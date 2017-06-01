@@ -30,8 +30,6 @@ import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.InMemorySharedPreferences;
 import org.chromium.components.safe_browsing.SafeBrowsingApiBridge;
 import org.chromium.components.safe_browsing.SafeBrowsingApiHandler;
-import org.chromium.content.browser.test.util.Criteria;
-import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.net.test.EmbeddedTestServer;
 
@@ -66,8 +64,6 @@ public class SafeBrowsingTest extends AwTestBase {
 
     // A gray page with an iframe to MALWARE_HTML_PATH
     private static final String IFRAME_HTML_PATH = RESOURCE_PATH + "/iframe.html";
-
-    private static final String INTERSTITIAL_PAGE_TITLE = "Security error";
 
     /**
      * A fake SafeBrowsingApiHandler which treats URLs ending in MALWARE_HTML_PATH as malicious URLs
@@ -245,15 +241,6 @@ public class SafeBrowsingTest extends AwTestBase {
         });
     }
 
-    private void waitForInterstitialToChangeTitle() {
-        CriteriaHelper.pollUiThread(new Criteria() {
-            @Override
-            public boolean isSatisfied() {
-                return INTERSTITIAL_PAGE_TITLE.equals(mAwContents.getTitle());
-            }
-        });
-    }
-
     @SmallTest
     @Feature({"AndroidWebView"})
     @CommandLineFlags.Add(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
@@ -356,8 +343,7 @@ public class SafeBrowsingTest extends AwTestBase {
         int errorCount = errorHelper.getCallCount();
         dontProceedThroughInterstitial();
         errorHelper.waitForCallback(errorCount);
-        assertEquals(
-                ErrorCodeConversionHelper.ERROR_UNSAFE_RESOURCE, errorHelper.getError().errorCode);
+        assertEquals(ErrorCodeConversionHelper.ERROR_UNKNOWN, errorHelper.getError().errorCode);
         assertEquals("Network error is for the malicious page", responseUrl,
                 errorHelper.getRequest().url);
     }
@@ -375,34 +361,10 @@ public class SafeBrowsingTest extends AwTestBase {
         int errorCount = errorHelper.getCallCount();
         dontProceedThroughInterstitial();
         errorHelper.waitForCallback(errorCount);
-        assertEquals(
-                ErrorCodeConversionHelper.ERROR_UNSAFE_RESOURCE, errorHelper.getError().errorCode);
+        assertEquals(ErrorCodeConversionHelper.ERROR_UNKNOWN, errorHelper.getError().errorCode);
         final String subresourceUrl = mTestServer.getURL(MALWARE_HTML_PATH);
         assertEquals(subresourceUrl, errorHelper.getRequest().url);
         assertFalse(errorHelper.getRequest().isMainFrame);
-    }
-
-    @SmallTest
-    @Feature({"AndroidWebView"})
-    @CommandLineFlags.Add(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
-    public void testSafeBrowsingDontProceedNavigatesBackForMainFrame() throws Throwable {
-        loadGreenPage();
-        final String originalTitle = getTitleOnUiThread(mAwContents);
-        int interstitialCount =
-                mWebContentsObserver.getAttachedInterstitialPageHelper().getCallCount();
-        final String responseUrl = mTestServer.getURL(MALWARE_HTML_PATH);
-        loadUrlAsync(mAwContents, responseUrl);
-        mWebContentsObserver.getAttachedInterstitialPageHelper().waitForCallback(interstitialCount);
-        waitForInterstitialToChangeTitle();
-        dontProceedThroughInterstitial();
-
-        // Make sure we navigate back to previous page
-        CriteriaHelper.pollUiThread(new Criteria() {
-            @Override
-            public boolean isSatisfied() {
-                return originalTitle.equals(mAwContents.getTitle());
-            }
-        });
     }
 
     @SmallTest
@@ -454,8 +416,7 @@ public class SafeBrowsingTest extends AwTestBase {
         int errorCount = errorHelper.getCallCount();
         loadUrlAsync(mAwContents, responseUrl);
         errorHelper.waitForCallback(errorCount);
-        assertEquals(
-                ErrorCodeConversionHelper.ERROR_UNSAFE_RESOURCE, errorHelper.getError().errorCode);
+        assertEquals(ErrorCodeConversionHelper.ERROR_UNKNOWN, errorHelper.getError().errorCode);
         assertEquals("Network error is for the malicious page", responseUrl,
                 errorHelper.getRequest().url);
     }
@@ -463,20 +424,15 @@ public class SafeBrowsingTest extends AwTestBase {
     @SmallTest
     @Feature({"AndroidWebView"})
     @CommandLineFlags.Add(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
-    public void testSafeBrowsingShowsQuietInterstitialForOddSizedViews() throws Throwable {
+    public void testSafeBrowsingShowsNetworkErrorForOddSizedViews() throws Throwable {
         mAwContents.setCanShowBigInterstitial(false);
-        loadGreenPage();
-        int count = mWebContentsObserver.getAttachedInterstitialPageHelper().getCallCount();
         final String responseUrl = mTestServer.getURL(MALWARE_HTML_PATH);
+        OnReceivedError2Helper errorHelper = mContentsClient.getOnReceivedError2Helper();
+        int errorCount = errorHelper.getCallCount();
         loadUrlAsync(mAwContents, responseUrl);
-        mWebContentsObserver.getAttachedInterstitialPageHelper().waitForCallback(count);
-        assertTrue("Original page should not be showing",
-                GREEN_PAGE_BACKGROUND_COLOR
-                        != GraphicsTestUtils.getPixelColorAtCenterOfView(
-                                   mAwContents, mContainerView));
-        assertTrue("Target page should not be visible",
-                MALWARE_PAGE_BACKGROUND_COLOR
-                        != GraphicsTestUtils.getPixelColorAtCenterOfView(
-                                   mAwContents, mContainerView));
+        errorHelper.waitForCallback(errorCount);
+        assertEquals(ErrorCodeConversionHelper.ERROR_UNKNOWN, errorHelper.getError().errorCode);
+        assertEquals("Network error is for the malicious page", responseUrl,
+                errorHelper.getRequest().url);
     }
 }

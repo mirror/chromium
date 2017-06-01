@@ -72,7 +72,7 @@ void TopIconAnimationView::TransformView() {
   layer()->SetTransform(open_folder_ ? gfx::Transform() : transform);
 }
 
-gfx::Size TopIconAnimationView::CalculatePreferredSize() const {
+gfx::Size TopIconAnimationView::GetPreferredSize() const {
   return icon_size_;
 }
 

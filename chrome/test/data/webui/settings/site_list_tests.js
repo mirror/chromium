@@ -10,7 +10,7 @@
  * all types, even though some might be blank.
  * @type {SiteSettingsPref}
  */
-var prefsGeolocation = {
+var prefs = {
   exceptions: {
     auto_downloads: [],
     background_sync: [],
@@ -485,17 +485,17 @@ suite('SiteList', function() {
   test('initial ALLOW state is correct', function() {
     setUpCategory(
         settings.ContentSettingsTypes.GEOLOCATION,
-        settings.PermissionValues.ALLOW, prefsGeolocation);
+        settings.PermissionValues.ALLOW, prefs);
     return browserProxy.whenCalled('getExceptionList')
         .then(function(contentType) {
           assertEquals(settings.ContentSettingsTypes.GEOLOCATION, contentType);
 
           assertEquals(2, testElement.sites.length);
           assertEquals(
-              prefsGeolocation.exceptions.geolocation[0].origin,
+              prefs.exceptions.geolocation[0].origin,
               testElement.sites[0].origin);
           assertEquals(
-              prefsGeolocation.exceptions.geolocation[1].origin,
+              prefs.exceptions.geolocation[1].origin,
               testElement.sites[1].origin);
           assertEquals(
               settings.PermissionValues.ALLOW, testElement.categorySubtype);
@@ -510,7 +510,7 @@ suite('SiteList', function() {
   test('action menu closes when list changes', function() {
     setUpCategory(
         settings.ContentSettingsTypes.GEOLOCATION,
-        settings.PermissionValues.ALLOW, prefsGeolocation);
+        settings.PermissionValues.ALLOW, prefs);
     var actionMenu = testElement.$$('dialog[is=cr-action-menu]');
     return browserProxy.whenCalled('getExceptionList')
         .then(function(contentType) {
@@ -538,16 +538,16 @@ suite('SiteList', function() {
     return browserProxy.whenCalled('getExceptionList')
         .then(function(contentType) {
           assertEquals(settings.ContentSettingsTypes.GEOLOCATION, contentType);
+
           assertEquals(3, testElement.sites.length);
-          for (var i = 0; i < testElement.sites.length; ++i) {
+          for (var i = 0; i < 3; i++) {
             assertEquals(
-                prefsMixedProvider.exceptions.geolocation[i].origin,
-                testElement.sites[i].origin);
+                prefsMixedProvider.exceptions.geolocation[0].origin,
+                testElement.sites[0].origin);
             assertEquals(
-                kControlledByLookup[prefsMixedProvider.exceptions.geolocation[i]
-                                        .source] ||
-                    '',
-                testElement.sites[i].controlledBy);
+                kControlledByLookup[prefsMixedProvider.exceptions.geolocation[0]
+                                        .source],
+                testElement.sites[0].controlledBy);
           }
         });
   });
@@ -555,7 +555,7 @@ suite('SiteList', function() {
   test('initial BLOCK state is correct', function() {
     var contentType = settings.ContentSettingsTypes.GEOLOCATION;
     var categorySubtype = settings.PermissionValues.BLOCK;
-    setUpCategory(contentType, categorySubtype, prefsGeolocation);
+    setUpCategory(contentType, categorySubtype, prefs);
     return browserProxy.whenCalled('getExceptionList')
         .then(function(actualContentType) {
           assertEquals(contentType, actualContentType);
@@ -563,10 +563,10 @@ suite('SiteList', function() {
 
           assertEquals(2, testElement.sites.length);
           assertEquals(
-              prefsGeolocation.exceptions.geolocation[2].origin,
+              prefs.exceptions.geolocation[2].origin,
               testElement.sites[0].origin);
           assertEquals(
-              prefsGeolocation.exceptions.geolocation[3].origin,
+              prefs.exceptions.geolocation[3].origin,
               testElement.sites[1].origin);
           Polymer.dom.flush();  // Populates action menu.
           openActionMenu(0);
@@ -771,8 +771,7 @@ suite('SiteList', function() {
 
   test('list items shown and clickable when data is present', function() {
     var contentType = settings.ContentSettingsTypes.GEOLOCATION;
-    setUpCategory(
-        contentType, settings.PermissionValues.ALLOW, prefsGeolocation);
+    setUpCategory(contentType, settings.PermissionValues.ALLOW, prefs);
     return browserProxy.whenCalled('getExceptionList')
         .then(function(actualContentType) {
           assertEquals(contentType, actualContentType);
@@ -783,10 +782,10 @@ suite('SiteList', function() {
           // Validate that the sites gets populated from pre-canned prefs.
           assertEquals(2, testElement.sites.length);
           assertEquals(
-              prefsGeolocation.exceptions.geolocation[0].origin,
+              prefs.exceptions.geolocation[0].origin,
               testElement.sites[0].origin);
           assertEquals(
-              prefsGeolocation.exceptions.geolocation[1].origin,
+              prefs.exceptions.geolocation[1].origin,
               testElement.sites[1].origin);
           assertFalse(!!testElement.selectedOrigin);
 
@@ -796,7 +795,7 @@ suite('SiteList', function() {
           assertTrue(!!clickable);
           MockInteractions.tap(clickable);
           assertEquals(
-              prefsGeolocation.exceptions.geolocation[0].origin,
+              prefs.exceptions.geolocation[0].origin,
               settings.getQueryParameters().get('site'));
         });
   });
@@ -819,8 +818,7 @@ suite('SiteList', function() {
   test('Block list closed when Allow list is not empty', function() {
     // Prefs: Items in both Block and Allow list.
     var contentType = settings.ContentSettingsTypes.GEOLOCATION;
-    setUpCategory(
-        contentType, settings.PermissionValues.BLOCK, prefsGeolocation);
+    setUpCategory(contentType, settings.PermissionValues.BLOCK, prefs);
     return browserProxy.whenCalled('getExceptionList')
         .then(function(actualContentType) {
           assertEquals(contentType, actualContentType);
@@ -847,8 +845,7 @@ suite('SiteList', function() {
   test('Allow list is always open (Block list non-empty)', function() {
     // Prefs: Items in both Block and Allow list.
     var contentType = settings.ContentSettingsTypes.GEOLOCATION;
-    setUpCategory(
-        contentType, settings.PermissionValues.ALLOW, prefsGeolocation);
+    setUpCategory(contentType, settings.PermissionValues.ALLOW, prefs);
     return browserProxy.whenCalled('getExceptionList')
         .then(function(actualContentType) {
           assertEquals(contentType, actualContentType);
@@ -917,7 +914,7 @@ suite('SiteList', function() {
     // Test for error: "Cannot read property 'origin' of undefined".
     setUpCategory(
         settings.ContentSettingsTypes.GEOLOCATION,
-        settings.PermissionValues.ALLOW, prefsGeolocation);
+        settings.PermissionValues.ALLOW, prefs);
     return browserProxy.whenCalled('getExceptionList')
         .then(function(contentType) {
           Polymer.dom.flush();

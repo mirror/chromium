@@ -5,7 +5,7 @@
 #include "ash/system/user/tray_user.h"
 
 #include "ash/session/session_controller.h"
-#include "ash/shelf/shelf.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/strings/grit/ash_strings.h"
@@ -206,7 +206,7 @@ void TrayUser::UpdateAvatarImage(LoginStatus status) {
 
   const mojom::UserSession* const user_session =
       session_controller->GetUserSession(0);
-  avatar_->SetImage(user_session->user_info->avatar,
+  avatar_->SetImage(user_session->avatar,
                     gfx::Size(kTrayItemSize, kTrayItemSize));
 
   // Unit tests might come here with no images for some users.

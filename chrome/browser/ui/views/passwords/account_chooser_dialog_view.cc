@@ -43,7 +43,7 @@ void BuildColumnSet(ColumnSetType type, views::GridLayout* layout) {
   const int horizontal_padding =
       type == SINGLE_VIEW_COLUMN_SET
           ? ChromeLayoutProvider::Get()->GetDistanceMetric(
-                views::DISTANCE_DIALOG_CONTENTS_HORIZONTAL_MARGIN)
+                DISTANCE_DIALOG_BUTTON_MARGIN)
           : 0;
   column_set->AddPaddingColumn(0, horizontal_padding);
   column_set->AddColumn(views::GridLayout::FILL,
@@ -85,7 +85,7 @@ views::ScrollView* CreateCredentialsView(
     credential_view->SetLowerLabelColor(kAutoSigninTextColor);
     ChromeLayoutProvider* layout_provider = ChromeLayoutProvider::Get();
     gfx::Insets dialog_insets =
-        layout_provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS);
+        layout_provider->GetInsetsMetric(views::INSETS_PANEL);
     const int vertical_padding = layout_provider->GetDistanceMetric(
         views::DISTANCE_RELATED_CONTROL_VERTICAL);
     credential_view->SetBorder(
@@ -178,7 +178,7 @@ base::string16 AccountChooserDialogView::GetDialogButtonLabel(
   return l10n_util::GetStringUTF16(message_id);
 }
 
-gfx::Size AccountChooserDialogView::CalculatePreferredSize() const {
+gfx::Size AccountChooserDialogView::GetPreferredSize() const {
   return gfx::Size(kDesiredWidth, GetHeightForWidth(kDesiredWidth));
 }
 
@@ -220,7 +220,7 @@ void AccountChooserDialogView::InitWindow() {
 
   // Show credentials.
   gfx::Insets dialog_insets =
-      layout_provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS);
+      layout_provider->GetInsetsMetric(views::INSETS_PANEL);
   BuildColumnSet(SINGLE_VIEW_COLUMN_SET_NO_PADDING, layout);
   layout->StartRowWithPadding(0, SINGLE_VIEW_COLUMN_SET_NO_PADDING, 0,
                               dialog_insets.top());

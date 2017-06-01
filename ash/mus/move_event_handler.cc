@@ -5,11 +5,10 @@
 #include "ash/mus/move_event_handler.h"
 
 #include "ash/mus/bridge/workspace_event_handler_mus.h"
-#include "ash/wm/window_util.h"
+#include "ash/wm_window.h"
 #include "services/ui/public/interfaces/cursor/cursor.mojom.h"
 #include "ui/aura/mus/window_manager_delegate.h"
 #include "ui/aura/window.h"
-#include "ui/aura/window_delegate.h"
 #include "ui/base/class_property.h"
 #include "ui/base/cursor/cursor.h"
 #include "ui/base/hit_test.h"
@@ -64,7 +63,8 @@ void OnMoveLoopCompleted(const base::Callback<void(bool success)>& end_closure,
 MoveEventHandler::MoveEventHandler(
     aura::WindowManagerClient* window_manager_client,
     aura::Window* window)
-    : window_(window), window_manager_client_(window_manager_client) {
+    : wm_window_(WmWindow::Get(window)),
+      window_manager_client_(window_manager_client) {
   window->AddObserver(this);
   window->AddPreTargetHandler(this);
 
@@ -76,17 +76,17 @@ MoveEventHandler::~MoveEventHandler() {
 }
 
 // static
-MoveEventHandler* MoveEventHandler::GetForWindow(aura::Window* window) {
-  return window->GetProperty(kWmMoveEventHandler);
+MoveEventHandler* MoveEventHandler::GetForWindow(WmWindow* wm_window) {
+  return WmWindow::GetAuraWindow(wm_window)->GetProperty(kWmMoveEventHandler);
 }
 
 void MoveEventHandler::AttemptToStartDrag(
     const gfx::Point& point_in_parent,
     int window_component,
-    ::wm::WindowMoveSource source,
+    aura::client::WindowMoveSource source,
     const base::Callback<void(bool success)>& end_closure) {
   toplevel_window_event_handler_.AttemptToStartDrag(
-      window_, point_in_parent, window_component, source,
+      wm_window_, point_in_parent, window_component, source,
       base::Bind(&OnMoveLoopCompleted, end_closure));
 }
 
@@ -99,46 +99,47 @@ void MoveEventHandler::RevertDrag() {
 }
 
 void MoveEventHandler::Detach() {
-  if (!window_)
+  if (!wm_window_)
     return;
 
-  window_->RemoveObserver(this);
-  window_->RemovePreTargetHandler(this);
-  window_->ClearProperty(kWmMoveEventHandler);
-  window_ = nullptr;
+  wm_window_->aura_window()->RemoveObserver(this);
+  wm_window_->aura_window()->RemovePreTargetHandler(this);
+  wm_window_->aura_window()->ClearProperty(kWmMoveEventHandler);
+  wm_window_ = nullptr;
 }
 
 WorkspaceEventHandlerMus* MoveEventHandler::GetWorkspaceEventHandlerMus() {
-  if (!window_->parent())
+  if (!wm_window_->GetParent())
     return nullptr;
 
-  return WorkspaceEventHandlerMus::Get(window_->parent());
+  return WorkspaceEventHandlerMus::Get(wm_window_->aura_window()->parent());
 }
 
 void MoveEventHandler::OnMouseEvent(ui::MouseEvent* event) {
-  toplevel_window_event_handler_.OnMouseEvent(event, window_);
+  toplevel_window_event_handler_.OnMouseEvent(event, wm_window_);
   if (!toplevel_window_event_handler_.is_drag_in_progress() &&
       (event->type() == ui::ET_POINTER_MOVED ||
        event->type() == ui::ET_MOUSE_MOVED)) {
     const int hit_test_location =
-        wm::GetNonClientComponent(window_, event->location());
+        wm_window_->GetNonClientComponent(event->location());
     window_manager_client_->SetNonClientCursor(
-        window_, ui::CursorData(CursorForWindowComponent(hit_test_location)));
+        wm_window_->aura_window(),
+        ui::CursorData(CursorForWindowComponent(hit_test_location)));
   }
 
   WorkspaceEventHandlerMus* workspace_event_handler =
       GetWorkspaceEventHandlerMus();
   if (workspace_event_handler)
-    workspace_event_handler->OnMouseEvent(event, window_);
+    workspace_event_handler->OnMouseEvent(event, wm_window_);
 }
 
 void MoveEventHandler::OnGestureEvent(ui::GestureEvent* event) {
-  toplevel_window_event_handler_.OnGestureEvent(event, window_);
+  toplevel_window_event_handler_.OnGestureEvent(event, wm_window_);
 
   WorkspaceEventHandlerMus* workspace_event_handler =
       GetWorkspaceEventHandlerMus();
   if (workspace_event_handler)
-    workspace_event_handler->OnGestureEvent(event, window_);
+    workspace_event_handler->OnGestureEvent(event, wm_window_);
 }
 
 void MoveEventHandler::OnCancelMode(ui::CancelModeEvent* event) {
@@ -146,7 +147,7 @@ void MoveEventHandler::OnCancelMode(ui::CancelModeEvent* event) {
 }
 
 void MoveEventHandler::OnWindowDestroying(aura::Window* window) {
-  DCHECK_EQ(window_, window);
+  DCHECK_EQ(wm_window_->aura_window(), window);
   Detach();
 }
 

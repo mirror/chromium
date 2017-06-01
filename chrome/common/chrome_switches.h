@@ -123,7 +123,6 @@ extern const char kEnableNetBenchmarking[];
 extern const char kEnableOfflineAutoReload[];
 extern const char kEnableOfflineAutoReloadVisibleOnly[];
 extern const char kEnablePermissionActionReporting[];
-extern const char kEnablePictureInPicture[];
 extern const char kEnablePotentiallyAnnoyingSecurityFeatures[];
 extern const char kEnablePowerOverlay[];
 extern const char kEnablePrintPreviewRegisterPromos[];
@@ -156,8 +155,8 @@ extern const char kForceFirstRun[];
 extern const char kForceLocalNtp[];
 extern const char kForceVariationIds[];
 extern const char kHomePage[];
+extern const char kHostResolverRetryAttempts[];
 extern const char kHostRules[];
-extern const char kIgnoreCertificateErrorsSPKIList[];
 extern const char kIgnoreUrlFetcherCertRequests[];
 extern const char kIncognito[];
 extern const char kInstallChromeApp[];
@@ -254,7 +253,6 @@ extern const char kLocalNtpReload[];
 
 #if defined(OS_ANDROID)
 extern const char kAuthAndroidNegotiateAccountType[];
-extern const char kChromeHomeSwipeLogicType[];
 extern const char kDisableContextualSearch[];
 extern const char kEnableAccessibilityTabSwitcher[];
 extern const char kEnableContextualSearch[];
@@ -361,7 +359,6 @@ extern const char kEnableNewAppMenuIcon[];
 #endif
 
 bool ExtensionsDisabled(const base::CommandLine& command_line);
-bool ExtensionsDisabled();
 bool MdFeedbackEnabled();
 bool MdPolicyPageEnabled();
 bool SettingsWindowEnabled();

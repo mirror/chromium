@@ -23,14 +23,13 @@ CaptivePortalDetector::CaptivePortalDetector(
 }
 
 CaptivePortalDetector::~CaptivePortalDetector() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 }
 
 void CaptivePortalDetector::DetectCaptivePortal(
     const GURL& url,
     const DetectionCallback& detection_callback,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(!FetchingURL());
   DCHECK(detection_callback_.is_null());
 
@@ -61,7 +60,7 @@ void CaptivePortalDetector::Cancel() {
 }
 
 void CaptivePortalDetector::OnURLFetchComplete(const net::URLFetcher* source) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(FetchingURL());
   DCHECK_EQ(url_fetcher_.get(), source);
   DCHECK(!detection_callback_.is_null());

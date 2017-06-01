@@ -111,11 +111,7 @@ class IDBIndex final : public GarbageCollectedFinalized<IDBIndex>,
   void RevertMetadata(RefPtr<IDBIndexMetadata> old_metadata);
 
   // Used internally and by InspectorIndexedDBAgent:
-  IDBRequest* openCursor(
-      ScriptState*,
-      IDBKeyRange*,
-      WebIDBCursorDirection,
-      IDBRequest::AsyncTraceState = IDBRequest::AsyncTraceState());
+  IDBRequest* openCursor(ScriptState*, IDBKeyRange*, WebIDBCursorDirection);
 
   WebIDBDatabase* BackendDB() const;
 

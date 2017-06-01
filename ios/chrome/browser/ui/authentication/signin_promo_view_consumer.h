@@ -14,11 +14,11 @@
 @protocol SigninPromoViewConsumer<NSObject>
 
 // Called when the default identity is changed or updated.
+// |newIdentity| is set to YES when the default identity is changed.
 // |configurator|, new instance set each time, to configure a SigninPromoView.
-// |identityChanged| is set to YES when the default identity is changed.
-- (void)configureSigninPromoWithConfigurator:
-            (SigninPromoViewConfigurator*)configurator
-                             identityChanged:(BOOL)identityChanged;
+- (void)configureSigninPromoViewWithNewIdentity:(BOOL)newIdentity
+                                   configurator:(SigninPromoViewConfigurator*)
+                                                    configurator;
 
 @end
 

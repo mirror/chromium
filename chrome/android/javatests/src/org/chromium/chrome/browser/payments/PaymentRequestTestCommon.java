@@ -209,6 +209,18 @@ final class PaymentRequestTestCommon implements PaymentRequestObserverForTest,
         helper.waitForCallback(callCount);
     }
 
+    protected void clickInShippingSummaryAndWait(final int resourceId, CallbackHelper helper)
+            throws InterruptedException, TimeoutException {
+        int callCount = helper.getCallCount();
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mUI.getShippingSummarySectionForTest().findViewById(resourceId).performClick();
+            }
+        });
+        helper.waitForCallback(callCount);
+    }
+
     protected void clickInShippingAddressAndWait(final int resourceId, CallbackHelper helper)
             throws InterruptedException, TimeoutException {
         int callCount = helper.getCallCount();
@@ -296,11 +308,11 @@ final class PaymentRequestTestCommon implements PaymentRequestObserverForTest,
         helper.waitForCallback(callCount);
     }
 
-    protected int getShippingAddressSectionButtonState() throws ExecutionException {
+    protected int getSummarySectionButtonState() throws ExecutionException {
         return ThreadUtils.runOnUiThreadBlocking(new Callable<Integer>() {
             @Override
             public Integer call() {
-                return mUI.getShippingAddressSectionForTest().getEditButtonState();
+                return mUI.getShippingSummarySectionForTest().getEditButtonState();
             }
         });
     }
@@ -322,31 +334,6 @@ final class PaymentRequestTestCommon implements PaymentRequestObserverForTest,
                         .getOptionLabelsForTest(index)
                         .getText()
                         .toString();
-            }
-        });
-    }
-
-    protected String getSelectedPaymentInstrumentLabel() throws ExecutionException {
-        return ThreadUtils.runOnUiThreadBlocking(new Callable<String>() {
-            @Override
-            public String call() {
-                OptionSection section = ((OptionSection) mUI.getPaymentMethodSectionForTest());
-                int size = section.getNumberOfOptionLabelsForTest();
-                for (int i = 0; i < size; i++) {
-                    if (section.getOptionRowAtIndex(i).isChecked()) {
-                        return section.getOptionRowAtIndex(i).getLabelText().toString();
-                    }
-                }
-                return null;
-            }
-        });
-    }
-
-    protected String getOrderSummaryTotal() throws ExecutionException {
-        return ThreadUtils.runOnUiThreadBlocking(new Callable<String>() {
-            @Override
-            public String call() {
-                return mUI.getOrderSummaryTotalTextViewForTest().getText().toString();
             }
         });
     }
@@ -391,32 +378,8 @@ final class PaymentRequestTestCommon implements PaymentRequestObserverForTest,
         return ThreadUtils.runOnUiThreadBlocking(new Callable<String>() {
             @Override
             public String call() {
-                return mUI.getShippingAddressSectionForTest()
+                return ((OptionSection) mUI.getShippingAddressSectionForTest())
                         .getOptionLabelsForTest(suggestionIndex)
-                        .getText()
-                        .toString();
-            }
-        });
-    }
-
-    protected String getShippingAddressSummary() throws ExecutionException {
-        return ThreadUtils.runOnUiThreadBlocking(new Callable<String>() {
-            @Override
-            public String call() {
-                return mUI.getShippingAddressSectionForTest()
-                        .getSummaryLabelForTest()
-                        .getText()
-                        .toString();
-            }
-        });
-    }
-
-    protected String getShippingOptionSummary() throws ExecutionException {
-        return ThreadUtils.runOnUiThreadBlocking(new Callable<String>() {
-            @Override
-            public String call() {
-                return mUI.getShippingOptionSectionForTest()
-                        .getSummaryLabelForTest()
                         .getText()
                         .toString();
             }
@@ -731,7 +694,7 @@ final class PaymentRequestTestCommon implements PaymentRequestObserverForTest,
     }
 
     protected void assertOnlySpecificAbortMetricLogged(int abortReason) {
-        for (int i = 0; i < AbortReason.MAX; ++i) {
+        for (int i = 0; i < PaymentRequestMetrics.ABORT_REASON_MAX; ++i) {
             Assert.assertEquals(
                     String.format(Locale.getDefault(), "Found %d instead of %d", i, abortReason),
                     (i == abortReason ? 1 : 0),

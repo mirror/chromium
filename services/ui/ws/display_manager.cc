@@ -7,14 +7,11 @@
 #include <vector>
 
 #include "base/memory/ptr_util.h"
-#include "base/stl_util.h"
 #include "base/trace_event/trace_event.h"
-#include "services/ui/display/screen_manager.h"
 #include "services/ui/display/viewport_metrics.h"
 #include "services/ui/ws/cursor_location_manager.h"
 #include "services/ui/ws/display.h"
 #include "services/ui/ws/display_binding.h"
-#include "services/ui/ws/display_creation_config.h"
 #include "services/ui/ws/event_dispatcher.h"
 #include "services/ui/ws/frame_generator.h"
 #include "services/ui/ws/server_window.h"
@@ -25,8 +22,6 @@
 #include "services/ui/ws/window_manager_window_tree_factory.h"
 #include "services/ui/ws/window_server_delegate.h"
 #include "services/ui/ws/window_tree.h"
-#include "ui/display/display_list.h"
-#include "ui/display/screen_base.h"
 #include "ui/events/event_rewriter.h"
 
 #if defined(OS_CHROMEOS)
@@ -59,101 +54,11 @@ DisplayManager::~DisplayManager() {
   DestroyAllDisplays();
 }
 
-void DisplayManager::OnDisplayCreationConfigSet() {
-  if (window_server_->display_creation_config() ==
-      DisplayCreationConfig::MANUAL) {
-    for (const auto& pair : user_display_managers_)
-      pair.second->DisableAutomaticNotification();
-  } else {
-    // In AUTOMATIC mode SetDisplayConfiguration() is never called.
-    got_initial_config_from_window_manager_ = true;
-  }
-}
-
-bool DisplayManager::SetDisplayConfiguration(
-    const std::vector<display::Display>& displays,
-    std::vector<ui::mojom::WmViewportMetricsPtr> viewport_metrics,
-    int64_t primary_display_id) {
-  if (window_server_->display_creation_config() !=
-      DisplayCreationConfig::MANUAL) {
-    DVLOG(1) << "SetDisplayConfiguration is only valid when roots manually "
-                "created";
-    return false;
-  }
-  if (displays.size() != viewport_metrics.size()) {
-    DVLOG(1) << "SetDisplayConfiguration called with mismatch in sizes";
-    return false;
-  }
-  size_t primary_display_index = displays.size();
-  std::set<int64_t> display_ids;
-  for (size_t i = 0; i < displays.size(); ++i) {
-    const display::Display& display = displays[i];
-    if (display.id() == display::kInvalidDisplayId) {
-      DVLOG(1) << "SetDisplayConfiguration passed invalid display id";
-      return false;
-    }
-    if (!display_ids.insert(display.id()).second) {
-      DVLOG(1) << "SetDisplayConfiguration passed duplicate display id";
-      return false;
-    }
-    if (display.id() == primary_display_id)
-      primary_display_index = i;
-    Display* ws_display = GetDisplayById(display.id());
-    if (!ws_display) {
-      DVLOG(1) << "SetDisplayConfiguration passed unknown display id "
-               << display.id();
-      return false;
-    }
-  }
-  if (primary_display_index == displays.size()) {
-    DVLOG(1) << "SetDisplayConfiguration primary id not in displays";
-    return false;
-  }
-
-  display::DisplayList& display_list =
-      display::ScreenManager::GetInstance()->GetScreen()->display_list();
-  display_list.AddOrUpdateDisplay(displays[primary_display_index],
-                                  display::DisplayList::Type::PRIMARY);
-  for (size_t i = 0; i < displays.size(); ++i) {
-    Display* ws_display = GetDisplayById(displays[i].id());
-    DCHECK(ws_display);
-    ws_display->SetDisplay(displays[i]);
-    ws_display->SetBoundsInPixels(viewport_metrics[i]->bounds_in_pixels);
-    if (i != primary_display_index) {
-      display_list.AddOrUpdateDisplay(displays[i],
-                                      display::DisplayList::Type::NOT_PRIMARY);
-    }
-  }
-
-  std::set<int64_t> existing_display_ids;
-  for (const display::Display& display : display_list.displays())
-    existing_display_ids.insert(display.id());
-  std::set<int64_t> removed_display_ids =
-      base::STLSetDifference<std::set<int64_t>>(existing_display_ids,
-                                                display_ids);
-  for (int64_t display_id : removed_display_ids)
-    display_list.RemoveDisplay(display_id);
-
-  for (auto& pair : user_display_managers_)
-    pair.second->CallOnDisplaysChanged();
-
-  if (!got_initial_config_from_window_manager_) {
-    got_initial_config_from_window_manager_ = true;
-    window_server_->delegate()->OnFirstDisplayReady();
-  }
-
-  return true;
-}
-
 UserDisplayManager* DisplayManager::GetUserDisplayManager(
     const UserId& user_id) {
   if (!user_display_managers_.count(user_id)) {
     user_display_managers_[user_id] =
         base::MakeUnique<UserDisplayManager>(window_server_, user_id);
-    if (window_server_->display_creation_config() ==
-        DisplayCreationConfig::MANUAL) {
-      user_display_managers_[user_id]->DisableAutomaticNotification();
-    }
   }
   return user_display_managers_[user_id].get();
 }
@@ -172,41 +77,29 @@ void DisplayManager::AddDisplay(Display* display) {
   pending_displays_.insert(display);
 }
 
-Display* DisplayManager::AddDisplayForWindowManager(
-    bool is_primary_display,
+void DisplayManager::AddDisplayForWindowManager(
     const display::Display& display,
     const display::ViewportMetrics& metrics) {
-  DCHECK_EQ(DisplayCreationConfig::MANUAL,
-            window_server_->display_creation_config());
-  const display::DisplayList::Type display_type =
-      is_primary_display ? display::DisplayList::Type::PRIMARY
-                         : display::DisplayList::Type::NOT_PRIMARY;
-  display::ScreenManager::GetInstance()->GetScreen()->display_list().AddDisplay(
-      display, display_type);
   OnDisplayAdded(display, metrics);
-  return GetDisplayById(display.id());
 }
 
 void DisplayManager::DestroyDisplay(Display* display) {
-  const bool is_pending = pending_displays_.count(display) > 0;
-  if (is_pending) {
+  if (pending_displays_.count(display)) {
     pending_displays_.erase(display);
   } else {
+    for (const auto& pair : user_display_managers_)
+      pair.second->OnWillDestroyDisplay(display->GetId());
+
     DCHECK(displays_.count(display));
     displays_.erase(display);
     window_server_->OnDisplayDestroyed(display);
   }
-  const int64_t display_id = display->GetId();
   delete display;
 
   // If we have no more roots left, let the app know so it can terminate.
   // TODO(sky): move to delegate/observer.
-  if (displays_.empty() && pending_displays_.empty()) {
+  if (displays_.empty() && pending_displays_.empty())
     window_server_->OnNoMoreDisplays();
-  } else {
-    for (const auto& pair : user_display_managers_)
-      pair.second->OnDisplayDestroyed(display_id);
-  }
 }
 
 void DisplayManager::DestroyAllDisplays() {
@@ -224,9 +117,9 @@ std::set<const Display*> DisplayManager::displays() const {
   return ret_value;
 }
 
-void DisplayManager::OnDisplayUpdated(const display::Display& display) {
+void DisplayManager::OnDisplayUpdate(const display::Display& display) {
   for (const auto& pair : user_display_managers_)
-    pair.second->OnDisplayUpdated(display);
+    pair.second->OnDisplayUpdate(display);
 }
 
 Display* DisplayManager::GetDisplayContaining(const ServerWindow* window) {
@@ -284,8 +177,7 @@ WindowId DisplayManager::GetAndAdvanceNextRootId() {
 void DisplayManager::OnDisplayAcceleratedWidgetAvailable(Display* display) {
   DCHECK_NE(0u, pending_displays_.count(display));
   DCHECK_EQ(0u, displays_.count(display));
-  const bool is_first_display =
-      displays_.empty() && got_initial_config_from_window_manager_;
+  const bool is_first_display = displays_.empty();
   displays_.insert(display);
   pending_displays_.erase(display);
   if (event_rewriter_)
@@ -304,35 +196,26 @@ void DisplayManager::OnActiveUserIdChanged(const UserId& previously_active_id,
                                            const UserId& active_id) {
   WindowManagerState* previous_window_manager_state =
       window_server_->GetWindowManagerStateForUser(previously_active_id);
-  gfx::Point mouse_location_on_display;
-  int64_t mouse_display_id = 0;
+  gfx::Point mouse_location_on_screen;
   if (previous_window_manager_state) {
-    mouse_location_on_display =
-        previous_window_manager_state->event_dispatcher()
-            ->mouse_pointer_last_location();
-    mouse_display_id = previous_window_manager_state->event_dispatcher()
-                           ->mouse_pointer_display_id();
+    mouse_location_on_screen = previous_window_manager_state->event_dispatcher()
+                                   ->mouse_pointer_last_location();
     previous_window_manager_state->Deactivate();
   }
 
   WindowManagerState* current_window_manager_state =
       window_server_->GetWindowManagerStateForUser(active_id);
   if (current_window_manager_state)
-    current_window_manager_state->Activate(mouse_location_on_display,
-                                           mouse_display_id);
-}
-
-void DisplayManager::CreateDisplay(const display::Display& display,
-                                   const display::ViewportMetrics& metrics) {
-  ws::Display* ws_display = new ws::Display(window_server_);
-  ws_display->SetDisplay(display);
-  ws_display->Init(metrics, nullptr);
+    current_window_manager_state->Activate(mouse_location_on_screen);
 }
 
 void DisplayManager::OnDisplayAdded(const display::Display& display,
                                     const display::ViewportMetrics& metrics) {
   DVLOG(3) << "OnDisplayAdded: " << display.ToString();
-  CreateDisplay(display, metrics);
+
+  ws::Display* ws_display = new ws::Display(window_server_);
+  ws_display->SetDisplay(display);
+  ws_display->Init(metrics, nullptr);
 }
 
 void DisplayManager::OnDisplayRemoved(int64_t display_id) {
@@ -365,7 +248,7 @@ void DisplayManager::OnDisplayModified(
   // OnWmDisplayModified() so the WM has updated the display size.
   ws_display->OnViewportMetricsChanged(metrics);
 
-  OnDisplayUpdated(display);
+  OnDisplayUpdate(display);
 }
 
 void DisplayManager::OnPrimaryDisplayChanged(int64_t primary_display_id) {

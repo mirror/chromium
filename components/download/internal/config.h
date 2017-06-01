@@ -39,18 +39,18 @@ struct Configuration {
 
   // The maximum number of downloads the DownloadService can have currently in
   // Active or Paused states.
-  uint32_t max_concurrent_downloads;
+  int max_concurrent_downloads;
 
   // The maximum number of downloads the DownloadService can have currently in
   // only Active state.
-  uint32_t max_running_downloads;
+  int max_running_downloads;
 
   // The maximum number of downloads that are scheduled but not yet in Active
   // state, for each client using the download service.
-  uint32_t max_scheduled_downloads;
+  int max_scheduled_downloads;
 
   // The maximum number of retries before the download is aborted.
-  uint32_t max_retry_count;
+  int max_retry_count;
 
   // The time that the download service will keep the files around before
   // deleting them if the client hasn't handle the files.

@@ -225,7 +225,7 @@ SupportsType MimeUtil::AreSupportedCodecs(
         mime_type_lower_case, parsed_codec.codec, video_profile, video_level,
         parsed_codec.video_color_space, is_encrypted);
     if (result == IsNotSupported) {
-      DVLOG(2) << __func__ << ": Codec " << parsed_codec.codec
+      DVLOG(2) << __func__ << " Codec " << parsed_codec.codec
                << " not supported by platform.";
       return IsNotSupported;
     }
@@ -349,12 +349,9 @@ void MimeUtil::AddSupportedMediaFormats() {
 #endif  // BUILDFLAG(ENABLE_MSE_MPEG2TS_STREAM_PARSER)
 #if defined(OS_ANDROID)
   // HTTP Live Streaming (HLS).
-  CodecSet hls_codecs;
-  hls_codecs.insert(H264);
   // TODO(ddorwin): Is any MP3 codec string variant included in real queries?
+  CodecSet hls_codecs(avc_and_aac);
   hls_codecs.insert(MP3);
-  // Android HLS only supports MPEG4_AAC (missing demuxer support for MPEG2_AAC)
-  hls_codecs.insert(MPEG4_AAC);
   AddContainerWithCodecs("application/x-mpegurl", hls_codecs, true);
   AddContainerWithCodecs("application/vnd.apple.mpegurl", hls_codecs, true);
   AddContainerWithCodecs("audio/mpegurl", hls_codecs, true);
@@ -524,7 +521,6 @@ bool MimeUtil::IsCodecSupportedOnAndroid(
     const std::string& mime_type_lower_case,
     bool is_encrypted,
     const PlatformInfo& platform_info) {
-  DVLOG(3) << __func__;
   DCHECK_NE(mime_type_lower_case, "");
 
   // Encrypted block support is never available without platform decoders.
@@ -546,12 +542,7 @@ bool MimeUtil::IsCodecSupportedOnAndroid(
     // ----------------------------------------------------------------------
     // The remaining codecs may be supported depending on platform abilities.
     // ----------------------------------------------------------------------
-    case MPEG2_AAC:
-      // MPEG2_AAC cannot be used in HLS (mpegurl suffix), but this is enforced
-      // in the parsing step by excluding MPEG2_AAC from the list of
-      // valid codecs to be used with HLS mime types.
-      DCHECK(!base::EndsWith(mime_type_lower_case, "mpegurl",
-                             base::CompareCase::SENSITIVE));
+
     case PCM:
     case MP3:
     case MPEG4_AAC:
@@ -563,16 +554,24 @@ bool MimeUtil::IsCodecSupportedOnAndroid(
       DCHECK(!is_encrypted || platform_info.has_platform_decoders);
       return true;
 
+    case MPEG2_AAC:
+      // MPEG-2 variants of AAC are not supported on Android unless the unified
+      // media pipeline can be used and the container is not HLS. These codecs
+      // will be decoded in software. See https://crbug.com/544268 for details.
+      if (base::EndsWith(mime_type_lower_case, "mpegurl",
+                         base::CompareCase::SENSITIVE)) {
+        return false;
+      }
+      return !is_encrypted;
+
     case OPUS:
       // If clear, the unified pipeline can always decode Opus in software.
       if (!is_encrypted)
         return true;
 
       // Otherwise, platform support is required.
-      if (!platform_info.supports_opus) {
-        DVLOG(3) << "Platform does not support opus";
+      if (!platform_info.supports_opus)
         return false;
-      }
 
       // MediaPlayer does not support Opus in ogg containers.
       if (base::EndsWith(mime_type_lower_case, "ogg",
@@ -840,8 +839,6 @@ SupportsType MimeUtil::IsCodecSupported(const std::string& mime_type_lower_case,
                                         uint8_t video_level,
                                         const VideoColorSpace& color_space,
                                         bool is_encrypted) const {
-  DVLOG(3) << __func__;
-
   DCHECK_EQ(base::ToLowerASCII(mime_type_lower_case), mime_type_lower_case);
   DCHECK_NE(codec, INVALID_CODEC);
 

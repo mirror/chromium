@@ -35,11 +35,6 @@ public class AllDismissedItem extends OptionalLeaf {
         ((ViewHolder) holder).onBindViewHolder();
     }
 
-    @Override
-    public void visitOptionalItem(NodeVisitor visitor) {
-        visitor.visitAllDismissedItem();
-    }
-
     /**
      * ViewHolder for an item of type {@link ItemViewType#ALL_DISMISSED}.
      */

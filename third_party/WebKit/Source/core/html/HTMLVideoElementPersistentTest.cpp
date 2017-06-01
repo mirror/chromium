@@ -6,12 +6,13 @@
 
 #include <memory>
 
+#include "core/dom/DocumentUserGestureToken.h"
 #include "core/dom/Fullscreen.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/html/HTMLDivElement.h"
 #include "core/layout/LayoutFullScreen.h"
 #include "core/loader/EmptyClients.h"
 #include "core/testing/DummyPageHolder.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -105,7 +106,7 @@ TEST_F(HTMLVideoElementPersistentTest, videoIsFullscreen) {
   EXPECT_CALL(GetMockChromeClient(), ExitFullscreen(_)).Times(0);
 
   UserGestureIndicator gesture_indicator(
-      UserGestureToken::Create(&GetDocument()));
+      DocumentUserGestureToken::Create(&GetDocument()));
   Fullscreen::RequestFullscreen(*VideoElement());
   SimulateDidEnterFullscreen();
   EXPECT_EQ(FullscreenElement(), VideoElement());
@@ -132,7 +133,7 @@ TEST_F(HTMLVideoElementPersistentTest, divIsFullscreen) {
   EXPECT_CALL(GetMockChromeClient(), ExitFullscreen(_)).Times(0);
 
   UserGestureIndicator gesture_indicator(
-      UserGestureToken::Create(&GetDocument()));
+      DocumentUserGestureToken::Create(&GetDocument()));
   Fullscreen::RequestFullscreen(*DivElement());
   SimulateDidEnterFullscreen();
   EXPECT_EQ(FullscreenElement(), DivElement());
@@ -166,7 +167,7 @@ TEST_F(HTMLVideoElementPersistentTest, exitFullscreenBeforePersistence) {
   EXPECT_CALL(GetMockChromeClient(), ExitFullscreen(_)).Times(1);
 
   UserGestureIndicator gesture_indicator(
-      UserGestureToken::Create(&GetDocument()));
+      DocumentUserGestureToken::Create(&GetDocument()));
   Fullscreen::RequestFullscreen(*DivElement());
   SimulateDidEnterFullscreen();
   EXPECT_EQ(FullscreenElement(), DivElement());
@@ -195,24 +196,13 @@ TEST_F(HTMLVideoElementPersistentTest, internalPseudoClassOnlyUAStyleSheet) {
   EXPECT_CALL(GetMockChromeClient(), EnterFullscreen(_)).Times(1);
   EXPECT_CALL(GetMockChromeClient(), ExitFullscreen(_)).Times(0);
 
-  DummyExceptionStateForTesting exception_state;
-
   EXPECT_FALSE(DivElement()->matches(":-webkit-full-screen"));
-  EXPECT_FALSE(DivElement()->matches(":-internal-video-persistent-ancestor",
-                                     exception_state));
-  EXPECT_TRUE(exception_state.HadException());
-  exception_state.ClearException();
-  EXPECT_FALSE(
-      VideoElement()->matches(":-internal-video-persistent", exception_state));
-  EXPECT_TRUE(exception_state.HadException());
-  exception_state.ClearException();
-  EXPECT_FALSE(VideoElement()->matches(":-internal-video-persistent-ancestor",
-                                       exception_state));
-  EXPECT_TRUE(exception_state.HadException());
-  exception_state.ClearException();
+  EXPECT_FALSE(DivElement()->matches(":-internal-video-persistent-ancestor"));
+  EXPECT_FALSE(VideoElement()->matches(":-internal-video-persistent"));
+  EXPECT_FALSE(VideoElement()->matches(":-internal-video-persistent-ancestor"));
 
   UserGestureIndicator gesture_indicator(
-      UserGestureToken::Create(&GetDocument()));
+      DocumentUserGestureToken::Create(&GetDocument()));
   Fullscreen::RequestFullscreen(*DivElement());
   SimulateDidEnterFullscreen();
   SimulateBecamePersistentVideo(true);
@@ -224,18 +214,9 @@ TEST_F(HTMLVideoElementPersistentTest, internalPseudoClassOnlyUAStyleSheet) {
 
   // The :internal-* rules apply only from the UA stylesheet.
   EXPECT_TRUE(DivElement()->matches(":-webkit-full-screen"));
-  EXPECT_FALSE(DivElement()->matches(":-internal-video-persistent-ancestor",
-                                     exception_state));
-  EXPECT_TRUE(exception_state.HadException());
-  exception_state.ClearException();
-  EXPECT_FALSE(
-      VideoElement()->matches(":-internal-video-persistent", exception_state));
-  EXPECT_TRUE(exception_state.HadException());
-  exception_state.ClearException();
-  EXPECT_FALSE(VideoElement()->matches(":-internal-video-persistent-ancestor",
-                                       exception_state));
-  EXPECT_TRUE(exception_state.HadException());
-  exception_state.ClearException();
+  EXPECT_FALSE(DivElement()->matches(":-internal-video-persistent-ancestor"));
+  EXPECT_FALSE(VideoElement()->matches(":-internal-video-persistent"));
+  EXPECT_FALSE(VideoElement()->matches(":-internal-video-persistent-ancestor"));
 }
 
 TEST_F(HTMLVideoElementPersistentTest, removeContainerWhilePersisting) {
@@ -245,7 +226,7 @@ TEST_F(HTMLVideoElementPersistentTest, removeContainerWhilePersisting) {
   EXPECT_CALL(GetMockChromeClient(), ExitFullscreen(_)).Times(1);
 
   UserGestureIndicator gesture_indicator(
-      UserGestureToken::Create(&GetDocument()));
+      DocumentUserGestureToken::Create(&GetDocument()));
   Fullscreen::RequestFullscreen(*DivElement());
   SimulateDidEnterFullscreen();
   EXPECT_EQ(FullscreenElement(), DivElement());
@@ -267,7 +248,7 @@ TEST_F(HTMLVideoElementPersistentTest, removeVideoWhilePersisting) {
   EXPECT_CALL(GetMockChromeClient(), ExitFullscreen(_)).Times(0);
 
   UserGestureIndicator gesture_indicator(
-      UserGestureToken::Create(&GetDocument()));
+      DocumentUserGestureToken::Create(&GetDocument()));
   Fullscreen::RequestFullscreen(*DivElement());
   SimulateDidEnterFullscreen();
   EXPECT_EQ(FullscreenElement(), DivElement());
@@ -293,7 +274,7 @@ TEST_F(HTMLVideoElementPersistentTest, removeVideoWithLayerWhilePersisting) {
   EXPECT_CALL(GetMockChromeClient(), ExitFullscreen(_)).Times(0);
 
   UserGestureIndicator gesture_indicator(
-      UserGestureToken::Create(&GetDocument()));
+      DocumentUserGestureToken::Create(&GetDocument()));
   Fullscreen::RequestFullscreen(*DivElement());
   SimulateDidEnterFullscreen();
   EXPECT_EQ(FullscreenElement(), DivElement());
@@ -315,7 +296,7 @@ TEST_F(HTMLVideoElementPersistentTest, containsPersistentVideoScopedToFS) {
   EXPECT_CALL(GetMockChromeClient(), ExitFullscreen(_)).Times(0);
 
   UserGestureIndicator gesture_indicator(
-      UserGestureToken::Create(&GetDocument()));
+      DocumentUserGestureToken::Create(&GetDocument()));
   Fullscreen::RequestFullscreen(*DivElement());
   SimulateDidEnterFullscreen();
   EXPECT_EQ(FullscreenElement(), DivElement());

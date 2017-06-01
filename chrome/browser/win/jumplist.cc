@@ -30,7 +30,6 @@
 #include "chrome/browser/sessions/tab_restore_service_factory.h"
 #include "chrome/browser/shell_integration_win.h"
 #include "chrome/browser/win/jumplist_file_util.h"
-#include "chrome/browser/win/jumplist_update_util.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_icon_resources_win.h"
 #include "chrome/common/chrome_switches.h"
@@ -61,7 +60,7 @@ namespace {
 // https://msdn.microsoft.com/library/windows/desktop/dd378398.aspx
 // The "Most visited" and "Recently closed" category titles always take 2 slots.
 // For the remaining 8 slots, we allocate 5 slots to "most-visited" items and 3
-// slots to "recently-closed" items, respectively.
+// slots to"recently-closed" items, respectively.
 constexpr size_t kMostVisitedItems = 5;
 constexpr size_t kRecentlyClosedItems = 3;
 
@@ -99,7 +98,7 @@ void AppendCommonSwitches(ShellLinkItem* shell_link) {
 
 // Creates a ShellLinkItem preloaded with common switches.
 scoped_refptr<ShellLinkItem> CreateShellLink() {
-  auto link = base::MakeRefCounted<ShellLinkItem>();
+  scoped_refptr<ShellLinkItem> link(new ShellLinkItem);
   AppendCommonSwitches(link.get());
   return link;
 }
@@ -245,7 +244,7 @@ JumpList::JumpList(Profile* profile)
 }
 
 JumpList::~JumpList() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   Terminate();
 }
 
@@ -255,7 +254,7 @@ bool JumpList::Enabled() {
 }
 
 void JumpList::CancelPendingUpdate() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (task_id_ != base::CancelableTaskTracker::kBadTaskId) {
     cancelable_task_tracker_.TryCancel(task_id_);
     task_id_ = base::CancelableTaskTracker::kBadTaskId;
@@ -263,7 +262,7 @@ void JumpList::CancelPendingUpdate() {
 }
 
 void JumpList::Terminate() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   timer_most_visited_.Stop();
   timer_recently_closed_.Stop();
   CancelPendingUpdate();
@@ -282,25 +281,17 @@ void JumpList::Terminate() {
 }
 
 void JumpList::ShutdownOnUIThread() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   Terminate();
 }
 
 void JumpList::OnMostVisitedURLsAvailable(
     const history::MostVisitedURLList& urls) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   {
     JumpListData* data = &jumplist_data_->data;
     base::AutoLock auto_lock(data->list_lock_);
-
-    // There is no need to update the JumpList if the top most visited sites in
-    // display have not changed.
-    if (MostVisitedItemsUnchanged(data->most_visited_pages_, urls,
-                                  kMostVisitedItems)) {
-      return;
-    }
-
     data->most_visited_pages_.clear();
 
     for (size_t i = 0; i < urls.size() && i < kMostVisitedItems; i++) {
@@ -324,7 +315,7 @@ void JumpList::OnMostVisitedURLsAvailable(
 }
 
 void JumpList::TabRestoreServiceChanged(sessions::TabRestoreService* service) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   // if we have a pending favicon request, cancel it here (it is out of date).
   CancelPendingUpdate();
@@ -350,7 +341,7 @@ void JumpList::TabRestoreServiceDestroyed(
 bool JumpList::AddTab(const sessions::TabRestoreService::Tab& tab,
                       size_t max_items,
                       JumpListData* data) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   data->list_lock_.AssertAcquired();
 
   // This code adds the URL and the title strings of the given tab to |data|.
@@ -375,7 +366,7 @@ bool JumpList::AddTab(const sessions::TabRestoreService::Tab& tab,
 void JumpList::AddWindow(const sessions::TabRestoreService::Window& window,
                          size_t max_items,
                          JumpListData* data) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   data->list_lock_.AssertAcquired();
 
   // This code enumerates all the tabs in the given window object and add their
@@ -389,7 +380,7 @@ void JumpList::AddWindow(const sessions::TabRestoreService::Window& window,
 }
 
 void JumpList::StartLoadingFavicon() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   base::ElapsedTimer timer;
 
@@ -428,7 +419,7 @@ void JumpList::StartLoadingFavicon() {
 
 void JumpList::OnFaviconDataAvailable(
     const favicon_base::FaviconImageResult& image_result) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   base::ElapsedTimer timer;
 
@@ -463,7 +454,7 @@ void JumpList::OnFaviconDataAvailable(
 }
 
 void JumpList::OnIncognitoAvailabilityChanged() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   bool waiting_for_icons = true;
   {
@@ -480,7 +471,7 @@ void JumpList::OnIncognitoAvailabilityChanged() {
 }
 
 void JumpList::PostRunUpdate() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   TRACE_EVENT0("browser", "JumpList::PostRunUpdate");
   if (!profile_)
@@ -541,7 +532,7 @@ void JumpList::TopSitesChanged(history::TopSites* top_sites,
 }
 
 void JumpList::DeferredTopSitesChanged() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   if (updates_to_skip_ > 0) {
     --updates_to_skip_;
@@ -565,7 +556,7 @@ void JumpList::DeferredTopSitesChanged() {
 }
 
 void JumpList::DeferredTabRestoreServiceChanged() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   if (updates_to_skip_ > 0) {
     --updates_to_skip_;
@@ -644,14 +635,12 @@ void JumpList::DeleteIconFiles(const base::FilePath& icon_dir,
   DeleteNonCachedFiles(icon_dir, cached_files);
 }
 
-int JumpList::CreateIconFiles(const base::FilePath& icon_dir,
-                              const ShellLinkItemList& item_list,
-                              size_t max_items,
-                              JumpListCategory category) {
+void JumpList::CreateIconFiles(const base::FilePath& icon_dir,
+                               const ShellLinkItemList& item_list,
+                               size_t max_items,
+                               JumpListCategory category) {
   // TODO(chengx): Remove the UMA histogram after fixing http://crbug.com/40407.
   SCOPED_UMA_HISTOGRAM_TIMER("WinJumplist.CreateIconFilesDuration");
-
-  int icons_created = 0;
 
   // Reuse icons for urls that were already present in the jumplist for this
   // category.
@@ -678,28 +667,20 @@ int JumpList::CreateIconFiles(const base::FilePath& icon_dir,
     } else {
       base::FilePath icon_path;
       if (CreateIconFile(item->icon_image(), icon_dir, &icon_path)) {
-        ++icons_created;
         item->set_icon(icon_path.value(), 0);
         updated_map[item->url()] = icon_path;
       }
     }
   }
   source_map->swap(updated_map);
-
-  return icons_created;
 }
 
-int JumpList::UpdateIconFiles(const base::FilePath& icon_dir,
-                              const ShellLinkItemList& page_list,
-                              size_t slot_limit,
-                              JumpListCategory category) {
-  int icons_created = 0;
-
-  // Maximum number of icon files that each JumpList icon folder may hold, which
-  // is set to 2 times the normal amount.
-  size_t icon_limit =
-      2 * ((category == JumpListCategory::kMostVisited) ? kMostVisitedItems
-                                                        : kRecentlyClosedItems);
+void JumpList::UpdateIconFiles(const base::FilePath& icon_dir,
+                               const ShellLinkItemList& page_list,
+                               size_t slot_limit,
+                               JumpListCategory category) {
+  // Maximum number of icon files that each JumpList icon folder may hold.
+  size_t icon_limit = (category == JumpListCategory::kMostVisited) ? 10 : 6;
 
   // Clear the JumpList icon folder at |icon_dir| and the cache when
   // 1) "Most visited" category updates for the 1st time after Chrome is
@@ -717,14 +698,11 @@ int JumpList::UpdateIconFiles(const base::FilePath& icon_dir,
     recently_closed_icons_.clear();
     // Create new icons only when the directory exists and is empty.
     if (base::CreateDirectory(icon_dir) && base::IsDirectoryEmpty(icon_dir))
-      icons_created +=
-          CreateIconFiles(icon_dir, page_list, slot_limit, category);
+      CreateIconFiles(icon_dir, page_list, slot_limit, category);
   } else if (base::CreateDirectory(icon_dir)) {
-    icons_created += CreateIconFiles(icon_dir, page_list, slot_limit, category);
+    CreateIconFiles(icon_dir, page_list, slot_limit, category);
     DeleteIconFiles(icon_dir, category);
   }
-
-  return icons_created;
 }
 
 bool JumpList::UpdateJumpList(
@@ -754,17 +732,18 @@ bool JumpList::UpdateJumpList(
     return false;
   }
 
-  // Record the desired number of icons created in this JumpList update.
-  int icons_created = 0;
+  // Record the desired number of icons to create in this JumpList update.
+  int icons_to_create = 0;
 
   // Update the icons for "Most Visisted" category of the JumpList if needed.
   if (most_visited_pages_have_updates) {
     base::FilePath icon_dir_most_visited = GenerateJumplistIconDirName(
         profile_dir, FILE_PATH_LITERAL("MostVisited"));
 
-    icons_created +=
-        UpdateIconFiles(icon_dir_most_visited, most_visited_pages,
-                        kMostVisitedItems, JumpListCategory::kMostVisited);
+    UpdateIconFiles(icon_dir_most_visited, most_visited_pages,
+                    kMostVisitedItems, JumpListCategory::kMostVisited);
+
+    icons_to_create += std::min(most_visited_pages.size(), kMostVisitedItems);
   }
 
   // Update the icons for "Recently Closed" category of the JumpList if needed.
@@ -772,13 +751,15 @@ bool JumpList::UpdateJumpList(
     base::FilePath icon_dir_recent_closed = GenerateJumplistIconDirName(
         profile_dir, FILE_PATH_LITERAL("RecentClosed"));
 
-    icons_created += UpdateIconFiles(
-        icon_dir_recent_closed, recently_closed_pages, kRecentlyClosedItems,
-        JumpListCategory::kRecentlyClosed);
+    UpdateIconFiles(icon_dir_recent_closed, recently_closed_pages,
+                    kRecentlyClosedItems, JumpListCategory::kRecentlyClosed);
+
+    icons_to_create +=
+        std::min(recently_closed_pages.size(), kRecentlyClosedItems);
   }
 
   // TODO(chengx): Remove the UMA histogram after fixing http://crbug.com/40407.
-  UMA_HISTOGRAM_COUNTS_100("WinJumplist.CreateIconFilesCount", icons_created);
+  UMA_HISTOGRAM_COUNTS_100("WinJumplist.CreateIconFilesCount", icons_to_create);
 
   // TODO(chengx): Remove the UMA histogram after fixing http://crbug.com/40407.
   SCOPED_UMA_HISTOGRAM_TIMER("WinJumplist.UpdateJumpListDuration");

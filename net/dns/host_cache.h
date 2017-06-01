@@ -8,7 +8,6 @@
 #include <stddef.h>
 
 #include <functional>
-#include <map>
 #include <memory>
 #include <string>
 #include <tuple>
@@ -22,10 +21,6 @@
 #include "net/base/expiring_cache.h"
 #include "net/base/net_export.h"
 #include "net/dns/dns_util.h"
-
-namespace base {
-class ListValue;
-}
 
 namespace net {
 
@@ -95,11 +90,6 @@ class NET_EXPORT HostCache : NON_EXPORTED_BASE(public base::NonThreadSafe) {
           base::TimeDelta ttl,
           int network_changes);
 
-    Entry(int error,
-          const AddressList& addresses,
-          base::TimeTicks expires,
-          int network_changes);
-
     int total_hits() const { return total_hits_; }
     int stale_hits() const { return stale_hits_; }
 
@@ -165,14 +155,6 @@ class NET_EXPORT HostCache : NON_EXPORTED_BASE(public base::NonThreadSafe) {
   void ClearForHosts(
       const base::Callback<bool(const std::string&)>& host_filter);
 
-  // Returns the contents of the cache represented as a base::ListValue for
-  // serialization.
-  std::unique_ptr<base::ListValue> GetAsListValue(bool include_staleness) const;
-  // Takes a base::ListValue representing cache entries and stores them in the
-  // cache, skipping any that already have entries. Returns true on success,
-  // false on failure.
-  bool RestoreFromListValue(base::ListValue& old_cache);
-
   // Returns the number of entries in the cache.
   size_t size() const;
 
@@ -209,8 +191,6 @@ class NET_EXPORT HostCache : NON_EXPORTED_BASE(public base::NonThreadSafe) {
   bool caching_is_disabled() const { return max_entries_ == 0; }
 
   void EvictOneEntry(base::TimeTicks now);
-  // Helper to insert an Entry into the cache.
-  void AddEntry(const Key& key, const Entry& entry);
 
   // Map from hostname (presumably in lowercase canonicalized format) to
   // a resolved result entry.

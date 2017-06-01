@@ -357,8 +357,10 @@ TouchHudDebug::~TouchHudDebug() {}
 std::unique_ptr<base::DictionaryValue> TouchHudDebug::GetAllAsDictionary() {
   std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue());
   aura::Window::Windows roots = Shell::Get()->GetAllRootWindows();
-  for (RootWindowController* root : Shell::GetAllRootWindowControllers()) {
-    TouchHudDebug* hud = root->touch_hud_debug();
+  for (aura::Window::Windows::iterator iter = roots.begin();
+       iter != roots.end(); ++iter) {
+    RootWindowController* controller = GetRootWindowController(*iter);
+    TouchHudDebug* hud = controller->touch_hud_debug();
     if (hud) {
       std::unique_ptr<base::ListValue> list = hud->GetLogAsList();
       if (!list->empty())

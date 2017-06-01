@@ -32,8 +32,7 @@
 
 #include <memory>
 
-#include "core/animation/CompositorMutatorImpl.h"
-#include "core/dom/UserGestureIndicator.h"
+#include "core/dom/DocumentUserGestureToken.h"
 #include "core/editing/CompositionUnderlineVectorBuilder.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/Editor.h"
@@ -43,14 +42,11 @@
 #include "core/events/WebInputEventConversion.h"
 #include "core/exported/WebPluginContainerBase.h"
 #include "core/exported/WebViewBase.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/RemoteFrame.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
-#include "core/frame/WebLocalFrameBase.h"
-#include "core/frame/WebViewFrameWidget.h"
 #include "core/html/HTMLTextAreaElement.h"
-#include "core/input/ContextMenuAllowedScope.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/api/LayoutViewItem.h"
@@ -71,10 +67,15 @@
 #include "public/web/WebRange.h"
 #include "public/web/WebWidgetClient.h"
 #include "web/AnimationWorkletProxyClientImpl.h"
+#include "web/CompositorMutatorImpl.h"
 #include "web/CompositorWorkerProxyClientImpl.h"
+#include "web/ContextMenuAllowedScope.h"
 #include "web/WebDevToolsAgentImpl.h"
+#include "web/WebInputMethodControllerImpl.h"
+#include "web/WebLocalFrameImpl.h"
 #include "web/WebPagePopupImpl.h"
 #include "web/WebRemoteFrameImpl.h"
+#include "web/WebViewFrameWidget.h"
 
 namespace blink {
 
@@ -92,7 +93,7 @@ WebFrameWidget* WebFrameWidget::Create(WebWidgetClient* client,
                                        WebLocalFrame* main_frame) {
   DCHECK(client) << "A valid WebWidgetClient must be supplied.";
   return new WebViewFrameWidget(*client, static_cast<WebViewBase&>(*web_view),
-                                ToWebLocalFrameBase(*main_frame));
+                                ToWebLocalFrameImpl(*main_frame));
 }
 
 WebFrameWidgetImpl* WebFrameWidgetImpl::Create(WebWidgetClient* client,
@@ -106,7 +107,7 @@ WebFrameWidgetImpl* WebFrameWidgetImpl::Create(WebWidgetClient* client,
 WebFrameWidgetImpl::WebFrameWidgetImpl(WebWidgetClient* client,
                                        WebLocalFrame* local_root)
     : client_(client),
-      local_root_(ToWebLocalFrameBase(local_root)),
+      local_root_(ToWebLocalFrameImpl(local_root)),
       mutator_(nullptr),
       layer_tree_view_(nullptr),
       root_layer_(nullptr),
@@ -161,7 +162,7 @@ void WebFrameWidgetImpl::Resize(const WebSize& new_size) {
   if (size_ == new_size)
     return;
 
-  LocalFrameView* view = local_root_->GetFrameView();
+  FrameView* view = local_root_->GetFrameView();
   if (!view)
     return;
 
@@ -183,10 +184,9 @@ void WebFrameWidgetImpl::Resize(const WebSize& new_size) {
 }
 
 void WebFrameWidgetImpl::SendResizeEventAndRepaint() {
-  // FIXME: This is wrong. The LocalFrameView is responsible sending a
-  // resizeEvent as part of layout. Layout is also responsible for sending
-  // invalidations to the embedder. This method and all callers may be wrong. --
-  // eseidel.
+  // FIXME: This is wrong. The FrameView is responsible sending a resizeEvent
+  // as part of layout. Layout is also responsible for sending invalidations
+  // to the embedder. This method and all callers may be wrong. -- eseidel.
   if (local_root_->GetFrameView()) {
     // Enqueues the resize event.
     local_root_->GetFrame()->GetDocument()->EnqueueResizeEvent();
@@ -216,7 +216,7 @@ void WebFrameWidgetImpl::UpdateMainFrameLayoutSize() {
   if (!local_root_)
     return;
 
-  LocalFrameView* view = local_root_->GetFrameView();
+  FrameView* view = local_root_->GetFrameView();
   if (!view)
     return;
 
@@ -308,7 +308,7 @@ void WebFrameWidgetImpl::SetBaseBackgroundColorOverride(WebColor color) {
   base_background_color_override_enabled_ = true;
   base_background_color_override_ = color;
   // Force lifecycle update to ensure we're good to call
-  // LocalFrameView::setBaseBackgroundColor().
+  // FrameView::setBaseBackgroundColor().
   local_root_->GetFrameView()->UpdateLifecycleToCompositingCleanPlusScrolling();
   UpdateBaseBackgroundColor();
 }
@@ -319,7 +319,7 @@ void WebFrameWidgetImpl::ClearBaseBackgroundColorOverride() {
 
   base_background_color_override_enabled_ = false;
   // Force lifecycle update to ensure we're good to call
-  // LocalFrameView::setBaseBackgroundColor().
+  // FrameView::setBaseBackgroundColor().
   local_root_->GetFrameView()->UpdateLifecycleToCompositingCleanPlusScrolling();
   UpdateBaseBackgroundColor();
 }
@@ -335,7 +335,7 @@ void WebFrameWidgetImpl::CompositeAndReadbackAsync(
 }
 
 void WebFrameWidgetImpl::ThemeChanged() {
-  LocalFrameView* view = local_root_->GetFrameView();
+  FrameView* view = local_root_->GetFrameView();
 
   WebRect damaged_rect(0, 0, size_.width, size_.height);
   view->InvalidateRect(damaged_rect);
@@ -377,7 +377,7 @@ WebInputEventResult WebFrameWidgetImpl::HandleInputEvent(
   DCHECK(client_);
   if (client_->IsPointerLocked() &&
       WebInputEvent::IsMouseEventType(input_event.GetType())) {
-    PointerLockMouseEvent(coalesced_event);
+    PointerLockMouseEvent(input_event);
     return WebInputEventResult::kHandledSystem;
   }
 
@@ -404,15 +404,15 @@ WebInputEventResult WebFrameWidgetImpl::HandleInputEvent(
         break;
       case WebInputEvent::kMouseDown:
         event_type = EventTypeNames::mousedown;
-        gesture_indicator =
-            WTF::WrapUnique(new UserGestureIndicator(UserGestureToken::Create(
+        gesture_indicator = WTF::WrapUnique(
+            new UserGestureIndicator(DocumentUserGestureToken::Create(
                 &node->GetDocument(), UserGestureToken::kNewGesture)));
         mouse_capture_gesture_token_ = gesture_indicator->CurrentToken();
         break;
       case WebInputEvent::kMouseUp:
         event_type = EventTypeNames::mouseup;
         gesture_indicator = WTF::WrapUnique(
-            new UserGestureIndicator(std::move(mouse_capture_gesture_token_)));
+            new UserGestureIndicator(mouse_capture_gesture_token_.Release()));
         break;
       default:
         NOTREACHED();
@@ -458,11 +458,9 @@ void WebFrameWidgetImpl::UpdateBaseBackgroundColor() {
   local_root_->GetFrameView()->SetBaseBackgroundColor(BaseBackgroundColor());
 }
 
-WebInputMethodController*
+WebInputMethodControllerImpl*
 WebFrameWidgetImpl::GetActiveWebInputMethodController() const {
-  WebLocalFrameBase* local_frame =
-      WebLocalFrameBase::FromFrame(FocusedLocalFrameInWidget());
-  return local_frame ? local_frame->GetInputMethodController() : nullptr;
+  return WebInputMethodControllerImpl::FromFrame(FocusedLocalFrameInWidget());
 }
 
 void WebFrameWidgetImpl::ScheduleAnimation() {
@@ -584,7 +582,7 @@ WebColor WebFrameWidgetImpl::BackgroundColor() const {
     return background_color_override_;
   if (!local_root_->GetFrameView())
     return base_background_color_;
-  LocalFrameView* view = local_root_->GetFrameView();
+  FrameView* view = local_root_->GetFrameView();
   return view->DocumentBackgroundColor().Rgb();
 }
 
@@ -651,10 +649,14 @@ bool WebFrameWidgetImpl::SelectionTextDirection(WebTextDirection& start,
           .ToNormalizedEphemeralRange()
           .IsNull())
     return false;
-  start = ToWebTextDirection(PrimaryDirectionOf(
-      *selection.ComputeVisibleSelectionInDOMTree().Start().AnchorNode()));
-  end = ToWebTextDirection(PrimaryDirectionOf(
-      *selection.ComputeVisibleSelectionInDOMTree().end().AnchorNode()));
+  start = ToWebTextDirection(
+      PrimaryDirectionOf(*selection.ComputeVisibleSelectionInDOMTreeDeprecated()
+                              .Start()
+                              .AnchorNode()));
+  end = ToWebTextDirection(
+      PrimaryDirectionOf(*selection.ComputeVisibleSelectionInDOMTreeDeprecated()
+                              .end()
+                              .AnchorNode()));
   return true;
 }
 
@@ -744,7 +746,7 @@ bool WebFrameWidgetImpl::GetCompositionCharacterBounds(
   if (!frame)
     return false;
 
-  WebLocalFrameBase* web_local_frame = WebLocalFrameBase::FromFrame(frame);
+  WebLocalFrameImpl* web_local_frame = WebLocalFrameImpl::FromFrame(frame);
   size_t character_count = range.length();
   size_t offset = range.StartOffset();
   WebVector<WebRect> result(character_count);
@@ -766,8 +768,8 @@ void WebFrameWidgetImpl::SetRemoteViewportIntersection(
   // Remote viewports are only applicable to local frames with remote ancestors.
   DCHECK(local_root_->Parent() && local_root_->Parent()->IsWebRemoteFrame());
 
-  if (local_root_->GetFrame()) {
-    local_root_->GetFrame()->SetViewportIntersectionFromParent(
+  if (local_root_->GetFrameView()) {
+    local_root_->GetFrameView()->SetViewportIntersectionFromParent(
         viewport_intersection);
   }
 }
@@ -1164,7 +1166,7 @@ HitTestResult WebFrameWidgetImpl::CoreHitTestResultAt(
     const WebPoint& point_in_viewport) {
   DocumentLifecycle::AllowThrottlingScope throttling_scope(
       local_root_->GetFrame()->GetDocument()->Lifecycle());
-  LocalFrameView* view = local_root_->GetFrameView();
+  FrameView* view = local_root_->GetFrameView();
   IntPoint point_in_root_frame =
       view->ContentsToFrame(view->ViewportToContents(point_in_viewport));
   return HitTestResultForRootFramePos(point_in_root_frame);
@@ -1193,6 +1195,15 @@ LocalFrame* WebFrameWidgetImpl::FocusedLocalFrameInWidget() const {
   return (frame && frame->LocalFrameRoot() == local_root_->GetFrame())
              ? frame
              : nullptr;
+}
+
+WebPlugin* WebFrameWidgetImpl::FocusedPluginIfInputMethodSupported(
+    LocalFrame* frame) const {
+  WebPluginContainerBase* container =
+      WebLocalFrameImpl::CurrentPluginContainer(frame);
+  if (container && container->SupportsInputMethod())
+    return container->Plugin();
+  return nullptr;
 }
 
 LocalFrame* WebFrameWidgetImpl::FocusedLocalFrameAvailableForIme() const {

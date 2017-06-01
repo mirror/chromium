@@ -21,7 +21,8 @@ class IdentityManager : public mojom::IdentityManager {
 
  private:
   // mojom::IdentityManager:
-  void GetPrimaryAccountId(GetPrimaryAccountIdCallback callback) override;
+  void GetPrimaryAccountId(
+      const GetPrimaryAccountIdCallback& callback) override;
 
   SigninManagerBase* signin_manager_;
 };

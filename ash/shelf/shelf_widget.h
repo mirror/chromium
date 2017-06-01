@@ -24,10 +24,11 @@ namespace ash {
 enum class AnimationChangeType;
 class AppListButton;
 class FocusCycler;
-class Shelf;
 class ShelfLayoutManager;
 class ShelfView;
 class StatusAreaWidget;
+class WmShelf;
+class WmWindow;
 
 // The ShelfWidget manages the shelf view (which contains the shelf icons) and
 // the status area widget. There is one ShelfWidget per display. It is created
@@ -37,10 +38,10 @@ class ASH_EXPORT ShelfWidget : public views::Widget,
                                public ShelfBackgroundAnimatorObserver,
                                public ShelfLayoutManagerObserver {
  public:
-  ShelfWidget(aura::Window* shelf_container, Shelf* shelf);
+  ShelfWidget(WmWindow* shelf_container, WmShelf* wm_shelf);
   ~ShelfWidget() override;
 
-  void CreateStatusAreaWidget(aura::Window* status_container);
+  void CreateStatusAreaWidget(WmWindow* status_container);
 
   void OnShelfAlignmentChanged();
 
@@ -74,11 +75,11 @@ class ASH_EXPORT ShelfWidget : public views::Widget,
   // Clean up prior to deletion.
   void Shutdown();
 
-  // See Shelf::UpdateIconPositionForPanel().
-  void UpdateIconPositionForPanel(aura::Window* panel);
+  // See WmShelf::UpdateIconPositionForPanel().
+  void UpdateIconPositionForPanel(WmWindow* panel);
 
-  // See Shelf::GetScreenBoundsOfItemIconForWindow().
-  gfx::Rect GetScreenBoundsOfItemIconForWindow(aura::Window* window);
+  // See WmShelf::GetScreenBoundsOfItemIconForWindow().
+  gfx::Rect GetScreenBoundsOfItemIconForWindow(WmWindow* window);
 
   // Returns the button that opens the app launcher.
   AppListButton* GetAppListButton() const;
@@ -102,7 +103,7 @@ class ASH_EXPORT ShelfWidget : public views::Widget,
   class DelegateView;
   friend class DelegateView;
 
-  Shelf* shelf_;
+  WmShelf* wm_shelf_;
 
   // Owned by the shelf container's window.
   ShelfLayoutManager* shelf_layout_manager_;

@@ -36,7 +36,7 @@
 
 namespace blink {
 
-class LocalFrameView;
+class FrameView;
 class WebViewBase;
 
 class CORE_EXPORT ValidationMessageClientImpl final
@@ -54,7 +54,7 @@ class CORE_EXPORT ValidationMessageClientImpl final
  private:
   ValidationMessageClientImpl(WebViewBase&);
   void CheckAnchorStatus(TimerBase*);
-  LocalFrameView* CurrentView();
+  FrameView* CurrentView();
 
   void ShowValidationMessage(const Element& anchor,
                              const String& message,

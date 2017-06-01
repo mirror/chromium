@@ -15,7 +15,6 @@
 #include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "ipc/ipc_sync_channel.h"
-#include "mojo/public/cpp/bindings/associated_group.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
@@ -80,8 +79,6 @@ class WebServiceWorkerNetworkProviderForFrame
   bool IsControlledByServiceWorker() override {
     return provider_->IsControlledByServiceWorker();
   }
-
-  int GetProviderID() const override { return provider_->provider_id(); }
 
   int64_t ServiceWorkerID() override {
     if (provider_->context() && provider_->context()->controller())
@@ -177,21 +174,14 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
     return;
   if (!ChildThreadImpl::current())
     return;  // May be null in some tests.
-
-  ServiceWorkerProviderHostInfo host_info(provider_id_, route_id, provider_type,
-                                          is_parent_frame_secure);
-  host_info.host_request = mojo::MakeRequest(&provider_host_);
-  mojom::ServiceWorkerProviderAssociatedRequest client_request =
-      mojo::MakeRequest(&host_info.client_ptr_info);
-
-  DCHECK(host_info.host_request.is_pending());
-  DCHECK(host_info.host_request.handle().is_valid());
+  ServiceWorkerProviderHostInfo provider_info(
+      provider_id_, route_id, provider_type, is_parent_frame_secure);
   context_ = new ServiceWorkerProviderContext(
-      provider_id_, provider_type, std::move(client_request),
+      provider_id_, provider_type,
       ChildThreadImpl::current()->thread_safe_sender());
   ChildThreadImpl::current()->channel()->GetRemoteAssociatedInterface(
       &dispatcher_host_);
-  dispatcher_host_->OnProviderCreated(std::move(host_info));
+  dispatcher_host_->OnProviderCreated(std::move(provider_info));
 }
 
 ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
@@ -211,7 +201,7 @@ ServiceWorkerNetworkProvider::~ServiceWorkerNetworkProvider() {
     return;
   if (!ChildThreadImpl::current())
     return;  // May be null in some tests.
-  provider_host_.reset();
+  dispatcher_host_->OnProviderDestroyed(provider_id());
 }
 
 void ServiceWorkerNetworkProvider::SetServiceWorkerVersionId(

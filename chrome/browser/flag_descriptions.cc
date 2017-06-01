@@ -171,13 +171,8 @@ const char kEnableHttpFormWarningDescription[] =
 const char kMarkHttpAsName[] = "Mark non-secure origins as non-secure";
 
 const char kMarkHttpAsDescription[] = "Change the UI treatment for HTTP pages";
+
 const char kMarkHttpAsDangerous[] = "Always mark HTTP as actively dangerous";
-const char kMarkHttpAsNonSecureAfterEditing[] =
-    "Warn on HTTP after editing forms";
-const char kMarkHttpAsNonSecureWhileIncognito[] =
-    "Warn on HTTP while in Incognito mode";
-const char kMarkHttpAsNonSecureWhileIncognitoOrEditing[] =
-    "Warn on HTTP while in Incognito mode or after editing forms";
 
 //  Material design of the Incognito NTP.
 
@@ -376,6 +371,17 @@ const char kDisplayList2dCanvasDescription[] =
     "Enables the use of display lists to record 2D canvas commands. This "
     "allows 2D canvas rasterization to be performed on separate thread.";
 
+const char kEnable2dCanvasDynamicRenderingModeSwitchingName[] =
+    "Enable 2D canvas dynamic rendering mode switching.";
+
+const char kEnable2dCanvasDynamicRenderingModeSwitchingDescription[] =
+    "There are multiple implementations of the graphics rendering pipeline "
+    "for the 2D canvas. These different implementations have different "
+    "performance characteristics. Turning on this flag allows canvas 2D "
+    "contexts to switch between these implementations on the fly based on "
+    "how the canvas is used in order to increase performance. For example, "
+    "going from an implementation that uses the GPU to one that doesn't.";
+
 const char kExperimentalExtensionApisName[] = "Experimental Extension APIs";
 
 const char kExperimentalExtensionApisDescription[] =
@@ -393,12 +399,6 @@ const char kFastUnloadName[] = "Fast tab/window close";
 const char kFastUnloadDescription[] =
     "Enables fast tab/window closing - runs a tab's onunload js handler "
     "independently of the GUI.";
-
-const char kFetchKeepaliveTimeoutSettingName[] =
-    "Fetch API keepalive timeout setting";
-const char kFetchKeepaliveTimeoutSettingDescription[] =
-    "This is for setting "
-    "the timeout value for Fetch API with keepalive option and SendBeacon";
 
 const char kUserConsentForExtensionScriptsName[] =
     "User consent for extension scripts";
@@ -1067,11 +1067,6 @@ const char kEnableNavigationTracingDescription[] =
     "flag. The trace may include personally identifiable information (PII) "
     "such as the titles and URLs of websites you visit.";
 
-const char kEnablePictureInPictureName[] = "Enable picture in picture.";
-
-const char kEnablePictureInPictureDescription[] =
-    "Enable the picture in picture feature for videos.";
-
 const char kTraceUploadUrlName[] = "Trace label for navigation tracing";
 
 const char kTraceUploadUrlDescription[] =
@@ -1177,16 +1172,6 @@ const char kEnableDataReductionProxyLitePageDescription[] =
     "Enable lite pages in Data Saver Lo-Fi mode. Previews of pages will be "
     "shown instead of image placeholders when Lo-Fi is on. Data Saver and "
     "Lo-Fi must be enabled for lite pages to be shown.";
-
-const char kDataReductionProxyServerAlternative[] =
-    "Use alternative server configuration";
-
-const char kEnableDataReductionProxyServerExperimentName[] =
-    "Use an alternative Data Saver back end configuration.";
-
-const char kEnableDataReductionProxyServerExperimentDescription[] =
-    "Enable a different approach to saving data by configuring the back end "
-    "server";
 
 const char kDataReductionProxyCarrierTestName[] =
     "Enable a carrier-specific Data Reduction Proxy for testing.";
@@ -1978,13 +1963,6 @@ const char kChromeHomeExpandButtonName[] = "Chrome Home Expand Button";
 const char kChromeHomeExpandButtonDescription[] =
     "Enables the expand button for Chrome Home.";
 
-const char kChromeHomeSwipeLogicName[] = "Chrome Home Swipe Logic";
-
-const char kChromeHomeSwipeLogicDescription[] =
-    "Various swipe logic options for Chrome Home for sheet expansion.";
-
-const char kChromeHomeSwipeLogicRestrictArea[] = "Restrict swipable area";
-
 #endif  // defined(OS_ANDROID)
 
 //  In-Product Help flags
@@ -2060,11 +2038,6 @@ const char kMessageCenterAlwaysScrollUpUponRemovalName[] =
 const char kMessageCenterAlwaysScrollUpUponRemovalDescription[] =
     "Enables experiment that message center always scroll up when a "
     "notification is removed.";
-
-const char kMessageCenterNewStyleNotificationName[] = "New style notification";
-
-const char kMessageCenterNewStyleNotificationDescription[] =
-    "Enables the experiment style of material-design notification";
 
 const char kCastStreamingHwEncodingName[] =
     "Cast Streaming hardware video encoding";
@@ -2394,13 +2367,6 @@ const char kEnableNtpMostLikelyFaviconsFromServerName[] =
 const char kEnableNtpMostLikelyFaviconsFromServerDescription[] =
     "If enabled, missing favicons for NTP tiles get downloaded from Google. "
     "This only applies to tiles that originate from synced history.";
-
-const char kEnableContentSuggestionsCategoriesName[] =
-    "Organize content suggestions by categories.";
-
-const char kEnableContentSuggestionsCategoriesDescription[] =
-    "If enabled, the content suggestions will be grouped by categories or "
-    "topics. Only remote content suggestions are shown when this is enabled.";
 
 const char kEnableContentSuggestionsSettingsName[] =
     "Show content suggestions settings.";
@@ -2921,6 +2887,12 @@ const char kNewZipUnpackerName[] = "New ZIP unpacker";
 const char kNewZipUnpackerDescription[] =
     "New ZIP unpacker flow, based on the File System Provider API.";
 
+const char kShowArcFilesAppName[] = "Show Android Files app";
+
+const char kShowArcFilesAppDescription[] =
+    "Show Android Files app in Chrome OS launcher. This is only effective "
+    "on a device with access to Play Store.";
+
 const char kOfficeEditingComponentAppName[] =
     "Office Editing for Docs, Sheets & Slides";
 
@@ -3009,13 +2981,6 @@ const char kNetworkPortalNotificationName[] =
 const char kNetworkPortalNotificationDescription[] =
     "If enabled, notification is displayed when device is connected to a "
     "network behind captive portal.";
-
-const char kNetworkSettingsConfigName[] =
-    "Settings based Network Configuration";
-
-const char kNetworkSettingsConfigDescription[] =
-    "Enables the Settings based network configuration UI instead of the Views "
-    "based configuration dialog.";
 
 const char kMtpWriteSupportName[] = "MTP write support";
 
@@ -3130,11 +3095,6 @@ const char kOmniboxUIMaxAutocompleteMatchesName[] =
 const char kOmniboxUIMaxAutocompleteMatchesDescription[] =
     "Changes the maximum number af autocomplete matches displayed in the "
     "Omnibox UI.";
-
-const char kOmniboxUIVerticalLayoutName[] = "Omnibox UI Vertical Layout";
-
-const char kOmniboxUIVerticalLayoutDescription[] =
-    "Displays Omnibox sugestions in 2 lines - title over origin.";
 
 const char kOmniboxUIVerticalMarginName[] = "Omnibox UI Vertical Margin";
 

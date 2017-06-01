@@ -128,10 +128,9 @@ class LayerTreeHostImplTest : public testing::Test,
 
   LayerTreeSettings DefaultSettings() {
     LayerTreeSettings settings;
-    settings.enable_surface_synchronization = true;
     settings.minimum_occlusion_tracking_size = gfx::Size();
     settings.renderer_settings.texture_id_allocation_chunk_size = 1;
-    settings.buffer_to_texture_target_map =
+    settings.renderer_settings.buffer_to_texture_target_map =
         DefaultBufferToTextureTargetMapForTesting();
     return settings;
   }
@@ -1726,6 +1725,91 @@ class MissingTilesLayer : public LayerImpl {
  private:
   bool has_missing_tiles_;
 };
+
+TEST_F(LayerTreeHostImplTest, AnimationMarksLayerNotReady) {
+  host_impl_->SetViewportSize(gfx::Size(50, 50));
+
+  host_impl_->active_tree()->SetRootLayerForTesting(
+      LayerImpl::Create(host_impl_->active_tree(), 1));
+  LayerImpl* root = *host_impl_->active_tree()->begin();
+  root->SetBounds(gfx::Size(50, 50));
+
+  root->test_properties()->AddChild(std::unique_ptr<MissingTilesLayer>(
+      new MissingTilesLayer(host_impl_->active_tree(), 2)));
+  MissingTilesLayer* child =
+      static_cast<MissingTilesLayer*>(root->test_properties()->children[0]);
+  child->SetBounds(gfx::Size(10, 10));
+  child->draw_properties().visible_layer_rect = gfx::Rect(10, 10);
+  child->SetDrawsContent(true);
+
+  host_impl_->active_tree()->SetElementIdsForTesting();
+
+  EXPECT_TRUE(child->was_ever_ready_since_last_transform_animation());
+
+  // Add a translate from 6,7 to 8,9.
+  TransformOperations start;
+  start.AppendTranslate(6.f, 7.f, 0.f);
+  TransformOperations end;
+  end.AppendTranslate(8.f, 9.f, 0.f);
+  int animation_id = AddAnimatedTransformToElementWithPlayer(
+      child->element_id(), timeline(), 4.0, start, end);
+  host_impl_->active_tree()->BuildPropertyTreesForTesting();
+
+  base::TimeTicks now = base::TimeTicks::Now();
+  host_impl_->WillBeginImplFrame(
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 2, now));
+
+  host_impl_->ActivateAnimations();
+  host_impl_->Animate();
+
+  EXPECT_FALSE(child->was_ever_ready_since_last_transform_animation());
+
+  host_impl_->ResetRequiresHighResToDraw();
+
+  // Child layer has an animating transform but missing tiles.
+  TestFrameData frame;
+  DrawResult result = host_impl_->PrepareToDraw(&frame);
+  EXPECT_EQ(DRAW_ABORTED_CHECKERBOARD_ANIMATIONS, result);
+  host_impl_->DidDrawAllLayers(frame);
+
+  child->set_has_missing_tiles(false);
+
+  // Child layer has an animating and no missing tiles.
+  result = host_impl_->PrepareToDraw(&frame);
+  EXPECT_EQ(DRAW_SUCCESS, result);
+  EXPECT_TRUE(child->was_ever_ready_since_last_transform_animation());
+  host_impl_->DidDrawAllLayers(frame);
+
+  // Remove the animation.
+  child->set_has_missing_tiles(true);
+  RemoveAnimationFromElementWithExistingPlayer(child->element_id(), timeline(),
+                                               animation_id);
+  child->draw_properties().screen_space_transform_is_animating = false;
+
+  // Child layer doesn't have an animation, but was never ready since the last
+  // time it animated (and has missing tiles).
+  result = host_impl_->PrepareToDraw(&frame);
+  EXPECT_EQ(DRAW_ABORTED_CHECKERBOARD_ANIMATIONS, result);
+  EXPECT_FALSE(child->was_ever_ready_since_last_transform_animation());
+  host_impl_->DidDrawAllLayers(frame);
+
+  child->set_has_missing_tiles(false);
+
+  // Child layer doesn't have an animation and all tiles are ready.
+  result = host_impl_->PrepareToDraw(&frame);
+  EXPECT_EQ(DRAW_SUCCESS, result);
+  EXPECT_TRUE(child->was_ever_ready_since_last_transform_animation());
+  host_impl_->DidDrawAllLayers(frame);
+
+  child->set_has_missing_tiles(true);
+
+  // Child layer doesn't have an animation, and was ready at least once since
+  // the last time it animated.
+  result = host_impl_->PrepareToDraw(&frame);
+  EXPECT_EQ(DRAW_SUCCESS, result);
+  EXPECT_TRUE(child->was_ever_ready_since_last_transform_animation());
+  host_impl_->DidDrawAllLayers(frame);
+}
 
 TEST_F(LayerTreeHostImplTest, ImplPinchZoom) {
   LayerImpl* scroll_layer = SetupScrollAndContentsLayers(gfx::Size(100, 100));
@@ -3454,44 +3538,29 @@ TEST_F(LayerTreeHostImplTest, MouseMoveAtWithDeviceScaleOf2) {
   SetupMouseMoveAtWithDeviceScale(2.f);
 }
 
-// This test verifies that only SurfaceLayers in the viewport and have fallbacks
-// that are different are included in CompositorFrameMetadata's
-// |activation_dependencies|.
-TEST_F(LayerTreeHostImplTest, ActivationDependenciesInMetadata) {
+// This test verifies that only SurfaceLayers in the viewport are included
+// in CompositorFrameMetadata's |activation_dependencies|.
+TEST_F(LayerTreeHostImplTest, EmbeddedSurfacesInMetadata) {
   SetupScrollAndContentsLayers(gfx::Size(100, 100));
   host_impl_->SetViewportSize(gfx::Size(50, 50));
   LayerImpl* root = host_impl_->active_tree()->root_layer_for_testing();
 
-  std::vector<SurfaceId> primary_surfaces = {
-      MakeSurfaceId(FrameSinkId(1, 1), 1), MakeSurfaceId(FrameSinkId(2, 2), 2),
-      MakeSurfaceId(FrameSinkId(3, 3), 3)};
-
-  std::vector<SurfaceId> fallback_surfaces = {
-      MakeSurfaceId(FrameSinkId(4, 4), 1), MakeSurfaceId(FrameSinkId(4, 4), 2),
-      MakeSurfaceId(FrameSinkId(4, 4), 3)};
-
-  for (size_t i = 0; i < primary_surfaces.size(); ++i) {
+  std::vector<SurfaceId> children = {MakeSurfaceId(FrameSinkId(1, 1), 1),
+                                     MakeSurfaceId(FrameSinkId(2, 2), 2),
+                                     MakeSurfaceId(FrameSinkId(3, 3), 3)};
+  for (size_t i = 0; i < children.size(); ++i) {
     std::unique_ptr<SurfaceLayerImpl> child =
         SurfaceLayerImpl::Create(host_impl_->active_tree(), i + 6);
     child->SetPosition(gfx::PointF(25.f * i, 0.f));
     child->SetBounds(gfx::Size(1, 1));
     child->SetDrawsContent(true);
     child->SetPrimarySurfaceInfo(
-        SurfaceInfo(primary_surfaces[i], 1.f /* device_scale_factor */,
-                    gfx::Size(10, 10) /* size_in_pixels */));
-    child->SetFallbackSurfaceInfo(
-        SurfaceInfo(fallback_surfaces[i], 1.f /* device_scale_factor */,
+        SurfaceInfo(children[i], 1.f /* device_scale_factor */,
                     gfx::Size(10, 10) /* size_in_pixels */));
     root->test_properties()->AddChild(std::move(child));
   }
 
-  base::flat_set<SurfaceId> fallback_surfaces_set;
-  for (size_t i = 0; i < fallback_surfaces.size(); ++i) {
-    fallback_surfaces_set.insert(fallback_surfaces[i]);
-  }
-
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
-  host_impl_->active_tree()->SetSurfaceLayerIds(fallback_surfaces_set);
   DrawFrame();
 
   FakeCompositorFrameSink* fake_compositor_frame_sink =
@@ -3499,13 +3568,11 @@ TEST_F(LayerTreeHostImplTest, ActivationDependenciesInMetadata) {
           host_impl_->compositor_frame_sink());
   const CompositorFrameMetadata& metadata =
       fake_compositor_frame_sink->last_sent_frame()->metadata;
-  EXPECT_THAT(
-      metadata.activation_dependencies,
-      testing::UnorderedElementsAre(primary_surfaces[0], primary_surfaces[1]));
+  EXPECT_THAT(metadata.activation_dependencies,
+              testing::UnorderedElementsAre(children[0], children[1]));
   EXPECT_THAT(
       metadata.referenced_surfaces,
-      testing::UnorderedElementsAre(fallback_surfaces[0], fallback_surfaces[1],
-                                    fallback_surfaces[2]));
+      testing::UnorderedElementsAre(children[0], children[1], children[2]));
 }
 
 TEST_F(LayerTreeHostImplTest, CompositorFrameMetadata) {
@@ -12412,137 +12479,6 @@ TEST_F(LayerTreeHostImplTest, RasterColorSpace) {
   settings.enable_color_correct_rasterization = true;
   CreateHostImpl(settings, CreateCompositorFrameSink());
   EXPECT_EQ(host_impl_->GetRasterColorSpace(), gfx::ColorSpace::CreateSRGB());
-}
-
-TEST_F(LayerTreeHostImplTest, UpdatedTilingsForNonDrawingLayers) {
-  gfx::Size layer_bounds(500, 500);
-
-  host_impl_->SetViewportSize(layer_bounds);
-  host_impl_->CreatePendingTree();
-  std::unique_ptr<LayerImpl> scoped_root =
-      LayerImpl::Create(host_impl_->pending_tree(), 1);
-  scoped_root->SetBounds(layer_bounds);
-  LayerImpl* root = scoped_root.get();
-  host_impl_->pending_tree()->SetRootLayerForTesting(std::move(scoped_root));
-
-  scoped_refptr<FakeRasterSource> raster_source(
-      FakeRasterSource::CreateFilled(layer_bounds));
-  std::unique_ptr<FakePictureLayerImpl> scoped_animated_transform_layer =
-      FakePictureLayerImpl::CreateWithRasterSource(host_impl_->pending_tree(),
-                                                   2, raster_source);
-  scoped_animated_transform_layer->SetBounds(layer_bounds);
-  scoped_animated_transform_layer->SetDrawsContent(true);
-  gfx::Transform singular;
-  singular.Scale3d(6.f, 6.f, 0.f);
-  scoped_animated_transform_layer->test_properties()->transform = singular;
-  FakePictureLayerImpl* animated_transform_layer =
-      scoped_animated_transform_layer.get();
-  root->test_properties()->AddChild(std::move(scoped_animated_transform_layer));
-
-  // A layer with a non-invertible transform is not drawn or rasterized. Since
-  // this layer is not rasterized, we shouldn't be creating any tilings for it.
-  host_impl_->pending_tree()->BuildLayerListAndPropertyTreesForTesting();
-  EXPECT_FALSE(animated_transform_layer->HasValidTilePriorities());
-  EXPECT_EQ(animated_transform_layer->tilings()->num_tilings(), 0u);
-  host_impl_->pending_tree()->UpdateDrawProperties(false);
-  EXPECT_FALSE(animated_transform_layer->raster_even_if_not_drawn());
-  EXPECT_FALSE(animated_transform_layer->contributes_to_drawn_render_surface());
-  EXPECT_EQ(animated_transform_layer->tilings()->num_tilings(), 0u);
-
-  // Now add a transform animation to this layer. While we don't drawn layers
-  // with non-invertible transforms, we still raster them if there is a
-  // transform animation.
-  host_impl_->pending_tree()->SetElementIdsForTesting();
-  TransformOperations start_transform_operations;
-  start_transform_operations.AppendMatrix(singular);
-  TransformOperations end_transform_operations;
-  AddAnimatedTransformToElementWithPlayer(
-      animated_transform_layer->element_id(), timeline(), 10.0,
-      start_transform_operations, end_transform_operations);
-
-  // The layer is still not drawn, but it will be rasterized. Since the layer is
-  // rasterized, we should be creating tilings for it in UpdateDrawProperties.
-  // However, none of these tiles should be required for activation.
-  host_impl_->pending_tree()->BuildLayerListAndPropertyTreesForTesting();
-  host_impl_->pending_tree()->UpdateDrawProperties(false);
-  EXPECT_TRUE(animated_transform_layer->raster_even_if_not_drawn());
-  EXPECT_FALSE(animated_transform_layer->contributes_to_drawn_render_surface());
-  EXPECT_EQ(animated_transform_layer->tilings()->num_tilings(), 1u);
-  EXPECT_FALSE(animated_transform_layer->tilings()
-                   ->tiling_at(0)
-                   ->can_require_tiles_for_activation());
-}
-
-TEST_F(LayerTreeHostImplTest, RasterTilePrioritizationForNonDrawingLayers) {
-  gfx::Size layer_bounds(500, 500);
-
-  host_impl_->SetViewportSize(layer_bounds);
-  host_impl_->CreatePendingTree();
-  std::unique_ptr<LayerImpl> scoped_root =
-      LayerImpl::Create(host_impl_->pending_tree(), 1);
-  scoped_root->SetBounds(layer_bounds);
-  LayerImpl* root = scoped_root.get();
-  host_impl_->pending_tree()->SetRootLayerForTesting(std::move(scoped_root));
-
-  scoped_refptr<FakeRasterSource> raster_source(
-      FakeRasterSource::CreateFilled(layer_bounds));
-
-  std::unique_ptr<FakePictureLayerImpl> scoped_hidden_layer =
-      FakePictureLayerImpl::CreateWithRasterSource(host_impl_->pending_tree(),
-                                                   2, raster_source);
-  scoped_hidden_layer->SetBounds(layer_bounds);
-  scoped_hidden_layer->SetDrawsContent(true);
-  scoped_hidden_layer->set_contributes_to_drawn_render_surface(true);
-  FakePictureLayerImpl* hidden_layer = scoped_hidden_layer.get();
-  root->test_properties()->AddChild(std::move(scoped_hidden_layer));
-
-  std::unique_ptr<FakePictureLayerImpl> scoped_drawing_layer =
-      FakePictureLayerImpl::CreateWithRasterSource(host_impl_->pending_tree(),
-                                                   3, raster_source);
-  scoped_drawing_layer->SetBounds(layer_bounds);
-  scoped_drawing_layer->SetDrawsContent(true);
-  scoped_drawing_layer->set_contributes_to_drawn_render_surface(true);
-  FakePictureLayerImpl* drawing_layer = scoped_drawing_layer.get();
-  root->test_properties()->AddChild(std::move(scoped_drawing_layer));
-
-  gfx::Rect layer_rect(0, 0, 500, 500);
-  gfx::Rect empty_rect(0, 0, 0, 0);
-  host_impl_->pending_tree()->BuildPropertyTreesForTesting();
-
-  hidden_layer->tilings()->AddTiling(gfx::AxisTransform2d(), raster_source);
-  PictureLayerTiling* hidden_tiling = hidden_layer->tilings()->tiling_at(0);
-  hidden_tiling->set_resolution(TileResolution::LOW_RESOLUTION);
-  hidden_tiling->CreateAllTilesForTesting();
-  hidden_tiling->SetTilePriorityRectsForTesting(
-      layer_rect,   // Visible rect.
-      layer_rect,   // Skewport rect.
-      layer_rect,   // Soon rect.
-      layer_rect);  // Eventually rect.
-
-  drawing_layer->tilings()->AddTiling(gfx::AxisTransform2d(), raster_source);
-  PictureLayerTiling* drawing_tiling = drawing_layer->tilings()->tiling_at(0);
-  drawing_tiling->set_resolution(TileResolution::HIGH_RESOLUTION);
-  drawing_tiling->CreateAllTilesForTesting();
-  drawing_tiling->SetTilePriorityRectsForTesting(
-      layer_rect,   // Visible rect.
-      layer_rect,   // Skewport rect.
-      layer_rect,   // Soon rect.
-      layer_rect);  // Eventually rect.
-
-  // Both layers are drawn. Since the hidden layer has a low resolution tiling,
-  // in smoothness priority mode its tile is higher priority.
-  std::unique_ptr<RasterTilePriorityQueue> queue =
-      host_impl_->BuildRasterQueue(TreePriority::SMOOTHNESS_TAKES_PRIORITY,
-                                   RasterTilePriorityQueue::Type::ALL);
-  EXPECT_EQ(queue->Top().tile()->layer_id(), 2);
-
-  // Hide the hidden layer and set it to so it still rasters. Now the drawing
-  // layer should be prioritized over the hidden layer.
-  hidden_layer->set_contributes_to_drawn_render_surface(false);
-  hidden_layer->set_raster_even_if_not_drawn(true);
-  queue = host_impl_->BuildRasterQueue(TreePriority::SMOOTHNESS_TAKES_PRIORITY,
-                                       RasterTilePriorityQueue::Type::ALL);
-  EXPECT_EQ(queue->Top().tile()->layer_id(), 3);
 }
 
 }  // namespace

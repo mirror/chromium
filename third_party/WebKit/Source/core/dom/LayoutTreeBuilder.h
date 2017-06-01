@@ -73,7 +73,7 @@ class LayoutTreeBuilder {
     // node.
     if (layout_object_parent_->GetNode() &&
         layout_object_parent_->GetNode()->NeedsAttach())
-      return nullptr;
+      return 0;
 
     return LayoutTreeBuilderTraversal::NextSiblingLayoutObject(*node_);
   }

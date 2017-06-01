@@ -30,24 +30,13 @@
 #include "core/CSSPropertyNames.h"
 #include "core/ComputedStyleBase.h"
 #include "core/CoreExport.h"
-#include "core/css/StyleAutoColor.h"
-#include "core/css/StyleColor.h"
-#include "core/layout/LayoutTheme.h"
-#include "core/style/AppliedTextDecoration.h"
-#include "core/style/AppliedTextDecorationList.h"
 #include "core/style/BorderValue.h"
 #include "core/style/ComputedStyleConstants.h"
-#include "core/style/ContentData.h"
 #include "core/style/CounterDirectives.h"
-#include "core/style/CursorData.h"
-#include "core/style/CursorList.h"
 #include "core/style/DataRef.h"
 #include "core/style/LineClampValue.h"
 #include "core/style/NinePieceImage.h"
-#include "core/style/QuotesData.h"
 #include "core/style/SVGComputedStyle.h"
-#include "core/style/ShadowData.h"
-#include "core/style/ShadowList.h"
 #include "core/style/StyleContentAlignmentData.h"
 #include "core/style/StyleDeprecatedFlexibleBoxData.h"
 #include "core/style/StyleDifference.h"
@@ -55,16 +44,14 @@
 #include "core/style/StyleFlexibleBoxData.h"
 #include "core/style/StyleGridData.h"
 #include "core/style/StyleGridItemData.h"
-#include "core/style/StyleImage.h"
-#include "core/style/StyleInheritedVariables.h"
 #include "core/style/StyleMultiColData.h"
 #include "core/style/StyleOffsetRotation.h"
+#include "core/style/StyleRareInheritedData.h"
 #include "core/style/StyleRareNonInheritedData.h"
 #include "core/style/StyleReflection.h"
 #include "core/style/StyleSelfAlignmentData.h"
 #include "core/style/StyleTransformData.h"
 #include "core/style/StyleWillChangeData.h"
-#include "core/style/TextSizeAdjust.h"
 #include "core/style/TransformOrigin.h"
 #include "platform/Length.h"
 #include "platform/LengthBox.h"
@@ -78,18 +65,14 @@
 #include "platform/geometry/LayoutRectOutsets.h"
 #include "platform/graphics/Color.h"
 #include "platform/graphics/TouchAction.h"
-#include "platform/heap/Handle.h"
 #include "platform/scroll/ScrollTypes.h"
-#include "platform/text/TabSize.h"
 #include "platform/text/TextDirection.h"
 #include "platform/text/UnicodeBidi.h"
 #include "platform/transforms/TransformOperations.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/LeakAnnotations.h"
 #include "platform/wtf/RefCounted.h"
-#include "platform/wtf/RefVector.h"
 #include "platform/wtf/Vector.h"
-#include "platform/wtf/text/AtomicString.h"
 
 template <typename T, typename U>
 inline bool compareEqual(const T& t, const U& u) {
@@ -152,65 +135,21 @@ class ContentData;
 
 typedef Vector<RefPtr<ComputedStyle>, 4> PseudoStyleCache;
 
-// ComputedStyle stores the computed value [1] for every CSS property on an
-// element and provides the interface between the style engine and the rest of
-// Blink. It acts as a container where the computed value of every CSS property
-// can be stored and retrieved:
+// ComputedStyle stores the final style for an element and provides the
+// interface between the style engine and the rest of Blink.
 //
-//   auto style = ComputedStyle::Create();
-//   style->SetDisplay(EDisplay::kNone); //'display' keyword property
-//   style->Display();
+// It contains all the resolved styles for an element, and is densely packed and
+// optimized for memory and performance. Enums and small fields are packed in
+// bit fields, while large fields are stored in pointers and shared where not
+// modified from their parent value (see the DataRef class).
 //
-// In addition to storing the computed value of every CSS property,
-// ComputedStyle also contains various internal style information. Examples
-// include cached_pseudo_styles_ (for storing pseudo element styles), unique_
-// (for style sharing) and has_simple_underline_ (cached indicator flag of
-// text-decoration). These are stored on ComputedStyle for two reasons:
-//
-//  1) They share the same lifetime as ComputedStyle, so it is convenient to
-//  store them in the same object rather than a separate object that have to be
-//  passed around as well.
-//
-//  2) Many of these data members can be packed as bit fields, so we use less
-//  memory by packing them in this object with other bit fields.
-//
-// STORAGE:
-//
-// ComputedStyle is optimized for memory and performance. The data is not
-// actually stored directly in ComputedStyle, but rather in a generated parent
-// class ComputedStyleBase. This separation of concerns allows us to optimise
-// the memory layout without affecting users of ComputedStyle. ComputedStyle
-// inherits from ComputedStyleBase, which in turn takes ComputedStyle as a
-// template argument so that ComputedStyleBase can access methods declared on
-// ComputedStyle. For more about the memory layout, there is documentation in
-// ComputedStyleBase and make_computed_style_base.py.
-//
-// INTERFACE:
-//
-// For most CSS properties, ComputedStyle provides a consistent interface which
-// includes a getter, setter, initial method (the computed value when the
-// property is to 'initial'), and resetter (that resets the computed value to
-// its initial value). Exceptions include vertical-align, which has a separate
-// set of accessors for its length and its keyword components. Apart from
-// accessors, ComputedStyle also has a wealth of helper functions.
-//
-// Because ComputedStyleBase defines simple accessors to every CSS property,
-// ComputedStyle inherits these and so they are not redeclared in this file.
-// This means that the interface to ComputedStyle is split between this file and
-// ComputedStyleBase.h.
-//
-// [1] https://developer.mozilla.org/en-US/docs/Web/CSS/computed_value
-//
-// NOTE:
-//
-// Currently, some properties are stored in ComputedStyle and some in
-// ComputedStyleBase. Eventually, the storage of all properties (except SVG
-// ones) will be in ComputedStyleBase.
+// Currently, ComputedStyle is hand-written and ComputedStyleBase is generated.
+// Over time, methods will be moved to ComputedStyleBase and the generator will
+// be expanded to handle more and more types of properties. Eventually, all
+// methods will be on ComputedStyleBase (with custom methods defined in a class
+// such as ComputedStyleBase.cpp) and ComputedStyle will be removed.
 class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
                                   public RefCounted<ComputedStyle> {
-  // Needed to allow access to private/protected getters of fields to allow diff
-  // generation
-  friend class ComputedStyleBase<ComputedStyle>;
   // Used by Web Animations CSS. Sets the color styles.
   friend class AnimatedStyleBuilder;
   // Used by Web Animations CSS. Gets visited and unvisited colors separately.
@@ -243,6 +182,9 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
   // non-inherited attributes
   DataRef<StyleRareNonInheritedData> rare_non_inherited_data_;
 
+  // inherited attributes
+  DataRef<StyleRareInheritedData> rare_inherited_data_;
+
   // list of associated pseudo styles
   std::unique_ptr<PseudoStyleCache> cached_pseudo_styles_;
 
@@ -253,16 +195,16 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
   ALWAYS_INLINE ComputedStyle();
   ALWAYS_INLINE ComputedStyle(const ComputedStyle&);
 
-  static RefPtr<ComputedStyle> CreateInitialStyle();
+  static PassRefPtr<ComputedStyle> CreateInitialStyle();
   // TODO(shend): Remove this. Initial style should not be mutable.
   static ComputedStyle& MutableInitialStyle();
 
  public:
-  static RefPtr<ComputedStyle> Create();
-  static RefPtr<ComputedStyle> CreateAnonymousStyleWithDisplay(
+  static PassRefPtr<ComputedStyle> Create();
+  static PassRefPtr<ComputedStyle> CreateAnonymousStyleWithDisplay(
       const ComputedStyle& parent_style,
       EDisplay);
-  static RefPtr<ComputedStyle> Clone(const ComputedStyle&);
+  static PassRefPtr<ComputedStyle> Clone(const ComputedStyle&);
   static const ComputedStyle& InitialStyle() { return MutableInitialStyle(); }
   static void InvalidateInitialStyle();
 
@@ -309,6 +251,12 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
 
   const PseudoStyleCache* CachedPseudoStyles() const {
     return cached_pseudo_styles_.get();
+  }
+
+  bool BorderWidthEquals(float border_width_first,
+                         float border_width_second) const {
+    return WidthToFixedPoint(border_width_first) ==
+           WidthToFixedPoint(border_width_second);
   }
 
   /**
@@ -510,9 +458,12 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
     if (BorderTopStyle() == EBorderStyle::kNone ||
         BorderTopStyle() == EBorderStyle::kHidden)
       return 0;
-    return BorderTopWidthInternal().ToFloat();
+    return static_cast<float>(BorderTopWidthInternal()) /
+           kBorderWidthDenominator;
   }
-  void SetBorderTopWidth(float v) { SetBorderTopWidthInternal(LayoutUnit(v)); }
+  void SetBorderTopWidth(float v) {
+    SetBorderTopWidthInternal(WidthToFixedPoint(v));
+  }
   bool BorderTopNonZero() const {
     return BorderTopWidth() && (BorderTopStyle() != EBorderStyle::kNone);
   }
@@ -522,10 +473,11 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
     if (BorderBottomStyle() == EBorderStyle::kNone ||
         BorderBottomStyle() == EBorderStyle::kHidden)
       return 0;
-    return BorderBottomWidthInternal().ToFloat();
+    return static_cast<float>(BorderBottomWidthInternal()) /
+           kBorderWidthDenominator;
   }
   void SetBorderBottomWidth(float v) {
-    SetBorderBottomWidthInternal(LayoutUnit(v));
+    SetBorderBottomWidthInternal(WidthToFixedPoint(v));
   }
   bool BorderBottomNonZero() const {
     return BorderBottomWidth() && (BorderBottomStyle() != EBorderStyle::kNone);
@@ -536,10 +488,11 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
     if (BorderLeftStyle() == EBorderStyle::kNone ||
         BorderLeftStyle() == EBorderStyle::kHidden)
       return 0;
-    return BorderLeftWidthInternal().ToFloat();
+    return static_cast<float>(BorderLeftWidthInternal()) /
+           kBorderWidthDenominator;
   }
   void SetBorderLeftWidth(float v) {
-    SetBorderLeftWidthInternal(LayoutUnit(v));
+    SetBorderLeftWidthInternal(WidthToFixedPoint(v));
   }
   bool BorderLeftNonZero() const {
     return BorderLeftWidth() && (BorderLeftStyle() != EBorderStyle::kNone);
@@ -550,10 +503,11 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
     if (BorderRightStyle() == EBorderStyle::kNone ||
         BorderRightStyle() == EBorderStyle::kHidden)
       return 0;
-    return BorderRightWidthInternal().ToFloat();
+    return static_cast<float>(BorderRightWidthInternal()) /
+           kBorderWidthDenominator;
   }
   void SetBorderRightWidth(float v) {
-    SetBorderRightWidthInternal(LayoutUnit(v));
+    SetBorderRightWidthInternal(WidthToFixedPoint(v));
   }
   bool BorderRightNonZero() const {
     return BorderRightWidth() && (BorderRightStyle() != EBorderStyle::kNone);
@@ -600,9 +554,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
     return rare_non_inherited_data_->box_shadow_.Get();
   }
   void SetBoxShadow(RefPtr<ShadowList>);
-  bool BoxShadowDataEquivalent(const ComputedStyle& other) const {
-    return DataEquivalent(BoxShadow(), other.BoxShadow());
-  }
 
   // clip
   static LengthBox InitialClip() { return LengthBox(); }
@@ -1008,14 +959,12 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
   }
 
   // image-rendering
-  static EImageRendering InitialImageRendering() {
-    return EImageRendering::kAuto;
-  }
+  static EImageRendering InitialImageRendering() { return kImageRenderingAuto; }
   EImageRendering ImageRendering() const {
     return static_cast<EImageRendering>(rare_inherited_data_->image_rendering_);
   }
   void SetImageRendering(EImageRendering v) {
-    SET_VAR(rare_inherited_data_, image_rendering_, static_cast<unsigned>(v));
+    SET_VAR(rare_inherited_data_, image_rendering_, v);
   }
 
   // isolation
@@ -1033,10 +982,10 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
   }
   EMarginCollapse MarginAfterCollapse() const {
     return static_cast<EMarginCollapse>(
-        rare_non_inherited_data_->margin_after_collapse_);
+        rare_non_inherited_data_->margin_after_collapse);
   }
   void SetMarginBeforeCollapse(EMarginCollapse c) {
-    SET_VAR(rare_non_inherited_data_, margin_before_collapse_, c);
+    SET_VAR(rare_non_inherited_data_, margin_before_collapse, c);
   }
 
   // -webkit-margin-after-collapse (aka -webkit-margin-bottom-collapse)
@@ -1045,10 +994,10 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
   }
   EMarginCollapse MarginBeforeCollapse() const {
     return static_cast<EMarginCollapse>(
-        rare_non_inherited_data_->margin_before_collapse_);
+        rare_non_inherited_data_->margin_before_collapse);
   }
   void SetMarginAfterCollapse(EMarginCollapse c) {
-    SET_VAR(rare_non_inherited_data_, margin_after_collapse_, c);
+    SET_VAR(rare_non_inherited_data_, margin_after_collapse, c);
   }
 
   // mix-blend-mode
@@ -1136,10 +1085,10 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
 
   // opacity (aka -webkit-opacity)
   static float InitialOpacity() { return 1.0f; }
-  float Opacity() const { return rare_non_inherited_data_->opacity_; }
+  float Opacity() const { return rare_non_inherited_data_->opacity; }
   void SetOpacity(float f) {
     float v = clampTo<float>(f, 0, 1);
-    SET_VAR(rare_non_inherited_data_, opacity_, v);
+    SET_VAR(rare_non_inherited_data_, opacity, v);
   }
 
   // order (aka -webkit-order)
@@ -1265,10 +1214,10 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
   }
   ETransformStyle3D TransformStyle3D() const {
     return static_cast<ETransformStyle3D>(
-        rare_non_inherited_data_->transform_style_3d_);
+        rare_non_inherited_data_->transform_style3d_);
   }
   void SetTransformStyle3D(ETransformStyle3D b) {
-    SET_VAR(rare_non_inherited_data_, transform_style_3d_, b);
+    SET_VAR(rare_non_inherited_data_, transform_style3d_, b);
   }
 
   // -webkit-transform-origin-x
@@ -1297,7 +1246,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
 
   // Independent transform properties.
   // translate
-  static RefPtr<TranslateTransformOperation> InitialTranslate() {
+  static PassRefPtr<TranslateTransformOperation> InitialTranslate() {
     return nullptr;
   }
   TranslateTransformOperation* Translate() const {
@@ -1309,7 +1258,9 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
   }
 
   // rotate
-  static RefPtr<RotateTransformOperation> InitialRotate() { return nullptr; }
+  static PassRefPtr<RotateTransformOperation> InitialRotate() {
+    return nullptr;
+  }
   RotateTransformOperation* Rotate() const {
     return rare_non_inherited_data_->transform_->rotate_.Get();
   }
@@ -1319,7 +1270,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
   }
 
   // scale
-  static RefPtr<ScaleTransformOperation> InitialScale() { return nullptr; }
+  static PassRefPtr<ScaleTransformOperation> InitialScale() { return nullptr; }
   ScaleTransformOperation* Scale() const {
     return rare_non_inherited_data_->transform_->scale_.Get();
   }
@@ -1424,9 +1375,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
       return;
     rare_non_inherited_data_.Access()->shape_outside_ = value;
   }
-  bool ShapeOutsideDataEquivalent(const ComputedStyle& other) const {
-    return DataEquivalent(ShapeOutside(), other.ShapeOutside());
-  }
 
   // size
   const FloatSize& PageSize() const {
@@ -1439,8 +1387,15 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
     SET_VAR(rare_non_inherited_data_, page_size_, s);
   }
   void SetPageSizeType(PageSizeType t) {
-    SET_VAR(rare_non_inherited_data_, page_size_type_,
-            static_cast<unsigned>(t));
+    SET_VAR(rare_non_inherited_data_, page_size_type_, t);
+  }
+
+  // sticky subtrees
+  bool SubtreeIsSticky() const {
+    return rare_inherited_data_->subtree_is_sticky_;
+  }
+  void SetSubtreeIsSticky(bool b) {
+    SET_VAR(rare_inherited_data_, subtree_is_sticky_, b);
   }
 
   // Text decoration properties.
@@ -1472,37 +1427,35 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
 
   // text-underline-position
   static TextUnderlinePosition InitialTextUnderlinePosition() {
-    return TextUnderlinePosition::kAuto;
+    return kTextUnderlinePositionAuto;
   }
   TextUnderlinePosition GetTextUnderlinePosition() const {
     return static_cast<TextUnderlinePosition>(
         rare_inherited_data_->text_underline_position_);
   }
   void SetTextUnderlinePosition(TextUnderlinePosition v) {
-    SET_VAR(rare_inherited_data_, text_underline_position_,
-            static_cast<unsigned>(v));
+    SET_VAR(rare_inherited_data_, text_underline_position_, v);
   }
 
   // text-decoration-skip
   static TextDecorationSkip InitialTextDecorationSkip() {
-    return TextDecorationSkip::kObjects;
+    return kTextDecorationSkipObjects;
   }
   TextDecorationSkip GetTextDecorationSkip() const {
     return static_cast<TextDecorationSkip>(
         rare_inherited_data_->text_decoration_skip_);
   }
   void SetTextDecorationSkip(TextDecorationSkip v) {
-    SET_VAR(rare_inherited_data_, text_decoration_skip_,
-            static_cast<unsigned>(v));
+    SET_VAR(rare_inherited_data_, text_decoration_skip_, v);
   }
 
   // text-overflow
   static TextOverflow InitialTextOverflow() { return kTextOverflowClip; }
   TextOverflow GetTextOverflow() const {
-    return static_cast<TextOverflow>(rare_non_inherited_data_->text_overflow_);
+    return static_cast<TextOverflow>(rare_non_inherited_data_->text_overflow);
   }
   void SetTextOverflow(TextOverflow overflow) {
-    SET_VAR(rare_non_inherited_data_, text_overflow_, overflow);
+    SET_VAR(rare_non_inherited_data_, text_overflow, overflow);
   }
 
   // touch-action
@@ -1578,12 +1531,10 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
 
   // -webkit-app-region
   DraggableRegionMode GetDraggableRegionMode() const {
-    return static_cast<DraggableRegionMode>(
-        rare_non_inherited_data_->draggable_region_mode_);
+    return rare_non_inherited_data_->draggable_region_mode_;
   }
   void SetDraggableRegionMode(DraggableRegionMode v) {
-    SET_VAR(rare_non_inherited_data_, draggable_region_mode_,
-            static_cast<unsigned>(v));
+    SET_VAR(rare_non_inherited_data_, draggable_region_mode_, v);
   }
 
   // -webkit-appearance
@@ -1603,9 +1554,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
   void SetClipPath(RefPtr<ClipPathOperation> operation) {
     if (rare_non_inherited_data_->clip_path_ != operation)
       rare_non_inherited_data_.Access()->clip_path_ = std::move(operation);
-  }
-  bool ClipPathDataEquivalent(const ComputedStyle& other) const {
-    return DataEquivalent(ClipPath(), other.ClipPath());
   }
 
   // Mask properties.
@@ -1648,6 +1596,24 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
   static Color InitialColor() { return Color::kBlack; }
   void SetColor(const Color&);
 
+  // hyphens
+  static Hyphens InitialHyphens() { return Hyphens::kManual; }
+  Hyphens GetHyphens() const {
+    return static_cast<Hyphens>(rare_inherited_data_->hyphens_);
+  }
+  void SetHyphens(Hyphens h) {
+    SET_VAR(rare_inherited_data_, hyphens_, static_cast<unsigned>(h));
+  }
+
+  // -webkit-hyphenate-character
+  static const AtomicString& InitialHyphenationString() { return g_null_atom; }
+  const AtomicString& HyphenationString() const {
+    return rare_inherited_data_->hyphenation_string_;
+  }
+  void SetHyphenationString(const AtomicString& h) {
+    SET_VAR(rare_inherited_data_, hyphenation_string_, h);
+  }
+
   // line-height
   static Length InitialLineHeight() { return Length(-100.0, kPercent); }
   Length LineHeight() const;
@@ -1659,12 +1625,97 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
   StyleImage* ListStyleImage() const;
   void SetListStyleImage(StyleImage*);
 
+  // orphans
+  static short InitialOrphans() { return 2; }
+  short Orphans() const { return rare_inherited_data_->orphans_; }
+  void SetOrphans(short o) { SET_VAR(rare_inherited_data_, orphans_, o); }
+
+  // widows
+  static short InitialWidows() { return 2; }
+  short Widows() const { return rare_inherited_data_->widows_; }
+  void SetWidows(short w) { SET_VAR(rare_inherited_data_, widows_, w); }
+
+  // overflow-wrap (aka word-wrap)
+  static EOverflowWrap InitialOverflowWrap() { return EOverflowWrap::kNormal; }
+  EOverflowWrap OverflowWrap() const {
+    return static_cast<EOverflowWrap>(rare_inherited_data_->overflow_wrap_);
+  }
+  void SetOverflowWrap(EOverflowWrap b) {
+    SET_VAR(rare_inherited_data_, overflow_wrap_, static_cast<unsigned>(b));
+  }
+
   // quotes
   static QuotesData* InitialQuotes() { return 0; }
   QuotesData* Quotes() const { return rare_inherited_data_->quotes_.Get(); }
   void SetQuotes(RefPtr<QuotesData>);
 
   bool QuotesDataEquivalent(const ComputedStyle&) const;
+
+  // line-height-step
+  static uint8_t InitialLineHeightStep() { return 0; }
+  uint8_t LineHeightStep() const {
+    return rare_inherited_data_->line_height_step_;
+  }
+  void SetLineHeightStep(uint8_t unit) {
+    SET_VAR(rare_inherited_data_, line_height_step_, unit);
+  }
+
+  // speak
+  static ESpeak InitialSpeak() { return ESpeak::kNormal; }
+  ESpeak Speak() const {
+    return static_cast<ESpeak>(rare_inherited_data_->speak_);
+  }
+  void SetSpeak(ESpeak s) {
+    SET_VAR(rare_inherited_data_, speak_, static_cast<unsigned>(s));
+  }
+
+  // tab-size
+  static TabSize InitialTabSize() { return TabSize(8); }
+  TabSize GetTabSize() const { return rare_inherited_data_->tab_size_; }
+  void SetTabSize(TabSize size) {
+    SET_VAR(rare_inherited_data_, tab_size_, size);
+  }
+
+  // text-align-last
+  static TextAlignLast InitialTextAlignLast() { return kTextAlignLastAuto; }
+  TextAlignLast GetTextAlignLast() const {
+    return static_cast<TextAlignLast>(rare_inherited_data_->text_align_last_);
+  }
+  void SetTextAlignLast(TextAlignLast v) {
+    SET_VAR(rare_inherited_data_, text_align_last_, v);
+  }
+
+  // text-combine-upright (aka -webkit-text-combine, -epub-text-combine)
+  static TextCombine InitialTextCombine() { return kTextCombineNone; }
+  TextCombine GetTextCombine() const {
+    return static_cast<TextCombine>(rare_inherited_data_->text_combine_);
+  }
+  void SetTextCombine(TextCombine v) {
+    SET_VAR(rare_inherited_data_, text_combine_, v);
+  }
+
+  // text-indent
+  static Length InitialTextIndent() { return Length(kFixed); }
+  static TextIndentLine InitialTextIndentLine() { return kTextIndentFirstLine; }
+  static TextIndentType InitialTextIndentType() { return kTextIndentNormal; }
+  const Length& TextIndent() const {
+    return rare_inherited_data_->text_indent_;
+  }
+  TextIndentLine GetTextIndentLine() const {
+    return static_cast<TextIndentLine>(rare_inherited_data_->text_indent_line_);
+  }
+  TextIndentType GetTextIndentType() const {
+    return static_cast<TextIndentType>(rare_inherited_data_->text_indent_type_);
+  }
+  void SetTextIndent(const Length& v) {
+    SET_VAR(rare_inherited_data_, text_indent_, v);
+  }
+  void SetTextIndentLine(TextIndentLine v) {
+    SET_VAR(rare_inherited_data_, text_indent_line_, v);
+  }
+  void SetTextIndentType(TextIndentType v) {
+    SET_VAR(rare_inherited_data_, text_indent_type_, v);
+  }
 
   // text-justify
   static TextJustify InitialTextJustify() { return kTextJustifyAuto; }
@@ -1676,7 +1727,14 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
   }
 
   // text-orientation (aka -webkit-text-orientation, -epub-text-orientation)
-  bool SetTextOrientation(ETextOrientation);
+  static TextOrientation InitialTextOrientation() {
+    return kTextOrientationMixed;
+  }
+  TextOrientation GetTextOrientation() const {
+    return static_cast<TextOrientation>(
+        rare_inherited_data_->text_orientation_);
+  }
+  bool SetTextOrientation(TextOrientation);
 
   // text-shadow
   static ShadowList* InitialTextShadow() { return 0; }
@@ -1687,16 +1745,63 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
 
   bool TextShadowDataEquivalent(const ComputedStyle&) const;
 
+  // text-size-adjust (aka -webkit-text-size-adjust)
+  static TextSizeAdjust InitialTextSizeAdjust() {
+    return TextSizeAdjust::AdjustAuto();
+  }
+  TextSizeAdjust GetTextSizeAdjust() const {
+    return rare_inherited_data_->text_size_adjust_;
+  }
+  void SetTextSizeAdjust(TextSizeAdjust size_adjust) {
+    SET_VAR(rare_inherited_data_, text_size_adjust_, size_adjust);
+  }
+
+  // word-break inherited (aka -epub-word-break)
+  static EWordBreak InitialWordBreak() { return EWordBreak::kNormal; }
+  EWordBreak WordBreak() const {
+    return static_cast<EWordBreak>(rare_inherited_data_->word_break_);
+  }
+  void SetWordBreak(EWordBreak b) {
+    SET_VAR(rare_inherited_data_, word_break_, static_cast<unsigned>(b));
+  }
+
+  // -webkit-line-break
+  static LineBreak InitialLineBreak() { return LineBreak::kAuto; }
+  LineBreak GetLineBreak() const {
+    return static_cast<LineBreak>(rare_inherited_data_->line_break_);
+  }
+  void SetLineBreak(LineBreak b) {
+    SET_VAR(rare_inherited_data_, line_break_, static_cast<unsigned>(b));
+  }
+
   // Text emphasis properties.
+  static TextEmphasisFill InitialTextEmphasisFill() {
+    return kTextEmphasisFillFilled;
+  }
   static TextEmphasisMark InitialTextEmphasisMark() {
-    return TextEmphasisMark::kNone;
+    return kTextEmphasisMarkNone;
+  }
+  static const AtomicString& InitialTextEmphasisCustomMark() {
+    return g_null_atom;
+  }
+  TextEmphasisFill GetTextEmphasisFill() const {
+    return static_cast<TextEmphasisFill>(
+        rare_inherited_data_->text_emphasis_fill_);
   }
   TextEmphasisMark GetTextEmphasisMark() const;
-  void SetTextEmphasisMark(TextEmphasisMark mark) {
-    SET_VAR(rare_inherited_data_, text_emphasis_mark_,
-            static_cast<unsigned>(mark));
+  const AtomicString& TextEmphasisCustomMark() const {
+    return rare_inherited_data_->text_emphasis_custom_mark_;
   }
   const AtomicString& TextEmphasisMarkString() const;
+  void SetTextEmphasisFill(TextEmphasisFill fill) {
+    SET_VAR(rare_inherited_data_, text_emphasis_fill_, fill);
+  }
+  void SetTextEmphasisMark(TextEmphasisMark mark) {
+    SET_VAR(rare_inherited_data_, text_emphasis_mark_, mark);
+  }
+  void SetTextEmphasisCustomMark(const AtomicString& mark) {
+    SET_VAR(rare_inherited_data_, text_emphasis_custom_mark_, mark);
+  }
 
   // -webkit-text-emphasis-color (aka -epub-text-emphasis-color)
   void SetTextEmphasisColor(const StyleColor& color) {
@@ -1705,13 +1810,52 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
             color.IsCurrentColor());
   }
 
+  // -webkit-text-emphasis-position
+  static TextEmphasisPosition InitialTextEmphasisPosition() {
+    return kTextEmphasisPositionOver;
+  }
+  TextEmphasisPosition GetTextEmphasisPosition() const {
+    return static_cast<TextEmphasisPosition>(
+        rare_inherited_data_->text_emphasis_position_);
+  }
+  void SetTextEmphasisPosition(TextEmphasisPosition position) {
+    SET_VAR(rare_inherited_data_, text_emphasis_position_, position);
+  }
+
+  // -webkit-highlight
+  static const AtomicString& InitialHighlight() { return g_null_atom; }
+  const AtomicString& Highlight() const {
+    return rare_inherited_data_->highlight_;
+  }
+  void SetHighlight(const AtomicString& h) {
+    SET_VAR(rare_inherited_data_, highlight_, h);
+  }
+
   // -webkit-line-clamp
   static LineClampValue InitialLineClamp() { return LineClampValue(); }
   const LineClampValue& LineClamp() const {
-    return rare_non_inherited_data_->line_clamp_;
+    return rare_non_inherited_data_->line_clamp;
   }
   void SetLineClamp(LineClampValue c) {
-    SET_VAR(rare_non_inherited_data_, line_clamp_, c);
+    SET_VAR(rare_non_inherited_data_, line_clamp, c);
+  }
+
+  // -webkit-ruby-position
+  static RubyPosition InitialRubyPosition() { return kRubyPositionBefore; }
+  RubyPosition GetRubyPosition() const {
+    return static_cast<RubyPosition>(rare_inherited_data_->ruby_position_);
+  }
+  void SetRubyPosition(RubyPosition position) {
+    SET_VAR(rare_inherited_data_, ruby_position_, position);
+  }
+
+  // -webkit-tap-highlight-color
+  static Color InitialTapHighlightColor();
+  Color TapHighlightColor() const {
+    return rare_inherited_data_->tap_highlight_color_;
+  }
+  void SetTapHighlightColor(const Color& c) {
+    SET_VAR(rare_inherited_data_, tap_highlight_color_, c);
   }
 
   // -webkit-text-fill-color
@@ -1721,6 +1865,16 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
             color.IsCurrentColor());
   }
 
+  // -webkit-text-security
+  static ETextSecurity InitialTextSecurity() { return ETextSecurity::kNone; }
+  ETextSecurity TextSecurity() const {
+    return static_cast<ETextSecurity>(rare_inherited_data_->text_security_);
+  }
+  void SetTextSecurity(ETextSecurity a_text_security) {
+    SET_VAR(rare_inherited_data_, text_security_,
+            static_cast<unsigned>(a_text_security));
+  }
+
   // -webkit-text-stroke-color
   void SetTextStrokeColor(const StyleColor& color) {
     SET_VAR(rare_inherited_data_, text_stroke_color_, color.Resolve(Color()));
@@ -1728,13 +1882,40 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
             color.IsCurrentColor());
   }
 
+  // -webkit-text-stroke-width
+  static float InitialTextStrokeWidth() { return 0; }
+  float TextStrokeWidth() const {
+    return rare_inherited_data_->text_stroke_width_;
+  }
+  void SetTextStrokeWidth(float w) {
+    SET_VAR(rare_inherited_data_, text_stroke_width_, w);
+  }
+
   // -webkit-user-drag
   static EUserDrag InitialUserDrag() { return DRAG_AUTO; }
   EUserDrag UserDrag() const {
-    return static_cast<EUserDrag>(rare_non_inherited_data_->user_drag_);
+    return static_cast<EUserDrag>(rare_non_inherited_data_->user_drag);
   }
   void SetUserDrag(EUserDrag d) {
-    SET_VAR(rare_non_inherited_data_, user_drag_, d);
+    SET_VAR(rare_non_inherited_data_, user_drag, d);
+  }
+
+  // -webkit-user-modify
+  static EUserModify InitialUserModify() { return EUserModify::kReadOnly; }
+  EUserModify UserModify() const {
+    return static_cast<EUserModify>(rare_inherited_data_->user_modify_);
+  }
+  void SetUserModify(EUserModify u) {
+    SET_VAR(rare_inherited_data_, user_modify_, static_cast<unsigned>(u));
+  }
+
+  // -webkit-user-select
+  static EUserSelect InitialUserSelect() { return EUserSelect::kText; }
+  EUserSelect UserSelect() const {
+    return static_cast<EUserSelect>(rare_inherited_data_->user_select_);
+  }
+  void SetUserSelect(EUserSelect s) {
+    SET_VAR(rare_inherited_data_, user_select_, static_cast<unsigned>(s));
   }
 
   // caret-color
@@ -2126,8 +2307,9 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
            FlexDirection() == kFlowColumnReverse;
   }
   bool HasBoxReflect() const { return BoxReflect(); }
-  bool ReflectionDataEquivalent(const ComputedStyle& other) const {
-    return DataEquivalent(BoxReflect(), other.BoxReflect());
+  bool ReflectionDataEquivalent(const ComputedStyle* other_style) const {
+    return rare_non_inherited_data_->ReflectionDataEquivalent(
+        *other_style->rare_non_inherited_data_);
   }
 
   // Mask utility functions.
@@ -2164,7 +2346,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
   }
 
   // Text-combine utility functions.
-  bool HasTextCombine() const { return TextCombine() != ETextCombine::kNone; }
+  bool HasTextCombine() const { return GetTextCombine() != kTextCombineNone; }
 
   // Grid utility functions.
   const Vector<GridTrackSize>& GridAutoRepeatColumns() const {
@@ -2597,49 +2779,47 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
 
   void SetBorderImageSlicesFill(bool);
   const BorderValue BorderLeft() const {
-    return BorderValue(BorderLeftStyle(), BorderLeftColor(),
-                       BorderLeftWidthInternal().ToFloat(),
-                       OutlineStyleIsAuto());
+    return BorderValue(
+        BorderLeftStyle(), BorderLeftColor(),
+        static_cast<float>(BorderLeftWidthInternal()) / kBorderWidthDenominator,
+        OutlineStyleIsAuto());
   }
   const BorderValue BorderRight() const {
     return BorderValue(BorderRightStyle(), BorderRightColor(),
-                       BorderRightWidthInternal().ToFloat(),
+                       static_cast<float>(BorderRightWidthInternal()) /
+                           kBorderWidthDenominator,
                        OutlineStyleIsAuto());
   }
   const BorderValue BorderTop() const {
-    return BorderValue(BorderTopStyle(), BorderTopColor(),
-                       BorderTopWidthInternal().ToFloat(),
-                       OutlineStyleIsAuto());
+    return BorderValue(
+        BorderTopStyle(), BorderTopColor(),
+        static_cast<float>(BorderTopWidthInternal()) / kBorderWidthDenominator,
+        OutlineStyleIsAuto());
   }
   const BorderValue BorderBottom() const {
     return BorderValue(BorderBottomStyle(), BorderBottomColor(),
-                       BorderBottomWidthInternal().ToFloat(),
+                       static_cast<float>(BorderBottomWidthInternal()) /
+                           kBorderWidthDenominator,
                        OutlineStyleIsAuto());
   }
 
   bool BorderSizeEquals(const ComputedStyle& o) const {
-    return BorderLeftWidthInternal() == o.BorderLeftWidthInternal() &&
-           BorderTopWidthInternal() == o.BorderTopWidthInternal() &&
-           BorderRightWidthInternal() == o.BorderRightWidthInternal() &&
-           BorderBottomWidthInternal() == o.BorderBottomWidthInternal();
+    return BorderWidthEquals(BorderLeftWidth(), o.BorderLeftWidth()) &&
+           BorderWidthEquals(BorderTopWidth(), o.BorderTopWidth()) &&
+           BorderWidthEquals(BorderRightWidth(), o.BorderRightWidth()) &&
+           BorderWidthEquals(BorderBottomWidth(), o.BorderBottomWidth());
   }
 
   BorderValue BorderBefore() const;
   BorderValue BorderAfter() const;
   BorderValue BorderStart() const;
   BorderValue BorderEnd() const;
-
   float BorderAfterWidth() const;
   float BorderBeforeWidth() const;
   float BorderEndWidth() const;
   float BorderStartWidth() const;
   float BorderOverWidth() const;
   float BorderUnderWidth() const;
-
-  EBorderStyle BorderAfterStyle() const;
-  EBorderStyle BorderBeforeStyle() const;
-  EBorderStyle BorderEndStyle() const;
-  EBorderStyle BorderStartStyle() const;
 
   bool HasBorderFill() const {
     return BorderImage().HasImage() && BorderImage().Fill();
@@ -2661,10 +2841,10 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
     return false;
   }
   bool HasBorderColorReferencingCurrentColor() const {
-    return (BorderLeftNonZero() && BorderLeftColor().IsCurrentColor()) ||
-           (BorderRightNonZero() && BorderRightColor().IsCurrentColor()) ||
-           (BorderTopNonZero() && BorderTopColor().IsCurrentColor()) ||
-           (BorderBottomNonZero() && BorderBottomColor().IsCurrentColor());
+    return (BorderLeft().NonZero() && BorderLeftColor().IsCurrentColor()) ||
+           (BorderRight().NonZero() && BorderRightColor().IsCurrentColor()) ||
+           (BorderTop().NonZero() && BorderTopColor().IsCurrentColor()) ||
+           (BorderBottom().NonZero() && BorderBottomColor().IsCurrentColor());
   }
 
   bool RadiiEqual(const ComputedStyle& o) const {
@@ -2679,12 +2859,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
            BorderLeftStyle() == o.BorderLeftStyle() &&
            BorderLeftColor() == o.BorderLeftColor() &&
            BorderLeftColorIsCurrentColor() == o.BorderLeftColorIsCurrentColor();
-  }
-  bool BorderLeftEquals(const BorderValue& o) const {
-    return BorderLeftWidthInternal().ToFloat() == o.Width() &&
-           BorderLeftStyle() == o.Style() &&
-           BorderLeftColor() == o.GetColor() &&
-           BorderLeftColorIsCurrentColor() == o.ColorIsCurrentColor();
   }
 
   bool BorderLeftVisuallyEqual(const ComputedStyle& o) const {
@@ -2703,12 +2877,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
            BorderRightColor() == o.BorderRightColor() &&
            BorderRightColorIsCurrentColor() ==
                o.BorderRightColorIsCurrentColor();
-  }
-  bool BorderRightEquals(const BorderValue& o) const {
-    return BorderRightWidthInternal().ToFloat() == o.Width() &&
-           BorderRightStyle() == o.Style() &&
-           BorderRightColor() == o.GetColor() &&
-           BorderRightColorIsCurrentColor() == o.ColorIsCurrentColor();
   }
 
   bool BorderRightVisuallyEqual(const ComputedStyle& o) const {
@@ -2737,11 +2905,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
            BorderTopColor() == o.BorderTopColor() &&
            BorderTopColorIsCurrentColor() == o.BorderTopColorIsCurrentColor();
   }
-  bool BorderTopEquals(const BorderValue& o) const {
-    return BorderTopWidthInternal().ToFloat() == o.Width() &&
-           BorderTopStyle() == o.Style() && BorderTopColor() == o.GetColor() &&
-           BorderTopColorIsCurrentColor() == o.ColorIsCurrentColor();
-  }
 
   bool BorderBottomVisuallyEqual(const ComputedStyle& o) const {
     if (BorderBottomStyle() == EBorderStyle::kNone &&
@@ -2759,12 +2922,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
            BorderBottomColor() == o.BorderBottomColor() &&
            BorderBottomColorIsCurrentColor() ==
                o.BorderBottomColorIsCurrentColor();
-  }
-  bool BorderBottomEquals(const BorderValue& o) const {
-    return BorderBottomWidthInternal().ToFloat() == o.Width() &&
-           BorderBottomStyle() == o.Style() &&
-           BorderBottomColor() == o.GetColor() &&
-           BorderBottomColorIsCurrentColor() == o.ColorIsCurrentColor();
   }
 
   bool BorderEquals(const ComputedStyle& o) const {
@@ -2798,25 +2955,25 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
     SetBorderTopStyle(EBorderStyle::kNone);
     SetBorderTopWidth(3);
     SetBorderTopColorInternal(0);
-    SetBorderTopColorIsCurrentColor(true);
+    SetBorderTopColorInternal(true);
   }
   void ResetBorderRight() {
     SetBorderRightStyle(EBorderStyle::kNone);
     SetBorderRightWidth(3);
     SetBorderRightColorInternal(0);
-    SetBorderRightColorIsCurrentColor(true);
+    SetBorderRightColorInternal(true);
   }
   void ResetBorderBottom() {
     SetBorderBottomStyle(EBorderStyle::kNone);
     SetBorderBottomWidth(3);
     SetBorderBottomColorInternal(0);
-    SetBorderBottomColorIsCurrentColor(true);
+    SetBorderBottomColorInternal(true);
   }
   void ResetBorderLeft() {
     SetBorderLeftStyle(EBorderStyle::kNone);
     SetBorderLeftWidth(3);
     SetBorderLeftColorInternal(0);
-    SetBorderLeftColorIsCurrentColor(true);
+    SetBorderLeftColorInternal(true);
   }
 
   void SetBorderRadius(const LengthSize& s) {
@@ -2867,8 +3024,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
 
   // Page size utility functions.
   void ResetPageSizeType() {
-    SET_VAR(rare_non_inherited_data_, page_size_type_,
-            static_cast<unsigned>(PageSizeType::kAuto));
+    SET_VAR(rare_non_inherited_data_, page_size_type_, PAGE_SIZE_AUTO);
   }
 
   // Outline utility functions.
@@ -2936,8 +3092,10 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
   }
 
   // Content utility functions.
-  bool ContentDataEquivalent(const ComputedStyle& other) const {
-    return DataEquivalent(GetContentData(), other.GetContentData());
+  bool ContentDataEquivalent(const ComputedStyle* other_style) const {
+    return const_cast<ComputedStyle*>(this)
+        ->rare_non_inherited_data_->ContentDataEquivalent(
+            *const_cast<ComputedStyle*>(other_style)->rare_non_inherited_data_);
   }
 
   // Contain utility functions.
@@ -3060,9 +3218,9 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
   // check hasTransform(), as it is possible for two styles to have matching
   // transform operations but differ in other transform-impacting style
   // respects.
-  bool TransformDataEquivalent(const ComputedStyle& other) const {
+  bool TransformDataEquivalent(const ComputedStyle& other_style) const {
     return rare_non_inherited_data_->transform_ ==
-           other.rare_non_inherited_data_->transform_;
+           other_style.rare_non_inherited_data_->transform_;
   }
   bool Preserves3D() const {
     return UsedTransformStyle3D() != kTransformStyle3DFlat;
@@ -3086,8 +3244,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
                       ApplyTransformOrigin,
                       ApplyMotionPath,
                       ApplyIndependentTransformProperties) const;
-
-  bool HasFilters() const;
 
   // Returns |true| if any property that renders using filter operations is
   // used (including, but not limited to, 'filter' and 'box-reflect').
@@ -3596,13 +3752,11 @@ inline bool ComputedStyle::IsSharable() const {
 }
 
 inline bool ComputedStyle::SetTextOrientation(
-    ETextOrientation text_orientation) {
-  if (compareEqual(rare_inherited_data_->text_orientation_,
-                   static_cast<unsigned>(text_orientation)))
+    TextOrientation text_orientation) {
+  if (compareEqual(rare_inherited_data_->text_orientation_, text_orientation))
     return false;
 
-  rare_inherited_data_.Access()->text_orientation_ =
-      static_cast<unsigned>(text_orientation);
+  rare_inherited_data_.Access()->text_orientation_ = text_orientation;
   return true;
 }
 

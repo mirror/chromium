@@ -17,7 +17,6 @@
 #include "cc/test/begin_frame_args_test.h"
 #include "cc/test/compositor_frame_helpers.h"
 #include "cc/test/fake_external_begin_frame_source.h"
-#include "cc/test/fake_surface_observer.h"
 #include "cc/test/mock_compositor_frame_sink_support_client.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -91,7 +90,8 @@ class FakeCompositorFrameSinkSupportClient
   DISALLOW_COPY_AND_ASSIGN(FakeCompositorFrameSinkSupportClient);
 };
 
-class CompositorFrameSinkSupportTest : public testing::Test {
+class CompositorFrameSinkSupportTest : public testing::Test,
+                                       public SurfaceObserver {
  public:
   CompositorFrameSinkSupportTest()
       : support_(
@@ -101,16 +101,27 @@ class CompositorFrameSinkSupportTest : public testing::Test {
                                                kIsRoot,
                                                kHandlesFrameSinkIdInvalidation,
                                                kNeedsSyncPoints)),
-        begin_frame_source_(0.f, false),
         local_surface_id_(3, kArbitraryToken),
         frame_sync_token_(GenTestSyncToken(4)),
         consumer_sync_token_(GenTestSyncToken(5)) {
-    manager_.AddObserver(&surface_observer_);
-    support_->SetBeginFrameSource(&begin_frame_source_);
+    manager_.AddObserver(this);
   }
   ~CompositorFrameSinkSupportTest() override {
-    manager_.RemoveObserver(&surface_observer_);
+    manager_.RemoveObserver(this);
     support_->EvictCurrentSurface();
+  }
+
+  const SurfaceId& last_created_surface_id() const {
+    return last_created_surface_id_;
+  }
+
+  // SurfaceObserver implementation.
+  void OnSurfaceCreated(const SurfaceInfo& surface_info) override {
+    last_created_surface_id_ = surface_info.id();
+    last_surface_info_ = surface_info;
+  }
+  void OnSurfaceDamaged(const SurfaceId& id, bool* changed) override {
+    *changed = true;
   }
 
   void SubmitCompositorFrameWithResources(ResourceId* resource_ids,
@@ -124,8 +135,7 @@ class CompositorFrameSinkSupportTest : public testing::Test {
       frame.resource_list.push_back(resource);
     }
     support_->SubmitCompositorFrame(local_surface_id_, std::move(frame));
-    EXPECT_EQ(surface_observer_.last_created_surface_id().local_surface_id(),
-              local_surface_id_);
+    EXPECT_EQ(last_created_surface_id_.local_surface_id(), local_surface_id_);
   }
 
   void UnrefResources(ResourceId* ids_to_unref,
@@ -168,9 +178,9 @@ class CompositorFrameSinkSupportTest : public testing::Test {
   SurfaceManager manager_;
   FakeCompositorFrameSinkSupportClient fake_support_client_;
   std::unique_ptr<CompositorFrameSinkSupport> support_;
-  FakeExternalBeginFrameSource begin_frame_source_;
   LocalSurfaceId local_surface_id_;
-  FakeSurfaceObserver surface_observer_;
+  SurfaceId last_created_surface_id_;
+  SurfaceInfo last_surface_info_;
 
   // This is the sync token submitted with the frame. It should never be
   // returned to the client.
@@ -515,8 +525,7 @@ TEST_F(CompositorFrameSinkSupportTest, EvictCurrentSurface) {
   CompositorFrame frame = MakeCompositorFrame();
   frame.resource_list.push_back(resource);
   support->SubmitCompositorFrame(local_surface_id, std::move(frame));
-  EXPECT_EQ(surface_observer_.last_created_surface_id().local_surface_id(),
-            local_surface_id);
+  EXPECT_EQ(last_created_surface_id().local_surface_id(), local_surface_id);
   local_surface_id_ = LocalSurfaceId();
 
   ReturnedResourceArray returned_resources = {resource.ToReturnedResource()};
@@ -543,8 +552,7 @@ TEST_F(CompositorFrameSinkSupportTest,
   CompositorFrame frame = MakeCompositorFrame();
   frame.resource_list.push_back(resource);
   support->SubmitCompositorFrame(local_surface_id, std::move(frame));
-  EXPECT_EQ(surface_observer_.last_created_surface_id().local_surface_id(),
-            local_surface_id);
+  EXPECT_EQ(last_created_surface_id().local_surface_id(), local_surface_id);
   local_surface_id_ = LocalSurfaceId();
 
   SurfaceId surface_id(kAnotherArbitraryFrameSinkId, local_surface_id);
@@ -578,8 +586,7 @@ TEST_F(CompositorFrameSinkSupportTest,
   frame.resource_list.push_back(resource);
   uint32_t execute_count = 0;
   support->SubmitCompositorFrame(local_surface_id, std::move(frame));
-  EXPECT_EQ(surface_observer_.last_created_surface_id().local_surface_id(),
-            local_surface_id);
+  EXPECT_EQ(last_created_surface_id().local_surface_id(), local_surface_id);
   local_surface_id_ = LocalSurfaceId();
 
   manager_.RegisterFrameSinkId(kYetAnotherArbitraryFrameSinkId);
@@ -665,19 +672,22 @@ TEST_F(CompositorFrameSinkSupportTest, DestroyCycle) {
   manager_.RegisterFrameSinkId(kAnotherArbitraryFrameSinkId);
   // Give id2 a frame that references local_surface_id_.
   {
+    std::unique_ptr<RenderPass> render_pass(RenderPass::Create());
     CompositorFrame frame = MakeCompositorFrame();
+    frame.render_pass_list.push_back(std::move(render_pass));
     frame.metadata.referenced_surfaces.push_back(
         SurfaceId(support_->frame_sink_id(), local_surface_id_));
     support2->SubmitCompositorFrame(local_surface_id2, std::move(frame));
-    EXPECT_EQ(surface_observer_.last_created_surface_id().local_surface_id(),
-              local_surface_id2);
+    EXPECT_EQ(last_created_surface_id().local_surface_id(), local_surface_id2);
   }
   manager_.GetSurfaceForId(id2)->AddDestructionDependency(
       SurfaceSequence(kAnotherArbitraryFrameSinkId, 4));
   support2->EvictCurrentSurface();
   // Give local_surface_id_ a frame that references id2.
   {
+    std::unique_ptr<RenderPass> render_pass(RenderPass::Create());
     CompositorFrame frame = MakeCompositorFrame();
+    frame.render_pass_list.push_back(std::move(render_pass));
     frame.metadata.referenced_surfaces.push_back(id2);
     support_->SubmitCompositorFrame(local_surface_id_, std::move(frame));
   }
@@ -706,12 +716,13 @@ void CopyRequestTestCallback(bool* called,
 
 TEST_F(CompositorFrameSinkSupportTest, DuplicateCopyRequest) {
   {
+    std::unique_ptr<RenderPass> render_pass(RenderPass::Create());
     CompositorFrame frame = MakeCompositorFrame();
+    frame.render_pass_list.push_back(std::move(render_pass));
     frame.metadata.referenced_surfaces.push_back(
         SurfaceId(support_->frame_sink_id(), local_surface_id_));
     support_->SubmitCompositorFrame(local_surface_id_, std::move(frame));
-    EXPECT_EQ(surface_observer_.last_created_surface_id().local_surface_id(),
-              local_surface_id_);
+    EXPECT_EQ(last_created_surface_id().local_surface_id(), local_surface_id_);
   }
 
   bool called1 = false;
@@ -768,109 +779,9 @@ TEST_F(CompositorFrameSinkSupportTest, SurfaceInfo) {
 
   support_->SubmitCompositorFrame(local_surface_id_, std::move(frame));
   SurfaceId expected_surface_id(support_->frame_sink_id(), local_surface_id_);
-  EXPECT_EQ(expected_surface_id, surface_observer_.last_surface_info().id());
-  EXPECT_EQ(2.5f, surface_observer_.last_surface_info().device_scale_factor());
-  EXPECT_EQ(gfx::Size(7, 8),
-            surface_observer_.last_surface_info().size_in_pixels());
-}
-
-// Check that if a CompositorFrame is received with size zero, we don't create
-// a Surface for it.
-TEST_F(CompositorFrameSinkSupportTest, ZeroFrameSize) {
-  SurfaceId id(support_->frame_sink_id(), local_surface_id_);
-  CompositorFrame frame = MakeEmptyCompositorFrame();
-  frame.render_pass_list.push_back(RenderPass::Create());
-  EXPECT_TRUE(
-      support_->SubmitCompositorFrame(local_surface_id_, std::move(frame)));
-  EXPECT_FALSE(manager_.GetSurfaceForId(id));
-}
-
-// Check that if a CompositorFrame is received with device scale factor of 0, we
-// don't create a Surface for it.
-TEST_F(CompositorFrameSinkSupportTest, ZeroDeviceScaleFactor) {
-  SurfaceId id(support_->frame_sink_id(), local_surface_id_);
-  CompositorFrame frame = MakeCompositorFrame();
-  frame.metadata.device_scale_factor = 0.f;
-  EXPECT_TRUE(
-      support_->SubmitCompositorFrame(local_surface_id_, std::move(frame)));
-  EXPECT_FALSE(manager_.GetSurfaceForId(id));
-}
-
-// Check that if the size of a CompositorFrame doesn't match the size of the
-// Surface it's being submitted to, we skip the frame.
-TEST_F(CompositorFrameSinkSupportTest, FrameSizeMismatch) {
-  SurfaceId id(support_->frame_sink_id(), local_surface_id_);
-
-  // Submit a frame with size (5,5).
-  CompositorFrame frame = MakeEmptyCompositorFrame();
-  auto pass = RenderPass::Create();
-  pass->SetNew(1, gfx::Rect(5, 5), gfx::Rect(), gfx::Transform());
-  frame.render_pass_list.push_back(std::move(pass));
-  EXPECT_TRUE(
-      support_->SubmitCompositorFrame(local_surface_id_, std::move(frame)));
-  EXPECT_TRUE(manager_.GetSurfaceForId(id));
-
-  // Submit a frame with size (5,4). This frame should be rejected and the
-  // surface should be destroyed.
-  frame = MakeEmptyCompositorFrame();
-  pass = RenderPass::Create();
-  pass->SetNew(1, gfx::Rect(5, 4), gfx::Rect(), gfx::Transform());
-  frame.render_pass_list.push_back(std::move(pass));
-  EXPECT_FALSE(
-      support_->SubmitCompositorFrame(local_surface_id_, std::move(frame)));
-  EXPECT_FALSE(manager_.GetSurfaceForId(id));
-}
-
-// Check that if the device scale factor of a CompositorFrame doesn't match the
-// device scale factor of the Surface it's being submitted to, the frame is
-// rejected and the surface is destroyed.
-TEST_F(CompositorFrameSinkSupportTest, DeviceScaleFactorMismatch) {
-  SurfaceId id(support_->frame_sink_id(), local_surface_id_);
-
-  // Submit a frame with device scale factor of 0.5.
-  CompositorFrame frame = MakeCompositorFrame();
-  frame.metadata.device_scale_factor = 0.5f;
-  EXPECT_TRUE(
-      support_->SubmitCompositorFrame(local_surface_id_, std::move(frame)));
-  EXPECT_TRUE(manager_.GetSurfaceForId(id));
-
-  // Submit a frame with device scale factor of 0.4. This frame should be
-  // rejected and the surface should be destroyed.
-  frame = MakeCompositorFrame();
-  frame.metadata.device_scale_factor = 0.4f;
-  EXPECT_FALSE(
-      support_->SubmitCompositorFrame(local_surface_id_, std::move(frame)));
-  EXPECT_FALSE(manager_.GetSurfaceForId(id));
-}
-
-TEST_F(CompositorFrameSinkSupportTest, PassesOnBeginFrameAcks) {
-  // Request BeginFrames.
-  support_->SetNeedsBeginFrame(true);
-
-  // Issue a BeginFrame.
-  BeginFrameArgs args =
-      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
-  begin_frame_source_.TestOnBeginFrame(args);
-
-  // Check that the support and SurfaceManager forward the BeginFrameAck
-  // attached to a CompositorFrame to the SurfaceObserver.
-  BeginFrameAck ack(0, 1, 1, true);
-  CompositorFrame frame = MakeCompositorFrame();
-  frame.metadata.begin_frame_ack = ack;
-  support_->SubmitCompositorFrame(local_surface_id_, std::move(frame));
-  EXPECT_EQ(ack, surface_observer_.last_ack());
-
-  // Issue another BeginFrame.
-  args = CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 2);
-  begin_frame_source_.TestOnBeginFrame(args);
-
-  // Check that the support and SurfaceManager forward a DidNotProduceFrame ack
-  // to the SurfaceObserver.
-  BeginFrameAck ack2(0, 2, 2, false);
-  support_->DidNotProduceFrame(ack2);
-  EXPECT_EQ(ack2, surface_observer_.last_ack());
-
-  support_->SetNeedsBeginFrame(false);
+  EXPECT_EQ(expected_surface_id, last_surface_info_.id());
+  EXPECT_EQ(2.5f, last_surface_info_.device_scale_factor());
+  EXPECT_EQ(gfx::Size(7, 8), last_surface_info_.size_in_pixels());
 }
 
 }  // namespace

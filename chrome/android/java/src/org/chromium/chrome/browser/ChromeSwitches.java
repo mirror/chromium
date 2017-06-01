@@ -175,6 +175,9 @@ public abstract class ChromeSwitches {
     public static final String ALWAYS_EXTRACT_WEBAPK_RUNTIME_DEX_ON_STARTUP =
             "always-extract-webapk-dex-on-startup";
 
+    /** Enable non-'org.chromium.webapk' prefixed package names with proper signature. */
+    public static final String ENABLE_ANY_WEBAPK_PACKAGE_NAME = "any-webapk-package-name";
+
     /**
      * Forces a check for whether the WebAPK's Web Manifest has changed each time that a WebAPK is
      * launched.
@@ -184,12 +187,6 @@ public abstract class ChromeSwitches {
 
     /** Enable Vr Shell development environment. */
     public static final String ENABLE_VR_SHELL_DEV = "enable-vr-shell-dev";
-
-    /** Command line switch for Chrome Home's swipe logic. */
-    public static final String CHROME_HOME_SWIPE_LOGIC = "chrome-home-swipe-logic";
-
-    /** Switch for enabling "restricted area" swipe logic for Chrome Home. */
-    public static final String CHROME_HOME_SWIPE_LOGIC_RESTRICT_AREA = "restrict-area";
 
     // Prevent instantiation.
     private ChromeSwitches() {}

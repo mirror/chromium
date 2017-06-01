@@ -37,6 +37,9 @@ Polymer({
 
     /** @private */
     isFolder_: Boolean,
+
+    /** @private */
+    openItemUrl_: String,
   },
 
   observers: [
@@ -124,6 +127,10 @@ Polymer({
   /** @private */
   onItemChanged_: function() {
     this.isFolder_ = !this.item_.url;
+    if (this.item_.url)
+      this.openItemUrl_ = this.item_.url;
+    else
+      this.openItemUrl_ = 'chrome://bookmarks/?id=' + this.itemId;
   },
 
   /**

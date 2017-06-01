@@ -42,7 +42,7 @@ unsigned ClientRectList::length() const {
 
 ClientRect* ClientRectList::item(unsigned index) {
   if (index >= list_.size())
-    return nullptr;
+    return 0;
 
   return list_[index].Get();
 }

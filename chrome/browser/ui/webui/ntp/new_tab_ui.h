@@ -74,7 +74,6 @@ class NewTabUI : public content::WebUIController {
   };
 
   void OnShowBookmarkBarChanged();
-  void OnDefaultFontSizeChanged();
 
   Profile* GetProfile() const;
 

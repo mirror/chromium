@@ -165,18 +165,14 @@ const char* kCustomPatternsWithContext[] = {
 // The |kCustomPatternWithoutContext| array defines further patterns to match
 // and anonymize. Each pattern consists of a single capturing group.
 CustomPatternWithoutContext kCustomPatternsWithoutContext[] = {
-    {"URL", "(?i)(" IRI ")"},
-    // Email Addresses need to come after URLs because they can be part
-    // of a query parameter.
-    {"email", "(?i)([0-9a-z._%+-]+@[a-z0-9.-]+\\.[a-z]{2,6})"},
-    // IP filter rules need to come after URLs so that they don't disturb the
-    // URL pattern in case the IP address is part of a URL.
-    {"IPv4", "(?i)(" IPV4ADDRESS ")"},
-    {"IPv6", "(?i)(" IPV6ADDRESS ")"},
-    // Universal Unique Identifiers (UUIDs).
-    {"UUID",
-     "(?i)([0-9a-zA-Z]{8}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-[0-9a-zA-Z]{4}-"
-     "[0-9a-zA-Z]{12})"},
+  {"URL", "(?i)(" IRI ")"},
+  // Email Addresses need to come after URLs because they can be part
+  // of a query parameter.
+  {"email", "(?i)([0-9a-z._%+-]+@[a-z0-9.-]+\\.[a-z]{2,6})"},
+  // IP filter rules need to come after URLs so that they don't disturb the
+  // URL pattern in case the IP address is part of a URL.
+  {"IPv4", "(?i)(" IPV4ADDRESS ")"},
+  {"IPv6", "(?i)(" IPV6ADDRESS ")"},
 };
 
 // Like RE2's FindAndConsume, searches for the first occurrence of |pattern| in

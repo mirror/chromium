@@ -16,10 +16,6 @@
 namespace android_webview {
 
 // static
-const void* AwSafeBrowsingResourceThrottle::kUserDataKey =
-    static_cast<void*>(&AwSafeBrowsingResourceThrottle::kUserDataKey);
-
-// static
 AwSafeBrowsingResourceThrottle* AwSafeBrowsingResourceThrottle::MaybeCreate(
     net::URLRequest* request,
     content::ResourceType resource_type,
@@ -40,15 +36,12 @@ AwSafeBrowsingResourceThrottle::AwSafeBrowsingResourceThrottle(
     : safe_browsing::BaseResourceThrottle(request,
                                           resource_type,
                                           database_manager,
-                                          ui_manager),
-      request_(request) {}
+                                          ui_manager) {}
 
 AwSafeBrowsingResourceThrottle::~AwSafeBrowsingResourceThrottle() {}
 
 void AwSafeBrowsingResourceThrottle::CancelResourceLoad() {
-  request_->SetUserData(kUserDataKey,
-                        base::MakeUnique<base::SupportsUserData::Data>());
-  Cancel();
+  CancelWithError(net::ERR_FAILED);
 }
 
 }  // namespace android_webview

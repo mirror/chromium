@@ -44,7 +44,6 @@
 #import "ios/web/navigation/crw_session_controller.h"
 #import "ios/web/navigation/navigation_item_impl.h"
 #import "ios/web/navigation/navigation_manager_impl.h"
-#include "ios/web/navigation/navigation_manager_util.h"
 #include "ios/web/net/cert_host_pair.h"
 #import "ios/web/net/crw_cert_verification_controller.h"
 #import "ios/web/net/crw_ssl_status_updater.h"
@@ -612,6 +611,9 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 // YES if the navigation to |url| should be treated as a reload.
 - (BOOL)shouldReload:(const GURL&)destinationURL
           transition:(ui::PageTransition)transition;
+// Internal implementation of reload. Reloads without notifying the delegate.
+// Most callers should use -reload instead.
+- (void)reloadInternal;
 // Aborts any load for both the web view and web controller.
 - (void)abortLoad;
 // Updates the internal state and informs the delegate that any outstanding load
@@ -1338,7 +1340,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
                   transition:(ui::PageTransition)transition {
   std::unique_ptr<web::NavigationContextImpl> context =
       web::NavigationContextImpl::CreateNavigationContext(_webStateImpl,
-                                                          pageURL, transition);
+                                                          pageURL);
   _webStateImpl->OnNavigationStarted(context.get());
   [[self sessionController] pushNewItemWithURL:pageURL
                                    stateObject:stateObject
@@ -1351,9 +1353,8 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
 - (void)replaceStateWithPageURL:(const GURL&)pageURL
                     stateObject:(NSString*)stateObject {
   std::unique_ptr<web::NavigationContextImpl> context =
-      web::NavigationContextImpl::CreateNavigationContext(
-          _webStateImpl, pageURL,
-          ui::PageTransition::PAGE_TRANSITION_CLIENT_REDIRECT);
+      web::NavigationContextImpl::CreateNavigationContext(_webStateImpl,
+                                                          pageURL);
   _webStateImpl->OnNavigationStarted(context.get());
   [[self sessionController] updateCurrentItemWithURL:pageURL
                                          stateObject:stateObject];
@@ -1394,7 +1395,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
       _pendingNavigationInfo
           ? [_pendingNavigationInfo HTTPMethod]
           : [self currentBackForwardListItemHolder]->http_method();
-  return [HTTPMethod isEqual:@"POST"] || self.currentNavItem->HasPostData();
+  return [HTTPMethod isEqual:@"POST"];
 }
 
 - (BOOL)isCurrentNavigationBackForward {
@@ -1528,8 +1529,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
         web::NavigationManager::UserAgentOverrideOption::INHERIT);
   }
   std::unique_ptr<web::NavigationContextImpl> context =
-      web::NavigationContextImpl::CreateNavigationContext(
-          _webStateImpl, requestURL, transition);
+      web::NavigationContextImpl::CreateNavigationContext(_webStateImpl,
+                                                          requestURL);
 
   web::NavigationItem* item = self.navigationManagerImpl->GetPendingItem();
   // TODO(crbug.com/676129): AddPendingItem does not always create a pending
@@ -1538,7 +1539,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
     item = self.navigationManagerImpl->GetLastCommittedItem();
   }
   context->SetNavigationItemUniqueID(item->GetUniqueID());
-  context->SetIsPost([self isCurrentNavigationItemPOST]);
   _webStateImpl->SetIsLoading(true);
   _webStateImpl->OnNavigationStarted(context.get());
   return context;
@@ -2021,23 +2021,17 @@ registerLoadRequestForURL:(const GURL&)requestURL
           destinationURL == item->GetOriginalRequestURL());
 }
 
-- (void)reload {
+// Reload either the web view or the native content depending on which is
+// displayed.
+- (void)reloadInternal {
   // Clear last user interaction.
   // TODO(crbug.com/546337): Move to after the load commits, in the subclass
   // implementation. This will be inaccurate if the reload fails or is
   // cancelled.
   _lastUserInteraction.reset();
   base::RecordAction(UserMetricsAction("Reload"));
-  GURL url = self.currentNavItem->GetURL();
-  if ([self shouldLoadURLInNativeView:url]) {
-    std::unique_ptr<web::NavigationContextImpl> navigationContext = [self
-        registerLoadRequestForURL:url
-                         referrer:self.currentNavItemReferrer
-                       transition:ui::PageTransition::PAGE_TRANSITION_RELOAD];
-    [self didStartLoadingURL:url];
+  if ([self shouldLoadURLInNativeView:self.currentNavItem->GetURL()]) {
     [self.nativeController reload];
-    _webStateImpl->OnNavigationFinished(navigationContext.get());
-    [self loadCompleteWithSuccess:YES forNavigation:nil];
   } else {
     web::NavigationItem* transientItem =
         self.navigationManagerImpl->GetTransientItem();
@@ -2050,11 +2044,18 @@ registerLoadRequestForURL:(const GURL&)requestURL
           [transientItem->GetHttpRequestHeaders() copy]);
       [self loadWithParams:reloadParams];
     } else {
-      self.currentNavItem->SetTransitionType(
-          ui::PageTransition::PAGE_TRANSITION_RELOAD);
+      // As with back and forward navigation, load the URL manually instead of
+      // using the web view's reload. This ensures state processing and delegate
+      // calls are consistent.
+      // TODO(eugenebut): revisit this for WKWebView.
       [self loadCurrentURL];
     }
   }
+}
+
+- (void)reload {
+  [_delegate webWillReload];
+  [self reloadInternal];
 }
 
 - (void)abortLoad {
@@ -2129,6 +2130,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
   // safe and do nothing if that's happened.
   if (_loadPhase != web::PAGE_LOADING)
     return;
+
+  DCHECK(_webView);
 
   const GURL currentURL([self currentURL]);
 
@@ -4173,18 +4176,17 @@ registerLoadRequestForURL:(const GURL&)requestURL
   [_navigationStates setState:web::WKNavigationState::REQUESTED
                 forNavigation:navigation];
   std::unique_ptr<web::NavigationContextImpl> context;
-  const ui::PageTransition loadHTMLTransition =
-      ui::PageTransition::PAGE_TRANSITION_TYPED;
   if (_webStateImpl->HasWebUI()) {
     // WebUI uses |loadHTML:forURL:| to feed the content to web view. This
     // should not be treated as a navigation, but WKNavigationDelegate callbacks
     // still expect a valid context.
-    context = web::NavigationContextImpl::CreateNavigationContext(
-        _webStateImpl, URL, loadHTMLTransition);
+    context =
+        web::NavigationContextImpl::CreateNavigationContext(_webStateImpl, URL);
   } else {
-    context = [self registerLoadRequestForURL:URL
-                                     referrer:web::Referrer()
-                                   transition:loadHTMLTransition];
+    context = [self
+        registerLoadRequestForURL:URL
+                         referrer:web::Referrer()
+                       transition:ui::PageTransition::PAGE_TRANSITION_TYPED];
   }
   [_navigationStates setContext:std::move(context) forNavigation:navigation];
 }
@@ -4423,10 +4425,19 @@ registerLoadRequestForURL:(const GURL&)requestURL
                           : WKNavigationResponsePolicyCancel);
 }
 
+// TODO(stuartmorgan): Move all the guesswork around these states out of the
+// superclass, and wire these up to the remaining methods.
 - (void)webView:(WKWebView*)webView
     didStartProvisionalNavigation:(WKNavigation*)navigation {
   [_navigationStates setState:web::WKNavigationState::STARTED
                 forNavigation:navigation];
+
+  if (navigation &&
+      ![[_navigationStates lastAddedNavigation] isEqual:navigation]) {
+    // |navigation| is not the latest navigation and will be cancelled.
+    // Ignore |navigation| as a new navigation will start soon.
+    return;
+  }
 
   GURL webViewURL = net::GURLWithNSURL(webView.URL);
   if (webViewURL.is_empty()) {
@@ -4435,52 +4446,38 @@ registerLoadRequestForURL:(const GURL&)requestURL
     webViewURL = GURL(url::kAboutBlankURL);
   }
 
-  web::NavigationContextImpl* context =
-      [_navigationStates contextForNavigation:navigation];
-  if (context) {
-    // This is already seen and registered navigation.
-
-    if (context->GetUrl() != webViewURL) {
-      // Update last seen URL because it may be changed by WKWebView (f.e. by
-      // performing characters escaping).
-      web::NavigationItem* item = web::GetItemWithUniqueID(
-          self.navigationManagerImpl, context->GetNavigationItemUniqueID());
-      if (item) {
-        item->SetVirtualURL(webViewURL);
-        item->SetURL(webViewURL);
-      }
-
-      _lastRegisteredRequestURL = webViewURL;
-    }
-    return;
-  }
-
-  // This is renderer-initiated navigation which was not seen before and should
-  // be registered.
-
-  [self clearWebUI];
-
-  if (web::GetWebClient()->IsAppSpecificURL(webViewURL)) {
+  // Intercept renderer-initiated navigations. If this navigation has not yet
+  // been registered, do so. loadPhase check is necessary because
+  // lastRegisteredRequestURL may be the same as the webViewURL on a new tab
+  // created by window.open (default is about::blank).
+  if (_lastRegisteredRequestURL != webViewURL ||
+      self.loadPhase != web::LOAD_REQUESTED) {
+    // Reset current WebUI if one exists.
+    [self clearWebUI];
     // Restart app specific URL loads to properly capture state.
     // TODO(crbug.com/546347): Extract necessary tasks for app specific URL
     // navigation rather than restarting the load.
-
-    // Renderer-initiated loads of WebUI can be done only from other WebUI
-    // pages. WebUI pages may have increased power and using the same web
-    // process (which may potentially be controller by an attacker) is
-    // dangerous.
-    if (web::GetWebClient()->IsAppSpecificURL(_documentURL)) {
-      [self abortLoad];
-      NavigationManager::WebLoadParams params(webViewURL);
-      [self loadWithParams:params];
+    if (web::GetWebClient()->IsAppSpecificURL(webViewURL)) {
+      // Renderer-initiated loads of WebUI can be done only from other WebUI
+      // pages. WebUI pages may have increased power and using the same web
+      // process (which may potentially be controller by an attacker) is
+      // dangerous.
+      if (web::GetWebClient()->IsAppSpecificURL(_documentURL)) {
+        [self abortLoad];
+        NavigationManager::WebLoadParams params(webViewURL);
+        [self loadWithParams:params];
+      }
+      return;
+    } else {
+      std::unique_ptr<web::NavigationContextImpl> navigationContext =
+          [self registerLoadRequestForURL:webViewURL];
+      [_navigationStates setContext:std::move(navigationContext)
+                      forNavigation:navigation];
     }
-    return;
   }
 
-  std::unique_ptr<web::NavigationContextImpl> navigationContext =
-      [self registerLoadRequestForURL:webViewURL];
-  [_navigationStates setContext:std::move(navigationContext)
-                  forNavigation:navigation];
+  // Ensure the URL is registered and loadPhase is as expected.
+  DCHECK(_lastRegisteredRequestURL == webViewURL);
   DCHECK(self.loadPhase == web::LOAD_REQUESTED);
 }
 
@@ -4616,12 +4613,15 @@ registerLoadRequestForURL:(const GURL&)requestURL
     // corresponds to committed navigation.
     web::NavigationContextImpl* context =
         [_navigationStates contextForNavigation:navigation];
-    int itemIndex = web::GetCommittedItemIndexWithUniqueID(
-        self.navigationManagerImpl, context->GetNavigationItemUniqueID());
-    // Do not discard pending entry, because another pending navigation is still
-    // in progress and will commit or fail soon.
-    [self.sessionController goToItemAtIndex:itemIndex
-                   discardNonCommittedItems:NO];
+    for (int i = 0; i < self.navigationManagerImpl->GetItemCount(); i++) {
+      if (self.navigationManagerImpl->GetItemAtIndex(i)->GetUniqueID() ==
+          context->GetNavigationItemUniqueID()) {
+        // Do not discard pending entry, because another pending navigation is
+        // still in progress and will commit or fail soon.
+        [self.sessionController goToItemAtIndex:i discardNonCommittedItems:NO];
+        break;
+      }
+    }
   }
 
   self.webStateImpl->OnNavigationFinished(context);

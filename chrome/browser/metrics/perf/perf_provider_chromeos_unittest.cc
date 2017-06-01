@@ -35,8 +35,6 @@ const char kPerfRecordCallgraphCmd[] =
   "perf record -a -e cycles -g -c 4000037";
 const char kPerfRecordLBRCmd[] =
   "perf record -a -e r20c4 -b -c 200011";
-const char kPerfRecordCacheMissesCmd[] =
-  "perf record -a -e cache-misses -c 4001";
 const char kPerfStatMemoryBandwidthCmd[] =
   "perf stat -a -e cycles -e instructions "
   "-e uncore_imc/data_reads/ -e uncore_imc/data_writes/ "
@@ -584,12 +582,6 @@ TEST_F(PerfProviderTest, DefaultCommandsBasedOnUarch_IvyBridge) {
         return cmd.value == kPerfRecordLBRCmd;
       });
   EXPECT_NE(cmds.end(), found);
-  found = std::find_if(
-      cmds.begin(), cmds.end(),
-      [](const RandomSelector::WeightAndValue& cmd) -> bool {
-        return cmd.value == kPerfRecordCacheMissesCmd;
-      });
-  EXPECT_NE(cmds.end(), found);
 }
 
 TEST_F(PerfProviderTest, DefaultCommandsBasedOnUarch_SandyBridge) {
@@ -616,12 +608,6 @@ TEST_F(PerfProviderTest, DefaultCommandsBasedOnUarch_SandyBridge) {
         return cmd.value == kPerfRecordLBRCmd;
       });
   EXPECT_NE(cmds.end(), found);
-  found = std::find_if(
-      cmds.begin(), cmds.end(),
-      [](const RandomSelector::WeightAndValue& cmd) -> bool {
-        return cmd.value == kPerfRecordCacheMissesCmd;
-      });
-  EXPECT_NE(cmds.end(), found);
 }
 
 TEST_F(PerfProviderTest, DefaultCommandsBasedOnArch_Arm) {
@@ -636,16 +622,10 @@ TEST_F(PerfProviderTest, DefaultCommandsBasedOnArch_Arm) {
   ASSERT_GE(cmds.size(), 2UL);
   EXPECT_EQ(cmds[0].value, kPerfRecordCyclesCmd);
   EXPECT_EQ(cmds[1].value, kPerfRecordCallgraphCmd);
-  auto found = std::find_if(
+  const auto found = std::find_if(
       cmds.begin(), cmds.end(),
       [](const RandomSelector::WeightAndValue& cmd) -> bool {
         return cmd.value == kPerfRecordLBRCmd;
-      });
-  EXPECT_EQ(cmds.end(), found) << "ARM does not support this command";
-  found = std::find_if(
-      cmds.begin(), cmds.end(),
-      [](const RandomSelector::WeightAndValue& cmd) -> bool {
-        return cmd.value == kPerfRecordCacheMissesCmd;
       });
   EXPECT_EQ(cmds.end(), found) << "ARM does not support this command";
 }
@@ -672,12 +652,6 @@ TEST_F(PerfProviderTest, DefaultCommandsBasedOnArch_x86_32) {
       cmds.begin(), cmds.end(),
       [](const RandomSelector::WeightAndValue& cmd) -> bool {
         return cmd.value == kPerfRecordLBRCmd;
-      });
-  EXPECT_EQ(cmds.end(), found) << "x86_32 does not support this command";
-  found = std::find_if(
-      cmds.begin(), cmds.end(),
-      [](const RandomSelector::WeightAndValue& cmd) -> bool {
-        return cmd.value == kPerfRecordCacheMissesCmd;
       });
   EXPECT_EQ(cmds.end(), found) << "x86_32 does not support this command";
 }

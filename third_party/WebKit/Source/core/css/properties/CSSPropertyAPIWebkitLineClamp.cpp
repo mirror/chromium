@@ -6,13 +6,12 @@
 
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 
-class CSSParserLocalContext;
 namespace blink {
 
 const CSSValue* CSSPropertyAPIWebkitLineClamp::parseSingleValue(
     CSSParserTokenRange& range,
     const CSSParserContext& context,
-    const CSSParserLocalContext&) {
+    CSSPropertyID) {
   if (range.Peek().GetType() != kPercentageToken &&
       range.Peek().GetType() != kNumberToken)
     return nullptr;

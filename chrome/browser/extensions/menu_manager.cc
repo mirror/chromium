@@ -714,23 +714,25 @@ void MenuManager::ExecuteCommand(content::BrowserContext* context,
   {
     // Dispatch to menu item's .onclick handler (this is the legacy API, from
     // before chrome.contextMenus.onClicked existed).
-    auto event = base::MakeUnique<Event>(
-        webview_guest ? events::WEB_VIEW_INTERNAL_CONTEXT_MENUS
-                      : events::CONTEXT_MENUS,
-        webview_guest ? kOnWebviewContextMenus : kOnContextMenus,
-        std::unique_ptr<base::ListValue>(args->DeepCopy()), context);
+    std::unique_ptr<Event> event(
+        new Event(webview_guest ? events::WEB_VIEW_INTERNAL_CONTEXT_MENUS
+                                : events::CONTEXT_MENUS,
+                  webview_guest ? kOnWebviewContextMenus : kOnContextMenus,
+                  std::unique_ptr<base::ListValue>(args->DeepCopy())));
+    event->restrict_to_browser_context = context;
     event->user_gesture = EventRouter::USER_GESTURE_ENABLED;
     event_router->DispatchEventToExtension(item->extension_id(),
                                            std::move(event));
   }
   {
     // Dispatch to .contextMenus.onClicked handler.
-    auto event = base::MakeUnique<Event>(
+    std::unique_ptr<Event> event(new Event(
         webview_guest ? events::CHROME_WEB_VIEW_INTERNAL_ON_CLICKED
                       : events::CONTEXT_MENUS_ON_CLICKED,
         webview_guest ? api::chrome_web_view_internal::OnClicked::kEventName
                       : api::context_menus::OnClicked::kEventName,
-        std::move(args), context);
+        std::move(args)));
+    event->restrict_to_browser_context = context;
     event->user_gesture = EventRouter::USER_GESTURE_ENABLED;
     if (webview_guest)
       event->filter_info.SetInstanceID(webview_guest->view_instance_id());

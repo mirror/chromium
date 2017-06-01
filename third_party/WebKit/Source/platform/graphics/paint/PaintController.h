@@ -140,8 +140,11 @@ class PLATFORM_EXPORT PaintController {
   }
   bool IsSkippingCache() const { return skipping_cache_count_; }
 
-  // Must be called when a painting is finished.
-  void CommitNewDisplayItems();
+  // Must be called when a painting is finished. |offsetFromLayoutObject| is the
+  // offset between the space of the GraphicsLayer which owns this
+  // PaintController and the coordinate space of the owning LayoutObject.
+  void CommitNewDisplayItems(
+      const LayoutSize& offset_from_layout_object = LayoutSize());
 
   // Returns the approximate memory usage, excluding memory likely to be
   // shared with the embedder after copying to WebPaintController.
@@ -182,9 +185,10 @@ class PLATFORM_EXPORT PaintController {
   // the last commitNewDisplayItems(). Use with care.
   DisplayItemList& NewDisplayItemList() { return new_display_item_list_; }
 
-  void AppendDebugDrawingAfterCommit(const DisplayItemClient&,
-                                     sk_sp<PaintRecord>,
-                                     const FloatRect& record_bounds);
+  void AppendDebugDrawingAfterCommit(
+      const DisplayItemClient&,
+      sk_sp<PaintRecord>,
+      const LayoutSize& offset_from_layout_object);
 
   void ShowDebugData() const { ShowDebugDataInternal(false); }
 #ifndef NDEBUG
@@ -301,24 +305,12 @@ class PLATFORM_EXPORT PaintController {
   void GenerateRasterInvalidations(PaintChunk& new_chunk);
   void GenerateRasterInvalidationsComparingChunks(PaintChunk& new_chunk,
                                                   const PaintChunk& old_chunk);
-  inline void GenerateRasterInvalidation(const DisplayItemClient&,
-                                         PaintChunk&,
-                                         const DisplayItem* old_item,
-                                         const DisplayItem* new_item);
-  inline void GenerateIncrementalRasterInvalidation(
-      PaintChunk&,
-      const DisplayItem& old_item,
-      const DisplayItem& new_item);
-  inline void GenerateFullRasterInvalidation(PaintChunk&,
-                                             const DisplayItem& old_item,
-                                             const DisplayItem& new_item);
   inline void AddRasterInvalidation(const DisplayItemClient&,
                                     PaintChunk&,
-                                    const FloatRect&,
-                                    PaintInvalidationReason);
+                                    const FloatRect&);
   void TrackRasterInvalidation(const DisplayItemClient&,
                                PaintChunk&,
-                               PaintInvalidationReason);
+                               const FloatRect&);
 
   // The following two methods are for checking under-invalidations
   // (when RuntimeEnabledFeatures::paintUnderInvalidationCheckingEnabled).

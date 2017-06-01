@@ -73,11 +73,9 @@ function testAudioNodeOptions(should, context, nodeName, expectedNodeOptions) {
               channelCountMode: testChannelCountMode
             }));
       },
-      'new ' + nodeName + '(c, {channelCountMode: "' + testChannelCountMode +
-          '"}')
+      'new ' + nodeName + '(c, {channelCountMode: "' + testChannelCountMode + '"}')
       .notThrow();
-  should(node.channelCountMode, 'node.channelCountMode')
-      .beEqualTo(testChannelCountMode);
+  should(node.channelCountMode, 'node.channelCountMode').beEqualTo(testChannelCountMode);
 
   if (expectedNodeOptions.channelCountMode &&
       expectedNodeOptions.channelCountMode.isFixed) {
@@ -87,8 +85,7 @@ function testAudioNodeOptions(should, context, nodeName, expectedNodeOptions) {
       'clamped-max': 'explicit',
       'explicit': 'max'
     };
-    testChannelCountMode =
-        testChannelCountModeMap[expectedNodeOptions.channelCountMode.value];
+    testChannelCountMode = testChannelCountModeMap[expectedNodeOptions.channelCountMode.value];
     should(
         () => {
           node = new window[nodeName](
@@ -97,8 +94,7 @@ function testAudioNodeOptions(should, context, nodeName, expectedNodeOptions) {
                   {}, expectedNodeOptions.additionalOptions,
                   {channelCountMode: testChannelCountMode}));
         },
-        'new ' + nodeName + '(c, {channelCountMode: "' + testChannelCountMode +
-            '"}')
+        'new ' + nodeName + '(c, {channelCountMode: "' + testChannelCountMode + '"}')
         .throw(expectedNodeOptions.channelCountMode.errorType);
   } else {
     // Mode is not fixed. Verify that we can set the mode to all valid

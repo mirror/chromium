@@ -49,7 +49,7 @@ class BorderValue {
               const StyleColor& color,
               float width,
               OutlineIsAuto is_auto) {
-    SetColor(color);
+    SetColor(color.Resolve(Color()));
     SetStyle(style);
     SetWidth(width);
     SetIsAuto(is_auto);

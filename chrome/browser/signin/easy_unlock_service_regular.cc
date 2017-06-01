@@ -99,15 +99,6 @@ void EasyUnlockServiceRegular::LoadRemoteDevices() {
     return;
   }
 
-  // This code path may be hit by:
-  //   1. New devices were synced on the lock screen.
-  //   2. The service was initialized while the login screen is still up.
-  if (proximity_auth::ScreenlockBridge::Get()->IsLocked()) {
-    PA_LOG(INFO) << "Deferring device load until screen is unlocked.";
-    deferring_device_load_ = true;
-    return;
-  }
-
   remote_device_loader_.reset(new cryptauth::RemoteDeviceLoader(
       GetCryptAuthDeviceManager()->GetUnlockKeys(),
       proximity_auth_client()->GetAccountId(),
@@ -443,7 +434,6 @@ void EasyUnlockServiceRegular::SetAutoPairingResult(
 }
 
 void EasyUnlockServiceRegular::InitializeInternal() {
-  PA_LOG(INFO) << "Initializing EasyUnlockService inside the user session.";
   proximity_auth::ScreenlockBridge::Get()->AddObserver(this);
   registrar_.Init(profile()->GetPrefs());
   registrar_.Add(
@@ -518,7 +508,12 @@ void EasyUnlockServiceRegular::OnSyncFinished(
       cryptauth::CryptAuthDeviceManager::DeviceChangeResult::CHANGED)
     return;
 
-  LoadRemoteDevices();
+  if (proximity_auth::ScreenlockBridge::Get()->IsLocked()) {
+    PA_LOG(INFO) << "Deferring device load until screen is unlocked.";
+    deferring_device_load_ = true;
+  } else {
+    LoadRemoteDevices();
+  }
 }
 
 void EasyUnlockServiceRegular::OnScreenDidLock(
@@ -529,45 +524,34 @@ void EasyUnlockServiceRegular::OnScreenDidLock(
 
 void EasyUnlockServiceRegular::OnScreenDidUnlock(
     proximity_auth::ScreenlockBridge::LockHandler::ScreenType screen_type) {
-  bool is_lock_screen =
-      screen_type == proximity_auth::ScreenlockBridge::LockHandler::LOCK_SCREEN;
+  // Notifications of signin screen unlock events can also reach this code path;
+  // disregard them.
+  if (screen_type != proximity_auth::ScreenlockBridge::LockHandler::LOCK_SCREEN)
+    return;
 
-  if (!will_unlock_using_easy_unlock_ && GetProximityAuthPrefManager() &&
-      (is_lock_screen || !base::CommandLine::ForCurrentProcess()->HasSwitch(
-                             proximity_auth::switches::kEnableChromeOSLogin))) {
-    // If a password was used, then record the current timestamp. This timestamp
-    // is used to enforce password reauths after a certain time has elapsed.
-    GetProximityAuthPrefManager()->SetLastPasswordEntryTimestampMs(
-        base::Time::Now().ToJavaTime());
+  // Only record metrics for users who have enabled the feature.
+  if (IsEnabled()) {
+    EasyUnlockAuthEvent event =
+        will_unlock_using_easy_unlock_
+            ? EASY_UNLOCK_SUCCESS
+            : GetPasswordAuthEvent();
+    RecordEasyUnlockScreenUnlockEvent(event);
+
+    if (will_unlock_using_easy_unlock_) {
+      RecordEasyUnlockScreenUnlockDuration(
+          base::TimeTicks::Now() - lock_screen_last_shown_timestamp_);
+    }
   }
 
-  // If we tried to load remote devices (e.g. after a sync) while the screen was
-  // locked, we can now load the new remote devices.
-  // Note: This codepath may be reachable when the login screen unlocks.
+  will_unlock_using_easy_unlock_ = false;
+
+  // If we synced remote devices while the screen was locked, we can now load
+  // the new remote devices.
   if (deferring_device_load_) {
     PA_LOG(INFO) << "Loading deferred devices after screen unlock.";
     deferring_device_load_ = false;
     LoadRemoteDevices();
   }
-
-  // Do not process events for the login screen.
-  if (!is_lock_screen)
-    return;
-
-  // Only record metrics for users who have enabled the feature.
-  if (IsEnabled()) {
-    EasyUnlockAuthEvent event = will_unlock_using_easy_unlock_
-                                    ? EASY_UNLOCK_SUCCESS
-                                    : GetPasswordAuthEvent();
-    RecordEasyUnlockScreenUnlockEvent(event);
-
-    if (will_unlock_using_easy_unlock_) {
-      RecordEasyUnlockScreenUnlockDuration(base::TimeTicks::Now() -
-                                           lock_screen_last_shown_timestamp_);
-    }
-  }
-
-  will_unlock_using_easy_unlock_ = false;
 }
 
 void EasyUnlockServiceRegular::OnFocusedUserChanged(

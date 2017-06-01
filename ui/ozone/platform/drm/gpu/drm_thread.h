@@ -26,7 +26,6 @@ struct FileDescriptor;
 }
 
 namespace display {
-class DisplayMode;
 struct GammaRampRGBEntry;
 }
 
@@ -76,7 +75,7 @@ class DrmThread : public base::Thread, public ozone::mojom::DeviceCursor {
                          std::vector<gfx::BufferFormat>* scanout_formats);
   void SchedulePageFlip(gfx::AcceleratedWidget widget,
                         const std::vector<OverlayPlane>& planes,
-                        SwapCompletionOnceCallback callback);
+                        const SwapCompletionCallback& callback);
   void GetVSyncParameters(
       gfx::AcceleratedWidget widget,
       const gfx::VSyncProvider::UpdateVSyncCallback& callback);
@@ -100,7 +99,7 @@ class DrmThread : public base::Thread, public ozone::mojom::DeviceCursor {
       base::OnceCallback<void(const std::vector<DisplaySnapshot_Params>&)>
           callback);
   void ConfigureNativeDisplay(int64_t id,
-                              std::unique_ptr<const display::DisplayMode> mode,
+                              const DisplayMode_Params& mode,
                               const gfx::Point& origin,
                               base::OnceCallback<void(int64_t, bool)> callback);
   void DisableNativeDisplay(int64_t id,

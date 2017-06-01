@@ -1,7 +1,5 @@
 .. _sdk-release-notes:
 
-.. include:: /migration/deprecation.inc
-
 #############
 Release Notes
 #############

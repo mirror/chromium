@@ -31,10 +31,7 @@
 #ifndef WebFrameWidgetImpl_h
 #define WebFrameWidgetImpl_h
 
-#include "core/animation/CompositorMutatorImpl.h"
 #include "core/frame/WebFrameWidgetBase.h"
-#include "core/frame/WebLocalFrameBase.h"
-#include "core/page/PageWidgetDelegate.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/heap/SelfKeepAlive.h"
 #include "platform/scroll/ScrollTypes.h"
@@ -44,6 +41,10 @@
 #include "public/platform/WebPoint.h"
 #include "public/platform/WebSize.h"
 #include "public/web/WebInputMethodController.h"
+#include "web/CompositorMutatorImpl.h"
+#include "web/PageWidgetDelegate.h"
+#include "web/WebInputMethodControllerImpl.h"
+#include "web/WebLocalFrameImpl.h"
 
 namespace blink {
 
@@ -111,14 +112,15 @@ class WebFrameWidgetImpl final
   void SetRemoteViewportIntersection(const WebRect&) override;
 
   // WebFrameWidget implementation.
-  WebLocalFrameBase* LocalRoot() const override { return local_root_; }
+  WebLocalFrameImpl* LocalRoot() const override { return local_root_; }
   void SetVisibilityState(WebPageVisibilityState) override;
   void SetBackgroundColorOverride(WebColor) override;
   void ClearBackgroundColorOverride() override;
   void SetBaseBackgroundColorOverride(WebColor) override;
   void ClearBaseBackgroundColorOverride() override;
   void SetBaseBackgroundColor(WebColor) override;
-  WebInputMethodController* GetActiveWebInputMethodController() const override;
+  WebInputMethodControllerImpl* GetActiveWebInputMethodController()
+      const override;
 
   Frame* FocusedCoreFrame() const;
 
@@ -149,9 +151,7 @@ class WebFrameWidgetImpl final
   void MouseContextMenu(const WebMouseEvent&);
 
   WebLayerTreeView* LayerTreeView() const { return layer_tree_view_; }
-  GraphicsLayer* RootGraphicsLayer() const override {
-    return root_graphics_layer_;
-  };
+  GraphicsLayer* RootGraphicsLayer() const { return root_graphics_layer_; };
 
   Color BaseBackgroundColor() const;
 
@@ -189,6 +189,8 @@ class WebFrameWidgetImpl final
   // focused frame has a different local root.
   LocalFrame* FocusedLocalFrameInWidget() const;
 
+  WebPlugin* FocusedPluginIfInputMethodSupported(LocalFrame*) const;
+
   LocalFrame* FocusedLocalFrameAvailableForIme() const;
 
   CompositorMutatorImpl& Mutator();
@@ -198,7 +200,7 @@ class WebFrameWidgetImpl final
   // WebFrameWidget is associated with a subtree of the frame tree,
   // corresponding to a maximal connected tree of LocalFrames. This member
   // points to the root of that subtree.
-  Member<WebLocalFrameBase> local_root_;
+  Member<WebLocalFrameImpl> local_root_;
 
   WebSize size_;
 

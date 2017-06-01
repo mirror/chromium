@@ -170,7 +170,6 @@ class CONTENT_EXPORT RenderFrameProxy
       blink::WebSandboxFlags flags,
       const ParsedFeaturePolicyHeader& container_policy);
   void OnDispatchLoad();
-  void OnCollapse(bool collapsed);
   void OnDidUpdateName(const std::string& name, const std::string& unique_name);
   void OnAddContentSecurityPolicies(
       const std::vector<ContentSecurityPolicyHeader>& header);

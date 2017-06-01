@@ -175,21 +175,12 @@ bool UiScene::HasVisibleHeadLockedElements() const {
   return !GetHeadLockedElements().empty();
 }
 
-void UiScene::SetMode(ColorScheme::Mode mode) {
-  if (mode == mode_)
-    return;
-
-  mode_ = mode;
-  for (const auto& element : ui_elements_)
-    element->SetMode(mode);
+void UiScene::SetBackgroundColor(const vr::Colorf& color) {
+  background_color_ = color;
 }
 
-ColorScheme::Mode UiScene::mode() const {
-  return mode_;
-}
-
-SkColor UiScene::GetBackgroundColor() const {
-  return ColorScheme::GetColorScheme(mode_).horizon;
+const vr::Colorf& UiScene::GetBackgroundColor() const {
+  return background_color_;
 }
 
 void UiScene::SetBackgroundDistance(float distance) {

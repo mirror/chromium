@@ -15,6 +15,7 @@
 namespace ash {
 
 class RootWindowController;
+class WmWindow;
 
 // This class implements a widget-based wallpaper.
 // WallpaperWidgetController is owned by RootWindowController.
@@ -35,7 +36,7 @@ class ASH_EXPORT WallpaperWidgetController : public views::WidgetObserver,
   // Move the wallpaper for |root_window| to the specified |container|.
   // The lock screen moves the wallpaper container to hides the user's windows.
   // Returns true if there was something to reparent.
-  bool Reparent(aura::Window* root_window, int container);
+  bool Reparent(WmWindow* root_window, int container);
 
   // Starts wallpaper fade in animation. |root_window_controller| is
   // the root window where the animation will happen. (This is
@@ -55,7 +56,7 @@ class ASH_EXPORT WallpaperWidgetController : public views::WidgetObserver,
   views::Widget* widget_;
 
   // Parent of |widget_|.
-  aura::Window* widget_parent_;
+  WmWindow* widget_parent_;
 
   DISALLOW_COPY_AND_ASSIGN(WallpaperWidgetController);
 };

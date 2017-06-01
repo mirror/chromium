@@ -259,13 +259,12 @@ TCPSocketWin::TCPSocketWin(
 }
 
 TCPSocketWin::~TCPSocketWin() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   Close();
   net_log_.EndEvent(NetLogEventType::SOCKET_ALIVE);
 }
 
 int TCPSocketWin::Open(AddressFamily family) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_EQ(socket_, INVALID_SOCKET);
 
   socket_ = CreatePlatformSocket(ConvertAddressFamily(family), SOCK_STREAM,
@@ -287,7 +286,7 @@ int TCPSocketWin::Open(AddressFamily family) {
 
 int TCPSocketWin::AdoptConnectedSocket(SocketDescriptor socket,
                                        const IPEndPoint& peer_address) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_EQ(socket_, INVALID_SOCKET);
   DCHECK(!core_.get());
 
@@ -307,7 +306,7 @@ int TCPSocketWin::AdoptConnectedSocket(SocketDescriptor socket,
 }
 
 int TCPSocketWin::AdoptUnconnectedSocket(SocketDescriptor socket) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_EQ(socket_, INVALID_SOCKET);
 
   socket_ = socket;
@@ -326,7 +325,7 @@ int TCPSocketWin::AdoptUnconnectedSocket(SocketDescriptor socket) {
 }
 
 int TCPSocketWin::Bind(const IPEndPoint& address) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_NE(socket_, INVALID_SOCKET);
 
   SockaddrStorage storage;
@@ -344,7 +343,7 @@ int TCPSocketWin::Bind(const IPEndPoint& address) {
 }
 
 int TCPSocketWin::Listen(int backlog) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_GT(backlog, 0);
   DCHECK_NE(socket_, INVALID_SOCKET);
   DCHECK_EQ(accept_event_, WSA_INVALID_EVENT);
@@ -369,7 +368,7 @@ int TCPSocketWin::Listen(int backlog) {
 int TCPSocketWin::Accept(std::unique_ptr<TCPSocketWin>* socket,
                          IPEndPoint* address,
                          const CompletionCallback& callback) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(socket);
   DCHECK(address);
   DCHECK(!callback.is_null());
@@ -394,7 +393,7 @@ int TCPSocketWin::Accept(std::unique_ptr<TCPSocketWin>* socket,
 
 int TCPSocketWin::Connect(const IPEndPoint& address,
                           const CompletionCallback& callback) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_NE(socket_, INVALID_SOCKET);
   DCHECK(!waiting_connect_);
 
@@ -427,7 +426,7 @@ int TCPSocketWin::Connect(const IPEndPoint& address,
 }
 
 bool TCPSocketWin::IsConnected() const {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
 
   if (socket_ == INVALID_SOCKET || waiting_connect_)
     return false;
@@ -448,7 +447,7 @@ bool TCPSocketWin::IsConnected() const {
 }
 
 bool TCPSocketWin::IsConnectedAndIdle() const {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
 
   if (socket_ == INVALID_SOCKET || waiting_connect_)
     return false;
@@ -472,7 +471,7 @@ bool TCPSocketWin::IsConnectedAndIdle() const {
 int TCPSocketWin::Read(IOBuffer* buf,
                        int buf_len,
                        const CompletionCallback& callback) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(!core_->read_iobuffer_.get());
   // base::Unretained() is safe because RetryRead() won't be called when |this|
   // is gone.
@@ -490,7 +489,7 @@ int TCPSocketWin::Read(IOBuffer* buf,
 int TCPSocketWin::ReadIfReady(IOBuffer* buf,
                               int buf_len,
                               const CompletionCallback& callback) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_NE(socket_, INVALID_SOCKET);
   DCHECK(!waiting_read_);
   DCHECK(read_if_ready_callback_.is_null());
@@ -524,7 +523,7 @@ int TCPSocketWin::ReadIfReady(IOBuffer* buf,
 int TCPSocketWin::Write(IOBuffer* buf,
                         int buf_len,
                         const CompletionCallback& callback) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_NE(socket_, INVALID_SOCKET);
   DCHECK(!waiting_write_);
   CHECK(write_callback_.is_null());
@@ -573,7 +572,7 @@ int TCPSocketWin::Write(IOBuffer* buf,
 }
 
 int TCPSocketWin::GetLocalAddress(IPEndPoint* address) const {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(address);
 
   SockaddrStorage storage;
@@ -588,7 +587,7 @@ int TCPSocketWin::GetLocalAddress(IPEndPoint* address) const {
 }
 
 int TCPSocketWin::GetPeerAddress(IPEndPoint* address) const {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(address);
   if (!IsConnected())
     return ERR_SOCKET_NOT_CONNECTED;
@@ -632,12 +631,12 @@ int TCPSocketWin::SetExclusiveAddrUse() {
 }
 
 int TCPSocketWin::SetReceiveBufferSize(int32_t size) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   return SetSocketReceiveBufferSize(socket_, size);
 }
 
 int TCPSocketWin::SetSendBufferSize(int32_t size) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   return SetSocketSendBufferSize(socket_, size);
 }
 
@@ -650,7 +649,7 @@ bool TCPSocketWin::SetNoDelay(bool no_delay) {
 }
 
 void TCPSocketWin::Close() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
 
   if (socket_ != INVALID_SOCKET) {
     // Only log the close event if there's actually a socket to close.
@@ -708,7 +707,7 @@ void TCPSocketWin::Close() {
 }
 
 void TCPSocketWin::DetachFromThread() {
-  DETACH_FROM_THREAD(thread_checker_);
+  base::NonThreadSafe::DetachFromThread();
 }
 
 void TCPSocketWin::StartLoggingMultipleConnectAttempts(
@@ -815,7 +814,17 @@ int TCPSocketWin::DoConnect() {
   if (!peer_address_->ToSockAddr(storage.addr, &storage.addr_len))
     return ERR_ADDRESS_INVALID;
 
-  if (!connect(socket_, storage.addr, storage.addr_len)) {
+  int result;
+  int os_error;
+  {
+    // TODO(ricea): Remove ScopedTracker below once crbug.com/436634 is fixed.
+    tracked_objects::ScopedTracker tracking_profile(
+        FROM_HERE_WITH_EXPLICIT_FUNCTION("436634 connect()"));
+    result = connect(socket_, storage.addr, storage.addr_len);
+    os_error = WSAGetLastError();
+  }
+
+  if (!result) {
     // Connected without waiting!
     //
     // The MSDN page for connect says:
@@ -831,7 +840,6 @@ int TCPSocketWin::DoConnect() {
     if (ResetEventIfSignaled(core_->read_overlapped_.hEvent))
       return OK;
   } else {
-    int os_error = WSAGetLastError();
     if (os_error != WSAEWOULDBLOCK) {
       LOG(ERROR) << "connect failed: " << os_error;
       connect_os_error_ = os_error;
@@ -840,6 +848,10 @@ int TCPSocketWin::DoConnect() {
       return rv;
     }
   }
+
+  // TODO(ricea): Remove ScopedTracker below once crbug.com/436634 is fixed.
+  tracked_objects::ScopedTracker tracking_profile(
+      FROM_HERE_WITH_EXPLICIT_FUNCTION("436634 WatchForRead()"));
 
   core_->WatchForRead();
   return ERR_IO_PENDING;

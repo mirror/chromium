@@ -215,14 +215,16 @@ class NativeDialogContainer : public BaseDialogContainer {
   NativeDialogContainer(views::View* dialog_body,
                         const gfx::Size& size,
                         const base::Closure& close_callback)
-      : BaseDialogContainer(dialog_body, close_callback) {
+      : BaseDialogContainer(dialog_body, close_callback), size_(size) {
     SetLayoutManager(new views::FillLayout());
     chrome::RecordDialogCreation(chrome::DialogIdentifier::NATIVE_CONTAINER);
-    SetPreferredSize(size);
   }
   ~NativeDialogContainer() override {}
 
  private:
+  // Overridden from views::View:
+  gfx::Size GetPreferredSize() const override { return size_; }
+
   // Overridden from views::WidgetDelegate:
   views::NonClientFrameView* CreateNonClientFrameView(
       views::Widget* widget) override {
@@ -233,6 +235,8 @@ class NativeDialogContainer : public BaseDialogContainer {
     frame->SetBubbleBorder(std::move(border));
     return frame;
   }
+
+  const gfx::Size size_;
 
   DISALLOW_COPY_AND_ASSIGN(NativeDialogContainer);
 };

@@ -33,22 +33,23 @@ class SERVICES_DEVICE_FINGERPRINT_EXPORT FingerprintChromeOS
 
   // mojom::Fingerprint:
   void GetRecordsForUser(const std::string& user_id,
-                         GetRecordsForUserCallback callback) override;
+                         const GetRecordsForUserCallback& callback) override;
   void StartEnrollSession(const std::string& user_id,
                           const std::string& label) override;
   void CancelCurrentEnrollSession(
-      CancelCurrentEnrollSessionCallback callback) override;
+      const CancelCurrentEnrollSessionCallback& callback) override;
   void RequestRecordLabel(const std::string& record_path,
-                          RequestRecordLabelCallback callback) override;
+                          const RequestRecordLabelCallback& callback) override;
   void SetRecordLabel(const std::string& record_path,
                       const std::string& new_label,
-                      SetRecordLabelCallback callback) override;
+                      const SetRecordLabelCallback& callback) override;
   void RemoveRecord(const std::string& record_path,
-                    RemoveRecordCallback callback) override;
+                    const RemoveRecordCallback& callback) override;
   void StartAuthSession() override;
-  void EndCurrentAuthSession(EndCurrentAuthSessionCallback callback) override;
-  void DestroyAllRecords(DestroyAllRecordsCallback callback) override;
-  void RequestType(RequestTypeCallback callback) override;
+  void EndCurrentAuthSession(
+      const EndCurrentAuthSessionCallback& callback) override;
+  void DestroyAllRecords(const DestroyAllRecordsCallback& callback) override;
+  void RequestType(const RequestTypeCallback& callback) override;
   void AddFingerprintObserver(mojom::FingerprintObserverPtr observer) override;
 
  private:
@@ -67,9 +68,9 @@ class SERVICES_DEVICE_FINGERPRINT_EXPORT FingerprintChromeOS
   void OnFingerprintObserverDisconnected(mojom::FingerprintObserver* observer);
   void OnStartEnrollSession(const dbus::ObjectPath& enroll_path);
   void OnStartAuthSession(const dbus::ObjectPath& auth_path);
-  void OnGetRecordsForUser(GetRecordsForUserCallback callback,
+  void OnGetRecordsForUser(const GetRecordsForUserCallback& callback,
                            const std::vector<dbus::ObjectPath>& record_paths);
-  void OnGetLabelFromRecordPath(GetRecordsForUserCallback callback,
+  void OnGetLabelFromRecordPath(const GetRecordsForUserCallback& callback,
                                 size_t num_records,
                                 const dbus::ObjectPath& record_path,
                                 const std::string& label);

@@ -60,7 +60,7 @@ namespace {
 
 // Tests of the ability to decode some canonical Huffman code,
 // not just the one defined in the RFC 7541.
-class GenericHuffmanTableTest : public ::testing::Test {
+class GenericHuffmanTableTest : public ::testing::TestWithParam<bool> {
  protected:
   GenericHuffmanTableTest() : table_(), peer_(table_) {}
 

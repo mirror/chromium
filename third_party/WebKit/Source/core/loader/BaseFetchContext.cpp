@@ -20,14 +20,19 @@
 
 namespace blink {
 
+BaseFetchContext::BaseFetchContext(ExecutionContext* context)
+    : execution_context_(context) {}
+
 void BaseFetchContext::AddAdditionalRequestHeaders(ResourceRequest& request,
                                                    FetchResourceType type) {
   bool is_main_resource = type == kFetchMainResource;
   if (!is_main_resource) {
     if (!request.DidSetHTTPReferrer()) {
+      DCHECK(execution_context_);
       request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
-          GetReferrerPolicy(), request.Url(), GetOutgoingReferrer()));
-      request.AddHTTPOriginIfNeeded(GetSecurityOrigin());
+          execution_context_->GetReferrerPolicy(), request.Url(),
+          execution_context_->OutgoingReferrer()));
+      request.AddHTTPOriginIfNeeded(execution_context_->GetSecurityOrigin());
     } else {
       DCHECK_EQ(SecurityPolicy::GenerateReferrer(request.GetReferrerPolicy(),
                                                  request.Url(),
@@ -38,9 +43,14 @@ void BaseFetchContext::AddAdditionalRequestHeaders(ResourceRequest& request,
     }
   }
 
-  auto address_space = GetAddressSpace();
-  if (address_space)
-    request.SetExternalRequestStateFromRequestorAddressSpace(*address_space);
+  if (execution_context_) {
+    request.SetExternalRequestStateFromRequestorAddressSpace(
+        execution_context_->GetSecurityContext().AddressSpace());
+  }
+}
+
+SecurityOrigin* BaseFetchContext::GetSecurityOrigin() const {
+  return execution_context_ ? execution_context_->GetSecurityOrigin() : nullptr;
 }
 
 ResourceRequestBlockedReason BaseFetchContext::CanRequest(
@@ -104,28 +114,33 @@ void BaseFetchContext::PrintAccessDeniedMessage(const KURL& url) const {
   if (url.IsNull())
     return;
 
+  DCHECK(execution_context_);
   String message;
-  if (Url().IsNull()) {
+  if (execution_context_->Url().IsNull()) {
     message = "Unsafe attempt to load URL " + url.ElidedString() + '.';
-  } else if (url.IsLocalFile() || Url().IsLocalFile()) {
+  } else if (url.IsLocalFile() || execution_context_->Url().IsLocalFile()) {
     message = "Unsafe attempt to load URL " + url.ElidedString() +
-              " from frame with URL " + Url().ElidedString() +
+              " from frame with URL " +
+              execution_context_->Url().ElidedString() +
               ". 'file:' URLs are treated as unique security origins.\n";
   } else {
     message = "Unsafe attempt to load URL " + url.ElidedString() +
-              " from frame with URL " + Url().ElidedString() +
+              " from frame with URL " +
+              execution_context_->Url().ElidedString() +
               ". Domains, protocols and ports must match.\n";
   }
 
-  AddConsoleMessage(ConsoleMessage::Create(kSecurityMessageSource,
-                                           kErrorMessageLevel, message));
+  execution_context_->AddConsoleMessage(ConsoleMessage::Create(
+      kSecurityMessageSource, kErrorMessageLevel, message));
 }
 
 void BaseFetchContext::AddCSPHeaderIfNecessary(Resource::Type type,
                                                ResourceRequest& request) {
-  const ContentSecurityPolicy* csp = GetContentSecurityPolicy();
-  if (!csp)
+  if (!execution_context_)
     return;
+
+  const ContentSecurityPolicy* csp =
+      execution_context_->GetContentSecurityPolicy();
   if (csp->ShouldSendCSPHeader(type))
     request.AddHTTPHeaderField("CSP", "active");
 }
@@ -142,13 +157,14 @@ ResourceRequestBlockedReason BaseFetchContext::CheckCSPForRequest(
     return ResourceRequestBlockedReason::kNone;
   }
 
-  const ContentSecurityPolicy* csp = GetContentSecurityPolicy();
-  if (csp && !csp->AllowRequest(resource_request.GetRequestContext(), url,
-                                options.content_security_policy_nonce,
-                                options.integrity_metadata,
-                                options.parser_disposition, redirect_status,
-                                reporting_policy, check_header_type)) {
-    return ResourceRequestBlockedReason::CSP;
+  if (execution_context_) {
+    DCHECK(execution_context_->GetContentSecurityPolicy());
+    if (!execution_context_->GetContentSecurityPolicy()->AllowRequest(
+            resource_request.GetRequestContext(), url,
+            options.content_security_policy_nonce, options.integrity_metadata,
+            options.parser_disposition, redirect_status, reporting_policy,
+            check_header_type))
+      return ResourceRequestBlockedReason::CSP;
   }
   return ResourceRequestBlockedReason::kNone;
 }
@@ -165,15 +181,13 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
     return ResourceRequestBlockedReason::kInspector;
 
   SecurityOrigin* security_origin = options.security_origin.Get();
-  if (!security_origin)
-    security_origin = GetSecurityOrigin();
+  if (!security_origin && execution_context_)
+    security_origin = execution_context_->GetSecurityOrigin();
 
   if (origin_restriction != FetchParameters::kNoOriginRestriction &&
       security_origin && !security_origin->CanDisplay(url)) {
-    if (reporting_policy == SecurityViolationReportingPolicy::kReport) {
-      AddConsoleMessage("Not allowed to load local resource: " +
-                        url.GetString());
-    }
+    if (reporting_policy == SecurityViolationReportingPolicy::kReport)
+      ReportLocalLoadFailed(url);
     RESOURCE_LOADING_DVLOG(1) << "ResourceFetcher::requestResource URL was not "
                                  "allowed by SecurityOrigin::CanDisplay";
     return ResourceRequestBlockedReason::kOther;
@@ -246,12 +260,13 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
   WebURLRequest::FrameType frame_type = resource_request.GetFrameType();
   if (frame_type != WebURLRequest::kFrameTypeTopLevel) {
     bool is_subresource = frame_type == WebURLRequest::kFrameTypeNone;
-    const SecurityOrigin* embedding_origin =
-        is_subresource ? GetSecurityOrigin() : GetParentSecurityOrigin();
-    DCHECK(embedding_origin);
+    SecurityContext* embedding_context =
+        is_subresource ? &execution_context_->GetSecurityContext()
+                       : GetParentSecurityContext();
+    DCHECK(embedding_context);
     if (SchemeRegistry::ShouldTreatURLSchemeAsLegacy(url.Protocol()) &&
         !SchemeRegistry::ShouldTreatURLSchemeAsLegacy(
-            embedding_origin->Protocol())) {
+            embedding_context->GetSecurityOrigin()->Protocol())) {
       CountDeprecation(UseCounter::kLegacyProtocolEmbeddedAsSubresource);
 
       // TODO(mkwst): Enabled by default in M59. Drop the runtime-enabled check
@@ -273,16 +288,20 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
   }
 
   // Check for mixed content. We do this second-to-last so that when folks block
-  // mixed content via CSP, they don't get a mixed content warning, but a CSP
-  // warning instead.
+  // mixed content with a CSP policy, they don't get a warning. They'll still
+  // get a warning in the console about CSP blocking the load.
   if (ShouldBlockFetchByMixedContentCheck(resource_request, url,
                                           reporting_policy))
     return ResourceRequestBlockedReason::kMixedContent;
 
-  if (url.PotentiallyDanglingMarkup() && url.ProtocolIsInHTTPFamily()) {
+  if (url.WhitespaceRemoved()) {
     CountDeprecation(UseCounter::kCanRequestURLHTTPContainingNewline);
-    if (RuntimeEnabledFeatures::restrictCanRequestURLCharacterSetEnabled())
-      return ResourceRequestBlockedReason::kOther;
+    if (url.ProtocolIsInHTTPFamily()) {
+      if (RuntimeEnabledFeatures::restrictCanRequestURLCharacterSetEnabled())
+        return ResourceRequestBlockedReason::kOther;
+    } else {
+      CountUsage(UseCounter::kCanRequestURLNonHTTPContainingNewline);
+    }
   }
 
   // Let the client have the final say into whether or not the load should
@@ -299,6 +318,7 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
 }
 
 DEFINE_TRACE(BaseFetchContext) {
+  visitor->Trace(execution_context_);
   FetchContext::Trace(visitor);
 }
 

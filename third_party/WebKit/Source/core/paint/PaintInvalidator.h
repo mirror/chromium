@@ -12,7 +12,7 @@
 
 namespace blink {
 
-struct CORE_EXPORT PaintInvalidatorContext {
+struct PaintInvalidatorContext {
   USING_FAST_MALLOC(PaintInvalidatorContext);
 
  public:
@@ -114,7 +114,7 @@ struct CORE_EXPORT PaintInvalidatorContext {
 
 class PaintInvalidator {
  public:
-  void InvalidatePaint(LocalFrameView&,
+  void InvalidatePaint(FrameView&,
                        const PaintPropertyTreeBuilderContext*,
                        PaintInvalidatorContext&);
   void InvalidatePaint(const LayoutObject&,

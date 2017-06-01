@@ -6,7 +6,11 @@
 
 #include "ash/frame/caption_buttons/frame_caption_button_container_view.h"
 #include "ash/frame/default_header_painter.h"
+#include "ash/session/session_state_delegate.h"
 #include "ash/shell.h"
+#include "ash/shell_port.h"
+#include "ash/wm_window.h"
+#include "ui/gfx/canvas.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/widget/widget.h"
 
@@ -25,6 +29,7 @@ HeaderView::HeaderView(views::Widget* target_widget,
   AddChildView(caption_button_container_);
 
   header_painter_->Init(target_widget_, this, caption_button_container_);
+  UpdateAvatarIcon();
 
   Shell::Get()->AddShellObserver(this);
 }
@@ -60,20 +65,23 @@ int HeaderView::GetMinimumWidth() const {
   return header_painter_->GetMinimumHeaderWidth();
 }
 
-void HeaderView::SetAvatarIcon(const gfx::ImageSkia& avatar) {
-  const bool show = !avatar.isNull();
+void HeaderView::UpdateAvatarIcon() {
+  SessionStateDelegate* delegate = ShellPort::Get()->GetSessionStateDelegate();
+  WmWindow* window = WmWindow::Get(target_widget_->GetNativeWindow());
+  bool show = delegate->ShouldShowAvatar(window);
   if (!show) {
     if (!avatar_icon_)
       return;
     delete avatar_icon_;
     avatar_icon_ = nullptr;
   } else {
-    DCHECK_EQ(avatar.width(), avatar.height());
+    gfx::ImageSkia image = delegate->GetAvatarImageForWindow(window);
+    DCHECK_EQ(image.width(), image.height());
     if (!avatar_icon_) {
       avatar_icon_ = new views::ImageView();
       AddChildView(avatar_icon_);
     }
-    avatar_icon_->SetImage(avatar);
+    avatar_icon_->SetImage(image);
   }
   header_painter_->UpdateLeftHeaderView(avatar_icon_);
   Layout();

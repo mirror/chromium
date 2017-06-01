@@ -6,8 +6,6 @@ package org.chromium.chrome.browser.photo_picker;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,13 +16,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.widget.selection.SelectableListLayout;
 import org.chromium.chrome.browser.widget.selection.SelectionDelegate;
 import org.chromium.ui.PhotoPickerListener;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -64,12 +60,6 @@ public class PickerCategoryView extends RelativeLayout
     // The {@link PickerAdapter} for the RecyclerView.
     private PickerAdapter mPickerAdapter;
 
-    // The layout manager for the RecyclerView.
-    private GridLayoutManager mLayoutManager;
-
-    // The decoration to use for the RecyclerView.
-    private GridSpacingItemDecoration mSpacingDecoration;
-
     // The {@link SelectionDelegate} keeping track of which images are selected.
     private SelectionDelegate<PickerBitmap> mSelectionDelegate;
 
@@ -99,9 +89,6 @@ public class PickerCategoryView extends RelativeLayout
 
     // Whether the connection to the service has been established.
     private boolean mServiceReady;
-
-    // A list of files to use for testing (instead of reading files on disk).
-    private static List<PickerBitmap> sTestFiles;
 
     public PickerCategoryView(Context context) {
         super(context);
@@ -137,30 +124,20 @@ public class PickerCategoryView extends RelativeLayout
         Button doneButton = (Button) toolbar.findViewById(R.id.done);
         doneButton.setOnClickListener(this);
 
-        calculateGridMetrics();
+        Rect appRect = new Rect();
+        ((Activity) context).getWindow().getDecorView().getWindowVisibleDisplayFrame(appRect);
+        calculateGridMetrics(appRect.width());
 
-        mLayoutManager = new GridLayoutManager(mContext, mColumns);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(mContext, mColumns);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mSpacingDecoration = new GridSpacingItemDecoration(mColumns, mPadding);
-        mRecyclerView.addItemDecoration(mSpacingDecoration);
+        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(mColumns, mPadding));
 
         final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / KILOBYTE);
         final int cacheSizeLarge = maxMemory / 2; // 1/2 of the available memory.
         final int cacheSizeSmall = maxMemory / 8; // 1/8th of the available memory.
         mLowResBitmaps = new LruCache<String, Bitmap>(cacheSizeSmall);
         mHighResBitmaps = new LruCache<String, Bitmap>(cacheSizeLarge);
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        calculateGridMetrics();
-        mLayoutManager.setSpanCount(mColumns);
-        mRecyclerView.removeItemDecoration(mSpacingDecoration);
-        mSpacingDecoration = new GridSpacingItemDecoration(mColumns, mPadding);
-        mRecyclerView.addItemDecoration(mSpacingDecoration);
     }
 
     /**
@@ -191,13 +168,6 @@ public class PickerCategoryView extends RelativeLayout
         mDialog = dialog;
         mMultiSelectionAllowed = multiSelectionAllowed;
         mListener = listener;
-
-        mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                mListener.onPickerUserAction(PhotoPickerListener.Action.CANCEL, null);
-            }
-        });
     }
 
     // FileEnumWorkerTask.FilesEnumeratedCallback:
@@ -296,12 +266,9 @@ public class PickerCategoryView extends RelativeLayout
 
     /**
      * Calculates image size and how many columns can fit on-screen.
+     * @param width The total width of the boundary to show the images in.
      */
-    private void calculateGridMetrics() {
-        Rect appRect = new Rect();
-        ((Activity) mContext).getWindow().getDecorView().getWindowVisibleDisplayFrame(appRect);
-
-        int width = appRect.width();
+    private void calculateGridMetrics(int width) {
         int minSize =
                 mContext.getResources().getDimensionPixelSize(R.dimen.photo_picker_tile_min_size);
         mPadding = mContext.getResources().getDimensionPixelSize(R.dimen.photo_picker_tile_gap);
@@ -318,11 +285,6 @@ public class PickerCategoryView extends RelativeLayout
      * Asynchronously enumerates bitmaps on disk.
      */
     private void enumerateBitmaps() {
-        if (sTestFiles != null) {
-            filesEnumeratedCallback(sTestFiles);
-            return;
-        }
-
         if (mWorkerTask != null) {
             mWorkerTask.cancel(true);
         }
@@ -381,16 +343,5 @@ public class PickerCategoryView extends RelativeLayout
 
             outRect.set(left, top, right, bottom);
         }
-    }
-
-    /** Sets a list of files to use as data for the dialog. For testing use only. */
-    @VisibleForTesting
-    public static void setTestFiles(List<PickerBitmap> testFiles) {
-        sTestFiles = new ArrayList<>(testFiles);
-    }
-
-    @VisibleForTesting
-    public SelectionDelegate<PickerBitmap> getSelectionDelegateForTesting() {
-        return mSelectionDelegate;
     }
 }

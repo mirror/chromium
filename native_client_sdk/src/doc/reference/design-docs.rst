@@ -1,5 +1,3 @@
-.. include:: /migration/deprecation.inc
-
 ================
 Design Documents
 ================

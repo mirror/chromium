@@ -30,7 +30,6 @@ namespace {
 
 const char kIsGoogleSearchEngineKey[] = "is_google_search_engine";
 const char kDSESettingKey[] = "dse_setting";
-const char kDSENameKey[] = "dse_name";
 
 // Default implementation of SearchEngineDelegate that is used for production
 // code.
@@ -51,29 +50,22 @@ class SearchEngineDelegateImpl
       template_url_service_->RemoveObserver(this);
   }
 
-  base::string16 GetDSEName() override {
-    if (template_url_service_) {
-      const TemplateURL* template_url =
-          template_url_service_->GetDefaultSearchProvider();
-      if (template_url)
-        return template_url->short_name();
-    }
+  bool IsDSEGoogle() override {
+    if (!template_url_service_)
+      return false;
 
-    return base::string16();
+    const TemplateURL* template_url =
+        template_url_service_->GetDefaultSearchProvider();
+    return template_url &&
+           template_url->HasGoogleBaseURLs(UIThreadSearchTermsData(profile_));
   }
 
-  url::Origin GetDSEOrigin() override {
-    if (template_url_service_) {
-      const TemplateURL* template_url =
-          template_url_service_->GetDefaultSearchProvider();
-      if (template_url) {
-        GURL search_url = template_url->GenerateSearchURL(
-            template_url_service_->search_terms_data());
-        return url::Origin(search_url);
-      }
-    }
+  url::Origin GetGoogleDSECCTLD() override {
+    if (!IsDSEGoogle())
+      return url::Origin();
 
-    return url::Origin();
+    return url::Origin(
+        GURL(UIThreadSearchTermsData(profile_).GoogleBaseURLValue()));
   }
 
   void SetDSEChangedCallback(const base::Closure& callback) override {
@@ -95,7 +87,7 @@ class SearchEngineDelegateImpl
 }  // namespace
 
 struct SearchGeolocationService::PrefValue {
-  base::string16 dse_name;
+  bool is_google_search_engine = false;
   bool setting = false;
 };
 
@@ -135,9 +127,7 @@ KeyedService* SearchGeolocationService::Factory::BuildServiceInstanceFor(
 
 void SearchGeolocationService::Factory::RegisterProfilePrefs(
     user_prefs::PrefRegistrySyncable* registry) {
-  registry->RegisterDictionaryPref(prefs::kDSEGeolocationSetting);
-  registry->RegisterDictionaryPref(
-      prefs::kGoogleDSEGeolocationSettingDeprecated);
+  registry->RegisterDictionaryPref(prefs::kGoogleDSEGeolocationSetting);
 }
 
 SearchGeolocationService::SearchGeolocationService(Profile* profile)
@@ -171,7 +161,7 @@ bool SearchGeolocationService::UseDSEGeolocationSetting(
   if (requesting_origin.scheme() != url::kHttpsScheme)
     return false;
 
-  if (!requesting_origin.IsSameOriginWith(delegate_->GetDSEOrigin()))
+  if (!requesting_origin.IsSameOriginWith(delegate_->GetGoogleDSECCTLD()))
     return false;
 
   // If the content setting for the DSE CCTLD is controlled by policy, and is st
@@ -194,6 +184,7 @@ bool SearchGeolocationService::GetDSEGeolocationSetting() {
 }
 
 void SearchGeolocationService::SetDSEGeolocationSetting(bool setting) {
+  DCHECK(delegate_->IsDSEGoogle());
   PrefValue pref = GetDSEGeolocationPref();
   if (setting == pref.setting)
     return;
@@ -217,57 +208,34 @@ void SearchGeolocationService::Shutdown() {
 SearchGeolocationService::~SearchGeolocationService() {}
 
 void SearchGeolocationService::OnDSEChanged() {
-  base::string16 new_dse_name = delegate_->GetDSEName();
+  bool is_now_google_search_engine = delegate_->IsDSEGoogle();
   PrefValue pref = GetDSEGeolocationPref();
   ContentSetting content_setting = GetCurrentContentSetting();
 
-  if (content_setting == CONTENT_SETTING_BLOCK && pref.setting) {
-    pref.setting = false;
-  } else if (content_setting == CONTENT_SETTING_ALLOW && !pref.setting) {
-    ResetContentSetting();
+  if (is_now_google_search_engine) {
+    if (content_setting == CONTENT_SETTING_BLOCK && pref.setting) {
+      pref.setting = false;
+    } else if (content_setting == CONTENT_SETTING_ALLOW && !pref.setting) {
+      ResetContentSetting();
+    }
   }
 
-  if (new_dse_name != pref.dse_name && pref.setting)
+  if (is_now_google_search_engine && !pref.is_google_search_engine &&
+      pref.setting) {
     SearchGeolocationDisclosureTabHelper::ResetDisclosure(profile_);
+  }
 
-  pref.dse_name = new_dse_name;
+  pref.is_google_search_engine = is_now_google_search_engine;
   SetDSEGeolocationPref(pref);
 }
 
 void SearchGeolocationService::InitializeDSEGeolocationSettingIfNeeded() {
-  // Migrate the pref if it hasn't been migrated yet.
-  if (pref_service_->HasPrefPath(
-          prefs::kGoogleDSEGeolocationSettingDeprecated)) {
-    const base::DictionaryValue* dict = pref_service_->GetDictionary(
-        prefs::kGoogleDSEGeolocationSettingDeprecated);
-
-    bool setting = false;
-    dict->GetBoolean(kDSESettingKey, &setting);
-    bool was_google = false;
-    dict->GetBoolean(kIsGoogleSearchEngineKey, &was_google);
-
-    // Make sure the new setting is configured to match the old one.
-    PrefValue pref;
-    pref.dse_name = delegate_->GetDSEName();
-    pref.setting = setting;
-    SetDSEGeolocationPref(pref);
-
-    // If the setting isn't for Google, reset the disclosure so it will be
-    // shown, even if it was shown previously for Google.
-    if (!was_google && setting)
-      SearchGeolocationDisclosureTabHelper::ResetDisclosure(profile_);
-
-    // Now remove the old setting so there is no more migration.
-    pref_service_->ClearPref(prefs::kGoogleDSEGeolocationSettingDeprecated);
-    return;
-  }
-
   // Initialize the pref if it hasn't been initialized yet.
-  if (!pref_service_->HasPrefPath(prefs::kDSEGeolocationSetting)) {
+  if (!pref_service_->HasPrefPath(prefs::kGoogleDSEGeolocationSetting)) {
     ContentSetting content_setting = GetCurrentContentSetting();
 
     PrefValue pref;
-    pref.dse_name = delegate_->GetDSEName();
+    pref.is_google_search_engine = delegate_->IsDSEGoogle();
     pref.setting = content_setting != CONTENT_SETTING_BLOCK;
     SetDSEGeolocationPref(pref);
 
@@ -295,14 +263,14 @@ void SearchGeolocationService::EnsureDSEGeolocationSettingIsValid() {
 SearchGeolocationService::PrefValue
 SearchGeolocationService::GetDSEGeolocationPref() {
   const base::DictionaryValue* dict =
-      pref_service_->GetDictionary(prefs::kDSEGeolocationSetting);
+      pref_service_->GetDictionary(prefs::kGoogleDSEGeolocationSetting);
 
   PrefValue pref;
-  base::string16 dse_name;
+  bool is_google_search_engine;
   bool setting;
-  if (dict->GetString(kDSENameKey, &dse_name) &&
+  if (dict->GetBoolean(kIsGoogleSearchEngineKey, &is_google_search_engine) &&
       dict->GetBoolean(kDSESettingKey, &setting)) {
-    pref.dse_name = dse_name;
+    pref.is_google_search_engine = is_google_search_engine;
     pref.setting = setting;
   }
 
@@ -312,20 +280,20 @@ SearchGeolocationService::GetDSEGeolocationPref() {
 void SearchGeolocationService::SetDSEGeolocationPref(
     const SearchGeolocationService::PrefValue& pref) {
   base::DictionaryValue dict;
-  dict.SetString(kDSENameKey, pref.dse_name);
+  dict.SetBoolean(kIsGoogleSearchEngineKey, pref.is_google_search_engine);
   dict.SetBoolean(kDSESettingKey, pref.setting);
-  pref_service_->Set(prefs::kDSEGeolocationSetting, dict);
+  pref_service_->Set(prefs::kGoogleDSEGeolocationSetting, dict);
 }
 
 ContentSetting SearchGeolocationService::GetCurrentContentSetting() {
-  url::Origin origin = delegate_->GetDSEOrigin();
+  url::Origin origin = delegate_->GetGoogleDSECCTLD();
   return host_content_settings_map_->GetContentSetting(
       origin.GetURL(), origin.GetURL(), CONTENT_SETTINGS_TYPE_GEOLOCATION,
       std::string());
 }
 
 void SearchGeolocationService::ResetContentSetting() {
-  url::Origin origin = delegate_->GetDSEOrigin();
+  url::Origin origin = delegate_->GetGoogleDSECCTLD();
   host_content_settings_map_->SetContentSettingDefaultScope(
       origin.GetURL(), origin.GetURL(), CONTENT_SETTINGS_TYPE_GEOLOCATION,
       std::string(), CONTENT_SETTING_DEFAULT);
@@ -333,7 +301,7 @@ void SearchGeolocationService::ResetContentSetting() {
 
 bool SearchGeolocationService::IsContentSettingUserSettable() {
   content_settings::SettingInfo info;
-  url::Origin origin = delegate_->GetDSEOrigin();
+  url::Origin origin = delegate_->GetGoogleDSECCTLD();
   std::unique_ptr<base::Value> value =
       host_content_settings_map_->GetWebsiteSetting(
           origin.GetURL(), origin.GetURL(), CONTENT_SETTINGS_TYPE_GEOLOCATION,

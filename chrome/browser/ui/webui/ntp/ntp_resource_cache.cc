@@ -32,6 +32,7 @@
 #include "chrome/grit/browser_resources.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
+#include "chrome/grit/locale_settings.h"
 #include "chrome/grit/theme_resources.h"
 #include "components/bookmarks/common/bookmark_pref_names.h"
 #include "components/google/core/browser/google_util.h"
@@ -498,8 +499,7 @@ void NTPResourceCache::CreateNewTabIncognitoCSS() {
   SkColor color_background =
       tp.HasCustomImage(IDR_THEME_NTP_BACKGROUND)
           ? GetThemeColor(tp, ThemeProperties::COLOR_NTP_BACKGROUND)
-          : ThemeProperties::GetDefaultColor(
-                ThemeProperties::COLOR_NTP_BACKGROUND, true /* incognito */);
+          : SkColorSetRGB(0x32, 0x32, 0x32);
 
   // Generate the replacements.
   ui::TemplateReplacements substitutions;

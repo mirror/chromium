@@ -53,11 +53,6 @@ Resources.IDBDatabaseView = class extends UI.VBox {
         Common.UIString('Delete database'), () => this._deleteDatabase(), Common.UIString('Delete database'));
     footer.appendChild(this._clearButton);
 
-    this._refreshButton = UI.createTextButton(
-        Common.UIString('Refresh database'), () => this._refreshDatabaseButtonClicked(),
-        Common.UIString('Refresh database'));
-    footer.appendChild(this._refreshButton);
-
     this.update(database);
   }
 
@@ -66,21 +61,12 @@ Resources.IDBDatabaseView = class extends UI.VBox {
     this._versionElement.textContent = this._database.version;
   }
 
-  _refreshDatabaseButtonClicked() {
-    this._model.refreshDatabase(this._database.databaseId);
-  }
-
   /**
    * @param {!Resources.IndexedDBModel.Database} database
    */
   update(database) {
     this._database = database;
     this._refreshDatabase();
-    this._updatedForTests();
-  }
-
-  _updatedForTests() {
-    // Sniffed in tests.
   }
 
   _deleteDatabase() {
@@ -145,7 +131,6 @@ Resources.IDBDataView = class extends UI.SimpleView {
     columns.push({id: 'value', title: Common.UIString('Value'), sortable: false});
 
     var dataGrid = new DataGrid.DataGrid(columns);
-    dataGrid.setStriped(true);
     return dataGrid;
   }
 
@@ -303,7 +288,6 @@ Resources.IDBDataView = class extends UI.SimpleView {
 
       this._pageBackButton.setEnabled(!!skipCount);
       this._pageForwardButton.setEnabled(hasMore);
-      this._updatedDataForTests();
     }
 
     var idbKeyRange = key ? window.IDBKeyRange.lowerBound(key) : null;
@@ -315,10 +299,6 @@ Resources.IDBDataView = class extends UI.SimpleView {
       this._model.loadObjectStoreData(
           this._databaseId, this._objectStore.name, idbKeyRange, skipCount, pageSize, callback.bind(this));
     }
-  }
-
-  _updatedDataForTests() {
-    // Sniffed in tests.
   }
 
   /**

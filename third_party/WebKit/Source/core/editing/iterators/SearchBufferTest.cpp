@@ -32,7 +32,7 @@
 
 #include "core/dom/Range.h"
 #include "core/editing/EditingTestBase.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 
 namespace blink {
 

@@ -60,7 +60,7 @@ public class SignInPromo extends OptionalLeaf
 
     @Override
     @ItemViewType
-    protected int getItemViewType() {
+    public int getItemViewType() {
         return ItemViewType.PROMO;
     }
 
@@ -74,15 +74,10 @@ public class SignInPromo extends OptionalLeaf
     }
 
     @Override
-    protected void onBindViewHolder(NewTabPageViewHolder holder) {
+    public void onBindViewHolder(NewTabPageViewHolder holder) {
         assert holder instanceof StatusCardViewHolder;
         ((StatusCardViewHolder) holder).onBindViewHolder(this);
         mImpressionTracker.reset(mImpressionTracker.wasTriggered() ? null : holder.itemView);
-    }
-
-    @Override
-    protected void visitOptionalItem(NodeVisitor visitor) {
-        visitor.visitSignInPromo();
     }
 
     @Override

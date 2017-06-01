@@ -31,8 +31,8 @@ class VerticalCandidateLabel : public views::Label {
   // views::Label:
   // Returns the preferred size, but guarantees that the width has at
   // least kMinCandidateLabelWidth pixels.
-  gfx::Size CalculatePreferredSize() const override {
-    gfx::Size size = Label::CalculatePreferredSize();
+  gfx::Size GetPreferredSize() const override {
+    gfx::Size size = Label::GetPreferredSize();
     size.SetToMax(gfx::Size(kMinCandidateLabelWidth, 0));
     size.SetToMin(gfx::Size(kMaxCandidateLabelWidth, size.height()));
     return size;
@@ -282,7 +282,7 @@ void CandidateView::Layout() {
   annotation_label_->SetBounds(x, 0, right - x, height());
 }
 
-gfx::Size CandidateView::CalculatePreferredSize() const {
+gfx::Size CandidateView::GetPreferredSize() const {
   const int padding_width =
       orientation_ == ui::CandidateWindow::VERTICAL ? 4 : 6;
   gfx::Size size;

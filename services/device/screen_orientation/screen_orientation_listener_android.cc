@@ -55,11 +55,4 @@ void ScreenOrientationListenerAndroid::Stop() {
   }
 }
 
-void ScreenOrientationListenerAndroid::IsAutoRotateEnabledByUser(
-    IsAutoRotateEnabledByUserCallback callback) {
-  std::move(callback).Run(
-      Java_ScreenOrientationListener_isAutoRotateEnabledByUser(
-          base::android::AttachCurrentThread()));
-}
-
 }  // namespace device

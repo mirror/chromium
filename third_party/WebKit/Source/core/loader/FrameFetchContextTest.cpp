@@ -34,7 +34,7 @@
 #include "core/dom/Document.h"
 #include "core/frame/FrameOwner.h"
 #include "core/frame/FrameTypes.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLIFrameElement.h"
 #include "core/loader/DocumentLoader.h"
@@ -128,8 +128,7 @@ class FrameFetchContextTest : public ::testing::Test {
     child_client = StubLocalFrameClientWithParent::Create(document->GetFrame());
     child_frame = LocalFrame::Create(
         child_client.Get(), *document->GetFrame()->GetPage(), owner.Get());
-    child_frame->SetView(
-        LocalFrameView::Create(*child_frame, IntSize(500, 500)));
+    child_frame->SetView(FrameView::Create(*child_frame, IntSize(500, 500)));
     child_frame->Init();
     child_document = child_frame->GetDocument();
     FrameFetchContext* child_fetch_context = static_cast<FrameFetchContext*>(
@@ -292,7 +291,7 @@ class FrameFetchContextModifyRequestTest : public FrameFetchContextTest {
     fetch_context->ModifyRequestForCSP(resource_request);
 
     EXPECT_EQ(expected_required_csp,
-              resource_request.HttpHeaderField(HTTPNames::Sec_Required_CSP));
+              resource_request.HttpHeaderField(HTTPNames::Required_CSP));
   }
 
   void SetFrameOwnerBasedOnFrameType(WebURLRequest::FrameType frame_type,
@@ -524,24 +523,6 @@ class FrameFetchContextHintsTest : public FrameFetchContextTest {
   }
 };
 
-TEST_F(FrameFetchContextHintsTest, MonitorDeviceRAMHints) {
-  ExpectHeader("http://www.example.com/1.gif", "device-ram", false, "");
-  ClientHintsPreferences preferences;
-  preferences.SetShouldSendDeviceRAM(true);
-  document->GetClientHintsPreferences().UpdateFrom(preferences);
-  MemoryCoordinator::SetPhysicalMemoryMBForTesting(4096);
-  ExpectHeader("http://www.example.com/1.gif", "device-ram", true, "4");
-  MemoryCoordinator::SetPhysicalMemoryMBForTesting(2048);
-  ExpectHeader("http://www.example.com/1.gif", "device-ram", true, "2");
-  MemoryCoordinator::SetPhysicalMemoryMBForTesting(64385);
-  ExpectHeader("http://www.example.com/1.gif", "device-ram", true, "32");
-  MemoryCoordinator::SetPhysicalMemoryMBForTesting(768);
-  ExpectHeader("http://www.example.com/1.gif", "device-ram", true, "0.5");
-  ExpectHeader("http://www.example.com/1.gif", "DPR", false, "");
-  ExpectHeader("http://www.example.com/1.gif", "Width", false, "");
-  ExpectHeader("http://www.example.com/1.gif", "Viewport-Width", false, "");
-}
-
 TEST_F(FrameFetchContextHintsTest, MonitorDPRHints) {
   ExpectHeader("http://www.example.com/1.gif", "DPR", false, "");
   ClientHintsPreferences preferences;
@@ -582,41 +563,18 @@ TEST_F(FrameFetchContextHintsTest, MonitorViewportWidthHints) {
 }
 
 TEST_F(FrameFetchContextHintsTest, MonitorAllHints) {
-  ExpectHeader("http://www.example.com/1.gif", "device-ram", false, "");
   ExpectHeader("http://www.example.com/1.gif", "DPR", false, "");
   ExpectHeader("http://www.example.com/1.gif", "Viewport-Width", false, "");
   ExpectHeader("http://www.example.com/1.gif", "Width", false, "");
 
   ClientHintsPreferences preferences;
-  preferences.SetShouldSendDeviceRAM(true);
   preferences.SetShouldSendDPR(true);
   preferences.SetShouldSendResourceWidth(true);
   preferences.SetShouldSendViewportWidth(true);
-  MemoryCoordinator::SetPhysicalMemoryMBForTesting(4096);
   document->GetClientHintsPreferences().UpdateFrom(preferences);
-  ExpectHeader("http://www.example.com/1.gif", "device-ram", true, "4");
   ExpectHeader("http://www.example.com/1.gif", "DPR", true, "1");
   ExpectHeader("http://www.example.com/1.gif", "Width", true, "400", 400);
   ExpectHeader("http://www.example.com/1.gif", "Viewport-Width", true, "500");
-}
-
-TEST_F(FrameFetchContextHintsTest, ClientHintsDeviceRAM) {
-  EXPECT_EQ(0.125, FrameFetchContext::ClientHintsDeviceRAM(128));  // 128MB
-  EXPECT_EQ(0.25, FrameFetchContext::ClientHintsDeviceRAM(256));   // 256MB
-  EXPECT_EQ(0.25, FrameFetchContext::ClientHintsDeviceRAM(510));   // <512MB
-  EXPECT_EQ(0.5, FrameFetchContext::ClientHintsDeviceRAM(512));    // 512MB
-  EXPECT_EQ(0.5, FrameFetchContext::ClientHintsDeviceRAM(640));    // 512+128MB
-  EXPECT_EQ(0.5, FrameFetchContext::ClientHintsDeviceRAM(768));    // 512+256MB
-  EXPECT_EQ(0.5, FrameFetchContext::ClientHintsDeviceRAM(1000));   // <1GB
-  EXPECT_EQ(1, FrameFetchContext::ClientHintsDeviceRAM(1024));     // 1GB
-  EXPECT_EQ(1, FrameFetchContext::ClientHintsDeviceRAM(1536));     // 1.5GB
-  EXPECT_EQ(1, FrameFetchContext::ClientHintsDeviceRAM(2000));     // <2GB
-  EXPECT_EQ(2, FrameFetchContext::ClientHintsDeviceRAM(2048));     // 2GB
-  EXPECT_EQ(4, FrameFetchContext::ClientHintsDeviceRAM(5120));     // 5GB
-  EXPECT_EQ(8, FrameFetchContext::ClientHintsDeviceRAM(8192));     // 8GB
-  EXPECT_EQ(16, FrameFetchContext::ClientHintsDeviceRAM(16384));   // 16GB
-  EXPECT_EQ(32, FrameFetchContext::ClientHintsDeviceRAM(32768));   // 32GB
-  EXPECT_EQ(32, FrameFetchContext::ClientHintsDeviceRAM(64385));   // <64GB
 }
 
 TEST_F(FrameFetchContextTest, MainResourceCachePolicy) {

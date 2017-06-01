@@ -31,20 +31,21 @@ class WindowSelectorDelegate;
 class WindowSelectorItem;
 class WindowSelectorTest;
 class WindowGrid;
+class WmWindow;
 
 // The WindowSelector shows a grid of all of your windows, allowing to select
 // one by clicking or tapping on it.
 class ASH_EXPORT WindowSelector : public display::DisplayObserver,
                                   public aura::WindowObserver,
-                                  public ::wm::ActivationChangeObserver,
+                                  public aura::client::ActivationChangeObserver,
                                   public views::TextfieldController {
  public:
   // Returns true if the window can be selected in overview mode.
-  static bool IsSelectable(aura::Window* window);
+  static bool IsSelectable(WmWindow* window);
 
   enum Direction { LEFT, UP, RIGHT, DOWN };
 
-  using WindowList = std::vector<aura::Window*>;
+  using WindowList = std::vector<WmWindow*>;
 
   explicit WindowSelector(WindowSelectorDelegate* delegate);
   ~WindowSelector() override;
@@ -95,7 +96,7 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
   void OnWindowHierarchyChanged(const HierarchyChangeParams& params) override;
   void OnWindowDestroying(aura::Window* window) override;
 
-  // wm::ActivationChangeObserver:
+  // aura::client::ActivationChangeObserver:
   void OnWindowActivated(ActivationReason reason,
                          aura::Window* gained_active,
                          aura::Window* lost_active) override;
@@ -111,8 +112,8 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
  private:
   friend class WindowSelectorTest;
 
-  // Returns the aura::Window for |text_filter_widget_|.
-  aura::Window* GetTextFilterWidgetWindow();
+  // Returns the WmWindow for |text_filter_widget_|.
+  WmWindow* GetTextFilterWidgetWindow();
 
   // Position all of the windows in the overview.
   void PositionWindows(bool animate);
@@ -133,7 +134,7 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
   void RemoveAllObservers();
 
   // Tracks observed windows.
-  std::set<aura::Window*> observed_windows_;
+  std::set<WmWindow*> observed_windows_;
 
   // Weak pointer to the selector delegate which will be called when a
   // selection is made.
@@ -142,7 +143,7 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
   // A weak pointer to the window which was focused on beginning window
   // selection. If window selection is canceled the focus should be restored to
   // this window.
-  aura::Window* restore_focus_window_;
+  WmWindow* restore_focus_window_;
 
   // True when performing operations that may cause window activations. This is
   // used to prevent handling the resulting expected activation.

@@ -7,8 +7,8 @@ package org.chromium.net.urlconnection;
 import android.support.test.filters.SmallTest;
 
 import org.chromium.base.test.util.Feature;
-import org.chromium.net.CronetEngine;
 import org.chromium.net.CronetTestBase;
+import org.chromium.net.CronetTestFramework;
 import org.chromium.net.NativeTestServer;
 import org.chromium.net.NetworkException;
 
@@ -34,7 +34,11 @@ public class CronetChunkedOutputStreamTest extends CronetTestBase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        setStreamHandlerFactory(new CronetEngine.Builder(getContext()).build());
+        String[] commandLineArgs = {
+                CronetTestFramework.LIBRARY_INIT_KEY,
+                CronetTestFramework.LibraryInitType.HTTP_URL_CONNECTION,
+        };
+        startCronetTestFrameworkWithUrlAndCommandLineArgs(null, commandLineArgs);
         assertTrue(NativeTestServer.startNativeTestServer(getContext()));
     }
 

@@ -26,16 +26,11 @@ class MediaSinkServiceBase : public MediaSinkService {
   // Called when |finish_timer_| expires.
   void OnFetchCompleted();
 
-  // Helper function to start |finish_timer_|. Create a new timer if none
-  // exists.
+  // Helper function to start |finish_timer_|.
   void StartTimer();
 
-  // Helper function to stop |finish_timer_|.
-  void StopTimer();
-
-  // Helper function to restart |finish_timer|. No-op if timer does not exist or
-  // timer is currently running.
-  void RestartTimer();
+  // Timer for finishing fetching.
+  std::unique_ptr<base::Timer> finish_timer_;
 
   // Time out value for |finish_timer_|
   int fetch_complete_timeout_secs_;
@@ -50,9 +45,6 @@ class MediaSinkServiceBase : public MediaSinkService {
   friend class MediaSinkServiceBaseTest;
   FRIEND_TEST_ALL_PREFIXES(MediaSinkServiceBaseTest,
                            TestFetchCompleted_SameSink);
-
-  // Timer for finishing fetching.
-  std::unique_ptr<base::Timer> finish_timer_;
 };
 
 }  // namespace media_router

@@ -51,7 +51,7 @@ public class PaymentRequestContactDetailsAndFreeShippingTest implements MainActi
                 true, "Jon Doe", "Google", "340 Main St", "CA", "Los Angeles", "", "90291", "",
                 "US", "555-555-5555", "jon.doe@google.com", "en-US"));
         helper.setCreditCard(new CreditCard("", "https://example.com", true, true, "Jon Doe",
-                "4111111111111111", "1111", "12", "2050", "visa", R.drawable.visa_card,
+                "4111111111111111", "1111", "12", "2050", "visa", R.drawable.pr_visa,
                 billingAddressId, "" /* serverId */));
     }
 
@@ -90,14 +90,18 @@ public class PaymentRequestContactDetailsAndFreeShippingTest implements MainActi
         mPaymentRequestTestRule.triggerUIAndWait(mPaymentRequestTestRule.getReadyToPay());
 
         // Make sure that only the appropriate enum value was logged.
-        for (int i = 0; i < RequestedInformation.MAX; ++i) {
-            Assert.assertEquals((i
-                                                        == (RequestedInformation.EMAIL
-                                                                   | RequestedInformation.PHONE
-                                                                   | RequestedInformation.SHIPPING
-                                                                   | RequestedInformation.NAME)
-                                                ? 1
-                                                : 0),
+        for (int i = 0; i < PaymentRequestMetrics.REQUESTED_INFORMATION_MAX; ++i) {
+            Assert.assertEquals(
+                    (i
+                                            == (PaymentRequestMetrics.REQUESTED_INFORMATION_EMAIL
+                                                       | PaymentRequestMetrics
+                                                                 .REQUESTED_INFORMATION_PHONE
+                                                       | PaymentRequestMetrics
+                                                                 .REQUESTED_INFORMATION_SHIPPING
+                                                       | PaymentRequestMetrics
+                                                                 .REQUESTED_INFORMATION_NAME)
+                                    ? 1
+                                    : 0),
                     RecordHistogram.getHistogramValueCountForTesting(
                             "PaymentRequest.RequestedInformation", i));
         }

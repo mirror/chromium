@@ -9,7 +9,6 @@ import android.test.InstrumentationTestCase;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.TestFileUtil;
 
@@ -44,7 +43,6 @@ public class CrashDumpManagerTest extends InstrumentationTestCase {
 
     @SmallTest
     @Feature({"Android-AppBase"})
-    @DisabledTest // Flaky, crbug.com/725379.
     public void testUploadMinidump_NoCallback() throws IOException {
         File minidump = new File(mTempDir, "mini.dmp");
         assertTrue(minidump.createNewFile());
@@ -54,7 +52,6 @@ public class CrashDumpManagerTest extends InstrumentationTestCase {
 
     @SmallTest
     @Feature({"Android-AppBase"})
-    @DisabledTest // Flaky, crbug.com/725379.
     public void testUploadMinidump_NullMinidumpPath() {
         registerUploadCallback(new CrashDumpManager.UploadMinidumpCallback() {
             @Override
@@ -66,9 +63,8 @@ public class CrashDumpManagerTest extends InstrumentationTestCase {
         CrashDumpManager.tryToUploadMinidump(null);
     }
 
-    // @SmallTest
-    // @Feature({"Android-AppBase"})
-    @DisabledTest // Flaky, crbug.com/726976.
+    @SmallTest
+    @Feature({"Android-AppBase"})
     public void testUploadMinidump_FileDoesntExist() {
         registerUploadCallback(new CrashDumpManager.UploadMinidumpCallback() {
             @Override

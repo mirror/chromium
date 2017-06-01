@@ -8,7 +8,7 @@
  *
  * @constructor
  */
-function AutomationPredicate() {}
+function AutomationPredicate() {};
 
 /**
  * Returns true if |node| is a subtreeLeaf, meaning that |node| is either
@@ -122,4 +122,4 @@ AutomationPredicate.isInteresting = function(node) {
 
   // The general rule that applies to everything.
   return state[chrome.automation.StateType.FOCUSABLE] === true;
-};
+}

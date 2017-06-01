@@ -35,25 +35,24 @@
 
 namespace {
 
-constexpr char kActivity[] = "activity";
-constexpr char kIconResourceId[] = "icon_resource_id";
-constexpr char kInstallTime[] = "install_time";
-constexpr char kIntentUri[] = "intent_uri";
-constexpr char kInvalidatedIcons[] = "invalidated_icons";
-constexpr char kLastBackupAndroidId[] = "last_backup_android_id";
-constexpr char kLastBackupTime[] = "last_backup_time";
-constexpr char kLastLaunchTime[] = "lastlaunchtime";
-constexpr char kLaunchable[] = "launchable";
-constexpr char kName[] = "name";
-constexpr char kNotificationsEnabled[] = "notifications_enabled";
-constexpr char kOrientationLock[] = "orientation_lock";
-constexpr char kPackageName[] = "package_name";
-constexpr char kPackageVersion[] = "package_version";
-constexpr char kSticky[] = "sticky";
-constexpr char kShortcut[] = "shortcut";
-constexpr char kShouldSync[] = "should_sync";
-constexpr char kSystem[] = "system";
-constexpr char kUninstalled[] = "uninstalled";
+const char kActivity[] = "activity";
+const char kIconResourceId[] = "icon_resource_id";
+const char kInstallTime[] = "install_time";
+const char kIntentUri[] = "intent_uri";
+const char kLastBackupAndroidId[] = "last_backup_android_id";
+const char kLastBackupTime[] = "last_backup_time";
+const char kLastLaunchTime[] = "lastlaunchtime";
+const char kLaunchable[] = "launchable";
+const char kName[] = "name";
+const char kNotificationsEnabled[] = "notifications_enabled";
+const char kOrientationLock[] = "orientation_lock";
+const char kPackageName[] = "package_name";
+const char kPackageVersion[] = "package_version";
+const char kSticky[] = "sticky";
+const char kShortcut[] = "shortcut";
+const char kShouldSync[] = "should_sync";
+const char kSystem[] = "system";
+const char kUninstalled[] = "uninstalled";
 
 constexpr base::TimeDelta kDetectDefaultAppAvailabilityTimeout =
     base::TimeDelta::FromSeconds(15);
@@ -115,7 +114,9 @@ class SetNotificationsEnabledDeferred {
   PrefService* const prefs_;
 };
 
-bool InstallIconFromFileThread(const base::FilePath& icon_path,
+bool InstallIconFromFileThread(const std::string& app_id,
+                               ui::ScaleFactor scale_factor,
+                               const base::FilePath& icon_path,
                                const std::vector<uint8_t>& content_png) {
   DCHECK(!content_png.empty());
 
@@ -127,10 +128,9 @@ bool InstallIconFromFileThread(const base::FilePath& icon_path,
   if (wrote != static_cast<int>(content_png.size())) {
     VLOG(2) << "Failed to write ARC icon file: " << icon_path.MaybeAsASCII()
             << ".";
-    if (!base::DeleteFile(icon_path, false)) {
+    if (!base::DeleteFile(icon_path, false))
       VLOG(2) << "Couldn't delete broken icon file" << icon_path.MaybeAsASCII()
               << ".";
-    }
     return false;
   }
 
@@ -362,8 +362,6 @@ void ArcAppListPrefs::ClearIconRequestRecord() {
 
 void ArcAppListPrefs::RequestIcon(const std::string& app_id,
                                   ui::ScaleFactor scale_factor) {
-  DCHECK_NE(app_id, arc::kPlayStoreAppId);
-
   // ArcSessionManager can be terminated during test tear down, before callback
   // into this function.
   // TODO(victorhsieh): figure out the best way/place to handle this situation.
@@ -902,14 +900,13 @@ void ArcAppListPrefs::AddAppAndShortcut(
   }
 
   if (app_ready) {
-    int icon_update_mask = 0;
-    app_dict->GetInteger(kInvalidatedIcons, &icon_update_mask);
     auto pending_icons = request_icon_recorded_.find(app_id);
-    if (pending_icons != request_icon_recorded_.end())
-      icon_update_mask |= pending_icons->second;
-    for (ui::ScaleFactor scale_factor : ui::GetSupportedScaleFactors()) {
-      if (icon_update_mask & (1 << scale_factor))
-        RequestIcon(app_id, scale_factor);
+    if (pending_icons != request_icon_recorded_.end()) {
+      for (uint32_t i = ui::SCALE_FACTOR_100P; i < ui::NUM_SCALE_FACTORS; ++i) {
+        if (pending_icons->second & (1 << i)) {
+          RequestIcon(app_id, static_cast<ui::ScaleFactor>(i));
+        }
+      }
     }
 
     bool deferred_notifications_enabled;
@@ -1059,6 +1056,13 @@ void ArcAppListPrefs::MaybeSetDefaultAppLoadingTimeout() {
   }
 }
 
+void ArcAppListPrefs::OnTaskOrientationLockRequested(
+    int32_t task_id,
+    const arc::mojom::OrientationLock orientation_lock) {
+  for (auto& observer : observer_list_)
+    observer.OnTaskOrientationLockRequested(task_id, orientation_lock);
+}
+
 void ArcAppListPrefs::AddApp(const arc::mojom::AppInfo& app_info) {
   if ((app_info.name.empty() || app_info.package_name.empty() ||
        app_info.activity.empty())) {
@@ -1094,23 +1098,8 @@ void ArcAppListPrefs::OnPackageAppListRefreshed(
   std::unordered_set<std::string> apps_to_remove =
       GetAppsForPackage(package_name);
   default_apps_.MaybeMarkPackageUninstalled(package_name, false);
-
-  int invalidated_icon_mask = 0;
-  for (ui::ScaleFactor scale_factor : ui::GetSupportedScaleFactors())
-    invalidated_icon_mask |= (1 << scale_factor);
-
   for (const auto& app : apps) {
-    const std::string app_id = GetAppId(app->package_name, app->activity);
-    apps_to_remove.erase(app_id);
-
-    // Mark app icons as invalidated. Ignore Play Store app since we provide its
-    // icon in Chrome resources.
-    if (app_id != arc::kPlayStoreAppId) {
-      ScopedArcPrefUpdate update(prefs_, app_id, prefs::kArcApps);
-      base::DictionaryValue* app_dict = update.Get();
-      app_dict->SetInteger(kInvalidatedIcons, invalidated_icon_mask);
-    }
-
+    apps_to_remove.erase(GetAppId(app->package_name, app->activity));
     AddApp(*app);
   }
 
@@ -1272,24 +1261,9 @@ void ArcAppListPrefs::OnTaskCreated(int32_t task_id,
   }
 }
 
-void ArcAppListPrefs::OnTaskDescriptionUpdated(
-    int32_t task_id,
-    const std::string& label,
-    const std::vector<uint8_t>& icon_png_data) {
-  for (auto& observer : observer_list_)
-    observer.OnTaskDescriptionUpdated(task_id, label, icon_png_data);
-}
-
 void ArcAppListPrefs::OnTaskDestroyed(int32_t task_id) {
   for (auto& observer : observer_list_)
     observer.OnTaskDestroyed(task_id);
-}
-
-void ArcAppListPrefs::OnTaskOrientationLockRequested(
-    int32_t task_id,
-    const arc::mojom::OrientationLock orientation_lock) {
-  for (auto& observer : observer_list_)
-    observer.OnTaskOrientationLockRequested(task_id, orientation_lock);
 }
 
 void ArcAppListPrefs::OnTaskSetActive(int32_t task_id) {
@@ -1458,10 +1432,11 @@ base::Time ArcAppListPrefs::GetInstallTime(const std::string& app_id) const {
 void ArcAppListPrefs::InstallIcon(const std::string& app_id,
                                   ui::ScaleFactor scale_factor,
                                   const std::vector<uint8_t>& content_png) {
-  const base::FilePath icon_path = GetIconPath(app_id, scale_factor);
+  base::FilePath icon_path = GetIconPath(app_id, scale_factor);
   base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-      base::Bind(&InstallIconFromFileThread, icon_path, content_png),
+      base::Bind(&InstallIconFromFileThread, app_id, scale_factor, icon_path,
+                 content_png),
       base::Bind(&ArcAppListPrefs::OnIconInstalled,
                  weak_ptr_factory_.GetWeakPtr(), app_id, scale_factor));
 }
@@ -1472,13 +1447,6 @@ void ArcAppListPrefs::OnIconInstalled(const std::string& app_id,
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   if (!install_succeed)
     return;
-
-  ScopedArcPrefUpdate update(prefs_, app_id, prefs::kArcApps);
-  int invalidated_icon_mask = 0;
-  base::DictionaryValue* app_dict = update.Get();
-  app_dict->GetInteger(kInvalidatedIcons, &invalidated_icon_mask);
-  invalidated_icon_mask &= (~(1 << scale_factor));
-  app_dict->SetInteger(kInvalidatedIcons, invalidated_icon_mask);
 
   for (auto& observer : observer_list_)
     observer.OnAppIconUpdated(app_id, scale_factor);

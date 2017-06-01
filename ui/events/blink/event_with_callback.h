@@ -21,17 +21,18 @@ class EventWithCallback {
   struct OriginalEventWithCallback {
     OriginalEventWithCallback(
         WebScopedInputEvent event,
-        InputHandlerProxy::EventDispositionCallback callback);
+        const InputHandlerProxy::EventDispositionCallback& callback);
     ~OriginalEventWithCallback();
     WebScopedInputEvent event_;
     InputHandlerProxy::EventDispositionCallback callback_;
   };
   using OriginalEventList = std::list<OriginalEventWithCallback>;
 
-  EventWithCallback(WebScopedInputEvent event,
-                    const LatencyInfo& latency,
-                    base::TimeTicks timestamp_now,
-                    InputHandlerProxy::EventDispositionCallback callback);
+  EventWithCallback(
+      WebScopedInputEvent event,
+      const LatencyInfo& latency,
+      base::TimeTicks timestamp_now,
+      const InputHandlerProxy::EventDispositionCallback& callback);
   EventWithCallback(WebScopedInputEvent event,
                     const LatencyInfo& latency,
                     base::TimeTicks creation_timestamp,

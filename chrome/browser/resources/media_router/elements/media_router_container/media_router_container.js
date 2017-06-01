@@ -2,11 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/**
- * This Polymer element contains the entire media router interface. It handles
- * hiding and showing specific components.
- * @implements {MediaRouterContainerInterface}
- */
+// This Polymer element contains the entire media router interface. It handles
+// hiding and showing specific components.
 Polymer({
   is: 'media-router-container',
 
@@ -390,16 +387,6 @@ Polymer({
     },
 
     /**
-     * Whether the WebUI route controls should be shown instead of the
-     * extensionview in the route details view.
-     * @type {boolean}
-     */
-    useWebUiRouteControls: {
-      type: Boolean,
-      value: false,
-    },
-
-    /**
      * Whether the user has explicitly selected a cast mode.
      * @private {boolean}
      */
@@ -674,7 +661,7 @@ Polymer({
    */
   computeCastModeIcon_: function(castMode) {
     switch (castMode.type) {
-      case media_router.CastModeType.PRESENTATION:
+      case media_router.CastModeType.DEFAULT:
         return 'media-router:web';
       case media_router.CastModeType.TAB_MIRROR:
         return 'media-router:tab';
@@ -687,14 +674,13 @@ Polymer({
 
   /**
    * @param {!Array<!media_router.CastMode>} castModeList The current list of
-   *     cast modes.
-   * @return {!Array<!media_router.CastMode>} The list of PRESENTATION cast
-   *     modes.
+   *      cast modes.
+   * @return {!Array<!media_router.CastMode>} The list of default cast modes.
    * @private
    */
-  computePresentationCastModeList_: function(castModeList) {
+  computeDefaultCastModeList_: function(castModeList) {
     return castModeList.filter(function(mode) {
-      return mode.type == media_router.CastModeType.PRESENTATION;
+      return mode.type == media_router.CastModeType.DEFAULT;
     });
   },
 
@@ -811,13 +797,13 @@ Polymer({
   /**
    * @param {!Array<!media_router.CastMode>} castModeList The current list of
    *     cast modes.
-   * @return {!Array<!media_router.CastMode>} The list of non-PRESENTATION cast
+   * @return {!Array<!media_router.CastMode>} The list of non-default cast
    *     modes.
    * @private
    */
-  computeNonPresentationCastModeList_: function(castModeList) {
+  computeNonDefaultCastModeList_: function(castModeList) {
     return castModeList.filter(function(mode) {
-      return mode.type != media_router.CastModeType.PRESENTATION;
+      return mode.type != media_router.CastModeType.DEFAULT;
     });
   },
 
@@ -877,8 +863,8 @@ Polymer({
    * @return {boolean} Whether the search results list should be hidden.
    * @private
    */
-  computeSearchResultsHidden_: function(
-      searchResultsToShow, isSearchListHidden) {
+  computeSearchResultsHidden_: function(searchResultsToShow,
+                                        isSearchListHidden) {
     return isSearchListHidden || searchResultsToShow.length == 0;
   },
 
@@ -889,7 +875,7 @@ Polymer({
    * @private
    */
   computeShareScreenSubheadingHidden_: function(castModeList) {
-    return this.computeNonPresentationCastModeList_(castModeList).length == 0;
+    return this.computeNonDefaultCastModeList_(castModeList).length == 0;
   },
 
   /**
@@ -1094,22 +1080,14 @@ Polymer({
    * filter action here.
    * @param {?media_router.MediaRouterView} currentView The current view of the
    *     dialog.
-   * @param {?media_router.MediaRouterView} previousView The previous
-   *     |currentView|.
    * @private
    */
-  currentViewChanged_: function(currentView, previousView) {
+  currentViewChanged_: function(currentView) {
     if (currentView == media_router.MediaRouterView.FILTER) {
       this.reportFilterOnInput_ = true;
       this.maybeReportFilter_();
     }
     this.updateElementPositioning_();
-
-    if (previousView == media_router.MediaRouterView.ROUTE_DETAILS) {
-      media_router.browserApi.onMediaControllerClosed();
-      if (this.$$('route-details'))
-        this.$$('route-details').onClosed();
-    }
   },
 
   /**
@@ -1598,10 +1576,10 @@ Polymer({
    */
   onCastModeClick_: function(event) {
     // The clicked cast mode can come from one of two lists,
-    // presentationCastModeList and nonPresentationCastModeList.
+    // defaultCastModeList and nonDefaultCastModeList.
     var clickedMode =
-        this.$$('#presentationCastModeList').itemForElement(event.target) ||
-        this.$$('#nonPresentationCastModeList').itemForElement(event.target);
+        this.$$('#defaultCastModeList').itemForElement(event.target) ||
+            this.$$('#nonDefaultCastModeList').itemForElement(event.target);
 
     if (!clickedMode)
       return;
@@ -1785,18 +1763,6 @@ Polymer({
     // up.
     if (this.currentView_ == media_router.MediaRouterView.FILTER) {
       this.filterSinks_(this.searchInputText_);
-    }
-  },
-
-  /**
-   * Called when the connection to the route controller is invalidated. Switches
-   * from route details view to the sink list view.
-   */
-  onRouteControllerInvalidated: function() {
-    if (this.useWebUiRouteControls &&
-        this.currentView_ == media_router.MediaRouterView.ROUTE_DETAILS) {
-      this.currentRoute_ = null;
-      this.showSinkList_();
     }
   },
 
@@ -2312,12 +2278,6 @@ Polymer({
   showRouteDetails_: function(route) {
     this.currentRoute_ = route;
     this.currentView_ = media_router.MediaRouterView.ROUTE_DETAILS;
-    if (this.useWebUiRouteControls) {
-      media_router.browserApi.onMediaControllerAvailable(route.id);
-    }
-    if (this.$$('route-details')) {
-      this.$$('route-details').onOpened();
-    }
   },
 
   /**

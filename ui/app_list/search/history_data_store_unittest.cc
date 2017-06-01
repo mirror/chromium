@@ -11,6 +11,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
+#include "base/test/sequenced_worker_pool_owner.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/app_list/search/dictionary_data_store.h"
 #include "ui/app_list/search/history_data.h"
@@ -43,7 +44,8 @@ class HistoryDataStoreTest : public testing::Test {
  public:
   HistoryDataStoreTest()
       : scoped_task_environment_(
-            base::test::ScopedTaskEnvironment::MainThreadType::UI) {}
+            base::test::ScopedTaskEnvironment::MainThreadType::UI),
+        worker_pool_owner_(2, "AppLanucherTest") {}
 
   // testing::Test overrides:
   void SetUp() override {
@@ -57,7 +59,7 @@ class HistoryDataStoreTest : public testing::Test {
   void OpenStore(const std::string& file_name) {
     data_file_ = temp_dir_.GetPath().AppendASCII(file_name);
     store_ = new HistoryDataStore(scoped_refptr<DictionaryDataStore>(
-        new DictionaryDataStore(data_file_)));
+        new DictionaryDataStore(data_file_, worker_pool_owner_.pool().get())));
     Load();
   }
 
@@ -95,6 +97,7 @@ class HistoryDataStoreTest : public testing::Test {
   base::ScopedTempDir temp_dir_;
   base::FilePath data_file_;
   std::unique_ptr<base::RunLoop> run_loop_;
+  base::SequencedWorkerPoolOwner worker_pool_owner_;
 
   scoped_refptr<HistoryDataStore> store_;
   HistoryData::Associations associations_;

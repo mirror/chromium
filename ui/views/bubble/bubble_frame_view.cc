@@ -30,6 +30,7 @@
 #include "ui/views/controls/image_view.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/layout/box_layout.h"
+#include "ui/views/layout/layout_constants.h"
 #include "ui/views/layout/layout_provider.h"
 #include "ui/views/resources/grit/views_resources.h"
 #include "ui/views/widget/widget.h"
@@ -264,7 +265,7 @@ gfx::Insets BubbleFrameView::GetInsets() const {
   return insets;
 }
 
-gfx::Size BubbleFrameView::CalculatePreferredSize() const {
+gfx::Size BubbleFrameView::GetPreferredSize() const {
   // Get the preferred size of the client area.
   gfx::Size client_size = GetWidget()->client_view()->GetPreferredSize();
   // Expand it to include the bubble border and space for the arrow.
@@ -359,19 +360,6 @@ void BubbleFrameView::OnNativeThemeChanged(const ui::NativeTheme* theme) {
     bubble_border_->set_background_color(GetNativeTheme()->
         GetSystemColor(ui::NativeTheme::kColorId_DialogBackground));
     SchedulePaint();
-  }
-}
-
-void BubbleFrameView::ViewHierarchyChanged(
-    const ViewHierarchyChangedDetails& details) {
-  if (!details.is_add && details.parent == footnote_container_ &&
-      footnote_container_->child_count() == 1 &&
-      details.child == footnote_container_->child_at(0)) {
-    // Setting the footnote_container_ to be hidden and null it. This will
-    // remove update the bubble to have no placeholder for the footnote and
-    // enable the destructor to delete the footnote_container_ later.
-    footnote_container_->SetVisible(false);
-    footnote_container_ = nullptr;
   }
 }
 

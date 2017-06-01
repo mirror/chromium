@@ -130,8 +130,6 @@ class BaseSafeBrowsingErrorUI {
       base::DictionaryValue* load_time_data) = 0;
   virtual void HandleCommand(SecurityInterstitialCommands command) = 0;
 
-  virtual int GetHTMLTemplateId() const = 0;
-
  private:
   const GURL request_url_;
   const GURL main_frame_url_;

@@ -35,9 +35,9 @@
 #include "core/MediaTypeNames.h"
 #include "core/StylePropertyShorthand.h"
 #include "core/animation/AnimationTimeline.h"
-#include "core/animation/CSSInterpolationEnvironment.h"
 #include "core/animation/CSSInterpolationTypesMap.h"
 #include "core/animation/ElementAnimations.h"
+#include "core/animation/InterpolationEnvironment.h"
 #include "core/animation/InvalidatableInterpolation.h"
 #include "core/animation/KeyframeEffect.h"
 #include "core/animation/LegacyStyleInterpolation.h"
@@ -82,8 +82,8 @@
 #include "core/dom/Text.h"
 #include "core/dom/shadow/ElementShadow.h"
 #include "core/dom/shadow/ShadowRoot.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLIFrameElement.h"
@@ -829,7 +829,8 @@ PassRefPtr<AnimatableValue> StyleResolver::CreateAnimatableValueSnapshot(
         state.GetDocument().GetStyleEngine().FontSelector(),
         state.MutableStyleRef());
   }
-  return CSSAnimatableValueFactory::Create(property, *state.Style());
+  return CSSAnimatableValueFactory::Create(PropertyHandle(property),
+                                           *state.Style());
 }
 
 PseudoElement* StyleResolver::CreatePseudoElement(Element* parent,
@@ -1170,22 +1171,21 @@ bool StyleResolver::ApplyAnimatedStandardProperties(
     state.SetApplyPropertyToVisitedLinkStyle(true);
   }
 
-  const ActiveInterpolationsMap&
-      active_interpolations_map_for_standard_animations =
-          state.AnimationUpdate().ActiveInterpolationsForStandardAnimations();
+  const ActiveInterpolationsMap& active_interpolations_map_for_animations =
+      state.AnimationUpdate().ActiveInterpolationsForAnimations();
   const ActiveInterpolationsMap&
       active_interpolations_map_for_standard_transitions =
           state.AnimationUpdate().ActiveInterpolationsForStandardTransitions();
   // TODO(crbug.com/644148): Apply animations on custom properties.
   ApplyAnimatedProperties<kHighPropertyPriority>(
-      state, active_interpolations_map_for_standard_animations);
+      state, active_interpolations_map_for_animations);
   ApplyAnimatedProperties<kHighPropertyPriority>(
       state, active_interpolations_map_for_standard_transitions);
 
   UpdateFont(state);
 
   ApplyAnimatedProperties<kLowPropertyPriority>(
-      state, active_interpolations_map_for_standard_animations);
+      state, active_interpolations_map_for_animations);
   ApplyAnimatedProperties<kLowPropertyPriority>(
       state, active_interpolations_map_for_standard_transitions);
 
@@ -1230,13 +1230,12 @@ void StyleResolver::ApplyAnimatedProperties(
     CSSPropertyID property = entry.key.IsCSSProperty()
                                  ? entry.key.CssProperty()
                                  : entry.key.PresentationAttribute();
-    DCHECK_EQ(entry.key.IsCSSCustomProperty(), priority == kResolveVariables);
     if (!CSSPropertyPriorityData<priority>::PropertyHasPriority(property))
       continue;
     const Interpolation& interpolation = *entry.value.front();
     if (interpolation.IsInvalidatableInterpolation()) {
       CSSInterpolationTypesMap map(state.GetDocument().GetPropertyRegistry());
-      CSSInterpolationEnvironment environment(map, state);
+      InterpolationEnvironment environment(map, state);
       InvalidatableInterpolation::ApplyStack(entry.value, environment);
     } else if (interpolation.IsTransitionInterpolation()) {
       ToTransitionInterpolation(interpolation).Apply(state);
@@ -1753,14 +1752,13 @@ void StyleResolver::ApplyCustomProperties(StyleResolverState& state,
       needs_apply_pass);
   if (apply_animations == kIncludeAnimations) {
     ApplyAnimatedProperties<kResolveVariables>(
-        state,
-        state.AnimationUpdate().ActiveInterpolationsForCustomAnimations());
+        state, state.AnimationUpdate().ActiveInterpolationsForAnimations());
     ApplyAnimatedProperties<kResolveVariables>(
         state,
         state.AnimationUpdate().ActiveInterpolationsForCustomTransitions());
   }
   // TODO(leviw): stop recalculating every time
-  CSSVariableResolver(state).ResolveVariableDefinitions();
+  CSSVariableResolver::ResolveVariableDefinitions(state);
 
   if (RuntimeEnabledFeatures::cssApplyAtRulesEnabled()) {
     if (CacheCustomPropertiesForApplyAtRules(state,
@@ -1773,13 +1771,12 @@ void StyleResolver::ApplyCustomProperties(StyleResolverState& state,
           needs_apply_pass);
       if (apply_animations == kIncludeAnimations) {
         ApplyAnimatedProperties<kResolveVariables>(
-            state,
-            state.AnimationUpdate().ActiveInterpolationsForCustomAnimations());
+            state, state.AnimationUpdate().ActiveInterpolationsForAnimations());
         ApplyAnimatedProperties<kResolveVariables>(
             state,
             state.AnimationUpdate().ActiveInterpolationsForCustomTransitions());
       }
-      CSSVariableResolver(state).ResolveVariableDefinitions();
+      CSSVariableResolver::ResolveVariableDefinitions(state);
     }
   }
 }
@@ -1819,12 +1816,17 @@ void StyleResolver::CalculateAnimationUpdate(StyleResolverState& state,
     return;
   }
   if (!state.AnimationUpdate()
-           .ActiveInterpolationsForCustomAnimations()
-           .IsEmpty() ||
-      !state.AnimationUpdate()
            .ActiveInterpolationsForCustomTransitions()
            .IsEmpty()) {
     state.SetIsAnimatingCustomProperties(true);
+    return;
+  }
+  for (const auto& property_handle :
+       state.AnimationUpdate().ActiveInterpolationsForAnimations().Keys()) {
+    if (CSSAnimations::IsCustomPropertyHandle(property_handle)) {
+      state.SetIsAnimatingCustomProperties(true);
+      return;
+    }
   }
 }
 
@@ -1887,7 +1889,7 @@ void StyleResolver::ApplyMatchedStandardProperties(
     apply_inherited_only = false;
 
   // Registered custom properties are computed after high priority properties.
-  CSSVariableResolver(state).ComputeRegisteredVariables();
+  CSSVariableResolver::ComputeRegisteredVariables(state);
 
   // Now do the normal priority UA properties.
   ApplyMatchedProperties<kLowPropertyPriority, kCheckNeedsApplyPass>(
@@ -2009,7 +2011,7 @@ void StyleResolver::ComputeFont(ComputedStyle* style,
 }
 
 void StyleResolver::UpdateMediaType() {
-  if (LocalFrameView* view = GetDocument().View()) {
+  if (FrameView* view = GetDocument().View()) {
     bool was_print = print_media_type_;
     print_media_type_ =
         DeprecatedEqualIgnoringCase(view->MediaType(), MediaTypeNames::print);

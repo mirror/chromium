@@ -58,8 +58,6 @@ public class ChromePreferenceManager {
     private static final String SUCCESS_UPLOAD_SUFFIX = "_crash_success_upload";
     private static final String FAILURE_UPLOAD_SUFFIX = "_crash_failure_upload";
 
-    private static final String OMNIBOX_PLACEHOLDER_GROUP = "omnibox-placeholder-group";
-
     private static ChromePreferenceManager sPrefs;
 
     private final SharedPreferences mSharedPreferences;
@@ -356,6 +354,16 @@ public class ChromePreferenceManager {
         writeBoolean(WEBAPK_RUNTIME_KEY, isEnabled);
     }
 
+    /** Checks the cached value for the webapk any package name feature. */
+    public boolean getCachedWebApkAnyPackageName() {
+        return mSharedPreferences.getBoolean(WEBAPK_ANY_PACKAGE_KEY, false);
+    }
+
+    /** Writes the cached value for the webapk any package name feature is enabled. */
+    public void setCachedWebApkAnyPackageNameEnabled(boolean isEnabled) {
+        writeBoolean(WEBAPK_ANY_PACKAGE_KEY, isEnabled);
+    }
+
     public boolean getCachedChromeDefaultBrowser() {
         return mSharedPreferences.getBoolean(CHROME_DEFAULT_BROWSER, false);
     }
@@ -418,22 +426,6 @@ public class ChromePreferenceManager {
     /** Returns whether the content suggestions surface has ever been shown. */
     public boolean getSuggestionsSurfaceShown() {
         return mSharedPreferences.getBoolean(CONTENT_SUGGESTIONS_SHOWN_KEY, false);
-    }
-
-    /**
-     * Set group of omnibox placeholder experiment
-     * @param group group name of omnibox placeholder experiment
-     */
-    public void setOmniboxPlaceholderGroup(String group) {
-        writeString(OMNIBOX_PLACEHOLDER_GROUP, group);
-    }
-
-    /**
-     * Get group of omnibox placeholder experiment
-     * @return String of omnibox placeholder experiment group name, empty string if not set
-     */
-    public String getOmniboxPlaceholderGroup() {
-        return mSharedPreferences.getString(OMNIBOX_PLACEHOLDER_GROUP, "");
     }
 
     /**

@@ -123,13 +123,13 @@ class ConstrainedWebDialogDelegateViewMac :
   }
   gfx::NativeWindow GetNativeDialog() override { return window_; }
   WebContents* GetWebContents() override { return impl_->GetWebContents(); }
-  gfx::Size GetConstrainedWebDialogMinimumSize() const override {
+  gfx::Size GetMinimumSize() const override {
     return min_size_;
   }
-  gfx::Size GetConstrainedWebDialogMaximumSize() const override {
+  gfx::Size GetMaximumSize() const override {
     return max_size_;
   }
-  gfx::Size GetConstrainedWebDialogPreferredSize() const override {
+  gfx::Size GetPreferredSize() const override {
     gfx::Size size;
     if (!impl_->closed_via_webui()) {
       NSRect frame = [window_ frame];

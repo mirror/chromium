@@ -128,7 +128,7 @@ ScriptPromise ImageCapture::getPhotoCapabilities(ScriptState* script_state) {
     resolver->Reject(DOMException::Create(kNotFoundError, kNoServiceError));
     return promise;
   }
-  service_requests_.insert(resolver, HeapVector<MediaTrackConstraintSet>());
+  service_requests_.insert(resolver);
 
   // m_streamTrack->component()->source()->id() is the renderer "name" of the
   // camera;
@@ -158,7 +158,7 @@ ScriptPromise ImageCapture::setOptions(ScriptState* script_state,
     resolver->Reject(DOMException::Create(kNotFoundError, kNoServiceError));
     return promise;
   }
-  service_requests_.insert(resolver, HeapVector<MediaTrackConstraintSet>());
+  service_requests_.insert(resolver);
 
   // TODO(mcasas): should be using a mojo::StructTraits instead.
   auto settings = media::mojom::blink::PhotoSettings::New();
@@ -233,7 +233,7 @@ ScriptPromise ImageCapture::takePhoto(ScriptState* script_state) {
     return promise;
   }
 
-  service_requests_.insert(resolver, HeapVector<MediaTrackConstraintSet>());
+  service_requests_.insert(resolver);
 
   // m_streamTrack->component()->source()->id() is the renderer "name" of the
   // camera;
@@ -294,8 +294,10 @@ void ImageCapture::SetMediaTrackConstraints(
     resolver->Reject(DOMException::Create(kNotFoundError, kNoServiceError));
     return;
   }
+  service_requests_.insert(resolver);
+
   // TODO(mcasas): add support more than one single advanced constraint.
-  auto constraints = constraints_vector[0];
+  const auto constraints = constraints_vector[0];
 
   if ((constraints.hasWhiteBalanceMode() &&
        !capabilities_.hasWhiteBalanceMode()) ||
@@ -499,8 +501,6 @@ void ImageCapture::SetMediaTrackConstraints(
 
   current_constraints_ = temp_constraints;
 
-  service_requests_.insert(resolver, constraints_vector);
-
   service_->SetOptions(
       stream_track_->Component()->Source()->Id(), std::move(settings),
       ConvertToBaseCallback(
@@ -637,19 +637,7 @@ void ImageCapture::OnMojoPhotoCapabilities(
     return;
   }
 
-  // If this is a response to a SetMediaTrackConstraints() request, it will have
-  // the original constraints to apply: Resolve() with those; Resolve() with the
-  // |photo_capabilities_| otherwise.
-  const HeapVector<MediaTrackConstraintSet>& originalConstraints =
-      service_requests_.at(resolver);
-  if (originalConstraints.IsEmpty()) {
-    resolver->Resolve(photo_capabilities_);
-  } else {
-    MediaTrackConstraints constraints;
-    constraints.setAdvanced(originalConstraints);
-    resolver->Resolve(constraints);
-  }
-
+  resolver->Resolve(photo_capabilities_);
   service_requests_.erase(resolver);
 }
 
@@ -790,8 +778,8 @@ void ImageCapture::UpdateMediaTrackCapabilities(
 
 void ImageCapture::OnServiceConnectionError() {
   service_.reset();
-  for (const auto& resolver : service_requests_)
-    resolver.key->Reject(DOMException::Create(kNotFoundError, kNoServiceError));
+  for (ScriptPromiseResolver* resolver : service_requests_)
+    resolver->Reject(DOMException::Create(kNotFoundError, kNoServiceError));
   service_requests_.clear();
 }
 

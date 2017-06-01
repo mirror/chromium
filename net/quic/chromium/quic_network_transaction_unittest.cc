@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <algorithm>
 #include <memory>
 #include <ostream>
 #include <string>
@@ -500,29 +499,26 @@ class QuicNetworkTransactionTest
   }
 
   void CreateSession() {
-    session_params_.enable_quic = true;
-    session_params_.quic_supported_versions = SupportedVersions(version_);
-
-    session_context_.quic_clock = &clock_;
-    session_context_.quic_random = &random_generator_;
-    session_context_.client_socket_factory = &socket_factory_;
-    session_context_.quic_crypto_client_stream_factory =
-        &crypto_client_stream_factory_;
-    session_context_.host_resolver = &host_resolver_;
-    session_context_.cert_verifier = &cert_verifier_;
-    session_context_.transport_security_state = &transport_security_state_;
-    session_context_.cert_transparency_verifier =
-        cert_transparency_verifier_.get();
-    session_context_.ct_policy_enforcer = &ct_policy_enforcer_;
-    session_context_.socket_performance_watcher_factory =
+    params_.enable_quic = true;
+    params_.quic_clock = &clock_;
+    params_.quic_random = &random_generator_;
+    params_.client_socket_factory = &socket_factory_;
+    params_.quic_crypto_client_stream_factory = &crypto_client_stream_factory_;
+    params_.host_resolver = &host_resolver_;
+    params_.cert_verifier = &cert_verifier_;
+    params_.transport_security_state = &transport_security_state_;
+    params_.cert_transparency_verifier = cert_transparency_verifier_.get();
+    params_.ct_policy_enforcer = &ct_policy_enforcer_;
+    params_.socket_performance_watcher_factory =
         &test_socket_performance_watcher_factory_;
-    session_context_.proxy_service = proxy_service_.get();
-    session_context_.ssl_config_service = ssl_config_service_.get();
-    session_context_.http_auth_handler_factory = auth_handler_factory_.get();
-    session_context_.http_server_properties = &http_server_properties_;
-    session_context_.net_log = net_log_.bound().net_log();
+    params_.proxy_service = proxy_service_.get();
+    params_.ssl_config_service = ssl_config_service_.get();
+    params_.http_auth_handler_factory = auth_handler_factory_.get();
+    params_.http_server_properties = &http_server_properties_;
+    params_.quic_supported_versions = SupportedVersions(version_);
+    params_.net_log = net_log_.bound().net_log();
 
-    session_.reset(new HttpNetworkSession(session_params_, session_context_));
+    session_.reset(new HttpNetworkSession(params_));
     session_->quic_stream_factory()->set_require_confirmation(false);
   }
 
@@ -700,7 +696,7 @@ class QuicNetworkTransactionTest
     test_proxy_delegate.set_alternative_proxy_server(
         ProxyServer::FromPacString("QUIC myproxy.org:443"));
 
-    session_context_.proxy_delegate = &test_proxy_delegate;
+    params_.proxy_delegate = &test_proxy_delegate;
     proxy_service_ =
         ProxyService::CreateFixedFromPacResult("HTTPS myproxy.org:443");
 
@@ -750,8 +746,7 @@ class QuicNetworkTransactionTest
   std::unique_ptr<HttpAuthHandlerFactory> auth_handler_factory_;
   MockRandom random_generator_;
   HttpServerPropertiesImpl http_server_properties_;
-  HttpNetworkSession::Params session_params_;
-  HttpNetworkSession::Context session_context_;
+  HttpNetworkSession::Params params_;
   HttpRequestInfo request_;
   BoundTestNetLog net_log_;
   std::vector<std::unique_ptr<StaticSocketDataProvider>> hanging_data_;
@@ -785,7 +780,7 @@ INSTANTIATE_TEST_CASE_P(Version,
                         ::testing::ValuesIn(AllSupportedVersions()));
 
 TEST_P(QuicNetworkTransactionTest, SocketWatcherEnabled) {
-  session_params_.origins_to_force_quic_on.insert(
+  params_.origins_to_force_quic_on.insert(
       HostPortPair::FromString("mail.example.org:443"));
 
   MockQuicData mock_quic_data;
@@ -816,7 +811,7 @@ TEST_P(QuicNetworkTransactionTest, SocketWatcherEnabled) {
 }
 
 TEST_P(QuicNetworkTransactionTest, SocketWatcherDisabled) {
-  session_params_.origins_to_force_quic_on.insert(
+  params_.origins_to_force_quic_on.insert(
       HostPortPair::FromString("mail.example.org:443"));
 
   MockQuicData mock_quic_data;
@@ -847,7 +842,7 @@ TEST_P(QuicNetworkTransactionTest, SocketWatcherDisabled) {
 }
 
 TEST_P(QuicNetworkTransactionTest, ForceQuic) {
-  session_params_.origins_to_force_quic_on.insert(
+  params_.origins_to_force_quic_on.insert(
       HostPortPair::FromString("mail.example.org:443"));
 
   MockQuicData mock_quic_data;
@@ -910,114 +905,8 @@ TEST_P(QuicNetworkTransactionTest, ForceQuic) {
   EXPECT_EQ(3, log_stream_id);
 }
 
-TEST_P(QuicNetworkTransactionTest, LargeResponseHeaders) {
-  session_params_.origins_to_force_quic_on.insert(
-      HostPortPair::FromString("mail.example.org:443"));
-
-  MockQuicData mock_quic_data;
-  QuicStreamOffset header_stream_offset = 0;
-  mock_quic_data.AddWrite(
-      ConstructInitialSettingsPacket(1, &header_stream_offset));
-  mock_quic_data.AddWrite(ConstructClientRequestHeadersPacket(
-      2, GetNthClientInitiatedStreamId(0), true, true,
-      GetRequestHeaders("GET", "https", "/"), &header_stream_offset));
-  SpdyHeaderBlock response_headers = GetResponseHeaders("200 OK");
-  response_headers["key1"] = std::string(30000, 'A');
-  response_headers["key2"] = std::string(30000, 'A');
-  response_headers["key3"] = std::string(30000, 'A');
-  response_headers["key4"] = std::string(30000, 'A');
-  response_headers["key5"] = std::string(30000, 'A');
-  response_headers["key6"] = std::string(30000, 'A');
-  response_headers["key7"] = std::string(30000, 'A');
-  response_headers["key8"] = std::string(30000, 'A');
-  SpdyHeadersIR headers_frame(GetNthClientInitiatedStreamId(0),
-                              std::move(response_headers));
-  SpdyFramer response_framer(SpdyFramer::ENABLE_COMPRESSION);
-  SpdySerializedFrame spdy_frame =
-      response_framer.SerializeFrame(headers_frame);
-
-  QuicPacketNumber packet_number = 1;
-  size_t chunk_size = 1200;
-  for (size_t offset = 0; offset < spdy_frame.size(); offset += chunk_size) {
-    size_t len = std::min(chunk_size, spdy_frame.size() - offset);
-    mock_quic_data.AddRead(ConstructServerDataPacket(
-        packet_number++, kHeadersStreamId, false, false, offset,
-        base::StringPiece(spdy_frame.data() + offset, len)));
-  }
-
-  mock_quic_data.AddRead(
-      ConstructServerDataPacket(packet_number, GetNthClientInitiatedStreamId(0),
-                                false, true, 0, "hello!"));
-  mock_quic_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);  // No more data to read
-  mock_quic_data.AddAsyncWrite(ConstructClientAckPacket(3, 2, 1, 1));
-  mock_quic_data.AddAsyncWrite(
-      ConstructClientAckPacket(4, packet_number, 3, 1));
-
-  mock_quic_data.AddSocketDataToFactory(&socket_factory_);
-
-  CreateSession();
-
-  SendRequestAndExpectQuicResponse("hello!");
-}
-
-TEST_P(QuicNetworkTransactionTest, TooLargeResponseHeaders) {
-  session_params_.origins_to_force_quic_on.insert(
-      HostPortPair::FromString("mail.example.org:443"));
-
-  MockQuicData mock_quic_data;
-  QuicStreamOffset header_stream_offset = 0;
-  mock_quic_data.AddWrite(
-      ConstructInitialSettingsPacket(1, &header_stream_offset));
-  mock_quic_data.AddWrite(ConstructClientRequestHeadersPacket(
-      2, GetNthClientInitiatedStreamId(0), true, true,
-      GetRequestHeaders("GET", "https", "/"), &header_stream_offset));
-  SpdyHeaderBlock response_headers = GetResponseHeaders("200 OK");
-  response_headers["key1"] = std::string(30000, 'A');
-  response_headers["key2"] = std::string(30000, 'A');
-  response_headers["key3"] = std::string(30000, 'A');
-  response_headers["key4"] = std::string(30000, 'A');
-  response_headers["key5"] = std::string(30000, 'A');
-  response_headers["key6"] = std::string(30000, 'A');
-  response_headers["key7"] = std::string(30000, 'A');
-  response_headers["key8"] = std::string(30000, 'A');
-  response_headers["key9"] = std::string(30000, 'A');
-  SpdyHeadersIR headers_frame(GetNthClientInitiatedStreamId(0),
-                              std::move(response_headers));
-  SpdyFramer response_framer(SpdyFramer::ENABLE_COMPRESSION);
-  SpdySerializedFrame spdy_frame =
-      response_framer.SerializeFrame(headers_frame);
-
-  QuicPacketNumber packet_number = 1;
-  size_t chunk_size = 1200;
-  for (size_t offset = 0; offset < spdy_frame.size(); offset += chunk_size) {
-    size_t len = std::min(chunk_size, spdy_frame.size() - offset);
-    mock_quic_data.AddRead(ConstructServerDataPacket(
-        packet_number++, kHeadersStreamId, false, false, offset,
-        base::StringPiece(spdy_frame.data() + offset, len)));
-  }
-
-  mock_quic_data.AddRead(
-      ConstructServerDataPacket(packet_number, GetNthClientInitiatedStreamId(0),
-                                false, true, 0, "hello!"));
-  mock_quic_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);  // No more data to read
-  mock_quic_data.AddAsyncWrite(ConstructClientAckPacket(3, 2, 1, 1));
-  mock_quic_data.AddAsyncWrite(ConstructClientAckAndRstPacket(
-      4, GetNthClientInitiatedStreamId(0), QUIC_HEADERS_TOO_LARGE,
-      packet_number, 3, 1));
-
-  mock_quic_data.AddSocketDataToFactory(&socket_factory_);
-
-  CreateSession();
-
-  HttpNetworkTransaction trans(DEFAULT_PRIORITY, session_.get());
-  TestCompletionCallback callback;
-  int rv = trans.Start(&request_, callback.callback(), net_log_.bound());
-  EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
-  EXPECT_THAT(callback.WaitForResult(), IsError(ERR_QUIC_PROTOCOL_ERROR));
-}
-
 TEST_P(QuicNetworkTransactionTest, ForceQuicForAll) {
-  session_params_.origins_to_force_quic_on.insert(HostPortPair());
+  params_.origins_to_force_quic_on.insert(HostPortPair());
 
   AddQuicAlternateProtocolMapping(MockCryptoClientStream::CONFIRM_HANDSHAKE);
 
@@ -1046,7 +935,7 @@ TEST_P(QuicNetworkTransactionTest, ForceQuicForAll) {
 }
 
 TEST_P(QuicNetworkTransactionTest, QuicProxy) {
-  session_params_.enable_quic = true;
+  params_.enable_quic = true;
   proxy_service_ =
       ProxyService::CreateFixedFromPacResult("QUIC mail.example.org:70");
 
@@ -1088,7 +977,7 @@ TEST_P(QuicNetworkTransactionTest, QuicProxyWithCert) {
   const std::string origin_host = "mail.example.com";
   const std::string proxy_host = "www.example.org";
 
-  session_params_.enable_quic = true;
+  params_.enable_quic = true;
   proxy_service_ =
       ProxyService::CreateFixedFromPacResult("QUIC " + proxy_host + ":70");
 
@@ -1253,7 +1142,7 @@ TEST_P(QuicNetworkTransactionTest, RetryMisdirectedRequest) {
 }
 
 TEST_P(QuicNetworkTransactionTest, ForceQuicWithErrorConnecting) {
-  session_params_.origins_to_force_quic_on.insert(
+  params_.origins_to_force_quic_on.insert(
       HostPortPair::FromString("mail.example.org:443"));
 
   MockQuicData mock_quic_data1;
@@ -1287,7 +1176,7 @@ TEST_P(QuicNetworkTransactionTest, ForceQuicWithErrorConnecting) {
 
 TEST_P(QuicNetworkTransactionTest, DoNotForceQuicForHttps) {
   // Attempt to "force" quic on 443, which will not be honored.
-  session_params_.origins_to_force_quic_on.insert(
+  params_.origins_to_force_quic_on.insert(
       HostPortPair::FromString("www.google.com:443"));
 
   MockRead http_reads[] = {
@@ -1556,7 +1445,7 @@ TEST_P(QuicNetworkTransactionTest, GoAwayWithConnectionMigrationOnPortsOnly) {
 // Verify that if a QUIC connection times out, the QuicHttpStream will
 // return QUIC_PROTOCOL_ERROR.
 TEST_P(QuicNetworkTransactionTest, TimeoutAfterHandshakeConfirmed) {
-  session_params_.quic_idle_connection_timeout_seconds = 5;
+  params_.quic_idle_connection_timeout_seconds = 5;
 
   // The request will initially go out over QUIC.
   MockQuicData quic_data;
@@ -1646,7 +1535,7 @@ TEST_P(QuicNetworkTransactionTest, TimeoutAfterHandshakeConfirmed) {
 // Verify that if a QUIC connection RTOs, the QuicHttpStream will
 // return QUIC_PROTOCOL_ERROR.
 TEST_P(QuicNetworkTransactionTest, TooManyRtosAfterHandshakeConfirmed) {
-  session_params_.quic_connection_options.push_back(k5RTO);
+  params_.quic_connection_options.push_back(k5RTO);
 
   // The request will initially go out over QUIC.
   MockQuicData quic_data;
@@ -1745,7 +1634,7 @@ TEST_P(QuicNetworkTransactionTest, TooManyRtosAfterHandshakeConfirmed) {
 // QUIC will not be marked as broken.
 TEST_P(QuicNetworkTransactionTest,
        TooManyRtosAfterHandshakeConfirmedAndStreamReset) {
-  session_params_.quic_connection_options.push_back(k5RTO);
+  params_.quic_connection_options.push_back(k5RTO);
 
   // The request will initially go out over QUIC.
   MockQuicData quic_data;
@@ -1912,8 +1801,8 @@ TEST_P(QuicNetworkTransactionTest, ProtocolErrorAfterHandshakeConfirmed) {
 // connection times out, then QUIC will be marked as broken and the request
 // retried over TCP.
 TEST_P(QuicNetworkTransactionTest, TimeoutAfterHandshakeConfirmedThenBroken) {
-  session_params_.mark_quic_broken_when_network_blackholes = true;
-  session_params_.quic_idle_connection_timeout_seconds = 5;
+  params_.mark_quic_broken_when_network_blackholes = true;
+  params_.quic_idle_connection_timeout_seconds = 5;
 
   // The request will initially go out over QUIC.
   MockQuicData quic_data;
@@ -2029,8 +1918,8 @@ TEST_P(QuicNetworkTransactionTest, TimeoutAfterHandshakeConfirmedThenBroken) {
 // connection times out, then QUIC will be marked as broken and the request
 // retried over TCP.
 TEST_P(QuicNetworkTransactionTest, TimeoutAfterHandshakeConfirmedThenBroken2) {
-  session_params_.retry_without_alt_svc_on_quic_errors = true;
-  session_params_.quic_idle_connection_timeout_seconds = 5;
+  params_.retry_without_alt_svc_on_quic_errors = true;
+  params_.quic_idle_connection_timeout_seconds = 5;
 
   // The request will initially go out over QUIC.
   MockQuicData quic_data;
@@ -2149,8 +2038,8 @@ TEST_P(QuicNetworkTransactionTest, TimeoutAfterHandshakeConfirmedThenBroken2) {
 // will not be retried over TCP.
 TEST_P(QuicNetworkTransactionTest,
        TimeoutAfterHandshakeConfirmedAndHeadersThenBrokenNotRetried) {
-  session_params_.mark_quic_broken_when_network_blackholes = true;
-  session_params_.quic_idle_connection_timeout_seconds = 5;
+  params_.mark_quic_broken_when_network_blackholes = true;
+  params_.quic_idle_connection_timeout_seconds = 5;
 
   // The request will initially go out over QUIC.
   MockQuicData quic_data;
@@ -2261,8 +2150,8 @@ TEST_P(QuicNetworkTransactionTest,
 // over TCP.
 TEST_P(QuicNetworkTransactionTest,
        TooManyRtosAfterHandshakeConfirmedThenBroken) {
-  session_params_.mark_quic_broken_when_network_blackholes = true;
-  session_params_.quic_connection_options.push_back(k5RTO);
+  params_.mark_quic_broken_when_network_blackholes = true;
+  params_.quic_connection_options.push_back(k5RTO);
 
   // The request will initially go out over QUIC.
   MockQuicData quic_data;
@@ -2386,8 +2275,8 @@ TEST_P(QuicNetworkTransactionTest,
 // QUIC will be marked as broken.
 TEST_P(QuicNetworkTransactionTest,
        TooManyRtosAfterHandshakeConfirmedAndStreamResetThenBroken) {
-  session_params_.mark_quic_broken_when_network_blackholes = true;
-  session_params_.quic_connection_options.push_back(k5RTO);
+  params_.mark_quic_broken_when_network_blackholes = true;
+  params_.quic_connection_options.push_back(k5RTO);
 
   // The request will initially go out over QUIC.
   MockQuicData quic_data;
@@ -2494,8 +2383,8 @@ TEST_P(QuicNetworkTransactionTest,
 // retried over TCP and the QUIC will be marked as broken.
 TEST_P(QuicNetworkTransactionTest,
        ProtocolErrorAfterHandshakeConfirmedThenBroken) {
-  session_params_.retry_without_alt_svc_on_quic_errors = true;
-  session_params_.quic_idle_connection_timeout_seconds = 5;
+  params_.retry_without_alt_svc_on_quic_errors = true;
+  params_.quic_idle_connection_timeout_seconds = 5;
 
   // The request will initially go out over QUIC.
   MockQuicData quic_data;
@@ -2719,7 +2608,7 @@ TEST_P(QuicNetworkTransactionTest, UseExistingQUICAlternativeProxy) {
 
   test_proxy_delegate.set_alternative_proxy_server(
       ProxyServer::FromPacString("QUIC mail.example.org:443"));
-  session_context_.proxy_delegate = &test_proxy_delegate;
+  params_.proxy_delegate = &test_proxy_delegate;
 
   request_.url = GURL("http://mail.example.org/");
 
@@ -3126,7 +3015,7 @@ TEST_P(QuicNetworkTransactionTest, QuicProxyWithRacing) {
 
   test_proxy_delegate.set_alternative_proxy_server(
       ProxyServer::FromPacString("QUIC mail.example.org:443"));
-  session_context_.proxy_delegate = &test_proxy_delegate;
+  params_.proxy_delegate = &test_proxy_delegate;
   CreateSession();
   EXPECT_TRUE(test_proxy_delegate.alternative_proxy_server().is_quic());
 
@@ -3838,7 +3727,7 @@ TEST_P(QuicNetworkTransactionTest, ConnectionCloseDuringConnectProxy) {
       ProxyServer::FromPacString("QUIC myproxy.org:443"));
   EXPECT_TRUE(test_proxy_delegate.alternative_proxy_server().is_quic());
 
-  session_context_.proxy_delegate = &test_proxy_delegate;
+  params_.proxy_delegate = &test_proxy_delegate;
   proxy_service_ =
       ProxyService::CreateFixedFromPacResult("HTTPS myproxy.org:443");
   request_.url = GURL("http://mail.example.org/");
@@ -3901,7 +3790,7 @@ TEST_P(QuicNetworkTransactionTest,
 
   test_proxy_delegate.set_alternative_proxy_server(
       ProxyServer::FromPacString("QUIC mail.example.org:443"));
-  session_context_.proxy_delegate = &test_proxy_delegate;
+  params_.proxy_delegate = &test_proxy_delegate;
 
   request_.url = GURL("http://mail.example.org/");
 
@@ -3940,7 +3829,7 @@ TEST_P(QuicNetworkTransactionTest,
 }
 
 TEST_P(QuicNetworkTransactionTest, QuicUpload) {
-  session_params_.origins_to_force_quic_on.insert(
+  params_.origins_to_force_quic_on.insert(
       HostPortPair::FromString("mail.example.org:443"));
 
   MockRead reads[] = {MockRead(SYNCHRONOUS, ERR_IO_PENDING, 0)};
@@ -3975,9 +3864,9 @@ TEST_P(QuicNetworkTransactionTest, QuicUploadWriteError) {
   mock_ncn->SetConnectedNetworksList(
       {kDefaultNetworkForTests, kNewNetworkForTests});
 
-  session_params_.origins_to_force_quic_on.insert(
+  params_.origins_to_force_quic_on.insert(
       HostPortPair::FromString("mail.example.org:443"));
-  session_params_.quic_migrate_sessions_on_network_change = true;
+  params_.quic_migrate_sessions_on_network_change = true;
 
   MockQuicData socket_data;
   socket_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);
@@ -4020,7 +3909,7 @@ TEST_P(QuicNetworkTransactionTest, QuicUploadWriteError) {
 
 // Adds coverage to catch regression such as https://crbug.com/622043
 TEST_P(QuicNetworkTransactionTest, QuicServerPush) {
-  session_params_.origins_to_force_quic_on.insert(
+  params_.origins_to_force_quic_on.insert(
       HostPortPair::FromString("mail.example.org:443"));
 
   MockQuicData mock_quic_data;
@@ -4078,8 +3967,8 @@ TEST_P(QuicNetworkTransactionTest, QuicServerPush) {
 }
 
 TEST_P(QuicNetworkTransactionTest, QuicForceHolBlocking) {
-  session_params_.quic_force_hol_blocking = true;
-  session_params_.origins_to_force_quic_on.insert(
+  params_.quic_force_hol_blocking = true;
+  params_.origins_to_force_quic_on.insert(
       HostPortPair::FromString("mail.example.org:443"));
 
   MockQuicData mock_quic_data;
@@ -4161,7 +4050,7 @@ class QuicURLRequestContext : public URLRequestContext {
 };
 
 TEST_P(QuicNetworkTransactionTest, RawHeaderSizeSuccessfullRequest) {
-  session_params_.origins_to_force_quic_on.insert(
+  params_.origins_to_force_quic_on.insert(
       HostPortPair::FromString("mail.example.org:443"));
 
   MockQuicData mock_quic_data;
@@ -4220,7 +4109,7 @@ TEST_P(QuicNetworkTransactionTest, RawHeaderSizeSuccessfullRequest) {
 }
 
 TEST_P(QuicNetworkTransactionTest, RawHeaderSizeSuccessfullPushHeadersFirst) {
-  session_params_.origins_to_force_quic_on.insert(
+  params_.origins_to_force_quic_on.insert(
       HostPortPair::FromString("mail.example.org:443"));
 
   MockQuicData mock_quic_data;
@@ -4316,36 +4205,32 @@ class QuicNetworkTransactionWithDestinationTest
     NetworkChangeNotifier::NotifyObserversOfIPAddressChangeForTests();
     base::RunLoop().RunUntilIdle();
 
-    HttpNetworkSession::Params session_params;
-    session_params.enable_quic = true;
-    session_params.quic_supported_versions = SupportedVersions(version_);
-
-    HttpNetworkSession::Context session_context;
+    HttpNetworkSession::Params params;
 
     clock_.AdvanceTime(QuicTime::Delta::FromMilliseconds(20));
-    session_context.quic_clock = &clock_;
+    params.quic_clock = &clock_;
 
     crypto_client_stream_factory_.set_handshake_mode(
         MockCryptoClientStream::CONFIRM_HANDSHAKE);
-    session_context.quic_crypto_client_stream_factory =
-        &crypto_client_stream_factory_;
+    params.quic_crypto_client_stream_factory = &crypto_client_stream_factory_;
 
-    session_context.quic_random = &random_generator_;
-    session_context.client_socket_factory = &socket_factory_;
-    session_context.host_resolver = &host_resolver_;
-    session_context.cert_verifier = &cert_verifier_;
-    session_context.transport_security_state = &transport_security_state_;
-    session_context.cert_transparency_verifier =
-        cert_transparency_verifier_.get();
-    session_context.ct_policy_enforcer = &ct_policy_enforcer_;
-    session_context.socket_performance_watcher_factory =
+    params.enable_quic = true;
+    params.quic_random = &random_generator_;
+    params.client_socket_factory = &socket_factory_;
+    params.host_resolver = &host_resolver_;
+    params.cert_verifier = &cert_verifier_;
+    params.transport_security_state = &transport_security_state_;
+    params.cert_transparency_verifier = cert_transparency_verifier_.get();
+    params.ct_policy_enforcer = &ct_policy_enforcer_;
+    params.socket_performance_watcher_factory =
         &test_socket_performance_watcher_factory_;
-    session_context.ssl_config_service = ssl_config_service_.get();
-    session_context.proxy_service = proxy_service_.get();
-    session_context.http_auth_handler_factory = auth_handler_factory_.get();
-    session_context.http_server_properties = &http_server_properties_;
+    params.ssl_config_service = ssl_config_service_.get();
+    params.proxy_service = proxy_service_.get();
+    params.http_auth_handler_factory = auth_handler_factory_.get();
+    params.http_server_properties = &http_server_properties_;
+    params.quic_supported_versions = SupportedVersions(version_);
 
-    session_.reset(new HttpNetworkSession(session_params, session_context));
+    session_.reset(new HttpNetworkSession(params));
     session_->quic_stream_factory()->set_require_confirmation(true);
   }
 
@@ -4740,7 +4625,7 @@ TEST_P(QuicNetworkTransactionWithDestinationTest,
 // crbug.com/705109 - this confirms that matching request with a body
 // triggers a crash (pre-fix).
 TEST_P(QuicNetworkTransactionTest, QuicServerPushMatchesRequestWithBody) {
-  session_params_.origins_to_force_quic_on.insert(
+  params_.origins_to_force_quic_on.insert(
       HostPortPair::FromString("mail.example.org:443"));
 
   MockQuicData mock_quic_data;

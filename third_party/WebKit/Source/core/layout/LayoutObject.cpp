@@ -44,8 +44,8 @@
 #include "core/editing/VisibleUnits.h"
 #include "core/frame/DeprecatedScheduleStyleRecalcDuringLayout.h"
 #include "core/frame/EventHandlerRegistry.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLElement.h"
 #include "core/html/HTMLHtmlElement.h"
@@ -763,7 +763,7 @@ void LayoutObject::MarkContainerChainForLayout(bool schedule_relayout,
   // When we're in layout, we're marking a descendant as needing layout with
   // the intention of visiting it during this layout. We shouldn't be
   // scheduling it to be laid out later. Also, scheduleRelayout() must not be
-  // called while iterating LocalFrameView::layout_subtree_root_list_.
+  // called while iterating FrameView::m_layoutSubtreeRootList.
   schedule_relayout &= !GetFrameView()->IsInPerformLayout();
 
   LayoutObject* object = Container();
@@ -994,14 +994,20 @@ IntRect LayoutObject::AbsoluteElementBoundingBoxRect() const {
       .EnclosingBoundingBox();
 }
 
-FloatRect LayoutObject::AbsoluteBoundingBoxRectForRange(
-    const EphemeralRange& range) {
-  if (range.IsNull() || !range.StartPosition().ComputeContainerNode())
+FloatRect LayoutObject::AbsoluteBoundingBoxRectForRange(const Range* range) {
+  if (!range || !range->startContainer())
     return FloatRect();
 
-  range.GetDocument().UpdateStyleAndLayout();
+  range->OwnerDocument().UpdateStyleAndLayout();
 
-  return ComputeTextFloatRect(range);
+  Vector<FloatQuad> quads;
+  quads.AppendVector(ComputeTextQuads(EphemeralRange(range)));
+
+  FloatRect result;
+  for (size_t i = 0; i < quads.size(); ++i)
+    result.Unite(quads[i].BoundingBox());
+
+  return result;
 }
 
 void LayoutObject::AddAbsoluteRectForLayer(IntRect& result) {
@@ -2592,12 +2598,11 @@ inline LayoutObject* LayoutObject::ParentCrossingFrames() const {
 
 bool LayoutObject::IsSelectionBorder() const {
   SelectionState st = GetSelectionState();
-  return st == SelectionState::kStart || st == SelectionState::kEnd ||
-         st == SelectionState::kStartAndEnd;
+  return st == SelectionStart || st == SelectionEnd || st == SelectionBoth;
 }
 
 inline void LayoutObject::ClearLayoutRootIfNeeded() const {
-  if (LocalFrameView* view = GetFrameView()) {
+  if (FrameView* view = GetFrameView()) {
     if (!DocumentBeingDestroyed())
       view->ClearLayoutSubtreeRoot(*this);
   }
@@ -2751,7 +2756,7 @@ static bool FindReferencingScrollAnchors(
     }
     layer = layer->Parent();
   }
-  if (LocalFrameView* view = layout_object->GetFrameView()) {
+  if (FrameView* view = layout_object->GetFrameView()) {
     ScrollAnchor* anchor = view->GetScrollAnchor();
     DCHECK(anchor);
     if (anchor->RefersTo(layout_object)) {
@@ -2995,13 +3000,13 @@ bool LayoutObject::NodeAtPoint(HitTestResult&,
 
 void LayoutObject::ScheduleRelayout() {
   if (IsLayoutView()) {
-    LocalFrameView* view = ToLayoutView(this)->GetFrameView();
+    FrameView* view = ToLayoutView(this)->GetFrameView();
     if (view)
       view->ScheduleRelayout();
   } else {
     if (IsRooted()) {
       if (LayoutView* layout_view = View()) {
-        if (LocalFrameView* frame_view = layout_view->GetFrameView())
+        if (FrameView* frame_view = layout_view->GetFrameView())
           frame_view->ScheduleRelayoutOfSubtree(this);
       }
     }
@@ -3610,7 +3615,7 @@ void LayoutObject::InvalidatePaintForSelection() {
        child = child->NextSibling()) {
     if (!child->CanBeSelectionLeaf())
       continue;
-    if (child->GetSelectionState() == SelectionState::kNone)
+    if (child->GetSelectionState() == SelectionNone)
       continue;
     child->SetShouldInvalidateSelection();
   }

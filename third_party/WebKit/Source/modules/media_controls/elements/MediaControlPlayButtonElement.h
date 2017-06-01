@@ -22,8 +22,6 @@ class MediaControlPlayButtonElement final : public MediaControlInputElement {
   WebLocalizedString::Name GetOverflowStringName() override;
   bool HasOverflowButton() override;
 
-  void OnMediaKeyboardEvent(Event* event) { DefaultEventHandler(event); }
-
  private:
   void DefaultEventHandler(Event*) override;
 };

@@ -8,8 +8,10 @@
 podrow {
   /* Temporarily disabled because animation interferes with updating screen's
    size. */
+  height: 100%;
   overflow: visible;
   position: absolute;
+  width: 100%;
 }
 
 /* Hide the pod row while images are loading. */
@@ -25,14 +27,17 @@ pin-keyboard {
   -webkit-tap-highlight-color: transparent;
   border-radius: 2px;
   cursor: pointer;
-  opacity: 0.64;
+  height: 346px;
   outline: none;
   position: absolute;
+  top: 0;
+  transform: scale3d(0.9, 0.9, 0.9);
+  width: 306px;
   z-index: 0;
 }
 
 .account-picker.flying-pods .pod {
-  transition: all 300ms;
+  transition: all 180ms;
 }
 
 .pod.pin-enabled {
@@ -52,18 +57,19 @@ pin-keyboard {
   opacity: .75;
 }
 
+podrow[ncolumns='6'] .pod {
+  transform: scale3d(0.8, 0.8, 0.8);
+}
+
 .pod.focused {
+  /* Focused pod has the same size no matter how many pods. */
   cursor: default;
-  opacity: 1;
+  transform: scale3d(1, 1, 1) !important;
   z-index: 1;
 }
 
 .pod.focused[auth-type='userClick'] {
   cursor: pointer;
-}
-
-.pod.hovered {
-  opacity: 1;
 }
 
 .user-image-pane {
@@ -95,13 +101,8 @@ html[dir=rtl] .user-image-pane {
 
 .user-image {
   border-radius: 50%;
-  box-shadow: 0 0 2px rgba(255, 255, 255, .34);
   height: 100%;
   width: 100%;
-}
-
-.user-image.switch-image-animation {
-  animation: switch-image 300ms;
 }
 
 .pod .user-image {
@@ -113,6 +114,7 @@ html[dir=rtl] .user-image-pane {
 html:not([screen=login-add-user]) .pod .user-image {
   max-height: 160px;
   max-width: 160px;
+  opacity: 0.7;
   position: absolute;
 }
 
@@ -144,6 +146,7 @@ html[dir=rtl] .main-pane {
   display: flex;
   height: 40px;
   left: 51px;
+  padding-bottom: 16px;
   position: absolute;
   top: 244px;
 /* On chromeos we extend the width to cover the padding on the user pods. This
@@ -205,7 +208,7 @@ html[dir=rtl] .main-pane {
   opacity: 0.34;
   position: absolute;
   stroke: #FFFFFF;
-  stroke-width: 1px;
+  stroke-width: 1;
   top: 40px;
 }
 
@@ -493,25 +496,6 @@ html[dir=rtl] .action-box-area {
   width: 24px;
 }
 
-.action-box-button.ripple-circle {
-  background: #FFF;
-  border-radius: 50%;
-  opacity: .08;
-  position: absolute;
-  transform: scale(0);
-}
-
-.action-box-area.active .action-box-button.ripple-circle {
-  animation: ripple 360ms;
-  transform: scale(1);
-}
-
-@keyframes ripple {
-  0% { transform: scale(0); }
-  30% { transform: scale(1); }
-  100% { transform: scale(1); }
-}
-
 .action-box-area .action-box-icon {
   /* overriden in chrome/browser/resources/md_user_manager/user_manager.css */
   display: none;
@@ -595,12 +579,11 @@ html[dir=rtl] .user-type-icon-area {
 
 .action-box-menu {
   display: none;
-  position: absolute;
   z-index: 6;
 }
 
 .action-box-area.active ~ .action-box-menu {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, .34);
   border-radius: 2px;
   display: flex;
   flex-direction: column;
@@ -670,7 +653,8 @@ html[dir=rtl] .action-box-area.active ~ .action-box-menu {
 
 .action-box-menu-remove:hover,
 .action-box-menu-remove:focus {
-  font-weight: bold;
+  background-color: grey;
+  color: white;
 }
 
 .action-box-remove-user-warning {
@@ -1037,65 +1021,4 @@ html[dir=rtl] .expanded-pane-contents {
   50% { opacity: 0; }
   75% { opacity: 1; }
   100% { opacity: 0; }
-}
-
-.large-pod {
-  height: 346px;
-  width: 306px;
-}
-
-.small-pod {
-  height: 74px;
-  width: 304px;
-}
-
-.small-pod.extra-small {
-  height: 60px;
-  width: 282px;
-}
-
-.small-user-image-container {
-  align-items: center;
-  height: 74px;
-  justify-content: center;
-  position: absolute;
-  transition: height 180ms ease-in-out,
-              left 180ms ease-in-out,
-              right 180ms ease-in-out,
-              top 180ms ease-in-out,
-              width 180ms ease-in-out;
-  width: 74px;
-}
-
-.small-pod.extra-small .small-user-image-container {
-  height: 60px;
-  width: 60px;
-}
-
-.small-pod-name {
-  color: #FFFFFF;
-  flex: auto;
-  font-family: "Roboto";
-  font-size: 20px;
-  height: 28px;
-  left: 90px;
-  opacity: 1;
-  outline: none;
-  overflow: hidden;
-  padding: 23px 0;
-  position: absolute;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 214px;
-}
-
-.small-pod.extra-small .small-pod-name {
-  left: 76px;
-  padding: 16px 0;
-  width: 190px;
-}
-
-@keyframes switch-image {
-  from { transform: rotate3d(0, 1, 0, 90deg); }
-  to { transform: none; }
 }

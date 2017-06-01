@@ -208,7 +208,8 @@ void ScopedLogger::PrintIndent() {
 }
 
 ScopedLogger*& ScopedLogger::Current() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific<ScopedLogger*>, ref, ());
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific<ScopedLogger*>, ref,
+                                  new ThreadSpecific<ScopedLogger*>);
   return *ref;
 }
 

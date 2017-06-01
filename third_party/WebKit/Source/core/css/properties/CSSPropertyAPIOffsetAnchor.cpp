@@ -9,20 +9,17 @@
 #include "core/css/parser/CSSParserTokenRange.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 
-class CSSParserLocalContext;
 namespace blink {
-
-using namespace CSSPropertyParserHelpers;
 
 const CSSValue* CSSPropertyAPIOffsetAnchor::parseSingleValue(
     CSSParserTokenRange& range,
     const CSSParserContext& context,
-    const CSSParserLocalContext&) {
+    CSSPropertyID) {
   CSSValueID id = range.Peek().Id();
   if (id == CSSValueAuto)
-    return ConsumeIdent(range);
-  return ConsumePosition(range, context, UnitlessQuirk::kForbid,
-                         Optional<UseCounter::Feature>());
+    return CSSPropertyParserHelpers::ConsumeIdent(range);
+  return ConsumePosition(range, context.Mode(),
+                         CSSPropertyParserHelpers::UnitlessQuirk::kForbid);
 }
 
 }  // namespace blink

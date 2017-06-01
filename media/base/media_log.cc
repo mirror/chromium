@@ -61,21 +61,6 @@ const char MediaLog::kWatchTimeAudioVideoBackgroundEmbeddedExperience[] =
 const char MediaLog::kWatchTimeFinalize[] = "FinalizeWatchTime";
 const char MediaLog::kWatchTimeFinalizePower[] = "FinalizePowerWatchTime";
 
-const char MediaLog::kUnderflowCount[] = "UnderflowCount";
-
-const char MediaLog::kMeanTimeBetweenRebuffersAudioSrc[] =
-    "Media.MeanTimeBetweenRebuffers.Audio.SRC";
-const char MediaLog::kMeanTimeBetweenRebuffersAudioMse[] =
-    "Media.MeanTimeBetweenRebuffers.Audio.MSE";
-const char MediaLog::kMeanTimeBetweenRebuffersAudioEme[] =
-    "Media.MeanTimeBetweenRebuffers.Audio.EME";
-const char MediaLog::kMeanTimeBetweenRebuffersAudioVideoSrc[] =
-    "Media.MeanTimeBetweenRebuffers.AudioVideo.SRC";
-const char MediaLog::kMeanTimeBetweenRebuffersAudioVideoMse[] =
-    "Media.MeanTimeBetweenRebuffers.AudioVideo.MSE";
-const char MediaLog::kMeanTimeBetweenRebuffersAudioVideoEme[] =
-    "Media.MeanTimeBetweenRebuffers.AudioVideo.EME";
-
 base::flat_set<base::StringPiece> MediaLog::GetWatchTimeKeys() {
   return base::flat_set<base::StringPiece>(
       {kWatchTimeAudioAll,
@@ -274,14 +259,6 @@ std::string MediaLog::GetErrorMessage() {
 
 void MediaLog::RecordRapporWithSecurityOrigin(const std::string& metric) {
   DVLOG(1) << "Default MediaLog doesn't support rappor reporting.";
-}
-
-std::unique_ptr<MediaLogEvent> MediaLog::CreateCreatedEvent(
-    const std::string& origin_url) {
-  std::unique_ptr<MediaLogEvent> event(
-      CreateEvent(MediaLogEvent::WEBMEDIAPLAYER_CREATED));
-  event->params.SetString("origin_url", origin_url);
-  return event;
 }
 
 std::unique_ptr<MediaLogEvent> MediaLog::CreateEvent(MediaLogEvent::Type type) {

@@ -28,7 +28,7 @@ class ImportLockDialogView : public views::DialogDelegateView {
   ~ImportLockDialogView() override;
 
   // views::View:
-  gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetPreferredSize() const override;
   void Layout() override;
 
   // views::DialogDelegate:

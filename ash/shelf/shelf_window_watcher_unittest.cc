@@ -16,26 +16,13 @@
 #include "ash/test/ash_test_base.h"
 #include "ash/wm/window_resizer.h"
 #include "ash/wm/window_state.h"
+#include "ash/wm_window.h"
 #include "base/strings/string_number_conversions.h"
-#include "third_party/skia/include/core/SkBitmap.h"
-#include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
 #include "ui/base/hit_test.h"
-#include "ui/base/resource/resource_bundle.h"
-#include "ui/gfx/image/image_skia.h"
-#include "ui/resources/grit/ui_resources.h"
 #include "ui/views/widget/widget.h"
 
 namespace ash {
-namespace {
-
-// Create a test 1x1 icon image with a given |color|.
-gfx::ImageSkia CreateImageSkiaIcon(SkColor color) {
-  SkBitmap bitmap;
-  bitmap.allocN32Pixels(1, 1);
-  bitmap.eraseColor(color);
-  return gfx::ImageSkia::CreateFrom1xBitmap(bitmap);
-}
 
 class ShelfWindowWatcherTest : public test::AshTestBase {
  public:
@@ -257,7 +244,7 @@ TEST_F(ShelfWindowWatcherTest, DragWindow) {
   // Simulate dragging of the window and check its item is not changed.
   std::unique_ptr<WindowResizer> resizer(
       CreateWindowResizer(widget->GetNativeWindow(), gfx::Point(), HTCAPTION,
-                          ::wm::WINDOW_MOVE_SOURCE_MOUSE));
+                          aura::client::WINDOW_MOVE_SOURCE_MOUSE));
   ASSERT_TRUE(resizer.get());
   resizer->Drag(gfx::Point(50, 50), 0);
   resizer->CompleteDrag();
@@ -315,42 +302,11 @@ TEST_F(ShelfWindowWatcherTest, PanelWindow) {
   EXPECT_EQ(1, model_->item_count());
 }
 
-// Ensure items use the app icon and window icon aura::Window properties.
-TEST_F(ShelfWindowWatcherTest, ItemIcon) {
-  // ShelfModel only has an APP_LIST item.
-  EXPECT_EQ(1, model_->item_count());
-
-  // Create a ShelfItem for a window; it should have a default icon.
-  std::unique_ptr<views::Widget> widget =
-      CreateTestWidget(nullptr, kShellWindowId_DefaultContainer, gfx::Rect());
-  aura::Window* window = widget->GetNativeWindow();
-  ShelfID id = CreateShelfItem(window);
-  EXPECT_EQ(2, model_->item_count());
-  ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
-  gfx::Image default_image = rb.GetImageNamed(IDR_DEFAULT_FAVICON_32);
-  EXPECT_TRUE(model_->items()[1].image.BackedBySameObjectAs(
-      default_image.AsImageSkia()));
-
-  // Setting a window icon should update the item icon.
-  const gfx::ImageSkia red = CreateImageSkiaIcon(SK_ColorRED);
-  window->SetProperty(aura::client::kWindowIconKey, new gfx::ImageSkia(red));
-  EXPECT_EQ(SK_ColorRED, model_->items()[1].image.bitmap()->getColor(0, 0));
-
-  // Setting an app icon should override the window icon.
-  const gfx::ImageSkia blue = CreateImageSkiaIcon(SK_ColorBLUE);
-  window->SetProperty(aura::client::kAppIconKey, new gfx::ImageSkia(blue));
-  EXPECT_EQ(SK_ColorBLUE, model_->items()[1].image.bitmap()->getColor(0, 0));
-
-  // Clearing the app icon should restore the window icon to the shelf item.
-  window->ClearProperty(aura::client::kAppIconKey);
-  EXPECT_EQ(SK_ColorRED, model_->items()[1].image.bitmap()->getColor(0, 0));
-}
-
 TEST_F(ShelfWindowWatcherTest, DontCreateShelfEntriesForChildWindows) {
   const int initial_item_count = model_->item_count();
 
-  std::unique_ptr<aura::Window> window(base::MakeUnique<aura::Window>(
-      nullptr, aura::client::WINDOW_TYPE_NORMAL));
+  std::unique_ptr<aura::Window> window(
+      base::MakeUnique<aura::Window>(nullptr, ui::wm::WINDOW_TYPE_NORMAL));
   window->Init(ui::LAYER_NOT_DRAWN);
   window->SetProperty(kShelfIDKey, new std::string(ShelfID("foo").Serialize()));
   window->SetProperty(kShelfItemTypeKey, static_cast<int32_t>(TYPE_APP));
@@ -360,8 +316,8 @@ TEST_F(ShelfWindowWatcherTest, DontCreateShelfEntriesForChildWindows) {
   window->Show();
   EXPECT_EQ(initial_item_count + 1, model_->item_count());
 
-  std::unique_ptr<aura::Window> child_window(base::MakeUnique<aura::Window>(
-      nullptr, aura::client::WINDOW_TYPE_NORMAL));
+  std::unique_ptr<aura::Window> child_window(
+      base::MakeUnique<aura::Window>(nullptr, ui::wm::WINDOW_TYPE_NORMAL));
   child_window->Init(ui::LAYER_NOT_DRAWN);
   child_window->SetProperty(kShelfItemTypeKey, static_cast<int32_t>(TYPE_APP));
   window->AddChild(child_window.get());
@@ -395,5 +351,4 @@ TEST_F(ShelfWindowWatcherSessionStartTest, PreExistingWindow) {
   EXPECT_EQ(2, model->item_count());
 }
 
-}  // namespace
 }  // namespace ash

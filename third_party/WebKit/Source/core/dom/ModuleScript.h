@@ -53,7 +53,7 @@ class CORE_EXPORT ModuleScript final : public Script, public TraceWrapperBase {
 
   ~ModuleScript() override = default;
 
-  ScriptModule Record() const;
+  const ScriptModule& Record() const { return record_; }
   const KURL& BaseURL() const { return base_url_; }
 
   ModuleInstantiationState InstantiationState() const {
@@ -87,7 +87,15 @@ class CORE_EXPORT ModuleScript final : public Script, public TraceWrapperBase {
                const String& nonce,
                ParserDisposition parser_state,
                WebURLRequest::FetchCredentialsMode credentials_mode,
-               const String& source_text);
+               const String& source_text)
+      : settings_object_(settings_object),
+        record_(record),
+        base_url_(base_url),
+        instantiation_error_(this),
+        nonce_(nonce),
+        parser_state_(parser_state),
+        credentials_mode_(credentials_mode),
+        source_text_(source_text) {}
 
   static ModuleScript* CreateInternal(const String& source_text,
                                       Modulator*,
@@ -117,7 +125,7 @@ class CORE_EXPORT ModuleScript final : public Script, public TraceWrapperBase {
   Member<Modulator> settings_object_;
 
   // https://html.spec.whatwg.org/multipage/webappapis.html#concept-module-script-module-record
-  TraceWrapperV8Reference<v8::Module> record_;
+  ScriptModule record_;
 
   // https://html.spec.whatwg.org/multipage/webappapis.html#concept-module-script-base-url
   const KURL base_url_;

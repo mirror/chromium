@@ -14,7 +14,6 @@
 
 package org.chromium.net;
 
-import android.os.Build;
 import android.support.test.filters.SmallTest;
 
 import org.junit.Assert;
@@ -184,10 +183,7 @@ public class AndroidProxySelectorTest {
         System.setProperty("http.nonProxyHosts", "*example.com");
         System.setProperty("http.proxyHost", "httpproxy.com");
         System.setProperty("http.proxyPort", "8080");
-        // TODO(jbudorick): Find an appropriate upper bound for this. crbug.com/726360
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            checkMapping("http://example.com/", "DIRECT");
-        }
+        checkMapping("http://example.com/", "DIRECT");
         checkMapping("http://slashdot.org/", "PROXY httpproxy.com:8080");
         checkMapping("http://www.example.com/", "DIRECT");
     }

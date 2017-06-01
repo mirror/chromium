@@ -101,9 +101,6 @@ const FindInPageEntry kFindInPageEntryZero = {{0.0, 0.0}, 0};
   __weak JsFindinpageManager* weakSelf = self;
   [self executeJavaScript:JSONQuery
         completionHandler:^(id result, NSError* error) {
-          // Conservative early return in case of error.
-          if (error)
-            return;
           [weakSelf processFindInPagePumpResult:result
                               completionHandler:completionHandler];
         }];
@@ -114,9 +111,8 @@ const FindInPageEntry kFindInPageEntryZero = {{0.0, 0.0}, 0};
   __weak JsFindinpageManager* weakSelf = self;
   [self executeJavaScript:kFindInPagePump
         completionHandler:^(id result, NSError* error) {
-          // Conservative early return in case of error.
-          if (error)
-            return;
+          // TODO(shreyasv): What to do here if this returns an NSError in the
+          // WKWebView version.
           [weakSelf processFindInPagePumpResult:result
                               completionHandler:completionHandler];
         }];
@@ -142,9 +138,7 @@ const FindInPageEntry kFindInPageEntryZero = {{0.0, 0.0}, 0};
           JsFindinpageManager* strongSelf = weakSelf;
           if (!strongSelf)
             return;
-          // Conservative early return in case of error.
-          if (error)
-            return;
+          DCHECK(!error);
           FindInPageEntry entry = kFindInPageEntryZero;
           if (![result isEqual:kFindInPagePending]) {
             NSString* stringResult =
@@ -209,6 +203,8 @@ const FindInPageEntry kFindInPageEntryZero = {{0.0, 0.0}, 0};
   if ([result isEqual:kFindInPagePending]) {
     completionHandler(NO, point);
   }
+  // TODO(shreyasv): Inline this call from the logic from the above function
+  // and remove the above function.
   BOOL processFIPResult =
       [self processFindInPageResult:result scrollPosition:&point];
   completionHandler(processFIPResult, point);

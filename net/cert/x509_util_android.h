@@ -11,6 +11,6 @@ namespace net {
 
 bool RegisterX509Util(JNIEnv* env);
 
-}  // namespace net
+}  // net namespace
 
 #endif  // NET_CERT_X509_UTIL_ANDROID_H_

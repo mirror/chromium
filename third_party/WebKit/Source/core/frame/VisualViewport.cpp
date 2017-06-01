@@ -33,9 +33,9 @@
 #include <memory>
 #include "core/dom/DOMNodeIds.h"
 #include "core/dom/TaskRunnerHelper.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/PageScaleConstraints.h"
 #include "core/frame/PageScaleConstraintsSet.h"
 #include "core/frame/RootFrameViewport.h"
@@ -78,7 +78,7 @@ DEFINE_TRACE(VisualViewport) {
   ScrollableArea::Trace(visitor);
 }
 
-void VisualViewport::UpdateStyleAndLayoutIgnorePendingStylesheets() const {
+void VisualViewport::UpdateStyleAndLayoutIgnorePendingStylesheets() {
   if (!MainFrame())
     return;
 
@@ -190,7 +190,7 @@ void VisualViewport::SetScale(float scale) {
   SetScaleAndLocation(scale, FloatPoint(offset_));
 }
 
-double VisualViewport::OffsetLeft() const {
+double VisualViewport::ScrollLeft() {
   if (!MainFrame())
     return 0;
 
@@ -200,7 +200,7 @@ double VisualViewport::OffsetLeft() const {
                                      MainFrame()->PageZoomFactor());
 }
 
-double VisualViewport::OffsetTop() const {
+double VisualViewport::ScrollTop() {
   if (!MainFrame())
     return 0;
 
@@ -210,7 +210,7 @@ double VisualViewport::OffsetTop() const {
                                      MainFrame()->PageZoomFactor());
 }
 
-double VisualViewport::Width() const {
+double VisualViewport::ClientWidth() {
   if (!MainFrame())
     return 0;
 
@@ -221,7 +221,7 @@ double VisualViewport::Width() const {
   return width - MainFrame()->View()->VerticalScrollbarWidth() / scale_;
 }
 
-double VisualViewport::Height() const {
+double VisualViewport::ClientHeight() {
   if (!MainFrame())
     return 0;
 
@@ -232,8 +232,10 @@ double VisualViewport::Height() const {
   return height - MainFrame()->View()->HorizontalScrollbarHeight() / scale_;
 }
 
-double VisualViewport::ScaleForVisualViewport() const {
-  return Scale();
+double VisualViewport::PageScale() {
+  UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+  return scale_;
 }
 
 void VisualViewport::SetScaleAndLocation(float scale,
@@ -318,7 +320,7 @@ bool VisualViewport::MagnifyScaleAroundAnchor(float magnify_delta,
   FloatPoint anchor_at_new_scale = anchor.ScaledBy(1.f / new_page_scale);
   FloatSize anchor_delta = anchor_at_old_scale - anchor_at_new_scale;
 
-  // First try to use the anchor's delta to scroll the LocalFrameView.
+  // First try to use the anchor's delta to scroll the FrameView.
   FloatSize anchor_delta_unused_by_scroll = anchor_delta;
 
   // Manually bubble any remaining anchor delta up to the visual viewport.
@@ -418,9 +420,9 @@ void VisualViewport::InitializeScrollbars() {
   SetupScrollbar(WebScrollbar::kHorizontal);
   SetupScrollbar(WebScrollbar::kVertical);
 
-  // Ensure existing LocalFrameView scrollbars are removed if the visual
-  // viewport scrollbars are now supplied, or created if the visual viewport no
-  // longer supplies scrollbars.
+  // Ensure existing FrameView scrollbars are removed if the visual viewport
+  // scrollbars are now supplied, or created if the visual viewport no longer
+  // supplies scrollbars.
   LocalFrame* frame = MainFrame();
   if (frame && frame->View())
     frame->View()->VisualViewportScrollbarsChanged();
@@ -568,7 +570,7 @@ IntPoint VisualViewport::ClampDocumentOffsetAtScale(const IntPoint& offset,
   if (!MainFrame() || !MainFrame()->View())
     return IntPoint();
 
-  LocalFrameView* view = MainFrame()->View();
+  FrameView* view = MainFrame()->View();
 
   FloatSize scaled_size(size_);
   scaled_size.Scale(1 / scale);
@@ -594,10 +596,10 @@ float VisualViewport::BrowserControlsAdjustment() const {
 }
 
 IntRect VisualViewport::ScrollableAreaBoundingBox() const {
-  // This method should return the bounding box in the top-level
-  // LocalFrameView's coordinate space; however, VisualViewport technically
-  // isn't a child of any Frames.  Nonetheless, the VisualViewport always
-  // occupies the entire main frame so just return that.
+  // This method should return the bounding box in the top-level FrameView's
+  // coordinate space; however, VisualViewport technically isn't a child of any
+  // Frames.  Nonetheless, the VisualViewport always occupies the entire main
+  // frame so just return that.
   LocalFrame* frame = MainFrame();
 
   if (!frame || !frame->View())
@@ -612,8 +614,7 @@ IntSize VisualViewport::ContentsSize() const {
   if (!frame || !frame->View())
     return IntSize();
 
-  // TODO(bokan): This should be the layout viewport rather than main
-  // LocalFrameView.
+  // TODO(bokan): This should be the layout viewport rather than main FrameView.
   return frame->View()->VisibleContentRect(kIncludeScrollbars).Size();
 }
 

@@ -64,6 +64,16 @@ class StyleReflection;
 class StyleTransformData;
 class StyleWillChangeData;
 
+// Page size type.
+// StyleRareNonInheritedData::page_size_ is meaningful only when
+// StyleRareNonInheritedData::page_size_type_ is PAGE_SIZE_RESOLVED.
+enum PageSizeType {
+  PAGE_SIZE_AUTO,            // size: auto
+  PAGE_SIZE_AUTO_LANDSCAPE,  // size: landscape
+  PAGE_SIZE_AUTO_PORTRAIT,   // size: portrait
+  PAGE_SIZE_RESOLVED         // Size is fully resolved.
+};
+
 // This struct is for rarely used non-inherited CSS3, CSS2, and WebKit-specific
 // properties.  By grouping them together, we save space, and only allocate this
 // object when someone actually uses one of these properties.
@@ -86,7 +96,19 @@ class CORE_EXPORT StyleRareNonInheritedData
     return !(*this == o);
   }
 
-  float opacity_;  // Whether or not we're transparent.
+  bool ContentDataEquivalent(const StyleRareNonInheritedData&) const;
+  bool CounterDataEquivalent(const StyleRareNonInheritedData&) const;
+  bool ShadowDataEquivalent(const StyleRareNonInheritedData&) const;
+  bool ReflectionDataEquivalent(const StyleRareNonInheritedData&) const;
+  bool AnimationDataEquivalent(const StyleRareNonInheritedData&) const;
+  bool TransitionDataEquivalent(const StyleRareNonInheritedData&) const;
+  bool ShapeOutsideDataEquivalent(const StyleRareNonInheritedData&) const;
+  bool ClipPathDataEquivalent(const StyleRareNonInheritedData&) const;
+  bool HasFilters() const;
+  bool HasBackdropFilters() const;
+  bool HasOpacity() const { return opacity < 1; }
+
+  float opacity;  // Whether or not we're transparent.
 
   float perspective_;
   float shape_image_threshold_;
@@ -96,8 +118,8 @@ class CORE_EXPORT StyleRareNonInheritedData
   LengthPoint perspective_origin_;
   LengthPoint object_position_;
 
-  LineClampValue line_clamp_;           // An Apple extension.
-  unsigned draggable_region_mode_ : 2;  // DraggableRegionMode
+  LineClampValue line_clamp;  // An Apple extension.
+  DraggableRegionMode draggable_region_mode_;
 
   DataRef<StyleDeprecatedFlexibleBoxData>
       deprecated_flexible_box_;  // Flexible box properties
@@ -159,14 +181,14 @@ class CORE_EXPORT StyleRareNonInheritedData
   StyleSelfAlignmentData justify_self_;
 
   unsigned page_size_type_ : 2;       // PageSizeType
-  unsigned transform_style_3d_ : 1;   // ETransformStyle3D
+  unsigned transform_style3d_ : 1;    // ETransformStyle3D
   unsigned backface_visibility_ : 1;  // EBackfaceVisibility
 
-  unsigned user_drag_ : 2;      // EUserDrag
-  unsigned text_overflow_ : 1;  // Whether or not lines that spill out should be
-                                // truncated with "..."
-  unsigned margin_before_collapse_ : 2;  // EMarginCollapse
-  unsigned margin_after_collapse_ : 2;   // EMarginCollapse
+  unsigned user_drag : 2;      // EUserDrag
+  unsigned text_overflow : 1;  // Whether or not lines that spill out should be
+                               // truncated with "..."
+  unsigned margin_before_collapse : 2;  // EMarginCollapse
+  unsigned margin_after_collapse : 2;   // EMarginCollapse
   unsigned appearance_ : 6;             // EAppearance
 
   unsigned text_decoration_style_ : 3;  // TextDecorationStyle

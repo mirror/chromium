@@ -17,7 +17,6 @@
 #include "base/sys_info.h"
 #include "base/task_scheduler/post_task.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/chromeos/arc/arc_migration_constants.h"
 #include "chrome/browser/chromeos/login/ui/login_feedback.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/profiles/profile.h"
@@ -29,7 +28,6 @@
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/power_manager/power_supply_properties.pb.h"
 #include "chromeos/dbus/power_manager_client.h"
-#include "chromeos/dbus/power_policy_controller.h"
 #include "components/login/localized_values_builder.h"
 #include "components/user_manager/user_manager.h"
 #include "content/public/browser/browser_thread.h"
@@ -42,6 +40,12 @@ constexpr char kJsScreenPath[] = "login.EncryptionMigrationScreen";
 
 // Path to the mount point to check the available space.
 constexpr char kCheckStoragePath[] = "/home";
+
+// The minimum size of available space to start the migration.
+constexpr int64_t kMinimumAvailableStorage = 10LL * 1024 * 1024;  // 10MB
+
+// The minimum battery level to start the migration.
+constexpr double kMinimumBatteryPercent = 30;
 
 // JS API callbacks names.
 constexpr char kJsApiStartMigration[] = "startMigration";
@@ -139,7 +143,6 @@ void EncryptionMigrationScreenHandler::SetContinueLoginCallback(
 }
 
 void EncryptionMigrationScreenHandler::SetupInitialView() {
-  DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(this);
   CheckAvailableStorage();
 }
 
@@ -193,6 +196,8 @@ void EncryptionMigrationScreenHandler::Initialize() {
   if (!page_is_ready() || !delegate_)
     return;
 
+  DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(this);
+
   if (show_on_init_) {
     Show();
     show_on_init_ = false;
@@ -212,28 +217,15 @@ void EncryptionMigrationScreenHandler::RegisterMessages() {
 
 void EncryptionMigrationScreenHandler::PowerChanged(
     const power_manager::PowerSupplyProperties& proto) {
-  if (proto.has_battery_percent()) {
-    if (!current_battery_percent_) {
-      // If initial battery level is below the minimum, migration should start
-      // automatically once the device is charged enough.
-      if (proto.battery_percent() < arc::kMigrationMinimumBatteryPercent)
-        should_migrate_on_enough_battery_ = true;
-    }
-    current_battery_percent_ = proto.battery_percent();
-  } else {
-    // If battery level is not provided, we regard it as 100% to start migration
-    // immediately.
-    current_battery_percent_ = 100.0;
-  }
-
-  CallJS("setBatteryState", *current_battery_percent_,
-         *current_battery_percent_ >= arc::kMigrationMinimumBatteryPercent,
+  current_battery_percent_ = proto.battery_percent();
+  CallJS("setBatteryState", current_battery_percent_,
+         current_battery_percent_ >= kMinimumBatteryPercent,
          proto.battery_state() ==
              power_manager::PowerSupplyProperties_BatteryState_CHARGING);
 
   // If the migration was already requested and the bettery level is enough now,
   // The migration should start immediately.
-  if (*current_battery_percent_ >= arc::kMigrationMinimumBatteryPercent &&
+  if (current_battery_percent_ >= kMinimumBatteryPercent &&
       should_migrate_on_enough_battery_) {
     should_migrate_on_enough_battery_ = false;
     StartMigration();
@@ -283,14 +275,11 @@ void EncryptionMigrationScreenHandler::UpdateUIState(UIState state) {
   if (state == UIState::READY)
     DBusThreadManager::Get()->GetPowerManagerClient()->RequestStatusUpdate();
 
-  // We should block power save and not shut down on lid close during migration.
-  if (state == UIState::MIGRATING) {
+  // We should block power save during migration.
+  if (state == UIState::MIGRATING)
     StartBlockingPowerSave();
-    PowerPolicyController::Get()->SetEncryptionMigrationActive(true);
-  } else {
+  else
     StopBlockingPowerSave();
-    PowerPolicyController::Get()->SetEncryptionMigrationActive(false);
-  }
 }
 
 void EncryptionMigrationScreenHandler::CheckAvailableStorage() {
@@ -303,7 +292,7 @@ void EncryptionMigrationScreenHandler::CheckAvailableStorage() {
 }
 
 void EncryptionMigrationScreenHandler::OnGetAvailableStorage(int64_t size) {
-  if (size >= arc::kMigrationMinimumAvailableStorage || IsTestingUI()) {
+  if (size >= kMinimumAvailableStorage || IsTestingUI()) {
     if (should_resume_) {
       RecordFirstScreen(FirstScreen::FIRST_SCREEN_RESUME);
       WaitBatteryAndMigrate();
@@ -315,14 +304,13 @@ void EncryptionMigrationScreenHandler::OnGetAvailableStorage(int64_t size) {
     RecordFirstScreen(FirstScreen::FIRST_SCREEN_LOW_STORAGE);
     CallJS("setAvailableSpaceInString", ui::FormatBytes(size));
     CallJS("setNecessarySpaceInString",
-           ui::FormatBytes(arc::kMigrationMinimumAvailableStorage));
+           ui::FormatBytes(kMinimumAvailableStorage));
     UpdateUIState(UIState::NOT_ENOUGH_STORAGE);
   }
 }
 
 void EncryptionMigrationScreenHandler::WaitBatteryAndMigrate() {
-  if (current_battery_percent_ &&
-      *current_battery_percent_ >= arc::kMigrationMinimumBatteryPercent) {
+  if (current_battery_percent_ >= kMinimumBatteryPercent) {
     StartMigration();
     return;
   }
@@ -334,7 +322,7 @@ void EncryptionMigrationScreenHandler::WaitBatteryAndMigrate() {
 
 void EncryptionMigrationScreenHandler::StartMigration() {
   UpdateUIState(UIState::MIGRATING);
-  initial_battery_percent_ = *current_battery_percent_;
+  initial_battery_percent_ = current_battery_percent_;
 
   // Mount the existing eCryptfs vault to a temporary location for migration.
   cryptohome::MountParameters mount(false);
@@ -435,11 +423,11 @@ void EncryptionMigrationScreenHandler::OnMigrationProgress(
     case cryptohome::DIRCRYPTO_MIGRATION_SUCCESS:
       // If the battery level decreased during migration, record the consumed
       // battery level.
-      if (*current_battery_percent_ < initial_battery_percent_) {
+      if (current_battery_percent_ < initial_battery_percent_) {
         UMA_HISTOGRAM_PERCENTAGE(
             kUmaNameConsumedBatteryPercent,
             static_cast<int>(std::round(initial_battery_percent_ -
-                                        *current_battery_percent_)));
+                                        current_battery_percent_)));
       }
       // Restart immediately after successful migration.
       DBusThreadManager::Get()->GetPowerManagerClient()->RequestRestart();

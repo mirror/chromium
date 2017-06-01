@@ -96,6 +96,8 @@ class MODULES_EXPORT OffscreenCanvasRenderingContext2D final
 
   ImageBitmap* TransferToImageBitmap(ScriptState*) final;
 
+  ColorBehavior DrawImageColorBehavior() const final;
+
  protected:
   OffscreenCanvasRenderingContext2D(
       ScriptState*,
@@ -115,7 +117,6 @@ class MODULES_EXPORT OffscreenCanvasRenderingContext2D final
   CanvasColorSpace ColorSpace() const override;
   String ColorSpaceAsString() const override;
   CanvasPixelFormat PixelFormat() const override;
-  SkIRect dirty_rect_for_commit_;
 };
 
 DEFINE_TYPE_CASTS(OffscreenCanvasRenderingContext2D,

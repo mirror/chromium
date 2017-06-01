@@ -9,6 +9,7 @@
 #include <string>
 
 #include "ash/shell_delegate.h"
+#include "ash/test/test_session_state_delegate.h"
 #include "base/macros.h"
 
 class PrefService;
@@ -40,7 +41,7 @@ class TestShellDelegate : public ShellDelegate {
   bool IsIncognitoAllowed() const override;
   bool IsMultiProfilesEnabled() const override;
   bool IsRunningInForcedAppMode() const override;
-  bool CanShowWindowForUser(aura::Window* window) const override;
+  bool CanShowWindowForUser(WmWindow* window) const override;
   bool IsForceMaximizeOnFirstRun() const override;
   void PreInit() override;
   void PreShutdown() override;
@@ -51,9 +52,10 @@ class TestShellDelegate : public ShellDelegate {
   void OpenUrlFromArc(const GURL& url) override;
   SystemTrayDelegate* CreateSystemTrayDelegate() override;
   std::unique_ptr<WallpaperDelegate> CreateWallpaperDelegate() override;
+  TestSessionStateDelegate* CreateSessionStateDelegate() override;
   AccessibilityDelegate* CreateAccessibilityDelegate() override;
   std::unique_ptr<PaletteDelegate> CreatePaletteDelegate() override;
-  ui::MenuModel* CreateContextMenu(Shelf* shelf,
+  ui::MenuModel* CreateContextMenu(WmShelf* wm_shelf,
                                    const ShelfItem* item) override;
   GPUSupport* CreateGPUSupport() override;
   base::string16 GetProductName() const override;
@@ -63,7 +65,6 @@ class TestShellDelegate : public ShellDelegate {
   void SetTouchscreenEnabledInPrefs(bool enabled,
                                     bool use_local_state) override;
   void UpdateTouchscreenStatusFromPrefs() override;
-  void SuspendMediaSessions() override;
 
   int num_exit_requests() const { return num_exit_requests_; }
 
@@ -71,16 +72,13 @@ class TestShellDelegate : public ShellDelegate {
     force_maximize_on_first_run_ = maximize;
   }
 
-  bool media_sessions_suspended() const { return media_sessions_suspended_; }
-
  private:
-  int num_exit_requests_ = 0;
-  bool multi_profiles_enabled_ = false;
-  bool force_maximize_on_first_run_ = false;
-  bool touchscreen_enabled_in_local_pref_ = true;
-  bool media_sessions_suspended_ = false;
+  int num_exit_requests_;
+  bool multi_profiles_enabled_;
+  bool force_maximize_on_first_run_;
+  bool touchscreen_enabled_in_local_pref_;
   std::unique_ptr<ShelfInitializer> shelf_initializer_;
-  PrefService* active_user_pref_service_ = nullptr;  // Not owned.
+  PrefService* active_user_pref_service_;  // Not owned.
 
   DISALLOW_COPY_AND_ASSIGN(TestShellDelegate);
 };

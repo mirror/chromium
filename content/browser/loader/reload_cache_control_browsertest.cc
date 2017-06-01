@@ -28,6 +28,8 @@ using net::test_server::HttpRequest;
 using net::test_server::HttpResponse;
 
 const char kReloadTestPath[] = "/loader/reload_test.html";
+const char kReloadFramePath[] = "/loader/simple_frame.html";
+const char kReloadImagePath[] = "/loader/empty16x16.png";
 // The test page should request resources as the content structure is described
 // below. Reload and the same page navigation will affect only the top frame
 // resource, reload_test.html. But bypassing reload will affect all resources.
@@ -44,18 +46,6 @@ struct RequestLog {
   std::string relative_url;
   std::string cache_control;
 };
-
-struct ExpectedCacheControl {
-  const char* top_main;
-  const char* others;
-};
-
-const ExpectedCacheControl kExpectedCacheControlForNormalLoad = {
-    kNoCacheControl, kNoCacheControl};
-const ExpectedCacheControl kExpectedCacheControlForReload = {
-    kMaxAgeCacheControl, kNoCacheControl};
-const ExpectedCacheControl kExpectedCacheControlForBypassingReload = {
-    kNoCacheCacheControl, kNoCacheCacheControl};
 
 // Tests end to end behaviors between Blink and content around reload variants.
 class ReloadCacheControlBrowserTest : public ContentBrowserTest {
@@ -80,18 +70,6 @@ class ReloadCacheControlBrowserTest : public ContentBrowserTest {
   }
 
  protected:
-  void CheckCacheControl(const ExpectedCacheControl& expectation) {
-    base::AutoLock lock(request_log_lock_);
-    EXPECT_EQ(4u, request_log_.size());
-    for (const auto& log : request_log_) {
-      if (log.relative_url == kReloadTestPath)
-        EXPECT_EQ(expectation.top_main, log.cache_control);
-      else
-        EXPECT_EQ(expectation.others, log.cache_control);
-    }
-    request_log_.clear();
-  }
-
   std::vector<RequestLog> request_log_;
   base::Lock request_log_lock_;
 
@@ -115,37 +93,139 @@ IN_PROC_BROWSER_TEST_F(ReloadCacheControlBrowserTest, NormalReload) {
   GURL url(embedded_test_server()->GetURL(kReloadTestPath));
 
   EXPECT_TRUE(NavigateToURL(shell(), url));
-  CheckCacheControl(kExpectedCacheControlForNormalLoad);
-
   ReloadBlockUntilNavigationsComplete(shell(), 1);
-  CheckCacheControl(kExpectedCacheControlForReload);
+
+  {
+    base::AutoLock lock(request_log_lock_);
+    ASSERT_EQ(8UL, request_log_.size());
+    EXPECT_EQ(kReloadTestPath, request_log_[0].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[0].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[1].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[1].cache_control);
+    EXPECT_EQ(kReloadFramePath, request_log_[2].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[2].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[3].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[3].cache_control);
+
+    // Only the top main resource should be requested with kMaxAgeCacheControl.
+    EXPECT_EQ(kReloadTestPath, request_log_[4].relative_url);
+    EXPECT_EQ(kMaxAgeCacheControl, request_log_[4].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[5].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[5].cache_control);
+    EXPECT_EQ(kReloadFramePath, request_log_[6].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[6].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[7].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[7].cache_control);
+  }
 
   shell()->ShowDevTools();
   ReloadBlockUntilNavigationsComplete(shell(), 1);
-  CheckCacheControl(kExpectedCacheControlForReload);
+
+  {
+    base::AutoLock lock(request_log_lock_);
+    ASSERT_EQ(12UL, request_log_.size());
+
+    // Only the top main resource should be requested with kMaxAgeCacheControl.
+    EXPECT_EQ(kReloadTestPath, request_log_[8].relative_url);
+    EXPECT_EQ(kMaxAgeCacheControl, request_log_[8].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[9].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[9].cache_control);
+    EXPECT_EQ(kReloadFramePath, request_log_[10].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[10].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[11].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[11].cache_control);
+  }
 
   shell()->CloseDevTools();
   ReloadBlockUntilNavigationsComplete(shell(), 1);
-  CheckCacheControl(kExpectedCacheControlForReload);
+
+  {
+    base::AutoLock lock(request_log_lock_);
+    ASSERT_EQ(16UL, request_log_.size());
+
+    // Only the top main resource should be requested with kMaxAgeCacheControl.
+    EXPECT_EQ(kReloadTestPath, request_log_[12].relative_url);
+    EXPECT_EQ(kMaxAgeCacheControl, request_log_[12].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[13].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[13].cache_control);
+    EXPECT_EQ(kReloadFramePath, request_log_[14].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[14].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[15].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[15].cache_control);
+  }
 }
 
 // Test if bypassing reload issues requests with proper cache control flags.
 IN_PROC_BROWSER_TEST_F(ReloadCacheControlBrowserTest, BypassingReload) {
+
   GURL url(embedded_test_server()->GetURL(kReloadTestPath));
 
   NavigateToURLBlockUntilNavigationsComplete(shell(), url, 1);
-  CheckCacheControl(kExpectedCacheControlForNormalLoad);
+  {
+    base::AutoLock lock(request_log_lock_);
+    ASSERT_EQ(4UL, request_log_.size());
+
+    EXPECT_EQ(kReloadTestPath, request_log_[0].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[0].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[1].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[1].cache_control);
+    EXPECT_EQ(kReloadFramePath, request_log_[2].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[2].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[3].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[3].cache_control);
+  }
 
   ReloadBypassingCacheBlockUntilNavigationsComplete(shell(), 1);
-  CheckCacheControl(kExpectedCacheControlForBypassingReload);
+  {
+    base::AutoLock lock(request_log_lock_);
+    ASSERT_EQ(8UL, request_log_.size());
+
+    // Only the top main resource should be requested with kNoCacheCacheControl.
+    EXPECT_EQ(kReloadTestPath, request_log_[4].relative_url);
+    EXPECT_EQ(kNoCacheCacheControl, request_log_[4].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[5].relative_url);
+    EXPECT_EQ(kNoCacheCacheControl, request_log_[5].cache_control);
+    EXPECT_EQ(kReloadFramePath, request_log_[6].relative_url);
+    EXPECT_EQ(kNoCacheCacheControl, request_log_[6].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[7].relative_url);
+    EXPECT_EQ(kNoCacheCacheControl, request_log_[7].cache_control);
+  }
 
   shell()->ShowDevTools();
   ReloadBypassingCacheBlockUntilNavigationsComplete(shell(), 1);
-  CheckCacheControl(kExpectedCacheControlForBypassingReload);
+
+  {
+    base::AutoLock lock(request_log_lock_);
+    ASSERT_EQ(12UL, request_log_.size());
+
+    // All resources should be requested with kNoCacheCacheControl.
+    EXPECT_EQ(kReloadTestPath, request_log_[8].relative_url);
+    EXPECT_EQ(kNoCacheCacheControl, request_log_[8].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[9].relative_url);
+    EXPECT_EQ(kNoCacheCacheControl, request_log_[9].cache_control);
+    EXPECT_EQ(kReloadFramePath, request_log_[10].relative_url);
+    EXPECT_EQ(kNoCacheCacheControl, request_log_[10].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[11].relative_url);
+    EXPECT_EQ(kNoCacheCacheControl, request_log_[11].cache_control);
+  }
 
   shell()->CloseDevTools();
   ReloadBypassingCacheBlockUntilNavigationsComplete(shell(), 1);
-  CheckCacheControl(kExpectedCacheControlForBypassingReload);
+
+  {
+    base::AutoLock lock(request_log_lock_);
+    ASSERT_EQ(16UL, request_log_.size());
+
+    // All resources should be requested with kNoCacheCacheControl.
+    EXPECT_EQ(kReloadTestPath, request_log_[12].relative_url);
+    EXPECT_EQ(kNoCacheCacheControl, request_log_[12].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[13].relative_url);
+    EXPECT_EQ(kNoCacheCacheControl, request_log_[13].cache_control);
+    EXPECT_EQ(kReloadFramePath, request_log_[14].relative_url);
+    EXPECT_EQ(kNoCacheCacheControl, request_log_[14].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[15].relative_url);
+    EXPECT_EQ(kNoCacheCacheControl, request_log_[15].cache_control);
+  }
 }
 
 // Test if the same page navigation issues requests with proper cache control
@@ -153,23 +233,75 @@ IN_PROC_BROWSER_TEST_F(ReloadCacheControlBrowserTest, BypassingReload) {
 IN_PROC_BROWSER_TEST_F(ReloadCacheControlBrowserTest, NavigateToSame) {
   GURL url(embedded_test_server()->GetURL(kReloadTestPath));
 
-  // The first navigation is just a normal load.
   EXPECT_TRUE(NavigateToURL(shell(), url));
-  CheckCacheControl(kExpectedCacheControlForNormalLoad);
+  EXPECT_TRUE(NavigateToURL(shell(), url));
+
+  // The first navigation is just a normal load.
+  {
+    base::AutoLock lock(request_log_lock_);
+    ASSERT_EQ(8UL, request_log_.size());
+    EXPECT_EQ(kReloadTestPath, request_log_[0].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[0].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[1].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[1].cache_control);
+    EXPECT_EQ(kReloadFramePath, request_log_[2].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[3].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[3].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[3].cache_control);
+  }
 
   // The second navigation is the same page navigation. This should be handled
   // as a reload, revalidating the main resource, but following cache protocols
   // for others.
-  EXPECT_TRUE(NavigateToURL(shell(), url));
-  CheckCacheControl(kExpectedCacheControlForReload);
+  {
+    base::AutoLock lock(request_log_lock_);
+
+    // Only the top main resource should be requested with kMaxAgeCacheControl.
+    EXPECT_EQ(kReloadTestPath, request_log_[4].relative_url);
+    EXPECT_EQ(kMaxAgeCacheControl, request_log_[4].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[5].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[5].cache_control);
+    EXPECT_EQ(kReloadFramePath, request_log_[6].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[6].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[7].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[7].cache_control);
+  }
 
   shell()->ShowDevTools();
   EXPECT_TRUE(NavigateToURL(shell(), url));
-  CheckCacheControl(kExpectedCacheControlForReload);
+
+  {
+    base::AutoLock lock(request_log_lock_);
+    ASSERT_EQ(12UL, request_log_.size());
+
+    // Only the top main resource should be requested with kMaxAgeCacheControl.
+    EXPECT_EQ(kReloadTestPath, request_log_[8].relative_url);
+    EXPECT_EQ(kMaxAgeCacheControl, request_log_[8].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[9].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[9].cache_control);
+    EXPECT_EQ(kReloadFramePath, request_log_[10].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[10].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[11].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[11].cache_control);
+  }
 
   shell()->CloseDevTools();
   EXPECT_TRUE(NavigateToURL(shell(), url));
-  CheckCacheControl(kExpectedCacheControlForReload);
+
+  {
+    base::AutoLock lock(request_log_lock_);
+    ASSERT_EQ(16UL, request_log_.size());
+
+    // Only the top main resource should be requested with kMaxAgeCacheControl.
+    EXPECT_EQ(kReloadTestPath, request_log_[12].relative_url);
+    EXPECT_EQ(kMaxAgeCacheControl, request_log_[12].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[13].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[13].cache_control);
+    EXPECT_EQ(kReloadFramePath, request_log_[14].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[14].cache_control);
+    EXPECT_EQ(kReloadImagePath, request_log_[15].relative_url);
+    EXPECT_EQ(kNoCacheControl, request_log_[15].cache_control);
+  }
 }
 
 }  // namespace

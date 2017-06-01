@@ -19,15 +19,15 @@ class WebPageImportanceSignals {
   WebPageImportanceSignals() { Reset(); }
 
   bool HadFormInteraction() const { return had_form_interaction_; }
-  BLINK_EXPORT void SetHadFormInteraction();
+  void SetHadFormInteraction();
   bool IssuedNonGetFetchFromScript() const {
     return issued_non_get_fetch_from_script_;
   }
-  BLINK_EXPORT void SetIssuedNonGetFetchFromScript();
+  void SetIssuedNonGetFetchFromScript();
 
   BLINK_EXPORT void Reset();
 #if BLINK_IMPLEMENTATION
-  BLINK_EXPORT void OnCommitLoad();
+  void OnCommitLoad();
 #endif
 
   void SetObserver(WebViewClient* observer) { observer_ = observer; }

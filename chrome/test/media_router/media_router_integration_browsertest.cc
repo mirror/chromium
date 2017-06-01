@@ -13,7 +13,6 @@
 #include "base/json/json_writer.h"
 #include "base/path_service.h"
 #include "base/strings/stringprintf.h"
-#include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -163,16 +162,12 @@ void MediaRouterIntegrationBrowserTest::ExecuteJavaScriptAPI(
   ASSERT_TRUE(passed) << error_message;
 }
 
-void MediaRouterIntegrationBrowserTest::StartSessionAndAssertNotFoundError() {
+WebContents* MediaRouterIntegrationBrowserTest::StartSessionWithTestPageNow() {
   OpenTestPage(FILE_PATH_LITERAL("basic_test.html"));
   WebContents* web_contents = GetActiveWebContents();
   CHECK(web_contents);
   StartSession(web_contents);
-
-  // Wait for any sinks to be displayed.
-  Wait(base::TimeDelta::FromSeconds(1));
-  GetControllerForShownDialog(web_contents)->HideMediaRouterDialog();
-  CheckStartFailed(web_contents, "NotFoundError", "No screens found.");
+  return web_contents;
 }
 
 WebContents*
@@ -288,12 +283,8 @@ void MediaRouterIntegrationBrowserTest::SetTestData(
   JSONFileValueDeserializer deserializer(full_path);
   int error_code = 0;
   std::string error_message;
-  std::unique_ptr<base::Value> value;
-  {
-    // crbug.com/724573
-    base::ThreadRestrictions::ScopedAllowIO allow_io;
-    value = deserializer.Deserialize(&error_code, &error_message);
-  }
+  std::unique_ptr<base::Value> value =
+      deserializer.Deserialize(&error_code, &error_message);
   CHECK(value.get()) << "Deserialize failed: " << error_message;
   std::string test_data_str;
   ASSERT_TRUE(base::JSONWriter::Write(*value, &test_data_str));
@@ -327,11 +318,7 @@ base::FilePath MediaRouterIntegrationBrowserTest::GetResourceFile(
   CHECK(PathService::Get(base::DIR_MODULE, &base_dir));
   base::FilePath full_path =
       base_dir.Append(kResourcePath).Append(relative_path);
-  {
-    // crbug.com/724573
-    base::ThreadRestrictions::ScopedAllowIO allow_io;
-    CHECK(PathExists(full_path));
-  }
+  CHECK(PathExists(full_path));
   return full_path;
 }
 
@@ -636,13 +623,18 @@ IN_PROC_BROWSER_TEST_F(MediaRouterIntegrationBrowserTest,
 IN_PROC_BROWSER_TEST_F(MediaRouterIntegrationBrowserTest,
                        MANUAL_Fail_StartCancelledNoSinks) {
   SetTestData(FILE_PATH_LITERAL("no_sinks.json"));
-  StartSessionAndAssertNotFoundError();
+  WebContents* web_contents = StartSessionWithTestPageNow();
+  GetControllerForShownDialog(web_contents)->HideMediaRouterDialog();
+  CheckStartFailed(web_contents, "NotFoundError", "No screens found.");
 }
 
 IN_PROC_BROWSER_TEST_F(MediaRouterIntegrationBrowserTest,
                        MANUAL_Fail_StartCancelledNoSupportedSinks) {
   SetTestData(FILE_PATH_LITERAL("no_supported_sinks.json"));
-  StartSessionAndAssertNotFoundError();
+  WebContents* web_contents = StartSessionWithTestPageNow();
+  WaitUntilSinkDiscoveredOnUI();
+  GetControllerForShownDialog(web_contents)->HideMediaRouterDialog();
+  CheckStartFailed(web_contents, "NotFoundError", "No screens found.");
 }
 
 void MediaRouterIntegrationIncognitoBrowserTest::InstallAndEnableMRExtension() {

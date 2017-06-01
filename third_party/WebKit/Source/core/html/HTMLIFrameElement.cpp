@@ -27,7 +27,6 @@
 #include "core/CSSPropertyNames.h"
 #include "core/HTMLNames.h"
 #include "core/frame/UseCounter.h"
-#include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/HTMLDocument.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/layout/LayoutIFrame.h"
@@ -40,7 +39,6 @@ using namespace HTMLNames;
 inline HTMLIFrameElement::HTMLIFrameElement(Document& document)
     : HTMLFrameElementBase(iframeTag, document),
       did_load_non_empty_document_(false),
-      collapsed_by_client_(false),
       sandbox_(HTMLIFrameElementSandbox::Create(this)),
       allow_(HTMLIFrameElementAllow::Create(this)),
       referrer_policy_(kReferrerPolicyDefault) {}
@@ -55,18 +53,6 @@ DEFINE_TRACE(HTMLIFrameElement) {
 }
 
 HTMLIFrameElement::~HTMLIFrameElement() {}
-
-void HTMLIFrameElement::SetCollapsed(bool collapse) {
-  if (collapsed_by_client_ == collapse)
-    return;
-
-  collapsed_by_client_ = collapse;
-
-  // This is always called in response to an IPC, so should not happen in the
-  // middle of a style recalc.
-  DCHECK(!GetDocument().InStyleRecalc());
-  LazyReattachIfAttached();
-}
 
 DOMTokenList* HTMLIFrameElement::sandbox() const {
   return sandbox_.Get();
@@ -125,16 +111,7 @@ void HTMLIFrameElement::ParseAttribute(
     if (name_ != old_name)
       FrameOwnerPropertiesChanged();
   } else if (name == sandboxAttr) {
-    sandbox_->DidUpdateAttributeValue(params.old_value, value);
-    String invalid_tokens;
-    SetSandboxFlags(value.IsNull() ? kSandboxNone
-                                   : ParseSandboxPolicy(sandbox_->Tokens(),
-                                                        invalid_tokens));
-    if (!invalid_tokens.IsNull()) {
-      GetDocument().AddConsoleMessage(ConsoleMessage::Create(
-          kOtherMessageSource, kErrorMessageLevel,
-          "Error while parsing the 'sandbox' attribute: " + invalid_tokens));
-    }
+    sandbox_->setValue(value);
     UseCounter::Count(GetDocument(), UseCounter::kSandboxViaIFrame);
   } else if (name == referrerpolicyAttr) {
     referrer_policy_ = kReferrerPolicyDefault;
@@ -168,11 +145,12 @@ void HTMLIFrameElement::ParseAttribute(
     }
   } else if (RuntimeEnabledFeatures::embedderCSPEnforcementEnabled() &&
              name == cspAttr) {
-    if (!ContentSecurityPolicy::IsValidCSPAttr(value.GetString())) {
+    // TODO(amalika): add more robust validation of the value
+    if (!value.GetString().ContainsOnlyASCII()) {
       csp_ = g_null_atom;
       GetDocument().AddConsoleMessage(ConsoleMessage::Create(
           kOtherMessageSource, kErrorMessageLevel,
-          "'csp' attribute is not a valid policy: " + value));
+          "'csp' attribute contains non-ASCII characters: " + value));
       return;
     }
     AtomicString old_csp = csp_;
@@ -181,16 +159,7 @@ void HTMLIFrameElement::ParseAttribute(
       FrameOwnerPropertiesChanged();
   } else if (RuntimeEnabledFeatures::featurePolicyEnabled() &&
              name == allowAttr) {
-    allow_->DidUpdateAttributeValue(params.old_value, value);
-    String invalid_tokens;
-    allowed_features_ = allow_->ParseAllowedFeatureNames(invalid_tokens);
-    if (!invalid_tokens.IsNull()) {
-      GetDocument().AddConsoleMessage(ConsoleMessage::Create(
-          kOtherMessageSource, kErrorMessageLevel,
-          "Error while parsing the 'allow' attribute: " + invalid_tokens));
-    }
-    FrameOwnerPropertiesChanged();
-    UpdateContainerPolicy();
+    allow_->setValue(value);
   } else {
     if (name == srcAttr)
       LogUpdateAttributeIfIsolatedWorldAndInDocument("iframe", params);
@@ -199,8 +168,7 @@ void HTMLIFrameElement::ParseAttribute(
 }
 
 bool HTMLIFrameElement::LayoutObjectIsNeeded(const ComputedStyle& style) {
-  return ContentFrame() && !collapsed_by_client_ &&
-         HTMLElement::LayoutObjectIsNeeded(style);
+  return ContentFrame() && HTMLElement::LayoutObjectIsNeeded(style);
 }
 
 LayoutObject* HTMLIFrameElement::CreateLayoutObject(const ComputedStyle&) {
@@ -225,6 +193,31 @@ void HTMLIFrameElement::RemovedFrom(ContainerNode* insertion_point) {
 
 bool HTMLIFrameElement::IsInteractiveContent() const {
   return true;
+}
+
+void HTMLIFrameElement::SandboxValueWasSet() {
+  String invalid_tokens;
+  SetSandboxFlags(sandbox_->value().IsNull()
+                      ? kSandboxNone
+                      : ParseSandboxPolicy(sandbox_->Tokens(), invalid_tokens));
+  if (!invalid_tokens.IsNull())
+    GetDocument().AddConsoleMessage(ConsoleMessage::Create(
+        kOtherMessageSource, kErrorMessageLevel,
+        "Error while parsing the 'sandbox' attribute: " + invalid_tokens));
+  SetSynchronizedLazyAttribute(sandboxAttr, sandbox_->value());
+}
+
+void HTMLIFrameElement::AllowValueWasSet() {
+  String invalid_tokens;
+  allowed_features_ = allow_->ParseAllowedFeatureNames(invalid_tokens);
+  if (!invalid_tokens.IsNull()) {
+    GetDocument().AddConsoleMessage(ConsoleMessage::Create(
+        kOtherMessageSource, kErrorMessageLevel,
+        "Error while parsing the 'allow' attribute: " + invalid_tokens));
+  }
+  SetSynchronizedLazyAttribute(allowAttr, allow_->value());
+  FrameOwnerPropertiesChanged();
+  UpdateContainerPolicy();
 }
 
 ReferrerPolicy HTMLIFrameElement::ReferrerPolicyAttribute() {

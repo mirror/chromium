@@ -1406,7 +1406,7 @@ void PepperPluginInstanceImpl::SetSelectedText(
 
   selected_text_ = selected_text;
   gfx::Range range(0, selected_text.length());
-  render_frame_->SetSelectedText(selected_text, 0, range);
+  render_frame_->SetSelectedText(selected_text, 0, range, true);
 }
 
 void PepperPluginInstanceImpl::SetLinkUnderCursor(const std::string& url) {
@@ -3265,7 +3265,7 @@ int32_t PepperPluginInstanceImpl::Navigate(
     // In imitation of the NPAPI implementation, only |target_frame == frame| is
     // allowed for security reasons.
     WebFrame* target_frame =
-        frame->FindFrameByName(WebString::FromUTF8(target));
+        frame->View()->FindFrameByName(WebString::FromUTF8(target), frame);
     if (target_frame != frame)
       return PP_ERROR_NOACCESS;
 

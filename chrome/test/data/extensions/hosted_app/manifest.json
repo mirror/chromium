@@ -10,6 +10,5 @@
     "launch": {
       "web_url": "http://localhost/extensions/hosted_app/main.html"
     }
-  },
-  "icons": { "128": "icon.png" }
+  }
 }

@@ -30,6 +30,10 @@ AutofillPaymentInstrument::AutofillPaymentInstrument(
     PaymentRequestDelegate* payment_request_delegate)
     : PaymentInstrument(
           method_name,
+          /* label= */ card.NetworkAndLastFourDigits(),
+          /* sublabel= */
+          card.GetInfo(autofill::AutofillType(autofill::CREDIT_CARD_NAME_FULL),
+                       app_locale),
           autofill::data_util::GetPaymentRequestData(card.network())
               .icon_resource_id,
           PaymentInstrument::Type::AUTOFILL),
@@ -78,11 +82,9 @@ void AutofillPaymentInstrument::InvokePaymentApp(
 }
 
 bool AutofillPaymentInstrument::IsCompleteForPayment() {
-  // COMPLETE or EXPIRED cards are considered valid for payment. The user will
-  // be prompted to enter the new expiration at the CVC step.
   return autofill::GetCompletionStatusForCard(credit_card_, app_locale_,
-                                              billing_profiles_) <=
-         autofill::CREDIT_CARD_EXPIRED;
+                                              billing_profiles_) ==
+         autofill::CREDIT_CARD_COMPLETE;
 }
 
 base::string16 AutofillPaymentInstrument::GetMissingInfoLabel() {
@@ -105,15 +107,6 @@ void AutofillPaymentInstrument::RecordUse() {
   // Record the use of the credit card.
   payment_request_delegate_->GetPersonalDataManager()->RecordUseOf(
       credit_card_);
-}
-
-base::string16 AutofillPaymentInstrument::GetLabel() const {
-  return credit_card_.NetworkAndLastFourDigits();
-}
-
-base::string16 AutofillPaymentInstrument::GetSublabel() const {
-  return credit_card_.GetInfo(
-      autofill::AutofillType(autofill::CREDIT_CARD_NAME_FULL), app_locale_);
 }
 
 void AutofillPaymentInstrument::OnFullCardRequestSucceeded(

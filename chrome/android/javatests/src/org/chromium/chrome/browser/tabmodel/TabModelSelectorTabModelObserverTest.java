@@ -4,23 +4,12 @@
 
 package org.chromium.chrome.browser.tabmodel;
 
-import android.support.test.annotation.UiThreadTest;
 import android.support.test.filters.SmallTest;
-import android.support.test.rule.UiThreadTestRule;
+import android.test.UiThreadTest;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.runner.RunWith;
-
-import org.chromium.base.annotations.SuppressFBWarnings;
-import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
-import org.chromium.chrome.browser.tabmodel.TabModelSelectorObserverTestRule.TabModelSelectorTestTabModel;
 import org.chromium.content_public.browser.LoadUrlParams;
 
 import java.util.List;
@@ -29,23 +18,7 @@ import java.util.concurrent.TimeoutException;
 /**
  * Tests for the TabModelSelectorTabModelObserver.
  */
-@RunWith(BaseJUnit4ClassRunner.class)
-public class TabModelSelectorTabModelObserverTest {
-    // Do not add @Rule to this, it's already added to RuleChain
-    private TabModelSelectorObserverTestRule mTestRule = new TabModelSelectorObserverTestRule();
-
-    @SuppressFBWarnings("URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD")
-    @Rule
-    public RuleChain mChain = RuleChain.outerRule(mTestRule).around(new UiThreadTestRule());
-
-    private TabModelSelectorBase mSelector;
-
-    @Before
-    public void setUp() {
-        mSelector = mTestRule.getSelector();
-    }
-
-    @Test
+public class TabModelSelectorTabModelObserverTest extends TabModelSelectorObserverTestBase {
     @UiThreadTest
     @SmallTest
     public void testAlreadyInitializedSelector() throws InterruptedException, TimeoutException {
@@ -61,7 +34,6 @@ public class TabModelSelectorTabModelObserverTest {
         assertAllModelsHaveObserver(mSelector, observer);
     }
 
-    @Test
     @UiThreadTest
     @SmallTest
     public void testUninitializedSelector() throws InterruptedException, TimeoutException {
@@ -80,8 +52,7 @@ public class TabModelSelectorTabModelObserverTest {
                         registrationCompleteCallback.notifyCalled();
                     }
                 };
-        mSelector.initialize(
-                false, mTestRule.getNormalTabModel(), mTestRule.getIncognitoTabModel());
+        mSelector.initialize(false, mNormalTabModel, mIncognitoTabModel);
         registrationCompleteCallback.waitForCallback(0);
         assertAllModelsHaveObserver(mSelector, observer);
     }
@@ -90,10 +61,9 @@ public class TabModelSelectorTabModelObserverTest {
             TabModelSelector selector, TabModelObserver observer) {
         List<TabModel> models = selector.getModels();
         for (int i = 0; i < models.size(); i++) {
-            Assert.assertTrue(models.get(i) instanceof TabModelSelectorTestTabModel);
-            Assert.assertTrue(((TabModelSelectorTestTabModel) models.get(i))
-                                      .getObservers()
-                                      .contains(observer));
+            assertTrue(models.get(i) instanceof TabModelSelectorTestTabModel);
+            assertTrue(((TabModelSelectorTestTabModel) models.get(i))
+                    .getObservers().contains(observer));
         }
     }
 }

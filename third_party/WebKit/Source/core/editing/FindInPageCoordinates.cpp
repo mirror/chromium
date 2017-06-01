@@ -32,8 +32,8 @@
 
 #include "core/dom/Node.h"
 #include "core/dom/Range.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/layout/LayoutBlock.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutObject.h"
@@ -146,17 +146,13 @@ FloatRect FindInPageRectFromAbsoluteRect(
   return normalized_rect;
 }
 
-FloatRect FindInPageRectFromRange(const EphemeralRange& range) {
-  if (range.IsNull() || !range.StartPosition().NodeAsRangeFirstNode())
-    return FloatRect();
-
-  const LayoutObject* const baseLayoutObject =
-      range.StartPosition().NodeAsRangeFirstNode()->GetLayoutObject();
-  if (!baseLayoutObject)
+FloatRect FindInPageRectFromRange(Range* range) {
+  if (!range || !range->FirstNode())
     return FloatRect();
 
   return FindInPageRectFromAbsoluteRect(
-      LayoutObject::AbsoluteBoundingBoxRectForRange(range), baseLayoutObject);
+      LayoutObject::AbsoluteBoundingBoxRectForRange(range),
+      range->FirstNode()->GetLayoutObject());
 }
 
 }  // namespace blink

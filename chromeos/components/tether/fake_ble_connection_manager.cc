@@ -4,8 +4,6 @@
 
 #include "chromeos/components/tether/fake_ble_connection_manager.h"
 
-#include "chromeos/components/tether/timer_factory.h"
-
 namespace chromeos {
 
 namespace tether {

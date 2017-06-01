@@ -13,7 +13,7 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/sequence_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "base/timer/timer.h"
 #include "storage/browser/storage_browser_export.h"
 #include "storage/common/quota/quota_types.h"
@@ -29,7 +29,7 @@ namespace storage {
 class QuotaEvictionHandler;
 struct QuotaSettings;
 
-class STORAGE_EXPORT QuotaTemporaryStorageEvictor {
+class STORAGE_EXPORT QuotaTemporaryStorageEvictor : public base::NonThreadSafe {
  public:
   struct Statistics {
     Statistics()
@@ -110,9 +110,6 @@ class STORAGE_EXPORT QuotaTemporaryStorageEvictor {
 
   base::OneShotTimer eviction_timer_;
   base::RepeatingTimer histogram_timer_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
-
   base::WeakPtrFactory<QuotaTemporaryStorageEvictor> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(QuotaTemporaryStorageEvictor);

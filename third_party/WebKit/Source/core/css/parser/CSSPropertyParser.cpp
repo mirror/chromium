@@ -35,14 +35,12 @@
 #include "core/css/HashTools.h"
 #include "core/css/parser/CSSParserFastPaths.h"
 #include "core/css/parser/CSSParserIdioms.h"
-#include "core/css/parser/CSSParserLocalContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "core/css/parser/CSSVariableParser.h"
 #include "core/css/parser/FontVariantLigaturesParser.h"
 #include "core/css/parser/FontVariantNumericParser.h"
 #include "core/css/properties/CSSPropertyAPI.h"
 #include "core/css/properties/CSSPropertyAlignmentUtils.h"
-#include "core/css/properties/CSSPropertyAnimationNameUtils.h"
 #include "core/css/properties/CSSPropertyColumnUtils.h"
 #include "core/css/properties/CSSPropertyDescriptor.h"
 #include "core/css/properties/CSSPropertyFontUtils.h"
@@ -332,6 +330,25 @@ static CSSValue* ConsumeAnimationIterationCount(CSSParserTokenRange& range) {
   return ConsumeNumber(range, kValueRangeNonNegative);
 }
 
+static CSSValue* ConsumeAnimationName(CSSParserTokenRange& range,
+                                      const CSSParserContext* context,
+                                      bool allow_quoted_name) {
+  if (range.Peek().Id() == CSSValueNone)
+    return ConsumeIdent(range);
+
+  if (allow_quoted_name && range.Peek().GetType() == kStringToken) {
+    // Legacy support for strings in prefixed animations.
+    context->Count(UseCounter::kQuotedAnimationName);
+
+    const CSSParserToken& token = range.ConsumeIncludingWhitespace();
+    if (EqualIgnoringASCIICase(token.Value(), "none"))
+      return CSSIdentifierValue::Create(CSSValueNone);
+    return CSSCustomIdentValue::Create(token.Value().ToAtomicString());
+  }
+
+  return ConsumeCustomIdent(range);
+}
+
 static CSSValue* ConsumeTransitionProperty(CSSParserTokenRange& range) {
   const CSSParserToken& token = range.Peek();
   if (token.GetType() != kIdentToken)
@@ -461,8 +478,7 @@ static CSSValue* ConsumeAnimationValue(CSSPropertyID property,
     case CSSPropertyAnimationIterationCount:
       return ConsumeAnimationIterationCount(range);
     case CSSPropertyAnimationName:
-      return CSSPropertyAnimationNameUtils::ConsumeAnimationName(
-          range, context, use_legacy_parsing);
+      return ConsumeAnimationName(range, context, use_legacy_parsing);
     case CSSPropertyAnimationPlayState:
       return ConsumeIdent<CSSValueRunning, CSSValuePaused>(range);
     case CSSPropertyTransitionProperty:
@@ -631,8 +647,7 @@ static CSSFunctionValue* ConsumeFilterFunction(
       if (!parsed_value)
         parsed_value = ConsumeNumber(args, kValueRangeAll);
     } else if (filter_type == CSSValueHueRotate) {
-      parsed_value =
-          ConsumeAngle(args, *context, UseCounter::kUnitlessZeroAngleFilter);
+      parsed_value = ConsumeAngle(args);
     } else if (filter_type == CSSValueBlur) {
       parsed_value =
           ConsumeLength(args, kHTMLStandardMode, kValueRangeNonNegative);
@@ -700,18 +715,14 @@ static CSSValue* ConsumeTextDecorationLine(CSSParserTokenRange& range) {
   return list;
 }
 
-static CSSValue* ConsumeOffsetRotate(CSSParserTokenRange& range,
-                                     const CSSParserContext& context) {
-  CSSValue* angle =
-      ConsumeAngle(range, context, UseCounter::kUnitlessZeroAngleOffsetRotate);
+static CSSValue* ConsumeOffsetRotate(CSSParserTokenRange& range) {
+  CSSValue* angle = ConsumeAngle(range);
   CSSValue* keyword = ConsumeIdent<CSSValueAuto, CSSValueReverse>(range);
   if (!angle && !keyword)
     return nullptr;
 
-  if (!angle) {
-    angle = ConsumeAngle(range, context,
-                         UseCounter::kUnitlessZeroAngleOffsetRotate);
-  }
+  if (!angle)
+    angle = ConsumeAngle(range);
 
   CSSValueList* list = CSSValueList::CreateSpaceSeparated();
   if (keyword)
@@ -727,7 +738,7 @@ bool CSSPropertyParser::ConsumeOffsetShorthand(bool important) {
       CSSPropertyOffsetPathUtils::ConsumeOffsetPath(range_, context_);
   const CSSValue* offset_distance =
       ConsumeLengthOrPercent(range_, context_->Mode(), kValueRangeAll);
-  const CSSValue* offset_rotate = ConsumeOffsetRotate(range_, *context_);
+  const CSSValue* offset_rotate = ConsumeOffsetRotate(range_);
   if (!offset_path || !offset_distance || !offset_rotate || !range_.AtEnd())
     return false;
 
@@ -1613,9 +1624,8 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
   const CSSPropertyDescriptor& css_property_desc =
       CSSPropertyDescriptor::Get(property);
   if (css_property_desc.parseSingleValue) {
-    return css_property_desc.parseSingleValue(
-        range_, *context_,
-        CSSParserLocalContext(unresolved_property != property));
+    return css_property_desc.parseSingleValue(range_, *context_,
+                                              unresolved_property);
   }
 
   switch (property) {
@@ -1641,15 +1651,9 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
     case CSSPropertyWebkitLogicalHeight:
       return CSSPropertyLengthUtils::ConsumeWidthOrHeight(range_, *context_);
     case CSSPropertyScrollSnapDestination:
-      // TODO(crbug.com/724912): Retire scroll-snap-destination
-      return ConsumePosition(range_, *context_, UnitlessQuirk::kForbid,
-                             Optional<UseCounter::Feature>());
     case CSSPropertyObjectPosition:
-      return ConsumePosition(range_, *context_, UnitlessQuirk::kForbid,
-                             UseCounter::kThreeValuedPositionObjectPosition);
     case CSSPropertyPerspectiveOrigin:
-      return ConsumePosition(range_, *context_, UnitlessQuirk::kForbid,
-                             UseCounter::kThreeValuedPositionPerspectiveOrigin);
+      return ConsumePosition(range_, context_->Mode(), UnitlessQuirk::kForbid);
     case CSSPropertyWebkitHyphenateCharacter:
     case CSSPropertyWebkitLocale:
       return ConsumeLocale(range_);
@@ -1672,6 +1676,10 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
           range_);
     case CSSPropertyAnimationIterationCount:
       return ConsumeCommaSeparatedList(ConsumeAnimationIterationCount, range_);
+    case CSSPropertyAnimationName:
+      return ConsumeCommaSeparatedList(
+          ConsumeAnimationName, range_, context_,
+          unresolved_property == CSSPropertyAliasWebkitAnimationName);
     case CSSPropertyAnimationPlayState:
       return ConsumeCommaSeparatedList(
           ConsumeIdent<CSSValueRunning, CSSValuePaused>, range_);
@@ -1729,7 +1737,7 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
     case CSSPropertyOffsetDistance:
       return ConsumeLengthOrPercent(range_, context_->Mode(), kValueRangeAll);
     case CSSPropertyOffsetRotate:
-      return ConsumeOffsetRotate(range_, *context_);
+      return ConsumeOffsetRotate(range_);
     case CSSPropertyWebkitTransformOriginX:
     case CSSPropertyWebkitPerspectiveOriginX:
       return CSSPropertyPositionUtils::ConsumePositionLonghand<CSSValueLeft,
@@ -2606,8 +2614,7 @@ static bool ConsumeBackgroundPosition(CSSParserTokenRange& range,
   do {
     CSSValue* position_x = nullptr;
     CSSValue* position_y = nullptr;
-    if (!ConsumePosition(range, *context, unitless,
-                         UseCounter::kThreeValuedPositionBackground, position_x,
+    if (!ConsumePosition(range, context->Mode(), unitless, position_x,
                          position_y))
       return false;
     AddBackgroundValue(result_x, position_x);
@@ -2688,8 +2695,7 @@ bool CSSPropertyParser::ConsumeBackgroundShorthand(
           ConsumeRepeatStyleComponent(range_, value, value_y, implicit);
         } else if (property == CSSPropertyBackgroundPositionX ||
                    property == CSSPropertyWebkitMaskPositionX) {
-          if (!ConsumePosition(range_, *context_, UnitlessQuirk::kForbid,
-                               UseCounter::kThreeValuedPositionBackground,
+          if (!ConsumePosition(range_, context_->Mode(), UnitlessQuirk::kForbid,
                                value, value_y))
             continue;
         } else if (property == CSSPropertyBackgroundSize ||

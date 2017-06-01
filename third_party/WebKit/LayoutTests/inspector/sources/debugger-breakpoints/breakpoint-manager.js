@@ -157,10 +157,12 @@ InspectorTest.DebuggerModelMock = class extends SDK.SDKModel {
         this._scheduleSetBeakpointCallback(callback, breakpointId, locations);
     }
 
-    async removeBreakpoint(breakpointId)
+    removeBreakpoint(breakpointId, callback)
     {
         InspectorTest.addResult("    debuggerModel.removeBreakpoint(" + breakpointId + ")");
         delete this._breakpoints[breakpointId];
+        if (callback)
+            setTimeout(callback, 0);
     }
 
     setBreakpointsActive() { }

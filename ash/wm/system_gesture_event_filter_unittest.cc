@@ -14,6 +14,7 @@
 #include "ash/test/shell_test_api.h"
 #include "ash/wm/window_positioning_utils.h"
 #include "ash/wm/window_state.h"
+#include "ash/wm_window.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "ui/aura/env.h"
@@ -460,7 +461,7 @@ TEST_F(SystemGestureEventFilterTest,
   aura::test::EventCountDelegate delegate;
   delegate.set_window_component(HTCLIENT);
   std::unique_ptr<aura::Window> child(new aura::Window(&delegate));
-  child->SetType(aura::client::WINDOW_TYPE_CONTROL);
+  child->SetType(ui::wm::WINDOW_TYPE_CONTROL);
   child->Init(ui::LAYER_TEXTURED);
   parent->AddChild(child.get());
   child->SetBounds(gfx::Rect(100, 100));

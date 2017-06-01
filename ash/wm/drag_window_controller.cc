@@ -10,6 +10,7 @@
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/wm/window_util.h"
+#include "ash/wm_window.h"
 #include "base/memory/ptr_util.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/screen_position_client.h"
@@ -84,7 +85,7 @@ class DragWindowController::DragWindowDetails : public aura::WindowDelegate {
     int parent_id = original_window->parent()->id();
     aura::Window* container = root_window_->GetChildById(parent_id);
 
-    drag_window_->SetType(aura::client::WINDOW_TYPE_POPUP);
+    drag_window_->SetType(ui::wm::WINDOW_TYPE_POPUP);
     drag_window_->SetTransparent(true);
     drag_window_->Init(ui::LAYER_TEXTURED);
     drag_window_->SetName("DragWindow");

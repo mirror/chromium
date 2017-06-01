@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
+#include "extensions/common/feature_switch.h"
 
 namespace extensions {
 class Extension;
@@ -48,6 +49,12 @@ class BrowserActionsBarBrowserTest : public ExtensionBrowserTest {
     return extension_c_.get();
   }
 
+ protected:
+  // Enable or disable the feature redesign switch.
+  std::unique_ptr<extensions::FeatureSwitch::ScopedOverride> override_redesign_;
+  std::unique_ptr<extensions::FeatureSwitch::ScopedOverride>
+      override_media_router_;
+
  private:
   std::unique_ptr<BrowserActionTestUtil> browser_actions_bar_;
 
@@ -60,6 +67,19 @@ class BrowserActionsBarBrowserTest : public ExtensionBrowserTest {
   scoped_refptr<const extensions::Extension> extension_c_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserActionsBarBrowserTest);
+};
+
+// A test with the extension-action-redesign switch disabled.
+class BrowserActionsBarLegacyBrowserTest
+    : public BrowserActionsBarBrowserTest {
+ protected:
+  BrowserActionsBarLegacyBrowserTest();
+  ~BrowserActionsBarLegacyBrowserTest() override;
+
+  void SetUpCommandLine(base::CommandLine* command_line) override;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(BrowserActionsBarLegacyBrowserTest);
 };
 
 #endif  // CHROME_BROWSER_UI_TOOLBAR_BROWSER_ACTIONS_BAR_BROWSERTEST_H_

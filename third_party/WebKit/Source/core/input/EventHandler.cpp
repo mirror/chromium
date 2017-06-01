@@ -35,9 +35,9 @@
 #include "core/clipboard/DataTransfer.h"
 #include "core/dom/DOMNodeIds.h"
 #include "core/dom/Document.h"
+#include "core/dom/DocumentUserGestureToken.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/dom/TouchList.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/dom/shadow/FlatTreeTraversal.h"
 #include "core/dom/shadow/ShadowRoot.h"
 #include "core/editing/EditingUtilities.h"
@@ -54,9 +54,9 @@
 #include "core/events/WheelEvent.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/EventHandlerRegistry.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/frame/VisualViewport.h"
@@ -270,8 +270,8 @@ HitTestResult EventHandler::HitTestResultAtPoint(
   if (frame_->GetPage()) {
     LocalFrame& main_frame = frame_->LocalFrameRoot();
     if (frame_ != &main_frame) {
-      LocalFrameView* frame_view = frame_->View();
-      LocalFrameView* main_view = main_frame.View();
+      FrameView* frame_view = frame_->View();
+      FrameView* main_view = main_frame.View();
       if (frame_view && main_view) {
         IntPoint main_frame_point = main_view->RootFrameToContents(
             frame_view->ContentsToRootFrame(RoundedIntPoint(point)));
@@ -341,7 +341,7 @@ static LocalFrame* SubframeForTargetNode(Node* node) {
   if (!layout_object || !layout_object->IsLayoutPart())
     return nullptr;
 
-  LocalFrameView* frame_view = ToLayoutPart(layout_object)->ChildFrameView();
+  FrameView* frame_view = ToLayoutPart(layout_object)->ChildFrameView();
   if (!frame_view)
     return nullptr;
 
@@ -381,7 +381,7 @@ void EventHandler::UpdateCursor() {
   // cursor update could be occluded by a different frame.
   DCHECK_EQ(frame_, &frame_->LocalFrameRoot());
 
-  LocalFrameView* view = frame_->View();
+  FrameView* view = frame_->View();
   if (!view || !view->ShouldSetCursor())
     return;
 
@@ -635,7 +635,7 @@ WebInputEventResult EventHandler::HandleMousePressEvent(
   }
 
   UserGestureIndicator gesture_indicator(
-      UserGestureToken::Create(frame_->GetDocument()));
+      DocumentUserGestureToken::Create(frame_->GetDocument()));
   frame_->LocalFrameRoot()
       .GetEventHandler()
       .last_mouse_down_user_gesture_token_ =
@@ -668,7 +668,7 @@ WebInputEventResult EventHandler::HandleMousePressEvent(
       mev.Event(), Vector<WebMouseEvent>());
 
   if (event_result == WebInputEventResult::kNotHandled && frame_->View()) {
-    LocalFrameView* view = frame_->View();
+    FrameView* view = frame_->View();
     PaintLayer* layer =
         mev.InnerNode()->GetLayoutObject()
             ? mev.InnerNode()->GetLayoutObject()->EnclosingLayer()
@@ -767,7 +767,7 @@ WebInputEventResult EventHandler::HandleMouseMoveEvent(
       layer_scrollable_area->MouseMovedInContentArea();
   }
 
-  if (LocalFrameView* frame_view = frame_->View())
+  if (FrameView* frame_view = frame_->View())
     frame_view->MouseMovedInContentArea();
 
   hovered_node.SetToShadowHostIfInRestrictedShadowRoot();
@@ -885,8 +885,8 @@ WebInputEventResult EventHandler::HandleMouseMoveOrLeaveEvent(
         mev.Event());
 
     // Event dispatch in sendMouseAndPointerBoundaryEvents may have caused the
-    // subframe of the target node to be detached from its LocalFrameView, in
-    // which case the event should not be passed.
+    // subframe of the target node to be detached from its FrameView, in which
+    // case the event should not be passed.
     if (new_subframe->View()) {
       event_result = PassMouseMoveEventToSubframe(mev, coalesced_events,
                                                   new_subframe, hovered_node);
@@ -897,7 +897,7 @@ WebInputEventResult EventHandler::HandleMouseMoveOrLeaveEvent(
       // scrollbar hovering.
       scrollbar->MouseMoved(mev.Event());
     }
-    if (LocalFrameView* view = frame_->View()) {
+    if (FrameView* view = frame_->View()) {
       OptionalCursor optional_cursor = SelectCursor(mev.GetHitTestResult());
       if (optional_cursor.IsCursorChange()) {
         view->SetCursor(optional_cursor.GetCursor());
@@ -983,12 +983,12 @@ WebInputEventResult EventHandler::HandleMouseReleaseEvent(
           .GetEventHandler()
           .last_mouse_down_user_gesture_token_) {
     gesture_indicator = WTF::WrapUnique(new UserGestureIndicator(
-        std::move(frame_->LocalFrameRoot()
-                      .GetEventHandler()
-                      .last_mouse_down_user_gesture_token_)));
+        frame_->LocalFrameRoot()
+            .GetEventHandler()
+            .last_mouse_down_user_gesture_token_.Release()));
   } else {
     gesture_indicator = WTF::WrapUnique(new UserGestureIndicator(
-        UserGestureToken::Create(frame_->GetDocument())));
+        DocumentUserGestureToken::Create(frame_->GetDocument())));
   }
 
   WebInputEventResult event_result = UpdatePointerTargetAndDispatchEvents(
@@ -1215,10 +1215,6 @@ void EventHandler::ReleasePointerCapture(int pointer_id, EventTarget* target) {
   }
 }
 
-void EventHandler::ReleaseMousePointerCapture() {
-  pointer_event_manager_->ReleaseMousePointerCapture();
-}
-
 bool EventHandler::HasPointerCapture(int pointer_id,
                                      const EventTarget* target) const {
   if (RootFrameTouchPointerActiveInCurrentFrame(pointer_id)) {
@@ -1232,12 +1228,6 @@ bool EventHandler::HasPointerCapture(int pointer_id,
 bool EventHandler::HasProcessedPointerCapture(int pointer_id,
                                               const EventTarget* target) const {
   return pointer_event_manager_->HasProcessedPointerCapture(pointer_id, target);
-}
-
-void EventHandler::ProcessPendingPointerCaptureForPointerLock(
-    const WebMouseEvent& mouse_event) {
-  pointer_event_manager_->ProcessPendingPointerCaptureForPointerLock(
-      mouse_event);
 }
 
 void EventHandler::ElementRemoved(EventTarget* target) {
@@ -1280,7 +1270,7 @@ WebInputEventResult EventHandler::HandleWheelEvent(
   if (doc->GetLayoutViewItem().IsNull())
     return WebInputEventResult::kNotHandled;
 
-  LocalFrameView* view = frame_->View();
+  FrameView* view = frame_->View();
   if (!view)
     return WebInputEventResult::kNotHandled;
 
@@ -1785,7 +1775,7 @@ void EventHandler::ApplyTouchAdjustment(WebGestureEvent* gesture_event,
 WebInputEventResult EventHandler::SendContextMenuEvent(
     const WebMouseEvent& event,
     Node* override_target_node) {
-  LocalFrameView* v = frame_->View();
+  FrameView* v = frame_->View();
   if (!v)
     return WebInputEventResult::kNotHandled;
 
@@ -1820,10 +1810,9 @@ static bool ShouldShowContextMenuAtSelection(const FrameSelection& selection) {
   return selection.SelectionHasFocus();
 }
 
-WebInputEventResult EventHandler::ShowNonLocatedContextMenu(
-    Element* override_target_element,
-    WebMenuSourceType source_type) {
-  LocalFrameView* view = frame_->View();
+WebInputEventResult EventHandler::SendContextMenuEventForKey(
+    Element* override_target_element) {
+  FrameView* view = frame_->View();
   if (!view)
     return WebInputEventResult::kNotHandled;
 
@@ -1892,7 +1881,7 @@ WebInputEventResult EventHandler::ShowNonLocatedContextMenu(
   doc->UpdateHoverActiveState(request, result.InnerElement());
 
   // The contextmenu event is a mouse event even when invoked using the
-  // keyboard or other methods.  This is required for web compatibility.
+  // keyboard.  This is required for web compatibility.
   WebInputEvent::Type event_type = WebInputEvent::kMouseDown;
   if (frame_->GetSettings() &&
       frame_->GetSettings()->GetShowContextMenuOnMouseUp())
@@ -1903,10 +1892,7 @@ WebInputEventResult EventHandler::ShowNonLocatedContextMenu(
       WebFloatPoint(location_in_root_frame.X(), location_in_root_frame.Y()),
       WebFloatPoint(global_position.X(), global_position.Y()),
       WebPointerProperties::Button::kNoButton, /* clickCount */ 0,
-      ((source_type == kMenuSourceTouchHandle)
-           ? WebInputEvent::kIsCompatibilityEventForTouch
-           : WebInputEvent::kNoModifiers),
-      TimeTicks::Now().InSeconds());
+      WebInputEvent::kNoModifiers, TimeTicks::Now().InSeconds());
 
   // TODO(dtapuska): Transition the mouseEvent to be created really in viewport
   // coordinates instead of root frame coordinates.
@@ -1959,7 +1945,7 @@ void EventHandler::HoverTimerFired(TimerBase*) {
   DCHECK(frame_->GetDocument());
 
   if (LayoutViewItem layout_item = frame_->ContentLayoutItem()) {
-    if (LocalFrameView* view = frame_->View()) {
+    if (FrameView* view = frame_->View()) {
       HitTestRequest request(HitTestRequest::kMove);
       HitTestResult result(request,
                            view->RootFrameToContents(

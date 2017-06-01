@@ -254,12 +254,12 @@ test(() => {
 test(() => {
     assert_equals(checked_assert_selection('^|foo', 'noop', 'baz'),
         'You should have focus marker and should not have anchor marker if and only if selection is a caret in "^|foo".');
-}, 'anchor == focus in input');
+}, 'anchor == foucs in input');
 
 test(() => {
     assert_equals(checked_assert_selection('|foo', 'noop', 'b^|az'),
         'You should have focus marker and should not have anchor marker if and only if selection is a caret in "b^|az".');
-}, 'anchor == focus in output');
+}, 'anchor == foucs in output');
 
 // TODO: It's better to have more powerful diff like
 // |CreateUnifiedDiff()| in gtest or "Longest common substring"

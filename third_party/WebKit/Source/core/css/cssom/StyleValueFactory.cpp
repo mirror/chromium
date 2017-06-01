@@ -6,8 +6,11 @@
 
 #include "core/css/CSSImageValue.h"
 #include "core/css/CSSValue.h"
+#include "core/css/cssom/CSSCalcLength.h"
 #include "core/css/cssom/CSSKeywordValue.h"
+#include "core/css/cssom/CSSNumberValue.h"
 #include "core/css/cssom/CSSOMTypes.h"
+#include "core/css/cssom/CSSSimpleLength.h"
 #include "core/css/cssom/CSSStyleValue.h"
 #include "core/css/cssom/CSSStyleVariableReferenceValue.h"
 #include "core/css/cssom/CSSTransformValue.h"
@@ -21,6 +24,10 @@ namespace {
 
 CSSStyleValue* CreateStyleValueFromPrimitiveValue(
     const CSSPrimitiveValue& primitive_value) {
+  if (primitive_value.IsNumber())
+    return CSSNumberValue::Create(primitive_value.GetDoubleValue());
+  if (primitive_value.IsLength() || primitive_value.IsPercentage())
+    return CSSSimpleLength::FromCSSValue(primitive_value);
   return nullptr;
 }
 
@@ -32,6 +39,13 @@ CSSStyleValue* CreateStyleValueWithPropertyInternal(CSSPropertyID property_id,
     default:
       // TODO(meade): Implement other properties.
       break;
+  }
+  if (value.IsPrimitiveValue() && ToCSSPrimitiveValue(value).IsCalculated()) {
+    // TODO(meade): Handle other calculated types, e.g. angles here.
+    if (CSSOMTypes::PropertyCanTakeType(property_id,
+                                        CSSStyleValue::kCalcLengthType)) {
+      return CSSCalcLength::FromCSSValue(ToCSSPrimitiveValue(value));
+    }
   }
   return nullptr;
 }

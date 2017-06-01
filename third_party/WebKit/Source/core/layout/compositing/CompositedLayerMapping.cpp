@@ -29,7 +29,7 @@
 
 #include "core/HTMLNames.h"
 #include "core/dom/DOMNodeIds.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/RemoteFrame.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
@@ -1590,7 +1590,7 @@ void CompositedLayerMapping::UpdateBackgroundLayerGeometry(
 
   FloatSize background_size = relative_compositing_bounds_size;
   if (BackgroundLayerPaintsFixedRootBackground()) {
-    LocalFrameView* frame_view = ToLayoutView(GetLayoutObject()).GetFrameView();
+    FrameView* frame_view = ToLayoutView(GetLayoutObject()).GetFrameView();
     background_size = FloatSize(frame_view->VisibleContentRect().Size());
   }
   background_layer_->SetPosition(FloatPoint());
@@ -2796,7 +2796,7 @@ void CompositedLayerMapping::UpdateImageContents() {
       image, LayoutObject::ShouldRespectImageOrientation(&image_layout_object));
 
   graphics_layer_->SetFilterQuality(
-      GetLayoutObject().Style()->ImageRendering() == EImageRendering::kPixelated
+      GetLayoutObject().Style()->ImageRendering() == kImageRenderingPixelated
           ? kNone_SkFilterQuality
           : kLow_SkFilterQuality);
 

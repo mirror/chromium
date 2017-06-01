@@ -65,7 +65,7 @@ Image* Image::NullImage() {
 }
 
 PassRefPtr<Image> Image::LoadPlatformResource(const char* name) {
-  const WebData& resource = Platform::Current()->GetDataResource(name);
+  const WebData& resource = Platform::Current()->LoadResource(name);
   if (resource.IsEmpty())
     return Image::NullImage();
 
@@ -246,8 +246,8 @@ sk_sp<PaintShader> CreatePatternShader(const PaintImage& image,
   PaintCanvas* canvas = recorder.beginRecording(tile_rect);
   canvas->drawImage(image, 0, 0, &paint);
 
-  return MakePaintShaderRecord(recorder.finishRecordingAsPicture(), tile_rect,
-                               tmx, tmy, &shader_matrix);
+  return MakePaintShaderRecord(recorder.finishRecordingAsPicture(), tmx, tmy,
+                               &shader_matrix, nullptr);
 }
 
 SkShader::TileMode ComputeTileMode(float left,

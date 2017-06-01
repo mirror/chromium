@@ -29,9 +29,9 @@ import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.ShortcutHelper;
-import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
+import org.chromium.content_public.browser.WebContents;
 
 /**
  * Unit tests for {@link InstantAppsHandler}.
@@ -172,9 +172,12 @@ public class InstantAppsHandlerTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                Assert.assertFalse(mHandler.handleNavigation(mContext, INSTANT_APP_URL,
-                        REFERRER_URI,
-                        mActivityTestRule.getActivity().getTabModelSelector().getCurrentTab()));
+                Assert.assertFalse(
+                        mHandler.handleNavigation(mContext, INSTANT_APP_URL, REFERRER_URI,
+                                mActivityTestRule.getActivity()
+                                        .getTabModelSelector()
+                                        .getCurrentTab()
+                                        .getWebContents()));
             }
         });
         Assert.assertFalse(mHandler.mLaunchInstantApp);
@@ -220,7 +223,10 @@ public class InstantAppsHandlerTest {
             @Override
             public void run() {
                 Assert.assertTrue(mHandler.handleNavigation(mContext, INSTANT_APP_URL, REFERRER_URI,
-                        mActivityTestRule.getActivity().getTabModelSelector().getCurrentTab()));
+                        mActivityTestRule.getActivity()
+                                .getTabModelSelector()
+                                .getCurrentTab()
+                                .getWebContents()));
             }
         });
         Assert.assertFalse(mHandler.mStartedAsyncCall);
@@ -246,8 +252,8 @@ public class InstantAppsHandlerTest {
         }
 
         @Override
-        protected boolean startCheckForInstantApps(
-                Context context, String url, Uri referrer, Tab tab) {
+        protected boolean startCheckForInstantApps(Context context, String url, Uri referrer,
+                WebContents webContents) {
             mStartedAsyncCall = true;
             return false;
         }

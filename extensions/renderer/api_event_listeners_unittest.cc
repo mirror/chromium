@@ -9,7 +9,6 @@
 #include "extensions/common/event_filter.h"
 #include "extensions/renderer/api_binding_test.h"
 #include "extensions/renderer/api_binding_test_util.h"
-#include "extensions/renderer/api_binding_types.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 namespace extensions {
@@ -36,7 +35,7 @@ TEST_F(APIEventListenersTest, UnfilteredListeners) {
   v8::Local<v8::Context> context = MainContext();
 
   MockEventChangeHandler handler;
-  UnfilteredEventListeners listeners(handler.Get(), binding::kNoListenerMax);
+  UnfilteredEventListeners listeners(handler.Get());
 
   // Starting out, there should be no listeners.
   v8::Local<v8::Function> function_a = FunctionFromString(context, kFunction);
@@ -107,7 +106,7 @@ TEST_F(APIEventListenersTest, UnfilteredListenersInvalidation) {
   v8::Local<v8::Context> context = MainContext();
 
   MockEventChangeHandler handler;
-  UnfilteredEventListeners listeners(handler.Get(), binding::kNoListenerMax);
+  UnfilteredEventListeners listeners(handler.Get());
 
   listeners.Invalidate(context);
 
@@ -134,8 +133,7 @@ TEST_F(APIEventListenersTest, UnfilteredListenersIgnoreFilteringInfo) {
   v8::HandleScope handle_scope(isolate());
   v8::Local<v8::Context> context = MainContext();
 
-  UnfilteredEventListeners listeners(base::Bind(&DoNothingOnUpdate),
-                                     binding::kNoListenerMax);
+  UnfilteredEventListeners listeners(base::Bind(&DoNothingOnUpdate));
   v8::Local<v8::Function> function = FunctionFromString(context, kFunction);
   std::string error;
   v8::Local<v8::Object> filter;
@@ -147,29 +145,6 @@ TEST_F(APIEventListenersTest, UnfilteredListenersIgnoreFilteringInfo) {
               testing::UnorderedElementsAre(function));
 }
 
-TEST_F(APIEventListenersTest, UnfilteredListenersMaxListenersTest) {
-  v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = MainContext();
-
-  UnfilteredEventListeners listeners(base::Bind(&DoNothingOnUpdate), 1);
-
-  v8::Local<v8::Function> function_a = FunctionFromString(context, kFunction);
-  EXPECT_EQ(0u, listeners.GetNumListeners());
-
-  std::string error;
-  v8::Local<v8::Object> filter;
-  EXPECT_TRUE(listeners.AddListener(function_a, filter, context, &error));
-  EXPECT_TRUE(listeners.HasListener(function_a));
-  EXPECT_EQ(1u, listeners.GetNumListeners());
-
-  v8::Local<v8::Function> function_b = FunctionFromString(context, kFunction);
-  EXPECT_FALSE(listeners.AddListener(function_b, filter, context, &error));
-  EXPECT_FALSE(error.empty());
-  EXPECT_FALSE(listeners.HasListener(function_b));
-  EXPECT_TRUE(listeners.HasListener(function_a));
-  EXPECT_EQ(1u, listeners.GetNumListeners());
-}
-
 // Tests filtered listeners.
 TEST_F(APIEventListenersTest, FilteredListeners) {
   v8::HandleScope handle_scope(isolate());
@@ -177,8 +152,7 @@ TEST_F(APIEventListenersTest, FilteredListeners) {
 
   MockEventChangeHandler handler;
   EventFilter event_filter;
-  FilteredEventListeners listeners(handler.Get(), kEvent,
-                                   binding::kNoListenerMax, &event_filter);
+  FilteredEventListeners listeners(handler.Get(), kEvent, &event_filter);
 
   // Starting out, there should be no listeners registered.
   v8::Local<v8::Function> function_a = FunctionFromString(context, kFunction);
@@ -309,8 +283,7 @@ TEST_F(APIEventListenersTest,
 
   MockEventChangeHandler handler;
   EventFilter event_filter;
-  FilteredEventListeners listeners(handler.Get(), kEvent,
-                                   binding::kNoListenerMax, &event_filter);
+  FilteredEventListeners listeners(handler.Get(), kEvent, &event_filter);
 
   auto get_filter = [context]() {
     return V8ValueFromScriptSource(context, "({url: [{pathContains: 'foo'}]})")
@@ -358,7 +331,7 @@ TEST_F(APIEventListenersTest, UnfilteredListenersError) {
 
   EventFilter event_filter;
   FilteredEventListeners listeners(base::Bind(&DoNothingOnUpdate), kEvent,
-                                   binding::kNoListenerMax, &event_filter);
+                                   &event_filter);
 
   v8::Local<v8::Object> invalid_filter =
       V8ValueFromScriptSource(context, "({url: 'some string'})")
@@ -381,9 +354,9 @@ TEST_F(APIEventListenersTest, MultipleUnfilteredListenerEvents) {
 
   EventFilter event_filter;
   FilteredEventListeners listeners_a(base::Bind(&DoNothingOnUpdate), kAlpha,
-                                     binding::kNoListenerMax, &event_filter);
+                                     &event_filter);
   FilteredEventListeners listeners_b(base::Bind(&DoNothingOnUpdate), kBeta,
-                                     binding::kNoListenerMax, &event_filter);
+                                     &event_filter);
 
   EXPECT_EQ(0, event_filter.GetMatcherCountForEventForTesting(kAlpha));
   EXPECT_EQ(0, event_filter.GetMatcherCountForEventForTesting(kBeta));
@@ -417,8 +390,7 @@ TEST_F(APIEventListenersTest, FilteredListenersInvalidation) {
 
   MockEventChangeHandler handler;
   EventFilter event_filter;
-  FilteredEventListeners listeners(handler.Get(), kEvent,
-                                   binding::kNoListenerMax, &event_filter);
+  FilteredEventListeners listeners(handler.Get(), kEvent, &event_filter);
   listeners.Invalidate(context);
 
   v8::Local<v8::Object> empty_filter;
@@ -451,31 +423,6 @@ TEST_F(APIEventListenersTest, FilteredListenersInvalidation) {
 
   EXPECT_EQ(0u, listeners.GetNumListeners());
   EXPECT_EQ(0, event_filter.GetMatcherCountForEventForTesting(kEvent));
-}
-
-TEST_F(APIEventListenersTest, FilteredListenersMaxListenersTest) {
-  v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = MainContext();
-
-  EventFilter event_filter;
-  FilteredEventListeners listeners(base::Bind(&DoNothingOnUpdate), kEvent, 1,
-                                   &event_filter);
-
-  v8::Local<v8::Function> function_a = FunctionFromString(context, kFunction);
-  EXPECT_EQ(0u, listeners.GetNumListeners());
-
-  std::string error;
-  v8::Local<v8::Object> filter;
-  EXPECT_TRUE(listeners.AddListener(function_a, filter, context, &error));
-  EXPECT_TRUE(listeners.HasListener(function_a));
-  EXPECT_EQ(1u, listeners.GetNumListeners());
-
-  v8::Local<v8::Function> function_b = FunctionFromString(context, kFunction);
-  EXPECT_FALSE(listeners.AddListener(function_b, filter, context, &error));
-  EXPECT_FALSE(error.empty());
-  EXPECT_FALSE(listeners.HasListener(function_b));
-  EXPECT_TRUE(listeners.HasListener(function_a));
-  EXPECT_EQ(1u, listeners.GetNumListeners());
 }
 
 }  // namespace extensions

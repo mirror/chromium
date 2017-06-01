@@ -65,16 +65,15 @@
 #include "core/editing/iterators/TextIterator.h"
 #include "core/editing/markers/DocumentMarker.h"
 #include "core/editing/markers/DocumentMarkerController.h"
-#include "core/editing/markers/TextMatchMarker.h"
 #include "core/editing/serializers/Serialization.h"
 #include "core/editing/spellcheck/IdleSpellCheckCallback.h"
 #include "core/editing/spellcheck/SpellCheckRequester.h"
 #include "core/editing/spellcheck/SpellChecker.h"
 #include "core/frame/EventHandlerRegistry.h"
 #include "core/frame/FrameConsole.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
 #include "core/geometry/DOMPoint.h"
@@ -165,13 +164,14 @@ class UseCounterObserverImpl final : public UseCounter::Observer {
   WTF_MAKE_NONCOPYABLE(UseCounterObserverImpl);
 
  public:
-  UseCounterObserverImpl(ScriptPromiseResolver* resolver, WebFeature feature)
+  UseCounterObserverImpl(ScriptPromiseResolver* resolver,
+                         UseCounter::Feature feature)
       : resolver_(resolver), feature_(feature) {}
 
-  bool OnCountFeature(WebFeature feature) final {
+  bool OnCountFeature(UseCounter::Feature feature) final {
     if (feature_ != feature)
       return false;
-    resolver_->Resolve(static_cast<int>(feature));
+    resolver_->Resolve(feature);
     return true;
   }
 
@@ -182,7 +182,7 @@ class UseCounterObserverImpl final : public UseCounter::Observer {
 
  private:
   Member<ScriptPromiseResolver> resolver_;
-  WebFeature feature_;
+  UseCounter::Feature feature_;
 };
 
 }  // namespace
@@ -220,7 +220,7 @@ static ScrollableArea* ScrollableAreaForNode(Node* node) {
 
   if (node->IsDocumentNode()) {
     // This can be removed after root layer scrolling is enabled.
-    if (LocalFrameView* frame_view = ToDocument(node)->View())
+    if (FrameView* frame_view = ToDocument(node)->View())
       return frame_view->LayoutViewportScrollableArea();
   }
 
@@ -259,6 +259,7 @@ void Internals::ResetToConsistentState(Page* page) {
           page->GetScrollingCoordinator())
     scrolling_coordinator->Reset();
 
+  page->DeprecatedLocalMainFrame()->View()->Clear();
   KeyboardEventManager::SetCurrentCapsLockState(
       OverrideCapsLockState::kDefault);
 }
@@ -920,20 +921,9 @@ void Internals::setMarker(Document* document,
     return;
   }
 
-  if (type != DocumentMarker::kSpelling && type != DocumentMarker::kGrammar) {
-    exception_state.ThrowDOMException(kSyntaxError,
-                                      "internals.setMarker() currently only "
-                                      "supports spelling and grammar markers; "
-                                      "attempted to add marker of type '" +
-                                          marker_type + "'.");
-    return;
-  }
-
   document->UpdateStyleAndLayoutIgnorePendingStylesheets();
-  if (type == DocumentMarker::kSpelling)
-    document->Markers().AddSpellingMarker(EphemeralRange(range));
-  else
-    document->Markers().AddGrammarMarker(EphemeralRange(range));
+  document->Markers().AddMarker(range->StartPosition(), range->EndPosition(),
+                                type.value());
 }
 
 unsigned Internals::markerCountForNode(Node* node,
@@ -965,7 +955,7 @@ unsigned Internals::activeMarkerCountForNode(Node* node) {
 
   unsigned active_marker_count = 0;
   for (const auto& marker : markers) {
-    if (ToTextMatchMarker(marker)->IsActiveMatch())
+    if (marker->IsActiveMatch())
       active_marker_count++;
   }
 
@@ -1015,12 +1005,12 @@ String Internals::markerDescriptionForNode(Node* node,
   return marker->Description();
 }
 
-static WTF::Optional<TextMatchMarker::MatchStatus> MatchStatusFrom(
+static WTF::Optional<DocumentMarker::MatchStatus> MatchStatusFrom(
     const String& match_status) {
   if (EqualIgnoringASCIICase(match_status, "kActive"))
-    return TextMatchMarker::MatchStatus::kActive;
+    return DocumentMarker::MatchStatus::kActive;
   if (EqualIgnoringASCIICase(match_status, "kInactive"))
-    return TextMatchMarker::MatchStatus::kInactive;
+    return DocumentMarker::MatchStatus::kInactive;
   return WTF::nullopt;
 }
 
@@ -1031,7 +1021,7 @@ void Internals::addTextMatchMarker(const Range* range,
   if (!range->OwnerDocument().View())
     return;
 
-  WTF::Optional<TextMatchMarker::MatchStatus> match_status_enum =
+  WTF::Optional<DocumentMarker::MatchStatus> match_status_enum =
       MatchStatusFrom(match_status);
   if (!match_status_enum) {
     exception_state.ThrowDOMException(
@@ -1075,7 +1065,8 @@ void Internals::addCompositionMarker(const Range* range,
       ParseColor(background_color_value, background_color, exception_state,
                  "Invalid background color.")) {
     range->OwnerDocument().Markers().AddCompositionMarker(
-        EphemeralRange(range), underline_color, thick, background_color);
+        range->StartPosition(), range->EndPosition(), underline_color, thick,
+        background_color);
   }
 }
 
@@ -1108,7 +1099,7 @@ void Internals::setFrameViewPosition(Document* document,
     return;
   }
 
-  LocalFrameView* frame_view = document->View();
+  FrameView* frame_view = document->View();
   bool scrollbars_suppressed_old_value = frame_view->ScrollbarsSuppressed();
 
   frame_view->SetScrollbarsSuppressed(false);
@@ -1875,7 +1866,7 @@ StaticNodeList* Internals::nodesFromRect(
   }
 
   LocalFrame* frame = document->GetFrame();
-  LocalFrameView* frame_view = document->View();
+  FrameView* frame_view = document->View();
   LayoutViewItem layout_view_item = document->GetLayoutViewItem();
 
   if (layout_view_item.IsNull())
@@ -2039,7 +2030,7 @@ String Internals::elementLayerTreeAsText(
     Element* element,
     ExceptionState& exception_state) const {
   DCHECK(element);
-  LocalFrameView* frame_view = element->GetDocument().View();
+  FrameView* frame_view = element->GetDocument().View();
   frame_view->UpdateAllLifecyclePhases();
 
   return elementLayerTreeAsText(element, 0, exception_state);
@@ -2266,7 +2257,7 @@ float Internals::pageScaleFactor(ExceptionState& exception_state) {
     return 0;
   }
   Page* page = document_->GetPage();
-  return page->GetVisualViewport().Scale();
+  return page->GetVisualViewport().PageScale();
 }
 
 void Internals::setPageScaleFactor(float scale_factor,
@@ -2428,7 +2419,7 @@ void Internals::startStoringCompositedLayerDebugInfo(
     return;
   }
 
-  LocalFrameView* frame_view = document->View();
+  FrameView* frame_view = document->View();
   frame_view->SetIsStoringCompositedLayerDebugInfo(true);
   frame_view->UpdateAllLifecyclePhases();
 }
@@ -2443,7 +2434,7 @@ void Internals::stopStoringCompositedLayerDebugInfo(
     return;
   }
 
-  LocalFrameView* frame_view = document->View();
+  FrameView* frame_view = document->View();
   frame_view->SetIsStoringCompositedLayerDebugInfo(false);
   frame_view->UpdateAllLifecyclePhases();
 }
@@ -2457,7 +2448,7 @@ void Internals::startTrackingRepaints(Document* document,
     return;
   }
 
-  LocalFrameView* frame_view = document->View();
+  FrameView* frame_view = document->View();
   frame_view->UpdateAllLifecyclePhases();
   frame_view->SetTracksPaintInvalidations(true);
 }
@@ -2471,7 +2462,7 @@ void Internals::stopTrackingRepaints(Document* document,
     return;
   }
 
-  LocalFrameView* frame_view = document->View();
+  FrameView* frame_view = document->View();
   frame_view->UpdateAllLifecyclePhases();
   frame_view->SetTracksPaintInvalidations(false);
 }
@@ -3217,8 +3208,8 @@ ScriptPromise Internals::observeUseCounter(ScriptState* script_state,
     return promise;
   }
 
-  page->GetUseCounter().AddObserver(new UseCounterObserverImpl(
-      resolver, static_cast<WebFeature>(use_counter_feature)));
+  page->GetUseCounter().AddObserver(
+      new UseCounterObserverImpl(resolver, use_counter_feature));
   return promise;
 }
 

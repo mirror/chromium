@@ -34,8 +34,7 @@ NoStatePrefetchPageLoadMetricsObserver::
 
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy
 NoStatePrefetchPageLoadMetricsObserver::OnCommit(
-    content::NavigationHandle* navigation_handle,
-    ukm::SourceId source_id) {
+    content::NavigationHandle* navigation_handle) {
   const net::HttpResponseHeaders* response_headers =
       navigation_handle->GetResponseHeaders();
 

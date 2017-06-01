@@ -37,7 +37,7 @@ DEFINE_NON_INTERPOLABLE_VALUE_TYPE_CASTS(CSSOffsetRotationNonInterpolableValue);
 namespace {
 
 class UnderlyingRotationTypeChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+    : public InterpolationType::ConversionChecker {
  public:
   static std::unique_ptr<UnderlyingRotationTypeChecker> Create(
       OffsetRotationType underlying_rotation_type) {
@@ -45,7 +45,7 @@ class UnderlyingRotationTypeChecker
         new UnderlyingRotationTypeChecker(underlying_rotation_type));
   }
 
-  bool IsValid(const StyleResolverState&,
+  bool IsValid(const InterpolationEnvironment&,
                const InterpolationValue& underlying) const final {
     return underlying_rotation_type_ == ToCSSOffsetRotationNonInterpolableValue(
                                             *underlying.non_interpolable_value)
@@ -60,7 +60,7 @@ class UnderlyingRotationTypeChecker
 };
 
 class InheritedRotationTypeChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+    : public InterpolationType::ConversionChecker {
  public:
   static std::unique_ptr<InheritedRotationTypeChecker> Create(
       OffsetRotationType inherited_rotation_type) {
@@ -68,9 +68,10 @@ class InheritedRotationTypeChecker
         new InheritedRotationTypeChecker(inherited_rotation_type));
   }
 
-  bool IsValid(const StyleResolverState& state,
+  bool IsValid(const InterpolationEnvironment& environment,
                const InterpolationValue& underlying) const final {
-    return inherited_rotation_type_ == state.ParentStyle()->OffsetRotate().type;
+    return inherited_rotation_type_ ==
+           environment.GetState().ParentStyle()->OffsetRotate().type;
   }
 
  private:

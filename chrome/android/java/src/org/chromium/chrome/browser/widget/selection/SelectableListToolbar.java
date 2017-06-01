@@ -79,11 +79,6 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
          *                     parameter is true, it indicates that dark drawables should be used.
          */
         void onThemeColorChanged(boolean isLightTheme);
-
-        /**
-         * A notification that search mode has been activated for this toolbar.
-         */
-        void onStartSearch();
     }
 
     /** No navigation button is displayed. **/
@@ -382,7 +377,6 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
         mSelectionDelegate.clearSelection();
 
         showSearchViewInternal();
-        for (SelectableListToolbarObserver o : mObservers) o.onStartSearch();
 
         mSearchEditText.requestFocus();
         UiUtils.showKeyboard(mSearchEditText);

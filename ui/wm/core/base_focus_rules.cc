@@ -61,8 +61,8 @@ bool BaseFocusRules::CanActivateWindow(aura::Window* window) const {
     return false;
 
   // The window's activation delegate must allow this window to be activated.
-  if (GetActivationDelegate(window) &&
-      !GetActivationDelegate(window)->ShouldActivate()) {
+  if (aura::client::GetActivationDelegate(window) &&
+      !aura::client::GetActivationDelegate(window)->ShouldActivate()) {
     return false;
   }
 

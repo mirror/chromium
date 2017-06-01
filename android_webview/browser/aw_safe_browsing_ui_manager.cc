@@ -25,7 +25,7 @@ void AwSafeBrowsingUIManager::DisplayBlockingPage(
   WebContents* web_contents = resource.web_contents_getter.Run();
   // Check the size of the view
   UIManagerClient* client = UIManagerClient::FromWebContents(web_contents);
-  if (!client || !client->CanShowInterstitial()) {
+  if (!client || !client->CanShowBigInterstitial()) {
     LOG(WARNING) << "The view is not suitable to show the SB interstitial";
     OnBlockingPageDone(std::vector<UnsafeResource>{resource}, false,
                        web_contents, resource.url.GetWithEmptyPath());
@@ -37,14 +37,6 @@ void AwSafeBrowsingUIManager::DisplayBlockingPage(
 void AwSafeBrowsingUIManager::ShowBlockingPageForResource(
     const UnsafeResource& resource) {
   AwSafeBrowsingBlockingPage::ShowBlockingPage(this, resource);
-}
-
-int AwSafeBrowsingUIManager::GetErrorUiType(
-    const UnsafeResource& resource) const {
-  WebContents* web_contents = resource.web_contents_getter.Run();
-  UIManagerClient* client = UIManagerClient::FromWebContents(web_contents);
-  DCHECK(client);
-  return client->GetErrorUiType();
 }
 
 }  // namespace android_webview

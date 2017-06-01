@@ -69,6 +69,7 @@ class CONTENT_EXPORT BrowserGpuMemoryBufferManager
 
  private:
   struct BufferInfo {
+    BufferInfo();
     BufferInfo(const gfx::Size& size,
                gfx::GpuMemoryBufferType type,
                gfx::BufferFormat format,

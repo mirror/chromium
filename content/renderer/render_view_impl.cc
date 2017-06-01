@@ -121,7 +121,6 @@
 #include "third_party/WebKit/public/platform/WebMessagePortChannel.h"
 #include "third_party/WebKit/public/platform/WebPoint.h"
 #include "third_party/WebKit/public/platform/WebRect.h"
-#include "third_party/WebKit/public/platform/WebRuntimeFeatures.h"
 #include "third_party/WebKit/public/platform/WebSize.h"
 #include "third_party/WebKit/public/platform/WebStorageQuotaCallbacks.h"
 #include "third_party/WebKit/public/platform/WebString.h"
@@ -158,6 +157,7 @@
 #include "third_party/WebKit/public/web/WebPluginAction.h"
 #include "third_party/WebKit/public/web/WebRange.h"
 #include "third_party/WebKit/public/web/WebRenderTheme.h"
+#include "third_party/WebKit/public/web/WebRuntimeFeatures.h"
 #include "third_party/WebKit/public/web/WebScriptSource.h"
 #include "third_party/WebKit/public/web/WebSearchableFormData.h"
 #include "third_party/WebKit/public/web/WebSecurityPolicy.h"
@@ -824,6 +824,8 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
       WebString::FromASCII(prefs.default_encoding));
   settings->SetJavaScriptEnabled(prefs.javascript_enabled);
   settings->SetWebSecurityEnabled(prefs.web_security_enabled);
+  settings->SetJavaScriptCanOpenWindowsAutomatically(
+      prefs.javascript_can_open_windows_automatically);
   settings->SetLoadsImagesAutomatically(prefs.loads_images_automatically);
   settings->SetImagesEnabled(prefs.images_enabled);
   settings->SetPluginsEnabled(prefs.plugins_enabled);
@@ -932,6 +934,9 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
   WebRuntimeFeatures::EnableColorCorrectRendering(
       prefs.color_correct_rendering_enabled);
 
+  WebRuntimeFeatures::EnableColorCorrectRenderingDefaultMode(
+      prefs.color_correct_rendering_default_mode_enabled);
+
   settings->SetShouldRespectImageOrientation(
       prefs.should_respect_image_orientation);
 
@@ -1035,7 +1040,6 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
       prefs.video_fullscreen_detection_enabled);
   settings->SetEmbeddedMediaExperienceEnabled(
       prefs.embedded_media_experience_enabled);
-  settings->SetPagePopupsSuppressed(prefs.page_popups_suppressed);
   settings->SetDoNotUpdateSelectionOnMutatingSelectionRange(
       prefs.do_not_update_selection_on_mutating_selection_range);
 #endif  // defined(OS_ANDROID)
@@ -1230,6 +1234,7 @@ bool RenderViewImpl::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ViewMsg_MediaPlayerActionAt, OnMediaPlayerActionAt)
     IPC_MESSAGE_HANDLER(ViewMsg_PluginActionAt, OnPluginActionAt)
     IPC_MESSAGE_HANDLER(ViewMsg_SetActive, OnSetActive)
+    IPC_MESSAGE_HANDLER(ViewMsg_ShowContextMenu, OnShowContextMenu)
     IPC_MESSAGE_HANDLER(ViewMsg_ReleaseDisambiguationPopupBitmap,
                         OnReleaseDisambiguationPopupBitmap)
     IPC_MESSAGE_HANDLER(ViewMsg_ResolveTapDisambiguation,
@@ -1278,8 +1283,7 @@ void RenderViewImpl::OnSelectWordAroundCaret() {
     if (focused_frame) {
       input_handler_->set_handling_input_event(true);
       blink::WebRange initial_range = focused_frame->SelectionRange();
-      if (!initial_range.IsNull())
-        did_select = focused_frame->SelectWordAroundCaret();
+      did_select = focused_frame->SelectWordAroundCaret();
       if (did_select) {
         blink::WebRange adjusted_range = focused_frame->SelectionRange();
         start_adjust =
@@ -1448,13 +1452,6 @@ WebView* RenderViewImpl::CreateView(WebLocalFrame* creator,
     return nullptr;
 
   WebUserGestureIndicator::ConsumeUserGesture();
-
-  // For Android WebView, we support a pop-up like behavior for window.open()
-  // even if the embedding app doesn't support multiple windows. In this case,
-  // window.open() will return "window" and navigate it to whatever URL was
-  // passed.
-  if (reply->route_id == GetRoutingID())
-    return webview();
 
   // While this view may be a background extension page, it can spawn a visible
   // render view. So we just assume that the new one is not another background
@@ -1634,6 +1631,8 @@ void RenderViewImpl::MoveValidationMessage(
   Send(new ViewHostMsg_MoveValidationMessage(
       GetRoutingID(), AdjustValidationMessageAnchor(anchor_in_viewport)));
 }
+
+void RenderViewImpl::SetStatusText(const WebString& text) {}
 
 void RenderViewImpl::UpdateTargetURL(const GURL& url,
                                      const GURL& fallback_url) {
@@ -2411,6 +2410,19 @@ void RenderViewImpl::DismissDateTimeDialog() {
   date_time_picker_client_.reset(NULL);
 }
 
+#endif  // defined(OS_ANDROID)
+
+void RenderViewImpl::OnShowContextMenu(
+    ui::MenuSourceType source_type, const gfx::Point& location) {
+  input_handler_->set_context_menu_source_type(source_type);
+  has_host_context_menu_location_ = true;
+  host_context_menu_location_ = location;
+  if (webview())
+    webview()->ShowContextMenu();
+  has_host_context_menu_location_ = false;
+}
+
+#if defined(OS_ANDROID)
 bool RenderViewImpl::DidTapMultipleTargets(
     const WebSize& inner_viewport_offset,
     const WebRect& touch_rect,

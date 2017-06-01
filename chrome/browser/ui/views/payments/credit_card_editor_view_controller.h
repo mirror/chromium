@@ -63,14 +63,6 @@ class CreditCardEditorViewController : public EditorViewController {
   std::unique_ptr<ui::ComboboxModel> GetComboboxModelForType(
       const autofill::ServerFieldType& type) override;
 
-  // Selects the icon in the UI corresponding to |basic_card_network| with
-  // higher opacity. If empty string, selects none of them (all full opacity).
-  void SelectBasicCardNetworkIcon(const std::string& basic_card_network);
-
-  // Exposed for validation delegate.
-  bool IsValidCreditCardNumber(const base::string16& card_number,
-                               base::string16* error_message);
-
  protected:
   // PaymentRequestSheetController:
   void FillContentView(views::View* content_view) override;
@@ -81,18 +73,18 @@ class CreditCardEditorViewController : public EditorViewController {
   class CreditCardValidationDelegate : public ValidationDelegate {
    public:
     // Used to validate |field| type. A reference to the |controller| should
-    // outlive this delegate.
-    CreditCardValidationDelegate(const EditorField& field,
-                                 CreditCardEditorViewController* controller);
+    // outlive this delegate, and a list of |supported_card_networks| can be
+    // passed in to validate |field| (the data will be copied to the delegate).
+    CreditCardValidationDelegate(
+        const EditorField& field,
+        EditorViewController* controller,
+        const std::vector<std::string>& supported_card_networks);
     ~CreditCardValidationDelegate() override;
 
     // ValidationDelegate:
-    bool ShouldFormat() override;
-    base::string16 Format(const base::string16& text) override;
     bool IsValidTextfield(views::Textfield* textfield) override;
     bool IsValidCombobox(views::Combobox* combobox) override;
-    bool TextfieldValueChanged(views::Textfield* textfield,
-                               bool was_blurred) override;
+    bool TextfieldValueChanged(views::Textfield* textfield) override;
     bool ComboboxValueChanged(views::Combobox* combobox) override;
     void ComboboxModelChanged(views::Combobox* combobox) override {}
 
@@ -105,7 +97,9 @@ class CreditCardEditorViewController : public EditorViewController {
 
     EditorField field_;
     // Outlives this class.
-    CreditCardEditorViewController* controller_;
+    EditorViewController* controller_;
+    // The list of supported basic card networks.
+    std::set<std::string> supported_card_networks_;
 
     DISALLOW_COPY_AND_ASSIGN(CreditCardValidationDelegate);
   };
@@ -117,9 +111,6 @@ class CreditCardEditorViewController : public EditorViewController {
   // simply propagated to the address combobox model.
   void AddAndSelectNewBillingAddress(const autofill::AutofillProfile& profile);
 
-  // Whether the editor is editing a server card (masked).
-  bool IsEditingServerCard() const;
-
   // Called when |credit_card_to_edit_| was successfully edited.
   base::OnceClosure on_edited_;
   // Called when a new card was added. The const reference is short-lived, and
@@ -130,15 +121,8 @@ class CreditCardEditorViewController : public EditorViewController {
   // controller.
   autofill::CreditCard* credit_card_to_edit_;
 
-  // Keeps track of the card icons currently visible, keyed by basic card
-  // network.
-  std::map<std::string, views::View*> card_icons_;
-
   // The value to use for the add billing address button tag.
   int add_billing_address_button_tag_;
-
-  // The list of supported basic card networks.
-  std::set<std::string> supported_card_networks_;
 
   DISALLOW_COPY_AND_ASSIGN(CreditCardEditorViewController);
 };

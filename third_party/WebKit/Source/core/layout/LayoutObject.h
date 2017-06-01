@@ -30,9 +30,7 @@
 #include "core/CoreExport.h"
 #include "core/dom/Document.h"
 #include "core/dom/DocumentLifecycle.h"
-#include "core/editing/EphemeralRange.h"
 #include "core/editing/PositionWithAffinity.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/layout/LayoutObjectChildList.h"
 #include "core/layout/MapCoordinatesFlags.h"
 #include "core/layout/ScrollAlignment.h"
@@ -885,7 +883,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
       const ComputedStyle* parent_style = nullptr) const;
 
   LayoutView* View() const { return GetDocument().GetLayoutView(); }
-  LocalFrameView* GetFrameView() const { return GetDocument().View(); }
+  FrameView* GetFrameView() const { return GetDocument().View(); }
 
   bool IsRooted() const;
 
@@ -1307,7 +1305,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   virtual void AbsoluteQuads(Vector<FloatQuad>&,
                              MapCoordinatesFlags mode = 0) const {}
 
-  static FloatRect AbsoluteBoundingBoxRectForRange(const EphemeralRange&);
+  static FloatRect AbsoluteBoundingBoxRectForRange(const Range*);
 
   // The bounding box (see: absoluteBoundingBoxRect) including all descendant
   // bounding boxes.
@@ -1485,7 +1483,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
 
   virtual bool CanBeSelectionLeaf() const { return false; }
   bool HasSelectedChildren() const {
-    return GetSelectionState() != SelectionState::kNone;
+    return GetSelectionState() != SelectionNone;
   }
 
   bool IsSelectable() const;
@@ -2303,7 +2301,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
           outline_may_be_affected_by_descendants_(false),
           previous_outline_may_be_affected_by_descendants_(false),
           positioned_state_(kIsStaticallyPositioned),
-          selection_state_(static_cast<unsigned>(SelectionState::kNone)),
+          selection_state_(SelectionNone),
           background_obscuration_state_(kBackgroundObscurationStatusInvalid),
           full_paint_invalidation_reason_(
               static_cast<unsigned>(PaintInvalidationReason::kNone)) {}
@@ -2567,7 +2565,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
       return static_cast<SelectionState>(selection_state_);
     }
     ALWAYS_INLINE void SetSelectionState(SelectionState selection_state) {
-      selection_state_ = static_cast<unsigned>(selection_state);
+      selection_state_ = selection_state;
     }
 
     ALWAYS_INLINE BackgroundObscurationState

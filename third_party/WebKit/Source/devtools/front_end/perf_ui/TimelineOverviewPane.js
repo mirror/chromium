@@ -159,6 +159,7 @@ PerfUI.TimelineOverviewPane = class extends UI.VBox {
     this._overviewCalculator.setDisplayWidth(this._overviewGrid.clientWidth());
     for (var i = 0; i < this._overviewControls.length; ++i)
       this._overviewControls[i].update();
+    this._overviewGrid.updateDividers(this._overviewCalculator);
     this._updateMarkers();
     this._updateWindow();
   }
@@ -168,6 +169,7 @@ PerfUI.TimelineOverviewPane = class extends UI.VBox {
    */
   setMarkers(markers) {
     this._markers = markers;
+    this._updateMarkers();
   }
 
   _updateMarkers() {
@@ -465,17 +467,8 @@ PerfUI.TimelineOverviewBase = class extends UI.VBox {
   }
 
   resetCanvas() {
-    if (this.element.clientWidth)
-      this.setCanvasSize(this.element.clientWidth, this.element.clientHeight);
-  }
-
-  /**
-   * @param {number} width
-   * @param {number} height
-   */
-  setCanvasSize(width, height) {
-    this._canvas.width = width * window.devicePixelRatio;
-    this._canvas.height = height * window.devicePixelRatio;
+    this._canvas.width = this.element.clientWidth * window.devicePixelRatio;
+    this._canvas.height = this.element.clientHeight * window.devicePixelRatio;
   }
 };
 

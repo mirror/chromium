@@ -191,27 +191,26 @@ _BANNED_CPP_FUNCTIONS = (
     (
       'ScopedAllowIO',
       (
-       'New production code should not use ScopedAllowIO (using it in',
-       'browser tests is fine). Post a task to the blocking pool or the',
-       'FILE thread instead.',
+       'New code should not use ScopedAllowIO. Post a task to the blocking',
+       'pool or the FILE thread instead.',
       ),
       True,
       (
-        r"^.*browser(|_)test[a-z_]*\.cc$",
         r"^base[\\\/]memory[\\\/]shared_memory_posix\.cc$",
         r"^base[\\\/]process[\\\/]internal_aix\.cc$",
         r"^base[\\\/]process[\\\/]process_linux\.cc$",
         r"^base[\\\/]process[\\\/]process_metrics_linux\.cc$",
         r"^chrome[\\\/]browser[\\\/]chromeos[\\\/]boot_times_recorder\.cc$",
         r"^chrome[\\\/]browser[\\\/]lifetime[\\\/]application_lifetime\.cc$",
+        r"^chrome[\\\/]browser[\\\/]chromeos[\\\/]"
+            "customization_document_browsertest\.cc$",
         r"^components[\\\/]crash[\\\/]app[\\\/]breakpad_mac\.mm$",
         r"^content[\\\/]shell[\\\/]browser[\\\/]layout_test[\\\/]" +
             r"test_info_extractor\.cc$",
+        r"^content[\\\/].*browser(|_)test[a-zA-Z_]*\.cc$",
         r"^content[\\\/]shell[\\\/]browser[\\\/]shell_browser_main\.cc$",
         r"^content[\\\/]shell[\\\/]browser[\\\/]shell_message_filter\.cc$",
         r"^content[\\\/]test[\\\/]ppapi[\\\/]ppapi_test\.cc$",
-        r"^media[\\\/]cast[\\\/]test[\\\/]utility[\\\/]" +
-            r"standalone_cast_environment\.cc$",
         r"^mojo[\\\/]edk[\\\/]embedder[\\\/]" +
             r"simple_platform_shared_buffer_posix\.cc$",
         r"^net[\\\/]disk_cache[\\\/]cache_util\.cc$",
@@ -1141,6 +1140,12 @@ def _ExtractAddRulesFromParsedDeps(parsed_deps):
 def _ParseDeps(contents):
   """Simple helper for parsing DEPS files."""
   # Stubs for handling special syntax in the root DEPS file.
+  def FromImpl(*_):
+    pass  # NOP function so "From" doesn't fail.
+
+  def FileImpl(_):
+    pass  # NOP function so "File" doesn't fail.
+
   class _VarImpl:
 
     def __init__(self, local_scope):
@@ -1155,6 +1160,8 @@ def _ParseDeps(contents):
 
   local_scope = {}
   global_scope = {
+      'File': FileImpl,
+      'From': FromImpl,
       'Var': _VarImpl(local_scope).Lookup,
   }
   exec contents in global_scope, local_scope
@@ -2151,54 +2158,6 @@ https://chromium.googlesource.com/chromium/src/+/master/docs/es6_chromium.md#Arr
 """ % "\n".join("  %s:%d\n" % line for line in arrow_lines))]
 
 
-def _CheckForRelativeIncludes(input_api, output_api):
-  # Need to set the sys.path so PRESUBMIT_test.py runs properly
-  import sys
-  original_sys_path = sys.path
-  try:
-    sys.path = sys.path + [input_api.os_path.join(
-        input_api.PresubmitLocalPath(), 'buildtools', 'checkdeps')]
-    from cpp_checker import CppChecker
-  finally:
-    # Restore sys.path to what it was before.
-    sys.path = original_sys_path
-
-  bad_files = {}
-  for f in input_api.AffectedFiles(include_deletes=False):
-    if (f.LocalPath().startswith('third_party') and
-      not f.LocalPath().startswith('third_party/WebKit') and
-      not f.LocalPath().startswith('third_party\\WebKit')):
-      continue
-
-    if not CppChecker.IsCppFile(f.LocalPath()):
-      continue
-
-    relative_includes = [line for line_num, line in f.ChangedContents()
-                         if "#include" in line and "../" in line]
-    if not relative_includes:
-      continue
-    bad_files[f.LocalPath()] = relative_includes
-
-  if not bad_files:
-    return []
-
-  error_descriptions = []
-  for file_path, bad_lines in bad_files.iteritems():
-    error_description = file_path
-    for line in bad_lines:
-      error_description += '\n    ' + line
-    error_descriptions.append(error_description)
-
-  results = []
-  results.append(output_api.PresubmitError(
-        'You added one or more relative #include paths (including "../").\n'
-        'These shouldn\'t be used because they can be used to include headers\n'
-        'from code that\'s not correctly specified as a dependency in the\n'
-        'relevant BUILD.gn file(s).',
-        error_descriptions))
-
-  return results
-
 def _AndroidSpecificOnUploadChecks(input_api, output_api):
   """Groups checks that target android code."""
   results = []
@@ -2260,7 +2219,6 @@ def _CommonChecks(input_api, output_api):
   results.extend(_CheckIpcOwners(input_api, output_api))
   results.extend(_CheckUselessForwardDeclarations(input_api, output_api))
   results.extend(_CheckForRiskyJsFeatures(input_api, output_api))
-  results.extend(_CheckForRelativeIncludes(input_api, output_api))
 
   if any('PRESUBMIT.py' == f.LocalPath() for f in input_api.AffectedFiles()):
     results.extend(input_api.canned_checks.RunUnitTestsInDirectory(
@@ -2366,8 +2324,6 @@ def _CheckForInvalidIfDefinedMacros(input_api, output_api):
   """Check all affected files for invalid "if defined" macros."""
   bad_macros = []
   for f in input_api.AffectedFiles():
-    if f.LocalPath().startswith('third_party/sqlite/'):
-      continue
     if f.LocalPath().endswith(('.h', '.c', '.cc', '.m', '.mm')):
       bad_macros.extend(_CheckForInvalidIfDefinedMacrosInFile(input_api, f))
 

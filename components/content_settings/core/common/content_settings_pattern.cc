@@ -10,7 +10,6 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "components/content_settings/core/common/content_settings_pattern_parser.h"
@@ -101,7 +100,7 @@ typedef ContentSettingsPattern::BuilderInterface BuilderInterface;
 class ContentSettingsPattern::Builder :
     public ContentSettingsPattern::BuilderInterface {
  public:
-  explicit Builder();
+  explicit Builder(bool use_legacy_validate);
   ~Builder() override;
 
   // BuilderInterface:
@@ -125,14 +124,20 @@ class ContentSettingsPattern::Builder :
   // Returns true when the pattern |parts| represent a valid pattern.
   static bool Validate(const PatternParts& parts);
 
+  static bool LegacyValidate(const PatternParts& parts);
+
   bool is_valid_;
+
+  bool use_legacy_validate_;
 
   PatternParts parts_;
 
   DISALLOW_COPY_AND_ASSIGN(Builder);
 };
 
-ContentSettingsPattern::Builder::Builder() : is_valid_(true) {}
+ContentSettingsPattern::Builder::Builder(bool use_legacy_validate)
+    : is_valid_(true),
+      use_legacy_validate_(use_legacy_validate) {}
 
 ContentSettingsPattern::Builder::~Builder() {}
 
@@ -196,11 +201,17 @@ ContentSettingsPattern ContentSettingsPattern::Builder::Build() {
     return ContentSettingsPattern();
   if (!Canonicalize(&parts_))
     return ContentSettingsPattern();
-  is_valid_ = Validate(parts_);
+  if (use_legacy_validate_) {
+    is_valid_ = LegacyValidate(parts_);
+  } else {
+    is_valid_ = Validate(parts_);
+  }
   if (!is_valid_)
     return ContentSettingsPattern();
 
   // A pattern is invalid if canonicalization is not idempotent.
+  // This check is here because it should be checked no matter
+  // use_legacy_validate_ is.
   PatternParts parts(parts_);
   if (!Canonicalize(&parts))
     return ContentSettingsPattern();
@@ -291,6 +302,41 @@ bool ContentSettingsPattern::Builder::Validate(const PatternParts& parts) {
   return true;
 }
 
+// static
+bool ContentSettingsPattern::Builder::LegacyValidate(
+    const PatternParts& parts) {
+  // If the pattern is for a "file-pattern" test if it is valid.
+  if (parts.scheme == std::string(url::kFileScheme) &&
+      !parts.is_scheme_wildcard &&
+      parts.host.empty() &&
+      parts.port.empty())
+    return true;
+
+  // If the pattern is for an extension URL test if it is valid.
+  if (IsNonWildcardDomainNonPortScheme(parts.scheme) &&
+      !parts.is_scheme_wildcard &&
+      !parts.host.empty() &&
+      !parts.has_domain_wildcard &&
+      parts.port.empty() &&
+      !parts.is_port_wildcard)
+    return true;
+
+  // Non-file patterns are invalid if either the scheme, host or port part is
+  // empty.
+  if ((!parts.is_scheme_wildcard) ||
+      (parts.host.empty() && !parts.has_domain_wildcard) ||
+      (!parts.is_port_wildcard))
+    return false;
+
+  // Test if the scheme is supported or a wildcard.
+  if (!parts.is_scheme_wildcard &&
+      parts.scheme != std::string(url::kHttpScheme) &&
+      parts.scheme != std::string(url::kHttpsScheme)) {
+    return false;
+  }
+  return true;
+}
+
 // ////////////////////////////////////////////////////////////////////////////
 // ContentSettingsPattern::PatternParts
 //
@@ -321,8 +367,9 @@ ContentSettingsPattern::PatternParts::~PatternParts() {}
 const int ContentSettingsPattern::kContentSettingsPatternVersion = 1;
 
 // static
-std::unique_ptr<BuilderInterface> ContentSettingsPattern::CreateBuilder() {
-  return base::MakeUnique<Builder>();
+BuilderInterface* ContentSettingsPattern::CreateBuilder(
+    bool validate) {
+  return new Builder(validate);
 }
 
 // static
@@ -338,67 +385,71 @@ ContentSettingsPattern ContentSettingsPattern::Wildcard() {
 // static
 ContentSettingsPattern ContentSettingsPattern::FromURL(
     const GURL& url) {
-  ContentSettingsPattern::Builder builder;
+  std::unique_ptr<ContentSettingsPattern::BuilderInterface> builder(
+      ContentSettingsPattern::CreateBuilder(false));
   const GURL* local_url = &url;
   if (url.SchemeIsFileSystem() && url.inner_url()) {
     local_url = url.inner_url();
   }
   if (local_url->SchemeIsFile()) {
-    builder.WithScheme(local_url->scheme())->WithPath(local_url->path());
+    builder->WithScheme(local_url->scheme())->WithPath(local_url->path());
   } else {
     // Please keep the order of the ifs below as URLs with an IP as host can
     // also have a "http" scheme.
     if (local_url->HostIsIPAddress()) {
-      builder.WithScheme(local_url->scheme())->WithHost(local_url->host());
+      builder->WithScheme(local_url->scheme())->WithHost(local_url->host());
     } else if (local_url->SchemeIs(url::kHttpScheme)) {
-      builder.WithSchemeWildcard()->WithDomainWildcard()->WithHost(
+      builder->WithSchemeWildcard()->WithDomainWildcard()->WithHost(
           local_url->host());
     } else if (local_url->SchemeIs(url::kHttpsScheme)) {
-      builder.WithScheme(local_url->scheme())
-          ->WithDomainWildcard()
-          ->WithHost(local_url->host());
+      builder->WithScheme(local_url->scheme())->WithDomainWildcard()->WithHost(
+          local_url->host());
     } else {
       // Unsupported scheme
     }
     if (local_url->port().empty()) {
       if (local_url->SchemeIs(url::kHttpsScheme))
-        builder.WithPort(GetDefaultPort(url::kHttpsScheme));
+        builder->WithPort(GetDefaultPort(url::kHttpsScheme));
       else
-        builder.WithPortWildcard();
+        builder->WithPortWildcard();
     } else {
-      builder.WithPort(local_url->port());
+      builder->WithPort(local_url->port());
     }
   }
-  return builder.Build();
+  return builder->Build();
 }
 
 // static
 ContentSettingsPattern ContentSettingsPattern::FromURLNoWildcard(
     const GURL& url) {
-  ContentSettingsPattern::Builder builder;
+  std::unique_ptr<ContentSettingsPattern::BuilderInterface> builder(
+      ContentSettingsPattern::CreateBuilder(false));
+
   const GURL* local_url = &url;
   if (url.SchemeIsFileSystem() && url.inner_url()) {
     local_url = url.inner_url();
   }
   if (local_url->SchemeIsFile()) {
-    builder.WithScheme(local_url->scheme())->WithPath(local_url->path());
+    builder->WithScheme(local_url->scheme())->WithPath(local_url->path());
   } else {
-    builder.WithScheme(local_url->scheme())->WithHost(local_url->host());
+    builder->WithScheme(local_url->scheme())->WithHost(local_url->host());
     if (local_url->port().empty()) {
-      builder.WithPort(GetDefaultPort(local_url->scheme()));
+      builder->WithPort(GetDefaultPort(local_url->scheme()));
     } else {
-      builder.WithPort(local_url->port());
+      builder->WithPort(local_url->port());
     }
   }
-  return builder.Build();
+  return builder->Build();
 }
 
 // static
 ContentSettingsPattern ContentSettingsPattern::FromString(
     const std::string& pattern_spec) {
-  ContentSettingsPattern::Builder builder;
-  content_settings::PatternParser::Parse(pattern_spec, &builder);
-  return builder.Build();
+  std::unique_ptr<ContentSettingsPattern::BuilderInterface> builder(
+      ContentSettingsPattern::CreateBuilder(false));
+  content_settings::PatternParser::Parse(pattern_spec,
+                                         builder.get());
+  return builder->Build();
 }
 
 // static
@@ -430,25 +481,27 @@ bool ContentSettingsPattern::MigrateFromDomainToOrigin(
   if (domain_pattern.parts_.host.empty())
     return false;
 
-  ContentSettingsPattern::Builder builder;
-  if (domain_pattern.parts_.is_scheme_wildcard)
-    builder.WithScheme(url::kHttpScheme);
-  else
-    builder.WithScheme(domain_pattern.parts_.scheme);
+  std::unique_ptr<ContentSettingsPattern::BuilderInterface> builder(
+      ContentSettingsPattern::CreateBuilder(false));
 
-  builder.WithHost(domain_pattern.parts_.host);
+  if (domain_pattern.parts_.is_scheme_wildcard)
+    builder->WithScheme(url::kHttpScheme);
+  else
+    builder->WithScheme(domain_pattern.parts_.scheme);
+
+  builder->WithHost(domain_pattern.parts_.host);
 
   if (domain_pattern.parts_.is_port_wildcard) {
     if (domain_pattern.parts_.scheme == url::kHttpsScheme) {
-      builder.WithPort(GetDefaultPort(url::kHttpsScheme));
+      builder->WithPort(GetDefaultPort(url::kHttpsScheme));
     } else {
-      builder.WithPort(GetDefaultPort(url::kHttpScheme));
+      builder->WithPort(GetDefaultPort(url::kHttpScheme));
     }
   } else {
-    builder.WithPort(domain_pattern.parts_.port);
+    builder->WithPort(domain_pattern.parts_.port);
   }
 
-  *origin_pattern = builder.Build();
+  *origin_pattern = builder->Build();
 
   return true;
 }

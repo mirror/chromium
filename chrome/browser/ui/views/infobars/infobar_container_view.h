@@ -22,7 +22,7 @@ class InfoBarContainerView : public views::AccessiblePaneView,
   ~InfoBarContainerView() override;
 
   // AccessiblePaneView:
-  gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetPreferredSize() const override;
   const char* GetClassName() const override;
   void Layout() override;
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override;

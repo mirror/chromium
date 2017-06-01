@@ -40,7 +40,6 @@
 #include "chrome/browser/net/dns_probe_service.h"
 #include "chrome/browser/net/proxy_service_factory.h"
 #include "chrome/browser/net/sth_distributor_provider.h"
-#include "chrome/browser/ssl/ignore_errors_cert_verifier.h"
 #include "chrome/common/channel_info.h"
 #include "chrome/common/chrome_content_client.h"
 #include "chrome/common/chrome_switches.h"
@@ -222,6 +221,20 @@ std::unique_ptr<net::HostResolver> CreateGlobalHostResolver(
       *base::CommandLine::ForCurrentProcess();
 
   net::HostResolver::Options options;
+
+  // Use the retry attempts override from the command-line, if any.
+  if (command_line.HasSwitch(switches::kHostResolverRetryAttempts)) {
+    std::string s =
+        command_line.GetSwitchValueASCII(switches::kHostResolverRetryAttempts);
+    // Parse the switch (it should be a non-negative integer).
+    int n;
+    if (base::StringToInt(s, &n) && n >= 0) {
+      options.max_retry_attempts = static_cast<size_t>(n);
+    } else {
+      LOG(ERROR) << "Invalid switch for host resolver retry attempts: " << s;
+    }
+  }
+
   std::unique_ptr<net::HostResolver> global_host_resolver;
 #if defined OS_CHROMEOS
   global_host_resolver =
@@ -539,6 +552,14 @@ void IOThread::Init() {
           new chrome_browser_data_usage::TabIdAnnotator()),
       std::move(data_use_amortizer)));
 
+  std::unique_ptr<ChromeNetworkDelegate> chrome_network_delegate(
+      new ChromeNetworkDelegate(extension_event_router_forwarder(),
+                                &system_enable_referrers_));
+  // By default, data usage is considered off the record.
+  chrome_network_delegate->set_data_use_aggregator(
+      globals_->data_use_aggregator.get(),
+      true /* is_data_usage_off_the_record */);
+
 #if defined(OS_ANDROID)
   globals_->external_data_use_observer.reset(
       new chrome::android::ExternalDataUseObserver(
@@ -546,6 +567,10 @@ void IOThread::Init() {
           BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
           BrowserThread::GetTaskRunnerForThread(BrowserThread::UI)));
 #endif  // defined(OS_ANDROID)
+
+  globals_->system_network_delegate =
+      globals_->data_use_ascriber->CreateNetworkDelegate(
+          std::move(chrome_network_delegate), GetMetricsDataUseForwarder());
 
   globals_->host_resolver = CreateGlobalHostResolver(net_log_);
 
@@ -585,12 +610,10 @@ void IOThread::Init() {
       base::MakeUnique<net::MultiThreadedCertVerifier>(
           new chromeos::CertVerifyProcChromeOS()));
 #else
-  globals_->cert_verifier = IgnoreErrorsCertVerifier::MaybeWrapCertVerifier(
-      command_line, net::CertVerifier::CreateDefault());
-  UMA_HISTOGRAM_BOOLEAN(
-      "Net.Certificate.IgnoreCertificateErrorsSPKIListPresent",
-      command_line.HasSwitch(switches::kIgnoreCertificateErrorsSPKIList));
+  globals_->cert_verifier = net::CertVerifier::CreateDefault();
 #endif
+
+  globals_->transport_security_state.reset(new net::TransportSecurityState());
 
   std::vector<scoped_refptr<const net::CTLogVerifier>> ct_logs(
       net::ct::CreateLogVerifiersForKnownLogs());
@@ -609,20 +632,30 @@ void IOThread::Init() {
   // Register the ct_tree_tracker_ as observer for verified SCTs.
   globals_->cert_transparency_verifier->SetObserver(ct_tree_tracker_.get());
 
+  globals_->ct_policy_enforcer.reset(new net::CTPolicyEnforcer());
+  params_.ct_policy_enforcer = globals_->ct_policy_enforcer.get();
+
+  globals_->ssl_config_service = GetSSLConfigService();
+
   CreateDefaultAuthHandlerFactory();
+  globals_->http_server_properties.reset(new net::HttpServerPropertiesImpl());
+  // For the ProxyScriptFetcher, we use a direct ProxyService.
+  globals_->proxy_script_fetcher_proxy_service =
+      net::ProxyService::CreateDirectWithNetLog(net_log_);
   globals_->dns_probe_service.reset(new chrome_browser_net::DnsProbeService());
   globals_->host_mapping_rules.reset(new net::HostMappingRules());
+  params_.host_mapping_rules = globals_->host_mapping_rules.get();
+  globals_->http_user_agent_settings.reset(
+      new net::StaticHttpUserAgentSettings(std::string(), GetUserAgent()));
   if (command_line.HasSwitch(switches::kHostRules)) {
     TRACE_EVENT_BEGIN0("startup", "IOThread::InitAsync:SetRulesFromString");
     globals_->host_mapping_rules->SetRulesFromString(
         command_line.GetSwitchValueASCII(switches::kHostRules));
     TRACE_EVENT_END0("startup", "IOThread::InitAsync:SetRulesFromString");
   }
-
-  session_params_.host_mapping_rules = *globals_->host_mapping_rules.get();
   globals_->enable_brotli =
       base::FeatureList::IsEnabled(features::kBrotliEncoding);
-  session_params_.enable_token_binding =
+  params_.enable_token_binding =
       base::FeatureList::IsEnabled(features::kTokenBinding);
 
   // Check for OS support of TCP FastOpen, and turn it on for all connections if
@@ -636,7 +669,7 @@ void IOThread::Init() {
 
   ConfigureParamsFromFieldTrialsAndCommandLine(
       command_line, is_quic_allowed_by_policy_,
-      http_09_on_non_default_ports_enabled_, &session_params_);
+      http_09_on_non_default_ports_enabled_, &params_);
 
 #if defined(OS_MACOSX)
   // Start observing Keychain events. This needs to be done on the UI thread,
@@ -676,9 +709,6 @@ void IOThread::CleanUp() {
     UnregisterSTHObserver(ct_tree_tracker_.get());
     ct_tree_tracker_.reset();
   }
-
-  if (globals_->system_request_context)
-    globals_->system_request_context->proxy_service()->OnShutdown();
 
   // Release objects that the net::URLRequestContext could have been pointing
   // to.
@@ -778,15 +808,18 @@ void IOThread::ClearHostCache(
 }
 
 const net::HttpNetworkSession::Params& IOThread::NetworkSessionParams() const {
-  return session_params_;
+  return params_;
 }
 
 void IOThread::DisableQuic() {
-  session_params_.enable_quic = false;
+  params_.enable_quic = false;
 
   if (globals_->system_request_context_storage)
     globals_->system_request_context_storage->http_network_session()
         ->DisableQuic();
+
+  if (globals_->proxy_script_fetcher_http_network_session)
+    globals_->proxy_script_fetcher_http_network_session->DisableQuic();
 }
 
 base::TimeTicks IOThread::creation_time() const {
@@ -839,23 +872,13 @@ void IOThread::ConstructSystemRequestContext() {
   context->set_enable_brotli(globals_->enable_brotli);
   context->set_name("system");
 
-  context_storage->set_http_user_agent_settings(
-      base::MakeUnique<net::StaticHttpUserAgentSettings>(std::string(),
-                                                         GetUserAgent()));
-  std::unique_ptr<ChromeNetworkDelegate> chrome_network_delegate(
-      new ChromeNetworkDelegate(extension_event_router_forwarder(),
-                                &system_enable_referrers_));
-  // By default, data usage is considered off the record.
-  chrome_network_delegate->set_data_use_aggregator(
-      globals_->data_use_aggregator.get(),
-      true /* is_data_usage_off_the_record */);
-  context_storage->set_network_delegate(
-      globals_->data_use_ascriber->CreateNetworkDelegate(
-          std::move(chrome_network_delegate), GetMetricsDataUseForwarder()));
+  context->set_http_user_agent_settings(
+      globals_->http_user_agent_settings.get());
+  context->set_network_delegate(globals_->system_network_delegate.get());
   context->set_net_log(net_log_);
   context->set_host_resolver(globals_->host_resolver.get());
 
-  context_storage->set_ssl_config_service(GetSSLConfigService());
+  context->set_ssl_config_service(globals_->ssl_config_service.get());
   context->set_http_auth_handler_factory(
       globals_->http_auth_handler_factory.get());
 
@@ -869,55 +892,43 @@ void IOThread::ConstructSystemRequestContext() {
   context->cookie_store()->SetChannelIDServiceID(
       context->channel_id_service()->GetUniqueID());
 
-  context_storage->set_transport_security_state(
-      base::MakeUnique<net::TransportSecurityState>());
+  context->set_transport_security_state(
+      globals_->transport_security_state.get());
 
-  context_storage->set_http_server_properties(
-      base::MakeUnique<net::HttpServerPropertiesImpl>());
+  context->set_http_server_properties(globals_->http_server_properties.get());
 
   context->set_cert_verifier(globals_->cert_verifier.get());
   context->set_cert_transparency_verifier(
       globals_->cert_transparency_verifier.get());
+  context->set_ct_policy_enforcer(globals_->ct_policy_enforcer.get());
 
-  context_storage->set_ct_policy_enforcer(
-      base::MakeUnique<net::CTPolicyEnforcer>());
+  TRACE_EVENT_BEGIN0("startup",
+                     "IOThread::Init:ProxyScriptFetcherRequestContext");
+  globals_->proxy_script_fetcher_context.reset(
+      ConstructProxyScriptFetcherContext(globals_, params_, net_log_));
+  TRACE_EVENT_END0("startup",
+                   "IOThread::Init:ProxyScriptFetcherRequestContext");
 
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
   context_storage->set_proxy_service(ProxyServiceFactory::CreateProxyService(
-      net_log_, context, context->network_delegate(),
+      net_log_, globals_->proxy_script_fetcher_context.get(),
+      globals_->system_network_delegate.get(),
       std::move(system_proxy_config_service_), command_line,
       WpadQuickCheckEnabled(), PacHttpsUrlStrippingEnabled()));
 
-  net::HttpNetworkSession::Context session_context;
+  net::HttpNetworkSession::Params system_params(params_);
   net::URLRequestContextBuilder::SetHttpNetworkSessionComponents(
-      context, &session_context);
+      context, &system_params);
 
   context_storage->set_http_network_session(
-      base::MakeUnique<net::HttpNetworkSession>(session_params_,
-                                                session_context));
+      base::MakeUnique<net::HttpNetworkSession>(system_params));
   context_storage->set_http_transaction_factory(
       base::MakeUnique<net::HttpNetworkLayer>(
           context_storage->http_network_session()));
 
-  std::unique_ptr<net::URLRequestJobFactoryImpl> job_factory(
-      new net::URLRequestJobFactoryImpl());
-
-  job_factory->SetProtocolHandler(url::kDataScheme,
-                                  base::MakeUnique<net::DataProtocolHandler>());
-  job_factory->SetProtocolHandler(
-      url::kFileScheme,
-      base::MakeUnique<net::FileProtocolHandler>(
-          base::CreateTaskRunnerWithTraits(
-              {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
-               base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})));
-#if !BUILDFLAG(DISABLE_FTP_SUPPORT)
-  job_factory->SetProtocolHandler(
-      url::kFtpScheme,
-      net::FtpProtocolHandler::Create(globals_->host_resolver.get()));
-#endif
-
-  context_storage->set_job_factory(std::move(job_factory));
+  context_storage->set_job_factory(
+      base::MakeUnique<net::URLRequestJobFactoryImpl>());
 }
 
 // static
@@ -1012,6 +1023,79 @@ void IOThread::ConfigureParamsFromFieldTrialsAndCommandLine(
 
   params->http_09_on_non_default_ports_enabled =
       http_09_on_non_default_ports_enabled;
+}
+
+// static
+net::URLRequestContext* IOThread::ConstructProxyScriptFetcherContext(
+    IOThread::Globals* globals,
+    const net::HttpNetworkSession::Params& params,
+    net::NetLog* net_log) {
+  net::URLRequestContext* context = new net::URLRequestContext;
+  context->set_net_log(net_log);
+  context->set_host_resolver(globals->host_resolver.get());
+  context->set_cert_verifier(globals->cert_verifier.get());
+  context->set_transport_security_state(
+      globals->transport_security_state.get());
+  context->set_cert_transparency_verifier(
+      globals->cert_transparency_verifier.get());
+  context->set_ct_policy_enforcer(globals->ct_policy_enforcer.get());
+  context->set_ssl_config_service(globals->ssl_config_service.get());
+  context->set_http_auth_handler_factory(
+      globals->http_auth_handler_factory.get());
+  context->set_proxy_service(globals->proxy_script_fetcher_proxy_service.get());
+
+  context->set_job_factory(
+      globals->proxy_script_fetcher_url_request_job_factory.get());
+
+  context->set_cookie_store(globals->system_request_context->cookie_store());
+  context->set_channel_id_service(
+      globals->system_request_context->channel_id_service());
+  context->set_network_delegate(globals->system_network_delegate.get());
+  context->set_http_user_agent_settings(
+      globals->http_user_agent_settings.get());
+  context->set_http_server_properties(globals->http_server_properties.get());
+
+  context->set_enable_brotli(globals->enable_brotli);
+
+  net::HttpNetworkSession::Params session_params(params);
+  net::URLRequestContextBuilder::SetHttpNetworkSessionComponents(
+      context, &session_params);
+
+  globals->proxy_script_fetcher_http_network_session.reset(
+      new net::HttpNetworkSession(session_params));
+  globals->proxy_script_fetcher_http_transaction_factory.reset(
+      new net::HttpNetworkLayer(
+          globals->proxy_script_fetcher_http_network_session.get()));
+  context->set_name("proxy");
+  context->set_http_transaction_factory(
+      globals->proxy_script_fetcher_http_transaction_factory.get());
+
+  std::unique_ptr<net::URLRequestJobFactoryImpl> job_factory(
+      new net::URLRequestJobFactoryImpl());
+
+  job_factory->SetProtocolHandler(url::kDataScheme,
+                                  base::MakeUnique<net::DataProtocolHandler>());
+  job_factory->SetProtocolHandler(
+      url::kFileScheme,
+      base::MakeUnique<net::FileProtocolHandler>(
+          base::CreateTaskRunnerWithTraits(
+              {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
+               base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})));
+#if !BUILDFLAG(DISABLE_FTP_SUPPORT)
+  job_factory->SetProtocolHandler(
+      url::kFtpScheme,
+      net::FtpProtocolHandler::Create(globals->host_resolver.get()));
+#endif
+  globals->proxy_script_fetcher_url_request_job_factory =
+      std::move(job_factory);
+
+  context->set_job_factory(
+      globals->proxy_script_fetcher_url_request_job_factory.get());
+
+  // TODO(rtenneti): We should probably use HttpServerPropertiesManager for the
+  // system URLRequestContext too. There's no reason this should be tied to a
+  // profile.
+  return context;
 }
 
 metrics::UpdateUsagePrefCallbackType IOThread::GetMetricsDataUseForwarder() {

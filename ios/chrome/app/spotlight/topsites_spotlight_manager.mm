@@ -39,7 +39,7 @@ class SpotlightSuggestionsBridge;
   std::unique_ptr<SpotlightTopSitesCallbackBridge> _topSitesCallbackBridge;
 
   // Bridge to register for sync changes.
-  std::unique_ptr<SyncObserverBridge> _syncObserverBridge;
+  std::unique_ptr<SyncObserverBridge> sync_observer_bridge_;
 
   // Bridge to register for suggestion changes.
   std::unique_ptr<SpotlightSuggestionsBridge> _suggestionsBridge;
@@ -172,10 +172,6 @@ initWithLargeIconService:(favicon::LargeIconService*)largeIconService
   self = [super initWithLargeIconService:largeIconService
                                   domain:spotlight::DOMAIN_TOPSITES];
   if (self) {
-    DCHECK(topSites);
-    DCHECK(bookmarkModel);
-    DCHECK(syncService);
-    DCHECK(suggestionsService);
     _topSites = topSites;
     _topSitesBridge.reset(new SpotlightTopSitesBridge(self, _topSites.get()));
     _topSitesCallbackBridge.reset(new SpotlightTopSitesCallbackBridge(self));
@@ -188,7 +184,7 @@ initWithLargeIconService:(favicon::LargeIconService*)largeIconService
       _suggestionsServiceResponseSubscription = _suggestionService->AddCallback(
           base::Bind(&SpotlightSuggestionsBridge::OnSuggestionsProfileAvailable,
                      _suggestionsBridge->AsWeakPtr()));
-      _syncObserverBridge.reset(new SyncObserverBridge(self, syncService));
+      sync_observer_bridge_.reset(new SyncObserverBridge(self, syncService));
     }
   }
   return self;
@@ -204,9 +200,6 @@ initWithLargeIconService:(favicon::LargeIconService*)largeIconService
 }
 
 - (void)addAllTopSitesSpotlightItems {
-  if (!_topSites)
-    return;
-
   if (_suggestionService) {
     [self addAllSuggestionsTopSitesItems];
   } else {
@@ -291,20 +284,6 @@ initWithLargeIconService:(favicon::LargeIconService*)largeIconService
         [strongSelf updateAllTopSitesSpotlightItems];
         strongSelf->_isReindexPending = false;
       });
-}
-
-- (void)shutdown {
-  _topSitesBridge.reset();
-  _topSitesCallbackBridge.reset();
-  _syncObserverBridge.reset();
-  _suggestionsBridge.reset();
-
-  _topSites = nullptr;
-  _bookmarkModel = nullptr;
-  _syncService = nullptr;
-  _suggestionService = nullptr;
-
-  [super shutdown];
 }
 
 #pragma mark -

@@ -512,7 +512,7 @@ GpuProcessHost::GpuProcessHost(int host_id, GpuProcessKind kind)
 }
 
 GpuProcessHost::~GpuProcessHost() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   SendOutstandingReplies();
 
@@ -659,7 +659,7 @@ bool GpuProcessHost::Init() {
 }
 
 bool GpuProcessHost::Send(IPC::Message* msg) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (process_->GetHost()->IsChannelOpening()) {
     queued_messages_.push(msg);
     return true;
@@ -676,7 +676,7 @@ bool GpuProcessHost::Send(IPC::Message* msg) {
 }
 
 bool GpuProcessHost::OnMessageReceived(const IPC::Message& message) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 #if defined(USE_OZONE)
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                           base::Bind(&RouteMessageToOzoneOnUI, message));
@@ -700,7 +700,7 @@ void GpuProcessHost::EstablishGpuChannel(
     bool allow_view_command_buffers,
     bool allow_real_time_streams,
     const EstablishChannelCallback& callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   TRACE_EVENT0("gpu", "GpuProcessHost::EstablishGpuChannel");
 
   // If GPU features are already blacklisted, no need to establish the channel.
@@ -737,7 +737,7 @@ void GpuProcessHost::CreateGpuMemoryBuffer(
     const CreateGpuMemoryBufferCallback& callback) {
   TRACE_EVENT0("gpu", "GpuProcessHost::CreateGpuMemoryBuffer");
 
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   create_gpu_memory_buffer_requests_.push(callback);
   gpu_service_ptr_->CreateGpuMemoryBuffer(
       id, size, format, usage, client_id, surface_handle,
@@ -774,11 +774,10 @@ void GpuProcessHost::OnChannelEstablished(
   DCHECK(channel_requests_.front().Equals(callback));
   channel_requests_.pop();
 
-  auto* gpu_data_manager = GpuDataManagerImpl::GetInstance();
   // Currently if any of the GPU features are blacklisted, we don't establish a
   // GPU channel.
   if (channel_handle.is_valid() &&
-      !gpu_data_manager->GpuAccessAllowed(nullptr)) {
+      !GpuDataManagerImpl::GetInstance()->GpuAccessAllowed(nullptr)) {
     gpu_service_ptr_->CloseChannel(client_id);
     callback.Run(IPC::ChannelHandle(), gpu::GPUInfo(),
                  EstablishChannelStatus::GPU_ACCESS_DENIED);
@@ -787,8 +786,8 @@ void GpuProcessHost::OnChannelEstablished(
     return;
   }
 
-  callback.Run(IPC::ChannelHandle(channel_handle.release()),
-               gpu_data_manager->GetGPUInfo(), EstablishChannelStatus::SUCCESS);
+  callback.Run(IPC::ChannelHandle(channel_handle.release()), gpu_info_,
+               EstablishChannelStatus::SUCCESS);
 }
 
 void GpuProcessHost::OnGpuMemoryBufferCreated(
@@ -847,8 +846,11 @@ void GpuProcessHost::DidInitialize(
   initialized_ = true;
   GpuDataManagerImpl* gpu_data_manager = GpuDataManagerImpl::GetInstance();
   if (!gpu_data_manager->ShouldUseSwiftShader()) {
+    gpu_info_ = gpu_info;
     gpu_data_manager->UpdateGpuInfo(gpu_info);
     gpu_data_manager->UpdateGpuFeatureInfo(gpu_feature_info);
+  } else {
+    gpu_info_ = gpu_data_manager->GetGPUInfo();
   }
 }
 

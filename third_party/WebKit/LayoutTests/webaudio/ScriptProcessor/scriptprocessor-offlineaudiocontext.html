@@ -1,40 +1,38 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>
-      ScriptProcessorNode on OfflineAudioContext
-    </title>
-    <script src="../../resources/testharness.js"></script>
-    <script src="../../resources/testharnessreport.js"></script>
-    <script src="../resources/audit-util.js"></script>
-    <script src="../resources/audit.js"></script>
-  </head>
-  <body>
-    <script id="layout-test-code">
-      let audit = Audit.createTaskRunner();
+<head>
+  <title>ScriptProcessorNode on OfflineAudioContext</title>
+  <script src="../../resources/testharness.js"></script>
+  <script src="../../resources/testharnessreport.js"></script>
+  <script src="../resources/audit-util.js"></script>
+  <script src="../resources/audit.js"></script>
+</head>
+<body>
+  <script>
+      var audit = Audit.createTaskRunner();
 
 
       // Fill the output of script processor with a constant value.
       audit.define('simple-output', (task, should) => {
-        let sampleRate = 44100;
-        let scriptBufferSize = 256;
-        let renderLength = 1;
-        let PI = Math.fround(Math.PI);
+        var sampleRate = 44100;
+        var scriptBufferSize = 256;
+        var renderLength = 1;
+        var PI = Math.fround(Math.PI);
 
-        let context =
+        var context =
             new OfflineAudioContext(1, renderLength * sampleRate, sampleRate);
 
-        let scriptNode = context.createScriptProcessor(scriptBufferSize, 1, 1);
+        var scriptNode = context.createScriptProcessor(scriptBufferSize, 1, 1);
         scriptNode.onaudioprocess = function(event) {
-          let outputChannel = event.outputBuffer.getChannelData(0);
+          var outputChannel = event.outputBuffer.getChannelData(0);
           outputChannel.fill(PI);
         };
         scriptNode.connect(context.destination);
 
         context.startRendering().then(function(buffer) {
-          let channel = buffer.getChannelData(0);
-          let initialDelay = channel.subarray(0, 2 * scriptBufferSize);
-          let actualContent = channel.subarray(2 * scriptBufferSize);
+          var channel = buffer.getChannelData(0);
+          var initialDelay = channel.subarray(0, 2 * scriptBufferSize);
+          var actualContent = channel.subarray(2 * scriptBufferSize);
 
           // There is the initial delay (2 x buffer size) which is silent.
           should(initialDelay, 'The initial delay contains zeros.')
@@ -53,20 +51,20 @@
       // phase-inverted oscillator with the delayed start time. Verify the
       // rendered buffer is completely silent.
       audit.define('oscillator-output', (task, should) => {
-        let sampleRate = 44100;
-        let scriptBufferSize = 256;
-        let renderLength = 1;
+        var sampleRate = 44100;
+        var scriptBufferSize = 256;
+        var renderLength = 1;
 
-        let context =
+        var context =
             new OfflineAudioContext(1, renderLength * sampleRate, sampleRate);
 
-        let osc1 = context.createOscillator();
-        let osc2 = context.createOscillator();
-        let inverter = context.createGain();
-        let scriptNode = context.createScriptProcessor(scriptBufferSize, 1, 1);
+        var osc1 = context.createOscillator();
+        var osc2 = context.createOscillator();
+        var inverter = context.createGain();
+        var scriptNode = context.createScriptProcessor(scriptBufferSize, 1, 1);
         scriptNode.onaudioprocess = function(event) {
-          let inputChannel = event.inputBuffer.getChannelData(0);
-          let outputChannel = event.outputBuffer.getChannelData(0);
+          var inputChannel = event.inputBuffer.getChannelData(0);
+          var outputChannel = event.outputBuffer.getChannelData(0);
           outputChannel.set(inputChannel);
         };
 
@@ -80,7 +78,7 @@
         osc2.start();
 
         context.startRendering().then(function(buffer) {
-          let channel = buffer.getChannelData(0);
+          var channel = buffer.getChannelData(0);
 
           // The rendered buffer must be silent.
           should(channel, 'The rendered buffer').beConstantValueOf(0);
@@ -90,6 +88,6 @@
       });
 
       audit.run();
-    </script>
-  </body>
+  </script>
+</body>
 </html>

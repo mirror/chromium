@@ -22,6 +22,7 @@
 #include "chrome/browser/android/vr_shell/ui_elements/video_capture_indicator.h"
 #include "chrome/browser/android/vr_shell/ui_scene.h"
 #include "chrome/browser/android/vr_shell/vr_browser_interface.h"
+#include "chrome/browser/android/vr_shell/vr_shell.h"
 
 namespace vr_shell {
 
@@ -56,14 +57,17 @@ static constexpr float kLoadingIndicatorHeight = 0.008 * kUrlBarDistance;
 static constexpr float kLoadingIndicatorOffset =
     -0.016 * kUrlBarDistance - kLoadingIndicatorHeight / 2;
 
+static constexpr float kFullscreenWidth = 2.88;
+static constexpr float kFullscreenHeight = 1.62;
+static constexpr float kFullscreenDistance = 3;
+static constexpr float kFullscreenVerticalOffset = -0.26;
+static constexpr vr::Colorf kFullscreenBackgroundColor = {0.1, 0.1, 0.1, 1.0};
+
 static constexpr float kSceneSize = 25.0;
 static constexpr float kSceneHeight = 4.0;
 static constexpr int kFloorGridlineCount = 40;
-
-static constexpr float kFullscreenDistance = 3;
-static constexpr float kFullscreenHeight = 0.64 * kFullscreenDistance;
-static constexpr float kFullscreenWidth = 1.138 * kFullscreenDistance;
-static constexpr float kFullscreenVerticalOffset = -0.1 * kFullscreenDistance;
+static constexpr vr::Colorf kBackgroundHorizonColor = {0.57, 0.57, 0.57, 1.0};
+static constexpr vr::Colorf kBackgroundCenterColor = {0.48, 0.48, 0.48, 1.0};
 
 // Tiny distance to offset textures that should appear in the same plane.
 static constexpr float kTextureOffset = 0.01;
@@ -97,7 +101,6 @@ UiSceneManager::~UiSceneManager() {}
 void UiSceneManager::CreateScreenDimmer() {
   std::unique_ptr<UiElement> element;
   element = base::MakeUnique<ScreenDimmer>();
-  element->set_debug_id(kScreenDimmer);
   element->set_id(AllocateId());
   element->set_fill(vr_shell::Fill::NONE);
   element->set_visible(false);
@@ -142,7 +145,6 @@ void UiSceneManager::CreateSecurityWarnings() {
   scene_->AddUiElement(std::move(element));
 
   element = base::MakeUnique<ExitWarning>(1024);
-  element->set_debug_id(kExitWarning);
   element->set_id(AllocateId());
   element->set_fill(vr_shell::Fill::NONE);
   element->set_size({kExitWarningWidth, kExitWarningHeight, 1});
@@ -161,7 +163,6 @@ void UiSceneManager::CreateSystemIndicators() {
   // TODO(acondor): Make constants for sizes and positions once the UX for the
   // indicators is defined.
   element = base::MakeUnique<AudioCaptureIndicator>(512);
-  element->set_debug_id(kAudioCaptureIndicator);
   element->set_id(AllocateId());
   element->set_translation({-0.3, 0.8, -kContentDistance + 0.1});
   element->set_size({0.5, 0, 1});
@@ -170,7 +171,6 @@ void UiSceneManager::CreateSystemIndicators() {
   scene_->AddUiElement(std::move(element));
 
   element = base::MakeUnique<VideoCaptureIndicator>(512);
-  element->set_debug_id(kVideoCaptureIndicator);
   element->set_id(AllocateId());
   element->set_translation({0.3, 0.8, -kContentDistance + 0.1});
   element->set_size({0.5, 0, 1});
@@ -179,7 +179,6 @@ void UiSceneManager::CreateSystemIndicators() {
   scene_->AddUiElement(std::move(element));
 
   element = base::MakeUnique<ScreenCaptureIndicator>(512);
-  element->set_debug_id(kScreenCaptureIndicator);
   element->set_id(AllocateId());
   element->set_translation({0.0, 0.65, -kContentDistance + 0.1});
   element->set_size({0.4, 0, 1});
@@ -192,7 +191,6 @@ void UiSceneManager::CreateContentQuad() {
   std::unique_ptr<UiElement> element;
 
   element = base::MakeUnique<UiElement>();
-  element->set_debug_id(kContentQuad);
   element->set_id(AllocateId());
   element->set_fill(vr_shell::Fill::CONTENT);
   element->set_size({kContentWidth, kContentHeight, 1});
@@ -205,7 +203,6 @@ void UiSceneManager::CreateContentQuad() {
   // Place an invisible but hittable plane behind the content quad, to keep the
   // reticle roughly planar with the content if near content.
   element = base::MakeUnique<UiElement>();
-  element->set_debug_id(kBackplane);
   element->set_id(AllocateId());
   element->set_fill(vr_shell::Fill::NONE);
   element->set_size({kBackplaneSize, kBackplaneSize, 1.0});
@@ -224,40 +221,54 @@ void UiSceneManager::CreateBackground() {
 
   // Floor.
   element = base::MakeUnique<UiElement>();
-  element->set_debug_id(kFloor);
   element->set_id(AllocateId());
   element->set_size({kSceneSize, kSceneSize, 1.0});
   element->set_translation({0.0, -kSceneHeight / 2, 0.0});
   element->set_rotation({1.0, 0.0, 0.0, -M_PI / 2.0});
-  element->set_fill(vr_shell::Fill::GRID_GRADIENT);
+  element->set_fill(vr_shell::Fill::OPAQUE_GRADIENT);
+  element->set_edge_color(kBackgroundHorizonColor);
+  element->set_center_color(kBackgroundCenterColor);
   element->set_draw_phase(0);
-  element->set_gridline_count(kFloorGridlineCount);
-  floor_ = element.get();
-  content_elements_.push_back(element.get());
+  control_elements_.push_back(element.get());
   scene_->AddUiElement(std::move(element));
 
   // Ceiling.
   element = base::MakeUnique<UiElement>();
-  element->set_debug_id(kCeiling);
   element->set_id(AllocateId());
+  element->set_fill(vr_shell::Fill::OPAQUE_GRADIENT);
   element->set_size({kSceneSize, kSceneSize, 1.0});
   element->set_translation({0.0, kSceneHeight / 2, 0.0});
   element->set_rotation({1.0, 0.0, 0.0, M_PI / 2});
   element->set_fill(vr_shell::Fill::OPAQUE_GRADIENT);
+  element->set_edge_color(kBackgroundHorizonColor);
+  element->set_center_color(kBackgroundCenterColor);
   element->set_draw_phase(0);
-  ceiling_ = element.get();
-  content_elements_.push_back(element.get());
+  control_elements_.push_back(element.get());
   scene_->AddUiElement(std::move(element));
 
-  UpdateBackgroundColor();
+  // Floor grid.
+  element = base::MakeUnique<UiElement>();
+  element->set_id(AllocateId());
+  element->set_fill(vr_shell::Fill::GRID_GRADIENT);
+  element->set_size({kSceneSize, kSceneSize, 1.0});
+  element->set_translation({0.0, -kSceneHeight / 2 + kTextureOffset, 0.0});
+  element->set_rotation({1.0, 0.0, 0.0, -M_PI / 2});
+  element->set_fill(vr_shell::Fill::GRID_GRADIENT);
+  element->set_center_color(kBackgroundHorizonColor);
+  vr::Colorf edge_color = kBackgroundHorizonColor;
+  edge_color.a = 0.0;
+  element->set_edge_color(edge_color);
+  element->set_gridline_count(kFloorGridlineCount);
+  element->set_draw_phase(0);
+  control_elements_.push_back(element.get());
+  scene_->AddUiElement(std::move(element));
+
+  scene_->SetBackgroundColor(kBackgroundHorizonColor);
 }
 
 void UiSceneManager::CreateUrlBar() {
   // TODO(cjgrant): Incorporate final size and position.
-  auto url_bar = base::MakeUnique<UrlBar>(
-      512,
-      base::Bind(&UiSceneManager::OnUnsupportedMode, base::Unretained(this)));
-  url_bar->set_debug_id(kUrlBar);
+  auto url_bar = base::MakeUnique<UrlBar>(512);
   url_bar->set_id(AllocateId());
   url_bar->set_translation({0, kUrlBarVerticalOffset, -kUrlBarDistance});
   url_bar->set_size({kUrlBarWidth, kUrlBarHeight, 1});
@@ -268,7 +279,6 @@ void UiSceneManager::CreateUrlBar() {
   scene_->AddUiElement(std::move(url_bar));
 
   auto indicator = base::MakeUnique<LoadingIndicator>(256);
-  indicator->set_debug_id(kLoadingIndicator);
   indicator->set_id(AllocateId());
   indicator->set_translation({0, 0, kLoadingIndicatorOffset});
   indicator->set_size({kLoadingIndicatorWidth, kLoadingIndicatorHeight, 1});
@@ -304,9 +314,6 @@ void UiSceneManager::SetWebVrMode(bool web_vr) {
   web_vr_mode_ = web_vr;
   ConfigureScene();
   ConfigureSecurityWarnings();
-  audio_capture_indicator_->set_visible(!web_vr && audio_capturing_);
-  video_capture_indicator_->set_visible(!web_vr && video_capturing_);
-  screen_capture_indicator_->set_visible(!web_vr && screen_capturing_);
 }
 
 void UiSceneManager::ConfigureScene() {
@@ -327,57 +334,37 @@ void UiSceneManager::ConfigureScene() {
   // Update content quad parameters depending on fullscreen.
   // TODO(http://crbug.com/642937): Animate fullscreen transitions.
   if (fullscreen_) {
+    scene_->SetBackgroundColor(kFullscreenBackgroundColor);
     main_content_->set_translation(
         {0, kFullscreenVerticalOffset, -kFullscreenDistance});
     main_content_->set_size({kFullscreenWidth, kFullscreenHeight, 1});
   } else {
+    scene_->SetBackgroundColor(kBackgroundHorizonColor);
     // Note that main_content_ is already visible in this case.
     main_content_->set_translation(
         {0, kContentVerticalOffset, -kContentDistance});
     main_content_->set_size({kContentWidth, kContentHeight, 1});
   }
 
-  scene_->SetMode(mode());
   scene_->SetBackgroundDistance(main_content_->translation().z() *
                                 -kBackgroundDistanceMultiplier);
-  UpdateBackgroundColor();
-}
-
-void UiSceneManager::UpdateBackgroundColor() {
-  // TODO(vollick): it would be nice if ceiling, floor and the grid were
-  // UiElement subclasses and could respond to the OnSetMode signal.
-  ceiling_->set_center_color(color_scheme().ceiling);
-  ceiling_->set_edge_color(color_scheme().horizon);
-  floor_->set_center_color(color_scheme().floor);
-  floor_->set_edge_color(color_scheme().horizon);
-  floor_->set_grid_color(color_scheme().floor_grid);
 }
 
 void UiSceneManager::SetAudioCapturingIndicator(bool enabled) {
-  audio_capturing_ = enabled;
-  audio_capture_indicator_->set_visible(enabled && !web_vr_mode_);
+  audio_capture_indicator_->set_visible(enabled);
 }
 
 void UiSceneManager::SetVideoCapturingIndicator(bool enabled) {
-  video_capturing_ = enabled;
-  video_capture_indicator_->set_visible(enabled && !web_vr_mode_);
+  video_capture_indicator_->set_visible(enabled);
 }
 
 void UiSceneManager::SetScreenCapturingIndicator(bool enabled) {
-  screen_capturing_ = enabled;
-  screen_capture_indicator_->set_visible(enabled && !web_vr_mode_);
+  // TODO(asimjour) add the indicator and change the visibility here.
 }
 
 void UiSceneManager::SetWebVrSecureOrigin(bool secure) {
   secure_origin_ = secure;
   ConfigureSecurityWarnings();
-}
-
-void UiSceneManager::SetIncognito(bool incognito) {
-  if (incognito == incognito_)
-    return;
-  incognito_ = incognito;
-  ConfigureScene();
 }
 
 void UiSceneManager::OnAppButtonClicked() {
@@ -421,7 +408,7 @@ void UiSceneManager::SetURL(const GURL& gurl) {
   url_bar_->SetURL(gurl);
 }
 
-void UiSceneManager::SetSecurityLevel(security_state::SecurityLevel level) {
+void UiSceneManager::SetSecurityLevel(int level) {
   url_bar_->SetSecurityLevel(level);
 }
 
@@ -441,32 +428,14 @@ void UiSceneManager::SetIsExiting() {
 }
 
 void UiSceneManager::SetHistoryButtonsEnabled(bool can_go_back,
-                                              bool can_go_forward) {
-  url_bar_->SetHistoryButtonsEnabled(can_go_back);
-}
+                                              bool can_go_forward) {}
 
 void UiSceneManager::OnCloseButtonClicked() {
   browser_->ExitCct();
 }
 
-void UiSceneManager::OnUnsupportedMode(UiUnsupportedMode mode) {
-  browser_->OnUnsupportedMode(mode);
-}
-
 int UiSceneManager::AllocateId() {
   return next_available_id_++;
-}
-
-ColorScheme::Mode UiSceneManager::mode() const {
-  if (incognito_)
-    return ColorScheme::kModeIncognito;
-  if (fullscreen_)
-    return ColorScheme::kModeFullscreen;
-  return ColorScheme::kModeNormal;
-}
-
-const ColorScheme& UiSceneManager::color_scheme() const {
-  return ColorScheme::GetColorScheme(mode());
 }
 
 }  // namespace vr_shell

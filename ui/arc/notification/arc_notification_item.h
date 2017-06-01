@@ -42,14 +42,14 @@ class ArcNotificationItem {
   virtual void Click() = 0;
 
   // Called when the user wants to open an intrinsic setting of notification.
-  // This is called from ArcNotificationContentView.
+  // This is called from ArcCustomNotificationView.
   virtual void OpenSettings() = 0;
   // Called when the user wants to toggle expansio of notification. This is
-  // called from ArcNotificationContentView.
+  // called from ArcCustomNotificationView.
   virtual void ToggleExpansion() = 0;
   // Returns true if this notification has an intrinsic setting which shown
   // inside the notification content area. This is called from
-  // ArcNotificationContentView.
+  // ArcCustomNotificationView.
   virtual bool IsOpeningSettingsSupported() const = 0;
 
   // Adds an observer.
@@ -75,10 +75,6 @@ class ArcNotificationItem {
   virtual mojom::ArcNotificationShownContents GetShownContents() const = 0;
   // Returns the notification key passed from Android-side.
   virtual const std::string& GetNotificationKey() const = 0;
-  // Returns the notification ID used in the Chrome message center.
-  virtual const std::string& GetNotificationId() const = 0;
-  // Returnes the accessible name of the notification.
-  virtual const base::string16& GetAccessibleName() const = 0;
 };
 
 }  // namespace arc

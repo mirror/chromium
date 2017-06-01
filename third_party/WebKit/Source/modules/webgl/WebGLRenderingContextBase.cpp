@@ -128,8 +128,9 @@ unsigned CurrentMaxGLContexts() {
 using WebGLRenderingContextBaseSet =
     PersistentHeapHashSet<WeakMember<WebGLRenderingContextBase>>;
 WebGLRenderingContextBaseSet& ActiveContexts() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific<WebGLRenderingContextBaseSet>,
-                                  active_contexts, ());
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      ThreadSpecific<WebGLRenderingContextBaseSet>, active_contexts,
+      new ThreadSpecific<WebGLRenderingContextBaseSet>());
   if (!active_contexts.IsSet())
     active_contexts->RegisterAsStaticReference();
   return *active_contexts;
@@ -138,8 +139,9 @@ WebGLRenderingContextBaseSet& ActiveContexts() {
 using WebGLRenderingContextBaseMap =
     PersistentHeapHashMap<WeakMember<WebGLRenderingContextBase>, int>;
 WebGLRenderingContextBaseMap& ForciblyEvictedContexts() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific<WebGLRenderingContextBaseMap>,
-                                  forcibly_evicted_contexts, ());
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      ThreadSpecific<WebGLRenderingContextBaseMap>, forcibly_evicted_contexts,
+      new ThreadSpecific<WebGLRenderingContextBaseMap>());
   if (!forcibly_evicted_contexts.IsSet())
     forcibly_evicted_contexts->RegisterAsStaticReference();
   return *forcibly_evicted_contexts;
@@ -747,17 +749,16 @@ ScriptPromise WebGLRenderingContextBase::commit(
     ExceptionState& exception_state) {
   UseCounter::Feature feature = UseCounter::kOffscreenCanvasCommitWebGL;
   UseCounter::Count(ExecutionContext::From(script_state), feature);
-  int width = GetDrawingBuffer()->Size().Width();
-  int height = GetDrawingBuffer()->Size().Height();
   if (!GetDrawingBuffer()) {
     bool is_web_gl_software_rendering = false;
-    return host()->Commit(nullptr, SkIRect::MakeWH(width, height),
-                          is_web_gl_software_rendering, script_state,
+    return host()->Commit(nullptr, is_web_gl_software_rendering, script_state,
                           exception_state);
   }
 
   RefPtr<StaticBitmapImage> image;
   if (CreationAttributes().preserveDrawingBuffer()) {
+    int width = GetDrawingBuffer()->Size().Width();
+    int height = GetDrawingBuffer()->Size().Height();
     SkImageInfo image_info =
         SkImageInfo::Make(width, height, kRGBA_8888_SkColorType,
                           CreationAttributes().alpha() ? kPremul_SkAlphaType
@@ -768,7 +769,7 @@ ScriptPromise WebGLRenderingContextBase::commit(
   }
 
   return host()->Commit(
-      std::move(image), SkIRect::MakeWH(width, height),
+      std::move(image),
       GetDrawingBuffer()->ContextProvider()->IsSoftwareRendering(),
       script_state, exception_state);
 }
@@ -1052,7 +1053,10 @@ WebGLRenderingContextBase::WebGLRenderingContextBase(
     return;
   }
 
-  drawing_buffer_ = std::move(buffer);
+  drawing_buffer_ = buffer.Release();
+  drawing_buffer_->AddNewMailboxCallback(
+      WTF::Bind(&WebGLRenderingContextBase::NotifyCanvasContextChanged,
+                WrapWeakPersistent(this)));
   GetDrawingBuffer()->Bind(GL_FRAMEBUFFER);
   SetupFlags();
 
@@ -1313,6 +1317,7 @@ void WebGLRenderingContextBase::DestroyContext() {
       ConvertToBaseCallback(std::move(null_closure)));
   GetDrawingBuffer()->ContextProvider()->SetErrorMessageCallback(
       ConvertToBaseCallback(std::move(null_function)));
+  GetDrawingBuffer()->AddNewMailboxCallback(nullptr);
 
   DCHECK(GetDrawingBuffer());
   drawing_buffer_->BeginDestruction();
@@ -1353,6 +1358,13 @@ void WebGLRenderingContextBase::OnErrorMessage(const char* message,
   if (synthesized_errors_to_console_)
     PrintGLErrorToConsole(message);
   probe::didFireWebGLErrorOrWarning(canvas(), message);
+}
+
+void WebGLRenderingContextBase::NotifyCanvasContextChanged() {
+  if (!canvas())
+    return;
+
+  canvas()->NotifyListenersCanvasChanged();
 }
 
 WebGLRenderingContextBase::HowToClear
@@ -4859,9 +4871,8 @@ void WebGLRenderingContextBase::TexImageHelperHTMLImageElement(
     if (canvas()) {
       UseCounter::Count(canvas()->GetDocument(), UseCounter::kSVGInWebGL);
     }
-    image_for_render =
-        DrawImageIntoBuffer(std::move(image_for_render), image->width(),
-                            image->height(), func_name);
+    image_for_render = DrawImageIntoBuffer(
+        image_for_render.Release(), image->width(), image->height(), func_name);
   }
 
   TexImageFunctionType function_type;
@@ -7521,7 +7532,11 @@ void WebGLRenderingContextBase::MaybeRestoreContext(TimerBase*) {
     return;
   }
 
-  drawing_buffer_ = std::move(buffer);
+  drawing_buffer_ = buffer.Release();
+  drawing_buffer_->AddNewMailboxCallback(
+      WTF::Bind(&WebGLRenderingContextBase::NotifyCanvasContextChanged,
+                WrapWeakPersistent(this)));
+
   GetDrawingBuffer()->Bind(GL_FRAMEBUFFER);
   lost_context_errors_.clear();
   context_lost_mode_ = kNotLostContext;

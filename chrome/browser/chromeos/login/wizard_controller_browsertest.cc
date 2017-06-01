@@ -72,7 +72,6 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_utils.h"
 #include "net/test/spawned_test_server/spawned_test_server.h"
-#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "net/url_request/url_fetcher_impl.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -366,8 +365,7 @@ class WizardControllerTestURLFetcherFactory
       int id,
       const GURL& url,
       net::URLFetcher::RequestType request_type,
-      net::URLFetcherDelegate* d,
-      net::NetworkTrafficAnnotationTag traffic_annotation) override {
+      net::URLFetcherDelegate* d) override {
     if (base::StartsWith(
             url.spec(),
             SimpleGeolocationProvider::DefaultGeolocationProviderURL().spec(),
@@ -383,8 +381,8 @@ class WizardControllerTestURLFetcherFactory
           url, d, std::string(kTimezoneResponseBody), net::HTTP_OK,
           net::URLRequestStatus::SUCCESS));
     }
-    return net::TestURLFetcherFactory::CreateURLFetcher(id, url, request_type,
-                                                        d, traffic_annotation);
+    return net::TestURLFetcherFactory::CreateURLFetcher(
+        id, url, request_type, d);
   }
   ~WizardControllerTestURLFetcherFactory() override {}
 };

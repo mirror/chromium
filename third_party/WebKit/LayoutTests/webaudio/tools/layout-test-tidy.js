@@ -21,13 +21,8 @@ const {JSDOM} = jsdom;
  */
 const OPTIONS = {
 
-  HTMLTidy: {
-    'indent': 'yes',
-    'indent-spaces': '2',
-    'wrap': '80',
-    'tidy-mark': 'no',
-    'doctype': 'html5'
-  },
+  HTMLTidy:
+      {'indent': 'yes', 'indent-spaces': '2', 'wrap': '80', 'tidy-mark': 'no'},
 
   ClangFormat: ['-style=Chromium', '-assume-filename=a.js'],
 
@@ -358,8 +353,8 @@ class TidyTask {
       Util.logAndExit('TidyTask.processHTML_', 'Invalid <script> element.');
 
     // Start with clang-foramt, then HTMLTidy and RegExp substitution.
-    Module
-        .runClangFormat(scriptElement.textContent, OPTIONS.ClangFormat, 3, this)
+    Module.runClangFormat(
+        scriptElement.textContent, OPTIONS.ClangFormat, 3, this)
         .then((formattedCodeString) => {
           // Replace the original code with clang-formatted code.
           scriptElement.textContent = formattedCodeString;
@@ -516,32 +511,43 @@ function main() {
 
   args = args.filter(arg => arg);
 
+  // A single target (a file or a directory) is allowed.
+  if (args.length !== 1) {
+    Util.logAndExit('main', 'Please specify a single target. (' + args + ')');
+  }
+
   // Populate options flags.
   let options = {
-    inplace: optionArgs.includes('-i') || optionArgs.includes('--inplace'),
-    recursive: optionArgs.includes('-R') || optionArgs.includes('--recursive'),
-    verbose: optionArgs.includes('-v') || optionArgs.includes('--verbose'),
+    inPlace: optionArgs.includes('-i') || optionArgs.includes('--in-place'),
+    verbose: optionArgs.includes('-v') || optionArgs.includes('--verbose')
   };
 
   // Collect target file(s) from the file system.
+  let targetPath = args[0];
   let files = [];
-  args.forEach((targetPath) => {
+  if (targetPath) {
     try {
       let stat = fs.lstatSync(targetPath);
       if (stat.isFile()) {
-        let fileType = path.extname(targetPath);
-        if (fileType === '.html' || fileType === '.js') {
-          files.push(targetPath);
-        }
-      } else if (
-          stat.isDirectory() && options.recursive &&
-          !targetPath.includes('node_modules')) {
-        files = files.concat(glob.sync(targetPath + '/**/*.{html,js}'));
+        files.push(targetPath);
+      } else if (stat.isDirectory()) {
+        files = glob.sync(
+            targetPath + '/**/*.{html,js}', {ignore: ['**/node_modules/**/*']});
       }
     } catch (error) {
       let errorMessage = 'Invalid file path. (' + targetPath + ')\n' +
           '  > ' + error.toString();
       Util.logAndExit('main', errorMessage);
+    }
+  }
+
+  // Files to be skipped.
+  let filesToBeSkipped =
+      Util.loadFileToStringSync('skip-tidy').toString().split('\n');
+  filesToBeSkipped.forEach((fileSkipped) => {
+    let index = files.indexOf(fileSkipped);
+    if (index > -1) {
+      files.splice(index, 1);
     }
   });
 

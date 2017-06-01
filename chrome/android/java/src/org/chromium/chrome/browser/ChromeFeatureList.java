@@ -156,7 +156,6 @@ public abstract class ChromeFeatureList {
             "ContentSuggestionsFaviconsFromNewServer";
     public static final String CONTENT_SUGGESTIONS_NOTIFICATIONS =
             "ContentSuggestionsNotifications";
-    public static final String CONTENT_SUGGESTIONS_CATEGORIES = "ContentSuggestionsCategories";
     public static final String CONTENT_SUGGESTIONS_SETTINGS = "ContentSuggestionsSettings";
     public static final String CONTENT_SUGGESTIONS_SHOW_SUMMARY = "ContentSuggestionsShowSummary";
     public static final String CONTEXTUAL_SEARCH_SINGLE_ACTIONS = "ContextualSearchSingleActions";
@@ -179,7 +178,6 @@ public abstract class ChromeFeatureList {
     public static final String SEARCH_ENGINE_PROMO_EXISTING_DEVICE =
             "SearchEnginePromo.ExistingDevice";
     public static final String SEARCH_ENGINE_PROMO_NEW_DEVICE = "SearchEnginePromo.NewDevice";
-    public static final String MATERIAL_DESIGN_INCOGNITO_NTP = "MaterialDesignIncognitoNTP";
     public static final String NEW_PHOTO_PICKER = "NewPhotoPicker";
     public static final String NO_CREDIT_CARD_ABORT = "NoCreditCardAbort";
     public static final String NTP_CONDENSED_LAYOUT = "NTPCondensedLayout";
@@ -192,7 +190,6 @@ public abstract class ChromeFeatureList {
     public static final String SERVICE_WORKER_PAYMENT_APPS = "ServiceWorkerPaymentApps";
     public static final String TAB_REPARENTING = "TabReparenting";
     public static final String VIDEO_PERSISTENCE = "VideoPersistence";
-    public static final String VR_BROWSING_FEEDBACK = "VrBrowsingFeedback";
     public static final String VR_CUSTOM_TAB_BROWSING = "VrCustomTabBrowsing";
     public static final String VR_SHELL = "VrShell";
     public static final String WEB_PAYMENTS = "WebPayments";

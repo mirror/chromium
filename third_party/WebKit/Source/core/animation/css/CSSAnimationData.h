@@ -24,9 +24,6 @@ class CSSAnimationData final : public CSSTimingData {
   }
 
   bool AnimationsMatchForStyleRecalc(const CSSAnimationData& other) const;
-  bool operator==(const CSSAnimationData& other) const {
-    return AnimationsMatchForStyleRecalc(other);
-  }
 
   Timing ConvertToTiming(size_t index) const;
 

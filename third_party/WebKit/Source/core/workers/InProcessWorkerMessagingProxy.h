@@ -32,6 +32,7 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/MessagePort.h"
 #include "core/workers/ThreadedMessagingProxyBase.h"
+#include "core/workers/WorkerLoaderProxy.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/PassRefPtr.h"
@@ -97,6 +98,7 @@ class CORE_EXPORT InProcessWorkerMessagingProxy
 
   std::unique_ptr<InProcessWorkerObjectProxy> worker_object_proxy_;
   WeakPersistent<InProcessWorkerBase> worker_object_;
+  Persistent<WorkerClients> worker_clients_;
 
   // Tasks are queued here until there's a thread object created.
   struct QueuedTask;

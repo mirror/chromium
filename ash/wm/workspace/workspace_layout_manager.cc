@@ -11,7 +11,7 @@
 #include "ash/root_window_controller.h"
 #include "ash/screen_util.h"
 #include "ash/session/session_controller.h"
-#include "ash/shelf/shelf.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/wm/always_on_top_controller.h"
 #include "ash/wm/fullscreen_window_finder.h"
@@ -23,6 +23,7 @@
 #include "ash/wm/wm_event.h"
 #include "ash/wm/workspace/backdrop_controller.h"
 #include "ash/wm/workspace/backdrop_delegate.h"
+#include "ash/wm_window.h"
 #include "base/command_line.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/base/ui_base_switches.h"
@@ -86,7 +87,7 @@ void WorkspaceLayoutManager::OnWindowAddedToLayout(aura::Window* child) {
   UpdateFullscreenState();
 
   backdrop_controller_->OnWindowAddedToLayout(child);
-  WindowPositioner::RearrangeVisibleWindowOnShow(child);
+  WindowPositioner::RearrangeVisibleWindowOnShow(WmWindow::Get(child));
   if (Shell::Get()->screen_pinning_controller()->IsPinned())
     wm::GetWindowState(child)->DisableAlwaysOnTop(nullptr);
 }
@@ -97,7 +98,8 @@ void WorkspaceLayoutManager::OnWillRemoveWindowFromLayout(aura::Window* child) {
   wm::GetWindowState(child)->RemoveObserver(this);
 
   if (child->layer()->GetTargetVisibility())
-    WindowPositioner::RearrangeVisibleWindowOnHideOrRemove(child);
+    WindowPositioner::RearrangeVisibleWindowOnHideOrRemove(
+        WmWindow::Get(child));
 }
 
 void WorkspaceLayoutManager::OnWindowRemovedFromLayout(aura::Window* child) {
@@ -114,9 +116,10 @@ void WorkspaceLayoutManager::OnChildWindowVisibilityChanged(aura::Window* child,
     window_state->Unminimize();
 
   if (child->layer()->GetTargetVisibility())
-    WindowPositioner::RearrangeVisibleWindowOnShow(child);
+    WindowPositioner::RearrangeVisibleWindowOnShow(WmWindow::Get(child));
   else
-    WindowPositioner::RearrangeVisibleWindowOnHideOrRemove(child);
+    WindowPositioner::RearrangeVisibleWindowOnHideOrRemove(
+        WmWindow::Get(child));
   UpdateFullscreenState();
   UpdateShelfVisibility();
   backdrop_controller_->OnChildWindowVisibilityChanged(child, visible);
@@ -214,8 +217,9 @@ void WorkspaceLayoutManager::OnWindowPropertyChanged(aura::Window* window,
   if (key == aura::client::kAlwaysOnTopKey) {
     if (window->GetProperty(aura::client::kAlwaysOnTopKey)) {
       aura::Window* container =
-          root_window_controller_->always_on_top_controller()->GetContainer(
-              window);
+          root_window_controller_->always_on_top_controller()
+              ->GetContainer(WmWindow::Get(window))
+              ->aura_window();
       if (window->parent() != container)
         container->AddChild(window);
     }
@@ -248,7 +252,8 @@ void WorkspaceLayoutManager::OnWindowBoundsChanged(
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// WorkspaceLayoutManager, wm::ActivationChangeObserver implementation:
+// WorkspaceLayoutManager,
+// aura::client::ActivationChangeObserver implementation:
 
 void WorkspaceLayoutManager::OnWindowActivated(ActivationReason reason,
                                                aura::Window* gained_active,
@@ -302,11 +307,12 @@ void WorkspaceLayoutManager::OnDisplayMetricsChanged(
 //////////////////////////////////////////////////////////////////////////////
 // WorkspaceLayoutManager, ShellObserver implementation:
 
-void WorkspaceLayoutManager::OnFullscreenStateChanged(
-    bool is_fullscreen,
-    aura::Window* root_window) {
-  if (root_window != root_window_ || is_fullscreen_ == is_fullscreen)
+void WorkspaceLayoutManager::OnFullscreenStateChanged(bool is_fullscreen,
+                                                      WmWindow* root_window) {
+  if (root_window->aura_window() != root_window_ ||
+      is_fullscreen_ == is_fullscreen) {
     return;
+  }
 
   is_fullscreen_ = is_fullscreen;
   if (Shell::Get()->screen_pinning_controller()->IsPinned()) {
@@ -320,7 +326,7 @@ void WorkspaceLayoutManager::OnFullscreenStateChanged(
                                    : nullptr);
 }
 
-void WorkspaceLayoutManager::OnPinnedStateChanged(aura::Window* pinned_window) {
+void WorkspaceLayoutManager::OnPinnedStateChanged(WmWindow* pinned_window) {
   const bool is_pinned = Shell::Get()->screen_pinning_controller()->IsPinned();
   if (!is_pinned && is_fullscreen_) {
     // On exiting from pinned mode, if the workspace is still in fullscreen
@@ -330,7 +336,7 @@ void WorkspaceLayoutManager::OnPinnedStateChanged(aura::Window* pinned_window) {
     return;
   }
 
-  UpdateAlwaysOnTop(is_pinned ? pinned_window : nullptr);
+  UpdateAlwaysOnTop(is_pinned ? pinned_window->aura_window() : nullptr);
 }
 
 void WorkspaceLayoutManager::OnVirtualKeyboardStateChanged(
@@ -367,7 +373,7 @@ void WorkspaceLayoutManager::AdjustAllWindowsBoundsForWorkAreaChange(
 }
 
 void WorkspaceLayoutManager::UpdateShelfVisibility() {
-  root_window_controller_->shelf()->UpdateVisibilityState();
+  root_window_controller_->wm_shelf()->UpdateVisibilityState();
 }
 
 void WorkspaceLayoutManager::UpdateFullscreenState() {
@@ -380,7 +386,8 @@ void WorkspaceLayoutManager::UpdateFullscreenState() {
     return;
   bool is_fullscreen = wm::GetWindowForFullscreenMode(window_) != nullptr;
   if (is_fullscreen != is_fullscreen_) {
-    Shell::Get()->NotifyFullscreenStateChanged(is_fullscreen, root_window_);
+    Shell::Get()->NotifyFullscreenStateChanged(is_fullscreen,
+                                               WmWindow::Get(root_window_));
     is_fullscreen_ = is_fullscreen;
   }
 }
@@ -394,7 +401,7 @@ void WorkspaceLayoutManager::UpdateAlwaysOnTop(aura::Window* window_on_top) {
   for (aura::Window* window : windows) {
     wm::WindowState* window_state = wm::GetWindowState(window);
     if (window_on_top)
-      window_state->DisableAlwaysOnTop(window_on_top);
+      window_state->DisableAlwaysOnTop(WmWindow::Get(window_on_top));
     else
       window_state->RestoreAlwaysOnTop();
   }

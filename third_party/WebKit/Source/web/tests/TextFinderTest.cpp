@@ -10,9 +10,8 @@
 #include "core/dom/Range.h"
 #include "core/dom/shadow/ShadowRoot.h"
 #include "core/editing/FindInPageCoordinates.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/VisualViewport.h"
-#include "core/frame/WebLocalFrameBase.h"
 #include "core/html/HTMLElement.h"
 #include "core/layout/TextAutosizer.h"
 #include "core/page/Page.h"
@@ -21,6 +20,7 @@
 #include "public/platform/Platform.h"
 #include "public/web/WebDocument.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "web/WebLocalFrameImpl.h"
 #include "web/tests/FrameTestHelpers.h"
 
 using blink::testing::RunPendingTasks;
@@ -31,7 +31,7 @@ class TextFinderTest : public ::testing::Test {
  protected:
   TextFinderTest() {
     web_view_helper_.Initialize();
-    WebLocalFrameBase& frame_impl =
+    WebLocalFrameImpl& frame_impl =
         *web_view_helper_.WebView()->MainFrameImpl();
     frame_impl.ViewImpl()->Resize(WebSize(640, 480));
     frame_impl.ViewImpl()->UpdateAllLifecyclePhases();
@@ -65,9 +65,8 @@ WebFloatRect TextFinderTest::FindInPageRect(Node* start_container,
                                             int start_offset,
                                             Node* end_container,
                                             int end_offset) {
-  const Position start_position(start_container, start_offset);
-  const Position end_position(end_container, end_offset);
-  const EphemeralRange range(start_position, end_position);
+  Range* range = Range::Create(start_container->GetDocument(), start_container,
+                               start_offset, end_container, end_offset);
   return WebFloatRect(FindInPageRectFromRange(range));
 }
 

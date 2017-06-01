@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 /**
  * VisibleNetworksTracker keeps track of the visible networks.
  */
-class VisibleNetworksTracker {
+public class VisibleNetworksTracker {
     private static final String TAG = "VNTracker";
 
     @VisibleForTesting
@@ -40,7 +40,7 @@ class VisibleNetworksTracker {
      * refresh. Might return null if visible networks cannot be computed.
      */
     @Nullable
-    static VisibleNetworks getLastKnownVisibleNetworks(final Context context) {
+    public static VisibleNetworks getLastKnownVisibleNetworks(final Context context) {
         if (sUseVisibleNetworksForTesting) return sVisibleNetworksForTesting;
 
         if (isValidCachedVisibleNetworks()) return getCachedVisibleNetworks();
@@ -65,7 +65,7 @@ class VisibleNetworksTracker {
      * needed.
      */
     @SuppressFBWarnings("LI_LAZY_INIT_UPDATE_STATIC")
-    static void refreshVisibleNetworks(final Context context) {
+    public static void refreshVisibleNetworks(final Context context) {
         ThreadUtils.assertOnUiThread();
         if (isValidCachedVisibleNetworks() || sOngoingRefresh != null) {
             return;

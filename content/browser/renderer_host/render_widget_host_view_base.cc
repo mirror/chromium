@@ -19,7 +19,6 @@
 #include "content/public/common/content_features.h"
 #include "media/base/video_frame.h"
 #include "ui/base/layout.h"
-#include "ui/base/ui_base_types.h"
 #include "ui/display/screen.h"
 #include "ui/gfx/geometry/point_conversions.h"
 #include "ui/gfx/geometry/size_conversions.h"
@@ -120,9 +119,12 @@ float RenderWidgetHostViewBase::GetBottomControlsHeight() const {
 
 void RenderWidgetHostViewBase::SelectionChanged(const base::string16& text,
                                                 size_t offset,
-                                                const gfx::Range& range) {
-  if (GetTextInputManager())
-    GetTextInputManager()->SelectionChanged(this, text, offset, range);
+                                                const gfx::Range& range,
+                                                bool user_initiated) {
+  if (GetTextInputManager()) {
+    GetTextInputManager()->SelectionChanged(this, text, offset, range,
+                                            user_initiated);
+  }
 }
 
 gfx::Size RenderWidgetHostViewBase::GetRequestedRendererSize() const {
@@ -219,7 +221,7 @@ void RenderWidgetHostViewBase::AccessibilityShowMenu(const gfx::Point& point) {
     impl = RenderWidgetHostImpl::From(GetRenderWidgetHost());
 
   if (impl)
-    impl->ShowContextMenuAtPoint(point, ui::MENU_SOURCE_NONE);
+    impl->ShowContextMenuAtPoint(point);
 }
 
 gfx::Point RenderWidgetHostViewBase::AccessibilityOriginInScreen(
@@ -480,11 +482,6 @@ void RenderWidgetHostViewBase::AddObserver(
 void RenderWidgetHostViewBase::RemoveObserver(
     RenderWidgetHostViewBaseObserver* observer) {
   observers_.RemoveObserver(observer);
-}
-
-TouchSelectionControllerClientManager*
-RenderWidgetHostViewBase::touch_selection_controller_client_manager() {
-  return nullptr;
 }
 
 bool RenderWidgetHostViewBase::IsChildFrameForTesting() const {

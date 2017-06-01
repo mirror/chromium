@@ -30,12 +30,24 @@ bool IsTokenSupported(const AtomicString& token) {
 }  // namespace
 
 HTMLIFrameElementSandbox::HTMLIFrameElementSandbox(HTMLIFrameElement* element)
-    : DOMTokenList(*element, HTMLNames::sandboxAttr) {}
+    : DOMTokenList(this), element_(element) {}
+
+HTMLIFrameElementSandbox::~HTMLIFrameElementSandbox() {}
+
+DEFINE_TRACE(HTMLIFrameElementSandbox) {
+  visitor->Trace(element_);
+  DOMTokenList::Trace(visitor);
+  DOMTokenListObserver::Trace(visitor);
+}
 
 bool HTMLIFrameElementSandbox::ValidateTokenValue(
     const AtomicString& token_value,
     ExceptionState&) const {
   return IsTokenSupported(token_value);
+}
+
+void HTMLIFrameElementSandbox::ValueWasSet() {
+  element_->SandboxValueWasSet();
 }
 
 }  // namespace blink

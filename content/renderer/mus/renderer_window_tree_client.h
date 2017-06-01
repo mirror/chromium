@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/ui/common/types.h"
+#include "services/ui/public/cpp/client_compositor_frame_sink.h"
 #include "services/ui/public/interfaces/window_tree.mojom.h"
 
 namespace cc {
@@ -88,9 +89,6 @@ class RendererWindowTreeClient : public ui::mojom::WindowTreeClient {
       const gfx::Rect& old_bounds,
       const gfx::Rect& new_bounds,
       const base::Optional<cc::LocalSurfaceId>& local_frame_id) override;
-  void OnWindowTransformChanged(ui::Id window_id,
-                                const gfx::Transform& old_transform,
-                                const gfx::Transform& new_transform) override;
   void OnClientAreaChanged(
       uint32_t window_id,
       const gfx::Insets& new_client_area,

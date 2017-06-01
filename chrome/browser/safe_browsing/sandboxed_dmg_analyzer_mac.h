@@ -21,7 +21,9 @@ namespace safe_browsing {
 class SandboxedDMGAnalyzer
     : public base::RefCountedThreadSafe<SandboxedDMGAnalyzer> {
  public:
-  using ResultCallback = base::Callback<void(const ArchiveAnalyzerResults&)>;
+  using Results = zip_analyzer::Results;
+
+  using ResultCallback = base::Callback<void(const Results&)>;
 
   SandboxedDMGAnalyzer(const base::FilePath& dmg_file,
                        const ResultCallback& callback);
@@ -44,7 +46,7 @@ class SandboxedDMGAnalyzer
   void AnalyzeFile(base::File file);
 
   // The response containing the file analyze results.
-  void AnalyzeFileDone(const ArchiveAnalyzerResults& results);
+  void AnalyzeFileDone(const Results& results);
 
   // The file path of the file to analyze.
   const base::FilePath file_path_;

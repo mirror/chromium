@@ -185,16 +185,17 @@ test("components_unittests") {
       "//components/discardable_memory/service:unit_tests",
       "//components/dom_distiller/content/browser:unit_tests",
       "//components/domain_reliability:unit_tests",
-      "//components/download/content:unit_tests",
       "//components/error_page/renderer:unit_tests",
       "//components/favicon/content:unit_tests",
       "//components/gcm_driver/instance_id:unit_tests",
+      "//components/guest_view/browser:unit_tests",
       "//components/history/content/browser:unit_tests",
       "//components/invalidation/impl:unit_tests",
       "//components/keyed_service/content:unit_tests",
       "//components/link_header_util:unit_tests",
       "//components/navigation_interception:unit_tests",
       "//components/network_hints/renderer:unit_tests",
+      "//components/offline_pages/content:unit_tests",
       "//components/offline_pages/content/background_loader:unit_tests",
       "//components/offline_pages/core:unit_tests",
       "//components/offline_pages/core/background:unit_tests",
@@ -223,6 +224,7 @@ test("components_unittests") {
       "//components/wallpaper:unit_tests",
       "//components/web_cache/browser:unit_tests",
       "//components/webcrypto:unit_tests",
+      "//components/zoom:unit_tests",
     ]
 
     data_deps = [
@@ -275,14 +277,9 @@ test("components_unittests") {
     deps += [
       "//components/cryptauth:unit_tests",
       "//components/feedback:unit_tests",
-
-      # See comment in components/guest_view/browser/BUILD.gn for why
-      # guest_view is currently non-mobile.
-      "//components/guest_view/browser:unit_tests",
       "//components/proximity_auth:unit_tests",
       "//components/storage_monitor:unit_tests",
       "//components/web_modal:unit_tests",
-      "//components/zoom:unit_tests",
     ]
   }
 

@@ -8,8 +8,6 @@
 
 #include <cstddef>
 #include <memory>
-#include <utility>
-#include <vector>
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
@@ -136,7 +134,8 @@ TEST_F(URLRequestHttpJobSetUpSourceTest, SetUpSourceFails) {
   std::unique_ptr<URLRequest> request =
       context_.CreateRequest(GURL("http://www.example.com"), DEFAULT_PRIORITY,
                              &delegate_, TRAFFIC_ANNOTATION_FOR_TESTS);
-  auto job = base::MakeUnique<TestURLRequestHttpJob>(request.get());
+  std::unique_ptr<TestURLRequestHttpJob> job(
+      new TestURLRequestHttpJob(request.get()));
   job->set_use_null_source_stream(true);
   test_job_interceptor_->set_main_intercept_job(std::move(job));
   request->Start();
@@ -161,7 +160,8 @@ TEST_F(URLRequestHttpJobSetUpSourceTest, UnknownEncoding) {
   std::unique_ptr<URLRequest> request =
       context_.CreateRequest(GURL("http://www.example.com"), DEFAULT_PRIORITY,
                              &delegate_, TRAFFIC_ANNOTATION_FOR_TESTS);
-  auto job = base::MakeUnique<TestURLRequestHttpJob>(request.get());
+  std::unique_ptr<TestURLRequestHttpJob> job(
+      new TestURLRequestHttpJob(request.get()));
   test_job_interceptor_->set_main_intercept_job(std::move(job));
   request->Start();
 
@@ -188,7 +188,8 @@ TEST_F(URLRequestHttpJobSetUpSourceTest, SdchNotAdvertisedGotSdchResponse) {
   std::unique_ptr<URLRequest> request =
       context_.CreateRequest(GURL("http://www.example.com"), DEFAULT_PRIORITY,
                              &delegate_, TRAFFIC_ANNOTATION_FOR_TESTS);
-  auto job = base::MakeUnique<TestURLRequestHttpJob>(request.get());
+  std::unique_ptr<TestURLRequestHttpJob> job(
+      new TestURLRequestHttpJob(request.get()));
   test_job_interceptor_->set_main_intercept_job(std::move(job));
   request->Start();
 
@@ -242,7 +243,7 @@ class URLRequestHttpJobTest : public ::testing::Test {
   }
 
   void EnableSdch() {
-    context_.SetSdchManager(base::MakeUnique<SdchManager>());
+    context_.SetSdchManager(std::unique_ptr<SdchManager>(new SdchManager));
   }
 
   MockNetworkLayer network_layer_;
@@ -700,7 +701,8 @@ TEST_F(URLRequestHttpJobTest, TestCancelWhileReadingCookies) {
 // Make sure that SetPriority actually sets the URLRequestHttpJob's
 // priority, before start.  Other tests handle the after start case.
 TEST_F(URLRequestHttpJobTest, SetPriorityBasic) {
-  auto job = base::MakeUnique<TestURLRequestHttpJob>(req_.get());
+  std::unique_ptr<TestURLRequestHttpJob> job(
+      new TestURLRequestHttpJob(req_.get()));
   EXPECT_EQ(DEFAULT_PRIORITY, job->priority());
 
   job->SetPriority(LOWEST);
@@ -714,7 +716,7 @@ TEST_F(URLRequestHttpJobTest, SetPriorityBasic) {
 // transaction on start.
 TEST_F(URLRequestHttpJobTest, SetTransactionPriorityOnStart) {
   test_job_interceptor_->set_main_intercept_job(
-      base::MakeUnique<TestURLRequestHttpJob>(req_.get()));
+      base::WrapUnique(new TestURLRequestHttpJob(req_.get())));
   req_->SetPriority(LOW);
 
   EXPECT_FALSE(network_layer_.last_transaction());
@@ -729,7 +731,7 @@ TEST_F(URLRequestHttpJobTest, SetTransactionPriorityOnStart) {
 // its transaction.
 TEST_F(URLRequestHttpJobTest, SetTransactionPriority) {
   test_job_interceptor_->set_main_intercept_job(
-      base::MakeUnique<TestURLRequestHttpJob>(req_.get()));
+      base::WrapUnique(new TestURLRequestHttpJob(req_.get())));
   req_->SetPriority(LOW);
   req_->Start();
   ASSERT_TRUE(network_layer_.last_transaction());
@@ -744,7 +746,7 @@ TEST_F(URLRequestHttpJobTest, SdchAdvertisementGet) {
   EnableSdch();
   req_->set_method("GET");  // Redundant with default.
   test_job_interceptor_->set_main_intercept_job(
-      base::MakeUnique<TestURLRequestHttpJob>(req_.get()));
+      base::WrapUnique(new TestURLRequestHttpJob(req_.get())));
   req_->Start();
   EXPECT_TRUE(TransactionAcceptsSdchEncoding());
 }
@@ -754,7 +756,7 @@ TEST_F(URLRequestHttpJobTest, SdchAdvertisementPost) {
   EnableSdch();
   req_->set_method("POST");
   test_job_interceptor_->set_main_intercept_job(
-      base::MakeUnique<TestURLRequestHttpJob>(req_.get()));
+      base::WrapUnique(new TestURLRequestHttpJob(req_.get())));
   req_->Start();
   EXPECT_FALSE(TransactionAcceptsSdchEncoding());
 }
@@ -835,7 +837,8 @@ class MockSdchObserver : public SdchObserver {
 class URLRequestHttpJobWithSdchSupportTest : public ::testing::Test {
  protected:
   URLRequestHttpJobWithSdchSupportTest() : context_(true) {
-    auto params = base::MakeUnique<HttpNetworkSession::Params>();
+    std::unique_ptr<HttpNetworkSession::Params> params(
+        new HttpNetworkSession::Params);
     context_.set_http_network_session_params(std::move(params));
     context_.set_client_socket_factory(&socket_factory_);
     context_.Init();
@@ -937,7 +940,8 @@ class URLRequestHttpJobWithBrotliSupportTest : public ::testing::Test {
  protected:
   URLRequestHttpJobWithBrotliSupportTest()
       : context_(new TestURLRequestContext(true)) {
-    auto params = base::MakeUnique<HttpNetworkSession::Params>();
+    std::unique_ptr<HttpNetworkSession::Params> params(
+        new HttpNetworkSession::Params);
     context_->set_enable_brotli(true);
     context_->set_http_network_session_params(std::move(params));
     context_->set_client_socket_factory(&socket_factory_);
@@ -1193,8 +1197,8 @@ TEST_F(URLRequestHttpJobWebSocketTest, RejectedWithoutCreateHelper) {
 }
 
 TEST_F(URLRequestHttpJobWebSocketTest, CreateHelperPassedThrough) {
-  std::unique_ptr<MockCreateHelper> create_helper =
-      base::MakeUnique<::testing::StrictMock<MockCreateHelper>>();
+  std::unique_ptr<MockCreateHelper> create_helper(
+      new ::testing::StrictMock<MockCreateHelper>());
   FakeWebSocketHandshakeStream* fake_handshake_stream(
       new FakeWebSocketHandshakeStream);
   // Ownership of fake_handshake_stream is transferred when CreateBasicStream()

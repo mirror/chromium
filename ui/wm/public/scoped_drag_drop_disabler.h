@@ -9,37 +9,33 @@
 
 #include "base/macros.h"
 #include "ui/aura/window_observer.h"
-#include "ui/wm/public/wm_public_export.h"
 
 namespace aura {
 class Window;
 
 namespace client {
 class DragDropClient;
-}
-}
-
-namespace wm {
 
 // ScopedDragDropDisabler is used to temporarily replace the drag'n'drop client
 // for a window with a "no-op" client. Upon construction, it installs a new
 // client on the window, and upon destruction, it restores the previous one.
-class WM_PUBLIC_EXPORT ScopedDragDropDisabler : public aura::WindowObserver {
+class AURA_EXPORT ScopedDragDropDisabler : public WindowObserver {
  public:
-  explicit ScopedDragDropDisabler(aura::Window* window);
+  explicit ScopedDragDropDisabler(Window* window);
   ~ScopedDragDropDisabler() override;
 
  private:
   // WindowObserver:
-  void OnWindowDestroyed(aura::Window* window) override;
+  void OnWindowDestroyed(Window* window) override;
 
-  aura::Window* window_;
-  aura::client::DragDropClient* old_client_;
-  std::unique_ptr<aura::client::DragDropClient> new_client_;
+  Window* window_;
+  DragDropClient* old_client_;
+  std::unique_ptr<DragDropClient> new_client_;
 
   DISALLOW_COPY_AND_ASSIGN(ScopedDragDropDisabler);
 };
 
-}  // namespace wm
+}  // namespace client
+}  // namespace aura
 
 #endif  // UI_WM_PUBLIC_SCOPED_DRAG_DROP_DISABLER_H_

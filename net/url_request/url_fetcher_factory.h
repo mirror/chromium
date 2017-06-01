@@ -18,8 +18,7 @@ class URLFetcherFactory {
       int id,
       const GURL& url,
       URLFetcher::RequestType request_type,
-      URLFetcherDelegate* delegate,
-      NetworkTrafficAnnotationTag traffic_annotation) = 0;
+      URLFetcherDelegate* delegate) = 0;
 
  protected:
   virtual ~URLFetcherFactory() {}

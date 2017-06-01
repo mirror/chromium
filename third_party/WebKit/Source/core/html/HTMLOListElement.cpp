@@ -96,20 +96,6 @@ void HTMLOListElement::ParseAttribute(
   }
 }
 
-int HTMLOListElement::start() const {
-  if (has_explicit_start_)
-    return start_;
-
-  if (is_reversed_) {
-    UseCounter::Count(
-        GetDocument(),
-        UseCounter::kHTMLOListElementStartGetterReversedWithoutStartAttribute);
-    return ItemCount();
-  }
-
-  return 1;
-}
-
 void HTMLOListElement::setStart(int start) {
   SetIntegralAttribute(startAttr, start);
 }

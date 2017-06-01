@@ -372,7 +372,7 @@ void PaymentRequestDialogView::SetupSpinnerOverlay() {
   AddChildView(&throbber_overlay_);
 }
 
-gfx::Size PaymentRequestDialogView::CalculatePreferredSize() const {
+gfx::Size PaymentRequestDialogView::GetPreferredSize() const {
   return gfx::Size(GetActualDialogWidth(), kDialogHeight);
 }
 

@@ -300,7 +300,7 @@ ComponentCloudPolicyService::ComponentCloudPolicyService(
 }
 
 ComponentCloudPolicyService::~ComponentCloudPolicyService() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   schema_registry_->RemoveObserver(this);
   core_->store()->RemoveObserver(this);
@@ -319,25 +319,25 @@ bool ComponentCloudPolicyService::SupportsDomain(PolicyDomain domain) {
 }
 
 void ComponentCloudPolicyService::ClearCache() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   backend_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&Backend::ClearCache, base::Unretained(backend_.get())));
 }
 
 void ComponentCloudPolicyService::OnSchemaRegistryReady() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   UpdateFromSchemaRegistry();
 }
 
 void ComponentCloudPolicyService::OnSchemaRegistryUpdated(
     bool has_new_schemas) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   UpdateFromSchemaRegistry();
 }
 
 void ComponentCloudPolicyService::OnCoreConnected(CloudPolicyCore* core) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_EQ(core_, core);
   // Immediately update with any PolicyFetchResponses that the client may
   // already have.
@@ -345,7 +345,7 @@ void ComponentCloudPolicyService::OnCoreConnected(CloudPolicyCore* core) {
 }
 
 void ComponentCloudPolicyService::OnCoreDisconnecting(CloudPolicyCore* core) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_EQ(core_, core);
   Disconnect();
 }
@@ -356,37 +356,37 @@ void ComponentCloudPolicyService::OnRefreshSchedulerStarted(
 }
 
 void ComponentCloudPolicyService::OnStoreLoaded(CloudPolicyStore* store) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_EQ(core_->store(), store);
   UpdateFromSuperiorStore();
 }
 
 void ComponentCloudPolicyService::OnStoreError(CloudPolicyStore* store) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_EQ(core_->store(), store);
   UpdateFromSuperiorStore();
 }
 
 void ComponentCloudPolicyService::OnPolicyFetched(CloudPolicyClient* client) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_EQ(core_->client(), client);
   UpdateFromClient();
 }
 
 void ComponentCloudPolicyService::OnRegistrationStateChanged(
     CloudPolicyClient* client) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   // Ignored; the registration state is tracked by looking at the
   // CloudPolicyStore instead.
 }
 
 void ComponentCloudPolicyService::OnClientError(CloudPolicyClient* client) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   // Ignored.
 }
 
 void ComponentCloudPolicyService::UpdateFromSuperiorStore() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   DVLOG(2) << "Obtaining credentials from the superior policy store";
 
@@ -423,7 +423,7 @@ void ComponentCloudPolicyService::UpdateFromSuperiorStore() {
 }
 
 void ComponentCloudPolicyService::UpdateFromClient() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   if (core_->client()->responses().empty()) {
     // The client's responses will be empty if it hasn't fetched policy from the
@@ -452,7 +452,7 @@ void ComponentCloudPolicyService::UpdateFromClient() {
 }
 
 void ComponentCloudPolicyService::UpdateFromSchemaRegistry() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (!schema_registry_->IsReady()) {
     // Ignore notifications from the registry which is not ready yet.
     return;
@@ -463,7 +463,7 @@ void ComponentCloudPolicyService::UpdateFromSchemaRegistry() {
 }
 
 void ComponentCloudPolicyService::Disconnect() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   core_->client()->RemoveObserver(this);
 
@@ -475,7 +475,7 @@ void ComponentCloudPolicyService::Disconnect() {
 
 void ComponentCloudPolicyService::SetPolicy(
     std::unique_ptr<PolicyBundle> policy) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   // Store the current unfiltered policies.
   unfiltered_policy_ = std::move(policy);
@@ -484,7 +484,7 @@ void ComponentCloudPolicyService::SetPolicy(
 }
 
 void ComponentCloudPolicyService::FilterAndInstallPolicy() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   if (!unfiltered_policy_ || !current_schema_map_)
     return;

@@ -35,8 +35,8 @@ const base::Feature kAutofillCreditCardLastUsedDateDisplay{
     "AutofillCreditCardLastUsedDateDisplay", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillUpstreamRequestCvcIfMissing{
     "AutofillUpstreamRequestCvcIfMissing", base::FEATURE_DISABLED_BY_DEFAULT};
-const base::Feature kAutofillUpstreamUseAutofillProfileComparator{
-    "AutofillUpstreamUseAutofillProfileComparator",
+const base::Feature kAutofillUpstreamUseAutofillProfileComparatorForName{
+    "AutofillUpstreamUseAutofillProfileComparatorForName",
     base::FEATURE_ENABLED_BY_DEFAULT};
 const base::Feature kAutofillUpstreamUseNotRecentlyUsedAutofillProfile{
     "AutofillUpstreamUseNotRecentlyUsedAutofillProfile",

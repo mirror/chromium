@@ -53,10 +53,15 @@ void BidirectionalStreamQuicImpl::Start(
     std::unique_ptr<base::Timer> /* timer */) {
   DCHECK(!stream_);
   CHECK(delegate);
-  DLOG_IF(WARNING, !session_->IsConnected())
-      << "Trying to start request headers after session has been closed.";
 
   send_request_headers_automatically_ = send_request_headers_automatically;
+  if (!session_->IsConnected()) {
+    NotifyError(session_->IsCryptoHandshakeConfirmed()
+                    ? ERR_QUIC_PROTOCOL_ERROR
+                    : ERR_QUIC_HANDSHAKE_FAILED);
+    return;
+  }
+
   delegate_ = delegate;
   request_info_ = request_info;
 
@@ -67,17 +72,11 @@ void BidirectionalStreamQuicImpl::Start(
   if (rv == ERR_IO_PENDING)
     return;
 
-  if (rv != OK) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(&BidirectionalStreamQuicImpl::NotifyError,
-                              weak_factory_.GetWeakPtr(),
-                              session_->IsCryptoHandshakeConfirmed()
-                                  ? rv
-                                  : ERR_QUIC_HANDSHAKE_FAILED));
-    return;
+  if (rv == OK) {
+    OnStreamReady(rv);
+  } else if (!session_->IsCryptoHandshakeConfirmed()) {
+    NotifyError(ERR_QUIC_HANDSHAKE_FAILED);
   }
-
-  OnStreamReady(rv);
 }
 
 void BidirectionalStreamQuicImpl::SendRequestHeaders() {
@@ -99,12 +98,8 @@ void BidirectionalStreamQuicImpl::SendRequestHeaders() {
 
   CreateSpdyHeadersFromHttpRequest(
       http_request_info, http_request_info.extra_headers, true, &headers);
-  // Sending the request might result in |this| being deleted.
-  auto guard = weak_factory_.GetWeakPtr();
   size_t headers_bytes_sent = stream_->WriteHeaders(
       std::move(headers), request_info_->end_stream_on_headers, nullptr);
-  if (!guard.get())
-    return;
   headers_bytes_sent_ += headers_bytes_sent;
   has_sent_headers_ = true;
 }
@@ -117,25 +112,20 @@ int BidirectionalStreamQuicImpl::ReadData(IOBuffer* buffer, int buffer_len) {
     // If the stream is already closed, there is no body to read.
     return response_status_;
   }
-  int rv = stream_->ReadBody(
-      buffer, buffer_len,
-      base::Bind(&BidirectionalStreamQuicImpl::OnReadDataComplete,
-                 weak_factory_.GetWeakPtr()));
-  if (rv == ERR_IO_PENDING) {
-    read_buffer_ = buffer;
-    read_buffer_len_ = buffer_len;
-    return ERR_IO_PENDING;
-  }
-
-  if (rv < 0)
+  int rv = stream_->Read(buffer, buffer_len);
+  if (rv != ERR_IO_PENDING) {
+    if (stream_->IsDoneReading()) {
+      // If the write side is closed, OnFinRead() will call
+      // BidirectionalStreamQuicImpl::OnClose().
+      stream_->OnFinRead();
+    }
     return rv;
-
-  if (stream_->IsDoneReading()) {
-    // If the write side is closed, OnFinRead() will call
-    // BidirectionalStreamQuicImpl::OnClose().
-    stream_->OnFinRead();
   }
-  return rv;
+  // Read will complete asynchronously and Delegate::OnReadCompleted will be
+  // called upon completion.
+  read_buffer_ = buffer;
+  read_buffer_len_ = buffer_len;
+  return ERR_IO_PENDING;
 }
 
 void BidirectionalStreamQuicImpl::SendData(const scoped_refptr<IOBuffer>& data,
@@ -237,6 +227,31 @@ bool BidirectionalStreamQuicImpl::GetLoadTimingInfo(
   return true;
 }
 
+void BidirectionalStreamQuicImpl::OnTrailingHeadersAvailable(
+    const SpdyHeaderBlock& headers,
+    size_t frame_len) {
+  headers_bytes_received_ += frame_len;
+  if (delegate_)
+    delegate_->OnTrailersReceived(headers);
+  // |this| can be destroyed after this point.
+}
+
+void BidirectionalStreamQuicImpl::OnDataAvailable() {
+  // Return early if ReadData has not been called.
+  if (!read_buffer_)
+    return;
+
+  int rv = ReadData(read_buffer_.get(), read_buffer_len_);
+  if (rv == ERR_IO_PENDING) {
+    // Spurrious notification. Wait for the next one.
+    return;
+  }
+  read_buffer_ = nullptr;
+  read_buffer_len_ = 0;
+  if (delegate_)
+    delegate_->OnDataRead(rv);
+}
+
 void BidirectionalStreamQuicImpl::OnClose() {
   DCHECK(stream_);
 
@@ -267,29 +282,31 @@ void BidirectionalStreamQuicImpl::OnError(int error) {
 void BidirectionalStreamQuicImpl::OnStreamReady(int rv) {
   DCHECK_NE(ERR_IO_PENDING, rv);
   DCHECK(rv == OK || !stream_);
-  if (rv != OK) {
+  if (rv == OK) {
+    stream_ = session_->ReleaseStream(this);
+    NotifyStreamReady();
+
+    rv = stream_->ReadInitialHeaders(
+        &initial_headers_,
+        base::Bind(&BidirectionalStreamQuicImpl::OnReadInitialHeadersComplete,
+                   weak_factory_.GetWeakPtr()));
+    if (rv == ERR_IO_PENDING)
+      return;
+
+    OnReadInitialHeadersComplete(rv);
+  } else {
     NotifyError(rv);
-    return;
   }
-
-  stream_ = session_->ReleaseStream(this);
-
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(&BidirectionalStreamQuicImpl::ReadInitialHeaders,
-                            weak_factory_.GetWeakPtr()));
-
-  NotifyStreamReady();
 }
 
 void BidirectionalStreamQuicImpl::OnSendDataComplete(int rv) {
   DCHECK(rv == OK || !stream_);
-  if (rv != 0) {
+  if (rv == OK) {
+    if (delegate_)
+      delegate_->OnDataSent();
+  } else {
     NotifyError(rv);
-    return;
   }
-
-  if (delegate_)
-    delegate_->OnDataSent();
 }
 
 void BidirectionalStreamQuicImpl::OnReadInitialHeadersComplete(int rv) {
@@ -302,59 +319,8 @@ void BidirectionalStreamQuicImpl::OnReadInitialHeadersComplete(int rv) {
   headers_bytes_received_ += rv;
   negotiated_protocol_ = kProtoQUIC;
   connect_timing_ = session_->GetConnectTiming();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(&BidirectionalStreamQuicImpl::ReadTrailingHeaders,
-                            weak_factory_.GetWeakPtr()));
   if (delegate_)
     delegate_->OnHeadersReceived(initial_headers_);
-}
-
-void BidirectionalStreamQuicImpl::ReadInitialHeaders() {
-  int rv = stream_->ReadInitialHeaders(
-      &initial_headers_,
-      base::Bind(&BidirectionalStreamQuicImpl::OnReadInitialHeadersComplete,
-                 weak_factory_.GetWeakPtr()));
-
-  if (rv != ERR_IO_PENDING)
-    OnReadInitialHeadersComplete(rv);
-}
-
-void BidirectionalStreamQuicImpl::ReadTrailingHeaders() {
-  int rv = stream_->ReadTrailingHeaders(
-      &trailing_headers_,
-      base::Bind(&BidirectionalStreamQuicImpl::OnReadTrailingHeadersComplete,
-                 weak_factory_.GetWeakPtr()));
-
-  if (rv != ERR_IO_PENDING)
-    OnReadTrailingHeadersComplete(rv);
-}
-
-void BidirectionalStreamQuicImpl::OnReadTrailingHeadersComplete(int rv) {
-  DCHECK_NE(ERR_IO_PENDING, rv);
-  if (rv < 0) {
-    NotifyError(rv);
-    return;
-  }
-
-  headers_bytes_received_ += rv;
-
-  if (delegate_)
-    delegate_->OnTrailersReceived(trailing_headers_);
-}
-
-void BidirectionalStreamQuicImpl::OnReadDataComplete(int rv) {
-  DCHECK_GE(rv, 0);
-  read_buffer_ = nullptr;
-  read_buffer_len_ = 0;
-
-  if (stream_->IsDoneReading()) {
-    // If the write side is closed, OnFinRead() will call
-    // BidirectionalStreamQuicImpl::OnClose().
-    stream_->OnFinRead();
-  }
-
-  if (delegate_)
-    delegate_->OnDataRead(rv);
 }
 
 void BidirectionalStreamQuicImpl::NotifyError(int error) {
@@ -375,11 +341,7 @@ void BidirectionalStreamQuicImpl::NotifyError(int error) {
 
 void BidirectionalStreamQuicImpl::NotifyStreamReady() {
   if (send_request_headers_automatically_) {
-    // Sending the request might result in |this| being deleted.
-    auto guard = weak_factory_.GetWeakPtr();
     SendRequestHeaders();
-    if (!guard.get())
-      return;
   }
   if (delegate_)
     delegate_->OnStreamReady(has_sent_headers_);

@@ -1152,8 +1152,8 @@ void CSPDirectiveList::ApplySandboxPolicy(const String& name,
   }
   has_sandbox_policy_ = true;
   String invalid_tokens;
-  SpaceSplitString policy_tokens =
-      SpaceSplitString(AtomicString(sandbox_policy));
+  SpaceSplitString policy_tokens(AtomicString(sandbox_policy),
+                                 SpaceSplitString::kShouldNotFoldCase);
   policy_->EnforceSandboxFlags(
       ParseSandboxPolicy(policy_tokens, invalid_tokens));
   if (!invalid_tokens.IsNull())
@@ -1225,7 +1225,9 @@ void CSPDirectiveList::AddDirective(const String& name, const String& value) {
     policy_->UsesScriptHashAlgorithms(script_src_->HashAlgorithmsUsed());
   } else if (type == ContentSecurityPolicy::DirectiveType::kObjectSrc) {
     SetCSPDirective<SourceListDirective>(name, value, object_src_);
-  } else if (type == ContentSecurityPolicy::DirectiveType::kFrameAncestors) {
+  } else if (type ==
+
+             ContentSecurityPolicy::DirectiveType::kFrameAncestors) {
     SetCSPDirective<SourceListDirective>(name, value, frame_ancestors_);
   } else if (type == ContentSecurityPolicy::DirectiveType::kFrameSrc) {
     SetCSPDirective<SourceListDirective>(name, value, frame_src_);

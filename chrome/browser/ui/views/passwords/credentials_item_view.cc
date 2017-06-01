@@ -9,6 +9,7 @@
 #include "chrome/browser/ui/passwords/manage_passwords_view_utils.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/harmony/chrome_typography.h"
+#include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
 #include "components/autofill/core/common/password_form.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -141,7 +142,7 @@ int CredentialsItemView::GetPreferredHeight() const {
   return GetPreferredSize().height();
 }
 
-gfx::Size CredentialsItemView::CalculatePreferredSize() const {
+gfx::Size CredentialsItemView::GetPreferredSize() const {
   gfx::Size labels_size = GetTextLabelsSize(upper_label_, lower_label_);
   gfx::Size size = gfx::Size(kAvatarImageSize + labels_size.width(),
                              std::max(kAvatarImageSize, labels_size.height()));
@@ -194,7 +195,9 @@ void CredentialsItemView::Layout() {
   }
 }
 
-void CredentialsItemView::OnPaintBackground(gfx::Canvas* canvas) {
+void CredentialsItemView::OnPaint(gfx::Canvas* canvas) {
   if (state() == STATE_PRESSED || state() == STATE_HOVERED)
     canvas->DrawColor(hover_color_);
+
+  CustomButton::OnPaint(canvas);
 }

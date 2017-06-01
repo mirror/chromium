@@ -59,20 +59,23 @@ namespace wm {
 void ActivateWindow(aura::Window* window) {
   DCHECK(window);
   DCHECK(window->GetRootWindow());
-  GetActivationClient(window->GetRootWindow())->ActivateWindow(window);
+  aura::client::GetActivationClient(window->GetRootWindow())->ActivateWindow(
+      window);
 }
 
 void DeactivateWindow(aura::Window* window) {
   DCHECK(window);
   DCHECK(window->GetRootWindow());
-  GetActivationClient(window->GetRootWindow())->DeactivateWindow(window);
+  aura::client::GetActivationClient(window->GetRootWindow())->DeactivateWindow(
+      window);
 }
 
 bool IsActiveWindow(const aura::Window* window) {
   DCHECK(window);
   if (!window->GetRootWindow())
     return false;
-  const ActivationClient* client = GetActivationClient(window->GetRootWindow());
+  const aura::client::ActivationClient* client =
+      aura::client::GetActivationClient(window->GetRootWindow());
   return client && client->GetActiveWindow() == window;
 }
 
@@ -80,7 +83,8 @@ bool CanActivateWindow(aura::Window* window) {
   DCHECK(window);
   if (!window->GetRootWindow())
     return false;
-  ActivationClient* client = GetActivationClient(window->GetRootWindow());
+  aura::client::ActivationClient* client =
+      aura::client::GetActivationClient(window->GetRootWindow());
   return client && client->CanActivateWindow(window);
 }
 
@@ -118,12 +122,14 @@ void SetWindowFullscreen(aura::Window* window, bool fullscreen) {
 }
 
 aura::Window* GetActivatableWindow(aura::Window* window) {
-  ActivationClient* client = GetActivationClient(window->GetRootWindow());
+  aura::client::ActivationClient* client =
+      aura::client::GetActivationClient(window->GetRootWindow());
   return client ? client->GetActivatableWindow(window) : NULL;
 }
 
 aura::Window* GetToplevelWindow(aura::Window* window) {
-  ActivationClient* client = GetActivationClient(window->GetRootWindow());
+  aura::client::ActivationClient* client =
+      aura::client::GetActivationClient(window->GetRootWindow());
   return client ? client->GetToplevelWindow(window) : NULL;
 }
 

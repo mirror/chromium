@@ -5,7 +5,6 @@
 #include "modules/accessibility/AXRadioInput.h"
 
 #include "core/InputTypeNames.h"
-#include "core/dom/AccessibleNode.h"
 #include "core/html/HTMLInputElement.h"
 #include "core/html/forms/RadioInputType.h"
 #include "core/layout/LayoutObject.h"
@@ -66,16 +65,14 @@ HTMLInputElement* AXRadioInput::FindFirstRadioButtonInGroup(
 }
 
 int AXRadioInput::PosInSet() const {
-  uint32_t pos_in_set;
-  if (HasAOMPropertyOrARIAAttribute(AOMUIntProperty::kPosInSet, pos_in_set))
-    return pos_in_set;
+  if (HasAttribute(aria_posinsetAttr))
+    return GetAttribute(aria_posinsetAttr).ToInt();
   return pos_in_set_;
 }
 
 int AXRadioInput::SetSize() const {
-  int32_t set_size;
-  if (HasAOMPropertyOrARIAAttribute(AOMIntProperty::kSetSize, set_size))
-    return set_size;
+  if (HasAttribute(aria_setsizeAttr))
+    return GetAttribute(aria_setsizeAttr).ToInt();
   return set_size_;
 }
 

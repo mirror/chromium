@@ -19,6 +19,7 @@
 #include "ui/gfx/image/canvas_image_source.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/image/image_skia_operations.h"
+#include "ui/strings/grit/ui_strings.h"
 
 namespace app_list {
 

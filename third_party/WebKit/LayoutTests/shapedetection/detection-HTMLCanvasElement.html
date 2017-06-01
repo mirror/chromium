@@ -7,13 +7,14 @@
 <script src="resources/mock-textdetection.js"></script>
 <script>
 
-function detectShapeForCanvas(createDetector,
-                              createCanvas,
-                              mockReady,
-                              detectionResultTest) {
-  return new Promise(function(resolve, reject) {
-      var img = new Image();
-      img.onload = function() {
+var createTestForCanvasElement = function(createDetector,
+                                          createCanvas,
+                                          mockReady,
+                                          detectionResultTest) {
+  async_test(function(t) {
+
+    var img = new Image();
+    img.onload = function() {
 
       var canvas = createCanvas();
       canvas.getContext("2d").drawImage(img, 0, 0);
@@ -33,29 +34,14 @@ function detectShapeForCanvas(createDetector,
         })
         .then(detectionResult => {
           detectionResultTest(detectionResult, theMock);
-          resolve("Success");
+          t.done();
         })
         .catch(error => {
           assert_unreached("Error during detect(canvas): " + error);
         });
-      }
+    }
 
-      img.src = "../media/content/greenbox.png";
-  });
-}
-
-var createTestForCanvasElement = function(createDetector,
-                                          createCanvas,
-                                          mockReady,
-                                          detectionResultTest) {
-  promise_test(function() {
-    return detectShapeForCanvas(createDetector,
-                                createCanvas,
-                                mockReady,
-                                detectionResultTest)
-        .then(function(result) {
-            assert_equals(result, "Success", "Detect 'Success'");
-        });
+    img.src = "../media/content/greenbox.png";
   });
 };
 

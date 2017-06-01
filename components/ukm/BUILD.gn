@@ -28,7 +28,6 @@ static_library("ukm") {
   public_deps = [
     "//components/metrics/proto",
     "//components/ukm/public",
-    "//components/ukm/public/interfaces",
   ]
 
   deps = [
@@ -38,23 +37,6 @@ static_library("ukm") {
     "//components/prefs",
     "//components/variations",
     "//url",
-  ]
-}
-
-static_library("ukm_interface") {
-  sources = [
-    "ukm_interface.cc",
-    "ukm_interface.h",
-  ]
-
-  public_deps = [
-    "//base",
-    "//components/ukm/public/interfaces",
-  ]
-
-  deps = [
-    ":ukm",
-    "//mojo/public/cpp/bindings",
   ]
 }
 

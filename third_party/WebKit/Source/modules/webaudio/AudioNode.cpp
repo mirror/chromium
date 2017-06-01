@@ -550,10 +550,9 @@ void AudioNode::Dispose() {
 #endif
   BaseAudioContext::AutoLocker locker(context());
   Handler().Dispose();
-  if (context()->ContextState() == BaseAudioContext::kRunning) {
+  if (context()->ContextState() == BaseAudioContext::kRunning)
     context()->GetDeferredTaskHandler().AddRenderingOrphanHandler(
-        std::move(handler_));
-  }
+        handler_.Release());
 }
 
 void AudioNode::SetHandler(PassRefPtr<AudioHandler> handler) {

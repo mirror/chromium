@@ -75,7 +75,6 @@ class MEDIA_EXPORT AudioOutputController
     virtual void OnControllerPlaying() = 0;
     virtual void OnControllerPaused() = 0;
     virtual void OnControllerError() = 0;
-    virtual void OnLog(const std::string& message) = 0;
 
    protected:
     virtual ~EventHandler() {}
@@ -154,7 +153,7 @@ class MEDIA_EXPORT AudioOutputController
                  base::TimeTicks delay_timestamp,
                  int prior_frames_skipped,
                  AudioBus* dest) override;
-  void OnError() override;
+  void OnError(AudioOutputStream* stream) override;
 
   // AudioDeviceListener implementation.  When called AudioOutputController will
   // shutdown the existing |stream_|, transition to the kRecreating state,
@@ -222,9 +221,6 @@ class MEDIA_EXPORT AudioOutputController
   void BroadcastDataToDuplicationTargets(std::unique_ptr<AudioBus> audio_bus,
                                          base::TimeTicks reference_time);
 
-  // Log the current average power level measured by power_monitor_.
-  void LogAudioPowerLevel(const std::string& call_name);
-
   AudioManager* const audio_manager_;
   const AudioParameters params_;
   EventHandler* const handler_;
@@ -258,9 +254,6 @@ class MEDIA_EXPORT AudioOutputController
 
   // Scans audio samples from OnMoreData() as input to compute power levels.
   AudioPowerMonitor power_monitor_;
-
-  // Updated each time a power measurement is logged.
-  base::TimeTicks last_audio_level_log_time_;
 
   // Flags when we've asked for a stream to start but it never did.
   base::AtomicRefCount on_more_io_data_called_;

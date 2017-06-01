@@ -1,7 +1,5 @@
 .. _devguide-coding-audio:
 
-.. include:: /migration/deprecation.inc
-
 #####
 Audio
 #####

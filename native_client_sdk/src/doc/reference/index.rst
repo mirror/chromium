@@ -1,5 +1,3 @@
-.. include:: /migration/deprecation.inc
-
 #########
 Reference
 #########

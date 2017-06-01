@@ -103,6 +103,7 @@ component("gin") {
   deps = [
     ":gin_features",
     "//base/third_party/dynamic_annotations",
+    "//crypto",
   ]
 
   if (is_mac) {

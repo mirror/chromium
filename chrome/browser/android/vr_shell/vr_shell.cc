@@ -34,17 +34,14 @@
 #include "chrome/browser/android/vr_shell/vr_web_contents_observer.h"
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/media/webrtc/media_stream_capture_indicator.h"
-#include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host.h"
-#include "content/public/browser/render_widget_host_iterator.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/referrer.h"
-#include "device/vr/android/gvr/cardboard_gamepad_data_fetcher.h"
 #include "device/vr/android/gvr/gvr_device.h"
 #include "device/vr/android/gvr/gvr_device_provider.h"
 #include "device/vr/android/gvr/gvr_gamepad_data_fetcher.h"
@@ -70,7 +67,7 @@ namespace {
 vr_shell::VrShell* g_instance;
 
 constexpr base::TimeDelta poll_media_access_interval_ =
-    base::TimeDelta::FromSecondsD(0.1);
+    base::TimeDelta::FromSecondsD(0.01);
 
 constexpr base::TimeDelta kExitVrDueToUnsupportedModeDelay =
     base::TimeDelta::FromSeconds(5);
@@ -169,12 +166,11 @@ void VrShell::SetUiState() {
     ui_->SetURL(GURL());
     ui_->SetLoading(false);
     ui_->SetFullscreen(false);
-    ui_->SetIncognito(false);
+    ui_->SetURL(GURL());
   } else {
     ui_->SetURL(web_contents_->GetVisibleURL());
     ui_->SetLoading(web_contents_->IsLoading());
     ui_->SetFullscreen(web_contents_->IsFullscreen());
-    ui_->SetIncognito(web_contents_->GetBrowserContext()->IsOffTheRecord());
   }
 }
 
@@ -185,14 +181,9 @@ bool RegisterVrShell(JNIEnv* env) {
 VrShell::~VrShell() {
   DVLOG(1) << __FUNCTION__ << "=" << this;
   poll_capturing_media_task_.Cancel();
-  if (gvr_gamepad_source_active_) {
+  if (gamepad_source_active_) {
     device::GamepadDataFetcherManager::GetInstance()->RemoveSourceFactory(
         device::GAMEPAD_SOURCE_GVR);
-  }
-
-  if (cardboard_gamepad_source_active_) {
-    device::GamepadDataFetcherManager::GetInstance()->RemoveSourceFactory(
-        device::GAMEPAD_SOURCE_CARDBOARD);
   }
 
   delegate_provider_->RemoveDelegate();
@@ -255,49 +246,10 @@ void VrShell::ExitCct() {
   Java_VrShellImpl_exitCct(env, j_vr_shell_.obj());
 }
 
-void VrShell::ToggleCardboardGamepad(bool enabled) {
-  // enable/disable updating gamepad state
-  if (cardboard_gamepad_source_active_ && !enabled) {
-    device::GamepadDataFetcherManager::GetInstance()->RemoveSourceFactory(
-        device::GAMEPAD_SOURCE_CARDBOARD);
-    cardboard_gamepad_data_fetcher_ = nullptr;
-    cardboard_gamepad_source_active_ = false;
-  }
-
-  if (!cardboard_gamepad_source_active_ && enabled) {
-    // enable the gamepad
-    if (!delegate_provider_->device_provider())
-      return;
-
-    unsigned int device_id =
-        delegate_provider_->device_provider()->Device()->id();
-
-    device::GamepadDataFetcherManager::GetInstance()->AddFactory(
-        new device::CardboardGamepadDataFetcher::Factory(this, device_id));
-    cardboard_gamepad_source_active_ = true;
-  }
-}
-
-void VrShell::OnTriggerEvent(JNIEnv* env,
-                             const JavaParamRef<jobject>& obj,
-                             bool touched) {
+void VrShell::OnTriggerEvent(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   WaitForGlThread();
-
-  // Send screen taps over to VrShellGl to be turned into simulated clicks for
-  // cardboard.
-  if (touched)
-    PostToGlThread(FROM_HERE, base::Bind(&VrShellGl::OnTriggerEvent,
-                                         gl_thread_->GetVrShellGl()));
-
-  // If we are running cardboard, update gamepad state.
-  if (cardboard_gamepad_source_active_) {
-    device::CardboardGamepadData pad;
-    pad.timestamp = cardboard_gamepad_timer_++;
-    pad.is_screen_touching = touched;
-    if (cardboard_gamepad_data_fetcher_) {
-      cardboard_gamepad_data_fetcher_->SetGamepadData(pad);
-    }
-  }
+  PostToGlThread(FROM_HERE, base::Bind(&VrShellGl::OnTriggerEvent,
+                                       gl_thread_->GetVrShellGl()));
 }
 
 void VrShell::OnPause(JNIEnv* env, const JavaParamRef<jobject>& obj) {
@@ -584,14 +536,12 @@ void VrShell::ExitFullscreen() {
   }
 }
 
-void VrShell::ExitVrDueToUnsupportedMode(UiUnsupportedMode mode) {
+void VrShell::ExitVrDueToUnsupportedMode() {
   ui_->SetIsExiting();
   main_thread_task_runner_->PostDelayedTask(
       FROM_HERE,
       base::Bind(&VrShell::ForceExitVr, weak_ptr_factory_.GetWeakPtr()),
       kExitVrDueToUnsupportedModeDelay);
-  UMA_HISTOGRAM_ENUMERATION("VR.Shell.EncounteredUnsupportedMode", mode,
-                            UiUnsupportedMode::kCount);
 }
 
 void VrShell::OnVRVsyncProviderRequest(
@@ -620,50 +570,23 @@ void VrShell::PollMediaAccessFlag() {
       FROM_HERE, poll_capturing_media_task_.callback(),
       poll_media_access_interval_);
 
-  int num_tabs_capturing_audio = 0;
-  int num_tabs_capturing_video = 0;
-  int num_tabs_capturing_screen = 0;
   scoped_refptr<MediaStreamCaptureIndicator> indicator =
       MediaCaptureDevicesDispatcher::GetInstance()
           ->GetMediaStreamCaptureIndicator();
-
-  std::unique_ptr<content::RenderWidgetHostIterator> widgets(
-      content::RenderWidgetHost::GetRenderWidgetHosts());
-  while (content::RenderWidgetHost* rwh = widgets->GetNextHost()) {
-    content::RenderViewHost* rvh = content::RenderViewHost::From(rwh);
-    if (!rvh)
-      continue;
-    content::WebContents* web_contents =
-        content::WebContents::FromRenderViewHost(rvh);
-    if (!web_contents)
-      continue;
-    if (web_contents->GetRenderViewHost() != rvh)
-      continue;
-    // Because a WebContents can only have one current RVH at a time, there will
-    // be no duplicate WebContents here.
-    if (indicator->IsCapturingAudio(web_contents))
-      num_tabs_capturing_audio++;
-    if (indicator->IsCapturingVideo(web_contents))
-      num_tabs_capturing_video++;
-    if (indicator->IsBeingMirrored(web_contents))
-      num_tabs_capturing_screen++;
-  }
-
-  bool is_capturing_audio = num_tabs_capturing_audio > 0;
-  bool is_capturing_video = num_tabs_capturing_video > 0;
-  bool is_capturing_screen = num_tabs_capturing_screen > 0;
-  if (is_capturing_audio != is_capturing_audio_) {
+  bool is_capturing_audio = indicator->IsCapturingAudio(web_contents_);
+  if (is_capturing_audio != is_capturing_audio_)
     ui_->SetAudioCapturingIndicator(is_capturing_audio);
-    is_capturing_audio_ = is_capturing_audio;
-  }
-  if (is_capturing_video != is_capturing_video_) {
+  is_capturing_audio_ = is_capturing_audio;
+
+  bool is_capturing_video = indicator->IsCapturingVideo(web_contents_);
+  if (is_capturing_video != is_capturing_video_)
     ui_->SetVideoCapturingIndicator(is_capturing_video);
-    is_capturing_video_ = is_capturing_video;
-  }
-  if (is_capturing_screen != is_capturing_screen_) {
+  is_capturing_video_ = is_capturing_video;
+
+  bool is_capturing_screen = indicator->IsBeingMirrored(web_contents_);
+  if (is_capturing_screen != is_capturing_screen_)
     ui_->SetScreenCapturingIndicator(is_capturing_screen);
-    is_capturing_screen_ = is_capturing_screen;
-  }
+  is_capturing_screen_ = is_capturing_screen;
 }
 
 void VrShell::SetContentCssSize(float width, float height, float dpr) {
@@ -682,32 +605,25 @@ void VrShell::ProcessContentGesture(
 }
 
 void VrShell::UpdateGamepadData(device::GvrGamepadData pad) {
-  if (!gvr_gamepad_source_active_) {
+  if (!gamepad_source_active_) {
     if (!delegate_provider_->device_provider())
       return;
 
     unsigned int device_id =
         delegate_provider_->device_provider()->Device()->id();
-
     device::GamepadDataFetcherManager::GetInstance()->AddFactory(
         new device::GvrGamepadDataFetcher::Factory(this, device_id));
-    gvr_gamepad_source_active_ = true;
+    gamepad_source_active_ = true;
   }
-  if (gvr_gamepad_data_fetcher_) {
-    gvr_gamepad_data_fetcher_->SetGamepadData(pad);
+  if (gamepad_data_fetcher_) {
+    gamepad_data_fetcher_->SetGamepadData(pad);
   }
 }
 
-void VrShell::RegisterGvrGamepadDataFetcher(
+void VrShell::RegisterGamepadDataFetcher(
     device::GvrGamepadDataFetcher* fetcher) {
   DVLOG(1) << __FUNCTION__ << "(" << fetcher << ")";
-  gvr_gamepad_data_fetcher_ = fetcher;
-}
-
-void VrShell::RegisterCardboardGamepadDataFetcher(
-    device::CardboardGamepadDataFetcher* fetcher) {
-  DVLOG(1) << __FUNCTION__ << "(" << fetcher << ")";
-  cardboard_gamepad_data_fetcher_ = fetcher;
+  gamepad_data_fetcher_ = fetcher;
 }
 
 bool VrShell::HasDaydreamSupport(JNIEnv* env) {

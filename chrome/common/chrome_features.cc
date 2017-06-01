@@ -40,6 +40,12 @@ const base::Feature kArcMemoryManagement{
 const base::Feature kAssetDownloadSuggestionsFeature{
     "NTPAssetDownloadSuggestions", base::FEATURE_ENABLED_BY_DEFAULT};
 
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+// Enables auto-dismissing JavaScript dialogs.
+const base::Feature kAutoDismissingDialogs{"AutoDismissingDialogs",
+                                           base::FEATURE_ENABLED_BY_DEFAULT};
+#endif
+
 #if defined(OS_WIN) || defined(OS_MACOSX)
 // Enables automatic tab discarding, when the system is in low memory state.
 const base::Feature kAutomaticTabDiscarding{"AutomaticTabDiscarding",
@@ -53,6 +59,12 @@ const base::Feature kAutomaticTabDiscarding{"AutomaticTabDiscarding",
 const base::Feature kBackgroundModeAllowRestart{
     "BackgroundModeAllowRestart", base::FEATURE_DISABLED_BY_DEFAULT};
 #endif  // defined(OS_WIN) || defined(OS_LINUX)
+
+// Enables the Backspace key to navigate back in the browser, as well as
+// Shift+Backspace to navigate forward.
+const base::Feature kBackspaceGoesBackFeature {
+  "BackspaceGoesBack", base::FEATURE_DISABLED_BY_DEFAULT
+};
 
 // Enables or disables whether permission prompts are automatically blocked
 // after the user has explicitly dismissed them too many times.
@@ -193,13 +205,7 @@ extern const base::Feature kAcknowledgeNtpOverrideOnDeactivate{
 
 // The material redesign of the Incognito NTP.
 const base::Feature kMaterialDesignIncognitoNTP{
-  "MaterialDesignIncognitoNTP",
-#if defined(OS_ANDROID)
-      base::FEATURE_DISABLED_BY_DEFAULT
-#else
-      base::FEATURE_ENABLED_BY_DEFAULT
-#endif
-};
+    "MaterialDesignIncognitoNTP", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Enables or disables the Material Design version of chrome://settings.
 // Also affects chrome://help.

@@ -5,21 +5,18 @@
 #include "ash/devtools/ash_devtools_css_agent.h"
 #include "ash/devtools/ash_devtools_dom_agent.h"
 #include "ash/devtools/ui_element.h"
-#include "ash/devtools/view_element.h"
-#include "ash/devtools/widget_element.h"
 #include "ash/devtools/window_element.h"
+#include "ash/public/cpp/shell_window_ids.h"
+#include "ash/root_window_controller.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/wm/widget_finder.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
-#include "ui/aura/client/window_parenting_client.h"
-#include "ui/aura/window_tree_host.h"
 #include "ui/display/display.h"
 #include "ui/views/background.h"
 #include "ui/views/widget/native_widget_private.h"
 #include "ui/views/widget/widget.h"
-#include "ui/wm/core/coordinate_conversion.h"
 
 namespace ash {
 namespace {
@@ -141,8 +138,11 @@ int GetPropertyByName(const std::string& name,
   return -1;
 }
 
-aura::Window* GetHighlightingWindow(aura::Window* root_window) {
-  const aura::Window::Windows& overlay_windows = root_window->children();
+aura::Window* GetHighlightingWindow(int root_window_index) {
+  const aura::Window::Windows& overlay_windows =
+      Shell::GetAllRootWindows()[root_window_index]
+          ->GetChildById(kShellWindowId_OverlayContainer)
+          ->children();
   for (aura::Window* window : overlay_windows) {
     if (window->GetName() == "HighlightingWidget")
       return window;
@@ -169,14 +169,18 @@ std::unique_ptr<DOM::HighlightConfig> CreateHighlightConfig(
       .build();
 }
 
-void ExpectHighlighted(const gfx::Rect& bounds, aura::Window* root_window) {
-  aura::Window* highlighting_window = GetHighlightingWindow(root_window);
+void ExpectHighlighted(const gfx::Rect& bounds, int root_window_index) {
+  aura::Window* highlighting_window = GetHighlightingWindow(root_window_index);
   EXPECT_TRUE(highlighting_window->IsVisible());
   EXPECT_EQ(bounds, highlighting_window->GetBoundsInScreen());
   EXPECT_EQ(kBackgroundColor, GetInternalWidgetForWindow(highlighting_window)
                                   ->GetRootView()
                                   ->background()
                                   ->get_color());
+}
+
+aura::Window* GetPrimaryRootWindow() {
+  return Shell::Get()->GetPrimaryRootWindow();
 }
 
 }  // namespace
@@ -190,6 +194,9 @@ class AshDevToolsTest : public test::AshTestBase {
     views::Widget* widget = new views::Widget;
     views::Widget::InitParams params;
     params.ownership = views::Widget::InitParams::NATIVE_WIDGET_OWNS_WIDGET;
+    Shell::GetPrimaryRootWindowController()
+        ->ConfigureWidgetInitParamsForContainer(
+            widget, kShellWindowId_DefaultContainer, &params);
     widget->Init(params);
     return widget->native_widget_private();
   }
@@ -200,6 +207,7 @@ class AshDevToolsTest : public test::AshTestBase {
   }
 
   void SetUp() override {
+    AshTestBase::SetUp();
     fake_frontend_channel_ = base::MakeUnique<FakeFrontendChannel>();
     uber_dispatcher_ =
         base::MakeUnique<UberDispatcher>(fake_frontend_channel_.get());
@@ -209,9 +217,6 @@ class AshDevToolsTest : public test::AshTestBase {
         base::MakeUnique<devtools::AshDevToolsCSSAgent>(dom_agent_.get());
     css_agent_->Init(uber_dispatcher_.get());
     css_agent_->enable();
-    // We need to create |dom_agent| first to observe creation of
-    // WindowTreeHosts in AshTestBase::SetUp().
-    AshTestBase::SetUp();
   }
 
   void TearDown() override {
@@ -282,21 +287,11 @@ class AshDevToolsTest : public test::AshTestBase {
 
   void HideHighlight(int root_window_index) {
     dom_agent_->hideHighlight();
-    DCHECK_GE(root_window_index, 0);
-    DCHECK_LE(root_window_index,
-              static_cast<int>(dom_agent()->root_windows().size()));
-    ASSERT_FALSE(
-        GetHighlightingWindow(dom_agent()->root_windows()[root_window_index])
-            ->IsVisible());
+    ASSERT_FALSE(GetHighlightingWindow(root_window_index)->IsVisible());
   }
 
   FakeFrontendChannel* frontend_channel() {
     return fake_frontend_channel_.get();
-  }
-
-  aura::Window* GetPrimaryRootWindow() {
-    DCHECK(dom_agent()->root_windows().size());
-    return dom_agent()->root_windows()[0];
   }
 
   devtools::AshDevToolsCSSAgent* css_agent() { return css_agent_.get(); }
@@ -639,42 +634,23 @@ TEST_F(AshDevToolsTest, WindowWidgetViewHighlight) {
   DOM::Node* root_view_node = widget_node->getChildren(nullptr)->get(0);
 
   HighlightNode(window_node->getNodeId());
-  ExpectHighlighted(window->GetBoundsInScreen(), GetPrimaryRootWindow());
-  devtools::UIElement* element =
-      dom_agent()->GetElementFromNodeId(window_node->getNodeId());
-  ASSERT_EQ(devtools::UIElementType::WINDOW, element->type());
-  EXPECT_EQ(element->GetNodeWindowAndBounds().first, window.get());
-  EXPECT_EQ(element->GetNodeWindowAndBounds().second,
-            window->GetBoundsInScreen());
+  ExpectHighlighted(window->GetBoundsInScreen(), 0);
 
   HideHighlight(0);
 
   HighlightNode(widget_node->getNodeId());
-  ExpectHighlighted(widget->GetWindowBoundsInScreen(), GetPrimaryRootWindow());
-
-  element = dom_agent()->GetElementFromNodeId(widget_node->getNodeId());
-  ASSERT_EQ(devtools::UIElementType::WIDGET, element->type());
-  EXPECT_EQ(element->GetNodeWindowAndBounds().first, widget->GetNativeWindow());
-  EXPECT_EQ(element->GetNodeWindowAndBounds().second,
-            widget->GetWindowBoundsInScreen());
+  ExpectHighlighted(widget->GetWindowBoundsInScreen(), 0);
 
   HideHighlight(0);
 
   HighlightNode(root_view_node->getNodeId());
-  ExpectHighlighted(root_view->GetBoundsInScreen(), GetPrimaryRootWindow());
-
-  element = dom_agent()->GetElementFromNodeId(root_view_node->getNodeId());
-  ASSERT_EQ(devtools::UIElementType::VIEW, element->type());
-  EXPECT_EQ(element->GetNodeWindowAndBounds().first,
-            root_view->GetWidget()->GetNativeWindow());
-  EXPECT_EQ(element->GetNodeWindowAndBounds().second,
-            root_view->GetBoundsInScreen());
+  ExpectHighlighted(root_view->GetBoundsInScreen(), 0);
 
   HideHighlight(0);
 
   // Highlight non-existent node
   HighlightNode(10000);
-  EXPECT_FALSE(GetHighlightingWindow(GetPrimaryRootWindow())->IsVisible());
+  EXPECT_FALSE(GetHighlightingWindow(0)->IsVisible());
 }
 
 int GetNodeIdFromWindow(devtools::UIElement* ui_element, aura::Window* window) {
@@ -694,8 +670,27 @@ int GetNodeIdFromWindow(devtools::UIElement* ui_element, aura::Window* window) {
   return 0;
 }
 
-// TODO(thanhph): Make test AshDevToolsTest.MultipleDisplayHighlight work with
-// multiple displays. https://crbug.com/726831.
+TEST_F(AshDevToolsTest, MultipleDisplayHighlight) {
+  UpdateDisplay("300x400,500x500");
+
+  aura::Window::Windows root_windows = Shell::GetAllRootWindows();
+  std::unique_ptr<aura::Window> window(
+      CreateTestWindowInShellWithBounds(gfx::Rect(1, 2, 30, 40)));
+
+  std::unique_ptr<ui::devtools::protocol::DOM::Node> root;
+  dom_agent()->getDocument(&root);
+
+  EXPECT_EQ(root_windows[0], window->GetRootWindow());
+  HighlightNode(
+      GetNodeIdFromWindow(dom_agent()->window_element_root(), window.get()));
+  ExpectHighlighted(window->GetBoundsInScreen(), 0);
+
+  window->SetBoundsInScreen(gfx::Rect(500, 0, 50, 50), GetSecondaryDisplay());
+  EXPECT_EQ(root_windows[1], window->GetRootWindow());
+  HighlightNode(
+      GetNodeIdFromWindow(dom_agent()->window_element_root(), window.get()));
+  ExpectHighlighted(window->GetBoundsInScreen(), 1);
+}
 
 TEST_F(AshDevToolsTest, WindowWidgetViewGetMatchedStylesForNode) {
   std::unique_ptr<views::Widget> widget(

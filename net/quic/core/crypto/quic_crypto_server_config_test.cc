@@ -39,8 +39,10 @@ TEST_F(QuicCryptoServerConfigTest, ServerConfig) {
 
   // The default configuration should have AES-GCM and at least one ChaCha20
   // cipher.
-  QuicTagVector aead;
-  ASSERT_EQ(QUIC_NO_ERROR, message->GetTaglist(kAEAD, &aead));
+  const QuicTag* aead_tags;
+  size_t aead_len;
+  ASSERT_EQ(QUIC_NO_ERROR, message->GetTaglist(kAEAD, &aead_tags, &aead_len));
+  std::vector<QuicTag> aead(aead_tags, aead_tags + aead_len);
   EXPECT_THAT(aead, ::testing::Contains(kAESG));
   EXPECT_LE(1u, aead.size());
 }

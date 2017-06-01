@@ -24,10 +24,6 @@ class CORE_EXPORT NGFragmentBuilder final {
  public:
   NGFragmentBuilder(NGPhysicalFragment::NGFragmentType, NGLayoutInputNode*);
 
-  // Build a fragment for LayoutObject without NGLayoutInputNode. LayoutInline
-  // has NGInlineItem but does not have corresponding NGLayoutInputNode.
-  NGFragmentBuilder(NGPhysicalFragment::NGFragmentType, LayoutObject*);
-
   using WeakBoxList = PersistentHeapLinkedHashSet<WeakMember<NGBlockNode>>;
 
   NGFragmentBuilder& SetWritingMode(NGWritingMode);
@@ -129,11 +125,6 @@ class CORE_EXPORT NGFragmentBuilder final {
 
   bool DidBreak() const { return did_break_; }
 
-  NGFragmentBuilder& SetBorderEdges(NGBorderEdges::Logical border_edges) {
-    border_edges_ = border_edges;
-    return *this;
-  }
-
  private:
   // Out-of-flow descendant placement information.
   // The generated fragment must compute NGStaticPosition for all
@@ -158,7 +149,6 @@ class CORE_EXPORT NGFragmentBuilder final {
   TextDirection direction_;
 
   Persistent<NGLayoutInputNode> node_;
-  LayoutObject* layout_object_;
 
   NGLogicalSize size_;
   NGLogicalSize overflow_;
@@ -186,8 +176,6 @@ class CORE_EXPORT NGFragmentBuilder final {
 
   WTF::Optional<NGLogicalOffset> bfc_offset_;
   NGMarginStrut end_margin_strut_;
-
-  NGBorderEdges::Logical border_edges_;
 };
 
 }  // namespace blink

@@ -117,11 +117,6 @@ class TestDataReductionProxyConfig : public DataReductionProxyConfig {
   // Sets if the captive portal probe has been blocked for the current network.
   void SetIsCaptivePortal(bool is_captive_portal);
 
-  void SetConnectionTypeForTesting(
-      net::NetworkChangeNotifier::ConnectionType connection_type) {
-    connection_type_ = connection_type;
-  }
-
   using DataReductionProxyConfig::UpdateConfigForTesting;
 
  private:

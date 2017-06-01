@@ -21,7 +21,7 @@ class ShellWebClient : public WebClient {
   ~ShellWebClient() override;
 
   // WebClient implementation.
-  std::unique_ptr<WebMainParts> CreateWebMainParts() override;
+  WebMainParts* CreateWebMainParts() override;
   std::string GetProduct() const override;
   std::string GetUserAgent(UserAgentType type) const override;
   void AllowCertificateError(
@@ -35,7 +35,7 @@ class ShellWebClient : public WebClient {
   ShellBrowserState* browser_state() const;
 
  private:
-  ShellWebMainParts* web_main_parts_;
+  std::unique_ptr<ShellWebMainParts> web_main_parts_;
 
   DISALLOW_COPY_AND_ASSIGN(ShellWebClient);
 };

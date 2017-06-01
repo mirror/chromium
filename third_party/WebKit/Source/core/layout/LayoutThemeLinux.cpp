@@ -4,7 +4,7 @@
 
 #include "core/layout/LayoutThemeLinux.h"
 
-#include "platform/DataResourceHelper.h"
+#include "platform/PlatformResourceLoader.h"
 
 namespace blink {
 
@@ -19,7 +19,7 @@ LayoutTheme& LayoutTheme::NativeTheme() {
 
 String LayoutThemeLinux::ExtraDefaultStyleSheet() {
   return LayoutThemeDefault::ExtraDefaultStyleSheet() +
-         GetDataResourceAsASCIIString("themeChromiumLinux.css");
+         LoadResourceAsASCIIString("themeChromiumLinux.css");
 }
 
 }  // namespace blink

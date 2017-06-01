@@ -9,7 +9,7 @@ source_set("test_support") {
     "toolbar_test_util.mm",
   ]
   deps = [
-    "//ios/web/public/test/fakes",
+    "//ios/web:test_support",
   ]
   configs += [ "//build/config/compiler:enable_arc" ]
 }

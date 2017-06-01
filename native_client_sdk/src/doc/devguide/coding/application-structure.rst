@@ -1,7 +1,5 @@
 .. _devcycle-application-structure:
 
-.. include:: /migration/deprecation.inc
-
 #####################
 Application Structure
 #####################

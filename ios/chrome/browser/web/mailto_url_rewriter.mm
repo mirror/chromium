@@ -90,9 +90,7 @@ NSString* const kMailtoDefaultHandlerKey = @"MailtoHandlerDefault";
 - (NSString*)defaultHandlerID {
   NSString* value = [[NSUserDefaults standardUserDefaults]
       stringForKey:kMailtoDefaultHandlerKey];
-  if ([_handlers[value] isAvailable])
-    return value;
-  return [[self class] systemMailApp];
+  return value ? value : [[self class] systemMailApp];
 }
 
 - (void)setDefaultHandlerID:(NSString*)appStoreID {

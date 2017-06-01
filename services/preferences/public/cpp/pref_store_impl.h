@@ -41,7 +41,7 @@ class PrefStoreImpl : public ::PrefStore::Observer, public mojom::PrefStore {
 
   // prefs::mojom::PrefStore:
   void AddObserver(const std::vector<std::string>& prefs_to_observe,
-                   AddObserverCallback callback) override;
+                   const AddObserverCallback& callback) override;
 
   // The backing store we observer for changes.
   scoped_refptr<::PrefStore> backing_pref_store_;

@@ -9,7 +9,6 @@
 
 #include "base/macros.h"
 #include "base/optional.h"
-#include "ui/gfx/native_widget_types.h"
 #include "ui/views/bubble/bubble_dialog_delegate.h"
 #include "ui/views/mouse_watcher.h"
 #include "ui/views/views_export.h"
@@ -62,6 +61,15 @@ class VIEWS_EXPORT TrayBubbleView : public BubbleDialogDelegateView,
     // accessible name for the bubble.
     virtual base::string16 GetAccessibleNameForBubble() = 0;
 
+    // Called before Widget::Init() on |bubble_widget|. Allows |params| to be
+    // modified.
+    // TODO(jamescook): Eliminate this method. It was introduced to let mash set
+    // the widget container back when mash could not use aura::Window. Now the
+    // anchor view should be sufficient.
+    virtual void OnBeforeBubbleWidgetInit(Widget* anchor_widget,
+                                          Widget* bubble_widget,
+                                          Widget::InitParams* params) const = 0;
+
     // Called when a bubble wants to hide/destroy itself (e.g. last visible
     // child view was closed).
     virtual void HideBubble(const TrayBubbleView* bubble_view) = 0;
@@ -71,22 +79,23 @@ class VIEWS_EXPORT TrayBubbleView : public BubbleDialogDelegateView,
   };
 
   struct VIEWS_EXPORT InitParams {
-    InitParams();
+    InitParams(AnchorAlignment anchor_alignment, int min_width, int max_width);
     InitParams(const InitParams& other);
-    Delegate* delegate = nullptr;
-    gfx::NativeWindow parent_window = nullptr;
-    View* anchor_view = nullptr;
-    AnchorAlignment anchor_alignment = ANCHOR_ALIGNMENT_BOTTOM;
-    int min_width = 0;
-    int max_width = 0;
-    int max_height = 0;
-    bool can_activate = false;
-    bool close_on_deactivate = true;
+    AnchorAlignment anchor_alignment;
+    int min_width;
+    int max_width;
+    int max_height;
+    bool can_activate;
+    bool close_on_deactivate;
     // If not provided, the bg color will be derived from the NativeTheme.
     base::Optional<SkColor> bg_color;
   };
 
-  explicit TrayBubbleView(const InitParams& init_params);
+  // Constructs and returns a TrayBubbleView. |init_params| may be modified.
+  static TrayBubbleView* Create(views::View* anchor,
+                                Delegate* delegate,
+                                InitParams* init_params);
+
   ~TrayBubbleView() override;
 
   // Returns whether a tray bubble is active.
@@ -132,7 +141,7 @@ class VIEWS_EXPORT TrayBubbleView : public BubbleDialogDelegateView,
   void OnWidgetClosing(Widget* widget) override;
 
   // Overridden from views::View.
-  gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetPreferredSize() const override;
   gfx::Size GetMaximumSize() const override;
   int GetHeightForWidth(int width) const override;
   void OnMouseEntered(const ui::MouseEvent& event) override;
@@ -143,6 +152,10 @@ class VIEWS_EXPORT TrayBubbleView : public BubbleDialogDelegateView,
   void MouseMovedOutOfHost() override;
 
  protected:
+  TrayBubbleView(views::View* anchor,
+                 Delegate* delegate,
+                 const InitParams& init_params);
+
   // Overridden from views::BubbleDialogDelegateView.
   int GetDialogButtons() const override;
 

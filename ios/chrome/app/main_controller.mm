@@ -956,9 +956,7 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 }
 
 - (void)stopChromeMain {
-  [_spotlightManager shutdown];
   _spotlightManager.reset();
-
   _browserViewWrangler.reset();
   _chromeMain.reset();
 }
@@ -2243,9 +2241,13 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
                   transition:(ui::PageTransition)transition {
   BrowserViewController* targetBVC =
       targetMode == ApplicationMode::NORMAL ? self.mainBVC : self.otrBVC;
+  GURL currentURL;
 
   Tab* currentTabInTargetBVC = [[targetBVC tabModel] currentTab];
-  if (!(currentTabInTargetBVC && IsURLNtp(currentTabInTargetBVC.visibleURL))) {
+  if (currentTabInTargetBVC)
+    currentURL = [currentTabInTargetBVC url];
+
+  if (!(currentTabInTargetBVC && IsURLNtp(currentURL))) {
     return [targetBVC addSelectedTabWithURL:URL
                                     atIndex:NSNotFound
                                  transition:transition];

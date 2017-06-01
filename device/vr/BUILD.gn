@@ -45,9 +45,6 @@ if (enable_vr) {
 
     if (is_android && (current_cpu == "arm" || current_cpu == "arm64")) {
       sources += [
-        "android/gvr/cardboard_gamepad_data_fetcher.cc",
-        "android/gvr/cardboard_gamepad_data_fetcher.h",
-        "android/gvr/cardboard_gamepad_data_provider.h",
         "android/gvr/gvr_delegate.cc",
         "android/gvr/gvr_delegate.h",
         "android/gvr/gvr_delegate_provider.cc",
@@ -131,6 +128,6 @@ mojom_component("mojo_bindings") {
     "//mojo/common:common_custom_types",
   ]
 
-  # TODO(crbug.com/699569): Convert to use the new JS bindings.
-  use_new_js_bindings = false
+  # TODO(crbug.com/714018): Convert the implementation to use OnceCallback.
+  use_once_callback = false
 }

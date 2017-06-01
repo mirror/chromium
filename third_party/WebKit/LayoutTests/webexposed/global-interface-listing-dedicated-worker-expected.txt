@@ -3,7 +3,7 @@ This test documents all interface attributes and methods on DedicatedWorkerGloba
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
 
-Starting worker: resources/global-interface-listing-worker.js
+Starting worker: resources/global-interface-listing.js
 [Worker] [INTERFACES]
 [Worker] interface BackgroundFetchFetch
 [Worker]     attribute @@toStringTag
@@ -657,7 +657,6 @@ Starting worker: resources/global-interface-listing-worker.js
 [Worker]     attribute @@toStringTag
 [Worker]     getter downlink
 [Worker]     getter downlinkMax
-[Worker]     getter effectiveType
 [Worker]     getter onchange
 [Worker]     getter ontypechange
 [Worker]     getter rtt

@@ -158,9 +158,6 @@ const char kPerfRecordInstructionTLBMissesCmd[] =
 const char kPerfRecordDataTLBMissesCmd[] =
   "perf record -a -e dTLB-misses -c 2003";
 
-const char kPerfRecordCacheMissesCmd[] =
-  "perf record -a -e cache-misses -c 4001";
-
 const char kPerfStatMemoryBandwidthCmd[] =
   "perf stat -a -e cycles -e instructions "
   "-e uncore_imc/data_reads/ -e uncore_imc/data_writes/ "
@@ -187,39 +184,35 @@ const std::vector<RandomSelector::WeightAndValue> GetDefaultCommands_x86_64(
   if (intel_uarch == "IvyBridge" ||
       intel_uarch == "Haswell" ||
       intel_uarch == "Broadwell") {
-    cmds.push_back(WeightAndValue(45.0, kPerfRecordCyclesCmd));
+    cmds.push_back(WeightAndValue(50.0, kPerfRecordCyclesCmd));
     cmds.push_back(WeightAndValue(20.0, callgraph_cmd));
     cmds.push_back(WeightAndValue(15.0, kPerfRecordLBRCmd));
     cmds.push_back(WeightAndValue(5.0, kPerfRecordInstructionTLBMissesCmd));
     cmds.push_back(WeightAndValue(5.0, kPerfRecordDataTLBMissesCmd));
     cmds.push_back(WeightAndValue(5.0, kPerfStatMemoryBandwidthCmd));
-    cmds.push_back(WeightAndValue(5.0, kPerfRecordCacheMissesCmd));
     return cmds;
   }
   if (intel_uarch == "SandyBridge" || intel_uarch == "Skylake") {
-    cmds.push_back(WeightAndValue(50.0, kPerfRecordCyclesCmd));
+    cmds.push_back(WeightAndValue(55.0, kPerfRecordCyclesCmd));
     cmds.push_back(WeightAndValue(20.0, callgraph_cmd));
     cmds.push_back(WeightAndValue(15.0, kPerfRecordLBRCmd));
     cmds.push_back(WeightAndValue(5.0, kPerfRecordInstructionTLBMissesCmd));
     cmds.push_back(WeightAndValue(5.0, kPerfRecordDataTLBMissesCmd));
-    cmds.push_back(WeightAndValue(5.0, kPerfRecordCacheMissesCmd));
     return cmds;
   }
   if (intel_uarch == "Silvermont" || intel_uarch == "Airmont") {
-    cmds.push_back(WeightAndValue(50.0, kPerfRecordCyclesCmd));
+    cmds.push_back(WeightAndValue(55.0, kPerfRecordCyclesCmd));
     cmds.push_back(WeightAndValue(20.0, callgraph_cmd));
     cmds.push_back(WeightAndValue(15.0, kPerfRecordLBRCmdAtom));
     cmds.push_back(WeightAndValue(5.0, kPerfRecordInstructionTLBMissesCmd));
     cmds.push_back(WeightAndValue(5.0, kPerfRecordDataTLBMissesCmd));
-    cmds.push_back(WeightAndValue(5.0, kPerfRecordCacheMissesCmd));
     return cmds;
   }
   // Other 64-bit x86
-  cmds.push_back(WeightAndValue(65.0, kPerfRecordCyclesCmd));
+  cmds.push_back(WeightAndValue(70.0, kPerfRecordCyclesCmd));
   cmds.push_back(WeightAndValue(20.0, callgraph_cmd));
   cmds.push_back(WeightAndValue(5.0, kPerfRecordInstructionTLBMissesCmd));
   cmds.push_back(WeightAndValue(5.0, kPerfRecordDataTLBMissesCmd));
-  cmds.push_back(WeightAndValue(5.0, kPerfRecordCacheMissesCmd));
   return cmds;
 }
 
@@ -316,7 +309,6 @@ PerfProvider::PerfProvider()
 }
 
 PerfProvider::~PerfProvider() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   chromeos::LoginState::Get()->RemoveObserver(&login_observer_);
 }
 
@@ -461,7 +453,7 @@ void PerfProvider::SetCollectionParamsFromVariationParams(
 
 bool PerfProvider::GetSampledProfiles(
     std::vector<SampledProfile>* sampled_profiles) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (cached_perf_data_.empty()) {
     AddToPerfHistogram(NOT_READY_TO_UPLOAD);
     return false;
@@ -496,7 +488,7 @@ void PerfProvider::ParseOutputProtoIfValid(
     std::unique_ptr<SampledProfile> sampled_profile,
     PerfSubcommand subcommand,
     const std::string& perf_stdout) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   // |perf_output_call_| called us, and owns |perf_stdout|. We must delete it,
   // but not before parsing |perf_stdout|, and we may return early.
@@ -647,7 +639,7 @@ void PerfProvider::Deactivate() {
 }
 
 void PerfProvider::ScheduleIntervalCollection() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (timer_.IsRunning())
     return;
 
@@ -679,7 +671,7 @@ void PerfProvider::ScheduleIntervalCollection() {
 
 void PerfProvider::CollectIfNecessary(
     std::unique_ptr<SampledProfile> sampled_profile) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   // Schedule another interval collection. This call makes sense regardless of
   // whether or not the current collection was interval-triggered. If it had

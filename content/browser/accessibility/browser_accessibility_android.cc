@@ -105,6 +105,10 @@ bool BrowserAccessibilityAndroid::PlatformIsLeaf() const {
     return false;
   }
 
+  // If it has a focusable child, we definitely can't leave out children.
+  if (HasFocusableChild())
+    return false;
+
   // Date and time controls should drop their children.
   switch (GetRole()) {
     case ui::AX_ROLE_DATE:
@@ -114,10 +118,6 @@ bool BrowserAccessibilityAndroid::PlatformIsLeaf() const {
     default:
       break;
   }
-
-  // If it has a focusable child, we definitely can't leave out children.
-  if (HasFocusableNonOptionChild())
-    return false;
 
   BrowserAccessibilityManagerAndroid* manager_android =
       static_cast<BrowserAccessibilityManagerAndroid*>(manager());
@@ -342,6 +342,18 @@ base::string16 BrowserAccessibilityAndroid::GetText() const {
   if (IsIframe() ||
       GetRole() == ui::AX_ROLE_WEB_AREA) {
     return base::string16();
+  }
+
+  // In accordance with ARIA, some elements use their contents as an
+  // accessibility name, so some elements will have the same name as their
+  // child. While most platforms expect this, it causes Android to speak the
+  // name twice. So in this case we should remove the name from the parent.
+  if (GetRole() == ui::AX_ROLE_LIST_ITEM &&
+      GetIntAttribute(ui::AX_ATTR_NAME_FROM) == ui::AX_NAME_FROM_CONTENTS) {
+    // This is an approximation of "PlatformChildCount() > 0" because we can't
+    // call PlatformChildCount from here.
+    if (InternalChildCount() > 0 && !HasOnlyTextChildren())
+      return base::string16();
   }
 
   // We can only expose one accessible name on Android,
@@ -1320,16 +1332,14 @@ void BrowserAccessibilityAndroid::GetWordBoundaries(
   }
 }
 
-bool BrowserAccessibilityAndroid::HasFocusableNonOptionChild() const {
+bool BrowserAccessibilityAndroid::HasFocusableChild() const {
   // This is called from PlatformIsLeaf, so don't call PlatformChildCount
   // from within this!
   for (uint32_t i = 0; i < InternalChildCount(); i++) {
     BrowserAccessibility* child = InternalGetChild(i);
-    if (child->HasState(ui::AX_STATE_FOCUSABLE) &&
-        child->GetRole() != ui::AX_ROLE_MENU_LIST_OPTION)
+    if (child->HasState(ui::AX_STATE_FOCUSABLE))
       return true;
-    if (static_cast<BrowserAccessibilityAndroid*>(child)
-            ->HasFocusableNonOptionChild())
+    if (static_cast<BrowserAccessibilityAndroid*>(child)->HasFocusableChild())
       return true;
   }
   return false;

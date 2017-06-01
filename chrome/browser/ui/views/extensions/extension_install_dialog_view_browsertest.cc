@@ -128,7 +128,7 @@ IN_PROC_BROWSER_TEST_F(ScrollbarTest, LongPromptScrollbar) {
                                             PermissionIDSet()));
   }
   std::unique_ptr<ExtensionInstallPrompt::Prompt> prompt = CreatePrompt();
-  prompt->AddPermissions(permissions,
+  prompt->SetPermissions(permissions,
                          ExtensionInstallPrompt::REGULAR_PERMISSIONS);
   ASSERT_TRUE(IsScrollbarVisible(std::move(prompt)))
       << "Scrollbar is not visible";
@@ -143,7 +143,7 @@ IN_PROC_BROWSER_TEST_F(ScrollbarTest, ScrollbarRegression) {
   permissions.push_back(PermissionMessage(permission_string,
                                           PermissionIDSet()));
   std::unique_ptr<ExtensionInstallPrompt::Prompt> prompt = CreatePrompt();
-  prompt->AddPermissions(permissions,
+  prompt->SetPermissions(permissions,
                          ExtensionInstallPrompt::REGULAR_PERMISSIONS);
   ASSERT_FALSE(IsScrollbarVisible(std::move(prompt))) << "Scrollbar is visible";
 }
@@ -217,13 +217,9 @@ IN_PROC_BROWSER_TEST_F(ExtensionInstallDialogViewTest, InstallButtonDelay) {
   // Check initial button states.
   EXPECT_FALSE(delegate_view->IsDialogButtonEnabled(ui::DIALOG_BUTTON_OK));
   EXPECT_TRUE(delegate_view->IsDialogButtonEnabled(ui::DIALOG_BUTTON_CANCEL));
-  EXPECT_TRUE(delegate_view->GetInitiallyFocusedView()->HasFocus());
 
   // Check OK button state after timeout to verify that it is re-enabled.
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(delegate_view->IsDialogButtonEnabled(ui::DIALOG_BUTTON_OK));
-
-  // Ensure default button (cancel) has focus.
-  EXPECT_TRUE(delegate_view->GetInitiallyFocusedView()->HasFocus());
   delegate_view->Close();
 }

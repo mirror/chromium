@@ -11,8 +11,6 @@
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "chrome/browser/android/vr_shell/ui_elements/textured_element.h"
-#include "chrome/browser/android/vr_shell/ui_unsupported_mode.h"
-#include "components/security_state/core/security_state.h"
 #include "url/gurl.h"
 
 namespace vr_shell {
@@ -21,8 +19,7 @@ class UrlBarTexture;
 
 class UrlBar : public TexturedElement {
  public:
-  UrlBar(int preferred_width,
-         const base::Callback<void(UiUnsupportedMode)>& failure_callback);
+  explicit UrlBar(int preferred_width);
   ~UrlBar() override;
 
   void OnHoverEnter(const gfx::PointF& position) override;
@@ -35,9 +32,8 @@ class UrlBar : public TexturedElement {
   void OnBeginFrame(const base::TimeTicks& begin_frame_time) override;
   void SetEnabled(bool enabled) override;
 
-  void SetHistoryButtonsEnabled(bool can_go_back);
   void SetURL(const GURL& gurl);
-  void SetSecurityLevel(security_state::SecurityLevel level);
+  void SetSecurityLevel(int level);
   void SetBackButtonCallback(const base::Callback<void()>& callback);
 
  private:

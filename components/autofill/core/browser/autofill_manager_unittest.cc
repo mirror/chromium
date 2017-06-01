@@ -76,7 +76,6 @@ using testing::_;
 using testing::AtLeast;
 using testing::Return;
 using testing::SaveArg;
-using testing::UnorderedElementsAre;
 
 namespace autofill {
 namespace {
@@ -117,9 +116,7 @@ class TestPaymentsClient : public payments::PaymentsClient {
   ~TestPaymentsClient() override {}
 
   void GetUploadDetails(const std::vector<AutofillProfile>& addresses,
-                        const std::vector<const char*>& active_experiments,
                         const std::string& app_locale) override {
-    active_experiments_ = active_experiments;
     delegate_->OnDidGetUploadDetails(
         app_locale == "en-US" ? AutofillClient::SUCCESS
                               : AutofillClient::PERMANENT_FAILURE,
@@ -129,12 +126,10 @@ class TestPaymentsClient : public payments::PaymentsClient {
 
   void UploadCard(const payments::PaymentsClient::UploadRequestDetails&
                       request_details) override {
-    active_experiments_ = request_details.active_experiments;
     delegate_->OnDidUploadCard(AutofillClient::SUCCESS, server_id_);
   }
 
   std::string server_id_;
-  std::vector<const char*> active_experiments_;
 
  private:
   payments::PaymentsClientDelegate* const delegate_;
@@ -160,7 +155,7 @@ class TestPersonalDataManager : public PersonalDataManager {
 
   std::string SaveImportedProfile(const AutofillProfile& profile) override {
     num_times_save_imported_profile_called_++;
-    AddProfile(profile);
+    AddProfile(base::MakeUnique<AutofillProfile>(profile));
     return profile.guid();
   }
 
@@ -180,11 +175,9 @@ class TestPersonalDataManager : public PersonalDataManager {
     return NULL;
   }
 
-  void AddProfile(const AutofillProfile& profile) override {
-    std::unique_ptr<AutofillProfile> profile_ptr =
-        base::MakeUnique<AutofillProfile>(profile);
-    profile_ptr->set_modification_date(AutofillClock::Now());
-    web_profiles_.push_back(std::move(profile_ptr));
+  void AddProfile(std::unique_ptr<AutofillProfile> profile) {
+    profile->set_modification_date(AutofillClock::Now());
+    web_profiles_.push_back(std::move(profile));
   }
 
   void AddCreditCard(const CreditCard& credit_card) override {
@@ -565,13 +558,12 @@ class TestAutofillManager : public AutofillManager {
       : AutofillManager(driver, client, personal_data),
         personal_data_(personal_data),
         context_getter_(driver->GetURLRequestContext()),
-        test_payments_client_(new TestPaymentsClient(context_getter_, this)),
         autofill_enabled_(true),
         credit_card_upload_enabled_(false),
         credit_card_was_uploaded_(false),
         expected_observed_submission_(true),
         call_parent_upload_form_data_(false) {
-    set_payments_client(test_payments_client_);
+    set_payments_client(new TestPaymentsClient(context_getter_, this));
   }
   ~TestAutofillManager() override {}
 
@@ -675,15 +667,11 @@ class TestAutofillManager : public AutofillManager {
   }
 
   void AddProfile(std::unique_ptr<AutofillProfile> profile) {
-    personal_data_->AddProfile(*profile);
+    personal_data_->AddProfile(std::move(profile));
   }
 
   void AddCreditCard(const CreditCard& credit_card) {
     personal_data_->AddCreditCard(credit_card);
-  }
-
-  const std::vector<const char*>& GetActiveExperiments() const {
-    return test_payments_client_->active_experiments_;
   }
 
   int GetPackedCreditCardID(int credit_card_id) {
@@ -715,7 +703,6 @@ class TestAutofillManager : public AutofillManager {
 
   TestPersonalDataManager* personal_data_;        // Weak reference.
   net::URLRequestContextGetter* context_getter_;  // Weak reference.
-  TestPaymentsClient* test_payments_client_;      // Weak reference.
   bool autofill_enabled_;
   bool credit_card_upload_enabled_;
   bool credit_card_was_uploaded_;
@@ -1073,23 +1060,25 @@ class AutofillManagerTest : public testing::Test {
   }
 
   void EnableAutofillUpstreamRequestCvcIfMissingExperiment() {
-    scoped_feature_list_.InitAndEnableFeature(
-        kAutofillUpstreamRequestCvcIfMissing);
+    scoped_feature_list_.InitWithFeatures(
+        {kAutofillUpstreamRequestCvcIfMissing}, {});
   }
 
-  void DisableAutofillUpstreamUseAutofillProfileComparator() {
+  void DisableAutofillUpstreamUseAutofillProfileComparatorForName() {
     scoped_feature_list_.InitAndDisableFeature(
-        kAutofillUpstreamUseAutofillProfileComparator);
+        kAutofillUpstreamUseAutofillProfileComparatorForName);
   }
 
   void ExpectUniqueFillableFormParsedUkm() {
+    ukm::TestUkmRecorder* ukm_recorder = autofill_client_.GetTestUkmRecorder();
+
     // Check that one source is logged.
-    ASSERT_EQ(1U, test_ukm_recorder_.sources_count());
-    const ukm::UkmSource* source = GetUkmSources(&test_ukm_recorder_)[0];
+    ASSERT_EQ(1U, ukm_recorder->sources_count());
+    const ukm::UkmSource* source = GetUkmSources(ukm_recorder)[0];
 
     // Check that one entry is logged.
-    EXPECT_EQ(1U, test_ukm_recorder_.entries_count());
-    const ukm::mojom::UkmEntry* entry = test_ukm_recorder_.GetEntry(0);
+    EXPECT_EQ(1U, ukm_recorder->entries_count());
+    const ukm::mojom::UkmEntry* entry = ukm_recorder->GetEntry(0);
     EXPECT_EQ(source->id(), entry->source_id);
 
     EXPECT_EQ(source->id(), entry->source_id);
@@ -1140,9 +1129,11 @@ class AutofillManagerTest : public testing::Test {
                     const char* entry_name,
                     int expected_metric_value,
                     int expected_num_matching_entries) {
+    ukm::TestUkmRecorder* ukm_recorder = autofill_client_.GetTestUkmRecorder();
+
     int num_matching_entries = 0;
-    for (size_t i = 0; i < test_ukm_recorder_.entries_count(); ++i) {
-      const ukm::mojom::UkmEntry* entry = test_ukm_recorder_.GetEntry(i);
+    for (size_t i = 0; i < ukm_recorder->entries_count(); ++i) {
+      const ukm::mojom::UkmEntry* entry = ukm_recorder->GetEntry(i);
       // Check if there is an entry for |entry_name|.
       if (entry->event_hash == base::HashMetricName(entry_name)) {
         EXPECT_EQ(1UL, entry->metrics.size());
@@ -1160,7 +1151,6 @@ class AutofillManagerTest : public testing::Test {
 
  protected:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
-  ukm::TestUkmRecorder test_ukm_recorder_;
   MockAutofillClient autofill_client_;
   std::unique_ptr<MockAutofillDriver> autofill_driver_;
   std::unique_ptr<TestAutofillManager> autofill_manager_;
@@ -4660,9 +4650,6 @@ TEST_F(AutofillManagerTest, UploadCreditCard) {
   EXPECT_CALL(autofill_client_, ConfirmSaveCreditCardLocally(_, _)).Times(0);
   FormSubmitted(credit_card_form);
   EXPECT_TRUE(autofill_manager_->credit_card_was_uploaded());
-  EXPECT_THAT(
-      autofill_manager_->GetActiveExperiments(),
-      UnorderedElementsAre(kAutofillUpstreamUseAutofillProfileComparator.name));
 
   // Server did not send a server_id, expect copy of card is not stored.
   EXPECT_TRUE(autofill_manager_->GetCreditCards().empty());
@@ -4678,43 +4665,6 @@ TEST_F(AutofillManagerTest, UploadCreditCard) {
   // modified the profile.
   histogram_tester.ExpectTotalCount(
       "Autofill.DaysSincePreviousUseAtSubmission.Profile", 0);
-}
-
-TEST_F(AutofillManagerTest, UploadCreditCard_RequestCVCEnabled_DoesNotTrigger) {
-  EnableAutofillUpstreamRequestCvcIfMissingExperiment();
-
-  personal_data_.ClearCreditCards();
-  personal_data_.ClearAutofillProfiles();
-  autofill_manager_->set_credit_card_upload_enabled(true);
-
-  // Create, fill and submit an address form in order to establish a recent
-  // profile which can be selected for the upload request.
-  FormData address_form;
-  test::CreateTestAddressFormData(&address_form);
-  FormsSeen({address_form});
-
-  ManuallyFillAddressForm("Flo", "Master", "77401", "US", &address_form);
-  FormSubmitted(address_form);
-
-  // Set up our credit card form data.
-  FormData credit_card_form;
-  CreateTestCreditCardFormData(&credit_card_form, true, false);
-  FormsSeen({credit_card_form});
-
-  // Edit the data, and submit.
-  credit_card_form.fields[0].value = ASCIIToUTF16("Flo Master");
-  credit_card_form.fields[1].value = ASCIIToUTF16("4111111111111111");
-  credit_card_form.fields[2].value = ASCIIToUTF16("11");
-  credit_card_form.fields[3].value = ASCIIToUTF16("2017");
-  credit_card_form.fields[4].value = ASCIIToUTF16("123");
-
-  EXPECT_CALL(autofill_client_, ConfirmSaveCreditCardLocally(_, _)).Times(0);
-  FormSubmitted(credit_card_form);
-  EXPECT_TRUE(autofill_manager_->credit_card_was_uploaded());
-  // Submitted form included CVC, so user did not need to enter CVC.
-  EXPECT_THAT(
-      autofill_manager_->GetActiveExperiments(),
-      UnorderedElementsAre(kAutofillUpstreamUseAutofillProfileComparator.name));
 }
 
 TEST_F(AutofillManagerTest, UploadCreditCardAndSaveCopy) {
@@ -4751,10 +4701,6 @@ TEST_F(AutofillManagerTest, UploadCreditCardAndSaveCopy) {
 
   EXPECT_TRUE(autofill_manager_->credit_card_was_uploaded());
   EXPECT_TRUE(autofill_manager_->GetLocalCreditCards().empty());
-#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
-  // See |OfferStoreUnmaskedCards|
-  EXPECT_TRUE(autofill_manager_->GetCreditCards().empty());
-#else
   ASSERT_EQ(1U, autofill_manager_->GetCreditCards().size());
   const CreditCard* const saved_card = autofill_manager_->GetCreditCards()[0];
   EXPECT_EQ(CreditCard::OK, saved_card->GetServerStatus());
@@ -4765,7 +4711,6 @@ TEST_F(AutofillManagerTest, UploadCreditCardAndSaveCopy) {
   EXPECT_EQ(server_id, saved_card->server_id());
   EXPECT_EQ(CreditCard::FULL_SERVER_CARD, saved_card->record_type());
   EXPECT_EQ(base::ASCIIToUTF16(card_number), saved_card->number());
-#endif
 }
 
 TEST_F(AutofillManagerTest, UploadCreditCard_FeatureNotEnabled) {
@@ -5248,10 +5193,6 @@ TEST_F(AutofillManagerTest,
   EXPECT_CALL(autofill_client_, ConfirmSaveCreditCardLocally(_, _)).Times(0);
   FormSubmitted(credit_card_form);
   EXPECT_TRUE(autofill_manager_->credit_card_was_uploaded());
-  EXPECT_THAT(
-      autofill_manager_->GetActiveExperiments(),
-      UnorderedElementsAre(kAutofillUpstreamUseAutofillProfileComparator.name,
-                           kAutofillUpstreamRequestCvcIfMissing.name));
 
   // Verify that the correct histogram entries were logged.
   ExpectCardUploadDecision(histogram_tester, AutofillMetrics::UPLOAD_OFFERED);
@@ -5469,10 +5410,6 @@ TEST_F(AutofillManagerTest,
   EXPECT_CALL(autofill_client_, ConfirmSaveCreditCardLocally(_, _)).Times(0);
   FormSubmitted(credit_card_form);
   EXPECT_TRUE(autofill_manager_->credit_card_was_uploaded());
-  EXPECT_THAT(autofill_manager_->GetActiveExperiments(),
-              UnorderedElementsAre(
-                  kAutofillUpstreamUseAutofillProfileComparator.name,
-                  kAutofillUpstreamUseNotRecentlyUsedAutofillProfile.name));
 
   // Verify that the correct histogram entry (and only that) was logged.
   ExpectUniqueCardUploadDecision(histogram_tester,
@@ -5627,90 +5564,6 @@ TEST_F(AutofillManagerTest, UploadCreditCard_ZipCodesConflict) {
       AutofillMetrics::UPLOAD_NOT_OFFERED_CONFLICTING_ZIPS);
 }
 
-TEST_F(AutofillManagerTest, UploadCreditCard_ZipCodesDiscardWhitespace) {
-  personal_data_.ClearAutofillProfiles();
-  autofill_manager_->set_credit_card_upload_enabled(true);
-
-  // Create, fill and submit two address forms with different zip codes.
-  FormData address_form1, address_form2;
-  test::CreateTestAddressFormData(&address_form1);
-  test::CreateTestAddressFormData(&address_form2);
-
-  FormsSeen({address_form1, address_form2});
-
-  ManuallyFillAddressForm("Flo", "Master", "H3B2Y5", "CA", &address_form1);
-  FormSubmitted(address_form1);
-
-  ManuallyFillAddressForm("Flo", "Master", "h3b 2y5", "CA", &address_form2);
-  FormSubmitted(address_form2);
-
-  // Set up our credit card form data.
-  FormData credit_card_form;
-  CreateTestCreditCardFormData(&credit_card_form, true, false);
-  FormsSeen({credit_card_form});
-
-  // Edit the data, but don't include a name, and submit.
-  credit_card_form.fields[0].value = ASCIIToUTF16("Flo Master");
-  credit_card_form.fields[1].value = ASCIIToUTF16("4111111111111111");
-  credit_card_form.fields[2].value = ASCIIToUTF16("11");
-  credit_card_form.fields[3].value = ASCIIToUTF16("2017");
-  credit_card_form.fields[4].value = ASCIIToUTF16("123");
-
-  base::HistogramTester histogram_tester;
-
-  // Zips match because we discard whitespace before comparison.
-  EXPECT_CALL(autofill_client_, ConfirmSaveCreditCardLocally(_, _)).Times(0);
-  FormSubmitted(credit_card_form);
-  EXPECT_TRUE(autofill_manager_->credit_card_was_uploaded());
-
-  // Verify that the correct histogram entry (and only that) was logged.
-  ExpectUniqueCardUploadDecision(histogram_tester,
-                                 AutofillMetrics::UPLOAD_OFFERED);
-}
-
-TEST_F(AutofillManagerTest,
-       UploadCreditCard_ZipCodesDiscardWhitespace_DisableComparator) {
-  DisableAutofillUpstreamUseAutofillProfileComparator();
-  personal_data_.ClearAutofillProfiles();
-  autofill_manager_->set_credit_card_upload_enabled(true);
-
-  // Create, fill and submit two address forms with different zip codes.
-  FormData address_form1, address_form2;
-  test::CreateTestAddressFormData(&address_form1);
-  test::CreateTestAddressFormData(&address_form2);
-
-  FormsSeen({address_form1, address_form2});
-
-  ManuallyFillAddressForm("Flo", "Master", "H3B2Y5", "CA", &address_form1);
-  FormSubmitted(address_form1);
-
-  ManuallyFillAddressForm("Flo", "Master", "h3b 2y5", "CA", &address_form2);
-  FormSubmitted(address_form2);
-
-  // Set up our credit card form data.
-  FormData credit_card_form;
-  CreateTestCreditCardFormData(&credit_card_form, true, false);
-  FormsSeen({credit_card_form});
-
-  // Edit the data, but don't include a name, and submit.
-  credit_card_form.fields[0].value = ASCIIToUTF16("Flo Master");
-  credit_card_form.fields[1].value = ASCIIToUTF16("4111111111111111");
-  credit_card_form.fields[2].value = ASCIIToUTF16("11");
-  credit_card_form.fields[3].value = ASCIIToUTF16("2017");
-  credit_card_form.fields[4].value = ASCIIToUTF16("123");
-
-  base::HistogramTester histogram_tester;
-
-  // Neither a local save nor an upload should happen in this case.
-  EXPECT_CALL(autofill_client_, ConfirmSaveCreditCardLocally(_, _)).Times(0);
-  FormSubmitted(credit_card_form);
-  EXPECT_FALSE(autofill_manager_->credit_card_was_uploaded());
-
-  // Verify that the correct histogram entry (and only that) was logged.
-  ExpectUniqueCardUploadDecision(
-      histogram_tester, AutofillMetrics::UPLOAD_NOT_OFFERED_CONFLICTING_ZIPS);
-}
-
 TEST_F(AutofillManagerTest, UploadCreditCard_ZipCodesHavePrefixMatch) {
   personal_data_.ClearAutofillProfiles();
   autofill_manager_->set_credit_card_upload_enabled(true);
@@ -5849,7 +5702,7 @@ TEST_F(AutofillManagerTest, UploadCreditCard_CCFormHasMiddleInitial) {
 
 TEST_F(AutofillManagerTest,
        UploadCreditCard_CCFormHasMiddleInitial_DisableComparator) {
-  DisableAutofillUpstreamUseAutofillProfileComparator();
+  DisableAutofillUpstreamUseAutofillProfileComparatorForName();
   personal_data_.ClearAutofillProfiles();
   autofill_manager_->set_credit_card_upload_enabled(true);
 
@@ -5886,7 +5739,6 @@ TEST_F(AutofillManagerTest,
   EXPECT_CALL(autofill_client_, ConfirmSaveCreditCardLocally(_, _)).Times(0);
   FormSubmitted(credit_card_form);
   EXPECT_TRUE(autofill_manager_->credit_card_was_uploaded());
-  EXPECT_TRUE(autofill_manager_->GetActiveExperiments().empty());
 
   // Verify that the correct histogram entry (and only that) was logged.
   ExpectUniqueCardUploadDecision(histogram_tester,
@@ -5937,7 +5789,7 @@ TEST_F(AutofillManagerTest, UploadCreditCard_NoMiddleInitialInCCForm) {
 
 TEST_F(AutofillManagerTest,
        UploadCreditCard_NoMiddleInitialInCCForm_DisableComparator) {
-  DisableAutofillUpstreamUseAutofillProfileComparator();
+  DisableAutofillUpstreamUseAutofillProfileComparatorForName();
   personal_data_.ClearAutofillProfiles();
   autofill_manager_->set_credit_card_upload_enabled(true);
 
@@ -6016,7 +5868,7 @@ TEST_F(AutofillManagerTest, UploadCreditCard_CCFormHasMiddleName) {
 
 TEST_F(AutofillManagerTest,
        UploadCreditCard_CCFormHasMiddleName_DisableComparator) {
-  DisableAutofillUpstreamUseAutofillProfileComparator();
+  DisableAutofillUpstreamUseAutofillProfileComparatorForName();
   personal_data_.ClearAutofillProfiles();
   autofill_manager_->set_credit_card_upload_enabled(true);
 
@@ -6244,10 +6096,6 @@ TEST_F(AutofillManagerTest,
   EXPECT_CALL(autofill_client_, ConfirmSaveCreditCardLocally(_, _)).Times(0);
   FormSubmitted(credit_card_form);
   EXPECT_TRUE(autofill_manager_->credit_card_was_uploaded());
-  // Recently used profile was available, so did not need to use old profile.
-  EXPECT_THAT(
-      autofill_manager_->GetActiveExperiments(),
-      UnorderedElementsAre(kAutofillUpstreamUseAutofillProfileComparator.name));
 
   // Verify that the correct histogram entry (and only that) was logged.
   ExpectUniqueCardUploadDecision(histogram_tester,
@@ -6256,7 +6104,7 @@ TEST_F(AutofillManagerTest,
 
 TEST_F(AutofillManagerTest,
        UploadCreditCard_NamesHaveToMatch_DisableComparator) {
-  DisableAutofillUpstreamUseAutofillProfileComparator();
+  DisableAutofillUpstreamUseAutofillProfileComparatorForName();
   personal_data_.ClearAutofillProfiles();
   autofill_manager_->set_credit_card_upload_enabled(true);
 

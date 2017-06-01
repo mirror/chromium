@@ -26,16 +26,13 @@ source_set("display") {
 
   public_deps = [
     "//remoting/client",
-    "//third_party/protobuf:protobuf_lite",
+    "//remoting/client/display",
     "//third_party/webrtc/base:rtc_base_approved",
   ]
 
   deps = [
     "//base",
-    "//remoting/client/display",
   ]
-
-  include_dirs = [ "//third_party/protobuf/src" ]
 
   libs = [
     "CoreGraphics.framework",

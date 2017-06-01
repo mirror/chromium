@@ -30,7 +30,7 @@ Polymer({
 
     /**
      * The device state for each network device type. Set by network-summary.
-     * @type {!Object<!CrOnc.DeviceStateProperties>|undefined}
+     * @type {!Object<chrome.networkingPrivate.DeviceStateProperties>|undefined}
      * @private
      */
     deviceStates: {
@@ -105,7 +105,6 @@ Polymer({
   listeners: {
     'device-enabled-toggled': 'onDeviceEnabledToggled_',
     'network-connect': 'onNetworkConnect_',
-    'show-config': 'onShowConfig_',
     'show-detail': 'onShowDetail_',
     'show-known-networks': 'onShowKnownNetworks_',
     'show-networks': 'onShowNetworks_',
@@ -216,32 +215,6 @@ Polymer({
   },
 
   /**
-   * @param {!{detail: !CrOnc.NetworkProperties}} event
-   * @private
-   */
-  onShowConfig_: function(event) {
-    var properties = event.detail;
-    this.showConfig_(
-        properties.Type, properties.GUID, CrOnc.getNetworkName(properties));
-  },
-
-  /**
-   * @param {string} type
-   * @param {string=} guid
-   * @param {string=} name
-   * @private
-   */
-  showConfig_: function(type, guid, name) {
-    var params = new URLSearchParams;
-    params.append('type', type);
-    if (guid)
-      params.append('guid', guid);
-    if (name)
-      params.append('name', name);
-    settings.navigateTo(settings.Route.NETWORK_CONFIG, params);
-  },
-
-  /**
    * @param {!{detail: !CrOnc.NetworkStateProperties}} event
    * @private
    */
@@ -300,10 +273,7 @@ Polymer({
 
   /** @private */
   onAddWiFiTap_: function() {
-    if (loadTimeData.getBoolean('networkSettingsConfig'))
-      this.showConfig_(CrOnc.Type.WI_FI);
-    else
-      chrome.send('addNetwork', [CrOnc.Type.WI_FI]);
+    chrome.send('addNetwork', [CrOnc.Type.WI_FI]);
   },
 
   /** @private */
@@ -392,12 +362,13 @@ Polymer({
   },
 
   /**
-   * @param {!CrOnc.DeviceStateProperties} deviceState
+   * @param {!chrome.networkingPrivate.DeviceStateProperties} deviceState
    * @return {boolean}
    * @private
    */
   deviceIsEnabled_: function(deviceState) {
-    return !!deviceState && deviceState.State == CrOnc.DeviceState.ENABLED;
+    return !!deviceState &&
+        deviceState.State == chrome.networkingPrivate.DeviceStateType.ENABLED;
   },
 
   /**
@@ -448,7 +419,7 @@ Polymer({
         }
         console.error(
             'Unexpected networkingPrivate.startConnect error: ' + message +
-            ' For: ' + properties.GUID);
+                ' For: ' + properties.GUID);
       }
     });
   },

@@ -57,9 +57,9 @@ class SPDY_EXPORT_PRIVATE HpackHuffmanDecoder {
   static HuffmanWord DecodeToCanonical(HuffmanCodeLength code_length,
                                        HuffmanWord bits);
 
-  // Converts a canonical symbol to the source symbol (the octet in the original
+  // Converts a canonical symbol to the source symbol (the char in the original
   // string that was encoded).
-  static uint8_t CanonicalToSource(HuffmanWord canonical);
+  static char CanonicalToSource(HuffmanWord canonical);
 };
 
 }  // namespace net

@@ -14,7 +14,6 @@
 #include <limits>
 #include <memory>
 
-#include "base/allocator/features.h"
 #include "base/files/file_util.h"
 #include "base/logging.h"
 #include "base/memory/free_deleter.h"
@@ -45,10 +44,15 @@ NOINLINE Type HideValueFromCompiler(volatile Type value) {
   return value;
 }
 
-// TCmalloc, currently supported only by Linux/CrOS, supports malloc limits.
+// Tcmalloc and Windows allocator shim support setting malloc limits.
 // - NO_TCMALLOC (should be defined if compiled with use_allocator!="tcmalloc")
-// - ADDRESS_SANITIZER it has its own memory allocator
-#if defined(OS_LINUX) && !defined(NO_TCMALLOC) && !defined(ADDRESS_SANITIZER)
+// - ADDRESS_SANITIZER and SYZYASAN because they have their own memory allocator
+// - IOS does not use tcmalloc
+// - OS_MACOSX does not use tcmalloc
+// - Windows allocator shim defines ALLOCATOR_SHIM
+#if (!defined(NO_TCMALLOC) || defined(ALLOCATOR_SHIM)) &&                     \
+    !defined(ADDRESS_SANITIZER) && !defined(OS_IOS) && !defined(OS_MACOSX) && \
+    !defined(SYZYASAN)
 #define MALLOC_OVERFLOW_TEST(function) function
 #else
 #define MALLOC_OVERFLOW_TEST(function) DISABLED_##function

@@ -5,7 +5,7 @@
 #include "chrome/browser/chromeos/profiles/multiprofiles_session_aborted_dialog.h"
 
 #include "ash/root_window_controller.h"
-#include "ash/shelf/shelf.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
@@ -49,7 +49,7 @@ class MultiprofilesSessionAbortedView : public views::DialogDelegateView {
   ui::ModalType GetModalType() const override;
 
   // views::View overrides.
-  gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetPreferredSize() const override;
 
  private:
   void InitDialog(const std::string& user_email);
@@ -85,7 +85,7 @@ void MultiprofilesSessionAbortedView::ShowDialog(
   std::vector<ash::RootWindowController*> controllers =
       ash::Shell::GetAllRootWindowControllers();
   for (ash::RootWindowController* controller : controllers) {
-    controller->shelf()->SetAutoHideBehavior(
+    controller->wm_shelf()->SetAutoHideBehavior(
         ash::SHELF_AUTO_HIDE_ALWAYS_HIDDEN);
   }
 }
@@ -109,7 +109,7 @@ ui::ModalType MultiprofilesSessionAbortedView::GetModalType() const {
   return ui::MODAL_TYPE_SYSTEM;
 }
 
-gfx::Size MultiprofilesSessionAbortedView::CalculatePreferredSize() const {
+gfx::Size MultiprofilesSessionAbortedView::GetPreferredSize() const {
   return gfx::Size(kDefaultWidth, kDefaultHeight);
 }
 

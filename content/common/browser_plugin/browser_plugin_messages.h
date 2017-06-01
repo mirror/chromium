@@ -58,10 +58,7 @@ IPC_STRUCT_END()
 // These messages are from the embedder to the browser process.
 // Most messages from the embedder to the browser process are CONTROL because
 // they are routed to the appropriate BrowserPluginGuest based on the
-// |browser_plugin_instance_id| which is unique per embedder process.
-// |browser_plugin_instance_id| is only used by BrowserPluginMessageFilter to
-// find the right BrowserPluginGuest. It should not be needed by the final IPC
-// handler.
+// browser_plugin_instance_id which is unique per embedder process.
 
 // This message is sent from BrowserPlugin to BrowserPluginGuest to issue an
 // edit command.
@@ -92,8 +89,7 @@ IPC_MESSAGE_CONTROL5(
 
 // This message is sent from BrowserPlugin to BrowserPluginGuest to notify that
 // inserting the current composition is requested.
-IPC_MESSAGE_CONTROL2(BrowserPluginHostMsg_ImeFinishComposingText,
-                     int /* browser_plugin_instance_id */,
+IPC_MESSAGE_CONTROL1(BrowserPluginHostMsg_ImeFinishComposingText,
                      bool /* keep selection */)
 
 // Deletes the current selection plus the specified number of characters before

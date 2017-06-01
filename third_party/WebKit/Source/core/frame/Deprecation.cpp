@@ -19,8 +19,6 @@ enum Milestone {
   M60,
   M61,
   M62,
-  M63,
-  M64,
 };
 
 const char* milestoneString(Milestone milestone) {
@@ -36,10 +34,6 @@ const char* milestoneString(Milestone milestone) {
       return "M61, around September 2017";
     case M62:
       return "M62, around October 2017";
-    case M63:
-      return "M63, around December 2017";
-    case M64:
-      return "M64, around January 2018";
   }
 
   NOTREACHED();
@@ -396,13 +390,14 @@ String Deprecation::DeprecationMessage(UseCounter::Feature feature) {
                                    M60, "5922594955984896");
 
     case UseCounter::kCanRequestURLHTTPContainingNewline:
-      return "Resource requests whose URLs contained both removed whitespace "
-             "(`\\n`, `\\r`, `\\t`) characters and less-than characters (`<`) "
-             "are blocked. Please remove newlines and encode less-than "
-             "characters from places like element attribute values in order to "
-             "load these resources. See "
-             "https://www.chromestatus.com/feature/5735596811091968 for more "
-             "details.";
+      return String::Format(
+          "Resource requests whose URLs contain raw newline characters are "
+          "deprecated, and may be blocked in %s. Please remove newlines from "
+          "places like element attribute values in order to continue loading "
+          "those resources. See "
+          "https://www.chromestatus.com/features/5735596811091968 for more "
+          "details.",
+          milestoneString(M60));
 
     case UseCounter::kV8RTCPeerConnection_GetStreamById_Method:
       return willBeRemoved("RTCPeerConnection.getStreamById()", M62,
@@ -429,18 +424,6 @@ String Deprecation::DeprecationMessage(UseCounter::Feature feature) {
           "details and https://www.chromium.org/developers/"
           "recent-changes-credential-management-api for migration suggestions.",
           milestoneString(M62));
-    case UseCounter::kPaymentRequestNetworkNameInSupportedMethods:
-      return replacedWillBeRemoved(
-          "Card issuer network (\"amex\", \"diners\", \"discover\", \"jcb\", "
-          "\"mastercard\", \"mir\", \"unionpay\", \"visa\") as payment method",
-          "payment method name \"basic-card\" with issuer network in the "
-          "\"supportedNetworks\" field",
-          M64, "5725727580225536");
-    case UseCounter::kCredentialManagerRequireUserMediation:
-      return replacedWillBeRemoved(
-          "The CredentialsContainer.requireUserMediation method",
-          "the CredentialsContainer.preventSilentAccess method", M62,
-          "4781762488041472");
 
     // Features that aren't deprecated don't have a deprecation message.
     default:

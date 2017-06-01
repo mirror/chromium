@@ -117,10 +117,6 @@ class BaseBlockingPage
                          const UnsafeResourceList& unsafe_resources,
                          BaseUIManager* ui_manager);
 
-  int GetHTMLTemplateId() override;
-
-  void set_sb_error_ui(std::unique_ptr<BaseSafeBrowsingErrorUI> sb_error_ui);
-
  private:
   // For reporting back user actions.
   BaseUIManager* ui_manager_;
@@ -135,6 +131,9 @@ class BaseBlockingPage
   // The list of unsafe resources this page is warning about.
   UnsafeResourceList unsafe_resources_;
 
+  // For displaying safe browsing interstitial.
+  std::unique_ptr<BaseSafeBrowsingErrorUI> sb_error_ui_;
+
   // Indicate whether user has proceeded this blocking page.
   bool proceeded_;
 
@@ -143,9 +142,6 @@ class BaseBlockingPage
   // ThreatDetails::FinishCollection() by this much time (in
   // milliseconds), in order to get data from the blocked resource itself.
   int64_t threat_details_proceed_delay_ms_;
-
-  // For displaying safe browsing interstitial.
-  std::unique_ptr<BaseSafeBrowsingErrorUI> sb_error_ui_;
 
   DISALLOW_COPY_AND_ASSIGN(BaseBlockingPage);
 };

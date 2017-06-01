@@ -285,12 +285,6 @@ void TestNetworkQualityEstimator::
   }
 }
 
-void TestNetworkQualityEstimator::NotifyObserversOfEffectiveConnectionType(
-    EffectiveConnectionType type) {
-  for (auto& observer : effective_connection_type_observer_list_)
-    observer.OnEffectiveConnectionTypeChanged(type);
-}
-
 nqe::internal::NetworkID TestNetworkQualityEstimator::GetCurrentNetworkID()
     const {
   return nqe::internal::NetworkID(current_network_type_, current_network_id_);

@@ -44,14 +44,16 @@ InspectorTest.flushResults = function()
     results = [];
 }
 
-InspectorTest.evaluateInPage = async function(code, callback)
+InspectorTest.evaluateInPage = function(code, callback)
 {
-    var response = await InspectorTest.RuntimeAgent.invoke_evaluate({
-        expression: code,
-        objectGroup: "console"
-    });
-    if (!response[Protocol.Error])
-        InspectorTest.safeWrap(callback)(InspectorTest.runtimeModel.createRemoteObject(response.result), response.exceptionDetails);
+    callback = InspectorTest.safeWrap(callback);
+
+    function mycallback(error, result, exceptionDetails)
+    {
+        if (!error)
+            callback(InspectorTest.runtimeModel.createRemoteObject(result), exceptionDetails);
+    }
+    InspectorTest.RuntimeAgent.evaluate(code, "console", false, mycallback);
 }
 
 InspectorTest.addScriptUISourceCode = function(url, content, isContentScript, worldId) {
@@ -65,7 +67,7 @@ InspectorTest.addScriptUISourceCode = function(url, content, isContentScript, wo
 InspectorTest.addScriptForFrame = function(url, content, frame) {
     content += '\n//# sourceURL=' + url;
     var executionContext = InspectorTest.runtimeModel.executionContexts().find(context => context.frameId === frame.id);
-    InspectorTest.RuntimeAgent.evaluate(content, "console", false, false, executionContext.id);
+    InspectorTest.RuntimeAgent.evaluate(content, "console", false, false, executionContext.id, function() { });
 }
 
 InspectorTest.evaluateInPagePromise = function(code)
@@ -73,25 +75,34 @@ InspectorTest.evaluateInPagePromise = function(code)
     return new Promise(succ => InspectorTest.evaluateInPage(code, succ));
 }
 
-InspectorTest.evaluateInPageAsync = async function(code)
+InspectorTest.evaluateInPageAsync = function(code)
 {
-    var response = await InspectorTest.RuntimeAgent.invoke_evaluate({
-        expression: code,
-        objectGroup: "console",
-        includeCommandLineAPI: false,
-        silent: undefined,
-        contextId: undefined,
-        returnByValue: undefined,
-        generatePreview: undefined,
-        userGesture: undefined,
-        awaitPromise: true
-    });
+    var callback;
+    var promise = new Promise((fulfill) => { callback = fulfill });
+    InspectorTest.RuntimeAgent.evaluate(code,
+        "console",
+        /* includeCommandLineAPI */ false,
+        /* doNotPauseOnExceptionsAndMuteConsole */ undefined,
+        /* contextId */ undefined,
+        /* returnByValue */ undefined,
+        /* generatePreview */ undefined,
+        /* userGesture */ undefined,
+        /* awaitPromise */ true,
+        mycallback);
 
-    var error = response[Protocol.Error];
-    if (!error && !response.exceptionDetails)
-        return InspectorTest.runtimeModel.createRemoteObject(response.result);
-    InspectorTest.addResult("Error: " + (error || response.exceptionDetails && response.exceptionDetails.text || "exception while evaluation in page."));
-    InspectorTest.completeTest();
+    function mycallback(error, result, exceptionDetails)
+    {
+        if (!error && !exceptionDetails) {
+            callback(InspectorTest.runtimeModel.createRemoteObject(result));
+        } else {
+            if (error)
+                InspectorTest.addResult("Error: " + error);
+            else
+                InspectorTest.addResult("Error: " + (exceptionDetails ? exceptionDetails.text : " exception while evaluation in page."));
+            InspectorTest.completeTest();
+        }
+    }
+    return promise;
 }
 
 InspectorTest.callFunctionInPageAsync = function(name, args)

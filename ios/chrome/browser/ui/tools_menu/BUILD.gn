@@ -67,6 +67,7 @@ source_set("eg_tests") {
   configs += [ "//build/config/compiler:enable_arc" ]
   testonly = true
   sources = [
+    "request_desktop_mobile_site_egtest.mm",
     "tools_popup_menu_egtest.mm",
   ]
   deps = [
@@ -79,8 +80,7 @@ source_set("eg_tests") {
     "//ios/chrome/browser/ui/toolbar",
     "//ios/chrome/test/earl_grey:test_support",
     "//ios/third_party/earl_grey",
-    "//ios/web/public/test",
-    "//ios/web/public/test/http_server",
+    "//ios/web:test_support",
     "//ui/base",
   ]
   libs = [ "XCTest.framework" ]

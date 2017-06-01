@@ -109,12 +109,9 @@ static_library("common") {
     "multi_process_lock_win.cc",
     "origin_trials/chrome_origin_trial_policy.cc",
     "origin_trials/chrome_origin_trial_policy.h",
-    "page_load_metrics/page_load_metrics_constants.h",
     "page_load_metrics/page_load_metrics_messages.h",
     "page_load_metrics/page_load_metrics_param_traits.cc",
     "page_load_metrics/page_load_metrics_param_traits.h",
-    "page_load_metrics/page_load_metrics_util.cc",
-    "page_load_metrics/page_load_metrics_util.h",
     "page_load_metrics/page_load_timing.cc",
     "page_load_metrics/page_load_timing.h",
     "page_load_metrics/page_track_decider.cc",
@@ -122,8 +119,6 @@ static_library("common") {
     "partial_circular_buffer.cc",
     "partial_circular_buffer.h",
     "pause_tabs_field_trial.h",
-    "pdf_uma.cc",
-    "pdf_uma.h",
     "pref_names_util.cc",
     "pref_names_util.h",
     "prerender_messages.h",
@@ -316,7 +311,6 @@ static_library("common") {
       "extensions/manifest_handlers/theme_handler.h",
       "extensions/manifest_handlers/ui_overrides_handler.cc",
       "extensions/manifest_handlers/ui_overrides_handler.h",
-      "extensions/mojom/inline_install_traits.h",
       "extensions/permissions/chrome_api_permissions.cc",
       "extensions/permissions/chrome_api_permissions.h",
       "extensions/permissions/chrome_permission_message_provider.cc",
@@ -510,8 +504,6 @@ static_library("common") {
 
     if (safe_browsing_mode == 1) {
       sources += [
-        "safe_browsing/archive_analyzer_results.cc",
-        "safe_browsing/archive_analyzer_results.h",
         "safe_browsing/binary_feature_extractor.cc",
         "safe_browsing/binary_feature_extractor.h",
         "safe_browsing/binary_feature_extractor_mac.cc",
@@ -532,6 +524,8 @@ static_library("common") {
         "safe_browsing/protobuf_message_write_macros.h",
         "safe_browsing/zip_analyzer.cc",
         "safe_browsing/zip_analyzer.h",
+        "safe_browsing/zip_analyzer_results.cc",
+        "safe_browsing/zip_analyzer_results.h",
       ]
 
       public_deps += [ "//ipc" ]
@@ -656,8 +650,6 @@ static_library("test_support") {
   visibility = [ "//chrome/test:*" ]
 
   sources = [
-    "page_load_metrics/test/page_load_metrics_test_util.cc",
-    "page_load_metrics/test/page_load_metrics_test_util.h",
     "search/mock_searchbox.cc",
     "search/mock_searchbox.h",
   ]

@@ -250,7 +250,7 @@ void HpackHeaderTable::DebugLogTableState() const {
     DVLOG(2) << "  " << it->GetDebugString();
   }
   DVLOG(2) << "Full Static Index:";
-  for (const auto* entry : static_index_) {
+  for (auto* entry : static_index_) {
     DVLOG(2) << "  " << entry->GetDebugString();
   }
   DVLOG(2) << "Full Static Name Index:";
@@ -258,7 +258,7 @@ void HpackHeaderTable::DebugLogTableState() const {
     DVLOG(2) << "  " << it.first << ": " << it.second->GetDebugString();
   }
   DVLOG(2) << "Full Dynamic Index:";
-  for (const auto* entry : dynamic_index_) {
+  for (auto* entry : dynamic_index_) {
     DVLOG(2) << "  " << entry->GetDebugString();
   }
   DVLOG(2) << "Full Dynamic Name Index:";

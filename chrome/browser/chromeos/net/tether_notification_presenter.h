@@ -47,8 +47,6 @@ class TetherNotificationPresenter
       const cryptauth::RemoteDevice& remote_device) override;
   void NotifyMultiplePotentialHotspotsNearby() override;
   void RemovePotentialHotspotNotification() override;
-  void NotifySetupRequired(const std::string& device_name) override;
-  void RemoveSetupRequiredNotification() override;
   void NotifyConnectionToHostFailed() override;
   void RemoveConnectionToHostFailedNotification() override;
 
@@ -71,7 +69,6 @@ class TetherNotificationPresenter
   static const char kTetherNotifierId[];
   static const char kPotentialHotspotNotificationId[];
   static const char kActiveHostNotificationId[];
-  static const char kSetupRequiredNotificationId[];
 
   static std::unique_ptr<message_center::Notification> CreateNotification(
       const std::string& id,

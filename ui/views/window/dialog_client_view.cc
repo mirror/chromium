@@ -19,7 +19,6 @@
 #include "ui/views/layout/grid_layout.h"
 #include "ui/views/layout/layout_provider.h"
 #include "ui/views/style/platform_style.h"
-#include "ui/views/view_observer.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/window/dialog_delegate.h"
 
@@ -51,36 +50,6 @@ gfx::Size GetBoundingSizeForVerticalStack(const gfx::Size& size1,
                    size1.height() + size2.height());
 }
 
-// ViewDeletionObserver implements an observer to track the deletion of the
-// view in focus.
-class ViewDeletionObserver : public ViewObserver {
- public:
-  explicit ViewDeletionObserver(View* observed_view)
-      : observed_view_(observed_view) {
-    if (observed_view_)
-      observed_view_->AddObserver(this);
-  }
-
-  ~ViewDeletionObserver() override {
-    if (observed_view_)
-      observed_view_->RemoveObserver(this);
-  }
-
-  // ViewObserver:
-  void OnViewIsDeleting(View* observed_view) override {
-    DCHECK_EQ(observed_view, observed_view_);
-    observed_view_ = nullptr;
-    observed_view_->RemoveObserver(this);
-  }
-
-  View* observed_view() { return observed_view_; }
-
- private:
-  View* observed_view_ = nullptr;
-
-  DISALLOW_COPY_AND_ASSIGN(ViewDeletionObserver);
-};
-
 }  // namespace
 
 // Simple container to bubble child view changes up the view hierarchy.
@@ -108,7 +77,7 @@ class DialogClientView::ButtonRowContainer : public View {
 DialogClientView::DialogClientView(Widget* owner, View* contents_view)
     : ClientView(owner, contents_view),
       button_row_insets_(
-          LayoutProvider::Get()->GetInsetsMetric(INSETS_DIALOG_BUTTON_ROW)) {
+          LayoutProvider::Get()->GetInsetsMetric(INSETS_DIALOG_BUTTON)) {
   // Doing this now ensures this accelerator will have lower priority than
   // one set by the contents view.
   AddAccelerator(ui::Accelerator(ui::VKEY_ESCAPE, ui::EF_NONE));
@@ -167,9 +136,9 @@ const DialogClientView* DialogClientView::AsDialogClientView() const {
 ////////////////////////////////////////////////////////////////////////////////
 // DialogClientView, View overrides:
 
-gfx::Size DialogClientView::CalculatePreferredSize() const {
+gfx::Size DialogClientView::GetPreferredSize() const {
   return GetBoundingSizeForVerticalStack(
-      ClientView::CalculatePreferredSize(),
+      ClientView::GetPreferredSize(),
       button_row_container_->GetPreferredSize());
 }
 
@@ -357,8 +326,6 @@ void DialogClientView::SetupLayout() {
   base::AutoReset<bool> auto_reset(&adding_or_removing_views_, true);
   GridLayout* layout = new GridLayout(button_row_container_);
   layout->set_minimum_size(minimum_size_);
-  FocusManager* focus_manager = GetFocusManager();
-  ViewDeletionObserver deletion_observer(focus_manager->GetFocusedView());
 
   // Clobber any existing LayoutManager since it has weak references to child
   // Views which may be removed by SetupViews().
@@ -380,8 +347,8 @@ void DialogClientView::SetupLayout() {
   LayoutProvider* const layout_provider = LayoutProvider::Get();
   // Support dialogs that clear |button_row_insets_| to do their own layout.
   // They expect GetDialogRelatedControlVerticalSpacing() in this case.
-  if (insets.top() == 0 &&
-      !ui::MaterialDesignController::IsSecondaryUiMaterial()) {
+  // TODO(tapted): Remove this under Harmony.
+  if (insets.top() == 0) {
     const int top =
         layout_provider->GetDistanceMetric(DISTANCE_RELATED_CONTROL_VERTICAL);
     insets.Set(top, insets.left(), insets.bottom(), insets.right());
@@ -446,14 +413,6 @@ void DialogClientView::SetupLayout() {
     column_set->LinkColumnSizes(link[0], link[1], link[2], -1);
 
   layout->AddPaddingRow(kFixed, insets.bottom());
-
-  // The default focus is lost when child views are added back into the dialog.
-  // This restores focus if the button is still available.
-  View* previously_focused_view = deletion_observer.observed_view();
-  if (previously_focused_view && !focus_manager->GetFocusedView() &&
-      Contains(previously_focused_view)) {
-    previously_focused_view->RequestFocus();
-  }
 }
 
 void DialogClientView::SetupViews() {

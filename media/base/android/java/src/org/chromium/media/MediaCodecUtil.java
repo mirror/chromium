@@ -87,13 +87,7 @@ class MediaCodecUtil {
         @SuppressWarnings("deprecation")
         private int getCodecCount() {
             if (hasNewMediaCodecList()) return mCodecList.length;
-            try {
-                return MediaCodecList.getCodecCount();
-            } catch (RuntimeException e) {
-                // Swallow the exception due to bad Android implementation and pretend
-                // MediaCodecList is not supported.
-                return 0;
-            }
+            return MediaCodecList.getCodecCount();
         }
 
         @SuppressWarnings("deprecation")
@@ -255,7 +249,7 @@ class MediaCodecUtil {
                 // https://developer.android.com/reference/android/media/MediaCodecInfo.CodecProfileLevel.html
                 CodecCapabilities codecCapabilities = info.getCapabilitiesForType(mime);
                 if (mime.endsWith("vp9") && Build.VERSION_CODES.LOLLIPOP <= Build.VERSION.SDK_INT
-                        && Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
+                        && Build.VERSION.SDK_INT <= 23) {
                     addVp9CodecProfileLevels(profileLevels, codecCapabilities);
                     continue;
                 }
@@ -631,10 +625,10 @@ class MediaCodecUtil {
      * encryption scheme, specifically AES CBC encryption with possibility of pattern
      * encryption.
      * While 'cbcs' scheme was originally implemented in N, there was a bug (in the
-     * DRM code) which means that it didn't really work properly until N-MR1).
+     * DRM code) which means that it didn't really work properly until post-N).
      */
     static boolean platformSupportsCbcsEncryption() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1;
+        return Build.VERSION.SDK_INT > Build.VERSION_CODES.N;
     }
 
     /**

@@ -22,6 +22,7 @@
 #include "ash/test/test_system_tray_delegate.h"
 #include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/wm/window_state.h"
+#include "ash/wm_window.h"
 #include "base/command_line.h"
 #include "chromeos/accelerometer/accelerometer_reader.h"
 #include "chromeos/accelerometer/accelerometer_types.h"
@@ -29,7 +30,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/test_browser_context.h"
 #include "third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationLockType.h"
-#include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
 #include "ui/display/display.h"
 #include "ui/display/display_switches.h"
@@ -132,8 +132,7 @@ class ScreenOrientationControllerTest : public test::AshTestBase {
  protected:
   aura::Window* CreateAppWindowInShellWithId(int id) {
     aura::Window* window = CreateTestWindowInShellWithId(id);
-    window->SetProperty(aura::client::kAppType,
-                        static_cast<int>(AppType::CHROME_APP));
+    WmWindow::Get(window)->SetAppType(static_cast<int>(AppType::CHROME_APP));
     return window;
   }
 
@@ -283,7 +282,8 @@ TEST_F(ScreenOrientationControllerTest, ActiveWindowChangesUpdateLock) {
   delegate()->Lock(content.get(), blink::kWebScreenOrientationLockLandscape);
   ASSERT_TRUE(RotationLocked());
 
-  ::wm::ActivationClient* activation_client = Shell::Get()->activation_client();
+  aura::client::ActivationClient* activation_client =
+      Shell::Get()->activation_client();
   activation_client->ActivateWindow(focus_window2.get());
   EXPECT_FALSE(RotationLocked());
 
@@ -305,7 +305,8 @@ TEST_F(ScreenOrientationControllerTest, ActiveWindowChangesUpdateOrientation) {
   delegate()->Lock(content2.get(), blink::kWebScreenOrientationLockPortrait);
   EXPECT_EQ(display::Display::ROTATE_0, GetCurrentInternalDisplayRotation());
 
-  ::wm::ActivationClient* activation_client = Shell::Get()->activation_client();
+  aura::client::ActivationClient* activation_client =
+      Shell::Get()->activation_client();
   activation_client->ActivateWindow(focus_window2.get());
   EXPECT_TRUE(RotationLocked());
   EXPECT_EQ(display::Display::ROTATE_90, GetCurrentInternalDisplayRotation());
@@ -347,7 +348,8 @@ TEST_F(ScreenOrientationControllerTest, WindowDestructionRemovesLock) {
   content.reset();
   EXPECT_FALSE(RotationLocked());
 
-  ::wm::ActivationClient* activation_client = Shell::Get()->activation_client();
+  aura::client::ActivationClient* activation_client =
+      Shell::Get()->activation_client();
   activation_client->ActivateWindow(focus_window2.get());
   EXPECT_FALSE(RotationLocked());
 
@@ -768,7 +770,8 @@ TEST_F(ScreenOrientationControllerTest, UserRotationLock) {
 
   EXPECT_EQ(display::Display::ROTATE_90, GetCurrentInternalDisplayRotation());
 
-  ::wm::ActivationClient* activation_client = Shell::Get()->activation_client();
+  aura::client::ActivationClient* activation_client =
+      Shell::Get()->activation_client();
   // Activating any will switch to the natural orientation.
   activation_client->ActivateWindow(focus_window2.get());
   EXPECT_EQ(display::Display::ROTATE_0, GetCurrentInternalDisplayRotation());

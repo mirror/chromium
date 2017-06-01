@@ -12,6 +12,7 @@
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
+#include "components/app_modal/app_modal_dialog.h"
 #include "components/app_modal/app_modal_dialog_queue.h"
 #include "components/app_modal/javascript_dialog_extensions_client.h"
 #include "components/app_modal/javascript_native_dialog_factory.h"
@@ -243,6 +244,7 @@ bool JavaScriptDialogManager::HandleJavaScriptDialog(
     const base::string16* prompt_override) {
   AppModalDialogQueue* dialog_queue = AppModalDialogQueue::GetInstance();
   if (!dialog_queue->HasActiveDialog() ||
+      !dialog_queue->active_dialog()->IsJavaScriptModalDialog() ||
       dialog_queue->active_dialog()->web_contents() != web_contents) {
     return false;
   }
@@ -270,14 +272,15 @@ bool JavaScriptDialogManager::HandleJavaScriptDialog(
 void JavaScriptDialogManager::CancelDialogs(content::WebContents* web_contents,
                                             bool reset_state) {
   AppModalDialogQueue* queue = AppModalDialogQueue::GetInstance();
-  JavaScriptAppModalDialog* active_dialog = queue->active_dialog();
-  for (auto* dialog : *queue) {
+  AppModalDialog* active_dialog = queue->active_dialog();
+  for (AppModalDialogQueue::iterator i = queue->begin();
+       i != queue->end(); ++i) {
     // Invalidating the active dialog might trigger showing a not-yet
     // invalidated dialog, so invalidate the active dialog last.
-    if (dialog == active_dialog)
+    if ((*i) == active_dialog)
       continue;
-    if (dialog->web_contents() == web_contents)
-      dialog->Invalidate();
+    if ((*i)->web_contents() == web_contents)
+      (*i)->Invalidate();
   }
   if (active_dialog && active_dialog->web_contents() == web_contents)
     active_dialog->Invalidate();

@@ -52,14 +52,10 @@ class JourneyLoggerAndroid {
   void SetEventOccurred(JNIEnv* env,
                         const base::android::JavaParamRef<jobject>& jcaller,
                         jint jevent);
-  void SetCompleted(JNIEnv* env,
-                    const base::android::JavaParamRef<jobject>& jcaller);
-  void SetAborted(JNIEnv* env,
-                  const base::android::JavaParamRef<jobject>& jcaller,
-                  jint jreason);
-  void SetNotShown(JNIEnv* env,
-                   const base::android::JavaParamRef<jobject>& jcaller,
-                   jint jreason);
+  void RecordJourneyStatsHistograms(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& jcaller,
+      jint jcompletion_status);
 
  private:
   JourneyLogger journey_logger_;

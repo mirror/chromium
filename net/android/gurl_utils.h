@@ -11,6 +11,6 @@ namespace net {
 
 bool RegisterGURLUtils(JNIEnv* env);
 
-}  // namespace net
+}  // net namespace
 
 #endif  // NET_ANDROID_GURL_UTILS_H_

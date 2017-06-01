@@ -17,6 +17,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/tab_contents/tab_util.h"
 #include "chrome/grit/generated_resources.h"
+#include "chrome/grit/locale_settings.h"
 #include "components/url_formatter/elide_url.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_details.h"
@@ -36,9 +37,11 @@
 
 namespace {
 
-// On Android, if the site requested larger quota than this threshold, show a
-// different message to the user.
+#if defined(OS_ANDROID)
+// If the site requested larger quota than this threshold, show a different
+// message to the user.
 const int64_t kRequestLargeQuotaThreshold = 5 * 1024 * 1024;
+#endif
 
 // QuotaPermissionRequest ---------------------------------------------
 
@@ -47,7 +50,6 @@ class QuotaPermissionRequest : public PermissionRequest {
   QuotaPermissionRequest(
       ChromeQuotaPermissionContext* context,
       const GURL& origin_url,
-      bool is_large_quota_request_,
       const content::QuotaPermissionContext::PermissionCallback& callback);
 
   ~QuotaPermissionRequest() override;
@@ -55,9 +57,6 @@ class QuotaPermissionRequest : public PermissionRequest {
  private:
   // PermissionRequest:
   IconId GetIconId() const override;
-#if defined(OS_ANDROID)
-  base::string16 GetMessageText() const override;
-#endif
   base::string16 GetMessageTextFragment() const override;
   GURL GetOrigin() const override;
   void PermissionGranted() override;
@@ -66,9 +65,8 @@ class QuotaPermissionRequest : public PermissionRequest {
   void RequestFinished() override;
   PermissionRequestType GetPermissionRequestType() const override;
 
-  const scoped_refptr<ChromeQuotaPermissionContext> context_;
-  const GURL origin_url_;
-  const bool is_large_quota_request_;
+  scoped_refptr<ChromeQuotaPermissionContext> context_;
+  GURL origin_url_;
   content::QuotaPermissionContext::PermissionCallback callback_;
 
   DISALLOW_COPY_AND_ASSIGN(QuotaPermissionRequest);
@@ -77,15 +75,10 @@ class QuotaPermissionRequest : public PermissionRequest {
 QuotaPermissionRequest::QuotaPermissionRequest(
     ChromeQuotaPermissionContext* context,
     const GURL& origin_url,
-    bool is_large_quota_request,
     const content::QuotaPermissionContext::PermissionCallback& callback)
     : context_(context),
       origin_url_(origin_url),
-      is_large_quota_request_(is_large_quota_request),
-      callback_(callback) {
-  // Suppress unused private field warning on desktop
-  (void)is_large_quota_request_;
-}
+      callback_(callback) {}
 
 QuotaPermissionRequest::~QuotaPermissionRequest() {}
 
@@ -97,17 +90,6 @@ PermissionRequest::IconId QuotaPermissionRequest::GetIconId() const {
   return ui::kWarningIcon;
 #endif
 }
-
-#if defined(OS_ANDROID)
-base::string16 QuotaPermissionRequest::GetMessageText() const {
-  // If the site requested larger quota than this threshold, show a different
-  // message to the user.
-  return l10n_util::GetStringFUTF16(
-      (is_large_quota_request_ ? IDS_REQUEST_LARGE_QUOTA_INFOBAR_QUESTION
-                               : IDS_REQUEST_QUOTA_INFOBAR_QUESTION),
-      url_formatter::FormatUrlForSecurityDisplay(origin_url_));
-}
-#endif
 
 base::string16 QuotaPermissionRequest::GetMessageTextFragment() const {
   return l10n_util::GetStringUTF16(IDS_REQUEST_QUOTA_PERMISSION_FRAGMENT);
@@ -286,10 +268,8 @@ void ChromeQuotaPermissionContext::RequestQuotaPermission(
     PermissionRequestManager* permission_request_manager =
         PermissionRequestManager::FromWebContents(web_contents);
     if (permission_request_manager) {
-      bool is_large_quota_request =
-          params.requested_size > kRequestLargeQuotaThreshold;
-      permission_request_manager->AddRequest(new QuotaPermissionRequest(
-          this, params.origin_url, is_large_quota_request, callback));
+      permission_request_manager->AddRequest(
+          new QuotaPermissionRequest(this, params.origin_url, callback));
       return;
     }
 #if defined(OS_ANDROID)

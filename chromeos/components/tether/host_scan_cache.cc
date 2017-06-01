@@ -11,7 +11,6 @@
 #include "chromeos/components/tether/active_host.h"
 #include "chromeos/components/tether/device_id_tether_network_guid_map.h"
 #include "chromeos/components/tether/tether_host_response_recorder.h"
-#include "chromeos/components/tether/timer_factory.h"
 #include "chromeos/network/network_state_handler.h"
 #include "components/proximity_auth/logging/logging.h"
 
@@ -19,12 +18,27 @@ namespace chromeos {
 
 namespace tether {
 
+namespace {
+
+class TimerFactoryImpl : public HostScanCache::TimerFactory {
+ public:
+  TimerFactoryImpl() {}
+  ~TimerFactoryImpl() {}
+
+  // HostScanCache::TimerFactory:
+  std::unique_ptr<base::Timer> CreateOneShotTimer() override {
+    return base::MakeUnique<base::OneShotTimer>();
+  }
+};
+
+}  // namespace
+
 HostScanCache::HostScanCache(
     NetworkStateHandler* network_state_handler,
     ActiveHost* active_host,
     TetherHostResponseRecorder* tether_host_response_recorder,
     DeviceIdTetherNetworkGuidMap* device_id_tether_network_guid_map)
-    : timer_factory_(base::MakeUnique<TimerFactory>()),
+    : timer_factory_(base::MakeUnique<TimerFactoryImpl>()),
       network_state_handler_(network_state_handler),
       active_host_(active_host),
       tether_host_response_recorder_(tether_host_response_recorder),
@@ -41,8 +55,7 @@ void HostScanCache::SetHostScanResult(const std::string& tether_network_guid,
                                       const std::string& device_name,
                                       const std::string& carrier,
                                       int battery_percentage,
-                                      int signal_strength,
-                                      bool setup_required) {
+                                      int signal_strength) {
   DCHECK(!tether_network_guid.empty());
 
   auto found_iter = tether_guid_to_timer_map_.find(tether_network_guid);
@@ -73,11 +86,6 @@ void HostScanCache::SetHostScanResult(const std::string& tether_network_guid,
                  << "new signal strength: " << signal_strength;
   }
 
-  if (setup_required)
-    setup_required_tether_guids_.insert(tether_network_guid);
-  else
-    setup_required_tether_guids_.erase(tether_network_guid);
-
   StartTimer(tether_network_guid);
 }
 
@@ -101,7 +109,6 @@ bool HostScanCache::RemoveHostScanResult(
   }
 
   tether_guid_to_timer_map_.erase(it);
-  setup_required_tether_guids_.erase(tether_network_guid);
   return network_state_handler_->RemoveTetherNetworkState(tether_network_guid);
 }
 
@@ -138,12 +145,6 @@ void HostScanCache::ClearCacheExceptForActiveHost() {
 
     RemoveHostScanResult(tether_network_guid);
   }
-}
-
-bool HostScanCache::DoesHostRequireSetup(
-    const std::string& tether_network_guid) {
-  return setup_required_tether_guids_.find(tether_network_guid) !=
-         setup_required_tether_guids_.end();
 }
 
 void HostScanCache::OnPreviouslyConnectedHostIdsChanged() {

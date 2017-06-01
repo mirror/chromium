@@ -1015,9 +1015,9 @@ void XMLHttpRequest::CreateRequest(PassRefPtr<EncodedFormData> http_body,
     request.AddHTTPHeaderFields(request_headers_);
 
   ThreadableLoaderOptions options;
-  options.fetch_request_mode =
-      upload_events ? WebURLRequest::kFetchRequestModeCORSWithForcedPreflight
-                    : WebURLRequest::kFetchRequestModeCORS;
+  options.preflight_policy =
+      upload_events ? kForcePreflight : kConsiderPreflight;
+  options.cross_origin_request_policy = kUseAccessControl;
   options.initiator = FetchInitiatorTypeNames::xmlhttprequest;
   options.content_security_policy_enforcement =
       ContentSecurityPolicy::ShouldBypassMainWorld(&execution_context)
@@ -1364,8 +1364,9 @@ void XMLHttpRequest::SetRequestHeaderInternal(const AtomicString& name,
 
   DEFINE_THREAD_SAFE_STATIC_LOCAL(
       EnumerationHistogram, header_value_category_histogram,
-      ("Blink.XHR.setRequestHeader.HeaderValueCategoryInRFC7230",
-       kHeaderValueCategoryByRFC7230End));
+      new EnumerationHistogram(
+          "Blink.XHR.setRequestHeader.HeaderValueCategoryInRFC7230",
+          kHeaderValueCategoryByRFC7230End));
   header_value_category_histogram.Count(header_value_category);
 }
 

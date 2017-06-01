@@ -75,5 +75,4 @@ TEST(HttpAuthHandlerNegotiateParseTest,
             ParseLaterRoundChallenge("negotiate", &challenge, &encoded_token,
                                      &decoded_token));
 }
-
-}  // namespace net
+}

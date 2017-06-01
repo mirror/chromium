@@ -96,10 +96,16 @@ class CORE_EXPORT FrameLoader final {
             HistoryItem* = nullptr,
             HistoryLoadType = kHistoryDifferentDocumentLoad);
 
+  static void ReportLocalLoadFailed(LocalFrame*, const String& url);
+
   // Warning: stopAllLoaders can and will detach the LocalFrame out from under
   // you. All callers need to either protect the LocalFrame or guarantee they
   // won't in any way access the LocalFrame after stopAllLoaders returns.
   void StopAllLoaders();
+
+  // FIXME: clear() is trying to do too many things. We should break it down
+  // into smaller functions.
+  void Clear();
 
   void ReplaceDocumentWhileExecutingJavaScriptURL(const String& source,
                                                   Document* owner_document);

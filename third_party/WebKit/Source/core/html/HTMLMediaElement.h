@@ -210,6 +210,7 @@ class CORE_EXPORT HTMLMediaElement
       const RecordMetricsBehavior = RecordMetricsBehavior::kDoNotRecord) const;
   DOMTokenList* controlsList() const;
   HTMLMediaElementControlsList* ControlsListInternal() const;
+  void ControlsListValueWasSet();
   double volume() const;
   void setVolume(double, ExceptionState& = ASSERT_NO_EXCEPTION);
   bool muted() const;
@@ -289,7 +290,7 @@ class CORE_EXPORT HTMLMediaElement
   void SourceWasAdded(HTMLSourceElement*);
 
   // ScriptWrappable functions.
-  bool HasPendingActivity() const override;
+  bool HasPendingActivity() const final;
 
   AudioSourceProviderClient* AudioSourceNode() { return audio_source_node_; }
   void SetAudioSourceNode(AudioSourceProviderClient*);

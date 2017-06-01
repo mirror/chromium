@@ -17,7 +17,6 @@
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_set.h"
-#include "extensions/common/manifest_handlers/icons_handler.h"
 #include "extensions/common/manifest_handlers/web_accessible_resources_info.h"
 #include "extensions/common/manifest_handlers/webview_info.h"
 #include "extensions/common/permissions/api_permission.h"
@@ -33,7 +32,7 @@ ExtensionNavigationThrottle::ExtensionNavigationThrottle(
 ExtensionNavigationThrottle::~ExtensionNavigationThrottle() {}
 
 content::NavigationThrottle::ThrottleCheckResult
-ExtensionNavigationThrottle::WillStartOrRedirectRequest() {
+ExtensionNavigationThrottle::WillStartRequest() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   content::WebContents* web_contents = navigation_handle()->GetWebContents();
   ExtensionRegistry* registry =
@@ -64,18 +63,6 @@ ExtensionNavigationThrottle::WillStartOrRedirectRequest() {
     // TODO(nick): This yields an unsatisfying error page; use a different error
     // code once that's supported. https://crbug.com/649869
     return content::NavigationThrottle::BLOCK_REQUEST;
-  }
-
-  // Hosted apps don't have any associated resources outside of icons, so
-  // block any requests to URLs in their extension origin.
-  if (target_extension->is_hosted_app()) {
-    base::StringPiece resource_root_relative_path =
-        url.path_piece().empty() ? base::StringPiece()
-                                 : url.path_piece().substr(1);
-    if (!IconsInfo::GetIcons(target_extension)
-             .ContainsPath(resource_root_relative_path)) {
-      return content::NavigationThrottle::BLOCK_REQUEST;
-    }
   }
 
   if (navigation_handle()->IsInMainFrame()) {
@@ -125,8 +112,7 @@ ExtensionNavigationThrottle::WillStartOrRedirectRequest() {
   }
 
   // This is a subframe navigation to a |target_extension| resource.
-  // Enforce the web_accessible_resources restriction, and same-origin
-  // restrictions for platform apps.
+  // Enforce the web_accessible_resources restriction.
   content::RenderFrameHost* parent = navigation_handle()->GetParentFrame();
 
   // Look to see if all ancestors belong to |target_extension|. If not,
@@ -162,41 +148,9 @@ ExtensionNavigationThrottle::WillStartOrRedirectRequest() {
     if (!WebAccessibleResourcesInfo::IsResourceWebAccessible(target_extension,
                                                              url.path()))
       return content::NavigationThrottle::BLOCK_REQUEST;
-
-    // A platform app may not be loaded in an <iframe> by another origin.
-    //
-    // In fact, platform apps may not have any cross-origin iframes at all; for
-    // non-extension origins of |url| this is enforced by means of a Content
-    // Security Policy. But CSP is incapable of blocking the chrome-extension
-    // scheme. Thus, this case must be handled specially here.
-    if (target_extension->is_platform_app())
-      return content::NavigationThrottle::CANCEL;
-
-    // A platform app may not load another extension in an <iframe>.
-    const Extension* parent_extension =
-        registry->enabled_extensions().GetExtensionOrAppByURL(
-            parent->GetSiteInstance()->GetSiteURL());
-    if (parent_extension && parent_extension->is_platform_app())
-      return content::NavigationThrottle::BLOCK_REQUEST;
   }
 
   return content::NavigationThrottle::PROCEED;
-}
-
-content::NavigationThrottle::ThrottleCheckResult
-ExtensionNavigationThrottle::WillStartRequest() {
-  return WillStartOrRedirectRequest();
-}
-
-content::NavigationThrottle::ThrottleCheckResult
-ExtensionNavigationThrottle::WillRedirectRequest() {
-  ThrottleCheckResult result = WillStartOrRedirectRequest();
-  if (result == BLOCK_REQUEST) {
-    // TODO(nick): https://crbug.com/695421 means that BLOCK_REQUEST does not
-    // work here. Once PlzNavigate is enabled 100%, just return |result|.
-    return CANCEL;
-  }
-  return result;
 }
 
 const char* ExtensionNavigationThrottle::GetNameForLogging() {

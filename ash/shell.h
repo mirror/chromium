@@ -37,6 +37,9 @@ class UserActivityForwarder;
 class Window;
 class WindowManagerClient;
 class WindowTreeClient;
+namespace client {
+class ActivationClient;
+}
 }
 
 namespace base {
@@ -79,7 +82,6 @@ class TooltipController;
 
 namespace wm {
 class AcceleratorFilter;
-class ActivationClient;
 class CompoundEventFilter;
 class FocusController;
 class ShadowController;
@@ -135,12 +137,14 @@ class ResizeShadowController;
 class ResolutionNotificationController;
 class RootWindowController;
 class ShellPort;
+class ScopedOverviewAnimationSettingsFactoryAura;
 class ScreenLayoutObserver;
 class ScreenOrientationController;
 class ScreenshotController;
 class ScreenPinningController;
 class ScreenPositionController;
 class SessionController;
+class SessionStateDelegate;
 class ShelfController;
 class ShelfModel;
 class ShelfWindowWatcher;
@@ -172,6 +176,7 @@ class WindowCycleController;
 class WindowPositioner;
 class WindowSelectorController;
 class WindowTreeHostManager;
+class WmWindow;
 
 enum class Config;
 enum class LoginStatus;
@@ -193,7 +198,7 @@ class SmsObserverTest;
 class ASH_EXPORT Shell : public SessionObserver,
                          public SystemModalContainerEventFilterDelegate,
                          public ui::EventTarget,
-                         public ::wm::ActivationChangeObserver {
+                         public aura::client::ActivationChangeObserver {
  public:
   typedef std::vector<RootWindowController*> RootWindowControllerList;
 
@@ -281,7 +286,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   void OnCastingSessionStartedOrStopped(bool started);
 
   // Called when a root window is created.
-  void OnRootWindowAdded(aura::Window* root_window);
+  void OnRootWindowAdded(WmWindow* root_window);
 
   // Creates a virtual keyboard. Deletes the old virtual keyboard if it already
   // exists.
@@ -413,6 +418,10 @@ class ASH_EXPORT Shell : public SessionObserver,
   }
   ::wm::CursorManager* cursor_manager() { return cursor_manager_.get(); }
 
+  SessionStateDelegate* session_state_delegate() {
+    return session_state_delegate_.get();
+  }
+
   HighContrastController* high_contrast_controller() {
     return high_contrast_controller_.get();
   }
@@ -427,7 +436,7 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   ToastManager* toast_manager() { return toast_manager_.get(); }
 
-  ::wm::ActivationClient* activation_client();
+  aura::client::ActivationClient* activation_client();
 
   // Force the shelf to query for it's current visibility state.
   // TODO(jamescook): Move to Shelf.
@@ -578,11 +587,10 @@ class ASH_EXPORT Shell : public SessionObserver,
   void NotifyOverviewModeEnded();
 
   // Notifies observers that fullscreen mode has changed for |root_window|.
-  void NotifyFullscreenStateChanged(bool is_fullscreen,
-                                    aura::Window* root_window);
+  void NotifyFullscreenStateChanged(bool is_fullscreen, WmWindow* root_window);
 
   // Notifies observers that |pinned_window| changed its pinned window state.
-  void NotifyPinnedStateChanged(aura::Window* pinned_window);
+  void NotifyPinnedStateChanged(WmWindow* pinned_window);
 
   // Notifies observers that the virtual keyboard has been
   // activated/deactivated for |root_window|.
@@ -591,15 +599,15 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   // Notifies observers that the shelf was created for |root_window|.
   // TODO(jamescook): Move to Shelf.
-  void NotifyShelfCreatedForRootWindow(aura::Window* root_window);
+  void NotifyShelfCreatedForRootWindow(WmWindow* root_window);
 
   // Notifies observers that |root_window|'s shelf changed alignment.
   // TODO(jamescook): Move to Shelf.
-  void NotifyShelfAlignmentChanged(aura::Window* root_window);
+  void NotifyShelfAlignmentChanged(WmWindow* root_window);
 
   // Notifies observers that |root_window|'s shelf changed auto-hide behavior.
   // TODO(jamescook): Move to Shelf.
-  void NotifyShelfAutoHideBehaviorChanged(aura::Window* root_window);
+  void NotifyShelfAutoHideBehaviorChanged(WmWindow* root_window);
 
   // Used to provide better error messages for Shell::Get() under mash.
   static void SetIsBrowserProcessWithMash();
@@ -642,7 +650,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<ui::EventTargetIterator> GetChildIterator() const override;
   ui::EventTargeter* GetEventTargeter() override;
 
-  // wm::ActivationChangeObserver:
+  // aura::client::ActivationChangeObserver:
   void OnWindowActivated(ActivationReason reason,
                          aura::Window* gained_active,
                          aura::Window* lost_active) override;
@@ -669,12 +677,15 @@ class ASH_EXPORT Shell : public SessionObserver,
   // when the screen is initially created.
   static bool initially_hide_cursor_;
 
+  std::unique_ptr<ScopedOverviewAnimationSettingsFactoryAura>
+      scoped_overview_animation_settings_factory_;
   std::unique_ptr<ShellPort> shell_port_;
 
   // The CompoundEventFilter owned by aura::Env object.
   std::unique_ptr<::wm::CompoundEventFilter> env_filter_;
 
   std::unique_ptr<UserMetricsRecorder> user_metrics_recorder_;
+  std::unique_ptr<SessionStateDelegate> session_state_delegate_;
   std::unique_ptr<WindowPositioner> window_positioner_;
 
   std::unique_ptr<AcceleratorController> accelerator_controller_;

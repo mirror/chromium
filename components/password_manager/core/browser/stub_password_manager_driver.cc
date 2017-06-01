@@ -60,8 +60,4 @@ autofill::AutofillDriver* StubPasswordManagerDriver::GetAutofillDriver() {
   return nullptr;
 }
 
-bool StubPasswordManagerDriver::IsMainFrame() const {
-  return true;
-}
-
 }  // namespace password_manager

@@ -179,7 +179,6 @@ component("shared_impl") {
 
   if (!is_nacl) {
     deps += [
-      "//net",
       "//skia",
       "//ui/events:events_base",
       "//ui/surface",

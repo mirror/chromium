@@ -19,6 +19,7 @@ class Window;
 namespace ash {
 
 class WindowDimmer;
+class WmWindow;
 
 template <typename UserData>
 class WindowUserData;
@@ -37,34 +38,34 @@ class ASH_EXPORT ScreenPinningController : public WmDisplayObserver {
 
   // Sets a pinned window. It is not allowed to call this when there already
   // is a pinned window.
-  void SetPinnedWindow(aura::Window* pinned_window);
+  void SetPinnedWindow(WmWindow* pinned_window);
 
   // Returns true if in pinned mode, otherwise false.
   bool IsPinned() const;
 
   // Returns the pinned window if in pinned mode, or nullptr.
-  aura::Window* pinned_window() const { return pinned_window_; }
+  WmWindow* pinned_window() const { return pinned_window_; }
 
   // Called when a new window is added to the container which has the pinned
   // window.
-  void OnWindowAddedToPinnedContainer(aura::Window* new_window);
+  void OnWindowAddedToPinnedContainer(WmWindow* new_window);
 
   // Called when a window will be removed from the container which has the
   // pinned window.
-  void OnWillRemoveWindowFromPinnedContainer(aura::Window* window);
+  void OnWillRemoveWindowFromPinnedContainer(WmWindow* window);
 
   // Called when a window stacking is changed in the container which has the
   // pinned window.
-  void OnPinnedContainerWindowStackingChanged(aura::Window* window);
+  void OnPinnedContainerWindowStackingChanged(WmWindow* window);
 
   // Called when a new window is added to a system modal container.
-  void OnWindowAddedToSystemModalContainer(aura::Window* new_window);
+  void OnWindowAddedToSystemModalContainer(WmWindow* new_window);
 
   // Called when a window will be removed from a system modal container.
-  void OnWillRemoveWindowFromSystemModalContainer(aura::Window* window);
+  void OnWillRemoveWindowFromSystemModalContainer(WmWindow* window);
 
   // Called when a window stacking is changed in a system modal container.
-  void OnSystemModalContainerWindowStackingChanged(aura::Window* window);
+  void OnSystemModalContainerWindowStackingChanged(WmWindow* window);
 
  private:
   class PinnedContainerWindowObserver;
@@ -80,13 +81,13 @@ class ASH_EXPORT ScreenPinningController : public WmDisplayObserver {
 
   // Creates a WindowDimmer for |container| and places it in |window_dimmers_|.
   // Returns the window from WindowDimmer.
-  aura::Window* CreateWindowDimmer(aura::Window* container);
+  WmWindow* CreateWindowDimmer(WmWindow* container);
 
   // WmDisplayObserver:
   void OnDisplayConfigurationChanged() override;
 
   // Pinned window should be on top in the parent window.
-  aura::Window* pinned_window_ = nullptr;
+  WmWindow* pinned_window_ = nullptr;
 
   // Owns the WindowDimmers. There is one WindowDimmer for the parent of
   // |pinned_window_| and one for each display other than the display

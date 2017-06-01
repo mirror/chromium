@@ -208,7 +208,7 @@ void OffTheRecordProfileIOData::InitializeInternal(
   main_context->set_cert_transparency_verifier(
       io_thread_globals->cert_transparency_verifier.get());
   main_context->set_ct_policy_enforcer(
-      io_thread_globals->system_request_context->ct_policy_enforcer());
+      io_thread_globals->ct_policy_enforcer.get());
 
   main_context->set_net_log(io_thread->net_log());
 
@@ -289,13 +289,11 @@ net::URLRequestContext* OffTheRecordProfileIOData::InitializeAppRequestContext(
   context->SetCookieStore(std::move(cookie_store));
 
   // Build a new HttpNetworkSession that uses the new ChannelIDService.
-  net::HttpNetworkSession::Context session_context =
-      main_request_context_storage()->http_network_session()->context();
-  session_context.channel_id_service = channel_id_service.get();
+  net::HttpNetworkSession::Params network_params =
+      main_request_context_storage()->http_network_session()->params();
+  network_params.channel_id_service = channel_id_service.get();
   std::unique_ptr<net::HttpNetworkSession> http_network_session(
-      new net::HttpNetworkSession(
-          main_request_context_storage()->http_network_session()->params(),
-          session_context));
+      new net::HttpNetworkSession(network_params));
 
   // Use a separate in-memory cache for the app.
   std::unique_ptr<net::HttpCache> app_http_cache = CreateMainHttpFactory(

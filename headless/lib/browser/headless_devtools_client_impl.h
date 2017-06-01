@@ -13,7 +13,6 @@
 #include "headless/public/devtools/domains/accessibility.h"
 #include "headless/public/devtools/domains/animation.h"
 #include "headless/public/devtools/domains/application_cache.h"
-#include "headless/public/devtools/domains/browser.h"
 #include "headless/public/devtools/domains/cache_storage.h"
 #include "headless/public/devtools/domains/console.h"
 #include "headless/public/devtools/domains/css.h"
@@ -66,7 +65,6 @@ class HeadlessDevToolsClientImpl : public HeadlessDevToolsClient,
   accessibility::Domain* GetAccessibility() override;
   animation::Domain* GetAnimation() override;
   application_cache::Domain* GetApplicationCache() override;
-  browser::Domain* GetBrowser() override;
   cache_storage::Domain* GetCacheStorage() override;
   console::Domain* GetConsole() override;
   css::Domain* GetCSS() override;
@@ -169,7 +167,6 @@ class HeadlessDevToolsClientImpl : public HeadlessDevToolsClient,
   accessibility::ExperimentalDomain accessibility_domain_;
   animation::ExperimentalDomain animation_domain_;
   application_cache::ExperimentalDomain application_cache_domain_;
-  browser::ExperimentalDomain browser_domain_;
   cache_storage::ExperimentalDomain cache_storage_domain_;
   console::ExperimentalDomain console_domain_;
   css::ExperimentalDomain css_domain_;

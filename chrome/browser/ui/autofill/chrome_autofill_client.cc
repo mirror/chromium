@@ -310,12 +310,10 @@ void ChromeAutofillClient::WebContentsDestroyed() {
   HideAutofillPopup();
 }
 
-#if !defined(OS_ANDROID)
 void ChromeAutofillClient::OnZoomChanged(
     const zoom::ZoomController::ZoomChangedEventData& data) {
   HideAutofillPopup();
 }
-#endif  // !defined(OS_ANDROID)
 
 void ChromeAutofillClient::PropagateAutofillPredictions(
     content::RenderFrameHost* rfh,

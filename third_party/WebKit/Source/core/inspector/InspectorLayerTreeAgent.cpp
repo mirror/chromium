@@ -34,8 +34,8 @@
 #include <memory>
 #include "core/dom/DOMNodeIds.h"
 #include "core/dom/Document.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/VisualViewport.h"
 #include "core/inspector/IdentifiersFactory.h"
 #include "core/inspector/InspectedFrames.h"
@@ -50,6 +50,7 @@
 #include "platform/graphics/CompositingReasons.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/graphics/PictureSnapshot.h"
+#include "platform/image-encoders/PNGImageEncoder.h"
 #include "platform/transforms/TransformationMatrix.h"
 #include "platform/wtf/text/Base64.h"
 #include "platform/wtf/text/StringBuilder.h"
@@ -210,8 +211,8 @@ void InspectorLayerTreeAgent::DidPaint(const GraphicsLayer* graphics_layer,
                                        const LayoutRect& rect) {
   if (suppress_layer_paint_events_)
     return;
-  // Should only happen for LocalFrameView paints when compositing is off.
-  // Consider different instrumentation method for that.
+  // Should only happen for FrameView paints when compositing is off. Consider
+  // different instrumentation method for that.
   if (!graphics_layer)
     return;
 
@@ -265,7 +266,7 @@ void InspectorLayerTreeAgent::BuildLayerIdToNodeIdMap(
     BuildLayerIdToNodeIdMap(child, layer_id_to_node_id_map);
   if (!root->GetLayoutObject().IsLayoutIFrame())
     return;
-  LocalFrameView* child_frame_view =
+  FrameView* child_frame_view =
       ToLayoutPart(root->GetLayoutObject()).ChildFrameView();
   LayoutViewItem child_layout_view_item = child_frame_view->GetLayoutViewItem();
   if (!child_layout_view_item.IsNull()) {
@@ -377,8 +378,8 @@ Response InspectorLayerTreeAgent::makeSnapshot(const String& layer_id,
   GraphicsContext context(layer->GetPaintController());
   context.BeginRecording(interest_rect);
   layer->GetPaintController().GetPaintArtifact().Replay(interest_rect, context);
-  RefPtr<PictureSnapshot> snapshot = AdoptRef(
-      new PictureSnapshot(ToSkPicture(context.EndRecording(), interest_rect)));
+  RefPtr<PictureSnapshot> snapshot =
+      AdoptRef(new PictureSnapshot(ToSkPicture(context.EndRecording())));
 
   *snapshot_id = String::Number(++last_snapshot_id_);
   bool new_entry = snapshot_by_id_.insert(*snapshot_id, snapshot).is_new_entry;

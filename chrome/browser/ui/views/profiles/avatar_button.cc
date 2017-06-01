@@ -16,7 +16,6 @@
 #include "chrome/browser/themes/theme_service_factory.h"
 #include "chrome/browser/ui/views/profiles/profile_chooser_view.h"
 #include "chrome/grit/theme_resources.h"
-#include "components/keyed_service/content/browser_context_keyed_service_shutdown_notifier_factory.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/theme_provider.h"
@@ -71,29 +70,7 @@ class AvatarButtonThemedBorder : public views::Border {
   ~AvatarButtonThemedBorder() override {}
 
   void Paint(const views::View& view, gfx::Canvas* canvas) override {
-    // Fill the color/background image from the theme.
-    cc::PaintFlags fill_flags;
-    fill_flags.setAntiAlias(true);
-    const ui::ThemeProvider* theme = view.GetThemeProvider();
-    fill_flags.setColor(
-        theme->GetColor(ThemeProperties::COLOR_BUTTON_BACKGROUND));
-    SkPath fill_path;
-    gfx::Rect fill_bounds = view.GetLocalBounds();
-    // The fill should overlap the inner stroke but not the outer stroke. But we
-    // don't inset the top because as it stands, the asset-based window controls
-    // fill one pixel higher due to how the background masking works out. Not
-    // matching that is very noticeable. TODO(estade): when the window
-    // controls use this same code, inset all sides equally.
-    fill_bounds.Inset(gfx::Insets(0, kStrokeWidth, kStrokeWidth, kStrokeWidth));
-    fill_path.addRoundRect(gfx::RectToSkRect(fill_bounds), kCornerRadius,
-                           kCornerRadius);
-    canvas->DrawPath(fill_path, fill_flags);
-    fill_flags.setColor(SK_ColorBLACK);
-    canvas->DrawImageInPath(
-        *theme->GetImageSkiaNamed(IDR_THEME_WINDOW_CONTROL_BACKGROUND), 0, 0,
-        fill_path, fill_flags);
-
-    // Paint an outer dark stroke.
+    // Start with an outer dark stroke.
     cc::PaintFlags stroke_flags;
     stroke_flags.setStyle(cc::PaintFlags::kStroke_Style);
     // The colors are chosen to match the assets we use for Linux.
@@ -143,26 +120,6 @@ constexpr int AvatarButtonThemedBorder::kStrokeWidth;
 constexpr gfx::Insets AvatarButtonThemedBorder::kBorderStrokeInsets;
 constexpr float AvatarButtonThemedBorder::kCornerRadius;
 
-class ShutdownNotifierFactory
-    : public BrowserContextKeyedServiceShutdownNotifierFactory {
- public:
-  static ShutdownNotifierFactory* GetInstance() {
-    return base::Singleton<ShutdownNotifierFactory>::get();
-  }
-
- private:
-  friend struct base::DefaultSingletonTraits<ShutdownNotifierFactory>;
-
-  ShutdownNotifierFactory()
-      : BrowserContextKeyedServiceShutdownNotifierFactory(
-            "AvatarButtonShutdownNotifierFactory") {
-    DependsOn(SigninManagerFactory::GetInstance());
-  }
-  ~ShutdownNotifierFactory() override {}
-
-  DISALLOW_COPY_AND_ASSIGN(ShutdownNotifierFactory);
-};
-
 }  // namespace
 
 AvatarButton::AvatarButton(views::ButtonListener* listener,
@@ -198,23 +155,21 @@ AvatarButton::AvatarButton(views::ButtonListener* listener,
 #endif
 
   if (apply_ink_drop) {
-    SetInkDropMode(InkDropMode::ON);
-    SetFocusPainter(nullptr);
-#if defined(OS_LINUX)
     constexpr int kIconSize = 16;
-    set_ink_drop_base_color(SK_ColorWHITE);
-    SetBorder(base::MakeUnique<AvatarButtonThemedBorder>());
-    generic_avatar_ = gfx::CreateVectorIcon(kProfileSwitcherOutlineIcon,
-                                            kIconSize, gfx::kPlaceholderColor);
-#elif defined(OS_WIN)
-    constexpr int kIconSize = 16;
-    DCHECK_EQ(AvatarButtonStyle::NATIVE, button_style);
-    set_ink_drop_base_color(SK_ColorBLACK);
-    SetBorder(views::CreateEmptyBorder(kBorderInsets));
     constexpr SkColor kIconColor =
         SkColorSetA(SK_ColorBLACK, static_cast<SkAlpha>(0.54 * 0xFF));
     generic_avatar_ =
         gfx::CreateVectorIcon(kAccountCircleIcon, kIconSize, kIconColor);
+
+    SetInkDropMode(InkDropMode::ON);
+    SetFocusPainter(nullptr);
+#if defined(OS_LINUX)
+    set_ink_drop_base_color(SK_ColorWHITE);
+    SetBorder(base::MakeUnique<AvatarButtonThemedBorder>());
+#elif defined(OS_WIN)
+    DCHECK_EQ(AvatarButtonStyle::NATIVE, button_style);
+    set_ink_drop_base_color(SK_ColorBLACK);
+    SetBorder(views::CreateEmptyBorder(kBorderInsets));
 #endif  // defined(OS_WIN)
   } else if (button_style == AvatarButtonStyle::THEMED) {
     const int kNormalImageSet[] = IMAGE_GRID(IDR_AVATAR_THEMED_BUTTON_NORMAL);
@@ -240,10 +195,6 @@ AvatarButton::AvatarButton(views::ButtonListener* listener,
     SetBorder(
         CreateThemedBorder(kNormalImageSet, kHoverImageSet, kPressedImageSet));
   }
-
-  profile_shutdown_notifier_ =
-      ShutdownNotifierFactory::GetInstance()->Get(profile_)->Subscribe(
-          base::Bind(&AvatarButton::OnProfileShutdown, base::Unretained(this)));
 
   Update();
   SchedulePaint();
@@ -273,10 +224,10 @@ gfx::Size AvatarButton::GetMinimumSize() const {
   return LabelButton::GetMinimumSize();
 }
 
-gfx::Size AvatarButton::CalculatePreferredSize() const {
+gfx::Size AvatarButton::GetPreferredSize() const {
   // TODO(estade): Calculate the height instead of hardcoding to 20 for the
   // not-condensible case.
-  gfx::Size size(LabelButton::CalculatePreferredSize().width(), 20);
+  gfx::Size size(LabelButton::GetPreferredSize().width(), 20);
 
   if (IsCondensible()) {
     // Returns the normal size of the button (when it does not overlap the
@@ -365,23 +316,7 @@ void AvatarButton::OnWidgetClosing(views::Widget* widget) {
   AnimateInkDrop(views::InkDropState::DEACTIVATED, nullptr);
 }
 
-void AvatarButton::OnProfileShutdown() {
-  // It looks like in some mysterious cases, the AvatarButton outlives the
-  // profile (see http://crbug.com/id=579690). The avatar button is owned by
-  // the browser frame (which is owned by the BrowserWindow), and there is an
-  // expectation for the UI to be destroyed before the profile is destroyed.
-  CHECK(false) << "Avatar button must not outlive the profile.";
-}
-
 void AvatarButton::Update() {
-  // It looks like in some mysterious cases, the AvatarButton outlives the
-  // profile manager (see http://crbug.com/id=579690). The avatar button is
-  // owned by the browser frame (which is owned by the BrowserWindow), and
-  // there is an expectation for the UI to be destroyed before the profile
-  // manager is destroyed.
-  CHECK(g_browser_process->profile_manager())
-      << "Avatar button must not outlive the profile manager";
-
   ProfileAttributesStorage& storage =
       g_browser_process->profile_manager()->GetProfileAttributesStorage();
 

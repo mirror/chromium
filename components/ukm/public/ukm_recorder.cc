@@ -12,23 +12,10 @@
 
 namespace ukm {
 
-UkmRecorder* g_ukm_recorder = nullptr;
-
 const base::Feature kUkmFeature = {"Ukm", base::FEATURE_DISABLED_BY_DEFAULT};
 
-UkmRecorder::UkmRecorder() {
-  DCHECK(!g_ukm_recorder);
-  g_ukm_recorder = this;
-}
-
-UkmRecorder::~UkmRecorder() {
-  g_ukm_recorder = nullptr;
-}
-
-// static
-UkmRecorder* UkmRecorder::Get() {
-  return g_ukm_recorder;
-}
+UkmRecorder::UkmRecorder() = default;
+UkmRecorder::~UkmRecorder() = default;
 
 // static
 ukm::SourceId UkmRecorder::GetNewSourceID() {

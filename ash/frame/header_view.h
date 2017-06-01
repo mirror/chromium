@@ -15,10 +15,6 @@
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/views/view.h"
 
-namespace gfx {
-class ImageSkia;
-}
-
 namespace views {
 class ImageView;
 class Widget;
@@ -62,8 +58,7 @@ class ASH_EXPORT HeaderView : public views::View,
   // Returns the view's minimum width.
   int GetMinimumWidth() const;
 
-  // Sets the avatar icon to be displayed on the frame header.
-  void SetAvatarIcon(const gfx::ImageSkia& avatar);
+  void UpdateAvatarIcon();
 
   void SizeConstraintsChanged();
 

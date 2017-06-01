@@ -36,8 +36,7 @@ namespace cc {
 // in the cache multiple times at different scales and filter qualities.
 class CC_EXPORT ImageDecodeCacheKey {
  public:
-  static ImageDecodeCacheKey FromDrawImage(const DrawImage& image,
-                                           ResourceFormat format);
+  static ImageDecodeCacheKey FromDrawImage(const DrawImage& image);
 
   ImageDecodeCacheKey(const ImageDecodeCacheKey& other);
 

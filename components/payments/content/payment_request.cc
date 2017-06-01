@@ -174,7 +174,8 @@ void PaymentRequest::Complete(mojom::PaymentComplete result) {
   if (result != mojom::PaymentComplete::SUCCESS) {
     delegate_->ShowErrorMessage();
   } else {
-    journey_logger_.SetCompleted();
+    journey_logger_.RecordJourneyStatsHistograms(
+        JourneyLogger::COMPLETION_STATUS_COMPLETED);
     delegate_->GetPrefService()->SetBoolean(kPaymentsFirstTransactionCompleted,
                                             true);
     // When the renderer closes the connection,
@@ -275,12 +276,7 @@ void PaymentRequest::RecordFirstCompletionStatus(
     JourneyLogger::CompletionStatus completion_status) {
   if (!has_recorded_abort_reason_) {
     has_recorded_abort_reason_ = true;
-    // TODO(crbug.com/716546): Record more abort reasons.
-    if (completion_status == JourneyLogger::COMPLETION_STATUS_USER_ABORTED) {
-      journey_logger_.SetAborted(JourneyLogger::ABORT_REASON_ABORTED_BY_USER);
-    } else {
-      journey_logger_.SetAborted(JourneyLogger::ABORT_REASON_OTHER);
-    }
+    journey_logger_.RecordJourneyStatsHistograms(completion_status);
   }
 }
 

@@ -29,6 +29,8 @@
 #include "chrome/browser/ui/views/page_info/non_accessible_image_view.h"
 #include "chrome/browser/ui/views/page_info/permission_selector_row.h"
 #include "chrome/common/url_constants.h"
+#include "chrome/grit/chromium_strings.h"
+#include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "components/strings/grit/components_chromium_strings.h"
@@ -43,6 +45,7 @@
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/image/image.h"
+#include "ui/resources/grit/ui_resources.h"
 #include "ui/views/border.h"
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/button/md_text_button.h"
@@ -383,7 +386,7 @@ int InternalPageInfoBubbleView::GetDialogButtons() const {
 PageInfoBubbleView::~PageInfoBubbleView() {}
 
 // static
-views::BubbleDialogDelegateView* PageInfoBubbleView::ShowBubble(
+void PageInfoBubbleView::ShowBubble(
     views::View* anchor_view,
     views::WidgetObserver* widget_observer,
     const gfx::Rect& anchor_rect,
@@ -405,7 +408,7 @@ views::BubbleDialogDelegateView* PageInfoBubbleView::ShowBubble(
     if (widget_observer)
       bubble->GetWidget()->AddObserver(widget_observer);
     bubble->GetWidget()->Show();
-    return bubble;
+    return;
   }
   PageInfoBubbleView* bubble = new PageInfoBubbleView(
       anchor_view, parent_window, profile, web_contents, url, security_info);
@@ -414,7 +417,6 @@ views::BubbleDialogDelegateView* PageInfoBubbleView::ShowBubble(
   if (widget_observer)
     bubble->GetWidget()->AddObserver(widget_observer);
   bubble->GetWidget()->Show();
-  return bubble;
 }
 
 // static
@@ -484,7 +486,7 @@ PageInfoBubbleView::PageInfoBubbleView(
     // horizontal insets match.
     set_title_margins(
         gfx::Insets(ChromeLayoutProvider::Get()->GetDistanceMetric(
-                        views::DISTANCE_DIALOG_CONTENTS_VERTICAL_MARGIN),
+                        DISTANCE_PANEL_CONTENT_MARGIN),
                     side_margin, 0, side_margin));
   }
   views::BubbleDialogDelegateView::CreateBubble(this);
@@ -502,14 +504,6 @@ void PageInfoBubbleView::RenderFrameDeleted(
 
 void PageInfoBubbleView::WebContentsDestroyed() {
   weak_factory_.InvalidateWeakPtrs();
-}
-
-void PageInfoBubbleView::WasHidden() {
-  GetWidget()->Close();
-}
-
-void PageInfoBubbleView::DidStartNavigation(content::NavigationHandle* handle) {
-  GetWidget()->Close();
 }
 
 void PageInfoBubbleView::OnPermissionChanged(
@@ -564,9 +558,9 @@ void PageInfoBubbleView::LinkClicked(views::Link* source, int event_flags) {
                      weak_factory_.GetWeakPtr(), source));
 }
 
-gfx::Size PageInfoBubbleView::CalculatePreferredSize() const {
+gfx::Size PageInfoBubbleView::GetPreferredSize() const {
   if (header_ == nullptr && site_settings_view_ == nullptr)
-    return views::View::CalculatePreferredSize();
+    return views::View::GetPreferredSize();
 
   int height = 0;
   if (header_)

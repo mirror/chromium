@@ -7,8 +7,14 @@
 #include <stddef.h>
 #include <string.h>
 
+#define __STDC_LIMIT_MACROS
+#ifdef _WIN32
+#include <limits.h>
+#else
+#include <stdint.h>
+#endif
+
 #include <algorithm>
-#include <limits>
 
 namespace chrome_pdf {
 
@@ -32,7 +38,7 @@ size_t ChunkStream::GetSize() const {
 }
 
 bool ChunkStream::WriteData(size_t offset, void* buffer, size_t size) {
-  if (std::numeric_limits<size_t>::max() - size < offset)
+  if (SIZE_MAX - size < offset)
     return false;
 
   if (data_.size() < offset + size)
@@ -45,22 +51,28 @@ bool ChunkStream::WriteData(size_t offset, void* buffer, size_t size) {
     return true;
   }
 
-  auto start = GetStartChunk(offset);
-  auto end = chunks_.upper_bound(offset + size);
+  std::map<size_t, size_t>::iterator start = chunks_.upper_bound(offset);
+  if (start != chunks_.begin())
+    --start;  // start now points to the key equal or lower than offset.
+  if (start->first + start->second < offset)
+    ++start;  // start element is entirely before current chunk, skip it.
+
+  std::map<size_t, size_t>::iterator end = chunks_.upper_bound(offset + size);
   if (start == end) {  // No chunks to merge.
     chunks_[offset] = size;
     return true;
   }
 
-  auto prev = end;
-  --prev;
-  size_t prev_size = prev->first + prev->second;
+  --end;
 
   size_t new_offset = std::min<size_t>(start->first, offset);
-  size_t new_size = std::max<size_t>(prev_size, offset + size) - new_offset;
+  size_t new_size =
+      std::max<size_t>(end->first + end->second, offset + size) - new_offset;
 
-  chunks_.erase(start, end);
+  chunks_.erase(start, ++end);
+
   chunks_[new_offset] = new_size;
+
   return true;
 }
 
@@ -85,15 +97,22 @@ bool ChunkStream::GetMissedRanges(
     return true;
   }
 
-  auto start = GetStartChunk(offset);
-  auto end = chunks_.upper_bound(offset + size);
+  std::map<size_t, size_t>::const_iterator start = chunks_.upper_bound(offset);
+  if (start != chunks_.begin())
+    --start;  // start now points to the key equal or lower than offset.
+  if (start->first + start->second < offset)
+    ++start;  // start element is entirely before current chunk, skip it.
+
+  std::map<size_t, size_t>::const_iterator end =
+      chunks_.upper_bound(offset + size);
   if (start == end) {  // No data in the current range available.
     ranges->push_back(std::pair<size_t, size_t>(offset, size));
     return true;
   }
 
   size_t cur_offset = offset;
-  for (auto it = start; it != end; ++it) {
+  std::map<size_t, size_t>::const_iterator it;
+  for (it = start; it != end; ++it) {
     if (cur_offset < it->first) {
       size_t new_size = it->first - cur_offset;
       ranges->push_back(std::pair<size_t, size_t>(cur_offset, new_size));
@@ -104,10 +123,9 @@ bool ChunkStream::GetMissedRanges(
   }
 
   // Add last chunk.
-  if (cur_offset < offset + size) {
+  if (cur_offset < offset + size)
     ranges->push_back(
         std::pair<size_t, size_t>(cur_offset, offset + size - cur_offset));
-  }
 
   return true;
 }
@@ -116,28 +134,28 @@ bool ChunkStream::IsRangeAvailable(size_t offset, size_t size) const {
   if (chunks_.empty())
     return false;
 
-  if (std::numeric_limits<size_t>::max() - size < offset)
+  if (SIZE_MAX - size < offset)
     return false;
 
-  auto it = chunks_.upper_bound(offset);
+  std::map<size_t, size_t>::const_iterator it = chunks_.upper_bound(offset);
   if (it == chunks_.begin())
     return false;  // No chunks includes offset byte.
 
   --it;  // Now it starts equal or before offset.
-  return it->first + it->second >= offset + size;
+  return (it->first + it->second) >= (offset + size);
 }
 
 size_t ChunkStream::GetFirstMissingByte() const {
   if (chunks_.empty())
     return 0;
-  auto begin = chunks_.begin();
+  std::map<size_t, size_t>::const_iterator begin = chunks_.begin();
   return begin->first > 0 ? 0 : begin->second;
 }
 
 size_t ChunkStream::GetFirstMissingByteInInterval(size_t offset) const {
   if (chunks_.empty())
     return 0;
-  auto it = chunks_.upper_bound(offset);
+  std::map<size_t, size_t>::const_iterator it = chunks_.upper_bound(offset);
   if (it == chunks_.begin())
     return 0;
   --it;
@@ -147,20 +165,10 @@ size_t ChunkStream::GetFirstMissingByteInInterval(size_t offset) const {
 size_t ChunkStream::GetLastMissingByteInInterval(size_t offset) const {
   if (chunks_.empty())
     return stream_size_ - 1;
-  auto it = chunks_.upper_bound(offset);
+  std::map<size_t, size_t>::const_iterator it = chunks_.upper_bound(offset);
   if (it == chunks_.end())
     return stream_size_ - 1;
   return it->first - 1;
-}
-
-std::map<size_t, size_t>::const_iterator ChunkStream::GetStartChunk(
-    size_t offset) const {
-  auto start = chunks_.upper_bound(offset);
-  if (start != chunks_.begin())
-    --start;  // start now points to the key equal or lower than offset.
-  if (start->first + start->second < offset)
-    ++start;  // start element is entirely before current chunk, skip it.
-  return start;
 }
 
 }  // namespace chrome_pdf

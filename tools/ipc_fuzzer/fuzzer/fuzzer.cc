@@ -1291,10 +1291,10 @@ struct FuzzTraits<net::HostPortPair> {
 template <>
 struct FuzzTraits<net::IPAddress> {
   static bool Fuzz(net::IPAddress* p, Fuzzer* fuzzer) {
-    std::vector<uint8_t> bytes = p->CopyBytesToVector();
+    std::vector<uint8_t> bytes = p->bytes();
     if (!FuzzParam(&bytes, fuzzer))
       return false;
-    net::IPAddress ip_address(bytes.data(), bytes.size());
+    net::IPAddress ip_address(bytes);
     *p = ip_address;
     return true;
   }

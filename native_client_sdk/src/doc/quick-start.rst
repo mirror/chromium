@@ -1,7 +1,5 @@
 .. _quick-start:
 
-.. include:: /migration/deprecation.inc
-
 ###########
 Quick-start
 ###########

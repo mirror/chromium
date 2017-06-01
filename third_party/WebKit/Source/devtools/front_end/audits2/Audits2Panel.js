@@ -3,12 +3,12 @@
 // found in the LICENSE file.
 
 /**
- * @implements {SDK.SDKModelObserver<!SDK.ServiceWorkerManager>}
  * @unrestricted
  */
 Audits2.Audits2Panel = class extends UI.PanelWithSidebar {
   constructor() {
     super('audits2');
+    this.setHideOnDetach();
     this.registerRequiredCSS('audits2/audits2Panel.css');
     this.registerRequiredCSS('audits2/lighthouse/report-styles.css');
 
@@ -43,90 +43,6 @@ Audits2.Audits2Panel = class extends UI.PanelWithSidebar {
     for (var preset of Audits2.Audits2Panel.Presets)
       preset.setting.addChangeListener(this._updateStartButtonEnabled.bind(this));
     this._showLandingPage();
-    SDK.targetManager.observeModels(SDK.ServiceWorkerManager, this);
-  }
-
-  /**
-   * @override
-   * @param {!SDK.ServiceWorkerManager} serviceWorkerManager
-   */
-  modelAdded(serviceWorkerManager) {
-    if (this._manager)
-      return;
-
-    this._manager = serviceWorkerManager;
-    this._serviceWorkerListeners = [
-      this._manager.addEventListener(
-          SDK.ServiceWorkerManager.Events.RegistrationUpdated, this._updateStartButtonEnabled, this),
-      this._manager.addEventListener(
-          SDK.ServiceWorkerManager.Events.RegistrationDeleted, this._updateStartButtonEnabled, this),
-    ];
-
-    this._updateStartButtonEnabled();
-  }
-
-  /**
-   * @override
-   * @param {!SDK.ServiceWorkerManager} serviceWorkerManager
-   */
-  modelRemoved(serviceWorkerManager) {
-    if (!this._manager || this._manager !== serviceWorkerManager)
-      return;
-
-    Common.EventTarget.removeEventListeners(this._serviceWorkerListeners);
-    this._manager = null;
-    this._serviceWorkerListeners = null;
-    this._updateStartButtonEnabled();
-  }
-
-  /**
-   * @return {boolean}
-   */
-  _hasActiveServiceWorker() {
-    if (!this._manager)
-      return false;
-
-    var inspectedURL = SDK.targetManager.mainTarget().inspectedURL().asParsedURL();
-    var inspectedOrigin = inspectedURL && inspectedURL.securityOrigin();
-    for (var registration of this._manager.registrations().values()) {
-      if (registration.securityOrigin !== inspectedOrigin)
-        continue;
-
-      for (var version of registration.versions.values()) {
-        if (version.controlledClients.length > 1)
-          return true;
-      }
-    }
-
-    return false;
-  }
-
-  /**
-   * @return {boolean}
-   */
-  _hasAtLeastOneCategory() {
-    return Audits2.Audits2Panel.Presets.some(preset => preset.setting.get());
-  }
-
-  _updateStartButtonEnabled() {
-    var hasActiveServiceWorker = this._hasActiveServiceWorker();
-    var hasAtLeastOneCategory = this._hasAtLeastOneCategory();
-    var isDisabled = hasActiveServiceWorker || !hasAtLeastOneCategory;
-
-    if (this._dialogHelpText && hasActiveServiceWorker) {
-      this._dialogHelpText.textContent = Common.UIString(
-          'Multiple tabs are being controlled by the same service worker. ' +
-          'Close your other tabs on the same origin to audit this page.');
-    }
-
-    if (this._dialogHelpText && !hasAtLeastOneCategory)
-      this._dialogHelpText.textContent = Common.UIString('At least one category must be selected.');
-
-    if (this._dialogHelpText)
-      this._dialogHelpText.classList.toggle('hidden', !isDisabled);
-
-    if (this._startButton)
-      this._startButton.disabled = isDisabled;
   }
 
   _clearAll() {
@@ -186,7 +102,6 @@ Audits2.Audits2Panel = class extends UI.PanelWithSidebar {
     }
 
     this._statusView = this._createStatusView(uiElement);
-    this._dialogHelpText = uiElement.createChild('div', 'audits2-dialog-help-text');
 
     var buttonsRow = uiElement.createChild('div', 'audits2-dialog-buttons hbox');
     this._startButton =
@@ -201,6 +116,18 @@ Audits2.Audits2Panel = class extends UI.PanelWithSidebar {
     this._dialog.show(this.mainElement());
     auditsViewElement.tabIndex = 0;
     auditsViewElement.focus();
+  }
+
+  _updateStartButtonEnabled() {
+    if (!this._startButton)
+      return;
+    for (var preset of Audits2.Audits2Panel.Presets) {
+      if (preset.setting.get()) {
+        this._startButton.disabled = false;
+        return;
+      }
+    }
+    this._startButton.disabled = true;
   }
 
   /**
@@ -371,8 +298,7 @@ Audits2.Audits2Panel = class extends UI.PanelWithSidebar {
     console.error(err);
     this._statusElement.textContent = '';
     this._statusIcon.classList.add('error');
-    this._statusElement.createTextChild(Common.UIString('Ah, sorry! We ran into an error: '));
-    this._statusElement.createChild('em').createTextChild(err.message);
+    this._statusElement.createTextChild(Common.UIString('We ran into an error. '));
     this._createBugReportLink(err, this._statusElement);
   }
 
@@ -384,16 +310,13 @@ Audits2.Audits2Panel = class extends UI.PanelWithSidebar {
     var baseURI = 'https://github.com/GoogleChrome/lighthouse/issues/new?';
     var title = encodeURI('title=DevTools Error: ' + err.message.substring(0, 60));
 
-    var issueBody = `
-**Initial URL**: ${this._inspectedURL}
-**Chrome Version**: ${navigator.userAgent.match(/Chrome\/(\S+)/)[1]}
-**Error Message**: ${err.message}
-**Stack Trace**:
-\`\`\`
-${err.stack}
-\`\`\`
-    `;
-    var body = '&body=' + encodeURI(issueBody.trim());
+    var qsBody = '';
+    qsBody += '**Initial URL**: ' + this._inspectedURL + '\n';
+    qsBody += '**Chrome Version**: ' + navigator.userAgent.match(/Chrome\/(\S+)/)[1] + '\n';
+    qsBody += '**Error Message**: ' + err.message + '\n';
+    qsBody += '**Stack Trace**:\n ```' + err.stack + '```';
+    var body = '&body=' + encodeURI(qsBody);
+
     var reportErrorEl = parentElem.createChild('a', 'audits2-link audits2-report-error');
     reportErrorEl.href = baseURI + title + body;
     reportErrorEl.textContent = Common.UIString('Report this bug');
@@ -513,8 +436,6 @@ Audits2.ProtocolService = class extends Common.Object {
   attach() {
     return SDK.targetManager.interceptMainConnection(this._dispatchProtocolMessage.bind(this)).then(rawConnection => {
       this._rawConnection = rawConnection;
-      this._rawConnection.sendMessage(
-          JSON.stringify({id: 0, method: 'Input.setIgnoreInputEvents', params: {ignore: true}}));
     });
   }
 
@@ -737,7 +658,7 @@ Audits2.DetailsRenderer = class extends DetailsRenderer {
    * @param {!Element} origElement
    * @param {!DetailsRenderer.NodeDetailsJSON} detailsItem
    */
-  async _replaceWithDeferredNodeBlock(origElement, detailsItem) {
+  _replaceWithDeferredNodeBlock(origElement, detailsItem) {
     var mainTarget = SDK.targetManager.mainTarget();
     if (!this._onMainFrameNavigatedPromise) {
       var resourceTreeModel = mainTarget.model(SDK.ResourceTreeModel);
@@ -746,23 +667,23 @@ Audits2.DetailsRenderer = class extends DetailsRenderer {
       });
     }
 
-    await this._onMainFrameNavigatedPromise;
+    this._onMainFrameNavigatedPromise.then(_ => {
+      var domModel = mainTarget.model(SDK.DOMModel);
+      if (!detailsItem.path)
+        return;
 
-    var domModel = mainTarget.model(SDK.DOMModel);
-    if (!detailsItem.path)
-      return;
+      domModel.pushNodeByPathToFrontend(detailsItem.path, nodeId => {
+        if (!nodeId)
+          return;
+        var node = domModel.nodeForId(nodeId);
+        if (!node)
+          return;
 
-    var nodeId = await domModel.pushNodeByPathToFrontend(detailsItem.path);
-
-    if (!nodeId)
-      return;
-    var node = domModel.nodeForId(nodeId);
-    if (!node)
-      return;
-
-    var element = Components.DOMPresentationUtils.linkifyNodeReference(node, undefined, detailsItem.snippet);
-    origElement.title = '';
-    origElement.textContent = '';
-    origElement.appendChild(element);
+        var element = Components.DOMPresentationUtils.linkifyNodeReference(node, undefined, detailsItem.snippet);
+        origElement.title = '';
+        origElement.textContent = '';
+        origElement.appendChild(element);
+      });
+    });
   }
 };

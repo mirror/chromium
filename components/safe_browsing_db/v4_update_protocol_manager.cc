@@ -153,9 +153,7 @@ V4UpdateProtocolManager::V4UpdateProtocolManager(
   // when it is ready to process updates.
 }
 
-V4UpdateProtocolManager::~V4UpdateProtocolManager() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-}
+V4UpdateProtocolManager::~V4UpdateProtocolManager() {}
 
 bool V4UpdateProtocolManager::IsUpdateScheduled() const {
   return update_timer_.IsRunning();
@@ -168,7 +166,7 @@ void V4UpdateProtocolManager::ScheduleNextUpdate(
 }
 
 void V4UpdateProtocolManager::ScheduleNextUpdateWithBackoff(bool back_off) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   if (config_.disable_auto_update) {
     DCHECK(!IsUpdateScheduled());
@@ -183,7 +181,7 @@ void V4UpdateProtocolManager::ScheduleNextUpdateWithBackoff(bool back_off) {
 // According to section 5 of the SafeBrowsing protocol specification, we must
 // back off after a certain number of errors.
 base::TimeDelta V4UpdateProtocolManager::GetNextUpdateInterval(bool back_off) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(next_update_interval_ > base::TimeDelta());
 
   base::TimeDelta next = next_update_interval_;
@@ -210,7 +208,7 @@ base::TimeDelta V4UpdateProtocolManager::GetNextUpdateInterval(bool back_off) {
 
 void V4UpdateProtocolManager::ScheduleNextUpdateAfterInterval(
     base::TimeDelta interval) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(interval >= base::TimeDelta());
 
   // Unschedule any current timer.
@@ -301,7 +299,7 @@ bool V4UpdateProtocolManager::ParseUpdateResponse(
 }
 
 void V4UpdateProtocolManager::IssueUpdateRequest() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   // If an update request is already pending, record and return silently.
   if (request_.get()) {
@@ -372,7 +370,7 @@ void V4UpdateProtocolManager::HandleTimeout() {
 // SafeBrowsing request responses are handled here.
 void V4UpdateProtocolManager::OnURLFetchComplete(
     const net::URLFetcher* source) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   timeout_timer_.Stop();
 

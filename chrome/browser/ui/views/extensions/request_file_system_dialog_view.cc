@@ -80,14 +80,13 @@ bool RequestFileSystemDialogView::Accept() {
   return true;
 }
 
-gfx::Size RequestFileSystemDialogView::CalculatePreferredSize() const {
+gfx::Size RequestFileSystemDialogView::GetPreferredSize() const {
   return gfx::Size(kDialogMaxWidth,
                    child_at(0)->GetHeightForWidth(kDialogMaxWidth));
 }
 
 gfx::Insets RequestFileSystemDialogView::GetInsets() const {
-  return ChromeLayoutProvider::Get()->GetInsetsMetric(
-      views::INSETS_DIALOG_CONTENTS);
+  return ChromeLayoutProvider::Get()->GetInsetsMetric(views::INSETS_PANEL);
 }
 
 RequestFileSystemDialogView::RequestFileSystemDialogView(

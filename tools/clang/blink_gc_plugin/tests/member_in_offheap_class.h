@@ -16,7 +16,6 @@ public:
     void Trace(Visitor*);
 private:
     Member<HeapObject> m_obj; // Must not contain Member.
-    WeakMember<HeapObject> m_weak;  // Must not contain WeakMember.
     Persistent<HeapVector<Member<HeapObject> > > m_objs; // OK
 };
 

@@ -4,6 +4,7 @@
 
 #include <memory>
 
+#include "base/mac/scoped_nsobject.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_samples.h"
 #include "base/stl_util.h"
@@ -18,10 +19,6 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 #include "third_party/ocmock/ocmock_extensions.h"
-
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
 
 @interface TURTestTabMock : OCMockComplexTypeHelper {
   GURL _url;
@@ -108,7 +105,7 @@ class TabUsageRecorderTest : public PlatformTest {
     [tab_mock setUrl:webUrl_];
     [[[web_controller_mock stub] andReturnBool:inMemory] isViewAlive];
     [[web_controller_mock stub] removeObserver:OCMOCK_ANY];
-    return tab_mock;
+    return [tab_mock autorelease];
   }
 
   GURL webUrl_;
@@ -315,8 +312,8 @@ TEST_F(TabUsageRecorderTest, RendererTerminated) {
   Tab* terminated_tab = MockTab(false);
 
   // Set up the delegate to return |kAliveTabsCountAtRenderTermination|.
-  MockTabUsageRecorderDelegate* delegate =
-      [[MockTabUsageRecorderDelegate alloc] init];
+  base::scoped_nsobject<MockTabUsageRecorderDelegate> delegate(
+      [[MockTabUsageRecorderDelegate alloc] init]);
   [delegate setLiveTabsCount:kAliveTabsCountAtRendererTermination];
   tab_usage_recorder_->SetDelegate(delegate);
 

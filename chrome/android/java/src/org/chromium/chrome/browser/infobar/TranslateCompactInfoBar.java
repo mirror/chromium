@@ -8,7 +8,6 @@ import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLayoutChangeListener;
 import android.widget.LinearLayout;
 
 import org.chromium.base.annotations.CalledByNative;
@@ -25,8 +24,9 @@ import org.chromium.ui.widget.Toast;
 /**
  * Java version of the compact translate infobar.
  */
-public class TranslateCompactInfoBar extends InfoBar
-        implements TabLayout.OnTabSelectedListener, TranslateMenuHelper.TranslateMenuListener {
+class TranslateCompactInfoBar extends InfoBar implements TabLayout.OnTabSelectedListener,
+                                                         TranslateMenuHelper.TranslateMenuListener,
+                                                         View.OnLayoutChangeListener {
     public static final int TRANSLATING_INFOBAR = 1;
 
     private static final int SOURCE_TAB_INDEX = 0;
@@ -102,8 +102,7 @@ public class TranslateCompactInfoBar extends InfoBar
     private TranslateMenuHelper mOverflowMenuHelper;
     private TranslateMenuHelper mLanguageMenuHelper;
     private TintedImageButton mMenuButton;
-
-    private boolean mMenuExpanded;
+    private boolean mUserInteracted;
 
     /** The controller for translate UI snackbars. */
     class TranslateSnackbarController implements SnackbarController {
@@ -134,7 +133,7 @@ public class TranslateCompactInfoBar extends InfoBar
                     recordInfobarAction(INFOBAR_SNACKBAR_CANCEL_AUTO_NEVER);
                     // This snackbar is triggered automatically after a close button click.  Need to
                     // dismiss the infobar even if the user cancels the "Never Translate".
-                    closeInfobar(false);
+                    performCloseButtonActionWithoutDeniedCheck();
                     return;
                 case ACTION_OVERFLOW_NEVER_SITE:
                     recordInfobarAction(INFOBAR_SNACKBAR_CANCEL_NEVER_SITE);
@@ -177,24 +176,17 @@ public class TranslateCompactInfoBar extends InfoBar
                         .inflate(R.layout.infobar_translate_compact_content, parent, false);
 
         mTabLayout = (TranslateTabLayout) content.findViewById(R.id.translate_infobar_tabs);
+        mTabLayout.addOnLayoutChangeListener(this);
         mTabLayout.addTabs(mOptions.sourceLanguageName(), mOptions.targetLanguageName());
 
         // Set translating status in the beginning for pages translated automatically.
         if (mInitialStep == TRANSLATING_INFOBAR) {
             mTabLayout.getTabAt(TARGET_TAB_INDEX).select();
             mTabLayout.showProgressBarOnTab(TARGET_TAB_INDEX);
+            mUserInteracted = true;
         }
 
         mTabLayout.addOnTabSelectedListener(this);
-
-        // Dismiss all menus when there is layout changed. (which will cause menu misplacement.)
-        mTabLayout.addOnLayoutChangeListener(new OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom,
-                    int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                dismissMenus();
-            }
-        });
 
         mMenuButton = (TintedImageButton) content.findViewById(R.id.translate_infobar_menu_button);
         mMenuButton.setOnClickListener(new OnClickListener() {
@@ -203,7 +195,6 @@ public class TranslateCompactInfoBar extends InfoBar
                 recordInfobarAction(INFOBAR_OPTIONS);
                 initMenuHelper(TranslateMenu.MENU_OVERFLOW);
                 mOverflowMenuHelper.show(TranslateMenu.MENU_OVERFLOW);
-                mMenuExpanded = true;
             }
         });
 
@@ -235,6 +226,7 @@ public class TranslateCompactInfoBar extends InfoBar
             // Already on the target tab.
             mTabLayout.showProgressBarOnTab(TARGET_TAB_INDEX);
             onButtonClicked(ActionType.TRANSLATE);
+            mUserInteracted = true;
         } else {
             mTabLayout.getTabAt(TARGET_TAB_INDEX).select();
         }
@@ -269,32 +261,43 @@ public class TranslateCompactInfoBar extends InfoBar
                 Snackbar.UMA_TRANSLATE_ALWAYS, ACTION_AUTO_ALWAYS_TRANSLATE);
     }
 
+    private void setAutoNeverTranslate() {
+        createAndShowSnackbar(getContext().getString(R.string.translate_snackbar_language_never,
+                                      mOptions.sourceLanguageName()),
+                Snackbar.UMA_TRANSLATE_NEVER, ACTION_AUTO_NEVER_LANGUAGE);
+    }
+
     @Override
     protected void onNativeDestroyed() {
         mNativeTranslateInfoBarPtr = 0;
         super.onNativeDestroyed();
     }
 
-    private void closeInfobar(boolean explicitly) {
-        // Check if we should trigger the auto "never translate" if infobar is closed explicitly.
-        if (explicitly && mNativeTranslateInfoBarPtr != 0
-                && nativeShouldAutoNeverTranslate(mNativeTranslateInfoBarPtr, mMenuExpanded)) {
-            createAndShowSnackbar(getContext().getString(R.string.translate_snackbar_language_never,
-                                          mOptions.sourceLanguageName()),
-                    Snackbar.UMA_TRANSLATE_NEVER, ACTION_AUTO_NEVER_LANGUAGE);
-            // Postpone the infobar dismiss until the snackbar finished showing.  Otherwise, the
-            // reference to the native infobar is killed and there is no way for the snackbar to
-            // perform the action.
-            return;
+    @Override
+    public void onCloseButtonClicked() {
+        // If mUserInteracted is false, it is regarded as a translation denied.
+        if (!mUserInteracted) {
+            recordInfobarAction(INFOBAR_DECLINE);
+            // This will increment the denied count.
+            onButtonClicked(ActionType.CANCEL);
+
+            // Check if it should trigger the auto "never translate".
+            if (!mOptions.neverTranslateLanguageState()
+                    && nativeShouldAutoNeverTranslate(mNativeTranslateInfoBarPtr)) {
+                setAutoNeverTranslate();
+                // Postpone the infobar dismiss until the snackbar finished showing.  Otherwise, the
+                // reference to the native infobar is killed and there is no way for the snackbar to
+                // perform the action.
+                return;
+            }
         }
         recordInfobarAction(INFOBAR_CLOSE);
         // This line will dismiss this infobar.
-        super.onCloseButtonClicked();
+        performCloseButtonActionWithoutDeniedCheck();
     }
 
-    @Override
-    public void onCloseButtonClicked() {
-        closeInfobar(true);
+    private void performCloseButtonActionWithoutDeniedCheck() {
+        super.onCloseButtonClicked();
     }
 
     @Override
@@ -324,6 +327,7 @@ public class TranslateCompactInfoBar extends InfoBar
 
     @Override
     public void onOverflowMenuItemClicked(int itemId) {
+        mUserInteracted = true;
         switch (itemId) {
             case TranslateMenu.ID_OVERFLOW_MORE_LANGUAGE:
                 recordInfobarAction(INFOBAR_MORE_LANGUAGES);
@@ -373,7 +377,7 @@ public class TranslateCompactInfoBar extends InfoBar
     @Override
     public void onTargetMenuItemClicked(String code) {
         // Reset target code in both UI and native.
-        if (mNativeTranslateInfoBarPtr != 0 && mOptions.setTargetLanguage(code)) {
+        if (mOptions.setTargetLanguage(code)) {
             recordInfobarLanguageData(
                     INFOBAR_HISTOGRAM_MORE_LANGUAGES_LANGUAGE, mOptions.targetLanguageCode());
             nativeApplyStringTranslateOption(
@@ -387,7 +391,7 @@ public class TranslateCompactInfoBar extends InfoBar
     @Override
     public void onSourceMenuItemClicked(String code) {
         // Reset source code in both UI and native.
-        if (mNativeTranslateInfoBarPtr != 0 && mOptions.setSourceLanguage(code)) {
+        if (mOptions.setSourceLanguage(code)) {
             recordInfobarLanguageData(
                     INFOBAR_HISTOGRAM_PAGE_NOT_IN_LANGUAGE, mOptions.sourceLanguageCode());
             nativeApplyStringTranslateOption(
@@ -396,6 +400,13 @@ public class TranslateCompactInfoBar extends InfoBar
             mTabLayout.replaceTabTitle(SOURCE_TAB_INDEX, mOptions.getRepresentationFromCode(code));
             startTranslating(mTabLayout.getSelectedTabPosition());
         }
+    }
+
+    @Override
+    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft,
+            int oldTop, int oldRight, int oldBottom) {
+        // Dismiss all menus when there is layout changed. (which will cause menu misplacement.)
+        dismissMenus();
     }
 
     // Dismiss all overflow menus that remains open.
@@ -410,22 +421,6 @@ public class TranslateCompactInfoBar extends InfoBar
         dismissMenus();
         if (getSnackbarManager() != null) getSnackbarManager().dismissAllSnackbars();
         super.onStartedHiding();
-    }
-
-    /**
-     * Returns true if overflow menu is showing.  This is only used for automation testing.
-     */
-    public boolean isShowingOverflowMenuForTesting() {
-        if (mOverflowMenuHelper == null) return false;
-        return mOverflowMenuHelper.isShowing();
-    }
-
-    /**
-     * Returns true if language menu is showing.  This is only used for automation testing.
-     */
-    public boolean isShowingLanguageMenuForTesting() {
-        if (mLanguageMenuHelper == null) return false;
-        return mLanguageMenuHelper.isShowing();
     }
 
     private void createAndShowSnackbar(String title, int umaType, int actionId) {
@@ -463,9 +458,6 @@ public class TranslateCompactInfoBar extends InfoBar
     }
 
     private void handleTranslateOptionPostSnackbar(int actionId) {
-        // Quit if native is destroyed.
-        if (mNativeTranslateInfoBarPtr == 0) return;
-
         switch (actionId) {
             case ACTION_OVERFLOW_ALWAYS_TRANSLATE:
                 toggleAlwaysTranslate();
@@ -522,6 +514,5 @@ public class TranslateCompactInfoBar extends InfoBar
             long nativeTranslateCompactInfoBar, int option, String value);
     private native void nativeApplyBoolTranslateOption(
             long nativeTranslateCompactInfoBar, int option, boolean value);
-    private native boolean nativeShouldAutoNeverTranslate(
-            long nativeTranslateCompactInfoBar, boolean menuExpanded);
+    private native boolean nativeShouldAutoNeverTranslate(long nativeTranslateCompactInfoBar);
 }

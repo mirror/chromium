@@ -164,7 +164,7 @@ const char* SearchResultView::GetClassName() const {
   return kViewClassName;
 }
 
-gfx::Size SearchResultView::CalculatePreferredSize() const {
+gfx::Size SearchResultView::GetPreferredSize() const {
   return gfx::Size(kPreferredWidth, kPreferredHeight);
 }
 
@@ -240,7 +240,7 @@ void SearchResultView::ChildPreferredSizeChanged(views::View* child) {
   Layout();
 }
 
-void SearchResultView::PaintButtonContents(gfx::Canvas* canvas) {
+void SearchResultView::OnPaint(gfx::Canvas* canvas) {
   gfx::Rect rect(GetContentsBounds());
   if (rect.IsEmpty())
     return;

@@ -1,9 +1,8 @@
 <!doctype html>
 <title>register</title>
+<script src="test-helpers.js"></script>
 <body>
 <script>
-'use strict';
-
 navigator.serviceWorker.register('empty-worker.js', {scope: 'scope-register'})
   .then(
     registration => {

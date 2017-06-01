@@ -22,8 +22,7 @@ class NavigationContextImpl : public NavigationContext {
   // Response headers will ne null.
   static std::unique_ptr<NavigationContextImpl> CreateNavigationContext(
       WebState* web_state,
-      const GURL& url,
-      ui::PageTransition page_transition);
+      const GURL& url);
 
 #ifndef NDEBUG
   // Returns human readable description of this object.
@@ -33,16 +32,13 @@ class NavigationContextImpl : public NavigationContext {
   // NavigationContext overrides:
   WebState* GetWebState() override;
   const GURL& GetUrl() const override;
-  ui::PageTransition GetPageTransition() const override;
   bool IsSameDocument() const override;
-  bool IsPost() const override;
   NSError* GetError() const override;
   net::HttpResponseHeaders* GetResponseHeaders() const override;
   ~NavigationContextImpl() override;
 
   // Setters for navigation context data members.
   void SetIsSameDocument(bool is_same_document);
-  void SetIsPost(bool is_post);
   void SetError(NSError* error);
   void SetResponseHeaders(
       const scoped_refptr<net::HttpResponseHeaders>& response_headers);
@@ -52,15 +48,11 @@ class NavigationContextImpl : public NavigationContext {
   void SetNavigationItemUniqueID(int unique_id);
 
  private:
-  NavigationContextImpl(WebState* web_state,
-                        const GURL& url,
-                        ui::PageTransition page_transition);
+  NavigationContextImpl(WebState* web_state, const GURL& url);
 
   WebState* web_state_ = nullptr;
   GURL url_;
-  ui::PageTransition page_transition_;
   bool is_same_document_ = false;
-  bool is_post_ = false;
   base::scoped_nsobject<NSError> error_;
   scoped_refptr<net::HttpResponseHeaders> response_headers_;
   int navigation_item_unique_id_ = -1;

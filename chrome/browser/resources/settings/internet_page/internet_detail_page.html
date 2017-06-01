@@ -61,6 +61,11 @@
         border-top: none;
       }
 
+      #networkState {
+        font-size: 107.69%;  /* 14px / 13px */
+        font-weight: 500;
+      }
+
       #networkState[connected] {
         color: var(--google-green-500);
       }
@@ -70,7 +75,7 @@
       <div class="start layout horizontal center">
         <cr-network-icon network-state="[[networkProperties]]">
         </cr-network-icon>
-        <div id="networkState" class="title"
+        <div id="networkState"
             connected$="[[isConnectedState_(networkProperties)]]">
           [[getStateText_(networkProperties)]]
         </div>

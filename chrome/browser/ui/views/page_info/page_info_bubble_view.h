@@ -77,14 +77,14 @@ class PageInfoBubbleView : public content::WebContentsObserver,
   };
 
   // If |anchor_view| is null, |anchor_rect| is used to anchor the bubble.
-  static views::BubbleDialogDelegateView* ShowBubble(
-      views::View* anchor_view,
-      views::WidgetObserver* widget_observer,
-      const gfx::Rect& anchor_rect,
-      Profile* profile,
-      content::WebContents* web_contents,
-      const GURL& url,
-      const security_state::SecurityInfo& security_info);
+  static void ShowBubble(views::View* anchor_view,
+                         views::WidgetObserver* widget_observer,
+                         const gfx::Rect& anchor_rect,
+                         Profile* profile,
+                         content::WebContents* web_contents,
+                         const GURL& url,
+                         const security_state::SecurityInfo& security_info);
+
   // Returns the type of the bubble being shown.
   static BubbleType GetShownBubbleType();
 
@@ -101,8 +101,6 @@ class PageInfoBubbleView : public content::WebContentsObserver,
   // WebContentsObserver implementation.
   void RenderFrameDeleted(content::RenderFrameHost* render_frame_host) override;
   void WebContentsDestroyed() override;
-  void WasHidden() override;
-  void DidStartNavigation(content::NavigationHandle* handle) override;
 
   // PermissionSelectorRowObserver implementation.
   void OnPermissionChanged(
@@ -130,7 +128,7 @@ class PageInfoBubbleView : public content::WebContentsObserver,
                               int event_flags) override;
 
   // views::View implementation.
-  gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetPreferredSize() const override;
 
   // PageInfoUI implementations.
   void SetCookieInfo(const CookieInfoList& cookie_info_list) override;

@@ -219,11 +219,6 @@ _ANDROID_NEGATIVE_FILTER['chromedriver_webview_shell'] = (
         'ChromeDriverTest.testClickElementAfterNavigation',
         'ChromeDriverTest.testGetLogOnWindowWithAlert',
         'ChromeDriverTest.testUnexpectedAlertOpenExceptionMessage',
-        # The WebView shell that we test against (on Kitkat) does not yet
-        # support Network.setCookie DevTools command.
-        # TODO(gmanikpure): reenable when it does.
-        'ChromeDriverTest.testGetHttpOnlyCookie',
-        'ChromeDriverLogTest.testDisablingDriverLogsSuppressesChromeDriverLog',
     ]
 )
 

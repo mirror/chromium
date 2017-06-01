@@ -6,14 +6,7 @@
 
 var testSuccessCount = 0;
 
-function verifySetImageDataResult(expectedError) {
-  if (expectedError)
-    chrome.test.assertLastError(expectedError);
-  chrome.test.succeed();
-}
-
-function testSetImageDataClipboard(
-    imageUrl, imageType, expectedError, additionalItems) {
+function testSetImageDataClipboard(imageUrl, imageType, expectSucceed) {
   var oReq = new XMLHttpRequest();
   oReq.open('GET', imageUrl, true);
   oReq.responseType = 'arraybuffer';
@@ -23,19 +16,12 @@ function testSetImageDataClipboard(
     var binaryString = '';
 
     if (arrayBuffer) {
-      if (additionalItems) {
-        chrome.clipboard.setImageData(arrayBuffer, imageType, additionalItems,
-                                      function() {
-          verifySetImageDataResult(expectedError);
-        });
-      } else {
-        chrome.clipboard.setImageData(arrayBuffer, imageType,
-                                      function() {
-          verifySetImageDataResult(expectedError);
-        });
-      }
+      chrome.clipboard.setImageData(arrayBuffer, imageType, function() {
+        chrome.test.assertEq(expectSucceed, !chrome.runtime.lastError);
+        chrome.test.succeed();
+      });
     } else {
-      chrome.test.fail('Failed to load the image file');
+      chrome.test.fail('Failed to load the png image file');
     }
   };
 
@@ -43,51 +29,15 @@ function testSetImageDataClipboard(
 }
 
 function testSavePngImageToClipboard(baseUrl) {
-  testSetImageDataClipboard(baseUrl + '/icon1.png', 'png');
+  testSetImageDataClipboard(baseUrl + '/icon1.png', 'png', true);
 }
 
 function testSaveJpegImageToClipboard(baseUrl) {
-  testSetImageDataClipboard(baseUrl + '/test.jpg', 'jpeg');
+  testSetImageDataClipboard(baseUrl + '/test.jpg', 'jpeg', true);
 }
 
 function testSaveBadImageData(baseUrl) {
-  testSetImageDataClipboard(
-      baseUrl + '/redirect_target.gif', 'jpeg', 'Image data decoding failed.');
-}
-
-function testSavePngImageWithAdditionalDataToClipboard(baseUrl) {
-  var additional_items = [];
-  var text_item = {
-      type: 'textPlain',
-      data: 'Hello, world'
-  }
-  var html_item = {
-      type: 'textHtml',
-      data: '<b>This is an html markup</b>'
-  }
-  additional_items.push(text_item);
-  additional_items.push(html_item);
-  testSetImageDataClipboard(
-      baseUrl + '/icon1.png', 'png', undefined, additional_items);
-}
-
-function testSavePngImageWithAdditionalDataToClipboardDuplicateTypeItems(
-    baseUrl) {
-  var additional_items = [];
-  var text_item1 = {
-      type: 'textPlain',
-      data: 'Hello, world'
-  }
-  var text_item2 = {
-      type: 'textPlain',
-      data: 'Another text item'
-  }
-  additional_items.push(text_item1);
-  additional_items.push(text_item2);
-  testSetImageDataClipboard(
-      baseUrl + '/icon1.png', 'png',
-      'Unsupported additionalItems parameter data.',
-      additional_items);
+  testSetImageDataClipboard(baseUrl + '/redirect_target.gif', 'jpeg', false);
 }
 
 function bindTest(test, param) {
@@ -101,9 +51,6 @@ chrome.test.getConfig(function(config) {
   chrome.test.runTests([
     bindTest(testSavePngImageToClipboard, baseUrl),
     bindTest(testSaveJpegImageToClipboard, baseUrl),
-    bindTest(testSaveBadImageData, baseUrl),
-    bindTest(testSavePngImageWithAdditionalDataToClipboard, baseUrl),
-    bindTest(testSavePngImageWithAdditionalDataToClipboardDuplicateTypeItems,
-             baseUrl)
+    bindTest(testSaveBadImageData, baseUrl)
   ]);
 })

@@ -28,16 +28,21 @@
 #include "core/editing/iterators/TextIterator.h"
 
 #include <unicode/utf16.h>
+#include <algorithm>
+#include "bindings/core/v8/ExceptionState.h"
 #include "core/HTMLNames.h"
 #include "core/InputTypeNames.h"
 #include "core/dom/Document.h"
+#include "core/dom/FirstLetterPseudoElement.h"
 #include "core/dom/shadow/ShadowRoot.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/EphemeralRange.h"
 #include "core/editing/Position.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/VisibleUnits.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/editing/iterators/CharacterIterator.h"
+#include "core/editing/iterators/WordAwareIterator.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLElement.h"
 #include "core/html/HTMLImageElement.h"
@@ -45,7 +50,10 @@
 #include "core/html/TextControlElement.h"
 #include "core/layout/LayoutTableCell.h"
 #include "core/layout/LayoutTableRow.h"
+#include "core/layout/LayoutTextFragment.h"
+#include "core/layout/line/InlineTextBox.h"
 #include "platform/fonts/Font.h"
+#include "platform/wtf/text/CString.h"
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
@@ -144,32 +152,28 @@ bool IsRenderedAsTable(const Node* node) {
 
 }  // namespace
 
-// TODO(xiaochengh): Most members should be initialized in-place, not here.
-template <typename Strategy>
-TextIteratorAlgorithm<Strategy>::TextIteratorAlgorithm(
-    const EphemeralRangeTemplate<Strategy>& range,
-    const TextIteratorBehavior& behavior)
-    : TextIteratorAlgorithm(range.StartPosition(),
-                            range.EndPosition(),
-                            behavior) {}
-
 template <typename Strategy>
 TextIteratorAlgorithm<Strategy>::TextIteratorAlgorithm(
     const PositionTemplate<Strategy>& start,
     const PositionTemplate<Strategy>& end,
     const TextIteratorBehavior& behavior)
-    : start_container_(nullptr),
+    : offset_(0),
+      start_container_(nullptr),
       start_offset_(0),
       end_container_(nullptr),
       end_offset_(0),
       needs_another_newline_(false),
-      needs_handle_replaced_element_(false),
+      text_box_(nullptr),
+      remaining_text_box_(nullptr),
+      first_letter_text_(nullptr),
       last_text_node_(nullptr),
+      last_text_node_ended_with_collapsed_space_(false),
+      sorted_text_boxes_position_(0),
       behavior_(AdjustBehaviorFlags<Strategy>(behavior)),
+      handled_first_letter_(false),
       should_stop_(false),
       handle_shadow_root_(false),
-      text_state_(behavior_),
-      text_node_handler_(behavior_, &text_state_) {
+      text_state_(behavior_) {
   DCHECK(start.IsNotNull());
   DCHECK(end.IsNotNull());
 
@@ -179,17 +183,24 @@ TextIteratorAlgorithm<Strategy>::TextIteratorAlgorithm(
   DCHECK(!start.GetDocument()->View() ||
          !start.GetDocument()->View()->NeedsLayout());
   DCHECK(!start.GetDocument()->NeedsLayoutTreeUpdate());
-  // To avoid renderer hang, we use |CHECK_LE()| to catch the bad callers
-  // in release build.
-  CHECK_LE(start, end);
 
-  Node* const start_container = start.ComputeContainerNode();
-  const int start_offset = start.ComputeOffsetInContainerNode();
-  Node* const end_container = end.ComputeContainerNode();
-  const int end_offset = end.ComputeOffsetInContainerNode();
+  if (start.CompareTo(end) > 0) {
+    Initialize(end.ComputeContainerNode(), end.ComputeOffsetInContainerNode(),
+               start.ComputeContainerNode(),
+               start.ComputeOffsetInContainerNode());
+    return;
+  }
+  Initialize(start.ComputeContainerNode(), start.ComputeOffsetInContainerNode(),
+             end.ComputeContainerNode(), end.ComputeOffsetInContainerNode());
+}
 
-  text_node_handler_.Initialize(start_container, start_offset, end_container,
-                                end_offset);
+template <typename Strategy>
+void TextIteratorAlgorithm<Strategy>::Initialize(Node* start_container,
+                                                 int start_offset,
+                                                 Node* end_container,
+                                                 int end_offset) {
+  DCHECK(start_container);
+  DCHECK(end_container);
 
   // Remember the range - this does not change.
   start_container_ = start_container;
@@ -217,6 +228,7 @@ TextIteratorAlgorithm<Strategy>::TextIteratorAlgorithm(
     return;
 
   fully_clipped_stack_.SetUpFullyClippedStack(node_);
+  offset_ = node_ == start_container_ ? start_offset_ : 0;
   iteration_progress_ = kHandledNone;
 
   // Calculate first out of bounds node.
@@ -253,8 +265,16 @@ bool TextIteratorAlgorithm<Strategy>::IsInsideAtomicInlineElement() const {
 }
 
 template <typename Strategy>
-bool TextIteratorAlgorithm<Strategy>::HandleRememberedProgress() {
-  // Handle remembered node that needed a newline after the text node's newline
+void TextIteratorAlgorithm<Strategy>::Advance() {
+  if (should_stop_)
+    return;
+
+  if (node_)
+    DCHECK(!node_->GetDocument().NeedsLayoutTreeUpdate()) << node_;
+
+  text_state_.ResetRunInformation();
+
+  // handle remembered node that needed a newline after the text node's newline
   if (needs_another_newline_) {
     // Emit the extra newline, and position it *inside* m_node, after m_node's
     // contents, in case it's a block, in the same way that we position the
@@ -266,31 +286,17 @@ bool TextIteratorAlgorithm<Strategy>::HandleRememberedProgress() {
     Node* base_node = last_child ? last_child : node_.Get();
     SpliceBuffer('\n', Strategy::Parent(*base_node), base_node, 1, 1);
     needs_another_newline_ = false;
-    return true;
+    return;
   }
 
-  if (needs_handle_replaced_element_) {
-    HandleReplacedElement();
+  if (ShouldProceedToRemainingText())
+    ProceedToRemainingText();
+  // handle remembered text box
+  if (text_box_) {
+    HandleTextBox();
     if (text_state_.PositionNode())
-      return true;
+      return;
   }
-
-  // Try to emit more text runs if we are handling a text node.
-  return text_node_handler_.HandleRemainingTextRuns();
-}
-
-template <typename Strategy>
-void TextIteratorAlgorithm<Strategy>::Advance() {
-  if (should_stop_)
-    return;
-
-  if (node_)
-    DCHECK(!node_->GetDocument().NeedsLayoutTreeUpdate()) << node_;
-
-  text_state_.ResetRunInformation();
-
-  if (HandleRememberedProgress())
-    return;
 
   while (node_ && (node_ != past_end_node_ || shadow_depth_ > 0)) {
     if (!should_stop_ && StopsOnFormControls() &&
@@ -355,11 +361,12 @@ void TextIteratorAlgorithm<Strategy>::Advance() {
 
       // Handle the current node according to its type.
       if (iteration_progress_ < kHandledNode) {
+        bool handled_node = false;
         if (layout_object->IsText() &&
             node_->getNodeType() ==
                 Node::kTextNode) {  // FIXME: What about kCdataSectionNode?
           if (!fully_clipped_stack_.Top() || IgnoresStyleVisibility())
-            HandleTextNode();
+            handled_node = HandleTextNode();
         } else if (layout_object &&
                    (layout_object->IsImage() || layout_object->IsLayoutPart() ||
                     (node_ && node_->IsHTMLElement() &&
@@ -368,11 +375,12 @@ void TextIteratorAlgorithm<Strategy>::Advance() {
                       isHTMLImageElement(ToHTMLElement(*node_)) ||
                       isHTMLMeterElement(ToHTMLElement(*node_)) ||
                       isHTMLProgressElement(ToHTMLElement(*node_)))))) {
-          HandleReplacedElement();
+          handled_node = HandleReplacedElement();
         } else {
-          HandleNonTextNode();
+          handled_node = HandleNonTextNode();
         }
-        iteration_progress_ = kHandledNode;
+        if (handled_node)
+          iteration_progress_ = kHandledNode;
         if (text_state_.PositionNode())
           return;
       }
@@ -388,6 +396,7 @@ void TextIteratorAlgorithm<Strategy>::Advance() {
         iteration_progress_ < kHandledChildren && !isHTMLImageElement(*node_)
             ? Strategy::FirstChild(*node_)
             : nullptr;
+    offset_ = 0;
     if (!next) {
       // 2. If we've already iterated children or they are not available, go to
       // the next sibling node.
@@ -454,6 +463,8 @@ void TextIteratorAlgorithm<Strategy>::Advance() {
             --shadow_depth_;
             fully_clipped_stack_.Pop();
           }
+          handled_first_letter_ = false;
+          first_letter_text_ = nullptr;
           continue;
         }
       }
@@ -465,6 +476,8 @@ void TextIteratorAlgorithm<Strategy>::Advance() {
     if (node_)
       fully_clipped_stack_.PushFullyClippedState(node_);
     iteration_progress_ = kHandledNone;
+    handled_first_letter_ = false;
+    first_letter_text_ = nullptr;
 
     // how would this ever be?
     if (text_state_.PositionNode())
@@ -472,20 +485,350 @@ void TextIteratorAlgorithm<Strategy>::Advance() {
   }
 }
 
+static bool HasVisibleTextNode(LayoutText* layout_object) {
+  if (layout_object->Style()->Visibility() == EVisibility::kVisible)
+    return true;
+
+  if (!layout_object->IsTextFragment())
+    return false;
+
+  LayoutTextFragment* fragment = ToLayoutTextFragment(layout_object);
+  if (!fragment->IsRemainingTextLayoutObject())
+    return false;
+
+  DCHECK(fragment->GetFirstLetterPseudoElement());
+  LayoutObject* pseudo_element_layout_object =
+      fragment->GetFirstLetterPseudoElement()->GetLayoutObject();
+  return pseudo_element_layout_object &&
+         pseudo_element_layout_object->Style()->Visibility() ==
+             EVisibility::kVisible;
+}
+
 template <typename Strategy>
-void TextIteratorAlgorithm<Strategy>::HandleTextNode() {
+bool TextIteratorAlgorithm<Strategy>::ShouldHandleFirstLetter(
+    const LayoutText& layout_text) const {
+  if (handled_first_letter_)
+    return false;
+  if (!layout_text.IsTextFragment())
+    return false;
+  const LayoutTextFragment& text_fragment = ToLayoutTextFragment(layout_text);
+  return offset_ < static_cast<int>(text_fragment.TextStartOffset());
+}
+
+template <typename Strategy>
+bool TextIteratorAlgorithm<Strategy>::HandleTextNode() {
   if (ExcludesAutofilledValue()) {
     TextControlElement* control = EnclosingTextControl(node_);
     // For security reason, we don't expose suggested value if it is
     // auto-filled.
     if (control && control->IsAutofilled())
-      return;
+      return true;
   }
 
-  DCHECK_NE(last_text_node_, node_)
-      << "We should never call HandleTextNode on the same node twice";
-  last_text_node_ = ToText(node_);
-  text_node_handler_.HandleTextNode(ToText(node_));
+  Text* text_node = ToText(node_);
+  LayoutText* layout_object = text_node->GetLayoutObject();
+
+  last_text_node_ = text_node;
+  String str = layout_object->GetText();
+
+  // handle pre-formatted text
+  if (!layout_object->Style()->CollapseWhiteSpace()) {
+    if (last_text_node_ended_with_collapsed_space_ &&
+        HasVisibleTextNode(layout_object)) {
+      if (behavior_.CollapseTrailingSpace()) {
+        if (offset_ > 0 && str[offset_ - 1] == ' ') {
+          SpliceBuffer(kSpaceCharacter, text_node, 0, offset_, offset_);
+          return false;
+        }
+      } else {
+        SpliceBuffer(kSpaceCharacter, text_node, 0, offset_, offset_);
+        return false;
+      }
+    }
+    if (ShouldHandleFirstLetter(*layout_object)) {
+      HandleTextNodeFirstLetter(ToLayoutTextFragment(layout_object));
+      if (first_letter_text_) {
+        String first_letter = first_letter_text_->GetText();
+        const unsigned run_start = offset_;
+        const bool stops_in_first_letter =
+            text_node == end_container_ &&
+            end_offset_ <= static_cast<int>(first_letter.length());
+        const unsigned run_end =
+            stops_in_first_letter ? end_offset_ : first_letter.length();
+        EmitText(text_node, first_letter_text_, run_start, run_end);
+        first_letter_text_ = nullptr;
+        text_box_ = 0;
+        offset_ = run_end;
+        return stops_in_first_letter;
+      }
+      // We are here only if the DOM and/or layout trees are broken.
+      NOTREACHED();
+    }
+    if (layout_object->Style()->Visibility() != EVisibility::kVisible &&
+        !IgnoresStyleVisibility())
+      return false;
+    const unsigned run_start = offset_ - layout_object->TextStartOffset();
+    const unsigned str_length = str.length();
+    const unsigned end = (text_node == end_container_)
+                             ? end_offset_ - layout_object->TextStartOffset()
+                             : INT_MAX;
+    const unsigned run_end = std::min(str_length, end);
+
+    if (run_start >= run_end)
+      return true;
+
+    EmitText(text_node, text_node->GetLayoutObject(), run_start, run_end);
+    return true;
+  }
+
+  if (layout_object->FirstTextBox())
+    text_box_ = layout_object->FirstTextBox();
+
+  const bool should_handle_first_letter =
+      ShouldHandleFirstLetter(*layout_object);
+  if (should_handle_first_letter)
+    HandleTextNodeFirstLetter(ToLayoutTextFragment(layout_object));
+
+  if (!layout_object->FirstTextBox() && str.length() > 0 &&
+      !should_handle_first_letter) {
+    if (layout_object->Style()->Visibility() != EVisibility::kVisible &&
+        !IgnoresStyleVisibility())
+      return false;
+    last_text_node_ended_with_collapsed_space_ =
+        true;  // entire block is collapsed space
+    return true;
+  }
+
+  if (first_letter_text_)
+    layout_object = first_letter_text_;
+
+  // Used when text boxes are out of order (Hebrew/Arabic w/ embeded LTR text)
+  if (layout_object->ContainsReversedText()) {
+    sorted_text_boxes_.clear();
+    for (InlineTextBox* text_box = layout_object->FirstTextBox(); text_box;
+         text_box = text_box->NextTextBox()) {
+      sorted_text_boxes_.push_back(text_box);
+    }
+    std::sort(sorted_text_boxes_.begin(), sorted_text_boxes_.end(),
+              InlineTextBox::CompareByStart);
+    sorted_text_boxes_position_ = 0;
+    text_box_ = sorted_text_boxes_.IsEmpty() ? 0 : sorted_text_boxes_[0];
+  }
+
+  HandleTextBox();
+  return true;
+}
+
+// Restore the collapsed space for copy & paste. See http://crbug.com/318925
+template <typename Strategy>
+size_t TextIteratorAlgorithm<Strategy>::RestoreCollapsedTrailingSpace(
+    InlineTextBox* next_text_box,
+    size_t subrun_end) {
+  if (next_text_box || !text_box_->Root().NextRootBox() ||
+      text_box_->Root().LastChild() != text_box_)
+    return subrun_end;
+
+  const String& text = ToLayoutText(node_->GetLayoutObject())->GetText();
+  if (text.EndsWith(' ') == 0 || subrun_end != text.length() - 1 ||
+      text[subrun_end - 1] == ' ')
+    return subrun_end;
+
+  // If there is the leading space in the next line, we don't need to restore
+  // the trailing space.
+  // Example: <div style="width: 2em;"><b><i>foo </i></b> bar</div>
+  InlineBox* first_box_of_next_line =
+      text_box_->Root().NextRootBox()->FirstChild();
+  if (!first_box_of_next_line)
+    return subrun_end + 1;
+  Node* first_node_of_next_line =
+      first_box_of_next_line->GetLineLayoutItem().GetNode();
+  if (!first_node_of_next_line ||
+      first_node_of_next_line->nodeValue()[0] != ' ')
+    return subrun_end + 1;
+
+  return subrun_end;
+}
+
+template <typename Strategy>
+void TextIteratorAlgorithm<Strategy>::HandleTextBox() {
+  LayoutText* layout_object = first_letter_text_
+                                  ? first_letter_text_
+                                  : ToLayoutText(node_->GetLayoutObject());
+  const unsigned text_start_offset = layout_object->TextStartOffset();
+
+  if (layout_object->Style()->Visibility() != EVisibility::kVisible &&
+      !IgnoresStyleVisibility()) {
+    text_box_ = nullptr;
+  } else {
+    String str = layout_object->GetText();
+    // Start and end offsets in |str|, i.e., str[start..end - 1] should be
+    // emitted (after handling whitespace collapsing).
+    const unsigned start = offset_ - layout_object->TextStartOffset();
+    const unsigned end =
+        (node_ == end_container_)
+            ? static_cast<unsigned>(end_offset_) - text_start_offset
+            : INT_MAX;
+    while (text_box_) {
+      const unsigned text_box_start = text_box_->Start();
+      const unsigned run_start = std::max(text_box_start, start);
+
+      // Check for collapsed space at the start of this run.
+      InlineTextBox* first_text_box =
+          layout_object->ContainsReversedText()
+              ? (sorted_text_boxes_.IsEmpty() ? 0 : sorted_text_boxes_[0])
+              : layout_object->FirstTextBox();
+      const bool need_space = last_text_node_ended_with_collapsed_space_ ||
+                              (text_box_ == first_text_box &&
+                               text_box_start == run_start && run_start > 0);
+      if (need_space &&
+          !layout_object->Style()->IsCollapsibleWhiteSpace(
+              text_state_.LastCharacter()) &&
+          text_state_.LastCharacter()) {
+        if (last_text_node_ == node_ && run_start > 0 &&
+            str[run_start - 1] == ' ') {
+          unsigned space_run_start = run_start - 1;
+          while (space_run_start > 0 && str[space_run_start - 1] == ' ')
+            --space_run_start;
+          EmitText(node_, layout_object, space_run_start, space_run_start + 1);
+        } else {
+          SpliceBuffer(kSpaceCharacter, node_, 0, run_start, run_start);
+        }
+        return;
+      }
+      const unsigned text_box_end = text_box_start + text_box_->Len();
+      const unsigned run_end = std::min(text_box_end, end);
+
+      // Determine what the next text box will be, but don't advance yet
+      InlineTextBox* next_text_box = nullptr;
+      if (layout_object->ContainsReversedText()) {
+        if (sorted_text_boxes_position_ + 1 < sorted_text_boxes_.size())
+          next_text_box = sorted_text_boxes_[sorted_text_boxes_position_ + 1];
+      } else {
+        next_text_box = text_box_->NextTextBox();
+      }
+
+      // FIXME: Based on the outcome of crbug.com/446502 it's possible we can
+      //   remove this block. The reason we new it now is because BIDI and
+      //   FirstLetter seem to have different ideas of where things can split.
+      //   FirstLetter takes the punctuation + first letter, and BIDI will
+      //   split out the punctuation and possibly reorder it.
+      if (next_text_box &&
+          !(next_text_box->GetLineLayoutItem().IsEqual(layout_object))) {
+        text_box_ = 0;
+        return;
+      }
+      DCHECK(!next_text_box ||
+             next_text_box->GetLineLayoutItem().IsEqual(layout_object));
+
+      if (run_start < run_end) {
+        // Handle either a single newline character (which becomes a space),
+        // or a run of characters that does not include a newline.
+        // This effectively translates newlines to spaces without copying the
+        // text.
+        if (str[run_start] == '\n') {
+          // We need to preserve new lines in case of PreLine.
+          // See bug crbug.com/317365.
+          if (layout_object->Style()->WhiteSpace() == EWhiteSpace::kPreLine)
+            SpliceBuffer('\n', node_, 0, run_start, run_start);
+          else
+            SpliceBuffer(kSpaceCharacter, node_, 0, run_start, run_start + 1);
+          offset_ = text_start_offset + run_start + 1;
+        } else {
+          size_t subrun_end = str.find('\n', run_start);
+          if (subrun_end == kNotFound || subrun_end > run_end) {
+            subrun_end = run_end;
+            subrun_end =
+                RestoreCollapsedTrailingSpace(next_text_box, subrun_end);
+          }
+
+          offset_ = text_start_offset + subrun_end;
+          EmitText(node_, layout_object, run_start, subrun_end);
+        }
+
+        // If we are doing a subrun that doesn't go to the end of the text box,
+        // come back again to finish handling this text box; don't advance to
+        // the next one.
+        if (static_cast<unsigned>(text_state_.PositionEndOffset()) <
+            text_box_end)
+          return;
+
+        if (behavior_.DoesNotEmitSpaceBeyondRangeEnd()) {
+          // If the subrun went to the text box end and this end is also the end
+          // of the range, do not advance to the next text box and do not
+          // generate a space, just stop.
+          if (text_box_end == end) {
+            text_box_ = nullptr;
+            return;
+          }
+        }
+
+        // Advance and return
+        const unsigned next_run_start =
+            next_text_box ? next_text_box->Start() : str.length();
+        if (next_run_start > run_end)
+          last_text_node_ended_with_collapsed_space_ =
+              true;  // collapsed space between runs or at the end
+
+        text_box_ = next_text_box;
+        if (layout_object->ContainsReversedText())
+          ++sorted_text_boxes_position_;
+        return;
+      }
+      // Advance and continue
+      text_box_ = next_text_box;
+      if (layout_object->ContainsReversedText())
+        ++sorted_text_boxes_position_;
+    }
+  }
+
+  if (ShouldProceedToRemainingText()) {
+    ProceedToRemainingText();
+    HandleTextBox();
+  }
+}
+
+template <typename Strategy>
+bool TextIteratorAlgorithm<Strategy>::ShouldProceedToRemainingText() const {
+  if (text_box_ || !remaining_text_box_)
+    return false;
+  if (node_ != end_container_)
+    return true;
+  return offset_ < end_offset_;
+}
+
+template <typename Strategy>
+void TextIteratorAlgorithm<Strategy>::ProceedToRemainingText() {
+  text_box_ = remaining_text_box_;
+  remaining_text_box_ = 0;
+  first_letter_text_ = nullptr;
+  offset_ = ToLayoutText(node_->GetLayoutObject())->TextStartOffset();
+}
+
+template <typename Strategy>
+void TextIteratorAlgorithm<Strategy>::HandleTextNodeFirstLetter(
+    LayoutTextFragment* layout_object) {
+  handled_first_letter_ = true;
+
+  if (!layout_object->IsRemainingTextLayoutObject())
+    return;
+
+  FirstLetterPseudoElement* first_letter_element =
+      layout_object->GetFirstLetterPseudoElement();
+  if (!first_letter_element)
+    return;
+
+  LayoutObject* pseudo_layout_object = first_letter_element->GetLayoutObject();
+  if (pseudo_layout_object->Style()->Visibility() != EVisibility::kVisible &&
+      !IgnoresStyleVisibility())
+    return;
+
+  LayoutObject* first_letter = pseudo_layout_object->SlowFirstChild();
+
+  sorted_text_boxes_.clear();
+  remaining_text_box_ = text_box_;
+  CHECK(first_letter && first_letter->IsText());
+  first_letter_text_ = ToLayoutText(first_letter);
+  text_box_ = first_letter_text_->FirstTextBox();
 }
 
 template <typename Strategy>
@@ -504,36 +847,40 @@ bool TextIteratorAlgorithm<Strategy>::SupportsAltText(Node* node) {
 }
 
 template <typename Strategy>
-void TextIteratorAlgorithm<Strategy>::HandleReplacedElement() {
-  needs_handle_replaced_element_ = false;
-
+bool TextIteratorAlgorithm<Strategy>::HandleReplacedElement() {
   if (fully_clipped_stack_.Top())
-    return;
+    return false;
 
   LayoutObject* layout_object = node_->GetLayoutObject();
   if (layout_object->Style()->Visibility() != EVisibility::kVisible &&
-      !IgnoresStyleVisibility()) {
-    return;
-  }
+      !IgnoresStyleVisibility())
+    return false;
 
   if (EmitsObjectReplacementCharacter()) {
     SpliceBuffer(kObjectReplacementCharacter, Strategy::Parent(*node_), node_,
                  0, 1);
-    return;
+    return true;
   }
 
-  DCHECK_EQ(last_text_node_, text_node_handler_.GetNode());
-  if (last_text_node_) {
-    if (text_node_handler_.FixLeadingWhiteSpaceForReplacedElement(
-            Strategy::Parent(*last_text_node_))) {
-      needs_handle_replaced_element_ = true;
-      return;
+  if (behavior_.CollapseTrailingSpace()) {
+    if (last_text_node_) {
+      String str = last_text_node_->GetLayoutObject()->GetText();
+      if (last_text_node_ended_with_collapsed_space_ && offset_ > 0 &&
+          str[offset_ - 1] == ' ') {
+        SpliceBuffer(kSpaceCharacter, Strategy::Parent(*last_text_node_),
+                     last_text_node_, 1, 1);
+        return false;
+      }
     }
+  } else if (last_text_node_ended_with_collapsed_space_) {
+    SpliceBuffer(kSpaceCharacter, Strategy::Parent(*last_text_node_),
+                 last_text_node_, 1, 1);
+    return false;
   }
 
   if (EntersTextControls() && layout_object->IsTextControl()) {
     // The shadow tree should be already visited.
-    return;
+    return true;
   }
 
   if (EmitsCharactersBetweenAllVisiblePositions()) {
@@ -541,7 +888,7 @@ void TextIteratorAlgorithm<Strategy>::HandleReplacedElement() {
     // finding, and to simply take up space for the selection preservation
     // code in moveParagraphs, so we use a comma.
     SpliceBuffer(',', Strategy::Parent(*node_), node_, 0, 1);
-    return;
+    return true;
   }
 
   text_state_.UpdateForReplacedElement(node_);
@@ -549,8 +896,10 @@ void TextIteratorAlgorithm<Strategy>::HandleReplacedElement() {
   if (EmitsImageAltText() && TextIterator::SupportsAltText(node_)) {
     text_state_.EmitAltText(node_);
     if (text_state_.length())
-      return;
+      return true;
   }
+
+  return true;
 }
 
 template <typename Strategy>
@@ -768,7 +1117,7 @@ void TextIteratorAlgorithm<Strategy>::RepresentNodeOffsetZero() {
 }
 
 template <typename Strategy>
-void TextIteratorAlgorithm<Strategy>::HandleNonTextNode() {
+bool TextIteratorAlgorithm<Strategy>::HandleNonTextNode() {
   if (ShouldEmitNewlineForNode(node_, EmitsOriginalText()))
     SpliceBuffer('\n', Strategy::Parent(*node_), node_, 0, 1);
   else if (EmitsCharactersBetweenAllVisiblePositions() &&
@@ -776,6 +1125,8 @@ void TextIteratorAlgorithm<Strategy>::HandleNonTextNode() {
     SpliceBuffer(kSpaceCharacter, Strategy::Parent(*node_), node_, 0, 1);
   else
     RepresentNodeOffsetZero();
+
+  return true;
 }
 
 template <typename Strategy>
@@ -830,9 +1181,25 @@ void TextIteratorAlgorithm<Strategy>::SpliceBuffer(UChar c,
                                                    Node* offset_base_node,
                                                    int text_start_offset,
                                                    int text_end_offset) {
+  // Since m_lastTextNodeEndedWithCollapsedSpace seems better placed in
+  // TextIterator, but is always reset when we call spliceBuffer, we
+  // wrap TextIteratorTextState::spliceBuffer() with this function.
   text_state_.SpliceBuffer(c, text_node, offset_base_node, text_start_offset,
                            text_end_offset);
-  text_node_handler_.ResetCollapsedWhiteSpaceFixup();
+  last_text_node_ended_with_collapsed_space_ = false;
+}
+
+template <typename Strategy>
+void TextIteratorAlgorithm<Strategy>::EmitText(Node* text_node,
+                                               LayoutText* layout_object,
+                                               int text_start_offset,
+                                               int text_end_offset) {
+  // Since m_lastTextNodeEndedWithCollapsedSpace seems better placed in
+  // TextIterator, but is always reset when we call spliceBuffer, we
+  // wrap TextIteratorTextState::spliceBuffer() with this function.
+  text_state_.EmitText(text_node, layout_object, text_start_offset,
+                       text_end_offset);
+  last_text_node_ended_with_collapsed_space_ = false;
 }
 
 template <typename Strategy>

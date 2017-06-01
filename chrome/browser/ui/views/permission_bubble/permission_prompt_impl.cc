@@ -42,6 +42,7 @@
 #include "ui/views/controls/menu/menu_runner.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/grid_layout.h"
+#include "ui/views/layout/layout_constants.h"
 
 namespace {
 
@@ -156,6 +157,7 @@ class PermissionsBubbleDialogDelegateView
   const gfx::FontList& GetTitleFontList() const override;
   base::string16 GetWindowTitle() const override;
   void OnWidgetDestroying(views::Widget* widget) override;
+  gfx::Size GetPreferredSize() const override;
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
   bool Cancel() override;
   bool Accept() override;
@@ -300,6 +302,12 @@ void PermissionsBubbleDialogDelegateView::OnWidgetDestroying(
     owner_->Closing();
     owner_ = nullptr;
   }
+}
+
+gfx::Size PermissionsBubbleDialogDelegateView::GetPreferredSize() const {
+  // TODO(estade): bubbles should default to this width.
+  const int kWidth = 320 - GetInsets().width();
+  return gfx::Size(kWidth, GetHeightForWidth(kWidth));
 }
 
 void PermissionsBubbleDialogDelegateView::GetAccessibleNodeData(

@@ -7,7 +7,7 @@
 #include "base/trace_event/trace_event.h"
 #include "cc/paint/skia_paint_canvas.h"
 #include "chrome/browser/android/vr_shell/textures/ui_texture.h"
-#include "chrome/browser/android/vr_shell/ui_element_renderer.h"
+#include "chrome/browser/android/vr_shell/vr_shell_renderer.h"
 #include "third_party/skia/include/core/SkSurface.h"
 
 namespace vr_shell {
@@ -39,15 +39,15 @@ void TexturedElement::UpdateTexture() {
   Flush(surface.get());
 }
 
-void TexturedElement::Render(UiElementRenderer* renderer,
+void TexturedElement::Render(VrShellRenderer* renderer,
                              vr::Mat4f view_proj_matrix) const {
   if (!initialized_)
     return;
   gfx::SizeF drawn_size = GetTexture()->GetDrawnSize();
   gfx::RectF copy_rect(0, 0, drawn_size.width() / texture_size_.width(),
                        drawn_size.height() / texture_size_.height());
-  renderer->DrawTexturedQuad(texture_handle_, view_proj_matrix, copy_rect,
-                             opacity());
+  renderer->GetTexturedQuadRenderer()->AddQuad(
+      texture_handle_, view_proj_matrix, copy_rect, opacity());
 }
 
 void TexturedElement::Flush(SkSurface* surface) {
@@ -63,10 +63,6 @@ void TexturedElement::Flush(SkSurface* surface) {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pixmap.width(), pixmap.height(), 0,
                GL_RGBA, GL_UNSIGNED_BYTE, pixmap.addr());
-}
-
-void TexturedElement::OnSetMode() {
-  GetTexture()->SetMode(mode());
 }
 
 }  // namespace vr_shell

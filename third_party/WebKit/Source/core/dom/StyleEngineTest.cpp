@@ -14,7 +14,7 @@
 #include "core/dom/Document.h"
 #include "core/dom/NodeComputedStyle.h"
 #include "core/dom/shadow/ShadowRootInit.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/html/HTMLElement.h"
 #include "core/html/HTMLStyleElement.h"
 #include "core/testing/DummyPageHolder.h"
@@ -87,52 +87,19 @@ TEST_F(StyleEngineTest, AnalyzedInject) {
   EXPECT_EQ(MakeRGB(255, 0, 0),
             t1->GetComputedStyle()->VisitedDependentColor(CSSPropertyColor));
 
-  const unsigned initial_count = GetStyleEngine().StyleForElementCount();
+  unsigned before_count = GetStyleEngine().StyleForElementCount();
 
-  StyleSheetContents* green_parsed_sheet =
+  StyleSheetContents* parsed_sheet =
       StyleSheetContents::Create(CSSParserContext::Create(GetDocument()));
-  green_parsed_sheet->ParseString("#t1 { color: green }");
-  WebStyleSheetId green_id =
-      GetStyleEngine().InjectAuthorSheet(green_parsed_sheet);
-  EXPECT_EQ(1u, green_id);
-  EXPECT_EQ(1u, GetStyleEngine().InjectedAuthorStyleSheets().size());
+  parsed_sheet->ParseString("#t1 { color: green }");
+  GetStyleEngine().InjectAuthorSheet(parsed_sheet);
   GetDocument().View()->UpdateAllLifecyclePhases();
 
-  EXPECT_EQ(1u, GetStyleEngine().StyleForElementCount() - initial_count);
+  unsigned after_count = GetStyleEngine().StyleForElementCount();
+  EXPECT_EQ(1u, after_count - before_count);
 
   ASSERT_TRUE(t1->GetComputedStyle());
   EXPECT_EQ(MakeRGB(0, 128, 0),
-            t1->GetComputedStyle()->VisitedDependentColor(CSSPropertyColor));
-
-  StyleSheetContents* blue_parsed_sheet =
-      StyleSheetContents::Create(CSSParserContext::Create(GetDocument()));
-  blue_parsed_sheet->ParseString("#t1 { color: blue }");
-  WebStyleSheetId blue_id =
-      GetStyleEngine().InjectAuthorSheet(blue_parsed_sheet);
-  EXPECT_EQ(2u, blue_id);
-  EXPECT_EQ(2u, GetStyleEngine().InjectedAuthorStyleSheets().size());
-  GetDocument().View()->UpdateAllLifecyclePhases();
-
-  EXPECT_EQ(2u, GetStyleEngine().StyleForElementCount() - initial_count);
-
-  ASSERT_TRUE(t1->GetComputedStyle());
-  EXPECT_EQ(MakeRGB(0, 0, 255),
-            t1->GetComputedStyle()->VisitedDependentColor(CSSPropertyColor));
-
-  GetStyleEngine().RemoveInjectedAuthorSheet(green_id);
-  EXPECT_EQ(1u, GetStyleEngine().InjectedAuthorStyleSheets().size());
-  GetDocument().View()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(3u, GetStyleEngine().StyleForElementCount() - initial_count);
-  ASSERT_TRUE(t1->GetComputedStyle());
-  EXPECT_EQ(MakeRGB(0, 0, 255),
-            t1->GetComputedStyle()->VisitedDependentColor(CSSPropertyColor));
-
-  GetStyleEngine().RemoveInjectedAuthorSheet(blue_id);
-  EXPECT_EQ(0u, GetStyleEngine().InjectedAuthorStyleSheets().size());
-  GetDocument().View()->UpdateAllLifecyclePhases();
-  EXPECT_EQ(4u, GetStyleEngine().StyleForElementCount() - initial_count);
-  ASSERT_TRUE(t1->GetComputedStyle());
-  EXPECT_EQ(MakeRGB(255, 0, 0),
             t1->GetComputedStyle()->VisitedDependentColor(CSSPropertyColor));
 }
 

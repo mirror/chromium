@@ -6,10 +6,13 @@
 
 #include <cassert>
 
+#include "BlinkGCPluginOptions.h"
 #include "RecordInfo.h"
 
-CheckFieldsVisitor::CheckFieldsVisitor(const BlinkGCPluginOptions& options)
-    : options_(options), current_(0), stack_allocated_host_(false) {}
+CheckFieldsVisitor::CheckFieldsVisitor()
+    : current_(0),
+      stack_allocated_host_(false) {
+}
 
 CheckFieldsVisitor::Errors& CheckFieldsVisitor::invalid_fields() {
   return invalid_fields_;
@@ -31,7 +34,7 @@ bool CheckFieldsVisitor::ContainsInvalidFields(RecordInfo* info) {
   return !invalid_fields_.empty();
 }
 
-void CheckFieldsVisitor::AtMember(Member*) {
+void CheckFieldsVisitor::AtMember(Member* edge) {
   if (managed_host_)
     return;
   // A member is allowed to appear in the context of a root.
@@ -42,14 +45,6 @@ void CheckFieldsVisitor::AtMember(Member*) {
       return;
   }
   invalid_fields_.push_back(std::make_pair(current_, kMemberInUnmanaged));
-}
-
-void CheckFieldsVisitor::AtWeakMember(WeakMember*) {
-  // TODO(sof): remove this once crbug.com/724418's change
-  // has safely been rolled out.
-  if (options_.enable_weak_members_in_unmanaged_classes)
-    return;
-  AtMember(nullptr);
 }
 
 void CheckFieldsVisitor::AtIterator(Iterator* edge) {

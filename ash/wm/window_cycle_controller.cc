@@ -14,6 +14,7 @@
 #include "ash/wm/window_cycle_event_filter.h"
 #include "ash/wm/window_cycle_list.h"
 #include "ash/wm/window_state.h"
+#include "ash/wm_window.h"
 #include "base/metrics/histogram_macros.h"
 
 namespace ash {
@@ -54,8 +55,8 @@ void WindowCycleController::HandleCycleWindow(Direction direction) {
 }
 
 void WindowCycleController::StartCycling() {
-  WindowCycleList::WindowList window_list =
-      Shell::Get()->mru_window_tracker()->BuildMruWindowList();
+  WindowCycleList::WindowList window_list = WmWindow::ToAuraWindows(
+      Shell::Get()->mru_window_tracker()->BuildMruWindowList());
   // Exclude windows:
   // - non user positionable windows, such as extension popups.
   // - windows being dragged
@@ -109,7 +110,8 @@ void WindowCycleController::StopCycling() {
   window_cycle_list_.reset();
 
   aura::Window* active_window_after_window_cycle =
-      GetActiveWindow(Shell::Get()->mru_window_tracker()->BuildMruWindowList());
+      GetActiveWindow(WmWindow::ToAuraWindows(
+          Shell::Get()->mru_window_tracker()->BuildMruWindowList()));
 
   // Remove our key event filter.
   event_filter_.reset();

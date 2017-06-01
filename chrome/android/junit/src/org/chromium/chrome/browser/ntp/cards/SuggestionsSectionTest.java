@@ -485,12 +485,11 @@ public class SuggestionsSectionTest {
         verify(mParent).onItemRangeRemoved(section, 2, 3);
         verify(mParent).onItemRangeInserted(section, 2, 2);
         assertEquals(3, section.getSuggestionsCount());
-        List<SnippetArticle> sectionSuggestions = getSuggestions(section);
-        assertEquals(snippets.get(0), sectionSuggestions.get(0));
-        assertNotEquals(snippets.get(1), sectionSuggestions.get(1));
-        assertEquals(newSnippets.get(0), sectionSuggestions.get(1));
-        assertNotEquals(snippets.get(2), sectionSuggestions.get(2));
-        assertEquals(newSnippets.get(1), sectionSuggestions.get(2));
+        assertEquals(snippets.get(0), section.getSuggestionAt(1));
+        assertNotEquals(snippets.get(1), section.getSuggestionAt(2));
+        assertEquals(newSnippets.get(0), section.getSuggestionAt(2));
+        assertNotEquals(snippets.get(2), section.getSuggestionAt(3));
+        assertEquals(newSnippets.get(1), section.getSuggestionAt(3));
 
         assertTrue(section.isDataStale());
     }
@@ -519,11 +518,10 @@ public class SuggestionsSectionTest {
         verify(mParent).onItemRangeRemoved(section, 3, 2);
         verify(mParent).onItemRangeInserted(section, 3, 1);
         assertEquals(3, section.getSuggestionsCount());
-        List<SnippetArticle> sectionSuggestions = getSuggestions(section);
-        assertEquals(snippets.get(0), sectionSuggestions.get(0));
-        assertEquals(snippets.get(1), sectionSuggestions.get(1));
-        assertNotEquals(snippets.get(2), sectionSuggestions.get(2));
-        assertEquals(newSnippets.get(0), sectionSuggestions.get(2));
+        assertEquals(snippets.get(0), section.getSuggestionAt(1));
+        assertEquals(snippets.get(1), section.getSuggestionAt(2));
+        assertNotEquals(snippets.get(2), section.getSuggestionAt(3));
+        assertEquals(newSnippets.get(0), section.getSuggestionAt(3));
 
         assertTrue(section.isDataStale());
     }
@@ -551,9 +549,8 @@ public class SuggestionsSectionTest {
         verify(mParent).onItemRangeRemoved(section, 3, 2);
         verify(mParent, never()).onItemRangeInserted(any(TreeNode.class), anyInt(), anyInt());
         assertEquals(2, section.getSuggestionsCount());
-        List<SnippetArticle> sectionSuggestions = getSuggestions(section);
-        assertEquals(snippets.get(0), sectionSuggestions.get(0));
-        assertEquals(snippets.get(1), sectionSuggestions.get(1));
+        assertEquals(snippets.get(0), section.getSuggestionAt(1));
+        assertEquals(snippets.get(1), section.getSuggestionAt(2));
 
         assertTrue(section.isDataStale());
     }
@@ -576,9 +573,8 @@ public class SuggestionsSectionTest {
         bindViewHolders(section, 1, 3);
 
         // Remove last two items.
-        List<SnippetArticle> sectionSuggestions = getSuggestions(section);
-        section.removeSuggestionById(sectionSuggestions.get(2).mIdWithinCategory);
-        section.removeSuggestionById(sectionSuggestions.get(1).mIdWithinCategory);
+        section.removeSuggestionById(section.getSuggestionAt(3).mIdWithinCategory);
+        section.removeSuggestionById(section.getSuggestionAt(2).mIdWithinCategory);
         reset(mParent);
 
         assertEquals(1, section.getSuggestionsCount());
@@ -588,7 +584,7 @@ public class SuggestionsSectionTest {
         verify(mParent, never()).onItemRangeRemoved(any(TreeNode.class), anyInt(), anyInt());
         verify(mParent, never()).onItemRangeInserted(any(TreeNode.class), anyInt(), anyInt());
         assertEquals(1, section.getSuggestionsCount());
-        assertEquals(snippets.get(0), sectionSuggestions.get(0));
+        assertEquals(snippets.get(0), section.getSuggestionAt(1));
 
         assertTrue(section.isDataStale());
     }
@@ -611,7 +607,7 @@ public class SuggestionsSectionTest {
         verify(mParent, never()).onItemRangeInserted(any(TreeNode.class), anyInt(), anyInt());
 
         // All old snippets should be in place.
-        assertEquals(snippets, getSuggestions(section));
+        verifySnippets(section, snippets);
 
         assertTrue(section.isDataStale());
     }
@@ -632,7 +628,7 @@ public class SuggestionsSectionTest {
 
         // All 7 snippets should be in place.
         snippets.addAll(appendedSnippets);
-        assertEquals(snippets, getSuggestions(section));
+        verifySnippets(section, snippets);
 
         // Try to replace them with another list. Should have no effect.
         List<SnippetArticle> newSnippets =
@@ -640,7 +636,7 @@ public class SuggestionsSectionTest {
         section.updateSuggestions(createSourceFor(newSnippets));
 
         // All previous snippets should be in place.
-        assertEquals(snippets, getSuggestions(section));
+        verifySnippets(section, snippets);
 
         assertTrue(section.isDataStale());
     }
@@ -747,17 +743,6 @@ public class SuggestionsSectionTest {
         return set;
     }
 
-    private static List<SnippetArticle> getSuggestions(TreeNode root) {
-        final List<SnippetArticle> suggestions = new ArrayList<>();
-        root.visitItems(new NodeVisitor() {
-            @Override
-            public void visitSuggestion(SnippetArticle suggestion) {
-                suggestions.add(suggestion);
-            }
-        });
-        return suggestions;
-    }
-
     private SuggestionsSection createSectionWithFetchAction(boolean hasFetchAction) {
         CategoryInfoBuilder builder = new CategoryInfoBuilder(TEST_CATEGORY_ID).showIfEmpty();
         if (hasFetchAction) builder.withAction(ContentSuggestionsAdditionalAction.FETCH);
@@ -804,5 +789,14 @@ public class SuggestionsSectionTest {
         verify(suggestionsSource,
                 (action == ContentSuggestionsAdditionalAction.FETCH ? times(1) : never()))
                 .fetchSuggestions(anyInt(), any(String[].class));
+    }
+
+    private static void verifySnippets(SuggestionsSection section, List<SnippetArticle> snippets) {
+        assertEquals(snippets.size(), section.getSuggestionsCount());
+        // Indices in section are off-by-one (index 0 is the header).
+        int index = 1;
+        for (SnippetArticle snippet : snippets) {
+            assertEquals(snippet, section.getSuggestionAt(index++));
+        }
     }
 }

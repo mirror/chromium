@@ -4,6 +4,7 @@
 
 package org.chromium.shape_detection;
 
+import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.SparseArray;
@@ -14,7 +15,6 @@ import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
-import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.gfx.mojom.PointF;
 import org.chromium.gfx.mojom.RectF;
@@ -30,18 +30,18 @@ import org.chromium.shape_detection.mojom.BarcodeDetectionResult;
 public class BarcodeDetectionImpl implements BarcodeDetection {
     private static final String TAG = "BarcodeDetectionImpl";
 
+    private final Context mContext;
     private BarcodeDetector mBarcodeDetector;
 
-    public BarcodeDetectionImpl() {
-        mBarcodeDetector =
-                new BarcodeDetector.Builder(ContextUtils.getApplicationContext()).build();
+    public BarcodeDetectionImpl(Context context) {
+        mContext = context;
+        mBarcodeDetector = new BarcodeDetector.Builder(mContext).build();
     }
 
     @Override
     public void detect(
             SharedBufferHandle frameData, int width, int height, DetectResponse callback) {
-        if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(
-                    ContextUtils.getApplicationContext())
+        if (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(mContext)
                 != ConnectionResult.SUCCESS) {
             Log.e(TAG, "Google Play Services not available");
             callback.call(new BarcodeDetectionResult[0]);
@@ -102,11 +102,15 @@ public class BarcodeDetectionImpl implements BarcodeDetection {
      * A factory class to register BarcodeDetection interface.
      */
     public static class Factory implements InterfaceFactory<BarcodeDetection> {
-        public Factory() {}
+        private final Context mContext;
+
+        public Factory(Context context) {
+            mContext = context;
+        }
 
         @Override
         public BarcodeDetection createImpl() {
-            return new BarcodeDetectionImpl();
+            return new BarcodeDetectionImpl(mContext);
         }
     }
 }

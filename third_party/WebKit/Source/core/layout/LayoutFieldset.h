@@ -45,6 +45,7 @@ class LayoutFieldset final : public LayoutBlockFlow {
                                            SubtreeLayoutScope&) override;
 
   void ComputePreferredLogicalWidths() override;
+  bool AvoidsFloats() const override { return true; }
 
   void PaintBoxDecorationBackground(const PaintInfo&,
                                     const LayoutPoint&) const override;

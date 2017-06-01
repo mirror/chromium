@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
@@ -22,7 +21,6 @@ import android.widget.TextView;
 import com.google.android.gms.common.ConnectionResult;
 
 import org.chromium.base.Callback;
-import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.externalauth.ExternalAuthUtils;
@@ -39,7 +37,6 @@ import org.chromium.ui.text.SpanApplier.SpanInfo;
 import org.chromium.ui.widget.ButtonCompat;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 // TODO(gogerald): refactor common part into one place after redesign all sign in screens.
 
@@ -388,6 +385,16 @@ public class AccountSigninView extends FrameLayout implements ProfileDownloader.
         mSigninAccountEmail.setText(selectedAccountEmail);
     }
 
+    /**
+     * Updates the view to show that sign in has completed.
+     * This should only be used if the user is not currently signed in (eg on the First
+     * Run Experience).
+     */
+    public void switchToSignedMode() {
+        // TODO(peconn): Add a warning here
+        showConfirmSigninPage();
+    }
+
     private void showSigninPage() {
         mSignedIn = false;
 
@@ -433,16 +440,15 @@ public class AccountSigninView extends FrameLayout implements ProfileDownloader.
 
         // Ensure that the AccountTrackerService has a fully up to date GAIA id <-> email mapping,
         // as this is needed for the previous account check.
-        final long seedingStartTime = SystemClock.elapsedRealtime();
         if (AccountTrackerService.get().checkAndSeedSystemAccounts()) {
-            showConfirmSigninPagePreviousAccountCheck(seedingStartTime);
+            showConfirmSigninPagePreviousAccountCheck();
         } else {
             AccountTrackerService.get().addSystemAccountsSeededListener(
                     new OnSystemAccountsSeededListener() {
                         @Override
                         public void onSystemAccountsSeedingComplete() {
                             AccountTrackerService.get().removeSystemAccountsSeededListener(this);
-                            showConfirmSigninPagePreviousAccountCheck(seedingStartTime);
+                            showConfirmSigninPagePreviousAccountCheck();
                         }
 
                         @Override
@@ -451,9 +457,7 @@ public class AccountSigninView extends FrameLayout implements ProfileDownloader.
         }
     }
 
-    private void showConfirmSigninPagePreviousAccountCheck(long seedingStartTime) {
-        RecordHistogram.recordTimesHistogram("Signin.AndroidAccountSigninViewSeedingTime",
-                SystemClock.elapsedRealtime() - seedingStartTime, TimeUnit.MILLISECONDS);
+    private void showConfirmSigninPagePreviousAccountCheck() {
         String accountName = getSelectedAccountName();
         ConfirmSyncDataStateMachine.run(PrefServiceBridge.getInstance().getSyncLastAccountName(),
                 accountName, ImportSyncType.PREVIOUS_DATA_FOUND,

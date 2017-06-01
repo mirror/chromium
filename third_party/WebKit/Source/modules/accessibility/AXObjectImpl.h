@@ -49,17 +49,14 @@ namespace blink {
 class AXObjectImpl;
 class AXObjectCacheImpl;
 class Element;
+class FrameView;
 class IntPoint;
-class LayoutObject;
-class LocalFrameView;
 class Node;
+class LayoutObject;
 class ScrollableArea;
 
 enum class AOMBooleanProperty;
 enum class AOMStringProperty;
-enum class AOMUIntProperty;
-enum class AOMIntProperty;
-enum class AOMFloatProperty;
 
 typedef unsigned AXID;
 
@@ -144,12 +141,11 @@ enum AXIgnoredReason {
   kAXActiveModalDialog,
   kAXAncestorDisallowsChild,
   kAXAncestorIsLeafNode,
-  kAXAriaHiddenElement,
-  kAXAriaHiddenSubtree,
+  kAXAriaHidden,
+  kAXAriaHiddenRoot,
   kAXEmptyAlt,
   kAXEmptyText,
-  kAXInertElement,
-  kAXInertSubtree,
+  kAXInert,
   kAXInheritsPresentation,
   kAXLabelContainer,
   kAXLabelFor,
@@ -357,9 +353,6 @@ class MODULES_EXPORT AXObjectImpl
   bool HasAOMPropertyOrARIAAttribute(AOMBooleanProperty, bool& result) const;
   bool AOMPropertyOrARIAAttributeIsTrue(AOMBooleanProperty) const;
   bool AOMPropertyOrARIAAttributeIsFalse(AOMBooleanProperty) const;
-  bool HasAOMPropertyOrARIAAttribute(AOMUIntProperty, uint32_t& result) const;
-  bool HasAOMPropertyOrARIAAttribute(AOMIntProperty, int32_t& result) const;
-  bool HasAOMPropertyOrARIAAttribute(AOMFloatProperty, float& result) const;
 
   virtual void GetSparseAXAttributes(AXSparseAttributeClient&) const {}
 
@@ -466,7 +459,7 @@ class MODULES_EXPORT AXObjectImpl
   virtual bool CanSetSelectedAttribute() const { return false; }
 
   // Whether objects are ignored, i.e. not included in the tree.
-  bool AccessibilityIsIgnored();
+  bool AccessibilityIsIgnored() const;
   typedef HeapVector<IgnoredReason> IgnoredReasons;
   virtual bool ComputeAccessibilityIsIgnored(IgnoredReasons* = nullptr) const {
     return true;
@@ -715,8 +708,6 @@ class MODULES_EXPORT AXObjectImpl
   virtual AXObjectImpl* ComputeParentIfExists() const { return 0; }
   AXObjectImpl* CachedParentObject() const { return parent_; }
   AXObjectImpl* ParentObjectUnignored() const;
-  AXObjectImpl* ContainerWidget() const;
-  bool IsContainerWidget() const;
 
   // Low-level accessibility tree exploration, only for use within the
   // accessibility module.
@@ -740,7 +731,7 @@ class MODULES_EXPORT AXObjectImpl
   virtual Element* GetElement() const;  // Same as GetNode, if it's an Element.
   virtual LayoutObject* GetLayoutObject() const { return nullptr; }
   virtual Document* GetDocument() const;
-  virtual LocalFrameView* DocumentFrameView() const;
+  virtual FrameView* DocumentFrameView() const;
   virtual Element* AnchorElement() const { return nullptr; }
   virtual Element* ActionElement() const { return nullptr; }
   String Language() const;
@@ -810,6 +801,7 @@ class MODULES_EXPORT AXObjectImpl
   static AccessibilityRole AriaRoleToWebCoreRole(const String&);
   static const AtomicString& RoleName(AccessibilityRole);
   static const AtomicString& InternalRoleName(AccessibilityRole);
+  static bool IsInsideFocusableElementOrARIAWidget(const Node&);
 
  protected:
   AXID id_;
@@ -858,8 +850,6 @@ class MODULES_EXPORT AXObjectImpl
     return nullptr;
   }
 
-  const AXObjectImpl* InertRoot() const;
-
   mutable Member<AXObjectImpl> parent_;
 
   // The following cached attribute values (the ones starting with m_cached*)
@@ -885,6 +875,8 @@ class MODULES_EXPORT AXObjectImpl
 
  private:
   static bool IsNativeInputInMixedState(const Node*);
+  static bool IncludesARIAWidgetRole(const String&);
+  static bool HasInteractiveARIAAttribute(const Element&);
 
   static unsigned number_of_live_ax_objects_;
 };

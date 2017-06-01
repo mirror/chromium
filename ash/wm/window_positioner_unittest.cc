@@ -14,6 +14,7 @@
 #include "ash/test/test_shell_delegate.h"
 #include "ash/wm/window_positioner.h"
 #include "ash/wm/window_state.h"
+#include "ash/wm_window.h"
 #include "base/strings/string_number_conversions.h"
 #include "ui/display/screen.h"
 #include "ui/views/widget/widget.h"

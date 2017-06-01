@@ -10,6 +10,7 @@
 #include "ash/wm/root_window_finder.h"
 #include "ash/wm/window_properties.h"
 #include "ash/wm/window_util.h"
+#include "ash/wm_window.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "ui/aura/client/capture_client.h"
@@ -164,20 +165,23 @@ class ExtendedDesktopTest : public test::AshTestBase {
   }
 };
 
-// Test conditions that root windows in extended desktop mode must satisfy.
+// Test conditions that root windows in extended desktop mode
+// must satisfy.
 TEST_F(ExtendedDesktopTest, Basic) {
   UpdateDisplay("1000x600,600x400");
   aura::Window::Windows root_windows = Shell::GetAllRootWindows();
 
-  // All root windows must have a root window controller.
+  // All root windows must have the root window controller.
   ASSERT_EQ(2U, root_windows.size());
-  EXPECT_TRUE(RootWindowController::ForWindow(root_windows[0]));
-  EXPECT_TRUE(RootWindowController::ForWindow(root_windows[1]));
+  for (aura::Window::Windows::const_iterator iter = root_windows.begin();
+       iter != root_windows.end(); ++iter) {
+    EXPECT_TRUE(GetRootWindowController(*iter) != nullptr);
+  }
   // Make sure root windows share the same controllers.
   EXPECT_EQ(aura::client::GetFocusClient(root_windows[0]),
             aura::client::GetFocusClient(root_windows[1]));
-  EXPECT_EQ(::wm::GetActivationClient(root_windows[0]),
-            ::wm::GetActivationClient(root_windows[1]));
+  EXPECT_EQ(aura::client::GetActivationClient(root_windows[0]),
+            aura::client::GetActivationClient(root_windows[1]));
   EXPECT_EQ(aura::client::GetCaptureClient(root_windows[0]),
             aura::client::GetCaptureClient(root_windows[1]));
 }
@@ -287,17 +291,24 @@ TEST_F(ExtendedDesktopTest, GetRootWindowAt) {
   SetSecondaryDisplayLayout(display::DisplayPlacement::LEFT);
   aura::Window::Windows root_windows = Shell::GetAllRootWindows();
 
-  EXPECT_EQ(root_windows[1], wm::GetRootWindowAt(gfx::Point(-400, 100)));
-  EXPECT_EQ(root_windows[1], wm::GetRootWindowAt(gfx::Point(-1, 100)));
-  EXPECT_EQ(root_windows[0], wm::GetRootWindowAt(gfx::Point(0, 300)));
-  EXPECT_EQ(root_windows[0], wm::GetRootWindowAt(gfx::Point(700, 300)));
+  EXPECT_EQ(root_windows[1], WmWindow::GetAuraWindow(
+                                 wm::GetRootWindowAt(gfx::Point(-400, 100))));
+  EXPECT_EQ(root_windows[1],
+            WmWindow::GetAuraWindow(wm::GetRootWindowAt(gfx::Point(-1, 100))));
+  EXPECT_EQ(root_windows[0],
+            WmWindow::GetAuraWindow(wm::GetRootWindowAt(gfx::Point(0, 300))));
+  EXPECT_EQ(root_windows[0],
+            WmWindow::GetAuraWindow(wm::GetRootWindowAt(gfx::Point(700, 300))));
 
   // Zero origin.
-  EXPECT_EQ(root_windows[0], wm::GetRootWindowAt(gfx::Point(0, 0)));
+  EXPECT_EQ(root_windows[0],
+            WmWindow::GetAuraWindow(wm::GetRootWindowAt(gfx::Point(0, 0))));
 
   // Out of range point should return the nearest root window
-  EXPECT_EQ(root_windows[1], wm::GetRootWindowAt(gfx::Point(-600, 0)));
-  EXPECT_EQ(root_windows[0], wm::GetRootWindowAt(gfx::Point(701, 100)));
+  EXPECT_EQ(root_windows[1],
+            WmWindow::GetAuraWindow(wm::GetRootWindowAt(gfx::Point(-600, 0))));
+  EXPECT_EQ(root_windows[0],
+            WmWindow::GetAuraWindow(wm::GetRootWindowAt(gfx::Point(701, 100))));
 }
 
 TEST_F(ExtendedDesktopTest, GetRootWindowMatching) {
@@ -307,32 +318,34 @@ TEST_F(ExtendedDesktopTest, GetRootWindowMatching) {
   aura::Window::Windows root_windows = Shell::GetAllRootWindows();
 
   // Containing rect.
-  EXPECT_EQ(root_windows[1],
-            wm::GetRootWindowMatching(gfx::Rect(-300, 10, 50, 50)));
-  EXPECT_EQ(root_windows[0],
-            wm::GetRootWindowMatching(gfx::Rect(100, 10, 50, 50)));
+  EXPECT_EQ(root_windows[1], WmWindow::GetAuraWindow(wm::GetRootWindowMatching(
+                                 gfx::Rect(-300, 10, 50, 50))));
+  EXPECT_EQ(root_windows[0], WmWindow::GetAuraWindow(wm::GetRootWindowMatching(
+                                 gfx::Rect(100, 10, 50, 50))));
 
   // Intersecting rect.
-  EXPECT_EQ(root_windows[1],
-            wm::GetRootWindowMatching(gfx::Rect(-200, 0, 300, 300)));
-  EXPECT_EQ(root_windows[0],
-            wm::GetRootWindowMatching(gfx::Rect(-100, 0, 300, 300)));
+  EXPECT_EQ(root_windows[1], WmWindow::GetAuraWindow(wm::GetRootWindowMatching(
+                                 gfx::Rect(-200, 0, 300, 300))));
+  EXPECT_EQ(root_windows[0], WmWindow::GetAuraWindow(wm::GetRootWindowMatching(
+                                 gfx::Rect(-100, 0, 300, 300))));
 
   // Zero origin.
-  EXPECT_EQ(root_windows[0], wm::GetRootWindowMatching(gfx::Rect(0, 0, 0, 0)));
-  EXPECT_EQ(root_windows[0], wm::GetRootWindowMatching(gfx::Rect(0, 0, 1, 1)));
+  EXPECT_EQ(root_windows[0], WmWindow::GetAuraWindow(wm::GetRootWindowMatching(
+                                 gfx::Rect(0, 0, 0, 0))));
+  EXPECT_EQ(root_windows[0], WmWindow::GetAuraWindow(wm::GetRootWindowMatching(
+                                 gfx::Rect(0, 0, 1, 1))));
 
   // Empty rect.
-  EXPECT_EQ(root_windows[1],
-            wm::GetRootWindowMatching(gfx::Rect(-400, 100, 0, 0)));
-  EXPECT_EQ(root_windows[0],
-            wm::GetRootWindowMatching(gfx::Rect(100, 100, 0, 0)));
+  EXPECT_EQ(root_windows[1], WmWindow::GetAuraWindow(wm::GetRootWindowMatching(
+                                 gfx::Rect(-400, 100, 0, 0))));
+  EXPECT_EQ(root_windows[0], WmWindow::GetAuraWindow(wm::GetRootWindowMatching(
+                                 gfx::Rect(100, 100, 0, 0))));
 
   // Out of range rect should return the primary root window.
-  EXPECT_EQ(root_windows[0],
-            wm::GetRootWindowMatching(gfx::Rect(-600, -300, 50, 50)));
-  EXPECT_EQ(root_windows[0],
-            wm::GetRootWindowMatching(gfx::Rect(0, 1000, 50, 50)));
+  EXPECT_EQ(root_windows[0], WmWindow::GetAuraWindow(wm::GetRootWindowMatching(
+                                 gfx::Rect(-600, -300, 50, 50))));
+  EXPECT_EQ(root_windows[0], WmWindow::GetAuraWindow(wm::GetRootWindowMatching(
+                                 gfx::Rect(0, 1000, 50, 50))));
 }
 
 TEST_F(ExtendedDesktopTest, Capture) {

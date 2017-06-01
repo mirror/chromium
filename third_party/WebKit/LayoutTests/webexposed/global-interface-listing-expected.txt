@@ -1,4 +1,4 @@
-CONSOLE WARNING: line 70: 'webkitURL' is deprecated. Please use 'URL' instead.
+CONSOLE WARNING: line 95: 'webkitURL' is deprecated. Please use 'URL' instead.
 This test documents all interface attributes and methods on the global window object and element instances.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
@@ -20,9 +20,6 @@ interface AccessibleNode
     getter autocomplete
     getter busy
     getter checked
-    getter colCount
-    getter colIndex
-    getter colSpan
     getter current
     getter disabled
     getter expanded
@@ -30,37 +27,25 @@ interface AccessibleNode
     getter invalid
     getter keyShortcuts
     getter label
-    getter level
     getter live
     getter modal
     getter multiline
     getter multiselectable
     getter orientation
     getter placeholder
-    getter posInSet
     getter readOnly
     getter relevant
     getter required
     getter role
     getter roleDescription
-    getter rowCount
-    getter rowIndex
-    getter rowSpan
     getter selected
-    getter setSize
     getter sort
-    getter valueMax
-    getter valueMin
-    getter valueNow
     getter valueText
     method constructor
     setter atomic
     setter autocomplete
     setter busy
     setter checked
-    setter colCount
-    setter colIndex
-    setter colSpan
     setter current
     setter disabled
     setter expanded
@@ -68,28 +53,19 @@ interface AccessibleNode
     setter invalid
     setter keyShortcuts
     setter label
-    setter level
     setter live
     setter modal
     setter multiline
     setter multiselectable
     setter orientation
     setter placeholder
-    setter posInSet
     setter readOnly
     setter relevant
     setter required
     setter role
     setter roleDescription
-    setter rowCount
-    setter rowIndex
-    setter rowSpan
     setter selected
-    setter setSize
     setter sort
-    setter valueMax
-    setter valueMin
-    setter valueNow
     setter valueText
 interface AmbientLightSensor : Sensor
     attribute @@toStringTag
@@ -544,38 +520,35 @@ interface CDATASection : Text
     attribute @@toStringTag
     method constructor
 interface CSS
-    static method Hz
-    static method ch
-    static method cm
-    static method deg
-    static method dpcm
-    static method dpi
-    static method dppx
-    static method em
     static method escape
-    static method ex
-    static method fr
-    static method grad
-    static method in
-    static method kHz
-    static method mm
-    static method ms
-    static method number
-    static method pc
-    static method percent
-    static method pt
-    static method px
-    static method rad
     static method registerProperty
-    static method rem
-    static method s
     static method supports
-    static method turn
-    static method vh
-    static method vmax
-    static method vmin
-    static method vw
     attribute @@toStringTag
+    method constructor
+interface CSSAngleValue : CSSStyleValue
+    attribute @@toStringTag
+    getter degrees
+    getter gradians
+    getter radians
+    getter turns
+    method constructor
+interface CSSCalcLength : CSSLengthValue
+    attribute @@toStringTag
+    getter ch
+    getter cm
+    getter em
+    getter ex
+    getter in
+    getter mm
+    getter pc
+    getter percent
+    getter pt
+    getter px
+    getter rem
+    getter vh
+    getter vmax
+    getter vmin
+    getter vw
     method constructor
 interface CSSConditionRule : CSSGroupingRule
     attribute @@toStringTag
@@ -620,14 +593,41 @@ interface CSSKeyframesRule : CSSRule
     setter name
 interface CSSKeywordValue : CSSStyleValue
     attribute @@toStringTag
-    getter value
+    getter keywordValue
     method constructor
-    setter value
+interface CSSLengthValue : CSSStyleValue
+    static method from
+    attribute @@toStringTag
+    method add
+    method constructor
+    method divide
+    method multiply
+    method subtract
 interface CSSMatrixComponent : CSSTransformComponent
     attribute @@toStringTag
-    getter matrix
+    getter a
+    getter b
+    getter c
+    getter d
+    getter e
+    getter f
+    getter m11
+    getter m12
+    getter m13
+    getter m14
+    getter m21
+    getter m22
+    getter m23
+    getter m24
+    getter m31
+    getter m32
+    getter m33
+    getter m34
+    getter m41
+    getter m42
+    getter m43
+    getter m44
     method constructor
-    setter matrix
 interface CSSMediaRule : CSSConditionRule
     attribute @@toStringTag
     getter media
@@ -636,6 +636,10 @@ interface CSSNamespaceRule : CSSRule
     attribute @@toStringTag
     getter namespaceURI
     getter prefix
+    method constructor
+interface CSSNumberValue : CSSStyleValue
+    attribute @@toStringTag
+    getter value
     method constructor
 interface CSSNumericValue : CSSStyleValue
     attribute @@toStringTag
@@ -705,6 +709,11 @@ interface CSSScale : CSSTransformComponent
     setter x
     setter y
     setter z
+interface CSSSimpleLength : CSSLengthValue
+    attribute @@toStringTag
+    getter type
+    getter value
+    method constructor
 interface CSSSkew : CSSTransformComponent
     attribute @@toStringTag
     getter ax
@@ -745,8 +754,8 @@ interface CSSStyleSheet : StyleSheet
 interface CSSStyleValue
     static method parse
     attribute @@toStringTag
+    getter cssText
     method constructor
-    method toString
 interface CSSSupportsRule : CSSConditionRule
     attribute @@toStringTag
     method constructor
@@ -1028,7 +1037,6 @@ interface CredentialsContainer
     method constructor
     method create
     method get
-    method preventSilentAccess
     method requireUserMediation
     method store
 interface Crypto
@@ -1287,7 +1295,6 @@ interface DOMTokenList
     method item
     method keys
     method remove
-    method replace
     method supports
     method toString
     method toggle
@@ -2319,11 +2326,11 @@ interface HTMLElement : Element
     attribute @@toStringTag
     getter accessKey
     getter contentEditable
+    getter contextMenu
     getter dataset
     getter dir
     getter draggable
     getter hidden
-    getter inert
     getter innerText
     getter inputMode
     getter isContentEditable
@@ -2420,10 +2427,10 @@ interface HTMLElement : Element
     method focus
     setter accessKey
     setter contentEditable
+    setter contextMenu
     setter dir
     setter draggable
     setter hidden
-    setter inert
     setter innerText
     setter inputMode
     setter lang
@@ -3028,8 +3035,29 @@ interface HTMLMediaElement : HTMLElement
 interface HTMLMenuElement : HTMLElement
     attribute @@toStringTag
     getter compact
+    getter label
+    getter type
     method constructor
     setter compact
+    setter label
+    setter type
+interface HTMLMenuItemElement : HTMLElement
+    attribute @@toStringTag
+    getter checked
+    getter default
+    getter disabled
+    getter icon
+    getter label
+    getter radiogroup
+    getter type
+    method constructor
+    setter checked
+    setter default
+    setter disabled
+    setter icon
+    setter label
+    setter radiogroup
+    setter type
 interface HTMLMetaElement : HTMLElement
     attribute @@toStringTag
     getter content
@@ -3850,6 +3878,7 @@ interface KeyboardEvent : UIEvent
     getter metaKey
     getter repeat
     getter shiftKey
+    getter which
     method constructor
     method getModifierState
     method initKeyboardEvent
@@ -4276,6 +4305,7 @@ interface MouseEvent : UIEvent
     getter screenY
     getter shiftKey
     getter toElement
+    getter which
     getter x
     getter y
     method constructor
@@ -4396,7 +4426,6 @@ interface NetworkInformation : EventTarget
     attribute @@toStringTag
     getter downlink
     getter downlinkMax
-    getter effectiveType
     getter onchange
     getter ontypechange
     getter rtt
@@ -5196,6 +5225,10 @@ interface ReadableStream
     method pipeThrough
     method pipeTo
     method tee
+interface RelatedEvent : Event
+    attribute @@toStringTag
+    getter relatedTarget
+    method constructor
 interface RemotePlayback : EventTarget
     attribute @@toStringTag
     getter onconnect
@@ -7152,13 +7185,13 @@ interface VideoTrackList : EventTarget
     setter onremovetrack
 interface VisualViewport : EventTarget
     attribute @@toStringTag
-    getter height
-    getter offsetLeft
-    getter offsetTop
-    getter pageLeft
-    getter pageTop
+    getter clientHeight
+    getter clientWidth
+    getter pageX
+    getter pageY
     getter scale
-    getter width
+    getter scrollLeft
+    getter scrollTop
     method constructor
 interface WaveShaperNode : AudioNode
     attribute @@toStringTag
@@ -9019,7 +9052,7 @@ interface webkitURL
     getter statusbar
     getter styleMedia
     getter toolbar
-    getter view
+    getter visualViewport
     getter webkitStorageInfo
     method NodeFilter
     method alert
@@ -9196,7 +9229,7 @@ interface webkitURL
     setter status
     setter statusbar
     setter toolbar
-    setter view
+    setter visualViewport
 PASS successfullyParsed is true
 
 TEST COMPLETE

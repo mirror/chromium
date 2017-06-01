@@ -4,13 +4,11 @@
 
 #include "ui/message_center/notification_delegate.h"
 
-#include "ui/message_center/views/message_view.h"
+#include "ui/views/view.h"
 
 namespace message_center {
 
-std::unique_ptr<MessageView> NotificationDelegate::CreateCustomMessageView(
-    MessageCenterController* controller,
-    const Notification& notification) {
+std::unique_ptr<CustomContent> NotificationDelegate::CreateCustomContent() {
   return nullptr;
 }
 

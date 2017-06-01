@@ -39,6 +39,7 @@ class ImmersiveFocusWatcher;
 class ImmersiveFullscreenControllerDelegate;
 class ImmersiveFullscreenControllerTestApi;
 class ImmersiveGestureHandler;
+class WmWindow;
 
 class ASH_EXPORT ImmersiveFullscreenController
     : public gfx::AnimationDelegate,
@@ -226,6 +227,8 @@ class ASH_EXPORT ImmersiveFullscreenController
   ImmersiveFullscreenControllerDelegate* delegate_;
   views::View* top_container_;
   views::Widget* widget_;
+  // The WmWindow for |widget_|.
+  WmWindow* widget_window_ = nullptr;
 
   // True if the observers have been enabled.
   bool observers_enabled_;

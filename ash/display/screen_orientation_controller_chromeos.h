@@ -19,10 +19,6 @@
 #include "ui/display/display.h"
 #include "ui/wm/public/activation_change_observer.h"
 
-namespace aura {
-class Window;
-}
-
 namespace ash {
 namespace test {
 class ScreenOrientationControllerTestApi;
@@ -30,7 +26,7 @@ class ScreenOrientationControllerTestApi;
 
 // Implements ChromeOS specific functionality for ScreenOrientationProvider.
 class ASH_EXPORT ScreenOrientationController
-    : public ::wm::ActivationChangeObserver,
+    : public aura::client::ActivationChangeObserver,
       public aura::WindowObserver,
       public chromeos::AccelerometerReader::Observer,
       public WmDisplayObserver,
@@ -68,10 +64,10 @@ class ASH_EXPORT ScreenOrientationController
 
   // Allows/unallows a window to lock the screen orientation.
   void LockOrientationForWindow(
-      aura::Window* requesting_window,
+      WmWindow* requesting_window,
       blink::WebScreenOrientationLockType lock_orientation,
       LockCompletionBehavior lock_completion_behavior);
-  void UnlockOrientationForWindow(aura::Window* window);
+  void UnlockOrientationForWindow(WmWindow* window);
 
   // Unlock all and set the rotation back to the user specified rotation.
   void UnlockAll();
@@ -99,11 +95,10 @@ class ASH_EXPORT ScreenOrientationController
   // Set locked to the given |rotation| and save it.
   void SetLockToRotation(display::Display::Rotation rotation);
 
-  // wm::ActivationChangeObserver:
-  void OnWindowActivated(
-      ::wm::ActivationChangeObserver::ActivationReason reason,
-      aura::Window* gained_active,
-      aura::Window* lost_active) override;
+  // aura::client::ActivationChangeObserver:
+  void OnWindowActivated(ActivationReason reason,
+                         aura::Window* gained_active,
+                         aura::Window* lost_active) override;
 
   // aura::WindowObserver:
   void OnWindowDestroying(aura::Window* window) override;
@@ -231,7 +226,7 @@ class ASH_EXPORT ScreenOrientationController
 
   // Tracks all windows that have requested a lock, as well as the requested
   // orientation.
-  std::unordered_map<aura::Window*, LockInfo> lock_info_map_;
+  std::unordered_map<WmWindow*, LockInfo> lock_info_map_;
 
   DISALLOW_COPY_AND_ASSIGN(ScreenOrientationController);
 };

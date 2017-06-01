@@ -42,35 +42,35 @@ test(function() {
 }, "Test that the toString for CSSScale is correct.");
 
 test(function() {
-  assert_throws(new TypeError(), () => { new CSSScale(); });
-  assert_throws(new TypeError(), () => { new CSSScale(1); });
+  assert_throws(null, () => { new CSSScale(); });
+  assert_throws(null, () => { new CSSScale(1); });
 }, "Test that invalid number of arguments for CSSScale throws an exception.");
 
 test(function() {
-  assert_throws(new TypeError(), () => { new CSSScale(NaN, 0); });
-  assert_throws(new TypeError(), () => { new CSSScale(0, NaN); });
-  assert_throws(new TypeError(), () => { new CSSScale(NaN, NaN); });
-  assert_throws(new TypeError(), () => { new CSSScale(Infinity, 0); });
-  assert_throws(new TypeError(), () => { new CSSScale(-Infinity, 0); });
-  assert_throws(new TypeError(), () => { new CSSScale("hello", 0); });
-  assert_throws(new TypeError(), () => { new CSSScale(0, "world"); });
-  assert_throws(new TypeError(), () => { new CSSScale(undefined, 0); });
-  assert_throws(new TypeError(), () => { new CSSScale({}, {}); });
+  assert_throws(null, () => { new CSSScale(NaN, 0); });
+  assert_throws(null, () => { new CSSScale(0, NaN); });
+  assert_throws(null, () => { new CSSScale(NaN, NaN); });
+  assert_throws(null, () => { new CSSScale(Infinity, 0); });
+  assert_throws(null, () => { new CSSScale(-Infinity, 0); });
+  assert_throws(null, () => { new CSSScale("hello", 0); });
+  assert_throws(null, () => { new CSSScale(0, "world"); });
+  assert_throws(null, () => { new CSSScale(undefined, 0); });
+  assert_throws(null, () => { new CSSScale({}, {}); });
 
-  assert_throws(new TypeError(), () => { new CSSScale("hello", 0, 0); });
-  assert_throws(new TypeError(), () => { new CSSScale(0, NaN, 0); });
-  assert_throws(new TypeError(), () => { new CSSScale(0, Infinity, 0); });
-  assert_throws(new TypeError(), () => { new CSSScale(0, 0, NaN); });
-  assert_throws(new TypeError(), () => { new CSSScale(0, 0, Infinity); });
-  assert_throws(new TypeError(), () => { new CSSScale(0, 0, -Infinity); });
-  assert_throws(new TypeError(), () => { new CSSScale(0, 0, undefined); });
-  assert_throws(new TypeError(), () => { new CSSScale(undefined, undefined, 0); });
-  assert_throws(new TypeError(), () => { new CSSScale(NaN, undefined, 0); });
-  assert_throws(new TypeError(), () => { new CSSScale(NaN, 0, NaN); });
-  assert_throws(new TypeError(), () => { new CSSScale(0, "hello", "world"); });
-  assert_throws(new TypeError(), () => { new CSSScale(0, {}, {}); });
-  assert_throws(new TypeError(), () => { new CSSScale({}, {}, {}); });
-  assert_throws(new TypeError(), () => { new CSSScale(NaN, NaN, NaN); });
+  assert_throws(null, () => { new CSSScale("hello", 0, 0); });
+  assert_throws(null, () => { new CSSScale(0, NaN, 0); });
+  assert_throws(null, () => { new CSSScale(0, Infinity, 0); });
+  assert_throws(null, () => { new CSSScale(0, 0, NaN); });
+  assert_throws(null, () => { new CSSScale(0, 0, Infinity); });
+  assert_throws(null, () => { new CSSScale(0, 0, -Infinity); });
+  assert_throws(null, () => { new CSSScale(0, 0, undefined); });
+  assert_throws(null, () => { new CSSScale(undefined, undefined, 0); });
+  assert_throws(null, () => { new CSSScale(NaN, undefined, 0); });
+  assert_throws(null, () => { new CSSScale(NaN, 0, NaN); });
+  assert_throws(null, () => { new CSSScale(0, "hello", "world"); });
+  assert_throws(null, () => { new CSSScale(0, {}, {}); });
+  assert_throws(null, () => { new CSSScale({}, {}, {}); });
+  assert_throws(null, () => { new CSSScale(NaN, NaN, NaN); });
 }, "Test that invalid input throws an exception.");
 
 test(function() {
@@ -79,11 +79,11 @@ test(function() {
     var inputAsMatrix = input.asMatrix();
     assert_equals(inputAsMatrix.is2D(), input.is2D());
 
-    var expectedMatrix = input.is2D() ? new CSSMatrixComponent(new DOMMatrixReadOnly([input.x, 0, 0, input.y, 0, 0])) :
-        new CSSMatrixComponent(new DOMMatrixReadOnly([input.x, 0, 0, 0, 0, input.y, 0, 0, 0, 0, input.z, 0, 0, 0, 0, 1]));
+    var expectedMatrix = input.is2D() ? new CSSMatrixComponent(input.x, 0, 0, input.y, 0, 0) :
+        new CSSMatrixComponent(input.x, 0, 0, 0, 0, input.y, 0, 0, 0, 0, input.z, 0, 0, 0, 0, 1);
     for (var attribute in expectedMatrix) {
-      if (attribute == "matrix") {
-        assert_matrix_approx_equals(inputAsMatrix[attribute], expectedMatrix[attribute]);
+      if (typeof expectedMatrix[attribute] === "number") {
+        assert_approx_equals(inputAsMatrix[attribute], expectedMatrix[attribute], EPSILON);
       } else {
         assert_equals(inputAsMatrix[attribute], expectedMatrix[attribute]);
       }
@@ -100,14 +100,4 @@ test(function() {
   assert_equals(actual.y, 2);
   assert_equals(actual.z, 3);
 }, "Test that x, y, z are mutable attributes.");
-
-function assert_array_approx_equals(actual, expected) {
-  for (var i = 0; i < actual.length; i++) {
-    assert_approx_equals(actual[i], expected[i], EPSILON);
-  }
-}
-
-function assert_matrix_approx_equals(actual, expected) {
-  assert_array_approx_equals(actual.toFloat64Array(), expected.toFloat64Array());
-}
 </script>

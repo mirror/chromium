@@ -10,7 +10,6 @@
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/i18n/rtl.h"
-#include "base/metrics/statistics_recorder.h"
 #include "base/path_service.h"
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -29,8 +28,6 @@ AshTestSuite::~AshTestSuite() {}
 
 void AshTestSuite::Initialize() {
   base::TestSuite::Initialize();
-  // Ensure histograms hit during tests are registered properly.
-  base::StatisticsRecorder::Initialize();
   gl::GLSurfaceTestSupport::InitializeOneOff();
 
   gfx::RegisterPathProvider();
@@ -61,16 +58,13 @@ void AshTestSuite::Initialize() {
   }
 
   const bool is_mus = base::CommandLine::ForCurrentProcess()->HasSwitch("mus");
-  const bool is_mash =
-      base::CommandLine::ForCurrentProcess()->HasSwitch("mash");
-  ash::test::AshTestHelper::config_ =
-      is_mus ? Config::MUS : is_mash ? Config::MASH : Config::CLASSIC;
+  ash::test::AshTestHelper::config_ = is_mus ? Config::MUS : Config::CLASSIC;
 
   base::DiscardableMemoryAllocator::SetInstance(&discardable_memory_allocator_);
-  env_ = aura::Env::CreateInstance(is_mus || is_mash ? aura::Env::Mode::MUS
-                                                     : aura::Env::Mode::LOCAL);
+  env_ = aura::Env::CreateInstance(is_mus ? aura::Env::Mode::MUS
+                                          : aura::Env::Mode::LOCAL);
 
-  if (is_mus || is_mash) {
+  if (is_mus) {
     context_factory_ = base::MakeUnique<ui::FakeContextFactory>();
     env_->set_context_factory(context_factory_.get());
     env_->set_context_factory_private(nullptr);

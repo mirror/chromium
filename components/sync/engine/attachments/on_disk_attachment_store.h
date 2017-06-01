@@ -11,7 +11,7 @@
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/sequence_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "components/sync/engine/attachments/attachment_store_backend.h"
 #include "components/sync/model/attachments/attachment.h"
 #include "components/sync/model/attachments/attachment_id.h"
@@ -33,7 +33,8 @@ namespace syncer {
 
 // On-disk implementation of AttachmentStore. Stores attachments in leveldb
 // database in |path| directory.
-class OnDiskAttachmentStore : public AttachmentStoreBackend {
+class OnDiskAttachmentStore : public AttachmentStoreBackend,
+                              public base::NonThreadSafe {
  public:
   // Constructs attachment store.
   OnDiskAttachmentStore(
@@ -97,8 +98,6 @@ class OnDiskAttachmentStore : public AttachmentStoreBackend {
 
   const base::FilePath path_;
   std::unique_ptr<leveldb::DB> db_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(OnDiskAttachmentStore);
 };

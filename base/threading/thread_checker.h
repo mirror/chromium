@@ -5,7 +5,6 @@
 #ifndef BASE_THREADING_THREAD_CHECKER_H_
 #define BASE_THREADING_THREAD_CHECKER_H_
 
-#include "base/compiler_specific.h"
 #include "base/logging.h"
 #include "base/threading/thread_checker_impl.h"
 

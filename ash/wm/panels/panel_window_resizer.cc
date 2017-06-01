@@ -7,11 +7,12 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/root_window_controller.h"
-#include "ash/shelf/shelf.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/wm/panels/panel_layout_manager.h"
 #include "ash/wm/window_parenting_utils.h"
 #include "ash/wm/window_state.h"
+#include "ash/wm_window.h"
 #include "ui/aura/client/window_parenting_client.h"
 #include "ui/base/hit_test.h"
 #include "ui/base/ui_base_types.h"
@@ -66,7 +67,7 @@ void PanelWindowResizer::Drag(const gfx::Point& location, int event_flags) {
     // The panel's parent already knows that the drag is in progress for this
     // panel.
     if (panel_container_ && GetTarget()->parent() != panel_container_)
-      GetPanelLayoutManager()->StartDragging(GetTarget());
+      GetPanelLayoutManager()->StartDragging(WmWindow::Get(GetTarget()));
   }
   gfx::Point offset;
   gfx::Rect bounds(CalculateBoundsForDrag(location));
@@ -123,7 +124,7 @@ bool PanelWindowResizer::AttachToLauncher(const gfx::Rect& bounds,
     gfx::Rect launcher_bounds =
         panel_layout_manager->shelf()->GetWindow()->GetBoundsInScreen();
     ::wm::ConvertRectFromScreen(GetTarget()->parent(), &launcher_bounds);
-    switch (panel_layout_manager->shelf()->alignment()) {
+    switch (panel_layout_manager->shelf()->GetAlignment()) {
       case SHELF_ALIGNMENT_BOTTOM:
       case SHELF_ALIGNMENT_BOTTOM_LOCKED:
         if (bounds.bottom() >=
@@ -155,7 +156,7 @@ void PanelWindowResizer::StartedDragging() {
   // Tell the panel layout manager that we are dragging this panel before
   // attaching it so that it does not get repositioned.
   if (panel_container_)
-    GetPanelLayoutManager()->StartDragging(GetTarget());
+    GetPanelLayoutManager()->StartDragging(WmWindow::Get(GetTarget()));
   if (!was_attached_) {
     // Attach the panel while dragging, placing it in front of other panels.
     aura::Window* target = GetTarget();
@@ -190,20 +191,23 @@ void PanelWindowResizer::FinishDragging() {
   // If we started the drag in one root window and moved into another root
   // but then canceled the drag we may need to inform the original layout
   // manager that the drag is finished.
-  if (initial_panel_container_ != panel_container_)
-    PanelLayoutManager::Get(initial_panel_container_)->FinishDragging();
+  if (initial_panel_container_ != panel_container_) {
+    PanelLayoutManager::Get(WmWindow::Get(initial_panel_container_))
+        ->FinishDragging();
+  }
   if (panel_container_)
     GetPanelLayoutManager()->FinishDragging();
 }
 
 void PanelWindowResizer::UpdateLauncherPosition() {
   if (panel_container_) {
-    GetPanelLayoutManager()->shelf()->UpdateIconPositionForPanel(GetTarget());
+    GetPanelLayoutManager()->shelf()->UpdateIconPositionForPanel(
+        WmWindow::Get(GetTarget()));
   }
 }
 
 PanelLayoutManager* PanelWindowResizer::GetPanelLayoutManager() {
-  return PanelLayoutManager::Get(panel_container_);
+  return PanelLayoutManager::Get(WmWindow::Get(panel_container_));
 }
 
 }  // namespace ash

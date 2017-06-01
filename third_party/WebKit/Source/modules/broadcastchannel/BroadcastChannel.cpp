@@ -24,7 +24,8 @@ namespace {
 // associated interfaces, ensuring proper message ordering.
 mojom::blink::BroadcastChannelProviderPtr& GetThreadSpecificProvider() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(
-      ThreadSpecific<mojom::blink::BroadcastChannelProviderPtr>, provider, ());
+      ThreadSpecific<mojom::blink::BroadcastChannelProviderPtr>, provider,
+      new ThreadSpecific<mojom::blink::BroadcastChannelProviderPtr>);
   if (!provider.IsSet()) {
     Platform::Current()->GetInterfaceProvider()->GetInterface(
         mojo::MakeRequest(&*provider));
@@ -104,7 +105,7 @@ void BroadcastChannel::OnMessage(const WTF::Vector<uint8_t>& message) {
                         : reinterpret_cast<const char*>(&message.front()),
       message.size());
   MessageEvent* event = MessageEvent::Create(
-      nullptr, std::move(value),
+      nullptr, value.Release(),
       GetExecutionContext()->GetSecurityOrigin()->ToString());
   event->SetTarget(this);
   bool success = GetExecutionContext()->GetEventQueue()->EnqueueEvent(event);

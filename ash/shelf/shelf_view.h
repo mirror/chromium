@@ -43,11 +43,11 @@ class DragImageView;
 class OverflowBubble;
 class OverflowButton;
 class ScopedRootWindowForNewWindows;
-class Shelf;
 class ShelfButton;
 class ShelfModel;
 struct ShelfItem;
 class ShelfWidget;
+class WmShelf;
 
 namespace test {
 class ShelfViewTestAPI;
@@ -69,10 +69,12 @@ class ASH_EXPORT ShelfView : public views::View,
                              public views::BoundsAnimatorObserver,
                              public app_list::ApplicationDragAndDropHost {
  public:
-  ShelfView(ShelfModel* model, Shelf* shelf, ShelfWidget* shelf_widget);
+  ShelfView(ShelfModel* model,
+            WmShelf* wm_shelf,
+            ShelfWidget* shelf_widget);
   ~ShelfView() override;
 
-  Shelf* shelf() const { return shelf_; }
+  WmShelf* wm_shelf() const { return wm_shelf_; }
   ShelfModel* model() const { return model_; }
 
   void Init();
@@ -294,8 +296,6 @@ class ASH_EXPORT ShelfView : public views::View,
   void ShelfItemRemoved(int model_index, const ShelfItem& old_item) override;
   void ShelfItemChanged(int model_index, const ShelfItem& old_item) override;
   void ShelfItemMoved(int start_index, int target_index) override;
-  void ShelfItemDelegateChanged(const ShelfID& id,
-                                ShelfItemDelegate* delegate) override;
 
   // Handles the result of an item selection, records the |action| taken and
   // optionally shows an application menu with the given |menu_items|.
@@ -358,7 +358,7 @@ class ASH_EXPORT ShelfView : public views::View,
   ShelfModel* model_;
 
   // The shelf controller; owned by RootWindowController.
-  Shelf* shelf_;
+  WmShelf* wm_shelf_;
 
   // The shelf widget for this view. For overflow bubbles, this is the widget
   // for the shelf, not for the bubble.

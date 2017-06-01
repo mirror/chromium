@@ -9,20 +9,17 @@
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "core/frame/UseCounter.h"
 
-class CSSParserLocalContext;
 namespace blink {
-
-using namespace CSSPropertyParserHelpers;
 
 const CSSValue* CSSPropertyAPIOffsetPosition::parseSingleValue(
     CSSParserTokenRange& range,
     const CSSParserContext& context,
-    const CSSParserLocalContext&) {
+    CSSPropertyID) {
   CSSValueID id = range.Peek().Id();
   if (id == CSSValueAuto)
-    return ConsumeIdent(range);
-  CSSValue* value = ConsumePosition(range, context, UnitlessQuirk::kForbid,
-                                    Optional<UseCounter::Feature>());
+    return CSSPropertyParserHelpers::ConsumeIdent(range);
+  CSSValue* value = CSSPropertyParserHelpers::ConsumePosition(
+      range, context.Mode(), CSSPropertyParserHelpers::UnitlessQuirk::kForbid);
 
   // Count when we receive a valid position other than 'auto'.
   if (value && value->IsValuePair())

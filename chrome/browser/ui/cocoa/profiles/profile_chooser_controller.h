@@ -53,6 +53,9 @@ class GaiaWebContentsDelegate;
   // Active view mode.
   profiles::BubbleViewMode viewMode_;
 
+  // The current tutorial mode.
+  profiles::TutorialMode tutorialMode_;
+
   // List of the full, un-elided accounts for the active profile. The keys are
   // generated used to tag the UI buttons, and the values are the original
   // emails displayed by the buttons.
@@ -75,6 +78,7 @@ class GaiaWebContentsDelegate;
 - (id)initWithBrowser:(Browser*)browser
            anchoredAt:(NSPoint)point
              viewMode:(profiles::BubbleViewMode)viewMode
+         tutorialMode:(profiles::TutorialMode)tutorialMode
           serviceType:(signin::GAIAServiceType)GAIAServiceType
           accessPoint:(signin_metrics::AccessPoint)accessPoint;
 
@@ -83,6 +87,9 @@ class GaiaWebContentsDelegate;
 
 // Returns the view currently displayed by the bubble.
 - (profiles::BubbleViewMode)viewMode;
+
+// Sets the tutorial mode of the bubble.
+- (void)setTutorialMode:(profiles::TutorialMode)tutorialMode;
 
 // Switches to a given profile. |sender| is an ProfileChooserItemController.
 - (IBAction)switchToProfile:(id)sender;
@@ -132,7 +139,9 @@ class GaiaWebContentsDelegate;
 - (id)initWithBrowser:(Browser*)browser
            anchoredAt:(NSPoint)point
              viewMode:(profiles::BubbleViewMode)viewMode
+         tutorialMode:(profiles::TutorialMode)tutorialMode
           serviceType:(signin::GAIAServiceType)GAIAServiceType;
+- (IBAction)dismissTutorial:(id)sender;
 @end
 
 #endif  // CHROME_BROWSER_UI_COCOA_PROFILES_PROFILE_CHOOSER_CONTROLLER_H_

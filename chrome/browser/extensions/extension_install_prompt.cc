@@ -19,6 +19,7 @@
 #include "chrome/browser/extensions/permissions_updater.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/extensions/extension_install_ui_factory.h"
+#include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
 #include "components/strings/grit/components_strings.h"
@@ -160,11 +161,15 @@ ExtensionInstallPrompt::Prompt::Prompt(PromptType type)
 ExtensionInstallPrompt::Prompt::~Prompt() {
 }
 
-void ExtensionInstallPrompt::Prompt::AddPermissions(
+void ExtensionInstallPrompt::Prompt::SetPermissions(
     const PermissionMessages& permissions,
     PermissionsType permissions_type) {
   InstallPromptPermissions& install_permissions =
       GetPermissionsForType(permissions_type);
+
+  install_permissions.permissions.clear();
+  install_permissions.details.clear();
+  install_permissions.is_showing_details.clear();
 
   for (const PermissionMessage& msg : permissions) {
     install_permissions.permissions.push_back(msg.message());
@@ -787,7 +792,7 @@ void ExtensionInstallPrompt::ShowConfirmation() {
     const extensions::PermissionMessageProvider* message_provider =
         extensions::PermissionMessageProvider::Get();
 
-    prompt_->AddPermissions(message_provider->GetPermissionMessages(
+    prompt_->SetPermissions(message_provider->GetPermissionMessages(
                                 message_provider->GetAllPermissionIDs(
                                     *permissions_to_display, type)),
                             REGULAR_PERMISSIONS);
@@ -796,7 +801,7 @@ void ExtensionInstallPrompt::ShowConfirmation() {
         extension_ ? &extension_->permissions_data()->withheld_permissions()
                    : nullptr;
     if (withheld && !withheld->IsEmpty()) {
-      prompt_->AddPermissions(
+      prompt_->SetPermissions(
           message_provider->GetPermissionMessages(
               message_provider->GetAllPermissionIDs(*withheld, type)),
           WITHHELD_PERMISSIONS);

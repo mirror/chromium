@@ -55,14 +55,14 @@ size_t DistributedNodes::Find(const Node* node) const {
 Node* DistributedNodes::NextTo(const Node* node) const {
   size_t index = Find(node);
   if (index == kNotFound || index + 1 == size())
-    return nullptr;
+    return 0;
   return at(index + 1);
 }
 
 Node* DistributedNodes::PreviousTo(const Node* node) const {
   size_t index = Find(node);
   if (index == kNotFound || !index)
-    return nullptr;
+    return 0;
   return at(index - 1);
 }
 

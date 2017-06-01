@@ -70,13 +70,7 @@ class PaymentRequest : payments::PaymentOptionsProvider {
   payments::CurrencyFormatter* GetOrCreateCurrencyFormatter();
 
   // Returns the autofill::RegionDataLoader instance for this PaymentRequest.
-  virtual autofill::RegionDataLoader* GetRegionDataLoader();
-
-  // Adds |profile| to the list of cached profiles, updates the list of
-  // available shipping and contact profiles, and returns a reference to the
-  // cached copy of |profile|.
-  virtual autofill::AutofillProfile* AddAutofillProfile(
-      const autofill::AutofillProfile& profile);
+  autofill::RegionDataLoader* GetRegionDataLoader();
 
   // Returns the available autofill profiles for this user to be used as
   // shipping profiles.
@@ -126,9 +120,8 @@ class PaymentRequest : payments::PaymentOptionsProvider {
     return basic_card_specified_networks_;
   }
 
-  // Adds |credit_card| to the list of cached credit cards, updates the list of
-  // available credit cards, and returns a reference to the cached copy of
-  // |credit_card|.
+  // Adds |credit_card| to the list of cached credit cards and returns a pointer
+  // to the cached copy.
   virtual autofill::CreditCard* AddCreditCard(
       const autofill::CreditCard& credit_card);
 
@@ -168,25 +161,14 @@ class PaymentRequest : payments::PaymentOptionsProvider {
   // and stores copies of them, owned by this PaymentRequest, in profile_cache_.
   void PopulateProfileCache();
 
-  // Sets the available shipping and contact profiles as references to the
-  // cached profiles ordered by completeness.
-  void PopulateAvailableProfiles();
-
   // Fetches the autofill credit cards for this user from the
   // PersonalDataManager that match a supported type specified in
   // |web_payment_request_| and stores copies of them, owned by this
   // PaymentRequest, in credit_card_cache_.
   void PopulateCreditCardCache();
 
-  // Sets the available credit cards as references to the cached credit cards.
-  void PopulateAvailableCreditCards();
-
-  // Sets the available shipping options as references to the shipping options
-  // in |web_payment_request_|.
-  void PopulateAvailableShippingOptions();
-
-  // Sets the selected shipping option, if any.
-  void SetSelectedShippingOption();
+  // Stores references to the shipping options in |web_payment_request_|.
+  void PopulateShippingOptionCache();
 
   // The web::PaymentRequest object as provided by the page invoking the Payment
   // Request API, owned by this object.
@@ -202,7 +184,7 @@ class PaymentRequest : payments::PaymentOptionsProvider {
   // meaning PaymentRequest may outlive them. Therefore, profiles are fetched
   // once and their copies are cached here. Whenever profiles are requested a
   // vector of pointers to these copies are returned.
-  std::vector<std::unique_ptr<autofill::AutofillProfile>> profile_cache_;
+  std::vector<autofill::AutofillProfile> profile_cache_;
 
   std::vector<autofill::AutofillProfile*> shipping_profiles_;
   autofill::AutofillProfile* selected_shipping_profile_;
@@ -214,7 +196,7 @@ class PaymentRequest : payments::PaymentOptionsProvider {
   // sync events, meaning PaymentRequest may outlive them. Therefore, credit
   // cards are fetched once and their copies are cached here. Whenever credit
   // cards are requested a vector of pointers to these copies are returned.
-  std::vector<std::unique_ptr<autofill::CreditCard>> credit_card_cache_;
+  std::vector<autofill::CreditCard> credit_card_cache_;
 
   std::vector<autofill::CreditCard*> credit_cards_;
   autofill::CreditCard* selected_credit_card_;

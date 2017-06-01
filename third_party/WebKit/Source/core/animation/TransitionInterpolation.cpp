@@ -47,7 +47,7 @@ NonInterpolableValue* TransitionInterpolation::CurrentNonInterpolableValue()
 
 void TransitionInterpolation::Apply(StyleResolverState& state) const {
   CSSInterpolationTypesMap map(state.GetDocument().GetPropertyRegistry());
-  CSSInterpolationEnvironment environment(map, state);
+  InterpolationEnvironment environment(map, state);
   type_.Apply(CurrentInterpolableValue(), CurrentNonInterpolableValue(),
               environment);
 }

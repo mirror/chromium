@@ -25,7 +25,6 @@ class PointerWatcherEventRouter;
 namespace ash {
 
 class AcceleratorControllerDelegateAura;
-class DisplaySynchronizer;
 class PointerWatcherAdapter;
 class RootWindowController;
 
@@ -40,9 +39,12 @@ class ShellPortMashTestApi;
 // ShellPort implementation for mash/mus. See ash/README.md for more.
 class ShellPortMash : public ShellPort, public WindowTreeHostManager::Observer {
  public:
+  // If |create_session_state_delegate_stub| is true SessionStateDelegateStub is
+  // created. If false, the SessionStateDelegate from Shell is used.
   ShellPortMash(aura::Window* primary_root_window,
                 WindowManager* window_manager,
-                views::PointerWatcherEventRouter* pointer_watcher_event_router);
+                views::PointerWatcherEventRouter* pointer_watcher_event_router,
+                bool create_session_state_delegate_stub);
   ~ShellPortMash() override;
 
   static ShellPortMash* Get();
@@ -68,7 +70,7 @@ class ShellPortMash : public ShellPort, public WindowTreeHostManager::Observer {
   display::Display GetFirstDisplay() const override;
   bool IsInUnifiedMode() const override;
   bool IsInUnifiedModeIgnoreMirroring() const override;
-  void SetDisplayWorkAreaInsets(aura::Window* window,
+  void SetDisplayWorkAreaInsets(WmWindow* window,
                                 const gfx::Insets& insets) override;
   std::unique_ptr<display::TouchTransformSetter> CreateTouchTransformDelegate()
       override;
@@ -78,7 +80,7 @@ class ShellPortMash : public ShellPort, public WindowTreeHostManager::Observer {
   void HideCursor() override;
   void SetGlobalOverrideCursor(base::Optional<ui::CursorData> cursor) override;
   bool IsMouseEventsEnabled() override;
-  std::vector<aura::Window*> GetAllRootWindows() override;
+  std::vector<WmWindow*> GetAllRootWindows() override;
   void RecordGestureAction(GestureActionType action) override;
   void RecordUserMetricsAction(UserMetricsAction action) override;
   void RecordTaskSwitchMetric(TaskSwitchSource source) override;
@@ -90,13 +92,14 @@ class ShellPortMash : public ShellPort, public WindowTreeHostManager::Observer {
   std::unique_ptr<wm::MaximizeModeEventHandler> CreateMaximizeModeEventHandler()
       override;
   std::unique_ptr<WorkspaceEventHandler> CreateWorkspaceEventHandler(
-      aura::Window* workspace_window) override;
+      WmWindow* workspace_window) override;
   std::unique_ptr<ScopedDisableInternalMouseAndKeyboard>
   CreateScopedDisableInternalMouseAndKeyboard() override;
   std::unique_ptr<ImmersiveFullscreenController>
   CreateImmersiveFullscreenController() override;
   std::unique_ptr<KeyboardUI> CreateKeyboardUI() override;
   std::unique_ptr<KeyEventWatcher> CreateKeyEventWatcher() override;
+  SessionStateDelegate* GetSessionStateDelegate() override;
   void AddDisplayObserver(WmDisplayObserver* observer) override;
   void RemoveDisplayObserver(WmDisplayObserver* observer) override;
   void AddPointerWatcher(views::PointerWatcher* watcher,
@@ -155,7 +158,7 @@ class ShellPortMash : public ShellPort, public WindowTreeHostManager::Observer {
   std::unique_ptr<MashSpecificState> mash_state_;
   std::unique_ptr<MusSpecificState> mus_state_;
 
-  std::unique_ptr<DisplaySynchronizer> display_synchronizer_;
+  std::unique_ptr<SessionStateDelegate> session_state_delegate_;
 
   bool added_display_observer_ = false;
   base::ObserverList<WmDisplayObserver> display_observers_;

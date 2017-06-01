@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import org.chromium.base.Callback;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder.PartialBindCallback;
+import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -83,6 +84,13 @@ public class InnerNode extends ChildNode implements NodeParent {
     }
 
     @Override
+    public SnippetArticle getSuggestionAt(int position) {
+        int index = getChildIndexForPosition(position);
+        return mChildren.get(index).getSuggestionAt(
+                position - getStartingOffsetForChildIndex(index));
+    }
+
+    @Override
     public Set<Integer> getItemDismissalGroup(int position) {
         int index = getChildIndexForPosition(position);
         int offset = getStartingOffsetForChildIndex(index);
@@ -96,13 +104,6 @@ public class InnerNode extends ChildNode implements NodeParent {
         int index = getChildIndexForPosition(position);
         getChildren().get(index).dismissItem(
                 position - getStartingOffsetForChildIndex(index), itemRemovedCallback);
-    }
-
-    @Override
-    public void visitItems(NodeVisitor visitor) {
-        for (TreeNode child : getChildren()) {
-            child.visitItems(visitor);
-        }
     }
 
     @Override

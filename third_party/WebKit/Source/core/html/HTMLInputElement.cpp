@@ -50,8 +50,8 @@
 #include "core/events/MouseEvent.h"
 #include "core/events/ScopedEventQueue.h"
 #include "core/frame/Deprecation.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLCollection.h"
 #include "core/html/HTMLDataListElement.h"
@@ -135,10 +135,6 @@ DEFINE_TRACE(HTMLInputElement) {
   visitor->Trace(list_attribute_target_observer_);
   visitor->Trace(image_loader_);
   TextControlElement::Trace(visitor);
-}
-
-bool HTMLInputElement::HasPendingActivity() const {
-  return ImageLoader() && ImageLoader()->HasPendingActivity();
 }
 
 HTMLImageLoader& HTMLInputElement::EnsureImageLoader() {

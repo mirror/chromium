@@ -27,16 +27,13 @@
 #include "core/svg/SVGGraphicsElement.h"
 #include "core/svg/SVGImageLoader.h"
 #include "core/svg/SVGURIReference.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
 
-class CORE_EXPORT SVGImageElement final
-    : public SVGGraphicsElement,
-      public ImageElementBase,
-      public SVGURIReference,
-      public ActiveScriptWrappable<SVGImageElement> {
+class CORE_EXPORT SVGImageElement final : public SVGGraphicsElement,
+                                          public ImageElementBase,
+                                          public SVGURIReference {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(SVGImageElement);
 
@@ -52,10 +49,6 @@ class CORE_EXPORT SVGImageElement final
   SVGAnimatedLength* height() const { return height_.Get(); }
   SVGAnimatedPreserveAspectRatio* preserveAspectRatio() {
     return preserve_aspect_ratio_.Get();
-  }
-
-  bool HasPendingActivity() const final {
-    return GetImageLoader().HasPendingActivity();
   }
 
   // Exposed for testing.

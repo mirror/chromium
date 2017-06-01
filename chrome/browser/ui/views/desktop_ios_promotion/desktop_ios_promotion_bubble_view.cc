@@ -6,7 +6,7 @@
 
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
-#include "chrome/browser/ui/desktop_ios_promotion/desktop_ios_promotion_bubble_controller.h"
+#include "chrome/browser/ui/desktop_ios_promotion/desktop_ios_promotion_controller.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h"
 #include "chrome/grit/generated_resources.h"
@@ -37,15 +37,15 @@ DesktopIOSPromotionBubbleView::DesktopIOSPromotionBubbleView(
     : promotion_text_label_(
           new views::Label(desktop_ios_promotion::GetPromoText(entry_point))),
       promotion_controller_(
-          base::MakeUnique<DesktopIOSPromotionBubbleController>(profile,
-                                                                this,
-                                                                entry_point)) {
+          base::MakeUnique<DesktopIOSPromotionController>(profile,
+                                                          this,
+                                                          entry_point)) {
   views::GridLayout* layout = new views::GridLayout(this);
   SetLayoutManager(layout);
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
   SetBorder(views::CreateEmptyBorder(
       0,
-      provider->GetInsetsMetric(views::INSETS_BUBBLE_CONTENTS).left() +
+      provider->GetDistanceMetric(DISTANCE_PANEL_CONTENT_MARGIN) +
           desktop_ios_promotion::GetPromoImage(
               GetNativeTheme()->GetSystemColor(
                   ui::NativeTheme::kColorId_TextfieldDefaultColor))
@@ -96,16 +96,19 @@ void DesktopIOSPromotionBubbleView::ButtonPressed(views::Button* sender,
   GetWidget()->Close();
 }
 
+void DesktopIOSPromotionBubbleView::UpdateBubbleHeight() {
+  gfx::Rect old_bounds = GetWidget()->GetWindowBoundsInScreen();
+  old_bounds.set_height(
+      GetWidget()->GetRootView()->GetHeightForWidth(old_bounds.width()));
+  GetWidget()->SetBounds(old_bounds);
+}
+
 void DesktopIOSPromotionBubbleView::UpdateRecoveryPhoneLabel() {
   std::string number = promotion_controller_->GetUsersRecoveryPhoneNumber();
   if (!number.empty()) {
     promotion_text_label_->SetText(desktop_ios_promotion::GetPromoText(
         promotion_controller_->entry_point(), number));
     Layout();
-    views::Widget* widget = GetWidget();
-    gfx::Rect old_bounds = widget->GetWindowBoundsInScreen();
-    old_bounds.set_height(
-        widget->GetRootView()->GetHeightForWidth(old_bounds.width()));
-    widget->SetBounds(old_bounds);
+    UpdateBubbleHeight();
   }
 }

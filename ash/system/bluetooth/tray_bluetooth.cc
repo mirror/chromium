@@ -4,13 +4,9 @@
 
 #include "ash/system/bluetooth/tray_bluetooth.h"
 
-#include <map>
-#include <memory>
-#include <set>
-#include <string>
-
 #include "ash/resources/grit/ash_resources.h"
 #include "ash/resources/vector_icons/vector_icons.h"
+#include "ash/session/session_state_delegate.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/strings/grit/ash_strings.h"
@@ -314,8 +310,8 @@ class BluetoothDetailedView : public TrayDetailsView {
 
     // Show user Bluetooth state if there is no bluetooth devices in list.
     if (device_map_.size() == 0 && bluetooth_available && bluetooth_enabled) {
-      scroll_content()->AddChildView(
-          new InfoLabel(IDS_ASH_STATUS_TRAY_BLUETOOTH_DISCOVERING));
+      scroll_content()->AddChildView(TrayPopupUtils::CreateInfoLabelRowView(
+          IDS_ASH_STATUS_TRAY_BLUETOOTH_DISCOVERING));
     }
 
     // Focus the device which was focused before the device-list update.
@@ -335,11 +331,24 @@ class BluetoothDetailedView : public TrayDetailsView {
       HoverHighlightView* container =
           AddScrollListItem(icon, device.display_name);
       if (device.connected)
-        SetupConnectedScrollListItem(container);
+        SetupConnectedItem(container);
       else if (device.connecting)
-        SetupConnectingScrollListItem(container);
+        SetupConnectingItem(container);
       device_map_[container] = device.address;
     }
+  }
+
+  void SetupConnectedItem(HoverHighlightView* container) {
+    container->SetSubText(l10n_util::GetStringUTF16(
+        IDS_ASH_STATUS_TRAY_NETWORK_STATUS_CONNECTED));
+    TrayPopupItemStyle style(TrayPopupItemStyle::FontStyle::CAPTION);
+    style.set_color_style(TrayPopupItemStyle::ColorStyle::CONNECTED);
+    style.SetupLabel(container->sub_text_label());
+  }
+
+  void SetupConnectingItem(HoverHighlightView* container) {
+    container->SetSubText(l10n_util::GetStringUTF16(
+        IDS_ASH_STATUS_TRAY_NETWORK_STATUS_CONNECTING));
   }
 
   // Returns true if the device with |device_id| is found in |device_list|.
@@ -359,7 +368,7 @@ class BluetoothDetailedView : public TrayDetailsView {
     if (FoundDevice(device_id, paired_not_connected_devices_)) {
       HoverHighlightView* container =
           static_cast<HoverHighlightView*>(item_container);
-      SetupConnectingScrollListItem(container);
+      SetupConnectingItem(container);
       scroll_content()->SizeToPreferredSize();
       scroller()->Layout();
     }

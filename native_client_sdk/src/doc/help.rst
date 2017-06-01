@@ -1,7 +1,5 @@
 .. _help:
 
-.. include:: /migration/deprecation.inc
-
 ##############
 Help with NaCl
 ##############

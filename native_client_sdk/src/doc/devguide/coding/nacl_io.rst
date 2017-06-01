@@ -1,7 +1,5 @@
 .. _nacl_io:
 
-.. include:: /migration/deprecation.inc
-
 ###################
 The nacl_io Library
 ###################

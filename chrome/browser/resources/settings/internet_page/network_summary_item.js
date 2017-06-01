@@ -7,6 +7,9 @@
  * type and a list of networks for that type.
  */
 
+/** @typedef {chrome.networkingPrivate.DeviceStateProperties} */
+var DeviceStateProperties;
+
 Polymer({
   is: 'network-summary-item',
 
@@ -14,9 +17,8 @@ Polymer({
 
   properties: {
     /**
-     * Device state for the network type. This might briefly be undefined if a
-     * device becomes unavailable.
-     * @type {!CrOnc.DeviceStateProperties|undefined}
+     * Device state for the network type.
+     * @type {!DeviceStateProperties|undefined}
      */
     deviceState: Object,
 
@@ -53,22 +55,26 @@ Polymer({
   },
 
   /**
-   * @param {!CrOnc.NetworkStateProperties} activeNetworkState
-   * @param {!CrOnc.DeviceStateProperties|undefined} deviceState
    * @return {string}
    * @private
    */
-  getNetworkStateText_: function(activeNetworkState, deviceState) {
-    var state = activeNetworkState.ConnectionState;
-    var name = CrOnc.getNetworkName(activeNetworkState);
+  getNetworkStateText_: function() {
+    var network = this.activeNetworkState;
+    var state = network.ConnectionState;
+    var name = CrOnc.getNetworkName(network);
     if (state)
       return this.getConnectionStateText_(state, name);
+    var deviceState = this.deviceState;
     if (deviceState) {
-      if (deviceState.State == CrOnc.DeviceState.ENABLING)
+      if (deviceState.State ==
+          chrome.networkingPrivate.DeviceStateType.ENABLING) {
         return this.i18n('internetDeviceEnabling');
-      if (deviceState.Type == CrOnc.Type.CELLULAR && this.deviceState.Scanning)
+      }
+      if (deviceState.Type == CrOnc.Type.CELLULAR &&
+          this.deviceState.Scanning) {
         return this.i18n('internetMobileSearching');
-      if (deviceState.State == CrOnc.DeviceState.ENABLED)
+      }
+      if (deviceState.State == chrome.networkingPrivate.DeviceStateType.ENABLED)
         return CrOncStrings.networkListItemNotConnected;
     }
     return this.i18n('deviceOff');
@@ -96,43 +102,40 @@ Polymer({
   },
 
   /**
-   * @param {!CrOnc.NetworkStateProperties} activeNetworkState
    * @return {boolean}
    * @private
    */
-  showPolicyIndicator_: function(activeNetworkState) {
-    return activeNetworkState.ConnectionState ==
-        CrOnc.ConnectionState.CONNECTED ||
-        this.isPolicySource(activeNetworkState.Source);
+  showPolicyIndicator_: function() {
+    var network = this.activeNetworkState;
+    return network.ConnectionState == CrOnc.ConnectionState.CONNECTED ||
+        this.isPolicySource(network.Source);
   },
 
   /**
    * Show the <network-siminfo> element if this is a disabled and locked
    * cellular device.
-   * @param {!CrOnc.DeviceStateProperties|undefined} deviceState
    * @return {boolean}
    * @private
    */
-  showSimInfo_: function(deviceState) {
-    if (!deviceState || deviceState.Type != CrOnc.Type.CELLULAR ||
-        this.deviceIsEnabled_(deviceState)) {
+  showSimInfo_: function() {
+    var device = this.deviceState;
+    if (device.Type != CrOnc.Type.CELLULAR ||
+        this.deviceIsEnabled_(this.deviceState)) {
       return false;
     }
-    return deviceState.SimPresent === false ||
-        deviceState.SimLockType == CrOnc.LockType.PIN ||
-        deviceState.SimLockType == CrOnc.LockType.PUK;
+    return device.SimPresent === false ||
+        device.SimLockType == CrOnc.LockType.PIN ||
+        device.SimLockType == CrOnc.LockType.PUK;
   },
 
   /**
    * Returns a NetworkProperties object for <network-siminfo> built from
    * the device properties (since there will be no active network).
-   * @param {!CrOnc.DeviceStateProperties|undefined} deviceState
-   * @return {!CrOnc.NetworkProperties|undefined}
+   * @param {!DeviceStateProperties} deviceState
+   * @return {!CrOnc.NetworkProperties}
    * @private
    */
   getCellularState_: function(deviceState) {
-    if (!deviceState)
-      return undefined;
     return {
       GUID: '',
       Type: CrOnc.Type.CELLULAR,
@@ -147,35 +150,37 @@ Polymer({
   },
 
   /**
-   * @param {!CrOnc.DeviceStateProperties|undefined} deviceState
+   * @param {!DeviceStateProperties|undefined} deviceState
    * @return {boolean} Whether or not the device state is enabled.
    * @private
    */
   deviceIsEnabled_: function(deviceState) {
-    return !!deviceState && deviceState.State == CrOnc.DeviceState.ENABLED;
+    return !!deviceState &&
+        deviceState.State == chrome.networkingPrivate.DeviceStateType.ENABLED;
   },
 
   /**
-   * @param {!CrOnc.DeviceStateProperties|undefined} deviceState
+   * @param {!DeviceStateProperties} deviceState
    * @return {boolean}
    * @private
    */
   enableToggleIsVisible_: function(deviceState) {
-    return !!deviceState && deviceState.Type != CrOnc.Type.ETHERNET &&
+    return deviceState.Type != CrOnc.Type.ETHERNET &&
         deviceState.Type != CrOnc.Type.VPN;
   },
 
   /**
-   * @param {!CrOnc.DeviceStateProperties|undefined} deviceState
+   * @param {!DeviceStateProperties} deviceState
    * @return {boolean}
    * @private
    */
   enableToggleIsEnabled_: function(deviceState) {
-    return !!deviceState && deviceState.State != CrOnc.DeviceState.PROHIBITED;
+    return deviceState.State !=
+        chrome.networkingPrivate.DeviceStateType.PROHIBITED;
   },
 
   /**
-   * @param {!CrOnc.DeviceStateProperties|undefined} deviceState
+   * @param {!DeviceStateProperties} deviceState
    * @return {string}
    * @private
    */
@@ -197,34 +202,25 @@ Polymer({
   },
 
   /**
-   * @param {!CrOnc.NetworkStateProperties} activeNetworkState
-   * @param {!CrOnc.DeviceStateProperties|undefined} deviceState
-   * @param {!Array<!CrOnc.NetworkStateProperties>} networkStateList
    * @return {boolean}
    * @private
    */
-  showDetailsIsVisible_: function(
-      activeNetworkState, deviceState, networkStateList) {
-    return this.deviceIsEnabled_(deviceState) &&
-        (!!activeNetworkState.GUID || networkStateList.length > 0);
+  showDetailsIsVisible_: function() {
+    return this.deviceIsEnabled_(this.deviceState) &&
+        (!!this.activeNetworkState.GUID || this.networkStateList.length > 0);
   },
 
   /**
-   * @param {!CrOnc.DeviceStateProperties|undefined} deviceState
-   * @param {!Array<!CrOnc.NetworkStateProperties>} networkStateList
    * @return {boolean}
    * @private
    */
-  shouldShowSubpage_: function(deviceState, networkStateList) {
-    if (!deviceState)
-      return false;
-    var type = deviceState.Type;
-    var minlen = (deviceState.Type == CrOnc.Type.WI_FI ||
-                  deviceState.Type == CrOnc.Type.VPN ||
-                  deviceState.Type == CrOnc.Type.TETHER) ?
+  shouldShowList_: function() {
+    var minlen = (this.deviceState.Type == CrOnc.Type.WI_FI ||
+                  this.deviceState.Type == CrOnc.Type.VPN ||
+                  this.deviceState.Type == CrOnc.Type.TETHER) ?
         1 :
         2;
-    return networkStateList.length >= minlen;
+    return this.networkStateList.length >= minlen;
   },
 
   /**
@@ -236,8 +232,7 @@ Polymer({
       this.fire(
           'device-enabled-toggled',
           {enabled: true, type: this.deviceState.Type});
-    } else if (this.shouldShowSubpage_(
-                   this.deviceState, this.networkStateList)) {
+    } else if (this.shouldShowList_()) {
       this.fire('show-networks', this.deviceState);
     } else if (this.activeNetworkState.GUID) {
       this.fire('show-detail', this.activeNetworkState);
@@ -248,22 +243,18 @@ Polymer({
   },
 
   /**
-   * @param {!CrOnc.NetworkStateProperties} activeNetworkState
-   * @param {!CrOnc.DeviceStateProperties|undefined} deviceState
-   * @param {!Array<!CrOnc.NetworkStateProperties>} networkStateList
    * @return {string}
    * @private
    */
-  getDetailsA11yString_: function(
-      activeNetworkState, deviceState, networkStateList) {
-    if (!this.shouldShowSubpage_(deviceState, networkStateList)) {
-      if (activeNetworkState.GUID) {
-        return CrOnc.getNetworkName(activeNetworkState);
-      } else if (networkStateList.length > 0) {
-        return CrOnc.getNetworkName(networkStateList[0]);
+  getDetailsA11yString_: function() {
+    if (!this.shouldShowList_()) {
+      if (this.activeNetworkState.GUID) {
+        return CrOnc.getNetworkName(this.activeNetworkState);
+      } else if (this.networkStateList.length > 0) {
+        return CrOnc.getNetworkName(this.networkStateList[0]);
       }
     }
-    return this.i18n('OncType' + deviceState.Type);
+    return this.i18n('OncType' + this.deviceState.Type);
   },
 
   /**

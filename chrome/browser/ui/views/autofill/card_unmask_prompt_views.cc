@@ -11,6 +11,8 @@
 #include "chrome/browser/ui/autofill/create_card_unmask_prompt_view.h"
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/views/autofill/view_util.h"
+#include "chrome/grit/generated_resources.h"
+#include "chrome/grit/theme_resources.h"
 #include "components/autofill/core/browser/ui/card_unmask_prompt_controller.h"
 #include "components/constrained_window/constrained_window_views.h"
 #include "components/strings/grit/components_strings.h"
@@ -246,7 +248,7 @@ views::View* CardUnmaskPromptViews::CreateFootnoteView() {
   return storage_row_;
 }
 
-gfx::Size CardUnmaskPromptViews::CalculatePreferredSize() const {
+gfx::Size CardUnmaskPromptViews::GetPreferredSize() const {
   // Must hardcode a width so the label knows where to wrap.
   const int kWidth = 375;
   return gfx::Size(kWidth, GetHeightForWidth(kWidth));

@@ -4,14 +4,9 @@
 
 #import "ios/chrome/browser/ui/payments/address_edit_coordinator.h"
 
-#include "base/guid.h"
 #include "base/logging.h"
-#include "base/strings/sys_string_conversions.h"
 #include "components/autofill/core/browser/autofill_profile.h"
-#include "components/autofill/core/browser/personal_data_manager.h"
-#include "components/autofill/core/common/autofill_constants.h"
 #include "components/strings/grit/components_strings.h"
-#include "ios/chrome/browser/payments/payment_request.h"
 #import "ios/chrome/browser/ui/autofill/autofill_ui_type_util.h"
 #import "ios/chrome/browser/ui/payments/address_edit_mediator.h"
 #import "ios/chrome/browser/ui/payments/payment_request_editor_field.h"
@@ -28,10 +23,7 @@ using ::AutofillTypeFromAutofillUIType;
 
 @interface AddressEditCoordinator ()
 
-@property(nonatomic, strong)
-    CountrySelectionCoordinator* countrySelectionCoordinator;
-
-@property(nonatomic, strong) PaymentRequestEditViewController* viewController;
+@property(nonatomic, strong) AddressEditViewController* viewController;
 
 @property(nonatomic, strong) AddressEditMediator* mediator;
 
@@ -42,12 +34,11 @@ using ::AutofillTypeFromAutofillUIType;
 @synthesize address = _address;
 @synthesize paymentRequest = _paymentRequest;
 @synthesize delegate = _delegate;
-@synthesize countrySelectionCoordinator = _countrySelectionCoordinator;
 @synthesize viewController = _viewController;
 @synthesize mediator = _mediator;
 
 - (void)start {
-  self.viewController = [[PaymentRequestEditViewController alloc] init];
+  self.viewController = [[AddressEditViewController alloc] init];
   // TODO(crbug.com/602666): Title varies depending on what field is missing.
   // e.g., Add Email vs. Add Phone Number.
   NSString* title = self.address
@@ -59,7 +50,6 @@ using ::AutofillTypeFromAutofillUIType;
   self.mediator =
       [[AddressEditMediator alloc] initWithPaymentRequest:self.paymentRequest
                                                   address:self.address];
-  [self.mediator setConsumer:self.viewController];
   [self.viewController setDataSource:self.mediator];
   [self.viewController loadModel];
 
@@ -71,8 +61,6 @@ using ::AutofillTypeFromAutofillUIType;
 
 - (void)stop {
   [self.viewController.navigationController popViewControllerAnimated:YES];
-  [self.countrySelectionCoordinator stop];
-  self.countrySelectionCoordinator = nil;
   self.viewController = nil;
 }
 
@@ -81,78 +69,30 @@ using ::AutofillTypeFromAutofillUIType;
 - (NSString*)paymentRequestEditViewController:
                  (PaymentRequestEditViewController*)controller
                                 validateField:(EditorField*)field {
-  if (!field.value.length && field.isRequired) {
-    return l10n_util::GetNSString(
-        IDS_PAYMENTS_FIELD_REQUIRED_VALIDATION_MESSAGE);
-  }
+  // TODO(crbug.com/602666): Validation.
   return nil;
 }
 
-#pragma mark - PaymentRequestEditViewControllerDelegate
+#pragma mark - AddressEditViewControllerDelegate
 
 - (void)paymentRequestEditViewController:
             (PaymentRequestEditViewController*)controller
                           didSelectField:(EditorField*)field {
   if (field.autofillUIType == AutofillUITypeProfileHomeAddressCountry) {
-    self.countrySelectionCoordinator = [[CountrySelectionCoordinator alloc]
-        initWithBaseViewController:self.viewController];
-    [self.countrySelectionCoordinator setCountries:self.mediator.countries];
-    [self.countrySelectionCoordinator
-        setSelectedCountryCode:self.mediator.selectedCountryCode];
-    [self.countrySelectionCoordinator setDelegate:self];
-    [self.countrySelectionCoordinator start];
+    // TODO(crbug.com/602666): Change the fields according to the selection.
   }
 }
 
-- (void)paymentRequestEditViewController:
-            (PaymentRequestEditViewController*)controller
-                  didFinishEditingFields:(NSArray<EditorField*>*)fields {
-  // Create an empty autofill profile. If an address is being edited, copy over
-  // the information.
-  autofill::AutofillProfile address =
-      self.address ? *self.address
-                   : autofill::AutofillProfile(base::GenerateGUID(),
-                                               autofill::kSettingsOrigin);
-
-  for (EditorField* field in fields) {
-    address.SetRawInfo(AutofillTypeFromAutofillUIType(field.autofillUIType),
-                       base::SysNSStringToUTF16(field.value));
-  }
-
-  if (!self.address) {
-    self.paymentRequest->GetPersonalDataManager()->AddProfile(address);
-
-    // Add the profile to the list of profiles in |self.paymentRequest|.
-    self.address = self.paymentRequest->AddAutofillProfile(address);
-  } else {
-    // Override the origin.
-    address.set_origin(autofill::kSettingsOrigin);
-    self.paymentRequest->GetPersonalDataManager()->UpdateProfile(address);
-
-    // Update the original profile instance that is being edited.
-    *self.address = address;
-  }
-
+- (void)addressEditViewController:(AddressEditViewController*)controller
+           didFinishEditingFields:(NSArray<EditorField*>*)fields {
+  // TODO(crbug.com/602666): Create or edit an address as appropriate.
   [self.delegate addressEditCoordinator:self
                 didFinishEditingAddress:self.address];
 }
 
-- (void)paymentRequestEditViewControllerDidCancel:
-    (PaymentRequestEditViewController*)controller {
+- (void)addressEditViewControllerDidCancel:
+    (AddressEditViewController*)controller {
   [self.delegate addressEditCoordinatorDidCancel:self];
-}
-
-#pragma mark - CountrySelectionCoordinatorDelegate
-
-- (void)countrySelectionCoordinator:(CountrySelectionCoordinator*)coordinator
-           didSelectCountryWithCode:(NSString*)countryCode {
-  if (self.mediator.selectedCountryCode != countryCode) {
-    [self.mediator setSelectedCountryCode:countryCode];
-    [self.viewController loadModel];
-    [self.viewController.collectionView reloadData];
-  }
-  [self.countrySelectionCoordinator stop];
-  self.countrySelectionCoordinator = nil;
 }
 
 @end

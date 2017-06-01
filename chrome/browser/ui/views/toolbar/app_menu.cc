@@ -115,8 +115,8 @@ class FullscreenButton : public ImageButton {
       : ImageButton(listener) { }
 
   // Overridden from ImageButton.
-  gfx::Size CalculatePreferredSize() const override {
-    gfx::Size pref = ImageButton::CalculatePreferredSize();
+  gfx::Size GetPreferredSize() const override {
+    gfx::Size pref = ImageButton::GetPreferredSize();
     if (border()) {
       gfx::Insets insets = border()->GetInsets();
       pref.Enlarge(insets.width(), insets.height());
@@ -176,9 +176,10 @@ class InMenuButtonBackground : public views::Background {
     }
 
     // Fill in background for state.
+    bounds.set_x(view->GetMirroredXForRect(bounds));
     views::Button::ButtonState state =
         button ? button->state() : views::Button::STATE_NORMAL;
-    DrawBackground(canvas, view, view->GetMirroredRect(bounds), state);
+    DrawBackground(canvas, view, bounds, state);
   }
 
  private:
@@ -426,7 +427,7 @@ class AppMenu::CutCopyPasteView : public AppMenuView {
   }
 
   // Overridden from View.
-  gfx::Size CalculatePreferredSize() const override {
+  gfx::Size GetPreferredSize() const override {
     // Returned height doesn't matter as MenuItemView forces everything to the
     // height of the menuitemview.
     return gfx::Size(GetMaxChildViewPreferredWidth() * child_count(), 0);
@@ -531,7 +532,7 @@ class AppMenu::ZoomView : public AppMenuView {
   ~ZoomView() override {}
 
   // Overridden from View.
-  gfx::Size CalculatePreferredSize() const override {
+  gfx::Size GetPreferredSize() const override {
     // The increment/decrement button are forced to the same width.
     int button_width = std::max(increment_button_->GetPreferredSize().width(),
                                 decrement_button_->GetPreferredSize().width());

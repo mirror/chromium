@@ -14,6 +14,7 @@
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/infobars/infobar_background.h"
 #include "chrome/grit/generated_resources.h"
+#include "chrome/grit/theme_resources.h"
 #include "components/infobars/core/infobar_delegate.h"
 #include "components/strings/grit/components_strings.h"
 #include "third_party/skia/include/effects/SkGradientShader.h"
@@ -283,7 +284,7 @@ void InfoBarView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->AddStringAttribute(ui::AX_ATTR_SHORTCUT, "Alt+Shift+A");
 }
 
-gfx::Size InfoBarView::CalculatePreferredSize() const {
+gfx::Size InfoBarView::GetPreferredSize() const {
   ChromeLayoutProvider* layout_provider = ChromeLayoutProvider::Get();
 
   const int related_control_spacing = layout_provider->GetDistanceMetric(

@@ -5,10 +5,10 @@
 #include "ash/shelf/shelf_widget.h"
 
 #include "ash/root_window_controller.h"
-#include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_constants.h"
 #include "ash/shelf/shelf_layout_manager.h"
 #include "ash/shelf/shelf_view.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/system/status_area_widget.h"
@@ -17,6 +17,7 @@
 #include "ash/test/shelf_view_test_api.h"
 #include "ash/test/test_shell_delegate.h"
 #include "ash/wm/window_util.h"
+#include "ash/wm_window.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/display/display.h"
 #include "ui/events/event_utils.h"
@@ -37,7 +38,7 @@ ShelfLayoutManager* GetShelfLayoutManager() {
 void TestLauncherAlignment(aura::Window* root,
                            ShelfAlignment alignment,
                            const gfx::Rect& expected) {
-  Shelf::ForWindow(root)->SetAlignment(alignment);
+  GetRootWindowController(root)->GetShelf()->SetAlignment(alignment);
   EXPECT_EQ(expected.ToString(), display::Screen::GetScreen()
                                      ->GetDisplayNearestWindow(root)
                                      .work_area()
@@ -151,8 +152,8 @@ TEST_F(ShelfWidgetTest, ShelfInitiallySizedAfterLogin) {
 
   // Both displays have a shelf controller.
   aura::Window::Windows roots = Shell::GetAllRootWindows();
-  Shelf* shelf1 = Shelf::ForWindow(roots[0]);
-  Shelf* shelf2 = Shelf::ForWindow(roots[1]);
+  WmShelf* shelf1 = WmShelf::ForWindow(roots[0]);
+  WmShelf* shelf2 = WmShelf::ForWindow(roots[1]);
   ASSERT_TRUE(shelf1);
   ASSERT_TRUE(shelf2);
 
@@ -225,7 +226,7 @@ TEST_F(ShelfWidgetTest, ShelfEdgeOverlappingWindowHitTestMouse) {
   }
 
   // Change shelf alignment to verify that the targeter insets are updated.
-  Shelf* shelf = GetPrimaryShelf();
+  WmShelf* shelf = GetPrimaryShelf();
   shelf->SetAlignment(SHELF_ALIGNMENT_LEFT);
   shelf_layout_manager->LayoutShelf();
   shelf_bounds = shelf_widget->GetWindowBoundsInScreen();
@@ -269,7 +270,7 @@ TEST_F(ShelfWidgetTest, ShelfEdgeOverlappingWindowHitTestMouse) {
 // Tests that the shelf has a slightly larger hit-region for touch-events when
 // it's in the auto-hidden state.
 TEST_F(ShelfWidgetTest, HiddenShelfHitTestTouch) {
-  Shelf* shelf = GetPrimaryShelf();
+  WmShelf* shelf = GetPrimaryShelf();
   ShelfWidget* shelf_widget = GetShelfWidget();
   gfx::Rect shelf_bounds = shelf_widget->GetWindowBoundsInScreen();
   EXPECT_TRUE(!shelf_bounds.IsEmpty());
@@ -335,7 +336,7 @@ class ShelfWidgetAfterLoginTest : public test::AshTestBase {
     SetSessionStarted(true);
 
     // Simulate shelf settings being applied from profile prefs.
-    Shelf* shelf = GetPrimaryShelf();
+    WmShelf* shelf = GetPrimaryShelf();
     ASSERT_NE(nullptr, shelf);
     shelf->SetAlignment(alignment);
     shelf->SetAutoHideBehavior(auto_hide_behavior);
@@ -354,7 +355,7 @@ class ShelfWidgetAfterLoginTest : public test::AshTestBase {
 
 TEST_F(ShelfWidgetAfterLoginTest, InitialValues) {
   // Ensure shelf components are created.
-  Shelf* shelf = GetPrimaryShelf();
+  WmShelf* shelf = GetPrimaryShelf();
   ASSERT_NE(nullptr, shelf);
   ShelfWidget* shelf_widget = GetShelfWidget();
   ASSERT_NE(nullptr, shelf_widget);

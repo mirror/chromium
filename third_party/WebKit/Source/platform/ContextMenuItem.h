@@ -55,10 +55,12 @@ class PLATFORM_EXPORT ContextMenuItem {
   ContextMenuItem(ContextMenuItemType,
                   ContextMenuAction,
                   const String& title,
+                  const String& icon,
                   ContextMenu* sub_menu = 0);
   ContextMenuItem(ContextMenuItemType,
                   ContextMenuAction,
                   const String& title,
+                  const String& icon,
                   bool enabled,
                   bool checked);
 
@@ -87,6 +89,9 @@ class PLATFORM_EXPORT ContextMenuItem {
   void SetTitle(const String& title) { title_ = title; }
   const String& Title() const { return title_; }
 
+  void SetIcon(const String& icon) { icon_ = icon; }
+  const String& Icon() const { return icon_; }
+
   const Vector<ContextMenuItem>& SubMenuItems() const {
     return sub_menu_items_;
   }
@@ -95,6 +100,7 @@ class PLATFORM_EXPORT ContextMenuItem {
   ContextMenuItemType type_;
   ContextMenuAction action_;
   String title_;
+  String icon_;
   bool enabled_;
   bool checked_;
   Vector<ContextMenuItem> sub_menu_items_;

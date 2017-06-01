@@ -33,14 +33,12 @@ SharedModelTypeProcessor::SharedModelTypeProcessor(
   DCHECK(bridge);
 }
 
-SharedModelTypeProcessor::~SharedModelTypeProcessor() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-}
+SharedModelTypeProcessor::~SharedModelTypeProcessor() = default;
 
 void SharedModelTypeProcessor::OnSyncStarting(
     const ModelErrorHandler& error_handler,
     const StartCallback& start_callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(!IsConnected());
   DCHECK(error_handler);
   DCHECK(start_callback);
@@ -53,7 +51,7 @@ void SharedModelTypeProcessor::OnSyncStarting(
 
 void SharedModelTypeProcessor::ModelReadyToSync(
     std::unique_ptr<MetadataBatch> batch) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(waiting_for_metadata_);
   DCHECK(entities_.empty());
 
@@ -119,18 +117,18 @@ void SharedModelTypeProcessor::ConnectIfReady() {
 }
 
 bool SharedModelTypeProcessor::IsAllowingChanges() const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   // Changes can be handled correctly even before pending data is loaded.
   return !waiting_for_metadata_;
 }
 
 bool SharedModelTypeProcessor::IsConnected() const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   return !!worker_;
 }
 
 void SharedModelTypeProcessor::DisableSync() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   std::unique_ptr<MetadataChangeList> change_list =
       bridge_->CreateMetadataChangeList();
   for (auto it = entities_.begin(); it != entities_.end(); ++it) {
@@ -146,7 +144,7 @@ bool SharedModelTypeProcessor::IsTrackingMetadata() {
 }
 
 void SharedModelTypeProcessor::ReportError(const ModelError& error) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   // Ignore all errors after the first.
   if (model_error_)
@@ -177,7 +175,7 @@ void SharedModelTypeProcessor::ReportError(
 
 void SharedModelTypeProcessor::ConnectSync(
     std::unique_ptr<CommitQueue> worker) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DVLOG(1) << "Successfully connected " << ModelTypeToString(type_);
 
   worker_ = std::move(worker);
@@ -186,7 +184,7 @@ void SharedModelTypeProcessor::ConnectSync(
 }
 
 void SharedModelTypeProcessor::DisconnectSync() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(IsConnected());
 
   DVLOG(1) << "Disconnecting sync for " << ModelTypeToString(type_);
@@ -201,7 +199,7 @@ void SharedModelTypeProcessor::DisconnectSync() {
 void SharedModelTypeProcessor::Put(const std::string& storage_key,
                                    std::unique_ptr<EntityData> data,
                                    MetadataChangeList* metadata_change_list) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(IsAllowingChanges());
   DCHECK(data);
   DCHECK(!data->is_deleted());
@@ -236,7 +234,7 @@ void SharedModelTypeProcessor::Put(const std::string& storage_key,
 void SharedModelTypeProcessor::Delete(
     const std::string& storage_key,
     MetadataChangeList* metadata_change_list) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(IsAllowingChanges());
 
   if (!model_type_state_.initial_sync_done()) {
@@ -310,7 +308,7 @@ void SharedModelTypeProcessor::FlushPendingCommitRequests() {
 void SharedModelTypeProcessor::OnCommitCompleted(
     const sync_pb::ModelTypeState& type_state,
     const CommitResponseDataList& response_list) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   std::unique_ptr<MetadataChangeList> change_list =
       bridge_->CreateMetadataChangeList();
 
@@ -347,7 +345,7 @@ void SharedModelTypeProcessor::OnCommitCompleted(
 void SharedModelTypeProcessor::OnUpdateReceived(
     const sync_pb::ModelTypeState& model_type_state,
     const UpdateResponseDataList& updates) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (!model_type_state_.initial_sync_done()) {
     OnInitialUpdateReceived(model_type_state, updates);
     return;
@@ -606,7 +604,7 @@ void SharedModelTypeProcessor::OnInitialUpdateReceived(
 
 void SharedModelTypeProcessor::OnInitialPendingDataLoaded(
     std::unique_ptr<DataBatch> data_batch) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(waiting_for_pending_data_);
 
   // The model already experienced an error; abort;
@@ -621,7 +619,7 @@ void SharedModelTypeProcessor::OnInitialPendingDataLoaded(
 
 void SharedModelTypeProcessor::OnDataLoadedForReEncryption(
     std::unique_ptr<DataBatch> data_batch) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(!waiting_for_pending_data_);
 
   ConsumeDataBatch(std::move(data_batch));

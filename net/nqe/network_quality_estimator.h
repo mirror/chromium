@@ -341,10 +341,6 @@ class NET_EXPORT NetworkQualityEstimator
       const std::map<nqe::internal::NetworkID,
                      nqe::internal::CachedNetworkQuality> read_prefs);
 
-  // Returns the current transport RTT estimate. If the estimate is unavailable,
-  // the returned optional has no value.
-  base::Optional<base::TimeDelta> GetTransportRTT() const;
-
  protected:
   // A protected constructor for testing that allows setting the value of
   // |add_default_platform_observations_|.
@@ -462,10 +458,6 @@ class NET_EXPORT NetworkQualityEstimator
   // Observer list for RTT or throughput estimates. Protected for testing.
   base::ObserverList<RTTAndThroughputEstimatesObserver>
       rtt_and_throughput_estimates_observer_list_;
-
-  // Observer list for changes in effective connection type.
-  base::ObserverList<EffectiveConnectionTypeObserver>
-      effective_connection_type_observer_list_;
 
  private:
   FRIEND_TEST_ALL_PREFIXES(NetworkQualityEstimatorTest,
@@ -730,6 +722,10 @@ class NET_EXPORT NetworkQualityEstimator
   // ExternalEstimateProvider that provides network quality using operating
   // system APIs. May be NULL.
   const std::unique_ptr<ExternalEstimateProvider> external_estimate_provider_;
+
+  // Observer list for changes in effective connection type.
+  base::ObserverList<EffectiveConnectionTypeObserver>
+      effective_connection_type_observer_list_;
 
   // Observer lists for round trip times and throughput measurements.
   base::ObserverList<RTTObserver> rtt_observer_list_;

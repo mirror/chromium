@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.net.TrafficStats;
 import android.os.Build;
+
 import android.util.Log;
 
 import org.chromium.net.CronetException;
@@ -16,6 +17,7 @@ import org.chromium.net.UploadDataProvider;
 import org.chromium.net.UploadDataSink;
 import org.chromium.net.UrlResponseInfo;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -96,10 +98,17 @@ final class JavaUrlRequest extends UrlRequestBase {
 
     /* These change with redirects. */
     private String mCurrentUrl;
-    private ReadableByteChannel mResponseChannel; // Only accessed on mExecutor.
+    private ReadableByteChannel mResponseChannel;
     private UrlResponseInfoImpl mUrlResponseInfo;
     private String mPendingRedirectUrl;
-    private HttpURLConnection mCurrentUrlConnection; // Only accessed on mExecutor.
+    /**
+     * The happens-before edges created by the executor submission and AtomicReference setting are
+     * sufficient to guarantee the correct behavior of this field; however, this is an
+     * AtomicReference so that we can cleanly dispose of a new connection if we're cancelled during
+     * a redirect, which requires get-and-set semantics.
+     * */
+    private final AtomicReference<HttpURLConnection> mCurrentUrlConnection =
+            new AtomicReference<>();
 
     /**
      *             /- AWAITING_FOLLOW_REDIRECT <-  REDIRECT_RECEIVED <-\     /- READING <--\
@@ -576,30 +585,29 @@ final class JavaUrlRequest extends UrlRequestBase {
         mExecutor.execute(errorSetting(new CheckedRunnable() {
             @Override
             public void run() throws Exception {
-                if (mCurrentUrlConnection == null) {
+                HttpURLConnection connection = mCurrentUrlConnection.get();
+                if (connection == null) {
                     return; // We've been cancelled
                 }
                 final List<Map.Entry<String, String>> headerList = new ArrayList<>();
                 String selectedTransport = "http/1.1";
                 String headerKey;
-                for (int i = 0; (headerKey = mCurrentUrlConnection.getHeaderFieldKey(i)) != null;
-                        i++) {
+                for (int i = 0; (headerKey = connection.getHeaderFieldKey(i)) != null; i++) {
                     if (X_ANDROID_SELECTED_TRANSPORT.equalsIgnoreCase(headerKey)) {
-                        selectedTransport = mCurrentUrlConnection.getHeaderField(i);
+                        selectedTransport = connection.getHeaderField(i);
                     }
                     if (!headerKey.startsWith(X_ANDROID)) {
-                        headerList.add(new SimpleEntry<>(
-                                headerKey, mCurrentUrlConnection.getHeaderField(i)));
+                        headerList.add(new SimpleEntry<>(headerKey, connection.getHeaderField(i)));
                     }
                 }
 
-                int responseCode = mCurrentUrlConnection.getResponseCode();
+                int responseCode = connection.getResponseCode();
                 // Important to copy the list here, because although we never concurrently modify
                 // the list ourselves, user code might iterate over it while we're redirecting, and
                 // that would throw ConcurrentModificationException.
                 mUrlResponseInfo = new UrlResponseInfoImpl(new ArrayList<>(mUrlChain), responseCode,
-                        mCurrentUrlConnection.getResponseMessage(),
-                        Collections.unmodifiableList(headerList), false, selectedTransport, "");
+                        connection.getResponseMessage(), Collections.unmodifiableList(headerList),
+                        false, selectedTransport, "");
                 // TODO(clm) actual redirect handling? post -> get and whatnot?
                 if (responseCode >= 300 && responseCode < 400) {
                     fireRedirectReceived(mUrlResponseInfo.getAllHeaders());
@@ -607,12 +615,10 @@ final class JavaUrlRequest extends UrlRequestBase {
                 }
                 fireCloseUploadDataProvider();
                 if (responseCode >= 400) {
-                    mResponseChannel =
-                            InputStreamChannel.wrap(mCurrentUrlConnection.getErrorStream());
+                    mResponseChannel = InputStreamChannel.wrap(connection.getErrorStream());
                     mCallbackAsync.onResponseStarted(mUrlResponseInfo);
                 } else {
-                    mResponseChannel =
-                            InputStreamChannel.wrap(mCurrentUrlConnection.getInputStream());
+                    mResponseChannel = InputStreamChannel.wrap(connection.getInputStream());
                     mCallbackAsync.onResponseStarted(mUrlResponseInfo);
                 }
             }
@@ -665,29 +671,29 @@ final class JavaUrlRequest extends UrlRequestBase {
                 }
 
                 final URL url = new URL(mCurrentUrl);
-                if (mCurrentUrlConnection != null) {
-                    mCurrentUrlConnection.disconnect();
-                    mCurrentUrlConnection = null;
+                HttpURLConnection newConnection = (HttpURLConnection) url.openConnection();
+                HttpURLConnection oldConnection = mCurrentUrlConnection.getAndSet(newConnection);
+                if (oldConnection != null) {
+                    oldConnection.disconnect();
                 }
-                mCurrentUrlConnection = (HttpURLConnection) url.openConnection();
-                mCurrentUrlConnection.setInstanceFollowRedirects(false);
+                newConnection.setInstanceFollowRedirects(false);
                 if (!mRequestHeaders.containsKey(USER_AGENT)) {
                     mRequestHeaders.put(USER_AGENT, mUserAgent);
                 }
                 for (Map.Entry<String, String> entry : mRequestHeaders.entrySet()) {
-                    mCurrentUrlConnection.setRequestProperty(entry.getKey(), entry.getValue());
+                    newConnection.setRequestProperty(entry.getKey(), entry.getValue());
                 }
                 if (mInitialMethod == null) {
                     mInitialMethod = "GET";
                 }
-                mCurrentUrlConnection.setRequestMethod(mInitialMethod);
+                newConnection.setRequestMethod(mInitialMethod);
                 if (mUploadDataProvider != null) {
                     OutputStreamDataSink dataSink = new OutputStreamDataSink(
-                            mUploadExecutor, mExecutor, mCurrentUrlConnection, mUploadDataProvider);
+                            mUploadExecutor, mExecutor, newConnection, mUploadDataProvider);
                     dataSink.start(mUrlChain.size() == 1);
                 } else {
                     mAdditionalStatusDetails = Status.CONNECTING;
-                    mCurrentUrlConnection.connect();
+                    newConnection.connect();
                     fireGetHeaders();
                 }
             }
@@ -766,15 +772,15 @@ final class JavaUrlRequest extends UrlRequestBase {
     }
 
     private void fireDisconnect() {
-        mExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                if (mCurrentUrlConnection != null) {
-                    mCurrentUrlConnection.disconnect();
-                    mCurrentUrlConnection = null;
+        final HttpURLConnection connection = mCurrentUrlConnection.getAndSet(null);
+        if (connection != null) {
+            mExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    connection.disconnect();
                 }
-            }
-        });
+            });
+        }
     }
 
     @Override
@@ -959,16 +965,18 @@ final class JavaUrlRequest extends UrlRequestBase {
     }
 
     private void closeResponseChannel() {
+        final Closeable closeable = mResponseChannel;
+        if (closeable == null) {
+            return;
+        }
+        mResponseChannel = null;
         mExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                if (mResponseChannel != null) {
-                    try {
-                        mResponseChannel.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    mResponseChannel = null;
+                try {
+                    closeable.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         });

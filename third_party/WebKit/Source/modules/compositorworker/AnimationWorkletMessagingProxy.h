@@ -21,7 +21,6 @@ class AnimationWorkletMessagingProxy final
 
  public:
   AnimationWorkletMessagingProxy(ExecutionContext*,
-                                 WorkerClients*,
                                  AnimationWorkletProxyClient*);
 
  protected:

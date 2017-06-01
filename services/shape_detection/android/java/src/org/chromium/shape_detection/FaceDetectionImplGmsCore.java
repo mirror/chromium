@@ -4,6 +4,7 @@
 
 package org.chromium.shape_detection;
 
+import android.content.Context;
 import android.graphics.PointF;
 import android.util.SparseArray;
 
@@ -12,7 +13,6 @@ import com.google.android.gms.vision.face.Face;
 import com.google.android.gms.vision.face.FaceDetector;
 import com.google.android.gms.vision.face.Landmark;
 
-import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.gfx.mojom.RectF;
 import org.chromium.mojo.system.MojoException;
@@ -36,9 +36,8 @@ public class FaceDetectionImplGmsCore implements FaceDetection {
     private final boolean mFastMode;
     private final FaceDetector mFaceDetector;
 
-    FaceDetectionImplGmsCore(FaceDetectorOptions options) {
-        FaceDetector.Builder builder =
-                new FaceDetector.Builder(ContextUtils.getApplicationContext());
+    FaceDetectionImplGmsCore(Context context, FaceDetectorOptions options) {
+        FaceDetector.Builder builder = new FaceDetector.Builder(context);
         mMaxFaces = Math.min(options.maxDetectedFaces, MAX_FACES);
         mFastMode = options.fastMode;
 

@@ -111,6 +111,8 @@ static_library("test_support_common") {
     "test_session_controller_client.h",
     "test_session_state_animator.cc",
     "test_session_state_animator.h",
+    "test_session_state_delegate.cc",
+    "test_session_state_delegate.h",
     "test_shell_delegate.cc",
     "test_shell_delegate.h",
     "test_system_tray_delegate.cc",
@@ -127,6 +129,8 @@ static_library("test_support_common") {
     "user_metrics_recorder_test_api.h",
     "wallpaper_controller_test_api.cc",
     "wallpaper_controller_test_api.h",
+    "wm_window_test_api.cc",
+    "wm_window_test_api.h",
     "workspace_controller_test_api.cc",
     "workspace_controller_test_api.h",
     "workspace_event_handler_test_helper.cc",
@@ -177,7 +181,6 @@ static_library("test_support_common") {
     "//ui/views",
     "//ui/views:test_support",
     "//ui/wm",
-    "//ui/wm/public",
   ]
 
   if (use_x11) {

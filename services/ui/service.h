@@ -66,6 +66,20 @@ class Service : public service_manager::Service,
   ~Service() override;
 
  private:
+  // How the ScreenManager is configured.
+  enum ScreenManagerConfig {
+    // Initial state.
+    UNKNOWN,
+
+    // ScreenManager runs locally.
+    INTERNAL,
+
+    // Used when the window manager supplies a value of false for
+    // |automatically_create_display_roots|. In this config the ScreenManager
+    // is configured to forward calls.
+    FORWARDING,
+  };
+
   // Holds InterfaceRequests received before the first WindowTreeHost Display
   // has been established.
   struct PendingRequest;
@@ -73,9 +87,7 @@ class Service : public service_manager::Service,
 
   using UserIdToUserState = std::map<ws::UserId, std::unique_ptr<UserState>>;
 
-  // Attempts to initialize the resource bundle. Returns true if successful,
-  // otherwise false if resources cannot be loaded.
-  bool InitializeResources(service_manager::Connector* connector);
+  void InitializeResources(service_manager::Connector* connector);
 
   // Returns the user specific state for the user id of |remote_identity|.
   // Service owns the return value.
@@ -178,6 +190,7 @@ class Service : public service_manager::Service,
 
   // Set to true in StartDisplayInit().
   bool is_gpu_ready_ = false;
+  ScreenManagerConfig screen_manager_config_ = ScreenManagerConfig::UNKNOWN;
 
   DISALLOW_COPY_AND_ASSIGN(Service);
 };

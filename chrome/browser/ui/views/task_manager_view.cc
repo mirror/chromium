@@ -156,7 +156,7 @@ void TaskManagerView::SetSortDescriptor(const TableSortDescriptor& descriptor) {
   tab_table_->SetSortDescriptors(descriptor_list);
 }
 
-gfx::Size TaskManagerView::CalculatePreferredSize() const {
+gfx::Size TaskManagerView::GetPreferredSize() const {
   return gfx::Size(460, 270);
 }
 
@@ -338,9 +338,10 @@ void TaskManagerView::Init() {
   AddChildView(tab_table_parent_);
 
   SetLayoutManager(new views::FillLayout());
-  SetBorder(
-      views::CreateEmptyBorder(ChromeLayoutProvider::Get()->GetInsetsMetric(
-          views::INSETS_DIALOG_CONTENTS)));
+  SetBorder(views::CreateEmptyBorder(
+      ChromeLayoutProvider::Get()->GetDistanceMetric(
+          DISTANCE_PANEL_CONTENT_MARGIN),
+      views::kButtonHEdgeMarginNew, 0, views::kButtonHEdgeMarginNew));
 
   table_model_->RetrieveSavedColumnsSettingsAndUpdateTable();
 

@@ -25,9 +25,7 @@
 
 // https://html.spec.whatwg.org/#the-video-element
 
-[
-    ActiveScriptWrappable,
-] interface HTMLVideoElement : HTMLMediaElement {
+interface HTMLVideoElement : HTMLMediaElement {
     [CEReactions, Reflect] attribute unsigned long width;
     [CEReactions, Reflect] attribute unsigned long height;
     readonly attribute unsigned long videoWidth;

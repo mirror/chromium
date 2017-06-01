@@ -9,7 +9,6 @@
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
-#include "base/strings/sys_string_conversions.h"
 #include "device/bluetooth/bluetooth_adapter_mac.h"
 #include "device/bluetooth/bluetooth_low_energy_device_mac.h"
 #include "device/bluetooth/bluetooth_remote_gatt_characteristic_mac.h"
@@ -26,10 +25,11 @@ BluetoothRemoteGattServiceMac::BluetoothRemoteGattServiceMac(
       is_primary_(is_primary),
       is_discovery_complete_(false),
       discovery_pending_count_(0) {
-  uuid_ = BluetoothAdapterMac::BluetoothUUIDWithCBUUID([service_ UUID]);
-  identifier_ = base::SysNSStringToUTF8(
+  uuid_ = BluetoothAdapterMac::BluetoothUUIDWithCBUUID([service_.get() UUID]);
+  identifier_ =
       [NSString stringWithFormat:@"%s-%p", uuid_.canonical_value().c_str(),
-                                 service_.get()]);
+                                 (void*)service_]
+          .UTF8String;
 }
 
 BluetoothRemoteGattServiceMac::~BluetoothRemoteGattServiceMac() {}
@@ -214,7 +214,7 @@ CBPeripheral* BluetoothRemoteGattServiceMac::GetCBPeripheral() const {
 }
 
 CBService* BluetoothRemoteGattServiceMac::GetService() const {
-  return service_;
+  return service_.get();
 }
 
 BluetoothRemoteGattCharacteristicMac*

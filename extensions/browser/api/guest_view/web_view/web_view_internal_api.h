@@ -109,7 +109,7 @@ class WebViewInternalExecuteCodeFunction
  private:
   // Loads a file url on WebUI.
   bool LoadFileForWebUI(const std::string& file_src,
-                        WebUIURLFetcher::WebUILoadFileCallback callback);
+                        const WebUIURLFetcher::WebUILoadFileCallback& callback);
 
   // Contains extension resource built from path of file which is
   // specified in JSON arguments.

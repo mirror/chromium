@@ -14,6 +14,7 @@
 #include "ash/wm/window_mirror_view.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
+#include "ash/wm_window.h"
 #include "base/command_line.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
@@ -29,7 +30,6 @@
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
 #include "ui/wm/core/visibility_controller.h"
-#include "ui/wm/core/window_animations.h"
 
 namespace ash {
 
@@ -534,7 +534,7 @@ void WindowCycleList::InitWindowCycleView() {
   // TODO(estade): make sure nothing untoward happens when the lock screen
   // or a system modal dialog is shown.
   aura::Window* root_window = Shell::GetRootWindowForNewWindows();
-  RootWindowController::ForWindow(root_window)
+  GetRootWindowController(root_window)
       ->ConfigureWidgetInitParamsForContainer(
           widget, kShellWindowId_OverlayContainer, &params);
   gfx::Rect widget_rect = display::Screen::GetScreen()

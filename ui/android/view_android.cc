@@ -15,7 +15,6 @@
 #include "ui/android/view_client.h"
 #include "ui/android/window_android.h"
 #include "ui/base/layout.h"
-#include "ui/events/android/drag_event_android.h"
 #include "ui/events/android/motion_event_android.h"
 #include "url/gurl.h"
 
@@ -303,72 +302,48 @@ gfx::Size ViewAndroid::GetPhysicalBackingSize() {
   return physical_size_;
 }
 
-bool ViewAndroid::OnDragEvent(const DragEventAndroid& event) {
-  return HitTest(base::Bind(&ViewAndroid::SendDragEventToClient), event,
-                 event.location_f());
-}
-
-// static
-bool ViewAndroid::SendDragEventToClient(ViewClient* client,
-                                        const DragEventAndroid& event,
-                                        const gfx::PointF& point) {
-  std::unique_ptr<DragEventAndroid> e = event.CreateFor(point);
-  return client->OnDragEvent(*e);
-}
-
 bool ViewAndroid::OnTouchEvent(const MotionEventAndroid& event,
                                bool for_touch_handle) {
   return HitTest(
-      base::Bind(&ViewAndroid::SendTouchEventToClient, for_touch_handle), event,
-      event.GetPoint());
+      base::Bind(&ViewAndroid::SendTouchEventToClient, for_touch_handle),
+      event);
 }
 
-// static
 bool ViewAndroid::SendTouchEventToClient(bool for_touch_handle,
                                          ViewClient* client,
-                                         const MotionEventAndroid& event,
-                                         const gfx::PointF& point) {
-  std::unique_ptr<MotionEventAndroid> e(event.CreateFor(point));
-  return client->OnTouchEvent(*e, for_touch_handle);
+                                         const MotionEventAndroid& event) {
+  return client->OnTouchEvent(event, for_touch_handle);
 }
 
 bool ViewAndroid::OnMouseEvent(const MotionEventAndroid& event) {
-  return HitTest(base::Bind(&ViewAndroid::SendMouseEventToClient), event,
-                 event.GetPoint());
+  return HitTest(base::Bind(&ViewAndroid::SendMouseEventToClient), event);
 }
 
 // static
 bool ViewAndroid::SendMouseEventToClient(ViewClient* client,
-                                         const MotionEventAndroid& event,
-                                         const gfx::PointF& point) {
-  std::unique_ptr<MotionEventAndroid> e(event.CreateFor(point));
-  return client->OnMouseEvent(*e);
+                                         const MotionEventAndroid& event) {
+  return client->OnMouseEvent(event);
 }
 
+// static
 bool ViewAndroid::OnMouseWheelEvent(const MotionEventAndroid& event) {
-  return HitTest(base::Bind(&ViewAndroid::SendMouseWheelEventToClient), event,
-                 event.GetPoint());
+  return HitTest(base::Bind(&ViewAndroid::SendMouseWheelEventToClient), event);
 }
 
 // static
 bool ViewAndroid::SendMouseWheelEventToClient(ViewClient* client,
-                                              const MotionEventAndroid& event,
-                                              const gfx::PointF& point) {
-  std::unique_ptr<MotionEventAndroid> e(event.CreateFor(point));
-  return client->OnMouseWheelEvent(*e);
+                                              const MotionEventAndroid& event) {
+  return client->OnMouseWheelEvent(event);
 }
 
-template <typename E>
-bool ViewAndroid::HitTest(ViewClientCallback<E> send_to_client,
-                          const E& event,
-                          const gfx::PointF& point) {
-  if (client_ && send_to_client.Run(client_, event, point))
+bool ViewAndroid::HitTest(ViewClientCallback send_to_client,
+                          const MotionEventAndroid& event) {
+  if (client_ && send_to_client.Run(client_, event))
     return true;
 
   if (!children_.empty()) {
-    gfx::PointF offset_point(point);
-    offset_point.Offset(-layout_params_.x, -layout_params_.y);
-    gfx::Point int_point = gfx::ToFlooredPoint(offset_point);
+    std::unique_ptr<MotionEventAndroid> e(
+        event.Offset(-layout_params_.x, -layout_params_.y));
 
     // Match from back to front for hit testing.
     for (auto* child : base::Reversed(children_)) {
@@ -377,9 +352,9 @@ bool ViewAndroid::HitTest(ViewClientCallback<E> send_to_client,
         gfx::Rect bound(child->layout_params_.x, child->layout_params_.y,
                         child->layout_params_.width,
                         child->layout_params_.height);
-        matched = bound.Contains(int_point);
+        matched = bound.Contains(e->GetX(0), e->GetY(0));
       }
-      if (matched && child->HitTest(send_to_client, event, offset_point))
+      if (matched && child->HitTest(send_to_client, *e))
         return true;
     }
   }

@@ -883,7 +883,7 @@ function getSelectedBookmarkNodes(opt_target) {
  */
 function getSelectedBookmarkIds(opt_target) {
   var selectedNodes = getSelectedBookmarkNodes(opt_target);
-  selectedNodes.sort(function(a, b) { return a.index - b.index; });
+  selectedNodes.sort(function(a, b) { return a.index - b.index });
   return selectedNodes.map(function(node) {
     return node.id;
   });
@@ -1143,7 +1143,7 @@ function addPage() {
     var sm = bmm.list.selectionModel;
     sm.anchorIndex = sm.leadIndex = sm.selectedIndex = index;
     scrollIntoViewAndMakeEditable(index);
-  }
+  };
 
   navigateTo(parentId, editNewBookmark);
 }

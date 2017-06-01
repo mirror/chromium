@@ -89,14 +89,11 @@ function onReadFileRequested(options, onSuccess, onError) {
   var contents =
       METADATA[openedFiles[options.openRequestId]].contents;
 
-  var remaining = Math.max(0, contents.length - options.offset);
-  var length = Math.min(remaining, options.length);
-
   // Write the contents as ASCII text.
-  var buffer = new ArrayBuffer(length);
+  var buffer = new ArrayBuffer(options.length);
   var bufferView = new Uint8Array(buffer);
-  for (var i = 0; i < length; i++) {
-    bufferView[i] = contents.charCodeAt(i + options.offset);
+  for (var i = 0; i < options.length; i++) {
+    bufferView[i] = contents.charCodeAt(i);
   }
 
   onSuccess(buffer, false /* Last call. */);

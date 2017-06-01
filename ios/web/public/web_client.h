@@ -5,7 +5,6 @@
 #ifndef IOS_WEB_PUBLIC_WEB_CLIENT_H_
 #define IOS_WEB_PUBLIC_WEB_CLIENT_H_
 
-#include <memory>
 #include <string>
 #include <vector>
 
@@ -51,7 +50,7 @@ class WebClient {
 
   // Allows the embedder to set a custom WebMainParts implementation for the
   // browser startup code.
-  virtual std::unique_ptr<WebMainParts> CreateWebMainParts();
+  virtual WebMainParts* CreateWebMainParts();
 
   // Gives the embedder a chance to perform tasks before a web view is created.
   virtual void PreWebViewCreation() const {}

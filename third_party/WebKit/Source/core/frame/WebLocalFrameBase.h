@@ -14,8 +14,8 @@ namespace blink {
 
 class ContentSettingsClient;
 class FrameOwner;
+class FrameView;
 class LocalFrame;
-class LocalFrameView;
 class Node;
 class Page;
 class SharedWorkerRepositoryClientImpl;
@@ -51,7 +51,7 @@ class WebLocalFrameBase : public GarbageCollectedFinalized<WebLocalFrameBase>,
   virtual void SetContextMenuNode(Node*) = 0;
   virtual void ClearContextMenuNode() = 0;
   virtual LocalFrame* GetFrame() const = 0;
-  virtual LocalFrameView* GetFrameView() const = 0;
+  virtual FrameView* GetFrameView() const = 0;
   virtual void InitializeCoreFrame(Page&,
                                    FrameOwner*,
                                    const AtomicString& name) = 0;
@@ -76,8 +76,6 @@ class WebLocalFrameBase : public GarbageCollectedFinalized<WebLocalFrameBase>,
   virtual SharedWorkerRepositoryClientImpl* SharedWorkerRepositoryClient()
       const = 0;
   virtual TextCheckerClient& GetTextCheckerClient() const = 0;
-  virtual TextFinder* GetTextFinder() const = 0;
-  virtual void SetInputEventsTransformForEmulation(const IntSize&, float) = 0;
 
   DEFINE_INLINE_VIRTUAL_TRACE() {}
 

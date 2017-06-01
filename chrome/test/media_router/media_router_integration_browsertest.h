@@ -74,10 +74,8 @@ class MediaRouterIntegrationBrowserTest : public MediaRouterBaseBrowserTest {
 
   void CheckDialogRemainsOpen(content::WebContents* web_contents);
 
-  // Opens "basic_test.html" and asserts that attempting to start a presentation
-  // fails with NotFoundError due to no sinks available.
-  void StartSessionAndAssertNotFoundError();
-
+  // Opens "basic_test.html," and starts a presentation.
+  content::WebContents* StartSessionWithTestPageNow();
   // Opens "basic_test.html," waits for sinks to be available, and starts a
   // presentation.
   content::WebContents* StartSessionWithTestPageAndSink();

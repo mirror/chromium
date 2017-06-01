@@ -5,7 +5,7 @@
 #ifndef FrameClientHintsPreferencesContext_h
 #define FrameClientHintsPreferencesContext_h
 
-#include "core/frame/LocalFrame.h"
+#include "core/frame/Frame.h"
 #include "platform/heap/Persistent.h"
 #include "platform/loader/fetch/ClientHintsPreferences.h"
 #include "platform/wtf/Allocator.h"
@@ -17,15 +17,14 @@ class FrameClientHintsPreferencesContext final
   STACK_ALLOCATED();
 
  public:
-  explicit FrameClientHintsPreferencesContext(LocalFrame*);
+  explicit FrameClientHintsPreferencesContext(Frame*);
 
-  void CountClientHintsDeviceRAM() override;
   void CountClientHintsDPR() override;
   void CountClientHintsResourceWidth() override;
   void CountClientHintsViewportWidth() override;
 
  private:
-  Member<LocalFrame> frame_;
+  Member<Frame> frame_;
 };
 
 }  // namespace blink

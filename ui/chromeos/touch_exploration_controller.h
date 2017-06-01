@@ -194,10 +194,6 @@ class UI_CHROMEOS_EXPORT TouchExplorationController
   // |bounds| are in root window coordinates.
   void SetExcludeBounds(const gfx::Rect& bounds);
 
-  // Updates |lift_activation_bounds_|. See |lift_activation_bounds_| for more
-  // information.
-  void SetLiftActivationBounds(const gfx::Rect& bounds);
-
  private:
   friend class TouchExplorationControllerTestApi;
 
@@ -300,16 +296,7 @@ class UI_CHROMEOS_EXPORT TouchExplorationController
 
   void PlaySoundForTimer();
 
-  // Sends a simulated click, if an anchor point was set explicitly. Otherwise,
-  // sends a simulated tap at anchor point.
-  void SendSimulatedClickOrTap();
-
-  // Sends a simulated tap at anchor point.
-  void SendSimulatedTap();
-
-  // Sends a simulated tap, if the anchor point falls within lift activation
-  // bounds.
-  void MaybeSendSimulatedTapInLiftActivationBounds(const ui::TouchEvent& event);
+  void SendSimulatedClick();
 
   // Some constants used in touch_exploration_controller:
 
@@ -526,11 +513,6 @@ class UI_CHROMEOS_EXPORT TouchExplorationController
   // but events need to be sent to TouchAccessibilityEnabler before being
   // rewritten when TouchExplorationController is running.
   TouchAccessibilityEnabler* touch_accessibility_enabler_;
-
-  // Any touch exploration that both starts and ends (touch pressed, and
-  // released) within this rectangle, triggers a simulated single finger tap at
-  // the anchor point on release.
-  gfx::Rect lift_activation_bounds_;
 
   DISALLOW_COPY_AND_ASSIGN(TouchExplorationController);
 };

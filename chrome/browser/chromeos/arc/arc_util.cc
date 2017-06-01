@@ -35,10 +35,6 @@ constexpr char kAndroidMSdkVersion[] = "23";
 // Let IsAllowedForProfile() return "false" for any profile.
 bool g_disallow_for_testing = false;
 
-// Let IsArcBlockedDueToIncompatibleFileSystem() return the specified value
-// during test runs.
-bool g_arc_blocked_due_to_incomaptible_filesystem_for_testing = false;
-
 // Returns whether ARC can run on the filesystem mounted at |path|.
 // This function should run only on threads where IO operations are allowed.
 bool IsArcCompatibleFilesystem(const base::FilePath& path) {
@@ -75,6 +71,22 @@ FileSystemCompatibilityState GetFileSystemCompatibilityPref(
 }  // namespace
 
 bool IsArcAllowedForProfile(const Profile* profile) {
+  if (!IsArcAllowedInAppListForProfile(profile))
+    return false;
+
+  if (base::SysInfo::IsRunningOnChromeOS()) {
+    // Do not allow newer version of ARC on old filesystem.
+    // Check this condition only on real Chrome OS devices. Test runs on Linux
+    // workstation does not have expected /etc/lsb-release field nor profile
+    // creation step.
+    if (!IsArcCompatibleFileSystemUsedForProfile(profile))
+      return false;
+  }
+
+  return true;
+}
+
+bool IsArcAllowedInAppListForProfile(const Profile* profile) {
   if (g_disallow_for_testing) {
     VLOG(1) << "ARC is disallowed for testing.";
     return false;
@@ -116,8 +128,10 @@ bool IsArcAllowedForProfile(const Profile* profile) {
   // (e.g. in public sessions). cf) crbug.com/605545
   const user_manager::User* user =
       chromeos::ProfileHelper::Get()->GetUserByProfile(profile);
-  if (!IsArcAllowedForUser(user)) {
-    VLOG(1) << "ARC is not allowed for the user.";
+  const bool has_gaia_account = user && user->HasGaiaAccount();
+  const bool is_active_directory_user = user && user->IsActiveDirectoryUser();
+  if (!has_gaia_account && !is_active_directory_user && !IsArcKioskMode()) {
+    VLOG(1) << "Users without GAIA or AD accounts are not supported in ARC.";
     return false;
   }
 
@@ -130,21 +144,14 @@ bool IsArcAllowedForProfile(const Profile* profile) {
     return false;
   }
 
+  // Do not allow for Ephemeral data user. cf) b/26402681
+  if (user_manager::UserManager::Get()
+          ->IsCurrentUserCryptohomeDataEphemeral()) {
+    VLOG(1) << "Users with ephemeral data are not supported in ARC.";
+    return false;
+  }
+
   return true;
-}
-
-bool IsArcBlockedDueToIncompatibleFileSystem(const Profile* profile) {
-  // Test runs on Linux workstation does not have expected /etc/lsb-release
-  // field nor profile creation step. Hence it returns a dummy test value.
-  if (!base::SysInfo::IsRunningOnChromeOS())
-    return g_arc_blocked_due_to_incomaptible_filesystem_for_testing;
-
-  // Conducts the actual check, only when running on a real Chrome OS device.
-  return !IsArcCompatibleFileSystemUsedForProfile(profile);
-}
-
-void SetArcBlockedDueToIncompatibleFileSystemForTesting(bool block) {
-  g_arc_blocked_due_to_incomaptible_filesystem_for_testing = block;
 }
 
 bool IsArcCompatibleFileSystemUsedForProfile(const Profile* profile) {

@@ -9,12 +9,8 @@
 namespace blink {
 
 FrameClientHintsPreferencesContext::FrameClientHintsPreferencesContext(
-    LocalFrame* frame)
+    Frame* frame)
     : frame_(frame) {}
-
-void FrameClientHintsPreferencesContext::CountClientHintsDeviceRAM() {
-  UseCounter::Count(frame_, UseCounter::kClientHintsDeviceRAM);
-}
 
 void FrameClientHintsPreferencesContext::CountClientHintsDPR() {
   UseCounter::Count(frame_, UseCounter::kClientHintsDPR);

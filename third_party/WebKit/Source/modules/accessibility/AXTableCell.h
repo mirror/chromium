@@ -70,7 +70,7 @@ class MODULES_EXPORT AXTableCell : public AXLayoutObject {
 
   bool ComputeAccessibilityIsIgnored(IgnoredReasons* = nullptr) const final;
 
-  unsigned aria_col_index_from_row_ = 0;
+  unsigned aria_col_index_from_row_;
 };
 
 DEFINE_AX_OBJECT_TYPE_CASTS(AXTableCell, IsTableCell());

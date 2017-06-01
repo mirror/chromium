@@ -11,7 +11,6 @@
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/loader/MixedContentChecker.h"
@@ -23,6 +22,7 @@
 #include "modules/presentation/PresentationConnectionCallbacks.h"
 #include "modules/presentation/PresentationController.h"
 #include "modules/presentation/PresentationError.h"
+#include "platform/UserGestureIndicator.h"
 
 namespace blink {
 

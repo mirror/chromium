@@ -43,9 +43,9 @@
 #include "core/editing/iterators/CharacterIterator.h"
 #include "core/editing/iterators/TextIterator.h"
 #include "core/frame/FrameOwner.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/ImageBitmap.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLFrameOwnerElement.h"
@@ -292,11 +292,20 @@ AccessibilityRole AXLayoutObject::DetermineAccessibilityRole() {
     return aria_role_;
 
   AccessibilityRole role = NativeAccessibilityRoleIgnoringAria();
-  // Anything that needs to still be exposed but doesn't have a more specific
-  // role should be considered a generic container. Examples are
-  // layout blocks with no node, in-page link targets, and plain elements
-  // such as a <span> with ARIA markup.
-  return role == kUnknownRole ? kGenericContainerRole : role;
+  if (role != kUnknownRole)
+    return role;
+
+  // These are layout containers added by blink
+  if (layout_object_->IsLayoutBlockFlow())
+    return kGenericContainerRole;
+
+  // If the element does not have role, but it has ARIA attributes or is an
+  // in-page link target, accessibility should fallback to exposing it as a
+  // generic container.
+  if (IsInPageLinkTarget() || SupportsARIAAttributes())
+    return kGenericContainerRole;
+
+  return kUnknownRole;
 }
 
 void AXLayoutObject::Init() {
@@ -391,7 +400,7 @@ bool AXLayoutObject::IsOffScreen() const {
   DCHECK(layout_object_);
   IntRect content_rect =
       PixelSnappedIntRect(layout_object_->AbsoluteVisualRect());
-  LocalFrameView* view = layout_object_->GetFrame()->View();
+  FrameView* view = layout_object_->GetFrame()->View();
   IntRect view_rect = view->VisibleContentRect();
   view_rect.Intersect(content_rect);
   return view_rect.IsEmpty();
@@ -448,28 +457,22 @@ bool AXLayoutObject::IsFocused() const {
 }
 
 bool AXLayoutObject::IsSelected() const {
-  if (!GetLayoutObject() || !GetNode() || !CanSetSelectedAttribute())
+  if (!GetLayoutObject() || !GetNode())
     return false;
 
-  // aria-selected overrides automatic behaviors
-  bool is_selected;
-  if (HasAOMPropertyOrARIAAttribute(AOMBooleanProperty::kSelected, is_selected))
-    return is_selected;
+  if (AOMPropertyOrARIAAttributeIsTrue(AOMBooleanProperty::kSelected))
+    return true;
 
-  // Tab item with focus in the associated tab
+  AXObjectImpl* focused_object = AxObjectCache().FocusedObject();
+  if (AriaRoleAttribute() == kListBoxOptionRole && focused_object &&
+      focused_object->ActiveDescendant() == this) {
+    return true;
+  }
+
   if (IsTabItem() && IsTabItemSelected())
     return true;
 
-  // Selection follows focus, but ONLY in single selection containers,
-  // and only if aria-selected was not present to override
-
-  AXObjectImpl* container = ContainerWidget();
-  if (!container || container->IsMultiSelectable())
-    return false;
-
-  AXObjectImpl* focused_object = AxObjectCache().FocusedObject();
-  return focused_object == this ||
-         (focused_object && focused_object->ActiveDescendant() == this);
+  return false;
 }
 
 //
@@ -827,7 +830,7 @@ RGBA32 AXLayoutObject::ComputeBackgroundColor() const {
 
   // If we still have some transparency, blend in the document base color.
   if (blended_color.HasAlpha()) {
-    LocalFrameView* view = DocumentFrameView();
+    FrameView* view = DocumentFrameView();
     if (view) {
       Color document_base_color = view->BaseBackgroundColor();
       blended_color = document_base_color.Blend(blended_color);
@@ -1675,11 +1678,11 @@ Document* AXLayoutObject::GetDocument() const {
   return &GetLayoutObject()->GetDocument();
 }
 
-LocalFrameView* AXLayoutObject::DocumentFrameView() const {
+FrameView* AXLayoutObject::DocumentFrameView() const {
   if (!GetLayoutObject())
     return nullptr;
 
-  // this is the LayoutObject's Document's LocalFrame's LocalFrameView
+  // this is the LayoutObject's Document's LocalFrame's FrameView
   return GetLayoutObject()->GetDocument().View();
 }
 

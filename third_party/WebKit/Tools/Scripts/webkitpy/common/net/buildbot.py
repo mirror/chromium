@@ -96,6 +96,10 @@ class BuildBot(object):
         return self.builder_results_url_base(builder_name) + '/results/layout-test-results'
 
     @memoized
+    def latest_layout_test_results(self, builder_name):
+        return self.fetch_layout_test_results(self.accumulated_results_url_base(builder_name))
+
+    @memoized
     def fetch_results(self, build):
         return self.fetch_layout_test_results(self.results_url(build.builder_name, build.build_number))
 
@@ -105,12 +109,12 @@ class BuildBot(object):
         results_file = NetworkTransaction(return_none_on_404=True).run(
             lambda: self.fetch_file(results_url, 'failing_results.json'))
         if results_file is None:
-            _log.debug('Got 404 response from:\n%s/failing_results.json', results_url)
+            _log.warning('Got 404 response from:\n%s/failing_results.json', results_url)
             return None
         revision = NetworkTransaction(return_none_on_404=True).run(
             lambda: self.fetch_file(results_url, 'LAST_CHANGE'))
         if revision is None:
-            _log.debug('Got 404 response from:\n%s/LAST_CHANGE', results_url)
+            _log.warning('Got 404 response from:\n%s/LAST_CHANGE', results_url)
             return None
         return LayoutTestResults.results_from_string(results_file, revision)
 

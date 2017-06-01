@@ -6,13 +6,14 @@
 #define COMPONENTS_SYNC_ENGINE_ATTACHMENTS_FAKE_ATTACHMENT_UPLOADER_H_
 
 #include "base/macros.h"
-#include "base/sequence_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "components/sync/engine/attachments/attachment_uploader.h"
 
 namespace syncer {
 
 // A fake implementation of AttachmentUploader.
-class FakeAttachmentUploader : public AttachmentUploader {
+class FakeAttachmentUploader : public AttachmentUploader,
+                               public base::NonThreadSafe {
  public:
   FakeAttachmentUploader();
   ~FakeAttachmentUploader() override;
@@ -22,8 +23,6 @@ class FakeAttachmentUploader : public AttachmentUploader {
                         const UploadCallback& callback) override;
 
  private:
-  SEQUENCE_CHECKER(sequence_checker_);
-
   DISALLOW_COPY_AND_ASSIGN(FakeAttachmentUploader);
 };
 

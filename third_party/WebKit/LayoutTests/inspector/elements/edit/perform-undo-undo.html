@@ -28,15 +28,26 @@ function test()
         containerNode.setAttribute("", "foo=\"bar\"", callback);
     }
 
-    async function step3()
+    function step3()
     {
-        await InspectorTest.domModel.undo();
-        InspectorTest.addResult("===== Undo 1 =====");
-        InspectorTest.dumpElementsTree(containerNode);
+        function callback()
+        {
+            InspectorTest.addResult("===== Undo 1 =====");
+            InspectorTest.dumpElementsTree(containerNode);
+            step4();
+        }
+        InspectorTest.domModel.undo(callback);
+    }
 
-        InspectorTest.addResult("===== Undo 2 =====");
-        InspectorTest.dumpElementsTree(containerNode);
-        InspectorTest.completeTest();
+    function step4()
+    {
+        function callback()
+        {
+            InspectorTest.addResult("===== Undo 2 =====");
+            InspectorTest.dumpElementsTree(containerNode);
+            InspectorTest.completeTest();
+        }
+        InspectorTest.domModel.undo(callback);
     }
 }
 

@@ -11,18 +11,11 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "base/sequenced_task_runner.h"
-#include "base/single_thread_task_runner.h"
-#include "base/test/user_action_tester.h"
-#include "base/threading/thread_task_runner_handle.h"
-#include "components/feature_engagement_tracker/internal/availability_model_impl.h"
 #include "components/feature_engagement_tracker/internal/editable_configuration.h"
 #include "components/feature_engagement_tracker/internal/in_memory_store.h"
 #include "components/feature_engagement_tracker/internal/model_impl.h"
-#include "components/feature_engagement_tracker/internal/never_availability_model.h"
 #include "components/feature_engagement_tracker/internal/never_storage_validator.h"
 #include "components/feature_engagement_tracker/internal/once_condition_validator.h"
-#include "components/feature_engagement_tracker/internal/stats.h"
 #include "components/feature_engagement_tracker/internal/time_provider.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -127,32 +120,6 @@ class TestTimeProvider : public TimeProvider {
   DISALLOW_COPY_AND_ASSIGN(TestTimeProvider);
 };
 
-class TestAvailabilityModel : public AvailabilityModel {
- public:
-  TestAvailabilityModel() : ready_(true) {}
-  ~TestAvailabilityModel() override = default;
-
-  void Initialize(AvailabilityModel::OnInitializedCallback callback,
-                  uint32_t current_day) override {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::BindOnce(std::move(callback), ready_));
-  }
-
-  bool IsReady() const override { return ready_; }
-
-  void SetIsReady(bool ready) { ready_ = ready; }
-
-  base::Optional<uint32_t> GetAvailability(
-      const base::Feature& feature) const override {
-    return base::nullopt;
-  }
-
- private:
-  bool ready_;
-
-  DISALLOW_COPY_AND_ASSIGN(TestAvailabilityModel);
-};
-
 class FeatureEngagementTrackerImplTest : public ::testing::Test {
  public:
   FeatureEngagementTrackerImplTest() = default;
@@ -172,13 +139,9 @@ class FeatureEngagementTrackerImplTest : public ::testing::Test {
     auto model = base::MakeUnique<ModelImpl>(
         std::move(store), base::MakeUnique<StoreEverythingStorageValidator>());
 
-    auto availability_model = base::MakeUnique<TestAvailabilityModel>();
-    availability_model_ = availability_model.get();
-    availability_model_->SetIsReady(ShouldAvailabilityStoreBeReady());
-
     tracker_.reset(new FeatureEngagementTrackerImpl(
-        std::move(model), std::move(availability_model),
-        std::move(configuration), base::MakeUnique<OnceConditionValidator>(),
+        std::move(model), std::move(configuration),
+        base::MakeUnique<OnceConditionValidator>(),
         base::MakeUnique<TestTimeProvider>()));
   }
 
@@ -201,12 +164,9 @@ class FeatureEngagementTrackerImplTest : public ::testing::Test {
     return base::MakeUnique<TestInMemoryStore>(true);
   }
 
-  virtual bool ShouldAvailabilityStoreBeReady() { return true; }
-
   base::MessageLoop message_loop_;
   std::unique_ptr<FeatureEngagementTrackerImpl> tracker_;
   TestInMemoryStore* store_;
-  TestAvailabilityModel* availability_model_;
   Configuration* configuration_;
 
  private:
@@ -214,10 +174,10 @@ class FeatureEngagementTrackerImplTest : public ::testing::Test {
 };
 
 // A top-level test class where the store fails to initialize.
-class FailingStoreInitFeatureEngagementTrackerImplTest
+class FailingInitFeatureEngagementTrackerImplTest
     : public FeatureEngagementTrackerImplTest {
  public:
-  FailingStoreInitFeatureEngagementTrackerImplTest() = default;
+  FailingInitFeatureEngagementTrackerImplTest() = default;
 
  protected:
   std::unique_ptr<TestInMemoryStore> CreateStore() override {
@@ -226,21 +186,7 @@ class FailingStoreInitFeatureEngagementTrackerImplTest
   }
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(FailingStoreInitFeatureEngagementTrackerImplTest);
-};
-
-// A top-level test class where the AvailabilityModel fails to initialize.
-class FailingAvailabilityModelInitFeatureEngagementTrackerImplTest
-    : public FeatureEngagementTrackerImplTest {
- public:
-  FailingAvailabilityModelInitFeatureEngagementTrackerImplTest() = default;
-
- protected:
-  bool ShouldAvailabilityStoreBeReady() override { return false; }
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(
-      FailingAvailabilityModelInitFeatureEngagementTrackerImplTest);
+  DISALLOW_COPY_AND_ASSIGN(FailingInitFeatureEngagementTrackerImplTest);
 };
 
 }  // namespace
@@ -334,8 +280,7 @@ TEST_F(FeatureEngagementTrackerImplTest,
   EXPECT_TRUE(callback_after.invoked());
 }
 
-TEST_F(FailingStoreInitFeatureEngagementTrackerImplTest,
-       TestFailingInitialization) {
+TEST_F(FailingInitFeatureEngagementTrackerImplTest, TestFailingInitialization) {
   EXPECT_FALSE(tracker_->IsInitialized());
 
   StoringInitializedCallback callback;
@@ -351,7 +296,7 @@ TEST_F(FailingStoreInitFeatureEngagementTrackerImplTest,
   EXPECT_FALSE(callback.success());
 }
 
-TEST_F(FailingStoreInitFeatureEngagementTrackerImplTest,
+TEST_F(FailingInitFeatureEngagementTrackerImplTest,
        TestFailingInitializationMultipleCallbacks) {
   EXPECT_FALSE(tracker_->IsInitialized());
 
@@ -374,23 +319,6 @@ TEST_F(FailingStoreInitFeatureEngagementTrackerImplTest,
   EXPECT_TRUE(callback2.invoked());
   EXPECT_FALSE(callback1.success());
   EXPECT_FALSE(callback2.success());
-}
-
-TEST_F(FailingAvailabilityModelInitFeatureEngagementTrackerImplTest,
-       AvailabilityModelNotReady) {
-  EXPECT_FALSE(tracker_->IsInitialized());
-
-  StoringInitializedCallback callback;
-  tracker_->AddOnInitializedCallback(base::Bind(
-      &StoringInitializedCallback::OnInitialized, base::Unretained(&callback)));
-  EXPECT_FALSE(callback.invoked());
-
-  // Ensure all initialization is finished.
-  base::RunLoop().RunUntilIdle();
-
-  EXPECT_FALSE(tracker_->IsInitialized());
-  EXPECT_TRUE(callback.invoked());
-  EXPECT_FALSE(callback.success());
 }
 
 TEST_F(FeatureEngagementTrackerImplTest, TestTriggering) {
@@ -441,24 +369,10 @@ TEST_F(FeatureEngagementTrackerImplTest, TestNotifyEvent) {
   tracker_->AddOnInitializedCallback(base::Bind(
       &StoringInitializedCallback::OnInitialized, base::Unretained(&callback)));
   base::RunLoop().RunUntilIdle();
-  base::UserActionTester user_action_tester;
 
   tracker_->NotifyEvent("foo");
   tracker_->NotifyEvent("foo");
   tracker_->NotifyEvent("bar");
-  tracker_->NotifyEvent(kTestFeatureFoo.name + std::string("_used"));
-  tracker_->NotifyEvent(kTestFeatureFoo.name + std::string("_trigger"));
-
-  // Used event will record both NotifyEvent and NotifyUsedEvent. Explicitly
-  // specify the whole user action string here.
-  EXPECT_EQ(1, user_action_tester.GetActionCount(
-                   "InProductHelp.NotifyUsedEvent.test_foo"));
-  EXPECT_EQ(2, user_action_tester.GetActionCount(
-                   "InProductHelp.NotifyEvent.test_foo"));
-  EXPECT_EQ(0, user_action_tester.GetActionCount(
-                   "InProductHelp.NotifyUsedEvent.test_bar"));
-  EXPECT_EQ(0, user_action_tester.GetActionCount(
-                   "InProductHelp.NotifyEvent.test_bar"));
 
   Event foo_event = store_->GetEvent("foo");
   ASSERT_EQ(1, foo_event.events_size());

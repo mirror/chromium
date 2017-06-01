@@ -17,9 +17,13 @@
 namespace cc {
 
 SurfaceLayerImpl::SurfaceLayerImpl(LayerTreeImpl* tree_impl, int id)
-    : LayerImpl(tree_impl, id) {}
+    : LayerImpl(tree_impl, id) {
+  layer_tree_impl()->AddSurfaceLayer(this);
+}
 
-SurfaceLayerImpl::~SurfaceLayerImpl() {}
+SurfaceLayerImpl::~SurfaceLayerImpl() {
+  layer_tree_impl()->RemoveSurfaceLayer(this);
+}
 
 std::unique_ptr<LayerImpl> SurfaceLayerImpl::CreateLayerImpl(
     LayerTreeImpl* tree_impl) {
@@ -68,8 +72,7 @@ void SurfaceLayerImpl::AppendQuads(RenderPass* render_pass,
   // Emitting a fallback SurfaceDrawQuad is unnecessary if the primary and
   // fallback surface Ids match.
   bool needs_fallback =
-      fallback_surface_info_.is_valid() &&
-      (fallback_surface_info_.id() != primary_surface_info_.id());
+      fallback_surface_info_.id() != primary_surface_info_.id();
   if (primary && needs_fallback) {
     // Add the primary surface ID as a dependency.
     append_quads_data->activation_dependencies.push_back(

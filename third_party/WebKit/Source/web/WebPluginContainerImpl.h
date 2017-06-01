@@ -51,7 +51,6 @@ class HTMLFrameOwnerElement;
 class HTMLPlugInElement;
 class IntRect;
 class KeyboardEvent;
-class LocalFrameView;
 class MouseEvent;
 class ResourceError;
 class ResourceResponse;
@@ -72,9 +71,8 @@ class WEB_EXPORT WebPluginContainerImpl final : public WebPluginContainerBase {
   ~WebPluginContainerImpl() override;
 
   // PluginView methods
-  void Attach() override;
-  void Detach() override;
-  bool IsAttached() const override { return is_attached_; }
+  void SetParent(FrameView*) override;
+  FrameView* Parent() const override { return parent_; };
   void SetParentVisible(bool) override;
   WebLayer* PlatformLayer() const override;
   v8::Local<v8::Object> ScriptableObject(v8::Isolate*) override;
@@ -176,10 +174,6 @@ class WEB_EXPORT WebPluginContainerImpl final : public WebPluginContainerBase {
   void DidFinishLoading() override;
   void DidFailLoading(const ResourceError&) override;
 
-  WebPluginContainerBase* GetWebPluginContainerBase() const override {
-    return const_cast<WebPluginContainerImpl*>(this);
-  }
-
   DECLARE_VIRTUAL_TRACE();
   // USING_PRE_FINALIZER does not allow for virtual dispatch from the finalizer
   // method. Here we call Dispose() which does the correct virtual dispatch.
@@ -187,7 +181,6 @@ class WEB_EXPORT WebPluginContainerImpl final : public WebPluginContainerBase {
   void Dispose() override;
 
  private:
-  LocalFrameView* ParentFrameView() const;
   // Sets |windowRect| to the content rect of the plugin in screen space.
   // Sets |clippedAbsoluteRect| to the visible rect for the plugin, clipped to
   // the visible screen of the root frame, in local space of the plugin.
@@ -224,7 +217,7 @@ class WEB_EXPORT WebPluginContainerImpl final : public WebPluginContainerBase {
 
   friend class WebPluginContainerTest;
 
-  bool is_attached_;
+  Member<FrameView> parent_;
   Member<HTMLPlugInElement> element_;
   WebPlugin* web_plugin_;
   WebLayer* web_layer_;

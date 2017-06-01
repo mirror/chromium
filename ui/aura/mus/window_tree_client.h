@@ -184,7 +184,6 @@ class AURA_EXPORT WindowTreeClient
   friend class InFlightBoundsChange;
   friend class InFlightFocusChange;
   friend class InFlightPropertyChange;
-  friend class InFlightTransformChange;
   friend class InFlightVisibleChange;
   friend class WindowPortMus;
   friend class WindowTreeClientPrivate;
@@ -270,9 +269,7 @@ class AURA_EXPORT WindowTreeClient
                    const base::Optional<cc::LocalSurfaceId>& local_surface_id);
 
   // Called once mus acks the call to SetDisplayRoot().
-  void OnSetDisplayRootDone(
-      Id window_id,
-      const base::Optional<cc::LocalSurfaceId>& local_surface_id);
+  void OnSetDisplayRootDone(bool success);
 
   // Called by WmNewDisplayAdded().
   WindowTreeHostMus* WmNewDisplayAddedImpl(
@@ -292,8 +289,6 @@ class AURA_EXPORT WindowTreeClient
       WindowMus* window,
       const gfx::Rect& revert_bounds_in_pixels,
       const base::Optional<cc::LocalSurfaceId>& local_surface_id);
-  void SetWindowTransformFromServer(WindowMus* window,
-                                    const gfx::Transform& transform);
   void SetWindowVisibleFromServer(WindowMus* window, bool visible);
 
   // Called from OnWindowMusBoundsChanged() and SetRootWindowBounds().
@@ -307,9 +302,6 @@ class AURA_EXPORT WindowTreeClient
   void OnWindowMusBoundsChanged(WindowMus* window,
                                 const gfx::Rect& old_bounds,
                                 const gfx::Rect& new_bounds);
-  void OnWindowMusTransformChanged(WindowMus* window,
-                                   const gfx::Transform& old_transform,
-                                   const gfx::Transform& new_transform);
   void OnWindowMusAddChild(WindowMus* parent, WindowMus* child);
   void OnWindowMusRemoveChild(WindowMus* parent, WindowMus* child);
   void OnWindowMusMoveChild(WindowMus* parent,
@@ -353,9 +345,6 @@ class AURA_EXPORT WindowTreeClient
       const gfx::Rect& old_bounds,
       const gfx::Rect& new_bounds,
       const base::Optional<cc::LocalSurfaceId>& local_surface_id) override;
-  void OnWindowTransformChanged(Id window_id,
-                                const gfx::Transform& old_transform,
-                                const gfx::Transform& new_transform) override;
   void OnClientAreaChanged(
       uint32_t window_id,
       const gfx::Insets& new_client_area,
@@ -486,10 +475,6 @@ class AURA_EXPORT WindowTreeClient
   void RequestClose(Window* window) override;
   bool WaitForInitialDisplays() override;
   WindowTreeHostMusInitParams CreateInitParamsForNewDisplay() override;
-  void SetDisplayConfiguration(
-      const std::vector<display::Display>& displays,
-      std::vector<ui::mojom::WmViewportMetricsPtr> viewport_metrics,
-      int64_t primary_display_id) override;
 
   // Overriden from WindowTreeHostMusDelegate:
   void OnWindowTreeHostBoundsWillChange(WindowTreeHostMus* window_tree_host,
@@ -590,6 +575,8 @@ class AURA_EXPORT WindowTreeClient
   bool is_from_embed_ = false;
 
   bool in_destructor_;
+
+  bool enable_surface_synchronization_ = false;
 
   // A mapping to shared memory that is one 32 bit integer long. The window
   // server uses this to let us synchronously read the cursor location.

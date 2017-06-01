@@ -12,6 +12,7 @@
 
 namespace ash {
 class MaximizeModeWindowManager;
+class WmWindow;
 
 // The MaximizeModeWindowState implementation which reduces all possible window
 // states to minimized and maximized. If a window cannot be maximized it will be
@@ -26,8 +27,7 @@ class MaximizeModeWindowState : public wm::WindowState::State {
   // state handler. Upon destruction it will restore the previous state handler
   // and call |creator::WindowStateDestroyed()| to inform that the window mode
   // was reverted to the old window manager.
-  MaximizeModeWindowState(aura::Window* window,
-                          MaximizeModeWindowManager* creator);
+  MaximizeModeWindowState(WmWindow* window, MaximizeModeWindowManager* creator);
   ~MaximizeModeWindowState() override;
 
   void set_ignore_wm_events(bool ignore) { ignore_wm_events_ = ignore; }
@@ -69,8 +69,8 @@ class MaximizeModeWindowState : public wm::WindowState::State {
   // The original state object of the window.
   std::unique_ptr<wm::WindowState::State> old_state_;
 
-  // The window whose WindowState owns this instance.
-  aura::Window* window_;
+  // The state object for this object which owns this instance.
+  WmWindow* window_;
 
   // The creator which needs to be informed when this state goes away.
   MaximizeModeWindowManager* creator_;

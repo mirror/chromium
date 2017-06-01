@@ -40,7 +40,7 @@
 #include "core/editing/markers/DocumentMarker.h"
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/exported/WebViewBase.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/WebLocalFrameBase.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/TextAutosizer.h"
@@ -125,10 +125,10 @@ bool TextFinder::Find(int identifier,
   // If the user has selected something since the last Find operation we want
   // to start from there. Otherwise, we start searching from where the last Find
   // operation left off (either a Find or a FindNext operation).
-  // TODO(editing-dev): The use of VisibleSelection should be audited. See
-  // crbug.com/657237 for details.
-  VisibleSelection selection(
-      OwnerFrame().GetFrame()->Selection().ComputeVisibleSelectionInDOMTree());
+  VisibleSelection selection(OwnerFrame()
+                                 .GetFrame()
+                                 ->Selection()
+                                 .ComputeVisibleSelectionInDOMTreeDeprecated());
   bool active_selection = !selection.IsNone();
   if (active_selection) {
     active_match_ = CreateRange(FirstEphemeralRangeOf(selection));
@@ -170,7 +170,7 @@ bool TextFinder::Find(int identifier,
     OwnerFrame().ViewImpl()->ZoomToFindInPageRect(
         OwnerFrame().GetFrameView()->ContentsToRootFrame(
             EnclosingIntRect(LayoutObject::AbsoluteBoundingBoxRectForRange(
-                EphemeralRange(active_match_.Get())))));
+                active_match_.Get()))));
   }
 
   bool was_active_frame = current_active_match_frame_;
@@ -403,8 +403,8 @@ void TextFinder::ScopeStringMatches(int identifier,
 
     OwnerFrame().GetFrame()->GetDocument()->Markers().AddTextMatchMarker(
         EphemeralRange(result_range),
-        found_active_match ? TextMatchMarker::MatchStatus::kActive
-                           : TextMatchMarker::MatchStatus::kInactive);
+        found_active_match ? DocumentMarker::MatchStatus::kActive
+                           : DocumentMarker::MatchStatus::kInactive);
 
     find_matches_cache_.push_back(
         FindMatch(result_range, last_match_count_ + match_count));
@@ -540,7 +540,7 @@ void TextFinder::UpdateFindMatchRects() {
         !match.range_->startContainer()->isConnected())
       match.rect_ = FloatRect();
     else if (!find_match_rects_are_valid_)
-      match.rect_ = FindInPageRectFromRange(EphemeralRange(match.range_.Get()));
+      match.rect_ = FindInPageRectFromRange(match.range_.Get());
 
     if (match.rect_.IsEmpty())
       ++dead_matches;
@@ -575,7 +575,7 @@ WebFloatRect TextFinder::ActiveFindMatchRect() {
   if (!current_active_match_frame_ || !active_match_)
     return WebFloatRect();
 
-  return WebFloatRect(FindInPageRectFromRange(EphemeralRange(ActiveMatch())));
+  return WebFloatRect(FindInPageRectFromRange(ActiveMatch()));
 }
 
 void TextFinder::FindMatchRects(WebVector<WebFloatRect>& output_rects) {
@@ -654,9 +654,8 @@ int TextFinder::SelectFindMatch(unsigned index, WebRect* selection_rect) {
   }
 
   IntRect active_match_rect;
-  IntRect active_match_bounding_box =
-      EnclosingIntRect(LayoutObject::AbsoluteBoundingBoxRectForRange(
-          EphemeralRange(active_match_.Get())));
+  IntRect active_match_bounding_box = EnclosingIntRect(
+      LayoutObject::AbsoluteBoundingBoxRectForRange(active_match_.Get()));
 
   if (!active_match_bounding_box.IsEmpty()) {
     if (active_match_->FirstNode() &&

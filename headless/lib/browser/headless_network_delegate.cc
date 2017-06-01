@@ -86,8 +86,7 @@ bool HeadlessNetworkDelegate::OnCanSetCookie(const net::URLRequest& request,
 
 bool HeadlessNetworkDelegate::OnCanAccessFile(
     const net::URLRequest& request,
-    const base::FilePath& original_path,
-    const base::FilePath& absolute_path) const {
+    const base::FilePath& path) const {
   return true;
 }
 

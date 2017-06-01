@@ -21,11 +21,8 @@
 // The value of the text field.
 @property(nonatomic, copy) NSString* textFieldValue;
 
-// An icon identifying the text field or its current value, if any.
-@property(nonatomic, copy) UIImage* identifyingIcon;
-
-// The inputView for the text field, if any.
-@property(nonatomic, strong) UIPickerView* inputView;
+// An image corresponding to the type of the credit card, if any.
+@property(nonatomic, copy) UIImage* cardTypeIcon;
 
 // The field type this item is describing.
 @property(nonatomic, assign) AutofillUIType autofillUIType;
@@ -51,8 +48,8 @@
 // |textFieldValue|.
 @property(nonatomic, readonly, strong) UITextField* textField;
 
-// UIImageView containing the icon identifying |textField| or its current value.
-@property(nonatomic, readonly, strong) UIImageView* identifyingIconView;
+// UIImageView containing the credit card type icon.
+@property(nonatomic, readonly, strong) UIImageView* cardTypeIconView;
 
 @end
 

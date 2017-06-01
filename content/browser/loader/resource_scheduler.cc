@@ -894,7 +894,6 @@ ResourceScheduler::ResourceScheduler()
           kMaxRequestsBeforeYieldingDefault)) {}
 
 ResourceScheduler::~ResourceScheduler() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(unowned_requests_.empty());
   DCHECK(client_map_.empty());
 }
@@ -904,7 +903,7 @@ std::unique_ptr<ResourceThrottle> ResourceScheduler::ScheduleRequest(
     int route_id,
     bool is_async,
     net::URLRequest* url_request) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   ClientId client_id = MakeClientId(child_id, route_id);
   std::unique_ptr<ScheduledResourceRequest> request(
       new ScheduledResourceRequest(
@@ -928,7 +927,7 @@ std::unique_ptr<ResourceThrottle> ResourceScheduler::ScheduleRequest(
 }
 
 void ResourceScheduler::RemoveRequest(ScheduledResourceRequest* request) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (base::ContainsKey(unowned_requests_, request)) {
     unowned_requests_.erase(request);
     return;
@@ -945,7 +944,7 @@ void ResourceScheduler::RemoveRequest(ScheduledResourceRequest* request) {
 
 void ResourceScheduler::OnClientCreated(int child_id,
                                         int route_id) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   ClientId client_id = MakeClientId(child_id, route_id);
   DCHECK(!base::ContainsKey(client_map_, client_id));
 
@@ -956,7 +955,7 @@ void ResourceScheduler::OnClientCreated(int child_id,
 }
 
 void ResourceScheduler::OnClientDeleted(int child_id, int route_id) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   ClientId client_id = MakeClientId(child_id, route_id);
   ClientMap::iterator it = client_map_.find(client_id);
   DCHECK(it != client_map_.end());
@@ -984,7 +983,7 @@ void ResourceScheduler::OnLoadingStateChanged(int child_id,
 }
 
 void ResourceScheduler::OnNavigate(int child_id, int route_id) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   ClientId client_id = MakeClientId(child_id, route_id);
 
   ClientMap::iterator it = client_map_.find(client_id);
@@ -998,7 +997,7 @@ void ResourceScheduler::OnNavigate(int child_id, int route_id) {
 }
 
 void ResourceScheduler::OnWillInsertBody(int child_id, int route_id) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   ClientId client_id = MakeClientId(child_id, route_id);
 
   ClientMap::iterator it = client_map_.find(client_id);
@@ -1014,7 +1013,7 @@ void ResourceScheduler::OnWillInsertBody(int child_id, int route_id) {
 void ResourceScheduler::OnReceivedSpdyProxiedHttpResponse(
     int child_id,
     int route_id) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   ClientId client_id = MakeClientId(child_id, route_id);
 
   ClientMap::iterator client_it = client_map_.find(client_id);

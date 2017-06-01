@@ -10,6 +10,7 @@
 #include <algorithm>
 
 #include "base/stl_util.h"
+#include "cc/output/compositor_frame.h"
 #include "cc/output/copy_output_request.h"
 #include "cc/surfaces/compositor_frame_sink_support.h"
 #include "cc/surfaces/local_surface_id_allocator.h"
@@ -23,10 +24,10 @@ namespace cc {
 static const int kFrameIndexStart = 2;
 
 Surface::Surface(
-    const SurfaceInfo& surface_info,
+    const SurfaceId& id,
     base::WeakPtr<CompositorFrameSinkSupport> compositor_frame_sink_support)
-    : surface_info_(surface_info),
-      previous_frame_surface_id_(surface_info.id()),
+    : surface_id_(id),
+      previous_frame_surface_id_(id),
       compositor_frame_sink_support_(std::move(compositor_frame_sink_support)),
       surface_manager_(compositor_frame_sink_support_->surface_manager()),
       frame_index_(kFrameIndexStart),
@@ -54,25 +55,17 @@ void Surface::Close() {
   closed_ = true;
 }
 
-bool Surface::QueueFrame(CompositorFrame frame,
+void Surface::QueueFrame(CompositorFrame frame,
                          const base::Closure& callback,
                          const WillDrawCallback& will_draw_callback) {
-  gfx::Size frame_size = frame.render_pass_list.back()->output_rect.size();
-  float device_scale_factor = frame.metadata.device_scale_factor;
-
-  if (frame_size != surface_info_.size_in_pixels() ||
-      device_scale_factor != surface_info_.device_scale_factor()) {
-    TRACE_EVENT_INSTANT0("cc", "Surface invariants violation",
-                         TRACE_EVENT_SCOPE_THREAD);
-    return false;
-  }
-
   if (closed_) {
-    ReturnedResourceArray resources;
-    TransferableResource::ReturnResources(frame.resource_list, &resources);
-    compositor_frame_sink_support_->ReturnResources(resources);
+    if (compositor_frame_sink_support_) {
+      ReturnedResourceArray resources;
+      TransferableResource::ReturnResources(frame.resource_list, &resources);
+      compositor_frame_sink_support_->ReturnResources(resources);
+    }
     callback.Run();
-    return true;
+    return;
   }
 
   TakeLatencyInfoFromPendingFrame(&frame.metadata.latency_info);
@@ -105,11 +98,8 @@ bool Surface::QueueFrame(CompositorFrame frame,
           frame_sink_ids_for_dependencies.count(surface_id.frame_sink_id()) > 0;
       if (is_fallback_surface) {
         Surface* surface = surface_manager_->GetSurfaceForId(surface_id);
-        // A misbehaving client may report a non-existent surface ID as a
-        // |referenced_surface|. In that case, |surface| would be nullptr, and
-        // there is nothing to do here.
-        if (surface)
-          surface->Close();
+        DCHECK(surface);
+        surface->Close();
       }
     }
     pending_frame_data_ =
@@ -124,8 +114,6 @@ bool Surface::QueueFrame(CompositorFrame frame,
 
   // Returns resources for the previous pending frame.
   UnrefFrameResourcesAndRunDrawCallback(std::move(previous_pending_frame_data));
-
-  return true;
 }
 
 void Surface::RequestCopyOfOutput(
@@ -232,14 +220,21 @@ void Surface::ActivateFrame(FrameData frame_data) {
 
 void Surface::UpdateBlockingSurfaces(bool has_previous_pending_frame,
                                      const CompositorFrame& current_frame) {
+  // If there is no SurfaceDependencyTracker installed then the |current_frame|
+  // does not block on anything.
+  if (!surface_manager_->dependency_tracker()) {
+    blocking_surfaces_.clear();
+    return;
+  }
+
   base::flat_set<SurfaceId> new_blocking_surfaces;
 
   for (const SurfaceId& surface_id :
        current_frame.metadata.activation_dependencies) {
-    Surface* dependency = surface_manager_->GetSurfaceForId(surface_id);
-    // If a activation dependency does not have a corresponding active frame in
-    // the display compositor, then it blocks this frame.
-    if (!dependency || !dependency->HasActiveFrame())
+    Surface* surface = surface_manager_->GetSurfaceForId(surface_id);
+    // If a referenced surface does not have a corresponding active frame in the
+    // display compositor, then it blocks this frame.
+    if (!surface || !surface->HasActiveFrame())
       new_blocking_surfaces.insert(surface_id);
   }
 
@@ -312,7 +307,7 @@ void Surface::RunWillDrawCallback(const gfx::Rect& damage_rect) {
   if (!active_frame_data_ || active_frame_data_->will_draw_callback.is_null())
     return;
 
-  active_frame_data_->will_draw_callback.Run(surface_id().local_surface_id(),
+  active_frame_data_->will_draw_callback.Run(surface_id_.local_surface_id(),
                                              damage_rect);
 }
 

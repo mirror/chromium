@@ -12,7 +12,7 @@
 #include "core/editing/EditingTestBase.h"
 #include "core/editing/FrameCaret.h"
 #include "core/editing/SelectionController.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/html/HTMLBodyElement.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutBlock.h"
@@ -60,18 +60,16 @@ TEST_F(FrameSelectionTest, FirstEphemeralRangeOf) {
   SetBodyContent("<div id=sample>0123456789</div>abc");
   Element* const sample = GetDocument().getElementById("sample");
   Node* const text = sample->firstChild();
-  Selection().SetSelection(SelectionInDOMTree::Builder()
-                               .SetBaseAndExtent(EphemeralRange(
-                                   Position(text, 3), Position(text, 6)))
-                               .Build(),
-                           0);
+  Selection().SetSelectedRange(
+      EphemeralRange(Position(text, 3), Position(text, 6)), VP_DEFAULT_AFFINITY,
+      SelectionDirectionalMode::kNonDirectional, 0);
   sample->setAttribute(HTMLNames::styleAttr, "display:none");
   // Move |VisibleSelection| before "abc".
   UpdateAllLifecyclePhases();
   const EphemeralRange& range =
       FirstEphemeralRangeOf(Selection().ComputeVisibleSelectionInDOMTree());
   EXPECT_EQ(Position(sample->nextSibling(), 0), range.StartPosition())
-      << "firstRange() should return current selection value";
+      << "firstRagne() should return current selection value";
   EXPECT_EQ(Position(sample->nextSibling(), 0), range.EndPosition());
 }
 
@@ -106,7 +104,7 @@ TEST_F(FrameSelectionTest, PaintCaretShouldNotLayout) {
   int start_count = LayoutCount();
   {
     // To force layout in next updateLayout calling, widen view.
-    LocalFrameView& frame_view = GetDummyPageHolder().GetFrameView();
+    FrameView& frame_view = GetDummyPageHolder().GetFrameView();
     IntRect frame_rect = frame_view.FrameRect();
     frame_rect.SetWidth(frame_rect.Width() + 1);
     frame_rect.SetHeight(frame_rect.Height() + 1);
@@ -282,8 +280,8 @@ TEST_F(FrameSelectionTest, SelectAllPreservesHandle) {
   EXPECT_FALSE(Selection().IsHandleVisible());
   Selection().SelectAll();
   EXPECT_FALSE(Selection().IsHandleVisible())
-      << "If handles weren't present before "
-         "selectAll. Then they shouldn't be present "
+      << "If handles weren't present before"
+         "selectAll. Then they shouldn't be present"
          "after it.";
 
   Selection().SetSelection(SelectionInDOMTree::Builder()
@@ -293,41 +291,12 @@ TEST_F(FrameSelectionTest, SelectAllPreservesHandle) {
   EXPECT_TRUE(Selection().IsHandleVisible());
   Selection().SelectAll();
   EXPECT_TRUE(Selection().IsHandleVisible())
-      << "If handles were present before "
-         "selectAll. Then they should be present "
+      << "If handles were present before"
+         "selectAll. Then they should be present"
          "after it.";
 }
 
-TEST_F(FrameSelectionTest, BoldCommandPreservesHandle) {
-  SetBodyContent("<div id=sample>abc</div>");
-  Element* sample = GetDocument().getElementById("sample");
-  const Position end_of_text(sample->firstChild(), 3);
-  Selection().SetSelection(SelectionInDOMTree::Builder()
-                               .Collapse(end_of_text)
-                               .SetIsHandleVisible(false)
-                               .Build());
-  EXPECT_FALSE(Selection().IsHandleVisible());
-  Selection().SelectAll();
-  GetDocument().execCommand("bold", false, "", ASSERT_NO_EXCEPTION);
-  EXPECT_FALSE(Selection().IsHandleVisible())
-      << "If handles weren't present before "
-         "bold command. Then they shouldn't "
-         "be present after it.";
-
-  Selection().SetSelection(SelectionInDOMTree::Builder()
-                               .Collapse(end_of_text)
-                               .SetIsHandleVisible(true)
-                               .Build());
-  EXPECT_TRUE(Selection().IsHandleVisible());
-  Selection().SelectAll();
-  GetDocument().execCommand("bold", false, "", ASSERT_NO_EXCEPTION);
-  EXPECT_TRUE(Selection().IsHandleVisible())
-      << "If handles were present before "
-         "bold command. Then they should "
-         "be present after it.";
-}
-
-TEST_F(FrameSelectionTest, SelectionOnRangeHidesHandles) {
+TEST_F(FrameSelectionTest, SetSelectedRangeHidesHandle) {
   Text* text = AppendTextNode("Hello, World!");
   GetDocument().View()->UpdateAllLifecyclePhases();
   Selection().SetSelection(
@@ -336,14 +305,12 @@ TEST_F(FrameSelectionTest, SelectionOnRangeHidesHandles) {
           .SetIsHandleVisible(false)
           .Build());
 
-  Selection().SetSelection(SelectionInDOMTree::Builder()
-                               .SetBaseAndExtent(EphemeralRange(
-                                   Position(text, 0), Position(text, 12)))
-                               .Build(),
-                           0);
+  Selection().SetSelectedRange(
+      EphemeralRange(Position(text, 0), Position(text, 12)),
+      VP_DEFAULT_AFFINITY, SelectionDirectionalMode::kNonDirectional, 0);
 
   EXPECT_FALSE(Selection().IsHandleVisible())
-      << "After SetSelection on Range, handles shouldn't be present.";
+      << "After SetSelectedRange handles shouldn't be present.";
 
   Selection().SetSelection(
       SelectionInDOMTree::Builder()
@@ -351,14 +318,12 @@ TEST_F(FrameSelectionTest, SelectionOnRangeHidesHandles) {
           .SetIsHandleVisible(true)
           .Build());
 
-  Selection().SetSelection(SelectionInDOMTree::Builder()
-                               .SetBaseAndExtent(EphemeralRange(
-                                   Position(text, 0), Position(text, 12)))
-                               .Build(),
-                           0);
+  Selection().SetSelectedRange(
+      EphemeralRange(Position(text, 0), Position(text, 12)),
+      VP_DEFAULT_AFFINITY, SelectionDirectionalMode::kNonDirectional, 0);
 
   EXPECT_FALSE(Selection().IsHandleVisible())
-      << "After SetSelection on Range, handles shouldn't be present.";
+      << "After SetSelectedRange handles shouldn't be present.";
 }
 
 // Regression test for crbug.com/702756

@@ -22,19 +22,19 @@ namespace blink {
 template class WorkletThreadHolder<AudioWorkletThread>;
 
 std::unique_ptr<AudioWorkletThread> AudioWorkletThread::Create(
-    ThreadableLoadingContext* loading_context,
+    PassRefPtr<WorkerLoaderProxy> worker_loader_proxy,
     WorkerReportingProxy& worker_reporting_proxy) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("audio-worklet"),
                "AudioWorkletThread::create");
   DCHECK(IsMainThread());
-  return WTF::WrapUnique(
-      new AudioWorkletThread(loading_context, worker_reporting_proxy));
+  return WTF::WrapUnique(new AudioWorkletThread(std::move(worker_loader_proxy),
+                                                worker_reporting_proxy));
 }
 
 AudioWorkletThread::AudioWorkletThread(
-    ThreadableLoadingContext* loading_context,
+    PassRefPtr<WorkerLoaderProxy> worker_loader_proxy,
     WorkerReportingProxy& worker_reporting_proxy)
-    : WorkerThread(loading_context, worker_reporting_proxy) {}
+    : WorkerThread(std::move(worker_loader_proxy), worker_reporting_proxy) {}
 
 AudioWorkletThread::~AudioWorkletThread() {}
 
@@ -88,8 +88,7 @@ WorkerOrWorkletGlobalScope* AudioWorkletThread::CreateWorkerGlobalScope(
 
   return AudioWorkletGlobalScope::Create(
       startup_data->script_url_, startup_data->user_agent_,
-      std::move(security_origin), this->GetIsolate(), this,
-      startup_data->worker_clients_);
+      security_origin.Release(), this->GetIsolate(), this);
 }
 
 }  // namespace blink

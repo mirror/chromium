@@ -34,33 +34,18 @@ gfx::Insets LayoutProvider::GetInsetsMetric(int metric) const {
   DCHECK_LT(metric, VIEWS_INSETS_MAX);
   switch (metric) {
     case InsetsMetric::INSETS_BUBBLE_CONTENTS:
-      return gfx::Insets(
-          GetDistanceMetric(DISTANCE_BUBBLE_CONTENTS_VERTICAL_MARGIN),
-          GetDistanceMetric(DISTANCE_BUBBLE_CONTENTS_HORIZONTAL_MARGIN));
-    case InsetsMetric::INSETS_BUBBLE_TITLE: {
-      const gfx::Insets bubble_contents =
-          GetInsetsMetric(INSETS_BUBBLE_CONTENTS);
-      return gfx::Insets(bubble_contents.top(), bubble_contents.left(), 0,
-                         bubble_contents.right());
-    }
-    case InsetsMetric::INSETS_DIALOG_BUTTON_ROW: {
-      const gfx::Insets dialog_contents =
-          GetInsetsMetric(INSETS_DIALOG_CONTENTS);
-      return gfx::Insets(
-          0, dialog_contents.left(),
-          GetDistanceMetric(DISTANCE_DIALOG_BUTTON_BOTTOM_MARGIN),
-          dialog_contents.right());
-    }
-    case InsetsMetric::INSETS_DIALOG_CONTENTS:
-      return gfx::Insets(
-          GetDistanceMetric(DISTANCE_DIALOG_CONTENTS_VERTICAL_MARGIN),
-          GetDistanceMetric(DISTANCE_DIALOG_CONTENTS_HORIZONTAL_MARGIN));
-    case InsetsMetric::INSETS_DIALOG_TITLE: {
-      const gfx::Insets dialog_contents =
-          GetInsetsMetric(INSETS_DIALOG_CONTENTS);
-      return gfx::Insets(dialog_contents.top(), dialog_contents.left(), 0,
-                         dialog_contents.right());
-    }
+      return gfx::Insets(kPanelVertMargin, kPanelHorizMargin);
+    case InsetsMetric::INSETS_BUBBLE_TITLE:
+      return gfx::Insets(kPanelVertMargin, kPanelHorizMargin, 0,
+                         kPanelHorizMargin);
+    case InsetsMetric::INSETS_DIALOG_BUTTON:
+      return gfx::Insets(0, kButtonHEdgeMarginNew, kButtonVEdgeMarginNew,
+                         kButtonHEdgeMarginNew);
+    case InsetsMetric::INSETS_DIALOG_TITLE:
+      return gfx::Insets(kPanelVertMargin, kButtonHEdgeMarginNew, 0,
+                         kButtonHEdgeMarginNew);
+    case InsetsMetric::INSETS_PANEL:
+      return gfx::Insets(kPanelVertMargin, kButtonHEdgeMarginNew);
     case InsetsMetric::INSETS_VECTOR_IMAGE_BUTTON:
       return gfx::Insets(kVectorButtonExtraTouchSize);
   }
@@ -71,11 +56,6 @@ gfx::Insets LayoutProvider::GetInsetsMetric(int metric) const {
 int LayoutProvider::GetDistanceMetric(int metric) const {
   DCHECK_GE(metric, VIEWS_INSETS_MAX);
   switch (metric) {
-    case DISTANCE_BUBBLE_CONTENTS_HORIZONTAL_MARGIN:
-      return kPanelHorizMargin;
-    case DISTANCE_BUBBLE_CONTENTS_VERTICAL_MARGIN:
-    case DISTANCE_DIALOG_CONTENTS_VERTICAL_MARGIN:
-      return kPanelVertMargin;
     case DistanceMetric::DISTANCE_BUTTON_HORIZONTAL_PADDING:
       return kButtonHorizontalPadding;
     case DistanceMetric::DISTANCE_BUTTON_MAX_LINKABLE_WIDTH:
@@ -88,12 +68,8 @@ int LayoutProvider::GetDistanceMetric(int metric) const {
       return kRelatedControlHorizontalSpacing;
     case DistanceMetric::DISTANCE_RELATED_CONTROL_VERTICAL:
       return kRelatedControlVerticalSpacing;
-    case DISTANCE_DIALOG_BUTTON_BOTTOM_MARGIN:
-      return views::kButtonVEdgeMarginNew;
     case DistanceMetric::DISTANCE_DIALOG_BUTTON_MINIMUM_WIDTH:
       return kDialogMinimumButtonWidth;
-    case DISTANCE_DIALOG_CONTENTS_HORIZONTAL_MARGIN:
-      return kButtonHEdgeMarginNew;
   }
   NOTREACHED();
   return 0;
@@ -104,13 +80,7 @@ const TypographyProvider& LayoutProvider::GetTypographyProvider() const {
 }
 
 int LayoutProvider::GetSnappedDialogWidth(int min_width) const {
-  // This is an arbitrary value, but it's a good arbitrary value. Some dialogs
-  // have very small widths for their contents views, which causes ugly
-  // title-wrapping where a two-word title is split across multiple lines or
-  // similar. To prevent that, forbid any snappable dialog from being narrower
-  // than this value. In principle it's possible to factor in the title width
-  // here, but it is not really worth the complexity.
-  return std::max(min_width, 320);
+  return min_width;
 }
 
 }  // namespace views

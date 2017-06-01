@@ -290,9 +290,8 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
         View view = footerView.findViewById(highlightedItemId);
         if (view == null) return;
 
-        PulseDrawable pulse = view == footerView
-                ? PulseDrawable.createHighlight()
-                : PulseDrawable.createCircle(footerView.getContext());
+        PulseDrawable pulse =
+                view == footerView ? PulseDrawable.createHighlight() : PulseDrawable.createCircle();
 
         Drawable newBackground = pulse;
         Drawable currentBackground = view.getBackground();

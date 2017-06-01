@@ -49,6 +49,7 @@
 #include "core/workers/WorkerContentSettingsClient.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkerInspectorProxy.h"
+#include "core/workers/WorkerLoaderProxy.h"
 #include "core/workers/WorkerScriptLoader.h"
 #include "core/workers/WorkerThreadStartupData.h"
 #include "platform/CrossThreadFunctional.h"
@@ -101,6 +102,8 @@ WebSharedWorkerImpl::~WebSharedWorkerImpl() {
 
   web_view_->Close();
   main_frame_->Close();
+  if (loader_proxy_)
+    loader_proxy_->DetachProvider(this);
 }
 
 void WebSharedWorkerImpl::TerminateWorkerThread() {
@@ -189,13 +192,12 @@ void WebSharedWorkerImpl::DidFinishDocumentLoad() {
       WebURLRequest::kRequestContextSharedWorker);
   loading_document_ = main_frame_->GetFrame()->GetDocument();
 
-  WebURLRequest::FetchRequestMode fetch_request_mode =
-      (static_cast<KURL>(url_)).ProtocolIsData()
-          ? WebURLRequest::kFetchRequestModeNoCORS
-          : WebURLRequest::kFetchRequestModeSameOrigin;
+  CrossOriginRequestPolicy cross_origin_request_policy =
+      (static_cast<KURL>(url_)).ProtocolIsData() ? kAllowCrossOriginRequests
+                                                 : kDenyCrossOriginRequests;
 
   main_script_loader_->LoadAsynchronously(
-      *loading_document_.Get(), url_, fetch_request_mode,
+      *loading_document_.Get(), url_, cross_origin_request_policy,
       creation_address_space_,
       Bind(&WebSharedWorkerImpl::DidReceiveScriptLoaderResponse,
            WTF::Unretained(this)),
@@ -248,6 +250,14 @@ void WebSharedWorkerImpl::DidTerminateWorkerThread() {
   client_->WorkerContextDestroyed();
   // The lifetime of this proxy is controlled by the worker context.
   delete this;
+}
+
+ThreadableLoadingContext* WebSharedWorkerImpl::GetThreadableLoadingContext() {
+  if (!loading_context_) {
+    loading_context_ =
+        ThreadableLoadingContext::Create(*ToDocument(loading_document_.Get()));
+  }
+  return loading_context_;
 }
 
 void WebSharedWorkerImpl::Connect(
@@ -374,11 +384,10 @@ void WebSharedWorkerImpl::OnScriptLoaderFinished() {
   ParentFrameTaskRunners* task_runners =
       ParentFrameTaskRunners::Create(nullptr);
 
+  loader_proxy_ = WorkerLoaderProxy::Create(this);
   reporting_proxy_ = new WebSharedWorkerReportingProxyImpl(this, task_runners);
-  worker_thread_ = WTF::MakeUnique<SharedWorkerThread>(
-      name_,
-      ThreadableLoadingContext::Create(*ToDocument(loading_document_.Get())),
-      *reporting_proxy_);
+  worker_thread_ =
+      SharedWorkerThread::Create(name_, loader_proxy_, *reporting_proxy_);
   probe::scriptImported(loading_document_, main_script_loader_->Identifier(),
                         main_script_loader_->SourceText());
   main_script_loader_.Clear();

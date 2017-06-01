@@ -28,8 +28,8 @@
 #import "ios/chrome/test/earl_grey/chrome_matchers.h"
 #import "ios/chrome/test/earl_grey/chrome_test_case.h"
 #include "ios/shared/chrome/browser/ui/omnibox/location_bar_delegate.h"
-#import "ios/web/public/test/http_server/http_server.h"
-#include "ios/web/public/test/http_server/http_server_util.h"
+#include "ios/web/public/test/http_server.h"
+#include "ios/web/public/test/http_server_util.h"
 #import "third_party/ocmock/OCMock/OCMock.h"
 #import "ui/base/l10n/l10n_util.h"
 #import "ui/base/l10n/l10n_util_mac.h"
@@ -396,11 +396,13 @@ void TapKeyboardReturnKeyInOmniboxWithText(std::string text) {
 - (void)swizzleCameraController:(id)cameraControllerMock {
   CameraController* (^swizzleCameraControllerBlock)(
       id<CameraControllerDelegate>) = ^(id<CameraControllerDelegate> delegate) {
-    return cameraControllerMock;
+    // |initWithDelegate:| must return an object with a return count of 1
+    // because it is preceded by a call to |alloc|.
+    return [cameraControllerMock retain];
   };
 
   camera_controller_swizzler_.reset(new ScopedBlockSwizzler(
-      [CameraController class], @selector(cameraControllerWithDelegate:),
+      [CameraController class], @selector(initWithDelegate:),
       swizzleCameraControllerBlock));
 }
 

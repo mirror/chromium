@@ -12,7 +12,6 @@ namespace blink {
 
 class Document;
 class Element;
-class HTMLFrameOwnerElement;
 class PaintLayer;
 
 // Manages the root scroller associated with a given document. The root
@@ -69,11 +68,6 @@ class CORE_EXPORT RootScrollerController
   // replaced by the default root scroller.
   void DidUpdateLayout();
 
-  // This class needs to be informed when the FrameView of its Document changes
-  // size. This may occur without a layout (e.g. URL bar hiding) so we can't
-  // rely on DidUpdateLayout.
-  void DidResizeFrameView();
-
   // Returns the PaintLayer associated with the currently effective root
   // scroller.
   PaintLayer* RootScrollerPaintLayer() const;
@@ -95,12 +89,6 @@ class CORE_EXPORT RootScrollerController
   // Determines whether the given element meets the criteria to become the
   // effective root scroller.
   bool IsValidRootScroller(const Element&) const;
-
-  // Set certain properties to the effective root scroller. Called when a Node
-  // becomes or unbecomes the effective root scroller.
-  void ApplyRootScrollerProperties(Node&) const;
-
-  void UpdateIFrameGeometryAndLayoutSize(HTMLFrameOwnerElement&) const;
 
   // The owning Document whose root scroller this object manages.
   WeakMember<Document> document_;

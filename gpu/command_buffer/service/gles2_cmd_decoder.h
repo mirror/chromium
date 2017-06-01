@@ -82,8 +82,8 @@ typedef base::Callback<void(const std::string& key,
 
 // This class implements the AsyncAPIInterface interface, decoding GLES2
 // commands and calling GL.
-class GPU_EXPORT GLES2Decoder : public CommonDecoder,
-                                NON_EXPORTED_BASE(public AsyncAPIInterface) {
+class GPU_EXPORT GLES2Decoder : public base::SupportsWeakPtr<GLES2Decoder>,
+                                public CommonDecoder {
  public:
   typedef error::Error Error;
   typedef base::Callback<void(uint64_t release)> FenceSyncReleaseCallback;
@@ -125,8 +125,6 @@ class GPU_EXPORT GLES2Decoder : public CommonDecoder,
   void set_log_commands(bool log_commands) {
     log_commands_ = log_commands;
   }
-
-  virtual base::WeakPtr<GLES2Decoder> AsWeakPtr() = 0;
 
   // Initializes the graphics context. Can create an offscreen
   // decoder with a frame buffer that can be referenced from the parent.
@@ -242,6 +240,9 @@ class GPU_EXPORT GLES2Decoder : public CommonDecoder,
   virtual bool GetServiceTextureId(uint32_t client_texture_id,
                                    uint32_t* service_texture_id);
 
+  // Provides detail about a lost context if one occurred.
+  virtual error::ContextLostReason GetContextLostReason() = 0;
+
   // Clears a level sub area of a 2D texture.
   // Returns false if a GL error should be generated.
   virtual bool ClearLevel(Texture* texture,
@@ -312,8 +313,8 @@ class GPU_EXPORT GLES2Decoder : public CommonDecoder,
 
   virtual Logger* GetLogger() = 0;
 
-  void BeginDecoding() override;
-  void EndDecoding() override;
+  virtual void BeginDecoding();
+  virtual void EndDecoding();
 
   virtual const ContextState* GetContextState() = 0;
   virtual scoped_refptr<ShaderTranslatorInterface> GetTranslator(
@@ -322,7 +323,13 @@ class GPU_EXPORT GLES2Decoder : public CommonDecoder,
  protected:
   GLES2Decoder();
 
-  base::StringPiece GetLogPrefix() override;
+  // Decode a command, and call the corresponding GL functions.
+  // NOTE: DoCommand() is slower than calling DoCommands() on larger batches
+  // of commands at once, and is now only used for tests that need to track
+  // individual commands.
+  error::Error DoCommand(unsigned int command,
+                         unsigned int arg_count,
+                         const volatile void* cmd_data) override;
 
  private:
   bool initialized_;

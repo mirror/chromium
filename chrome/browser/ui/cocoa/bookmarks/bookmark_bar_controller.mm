@@ -76,6 +76,7 @@
 #include "ui/gfx/image/image.h"
 #include "ui/gfx/image/image_skia_util_mac.h"
 #include "ui/gfx/paint_vector_icon.h"
+#include "ui/resources/grit/ui_resources.h"
 
 using base::UserMetricsAction;
 using bookmarks::BookmarkBarLayout;

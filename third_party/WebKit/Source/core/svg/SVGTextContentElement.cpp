@@ -138,7 +138,8 @@ SVGPointTearOff* SVGTextContentElement::getStartPositionOfChar(
 
   FloatPoint point =
       SVGTextQuery(GetLayoutObject()).StartPositionOfCharacter(charnum);
-  return SVGPointTearOff::CreateDetached(point);
+  return SVGPointTearOff::Create(SVGPoint::Create(point), 0,
+                                 kPropertyIsNotAnimVal);
 }
 
 SVGPointTearOff* SVGTextContentElement::getEndPositionOfChar(
@@ -155,7 +156,8 @@ SVGPointTearOff* SVGTextContentElement::getEndPositionOfChar(
 
   FloatPoint point =
       SVGTextQuery(GetLayoutObject()).EndPositionOfCharacter(charnum);
-  return SVGPointTearOff::CreateDetached(point);
+  return SVGPointTearOff::Create(SVGPoint::Create(point), 0,
+                                 kPropertyIsNotAnimVal);
 }
 
 SVGRectTearOff* SVGTextContentElement::getExtentOfChar(
@@ -171,7 +173,8 @@ SVGRectTearOff* SVGTextContentElement::getExtentOfChar(
   }
 
   FloatRect rect = SVGTextQuery(GetLayoutObject()).ExtentOfCharacter(charnum);
-  return SVGRectTearOff::CreateDetached(rect);
+  return SVGRectTearOff::Create(SVGRect::Create(rect), 0,
+                                kPropertyIsNotAnimVal);
 }
 
 float SVGTextContentElement::getRotationOfChar(

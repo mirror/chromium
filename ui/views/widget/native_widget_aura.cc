@@ -21,7 +21,6 @@
 #include "ui/aura/client/focus_client.h"
 #include "ui/aura/client/screen_position_client.h"
 #include "ui/aura/client/window_parenting_client.h"
-#include "ui/aura/client/window_types.h"
 #include "ui/aura/env.h"
 #include "ui/aura/mus/property_utils.h"
 #include "ui/aura/window.h"
@@ -54,6 +53,7 @@
 #include "ui/wm/core/window_util.h"
 #include "ui/wm/public/activation_client.h"
 #include "ui/wm/public/window_move_client.h"
+#include "ui/wm/public/window_types.h"
 
 #if defined(OS_WIN)
 #include "base/win/scoped_gdi_object.h"
@@ -111,7 +111,7 @@ NativeWidgetAura::NativeWidgetAura(internal::NativeWidgetDelegate* delegate,
       cursor_(gfx::kNullCursor),
       close_widget_factory_(this) {
   aura::client::SetFocusChangeObserver(window_, this);
-  wm::SetActivationChangeObserver(window_, this);
+  aura::client::SetActivationChangeObserver(window_, this);
 }
 
 // static
@@ -159,7 +159,7 @@ void NativeWidgetAura::InitNativeWidget(const Widget::InitParams& params) {
   aura::SetWindowType(window_, static_cast<ui::mojom::WindowType>(params.type));
   window_->SetProperty(aura::client::kShowStateKey, params.show_state);
   if (params.type == Widget::InitParams::TYPE_BUBBLE)
-    wm::SetHideOnDeactivate(window_, true);
+    aura::client::SetHideOnDeactivate(window_, true);
   window_->SetTransparent(
       params.opacity == Widget::InitParams::TRANSLUCENT_WINDOW);
   window_->Init(params.layer_type);
@@ -177,7 +177,7 @@ void NativeWidgetAura::InitNativeWidget(const Widget::InitParams& params) {
   if (!params.child) {
     // Set up the transient child before the window is added. This way the
     // LayoutManager knows the window has a transient parent.
-    if (parent && parent->type() != aura::client::WINDOW_TYPE_UNKNOWN) {
+    if (parent && parent->type() != ui::wm::WINDOW_TYPE_UNKNOWN) {
       wm::AddTransientChild(parent, window_);
       if (!context)
         context = parent;
@@ -242,7 +242,7 @@ void NativeWidgetAura::InitNativeWidget(const Widget::InitParams& params) {
         base::MakeUnique<FocusManagerEventHandler>(GetWidget(), window_);
   }
 
-  wm::SetActivationDelegate(window_, this);
+  aura::client::SetActivationDelegate(window_, this);
 
   window_reorderer_.reset(new WindowReorderer(window_,
       GetWidget()->GetRootView()));
@@ -569,7 +569,8 @@ void NativeWidgetAura::Activate() {
   // We don't necessarily have a root window yet. This can happen with
   // constrained windows.
   if (window_->GetRootWindow()) {
-    wm::GetActivationClient(window_->GetRootWindow())->ActivateWindow(window_);
+    aura::client::GetActivationClient(window_->GetRootWindow())->ActivateWindow(
+        window_);
   }
   if (window_->GetProperty(aura::client::kDrawAttentionKey))
     window_->SetProperty(aura::client::kDrawAttentionKey, false);
@@ -578,7 +579,8 @@ void NativeWidgetAura::Activate() {
 void NativeWidgetAura::Deactivate() {
   if (!window_)
     return;
-  wm::GetActivationClient(window_->GetRootWindow())->DeactivateWindow(window_);
+  aura::client::GetActivationClient(window_->GetRootWindow())->DeactivateWindow(
+      window_);
 }
 
 bool NativeWidgetAura::IsActive() const {
@@ -701,17 +703,18 @@ Widget::MoveLoopResult NativeWidgetAura::RunMoveLoop(
   // loop.
   if (!window_ || !window_->GetRootWindow())
     return Widget::MOVE_LOOP_CANCELED;
-  wm::WindowMoveClient* move_client =
-      wm::GetWindowMoveClient(window_->GetRootWindow());
+  aura::client::WindowMoveClient* move_client =
+      aura::client::GetWindowMoveClient(window_->GetRootWindow());
   if (!move_client)
     return Widget::MOVE_LOOP_CANCELED;
 
   SetCapture();
-  wm::WindowMoveSource window_move_source =
-      source == Widget::MOVE_LOOP_SOURCE_MOUSE ? wm::WINDOW_MOVE_SOURCE_MOUSE
-                                               : wm::WINDOW_MOVE_SOURCE_TOUCH;
+  aura::client::WindowMoveSource window_move_source =
+      source == Widget::MOVE_LOOP_SOURCE_MOUSE ?
+      aura::client::WINDOW_MOVE_SOURCE_MOUSE :
+      aura::client::WINDOW_MOVE_SOURCE_TOUCH;
   if (move_client->RunMoveLoop(window_, drag_offset, window_move_source) ==
-      wm::MOVE_SUCCESSFUL) {
+          aura::client::MOVE_SUCCESSFUL) {
     return Widget::MOVE_LOOP_SUCCESSFUL;
   }
   return Widget::MOVE_LOOP_CANCELED;
@@ -720,8 +723,8 @@ Widget::MoveLoopResult NativeWidgetAura::RunMoveLoop(
 void NativeWidgetAura::EndMoveLoop() {
   if (!window_ || !window_->GetRootWindow())
     return;
-  wm::WindowMoveClient* move_client =
-      wm::GetWindowMoveClient(window_->GetRootWindow());
+  aura::client::WindowMoveClient* move_client =
+      aura::client::GetWindowMoveClient(window_->GetRootWindow());
   if (move_client)
     move_client->EndMoveLoop();
 }
@@ -915,17 +918,17 @@ void NativeWidgetAura::OnGestureEvent(ui::GestureEvent* event) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// NativeWidgetAura, wm::ActivationDelegate implementation:
+// NativeWidgetAura, aura::client::ActivationDelegate implementation:
 
 bool NativeWidgetAura::ShouldActivate() const {
   return delegate_->CanActivate();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// NativeWidgetAura, wm::ActivationChangeObserver implementation:
+// NativeWidgetAura, aura::client::ActivationChangeObserver implementation:
 
 void NativeWidgetAura::OnWindowActivated(
-    wm::ActivationChangeObserver::ActivationReason,
+    aura::client::ActivationChangeObserver::ActivationReason,
     aura::Window* gained_active,
     aura::Window* lost_active) {
   DCHECK(window_ == gained_active || window_ == lost_active);

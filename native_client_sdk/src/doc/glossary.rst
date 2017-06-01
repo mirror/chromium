@@ -1,7 +1,5 @@
 .. _glossary:
 
-.. include:: /migration/deprecation.inc
-
 ########
 Glossary
 ########

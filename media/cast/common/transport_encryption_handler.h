@@ -14,6 +14,7 @@
 
 #include "base/macros.h"
 #include "base/strings/string_piece.h"
+#include "base/threading/non_thread_safe.h"
 #include "media/cast/common/frame_id.h"
 
 namespace crypto {
@@ -24,7 +25,7 @@ class SymmetricKey;
 namespace media {
 namespace cast {
 
-class TransportEncryptionHandler {
+class TransportEncryptionHandler : public base::NonThreadSafe {
  public:
   TransportEncryptionHandler();
   ~TransportEncryptionHandler();

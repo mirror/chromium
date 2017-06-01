@@ -170,11 +170,8 @@ public class DisplayAndroidManager {
         public void onDisplayChanged(int sdkDisplayId) {
             PhysicalDisplayAndroid displayAndroid =
                     (PhysicalDisplayAndroid) mIdMap.get(sdkDisplayId);
-            Display display = getDisplayManager().getDisplay(sdkDisplayId);
-            // Note display null check here is needed because there appear to be an edge case in
-            // android display code, similar to onDisplayAdded.
-            if (displayAndroid != null && display != null) {
-                displayAndroid.updateFromDisplay(display);
+            if (displayAndroid != null) {
+                displayAndroid.updateFromDisplay(getDisplayManager().getDisplay(sdkDisplayId));
             }
         }
     }

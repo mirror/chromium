@@ -73,7 +73,7 @@ class OfflineAudioDestinationHandler final : public AudioDestinationHandler {
     return AudioUtilities::kRenderQuantumFrames;
   }
 
-  void InitializeOfflineRenderThread();
+  WebThread* OfflineRenderThread();
 
  private:
   OfflineAudioDestinationHandler(AudioNode&, AudioBuffer* render_target);

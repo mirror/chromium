@@ -104,7 +104,7 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
 
   void SetAbsoluteColumnIndex(unsigned column) {
     if (UNLIKELY(column > kMaxColumnIndex))
-      IMMEDIATE_CRASH();
+      CRASH();
 
     absolute_column_index_ = column;
   }
@@ -355,20 +355,6 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
     return cell1->RowIndex() < cell2->RowIndex();
   }
 
-  // For LayoutTable to compute its collapsed outer borders.
-  unsigned CollapsedOuterBorderBefore() const {
-    return CollapsedBorderHalfBefore(true);
-  }
-  unsigned CollapsedOuterBorderAfter() const {
-    return CollapsedBorderHalfAfter(true);
-  }
-  unsigned CollapsedOuterBorderStart() const {
-    return CollapsedBorderHalfStart(true);
-  }
-  unsigned CollapsedOuterBorderEnd() const {
-    return CollapsedBorderHalfEnd(true);
-  }
-
  protected:
   void StyleDidChange(StyleDifference, const ComputedStyle* old_style) override;
   void ComputePreferredLogicalWidths() override;
@@ -402,15 +388,15 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
                        bool recompute_floats = false) override;
   LayoutRect LocalVisualRect() const override;
 
-  unsigned CollapsedBorderHalfLeft(bool outer) const;
-  unsigned CollapsedBorderHalfRight(bool outer) const;
-  unsigned CollapsedBorderHalfTop(bool outer) const;
-  unsigned CollapsedBorderHalfBottom(bool outer) const;
+  LayoutUnit CollapsedBorderHalfLeft(bool outer) const;
+  LayoutUnit CollapsedBorderHalfRight(bool outer) const;
+  LayoutUnit CollapsedBorderHalfTop(bool outer) const;
+  LayoutUnit CollapsedBorderHalfBottom(bool outer) const;
 
-  unsigned CollapsedBorderHalfStart(bool outer) const;
-  unsigned CollapsedBorderHalfEnd(bool outer) const;
-  unsigned CollapsedBorderHalfBefore(bool outer) const;
-  unsigned CollapsedBorderHalfAfter(bool outer) const;
+  LayoutUnit CollapsedBorderHalfStart(bool outer) const;
+  LayoutUnit CollapsedBorderHalfEnd(bool outer) const;
+  LayoutUnit CollapsedBorderHalfBefore(bool outer) const;
+  LayoutUnit CollapsedBorderHalfAfter(bool outer) const;
 
   void SetIntrinsicPaddingBefore(int p) { intrinsic_padding_before_ = p; }
   void SetIntrinsicPaddingAfter(int p) { intrinsic_padding_after_ = p; }

@@ -9,7 +9,7 @@
 #include "base/command_line.h"
 #include "base/lazy_instance.h"
 #include "cc/base/switches.h"
-#include "components/viz/client/client_compositor_frame_sink.h"
+#include "services/ui/public/cpp/client_compositor_frame_sink.h"
 
 namespace content {
 
@@ -76,20 +76,16 @@ void RendererWindowTreeClient::RequestCompositorFrameSinkInternal(
     scoped_refptr<cc::ContextProvider> context_provider,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     const CompositorFrameSinkCallback& callback) {
-  cc::mojom::MojoCompositorFrameSinkPtrInfo sink_info;
-  cc::mojom::MojoCompositorFrameSinkRequest sink_request =
-      mojo::MakeRequest(&sink_info);
-  cc::mojom::MojoCompositorFrameSinkClientPtr client;
-  cc::mojom::MojoCompositorFrameSinkClientRequest client_request =
-      mojo::MakeRequest(&client);
-  constexpr bool enable_surface_synchronization = true;
-  auto frame_sink = base::MakeUnique<viz::ClientCompositorFrameSink>(
-      std::move(context_provider), nullptr /* worker_context_provider */,
-      gpu_memory_buffer_manager, nullptr /* shared_bitmap_manager */,
-      nullptr /* synthetic_begin_frame_source */, std::move(sink_info),
-      std::move(client_request), enable_surface_synchronization);
-  tree_->AttachCompositorFrameSink(root_window_id_, std::move(sink_request),
-                                   std::move(client));
+  std::unique_ptr<ui::ClientCompositorFrameSinkBinding> frame_sink_binding;
+  bool enable_surface_synchronization =
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          cc::switches::kEnableSurfaceSynchronization);
+  auto frame_sink = ui::ClientCompositorFrameSink::Create(
+      std::move(context_provider), gpu_memory_buffer_manager,
+      &frame_sink_binding, enable_surface_synchronization);
+  tree_->AttachCompositorFrameSink(
+      root_window_id_, frame_sink_binding->TakeFrameSinkRequest(),
+      mojo::MakeProxy(frame_sink_binding->TakeFrameSinkClient()));
   callback.Run(std::move(frame_sink));
 }
 
@@ -151,11 +147,6 @@ void RendererWindowTreeClient::OnWindowBoundsChanged(
     const gfx::Rect& new_bounds,
     const base::Optional<cc::LocalSurfaceId>& local_surface_id) {
 }
-
-void RendererWindowTreeClient::OnWindowTransformChanged(
-    ui::Id window_id,
-    const gfx::Transform& old_transform,
-    const gfx::Transform& new_transform) {}
 
 void RendererWindowTreeClient::OnClientAreaChanged(
     uint32_t window_id,

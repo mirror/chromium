@@ -52,13 +52,15 @@ MostVisitedSites::MostVisitedSites(
     SuggestionsService* suggestions,
     std::unique_ptr<PopularSites> popular_sites,
     std::unique_ptr<IconCacher> icon_cacher,
-    std::unique_ptr<MostVisitedSitesSupervisor> supervisor)
+    std::unique_ptr<MostVisitedSitesSupervisor> supervisor,
+    std::unique_ptr<HomePageClient> home_page_client)
     : prefs_(prefs),
       top_sites_(top_sites),
       suggestions_service_(suggestions),
       popular_sites_(std::move(popular_sites)),
       icon_cacher_(std::move(icon_cacher)),
       supervisor_(std::move(supervisor)),
+      home_page_client_(std::move(home_page_client)),
       observer_(nullptr),
       num_sites_(0u),
       top_sites_observer_(this),
@@ -71,6 +73,21 @@ MostVisitedSites::MostVisitedSites(
   if (supervisor_)
     supervisor_->SetObserver(this);
 }
+
+MostVisitedSites::MostVisitedSites(
+    PrefService* prefs,
+    scoped_refptr<history::TopSites> top_sites,
+    SuggestionsService* suggestions,
+    std::unique_ptr<PopularSites> popular_sites,
+    std::unique_ptr<IconCacher> icon_cacher,
+    std::unique_ptr<MostVisitedSitesSupervisor> supervisor)
+    : MostVisitedSites(prefs,
+                       top_sites,
+                       suggestions,
+                       std::move(popular_sites),
+                       std::move(icon_cacher),
+                       std::move(supervisor),
+                       nullptr) {}
 
 MostVisitedSites::~MostVisitedSites() {
   if (supervisor_)
@@ -92,12 +109,6 @@ bool MostVisitedSites::DoesSourceExist(TileSource source) const {
   }
   NOTREACHED();
   return false;
-}
-
-void MostVisitedSites::SetHomePageClient(
-    std::unique_ptr<HomePageClient> client) {
-  DCHECK(client);
-  home_page_client_ = std::move(client);
 }
 
 void MostVisitedSites::SetMostVisitedURLsObserver(Observer* observer,
@@ -480,11 +491,9 @@ void MostVisitedSites::TopSitesChanged(TopSites* top_sites,
 
 bool MostVisitedSites::ShouldAddHomeTile() const {
   return base::FeatureList::IsEnabled(kPinHomePageAsTileFeature) &&
-         num_sites_ > 0u &&
-         home_page_client_ &&  // No platform-specific implementation - no tile.
+         num_sites_ > 0u && home_page_client_ &&
          home_page_client_->IsHomePageEnabled() &&
          !home_page_client_->IsNewTabPageUsedAsHomePage() &&
-         !home_page_client_->GetHomepageUrl().is_empty() &&
          !(top_sites_ &&
            top_sites_->IsBlacklisted(home_page_client_->GetHomepageUrl()));
 }

@@ -235,8 +235,7 @@ FaviconData GetFaviconData(BookmarkModel* model,
     model->GetFavicon(node);
     observer.WaitForGetFavicon();
   }
-  return FaviconData(model->GetFavicon(node),
-                     node->icon_url() ? *node->icon_url() : GURL());
+  return FaviconData(model->GetFavicon(node), node->icon_url());
 }
 
 // Sets the favicon for |profile| and |node|. |profile| may be

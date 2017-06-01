@@ -71,14 +71,14 @@ DEFINE_NON_INTERPOLABLE_VALUE_TYPE_CASTS(CSSTextIndentNonInterpolableValue);
 namespace {
 
 class UnderlyingIndentModeChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+    : public InterpolationType::ConversionChecker {
  public:
   static std::unique_ptr<UnderlyingIndentModeChecker> Create(
       const IndentMode& mode) {
     return WTF::WrapUnique(new UnderlyingIndentModeChecker(mode));
   }
 
-  bool IsValid(const StyleResolverState&,
+  bool IsValid(const InterpolationEnvironment&,
                const InterpolationValue& underlying) const final {
     return mode_ == ToCSSTextIndentNonInterpolableValue(
                         *underlying.non_interpolable_value)
@@ -91,17 +91,16 @@ class UnderlyingIndentModeChecker
   const IndentMode mode_;
 };
 
-class InheritedIndentModeChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+class InheritedIndentModeChecker : public InterpolationType::ConversionChecker {
  public:
   static std::unique_ptr<InheritedIndentModeChecker> Create(
       const IndentMode& mode) {
     return WTF::WrapUnique(new InheritedIndentModeChecker(mode));
   }
 
-  bool IsValid(const StyleResolverState& state,
+  bool IsValid(const InterpolationEnvironment& environment,
                const InterpolationValue&) const final {
-    return mode_ == IndentMode(*state.ParentStyle());
+    return mode_ == IndentMode(*environment.GetState().ParentStyle());
   }
 
  private:
@@ -163,10 +162,10 @@ InterpolationValue CSSTextIndentInterpolationType::MaybeConvertValue(
   for (const auto& item : ToCSSValueList(value)) {
     if (item->IsIdentifierValue() &&
         ToCSSIdentifierValue(*item).GetValueID() == CSSValueEachLine)
-      line = TextIndentLine::kEachLine;
+      line = kTextIndentEachLine;
     else if (item->IsIdentifierValue() &&
              ToCSSIdentifierValue(*item).GetValueID() == CSSValueHanging)
-      type = TextIndentType::kHanging;
+      type = kTextIndentHanging;
     else
       length = LengthInterpolationFunctions::MaybeConvertCSSValue(*item);
   }

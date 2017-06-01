@@ -8,8 +8,8 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8BindingForTesting.h"
 #include "core/dom/Document.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/ImageBitmap.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLCanvasElement.h"
 #include "core/html/ImageData.h"
@@ -22,7 +22,7 @@
 #include "modules/canvas2d/CanvasPattern.h"
 #include "modules/webgl/WebGLRenderingContext.h"
 #include "platform/graphics/Canvas2DImageBufferSurface.h"
-#include "platform/graphics/CanvasHeuristicParameters.h"
+#include "platform/graphics/ExpensiveCanvasHeuristicParameters.h"
 #include "platform/graphics/RecordingImageBufferSurface.h"
 #include "platform/graphics/StaticBitmapImage.h"
 #include "platform/graphics/UnacceleratedImageBufferSurface.h"
@@ -42,6 +42,15 @@
 using ::testing::Mock;
 
 namespace blink {
+
+namespace {
+
+gfx::ColorSpace AdobeRGBColorSpace() {
+  return gfx::ColorSpace(gfx::ColorSpace::PrimaryID::ADOBE_RGB,
+                         gfx::ColorSpace::TransferID::GAMMA22);
+}
+
+}  // namespace
 
 enum BitmapOpacity { kOpaqueBitmap, kTransparentBitmap };
 
@@ -528,7 +537,8 @@ TEST_F(CanvasRenderingContext2DTest, NoLayerPromotionUnderOverdrawLimit) {
 
   Context2d()->setGlobalAlpha(0.5f);  // To prevent overdraw optimization
   for (int i = 0;
-       i < CanvasHeuristicParameters::kExpensiveOverdrawThreshold - 1; i++) {
+       i < ExpensiveCanvasHeuristicParameters::kExpensiveOverdrawThreshold - 1;
+       i++) {
     Context2d()->fillRect(0, 0, 10, 10);
   }
 
@@ -544,7 +554,8 @@ TEST_F(CanvasRenderingContext2DTest, LayerPromotionOverOverdrawLimit) {
   CanvasElement().CreateImageBufferUsingSurfaceForTesting(std::move(surface));
 
   Context2d()->setGlobalAlpha(0.5f);  // To prevent overdraw optimization
-  for (int i = 0; i < CanvasHeuristicParameters::kExpensiveOverdrawThreshold;
+  for (int i = 0;
+       i < ExpensiveCanvasHeuristicParameters::kExpensiveOverdrawThreshold;
        i++) {
     Context2d()->fillRect(0, 0, 10, 10);
   }
@@ -566,8 +577,8 @@ TEST_F(CanvasRenderingContext2DTest, NoLayerPromotionUnderImageSizeRatioLimit) {
   EXPECT_FALSE(exception_state.HadException());
   HTMLCanvasElement* source_canvas =
       static_cast<HTMLCanvasElement*>(source_canvas_element);
-  IntSize source_size(10,
-                      10 * CanvasHeuristicParameters::kExpensiveImageSizeRatio);
+  IntSize source_size(
+      10, 10 * ExpensiveCanvasHeuristicParameters::kExpensiveImageSizeRatio);
   std::unique_ptr<UnacceleratedImageBufferSurface> source_surface =
       WTF::MakeUnique<UnacceleratedImageBufferSurface>(source_size, kNonOpaque);
   source_canvas->CreateImageBufferUsingSurfaceForTesting(
@@ -601,7 +612,8 @@ TEST_F(CanvasRenderingContext2DTest, LayerPromotionOverImageSizeRatioLimit) {
   HTMLCanvasElement* source_canvas =
       static_cast<HTMLCanvasElement*>(source_canvas_element);
   IntSize source_size(
-      10, 10 * CanvasHeuristicParameters::kExpensiveImageSizeRatio + 1);
+      10,
+      10 * ExpensiveCanvasHeuristicParameters::kExpensiveImageSizeRatio + 1);
   std::unique_ptr<UnacceleratedImageBufferSurface> source_surface =
       WTF::MakeUnique<UnacceleratedImageBufferSurface>(source_size, kNonOpaque);
   source_canvas->CreateImageBufferUsingSurfaceForTesting(
@@ -631,10 +643,12 @@ TEST_F(CanvasRenderingContext2DTest,
 
   Context2d()->beginPath();
   Context2d()->moveTo(7, 5);
-  for (int i = 1; i < CanvasHeuristicParameters::kExpensivePathPointCount - 1;
+  for (int i = 1;
+       i < ExpensiveCanvasHeuristicParameters::kExpensivePathPointCount - 1;
        i++) {
-    float angle_rad = twoPiFloat * i /
-                      (CanvasHeuristicParameters::kExpensivePathPointCount - 1);
+    float angle_rad =
+        twoPiFloat * i /
+        (ExpensiveCanvasHeuristicParameters::kExpensivePathPointCount - 1);
     Context2d()->lineTo(5 + 2 * cos(angle_rad), 5 + 2 * sin(angle_rad));
   }
   Context2d()->fill();
@@ -653,10 +667,12 @@ TEST_F(CanvasRenderingContext2DTest,
 
   Context2d()->beginPath();
   Context2d()->moveTo(7, 5);
-  for (int i = 1; i < CanvasHeuristicParameters::kExpensivePathPointCount + 1;
+  for (int i = 1;
+       i < ExpensiveCanvasHeuristicParameters::kExpensivePathPointCount + 1;
        i++) {
-    float angle_rad = twoPiFloat * i /
-                      (CanvasHeuristicParameters::kExpensivePathPointCount + 1);
+    float angle_rad =
+        twoPiFloat * i /
+        (ExpensiveCanvasHeuristicParameters::kExpensivePathPointCount + 1);
     Context2d()->lineTo(5 + 2 * cos(angle_rad), 5 + 2 * sin(angle_rad));
   }
   Context2d()->fill();
@@ -679,7 +695,7 @@ TEST_F(CanvasRenderingContext2DTest, LayerPromotionWhenPathIsConcave) {
   Context2d()->lineTo(5, 9);
   Context2d()->fill();
 
-  if (CanvasHeuristicParameters::kConcavePathsAreExpensive) {
+  if (ExpensiveCanvasHeuristicParameters::kConcavePathsAreExpensive) {
     EXPECT_TRUE(CanvasElement().ShouldBeDirectComposited());
   } else {
     EXPECT_FALSE(CanvasElement().ShouldBeDirectComposited());
@@ -718,7 +734,7 @@ TEST_F(CanvasRenderingContext2DTest, LayerPromotionWithComplexClip) {
   Context2d()->clip();
   Context2d()->fillRect(0, 0, 4, 4);
 
-  if (CanvasHeuristicParameters::kComplexClipsAreExpensive) {
+  if (ExpensiveCanvasHeuristicParameters::kComplexClipsAreExpensive) {
     EXPECT_TRUE(CanvasElement().ShouldBeDirectComposited());
   } else {
     EXPECT_FALSE(CanvasElement().ShouldBeDirectComposited());
@@ -737,7 +753,7 @@ TEST_F(CanvasRenderingContext2DTest, LayerPromotionWithBlurredShadow) {
   Context2d()->setShadowBlur(1.0f);
   Context2d()->fillRect(1, 1, 1, 1);
 
-  if (CanvasHeuristicParameters::kBlurredShadowsAreExpensive) {
+  if (ExpensiveCanvasHeuristicParameters::kBlurredShadowsAreExpensive) {
     EXPECT_TRUE(CanvasElement().ShouldBeDirectComposited());
   } else {
     EXPECT_FALSE(CanvasElement().ShouldBeDirectComposited());
@@ -769,7 +785,9 @@ TEST_F(CanvasRenderingContext2DTest, NoFallbackWithSmallState) {
 
   Context2d()->fillRect(0, 0, 1, 1);  // To have a non-empty dirty rect.
   for (int i = 0;
-       i < CanvasHeuristicParameters::kExpensiveRecordingStackDepth - 1; ++i) {
+       i <
+       ExpensiveCanvasHeuristicParameters::kExpensiveRecordingStackDepth - 1;
+       ++i) {
     Context2d()->save();
     Context2d()->translate(1.0f, 0.0f);
   }
@@ -786,7 +804,8 @@ TEST_F(CanvasRenderingContext2DTest, FallbackWithLargeState) {
   CanvasElement().CreateImageBufferUsingSurfaceForTesting(std::move(surface));
 
   Context2d()->fillRect(0, 0, 1, 1);  // To have a non-empty dirty rect.
-  for (int i = 0; i < CanvasHeuristicParameters::kExpensiveRecordingStackDepth;
+  for (int i = 0;
+       i < ExpensiveCanvasHeuristicParameters::kExpensiveRecordingStackDepth;
        ++i) {
     Context2d()->save();
     Context2d()->translate(1.0f, 0.0f);
@@ -935,7 +954,8 @@ TEST_F(CanvasRenderingContext2DTest, GetImageDataDisablesAcceleration) {
 
   DummyExceptionStateForTesting exception_state;
   for (int i = 0;
-       i < CanvasHeuristicParameters::kGPUReadbackMinSuccessiveFrames - 1;
+       i <
+       ExpensiveCanvasHeuristicParameters::kGPUReadbackMinSuccessiveFrames - 1;
        i++) {
     Context2d()->getImageData(0, 0, 1, 1, exception_state);
     CanvasElement().FinalizeFrame();
@@ -950,7 +970,7 @@ TEST_F(CanvasRenderingContext2DTest, GetImageDataDisablesAcceleration) {
   CanvasElement().FinalizeFrame();
 
   EXPECT_FALSE(exception_state.HadException());
-  if (CanvasHeuristicParameters::kGPUReadbackForcesNoAcceleration) {
+  if (ExpensiveCanvasHeuristicParameters::kGPUReadbackForcesNoAcceleration) {
     EXPECT_FALSE(CanvasElement().GetImageBuffer()->IsAccelerated());
     EXPECT_EQ(0u, GetGlobalAcceleratedImageBufferCount());
     EXPECT_EQ(0, GetGlobalGPUMemoryUsage());
@@ -979,14 +999,14 @@ TEST_F(CanvasRenderingContext2DTest, TextureUploadHeuristics) {
 
   for (int test_variant = 0; test_variant < kTestVariantCount; test_variant++) {
     int delta = test_variant == kLargeTextureDisablesAcceleration ? 1 : -1;
-    int src_size =
-        std::sqrt(static_cast<float>(
-            CanvasHeuristicParameters::kDrawImageTextureUploadSoftSizeLimit)) +
-        delta;
+    int src_size = std::sqrt(static_cast<float>(
+                       ExpensiveCanvasHeuristicParameters::
+                           kDrawImageTextureUploadSoftSizeLimit)) +
+                   delta;
     int dst_size =
         src_size /
             std::sqrt(static_cast<float>(
-                CanvasHeuristicParameters::
+                ExpensiveCanvasHeuristicParameters::
                     kDrawImageTextureUploadSoftSizeLimitScaleThreshold)) -
         delta;
 
@@ -1032,6 +1052,41 @@ TEST_F(CanvasRenderingContext2DTest, TextureUploadHeuristics) {
       saved_fixed_rendering_mode);
 }
 
+TEST_F(CanvasRenderingContext2DTest,
+       IsAccelerationOptimalForCanvasContentHeuristic) {
+  CreateContext(kNonOpaque);
+
+  auto fake_accelerate_surface =
+      WTF::MakeUnique<FakeAcceleratedImageBufferSurface>(IntSize(10, 10),
+                                                         kNonOpaque);
+  CanvasElement().CreateImageBufferUsingSurfaceForTesting(
+      std::move(fake_accelerate_surface));
+
+  NonThrowableExceptionState exception_state;
+
+  CanvasRenderingContext2D* context = Context2d();
+  EXPECT_TRUE(context->IsAccelerationOptimalForCanvasContent());
+
+  context->fillRect(10, 10, 100, 100);
+  EXPECT_TRUE(context->IsAccelerationOptimalForCanvasContent());
+
+  int num_reps = 100;
+  for (int i = 0; i < num_reps; i++) {
+    context->fillText("Text", 10, 10, 1);  // faster with no acceleration
+  }
+  EXPECT_FALSE(context->IsAccelerationOptimalForCanvasContent());
+
+  for (int i = 0; i < num_reps; i++) {
+    context->fillRect(10, 10, 200, 200);  // faster with acceleration
+  }
+  EXPECT_TRUE(context->IsAccelerationOptimalForCanvasContent());
+
+  for (int i = 0; i < num_reps * 100; i++) {
+    context->strokeText("Text", 10, 10, 1);  // faster with no acceleration
+  }
+  EXPECT_FALSE(context->IsAccelerationOptimalForCanvasContent());
+}
+
 TEST_F(CanvasRenderingContext2DTest, DisableAcceleration) {
   CreateContext(kNonOpaque);
 
@@ -1061,6 +1116,90 @@ TEST_F(CanvasRenderingContext2DTest, DisableAcceleration) {
   EXPECT_EQ(0u, GetGlobalAcceleratedImageBufferCount());
 }
 
+TEST_F(CanvasRenderingContext2DTest,
+       LegacyColorSpaceUsesGlobalTargetColorBehavior) {
+  // Set the global target color space to something distinctly recognizable (not
+  // srgb)
+  gfx::ColorSpace saved_global_target_color_space =
+      ColorBehavior::GlobalTargetColorSpace();
+  ColorBehavior::SetGlobalTargetColorSpaceForTesting(AdobeRGBColorSpace());
+  bool saved_color_correct_rendering_enabled =
+      RuntimeEnabledFeatures::colorCorrectRenderingEnabled();
+
+  RuntimeEnabledFeatures::setColorCorrectRenderingEnabled(false);
+  CreateContext(kNonOpaque, "legacy-srgb");
+  ColorBehavior behavior = Context2d()->DrawImageColorBehavior();
+  EXPECT_TRUE(behavior.IsTransformToTargetColorSpace());
+  EXPECT_TRUE(ColorBehavior::GlobalTargetColorSpace() ==
+              behavior.TargetColorSpace());
+
+  // Restore global state to avoid interfering with other tests
+  ColorBehavior::SetGlobalTargetColorSpaceForTesting(
+      saved_global_target_color_space);
+  RuntimeEnabledFeatures::setColorCorrectRenderingEnabled(
+      saved_color_correct_rendering_enabled);
+}
+
+TEST_F(CanvasRenderingContext2DTest,
+       LegacyColorSpaceUsesSRGBWhenColorCorrectRenderingEnabled) {
+  // Set the global target color space to something distinctly recognizable (not
+  // srgb)
+  gfx::ColorSpace saved_global_target_color_space =
+      ColorBehavior::GlobalTargetColorSpace();
+  ColorBehavior::SetGlobalTargetColorSpaceForTesting(AdobeRGBColorSpace());
+  bool saved_color_correct_rendering_enabled =
+      RuntimeEnabledFeatures::colorCorrectRenderingEnabled();
+
+  RuntimeEnabledFeatures::setColorCorrectRenderingEnabled(true);
+  CreateContext(kNonOpaque, "legacy-srgb");
+  ColorBehavior behavior = Context2d()->DrawImageColorBehavior();
+  EXPECT_TRUE(behavior.IsTransformToTargetColorSpace());
+  EXPECT_TRUE(gfx::ColorSpace::CreateSRGB() == behavior.TargetColorSpace());
+
+  // Restore global state to avoid interfering with other tests
+  ColorBehavior::SetGlobalTargetColorSpaceForTesting(
+      saved_global_target_color_space);
+  RuntimeEnabledFeatures::setColorCorrectRenderingEnabled(
+      saved_color_correct_rendering_enabled);
+}
+
+TEST_F(CanvasRenderingContext2DTest,
+       SRGBColorSpaceUsesTransformToSRGBColorBehavior) {
+  // Set the global target color space to something distinctly recognizable (not
+  // srgb)
+  gfx::ColorSpace saved_global_target_color_space =
+      ColorBehavior::GlobalTargetColorSpace();
+  ColorBehavior::SetGlobalTargetColorSpaceForTesting(AdobeRGBColorSpace());
+
+  CreateContext(kNonOpaque, "srgb");
+  ColorBehavior behavior = Context2d()->DrawImageColorBehavior();
+  EXPECT_TRUE(behavior.IsTransformToTargetColorSpace());
+  EXPECT_TRUE(gfx::ColorSpace::CreateSRGB() == behavior.TargetColorSpace());
+
+  // Restore global state to avoid interfering with other tests
+  ColorBehavior::SetGlobalTargetColorSpaceForTesting(
+      saved_global_target_color_space);
+}
+
+TEST_F(CanvasRenderingContext2DTest,
+       LinearRGBColorSpaceUsesTransformToLinearSRGBColorBehavior) {
+  // Set the global target color space to something distinctly recognizable (not
+  // srgb)
+  gfx::ColorSpace saved_global_target_color_space =
+      ColorBehavior::GlobalTargetColorSpace();
+  ColorBehavior::SetGlobalTargetColorSpaceForTesting(AdobeRGBColorSpace());
+
+  CreateContext(kNonOpaque, "srgb", kLinearPixelMathEnabled);
+  ColorBehavior behavior = Context2d()->DrawImageColorBehavior();
+  EXPECT_TRUE(behavior.IsTransformToTargetColorSpace());
+  EXPECT_TRUE(gfx::ColorSpace::CreateSCRGBLinear() ==
+              behavior.TargetColorSpace());
+
+  // Restore global state to avoid interfering with other tests
+  ColorBehavior::SetGlobalTargetColorSpaceForTesting(
+      saved_global_target_color_space);
+}
+
 enum class ColorSpaceConversion : uint8_t {
   NONE = 0,
   DEFAULT_NOT_COLOR_CORRECTED = 1,
@@ -1085,7 +1224,8 @@ static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
                ColorSpaceConversion::DEFAULT_NOT_COLOR_CORRECTED);
   RuntimeEnabledFeatures::setExperimentalCanvasFeaturesEnabled(true);
   RuntimeEnabledFeatures::setColorCorrectRenderingEnabled(flag);
-  RuntimeEnabledFeatures::setColorCanvasExtensionsEnabled(true);
+  RuntimeEnabledFeatures::setColorCorrectRenderingDefaultModeEnabled(!flag);
+
   return options;
 }
 
@@ -1094,8 +1234,8 @@ TEST_F(CanvasRenderingContext2DTest, ImageBitmapColorSpaceConversion) {
       RuntimeEnabledFeatures::experimentalCanvasFeaturesEnabled();
   bool color_correct_rendering_runtime_flag =
       RuntimeEnabledFeatures::colorCorrectRenderingEnabled();
-  bool color_canvas_extensions_flag =
-      RuntimeEnabledFeatures::colorCanvasExtensionsEnabled();
+  bool color_correct_rendering_default_mode_runtime_flag =
+      RuntimeEnabledFeatures::colorCorrectRenderingDefaultModeEnabled();
 
   Persistent<HTMLCanvasElement> canvas =
       Persistent<HTMLCanvasElement>(CanvasElement());
@@ -1186,8 +1326,8 @@ TEST_F(CanvasRenderingContext2DTest, ImageBitmapColorSpaceConversion) {
       experimental_canvas_features_runtime_flag);
   RuntimeEnabledFeatures::setColorCorrectRenderingEnabled(
       color_correct_rendering_runtime_flag);
-  RuntimeEnabledFeatures::setColorCanvasExtensionsEnabled(
-      color_canvas_extensions_flag);
+  RuntimeEnabledFeatures::setColorCorrectRenderingDefaultModeEnabled(
+      color_correct_rendering_default_mode_runtime_flag);
 }
 
 bool ConvertPixelsToColorSpaceAndPixelFormatForTest(
@@ -1288,11 +1428,8 @@ void TestPutImageDataOnCanvasWithColorSpaceSettings(
       RuntimeEnabledFeatures::experimentalCanvasFeaturesEnabled();
   bool color_correct_rendering_runtime_flag =
       RuntimeEnabledFeatures::colorCorrectRenderingEnabled();
-  bool color_canvas_extensions_flag =
-      RuntimeEnabledFeatures::colorCanvasExtensionsEnabled();
   RuntimeEnabledFeatures::setExperimentalCanvasFeaturesEnabled(true);
   RuntimeEnabledFeatures::setColorCorrectRenderingEnabled(true);
-  RuntimeEnabledFeatures::setColorCanvasExtensionsEnabled(true);
 
   bool test_passed = true;
   unsigned num_image_data_color_spaces = 3;
@@ -1455,8 +1592,6 @@ void TestPutImageDataOnCanvasWithColorSpaceSettings(
       experimental_canvas_features_runtime_flag);
   RuntimeEnabledFeatures::setColorCorrectRenderingEnabled(
       color_correct_rendering_runtime_flag);
-  RuntimeEnabledFeatures::setColorCanvasExtensionsEnabled(
-      color_canvas_extensions_flag);
 }
 
 TEST_F(CanvasRenderingContext2DTest, ColorManagedPutImageDataOnSRGBCanvas) {

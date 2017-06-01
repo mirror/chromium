@@ -14,32 +14,34 @@ class Window;
 
 namespace ash {
 
+class WmWindow;
+
 class ASH_EXPORT ShellObserver {
  public:
   // Called when a casting session is started or stopped.
   virtual void OnCastingSessionStartedOrStopped(bool started) {}
 
   // Invoked after a non-primary root window is created.
-  virtual void OnRootWindowAdded(aura::Window* root_window) {}
+  virtual void OnRootWindowAdded(WmWindow* root_window) {}
 
   // Invoked after the shelf has been created for |root_window|.
-  virtual void OnShelfCreatedForRootWindow(aura::Window* root_window) {}
+  virtual void OnShelfCreatedForRootWindow(WmWindow* root_window) {}
 
   // Invoked when the shelf alignment in |root_window| is changed.
-  virtual void OnShelfAlignmentChanged(aura::Window* root_window) {}
+  virtual void OnShelfAlignmentChanged(WmWindow* root_window) {}
 
   // Invoked when the shelf auto-hide behavior in |root_window| is changed.
-  virtual void OnShelfAutoHideBehaviorChanged(aura::Window* root_window) {}
+  virtual void OnShelfAutoHideBehaviorChanged(WmWindow* root_window) {}
 
   // Invoked when the projection touch HUD is toggled.
   virtual void OnTouchHudProjectionToggled(bool enabled) {}
 
   // Invoked when entering or exiting fullscreen mode in |root_window|.
   virtual void OnFullscreenStateChanged(bool is_fullscreen,
-                                        aura::Window* root_window) {}
+                                        WmWindow* root_window) {}
 
   // Invoked when |pinned_window| enter or exit pinned mode.
-  virtual void OnPinnedStateChanged(aura::Window* pinned_window) {}
+  virtual void OnPinnedStateChanged(WmWindow* pinned_window) {}
 
   // Called when the overview mode is about to be started (before the windows
   // get re-arranged).

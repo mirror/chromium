@@ -161,22 +161,6 @@ std::unique_ptr<base::DictionaryValue> BuildAddressDictionary(
   return address;
 }
 
-// Populates the list of active experiments that affect either the data sent in
-// payments RPCs or whether the RPCs are sent or not.
-void SetActiveExperiments(const std::vector<const char*>& active_experiments,
-                          base::DictionaryValue* request_dict) {
-  if (active_experiments.empty())
-    return;
-
-  std::unique_ptr<base::ListValue> active_chrome_experiments(
-      base::MakeUnique<base::ListValue>());
-  for (const char* it : active_experiments)
-    active_chrome_experiments->AppendString(it);
-
-  request_dict->Set("active_chrome_experiments",
-                    std::move(active_chrome_experiments));
-}
-
 class UnmaskCardRequest : public PaymentsRequest {
  public:
   UnmaskCardRequest(const PaymentsClient::UnmaskRequestDetails& request_details)
@@ -238,11 +222,8 @@ class UnmaskCardRequest : public PaymentsRequest {
 class GetUploadDetailsRequest : public PaymentsRequest {
  public:
   GetUploadDetailsRequest(const std::vector<AutofillProfile>& addresses,
-                          const std::vector<const char*>& active_experiments,
                           const std::string& app_locale)
-      : addresses_(addresses),
-        active_experiments_(active_experiments),
-        app_locale_(app_locale) {}
+      : addresses_(addresses), app_locale_(app_locale) {}
   ~GetUploadDetailsRequest() override {}
 
   std::string GetRequestUrlPath() override {
@@ -269,8 +250,6 @@ class GetUploadDetailsRequest : public PaymentsRequest {
     }
     request_dict.Set("address", std::move(addresses));
 
-    SetActiveExperiments(active_experiments_, &request_dict);
-
     std::string request_content;
     base::JSONWriter::Write(request_dict, &request_content);
     VLOG(3) << "getdetailsforsavecard request body: " << request_content;
@@ -295,8 +274,7 @@ class GetUploadDetailsRequest : public PaymentsRequest {
   }
 
  private:
-  const std::vector<AutofillProfile> addresses_;
-  const std::vector<const char*> active_experiments_;
+  std::vector<AutofillProfile> addresses_;
   std::string app_locale_;
   base::string16 context_token_;
   std::unique_ptr<base::DictionaryValue> legal_message_;
@@ -347,8 +325,6 @@ class UploadCardRequest : public PaymentsRequest {
     if (base::StringToInt(exp_year, &value))
       request_dict.SetInteger("expiration_year", value);
 
-    SetActiveExperiments(request_details_.active_experiments, &request_dict);
-
     const base::string16 pan = request_details_.card.GetInfo(
         AutofillType(CREDIT_CARD_NUMBER), app_locale);
     std::string json_request;
@@ -376,7 +352,7 @@ class UploadCardRequest : public PaymentsRequest {
   }
 
  private:
-  const PaymentsClient::UploadRequestDetails request_details_;
+  PaymentsClient::UploadRequestDetails request_details_;
   std::string server_id_;
 };
 
@@ -417,10 +393,8 @@ void PaymentsClient::UnmaskCard(
 
 void PaymentsClient::GetUploadDetails(
     const std::vector<AutofillProfile>& addresses,
-    const std::vector<const char*>& active_experiments,
     const std::string& app_locale) {
-  IssueRequest(base::MakeUnique<GetUploadDetailsRequest>(
-                   addresses, active_experiments, app_locale),
+  IssueRequest(base::MakeUnique<GetUploadDetailsRequest>(addresses, app_locale),
                false);
 }
 

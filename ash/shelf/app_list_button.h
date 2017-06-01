@@ -14,15 +14,15 @@
 
 namespace ash {
 class InkDropButtonListener;
-class Shelf;
 class ShelfView;
+class WmShelf;
 
 // Button used for the AppList icon on the shelf.
 class ASH_EXPORT AppListButton : public views::ImageButton {
  public:
   AppListButton(InkDropButtonListener* listener,
                 ShelfView* shelf_view,
-                Shelf* shelf);
+                WmShelf* wm_shelf);
   ~AppListButton() override;
 
   void OnAppListShown();
@@ -42,13 +42,13 @@ class ASH_EXPORT AppListButton : public views::ImageButton {
   void OnMouseReleased(const ui::MouseEvent& event) override;
   void OnMouseCaptureLost() override;
   bool OnMouseDragged(const ui::MouseEvent& event) override;
+  void OnPaint(gfx::Canvas* canvas) override;
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
   std::unique_ptr<views::InkDropRipple> CreateInkDropRipple() const override;
   void NotifyClick(const ui::Event& event) override;
   bool ShouldEnterPushedState(const ui::Event& event) override;
   std::unique_ptr<views::InkDrop> CreateInkDrop() override;
   std::unique_ptr<views::InkDropMask> CreateInkDropMask() const override;
-  void PaintButtonContents(gfx::Canvas* canvas) override;
 
  private:
   // Get the center point of the app list button used to draw its background and
@@ -64,7 +64,7 @@ class ASH_EXPORT AppListButton : public views::ImageButton {
 
   InkDropButtonListener* listener_;
   ShelfView* shelf_view_;
-  Shelf* shelf_;
+  WmShelf* wm_shelf_;
 
   DISALLOW_COPY_AND_ASSIGN(AppListButton);
 };

@@ -48,11 +48,6 @@ SecurityOrigin* DummyModulator::GetSecurityOrigin() {
   return nullptr;
 }
 
-ScriptState* DummyModulator::GetScriptState() {
-  NOTREACHED();
-  return nullptr;
-}
-
 ScriptModuleResolver* DummyModulator::GetScriptModuleResolver() {
   return resolver_.Get();
 }

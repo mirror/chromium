@@ -1,33 +1,31 @@
 <!DOCTYPE html>
 <script src="../../resources/testharness.js"></script>
 <script src="../../resources/testharnessreport.js"></script>
-<script src="resources/helper.js"></script>
-<iframe src="about:blank" allow="fullscreen"></iframe>
-<iframe src="about:blank" allow="fullscreen" allowfullscreen></iframe>
-<iframe src="about:blank" allowfullscreen></iframe>
 <script>
-var srcs = [
-  "http://localhost:8000/feature-policy/resources/feature-policy-fullscreen.html",
-  "resources/feature-policy-fullscreen-relocate.html"
-];
-
-function loadFrame(iframe, src) {
-  var allowFullscreen = iframe.allowFullscreen;
-  var allow = iframe.hasAttribute('allow');
-  // fullscreen is enabled if:
-  //     a. relocating within the same origin; or
-  //     b. relocating across origin, with allowfullscreen not overriden by
-  //        container policy.
-  var expectedEnabled =
-    (src === srcs[0]) || (src === srcs[1] && iframe.allowFullscreen && !allow)
-  promise_test(function() {
+  if (window.testRunner) {
+    testRunner.dumpAsText();
+    testRunner.dumpAsText();
+  }
+</script>
+<iframe id="f1" src="about:blank" allow="fullscreen"></iframe>
+<iframe id="f2" src="about:blank" allow="fullscreen" allowfullscreen></iframe>
+<iframe id="f3" src="about:blank" allowfullscreen></iframe>
+<iframe id="f4" src="about:blank" allow="fullscreen"></iframe>
+<iframe id="f5" src="about:blank" allow="fullscreen" allowfullscreen></iframe>
+<iframe id="f6" src="about:blank" allowfullscreen></iframe>
+<script>
+function loadFrame(id, src, is_feature_enabled) {
+  var iframe = document.getElementById(id);
+  promise_test(function(t) {
     iframe.src = src;
     return new Promise(function(resolve, reject) {
       window.addEventListener('message', function(e) {
+        if (e.data.type === 'change' || e.data.type === 'error') {
           resolve(e.data);
-      }, { once: true });
+        }
+      });
     }).then(function(data) {
-      if (expectedEnabled) {
+      if (is_feature_enabled) {
         assert_true(data.enabled, 'Document.fullscreenEnabled:');
         assert_equals(data.type, 'change', 'Document.requestFullscreen():');
       } else {
@@ -35,13 +33,12 @@ function loadFrame(iframe, src) {
         assert_equals(data.type, 'error', 'Document.requestFullscreen():');
       }
     });
-  }, 'Iframe src set to ' + src + ', allowpaymentrequest = ' +
-  allowFullscreen + ', allow = ' + (allow ? 'fullscreen' : 'undefined') +
-  ', fullscreen is ' + (expectedEnabled ? 'enabled' : 'disabled') +
-  ' by container policy.');
+  }, 'iframe ' + id + ' relocated to URL: ' + src + ' with allowfullscreen = ' + iframe.allowFullscreen + ' is ' + (is_feature_enabled ? 'enabled' : 'disabled') + ' by container policy.');
 }
-
-window.onload = function() {
-  loadIframes(srcs);
-}
+loadFrame("f1", "http://localhost:8000/feature-policy/resources/feature-policy-fullscreen.html", true);
+loadFrame("f2", "http://localhost:8000/feature-policy/resources/feature-policy-fullscreen.html", true);
+loadFrame("f3", "http://localhost:8000/feature-policy/resources/feature-policy-fullscreen.html", true);
+loadFrame("f4", "resources/feature-policy-fullscreen-relocate.html", false);
+loadFrame("f5", "resources/feature-policy-fullscreen-relocate.html", false);
+loadFrame("f6", "resources/feature-policy-fullscreen-relocate.html", true);
 </script>

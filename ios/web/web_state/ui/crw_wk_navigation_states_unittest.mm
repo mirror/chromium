@@ -69,9 +69,8 @@ TEST_F(CRWWKNavigationStatesTest, LastAddedNavigation) {
 
   // navigation_3 is added later and hence the latest.
   std::unique_ptr<web::NavigationContextImpl> context =
-      NavigationContextImpl::CreateNavigationContext(
-          nullptr /*web_state*/, GURL(kTestUrl1),
-          ui::PageTransition::PAGE_TRANSITION_SERVER_REDIRECT);
+      NavigationContextImpl::CreateNavigationContext(nullptr /*web_state*/,
+                                                     GURL(kTestUrl1));
   [states_ setContext:std::move(context) forNavigation:navigation3_];
   EXPECT_EQ(navigation3_, [states_ lastAddedNavigation]);
   EXPECT_EQ(WKNavigationState::NONE, [states_ lastAddedNavigationState]);
@@ -85,9 +84,8 @@ TEST_F(CRWWKNavigationStatesTest, Context) {
 
   // Add first context.
   std::unique_ptr<web::NavigationContextImpl> context1 =
-      NavigationContextImpl::CreateNavigationContext(
-          nullptr /*web_state*/, GURL(kTestUrl1),
-          ui::PageTransition::PAGE_TRANSITION_RELOAD);
+      NavigationContextImpl::CreateNavigationContext(nullptr /*web_state*/,
+                                                     GURL(kTestUrl1));
   context1->SetIsSameDocument(true);
   [states_ setContext:std::move(context1) forNavigation:navigation1_];
   EXPECT_FALSE([states_ contextForNavigation:navigation2_]);
@@ -100,9 +98,8 @@ TEST_F(CRWWKNavigationStatesTest, Context) {
 
   // Replace existing context.
   std::unique_ptr<web::NavigationContextImpl> context2 =
-      NavigationContextImpl::CreateNavigationContext(
-          nullptr /*web_state*/, GURL(kTestUrl2),
-          ui::PageTransition::PAGE_TRANSITION_GENERATED);
+      NavigationContextImpl::CreateNavigationContext(nullptr /*web_state*/,
+                                                     GURL(kTestUrl2));
   NSError* error = [[[NSError alloc] init] autorelease];
   context2->SetError(error);
   [states_ setContext:std::move(context2) forNavigation:navigation1_];

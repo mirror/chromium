@@ -184,8 +184,7 @@ source_set("test_support") {
     "//ios/third_party/material_components_ios",
     "//ios/web",
     "//ios/web:earl_grey_test_support",
-    "//ios/web/public/test",
-    "//ios/web/public/test/http_server",
+    "//ios/web:test_support",
     "//ui/base",
     "//ui/base:test_support",
     "//url",
@@ -194,7 +193,6 @@ source_set("test_support") {
   public_deps = [
     "//build/config/ios:xctest",
     "//ios/third_party/earl_grey",
-    "//ios/web/public/test/fakes",
   ]
 
   libs = [

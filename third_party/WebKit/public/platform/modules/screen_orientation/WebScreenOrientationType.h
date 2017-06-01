@@ -12,9 +12,7 @@ enum WebScreenOrientationType {
   kWebScreenOrientationPortraitPrimary,
   kWebScreenOrientationPortraitSecondary,
   kWebScreenOrientationLandscapePrimary,
-  kWebScreenOrientationLandscapeSecondary,
-
-  WebScreenOrientationTypeLast = kWebScreenOrientationLandscapeSecondary
+  kWebScreenOrientationLandscapeSecondary
 };
 
 }  // namespace blink

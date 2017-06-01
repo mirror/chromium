@@ -27,7 +27,6 @@
 #define EventHandler_h
 
 #include "core/CoreExport.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/events/TextEventInputType.h"
 #include "core/input/GestureManager.h"
 #include "core/input/KeyboardEventManager.h"
@@ -39,6 +38,7 @@
 #include "core/page/EventWithHitTestResults.h"
 #include "core/style/ComputedStyleConstants.h"
 #include "platform/Cursor.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/geometry/LayoutPoint.h"
 #include "platform/heap/Handle.h"
 #include "platform/scroll/ScrollTypes.h"
@@ -48,7 +48,6 @@
 #include "platform/wtf/RefPtr.h"
 #include "public/platform/WebInputEvent.h"
 #include "public/platform/WebInputEventResult.h"
-#include "public/web/WebMenuSourceType.h"
 
 namespace blink {
 
@@ -194,19 +193,16 @@ class CORE_EXPORT EventHandler final
   WebInputEventResult SendContextMenuEvent(
       const WebMouseEvent&,
       Node* override_target_node = nullptr);
-  WebInputEventResult ShowNonLocatedContextMenu(
-      Element* override_target_element = nullptr,
-      WebMenuSourceType = kMenuSourceNone);
+  WebInputEventResult SendContextMenuEventForKey(
+      Element* override_target_element = nullptr);
 
   // Returns whether pointerId is active or not
   bool IsPointerEventActive(int);
 
   void SetPointerCapture(int, EventTarget*);
   void ReleasePointerCapture(int, EventTarget*);
-  void ReleaseMousePointerCapture();
   bool HasPointerCapture(int, const EventTarget*) const;
   bool HasProcessedPointerCapture(int, const EventTarget*) const;
-  void ProcessPendingPointerCaptureForPointerLock(const WebMouseEvent&);
 
   void ElementRemoved(EventTarget*);
 

@@ -856,9 +856,8 @@ void AutofillMetrics::FormEventLogger::OnDidPollSuggestions(
   }
 }
 
-void AutofillMetrics::FormEventLogger::OnDidShowSuggestions(
-    const AutofillField& field) {
-  form_interactions_ukm_logger_->LogSuggestionsShown(field);
+void AutofillMetrics::FormEventLogger::OnDidShowSuggestions() {
+  form_interactions_ukm_logger_->LogSuggestionsShown();
 
   Log(AutofillMetrics::FORM_EVENT_SUGGESTIONS_SHOWN);
   if (!has_logged_suggestions_shown_) {
@@ -1064,8 +1063,7 @@ void AutofillMetrics::FormInteractionsUkmLogger::LogInteractedWithForm(
                      server_record_type_count);
 }
 
-void AutofillMetrics::FormInteractionsUkmLogger::LogSuggestionsShown(
-    const AutofillField& field) {
+void AutofillMetrics::FormInteractionsUkmLogger::LogSuggestionsShown() {
   if (!CanLog())
     return;
 
@@ -1075,12 +1073,6 @@ void AutofillMetrics::FormInteractionsUkmLogger::LogSuggestionsShown(
   std::unique_ptr<ukm::UkmEntryBuilder> builder =
       ukm_recorder_->GetEntryBuilder(source_id_,
                                      internal::kUKMSuggestionsShownEntryName);
-  builder->AddMetric(internal::kUKMHeuristicTypeMetricName,
-                     static_cast<int>(field.heuristic_type()));
-  builder->AddMetric(internal::kUKMHtmlFieldTypeMetricName,
-                     static_cast<int>(field.html_type()));
-  builder->AddMetric(internal::kUKMServerTypeMetricName,
-                     static_cast<int>(field.server_type()));
   builder->AddMetric(internal::kUKMMillisecondsSinceFormParsedMetricName,
                      MillisecondsSinceFormParsed());
 }

@@ -39,9 +39,9 @@
 namespace blink {
 
 class Event;
+class FrameView;
 class ResourceResponse;
 class WebLayer;
-class WebPluginContainerBase;
 
 // TODO(joelhockey): Remove this class.
 // The only implementation of this class is web/WebPluginContainerImpl.
@@ -52,7 +52,11 @@ class CORE_EXPORT PluginView : public FrameOrPlugin {
 
   bool IsPluginView() const override { return true; }
 
+  virtual void SetParent(FrameView*) = 0;
+  virtual FrameView* Parent() const = 0;
+  virtual void SetParentVisible(bool) = 0;
   virtual void SetFocused(bool, WebFocusType) = 0;
+  virtual void FrameRectsChanged() = 0;
   virtual void GeometryMayHaveChanged() = 0;
   virtual void HandleEvent(Event*) = 0;
   virtual void EventListenersRemoved() = 0;
@@ -73,9 +77,6 @@ class CORE_EXPORT PluginView : public FrameOrPlugin {
 
   virtual void UpdateAllLifecyclePhases() {}
   virtual void InvalidatePaint() {}
-  virtual WebPluginContainerBase* GetWebPluginContainerBase() const {
-    return nullptr;
-  }
 };
 
 DEFINE_TYPE_CASTS(PluginView,

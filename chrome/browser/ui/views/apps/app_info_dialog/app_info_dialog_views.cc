@@ -30,6 +30,7 @@
 #include "ui/views/border.h"
 #include "ui/views/controls/scroll_view.h"
 #include "ui/views/layout/box_layout.h"
+#include "ui/views/layout/layout_constants.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/window/dialog_delegate.h"
 
@@ -134,14 +135,11 @@ AppInfoDialog::AppInfoDialog(gfx::NativeWindow parent_window,
   // Make a vertically stacked view of all the panels we want to display in the
   // dialog.
   views::View* dialog_body_contents = new views::View();
-  const ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
   dialog_body_contents->SetLayoutManager(new views::BoxLayout(
-      views::BoxLayout::kVertical,
-      provider->GetDistanceMetric(
-          views::DISTANCE_DIALOG_CONTENTS_HORIZONTAL_MARGIN),
-      provider->GetDistanceMetric(
-          views::DISTANCE_DIALOG_CONTENTS_VERTICAL_MARGIN),
-      provider->GetDistanceMetric(DISTANCE_UNRELATED_CONTROL_VERTICAL)));
+      views::BoxLayout::kVertical, views::kButtonHEdgeMarginNew,
+      ChromeLayoutProvider::Get()->GetDistanceMetric(
+          DISTANCE_PANEL_CONTENT_MARGIN),
+      views::kUnrelatedControlVerticalSpacing));
   dialog_body_contents->AddChildView(new AppInfoSummaryPanel(profile, app));
   dialog_body_contents->AddChildView(new AppInfoPermissionsPanel(profile, app));
 

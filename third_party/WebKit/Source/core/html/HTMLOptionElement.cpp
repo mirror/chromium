@@ -284,7 +284,7 @@ void HTMLOptionElement::SetSelectedState(bool selected) {
 }
 
 void HTMLOptionElement::SetDirty(bool value) {
-  is_dirty_ = value;
+  is_dirty_ = true;
 }
 
 void HTMLOptionElement::ChildrenChanged(const ChildrenChange& change) {

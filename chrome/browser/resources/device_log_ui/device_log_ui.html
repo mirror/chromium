@@ -1,68 +1,69 @@
 <!DOCTYPE html>
-<html dir="$i18n{textdirection}" lang="$i18n{language}">
+<html i18n-values="dir:textdirection;lang:language">
 <head>
   <meta charset="utf-8">
-  <title id="device-log-title">$i18n{titleText}</title>
+  <title id="device-log-title" i18n-content="titleText"></title>
   <link rel="stylesheet" href="chrome://device-log/device_log_ui.css">
   <script src="chrome://resources/js/load_time_data.js"></script>
   <script src="chrome://resources/js/util.js"></script>
   <script src="chrome://device-log/strings.js"></script>
   <script src="chrome://device-log/device_log_ui.js"></script>
 </head>
-<body style="fontFamily:$i18n{fontfamily};fontSize:$i18n{fontsize};">
+<body i18n-values=".style.fontFamily:fontfamily;.style.fontSize:fontsize">
   <div id="header">
-    <p>$i18n{autoRefreshText}</p>
+    <p i18n-content="autoRefreshText"></p>
   </div>
   <div id="log-checkbox-container">
-    <button id="log-refresh">$i18n{logRefreshText}</button>
-    <label id="log-checkbox-show">$i18n{logLevelShowText}</label>
+    <button id="log-refresh" i18n-content="logRefreshText"></button>
+    <label id="log-checkbox-show" i18n-content="logLevelShowText"></label>
+
     <label>
       <input id="log-level-error" type="checkbox">
-      <span>$i18n{logLevelErrorText}</span>
+      <span i18n-content="logLevelErrorText"></span>
     </label>
     <label>
       <input id="log-level-user" type="checkbox">
-      <span>$i18n{logLevelUserText}</span>
+      <span i18n-content="logLevelUserText"></span>
     </label>
     <label>
       <input id="log-level-event" type="checkbox">
-      <span>$i18n{logLevelEventText}</span>
+      <span i18n-content="logLevelEventText"></span>
     </label>
     <label>
       <input id="log-level-debug" type="checkbox">
-      <span>$i18n{logLevelDebugText}</span>
+      <span i18n-content="logLevelDebugText"></span>
     </label>
     <label>
       <input id="log-type-login" type="checkbox">
-      <span>$i18n{logTypeLoginText}</span>
+      <span i18n-content="logTypeLoginText"></span>
     </label>
     <label>
       <input id="log-type-network" type="checkbox">
-      <span>$i18n{logTypeNetworkText}</span>
+      <span i18n-content="logTypeNetworkText"></span>
     </label>
     <label>
       <input id="log-type-power" type="checkbox">
-      <span>$i18n{logTypePowerText}</span>
+      <span i18n-content="logTypePowerText"></span>
     </label>
     <label>
       <input id="log-type-bluetooth" type="checkbox">
-      <span>$i18n{logTypeBluetoothText}</span>
+      <span i18n-content="logTypeBluetoothText"></span>
     </label>
     <label>
       <input id="log-type-usb" type="checkbox">
-      <span>$i18n{logTypeUsbText}</span>
+      <span i18n-content="logTypeUsbText"></span>
     </label>
     <label>
       <input id="log-type-hid" type="checkbox">
-      <span>$i18n{logTypeHidText}</span>
+      <span i18n-content="logTypeHidText"></span>
     </label>
     <label>
       <input id="log-fileinfo" type="checkbox">
-      <span>$i18n{logLevelFileinfoText}</span>
+      <span i18n-content="logLevelFileinfoText"></span>
     </label>
     <label>
       <input id="log-timedetail" type="checkbox">
-      <span>$i18n{logLevelTimeDetailText}</span>
+      <span i18n-content="logLevelTimeDetailText"></span>
     </label>
   </div>
   <div id="log-container"></div>

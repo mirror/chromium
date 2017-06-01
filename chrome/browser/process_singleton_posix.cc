@@ -754,7 +754,6 @@ ProcessSingleton::ProcessSingleton(
 }
 
 ProcessSingleton::~ProcessSingleton() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 }
 
 ProcessSingleton::NotifyResult ProcessSingleton::NotifyOtherProcess() {

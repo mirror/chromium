@@ -39,13 +39,11 @@ interface PaymentManager {
 };
 
 struct PaymentAppRequest {
-  url.mojom.Url top_level_origin;
-  url.mojom.Url payment_request_origin;
-  string payment_request_id;
+  url.mojom.Url origin;
   array<PaymentMethodData> method_data;
   PaymentItem total;
   array<PaymentDetailsModifier> modifiers;
-  string instrument_key;
+  string option_id;
 };
 
 struct PaymentAppResponse {

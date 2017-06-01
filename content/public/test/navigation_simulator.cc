@@ -604,7 +604,6 @@ void NavigationSimulator::FailFromThrottleCheck(
       error_code = net::ERR_ABORTED;
       break;
     case NavigationThrottle::BLOCK_REQUEST:
-    case NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE:
       error_code = net::ERR_BLOCKED_BY_CLIENT;
       break;
     case NavigationThrottle::BLOCK_RESPONSE:

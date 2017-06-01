@@ -181,7 +181,7 @@ public class ContentView extends FrameLayout
 
     @Override
     public boolean onDragEvent(DragEvent event) {
-        return getEventForwarder().onDragEvent(event, this);
+        return mContentViewCore.onDragEvent(event);
     }
 
     @Override

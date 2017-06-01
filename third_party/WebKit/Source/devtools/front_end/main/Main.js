@@ -113,7 +113,6 @@ Main.Main = class {
     Runtime.experiments.register('timelineEventInitiators', 'Timeline: event initiators');
     Runtime.experiments.register('timelineFlowEvents', 'Timeline: flow events', true);
     Runtime.experiments.register('timelineInvalidationTracking', 'Timeline: invalidation tracking', true);
-    Runtime.experiments.register('timelineKeepHistory', 'Timeline: keep recording history');
     Runtime.experiments.register('timelineMultipleMainViews', 'Timeline: multiple main views');
     Runtime.experiments.register('timelinePaintTimingMarkers', 'Timeline: paint timing markers', true);
     Runtime.experiments.register('timelinePerFrameTrack', 'Timeline: per-frame tracks', true);
@@ -141,7 +140,7 @@ Main.Main = class {
 
     Runtime.experiments.setDefaultExperiments([
       'continueToLocationMarkers', 'autoAttachToCrossProcessSubframes', 'objectPreviews', 'audits2',
-      'networkGroupingRequests', 'timelineColorByProduct'
+      'networkGroupingRequests'
     ]);
   }
 
@@ -404,7 +403,7 @@ Main.Main = class {
    * @param {!Event} event
    */
   _redispatchClipboardEvent(event) {
-    var eventCopy = new CustomEvent('clipboard-' + event.type, {bubbles: true});
+    var eventCopy = new CustomEvent('clipboard-' + event.type);
     eventCopy['original'] = event;
     var document = event.target && event.target.ownerDocument;
     var target = document ? document.deepActiveElement() : null;

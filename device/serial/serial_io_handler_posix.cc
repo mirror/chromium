@@ -120,7 +120,7 @@ scoped_refptr<SerialIoHandler> SerialIoHandler::Create(
 }
 
 void SerialIoHandlerPosix::ReadImpl() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(pending_read_buffer());
   DCHECK(file().IsValid());
 
@@ -132,7 +132,7 @@ void SerialIoHandlerPosix::ReadImpl() {
 }
 
 void SerialIoHandlerPosix::WriteImpl() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(pending_write_buffer());
   DCHECK(file().IsValid());
 
@@ -140,13 +140,13 @@ void SerialIoHandlerPosix::WriteImpl() {
 }
 
 void SerialIoHandlerPosix::CancelReadImpl() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   file_read_watcher_.reset();
   QueueReadCompleted(0, read_cancel_reason());
 }
 
 void SerialIoHandlerPosix::CancelWriteImpl() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   file_write_watcher_.reset();
   QueueWriteCompleted(0, write_cancel_reason());
 }
@@ -300,7 +300,7 @@ SerialIoHandlerPosix::~SerialIoHandlerPosix() {
 }
 
 void SerialIoHandlerPosix::AttemptRead(bool within_read) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   if (pending_read_buffer()) {
     int bytes_read = HANDLE_EINTR(read(file().GetPlatformFile(),
@@ -357,7 +357,7 @@ void SerialIoHandlerPosix::RunReadCompleted(bool within_read,
 }
 
 void SerialIoHandlerPosix::OnFileCanWriteWithoutBlocking() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   if (pending_write_buffer()) {
     int bytes_written = HANDLE_EINTR(write(file().GetPlatformFile(),
@@ -376,7 +376,7 @@ void SerialIoHandlerPosix::OnFileCanWriteWithoutBlocking() {
 }
 
 void SerialIoHandlerPosix::EnsureWatchingReads() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(file().IsValid());
   if (!file_read_watcher_) {
     file_read_watcher_ = base::FileDescriptorWatcher::WatchReadable(
@@ -386,7 +386,7 @@ void SerialIoHandlerPosix::EnsureWatchingReads() {
 }
 
 void SerialIoHandlerPosix::EnsureWatchingWrites() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(file().IsValid());
   if (!file_write_watcher_) {
     file_write_watcher_ = base::FileDescriptorWatcher::WatchWritable(

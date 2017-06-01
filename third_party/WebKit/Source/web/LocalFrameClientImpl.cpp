@@ -37,21 +37,19 @@
 #include "core/HTMLNames.h"
 #include "core/dom/Document.h"
 #include "core/dom/Fullscreen.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/events/MessageEvent.h"
 #include "core/events/MouseEvent.h"
 #include "core/events/UIEventWithKeyState.h"
 #include "core/exported/SharedWorkerRepositoryClientImpl.h"
 #include "core/exported/WebDataSourceImpl.h"
 #include "core/exported/WebViewBase.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/WebLocalFrameBase.h"
 #include "core/html/HTMLFrameElementBase.h"
 #include "core/html/HTMLMediaElement.h"
 #include "core/html/HTMLPlugInElement.h"
 #include "core/input/EventHandler.h"
-#include "core/inspector/DevToolsEmulator.h"
 #include "core/layout/HitTestResult.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoadRequest.h"
@@ -75,6 +73,7 @@
 #include "modules/vr/NavigatorVR.h"
 #include "platform/Histogram.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/exported/WrappedResourceRequest.h"
 #include "platform/exported/WrappedResourceResponse.h"
 #include "platform/feature_policy/FeaturePolicy.h"
@@ -106,6 +105,7 @@
 #include "public/web/WebPluginParams.h"
 #include "public/web/WebViewClient.h"
 #include "v8/include/v8.h"
+#include "web/DevToolsEmulator.h"
 #include "web/WebDevToolsAgentImpl.h"
 #include "web/WebDevToolsFrontendImpl.h"
 #include "web/WebPluginContainerImpl.h"
@@ -316,10 +316,6 @@ void LocalFrameClientImpl::Detached(FrameDetachType type) {
 
   client->FrameDetached(web_frame_,
                         static_cast<WebFrameClient::DetachType>(type));
-
-  if (type == FrameDetachType::kRemove)
-    web_frame_->DetachFromParent();
-
   // Clear our reference to LocalFrame at the very end, in case the client
   // refers to it.
   web_frame_->SetCoreFrame(nullptr);

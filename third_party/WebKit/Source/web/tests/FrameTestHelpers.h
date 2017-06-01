@@ -53,7 +53,7 @@
 namespace blink {
 
 class WebFrame;
-class WebLocalFrameBase;
+class WebLocalFrameImpl;
 class WebRemoteFrameImpl;
 class WebSettings;
 enum class WebCachePolicy;
@@ -91,7 +91,7 @@ WebMouseEvent CreateMouseEvent(WebInputEvent::Type,
 // Calls WebRemoteFrame::createLocalChild, but with some arguments prefilled
 // with default test values (i.e. with a default |client| or |properties| and/or
 // with a precalculated |uniqueName|).
-WebLocalFrameBase* CreateLocalChild(
+WebLocalFrameImpl* CreateLocalChild(
     WebRemoteFrame* parent,
     const WebString& name = WebString(),
     WebFrameClient* = nullptr,

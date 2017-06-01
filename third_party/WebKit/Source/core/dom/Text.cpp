@@ -31,7 +31,6 @@
 #include "core/dom/LayoutTreeBuilderTraversal.h"
 #include "core/dom/NodeComputedStyle.h"
 #include "core/dom/NodeTraversal.h"
-#include "core/dom/shadow/ElementShadow.h"
 #include "core/dom/shadow/ShadowRoot.h"
 #include "core/events/ScopedEventQueue.h"
 #include "core/layout/LayoutText.h"
@@ -177,7 +176,7 @@ String Text::wholeText() const {
       continue;
     const String& data = ToText(n)->data();
     if (std::numeric_limits<unsigned>::max() - data.length() < result_length)
-      IMMEDIATE_CRASH();
+      CRASH();
     result_length += data.length();
   }
   StringBuilder result;
@@ -447,11 +446,6 @@ static bool ShouldUpdateLayoutByReattaching(const Text& text_node,
                                           *text_layout_object->Parent())) {
     return true;
   }
-  // Check whether this node may be about to be redistributed.
-  if (text_node.ParentElementShadow() &&
-      text_node.ParentElementShadow()->NeedsDistributionRecalc()) {
-    return true;
-  }
   if (text_layout_object->IsTextFragment()) {
     // Changes of |textNode| may change first letter part, so we should
     // reattach.
@@ -470,7 +464,6 @@ void Text::UpdateTextLayoutObject(unsigned offset_of_replaced_data,
     LazyReattachIfAttached();
     return;
   }
-
   text_layout_object->SetTextWithOffset(DataImpl(), offset_of_replaced_data,
                                         length_of_replaced_data);
 }

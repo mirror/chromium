@@ -7,7 +7,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/sequence_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "components/keyed_service/core/keyed_service.h"
 
 namespace base {
@@ -18,7 +18,8 @@ class SequencedTaskRunner;
 namespace bookmarks {
 
 // This service manages the startup task runners.
-class StartupTaskRunnerService : public KeyedService {
+class StartupTaskRunnerService : public base::NonThreadSafe,
+                                 public KeyedService {
  public:
   explicit StartupTaskRunnerService(
       const scoped_refptr<base::SequencedTaskRunner>& io_task_runner);
@@ -39,8 +40,6 @@ class StartupTaskRunnerService : public KeyedService {
  private:
   scoped_refptr<base::SequencedTaskRunner> io_task_runner_;
   scoped_refptr<base::DeferredSequencedTaskRunner> bookmark_task_runner_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(StartupTaskRunnerService);
 };

@@ -33,14 +33,10 @@ class NavigationContextImplTest : public PlatformTest {
 // Tests CreateNavigationContext factory method.
 TEST_F(NavigationContextImplTest, NavigationContext) {
   std::unique_ptr<NavigationContext> context =
-      NavigationContextImpl::CreateNavigationContext(
-          &web_state_, url_, ui::PageTransition::PAGE_TRANSITION_FORWARD_BACK);
+      NavigationContextImpl::CreateNavigationContext(&web_state_, url_);
   ASSERT_TRUE(context);
 
   EXPECT_EQ(&web_state_, context->GetWebState());
-  EXPECT_TRUE(PageTransitionTypeIncludingQualifiersIs(
-      context->GetPageTransition(),
-      ui::PageTransition::PAGE_TRANSITION_FORWARD_BACK));
   EXPECT_EQ(url_, context->GetUrl());
   EXPECT_FALSE(context->IsSameDocument());
   EXPECT_FALSE(context->GetError());
@@ -50,26 +46,16 @@ TEST_F(NavigationContextImplTest, NavigationContext) {
 // Tests NavigationContextImpl Setters.
 TEST_F(NavigationContextImplTest, Setters) {
   std::unique_ptr<NavigationContextImpl> context =
-      NavigationContextImpl::CreateNavigationContext(
-          &web_state_, url_, ui::PageTransition::PAGE_TRANSITION_FORWARD_BACK);
+      NavigationContextImpl::CreateNavigationContext(&web_state_, url_);
   ASSERT_TRUE(context);
 
   ASSERT_FALSE(context->IsSameDocument());
-  ASSERT_FALSE(context->IsPost());
   ASSERT_FALSE(context->GetError());
   ASSERT_NE(response_headers_.get(), context->GetResponseHeaders());
 
   // SetSameDocument
   context->SetIsSameDocument(true);
   EXPECT_TRUE(context->IsSameDocument());
-  ASSERT_FALSE(context->IsPost());
-  EXPECT_FALSE(context->GetError());
-  EXPECT_NE(response_headers_.get(), context->GetResponseHeaders());
-
-  // SetPost
-  context->SetIsPost(true);
-  EXPECT_TRUE(context->IsSameDocument());
-  ASSERT_TRUE(context->IsPost());
   EXPECT_FALSE(context->GetError());
   EXPECT_NE(response_headers_.get(), context->GetResponseHeaders());
 
@@ -77,14 +63,12 @@ TEST_F(NavigationContextImplTest, Setters) {
   NSError* error = [[[NSError alloc] init] autorelease];
   context->SetError(error);
   EXPECT_TRUE(context->IsSameDocument());
-  ASSERT_TRUE(context->IsPost());
   EXPECT_EQ(error, context->GetError());
   EXPECT_NE(response_headers_.get(), context->GetResponseHeaders());
 
   // SetResponseHeaders
   context->SetResponseHeaders(response_headers_);
   EXPECT_TRUE(context->IsSameDocument());
-  ASSERT_TRUE(context->IsPost());
   EXPECT_EQ(error, context->GetError());
   EXPECT_EQ(response_headers_.get(), context->GetResponseHeaders());
 }

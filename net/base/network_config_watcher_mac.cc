@@ -67,7 +67,10 @@ NetworkConfigWatcherMacThread::~NetworkConfigWatcherMacThread() {
 }
 
 void NetworkConfigWatcherMacThread::Init() {
-  base::ThreadRestrictions::SetIOAllowed(true);
+  // Disallow IO to make sure NetworkConfigWatcherMacThread's helper thread does
+  // not perform blocking operations.
+  base::ThreadRestrictions::SetIOAllowed(false);
+
   delegate_->Init();
 
   // TODO(willchan): Look to see if there's a better signal for when it's ok to

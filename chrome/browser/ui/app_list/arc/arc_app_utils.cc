@@ -9,6 +9,7 @@
 
 #include "ash/shell.h"
 #include "base/bind.h"
+#include "base/feature_list.h"
 #include "base/json/json_writer.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/values.h"
@@ -20,7 +21,10 @@
 #include "chrome/browser/ui/ash/launcher/arc_app_deferred_launcher_controller.h"
 #include "chrome/browser/ui/ash/launcher/arc_app_shelf_id.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
+#include "chromeos/dbus/session_manager_client.h"
 #include "components/arc/arc_bridge_service.h"
+#include "components/arc/arc_features.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/arc_util.h"
 #include "components/arc/common/intent_helper.mojom.h"
@@ -64,6 +68,12 @@ constexpr char kSetInTouchModeIntent[] =
     "org.chromium.arc.intent_helper.SET_IN_TOUCH_MODE";
 constexpr char kShowTalkbackSettingsIntent[] =
     "org.chromium.arc.intent_helper.SHOW_TALKBACK_SETTINGS";
+
+void SetArcCpuRestrictionCallback(bool success) {
+  VLOG(2) << "Finished prioritizing the instance: result=" << success;
+  if (!success)
+    LOG(ERROR) << "Failed to prioritize ARC";
+}
 
 // Find a proper size and position for a given rectangle on the screen.
 // TODO(skuhne): This needs more consideration, but it is lacking
@@ -170,10 +180,15 @@ const char kPlayStoreAppId[] = "cnbgggchhmkkdmeppjobngjoejnihlei";
 const char kLegacyPlayStoreAppId[] = "gpkmicpkkebkmabiaedjognfppcchdfa";
 const char kPlayStorePackage[] = "com.android.vending";
 const char kPlayStoreActivity[] = "com.android.vending.AssetBrowserActivity";
+const char kFilesAppId[] = "clippbnfpgifdekheldlleoeiiababjg";
 const char kSettingsAppId[] = "mconboelelhjpkbdhhiijkgcimoangdj";
 
 bool ShouldShowInLauncher(const std::string& app_id) {
-  return (app_id != kSettingsAppId);
+  if (app_id == kFilesAppId) {
+    return base::FeatureList::IsEnabled(kShowArcFilesAppFeature);
+  } else {
+    return (app_id != kSettingsAppId);
+  }
 }
 
 bool LaunchAppWithRect(content::BrowserContext* context,
@@ -264,7 +279,8 @@ bool LaunchApp(content::BrowserContext* context,
   // Even when ARC is not allowed for the profile, ARC apps may still show up
   // as a placeholder to show the guide notification for proper configuration.
   // Handle such a case here and shows the desired notification.
-  if (IsArcBlockedDueToIncompatibleFileSystem(profile)) {
+  if (IsArcAllowedInAppListForProfile(profile) &&
+      !IsArcAllowedForProfile(profile)) {
     arc::ShowArcMigrationGuideNotification(profile);
     return false;
   }
@@ -320,7 +336,12 @@ bool LaunchApp(content::BrowserContext* context,
       // default to avoid slowing down Chrome's user session restoration.
       // However, the restriction should be lifted once the user explicitly
       // tries to launch an ARC app.
-      SetArcCpuRestriction(false);
+      VLOG(2) << "Prioritizing the instance";
+      chromeos::SessionManagerClient* session_manager_client =
+          chromeos::DBusThreadManager::Get()->GetSessionManagerClient();
+      session_manager_client->SetArcCpuRestriction(
+          login_manager::CONTAINER_CPU_RESTRICTION_FOREGROUND,
+          base::Bind(SetArcCpuRestrictionCallback));
     }
     prefs->SetLastLaunchTime(app_id, base::Time::Now());
     return true;

@@ -338,8 +338,7 @@ class FailingFakeURLFetcherFactory : public net::URLFetcherFactory {
       int id,
       const GURL& url,
       net::URLFetcher::RequestType request_type,
-      net::URLFetcherDelegate* d,
-      net::NetworkTrafficAnnotationTag traffic_annotation) override {
+      net::URLFetcherDelegate* d) override {
     return base::MakeUnique<net::FakeURLFetcher>(
         url, d, /*response_data=*/std::string(), net::HTTP_NOT_FOUND,
         net::URLRequestStatus::FAILED);

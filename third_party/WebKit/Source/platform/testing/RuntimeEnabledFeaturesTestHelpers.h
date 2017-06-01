@@ -60,10 +60,6 @@ typedef ScopedRuntimeEnabledFeatureForTest<
     RuntimeEnabledFeatures::accessibilityObjectModelEnabled,
     RuntimeEnabledFeatures::setAccessibilityObjectModelEnabled>
     ScopedAccessibilityObjectModelForTest;
-typedef ScopedRuntimeEnabledFeatureForTest<
-    RuntimeEnabledFeatures::mojoBlobsEnabled,
-    RuntimeEnabledFeatures::setMojoBlobsEnabled>
-    ScopedMojoBlobsForTest;
 
 }  // namespace blink
 

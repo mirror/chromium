@@ -12,14 +12,14 @@
 
 namespace ash {
 
-class Shelf;
+class WmShelf;
 
 // ShelfLockingManager observes screen and session events to align the shelf at
 // the bottom of the screen when the screen is locked.
 class ASH_EXPORT ShelfLockingManager : public SessionObserver,
                                        public LockStateObserver {
  public:
-  explicit ShelfLockingManager(Shelf* shelf);
+  explicit ShelfLockingManager(WmShelf* shelf);
   ~ShelfLockingManager() override;
 
   bool is_locked() const { return session_locked_ || screen_locked_; }
@@ -36,7 +36,7 @@ class ASH_EXPORT ShelfLockingManager : public SessionObserver,
   // Update the shelf state for session and screen lock changes.
   void UpdateLockedState();
 
-  Shelf* shelf_;
+  WmShelf* shelf_;
   bool session_locked_ = false;
   bool screen_locked_ = false;
   ShelfAlignment stored_alignment_;

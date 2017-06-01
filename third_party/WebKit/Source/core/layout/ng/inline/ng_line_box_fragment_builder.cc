@@ -14,15 +14,7 @@
 namespace blink {
 
 NGLineBoxFragmentBuilder::NGLineBoxFragmentBuilder(NGInlineNode* node)
-    : writing_mode_(kHorizontalTopBottom),
-      direction_(TextDirection::kLtr),
-      node_(node) {}
-
-NGLineBoxFragmentBuilder& NGLineBoxFragmentBuilder::SetWritingMode(
-    NGWritingMode writing_mode) {
-  writing_mode_ = writing_mode;
-  return *this;
-}
+    : direction_(TextDirection::kLtr), node_(node) {}
 
 NGLineBoxFragmentBuilder& NGLineBoxFragmentBuilder::SetDirection(
     TextDirection direction) {
@@ -48,6 +40,18 @@ NGLineBoxFragmentBuilder& NGLineBoxFragmentBuilder::AddChild(
 void NGLineBoxFragmentBuilder::MoveChildrenInBlockDirection(LayoutUnit delta) {
   for (auto& offset : offsets_)
     offset.block_offset += delta;
+}
+
+void NGLineBoxFragmentBuilder::MoveChildrenInInlineDirection(LayoutUnit delta) {
+  NGWritingMode writing_mode(
+      FromPlatformWritingMode(node_->Style().GetWritingMode()));
+  LayoutUnit child_inline_size;
+  for (size_t i = 0; i < children_.size(); ++i) {
+    offsets_[i].inline_offset = delta + child_inline_size;
+    NGPhysicalFragment* child = children_[i].Get();
+    child_inline_size +=
+        child->Size().ConvertToLogical(writing_mode).inline_size;
+  }
 }
 
 void NGLineBoxFragmentBuilder::MoveChildrenInBlockDirection(LayoutUnit delta,

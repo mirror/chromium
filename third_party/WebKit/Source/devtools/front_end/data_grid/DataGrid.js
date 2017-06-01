@@ -125,13 +125,6 @@ DataGrid.DataGrid = class extends Common.Object {
   }
 
   /**
-   * @param {boolean} isStriped
-   */
-  setStriped(isStriped) {
-    this.element.classList.toggle('striped-data-grid', isStriped);
-  }
-
-  /**
    * @return {!Element}
    */
   headerTableBody() {
@@ -1298,7 +1291,7 @@ DataGrid.DataGridNode = class extends Common.Object {
    * @return {!Element}
    */
   createElement() {
-    this._element = createElementWithClass('tr', 'data-grid-data-grid-node');
+    this._element = createElement('tr');
     this._element._dataGridNode = this;
 
     if (this._hasChildren)

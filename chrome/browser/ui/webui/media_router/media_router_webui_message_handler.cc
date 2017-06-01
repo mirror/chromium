@@ -502,7 +502,7 @@ void MediaRouterWebUIMessageHandler::OnRequestInitialData(
   initial_data.SetBoolean("useTabMirroring", use_tab_mirroring);
 
   initial_data.SetBoolean(
-      "useWebUiRouteControls",
+      "useNewRouteControls",
       base::FeatureList::IsEnabled(features::kMediaRouterUIRouteController));
 
   web_ui()->CallJavascriptFunctionUnsafe(kSetInitialData, initial_data);

@@ -366,7 +366,7 @@ void HeadlessShell::OnExpressionResult(
 
 void HeadlessShell::CaptureScreenshot() {
   devtools_client_->GetPage()->GetExperimental()->CaptureScreenshot(
-      page::CaptureScreenshotParams::Builder().Build(),
+      page::CaptureScreenshotParams::Builder().SetFromSurface(true).Build(),
       base::Bind(&HeadlessShell::OnScreenshotCaptured,
                  weak_factory_.GetWeakPtr()));
 }
@@ -549,8 +549,7 @@ int HeadlessShellMain(HINSTANCE instance,
           ::switches::kProcessType);
   if (process_type == crash_reporter::switches::kCrashpadHandler) {
     return crash_reporter::RunAsCrashpadHandler(
-        *base::CommandLine::ForCurrentProcess(), base::FilePath(),
-        ::switches::kProcessType, switches::kUserDataDir);
+        *base::CommandLine::ForCurrentProcess(), ::switches::kProcessType);
   }
 #endif  // defined(HEADLESS_USE_CRASPHAD)
   RunChildProcessIfNeeded(instance, sandbox_info);

@@ -12,7 +12,7 @@
 #include <string>
 
 #include "base/macros.h"
-#include "components/cast_channel/cast_channel_enum.h"
+#include "extensions/common/api/cast_channel.h"
 #include "net/base/io_buffer.h"
 
 namespace extensions {
@@ -23,8 +23,6 @@ class CastMessage;
 // Class for constructing and parsing CastMessage packet data.
 class MessageFramer {
  public:
-  using ChannelError = ::cast_channel::ChannelError;
-
   // |input_buffer|: The input buffer used by all socket read operations that
   //                 feed data into the framer.
   explicit MessageFramer(scoped_refptr<net::GrowableIOBuffer> input_buffer);

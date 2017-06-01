@@ -195,7 +195,6 @@ HeadlessAsyncDevTooledBrowserTest::HeadlessAsyncDevTooledBrowserTest()
     : browser_context_(nullptr),
       web_contents_(nullptr),
       devtools_client_(HeadlessDevToolsClient::Create()),
-      browser_devtools_client_(HeadlessDevToolsClient::Create()),
       render_process_exited_(false) {}
 
 HeadlessAsyncDevTooledBrowserTest::~HeadlessAsyncDevTooledBrowserTest() {}
@@ -221,17 +220,16 @@ void HeadlessAsyncDevTooledBrowserTest::RunTest() {
   HeadlessBrowserContext::Builder builder =
       browser()->CreateBrowserContextBuilder();
   builder.SetProtocolHandlers(GetProtocolHandlers());
-  if (GetTabSocketType() != HeadlessWebContents::Builder::TabSocketType::NONE) {
+  if (GetCreateTabSocket()) {
     builder.EnableUnsafeNetworkAccessWithMojoBindings(true);
     builder.AddTabSocketMojoBindings();
   }
   browser_context_ = builder.Build();
 
   browser()->SetDefaultBrowserContext(browser_context_);
-  browser()->GetDevToolsTarget()->AttachClient(browser_devtools_client_.get());
 
   web_contents_ = browser_context_->CreateWebContentsBuilder()
-                      .SetTabSocketType(GetTabSocketType())
+                      .CreateTabSocket(GetCreateTabSocket())
                       .Build();
   web_contents_->AddObserver(this);
 
@@ -242,7 +240,6 @@ void HeadlessAsyncDevTooledBrowserTest::RunTest() {
   web_contents_->RemoveObserver(this);
   web_contents_->Close();
   web_contents_ = nullptr;
-  browser()->GetDevToolsTarget()->DetachClient(browser_devtools_client_.get());
   browser_context_->Close();
   browser_context_ = nullptr;
 }
@@ -251,13 +248,7 @@ ProtocolHandlerMap HeadlessAsyncDevTooledBrowserTest::GetProtocolHandlers() {
   return ProtocolHandlerMap();
 }
 
-HeadlessWebContents::Builder::TabSocketType
-HeadlessAsyncDevTooledBrowserTest::GetTabSocketType() {
-  return HeadlessWebContents::Builder::TabSocketType::NONE;
-}
-
-bool HeadlessAsyncDevTooledBrowserTest::
-    GetCreateTabSocketOnlyForIsolatedWorld() {
+bool HeadlessAsyncDevTooledBrowserTest::GetCreateTabSocket() {
   return false;
 }
 

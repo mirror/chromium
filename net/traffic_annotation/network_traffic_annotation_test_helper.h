@@ -10,10 +10,6 @@
 // Macro for unit tests traffic annotations.
 #define TRAFFIC_ANNOTATION_FOR_TESTS   \
   net::DefineNetworkTrafficAnnotation( \
-      "test", "Traffic annotation for unit, browser and other tests")
-#define PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS  \
-  net::DefinePartialNetworkTrafficAnnotation( \
-      "test_partial", "test",                 \
-      "Partial traffic annotation for unit, browser and other tests")
+      "UnitTest", "Traffic annotation for unit, browser and other tests")
 
 #endif  // NET_TRAFFIC_ANNOTATION_NETWORK_TRAFFIC_ANNOTATION_TEST_HELPER_H_

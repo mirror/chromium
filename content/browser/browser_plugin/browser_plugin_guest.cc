@@ -898,8 +898,8 @@ void BrowserPluginGuest::OnExecuteEditCommand(int browser_plugin_instance_id,
   if (!focused_frame)
     return;
 
-  focused_frame->GetFrameInputHandler()->ExecuteEditCommand(name,
-                                                            base::nullopt);
+  focused_frame->Send(new InputMsg_ExecuteNoValueEditCommand(
+      focused_frame->GetRoutingID(), name));
 }
 
 void BrowserPluginGuest::OnImeSetComposition(
@@ -920,10 +920,7 @@ void BrowserPluginGuest::OnImeCommitText(
                                   replacement_range, relative_cursor_pos));
 }
 
-void BrowserPluginGuest::OnImeFinishComposingText(
-    int browser_plugin_instance_id,
-    bool keep_selection) {
-  DCHECK_EQ(browser_plugin_instance_id_, browser_plugin_instance_id);
+void BrowserPluginGuest::OnImeFinishComposingText(bool keep_selection) {
   Send(new InputMsg_ImeFinishComposingText(routing_id(), keep_selection));
 }
 
@@ -934,7 +931,7 @@ void BrowserPluginGuest::OnExtendSelectionAndDelete(
   RenderFrameHostImpl* rfh = static_cast<RenderFrameHostImpl*>(
       web_contents()->GetFocusedFrame());
   if (rfh)
-    rfh->GetFrameInputHandler()->ExtendSelectionAndDelete(before, after);
+    rfh->ExtendSelectionAndDelete(before, after);
 }
 
 void BrowserPluginGuest::OnLockMouse(bool user_gesture,

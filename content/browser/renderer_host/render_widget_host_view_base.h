@@ -68,18 +68,12 @@ struct DidOverscrollParams;
 }
 
 namespace content {
-
-// The duration after which a synthetic wheel with zero deltas and
-// phase = |kPhaseEnded| will be sent after the last wheel event.
-const int64_t kDefaultMouseWheelLatchingTransactionMs = 100;
-
 class BrowserAccessibilityDelegate;
 class BrowserAccessibilityManager;
 class RenderWidgetHostImpl;
 class RenderWidgetHostViewBaseObserver;
 class SyntheticGestureTarget;
 class TextInputManager;
-class TouchSelectionControllerClientManager;
 class WebCursor;
 struct NativeWebKeyboardEvent;
 struct TextInputState;
@@ -167,7 +161,8 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // Notifies the View that the renderer text selection has changed.
   virtual void SelectionChanged(const base::string16& text,
                                 size_t offset,
-                                const gfx::Range& range);
+                                const gfx::Range& range,
+                                bool user_initiated);
 
   // The requested size of the renderer. May differ from GetViewBounds().size()
   // when the view requires additional throttling.
@@ -317,10 +312,6 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // need to also be resolved.
   virtual bool IsRenderWidgetHostViewChildFrame();
 
-  // Notify the View that a screen rect update is being sent to the
-  // RenderWidget. Related platform-specific updates can be sent from here.
-  virtual void WillSendScreenRects() {}
-
   // Returns true if the current view is in virtual reality mode.
   virtual bool IsInVR() const;
 
@@ -429,13 +420,6 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   bool wheel_scroll_latching_enabled() {
     return wheel_scroll_latching_enabled_;
   }
-
-  // This only returns non-null on platforms that implement touch
-  // selection editing (TSE), currently Aura and (soon) Android.
-  // TODO(wjmaclean): update this comment when OOPIF TSE is implemented on
-  // Android.
-  virtual TouchSelectionControllerClientManager*
-  touch_selection_controller_client_manager();
 
   // Exposed for testing.
   virtual bool IsChildFrameForTesting() const;

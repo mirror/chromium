@@ -19,7 +19,6 @@ class CORE_EXPORT CSSUnitValue final : public CSSNumericValue {
   static CSSUnitValue* Create(double value,
                               const String& unit,
                               ExceptionState&);
-  static CSSUnitValue* Create(double value, CSSPrimitiveValue::UnitType);
   static CSSUnitValue* FromCSSValue(const CSSPrimitiveValue&);
 
   void setValue(double new_value) { value_ = new_value; }

@@ -21,18 +21,18 @@ class MODULES_EXPORT PaintWorkletGlobalScopeProxy
  public:
   static PaintWorkletGlobalScopeProxy* From(WorkletGlobalScopeProxy*);
 
-  PaintWorkletGlobalScopeProxy(LocalFrame*,
-                               PaintWorkletPendingGeneratorRegistry*);
+  explicit PaintWorkletGlobalScopeProxy(LocalFrame*);
   virtual ~PaintWorkletGlobalScopeProxy() = default;
 
   // Implements WorkletGlobalScopeProxy.
   void FetchAndInvokeScript(const KURL& module_url_record,
                             WebURLRequest::FetchCredentialsMode,
-                            RefPtr<WebTaskRunner> outside_settings_task_runner,
                             WorkletPendingTasks*) override;
+  void EvaluateScript(const ScriptSourceCode&) override;
   void TerminateWorkletGlobalScope() override;
 
   CSSPaintDefinition* FindDefinition(const String& name);
+  void AddPendingGenerator(const String& name, CSSPaintImageGeneratorImpl*);
 
   PaintWorkletGlobalScope* global_scope() const { return global_scope_.Get(); }
 

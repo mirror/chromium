@@ -73,7 +73,7 @@ public class BottomSheetNewTabControllerTest extends BottomSheetTestCaseBase {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                mBottomSheet.loadUrlInNewTab(new LoadUrlParams("about:blank"));
+                mBottomSheet.loadUrl(new LoadUrlParams("about:blank"), false);
             }
         });
 
@@ -95,6 +95,7 @@ public class BottomSheetNewTabControllerTest extends BottomSheetTestCaseBase {
         // Select "New incognito tab" from the menu.
         MenuUtils.invokeCustomMenuActionSync(
                 getInstrumentation(), getActivity(), R.id.new_incognito_tab_menu_id);
+
         // The sheet should be opened at half height over the tab switcher and the tab count should
         // remain unchanged. The incognito model should now be selected.
         validateState(false, BottomSheet.SHEET_STATE_HALF);
@@ -114,7 +115,7 @@ public class BottomSheetNewTabControllerTest extends BottomSheetTestCaseBase {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                mBottomSheet.loadUrlInNewTab(new LoadUrlParams("about:blank"));
+                mBottomSheet.loadUrl(new LoadUrlParams("about:blank"), true);
             }
         });
 
@@ -172,8 +173,12 @@ public class BottomSheetNewTabControllerTest extends BottomSheetTestCaseBase {
 
     private void loadChromeHomeNewTab() throws InterruptedException {
         final Tab tab = getActivity().getActivityTab();
-        ChromeTabUtils.loadUrlOnUiThread(tab, UrlConstants.NTP_URL);
-        ChromeTabUtils.waitForTabPageLoaded(tab, UrlConstants.NTP_URL);
+        ChromeTabUtils.waitForTabPageLoaded(tab, new Runnable() {
+            @Override
+            public void run() {
+                ChromeTabUtils.loadUrlOnUiThread(tab, UrlConstants.NTP_URL);
+            }
+        });
         getInstrumentation().waitForIdleSync();
     }
 
@@ -192,12 +197,12 @@ public class BottomSheetNewTabControllerTest extends BottomSheetTestCaseBase {
     private void closeNewTab() throws InterruptedException, TimeoutException {
         int currentCallCount = mTabModelObserver.mDidCloseTabCallbackHelper.getCallCount();
         Tab tab = getActivity().getActivityTab();
-        final ChromeHomeNewTabPageBase newTabPage = (ChromeHomeNewTabPageBase) tab.getNativePage();
+        final ChromeHomeNewTabPageBase mNewTabPage = (ChromeHomeNewTabPageBase) tab.getNativePage();
 
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                newTabPage.getCloseButtonForTests().callOnClick();
+                mNewTabPage.getCloseButtonForTests().callOnClick();
                 getActivity().getLayoutManager().getActiveLayout().finishAnimationsForTests();
             }
         });

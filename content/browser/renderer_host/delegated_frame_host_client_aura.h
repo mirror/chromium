@@ -36,7 +36,7 @@ class CONTENT_EXPORT DelegatedFrameHostClientAura
   bool DelegatedFrameCanCreateResizeLock() const override;
   std::unique_ptr<CompositorResizeLock> DelegatedFrameHostCreateResizeLock()
       override;
-  void OnBeginFrame() override;
+  void OnBeginFrame(const cc::BeginFrameArgs& args) override;
   bool IsAutoResizeEnabled() const override;
 
   // CompositorResizeLockClient implementation.

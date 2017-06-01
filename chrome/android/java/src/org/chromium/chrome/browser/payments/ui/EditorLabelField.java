@@ -5,7 +5,6 @@
 package org.chromium.chrome.browser.payments.ui;
 
 import android.content.Context;
-import android.support.v7.content.res.AppCompatResources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,9 +49,11 @@ class EditorLabelField {
         ((TextView) mLayout.findViewById(R.id.top_label)).setText(fieldModel.getLabel());
         ((TextView) mLayout.findViewById(R.id.mid_label)).setText(fieldModel.getMidLabel());
         ((TextView) mLayout.findViewById(R.id.bottom_label)).setText(fieldModel.getBottomLabel());
+
+        ((ImageView) mLayout.findViewById(R.id.icon)).setImageResource(
+                fieldModel.getLabelIconResourceId());
         ((ImageView) mLayout.findViewById(R.id.icon))
-                .setImageDrawable(AppCompatResources.getDrawable(
-                        context, fieldModel.getLabelIconResourceId()));
+                .setBackgroundResource(R.drawable.payments_ui_logo_bg);
     }
 
     /** @return The View containing everything. */

@@ -74,7 +74,7 @@ class CocoaScrollBarThumb : public BaseScrollBarThumb {
 
  protected:
   // View:
-  gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetPreferredSize() const override;
   void OnPaint(gfx::Canvas* canvas) override;
   bool OnMousePressed(const ui::MouseEvent& event) override;
   void OnMouseReleased(const ui::MouseEvent& event) override;
@@ -110,7 +110,7 @@ bool CocoaScrollBarThumb::IsStatePressed() const {
   return GetState() == CustomButton::STATE_PRESSED;
 }
 
-gfx::Size CocoaScrollBarThumb::CalculatePreferredSize() const {
+gfx::Size CocoaScrollBarThumb::GetPreferredSize() const {
   return gfx::Size(kScrollbarThumbThickness, kScrollbarThumbThickness);
 }
 
@@ -238,7 +238,7 @@ void CocoaScrollBar::Layout() {
   }
 }
 
-gfx::Size CocoaScrollBar::CalculatePreferredSize() const {
+gfx::Size CocoaScrollBar::GetPreferredSize() const {
   return gfx::Size();
 }
 

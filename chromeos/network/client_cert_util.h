@@ -27,8 +27,6 @@ namespace chromeos {
 
 namespace client_cert {
 
-CHROMEOS_EXPORT extern const char kDefaultTPMPin[];
-
 enum ConfigType {
   CONFIG_TYPE_NONE,
   CONFIG_TYPE_OPENVPN,

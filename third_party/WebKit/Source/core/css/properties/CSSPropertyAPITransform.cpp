@@ -7,7 +7,6 @@
 #include "core/css/CSSFunctionValue.h"
 #include "core/css/CSSValueList.h"
 #include "core/css/parser/CSSParserContext.h"
-#include "core/css/parser/CSSParserLocalContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "platform/Length.h"
 
@@ -95,15 +94,13 @@ CSSValue* ConsumeTransformValue(CSSParserTokenRange& range,
     case CSSValueSkewX:
     case CSSValueSkewY:
     case CSSValueSkew:
-      parsed_value = CSSPropertyParserHelpers::ConsumeAngle(
-          args, *context, UseCounter::kUnitlessZeroAngleTransform);
+      parsed_value = CSSPropertyParserHelpers::ConsumeAngle(args);
       if (!parsed_value)
         return nullptr;
       if (function_id == CSSValueSkew &&
           CSSPropertyParserHelpers::ConsumeCommaIncludingWhitespace(args)) {
         transform_value->Append(*parsed_value);
-        parsed_value = CSSPropertyParserHelpers::ConsumeAngle(
-            args, *context, UseCounter::kUnitlessZeroAngleTransform);
+        parsed_value = CSSPropertyParserHelpers::ConsumeAngle(args);
         if (!parsed_value)
           return nullptr;
       }
@@ -167,8 +164,7 @@ CSSValue* ConsumeTransformValue(CSSParserTokenRange& range,
           !CSSPropertyParserHelpers::ConsumeCommaIncludingWhitespace(args)) {
         return nullptr;
       }
-      parsed_value = CSSPropertyParserHelpers::ConsumeAngle(
-          args, *context, UseCounter::kUnitlessZeroAngleTransform);
+      parsed_value = CSSPropertyParserHelpers::ConsumeAngle(args);
       if (!parsed_value)
         return nullptr;
       break;
@@ -191,14 +187,15 @@ CSSValue* ConsumeTransformValue(CSSParserTokenRange& range,
 const CSSValue* CSSPropertyAPITransform::parseSingleValue(
     CSSParserTokenRange& range,
     const CSSParserContext& context,
-    const CSSParserLocalContext& local_context) {
+    CSSPropertyID unresolved_property) {
   if (range.Peek().Id() == CSSValueNone)
     return CSSPropertyParserHelpers::ConsumeIdent(range);
 
   CSSValueList* list = CSSValueList::CreateSpaceSeparated();
   do {
     CSSValue* parsed_transform_value = ConsumeTransformValue(
-        range, &context, local_context.GetUseAliasParsing());
+        range, &context,
+        unresolved_property == CSSPropertyAliasWebkitTransform);
     if (!parsed_transform_value)
       return nullptr;
     list->Append(*parsed_transform_value);

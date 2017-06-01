@@ -27,9 +27,9 @@
 
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/VisualViewport.h"
 #include "core/page/Page.h"
 #include "core/style/ComputedStyle.h"
@@ -54,34 +54,34 @@ ExecutionContext* DOMVisualViewport::GetExecutionContext() const {
   return window_->GetExecutionContext();
 }
 
-float DOMVisualViewport::offsetLeft() const {
+float DOMVisualViewport::scrollLeft() {
   LocalFrame* frame = window_->GetFrame();
   if (!frame || !frame->IsMainFrame())
     return 0;
 
   if (Page* page = frame->GetPage())
-    return page->GetVisualViewport().OffsetLeft();
+    return page->GetVisualViewport().ScrollLeft();
 
   return 0;
 }
 
-float DOMVisualViewport::offsetTop() const {
+float DOMVisualViewport::scrollTop() {
   LocalFrame* frame = window_->GetFrame();
   if (!frame || !frame->IsMainFrame())
     return 0;
 
   if (Page* page = frame->GetPage())
-    return page->GetVisualViewport().OffsetTop();
+    return page->GetVisualViewport().ScrollTop();
 
   return 0;
 }
 
-float DOMVisualViewport::pageLeft() const {
+float DOMVisualViewport::pageX() {
   LocalFrame* frame = window_->GetFrame();
   if (!frame)
     return 0;
 
-  LocalFrameView* view = frame->View();
+  FrameView* view = frame->View();
   if (!view)
     return 0;
 
@@ -90,12 +90,12 @@ float DOMVisualViewport::pageLeft() const {
   return AdjustScrollForAbsoluteZoom(viewport_x, frame->PageZoomFactor());
 }
 
-float DOMVisualViewport::pageTop() const {
+float DOMVisualViewport::pageY() {
   LocalFrame* frame = window_->GetFrame();
   if (!frame)
     return 0;
 
-  LocalFrameView* view = frame->View();
+  FrameView* view = frame->View();
   if (!view)
     return 0;
 
@@ -104,7 +104,7 @@ float DOMVisualViewport::pageTop() const {
   return AdjustScrollForAbsoluteZoom(viewport_y, frame->PageZoomFactor());
 }
 
-double DOMVisualViewport::width() const {
+double DOMVisualViewport::clientWidth() {
   LocalFrame* frame = window_->GetFrame();
   if (!frame)
     return 0;
@@ -116,12 +116,12 @@ double DOMVisualViewport::width() const {
   }
 
   if (Page* page = frame->GetPage())
-    return page->GetVisualViewport().Width();
+    return page->GetVisualViewport().ClientWidth();
 
   return 0;
 }
 
-double DOMVisualViewport::height() const {
+double DOMVisualViewport::clientHeight() {
   LocalFrame* frame = window_->GetFrame();
   if (!frame)
     return 0;
@@ -133,12 +133,12 @@ double DOMVisualViewport::height() const {
   }
 
   if (Page* page = frame->GetPage())
-    return page->GetVisualViewport().Height();
+    return page->GetVisualViewport().ClientHeight();
 
   return 0;
 }
 
-double DOMVisualViewport::scale() const {
+double DOMVisualViewport::scale() {
   LocalFrame* frame = window_->GetFrame();
   if (!frame)
     return 0;
@@ -147,7 +147,7 @@ double DOMVisualViewport::scale() const {
     return 1;
 
   if (Page* page = window_->GetFrame()->GetPage())
-    return page->GetVisualViewport().ScaleForVisualViewport();
+    return page->GetVisualViewport().PageScale();
 
   return 0;
 }

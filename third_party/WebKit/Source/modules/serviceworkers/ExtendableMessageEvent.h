@@ -46,6 +46,7 @@ class MODULES_EXPORT ExtendableMessageEvent final : public ExtendableEvent {
   }
   const String& origin() const { return origin_; }
   const String& lastEventId() const { return last_event_id_; }
+  MessagePortArray ports(bool& is_null) const;
   MessagePortArray ports() const;
   void source(ClientOrServiceWorkerOrMessagePort& result) const;
 

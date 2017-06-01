@@ -114,7 +114,7 @@ WorkerOrWorkletScriptController::~WorkerOrWorkletScriptController() {
 
 void WorkerOrWorkletScriptController::Dispose() {
   rejected_promises_->Dispose();
-  rejected_promises_ = nullptr;
+  rejected_promises_.Release();
 
   world_->Dispose();
 

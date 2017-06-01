@@ -43,17 +43,17 @@
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/dom/TaskRunnerHelper.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/dom/ViewportDescription.h"
+#include "core/editing/Editor.h"
 #include "core/events/GestureEvent.h"
 #include "core/events/KeyboardEvent.h"
 #include "core/events/MouseEvent.h"
 #include "core/events/PageTransitionEvent.h"
 #include "core/frame/ContentSettingsClient.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
@@ -83,6 +83,7 @@
 #include "platform/InstanceCounters.h"
 #include "platform/PluginScriptForbiddenScope.h"
 #include "platform/ScriptForbiddenScope.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/bindings/DOMWrapperWorld.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
@@ -357,6 +358,24 @@ void FrameLoader::DidExplicitOpen() {
   frame_->GetNavigationScheduler().Cancel();
 }
 
+void FrameLoader::Clear() {
+  // clear() is called during (Local)Frame detachment or when reusing a
+  // FrameLoader by putting a new Document within it
+  // (DocumentLoader::ensureWriter().)
+  if (state_machine_.CreatingInitialEmptyDocument())
+    return;
+
+  frame_->GetEditor().Clear();
+  frame_->GetEventHandler().Clear();
+  if (frame_->View())
+    frame_->View()->Clear();
+
+  if (state_machine_.IsDisplayingInitialEmptyDocument())
+    state_machine_.AdvanceTo(FrameLoaderStateMachine::kCommittedFirstRealLoad);
+
+  TakeObjectSnapshot();
+}
+
 // This is only called by ScriptController::executeScriptIfJavaScriptURL and
 // always contains the result of evaluating a javascript: url. This is the
 // <iframe src="javascript:'html'"> case.
@@ -385,6 +404,7 @@ void FrameLoader::ReplaceDocumentWhileExecutingJavaScriptURL(
   SubframeLoadingDisabler disabler(frame_->GetDocument());
   frame_->DetachChildren();
   frame_->GetDocument()->Shutdown();
+  Clear();
 
   // detachChildren() potentially detaches the frame from the document. The
   // loading cannot continue in that case.
@@ -656,9 +676,7 @@ bool FrameLoader::PrepareRequestForThisFrame(FrameLoadRequest& request) {
     return false;
 
   if (!request.OriginDocument()->GetSecurityOrigin()->CanDisplay(url)) {
-    request.OriginDocument()->AddConsoleMessage(ConsoleMessage::Create(
-        kSecurityMessageSource, kErrorMessageLevel,
-        "Not allowed to load local resource: " + url.ElidedString()));
+    ReportLocalLoadFailed(frame_, url.ElidedString());
     return false;
   }
 
@@ -901,6 +919,16 @@ SubstituteData FrameLoader::DefaultSubstituteDataForURL(const KURL& url) {
       "text/html", "UTF-8", KURL());
 }
 
+void FrameLoader::ReportLocalLoadFailed(LocalFrame* frame, const String& url) {
+  DCHECK(!url.IsEmpty());
+  if (!frame)
+    return;
+
+  frame->GetDocument()->AddConsoleMessage(
+      ConsoleMessage::Create(kSecurityMessageSource, kErrorMessageLevel,
+                             "Not allowed to load local resource: " + url));
+}
+
 void FrameLoader::StopAllLoaders() {
   if (frame_->GetDocument()->PageDismissalEventBeingDispatched() !=
       Document::kNoDismissal)
@@ -1047,6 +1075,16 @@ void FrameLoader::CommitProvisionalLoad() {
   Client()->TransitionToCommittedForNewPage();
 
   frame_->GetNavigationScheduler().Cancel();
+
+  // If we are still in the process of initializing an empty document then its
+  // frame is not in a consistent state for rendering, so avoid
+  // setJSStatusBarText since it may cause clients to attempt to render the
+  // frame.
+  if (!state_machine_.CreatingInitialEmptyDocument()) {
+    LocalDOMWindow* window = frame_->DomWindow();
+    window->setStatus(String());
+    window->setDefaultStatus(String());
+  }
 }
 
 bool FrameLoader::IsLoadingMainFrame() const {
@@ -1061,7 +1099,7 @@ void FrameLoader::RestoreScrollPositionAndViewState() {
 
 void FrameLoader::RestoreScrollPositionAndViewStateForLoadType(
     FrameLoadType load_type) {
-  LocalFrameView* view = frame_->View();
+  FrameView* view = frame_->View();
   if (!view || !view->LayoutViewportScrollableArea() ||
       !state_machine_.CommittedFirstRealDocumentLoad()) {
     return;
@@ -1177,7 +1215,7 @@ bool FrameLoader::ShouldPerformFragmentNavigation(bool is_form_submission,
 void FrameLoader::ProcessFragment(const KURL& url,
                                   FrameLoadType frame_load_type,
                                   LoadStartType load_start_type) {
-  LocalFrameView* view = frame_->View();
+  FrameView* view = frame_->View();
   if (!view)
     return;
 
@@ -1207,8 +1245,8 @@ void FrameLoader::ProcessFragment(const KURL& url,
              kScrollRestorationManual));
 
   view->ProcessUrlFragment(url, should_scroll_to_fragment
-                                    ? LocalFrameView::kUrlFragmentScroll
-                                    : LocalFrameView::kUrlFragmentDontScroll);
+                                    ? FrameView::kUrlFragmentScroll
+                                    : FrameView::kUrlFragmentDontScroll);
 
   if (boundary_frame && boundary_frame->IsLocalFrame())
     ToLocalFrame(boundary_frame)
@@ -1269,15 +1307,6 @@ NavigationPolicy FrameLoader::ShouldContinueForNavigationPolicy(
   if (request.Url().IsEmpty() || substitute_data.IsValid())
     return kNavigationPolicyCurrentTab;
 
-  // Check for non-escaped new lines in the url.
-  if (request.Url().PotentiallyDanglingMarkup() &&
-      request.Url().ProtocolIsInHTTPFamily()) {
-    Deprecation::CountDeprecation(
-        frame_, UseCounter::kCanRequestURLHTTPContainingNewline);
-    if (RuntimeEnabledFeatures::restrictCanRequestURLCharacterSetEnabled())
-      return kNavigationPolicyIgnore;
-  }
-
   Settings* settings = frame_->GetSettings();
   if (MaybeCheckCSP(request, type, frame_, policy,
                     should_check_main_world_content_security_policy ==
@@ -1301,6 +1330,9 @@ NavigationPolicy FrameLoader::ShouldContinueForNavigationPolicy(
     return policy;
   }
 
+  if (!LocalDOMWindow::AllowPopUp(*frame_) &&
+      !UserGestureIndicator::ProcessingUserGesture())
+    return kNavigationPolicyIgnore;
   Client()->LoadURLExternally(request, policy, String(),
                               replaces_current_history_item);
   return kNavigationPolicyIgnore;
@@ -1571,9 +1603,9 @@ void FrameLoader::ModifyRequestForCSP(ResourceRequest& resource_request,
                                       Document* document) const {
   if (RuntimeEnabledFeatures::embedderCSPEnforcementEnabled() &&
       !RequiredCSP().IsEmpty()) {
-    DCHECK(ContentSecurityPolicy::IsValidCSPAttr(RequiredCSP().GetString()));
-    resource_request.SetHTTPHeaderField(HTTPNames::Sec_Required_CSP,
-                                        RequiredCSP());
+    // TODO(amalika): Strengthen this DCHECK that requiredCSP has proper format
+    DCHECK(RequiredCSP().GetString().ContainsOnlyASCII());
+    resource_request.SetHTTPHeaderField(HTTPNames::Required_CSP, RequiredCSP());
   }
 
   // Tack an 'Upgrade-Insecure-Requests' header to outgoing navigational

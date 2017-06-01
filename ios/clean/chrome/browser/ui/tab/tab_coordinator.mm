@@ -17,7 +17,6 @@
 #import "ios/clean/chrome/browser/ui/tab_strip/tab_strip_coordinator.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.h"
 #import "ios/clean/chrome/browser/ui/web_contents/web_coordinator.h"
-#import "ios/shared/chrome/browser/ui/broadcaster/chrome_broadcaster.h"
 #import "ios/shared/chrome/browser/ui/browser_list/browser.h"
 #import "ios/shared/chrome/browser/ui/commands/command_dispatcher.h"
 #import "ios/shared/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
@@ -54,11 +53,6 @@
   self.viewController.modalPresentationStyle = UIModalPresentationCustom;
   _webStateObserver =
       base::MakeUnique<web::WebStateObserverBridge>(self.webState, self);
-
-  [self.browser->broadcaster()
-      broadcastValue:@"tabStripVisible"
-            ofObject:self.viewController
-            selector:@selector(broadcastTabStripVisible:)];
 
   CommandDispatcher* dispatcher = self.browser->dispatcher();
   // TabCommands
@@ -102,8 +96,6 @@
   for (BrowserCoordinator* child in self.children) {
     [self removeChildCoordinator:child];
   }
-  [self.browser->broadcaster()
-      stopBroadcastingForSelector:@selector(broadcastTabStripVisible:)];
   _webStateObserver.reset();
   [self.browser->dispatcher() stopDispatchingToTarget:self];
 }

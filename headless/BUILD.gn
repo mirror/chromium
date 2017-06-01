@@ -84,9 +84,9 @@ action("embed_resources") {
 
   args = [
     "--data_file",
-    rebase_path("$root_out_dir/headless_lib.pak", root_build_dir),
+    rebase_path("$root_out_dir/headless_lib.pak"),
     "--gendir",
-    rebase_path("$root_gen_dir", root_build_dir),
+    rebase_path("$root_gen_dir"),
     "--header_file",
     "headless/embedded_resource_pak.h",
     "--source_file",
@@ -119,7 +119,7 @@ grit("resources") {
   ]
   grit_flags = [
     "-E",
-    "mojom_root=" + rebase_path(root_gen_dir, root_build_dir),
+    "mojom_root=" + rebase_path(root_gen_dir),
   ]
   deps = [
     ":tab_socket__generator",
@@ -130,7 +130,6 @@ devtools_domains = [
   "accessibility",
   "animation",
   "application_cache",
-  "browser",
   "cache_storage",
   "console",
   "css",
@@ -197,7 +196,7 @@ action("gen_devtools_client_api") {
     "--protocol",
     rebase_path(inputs[0], root_build_dir),
     "--output_dir",
-    rebase_path(target_gen_dir, root_build_dir) + "/public",
+    rebase_path(target_gen_dir) + "/public",
   ]
 }
 
@@ -209,7 +208,7 @@ if (headless_fontconfig_utils) {
     ]
 
     deps = [
-      "//build/linux:fontconfig",
+      "//third_party/fontconfig",
       "//third_party/freetype",
     ]
   }
@@ -490,12 +489,7 @@ if (is_mac) {
       "$root_out_dir/crashpad_handler",
     ]
 
-    if (is_component_build) {
-      sources += [ "$root_out_dir/libbase.dylib" ]
-    }
-
     deps = [
-      "//base",
       "//third_party/crashpad/crashpad/handler:crashpad_handler",
     ]
 
@@ -534,9 +528,7 @@ test("headless_browsertests") {
   ]
 
   if (is_mac) {
-    data_deps = [
-      ":mac_helpers",
-    ]
+    data += [ "$root_out_dir/Helpers/crashpad_handler" ]
   }
 
   defines = [ "HAS_OUT_OF_PROC_TEST_RUNNER" ]
@@ -692,7 +684,6 @@ executable("headless_shell") {
 
   deps = [
     ":headless_shell_lib",
-    "//build/config:exe_and_shlib_deps",
   ]
 
   if (is_win) {
@@ -716,6 +707,5 @@ executable("headless_example") {
 
   deps = [
     ":headless_shell_lib",
-    "//build/config:exe_and_shlib_deps",
   ]
 }

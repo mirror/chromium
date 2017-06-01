@@ -4,8 +4,6 @@
 
 package org.chromium.chrome.browser.tabmodel;
 
-import android.support.annotation.Nullable;
-
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
@@ -64,7 +62,6 @@ public interface TabModelSelector {
      * Convenience function to get the current tab on the current model
      * @return Current tab or null if none exists or if the model is not initialized.
      */
-    @Nullable
     Tab getCurrentTab();
 
     /**

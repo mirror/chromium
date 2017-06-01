@@ -32,4 +32,4 @@ bool RegisterX509Util(JNIEnv* env) {
   return RegisterNativesImpl(env);
 }
 
-}  // namespace net
+}  // net namespace

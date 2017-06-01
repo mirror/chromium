@@ -39,10 +39,10 @@
 #include "core/frame/ContentSettingsClient.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/FrameConsole.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLFrameOwnerElement.h"
@@ -77,7 +77,6 @@
 #include "platform/loader/fetch/ResourceTimingInfo.h"
 #include "platform/loader/fetch/UniqueIdentifier.h"
 #include "platform/mhtml/MHTMLArchive.h"
-#include "platform/scheduler/child/web_scheduler.h"
 #include "platform/scheduler/renderer/web_view_scheduler.h"
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/wtf/Vector.h"
@@ -170,7 +169,7 @@ WebCachePolicy DetermineFrameWebCachePolicy(Frame* frame,
 }  // namespace
 
 FrameFetchContext::FrameFetchContext(DocumentLoader* loader, Document* document)
-    : document_loader_(loader), document_(document) {
+    : BaseFetchContext(document), document_loader_(loader) {
   DCHECK(GetFrame());
 }
 
@@ -178,7 +177,7 @@ void FrameFetchContext::ProvideDocumentToContext(FetchContext& context,
                                                  Document* document) {
   DCHECK(document);
   CHECK(context.IsFrameFetchContext());
-  static_cast<FrameFetchContext&>(context).document_ = document;
+  static_cast<FrameFetchContext&>(context).execution_context_ = document;
 }
 
 FrameFetchContext::~FrameFetchContext() {
@@ -195,12 +194,8 @@ LocalFrame* FrameFetchContext::FrameOfImportsController() const {
   return frame;
 }
 
-RefPtr<WebTaskRunner> FrameFetchContext::GetTaskRunner() const {
-  return GetFrame()->FrameScheduler()->LoadingTaskRunner();
-}
-
 Document* FrameFetchContext::GetDocument() const {
-  return document_;
+  return ToDocument(execution_context_.Get());
 }
 
 LocalFrame* FrameFetchContext::GetFrame() const {
@@ -604,31 +599,11 @@ void FrameFetchContext::AddConsoleMessage(const String& message,
     GetFrame()->Console().AddMessage(console_message);
 }
 
-SecurityOrigin* FrameFetchContext::GetSecurityOrigin() const {
-  return document_ ? document_->GetSecurityOrigin() : nullptr;
-}
-
 void FrameFetchContext::ModifyRequestForCSP(ResourceRequest& resource_request) {
   // Record the latest requiredCSP value that will be used when sending this
   // request.
   GetFrame()->Loader().RecordLatestRequiredCSP();
   GetFrame()->Loader().ModifyRequestForCSP(resource_request, GetDocument());
-}
-
-float FrameFetchContext::ClientHintsDeviceRAM(int64_t physical_memory_mb) {
-  // TODO(fmeawad): The calculations in this method are still evolving as the
-  // spec gets updated: https://github.com/WICG/device-ram. The reported
-  // device-ram is rounded down to next power of 2 in GB. Ex. 3072MB will return
-  // 2, and 768MB will return 0.5.
-  DCHECK_GT(physical_memory_mb, 0);
-  int power = 0;
-  // Extract the MSB location.
-  while (physical_memory_mb > 1) {
-    physical_memory_mb >>= 1;
-    power++;
-  }
-  // Restore to the power of 2, and convert to GB.
-  return static_cast<float>(1 << power) / 1024.0;
 }
 
 void FrameFetchContext::AddClientHintsIfNecessary(
@@ -638,9 +613,6 @@ void FrameFetchContext::AddClientHintsIfNecessary(
   if (!RuntimeEnabledFeatures::clientHintsEnabled() || !GetDocument())
     return;
 
-  bool should_send_device_ram =
-      GetDocument()->GetClientHintsPreferences().ShouldSendDeviceRAM() ||
-      hints_preferences.ShouldSendDeviceRAM();
   bool should_send_dpr =
       GetDocument()->GetClientHintsPreferences().ShouldSendDPR() ||
       hints_preferences.ShouldSendDPR();
@@ -650,13 +622,6 @@ void FrameFetchContext::AddClientHintsIfNecessary(
   bool should_send_viewport_width =
       GetDocument()->GetClientHintsPreferences().ShouldSendViewportWidth() ||
       hints_preferences.ShouldSendViewportWidth();
-
-  if (should_send_device_ram) {
-    int64_t physical_memory = MemoryCoordinator::GetPhysicalMemoryMB();
-    request.AddHTTPHeaderField(
-        "device-ram",
-        AtomicString(String::Number(ClientHintsDeviceRAM(physical_memory))));
-  }
 
   if (should_send_dpr) {
     request.AddHTTPHeaderField(
@@ -721,9 +686,10 @@ void FrameFetchContext::SetFirstPartyCookieAndRequestorOrigin(
   // `isNull()` check. https://crbug.com/625969
   if (request.GetFrameType() == WebURLRequest::kFrameTypeNone &&
       request.RequestorOrigin()->IsUnique()) {
-    request.SetRequestorOrigin(GetDocument()->IsSandboxed(kSandboxOrigin)
-                                   ? SecurityOrigin::Create(document_->Url())
-                                   : document_->GetSecurityOrigin());
+    request.SetRequestorOrigin(
+        GetDocument()->IsSandboxed(kSandboxOrigin)
+            ? SecurityOrigin::Create(execution_context_->Url())
+            : execution_context_->GetSecurityOrigin());
   }
 }
 
@@ -742,6 +708,10 @@ MHTMLArchive* FrameFetchContext::Archive() const {
       ->Archive();
 }
 
+RefPtr<WebTaskRunner> FrameFetchContext::LoadingTaskRunner() const {
+  return GetFrame()->FrameScheduler()->LoadingTaskRunner();
+}
+
 ContentSettingsClient* FrameFetchContext::GetContentSettingsClient() const {
   return GetFrame()->GetContentSettingsClient();
 }
@@ -754,6 +724,12 @@ Settings* FrameFetchContext::GetSettings() const {
 SubresourceFilter* FrameFetchContext::GetSubresourceFilter() const {
   DocumentLoader* document_loader = MasterDocumentLoader();
   return document_loader ? document_loader->GetSubresourceFilter() : nullptr;
+}
+
+SecurityContext* FrameFetchContext::GetParentSecurityContext() const {
+  if (Frame* parent = GetFrame()->Tree().Parent())
+    return parent->GetSecurityContext();
+  return nullptr;
 }
 
 bool FrameFetchContext::ShouldBlockRequestByInspector(
@@ -770,6 +746,10 @@ void FrameFetchContext::DispatchDidBlockRequest(
     ResourceRequestBlockedReason blocked_reason) const {
   probe::didBlockRequest(GetFrame(), resource_request, MasterDocumentLoader(),
                          fetch_initiator_info, blocked_reason);
+}
+
+void FrameFetchContext::ReportLocalLoadFailed(const KURL& url) const {
+  FrameLoader::ReportLocalLoadFailed(GetFrame(), url.ElidedString());
 }
 
 bool FrameFetchContext::ShouldBypassMainWorldCSP() const {
@@ -795,60 +775,13 @@ bool FrameFetchContext::ShouldBlockFetchByMixedContentCheck(
   return MixedContentChecker::ShouldBlockFetch(GetFrame(), resource_request,
                                                url, reporting_policy);
 }
-ReferrerPolicy FrameFetchContext::GetReferrerPolicy() const {
-  return document_->GetReferrerPolicy();
-}
 
-String FrameFetchContext::GetOutgoingReferrer() const {
-  return document_->OutgoingReferrer();
-}
-
-const KURL& FrameFetchContext::Url() const {
-  return document_->Url();
-}
-
-const SecurityOrigin* FrameFetchContext::GetParentSecurityOrigin() const {
-  Frame* parent = GetFrame()->Tree().Parent();
-  DCHECK(parent);
-  return parent->GetSecurityContext()->GetSecurityOrigin();
-}
-
-Optional<WebAddressSpace> FrameFetchContext::GetAddressSpace() const {
-  if (!document_)
-    return WTF::nullopt;
-  ExecutionContext* context = document_;
-  return WTF::make_optional(context->GetSecurityContext().AddressSpace());
-}
-
-const ContentSecurityPolicy* FrameFetchContext::GetContentSecurityPolicy()
-    const {
-  return document_ ? document_->GetContentSecurityPolicy() : nullptr;
-}
-
-void FrameFetchContext::AddConsoleMessage(ConsoleMessage* message) const {
-  return document_->AddConsoleMessage(message);
-}
-
-std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader(
-    const ResourceRequest& request) {
-  auto loader = GetFrame()->CreateURLLoader();
-  RefPtr<WebTaskRunner> task_runner;
-
-  if (request.GetKeepalive()) {
-    // The loader should be able to work after the frame destruction, so we
-    // cannot use the task runner associated with the frame.
-    task_runner =
-        Platform::Current()->CurrentThread()->Scheduler()->LoadingTaskRunner();
-  } else {
-    task_runner = GetTaskRunner();
-  }
-  loader->SetLoadingTaskRunner(task_runner.Get());
-  return loader;
+std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader() {
+  return GetFrame()->CreateURLLoader();
 }
 
 DEFINE_TRACE(FrameFetchContext) {
   visitor->Trace(document_loader_);
-  visitor->Trace(document_);
   BaseFetchContext::Trace(visitor);
 }
 

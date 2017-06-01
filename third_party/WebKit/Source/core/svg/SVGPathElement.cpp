@@ -72,7 +72,8 @@ float SVGPathElement::getTotalLength() {
 SVGPointTearOff* SVGPathElement::getPointAtLength(float length) {
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
   FloatPoint point = SVGPathQuery(PathByteStream()).GetPointAtLength(length);
-  return SVGPointTearOff::CreateDetached(point);
+  return SVGPointTearOff::Create(SVGPoint::Create(point), 0,
+                                 kPropertyIsNotAnimVal);
 }
 
 unsigned SVGPathElement::getPathSegAtLength(float length) {

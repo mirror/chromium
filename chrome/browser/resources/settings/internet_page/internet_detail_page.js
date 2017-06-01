@@ -602,10 +602,7 @@ Polymer({
 
   /** @private */
   onConfigureTap_: function() {
-    if (loadTimeData.getBoolean('networkSettingsConfig'))
-      this.fire('show-config', this.networkProperties);
-    else
-      chrome.send('configureNetwork', [this.guid]);
+    chrome.send('configureNetwork', [this.guid]);
   },
 
   /** @private */

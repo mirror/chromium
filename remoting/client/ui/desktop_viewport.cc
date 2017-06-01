@@ -35,27 +35,9 @@ void DesktopViewport::SetSurfaceSize(int surface_width, int surface_height) {
     return;
   }
 
-  // Only reset the viewport if both dimensions have changed, otherwise keep
-  // the offset and scale and just change the constraint. This is to cover these
-  // use cases:
-  // * Rotation => Reset
-  // * Keyboard => No reset
-  // * Settings menu => No reset
-  //
-  // TODO(yuweih): This is probably too much inferring. Let the caller to decide
-  // when to call ResizeToFit() if things don't work right.
-  bool need_to_reset =
-      surface_width != surface_size_.x && surface_height != surface_size_.y;
-
   surface_size_.x = surface_width;
   surface_size_.y = surface_height;
-
-  if (need_to_reset) {
-    ResizeToFit();
-    return;
-  }
-
-  UpdateViewport();
+  ResizeToFit();
 }
 
 void DesktopViewport::MoveDesktop(float dx, float dy) {
@@ -85,16 +67,6 @@ ViewMatrix::Point DesktopViewport::GetViewportCenter() const {
   }
   return desktop_to_surface_transform_.Invert().MapPoint(
       {surface_size_.x / 2.f, surface_size_.y / 2.f});
-}
-
-bool DesktopViewport::IsPointWithinDesktopBounds(
-    const ViewMatrix::Point& point) const {
-  if (!IsViewportReady()) {
-    LOG(WARNING) << "Viewport is not ready";
-    return false;
-  }
-  return point.x >= 0 && point.y >= 0 && point.x < desktop_size_.x &&
-         point.y < desktop_size_.y;
 }
 
 ViewMatrix::Point DesktopViewport::ConstrainPointToDesktop(

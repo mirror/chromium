@@ -22,8 +22,8 @@
         "inline_editor",
         "data_grid",
         "components",
-        "object_ui",
-        "mobile_throttling"
+        "network_conditions",
+        "object_ui"
     ],
     "scripts": [
         "ApplicationCacheModel.js",

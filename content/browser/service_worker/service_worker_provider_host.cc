@@ -61,8 +61,8 @@ class ServiceWorkerURLTrackingRequestHandler
   // Called via custom URLRequestJobFactory.
   net::URLRequestJob* MaybeCreateJob(
       net::URLRequest* request,
-      net::NetworkDelegate* /* network_delegate */,
-      ResourceContext* /* resource_context */) override {
+      net::NetworkDelegate* network_delegate,
+      ResourceContext* resource_context) override {
     // |provider_host_| may have been deleted when the request is resumed.
     if (!provider_host_)
       return nullptr;
@@ -75,26 +75,6 @@ class ServiceWorkerURLTrackingRequestHandler
  private:
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerURLTrackingRequestHandler);
 };
-
-void RemoveProviderHost(base::WeakPtr<ServiceWorkerContextCore> context,
-                        int process_id,
-                        int provider_id) {
-  TRACE_EVENT0("ServiceWorker",
-               "ServiceWorkerProviderHost::RemoveProviderHost");
-  if (!context)
-    return;
-  if (!context->GetProviderHost(process_id, provider_id)) {
-    // PlzNavigate: in some cancellation of navigation cases, it is possible
-    // for the pre-created host, whose |provider_id| is assigned by the browser
-    // process, to have been destroyed before being claimed by the renderer. The
-    // provider is then destroyed in the renderer, and no matching host will be
-    // found.
-    DCHECK(IsBrowserSideNavigationEnabled() &&
-           ServiceWorkerUtils::IsBrowserAssignedProviderId(provider_id));
-    return;
-  }
-  context->RemoveProviderHost(process_id, provider_id);
-}
 
 }  // anonymous namespace
 
@@ -172,8 +152,7 @@ ServiceWorkerProviderHost::ServiceWorkerProviderHost(
       info_(std::move(info)),
       context_(context),
       dispatcher_host_(dispatcher_host),
-      allow_association_(true),
-      binding_(this) {
+      allow_association_(true) {
   DCHECK_NE(SERVICE_WORKER_PROVIDER_UNKNOWN, info_.type);
 
   // PlzNavigate
@@ -185,18 +164,6 @@ ServiceWorkerProviderHost::ServiceWorkerProviderHost(
     render_thread_id_ = kInvalidEmbeddedWorkerThreadId;
   }
   context_->RegisterProviderHostByClientID(client_uuid_, this);
-
-  // PlzNavigate
-  // |provider_| and |binding_| will be bound on CompleteNavigationInitialized.
-  if (IsBrowserSideNavigationEnabled()) {
-    DCHECK(!info.client_ptr_info.is_valid() && !info.host_request.is_pending());
-    return;
-  }
-
-  provider_.Bind(std::move(info_.client_ptr_info));
-  binding_.Bind(std::move(info_.host_request));
-  binding_.set_connection_error_handler(base::Bind(
-      &RemoveProviderHost, context_, render_process_id, info_.provider_id));
 }
 
 ServiceWorkerProviderHost::~ServiceWorkerProviderHost() {
@@ -243,7 +210,7 @@ bool ServiceWorkerProviderHost::IsContextSecureForServiceWorker() const {
 void ServiceWorkerProviderHost::OnVersionAttributesChanged(
     ServiceWorkerRegistration* registration,
     ChangedVersionAttributesMask changed_mask,
-    const ServiceWorkerRegistrationInfo& /* info */) {
+    const ServiceWorkerRegistrationInfo& info) {
   if (!get_ready_callback_ || get_ready_callback_->called)
     return;
   if (changed_mask.active_changed() && registration->active_version()) {
@@ -571,10 +538,7 @@ ServiceWorkerProviderHost::PrepareForCrossSiteTransfer() {
 
   std::unique_ptr<ServiceWorkerProviderHost> provisional_host =
       base::WrapUnique(new ServiceWorkerProviderHost(
-          process_id(),
-          ServiceWorkerProviderHostInfo(std::move(info_), binding_.Unbind(),
-                                        provider_.PassInterface()),
-          context_, dispatcher_host()));
+          process_id(), std::move(info_), context_, dispatcher_host()));
 
   for (const GURL& pattern : associated_patterns_)
     DecreaseProcessReference(pattern);
@@ -602,25 +566,18 @@ void ServiceWorkerProviderHost::CompleteCrossSiteTransfer(
   DCHECK_NE(MSG_ROUTING_NONE, provisional_host->frame_id());
 
   render_thread_id_ = kDocumentMainThreadId;
-  info_ = std::move(provisional_host->info_);
-
-  // Take the connection over from the provisional host.
-  DCHECK(!provider_.is_bound());
-  DCHECK(!binding_.is_bound());
-  provider_.Bind(provisional_host->provider_.PassInterface());
-  binding_.Bind(provisional_host->binding_.Unbind());
-  binding_.set_connection_error_handler(
-      base::Bind(&RemoveProviderHost, context_, provisional_host->process_id(),
-                 provider_id()));
+  info_.provider_id = provisional_host->provider_id();
+  info_.type = provisional_host->provider_type();
 
   FinalizeInitialization(provisional_host->process_id(),
+                         provisional_host->frame_id(),
                          provisional_host->dispatcher_host());
 }
 
 // PlzNavigate
 void ServiceWorkerProviderHost::CompleteNavigationInitialized(
     int process_id,
-    ServiceWorkerProviderHostInfo info,
+    int frame_routing_id,
     ServiceWorkerDispatcherHost* dispatcher_host) {
   CHECK(IsBrowserSideNavigationEnabled());
   DCHECK_EQ(ChildProcessHost::kInvalidUniqueID, render_process_id_);
@@ -628,19 +585,9 @@ void ServiceWorkerProviderHost::CompleteNavigationInitialized(
   DCHECK_EQ(kDocumentMainThreadId, render_thread_id_);
 
   DCHECK_NE(ChildProcessHost::kInvalidUniqueID, process_id);
-  DCHECK_EQ(info_.provider_id, info.provider_id);
-  DCHECK_NE(MSG_ROUTING_NONE, info.route_id);
+  DCHECK_NE(MSG_ROUTING_NONE, frame_routing_id);
 
-  // Connect with the provider on the renderer.
-  DCHECK(!provider_.is_bound());
-  DCHECK(!binding_.is_bound());
-  provider_.Bind(std::move(info.client_ptr_info));
-  binding_.Bind(std::move(info.host_request));
-  binding_.set_connection_error_handler(
-      base::Bind(&RemoveProviderHost, context_, process_id, provider_id()));
-  info_.route_id = info.route_id;
-
-  FinalizeInitialization(process_id, dispatcher_host);
+  FinalizeInitialization(process_id, frame_routing_id, dispatcher_host);
 }
 
 void ServiceWorkerProviderHost::SendUpdateFoundMessage(
@@ -809,8 +756,10 @@ void ServiceWorkerProviderHost::Send(IPC::Message* message) const {
 
 void ServiceWorkerProviderHost::FinalizeInitialization(
     int process_id,
+    int frame_routing_id,
     ServiceWorkerDispatcherHost* dispatcher_host) {
   render_process_id_ = process_id;
+  info_.route_id = frame_routing_id;
   dispatcher_host_ = dispatcher_host;
 
   for (const GURL& pattern : associated_patterns_)

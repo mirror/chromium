@@ -13,8 +13,6 @@
 @synthesize createdTime = _createdTime;
 @synthesize hostId = _hostId;
 @synthesize hostName = _hostName;
-@synthesize hostOs = _hostOs;
-@synthesize hostOsVersion = _hostOsVersion;
 @synthesize hostVersion = _hostVersion;
 @synthesize jabberId = _jabberId;
 @synthesize kind = _kind;
@@ -48,20 +46,18 @@
     host.createdTime = [svr objectForKey:@"createdTime"];
     host.hostId = [svr objectForKey:@"hostId"];
     host.hostName = [svr objectForKey:@"hostName"];
-    host.hostOs = [svr objectForKey:@"hostOs"];
     host.hostVersion = [svr objectForKey:@"hostVersion"];
-    host.hostOsVersion = [svr objectForKey:@"hostOsVersion"];
     host.jabberId = [svr objectForKey:@"jabberId"];
     host.kind = [svr objectForKey:@"kind"];
     host.publicKey = [svr objectForKey:@"publicKey"];
     host.status = [svr objectForKey:@"status"];
 
-    //    NSString* ISO8601DateString = [svr objectForKey:@"updatedTime"];
-    //    if (ISO8601DateString != nil) {
-    //      NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
-    //      [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSz"];
-    //      host.updatedTime = [dateFormatter dateFromString:ISO8601DateString];
-    //    }
+    NSString* ISO8601DateString = [svr objectForKey:@"updatedTime"];
+    if (ISO8601DateString != nil) {
+      NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+      [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSz"];
+      host.updatedTime = [dateFormatter dateFromString:ISO8601DateString];
+    }
 
     [hostList addObject:host];
   }

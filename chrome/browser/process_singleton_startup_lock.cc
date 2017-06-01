@@ -12,9 +12,7 @@ ProcessSingletonStartupLock::ProcessSingletonStartupLock(
     : locked_(true),
       original_callback_(original_callback) {}
 
-ProcessSingletonStartupLock::~ProcessSingletonStartupLock() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-}
+ProcessSingletonStartupLock::~ProcessSingletonStartupLock() {}
 
 ProcessSingleton::NotificationCallback
 ProcessSingletonStartupLock::AsNotificationCallback() {
@@ -23,7 +21,7 @@ ProcessSingletonStartupLock::AsNotificationCallback() {
 }
 
 void ProcessSingletonStartupLock::Unlock() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   locked_ = false;
 
   // Replay the command lines of the messages which were received while the

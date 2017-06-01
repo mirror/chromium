@@ -29,8 +29,8 @@
 
 #include "core/page/AutoscrollController.h"
 
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/HitTestResult.h"
@@ -104,7 +104,7 @@ void AutoscrollController::StopAutoscroll() {
 
   if (RuntimeEnabledFeatures::middleClickAutoscrollEnabled() &&
       MiddleClickAutoscrollInProgress()) {
-    if (LocalFrameView* view = scrollable->GetFrame()->View()) {
+    if (FrameView* view = scrollable->GetFrame()->View()) {
       view->SetCursor(PointerCursor());
     }
   }
@@ -192,8 +192,7 @@ void AutoscrollController::UpdateDragAndDrop(Node* drop_target_node,
     autoscroll_type_ = kAutoscrollForDragAndDrop;
     autoscroll_layout_object_ = scrollable;
     drag_and_drop_autoscroll_start_time_ = event_time;
-    UseCounter::Count(autoscroll_layout_object_->GetFrame(),
-                      UseCounter::kDragAndDropScrollStart);
+    UseCounter::Count(page_->MainFrame(), UseCounter::kDragAndDropScrollStart);
     StartAutoscroll();
   } else if (autoscroll_layout_object_ != scrollable) {
     drag_and_drop_autoscroll_start_time_ = event_time;
@@ -242,7 +241,7 @@ void AutoscrollController::StartMiddleClickAutoscroll(
   middle_click_autoscroll_start_pos_ = last_known_mouse_position;
   did_latch_for_middle_click_autoscroll_ = false;
 
-  UseCounter::Count(autoscroll_layout_object_->GetFrame(),
+  UseCounter::Count(page_->MainFrame(),
                     UseCounter::kMiddleClickAutoscrollStart);
   StartAutoscroll();
 }
@@ -335,7 +334,7 @@ void AutoscrollController::Animate(double) {
         StopAutoscroll();
         return;
       }
-      if (LocalFrameView* view = autoscroll_layout_object_->GetFrame()->View())
+      if (FrameView* view = autoscroll_layout_object_->GetFrame()->View())
         UpdateMiddleClickAutoscrollState(
             view, event_handler.LastKnownMousePosition());
       FloatSize delta = CalculateAutoscrollDelta();
@@ -377,7 +376,7 @@ void AutoscrollController::StartAutoscroll() {
 }
 
 void AutoscrollController::UpdateMiddleClickAutoscrollState(
-    LocalFrameView* view,
+    FrameView* view,
     const IntPoint& last_known_mouse_position) {
   DCHECK(RuntimeEnabledFeatures::middleClickAutoscrollEnabled());
   // At the original click location we draw a 4 arrowed icon. Over this icon

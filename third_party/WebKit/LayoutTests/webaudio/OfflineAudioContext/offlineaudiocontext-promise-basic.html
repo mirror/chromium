@@ -1,29 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <title>
-      OfflineAudioContext.startRendering Promise
-    </title>
     <script src="../../resources/testharness.js"></script>
-    <script src="../../resources/testharnessreport.js"></script>
+    <script src="../../resources/testharnessreport.js"></script> 
     <script src="../resources/audit.js"></script>
+    <title>OfflineAudioContext.startRendering Promise</title>
   </head>
+
   <body>
-    <script id="layout-test-code">
-      let context;
-      let promiseData;
+    <script>
+      var context;
+      var promiseData;
 
-      let sampleRate = 48000;
-      let renderSeconds = 1;
-      let renderFrames = sampleRate * renderSeconds;
-      let contextChannels = 2;
+      var sampleRate = 48000;
+      var renderSeconds = 1;
+      var renderFrames = sampleRate * renderSeconds;
+      var contextChannels = 2;
 
-      let audit = Audit.createTaskRunner();
+      var audit = Audit.createTaskRunner();
 
       audit.define('reject-promise', (task, should) => {
         // Create a context and verify that calling startRendering more than
         // once causes a rejected promise.
-        let context =
+        var context =
             new OfflineAudioContext(contextChannels, renderFrames, sampleRate);
         context.startRendering();
         should(
@@ -39,14 +38,14 @@
         context =
             new OfflineAudioContext(contextChannels, renderFrames, sampleRate);
 
-        let buffer =
+        var buffer =
             context.createBuffer(contextChannels, renderFrames, sampleRate);
-        for (let k = 0; k < renderFrames; ++k) {
+        for (var k = 0; k < renderFrames; ++k) {
           buffer.getChannelData(0)[k] = 1;
           buffer.getChannelData(1)[k] = 2;
         }
 
-        let source = context.createBufferSource();
+        var source = context.createBufferSource();
         source.buffer = buffer;
         source.connect(context.destination);
         source.start();
@@ -75,5 +74,6 @@
         }
       }
     </script>
+    
   </body>
 </html>

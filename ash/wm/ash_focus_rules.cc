@@ -11,6 +11,7 @@
 #include "ash/wm/focus_rules.h"
 #include "ash/wm/mru_window_tracker.h"
 #include "ash/wm/window_state.h"
+#include "ash/wm_window.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
 #include "ui/events/event.h"
@@ -41,7 +42,7 @@ AshFocusRules::~AshFocusRules() = default;
 // AshFocusRules, ::wm::FocusRules:
 
 bool AshFocusRules::IsToplevelWindow(aura::Window* window) const {
-  return ash::IsToplevelWindow(window);
+  return ash::IsToplevelWindow(WmWindow::Get(window));
 }
 
 bool AshFocusRules::SupportsChildActivation(aura::Window* window) const {
@@ -50,7 +51,7 @@ bool AshFocusRules::SupportsChildActivation(aura::Window* window) const {
 
 bool AshFocusRules::IsWindowConsideredVisibleForActivation(
     aura::Window* window) const {
-  return ash::IsWindowConsideredVisibleForActivation(window);
+  return ash::IsWindowConsideredVisibleForActivation(WmWindow::Get(window));
 }
 
 bool AshFocusRules::CanActivateWindow(aura::Window* window) const {
@@ -90,8 +91,9 @@ aura::Window* AshFocusRules::GetNextActivatableWindow(
   // MRU windows is empty, then start from the container of the window that just
   // lost focus |ignore|.
   MruWindowTracker* mru = Shell::Get()->mru_window_tracker();
-  aura::Window::Windows windows = mru->BuildMruWindowList();
-  aura::Window* starting_window = windows.empty() ? ignore : windows[0];
+  std::vector<WmWindow*> windows = mru->BuildMruWindowList();
+  aura::Window* starting_window =
+      windows.empty() ? ignore : WmWindow::GetAuraWindow(windows[0]);
 
   // Look for windows to focus in |starting_window|'s container. If none are
   // found, we look in all the containers in front of |starting_window|'s

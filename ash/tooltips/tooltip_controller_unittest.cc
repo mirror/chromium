@@ -68,7 +68,7 @@ void AddViewToWidgetAndResize(views::Widget* widget, views::View* view) {
 
 TooltipController* GetController() {
   return static_cast<TooltipController*>(
-      ::wm::GetTooltipClient(Shell::GetPrimaryRootWindow()));
+      aura::client::GetTooltipClient(Shell::GetPrimaryRootWindow()));
 }
 
 }  // namespace
@@ -91,7 +91,8 @@ class TooltipControllerTest : public AshTestBase {
 };
 
 TEST_F(TooltipControllerTest, NonNullTooltipClient) {
-  EXPECT_TRUE(::wm::GetTooltipClient(Shell::GetPrimaryRootWindow()) != NULL);
+  EXPECT_TRUE(aura::client::GetTooltipClient(Shell::GetPrimaryRootWindow()) !=
+              NULL);
   EXPECT_EQ(base::string16(), helper_->GetTooltipText());
   EXPECT_EQ(NULL, helper_->GetTooltipWindow());
   EXPECT_FALSE(helper_->IsTooltipVisible());

@@ -47,12 +47,12 @@
 
 namespace aura {
 
-Window::Window(WindowDelegate* delegate, client::WindowType type)
+Window::Window(WindowDelegate* delegate, ui::wm::WindowType type)
     : Window(delegate, nullptr, type) {}
 
 Window::Window(WindowDelegate* delegate,
                std::unique_ptr<WindowPort> port,
-               client::WindowType type)
+               ui::wm::WindowType type)
     : port_owner_(std::move(port)),
       port_(port_owner_.get()),
       host_(nullptr),
@@ -149,7 +149,7 @@ void Window::Init(ui::LayerType layer_type) {
   Env::GetInstance()->NotifyWindowInitialized(this);
 }
 
-void Window::SetType(client::WindowType type) {
+void Window::SetType(ui::wm::WindowType type) {
   // Cannot change type after the window is initialized.
   DCHECK(!layer());
   type_ = type;
@@ -261,9 +261,7 @@ gfx::Rect Window::GetBoundsInScreen() const {
 void Window::SetTransform(const gfx::Transform& transform) {
   for (WindowObserver& observer : observers_)
     observer.OnWindowTransforming(this);
-  gfx::Transform old_transform = layer()->transform();
   layer()->SetTransform(transform);
-  port_->OnDidChangeTransform(old_transform, transform);
   for (WindowObserver& observer : observers_)
     observer.OnWindowTransformed(this);
   NotifyAncestorWindowTransformed(this);

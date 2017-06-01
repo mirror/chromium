@@ -22,13 +22,8 @@ ThreadedWorkletGlobalScope::ThreadedWorkletGlobalScope(
     const String& user_agent,
     PassRefPtr<SecurityOrigin> security_origin,
     v8::Isolate* isolate,
-    WorkerThread* thread,
-    WorkerClients* worker_clients)
-    : WorkletGlobalScope(url,
-                         user_agent,
-                         std::move(security_origin),
-                         isolate,
-                         worker_clients),
+    WorkerThread* thread)
+    : WorkletGlobalScope(url, user_agent, std::move(security_origin), isolate),
       thread_(thread) {}
 
 ThreadedWorkletGlobalScope::~ThreadedWorkletGlobalScope() {

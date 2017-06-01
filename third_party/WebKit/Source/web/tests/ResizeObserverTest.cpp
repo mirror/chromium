@@ -8,6 +8,7 @@
 #include "bindings/core/v8/ScriptSourceCode.h"
 #include "bindings/core/v8/V8GCController.h"
 #include "core/dom/ResizeObservation.h"
+#include "core/dom/ResizeObserverCallback.h"
 #include "core/dom/ResizeObserverController.h"
 #include "core/exported/WebViewBase.h"
 #include "platform/testing/UnitTestHelpers.h"
@@ -22,19 +23,19 @@ namespace blink {
 
 namespace {
 
-class TestResizeObserverDelegate : public ResizeObserver::Delegate {
+class TestResizeObserverCallback : public ResizeObserverCallback {
  public:
-  TestResizeObserverDelegate(Document& document)
+  TestResizeObserverCallback(Document& document)
       : document_(document), call_count_(0) {}
-  void OnResize(
-      const HeapVector<Member<ResizeObserverEntry>>& entries) override {
+  void handleEvent(const HeapVector<Member<ResizeObserverEntry>>& entries,
+                   ResizeObserver*) override {
     call_count_++;
   }
   ExecutionContext* GetExecutionContext() const { return document_; }
   int CallCount() const { return call_count_; }
 
   DEFINE_INLINE_TRACE() {
-    ResizeObserver::Delegate::Trace(visitor);
+    ResizeObserverCallback::Trace(visitor);
     visitor->Trace(document_);
   }
 
@@ -66,9 +67,9 @@ TEST_F(ResizeObserverUnitTest, ResizeObservationSize) {
       "</svg>");
   main_resource.Finish();
 
-  ResizeObserver::Delegate* delegate =
-      new TestResizeObserverDelegate(GetDocument());
-  ResizeObserver* observer = ResizeObserver::Create(GetDocument(), delegate);
+  ResizeObserverCallback* callback =
+      new TestResizeObserverCallback(GetDocument());
+  ResizeObserver* observer = ResizeObserver::Create(GetDocument(), callback);
   Element* dom_target = GetDocument().getElementById("domTarget");
   Element* svg_target = GetDocument().getElementById("svgTarget");
   ResizeObservation* dom_observation =

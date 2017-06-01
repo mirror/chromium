@@ -66,7 +66,7 @@ class AppsContainerView : public AppListPage, public TopIconAnimationObserver {
   void ReparentDragEnded();
 
   // views::View overrides:
-  gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetPreferredSize() const override;
   void Layout() override;
   bool OnKeyPressed(const ui::KeyEvent& event) override;
 

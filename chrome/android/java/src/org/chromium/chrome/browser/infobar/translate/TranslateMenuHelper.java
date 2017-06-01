@@ -191,9 +191,9 @@ public class TranslateMenuHelper implements AdapterView.OnItemClickListener {
     }
 
     /**
-     * @return Whether the menu is currently showing.
+     * @return Whether the app menu is currently showing.
      */
-    public boolean isShowing() {
+    private boolean isShowing() {
         if (mPopup == null) {
             return false;
         }

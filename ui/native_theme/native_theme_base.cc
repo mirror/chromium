@@ -25,6 +25,7 @@
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/skia_util.h"
 #include "ui/native_theme/common_theme.h"
+#include "ui/resources/grit/ui_resources.h"
 
 namespace {
 

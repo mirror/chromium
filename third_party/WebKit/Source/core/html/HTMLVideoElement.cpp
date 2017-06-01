@@ -33,7 +33,6 @@
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/Fullscreen.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/dom/shadow/ShadowRoot.h"
 #include "core/frame/ImageBitmap.h"
 #include "core/frame/LocalDOMWindow.h"
@@ -46,6 +45,7 @@
 #include "core/layout/LayoutVideo.h"
 #include "platform/Histogram.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/gpu/Extensions3DUtil.h"
@@ -93,11 +93,6 @@ DEFINE_TRACE(HTMLVideoElement) {
   visitor->Trace(custom_controls_fullscreen_detector_);
   visitor->Trace(remoting_interstitial_);
   HTMLMediaElement::Trace(visitor);
-}
-
-bool HTMLVideoElement::HasPendingActivity() const {
-  return HTMLMediaElement::HasPendingActivity() ||
-         (image_loader_ && image_loader_->HasPendingActivity());
 }
 
 Node::InsertionNotificationRequest HTMLVideoElement::InsertedInto(
@@ -513,18 +508,21 @@ void HTMLVideoElement::MediaRemotingStarted() {
 }
 
 void HTMLVideoElement::MediaRemotingStopped() {
-  DCHECK(media_remoting_status_ == MediaRemotingStatus::kDisabled ||
-         media_remoting_status_ == MediaRemotingStatus::kStarted);
-  if (media_remoting_status_ != MediaRemotingStatus::kDisabled)
-    media_remoting_status_ = MediaRemotingStatus::kNotStarted;
+  // Early return because this was already called when media remoting was
+  // disabled.
+  if (media_remoting_status_ == MediaRemotingStatus::kDisabled)
+    return;
+  DCHECK(media_remoting_status_ == MediaRemotingStatus::kStarted);
   DCHECK(remoting_interstitial_);
+  media_remoting_status_ = MediaRemotingStatus::kNotStarted;
   remoting_interstitial_->Hide();
 }
 
 void HTMLVideoElement::DisableMediaRemoting() {
-  media_remoting_status_ = MediaRemotingStatus::kDisabled;
   if (GetWebMediaPlayer())
     GetWebMediaPlayer()->RequestRemotePlaybackDisabled(true);
+  media_remoting_status_ = MediaRemotingStatus::kDisabled;
+  MediaRemotingStopped();
 }
 
 }  // namespace blink

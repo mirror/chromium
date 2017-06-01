@@ -12,10 +12,10 @@
 #include "base/memory/ref_counted_memory.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "base/sequence_checker.h"
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/lock.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/threading/non_thread_safe.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/sync/base/model_type.h"
@@ -26,22 +26,21 @@ namespace syncer {
 
 // A stub implementation of AttachmentService that counts the number of times
 // its methods are invoked.
-class StubAttachmentService : public AttachmentService {
+class StubAttachmentService : public AttachmentService,
+                              public base::NonThreadSafe {
  public:
   StubAttachmentService() : call_count_(0), weak_ptr_factory_(this) {
     // DetachFromThread because we will be constructed in one thread and
     // used/destroyed in another.
-    DETACH_FROM_SEQUENCE(sequence_checker_);
+    DetachFromThread();
   }
 
-  ~StubAttachmentService() override {
-    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  }
+  ~StubAttachmentService() override {}
 
   void GetOrDownloadAttachments(
       const AttachmentIdList& attachment_ids,
       const GetOrDownloadCallback& callback) override {
-    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+    CalledOnValidThread();
     Increment();
     std::unique_ptr<AttachmentMap> attachments(new AttachmentMap());
     base::ThreadTaskRunnerHandle::Get()->PostTask(
@@ -51,7 +50,7 @@ class StubAttachmentService : public AttachmentService {
   }
 
   void UploadAttachments(const AttachmentIdList& attachments_ids) override {
-    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+    CalledOnValidThread();
     Increment();
   }
 
@@ -77,16 +76,15 @@ class StubAttachmentService : public AttachmentService {
     base::AutoLock lock(mutex_);
     ++call_count_;
   }
-
-  SEQUENCE_CHECKER(sequence_checker_);
 };
 
-class AttachmentServiceProxyTest : public testing::Test {
+class AttachmentServiceProxyTest : public testing::Test,
+                                   public base::NonThreadSafe {
  protected:
   AttachmentServiceProxyTest() {}
 
   void SetUp() override {
-    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+    CalledOnValidThread();
     stub_thread_ =
         base::MakeUnique<base::Thread>("attachment service stub thread");
     stub_thread_->Start();
@@ -113,7 +111,7 @@ class AttachmentServiceProxyTest : public testing::Test {
   // a GetOrDownloadCallback
   void IncrementGetOrDownload(const AttachmentService::GetOrDownloadResult&,
                               std::unique_ptr<AttachmentMap>) {
-    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+    CalledOnValidThread();
     ++count_callback_get_or_download_;
   }
 
@@ -135,8 +133,6 @@ class AttachmentServiceProxyTest : public testing::Test {
 
   // number of times callback_get_or_download_ was invoked
   int count_callback_get_or_download_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
 };
 
 // Verify that each of AttachmentServiceProxy's methods are invoked on the stub.

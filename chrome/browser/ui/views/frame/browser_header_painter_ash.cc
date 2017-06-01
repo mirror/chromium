@@ -263,11 +263,13 @@ void BrowserHeaderPainterAsh::PaintFrameImages(gfx::Canvas* canvas,
 
 void BrowserHeaderPainterAsh::PaintTitleBar(gfx::Canvas* canvas) {
   // The window icon is painted by its own views::View.
+  gfx::Rect title_bounds = GetTitleBounds();
+  title_bounds.set_x(view_->GetMirroredXForRect(title_bounds));
   canvas->DrawStringRectWithFlags(frame_->widget_delegate()->GetWindowTitle(),
                                   BrowserFrame::GetTitleFontList(),
                                   is_incognito_ ? kIncognitoWindowTitleTextColor
                                                 : kNormalWindowTitleTextColor,
-                                  view_->GetMirroredRect(GetTitleBounds()),
+                                  title_bounds,
                                   gfx::Canvas::NO_SUBPIXEL_RENDERING);
 }
 

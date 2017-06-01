@@ -760,8 +760,7 @@ bool XMLDocumentParser::SupportsXMLVersion(const String& version) {
   return version == "1.0";
 }
 
-XMLDocumentParser::XMLDocumentParser(Document& document,
-                                     LocalFrameView* frame_view)
+XMLDocumentParser::XMLDocumentParser(Document& document, FrameView* frame_view)
     : ScriptableDocumentParser(document),
       has_view_(frame_view),
       context_(nullptr),

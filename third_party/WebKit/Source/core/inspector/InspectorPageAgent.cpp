@@ -36,10 +36,9 @@
 #include "core/HTMLNames.h"
 #include "core/dom/DOMImplementation.h"
 #include "core/dom/Document.h"
-#include "core/dom/UserGestureIndicator.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
 #include "core/html/HTMLFrameOwnerElement.h"
@@ -59,6 +58,8 @@
 #include "core/loader/resource/ScriptResource.h"
 #include "core/page/Page.h"
 #include "core/probe/CoreProbes.h"
+#include "platform/PlatformResourceLoader.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/bindings/DOMWrapperWorld.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/loader/fetch/Resource.h"
@@ -105,8 +106,6 @@ String DialogTypeToProtocol(ChromeClient::DialogType dialog_type) {
       return protocol::Page::DialogTypeEnum::Prompt;
     case ChromeClient::kHTMLDialog:
       return protocol::Page::DialogTypeEnum::Beforeunload;
-    case ChromeClient::kPrintDialog:
-      NOTREACHED();
   }
   return protocol::Page::DialogTypeEnum::Alert;
 }
@@ -458,7 +457,6 @@ Response InspectorPageAgent::reload(
 
 Response InspectorPageAgent::navigate(const String& url,
                                       Maybe<String> referrer,
-                                      Maybe<String> transitionType,
                                       String* out_frame_id) {
   *out_frame_id = FrameId(inspected_frames_->Root());
   return Response::OK();
@@ -881,7 +879,7 @@ Response InspectorPageAgent::getLayoutMetrics(
                              .setClientHeight(visible_contents.Height())
                              .build();
 
-  LocalFrameView* frame_view = main_frame->View();
+  FrameView* frame_view = main_frame->View();
   ScrollOffset page_offset = frame_view->GetScrollableArea()->GetScrollOffset();
   float page_zoom = main_frame->PageZoomFactor();
   FloatRect visible_rect = visual_viewport.VisibleRect();

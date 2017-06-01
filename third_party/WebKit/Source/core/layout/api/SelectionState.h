@@ -10,20 +10,25 @@
 
 namespace blink {
 
-enum class SelectionState {
-  /* The object is not selected. */
-  kNone,
-  /* The object either contains the start of a selection run or is the */
-  /* start of a run. */
-  kStart,
-  /* The object is fully encompassed by a selection run. */
-  kInside,
-  /* The object either contains the end of a selection run or is the */
-  /* end of a run. */
-  kEnd,
-  /* The object contains an entire run or is the sole selected object */
-  /* in that run. */
-  kStartAndEnd
+#define FOR_EACH_SELECTION_STATE(V)                                       \
+  /* The object is not selected. */                                       \
+  V(None)                                                                 \
+  /* The object either contains the start of a selection run or is the */ \
+  /* start of a run. */                                                   \
+  V(Start)                                                                \
+  /* The object is fully encompassed by a selection run. */               \
+  V(Inside)                                                               \
+  /* The object either contains the end of a selection run or is the */   \
+  /* end of a run. */                                                     \
+  V(End)                                                                  \
+  /* The object contains an entire run or is the sole selected object */  \
+  /* in that run. */                                                      \
+  V(Both)
+
+enum SelectionState {
+#define V(state) Selection##state,
+  FOR_EACH_SELECTION_STATE(V)
+#undef V
 };
 
 CORE_EXPORT std::ostream& operator<<(std::ostream&, const SelectionState);

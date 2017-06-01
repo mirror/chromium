@@ -82,13 +82,7 @@ class WebLocalFrame : public WebFrame {
       WebRemoteFrame*,
       WebSandboxFlags);
 
-  // Creates a new local child of this frame. Similar to the other methods that
-  // create frames, the returned frame should be freed by calling Close() when
-  // it's no longer needed.
-  virtual WebLocalFrame* CreateLocalChild(WebTreeScopeType,
-                                          WebFrameClient*,
-                                          blink::InterfaceProvider*,
-                                          blink::InterfaceRegistry*) = 0;
+  // TODO(dcheng): Add a CreateChild() method.
 
   // Returns the WebFrame associated with the current V8 context. This
   // function can return 0 if the context is associated with a Document that
@@ -115,11 +109,6 @@ class WebLocalFrame : public WebFrame {
 
   // Get the highest-level LocalFrame in this frame's in-process subtree.
   virtual WebLocalFrame* LocalRoot() = 0;
-
-  // Returns the frame identified by the given name.  This method supports
-  // pseudo-names like _self, _top, and _blank and otherwise performs the same
-  // kind of lookup what |window.open(..., name)| would in Javascript.
-  virtual WebFrame* FindFrameByName(const WebString& name) = 0;
 
   // Navigation Ping --------------------------------------------------------
 

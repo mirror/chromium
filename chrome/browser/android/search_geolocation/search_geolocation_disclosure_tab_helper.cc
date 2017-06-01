@@ -17,7 +17,6 @@
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
-#include "chrome/browser/search_engines/ui_thread_search_terms_data.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
@@ -26,7 +25,6 @@
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
-#include "components/search_engines/template_url.h"
 #include "components/search_engines/template_url_service.h"
 #include "components/variations/variations_associated_data.h"
 #include "content/public/browser/web_contents.h"
@@ -106,20 +104,6 @@ void SearchGeolocationDisclosureTabHelper::ResetDisclosure(Profile* profile) {
   prefs->ClearPref(prefs::kSearchGeolocationDisclosureShownCount);
   prefs->ClearPref(prefs::kSearchGeolocationDisclosureLastShowDate);
   prefs->ClearPref(prefs::kSearchGeolocationDisclosureDismissed);
-}
-
-// static
-void SearchGeolocationDisclosureTabHelper::FakeShowingDisclosureForTests(
-    Profile* profile) {
-  PrefService* prefs = profile->GetPrefs();
-  prefs->SetInteger(prefs::kSearchGeolocationDisclosureShownCount, 1);
-}
-
-// static
-bool SearchGeolocationDisclosureTabHelper::IsDisclosureResetForTests(
-    Profile* profile) {
-  PrefService* prefs = profile->GetPrefs();
-  return !prefs->HasPrefPath(prefs::kSearchGeolocationDisclosureShownCount);
 }
 
 // static
@@ -204,13 +188,7 @@ void SearchGeolocationDisclosureTabHelper::MaybeShowDisclosureForValidUrl(
     return;
 
   // All good, let's show the disclosure and increment the shown count.
-  TemplateURLService* template_url_service =
-      TemplateURLServiceFactory::GetForProfile(GetProfile());
-  const TemplateURL* template_url =
-      template_url_service->GetDefaultSearchProvider();
-  base::string16 search_engine_name = template_url->short_name();
-  SearchGeolocationDisclosureInfoBarDelegate::Create(web_contents(), gurl,
-                                                     search_engine_name);
+  SearchGeolocationDisclosureInfoBarDelegate::Create(web_contents(), gurl);
   shown_count++;
   prefs->SetInteger(prefs::kSearchGeolocationDisclosureShownCount, shown_count);
   prefs->SetInt64(prefs::kSearchGeolocationDisclosureLastShowDate,
@@ -241,18 +219,11 @@ bool SearchGeolocationDisclosureTabHelper::ShouldShowDisclosureForNavigation(
   if (gIgnoreUrlChecksForTesting)
     return true;
 
-  // Only show the disclosure for default search navigations from the omnibox,
-  // and only if they are for the Google search engine (only Google supports the
-  // X-Geo header).
+  // Only show the disclosure for default search navigations from the omnibox.
   TemplateURLService* template_url_service =
       TemplateURLServiceFactory::GetForProfile(GetProfile());
-  const TemplateURL* template_url =
-      template_url_service->GetDefaultSearchProvider();
-  return template_url &&
-         template_url->HasGoogleBaseURLs(
-             UIThreadSearchTermsData(GetProfile())) &&
-         template_url_service->IsSearchResultsPageFromDefaultSearchProvider(
-             gurl);
+  return template_url_service->IsSearchResultsPageFromDefaultSearchProvider(
+      gurl);
 }
 
 void SearchGeolocationDisclosureTabHelper::RecordPreDisclosureMetrics(

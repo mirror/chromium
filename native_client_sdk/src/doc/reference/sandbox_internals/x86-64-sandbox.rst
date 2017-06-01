@@ -1,7 +1,5 @@
 .. _x86-64-sandbox:
 
-.. include:: /migration/deprecation.inc
-
 ================================
 NaCl SFI model on x86-64 systems
 ================================

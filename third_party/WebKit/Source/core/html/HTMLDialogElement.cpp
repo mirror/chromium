@@ -28,10 +28,9 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/AXObjectCache.h"
 #include "core/dom/ExceptionCode.h"
-#include "core/dom/Fullscreen.h"
 #include "core/dom/shadow/FlatTreeTraversal.h"
 #include "core/events/Event.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLFormControlElement.h"
 #include "core/style/ComputedStyle.h"
@@ -166,12 +165,6 @@ void HTMLDialogElement::showModal(ExceptionState& exception_state) {
     exception_state.ThrowDOMException(kInvalidStateError,
                                       "The element is not in a Document.");
     return;
-  }
-
-  // See comment in |Fullscreen::RequestFullscreen|.
-  if (Fullscreen::IsInFullscreenElementStack(*this)) {
-    UseCounter::Count(GetDocument(),
-                      UseCounter::kShowModalForElementInFullscreenStack);
   }
 
   GetDocument().AddToTopLayer(this);

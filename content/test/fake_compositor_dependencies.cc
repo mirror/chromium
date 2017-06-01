@@ -88,4 +88,8 @@ bool FakeCompositorDependencies::IsScrollAnimatorEnabled() {
   return false;
 }
 
+bool FakeCompositorDependencies::IsSurfaceSynchronizationEnabled() {
+  return false;
+}
+
 }  // namespace content

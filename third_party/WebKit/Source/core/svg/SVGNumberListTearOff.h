@@ -46,7 +46,7 @@ class SVGNumberListTearOff final
       SVGNumberList* target,
       SVGElement* context_element,
       PropertyIsAnimValType property_is_anim_val,
-      const QualifiedName& attribute_name) {
+      const QualifiedName& attribute_name = QualifiedName::Null()) {
     return new SVGNumberListTearOff(target, context_element,
                                     property_is_anim_val, attribute_name);
   }
@@ -56,10 +56,11 @@ class SVGNumberListTearOff final
   }
 
  private:
-  SVGNumberListTearOff(SVGNumberList* target,
-                       SVGElement* context_element,
-                       PropertyIsAnimValType property_is_anim_val,
-                       const QualifiedName& attribute_name)
+  SVGNumberListTearOff(
+      SVGNumberList* target,
+      SVGElement* context_element,
+      PropertyIsAnimValType property_is_anim_val,
+      const QualifiedName& attribute_name = QualifiedName::Null())
       : SVGListPropertyTearOffHelper<SVGNumberListTearOff, SVGNumberList>(
             target,
             context_element,

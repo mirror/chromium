@@ -51,7 +51,7 @@ inline HTMLLinkElement::HTMLLinkElement(Document& document,
                                         bool created_by_parser)
     : HTMLElement(linkTag, document),
       link_loader_(LinkLoader::Create(this)),
-      sizes_(DOMTokenList::Create(*this, HTMLNames::sizesAttr)),
+      sizes_(DOMTokenList::Create(this)),
       rel_list_(this, RelList::Create(this)),
       created_by_parser_(created_by_parser) {}
 
@@ -68,7 +68,7 @@ void HTMLLinkElement::ParseAttribute(
   const AtomicString& value = params.new_value;
   if (name == relAttr) {
     rel_attribute_ = LinkRelAttribute(value);
-    rel_list_->DidUpdateAttributeValue(params.old_value, value);
+    rel_list_->SetRelValues(value);
     Process();
   } else if (name == hrefAttr) {
     // Log href attribute before logging resource fetching in process().
@@ -89,13 +89,7 @@ void HTMLLinkElement::ParseAttribute(
                         UseCounter::kHTMLLinkElementReferrerPolicyAttribute);
     }
   } else if (name == sizesAttr) {
-    sizes_->DidUpdateAttributeValue(params.old_value, value);
-    WebVector<WebSize> web_icon_sizes =
-        WebIconSizesParser::ParseIconSizes(value);
-    icon_sizes_.resize(web_icon_sizes.size());
-    for (size_t i = 0; i < web_icon_sizes.size(); ++i)
-      icon_sizes_[i] = web_icon_sizes[i];
-    Process();
+    sizes_->setValue(value);
   } else if (name == mediaAttr) {
     media_ = value.DeprecatedLower();
     Process();
@@ -269,6 +263,16 @@ RefPtr<WebTaskRunner> HTMLLinkElement::GetLoadingTaskRunner() {
   return TaskRunnerHelper::Get(TaskType::kNetworking, &GetDocument());
 }
 
+void HTMLLinkElement::ValueWasSet() {
+  SetSynchronizedLazyAttribute(HTMLNames::sizesAttr, sizes_->value());
+  WebVector<WebSize> web_icon_sizes =
+      WebIconSizesParser::ParseIconSizes(sizes_->value());
+  icon_sizes_.resize(web_icon_sizes.size());
+  for (size_t i = 0; i < web_icon_sizes.size(); ++i)
+    icon_sizes_[i] = web_icon_sizes[i];
+  Process();
+}
+
 bool HTMLLinkElement::SheetLoaded() {
   DCHECK(GetLinkStyle());
   return GetLinkStyle()->SheetLoaded();
@@ -364,6 +368,7 @@ DEFINE_TRACE(HTMLLinkElement) {
   visitor->Trace(rel_list_);
   HTMLElement::Trace(visitor);
   LinkLoaderClient::Trace(visitor);
+  DOMTokenListObserver::Trace(visitor);
 }
 
 DEFINE_TRACE_WRAPPERS(HTMLLinkElement) {

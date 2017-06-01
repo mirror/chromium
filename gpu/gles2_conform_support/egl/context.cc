@@ -255,6 +255,12 @@ void Context::ApplyContextReleased() {
 }
 
 bool Context::CreateService(gl::GLSurface* gl_surface) {
+  transfer_buffer_manager_ =
+      base::MakeUnique<gpu::TransferBufferManager>(nullptr);
+
+  std::unique_ptr<gpu::CommandBufferService> command_buffer(
+      new gpu::CommandBufferService(transfer_buffer_manager_.get()));
+
   scoped_refptr<gpu::gles2::FeatureInfo> feature_info(
       new gpu::gles2::FeatureInfo(gpu_driver_bug_workarounds_));
   scoped_refptr<gpu::gles2::ContextGroup> group(new gpu::gles2::ContextGroup(
@@ -268,13 +274,11 @@ bool Context::CreateService(gl::GLSurface* gl_surface) {
   if (!decoder.get())
     return false;
 
-  transfer_buffer_manager_ =
-      base::MakeUnique<gpu::TransferBufferManager>(nullptr);
-  std::unique_ptr<gpu::CommandBufferDirect> command_buffer(
-      new gpu::CommandBufferDirect(transfer_buffer_manager_.get(),
-                                   decoder.get()));
+  std::unique_ptr<gpu::CommandExecutor> command_executor(
+      new gpu::CommandExecutor(command_buffer.get(), decoder.get(),
+                               decoder.get()));
 
-  decoder->set_command_buffer_service(command_buffer->service());
+  decoder->set_engine(command_executor.get());
 
   gl::GLContextAttribs context_attribs;
   context_attribs.gpu_preference = gl::PreferDiscreteGpu;
@@ -303,6 +307,13 @@ bool Context::CreateService(gl::GLSurface* gl_surface) {
     return false;
   }
 
+  command_buffer->SetPutOffsetChangeCallback(
+      base::Bind(&gpu::CommandExecutor::PutChanged,
+                 base::Unretained(command_executor.get())));
+  command_buffer->SetGetBufferChangeCallback(
+      base::Bind(&gpu::CommandExecutor::SetGetBuffer,
+                 base::Unretained(command_executor.get())));
+
   std::unique_ptr<gpu::gles2::GLES2CmdHelper> gles2_cmd_helper(
       new gpu::gles2::GLES2CmdHelper(command_buffer.get()));
   if (!gles2_cmd_helper->Initialize(kCommandBufferSize)) {
@@ -316,6 +327,7 @@ bool Context::CreateService(gl::GLSurface* gl_surface) {
   gles2_cmd_helper_.reset(gles2_cmd_helper.release());
   transfer_buffer_.reset(transfer_buffer.release());
   command_buffer_.reset(command_buffer.release());
+  command_executor_.reset(command_executor.release());
   decoder_.reset(decoder.release());
   gl_context_ = gl_context.get();
 
@@ -348,6 +360,7 @@ void Context::DestroyService() {
   gl_context_ = nullptr;
 
   transfer_buffer_.reset();
+  command_executor_.reset();
   if (decoder_)
     decoder_->Destroy(have_context);
   decoder_.reset();

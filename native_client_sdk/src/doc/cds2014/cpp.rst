@@ -1,7 +1,5 @@
 .. _cds2014_cpp:
 
-.. include:: /migration/deprecation.inc
-
 ##################################
 A Saga of Fire and Water - Codelab
 ##################################

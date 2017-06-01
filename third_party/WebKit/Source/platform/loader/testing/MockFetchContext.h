@@ -68,20 +68,16 @@ class MockFetchContext : public FetchContext {
   bool ShouldLoadNewResource(Resource::Type) const override {
     return load_policy_ == kShouldLoadNewResource;
   }
+  RefPtr<WebTaskRunner> LoadingTaskRunner() const override { return runner_; }
   bool IsLoadComplete() const override { return complete_; }
   void AddResourceTiming(
       const ResourceTimingInfo& resource_timing_info) override {
     transfer_size_ = resource_timing_info.TransferSize();
   }
 
-  std::unique_ptr<WebURLLoader> CreateURLLoader(
-      const ResourceRequest&) override {
-    auto loader = Platform::Current()->CreateURLLoader();
-    loader->SetLoadingTaskRunner(runner_.Get());
-    return loader;
+  std::unique_ptr<WebURLLoader> CreateURLLoader() override {
+    return Platform::Current()->CreateURLLoader();
   }
-
-  RefPtr<WebTaskRunner> GetTaskRunner() { return runner_; }
 
  private:
   MockFetchContext(LoadPolicy load_policy, RefPtr<WebTaskRunner> task_runner)

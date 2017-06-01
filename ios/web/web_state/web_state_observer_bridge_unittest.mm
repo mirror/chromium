@@ -44,9 +44,8 @@ TEST_F(WebStateObserverBridgeTest, DidStartNavigation) {
 
   GURL url("https://chromium.test/");
   std::unique_ptr<web::NavigationContext> context =
-      web::NavigationContextImpl::CreateNavigationContext(
-          &test_web_state_, url,
-          ui::PageTransition::PAGE_TRANSITION_FORWARD_BACK);
+      web::NavigationContextImpl::CreateNavigationContext(&test_web_state_,
+                                                          url);
   bridge_->DidStartNavigation(context.get());
 
   ASSERT_TRUE([observer_ didStartNavigationInfo]);
@@ -58,9 +57,6 @@ TEST_F(WebStateObserverBridgeTest, DidStartNavigation) {
   EXPECT_EQ(context->IsSameDocument(), actual_context->IsSameDocument());
   EXPECT_EQ(context->GetError(), actual_context->GetError());
   EXPECT_EQ(context->GetUrl(), actual_context->GetUrl());
-  EXPECT_TRUE(PageTransitionTypeIncludingQualifiersIs(
-      ui::PageTransition::PAGE_TRANSITION_FORWARD_BACK,
-      actual_context->GetPageTransition()));
   EXPECT_EQ(context->GetResponseHeaders(),
             actual_context->GetResponseHeaders());
 }
@@ -71,9 +67,8 @@ TEST_F(WebStateObserverBridgeTest, DidFinishNavigation) {
 
   GURL url("https://chromium.test/");
   std::unique_ptr<web::NavigationContext> context =
-      web::NavigationContextImpl::CreateNavigationContext(
-          &test_web_state_, url,
-          ui::PageTransition::PAGE_TRANSITION_FROM_ADDRESS_BAR);
+      web::NavigationContextImpl::CreateNavigationContext(&test_web_state_,
+                                                          url);
   bridge_->DidFinishNavigation(context.get());
 
   ASSERT_TRUE([observer_ didFinishNavigationInfo]);
@@ -85,9 +80,6 @@ TEST_F(WebStateObserverBridgeTest, DidFinishNavigation) {
   EXPECT_EQ(context->IsSameDocument(), actual_context->IsSameDocument());
   EXPECT_EQ(context->GetError(), actual_context->GetError());
   EXPECT_EQ(context->GetUrl(), actual_context->GetUrl());
-  EXPECT_TRUE(PageTransitionTypeIncludingQualifiersIs(
-      ui::PageTransition::PAGE_TRANSITION_FROM_ADDRESS_BAR,
-      actual_context->GetPageTransition()));
   EXPECT_EQ(context->GetResponseHeaders(),
             actual_context->GetResponseHeaders());
 }

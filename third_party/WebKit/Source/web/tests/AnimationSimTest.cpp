@@ -5,10 +5,10 @@
 #include "core/animation/ElementAnimation.h"
 #include "core/css/PropertyDescriptor.h"
 #include "core/css/PropertyRegistration.h"
-#include "core/frame/WebLocalFrameBase.h"
 #include "core/page/Page.h"
 #include "platform/wtf/CurrentTime.h"
 #include "public/web/WebScriptSource.h"
+#include "web/WebLocalFrameImpl.h"
 #include "web/tests/sim/SimCompositor.h"
 #include "web/tests/sim/SimDisplayItemList.h"
 #include "web/tests/sim/SimRequest.h"
@@ -69,7 +69,7 @@ TEST_F(AnimationSimTest, CustomPropertyBaseComputedStyle) {
   keyframes.push_back(keyframe.Release());
   Timing timing;
   timing.iteration_duration = 1;  // Seconds.
-  ElementAnimation::animateInternal(
+  ElementAnimation::animate(
       *target, StringKeyframeEffectModel::Create(keyframes), timing);
 
   // This sets the baseComputedStyle on the animation exit frame.
@@ -89,7 +89,7 @@ TEST_F(AnimationSimTest, CustomPropertyBaseComputedStyle) {
   keyframes.push_back(keyframe.Release());
   timing = Timing::Defaults();
   timing.iteration_duration = 1;  // Seconds.
-  ElementAnimation::animateInternal(
+  ElementAnimation::animate(
       *target, StringKeyframeEffectModel::Create(keyframes), timing);
 
   // This (previously) would not clear the existing baseComputedStyle and would

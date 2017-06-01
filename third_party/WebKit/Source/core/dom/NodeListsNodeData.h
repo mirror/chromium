@@ -65,21 +65,21 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
   struct NodeListAtomicCacheMapEntryHash {
     STATIC_ONLY(NodeListAtomicCacheMapEntryHash);
     static unsigned GetHash(
-        const std::pair<unsigned char, AtomicString>& entry) {
-      return DefaultHash<AtomicString>::Hash::GetHash(entry.second) +
+        const std::pair<unsigned char, StringImpl*>& entry) {
+      return DefaultHash<StringImpl*>::Hash::GetHash(entry.second) +
              entry.first;
     }
-    static bool Equal(const std::pair<unsigned char, AtomicString>& a,
-                      const std::pair<unsigned char, AtomicString>& b) {
+    static bool Equal(const std::pair<unsigned char, StringImpl*>& a,
+                      const std::pair<unsigned char, StringImpl*>& b) {
       return a == b;
     }
     static const bool safe_to_compare_to_empty_or_deleted =
-        DefaultHash<AtomicString>::Hash::safe_to_compare_to_empty_or_deleted;
+        DefaultHash<StringImpl*>::Hash::safe_to_compare_to_empty_or_deleted;
   };
 
   // Oilpan: keep a weak reference to the collection objects.
   // Object unregistration is handled by GC's weak processing.
-  typedef HeapHashMap<std::pair<unsigned char, AtomicString>,
+  typedef HeapHashMap<std::pair<unsigned char, StringImpl*>,
                       WeakMember<LiveNodeListBase>,
                       NodeListAtomicCacheMapEntryHash>
       NodeListAtomicNameCacheMap;
@@ -181,10 +181,13 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
  private:
   NodeListsNodeData() : child_node_list_(nullptr) {}
 
-  std::pair<unsigned char, AtomicString> NamedNodeListKey(
+  std::pair<unsigned char, StringImpl*> NamedNodeListKey(
       CollectionType type,
       const AtomicString& name) {
-    return std::pair<unsigned char, AtomicString>(type, name);
+    // Holding the raw StringImpl is safe because |name| is retained by the
+    // NodeList and the NodeList is reponsible for removing itself from the
+    // cache on deletion.
+    return std::pair<unsigned char, StringImpl*>(type, name.Impl());
   }
 
   // Can be a ChildNodeList or an EmptyNodeList.
@@ -222,7 +225,7 @@ inline Collection* ContainerNode::EnsureCachedCollection(
 template <typename Collection>
 inline Collection* ContainerNode::CachedCollection(CollectionType type) {
   NodeListsNodeData* node_lists = this->NodeLists();
-  return node_lists ? node_lists->Cached<Collection>(type) : nullptr;
+  return node_lists ? node_lists->Cached<Collection>(type) : 0;
 }
 
 }  // namespace blink

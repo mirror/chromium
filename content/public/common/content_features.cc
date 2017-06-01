@@ -40,11 +40,6 @@ const base::Feature kBrowserSideNavigation{"browser-side-navigation",
 const base::Feature kCanvas2DImageChromium{"Canvas2DImageChromium",
                                            base::FEATURE_ENABLED_BY_DEFAULT};
 
-// Enabled decoding images asynchronously from raster in the renderer
-// compositor.
-const base::Feature kCheckerImaging{"CheckerImaging",
-                                    base::FEATURE_DISABLED_BY_DEFAULT};
-
 // Enables the compositing of fixed position content that is opaque and can
 // preserve LCD text.
 const base::Feature kCompositeOpaqueFixedPosition{
@@ -74,10 +69,6 @@ const base::Feature kFeaturePolicy{"FeaturePolicy",
 // Enable filtering of same-origin tiny plugins
 const base::Feature kFilterSameOriginTinyPlugin{
     "FilterSameOriginTinyPlugins", base::FEATURE_DISABLED_BY_DEFAULT};
-
-// Enables Fetch API keepalive timeout setting.
-const base::Feature kFetchKeepaliveTimeoutSetting{
-    "FetchKeepaliveTimeoutSetting", base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Enables a blink::FontCache optimization that reuses a font to serve different
 // size of font.
@@ -151,9 +142,6 @@ const base::Feature kNotificationContentImage{"NotificationContentImage",
 const base::Feature kMainThreadBusyScrollIntervention{
     "MainThreadBusyScrollIntervention", base::FEATURE_DISABLED_BY_DEFAULT};
 
-// Blob mojofication.
-const base::Feature kMojoBlobs("MojoBlobs", base::FEATURE_DISABLED_BY_DEFAULT);
-
 // Experimental resource fetch optimizations for workers. See crbug.com/443374
 const base::Feature kOffMainThreadFetch{"OffMainThreadFetch",
                                         base::FEATURE_DISABLED_BY_DEFAULT};
@@ -195,7 +183,7 @@ const base::Feature kPurgeAndSuspend {
 
 // RAF aligned mouse input events support.
 const base::Feature kRafAlignedMouseInputEvents{
-    "RafAlignedMouseInput", base::FEATURE_ENABLED_BY_DEFAULT};
+    "RafAlignedMouseInput", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // RAF aligned touch input events support.
 const base::Feature kRafAlignedTouchInputEvents{
@@ -256,11 +244,6 @@ const base::Feature kTopDocumentIsolation{"top-document-isolation",
 // Enables touchpad and wheel scroll latching.
 const base::Feature kTouchpadAndWheelScrollLatching{
     "TouchpadAndWheelScrollLatching", base::FEATURE_DISABLED_BY_DEFAULT};
-
-// Use Feature Policy to gate the use of permission features like midi,
-// geolocation, camera, microphone, etc.
-const base::Feature kUseFeaturePolicyForPermissions{
-    "UseFeaturePolicyForPermissions", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Controls whether vibrate requires user gesture.
 const base::Feature kVibrateRequiresUserGesture{
@@ -345,7 +328,7 @@ const base::Feature kSendBeaconThrowForBlobWithNonSimpleType{
 // Autofill Accessibility in Android.
 // crbug.com/627860
 const base::Feature kAndroidAutofillAccessibility{
-    "AndroidAutofillAccessibility", base::FEATURE_ENABLED_BY_DEFAULT};
+    "AndroidAutofillAccessibility", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // FeatureList definition for the Seccomp field trial.
 const base::Feature kSeccompSandboxAndroid{"SeccompSandboxAndroid",

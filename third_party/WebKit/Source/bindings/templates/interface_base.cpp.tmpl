@@ -424,7 +424,7 @@ static void install{{v8_class}}Template(v8::Isolate* isolate, const DOMWrapperWo
          if parent_interface else
          'v8::Local<v8::FunctionTemplate>()' %}
   V8DOMConfiguration::InitializeDOMInterfaceTemplate(isolate, interfaceTemplate, {{v8_class}}::wrapperTypeInfo.interface_name, {{parent_interface_template}}, {{v8_class}}::internalFieldCount);
-  {% if constructors or has_custom_constructor or has_html_constructor %}
+  {% if constructors or has_custom_constructor or has_event_constructor or has_html_constructor %}
   interfaceTemplate->SetCallHandler({{v8_class}}::constructorCallback);
   interfaceTemplate->SetLength({{interface_length}});
   {% endif %}
@@ -701,7 +701,7 @@ void {{v8_class_or_partial}}::installRuntimeEnabledFeatures(v8::Isolate* isolate
         with context %}
 {% from 'constants.cpp.tmpl' import constant_configuration with context %}
 {% from 'methods.cpp.tmpl' import method_configuration with context %}
-{% for feature in optional_features %}
+{% for feature in origin_trial_features %}
 void {{v8_class_or_partial}}::install{{feature.name}}(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::Object> instance, v8::Local<v8::Object> prototype, v8::Local<v8::Function> interface) {
   {% if feature.attributes or feature.methods %}
   v8::Local<v8::FunctionTemplate> interfaceTemplate = {{v8_class}}::wrapperTypeInfo.domTemplate(isolate, world);

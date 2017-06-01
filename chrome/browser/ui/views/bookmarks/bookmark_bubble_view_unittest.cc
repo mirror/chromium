@@ -64,11 +64,6 @@ class BookmarkBubbleViewTest : public BrowserWithTestWindowTest {
     bubble_.reset(new BookmarkBubbleView(NULL, NULL, std::move(delegate),
                                          profile(), GURL(kTestBookmarkURL),
                                          true));
-    bubble_->Init();
-  }
-
-  std::unique_ptr<views::View> CreateFootnoteView() {
-    return base::WrapUnique(bubble_->CreateFootnoteView());
   }
 
   void SetUpSigninManager(const std::string& username) {
@@ -91,14 +86,16 @@ class BookmarkBubbleViewTest : public BrowserWithTestWindowTest {
 TEST_F(BookmarkBubbleViewTest, SyncPromoSignedIn) {
   SetUpSigninManager("fake_username");
   CreateBubbleView();
-  std::unique_ptr<views::View> footnote = CreateFootnoteView();
+  bubble_->Init();
+  std::unique_ptr<views::View> footnote(bubble_->CreateFootnoteView());
   EXPECT_FALSE(footnote);
 }
 
 // Verifies that the sync promo is displayed for a user that is not signed in.
 TEST_F(BookmarkBubbleViewTest, SyncPromoNotSignedIn) {
   CreateBubbleView();
-  std::unique_ptr<views::View> footnote = CreateFootnoteView();
+  bubble_->Init();
+  std::unique_ptr<views::View> footnote(bubble_->CreateFootnoteView());
 #if defined(OS_CHROMEOS)
   EXPECT_FALSE(footnote);
 #else  // !defined(OS_CHROMEOS)

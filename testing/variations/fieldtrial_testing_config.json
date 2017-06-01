@@ -409,25 +409,6 @@
             ]
         }
     ],
-    "CheckerImaging": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "CheckerImaging",
-                    "enable_features": [
-                        "CheckerImaging"
-                    ]
-                }
-            ]
-        }
-    ],
     "ChildAccountDetection": [
         {
             "platforms": [
@@ -471,21 +452,6 @@
             "experiments": [
                 {
                     "name": "Enabled"
-                }
-            ]
-        }
-    ],
-    "ContextualSearch": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Default",
-                    "params": {
-                        "enable_ranker_logging": "true"
-                    }
                 }
             ]
         }
@@ -1555,6 +1521,25 @@
             ]
         }
     ],
+    "NTPBookmarkSuggestions": [
+        {
+            "platforms": [
+                "android"
+            ],
+            "experiments": [
+                {
+                    "name": "Phase2Enabled3wWithDesktop",
+                    "params": {
+                        "bookmarks_consider_desktop_visits": "true",
+                        "bookmarks_max_age_in_days": "21"
+                    },
+                    "enable_features": [
+                        "NTPBookmarkSuggestions"
+                    ]
+                }
+            ]
+        }
+    ],
     "NTPFaviconsFromNewServer": [
         {
             "platforms": [
@@ -1769,9 +1754,9 @@
             ],
             "experiments": [
                 {
-                    "name": "NetworkTimeQueriesEnabledOnDemand",
+                    "name": "NetworkTimeQueriesEnabledBackgroundAndOnDemand",
                     "params": {
-                        "FetchBehavior": "on-demand-only"
+                        "FetchBehavior": "background-and-on-demand"
                     },
                     "enable_features": [
                         "NetworkTimeServiceQuerying"
@@ -1906,42 +1891,6 @@
                     "enable_features": [
                         "OmniboxEnableClipboardProvider"
                     ]
-                }
-            ]
-        }
-    ],
-    "OmniboxPlaceholderExperiment": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "SearchOrTypeUrl"
-                },
-                {
-                    "name": "SearchOrTypeWebsiteName"
-                },
-                {
-                    "name": "SearchTheWeb"
-                },
-                {
-                    "name": "EnterASearchOrWebsite"
-                },
-                {
-                    "name": "SearchNews"
-                },
-                {
-                    "name": "SearchRecipes"
-                },
-                {
-                    "name": "SearchWeather"
-                },
-                {
-                    "name": "Blank"
-                },
-                {
-                    "name": "Default"
                 }
             ]
         }
@@ -2587,26 +2536,6 @@
             ]
         }
     ],
-    "ReportingAPI": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "ios",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "ReportingEnabled",
-                    "enable_features": [
-                        "Reporting"
-                    ]
-                }
-            ]
-        }
-    ],
     "SRTPromptFieldTrial": [
         {
             "platforms": [
@@ -2981,26 +2910,6 @@
             "experiments": [
                 {
                     "name": "ExperimentYes"
-                }
-            ]
-        }
-    ],
-    "SocketReadIfReady": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "linux",
-                "mac",
-                "ios",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "SocketReadIfReady"
-                    ]
                 }
             ]
         }

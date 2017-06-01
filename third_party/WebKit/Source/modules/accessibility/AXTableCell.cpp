@@ -104,11 +104,9 @@ bool AXTableCell::IsTableCell() const {
 }
 
 unsigned AXTableCell::AriaColumnIndex() const {
-  uint32_t col_index;
-  if (HasAOMPropertyOrARIAAttribute(AOMUIntProperty::kColIndex, col_index) &&
-      col_index >= 1) {
-    return col_index;
-  }
+  const AtomicString& col_index = GetAttribute(aria_colindexAttr);
+  if (col_index.ToInt() >= 1)
+    return col_index.ToInt();
 
   AXObjectImpl* parent = ParentObjectUnignored();
   if (!parent || !parent->IsTableRow())
@@ -118,11 +116,9 @@ unsigned AXTableCell::AriaColumnIndex() const {
 }
 
 unsigned AXTableCell::AriaRowIndex() const {
-  uint32_t row_index;
-  if (HasAOMPropertyOrARIAAttribute(AOMUIntProperty::kRowIndex, row_index) &&
-      row_index >= 1) {
-    return row_index;
-  }
+  const AtomicString& row_index = GetAttribute(aria_rowindexAttr);
+  if (row_index.ToInt() >= 1)
+    return row_index.ToInt();
 
   AXObjectImpl* parent = ParentObjectUnignored();
   if (!parent || !parent->IsTableRow())

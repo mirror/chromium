@@ -32,9 +32,7 @@
 BrowserProcessPlatformPart::BrowserProcessPlatformPart()
     : created_profile_helper_(false) {}
 
-BrowserProcessPlatformPart::~BrowserProcessPlatformPart() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-}
+BrowserProcessPlatformPart::~BrowserProcessPlatformPart() {}
 
 void BrowserProcessPlatformPart::InitializeAutomaticRebootManager() {
   DCHECK(!automatic_reboot_manager_);
@@ -97,7 +95,7 @@ void BrowserProcessPlatformPart::UnregisterKeepAlive() {
 }
 
 chromeos::ProfileHelper* BrowserProcessPlatformPart::profile_helper() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (!created_profile_helper_)
     CreateProfileHelper();
   return profile_helper_.get();
@@ -154,16 +152,6 @@ chromeos::system::SystemClock* BrowserProcessPlatformPart::GetSystemClock() {
 
 void BrowserProcessPlatformPart::DestroySystemClock() {
   system_clock_.reset();
-}
-
-void BrowserProcessPlatformPart::AddCompatibleCrOSComponent(
-    const std::string& name) {
-  compatible_cros_components_.insert(name);
-}
-
-bool BrowserProcessPlatformPart::IsCompatibleCrOSComponent(
-    const std::string& name) {
-  return compatible_cros_components_.count(name) > 0;
 }
 
 void BrowserProcessPlatformPart::CreateProfileHelper() {

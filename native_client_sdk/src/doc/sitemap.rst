@@ -1,7 +1,5 @@
 :orphan:
 
-.. include:: /migration/deprecation.inc
-
 Native Client Documentation Sitemap
 ===================================
 
@@ -13,7 +11,6 @@ Contents:
    overview.rst
    quick-start.rst
    nacl-and-pnacl.rst
-   migration/index.rst
    glossary.rst
    sdk/download.rst
    sdk/examples.rst

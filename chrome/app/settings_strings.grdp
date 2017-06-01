@@ -1105,9 +1105,6 @@
     <message name="IDS_SETTINGS_INTERNET" desc="Name of the settings page which displays internet preferences.">
       Network
     </message>
-    <message name="IDS_SETTINGS_INTERNET_CONFIG" desc="Name of the settings page for configuring a network.">
-      Configure network
-    </message>
     <message name="IDS_SETTINGS_INTERNET_DETAIL" desc="Name of the settings page which displays network details.">
       Network Details
     </message>
@@ -1134,12 +1131,6 @@
     </message>
     <message name="IDS_SETTINGS_INTERNET_DEVICE_ENABLING" desc="Settings > Internet > Message when a device (e.g a Cellular modem) is enabling.">
       Enabling
-    </message>
-    <message name="IDS_SETTINGS_INTERNET_CONFIG_SHARE" desc="Settings > Internet > Network config: Label for setting allowing other device users to use the network configuration.">
-      Allow other users of this device to use this network
-    </message>
-    <message name="IDS_SETTINGS_INTERNET_CONFIG_SAVE_CREDENTIALS" desc="Settings > Internet > Network config: Label for the setting to save identity and password.">
-      Save identity and password
     </message>
     <message name="IDS_SETTINGS_INTERNET_NETWORK_SECTION_ACCESS_POINT" desc="Settings > Internet > Network details: Access Point section label.">
       Access Point
@@ -1175,7 +1166,7 @@
       Allow mobile data roaming
     </message>
     <message name="IDS_SETTINGS_INTERNET_NETWORK_SHARED" desc="Settings > Internet > Network details: Text to show when a network is shared.">
-      Other users of this device can use this network.
+      This network is shared with other users
     </message>
     <message name="IDS_SETTINGS_INTERNET_NETWORK_PRIMARY_USER_CONTROLLED" desc="Settings > Internet > Network details: Text to show when a network configuration is controlled by the primary user.">
       Network configuration is controlled by <ph name="USER_EMAIL">$1<ex>joe@gmail.com</ex></ph>.
@@ -1480,54 +1471,6 @@
     <message name="IDS_ONC_CONNECTING" desc="Settings > Internet, text in network summary when a network is connecting.">
       Connecting
     </message>
-    <message name="IDS_ONC_EAP_ANONYMOUS_IDENTITY" desc="ONC Property label for EAP.AnonymousIdentity">
-      Anonymous Identity
-    </message>
-    <message name="IDS_ONC_EAP_IDENTITY" desc="ONC Property label for EAP.Identity">
-      Identity
-    </message>
-    <message name="IDS_ONC_EAP_INNER" desc="ONC Property label for EAP.Inner (Phase 2 authentication)">
-      EAP Phase 2 authentication
-    </message>
-    <message name="IDS_ONC_EAP_INNER_AUTOMATIC" desc="ONC Property value for EAP.Inner = Automatic">
-      Automatic
-    </message>
-    <message name="IDS_ONC_EAP_INNER_MD5" desc="ONC Property value for EAP.Inner = MD5">
-      EAP-MD5
-    </message>
-    <message name="IDS_ONC_EAP_INNER_MSCHAP" desc="ONC Property value for EAP.Inner = MSCHAP">
-      MSCHAP
-    </message>
-    <message name="IDS_ONC_EAP_INNER_MSCHAPV2" desc="ONC Property value for EAP.Inner = MSCHAPv2">
-      MSCHAPv2
-    </message>
-    <message name="IDS_ONC_EAP_INNER_PAP" desc="ONC Property value for EAP.Inner = PAP">
-      PAP
-    </message>
-    <message name="IDS_ONC_EAP_INNER_CHAP" desc="ONC Property value for EAP.Inner = CHAP">
-      CHAP
-    </message>
-    <message name="IDS_ONC_EAP_INNER_GTC" desc="ONC Property value for EAP.Inner = GTC">
-      GTC
-    </message>
-    <message name="IDS_ONC_EAP_OUTER" desc="ONC Property label for EAP.Outer (Method)">
-      EAP method
-    </message>
-    <message name="IDS_ONC_EAP_OUTER_LEAP" desc="ONC Property value for EAP.Outer = LEAP">
-      LEAP
-    </message>
-    <message name="IDS_ONC_EAP_OUTER_PEAP" desc="ONC Property value for EAP.Outer = PEAP">
-      PEAP
-    </message>
-    <message name="IDS_ONC_EAP_OUTER_TLS" desc="ONC Property value for EAP.Outer = TLS">
-      EAP-TLS
-    </message>
-    <message name="IDS_ONC_EAP_OUTER_TTLS" desc="ONC Property value for EAP.Outer = TTLS">
-      EAP-TTLS
-    </message>
-    <message name="IDS_ONC_EAP_SUBJECT_MATCH" desc="ONC Property label for EAP.SubjectMatch">
-      Subject match
-    </message>
     <message name="IDS_ONC_NOT_CONNECTED" desc="Settings > Internet, text in network summary when a network is not connecting or connected.">
       Not Connected
     </message>
@@ -1582,32 +1525,50 @@
     <message name="IDS_ONC_VPN_TYPE" desc="ONC Property label for VPN.Type">
       Provider type
     </message>
+    <message name="IDS_ONC_WIFI_EAP_ANONYMOUS_IDENTITY" desc="ONC Property label for WiFi.EAP.AnonymousIdentity">
+      Anonymous Identity
+    </message>
+    <message name="IDS_ONC_WIFI_EAP_IDENTITY" desc="ONC Property label for WiFI.EAP.Identity">
+      Identity
+    </message>
+    <message name="IDS_ONC_WIFI_EAP_INNER" desc="ONC Property label for WiFi.EAP.Inner (Phase 2 authentication)">
+      EAP Phase 2 authentication
+    </message>
+    <message name="IDS_ONC_WIFI_EAP_INNER_AUTOMATIC" desc="ONC Property value for WiFi.EAP.Inner = Automatic">
+      Automatic
+    </message>
+    <message name="IDS_ONC_WIFI_EAP_INNER_MD5" desc="ONC Property value for WiFi.EAP.Inner = MD5">
+      EAP-MD5
+    </message>
+    <message name="IDS_ONC_WIFI_EAP_INNER_MSCHAP" desc="ONC Property value for WiFi.EAP.Inner = MSCHAP">
+      MSCHAP
+    </message>
+    <message name="IDS_ONC_WIFI_EAP_INNER_MSCHAPV2" desc="ONC Property value for WiFi.EAP.Inner = MSCHAPv2">
+      MSCHAPv2
+    </message>
+    <message name="IDS_ONC_WIFI_EAP_INNER_PAP" desc="ONC Property value for WiFi.EAP.Inner = PAP">
+      PAP
+    </message>
+    <message name="IDS_ONC_WIFI_EAP_INNER_CHAP" desc="ONC Property value for WiFi.EAP.Inner = CHAP">
+      CHAP
+    </message>
+    <message name="IDS_ONC_WIFI_EAP_INNER_GTC" desc="ONC Property value for WiFi.EAP.Inner = GTC">
+      GTC
+    </message>
+    <message name="IDS_ONC_WIFI_EAP_OUTER" desc="ONC Property label for WiFi.EAP.Outer (Method)">
+      EAP method
+    </message>
+    <message name="IDS_ONC_WIFI_EAP_SUBJECT_MATCH" desc="ONC Property label for WiFi.EAP.SubjectMatch">
+      Subject match
+    </message>
     <message name="IDS_ONC_WIFI_FREQUENCY" desc="ONC Property label for WiFi.Frequency">
       Frequency
-    </message>
-    <message name="IDS_ONC_WIFI_PASSWORD" desc="ONC Property label for WiFi.Password">
-      Password
     </message>
     <message name="IDS_ONC_WIFI_SECURITY" desc="ONC Property label for WiFi.Security">
       Security
     </message>
-    <message name="IDS_ONC_WIFI_SECURITY_NONE" desc="In settings > Internet, a string specifying security type = none.">
-      None
-    </message>
-    <message name="IDS_ONC_WIFI_SECURITY_WEP" desc="In settings > Internet, a string specifying security type = WEP.">
-      WEP
-    </message>
-    <message name="IDS_ONC_WIFI_SECURITY_PSK" desc="In settings > Internet, a string specifying security type = PSK (either WPA-PSK or RSN-PSK).">
-      PSK (WPA or RSN)
-    </message>
-    <message name="IDS_ONC_WIFI_SECURITY_EAP" desc="In settings > Internet, a string specifying security type = EAP (802.1X).">
-      EAP
-    </message>
     <message name="IDS_ONC_WIFI_SIGNAL_STRENGTH" desc="ONC Property label for WiFi.SignalStrength">
       Signal strength
-    </message>
-    <message name="IDS_ONC_WIFI_SSID" desc="ONC Property label for WiFi.SSID">
-      SSID
     </message>
     <message name="IDS_ONC_WIMAX_EAP_IDENTITY" desc="ONC Property label for WiMAX.EAP.Identity">
       Identity
@@ -2945,9 +2906,6 @@
     <message name="IDS_SETTINGS_STYLUS_NOTE_TAKING_APP_LABEL" desc="Label describing a dropdown that lets the user pick their default note-taking applications. The dropdown contains a list of all available choices. The user can install additional apps, so the contents of the dropdown is dynamic.">
       Note-taking app
     </message>
-    <message name="IDS_SETTINGS_STYLUS_NOTE_TAKING_APP_LOCK_SCREEN_CHECKBOX" desc="Label for a check box that enables note-taking by selected note-taking application when user session is locked (i.e. when lock screen is shown).">
-      Enable note-taking from lock screen
-    </message>
     <message name="IDS_SETTINGS_STYLUS_NOTE_TAKING_APP_NONE_AVAILABLE" desc="Secondary label used when there are no note-taking applications available.">
       None available
     </message>
@@ -2970,18 +2928,6 @@
     </message>
     <message name="IDS_SETTINGS_DISPLAY_NIGHT_LIGHT_LABEL" desc="In Device Settings > Displays, the label for the Night Light feature (which controls the color temperature of the screen) section.">
       Night Light
-    </message>
-    <message name="IDS_SETTINGS_DISPLAY_NIGHT_LIGHT_SCHEDULE_CUSTOM" desc="In Device Settings > Displays, the label of the option to set a custom schedule of the Night Light feature.">
-      Custom Schedule
-    </message>
-    <message name="IDS_SETTINGS_DISPLAY_NIGHT_LIGHT_SCHEDULE_LABEL" desc="In Device Settings > Displays, the label for the automatic schedule section of the Night Light feature.">
-      Schedule
-    </message>
-    <message name="IDS_SETTINGS_DISPLAY_NIGHT_LIGHT_SCHEDULE_NEVER" desc="In Device Settings > Displays, the label of the option to turn off the automatic schedule of the Night Light feature.">
-      Never
-    </message>
-    <message name="IDS_SETTINGS_DISPLAY_NIGHT_LIGHT_SCHEDULE_SUNSET_TO_SUNRISE" desc="In Device Settings > Displays, the label of the option to set the automatic schedule of the Night Light feature to turn on at sunset and off at sunrise.">
-      Sunset to Sunrise
     </message>
     <message name="IDS_SETTINGS_DISPLAY_NIGHT_LIGHT_TEXT" desc="In Device Settings > Displays, text describing the Night Light feature.">
       Makes it easier to look at your screen or read in dim light

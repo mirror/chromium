@@ -63,12 +63,12 @@ PrefModelAssociator::PrefModelAssociator(
       pref_service_(NULL),
       type_(type),
       client_(client) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(type_ == PREFERENCES || type_ == PRIORITY_PREFERENCES);
 }
 
 PrefModelAssociator::~PrefModelAssociator() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   pref_service_ = NULL;
 
   synced_pref_observers_.clear();
@@ -166,7 +166,7 @@ syncer::SyncMergeResult PrefModelAssociator::MergeDataAndStartSyncing(
     std::unique_ptr<syncer::SyncChangeProcessor> sync_processor,
     std::unique_ptr<syncer::SyncErrorFactory> sync_error_factory) {
   DCHECK_EQ(type_, type);
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(pref_service_);
   DCHECK(!sync_processor_.get());
   DCHECK(sync_processor.get());

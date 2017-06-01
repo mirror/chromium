@@ -2516,7 +2516,7 @@
         "v8.mobile_infinite_scroll-classic_tbmv2"
       ]
     },
-    "build30-b4": {
+    "build8-b1": {
       "benchmarks": [
         "battor.steady_state",
         "blink_perf.css",

@@ -50,7 +50,6 @@
 #include "third_party/WebKit/public/platform/WebDisplayMode.h"
 #include "ui/base/ime/text_input_mode.h"
 #include "ui/base/ime/text_input_type.h"
-#include "ui/base/ui_base_types.h"
 #include "ui/events/gesture_detection/gesture_provider_config_helper.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/latency/latency_info.h"
@@ -378,8 +377,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void ForwardEmulatedTouchEvent(
       const blink::WebTouchEvent& touch_event) override;
   void SetCursor(const WebCursor& cursor) override;
-  void ShowContextMenuAtPoint(const gfx::Point& point,
-                              const ui::MenuSourceType source_type) override;
+  void ShowContextMenuAtPoint(const gfx::Point& point) override;
 
   // Queues a synthetic gesture for testing purposes.  Invokes the on_complete
   // callback when the gesture is finished running.
@@ -545,7 +543,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   // Called from a RenderFrameHost when the text selection has changed.
   void SelectionChanged(const base::string16& text,
                         uint32_t offset,
-                        const gfx::Range& range);
+                        const gfx::Range& range,
+                        bool user_initiated);
 
   size_t in_flight_event_count() const { return in_flight_event_count_; }
   blink::WebInputEvent::Type hang_monitor_event_type() const {
@@ -592,6 +591,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void SubmitCompositorFrame(const cc::LocalSurfaceId& local_surface_id,
                              cc::CompositorFrame frame) override;
   void DidNotProduceFrame(const cc::BeginFrameAck& ack) override;
+  void EvictCurrentSurface() override {}
 
  protected:
   // ---------------------------------------------------------------------------

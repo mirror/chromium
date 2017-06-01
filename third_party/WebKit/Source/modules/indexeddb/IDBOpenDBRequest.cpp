@@ -53,10 +53,7 @@ IDBOpenDBRequest::IDBOpenDBRequest(ScriptState* script_state,
                                    IDBDatabaseCallbacks* callbacks,
                                    int64_t transaction_id,
                                    int64_t version)
-    : IDBRequest(script_state,
-                 IDBAny::CreateNull(),
-                 nullptr,
-                 IDBRequest::AsyncTraceState()),
+    : IDBRequest(script_state, IDBAny::CreateNull(), nullptr),
       database_callbacks_(callbacks),
       transaction_id_(transaction_id),
       version_(version) {
@@ -183,7 +180,7 @@ DispatchEventResult IDBOpenDBRequest::DispatchEventInternal(Event* event) {
       ResultAsAny()->IdbDatabase()->IsClosePending()) {
     DequeueEvent(event);
     SetResult(nullptr);
-    HandleResponse(
+    EnqueueResponse(
         DOMException::Create(kAbortError, "The connection was closed."));
     return DispatchEventResult::kCanceledBeforeDispatch;
   }

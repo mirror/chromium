@@ -4,9 +4,15 @@
 
 #include "cc/output/renderer_settings.h"
 
+#include <limits>
+
+#include "base/logging.h"
+#include "cc/resources/platform_color.h"
+
 namespace cc {
 
-RendererSettings::RendererSettings() = default;
+RendererSettings::RendererSettings()
+    : preferred_tile_format(PlatformColor::BestTextureFormat()) {}
 
 RendererSettings::RendererSettings(const RendererSettings& other) = default;
 

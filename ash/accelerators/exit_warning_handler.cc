@@ -10,6 +10,7 @@
 #include "ash/shell_delegate.h"
 #include "ash/shell_port.h"
 #include "ash/strings/grit/ash_strings.h"
+#include "ash/wm_window.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
@@ -49,7 +50,7 @@ class ExitWarningWidgetDelegateView : public views::WidgetDelegateView {
     const gfx::FontList& font_list =
         rb.GetFontList(ui::ResourceBundle::LargeFont);
     text_width_ = gfx::GetStringWidth(text_, font_list);
-    SetPreferredSize(
+    set_preferred_size(
         gfx::Size(text_width_ + kHorizontalMarginAroundText,
                   font_list.GetHeight() + kVerticalMarginAroundText));
     views::Label* label = new views::Label();
@@ -153,7 +154,7 @@ void ExitWarningHandler::Show() {
   params.bounds = bounds;
   params.name = "ExitWarningWindow";
   widget_.reset(new views::Widget);
-  RootWindowController::ForWindow(root_window)
+  GetRootWindowController(root_window)
       ->ConfigureWidgetInitParamsForContainer(
           widget_.get(), kShellWindowId_SettingBubbleContainer, &params);
   widget_->Init(params);

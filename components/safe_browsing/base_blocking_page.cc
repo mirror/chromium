@@ -55,8 +55,6 @@ BaseBlockingPage::BaseBlockingPage(
               ? -1
               : web_contents->GetController().GetLastCommittedEntryIndex()),
       unsafe_resources_(unsafe_resources),
-      proceeded_(false),
-      threat_details_proceed_delay_ms_(kThreatDetailsProceedDelayMilliSeconds),
       sb_error_ui_(base::MakeUnique<SafeBrowsingLoudErrorUI>(
           unsafe_resources_[0].url,
           main_frame_url_,
@@ -64,7 +62,10 @@ BaseBlockingPage::BaseBlockingPage(
           display_options,
           ui_manager->app_locale(),
           base::Time::NowFromSystemTime(),
-          controller())) {}
+          controller())),
+      proceeded_(false),
+      threat_details_proceed_delay_ms_(kThreatDetailsProceedDelayMilliSeconds) {
+}
 
 BaseBlockingPage::~BaseBlockingPage() {}
 
@@ -348,15 +349,6 @@ BaseBlockingPage::CreateControllerClient(
   return base::MakeUnique<SecurityInterstitialControllerClient>(
       web_contents, std::move(metrics_helper), nullptr, /* prefs */
       ui_manager->app_locale(), ui_manager->default_safe_page());
-}
-
-int BaseBlockingPage::GetHTMLTemplateId() {
-  return sb_error_ui_->GetHTMLTemplateId();
-}
-
-void BaseBlockingPage::set_sb_error_ui(
-    std::unique_ptr<BaseSafeBrowsingErrorUI> sb_error_ui) {
-  sb_error_ui_ = std::move(sb_error_ui);
 }
 
 }  // namespace safe_browsing

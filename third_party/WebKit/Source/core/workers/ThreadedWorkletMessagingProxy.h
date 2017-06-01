@@ -6,15 +6,12 @@
 #define ThreadedWorkletMessagingProxy_h
 
 #include "core/CoreExport.h"
-#include "core/loader/WorkletScriptLoader.h"
 #include "core/workers/ThreadedMessagingProxyBase.h"
 #include "core/workers/WorkletGlobalScopeProxy.h"
-#include "core/workers/WorkletPendingTasks.h"
 #include "platform/wtf/WeakPtr.h"
 
 namespace blink {
 
-class ScriptSourceCode;
 class ThreadedWorkletObjectProxy;
 
 class CORE_EXPORT ThreadedWorkletMessagingProxy
@@ -22,16 +19,13 @@ class CORE_EXPORT ThreadedWorkletMessagingProxy
       public WorkletGlobalScopeProxy {
  public:
   // WorkletGlobalScopeProxy implementation.
-  void FetchAndInvokeScript(const KURL& module_url_record,
-                            WebURLRequest::FetchCredentialsMode,
-                            RefPtr<WebTaskRunner> outside_settings_task_runner,
-                            WorkletPendingTasks*) final;
+  void EvaluateScript(const ScriptSourceCode&) final;
   void TerminateWorkletGlobalScope() final;
 
   void Initialize();
 
  protected:
-  ThreadedWorkletMessagingProxy(ExecutionContext*, WorkerClients*);
+  explicit ThreadedWorkletMessagingProxy(ExecutionContext*);
 
   ThreadedWorkletObjectProxy& WorkletObjectProxy() {
     return *worklet_object_proxy_;
@@ -39,14 +33,8 @@ class CORE_EXPORT ThreadedWorkletMessagingProxy
 
  private:
   friend class ThreadedWorkletMessagingProxyForTest;
-  class LoaderClient;
-
-  void NotifyLoadingFinished(WorkletScriptLoader*);
-  void EvaluateScript(const ScriptSourceCode&);
 
   std::unique_ptr<ThreadedWorkletObjectProxy> worklet_object_proxy_;
-
-  HashSet<Persistent<WorkletScriptLoader>> loaders_;
 
   WeakPtrFactory<ThreadedWorkletMessagingProxy> weak_ptr_factory_;
 };

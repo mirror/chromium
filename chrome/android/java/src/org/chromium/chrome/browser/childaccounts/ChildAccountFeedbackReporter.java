@@ -26,7 +26,7 @@ public final class ChildAccountFeedbackReporter {
             sFeedbackReporter = AppHooks.get().createFeedbackReporter();
         }
         FeedbackCollector.create(activity, Profile.getLastUsedProfile(), url,
-                true /* takeScreenshot */, new FeedbackCollector.FeedbackResult() {
+                new FeedbackCollector.FeedbackResult() {
                     @Override
                     public void onResult(FeedbackCollector collector) {
                         collector.setDescription(description);

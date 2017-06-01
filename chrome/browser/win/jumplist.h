@@ -17,7 +17,6 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
-#include "base/sequence_checker.h"
 #include "base/strings/string16.h"
 #include "base/synchronization/lock.h"
 #include "base/task/cancelable_task_tracker.h"
@@ -65,7 +64,8 @@ class Profile;
 // always delete JumpList on UI thread (the same thread it got constructed on).
 class JumpList : public sessions::TabRestoreServiceObserver,
                  public history::TopSitesObserver,
-                 public RefcountedKeyedService {
+                 public RefcountedKeyedService,
+                 public base::NonThreadSafe {
  public:
   struct JumpListData {
     JumpListData();
@@ -189,19 +189,17 @@ class JumpList : public sessions::TabRestoreServiceObserver,
 
   // Creates at most |max_items| icon files of |category| in |icon_dir| for the
   // asynchrounously loaded icons stored in |item_list|.
-  // Returns the number of new icon files created.
-  int CreateIconFiles(const base::FilePath& icon_dir,
-                      const ShellLinkItemList& item_list,
-                      size_t max_items,
-                      JumpListCategory category);
+  void CreateIconFiles(const base::FilePath& icon_dir,
+                       const ShellLinkItemList& item_list,
+                       size_t max_items,
+                       JumpListCategory category);
 
   // Updates icon files in |icon_dir|, which includes deleting old icons and
   // creating at most |slot_limit| new icons for |page_list|.
-  // Returns the number of new icon files created.
-  int UpdateIconFiles(const base::FilePath& icon_dir,
-                      const ShellLinkItemList& page_list,
-                      size_t slot_limit,
-                      JumpListCategory category);
+  void UpdateIconFiles(const base::FilePath& icon_dir,
+                       const ShellLinkItemList& page_list,
+                       size_t slot_limit,
+                       JumpListCategory category);
 
   // Updates the jumplist, once all the data has been fetched. This method calls
   // UpdateJumpList() to do most of the work.
@@ -271,8 +269,6 @@ class JumpList : public sessions::TabRestoreServiceObserver,
   // A task runner running tasks to delete JumpListIcons directory and
   // JumpListIconsOld directory.
   scoped_refptr<base::SequencedTaskRunner> delete_jumplisticons_task_runner_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
 
   // For callbacks may be run after destruction.
   base::WeakPtrFactory<JumpList> weak_ptr_factory_;

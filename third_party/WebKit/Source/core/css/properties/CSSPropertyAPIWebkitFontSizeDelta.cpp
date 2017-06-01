@@ -7,13 +7,12 @@
 #include "core/css/parser/CSSParserContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 
-class CSSParserLocalContext;
 namespace blink {
 
 const CSSValue* CSSPropertyAPIWebkitFontSizeDelta::parseSingleValue(
     CSSParserTokenRange& range,
     const CSSParserContext& context,
-    const CSSParserLocalContext&) {
+    CSSPropertyID) {
   return CSSPropertyParserHelpers::ConsumeLength(
       range, context.Mode(), kValueRangeAll,
       CSSPropertyParserHelpers::UnitlessQuirk::kAllow);

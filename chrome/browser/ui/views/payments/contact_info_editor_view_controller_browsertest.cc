@@ -63,7 +63,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestContactInfoEditorTest, HappyPath) {
   EXPECT_EQ(base::ASCIIToUTF16(kNameFull),
             profile->GetInfo(autofill::AutofillType(autofill::NAME_FULL),
                              GetLocale()));
-  EXPECT_EQ(base::ASCIIToUTF16("16515558946"),
+  EXPECT_EQ(base::ASCIIToUTF16(kPhoneNumber),
             profile->GetInfo(
                 autofill::AutofillType(autofill::PHONE_HOME_WHOLE_NUMBER),
                 GetLocale()));
@@ -108,7 +108,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestContactInfoEditorTest,
   EXPECT_EQ(base::ASCIIToUTF16(kNameFull),
             profile->GetInfo(autofill::AutofillType(autofill::NAME_FULL),
                              GetLocale()));
-  EXPECT_EQ(base::ASCIIToUTF16("16515558946"),
+  EXPECT_EQ(base::ASCIIToUTF16(kPhoneNumber),
             profile->GetInfo(
                 autofill::AutofillType(autofill::PHONE_HOME_WHOLE_NUMBER),
                 GetLocale()));
@@ -161,7 +161,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestContactInfoEditorTest, Validation) {
   EXPECT_EQ(base::ASCIIToUTF16(kNameFull),
             profile->GetInfo(autofill::AutofillType(autofill::NAME_FULL),
                              GetLocale()));
-  EXPECT_EQ(base::ASCIIToUTF16("16515558946"),
+  EXPECT_EQ(base::ASCIIToUTF16(kPhoneNumber),
             profile->GetInfo(
                 autofill::AutofillType(autofill::PHONE_HOME_WHOLE_NUMBER),
                 GetLocale()));
@@ -209,7 +209,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestContactInfoEditorTest, ModifyExisting) {
   EXPECT_EQ(base::ASCIIToUTF16(kNameFull),
             profile->GetInfo(autofill::AutofillType(autofill::NAME_FULL),
                              GetLocale()));
-  EXPECT_EQ(base::ASCIIToUTF16("16515558946"),
+  EXPECT_EQ(base::ASCIIToUTF16(kPhoneNumber),
             profile->GetInfo(
                 autofill::AutofillType(autofill::PHONE_HOME_WHOLE_NUMBER),
                 GetLocale()));
@@ -237,9 +237,8 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestContactInfoEditorTest,
   OpenContactInfoScreen();
 
   PaymentRequest* request = GetPaymentRequests(GetActiveWebContents()).front();
-
-  // No contact profiles are selected because both are incomplete.
-  EXPECT_EQ(nullptr, request->state()->selected_contact_profile());
+  EXPECT_EQ(request->state()->contact_profiles().front(),
+            request->state()->selected_contact_profile());
 
   views::View* list_view = dialog_view()->GetViewByID(
       static_cast<int>(DialogViewID::CONTACT_INFO_SHEET_LIST_VIEW));
@@ -262,7 +261,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestContactInfoEditorTest,
       request->state()->selected_contact_profile();
   DCHECK(profile);
 
-  EXPECT_EQ(base::ASCIIToUTF16("16515558946"),
+  EXPECT_EQ(base::ASCIIToUTF16(kPhoneNumber),
             profile->GetInfo(
                 autofill::AutofillType(autofill::PHONE_HOME_WHOLE_NUMBER),
                 GetLocale()));
@@ -270,7 +269,6 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestContactInfoEditorTest,
             profile->GetInfo(autofill::AutofillType(autofill::EMAIL_ADDRESS),
                              GetLocale()));
 
-  // Expect the newly-completed profile to be selected.
   EXPECT_EQ(2U, request->state()->contact_profiles().size());
   EXPECT_EQ(request->state()->contact_profiles().back(), profile);
 }

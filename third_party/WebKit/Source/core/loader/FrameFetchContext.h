@@ -51,18 +51,15 @@ class LocalFrame;
 class LocalFrameClient;
 class ResourceError;
 class ResourceResponse;
-class WebTaskRunner;
 
 class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
  public:
   static ResourceFetcher* CreateFetcherFromDocumentLoader(
       DocumentLoader* loader) {
-    auto* context = new FrameFetchContext(loader, nullptr);
-    return ResourceFetcher::Create(context, context->GetTaskRunner());
+    return ResourceFetcher::Create(new FrameFetchContext(loader, nullptr));
   }
   static ResourceFetcher* CreateFetcherFromDocument(Document* document) {
-    auto* context = new FrameFetchContext(nullptr, document);
-    return ResourceFetcher::Create(context, context->GetTaskRunner());
+    return ResourceFetcher::Create(new FrameFetchContext(nullptr, document));
   }
 
   static void ProvideDocumentToContext(FetchContext&, Document*);
@@ -132,7 +129,6 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   void SendImagePing(const KURL&) override;
   void AddConsoleMessage(const String&,
                          LogMessageType = kLogErrorMessage) const override;
-  SecurityOrigin* GetSecurityOrigin() const override;
 
   void PopulateResourceRequest(const KURL&,
                                Resource::Type,
@@ -148,12 +144,12 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   void AddClientHintsIfNecessary(const ClientHintsPreferences&,
                                  const FetchParameters::ResourceWidth&,
                                  ResourceRequest&);
-  static float ClientHintsDeviceRAM(int64_t physical_memory_mb);
 
   MHTMLArchive* Archive() const override;
 
-  std::unique_ptr<WebURLLoader> CreateURLLoader(
-      const ResourceRequest&) override;
+  RefPtr<WebTaskRunner> LoadingTaskRunner() const override;
+
+  std::unique_ptr<WebURLLoader> CreateURLLoader() override;
 
   DECLARE_VIRTUAL_TRACE();
 
@@ -170,16 +166,17 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   LocalFrame* GetFrame() const;
   LocalFrameClient* GetLocalFrameClient() const;
   LocalFrame* FrameOfImportsController() const;
-  RefPtr<WebTaskRunner> GetTaskRunner() const;
 
   // BaseFetchContext overrides:
   ContentSettingsClient* GetContentSettingsClient() const override;
   Settings* GetSettings() const override;
   SubresourceFilter* GetSubresourceFilter() const override;
+  SecurityContext* GetParentSecurityContext() const override;
   bool ShouldBlockRequestByInspector(const ResourceRequest&) const override;
   void DispatchDidBlockRequest(const ResourceRequest&,
                                const FetchInitiatorInfo&,
                                ResourceRequestBlockedReason) const override;
+  void ReportLocalLoadFailed(const KURL&) const override;
   bool ShouldBypassMainWorldCSP() const override;
   bool IsSVGImageChromeClient() const override;
   void CountUsage(UseCounter::Feature) const override;
@@ -188,19 +185,8 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
       const ResourceRequest&,
       const KURL&,
       SecurityViolationReportingPolicy) const override;
-  ReferrerPolicy GetReferrerPolicy() const override;
-  String GetOutgoingReferrer() const override;
-  const KURL& Url() const override;
-  const SecurityOrigin* GetParentSecurityOrigin() const override;
-  Optional<WebAddressSpace> GetAddressSpace() const override;
-  const ContentSecurityPolicy* GetContentSecurityPolicy() const override;
-  void AddConsoleMessage(ConsoleMessage*) const override;
 
   Member<DocumentLoader> document_loader_;
-  // FIXME: Oilpan: Ideally this should just be a traced Member but that will
-  // currently leak because ComputedStyle and its data are not on the heap.
-  // See crbug.com/383860 for details.
-  WeakMember<Document> document_;
 };
 
 }  // namespace blink

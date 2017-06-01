@@ -45,8 +45,7 @@ bool IsGoogleCaptcha(const GURL& url) {
 GoogleCaptchaObserver::GoogleCaptchaObserver() {}
 
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy
-GoogleCaptchaObserver::OnCommit(content::NavigationHandle* navigation_handle,
-                                ukm::SourceId source_id) {
+GoogleCaptchaObserver::OnCommit(content::NavigationHandle* navigation_handle) {
   if (!navigation_handle->IsSameDocument() &&
       IsGoogleCaptcha(navigation_handle->GetURL())) {
     RecordGoogleCaptchaEvent(GOOGLE_CAPTCHA_SHOWN);

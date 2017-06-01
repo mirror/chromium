@@ -153,6 +153,7 @@ extern const char kWebKitMinimumFontSize[];
 extern const char kWebKitMinimumLogicalFontSize[];
 extern const char kWebKitJavascriptEnabled[];
 extern const char kWebKitWebSecurityEnabled[];
+extern const char kWebKitJavascriptCanOpenWindowsAutomatically[];
 extern const char kWebKitLoadsImagesAutomatically[];
 extern const char kWebKitPluginsEnabled[];
 extern const char kWebKitEncryptedMediaEnabled[];
@@ -257,7 +258,6 @@ extern const char kDisplayRotationLock[];
 extern const char kEnableStylusTools[];
 extern const char kLaunchPaletteOnEjectEvent[];
 extern const char kNoteTakingAppId[];
-extern const char kNoteTakingAppEnabledOnLockScreen[];
 extern const char kSessionUserActivitySeen[];
 extern const char kSessionStartTime[];
 extern const char kSessionLengthLimit[];
@@ -379,12 +379,12 @@ extern const char kBackShortcutBubbleShownCount[];
 #if BUILDFLAG(ENABLE_PLUGINS)
 extern const char kContentSettingsPluginWhitelist[];
 #endif
-#if !defined(OS_ANDROID)
 extern const char kPartitionDefaultZoomLevel[];
 extern const char kPartitionPerHostZoomLevels[];
 
+#if !defined(OS_ANDROID)
 extern const char kPinnedTabs[];
-#endif  // !defined(OS_ANDROID)
+#endif
 
 extern const char kDisable3DAPIs[];
 extern const char kEnableDeprecatedWebPlatformFeatures[];
@@ -888,10 +888,7 @@ extern const char kSearchGeolocationPreDisclosureMetricsRecorded[];
 extern const char kSearchGeolocationPostDisclosureMetricsRecorded[];
 #endif
 
-extern const char kDSEGeolocationSetting[];
-
-// Deprecated Google-specific version of the above.
-extern const char kGoogleDSEGeolocationSettingDeprecated[];
+extern const char kGoogleDSEGeolocationSetting[];
 
 extern const char kWebShareVisitedTargets[];
 

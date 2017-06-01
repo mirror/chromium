@@ -38,8 +38,8 @@
 #include "core/editing/iterators/TextIterator.h"
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/events/Event.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/api/LayoutViewItem.h"
@@ -182,7 +182,7 @@ bool SelectionController::HandleSingleClick(
 
   // Don't restart the selection when the mouse is pressed on an
   // existing selection so we can allow for text dragging.
-  if (LocalFrameView* view = frame_->View()) {
+  if (FrameView* view = frame_->View()) {
     const LayoutPoint v_point = view->RootFrameToContents(
         FlooredIntPoint(event.Event().PositionInRootFrame()));
     if (!extend_selection && this->Selection().Contains(v_point)) {
@@ -215,18 +215,10 @@ bool SelectionController::HandleSingleClick(
       // Shift+Click deselects when selection was created right-to-left
       const PositionInFlatTree& start = selection.Start();
       const PositionInFlatTree& end = selection.end();
-      if (pos < start) {
-        // |distance_to_start < distance_to_end|.
-        builder.SetBaseAndExtent(end, pos);
-      } else if (end < pos) {
-        // |distance_to_start > distance_to_end|.
-        builder.SetBaseAndExtent(start, pos);
-      } else {
-        const int distance_to_start = TextDistance(start, pos);
-        const int distance_to_end = TextDistance(pos, end);
-        builder.SetBaseAndExtent(
-            distance_to_start <= distance_to_end ? end : start, pos);
-      }
+      const int distance_to_start = TextDistance(start, pos);
+      const int distance_to_end = TextDistance(pos, end);
+      builder.SetBaseAndExtent(
+          distance_to_start <= distance_to_end ? end : start, pos);
     }
 
     UpdateSelectionForMouseDownDispatchingSelectStart(
@@ -875,7 +867,7 @@ void SelectionController::UpdateSelectionForMouseDrag(
     Node* mouse_press_node,
     const LayoutPoint& drag_start_pos,
     const IntPoint& last_known_mouse_position) {
-  LocalFrameView* view = frame_->View();
+  FrameView* view = frame_->View();
   if (!view)
     return;
   LayoutViewItem layout_item = frame_->ContentLayoutItem();
@@ -1055,8 +1047,7 @@ void SelectionController::SendContextMenuEvent(
   AutoReset<bool> mouse_down_may_start_select_change(
       &mouse_down_may_start_select_, true);
 
-  if (!mev.Event().FromTouch() &&
-      HitTestResultIsMisspelled(mev.GetHitTestResult()))
+  if (HitTestResultIsMisspelled(mev.GetHitTestResult()))
     return SelectClosestMisspellingFromMouseEvent(mev);
 
   if (!frame_->GetEditor().Behavior().ShouldSelectOnContextualMenuClick())

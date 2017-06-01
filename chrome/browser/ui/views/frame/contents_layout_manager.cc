@@ -55,8 +55,11 @@ void ContentsLayoutManager::Layout(views::View* contents_container) {
 
   // DevTools cares about the specific position, so we have to compensate RTL
   // layout here.
-  devtools_view_->SetBoundsRect(host_->GetMirroredRect(new_devtools_bounds));
-  contents_view_->SetBoundsRect(host_->GetMirroredRect(new_contents_bounds));
+  new_devtools_bounds.set_x(host_->GetMirroredXForRect(new_devtools_bounds));
+  new_contents_bounds.set_x(host_->GetMirroredXForRect(new_contents_bounds));
+
+  devtools_view_->SetBoundsRect(new_devtools_bounds);
+  contents_view_->SetBoundsRect(new_contents_bounds);
 }
 
 gfx::Size ContentsLayoutManager::GetPreferredSize(

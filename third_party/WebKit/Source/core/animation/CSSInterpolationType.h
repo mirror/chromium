@@ -5,32 +5,17 @@
 #ifndef CSSInterpolationType_h
 #define CSSInterpolationType_h
 
-#include "core/animation/CSSInterpolationEnvironment.h"
+#include "core/animation/InterpolationEnvironment.h"
 #include "core/animation/InterpolationType.h"
 
 namespace blink {
 
 class CSSCustomPropertyDeclaration;
-class ComputedStyle;
 class PropertyRegistration;
-class StyleResolverState;
 
 class CSSInterpolationType : public InterpolationType {
  public:
   void SetCustomPropertyRegistration(const PropertyRegistration&);
-
-  class CSSConversionChecker : public ConversionChecker {
-   public:
-    bool IsValid(const InterpolationEnvironment& environment,
-                 const InterpolationValue& underlying) const final {
-      return IsValid(ToCSSInterpolationEnvironment(environment).GetState(),
-                     underlying);
-    }
-
-   protected:
-    virtual bool IsValid(const StyleResolverState&,
-                         const InterpolationValue& underlying) const = 0;
-  };
 
  protected:
   CSSInterpolationType(PropertyHandle);

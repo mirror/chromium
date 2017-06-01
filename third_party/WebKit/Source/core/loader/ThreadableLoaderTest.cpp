@@ -11,6 +11,7 @@
 #include "core/loader/ThreadableLoadingContext.h"
 #include "core/loader/WorkerThreadableLoader.h"
 #include "core/testing/DummyPageHolder.h"
+#include "core/workers/WorkerLoaderProxy.h"
 #include "core/workers/WorkerReportingProxy.h"
 #include "core/workers/WorkerThreadTestHelper.h"
 #include "platform/WaitableEvent.h"
@@ -32,7 +33,6 @@
 #include "public/platform/Platform.h"
 #include "public/platform/WebURLLoadTiming.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
-#include "public/platform/WebURLRequest.h"
 #include "public/platform/WebURLResponse.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -110,7 +110,7 @@ class ThreadableLoaderTestHelper {
   virtual ~ThreadableLoaderTestHelper() {}
 
   virtual void CreateLoader(ThreadableLoaderClient*,
-                            WebURLRequest::FetchRequestMode) = 0;
+                            CrossOriginRequestPolicy) = 0;
   virtual void StartLoader(const ResourceRequest&) = 0;
   virtual void CancelLoader() = 0;
   virtual void CancelAndClearLoader() = 0;
@@ -129,9 +129,9 @@ class DocumentThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
 
   void CreateLoader(
       ThreadableLoaderClient* client,
-      WebURLRequest::FetchRequestMode fetch_request_mode) override {
+      CrossOriginRequestPolicy cross_origin_request_policy) override {
     ThreadableLoaderOptions options;
-    options.fetch_request_mode = fetch_request_mode;
+    options.cross_origin_request_policy = cross_origin_request_policy;
     ResourceLoaderOptions resource_loader_options;
     loader_ = DocumentThreadableLoader::Create(
         *ThreadableLoadingContext::Create(GetDocument()), client, options,
@@ -170,22 +170,24 @@ class DocumentThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
   Persistent<DocumentThreadableLoader> loader_;
 };
 
-class WorkerThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
+class WorkerThreadableLoaderTestHelper : public ThreadableLoaderTestHelper,
+                                         public WorkerLoaderProxyProvider {
  public:
   WorkerThreadableLoaderTestHelper()
       : dummy_page_holder_(DummyPageHolder::Create(IntSize(1, 1))) {}
 
   void CreateLoader(
       ThreadableLoaderClient* client,
-      WebURLRequest::FetchRequestMode fetch_request_mode) override {
+      CrossOriginRequestPolicy cross_origin_request_policy) override {
     std::unique_ptr<WaitableEvent> completion_event =
         WTF::MakeUnique<WaitableEvent>();
     worker_loading_task_runner_->PostTask(
         BLINK_FROM_HERE,
-        CrossThreadBind(
-            &WorkerThreadableLoaderTestHelper::WorkerCreateLoader,
-            CrossThreadUnretained(this), CrossThreadUnretained(client),
-            CrossThreadUnretained(completion_event.get()), fetch_request_mode));
+        CrossThreadBind(&WorkerThreadableLoaderTestHelper::WorkerCreateLoader,
+                        CrossThreadUnretained(this),
+                        CrossThreadUnretained(client),
+                        CrossThreadUnretained(completion_event.get()),
+                        cross_origin_request_policy));
     completion_event->Wait();
   }
 
@@ -242,8 +244,9 @@ class WorkerThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
     security_origin_ = GetDocument().GetSecurityOrigin();
     parent_frame_task_runners_ =
         ParentFrameTaskRunners::Create(&dummy_page_holder_->GetFrame());
-    worker_thread_ = WTF::MakeUnique<WorkerThreadForTest>(
-        ThreadableLoadingContext::Create(GetDocument()), *reporting_proxy_);
+    worker_thread_ =
+        WTF::WrapUnique(new WorkerThreadForTest(this, *reporting_proxy_));
+    loading_context_ = ThreadableLoadingContext::Create(GetDocument());
 
     worker_thread_->StartWithSourceCode(security_origin_.Get(),
                                         "//fake source code",
@@ -270,19 +273,22 @@ class WorkerThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
     // Needed to clean up the things on the main thread side and
     // avoid Resource leaks.
     testing::RunPendingTasks();
+
+    worker_thread_->GetWorkerLoaderProxy()->DetachProvider(this);
   }
 
  private:
   Document& GetDocument() { return dummy_page_holder_->GetDocument(); }
 
-  void WorkerCreateLoader(ThreadableLoaderClient* client,
-                          WaitableEvent* event,
-                          WebURLRequest::FetchRequestMode fetch_request_mode) {
+  void WorkerCreateLoader(
+      ThreadableLoaderClient* client,
+      WaitableEvent* event,
+      CrossOriginRequestPolicy cross_origin_request_policy) {
     DCHECK(worker_thread_);
     DCHECK(worker_thread_->IsCurrentThread());
 
     ThreadableLoaderOptions options;
-    options.fetch_request_mode = fetch_request_mode;
+    options.cross_origin_request_policy = cross_origin_request_policy;
     ResourceLoaderOptions resource_loader_options;
 
     // Ensure that WorkerThreadableLoader is created.
@@ -315,6 +321,11 @@ class WorkerThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
     event->Signal();
   }
 
+  // WorkerLoaderProxyProvider methods.
+  ThreadableLoadingContext* GetThreadableLoadingContext() override {
+    return loading_context_.Get();
+  }
+
   RefPtr<SecurityOrigin> security_origin_;
   std::unique_ptr<WorkerReportingProxy> reporting_proxy_;
   std::unique_ptr<WorkerThreadForTest> worker_thread_;
@@ -326,6 +337,8 @@ class WorkerThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
   Checkpoint checkpoint_;
   // |m_loader| must be touched only from the worker thread only.
   CrossThreadPersistent<ThreadableLoader> loader_;
+
+  Persistent<ThreadableLoadingContext> loading_context_;
 };
 
 class ThreadableLoaderTest
@@ -359,9 +372,9 @@ class ThreadableLoaderTest
     Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
   }
 
-  void CreateLoader(WebURLRequest::FetchRequestMode fetch_request_mode =
-                        WebURLRequest::kFetchRequestModeNoCORS) {
-    helper_->CreateLoader(Client(), fetch_request_mode);
+  void CreateLoader(CrossOriginRequestPolicy cross_origin_request_policy =
+                        kAllowCrossOriginRequests) {
+    helper_->CreateLoader(Client(), cross_origin_request_policy);
   }
 
   MockThreadableLoaderClient* Client() const { return client_.get(); }
@@ -651,7 +664,7 @@ TEST_P(ThreadableLoaderTest, ClearInDidFail) {
 TEST_P(ThreadableLoaderTest, DidFailInStart) {
   InSequence s;
   EXPECT_CALL(GetCheckpoint(), Call(1));
-  CreateLoader(WebURLRequest::kFetchRequestModeSameOrigin);
+  CreateLoader(kDenyCrossOriginRequests);
   CallCheckpoint(1);
 
   EXPECT_CALL(*Client(),
@@ -668,7 +681,7 @@ TEST_P(ThreadableLoaderTest, DidFailInStart) {
 TEST_P(ThreadableLoaderTest, CancelInDidFailInStart) {
   InSequence s;
   EXPECT_CALL(GetCheckpoint(), Call(1));
-  CreateLoader(WebURLRequest::kFetchRequestModeSameOrigin);
+  CreateLoader(kDenyCrossOriginRequests);
   CallCheckpoint(1);
 
   EXPECT_CALL(*Client(), DidFail(_))
@@ -683,7 +696,7 @@ TEST_P(ThreadableLoaderTest, CancelInDidFailInStart) {
 TEST_P(ThreadableLoaderTest, ClearInDidFailInStart) {
   InSequence s;
   EXPECT_CALL(GetCheckpoint(), Call(1));
-  CreateLoader(WebURLRequest::kFetchRequestModeSameOrigin);
+  CreateLoader(kDenyCrossOriginRequests);
   CallCheckpoint(1);
 
   EXPECT_CALL(*Client(), DidFail(_))
@@ -698,7 +711,7 @@ TEST_P(ThreadableLoaderTest, ClearInDidFailInStart) {
 TEST_P(ThreadableLoaderTest, DidFailAccessControlCheck) {
   InSequence s;
   EXPECT_CALL(GetCheckpoint(), Call(1));
-  CreateLoader(WebURLRequest::kFetchRequestModeCORS);
+  CreateLoader(kUseAccessControl);
   CallCheckpoint(1);
 
   EXPECT_CALL(GetCheckpoint(), Call(2));
@@ -717,7 +730,7 @@ TEST_P(ThreadableLoaderTest, DidFailAccessControlCheck) {
 TEST_P(ThreadableLoaderTest, CancelInDidFailAccessControlCheck) {
   InSequence s;
   EXPECT_CALL(GetCheckpoint(), Call(1));
-  CreateLoader(WebURLRequest::kFetchRequestModeCORS);
+  CreateLoader(kUseAccessControl);
   CallCheckpoint(1);
 
   EXPECT_CALL(GetCheckpoint(), Call(2));
@@ -732,7 +745,7 @@ TEST_P(ThreadableLoaderTest, CancelInDidFailAccessControlCheck) {
 TEST_P(ThreadableLoaderTest, ClearInDidFailAccessControlCheck) {
   InSequence s;
   EXPECT_CALL(GetCheckpoint(), Call(1));
-  CreateLoader(WebURLRequest::kFetchRequestModeCORS);
+  CreateLoader(kUseAccessControl);
   CallCheckpoint(1);
 
   EXPECT_CALL(GetCheckpoint(), Call(2));
@@ -800,7 +813,7 @@ TEST_P(ThreadableLoaderTest, ClearInRedirectDidFinishLoading) {
 TEST_P(ThreadableLoaderTest, DidFailRedirectCheck) {
   InSequence s;
   EXPECT_CALL(GetCheckpoint(), Call(1));
-  CreateLoader(WebURLRequest::kFetchRequestModeCORS);
+  CreateLoader(kUseAccessControl);
   CallCheckpoint(1);
 
   EXPECT_CALL(GetCheckpoint(), Call(2));
@@ -814,7 +827,7 @@ TEST_P(ThreadableLoaderTest, DidFailRedirectCheck) {
 TEST_P(ThreadableLoaderTest, CancelInDidFailRedirectCheck) {
   InSequence s;
   EXPECT_CALL(GetCheckpoint(), Call(1));
-  CreateLoader(WebURLRequest::kFetchRequestModeCORS);
+  CreateLoader(kUseAccessControl);
   CallCheckpoint(1);
 
   EXPECT_CALL(GetCheckpoint(), Call(2));
@@ -829,7 +842,7 @@ TEST_P(ThreadableLoaderTest, CancelInDidFailRedirectCheck) {
 TEST_P(ThreadableLoaderTest, ClearInDidFailRedirectCheck) {
   InSequence s;
   EXPECT_CALL(GetCheckpoint(), Call(1));
-  CreateLoader(WebURLRequest::kFetchRequestModeCORS);
+  CreateLoader(kUseAccessControl);
   CallCheckpoint(1);
 
   EXPECT_CALL(GetCheckpoint(), Call(2));
@@ -846,7 +859,7 @@ TEST_P(ThreadableLoaderTest, ClearInDidFailRedirectCheck) {
 TEST_P(ThreadableLoaderTest, GetResponseSynchronously) {
   InSequence s;
   EXPECT_CALL(GetCheckpoint(), Call(1));
-  CreateLoader(WebURLRequest::kFetchRequestModeCORS);
+  CreateLoader(kUseAccessControl);
   CallCheckpoint(1);
 
   EXPECT_CALL(*Client(), DidFailAccessControlCheck(_));

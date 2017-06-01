@@ -47,15 +47,6 @@ function ContentSetting(contentType, settingSchema, schema) {
   };
 
   this.set = function(details, callback) {
-    // We check if the setting is deprecated first, since the validation will
-    // fail for deprecated types.
-    if ($Object.hasOwnProperty(DEPRECATED_CONTENT_TYPES, contentType)) {
-      console.warn('contentSettings.' + contentType + ' is deprecated; setting '
-                   + 'it has no effect.');
-      $Function.apply(callback, undefined, []);
-      return;
-    }
-
     // The set schema included in the Schema object is generic, since it varies
     // per-setting. However, this is only ever for a single setting, so we can
     // enforce the types more thoroughly.
@@ -70,7 +61,14 @@ function ContentSetting(contentType, settingSchema, schema) {
     };
     var modSetSchema = $Array.slice(rawSetSchema);
     modSetSchema[0] = modSettingParam;
-    validate([details, callback], modSetSchema);
+    validate([details, callback], rawSetSchema);
+
+    if ($Object.hasOwnProperty(DEPRECATED_CONTENT_TYPES, contentType)) {
+      console.warn('contentSettings.' + contentType + ' is deprecated; setting '
+                   + 'it has no effect.');
+      $Function.apply(callback, undefined, []);
+      return;
+    }
 
     return sendRequest('contentSettings.set',
                        [contentType, details, callback],

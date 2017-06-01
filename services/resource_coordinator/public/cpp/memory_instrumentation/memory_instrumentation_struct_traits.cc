@@ -123,7 +123,6 @@ bool StructTraits<
   out->compressed_bytes = input.compressed_bytes();
   out->rss_anon_bytes = input.rss_anon_bytes();
   out->vm_swap_bytes = input.vm_swap_bytes();
-  out->private_bytes = input.private_bytes();
   return true;
 }
 

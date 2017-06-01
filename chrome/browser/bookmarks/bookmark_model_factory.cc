@@ -15,7 +15,6 @@
 #include "chrome/browser/bookmarks/startup_task_runner_service_factory.h"
 #include "chrome/browser/profiles/incognito_helpers.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/ui/webui/md_bookmarks/md_bookmarks_ui.h"
 #include "chrome/browser/undo/bookmark_undo_service_factory.h"
 #include "chrome/common/chrome_switches.h"
 #include "components/bookmarks/browser/bookmark_model.h"
@@ -27,21 +26,6 @@
 #include "content/public/browser/browser_thread.h"
 
 using bookmarks::BookmarkModel;
-
-namespace {
-
-bool IsBookmarkUndoServiceEnabled() {
-  bool register_bookmark_undo_service_as_observer = true;
-#if !defined(OS_ANDROID)
-  register_bookmark_undo_service_as_observer =
-      base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableBookmarkUndo) ||
-      MdBookmarksUI::IsEnabled();
-#endif  // !defined(OS_ANDROID)
-  return register_bookmark_undo_service_as_observer;
-}
-
-}  // namespace
 
 // static
 BookmarkModel* BookmarkModelFactory::GetForBrowserContext(
@@ -85,7 +69,13 @@ KeyedService* BookmarkModelFactory::BuildServiceInstanceFor(
                            ->GetBookmarkTaskRunner(),
                        content::BrowserThread::GetTaskRunnerForThread(
                            content::BrowserThread::UI));
-  if (IsBookmarkUndoServiceEnabled())
+  bool register_bookmark_undo_service_as_observer = true;
+#if !defined(OS_ANDROID)
+  register_bookmark_undo_service_as_observer =
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableBookmarkUndo);
+#endif  // !defined(OS_ANDROID)
+  if (register_bookmark_undo_service_as_observer)
     BookmarkUndoServiceFactory::GetForProfile(profile)->Start(bookmark_model);
 
   return bookmark_model;

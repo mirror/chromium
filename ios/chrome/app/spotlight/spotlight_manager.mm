@@ -38,7 +38,6 @@
 }
 
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState {
-  DCHECK(browserState);
   DCHECK(spotlight::IsSpotlightAvailable());
   self = [super init];
   if (self) {
@@ -57,11 +56,6 @@
   return nil;
 }
 
-- (void)dealloc {
-  DCHECK(!_bookmarkManager);
-  DCHECK(!_topSitesManager);
-  DCHECK(!_actionsManager);
-}
 
 - (void)resyncIndex {
   [_bookmarkManager reindexBookmarksIfNeeded];
@@ -70,16 +64,6 @@
 
 - (void)bookmarkUpdated {
   [_topSitesManager reindexTopSites];
-}
-
-- (void)shutdown {
-  [_bookmarkManager shutdown];
-  [_topSitesManager shutdown];
-  [_actionsManager shutdown];
-
-  _bookmarkManager = nil;
-  _topSitesManager = nil;
-  _actionsManager = nil;
 }
 
 @end

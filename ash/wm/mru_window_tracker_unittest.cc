@@ -9,6 +9,7 @@
 #include "ash/test/ash_test_base.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
+#include "ash/wm_window.h"
 #include "ui/base/hit_test.h"
 
 namespace ash {
@@ -39,12 +40,11 @@ TEST_F(MruWindowTrackerTest, Basic) {
   wm::ActivateWindow(w2.get());
   wm::ActivateWindow(w1.get());
 
-  MruWindowTracker::WindowList window_list =
-      mru_window_tracker()->BuildMruWindowList();
+  WmWindow::Windows window_list = mru_window_tracker()->BuildMruWindowList();
   ASSERT_EQ(3u, window_list.size());
-  EXPECT_EQ(w1.get(), window_list[0]);
-  EXPECT_EQ(w2.get(), window_list[1]);
-  EXPECT_EQ(w3.get(), window_list[2]);
+  EXPECT_EQ(w1.get(), window_list[0]->aura_window());
+  EXPECT_EQ(w2.get(), window_list[1]->aura_window());
+  EXPECT_EQ(w3.get(), window_list[2]->aura_window());
 }
 
 // Test that minimized windows are not treated specially.
@@ -70,14 +70,13 @@ TEST_F(MruWindowTrackerTest, MinimizedWindowsAreLru) {
   // front of the MRU queue.
   EXPECT_TRUE(wm::IsActiveWindow(w2.get()));
 
-  MruWindowTracker::WindowList window_list =
-      mru_window_tracker()->BuildMruWindowList();
-  EXPECT_EQ(w2.get(), window_list[0]);
-  EXPECT_EQ(w1.get(), window_list[1]);
-  EXPECT_EQ(w3.get(), window_list[2]);
-  EXPECT_EQ(w4.get(), window_list[3]);
-  EXPECT_EQ(w5.get(), window_list[4]);
-  EXPECT_EQ(w6.get(), window_list[5]);
+  WmWindow::Windows window_list = mru_window_tracker()->BuildMruWindowList();
+  EXPECT_EQ(w2.get(), window_list[0]->aura_window());
+  EXPECT_EQ(w1.get(), window_list[1]->aura_window());
+  EXPECT_EQ(w3.get(), window_list[2]->aura_window());
+  EXPECT_EQ(w4.get(), window_list[3]->aura_window());
+  EXPECT_EQ(w5.get(), window_list[4]->aura_window());
+  EXPECT_EQ(w6.get(), window_list[5]->aura_window());
 }
 
 // Tests that windows being dragged are only in the WindowList once.
@@ -87,12 +86,13 @@ TEST_F(MruWindowTrackerTest, DraggedWindowsInListOnlyOnce) {
 
   // Start dragging the window.
   wm::GetWindowState(w1.get())->CreateDragDetails(
-      gfx::Point(), HTRIGHT, ::wm::WINDOW_MOVE_SOURCE_TOUCH);
+      gfx::Point(), HTRIGHT, aura::client::WINDOW_MOVE_SOURCE_TOUCH);
 
   // The dragged window should only be in the list once.
-  MruWindowTracker::WindowList window_list =
+  WmWindow::Windows window_list =
       mru_window_tracker()->BuildWindowListIgnoreModal();
-  EXPECT_EQ(1, std::count(window_list.begin(), window_list.end(), w1.get()));
+  EXPECT_EQ(1, std::count(window_list.begin(), window_list.end(),
+                          WmWindow::Get(w1.get())));
 }
 
 }  // namespace ash

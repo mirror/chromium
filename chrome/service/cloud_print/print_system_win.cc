@@ -720,18 +720,17 @@ bool PrintSystemWin::ValidatePrintTicket(
   DCHECK(print_ticket_data_mime_type == kContentTypeXML);
 
   printing::ScopedXPSInitializer xps_initializer;
-  CHECK(xps_initializer.initialized());
-
-  HPTPROVIDER provider = nullptr;
+  if (!xps_initializer.initialized()) {
+    // TODO(sanjeevr): Handle legacy proxy case (with no prntvpt.dll)
+    return false;
+  }
+  bool ret = false;
+  HPTPROVIDER provider = NULL;
   printing::XPSModule::OpenProvider(base::UTF8ToWide(printer_name), 1,
                                     &provider);
-  if (!provider)
-    return false;
-
-  bool ret;
-  {
+  if (provider) {
     base::win::ScopedComPtr<IStream> print_ticket_stream;
-    CreateStreamOnHGlobal(nullptr, TRUE, print_ticket_stream.GetAddressOf());
+    CreateStreamOnHGlobal(NULL, TRUE, print_ticket_stream.GetAddressOf());
     ULONG bytes_written = 0;
     print_ticket_stream->Write(print_ticket_data.c_str(),
                                print_ticket_data.length(),
@@ -742,10 +741,14 @@ bool PrintSystemWin::ValidatePrintTicket(
     print_ticket_stream->Seek(pos, STREAM_SEEK_SET, &new_pos);
     base::win::ScopedBstr error;
     base::win::ScopedComPtr<IStream> result_ticket_stream;
-    CreateStreamOnHGlobal(nullptr, TRUE, result_ticket_stream.GetAddressOf());
+    CreateStreamOnHGlobal(NULL, TRUE, result_ticket_stream.GetAddressOf());
     ret = SUCCEEDED(printing::XPSModule::MergeAndValidatePrintTicket(
-        provider, print_ticket_stream.Get(), nullptr, kPTJobScope,
-        result_ticket_stream.Get(), error.Receive()));
+        provider,
+        print_ticket_stream.Get(),
+        NULL,
+        kPTJobScope,
+        result_ticket_stream.Get(),
+        error.Receive()));
     printing::XPSModule::CloseProvider(provider);
   }
   return ret;

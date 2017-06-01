@@ -107,7 +107,7 @@ TEST(NetworkQualitiesPrefManager, Write) {
   // Prefs should not be read again.
   EXPECT_EQ(1u, prefs_delegate_ptr->read_count());
 
-  manager.ShutdownOnPrefSequence();
+  manager.ShutdownOnPrefThread();
 }
 
 // Verify that the pref is not written if the network ID contains a period.
@@ -134,7 +134,7 @@ TEST(NetworkQualitiesPrefManager, WriteWithPeriodInNetworkID) {
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(0u, prefs_delegate_ptr->write_count());
 
-  manager.ShutdownOnPrefSequence();
+  manager.ShutdownOnPrefThread();
 }
 
 TEST(NetworkQualitiesPrefManager, WriteAndReadWithMultipleNetworkIDs) {
@@ -194,7 +194,7 @@ TEST(NetworkQualitiesPrefManager, WriteAndReadWithMultipleNetworkIDs) {
   estimator.OnPrefsRead(read_prefs);
   histogram_tester.ExpectUniqueSample("NQE.Prefs.ReadSize", kMaxCacheSize, 1);
 
-  manager.ShutdownOnPrefSequence();
+  manager.ShutdownOnPrefThread();
 }
 
 // Verifies that the prefs are cleared correctly.
@@ -233,7 +233,7 @@ TEST(NetworkQualitiesPrefManager, ClearPrefs) {
   // Verify that the observer was notified, and the updated network quality was
   // written to the prefs.
   EXPECT_EQ(1u, manager.ForceReadPrefsForTesting().size());
-  manager.ShutdownOnPrefSequence();
+  manager.ShutdownOnPrefThread();
 }
 
 }  // namespace

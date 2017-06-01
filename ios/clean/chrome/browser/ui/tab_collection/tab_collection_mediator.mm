@@ -49,7 +49,6 @@
 #pragma mark - Properties
 
 - (void)setWebStateList:(WebStateList*)webStateList {
-  // TODO(crbug.com/727427):Add support for DCHECK(webStateList).
   _scopedWebStateListObserver->RemoveAll();
   _webStateList = webStateList;
   [self populateConsumerItems];

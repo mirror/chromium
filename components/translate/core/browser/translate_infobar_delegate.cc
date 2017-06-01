@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <utility>
 
+#include "base/feature_list.h"
 #include "base/i18n/string_compare.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
@@ -124,6 +125,11 @@ void TranslateInfoBarDelegate::Create(
     infobar_manager->AddInfoBar(std::move(infobar));
 }
 
+// static
+bool TranslateInfoBarDelegate::IsCompactUIEnabled() {
+  return base::FeatureList::IsEnabled(kTranslateCompactUI);
+}
+
 void TranslateInfoBarDelegate::SetObserver(Observer* observer) {
   observer_ = observer;
 }
@@ -144,11 +150,9 @@ void TranslateInfoBarDelegate::Translate() {
 
 void TranslateInfoBarDelegate::RevertTranslation() {
   ui_delegate_.RevertTranslation();
+  if (IsCompactUIEnabled())
+    return;
   infobar()->RemoveSelf();
-}
-
-void TranslateInfoBarDelegate::RevertWithoutClosingInfobar() {
-  ui_delegate_.RevertTranslation();
 }
 
 void TranslateInfoBarDelegate::ReportLanguageDetectionError() {

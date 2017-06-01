@@ -11,7 +11,10 @@
 namespace net {
 
 SpdyFrameReader::SpdyFrameReader(const char* data, const size_t len)
-    : data_(data), len_(len), ofs_(0) {}
+    : data_(data),
+      len_(len),
+      ofs_(0) {
+}
 
 bool SpdyFrameReader::ReadUInt8(uint8_t* result) {
   // Make sure that we have the whole uint8_t.
@@ -95,7 +98,7 @@ bool SpdyFrameReader::ReadUInt31(uint32_t* result) {
 }
 
 bool SpdyFrameReader::ReadUInt24(uint32_t* result) {
-  // Make sure that we have the whole uint24_t.
+  // Make sure that we have the whole uint24.
   if (!CanRead(3)) {
     OnFailure();
     return false;

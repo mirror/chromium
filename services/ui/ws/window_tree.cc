@@ -283,7 +283,8 @@ ServerWindow* WindowTree::ProcessSetDisplayRoot(
   DCHECK(window_manager_state_);  // Only called for window manager.
   DVLOG(3) << "SetDisplayRoot client=" << id_
            << " global window_id=" << client_window_id.id;
-  Display* display = display_manager()->GetDisplayById(display_to_create.id());
+  Display* display =
+      window_server_->display_manager()->GetDisplayById(display_to_create.id());
   if (display) {
     DVLOG(1) << "SetDisplayRoot called with existing display "
              << display_to_create.id();
@@ -309,14 +310,23 @@ ServerWindow* WindowTree::ProcessSetDisplayRoot(
     return nullptr;
   }
 
+  const display::DisplayList::Type display_type =
+      is_primary_display ? display::DisplayList::Type::PRIMARY
+                         : display::DisplayList::Type::NOT_PRIMARY;
+  display::ScreenManager::GetInstance()->GetScreen()->display_list().AddDisplay(
+      display_to_create, display_type);
   display::ViewportMetrics viewport_metrics;
   viewport_metrics.bounds_in_pixels =
       transport_viewport_metrics.bounds_in_pixels;
   viewport_metrics.device_scale_factor =
       transport_viewport_metrics.device_scale_factor;
   viewport_metrics.ui_scale_factor = transport_viewport_metrics.ui_scale_factor;
-  display = display_manager()->AddDisplayForWindowManager(
-      is_primary_display, display_to_create, viewport_metrics);
+  window_server_->display_manager()->AddDisplayForWindowManager(
+      display_to_create, viewport_metrics);
+
+  // OnDisplayAdded() should trigger creation of the Display.
+  display =
+      window_server_->display_manager()->GetDisplayById(display_to_create.id());
   DCHECK(display);
   WindowManagerDisplayRoot* display_root =
       display->GetWindowManagerDisplayRootForUser(
@@ -720,18 +730,6 @@ void WindowTree::ProcessWindowBoundsChanged(
     return;
   client()->OnWindowBoundsChanged(client_window_id.id, old_bounds, new_bounds,
                                   local_surface_id);
-}
-
-void WindowTree::ProcessWindowTransformChanged(
-    const ServerWindow* window,
-    const gfx::Transform& old_transform,
-    const gfx::Transform& new_transform,
-    bool originated_change) {
-  ClientWindowId client_window_id;
-  if (originated_change || !IsWindowKnown(window, &client_window_id))
-    return;
-  client()->OnWindowTransformChanged(client_window_id.id, old_transform,
-                                     new_transform);
 }
 
 void WindowTree::ProcessClientAreaChanged(
@@ -1157,7 +1155,7 @@ void WindowTree::RemoveRoot(ServerWindow* window, RemoveRootReason reason) {
   roots_.erase(window);
 
   if (window->id().client_id == id_) {
-    // This client created the window. If this client is the window manager and
+    // This cllient created the window. If this client is the window manager and
     // display roots are manually created, then |window| is a display root and
     // needs be cleaned.
     if (window_manager_state_ && !automatically_create_display_roots_) {
@@ -1574,35 +1572,6 @@ void WindowTree::SetWindowBounds(
   client()->OnChangeCompleted(change_id, success);
 }
 
-void WindowTree::SetWindowTransform(uint32_t change_id,
-                                    Id window_id,
-                                    const gfx::Transform& transform) {
-  // Clients shouldn't have a need to set the transform of the embed root, so
-  // we don't bother routing it to the window-manager.
-
-  ServerWindow* window = GetWindowByClientId(ClientWindowId(window_id));
-  DVLOG(3) << "set window transform client window_id=" << window_id
-           << " global window_id="
-           << (window ? WindowIdToTransportId(window->id()) : 0)
-           << " transform=" << transform.ToString();
-
-  if (!window) {
-    DVLOG(1) << "SetWindowTransform failed (invalid window id)";
-    client()->OnChangeCompleted(change_id, false);
-    return;
-  }
-
-  // Only the owner of the window can change the bounds.
-  const bool success = access_policy_->CanSetWindowTransform(window);
-  if (success) {
-    Operation op(this, window_server_, OperationType::SET_WINDOW_TRANSFORM);
-    window->SetTransform(transform);
-  } else {
-    DVLOG(1) << "SetWindowTransform failed (access denied)";
-  }
-  client()->OnChangeCompleted(change_id, success);
-}
-
 void WindowTree::SetWindowVisibility(uint32_t change_id,
                                      Id transport_window_id,
                                      bool visible) {
@@ -2011,7 +1980,7 @@ void WindowTree::GetWindowManagerClient(
 
 void WindowTree::GetCursorLocationMemory(
     const GetCursorLocationMemoryCallback& callback) {
-  callback.Run(display_manager()
+  callback.Run(window_server_->display_manager()
                    ->GetCursorLocationManager(user_id_)
                    ->GetCursorLocationMemory());
 }
@@ -2233,7 +2202,7 @@ void WindowTree::ActivateNextWindow() {
     return;
   }
   // Use the first display.
-  std::set<Display*> displays = display_manager()->displays();
+  std::set<Display*> displays = window_server_->display_manager()->displays();
   if (displays.empty())
     return;
 
@@ -2264,20 +2233,11 @@ void WindowTree::SetDisplayRoot(const display::Display& display,
       ProcessSetDisplayRoot(display, *viewport_metrics, is_primary_display,
                             ClientWindowId(window_id));
   if (!display_root) {
-    callback.Run(base::nullopt);
+    callback.Run(false);
     return;
   }
   display_root->parent()->SetVisible(true);
-  callback.Run(display_root->current_local_surface_id());
-}
-
-void WindowTree::SetDisplayConfiguration(
-    const std::vector<display::Display>& displays,
-    std::vector<ui::mojom::WmViewportMetricsPtr> viewport_metrics,
-    int64_t primary_display_id,
-    const SetDisplayConfigurationCallback& callback) {
-  callback.Run(display_manager()->SetDisplayConfiguration(
-      displays, std::move(viewport_metrics), primary_display_id));
+  callback.Run(true);
 }
 
 void WindowTree::WmResponse(uint32_t change_id, bool response) {

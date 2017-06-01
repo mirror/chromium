@@ -25,6 +25,7 @@
 #include "v8/include/v8.h"
 
 namespace blink {
+class WebFrame;
 class WebLocalFrame;
 }
 
@@ -61,7 +62,7 @@ class ScriptContext : public RequestSender::Source {
   // See comment in HasAccessOrThrowError.
   static bool IsSandboxedPage(const GURL& url);
 
-  // Clears the WebLocalFrame for this contexts and invalidates the associated
+  // Clears the WebFrame for this contexts and invalidates the associated
   // ModuleSystem.
   void Invalidate();
 
@@ -171,19 +172,19 @@ class ScriptContext : public RequestSender::Source {
   // Utility to get the URL we will match against for a frame. If the frame has
   // committed, this is the commited URL. Otherwise it is the provisional URL.
   // The returned URL may be invalid.
-  static GURL GetDataSourceURLForFrame(const blink::WebLocalFrame* frame);
+  static GURL GetDataSourceURLForFrame(const blink::WebFrame* frame);
 
   // Similar to GetDataSourceURLForFrame, but only returns the data source URL
   // if the frame's document url is empty and the frame has a security origin
   // that allows access to the data source url.
   // TODO(asargent/devlin) - there may be places that should switch to using
   // this instead of GetDataSourceURLForFrame.
-  static GURL GetAccessCheckedFrameURL(const blink::WebLocalFrame* frame);
+  static GURL GetAccessCheckedFrameURL(const blink::WebFrame* frame);
 
   // Returns the first non-about:-URL in the document hierarchy above and
   // including |frame|. The document hierarchy is only traversed if
   // |document_url| is an about:-URL and if |match_about_blank| is true.
-  static GURL GetEffectiveDocumentURL(const blink::WebLocalFrame* frame,
+  static GURL GetEffectiveDocumentURL(const blink::WebFrame* frame,
                                       const GURL& document_url,
                                       bool match_about_blank);
 

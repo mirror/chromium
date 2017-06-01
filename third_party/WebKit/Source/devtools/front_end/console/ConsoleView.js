@@ -84,13 +84,6 @@ Console.ConsoleView = class extends UI.VBox {
     this._hideNetworkMessagesCheckbox = new UI.ToolbarSettingCheckbox(
         this._filter._hideNetworkMessagesSetting, this._filter._hideNetworkMessagesSetting.title(),
         Common.UIString('Hide network'));
-    var filterByExecutionContextCheckbox = new UI.ToolbarSettingCheckbox(
-        this._filter._filterByExecutionContextSetting,
-        Common.UIString('Only show messages from the current context (top, iframe, worker, extension)'),
-        Common.UIString('Selected context only'));
-    var filterConsoleAPICheckbox = new UI.ToolbarSettingCheckbox(
-        Common.moduleSetting('consoleAPIFilterEnabled'), Common.UIString('Only show messages from console API methods'),
-        Common.UIString('User messages only'));
     var monitoringXHREnabledSetting = Common.moduleSetting('monitoringXHREnabled');
     this._timestampsSetting = Common.moduleSetting('consoleTimestampsEnabled');
     this._consoleHistoryAutocompleteSetting = Common.moduleSetting('consoleHistoryAutocomplete');
@@ -103,8 +96,7 @@ Console.ConsoleView = class extends UI.VBox {
     settingsToolbarLeft.makeVertical();
     settingsToolbarLeft.appendToolbarItem(this._hideNetworkMessagesCheckbox);
     settingsToolbarLeft.appendToolbarItem(this._preserveLogCheckbox);
-    settingsToolbarLeft.appendToolbarItem(filterByExecutionContextCheckbox);
-    settingsToolbarLeft.appendToolbarItem(filterConsoleAPICheckbox);
+    settingsToolbarLeft.appendToolbarItem(this._filter._filterByExecutionContextCheckbox);
 
     var settingsToolbarRight = new UI.Toolbar('', settingsPane.element);
     settingsToolbarRight.makeVertical();
@@ -143,7 +135,7 @@ Console.ConsoleView = class extends UI.VBox {
 
     this._messagesElement.addEventListener('contextmenu', this._handleContextMenuEvent.bind(this), false);
 
-    this._linkifier = new Components.Linkifier(Console.ConsoleViewMessage.MaxLengthForLinks);
+    this._linkifier = new Components.Linkifier();
     this._badgePool = new ProductRegistry.BadgePool();
 
     /** @type {!Array.<!Console.ConsoleViewMessage>} */
@@ -292,7 +284,7 @@ Console.ConsoleView = class extends UI.VBox {
 
   _executionContextChanged() {
     this._prompt.clearAutocomplete();
-    if (this._filter._filterByExecutionContextSetting.get())
+    if (this._filter._filterByExecutionContextCheckbox.checked())
       this._updateMessageList();
   }
 
@@ -1004,20 +996,20 @@ Console.ConsoleViewFilter = class {
    * @param {function()} filterChangedCallback
    */
   constructor(filterChangedCallback) {
+    this._filterByExecutionContextCheckbox = new UI.ToolbarCheckbox(
+        Common.UIString('Selected context only'),
+        Common.UIString('Only show messages from the current context (top, iframe, worker, extension)'),
+        filterChangedCallback);
     this._filterChanged = filterChangedCallback;
 
     this._messageURLFiltersSetting = Common.settings.createSetting('messageURLFilters', {});
     this._messageLevelFiltersSetting =
         Common.settings.createSetting('messageLevelFilters2', ConsoleModel.ConsoleMessage.MessageLevel.Info);
     this._hideNetworkMessagesSetting = Common.moduleSetting('hideNetworkMessages');
-    this._filterByExecutionContextSetting = Common.moduleSetting('selectedContextFilterEnabled');
-    this._filterByConsoleAPISetting = Common.moduleSetting('consoleAPIFilterEnabled');
 
     this._messageURLFiltersSetting.addChangeListener(this._filterChanged);
     this._messageLevelFiltersSetting.addChangeListener(this._filterChanged);
     this._hideNetworkMessagesSetting.addChangeListener(this._filterChanged);
-    this._filterByExecutionContextSetting.addChangeListener(this._filterChanged);
-    this._filterByConsoleAPISetting.addChangeListener(this._filterChanged);
 
     this._textFilterUI = new UI.ToolbarInput(Common.UIString('Filter'), 0.2, 1, true);
     this._textFilterUI.addEventListener(UI.ToolbarInput.Event.TextChanged, this._textFilterChanged, this);
@@ -1083,7 +1075,7 @@ Console.ConsoleViewFilter = class {
     var message = viewMessage.consoleMessage();
     var executionContext = UI.context.flavor(SDK.ExecutionContext);
 
-    if (this._filterByExecutionContextSetting.get() && executionContext) {
+    if (this._filterByExecutionContextCheckbox.checked() && executionContext) {
       if (message.runtimeModel() !== executionContext.runtimeModel)
         return false;
       if (message.executionContextId && message.executionContextId !== executionContext.id)
@@ -1117,18 +1109,13 @@ Console.ConsoleViewFilter = class {
         return false;
     }
 
-    if (this._filterByConsoleAPISetting.get() &&
-        message.source !== ConsoleModel.ConsoleMessage.MessageSource.ConsoleAPI)
-      return false;
-
     return true;
   }
 
   reset() {
     this._messageURLFiltersSetting.set({});
     this._messageLevelFiltersSetting.set(ConsoleModel.ConsoleMessage.MessageLevel.Info);
-    this._filterByExecutionContextSetting.set(false);
-    this._filterByConsoleAPISetting.set(false);
+    this._filterByExecutionContextCheckbox.inputElement.checked = false;
     this._hideNetworkMessagesSetting.set(false);
     this._textFilterUI.setValue('');
     this._textFilterChanged();

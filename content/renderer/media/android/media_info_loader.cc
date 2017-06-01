@@ -67,14 +67,16 @@ void MediaInfoLoader::Start(blink::WebFrame* frame) {
     WebAssociatedURLLoaderOptions options;
     if (cors_mode_ == blink::WebMediaPlayer::kCORSModeUnspecified) {
       options.allow_credentials = true;
-      options.fetch_request_mode = WebURLRequest::kFetchRequestModeNoCORS;
+      options.cross_origin_request_policy =
+          WebAssociatedURLLoaderOptions::kCrossOriginRequestPolicyAllow;
       allow_stored_credentials_ = true;
     } else {
       options.expose_all_response_headers = true;
       // The author header set is empty, no preflight should go ahead.
       options.preflight_policy =
           WebAssociatedURLLoaderOptions::kPreventPreflight;
-      options.fetch_request_mode = WebURLRequest::kFetchRequestModeCORS;
+      options.cross_origin_request_policy = WebAssociatedURLLoaderOptions::
+          kCrossOriginRequestPolicyUseAccessControl;
       if (cors_mode_ == blink::WebMediaPlayer::kCORSModeUseCredentials) {
         options.allow_credentials = true;
         allow_stored_credentials_ = true;

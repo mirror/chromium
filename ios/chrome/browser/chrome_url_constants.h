@@ -41,7 +41,6 @@ extern const char kChromeUIBookmarksHost[];
 extern const char kChromeUIBrowserCrashHost[];
 extern const char kChromeUIChromeURLsHost[];
 extern const char kChromeUICrashesHost[];
-extern const char kChromeUICrashHost[];
 extern const char kChromeUICreditsHost[];
 extern const char kChromeUIExternalFileHost[];
 extern const char kChromeUIFlagsHost[];

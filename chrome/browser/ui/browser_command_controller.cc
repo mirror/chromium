@@ -11,6 +11,7 @@
 #include "base/command_line.h"
 #include "base/debug/debugging_flags.h"
 #include "base/debug/profiler.h"
+#include "base/feature_list.h"
 #include "base/macros.h"
 #include "base/metrics/user_metrics.h"
 #include "build/build_config.h"
@@ -36,6 +37,7 @@
 #include "chrome/browser/ui/chrome_pages.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/webui/inspect_ui.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/content_restriction.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/profiling.h"
@@ -306,14 +308,20 @@ void BrowserCommandController::ExecuteCommandWithDisposition(
   switch (id) {
     // Navigation commands
     case IDC_BACKSPACE_BACK:
-      window()->MaybeShowNewBackShortcutBubble(false);
+      if (base::FeatureList::IsEnabled(features::kBackspaceGoesBackFeature))
+        GoBack(browser_, disposition);
+      else
+        window()->MaybeShowNewBackShortcutBubble(false);
       break;
     case IDC_BACK:
       window()->HideNewBackShortcutBubble();
       GoBack(browser_, disposition);
       break;
     case IDC_BACKSPACE_FORWARD:
-      window()->MaybeShowNewBackShortcutBubble(true);
+      if (base::FeatureList::IsEnabled(features::kBackspaceGoesBackFeature))
+        GoForward(browser_, disposition);
+      else
+        window()->MaybeShowNewBackShortcutBubble(true);
       break;
     case IDC_FORWARD:
       window()->HideNewBackShortcutBubble();

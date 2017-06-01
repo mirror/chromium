@@ -8,9 +8,6 @@ mojom("url_mojom_gurl") {
   sources = [
     "url.mojom",
   ]
-
-  # TODO(crbug.com/699569): Convert to use the new JS bindings.
-  use_new_js_bindings = false
 }
 
 mojom("url_mojom_origin") {
@@ -21,9 +18,6 @@ mojom("url_mojom_origin") {
   public_deps = [
     ":url_mojom_gurl",
   ]
-
-  # TODO(crbug.com/699569): Convert to use the new JS bindings.
-  use_new_js_bindings = false
 }
 
 mojom("test_url_mojom_gurl") {

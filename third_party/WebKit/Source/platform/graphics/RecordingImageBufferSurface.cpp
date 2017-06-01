@@ -7,8 +7,8 @@
 #include <memory>
 
 #include "platform/Histogram.h"
-#include "platform/graphics/CanvasHeuristicParameters.h"
 #include "platform/graphics/CanvasMetrics.h"
+#include "platform/graphics/ExpensiveCanvasHeuristicParameters.h"
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/UnacceleratedImageBufferSurface.h"
@@ -92,7 +92,8 @@ void RecordingImageBufferSurface::FallBackToRasterCanvas(
 
   DEFINE_THREAD_SAFE_STATIC_LOCAL(
       EnumerationHistogram, canvas_fallback_histogram,
-      ("Canvas.DisplayListFallbackReason", kFallbackReasonCount));
+      new EnumerationHistogram("Canvas.DisplayListFallbackReason",
+                               kFallbackReasonCount));
   canvas_fallback_histogram.Count(reason);
 
   fallback_surface_ = WTF::WrapUnique(new UnacceleratedImageBufferSurface(
@@ -219,8 +220,6 @@ DisableDeferralReasonToFallbackReason(DisableDeferralReason reason) {
     case kDisableDeferralDrawImageWithTextureBackedSourceImage:
       return RecordingImageBufferSurface::
           kFallbackReasonDrawImageWithTextureBackedSourceImage;
-    // The LowEndDevice reason should only be used on Canvas2DLayerBridge.
-    case kDisableDeferralReasonLowEndDevice:
     case kDisableDeferralReasonCount:
       NOTREACHED();
       break;
@@ -332,7 +331,7 @@ bool RecordingImageBufferSurface::FinalizeFrameInternal(
 
   if (allow_fallback_ == kAllowFallback &&
       current_frame_->getRecordingCanvas()->getSaveCount() - 1 >
-          CanvasHeuristicParameters::kExpensiveRecordingStackDepth) {
+          ExpensiveCanvasHeuristicParameters::kExpensiveRecordingStackDepth) {
     // (getSaveCount() decremented to account  for the intial recording canvas
     // save frame.)
     *fallback_reason = kFallbackReasonRunawayStateStack;
@@ -375,7 +374,7 @@ bool RecordingImageBufferSurface::IsExpensiveToPaint() {
 
     if (current_frame_pixel_count_ >=
         (size().Width() * size().Height() *
-         CanvasHeuristicParameters::kExpensiveOverdrawThreshold))
+         ExpensiveCanvasHeuristicParameters::kExpensiveOverdrawThreshold))
       return true;
 
     if (frame_was_cleared_)
@@ -388,7 +387,7 @@ bool RecordingImageBufferSurface::IsExpensiveToPaint() {
 
     if (previous_frame_pixel_count_ >=
         (size().Width() * size().Height() *
-         CanvasHeuristicParameters::kExpensiveOverdrawThreshold))
+         ExpensiveCanvasHeuristicParameters::kExpensiveOverdrawThreshold))
       return true;
   }
 

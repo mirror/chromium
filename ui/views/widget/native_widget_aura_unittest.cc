@@ -76,7 +76,7 @@ class NativeWidgetAuraTest : public aura::test::AuraTestBase {
     AuraTestBase::SetUp();
     test_focus_rules_ = new TestFocusRules;
     focus_controller_.reset(new wm::FocusController(test_focus_rules_));
-    wm::SetActivationClient(root_window(), focus_controller_.get());
+    aura::client::SetActivationClient(root_window(), focus_controller_.get());
     host()->SetBoundsInPixels(gfx::Rect(640, 480));
   }
 

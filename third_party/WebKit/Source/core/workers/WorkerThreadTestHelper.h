@@ -13,6 +13,7 @@
 #include "core/workers/WorkerBackingThread.h"
 #include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerGlobalScope.h"
+#include "core/workers/WorkerLoaderProxy.h"
 #include "core/workers/WorkerReportingProxy.h"
 #include "core/workers/WorkerThread.h"
 #include "core/workers/WorkerThreadLifecycleObserver.h"
@@ -50,9 +51,10 @@ class MockWorkerThreadLifecycleObserver final
 
 class WorkerThreadForTest : public WorkerThread {
  public:
-  WorkerThreadForTest(ThreadableLoadingContext* loading_context,
+  WorkerThreadForTest(WorkerLoaderProxyProvider* worker_loader_proxy_provider,
                       WorkerReportingProxy& mock_worker_reporting_proxy)
-      : WorkerThread(loading_context, mock_worker_reporting_proxy),
+      : WorkerThread(WorkerLoaderProxy::Create(worker_loader_proxy_provider),
+                     mock_worker_reporting_proxy),
         worker_backing_thread_(
             WorkerBackingThread::CreateForTest("Test thread")) {}
 

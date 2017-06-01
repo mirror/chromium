@@ -34,6 +34,7 @@
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/dip_util.h"
 #include "ui/compositor/layer.h"
+#include "ui/wm/public/activation_client.h"
 
 namespace content {
 

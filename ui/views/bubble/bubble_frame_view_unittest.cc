@@ -137,19 +137,6 @@ TEST_F(BubbleFrameViewTest, GetBoundsForClientView) {
   EXPECT_EQ(insets.top() + margin_y, frame.GetBoundsForClientView().y());
 }
 
-TEST_F(BubbleFrameViewTest, RemoveFootnoteView) {
-  TestBubbleFrameView frame(this);
-  EXPECT_EQ(nullptr, frame.footnote_container_);
-  View* footnote_dummy_view = new StaticSizedView(gfx::Size(200, 200));
-  frame.SetFootnoteView(footnote_dummy_view);
-  EXPECT_EQ(footnote_dummy_view->parent(), frame.footnote_container_);
-  View* container_view = footnote_dummy_view->parent();
-  delete footnote_dummy_view;
-  footnote_dummy_view = nullptr;
-  EXPECT_FALSE(container_view->visible());
-  EXPECT_EQ(nullptr, frame.footnote_container_);
-}
-
 TEST_F(BubbleFrameViewTest, GetBoundsForClientViewWithClose) {
   TestBubbleFrameView frame(this);
   // TestBubbleFrameView::GetWidget() is responsible for creating the widget and
@@ -528,9 +515,7 @@ class TestBubbleDialogDelegateView : public BubbleDialogDelegateView {
     return override_snap_.value_or(
         BubbleDialogDelegateView::ShouldSnapFrameWidth());
   }
-  gfx::Size CalculatePreferredSize() const override {
-    return gfx::Size(200, 200);
-  }
+  gfx::Size GetPreferredSize() const override { return gfx::Size(200, 200); }
 
  private:
   base::Optional<bool> override_snap_;

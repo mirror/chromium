@@ -121,16 +121,13 @@ found in the LICENSE file.
       <button id="submit-dump" type="button">Dump the list</button>
     </h2>
     <div jsselect="list" style="display:none">
-      <div>
-        <h3 style="margin-bottom: 0px; padding-bottom: 0px;">
-          <span jscontent="title"></span>
-          <span class="detail">
-            (id = <span jscontent="categoryId"></span>,
-            <span jscontent="status"></span>)
-          </span>
-        </h3>
-      </div>
-      <div class="vertical-buttons">
+      <h3>
+        <span jscontent="title"></span>
+        <span class="detail">
+          (id = <span jscontent="categoryId"></span>,
+          <span jscontent="status"></span>)
+        </span>
+
         <button jsvalues="category-id:categoryId" type="button"
             class="submit-clear-cached-suggestions">
           Clear cached suggestions
@@ -143,7 +140,7 @@ found in the LICENSE file.
             class="submit-clear-dismissed-suggestions">
           Clear dismissed suggestions
         </button>
-      </div>
+      </h3>
 
       <table class="section-details">
         <tr jsselect="suggestions" style="display:none">

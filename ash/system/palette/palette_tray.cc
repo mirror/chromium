@@ -4,12 +4,13 @@
 
 #include "ash/system/palette/palette_tray.h"
 
+#include "ash/public/cpp/shell_window_ids.h"
 #include "ash/resources/grit/ash_resources.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
-#include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_constants.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/palette/palette_tool_manager.h"
@@ -21,6 +22,7 @@
 #include "ash/system/tray/tray_container.h"
 #include "ash/system/tray/tray_popup_header_button.h"
 #include "ash/system/tray/tray_popup_item_style.h"
+#include "ash/wm_window.h"
 #include "base/metrics/histogram_macros.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -135,8 +137,8 @@ class TitleView : public views::View, public views::ButtonListener {
 
 }  // namespace
 
-PaletteTray::PaletteTray(Shelf* shelf)
-    : TrayBackgroundView(shelf),
+PaletteTray::PaletteTray(WmShelf* wm_shelf)
+    : TrayBackgroundView(wm_shelf),
       palette_tool_manager_(new PaletteToolManager(this)),
       scoped_session_observer_(this),
       weak_factory_(this) {
@@ -179,22 +181,20 @@ bool PaletteTray::ShowPalette() {
 
   DCHECK(tray_container());
 
-  views::TrayBubbleView::InitParams init_params;
-  init_params.delegate = this;
-  init_params.parent_window = GetBubbleWindowContainer();
-  init_params.anchor_view = GetBubbleAnchor();
-  init_params.anchor_alignment = GetAnchorAlignment();
-  init_params.min_width = kPaletteWidth;
-  init_params.max_width = kPaletteWidth;
+  views::TrayBubbleView::InitParams init_params(GetAnchorAlignment(),
+                                                kPaletteWidth, kPaletteWidth);
   init_params.can_activate = true;
   init_params.close_on_deactivate = true;
+
+  DCHECK(tray_container());
 
   // TODO(tdanderson): Refactor into common row layout code.
   // TODO(tdanderson|jdufault): Add material design ripple effects to the menu
   // rows.
 
   // Create and customize bubble view.
-  views::TrayBubbleView* bubble_view = new views::TrayBubbleView(init_params);
+  views::TrayBubbleView* bubble_view =
+      views::TrayBubbleView::Create(GetBubbleAnchor(), this, &init_params);
   bubble_view->set_anchor_view_insets(GetBubbleAnchorInsets());
   bubble_view->set_margins(
       gfx::Insets(kPalettePaddingOnTop, 0, kPalettePaddingOnBottom, 0));
@@ -304,6 +304,16 @@ base::string16 PaletteTray::GetAccessibleNameForBubble() {
   return GetAccessibleNameForTray();
 }
 
+void PaletteTray::OnBeforeBubbleWidgetInit(
+    views::Widget* anchor_widget,
+    views::Widget* bubble_widget,
+    views::Widget::InitParams* params) const {
+  // Place the bubble in the same root window as |anchor_widget|.
+  RootWindowController::ForWindow(anchor_widget->GetNativeWindow())
+      ->ConfigureWidgetInitParamsForContainer(
+          bubble_widget, kShellWindowId_SettingBubbleContainer, params);
+}
+
 void PaletteTray::HideBubble(const views::TrayBubbleView* bubble_view) {
   HideBubbleWithView(bubble_view);
 }
@@ -349,7 +359,7 @@ void PaletteTray::OnActiveToolChanged() {
 }
 
 aura::Window* PaletteTray::GetWindow() {
-  return shelf()->GetWindow();
+  return shelf()->GetWindow()->aura_window();
 }
 
 void PaletteTray::AnchorUpdated() {

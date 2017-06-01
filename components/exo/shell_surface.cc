@@ -7,10 +7,10 @@
 #include <algorithm>
 
 #include "ash/frame/custom_frame_view_ash.h"
-#include "ash/public/cpp/shelf_types.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/public/interfaces/window_pin_type.mojom.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell_port.h"
 #include "ash/wm/drag_window_resizer.h"
 #include "ash/wm/window_resizer.h"
@@ -44,11 +44,6 @@
 
 namespace exo {
 namespace {
-
-DEFINE_LOCAL_UI_CLASS_PROPERTY_KEY(Surface*, kMainSurfaceKey, nullptr)
-
-// Application Id set by the client.
-DEFINE_OWNED_UI_CLASS_PROPERTY_KEY(std::string, kApplicationIdKey, nullptr);
 
 // This is a struct for accelerator keys used to close ShellSurfaces.
 const struct Accelerator {
@@ -108,23 +103,17 @@ class CustomWindowTargeter : public aura::WindowTargeter {
     if (component != HTNOWHERE && component != HTCLIENT)
       return true;
 
-    // If there is an underlay, test against it first as it's bounds may be
-    // larger than the surface's bounds.
+    // If there is an underlay, test against it's bounds instead since it will
+    // be equal or larger than the surface's bounds.
     aura::Window* shadow_underlay =
         static_cast<ShellSurface*>(
             widget_->widget_delegate()->GetContentsView())
             ->shadow_underlay();
     if (shadow_underlay) {
-      gfx::Point local_point_in_shadow_underlay = local_point;
-      aura::Window::ConvertPointToTarget(window, shadow_underlay,
-                                         &local_point_in_shadow_underlay);
-      if (gfx::Rect(shadow_underlay->layer()->size())
-              .Contains(local_point_in_shadow_underlay)) {
-        return true;
-      }
+      aura::Window::ConvertPointToTarget(window, shadow_underlay, &local_point);
+      return gfx::Rect(shadow_underlay->layer()->size()).Contains(local_point);
     }
 
-    // Otherwise, fallback to hit test on the surface.
     aura::Window::ConvertPointToTarget(window, surface->window(), &local_point);
     return surface->HitTestRect(gfx::Rect(local_point, gfx::Size(1, 1)));
   }
@@ -134,8 +123,7 @@ class CustomWindowTargeter : public aura::WindowTargeter {
     aura::Window* window = static_cast<aura::Window*>(root);
     Surface* surface = ShellSurface::GetMainSurface(window);
 
-    // Send events which wouldn't be handled by the surface, to the shadow
-    // underlay.
+    // Send events which are outside of the surface's bounds to the underlay.
     aura::Window* shadow_underlay =
         static_cast<ShellSurface*>(
             widget_->widget_delegate()->GetContentsView())
@@ -143,17 +131,10 @@ class CustomWindowTargeter : public aura::WindowTargeter {
     if (surface && event->IsLocatedEvent() && shadow_underlay) {
       gfx::Point local_point = event->AsLocatedEvent()->location();
       int component = widget_->non_client_view()->NonClientHitTest(local_point);
-      if (component == HTNOWHERE) {
-        aura::Window::ConvertPointToTarget(window, surface->window(),
-                                           &local_point);
-        if (!surface->HitTestRect(gfx::Rect(local_point, gfx::Size(1, 1))))
-          return shadow_underlay;
-      }
+      if (component == HTNOWHERE)
+        return shadow_underlay;
     }
-    ui::EventTarget* target =
-        aura::WindowTargeter::FindTargetForEvent(root, event);
-    // Do not accept events in ShellSurface window.
-    return target != root ? target : nullptr;
+    return aura::WindowTargeter::FindTargetForEvent(root, event);
   }
 
  private:
@@ -288,6 +269,8 @@ ShellSurface::ScopedAnimationsDisabled::~ScopedAnimationsDisabled() {
 
 ////////////////////////////////////////////////////////////////////////////////
 // ShellSurface, public:
+
+DEFINE_LOCAL_UI_CLASS_PROPERTY_KEY(Surface*, kMainSurfaceKey, nullptr)
 
 ShellSurface::ShellSurface(Surface* surface,
                            ShellSurface* parent,
@@ -530,12 +513,14 @@ void ShellSurface::UpdateSystemModal() {
 void ShellSurface::SetApplicationId(aura::Window* window,
                                     const std::string& id) {
   TRACE_EVENT1("exo", "ShellSurface::SetApplicationId", "application_id", id);
-  window->SetProperty(kApplicationIdKey, new std::string(id));
+  const ash::ShelfID shelf_id(id);
+  window->SetProperty(ash::kShelfIDKey, new std::string(shelf_id.Serialize()));
 }
 
 // static
-const std::string* ShellSurface::GetApplicationId(aura::Window* window) {
-  return window->GetProperty(kApplicationIdKey);
+const std::string ShellSurface::GetApplicationId(aura::Window* window) {
+  return ash::ShelfID::Deserialize(window->GetProperty(ash::kShelfIDKey))
+      .app_id;
 }
 
 void ShellSurface::SetApplicationId(const std::string& application_id) {
@@ -686,13 +671,10 @@ std::unique_ptr<base::trace_event::TracedValue> ShellSurface::AsTracedValue()
   std::unique_ptr<base::trace_event::TracedValue> value(
       new base::trace_event::TracedValue());
   value->SetString("title", base::UTF16ToUTF8(title_));
-  if (GetWidget() && GetWidget()->GetNativeWindow()) {
-    const std::string* application_id =
-        GetApplicationId(GetWidget()->GetNativeWindow());
-
-    if (application_id)
-      value->SetString("application_id", *application_id);
-  }
+  std::string application_id;
+  if (GetWidget() && GetWidget()->GetNativeWindow())
+    application_id = GetApplicationId(GetWidget()->GetNativeWindow());
+  value->SetString("application_id", application_id);
   return value;
 }
 
@@ -892,7 +874,7 @@ void ShellSurface::GetWidgetHitTestMask(gfx::Path* mask) const {
 ////////////////////////////////////////////////////////////////////////////////
 // views::Views overrides:
 
-gfx::Size ShellSurface::CalculatePreferredSize() const {
+gfx::Size ShellSurface::GetPreferredSize() const {
   if (!geometry_.IsEmpty())
     return geometry_.size();
 
@@ -1331,7 +1313,7 @@ void ShellSurface::AttemptToStartDrag(int component) {
     }
 
     resizer_ = ash::CreateWindowResizer(window, GetMouseLocation(), component,
-                                        wm::WINDOW_MOVE_SOURCE_MOUSE);
+                                        aura::client::WINDOW_MOVE_SOURCE_MOUSE);
     if (!resizer_)
       return;
 
@@ -1349,7 +1331,7 @@ void ShellSurface::AttemptToStartDrag(int component) {
     DCHECK(!window_state->drag_details());
     DCHECK(component == HTCAPTION);
     window_state->CreateDragDetails(GetMouseLocation(), component,
-                                    wm::WINDOW_MOVE_SOURCE_MOUSE);
+                                    aura::client::WINDOW_MOVE_SOURCE_MOUSE);
 
     // Chained with a CustomWindowResizer, DragWindowResizer does not handle
     // dragging. It only renders phantom windows and moves the window to the

@@ -1,7 +1,5 @@
 .. _devcycle-building:
 
-.. include:: /migration/deprecation.inc
-
 ########
 Building
 ########

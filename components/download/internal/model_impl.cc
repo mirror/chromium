@@ -7,25 +7,26 @@
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "components/download/internal/entry.h"
-#include "components/download/internal/stats.h"
 
 namespace download {
 
-ModelImpl::ModelImpl(std::unique_ptr<Store> store)
-    : client_(nullptr), store_(std::move(store)), weak_ptr_factory_(this) {
+ModelImpl::ModelImpl(Client* client, std::unique_ptr<Store> store)
+    : client_(client), store_(std::move(store)), weak_ptr_factory_(this) {
+  DCHECK(client_);
   DCHECK(store_);
 }
 
 ModelImpl::~ModelImpl() = default;
 
-void ModelImpl::Initialize(Client* client) {
-  DCHECK(!client_);
-  client_ = client;
-  DCHECK(client_);
-
+void ModelImpl::Initialize() {
   DCHECK(!store_->IsInitialized());
   store_->Initialize(base::Bind(&ModelImpl::OnInitializedFinished,
                                 weak_ptr_factory_.GetWeakPtr()));
+}
+
+void ModelImpl::Destroy() {
+  store_->Destroy(base::Bind(&ModelImpl::OnDestroyFinished,
+                             weak_ptr_factory_.GetWeakPtr()));
 }
 
 void ModelImpl::Add(const Entry& entry) {
@@ -34,9 +35,9 @@ void ModelImpl::Add(const Entry& entry) {
 
   entries_.emplace(entry.guid, base::MakeUnique<Entry>(entry));
 
-  store_->Update(entry, base::BindOnce(&ModelImpl::OnAddFinished,
-                                       weak_ptr_factory_.GetWeakPtr(),
-                                       entry.client, entry.guid));
+  store_->Update(entry, base::Bind(&ModelImpl::OnAddFinished,
+                                   weak_ptr_factory_.GetWeakPtr(), entry.client,
+                                   entry.guid));
 }
 
 void ModelImpl::Update(const Entry& entry) {
@@ -44,9 +45,9 @@ void ModelImpl::Update(const Entry& entry) {
   DCHECK(entries_.find(entry.guid) != entries_.end());
 
   entries_[entry.guid] = base::MakeUnique<Entry>(entry);
-  store_->Update(entry, base::BindOnce(&ModelImpl::OnUpdateFinished,
-                                       weak_ptr_factory_.GetWeakPtr(),
-                                       entry.client, entry.guid));
+  store_->Update(entry, base::Bind(&ModelImpl::OnUpdateFinished,
+                                   weak_ptr_factory_.GetWeakPtr(), entry.client,
+                                   entry.guid));
 }
 
 void ModelImpl::Remove(const std::string& guid) {
@@ -58,8 +59,8 @@ void ModelImpl::Remove(const std::string& guid) {
   DownloadClient client = it->second->client;
   entries_.erase(it);
   store_->Remove(guid,
-                 base::BindOnce(&ModelImpl::OnRemoveFinished,
-                                weak_ptr_factory_.GetWeakPtr(), client, guid));
+                 base::Bind(&ModelImpl::OnRemoveFinished,
+                            weak_ptr_factory_.GetWeakPtr(), client, guid));
 }
 
 Entry* ModelImpl::Get(const std::string& guid) {
@@ -78,24 +79,26 @@ Model::EntryList ModelImpl::PeekEntries() {
 void ModelImpl::OnInitializedFinished(
     bool success,
     std::unique_ptr<std::vector<Entry>> entries) {
-  stats::LogModelOperationResult(stats::ModelAction::INITIALIZE, success);
-
   if (!success) {
-    client_->OnModelReady(false);
+    client_->OnInitialized(false);
     return;
   }
 
   for (const auto& entry : *entries)
     entries_.emplace(entry.guid, base::MakeUnique<Entry>(entry));
 
-  client_->OnModelReady(true);
+  client_->OnInitialized(true);
+}
+
+void ModelImpl::OnDestroyFinished(bool success) {
+  store_.reset();
+  entries_.clear();
+  client_->OnDestroyed(success);
 }
 
 void ModelImpl::OnAddFinished(DownloadClient client,
                               const std::string& guid,
                               bool success) {
-  stats::LogModelOperationResult(stats::ModelAction::ADD, success);
-
   // Don't notify the Client if the entry was already removed.
   if (entries_.find(guid) == entries_.end())
     return;
@@ -110,8 +113,6 @@ void ModelImpl::OnAddFinished(DownloadClient client,
 void ModelImpl::OnUpdateFinished(DownloadClient client,
                                  const std::string& guid,
                                  bool success) {
-  stats::LogModelOperationResult(stats::ModelAction::UPDATE, success);
-
   // Don't notify the Client if the entry was already removed.
   if (entries_.find(guid) == entries_.end())
     return;
@@ -122,8 +123,6 @@ void ModelImpl::OnUpdateFinished(DownloadClient client,
 void ModelImpl::OnRemoveFinished(DownloadClient client,
                                  const std::string& guid,
                                  bool success) {
-  stats::LogModelOperationResult(stats::ModelAction::REMOVE, success);
-
   DCHECK(entries_.find(guid) == entries_.end());
   client_->OnItemRemoved(success, client, guid);
 }

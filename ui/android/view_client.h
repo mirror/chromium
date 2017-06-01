@@ -9,7 +9,6 @@
 
 namespace ui {
 
-class DragEventAndroid;
 class MotionEventAndroid;
 
 // Client interface used to forward events from Java to native views.
@@ -23,7 +22,6 @@ class UI_ANDROID_EXPORT ViewClient {
                             bool for_touch_handle);
   virtual bool OnMouseEvent(const MotionEventAndroid& event);
   virtual bool OnMouseWheelEvent(const MotionEventAndroid& event);
-  virtual bool OnDragEvent(const DragEventAndroid& event);
   virtual void OnPhysicalBackingSizeChanged();
 };
 

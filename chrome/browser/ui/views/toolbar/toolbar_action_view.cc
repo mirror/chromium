@@ -106,10 +106,6 @@ SkColor ToolbarActionView::GetInkDropBaseColor() const {
       ThemeProperties::COLOR_TOOLBAR_BUTTON_ICON);
 }
 
-bool ToolbarActionView::ShouldUseFloodFillInkDrop() const {
-  return delegate_->ShownInsideMenu();
-}
-
 std::unique_ptr<views::InkDrop> ToolbarActionView::CreateInkDrop() {
   std::unique_ptr<views::InkDropImpl> ink_drop =
       CustomButton::CreateDefaultInkDropImpl();
@@ -179,7 +175,7 @@ gfx::ImageSkia ToolbarActionView::GetIconForTest() {
   return GetImage(views::Button::STATE_NORMAL);
 }
 
-gfx::Size ToolbarActionView::CalculatePreferredSize() const {
+gfx::Size ToolbarActionView::GetPreferredSize() const {
   return gfx::Size(ToolbarActionsBar::IconWidth(false),
                    ToolbarActionsBar::IconHeight());
 }

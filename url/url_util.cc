@@ -185,8 +185,8 @@ bool DoFindAndCompareScheme(const CHAR* str,
   // This matches the canonicalization done in DoCanonicalize function.
   RawCanonOutputT<CHAR> whitespace_buffer;
   int spec_len;
-  const CHAR* spec =
-      RemoveURLWhitespace(str, str_len, &whitespace_buffer, &spec_len, nullptr);
+  const CHAR* spec = RemoveURLWhitespace(str, str_len,
+                                         &whitespace_buffer, &spec_len);
 
   Component our_scheme;
   if (!ExtractScheme(spec, spec_len, &our_scheme)) {
@@ -214,8 +214,11 @@ bool DoCanonicalize(const CHAR* spec,
   // Possibly this will result in copying to the new buffer.
   RawCanonOutputT<CHAR> whitespace_buffer;
   if (whitespace_policy == REMOVE_WHITESPACE) {
-    spec = RemoveURLWhitespace(spec, spec_len, &whitespace_buffer, &spec_len,
-                               &output_parsed->potentially_dangling_markup);
+    int original_len = spec_len;
+    spec =
+        RemoveURLWhitespace(spec, original_len, &whitespace_buffer, &spec_len);
+    if (spec_len != original_len)
+      output_parsed->whitespace_removed = true;
   }
 
   Parsed parsed_input;
@@ -293,9 +296,11 @@ bool DoResolveRelative(const char* base_spec,
   // copying to the new buffer.
   RawCanonOutputT<CHAR> whitespace_buffer;
   int relative_length;
-  const CHAR* relative = RemoveURLWhitespace(
-      in_relative, in_relative_length, &whitespace_buffer, &relative_length,
-      &output_parsed->potentially_dangling_markup);
+  const CHAR* relative = RemoveURLWhitespace(in_relative, in_relative_length,
+                                             &whitespace_buffer,
+                                             &relative_length);
+  if (in_relative_length != relative_length)
+    output_parsed->whitespace_removed = true;
 
   bool base_is_authority_based = false;
   bool base_is_hierarchical = false;

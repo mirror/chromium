@@ -101,6 +101,7 @@ struct CONTENT_EXPORT WebPreferences {
   bool context_menu_on_mouse_up;
   bool javascript_enabled;
   bool web_security_enabled;
+  bool javascript_can_open_windows_automatically;
   bool loads_images_automatically;
   bool images_enabled;
   bool plugins_enabled;
@@ -175,6 +176,7 @@ struct CONTENT_EXPORT WebPreferences {
   ui::HoverType primary_hover_type;
   bool sync_xhr_in_documents_enabled;
   bool color_correct_rendering_enabled = false;
+  bool color_correct_rendering_default_mode_enabled = false;
   bool should_respect_image_orientation;
   int number_of_cpu_cores;
   EditingBehavior editing_behavior;
@@ -258,7 +260,6 @@ struct CONTENT_EXPORT WebPreferences {
   // If enabled, video fullscreen detection will be enabled.
   bool video_fullscreen_detection_enabled;
   bool embedded_media_experience_enabled;
-  bool page_popups_suppressed;
 #else  // defined(OS_ANDROID)
 #endif  // defined(OS_ANDROID)
 

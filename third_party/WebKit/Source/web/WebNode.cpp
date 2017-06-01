@@ -31,7 +31,7 @@
 #include "public/web/WebNode.h"
 
 #include "bindings/core/v8/ExceptionState.h"
-#include "core/dom/AXObject.h"
+#include "core/dom/AXObjectCacheBase.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/dom/Node.h"
@@ -47,12 +47,15 @@
 #include "core/html/HTMLElement.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutPart.h"
+#include "modules/accessibility/AXObjectImpl.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebString.h"
+#include "public/web/WebAXObject.h"
 #include "public/web/WebDOMEvent.h"
 #include "public/web/WebDocument.h"
 #include "public/web/WebElement.h"
 #include "public/web/WebElementCollection.h"
+#include "public/web/WebPluginContainer.h"
 
 namespace blink {
 
@@ -125,7 +128,7 @@ bool WebNode::IsContentEditable() const {
 }
 
 bool WebNode::IsInsideFocusableElementOrARIAWidget() const {
-  return AXObject::IsInsideFocusableElementOrARIAWidget(
+  return AXObjectImpl::IsInsideFocusableElementOrARIAWidget(
       *this->ConstUnwrap<Node>());
 }
 
@@ -171,8 +174,33 @@ bool WebNode::Focused() const {
   return private_->IsFocused();
 }
 
+WebPluginContainer* WebNode::PluginContainerFromNode(const Node* node) {
+  if (!node)
+    return nullptr;
+
+  if (!isHTMLObjectElement(node) && !isHTMLEmbedElement(node))
+    return nullptr;
+
+  LayoutObject* object = node->GetLayoutObject();
+  if (object && object->IsLayoutPart()) {
+    PluginView* plugin = ToLayoutPart(object)->Plugin();
+    if (plugin && plugin->IsPluginContainer())
+      return ToWebPluginContainerBase(plugin);
+  }
+
+  return nullptr;
+}
+
 WebPluginContainer* WebNode::PluginContainer() const {
-  return private_->GetWebPluginContainerBase();
+  return PluginContainerFromNode(ConstUnwrap<Node>());
+}
+
+WebAXObject WebNode::AccessibilityObject() {
+  WebDocument web_document = GetDocument();
+  const Document* doc = GetDocument().ConstUnwrap<Document>();
+  AXObjectCacheBase* cache = ToAXObjectCacheBase(doc->ExistingAXObjectCache());
+  Node* node = Unwrap<Node>();
+  return cache ? WebAXObject(cache->Get(node)) : WebAXObject();
 }
 
 WebNode::WebNode(Node* node) : private_(node) {}

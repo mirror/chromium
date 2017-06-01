@@ -277,7 +277,8 @@ IntRect GraphicsLayer::InterestRect() {
 void GraphicsLayer::Paint(const IntRect* interest_rect,
                           GraphicsContext::DisabledMode disabled_mode) {
   if (PaintWithoutCommit(interest_rect, disabled_mode)) {
-    GetPaintController().CommitNewDisplayItems();
+    GetPaintController().CommitNewDisplayItems(
+        OffsetFromLayoutObjectWithSubpixelAccumulation());
     if (RuntimeEnabledFeatures::paintUnderInvalidationCheckingEnabled()) {
       sk_sp<PaintRecord> record = CaptureRecord();
       CheckPaintUnderInvalidations(record);
@@ -388,14 +389,14 @@ void GraphicsLayer::RegisterContentsLayer(WebLayer* layer) {
   if (!g_registered_layer_set)
     g_registered_layer_set = new HashSet<int>;
   if (g_registered_layer_set->Contains(layer->Id()))
-    IMMEDIATE_CRASH();
+    CRASH();
   g_registered_layer_set->insert(layer->Id());
 }
 
 void GraphicsLayer::UnregisterContentsLayer(WebLayer* layer) {
   DCHECK(g_registered_layer_set);
   if (!g_registered_layer_set->Contains(layer->Id()))
-    IMMEDIATE_CRASH();
+    CRASH();
   g_registered_layer_set->erase(layer->Id());
 }
 
@@ -404,7 +405,7 @@ void GraphicsLayer::SetContentsTo(WebLayer* layer) {
   if (layer) {
     DCHECK(g_registered_layer_set);
     if (!g_registered_layer_set->Contains(layer->Id()))
-      IMMEDIATE_CRASH();
+      CRASH();
     if (contents_layer_id_ != layer->Id()) {
       SetupContentsLayer(layer);
       children_changed = true;
@@ -1206,11 +1207,6 @@ static bool PixelsDiffer(SkColor p1, SkColor p2) {
          PixelComponentsDiffer(SkColorGetB(p1), SkColorGetB(p2));
 }
 
-// This method is used to graphically verify any under invalidation when
-// RuntimeEnabledFeatures::paintUnderInvalidationCheckingEnabled is being
-// used. It compares the last recording made by GraphicsLayer::Paint against
-// |new_record|, by rastering both into bitmaps. Any differences are colored
-// as dark red.
 void GraphicsLayer::CheckPaintUnderInvalidations(
     sk_sp<PaintRecord> new_record) {
   if (!DrawsContent())
@@ -1286,7 +1282,8 @@ void GraphicsLayer::CheckPaintUnderInvalidations(
   recorder.beginRecording(rect);
   recorder.getRecordingCanvas()->drawBitmap(new_bitmap, rect.X(), rect.Y());
   sk_sp<PaintRecord> record = recorder.finishRecordingAsPicture();
-  GetPaintController().AppendDebugDrawingAfterCommit(*this, record, rect);
+  GetPaintController().AppendDebugDrawingAfterCommit(
+      *this, record, OffsetFromLayoutObjectWithSubpixelAccumulation());
 }
 
 }  // namespace blink

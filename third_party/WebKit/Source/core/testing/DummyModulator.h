@@ -35,7 +35,6 @@ class DummyModulator : public Modulator {
   WebTaskRunner* TaskRunner() override;
   ReferrerPolicy GetReferrerPolicy() override;
   SecurityOrigin* GetSecurityOrigin() override;
-  ScriptState* GetScriptState() override;
 
   void FetchTree(const ModuleScriptFetchRequest&, ModuleTreeClient*) override;
   void FetchTreeInternal(const ModuleScriptFetchRequest&,

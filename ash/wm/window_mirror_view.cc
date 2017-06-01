@@ -6,6 +6,7 @@
 
 #include "ash/wm/widget_finder.h"
 #include "ash/wm/window_state.h"
+#include "ash/wm_window.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
 #include "ui/compositor/layer.h"

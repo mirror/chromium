@@ -9,16 +9,13 @@
 #include "ash/wm/workspace/multi_window_resize_controller.h"
 #include "base/macros.h"
 
-namespace aura {
-class Window;
-}
-
 namespace ui {
 class GestureEvent;
 class MouseEvent;
 }
 
 namespace ash {
+class WmWindow;
 class WorkspaceEventHandlerTestHelper;
 
 namespace wm {
@@ -34,8 +31,8 @@ class ASH_EXPORT WorkspaceEventHandler {
   WorkspaceEventHandler();
   virtual ~WorkspaceEventHandler();
 
-  void OnMouseEvent(ui::MouseEvent* event, aura::Window* target);
-  void OnGestureEvent(ui::GestureEvent* event, aura::Window* target);
+  void OnMouseEvent(ui::MouseEvent* event, WmWindow* target);
+  void OnGestureEvent(ui::GestureEvent* event, WmWindow* target);
 
  private:
   friend class WorkspaceEventHandlerTestHelper;

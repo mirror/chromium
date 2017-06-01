@@ -197,8 +197,7 @@ BrowserListSessionServiceImpl::BrowserListSessionServiceImpl(
     : browser_list_(browser_list),
       session_directory_([session_directory copy]),
       session_service_(session_service),
-      create_web_state_(create_web_state),
-      weak_factory_(this) {
+      create_web_state_(create_web_state) {
   DCHECK(browser_list_);
   DCHECK(session_directory_);
   DCHECK(session_service_);
@@ -233,7 +232,10 @@ bool BrowserListSessionServiceImpl::RestoreSession() {
 
     WebStateList& web_state_list = browser->web_state_list();
     const int old_count = web_state_list.count();
-    DeserializeWebStateList(&web_state_list, session_window, create_web_state_);
+    // TODO(crbug.com/724282): Track whether web usage should be enabled for
+    // the deserialized WebStates.
+    DeserializeWebStateList(&web_state_list, session_window, false,
+                            create_web_state_);
     DCHECK_GT(web_state_list.count(), old_count);
 
     // If there was a single tab open without any navigation, then close it
@@ -270,25 +272,15 @@ void BrowserListSessionServiceImpl::ScheduleLastSessionDeletion() {
 void BrowserListSessionServiceImpl::ScheduleSaveSession(bool immediately) {
   DCHECK(browser_list_) << "ScheduleSaveSession called after Shutdown.";
   DCHECK_GE(browser_list_->count(), 0);
+  const int count = browser_list_->count();
+  NSMutableArray<SessionWindowIOS*>* windows =
+      [NSMutableArray arrayWithCapacity:static_cast<NSUInteger>(count)];
+  for (int index = 0; index < count; ++index) {
+    Browser* browser = browser_list_->GetBrowserAtIndex(index);
+    [windows addObject:SerializeWebStateList(&browser->web_state_list())];
+  }
 
-  base::WeakPtr<BrowserListSessionServiceImpl> weak_ptr =
-      weak_factory_.GetWeakPtr();
-  SessionIOSFactory session_factory = ^SessionIOS*() {
-    BrowserListSessionServiceImpl* service = weak_ptr.get();
-    if (!weak_ptr)
-      return nil;
-
-    const int count = service->browser_list_->count();
-    NSMutableArray<SessionWindowIOS*>* windows =
-        [NSMutableArray arrayWithCapacity:static_cast<NSUInteger>(count)];
-    for (int index = 0; index < count; ++index) {
-      Browser* browser = service->browser_list_->GetBrowserAtIndex(index);
-      [windows addObject:SerializeWebStateList(&browser->web_state_list())];
-    }
-    return [[SessionIOS alloc] initWithWindows:windows];
-  };
-
-  [session_service_ saveSession:session_factory
+  [session_service_ saveSession:[[SessionIOS alloc] initWithWindows:windows]
                       directory:session_directory_
                     immediately:immediately];
 }

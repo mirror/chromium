@@ -321,6 +321,13 @@ void EasyUnlockServiceSignin::InitializeInternal() {
   if (chromeos::LoginState::Get()->IsUserLoggedIn())
     return;
 
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          proximity_auth::switches::kEnableBluetoothLowEnergyDiscovery) &&
+      !base::CommandLine::ForCurrentProcess()->HasSwitch(
+          proximity_auth::switches::kEnableChromeOSLogin)) {
+    return;
+  }
+
   service_active_ = true;
 
   chromeos::LoginState::Get()->AddObserver(this);
@@ -398,16 +405,6 @@ void EasyUnlockServiceSignin::OnFocusedUserChanged(
 
   ResetScreenlockState();
   ShowInitialUserState();
-
-  // ShowInitialUserState() will display a tooltip explaining that the user must
-  // enter their password. We will skip the entire login code path unless the
-  // --enable-chromeos-login flag is enabled.
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          proximity_auth::switches::kEnableBluetoothLowEnergyDiscovery) &&
-      !base::CommandLine::ForCurrentProcess()->HasSwitch(
-          proximity_auth::switches::kEnableChromeOSLogin)) {
-    return;
-  }
 
   if (should_update_app_state) {
     UpdateAppState();

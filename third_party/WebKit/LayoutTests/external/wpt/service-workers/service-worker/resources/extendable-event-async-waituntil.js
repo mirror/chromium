@@ -50,24 +50,12 @@ self.addEventListener('message', function(event) {
   });
 
 self.addEventListener('fetch', function(event) {
-    if (event.request.url.indexOf('pending-respondwith-async-waituntil') != -1) {
-      var resolveFetch;
-      let response = new Promise((res) => { resolveFetch = res; });
-      event.respondWith(response);
-      async_task_waituntil(event)
-        .then(reportResultExpecting('OK'))
-        .then(() => { resolveFetch(new Response('OK')); });
-    } else if (event.request.url.indexOf('respondwith-microtask-sync-waituntil') != -1) {
-      response = Promise.resolve(new Response('RESP'));
-      event.respondWith(response);
-      response.then(() => { return sync_waituntil(event); })
-        .then(reportResultExpecting('OK'))
-    } else if (event.request.url.indexOf('respondwith-microtask-async-waituntil') != -1) {
-      response = Promise.resolve(new Response('RESP'));
-      event.respondWith(response);
-      response.then(() => { return async_microtask_waituntil(event); })
-        .then(reportResultExpecting('InvalidStateError'))
-    }
+    var resolveFetch;
+    let response = new Promise((res) => { resolveFetch = res; });
+    event.respondWith(response);
+    async_task_waituntil(event)
+      .then(reportResultExpecting('OK'))
+      .then(() => { resolveFetch(new Response('OK')); });
   });
 
 function reportResultExpecting(expectedResult) {

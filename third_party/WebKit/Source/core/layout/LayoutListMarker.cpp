@@ -139,7 +139,7 @@ void LayoutListMarker::UpdateLayout() {
   DCHECK(NeedsLayout());
   LayoutAnalyzer::Scope analyzer(*this);
 
-  LayoutUnit block_offset = LogicalTop();
+  LayoutUnit block_offset;
   for (LayoutBox* o = ParentBox(); o && o != ListItem(); o = o->ParentBox()) {
     block_offset += o->LogicalTop();
   }
@@ -484,10 +484,8 @@ void LayoutListMarker::SetSelectionState(SelectionState state) {
   // base class call.
   LayoutBox::SetSelectionState(state);
 
-  if (InlineBoxWrapper() && CanUpdateSelectionOnRootLineBoxes()) {
-    InlineBoxWrapper()->Root().SetHasSelectedChildren(state !=
-                                                      SelectionState::kNone);
-  }
+  if (InlineBoxWrapper() && CanUpdateSelectionOnRootLineBoxes())
+    InlineBoxWrapper()->Root().SetHasSelectedChildren(state != SelectionNone);
 }
 
 void LayoutListMarker::ListItemStyleDidChange() {

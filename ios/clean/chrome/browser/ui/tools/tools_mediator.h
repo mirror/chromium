@@ -9,22 +9,14 @@
 
 @protocol ToolsConsumer;
 @class ToolsMenuConfiguration;
-namespace web {
-class WebState;
-}
 
 // A mediator object that sets a ToolsMenuVC appeareance based on various data
 // sources.
 @interface ToolsMediator : NSObject
-- (nullable instancetype)initWithConsumer:(nonnull id<ToolsConsumer>)consumer
-                            configuration:(nonnull ToolsMenuConfiguration*)
-                                              menuConfiguration
+- (instancetype)initWithConsumer:(id<ToolsConsumer>)consumer
+                andConfiguration:(ToolsMenuConfiguration*)menuConfiguration
     NS_DESIGNATED_INITIALIZER;
-- (nullable instancetype)init NS_UNAVAILABLE;
-
-// The WebState whose properties this object mediates. This can change during
-// the lifetime of this object and may be null.
-@property(nonatomic, assign, nullable) web::WebState* webState;
+- (instancetype)init NS_UNAVAILABLE;
 @end
 
 #endif  // IOS_CLEAN_CHROME_BROWSER_UI_TOOLS_TOOLS_MEDIATOR_H_

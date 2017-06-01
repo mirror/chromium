@@ -32,7 +32,6 @@
 #define WebLocalFrameImpl_h
 
 #include "core/editing/VisiblePosition.h"
-#include "core/exported/WebInputMethodControllerImpl.h"
 #include "core/frame/ContentSettingsClient.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/WebFrameWidgetBase.h"
@@ -46,6 +45,7 @@
 #include "web/LocalFrameClientImpl.h"
 #include "web/UserMediaClientImpl.h"
 #include "web/WebExport.h"
+#include "web/WebInputMethodControllerImpl.h"
 
 #include <memory>
 
@@ -70,6 +70,7 @@ class WebInputMethodControllerImpl;
 class WebNode;
 class WebPerformance;
 class WebPlugin;
+class WebPluginContainerBase;
 class WebScriptExecutionCallback;
 class WebView;
 class WebViewBase;
@@ -239,16 +240,11 @@ class WEB_EXPORT WebLocalFrameImpl final
   WebString LayerTreeAsText(bool show_debug_info = false) const override;
 
   // WebLocalFrame methods:
-  WebLocalFrameImpl* CreateLocalChild(WebTreeScopeType,
-                                      WebFrameClient*,
-                                      blink::InterfaceProvider*,
-                                      blink::InterfaceRegistry*) override;
   void SetAutofillClient(WebAutofillClient*) override;
   WebAutofillClient* AutofillClient() override;
   void SetDevToolsAgentClient(WebDevToolsAgentClient*) override;
   WebDevToolsAgent* DevToolsAgent() override;
   WebLocalFrameImpl* LocalRoot() override;
-  WebFrame* FindFrameByName(const WebString& name) override;
   void SendPings(const WebURL& destination_url) override;
   bool DispatchBeforeUnloadEvent(bool) override;
   WebURLRequest RequestFromHistoryItem(const WebHistoryItem&,
@@ -317,7 +313,7 @@ class WEB_EXPORT WebLocalFrameImpl final
   base::SingleThreadTaskRunner* TimerTaskRunner() override;
   base::SingleThreadTaskRunner* LoadingTaskRunner() override;
   base::SingleThreadTaskRunner* UnthrottledTaskRunner() override;
-  WebInputMethodController* GetInputMethodController() override;
+  WebInputMethodControllerImpl* GetInputMethodController() override;
 
   void ExtractSmartClipData(WebRect rect_in_viewport,
                             WebString& clip_text,
@@ -341,7 +337,6 @@ class WEB_EXPORT WebLocalFrameImpl final
                                               blink::InterfaceRegistry*,
                                               WebRemoteFrame*,
                                               WebSandboxFlags);
-
   ~WebLocalFrameImpl() override;
 
   LocalFrame* CreateChildFrame(const FrameLoadRequest&,
@@ -356,9 +351,20 @@ class WEB_EXPORT WebLocalFrameImpl final
   static WebLocalFrameImpl* FromFrame(LocalFrame&);
   static WebLocalFrameImpl* FromFrameOwnerElement(Element*);
 
+  // If the frame hosts a PluginDocument, this method returns the
+  // WebPluginContainerBase that hosts the plugin.
+  static WebPluginContainerBase* PluginContainerFromFrame(LocalFrame*);
+
+  // If the frame hosts a PluginDocument, this method returns the
+  // WebPluginContainerBase that hosts the plugin. If the provided node is a
+  // plugin, then it runs its WebPluginContainerBase. Otherwise, uses the
+  // currently focused element (if any).
+  static WebPluginContainerBase* CurrentPluginContainer(LocalFrame*,
+                                                        Node* = nullptr);
+
   WebViewBase* ViewImpl() const override;
 
-  LocalFrameView* GetFrameView() const override {
+  FrameView* GetFrameView() const override {
     return GetFrame() ? GetFrame()->View() : 0;
   }
 
@@ -401,7 +407,7 @@ class WEB_EXPORT WebLocalFrameImpl final
     return shared_worker_repository_client_.get();
   }
 
-  void SetInputEventsTransformForEmulation(const IntSize&, float) override;
+  void SetInputEventsTransformForEmulation(const IntSize&, float);
 
   static void SelectWordAroundPosition(LocalFrame*, VisiblePosition);
 
@@ -410,7 +416,7 @@ class WEB_EXPORT WebLocalFrameImpl final
     return text_check_client_;
   }
 
-  TextFinder* GetTextFinder() const override;
+  TextFinder* GetTextFinder() const;
   // Returns the text finder object if it already exists.
   // Otherwise creates it and then returns.
   TextFinder& EnsureTextFinder() override;

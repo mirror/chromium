@@ -12,9 +12,8 @@
 namespace mojo {
 template <>
 struct StructTraits<net::interfaces::IPAddressDataView, net::IPAddress> {
-  static const std::vector<uint8_t> address(const net::IPAddress& ip_address) {
-    // TODO(rch): avoid creating a vector here.
-    return ip_address.CopyBytesToVector();
+  static const std::vector<uint8_t>& address(const net::IPAddress& ip_address) {
+    return ip_address.bytes();
   }
 
   static bool Read(net::interfaces::IPAddressDataView obj, net::IPAddress* out);

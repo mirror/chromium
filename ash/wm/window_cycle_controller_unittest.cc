@@ -12,8 +12,8 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/scoped_root_window_for_new_windows.h"
 #include "ash/session/session_controller.h"
-#include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_widget.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/shelf_view_test_api.h"
@@ -24,6 +24,7 @@
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
 #include "ash/wm/wm_event.h"
+#include "ash/wm_window.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/screen_position_client.h"
 #include "ui/aura/env.h"
@@ -98,7 +99,7 @@ class WindowCycleControllerTest : public test::AshTestBase {
   aura::Window* CreatePanelWindow() {
     gfx::Rect rect(100, 100);
     aura::Window* window = CreateTestWindowInShellWithDelegateAndType(
-        NULL, aura::client::WINDOW_TYPE_PANEL, 0, rect);
+        NULL, ui::wm::WINDOW_TYPE_PANEL, 0, rect);
     shelf_view_test_->RunMessageLoopUntilAnimationsDone();
     return window;
   }

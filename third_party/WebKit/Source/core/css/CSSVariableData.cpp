@@ -22,23 +22,21 @@ StylePropertySet* CSSVariableData::PropertySet() {
 }
 
 template <typename CharacterType>
-static void UpdateTokens(const CSSParserTokenRange& range,
-                         const String& backing_string,
-                         Vector<CSSParserToken>& result) {
+void CSSVariableData::UpdateTokens(const CSSParserTokenRange& range) {
   const CharacterType* current_offset =
-      backing_string.GetCharacters<CharacterType>();
+      backing_string_.GetCharacters<CharacterType>();
   for (const CSSParserToken& token : range) {
     if (token.HasStringBacking()) {
       unsigned length = token.Value().length();
       StringView string(current_offset, length);
-      result.push_back(token.CopyWithUpdatedString(string));
+      tokens_.push_back(token.CopyWithUpdatedString(string));
       current_offset += length;
     } else {
-      result.push_back(token);
+      tokens_.push_back(token);
     }
   }
-  DCHECK(current_offset == backing_string.GetCharacters<CharacterType>() +
-                               backing_string.length());
+  DCHECK(current_offset == backing_string_.GetCharacters<CharacterType>() +
+                               backing_string_.length());
 }
 
 bool CSSVariableData::operator==(const CSSVariableData& other) const {
@@ -46,8 +44,6 @@ bool CSSVariableData::operator==(const CSSVariableData& other) const {
 }
 
 void CSSVariableData::ConsumeAndUpdateTokens(const CSSParserTokenRange& range) {
-  DCHECK_EQ(tokens_.size(), 0u);
-  DCHECK_EQ(backing_strings_.size(), 0u);
   StringBuilder string_builder;
   CSSParserTokenRange local_range = range;
 
@@ -56,12 +52,11 @@ void CSSVariableData::ConsumeAndUpdateTokens(const CSSParserTokenRange& range) {
     if (token.HasStringBacking())
       string_builder.Append(token.Value());
   }
-  String backing_string = string_builder.ToString();
-  backing_strings_.push_back(backing_string);
-  if (backing_string.Is8Bit())
-    UpdateTokens<LChar>(range, backing_string, tokens_);
+  backing_string_ = string_builder.ToString();
+  if (backing_string_.Is8Bit())
+    UpdateTokens<LChar>(range);
   else
-    UpdateTokens<UChar>(range, backing_string, tokens_);
+    UpdateTokens<UChar>(range);
 }
 
 CSSVariableData::CSSVariableData(const CSSParserTokenRange& range,

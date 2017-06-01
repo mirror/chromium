@@ -16,10 +16,6 @@ namespace content {
 class BrowserContext;
 }
 
-namespace user_manager {
-class User;
-}
-
 content::BrowserContext* GetActiveBrowserContext();
 
 using GetActiveBrowserContextCallback =
@@ -34,6 +30,5 @@ bool CanShowWindowForUser(
     const GetActiveBrowserContextCallback& get_context_callback);
 
 gfx::ImageSkia GetAvatarImageForContext(content::BrowserContext* context);
-gfx::ImageSkia GetAvatarImageForUser(const user_manager::User* user);
 
 #endif  // CHROME_BROWSER_UI_ASH_SESSION_UTIL_H_

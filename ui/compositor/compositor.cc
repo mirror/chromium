@@ -52,8 +52,7 @@ namespace ui {
 Compositor::Compositor(const cc::FrameSinkId& frame_sink_id,
                        ui::ContextFactory* context_factory,
                        ui::ContextFactoryPrivate* context_factory_private,
-                       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-                       bool enable_surface_synchronization)
+                       scoped_refptr<base::SingleThreadTaskRunner> task_runner)
     : context_factory_(context_factory),
       context_factory_private_(context_factory_private),
       frame_sink_id_(frame_sink_id),
@@ -126,7 +125,8 @@ Compositor::Compositor(const cc::FrameSinkId& frame_sink_id,
 
   settings.initial_debug_state.SetRecordRenderingStats(
       command_line->HasSwitch(cc::switches::kEnableGpuBenchmarking));
-  settings.enable_surface_synchronization = enable_surface_synchronization;
+  settings.enable_surface_synchronization =
+      command_line->HasSwitch(cc::switches::kEnableSurfaceSynchronization);
 
   settings.use_zero_copy = IsUIZeroCopyEnabled();
 
@@ -139,11 +139,6 @@ Compositor::Compositor(const cc::FrameSinkId& frame_sink_id,
   // UI compositor always uses partial raster if not using zero-copy. Zero copy
   // doesn't currently support partial raster.
   settings.use_partial_raster = !settings.use_zero_copy;
-
-  settings.buffer_to_texture_target_map =
-      context_factory_->GetRendererSettings().buffer_to_texture_target_map;
-  if (command_line->HasSwitch(switches::kUIEnableRGBA4444Textures))
-    settings.preferred_tile_format = cc::RGBA_4444;
 
   settings.gpu_memory_policy.bytes_limit_when_visible = 512 * 1024 * 1024;
   settings.gpu_memory_policy.priority_cutoff_when_visible =

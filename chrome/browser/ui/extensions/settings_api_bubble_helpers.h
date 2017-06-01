@@ -15,9 +15,6 @@ class WebContents;
 
 namespace extensions {
 
-// Sets whether the NTP bubble is enabled for testing purposes.
-void SetNtpBubbleEnabledForTesting(bool enabled);
-
 // Shows a bubble notifying the user that the homepage is controlled by an
 // extension. This bubble is shown only on the first use of the Home button
 // after the controlling extension takes effect.

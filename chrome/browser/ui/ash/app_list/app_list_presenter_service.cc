@@ -7,13 +7,14 @@
 #include <utility>
 
 #include "ash/public/interfaces/constants.mojom.h"
-#include "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h"
 #include "chrome/browser/ui/ash/app_list/app_list_service_ash.h"
+#include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_service_manager.h"
+#include "components/arc/common/voice_interaction_framework.mojom.h"
+#include "components/arc/instance_holder.h"
 #include "content/public/common/service_manager_connection.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "ui/app_list/presenter/app_list_presenter_impl.h"
-#include "ui/gfx/geometry/rect.h"
 
 AppListPresenterService::AppListPresenterService() : binding_(this) {
   content::ServiceManagerConnection* connection =
@@ -45,10 +46,13 @@ void AppListPresenterService::ToggleAppList(int64_t display_id) {
 }
 
 void AppListPresenterService::StartVoiceInteractionSession() {
-  auto* service = arc::ArcServiceManager::Get()
-                      ->GetService<arc::ArcVoiceInteractionFrameworkService>();
-  DCHECK(service);
-  service->StartSessionFromUserInteraction(gfx::Rect());
+  arc::mojom::VoiceInteractionFrameworkInstance* framework_instance =
+      ARC_GET_INSTANCE_FOR_METHOD(arc::ArcServiceManager::Get()
+                                      ->arc_bridge_service()
+                                      ->voice_interaction_framework(),
+                                  StartVoiceInteractionSession);
+  if (framework_instance)
+    framework_instance->StartVoiceInteractionSession();
 }
 
 app_list::AppListPresenterImpl* AppListPresenterService::GetPresenter() {

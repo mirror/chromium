@@ -34,10 +34,7 @@ settings.PowerSource;
 settings.BatteryStatus;
 
 /**
- * @typedef {{name:string,
- *            value:string,
- *            preferred:boolean,
- *            supportsLockScreen: boolean}}
+ * @typedef {{name:string, value:string, preferred:boolean}}
  */
 settings.NoteAppInfo;
 

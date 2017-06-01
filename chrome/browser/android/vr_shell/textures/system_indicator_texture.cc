@@ -50,8 +50,7 @@ void SystemIndicatorTexture::Draw(SkCanvas* sk_canvas,
 
   base::string16 text = l10n_util::GetStringUTF16(message_id_);
 
-  gfx::FontList fonts;
-  GetFontList(size_.height() * kFontSizeFactor, text, &fonts);
+  auto fonts = GetFontList(size_.height() * kFontSizeFactor, text);
   gfx::Rect text_size(0, kTextHeightFactor * size_.height());
 
   std::vector<std::unique_ptr<gfx::RenderText>> lines =

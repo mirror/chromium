@@ -495,9 +495,7 @@ jboolean BrowserAccessibilityManagerAndroid::PopulateAccessibilityNodeInfo(
   Java_BrowserAccessibilityManager_setAccessibilityNodeInfoText(
       env, obj, info,
       base::android::ConvertUTF16ToJavaString(env, node->GetText()),
-      node->IsLink(), node->IsEditableText(),
-      base::android::ConvertUTF16ToJavaString(
-          env, node->GetInheritedString16Attribute(ui::AX_ATTR_LANGUAGE)));
+      node->IsLink(), node->IsEditableText());
   base::string16 element_id;
   if (node->GetHtmlAttribute("id", &element_id)) {
     Java_BrowserAccessibilityManager_setAccessibilityNodeInfoViewIdResourceName(

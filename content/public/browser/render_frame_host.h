@@ -10,7 +10,6 @@
 #include "base/callback_forward.h"
 #include "build/build_config.h"
 #include "content/common/content_export.h"
-#include "content/common/input/input_handler.mojom.h"
 #include "content/public/common/console_message_level.h"
 #include "content/public/common/file_chooser_params.h"
 #include "ipc/ipc_listener.h"
@@ -50,9 +49,6 @@ struct FileChooserFileInfo;
 class CONTENT_EXPORT RenderFrameHost : public IPC::Listener,
                                        public IPC::Sender {
  public:
-  // Constant used to denote that a lookup of a FrameTreeNode ID has failed.
-  static const int kNoFrameTreeNodeId = -1;
-
   // Returns the RenderFrameHost given its ID and the ID of its render process.
   // Returns nullptr if the IDs do not correspond to a live RenderFrameHost.
   static RenderFrameHost* FromID(int render_process_id, int render_frame_id);
@@ -66,11 +62,6 @@ class CONTENT_EXPORT RenderFrameHost : public IPC::Listener,
 
   // Returns a RenderFrameHost given its accessibility tree ID.
   static RenderFrameHost* FromAXTreeID(int ax_tree_id);
-
-  // Returns the FrameTreeNode ID corresponding to the specified |process_id|
-  // and |routing_id|. This routing ID pair may represent a placeholder for
-  // frame that is currently rendered in a different process than |process_id|.
-  static int GetFrameTreeNodeIdForRoutingId(int process_id, int routing_id);
 
   ~RenderFrameHost() override {}
 
@@ -270,12 +261,7 @@ class CONTENT_EXPORT RenderFrameHost : public IPC::Listener,
   virtual void DisableBeforeUnloadHangMonitorForTesting() = 0;
   virtual bool IsBeforeUnloadHangMonitorDisabledForTesting() = 0;
 
-  // Returns true if the given Feature Policy |feature| is enabled for this
-  // RenderFrameHost and is allowed to be used by it. Use this in the browser
-  // process to determine whether access to a feature is allowed.
   virtual bool IsFeatureEnabled(blink::WebFeaturePolicyFeature feature) = 0;
-
-  virtual mojom::FrameInputHandler* GetFrameInputHandler() = 0;
 
  private:
   // This interface should only be implemented inside content.

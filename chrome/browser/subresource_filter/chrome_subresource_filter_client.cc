@@ -72,7 +72,7 @@ void ChromeSubresourceFilterClient::MaybeAppendNavigationThrottles(
     throttles->push_back(
         base::MakeUnique<subresource_filter::
                              SubresourceFilterSafeBrowsingActivationThrottle>(
-            navigation_handle, this,
+            navigation_handle,
             content::BrowserThread::GetTaskRunnerForThread(
                 content::BrowserThread::IO),
             std::move(database_manager)));

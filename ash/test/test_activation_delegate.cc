@@ -33,8 +33,8 @@ TestActivationDelegate::TestActivationDelegate(bool activate)
 
 void TestActivationDelegate::SetWindow(aura::Window* window) {
   window_ = window;
-  ::wm::SetActivationDelegate(window, this);
-  ::wm::SetActivationChangeObserver(window, this);
+  aura::client::SetActivationDelegate(window, this);
+  aura::client::SetActivationChangeObserver(window, this);
 }
 
 bool TestActivationDelegate::ShouldActivate() const {
@@ -43,7 +43,7 @@ bool TestActivationDelegate::ShouldActivate() const {
 }
 
 void TestActivationDelegate::OnWindowActivated(
-    ::wm::ActivationChangeObserver::ActivationReason reason,
+    aura::client::ActivationChangeObserver::ActivationReason reason,
     aura::Window* gained_active,
     aura::Window* lost_active) {
   DCHECK(window_ == gained_active || window_ == lost_active);

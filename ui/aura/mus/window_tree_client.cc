@@ -193,12 +193,6 @@ void DispatchEventToTarget(ui::Event* event, WindowMus* target) {
   GetWindowTreeHostMus(target)->SendEventToSink(event);
 }
 
-// Use for acks from mus that are expected to always succeed and if they don't
-// a crash is triggered.
-void OnAckMustSucceed(bool success) {
-  CHECK(success);
-}
-
 }  // namespace
 
 WindowTreeClient::WindowTreeClient(
@@ -254,6 +248,9 @@ WindowTreeClient::WindowTreeClient(
           discardable_shared_memory_manager_.get());
     }
   }
+  enable_surface_synchronization_ =
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          cc::switches::kEnableSurfaceSynchronization);
 }
 
 WindowTreeClient::~WindowTreeClient() {
@@ -598,17 +595,9 @@ void WindowTreeClient::OnEmbedImpl(
   delegate_->OnEmbed(std::move(window_tree_host));
 }
 
-void WindowTreeClient::OnSetDisplayRootDone(
-    Id window_id,
-    const base::Optional<cc::LocalSurfaceId>& local_surface_id) {
+void WindowTreeClient::OnSetDisplayRootDone(bool success) {
   // The only way SetDisplayRoot() should fail is if we've done something wrong.
-  CHECK(local_surface_id.has_value());
-  WindowMus* window = GetWindowByServerId(window_id);
-  if (!window)
-    return;  // Display was already deleted.
-
-  ui::Compositor* compositor = window->GetWindow()->GetHost()->compositor();
-  compositor->SetLocalSurfaceId(*local_surface_id);
+  CHECK(success);
 }
 
 WindowTreeHostMus* WindowTreeClient::WmNewDisplayAddedImpl(
@@ -652,7 +641,8 @@ void WindowTreeClient::SetWindowBoundsFromServer(
   if (IsRoot(window)) {
     // WindowTreeHost expects bounds to be in pixels.
     GetWindowTreeHostMus(window)->SetBoundsFromServer(revert_bounds_in_pixels);
-    if (local_surface_id && local_surface_id->is_valid()) {
+    if (enable_surface_synchronization_ && local_surface_id &&
+        local_surface_id->is_valid()) {
       ui::Compositor* compositor = window->GetWindow()->GetHost()->compositor();
       compositor->SetLocalSurfaceId(*local_surface_id);
     }
@@ -663,12 +653,6 @@ void WindowTreeClient::SetWindowBoundsFromServer(
       gfx::ConvertRectToDIP(ScaleFactorForDisplay(window->GetWindow()),
                             revert_bounds_in_pixels),
       local_surface_id);
-}
-
-void WindowTreeClient::SetWindowTransformFromServer(
-    WindowMus* window,
-    const gfx::Transform& transform) {
-  window->SetTransformFromServer(transform);
 }
 
 void WindowTreeClient::SetWindowVisibleFromServer(WindowMus* window,
@@ -695,9 +679,8 @@ void WindowTreeClient::ScheduleInFlightBoundsChange(
       ScheduleInFlightChange(base::MakeUnique<InFlightBoundsChange>(
           this, window, old_bounds, window->GetLocalSurfaceId()));
   base::Optional<cc::LocalSurfaceId> local_surface_id;
-  if (window->window_mus_type() == WindowMusType::TOP_LEVEL_IN_WM ||
-      window->window_mus_type() == WindowMusType::EMBED_IN_OWNER ||
-      window->window_mus_type() == WindowMusType::DISPLAY_MANUALLY_CREATED) {
+  if ((window->window_mus_type() == WindowMusType::TOP_LEVEL_IN_WM ||
+       window->window_mus_type() == WindowMusType::EMBED_IN_OWNER)) {
     local_surface_id = window->GetOrAllocateLocalSurfaceId(new_bounds.size());
     synchronizing_with_child_on_next_frame_ = true;
   }
@@ -762,7 +745,7 @@ void WindowTreeClient::OnWindowMusCreated(WindowMus* window) {
           display, display_init_params->viewport_metrics.Clone(),
           display_init_params->is_primary_display, window->server_id(),
           base::Bind(&WindowTreeClient::OnSetDisplayRootDone,
-                     base::Unretained(this), window->server_id()));
+                     base::Unretained(this)));
     }
   }
 }
@@ -820,15 +803,6 @@ void WindowTreeClient::OnWindowMusBoundsChanged(WindowMus* window,
   ScheduleInFlightBoundsChange(
       window, gfx::ConvertRectToPixel(device_scale_factor, old_bounds),
       gfx::ConvertRectToPixel(device_scale_factor, new_bounds));
-}
-
-void WindowTreeClient::OnWindowMusTransformChanged(
-    WindowMus* window,
-    const gfx::Transform& old_transform,
-    const gfx::Transform& new_transform) {
-  const uint32_t change_id = ScheduleInFlightChange(
-      base::MakeUnique<InFlightTransformChange>(this, window, old_transform));
-  tree_->SetWindowTransform(change_id, window->server_id(), new_transform);
 }
 
 void WindowTreeClient::OnWindowMusAddChild(WindowMus* parent,
@@ -1154,21 +1128,6 @@ void WindowTreeClient::OnWindowBoundsChanged(
   SetWindowBoundsFromServer(window, new_bounds, local_surface_id);
 }
 
-void WindowTreeClient::OnWindowTransformChanged(
-    Id window_id,
-    const gfx::Transform& old_transform,
-    const gfx::Transform& new_transform) {
-  WindowMus* window = GetWindowByServerId(window_id);
-  if (!window)
-    return;
-
-  InFlightTransformChange new_change(this, window, new_transform);
-  if (ApplyServerChangeToExistingInFlightChange(new_change))
-    return;
-
-  SetWindowTransformFromServer(window, new_transform);
-}
-
 void WindowTreeClient::OnClientAreaChanged(
     uint32_t window_id,
     const gfx::Insets& new_client_area,
@@ -1412,13 +1371,18 @@ void WindowTreeClient::OnWindowSurfaceChanged(
   WindowMus* window = GetWindowByServerId(window_id);
   if (!window)
     return;
-
-  // If the parent is informed of a child's surface then that surface ID is
-  // guaranteed to be available in the display compositor so we set it as the
-  // fallback. If surface synchronization is enabled, the primary SurfaceInfo
-  // is created by the embedder, and the LocalSurfaceId is allocated by the
-  // embedder.
-  window->SetFallbackSurfaceInfo(surface_info);
+  if (enable_surface_synchronization_) {
+    // If surface synchronization is enabled, and the parent is informed
+    // of a child's surface then that surface ID is guaranteed to be available
+    // in the display compositor so we set it as the fallback. If surface
+    // synchronization is enabled, the primary SurfaceInfo is created by the
+    // embedder, and the LocalSurfaceId is allocated by the embedder.
+    window->SetFallbackSurfaceInfo(surface_info);
+  } else {
+    // If surface synchronization is disabled, fallback SurfaceInfos are never
+    // used.
+    window->SetPrimarySurfaceInfo(surface_info);
+  }
 }
 
 void WindowTreeClient::OnDragDropStart(
@@ -1891,18 +1855,6 @@ void WindowTreeClient::RequestClose(Window* window) {
   DCHECK(window);
   if (window_manager_client_)
     window_manager_client_->WmRequestClose(WindowMus::Get(window)->server_id());
-}
-
-void WindowTreeClient::SetDisplayConfiguration(
-    const std::vector<display::Display>& displays,
-    std::vector<ui::mojom::WmViewportMetricsPtr> viewport_metrics,
-    int64_t primary_display_id) {
-  DCHECK_EQ(displays.size(), viewport_metrics.size());
-  if (window_manager_client_) {
-    window_manager_client_->SetDisplayConfiguration(
-        displays, std::move(viewport_metrics), primary_display_id,
-        base::Bind(&OnAckMustSucceed));
-  }
 }
 
 void WindowTreeClient::OnWindowTreeHostBoundsWillChange(

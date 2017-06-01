@@ -80,12 +80,13 @@ void GeolocationPermissionContextAndroid::RegisterProfilePrefs(
   registry->RegisterInt64Pref(prefs::kLocationSettingsNextShowDefault, 0);
 }
 
-GeolocationPermissionContextAndroid::GeolocationPermissionContextAndroid(
-    Profile* profile)
+GeolocationPermissionContextAndroid::
+    GeolocationPermissionContextAndroid(Profile* profile)
     : GeolocationPermissionContext(profile),
       location_settings_(new LocationSettingsImpl()),
       permission_update_infobar_(nullptr),
-      weak_factory_(this) {}
+      weak_factory_(this) {
+}
 
 GeolocationPermissionContextAndroid::~GeolocationPermissionContextAndroid() {
 }

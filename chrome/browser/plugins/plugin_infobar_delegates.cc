@@ -22,7 +22,10 @@
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/common/features.h"
 #include "chrome/common/url_constants.h"
+#include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
+#include "chrome/grit/locale_settings.h"
+#include "chrome/grit/theme_resources.h"
 #include "components/google/core/browser/google_util.h"
 #include "components/infobars/core/infobar.h"
 #include "components/strings/grit/components_strings.h"
@@ -50,7 +53,7 @@ void OutdatedPluginInfoBarDelegate::Create(
   infobar_service->AddInfoBar(infobar_service->CreateConfirmInfoBar(
       std::unique_ptr<ConfirmInfoBarDelegate>(new OutdatedPluginInfoBarDelegate(
           installer, std::move(plugin_metadata),
-          l10n_util::GetStringFUTF16(IDS_PLUGIN_OUTDATED_PROMPT, name)))));
+          l10n_util::GetStringUTF16(IDS_PLUGIN_OUTDATED_PROMPT)))));
 }
 
 OutdatedPluginInfoBarDelegate::OutdatedPluginInfoBarDelegate(

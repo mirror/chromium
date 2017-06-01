@@ -10,8 +10,6 @@
 #include "base/command_line.h"
 #include "base/feature_list.h"
 #include "chromeos/chromeos_switches.h"
-#include "chromeos/dbus/dbus_thread_manager.h"
-#include "chromeos/dbus/session_manager_client.h"
 #include "components/user_manager/user_manager.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
@@ -30,18 +28,6 @@ const base::Feature kEnableArcFeature{"EnableARC",
 constexpr char kAvailabilityNone[] = "none";
 constexpr char kAvailabilityInstalled[] = "installed";
 constexpr char kAvailabilityOfficiallySupported[] = "officially-supported";
-
-void SetArcCpuRestrictionCallback(
-    login_manager::ContainerCpuRestrictionState state,
-    bool success) {
-  if (success)
-    return;
-  const char* message =
-      (state == login_manager::CONTAINER_CPU_RESTRICTION_BACKGROUND)
-          ? "unprioritize"
-          : "prioritize";
-  LOG(ERROR) << "Failed to " << message << " ARC";
-}
 
 }  // namespace
 
@@ -106,36 +92,6 @@ bool IsArcKioskMode() {
          user_manager::UserManager::Get()->IsLoggedInAsArcKioskApp();
 }
 
-bool IsArcAllowedForUser(const user_manager::User* user) {
-  if (!user) {
-    VLOG(1) << "No ARC for nullptr user.";
-    return false;
-  }
-
-  // ARC is only supported for the following cases:
-  // - Users have Gaia accounts;
-  // - Active directory users;
-  // - ARC kiosk session;
-  //   USER_TYPE_ARC_KIOSK_APP check is compatible with IsArcKioskMode()
-  //   above because ARC kiosk user is always the primary/active user of a
-  //   user session.
-  if (!user->HasGaiaAccount() && !user->IsActiveDirectoryUser() &&
-      user->GetType() != user_manager::USER_TYPE_ARC_KIOSK_APP) {
-    VLOG(1) << "Users without GAIA or AD accounts, or not ARC kiosk apps are "
-               "not supported in ARC.";
-    return false;
-  }
-
-  // Do not allow for ephemeral data user. cf) b/26402681
-  if (user_manager::UserManager::Get()->IsUserCryptohomeDataEphemeral(
-          user->GetAccountId())) {
-    VLOG(1) << "Users with ephemeral data are not supported in ARC.";
-    return false;
-  }
-
-  return true;
-}
-
 bool IsArcOptInVerificationDisabled() {
   const auto* command_line = base::CommandLine::ForCurrentProcess();
   return command_line->HasSwitch(
@@ -147,20 +103,6 @@ bool IsArcAppWindow(aura::Window* window) {
     return false;
   return window->GetProperty(aura::client::kAppType) ==
          static_cast<int>(ash::AppType::ARC_APP);
-}
-
-void SetArcCpuRestriction(bool do_restrict) {
-  chromeos::SessionManagerClient* session_manager_client =
-      chromeos::DBusThreadManager::Get()->GetSessionManagerClient();
-  if (!session_manager_client) {
-    LOG(WARNING) << "SessionManagerClient is not available";
-    return;
-  }
-  const login_manager::ContainerCpuRestrictionState state =
-      do_restrict ? login_manager::CONTAINER_CPU_RESTRICTION_BACKGROUND
-                  : login_manager::CONTAINER_CPU_RESTRICTION_FOREGROUND;
-  session_manager_client->SetArcCpuRestriction(
-      state, base::Bind(SetArcCpuRestrictionCallback, state));
 }
 
 }  // namespace arc

@@ -121,17 +121,20 @@ void ServiceWorkerGlobalScope::CountScript(size_t script_size,
 }
 
 void ServiceWorkerGlobalScope::DidEvaluateWorkerScript() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(CustomCountHistogram, script_count_histogram,
-                                  ("ServiceWorker.ScriptCount", 1, 1000, 50));
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      CustomCountHistogram, script_count_histogram,
+      new CustomCountHistogram("ServiceWorker.ScriptCount", 1, 1000, 50));
   script_count_histogram.Count(script_count_);
   DEFINE_THREAD_SAFE_STATIC_LOCAL(
       CustomCountHistogram, script_total_size_histogram,
-      ("ServiceWorker.ScriptTotalSize", 1000, 5000000, 50));
+      new CustomCountHistogram("ServiceWorker.ScriptTotalSize", 1000, 5000000,
+                               50));
   script_total_size_histogram.Count(script_total_size_);
   if (script_cached_metadata_total_size_) {
     DEFINE_THREAD_SAFE_STATIC_LOCAL(
         CustomCountHistogram, cached_metadata_histogram,
-        ("ServiceWorker.ScriptCachedMetadataTotalSize", 1000, 50000000, 50));
+        new CustomCountHistogram("ServiceWorker.ScriptCachedMetadataTotalSize",
+                                 1000, 50000000, 50));
     cached_metadata_histogram.Count(script_cached_metadata_total_size_);
   }
   did_evaluate_script_ = true;

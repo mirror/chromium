@@ -8,7 +8,7 @@
 
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
-#include "ash/shelf/shelf.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell_port.h"
 #include "ash/wm/fullscreen_window_finder.h"
 #include "ash/wm/window_state.h"
@@ -17,10 +17,10 @@
 #include "ash/wm/workspace/backdrop_delegate.h"
 #include "ash/wm/workspace/workspace_event_handler.h"
 #include "ash/wm/workspace/workspace_layout_manager.h"
+#include "ash/wm_window.h"
 #include "ui/aura/window.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
-#include "ui/wm/core/window_animations.h"
 
 namespace ash {
 namespace {
@@ -36,7 +36,8 @@ const int kInitialAnimationDurationMS = 200;
 
 WorkspaceController::WorkspaceController(aura::Window* viewport)
     : viewport_(viewport),
-      event_handler_(ShellPort::Get()->CreateWorkspaceEventHandler(viewport)),
+      event_handler_(ShellPort::Get()->CreateWorkspaceEventHandler(
+          WmWindow::Get(viewport))),
       layout_manager_(new WorkspaceLayoutManager(viewport)) {
   viewport_->AddObserver(this);
   ::wm::SetWindowVisibilityAnimationTransition(viewport_, ::wm::ANIMATE_NONE);
@@ -59,7 +60,7 @@ wm::WorkspaceWindowState WorkspaceController::GetWindowState() const {
   if (fullscreen && !wm::GetWindowState(fullscreen)->ignored_by_shelf())
     return wm::WORKSPACE_WINDOW_STATE_FULL_SCREEN;
 
-  const gfx::Rect shelf_bounds(Shelf::ForWindow(viewport_)->GetIdealBounds());
+  const gfx::Rect shelf_bounds(WmShelf::ForWindow(viewport_)->GetIdealBounds());
   bool window_overlaps_launcher = false;
   // The default container may contain windows that may overlap the launcher
   // shelf and affect its transparency.

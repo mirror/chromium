@@ -129,8 +129,6 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
     private String mFirstUrl;
     private boolean mShowsOfflinePage;
 
-    protected ToolbarDataProvider mToolbarDataProvider;
-
     private Runnable mTitleAnimationStarter = new Runnable() {
         @Override
         public void run() {
@@ -244,11 +242,6 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
     @Override
     public Tab getCurrentTab() {
         return getToolbarDataProvider().getTab();
-    }
-
-    @Override
-    public boolean allowKeyboardLearning() {
-        return !super.isIncognito();
     }
 
     @Override
@@ -404,16 +397,6 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
     public void updateLoadingState(boolean updateUrl) {
         if (updateUrl) setUrlToPageUrl();
         updateSecurityIcon(getSecurityLevel());
-    }
-
-    @Override
-    public void setToolbarDataProvider(ToolbarDataProvider model) {
-        mToolbarDataProvider = model;
-    }
-
-    @Override
-    public ToolbarDataProvider getToolbarDataProvider() {
-        return mToolbarDataProvider;
     }
 
     @Override
@@ -694,6 +677,9 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
     }
 
     // Toolbar and LocationBar calls that are not relevant here.
+
+    @Override
+    public void setToolbarDataProvider(ToolbarDataProvider model) {}
 
     @Override
     public void onTextChangedForAutocomplete(boolean canInlineAutocomplete) {}

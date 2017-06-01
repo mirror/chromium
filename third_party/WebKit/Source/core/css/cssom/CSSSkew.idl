@@ -6,10 +6,10 @@
 // "transform".
 // Spec: https://drafts.css-houdini.org/css-typed-om/#cssskew
 [
-    Constructor(CSSNumericValue ax, CSSNumericValue ay),
+    Constructor(CSSAngleValue ax, CSSAngleValue ay),
     Exposed=(Window,PaintWorklet),
     RuntimeEnabled=CSSTypedOM
 ] interface CSSSkew : CSSTransformComponent {
-    readonly attribute CSSNumericValue ax;
-    readonly attribute CSSNumericValue ay;
+    readonly attribute CSSAngleValue ax;
+    readonly attribute CSSAngleValue ay;
 };

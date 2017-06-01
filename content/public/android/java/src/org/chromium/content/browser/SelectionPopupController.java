@@ -233,7 +233,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     public void showActionModeOrClearOnFailure() {
         mPendingShowActionMode = false;
 
-        if (!isActionModeSupported() || !hasSelection()) return;
+        if (!isActionModeSupported() || !mHasSelection) return;
 
         // Just refresh the view if action mode already exists.
         if (isActionModeValid()) {
@@ -448,7 +448,6 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     @Override
     public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
         menu.removeGroup(R.id.select_action_menu_default_items);
-        menu.removeGroup(R.id.select_action_menu_assist_items);
         menu.removeGroup(R.id.select_action_menu_text_processing_menus);
         createActionMenu(mode, menu);
         return true;
@@ -586,7 +585,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         // Android O SDK and remove |mAssistMenuItemId|.
 
         if (mClassificationResult != null && mClassificationResult.hasNamedAction()) {
-            descriptor.addItem(R.id.select_action_menu_assist_items, mAssistMenuItemId, 1,
+            descriptor.addItem(R.id.select_action_menu_default_items, mAssistMenuItemId, 1,
                     mClassificationResult.label, mClassificationResult.icon);
         }
     }
@@ -633,7 +632,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         int id = item.getItemId();
         int groupId = item.getGroupId();
 
-        if (BuildInfo.isAtLeastO() && id == mAssistMenuItemId) {
+        if (id == mAssistMenuItemId) {
             doAssistAction();
             mode.finish();
         } else if (id == R.id.select_action_menu_select_all) {
@@ -909,7 +908,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         if (mWebContents == null || resultCode != Activity.RESULT_OK || data == null) return;
 
         // Do not handle the result if no text is selected or current selection is not editable.
-        if (!hasSelection() || !isSelectionEditable()) return;
+        if (!mHasSelection || !isSelectionEditable()) return;
 
         CharSequence result = data.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT);
         if (result != null) {
@@ -920,7 +919,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     }
 
     void restoreSelectionPopupsIfNecessary() {
-        if (hasSelection() && !isActionModeValid()) {
+        if (mHasSelection && !isActionModeValid()) {
             showActionModeOrClearOnFailure();
         }
     }
@@ -996,8 +995,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                 if (mWasPastePopupShowingOnInsertionDragStart) {
                     destroyPastePopup();
                 } else {
-                    mWebContents.showContextMenuAtTouchHandle(
-                            mSelectionRect.left, mSelectionRect.bottom);
+                    mWebContents.showContextMenuAtPoint(mSelectionRect.left, mSelectionRect.bottom);
                 }
                 mWasPastePopupShowingOnInsertionDragStart = false;
                 break;
@@ -1015,8 +1013,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
 
             case SelectionEventType.INSERTION_HANDLE_DRAG_STOPPED:
                 if (mWasPastePopupShowingOnInsertionDragStart) {
-                    mWebContents.showContextMenuAtTouchHandle(
-                            mSelectionRect.left, mSelectionRect.bottom);
+                    mWebContents.showContextMenuAtPoint(mSelectionRect.left, mSelectionRect.bottom);
                 }
                 mWasPastePopupShowingOnInsertionDragStart = false;
                 break;
@@ -1102,7 +1099,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
 
     @Override
     public String getSelectedText() {
-        return hasSelection() ? mLastSelectedText : "";
+        return mHasSelection ? mLastSelectedText : "";
     }
 
     private boolean isShareAvailable() {
@@ -1143,7 +1140,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         @Override
         public void onClassified(SmartSelectionProvider.Result result) {
             // If the selection does not exist any more, discard |result|.
-            if (!hasSelection()) {
+            if (!mHasSelection) {
                 assert !mHidden;
                 assert mClassificationResult == null;
                 mPendingShowActionMode = false;

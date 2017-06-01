@@ -9,7 +9,6 @@
 #include "content/common/cursors/webcursor.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "third_party/WebKit/public/platform/WebTouchEvent.h"
-#include "ui/base/ui_base_types.h"
 
 namespace content {
 
@@ -22,8 +21,7 @@ class CONTENT_EXPORT TouchEmulatorClient {
       const blink::WebGestureEvent& event) = 0;
   virtual void ForwardEmulatedTouchEvent(const blink::WebTouchEvent& event) = 0;
   virtual void SetCursor(const WebCursor& cursor) = 0;
-  virtual void ShowContextMenuAtPoint(const gfx::Point& point,
-                                      const ui::MenuSourceType source_type) = 0;
+  virtual void ShowContextMenuAtPoint(const gfx::Point& point) = 0;
 };
 
 }  // namespace content

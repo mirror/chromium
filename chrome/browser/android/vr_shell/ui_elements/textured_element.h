@@ -26,7 +26,7 @@ class TexturedElement : public UiElement {
   void Initialize() final;
 
   // UiElement interface.
-  void Render(UiElementRenderer* renderer,
+  void Render(VrShellRenderer* renderer,
               vr::Mat4f view_proj_matrix) const final;
 
  protected:
@@ -35,7 +35,6 @@ class TexturedElement : public UiElement {
 
  private:
   void Flush(SkSurface* surface);
-  void OnSetMode() override;
 
   gfx::Size texture_size_;
   GLuint texture_handle_;

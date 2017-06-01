@@ -13,19 +13,19 @@ typedef void (^GreyBlock)(UIImage*);
 
 // A singleton providing an in-memory and on-disk cache of tab snapshots.
 // A snapshot is a full-screen image of the contents of the page at the current
-// scroll offset and zoom level, used to stand in for the WKWebView if it has
+// scroll offset and zoom level, used to stand in for the UIWebView if it has
 // been purged from memory or when quickly switching tabs.
 // Persists to disk on a background thread each time a snapshot changes.
 @interface SnapshotCache : NSObject
 
 // Track session IDs to not release on low memory and to reload on
 // |UIApplicationDidBecomeActiveNotification|.
-@property(nonatomic, strong) NSSet* pinnedIDs;
+@property(nonatomic, retain) NSSet* pinnedIDs;
 
 + (SnapshotCache*)sharedInstance;
 
 // The scale that should be used for snapshots.
-- (CGFloat)snapshotScaleForDevice;
++ (CGFloat)snapshotScaleForDevice;
 
 // Retrieve a cached snapshot for the |sessionID| and return it via the callback
 // if it exists. The callback is guaranteed to be called synchronously if the

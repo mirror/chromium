@@ -45,7 +45,6 @@
 #include <windows.h>
 
 #include <base/strings/sys_string_conversions.h>
-#include <base/win/pe_image.h>
 #include <base/win/win_util.h>
 #endif  // defined(OS_WIN)
 
@@ -274,12 +273,6 @@ bool ProcessMetricsMemoryDumpProvider::DumpProcessMemoryMaps(
     region.size_in_bytes = module_info.SizeOfImage;
     region.mapped_file = base::SysWideToNativeMB(module_name);
     region.start_address = reinterpret_cast<uint64_t>(module_info.lpBaseOfDll);
-
-    // The PE header field |TimeDateStamp| is required to build the PE code
-    // identifier which is used as a key to query symbols servers.
-    base::win::PEImage pe_image(module_info.lpBaseOfDll);
-    region.module_timestamp = pe_image.GetNTHeaders()->FileHeader.TimeDateStamp;
-
     pmd->process_mmaps()->AddVMRegion(region);
   }
   if (!pmd->process_mmaps()->vm_regions().empty())
@@ -625,13 +618,12 @@ bool ProcessMetricsMemoryDumpProvider::DumpProcessTotals(
   pmd->process_totals()->SetExtraFieldInBytes("shared_bytes", shared_bytes);
   pmd->process_totals()->SetExtraFieldInBytes("locked_bytes", locked_bytes);
 
-  base::trace_event::ProcessMemoryTotals::PlatformPrivateFootprint footprint;
+  base::trace_event::ProcessMemoryTotals::PlatformPrivateFootprint& footprint =
+      pmd->process_totals()->GetPlatformPrivateFootprint();
   base::ProcessMetrics::TaskVMInfo info = process_metrics_->GetTaskVMInfo();
   footprint.phys_footprint_bytes = info.phys_footprint;
   footprint.internal_bytes = info.internal;
   footprint.compressed_bytes = info.compressed;
-
-  pmd->process_totals()->SetPlatformPrivateFootprint(footprint);
 #else
   uint64_t rss_bytes = process_metrics_->GetWorkingSetSize();
 #endif  // defined(OS_MACOSX)
@@ -645,7 +637,7 @@ bool ProcessMetricsMemoryDumpProvider::DumpProcessTotals(
   uint64_t peak_rss_bytes = 0;
 
 #if defined(OS_LINUX) || defined(OS_ANDROID)
-  base::trace_event::ProcessMemoryTotals::PlatformPrivateFootprint footprint;
+  auto& footprint = pmd->process_totals()->GetPlatformPrivateFootprint();
 
   base::ScopedFD autoclose;
   int statm_fd = fast_polling_statm_fd_.get();
@@ -665,18 +657,7 @@ bool ProcessMetricsMemoryDumpProvider::DumpProcessTotals(
 
   footprint.rss_anon_bytes = (resident_pages - shared_pages) * page_size;
   footprint.vm_swap_bytes = process_metrics_->GetVmSwapBytes();
-  pmd->process_totals()->SetPlatformPrivateFootprint(footprint);
 #endif  // defined(OS_LINUX) || defined(OS_ANDROID)
-
-#if defined(OS_WIN)
-  {
-    size_t private_bytes;
-    base::trace_event::ProcessMemoryTotals::PlatformPrivateFootprint footprint;
-    process_metrics_->GetMemoryBytes(&private_bytes, nullptr);
-    footprint.private_bytes = private_bytes;
-    pmd->process_totals()->SetPlatformPrivateFootprint(footprint);
-  }
-#endif
 
 #if !defined(OS_IOS)
   peak_rss_bytes = process_metrics_->GetPeakWorkingSetSize();

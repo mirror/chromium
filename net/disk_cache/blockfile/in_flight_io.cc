@@ -73,10 +73,10 @@ void InFlightIO::DropPendingIO() {
   }
 }
 
-// Runs in a background sequence.
+// Runs on a background thread.
 void InFlightIO::OnIOComplete(BackgroundIO* operation) {
 #if DCHECK_IS_ON()
-  if (callback_task_runner_->RunsTasksInCurrentSequence()) {
+  if (callback_task_runner_->RunsTasksOnCurrentThread()) {
     DCHECK(single_thread_ || !running_);
     single_thread_ = true;
   }
@@ -109,7 +109,7 @@ void InFlightIO::InvokeCallback(BackgroundIO* operation, bool cancel_task) {
 
 // Runs on the primary thread.
 void InFlightIO::OnOperationPosted(BackgroundIO* operation) {
-  DCHECK(callback_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(callback_task_runner_->RunsTasksOnCurrentThread());
   io_list_.insert(make_scoped_refptr(operation));
 }
 

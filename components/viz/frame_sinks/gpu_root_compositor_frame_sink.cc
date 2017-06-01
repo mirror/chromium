@@ -43,6 +43,7 @@ GpuRootCompositorFrameSink::GpuRootCompositorFrameSink(
       base::Bind(&GpuRootCompositorFrameSink::OnPrivateConnectionLost,
                  base::Unretained(this)));
   display_->Initialize(this, surface_manager);
+  display_->SetVisible(true);
 }
 
 GpuRootCompositorFrameSink::~GpuRootCompositorFrameSink() = default;
@@ -74,6 +75,10 @@ void GpuRootCompositorFrameSink::SetLocalSurfaceId(
   display_->SetLocalSurfaceId(local_surface_id, scale_factor);
 }
 
+void GpuRootCompositorFrameSink::EvictCurrentSurface() {
+  support_->EvictCurrentSurface();
+}
+
 void GpuRootCompositorFrameSink::SetNeedsBeginFrame(bool needs_begin_frame) {
   support_->SetNeedsBeginFrame(needs_begin_frame);
 }
@@ -81,10 +86,7 @@ void GpuRootCompositorFrameSink::SetNeedsBeginFrame(bool needs_begin_frame) {
 void GpuRootCompositorFrameSink::SubmitCompositorFrame(
     const cc::LocalSurfaceId& local_surface_id,
     cc::CompositorFrame frame) {
-  if (!support_->SubmitCompositorFrame(local_surface_id, std::move(frame))) {
-    compositor_frame_sink_binding_.Close();
-    OnClientConnectionLost();
-  }
+  support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
 }
 
 void GpuRootCompositorFrameSink::DidNotProduceFrame(

@@ -53,7 +53,6 @@ KeyedServiceBaseFactory::KeyedServiceBaseFactory(const char* service_name,
 }
 
 KeyedServiceBaseFactory::~KeyedServiceBaseFactory() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   dependency_manager_->RemoveComponent(this);
 }
 
@@ -89,7 +88,7 @@ void KeyedServiceBaseFactory::AssertContextWasntDestroyed(
 }
 
 void KeyedServiceBaseFactory::MarkContextLive(base::SupportsUserData* context) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   dependency_manager_->MarkContextLive(context);
 }
 
@@ -105,7 +104,7 @@ void KeyedServiceBaseFactory::ContextDestroyed(
     base::SupportsUserData* context) {
   // While object destruction can be customized in ways where the object is
   // only dereferenced, this still must run on the UI thread.
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   registered_preferences_.erase(context);
 }
 

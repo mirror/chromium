@@ -119,8 +119,7 @@ DEFINE_NON_INTERPOLABLE_VALUE_TYPE_CASTS(
 
 namespace {
 
-class UnderlyingSideTypesChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+class UnderlyingSideTypesChecker : public InterpolationType::ConversionChecker {
  public:
   static std::unique_ptr<UnderlyingSideTypesChecker> Create(
       const SideTypes& underlying_side_types) {
@@ -139,7 +138,7 @@ class UnderlyingSideTypesChecker
   UnderlyingSideTypesChecker(const SideTypes& underlying_side_types)
       : underlying_side_types_(underlying_side_types) {}
 
-  bool IsValid(const StyleResolverState&,
+  bool IsValid(const InterpolationEnvironment&,
                const InterpolationValue& underlying) const final {
     return underlying_side_types_ == GetUnderlyingSideTypes(underlying);
   }
@@ -147,8 +146,7 @@ class UnderlyingSideTypesChecker
   const SideTypes underlying_side_types_;
 };
 
-class InheritedSideTypesChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+class InheritedSideTypesChecker : public InterpolationType::ConversionChecker {
  public:
   static std::unique_ptr<InheritedSideTypesChecker> Create(
       CSSPropertyID property,
@@ -162,12 +160,12 @@ class InheritedSideTypesChecker
                             const SideTypes& inherited_side_types)
       : property_(property), inherited_side_types_(inherited_side_types) {}
 
-  bool IsValid(const StyleResolverState& state,
+  bool IsValid(const InterpolationEnvironment& environment,
                const InterpolationValue& underlying) const final {
     return inherited_side_types_ ==
            SideTypes(
                BorderImageLengthBoxPropertyFunctions::GetBorderImageLengthBox(
-                   property_, *state.ParentStyle()));
+                   property_, *environment.GetState().ParentStyle()));
   }
 
   const CSSPropertyID property_;

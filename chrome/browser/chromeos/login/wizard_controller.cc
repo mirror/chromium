@@ -217,8 +217,7 @@ bool NetworkAllowUpdate(const chromeos::NetworkState* network) {
     return false;
   if (network->type() == shill::kTypeBluetooth ||
       (network->type() == shill::kTypeCellular &&
-       !help_utils_chromeos::IsUpdateOverCellularAllowed(
-           false /* interactive */))) {
+       !help_utils_chromeos::IsUpdateOverCellularAllowed())) {
     return false;
   }
   return true;
@@ -1285,10 +1284,6 @@ void WizardController::AddNetworkRequested(const std::string& onc_spec) {
         base::Bind(&WizardController::OnSetHostNetworkFailed,
                    weak_factory_.GetWeakPtr()));
   }
-}
-
-void WizardController::RebootHostRequested() {
-  DBusThreadManager::Get()->GetPowerManagerClient()->RequestRestart();
 }
 
 void WizardController::OnEnableDebuggingScreenRequested() {

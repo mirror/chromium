@@ -279,7 +279,8 @@ BlobBytesConsumer* BlobBytesConsumer::CreateForTesting(
 
 ThreadableLoader* BlobBytesConsumer::CreateLoader() {
   ThreadableLoaderOptions options;
-  options.fetch_request_mode = WebURLRequest::kFetchRequestModeSameOrigin;
+  options.preflight_policy = kConsiderPreflight;
+  options.cross_origin_request_policy = kDenyCrossOriginRequests;
   options.content_security_policy_enforcement =
       kDoNotEnforceContentSecurityPolicy;
   options.initiator = FetchInitiatorTypeNames::internal;

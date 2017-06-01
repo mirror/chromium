@@ -119,7 +119,6 @@ class WebSettings {
     kNoUserGestureRequired = 0,
     kUserGestureRequired,
     kUserGestureRequiredForCrossOrigin,
-    kDocumentUserActivationRequired,
   };
 
   // Sets value of a setting by its string identifier from Settings.in and
@@ -196,6 +195,7 @@ class WebSettings {
   virtual void SetInlineTextBoxAccessibilityEnabled(bool) = 0;
   virtual void SetInertVisualViewport(bool) = 0;
   virtual void SetJavaScriptCanAccessClipboard(bool) = 0;
+  virtual void SetJavaScriptCanOpenWindowsAutomatically(bool) = 0;
   virtual void SetJavaScriptEnabled(bool) = 0;
   virtual void SetLoadsImagesAutomatically(bool) = 0;
   virtual void SetLoadWithOverviewMode(bool) = 0;
@@ -208,7 +208,6 @@ class WebSettings {
   virtual void SetMediaPlaybackGestureWhitelistScope(const WebString&) = 0;
   virtual void SetPresentationRequiresUserGesture(bool) = 0;
   virtual void SetEmbeddedMediaExperienceEnabled(bool) = 0;
-  virtual void SetPagePopupsSuppressed(bool) = 0;
   virtual void SetMinimumAccelerated2dCanvasSize(int) = 0;
   virtual void SetMinimumFontSize(int) = 0;
   virtual void SetMinimumLogicalFontSize(int) = 0;

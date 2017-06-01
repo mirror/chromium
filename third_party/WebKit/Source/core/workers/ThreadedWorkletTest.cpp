@@ -51,9 +51,11 @@ class ThreadedWorkletObjectProxyForTest final
 
 class ThreadedWorkletThreadForTest : public WorkerThread {
  public:
-  explicit ThreadedWorkletThreadForTest(
+  ThreadedWorkletThreadForTest(
+      WorkerLoaderProxyProvider* worker_loader_proxy_provider,
       WorkerReportingProxy& worker_reporting_proxy)
-      : WorkerThread(nullptr, worker_reporting_proxy) {}
+      : WorkerThread(WorkerLoaderProxy::Create(worker_loader_proxy_provider),
+                     worker_reporting_proxy) {}
   ~ThreadedWorkletThreadForTest() override {}
 
   WorkerBackingThread& GetWorkerBackingThread() override {
@@ -71,8 +73,7 @@ class ThreadedWorkletThreadForTest : public WorkerThread {
         SecurityOrigin::Create(startup_data->script_url_);
     return new ThreadedWorkletGlobalScope(
         startup_data->script_url_, startup_data->user_agent_,
-        security_origin.Release(), this->GetIsolate(), this,
-        startup_data->worker_clients_);
+        security_origin.Release(), this->GetIsolate(), this);
   }
 
   bool IsOwningBackingThread() const final { return false; }
@@ -116,17 +117,20 @@ class ThreadedWorkletThreadForTest : public WorkerThread {
 class ThreadedWorkletMessagingProxyForTest
     : public ThreadedWorkletMessagingProxy {
  public:
-  ThreadedWorkletMessagingProxyForTest(ExecutionContext* execution_context,
-                                       WorkerClients* worker_clients)
-      : ThreadedWorkletMessagingProxy(execution_context, worker_clients) {
+  ThreadedWorkletMessagingProxyForTest(ExecutionContext* execution_context)
+      : ThreadedWorkletMessagingProxy(execution_context) {
     worklet_object_proxy_ = WTF::MakeUnique<ThreadedWorkletObjectProxyForTest>(
         weak_ptr_factory_.CreateWeakPtr(), GetParentFrameTaskRunners());
-    worker_thread_ =
-        WTF::MakeUnique<ThreadedWorkletThreadForTest>(WorkletObjectProxy());
+    worker_loader_proxy_provider_ =
+        WTF::MakeUnique<WorkerLoaderProxyProvider>();
+    worker_thread_ = WTF::MakeUnique<ThreadedWorkletThreadForTest>(
+        worker_loader_proxy_provider_.get(), WorkletObjectProxy());
     ThreadedWorkletThreadForTest::EnsureSharedBackingThread();
   }
 
   ~ThreadedWorkletMessagingProxyForTest() override {
+    worker_thread_->GetWorkerLoaderProxy()->DetachProvider(
+        worker_loader_proxy_provider_.get());
     worker_thread_->TerminateAndWait();
     ThreadedWorkletThreadForTest::ClearSharedBackingThread();
   };
@@ -162,6 +166,7 @@ class ThreadedWorkletMessagingProxyForTest
  private:
   friend class ThreadedWorkletTest;
 
+  std::unique_ptr<WorkerLoaderProxyProvider> worker_loader_proxy_provider_;
   RefPtr<SecurityOrigin> security_origin_;
 };
 
@@ -170,7 +175,7 @@ class ThreadedWorkletTest : public ::testing::Test {
   void SetUp() override {
     page_ = DummyPageHolder::Create();
     messaging_proxy_ = WTF::MakeUnique<ThreadedWorkletMessagingProxyForTest>(
-        &page_->GetDocument(), WorkerClients::Create());
+        &page_->GetDocument());
   }
 
   ThreadedWorkletMessagingProxyForTest* MessagingProxy() {

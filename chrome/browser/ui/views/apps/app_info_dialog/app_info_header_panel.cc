@@ -11,7 +11,6 @@
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_util.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/common/extensions/extension_constants.h"
 #include "chrome/grit/generated_resources.h"
 #include "extensions/browser/extension_system.h"
@@ -36,6 +35,7 @@
 #include "ui/views/controls/link.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/grid_layout.h"
+#include "ui/views/layout/layout_constants.h"
 #include "ui/views/view.h"
 
 namespace {
@@ -49,15 +49,11 @@ AppInfoHeaderPanel::AppInfoHeaderPanel(Profile* profile,
                                        const extensions::Extension* app)
     : AppInfoPanel(profile, app),
       weak_ptr_factory_(this) {
-  ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
-
-  SetLayoutManager(new views::BoxLayout(
-      views::BoxLayout::kHorizontal,
-      provider->GetDistanceMetric(
-          views::DISTANCE_DIALOG_CONTENTS_HORIZONTAL_MARGIN),
-      provider->GetDistanceMetric(
-          views::DISTANCE_DIALOG_CONTENTS_VERTICAL_MARGIN),
-      provider->GetDistanceMetric(views::DISTANCE_RELATED_CONTROL_HORIZONTAL)));
+  SetLayoutManager(
+      new views::BoxLayout(views::BoxLayout::kHorizontal,
+                           views::kButtonHEdgeMargin,
+                           views::kButtonVEdgeMargin,
+                           views::kRelatedControlHorizontalSpacing));
 
   CreateControls();
 }

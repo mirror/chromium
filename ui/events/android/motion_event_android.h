@@ -68,12 +68,7 @@ class EVENTS_EXPORT MotionEventAndroid : public MotionEvent {
                      const Pointer* const pointer1);
   ~MotionEventAndroid() override;
 
-  // Create a new instance from |this| with its cached pointers set
-  // to a given point.
-  std::unique_ptr<MotionEventAndroid> CreateFor(const gfx::PointF& point) const;
-
-  // Convenience method returning the pointer at index 0.
-  gfx::PointF GetPoint() const { return gfx::PointF(GetX(0), GetY(0)); }
+  std::unique_ptr<MotionEventAndroid> Offset(float x, float y) const;
 
   // ui::MotionEvent methods.
   uint32_t GetUniqueEventId() const override;
@@ -118,8 +113,9 @@ class EVENTS_EXPORT MotionEventAndroid : public MotionEvent {
 
   float ToDips(float pixels) const;
   CachedPointer FromAndroidPointer(const Pointer& pointer) const;
-  CachedPointer CreateCachedPointer(const CachedPointer& pointer,
-                                    const gfx::PointF& point) const;
+  CachedPointer OffsetCachedPointer(const CachedPointer& pointer,
+                                    float x,
+                                    float y) const;
 
   // Cache pointer coords, id's and major lengths for the most common
   // touch-related scenarios, i.e., scrolling and pinching.  This prevents

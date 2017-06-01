@@ -12,7 +12,6 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.Region;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
@@ -31,9 +30,7 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.ObserverList;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeFeatureList;
-import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.NativePageHost;
 import org.chromium.chrome.browser.TabLoadStatus;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManagerChrome;
@@ -113,9 +110,6 @@ public class BottomSheet
     /** The height ratio for the sheet in the SHEET_STATE_HALF state. */
     private static final float HALF_HEIGHT_RATIO = 0.55f;
 
-    /** The fraction of the width of the screen that, when swiped, will cause the sheet to move. */
-    private static final float SWIPE_ALLOWED_FRACTION = 0.2f;
-
     /**
      * Information about the different scroll states of the sheet. Order is important for these,
      * they go from smallest to largest.
@@ -133,17 +127,11 @@ public class BottomSheet
     /** This is a cached array for getting the window location of different views. */
     private final int[] mLocationArray = new int[2];
 
-    /** The visible rect for the screen taking the keyboard into account. */
-    private final Rect mVisibleViewportRect = new Rect();
-
     /** The minimum distance between half and full states to allow the half state. */
     private final float mMinHalfFullDistance;
 
     /** The height of the shadow that sits above the toolbar. */
     private final int mToolbarShadowHeight;
-
-    /** The height of the bottom navigation bar that appears when the bottom sheet is expanded. */
-    private final float mBottomNavHeight;
 
     /** The {@link BottomSheetMetrics} used to record user actions and histograms. */
     private final BottomSheetMetrics mMetrics;
@@ -228,9 +216,6 @@ public class BottomSheet
     /** Whether the root view has been laid out at least once. **/
     private boolean mHasRootLayoutOccurred;
 
-    /** The activity displaying the bottom sheet. */
-    private ChromeActivity mActivity;
-
     /**
      * An interface defining content that can be displayed inside of the bottom sheet for Chrome
      * Home.
@@ -259,11 +244,6 @@ public class BottomSheet
         boolean isUsingLightToolbarTheme();
 
         /**
-         * @return Whether or not the content is themed for incognito (i.e. dark colors).
-         */
-        boolean isIncognitoThemedContent();
-
-        /**
          * @return The vertical scroll offset of the content view.
          */
         int getVerticalScrollOffset();
@@ -287,7 +267,7 @@ public class BottomSheet
     private class BottomSheetSwipeDetector extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onDown(MotionEvent e) {
-            return isTouchInSwipableXRange(e);
+            return true;
         }
 
         @Override
@@ -301,8 +281,6 @@ public class BottomSheet
                 setSheetState(SHEET_STATE_PEEK, false);
                 return false;
             }
-
-            if (!isTouchInSwipableXRange(e2)) return false;
 
             // Only start scrolling if the scroll is up or down. If the user is already scrolling,
             // continue moving the sheet.
@@ -326,15 +304,22 @@ public class BottomSheet
             // Allow the bottom sheet's content to be scrolled up without dragging the sheet down.
             if (!isTouchEventInToolbar(e2) && isSheetInMaxPosition && mSheetContent != null
                     && mSheetContent.getVerticalScrollOffset() > 0) {
+                mIsScrolling = false;
                 return false;
             }
 
             // If the sheet is in the max position, don't move the sheet if the scroll is upward.
             // Instead, allow the sheet's content to handle it if it needs to.
-            if (isSheetInMaxPosition && distanceY > 0) return false;
+            if (isSheetInMaxPosition && distanceY > 0) {
+                mIsScrolling = false;
+                return false;
+            }
 
             // Similarly, if the sheet is in the min position, don't move if the scroll is downward.
-            if (currentShownRatio <= getPeekRatio() && distanceY < 0) return false;
+            if (currentShownRatio <= getPeekRatio() && distanceY < 0) {
+                mIsScrolling = false;
+                return false;
+            }
 
             float newOffset = getSheetOffsetFromBottom() + distanceY;
             boolean wasOpenBeforeSwipe = mIsSheetOpen;
@@ -351,8 +336,6 @@ public class BottomSheet
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            if (!isTouchInSwipableXRange(e2)) return false;
-
             cancelAnimation();
             boolean wasOpenBeforeSwipe = mIsSheetOpen;
 
@@ -397,29 +380,6 @@ public class BottomSheet
     }
 
     /**
-     * Check if a touch event is in the swipable x-axis range of the toolbar when in peeking mode.
-     * If the "chrome-home-swipe-logic" flag is not set to "restrict-area" or the sheet is open,
-     * this function returns true.
-     * @param e The touch event.
-     * @return True if the touch is inside the swipable area of the toolbar.
-     */
-    private boolean isTouchInSwipableXRange(MotionEvent e) {
-        // If the sheet is already open or the experiment is not enabled, no need to restrict the
-        // swipe area.
-        if (mActivity == null || isSheetOpen()
-                || !ChromeSwitches.CHROME_HOME_SWIPE_LOGIC_RESTRICT_AREA.equals(
-                           FeatureUtilities.getChromeHomeSwipeLogicType())) {
-            return true;
-        }
-
-        // Determine an area in the middle of the toolbar that is swipable.
-        float allowedSwipeWidth = mContainerWidth * SWIPE_ALLOWED_FRACTION;
-        float startX = mVisibleViewportRect.left + (mContainerWidth - allowedSwipeWidth) / 2;
-        float endX = startX + allowedSwipeWidth;
-        return e.getRawX() > startX && e.getRawX() < endX;
-    }
-
-    /**
      * Constructor for inflation from XML.
      * @param context An Android context.
      * @param atts The XML attributes.
@@ -431,8 +391,6 @@ public class BottomSheet
                 getResources().getDimensionPixelSize(R.dimen.chrome_home_min_full_half_distance);
         mToolbarShadowHeight =
                 getResources().getDimensionPixelOffset(R.dimen.toolbar_shadow_height);
-
-        mBottomNavHeight = getResources().getDimensionPixelSize(R.dimen.bottom_nav_height);
 
         mVelocityTracker = VelocityTracker.obtain();
 
@@ -532,14 +490,6 @@ public class BottomSheet
     }
 
     /**
-     * Defocus the omnibox.
-     */
-    public void defocusOmnibox() {
-        if (mDefaultToolbarView == null) return;
-        mDefaultToolbarView.getLocationBar().setUrlBarFocus(false);
-    }
-
-    /**
      * @param tabModelSelector A TabModelSelector for getting the current tab and activity.
      */
     public void setTabModelSelector(TabModelSelector tabModelSelector) {
@@ -588,58 +538,26 @@ public class BottomSheet
      * calculations in this class.
      * @param root The container of the bottom sheet.
      * @param controlContainer The container for the toolbar.
-     * @param activity The activity displaying the bottom sheet.
      */
-    public void init(View root, View controlContainer, ChromeActivity activity) {
+    public void init(View root, View controlContainer) {
         mControlContainer = controlContainer;
         mToolbarHeight = mControlContainer.getHeight();
-        mActivity = activity;
 
         mBottomSheetContentContainer = (FrameLayout) findViewById(R.id.bottom_sheet_content);
 
         // Listen to height changes on the root.
         root.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            /** The height of the screen minus the keyboard height. */
-            private float mHeightMinusKeyboard;
-
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom,
                     int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                // Compute the new height taking the keyboard into account.
-                // TODO(mdjones): Share this logic with LocationBarLayout: crbug.com/725725.
-                int decorHeight = mActivity.getWindow().getDecorView().getHeight();
-                mActivity.getWindow().getDecorView().getWindowVisibleDisplayFrame(
-                        mVisibleViewportRect);
-                int heightMinusKeyboard = Math.min(decorHeight, mVisibleViewportRect.height());
-
-                boolean keyboardHeightChanged = heightMinusKeyboard != mHeightMinusKeyboard;
-
                 // Make sure the size of the layout actually changed.
-                if (!keyboardHeightChanged && bottom - top == oldBottom - oldTop
-                        && right - left == oldRight - oldLeft) {
+                if (bottom - top == oldBottom - oldTop && right - left == oldRight - oldLeft) {
                     return;
                 }
 
                 mContainerWidth = right - left;
                 mContainerHeight = bottom - top;
-                mHeightMinusKeyboard = heightMinusKeyboard;
-                int keyboardHeight = (int) (mContainerHeight - mHeightMinusKeyboard);
                 updateSheetDimensions();
-
-                for (BottomSheetObserver o : mObservers) {
-                    o.onSheetLayout((int) mContainerHeight, (int) mHeightMinusKeyboard);
-                }
-
-                // If the keyboard height changed, recompute the padding for the content area. This
-                // shrinks the content size while retaining the default background color where the
-                // keyboard is appearing. If the sheet is not showing, resize the sheet to its
-                // default state.
-                if (keyboardHeightChanged && isSheetOpen()) {
-                    mBottomSheetContentContainer.setPadding(
-                            0, 0, 0, (int) mBottomNavHeight + keyboardHeight);
-                } else if (!isSheetOpen()) {
-                    mBottomSheetContentContainer.setPadding(0, 0, 0, (int) mBottomNavHeight);
-                }
 
                 // If we are in the middle of a touch event stream (i.e. scrolling while keyboard is
                 // up) don't set the sheet state. Instead allow the gesture detector to position the
@@ -709,24 +627,21 @@ public class BottomSheet
             return TabLoadStatus.PAGE_LOAD_FAILED;
         }
 
-        assert mTabModelSelector != null;
-
-        int tabLoadStatus = TabLoadStatus.DEFAULT_PAGE_LOAD;
-
-        // First try to get the tab behind the sheet.
-        if (!isShowingNtp && getActiveTab() != null && getActiveTab().isIncognito() == incognito) {
-            tabLoadStatus = getActiveTab().loadUrl(params);
-        } else {
-            // If no compatible tab is active behind the sheet, open a new one.
-            mTabModelSelector.openNewTab(
-                    params, TabModel.TabLaunchType.FROM_CHROME_UI, getActiveTab(), incognito);
-        }
-
         // In all non-native cases, minimize the sheet.
         mMetrics.setSheetCloseReason(BottomSheetMetrics.CLOSED_BY_NAVIGATION);
         setSheetState(SHEET_STATE_PEEK, true);
 
-        return tabLoadStatus;
+        assert mTabModelSelector != null;
+
+        // First try to get the tab behind the sheet.
+        if (!isShowingNtp && getActiveTab() != null && getActiveTab().isIncognito() == incognito) {
+            return getActiveTab().loadUrl(params);
+        }
+
+        // If no compatible tab is active behind the sheet, open a new one.
+        mTabModelSelector.openNewTab(
+                params, TabModel.TabLaunchType.FROM_CHROME_UI, getActiveTab(), incognito);
+        return TabLoadStatus.DEFAULT_PAGE_LOAD;
     }
 
     /**
@@ -738,6 +653,13 @@ public class BottomSheet
         assert isShowingNewTab();
 
         loadUrl(params, mTabModelSelector.isIncognitoSelected());
+    }
+
+    /**
+     * Called when the activity containing the {@link BottomSheet} processes a url view intent.
+     */
+    public void onProcessUrlViewIntent() {
+        mNtpController.onProcessUrlViewIntent();
     }
 
     @Override
@@ -753,12 +675,9 @@ public class BottomSheet
 
     @Override
     public Tab getActiveTab() {
-        if (mTabModelSelector == null) return null;
-        if (mNtpController.isShowingNewTabUi() && isVisible()
-                && getTargetSheetState() != SHEET_STATE_PEEK) {
-            return null;
-        }
-        return mTabModelSelector.getCurrentTab();
+        return mTabModelSelector == null || mNtpController.isShowingNewTab()
+                ? null
+                : mTabModelSelector.getCurrentTab();
     }
 
     @Override
@@ -823,12 +742,8 @@ public class BottomSheet
 
         // Temporarily make the background of the toolbar holder a solid color so the transition
         // doesn't appear to show a hole in the toolbar.
-        int colorId = content.isIncognitoThemedContent() ? R.color.incognito_primary_color
-                                                         : R.color.default_primary_color;
-        mToolbarHolder.setBackgroundColor(ApiCompatibilityUtils.getColor(getResources(), colorId));
-        mBottomSheetContentContainer.setBackgroundColor(
-                ApiCompatibilityUtils.getColor(getResources(), colorId));
-
+        mToolbarHolder.setBackgroundColor(
+                ApiCompatibilityUtils.getColor(getResources(), R.color.default_primary_color));
         mContentSwapAnimatorSet.playTogether(animators);
         mContentSwapAnimatorSet.start();
 
@@ -903,8 +818,6 @@ public class BottomSheet
 
         mIsSheetOpen = true;
         for (BottomSheetObserver o : mObservers) o.onSheetOpened();
-        announceForAccessibility(getResources().getString(R.string.bottom_sheet_opened));
-        mActivity.addViewObscuringAllTabs(this);
     }
 
     /**
@@ -915,9 +828,6 @@ public class BottomSheet
 
         mIsSheetOpen = false;
         for (BottomSheetObserver o : mObservers) o.onSheetClosed();
-        announceForAccessibility(getResources().getString(R.string.bottom_sheet_closed));
-        clearFocus();
-        mActivity.removeViewObscuringAllTabs(this);
     }
 
     /**
@@ -958,10 +868,6 @@ public class BottomSheet
         MarginLayoutParams toolbarShadowParams =
                 (MarginLayoutParams) findViewById(R.id.toolbar_shadow).getLayoutParams();
         toolbarShadowParams.topMargin = (int) mToolbarHeight;
-
-        if (mCurrentState == SHEET_STATE_HALF && isSmallScreen()) {
-            setSheetState(SHEET_STATE_FULL, false);
-        }
 
         mBottomSheetContentContainer.requestLayout();
     }
@@ -1032,8 +938,6 @@ public class BottomSheet
      * @param offset The offset that the sheet should be.
      */
     private void setSheetOffsetFromBottom(float offset) {
-        if (MathUtils.areFloatsEqual(offset, getSheetOffsetFromBottom())) return;
-
         if (MathUtils.areFloatsEqual(getSheetOffsetFromBottom(), getMinOffset())
                 && offset > getMinOffset()) {
             onSheetOpened();
@@ -1238,8 +1142,13 @@ public class BottomSheet
         if (sheetHeight <= getMinOffset()) return SHEET_STATE_PEEK;
         if (sheetHeight >= getMaxOffset()) return SHEET_STATE_FULL;
 
+        float fullToHalfDiff = (getFullRatio() - getHalfRatio()) * mContainerHeight;
         boolean isMovingDownward = yVelocity < 0;
-        boolean shouldSkipHalfState = isMovingDownward || isSmallScreen();
+
+        // A small screen is defined by there being less than 160dp between half and full states.
+        boolean isSmallScreen = fullToHalfDiff < mMinHalfFullDistance;
+
+        boolean shouldSkipHalfState = isMovingDownward || isSmallScreen;
 
         // First, find the two states that the sheet height is between.
         @SheetState
@@ -1274,12 +1183,6 @@ public class BottomSheet
         return prevState;
     }
 
-    private boolean isSmallScreen() {
-        // A small screen is defined by there being less than 160dp between half and full states.
-        float fullToHalfDiff = (getFullRatio() - getHalfRatio()) * mContainerHeight;
-        return fullToHalfDiff < mMinHalfFullDistance;
-    }
-
     @Override
     public void onFadingViewClick() {
         mMetrics.setSheetCloseReason(BottomSheetMetrics.CLOSED_BY_TAP_SCRIM);
@@ -1294,7 +1197,7 @@ public class BottomSheet
      *         returns true if a normal or incognito new tab is showing.
      */
     public boolean isShowingNewTab() {
-        return mNtpController.isShowingNewTabUi();
+        return mNtpController.isShowingNewTab();
     }
 
     /**
@@ -1324,7 +1227,7 @@ public class BottomSheet
                 mFindInPageView != null && mFindInPageView.getVisibility() == View.VISIBLE;
 
         return !isToolbarAndroidViewHidden()
-                && (!isInOverviewMode || mNtpController.isShowingNewTabUi()) && !isFindInPageVisible
+                && (!isInOverviewMode || mNtpController.isShowingNewTab()) && !isFindInPageVisible
                 && !blockPeekingSwipes;
     }
 
@@ -1342,23 +1245,15 @@ public class BottomSheet
         SharedPreferences preferences = ContextUtils.getAppSharedPreferences();
         if (preferences.getBoolean(BOTTOM_SHEET_HELP_BUBBLE_SHOWN, false)) return;
 
-        boolean showExpandButtonHelpBubble =
-                ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_EXPAND_BUTTON);
-
         ViewAnchoredTextBubble helpBubble = new ViewAnchoredTextBubble(getContext(),
-                showExpandButtonHelpBubble
-                        ? mControlContainer.findViewById(R.id.expand_sheet_button)
-                        : mControlContainer,
-                showExpandButtonHelpBubble ? R.string.bottom_sheet_expand_button_help_bubble_message
-                                           : R.string.bottom_sheet_help_bubble_message,
-                showExpandButtonHelpBubble
-                        ? R.string.bottom_sheet_accessibility_expand_button_help_bubble_message
-                        : R.string.bottom_sheet_accessibility_help_bubble_message);
+                mControlContainer, R.string.bottom_sheet_help_bubble_message,
+                R.string.bottom_sheet_help_bubble_message);
         int inset = getContext().getResources().getDimensionPixelSize(
                 R.dimen.bottom_sheet_help_bubble_inset);
         helpBubble.setInsetPx(0, inset, 0, inset);
         helpBubble.setDismissOnTouchInteraction(true);
         helpBubble.show();
+
         preferences.edit().putBoolean(BOTTOM_SHEET_HELP_BUBBLE_SHOWN, true).apply();
     }
 

@@ -71,8 +71,7 @@ void TestAppListControllerDelegate::LaunchApp(
     Profile* profile,
     const extensions::Extension* extension,
     AppListSource source,
-    int event_flags,
-    int64_t display_id) {
+    int event_flags) {
 }
 
 }  // namespace test

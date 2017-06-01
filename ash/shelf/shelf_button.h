@@ -79,6 +79,7 @@ class ASH_EXPORT ShelfButton : public views::CustomButton {
   void ChildPreferredSizeChanged(views::View* child) override;
   void OnFocus() override;
   void OnBlur() override;
+  void OnPaint(gfx::Canvas* canvas) override;
 
   // ui::EventHandler overrides:
   void OnGestureEvent(ui::GestureEvent* event) override;

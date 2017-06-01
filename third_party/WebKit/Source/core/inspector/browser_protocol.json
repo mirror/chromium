@@ -127,22 +127,13 @@
                 "experimental": true
             },
             {
-                "id": "TransitionType",
-                "type": "string",
-                "description": "Transition type.",
-                "experimental": true,
-                "enum": ["link", "typed", "auto_bookmark", "auto_subframe", "manual_subframe", "generated", "auto_toplevel", "form_submit", "reload", "keyword", "keyword_generated", "other"]
-            },
-            {
                 "id": "NavigationEntry",
                 "type": "object",
                 "description": "Navigation history entry.",
                 "properties": [
                   { "name": "id", "type": "integer", "description": "Unique id of the navigation history entry." },
                   { "name": "url", "type": "string", "description": "URL of the navigation history entry." },
-                  { "name": "userTypedURL", "type": "string", "description": "URL that the user typed in the url bar." },
-                  { "name": "title", "type": "string", "description": "Title of the navigation history entry." },
-                  { "name": "transitionType", "$ref": "TransitionType", "description": "Transition type." }
+                  { "name": "title", "type": "string", "description": "Title of the navigation history entry." }
                 ],
                 "experimental": true
             },
@@ -261,8 +252,7 @@
                 "name": "navigate",
                 "parameters": [
                     { "name": "url", "type": "string", "description": "URL to navigate the page to." },
-                    { "name": "referrer", "type": "string", "optional": true, "experimental": true, "description": "Referrer URL." },
-                    { "name": "transitionType", "$ref": "TransitionType", "optional": true, "experimental": true, "description": "Intended transition type." }
+                    { "name": "referrer", "type": "string", "optional": true, "experimental": true, "description": "Referrer URL." }
                 ],
                 "returns": [
                     { "name": "frameId", "$ref": "FrameId", "experimental": true, "description": "Frame id that will be navigated." }
@@ -430,7 +420,7 @@
                 "parameters": [
                     { "name": "format", "type": "string", "optional": true, "enum": ["jpeg", "png"], "description": "Image compression format (defaults to png)." },
                     { "name": "quality", "type": "integer", "optional": true, "description": "Compression quality from range [0..100] (jpeg only)." },
-                    { "name": "fromSurface", "type": "boolean", "optional": true, "description": "Capture the screenshot from the surface, rather than the view. Defaults to true.", "experimental": true }
+                    { "name": "fromSurface", "type": "boolean", "optional": true, "description": "Capture the screenshot from the surface, rather than the view. Defaults to false.", "experimental": true }
                 ],
                 "returns": [
                     { "name": "data", "type": "string", "description": "Base64-encoded image data." }
@@ -3786,13 +3776,6 @@
             }
         ],
         "commands": [
-            {
-                "name": "setIgnoreInputEvents",
-                "parameters": [
-                    { "name": "ignore", "type": "boolean", "description": "Ignores input events processing when set to true." }
-                ],
-                "description": "Ignores input events (useful while auditing page)."
-            },
             {
                 "name": "dispatchKeyEvent",
                 "parameters": [

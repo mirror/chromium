@@ -47,7 +47,7 @@ MockWebDocumentSubresourceFilter::getLoadPolicyImpl(const blink::WebURL& url) {
 void MockWebDocumentSubresourceFilter::ReportDisallowedLoad() {}
 
 bool MockWebDocumentSubresourceFilter::ShouldLogToConsole() {
-  return true;
+  return false;
 }
 
 }  // namespace test_runner

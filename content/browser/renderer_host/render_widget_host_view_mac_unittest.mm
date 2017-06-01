@@ -16,9 +16,7 @@
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
-#include "base/test/scoped_feature_list.h"
 #include "base/test/simple_test_tick_clock.h"
-#include "base/threading/thread_task_runner_handle.h"
 #include "content/browser/browser_thread_impl.h"
 #include "content/browser/compositor/test/no_transport_image_transport_factory.h"
 #include "content/browser/frame_host/render_widget_host_view_guest.h"
@@ -30,7 +28,6 @@
 #include "content/common/view_messages.h"
 #include "content/public/browser/notification_types.h"
 #include "content/public/browser/render_widget_host_view_mac_delegate.h"
-#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/mock_render_process_host.h"
 #include "content/public/test/test_browser_context.h"
@@ -55,7 +52,6 @@
 @interface MockPhaseMethods : NSObject {
 }
 
-- (NSEventPhase)phaseNone;
 - (NSEventPhase)phaseBegan;
 - (NSEventPhase)phaseChanged;
 - (NSEventPhase)phaseEnded;
@@ -63,9 +59,6 @@
 
 @implementation MockPhaseMethods
 
-- (NSEventPhase)phaseNone {
-  return NSEventPhaseNone;
-}
 - (NSEventPhase)phaseBegan {
   return NSEventPhaseBegan;
 }
@@ -300,23 +293,6 @@ NSEvent* MockScrollWheelEventWithPhase(SEL mockPhaseSelector, int32_t delta) {
   CFRelease(cg_event);
   method_setImplementation(
       class_getInstanceMethod([NSEvent class], @selector(phase)),
-      [MockPhaseMethods instanceMethodForSelector:mockPhaseSelector]);
-  return event;
-}
-
-NSEvent* MockScrollWheelEventWithMomentumPhase(SEL mockPhaseSelector,
-                                               int32_t delta) {
-  // Create a dummy event with phaseNone. This is for resetting the phase info
-  // of CGEventRef.
-  MockScrollWheelEventWithPhase(@selector(phaseNone), 0);
-  CGEventRef cg_event = CGEventCreateScrollWheelEvent(
-      nullptr, kCGScrollEventUnitLine, 1, delta, 0);
-  CGEventTimestamp timestamp = 0;
-  CGEventSetTimestamp(cg_event, timestamp);
-  NSEvent* event = [NSEvent eventWithCGEvent:cg_event];
-  CFRelease(cg_event);
-  method_setImplementation(
-      class_getInstanceMethod([NSEvent class], @selector(momentumPhase)),
       [MockPhaseMethods instanceMethodForSelector:mockPhaseSelector]);
   return event;
 }
@@ -584,7 +560,7 @@ TEST_F(RenderWidgetHostViewMacTest, GetFirstRectForCharacterRangeCaretCase) {
 
   NSRect rect;
   NSRange actual_range;
-  rwhv_mac_->SelectionChanged(kDummyString, kDummyOffset, caret_range);
+  rwhv_mac_->SelectionChanged(kDummyString, kDummyOffset, caret_range, true);
   params.anchor_rect = params.focus_rect = caret_rect;
   params.anchor_dir = params.focus_dir = blink::kWebTextDirectionLeftToRight;
   rwhv_mac_->SelectionBoundsChanged(params);
@@ -612,7 +588,7 @@ TEST_F(RenderWidgetHostViewMacTest, GetFirstRectForCharacterRangeCaretCase) {
   caret_rect = gfx::Rect(20, 11, 0, 10);
   caret_range = gfx::Range(1, 1);
   params.anchor_rect = params.focus_rect = caret_rect;
-  rwhv_mac_->SelectionChanged(kDummyString, kDummyOffset, caret_range);
+  rwhv_mac_->SelectionChanged(kDummyString, kDummyOffset, caret_range, true);
   rwhv_mac_->SelectionBoundsChanged(params);
   EXPECT_TRUE(rwhv_mac_->GetCachedFirstRectForCharacterRange(
         caret_range.ToNSRange(),
@@ -636,7 +612,7 @@ TEST_F(RenderWidgetHostViewMacTest, GetFirstRectForCharacterRangeCaretCase) {
 
   // No caret.
   caret_range = gfx::Range(1, 2);
-  rwhv_mac_->SelectionChanged(kDummyString, kDummyOffset, caret_range);
+  rwhv_mac_->SelectionChanged(kDummyString, kDummyOffset, caret_range, true);
   params.anchor_rect = caret_rect;
   params.focus_rect = gfx::Rect(30, 11, 0, 10);
   rwhv_mac_->SelectionBoundsChanged(params);
@@ -1332,180 +1308,6 @@ TEST_F(RenderWidgetHostViewMacTest, Background) {
   host->ShutdownAndDestroyWidget(true);
 }
 
-class RenderWidgetHostViewMacWithWheelScrollLatchingEnabledTest
-    : public RenderWidgetHostViewMacTest {
- public:
-  RenderWidgetHostViewMacWithWheelScrollLatchingEnabledTest() {
-    feature_list_.InitFromCommandLine(
-        features::kTouchpadAndWheelScrollLatching.name, "");
-  }
-
- private:
-  base::test::ScopedFeatureList feature_list_;
-};
-
-// When wheel scroll latching is enabled, wheel end events are not sent
-// immediately, instead we start a timer to see if momentum phase of the scroll
-// starts or not.
-TEST_F(RenderWidgetHostViewMacWithWheelScrollLatchingEnabledTest,
-       WheelWithPhaseEndedIsNotForwardedImmediately) {
-  // Initialize the view associated with a MockRenderWidgetHostImpl, rather than
-  // the MockRenderProcessHost that is set up by the test harness which mocks
-  // out |OnMessageReceived()|.
-  TestBrowserContext browser_context;
-  MockRenderProcessHost* process_host =
-      new MockRenderProcessHost(&browser_context);
-  process_host->Init();
-  MockRenderWidgetHostDelegate delegate;
-  int32_t routing_id = process_host->GetNextRoutingID();
-  MockRenderWidgetHostImpl* host =
-      new MockRenderWidgetHostImpl(&delegate, process_host, routing_id);
-  RenderWidgetHostViewMac* view = new RenderWidgetHostViewMac(host, false);
-  process_host->sink().ClearMessages();
-
-  // Send an initial wheel event for scrolling by 3 lines.
-  NSEvent* wheelEvent1 =
-      MockScrollWheelEventWithPhase(@selector(phaseBegan), 3);
-  [view->cocoa_view() scrollWheel:wheelEvent1];
-  ASSERT_EQ(1U, process_host->sink().message_count());
-  process_host->sink().ClearMessages();
-
-  // Indicate that the wheel event was unhandled.
-  InputEventAck unhandled_ack(InputEventAckSource::COMPOSITOR_THREAD,
-                              blink::WebInputEvent::kMouseWheel,
-                              INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
-  std::unique_ptr<IPC::Message> response1(
-      new InputHostMsg_HandleInputEvent_ACK(0, unhandled_ack));
-  host->OnMessageReceived(*response1);
-  ASSERT_EQ(2U, process_host->sink().message_count());
-  process_host->sink().ClearMessages();
-
-  // Send a wheel event with phaseEnded. When wheel scroll latching is enabled
-  // the event will be dropped and the mouse_wheel_end_dispatch_timer_ will
-  // start.
-  NSEvent* wheelEvent2 =
-      MockScrollWheelEventWithPhase(@selector(phaseEnded), 0);
-  [view->cocoa_view() scrollWheel:wheelEvent2];
-  ASSERT_EQ(0U, process_host->sink().message_count());
-  DCHECK(view->HasPendingWheelEndEvent());
-  process_host->sink().ClearMessages();
-
-  host->ShutdownAndDestroyWidget(true);
-}
-
-TEST_F(RenderWidgetHostViewMacWithWheelScrollLatchingEnabledTest,
-       WheelWithMomentumPhaseBeganStopsTheWheelEndDispatchTimer) {
-  // Initialize the view associated with a MockRenderWidgetHostImpl, rather than
-  // the MockRenderProcessHost that is set up by the test harness which mocks
-  // out |OnMessageReceived()|.
-  TestBrowserContext browser_context;
-  MockRenderProcessHost* process_host =
-      new MockRenderProcessHost(&browser_context);
-  process_host->Init();
-  MockRenderWidgetHostDelegate delegate;
-  int32_t routing_id = process_host->GetNextRoutingID();
-  MockRenderWidgetHostImpl* host =
-      new MockRenderWidgetHostImpl(&delegate, process_host, routing_id);
-  RenderWidgetHostViewMac* view = new RenderWidgetHostViewMac(host, false);
-  process_host->sink().ClearMessages();
-
-  // Send an initial wheel event for scrolling by 3 lines.
-  NSEvent* wheelEvent1 =
-      MockScrollWheelEventWithPhase(@selector(phaseBegan), 3);
-  [view->cocoa_view() scrollWheel:wheelEvent1];
-  ASSERT_EQ(1U, process_host->sink().message_count());
-  process_host->sink().ClearMessages();
-
-  // Indicate that the wheel event was unhandled.
-  InputEventAck unhandled_ack(InputEventAckSource::COMPOSITOR_THREAD,
-                              blink::WebInputEvent::kMouseWheel,
-                              INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
-  std::unique_ptr<IPC::Message> response1(
-      new InputHostMsg_HandleInputEvent_ACK(0, unhandled_ack));
-  host->OnMessageReceived(*response1);
-  ASSERT_EQ(2U, process_host->sink().message_count());
-  process_host->sink().ClearMessages();
-
-  // Send a wheel event with phaseEnded. When wheel scroll latching is enabled
-  // the event will be dropped and the mouse_wheel_end_dispatch_timer_ will
-  // start.
-  NSEvent* wheelEvent2 =
-      MockScrollWheelEventWithPhase(@selector(phaseEnded), 0);
-  [view->cocoa_view() scrollWheel:wheelEvent2];
-  ASSERT_EQ(0U, process_host->sink().message_count());
-  DCHECK(view->HasPendingWheelEndEvent());
-  process_host->sink().ClearMessages();
-
-  // Send a wheel event with momentum phase started, this should stop the wheel
-  // end dispatch timer.
-  NSEvent* wheelEvent3 =
-      MockScrollWheelEventWithMomentumPhase(@selector(phaseBegan), 3);
-  ASSERT_TRUE(wheelEvent3);
-  [view->cocoa_view() scrollWheel:wheelEvent3];
-  ASSERT_EQ(1U, process_host->sink().message_count());
-  DCHECK(!view->HasPendingWheelEndEvent());
-  process_host->sink().ClearMessages();
-
-  host->ShutdownAndDestroyWidget(true);
-}
-
-TEST_F(RenderWidgetHostViewMacWithWheelScrollLatchingEnabledTest,
-       WheelWithPhaseBeganDispatchesThePendingWheelEnd) {
-  // Initialize the view associated with a MockRenderWidgetHostImpl, rather than
-  // the MockRenderProcessHost that is set up by the test harness which mocks
-  // out |OnMessageReceived()|.
-  TestBrowserContext browser_context;
-  MockRenderProcessHost* process_host =
-      new MockRenderProcessHost(&browser_context);
-  process_host->Init();
-  MockRenderWidgetHostDelegate delegate;
-  int32_t routing_id = process_host->GetNextRoutingID();
-  MockRenderWidgetHostImpl* host =
-      new MockRenderWidgetHostImpl(&delegate, process_host, routing_id);
-  RenderWidgetHostViewMac* view = new RenderWidgetHostViewMac(host, false);
-  process_host->sink().ClearMessages();
-
-  // Send an initial wheel event for scrolling by 3 lines.
-  NSEvent* wheelEvent1 =
-      MockScrollWheelEventWithPhase(@selector(phaseBegan), 3);
-  [view->cocoa_view() scrollWheel:wheelEvent1];
-  ASSERT_EQ(1U, process_host->sink().message_count());
-  process_host->sink().ClearMessages();
-
-  // Indicate that the wheel event was unhandled.
-  InputEventAck unhandled_ack(InputEventAckSource::COMPOSITOR_THREAD,
-                              blink::WebInputEvent::kMouseWheel,
-                              INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
-  std::unique_ptr<IPC::Message> response1(
-      new InputHostMsg_HandleInputEvent_ACK(0, unhandled_ack));
-  host->OnMessageReceived(*response1);
-  ASSERT_EQ(2U, process_host->sink().message_count());
-  process_host->sink().ClearMessages();
-
-  // Send a wheel event with phaseEnded. When wheel scroll latching is enabled
-  // the event will be dropped and the mouse_wheel_end_dispatch_timer_ will
-  // start.
-  NSEvent* wheelEvent2 =
-      MockScrollWheelEventWithPhase(@selector(phaseEnded), 0);
-  [view->cocoa_view() scrollWheel:wheelEvent2];
-  ASSERT_EQ(0U, process_host->sink().message_count());
-  DCHECK(view->HasPendingWheelEndEvent());
-  process_host->sink().ClearMessages();
-
-  // Send a wheel event with phase started, this should stop the wheel end
-  // dispatch timer and dispatch the pending wheel end event for the previous
-  // scroll sequence.
-  NSEvent* wheelEvent3 =
-      MockScrollWheelEventWithPhase(@selector(phaseBegan), 3);
-  ASSERT_TRUE(wheelEvent3);
-  [view->cocoa_view() scrollWheel:wheelEvent3];
-  ASSERT_EQ(2U, process_host->sink().message_count());
-  DCHECK(!view->HasPendingWheelEndEvent());
-  process_host->sink().ClearMessages();
-
-  host->ShutdownAndDestroyWidget(true);
-}
-
 class RenderWidgetHostViewMacPinchTest : public RenderWidgetHostViewMacTest {
  public:
   RenderWidgetHostViewMacPinchTest() : process_host_(nullptr) {}
@@ -1697,17 +1499,17 @@ TEST_F(RenderWidgetHostViewMacTest, SelectedText) {
   gfx::Range range(6, 11);
 
   // Send a valid selection for the word 'World'.
-  rwhv_mac_->SelectionChanged(sample_text, 0U, range);
+  rwhv_mac_->SelectionChanged(sample_text, 0U, range, true);
   EXPECT_EQ("world", selected_text());
 
   // Make the range cover some of the text and extend more.
   range.set_end(100);
-  rwhv_mac_->SelectionChanged(sample_text, 0U, range);
+  rwhv_mac_->SelectionChanged(sample_text, 0U, range, true);
   EXPECT_EQ("world!", selected_text());
 
   // Finally, send an empty range. This should clear the selected text.
   range.set_start(100);
-  rwhv_mac_->SelectionChanged(sample_text, 0U, range);
+  rwhv_mac_->SelectionChanged(sample_text, 0U, range, true);
   EXPECT_EQ("", selected_text());
 }
 

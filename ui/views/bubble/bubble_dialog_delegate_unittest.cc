@@ -33,9 +33,7 @@ class TestBubbleDialogDelegateView : public BubbleDialogDelegateView {
 
   // BubbleDialogDelegateView overrides:
   View* GetInitiallyFocusedView() override { return view_; }
-  gfx::Size CalculatePreferredSize() const override {
-    return gfx::Size(200, 200);
-  }
+  gfx::Size GetPreferredSize() const override { return gfx::Size(200, 200); }
 
   using BubbleDialogDelegateView::SetAnchorRect;
   using BubbleDialogDelegateView::GetBubbleFrameView;

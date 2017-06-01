@@ -25,7 +25,6 @@
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/browser/service_worker/service_worker_navigation_handle.h"
-#include "content/common/child_process_host_impl.h"
 #include "content/common/frame_messages.h"
 #include "content/common/resource_request_body_impl.h"
 #include "content/common/site_isolation_policy.h"
@@ -120,17 +119,12 @@ NavigationHandleImpl::NavigationHandleImpl(
       navigation_type_(NAVIGATION_TYPE_UNKNOWN),
       should_check_main_world_csp_(should_check_main_world_csp),
       is_form_submission_(is_form_submission),
-      expected_render_process_host_id_(ChildProcessHost::kInvalidUniqueID),
       weak_factory_(this) {
   TRACE_EVENT_ASYNC_BEGIN2("navigation", "NavigationHandle", this,
                            "frame_tree_node",
                            frame_tree_node_->frame_tree_node_id(), "url",
                            url_.possibly_invalid_spec());
   DCHECK(!navigation_start.is_null());
-
-  site_url_ = SiteInstance::GetSiteForURL(
-      frame_tree_node_->navigator()->GetController()->GetBrowserContext(),
-      url_);
   if (redirect_chain_.empty())
     redirect_chain_.push_back(url);
 
@@ -153,7 +147,6 @@ NavigationHandleImpl::NavigationHandleImpl(
     if (nav_entry) {
       reload_type_ = nav_entry->reload_type();
       restore_type_ = nav_entry->restore_type();
-      base_url_for_data_url_ = nav_entry->GetBaseURLForDataURL();
     }
   }
 
@@ -173,17 +166,6 @@ NavigationHandleImpl::NavigationHandleImpl(
 }
 
 NavigationHandleImpl::~NavigationHandleImpl() {
-  // Inform the RenderProcessHost to no longer expect a navigation.
-  if (expected_render_process_host_id_ != ChildProcessHost::kInvalidUniqueID) {
-    RenderProcessHost* process =
-        RenderProcessHost::FromID(expected_render_process_host_id_);
-    if (process) {
-      RenderProcessHostImpl::RemoveExpectedNavigationToSite(
-          frame_tree_node_->navigator()->GetController()->GetBrowserContext(),
-          process, site_url_);
-    }
-  }
-
   // Transfer requests that have not matched up with another navigation request
   // from the renderer need to be cleaned up. These are marked as protected in
   // the RDHI, so they do not get cancelled when frames are destroyed.
@@ -389,15 +371,7 @@ void NavigationHandleImpl::CancelDeferredNavigation(
          state_ == DEFERRING_REDIRECT ||
          state_ == DEFERRING_RESPONSE);
   DCHECK(result == NavigationThrottle::CANCEL_AND_IGNORE ||
-         result == NavigationThrottle::CANCEL ||
-         result == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE);
-  DCHECK(result != NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE ||
-         state_ == DEFERRING_START ||
-         (state_ == DEFERRING_REDIRECT && IsBrowserSideNavigationEnabled()));
-
-  if (result == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE)
-    frame_tree_node_->SetCollapsed(true);
-
+         result == NavigationThrottle::CANCEL);
   TRACE_EVENT_ASYNC_STEP_INTO0("navigation", "NavigationHandle", this,
                                "CancelDeferredNavigation");
   state_ = CANCELING;
@@ -617,7 +591,6 @@ void NavigationHandleImpl::WillRedirectRequest(
   // Update the navigation parameters.
   url_ = new_url;
   method_ = new_method;
-  UpdateSiteURL();
 
   if (!(transition_ & ui::PAGE_TRANSITION_CLIENT_REDIRECT)) {
     sanitized_referrer_.url = new_referrer_url;
@@ -708,9 +681,6 @@ void NavigationHandleImpl::ReadyToCommitNavigation(
   render_frame_host_ = render_frame_host;
   state_ = READY_TO_COMMIT;
 
-  if (IsBrowserSideNavigationEnabled())
-    SetExpectedProcess(render_frame_host->GetProcess());
-
   if (!IsRendererDebugURL(url_) && !IsSameDocument())
     GetDelegate()->ReadyToCommitNavigation(this);
 }
@@ -753,50 +723,7 @@ void NavigationHandleImpl::DidCommitNavigation(
     TRACE_EVENT_ASYNC_STEP_INTO0("navigation", "NavigationHandle", this,
                                  "DidCommitNavigation");
     state_ = DID_COMMIT;
-
-    // Getting this far means that the navigation was not blocked, and neither
-    // is this the error page navigation following a blocked navigation. Ensure
-    // the frame owner element is no longer collapsed as a result of a prior
-    // navigation having been blocked with BLOCK_REQUEST_AND_COLLAPSE.
-    if (!frame_tree_node()->IsMainFrame()) {
-      // The last committed load in collapsed frames will be an error page with
-      // |kUnreachableWebDataURL|. Same-page navigation should not be possible.
-      DCHECK(!is_same_page_ || !frame_tree_node()->is_collapsed());
-      frame_tree_node()->SetCollapsed(false);
-    }
   }
-}
-
-void NavigationHandleImpl::SetExpectedProcess(
-    RenderProcessHost* expected_process) {
-  if (expected_process &&
-      expected_process->GetID() == expected_render_process_host_id_) {
-    // This |expected_process| has already been informed of the navigation,
-    // no need to update it again.
-    return;
-  }
-
-  // If a RenderProcessHost was expecting this navigation to commit, have it
-  // stop tracking this site.
-  RenderProcessHost* old_process =
-      RenderProcessHost::FromID(expected_render_process_host_id_);
-  if (old_process) {
-    RenderProcessHostImpl::RemoveExpectedNavigationToSite(
-        frame_tree_node_->navigator()->GetController()->GetBrowserContext(),
-        old_process, site_url_);
-  }
-
-  if (expected_process == nullptr) {
-    expected_render_process_host_id_ = ChildProcessHost::kInvalidUniqueID;
-    return;
-  }
-
-  // Keep track of the speculative RenderProcessHost and tell it to expect a
-  // navigation to |site_url_|.
-  expected_render_process_host_id_ = expected_process->GetID();
-  RenderProcessHostImpl::AddExpectedNavigationToSite(
-      frame_tree_node_->navigator()->GetController()->GetBrowserContext(),
-      expected_process, site_url_);
 }
 
 void NavigationHandleImpl::Transfer() {
@@ -828,8 +755,6 @@ NavigationHandleImpl::CheckWillStartRequest() {
       case NavigationThrottle::PROCEED:
         continue;
 
-      case NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE:
-        frame_tree_node_->SetCollapsed(true);  // Fall through.
       case NavigationThrottle::BLOCK_REQUEST:
       case NavigationThrottle::CANCEL:
       case NavigationThrottle::CANCEL_AND_IGNORE:
@@ -868,12 +793,9 @@ NavigationHandleImpl::CheckWillRedirectRequest() {
       case NavigationThrottle::PROCEED:
         continue;
 
-      case NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE:
-        frame_tree_node_->SetCollapsed(true);  // Fall through.
       case NavigationThrottle::BLOCK_REQUEST:
         CHECK(IsBrowserSideNavigationEnabled())
-            << "BLOCK_REQUEST and BLOCK_REQUEST_AND_COLLAPSE must not be used "
-               "on redirect without PlzNavigate";
+            << "BLOCK_REQUEST must not be used on redirect without PlzNavigate";
       case NavigationThrottle::CANCEL:
       case NavigationThrottle::CANCEL_AND_IGNORE:
         state_ = CANCELING;
@@ -927,7 +849,6 @@ NavigationHandleImpl::CheckWillProcessResponse() {
         return result;
 
       case NavigationThrottle::BLOCK_REQUEST:
-      case NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE:
         NOTREACHED();
     }
   }
@@ -1130,19 +1051,6 @@ bool NavigationHandleImpl::IsSelfReferentialURL() {
     }
   }
   return false;
-}
-
-void NavigationHandleImpl::UpdateSiteURL() {
-  GURL new_site_url = SiteInstance::GetSiteForURL(
-      frame_tree_node_->navigator()->GetController()->GetBrowserContext(),
-      url_);
-  if (new_site_url == site_url_)
-    return;
-
-  // When redirecting cross-site, stop telling the speculative
-  // RenderProcessHost to expect a navigation commit.
-  SetExpectedProcess(nullptr);
-  site_url_ = new_site_url;
 }
 
 }  // namespace content

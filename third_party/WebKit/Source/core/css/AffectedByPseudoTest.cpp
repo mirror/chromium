@@ -9,7 +9,7 @@
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/NodeComputedStyle.h"
 #include "core/dom/StyleEngine.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/html/HTMLElement.h"
 #include "core/testing/DummyPageHolder.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -22,6 +22,7 @@ class AffectedByPseudoTest : public ::testing::Test {
  protected:
   struct ElementResult {
     const blink::HTMLQualifiedName tag;
+    bool affected_by;
     bool children_or_siblings_affected_by;
   };
 
@@ -60,6 +61,8 @@ void AffectedByPseudoTest::CheckElementsForFocus(
        element = Traversal<HTMLElement>::Next(*element), ++i) {
     ASSERT_TRUE(element->HasTagName(expected[i].tag));
     DCHECK(element->GetComputedStyle());
+    ASSERT_EQ(expected[i].affected_by,
+              element->GetComputedStyle()->AffectedByFocus());
     ASSERT_EQ(expected[i].children_or_siblings_affected_by,
               element->ChildrenOrSiblingsAffectedByFocus());
   }
@@ -68,14 +71,34 @@ void AffectedByPseudoTest::CheckElementsForFocus(
   DCHECK_EQ(i, expected_count);
 }
 
+// A global :focus rule in html.css currently causes every single element to be
+// affectedByFocus. Check that all elements in a document with no :focus rules
+// gets the affectedByFocus set on ComputedStyle and not
+// childrenOrSiblingsAffectedByFocus.
+TEST_F(AffectedByPseudoTest, UAUniversalFocusRule) {
+  ElementResult expected[] = {{bodyTag, true, false},
+                              {divTag, true, false},
+                              {divTag, true, false},
+                              {divTag, true, false},
+                              {spanTag, true, false}};
+
+  SetHtmlInnerHTML(
+      "<body>"
+      "<div><div></div></div>"
+      "<div><span></span></div>"
+      "</body>");
+
+  CheckElementsForFocus(expected, sizeof(expected) / sizeof(ElementResult));
+}
+
 // ":focus div" will mark ascendants of all divs with
 // childrenOrSiblingsAffectedByFocus.
 TEST_F(AffectedByPseudoTest, FocusedAscendant) {
-  ElementResult expected[] = {{bodyTag, true},
-                              {divTag, true},
-                              {divTag, false},
-                              {divTag, false},
-                              {spanTag, false}};
+  ElementResult expected[] = {{bodyTag, true, true},
+                              {divTag, true, true},
+                              {divTag, true, false},
+                              {divTag, true, false},
+                              {spanTag, true, false}};
 
   SetHtmlInnerHTML(
       "<head>"
@@ -92,11 +115,11 @@ TEST_F(AffectedByPseudoTest, FocusedAscendant) {
 // "body:focus div" will mark the body element with
 // childrenOrSiblingsAffectedByFocus.
 TEST_F(AffectedByPseudoTest, FocusedAscendantWithType) {
-  ElementResult expected[] = {{bodyTag, true},
-                              {divTag, false},
-                              {divTag, false},
-                              {divTag, false},
-                              {spanTag, false}};
+  ElementResult expected[] = {{bodyTag, true, true},
+                              {divTag, true, false},
+                              {divTag, true, false},
+                              {divTag, true, false},
+                              {spanTag, true, false}};
 
   SetHtmlInnerHTML(
       "<head>"
@@ -116,11 +139,11 @@ TEST_F(AffectedByPseudoTest, FocusedAscendantWithType) {
 // is checked and the childrenOrSiblingsAffectedByFocus flag set before the
 // negated type selector is found.
 TEST_F(AffectedByPseudoTest, FocusedAscendantWithNegatedType) {
-  ElementResult expected[] = {{bodyTag, false},
-                              {divTag, true},
-                              {divTag, false},
-                              {divTag, false},
-                              {spanTag, false}};
+  ElementResult expected[] = {{bodyTag, true, false},
+                              {divTag, true, true},
+                              {divTag, true, false},
+                              {divTag, true, false},
+                              {spanTag, true, false}};
 
   SetHtmlInnerHTML(
       "<head>"
@@ -141,8 +164,10 @@ TEST_F(AffectedByPseudoTest, FocusedAscendantWithNegatedType) {
 // though none of the children are affected. There are other mechanisms that
 // makes sure the sibling also gets its styles recalculated.
 TEST_F(AffectedByPseudoTest, FocusedSibling) {
-  ElementResult expected[] = {
-      {bodyTag, false}, {divTag, true}, {spanTag, false}, {divTag, false}};
+  ElementResult expected[] = {{bodyTag, true, false},
+                              {divTag, true, true},
+                              {spanTag, true, false},
+                              {divTag, true, false}};
 
   SetHtmlInnerHTML(
       "<head>"

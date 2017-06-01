@@ -117,14 +117,6 @@ NSCellImagePosition TrailingCellImagePosition() {
 }
 #endif  // MAC_OS_X_VERSION_10_12
 
-NSRectEdge LeadingEdge() {
-  return ShouldDoExperimentalRTLLayout() ? NSMaxXEdge : NSMinXEdge;
-}
-
-NSRectEdge TrailingEdge() {
-  return ShouldDoExperimentalRTLLayout() ? NSMinXEdge : NSMaxXEdge;
-}
-
 // Adapted from Apple's RTL docs (goo.gl/cBaFnT)
 NSImage* FlippedImage(NSImage* image) {
   const NSSize size = [image size];
@@ -147,30 +139,6 @@ NSImage* FlippedImage(NSImage* image) {
   [flipped_image unlockFocus];
 
   return flipped_image;
-}
-
-void FlipAllSubviewsIfNecessary(NSView* view) {
-  if (!ShouldDoExperimentalRTLLayout())
-    return;
-  CGFloat width = NSWidth([view frame]);
-  for (NSView* subview in [view subviews]) {
-    NSRect subviewFrame = [subview frame];
-    subviewFrame.origin.x =
-        width - NSWidth(subviewFrame) - NSMinX(subviewFrame);
-    [subview setFrame:subviewFrame];
-    BOOL hasMinXMargin = subview.autoresizingMask & NSViewMinXMargin;
-    BOOL hasMaxXMargin = subview.autoresizingMask & NSViewMaxXMargin;
-    if (hasMinXMargin && hasMaxXMargin) {
-      // No-op. Skip reversing autoresizing mask if both horizontal margins
-      // are flexible.
-    } else if (hasMinXMargin) {
-      subview.autoresizingMask &= ~NSViewMinXMargin;
-      subview.autoresizingMask |= NSViewMaxXMargin;
-    } else if (hasMaxXMargin) {
-      subview.autoresizingMask &= ~NSViewMaxXMargin;
-      subview.autoresizingMask |= NSViewMinXMargin;
-    }
-  }
 }
 
 }  // namespace cocoa_l10n_util

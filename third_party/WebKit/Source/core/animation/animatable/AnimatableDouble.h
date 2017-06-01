@@ -53,6 +53,7 @@ class CORE_EXPORT AnimatableDouble final : public AnimatableValue {
  private:
   AnimatableDouble(double number) : number_(number) {}
   AnimatableType GetType() const override { return kTypeDouble; }
+  bool EqualTo(const AnimatableValue*) const override;
 
   double number_;
 };

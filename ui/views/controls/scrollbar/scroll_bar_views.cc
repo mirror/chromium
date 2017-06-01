@@ -31,11 +31,11 @@ class ScrollBarButton : public BaseScrollBarButton {
   ScrollBarButton(ButtonListener* listener, Type type);
   ~ScrollBarButton() override;
 
-  gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetPreferredSize() const override;
   const char* GetClassName() const override { return "ScrollBarButton"; }
 
  protected:
-  void PaintButtonContents(gfx::Canvas* canvas) override;
+  void OnPaint(gfx::Canvas* canvas) override;
 
  private:
   ui::NativeTheme::ExtraParams GetNativeThemeParams() const;
@@ -51,7 +51,7 @@ class ScrollBarThumb : public BaseScrollBarThumb {
   explicit ScrollBarThumb(BaseScrollBar* scroll_bar);
   ~ScrollBarThumb() override;
 
-  gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetPreferredSize() const override;
   const char* GetClassName() const override { return "ScrollBarThumb"; }
 
  protected:
@@ -75,12 +75,12 @@ ScrollBarButton::ScrollBarButton(ButtonListener* listener, Type type)
 
 ScrollBarButton::~ScrollBarButton() {}
 
-gfx::Size ScrollBarButton::CalculatePreferredSize() const {
+gfx::Size ScrollBarButton::GetPreferredSize() const {
   return GetNativeTheme()->GetPartSize(
       GetNativeThemePart(), GetNativeThemeState(), GetNativeThemeParams());
 }
 
-void ScrollBarButton::PaintButtonContents(gfx::Canvas* canvas) {
+void ScrollBarButton::OnPaint(gfx::Canvas* canvas) {
   gfx::Rect bounds(GetPreferredSize());
   GetNativeTheme()->Paint(canvas->sk_canvas(), GetNativeThemePart(),
                           GetNativeThemeState(), bounds,
@@ -144,7 +144,7 @@ ScrollBarThumb::ScrollBarThumb(BaseScrollBar* scroll_bar)
 
 ScrollBarThumb::~ScrollBarThumb() {}
 
-gfx::Size ScrollBarThumb::CalculatePreferredSize() const {
+gfx::Size ScrollBarThumb::GetPreferredSize() const {
   return GetNativeTheme()->GetPartSize(
       GetNativeThemePart(), GetNativeThemeState(), GetNativeThemeParams());
 }
@@ -277,7 +277,7 @@ void ScrollBarViews::OnPaint(gfx::Canvas* canvas) {
   GetNativeTheme()->Paint(canvas->sk_canvas(), part_, state_, bounds, params_);
 }
 
-gfx::Size ScrollBarViews::CalculatePreferredSize() const {
+gfx::Size ScrollBarViews::GetPreferredSize() const {
   return gfx::Size(IsHorizontal() ? 0 : GetThickness(),
                    IsHorizontal() ? GetThickness() : 0);
 }

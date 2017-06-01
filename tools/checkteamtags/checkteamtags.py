@@ -90,11 +90,9 @@ def validate_mappings(options, args):
     error_message = 'The component "%s" has more than one team: ' % component
     team_details = []
     for team in teams:
-      offending_dirs = [d for d in team_to_dir[team]
-                        if new_dir_to_component[d] == component]
       team_details.append('%(team)s is used in %(paths)s' % {
           'team': team,
-          'paths': ', '.join(offending_dirs),
+          'paths': ', '.join(team_to_dir[team]),
       })
     error_message += '; '.join(team_details)
     result.append({

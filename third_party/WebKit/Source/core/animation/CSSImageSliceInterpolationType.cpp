@@ -78,7 +78,7 @@ DEFINE_NON_INTERPOLABLE_VALUE_TYPE_CASTS(CSSImageSliceNonInterpolableValue);
 namespace {
 
 class UnderlyingSliceTypesChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+    : public InterpolationType::ConversionChecker {
  public:
   static std::unique_ptr<UnderlyingSliceTypesChecker> Create(
       const SliceTypes& underlying_types) {
@@ -96,7 +96,7 @@ class UnderlyingSliceTypesChecker
   UnderlyingSliceTypesChecker(const SliceTypes& underlying_types)
       : underlying_types_(underlying_types) {}
 
-  bool IsValid(const StyleResolverState&,
+  bool IsValid(const InterpolationEnvironment&,
                const InterpolationValue& underlying) const final {
     return underlying_types_ == GetUnderlyingSliceTypes(underlying);
   }
@@ -104,8 +104,7 @@ class UnderlyingSliceTypesChecker
   const SliceTypes underlying_types_;
 };
 
-class InheritedSliceTypesChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+class InheritedSliceTypesChecker : public InterpolationType::ConversionChecker {
  public:
   static std::unique_ptr<InheritedSliceTypesChecker> Create(
       CSSPropertyID property,
@@ -119,11 +118,11 @@ class InheritedSliceTypesChecker
                              const SliceTypes& inherited_types)
       : property_(property), inherited_types_(inherited_types) {}
 
-  bool IsValid(const StyleResolverState& state,
+  bool IsValid(const InterpolationEnvironment& environment,
                const InterpolationValue& underlying) const final {
     return inherited_types_ ==
            SliceTypes(ImageSlicePropertyFunctions::GetImageSlice(
-               property_, *state.ParentStyle()));
+               property_, *environment.GetState().ParentStyle()));
   }
 
   const CSSPropertyID property_;

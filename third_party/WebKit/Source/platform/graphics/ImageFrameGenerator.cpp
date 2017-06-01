@@ -101,12 +101,15 @@ static bool UpdateYUVComponentSizes(ImageDecoder* decoder,
   if (!decoder->CanDecodeToYUV())
     return false;
 
-  for (int yuv_index = 0; yuv_index < 3; ++yuv_index) {
-    IntSize size = decoder->DecodedYUVSize(yuv_index);
-    component_sizes[yuv_index].set(size.Width(), size.Height());
-    component_width_bytes[yuv_index] = decoder->DecodedYUVWidthBytes(yuv_index);
-  }
-
+  IntSize size = decoder->DecodedYUVSize(0);
+  component_sizes[0].set(size.Width(), size.Height());
+  component_width_bytes[0] = decoder->DecodedYUVWidthBytes(0);
+  size = decoder->DecodedYUVSize(1);
+  component_sizes[1].set(size.Width(), size.Height());
+  component_width_bytes[1] = decoder->DecodedYUVWidthBytes(1);
+  size = decoder->DecodedYUVSize(2);
+  component_sizes[2].set(size.Width(), size.Height());
+  component_width_bytes[2] = decoder->DecodedYUVWidthBytes(2);
   return true;
 }
 

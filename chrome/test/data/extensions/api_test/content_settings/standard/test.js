@@ -113,14 +113,5 @@ chrome.test.runTests([
       'setting': 'allow'
     }, chrome.test.callbackFail(
         "Path wildcards in file URL patterns are not allowed."));
-    var caught = false;
-    try {
-      cs.javascript.set({primaryPattern: '<all_urls>',
-                         secondaryPattern: '<all_urls>',
-                         setting: 'something radically fake'});
-    } catch (e) {
-      caught = true;
-    }
-    chrome.test.assertTrue(caught);
   }
 ]);

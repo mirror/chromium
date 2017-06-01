@@ -19,8 +19,6 @@ typedef void (^CloseButtonCallback)(void);
 + (NSString*)reuseIdentifier;
 
 @property(nonatomic, readonly) SigninPromoView* signinPromoView;
-// Called when the user taps on the close button. If not set, the close button
-// is hidden.
 @property(nonatomic, copy) CloseButtonCallback closeButtonAction;
 
 @end

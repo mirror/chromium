@@ -173,7 +173,7 @@ void BrowserPlugin::Attach() {
       RenderFrameImpl::FromRoutingID(render_frame_routing_id());
   if (render_frame && render_frame->render_accessibility() && Container()) {
     blink::WebElement element = Container()->GetElement();
-    blink::WebAXObject ax_element = blink::WebAXObject::FromWebNode(element);
+    blink::WebAXObject ax_element = element.AccessibilityObject();
     if (!ax_element.IsDetached()) {
       render_frame->render_accessibility()->HandleAXEvent(
           ax_element,
@@ -604,8 +604,7 @@ bool BrowserPlugin::FinishComposingText(
   bool keep_selection =
       (selection_behavior == blink::WebInputMethodController::kKeepSelection);
   BrowserPluginManager::Get()->Send(
-      new BrowserPluginHostMsg_ImeFinishComposingText(
-          browser_plugin_instance_id_, keep_selection));
+      new BrowserPluginHostMsg_ImeFinishComposingText(keep_selection));
   // TODO(kochi): This assumes the IPC handling always succeeds.
   return true;
 }

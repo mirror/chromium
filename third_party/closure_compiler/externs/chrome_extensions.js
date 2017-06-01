@@ -2670,14 +2670,6 @@ chrome.tabs.detectLanguage = function(tabIdOrCallback, opt_callback) {};
 
 
 /**
- * @see https://developer.chrome.com/extensions/tabs#method-discard
- * @param {number|function(!Tab): void} tabIdOrCallback
- * @param {function(!Tab): void=} opt_callback
- */
-chrome.tabs.discard;
-
-
-/**
  * @see https://developer.chrome.com/extensions/tabs#method-executeScript
  * @param {number|!chrome.tabs.InjectDetails} tabIdOrDetails
  *     Either the id of the tab in which to run the script, or an object
@@ -2736,34 +2728,6 @@ chrome.tabs.getCurrent = function(callback) {};
  * @return {undefined}
  */
 chrome.tabs.getSelected = function(windowId, callback) {};
-
-
-/**
- * @see https://developer.chrome.com/extensions/tabs#method-getZoom
- * @param {number|function(number): void} tabIdOrCallback
- * @param {function(number): void=} opt_callback
- * @return {undefined}
- */
-chrome.tabs.getZoom = function(tabIdOrCallback, opt_callback) {};
-
-
-/**
- * @see https://developer.chrome.com/extensions/tabs#type-ZoomSettings
- * @typedef {?{
- *   mode: (string|undefined),
- *   scope: (string|undefined),
- *   defaultZoomFactor: (number|undefined),
- * }}
- */
-chrome.tabs.ZoomSettings;
-
-
-/**
- * @see https://developer.chrome.com/extensions/tabs#method-getZoomSettings
- * @param {number|function(!chrome.tabs.ZoomSettings): void} tabIdOrCallback
- * @param {function(!chrome.tabs.ZoomSettings): void=} opt_callback
- */
-chrome.tabs.getZoomSettings = function(tabIdOrCallback, opt_callback) {};
 
 
 /**
@@ -2930,28 +2894,6 @@ chrome.tabs.sendRequest = function(tabId, request, opt_callback) {};
 
 
 /**
- * @see https://developer.chrome.com/extensions/tabs#method-setZoom
- * @param {number} tabIdOrZoomFactor
- * @param {(number|function(): void)=} opt_zoomFactorOrCallback
- * @param {function(): void=} opt_callback
- * @return {undefined}
- */
-chrome.tabs.setZoom = function(
-    tabIdOrZoomFactor, opt_zoomFactorOrCallback, opt_callback) {};
-
-
-/**
- * @see https://developer.chrome.com/extensions/tabs#method-setZoomSettings
- * @param {number|!chrome.tabs.ZoomSettings} tabIdOrZoomSettings
- * @param {(!chrome.tabs.ZoomSettings|function(): void)=}
- *     opt_zoomSettingsOrCallback
- * @param {function(): void=} opt_callback
- */
-chrome.tabs.setZoomSettings = function(
-    tabIdOrZoomSettings, opt_zoomSettingsOrCallback, opt_callback) {};
-
-
-/**
  * @typedef {?{
  *   url: (string|undefined),
  *   active: (boolean|undefined),
@@ -3041,13 +2983,6 @@ chrome.tabs.onReplaced;
  * @deprecated Please use tabs.onActivated.
  */
 chrome.tabs.onSelectionChanged;
-
-
-/**
- * @see https://developer.chrome.com/extensions/tabs#event-onZoomChange
- * @type {!ChromeObjectEvent}
- */
-chrome.tabs.onZoomChange;
 
 
 /**
@@ -4549,19 +4484,8 @@ chrome.history.onVisited;
 chrome.identity = {};
 
 
-/** @typedef {?{id: string}} */
-chrome.identity.AccountInfo;
-
-
 /**
- * @param {function(!Array<!chrome.identity.AccountInfo>): void} callback
- * @return {undefined}
- */
-chrome.identity.getAccounts = function(callback) {};
-
-
-/**
- * @param {(!chrome.identity.TokenDetails|function(string=): void)}
+ * @param {(chrome.identity.TokenDetails|function(string=): void)}
  *     detailsOrCallback Token options or a callback function if no options are
  *     specified.
  * @param {function(string=): void=} opt_callback A callback function if options
@@ -4571,37 +4495,31 @@ chrome.identity.getAccounts = function(callback) {};
 chrome.identity.getAuthToken = function(detailsOrCallback, opt_callback) {};
 
 
-/**
- * @typedef {?{
- *   interactive: (boolean|undefined),
- *   account: (!chrome.identity.AccountInfo|undefined),
- *   scopes: (!Array<string>|undefined)
- * }}
- */
+/** @typedef {{interactive: (boolean|undefined)}} */
 chrome.identity.TokenDetails;
 
 
 /**
- * @param {!chrome.identity.InvalidTokenDetails} details
- * @param {function(): void=} opt_callback
+ * @param {chrome.identity.InvalidTokenDetails} details
+ * @param {function(): void} callback
  * @return {undefined}
  */
-chrome.identity.removeCachedAuthToken = function(details, opt_callback) {};
+chrome.identity.removeCachedAuthToken = function(details, callback) {};
 
 
-/** @typedef {?{token: string}} */
+/** @typedef {{token: string}} */
 chrome.identity.InvalidTokenDetails;
 
 
 /**
- * @param {!chrome.identity.WebAuthFlowDetails} details
+ * @param {chrome.identity.WebAuthFlowDetails} details
  * @param {function(string=): void} callback
  * @return {undefined}
  */
 chrome.identity.launchWebAuthFlow = function(details, callback) {};
 
 
-/** @typedef {?{url: string, interactive: (boolean|undefined)}} */
+/** @typedef {{url: string, interactive: (boolean|undefined)}} */
 chrome.identity.WebAuthFlowDetails;
 
 
@@ -4612,41 +4530,7 @@ chrome.identity.WebAuthFlowDetails;
 chrome.identity.getProfileUserInfo = function(callback) {};
 
 
-
-/** @constructor */
-chrome.identity.OnSignInChangedEvent = function() {}
-
-
-/**
- * @param {function(!chrome.identity.AccountInfo, boolean):void} callback
- * @return {undefined}
- */
-chrome.identity.OnSignInChangedEvent.prototype.addListener =
-    function(callback) {};
-
-
-/**
- * @param {function(!chrome.identity.AccountInfo, boolean):void} callback
- * @return {undefined}
- */
-chrome.identity.OnSignInChangedEvent.prototype.removeListener =
-    function(callback) {};
-
-
-/**
- * @param {function(!chrome.identity.AccountInfo, boolean):void} callback
- * @return {boolean}
- */
-chrome.identity.OnSignInChangedEvent.prototype.hasListener =
-    function(callback) {};
-
-
-/** @return {boolean} */
-chrome.identity.OnSignInChangedEvent.prototype.hasListeners =
-    function() {};
-
-
-/** @type {!chrome.identity.OnSignInChangedEvent} */
+/** @type {!ChromeEvent} */
 chrome.identity.onSignInChanged;
 
 
@@ -5946,68 +5830,7 @@ chrome.system.cpu = {};
 
 
 /**
- * @interface
- * @see https://developer.chrome.com/extensions/system_cpu#method-getInfo
- */
-chrome.system.cpu.CpuInformation = function() {};
-
-
-/** @type {number} */
-chrome.system.cpu.CpuInformation.prototype.numOfProcessors;
-
-
-/** @type {string} */
-chrome.system.cpu.CpuInformation.prototype.archName;
-
-
-/** @type {string} */
-chrome.system.cpu.CpuInformation.prototype.modelName;
-
-
-/** @type {!Array<string>} */
-chrome.system.cpu.CpuInformation.prototype.features;
-
-
-/** @type {!Array<!chrome.system.cpu.ProcessorInformation>} */
-chrome.system.cpu.CpuInformation.prototype.processors;
-
-
-/**
- * This field is expected to roll out in ChromeOS 60. See the following link
- * for the implementing CL. https://codereview.chromium.org/2802593005/
- *
- * TODO(b/38111360): Remove above documentation when this is released.
- *
- * @type {!Array<number>|undefined}
- */
-chrome.system.cpu.CpuInformation.prototype.temperatures;
-
-
-/**
- * @interface
- * @see https://developer.chrome.com/extensions/system_cpu#method-getInfo
- */
-chrome.system.cpu.ProcessorInformation = function() {};
-
-
-/** @type {number} */
-chrome.system.cpu.ProcessorInformation.prototype.user;
-
-
-/** @type {number} */
-chrome.system.cpu.ProcessorInformation.prototype.kernel;
-
-
-/** @type {number} */
-chrome.system.cpu.ProcessorInformation.prototype.idle;
-
-
-/** @type {number} */
-chrome.system.cpu.ProcessorInformation.prototype.total;
-
-
-/**
- * @param {function(!chrome.system.cpu.CpuInformation)} callback
+ * @param {function(!Object)} callback
  * @return {undefined}
  */
 chrome.system.cpu.getInfo = function(callback) {};
@@ -6020,253 +5843,110 @@ chrome.system.cpu.getInfo = function(callback) {};
 chrome.system.display = {};
 
 
+/** @type {!ChromeEvent} */
+chrome.system.display.onDisplayChanged;
+
+
+
 /**
- * @typedef {!{
- *   left: number,
- *   top: number,
- *   width: number,
- *   height: number
- * }}
- * @see https://developer.chrome.com/extensions/system.display#type-Bounds
+ * @constructor
  */
-chrome.system.display.Bounds;
+chrome.system.display.Bounds = function() {};
+
+
+/** @type {number} */
+chrome.system.display.Bounds.prototype.left;
+
+
+/** @type {number} */
+chrome.system.display.Bounds.prototype.top;
+
+
+/** @type {number} */
+chrome.system.display.Bounds.prototype.width;
+
+
+/** @type {number} */
+chrome.system.display.Bounds.prototype.height;
 
 
 /**
- * @typedef {!{
- *   left: number,
- *   top: number,
- *   right: number,
- *   bottom: number
+ * @typedef {{
+ *   left: (number|undefined),
+ *   top: (number|undefined),
+ *   right: (number|undefined),
+ *   bottom: (number|undefined)
  * }}
- * @see https://developer.chrome.com/extensions/system.display#type-Insets
  */
 chrome.system.display.Insets;
 
 
-/**
- * @typedef {!{
- *   x: number,
- *   y: number
- * }}
- * @see https://developer.chrome.com/extensions/system.display#type-Point
- */
-chrome.system.display.Point;
-
 
 /**
- * @typedef {!{
- *   width: number,
- *   height: number,
- *   widthInNativePixels: number,
- *   heightInNativePixels: number,
- *   uiScale: number,
- *   deviceScaleFactor: number,
- *   isNative: boolean,
- *   isSelected: boolean
- * }}
- * @see https://developer.chrome.com/extensions/system.display#type-DisplayMode
- */
-chrome.system.display.DisplayMode;
-
-
-/**
- * @typedef {!{
- *   id: string,
- *   parentId: string,
- *   position: string,
- *   offset: number
- * }}
- * @see https://developer.chrome.com/extensions/system.display#type-DisplayLayout
- */
-chrome.system.display.DisplayLayout;
-
-
-
-/**
- * An undocumented type that defines the objects passed to getInfo()'s callback.
  * @constructor
  */
-chrome.system.display.DisplayUnitInfo = function() {};
+chrome.system.display.DisplayInfo = function() {};
 
 
 /** @type {string} */
-chrome.system.display.DisplayUnitInfo.prototype.id;
+chrome.system.display.DisplayInfo.prototype.id;
 
 
 /** @type {string} */
-chrome.system.display.DisplayUnitInfo.prototype.name;
+chrome.system.display.DisplayInfo.prototype.name;
 
 
 /** @type {string} */
-chrome.system.display.DisplayUnitInfo.prototype.mirroringSourceId;
+chrome.system.display.DisplayInfo.prototype.mirroringSourceId;
 
 
 /** @type {boolean} */
-chrome.system.display.DisplayUnitInfo.prototype.isPrimary;
+chrome.system.display.DisplayInfo.prototype.isPrimary;
 
 
 /** @type {boolean} */
-chrome.system.display.DisplayUnitInfo.prototype.isInternal;
+chrome.system.display.DisplayInfo.prototype.isInternal;
 
 
 /** @type {boolean} */
-chrome.system.display.DisplayUnitInfo.prototype.isEnabled;
+chrome.system.display.DisplayInfo.prototype.isEnabled;
 
 
 /** @type {number} */
-chrome.system.display.DisplayUnitInfo.prototype.dpiX;
+chrome.system.display.DisplayInfo.prototype.dpiX;
 
 
 /** @type {number} */
-chrome.system.display.DisplayUnitInfo.prototype.dpiY;
+chrome.system.display.DisplayInfo.prototype.dpiY;
 
 
 /** @type {number} */
-chrome.system.display.DisplayUnitInfo.prototype.rotation;
+chrome.system.display.DisplayInfo.prototype.rotation;
 
 
 /** @type {!chrome.system.display.Bounds} */
-chrome.system.display.DisplayUnitInfo.prototype.bounds;
+chrome.system.display.DisplayInfo.prototype.bounds;
 
 
 /** @type {!chrome.system.display.Insets} */
-chrome.system.display.DisplayUnitInfo.prototype.overscan;
+chrome.system.display.DisplayInfo.prototype.overscan;
 
 
 /** @type {!chrome.system.display.Bounds} */
-chrome.system.display.DisplayUnitInfo.prototype.workArea;
-
-
-/** @type {!Array<!chrome.system.display.DisplayMode>} */
-chrome.system.display.DisplayUnitInfo.prototype.modes;
-
-
-/** @type {boolean} */
-chrome.system.display.DisplayUnitInfo.prototype.hasTouchSupport;
+chrome.system.display.DisplayInfo.prototype.workArea;
 
 
 /**
- * @param {function(!Array<!Object>):void} callback Callbacks must declare their
- *     param to be an array of objects since there is no defined type. To
- *     achieve stronger type checking, cast the objects to
- *     chrome.system.display.DisplayUnitInfo. Called with an array of objects
- *     representing display info.
- * @return {undefined}
- * @see https://developer.chrome.com/extensions/system.display#method-getInfo
+ * @typedef {{
+ *   mirroringSourceId: (string|undefined),
+ *   isPrimary: (boolean|undefined),
+ *   overscan: (!chrome.system.display.Insets|undefined),
+ *   rotation: (number|undefined),
+ *   boundsOriginX: (number|undefined),
+ *   boundsOriginY: (number|undefined)
+ * }}
  */
-chrome.system.display.getInfo = function(callback) {};
-
-
-/**
- * @param {function(!Array<!chrome.system.display.DisplayLayout>):void} callback
- *     The callback to invoke with the results.
- * @see https://developer.chrome.com/extensions/system.display#method-getDisplayLayout
- */
-chrome.system.display.getDisplayLayout = function(callback) {};
-
-
-/**
- * @param {string} id The display's unique identifier.
- * @param {!Object} info The information about display properties that should be
- *     changed. A property will be changed only if a new value for it is
- *     specified in info.
- * @param {function():void=} callback Empty function called when the function
- *     finishes. To find out whether the function succeeded, runtime.lastError
- *     should be queried.
- * @see https://developer.chrome.com/extensions/system.display#method-setDisplayProperties
- */
-chrome.system.display.setDisplayProperties = function(id, info, callback) {};
-
-
-/**
- * @param {!Array<!chrome.system.display.DisplayLayout>} layouts The layout
- *     information, required for all displays except the primary display.
- * @param {function():void=} callback Empty function called when the function
- *     finishes. To find out whether the function succeeded, runtime.lastError
- *     should be queried.
- * @see https://developer.chrome.com/extensions/system.display#method-setDisplayLayout
- */
-chrome.system.display.setDisplayLayout = function(layouts, callback) {};
-
-
-/**
- * @param {boolean} enabled True if unified desktop should be enabled.
- * @see https://developer.chrome.com/extensions/system.display#method-enableUnifiedDesktop
- */
-chrome.system.display.enableUnifiedDesktop = function(enabled) {};
-
-
-/**
- * @param {string} id The display's unique identifier.
- * @see https://developer.chrome.com/extensions/system.display#method-overscanCalibrationStart
- */
-chrome.system.display.overscanCalibrationStart = function(id) {};
-
-
-/**
- * @param {string} id The display's unique identifier.
- * @param {!chrome.system.display.Insets} delta The amount to change the
- *     overscan insets.
- * @see https://developer.chrome.com/extensions/system.display#method-overscanCalibrationAdjust
- */
-chrome.system.display.overscanCalibrationAdjust = function(id, delta) {};
-
-
-/**
- * @param {string} id The display's unique identifier.
- * @see https://developer.chrome.com/extensions/system.display#method-overscanCalibrationReset
- */
-chrome.system.display.overscanCalibrationReset = function(id) {};
-
-
-/**
- * @param {string} id The display's unique identifier.
- * @see https://developer.chrome.com/extensions/system.display#method-overscanCalibrationComplete
- */
-chrome.system.display.overscanCalibrationComplete = function(id) {};
-
-
-/**
- * @param {string} id The display's unique identifier.
- * @param {function(boolean):void=} callback Optional callback to inform the
- *     caller that the touch calibration has ended. The argument of the callback
- *     informs if the calibration was a success or not.
- * @see https://developer.chrome.com/extensions/system.display#method-showNativeTouchCalibration
- */
-chrome.system.display.showNativeTouchCalibration = function(id, callback) {};
-
-
-/**
- * @param {string} id The display's unique identifier.
- * @see https://developer.chrome.com/extensions/system.display#method-startCustomTouchCalibration
- */
-chrome.system.display.startCustomTouchCalibration = function(id) {};
-
-
-/**
- * @param {!Object} pairs The pairs of point used to calibrate the display.
- * @param {!chrome.system.display.Bounds} bounds Bounds of the display when the
- *     touch calibration was performed. |bounds.left| and |bounds.top| values
- *     are ignored.
- * @see https://developer.chrome.com/extensions/system.display#method-completeCustomTouchCalibration
- */
-chrome.system.display.completeCustomTouchCalibration = function(pairs, bounds) {
-};
-
-
-/**
- * @param {string} id The display's unique identifier.
- * @see https://developer.chrome.com/extensions/system.display#method-clearTouchCalibration
- */
-chrome.system.display.clearTouchCalibration = function(id) {};
-
-
-/**
- * @type {!ChromeEvent}
- * @see https://developer.chrome.com/extensions/system.display#event-onDisplayChanged
- */
-chrome.system.display.onDisplayChanged;
+chrome.system.display.SettableDisplayInfo;
 
 
 chrome.types = {};
@@ -6280,6 +5960,25 @@ chrome.types = {};
  */
 chrome.types.ImageDetails;
 
+
+/**
+ * @param {function(!Array<!chrome.system.display.DisplayInfo>)}
+ *     callback Called with an array of objects representing display info.
+ * @return {undefined}
+ */
+chrome.system.display.getInfo = function(callback) {};
+
+
+/**
+ * @param {string} id The display's unique identifier.
+ * @param {!chrome.system.display.SettableDisplayInfo} info The information
+ *     about display properties that should be changed.
+ * @param {function()=} opt_callback The callback to execute when the display
+ *     info has been changed.
+ * @return {undefined}
+ */
+chrome.system.display.setDisplayProperties =
+    function(id, info, opt_callback) {};
 
 
 /**

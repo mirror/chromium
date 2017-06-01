@@ -4,7 +4,6 @@
 
 #include "core/css/CSSPropertyEquality.h"
 
-#include "core/animation/PropertyHandle.h"
 #include "core/css/CSSValue.h"
 #include "core/style/ComputedStyle.h"
 #include "core/style/DataEquivalency.h"
@@ -56,15 +55,10 @@ bool FillLayersEqual(const FillLayer& a_layers, const FillLayer& b_layers) {
 
 }  // namespace
 
-bool CSSPropertyEquality::PropertiesEqual(const PropertyHandle& property,
+bool CSSPropertyEquality::PropertiesEqual(CSSPropertyID prop,
                                           const ComputedStyle& a,
                                           const ComputedStyle& b) {
-  if (property.IsCSSCustomProperty()) {
-    const AtomicString& name = property.CustomPropertyName();
-    return DataEquivalent(a.GetRegisteredVariable(name),
-                          b.GetRegisteredVariable(name));
-  }
-  switch (property.CssProperty()) {
+  switch (prop) {
     case CSSPropertyBackgroundColor:
       return a.BackgroundColor() == b.BackgroundColor() &&
              a.VisitedLinkBackgroundColor() == b.VisitedLinkBackgroundColor();
@@ -382,6 +376,14 @@ bool CSSPropertyEquality::PropertiesEqual(const PropertyHandle& property,
       NOTREACHED();
       return true;
   }
+}
+
+bool CSSPropertyEquality::RegisteredCustomPropertiesEqual(
+    const AtomicString& property_name,
+    const ComputedStyle& a,
+    const ComputedStyle& b) {
+  return DataEquivalent(a.GetRegisteredVariable(property_name),
+                        b.GetRegisteredVariable(property_name));
 }
 
 }  // namespace blink

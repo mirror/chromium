@@ -29,8 +29,6 @@ namespace {
 
 static constexpr char kDefaultFontFamily[] = "sans-serif";
 
-static bool force_font_fallback_failure_for_testing_ = false;
-
 std::set<UChar32> CollectDifferentChars(base::string16 text) {
   std::set<UChar32> characters;
   for (base::i18n::UTF16CharIterator it(&text); !it.end(); it.Advance()) {
@@ -55,15 +53,6 @@ void UiTexture::DrawAndLayout(SkCanvas* canvas, const gfx::Size& texture_size) {
 bool UiTexture::HitTest(const gfx::PointF& point) const {
   return false;
 }
-
-void UiTexture::SetMode(ColorScheme::Mode mode) {
-  if (mode_ == mode)
-    return;
-  mode_ = mode;
-  OnSetMode();
-}
-
-void UiTexture::OnSetMode() {}
 
 std::vector<std::unique_ptr<gfx::RenderText>> UiTexture::PrepareDrawStringRect(
     const base::string16& text,
@@ -173,33 +162,20 @@ gfx::FontList UiTexture::GetDefaultFontList(int size) {
   return gfx::FontList(gfx::Font(kDefaultFontFamily, size));
 }
 
-bool UiTexture::GetFontList(int size,
-                            base::string16 text,
-                            gfx::FontList* font_list) {
-  if (force_font_fallback_failure_for_testing_)
-    return false;
-
+gfx::FontList UiTexture::GetFontList(int size, base::string16 text) {
   gfx::Font default_font(kDefaultFontFamily, size);
   std::vector<gfx::Font> fonts{default_font};
 
   std::set<std::string> names;
   // TODO(acondor): Query BrowserProcess to obtain the application locale.
   for (UChar32 c : CollectDifferentChars(text)) {
-    std::string name;
-    bool found_name = GetFallbackFontNameForChar(default_font, c, "", &name);
-    if (!found_name)
-      return false;
-    if (name.empty())
+    std::string name = GetFallbackFontNameForChar(default_font, c, "");
+    if (!name.empty())
       names.insert(name);
   }
   for (const auto& name : names)
     fonts.push_back(gfx::Font(name, size));
-  *font_list = gfx::FontList(fonts);
-  return true;
-}
-
-void UiTexture::SetForceFontFallbackFailureForTesting(bool force) {
-  force_font_fallback_failure_for_testing_ = force;
+  return gfx::FontList(fonts);
 }
 
 }  // namespace vr_shell

@@ -11,20 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.locale.DefaultSearchEngineDialogHelper;
 import org.chromium.chrome.browser.locale.LocaleManager;
-import org.chromium.chrome.browser.locale.LocaleManager.SearchEnginePromoType;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.widget.RadioButtonLayout;
 
 /** A {@link Fragment} that presents a set of search engines for the user to choose from. */
 public class DefaultSearchEngineFirstRunFragment
         extends FirstRunPage implements TemplateUrlService.LoadListener {
-    @SearchEnginePromoType
-    private Integer mSearchEnginePromoDialoType;
-    private boolean mShownRecorded;
+    private DefaultSearchEngineDialogHelper mHelper;
 
     /** Layout that displays the available search engines to the user. */
     private RadioButtonLayout mEngineLayout;
@@ -52,35 +48,14 @@ public class DefaultSearchEngineFirstRunFragment
     public void onTemplateUrlServiceLoaded() {
         TemplateUrlService.getInstance().unregisterLoadListener(this);
 
-        mSearchEnginePromoDialoType = LocaleManager.getInstance().getSearchEnginePromoShowType();
+        int dialogType = LocaleManager.getInstance().getSearchEnginePromoShowType();
         Runnable dismissRunnable = new Runnable() {
             @Override
             public void run() {
                 advanceToNextPage();
             }
         };
-        new DefaultSearchEngineDialogHelper(
-                mSearchEnginePromoDialoType, mEngineLayout, mButton, dismissRunnable);
-        if (getUserVisibleHint()) recordShown();
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) recordShown();
-    }
-
-    private void recordShown() {
-        if (mSearchEnginePromoDialoType == null) return;
-
-        if (mShownRecorded) return;
-
-        if (mSearchEnginePromoDialoType == LocaleManager.SEARCH_ENGINE_PROMO_SHOW_NEW) {
-            RecordUserAction.record("SearchEnginePromo.NewDevice.Shown.FirstRun");
-        } else if (mSearchEnginePromoDialoType == LocaleManager.SEARCH_ENGINE_PROMO_SHOW_EXISTING) {
-            RecordUserAction.record("SearchEnginePromo.ExistingDevice.Shown.FirstRun");
-        }
-
-        mShownRecorded = true;
+        mHelper = new DefaultSearchEngineDialogHelper(
+                dialogType, mEngineLayout, mButton, dismissRunnable);
     }
 }

@@ -61,7 +61,8 @@ static void DatabaseClosed(Database* database) {
 }
 
 DatabaseTracker& DatabaseTracker::Tracker() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(DatabaseTracker, tracker, ());
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(DatabaseTracker, tracker,
+                                  new DatabaseTracker);
   return tracker;
 }
 

@@ -34,6 +34,12 @@
 
 namespace blink {
 
+PassRefPtr<AnimatableTransform> AnimatableTransform::Create(
+    const TransformOperations& transform,
+    double zoom) {
+  return AdoptRef(new AnimatableTransform(transform, zoom));
+}
+
 PassRefPtr<AnimatableValue> AnimatableTransform::InterpolateTo(
     const AnimatableValue* value,
     double fraction) const {
@@ -41,6 +47,10 @@ PassRefPtr<AnimatableValue> AnimatableTransform::InterpolateTo(
   return AnimatableTransform::Create(
       transform.transform_.Blend(transform_, fraction),
       Blend(zoom_, transform.zoom_, fraction));
+}
+
+bool AnimatableTransform::EqualTo(const AnimatableValue* value) const {
+  return transform_ == ToAnimatableTransform(value)->transform_;
 }
 
 }  // namespace blink

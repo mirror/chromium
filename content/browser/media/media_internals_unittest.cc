@@ -16,7 +16,6 @@
 #include "base/test/test_message_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
-#include "components/ukm/test_ukm_recorder.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "media/base/audio_parameters.h"
 #include "media/base/channel_layout.h"
@@ -29,7 +28,6 @@
 namespace {
 const int kTestComponentID = 0;
 const char kTestDeviceID[] = "test-device-id";
-const char kTestOrigin[] = "https://test.google.com/";
 
 // This class encapsulates a MediaInternals reference. It also has some useful
 // methods to receive a callback, deserialize its associated data and expect
@@ -159,7 +157,8 @@ TEST_F(MediaInternalsVideoCaptureDeviceTest,
   // be updated at the same time as the media internals JS files.
   const float kFrameRate = 30.0f;
   const gfx::Size kFrameSize(1280, 720);
-  const media::VideoPixelFormat kPixelFormat = media::PIXEL_FORMAT_I420;
+  const media::VideoPixelFormat kPixelFormat =
+      media::PIXEL_FORMAT_I420;
   const media::VideoPixelStorage kPixelStorage = media::PIXEL_STORAGE_CPU;
   const media::VideoCaptureFormat capture_format(kFrameSize, kFrameRate,
                                                  kPixelFormat, kPixelStorage);
@@ -177,9 +176,10 @@ TEST_F(MediaInternalsVideoCaptureDeviceTest,
   const int kWidth = 1280;
   const int kHeight = 720;
   const float kFrameRate = 30.0f;
-  const media::VideoPixelFormat kPixelFormat = media::PIXEL_FORMAT_I420;
-  const media::VideoCaptureFormat format_hd({kWidth, kHeight}, kFrameRate,
-                                            kPixelFormat);
+  const media::VideoPixelFormat kPixelFormat =
+      media::PIXEL_FORMAT_I420;
+  const media::VideoCaptureFormat format_hd({kWidth, kHeight},
+      kFrameRate, kPixelFormat);
   media::VideoCaptureFormats formats{};
   formats.push_back(format_hd);
   media::VideoCaptureDeviceDescriptor descriptor;
@@ -343,11 +343,8 @@ class MediaInternalsWatchTimeTest : public testing::Test,
         internals_(content::MediaInternals::GetInstance()),
         media_log_(new DirectMediaLog(render_process_id_)),
         histogram_tester_(new base::HistogramTester()),
-        test_recorder_(new ukm::TestUkmRecorder()),
         watch_time_keys_(media::MediaLog::GetWatchTimeKeys()),
-        watch_time_power_keys_(media::MediaLog::GetWatchTimePowerKeys()) {
-    media_log_->AddEvent(media_log_->CreateCreatedEvent(kTestOrigin));
-  }
+        watch_time_power_keys_(media::MediaLog::GetWatchTimePowerKeys()) {}
 
   void Initialize(bool has_audio,
                   bool has_video,
@@ -381,24 +378,6 @@ class MediaInternalsWatchTimeTest : public testing::Test,
     }
   }
 
-  void ExpectMtbrTime(const std::vector<base::StringPiece>& keys,
-                      base::TimeDelta value) {
-    for (auto key : keys) {
-      histogram_tester_->ExpectUniqueSample(key.as_string(),
-                                            value.InMilliseconds(), 1);
-    }
-  }
-
-  void ExpectUkmWatchTime(size_t entry, size_t size, base::TimeDelta value) {
-    ASSERT_LT(entry, test_recorder_->entries_count());
-
-    const auto& metrics_vector = test_recorder_->GetEntry(entry)->metrics;
-    ASSERT_EQ(size, metrics_vector.size());
-
-    for (auto& sample : metrics_vector)
-      EXPECT_EQ(value.InMilliseconds(), sample->value);
-  }
-
   void ResetHistogramTester() {
     histogram_tester_.reset(new base::HistogramTester());
   }
@@ -410,7 +389,6 @@ class MediaInternalsWatchTimeTest : public testing::Test,
   MediaInternals* const internals_;
   std::unique_ptr<DirectMediaLog> media_log_;
   std::unique_ptr<base::HistogramTester> histogram_tester_;
-  std::unique_ptr<ukm::TestUkmRecorder> test_recorder_;
   std::unique_ptr<media::WatchTimeReporter> wtr_;
   const base::flat_set<base::StringPiece> watch_time_keys_;
   const base::flat_set<base::StringPiece> watch_time_power_keys_;
@@ -433,8 +411,6 @@ TEST_F(MediaInternalsWatchTimeTest, BasicAudio) {
   CycleWatchTimeReporter();
   ExpectWatchTime(std::vector<base::StringPiece>(), base::TimeDelta());
 
-  wtr_->OnUnderflow();
-  wtr_->OnUnderflow();
   CycleWatchTimeReporter();
   wtr_.reset();
 
@@ -443,13 +419,6 @@ TEST_F(MediaInternalsWatchTimeTest, BasicAudio) {
        media::MediaLog::kWatchTimeAudioEme, media::MediaLog::kWatchTimeAudioAc,
        media::MediaLog::kWatchTimeAudioEmbeddedExperience},
       kWatchTimeLate);
-  ExpectMtbrTime({media::MediaLog::kMeanTimeBetweenRebuffersAudioMse,
-                  media::MediaLog::kMeanTimeBetweenRebuffersAudioEme},
-                 kWatchTimeLate / 2);
-
-  ASSERT_EQ(1U, test_recorder_->sources_count());
-  ExpectUkmWatchTime(0, 4, kWatchTimeLate);
-  EXPECT_TRUE(test_recorder_->GetSourceForUrl(kTestOrigin));
 }
 
 TEST_F(MediaInternalsWatchTimeTest, BasicVideo) {
@@ -467,8 +436,6 @@ TEST_F(MediaInternalsWatchTimeTest, BasicVideo) {
   CycleWatchTimeReporter();
   ExpectWatchTime(std::vector<base::StringPiece>(), base::TimeDelta());
 
-  wtr_->OnUnderflow();
-  wtr_->OnUnderflow();
   CycleWatchTimeReporter();
   wtr_.reset();
 
@@ -478,13 +445,6 @@ TEST_F(MediaInternalsWatchTimeTest, BasicVideo) {
                    media::MediaLog::kWatchTimeAudioVideoAc,
                    media::MediaLog::kWatchTimeAudioVideoEmbeddedExperience},
                   kWatchTimeLate);
-  ExpectMtbrTime({media::MediaLog::kMeanTimeBetweenRebuffersAudioVideoSrc,
-                  media::MediaLog::kMeanTimeBetweenRebuffersAudioVideoEme},
-                 kWatchTimeLate / 2);
-
-  ASSERT_EQ(1U, test_recorder_->sources_count());
-  ExpectUkmWatchTime(0, 4, kWatchTimeLate);
-  EXPECT_TRUE(test_recorder_->GetSourceForUrl(kTestOrigin));
 }
 
 TEST_F(MediaInternalsWatchTimeTest, BasicPower) {
@@ -539,22 +499,6 @@ TEST_F(MediaInternalsWatchTimeTest, BasicPower) {
                                             kWatchTime3.InMilliseconds(), 1);
     }
   }
-
-  // Each finalize creates a new source and entry. We don't check the URL here
-  // since the TestUkmService() helpers DCHECK() a unique URL per source.
-  ASSERT_EQ(2U, test_recorder_->sources_count());
-  ASSERT_EQ(2U, test_recorder_->entries_count());
-  ExpectUkmWatchTime(0, 1, kWatchTime2);
-
-  // Verify Media.WatchTime keys are properly stripped for UKM reporting.
-  EXPECT_TRUE(test_recorder_->FindMetric(test_recorder_->GetEntry(0),
-                                         "AudioVideo.Battery"));
-
-  // Spot check one of the non-AC keys; this relies on the assumption that the
-  // AC metric is not last.
-  const auto& metrics_vector = test_recorder_->GetEntry(1)->metrics;
-  ASSERT_EQ(4U, metrics_vector.size());
-  EXPECT_EQ(kWatchTime3.InMilliseconds(), metrics_vector.back()->value);
 }
 
 TEST_F(MediaInternalsWatchTimeTest, BasicHidden) {
@@ -583,10 +527,6 @@ TEST_F(MediaInternalsWatchTimeTest, BasicHidden) {
        media::MediaLog::kWatchTimeAudioVideoBackgroundAc,
        media::MediaLog::kWatchTimeAudioVideoBackgroundEmbeddedExperience},
       kWatchTimeLate);
-
-  ASSERT_EQ(1U, test_recorder_->sources_count());
-  ExpectUkmWatchTime(0, 4, kWatchTimeLate);
-  EXPECT_TRUE(test_recorder_->GetSourceForUrl(kTestOrigin));
 }
 
 TEST_F(MediaInternalsWatchTimeTest, PlayerDestructionFinalizes) {
@@ -615,10 +555,6 @@ TEST_F(MediaInternalsWatchTimeTest, PlayerDestructionFinalizes) {
                    media::MediaLog::kWatchTimeAudioVideoAc,
                    media::MediaLog::kWatchTimeAudioVideoEmbeddedExperience},
                   kWatchTimeLate);
-
-  ASSERT_EQ(1U, test_recorder_->sources_count());
-  ExpectUkmWatchTime(0, 4, kWatchTimeLate);
-  EXPECT_TRUE(test_recorder_->GetSourceForUrl(kTestOrigin));
 }
 
 TEST_F(MediaInternalsWatchTimeTest, ProcessDestructionFinalizes) {
@@ -638,8 +574,6 @@ TEST_F(MediaInternalsWatchTimeTest, ProcessDestructionFinalizes) {
 
   CycleWatchTimeReporter();
 
-  // Also verify that if UKM has already been destructed, we don't crash.
-  test_recorder_.reset();
   internals_->OnProcessTerminatedForTesting(render_process_id_);
   ExpectWatchTime({media::MediaLog::kWatchTimeAudioVideoAll,
                    media::MediaLog::kWatchTimeAudioVideoSrc,

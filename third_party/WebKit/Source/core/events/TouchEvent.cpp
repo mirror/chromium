@@ -28,8 +28,8 @@
 
 #include "core/events/EventDispatcher.h"
 #include "core/frame/FrameConsole.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalDOMWindow.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLElement.h"
 #include "core/input/InputDeviceCapabilities.h"
 #include "core/inspector/ConsoleMessage.h"
@@ -178,7 +178,7 @@ void LogTouchTargetHistogram(EventTarget* event_target,
   }
 
   if (document) {
-    LocalFrameView* view = document->View();
+    FrameView* view = document->View();
     if (view && view->IsScrollable())
       result += kTouchTargetHistogramScrollableDocumentOffset;
   }
@@ -266,9 +266,9 @@ void TouchEvent::preventDefault() {
     case PassiveMode::kNotPassive:
     case PassiveMode::kNotPassiveDefault:
       if (!cancelable()) {
-        if (view() && view()->IsLocalDOMWindow() && view()->GetFrame()) {
+        if (view() && view()->GetFrame()) {
           UseCounter::Count(
-              ToLocalFrame(view()->GetFrame()),
+              view()->GetFrame(),
               UseCounter::kUncancelableTouchEventPreventDefaulted);
         }
 
@@ -277,9 +277,9 @@ void TouchEvent::preventDefault() {
                 WebInputEvent::
                     kListenersForcedNonBlockingDueToMainThreadResponsiveness) {
           // Non blocking due to main thread responsiveness.
-          if (view() && view()->IsLocalDOMWindow() && view()->GetFrame()) {
+          if (view() && view()->GetFrame()) {
             UseCounter::Count(
-                ToLocalFrame(view()->GetFrame()),
+                view()->GetFrame(),
                 UseCounter::
                     kUncancelableTouchEventDueToMainThreadResponsivenessPreventDefaulted);
           }
@@ -323,16 +323,16 @@ void TouchEvent::preventDefault() {
 
   if ((type() == EventTypeNames::touchstart ||
        type() == EventTypeNames::touchmove) &&
-      view() && view()->IsLocalDOMWindow() && view()->GetFrame() &&
+      view() && view()->GetFrame() &&
       current_touch_action_ == TouchAction::kTouchActionAuto) {
     switch (HandlingPassive()) {
       case PassiveMode::kNotPassiveDefault:
-        UseCounter::Count(ToLocalFrame(view()->GetFrame()),
+        UseCounter::Count(view()->GetFrame(),
                           UseCounter::kTouchEventPreventedNoTouchAction);
         break;
       case PassiveMode::kPassiveForcedDocumentLevel:
         UseCounter::Count(
-            ToLocalFrame(view()->GetFrame()),
+            view()->GetFrame(),
             UseCounter::kTouchEventPreventedForcedDocumentPassiveNoTouchAction);
         break;
       default:

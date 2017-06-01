@@ -87,7 +87,7 @@ void DirectoryLister::Start() {
 }
 
 void DirectoryLister::Cancel() {
-  core_->CancelOnOriginSequence();
+  core_->CancelOnOriginThread();
 }
 
 DirectoryLister::Core::Core(const base::FilePath& dir,
@@ -103,8 +103,8 @@ DirectoryLister::Core::Core(const base::FilePath& dir,
 
 DirectoryLister::Core::~Core() {}
 
-void DirectoryLister::Core::CancelOnOriginSequence() {
-  DCHECK(origin_task_runner_->RunsTasksInCurrentSequence());
+void DirectoryLister::Core::CancelOnOriginThread() {
+  DCHECK(origin_task_runner_->RunsTasksOnCurrentThread());
 
   base::subtle::NoBarrier_Store(&cancelled_, 1);
   // Core must not call into |lister_| after cancellation, as the |lister_| may
@@ -118,7 +118,7 @@ void DirectoryLister::Core::Start() {
 
   if (!base::DirectoryExists(dir_)) {
     origin_task_runner_->PostTask(
-        FROM_HERE, base::Bind(&Core::DoneOnOriginSequence, this,
+        FROM_HERE, base::Bind(&Core::DoneOnOriginThread, this,
                               base::Passed(std::move(directory_list)),
                               ERR_FILE_NOT_FOUND));
     return;
@@ -137,14 +137,13 @@ void DirectoryLister::Core::Start() {
   base::FilePath path;
   while (!(path = file_enum.Next()).empty()) {
     // Abort on cancellation. This is purely for performance reasons.
-    // Correctness guarantees are made by checks in DoneOnOriginSequence.
+    // Correctness guarantees are made by checks in DoneOnOriginThread.
     if (IsCancelled())
       return;
 
     DirectoryListerData data;
     data.info = file_enum.GetInfo();
     data.path = path;
-    data.absolute_path = base::MakeAbsoluteFilePath(path);
     directory_list->push_back(data);
 
     /* TODO(brettw) bug 24107: It would be nice to send incremental updates.
@@ -166,7 +165,7 @@ void DirectoryLister::Core::Start() {
   SortData(directory_list.get(), type_);
 
   origin_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&Core::DoneOnOriginSequence, this,
+      FROM_HERE, base::Bind(&Core::DoneOnOriginThread, this,
                             base::Passed(std::move(directory_list)), OK));
 }
 
@@ -174,10 +173,10 @@ bool DirectoryLister::Core::IsCancelled() const {
   return !!base::subtle::NoBarrier_Load(&cancelled_);
 }
 
-void DirectoryLister::Core::DoneOnOriginSequence(
+void DirectoryLister::Core::DoneOnOriginThread(
     std::unique_ptr<DirectoryList> directory_list,
     int error) const {
-  DCHECK(origin_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(origin_task_runner_->RunsTasksOnCurrentThread());
 
   // Need to check if the operation was before first callback.
   if (IsCancelled())

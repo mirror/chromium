@@ -48,7 +48,9 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/grit/chromium_strings.h"
+#include "chrome/grit/theme_resources.h"
 #include "components/bookmarks/common/bookmark_pref_names.h"
+#include "components/grit/components_scaled_resources.h"
 #import "components/omnibox/browser/omnibox_popup_model.h"
 #include "components/prefs/pref_service.h"
 #include "components/search_engines/template_url.h"
@@ -74,6 +76,10 @@
 using content::WebContents;
 
 namespace {
+
+// Vertical space between the bottom edge of the location_bar and the first run
+// bubble arrow point.
+const static int kFirstRunBubbleYOffset = 1;
 
 const int kDefaultIconSize = 16;
 
@@ -650,13 +656,9 @@ void LocationBarViewMac::ShowFirstRunBubbleInternal() {
   if (!field_ || ![field_ window])
     return;
 
-  // Point the bubble's arrow at the middle of the page info icon. The x offset
-  // isn't the exact center, but this behavior matches other platforms and it
-  // looks better in practice since the arrow ends up between the handle and
-  // lens of the magnifying glass.
-  const NSPoint kOffset = NSMakePoint(
-      info_bubble::kBubbleArrowXOffset,
-      NSHeight([field_ frame]) / 2.0 - info_bubble::kBubbleArrowHeight);
+  // Point the bubble's arrow at the middle of the bottom of the page info icon.
+  const NSPoint kOffset =
+      NSMakePoint(info_bubble::kBubbleArrowXOffset, kFirstRunBubbleYOffset);
   [FirstRunBubbleController showForView:field_
                                  offset:kOffset
                                 browser:browser_

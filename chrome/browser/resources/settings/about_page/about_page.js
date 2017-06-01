@@ -72,8 +72,7 @@ Polymer({
     /** @private */
     showCheckUpdates_: {
       type: Boolean,
-      computed: 'computeShowCheckUpdates_(' +
-          'currentUpdateStatusEvent_, hasCheckedForUpdates_)',
+      computed: 'computeShowCheckUpdates_(currentUpdateStatusEvent_)',
     },
 
     /** @private {!Map<string, string>} */
@@ -175,9 +174,9 @@ Polymer({
    */
   onUpdateStatusChanged_: function(event) {
 // <if expr="chromeos">
-    if (event.status == UpdateStatus.CHECKING) {
+    if (event.status == UpdateStatus.CHECKING)
       this.hasCheckedForUpdates_ = true;
-    } else if (event.status == UpdateStatus.NEED_PERMISSION_TO_UPDATE) {
+    else if (event.status == UpdateStatus.NEED_PERMISSION_TO_UPDATE) {
       this.showUpdateWarningDialog_ = true;
       this.updateInfo_ = {version: event.version, size: event.size};
     }
@@ -230,10 +229,9 @@ Polymer({
   /** @private */
   updateShowUpdateStatus_: function() {
 // <if expr="chromeos">
-    // Do not show the "updated" status if we haven't checked yet or the update
-    // warning dialog is shown to user.
+    // Assume the "updated" status is stale if we haven't checked yet.
     if (this.currentUpdateStatusEvent_.status == UpdateStatus.UPDATED &&
-        (!this.hasCheckedForUpdates_ || this.showUpdateWarningDialog_)) {
+        !this.hasCheckedForUpdates_) {
       this.showUpdateStatus_ = false;
       return;
     }
@@ -276,8 +274,14 @@ Polymer({
   getUpdateStatusMessage_: function() {
     switch (this.currentUpdateStatusEvent_.status) {
       case UpdateStatus.CHECKING:
-      case UpdateStatus.NEED_PERMISSION_TO_UPDATE:
         return this.i18n('aboutUpgradeCheckStarted');
+      case UpdateStatus.NEED_PERMISSION_TO_UPDATE:
+        // This status is immediately followed by an reporting error status.
+        // When update engine reports error, UI just shows that your device is
+        // up to date. This is a bug that needs to be fixed in the future.
+        // TODO(weidongg/581071): Show proper message when update engine aborts
+        // due to cellular connection.
+        return '';
       case UpdateStatus.NEARLY_UPDATED:
 // <if expr="chromeos">
         if (this.currentChannel_ != this.targetChannel_)
@@ -419,7 +423,8 @@ Polymer({
     var staleUpdatedStatus = !this.hasCheckedForUpdates_ &&
         this.checkStatus_(UpdateStatus.UPDATED);
 
-    return staleUpdatedStatus || this.checkStatus_(UpdateStatus.FAILED);
+    return staleUpdatedStatus || this.checkStatus_(UpdateStatus.FAILED) ||
+        this.checkStatus_(UpdateStatus.NEED_PERMISSION_TO_UPDATE);
   },
 
   /**
@@ -433,9 +438,6 @@ Polymer({
   /** @private */
   onUpdateWarningDialogClose_: function() {
     this.showUpdateWarningDialog_ = false;
-    // Shows 'check for updates' button in case that the user cancels the
-    // dialog and then intends to check for update again.
-    this.hasCheckedForUpdates_ = false;
   },
 // </if>
 

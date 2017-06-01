@@ -244,11 +244,6 @@ SVGLengthTearOff::SVGLengthTearOff(SVGLength* target,
                                     property_is_anim_val,
                                     attribute_name) {}
 
-SVGLengthTearOff* SVGLengthTearOff::CreateDetached() {
-  return Create(SVGLength::Create(), nullptr, kPropertyIsNotAnimVal,
-                QualifiedName::Null());
-}
-
 DEFINE_TRACE_WRAPPERS(SVGLengthTearOff) {
   visitor->TraceWrappers(contextElement());
 }

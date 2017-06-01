@@ -11,7 +11,6 @@
 #include "base/files/file_util.h"
 #include "base/json/json_string_value_serializer.h"
 #include "base/memory/ptr_util.h"
-#include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
 #include "base/strings/string_util.h"
 #include "base/threading/sequenced_task_runner_handle.h"
@@ -45,18 +44,7 @@ namespace settings {
 
 namespace {
 
-// These values are written to logs.  New enum values can be added, but existing
-// enums must never be renumbered or deleted and reused.
-enum PpdSourceForHistogram { kUser = 0, kScs = 1, kPpdSourceMax };
-
-void RecordPpdSource(const PpdSourceForHistogram& source) {
-  UMA_HISTOGRAM_ENUMERATION("Printing.CUPS.PpdSource", source, kPpdSourceMax);
-}
-
-void OnRemovedPrinter(const Printer::PrinterProtocol& protocol, bool success) {
-  UMA_HISTOGRAM_ENUMERATION("Printing.CUPS.PrinterRemoved", protocol,
-                            Printer::PrinterProtocol::kProtocolMax);
-}
+void OnRemovedPrinter(bool success) {}
 
 std::unique_ptr<base::DictionaryValue> GetPrinterInfo(const Printer& printer) {
   std::unique_ptr<base::DictionaryValue> printer_info =
@@ -187,19 +175,12 @@ void CupsPrintersHandler::HandleRemoveCupsPrinter(const base::ListValue* args) {
   std::string printer_name;
   CHECK(args->GetString(0, &printer_id));
   CHECK(args->GetString(1, &printer_name));
-  PrintersManager* prefs =
-      PrintersManagerFactory::GetForBrowserContext(profile_);
-  auto printer = prefs->GetPrinter(printer_id);
-  if (!printer)
-    return;
-
-  Printer::PrinterProtocol protocol = printer->GetProtocol();
-  prefs->RemovePrinter(printer_id);
+  PrintersManagerFactory::GetForBrowserContext(profile_)->RemovePrinter(
+      printer_id);
 
   chromeos::DebugDaemonClient* client =
       chromeos::DBusThreadManager::Get()->GetDebugDaemonClient();
-  client->CupsRemovePrinter(printer_name,
-                            base::Bind(&OnRemovedPrinter, protocol),
+  client->CupsRemovePrinter(printer_name, base::Bind(&OnRemovedPrinter),
                             base::Bind(&base::DoNothing));
 }
 
@@ -244,7 +225,6 @@ void CupsPrintersHandler::HandleAddCupsPrinter(const base::ListValue* args) {
 
   // Verify a valid ppd path is present.
   if (!printer_ppd_path.empty()) {
-    RecordPpdSource(kUser);
     GURL tmp = net::FilePathToFileURL(base::FilePath(printer_ppd_path));
     if (!tmp.is_valid()) {
       LOG(ERROR) << "Invalid ppd path: " << printer_ppd_path;
@@ -253,7 +233,6 @@ void CupsPrintersHandler::HandleAddCupsPrinter(const base::ListValue* args) {
     }
     printer->mutable_ppd_reference()->user_supplied_ppd_url = tmp.spec();
   } else if (!printer_manufacturer.empty() && !printer_model.empty()) {
-    RecordPpdSource(kScs);
     // Using the manufacturer and model, get a ppd reference.
     if (!ppd_provider_->GetPpdReference(printer_manufacturer, printer_model,
                                         printer->mutable_ppd_reference())) {
@@ -276,43 +255,36 @@ void CupsPrintersHandler::OnAddedPrinter(
     std::unique_ptr<Printer> printer,
     chromeos::PrinterSetupResult result_code) {
   std::string printer_name = printer->display_name();
-  UMA_HISTOGRAM_ENUMERATION("Printing.CUPS.PrinterSetupResult", result_code,
-                            chromeos::PrinterSetupResult::kMaxValue);
   switch (result_code) {
-    case chromeos::PrinterSetupResult::kSuccess: {
-      UMA_HISTOGRAM_ENUMERATION("Printing.CUPS.PrinterAdded",
-                                printer->GetProtocol(), Printer::kProtocolMax);
+    case chromeos::PrinterSetupResult::SUCCESS: {
       auto* manager = PrintersManagerFactory::GetForBrowserContext(profile_);
       manager->PrinterInstalled(*printer);
       manager->RegisterPrinter(std::move(printer));
       break;
     }
-    case chromeos::PrinterSetupResult::kPpdNotFound:
+    case chromeos::PrinterSetupResult::PPD_NOT_FOUND:
       LOG(WARNING) << "Could not locate requested PPD";
       break;
-    case chromeos::PrinterSetupResult::kPpdTooLarge:
+    case chromeos::PrinterSetupResult::PPD_TOO_LARGE:
       LOG(WARNING) << "PPD is too large";
       break;
-    case chromeos::PrinterSetupResult::kPpdUnretrievable:
+    case chromeos::PrinterSetupResult::PPD_UNRETRIEVABLE:
       LOG(WARNING) << "Could not retrieve PPD from server";
       break;
-    case chromeos::PrinterSetupResult::kInvalidPpd:
+    case chromeos::PrinterSetupResult::INVALID_PPD:
       LOG(WARNING) << "Provided PPD is invalid.";
       break;
-    case chromeos::PrinterSetupResult::kPrinterUnreachable:
+    case chromeos::PrinterSetupResult::PRINTER_UNREACHABLE:
       LOG(WARNING) << "Could not contact printer for configuration";
       break;
-    case chromeos::PrinterSetupResult::kDbusError:
-    case chromeos::PrinterSetupResult::kFatalError:
+    case chromeos::PrinterSetupResult::DBUS_ERROR:
+    case chromeos::PrinterSetupResult::FATAL_ERROR:
       LOG(ERROR) << "Unrecoverable error.  Reboot required.";
-      break;
-    case chromeos::PrinterSetupResult::kMaxValue:
-      NOTREACHED() << "This is not an expected value";
       break;
   }
   CallJavascriptFunction(
       "cr.webUIListenerCallback", base::Value("on-add-cups-printer"),
-      base::Value(result_code == chromeos::PrinterSetupResult::kSuccess),
+      base::Value(result_code == chromeos::PrinterSetupResult::SUCCESS),
       base::Value(printer_name));
 }
 
@@ -438,8 +410,7 @@ void CupsPrintersHandler::OnPrintersFound(
   FireWebUIListener("on-printer-discovered", *printers_list);
 }
 
-void CupsPrintersHandler::OnDiscoveryInitialScanDone(int printer_count) {
-  UMA_HISTOGRAM_COUNTS_100("Printing.CUPS.PrintersDiscovered", printer_count);
+void CupsPrintersHandler::OnDiscoveryInitialScanDone() {
   FireWebUIListener("on-printer-discovery-done");
 }
 

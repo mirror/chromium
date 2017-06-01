@@ -35,10 +35,10 @@
 #include "core/clipboard/DataTransferAccessPolicy.h"
 #include "core/dom/Document.h"
 #include "core/dom/DocumentFragment.h"
+#include "core/dom/DocumentUserGestureToken.h"
 #include "core/dom/Element.h"
 #include "core/dom/Node.h"
 #include "core/dom/Text.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/dom/shadow/ShadowRoot.h"
 #include "core/editing/DragCaret.h"
 #include "core/editing/EditingUtilities.h"
@@ -47,8 +47,8 @@
 #include "core/editing/commands/DragAndDropCommand.h"
 #include "core/editing/serializers/Serialization.h"
 #include "core/events/TextEvent.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLAnchorElement.h"
 #include "core/html/HTMLFormElement.h"
@@ -222,7 +222,7 @@ void DragController::DragEnded() {
 void DragController::DragExited(DragData* drag_data, LocalFrame& local_root) {
   DCHECK(drag_data);
 
-  LocalFrameView* frame_view(local_root.View());
+  FrameView* frame_view(local_root.View());
   if (frame_view) {
     DataTransferAccessPolicy policy = kDataTransferTypesReadable;
     DataTransfer* data_transfer = CreateDraggingDataTransfer(policy, drag_data);
@@ -242,7 +242,7 @@ bool DragController::PerformDrag(DragData* drag_data, LocalFrame& local_root) {
   DCHECK(drag_data);
   document_under_mouse_ =
       local_root.DocumentAtPoint(drag_data->ClientPosition());
-  UserGestureIndicator gesture(UserGestureToken::Create(
+  UserGestureIndicator gesture(DocumentUserGestureToken::Create(
       document_under_mouse_, UserGestureToken::kNewGesture));
   if ((drag_destination_action_ & kDragDestinationActionDHTML) &&
       document_is_handling_drag_) {
@@ -383,7 +383,7 @@ bool DragController::TryDocumentDrag(DragData* drag_data,
 
   // It's unclear why this check is after tryDHTMLDrag.
   // We send drag events in tryDHTMLDrag and that may be the reason.
-  LocalFrameView* frame_view = document_under_mouse_->View();
+  FrameView* frame_view = document_under_mouse_->View();
   if (!frame_view)
     return false;
 
@@ -1018,7 +1018,7 @@ static std::unique_ptr<DragImage> DragImageForImage(
 
   InterpolationQuality interpolation_quality =
       element->EnsureComputedStyle()->ImageRendering() ==
-              EImageRendering::kPixelated
+              kImageRenderingPixelated
           ? kInterpolationNone
           : kInterpolationHigh;
   RespectImageOrientationEnum should_respect_image_orientation =
@@ -1213,7 +1213,7 @@ void DragController::DoSystemDrag(DragImage* image,
   did_initiate_drag_ = true;
   drag_initiator_ = frame->GetDocument();
 
-  LocalFrameView* main_frame_view = frame->LocalFrameRoot().View();
+  FrameView* main_frame_view = frame->LocalFrameRoot().View();
   IntPoint adjusted_drag_location = main_frame_view->RootFrameToContents(
       frame->View()->ContentsToRootFrame(drag_location));
   IntPoint adjusted_event_pos = main_frame_view->RootFrameToContents(

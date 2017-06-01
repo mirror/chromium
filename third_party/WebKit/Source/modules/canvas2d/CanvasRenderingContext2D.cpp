@@ -54,8 +54,8 @@
 #include "modules/canvas2d/HitRegion.h"
 #include "modules/canvas2d/Path2D.h"
 #include "platform/fonts/FontCache.h"
-#include "platform/graphics/CanvasHeuristicParameters.h"
 #include "platform/graphics/DrawLooperBuilder.h"
+#include "platform/graphics/ExpensiveCanvasHeuristicParameters.h"
 #include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/StrokeData.h"
 #include "platform/graphics/paint/PaintCanvas.h"
@@ -291,6 +291,10 @@ CanvasPixelFormat CanvasRenderingContext2D::PixelFormat() const {
   return color_params().pixel_format();
 }
 
+ColorBehavior CanvasRenderingContext2D::DrawImageColorBehavior() const {
+  return CanvasRenderingContext::ColorBehaviorForMediaDrawnToCanvas();
+}
+
 void CanvasRenderingContext2D::Reset() {
   // This is a multiple inherritance bootstrap
   BaseRenderingContext2D::Reset();
@@ -362,7 +366,7 @@ void CanvasRenderingContext2D::DidDraw(const SkIRect& dirty_rect) {
   if (dirty_rect.isEmpty())
     return;
 
-  if (CanvasHeuristicParameters::kBlurredShadowsAreExpensive &&
+  if (ExpensiveCanvasHeuristicParameters::kBlurredShadowsAreExpensive &&
       GetState().ShouldDrawShadows() && GetState().ShadowBlur() > 0) {
     ImageBuffer* buffer = GetImageBuffer();
     if (buffer)
@@ -733,6 +737,7 @@ void CanvasRenderingContext2D::setDirection(const String& direction_string) {
 void CanvasRenderingContext2D::fillText(const String& text,
                                         double x,
                                         double y) {
+  TrackDrawCall(kFillText);
   DrawTextInternal(text, x, y, CanvasRenderingContext2DState::kFillPaintType);
 }
 
@@ -740,6 +745,7 @@ void CanvasRenderingContext2D::fillText(const String& text,
                                         double x,
                                         double y,
                                         double max_width) {
+  TrackDrawCall(kFillText);
   DrawTextInternal(text, x, y, CanvasRenderingContext2DState::kFillPaintType,
                    &max_width);
 }
@@ -747,6 +753,7 @@ void CanvasRenderingContext2D::fillText(const String& text,
 void CanvasRenderingContext2D::strokeText(const String& text,
                                           double x,
                                           double y) {
+  TrackDrawCall(kStrokeText);
   DrawTextInternal(text, x, y, CanvasRenderingContext2DState::kStrokePaintType);
 }
 
@@ -754,6 +761,7 @@ void CanvasRenderingContext2D::strokeText(const String& text,
                                           double x,
                                           double y,
                                           double max_width) {
+  TrackDrawCall(kStrokeText);
   DrawTextInternal(text, x, y, CanvasRenderingContext2DState::kStrokePaintType,
                    &max_width);
 }
@@ -1154,6 +1162,38 @@ unsigned CanvasRenderingContext2D::HitRegionsCount() const {
     return hit_region_manager_->GetHitRegionsCount();
 
   return 0;
+}
+
+bool CanvasRenderingContext2D::IsAccelerationOptimalForCanvasContent() const {
+  // Heuristic to determine if the GPU accelerated rendering pipeline is optimal
+  // for performance based on past usage. It has a bias towards suggesting that
+  // the accelerated pipeline is optimal.
+
+  float accelerated_cost = EstimateRenderingCost(
+      ExpensiveCanvasHeuristicParameters::kAcceleratedModeIndex);
+
+  float recording_cost = EstimateRenderingCost(
+      ExpensiveCanvasHeuristicParameters::kRecordingModeIndex);
+
+  float cost_difference = accelerated_cost - recording_cost;
+  float percent_cost_reduction = cost_difference / accelerated_cost * 100.0;
+  float cost_difference_per_frame =
+      cost_difference / usage_counters_.num_frames_since_reset;
+
+  if (percent_cost_reduction >=
+          ExpensiveCanvasHeuristicParameters::
+              kMinPercentageImprovementToSuggestDisableAcceleration &&
+      cost_difference_per_frame >=
+          ExpensiveCanvasHeuristicParameters::
+              kMinCostPerFrameImprovementToSuggestDisableAcceleration) {
+    return false;
+  }
+  return true;
+}
+
+void CanvasRenderingContext2D::ResetUsageTracking() {
+  UsageCounters new_counters;
+  usage_counters_ = new_counters;
 }
 
 }  // namespace blink

@@ -173,6 +173,9 @@ CHAR-LIMIT guidelines:
       <message name="IDS_NO_THANKS" desc="Generic label to say no thanks for a feature. [CHAR-LIMIT=32]">
         No Thanks
       </message>
+      <message name="IDS_ENABLE" desc="Generic label to enable a feature. [CHAR-LIMIT=32]">
+        Enable
+      </message>
       <message name="IDS_NEXT" desc="Generic label for a button to advance to the next item. [CHAR-LIMIT=20]">
         Next
       </message>
@@ -594,10 +597,10 @@ Your Google account may have other forms of browsing history like searches and a
         Clears history and autocompletions in the address bar.
       </message>
       <message name="IDS_CLEAR_BROWSING_HISTORY_SUMMARY_SIGNED_IN" desc="A text explaining other forms of activity for signed in users.">
-        Clears history and autocompletions in the address bar. Your Google Account may have other forms of browsing history at <ph name="BEGIN_LINK">&lt;link&gt;</ph>myactivity.google.com<ph name="END_LINK">&lt;/link&gt;</ph>.
+        Clears history and autocompletions in the address bar. Manage other activity at <ph name="BEGIN_LINK">&lt;link&gt;</ph>myactivity.google.com<ph name="END_LINK">&lt;/link&gt;</ph>.
       </message>
       <message name="IDS_CLEAR_BROWSING_HISTORY_SUMMARY_SYNCED" desc="A text for the basic tab explaining browsing history for users with history sync.">
-        Clears history from all signed-in devices. Your Google Account may have other forms of browsing history at <ph name="BEGIN_LINK">&lt;link&gt;</ph>myactivity.google.com<ph name="END_LINK">&lt;/link&gt;</ph>.
+        Clears Chrome browsing history from all signed-in devices. Manage other activity at <ph name="BEGIN_LINK">&lt;link&gt;</ph>myactivity.google.com<ph name="END_LINK">&lt;/link&gt;</ph>.
       </message>
       <message name="IDS_CLEAR_PASSWORDS_TITLE" desc="Title for Clear Passwords in Clear Browsing Data preference">
         Saved passwords
@@ -671,9 +674,6 @@ Your Google account may have other forms of browsing history like searches and a
       <message name="IDS_ANDROID_HISTORY_OTHER_FORMS_OF_HISTORY" desc="The notification at the top of the history page indicating that deleting Chrome browsing history will not delete other forms of history stored at Google My Activity.">
         Your Google Account may have other forms of browsing history at <ph name="BEGIN_LINK">&lt;link&gt;</ph>history.google.com<ph name="END_LINK">&lt;/link&gt;</ph>.
       </message>
-      <message name="IDS_ANDROID_HISTORY_OTHER_FORMS_OF_HISTORY_NEW" desc="The notification at the top of the history page indicating that deleting Chrome browsing history will not delete other forms of history stored at Google My Activity.">
-        Your Google Account may have other forms of browsing history at <ph name="BEGIN_LINK">&lt;link&gt;</ph>myactivity.google.com<ph name="END_LINK">&lt;/link&gt;</ph>.
-      </message>
       <message name="IDS_ANDROID_HISTORY_BLOCKED_SITE" desc="The text displayed in the history page indicating that a visit to a web site was blocked due to an administrator policy.">
         Blocked site
       </message>
@@ -686,6 +686,9 @@ Your Google account may have other forms of browsing history like searches and a
       </message>
 
       <!-- Suggestions preferences -->
+      <message name="IDS_PREFS_SUGGESTIONS" desc="Title for the Suggestions preferences. [CHAR-LIMIT=32]" translateable="false">
+        Suggestions
+      </message>
       <message name="IDS_SUGGESTIONS_FEATURE_SWITCH_TITLE" desc="Title for switch used to toggle the Content Suggestions feature on or off." translateable="false">
         Suggestions
       </message>
@@ -824,6 +827,9 @@ Your Google account may have other forms of browsing history like searches and a
       </message>
       <message name="IDS_ACCESSIBILITY_COLLAPSED_GROUP" desc="The accessibility text to read when the selected widget is collapsed.">
         Collapsed - click to expand.
+      </message>
+      <message name="IDS_WEBSITE_SETTINGS_CATEGORY_BLOCKED_RECOMMENDED" desc="Summary text explaining that a permission is blocked, which is the recommended setting.">
+        Blocked (recommended)
       </message>
       <message name="IDS_WEBSITE_SETTINGS_CATEGORY_ALLOWED_RECOMMENDED" desc="Summary text explaining that a permission is allowed, which is the recommended setting.">
         Allowed (recommended)
@@ -1737,18 +1743,6 @@ To obtain new licenses, connect to the internet and play your downloaded content
       <message name="IDS_BROWSER_ACTIONS_SHARE" desc="Browser Actions menu item to share the url address of the selected link. [CHAR-LIMIT=30]">
         Share...
       </message>
-      <message name="IDS_BROWSER_ACTIONS_OPEN_IN_BACKGROUND_TOAST_MESSAGE" desc="Browser Actions toast message when to open a link in new Chrome tab in the backgoround. [CHAR-LIMIT=30]">
-        Link opened in Chrome
-      </message>
-      <message name="IDS_BROWSER_ACTIONS_SINGLE_LINK_OPEN_NOTIFICATION_TITLE" desc="Content title displayed in the notification when one link is opened in the background from Browser Actions. [CHAR-LIMIT=30]">
-        Link opened in Chrome
-      </message>
-      <message name="IDS_BROWSER_ACTIONS_MULTI_LINKS_OPEN_NOTIFICATION_TITLE" desc="Content title displayed in the notification when multiple links are opened in the background from Browser Actions. [CHAR-LIMIT=30]">
-        Multiple links opened in Chrome
-      </message>
-      <message name="IDS_BROWSER_ACTIONS_NOTIFICATION_TEXT" desc="Context text displayed in the notification when links are opened in the background from Browser Actions. [CHAR-LIMIT=30]">
-        Tap to view
-      </message>
 
       <!-- App banner strings -->
       <message name="IDS_APP_BANNER_INSTALLING" desc="Button text indicating that an application is being installed. [CHAR-LIMIT=25]">
@@ -2247,6 +2241,9 @@ To obtain new licenses, connect to the internet and play your downloaded content
       </message>
 
       <!-- New Tab Page strings -->
+      <message name="IDS_NTP_BOOKMARKS" desc="Text for bookmarks button [CHAR-LIMIT=20]">
+        Bookmarks
+      </message>
       <message name="IDS_RECENT_TABS" desc="Text for button to show 'Recent tabs', i.e. recently closed tabs and tabs that are open on other devices [CHAR-LIMIT=20]">
         Recent tabs
       </message>
@@ -2295,6 +2292,9 @@ To obtain new licenses, connect to the internet and play your downloaded content
       <message name="IDS_RECENT_TABS_HIDE_MENU_OPTION" desc="Context menu option to remove a foreign session.">
         Hide for now
       </message>
+      <message name="IDS_RECENT_TABS_SHOW_MORE" desc="Text shown on the button that shows all the currently open tabs in recent tabs page.">
+        More
+      </message>
       <message name="IDS_RECENTLY_CLOSED" desc="Header for the list of recently closed tabs">
         Recently closed
       </message>
@@ -2340,6 +2340,9 @@ To obtain new licenses, connect to the internet and play your downloaded content
       </message>
       <message name="IDS_MENU_UPDATE_SUMMARY_DEFAULT" desc="Summary string for update menu item explaining that a newer version of Chrome is available. [CHAR-LIMIT=30]">
         Newer version is available
+      </message>
+      <message name="IDS_MENU_UPDATE_SUMMARY_NEW_FEATURES" desc="Summary string for update menu item explaining that new features are available. [CHAR-LIMIT=30]">
+        Get the latest features
       </message>
       <message name="IDS_MENU_MOVE_TO_OTHER_WINDOW" desc="Menu item for moving the current tab into the other window. [CHAR-LIMIT=27]">
         Move to other window
@@ -2512,26 +2515,6 @@ To obtain new licenses, connect to the internet and play your downloaded content
         Offline
       </message>
 
-      <!-- Omnibox Placeholder Experiment -->
-      <message name="IDS_SEARCH_OR_TYPE_WEBSITE_NAME" desc="Prompt to enter text into the text field that will either perform web searches or navigate to a URL. [CHAR-LIMIT=38]">
-        Search or type website name
-      </message>
-      <message name="IDS_SEARCH_THE_WEB" desc="Prompt to enter text into the text field that will either perform web searches or navigate to a URL. [CHAR-LIMIT=38]">
-        Search the web
-      </message>
-      <message name="IDS_ENTER_A_SEARCH_OR_WEBSITE" desc="Prompt to enter text into the text field that will either perform web searches or navigate to a URL. [CHAR-LIMIT=38]">
-        Enter a search or website
-      </message>
-      <message name="IDS_SEARCH_NEWS" desc="Prompt to enter text into the text field that will either perform web searches or navigate to a URL, with a suggestion of searching news. [CHAR-LIMIT=38]">
-        Search… news
-      </message>
-      <message name="IDS_SEARCH_RECIPES" desc="Prompt to enter text into the text field that will either perform web searches or navigate to a URL, with a suggestion of searching recipes. [CHAR-LIMIT=38]">
-        Search… recipes
-      </message>
-      <message name="IDS_SEARCH_WEATHER" desc="Prompt to enter text into the text field that will either perform web searches or navigate to a URL, with a suggestion of searching weather. [CHAR-LIMIT=38]">
-        Search… weather
-      </message>
-
       <!-- Voice search -->
       <message name="IDS_VOICE_SEARCH_ERROR" desc="Toast when the voice search activity couldn't be started. [CHAR-LIMIT=40]">
         No enabled voice search available
@@ -2539,6 +2522,9 @@ To obtain new licenses, connect to the internet and play your downloaded content
 
       <message name="IDS_OPEN_IN_NEW_TAB_TOAST" desc="Toast displayed after a tab is opened in the background on a low end device.">
         Tab opened in background.
+      </message>
+      <message name="IDS_CONTEXTMENU_COPY_URL" desc="Context menu item for copying the url for query in the omnibox. [CHAR-LIMIT=30]">
+        Copy URL
       </message>
       <message name="IDS_MENU_OPEN_IN_CHROME" desc="Context sensitive menu item for opening a link in Chrome. [CHAR-LIMIT=30]">
         Open in Chrome
@@ -2673,6 +2659,9 @@ To obtain new licenses, connect to the internet and play your downloaded content
         {NUM_SELECTED, plural,
           =1 {Remove 1 selected item}
           other {Remove # selected items}}
+      </message>
+      <message name="IDS_SELECTED" desc="A label for the number of items selected.">
+        selected
       </message>
 
       <message name="IDS_MEDIA_NOTIFICATION_LINK_TEXT" desc="Url of the current tab. The notification will display this text for the user to identify the tab to return to.">
@@ -2915,8 +2904,16 @@ You must have Bluetooth and Location turned on in order to use the Physical Web.
       </message>
 
       <!-- WebAPK related strings -->
-      <message name="IDS_WEBAPK_RUNNING_IN_CHROME_DISCLOSURE" desc="Message on the notification that indicates a WebApk may use Chrome data.">
-        <ph name="APP_NAME">%1$s<ex>YouTube</ex></ph> is running in Chrome.
+      <message name="IDS_WEBAPK_UNKNOWN_SOURCES_DIALOG_TITLE" desc="Title of dialog warning user that installation from Unknown sources is required for WebAPK experiment.">
+        Improved Add to Home screen Experiment
+      </message>
+
+      <message name="IDS_WEBAPK_UNKNOWN_SOURCES_DIALOG_MESSAGE" desc="Text of dialog warning user that installation from Unknown sources is required for WebAPK experiment">
+        Turn on “Unknown sources” in Android security settings to try "Improved Add to Home screen" experiment. Be sure to disable this setting when you’re done trying it out.
+      </message>
+
+      <message name="IDS_WEBAPK_UNKNOWN_SOURCES_SETTINGS_BUTTON" desc="Button label for opening Android Settings from dialog warning user that installation from Unknown sources is required for WebAPK experiment.">
+        Settings
       </message>
 
       <!-- Keyboard shortcuts in Android N-->
@@ -3050,36 +3047,6 @@ You must have Bluetooth and Location turned on in order to use the Physical Web.
       <!-- Chrome Home -->
       <message name="IDS_BOTTOM_SHEET_HELP_BUBBLE_MESSAGE" desc="Text displayed in a help bubble above the bottom navigation sheet prompting users to pull the sheet up to see their bookmarks and other content.">
         Pull up to see bookmarks and more
-      </message>
-      <message name="IDS_BOTTOM_SHEET_ACCESSIBILITY_HELP_BUBBLE_MESSAGE" desc="Text displayed in a help bubble above the bottom navigation sheet prompting users to pull the sheet up to see their bookmarks and other content when accessibility is enabled.">
-        Pull up on the address bar to see bookmarks, downloads, and history
-      </message>
-      <message name="IDS_BOTTOM_SHEET_ACCESSIBILITY_TOOLBAR" desc="Accessibilty string read when the bottom toolbar, containing the adddress bar and some buttons, is focused. Informs users that they can pull up on the address bar to see their bookmarks and other content.">
-        Address bar. Pull up to see bookmarks, downloads, and history.
-      </message>
-      <message name="IDS_BOTTOM_SHEET_EXPAND_BUTTON_HELP_BUBBLE_MESSAGE" desc="Text displayed in a help bubble above the toolbar expand button prompting users to tap the button to see their bookmarks and other content.">
-        Tap to see bookmarks and more
-      </message>
-      <message name="IDS_BOTTOM_SHEET_ACCESSIBILITY_EXPAND_BUTTON_HELP_BUBBLE_MESSAGE" desc="Text displayed in a help bubble above the toolbar expand button prompting users to tap the button to see their bookmarks and other content when accessibility is enabled.">
-        Tap to see bookmarks, downloads, and history
-      </message>
-      <message name="IDS_BOTTOM_SHEET_OPENED" desc="Accessibility string read when the bottom navigation panel is opened.">
-        Navigation panel opened
-      </message>
-      <message name="IDS_BOTTOM_SHEET_CLOSED" desc="Accessibility string read when the bottom navigation panel is closed.">
-        Navigation panel closed
-      </message>
-      <message name="IDS_BOTTOM_SHEET_BOOKMARKS_TAB" desc="Accessibility string read when the bookmarks tab is selected.">
-        Bookmarks tab selected
-      </message>
-      <message name="IDS_BOTTOM_SHEET_DOWNLOADS_TAB" desc="Accessibility string read when the downloads tab is selected.">
-        Downloads tab selected
-      </message>
-      <message name="IDS_BOTTOM_SHEET_HISTORY_TAB" desc="Accessibility string read when the history tab is selected.">
-        History tab selected
-      </message>
-      <message name="IDS_BOTTOM_SHEET_HOME_TAB" desc="Accessibility string read when the home tab is selected.">
-        Home tab selected
       </message>
     </messages>
   </release>

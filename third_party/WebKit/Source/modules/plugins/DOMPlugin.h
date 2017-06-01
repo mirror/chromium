@@ -29,6 +29,8 @@
 
 namespace blink {
 
+class PluginData;
+
 class DOMPlugin final : public GarbageCollectedFinalized<DOMPlugin>,
                         public ScriptWrappable,
                         public ContextClient {
@@ -36,8 +38,10 @@ class DOMPlugin final : public GarbageCollectedFinalized<DOMPlugin>,
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static DOMPlugin* Create(LocalFrame* frame, const PluginInfo& plugin_info) {
-    return new DOMPlugin(frame, plugin_info);
+  static DOMPlugin* Create(PluginData* plugin_data,
+                           LocalFrame* frame,
+                           unsigned index) {
+    return new DOMPlugin(plugin_data, frame, index);
   }
   virtual ~DOMPlugin();
 
@@ -53,9 +57,14 @@ class DOMPlugin final : public GarbageCollectedFinalized<DOMPlugin>,
   DECLARE_VIRTUAL_TRACE();
 
  private:
-  DOMPlugin(LocalFrame*, const PluginInfo&);
+  DOMPlugin(PluginData*, LocalFrame*, unsigned index);
 
-  Member<const PluginInfo> plugin_info_;
+  const PluginInfo& GetPluginInfo() const {
+    return plugin_data_->Plugins()[index_];
+  }
+
+  RefPtr<PluginData> plugin_data_;
+  unsigned index_;
 };
 
 }  // namespace blink

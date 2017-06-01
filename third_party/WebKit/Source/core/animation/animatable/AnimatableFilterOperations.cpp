@@ -34,15 +34,21 @@
 
 namespace blink {
 
+bool AnimatableFilterOperations::UsesDefaultInterpolationWith(
+    const AnimatableValue* value) const {
+  const AnimatableFilterOperations* target =
+      ToAnimatableFilterOperations(value);
+  return !Operations().CanInterpolateWith(target->Operations());
+}
+
 PassRefPtr<AnimatableValue> AnimatableFilterOperations::InterpolateTo(
     const AnimatableValue* value,
     double fraction) const {
-  const AnimatableFilterOperations* target =
-      ToAnimatableFilterOperations(value);
-
-  if (!Operations().CanInterpolateWith(target->Operations()))
+  if (UsesDefaultInterpolationWith(value))
     return DefaultInterpolateTo(this, value, fraction);
 
+  const AnimatableFilterOperations* target =
+      ToAnimatableFilterOperations(value);
   FilterOperations result;
   size_t from_size = Operations().size();
   size_t to_size = target->Operations().size();
@@ -62,6 +68,10 @@ PassRefPtr<AnimatableValue> AnimatableFilterOperations::InterpolateTo(
       NOTREACHED();
   }
   return AnimatableFilterOperations::Create(result);
+}
+
+bool AnimatableFilterOperations::EqualTo(const AnimatableValue* value) const {
+  return Operations() == ToAnimatableFilterOperations(value)->Operations();
 }
 
 }  // namespace blink

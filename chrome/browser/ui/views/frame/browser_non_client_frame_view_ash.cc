@@ -12,7 +12,7 @@
 #include "ash/frame/frame_border_hit_test.h"
 #include "ash/frame/header_painter_util.h"
 #include "ash/shell.h"
-#include "ash/wm/window_util.h"
+#include "ash/wm_window.h"
 #include "base/feature_list.h"
 #include "build/build_config.h"
 #include "chrome/browser/profiles/profiles_state.h"
@@ -44,6 +44,7 @@
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/scoped_canvas.h"
 #include "ui/views/controls/label.h"
+#include "ui/views/layout/layout_constants.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
 
@@ -74,8 +75,8 @@ BrowserNonClientFrameViewAsh::BrowserNonClientFrameViewAsh(
     : BrowserNonClientFrameView(frame, browser_view),
       caption_button_container_(nullptr),
       window_icon_(nullptr) {
-  ash::wm::InstallResizeHandleWindowTargeterForWindow(frame->GetNativeWindow(),
-                                                      nullptr);
+  ash::WmWindow::Get(frame->GetNativeWindow())
+      ->InstallResizeHandleWindowTargeter(nullptr);
   ash::Shell::Get()->AddShellObserver(this);
 }
 
@@ -444,8 +445,8 @@ void BrowserNonClientFrameViewAsh::PaintToolbarBackground(gfx::Canvas* canvas) {
 
   // Top stroke.
   gfx::ScopedCanvas scoped_canvas(canvas);
-  gfx::Rect tabstrip_bounds =
-      GetMirroredRect(GetBoundsForTabStrip(browser_view()->tabstrip()));
+  gfx::Rect tabstrip_bounds(GetBoundsForTabStrip(browser_view()->tabstrip()));
+  tabstrip_bounds.set_x(GetMirroredXForRect(tabstrip_bounds));
   canvas->ClipRect(tabstrip_bounds, SkClipOp::kDifference);
   const gfx::Rect separator_rect(toolbar_bounds.x(), tabstrip_bounds.bottom(),
                                  toolbar_bounds.width(), 0);

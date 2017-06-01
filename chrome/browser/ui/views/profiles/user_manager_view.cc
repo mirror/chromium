@@ -72,7 +72,7 @@ UserManagerProfileDialogDelegate::UserManagerProfileDialogDelegate(
 
 UserManagerProfileDialogDelegate::~UserManagerProfileDialogDelegate() {}
 
-gfx::Size UserManagerProfileDialogDelegate::CalculatePreferredSize() const {
+gfx::Size UserManagerProfileDialogDelegate::GetPreferredSize() const {
   return gfx::Size(UserManagerProfileDialog::kDialogWidth,
                    UserManagerProfileDialog::kDialogHeight);
 }
@@ -135,6 +135,7 @@ void UserManagerProfileDialogDelegate::OnDialogDestroyed() {
 // static
 void UserManager::Show(
     const base::FilePath& profile_path_to_focus,
+    profiles::UserManagerTutorialMode tutorial_mode,
     profiles::UserManagerAction user_manager_action) {
   DCHECK(profile_path_to_focus != ProfileManager::GetGuestProfilePath());
 
@@ -164,7 +165,7 @@ void UserManager::Show(
   UserManagerView* user_manager = new UserManagerView();
   user_manager->set_user_manager_started_showing(base::Time::Now());
   profiles::CreateSystemProfileForUserManager(
-      profile_path_to_focus, user_manager_action,
+      profile_path_to_focus, tutorial_mode, user_manager_action,
       base::Bind(&UserManagerView::OnSystemProfileCreated,
                  base::Passed(base::WrapUnique(user_manager)),
                  base::Owned(new base::AutoReset<bool>(
@@ -403,7 +404,7 @@ bool UserManagerView::AcceleratorPressed(const ui::Accelerator& accelerator) {
   return true;
 }
 
-gfx::Size UserManagerView::CalculatePreferredSize() const {
+gfx::Size UserManagerView::GetPreferredSize() const {
   return gfx::Size(UserManager::kWindowWidth, UserManager::kWindowHeight);
 }
 

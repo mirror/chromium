@@ -343,26 +343,21 @@ LayoutUnit RootInlineBox::BeforeAnnotationsAdjustment() const {
 
 SelectionState RootInlineBox::GetSelectionState() const {
   // Walk over all of the selected boxes.
-  SelectionState state = SelectionState::kNone;
+  SelectionState state = SelectionNone;
   for (InlineBox* box = FirstLeafChild(); box; box = box->NextLeafChild()) {
     SelectionState box_state = box->GetSelectionState();
-    if ((box_state == SelectionState::kStart &&
-         state == SelectionState::kEnd) ||
-        (box_state == SelectionState::kEnd &&
-         state == SelectionState::kStart)) {
-      state = SelectionState::kStartAndEnd;
-    } else if (state == SelectionState::kNone ||
-               ((box_state == SelectionState::kStart ||
-                 box_state == SelectionState::kEnd) &&
-                (state == SelectionState::kNone ||
-                 state == SelectionState::kInside))) {
+    if ((box_state == SelectionStart && state == SelectionEnd) ||
+        (box_state == SelectionEnd && state == SelectionStart)) {
+      state = SelectionBoth;
+    } else if (state == SelectionNone ||
+               ((box_state == SelectionStart || box_state == SelectionEnd) &&
+                (state == SelectionNone || state == SelectionInside))) {
       state = box_state;
-    } else if (box_state == SelectionState::kNone &&
-               state == SelectionState::kStart) {
+    } else if (box_state == SelectionNone && state == SelectionStart) {
       // We are past the end of the selection.
-      state = SelectionState::kStartAndEnd;
+      state = SelectionBoth;
     }
-    if (state == SelectionState::kStartAndEnd)
+    if (state == SelectionBoth)
       break;
   }
 
@@ -371,7 +366,7 @@ SelectionState RootInlineBox::GetSelectionState() const {
 
 InlineBox* RootInlineBox::FirstSelectedBox() const {
   for (InlineBox* box = FirstLeafChild(); box; box = box->NextLeafChild()) {
-    if (box->GetSelectionState() != SelectionState::kNone)
+    if (box->GetSelectionState() != SelectionNone)
       return box;
   }
 
@@ -380,7 +375,7 @@ InlineBox* RootInlineBox::FirstSelectedBox() const {
 
 InlineBox* RootInlineBox::LastSelectedBox() const {
   for (InlineBox* box = LastLeafChild(); box; box = box->PrevLeafChild()) {
-    if (box->GetSelectionState() != SelectionState::kNone)
+    if (box->GetSelectionState() != SelectionNone)
       return box;
   }
 

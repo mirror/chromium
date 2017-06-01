@@ -65,10 +65,6 @@ static bool IsContextValid(ExecutionContext* context) {
 
 IDBRequest* IDBFactory::GetDatabaseNames(ScriptState* script_state,
                                          ExceptionState& exception_state) {
-  IDB_TRACE("IDBFactory::getDatabaseNamesRequestSetup");
-  IDBRequest::AsyncTraceState metrics("IDBFactory::getDatabaseNames", this);
-  IDBRequest* request = IDBRequest::Create(script_state, IDBAny::CreateNull(),
-                                           nullptr, std::move(metrics));
   // TODO(jsbell): Used only by inspector; remove unneeded checks/exceptions?
   if (!IsContextValid(ExecutionContext::From(script_state)))
     return nullptr;
@@ -80,10 +76,13 @@ IDBRequest* IDBFactory::GetDatabaseNames(ScriptState* script_state,
     return nullptr;
   }
 
+  IDBRequest* request =
+      IDBRequest::Create(script_state, IDBAny::CreateNull(), nullptr);
+
   if (!IndexedDBClient::From(ExecutionContext::From(script_state))
            ->AllowIndexedDB(ExecutionContext::From(script_state),
                             "Database Listing")) {
-    request->HandleResponse(
+    request->EnqueueResponse(
         DOMException::Create(kUnknownError, kPermissionDeniedErrorMessage));
     return request;
   }
@@ -130,7 +129,7 @@ IDBOpenDBRequest* IDBFactory::OpenInternal(ScriptState* script_state,
 
   if (!IndexedDBClient::From(ExecutionContext::From(script_state))
            ->AllowIndexedDB(ExecutionContext::From(script_state), name)) {
-    request->HandleResponse(
+    request->EnqueueResponse(
         DOMException::Create(kUnknownError, kPermissionDeniedErrorMessage));
     return request;
   }
@@ -189,7 +188,7 @@ IDBOpenDBRequest* IDBFactory::DeleteDatabaseInternal(
 
   if (!IndexedDBClient::From(ExecutionContext::From(script_state))
            ->AllowIndexedDB(ExecutionContext::From(script_state), name)) {
-    request->HandleResponse(
+    request->EnqueueResponse(
         DOMException::Create(kUnknownError, kPermissionDeniedErrorMessage));
     return request;
   }

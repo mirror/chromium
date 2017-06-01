@@ -38,7 +38,7 @@ class BluetoothTestMac::ScopedMockCentralManager {
   }
 
   // Returns MockCentralManager instance.
-  MockCentralManager* get() { return mock_central_manager_; };
+  MockCentralManager* get() { return mock_central_manager_.get(); };
 
  private:
   scoped_nsobject<MockCentralManager> mock_central_manager_;
@@ -140,20 +140,6 @@ void BluetoothTestMac::ResetEventCounts() {
   last_notify_value_ = false;
 }
 
-void BluetoothTestMac::SimulateAdapterPoweredOff() {
-  [mock_central_manager_->get() setState:CBCentralManagerStatePoweredOff];
-
-  for (BluetoothDevice* device : adapter_->GetDevices()) {
-    MockCBPeripheral* peripheral_mock = GetMockCBPeripheral(device);
-    [peripheral_mock setState:CBPeripheralStateDisconnected];
-  }
-
-  BluetoothLowEnergyCentralManagerDelegate* central_manager_delegate =
-      adapter_mac_->low_energy_central_manager_delegate_;
-  CBCentralManager* central_manager = adapter_mac_->low_energy_central_manager_;
-  [central_manager_delegate centralManagerDidUpdateState:central_manager];
-}
-
 BluetoothDevice* BluetoothTestMac::SimulateLowEnergyDevice(int device_ordinal) {
   TestBluetoothAdapterObserver observer(adapter_);
   CBCentralManager* central_manager = adapter_mac_->low_energy_central_manager_;
@@ -235,10 +221,10 @@ BluetoothDevice* BluetoothTestMac::SimulateLowEnergyDevice(int device_ordinal) {
   scoped_nsobject<MockCBPeripheral> mock_peripheral([[MockCBPeripheral alloc]
       initWithUTF8StringIdentifier:identifier
                               name:name]);
-  [mock_peripheral setBluetoothTestMac:this];
+  mock_peripheral.get().bluetoothTestMac = this;
   [central_manager_delegate
              centralManager:central_manager
-      didDiscoverPeripheral:[mock_peripheral peripheral]
+      didDiscoverPeripheral:mock_peripheral.get().peripheral
           advertisementData:CreateAdvertisementData(name, uuids, service_data,
                                                     tx_power)
                        RSSI:rssi];
@@ -276,14 +262,14 @@ void BluetoothTestMac::SimulateConnectedLowEnergyDevice(
   }
   DCHECK(name);
   DCHECK(identifier);
-  DCHECK([cbUUIDs count] > 0);
+  DCHECK([cbUUIDs.get() count] > 0);
   scoped_nsobject<MockCBPeripheral> mock_peripheral([[MockCBPeripheral alloc]
       initWithUTF8StringIdentifier:identifier
                               name:name]);
-  [mock_peripheral setBluetoothTestMac:this];
+  mock_peripheral.get().bluetoothTestMac = this;
   [mock_central_manager_->get()
-      setConnectedMockPeripheral:[mock_peripheral peripheral]
-                withServiceUUIDs:cbUUIDs];
+      setConnectedMockPeripheral:mock_peripheral.get().peripheral
+                withServiceUUIDs:cbUUIDs.get()];
 }
 
 void BluetoothTestMac::SimulateGattConnectionError(

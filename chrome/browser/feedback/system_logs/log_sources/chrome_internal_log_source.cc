@@ -4,9 +4,6 @@
 
 #include "chrome/browser/feedback/system_logs/log_sources/chrome_internal_log_source.h"
 
-#include <memory>
-#include <string>
-
 #include "base/json/json_string_value_serializer.h"
 #include "base/strings/string_util.h"
 #include "base/sys_info.h"
@@ -172,8 +169,8 @@ void ChromeInternalLogSource::PopulateSyncLogs(SystemLogsResponse* response) {
   browser_sync::ProfileSyncService* service =
       ProfileSyncServiceFactory::GetInstance()->GetForProfile(profile);
   std::unique_ptr<base::DictionaryValue> sync_logs(
-      syncer::sync_ui_util::ConstructAboutInformation(service,
-                                                      chrome::GetChannel()));
+      syncer::sync_ui_util::ConstructAboutInformation(
+          service, service->signin(), chrome::GetChannel()));
 
   // Remove identity section.
   base::ListValue* details = NULL;

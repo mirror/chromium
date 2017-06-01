@@ -46,8 +46,7 @@ source_set("unit_tests") {
     "//base/test:test_support",
     "//ios/chrome/browser/web:test_support",
     "//ios/web",
-    "//ios/web/public/test",
-    "//ios/web/public/test/fakes",
+    "//ios/web:test_support",
     "//testing/gtest",
   ]
 }
@@ -64,6 +63,7 @@ source_set("unit_tests_nonarc") {
     "//base/test:test_support",
     "//ios/chrome/browser/web:test_support",
     "//ios/web",
+    "//ios/web:test_support",
     "//testing/gtest",
   ]
 }

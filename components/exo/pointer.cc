@@ -4,8 +4,6 @@
 
 #include "components/exo/pointer.h"
 
-#include <utility>
-
 #include "ash/public/cpp/shell_window_ids.h"
 #include "cc/output/copy_output_request.h"
 #include "cc/output/copy_output_result.h"
@@ -35,7 +33,6 @@ namespace exo {
 namespace {
 
 const float kLargeCursorScale = 2.8f;
-const double kLocatedEventEpsilonSquared = 1.0 / (2000.0 * 2000.0);
 
 // Synthesized events typically lack floating point precision so to avoid
 // generating mouse event jitter we consider the location of these events
@@ -44,15 +41,7 @@ bool SameLocation(const ui::LocatedEvent* event, const gfx::PointF& location) {
   if (event->flags() & ui::EF_IS_SYNTHESIZED)
     return event->location() == gfx::ToFlooredPoint(location);
 
-  // In general, it is good practice to compare floats using an epsilon.
-  // In particular, the mouse location_f() could differ between the
-  // MOUSE_PRESSED and MOUSE_RELEASED events. At MOUSE_RELEASED, it will have a
-  // targeter() already cached, while at MOUSE_PRESSED, it will have to
-  // calculate it passing through all the hierarchy of windows, and that could
-  // generate rounding error. std::numeric_limits<float>::epsilon() is not big
-  // enough to catch this rounding error.
-  gfx::Vector2dF offset = event->location_f() - location;
-  return offset.LengthSquared() < (2 * kLocatedEventEpsilonSquared);
+  return event->location_f() == location;
 }
 
 }  // namespace

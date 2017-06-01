@@ -7,9 +7,8 @@
 
 #include "core/CoreExport.h"
 #include "core/clipboard/DataObject.h"
-#include "core/dom/UserGestureIndicator.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/wtf/Assertions.h"
-#include "public/platform/WebCoalescedInputEvent.h"
 #include "public/platform/WebDragData.h"
 #include "public/web/WebFrameWidget.h"
 
@@ -38,7 +37,6 @@ class CORE_EXPORT WebFrameWidgetBase
   // Sets the root graphics layer. |GraphicsLayer| can be null when detaching
   // the root layer.
   virtual void SetRootGraphicsLayer(GraphicsLayer*) = 0;
-  virtual GraphicsLayer* RootGraphicsLayer() const = 0;
 
   // Sets the root layer. |WebLayer| can be null when detaching the root layer.
   virtual void SetRootLayer(WebLayer*) = 0;
@@ -84,7 +82,6 @@ class CORE_EXPORT WebFrameWidgetBase
   void DidAcquirePointerLock() override;
   void DidNotAcquirePointerLock() override;
   void DidLosePointerLock() override;
-  void ShowContextMenu(WebMenuSourceType) override;
 
  protected:
   enum DragAction { kDragEnter, kDragOver };
@@ -120,11 +117,10 @@ class CORE_EXPORT WebFrameWidgetBase
   WebDragOperation drag_operation_ = kWebDragOperationNone;
 
   // Helper function to process events while pointer locked.
-  void PointerLockMouseEvent(const WebCoalescedInputEvent&);
+  void PointerLockMouseEvent(const WebInputEvent&);
 
  private:
   void CancelDrag();
-  LocalFrame* FocusedLocalFrameInWidget() const;
 
   static bool ignore_input_events_;
   RefPtr<UserGestureToken> pointer_lock_gesture_token_;

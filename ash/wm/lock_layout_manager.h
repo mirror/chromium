@@ -66,15 +66,11 @@ class ASH_EXPORT LockLayoutManager
   void OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) override;
   void OnKeyboardClosed() override;
 
- protected:
+ private:
   // Adjusts the bounds of all managed windows when the display area changes.
   // This happens when the display size, work area insets has changed.
   void AdjustWindowsForWorkAreaChange(const wm::WMEvent* event);
 
-  aura::Window* window() { return window_; }
-  aura::Window* root_window() { return root_window_; }
-
- private:
   aura::Window* window_;
   aura::Window* root_window_;
 

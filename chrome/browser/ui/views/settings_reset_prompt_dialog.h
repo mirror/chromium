@@ -52,7 +52,7 @@ class SettingsResetPromptDialog : public views::DialogDelegateView {
   bool Close() override;
 
   // views::View overrides.
-  gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetPreferredSize() const override;
 
  private:
   Browser* browser_;

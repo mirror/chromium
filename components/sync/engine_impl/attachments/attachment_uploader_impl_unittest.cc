@@ -15,7 +15,6 @@
 #include "base/memory/ref_counted_memory.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "base/sequence_checker.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
@@ -145,7 +144,8 @@ void MockOAuth2TokenService::InvalidateAccessTokenImpl(
 }
 
 class TokenServiceProvider
-    : public OAuth2TokenServiceRequest::TokenServiceProvider {
+    : public OAuth2TokenServiceRequest::TokenServiceProvider,
+      base::NonThreadSafe {
  public:
   explicit TokenServiceProvider(OAuth2TokenService* token_service);
 
@@ -159,8 +159,6 @@ class TokenServiceProvider
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
   OAuth2TokenService* token_service_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
 };
 
 TokenServiceProvider::TokenServiceProvider(OAuth2TokenService* token_service)
@@ -169,9 +167,7 @@ TokenServiceProvider::TokenServiceProvider(OAuth2TokenService* token_service)
   DCHECK(token_service_);
 }
 
-TokenServiceProvider::~TokenServiceProvider() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-}
+TokenServiceProvider::~TokenServiceProvider() {}
 
 scoped_refptr<base::SingleThreadTaskRunner>
 TokenServiceProvider::GetTokenServiceTaskRunner() {
@@ -187,13 +183,13 @@ OAuth2TokenService* TokenServiceProvider::GetTokenService() {
 //
 // This fixture provides an embedded HTTP server and a mock OAuth2 token service
 // for interacting with AttachmentUploaderImpl
-class AttachmentUploaderImplTest : public testing::Test {
+class AttachmentUploaderImplTest : public testing::Test,
+                                   public base::NonThreadSafe {
  public:
   void OnRequestReceived(const HttpRequest& request);
 
  protected:
   AttachmentUploaderImplTest();
-  ~AttachmentUploaderImplTest() override;
   void SetUp() override;
   void TearDown() override;
 
@@ -232,8 +228,6 @@ class AttachmentUploaderImplTest : public testing::Test {
   std::vector<AttachmentId> attachment_ids_;
   std::unique_ptr<MockOAuth2TokenService> token_service_;
 
-  SEQUENCE_CHECKER(sequence_checker_);
-
   // Must be last data member.
   base::WeakPtrFactory<AttachmentUploaderImplTest> weak_ptr_factory_;
 };
@@ -241,7 +235,7 @@ class AttachmentUploaderImplTest : public testing::Test {
 // Handles HTTP requests received by the EmbeddedTestServer.
 //
 // Responds with HTTP_OK by default.  See |SetStatusCode|.
-class RequestHandler {
+class RequestHandler : public base::NonThreadSafe {
  public:
   // Construct a RequestHandler that will PostTask to |test| using
   // |test_task_runner|.
@@ -266,24 +260,18 @@ class RequestHandler {
 
   scoped_refptr<base::SingleThreadTaskRunner> test_task_runner_;
   base::WeakPtr<AttachmentUploaderImplTest> test_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
 };
 
 AttachmentUploaderImplTest::AttachmentUploaderImplTest()
     : weak_ptr_factory_(this) {}
 
-AttachmentUploaderImplTest::~AttachmentUploaderImplTest() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-}
-
 void AttachmentUploaderImplTest::OnRequestReceived(const HttpRequest& request) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   http_requests_received_.push_back(request);
 }
 
 void AttachmentUploaderImplTest::SetUp() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   request_handler_ = base::MakeUnique<RequestHandler>(
       message_loop_.task_runner(), weak_ptr_factory_.GetWeakPtr());
   url_request_context_getter_ =
@@ -371,7 +359,7 @@ RequestHandler& AttachmentUploaderImplTest::request_handler() {
 void AttachmentUploaderImplTest::UploadDone(
     const AttachmentUploader::UploadResult& result,
     const AttachmentId& attachment_id) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   upload_results_.push_back(result);
   attachment_ids_.push_back(attachment_id);
   DCHECK(!signal_upload_done_.is_null());
@@ -384,14 +372,16 @@ RequestHandler::RequestHandler(
     : status_code_(net::HTTP_OK),
       test_task_runner_(test_task_runner),
       test_(test) {
-  DETACH_FROM_SEQUENCE(sequence_checker_);
+  DetachFromThread();
 }
 
-RequestHandler::~RequestHandler() = default;
+RequestHandler::~RequestHandler() {
+  DetachFromThread();
+}
 
 std::unique_ptr<HttpResponse> RequestHandler::HandleRequest(
     const HttpRequest& request) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   test_task_runner_->PostTask(
       FROM_HERE, base::Bind(&AttachmentUploaderImplTest::OnRequestReceived,
                             test_, request));

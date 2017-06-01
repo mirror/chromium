@@ -10,6 +10,7 @@
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/session/logout_confirmation_controller.h"
 #include "ash/system/tray/tray_constants.h"
+#include "ash/wm_window.h"
 #include "base/location.h"
 #include "base/time/tick_clock.h"
 #include "ui/base/l10n/l10n_util.h"

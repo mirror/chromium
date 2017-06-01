@@ -1,11 +1,8 @@
-AvailabilityModelImplTest.*
-AvailabilityStoreTest.*
 ChromeVariationsConfigurationTest.*
 ComparatorTest.*
 ConditionValidatorResultTest.*
 EditableConfigurationTest.*
-FailingStoreInitFeatureEngagementTrackerImplTest.*
-FailingAvailabilityModelInitFeatureEngagementTrackerImplTest.*
+FailingInitFeatureEngagementTrackerImplTest.*
 FeatureConfigConditionValidatorTest.*
 FeatureConfigStorageValidatorTest.*
 FeatureEngagementTrackerImplTest.*
@@ -13,7 +10,6 @@ InitAwareModelTest.*
 InMemoryStoreTest.*
 LoadFailingModelImplTest.*
 ModelImplTest.*
-NeverAvailabilityModelTest.*
 NeverConditionValidatorTest.*
 OnceConditionValidatorTest.*
 PersistentStoreTest.*

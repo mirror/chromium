@@ -1,5 +1,3 @@
-.. include:: /migration/deprecation.inc
-
 ========================
 PNaCl Undefined Behavior
 ========================

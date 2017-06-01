@@ -38,7 +38,6 @@
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Noncopyable.h"
-#include "public/platform/WebURLRequest.h"
 
 namespace blink {
 
@@ -46,7 +45,13 @@ class ResourceRequest;
 class ExecutionContext;
 class ThreadableLoaderClient;
 
-enum PreflightPolicy { kConsiderPreflight, kPreventPreflight };
+enum CrossOriginRequestPolicy {
+  kDenyCrossOriginRequests,
+  kUseAccessControl,
+  kAllowCrossOriginRequests
+};
+
+enum PreflightPolicy { kConsiderPreflight, kForcePreflight, kPreventPreflight };
 
 enum ContentSecurityPolicyEnforcement {
   kEnforceContentSecurityPolicy,
@@ -57,7 +62,7 @@ struct ThreadableLoaderOptions {
   DISALLOW_NEW();
   ThreadableLoaderOptions()
       : preflight_policy(kConsiderPreflight),
-        fetch_request_mode(WebURLRequest::kFetchRequestModeSameOrigin),
+        cross_origin_request_policy(kDenyCrossOriginRequests),
         content_security_policy_enforcement(kEnforceContentSecurityPolicy),
         timeout_milliseconds(0) {}
 
@@ -67,7 +72,7 @@ struct ThreadableLoaderOptions {
   // If AccessControl is used, how to determine if a preflight is needed.
   PreflightPolicy preflight_policy;
 
-  WebURLRequest::FetchRequestMode fetch_request_mode;
+  CrossOriginRequestPolicy cross_origin_request_policy;
   AtomicString initiator;
   ContentSecurityPolicyEnforcement content_security_policy_enforcement;
   unsigned long timeout_milliseconds;
@@ -79,7 +84,7 @@ struct CrossThreadThreadableLoaderOptionsData {
   explicit CrossThreadThreadableLoaderOptionsData(
       const ThreadableLoaderOptions& options)
       : preflight_policy(options.preflight_policy),
-        fetch_request_mode(options.fetch_request_mode),
+        cross_origin_request_policy(options.cross_origin_request_policy),
         initiator(options.initiator.GetString().IsolatedCopy()),
         content_security_policy_enforcement(
             options.content_security_policy_enforcement),
@@ -88,7 +93,7 @@ struct CrossThreadThreadableLoaderOptionsData {
   operator ThreadableLoaderOptions() const {
     ThreadableLoaderOptions options;
     options.preflight_policy = preflight_policy;
-    options.fetch_request_mode = fetch_request_mode;
+    options.cross_origin_request_policy = cross_origin_request_policy;
     options.initiator = AtomicString(initiator);
     options.content_security_policy_enforcement =
         content_security_policy_enforcement;
@@ -97,7 +102,7 @@ struct CrossThreadThreadableLoaderOptionsData {
   }
 
   PreflightPolicy preflight_policy;
-  WebURLRequest::FetchRequestMode fetch_request_mode;
+  CrossOriginRequestPolicy cross_origin_request_policy;
   String initiator;
   ContentSecurityPolicyEnforcement content_security_policy_enforcement;
   unsigned long timeout_milliseconds;

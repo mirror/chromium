@@ -8,13 +8,17 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
+#include "base/time/time.h"
 #include "media/audio/audio_io.h"
 #include "media/base/audio_parameters.h"
+#include "media/base/audio_timestamp_helper.h"
 
 namespace chromecast {
 namespace media {
 
 class CastAudioManager;
+class DecoderBufferBase;
 
 class CastAudioOutputStream : public ::media::AudioOutputStream {
  public:
@@ -33,12 +37,23 @@ class CastAudioOutputStream : public ::media::AudioOutputStream {
  private:
   class Backend;
 
+  void PushBuffer();
+  void OnPushBufferComplete(bool success);
+
   const ::media::AudioParameters audio_params_;
   CastAudioManager* const audio_manager_;
-  double volume_;
 
-  // Only valid when the stream is open.
+  double volume_;
+  AudioSourceCallback* source_callback_;
+  std::unique_ptr<::media::AudioBus> audio_bus_;
+  scoped_refptr<media::DecoderBufferBase> decoder_buffer_;
+  ::media::AudioTimestampHelper timestamp_helper_;
   std::unique_ptr<Backend> backend_;
+  const base::TimeDelta buffer_duration_;
+  bool push_in_progress_;
+  base::TimeTicks next_push_time_;
+
+  base::WeakPtrFactory<CastAudioOutputStream> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(CastAudioOutputStream);
 };

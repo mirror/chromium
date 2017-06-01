@@ -143,8 +143,7 @@ int main(int argc, char** argv) {
             "Usage: udp_proxy <localport> <remotehost> <remoteport> <type>\n"
             "or:\n"
             "       udp_proxy <localport> <type>\n"
-            "Where type is one of:\n"
-            "    perfect, wifi, slow, bad, evil, poisson-wifi\n");
+            "Where type is one of: perfect, wifi, bad, evil, poisson-wifi\n");
     exit(1);
   }
 
@@ -180,9 +179,6 @@ int main(int argc, char** argv) {
   } else if (network_type == "wifi") {
     in_pipe = media::cast::test::WifiNetwork();
     out_pipe = media::cast::test::WifiNetwork();
-  } else if (network_type == "slow") {
-    in_pipe = media::cast::test::SlowNetwork();
-    out_pipe = media::cast::test::SlowNetwork();
   } else if (network_type == "bad") {
     in_pipe = media::cast::test::BadNetwork();
     out_pipe = media::cast::test::BadNetwork();

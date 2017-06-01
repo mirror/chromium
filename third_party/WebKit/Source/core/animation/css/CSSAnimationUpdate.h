@@ -104,10 +104,8 @@ class CSSAnimationUpdate final {
     new_animations_ = update.NewAnimations();
     animations_with_updates_ = update.AnimationsWithUpdates();
     new_transitions_ = update.NewTransitions();
-    active_interpolations_for_custom_animations_ =
-        update.ActiveInterpolationsForCustomAnimations();
-    active_interpolations_for_standard_animations_ =
-        update.ActiveInterpolationsForStandardAnimations();
+    active_interpolations_for_animations_ =
+        update.ActiveInterpolationsForAnimations();
     active_interpolations_for_custom_transitions_ =
         update.ActiveInterpolationsForCustomTransitions();
     active_interpolations_for_standard_transitions_ =
@@ -124,8 +122,7 @@ class CSSAnimationUpdate final {
     new_animations_.clear();
     animations_with_updates_.clear();
     new_transitions_.clear();
-    active_interpolations_for_custom_animations_.clear();
-    active_interpolations_for_standard_animations_.clear();
+    active_interpolations_for_animations_.clear();
     active_interpolations_for_custom_transitions_.clear();
     active_interpolations_for_standard_transitions_.clear();
     cancelled_animation_indices_.clear();
@@ -170,9 +167,9 @@ class CSSAnimationUpdate final {
 
   void StartTransition(
       const PropertyHandle& property,
-      RefPtr<const ComputedStyle> from,
-      RefPtr<const ComputedStyle> to,
-      PassRefPtr<const ComputedStyle> reversing_adjusted_start_value,
+      RefPtr<AnimatableValue> from,
+      RefPtr<AnimatableValue> to,
+      PassRefPtr<AnimatableValue> reversing_adjusted_start_value,
       double reversing_shortening_factor,
       const InertEffect& effect) {
     NewTransition new_transition;
@@ -224,9 +221,9 @@ class CSSAnimationUpdate final {
     DEFINE_INLINE_TRACE() { visitor->Trace(effect); }
 
     PropertyHandle property = HashTraits<blink::PropertyHandle>::EmptyValue();
-    RefPtr<const ComputedStyle> from;
-    RefPtr<const ComputedStyle> to;
-    RefPtr<const ComputedStyle> reversing_adjusted_start_value;
+    RefPtr<AnimatableValue> from;
+    RefPtr<AnimatableValue> to;
+    RefPtr<AnimatableValue> reversing_adjusted_start_value;
     double reversing_shortening_factor;
     Member<const InertEffect> effect;
   };
@@ -239,13 +236,9 @@ class CSSAnimationUpdate final {
     return finished_transitions_;
   }
 
-  void AdoptActiveInterpolationsForCustomAnimations(
+  void AdoptActiveInterpolationsForAnimations(
       ActiveInterpolationsMap& new_map) {
-    new_map.swap(active_interpolations_for_custom_animations_);
-  }
-  void AdoptActiveInterpolationsForStandardAnimations(
-      ActiveInterpolationsMap& new_map) {
-    new_map.swap(active_interpolations_for_standard_animations_);
+    new_map.swap(active_interpolations_for_animations_);
   }
   void AdoptActiveInterpolationsForCustomTransitions(
       ActiveInterpolationsMap& new_map) {
@@ -255,19 +248,8 @@ class CSSAnimationUpdate final {
       ActiveInterpolationsMap& new_map) {
     new_map.swap(active_interpolations_for_standard_transitions_);
   }
-  const ActiveInterpolationsMap& ActiveInterpolationsForCustomAnimations()
-      const {
-    return active_interpolations_for_custom_animations_;
-  }
-  ActiveInterpolationsMap& ActiveInterpolationsForCustomAnimations() {
-    return active_interpolations_for_custom_animations_;
-  }
-  const ActiveInterpolationsMap& ActiveInterpolationsForStandardAnimations()
-      const {
-    return active_interpolations_for_standard_animations_;
-  }
-  ActiveInterpolationsMap& ActiveInterpolationsForStandardAnimations() {
-    return active_interpolations_for_standard_animations_;
+  const ActiveInterpolationsMap& ActiveInterpolationsForAnimations() const {
+    return active_interpolations_for_animations_;
   }
   const ActiveInterpolationsMap& ActiveInterpolationsForCustomTransitions()
       const {
@@ -276,6 +258,9 @@ class CSSAnimationUpdate final {
   const ActiveInterpolationsMap& ActiveInterpolationsForStandardTransitions()
       const {
     return active_interpolations_for_standard_transitions_;
+  }
+  ActiveInterpolationsMap& ActiveInterpolationsForAnimations() {
+    return active_interpolations_for_animations_;
   }
 
   bool IsEmpty() const {
@@ -286,8 +271,7 @@ class CSSAnimationUpdate final {
            animations_with_updates_.IsEmpty() && new_transitions_.IsEmpty() &&
            cancelled_transitions_.IsEmpty() &&
            finished_transitions_.IsEmpty() &&
-           active_interpolations_for_custom_animations_.IsEmpty() &&
-           active_interpolations_for_standard_animations_.IsEmpty() &&
+           active_interpolations_for_animations_.IsEmpty() &&
            active_interpolations_for_custom_transitions_.IsEmpty() &&
            active_interpolations_for_standard_transitions_.IsEmpty() &&
            updated_compositor_keyframes_.IsEmpty();
@@ -317,8 +301,7 @@ class CSSAnimationUpdate final {
   HashSet<PropertyHandle> cancelled_transitions_;
   HashSet<PropertyHandle> finished_transitions_;
 
-  ActiveInterpolationsMap active_interpolations_for_custom_animations_;
-  ActiveInterpolationsMap active_interpolations_for_standard_animations_;
+  ActiveInterpolationsMap active_interpolations_for_animations_;
   ActiveInterpolationsMap active_interpolations_for_custom_transitions_;
   ActiveInterpolationsMap active_interpolations_for_standard_transitions_;
 

@@ -16,10 +16,12 @@
 #include "ash/wm/overview/cleanup_animation_observer.h"
 #include "ash/wm/overview/overview_animation_type.h"
 #include "ash/wm/overview/scoped_overview_animation_settings.h"
+#include "ash/wm/overview/scoped_overview_animation_settings_factory.h"
 #include "ash/wm/overview/scoped_transform_overview_window.h"
 #include "ash/wm/overview/window_selector.h"
 #include "ash/wm/overview/window_selector_controller.h"
 #include "ash/wm/window_state.h"
+#include "ash/wm_window.h"
 #include "base/auto_reset.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -38,7 +40,6 @@
 #include "ui/views/border.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/window/non_client_view.h"
-#include "ui/wm/core/coordinate_conversion.h"
 #include "ui/wm/core/shadow.h"
 #include "ui/wm/core/window_util.h"
 
@@ -105,12 +106,16 @@ static const float kPreCloseScale = 0.02f;
 // Note: The fade in animation will occur after a delay where the delay is how
 // long the lay out animations take.
 void SetupFadeInAfterLayout(views::Widget* widget) {
-  aura::Window* window = widget->GetNativeWindow();
-  window->layer()->SetOpacity(0.0f);
-  ScopedOverviewAnimationSettings scoped_overview_animation_settings(
-      OverviewAnimationType::OVERVIEW_ANIMATION_ENTER_OVERVIEW_MODE_FADE_IN,
-      window);
-  window->layer()->SetOpacity(1.0f);
+  WmWindow* window = WmWindow::Get(widget->GetNativeWindow());
+  window->SetOpacity(0.0f);
+  std::unique_ptr<ScopedOverviewAnimationSettings>
+      scoped_overview_animation_settings =
+          ScopedOverviewAnimationSettingsFactory::Get()
+              ->CreateOverviewAnimationSettings(
+                  OverviewAnimationType::
+                      OVERVIEW_ANIMATION_ENTER_OVERVIEW_MODE_FADE_IN,
+                  window);
+  window->SetOpacity(1.0f);
 }
 
 // A Button that has a listener and listens to mouse clicks on the visible part
@@ -172,7 +177,7 @@ class WindowSelectorItem::RoundedContainerView
       public ui::LayerAnimationObserver {
  public:
   RoundedContainerView(WindowSelectorItem* item,
-                       aura::Window* item_window,
+                       WmWindow* item_window,
                        int corner_radius,
                        SkColor background)
       : item_(item),
@@ -280,9 +285,9 @@ class WindowSelectorItem::RoundedContainerView
     // during the initial animation. Once the initial fade-in completes and the
     // overview header is fully exposed update stacking to keep the label above
     // the item which prevents input events from reaching the window.
-    aura::Window* widget_window = GetWidget()->GetNativeWindow();
+    WmWindow* widget_window = WmWindow::Get(GetWidget()->GetNativeWindow());
     if (widget_window && item_window_)
-      widget_window->parent()->StackChildAbove(widget_window, item_window_);
+      widget_window->GetParent()->StackChildAbove(widget_window, item_window_);
     item_window_ = nullptr;
   }
 
@@ -320,7 +325,7 @@ class WindowSelectorItem::RoundedContainerView
       ui::LayerAnimationSequence* sequence) override {}
 
   WindowSelectorItem* item_;
-  aura::Window* item_window_;
+  WmWindow* item_window_;
   int corner_radius_;
   SkColor initial_color_;
   SkColor target_color_;
@@ -396,7 +401,7 @@ class WindowSelectorItem::CaptionContainerView : public views::View {
   DISALLOW_COPY_AND_ASSIGN(CaptionContainerView);
 };
 
-WindowSelectorItem::WindowSelectorItem(aura::Window* window,
+WindowSelectorItem::WindowSelectorItem(WmWindow* window,
                                        WindowSelector* window_selector)
     : dimmed_(false),
       root_window_(window->GetRootWindow()),
@@ -408,15 +413,15 @@ WindowSelectorItem::WindowSelectorItem(aura::Window* window,
       close_button_(new OverviewCloseButton(this)),
       window_selector_(window_selector),
       background_view_(nullptr) {
-  CreateWindowLabel(window->GetTitle());
-  GetWindow()->AddObserver(this);
+  CreateWindowLabel(window->aura_window()->GetTitle());
+  GetWindow()->aura_window()->AddObserver(this);
 }
 
 WindowSelectorItem::~WindowSelectorItem() {
-  GetWindow()->RemoveObserver(this);
+  GetWindow()->aura_window()->RemoveObserver(this);
 }
 
-aura::Window* WindowSelectorItem::GetWindow() {
+WmWindow* WindowSelectorItem::GetWindow() {
   return transform_window_.window();
 }
 
@@ -443,15 +448,15 @@ void WindowSelectorItem::Shutdown() {
     // overview) results in stacking it at the top. Maintain the label window
     // stacking position above the item to make the header transformation more
     // gradual upon exiting the overview mode.
-    aura::Window* widget_window = item_widget_->GetNativeWindow();
+    WmWindow* widget_window = WmWindow::Get(item_widget_->GetNativeWindow());
 
     // |widget_window| was originally created in the same container as the
     // |transform_window_| but when closing overview the |transform_window_|
     // could have been reparented if a drag was active. Only change stacking
     // if the windows still belong to the same container.
-    if (widget_window->parent() == transform_window_.window()->parent()) {
-      widget_window->parent()->StackChildAbove(widget_window,
-                                               transform_window_.window());
+    if (widget_window->GetParent() == transform_window_.window()->GetParent()) {
+      widget_window->GetParent()->StackChildAbove(widget_window,
+                                                  transform_window_.window());
     }
   }
   if (background_view_) {
@@ -467,7 +472,7 @@ void WindowSelectorItem::PrepareForOverview() {
                      OverviewAnimationType::OVERVIEW_ANIMATION_NONE);
 }
 
-bool WindowSelectorItem::Contains(const aura::Window* target) const {
+bool WindowSelectorItem::Contains(const WmWindow* target) const {
   return transform_window_.Contains(target);
 }
 
@@ -610,23 +615,24 @@ void WindowSelectorItem::CreateWindowLabel(const base::string16& title) {
       views::Widget::InitParams::Activatable::ACTIVATABLE_DEFAULT;
   params_label.accept_events = true;
   item_widget_.reset(new views::Widget);
-  RootWindowController::ForWindow(root_window_)
+  root_window_->GetRootWindowController()
       ->ConfigureWidgetInitParamsForContainer(
-          item_widget_.get(), transform_window_.window()->parent()->id(),
+          item_widget_.get(),
+          transform_window_.window()->GetParent()->aura_window()->id(),
           &params_label);
   item_widget_->set_focus_on_creation(false);
   item_widget_->Init(params_label);
-  aura::Window* widget_window = item_widget_->GetNativeWindow();
+  WmWindow* widget_window = WmWindow::Get(item_widget_->GetNativeWindow());
   if (transform_window_.GetTopInset()) {
     // For windows with headers the overview header fades in above the
     // original window header.
-    widget_window->parent()->StackChildAbove(widget_window,
-                                             transform_window_.window());
+    widget_window->GetParent()->StackChildAbove(widget_window,
+                                                transform_window_.window());
   } else {
     // For tabbed windows the overview header slides from behind. The stacking
     // is then corrected when the animation completes.
-    widget_window->parent()->StackChildBelow(widget_window,
-                                             transform_window_.window());
+    widget_window->GetParent()->StackChildBelow(widget_window,
+                                                transform_window_.window());
   }
   label_view_ = new views::Label(title);
   label_view_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
@@ -649,8 +655,8 @@ void WindowSelectorItem::CreateWindowLabel(const base::string16& title) {
 void WindowSelectorItem::UpdateHeaderLayout(
     HeaderFadeInMode mode,
     OverviewAnimationType animation_type) {
-  gfx::Rect transformed_window_bounds(transform_window_.GetTransformedBounds());
-  ::wm::ConvertRectFromScreen(root_window_, &transformed_window_bounds);
+  gfx::Rect transformed_window_bounds = root_window_->ConvertRectFromScreen(
+      transform_window_.GetTransformedBounds());
 
   gfx::Rect label_rect(close_button_->GetPreferredSize());
   label_rect.set_width(transformed_window_bounds.width());
@@ -681,9 +687,10 @@ void WindowSelectorItem::UpdateHeaderLayout(
     label_view_->SetVisible(true);
     SetupFadeInAfterLayout(item_widget_.get());
   }
-  aura::Window* widget_window = item_widget_->GetNativeWindow();
-  ScopedOverviewAnimationSettings animation_settings(animation_type,
-                                                     widget_window);
+  WmWindow* widget_window = WmWindow::Get(item_widget_->GetNativeWindow());
+  std::unique_ptr<ScopedOverviewAnimationSettings> animation_settings =
+      ScopedOverviewAnimationSettingsFactory::Get()
+          ->CreateOverviewAnimationSettings(animation_type, widget_window);
   // |widget_window| covers both the transformed window and the header
   // as well as the gap between the windows to prevent events from reaching
   // the window including its sizing borders.
@@ -708,25 +715,29 @@ void WindowSelectorItem::AnimateOpacity(float opacity,
   transform_window_.SetOpacity(opacity);
 
   const float header_opacity = selected_ ? 0.f : kHeaderOpacity * opacity;
-  aura::Window* widget_window = item_widget_->GetNativeWindow();
-  ScopedOverviewAnimationSettings animation_settings_label(animation_type,
-                                                           widget_window);
-  widget_window->layer()->SetOpacity(header_opacity);
+  WmWindow* widget_window = WmWindow::Get(item_widget_->GetNativeWindow());
+  std::unique_ptr<ScopedOverviewAnimationSettings> animation_settings_label =
+      ScopedOverviewAnimationSettingsFactory::Get()
+          ->CreateOverviewAnimationSettings(animation_type, widget_window);
+  widget_window->SetOpacity(header_opacity);
 }
 
 void WindowSelectorItem::UpdateAccessibilityName() {
   caption_container_view_->listener_button()->SetAccessibleName(
-      GetWindow()->GetTitle());
+      GetWindow()->aura_window()->GetTitle());
 }
 
 void WindowSelectorItem::FadeOut(std::unique_ptr<views::Widget> widget) {
   widget->SetOpacity(1.f);
 
   // Fade out the widget. This animation continues past the lifetime of |this|.
-  aura::Window* widget_window = widget->GetNativeWindow();
-  ScopedOverviewAnimationSettings animation_settings(
-      OverviewAnimationType::OVERVIEW_ANIMATION_EXIT_OVERVIEW_MODE_FADE_OUT,
-      widget_window);
+  WmWindow* widget_window = WmWindow::Get(widget->GetNativeWindow());
+  std::unique_ptr<ScopedOverviewAnimationSettings> animation_settings =
+      ScopedOverviewAnimationSettingsFactory::Get()
+          ->CreateOverviewAnimationSettings(
+              OverviewAnimationType::
+                  OVERVIEW_ANIMATION_EXIT_OVERVIEW_MODE_FADE_OUT,
+              widget_window);
   // CleanupAnimationObserver will delete itself (and the widget) when the
   // opacity animation is complete.
   // Ownership over the observer is passed to the window_selector_->delegate()
@@ -735,7 +746,7 @@ void WindowSelectorItem::FadeOut(std::unique_ptr<views::Widget> widget) {
   views::Widget* widget_ptr = widget.get();
   std::unique_ptr<CleanupAnimationObserver> observer(
       new CleanupAnimationObserver(std::move(widget)));
-  animation_settings.AddObserver(observer.get());
+  animation_settings->AddObserver(observer.get());
   window_selector_->delegate()->AddDelayedAnimationObserver(
       std::move(observer));
   widget_ptr->SetOpacity(0.f);
@@ -745,7 +756,7 @@ gfx::SlideAnimation* WindowSelectorItem::GetBackgroundViewAnimation() {
   return background_view_ ? background_view_->animation() : nullptr;
 }
 
-aura::Window* WindowSelectorItem::GetOverviewWindowForMinimizedStateForTest() {
+WmWindow* WindowSelectorItem::GetOverviewWindowForMinimizedStateForTest() {
   return transform_window_.GetOverviewWindowForMinimizedState();
 }
 

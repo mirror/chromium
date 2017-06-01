@@ -36,7 +36,6 @@
 #include "base/system_monitor/system_monitor.h"
 #include "base/task_scheduler/initialization_util.h"
 #include "base/task_scheduler/post_task.h"
-#include "base/task_scheduler/single_thread_task_runner_thread_mode.h"
 #include "base/task_scheduler/task_scheduler.h"
 #include "base/task_scheduler/task_traits.h"
 #include "base/threading/sequenced_worker_pool.h"
@@ -54,7 +53,6 @@
 #include "components/tracing/common/tracing_switches.h"
 #include "components/viz/display_compositor/host_shared_bitmap_manager.h"
 #include "content/browser/browser_thread_impl.h"
-#include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/dom_storage/dom_storage_area.h"
 #include "content/browser/download/download_resource_handler.h"
 #include "content/browser/download/save_file_manager.h"
@@ -504,6 +502,26 @@ BrowserMainLoop* g_current_browser_main_loop = NULL;
 bool g_browser_main_loop_shutting_down = false;
 #endif
 
+// For measuring memory usage after each task. Behind a command line flag.
+class BrowserMainLoop::MemoryObserver : public base::MessageLoop::TaskObserver {
+ public:
+  MemoryObserver() {}
+  ~MemoryObserver() override {}
+
+  void WillProcessTask(const base::PendingTask& pending_task) override {}
+
+  void DidProcessTask(const base::PendingTask& pending_task) override {
+    std::unique_ptr<base::ProcessMetrics> process_metrics(
+        base::ProcessMetrics::CreateCurrentProcessMetrics());
+    size_t private_bytes;
+    process_metrics->GetMemoryBytes(&private_bytes, NULL);
+    LOCAL_HISTOGRAM_MEMORY_KB("Memory.BrowserUsed", private_bytes >> 10);
+  }
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MemoryObserver);
+};
+
+
 // BrowserMainLoop construction / destruction =============================
 
 BrowserMainLoop* BrowserMainLoop::GetInstance() {
@@ -766,19 +784,18 @@ void BrowserMainLoop::PostMainMessageLoopStart() {
   }
 #endif
 
+  if (parsed_command_line_.HasSwitch(switches::kMemoryMetrics)) {
+    TRACE_EVENT0("startup", "BrowserMainLoop::Subsystem:MemoryObserver");
+    memory_observer_.reset(new MemoryObserver());
+    base::MessageLoop::current()->AddTaskObserver(memory_observer_.get());
+  }
+
   if (parsed_command_line_.HasSwitch(
           switches::kEnableAggressiveDOMStorageFlushing)) {
     TRACE_EVENT0("startup",
                  "BrowserMainLoop::Subsystem:EnableAggressiveCommitDelay");
     DOMStorageArea::EnableAggressiveCommitDelay();
     LevelDBWrapperImpl::EnableAggressiveCommitDelay();
-  }
-
-  if (parsed_command_line_.HasSwitch(switches::kIsolateOrigins)) {
-    ChildProcessSecurityPolicyImpl* policy =
-        ChildProcessSecurityPolicyImpl::GetInstance();
-    policy->AddIsolatedOriginsFromCommandLine(
-        parsed_command_line_.GetSwitchValueASCII(switches::kIsolateOrigins));
   }
 
   // Enable memory-infra dump providers.
@@ -1115,15 +1132,12 @@ int BrowserMainLoop::CreateThreads() {
       redirection_task_runner =
           (thread_id == BrowserThread::FILE)
               ? base::CreateCOMSTATaskRunnerWithTraits(
-                    non_ui_non_io_task_runner_traits,
-                    base::SingleThreadTaskRunnerThreadMode::DEDICATED)
+                    non_ui_non_io_task_runner_traits)
               : base::CreateSingleThreadTaskRunnerWithTraits(
-                    non_ui_non_io_task_runner_traits,
-                    base::SingleThreadTaskRunnerThreadMode::DEDICATED);
+                    non_ui_non_io_task_runner_traits);
 #else   // defined(OS_WIN)
       redirection_task_runner = base::CreateSingleThreadTaskRunnerWithTraits(
-          non_ui_non_io_task_runner_traits,
-          base::SingleThreadTaskRunnerThreadMode::DEDICATED);
+          non_ui_non_io_task_runner_traits);
 #endif  // defined(OS_WIN)
       DCHECK(redirection_task_runner);
       BrowserThreadImpl::RedirectThreadIDToTaskRunner(

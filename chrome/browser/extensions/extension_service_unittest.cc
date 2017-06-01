@@ -5019,7 +5019,7 @@ void ExtensionServiceTest::TestExternalProvider(MockExternalProvider* provider,
 
     // Should still be at 0.
     loaded_.clear();
-    service()->ReloadExtensionsForTest();
+    extensions::InstalledLoader(service()).LoadAllExtensions();
     content::RunAllBlockingPoolTasksUntilIdle();
     ASSERT_EQ(0u, loaded_.size());
     ValidatePrefKeyCount(1);

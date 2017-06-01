@@ -5,9 +5,9 @@
 #include "ash/shelf/overflow_button.h"
 
 #include "ash/resources/vector_icons/vector_icons.h"
-#include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_constants.h"
 #include "ash/shelf/shelf_view.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "base/memory/ptr_util.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -21,12 +21,12 @@
 
 namespace ash {
 
-OverflowButton::OverflowButton(ShelfView* shelf_view, Shelf* shelf)
+OverflowButton::OverflowButton(ShelfView* shelf_view, WmShelf* wm_shelf)
     : CustomButton(nullptr),
       upward_image_(gfx::CreateVectorIcon(kShelfOverflowIcon, kShelfIconColor)),
       chevron_image_(nullptr),
       shelf_view_(shelf_view),
-      shelf_(shelf),
+      wm_shelf_(wm_shelf),
       background_color_(kShelfDefaultBaseColor) {
   DCHECK(shelf_view_);
 
@@ -63,7 +63,7 @@ void OverflowButton::UpdateShelfItemBackground(SkColor color) {
 }
 
 OverflowButton::ChevronDirection OverflowButton::GetChevronDirection() const {
-  switch (shelf_->alignment()) {
+  switch (wm_shelf_->GetAlignment()) {
     case SHELF_ALIGNMENT_LEFT:
       if (shelf_view_->IsShowingOverflowBubble())
         return ChevronDirection::LEFT;
@@ -109,6 +109,12 @@ void OverflowButton::UpdateChevronImage() {
   SchedulePaint();
 }
 
+void OverflowButton::OnPaint(gfx::Canvas* canvas) {
+  gfx::Rect bounds = CalculateButtonBounds();
+  PaintBackground(canvas, bounds);
+  PaintForeground(canvas, bounds);
+}
+
 std::unique_ptr<views::InkDrop> OverflowButton::CreateInkDrop() {
   std::unique_ptr<views::InkDropImpl> ink_drop =
       CreateDefaultFloodFillInkDropImpl();
@@ -143,12 +149,6 @@ std::unique_ptr<views::InkDropMask> OverflowButton::CreateInkDropMask() const {
       size(), insets, kOverflowButtonCornerRadius);
 }
 
-void OverflowButton::PaintButtonContents(gfx::Canvas* canvas) {
-  gfx::Rect bounds = CalculateButtonBounds();
-  PaintBackground(canvas, bounds);
-  PaintForeground(canvas, bounds);
-}
-
 void OverflowButton::PaintBackground(gfx::Canvas* canvas,
                                      const gfx::Rect& bounds) {
   cc::PaintFlags flags;
@@ -167,7 +167,7 @@ void OverflowButton::PaintForeground(gfx::Canvas* canvas,
 }
 
 gfx::Rect OverflowButton::CalculateButtonBounds() const {
-  ShelfAlignment alignment = shelf_->alignment();
+  ShelfAlignment alignment = wm_shelf_->GetAlignment();
   gfx::Rect content_bounds = GetContentsBounds();
   // Align the button to the top of a bottom-aligned shelf, to the right edge
   // a left-aligned shelf, and to the left edge of a right-aligned shelf.

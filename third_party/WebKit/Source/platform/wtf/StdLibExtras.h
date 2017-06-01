@@ -57,9 +57,8 @@
 // multiple threads.
 //
 // TODO: rename as DEFINE_CROSS_THREAD_STATIC_LOCAL() ?
-#define DEFINE_THREAD_SAFE_STATIC_LOCAL(Type, Name, Arguments) \
-  static WTF::StaticSingleton<Type> s_##Name(                  \
-      new WTF::StaticSingleton<Type>::WrapperType Arguments);  \
+#define DEFINE_THREAD_SAFE_STATIC_LOCAL(Type, Name, Initializer) \
+  static WTF::StaticSingleton<Type> s_##Name(Initializer);       \
   Type& Name = s_##Name.Get(true)
 
 namespace blink {

@@ -17,7 +17,6 @@
 #include "chrome/browser/ui/global_error/global_error_service.h"
 #include "chrome/browser/ui/global_error/global_error_service_factory.h"
 #include "chrome/grit/generated_resources.h"
-#include "content/public/browser/browser_thread.h"
 #include "ui/base/l10n/l10n_util.h"
 
 namespace extensions {
@@ -102,12 +101,11 @@ int ErrorBadge::GetMenuItemCommandID() {
 
 WarningBadgeService::WarningBadgeService(Profile* profile)
     : profile_(profile), warning_service_observer_(this) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK(CalledOnValidThread());
   warning_service_observer_.Add(WarningService::Get(profile_));
 }
 
 WarningBadgeService::~WarningBadgeService() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 }
 
 // static
@@ -117,7 +115,7 @@ WarningBadgeService* WarningBadgeService::Get(
 }
 
 void WarningBadgeService::SuppressCurrentWarnings() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK(CalledOnValidThread());
   size_t old_size = suppressed_warnings_.size();
 
   const WarningSet& warnings = GetCurrentWarnings();
@@ -133,7 +131,7 @@ const WarningSet& WarningBadgeService::GetCurrentWarnings() const {
 
 void WarningBadgeService::ExtensionWarningsChanged(
     const ExtensionIdSet& affected_extensions) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK(CalledOnValidThread());
   UpdateBadgeStatus();
 }
 

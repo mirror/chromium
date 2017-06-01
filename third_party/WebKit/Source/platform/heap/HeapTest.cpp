@@ -50,15 +50,13 @@
 
 namespace blink {
 
-namespace {
-
-void PreciselyCollectGarbage() {
+static void PreciselyCollectGarbage() {
   ThreadState::Current()->CollectGarbage(BlinkGC::kNoHeapPointersOnStack,
                                          BlinkGC::kGCWithSweep,
                                          BlinkGC::kForcedGC);
 }
 
-void ConservativelyCollectGarbage() {
+static void ConservativelyCollectGarbage() {
   ThreadState::Current()->CollectGarbage(
       BlinkGC::kHeapPointersOnStack, BlinkGC::kGCWithSweep, BlinkGC::kForcedGC);
 }
@@ -254,8 +252,6 @@ struct WeakHandlingHashTraits : WTF::SimpleClassHashTraits<T> {
     return t.TraceInCollection(visitor, strongify);
   }
 };
-
-}  // namespace
 
 }  // namespace blink
 
@@ -5406,12 +5402,13 @@ TEST(HeapTest, IndirectStrongToWeak) {
 }
 
 static Mutex& MainThreadMutex() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(Mutex, main_mutex, ());
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(Mutex, main_mutex, new Mutex);
   return main_mutex;
 }
 
 static ThreadCondition& MainThreadCondition() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadCondition, main_condition, ());
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadCondition, main_condition,
+                                  new ThreadCondition);
   return main_condition;
 }
 
@@ -5425,12 +5422,13 @@ static void WakeMainThread() {
 }
 
 static Mutex& WorkerThreadMutex() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(Mutex, worker_mutex, ());
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(Mutex, worker_mutex, new Mutex);
   return worker_mutex;
 }
 
 static ThreadCondition& WorkerThreadCondition() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadCondition, worker_condition, ());
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadCondition, worker_condition,
+                                  new ThreadCondition);
   return worker_condition;
 }
 
@@ -5742,7 +5740,8 @@ TEST(HeapTest, GarbageCollectionDuringMixinConstruction) {
 }
 
 static RecursiveMutex& GetRecursiveMutex() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(RecursiveMutex, recursive_mutex, ());
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(RecursiveMutex, recursive_mutex,
+                                  new RecursiveMutex);
   return recursive_mutex;
 }
 
@@ -6539,7 +6538,8 @@ class ThreadedClearOnShutdownTester : public ThreadedTesterBase {
 
   static IntWrapper& ThreadSpecificIntWrapper() {
     DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific<Persistent<IntWrapper>>,
-                                    int_wrapper, ());
+                                    int_wrapper,
+                                    new ThreadSpecific<Persistent<IntWrapper>>);
     Persistent<IntWrapper>& handle = *int_wrapper;
     if (!handle) {
       handle = new IntWrapper(42);
@@ -6584,7 +6584,7 @@ class ThreadedClearOnShutdownTester::HeapObject final
 ThreadedClearOnShutdownTester::WeakHeapObjectSet&
 ThreadedClearOnShutdownTester::GetWeakHeapObjectSet() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific<WeakHeapObjectSet>, singleton,
-                                  ());
+                                  new ThreadSpecific<WeakHeapObjectSet>);
   if (!singleton.IsSet())
     singleton->RegisterAsStaticReference();
 
@@ -6593,7 +6593,8 @@ ThreadedClearOnShutdownTester::GetWeakHeapObjectSet() {
 
 ThreadedClearOnShutdownTester::HeapObjectSet&
 ThreadedClearOnShutdownTester::GetHeapObjectSet() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific<HeapObjectSet>, singleton, ());
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific<HeapObjectSet>, singleton,
+                                  new ThreadSpecific<HeapObjectSet>);
   if (!singleton.IsSet())
     singleton->RegisterAsStaticReference();
 

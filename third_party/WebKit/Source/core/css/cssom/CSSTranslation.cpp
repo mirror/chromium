@@ -6,17 +6,16 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/css/CSSPrimitiveValue.h"
-#include "core/css/cssom/CSSNumericValue.h"
 
 namespace blink {
 
-CSSTranslation* CSSTranslation::Create(CSSNumericValue* x,
-                                       CSSNumericValue* y,
-                                       CSSNumericValue* z,
+CSSTranslation* CSSTranslation::Create(CSSLengthValue* x,
+                                       CSSLengthValue* y,
+                                       CSSLengthValue* z,
                                        ExceptionState& exception_state) {
   if (z->ContainsPercent()) {
     exception_state.ThrowTypeError(
-        "CSSTranslation does not support z CSSNumericValue with percent units");
+        "CSSTranslation does not support z CSSLengthValue with percent units");
     return nullptr;
   }
   return new CSSTranslation(x, y, z);

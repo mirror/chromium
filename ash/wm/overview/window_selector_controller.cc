@@ -13,6 +13,7 @@
 #include "ash/wm/overview/window_selector.h"
 #include "ash/wm/screen_pinning_controller.h"
 #include "ash/wm/window_state.h"
+#include "ash/wm_window.h"
 #include "base/metrics/histogram_macros.h"
 
 namespace ash {
@@ -48,7 +49,8 @@ bool WindowSelectorController::ToggleOverview() {
     if (!CanSelect())
       return false;
 
-    auto windows = Shell::Get()->mru_window_tracker()->BuildMruWindowList();
+    std::vector<WmWindow*> windows =
+        Shell::Get()->mru_window_tracker()->BuildMruWindowList();
     auto end =
         std::remove_if(windows.begin(), windows.end(),
                        std::not1(std::ptr_fun(&WindowSelector::IsSelectable)));

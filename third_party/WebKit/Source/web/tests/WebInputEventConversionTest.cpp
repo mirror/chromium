@@ -38,10 +38,9 @@
 #include "core/events/TouchEvent.h"
 #include "core/events/WheelEvent.h"
 #include "core/exported/WebViewBase.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/VisualViewport.h"
-#include "core/frame/WebLocalFrameBase.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/page/Page.h"
 #include "platform/geometry/IntSize.h"
@@ -50,6 +49,7 @@
 #include "public/web/WebFrame.h"
 #include "public/web/WebSettings.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "web/WebLocalFrameImpl.h"
 #include "web/tests/FrameTestHelpers.h"
 
 namespace blink {
@@ -129,7 +129,7 @@ TEST(WebInputEventConversionTest, InputEventsScaling) {
 
   web_view->SetPageScaleFactor(2);
 
-  LocalFrameView* view = ToLocalFrame(web_view->GetPage()->MainFrame())->View();
+  FrameView* view = ToLocalFrame(web_view->GetPage()->MainFrame())->View();
 
   {
     WebMouseEvent web_mouse_event(WebInputEvent::kMouseMove,
@@ -360,7 +360,7 @@ TEST(WebInputEventConversionTest, InputEventsTransform) {
   web_view->MainFrameImpl()->SetInputEventsTransformForEmulation(
       IntSize(10, 20), 1.5);
 
-  LocalFrameView* view = ToLocalFrame(web_view->GetPage()->MainFrame())->View();
+  FrameView* view = ToLocalFrame(web_view->GetPage()->MainFrame())->View();
 
   {
     WebMouseEvent web_mouse_event(WebInputEvent::kMouseMove,
@@ -630,7 +630,7 @@ TEST(WebInputEventConversionTest, InputEventsConversions) {
   web_view->Resize(WebSize(page_width, page_height));
   web_view->UpdateAllLifecyclePhases();
 
-  LocalFrameView* view = ToLocalFrame(web_view->GetPage()->MainFrame())->View();
+  FrameView* view = ToLocalFrame(web_view->GetPage()->MainFrame())->View();
   {
     WebGestureEvent web_gesture_event(WebInputEvent::kGestureTap,
                                       WebInputEvent::kNoModifiers,
@@ -674,7 +674,7 @@ TEST(WebInputEventConversionTest, VisualViewportOffset) {
   IntPoint visual_offset(35, 60);
   web_view->GetPage()->GetVisualViewport().SetLocation(visual_offset);
 
-  LocalFrameView* view = ToLocalFrame(web_view->GetPage()->MainFrame())->View();
+  FrameView* view = ToLocalFrame(web_view->GetPage()->MainFrame())->View();
 
   {
     WebMouseEvent web_mouse_event(WebInputEvent::kMouseMove,
@@ -770,7 +770,7 @@ TEST(WebInputEventConversionTest, ElasticOverscroll) {
   web_view->Resize(WebSize(page_width, page_height));
   web_view->UpdateAllLifecyclePhases();
 
-  LocalFrameView* view = ToLocalFrame(web_view->GetPage()->MainFrame())->View();
+  FrameView* view = ToLocalFrame(web_view->GetPage()->MainFrame())->View();
 
   FloatSize elastic_overscroll(10, -20);
   web_view->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
@@ -850,7 +850,7 @@ TEST(WebInputEventConversionTest, ElasticOverscrollWithPageReload) {
   web_view->ApplyViewportDeltas(WebFloatSize(), WebFloatSize(),
                                 elastic_overscroll, 1.0f, 0.0f);
   FrameTestHelpers::ReloadFrame(web_view_helper.WebView()->MainFrame());
-  LocalFrameView* view = ToLocalFrame(web_view->GetPage()->MainFrame())->View();
+  FrameView* view = ToLocalFrame(web_view->GetPage()->MainFrame())->View();
 
   // Just elastic overscroll.
   {

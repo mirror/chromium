@@ -95,9 +95,7 @@ class LazyPaths(object):
         # Need to maintain a trailing /.
         if tool_prefix.endswith(os.path.sep):
           ret += os.path.sep
-        # Check for output directories that have a stale build_vars.txt.
-        if os.path.isfile(ret + 'c++filt'):
-          return ret
+        return ret
     from_path = distutils.spawn.find_executable('c++filt')
     if from_path:
       return from_path[:-7]

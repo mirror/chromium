@@ -14,7 +14,7 @@
 #include "base/run_loop.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_paths.h"
-#include "chrome/common/safe_browsing/archive_analyzer_results.h"
+#include "chrome/common/safe_browsing/zip_analyzer_results.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
 #include "crypto/sha2.h"
@@ -38,8 +38,9 @@ class SandboxedZipAnalyzerTest : public ::testing::Test {
   class ResultsGetter {
    public:
     ResultsGetter(const base::Closure& quit_closure,
-                  ArchiveAnalyzerResults* results)
-        : quit_closure_(quit_closure), results_(results) {
+                  zip_analyzer::Results* results)
+        : quit_closure_(quit_closure),
+          results_(results) {
       DCHECK(results);
       results->success = false;
     }
@@ -50,13 +51,13 @@ class SandboxedZipAnalyzerTest : public ::testing::Test {
     }
 
    private:
-    void OnZipAnalyzerResults(const ArchiveAnalyzerResults& results) {
+    void OnZipAnalyzerResults(const zip_analyzer::Results& results) {
       *results_ = results;
       quit_closure_.Run();
     }
 
     base::Closure quit_closure_;
-    ArchiveAnalyzerResults* results_;
+    zip_analyzer::Results* results_;
     DISALLOW_COPY_AND_ASSIGN(ResultsGetter);
   };
 
@@ -72,7 +73,7 @@ class SandboxedZipAnalyzerTest : public ::testing::Test {
   // Runs a sandboxed zip analyzer on |file_path|, writing its results into
   // |results|.
   void RunAnalyzer(const base::FilePath& file_path,
-                   ArchiveAnalyzerResults* results) {
+                   zip_analyzer::Results* results) {
     DCHECK(results);
     base::RunLoop run_loop;
     ResultsGetter results_getter(run_loop.QuitClosure(), results);
@@ -178,7 +179,7 @@ const SandboxedZipAnalyzerTest::BinaryData SandboxedZipAnalyzerTest::kJSEFile =
 };
 
 TEST_F(SandboxedZipAnalyzerTest, NoBinaries) {
-  ArchiveAnalyzerResults results;
+  zip_analyzer::Results results;
   RunAnalyzer(dir_test_data_.AppendASCII("zipfile_no_binaries.zip"), &results);
   ASSERT_TRUE(results.success);
   EXPECT_FALSE(results.has_executable);
@@ -187,7 +188,7 @@ TEST_F(SandboxedZipAnalyzerTest, NoBinaries) {
 }
 
 TEST_F(SandboxedZipAnalyzerTest, OneUnsignedBinary) {
-  ArchiveAnalyzerResults results;
+  zip_analyzer::Results results;
   RunAnalyzer(dir_test_data_.AppendASCII("zipfile_one_unsigned_binary.zip"),
               &results);
   ASSERT_TRUE(results.success);
@@ -198,7 +199,7 @@ TEST_F(SandboxedZipAnalyzerTest, OneUnsignedBinary) {
 }
 
 TEST_F(SandboxedZipAnalyzerTest, TwoBinariesOneSigned) {
-  ArchiveAnalyzerResults results;
+  zip_analyzer::Results results;
   RunAnalyzer(dir_test_data_.AppendASCII("zipfile_two_binaries_one_signed.zip"),
               &results);
   ASSERT_TRUE(results.success);
@@ -210,7 +211,7 @@ TEST_F(SandboxedZipAnalyzerTest, TwoBinariesOneSigned) {
 }
 
 TEST_F(SandboxedZipAnalyzerTest, ZippedArchiveNoBinaries) {
-  ArchiveAnalyzerResults results;
+  zip_analyzer::Results results;
   RunAnalyzer(dir_test_data_.AppendASCII("zipfile_archive_no_binaries.zip"),
               &results);
   ASSERT_TRUE(results.success);
@@ -223,7 +224,7 @@ TEST_F(SandboxedZipAnalyzerTest, ZippedArchiveNoBinaries) {
 }
 
 TEST_F(SandboxedZipAnalyzerTest, ZippedRarArchiveNoBinaries) {
-  ArchiveAnalyzerResults results;
+  zip_analyzer::Results results;
   RunAnalyzer(dir_test_data_.AppendASCII("zipfile_rar_archive_no_binaries.zip"),
               &results);
   ASSERT_TRUE(results.success);
@@ -236,7 +237,7 @@ TEST_F(SandboxedZipAnalyzerTest, ZippedRarArchiveNoBinaries) {
 }
 
 TEST_F(SandboxedZipAnalyzerTest, ZippedArchiveAndBinaries) {
-  ArchiveAnalyzerResults results;
+  zip_analyzer::Results results;
   RunAnalyzer(dir_test_data_.AppendASCII("zipfile_archive_and_binaries.zip"),
               &results);
   ASSERT_TRUE(results.success);
@@ -251,7 +252,7 @@ TEST_F(SandboxedZipAnalyzerTest, ZippedArchiveAndBinaries) {
 
 TEST_F(SandboxedZipAnalyzerTest,
        ZippedArchiveAndBinariesWithTrailingSpaceAndPeriodChars) {
-  ArchiveAnalyzerResults results;
+  zip_analyzer::Results results;
   RunAnalyzer(dir_test_data_.AppendASCII("zipfile_two_binaries_one_archive_"
                                          "trailing_space_and_period_chars.zip"),
               &results);
@@ -272,7 +273,7 @@ TEST_F(SandboxedZipAnalyzerTest,
 }
 
 TEST_F(SandboxedZipAnalyzerTest, ZippedJSEFile) {
-  ArchiveAnalyzerResults results;
+  zip_analyzer::Results results;
   RunAnalyzer(dir_test_data_.AppendASCII("zipfile_one_jse_file.zip"), &results);
   ASSERT_TRUE(results.success);
   EXPECT_TRUE(results.has_executable);

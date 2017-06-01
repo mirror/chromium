@@ -110,8 +110,9 @@ void DebugInfoCollector::IterateFileCache(
 
   blocking_task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::BindOnce(&IterateFileCacheInternal, metadata_,
-                     google_apis::CreateRelayCallback(iteration_callback)),
+      base::Bind(&IterateFileCacheInternal,
+                 metadata_,
+                 google_apis::CreateRelayCallback(iteration_callback)),
       completion_callback);
 }
 

@@ -103,8 +103,6 @@ class WebServiceWorkerNetworkProviderImpl
     request.SetExtraData(extra_data.release());
   }
 
-  int GetProviderID() const override { return provider_->provider_id(); }
-
  private:
   std::unique_ptr<ServiceWorkerNetworkProvider> provider_;
 };
@@ -1067,7 +1065,6 @@ void ServiceWorkerContextClient::RespondToPaymentRequestEvent(
   payments::mojom::PaymentAppResponsePtr response =
       payments::mojom::PaymentAppResponse::New();
   response->method_name = web_response.method_name.Utf8();
-  response->stringified_details = web_response.stringified_details.Utf8();
   response_callback->OnPaymentAppResponse(
       std::move(response), base::Time::FromDoubleT(dispatch_event_time));
   context_->payment_response_callbacks.erase(payment_request_id);

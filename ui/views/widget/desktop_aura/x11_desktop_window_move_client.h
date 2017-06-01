@@ -23,9 +23,9 @@ class WindowTreeHost;
 namespace views {
 
 // When we're dragging tabs, we need to manually position our window.
-class VIEWS_EXPORT X11DesktopWindowMoveClient
-    : public views::X11MoveLoopDelegate,
-      public wm::WindowMoveClient {
+class VIEWS_EXPORT X11DesktopWindowMoveClient :
+      public views::X11MoveLoopDelegate,
+      public aura::client::WindowMoveClient {
  public:
   X11DesktopWindowMoveClient();
   ~X11DesktopWindowMoveClient() override;
@@ -37,10 +37,11 @@ class VIEWS_EXPORT X11DesktopWindowMoveClient
   void OnMouseReleased() override;
   void OnMoveLoopEnded() override;
 
-  // Overridden from wm::WindowMoveClient:
-  wm::WindowMoveResult RunMoveLoop(aura::Window* window,
-                                   const gfx::Vector2d& drag_offset,
-                                   wm::WindowMoveSource move_source) override;
+  // Overridden from aura::client::WindowMoveClient:
+  aura::client::WindowMoveResult RunMoveLoop(
+      aura::Window* window,
+      const gfx::Vector2d& drag_offset,
+      aura::client::WindowMoveSource move_source) override;
   void EndMoveLoop() override;
 
  private:

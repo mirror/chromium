@@ -29,7 +29,6 @@ ScreenContext::ScreenContext() {
 }
 
 ScreenContext::~ScreenContext() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 }
 
 bool ScreenContext::SetBoolean(const KeyType& key, bool value) {
@@ -132,17 +131,17 @@ void ScreenContext::CopyFrom(ScreenContext& context) {
 }
 
 bool ScreenContext::HasKey(const KeyType& key) const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   return storage_.HasKey(key);
 }
 
 bool ScreenContext::HasChanges() const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   return !changes_.empty();
 }
 
 void ScreenContext::GetChangesAndReset(base::DictionaryValue* diff) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(diff);
   changes_.Swap(diff);
   changes_.Clear();
@@ -150,7 +149,7 @@ void ScreenContext::GetChangesAndReset(base::DictionaryValue* diff) {
 
 void ScreenContext::ApplyChanges(const base::DictionaryValue& diff,
                                  std::vector<std::string>* keys) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(!HasChanges());
   if (keys) {
     keys->clear();
@@ -166,7 +165,7 @@ void ScreenContext::ApplyChanges(const base::DictionaryValue& diff,
 }
 
 bool ScreenContext::Set(const KeyType& key, base::Value* value) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(value);
   std::unique_ptr<base::Value> new_value(value);
 

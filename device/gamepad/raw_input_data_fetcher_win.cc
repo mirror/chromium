@@ -47,7 +47,6 @@ RawInputDataFetcher::RawInputDataFetcher()
       last_enumeration_id_(0) {}
 
 RawInputDataFetcher::~RawInputDataFetcher() {
-  StopMonitor();
   ClearControllers();
   DCHECK(!window_);
   DCHECK(!events_monitored_);
@@ -55,6 +54,10 @@ RawInputDataFetcher::~RawInputDataFetcher() {
 
 GamepadSource RawInputDataFetcher::source() {
   return Factory::static_source();
+}
+
+void RawInputDataFetcher::WillDestroyCurrentMessageLoop() {
+  StopMonitor();
 }
 
 void RawInputDataFetcher::OnAddedToProvider() {
@@ -106,6 +109,11 @@ void RawInputDataFetcher::StartMonitor() {
     return;
   }
 
+  // Start observing message loop destruction if we start monitoring the first
+  // event.
+  if (!events_monitored_)
+    base::MessageLoop::current()->AddDestructionObserver(this);
+
   events_monitored_ = true;
 }
 
@@ -124,6 +132,9 @@ void RawInputDataFetcher::StopMonitor() {
 
   events_monitored_ = false;
   window_.reset();
+
+  // Stop observing message loop destruction if no event is being monitored.
+  base::MessageLoop::current()->RemoveDestructionObserver(this);
 }
 
 void RawInputDataFetcher::ClearControllers() {

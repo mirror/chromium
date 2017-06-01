@@ -7,8 +7,9 @@
 namespace ui {
 
 PageFlipRequest::PageFlipRequest(int crtc_count,
-                                 SwapCompletionOnceCallback callback)
-    : callback_(std::move(callback)), crtc_count_(crtc_count) {}
+                                 const SwapCompletionCallback& callback)
+    : callback_(callback), crtc_count_(crtc_count) {
+}
 
 PageFlipRequest::~PageFlipRequest() {
 }
@@ -20,7 +21,8 @@ void PageFlipRequest::Signal(gfx::SwapResult result) {
     result_ = result;
 
   if (!--crtc_count_) {
-    std::move(callback_).Run(result_);
+    callback_.Run(result_);
+    callback_.Reset();
   }
 }
 

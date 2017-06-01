@@ -180,12 +180,12 @@ void HeadlessContentMainDelegate::InitCrashReporter(
     breakpad::InitCrashReporter(process_type);
 #elif defined(OS_MACOSX)
   crash_reporter::InitializeCrashpad(process_type.empty(), process_type);
-// Avoid adding this dependency in Windows Chrome non component builds, since
+// Avoid adding this dependency in Windows Chrome component build, since
 // crashpad is already enabled.
-// TODO(dvallet): Ideally we would also want to avoid this for component builds.
+// TODO(dvallet): Ideally we would also want to avoid this for component build.
 #elif defined(OS_WIN) && !defined(CHROME_MULTIPLE_DLL)
   crash_reporter::InitializeCrashpadWithEmbeddedHandler(process_type.empty(),
-                                                        process_type, "");
+                                                        process_type);
 #endif  // defined(HEADLESS_USE_BREAKPAD)
 }
 

@@ -250,7 +250,7 @@ void AUHALStream::Start(AudioSourceCallback* callback) {
 
   Stop();
   OSSTATUS_DLOG(ERROR, result) << "AudioOutputUnitStart() failed.";
-  callback->OnError();
+  callback->OnError(this);
 }
 
 void AUHALStream::Stop() {
@@ -263,7 +263,7 @@ void AUHALStream::Stop() {
   OSSTATUS_DLOG_IF(ERROR, result != noErr, result)
       << "AudioOutputUnitStop() failed.";
   if (result != noErr)
-    source_->OnError();
+    source_->OnError(this);
   ReportAndResetStats();
   source_ = nullptr;
   stopped_ = true;

@@ -43,7 +43,7 @@ class WMEvent;
 class ASH_EXPORT WorkspaceLayoutManager
     : public aura::LayoutManager,
       public aura::WindowObserver,
-      public ::wm::ActivationChangeObserver,
+      public aura::client::ActivationChangeObserver,
       public keyboard::KeyboardControllerObserver,
       public display::DisplayObserver,
       public ShellObserver,
@@ -79,11 +79,10 @@ class ASH_EXPORT WorkspaceLayoutManager
                              const gfx::Rect& old_bounds,
                              const gfx::Rect& new_bounds) override;
 
-  // wm::ActivationChangeObserver overrides:
-  void OnWindowActivated(
-      ::wm::ActivationChangeObserver::ActivationReason reason,
-      aura::Window* gained_active,
-      aura::Window* lost_active) override;
+  // aura::client::ActivationChangeObserver overrides:
+  void OnWindowActivated(ActivationReason reason,
+                         aura::Window* gained_active,
+                         aura::Window* lost_active) override;
 
   // keyboard::KeyboardControllerObserver overrides:
   void OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) override;
@@ -99,8 +98,8 @@ class ASH_EXPORT WorkspaceLayoutManager
 
   // ShellObserver overrides:
   void OnFullscreenStateChanged(bool is_fullscreen,
-                                aura::Window* root_window) override;
-  void OnPinnedStateChanged(aura::Window* pinned_window) override;
+                                WmWindow* root_window) override;
+  void OnPinnedStateChanged(WmWindow* pinned_window) override;
   void OnVirtualKeyboardStateChanged(bool activated,
                                      aura::Window* root_window) override;
 

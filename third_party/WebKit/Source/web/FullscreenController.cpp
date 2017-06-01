@@ -33,22 +33,22 @@
 #include "core/dom/Document.h"
 #include "core/dom/Fullscreen.h"
 #include "core/exported/WebViewBase.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/PageScaleConstraintsSet.h"
-#include "core/frame/WebLocalFrameBase.h"
 #include "core/html/HTMLVideoElement.h"
 #include "core/layout/LayoutFullScreen.h"
 #include "core/page/Page.h"
 #include "public/platform/WebLayerTreeView.h"
 #include "public/web/WebFrameClient.h"
+#include "web/WebLocalFrameImpl.h"
 
 namespace blink {
 
 namespace {
 
 WebFrameClient& GetWebFrameClient(LocalFrame& frame) {
-  WebLocalFrameBase* web_frame = WebLocalFrameBase::FromFrame(frame);
+  WebLocalFrameImpl* web_frame = WebLocalFrameImpl::FromFrame(frame);
   DCHECK(web_frame);
   DCHECK(web_frame->Client());
   return *web_frame->Client();

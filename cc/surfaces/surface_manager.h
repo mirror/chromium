@@ -35,9 +35,6 @@
 #endif
 
 namespace cc {
-
-struct BeginFrameAck;
-struct BeginFrameArgs;
 class BeginFrameSource;
 class CompositorFrame;
 class FrameSinkManagerClient;
@@ -62,14 +59,17 @@ class CC_SURFACES_EXPORT SurfaceManager {
   std::string SurfaceReferencesToString();
 #endif
 
-  void SetDependencyTracker(SurfaceDependencyTracker* dependency_tracker);
-  SurfaceDependencyTracker* dependency_tracker() { return dependency_tracker_; }
+  void SetDependencyTracker(
+      std::unique_ptr<SurfaceDependencyTracker> dependency_tracker);
+  SurfaceDependencyTracker* dependency_tracker() {
+    return dependency_tracker_.get();
+  }
 
   void RequestSurfaceResolution(Surface* pending_surface);
 
   std::unique_ptr<Surface> CreateSurface(
       base::WeakPtr<CompositorFrameSinkSupport> compositor_frame_sink_support,
-      const SurfaceInfo& surface_info);
+      const LocalSurfaceId& local_surface_id);
 
   // Destroy the Surface once a set of sequence numbers has been satisfied.
   void DestroySurface(std::unique_ptr<Surface> surface);
@@ -82,12 +82,7 @@ class CC_SURFACES_EXPORT SurfaceManager {
     observer_list_.RemoveObserver(obs);
   }
 
-  // Called when a Surface is modified, e.g. when a CompositorFrame is
-  // activated, its producer confirms that no CompositorFrame will be submitted
-  // in response to a BeginFrame, or a CopyOutputRequest is issued.
-  //
-  // |ack.sequence_number| is only valid if called in response to a BeginFrame.
-  bool SurfaceModified(const SurfaceId& surface_id, const BeginFrameAck& ack);
+  bool SurfaceModified(const SurfaceId& surface_id);
 
   // Called when a CompositorFrame is submitted to a CompositorFrameSinkSupport
   // for a given |surface_id| for the first time.
@@ -105,11 +100,6 @@ class CC_SURFACES_EXPORT SurfaceManager {
 
   // Called when |surface| is being destroyed.
   void SurfaceDiscarded(Surface* surface);
-
-  // Called when a Surface's CompositorFrame producer has received a BeginFrame
-  // and, thus, is expected to produce damage soon.
-  void SurfaceDamageExpected(const SurfaceId& surface_id,
-                             const BeginFrameArgs& args);
 
   // Require that the given sequence number must be satisfied (using
   // SatisfySequence) before the given surface can be destroyed.
@@ -150,10 +140,6 @@ class CC_SURFACES_EXPORT SurfaceManager {
   void RegisterBeginFrameSource(BeginFrameSource* source,
                                 const FrameSinkId& frame_sink_id);
   void UnregisterBeginFrameSource(BeginFrameSource* source);
-
-  // Returns a stable BeginFrameSource that forwards BeginFrames from the first
-  // available BeginFrameSource.
-  BeginFrameSource* GetPrimaryBeginFrameSource();
 
   // Register a relationship between two namespaces.  This relationship means
   // that surfaces from the child namespace will be displayed in the parent.
@@ -302,7 +288,7 @@ class CC_SURFACES_EXPORT SurfaceManager {
   std::unordered_map<FrameSinkId, std::vector<LocalSurfaceId>, FrameSinkIdHash>
       temporary_reference_ranges_;
 
-  SurfaceDependencyTracker* dependency_tracker_ = nullptr;
+  std::unique_ptr<SurfaceDependencyTracker> dependency_tracker_;
 
   base::WeakPtrFactory<SurfaceManager> weak_factory_;
 

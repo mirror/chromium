@@ -30,6 +30,10 @@ class PaintControllerTestBase : public ::testing::Test {
  public:
   PaintControllerTestBase() : paint_controller_(PaintController::Create()) {}
 
+  IntRect VisualRect(const PaintArtifact& paint_artifact, size_t index) {
+    return paint_artifact.GetDisplayItemList().VisualRect(index);
+  }
+
  protected:
   PaintController& GetPaintController() { return *paint_controller_; }
 
@@ -63,7 +67,7 @@ class TestDisplayItem final : public DisplayItem {
       : DisplayItem(client, type, sizeof(*this)) {}
 
   void Replay(GraphicsContext&) const final { NOTREACHED(); }
-  void AppendToWebDisplayItemList(const LayoutSize&,
+  void AppendToWebDisplayItemList(const IntRect&,
                                   WebDisplayItemList*) const final {
     NOTREACHED();
   }
@@ -224,9 +228,10 @@ TEST_P(PaintControllerTest, UpdateBasic) {
 
   if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
-    EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
-                // |second| disappeared from the chunk.
-                UnorderedElementsAre(FloatRect(100, 100, 200, 200)));
+    EXPECT_THAT(
+        GetPaintController().PaintChunks()[0].raster_invalidation_rects,
+        UnorderedElementsAre(FloatRect(
+            100, 100, 200, 200)));  // |second| disappeared from the chunk.
   }
 }
 
@@ -299,8 +304,8 @@ TEST_P(PaintControllerTest, UpdateSwapOrder) {
   if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
-                // Bounds of |second| (old and new are the same).
-                UnorderedElementsAre(FloatRect(100, 100, 50, 200)));
+                UnorderedElementsAre(
+                    FloatRect(100, 100, 50, 200)));  // Bounds of |second|.
   }
 }
 
@@ -375,8 +380,9 @@ TEST_P(PaintControllerTest, UpdateSwapOrderWithInvalidation) {
   if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
-                // Bounds of |first| (old and new are the same).
-                UnorderedElementsAre(FloatRect(100, 100, 100, 100)));
+                UnorderedElementsAre(
+                    FloatRect(100, 100, 100, 100),    // Old bounds of |first|.
+                    FloatRect(100, 100, 100, 100)));  // New bounds of |first|.
     // No need to invalidate raster of |second|, because the client (|first|)
     // which swapped order with it has been invalidated.
   }
@@ -430,9 +436,10 @@ TEST_P(PaintControllerTest, UpdateNewItemInMiddle) {
 
   if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
-    EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
-                // |third| newly appeared in the chunk.
-                UnorderedElementsAre(FloatRect(125, 100, 200, 50)));
+    EXPECT_THAT(
+        GetPaintController().PaintChunks()[0].raster_invalidation_rects,
+        UnorderedElementsAre(FloatRect(
+            125, 100, 200, 50)));  // |third| newly appeared in the chunk.
   }
 }
 
@@ -503,57 +510,10 @@ TEST_P(PaintControllerTest, UpdateInvalidationWithPhases) {
   if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
-                // Bounds of |second| (old and new are the same).
-                UnorderedElementsAre(FloatRect(100, 100, 50, 200)));
+                UnorderedElementsAre(
+                    FloatRect(100, 100, 50, 200),    // Old bounds of |second|.
+                    FloatRect(100, 100, 50, 200)));  // New bounds of |second|.
   }
-}
-
-TEST_P(PaintControllerTest, IncrementalRasterInvalidation) {
-  if (!RuntimeEnabledFeatures::slimmingPaintV2Enabled())
-    return;
-
-  LayoutRect initial_rect(100, 100, 100, 100);
-  std::unique_ptr<FakeDisplayItemClient> clients[6];
-  for (auto& client : clients)
-    client = WTF::MakeUnique<FakeDisplayItemClient>("", initial_rect);
-  GraphicsContext context(GetPaintController());
-
-  GetPaintController().UpdateCurrentPaintChunkProperties(
-      &root_paint_chunk_id_, DefaultPaintChunkProperties());
-  for (auto& client : clients)
-    DrawRect(context, *client, kBackgroundDrawingType, FloatRect(initial_rect));
-  GetPaintController().CommitNewDisplayItems();
-
-  GetPaintController().UpdateCurrentPaintChunkProperties(
-      &root_paint_chunk_id_, DefaultPaintChunkProperties());
-  clients[0]->SetVisualRect(LayoutRect(100, 100, 150, 100));
-  clients[1]->SetVisualRect(LayoutRect(100, 100, 100, 150));
-  clients[2]->SetVisualRect(LayoutRect(100, 100, 150, 80));
-  clients[3]->SetVisualRect(LayoutRect(100, 100, 80, 150));
-  clients[4]->SetVisualRect(LayoutRect(100, 100, 150, 150));
-  clients[5]->SetVisualRect(LayoutRect(100, 100, 80, 80));
-  for (auto& client : clients) {
-    client->SetDisplayItemsUncached(PaintInvalidationReason::kIncremental);
-    DrawRect(context, *client, kBackgroundDrawingType,
-             FloatRect(client->VisualRect()));
-  }
-  GetPaintController().CommitNewDisplayItems();
-
-  EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
-  EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
-              UnorderedElementsAre(FloatRect(200, 100, 50, 100),    // 0: right
-                                   FloatRect(100, 200, 100, 50),    // 1: bottom
-                                   FloatRect(200, 100, 50, 80),     // 2: right
-                                   FloatRect(100, 180, 100, 20),    // 2: bottom
-                                   FloatRect(180, 100, 20, 100),    // 3: right
-                                   FloatRect(100, 200, 80, 50),     // 3: bottom
-                                   FloatRect(200, 100, 50, 150),    // 4: right
-                                   FloatRect(100, 200, 150, 50),    // 4: bottom
-                                   FloatRect(180, 100, 20, 100),    // 5: right
-                                   FloatRect(100, 180, 100, 20)));  // 5: bottom
-
-  GetPaintController().UpdateCurrentPaintChunkProperties(
-      &root_paint_chunk_id_, DefaultPaintChunkProperties());
 }
 
 TEST_P(PaintControllerTest, UpdateAddFirstOverlap) {
@@ -582,15 +542,15 @@ TEST_P(PaintControllerTest, UpdateAddFirstOverlap) {
 
   first.SetDisplayItemsUncached();
   second.SetDisplayItemsUncached();
-  second.SetVisualRect(LayoutRect(150, 250, 100, 100));
+  second.SetVisualRect(LayoutRect(150, 150, 100, 100));
   DrawRect(context, first, kBackgroundDrawingType,
            FloatRect(100, 100, 150, 150));
   DrawRect(context, first, kForegroundDrawingType,
            FloatRect(100, 100, 150, 150));
   DrawRect(context, second, kBackgroundDrawingType,
-           FloatRect(150, 250, 100, 100));
+           FloatRect(150, 150, 100, 100));
   DrawRect(context, second, kForegroundDrawingType,
-           FloatRect(150, 250, 100, 100));
+           FloatRect(150, 150, 100, 100));
   EXPECT_EQ(0, NumCachedNewItems());
   GetPaintController().CommitNewDisplayItems();
 
@@ -602,22 +562,21 @@ TEST_P(PaintControllerTest, UpdateAddFirstOverlap) {
 
   if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
-    EXPECT_THAT(
-        GetPaintController().PaintChunks()[0].raster_invalidation_rects,
-        UnorderedElementsAre(
-            // |first| newly appeared in the chunk.
-            FloatRect(100, 100, 150, 150),
-            // Old and new bounds of |second|.
-            FloatRect(200, 200, 50, 50), FloatRect(150, 250, 100, 100)));
+    EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
+                UnorderedElementsAre(
+                    FloatRect(100, 100, 150,
+                              150),  // |first| newly appeared in the chunk.
+                    FloatRect(200, 200, 50, 50),      // Old bounds of |second|.
+                    FloatRect(150, 150, 100, 100)));  // New bounds of |second|.
 
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
 
   DrawRect(context, second, kBackgroundDrawingType,
-           FloatRect(150, 250, 100, 100));
+           FloatRect(150, 150, 100, 100));
   DrawRect(context, second, kForegroundDrawingType,
-           FloatRect(150, 250, 100, 100));
+           FloatRect(150, 150, 100, 100));
 
   EXPECT_EQ(2, NumCachedNewItems());
 #ifndef NDEBUG
@@ -634,9 +593,10 @@ TEST_P(PaintControllerTest, UpdateAddFirstOverlap) {
 
   if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
-    EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
-                // |first| disappeared from the chunk.
-                UnorderedElementsAre(FloatRect(100, 100, 150, 150)));
+    EXPECT_THAT(
+        GetPaintController().PaintChunks()[0].raster_invalidation_rects,
+        UnorderedElementsAre(FloatRect(
+            100, 100, 150, 150)));  // |first| disappeared from the chunk.
   }
 }
 
@@ -688,10 +648,10 @@ TEST_P(PaintControllerTest, UpdateAddLastOverlap) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
                 UnorderedElementsAre(
-                    // The bigger of old and new bounds of |first|.
-                    FloatRect(100, 100, 150, 150),
-                    // |second| newly appeared in the chunk.
-                    FloatRect(200, 200, 50, 50)));
+                    FloatRect(100, 100, 150, 150),  // Old bounds of |first|.
+                    FloatRect(150, 150, 100, 100),  // New bounds of |first|.
+                    FloatRect(200, 200, 50,
+                              50)));  // |second| newly appeared in the chunk.
 
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
@@ -715,10 +675,10 @@ TEST_P(PaintControllerTest, UpdateAddLastOverlap) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
                 UnorderedElementsAre(
-                    // The bigger of old and new bounds of |first|.
-                    FloatRect(100, 100, 150, 150),
-                    // |second| disappeared from the chunk.
-                    FloatRect(200, 200, 50, 50)));
+                    FloatRect(150, 150, 100, 100),  // Old bounds of |first|.
+                    FloatRect(100, 100, 150, 150),  // New bounds of |first|.
+                    FloatRect(200, 200, 50,
+                              50)));  // |second| disappeared from the chunk.
   }
 }
 
@@ -783,8 +743,8 @@ TEST_P(PaintControllerTest, UpdateClip) {
   if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
-                // This is a new chunk.
-                UnorderedElementsAre(FloatRect(LayoutRect::InfiniteIntRect())));
+                UnorderedElementsAre(FloatRect(
+                    LayoutRect::InfiniteIntRect())));  // This is a new chunk.
 
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
@@ -818,11 +778,12 @@ TEST_P(PaintControllerTest, UpdateClip) {
 
     EXPECT_EQ(2u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
-                // |second| disappeared from the first chunk.
-                UnorderedElementsAre(FloatRect(100, 100, 200, 200)));
+                UnorderedElementsAre(FloatRect(
+                    100, 100, 200,
+                    200)));  // |second| disappeared from the first chunk.
     EXPECT_THAT(GetPaintController().PaintChunks()[1].raster_invalidation_rects,
-                // This is a new chunk.
-                UnorderedElementsAre(FloatRect(LayoutRect::InfiniteIntRect())));
+                UnorderedElementsAre(FloatRect(
+                    LayoutRect::InfiniteIntRect())));  // This is a new chunk.
   } else {
     EXPECT_DISPLAY_LIST(
         GetPaintController().GetDisplayItemList(), 4,
@@ -980,10 +941,10 @@ TEST_P(PaintControllerTest, UpdateSwapOrderWithChildren) {
     EXPECT_THAT(
         GetPaintController().PaintChunks()[0].raster_invalidation_rects,
         UnorderedElementsAre(
-            // Bounds of |container2| which was moved behind |container1|.
-            FloatRect(100, 200, 100, 100),
-            // Bounds of |content2| which was moved along with |container2|.
-            FloatRect(100, 200, 50, 200)));
+            FloatRect(100, 200, 100, 100),   // Bounds of |container2| which was
+                                             // moved behind |container1|.
+            FloatRect(100, 200, 50, 200)));  // Bounds of |content2| which was
+                                             // moved along with |container2|.
   }
 }
 
@@ -1069,12 +1030,12 @@ TEST_P(PaintControllerTest, UpdateSwapOrderWithChildrenAndInvalidation) {
     EXPECT_THAT(
         GetPaintController().PaintChunks()[0].raster_invalidation_rects,
         UnorderedElementsAre(
-            // Bounds of |container1| (old and new are the same).
-            FloatRect(100, 100, 100, 100),
-            // Bounds of |container2| which was moved behind |container1|.
-            FloatRect(100, 200, 100, 100),
-            // Bounds of |content2| which was moved along with |container2|.
-            FloatRect(100, 200, 50, 200)));
+            FloatRect(100, 100, 100, 100),   // Old bounds of |container1|.
+            FloatRect(100, 100, 100, 100),   // New bounds of |container1|.
+            FloatRect(100, 200, 100, 100),   // Bounds of |container2| which was
+                                             // moved behind |container1|.
+            FloatRect(100, 200, 50, 200)));  // Bounds of |content2| which was
+                                             // moved along with |container2|.
   }
 }
 
@@ -1637,8 +1598,11 @@ TEST_P(PaintControllerTest, CachedNestedSubsequenceUpdate) {
     EXPECT_THAT(GetPaintController().PaintChunks()[1].raster_invalidation_rects,
                 UnorderedElementsAre());
     // |container1| is invalidated.
-    EXPECT_THAT(GetPaintController().PaintChunks()[2].raster_invalidation_rects,
-                UnorderedElementsAre(FloatRect(100, 100, 100, 100)));
+    EXPECT_THAT(
+        GetPaintController().PaintChunks()[2].raster_invalidation_rects,
+        UnorderedElementsAre(
+            FloatRect(100, 100, 100, 100),    // Old bounds of |container1|.
+            FloatRect(100, 100, 100, 100)));  // New bounds of |container1|.
   }
 
 #if CHECK_DISPLAY_ITEM_CLIENT_ALIVENESS
@@ -1724,9 +1688,11 @@ TEST_P(PaintControllerTest, SkipCache) {
 
   if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
-    EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
-                // Bounds of |content| (old and new are the same);
-                UnorderedElementsAre(FloatRect(100, 100, 100, 100)));
+    EXPECT_THAT(
+        GetPaintController().PaintChunks()[0].raster_invalidation_rects,
+        UnorderedElementsAre(
+            FloatRect(100, 100, 100, 100),    // Old bounds of |content|.
+            FloatRect(100, 100, 100, 100)));  // New bounds of |content|.
 
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
@@ -1760,12 +1726,13 @@ TEST_P(PaintControllerTest, SkipCache) {
 
   if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
-    EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
-                UnorderedElementsAre(
-                    // Bounds of |multicol| (old and new are the same);
-                    FloatRect(100, 100, 200, 200),
-                    // Bounds of |content| (old and new are the same);
-                    FloatRect(100, 100, 100, 100)));
+    EXPECT_THAT(
+        GetPaintController().PaintChunks()[0].raster_invalidation_rects,
+        UnorderedElementsAre(
+            FloatRect(100, 100, 200, 200),    // Old bounds of |multicol|.
+            FloatRect(100, 100, 200, 200),    // New bounds of |multicol|.
+            FloatRect(100, 100, 100, 100),    // Old bounds of |content|.
+            FloatRect(100, 100, 100, 100)));  // New bounds of |content|.
   }
 }
 
@@ -1918,6 +1885,18 @@ TEST_F(PaintControllerTestBase, SmallPaintControllerHasOnePaintChunk) {
   EXPECT_EQ(1u, paint_chunks[0].end_index);
 }
 
+TEST_F(PaintControllerTestBase, PaintArtifactWithVisualRects) {
+  FakeDisplayItemClient client("test client", LayoutRect(0, 0, 200, 100));
+
+  GraphicsContext context(GetPaintController());
+  DrawRect(context, client, kBackgroundDrawingType, FloatRect(0, 0, 100, 100));
+
+  GetPaintController().CommitNewDisplayItems(LayoutSize(20, 30));
+  const auto& paint_artifact = GetPaintController().GetPaintArtifact();
+  ASSERT_EQ(1u, paint_artifact.GetDisplayItemList().size());
+  EXPECT_EQ(IntRect(-20, -30, 200, 100), VisualRect(paint_artifact, 0));
+}
+
 void DrawPath(GraphicsContext& context,
               DisplayItemClient& client,
               DisplayItem::Type type,
@@ -1944,8 +1923,9 @@ TEST_F(PaintControllerTestBase, IsSuitableForGpuRasterizationSinglePath) {
   FakeDisplayItemClient client("test client", LayoutRect(0, 0, 200, 100));
   GraphicsContext context(GetPaintController());
   DrawPath(context, client, kBackgroundDrawingType, 1);
-  GetPaintController().CommitNewDisplayItems();
-  EXPECT_EQ(1, GetPaintController().GetPaintArtifact().NumSlowPaths());
+  GetPaintController().CommitNewDisplayItems(LayoutSize());
+  EXPECT_TRUE(
+      GetPaintController().GetPaintArtifact().IsSuitableForGpuRasterization());
 }
 
 TEST_F(PaintControllerTestBase,
@@ -1954,8 +1934,9 @@ TEST_F(PaintControllerTestBase,
   GraphicsContext context(GetPaintController());
 
   DrawPath(context, client, kBackgroundDrawingType, 50);
-  GetPaintController().CommitNewDisplayItems();
-  EXPECT_EQ(50, GetPaintController().GetPaintArtifact().NumSlowPaths());
+  GetPaintController().CommitNewDisplayItems(LayoutSize());
+  EXPECT_FALSE(
+      GetPaintController().GetPaintArtifact().IsSuitableForGpuRasterization());
 }
 
 TEST_F(PaintControllerTestBase,
@@ -1968,8 +1949,9 @@ TEST_F(PaintControllerTestBase,
     DrawPath(context, client, kBackgroundDrawingType, 50);
 
   GetPaintController().EndSkippingCache();
-  GetPaintController().CommitNewDisplayItems();
-  EXPECT_EQ(50 * 50, GetPaintController().GetPaintArtifact().NumSlowPaths());
+  GetPaintController().CommitNewDisplayItems(LayoutSize());
+  EXPECT_FALSE(
+      GetPaintController().GetPaintArtifact().IsSuitableForGpuRasterization());
 }
 
 TEST_F(PaintControllerTestBase,
@@ -1979,8 +1961,10 @@ TEST_F(PaintControllerTestBase,
   {
     GraphicsContext context(GetPaintController());
     DrawPath(context, client, kBackgroundDrawingType, 50);
-    GetPaintController().CommitNewDisplayItems();
-    EXPECT_EQ(50, GetPaintController().GetPaintArtifact().NumSlowPaths());
+    GetPaintController().CommitNewDisplayItems(LayoutSize());
+    EXPECT_FALSE(GetPaintController()
+                     .GetPaintArtifact()
+                     .IsSuitableForGpuRasterization());
   }
 
   client.SetDisplayItemsUncached();
@@ -1988,8 +1972,10 @@ TEST_F(PaintControllerTestBase,
   {
     GraphicsContext context(GetPaintController());
     DrawPath(context, client, kBackgroundDrawingType, 50);
-    GetPaintController().CommitNewDisplayItems();
-    EXPECT_EQ(50, GetPaintController().GetPaintArtifact().NumSlowPaths());
+    GetPaintController().CommitNewDisplayItems(LayoutSize());
+    EXPECT_FALSE(GetPaintController()
+                     .GetPaintArtifact()
+                     .IsSuitableForGpuRasterization());
   }
 }
 
@@ -2000,15 +1986,19 @@ TEST_F(PaintControllerTestBase,
   {
     GraphicsContext context(GetPaintController());
     DrawPath(context, client, kBackgroundDrawingType, 50);
-    GetPaintController().CommitNewDisplayItems();
-    EXPECT_EQ(50, GetPaintController().GetPaintArtifact().NumSlowPaths());
+    GetPaintController().CommitNewDisplayItems(LayoutSize());
+    EXPECT_FALSE(GetPaintController()
+                     .GetPaintArtifact()
+                     .IsSuitableForGpuRasterization());
   }
 
   {
     GraphicsContext context(GetPaintController());
     DrawPath(context, client, kBackgroundDrawingType, 50);
-    GetPaintController().CommitNewDisplayItems();
-    EXPECT_EQ(50, GetPaintController().GetPaintArtifact().NumSlowPaths());
+    GetPaintController().CommitNewDisplayItems(LayoutSize());
+    EXPECT_FALSE(GetPaintController()
+                     .GetPaintArtifact()
+                     .IsSuitableForGpuRasterization());
   }
 }
 
@@ -2023,13 +2013,15 @@ TEST_F(
     SubsequenceRecorder subsequence_recorder(context, container);
     DrawPath(context, client, kBackgroundDrawingType, 50);
   }
-  GetPaintController().CommitNewDisplayItems();
-  EXPECT_EQ(50, GetPaintController().GetPaintArtifact().NumSlowPaths());
+  GetPaintController().CommitNewDisplayItems(LayoutSize());
+  EXPECT_FALSE(
+      GetPaintController().GetPaintArtifact().IsSuitableForGpuRasterization());
 
   EXPECT_TRUE(
       SubsequenceRecorder::UseCachedSubsequenceIfPossible(context, container));
-  GetPaintController().CommitNewDisplayItems();
-  EXPECT_EQ(50, GetPaintController().GetPaintArtifact().NumSlowPaths());
+  GetPaintController().CommitNewDisplayItems(LayoutSize());
+  EXPECT_FALSE(
+      GetPaintController().GetPaintArtifact().IsSuitableForGpuRasterization());
 
 #if CHECK_DISPLAY_ITEM_CLIENT_ALIVENESS
   DisplayItemClient::EndShouldKeepAliveAllClients();
@@ -2058,8 +2050,10 @@ TEST_F(PaintControllerTestBase,
              FloatRect(0, 0, 100, 100));
     for (int j = 0; j < 50; ++j)
       GetPaintController().CreateAndAppend<EndClipPathDisplayItem>(client);
-    GetPaintController().CommitNewDisplayItems();
-    EXPECT_EQ(50 * i, GetPaintController().GetPaintArtifact().NumSlowPaths());
+    GetPaintController().CommitNewDisplayItems(LayoutSize());
+    EXPECT_FALSE(GetPaintController()
+                     .GetPaintArtifact()
+                     .IsSuitableForGpuRasterization());
   }
 }
 

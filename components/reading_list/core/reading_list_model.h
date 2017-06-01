@@ -11,7 +11,7 @@
 
 #include "base/callback.h"
 #include "base/observer_list.h"
-#include "base/sequence_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "components/reading_list/core/reading_list_entry.h"
 #include "components/reading_list/core/reading_list_model_observer.h"
 
@@ -27,7 +27,7 @@ class ModelTypeSyncBridge;
 // other of read ones. This object should only be accessed from one thread
 // (Usually the main thread). The observers callbacks are also sent on the main
 // thread.
-class ReadingListModel {
+class ReadingListModel : public base::NonThreadSafe {
  public:
   class ScopedReadingListBatchUpdate;
 
@@ -169,8 +169,6 @@ class ReadingListModel {
 
   // Called when model is leaving batch update mode.
   virtual void LeavingBatchUpdates();
-
-  SEQUENCE_CHECKER(sequence_checker_);
 
  private:
   unsigned int current_batch_updates_count_;

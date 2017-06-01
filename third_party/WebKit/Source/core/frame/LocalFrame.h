@@ -33,7 +33,6 @@
 #include "core/CoreExport.h"
 #include "core/dom/WeakIdentifierMap.h"
 #include "core/frame/Frame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/loader/FrameLoader.h"
 #include "core/page/FrameTree.h"
 #include "core/paint/PaintPhase.h"
@@ -60,6 +59,7 @@ class FetchParameters;
 class FloatSize;
 class FrameConsole;
 class FrameSelection;
+class FrameView;
 class InputMethodController;
 class CoreProbeSink;
 class InterfaceProvider;
@@ -81,7 +81,6 @@ class PluginData;
 class ScriptController;
 class SpellChecker;
 class WebFrameScheduler;
-class WebPluginContainerBase;
 class WebURLLoader;
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<LocalFrame>;
@@ -100,7 +99,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
                             InterfaceRegistry* = nullptr);
 
   void Init();
-  void SetView(LocalFrameView*);
+  void SetView(FrameView*);
   void CreateView(const IntSize&,
                   const Color&,
                   ScrollbarMode = kScrollbarAuto,
@@ -128,16 +127,13 @@ class CORE_EXPORT LocalFrame final : public Frame,
   void DetachChildren();
   void DocumentAttached();
 
-  Frame* FindFrameForNavigation(const AtomicString& name,
-                                LocalFrame& active_frame);
-
   // Note: these two functions are not virtual but intentionally shadow the
   // corresponding method in the Frame base class to return the
   // LocalFrame-specific subclass.
   LocalWindowProxy* WindowProxy(DOMWrapperWorld&);
   LocalDOMWindow* DomWindow() const;
   void SetDOMWindow(LocalDOMWindow*);
-  LocalFrameView* View() const override;
+  FrameView* View() const;
   Document* GetDocument() const;
   void SetPagePopupOwner(Element&);
   Element* PagePopupOwner() const { return page_popup_owner_.Get(); }
@@ -223,8 +219,6 @@ class CORE_EXPORT LocalFrame final : public Frame,
 
   bool IsNavigationAllowed() const { return navigation_disable_count_ == 0; }
 
-  bool CanNavigate(const Frame&);
-
   InterfaceProvider* GetInterfaceProvider() { return interface_provider_; }
   InterfaceRegistry* GetInterfaceRegistry() { return interface_registry_; }
 
@@ -250,20 +244,6 @@ class CORE_EXPORT LocalFrame final : public Frame,
   // for adding a callback multiple times.
   static void RegisterInitializationCallback(FrameInitCallback);
 
-  // If the frame hosts a PluginDocument, this method returns the
-  // WebPluginContainerBase that hosts the plugin. If the provided node is a
-  // plugin, then it returns its WebPluginContainerBase. Otherwise, uses the
-  // currently focused element (if any).
-  // TODO(slangley): Refactor this method to extract the logic of looking up
-  // focused element or passed node into explicit methods.
-  WebPluginContainerBase* GetWebPluginContainerBase(Node* = nullptr) const;
-
-  // Called on a view for a LocalFrame with a RemoteFrame parent. This makes
-  // viewport intersection available that accounts for remote ancestor frames
-  // and their respective scroll positions, clips, etc.
-  void SetViewportIntersectionFromParent(const IntRect&);
-  IntRect RemoteViewportIntersection() { return remote_viewport_intersection_; }
-
  private:
   friend class FrameNavigationDisabler;
 
@@ -281,8 +261,6 @@ class CORE_EXPORT LocalFrame final : public Frame,
   void EnableNavigation() { --navigation_disable_count_; }
   void DisableNavigation() { ++navigation_disable_count_; }
 
-  bool CanNavigateWithoutFramebusting(const Frame&, String& error_reason);
-
   std::unique_ptr<WebFrameScheduler> frame_scheduler_;
 
   mutable FrameLoader loader_;
@@ -290,7 +268,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
 
   // Cleared by LocalFrame::detach(), so as to keep the observable lifespan
   // of LocalFrame::view().
-  Member<LocalFrameView> view_;
+  Member<FrameView> view_;
   // Usually 0. Non-null if this is the top frame of PagePopup.
   Member<Element> page_popup_owner_;
 
@@ -314,8 +292,6 @@ class CORE_EXPORT LocalFrame final : public Frame,
 
   InterfaceProvider* const interface_provider_;
   InterfaceRegistry* const interface_registry_;
-
-  IntRect remote_viewport_intersection_;
 };
 
 inline FrameLoader& LocalFrame::Loader() const {
@@ -327,7 +303,7 @@ inline NavigationScheduler& LocalFrame::GetNavigationScheduler() const {
   return *navigation_scheduler_.Get();
 }
 
-inline LocalFrameView* LocalFrame::View() const {
+inline FrameView* LocalFrame::View() const {
   return view_.Get();
 }
 

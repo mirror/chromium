@@ -11,30 +11,22 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/shell.h"
 #include "base/bind.h"
-#include "base/callback.h"
 #include "base/command_line.h"
 #include "base/containers/flat_set.h"
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
-#include "base/metrics/histogram_macros.h"
-#include "base/metrics/user_metrics.h"
-#include "base/metrics/user_metrics_action.h"
 #include "base/task_scheduler/post_task.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chromeos/chromeos_switches.h"
 #include "components/arc/arc_bridge_service.h"
-#include "components/arc/arc_util.h"
 #include "components/arc/instance_holder.h"
-#include "components/exo/surface.h"
 #include "content/public/browser/browser_thread.h"
-#include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/layer_owner.h"
 #include "ui/compositor/layer_tree_owner.h"
-#include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/image/image.h"
 #include "ui/gfx/image/image_util.h"
 #include "ui/gfx/native_widget_types.h"
@@ -46,19 +38,6 @@
 namespace arc {
 
 namespace {
-
-using LayerSet = base::flat_set<const ui::Layer*>;
-
-// Time out for a context query from container since user initiated
-// interaction. This must be strictly less than
-// kMaxTimeSinceUserInteractionForHistogram so that the histogram
-// could cover the range of normal operations.
-constexpr base::TimeDelta kAllowedTimeSinceUserInteraction =
-    base::TimeDelta::FromSeconds(2);
-constexpr base::TimeDelta kMaxTimeSinceUserInteractionForHistogram =
-    base::TimeDelta::FromSeconds(5);
-
-constexpr int32_t kContextRequestMaxRemainingCount = 2;
 
 void ScreenshotCallback(
     const mojom::VoiceInteractionFrameworkHost::CaptureFocusedWindowCallback&
@@ -72,26 +51,9 @@ void ScreenshotCallback(
   callback.Run(result);
 }
 
-bool IsMetalayerWindow(aura::Window* window) {
-  exo::Surface* surface = exo::Surface::AsSurface(window);
-  return surface != nullptr && surface->IsStylusOnly();
-}
-
-void CollectLayers(LayerSet& layers,
-                   aura::Window* root_window,
-                   base::Callback<bool(aura::Window*)> matcher_func) {
-  if (matcher_func.Run(root_window))
-    layers.insert(root_window->layer());
-
-  aura::Window::Windows children = root_window->children();
-  for (aura::Window::Windows::iterator iter = children.begin();
-       iter != children.end(); ++iter) {
-    CollectLayers(layers, *iter, matcher_func);
-  }
-}
-
 std::unique_ptr<ui::LayerTreeOwner> CreateLayerTreeForSnapshot(
     aura::Window* root_window) {
+  using LayerSet = base::flat_set<const ui::Layer*>;
   LayerSet blocked_layers;
   for (auto* browser : *BrowserList::GetInstance()) {
     if (browser->profile()->IsOffTheRecord())
@@ -99,7 +61,15 @@ std::unique_ptr<ui::LayerTreeOwner> CreateLayerTreeForSnapshot(
   }
 
   LayerSet excluded_layers;
-  CollectLayers(excluded_layers, root_window, base::Bind(IsMetalayerWindow));
+  // For the best UX the metalayer has to be excluded from the snapshot.
+  // It is currently impossible to identify the metalayer among others layers
+  // under kShellWindowId_SystemModalContainer. Other layers in this container
+  // are not relevant for this kind of snapshot, so it is safe to exclude all
+  // of them.
+  aura::Window* modal_container = ash::Shell::GetContainer(
+      root_window, ash::kShellWindowId_SystemModalContainer);
+  if (modal_container != nullptr)
+    excluded_layers.insert(modal_container->layer());
 
   auto layer_tree_owner = ::wm::RecreateLayersWithClosure(
       root_window, base::BindRepeating(
@@ -176,10 +146,17 @@ void ArcVoiceInteractionFrameworkService::OnInstanceReady() {
   DCHECK(framework_instance);
   framework_instance->Init(binding_.CreateInterfacePtrAndBind());
 
+  // TODO(updowndota): Move the dynamic shortcuts to accelerator_controller.cc
+  // to prevent several issues.
+  ash::Shell::Get()->accelerator_controller()->Register(
+      {ui::Accelerator(ui::VKEY_A, ui::EF_COMMAND_DOWN)}, this);
   // Temporary shortcut added to enable the metalayer experiment.
   ash::Shell::Get()->accelerator_controller()->Register(
       {ui::Accelerator(ui::VKEY_A, ui::EF_COMMAND_DOWN | ui::EF_SHIFT_DOWN)},
       this);
+  // Temporary shortcut added for UX/PM exploration.
+  ash::Shell::Get()->accelerator_controller()->Register(
+      {ui::Accelerator(ui::VKEY_SPACE, ui::EF_COMMAND_DOWN)}, this);
 }
 
 void ArcVoiceInteractionFrameworkService::OnInstanceClosed() {
@@ -194,14 +171,24 @@ bool ArcVoiceInteractionFrameworkService::AcceleratorPressed(
     const ui::Accelerator& accelerator) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  base::RecordAction(base::UserMetricsAction(
-      "VoiceInteraction.MetalayerStarted.Search_Shift_A"));
+  if (accelerator.IsShiftDown()) {
+    // Temporary, used for debugging.
+    // Does not take into account or update the palette state.
+    mojom::VoiceInteractionFrameworkInstance* framework_instance =
+        ARC_GET_INSTANCE_FOR_METHOD(
+            arc_bridge_service()->voice_interaction_framework(),
+            SetMetalayerVisibility);
+    DCHECK(framework_instance);
+    framework_instance->SetMetalayerVisibility(true);
+  } else {
+    mojom::VoiceInteractionFrameworkInstance* framework_instance =
+        ARC_GET_INSTANCE_FOR_METHOD(
+            arc_bridge_service()->voice_interaction_framework(),
+            StartVoiceInteractionSession);
+    DCHECK(framework_instance);
+    framework_instance->StartVoiceInteractionSession();
+  }
 
-  // Temporary, used for debugging.
-  // Does not take into account or update the palette state.
-  // Explicitly call ShowMetalayer() to take into account user interaction
-  // initiations.
-  ShowMetalayer(base::Bind([]() {}));
   return true;
 }
 
@@ -213,12 +200,6 @@ bool ArcVoiceInteractionFrameworkService::CanHandleAccelerators() const {
 void ArcVoiceInteractionFrameworkService::CaptureFocusedWindow(
     const CaptureFocusedWindowCallback& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  if (!ValidateTimeSinceUserInteraction()) {
-    callback.Run(std::vector<uint8_t>{});
-    return;
-  }
-
   aura::Window* window =
       ash::Shell::Get()->activation_client()->GetActiveWindow();
 
@@ -236,12 +217,6 @@ void ArcVoiceInteractionFrameworkService::CaptureFocusedWindow(
 void ArcVoiceInteractionFrameworkService::CaptureFullscreen(
     const CaptureFullscreenCallback& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  if (!ValidateTimeSinceUserInteraction()) {
-    callback.Run(std::vector<uint8_t>{});
-    return;
-  }
-
   // Since ARC currently only runs in primary display, we restrict
   // the screenshot to it.
   aura::Window* window = ash::Shell::GetPrimaryRootWindow();
@@ -279,17 +254,7 @@ void ArcVoiceInteractionFrameworkService::ShowMetalayer(
     LOG(ERROR) << "Metalayer is already enabled";
     return;
   }
-  metalayer_closed_callback_ = base::Bind(
-      [](const base::Callback<bool()>& init, const base::Closure& closed) {
-        // Initiate user interaction when metalayer disappears.
-        if (init.Run())
-          closed.Run();
-      },
-      base::Bind(&ArcVoiceInteractionFrameworkService::InitiateUserInteraction,
-                 // metalayer_closed_callback_ is owned and used inside
-                 // ArcVoiceInteractionFrameworkService's member functions.
-                 base::Unretained(this)),
-      closed);
+  metalayer_closed_callback_ = closed;
   SetMetalayerVisibility(true);
 }
 
@@ -315,79 +280,6 @@ void ArcVoiceInteractionFrameworkService::SetMetalayerVisibility(bool visible) {
     return;
   }
   framework_instance->SetMetalayerVisibility(visible);
-}
-
-void ArcVoiceInteractionFrameworkService::StartSessionFromUserInteraction(
-    const gfx::Rect& rect) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  if (!arc_bridge_service()->voice_interaction_framework()->has_instance()) {
-    SetArcCpuRestriction(false);
-    return;
-  }
-
-  if (!InitiateUserInteraction())
-    return;
-
-  if (rect.IsEmpty()) {
-    mojom::VoiceInteractionFrameworkInstance* framework_instance =
-        ARC_GET_INSTANCE_FOR_METHOD(
-            arc_bridge_service()->voice_interaction_framework(),
-            StartVoiceInteractionSession);
-    DCHECK(framework_instance);
-    framework_instance->StartVoiceInteractionSession();
-  } else {
-    mojom::VoiceInteractionFrameworkInstance* framework_instance =
-        ARC_GET_INSTANCE_FOR_METHOD(
-            arc_bridge_service()->voice_interaction_framework(),
-            StartVoiceInteractionSessionForRegion);
-    DCHECK(framework_instance);
-    framework_instance->StartVoiceInteractionSessionForRegion(rect);
-  }
-}
-
-bool ArcVoiceInteractionFrameworkService::ValidateTimeSinceUserInteraction() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  if (!context_request_remaining_count_) {
-    // Allowed number of requests used up. But we still have additional
-    // requests. It's likely that there is something malicious going on.
-    LOG(ERROR) << "Illegal context request from container.";
-    UMA_HISTOGRAM_BOOLEAN("VoiceInteraction.IllegalContextRequest", true);
-    return false;
-  }
-  auto elapsed = base::TimeTicks::Now() - user_interaction_start_time_;
-  elapsed = elapsed > kMaxTimeSinceUserInteractionForHistogram
-                ? kMaxTimeSinceUserInteractionForHistogram
-                : elapsed;
-
-  UMA_HISTOGRAM_CUSTOM_COUNTS(
-      "VoiceInteraction.UserInteractionToRequestArrival",
-      elapsed.InMilliseconds(), 1,
-      kMaxTimeSinceUserInteractionForHistogram.InMilliseconds(), 20);
-
-  if (elapsed > kAllowedTimeSinceUserInteraction) {
-    LOG(ERROR) << "Timed out since last user interaction.";
-    context_request_remaining_count_ = 0;
-    return false;
-  }
-
-  context_request_remaining_count_--;
-  return true;
-}
-
-bool ArcVoiceInteractionFrameworkService::InitiateUserInteraction() {
-  auto start_time = base::TimeTicks::Now();
-  if ((start_time - user_interaction_start_time_) <
-          kAllowedTimeSinceUserInteraction &&
-      context_request_remaining_count_) {
-    // If next request starts too soon and there is an active session in action,
-    // we should drop it.
-    return false;
-  }
-  user_interaction_start_time_ = start_time;
-  context_request_remaining_count_ = kContextRequestMaxRemainingCount;
-  return true;
 }
 
 }  // namespace arc

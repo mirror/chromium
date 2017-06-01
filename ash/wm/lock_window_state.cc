@@ -4,7 +4,6 @@
 
 #include "ash/wm/lock_window_state.h"
 
-#include <memory>
 #include <utility>
 
 #include "ash/screen_util.h"
@@ -14,18 +13,16 @@
 #include "ash/wm/window_state_delegate.h"
 #include "ash/wm/window_state_util.h"
 #include "ash/wm/wm_event.h"
+#include "ash/wm_window.h"
 #include "base/memory/ptr_util.h"
-#include "ui/aura/window.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/keyboard/keyboard_controller.h"
 #include "ui/keyboard/keyboard_util.h"
-#include "ui/wm/core/coordinate_conversion.h"
 
 namespace ash {
 
-LockWindowState::LockWindowState(aura::Window* window, bool exclude_shelf)
-    : current_state_type_(wm::GetWindowState(window)->GetStateType()),
-      exclude_shelf_(exclude_shelf) {}
+LockWindowState::LockWindowState(WmWindow* window)
+    : current_state_type_(window->GetWindowState()->GetStateType()) {}
 
 LockWindowState::~LockWindowState() {}
 
@@ -106,24 +103,12 @@ void LockWindowState::AttachState(wm::WindowState* window_state,
 void LockWindowState::DetachState(wm::WindowState* window_state) {}
 
 // static
-wm::WindowState* LockWindowState::SetLockWindowState(aura::Window* window) {
+wm::WindowState* LockWindowState::SetLockWindowState(WmWindow* window) {
   std::unique_ptr<wm::WindowState::State> lock_state =
-      base::MakeUnique<LockWindowState>(window, false);
-  wm::WindowState* window_state = wm::GetWindowState(window);
+      base::MakeUnique<LockWindowState>(window);
   std::unique_ptr<wm::WindowState::State> old_state(
-      window_state->SetStateObject(std::move(lock_state)));
-  return window_state;
-}
-
-// static
-wm::WindowState* LockWindowState::SetLockWindowStateWithShelfExcluded(
-    aura::Window* window) {
-  std::unique_ptr<wm::WindowState::State> lock_state =
-      base::MakeUnique<LockWindowState>(window, true);
-  wm::WindowState* window_state = wm::GetWindowState(window);
-  std::unique_ptr<wm::WindowState::State> old_state(
-      window_state->SetStateObject(std::move(lock_state)));
-  return window_state;
+      window->GetWindowState()->SetStateObject(std::move(lock_state)));
+  return window->GetWindowState();
 }
 
 void LockWindowState::UpdateWindow(wm::WindowState* window_state,
@@ -139,8 +124,8 @@ void LockWindowState::UpdateWindow(wm::WindowState* window_state,
       return;
 
     current_state_type_ = target_state;
-    ::wm::SetWindowVisibilityAnimationType(
-        window_state->window(), wm::WINDOW_VISIBILITY_ANIMATION_TYPE_MINIMIZE);
+    window_state->window()->SetVisibilityAnimationType(
+        wm::WINDOW_VISIBILITY_ANIMATION_TYPE_MINIMIZE);
     window_state->window()->Hide();
     if (window_state->IsActive())
       window_state->Deactivate();
@@ -160,9 +145,9 @@ void LockWindowState::UpdateWindow(wm::WindowState* window_state,
   UpdateBounds(window_state);
   window_state->NotifyPostStateTypeChange(old_state_type);
 
-  if ((window_state->window()->TargetVisibility() ||
+  if ((window_state->window()->GetTargetVisibility() ||
        old_state_type == wm::WINDOW_STATE_TYPE_MINIMIZED) &&
-      !window_state->window()->layer()->visible()) {
+      !window_state->window()->GetLayer()->visible()) {
     // The layer may be hidden if the window was previously minimized. Make
     // sure it's visible.
     window_state->window()->Show();
@@ -175,9 +160,9 @@ wm::WindowStateType LockWindowState::GetMaximizedOrCenteredWindowType(
                                      : wm::WINDOW_STATE_TYPE_NORMAL;
 }
 
-gfx::Rect LockWindowState::GetWindowBounds(aura::Window* window) {
-  if (exclude_shelf_)
-    return ScreenUtil::GetDisplayWorkAreaBoundsInParentForLockScreen(window);
+void LockWindowState::UpdateBounds(wm::WindowState* window_state) {
+  if (!window_state->IsMaximized() && !window_state->IsFullscreen())
+    return;
 
   keyboard::KeyboardController* keyboard_controller =
       keyboard::KeyboardController::GetInstance();
@@ -187,17 +172,10 @@ gfx::Rect LockWindowState::GetWindowBounds(aura::Window* window) {
       keyboard_controller->keyboard_visible()) {
     keyboard_bounds = keyboard_controller->current_keyboard_bounds();
   }
+  gfx::Rect bounds = ScreenUtil::GetDisplayBoundsWithShelf(
+      window_state->window()->aura_window());
+  bounds.set_height(bounds.height() - keyboard_bounds.height());
 
-  gfx::Rect bounds = ScreenUtil::GetDisplayBoundsWithShelf(window);
-  bounds.Inset(0, 0, 0, keyboard_bounds.height());
-  return bounds;
-}
-
-void LockWindowState::UpdateBounds(wm::WindowState* window_state) {
-  if (!window_state->IsMaximized() && !window_state->IsFullscreen())
-    return;
-
-  gfx::Rect bounds = GetWindowBounds(window_state->window());
   VLOG(1) << "Updating window bounds to: " << bounds.ToString();
   window_state->SetBoundsDirect(bounds);
 }

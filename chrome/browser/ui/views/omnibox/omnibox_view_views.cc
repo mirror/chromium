@@ -429,10 +429,6 @@ void OmniboxViewViews::SetWindowTextAndCaretPos(const base::string16& text,
     TextChanged();
 }
 
-void OmniboxViewViews::SetCaretPos(size_t caret_pos) {
-  SelectRange(gfx::Range(caret_pos, caret_pos));
-}
-
 bool OmniboxViewViews::IsSelectAll() const {
   // TODO(oshima): IME support.
   return text() == GetSelectedText();

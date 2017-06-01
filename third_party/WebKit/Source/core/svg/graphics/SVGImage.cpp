@@ -32,9 +32,9 @@
 #include "core/dom/NodeTraversal.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/dom/shadow/FlatTreeTraversal.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/svg/LayoutSVGRoot.h"
@@ -355,9 +355,9 @@ void SVGImage::DrawPatternForContainer(GraphicsContext& context,
                                  phase.Y() + spaced_tile.Y());
 
   PaintFlags flags;
-  flags.setShader(
-      MakePaintShaderRecord(record, spaced_tile, SkShader::kRepeat_TileMode,
-                            SkShader::kRepeat_TileMode, &pattern_transform));
+  flags.setShader(MakePaintShaderRecord(record, SkShader::kRepeat_TileMode,
+                                        SkShader::kRepeat_TileMode,
+                                        &pattern_transform, nullptr));
   // If the shader could not be instantiated (e.g. non-invertible matrix),
   // draw transparent.
   // Note: we can't simply bail, because of arbitrary blend mode.
@@ -383,7 +383,7 @@ sk_sp<SkImage> SVGImage::ImageForCurrentFrameForContainer(
                    container_rect, container_rect, url);
 
   return SkImage::MakeFromPicture(
-      ToSkPicture(recorder.finishRecordingAsPicture(), container_rect),
+      ToSkPicture(recorder.finishRecordingAsPicture()),
       SkISize::Make(container_size.Width(), container_size.Height()), nullptr,
       nullptr, SkImage::BitDepth::kU8, SkColorSpace::MakeSRGB());
 }
@@ -397,15 +397,16 @@ static bool DrawNeedsLayer(const PaintFlags& flags) {
 bool SVGImage::ApplyShaderInternal(PaintFlags& flags,
                                    const SkMatrix& local_matrix,
                                    const KURL& url) {
-  const IntSize size(ContainerSize());
+  const FloatSize size(ContainerSize());
   if (size.IsEmpty())
     return false;
 
-  IntRect bounds(IntPoint(), size);
+  FloatRect float_bounds(FloatPoint(), size);
+  const SkRect bounds(float_bounds);
 
   flags.setShader(MakePaintShaderRecord(
-      PaintRecordForCurrentFrame(bounds, url), bounds,
-      SkShader::kRepeat_TileMode, SkShader::kRepeat_TileMode, &local_matrix));
+      PaintRecordForCurrentFrame(float_bounds, url), SkShader::kRepeat_TileMode,
+      SkShader::kRepeat_TileMode, &local_matrix, &bounds));
 
   // Animation is normally refreshed in draw() impls, which we don't reach when
   // painting via shaders.
@@ -450,11 +451,11 @@ void SVGImage::Draw(
                should_respect_image_orientation, clamp_mode, KURL());
 }
 
-sk_sp<PaintRecord> SVGImage::PaintRecordForCurrentFrame(const IntRect& bounds,
+sk_sp<PaintRecord> SVGImage::PaintRecordForCurrentFrame(const FloatRect& bounds,
                                                         const KURL& url,
                                                         PaintCanvas* canvas) {
   DCHECK(page_);
-  LocalFrameView* view = ToLocalFrame(page_->MainFrame())->View();
+  FrameView* view = ToLocalFrame(page_->MainFrame())->View();
   view->Resize(ContainerSize());
 
   // Always call processUrlFragment, even if the url is empty, because
@@ -468,10 +469,12 @@ sk_sp<PaintRecord> SVGImage::PaintRecordForCurrentFrame(const IntRect& bounds,
   // avoid setting timers from the latter.
   FlushPendingTimelineRewind();
 
-  PaintRecordBuilder builder(bounds, nullptr, nullptr, paint_controller_.get());
+  IntRect int_bounds(EnclosingIntRect(bounds));
+  PaintRecordBuilder builder(int_bounds, nullptr, nullptr,
+                             paint_controller_.get());
 
   view->UpdateAllLifecyclePhasesExceptPaint();
-  view->Paint(builder.Context(), CullRect(bounds));
+  view->Paint(builder.Context(), CullRect(int_bounds));
   DCHECK(!view->NeedsLayout());
 
   if (canvas) {
@@ -509,7 +512,7 @@ void SVGImage::DrawInternal(PaintCanvas* canvas,
     canvas->save();
     canvas->clipRect(EnclosingIntRect(dst_rect));
     canvas->concat(AffineTransformToSkMatrix(transform));
-    PaintRecordForCurrentFrame(EnclosingIntRect(src_rect), url, canvas);
+    PaintRecordForCurrentFrame(src_rect, url, canvas);
     canvas->restore();
   }
 
@@ -577,9 +580,6 @@ bool SVGImage::MaybeAnimated() {
 }
 
 void SVGImage::ServiceAnimations(double monotonic_animation_start_time) {
-  if (!GetImageObserver())
-    return;
-
   // If none of our observers (sic!) are visible, or for some other reason
   // does not want us to keep running animations, stop them until further
   // notice (next paint.)
@@ -602,7 +602,7 @@ void SVGImage::ServiceAnimations(double monotonic_animation_start_time) {
   // actually generating painted output, not only for performance reasons,
   // but to preserve correct coherence of the cache of the output with
   // the needsRepaint bits of the PaintLayers in the image.
-  LocalFrameView* frame_view = ToLocalFrame(page_->MainFrame())->View();
+  FrameView* frame_view = ToLocalFrame(page_->MainFrame())->View();
   frame_view->UpdateAllLifecyclePhasesExceptPaint();
 
   // For SPv2 we run updateAnimations after the paint phase, but per above
@@ -741,7 +741,7 @@ Image::SizeAvailability SVGImage::DataChanged(bool all_data_received) {
       DCHECK(!frame_client_);
       frame_client_ = new SVGImageLocalFrameClient(this);
       frame = LocalFrame::Create(frame_client_, *page, 0);
-      frame->SetView(LocalFrameView::Create(*frame));
+      frame->SetView(FrameView::Create(*frame));
       frame->Init();
     }
 

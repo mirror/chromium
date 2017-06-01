@@ -9,6 +9,7 @@
 #include "core/loader/MixedContentChecker.h"
 #include "core/timing/WorkerGlobalScopePerformance.h"
 #include "core/workers/WorkerClients.h"
+#include "core/workers/WorkerGlobalScope.h"
 #include "platform/Supplementable.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/exported/WrappedResourceRequest.h"
@@ -60,10 +61,9 @@ class WorkerFetchContextHolder final
 WorkerFetchContext::~WorkerFetchContext() {}
 
 WorkerFetchContext* WorkerFetchContext::Create(
-    WorkerOrWorkletGlobalScope& global_scope) {
-  DCHECK(global_scope.IsContextThread());
-  DCHECK(!global_scope.IsMainThreadWorkletGlobalScope());
-  WorkerClients* worker_clients = global_scope.Clients();
+    WorkerGlobalScope& worker_global_scope) {
+  DCHECK(worker_global_scope.IsContextThread());
+  WorkerClients* worker_clients = worker_global_scope.Clients();
   DCHECK(worker_clients);
   WorkerFetchContextHolder* holder =
       static_cast<WorkerFetchContextHolder*>(Supplement<WorkerClients>::From(
@@ -72,13 +72,14 @@ WorkerFetchContext* WorkerFetchContext::Create(
     return nullptr;
   std::unique_ptr<WebWorkerFetchContext> web_context = holder->TakeContext();
   DCHECK(web_context);
-  return new WorkerFetchContext(global_scope, std::move(web_context));
+  return new WorkerFetchContext(worker_global_scope, std::move(web_context));
 }
 
 WorkerFetchContext::WorkerFetchContext(
-    WorkerOrWorkletGlobalScope& global_scope,
+    WorkerGlobalScope& worker_global_scope,
     std::unique_ptr<WebWorkerFetchContext> web_context)
-    : global_scope_(global_scope),
+    : BaseFetchContext(&worker_global_scope),
+      worker_global_scope_(worker_global_scope),
       web_context_(std::move(web_context)),
       loading_task_runner_(Platform::Current()
                                ->CurrentThread()
@@ -91,7 +92,7 @@ WorkerFetchContext::WorkerFetchContext(
 ResourceFetcher* WorkerFetchContext::GetResourceFetcher() {
   if (resource_fetcher_)
     return resource_fetcher_;
-  resource_fetcher_ = ResourceFetcher::Create(this, loading_task_runner_);
+  resource_fetcher_ = ResourceFetcher::Create(this);
   return resource_fetcher_;
 }
 
@@ -114,6 +115,14 @@ SubresourceFilter* WorkerFetchContext::GetSubresourceFilter() const {
   return nullptr;
 }
 
+SecurityContext* WorkerFetchContext::GetParentSecurityContext() const {
+  // This method was introduced to check the parent frame's security context
+  // while loading iframe document resources. So this method is not suitable for
+  // workers.
+  NOTREACHED();
+  return nullptr;
+}
+
 bool WorkerFetchContext::ShouldBlockRequestByInspector(
     const ResourceRequest& resource_request) const {
   // TODO(horo): Implement this.
@@ -125,6 +134,11 @@ void WorkerFetchContext::DispatchDidBlockRequest(
     const FetchInitiatorInfo& fetch_initiator_info,
     ResourceRequestBlockedReason blocked_reason) const {
   // TODO(horo): Implement this.
+}
+
+void WorkerFetchContext::ReportLocalLoadFailed(const KURL&) const {
+  // Threre is no way to load local files from worker thread.
+  NOTREACHED();
 }
 
 bool WorkerFetchContext::ShouldBypassMainWorldCSP() const {
@@ -139,11 +153,11 @@ bool WorkerFetchContext::IsSVGImageChromeClient() const {
 }
 
 void WorkerFetchContext::CountUsage(UseCounter::Feature feature) const {
-  UseCounter::Count(global_scope_, feature);
+  UseCounter::Count(worker_global_scope_, feature);
 }
 
 void WorkerFetchContext::CountDeprecation(UseCounter::Feature feature) const {
-  Deprecation::CountDeprecation(global_scope_, feature);
+  Deprecation::CountDeprecation(worker_global_scope_, feature);
 }
 
 bool WorkerFetchContext::ShouldBlockFetchByMixedContentCheck(
@@ -152,52 +166,12 @@ bool WorkerFetchContext::ShouldBlockFetchByMixedContentCheck(
     SecurityViolationReportingPolicy reporting_policy) const {
   // TODO(horo): We need more detailed check which is implemented in
   // MixedContentChecker::ShouldBlockFetch().
-  return MixedContentChecker::IsMixedContent(global_scope_->GetSecurityOrigin(),
-                                             url);
+  return MixedContentChecker::IsMixedContent(
+      worker_global_scope_->GetSecurityOrigin(), url);
 }
 
-ReferrerPolicy WorkerFetchContext::GetReferrerPolicy() const {
-  return global_scope_->GetReferrerPolicy();
-}
-
-String WorkerFetchContext::GetOutgoingReferrer() const {
-  return global_scope_->OutgoingReferrer();
-}
-
-const KURL& WorkerFetchContext::Url() const {
-  return global_scope_->Url();
-}
-
-const SecurityOrigin* WorkerFetchContext::GetParentSecurityOrigin() const {
-  // This method was introduced to check the parent frame's security context
-  // while loading iframe document resources. So this method is not suitable for
-  // workers.
-  NOTREACHED();
-  return nullptr;
-}
-
-Optional<WebAddressSpace> WorkerFetchContext::GetAddressSpace() const {
-  return WTF::make_optional(global_scope_->GetSecurityContext().AddressSpace());
-}
-
-const ContentSecurityPolicy* WorkerFetchContext::GetContentSecurityPolicy()
-    const {
-  return global_scope_->GetContentSecurityPolicy();
-}
-
-void WorkerFetchContext::AddConsoleMessage(ConsoleMessage* message) const {
-  return global_scope_->AddConsoleMessage(message);
-}
-
-SecurityOrigin* WorkerFetchContext::GetSecurityOrigin() const {
-  return global_scope_->GetSecurityOrigin();
-}
-
-std::unique_ptr<WebURLLoader> WorkerFetchContext::CreateURLLoader(
-    const ResourceRequest&) {
-  auto loader = web_context_->CreateURLLoader();
-  loader->SetLoadingTaskRunner(loading_task_runner_.Get());
-  return loader;
+std::unique_ptr<WebURLLoader> WorkerFetchContext::CreateURLLoader() {
+  return web_context_->CreateURLLoader();
 }
 
 bool WorkerFetchContext::IsControlledByServiceWorker() const {
@@ -209,6 +183,10 @@ void WorkerFetchContext::PrepareRequest(ResourceRequest& request,
   request.OverrideLoadingIPCType(WebURLRequest::LoadingIPCType::kMojo);
   WrappedResourceRequest webreq(request);
   web_context_->WillSendRequest(webreq);
+}
+
+RefPtr<WebTaskRunner> WorkerFetchContext::LoadingTaskRunner() const {
+  return loading_task_runner_;
 }
 
 void WorkerFetchContext::AddAdditionalRequestHeaders(ResourceRequest& request,
@@ -243,11 +221,7 @@ void WorkerFetchContext::DispatchDidReceiveResponse(
 }
 
 void WorkerFetchContext::AddResourceTiming(const ResourceTimingInfo& info) {
-  // TODO(nhiroki): Add ResourceTiming API support once it's spec'ed for
-  // worklets.
-  if (global_scope_->IsWorkletGlobalScope())
-    return;
-  WorkerGlobalScopePerformance::performance(*ToWorkerGlobalScope(global_scope_))
+  WorkerGlobalScopePerformance::performance(*worker_global_scope_)
       ->AddResourceTiming(info);
 }
 
@@ -274,7 +248,7 @@ void WorkerFetchContext::SetFirstPartyCookieAndRequestorOrigin(
 }
 
 DEFINE_TRACE(WorkerFetchContext) {
-  visitor->Trace(global_scope_);
+  visitor->Trace(worker_global_scope_);
   visitor->Trace(resource_fetcher_);
   BaseFetchContext::Trace(visitor);
 }

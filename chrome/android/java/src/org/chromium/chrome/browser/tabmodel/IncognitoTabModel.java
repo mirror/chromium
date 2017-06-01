@@ -36,7 +36,6 @@ public class IncognitoTabModel implements TabModel {
     private final ObserverList<TabModelObserver> mObservers = new ObserverList<TabModelObserver>();
     private TabModel mDelegateModel;
     private boolean mIsAddingTab;
-    private boolean mIsPendingTabAdd;
 
     /**
      * Constructor for IncognitoTabModel.
@@ -73,8 +72,7 @@ public class IncognitoTabModel implements TabModel {
      */
     protected void destroyIncognitoIfNecessary() {
         ThreadUtils.assertOnUiThread();
-        if (!isEmpty() || mDelegateModel instanceof EmptyTabModel || mIsAddingTab
-                || mIsPendingTabAdd) {
+        if (!isEmpty() || mDelegateModel instanceof EmptyTabModel || mIsAddingTab) {
             return;
         }
 
@@ -214,7 +212,6 @@ public class IncognitoTabModel implements TabModel {
     @Override
     public void addTab(Tab tab, int index, TabLaunchType type) {
         mIsAddingTab = true;
-        mIsPendingTabAdd = false;
         ensureTabModelImpl();
         mDelegateModel.addTab(tab, index, type);
         mIsAddingTab = false;
@@ -244,18 +241,4 @@ public class IncognitoTabModel implements TabModel {
     public void openMostRecentlyClosedTab() {
     }
 
-    @Override
-    public void setIsPendingTabAdd(boolean isPendingTabAdd) {
-        mIsPendingTabAdd = isPendingTabAdd;
-        if (mIsPendingTabAdd) {
-            ensureTabModelImpl();
-        } else {
-            destroyIncognitoIfNecessary();
-        }
-    }
-
-    @Override
-    public boolean isPendingTabAdd() {
-        return mIsPendingTabAdd;
-    }
 }

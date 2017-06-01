@@ -103,9 +103,6 @@ def ParseFlags():
     'to the given file instead of stderr.')
   parser.add_argument('--skip_slow', action='store_true', help='If set, tests '
     'marked as slow will be skipped.', default=False)
-  parser.add_argument('--chrome_start_time', type=int, default=0, help='The '
-    'number of attempts to check if Chrome has fetched a proxy client config '
-    'before starting the test. Each check takes about one second.')
   return parser.parse_args(sys.argv[1:])
 
 def GetLogger(name='common'):
@@ -255,9 +252,6 @@ class TestDriver:
     if self._control_network_connection:
       # Set network connection if it was called before LoadURL()
       self.SetNetworkConnection(self._network_connection)
-    self.SleepUntilHistogramHasEntry(
-      'DataReductionProxy.ConfigService.FetchResponseCode',
-      sleep_intervals=self._flags.chrome_start_time)
 
   def _StopDriver(self):
     """Nicely stops the ChromeDriver.
@@ -742,8 +736,6 @@ class IntegrationTest(unittest.TestCase):
     Args:
       run_all_tests: If True, all tests in the directory will be run, Otherwise
         only the tests in the file given on the command line will be run.
-    Returns:
-      the TestResult object from the test runner
     """
     flags = ParseFlags()
     logger = GetLogger()
@@ -769,4 +761,4 @@ class IntegrationTest(unittest.TestCase):
             tests.addTest(test)
     testRunner = unittest.runner.TextTestRunner(verbosity=2,
       failfast=flags.failfast, buffer=(not flags.disable_buffer))
-    return testRunner.run(tests)
+    testRunner.run(tests)

@@ -10,7 +10,6 @@ import android.support.v7.app.AlertDialog;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 
-import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.ui.PhotoPickerListener;
 
@@ -52,10 +51,5 @@ public class PhotoPickerDialog extends AlertDialog {
     public void dismiss() {
         super.dismiss();
         mCategoryView.onDialogDismissed();
-    }
-
-    @VisibleForTesting
-    public PickerCategoryView getCategoryViewForTesting() {
-        return mCategoryView;
     }
 }

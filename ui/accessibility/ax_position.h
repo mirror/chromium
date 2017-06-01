@@ -276,15 +276,8 @@ class AXPosition {
         NOTREACHED();
         return false;
       case AXPositionKind::TEXT_POSITION:
-        // Special case, when the caret is right after a line break and the next
-        // position is not another line break. We should return |true| because
-        // visually the caret is at the beginning of a new line.
-        if (text_position->IsInLineBreak()) {
-          return text_position->AtEndOfAnchor() &&
-                 !text_position->CreateNextTextAnchorPosition()
-                      ->IsInLineBreak();
-        }
-        return GetPreviousOnLineID(text_position->anchor_id_) ==
+        return !text_position->IsInLineBreak() &&
+               GetPreviousOnLineID(text_position->anchor_id_) ==
                    INVALID_ANCHOR_ID &&
                text_position->AtStartOfAnchor();
     }

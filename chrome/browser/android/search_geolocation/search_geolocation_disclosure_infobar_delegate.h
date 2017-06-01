@@ -35,8 +35,7 @@ class SearchGeolocationDisclosureInfoBarDelegate
 
   // Create and show the infobar.
   static void Create(content::WebContents* web_contents,
-                     const GURL& search_url,
-                     const base::string16& search_engine_name);
+                     const GURL& search_url);
 
   // Determine if there is a search geolocation disclosure infobar already open.
   static bool IsSearchGeolocationDisclosureOpen(
@@ -58,8 +57,7 @@ class SearchGeolocationDisclosureInfoBarDelegate
 
   explicit SearchGeolocationDisclosureInfoBarDelegate(
       content::WebContents* web_contents,
-      const GURL& search_url,
-      const base::string16& search_engine_name);
+      const GURL& search_url);
 
   // InfoBarDelegate:
   void InfoBarDismissed() override;

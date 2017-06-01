@@ -23,6 +23,7 @@ class Point;
 
 namespace views {
 class ImageView;
+class Widget;
 }
 
 namespace ash {
@@ -41,7 +42,7 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
                                public ui::InputDeviceEventObserver,
                                public views::TrayBubbleView::Delegate {
  public:
-  explicit PaletteTray(Shelf* shelf);
+  explicit PaletteTray(WmShelf* wm_shelf);
   ~PaletteTray() override;
 
   // ActionableView:
@@ -84,6 +85,10 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
   void OnMouseEnteredView() override;
   void OnMouseExitedView() override;
   base::string16 GetAccessibleNameForBubble() override;
+  void OnBeforeBubbleWidgetInit(
+      views::Widget* anchor_widget,
+      views::Widget* bubble_widget,
+      views::Widget::InitParams* params) const override;
   void HideBubble(const views::TrayBubbleView* bubble_view) override;
 
   // PaletteToolManager::Delegate:

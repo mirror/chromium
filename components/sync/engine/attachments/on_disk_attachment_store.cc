@@ -154,13 +154,11 @@ OnDiskAttachmentStore::OnDiskAttachmentStore(
     const base::FilePath& path)
     : AttachmentStoreBackend(callback_task_runner), path_(path) {}
 
-OnDiskAttachmentStore::~OnDiskAttachmentStore() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-}
+OnDiskAttachmentStore::~OnDiskAttachmentStore() {}
 
 void OnDiskAttachmentStore::Init(
     const AttachmentStore::InitCallback& callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   AttachmentStore::Result result_code = OpenOrCreate(path_);
   UMA_HISTOGRAM_ENUMERATION("Sync.Attachments.StoreInitResult", result_code,
                             AttachmentStore::RESULT_SIZE);
@@ -171,7 +169,7 @@ void OnDiskAttachmentStore::Read(
     AttachmentStore::Component component,
     const AttachmentIdList& ids,
     const AttachmentStore::ReadCallback& callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   std::unique_ptr<AttachmentMap> result_map(new AttachmentMap());
   std::unique_ptr<AttachmentIdList> unavailable_attachments(
       new AttachmentIdList());
@@ -205,7 +203,7 @@ void OnDiskAttachmentStore::Write(
     AttachmentStore::Component component,
     const AttachmentList& attachments,
     const AttachmentStore::WriteCallback& callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   AttachmentStore::Result result_code =
       AttachmentStore::STORE_INITIALIZATION_FAILED;
 
@@ -223,7 +221,7 @@ void OnDiskAttachmentStore::Write(
 
 void OnDiskAttachmentStore::SetReference(AttachmentStore::Component component,
                                          const AttachmentIdList& ids) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (!db_)
     return;
   attachment_store_pb::RecordMetadata::Component proto_component =
@@ -241,7 +239,7 @@ void OnDiskAttachmentStore::DropReference(
     AttachmentStore::Component component,
     const AttachmentIdList& ids,
     const AttachmentStore::DropCallback& callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   AttachmentStore::Result result_code =
       AttachmentStore::STORE_INITIALIZATION_FAILED;
   if (db_) {
@@ -281,7 +279,7 @@ void OnDiskAttachmentStore::ReadMetadataById(
     AttachmentStore::Component component,
     const AttachmentIdList& ids,
     const AttachmentStore::ReadMetadataCallback& callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   AttachmentStore::Result result_code =
       AttachmentStore::STORE_INITIALIZATION_FAILED;
   std::unique_ptr<AttachmentMetadataList> metadata_list(
@@ -308,7 +306,7 @@ void OnDiskAttachmentStore::ReadMetadataById(
 void OnDiskAttachmentStore::ReadMetadata(
     AttachmentStore::Component component,
     const AttachmentStore::ReadMetadataCallback& callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   AttachmentStore::Result result_code =
       AttachmentStore::STORE_INITIALIZATION_FAILED;
   std::unique_ptr<AttachmentMetadataList> metadata_list(

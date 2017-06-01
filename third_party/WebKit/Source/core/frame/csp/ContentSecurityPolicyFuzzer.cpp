@@ -16,7 +16,7 @@ namespace blink {
 DummyPageHolder* g_page_holder = nullptr;
 
 int LLVMFuzzerInitialize(int* argc, char*** argv) {
-  static BlinkFuzzerTestSupport test_support = BlinkFuzzerTestSupport();
+  InitializeBlinkFuzzTest(argc, argv);
   g_page_holder = DummyPageHolder::Create().release();
   return 0;
 }

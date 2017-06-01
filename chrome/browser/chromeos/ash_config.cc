@@ -10,27 +10,14 @@
 
 namespace chromeos {
 
-namespace {
-
-ash::Config ComputeAshConfig() {
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  std::string flag = command_line->GetSwitchValueASCII(switches::kMusConfig);
-  ash::Config config = ash::Config::CLASSIC;
-  if (command_line->HasSwitch("mash") || flag == switches::kMash)
-    config = ash::Config::MASH;
-  else if (command_line->HasSwitch("mus") || flag == switches::kMus)
-    config = ash::Config::MUS;
-  VLOG_IF(1, config != ash::Config::CLASSIC &&
-                 !service_manager::ServiceManagerIsRemote())
-      << " Running with a simulated ash config (likely for testing).";
-  return config;
-}
-
-}  // namespace
-
 ash::Config GetAshConfig() {
-  static const ash::Config config = ComputeAshConfig();
-  return config;
+  if (!service_manager::ServiceManagerIsRemote())
+    return ash::Config::CLASSIC;
+
+  return base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
+             switches::kMusConfig) == switches::kMash
+             ? ash::Config::MASH
+             : ash::Config::MUS;
 }
 
 }  // namespace chromeos

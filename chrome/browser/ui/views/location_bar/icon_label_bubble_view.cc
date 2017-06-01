@@ -167,7 +167,7 @@ bool IconLabelBubbleView::IsBubbleShowing() const {
   return false;
 }
 
-gfx::Size IconLabelBubbleView::CalculatePreferredSize() const {
+gfx::Size IconLabelBubbleView::GetPreferredSize() const {
   // Height will be ignored by the LocationBarView.
   return GetSizeForLabelWidth(label_->GetPreferredSize().width());
 }

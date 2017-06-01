@@ -15,7 +15,8 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "gpu/command_buffer/client/cmd_buffer_helper.h"
-#include "gpu/command_buffer/service/command_buffer_direct.h"
+#include "gpu/command_buffer/service/command_buffer_service.h"
+#include "gpu/command_buffer/service/command_executor.h"
 #include "gpu/command_buffer/service/mocks.h"
 #include "gpu/command_buffer/service/transfer_buffer_manager.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -46,10 +47,17 @@ class MappedMemoryTestBase : public testing::Test {
                               Return(error::kNoError)));
 
     transfer_buffer_manager_ = base::MakeUnique<TransferBufferManager>(nullptr);
-    command_buffer_.reset(new CommandBufferDirect(
-        transfer_buffer_manager_.get(), api_mock_.get()));
+    command_buffer_.reset(
+        new CommandBufferService(transfer_buffer_manager_.get()));
 
-    api_mock_->set_command_buffer_service(command_buffer_->service());
+    executor_.reset(
+        new CommandExecutor(command_buffer_.get(), api_mock_.get(), NULL));
+    command_buffer_->SetPutOffsetChangeCallback(base::Bind(
+        &CommandExecutor::PutChanged, base::Unretained(executor_.get())));
+    command_buffer_->SetGetBufferChangeCallback(base::Bind(
+        &CommandExecutor::SetGetBuffer, base::Unretained(executor_.get())));
+
+    api_mock_->set_engine(executor_.get());
 
     helper_.reset(new CommandBufferHelper(command_buffer_.get()));
     helper_->Initialize(kBufferSize);
@@ -59,7 +67,8 @@ class MappedMemoryTestBase : public testing::Test {
 
   std::unique_ptr<AsyncAPIMock> api_mock_;
   std::unique_ptr<TransferBufferManager> transfer_buffer_manager_;
-  std::unique_ptr<CommandBufferDirect> command_buffer_;
+  std::unique_ptr<CommandBufferService> command_buffer_;
+  std::unique_ptr<CommandExecutor> executor_;
   std::unique_ptr<CommandBufferHelper> helper_;
   base::MessageLoop message_loop_;
 };

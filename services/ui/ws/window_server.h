@@ -42,8 +42,6 @@ class WindowServerDelegate;
 class WindowTree;
 class WindowTreeBinding;
 
-enum class DisplayCreationConfig;
-
 // WindowServer manages the set of clients of the window server (all the
 // WindowTrees) as well as providing the root of the hierarchy.
 class WindowServer : public ServerWindowDelegate,
@@ -67,11 +65,6 @@ class WindowServer : public ServerWindowDelegate,
   }
 
   GpuHost* gpu_host() { return gpu_host_.get(); }
-
-  void SetDisplayCreationConfig(DisplayCreationConfig config);
-  DisplayCreationConfig display_creation_config() const {
-    return display_creation_config_;
-  }
 
   // Creates a new ServerWindow. The return value is owned by the caller, but
   // must be destroyed before WindowServer.
@@ -179,9 +172,6 @@ class WindowServer : public ServerWindowDelegate,
       const gfx::Rect& old_bounds,
       const gfx::Rect& new_bounds,
       const base::Optional<cc::LocalSurfaceId>& local_surface_id);
-  void ProcessWindowTransformChanged(const ServerWindow* window,
-                                     const gfx::Transform& old_transform,
-                                     const gfx::Transform& new_transform);
   void ProcessClientAreaChanged(
       const ServerWindow* window,
       const gfx::Insets& new_client_area,
@@ -316,9 +306,6 @@ class WindowServer : public ServerWindowDelegate,
   void OnWindowBoundsChanged(ServerWindow* window,
                              const gfx::Rect& old_bounds,
                              const gfx::Rect& new_bounds) override;
-  void OnWindowTransformChanged(ServerWindow* window,
-                                const gfx::Transform& old_transform,
-                                const gfx::Transform& new_transform) override;
   void OnWindowClientAreaChanged(
       ServerWindow* window,
       const gfx::Insets& new_client_area,
@@ -400,8 +387,6 @@ class WindowServer : public ServerWindowDelegate,
   mojo::Binding<cc::mojom::FrameSinkManagerClient>
       frame_sink_manager_client_binding_;
   cc::mojom::FrameSinkManagerPtr frame_sink_manager_;
-
-  DisplayCreationConfig display_creation_config_;
 
   DISALLOW_COPY_AND_ASSIGN(WindowServer);
 };

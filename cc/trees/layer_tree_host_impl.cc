@@ -945,7 +945,10 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
           append_quads_data.checkerboarded_needs_raster_content_area;
       if (append_quads_data.num_missing_tiles > 0) {
         have_missing_animated_tiles |=
+            !layer->was_ever_ready_since_last_transform_animation() ||
             layer->screen_space_transform_is_animating();
+      } else {
+        layer->set_was_ever_ready_since_last_transform_animation(true);
       }
     }
     frame->activation_dependencies.insert(
@@ -1631,10 +1634,19 @@ CompositorFrameMetadata LayerTreeHostImpl::MakeCompositorFrameMetadata() const {
         IsActivelyScrolling() || mutator_host_->NeedsTickAnimations();
   }
 
-  for (auto& surface_id : active_tree_->SurfaceLayerIds()) {
-    metadata.referenced_surfaces.push_back(surface_id);
+  for (LayerImpl* surface_layer : active_tree_->SurfaceLayers()) {
+    SurfaceLayerImpl* surface_layer_impl =
+        static_cast<SurfaceLayerImpl*>(surface_layer);
+    if (settings_.enable_surface_synchronization) {
+      if (surface_layer_impl->fallback_surface_info().is_valid()) {
+        metadata.referenced_surfaces.push_back(
+            surface_layer_impl->fallback_surface_info().id());
+      }
+    } else {
+      metadata.referenced_surfaces.push_back(
+          surface_layer_impl->primary_surface_info().id());
+    }
   }
-
   if (!InnerViewportScrollLayer())
     return metadata;
 
@@ -2243,12 +2255,12 @@ void LayerTreeHostImpl::CreateTileManagerResources() {
   if (use_gpu_rasterization_) {
     image_decode_cache_ = base::MakeUnique<GpuImageDecodeCache>(
         compositor_frame_sink_->worker_context_provider(),
-        settings_.preferred_tile_format,
+        settings_.renderer_settings.preferred_tile_format,
         settings_.decoded_image_working_set_budget_bytes,
         settings_.decoded_image_cache_budget_bytes);
   } else {
     image_decode_cache_ = base::MakeUnique<SoftwareImageDecodeCache>(
-        settings_.preferred_tile_format,
+        settings_.renderer_settings.preferred_tile_format,
         settings_.decoded_image_working_set_budget_bytes);
   }
 
@@ -2310,7 +2322,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
     *raster_buffer_provider = base::MakeUnique<GpuRasterBufferProvider>(
         compositor_context_provider, worker_context_provider,
         resource_provider_.get(), settings_.use_distance_field_text,
-        msaa_sample_count, settings_.preferred_tile_format,
+        msaa_sample_count, settings_.renderer_settings.preferred_tile_format,
         settings_.async_worker_context_enabled);
     return;
   }
@@ -2332,7 +2344,8 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
         settings_.disallow_non_exact_resource_reuse);
 
     *raster_buffer_provider = ZeroCopyRasterBufferProvider::Create(
-        resource_provider_.get(), settings_.preferred_tile_format);
+        resource_provider_.get(),
+        settings_.renderer_settings.preferred_tile_format);
     return;
   }
 
@@ -2350,7 +2363,8 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
       GetTaskRunner(), compositor_context_provider, worker_context_provider,
       resource_provider_.get(), max_copy_texture_chromium_size,
       settings_.use_partial_raster, settings_.max_staging_buffer_usage_in_bytes,
-      settings_.preferred_tile_format, settings_.async_worker_context_enabled);
+      settings_.renderer_settings.preferred_tile_format,
+      settings_.async_worker_context_enabled);
 }
 
 void LayerTreeHostImpl::SetLayerTreeMutator(
@@ -2490,7 +2504,7 @@ bool LayerTreeHostImpl::InitializeRenderer(
       compositor_frame_sink_->capabilities().delegated_sync_points_required,
       settings_.renderer_settings.use_gpu_memory_buffer_resources,
       settings_.enable_color_correct_rasterization,
-      settings_.buffer_to_texture_target_map);
+      settings_.renderer_settings.buffer_to_texture_target_map);
 
   // Since the new context may be capable of MSAA, update status here. We don't
   // need to check the return value since we are recreating all resources
@@ -4208,13 +4222,75 @@ void LayerTreeHostImpl::ElementIsAnimatingChanged(
     ElementListType list_type,
     const PropertyAnimationState& mask,
     const PropertyAnimationState& state) {
+  // TODO(weiliangc): Most of the code is duplicated with LayerTeeHost version
+  // of function. Should try to share code.
   LayerTreeImpl* tree =
       list_type == ElementListType::ACTIVE ? active_tree() : pending_tree();
-  // TODO(wkorman): Explore enabling DCHECK in ElementIsAnimatingChanged()
-  // below. Currently enabling causes batch of unit test failures.
-  if (tree && tree->property_trees()->ElementIsAnimatingChanged(
-                  mutator_host(), element_id, list_type, mask, state, false))
-    tree->set_needs_update_draw_properties();
+  if (!tree)
+    return;
+  PropertyTrees* property_trees = tree->property_trees();
+
+  for (int property = TargetProperty::FIRST_TARGET_PROPERTY;
+       property <= TargetProperty::LAST_TARGET_PROPERTY; ++property) {
+    if (!mask.currently_running[property] &&
+        !mask.potentially_animating[property])
+      continue;
+
+    switch (property) {
+      case TargetProperty::TRANSFORM:
+        if (TransformNode* transform_node =
+                property_trees->transform_tree.FindNodeFromElementId(
+                    element_id)) {
+          if (mask.currently_running[property])
+            transform_node->is_currently_animating =
+                state.currently_running[property];
+          if (mask.potentially_animating[property]) {
+            transform_node->has_potential_animation =
+                state.potentially_animating[property];
+            transform_node->has_only_translation_animations =
+                mutator_host()->HasOnlyTranslationTransforms(element_id,
+                                                             list_type);
+            property_trees->transform_tree.set_needs_update(true);
+            tree->set_needs_update_draw_properties();
+            // TODO(crbug.com/702777):
+            // was_ever_ready_since_last_transform_animation should not live on
+            // layers.
+            if (LayerImpl* layer = tree->LayerByElementId(element_id)) {
+              layer->set_was_ever_ready_since_last_transform_animation(false);
+            }
+          }
+        }
+        break;
+      case TargetProperty::OPACITY:
+        if (EffectNode* effect_node =
+                property_trees->effect_tree.FindNodeFromElementId(element_id)) {
+          if (mask.currently_running[property])
+            effect_node->is_currently_animating_opacity =
+                state.currently_running[property];
+          if (mask.potentially_animating[property]) {
+            effect_node->has_potential_opacity_animation =
+                state.potentially_animating[property];
+            property_trees->effect_tree.set_needs_update(true);
+          }
+        }
+        break;
+      case TargetProperty::FILTER:
+        if (EffectNode* effect_node =
+                property_trees->effect_tree.FindNodeFromElementId(element_id)) {
+          if (mask.currently_running[property])
+            effect_node->is_currently_animating_filter =
+                state.currently_running[property];
+          if (mask.potentially_animating[property])
+            effect_node->has_potential_filter_animation =
+                state.potentially_animating[property];
+          // Filter animation changes only the node, and the subtree does not
+          // care. There is no need to request update on property trees here.
+        }
+        break;
+      default:
+        break;
+    }
+  }
 }
 
 void LayerTreeHostImpl::ScrollOffsetAnimationFinished() {

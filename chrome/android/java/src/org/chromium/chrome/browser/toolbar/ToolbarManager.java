@@ -49,7 +49,6 @@ import org.chromium.chrome.browser.download.DownloadUtils;
 import org.chromium.chrome.browser.feature_engagement_tracker.FeatureEngagementTrackerFactory;
 import org.chromium.chrome.browser.fullscreen.BrowserStateBrowserControlsVisibilityDelegate;
 import org.chromium.chrome.browser.fullscreen.FullscreenManager;
-import org.chromium.chrome.browser.net.spdyproxy.DataReductionProxySettings;
 import org.chromium.chrome.browser.ntp.IncognitoNewTabPage;
 import org.chromium.chrome.browser.ntp.NativePageFactory;
 import org.chromium.chrome.browser.ntp.NewTabPage;
@@ -173,7 +172,6 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
 
     private boolean mShouldUpdateTabCount = true;
     private boolean mShouldUpdateToolbarPrimaryColor = true;
-    private int mCurrentThemeColor;
 
     /**
      * Creates a ToolbarManager object.
@@ -939,13 +937,6 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
             public void run() {
                 RecordUserAction.record("MobileToolbarShowMenu");
                 mToolbar.onMenuShown();
-
-                if (DataReductionProxySettings.getInstance().isDataReductionProxyEnabled()) {
-                    FeatureEngagementTracker tracker =
-                            FeatureEngagementTrackerFactory.getFeatureEngagementTrackerForProfile(
-                                    Profile.getLastUsedProfile());
-                    tracker.notifyEvent(EventConstants.OVERFLOW_OPENED_WITH_DATA_SAVER_SHOWN);
-                }
             }
         });
     }
@@ -1039,10 +1030,9 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
     public void updatePrimaryColor(int color, boolean shouldAnimate) {
         if (!mShouldUpdateToolbarPrimaryColor) return;
 
-        boolean colorChanged = mCurrentThemeColor != color;
+        boolean colorChanged = mToolbarModel.getPrimaryColor() != color;
         if (!colorChanged) return;
 
-        mCurrentThemeColor = color;
         mToolbarModel.setPrimaryColor(color);
         mToolbar.onPrimaryColorChanged(shouldAnimate);
     }
@@ -1258,7 +1248,8 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
 
         Profile profile = mTabModelSelector.getModel(isIncognito).getProfile();
 
-        if (mCurrentProfile != profile) {
+        // The profile may be null if the model is not yet initialized.
+        if (profile != null && mCurrentProfile != profile) {
             if (mBookmarkBridge != null) mBookmarkBridge.destroy();
             mBookmarkBridge = new BookmarkBridge(profile);
             mBookmarkBridge.addObserver(mBookmarksObserver);

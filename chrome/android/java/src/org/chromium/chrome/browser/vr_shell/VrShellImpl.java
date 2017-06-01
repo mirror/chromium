@@ -20,11 +20,13 @@ import android.widget.FrameLayout.LayoutParams;
 import com.google.vr.ndk.base.AndroidCompat;
 import com.google.vr.ndk.base.GvrLayout;
 
+import org.chromium.base.CommandLine;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.NativePage;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
@@ -43,7 +45,6 @@ import org.chromium.content.browser.MotionEventSynthesizer;
 import org.chromium.content.browser.WindowAndroidChangedObserver;
 import org.chromium.content.browser.WindowAndroidProvider;
 import org.chromium.content_public.browser.WebContents;
-import org.chromium.content_public.common.BrowserControlsState;
 import org.chromium.ui.UiUtils;
 import org.chromium.ui.base.WindowAndroid;
 import org.chromium.ui.display.DisplayAndroid;
@@ -68,10 +69,9 @@ public class VrShellImpl
     // text too small to read.
     private static final float DEFAULT_CONTENT_WIDTH = 960f;
     private static final float DEFAULT_CONTENT_HEIGHT = 640f;
-
-    // Make full screen 16:9 until we get exact dimensions from playing video.
-    private static final float FULLSCREEN_CONTENT_WIDTH = 1024f;
-    private static final float FULLSCREEN_CONTENT_HEIGHT = 576f;
+    // Make full screen 16:9 while maintaining same width as default.
+    private static final float FULLSCREEN_CONTENT_WIDTH = 960f;
+    private static final float FULLSCREEN_CONTENT_HEIGHT = 540f;
 
     private final ChromeActivity mActivity;
     private final VrShellDelegate mDelegate;
@@ -136,8 +136,7 @@ public class VrShellImpl
         getUiLayout().setCloseButtonListener(new Runnable() {
             @Override
             public void run() {
-                mDelegate.shutdownVr(true /* disableVrMode */, false /* canReenter */,
-                        true /* stayingInChrome */);
+                mDelegate.shutdownVr(true, false);
             }
         });
 
@@ -230,12 +229,9 @@ public class VrShellImpl
             @Override
             @SuppressLint("ClickableViewAccessibility")
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
-                    nativeOnTriggerEvent(mNativeVrShell, true);
-                    return true;
-                } else if (event.getActionMasked() == MotionEvent.ACTION_UP
-                        || event.getActionMasked() == MotionEvent.ACTION_CANCEL) {
-                    nativeOnTriggerEvent(mNativeVrShell, false);
+                if (!CommandLine.getInstance().hasSwitch(ChromeSwitches.ENABLE_VR_SHELL_DEV)
+                        && event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                    nativeOnTriggerEvent(mNativeVrShell);
                     return true;
                 }
                 return false;
@@ -287,7 +283,13 @@ public class VrShellImpl
                 inCct, getGvrApi().getNativeGvrContext(), mReprojectedRendering);
 
         // Set the UI and content sizes before we load the UI.
-        updateWebVrDisplaySize(forWebVr);
+        if (forWebVr) {
+            DisplayAndroid primaryDisplay = DisplayAndroid.getNonMultiDisplay(mActivity);
+            setContentCssSize(
+                    primaryDisplay.getDisplayWidth(), primaryDisplay.getDisplayHeight(), WEBVR_DPR);
+        } else {
+            setContentCssSize(DEFAULT_CONTENT_WIDTH, DEFAULT_CONTENT_HEIGHT, DEFAULT_DPR);
+        }
 
         swapToForegroundTab();
         createTabList();
@@ -412,9 +414,19 @@ public class VrShellImpl
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
+        // Normally, touch event is dispatched to presentation view only if the phone is paired with
+        // a Cardboard viewer. This is annoying when we just want to quickly verify a Cardboard
+        // behavior. This allows us to trigger cardboard trigger event without pair to a Cardboard.
+        boolean cardboardTriggered = false;
+        if (CommandLine.getInstance().hasSwitch(ChromeSwitches.ENABLE_VR_SHELL_DEV)
+                && event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+            nativeOnTriggerEvent(mNativeVrShell);
+            cardboardTriggered = true;
+        }
         boolean parentConsumed = super.dispatchTouchEvent(event);
         if (mOnDispatchTouchEventForTesting != null) {
-            mOnDispatchTouchEventForTesting.onDispatchTouchEvent(parentConsumed);
+            mOnDispatchTouchEventForTesting.onDispatchTouchEvent(
+                    parentConsumed, cardboardTriggered);
         }
         return parentConsumed;
     }
@@ -453,11 +465,6 @@ public class VrShellImpl
         mTabModelSelectorTabObserver.destroy();
         mTab.removeObserver(mTabObserver);
         restoreTabFromVR();
-
-        if (mTab != null) {
-            mTab.updateBrowserControlsState(BrowserControlsState.SHOWN, true);
-        }
-
         mContentVirtualDisplay.destroy();
         super.shutdown();
     }
@@ -481,18 +488,6 @@ public class VrShellImpl
     public void setWebVrModeEnabled(boolean enabled) {
         mContentVrWindowAndroid.setVSyncPaused(enabled);
         nativeSetWebVrMode(mNativeVrShell, enabled);
-
-        updateWebVrDisplaySize(enabled);
-    }
-
-    private void updateWebVrDisplaySize(boolean inWebVr) {
-        if (inWebVr) {
-            DisplayAndroid primaryDisplay = DisplayAndroid.getNonMultiDisplay(mActivity);
-            setContentCssSize(
-                    primaryDisplay.getDisplayWidth(), primaryDisplay.getDisplayHeight(), WEBVR_DPR);
-        } else {
-            setContentCssSize(DEFAULT_CONTENT_WIDTH, DEFAULT_CONTENT_HEIGHT, DEFAULT_DPR);
-        }
     }
 
     @Override
@@ -631,7 +626,7 @@ public class VrShellImpl
     private native void nativeSwapContents(
             long nativeVrShell, WebContents webContents, MotionEventSynthesizer eventSynthesizer);
     private native void nativeDestroy(long nativeVrShell);
-    private native void nativeOnTriggerEvent(long nativeVrShell, boolean touched);
+    private native void nativeOnTriggerEvent(long nativeVrShell);
     private native void nativeOnPause(long nativeVrShell);
     private native void nativeOnResume(long nativeVrShell);
     private native void nativeOnLoadProgressChanged(long nativeVrShell, double progress);

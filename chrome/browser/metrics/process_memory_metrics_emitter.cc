@@ -83,9 +83,7 @@ void ProcessMemoryMetricsEmitter::ReceivedMemoryDump(
   if (!ptr)
     return;
 
-  uint32_t private_footprint_total_kb = 0;
   for (const ProcessMemoryDumpPtr& pmd : ptr->process_dumps) {
-    private_footprint_total_kb += pmd->private_footprint;
     switch (pmd->process_type) {
       case memory_instrumentation::mojom::ProcessType::BROWSER:
         EmitBrowserMemoryMetrics(pmd);
@@ -102,7 +100,4 @@ void ProcessMemoryMetricsEmitter::ReceivedMemoryDump(
         break;
     }
   }
-  UMA_HISTOGRAM_MEMORY_LARGE_MB(
-      "Memory.Experimental.Total2.PrivateMemoryFootprint",
-      private_footprint_total_kb / 1024);
 }

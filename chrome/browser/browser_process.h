@@ -67,6 +67,10 @@ namespace gcm {
 class GCMDriver;
 }
 
+namespace memory {
+class TabManager;
+}
+
 namespace message_center {
 class MessageCenter;
 }
@@ -108,10 +112,6 @@ class PrintPreviewDialogController;
 
 namespace rappor {
 class RapporServiceImpl;
-}
-
-namespace resource_coordinator {
-class TabManager;
 }
 
 namespace safe_browsing {
@@ -278,7 +278,7 @@ class BrowserProcess {
   virtual gcm::GCMDriver* gcm_driver() = 0;
 
   // Returns the tab manager. On non-supported platforms, this returns null.
-  virtual resource_coordinator::TabManager* GetTabManager() = 0;
+  virtual memory::TabManager* GetTabManager() = 0;
 
   // Returns the default web client state of Chrome (i.e., was it the user's
   // default browser) at the time a previous check was made sometime between

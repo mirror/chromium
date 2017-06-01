@@ -21,30 +21,24 @@ namespace {
 Printer::PpdReference SpecificsToPpd(
     const sync_pb::PrinterPPDReference& specifics) {
   Printer::PpdReference ref;
-  if (specifics.autoconf()) {
-    ref.autoconf = specifics.autoconf();
-  } else if (specifics.has_user_supplied_ppd_url()) {
+  if (specifics.has_user_supplied_ppd_url()) {
     ref.user_supplied_ppd_url = specifics.user_supplied_ppd_url();
-  } else if (specifics.has_effective_make_and_model()) {
+  }
+
+  if (specifics.has_effective_make_and_model()) {
     ref.effective_make_and_model = specifics.effective_make_and_model();
   }
 
   return ref;
 }
 
-// Overwrite fields in |specifics| with an appropriately filled field from
-// |ref|.  If |ref| is the default object, nothing will be changed in
-// |specifics|.
 void MergeReferenceToSpecifics(sync_pb::PrinterPPDReference* specifics,
                                const Printer::PpdReference& ref) {
-  if (ref.autoconf) {
-    specifics->Clear();
-    specifics->set_autoconf(ref.autoconf);
-  } else if (!ref.user_supplied_ppd_url.empty()) {
-    specifics->Clear();
+  if (!ref.user_supplied_ppd_url.empty()) {
     specifics->set_user_supplied_ppd_url(ref.user_supplied_ppd_url);
-  } else if (!ref.effective_make_and_model.empty()) {
-    specifics->Clear();
+  }
+
+  if (!ref.effective_make_and_model.empty()) {
     specifics->set_effective_make_and_model(ref.effective_make_and_model);
   }
 }

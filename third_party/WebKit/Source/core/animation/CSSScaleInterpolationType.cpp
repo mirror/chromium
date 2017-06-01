@@ -62,8 +62,7 @@ std::unique_ptr<InterpolableValue> CreateScaleIdentity() {
   return std::move(list);
 }
 
-class InheritedScaleChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+class InheritedScaleChecker : public InterpolationType::ConversionChecker {
  public:
   static std::unique_ptr<InheritedScaleChecker> Create(const Scale& scale) {
     return WTF::WrapUnique(new InheritedScaleChecker(scale));
@@ -72,9 +71,9 @@ class InheritedScaleChecker
  private:
   InheritedScaleChecker(const Scale& scale) : scale_(scale) {}
 
-  bool IsValid(const StyleResolverState& state,
+  bool IsValid(const InterpolationEnvironment& environment,
                const InterpolationValue&) const final {
-    return scale_ == Scale(state.ParentStyle()->Scale());
+    return scale_ == Scale(environment.GetState().ParentStyle()->Scale());
   }
 
   const Scale scale_;

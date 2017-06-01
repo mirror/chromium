@@ -60,7 +60,11 @@ class MetricsWebContentsObserver
 
     void OnGoingAway();
 
-    virtual void OnCommit(PageLoadTracker* tracker) {}
+    // Invoked when a new PageLoadTiming update has been received and processed.
+    virtual void OnTimingUpdated(bool is_main_frame,
+                                 const mojom::PageLoadTiming& timing,
+                                 const mojom::PageLoadMetadata& metadata) {}
+
     virtual void DidReceiveTimingUpdate(IPCType type) {}
 
    private:
@@ -72,11 +76,9 @@ class MetricsWebContentsObserver
   // Note that the returned metrics is owned by the web contents.
   static MetricsWebContentsObserver* CreateForWebContents(
       content::WebContents* web_contents,
-      const base::Optional<content::WebContents::CreateParams>& create_params,
       std::unique_ptr<PageLoadMetricsEmbedderInterface> embedder_interface);
   MetricsWebContentsObserver(
       content::WebContents* web_contents,
-      const base::Optional<content::WebContents::CreateParams>& create_params,
       std::unique_ptr<PageLoadMetricsEmbedderInterface> embedder_interface);
   ~MetricsWebContentsObserver() override;
 
@@ -97,7 +99,6 @@ class MetricsWebContentsObserver
   void MediaStartedPlaying(
       const content::WebContentsObserver::MediaPlayerInfo& video_type,
       const content::WebContentsObserver::MediaPlayerId& id) override;
-  void WebContentsDestroyed() override;
 
   // These methods are forwarded from the MetricsNavigationThrottle.
   void WillStartNavigationRequest(content::NavigationHandle* navigation_handle);

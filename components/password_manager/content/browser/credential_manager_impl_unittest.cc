@@ -81,7 +81,7 @@ class MockPasswordManagerClient : public StubPasswordManagerClient {
   ~MockPasswordManagerClient() override {}
 
   bool PromptUserToSaveOrUpdatePassword(
-      scoped_refptr<PasswordFormManager> manager,
+      std::unique_ptr<PasswordFormManager> manager,
       bool update_password) override {
     manager_.swap(manager);
     PromptUserToSavePasswordPtr(manager_.get());
@@ -136,7 +136,7 @@ class MockPasswordManagerClient : public StubPasswordManagerClient {
  private:
   TestingPrefServiceSimple prefs_;
   PasswordStore* store_;
-  scoped_refptr<PasswordFormManager> manager_;
+  std::unique_ptr<PasswordFormManager> manager_;
 
   DISALLOW_COPY_AND_ASSIGN(MockPasswordManagerClient);
 };
@@ -356,9 +356,9 @@ class CredentialManagerImplTest : public content::RenderViewHostTestHarness {
     cm_service_impl_->Store(info, std::move(callback));
   }
 
-  void CallPreventSilentAccess(
-      CredentialManagerImpl::PreventSilentAccessCallback callback) {
-    cm_service_impl_->PreventSilentAccess(std::move(callback));
+  void CallRequireUserMediation(
+      CredentialManagerImpl::RequireUserMediationCallback callback) {
+    cm_service_impl_->RequireUserMediation(std::move(callback));
   }
 
   void CallGet(CredentialMediationRequirement mediation,
@@ -711,7 +711,7 @@ TEST_F(CredentialManagerImplTest,
   EXPECT_FALSE(client_->pending_manager());
 }
 
-TEST_F(CredentialManagerImplTest, CredentialManagerOnPreventSilentAccess) {
+TEST_F(CredentialManagerImplTest, CredentialManagerOnRequireUserMediation) {
   store_->AddLogin(form_);
   store_->AddLogin(subdomain_form_);
   store_->AddLogin(cross_origin_form_);
@@ -727,7 +727,7 @@ TEST_F(CredentialManagerImplTest, CredentialManagerOnPreventSilentAccess) {
   EXPECT_FALSE(passwords[cross_origin_form_.signon_realm][0].skip_zero_click);
 
   bool called = false;
-  CallPreventSilentAccess(base::Bind(&RespondCallback, &called));
+  CallRequireUserMediation(base::Bind(&RespondCallback, &called));
 
   RunAllPendingTasks();
 
@@ -744,7 +744,7 @@ TEST_F(CredentialManagerImplTest, CredentialManagerOnPreventSilentAccess) {
 }
 
 TEST_F(CredentialManagerImplTest,
-       CredentialManagerOnPreventSilentAccessIncognito) {
+       CredentialManagerOnRequireUserMediationIncognito) {
   EXPECT_CALL(*client_, IsSavingAndFillingEnabledForCurrentPage())
       .WillRepeatedly(testing::Return(false));
   store_->AddLogin(form_);
@@ -756,7 +756,7 @@ TEST_F(CredentialManagerImplTest,
   EXPECT_FALSE(passwords[form_.signon_realm][0].skip_zero_click);
 
   bool called = false;
-  CallPreventSilentAccess(base::Bind(&RespondCallback, &called));
+  CallRequireUserMediation(base::Bind(&RespondCallback, &called));
   RunAllPendingTasks();
 
   EXPECT_TRUE(called);
@@ -768,7 +768,7 @@ TEST_F(CredentialManagerImplTest,
 }
 
 TEST_F(CredentialManagerImplTest,
-       CredentialManagerOnPreventSilentAccessWithAffiliation) {
+       CredentialManagerOnRequireUserMediationWithAffiliation) {
   store_->AddLogin(form_);
   store_->AddLogin(cross_origin_form_);
   store_->AddLogin(affiliated_form1_);
@@ -793,7 +793,7 @@ TEST_F(CredentialManagerImplTest,
   EXPECT_FALSE(passwords[affiliated_form2_.signon_realm][0].skip_zero_click);
 
   bool called = false;
-  CallPreventSilentAccess(base::Bind(&RespondCallback, &called));
+  CallRequireUserMediation(base::Bind(&RespondCallback, &called));
   RunAllPendingTasks();
 
   passwords = store_->stored_passwords();

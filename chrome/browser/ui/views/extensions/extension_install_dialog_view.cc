@@ -81,9 +81,6 @@ constexpr int kNoPermissionsLeftColumnWidth = 200;
 // this case, so make it wider than normal.
 constexpr int kExternalInstallLeftColumnWidth = 350;
 
-// Time delay before the install button is enabled after initial display.
-int g_install_delay_in_ms = 500;
-
 // Get the appropriate indentation for an item if its parent is using bullet
 // points. If the parent is using bullets for its items, then a padding of one
 // unit will make the child item (which has no bullet) look like a sibling of
@@ -94,6 +91,9 @@ int GetLeftPaddingForBulletedItems(bool parent_bulleted) {
              views::DISTANCE_RELATED_CONTROL_HORIZONTAL) *
          (parent_bulleted ? 2 : 1);
 }
+
+// Time delay before the install button is enabled after initial display.
+int g_install_delay_in_ms = 500;
 
 void AddResourceIcon(const gfx::ImageSkia* skia_image, void* data) {
   views::View* parent = static_cast<views::View*>(data);
@@ -283,8 +283,7 @@ void ExtensionInstallDialogView::InitView() {
 
   const int content_width =
       left_column_width +
-      provider->GetDistanceMetric(DISTANCE_UNRELATED_CONTROL_HORIZONTAL) +
-      kIconSize;
+      provider->GetDistanceMetric(DISTANCE_PANEL_CONTENT_MARGIN) + kIconSize;
 
   // Create the scrollable view which will contain the permissions and retained
   // files/devices. It will span the full content width.
@@ -301,9 +300,9 @@ void ExtensionInstallDialogView::InitView() {
       views::GridLayout::USE_PREF, content_width, content_width);
 
   // Pad to the very right of the dialog, so the scrollbar will be on the edge.
-  const gfx::Insets button_row_insets =
-      provider->GetInsetsMetric(views::INSETS_DIALOG_BUTTON_ROW);
-  scrollable_column_set->AddPaddingColumn(0, button_row_insets.right());
+  const int button_margin =
+      provider->GetDistanceMetric(DISTANCE_DIALOG_BUTTON_MARGIN);
+  scrollable_column_set->AddPaddingColumn(0, button_margin);
 
   layout->StartRow(0, column_set_id);
   scroll_view_ = new views::ScrollView();
@@ -385,8 +384,8 @@ void ExtensionInstallDialogView::InitView() {
       0,
       std::min(kScrollViewMaxHeight, scrollable->GetPreferredSize().height()));
 
-  SetPreferredSize(gfx::Size(content_width + button_row_insets.width(),
-                             container_->GetPreferredSize().height()));
+  dialog_size_ = gfx::Size(content_width + 2 * button_margin,
+                           container_->GetPreferredSize().height());
 
   std::string event_name = ExperienceSamplingEvent::kExtensionInstallDialog;
   event_name.append(
@@ -445,8 +444,10 @@ views::GridLayout* ExtensionInstallDialogView::CreateLayout(
     int column_set_id) {
   container_ = new views::View();
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
-  const gfx::Insets content_insets =
-      provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS);
+  const int horizontal_margin =
+      provider->GetDistanceMetric(DISTANCE_DIALOG_BUTTON_MARGIN);
+  const int bottom_margin =
+      provider->GetDistanceMetric(DISTANCE_PANEL_CONTENT_MARGIN);
 
   // This is views::GridLayout::CreatePanel(), but without a top or right
   // margin. The empty dialog title will then become the top margin, and a
@@ -456,8 +457,8 @@ views::GridLayout* ExtensionInstallDialogView::CreateLayout(
   // content can have its scrollbar aligned with the right edge of the dialog.
   views::GridLayout* layout = new views::GridLayout(container_);
   container_->SetLayoutManager(layout);
-  container_->SetBorder(views::CreateEmptyBorder(0, content_insets.left(),
-                                                 content_insets.bottom(), 0));
+  container_->SetBorder(
+      views::CreateEmptyBorder(0, horizontal_margin, bottom_margin, 0));
   AddChildView(container_);
 
   views::ColumnSet* column_set = layout->AddColumnSet(column_set_id);
@@ -473,7 +474,7 @@ views::GridLayout* ExtensionInstallDialogView::CreateLayout(
                         views::GridLayout::USE_PREF,
                         0,  // no fixed width
                         kIconSize);
-  column_set->AddPaddingColumn(0, content_insets.right());
+  column_set->AddPaddingColumn(0, horizontal_margin);
 
   layout->StartRow(0, column_set_id);
   views::Label* title = new views::Label(prompt_->GetDialogTitle(),
@@ -586,6 +587,10 @@ void ExtensionInstallDialogView::Layout() {
   DialogDelegateView::Layout();
 }
 
+gfx::Size ExtensionInstallDialogView::GetPreferredSize() const {
+  return dialog_size_;
+}
+
 views::View* ExtensionInstallDialogView::CreateExtraView() {
   if (!prompt_->has_webstore_data())
     return nullptr;
@@ -658,8 +663,8 @@ void ExpandableContainerView::DetailsView::AddDetail(
   layout_->AddView(detail_label);
 }
 
-gfx::Size ExpandableContainerView::DetailsView::CalculatePreferredSize() const {
-  gfx::Size size = views::View::CalculatePreferredSize();
+gfx::Size ExpandableContainerView::DetailsView::GetPreferredSize() const {
+  gfx::Size size = views::View::GetPreferredSize();
   return gfx::Size(size.width(), size.height() * state_);
 }
 

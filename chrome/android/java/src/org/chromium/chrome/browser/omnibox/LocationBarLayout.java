@@ -56,7 +56,6 @@ import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.NativePage;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.WindowDelegate;
-import org.chromium.chrome.browser.locale.LocaleManager;
 import org.chromium.chrome.browser.ntp.NativePageFactory;
 import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.ntp.NewTabPage.FakeboxDelegate;
@@ -1153,11 +1152,16 @@ public class LocationBarLayout extends FrameLayout
                     mRequestSuggestions = null;
 
                     if (getCurrentTab() == null
-                            && (mBottomSheet == null || !mBottomSheet.isShowingNewTab())) {
+                            && (mBottomSheet == null || mToolbarDataProvider.isIncognito())) {
                         return;
                     }
 
-                    Profile profile = getToolbarDataProvider().getProfile();
+                    // If the bottom sheet is not null, the current tab will be null when the
+                    // NTP UI is showing. Use the original profile rather than the tab profile
+                    // in that scenario.
+                    Profile profile = getCurrentTab() != null
+                            ? getCurrentTab().getProfile()
+                            : Profile.getLastUsedProfile().getOriginalProfile();
                     String url = getCurrentTab() != null ? getCurrentTab().getUrl()
                                                          : UrlConstants.NTP_URL;
                     mAutocomplete.start(profile, url, textWithoutAutocomplete, preventAutocomplete);
@@ -1242,8 +1246,11 @@ public class LocationBarLayout extends FrameLayout
         mUrlFocusChangeListener = listener;
     }
 
-    @Override
-    public ToolbarDataProvider getToolbarDataProvider() {
+    /**
+     * @return The toolbar data provider.
+     */
+    @VisibleForTesting
+    protected ToolbarDataProvider getToolbarDataProvider() {
         return mToolbarDataProvider;
     }
 
@@ -2224,8 +2231,6 @@ public class LocationBarLayout extends FrameLayout
             setUrlToPageUrl();
         }
 
-        LocaleManager.getInstance().recordLocaleBasedSearchMetrics(false, url, transition);
-
         if (currentTab != null) currentTab.requestFocus();
 
         // Prevent any upcoming omnibox suggestions from showing. We have to do this after we load
@@ -2244,16 +2249,13 @@ public class LocationBarLayout extends FrameLayout
         updateSecurityIcon(getSecurityLevel());
     }
 
+    /**
+     * @return The Tab currently showing.
+     */
     @Override
     public Tab getCurrentTab() {
         if (mToolbarDataProvider == null) return null;
         return mToolbarDataProvider.getTab();
-    }
-
-    @Override
-    public boolean allowKeyboardLearning() {
-        if (mToolbarDataProvider == null) return false;
-        return !mToolbarDataProvider.isIncognito();
     }
 
     private void initOmniboxResultsContainer() {

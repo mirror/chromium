@@ -32,7 +32,6 @@ class BASE_EXPORT ProcessMemoryMaps {
 
     uint64_t start_address;
     uint64_t size_in_bytes;
-    uint64_t module_timestamp;
     uint32_t protection_flags;
     std::string mapped_file;
 

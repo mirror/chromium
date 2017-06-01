@@ -372,11 +372,9 @@ void OmniboxEditModel::Revert() {
   has_temporary_text_ = false;
   size_t start, end;
   view_->GetSelectionBounds(&start, &end);
-  // First home the cursor, so view of text is scrolled to left, then correct
-  // it. |SetCaretPos()| doesn't scroll the text, so doing that first wouldn't
-  // accomplish anything.
-  view_->SetWindowTextAndCaretPos(permanent_text_, 0, false, true);
-  view_->SetCaretPos(std::min(permanent_text_.length(), start));
+  view_->SetWindowTextAndCaretPos(permanent_text_, 0, false, false);
+  view_->SetWindowTextAndCaretPos(
+      permanent_text_, std::min(permanent_text_.length(), start), false, true);
   client_->OnRevert();
 }
 

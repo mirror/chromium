@@ -35,7 +35,7 @@
 namespace blink {
 
 class LocalFrame;
-class LocalFrameView;
+class FrameView;
 class Node;
 class Page;
 class LayoutBox;
@@ -81,7 +81,7 @@ class CORE_EXPORT AutoscrollController final
   void StartAutoscroll();
 
   void UpdateMiddleClickAutoscrollState(
-      LocalFrameView*,
+      FrameView*,
       const IntPoint& last_known_mouse_position);
   FloatSize CalculateAutoscrollDelta();
 

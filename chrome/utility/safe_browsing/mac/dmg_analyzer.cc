@@ -117,7 +117,8 @@ bool MachOFeatureExtractor::HashAndCopyStream(
 
 }  // namespace
 
-void AnalyzeDMGFile(base::File dmg_file, ArchiveAnalyzerResults* results) {
+void AnalyzeDMGFile(base::File dmg_file,
+                    safe_browsing::zip_analyzer::Results* results) {
   MachOFeatureExtractor feature_extractor;
   results->success = false;
 

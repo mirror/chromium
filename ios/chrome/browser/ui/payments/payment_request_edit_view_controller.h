@@ -26,16 +26,6 @@ extern NSString* const kWarningMessageAccessibilityID;
             (PaymentRequestEditViewController*)controller
                           didSelectField:(EditorField*)field;
 
-// Notifies the delegate that the user has finished editing the editor fields.
-- (void)paymentRequestEditViewController:
-            (PaymentRequestEditViewController*)controller
-                  didFinishEditingFields:(NSArray<EditorField*>*)fields;
-
-// Notifies the delegate that the user has chosen to discard entries in the
-// editor fields and return to the previous screen.
-- (void)paymentRequestEditViewControllerDidCancel:
-    (PaymentRequestEditViewController*)controller;
-
 @end
 
 // Validator protocol for PaymentRequestEditViewController.
@@ -68,11 +58,6 @@ extern NSString* const kWarningMessageAccessibilityID;
 // controller is the validator.
 @property(nonatomic, weak) id<PaymentRequestEditViewControllerValidator>
     validatorDelegate;
-
-// Convenience initializer. Initializes this view controller with the
-// CollectionViewControllerStyleAppBar style and sets up the leading (cancel)
-// and the trailing (done) buttons.
-- (instancetype)init;
 
 @end
 

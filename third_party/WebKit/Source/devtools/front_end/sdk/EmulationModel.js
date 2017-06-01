@@ -22,11 +22,6 @@ SDK.EmulationModel = class extends SDK.SDKModel {
     if (disableJavascriptSetting.get())
       this._emulationAgent.setScriptExecutionDisabled(true);
 
-    var mediaSetting = Common.moduleSetting('emulatedCSSMedia');
-    mediaSetting.addChangeListener(() => this._emulateCSSMedia(mediaSetting.get()));
-    if (mediaSetting.get())
-      this._emulateCSSMedia(mediaSetting.get());
-
     this._touchEnabled = false;
     this._touchMobile = false;
     this._customTouchEnabled = false;
@@ -115,10 +110,10 @@ SDK.EmulationModel = class extends SDK.SDKModel {
   }
 
   /**
-   * @param {string} media
+   * @param {?string} media
    */
-  _emulateCSSMedia(media) {
-    this._emulationAgent.setEmulatedMedia(media);
+  emulateCSSMedia(media) {
+    this._emulationAgent.setEmulatedMedia(media || '');
     if (this._cssModel)
       this._cssModel.mediaQueryResultChanged();
   }
@@ -186,8 +181,8 @@ SDK.EmulationModel = class extends SDK.SDKModel {
       this._pageAgent.removeScriptToEvaluateOnLoad(this._touchConfiguration.scriptId);
     this._touchConfiguration = configuration;
     if (configuration.enabled) {
-      this._pageAgent.addScriptToEvaluateOnLoad('(' + injectedFunction.toString() + ')()').then(scriptId => {
-        this._touchConfiguration.scriptId = scriptId || '';
+      this._pageAgent.addScriptToEvaluateOnLoad('(' + injectedFunction.toString() + ')()', (error, scriptId) => {
+        this._touchConfiguration.scriptId = error ? '' : scriptId;
       });
     }
 

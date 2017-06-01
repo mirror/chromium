@@ -109,6 +109,7 @@ class FloatQuad;
 class FloatRect;
 class FormController;
 class FrameRequestCallback;
+class FrameView;
 class HTMLAllCollection;
 class HTMLBodyElement;
 class HTMLCollection;
@@ -131,7 +132,6 @@ class LiveNodeListBase;
 class LocalDOMWindow;
 class Locale;
 class LocalFrame;
-class LocalFrameView;
 class Location;
 class MediaQueryListListener;
 class MediaQueryMatcher;
@@ -261,11 +261,6 @@ class CORE_EXPORT Document : public ContainerNode,
   static Document* Create(const DocumentInit& initializer = DocumentInit()) {
     return new Document(initializer);
   }
-  // Factory for web-exposed Document constructor. The argument document must be
-  // a document instance representing window.document, and it works as the
-  // source of ExecutionContext and security origin of the new document.
-  // https://dom.spec.whatwg.org/#dom-document-document
-  static Document* Create(const Document&);
   ~Document() override;
 
   MediaQueryMatcher& GetMediaQueryMatcher();
@@ -322,6 +317,9 @@ class CORE_EXPORT Document : public ContainerNode,
 
   Location* location() const;
 
+  Element* createElement(const LocalDOMWindow*,
+                         const AtomicString& name,
+                         ExceptionState&);
   DocumentFragment* createDocumentFragment();
   Text* createTextNode(const String& data);
   Comment* createComment(const String& data);
@@ -335,7 +333,8 @@ class CORE_EXPORT Document : public ContainerNode,
                           ExceptionState&,
                           bool should_ignore_namespace_checks = false);
   Node* importNode(Node* imported_node, bool deep, ExceptionState&);
-  Element* createElementNS(const AtomicString& namespace_uri,
+  Element* createElementNS(const LocalDOMWindow*,
+                           const AtomicString& namespace_uri,
                            const AtomicString& qualified_name,
                            ExceptionState&);
   Element* createElement(const QualifiedName&, CreateElementFlags);
@@ -474,7 +473,7 @@ class CORE_EXPORT Document : public ContainerNode,
   DocumentState* FormElementsState() const;
   void SetStateForNewFormElements(const Vector<String>&);
 
-  LocalFrameView* View() const;                    // can be null
+  FrameView* View() const;                         // can be null
   LocalFrame* GetFrame() const { return frame_; }  // can be null
   Page* GetPage() const;                           // can be null
   Settings* GetSettings() const;                   // can be null
@@ -1146,12 +1145,17 @@ class CORE_EXPORT Document : public ContainerNode,
 
   TextAutosizer* GetTextAutosizer();
 
-  Element* createElement(const AtomicString& local_name,
-                         ExceptionState& = ASSERT_NO_EXCEPTION);
-  Element* createElement(const AtomicString& local_name,
+  Element* createElement(
+      const AtomicString& local_name,
+      ExceptionState& exception_state = ASSERT_NO_EXCEPTION) {
+    return createElement(nullptr, local_name, exception_state);
+  }
+  Element* createElement(const LocalDOMWindow*,
+                         const AtomicString& local_name,
                          const StringOrDictionary&,
                          ExceptionState& = ASSERT_NO_EXCEPTION);
-  Element* createElementNS(const AtomicString& namespace_uri,
+  Element* createElementNS(const LocalDOMWindow*,
+                           const AtomicString& namespace_uri,
                            const AtomicString& qualified_name,
                            const StringOrDictionary&,
                            ExceptionState&);
@@ -1326,8 +1330,6 @@ class CORE_EXPORT Document : public ContainerNode,
   void DecrementPasswordCount();
 
   CoreProbeSink* GetProbeSink() final;
-
-  void SetFeaturePolicy(const String& feature_policy_header);
 
  protected:
   Document(const DocumentInit&, DocumentClassFlags = kDefaultDocumentClass);
@@ -1630,6 +1632,8 @@ class CORE_EXPORT Document : public ContainerNode,
   ViewportDescription viewport_description_;
   ViewportDescription legacy_viewport_description_;
   Length viewport_default_min_width_;
+
+  ReferrerPolicy referrer_policy_;
 
   DocumentTiming document_timing_;
   Member<MediaQueryMatcher> media_query_matcher_;

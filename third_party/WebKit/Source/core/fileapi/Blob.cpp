@@ -74,7 +74,8 @@ URLRegistry& BlobURLRegistry::Registry() {
   // (This code assumes it is safe to register or unregister URLs on
   // BlobURLRegistry (that is implemented by the embedder) on
   // multiple threads.)
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(BlobURLRegistry, instance, ());
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(BlobURLRegistry, instance,
+                                  new BlobURLRegistry());
   return instance;
 }
 

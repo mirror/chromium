@@ -4,7 +4,7 @@
 
 // Custom binding for the pageCapture API.
 
-var binding = apiBridge || require('binding').Binding.create('pageCapture');
+var binding = require('binding').Binding.create('pageCapture');
 
 var handleUncaughtException = require('uncaught_exception_handler').handle;
 var pageCaptureNatives = requireNative('page_capture');
@@ -32,5 +32,4 @@ binding.registerCustomHook(function(bindingsAPI) {
   });
 });
 
-if (!apiBridge)
-  exports.$set('binding', binding.generate());
+exports.$set('binding', binding.generate());

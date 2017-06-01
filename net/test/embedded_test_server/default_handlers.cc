@@ -617,7 +617,7 @@ std::unique_ptr<HttpResponse> HandleHungResponse(const HttpRequest& request) {
   return base::MakeUnique<HungHttpResponse>();
 }
 
-}  // anonymous namespace
+}  // namespace anonymous
 
 #define PREFIXED_HANDLER(prefix, handler) \
   base::Bind(&HandlePrefixedRequest, prefix, base::Bind(handler))

@@ -129,7 +129,7 @@ class ColorChooserView::HueView : public LocatedEventHandlerView {
   void ProcessEventAtLocation(const gfx::Point& point) override;
 
   // View overrides:
-  gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetPreferredSize() const override;
   void OnPaint(gfx::Canvas* canvas) override;
 
   ColorChooserView* chooser_view_;
@@ -164,7 +164,7 @@ void ColorChooserView::HueView::ProcessEventAtLocation(
   SchedulePaint();
 }
 
-gfx::Size ColorChooserView::HueView::CalculatePreferredSize() const {
+gfx::Size ColorChooserView::HueView::GetPreferredSize() const {
   // We put indicators on the both sides of the hue bar.
   return gfx::Size(kHueBarWidth + kHueIndicatorSize * 2 + kBorderWidth * 2,
                    kSaturationValueSize + kBorderWidth * 2);
@@ -236,7 +236,7 @@ class ColorChooserView::SaturationValueView : public LocatedEventHandlerView {
   void ProcessEventAtLocation(const gfx::Point& point) override;
 
   // View overrides:
-  gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetPreferredSize() const override;
   void OnPaint(gfx::Canvas* canvas) override;
 
   ColorChooserView* chooser_view_;
@@ -285,8 +285,7 @@ void ColorChooserView::SaturationValueView::ProcessEventAtLocation(
   chooser_view_->OnSaturationValueChosen(saturation, value);
 }
 
-gfx::Size ColorChooserView::SaturationValueView::CalculatePreferredSize()
-    const {
+gfx::Size ColorChooserView::SaturationValueView::GetPreferredSize() const {
   return gfx::Size(kSaturationValueSize + kBorderWidth * 2,
                    kSaturationValueSize + kBorderWidth * 2);
 }

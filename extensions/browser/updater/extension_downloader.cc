@@ -506,9 +506,7 @@ void ExtensionDownloader::CreateManifestFetcher() {
           chrome_policy {
             ExtensionInstallBlacklist {
               policy_options {mode: MANDATORY}
-              ExtensionInstallBlacklist: {
-                entries: '*'
-              }
+              ExtensionInstallBlacklist: '*'
             }
           }
         })");
@@ -835,9 +833,7 @@ void ExtensionDownloader::CreateExtensionFetcher() {
           chrome_policy {
             ExtensionInstallBlacklist {
               policy_options {mode: MANDATORY}
-              ExtensionInstallBlacklist: {
-                entries: '*'
-              }
+              ExtensionInstallBlacklist: '*'
             }
           }
         })");

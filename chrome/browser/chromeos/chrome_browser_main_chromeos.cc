@@ -18,7 +18,6 @@
 #include "base/files/file_util.h"
 #include "base/lazy_instance.h"
 #include "base/linux_util.h"
-#include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
@@ -54,6 +53,7 @@
 #include "chrome/browser/chromeos/extensions/extension_volume_observer.h"
 #include "chrome/browser/chromeos/external_metrics.h"
 #include "chrome/browser/chromeos/input_method/input_method_configuration.h"
+#include "chrome/browser/chromeos/input_method/input_method_util.h"
 #include "chrome/browser/chromeos/language_preferences.h"
 #include "chrome/browser/chromeos/lock_screen_apps/state_controller.h"
 #include "chrome/browser/chromeos/login/helper.h"
@@ -112,7 +112,6 @@
 #include "chromeos/cryptohome/cryptohome_parameters.h"
 #include "chromeos/cryptohome/homedir_methods.h"
 #include "chromeos/cryptohome/system_salt_getter.h"
-#include "chromeos/dbus/cryptohome_client.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/power_policy_controller.h"
 #include "chromeos/dbus/services/console_service_provider.h"
@@ -162,7 +161,6 @@
 #include "third_party/cros_system_api/dbus/service_constants.h"
 #include "ui/base/ime/chromeos/ime_keyboard.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
-#include "ui/base/ime/chromeos/input_method_util.h"
 #include "ui/base/touch/touch_device.h"
 #include "ui/chromeos/events/event_rewriter_chromeos.h"
 #include "ui/chromeos/events/pref_names.h"
@@ -288,10 +286,7 @@ class DBusServices {
       service_providers.push_back(base::MakeUnique<DisplayPowerServiceProvider>(
           base::MakeUnique<ChromeDisplayPowerServiceProviderDelegate>()));
     }
-    // TODO(teravest): Remove this provider once all callers are using
-    // |liveness_service_| instead: http://crbug.com/644322
-    service_providers.push_back(
-        base::MakeUnique<LivenessServiceProvider>(kLibCrosServiceInterface));
+    service_providers.push_back(base::MakeUnique<LivenessServiceProvider>());
     service_providers.push_back(base::MakeUnique<ScreenLockServiceProvider>());
     // TODO(sky): once mash supports simplified display mode we should always
     // use ChromeConsoleServiceProviderDelegate.
@@ -325,12 +320,6 @@ class DBusServices {
             base::MakeUnique<KioskInfoService>(
                 kKioskAppServiceInterface,
                 kKioskAppServiceGetRequiredPlatformVersionMethod)));
-
-    liveness_service_ = CrosDBusService::Create(
-        kLivenessServiceName, dbus::ObjectPath(kLivenessServicePath),
-        CrosDBusService::CreateServiceProviderList(
-            base::MakeUnique<LivenessServiceProvider>(
-                kLivenessServiceInterface)));
 
     // Initialize PowerDataCollector after DBusThreadManager is initialized.
     PowerDataCollector::Initialize();
@@ -383,7 +372,6 @@ class DBusServices {
     cros_dbus_service_.reset();
     proxy_resolution_service_.reset();
     kiosk_info_service_.reset();
-    liveness_service_.reset();
     PowerDataCollector::Shutdown();
     PowerPolicyController::Shutdown();
     device::BluetoothAdapterFactory::Shutdown();
@@ -403,7 +391,6 @@ class DBusServices {
 
   std::unique_ptr<CrosDBusService> proxy_resolution_service_;
   std::unique_ptr<CrosDBusService> kiosk_info_service_;
-  std::unique_ptr<CrosDBusService> liveness_service_;
 
   std::unique_ptr<NetworkConnectDelegateChromeOS> network_connect_delegate_;
 
@@ -422,42 +409,6 @@ class SystemTokenCertDBInitializer {
 
   // Entry point, called on UI thread.
   void Initialize() {
-    // Only start loading the system token once cryptohome is available and only
-    // if the TPM is ready (available && owned && not being owned).
-    DBusThreadManager::Get()
-        ->GetCryptohomeClient()
-        ->WaitForServiceToBeAvailable(
-            base::Bind(&SystemTokenCertDBInitializer::OnCryptohomeAvailable,
-                       weak_ptr_factory_.GetWeakPtr()));
-  }
-
- private:
-  // Called once the cryptohome service is available.
-  void OnCryptohomeAvailable(bool available) {
-    if (!available) {
-      LOG(ERROR) << "SystemTokenCertDBInitializer: Failed to wait for "
-                    "cryptohome to become available.";
-      return;
-    }
-
-    VLOG(1) << "SystemTokenCertDBInitializer: Cryptohome available.";
-    DBusThreadManager::Get()->GetCryptohomeClient()->TpmIsReady(
-        base::Bind(&SystemTokenCertDBInitializer::OnGotTpmIsReady,
-                   weak_ptr_factory_.GetWeakPtr()));
-  }
-
-  // This is a callback for the cryptohome TpmIsReady query. Note that this is
-  // not a listener which would be called once TPM becomes ready if it was not
-  // ready on startup (e.g. after device enrollment), see crbug.com/725500.
-  void OnGotTpmIsReady(DBusMethodCallStatus call_status, bool tpm_is_ready) {
-    if (!tpm_is_ready) {
-      VLOG(1) << "SystemTokenCertDBInitializer: TPM is not ready - not loading "
-                 "system token.";
-      return;
-    }
-    VLOG(1)
-        << "SystemTokenCertDBInitializer: TPM is ready, loading system token.";
-    TPMTokenLoader::Get()->EnsureStarted();
     base::Callback<void(crypto::ScopedPK11Slot)> callback =
         base::BindRepeating(&SystemTokenCertDBInitializer::InitializeDatabase,
                             weak_ptr_factory_.GetWeakPtr());
@@ -466,6 +417,7 @@ class SystemTokenCertDBInitializer {
         base::BindOnce(&GetSystemSlotOnIOThread, callback));
   }
 
+ private:
   // Initializes the global system token NSSCertDatabase with |system_slot|.
   // Also starts CertLoader with the system token database.
   void InitializeDatabase(crypto::ScopedPK11Slot system_slot) {
@@ -482,8 +434,6 @@ class SystemTokenCertDBInitializer {
     database->SetSystemSlot(std::move(system_slot_copy));
     system_token_cert_database_ = std::move(database);
 
-    VLOG(1) << "SystemTokenCertDBInitializer: Passing system token NSS "
-               "database to CertLoader.";
     CertLoader::Get()->SetSystemNSSDB(system_token_cert_database_.get());
   }
 
@@ -591,6 +541,7 @@ void ChromeBrowserMainPartsChromeos::PreMainMessageLoopRun() {
           content::BrowserThread::IO));
 
   // Initialize NSS database for system token.
+  TPMTokenLoader::Get()->EnsureStarted();
   system_token_certdb_initializer_ =
       base::MakeUnique<internal::SystemTokenCertDBInitializer>();
   system_token_certdb_initializer_->Initialize();

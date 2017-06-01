@@ -71,8 +71,9 @@ class DownloadHandler : public AllDownloadItemNotifier::Observer {
   bool IsDriveDownload(const content::DownloadItem* download);
 
   // Checks a file corresponding to the download item exists in Drive.
-  void CheckForFileExistence(const content::DownloadItem* download,
-                             content::CheckForFileExistenceCallback callback);
+  void CheckForFileExistence(
+      const content::DownloadItem* download,
+      const content::CheckForFileExistenceCallback& callback);
 
   // Calculates request space for |downloads|.
   int64_t CalculateRequestSpace(

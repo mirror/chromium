@@ -18,6 +18,10 @@ DownloadJobImpl::DownloadJobImpl(
 
 DownloadJobImpl::~DownloadJobImpl() = default;
 
+void DownloadJobImpl::Start() {
+  DownloadJob::StartDownload();
+}
+
 void DownloadJobImpl::Cancel(bool user_cancel) {
   if (request_handle_)
     request_handle_->CancelRequest();

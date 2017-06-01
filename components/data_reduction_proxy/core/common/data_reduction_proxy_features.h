@@ -12,7 +12,6 @@ namespace features {
 
 extern const base::Feature kDataReductionMainMenu;
 extern const base::Feature kDataReductionSiteBreakdown;
-extern const base::Feature kDataReductionProxyDecidesTransform;
 
 }  // namespace features
 }  // namespace data_reduction_proxy

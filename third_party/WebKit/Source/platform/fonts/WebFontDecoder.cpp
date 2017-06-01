@@ -150,7 +150,8 @@ void RecordDecodeSpeedHistogram(const char* data,
     if (data[0] == 'w' && data[1] == 'O' && data[2] == 'F' && data[3] == 'F') {
       DEFINE_THREAD_SAFE_STATIC_LOCAL(
           CustomCountHistogram, woff_histogram,
-          ("WebFont.DecodeSpeed.WOFF", 1000, 300000, 50));
+          new CustomCountHistogram("WebFont.DecodeSpeed.WOFF", 1000, 300000,
+                                   50));
       woff_histogram.Count(kb_per_second);
       return;
     }
@@ -158,7 +159,8 @@ void RecordDecodeSpeedHistogram(const char* data,
     if (data[0] == 'w' && data[1] == 'O' && data[2] == 'F' && data[3] == '2') {
       DEFINE_THREAD_SAFE_STATIC_LOCAL(
           CustomCountHistogram, woff2_histogram,
-          ("WebFont.DecodeSpeed.WOFF2", 1000, 300000, 50));
+          new CustomCountHistogram("WebFont.DecodeSpeed.WOFF2", 1000, 300000,
+                                   50));
       woff2_histogram.Count(kb_per_second);
       return;
     }
@@ -166,7 +168,7 @@ void RecordDecodeSpeedHistogram(const char* data,
 
   DEFINE_THREAD_SAFE_STATIC_LOCAL(
       CustomCountHistogram, sfnt_histogram,
-      ("WebFont.DecodeSpeed.SFNT", 1000, 300000, 50));
+      new CustomCountHistogram("WebFont.DecodeSpeed.SFNT", 1000, 300000, 50));
   sfnt_histogram.Count(kb_per_second);
 }
 

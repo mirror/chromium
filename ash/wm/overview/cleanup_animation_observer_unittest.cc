@@ -8,7 +8,7 @@
 
 #include "ash/test/ash_test_base.h"
 #include "ash/wm/overview/window_selector_delegate.h"
-#include "ui/aura/window.h"
+#include "ash/wm_window.h"
 #include "ui/compositor/layer_animation_observer.h"
 #include "ui/compositor/scoped_animation_duration_scale_mode.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
@@ -124,10 +124,10 @@ TEST_F(CleanupAnimationObserverTest, CreateAnimateComplete) {
   TestWindowSelectorDelegate delegate;
   std::unique_ptr<views::Widget> widget(
       CreateWindowWidget(gfx::Rect(0, 0, 40, 40)));
-  aura::Window* widget_window = widget->GetNativeWindow();
+  WmWindow* widget_window = WmWindow::Get(widget->GetNativeWindow());
   {
     ui::ScopedLayerAnimationSettings animation_settings(
-        widget_window->layer()->GetAnimator());
+        widget_window->GetLayer()->GetAnimator());
     animation_settings.SetTransitionDuration(
         base::TimeDelta::FromMilliseconds(1000));
     animation_settings.SetPreemptionStrategy(
@@ -155,14 +155,14 @@ TEST_F(CleanupAnimationObserverTest, CreateAnimateShutdown) {
   TestWindowSelectorDelegate delegate;
   std::unique_ptr<views::Widget> widget(
       CreateWindowWidget(gfx::Rect(0, 0, 40, 40)));
-  aura::Window* widget_window = widget->GetNativeWindow();
+  WmWindow* widget_window = WmWindow::Get(widget->GetNativeWindow());
   {
     // Normal animations for tests have ZERO_DURATION, make sure we are actually
     // animating the movement.
     ui::ScopedAnimationDurationScaleMode animation_scale_mode(
         ui::ScopedAnimationDurationScaleMode::NON_ZERO_DURATION);
     ui::ScopedLayerAnimationSettings animation_settings(
-        widget_window->layer()->GetAnimator());
+        widget_window->GetLayer()->GetAnimator());
     animation_settings.SetTransitionDuration(
         base::TimeDelta::FromMilliseconds(1000));
     animation_settings.SetPreemptionStrategy(

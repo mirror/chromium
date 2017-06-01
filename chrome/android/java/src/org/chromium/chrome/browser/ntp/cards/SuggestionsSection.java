@@ -137,6 +137,7 @@ public class SuggestionsSection extends InnerNode {
             ((SnippetArticleViewHolder) holder).onBindViewHolder(suggestion, mCategoryInfo);
         }
 
+        @Override
         public SnippetArticle getSuggestionAt(int position) {
             return mSuggestions.get(position);
         }
@@ -177,13 +178,6 @@ public class SuggestionsSection extends InnerNode {
         @Override
         public Iterator<SnippetArticle> iterator() {
             return mSuggestions.iterator();
-        }
-
-        @Override
-        public void visitItems(NodeVisitor visitor) {
-            for (SnippetArticle suggestion : mSuggestions) {
-                visitor.visitSuggestion(suggestion);
-            }
         }
 
         @Override
@@ -329,7 +323,7 @@ public class SuggestionsSection extends InnerNode {
         }
     }
 
-    private boolean hasSuggestions() {
+    public boolean hasSuggestions() {
         return mSuggestionsList.getItemCount() != 0;
     }
 

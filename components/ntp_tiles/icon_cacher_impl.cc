@@ -7,7 +7,6 @@
 #include <utility>
 
 #include "base/memory/ptr_util.h"
-#include "base/metrics/histogram_macros.h"
 #include "components/favicon/core/favicon_service.h"
 #include "components/favicon/core/favicon_util.h"
 #include "components/favicon/core/large_icon_service.h"
@@ -136,7 +135,6 @@ void IconCacherImpl::OnPopularSitesFaviconDownloaded(
     const image_fetcher::RequestMetadata& metadata) {
   if (fetched_image.IsEmpty()) {
     FinishRequestAndNotifyIconAvailable(site.url, /*newly_available=*/false);
-    UMA_HISTOGRAM_BOOLEAN("NewTabPage.TileFaviconFetchSuccess.Popular", false);
     return;
   }
 
@@ -147,7 +145,6 @@ void IconCacherImpl::OnPopularSitesFaviconDownloaded(
   }
   SaveIconForSite(site, fetched_image);
   FinishRequestAndNotifyIconAvailable(site.url, /*newly_available=*/true);
-  UMA_HISTOGRAM_BOOLEAN("NewTabPage.TileFaviconFetchSuccess.Popular", true);
 }
 
 void IconCacherImpl::SaveAndNotifyDefaultIconForSite(
@@ -219,15 +216,8 @@ void IconCacherImpl::OnGetLargeIconOrFallbackStyleFinished(
   large_icon_service_
       ->GetLargeIconOrFallbackStyleFromGoogleServerSkippingLocalCache(
           page_url, kTileIconMinSizePx, kTileIconDesiredSizePx,
-          /*may_page_url_be_private=*/true,
-          base::Bind(&IconCacherImpl::OnMostLikelyFaviconDownloaded,
+          base::Bind(&IconCacherImpl::FinishRequestAndNotifyIconAvailable,
                      weak_ptr_factory_.GetWeakPtr(), page_url));
-}
-
-void IconCacherImpl::OnMostLikelyFaviconDownloaded(const GURL& request_url,
-                                                   bool success) {
-  UMA_HISTOGRAM_BOOLEAN("NewTabPage.TileFaviconFetchSuccess.Server", success);
-  FinishRequestAndNotifyIconAvailable(request_url, success);
 }
 
 bool IconCacherImpl::StartRequest(const GURL& request_url,

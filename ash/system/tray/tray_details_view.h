@@ -22,7 +22,6 @@ struct VectorIcon;
 namespace views {
 class BoxLayout;
 class CustomButton;
-class Label;
 class ProgressBar;
 class ScrollView;
 }  // namespace views
@@ -55,22 +54,6 @@ class ASH_EXPORT TrayDetailsView : public views::View,
   SystemTrayItem* owner() { return owner_; }
 
  protected:
-  // A view containing only a label, which is to be inserted as a non-targetable
-  // row within a system menu detailed view (e.g., the "Scanning for devices..."
-  // message that can appear at the top of the Bluetooth detailed view).
-  class InfoLabel : public View {
-   public:
-    explicit InfoLabel(int message_id);
-    ~InfoLabel() override;
-
-    void SetMessage(int message_id);
-
-   private:
-    views::Label* const label_;
-
-    DISALLOW_COPY_AND_ASSIGN(InfoLabel);
-  };
-
   // views::View:
   void Layout() override;
   int GetHeightForWidth(int width) const override;
@@ -101,12 +84,6 @@ class ASH_EXPORT TrayDetailsView : public views::View,
   // checkbox. |checked| determines whether the checkbox is checked or not.
   HoverHighlightView* AddScrollListCheckableItem(const base::string16& text,
                                                  bool checked);
-
-  // Adds connected sub label to the |view| with appropriate style.
-  void SetupConnectedScrollListItem(HoverHighlightView* view);
-
-  // Adds connecting sub label to the |view| with appropriate style.
-  void SetupConnectingScrollListItem(HoverHighlightView* view);
 
   // Adds a sticky sub header to |scroll_content_| containing |icon| and a text
   // represented by |text_id| resource id.

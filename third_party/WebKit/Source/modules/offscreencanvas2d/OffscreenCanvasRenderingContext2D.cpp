@@ -33,7 +33,7 @@ OffscreenCanvasRenderingContext2D::OffscreenCanvasRenderingContext2D(
       canvas->SetDisableReadingFromCanvasTrue();
     return;
   }
-  dirty_rect_for_commit_.setEmpty();
+
   WorkerSettings* worker_settings =
       ToWorkerGlobalScope(execution_context)->GetWorkerSettings();
   if (worker_settings && worker_settings->DisableReadingFromCanvas())
@@ -51,9 +51,7 @@ ScriptPromise OffscreenCanvasRenderingContext2D::commit(
   UseCounter::Feature feature = UseCounter::kOffscreenCanvasCommit2D;
   UseCounter::Count(ExecutionContext::From(script_state), feature);
   bool is_web_gl_software_rendering = false;
-  SkIRect damage_rect(dirty_rect_for_commit_);
-  dirty_rect_for_commit_.setEmpty();
-  return host()->Commit(TransferToStaticBitmapImage(), damage_rect,
+  return host()->Commit(TransferToStaticBitmapImage(),
                         is_web_gl_software_rendering, script_state,
                         exception_state);
 }
@@ -96,6 +94,11 @@ bool OffscreenCanvasRenderingContext2D::HasImageBuffer() const {
 void OffscreenCanvasRenderingContext2D::Reset() {
   host()->DiscardImageBuffer();
   BaseRenderingContext2D::Reset();
+}
+
+ColorBehavior OffscreenCanvasRenderingContext2D::DrawImageColorBehavior()
+    const {
+  return CanvasRenderingContext::ColorBehaviorForMediaDrawnToCanvas();
 }
 
 ImageBuffer* OffscreenCanvasRenderingContext2D::GetImageBuffer() const {
@@ -189,9 +192,7 @@ AffineTransform OffscreenCanvasRenderingContext2D::BaseTransform() const {
   return GetImageBuffer()->BaseTransform();
 }
 
-void OffscreenCanvasRenderingContext2D::DidDraw(const SkIRect& dirty_rect) {
-  dirty_rect_for_commit_.join(dirty_rect);
-}
+void OffscreenCanvasRenderingContext2D::DidDraw(const SkIRect& dirty_rect) {}
 
 bool OffscreenCanvasRenderingContext2D::StateHasFilter() {
   return GetState().HasFilterForOffscreenCanvas(host()->Size());

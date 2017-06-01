@@ -16,11 +16,11 @@
 #include "ash/wm/lock_state_observer.h"
 #include "base/observer_list.h"
 #include "base/optional.h"
-#include "ui/aura/client/window_types.h"
 #include "ui/base/cursor/cursor_data.h"
 #include "ui/base/ui_base_types.h"
 #include "ui/compositor/layer_type.h"
 #include "ui/wm/public/activation_change_observer.h"
+#include "ui/wm/public/window_types.h"
 
 namespace display {
 class Display;
@@ -48,10 +48,12 @@ class KeyEventWatcher;
 class KeyboardUI;
 class RootWindowController;
 class ScopedDisableInternalMouseAndKeyboard;
+class SessionStateDelegate;
 struct ShellInitParams;
 class WindowCycleEventFilter;
 class WindowResizer;
 class WmDisplayObserver;
+class WmWindow;
 class WorkspaceEventHandler;
 
 enum class Config;
@@ -110,7 +112,7 @@ class ASH_EXPORT ShellPort {
   bool IsForceMaximizeOnFirstRun();
 
   // Sets work area insets of the display containing |window|, pings observers.
-  virtual void SetDisplayWorkAreaInsets(aura::Window* window,
+  virtual void SetDisplayWorkAreaInsets(WmWindow* window,
                                         const gfx::Insets& insets) = 0;
 
   // Returns true if a system-modal dialog window is currently open.
@@ -145,7 +147,7 @@ class ASH_EXPORT ShellPort {
       base::Optional<ui::CursorData> cursor) = 0;
   virtual bool IsMouseEventsEnabled() = 0;
 
-  virtual std::vector<aura::Window*> GetAllRootWindows() = 0;
+  virtual std::vector<WmWindow*> GetAllRootWindows() = 0;
 
   virtual void RecordGestureAction(GestureActionType action) = 0;
   virtual void RecordUserMetricsAction(UserMetricsAction action) = 0;
@@ -169,7 +171,7 @@ class ASH_EXPORT ShellPort {
   CreateMaximizeModeEventHandler() = 0;
 
   virtual std::unique_ptr<WorkspaceEventHandler> CreateWorkspaceEventHandler(
-      aura::Window* workspace_window) = 0;
+      WmWindow* workspace_window) = 0;
 
   virtual std::unique_ptr<ScopedDisableInternalMouseAndKeyboard>
   CreateScopedDisableInternalMouseAndKeyboard() = 0;
@@ -181,6 +183,8 @@ class ASH_EXPORT ShellPort {
   virtual std::unique_ptr<KeyboardUI> CreateKeyboardUI() = 0;
 
   virtual std::unique_ptr<KeyEventWatcher> CreateKeyEventWatcher() = 0;
+
+  virtual SessionStateDelegate* GetSessionStateDelegate() = 0;
 
   virtual void AddDisplayObserver(WmDisplayObserver* observer) = 0;
   virtual void RemoveDisplayObserver(WmDisplayObserver* observer) = 0;

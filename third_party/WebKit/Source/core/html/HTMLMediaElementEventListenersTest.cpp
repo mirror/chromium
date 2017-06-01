@@ -4,14 +4,15 @@
 
 #include "core/html/HTMLMediaElement.h"
 
+#include "core/dom/DocumentUserGestureToken.h"
 #include "core/dom/Fullscreen.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/html/HTMLVideoElement.h"
 #include "core/html/media/MediaControls.h"
 #include "core/html/media/MediaCustomControlsFullscreenDetector.h"
 #include "core/loader/EmptyClients.h"
 #include "core/testing/DummyPageHolder.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/testing/EmptyWebMediaPlayer.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -152,7 +153,7 @@ TEST_F(HTMLMediaElementEventListenersTest,
   EXPECT_NE(Video(), nullptr);
   SimulateReadyState(HTMLMediaElement::kHaveMetadata);
   UserGestureIndicator gesture_indicator(
-      UserGestureToken::Create(&GetDocument()));
+      DocumentUserGestureToken::Create(&GetDocument()));
   Fullscreen::RequestFullscreen(*Video());
   Fullscreen::From(GetDocument()).DidEnterFullscreen();
 

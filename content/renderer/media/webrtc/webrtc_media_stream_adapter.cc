@@ -101,8 +101,6 @@ void WebRtcMediaStreamAdapter::TrackRemoved(
   }
 }
 
-// TODO(hbos): Replace this code with |WebRtcMediaStreamTrackAdapter|.
-// crbug.com/705901
 void WebRtcMediaStreamAdapter::AddAudioSinkToTrack(
     const blink::WebMediaStreamTrack& track) {
   MediaStreamAudioTrack* native_track = MediaStreamAudioTrack::From(track);
@@ -136,8 +134,6 @@ void WebRtcMediaStreamAdapter::AddAudioSinkToTrack(
   webrtc_media_stream_->AddTrack(audio_sink->webrtc_audio_track());
 }
 
-// TODO(hbos): Replace this code with |WebRtcMediaStreamTrackAdapter|.
-// crbug.com/705901
 void WebRtcMediaStreamAdapter::AddVideoSinkToTrack(
     const blink::WebMediaStreamTrack& track) {
   DCHECK_EQ(track.Source().GetType(), blink::WebMediaStreamSource::kTypeVideo);

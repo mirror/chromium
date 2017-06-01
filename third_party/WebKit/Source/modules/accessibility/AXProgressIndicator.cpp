@@ -20,7 +20,6 @@
 
 #include "modules/accessibility/AXProgressIndicator.h"
 
-#include "core/dom/AccessibleNode.h"
 #include "core/html/HTMLProgressElement.h"
 #include "core/layout/LayoutProgress.h"
 #include "modules/accessibility/AXObjectCacheImpl.h"
@@ -52,9 +51,8 @@ bool AXProgressIndicator::ComputeAccessibilityIsIgnored(
 }
 
 float AXProgressIndicator::ValueForRange() const {
-  float value_now;
-  if (HasAOMPropertyOrARIAAttribute(AOMFloatProperty::kValueNow, value_now))
-    return value_now;
+  if (HasAttribute(aria_valuenowAttr))
+    return GetAttribute(aria_valuenowAttr).ToFloat();
 
   if (GetProgressElement()->position() >= 0)
     return clampTo<float>(GetProgressElement()->value());
@@ -63,17 +61,15 @@ float AXProgressIndicator::ValueForRange() const {
 }
 
 float AXProgressIndicator::MaxValueForRange() const {
-  float value_max;
-  if (HasAOMPropertyOrARIAAttribute(AOMFloatProperty::kValueMax, value_max))
-    return value_max;
+  if (HasAttribute(aria_valuemaxAttr))
+    return GetAttribute(aria_valuemaxAttr).ToFloat();
 
   return clampTo<float>(GetProgressElement()->max());
 }
 
 float AXProgressIndicator::MinValueForRange() const {
-  float value_min;
-  if (HasAOMPropertyOrARIAAttribute(AOMFloatProperty::kValueMin, value_min))
-    return value_min;
+  if (HasAttribute(aria_valueminAttr))
+    return GetAttribute(aria_valueminAttr).ToFloat();
 
   return 0.0f;
 }

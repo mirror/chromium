@@ -4,12 +4,8 @@
 
 #include "ui/arc/notification/arc_notification_delegate.h"
 
-#include "ui/arc/notification/arc_notification_content_view.h"
+#include "ui/arc/notification/arc_custom_notification_view.h"
 #include "ui/arc/notification/arc_notification_item.h"
-#include "ui/arc/notification/arc_notification_view.h"
-#include "ui/message_center/notification.h"
-#include "ui/message_center/views/message_center_controller.h"
-#include "ui/message_center/views/message_view.h"
 
 namespace arc {
 
@@ -19,20 +15,15 @@ ArcNotificationDelegate::ArcNotificationDelegate(
   DCHECK(item_);
 }
 
-ArcNotificationDelegate::~ArcNotificationDelegate() = default;
+ArcNotificationDelegate::~ArcNotificationDelegate() {}
 
-std::unique_ptr<message_center::MessageView>
-ArcNotificationDelegate::CreateCustomMessageView(
-    message_center::MessageCenterController* controller,
-    const message_center::Notification& notification) {
+std::unique_ptr<message_center::CustomContent>
+ArcNotificationDelegate::CreateCustomContent() {
   DCHECK(item_);
-  DCHECK_EQ(item_->GetNotificationId(), notification.id());
-
-  auto view = base::MakeUnique<ArcNotificationContentView>(item_.get());
+  auto view = base::MakeUnique<ArcCustomNotificationView>(item_.get());
   auto content_view_delegate = view->CreateContentViewDelegate();
-  return base::MakeUnique<ArcNotificationView>(std::move(view),
-                                               std::move(content_view_delegate),
-                                               controller, notification);
+  return base::MakeUnique<message_center::CustomContent>(
+      std::move(view), std::move(content_view_delegate));
 }
 
 void ArcNotificationDelegate::Close(bool by_user) {

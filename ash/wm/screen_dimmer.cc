@@ -9,6 +9,7 @@
 #include "ash/window_user_data.h"
 #include "ash/wm/container_finder.h"
 #include "ash/wm/window_dimmer.h"
+#include "ash/wm_window.h"
 #include "base/memory/ptr_util.h"
 #include "ui/aura/window.h"
 
@@ -52,7 +53,7 @@ aura::Window::Windows ScreenDimmer::GetAllContainers() {
                    ash::kShellWindowId_LockScreenContainersContainer);
 }
 
-void ScreenDimmer::OnRootWindowAdded(aura::Window* root_window) {
+void ScreenDimmer::OnRootWindowAdded(WmWindow* root_window) {
   Update(is_dimming_);
 }
 

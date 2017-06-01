@@ -1,5 +1,4 @@
 include_rules = [
   "+components/cast_certificate",
-  "+components/cast_channel",
   "+third_party/zlib",
 ]

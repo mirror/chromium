@@ -559,7 +559,7 @@ class BookmarkBarView::ButtonSeparatorView : public views::View {
                          ThemeProperties::COLOR_TOOLBAR_VERTICAL_SEPARATOR));
   }
 
-  gfx::Size CalculatePreferredSize() const override {
+  gfx::Size GetPreferredSize() const override {
     // We get the full height of the bookmark bar, so that the height returned
     // here doesn't matter.
     return gfx::Size(kSeparatorWidth, 1);
@@ -828,7 +828,7 @@ int BookmarkBarView::GetPreferredHeight() const {
   return height;
 }
 
-gfx::Size BookmarkBarView::CalculatePreferredSize() const {
+gfx::Size BookmarkBarView::GetPreferredSize() const {
   gfx::Size prefsize;
   int preferred_height = GetPreferredHeight();
   if (IsDetached()) {
@@ -1079,8 +1079,11 @@ void BookmarkBarView::PaintChildren(const ui::PaintContext& context) {
 
     // Since the drop indicator is painted directly onto the canvas, we must
     // make sure it is painted in the right location if the locale is RTL.
-    gfx::Rect indicator_bounds = GetMirroredRect(
-        gfx::Rect(x - kDropIndicatorWidth / 2, y, kDropIndicatorWidth, h));
+    gfx::Rect indicator_bounds(x - kDropIndicatorWidth / 2,
+                               y,
+                               kDropIndicatorWidth,
+                               h);
+    indicator_bounds.set_x(GetMirroredXForRect(indicator_bounds));
 
     ui::PaintRecorder recorder(context, size());
     // TODO(sky/glen): make me pretty!

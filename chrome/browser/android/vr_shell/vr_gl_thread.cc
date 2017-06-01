@@ -122,29 +122,10 @@ void VrGLThread::ExitCct() {
       FROM_HERE, base::Bind(&VrShell::ExitCct, weak_vr_shell_));
 }
 
-void VrGLThread::ToggleCardboardGamepad(bool enabled) {
-  main_thread_task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&VrShell::ToggleCardboardGamepad, weak_vr_shell_, enabled));
-}
-
-void VrGLThread::OnUnsupportedMode(UiUnsupportedMode mode) {
-  main_thread_task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&VrShell::ExitVrDueToUnsupportedMode, weak_vr_shell_, mode));
-}
-
 void VrGLThread::SetFullscreen(bool enabled) {
   WaitUntilThreadStarted();
   task_runner()->PostTask(FROM_HERE, base::Bind(&UiSceneManager::SetFullscreen,
                                                 weak_scene_manager_, enabled));
-}
-
-void VrGLThread::SetIncognito(bool incognito) {
-  WaitUntilThreadStarted();
-  task_runner()->PostTask(
-      FROM_HERE, base::Bind(&UiSceneManager::SetIncognito, weak_scene_manager_,
-                            incognito));
 }
 
 void VrGLThread::SetHistoryButtonsEnabled(bool can_go_back,
@@ -152,7 +133,7 @@ void VrGLThread::SetHistoryButtonsEnabled(bool can_go_back,
   WaitUntilThreadStarted();
   task_runner()->PostTask(
       FROM_HERE, base::Bind(&UiSceneManager::SetHistoryButtonsEnabled,
-                            weak_scene_manager_, can_go_back, can_go_forward));
+                            weak_scene_manager_, can_go_forward, can_go_back));
 }
 
 void VrGLThread::SetLoadProgress(float progress) {
@@ -168,7 +149,7 @@ void VrGLThread::SetLoading(bool loading) {
                                                 weak_scene_manager_, loading));
 }
 
-void VrGLThread::SetSecurityLevel(security_state::SecurityLevel level) {
+void VrGLThread::SetSecurityLevel(int level) {
   WaitUntilThreadStarted();
   task_runner()->PostTask(FROM_HERE,
                           base::Bind(&UiSceneManager::SetSecurityLevel,

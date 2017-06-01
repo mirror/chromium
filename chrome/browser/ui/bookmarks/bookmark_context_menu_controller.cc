@@ -273,6 +273,7 @@ void BookmarkContextMenuController::ExecuteCommand(int id, int event_flags) {
     }
 
     case IDC_BOOKMARK_MANAGER: {
+      base::RecordAction(UserMetricsAction("ShowBookmarkManager"));
       if (selection_.size() != 1)
         chrome::ShowBookmarkManager(browser_);
       else if (selection_[0]->is_folder())

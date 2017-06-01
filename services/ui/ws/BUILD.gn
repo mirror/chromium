@@ -33,7 +33,6 @@ static_library("lib") {
     "display.h",
     "display_binding.cc",
     "display_binding.h",
-    "display_creation_config.h",
     "display_manager.cc",
     "display_manager.h",
     "drag_controller.cc",
@@ -46,8 +45,6 @@ static_library("lib") {
     "event_dispatcher_delegate.h",
     "event_matcher.cc",
     "event_matcher.h",
-    "event_targeter.cc",
-    "event_targeter.h",
     "focus_controller.cc",
     "focus_controller.h",
     "focus_controller_delegate.h",
@@ -224,9 +221,14 @@ static_library("test_support") {
   ]
 }
 
-source_set("tests") {
+group("tests") {
   testonly = true
+  deps = [
+    ":ui_service_unittests",
+  ]
+}
 
+service_test("ui_service_unittests") {
   sources = [
     "cursor_location_manager_unittest.cc",
     "cursor_state_unittest.cc",
@@ -265,6 +267,8 @@ source_set("tests") {
     sources += [ "platform_display_default_unittest.cc" ]
   }
 
+  catalog = ":ui_service_unittests_catalog"
+
   deps = [
     ":lib",
     ":test_support",
@@ -296,12 +300,13 @@ source_set("tests") {
   ]
 }
 
-service_manifest("unittests_manifest") {
-  name = "ui_service_unittests"
-  source = "test_manifest.json"
+service_manifest("ui_service_unittests_app_manifest") {
+  name = "ui_service_unittests_app"
+  source = "ui_service_unittests_app_manifest.json"
 }
 
-catalog("tests_catalog") {
-  testonly = true
-  embedded_services = [ ":unittests_manifest" ]
+catalog("ui_service_unittests_catalog") {
+  embedded_services = [ ":ui_service_unittests_app_manifest" ]
+
+  standalone_services = [ "//services/ui:manifest" ]
 }

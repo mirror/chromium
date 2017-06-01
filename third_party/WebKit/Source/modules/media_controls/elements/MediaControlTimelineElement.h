@@ -27,8 +27,6 @@ class MediaControlTimelineElement final : public MediaControlInputElement {
 
   void OnPlaying();
 
-  void OnMediaKeyboardEvent(Event* event) { DefaultEventHandler(event); }
-
  private:
   void DefaultEventHandler(Event*) override;
   bool KeepEventInNode(Event*) override;

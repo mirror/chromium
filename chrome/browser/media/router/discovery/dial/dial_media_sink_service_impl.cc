@@ -31,11 +31,9 @@ void DialMediaSinkServiceImpl::Start() {
   if (dial_registry_)
     return;
 
-  dial_registry_ =
-      test_dial_registry_ ? test_dial_registry_ : DialRegistry::GetInstance();
+  dial_registry_ = DialRegistry::GetInstance();
   dial_registry_->RegisterObserver(this);
   dial_registry_->OnListenerAdded();
-  MediaSinkServiceBase::StartTimer();
 }
 
 void DialMediaSinkServiceImpl::Stop() {
@@ -46,7 +44,6 @@ void DialMediaSinkServiceImpl::Stop() {
   dial_registry_->OnListenerRemoved();
   dial_registry_->UnregisterObserver(this);
   dial_registry_ = nullptr;
-  MediaSinkServiceBase::StopTimer();
 }
 
 DeviceDescriptionService* DialMediaSinkServiceImpl::GetDescriptionService() {
@@ -63,8 +60,12 @@ DeviceDescriptionService* DialMediaSinkServiceImpl::GetDescriptionService() {
 
 void DialMediaSinkServiceImpl::SetDialRegistryForTest(
     DialRegistry* dial_registry) {
-  DCHECK(!test_dial_registry_);
-  test_dial_registry_ = dial_registry;
+  DCHECK(!dial_registry_);
+  dial_registry_ = dial_registry;
+
+  DCHECK(dial_registry);
+  dial_registry_->RegisterObserver(this);
+  dial_registry_->OnListenerAdded();
 }
 
 void DialMediaSinkServiceImpl::SetDescriptionServiceForTest(
@@ -78,6 +79,11 @@ void DialMediaSinkServiceImpl::OnDialDeviceEvent(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DVLOG(2) << "DialMediaSinkServiceImpl::OnDialDeviceEvent found "
            << devices.size() << " devices";
+
+  // Timer starts in |OnDialDeviceEvent()|, and expires 3 seconds later. If
+  // |OnDeviceDescriptionAvailable()| is called after |finish_timer_| expires,
+  // |finish_timer_| is restarted.
+  StartTimer();
 
   current_sinks_.clear();
   current_devices_ = devices;
@@ -119,7 +125,8 @@ void DialMediaSinkServiceImpl::OnDeviceDescriptionAvailable(
 
   // Start fetch timer again if device description comes back after
   // |finish_timer_| fires.
-  MediaSinkServiceBase::RestartTimer();
+  if (!finish_timer_->IsRunning())
+    StartTimer();
 }
 
 void DialMediaSinkServiceImpl::OnDeviceDescriptionError(

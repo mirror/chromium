@@ -7,7 +7,6 @@
 #include <stddef.h>
 
 #include <limits>
-#include <vector>
 
 #include "ash/accelerators/magnifier_key_scroller.h"
 #include "ash/accelerators/spoken_feedback_toggler.h"
@@ -19,6 +18,7 @@
 #include "ash/wm/mru_window_tracker.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
+#include "ash/wm_window.h"
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -48,6 +48,7 @@
 #include "chrome/browser/ui/ash/launcher/launcher_context_menu.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
 #include "chrome/browser/ui/ash/palette_delegate_chromeos.h"
+#include "chrome/browser/ui/ash/session_state_delegate_chromeos.h"
 #include "chrome/browser/ui/ash/session_util.h"
 #include "chrome/browser/ui/ash/system_tray_delegate_chromeos.h"
 #include "chrome/browser/ui/aura/accessibility/automation_manager_aura.h"
@@ -59,7 +60,6 @@
 #include "chrome/browser/ui/browser_tabstrip.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/scoped_tabbed_browser_displayer.h"
-#include "chrome/browser/ui/tab_contents/tab_contents_iterator.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
@@ -68,7 +68,6 @@
 #include "components/prefs/pref_service.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
-#include "content/public/browser/media_session.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/common/service_manager_connection.h"
 #include "ui/aura/window.h"
@@ -87,8 +86,8 @@ void InitAfterFirstSessionStart() {
   // Restore focus after the user session is started.  It's needed because some
   // windows can be opened in background while login UI is still active because
   // we currently restore browser windows before login UI is deleted.
-  aura::Window::Windows mru_list =
-      ash::Shell::Get()->mru_window_tracker()->BuildMruWindowList();
+  aura::Window::Windows mru_list = ash::WmWindow::ToAuraWindows(
+      ash::Shell::Get()->mru_window_tracker()->BuildMruWindowList());
   if (!mru_list.empty())
     mru_list.front()->Focus();
 
@@ -433,8 +432,9 @@ bool ChromeShellDelegate::IsRunningInForcedAppMode() const {
   return chrome::IsRunningInForcedAppMode();
 }
 
-bool ChromeShellDelegate::CanShowWindowForUser(aura::Window* window) const {
-  return ::CanShowWindowForUser(window, base::Bind(&GetActiveBrowserContext));
+bool ChromeShellDelegate::CanShowWindowForUser(ash::WmWindow* window) const {
+  return ::CanShowWindowForUser(ash::WmWindow::GetAuraWindow(window),
+                                base::Bind(&GetActiveBrowserContext));
 }
 
 bool ChromeShellDelegate::IsForceMaximizeOnFirstRun() const {
@@ -450,8 +450,8 @@ bool ChromeShellDelegate::IsForceMaximizeOnFirstRun() const {
 }
 
 void ChromeShellDelegate::PreInit() {
-  // TODO: port to mash. http://crbug.com/678949.
-  if (chromeos::GetAshConfig() == ash::Config::MASH)
+  // TODO: port to mus. http://crbug.com/678949.
+  if (chromeos::GetAshConfig() != ash::Config::CLASSIC)
     return;
 
   bool first_run_after_boot = base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -510,7 +510,7 @@ void ChromeShellDelegate::ShelfShutdown() {
 }
 
 ui::MenuModel* ChromeShellDelegate::CreateContextMenu(
-    ash::Shelf* shelf,
+    ash::WmShelf* wm_shelf,
     const ash::ShelfItem* item) {
   // Don't show context menu for exclusive app runtime mode.
   if (chrome::IsRunningInAppMode())
@@ -523,7 +523,8 @@ ui::MenuModel* ChromeShellDelegate::CreateContextMenu(
   if (!launcher_controller_)
     return nullptr;
 
-  return LauncherContextMenu::Create(launcher_controller_.get(), item, shelf);
+  return LauncherContextMenu::Create(launcher_controller_.get(), item,
+                                     wm_shelf);
 }
 
 ash::GPUSupport* ChromeShellDelegate::CreateGPUSupport() {
@@ -589,15 +590,12 @@ void ChromeShellDelegate::ToggleTouchpad() {
   chromeos::system::InputDeviceSettings::Get()->ToggleTouchpad();
 }
 
-void ChromeShellDelegate::SuspendMediaSessions() {
-  for (TabContentsIterator it; !it.done(); it.Next()) {
-    content::MediaSession::Get(*it)->Suspend(
-        content::MediaSession::SuspendType::SYSTEM);
-  }
-}
-
 keyboard::KeyboardUI* ChromeShellDelegate::CreateKeyboardUI() {
   return new ChromeKeyboardUI(ProfileManager::GetActiveUserProfile());
+}
+
+ash::SessionStateDelegate* ChromeShellDelegate::CreateSessionStateDelegate() {
+  return new SessionStateDelegateChromeos;
 }
 
 ash::AccessibilityDelegate* ChromeShellDelegate::CreateAccessibilityDelegate() {

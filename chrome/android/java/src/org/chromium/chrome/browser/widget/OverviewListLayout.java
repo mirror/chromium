@@ -55,10 +55,11 @@ public class OverviewListLayout extends Layout implements AccessibilityTabModelA
             adjustForFullscreen();
         }
 
-        if (container == null || mTabModelWrapper.getParent() != null) return;
+        if (container == null) return;
 
-        ((ViewGroup) container.findViewById(R.id.overview_list_layout_holder))
-                .addView(mTabModelWrapper);
+        if (mTabModelWrapper.getParent() == null) {
+            container.addView(mTabModelWrapper);
+        }
     }
 
     @Override

@@ -4,6 +4,7 @@
 
 #include "core/editing/markers/DocumentMarkerListEditor.h"
 
+#include "core/editing/markers/RenderedDocumentMarker.h"
 #include "core/editing/markers/SpellCheckMarkerListImpl.h"
 
 namespace blink {
@@ -66,7 +67,7 @@ bool DocumentMarkerListEditor::RemoveMarkers(MarkerList* list,
         return start_offset < marker->EndOffset();
       });
   for (MarkerList::iterator i = start_pos; i != list->end();) {
-    const DocumentMarker& marker = *i->Get();
+    DocumentMarker marker(*i->Get());
 
     // markers are returned in order, so stop if we are now past the specified
     // range
@@ -80,44 +81,10 @@ bool DocumentMarkerListEditor::RemoveMarkers(MarkerList* list,
   return doc_dirty;
 }
 
-// TODO(rlanday): make this not take O(n^2) time when all the markers are
-// removed
-bool DocumentMarkerListEditor::ShiftMarkersContentDependent(
-    MarkerList* list,
-    unsigned offset,
-    unsigned old_length,
-    unsigned new_length) {
-  bool did_shift_marker = false;
-  for (MarkerList::iterator it = list->begin(); it != list->end(); ++it) {
-    DocumentMarker& marker = **it;
-
-    // marked text is neither changed nor shifted
-    if (marker.EndOffset() <= offset)
-      continue;
-
-    // marked text is (potentially) changed by edit, remove marker
-    if (marker.StartOffset() < offset + old_length) {
-      list->erase(it - list->begin());
-      --it;
-      did_shift_marker = true;
-      continue;
-    }
-
-    // marked text is shifted but not changed
-    marker.ShiftOffsets(new_length - old_length);
-    did_shift_marker = true;
-  }
-
-  return did_shift_marker;
-}
-
-// TODO(rlanday): make this not take O(n^2) time when all the markers are
-// removed
-bool DocumentMarkerListEditor::ShiftMarkersContentIndependent(
-    MarkerList* list,
-    unsigned offset,
-    unsigned old_length,
-    unsigned new_length) {
+bool DocumentMarkerListEditor::ShiftMarkers(MarkerList* list,
+                                            unsigned offset,
+                                            unsigned old_length,
+                                            unsigned new_length) {
   bool did_shift_marker = false;
   for (MarkerList::iterator it = list->begin(); it != list->end(); ++it) {
     DocumentMarker& marker = **it;

@@ -12,12 +12,12 @@ function doit()
 
 function test()
 {
-    InspectorTest.RuntimeAgent.evaluate("window", "console", false).then(evalCallback);
+    InspectorTest.RuntimeAgent.evaluate("window", "console", false, evalCallback);
 
-    function evalCallback(result)
+    function evalCallback(error, result)
     {
-        if (!result) {
-            testController.notifyDone("Exception");
+        if (error) {
+            testController.notifyDone("Exception:" + error);
             return;
         }
         if (result.type === "error")

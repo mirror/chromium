@@ -17,6 +17,8 @@
 #include "ui/gfx/image/image.h"
 #include "ui/gfx/path.h"
 #include "ui/resources/grit/ui_resources.h"
+#include "ui/strings/grit/ui_strings.h"
+#include "ui/views/resources/grit/views_resources.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
 #include "ui/wm/core/coordinate_conversion.h"
@@ -317,7 +319,7 @@ class TouchSelectionControllerImpl::EditingHandleView
     }
   }
 
-  gfx::Size CalculatePreferredSize() const override {
+  gfx::Size GetPreferredSize() const override {
     // This function will be called during widget initialization, i.e. before
     // SetBoundInScreen has been called. No-op in that case.
     if (selection_bound_.type() == gfx::SelectionBound::EMPTY)

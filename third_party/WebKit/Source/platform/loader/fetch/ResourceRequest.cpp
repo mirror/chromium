@@ -57,7 +57,6 @@ ResourceRequest::ResourceRequest(const KURL& url)
       has_user_gesture_(false),
       download_to_file_(false),
       use_stream_on_response_(false),
-      keepalive_(false),
       should_reset_app_cache_(false),
       service_worker_mode_(WebURLRequest::ServiceWorkerMode::kAll),
       priority_(kResourceLoadPriorityLowest),
@@ -102,7 +101,6 @@ ResourceRequest::ResourceRequest(CrossThreadResourceRequestData* data)
   SetHasUserGesture(data->has_user_gesture_);
   SetDownloadToFile(data->download_to_file_);
   SetUseStreamOnResponse(data->use_stream_on_response_);
-  SetKeepalive(data->keepalive_);
   SetServiceWorkerMode(data->service_worker_mode_);
   SetShouldResetAppCache(data->should_reset_app_cache_);
   SetRequestorID(data->requestor_id_);
@@ -152,7 +150,6 @@ std::unique_ptr<CrossThreadResourceRequestData> ResourceRequest::CopyData()
   data->has_user_gesture_ = has_user_gesture_;
   data->download_to_file_ = download_to_file_;
   data->use_stream_on_response_ = use_stream_on_response_;
-  data->keepalive_ = keepalive_;
   data->service_worker_mode_ = service_worker_mode_;
   data->should_reset_app_cache_ = should_reset_app_cache_;
   data->requestor_id_ = requestor_id_;

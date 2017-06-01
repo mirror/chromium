@@ -783,6 +783,7 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
 
   _updateUserAgentOverride() {
     var userAgent = this._currentUserAgent();
+    Host.ResourceLoader.targetUserAgent = userAgent;
     for (var agent of this._agents)
       agent.setUserAgentOverride(userAgent);
   }
@@ -883,11 +884,19 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
 
   /**
    * @param {string} origin
-   * @return {!Promise<!Array<string>>}
+   * @param {function(!Array<string>)} callback
    */
-  getCertificate(origin) {
+  getCertificate(origin, callback) {
     var target = SDK.targetManager.mainTarget();
-    return target.networkAgent().getCertificate(origin).then(certificate => certificate || []);
+    target.networkAgent().getCertificate(origin, mycallback);
+
+    /**
+     * @param {?Protocol.Error} error
+     * @param {!Array<string>} certificate
+     */
+    function mycallback(error, certificate) {
+      callback(error ? [] : certificate);
+    }
   }
 
   /**

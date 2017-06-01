@@ -1370,24 +1370,13 @@ TEST_F(UpdateClientTest, OneCrxInstallError) {
                  bool(const std::string& file, base::FilePath* installed_file));
     MOCK_METHOD0(Uninstall, bool());
 
-    void OnInstall(const base::DictionaryValue& manifest,
-                   const base::FilePath& unpack_path) {
-      unpack_path_ = unpack_path;
-      EXPECT_TRUE(base::DirectoryExists(unpack_path_));
+    static void OnInstall(const base::DictionaryValue& manifest,
+                          const base::FilePath& unpack_path) {
+      base::DeleteFile(unpack_path, true);
     }
 
    protected:
-    ~MockInstaller() override {
-      // The unpack path is deleted unconditionally by the component state code,
-      // which is driving this installer. Therefore, the unpack path must not
-      // exist when this object is destroyed.
-      if (!unpack_path_.empty())
-        EXPECT_FALSE(base::DirectoryExists(unpack_path_));
-    }
-
-   private:
-    // Contains the |unpack_path| argument of the Install call.
-    base::FilePath unpack_path_;
+    ~MockInstaller() override {}
   };
 
   class DataCallbackFake {
@@ -1400,7 +1389,7 @@ TEST_F(UpdateClientTest, OneCrxInstallError) {
       EXPECT_CALL(*installer, OnUpdateError(_)).Times(0);
       EXPECT_CALL(*installer, Install(_, _))
           .WillOnce(
-              DoAll(Invoke(installer.get(), &MockInstaller::OnInstall),
+              DoAll(Invoke(MockInstaller::OnInstall),
                     Return(CrxInstaller::Result(InstallError::GENERIC_ERROR))));
       EXPECT_CALL(*installer, GetInstalledFile(_, _)).Times(0);
       EXPECT_CALL(*installer, Uninstall()).Times(0);

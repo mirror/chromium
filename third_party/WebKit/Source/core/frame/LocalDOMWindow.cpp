@@ -37,11 +37,11 @@
 #include "core/css/StyleMedia.h"
 #include "core/css/resolver/StyleResolver.h"
 #include "core/dom/DOMImplementation.h"
+#include "core/dom/DocumentUserGestureToken.h"
 #include "core/dom/FrameRequestCallback.h"
 #include "core/dom/SandboxFlags.h"
 #include "core/dom/SinkDocument.h"
 #include "core/dom/TaskRunnerHelper.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/dom/custom/CustomElementRegistry.h"
 #include "core/editing/Editor.h"
 #include "core/events/DOMWindowEventQueue.h"
@@ -55,10 +55,10 @@
 #include "core/frame/EventHandlerRegistry.h"
 #include "core/frame/External.h"
 #include "core/frame/FrameConsole.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/History.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Navigator.h"
 #include "core/frame/Screen.h"
 #include "core/frame/ScrollToOptions.h"
@@ -270,9 +270,21 @@ unsigned LocalDOMWindow::PendingUnloadEventListeners() const {
       const_cast<LocalDOMWindow*>(this));
 }
 
+bool LocalDOMWindow::AllowPopUp(LocalFrame& first_frame) {
+  if (UserGestureIndicator::ProcessingUserGesture())
+    return true;
+
+  Settings* settings = first_frame.GetSettings();
+  return settings && settings->GetJavaScriptCanOpenWindowsAutomatically();
+}
+
+bool LocalDOMWindow::AllowPopUp() {
+  return GetFrame() && AllowPopUp(*GetFrame());
+}
+
 LocalDOMWindow::LocalDOMWindow(LocalFrame& frame)
     : DOMWindow(frame),
-      view_(DOMVisualViewport::Create(this)),
+      visual_viewport_(DOMVisualViewport::Create(this)),
       unused_preloads_timer_(
           TaskRunnerHelper::Get(TaskType::kUnspecedTimer, &frame),
           this,
@@ -648,8 +660,8 @@ void LocalDOMWindow::PostMessageTimerFired(PostMessageTimer* timer) {
 
   MessageEvent* event = timer->Event();
 
-  UserGestureIndicator gesture_indicator(
-      UserGestureToken::Adopt(document(), timer->GetUserGestureToken()));
+  UserGestureIndicator gesture_indicator(DocumentUserGestureToken::Adopt(
+      document(), timer->GetUserGestureToken()));
 
   event->EntangleMessagePorts(document());
 
@@ -968,7 +980,7 @@ FloatSize LocalDOMWindow::GetViewportSize(
   if (!GetFrame())
     return FloatSize();
 
-  LocalFrameView* view = GetFrame()->View();
+  FrameView* view = GetFrame()->View();
   if (!view)
     return FloatSize();
 
@@ -1057,9 +1069,9 @@ double LocalDOMWindow::scrollX() const {
     return 0;
 
   if (!GetFrame()->GetPage()->GetSettings().GetInertVisualViewport())
-    return view_->pageLeft();
+    return visual_viewport_->pageX();
 
-  LocalFrameView* view = GetFrame()->View();
+  FrameView* view = GetFrame()->View();
   if (!view)
     return 0;
 
@@ -1075,9 +1087,9 @@ double LocalDOMWindow::scrollY() const {
     return 0;
 
   if (!GetFrame()->GetPage()->GetSettings().GetInertVisualViewport())
-    return view_->pageTop();
+    return visual_viewport_->pageY();
 
-  LocalFrameView* view = GetFrame()->View();
+  FrameView* view = GetFrame()->View();
   if (!view)
     return 0;
 
@@ -1088,11 +1100,11 @@ double LocalDOMWindow::scrollY() const {
   return AdjustScrollForAbsoluteZoom(viewport_y, GetFrame()->PageZoomFactor());
 }
 
-DOMVisualViewport* LocalDOMWindow::view() {
+DOMVisualViewport* LocalDOMWindow::visualViewport() {
   if (!GetFrame())
     return nullptr;
 
-  return view_;
+  return visual_viewport_;
 }
 
 const AtomicString& LocalDOMWindow::name() const {
@@ -1123,10 +1135,28 @@ void LocalDOMWindow::setName(const AtomicString& name) {
 
 void LocalDOMWindow::setStatus(const String& string) {
   status_ = string;
+
+  if (!GetFrame())
+    return;
+
+  Page* page = GetFrame()->GetPage();
+  if (!page)
+    return;
+
+  page->GetChromeClient().SetStatusbarText(status_);
 }
 
 void LocalDOMWindow::setDefaultStatus(const String& string) {
   default_status_ = string;
+
+  if (!GetFrame())
+    return;
+
+  Page* page = GetFrame()->GetPage();
+  if (!page)
+    return;
+
+  page->GetChromeClient().SetStatusbarText(default_status_);
 }
 
 String LocalDOMWindow::origin() const {
@@ -1188,7 +1218,7 @@ void LocalDOMWindow::scrollBy(double x,
 
   document()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  LocalFrameView* view = GetFrame()->View();
+  FrameView* view = GetFrame()->View();
   if (!view)
     return;
 
@@ -1228,7 +1258,7 @@ void LocalDOMWindow::scrollTo(double x, double y) const {
   if (!IsCurrentlyDisplayedInFrame())
     return;
 
-  LocalFrameView* view = GetFrame()->View();
+  FrameView* view = GetFrame()->View();
   if (!view)
     return;
 
@@ -1257,7 +1287,7 @@ void LocalDOMWindow::scrollTo(const ScrollToOptions& scroll_to_options) const {
   if (!IsCurrentlyDisplayedInFrame())
     return;
 
-  LocalFrameView* view = GetFrame()->View();
+  FrameView* view = GetFrame()->View();
   if (!view)
     return;
 
@@ -1606,6 +1636,14 @@ DOMWindow* LocalDOMWindow::open(const String& url_string,
   if (!window_features_string.IsEmpty())
     UseCounter::Count(*active_document, UseCounter::kDOMWindowOpenFeatures);
 
+  if (!entered_window->AllowPopUp()) {
+    // Because FrameTree::find() returns true for empty strings, we must check
+    // for empty frame names.  Otherwise, illegitimate window.open() calls with
+    // no name will pass right through the popup blocker.
+    if (frame_name.IsEmpty() || !GetFrame()->Tree().Find(frame_name))
+      return nullptr;
+  }
+
   // Get the target frame for the special cases of _top and _parent.
   // In those cases, we schedule a location change right now and return early.
   Frame* target_frame = nullptr;
@@ -1662,7 +1700,7 @@ DEFINE_TRACE(LocalDOMWindow) {
   visitor->Trace(application_cache_);
   visitor->Trace(event_queue_);
   visitor->Trace(post_message_timers_);
-  visitor->Trace(view_);
+  visitor->Trace(visual_viewport_);
   visitor->Trace(event_listener_observers_);
   DOMWindow::Trace(visitor);
   Supplementable<LocalDOMWindow>::Trace(visitor);

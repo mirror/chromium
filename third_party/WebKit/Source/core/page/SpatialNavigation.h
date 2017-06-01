@@ -21,7 +21,6 @@
 #ifndef SpatialNavigation_h
 #define SpatialNavigation_h
 
-#include "core/CoreExport.h"
 #include "core/dom/Node.h"
 #include "platform/geometry/LayoutRect.h"
 #include "public/platform/WebFocusType.h"
@@ -42,7 +41,7 @@ inline int FudgeFactor() {
   return 2;
 }
 
-CORE_EXPORT bool IsSpatialNavigationEnabled(const LocalFrame*);
+bool IsSpatialNavigationEnabled(const LocalFrame*);
 bool SpatialNavigationIgnoresEventHandlers(const LocalFrame*);
 
 // Spatially speaking, two given elements in a web page can be:

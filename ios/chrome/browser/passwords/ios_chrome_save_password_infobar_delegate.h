@@ -30,14 +30,14 @@ class IOSChromeSavePasswordInfoBarDelegate
   static void Create(
       bool is_smart_lock_branding_enabled,
       infobars::InfoBarManager* infobar_manager,
-      scoped_refptr<password_manager::PasswordFormManager> form_to_save);
+      std::unique_ptr<password_manager::PasswordFormManager> form_to_save);
 
   ~IOSChromeSavePasswordInfoBarDelegate() override;
 
  private:
   IOSChromeSavePasswordInfoBarDelegate(
       bool is_smart_lock_branding_enabled,
-      scoped_refptr<password_manager::PasswordFormManager> form_to_save);
+      std::unique_ptr<password_manager::PasswordFormManager> form_to_save);
 
   // ConfirmInfoBarDelegate implementation.
   infobars::InfoBarDelegate::InfoBarIdentifier GetIdentifier() const override;

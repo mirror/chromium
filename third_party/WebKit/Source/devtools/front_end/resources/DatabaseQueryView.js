@@ -138,7 +138,6 @@ Resources.DatabaseQueryView = class extends UI.VBox {
     var trimmedQuery = query.trim();
 
     if (dataGrid) {
-      dataGrid.setStriped(true);
       dataGrid.renderInline();
       this._appendViewQueryResult(trimmedQuery, dataGrid.asWidget());
       dataGrid.autoSizeColumns(5);

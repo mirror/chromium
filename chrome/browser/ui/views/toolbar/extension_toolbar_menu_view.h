@@ -34,7 +34,7 @@ class ExtensionToolbarMenuView : public views::ScrollView,
   ~ExtensionToolbarMenuView() override;
 
   // views::View:
-  gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetPreferredSize() const override;
   int GetHeightForWidth(int width) const override;
   void Layout() override;
 

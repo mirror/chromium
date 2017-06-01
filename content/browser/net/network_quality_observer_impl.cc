@@ -58,8 +58,7 @@ namespace content {
 class NetworkQualityObserverImpl::UiThreadObserver
     : public content::NotificationObserver {
  public:
-  UiThreadObserver()
-      : last_notified_type_(net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN) {}
+  UiThreadObserver() {}
 
   ~UiThreadObserver() override {
     registrar_.Remove(this, NOTIFICATION_RENDERER_PROCESS_CREATED,
@@ -72,24 +71,6 @@ class NetworkQualityObserverImpl::UiThreadObserver
                    NotificationService::AllSources());
   }
 
-  void OnEffectiveConnectionTypeChanged(net::EffectiveConnectionType type) {
-    DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
-    if (last_notified_type_ == type)
-      return;
-
-    last_notified_type_ = type;
-
-    // Notify all the existing renderers of the change in the network quality.
-    for (RenderProcessHost::iterator it(RenderProcessHost::AllHostsIterator());
-         !it.IsAtEnd(); it.Advance()) {
-      it.GetCurrentValue()->GetRendererInterface()->OnNetworkQualityChanged(
-          last_notified_type_, last_notified_network_quality_.http_rtt(),
-          last_notified_network_quality_.transport_rtt(),
-          last_notified_network_quality_.downstream_throughput_kbps());
-    }
-  }
-
   void OnRTTOrThroughputEstimatesComputed(
       const net::nqe::internal::NetworkQuality& network_quality) {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -100,7 +81,7 @@ class NetworkQualityObserverImpl::UiThreadObserver
     for (RenderProcessHost::iterator it(RenderProcessHost::AllHostsIterator());
          !it.IsAtEnd(); it.Advance()) {
       it.GetCurrentValue()->GetRendererInterface()->OnNetworkQualityChanged(
-          last_notified_type_, last_notified_network_quality_.http_rtt(),
+          last_notified_network_quality_.http_rtt(),
           last_notified_network_quality_.transport_rtt(),
           last_notified_network_quality_.downstream_throughput_kbps());
     }
@@ -118,7 +99,7 @@ class NetworkQualityObserverImpl::UiThreadObserver
 
     // Notify the newly created renderer of the current network quality.
     rph->GetRendererInterface()->OnNetworkQualityChanged(
-        last_notified_type_, last_notified_network_quality_.http_rtt(),
+        last_notified_network_quality_.http_rtt(),
         last_notified_network_quality_.transport_rtt(),
         last_notified_network_quality_.downstream_throughput_kbps());
   }
@@ -126,7 +107,6 @@ class NetworkQualityObserverImpl::UiThreadObserver
   content::NotificationRegistrar registrar_;
 
   // The network quality that was last sent to the renderers.
-  net::EffectiveConnectionType last_notified_type_;
   net::nqe::internal::NetworkQuality last_notified_network_quality_;
 
   DISALLOW_COPY_AND_ASSIGN(UiThreadObserver);
@@ -134,10 +114,8 @@ class NetworkQualityObserverImpl::UiThreadObserver
 
 NetworkQualityObserverImpl::NetworkQualityObserverImpl(
     net::NetworkQualityEstimator* network_quality_estimator)
-    : network_quality_estimator_(network_quality_estimator),
-      last_notified_type_(net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN) {
+    : network_quality_estimator_(network_quality_estimator) {
   network_quality_estimator_->AddRTTAndThroughputEstimatesObserver(this);
-  network_quality_estimator_->AddEffectiveConnectionTypeObserver(this);
 
   ui_thread_observer_ = base::MakeUnique<UiThreadObserver>();
   BrowserThread::PostTask(
@@ -149,7 +127,6 @@ NetworkQualityObserverImpl::NetworkQualityObserverImpl(
 NetworkQualityObserverImpl::~NetworkQualityObserverImpl() {
   DCHECK(thread_checker_.CalledOnValidThread());
   network_quality_estimator_->RemoveRTTAndThroughputEstimatesObserver(this);
-  network_quality_estimator_->RemoveEffectiveConnectionTypeObserver(this);
 
   DCHECK(ui_thread_observer_);
 
@@ -160,22 +137,6 @@ NetworkQualityObserverImpl::~NetworkQualityObserverImpl() {
 
   if (!posted)
     delete ui_thread_observer_ptr;
-}
-
-void NetworkQualityObserverImpl::OnEffectiveConnectionTypeChanged(
-    net::EffectiveConnectionType type) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-
-  if (last_notified_type_ == type)
-    return;
-
-  last_notified_type_ = type;
-
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&UiThreadObserver::OnEffectiveConnectionTypeChanged,
-                     base::Unretained(ui_thread_observer_.get()),
-                     last_notified_type_));
 }
 
 void NetworkQualityObserverImpl::OnRTTOrThroughputEstimatesComputed(

@@ -147,12 +147,11 @@ MemoryCoordinatorImpl::MemoryCoordinatorImpl(
 }
 
 MemoryCoordinatorImpl::~MemoryCoordinatorImpl() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   base::MemoryCoordinatorProxy::SetMemoryCoordinator(nullptr);
 }
 
 void MemoryCoordinatorImpl::Start() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(last_state_change_.is_null());
 
   notification_registrar_.Add(
@@ -305,7 +304,7 @@ void MemoryCoordinatorImpl::Observe(int type,
 
 MemoryState MemoryCoordinatorImpl::GetStateForProcess(
     base::ProcessHandle handle) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (handle == base::kNullProcessHandle)
     return MemoryState::UNKNOWN;
   if (handle == base::GetCurrentProcessHandle())
@@ -321,7 +320,7 @@ MemoryState MemoryCoordinatorImpl::GetStateForProcess(
 
 void MemoryCoordinatorImpl::UpdateConditionIfNeeded(
     MemoryCondition next_condition) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   if (next_condition == MemoryCondition::WARNING)
     policy_->OnWarningCondition();

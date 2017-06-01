@@ -781,7 +781,7 @@ IN_PROC_BROWSER_TEST_F(CaptureScreenshotTest,
   PlaceAndCaptureBox(kFrameSize, gfx::Size(100, 200), 0.5);
 
   // Ensure that content outside the emulated frame is painted, too.
-  PlaceAndCaptureBox(kFrameSize, gfx::Size(10, 8192), 1.0);
+  PlaceAndCaptureBox(kFrameSize, gfx::Size(10, 10000), 1.0);
 }
 
 // Verifies that setDefaultBackgroundColor and captureScreenshot support a
@@ -1204,30 +1204,6 @@ class NavigationFinishedObserver : public content::WebContentsObserver {
   int num_finished_;
   int num_to_wait_for_;
 };
-
-class LoadFinishedObserver : public content::WebContentsObserver {
- public:
-  explicit LoadFinishedObserver(WebContents* web_contents)
-      : WebContentsObserver(web_contents), num_finished_(0) {}
-
-  ~LoadFinishedObserver() override {}
-
-  void DidStopLoading() override {
-    num_finished_++;
-    if (run_loop_.running())
-      run_loop_.Quit();
-  }
-
-  void WaitForLoadToFinish() {
-    if (num_finished_ == 0)
-      run_loop_.Run();
-  }
-
- private:
-  int num_finished_;
-  base::RunLoop run_loop_;
-};
-
 }  // namespace
 
 IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, PageStopLoading) {
@@ -1243,7 +1219,8 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, PageStopLoading) {
   params->SetBoolean("enabled", true);
   SendCommand("Page.setControlNavigations", std::move(params), true);
 
-  LoadFinishedObserver load_finished_observer(shell()->web_contents());
+  NavigationFinishedObserver navigation_finished_observer(
+      shell()->web_contents());
 
   // The page will try to navigate twice, however since
   // Page.setControlNavigations is true, it'll wait for confirmation before
@@ -1256,7 +1233,7 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, PageStopLoading) {
   SendCommand("Page.stopLoading", nullptr);
 
   // Wait for the initial navigation to finish.
-  load_finished_observer.WaitForLoadToFinish();
+  navigation_finished_observer.WaitForNavigationsToFinish(1);
 }
 
 IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, ControlNavigationsMainFrame) {
@@ -1422,10 +1399,10 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, VirtualTimeTest) {
   params->SetString("expression", "console.log('done')");
   SendCommand("Runtime.evaluate", std::move(params), true);
 
-  // The third timer should not fire.
-  EXPECT_THAT(console_messages_, ElementsAre("before", "at", "done"));
+  // The second timer shold not fire.
+  EXPECT_THAT(console_messages_, ElementsAre("before", "done"));
 
-  // Let virtual time advance for another second, which should make the third
+  // Let virtual time advance for another second, which should make the second
   // timer fire.
   params.reset(new base::DictionaryValue());
   params->SetString("policy", "advance");
@@ -1434,7 +1411,7 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, VirtualTimeTest) {
 
   WaitForNotification("Emulation.virtualTimeBudgetExpired");
 
-  EXPECT_THAT(console_messages_, ElementsAre("before", "at", "done", "after"));
+  EXPECT_THAT(console_messages_, ElementsAre("before", "done", "at", "after"));
 }
 
 // Tests that the Security.showCertificateViewer command shows the

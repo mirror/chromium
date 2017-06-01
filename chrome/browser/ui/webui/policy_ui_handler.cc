@@ -27,6 +27,8 @@
 #include "chrome/browser/policy/schema_registry_service.h"
 #include "chrome/browser/policy/schema_registry_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/grit/policy_resources.h"
+#include "chrome/grit/policy_resources_map.h"
 #include "components/policy/core/browser/browser_policy_connector.h"
 #include "components/policy/core/browser/cloud/message_util.h"
 #include "components/policy/core/browser/configuration_policy_handler_list.h"
@@ -629,7 +631,7 @@ void PolicyUIHandler::OnPolicyUpdated(const policy::PolicyNamespace& ns,
 
 void PolicyUIHandler::AddPolicyName(const std::string& name,
                                     base::DictionaryValue* names) const {
-  names->SetBooleanWithoutPathExpansion(name, true);
+    names->SetBoolean(name, true);
 }
 
 void PolicyUIHandler::SendPolicyNames() const {
@@ -736,7 +738,7 @@ void PolicyUIHandler::GetPolicyValues(const policy::PolicyMap& map,
     base::string16 error = errors->GetErrors(entry.first);
     if (!error.empty())
       value->SetString("error", error);
-    values->SetWithoutPathExpansion(entry.first, std::move(value));
+    values->Set(entry.first, std::move(value));
   }
 }
 

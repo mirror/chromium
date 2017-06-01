@@ -60,6 +60,9 @@ class ToolbarActionsBar : public ToolbarActionsModel::Observer,
     int item_spacing;
     // The number of icons per row in the overflow menu.
     int icons_per_overflow_menu_row;
+    // Whether or not the overflow menu is displayed as a chevron (this is being
+    // phased out).
+    bool chevron_enabled;
   };
 
   // The type of drag that occurred in a drag-and-drop operation.
@@ -92,9 +95,9 @@ class ToolbarActionsBar : public ToolbarActionsModel::Observer,
   // Registers profile preferences.
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
 
-  // Returns the default/full size for the toolbar; this does *not* reflect any
+  // Returns the preferred size for the toolbar; this does *not* reflect any
   // animations that may be running.
-  gfx::Size GetFullSize() const;
+  gfx::Size GetPreferredSize() const;
 
   // Returns the [minimum|maximum] possible width for the toolbar.
   int GetMinimumWidth() const;
@@ -271,8 +274,8 @@ class ToolbarActionsBar : public ToolbarActionsModel::Observer,
                      bool foreground) override;
 
   // Resizes the delegate (if necessary) to the preferred size using the given
-  // |tween_type|.
-  void ResizeDelegate(gfx::Tween::Type tween_type);
+  // |tween_type| and optionally suppressing the chevron.
+  void ResizeDelegate(gfx::Tween::Type tween_type, bool suppress_chevron);
 
   // Returns the action for the given |id|, if one exists.
   ToolbarActionViewController* GetActionForId(const std::string& action_id);
@@ -301,7 +304,7 @@ class ToolbarActionsBar : public ToolbarActionsModel::Observer,
   // is the main bar.
   ToolbarActionsBar* main_bar_;
 
-  // Platform-specific settings for dimensions.
+  // Platform-specific settings for dimensions and the overflow chevron.
   PlatformSettings platform_settings_;
 
   // The toolbar actions.

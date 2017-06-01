@@ -34,7 +34,6 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8BindingForTesting.h"
 #include "core/exported/WebViewBase.h"
-#include "core/frame/WebLocalFrameBase.h"
 #include "platform/SerializedResource.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
@@ -50,6 +49,7 @@
 #include "public/platform/WebURLResponse.h"
 #include "public/web/WebSettings.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "web/WebLocalFrameImpl.h"
 #include "web/tests/FrameTestHelpers.h"
 
 using blink::URLTestHelpers::ToKURL;

@@ -147,10 +147,10 @@ void FeedbackPrivateAPI::RequestFeedbackForFlow(
     std::unique_ptr<base::ListValue> args =
         feedback_private::OnFeedbackRequested::Create(info);
 
-    auto event = base::MakeUnique<Event>(
+    std::unique_ptr<Event> event(new Event(
         events::FEEDBACK_PRIVATE_ON_FEEDBACK_REQUESTED,
-        feedback_private::OnFeedbackRequested::kEventName, std::move(args),
-        browser_context_);
+        feedback_private::OnFeedbackRequested::kEventName, std::move(args)));
+    event->restrict_to_browser_context = browser_context_;
 
     EventRouter::Get(browser_context_)
         ->DispatchEventToExtension(extension_misc::kFeedbackExtensionId,
@@ -162,17 +162,11 @@ void FeedbackPrivateAPI::RequestFeedbackForFlow(
 base::Closure* FeedbackPrivateGetStringsFunction::test_callback_ = NULL;
 
 ExtensionFunction::ResponseAction FeedbackPrivateGetStringsFunction::Run() {
-  auto params = feedback_private::GetStrings::Params::Create(*args_);
-  EXTENSION_FUNCTION_VALIDATE(params.get());
-
   std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
 
 #define SET_STRING(id, idr) \
   dict->SetString(id, l10n_util::GetStringUTF16(idr))
-  SET_STRING("page-title",
-             params->flow == FeedbackFlow::FEEDBACK_FLOW_SADTABCRASH
-                 ? IDS_FEEDBACK_REPORT_PAGE_TITLE_SAD_TAB_FLOW
-                 : IDS_FEEDBACK_REPORT_PAGE_TITLE);
+  SET_STRING("page-title", IDS_FEEDBACK_REPORT_PAGE_TITLE);
   SET_STRING("additionalInfo", IDS_FEEDBACK_ADDITIONAL_INFO_LABEL);
   SET_STRING("minimize-btn-label", IDS_FEEDBACK_MINIMIZE_BUTTON_LABEL);
   SET_STRING("close-btn-label", IDS_FEEDBACK_CLOSE_BUTTON_LABEL);

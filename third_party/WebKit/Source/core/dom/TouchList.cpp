@@ -29,7 +29,7 @@ namespace blink {
 
 Touch* TouchList::item(unsigned index) {
   if (index >= values_.size())
-    return nullptr;
+    return 0;
   return values_[index].Get();
 }
 

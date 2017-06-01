@@ -9,9 +9,8 @@
 #include "core/dom/FrameRequestCallback.h"
 #include "core/dom/ScriptedAnimationController.h"
 #include "core/dom/TaskRunnerHelper.h"
-#include "core/dom/UserGestureIndicator.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/ImageBitmap.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/UseCounter.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/layout/LayoutView.h"
@@ -30,6 +29,7 @@
 #include "modules/vr/VRStageParameters.h"
 #include "modules/webgl/WebGLRenderingContextBase.h"
 #include "platform/Histogram.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/wtf/AutoReset.h"
 #include "platform/wtf/Time.h"
@@ -129,60 +129,18 @@ VREyeParameters* VRDisplay::getEyeParameters(const String& which_eye) {
   }
 }
 
-void VRDisplay::RequestVSync() {
-  DVLOG(2) << __FUNCTION__
-           << " start: pending_vrdisplay_raf_=" << pending_vrdisplay_raf_
-           << " in_animation_frame_=" << in_animation_frame_
-           << " did_submit_this_frame_=" << did_submit_this_frame_;
-
-  // The logic here is a bit subtle. We get called from one of the following
-  // four contexts:
-  //
-  // (a) from requestAnimationFrame if outside an animating context (i.e. the
-  //     first rAF call from inside a getVRDisplays() promise)
-  //
-  // (b) from requestAnimationFrame in an animating context if the JS code
-  //     calls rAF after submitFrame.
-  //
-  // (c) from submitFrame if that is called after rAF.
-  //
-  // (d) from ProcessScheduledAnimations if a rAF callback finishes without
-  //     submitting a frame.
-  //
-  // These cases are mutually exclusive which prevents duplicate RequestVSync
-  // calls. Case (a) only applies outside an animating context
-  // (in_animation_frame_ is false), and (b,c,d) all require an animating
-  // context. While in an animating context, submitFrame is called either
-  // before rAF (b), after rAF (c), or not at all (d). If rAF isn't called at
-  // all, there won't be future frames.
-
-  if (!vr_v_sync_provider_.is_bound()) {
-    ConnectVSyncProvider();
-  } else if (!display_blurred_ && !pending_vsync_) {
-    pending_vsync_ = true;
-    vr_v_sync_provider_->GetVSync(ConvertToBaseCallback(
-        WTF::Bind(&VRDisplay::OnVSync, WrapWeakPersistent(this))));
-  }
-
-  DVLOG(2) << __FUNCTION__ << " done:"
-           << " vr_v_sync_provider_.is_bound()="
-           << vr_v_sync_provider_.is_bound()
-           << " pending_vsync_=" << pending_vsync_;
-}
-
 int VRDisplay::requestAnimationFrame(FrameRequestCallback* callback) {
   DVLOG(2) << __FUNCTION__;
   Document* doc = this->GetDocument();
   if (!doc)
     return 0;
   pending_vrdisplay_raf_ = true;
-
-  // We want to delay the GetVSync call while presenting to ensure it doesn't
-  // arrive earlier than frame submission, but other than that we want to call
-  // it as early as possible. See comments inside RequestVSync() for more
-  // details on the applicable cases.
-  if (!in_animation_frame_ || did_submit_this_frame_) {
-    RequestVSync();
+  if (!vr_v_sync_provider_.is_bound()) {
+    ConnectVSyncProvider();
+  } else if (!display_blurred_ && !pending_vsync_) {
+    pending_vsync_ = true;
+    vr_v_sync_provider_->GetVSync(ConvertToBaseCallback(
+        WTF::Bind(&VRDisplay::OnVSync, WrapWeakPersistent(this))));
   }
   callback->use_legacy_time_base_ = false;
   return EnsureScriptedAnimationController(doc).RegisterCallback(callback);
@@ -529,8 +487,6 @@ HeapVector<VRLayer> VRDisplay::getLayers() {
 }
 
 void VRDisplay::submitFrame() {
-  DVLOG(2) << __FUNCTION__;
-
   if (!display_)
     return;
   TRACE_EVENT1("gpu", "submitFrame", "frame", vr_frame_id_);
@@ -589,10 +545,14 @@ void VRDisplay::submitFrame() {
   //   to defer this wait to increase parallelism.
   //
   // - After submitting, need to wait for the mailbox to be consumed,
-  //   and the image object must remain alive during this time.
-  //   We keep a reference to the image so that we can defer this
-  //   wait. Here, we wait for the previous transfer to complete.
-  {
+  //   and must remain inside the execution context while waiting.
+  //   The waitForPreviousTransferToFinish option defers this wait
+  //   until the next frame. That's more efficient, but seems to
+  //   cause wobbly framerates.
+  bool wait_for_previous_transfer_to_finish =
+      RuntimeEnabledFeatures::webVRExperimentalRenderingEnabled();
+
+  if (wait_for_previous_transfer_to_finish) {
     TRACE_EVENT0("gpu", "VRDisplay::waitForPreviousTransferToFinish");
     while (pending_submit_frame_) {
       if (!submit_frame_client_binding_.WaitForIncomingMethodCall()) {
@@ -626,10 +586,12 @@ void VRDisplay::submitFrame() {
   static_image->EnsureMailbox();
   TRACE_EVENT_END0("gpu", "VRDisplay::EnsureMailbox");
 
-  // Save a reference to the image to keep it alive until next frame,
-  // where we'll wait for the transfer to finish before overwriting
-  // it.
-  previous_image_ = std::move(image_ref);
+  if (wait_for_previous_transfer_to_finish) {
+    // Save a reference to the image to keep it alive until next frame,
+    // where we'll wait for the transfer to finish before overwriting
+    // it.
+    previous_image_ = std::move(image_ref);
+  }
 
   // Create mailbox and sync token for transfer.
   TRACE_EVENT_BEGIN0("gpu", "VRDisplay::GetMailbox");
@@ -665,24 +627,30 @@ void VRDisplay::submitFrame() {
                         gpu::MailboxHolder(mailbox, sync_token, GL_TEXTURE_2D));
   TRACE_EVENT_END0("gpu", "VRDisplay::SubmitFrame");
 
-  did_submit_this_frame_ = true;
-  // If we were deferring a rAF-triggered vsync request, do this now.
-  if (pending_vrdisplay_raf_)
-    RequestVSync();
-
   // If preserveDrawingBuffer is false, must clear now. Normally this
   // happens as part of compositing, but that's not active while
   // presenting, so run the responsible code directly.
   rendering_context_->MarkCompositedAndClearBackbufferIfNeeded();
+
+  // If we're not deferring the wait for transferring the mailbox,
+  // we need to wait for it now to prevent the image going out of
+  // scope before its mailbox is retrieved.
+  if (!wait_for_previous_transfer_to_finish) {
+    TRACE_EVENT0("gpu", "waitForCurrentTransferToFinish");
+    while (pending_submit_frame_) {
+      if (!submit_frame_client_binding_.WaitForIncomingMethodCall()) {
+        DLOG(ERROR) << "Failed to receive SubmitFrame response";
+        break;
+      }
+    }
+  }
 }
 
 void VRDisplay::OnSubmitFrameTransferred() {
-  DVLOG(3) << __FUNCTION__;
   pending_submit_frame_ = false;
 }
 
 void VRDisplay::OnSubmitFrameRendered() {
-  DVLOG(3) << __FUNCTION__;
   pending_previous_frame_render_ = false;
 }
 
@@ -744,15 +712,14 @@ void VRDisplay::StopPresenting() {
   context_gl_ = nullptr;
   pending_submit_frame_ = false;
   pending_previous_frame_render_ = false;
-  did_submit_this_frame_ = false;
 }
 
 void VRDisplay::OnActivate(device::mojom::blink::VRDisplayEventReason reason,
-                           OnActivateCallback on_handled) {
+                           const OnActivateCallback& on_handled) {
   AutoReset<bool> activating(&in_display_activate_, true);
   navigator_vr_->DispatchVREvent(VRDisplayEvent::Create(
       EventTypeNames::vrdisplayactivate, true, false, this, reason));
-  std::move(on_handled).Run(!pending_present_request_ && !is_presenting_);
+  on_handled.Run(pending_present_request_);
 }
 
 void VRDisplay::OnDeactivate(
@@ -809,18 +776,8 @@ void VRDisplay::ProcessScheduledAnimations(double timestamp) {
     // that may be called later.
     AutoReset<bool> animating(&in_animation_frame_, true);
     pending_vrdisplay_raf_ = false;
-    did_submit_this_frame_ = false;
     scripted_animation_controller_->ServiceScriptedAnimations(timestamp);
-    if (pending_vrdisplay_raf_ && !did_submit_this_frame_) {
-      DVLOG(2) << __FUNCTION__ << ": vrDisplay.rAF did not submit a frame";
-      RequestVSync();
-    }
   }
-
-  // Sanity check: If pending_vrdisplay_raf_ is true and the vsync provider
-  // is connected, we must now have a pending vsync.
-  DCHECK(!pending_vrdisplay_raf_ || !vr_v_sync_provider_.is_bound() ||
-         pending_vsync_);
 
   // For GVR, we shut down normal vsync processing during VR presentation.
   // Trigger any callbacks on window.rAF manually so that they run after

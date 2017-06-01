@@ -21,7 +21,6 @@
 #ifndef SpaceSplitString_h
 #define SpaceSplitString_h
 
-#include "core/CoreExport.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/RefCounted.h"
 #include "platform/wtf/Vector.h"
@@ -29,18 +28,21 @@
 
 namespace blink {
 
-class CORE_EXPORT SpaceSplitString {
+class SpaceSplitString {
   USING_FAST_MALLOC(SpaceSplitString);
 
  public:
+  enum CaseFolding { kShouldNotFoldCase, kShouldFoldCase };
   SpaceSplitString() {}
-  explicit SpaceSplitString(const AtomicString& string) { Set(string); }
+  SpaceSplitString(const AtomicString& string, CaseFolding case_folding) {
+    Set(string, case_folding);
+  }
 
   bool operator!=(const SpaceSplitString& other) const {
     return data_ != other.data_;
   }
 
-  void Set(const AtomicString&);
+  void Set(const AtomicString&, CaseFolding);
   void Clear() { data_.Clear(); }
 
   bool Contains(const AtomicString& string) const {
@@ -51,8 +53,6 @@ class CORE_EXPORT SpaceSplitString {
   }
   void Add(const AtomicString&);
   bool Remove(const AtomicString&);
-  void Remove(size_t index);
-  void ReplaceAt(size_t index, const AtomicString&);
 
   size_t size() const { return data_ ? data_->size() : 0; }
   bool IsNull() const { return !data_; }
@@ -81,18 +81,15 @@ class CORE_EXPORT SpaceSplitString {
 
     bool IsUnique() const { return key_string_.IsNull(); }
     size_t size() const { return vector_.size(); }
-    const AtomicString& operator[](size_t i) const { return vector_[i]; }
-    AtomicString& operator[](size_t i) { return vector_[i]; }
+    const AtomicString& operator[](size_t i) { return vector_[i]; }
 
    private:
     explicit Data(const AtomicString&);
     explicit Data(const Data&);
 
-    void CreateVector(const AtomicString&);
+    void CreateVector(const String&);
     template <typename CharacterType>
-    inline void CreateVector(const AtomicString&,
-                             const CharacterType*,
-                             unsigned);
+    inline void CreateVector(const CharacterType*, unsigned);
 
     AtomicString key_string_;
     Vector<AtomicString, 4> vector_;

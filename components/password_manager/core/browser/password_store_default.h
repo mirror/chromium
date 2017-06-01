@@ -34,7 +34,7 @@ class PasswordStoreDefault : public PasswordStore {
 
   void ShutdownOnUIThread() override;
 
-  // To be used only for testing or in subclasses.
+  // To be used only for testing.
   LoginDatabase* login_db() const { return login_db_.get(); }
 
  protected:
@@ -70,8 +70,6 @@ class PasswordStoreDefault : public PasswordStore {
       base::Time delete_end) override;
   std::vector<std::unique_ptr<autofill::PasswordForm>> FillMatchingLogins(
       const FormDigest& form) override;
-  std::vector<std::unique_ptr<autofill::PasswordForm>>
-  FillLoginsForSameOrganizationName(const std::string& signon_realm) override;
   bool FillAutofillableLogins(
       std::vector<std::unique_ptr<autofill::PasswordForm>>* forms) override;
   bool FillBlacklistLogins(
@@ -84,6 +82,10 @@ class PasswordStoreDefault : public PasswordStore {
 
   inline bool DeleteAndRecreateDatabaseFile() {
     return login_db_->DeleteAndRecreateDatabaseFile();
+  }
+
+  void set_login_db(std::unique_ptr<password_manager::LoginDatabase> login_db) {
+    login_db_.swap(login_db);
   }
 
  private:

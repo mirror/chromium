@@ -372,11 +372,9 @@ def measure_as(definition_or_member, interface):
     extended_attributes = definition_or_member.extended_attributes
     if 'MeasureAs' in extended_attributes:
         includes.add('core/frame/UseCounter.h')
-        includes.add('public/platform/WebFeature.h')
         return lambda suffix: extended_attributes['MeasureAs']
     if 'Measure' in extended_attributes:
         includes.add('core/frame/UseCounter.h')
-        includes.add('public/platform/WebFeature.h')
         measure_as_name = capitalize(definition_or_member.name)
         if interface is not None:
             measure_as_name = '%s_%s' % (capitalize(interface.name), measure_as_name)
@@ -437,11 +435,6 @@ def origin_trial_enabled_function_name(definition_or_member):
 def origin_trial_feature_name(definition_or_member):
     extended_attributes = definition_or_member.extended_attributes
     return extended_attributes.get('OriginTrialEnabled') or extended_attributes.get('FeaturePolicy')
-
-
-# [ContextEnabled]
-def context_enabled_feature_name(definition_or_member):
-    return definition_or_member.extended_attributes.get('ContextEnabled')
 
 
 # [RuntimeEnabled]

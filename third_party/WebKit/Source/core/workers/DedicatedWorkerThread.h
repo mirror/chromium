@@ -41,7 +41,7 @@ class WorkerThreadStartupData;
 class CORE_EXPORT DedicatedWorkerThread : public WorkerThread {
  public:
   static std::unique_ptr<DedicatedWorkerThread> Create(
-      ThreadableLoadingContext*,
+      PassRefPtr<WorkerLoaderProxy>,
       InProcessWorkerObjectProxy&,
       double time_origin);
   ~DedicatedWorkerThread() override;
@@ -55,7 +55,7 @@ class CORE_EXPORT DedicatedWorkerThread : public WorkerThread {
   }
 
  protected:
-  DedicatedWorkerThread(ThreadableLoadingContext*,
+  DedicatedWorkerThread(PassRefPtr<WorkerLoaderProxy>,
                         InProcessWorkerObjectProxy&,
                         double time_origin);
   WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(

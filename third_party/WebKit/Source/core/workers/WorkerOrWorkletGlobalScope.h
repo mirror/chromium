@@ -7,8 +7,6 @@
 
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/UseCounter.h"
-#include "core/loader/WorkerFetchContext.h"
-#include "core/workers/WorkerClients.h"
 
 namespace blink {
 
@@ -18,7 +16,7 @@ class WorkerThread;
 
 class CORE_EXPORT WorkerOrWorkletGlobalScope : public ExecutionContext {
  public:
-  WorkerOrWorkletGlobalScope(v8::Isolate*, WorkerClients*);
+  explicit WorkerOrWorkletGlobalScope(v8::Isolate*);
   virtual ~WorkerOrWorkletGlobalScope();
 
   // ExecutionContext
@@ -30,7 +28,6 @@ class CORE_EXPORT WorkerOrWorkletGlobalScope : public ExecutionContext {
       const WebTraceLocation&,
       std::unique_ptr<ExecutionContextTask>,
       const String& task_name_for_instrumentation = g_empty_string) final;
-  bool CanExecuteScripts(ReasonForCallingCanExecuteScripts) final;
 
   virtual ScriptWrappable* GetScriptWrappable() const = 0;
 
@@ -55,11 +52,6 @@ class CORE_EXPORT WorkerOrWorkletGlobalScope : public ExecutionContext {
   // MainThreadWorkletGlobalScope) or after dispose() is called.
   virtual WorkerThread* GetThread() const = 0;
 
-  // Available only when off-main-thread-fetch is enabled.
-  WorkerFetchContext* GetFetchContext();
-
-  WorkerClients* Clients() const { return worker_clients_.Get(); }
-
   WorkerOrWorkletScriptController* ScriptController() {
     return script_controller_.Get();
   }
@@ -73,8 +65,6 @@ class CORE_EXPORT WorkerOrWorkletGlobalScope : public ExecutionContext {
  private:
   void RunTask(std::unique_ptr<ExecutionContextTask>, bool is_instrumented);
 
-  CrossThreadPersistent<WorkerClients> worker_clients_;
-  Member<WorkerFetchContext> fetch_context_;
   Member<WorkerOrWorkletScriptController> script_controller_;
 
   // This is the set of features that this worker has used.

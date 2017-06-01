@@ -15,6 +15,7 @@
 #include "ash/wm/window_state.h"
 #include "ash/wm/wm_event.h"
 #include "ash/wm/workspace/workspace_window_resizer.h"
+#include "ash/wm_window.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/exo/buffer.h"
@@ -249,9 +250,9 @@ TEST_F(ShellSurfaceTest, SetApplicationId) {
   surface->Attach(buffer.get());
   surface->Commit();
   aura::Window* window = shell_surface->GetWidget()->GetNativeWindow();
-  EXPECT_EQ("pre-widget-id", *ShellSurface::GetApplicationId(window));
+  EXPECT_EQ("pre-widget-id", ShellSurface::GetApplicationId(window));
   shell_surface->SetApplicationId("test");
-  EXPECT_EQ("test", *ShellSurface::GetApplicationId(window));
+  EXPECT_EQ("test", ShellSurface::GetApplicationId(window));
 }
 
 TEST_F(ShellSurfaceTest, Move) {
@@ -871,16 +872,17 @@ TEST_F(ShellSurfaceTest, ToggleFullscreen) {
             shell_surface->GetWidget()->GetWindowBoundsInScreen().width());
 
   ash::wm::WMEvent event(ash::wm::WM_EVENT_TOGGLE_FULLSCREEN);
-  aura::Window* window = shell_surface->GetWidget()->GetNativeWindow();
+  ash::WmWindow* window =
+      ash::WmWindow::Get(shell_surface->GetWidget()->GetNativeWindow());
 
   // Enter fullscreen mode.
-  ash::wm::GetWindowState(window)->OnWMEvent(&event);
+  window->GetWindowState()->OnWMEvent(&event);
 
   EXPECT_EQ(CurrentContext()->bounds().ToString(),
             shell_surface->GetWidget()->GetWindowBoundsInScreen().ToString());
 
   // Leave fullscreen mode.
-  ash::wm::GetWindowState(window)->OnWMEvent(&event);
+  window->GetWindowState()->OnWMEvent(&event);
 
   // Check that shell surface is maximized.
   EXPECT_EQ(CurrentContext()->bounds().width(),
@@ -917,25 +919,26 @@ TEST_F(ShellSurfaceTest, MaximizedAndImmersiveFullscreenBackdrop) {
   EXPECT_FALSE(test_helper.GetBackdropWindow());
 
   ash::wm::WMEvent fullscreen_event(ash::wm::WM_EVENT_TOGGLE_FULLSCREEN);
-  aura::Window* window = shell_surface->GetWidget()->GetNativeWindow();
+  ash::WmWindow* window =
+      ash::WmWindow::Get(shell_surface->GetWidget()->GetNativeWindow());
 
   // Enter immersive fullscreen mode. Shadow underlay is fullscreen.
-  ash::wm::GetWindowState(window)->OnWMEvent(&fullscreen_event);
+  window->GetWindowState()->OnWMEvent(&fullscreen_event);
 
   EXPECT_TRUE(test_helper.GetBackdropWindow());
 
   // Leave fullscreen mode. Shadow underlay is restored.
-  ash::wm::GetWindowState(window)->OnWMEvent(&fullscreen_event);
+  window->GetWindowState()->OnWMEvent(&fullscreen_event);
   EXPECT_FALSE(test_helper.GetBackdropWindow());
 
   ash::wm::WMEvent maximize_event(ash::wm::WM_EVENT_TOGGLE_MAXIMIZE);
 
   // Enter maximized mode.
-  ash::wm::GetWindowState(window)->OnWMEvent(&maximize_event);
+  window->GetWindowState()->OnWMEvent(&maximize_event);
   EXPECT_TRUE(test_helper.GetBackdropWindow());
 
   // Leave maximized mode.
-  ash::wm::GetWindowState(window)->OnWMEvent(&maximize_event);
+  window->GetWindowState()->OnWMEvent(&maximize_event);
   EXPECT_FALSE(test_helper.GetBackdropWindow());
 }
 
@@ -970,8 +973,9 @@ TEST_F(ShellSurfaceTest,
             shell_surface->surface_for_testing()->window()->bounds().size());
 
   ash::wm::WMEvent minimize_event(ash::wm::WM_EVENT_MINIMIZE);
-  aura::Window* window = shell_surface->GetWidget()->GetNativeWindow();
-  ash::wm::GetWindowState(window)->OnWMEvent(&minimize_event);
+  ash::WmWindow* window =
+      ash::WmWindow::Get(shell_surface->GetWidget()->GetNativeWindow());
+  window->GetWindowState()->OnWMEvent(&minimize_event);
 }
 
 }  // namespace

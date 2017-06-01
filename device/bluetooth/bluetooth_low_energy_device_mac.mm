@@ -20,7 +20,8 @@
 #include "device/bluetooth/bluetooth_remote_gatt_descriptor_mac.h"
 #include "device/bluetooth/bluetooth_remote_gatt_service_mac.h"
 
-namespace device {
+using device::BluetoothDevice;
+using device::BluetoothLowEnergyDeviceMac;
 
 BluetoothLowEnergyDeviceMac::BluetoothLowEnergyDeviceMac(
     BluetoothAdapterMac* adapter,
@@ -30,7 +31,7 @@ BluetoothLowEnergyDeviceMac::BluetoothLowEnergyDeviceMac(
       connected_(false),
       discovery_pending_count_(0) {
   DCHECK(BluetoothAdapterMac::IsLowEnergyAvailable());
-  DCHECK(peripheral_);
+  DCHECK(peripheral_.get());
   peripheral_delegate_.reset([[BluetoothLowEnergyPeripheralDelegate alloc]
       initWithBluetoothLowEnergyDeviceMac:this]);
   [peripheral_ setDelegate:peripheral_delegate_];
@@ -130,13 +131,6 @@ void BluetoothLowEnergyDeviceMac::GetConnectionInfo(
   NOTIMPLEMENTED();
 }
 
-void BluetoothLowEnergyDeviceMac::SetConnectionLatency(
-    ConnectionLatency connection_latency,
-    const base::Closure& callback,
-    const ErrorCallback& error_callback) {
-  NOTIMPLEMENTED();
-}
-
 void BluetoothLowEnergyDeviceMac::Connect(
     PairingDelegate* pairing_delegate,
     const base::Closure& callback,
@@ -183,7 +177,7 @@ void BluetoothLowEnergyDeviceMac::ConnectToService(
 }
 
 void BluetoothLowEnergyDeviceMac::ConnectToServiceInsecurely(
-    const BluetoothUUID& uuid,
+    const device::BluetoothUUID& uuid,
     const ConnectToServiceCallback& callback,
     const ConnectToServiceErrorCallback& error_callback) {
   NOTIMPLEMENTED();
@@ -229,7 +223,7 @@ void BluetoothLowEnergyDeviceMac::DidDiscoverPrimaryServices(NSError* error) {
 
   for (CBService* cb_service in GetPeripheral().services) {
     BluetoothRemoteGattServiceMac* gatt_service =
-        GetBluetoothRemoteGattServiceMac(cb_service);
+        GetBluetoothRemoteGattService(cb_service);
     if (!gatt_service) {
       gatt_service = new BluetoothRemoteGattServiceMac(this, cb_service,
                                                        true /* is_primary */);
@@ -244,8 +238,8 @@ void BluetoothLowEnergyDeviceMac::DidDiscoverPrimaryServices(NSError* error) {
   }
   if (discovery_pending_count_ == 0) {
     for (auto it = gatt_services_.begin(); it != gatt_services_.end(); ++it) {
-      BluetoothRemoteGattService* gatt_service = it->second.get();
-      BluetoothRemoteGattServiceMac* gatt_service_mac =
+      device::BluetoothRemoteGattService* gatt_service = it->second.get();
+      device::BluetoothRemoteGattServiceMac* gatt_service_mac =
           static_cast<BluetoothRemoteGattServiceMac*>(gatt_service);
       gatt_service_mac->DiscoverCharacteristics();
     }
@@ -278,7 +272,7 @@ void BluetoothLowEnergyDeviceMac::DidDiscoverCharacteristics(
   }
 
   BluetoothRemoteGattServiceMac* gatt_service =
-      GetBluetoothRemoteGattServiceMac(cb_service);
+      GetBluetoothRemoteGattService(cb_service);
   DCHECK(gatt_service);
   gatt_service->DidDiscoverCharacteristics();
   SendNotificationIfDiscoveryComplete();
@@ -291,7 +285,7 @@ void BluetoothLowEnergyDeviceMac::DidModifyServices(
           << base::SysNSStringToUTF8([invalidatedServices description]);
   for (CBService* cb_service in invalidatedServices) {
     BluetoothRemoteGattServiceMac* gatt_service =
-        GetBluetoothRemoteGattServiceMac(cb_service);
+        GetBluetoothRemoteGattService(cb_service);
     DCHECK(gatt_service);
     VLOG(1) << gatt_service->GetUUID().canonical_value();
     std::unique_ptr<BluetoothRemoteGattService> scoped_service =
@@ -309,7 +303,7 @@ void BluetoothLowEnergyDeviceMac::DidUpdateValue(
     CBCharacteristic* characteristic,
     NSError* error) {
   BluetoothRemoteGattServiceMac* gatt_service =
-      GetBluetoothRemoteGattServiceMac(characteristic.service);
+      GetBluetoothRemoteGattService(characteristic.service);
   DCHECK(gatt_service);
   gatt_service->DidUpdateValue(characteristic, error);
 }
@@ -318,7 +312,7 @@ void BluetoothLowEnergyDeviceMac::DidWriteValue(
     CBCharacteristic* characteristic,
     NSError* error) {
   BluetoothRemoteGattServiceMac* gatt_service =
-      GetBluetoothRemoteGattServiceMac(characteristic.service);
+      GetBluetoothRemoteGattService(characteristic.service);
   DCHECK(gatt_service);
   gatt_service->DidWriteValue(characteristic, error);
 }
@@ -327,7 +321,7 @@ void BluetoothLowEnergyDeviceMac::DidUpdateNotificationState(
     CBCharacteristic* characteristic,
     NSError* error) {
   BluetoothRemoteGattServiceMac* gatt_service =
-      GetBluetoothRemoteGattServiceMac(characteristic.service);
+      GetBluetoothRemoteGattService(characteristic.service);
   DCHECK(gatt_service);
   gatt_service->DidUpdateNotificationState(characteristic, error);
 }
@@ -355,7 +349,7 @@ void BluetoothLowEnergyDeviceMac::DidDiscoverDescriptors(
     return;
   }
   BluetoothRemoteGattServiceMac* gatt_service =
-      GetBluetoothRemoteGattServiceMac(cb_characteristic.service);
+      GetBluetoothRemoteGattService(cb_characteristic.service);
   DCHECK(gatt_service);
   gatt_service->DidDiscoverDescriptors(cb_characteristic);
   SendNotificationIfDiscoveryComplete();
@@ -365,7 +359,7 @@ void BluetoothLowEnergyDeviceMac::DidUpdateValueForDescriptor(
     CBDescriptor* cb_descriptor,
     NSError* error) {
   BluetoothRemoteGattDescriptorMac* gatt_descriptor =
-      GetBluetoothRemoteGattDescriptorMac(cb_descriptor);
+      GetBluetoothRemoteGattDescriptor(cb_descriptor);
   DCHECK(gatt_descriptor);
   gatt_descriptor->DidUpdateValueForDescriptor(error);
 }
@@ -374,7 +368,7 @@ void BluetoothLowEnergyDeviceMac::DidWriteValueForDescriptor(
     CBDescriptor* cb_descriptor,
     NSError* error) {
   BluetoothRemoteGattDescriptorMac* gatt_descriptor =
-      GetBluetoothRemoteGattDescriptorMac(cb_descriptor);
+      GetBluetoothRemoteGattDescriptor(cb_descriptor);
   DCHECK(gatt_descriptor);
   gatt_descriptor->DidWriteValueForDescriptor(error);
 }
@@ -441,7 +435,7 @@ void BluetoothLowEnergyDeviceMac::SendNotificationIfDiscoveryComplete() {
   }
 }
 
-BluetoothAdapterMac* BluetoothLowEnergyDeviceMac::GetMacAdapter() {
+device::BluetoothAdapterMac* BluetoothLowEnergyDeviceMac::GetMacAdapter() {
   return static_cast<BluetoothAdapterMac*>(this->adapter_);
 }
 
@@ -449,12 +443,12 @@ CBPeripheral* BluetoothLowEnergyDeviceMac::GetPeripheral() {
   return peripheral_;
 }
 
-BluetoothRemoteGattServiceMac*
-BluetoothLowEnergyDeviceMac::GetBluetoothRemoteGattServiceMac(
+device::BluetoothRemoteGattServiceMac*
+BluetoothLowEnergyDeviceMac::GetBluetoothRemoteGattService(
     CBService* cb_service) const {
   for (auto it = gatt_services_.begin(); it != gatt_services_.end(); ++it) {
-    BluetoothRemoteGattService* gatt_service = it->second.get();
-    BluetoothRemoteGattServiceMac* gatt_service_mac =
+    device::BluetoothRemoteGattService* gatt_service = it->second.get();
+    device::BluetoothRemoteGattServiceMac* gatt_service_mac =
         static_cast<BluetoothRemoteGattServiceMac*>(gatt_service);
     if (gatt_service_mac->GetService() == cb_service)
       return gatt_service_mac;
@@ -462,14 +456,14 @@ BluetoothLowEnergyDeviceMac::GetBluetoothRemoteGattServiceMac(
   return nullptr;
 }
 
-BluetoothRemoteGattDescriptorMac*
-BluetoothLowEnergyDeviceMac::GetBluetoothRemoteGattDescriptorMac(
+device::BluetoothRemoteGattDescriptorMac*
+BluetoothLowEnergyDeviceMac::GetBluetoothRemoteGattDescriptor(
     CBDescriptor* cb_descriptor) const {
   CBCharacteristic* cb_characteristic = cb_descriptor.characteristic;
-  BluetoothRemoteGattServiceMac* gatt_service =
-      GetBluetoothRemoteGattServiceMac(cb_characteristic.service);
+  device::BluetoothRemoteGattServiceMac* gatt_service =
+      GetBluetoothRemoteGattService(cb_characteristic.service);
   DCHECK(gatt_service);
-  BluetoothRemoteGattCharacteristicMac* gatt_characteristic =
+  device::BluetoothRemoteGattCharacteristicMac* gatt_characteristic =
       gatt_service->GetBluetoothRemoteGattCharacteristicMac(cb_characteristic);
   DCHECK(gatt_characteristic);
   return gatt_characteristic->GetBluetoothRemoteGattDescriptorMac(
@@ -504,6 +498,8 @@ void BluetoothLowEnergyDeviceMac::DidDisconnectPeripheral(NSError* error) {
   DidFailToConnectGatt(BluetoothDevice::ConnectErrorCode::ERROR_FAILED);
 }
 
+namespace device {
+
 std::ostream& operator<<(std::ostream& out,
                          const BluetoothLowEnergyDeviceMac& device) {
   // TODO(crbug.com/703878): Should use
@@ -515,5 +511,4 @@ std::ostream& operator<<(std::ostream& out,
              << &device << ", " << is_gatt_connected << ", \""
              << name.value_or("Unnamed device") << "\">";
 }
-
 }  // namespace device

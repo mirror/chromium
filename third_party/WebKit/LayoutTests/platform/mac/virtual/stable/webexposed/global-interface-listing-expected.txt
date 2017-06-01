@@ -1,4 +1,4 @@
-CONSOLE WARNING: line 70: 'webkitURL' is deprecated. Please use 'URL' instead.
+CONSOLE WARNING: line 95: 'webkitURL' is deprecated. Please use 'URL' instead.
 This test documents all interface attributes and methods on the global window object and element instances.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
@@ -337,10 +337,6 @@ interface BroadcastChannel : EventTarget
     method postMessage
     setter onmessage
     setter onmessageerror
-interface BudgetService
-    attribute @@toStringTag
-    method constructor
-    method reserve
 interface ByteLengthQueuingStrategy
     method constructor
     method size
@@ -657,7 +653,6 @@ interface CredentialsContainer
     method constructor
     method create
     method get
-    method preventSilentAccess
     method requireUserMediation
     method store
 interface Crypto
@@ -754,7 +749,6 @@ interface DOMTokenList
     method item
     method keys
     method remove
-    method replace
     method supports
     method toString
     method toggle
@@ -1375,7 +1369,6 @@ interface FocusEvent : UIEvent
     method constructor
 interface FontFace
     attribute @@toStringTag
-    getter display
     getter family
     getter featureSettings
     getter loaded
@@ -1387,7 +1380,6 @@ interface FontFace
     getter weight
     method constructor
     method load
-    setter display
     setter family
     setter featureSettings
     setter stretch
@@ -3214,6 +3206,7 @@ interface KeyboardEvent : UIEvent
     getter metaKey
     getter repeat
     getter shiftKey
+    getter which
     method constructor
     method getModifierState
     method initKeyboardEvent
@@ -3551,6 +3544,7 @@ interface MouseEvent : UIEvent
     getter screenY
     getter shiftKey
     getter toElement
+    getter which
     getter x
     getter y
     method constructor
@@ -3611,7 +3605,6 @@ interface Navigator
     getter appName
     getter appVersion
     getter bluetooth
-    getter budget
     getter cookieEnabled
     getter credentials
     getter doNotTrack
@@ -3960,9 +3953,6 @@ interface PerformanceObserverEntryList
     method getEntries
     method getEntriesByName
     method getEntriesByType
-interface PerformancePaintTiming : PerformanceEntry
-    attribute @@toStringTag
-    method constructor
 interface PerformanceResourceTiming : PerformanceEntry
     attribute @@toStringTag
     getter connectEnd
@@ -5701,7 +5691,6 @@ interface StorageEvent : Event
 interface StorageManager
     attribute @@toStringTag
     method constructor
-    method estimate
     method persist
     method persisted
 interface StyleSheet

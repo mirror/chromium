@@ -52,7 +52,8 @@ ImageDecodingStore::~ImageDecodingStore() {
 }
 
 ImageDecodingStore& ImageDecodingStore::Instance() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(ImageDecodingStore, store, ());
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(ImageDecodingStore, store,
+                                  ImageDecodingStore::Create().release());
   return store;
 }
 

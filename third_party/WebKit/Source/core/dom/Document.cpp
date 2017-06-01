@@ -136,12 +136,12 @@
 #include "core/frame/DOMVisualViewport.h"
 #include "core/frame/EventHandlerRegistry.h"
 #include "core/frame/FrameConsole.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/History.h"
 #include "core/frame/HostsUsingFeatures.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/PerformanceMonitor.h"
 #include "core/frame/Settings.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
@@ -193,6 +193,7 @@
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameFetchContext.h"
 #include "core/loader/FrameLoader.h"
+#include "core/loader/ImageLoader.h"
 #include "core/loader/NavigationScheduler.h"
 #include "core/loader/PrerendererClient.h"
 #include "core/loader/appcache/ApplicationCacheHost.h"
@@ -409,14 +410,12 @@ static bool IsValidElementNamePerHTMLParser(const String& name) {
 // Tests whether |name| is a valid name per DOM spec. Also checks
 // whether the HTML parser would accept this element name and counts
 // cases of mismatches.
-static bool IsValidElementName(Document* document, const String& name) {
+static bool IsValidElementName(const LocalDOMWindow* window,
+                               const String& name) {
   bool is_valid_dom_name = Document::IsValidName(name);
   bool is_valid_html_name = IsValidElementNamePerHTMLParser(name);
-  if (UNLIKELY(is_valid_html_name != is_valid_dom_name)) {
-    // This is inaccurate because it will not report activity in
-    // detached documents. However retrieving the frame from the
-    // bindings is too slow.
-    UseCounter::Count(document,
+  if (UNLIKELY(is_valid_html_name != is_valid_dom_name && window)) {
+    UseCounter::Count(window->GetFrame(),
                       is_valid_dom_name
                           ? UseCounter::kElementNameDOMValidHTMLParserInvalid
                           : UseCounter::kElementNameDOMInvalidHTMLParserValid);
@@ -491,14 +490,6 @@ class Document::NetworkStateObserver final
 
   DEFINE_INLINE_VIRTUAL_TRACE() { ContextLifecycleObserver::Trace(visitor); }
 };
-
-Document* Document::Create(const Document& document) {
-  Document* new_document = new Document(
-      DocumentInit::FromContext(const_cast<Document*>(&document), BlankURL()));
-  new_document->SetSecurityOrigin(document.GetSecurityOrigin());
-  new_document->SetContextFeatures(document.GetContextFeatures());
-  return new_document;
-}
 
 Document::Document(const DocumentInit& initializer,
                    DocumentClassFlags document_classes)
@@ -610,8 +601,7 @@ Document::Document(const DocumentInit& initializer,
   } else if (imports_controller_) {
     fetcher_ = FrameFetchContext::CreateFetcherFromDocument(this);
   } else {
-    fetcher_ = ResourceFetcher::Create(
-        nullptr, Platform::Current()->CurrentThread()->GetWebTaskRunner());
+    fetcher_ = ResourceFetcher::Create(nullptr);
   }
   DCHECK(fetcher_);
 
@@ -752,9 +742,10 @@ AtomicString Document::ConvertLocalName(const AtomicString& name) {
 }
 
 // https://dom.spec.whatwg.org/#dom-document-createelement
-Element* Document::createElement(const AtomicString& name,
+Element* Document::createElement(const LocalDOMWindow* window,
+                                 const AtomicString& name,
                                  ExceptionState& exception_state) {
-  if (!IsValidElementName(this, name)) {
+  if (!IsValidElementName(window, name)) {
     exception_state.ThrowDOMException(
         kInvalidCharacterError,
         "The tag name provided ('" + name + "') is not a valid name.");
@@ -804,11 +795,12 @@ String GetTypeExtension(Document* document,
 }
 
 // https://dom.spec.whatwg.org/#dom-document-createelement
-Element* Document::createElement(const AtomicString& local_name,
+Element* Document::createElement(const LocalDOMWindow* window,
+                                 const AtomicString& local_name,
                                  const StringOrDictionary& string_or_options,
                                  ExceptionState& exception_state) {
   // 1. If localName does not match Name production, throw InvalidCharacterError
-  if (!IsValidElementName(this, local_name)) {
+  if (!IsValidElementName(window, local_name)) {
     exception_state.ThrowDOMException(
         kInvalidCharacterError,
         "The tag name provided ('" + local_name + "') is not a valid name.");
@@ -864,7 +856,7 @@ Element* Document::createElement(const AtomicString& local_name,
         *this,
         QualifiedName(g_null_atom, converted_local_name, xhtmlNamespaceURI));
   } else {
-    element = createElement(local_name, exception_state);
+    element = createElement(window, local_name, exception_state);
     if (exception_state.HadException())
       return nullptr;
   }
@@ -904,7 +896,8 @@ static inline QualifiedName CreateQualifiedName(
   return q_name;
 }
 
-Element* Document::createElementNS(const AtomicString& namespace_uri,
+Element* Document::createElementNS(const LocalDOMWindow* window,
+                                   const AtomicString& namespace_uri,
                                    const AtomicString& qualified_name,
                                    ExceptionState& exception_state) {
   QualifiedName q_name(
@@ -918,7 +911,8 @@ Element* Document::createElementNS(const AtomicString& namespace_uri,
 }
 
 // https://dom.spec.whatwg.org/#internal-createelementns-steps
-Element* Document::createElementNS(const AtomicString& namespace_uri,
+Element* Document::createElementNS(const LocalDOMWindow* window,
+                                   const AtomicString& namespace_uri,
                                    const AtomicString& qualified_name,
                                    const StringOrDictionary& string_or_options,
                                    ExceptionState& exception_state) {
@@ -940,7 +934,7 @@ Element* Document::createElementNS(const AtomicString& namespace_uri,
       AtomicString(GetTypeExtension(this, string_or_options, exception_state));
   const AtomicString& name = should_create_builtin ? is : qualified_name;
 
-  if (!IsValidElementName(this, qualified_name)) {
+  if (!IsValidElementName(window, qualified_name)) {
     exception_state.ThrowDOMException(
         kInvalidCharacterError, "The tag name provided ('" + qualified_name +
                                     "') is not a valid name.");
@@ -1709,7 +1703,7 @@ void Document::SetStateForNewFormElements(const Vector<String>& state_vector) {
   GetFormController().SetStateForNewFormElements(state_vector);
 }
 
-LocalFrameView* Document::View() const {
+FrameView* Document::View() const {
   return frame_ ? frame_->View() : nullptr;
 }
 
@@ -1748,7 +1742,7 @@ bool Document::NeedsLayoutTreeUpdate() const {
     return true;
   if (ChildNeedsStyleInvalidation())
     return true;
-  if (GetLayoutView() && GetLayoutView()->WasNotifiedOfSubtreeChange())
+  if (GetLayoutViewItem().WasNotifiedOfSubtreeChange())
     return true;
   return false;
 }
@@ -2253,7 +2247,7 @@ void Document::UpdateStyleAndLayout() {
 
   ScriptForbiddenScope forbid_script;
 
-  LocalFrameView* frame_view = View();
+  FrameView* frame_view = View();
   if (frame_view && frame_view->IsInPerformLayout()) {
     // View layout should not be re-entrant.
     NOTREACHED();
@@ -2274,15 +2268,16 @@ void Document::UpdateStyleAndLayout() {
   if (Lifecycle().GetState() < DocumentLifecycle::kLayoutClean)
     Lifecycle().AdvanceTo(DocumentLifecycle::kLayoutClean);
 
-  if (LocalFrameView* frame_view = View())
+  if (FrameView* frame_view = View())
     frame_view->PerformScrollAnchoringAdjustments();
 }
 
 void Document::LayoutUpdated() {
   // Plugins can run script inside layout which can detach the page.
-  // TODO(dcheng): Does it make sense to do any of this work if detached?
-  if (GetFrame() && GetFrame()->IsMainFrame())
-    GetFrame()->GetPage()->GetChromeClient().LayoutUpdated();
+  // TODO(esprehn): Can this still happen now that all plugins are out of
+  // process?
+  if (GetFrame() && GetFrame()->GetPage())
+    GetFrame()->GetPage()->GetChromeClient().LayoutUpdated(GetFrame());
 
   Markers().InvalidateRectsForAllTextMatchMarkers();
 
@@ -2426,17 +2421,17 @@ void Document::PageSizeAndMarginsInPixels(int page_index,
   double width = page_size.Width();
   double height = page_size.Height();
   switch (style->GetPageSizeType()) {
-    case PageSizeType::kAuto:
+    case PAGE_SIZE_AUTO:
       break;
-    case PageSizeType::kLandscape:
+    case PAGE_SIZE_AUTO_LANDSCAPE:
       if (width < height)
         std::swap(width, height);
       break;
-    case PageSizeType::kPortrait:
+    case PAGE_SIZE_AUTO_PORTRAIT:
       if (width > height)
         std::swap(width, height);
       break;
-    case PageSizeType::kResolved: {
+    case PAGE_SIZE_RESOLVED: {
       FloatSize size = style->PageSize();
       width = size.Width();
       height = size.Height();
@@ -2555,10 +2550,9 @@ void Document::Shutdown() {
   View()->Dispose();
 
   // If the FrameViewBase of the document's frame owner doesn't match view()
-  // then LocalFrameView::Dispose() didn't clear the owner's FrameViewBase. If
-  // we don't clear it here, it may be clobbered later in
-  // LocalFrame::CreateView(). See also https://crbug.com/673170 and the comment
-  // in LocalFrameView::Dispose().
+  // then FrameView::dispose() didn't clear the owner's FrameViewBase. If we
+  // don't clear it here, it may be clobbered later in LocalFrame::createView().
+  // See also https://crbug.com/673170 and the comment in FrameView::dispose().
   HTMLFrameOwnerElement* owner_element = frame_->DeprecatedLocalOwner();
   if (owner_element)
     owner_element->SetWidget(nullptr);
@@ -3042,6 +3036,11 @@ void Document::ImplicitClose() {
   // onLoad event handler, as in Radar 3206524.
   DetachParser();
 
+  if (GetFrame() && CanExecuteScripts(kNotAboutToExecuteScript)) {
+    ImageLoader::DispatchPendingLoadEvents();
+    ImageLoader::DispatchPendingErrorEvents();
+  }
+
   // JS running below could remove the frame or destroy the LayoutView so we
   // call those two functions repeatedly and don't save them on the stack.
 
@@ -3314,8 +3313,8 @@ void Document::SetParsingState(ParsingState parsing_state) {
 }
 
 bool Document::ShouldScheduleLayout() const {
-  // This function will only be called when LocalFrameView thinks a layout is
-  // needed. This enforces a couple extra rules.
+  // This function will only be called when FrameView thinks a layout is needed.
+  // This enforces a couple extra rules.
   //
   //    (a) Only schedule a layout once the stylesheets are loaded.
   //    (b) Only schedule layout once we have a body element.
@@ -4576,13 +4575,13 @@ void Document::EnqueueMediaQueryChangeListeners(
 
 void Document::EnqueueVisualViewportScrollEvent() {
   VisualViewportScrollEvent* event = VisualViewportScrollEvent::Create();
-  event->SetTarget(domWindow()->view());
+  event->SetTarget(domWindow()->visualViewport());
   EnsureScriptedAnimationController().EnqueuePerFrameEvent(event);
 }
 
 void Document::EnqueueVisualViewportResizeEvent() {
   VisualViewportResizeEvent* event = VisualViewportResizeEvent::Create();
-  event->SetTarget(domWindow()->view());
+  event->SetTarget(domWindow()->visualViewport());
   EnsureScriptedAnimationController().EnqueuePerFrameEvent(event);
 }
 
@@ -5202,7 +5201,24 @@ void Document::SetEncodingData(const DocumentEncodingData& new_data) {
 }
 
 KURL Document::CompleteURL(const String& url) const {
-  return CompleteURLWithOverride(url, base_url_);
+  KURL completed = CompleteURLWithOverride(url, base_url_);
+
+  if (completed.WhitespaceRemoved()) {
+    if (completed.ProtocolIsInHTTPFamily()) {
+      UseCounter::Count(*this,
+                        UseCounter::kDocumentCompleteURLHTTPContainingNewline);
+      bool less_than = url.Contains('<');
+      if (less_than) {
+        UseCounter::Count(
+            *this,
+            UseCounter::kDocumentCompleteURLHTTPContainingNewlineAndLessThan);
+      }
+    } else {
+      UseCounter::Count(
+          *this, UseCounter::kDocumentCompleteURLNonHTTPContainingNewline);
+    }
+  }
+  return completed;
 }
 
 KURL Document::CompleteURLWithOverride(const String& url,
@@ -5636,48 +5652,6 @@ HTMLLinkElement* Document::LinkManifest() const {
   return 0;
 }
 
-void Document::SetFeaturePolicy(const String& feature_policy_header) {
-  if (!RuntimeEnabledFeatures::featurePolicyEnabled())
-    return;
-
-  WebFeaturePolicy* parent_feature_policy = nullptr;
-  WebParsedFeaturePolicy container_policy;
-  Vector<String> messages;
-  const WebParsedFeaturePolicy& parsed_header =
-      ParseFeaturePolicy(feature_policy_header, GetSecurityOrigin(), &messages);
-
-  // If this frame is not the main frame, then get the appropriate parent policy
-  // and container policy to construct the policy for this frame.
-  if (frame_) {
-    if (!frame_->IsMainFrame()) {
-      parent_feature_policy =
-          frame_->Tree().Parent()->GetSecurityContext()->GetFeaturePolicy();
-    }
-    if (frame_->Owner())
-      container_policy = frame_->Owner()->ContainerPolicy();
-  }
-
-  // Check that if there is a parent frame, that its feature policy is
-  // correctly initialized. Crash if that is not the case. (Temporary crash for
-  // isolating the cause of https://crbug.com/722333)
-  // Note that even with this check removed, the process will stil crash in
-  // feature_policy.cc when it attempts to dereference parent_feature_policy.
-  // This check is to distinguish between two possible causes.
-  if (!container_policy.empty())
-    CHECK(frame_ && (frame_->IsMainFrame() || parent_feature_policy));
-
-  InitializeFeaturePolicy(parsed_header, container_policy,
-                          parent_feature_policy);
-
-  for (const auto& message : messages) {
-    AddConsoleMessage(
-        ConsoleMessage::Create(kOtherMessageSource, kErrorMessageLevel,
-                               "Error with Feature-Policy header: " + message));
-  }
-  if (frame_ && !parsed_header.empty())
-    frame_->Client()->DidSetFeaturePolicyHeader(parsed_header);
-}
-
 void Document::InitSecurityContext(const DocumentInit& initializer) {
   DCHECK(!GetSecurityOrigin());
 
@@ -5687,7 +5661,6 @@ void Document::InitSecurityContext(const DocumentInit& initializer) {
     cookie_url_ = KURL(kParsedURLString, g_empty_string);
     SetSecurityOrigin(SecurityOrigin::CreateUnique());
     InitContentSecurityPolicy();
-    SetFeaturePolicy(g_empty_string);
     // Unique security origins cannot have a suborigin
     return;
   }
@@ -5788,8 +5761,6 @@ void Document::InitSecurityContext(const DocumentInit& initializer) {
 
   if (GetSecurityOrigin()->HasSuborigin())
     EnforceSuborigin(*GetSecurityOrigin()->GetSuborigin());
-
-  SetFeaturePolicy(g_empty_string);
 }
 
 void Document::InitContentSecurityPolicy(ContentSecurityPolicy* csp) {

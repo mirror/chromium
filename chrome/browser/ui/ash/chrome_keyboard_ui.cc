@@ -98,10 +98,11 @@ class AshKeyboardControllerObserver
     new_bounds->SetInteger("height", bounds.height());
     event_args->Append(std::move(new_bounds));
 
-    auto event = base::MakeUnique<extensions::Event>(
+    std::unique_ptr<extensions::Event> event(new extensions::Event(
         extensions::events::VIRTUAL_KEYBOARD_PRIVATE_ON_BOUNDS_CHANGED,
         virtual_keyboard_private::OnBoundsChanged::kEventName,
-        std::move(event_args), context_);
+        std::move(event_args)));
+    event->restrict_to_browser_context = context_;
     router->BroadcastEvent(std::move(event));
   }
 
@@ -113,10 +114,11 @@ class AshKeyboardControllerObserver
       return;
     }
 
-    auto event = base::MakeUnique<extensions::Event>(
+    std::unique_ptr<extensions::Event> event(new extensions::Event(
         extensions::events::VIRTUAL_KEYBOARD_PRIVATE_ON_KEYBOARD_CLOSED,
         virtual_keyboard_private::OnKeyboardClosed::kEventName,
-        base::MakeUnique<base::ListValue>(), context_);
+        base::WrapUnique(new base::ListValue())));
+    event->restrict_to_browser_context = context_;
     router->BroadcastEvent(std::move(event));
   }
 
@@ -201,7 +203,7 @@ bool ChromeKeyboardUI::ShouldWindowOverscroll(aura::Window* window) const {
     return false;
 
   ash::RootWindowController* root_window_controller =
-      ash::RootWindowController::ForWindow(root_window);
+      ash::GetRootWindowController(root_window);
   // Shell ime window container contains virtual keyboard windows and IME
   // windows(IME windows are created by chrome.app.window.create api). They
   // should never be overscrolled.
@@ -229,10 +231,11 @@ void ChromeKeyboardUI::SetUpdateInputType(ui::TextInputType type) {
                                TextInputTypeToGeneratedInputTypeEnum(type)));
   event_args->Append(std::move(input_context));
 
-  auto event = base::MakeUnique<extensions::Event>(
+  std::unique_ptr<extensions::Event> event(new extensions::Event(
       extensions::events::VIRTUAL_KEYBOARD_PRIVATE_ON_TEXT_INPUT_BOX_FOCUSED,
       virtual_keyboard_private::OnTextInputBoxFocused::kEventName,
-      std::move(event_args), browser_context());
+      std::move(event_args)));
+  event->restrict_to_browser_context = browser_context();
   router->DispatchEventToExtension(kVirtualKeyboardExtensionID,
                                    std::move(event));
 }

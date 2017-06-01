@@ -19,7 +19,7 @@ class SequenceCheckerImpl::Core {
         sequenced_worker_pool_token_(
             SequencedWorkerPool::GetSequenceTokenForCurrentThread()) {
     // SequencedWorkerPool doesn't use SequenceToken and code outside of
-    // SequencedWorkerPool doesn't set a SequencedWorkerPool token.
+    // SequenceWorkerPool doesn't set a SequencedWorkerPool token.
     DCHECK(!sequence_token_.IsValid() ||
            !sequenced_worker_pool_token_.IsValid());
   }

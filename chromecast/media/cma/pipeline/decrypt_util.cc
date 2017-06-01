@@ -103,7 +103,7 @@ void DecryptDecoderBuffer(scoped_refptr<DecoderBufferBase> buffer,
                           const BufferDecryptedCB& buffer_decrypted_cb) {
   decrypt_ctxt->DecryptAsync(
       buffer.get(), buffer->writable_data(), 0,
-      base::BindOnce(&OnBufferDecrypted, buffer, buffer_decrypted_cb));
+      base::Bind(&OnBufferDecrypted, buffer, buffer_decrypted_cb));
 }
 
 }  // namespace media

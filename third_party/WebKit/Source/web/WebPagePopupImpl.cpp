@@ -33,11 +33,10 @@
 #include "core/dom/ContextFeatures.h"
 #include "core/events/MessageEvent.h"
 #include "core/events/WebInputEventConversion.h"
-#include "core/exported/WebSettingsImpl.h"
 #include "core/exported/WebViewBase.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
 #include "core/input/EventHandler.h"
@@ -67,6 +66,7 @@
 #include "public/web/WebViewClient.h"
 #include "public/web/WebWidgetClient.h"
 #include "web/WebLocalFrameImpl.h"
+#include "web/WebSettingsImpl.h"
 
 namespace blink {
 
@@ -315,7 +315,7 @@ bool WebPagePopupImpl::InitializePage() {
                       (EmptyLocalFrameClient::Create()));
   LocalFrame* frame = LocalFrame::Create(&empty_local_frame_client, *page_, 0);
   frame->SetPagePopupOwner(popup_client_->OwnerElement());
-  frame->SetView(LocalFrameView::Create(*frame));
+  frame->SetView(FrameView::Create(*frame));
   frame->Init();
   frame->View()->SetParentVisible(true);
   frame->View()->SetSelfVisible(true);
@@ -600,7 +600,7 @@ WebRect WebPagePopupImpl::WindowRectInScreen() const {
 
 WebPagePopup* WebPagePopup::Create(WebWidgetClient* client) {
   if (!client)
-    IMMEDIATE_CRASH();
+    CRASH();
   // A WebPagePopupImpl instance usually has two references.
   //  - One owned by the instance itself. It represents the visible widget.
   //  - One owned by a WebViewBase. It's released when the WebViewBase ask the

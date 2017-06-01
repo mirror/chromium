@@ -184,6 +184,9 @@ WebFrameTestClient::~WebFrameTestClient() {}
 
 void WebFrameTestClient::FrameDetached(blink::WebLocalFrame* frame,
                                        DetachType type) {
+  if (type == DetachType::kRemove && frame->Parent())
+    frame->Parent()->RemoveChild(frame);
+
   if (frame->FrameWidget())
     frame->FrameWidget()->Close();
 

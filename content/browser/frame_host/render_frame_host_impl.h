@@ -85,7 +85,6 @@ class Range;
 namespace content {
 class AssociatedInterfaceProviderImpl;
 class AssociatedInterfaceRegistryImpl;
-class LegacyIPCFrameInputHandler;
 class FeaturePolicy;
 class FrameTree;
 class FrameTreeNode;
@@ -229,8 +228,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
       CSPDirective::Name directive,
       GURL* blocked_url,
       SourceLocation* source_location) const override;
-
-  mojom::FrameInputHandler* GetFrameInputHandler() override;
 
   // Creates a RenderFrame in the renderer process.
   bool CreateRenderFrame(int proxy_routing_id,
@@ -449,6 +446,21 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void AdvanceFocus(blink::WebFocusType type,
                     RenderFrameProxyHost* source_proxy);
 
+  // Deletes the current selection plus the specified number of characters
+  // before and after the selection or caret.
+  void ExtendSelectionAndDelete(size_t before, size_t after);
+
+  // Deletes text before and after the current cursor position, excluding the
+  // selection. The lengths are supplied in Java chars (UTF-16 Code Unit), not
+  // in code points or in glyphs.
+  void DeleteSurroundingText(size_t before, size_t after);
+
+  // Deletes text before and after the current cursor position, excluding the
+  // selection. The lengths are supplied in code points, not in Java chars
+  // (UTF-16 Code Unit) or in glyphs. Do nothing if there are one or more
+  // invalid surrogate pairs in the requested range.
+  void DeleteSurroundingTextInCodePoints(int before, int after);
+
   // Notifies the RenderFrame that the JavaScript message that was shown was
   // closed by the user.
   void JavaScriptDialogClosed(IPC::Message* reply_msg,
@@ -652,7 +664,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
                       bool renderer_initiated_creation);
 
  private:
-  friend class RenderFrameHostFeaturePolicyTest;
   friend class TestRenderFrameHost;
   friend class TestRenderViewHost;
 
@@ -779,7 +790,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
       base::TimeDelta renderer_main_thread_time);
   void OnSelectionChanged(const base::string16& text,
                           uint32_t offset,
-                          const gfx::Range& range);
+                          const gfx::Range& range,
+                          bool user_initiated);
   void OnFocusedNodeChanged(bool is_editable_element,
                             const gfx::Rect& bounds_in_frame_widget);
   void OnSetHasReceivedUserGesture();
@@ -918,7 +930,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
 #if defined(OS_ANDROID)
   void BindNFCRequest(const service_manager::BindSourceInfo& source_info,
-                      device::mojom::NFCRequest request);
+                      device::nfc::mojom::NFCRequest request);
 #endif
 
   // service_manager::mojom::InterfaceProvider:
@@ -943,11 +955,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   // Called by |beforeunload_timeout_| when the beforeunload timeout fires.
   void BeforeUnloadTimeout();
-
-  // Called when a navigation commits succesfully to |url|. This will update
-  // |last_committed_site_url_| if it's not equal to the site url corresponding
-  // to |url|.
-  void SetLastCommittedSiteUrl(const GURL& url);
 
   // For now, RenderFrameHosts indirectly keep RenderViewHosts alive via a
   // refcount that calls Shutdown when it reaches zero.  This allows each
@@ -991,10 +998,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   // Track this frame's last committed origin.
   url::Origin last_committed_origin_;
-
-  // Track the site URL of the last site we committed successfully, as obtained
-  // from SiteInstance::GetSiteURL.
-  GURL last_committed_site_url_;
 
   // The most recent non-error URL to commit in this frame.  Remove this in
   // favor of GetLastCommittedURL() once PlzNavigate is enabled or cross-process
@@ -1228,9 +1231,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // TODO(alexclarke): Remove once there is a solution for stable frame IDs. See
   // crbug.com/715541
   std::string untrusted_devtools_frame_id_;
-
-  mojom::FrameInputHandlerPtr frame_input_handler_;
-  std::unique_ptr<LegacyIPCFrameInputHandler> legacy_frame_input_handler_;
 
   // NOTE: This must be the last member.
   base::WeakPtrFactory<RenderFrameHostImpl> weak_ptr_factory_;

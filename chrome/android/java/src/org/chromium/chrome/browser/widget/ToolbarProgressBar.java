@@ -238,6 +238,8 @@ public class ToolbarProgressBar extends ClipDrawableProgressBar {
             mAnimationLogic = new ProgressAnimationFastStart();
         } else if (TextUtils.equals(animation, "linear")) {
             mAnimationLogic = new ProgressAnimationLinear();
+        } else {
+            assert TextUtils.isEmpty(animation) || TextUtils.equals(animation, "disabled");
         }
     }
 

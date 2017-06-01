@@ -15,11 +15,12 @@
 #include "ash/autoclick/mus/public/interfaces/autoclick.mojom.h"
 #include "ash/high_contrast/high_contrast_controller.h"
 #include "ash/root_window_controller.h"
-#include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_layout_manager.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/sticky_keys/sticky_keys_controller.h"
+#include "ash/wm_window.h"
 #include "base/callback.h"
 #include "base/callback_helpers.h"
 #include "base/command_line.h"
@@ -83,7 +84,6 @@
 #include "media/audio/sounds/sounds_manager.h"
 #include "media/base/media_switches.h"
 #include "services/service_manager/public/cpp/connector.h"
-#include "ui/base/ime/chromeos/extension_ime_util.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/keyboard/keyboard_controller.h"
@@ -174,6 +174,7 @@ AccessibilityStatusEventDetails::AccessibilityStatusEventDetails(
       notify(notify) {}
 
 ///////////////////////////////////////////////////////////////////////////////
+//
 // AccessibilityManager::PrefHandler
 
 AccessibilityManager::PrefHandler::PrefHandler(const char* pref_path)
@@ -1093,14 +1094,14 @@ void AccessibilityManager::UpdateBrailleImeState() {
       preload_engines_str, ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
   std::vector<base::StringPiece>::iterator it =
       std::find(preload_engines.begin(), preload_engines.end(),
-                extension_ime_util::kBrailleImeEngineId);
+                extension_misc::kBrailleImeEngineId);
   bool is_enabled = (it != preload_engines.end());
   bool should_be_enabled =
       (spoken_feedback_enabled_ && braille_display_connected_);
   if (is_enabled == should_be_enabled)
     return;
   if (should_be_enabled)
-    preload_engines.push_back(extension_ime_util::kBrailleImeEngineId);
+    preload_engines.push_back(extension_misc::kBrailleImeEngineId);
   else
     preload_engines.erase(it);
   pref_service->SetString(prefs::kLanguagePreloadEngines,
@@ -1123,7 +1124,7 @@ void AccessibilityManager::InputMethodChanged(
   const chromeos::input_method::InputMethodDescriptor descriptor =
       manager->GetActiveIMEState()->GetCurrentInputMethod();
   braille_ime_current_ =
-      (descriptor.id() == extension_ime_util::kBrailleImeEngineId);
+      (descriptor.id() == extension_misc::kBrailleImeEngineId);
 }
 
 void AccessibilityManager::OnSessionStateChanged() {
@@ -1275,8 +1276,9 @@ void AccessibilityManager::ActiveUserChanged(
   SetProfile(ProfileManager::GetActiveUserProfile());
 }
 
-void AccessibilityManager::OnFullscreenStateChanged(bool is_fullscreen,
-                                                    aura::Window* root_window) {
+void AccessibilityManager::OnFullscreenStateChanged(
+    bool is_fullscreen,
+    ash::WmWindow* root_window) {
   if (chromevox_panel_)
     chromevox_panel_->UpdateWidgetBounds();
 }
@@ -1425,7 +1427,7 @@ void AccessibilityManager::OnBrailleKeyEvent(const KeyEvent& event) {
       !braille_ime_current_) {
     input_method::InputMethodManager::Get()
         ->GetActiveIMEState()
-        ->ChangeInputMethod(extension_ime_util::kBrailleImeEngineId,
+        ->ChangeInputMethod(extension_misc::kBrailleImeEngineId,
                             false /* show_message */);
   }
 }

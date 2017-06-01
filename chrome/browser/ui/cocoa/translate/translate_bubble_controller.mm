@@ -25,7 +25,6 @@
 #include "chrome/browser/ui/translate/translate_bubble_view_state_transition.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/generated_resources.h"
-#include "chrome/grit/theme_resources.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/translate/core/browser/translate_ui_delegate.h"
 #include "content/public/browser/browser_context.h"
@@ -37,6 +36,7 @@
 #import "ui/base/cocoa/window_size_constants.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/models/combobox_model.h"
+#include "ui/resources/grit/ui_resources.h"
 
 // TODO(hajimehoshi): This class is almost same as that of views. Refactor them.
 class TranslateDenialComboboxModel : public ui::ComboboxModel {
@@ -659,7 +659,7 @@ const CGFloat kContentWidth = kWindowWidth - 2 * kFramePadding;
   base::scoped_nsobject<NSImageView> image(
       [[NSImageView alloc] initWithFrame:imageFrame]);
   [image setImage:(ui::ResourceBundle::GetSharedInstance()
-                       .GetImageNamed(IDR_TRANSLATE_BUBBLE_ICON)
+                       .GetImageNamed(IDR_TRANSLATE_ICON_BUBBLE)
                        .ToNSImage())];
   [view addSubview:image];
   return image.get();

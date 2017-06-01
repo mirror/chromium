@@ -11,13 +11,50 @@ import org.chromium.base.annotations.JNINamespace;
  */
 @JNINamespace("payments")
 public class JourneyLogger {
+    // Note: The constants should always be in sync with those in the
+    // components/payments/core/journey_logger.h file.
+    // The index of the different sections of a Payment Request. Used to record journey stats.
+    public static final int SECTION_CONTACT_INFO = 0;
+    public static final int SECTION_CREDIT_CARDS = 1;
+    public static final int SECTION_SHIPPING_ADDRESS = 2;
+    public static final int SECTION_MAX = 3;
+
+    // For the CanMakePayment histograms.
+    public static final int CAN_MAKE_PAYMENT_USED = 0;
+    public static final int CAN_MAKE_PAYMENT_NOT_USED = 1;
+    public static final int CAN_MAKE_PAYMENT_USE_MAX = 2;
+
+    // Used to log different parameters' effect on whether the transaction was completed.
+    public static final int COMPLETION_STATUS_COMPLETED = 0;
+    public static final int COMPLETION_STATUS_USER_ABORTED = 1;
+    public static final int COMPLETION_STATUS_OTHER_ABORTED = 2;
+    public static final int COMPLETION_STATUS_MAX = 3;
+
+    // Used to mesure the impact of the CanMakePayment return value on whether the Payment Request
+    // is shown to the user.
+    public static final int CMP_SHOW_COULD_NOT_MAKE_PAYMENT_AND_DID_NOT_SHOW = 0;
+    public static final int CMP_SHOW_DID_SHOW = 1 << 0;
+    public static final int CMP_SHOW_COULD_MAKE_PAYMENT = 1 << 1;
+    public static final int CMP_SHOW_MAX = 4;
+
+    // The events that can occur during a Payment Request.
+    public static final int EVENT_INITIATED = 0;
+    public static final int EVENT_SHOWN = 1 << 0;
+    public static final int EVENT_PAY_CLICKED = 1 << 1;
+    public static final int EVENT_RECEIVED_INSTRUMENT_DETAILS = 1 << 2;
+    public static final int EVENT_SKIPPED_SHOW = 1 << 3;
+    public static final int EVENT_MAX = 16;
+
+    // The minimum expected value of CustomCountHistograms is always set to 1. It is still possible
+    // to log the value 0 to that type of histogram.
+    private static final int MIN_EXPECTED_SAMPLE = 1;
+    private static final int MAX_EXPECTED_SAMPLE = 49;
+    private static final int NUMBER_BUCKETS = 50;
+
     /**
      * Pointer to the native implementation.
      */
     private long mJourneyLoggerAndroid;
-
-    private boolean mWasShowCalled;
-    private boolean mHasRecorded;
 
     public JourneyLogger(boolean isIncognito, String url) {
         // Note that this pointer could leak the native object. The called must call destroy() to
@@ -40,7 +77,7 @@ public class JourneyLogger {
      * @param number The number of suggestions.
      */
     public void setNumberOfSuggestionsShown(int section, int number) {
-        assert section < Section.MAX;
+        assert section < SECTION_MAX;
         nativeSetNumberOfSuggestionsShown(mJourneyLoggerAndroid, section, number);
     }
 
@@ -50,7 +87,7 @@ public class JourneyLogger {
      * @param section The section for which to log.
      */
     public void incrementSelectionChanges(int section) {
-        assert section < Section.MAX;
+        assert section < SECTION_MAX;
         nativeIncrementSelectionChanges(mJourneyLoggerAndroid, section);
     }
 
@@ -60,7 +97,7 @@ public class JourneyLogger {
      * @param section The section for which to log.
      */
     public void incrementSelectionEdits(int section) {
-        assert section < Section.MAX;
+        assert section < SECTION_MAX;
         nativeIncrementSelectionEdits(mJourneyLoggerAndroid, section);
     }
 
@@ -70,7 +107,7 @@ public class JourneyLogger {
      * @param section The section for which to log.
      */
     public void incrementSelectionAdds(int section) {
-        assert section < Section.MAX;
+        assert section < SECTION_MAX;
         nativeIncrementSelectionAdds(mJourneyLoggerAndroid, section);
     }
 
@@ -87,7 +124,6 @@ public class JourneyLogger {
      * Records the fact that the Payment Request was shown to the user.
      */
     public void setShowCalled() {
-        mWasShowCalled = true;
         nativeSetShowCalled(mJourneyLoggerAndroid);
     }
 
@@ -95,56 +131,19 @@ public class JourneyLogger {
      * Records that an event occurred.
      */
     public void setEventOccurred(int event) {
-        assert event < Event.ENUM_MAX;
+        assert event < EVENT_MAX;
         nativeSetEventOccurred(mJourneyLoggerAndroid, event);
     }
 
-    /**
-     * Records that the Payment Request was completed sucessfully. Also starts the logging of
-     * all the journey logger metrics.
-     */
-    public void setCompleted() {
-        assert !mHasRecorded;
-        assert mWasShowCalled;
-
-        if (!mHasRecorded && mWasShowCalled) {
-            mHasRecorded = true;
-            nativeSetCompleted(mJourneyLoggerAndroid);
-        }
-    }
-
-    /**
-     * Records that the Payment Request was aborted and for what reason. Also starts the logging of
-     * all the journey logger metrics.
+    /*
+     * Records the histograms for all the sections that were requested by the merchant and for the
+     * usage of the CanMakePayment method and its effect on the transaction. This method should be
+     * called when the payment request has either been completed or aborted.
      *
-     * @param reason An int indicating why the payment request was aborted.
+     * @param submissionType An int indicating the way the payment request was concluded.
      */
-    public void setAborted(int reason) {
-        assert reason < AbortReason.MAX;
-        assert mWasShowCalled;
-
-        // The abort reasons on Android cascade into each other, so only the first one should be
-        // recorded.
-        if (!mHasRecorded && mWasShowCalled) {
-            mHasRecorded = true;
-            nativeSetAborted(mJourneyLoggerAndroid, reason);
-        }
-    }
-
-    /**
-     * Records that the Payment Request was not shown to the user and for what reason.
-     *
-     * @param reason An int indicating why the payment request was not shown.
-     */
-    public void setNotShown(int reason) {
-        assert reason < NotShownReason.MAX;
-        assert !mWasShowCalled;
-        assert !mHasRecorded;
-
-        if (!mHasRecorded) {
-            mHasRecorded = true;
-            nativeSetNotShown(mJourneyLoggerAndroid, reason);
-        }
+    public void recordJourneyStatsHistograms(int completionStatus) {
+        nativeRecordJourneyStatsHistograms(mJourneyLoggerAndroid, completionStatus);
     }
 
     private native long nativeInitJourneyLoggerAndroid(boolean isIncognito, String url);
@@ -159,7 +158,6 @@ public class JourneyLogger {
             long nativeJourneyLoggerAndroid, boolean value);
     private native void nativeSetShowCalled(long nativeJourneyLoggerAndroid);
     private native void nativeSetEventOccurred(long nativeJourneyLoggerAndroid, int event);
-    private native void nativeSetCompleted(long nativeJourneyLoggerAndroid);
-    private native void nativeSetAborted(long nativeJourneyLoggerAndroid, int reason);
-    private native void nativeSetNotShown(long nativeJourneyLoggerAndroid, int reason);
+    private native void nativeRecordJourneyStatsHistograms(
+            long nativeJourneyLoggerAndroid, int completionStatus);
 }

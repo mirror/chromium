@@ -42,7 +42,6 @@ enum class DialogViewID : int {
 
   // The following are StyledLabel objects.
   ORDER_SUMMARY_TOTAL_AMOUNT_LABEL,
-  ORDER_SUMMARY_TOTAL_CURRENCY_LABEL,
   ORDER_SUMMARY_LINE_ITEM_1,
   ORDER_SUMMARY_LINE_ITEM_2,
   ORDER_SUMMARY_LINE_ITEM_3,
@@ -69,8 +68,6 @@ enum class DialogViewID : int {
   // The CVC text field in the unmask sheet.
   CVC_PROMPT_TEXT_FIELD,
   CVC_ERROR_LABEL,
-  CVC_MONTH,
-  CVC_YEAR,
 
   // The following are the ids for the individual sheets.
   CONTACT_INFO_EDITOR_SHEET,

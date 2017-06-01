@@ -4,9 +4,10 @@
 
 #include <string>
 
-#include "ash/shelf/shelf.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/system/tray/system_tray.h"
+#include "ash/wm_window.h"
 #include "base/command_line.h"
 #include "base/location.h"
 #include "base/single_thread_task_runner.h"
@@ -92,7 +93,7 @@ class LoginSigninTest : public InProcessBrowserTest {
   void TearDownOnMainThread() override {
     // Close the login manager, which otherwise holds a KeepAlive that is not
     // cleared in time by the end of the test.
-    LoginDisplayHost::default_host()->Finalize(base::OnceClosure());
+    LoginDisplayHost::default_host()->Finalize();
   }
 
   void SetUpOnMainThread() override {
@@ -328,10 +329,10 @@ class ActiveDirectoryLoginTest : public LoginManagerTest {
 void TestSystemTrayIsVisible(bool otr) {
   ash::SystemTray* tray = ash::Shell::Get()->GetPrimarySystemTray();
   aura::Window* primary_win = ash::Shell::GetPrimaryRootWindow();
-  ash::Shelf* shelf = ash::Shelf::ForWindow(primary_win);
+  ash::WmShelf* wm_shelf = ash::WmShelf::ForWindow(primary_win);
   SCOPED_TRACE(testing::Message()
-               << "ShelfVisibilityState=" << shelf->GetVisibilityState()
-               << " ShelfAutoHideBehavior=" << shelf->auto_hide_behavior());
+               << "ShelfVisibilityState=" << wm_shelf->GetVisibilityState()
+               << " ShelfAutoHideBehavior=" << wm_shelf->auto_hide_behavior());
   EXPECT_TRUE(tray->visible());
 
   // This check flakes for LoginGuestTest: https://crbug.com/693106.

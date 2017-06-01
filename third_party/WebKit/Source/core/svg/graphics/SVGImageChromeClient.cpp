@@ -114,12 +114,11 @@ void SVGImageChromeClient::AnimationTimerFired(TimerBase*) {
 
   // The SVGImageChromeClient object's lifetime is dependent on
   // the ImageObserver (an ImageResourceContent) of its image. Should it
-  // be dead and about to be lazily swept out, then GetImageObserver()
-  // becomes null and we do not proceed.
+  // be dead and about to be lazily swept out, do not proceed.
   //
   // TODO(Oilpan): move (SVG)Image to the Oilpan heap, and avoid
   // this explicit lifetime check.
-  if (!image_->GetImageObserver())
+  if (ThreadHeap::WillObjectBeLazilySwept(image_->GetImageObserver()))
     return;
 
   image_->ServiceAnimations(MonotonicallyIncreasingTime());

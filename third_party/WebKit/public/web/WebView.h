@@ -31,7 +31,6 @@
 #ifndef WebView_h
 #define WebView_h
 
-#include "WebWidget.h"
 #include "public/platform/WebColor.h"
 #include "public/platform/WebDisplayMode.h"
 #include "public/platform/WebDragOperation.h"
@@ -39,6 +38,7 @@
 #include "public/platform/WebPageVisibilityState.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebVector.h"
+#include "WebWidget.h"
 
 namespace gfx {
 class ICCProfile;
@@ -46,6 +46,7 @@ class ICCProfile;
 
 namespace blink {
 
+class WebAXObject;
 class WebCredentialManagerClient;
 class WebFrame;
 class WebHitTestResult;
@@ -172,6 +173,15 @@ class WebView : protected WebWidget {
   // Frames --------------------------------------------------------------
 
   virtual WebFrame* MainFrame() = 0;
+
+  // Returns the frame identified by the given name.  This method
+  // supports pseudo-names like _self, _top, and _blank.  It traverses
+  // the entire frame tree containing this tree looking for a frame that
+  // matches the given name.  If the optional relativeToFrame parameter
+  // is specified, then the search begins with the given frame and its
+  // children.
+  virtual WebFrame* FindFrameByName(const WebString& name,
+                                    WebFrame* relative_to_frame = 0) = 0;
 
   // Focus ---------------------------------------------------------------
 
@@ -369,10 +379,17 @@ class WebView : protected WebWidget {
   // Cancel emulation started via |enableDeviceEmulation| call.
   virtual void DisableDeviceEmulation() = 0;
 
+  // Accessibility -------------------------------------------------------
+
+  // Returns the accessibility object for this view.
+  virtual WebAXObject AccessibilityObject() = 0;
 
   // Context menu --------------------------------------------------------
 
   virtual void PerformCustomContextMenuAction(unsigned action) = 0;
+
+  // Shows a context menu for the currently focused element.
+  virtual void ShowContextMenu() = 0;
 
   // Notify that context menu has been closed.
   virtual void DidCloseContextMenu() = 0;

@@ -115,7 +115,6 @@ void NightLightController::Refresh() {
   ApplyColorTemperatureToLayers(
       GetEnabled() ? GetColorTemperature() : 0.0f,
       base::TimeDelta::FromSeconds(kManualToggleAnimationDurationSec));
-  Shell::Get()->SetCursorCompositingEnabled(GetEnabled());
 }
 
 void NightLightController::StartWatchingPrefsChanges() {

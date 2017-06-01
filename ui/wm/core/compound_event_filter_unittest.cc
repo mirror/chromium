@@ -159,7 +159,8 @@ TEST_F(CompoundEventFilterTest, TouchHidesCursor) {
   ui::TouchEvent press1(
       ui::ET_TOUCH_PRESSED, gfx::Point(90, 90), GetTime(),
       ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_TOUCH, 1));
-  GetActivationClient(root_window())->ActivateWindow(window.get());
+  aura::client::GetActivationClient(
+      root_window())->ActivateWindow(window.get());
   DispatchEventUsingWindowDispatcher(&press1);
   EXPECT_FALSE(cursor_client.IsMouseEventsEnabled());
   aura::Env::GetInstance()->RemovePreTargetHandler(compound_filter.get());

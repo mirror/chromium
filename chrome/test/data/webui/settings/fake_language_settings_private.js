@@ -26,11 +26,6 @@ cr.define('settings', function() {
    * @implements {LanguageSettingsPrivate}
    */
   function FakeLanguageSettingsPrivate() {
-    this.onSpellcheckDictionariesChanged = new FakeChromeEvent();
-    this.onCustomDictionaryChanged = new FakeChromeEvent();
-    this.onInputMethodAdded = new FakeChromeEvent();
-    this.onInputMethodRemoved = new FakeChromeEvent();
-
     // List of method names expected to be tested with whenCalled()
     settings.TestBrowserProxy.call(this, [
       'getSpellcheckWords',
@@ -194,7 +189,7 @@ cr.define('settings', function() {
      * @param {string} word
      */
     addSpellcheckWord: function(word) {
-      this.onCustomDictionaryChanged.callListeners([word], []);
+      // Current tests don't actually care about this implementation.
     },
 
     /**
@@ -266,28 +261,28 @@ cr.define('settings', function() {
     /**
      * Called when the pref for the dictionaries used for spell checking changes
      * or the status of one of the spell check dictionaries changes.
-     * @type {ChromeEvent}
+     * @type {!ChromeEvent}
      */
-    onSpellcheckDictionariesChanged: null,
+    onSpellcheckDictionariesChanged: new FakeChromeEvent(),
 
     /**
      * Called when words are added to and/or removed from the custom spell check
      * dictionary.
-     * @type {ChromeEvent}
+     * @type {!ChromeEvent}
      */
-    onCustomDictionaryChanged: null,
+    onCustomDictionaryChanged: new FakeChromeEvent(),
 
     /**
      * Called when an input method is added.
-     * @type {ChromeEvent}
+     * @type {!ChromeEvent}
      */
-    onInputMethodAdded: null,
+    onInputMethodAdded: new FakeChromeEvent(),
 
     /**
      * Called when an input method is removed.
-     * @type {ChromeEvent}
+     * @type {!ChromeEvent}
      */
-    onInputMethodRemoved: null,
+    onInputMethodRemoved: new FakeChromeEvent(),
   };
 
   // List of language-related preferences suitable for testing.

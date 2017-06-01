@@ -9,10 +9,10 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/root_window_controller.h"
-#include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_layout_manager.h"
 #include "ash/shelf/shelf_model.h"
 #include "ash/shelf/shelf_widget.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/test/ash_test_base.h"
@@ -22,6 +22,7 @@
 #include "ash/wm/window_properties.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/wm_event.h"
+#include "ash/wm_window.h"
 #include "base/i18n/rtl.h"
 #include "base/strings/string_number_conversions.h"
 #include "ui/aura/client/aura_constants.h"
@@ -61,7 +62,7 @@ class PanelWindowResizerTest : public test::AshTestBase {
   aura::Window* CreatePanelWindow(const gfx::Point& origin) {
     gfx::Rect bounds(origin, gfx::Size(101, 101));
     aura::Window* window = CreateTestWindowInShellWithDelegateAndType(
-        NULL, aura::client::WINDOW_TYPE_PANEL, 0, bounds);
+        NULL, ui::wm::WINDOW_TYPE_PANEL, 0, bounds);
     static int id = 0;
     std::string shelf_id(ash::ShelfID(base::IntToString(id++)).Serialize());
     window->SetProperty(kShelfIDKey, new std::string(shelf_id));
@@ -71,7 +72,7 @@ class PanelWindowResizerTest : public test::AshTestBase {
 
   void DragStart(aura::Window* window) {
     resizer_ = CreateWindowResizer(window, window->bounds().origin(), HTCAPTION,
-                                   ::wm::WINDOW_MOVE_SOURCE_MOUSE);
+                                   aura::client::WINDOW_MOVE_SOURCE_MOUSE);
   }
 
   void DragMove(int dx, int dy) {
@@ -128,11 +129,11 @@ class PanelWindowResizerTest : public test::AshTestBase {
   // - |first| should be right of |second| in an RTL bottom-aligned shelf.
   // - |first| should be above |second| in a left- or right-aligned shelf.
   void CheckWindowAndItemPlacement(aura::Window* first, aura::Window* second) {
-    Shelf* shelf = GetPrimaryShelf();
+    WmShelf* shelf = GetPrimaryShelf();
     const gfx::Rect first_item_bounds =
-        shelf->GetScreenBoundsOfItemIconForWindow(first);
+        shelf->GetScreenBoundsOfItemIconForWindow(WmWindow::Get(first));
     const gfx::Rect second_item_bounds =
-        shelf->GetScreenBoundsOfItemIconForWindow(second);
+        shelf->GetScreenBoundsOfItemIconForWindow(WmWindow::Get(second));
     if (!base::i18n::IsRTL()) {
       EXPECT_TRUE((first->bounds().x() < second->bounds().x()) ||
                   (first->bounds().y() < second->bounds().y()));
@@ -208,13 +209,13 @@ class PanelWindowResizerTextDirectionTest
 // transient children of supported types.
 class PanelWindowResizerTransientTest
     : public PanelWindowResizerTest,
-      public testing::WithParamInterface<aura::client::WindowType> {
+      public testing::WithParamInterface<ui::wm::WindowType> {
  public:
   PanelWindowResizerTransientTest() : transient_window_type_(GetParam()) {}
   virtual ~PanelWindowResizerTransientTest() {}
 
  protected:
-  aura::client::WindowType transient_window_type_;
+  ui::wm::WindowType transient_window_type_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(PanelWindowResizerTransientTest);
@@ -264,7 +265,7 @@ TEST_F(PanelWindowResizerTest, DetachThenHideShelf) {
 
   // Hide the shelf. This minimizes all attached windows but should ignore
   // the dragged window.
-  Shelf* shelf = GetPrimaryShelf();
+  WmShelf* shelf = GetPrimaryShelf();
   shelf->SetAutoHideBehavior(SHELF_AUTO_HIDE_ALWAYS_HIDDEN);
   shelf->shelf_layout_manager()->UpdateVisibilityState();
   RunAllPendingInMessageLoop();
@@ -560,7 +561,7 @@ INSTANTIATE_TEST_CASE_P(LtrRtl,
                         testing::Bool());
 INSTANTIATE_TEST_CASE_P(NormalPanelPopup,
                         PanelWindowResizerTransientTest,
-                        testing::Values(aura::client::WINDOW_TYPE_NORMAL,
-                                        aura::client::WINDOW_TYPE_POPUP));
+                        testing::Values(ui::wm::WINDOW_TYPE_NORMAL,
+                                        ui::wm::WINDOW_TYPE_POPUP));
 
 }  // namespace ash

@@ -60,7 +60,6 @@ std::unique_ptr<SearchResult> URLSuggestionResult::Duplicate() const {
 
 void URLSuggestionResult::UpdateIcon() {
   std::vector<int> icon_types;
-  icon_types.push_back(favicon_base::IconType::WEB_MANIFEST_ICON);
   icon_types.push_back(favicon_base::IconType::FAVICON);
   icon_types.push_back(favicon_base::IconType::TOUCH_ICON);
   icon_types.push_back(favicon_base::IconType::TOUCH_PRECOMPOSED_ICON);

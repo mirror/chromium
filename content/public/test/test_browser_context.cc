@@ -79,12 +79,10 @@ base::FilePath TestBrowserContext::GetPath() const {
   return browser_context_dir_.GetPath();
 }
 
-#if !defined(OS_ANDROID)
 std::unique_ptr<ZoomLevelDelegate> TestBrowserContext::CreateZoomLevelDelegate(
     const base::FilePath& partition_path) {
   return std::unique_ptr<ZoomLevelDelegate>();
 }
-#endif  // !defined(OS_ANDROID)
 
 bool TestBrowserContext::IsOffTheRecord() const {
   return is_off_the_record_;
@@ -128,13 +126,6 @@ BackgroundSyncController* TestBrowserContext::GetBackgroundSyncController() {
     background_sync_controller_.reset(new MockBackgroundSyncController());
 
   return background_sync_controller_.get();
-}
-
-BrowsingDataRemoverDelegate*
-TestBrowserContext::GetBrowsingDataRemoverDelegate() {
-  // Most BrowsingDataRemover tests do not require a delegate
-  // (not even a mock one).
-  return nullptr;
 }
 
 net::URLRequestContextGetter* TestBrowserContext::CreateRequestContext(

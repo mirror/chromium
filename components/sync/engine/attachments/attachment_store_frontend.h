@@ -9,7 +9,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/sequence_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "components/sync/model/attachments/attachment_store.h"
 
 namespace base {
@@ -30,7 +30,8 @@ class AttachmentStoreBackend;
 // Method signatures of AttachmentStoreFrontend match exactly methods of
 // AttachmentStoreBackend.
 class AttachmentStoreFrontend
-    : public base::RefCounted<AttachmentStoreFrontend> {
+    : public base::RefCounted<AttachmentStoreFrontend>,
+      public base::NonThreadSafe {
  public:
   AttachmentStoreFrontend(
       std::unique_ptr<AttachmentStoreBackend> backend,
@@ -64,8 +65,6 @@ class AttachmentStoreFrontend
 
   std::unique_ptr<AttachmentStoreBackend> backend_;
   scoped_refptr<base::SequencedTaskRunner> backend_task_runner_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(AttachmentStoreFrontend);
 };

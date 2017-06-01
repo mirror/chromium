@@ -91,7 +91,7 @@ class TestingHttpServerPropertiesManager : public HttpServerPropertiesManager {
         net_task_runner_(std::move(net_task_runner)) {
     // This call must run in the context of |net_task_runner_|.
     TestMockTimeTaskRunner::ScopedContext scoped_context(net_task_runner_);
-    HttpServerPropertiesManager::InitializeOnNetworkSequence();
+    HttpServerPropertiesManager::InitializeOnNetworkThread();
   }
 
   ~TestingHttpServerPropertiesManager() override {}
@@ -101,33 +101,31 @@ class TestingHttpServerPropertiesManager : public HttpServerPropertiesManager {
 
   void UpdateCacheFromPrefsOnUIConcrete() {
     TestMockTimeTaskRunner::ScopedContext scoped_context(pref_task_runner_);
-    HttpServerPropertiesManager::UpdateCacheFromPrefsOnPrefSequence();
+    HttpServerPropertiesManager::UpdateCacheFromPrefsOnPrefThread();
   }
 
-  void UpdatePrefsFromCacheOnNetworkSequenceConcrete(
+  void UpdatePrefsFromCacheOnNetworkThreadConcrete(
       const base::Closure& callback) {
     TestMockTimeTaskRunner::ScopedContext scoped_context(net_task_runner_);
-    HttpServerPropertiesManager::UpdatePrefsFromCacheOnNetworkSequence(
-        callback);
+    HttpServerPropertiesManager::UpdatePrefsFromCacheOnNetworkThread(callback);
   }
 
-  void ScheduleUpdatePrefsOnNetworkSequenceConcrete(Location location) {
+  void ScheduleUpdatePrefsOnNetworkThreadConcrete(Location location) {
     TestMockTimeTaskRunner::ScopedContext scoped_context(net_task_runner_);
-    HttpServerPropertiesManager::ScheduleUpdatePrefsOnNetworkSequence(location);
+    HttpServerPropertiesManager::ScheduleUpdatePrefsOnNetworkThread(location);
   }
 
-  void ScheduleUpdatePrefsOnNetworkSequenceDefault() {
+  void ScheduleUpdatePrefsOnNetworkThreadDefault() {
     TestMockTimeTaskRunner::ScopedContext scoped_context(net_task_runner_);
     // Picked a random Location as caller.
-    HttpServerPropertiesManager::ScheduleUpdatePrefsOnNetworkSequence(
+    HttpServerPropertiesManager::ScheduleUpdatePrefsOnNetworkThread(
         DETECTED_CORRUPTED_PREFS);
   }
 
-  MOCK_METHOD0(UpdateCacheFromPrefsOnPrefSequence, void());
-  MOCK_METHOD1(UpdatePrefsFromCacheOnNetworkSequence,
-               void(const base::Closure&));
-  MOCK_METHOD1(ScheduleUpdatePrefsOnNetworkSequence, void(Location location));
-  MOCK_METHOD6(UpdateCacheFromPrefsOnNetworkSequence,
+  MOCK_METHOD0(UpdateCacheFromPrefsOnPrefThread, void());
+  MOCK_METHOD1(UpdatePrefsFromCacheOnNetworkThread, void(const base::Closure&));
+  MOCK_METHOD1(ScheduleUpdatePrefsOnNetworkThread, void(Location location));
+  MOCK_METHOD6(UpdateCacheFromPrefsOnNetworkThread,
                void(std::vector<std::string>* spdy_servers,
                     AlternativeServiceMap* alternative_service_map,
                     IPAddress* last_quic_address,
@@ -181,7 +179,7 @@ class HttpServerPropertiesManagerTest : public testing::TestWithParam<int> {
 
   void TearDown() override {
     if (http_server_props_manager_.get())
-      http_server_props_manager_->ShutdownOnPrefSequence();
+      http_server_props_manager_->ShutdownOnPrefThread();
     // Run pending non-delayed tasks but don't FastForwardUntilNoTasksRemain()
     // as some delayed tasks may forever repost (e.g. because impl doesn't use a
     // mock clock and doesn't see timings as having expired, ref.
@@ -193,39 +191,37 @@ class HttpServerPropertiesManagerTest : public testing::TestWithParam<int> {
   }
 
   void ExpectCacheUpdate() {
-    EXPECT_CALL(*http_server_props_manager_,
-                UpdateCacheFromPrefsOnPrefSequence())
+    EXPECT_CALL(*http_server_props_manager_, UpdateCacheFromPrefsOnPrefThread())
         .WillOnce(Invoke(http_server_props_manager_.get(),
                          &TestingHttpServerPropertiesManager::
                              UpdateCacheFromPrefsOnUIConcrete));
   }
 
-  void ExpectScheduleUpdatePrefsOnNetworkSequence() {
+  void ExpectScheduleUpdatePrefsOnNetworkThread() {
     EXPECT_CALL(*http_server_props_manager_,
-                ScheduleUpdatePrefsOnNetworkSequence(_))
+                ScheduleUpdatePrefsOnNetworkThread(_))
         .WillOnce(Invoke(http_server_props_manager_.get(),
                          &TestingHttpServerPropertiesManager::
-                             ScheduleUpdatePrefsOnNetworkSequenceConcrete));
+                             ScheduleUpdatePrefsOnNetworkThreadConcrete));
   }
 
-  void ExpectScheduleUpdatePrefsOnNetworkSequenceRepeatedly(int times) {
+  void ExpectScheduleUpdatePrefsOnNetworkThreadRepeatedly(int times) {
     EXPECT_CALL(*http_server_props_manager_,
-                ScheduleUpdatePrefsOnNetworkSequence(_))
+                ScheduleUpdatePrefsOnNetworkThread(_))
         .Times(AtLeast(times))
-        .WillRepeatedly(
-            Invoke(http_server_props_manager_.get(),
-                   &TestingHttpServerPropertiesManager::
-                       ScheduleUpdatePrefsOnNetworkSequenceConcrete));
+        .WillRepeatedly(Invoke(http_server_props_manager_.get(),
+                               &TestingHttpServerPropertiesManager::
+                                   ScheduleUpdatePrefsOnNetworkThreadConcrete));
   }
 
   void ExpectPrefsUpdate(int times) {
     EXPECT_CALL(*http_server_props_manager_,
-                UpdatePrefsFromCacheOnNetworkSequence(_))
+                UpdatePrefsFromCacheOnNetworkThread(_))
         .Times(times)
         .WillRepeatedly(
             Invoke(http_server_props_manager_.get(),
                    &TestingHttpServerPropertiesManager::
-                       UpdatePrefsFromCacheOnNetworkSequenceConcrete));
+                       UpdatePrefsFromCacheOnNetworkThreadConcrete));
   }
 
   bool HasAlternativeService(const url::SchemeHostPort& server) {
@@ -482,7 +478,7 @@ TEST_P(HttpServerPropertiesManagerTest, BadCachedHostPortPair) {
   ExpectCacheUpdate();
   // The prefs are automatically updated in the case corruption is detected.
   ExpectPrefsUpdate(1);
-  ExpectScheduleUpdatePrefsOnNetworkSequence();
+  ExpectScheduleUpdatePrefsOnNetworkThread();
 
   auto server_pref_dict = base::MakeUnique<base::DictionaryValue>();
 
@@ -571,7 +567,7 @@ TEST_P(HttpServerPropertiesManagerTest, BadCachedAltProtocolPort) {
   ExpectCacheUpdate();
   // The prefs are automatically updated in the case corruption is detected.
   ExpectPrefsUpdate(1);
-  ExpectScheduleUpdatePrefsOnNetworkSequence();
+  ExpectScheduleUpdatePrefsOnNetworkThread();
 
   auto server_pref_dict = base::MakeUnique<base::DictionaryValue>();
 
@@ -632,17 +628,17 @@ TEST_P(HttpServerPropertiesManagerTest, BadCachedAltProtocolPort) {
 
 TEST_P(HttpServerPropertiesManagerTest, SupportsSpdy) {
   ExpectPrefsUpdate(1);
-  ExpectScheduleUpdatePrefsOnNetworkSequence();
+  ExpectScheduleUpdatePrefsOnNetworkThread();
 
   // Post an update task to the network thread. SetSupportsSpdy calls
-  // ScheduleUpdatePrefsOnNetworkSequence.
+  // ScheduleUpdatePrefsOnNetworkThread.
 
   // Add mail.google.com:443 as a supporting spdy server.
   url::SchemeHostPort spdy_server("https", "mail.google.com", 443);
   EXPECT_FALSE(
       http_server_props_manager_->SupportsRequestPriority(spdy_server));
   http_server_props_manager_->SetSupportsSpdy(spdy_server, true);
-  // ExpectScheduleUpdatePrefsOnNetworkSequence() should be called only once.
+  // ExpectScheduleUpdatePrefsOnNetworkThread() should be called only once.
   http_server_props_manager_->SetSupportsSpdy(spdy_server, true);
 
   // Run the task.
@@ -665,10 +661,10 @@ TEST_P(HttpServerPropertiesManagerTest, SupportsSpdy) {
 TEST_P(HttpServerPropertiesManagerTest,
        SinglePrefUpdateForTwoSpdyServerCacheChanges) {
   ExpectPrefsUpdate(2);
-  ExpectScheduleUpdatePrefsOnNetworkSequenceRepeatedly(3);
+  ExpectScheduleUpdatePrefsOnNetworkThreadRepeatedly(3);
 
   // Post an update task to the network thread. SetSupportsSpdy calls
-  // ScheduleUpdatePrefsOnNetworkSequence with a delay of 60ms.
+  // ScheduleUpdatePrefsOnNetworkThread with a delay of 60ms.
   url::SchemeHostPort spdy_server("https", "mail.google.com", 443);
   EXPECT_FALSE(
       http_server_props_manager_->SupportsRequestPriority(spdy_server));
@@ -682,8 +678,8 @@ TEST_P(HttpServerPropertiesManagerTest,
       base::TimeDelta::FromMilliseconds(20));
 
   // Set another spdy server to trigger another call to
-  // ScheduleUpdatePrefsOnNetworkSequence. There should be no new update posted
-  // to the network thread.
+  // ScheduleUpdatePrefsOnNetworkThread. There should be no new update posted to
+  // the network thread.
   url::SchemeHostPort spdy_server2("https", "drive.google.com", 443);
   http_server_props_manager_->SetSupportsSpdy(spdy_server2, true);
   EXPECT_EQ(1u, net_test_task_runner_->GetPendingTaskCount());
@@ -701,7 +697,7 @@ TEST_P(HttpServerPropertiesManagerTest,
   EXPECT_TRUE(
       http_server_props_manager_->SupportsRequestPriority(spdy_server2));
   // Set the third spdy server to trigger one more call to
-  // ScheduleUpdatePrefsOnNetworkSequence. A new update task should be posted to
+  // ScheduleUpdatePrefsOnNetworkThread. A new update task should be posted to
   // network thread now since the previous one is completed.
   url::SchemeHostPort spdy_server3("https", "maps.google.com", 443);
   http_server_props_manager_->SetSupportsSpdy(spdy_server3, true);
@@ -722,7 +718,7 @@ TEST_P(HttpServerPropertiesManagerTest,
 
 TEST_P(HttpServerPropertiesManagerTest, GetAlternativeServiceInfos) {
   ExpectPrefsUpdate(1);
-  ExpectScheduleUpdatePrefsOnNetworkSequence();
+  ExpectScheduleUpdatePrefsOnNetworkThread();
 
   url::SchemeHostPort spdy_server_mail("http", "mail.google.com", 80);
   EXPECT_FALSE(HasAlternativeService(spdy_server_mail));
@@ -730,7 +726,7 @@ TEST_P(HttpServerPropertiesManagerTest, GetAlternativeServiceInfos) {
                                                443);
   http_server_props_manager_->SetAlternativeService(
       spdy_server_mail, alternative_service, one_day_from_now_);
-  // ExpectScheduleUpdatePrefsOnNetworkSequence() should be called only once.
+  // ExpectScheduleUpdatePrefsOnNetworkThread() should be called only once.
   http_server_props_manager_->SetAlternativeService(
       spdy_server_mail, alternative_service, one_day_from_now_);
 
@@ -754,7 +750,7 @@ TEST_P(HttpServerPropertiesManagerTest, GetAlternativeServiceInfos) {
 
 TEST_P(HttpServerPropertiesManagerTest, SetAlternativeServices) {
   ExpectPrefsUpdate(1);
-  ExpectScheduleUpdatePrefsOnNetworkSequence();
+  ExpectScheduleUpdatePrefsOnNetworkThread();
 
   url::SchemeHostPort spdy_server_mail("http", "mail.google.com", 80);
   EXPECT_FALSE(HasAlternativeService(spdy_server_mail));
@@ -769,7 +765,7 @@ TEST_P(HttpServerPropertiesManagerTest, SetAlternativeServices) {
       AlternativeServiceInfo(alternative_service2, one_day_from_now_));
   http_server_props_manager_->SetAlternativeServices(
       spdy_server_mail, alternative_service_info_vector);
-  // ExpectScheduleUpdatePrefsOnNetworkSequence() should be called only once.
+  // ExpectScheduleUpdatePrefsOnNetworkThread() should be called only once.
   http_server_props_manager_->SetAlternativeServices(
       spdy_server_mail, alternative_service_info_vector);
 
@@ -801,7 +797,7 @@ TEST_P(HttpServerPropertiesManagerTest, SetAlternativeServicesEmpty) {
   http_server_props_manager_->SetAlternativeServices(
       spdy_server_mail, AlternativeServiceInfoVector());
 
-  // ExpectScheduleUpdatePrefsOnNetworkSequence() should not be called.
+  // ExpectScheduleUpdatePrefsOnNetworkThread() should not be called.
   EXPECT_FALSE(pref_test_task_runner_->HasPendingTask());
   EXPECT_FALSE(net_test_task_runner_->HasPendingTask());
   Mock::VerifyAndClearExpectations(http_server_props_manager_.get());
@@ -823,7 +819,7 @@ TEST_P(HttpServerPropertiesManagerTest, ConfirmAlternativeService) {
     alternative_service =
         AlternativeService(kProtoHTTP2, "mail.google.com", 443);
 
-    ExpectScheduleUpdatePrefsOnNetworkSequence();
+    ExpectScheduleUpdatePrefsOnNetworkThread();
     http_server_props_manager_->SetAlternativeService(
         spdy_server_mail, alternative_service, one_day_from_now_);
 
@@ -833,7 +829,7 @@ TEST_P(HttpServerPropertiesManagerTest, ConfirmAlternativeService) {
         http_server_props_manager_->WasAlternativeServiceRecentlyBroken(
             alternative_service));
 
-    ExpectScheduleUpdatePrefsOnNetworkSequence();
+    ExpectScheduleUpdatePrefsOnNetworkThread();
     http_server_props_manager_->MarkAlternativeServiceBroken(
         alternative_service);
     EXPECT_TRUE(http_server_props_manager_->IsAlternativeServiceBroken(
@@ -841,14 +837,14 @@ TEST_P(HttpServerPropertiesManagerTest, ConfirmAlternativeService) {
     EXPECT_TRUE(http_server_props_manager_->WasAlternativeServiceRecentlyBroken(
         alternative_service));
 
-    ExpectScheduleUpdatePrefsOnNetworkSequence();
+    ExpectScheduleUpdatePrefsOnNetworkThread();
     http_server_props_manager_->ConfirmAlternativeService(alternative_service);
     EXPECT_FALSE(http_server_props_manager_->IsAlternativeServiceBroken(
         alternative_service));
     EXPECT_FALSE(
         http_server_props_manager_->WasAlternativeServiceRecentlyBroken(
             alternative_service));
-    // ExpectScheduleUpdatePrefsOnNetworkSequence() should be called only once.
+    // ExpectScheduleUpdatePrefsOnNetworkThread() should be called only once.
     http_server_props_manager_->ConfirmAlternativeService(alternative_service);
     EXPECT_FALSE(http_server_props_manager_->IsAlternativeServiceBroken(
         alternative_service));
@@ -880,14 +876,14 @@ TEST_P(HttpServerPropertiesManagerTest, ConfirmAlternativeService) {
 
 TEST_P(HttpServerPropertiesManagerTest, SupportsQuic) {
   ExpectPrefsUpdate(1);
-  ExpectScheduleUpdatePrefsOnNetworkSequence();
+  ExpectScheduleUpdatePrefsOnNetworkThread();
 
   IPAddress address;
   EXPECT_FALSE(http_server_props_manager_->GetSupportsQuic(&address));
 
   IPAddress actual_address(127, 0, 0, 1);
   http_server_props_manager_->SetSupportsQuic(true, actual_address);
-  // ExpectScheduleUpdatePrefsOnNetworkSequence() should be called only once.
+  // ExpectScheduleUpdatePrefsOnNetworkThread() should be called only once.
   http_server_props_manager_->SetSupportsQuic(true, actual_address);
 
   // Run the task.
@@ -907,7 +903,7 @@ TEST_P(HttpServerPropertiesManagerTest, SupportsQuic) {
 
 TEST_P(HttpServerPropertiesManagerTest, ServerNetworkStats) {
   ExpectPrefsUpdate(1);
-  ExpectScheduleUpdatePrefsOnNetworkSequence();
+  ExpectScheduleUpdatePrefsOnNetworkThread();
 
   url::SchemeHostPort mail_server("http", "mail.google.com", 80);
   const ServerNetworkStats* stats =
@@ -916,7 +912,7 @@ TEST_P(HttpServerPropertiesManagerTest, ServerNetworkStats) {
   ServerNetworkStats stats1;
   stats1.srtt = base::TimeDelta::FromMicroseconds(10);
   http_server_props_manager_->SetServerNetworkStats(mail_server, stats1);
-  // ExpectScheduleUpdatePrefsOnNetworkSequence() should be called only once.
+  // ExpectScheduleUpdatePrefsOnNetworkThread() should be called only once.
   http_server_props_manager_->SetServerNetworkStats(mail_server, stats1);
 
   // Run the task.
@@ -935,7 +931,7 @@ TEST_P(HttpServerPropertiesManagerTest, ServerNetworkStats) {
   EXPECT_EQ(10, stats2->srtt.ToInternalValue());
 
   ExpectPrefsUpdate(1);
-  ExpectScheduleUpdatePrefsOnNetworkSequence();
+  ExpectScheduleUpdatePrefsOnNetworkThread();
 
   http_server_props_manager_->ClearServerNetworkStats(mail_server);
 
@@ -955,7 +951,7 @@ TEST_P(HttpServerPropertiesManagerTest, ServerNetworkStats) {
 
 TEST_P(HttpServerPropertiesManagerTest, QuicServerInfo) {
   ExpectPrefsUpdate(1);
-  ExpectScheduleUpdatePrefsOnNetworkSequence();
+  ExpectScheduleUpdatePrefsOnNetworkThread();
 
   QuicServerId mail_quic_server_id("mail.google.com", 80);
   EXPECT_EQ(nullptr,
@@ -963,7 +959,7 @@ TEST_P(HttpServerPropertiesManagerTest, QuicServerInfo) {
   std::string quic_server_info1("quic_server_info1");
   http_server_props_manager_->SetQuicServerInfo(mail_quic_server_id,
                                                 quic_server_info1);
-  // ExpectScheduleUpdatePrefsOnNetworkSequence() should be called only once.
+  // ExpectScheduleUpdatePrefsOnNetworkThread() should be called only once.
   http_server_props_manager_->SetQuicServerInfo(mail_quic_server_id,
                                                 quic_server_info1);
 
@@ -984,7 +980,7 @@ TEST_P(HttpServerPropertiesManagerTest, QuicServerInfo) {
 
 TEST_P(HttpServerPropertiesManagerTest, Clear) {
   ExpectPrefsUpdate(1);
-  ExpectScheduleUpdatePrefsOnNetworkSequenceRepeatedly(5);
+  ExpectScheduleUpdatePrefsOnNetworkThreadRepeatedly(5);
 
   const url::SchemeHostPort spdy_server("https", "mail.google.com", 443);
   const IPAddress actual_address(127, 0, 0, 1);
@@ -1157,7 +1153,7 @@ TEST_P(HttpServerPropertiesManagerTest, BadSupportsQuic) {
 }
 
 TEST_P(HttpServerPropertiesManagerTest, UpdatePrefsWithCache) {
-  ExpectScheduleUpdatePrefsOnNetworkSequenceRepeatedly(5);
+  ExpectScheduleUpdatePrefsOnNetworkThreadRepeatedly(5);
 
   const url::SchemeHostPort server_www("https", "www.google.com", 80);
   const url::SchemeHostPort server_mail("https", "mail.google.com", 80);
@@ -1342,7 +1338,7 @@ TEST_P(HttpServerPropertiesManagerTest, DoNotLoadAltSvcForInsecureOrigins) {
 // Do not persist expired or broken alternative service entries to disk.
 TEST_P(HttpServerPropertiesManagerTest,
        DoNotPersistExpiredOrBrokenAlternativeService) {
-  ExpectScheduleUpdatePrefsOnNetworkSequenceRepeatedly(2);
+  ExpectScheduleUpdatePrefsOnNetworkThreadRepeatedly(2);
 
   {
     TestMockTimeTaskRunner::ScopedContext scoped_context(net_test_task_runner_);
@@ -1470,7 +1466,7 @@ TEST_P(HttpServerPropertiesManagerTest, ShutdownWithPendingUpdateCache0) {
   // Post an update task to the UI thread.
   http_server_props_manager_->ScheduleUpdateCacheOnPrefThread();
   // Shutdown comes before the task is executed.
-  http_server_props_manager_->ShutdownOnPrefSequence();
+  http_server_props_manager_->ShutdownOnPrefThread();
   http_server_props_manager_.reset();
   // Run the task after shutdown and deletion.
   EXPECT_FALSE(net_test_task_runner_->HasPendingTask());
@@ -1484,7 +1480,7 @@ TEST_P(HttpServerPropertiesManagerTest, ShutdownWithPendingUpdateCache1) {
   // Post an update task.
   http_server_props_manager_->ScheduleUpdateCacheOnPrefThread();
   // Shutdown comes before the task is executed.
-  http_server_props_manager_->ShutdownOnPrefSequence();
+  http_server_props_manager_->ShutdownOnPrefThread();
   // Run the task after shutdown, but before deletion.
   EXPECT_FALSE(net_test_task_runner_->HasPendingTask());
   EXPECT_TRUE(pref_test_task_runner_->HasPendingTask());
@@ -1501,7 +1497,7 @@ TEST_P(HttpServerPropertiesManagerTest, ShutdownWithPendingUpdateCache1) {
 TEST_P(HttpServerPropertiesManagerTest, ShutdownWithPendingUpdateCache2) {
   http_server_props_manager_->UpdateCacheFromPrefsOnUIConcrete();
   // Shutdown comes before the task is executed.
-  http_server_props_manager_->ShutdownOnPrefSequence();
+  http_server_props_manager_->ShutdownOnPrefThread();
   // There should be no tasks to run.
   EXPECT_FALSE(net_test_task_runner_->HasPendingTask());
   EXPECT_FALSE(pref_test_task_runner_->HasPendingTask());
@@ -1516,9 +1512,9 @@ TEST_P(HttpServerPropertiesManagerTest, ShutdownWithPendingUpdateCache2) {
 //
 TEST_P(HttpServerPropertiesManagerTest, ShutdownWithPendingUpdatePrefs0) {
   // Post an update task to the IO thread.
-  http_server_props_manager_->ScheduleUpdatePrefsOnNetworkSequenceDefault();
+  http_server_props_manager_->ScheduleUpdatePrefsOnNetworkThreadDefault();
   // Shutdown comes before the task is executed.
-  http_server_props_manager_->ShutdownOnPrefSequence();
+  http_server_props_manager_->ShutdownOnPrefThread();
   http_server_props_manager_.reset();
   // Run the task after shutdown and deletion.
   EXPECT_TRUE(net_test_task_runner_->HasPendingTask());
@@ -1531,9 +1527,9 @@ TEST_P(HttpServerPropertiesManagerTest, ShutdownWithPendingUpdatePrefs0) {
 TEST_P(HttpServerPropertiesManagerTest, ShutdownWithPendingUpdatePrefs1) {
   ExpectPrefsUpdate(1);
   // Post an update task.
-  http_server_props_manager_->ScheduleUpdatePrefsOnNetworkSequenceDefault();
+  http_server_props_manager_->ScheduleUpdatePrefsOnNetworkThreadDefault();
   // Shutdown comes before the task is executed.
-  http_server_props_manager_->ShutdownOnPrefSequence();
+  http_server_props_manager_->ShutdownOnPrefThread();
   // Run the task after shutdown, but before deletion.
   EXPECT_TRUE(net_test_task_runner_->HasPendingTask());
   EXPECT_FALSE(pref_test_task_runner_->HasPendingTask());
@@ -1551,10 +1547,10 @@ TEST_P(HttpServerPropertiesManagerTest, ShutdownWithPendingUpdatePrefs1) {
 
 TEST_P(HttpServerPropertiesManagerTest, ShutdownWithPendingUpdatePrefs2) {
   // This posts a task to the UI thread.
-  http_server_props_manager_->UpdatePrefsFromCacheOnNetworkSequenceConcrete(
+  http_server_props_manager_->UpdatePrefsFromCacheOnNetworkThreadConcrete(
       base::Closure());
   // Shutdown comes before the task is executed.
-  http_server_props_manager_->ShutdownOnPrefSequence();
+  http_server_props_manager_->ShutdownOnPrefThread();
   // Run the task after shutdown, but before deletion.
   EXPECT_FALSE(net_test_task_runner_->HasPendingTask());
   EXPECT_TRUE(pref_test_task_runner_->HasPendingTask());

@@ -1,4 +1,4 @@
-#!/usr/bin/env vpython
+#!/usr/bin/python
 import json
 import optparse
 import os

@@ -20,7 +20,6 @@
 #include "ash/mus/ash_window_tree_host_mus.h"
 #include "ash/mus/bridge/immersive_handler_factory_mus.h"
 #include "ash/mus/bridge/workspace_event_handler_mus.h"
-#include "ash/mus/display_synchronizer.h"
 #include "ash/mus/drag_window_resizer.h"
 #include "ash/mus/keyboard_ui_mus.h"
 #include "ash/mus/screen_mus.h"
@@ -30,6 +29,7 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
 #include "ash/root_window_settings.h"
+#include "ash/session/session_state_delegate.h"
 #include "ash/shared/immersive_fullscreen_controller.h"
 #include "ash/shell.h"
 #include "ash/shell_delegate.h"
@@ -51,6 +51,7 @@
 #include "ash/wm/window_util.h"
 #include "ash/wm/workspace/workspace_event_handler_aura.h"
 #include "ash/wm_display_observer.h"
+#include "ash/wm_window.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "components/user_manager/user_info_impl.h"
@@ -74,6 +75,36 @@
 namespace ash {
 namespace mus {
 
+namespace {
+
+// TODO(jamescook): After ShellDelegate is ported to ash/common use
+// ShellDelegate::CreateSessionStateDelegate() to construct the mus version
+// of SessionStateDelegate.
+class SessionStateDelegateStub : public SessionStateDelegate {
+ public:
+  SessionStateDelegateStub() : user_info_(new user_manager::UserInfoImpl()) {}
+
+  ~SessionStateDelegateStub() override {}
+
+  // SessionStateDelegate:
+  bool ShouldShowAvatar(WmWindow* window) const override {
+    NOTIMPLEMENTED();
+    return !user_info_->GetImage().isNull();
+  }
+  gfx::ImageSkia GetAvatarImageForWindow(WmWindow* window) const override {
+    NOTIMPLEMENTED();
+    return gfx::ImageSkia();
+  }
+
+ private:
+  // A pseudo user info.
+  std::unique_ptr<user_manager::UserInfo> user_info_;
+
+  DISALLOW_COPY_AND_ASSIGN(SessionStateDelegateStub);
+};
+
+}  // namespace
+
 ShellPortMash::MashSpecificState::MashSpecificState() = default;
 
 ShellPortMash::MashSpecificState::~MashSpecificState() = default;
@@ -85,9 +116,13 @@ ShellPortMash::MusSpecificState::~MusSpecificState() = default;
 ShellPortMash::ShellPortMash(
     aura::Window* primary_root_window,
     WindowManager* window_manager,
-    views::PointerWatcherEventRouter* pointer_watcher_event_router)
+    views::PointerWatcherEventRouter* pointer_watcher_event_router,
+    bool create_session_state_delegate_stub)
     : window_manager_(window_manager),
       primary_root_window_(primary_root_window) {
+  if (create_session_state_delegate_stub)
+    session_state_delegate_ = base::MakeUnique<SessionStateDelegateStub>();
+
   if (GetAshConfig() == Config::MASH) {
     mash_state_ = base::MakeUnique<MashSpecificState>();
     mash_state_->pointer_watcher_event_router = pointer_watcher_event_router;
@@ -126,8 +161,6 @@ aura::WindowTreeClient* ShellPortMash::window_tree_client() {
 }
 
 void ShellPortMash::Shutdown() {
-  display_synchronizer_.reset();
-
   if (added_display_observer_)
     Shell::Get()->window_tree_host_manager()->RemoveObserver(this);
 
@@ -225,15 +258,15 @@ bool ShellPortMash::IsInUnifiedModeIgnoreMirroring() const {
   return false;
 }
 
-void ShellPortMash::SetDisplayWorkAreaInsets(aura::Window* window,
+void ShellPortMash::SetDisplayWorkAreaInsets(WmWindow* window,
                                              const gfx::Insets& insets) {
   if (GetAshConfig() == Config::MUS) {
     Shell::Get()
         ->window_tree_host_manager()
-        ->UpdateWorkAreaOfDisplayNearestWindow(window, insets);
+        ->UpdateWorkAreaOfDisplayNearestWindow(window->aura_window(), insets);
     return;
   }
-  window_manager_->screen()->SetWorkAreaInsets(window, insets);
+  window_manager_->screen()->SetWorkAreaInsets(window->aura_window(), insets);
 }
 
 std::unique_ptr<display::TouchTransformSetter>
@@ -270,14 +303,19 @@ bool ShellPortMash::IsMouseEventsEnabled() {
   return true;
 }
 
-std::vector<aura::Window*> ShellPortMash::GetAllRootWindows() {
-  if (GetAshConfig() == Config::MUS)
-    return Shell::Get()->window_tree_host_manager()->GetAllRootWindows();
-
-  aura::Window::Windows root_windows;
+std::vector<WmWindow*> ShellPortMash::GetAllRootWindows() {
+  if (GetAshConfig() == Config::MUS) {
+    aura::Window::Windows root_windows =
+        Shell::Get()->window_tree_host_manager()->GetAllRootWindows();
+    std::vector<WmWindow*> wm_windows(root_windows.size());
+    for (size_t i = 0; i < root_windows.size(); ++i)
+      wm_windows[i] = WmWindow::Get(root_windows[i]);
+    return wm_windows;
+  }
+  std::vector<WmWindow*> root_windows;
   for (RootWindowController* root_window_controller :
        RootWindowController::root_window_controllers()) {
-    root_windows.push_back(root_window_controller->GetRootWindow());
+    root_windows.push_back(root_window_controller->GetWindow());
   }
   return root_windows;
 }
@@ -360,11 +398,12 @@ ShellPortMash::CreateScopedDisableInternalMouseAndKeyboard() {
 }
 
 std::unique_ptr<WorkspaceEventHandler>
-ShellPortMash::CreateWorkspaceEventHandler(aura::Window* workspace_window) {
+ShellPortMash::CreateWorkspaceEventHandler(WmWindow* workspace_window) {
   if (GetAshConfig() == Config::MUS)
     return base::MakeUnique<WorkspaceEventHandlerAura>(workspace_window);
 
-  return base::MakeUnique<WorkspaceEventHandlerMus>(workspace_window);
+  return base::MakeUnique<WorkspaceEventHandlerMus>(
+      WmWindow::GetAuraWindow(workspace_window));
 }
 
 std::unique_ptr<ImmersiveFullscreenController>
@@ -386,6 +425,11 @@ std::unique_ptr<KeyEventWatcher> ShellPortMash::CreateKeyEventWatcher() {
   // TODO: needs implementation for mus, http://crbug.com/649600.
   NOTIMPLEMENTED();
   return std::unique_ptr<KeyEventWatcher>();
+}
+
+SessionStateDelegate* ShellPortMash::GetSessionStateDelegate() {
+  return session_state_delegate_ ? session_state_delegate_.get()
+                                 : Shell::Get()->session_state_delegate();
 }
 
 void ShellPortMash::AddDisplayObserver(WmDisplayObserver* observer) {
@@ -481,7 +525,8 @@ void ShellPortMash::CreatePointerWatcherAdapter() {
 
 std::unique_ptr<AshWindowTreeHost> ShellPortMash::CreateAshWindowTreeHost(
     const AshWindowTreeHostInitParams& init_params) {
-  if (!Shell::ShouldEnableSimplifiedDisplayManagement())
+  // TODO(sky): make this work for mash too.
+  if (GetAshConfig() != Config::MUS)
     return nullptr;
 
   std::unique_ptr<aura::DisplayInitParams> display_params =
@@ -499,6 +544,7 @@ std::unique_ptr<AshWindowTreeHost> ShellPortMash::CreateAshWindowTreeHost(
     display_params->display =
         base::MakeUnique<display::Display>(mirrored_display);
   }
+  // TODO: wire update is_primary_display correctly.
   display_params->is_primary_display = true;
   aura::WindowTreeHostMusInitParams aura_init_params =
       window_manager_->window_manager_client()->CreateInitParamsForNewDisplay();
@@ -530,10 +576,8 @@ void ShellPortMash::CreatePrimaryHost() {
 }
 
 void ShellPortMash::InitHosts(const ShellInitParams& init_params) {
-  if (Shell::ShouldEnableSimplifiedDisplayManagement()) {
+  if (GetAshConfig() == Config::MUS) {
     Shell::Get()->window_tree_host_manager()->InitHosts();
-    display_synchronizer_ = base::MakeUnique<DisplaySynchronizer>(
-        window_manager_->window_manager_client());
   } else {
     window_manager_->CreatePrimaryRootWindowController(
         base::WrapUnique(init_params.primary_window_tree_host));

@@ -26,8 +26,7 @@ namespace dns_protocol {
 struct Header;
 }
 
-// Structure representing a Resource Record as specified in RFC 1035, Section
-// 4.1.3.
+// Parsed resource record.
 struct NET_EXPORT_PRIVATE DnsResourceRecord {
   DnsResourceRecord();
   ~DnsResourceRecord();

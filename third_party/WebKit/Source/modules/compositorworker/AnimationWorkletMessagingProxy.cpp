@@ -11,17 +11,15 @@ namespace blink {
 
 AnimationWorkletMessagingProxy::AnimationWorkletMessagingProxy(
     ExecutionContext* execution_context,
-    WorkerClients* worker_clients,
     AnimationWorkletProxyClient* proxy_client)
-    : ThreadedWorkletMessagingProxy(execution_context, worker_clients),
+    : ThreadedWorkletMessagingProxy(execution_context),
       proxy_client_(proxy_client) {}
 
 AnimationWorkletMessagingProxy::~AnimationWorkletMessagingProxy() {}
 
 std::unique_ptr<WorkerThread>
 AnimationWorkletMessagingProxy::CreateWorkerThread(double origin_time) {
-  return AnimationWorkletThread::Create(GetThreadableLoadingContext(),
-                                        WorkletObjectProxy());
+  return AnimationWorkletThread::Create(LoaderProxy(), WorkletObjectProxy());
 }
 
 }  // namespace blink

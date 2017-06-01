@@ -49,8 +49,8 @@
 #include "core/events/KeyboardEvent.h"
 #include "core/events/MouseEvent.h"
 #include "core/events/ScopedEventQueue.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/html/FormData.h"
 #include "core/html/HTMLFormElement.h"
 #include "core/html/HTMLHRElement.h"
@@ -1949,9 +1949,6 @@ void HTMLSelectElement::ShowPopup() {
   if (!popup_)
     popup_ = GetDocument().GetPage()->GetChromeClient().OpenPopupMenu(
         *GetDocument().GetFrame(), *this);
-  if (!popup_)
-    return;
-
   popup_is_visible_ = true;
   ObserveTreeMutation();
 

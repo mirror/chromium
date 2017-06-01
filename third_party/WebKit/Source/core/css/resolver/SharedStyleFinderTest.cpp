@@ -13,7 +13,7 @@
 #include "core/dom/Document.h"
 #include "core/dom/shadow/ShadowRoot.h"
 #include "core/dom/shadow/ShadowRootInit.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/html/HTMLElement.h"
 #include "core/testing/DummyPageHolder.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -153,9 +153,7 @@ TEST_F(SharedStyleFinderTest, AttributeAffectedByFocus) {
   EXPECT_FALSE(a->IsFocused());
   EXPECT_FALSE(b->IsFocused());
 
-  // :focus rules do not end up in uncommon attribute rule sets. Style sharing
-  // is skipped for focused elements in Element::SupportsStyleSharing().
-  EXPECT_FALSE(MatchesUncommonAttributeRuleSet(*a));
+  EXPECT_TRUE(MatchesUncommonAttributeRuleSet(*a));
   EXPECT_FALSE(MatchesUncommonAttributeRuleSet(*b));
 }
 

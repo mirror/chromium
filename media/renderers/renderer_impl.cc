@@ -264,13 +264,6 @@ void RendererImpl::SetVolume(float volume) {
 base::TimeDelta RendererImpl::GetMediaTime() {
   // No BelongsToCurrentThread() checking because this can be called from other
   // threads.
-  {
-    base::AutoLock lock(restarting_audio_lock_);
-    if (restarting_audio_) {
-      DCHECK_NE(kNoTimestamp, restarting_audio_time_);
-      return restarting_audio_time_;
-    }
-  }
   return time_source_->CurrentMediaTime();
 }
 
@@ -582,11 +575,7 @@ void RendererImpl::OnStreamStatusChanged(DemuxerStream* stream,
   } else if (stream->type() == DemuxerStream::AUDIO) {
     DCHECK(audio_renderer_);
     DCHECK(time_source_);
-    {
-      base::AutoLock lock(restarting_audio_lock_);
-      restarting_audio_time_ = time;
-      restarting_audio_ = true;
-    }
+    restarting_audio_ = true;
     base::Closure handle_track_status_cb =
         base::Bind(stream == current_audio_stream_
                        ? &RendererImpl::RestartAudioRenderer
@@ -780,11 +769,7 @@ void RendererImpl::OnStreamRestartCompleted() {
            << " restarting_video_=" << restarting_video_;
   DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK(restarting_audio_ || restarting_video_);
-  {
-    base::AutoLock lock(restarting_audio_lock_);
-    restarting_audio_ = false;
-    restarting_audio_time_ = kNoTimestamp;
-  }
+  restarting_audio_ = false;
   restarting_video_ = false;
   if (!pending_actions_.empty()) {
     base::Closure closure = pending_actions_.front();

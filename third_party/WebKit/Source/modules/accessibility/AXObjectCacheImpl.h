@@ -41,7 +41,7 @@ namespace blink {
 
 class AbstractInlineTextBox;
 class HTMLAreaElement;
-class LocalFrameView;
+class FrameView;
 
 // This class should only be used from inside the accessibility directory.
 class MODULES_EXPORT AXObjectCacheImpl : public AXObjectCacheBase {
@@ -54,7 +54,6 @@ class MODULES_EXPORT AXObjectCacheImpl : public AXObjectCacheBase {
   virtual ~AXObjectCacheImpl();
   DECLARE_VIRTUAL_TRACE();
 
-  Document& GetDocument() { return *document_; }
   AXObjectImpl* FocusedObject();
 
   void Dispose() override;
@@ -104,7 +103,7 @@ class MODULES_EXPORT AXObjectCacheImpl : public AXObjectCacheBase {
   void InlineTextBoxesUpdated(LineLayoutItem) override;
 
   // Called when the scroll offset changes.
-  void HandleScrollPositionChanged(LocalFrameView*) override;
+  void HandleScrollPositionChanged(FrameView*) override;
   void HandleScrollPositionChanged(LayoutObject*) override;
 
   // Called when scroll bars are added / removed (as the view resizes).

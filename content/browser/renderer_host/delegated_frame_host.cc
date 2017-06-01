@@ -456,9 +456,7 @@ void DelegatedFrameHost::SubmitCompositorFrame(
                                        skipped_latency_info_list_.end());
     skipped_latency_info_list_.clear();
 
-    bool result =
-        support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
-    DCHECK(result);
+    support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
 
     if (local_surface_id != local_surface_id_ || !has_frame_) {
       // manager must outlive compositors using it.
@@ -516,9 +514,7 @@ void DelegatedFrameHost::WillDrawSurface(const cc::LocalSurfaceId& id,
 }
 
 void DelegatedFrameHost::OnBeginFrame(const cc::BeginFrameArgs& args) {
-  if (renderer_compositor_frame_sink_)
-    renderer_compositor_frame_sink_->OnBeginFrame(args);
-  client_->OnBeginFrame();
+  client_->OnBeginFrame(args);
 }
 
 void DelegatedFrameHost::EvictDelegatedFrame() {

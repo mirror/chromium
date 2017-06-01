@@ -34,6 +34,10 @@ extern const base::Feature kArcMemoryManagement;
 
 extern const base::Feature kAssetDownloadSuggestionsFeature;
 
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+extern const base::Feature kAutoDismissingDialogs;
+#endif
+
 #if defined(OS_WIN) || defined(OS_MACOSX)
 extern const base::Feature kAutomaticTabDiscarding;
 #endif  // defined(OS_WIN) || defined(OS_MACOSX)
@@ -41,6 +45,8 @@ extern const base::Feature kAutomaticTabDiscarding;
 #if defined(OS_WIN) || defined(OS_LINUX)
 extern const base::Feature kBackgroundModeAllowRestart;
 #endif  // defined(OS_WIN) || defined(OS_LINUX)
+
+extern const base::Feature kBackspaceGoesBackFeature;
 
 extern const base::Feature kBlockPromptsIfDismissedOften;
 extern const base::Feature kBlockPromptsIfIgnoredOften;

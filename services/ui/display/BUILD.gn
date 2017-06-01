@@ -55,10 +55,9 @@ source_set("display") {
 }
 
 if (use_ozone && is_chromeos) {
-  source_set("tests") {
-    testonly = true
-
+  test("display_service_unittests") {
     sources = [
+      "run_all_unittests.cc",
       "screen_manager_ozone_internal_unittests.cc",
     ]
 

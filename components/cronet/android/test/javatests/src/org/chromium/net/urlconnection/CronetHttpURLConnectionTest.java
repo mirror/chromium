@@ -12,6 +12,7 @@ import org.chromium.base.test.util.Feature;
 import org.chromium.net.CronetEngine;
 import org.chromium.net.CronetException;
 import org.chromium.net.CronetTestBase;
+import org.chromium.net.CronetTestFramework;
 import org.chromium.net.MockUrlRequestJobFactory;
 import org.chromium.net.NativeTestServer;
 
@@ -46,8 +47,13 @@ public class CronetHttpURLConnectionTest extends CronetTestBase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        mCronetEngine = enableDiskCache(new CronetEngine.Builder(getContext())).build();
-        setStreamHandlerFactory(mCronetEngine);
+        String[] commandLineArgs = {
+                CronetTestFramework.CACHE_KEY, CronetTestFramework.CACHE_DISK,
+                CronetTestFramework.LIBRARY_INIT_KEY,
+                CronetTestFramework.LibraryInitType.HTTP_URL_CONNECTION,
+        };
+        mCronetEngine = startCronetTestFrameworkWithUrlAndCommandLineArgs(null,
+                commandLineArgs).mCronetEngine;
         assertTrue(NativeTestServer.startNativeTestServer(getContext()));
     }
 

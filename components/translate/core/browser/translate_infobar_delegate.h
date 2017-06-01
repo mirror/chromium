@@ -42,9 +42,9 @@ class TranslateInfoBarDelegate : public infobars::InfoBarDelegate {
    public:
     // Handles UI changes on the translate step given.
     virtual void OnTranslateStepChanged(translate::TranslateStep step,
-                                        TranslateErrors::Type error_type) = 0;
+                              TranslateErrors::Type error_type){};
     // Return whether user declined translate service.
-    virtual bool IsDeclinedByUser() = 0;
+    virtual bool IsDeclinedByUser();
 
    protected:
     virtual ~Observer() {}
@@ -75,6 +75,9 @@ class TranslateInfoBarDelegate : public infobars::InfoBarDelegate {
                      const std::string& target_language,
                      TranslateErrors::Type error_type,
                      bool triggered_from_menu);
+
+  // Returns true if compact translate UI is enabled.
+  static bool IsCompactUIEnabled();
 
   // Returns the number of languages supported.
   size_t num_languages() const { return ui_delegate_.GetNumberOfLanguages(); }
@@ -129,7 +132,6 @@ class TranslateInfoBarDelegate : public infobars::InfoBarDelegate {
 
   virtual void Translate();
   virtual void RevertTranslation();
-  void RevertWithoutClosingInfobar();
   void ReportLanguageDetectionError();
 
   // Called when the user declines to translate a page, by either closing the

@@ -150,7 +150,7 @@
         "components",
         "platform",
         "ui",
-        "mobile_throttling"
+        "network_conditions"
     ],
     "scripts": [
         "AdvancedApp.js",

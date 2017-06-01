@@ -82,6 +82,29 @@ bool IsProhibitedByPolicy(const chromeos::NetworkState* network) {
       network->guid(), network->profile_path(), nullptr /* onc_source */);
 }
 
+// TODO(varkha|mohsen): Consolidate with a similar method in
+// BluetoothDetailedView (see https://crbug.com/686924).
+void SetupConnectedItem(HoverHighlightView* container,
+                        const base::string16& text,
+                        const gfx::ImageSkia& image) {
+  container->AddIconAndLabels(
+      image, text,
+      l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_NETWORK_STATUS_CONNECTED));
+  TrayPopupItemStyle style(TrayPopupItemStyle::FontStyle::CAPTION);
+  style.set_color_style(TrayPopupItemStyle::ColorStyle::CONNECTED);
+  style.SetupLabel(container->sub_text_label());
+}
+
+// TODO(varkha|mohsen): Consolidate with a similar method in
+// BluetoothDetailedView (see https://crbug.com/686924).
+void SetupConnectingItem(HoverHighlightView* container,
+                         const base::string16& text,
+                         const gfx::ImageSkia& image) {
+  container->AddIconAndLabels(
+      image, text,
+      l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_NETWORK_STATUS_CONNECTING));
+}
+
 }  // namespace
 
 // A header row for sections in network detailed view which contains a title and
@@ -589,18 +612,35 @@ NetworkListView::UpdateNetworkListEntries() {
   return new_guids;
 }
 
-void NetworkListView::UpdateViewForNetwork(HoverHighlightView* view,
-                                           const NetworkInfo& info) {
-  view->Reset();
-  view->AddIconAndLabel(info.image, info.label);
+HoverHighlightView* NetworkListView::CreateViewForNetwork(
+    const NetworkInfo& info) {
+  HoverHighlightView* container = new HoverHighlightView(this);
   if (info.connected)
-    SetupConnectedScrollListItem(view);
+    SetupConnectedItem(container, info.label, info.image);
   else if (info.connecting)
-    SetupConnectingScrollListItem(view);
-  view->SetTooltipText(info.tooltip);
+    SetupConnectingItem(container, info.label, info.image);
+  else
+    container->AddIconAndLabel(info.image, info.label);
+  container->SetTooltipText(info.tooltip);
   views::View* controlled_icon = CreateControlledByExtensionView(info);
   if (controlled_icon)
-    view->AddRightView(controlled_icon);
+    container->AddRightView(controlled_icon);
+  return container;
+}
+
+void NetworkListView::UpdateViewForNetwork(HoverHighlightView* view,
+                                           const NetworkInfo& info) {
+  DCHECK(!view->is_populated());
+  if (info.connected)
+    SetupConnectedItem(view, info.label, info.image);
+  else if (info.connecting)
+    SetupConnectingItem(view, info.label, info.image);
+  else
+    view->AddIconAndLabel(info.image, info.label);
+  views::View* controlled_icon = CreateControlledByExtensionView(info);
+  view->SetTooltipText(info.tooltip);
+  if (controlled_icon)
+    view->AddChildView(controlled_icon);
 }
 
 views::View* NetworkListView::CreateControlledByExtensionView(
@@ -641,12 +681,15 @@ void NetworkListView::UpdateNetworkChild(int index, const NetworkInfo* info) {
   HoverHighlightView* network_view = nullptr;
   NetworkGuidMap::const_iterator found = network_guid_map_.find(info->guid);
   if (found == network_guid_map_.end()) {
-    network_view = new HoverHighlightView(this);
-    UpdateViewForNetwork(network_view, *info);
+    network_view = CreateViewForNetwork(*info);
   } else {
     network_view = found->second;
-    if (NeedUpdateViewForNetwork(*info))
+    if (NeedUpdateViewForNetwork(*info)) {
+      network_view->Reset();
       UpdateViewForNetwork(network_view, *info);
+      network_view->Layout();
+      network_view->SchedulePaint();
+    }
   }
   PlaceViewAtIndex(network_view, index);
   if (info->disable)
@@ -659,7 +702,6 @@ void NetworkListView::PlaceViewAtIndex(views::View* view, int index) {
   if (view->parent() != scroll_content()) {
     scroll_content()->AddChildViewAt(view, index);
   } else {
-    // No re-order and re-layout is necessary if |view| is already at |index|.
     if (scroll_content()->child_at(index) == view)
       return;
     scroll_content()->ReorderChildView(view, index);
@@ -669,22 +711,30 @@ void NetworkListView::PlaceViewAtIndex(views::View* view, int index) {
 
 void NetworkListView::UpdateInfoLabel(int message_id,
                                       int insertion_index,
-                                      InfoLabel** info_label_ptr) {
-  InfoLabel* info_label = *info_label_ptr;
+                                      views::Label** label_ptr) {
+  views::Label* label = *label_ptr;
   if (!message_id) {
-    if (info_label) {
+    if (label) {
       needs_relayout_ = true;
-      delete info_label;
-      *info_label_ptr = nullptr;
+      delete label;
+      *label_ptr = nullptr;
     }
     return;
   }
-  if (!info_label)
-    info_label = new InfoLabel(message_id);
-  else
-    info_label->SetMessage(message_id);
-  PlaceViewAtIndex(info_label, insertion_index);
-  *info_label_ptr = info_label;
+  base::string16 text = l10n_util::GetStringUTF16(message_id);
+  if (!label) {
+    // TODO(mohsen): Update info label to follow MD specs. See
+    // https://crbug.com/687778.
+    label = new views::Label();
+    label->SetBorder(views::CreateEmptyBorder(
+        kTrayPopupPaddingBetweenItems, kTrayPopupPaddingHorizontal,
+        kTrayPopupPaddingBetweenItems, 0));
+    label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+    label->SetEnabledColor(SkColorSetARGB(192, 0, 0, 0));
+  }
+  label->SetText(text);
+  PlaceViewAtIndex(label, insertion_index);
+  *label_ptr = label;
 }
 
 int NetworkListView::UpdateSectionHeaderRow(NetworkTypePattern pattern,

@@ -22,7 +22,7 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
     private LayoutManagerChrome mLayoutManager;
     private TabModelSelector mTabModelSelector;
 
-    private boolean mIsShowingNewTabUi;
+    private boolean mIsShowingNewTab;
 
     /**
      * Creates a new {@link BottomSheetNewTabController}.
@@ -56,10 +56,7 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
      * @param isIncognito Whether to display the incognito new tab UI.
      */
     public void displayNewTabUi(boolean isIncognito) {
-        mIsShowingNewTabUi = true;
-
-        // Tell the model that a new tab may be added soon.
-        mTabModelSelector.getModel(isIncognito).setIsPendingTabAdd(true);
+        mIsShowingNewTab = true;
 
         // Select the correct model, immediately ending animations so that the sheet content is not
         // in transition while the sheet is opening.
@@ -71,40 +68,45 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
         // Update the loading status so that the location bar will update its contents.
         mLocationBar.updateLoadingState(true);
 
-        // Show the tab switcher if needed. The overview should be shown before the sheet is opened
-        // to ensure the toolbar ends up in the correct state.
-        if (!mLayoutManager.overviewVisible()) mLayoutManager.showOverview(true);
-
         // Open the sheet.
         mBottomSheet.setSheetState(mTabModelSelector.getTotalTabCount() == 0
                         ? BottomSheet.SHEET_STATE_FULL
                         : BottomSheet.SHEET_STATE_HALF,
                 true);
 
+        // Show the tab switcher if needed.
+        if (!mLayoutManager.overviewVisible()) mLayoutManager.showOverview(true);
+
         mBottomSheet.getBottomSheetMetrics().recordSheetOpenReason(
                 BottomSheetMetrics.OPENED_BY_NEW_TAB_CREATION);
     }
 
     /**
-     * @return Whether the the new tab UI is showing.
+     * Called when the activity containing the {@link BottomSheet} processes a url view intent.
+     * The new tab UI will be hidden.
      */
-    public boolean isShowingNewTabUi() {
-        return mIsShowingNewTabUi;
+    public void onProcessUrlViewIntent() {
+        if (!mIsShowingNewTab) return;
+
+        mIsShowingNewTab = false;
+        mLayoutManager.hideOverview(true);
     }
 
     @Override
     public void onLoadUrl(String url) {
-        if (!mIsShowingNewTabUi) return;
+        onProcessUrlViewIntent();
+    }
 
-        mLayoutManager.hideOverview(true);
-
-        // BottomSheet closes itself when URLs are loaded; wait to finish hiding the new tab UI
-        // until the bottom sheet is closed.
+    /**
+     * @return Whether the the new tab UI is showing.
+     */
+    public boolean isShowingNewTab() {
+        return mIsShowingNewTab;
     }
 
     @Override
     public void onSheetOpened() {
-        if (!mIsShowingNewTabUi) return;
+        if (!mIsShowingNewTab) return;
 
         // Transition from the tab switcher toolbar to the normal toolbar.
         mToolbar.showNormalToolbar();
@@ -116,7 +118,7 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
 
     @Override
     public void onSheetReleased() {
-        if (!mIsShowingNewTabUi) return;
+        if (!mIsShowingNewTab) return;
 
         // Start transitioning back to the tab switcher toolbar when the sheet is released to help
         // smooth out animations.
@@ -127,7 +129,9 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
 
     @Override
     public void onSheetClosed() {
-        if (!mIsShowingNewTabUi) return;
+        if (!mIsShowingNewTab) return;
+
+        mIsShowingNewTab = false;
 
         // If the incognito tab model is showing, but has no tabs, this indicates that the model
         // was switched during the creation of an incognito ntp and the user closed the sheet
@@ -139,15 +143,5 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
 
         // Transition back to the tab switcher toolbar if the tab switcher is sill visible.
         if (mLayoutManager.overviewVisible()) mToolbar.showTabSwitcherToolbar();
-
-        onNewTabUiHidden();
-
-        mIsShowingNewTabUi = false;
-    }
-
-    /** Called after the new tab UI is hidden. Resets properties on the tab models. */
-    private void onNewTabUiHidden() {
-        mTabModelSelector.getModel(false).setIsPendingTabAdd(false);
-        mTabModelSelector.getModel(true).setIsPendingTabAdd(false);
     }
 }

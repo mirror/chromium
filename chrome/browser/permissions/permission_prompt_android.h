@@ -37,7 +37,6 @@ class PermissionPromptAndroid : public PermissionPrompt {
   size_t PermissionCount() const;
   ContentSettingsType GetContentSettingType(size_t position) const;
   int GetIconIdForPermission(size_t position) const;
-  base::string16 GetMessageText(size_t position) const;
   base::string16 GetMessageTextFragment(size_t position) const;
 
  private:

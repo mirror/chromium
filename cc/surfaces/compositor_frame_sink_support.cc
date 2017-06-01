@@ -86,33 +86,32 @@ void CompositorFrameSinkSupport::SetNeedsBeginFrame(bool needs_begin_frame) {
 }
 
 void CompositorFrameSinkSupport::DidNotProduceFrame(const BeginFrameAck& ack) {
-  TRACE_EVENT2("cc", "CompositorFrameSinkSupport::DidNotProduceFrame",
-               "ack.source_id", ack.source_id, "ack.sequence_number",
-               ack.sequence_number);
+  // TODO(eseckler): While a pending CompositorFrame exists (see TODO below), we
+  // should not acknowledge immediately. Instead, we should update the ack that
+  // will be sent to DisplayScheduler when the pending frame is activated.
   DCHECK_GE(ack.sequence_number, BeginFrameArgs::kStartingFrameNumber);
 
   // |has_damage| is not transmitted, but false by default.
   DCHECK(!ack.has_damage);
-
-  if (current_surface_)
-    surface_manager_->SurfaceModified(current_surface_->surface_id(), ack);
   if (begin_frame_source_)
-    begin_frame_source_->DidFinishFrame(this);
+    begin_frame_source_->DidFinishFrame(this, ack);
 }
 
-bool CompositorFrameSinkSupport::SubmitCompositorFrame(
+void CompositorFrameSinkSupport::SubmitCompositorFrame(
     const LocalSurfaceId& local_surface_id,
     CompositorFrame frame) {
   TRACE_EVENT0("cc", "CompositorFrameSinkSupport::SubmitCompositorFrame");
   DCHECK(local_surface_id.is_valid());
+  DCHECK_GE(frame.metadata.begin_frame_ack.sequence_number,
+            BeginFrameArgs::kStartingFrameNumber);
   DCHECK(!frame.render_pass_list.empty());
 
   ++ack_pending_count_;
 
   // |has_damage| is not transmitted.
   frame.metadata.begin_frame_ack.has_damage = true;
+
   BeginFrameAck ack = frame.metadata.begin_frame_ack;
-  DCHECK_LE(BeginFrameArgs::kStartingFrameNumber, ack.sequence_number);
 
   if (!ui::LatencyInfo::Verify(frame.metadata.latency_info,
                                "RenderWidgetHostImpl::OnSwapCompositorFrame")) {
@@ -132,40 +131,15 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
   if (!create_new_surface) {
     surface = std::move(current_surface_);
   } else {
-    SurfaceId surface_id(frame_sink_id_, local_surface_id);
-    gfx::Size frame_size = frame.render_pass_list.back()->output_rect.size();
-    float device_scale_factor = frame.metadata.device_scale_factor;
-    SurfaceInfo surface_info(surface_id, device_scale_factor, frame_size);
-
-    if (!surface_info.is_valid()) {
-      TRACE_EVENT_INSTANT0("cc", "Invalid SurfaceInfo",
-                           TRACE_EVENT_SCOPE_THREAD);
-      if (current_surface_)
-        DestroyCurrentSurface();
-      ReturnedResourceArray resources;
-      TransferableResource::ReturnResources(frame.resource_list, &resources);
-      ReturnResources(resources);
-      DidReceiveCompositorFrameAck();
-      return true;
-    }
-
-    surface = CreateSurface(surface_info);
+    surface = CreateSurface(local_surface_id);
   }
 
-  bool result = surface->QueueFrame(
+  surface->QueueFrame(
       std::move(frame),
       base::Bind(&CompositorFrameSinkSupport::DidReceiveCompositorFrameAck,
                  weak_factory_.GetWeakPtr()),
       base::BindRepeating(&CompositorFrameSinkSupport::WillDrawSurface,
                           weak_factory_.GetWeakPtr()));
-
-  if (!result) {
-    surface_manager_->DestroySurface(std::move(surface));
-    return false;
-  }
-
-  surface_manager_->SurfaceDamageExpected(surface->surface_id(),
-                                          last_begin_frame_args_);
 
   if (current_surface_) {
     surface->SetPreviousFrameSurface(current_surface_.get());
@@ -173,10 +147,13 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
   }
   current_surface_ = std::move(surface);
 
+  // TODO(eseckler): The CompositorFrame submitted below might not be activated
+  // right away b/c of surface synchronization. We should only send the
+  // BeginFrameAck to DisplayScheduler when it is activated. This also means
+  // that we need to stay an active BFO while a CompositorFrame is pending.
+  // See https://crbug.com/703079.
   if (begin_frame_source_)
-    begin_frame_source_->DidFinishFrame(this);
-
-  return true;
+    begin_frame_source_->DidFinishFrame(this, ack);
 }
 
 void CompositorFrameSinkSupport::UpdateSurfaceReferences(
@@ -303,10 +280,6 @@ void CompositorFrameSinkSupport::Init(SurfaceManager* surface_manager) {
 
 void CompositorFrameSinkSupport::OnBeginFrame(const BeginFrameArgs& args) {
   UpdateNeedsBeginFramesInternal();
-  if (current_surface_) {
-    surface_manager_->SurfaceDamageExpected(current_surface_->surface_id(),
-                                            args);
-  }
   last_begin_frame_args_ = args;
   if (client_)
     client_->OnBeginFrame(args);
@@ -321,12 +294,14 @@ void CompositorFrameSinkSupport::OnBeginFrameSourcePausedChanged(bool paused) {}
 
 void CompositorFrameSinkSupport::OnSurfaceActivated(Surface* surface) {
   DCHECK(surface->HasActiveFrame());
-  const CompositorFrame& frame = surface->GetActiveFrame();
   if (!seen_first_frame_activation_) {
-    // SurfaceCreated only applies for the first Surface activation.
     seen_first_frame_activation_ = true;
 
+    const CompositorFrame& frame = surface->GetActiveFrame();
     gfx::Size frame_size = frame.render_pass_list.back()->output_rect.size();
+
+    // SurfaceCreated only applies for the first Surface activation. Thus,
+    // SurfaceFactory stops observing new activations after the first one.
     surface_manager_->SurfaceCreated(SurfaceInfo(
         surface->surface_id(), frame.metadata.device_scale_factor, frame_size));
   }
@@ -334,8 +309,7 @@ void CompositorFrameSinkSupport::OnSurfaceActivated(Surface* surface) {
   // is potentially transformed into a real reference by the client.
   ReferencedSurfacesChanged(surface->surface_id().local_surface_id(),
                             surface->active_referenced_surfaces());
-  if (!surface_manager_->SurfaceModified(surface->surface_id(),
-                                         frame.metadata.begin_frame_ack)) {
+  if (!surface_manager_->SurfaceModified(surface->surface_id())) {
     TRACE_EVENT_INSTANT0("cc", "Damage not visible.", TRACE_EVENT_SCOPE_THREAD);
     surface->RunDrawCallback();
   }
@@ -357,10 +331,11 @@ void CompositorFrameSinkSupport::UpdateNeedsBeginFramesInternal() {
 }
 
 std::unique_ptr<Surface> CompositorFrameSinkSupport::CreateSurface(
-    const SurfaceInfo& surface_info) {
+    const LocalSurfaceId& local_surface_id) {
   seen_first_frame_activation_ = false;
-  return surface_manager_->CreateSurface(weak_factory_.GetWeakPtr(),
-                                         surface_info);
+  std::unique_ptr<Surface> surface = surface_manager_->CreateSurface(
+      weak_factory_.GetWeakPtr(), local_surface_id);
+  return surface;
 }
 
 void CompositorFrameSinkSupport::DestroyCurrentSurface() {
@@ -374,10 +349,7 @@ void CompositorFrameSinkSupport::RequestCopyOfSurface(
 
   DCHECK(current_surface_->compositor_frame_sink_support().get() == this);
   current_surface_->RequestCopyOfOutput(std::move(copy_request));
-  BeginFrameAck ack;
-  ack.has_damage = true;
-  if (current_surface_->HasActiveFrame())
-    surface_manager_->SurfaceModified(current_surface_->surface_id(), ack);
+  surface_manager_->SurfaceModified(current_surface_->surface_id());
 }
 
 }  // namespace cc

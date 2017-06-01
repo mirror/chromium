@@ -15,7 +15,6 @@ namespace blink {
 class ExceptionState;
 class HTMLDivElement;
 class TestCallback;
-class TestEnumCallback;
 class TestInterfaceCallback;
 class TestReceiverObjectCallback;
 class TestSequenceCallback;
@@ -45,9 +44,6 @@ class CallbackFunctionTest final
   Vector<String> testSequenceCallback(TestSequenceCallback*,
                                       const Vector<int>& numbers,
                                       ExceptionState&);
-  void testEnumCallback(TestEnumCallback*,
-                        const String& enum_value,
-                        ExceptionState&);
 };
 
 }  // namespace blink

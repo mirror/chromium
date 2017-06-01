@@ -11,7 +11,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/sequence_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "base/time/time.h"
 #include "components/captive_portal/captive_portal_export.h"
 #include "components/captive_portal/captive_portal_types.h"
@@ -25,7 +25,8 @@ class GURL;
 namespace captive_portal {
 
 class CAPTIVE_PORTAL_EXPORT CaptivePortalDetector
-    : public net::URLFetcherDelegate {
+    : public net::URLFetcherDelegate,
+      public base::NonThreadSafe {
  public:
   struct Results {
     Results()
@@ -102,8 +103,6 @@ class CAPTIVE_PORTAL_EXPORT CaptivePortalDetector
 
   // Test time used by unit tests.
   base::Time time_for_testing_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(CaptivePortalDetector);
 };

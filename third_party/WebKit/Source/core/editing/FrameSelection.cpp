@@ -54,9 +54,9 @@
 #include "core/editing/serializers/Serialization.h"
 #include "core/editing/spellcheck/SpellChecker.h"
 #include "core/events/Event.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLBodyElement.h"
 #include "core/html/HTMLFrameElementBase.h"
@@ -443,12 +443,6 @@ bool FrameSelection::SelectionHasFocus() const {
   if (focused_element->IsTextControl())
     return focused_element->ContainsIncludingHostElements(*current);
 
-  if (ComputeVisibleSelectionInFlatTree().IsNone()) {
-    // TODO(editing-dev): We should avoid any case where VSInFlatTree is none
-    // but VSInDOMTree is not none.
-    DLOG(FATAL) << ComputeVisibleSelectionInDOMTree();
-  }
-
   // Selection has focus if it contains the focused element.
   const PositionInFlatTree& focused_position =
       PositionInFlatTree::FirstPositionInNode(focused_element);
@@ -730,6 +724,22 @@ void FrameSelection::SelectAll(EUserTriggered user_triggered) {
   NotifyTextControlOfSelectionChange(kUserTriggered);
 }
 
+bool FrameSelection::SetSelectedRange(const EphemeralRange& range,
+                                      TextAffinity affinity,
+                                      SelectionDirectionalMode directional,
+                                      SetSelectionOptions options) {
+  if (range.IsNull())
+    return false;
+  SetSelection(SelectionInDOMTree::Builder()
+                   .SetBaseAndExtent(range)
+                   .SetAffinity(affinity)
+                   .SetIsDirectional(directional ==
+                                     SelectionDirectionalMode::kDirectional)
+                   .Build(),
+               options);
+  return true;
+}
+
 void FrameSelection::NotifyAccessibilityForSelectionChange() {
   if (GetSelectionInDOMTree().IsNone())
     return;
@@ -852,7 +862,7 @@ void FrameSelection::NotifyTextControlOfSelectionChange(
 }
 
 // Helper function that tells whether a particular node is an element that has
-// an entire LocalFrame and LocalFrameView, a <frame>, <iframe>, or <object>.
+// an entire LocalFrame and FrameView, a <frame>, <iframe>, or <object>.
 static bool IsFrameElement(const Node* n) {
   if (!n)
     return false;
@@ -927,7 +937,7 @@ String FrameSelection::SelectedTextForClipboard() const {
 }
 
 LayoutRect FrameSelection::Bounds() const {
-  LocalFrameView* view = frame_->View();
+  FrameView* view = frame_->View();
   if (!view)
     return LayoutRect();
 
@@ -936,7 +946,7 @@ LayoutRect FrameSelection::Bounds() const {
 }
 
 LayoutRect FrameSelection::UnclippedBounds() const {
-  LocalFrameView* view = frame_->View();
+  FrameView* view = frame_->View();
   LayoutViewItem layout_view = frame_->ContentLayoutItem();
 
   if (!view || layout_view.IsNull())
@@ -1052,7 +1062,7 @@ void FrameSelection::ScheduleVisualUpdate() const {
 }
 
 void FrameSelection::ScheduleVisualUpdateForPaintInvalidationIfNeeded() const {
-  if (LocalFrameView* frame_view = frame_->View())
+  if (FrameView* frame_view = frame_->View())
     frame_view->ScheduleVisualUpdateForPaintInvalidationIfNeeded();
 }
 

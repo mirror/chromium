@@ -20,8 +20,7 @@ struct FaviconURL {
     INVALID_ICON = 0x0,
     FAVICON = 1 << 0,
     TOUCH_ICON = 1 << 1,
-    TOUCH_PRECOMPOSED_ICON = 1 << 2,
-    WEB_MANIFEST_ICON = 1 << 3,
+    TOUCH_PRECOMPOSED_ICON = 1 << 2
   };
 
   FaviconURL();

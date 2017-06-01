@@ -184,9 +184,6 @@ const char kDisableHIDDetectionOnOOBE[] = "disable-hid-detection-on-oobe";
 // Avoid doing expensive animations upon login.
 const char kDisableLoginAnimations[] = "disable-login-animations";
 
-// Disables requests for an enterprise machine certificate during attestation.
-const char kDisableMachineCertRequest[] = "disable-machine-cert-request";
-
 // Disables mtp write support.
 const char kDisableMtpWriteSupport[] = "disable-mtp-write-support";
 
@@ -280,10 +277,6 @@ const char kEnableKioskMode[] = "enable-kiosk-mode";
 
 // Enables tethering to nearby LTE devices.
 const char kEnableTether[] = "enable-tether";
-
-// Overrides Tether with stub service. Provide integer arguments for the number
-// of fake networks desired, e.g. 'tether-stub=2'.
-const char kTetherStub[] = "tether-stub";
 
 // Disables material design OOBE UI.
 const char kDisableMdOobe[] = "disable-md-oobe";
@@ -415,9 +408,6 @@ const char kMemoryPressureThresholds[] = "memory-pressure-thresholds";
 
 // Enables natural scroll by default.
 const char kNaturalScrollDefault[] = "enable-natural-scroll-default";
-
-// Enables Settings based network config in MD Settings.
-const char kNetworkSettingsConfig[] = "network-settings-config";
 
 // An optional comma-separated list of IDs of apps that can be used to take
 // notes. If unset, a hardcoded list is used instead.

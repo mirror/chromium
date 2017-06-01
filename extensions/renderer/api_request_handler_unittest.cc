@@ -6,7 +6,6 @@
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/optional.h"
-#include "base/strings/stringprintf.h"
 #include "base/values.h"
 #include "extensions/renderer/api_binding_test.h"
 #include "extensions/renderer/api_binding_test_util.h"
@@ -93,13 +92,6 @@ TEST_F(APIRequestHandlerTest, AddRequestAndCompleteRequestTest) {
             GetStringPropertyFromObject(context->Global(), context, "result"));
 
   EXPECT_TRUE(request_handler.GetPendingRequestIdsForTesting().empty());
-
-  request_id = request_handler.StartRequest(
-      context, kMethod, base::MakeUnique<base::ListValue>(),
-      v8::Local<v8::Function>(), v8::Local<v8::Function>(),
-      binding::RequestThread::UI);
-  EXPECT_NE(-1, request_id);
-  request_handler.CompleteRequest(request_id, base::ListValue(), std::string());
 }
 
 // Tests that trying to run non-existent or invalided requests is a no-op.
@@ -228,8 +220,7 @@ TEST_F(APIRequestHandlerTest, CustomCallbackArguments) {
   ASSERT_TRUE(gin::Converter<ArgumentList>::FromV8(isolate(), result, &args));
   ASSERT_EQ(5u, args.size());
   EXPECT_EQ("\"method\"", V8ToString(args[0], context));
-  EXPECT_EQ(base::StringPrintf("{\"id\":%d}", request_id),
-            V8ToString(args[1], context));
+  EXPECT_EQ("{}", V8ToString(args[1], context));
   EXPECT_EQ(callback, args[2]);
   EXPECT_EQ("\"response\"", V8ToString(args[3], context));
   EXPECT_EQ("\"arguments\"", V8ToString(args[4], context));
@@ -270,8 +261,7 @@ TEST_F(APIRequestHandlerTest, CustomCallbackArgumentsWithEmptyCallback) {
   ASSERT_TRUE(gin::Converter<ArgumentList>::FromV8(isolate(), result, &args));
   ASSERT_EQ(3u, args.size());
   EXPECT_EQ("\"method\"", V8ToString(args[0], context));
-  EXPECT_EQ(base::StringPrintf("{\"id\":%d}", request_id),
-            V8ToString(args[1], context));
+  EXPECT_EQ("{}", V8ToString(args[1], context));
   EXPECT_TRUE(args[2]->IsUndefined());
 
   EXPECT_TRUE(request_handler.GetPendingRequestIdsForTesting().empty());
@@ -442,47 +432,6 @@ TEST_F(APIRequestHandlerTest, SettingLastError) {
     EXPECT_EQ("Unchecked runtime.lastError: some error", *logged_error);
     logged_error.reset();
   }
-}
-
-TEST_F(APIRequestHandlerTest, AddPendingRequest) {
-  v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = MainContext();
-
-  bool dispatched_request = false;
-  auto handle_request = [](bool* dispatched_request,
-                           std::unique_ptr<APIRequestHandler::Request> request,
-                           v8::Local<v8::Context> context) {
-    *dispatched_request = true;
-  };
-
-  APIRequestHandler request_handler(
-      base::Bind(handle_request, &dispatched_request),
-      base::Bind(&APIRequestHandlerTest::RunJS, base::Unretained(this)),
-      APILastError(APILastError::GetParent(), APILastError::AddConsoleError()));
-
-  EXPECT_TRUE(request_handler.GetPendingRequestIdsForTesting().empty());
-  v8::Local<v8::Function> function = FunctionFromString(context, kEchoArgs);
-  ASSERT_FALSE(function.IsEmpty());
-
-  int request_id = request_handler.AddPendingRequest(context, function);
-  EXPECT_THAT(request_handler.GetPendingRequestIdsForTesting(),
-              testing::UnorderedElementsAre(request_id));
-  // Even though we add a pending request, we shouldn't have dispatched anything
-  // because AddPendingRequest() is intended for renderer-side implementations.
-  EXPECT_FALSE(dispatched_request);
-
-  const char kArguments[] = "['foo',1,{'prop1':'bar'}]";
-  std::unique_ptr<base::ListValue> response_arguments =
-      ListValueFromString(kArguments);
-  ASSERT_TRUE(response_arguments);
-  request_handler.CompleteRequest(request_id, *response_arguments,
-                                  std::string());
-
-  EXPECT_EQ(ReplaceSingleQuotes(kArguments),
-            GetStringPropertyFromObject(context->Global(), context, "result"));
-
-  EXPECT_TRUE(request_handler.GetPendingRequestIdsForTesting().empty());
-  EXPECT_FALSE(dispatched_request);
 }
 
 }  // namespace extensions

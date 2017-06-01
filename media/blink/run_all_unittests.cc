@@ -18,7 +18,6 @@
 
 #if defined(OS_ANDROID)
 #include "base/android/jni_android.h"
-#include "media/base/android/media_codec_util.h"
 #include "media/base/android/media_jni_registrar.h"
 #endif
 
@@ -77,9 +76,6 @@ void BlinkMediaTestSuite::Initialize() {
 
 #if defined(OS_ANDROID)
   media::RegisterJni(base::android::AttachCurrentThread());
-
-  if (media::MediaCodecUtil::IsMediaCodecAvailable())
-    media::EnablePlatformDecoderSupport();
 #endif
 
   // Run this here instead of main() to ensure an AtExitManager is already

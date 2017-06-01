@@ -64,7 +64,7 @@ class EnrollmentDialogView : public views::DialogDelegateView {
   void WindowClosing() override;
 
   // views::View overrides
-  gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetPreferredSize() const override;
 
  private:
   EnrollmentDialogView(const std::string& network_name,
@@ -150,7 +150,7 @@ void EnrollmentDialogView::WindowClosing() {
   chrome::Navigate(&params);
 }
 
-gfx::Size EnrollmentDialogView::CalculatePreferredSize() const {
+gfx::Size EnrollmentDialogView::GetPreferredSize() const {
   return gfx::Size(kDefaultWidth, kDefaultHeight);
 }
 

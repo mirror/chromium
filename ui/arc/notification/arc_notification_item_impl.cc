@@ -8,8 +8,8 @@
 #include <vector>
 
 #include "base/memory/ptr_util.h"
-#include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "ui/arc/notification/arc_custom_notification_view.h"
 #include "ui/arc/notification/arc_notification_delegate.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/image/image.h"
@@ -77,14 +77,8 @@ void ArcNotificationItemImpl::OnUpdatedFromAndroid(
   rich_data.priority = ConvertAndroidPriority(data->priority);
   if (data->small_icon)
     rich_data.small_image = gfx::Image::CreateFrom1xBitmap(*data->small_icon);
-  if (data->accessible_name.has_value()) {
-    accessible_name_ = base::UTF8ToUTF16(*data->accessible_name);
-  } else {
-    accessible_name_ = base::JoinString(
-        {base::UTF8ToUTF16(data->title), base::UTF8ToUTF16(data->message)},
-        base::ASCIIToUTF16("\n"));
-  }
-  rich_data.accessible_name = accessible_name_;
+  if (data->accessible_name.has_value())
+    rich_data.accessible_name = base::UTF8ToUTF16(*data->accessible_name);
 
   message_center::NotifierId notifier_id(
       message_center::NotifierId::SYSTEM_COMPONENT, kNotifierId);
@@ -195,14 +189,6 @@ mojom::ArcNotificationShownContents ArcNotificationItemImpl::GetShownContents()
 
 const std::string& ArcNotificationItemImpl::GetNotificationKey() const {
   return notification_key_;
-}
-
-const std::string& ArcNotificationItemImpl::GetNotificationId() const {
-  return notification_id_;
-}
-
-const base::string16& ArcNotificationItemImpl::GetAccessibleName() const {
-  return accessible_name_;
 }
 
 }  // namespace arc

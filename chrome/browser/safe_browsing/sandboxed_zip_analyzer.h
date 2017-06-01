@@ -11,7 +11,6 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "chrome/common/safe_archive_analyzer.mojom.h"
-#include "chrome/common/safe_browsing/archive_analyzer_results.h"
 #include "content/public/browser/utility_process_mojo_client.h"
 
 namespace safe_browsing {
@@ -22,7 +21,9 @@ namespace safe_browsing {
 class SandboxedZipAnalyzer
     : public base::RefCountedThreadSafe<SandboxedZipAnalyzer> {
  public:
-  using ResultCallback = base::Callback<void(const ArchiveAnalyzerResults&)>;
+  using Results = zip_analyzer::Results;
+
+  using ResultCallback = base::Callback<void(const Results&)>;
 
   SandboxedZipAnalyzer(const base::FilePath& zip_file,
                        const ResultCallback& callback);
@@ -45,7 +46,7 @@ class SandboxedZipAnalyzer
   void AnalyzeFile(base::File file, base::File temp);
 
   // The response containing the file analyze results.
-  void AnalyzeFileDone(const ArchiveAnalyzerResults& results);
+  void AnalyzeFileDone(const Results& results);
 
   // The file path of the file to analyze.
   const base::FilePath file_path_;

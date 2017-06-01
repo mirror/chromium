@@ -95,9 +95,7 @@ CrOSComponentInstallerTraits::OnCustomInstall(
 void CrOSComponentInstallerTraits::ComponentReady(
     const base::Version& version,
     const base::FilePath& path,
-    std::unique_ptr<base::DictionaryValue> manifest) {
-  g_browser_process->platform_part()->AddCompatibleCrOSComponent(GetName());
-}
+    std::unique_ptr<base::DictionaryValue> manifest) {}
 
 bool CrOSComponentInstallerTraits::VerifyInstallation(
     const base::DictionaryValue& manifest,

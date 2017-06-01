@@ -20,7 +20,6 @@ CALLBACK_FUNCTION_H_INCLUDES = frozenset([
 CALLBACK_FUNCTION_CPP_INCLUDES = frozenset([
     'bindings/core/v8/ExceptionState.h',
     'platform/bindings/ScriptState.h',
-    'bindings/core/v8/NativeValueTraitsImpl.h',
     'bindings/core/v8/ToV8ForCore.h',
     'bindings/core/v8/V8BindingForCore.h',
     'core/dom/ExecutionContext.h',
@@ -33,10 +32,11 @@ def callback_function_context(callback_function):
     includes.update(CALLBACK_FUNCTION_CPP_INCLUDES)
     idl_type = callback_function.idl_type
     idl_type_str = str(idl_type)
-
+    forward_declarations = []
     for argument in callback_function.arguments:
-        argument.idl_type.add_includes_for_type(
-            callback_function.extended_attributes)
+        if argument.idl_type.is_interface_type:
+            forward_declarations.append(argument.idl_type)
+        argument.idl_type.add_includes_for_type(callback_function.extended_attributes)
 
     context = {
         # While both |callback_function_name| and |cpp_class| are identical at
@@ -46,7 +46,7 @@ def callback_function_context(callback_function):
         'callback_function_name': callback_function.name,
         'cpp_class': callback_function.name,
         'cpp_includes': sorted(includes),
-        'forward_declarations': sorted(forward_declarations(callback_function)),
+        'forward_declarations': sorted(forward_declarations),
         'header_includes': sorted(CALLBACK_FUNCTION_H_INCLUDES),
         'idl_type': idl_type_str,
     }
@@ -65,33 +65,13 @@ def callback_function_context(callback_function):
     return context
 
 
-def forward_declarations(callback_function):
-    def find_forward_declaration(idl_type):
-        if idl_type.is_interface_type or idl_type.is_dictionary:
-            return idl_type.implemented_as
-        elif idl_type.is_array_or_sequence_type:
-            return find_forward_declaration(idl_type.element_type)
-        return None
-
-    declarations = []
-    for argument in callback_function.arguments:
-        name = find_forward_declaration(argument.idl_type)
-        if name:
-            declarations.append(name)
-    return declarations
-
-
 def arguments_context(arguments, return_cpp_type):
     def argument_context(argument):
-        idl_type = argument.idl_type
         return {
-            'cpp_value_to_v8_value': idl_type.cpp_value_to_v8_value(
+            'argument_name': '%sArgument' % argument.name,
+            'cpp_value_to_v8_value': argument.idl_type.cpp_value_to_v8_value(
                 argument.name, isolate='script_state_->GetIsolate()',
                 creation_context='script_state_->GetContext()->Global()'),
-            'enum_type': idl_type.enum_type,
-            'enum_values': idl_type.enum_values,
-            'name': argument.name,
-            'v8_name': 'v8_%s' % argument.name,
         }
 
     argument_declarations = [

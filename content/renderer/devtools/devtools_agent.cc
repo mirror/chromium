@@ -12,8 +12,8 @@
 #include "base/lazy_instance.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "base/sequence_checker.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/threading/non_thread_safe.h"
 #include "base/trace_event/trace_event.h"
 #include "content/common/devtools_messages.h"
 #include "content/common/frame_messages.h"
@@ -46,14 +46,13 @@ const size_t kMaxMessageChunkSize = IPC::Channel::kMaximumMessageSize / 4;
 const char kPageGetAppManifest[] = "Page.getAppManifest";
 
 class WebKitClientMessageLoopImpl
-    : public WebDevToolsAgentClient::WebKitClientMessageLoop {
+    : public WebDevToolsAgentClient::WebKitClientMessageLoop,
+      public base::NonThreadSafe {
  public:
   WebKitClientMessageLoopImpl() = default;
-  ~WebKitClientMessageLoopImpl() override {
-    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  }
+  ~WebKitClientMessageLoopImpl() override { DCHECK(CalledOnValidThread()); }
   void Run() override {
-    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+    DCHECK(CalledOnValidThread());
 
     base::RunLoop* const previous_run_loop = run_loop_;
     base::RunLoop run_loop;
@@ -66,7 +65,7 @@ class WebKitClientMessageLoopImpl
     run_loop_ = previous_run_loop;
   }
   void QuitNow() override {
-    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+    DCHECK(CalledOnValidThread());
     DCHECK(run_loop_);
 
     run_loop_->Quit();
@@ -74,8 +73,6 @@ class WebKitClientMessageLoopImpl
 
  private:
   base::RunLoop* run_loop_ = nullptr;
-
-  SEQUENCE_CHECKER(sequence_checker_);
 };
 
 typedef std::map<int, DevToolsAgent*> IdToAgentMap;

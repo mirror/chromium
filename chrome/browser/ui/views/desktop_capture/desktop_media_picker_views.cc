@@ -64,15 +64,13 @@ DesktopMediaPickerDialogView::DesktopMediaPickerDialogView(
       description_label_(new views::Label()),
       audio_share_checkbox_(nullptr),
       pane_(new views::TabbedPane()) {
-  const ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
+  ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
 
   SetLayoutManager(new views::BoxLayout(
       views::BoxLayout::kVertical,
-      provider->GetDistanceMetric(
-          views::DISTANCE_DIALOG_CONTENTS_HORIZONTAL_MARGIN),
-      provider->GetDistanceMetric(
-          views::DISTANCE_DIALOG_CONTENTS_VERTICAL_MARGIN),
-      provider->GetDistanceMetric(DISTANCE_RELATED_CONTROL_VERTICAL_SMALL)));
+      provider->GetDistanceMetric(DISTANCE_DIALOG_BUTTON_MARGIN),
+      provider->GetDistanceMetric(DISTANCE_PANEL_CONTENT_MARGIN),
+      provider->GetDistanceMetric(views::DISTANCE_RELATED_CONTROL_VERTICAL)));
 
   description_label_->SetMultiLine(true);
   description_label_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
@@ -279,7 +277,7 @@ void DesktopMediaPickerDialogView::DetachParent() {
   parent_ = nullptr;
 }
 
-gfx::Size DesktopMediaPickerDialogView::CalculatePreferredSize() const {
+gfx::Size DesktopMediaPickerDialogView::GetPreferredSize() const {
   static const size_t kDialogViewWidth = 600;
   return gfx::Size(kDialogViewWidth, GetHeightForWidth(kDialogViewWidth));
 }

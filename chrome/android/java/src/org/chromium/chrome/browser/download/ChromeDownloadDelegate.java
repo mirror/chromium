@@ -278,7 +278,9 @@ public class ChromeDownloadDelegate {
             return false;
         }
         String path = uri.getPath();
-        if (!OMADownloadHandler.isOMAFile(path)) return false;
+        // OMA downloads have extension "dm" or "dd". For the latter, it
+        // can be handled when native download completes.
+        if (path == null || !path.endsWith(".dm")) return false;
         if (mTab == null) return true;
         String fileName = URLUtil.guessFileName(
                 url, null, OMADownloadHandler.OMA_DRM_MESSAGE_MIME);

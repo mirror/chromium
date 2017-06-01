@@ -18,6 +18,7 @@
 #include "chrome/grit/locale_settings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/views/controls/label.h"
+#include "ui/views/layout/layout_constants.h"
 #include "ui/views/widget/widget.h"
 
 using base::UserMetricsAction;
@@ -54,7 +55,7 @@ ImportLockDialogView::ImportLockDialogView(
 ImportLockDialogView::~ImportLockDialogView() {
 }
 
-gfx::Size ImportLockDialogView::CalculatePreferredSize() const {
+gfx::Size ImportLockDialogView::GetPreferredSize() const {
   return gfx::Size(views::Widget::GetLocalizedContentsSize(
       IDS_IMPORTLOCK_DIALOG_WIDTH_CHARS,
       IDS_IMPORTLOCK_DIALOG_HEIGHT_LINES));
@@ -62,11 +63,9 @@ gfx::Size ImportLockDialogView::CalculatePreferredSize() const {
 
 void ImportLockDialogView::Layout() {
   gfx::Rect bounds(GetLocalBounds());
-  const ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
-  bounds.Inset(provider->GetDistanceMetric(
-                   views::DISTANCE_DIALOG_CONTENTS_HORIZONTAL_MARGIN),
-               provider->GetDistanceMetric(
-                   views::DISTANCE_DIALOG_CONTENTS_VERTICAL_MARGIN));
+  bounds.Inset(views::kButtonHEdgeMarginNew,
+               ChromeLayoutProvider::Get()->GetDistanceMetric(
+                   DISTANCE_PANEL_CONTENT_MARGIN));
   description_label_->SetBoundsRect(bounds);
 }
 

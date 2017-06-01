@@ -48,7 +48,6 @@ AudioRendererImpl::AudioRendererImpl(
       last_decoded_sample_rate_(0),
       last_decoded_channel_layout_(CHANNEL_LAYOUT_NONE),
       is_encrypted_(false),
-      last_decoded_channels_(0),
       playback_rate_(0.0),
       state_(kUninitialized),
       create_audio_decoders_cb_(create_audio_decoders_cb),
@@ -370,18 +369,9 @@ void AudioRendererImpl::Initialize(DemuxerStream* stream,
   auto output_device_info = sink_->GetOutputDeviceInfo();
   const AudioParameters& hw_params = output_device_info.output_params();
   expecting_config_changes_ = stream->SupportsConfigChanges();
-
-  bool use_stream_params = !expecting_config_changes_ || !hw_params.IsValid() ||
-                           hw_params.format() == AudioParameters::AUDIO_FAKE ||
-                           !sink_->IsOptimizedForHardwareParameters();
-
-  if (stream->audio_decoder_config().channel_layout() ==
-          CHANNEL_LAYOUT_DISCRETE &&
-      sink_->IsOptimizedForHardwareParameters()) {
-    use_stream_params = false;
-  }
-
-  if (use_stream_params) {
+  if (!expecting_config_changes_ || !hw_params.IsValid() ||
+      hw_params.format() == AudioParameters::AUDIO_FAKE ||
+      !sink_->IsOptimizedForHardwareParameters()) {
     // The actual buffer size is controlled via the size of the AudioBus
     // provided to Render(), but we should choose a value here based on hardware
     // parameters if possible since it affects the initial buffer size used by
@@ -394,8 +384,6 @@ void AudioRendererImpl::Initialize(DemuxerStream* stream,
                             stream->audio_decoder_config().samples_per_second(),
                             stream->audio_decoder_config().bits_per_channel(),
                             buffer_size);
-    audio_parameters_.set_channels_for_discrete(
-        stream->audio_decoder_config().channels());
     buffer_converter_.reset();
   } else {
     // To allow for seamless sample rate adaptations (i.e. changes from say
@@ -413,7 +401,8 @@ void AudioRendererImpl::Initialize(DemuxerStream* stream,
     }
 #endif
 
-    int stream_channel_count = stream->audio_decoder_config().channels();
+    int stream_channel_count = ChannelLayoutToChannelCount(
+        stream->audio_decoder_config().channel_layout());
 
     bool try_supported_channel_layouts = false;
 #if defined(OS_WIN)
@@ -468,8 +457,6 @@ void AudioRendererImpl::Initialize(DemuxerStream* stream,
       stream->audio_decoder_config().channel_layout();
 
   is_encrypted_ = stream->audio_decoder_config().is_encrypted();
-
-  last_decoded_channels_ = stream->audio_decoder_config().channels();
 
   audio_clock_.reset(
       new AudioClock(base::TimeDelta(), audio_parameters_.sample_rate()));
@@ -618,7 +605,6 @@ void AudioRendererImpl::DecodedAudioReady(
 
       if (last_decoded_channel_layout_ != buffer->channel_layout()) {
         last_decoded_channel_layout_ = buffer->channel_layout();
-        last_decoded_channels_ = buffer->channel_count();
 
         // Input layouts should never be discrete.
         DCHECK_NE(last_decoded_channel_layout_, CHANNEL_LAYOUT_DISCRETE);
@@ -1004,10 +990,14 @@ void AudioRendererImpl::ConfigureChannelMask() {
   DCHECK(audio_parameters_.IsValid());
   DCHECK_NE(last_decoded_channel_layout_, CHANNEL_LAYOUT_NONE);
   DCHECK_NE(last_decoded_channel_layout_, CHANNEL_LAYOUT_UNSUPPORTED);
+  DCHECK_NE(last_decoded_channel_layout_, CHANNEL_LAYOUT_DISCRETE);
+
+  const int input_channel_count =
+      ChannelLayoutToChannelCount(last_decoded_channel_layout_);
 
   // If we're actually downmixing the signal, no mask is necessary, but ensure
   // we clear any existing mask if present.
-  if (last_decoded_channels_ >= audio_parameters_.channels()) {
+  if (input_channel_count >= audio_parameters_.channels()) {
     algorithm_->SetChannelMask(
         std::vector<bool>(audio_parameters_.channels(), true));
     return;
@@ -1015,7 +1005,7 @@ void AudioRendererImpl::ConfigureChannelMask() {
 
   // Determine the matrix used to upmix the channels.
   std::vector<std::vector<float>> matrix;
-  ChannelMixingMatrix(last_decoded_channel_layout_, last_decoded_channels_,
+  ChannelMixingMatrix(last_decoded_channel_layout_, input_channel_count,
                       audio_parameters_.channel_layout(),
                       audio_parameters_.channels())
       .CreateTransformationMatrix(&matrix);

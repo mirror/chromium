@@ -27,6 +27,7 @@
 #include "extensions/browser/extension_host.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/extension.h"
+#include "extensions/common/feature_switch.h"
 #include "extensions/common/manifest_constants.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/image/image_skia_operations.h"
@@ -229,7 +230,7 @@ void ExtensionActionViewController::RegisterCommand() {
 }
 
 bool ExtensionActionViewController::DisabledClickOpensMenu() const {
-  return true;
+  return extensions::FeatureSwitch::extension_action_redesign()->IsEnabled();
 }
 
 void ExtensionActionViewController::InspectPopup() {
@@ -326,7 +327,8 @@ bool ExtensionActionViewController::TriggerPopupWithUrl(
     toolbar_actions_bar_->SetPopupOwner(this);
 
   if (toolbar_actions_bar_ &&
-      !toolbar_actions_bar_->IsActionVisibleOnMainBar(this)) {
+      !toolbar_actions_bar_->IsActionVisibleOnMainBar(this) &&
+      extensions::FeatureSwitch::extension_action_redesign()->IsEnabled()) {
     platform_delegate_->CloseOverflowMenu();
     toolbar_actions_bar_->PopOutAction(
         this,
@@ -386,21 +388,25 @@ ExtensionActionViewController::GetIconImageSource(
   }
   image_source->SetBadge(std::move(badge));
 
-  // If the extension doesn't want to run on the active web contents, we
-  // grayscale it to indicate that.
-  image_source->set_grayscale(!IsEnabled(web_contents));
-  // If the action *does* want to run on the active web contents and is also
-  // overflowed, we add a decoration so that the user can see which overflowed
-  // action wants to run (since they wouldn't be able to see the change from
-  // grayscale to color).
-  bool is_overflow =
-      toolbar_actions_bar_ && toolbar_actions_bar_->in_overflow_mode();
+  // Greyscaling disabled actions and having a special wants-to-run decoration
+  // are gated on the toolbar redesign.
+  if (extensions::FeatureSwitch::extension_action_redesign()->IsEnabled()) {
+    // If the extension doesn't want to run on the active web contents, we
+    // grayscale it to indicate that.
+    image_source->set_grayscale(!IsEnabled(web_contents));
+    // If the action *does* want to run on the active web contents and is also
+    // overflowed, we add a decoration so that the user can see which overflowed
+    // action wants to run (since they wouldn't be able to see the change from
+    // grayscale to color).
+    bool is_overflow =
+        toolbar_actions_bar_ && toolbar_actions_bar_->in_overflow_mode();
 
-  bool has_blocked_actions = HasBeenBlocked(web_contents);
-  image_source->set_paint_blocked_actions_decoration(has_blocked_actions);
-  image_source->set_paint_page_action_decoration(
-      !has_blocked_actions && is_overflow &&
-      PageActionWantsToRun(web_contents));
+    bool has_blocked_actions = HasBeenBlocked(web_contents);
+    image_source->set_paint_blocked_actions_decoration(has_blocked_actions);
+    image_source->set_paint_page_action_decoration(
+        !has_blocked_actions && is_overflow &&
+        PageActionWantsToRun(web_contents));
+  }
 
   return image_source;
 }

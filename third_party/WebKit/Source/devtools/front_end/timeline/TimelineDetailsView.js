@@ -16,7 +16,6 @@ Timeline.TimelineDetailsView = class extends UI.VBox {
 
     this._detailsLinkifier = new Components.Linkifier();
     this._badgePool = new ProductRegistry.BadgePool();
-    this._badgePool.setShowTitles(true);
 
     this._tabbedPane = new UI.TabbedPane();
     this._tabbedPane.show(this.element);

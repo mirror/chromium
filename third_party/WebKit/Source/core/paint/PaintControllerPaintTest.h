@@ -5,8 +5,7 @@
 #ifndef PaintControllerPaintTest_h
 #define PaintControllerPaintTest_h
 
-#include <gtest/gtest.h>
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/layout/LayoutTestHelper.h"
 #include "core/layout/LayoutView.h"
 #include "core/paint/PaintLayer.h"
@@ -14,6 +13,7 @@
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/graphics/paint/CullRect.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
+#include <gtest/gtest.h>
 
 namespace blink {
 
@@ -118,7 +118,7 @@ class TestDisplayItem final : public DisplayItem {
       : DisplayItem(client, type, sizeof(*this)) {}
 
   void Replay(GraphicsContext&) const final { NOTREACHED(); }
-  void AppendToWebDisplayItemList(const LayoutSize&,
+  void AppendToWebDisplayItemList(const IntRect&,
                                   WebDisplayItemList*) const final {
     NOTREACHED();
   }

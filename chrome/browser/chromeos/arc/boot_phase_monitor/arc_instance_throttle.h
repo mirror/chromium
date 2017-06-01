@@ -13,12 +13,12 @@ namespace arc {
 // A class that watches window activations and prioritizes the ARC instance when
 // one of ARC windows is activated. The class also unprioritizes the instance
 // when non-ARC window such as Chrome is activated.
-class ArcInstanceThrottle : public wm::ActivationChangeObserver {
+class ArcInstanceThrottle : public aura::client::ActivationChangeObserver {
  public:
   ArcInstanceThrottle();
   ~ArcInstanceThrottle() override;
 
-  // wm::ActivationChangeObserver overrides:
+  // aura::client::ActivationChangeObserver overrides:
   void OnWindowActivated(ActivationReason reason,
                          aura::Window* gained_active,
                          aura::Window* lost_active) override;

@@ -274,24 +274,6 @@ void FillVolumeList(Profile* profile,
     result->push_back(std::move(result_volume));
   }
 }
-
-// Converts the clicked button to a consent result and passes it via the
-// |callback|.
-void DialogResultToConsent(
-    const file_system_api::ConsentProvider::ConsentCallback& callback,
-    ui::DialogButton button) {
-  switch (button) {
-    case ui::DIALOG_BUTTON_NONE:
-      callback.Run(file_system_api::ConsentProvider::CONSENT_IMPOSSIBLE);
-      break;
-    case ui::DIALOG_BUTTON_OK:
-      callback.Run(file_system_api::ConsentProvider::CONSENT_GRANTED);
-      break;
-    case ui::DIALOG_BUTTON_CANCEL:
-      callback.Run(file_system_api::ConsentProvider::CONSENT_REJECTED);
-      break;
-  }
-}
 #endif
 
 }  // namespace
@@ -381,7 +363,8 @@ void ConsentProvider::RequestConsent(
   if (KioskModeInfo::IsKioskOnly(&extension) &&
       user_manager::UserManager::Get()->IsLoggedInAsKioskApp()) {
     delegate_->ShowDialog(extension, volume, writable,
-                          base::Bind(&DialogResultToConsent, callback));
+                          base::Bind(&ConsentProvider::DialogResultToConsent,
+                                     base::Unretained(this), callback));
     return;
   }
 
@@ -397,6 +380,21 @@ bool ConsentProvider::IsGrantable(const Extension& extension) {
       user_manager::UserManager::Get()->IsLoggedInAsKioskApp();
 
   return is_whitelisted_component || is_running_in_kiosk_session;
+}
+
+void ConsentProvider::DialogResultToConsent(const ConsentCallback& callback,
+                                            ui::DialogButton button) {
+  switch (button) {
+    case ui::DIALOG_BUTTON_NONE:
+      callback.Run(CONSENT_IMPOSSIBLE);
+      break;
+    case ui::DIALOG_BUTTON_OK:
+      callback.Run(CONSENT_GRANTED);
+      break;
+    case ui::DIALOG_BUTTON_CANCEL:
+      callback.Run(CONSENT_REJECTED);
+      break;
+  }
 }
 
 ConsentProviderDelegate::ConsentProviderDelegate(Profile* profile,
@@ -1325,12 +1323,6 @@ void FileSystemRequestFileSystemFunction::OnConsentReceived(
     ConsentProvider::Consent result) {
   using file_manager::VolumeManager;
   using file_manager::Volume;
-
-  // Render frame host can be gone before this callback method is executed.
-  if (!render_frame_host()) {
-    Respond(Error(""));
-    return;
-  }
 
   switch (result) {
     case ConsentProvider::CONSENT_REJECTED:

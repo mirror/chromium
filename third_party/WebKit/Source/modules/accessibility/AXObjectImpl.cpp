@@ -32,11 +32,11 @@
 #include "core/InputTypeNames.h"
 #include "core/css/resolver/StyleResolver.h"
 #include "core/dom/AccessibleNode.h"
-#include "core/dom/UserGestureIndicator.h"
+#include "core/dom/DocumentUserGestureToken.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/VisibleUnits.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLDialogElement.h"
 #include "core/html/HTMLFrameOwnerElement.h"
@@ -44,6 +44,7 @@
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/layout/LayoutBoxModelObject.h"
 #include "modules/accessibility/AXObjectCacheImpl.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/text/PlatformLocale.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/StdLibExtras.h"
@@ -57,6 +58,7 @@ using namespace HTMLNames;
 
 namespace {
 typedef HashMap<String, AccessibilityRole, CaseFoldingHash> ARIARoleMap;
+typedef HashSet<String, CaseFoldingHash> ARIAWidgetSet;
 
 struct RoleEntry {
   const char* aria_role;
@@ -313,6 +315,32 @@ static Vector<AtomicString>* CreateInternalRoleNameVector() {
   return internal_role_name_vector;
 }
 
+const char* g_aria_widgets[] = {
+    // From http://www.w3.org/TR/wai-aria/roles#widget_roles
+    "alert", "alertdialog", "button", "checkbox", "dialog", "gridcell", "link",
+    "log", "marquee", "menuitem", "menuitemcheckbox", "menuitemradio", "option",
+    "progressbar", "radio", "scrollbar", "slider", "spinbutton", "status",
+    "tab", "tabpanel", "textbox", "timer", "tooltip", "treeitem",
+    // Composite user interface widgets.
+    // This list is also from the w3.org site referenced above.
+    "combobox", "grid", "listbox", "menu", "menubar", "radiogroup", "tablist",
+    "tree", "treegrid"};
+
+static ARIAWidgetSet* CreateARIARoleWidgetSet() {
+  ARIAWidgetSet* widget_set = new HashSet<String, CaseFoldingHash>();
+  for (size_t i = 0; i < WTF_ARRAY_LENGTH(g_aria_widgets); ++i)
+    widget_set->insert(String(g_aria_widgets[i]));
+  return widget_set;
+}
+
+const char* g_aria_interactive_widget_attributes[] = {
+    // These attributes implicitly indicate the given widget is interactive.
+    // From http://www.w3.org/TR/wai-aria/states_and_properties#attrs_widgets
+    "aria-activedescendant", "aria-checked",  "aria-controls",
+    "aria-disabled",  // If it's disabled, it can be made interactive.
+    "aria-expanded",         "aria-haspopup", "aria-multiselectable",
+    "aria-pressed",          "aria-required", "aria-selected"};
+
 HTMLDialogElement* GetActiveDialogElement(Node* node) {
   return node->GetDocument().ActiveModalDialog();
 }
@@ -391,42 +419,6 @@ bool AXObjectImpl::AOMPropertyOrARIAAttributeIsFalse(
   if (HasAOMPropertyOrARIAAttribute(property, result))
     return !result;
   return false;
-}
-
-bool AXObjectImpl::HasAOMPropertyOrARIAAttribute(AOMUIntProperty property,
-                                                 uint32_t& result) const {
-  Element* element = this->GetElement();
-  if (!element)
-    return false;
-
-  bool is_null = true;
-  result =
-      AccessibleNode::GetPropertyOrARIAAttribute(element, property, is_null);
-  return !is_null;
-}
-
-bool AXObjectImpl::HasAOMPropertyOrARIAAttribute(AOMIntProperty property,
-                                                 int32_t& result) const {
-  Element* element = this->GetElement();
-  if (!element)
-    return false;
-
-  bool is_null = true;
-  result =
-      AccessibleNode::GetPropertyOrARIAAttribute(element, property, is_null);
-  return !is_null;
-}
-
-bool AXObjectImpl::HasAOMPropertyOrARIAAttribute(AOMFloatProperty property,
-                                                 float& result) const {
-  Element* element = this->GetElement();
-  if (!element)
-    return false;
-
-  bool is_null = true;
-  result =
-      AccessibleNode::GetPropertyOrARIAAttribute(element, property, is_null);
-  return !is_null;
 }
 
 bool AXObjectImpl::IsARIATextControl() const {
@@ -570,26 +562,7 @@ bool AXObjectImpl::IsClickable() const {
   }
 }
 
-bool AXObjectImpl::AccessibilityIsIgnored() {
-  Node* node = GetNode();
-  if (!node) {
-    AXObjectImpl* parent = this->ParentObject();
-    while (!node && parent) {
-      node = parent->GetNode();
-      parent = parent->ParentObject();
-    }
-  }
-
-  if (node)
-    node->UpdateDistribution();
-
-  // TODO(aboxhall): Instead of this, propagate inert down through frames
-  Document* document = GetDocument();
-  while (document && document->LocalOwner()) {
-    document->LocalOwner()->UpdateDistribution();
-    document = document->LocalOwner()->ownerDocument();
-  }
-
+bool AXObjectImpl::AccessibilityIsIgnored() const {
   UpdateCachedAttributeValuesIfNeeded();
   return cached_is_ignored_;
 }
@@ -671,16 +644,11 @@ bool AXObjectImpl::ComputeIsInertOrAriaHidden(
             ignored_reasons->push_back(
                 IgnoredReason(kAXActiveModalDialog, dialog_object));
           } else {
-            ignored_reasons->push_back(IgnoredReason(kAXInertElement));
+            ignored_reasons->push_back(IgnoredReason(kAXInert));
           }
         } else {
-          const AXObjectImpl* inert_root_el = InertRoot();
-          if (inert_root_el == this) {
-            ignored_reasons->push_back(IgnoredReason(kAXInertElement));
-          } else {
-            ignored_reasons->push_back(
-                IgnoredReason(kAXInertSubtree, inert_root_el));
-          }
+          // TODO(aboxhall): handle inert attribute if it eventuates
+          ignored_reasons->push_back(IgnoredReason(kAXInert));
         }
       }
       return true;
@@ -698,10 +666,10 @@ bool AXObjectImpl::ComputeIsInertOrAriaHidden(
   if (hidden_root) {
     if (ignored_reasons) {
       if (hidden_root == this) {
-        ignored_reasons->push_back(IgnoredReason(kAXAriaHiddenElement));
+        ignored_reasons->push_back(IgnoredReason(kAXAriaHidden));
       } else {
         ignored_reasons->push_back(
-            IgnoredReason(kAXAriaHiddenSubtree, hidden_root));
+            IgnoredReason(kAXAriaHiddenRoot, hidden_root));
       }
     }
     return true;
@@ -731,26 +699,6 @@ const AXObjectImpl* AXObjectImpl::AriaHiddenRoot() const {
        object = object->ParentObject()) {
     if (object->AOMPropertyOrARIAAttributeIsTrue(AOMBooleanProperty::kHidden))
       return object;
-  }
-
-  return 0;
-}
-
-const AXObjectImpl* AXObjectImpl::InertRoot() const {
-  const AXObjectImpl* object = this;
-  if (!RuntimeEnabledFeatures::inertAttributeEnabled())
-    return 0;
-
-  while (object && !object->IsAXNodeObject())
-    object = object->ParentObject();
-  Node* node = object->GetNode();
-  Element* element = node->IsElementNode()
-                         ? ToElement(node)
-                         : FlatTreeTraversal::ParentElement(*node);
-  while (element) {
-    if (element->hasAttribute(inertAttr))
-      return AxObjectCache().GetOrCreate(element);
-    element = FlatTreeTraversal::ParentElement(*element);
   }
 
   return 0;
@@ -826,7 +774,7 @@ bool AXObjectImpl::ComputeAncestorExposesActiveDescendant() const {
     return false;
 
   if (parent->SupportsActiveDescendant() &&
-      parent->HasAttribute(aria_activedescendantAttr)) {
+      !parent->GetAttribute(aria_activedescendantAttr).IsEmpty()) {
     return true;
   }
 
@@ -1307,35 +1255,6 @@ AXObjectImpl* AXObjectImpl::ParentObjectUnignored() const {
   return parent;
 }
 
-// Container widgets are those that a user tabs into and arrows around
-// sub-widgets
-bool AXObjectImpl::IsContainerWidget() const {
-  switch (RoleValue()) {
-    case kComboBoxRole:
-    case kGridRole:
-    case kListBoxRole:
-    case kMenuBarRole:
-    case kMenuRole:
-    case kRadioGroupRole:
-    case kSpinButtonRole:
-    case kTabListRole:
-    case kToolbarRole:
-    case kTreeGridRole:
-    case kTreeRole:
-      return true;
-    default:
-      return false;
-  }
-}
-
-AXObjectImpl* AXObjectImpl::ContainerWidget() const {
-  AXObjectImpl* ancestor = ParentObjectUnignored();
-  while (ancestor && !ancestor->IsContainerWidget())
-    ancestor = ancestor->ParentObjectUnignored();
-
-  return ancestor;
-}
-
 void AXObjectImpl::UpdateChildrenIfNecessary() {
   if (!HasChildren())
     AddChildren();
@@ -1356,14 +1275,14 @@ Element* AXObjectImpl::GetElement() const {
 }
 
 Document* AXObjectImpl::GetDocument() const {
-  LocalFrameView* frame_view = DocumentFrameView();
+  FrameView* frame_view = DocumentFrameView();
   if (!frame_view)
     return 0;
 
   return frame_view->GetFrame().GetDocument();
 }
 
-LocalFrameView* AXObjectImpl::DocumentFrameView() const {
+FrameView* AXObjectImpl::DocumentFrameView() const {
   const AXObjectImpl* object = this;
   while (object && !object->IsAXLayoutObject())
     object = object->ParentObject();
@@ -1559,8 +1478,8 @@ bool AXObjectImpl::Press() {
   if (!document)
     return false;
 
-  UserGestureIndicator gesture_indicator(
-      UserGestureToken::Create(document, UserGestureToken::kNewGesture));
+  UserGestureIndicator gesture_indicator(DocumentUserGestureToken::Create(
+      document, UserGestureToken::kNewGesture));
   Element* action_elem = ActionElement();
   if (action_elem) {
     action_elem->AccessKeyAction(true);
@@ -1879,6 +1798,48 @@ AccessibilityRole AXObjectImpl::AriaRoleToWebCoreRole(const String& value) {
   return role;
 }
 
+bool AXObjectImpl::IsInsideFocusableElementOrARIAWidget(const Node& node) {
+  const Node* cur_node = &node;
+  do {
+    if (cur_node->IsElementNode()) {
+      const Element* element = ToElement(cur_node);
+      if (element->IsFocusable())
+        return true;
+      String role = element->getAttribute("role");
+      if (!role.IsEmpty() && AXObjectImpl::IncludesARIAWidgetRole(role))
+        return true;
+      if (HasInteractiveARIAAttribute(*element))
+        return true;
+    }
+    cur_node = cur_node->parentNode();
+  } while (cur_node && !isHTMLBodyElement(node));
+  return false;
+}
+
+bool AXObjectImpl::HasInteractiveARIAAttribute(const Element& element) {
+  for (size_t i = 0; i < WTF_ARRAY_LENGTH(g_aria_interactive_widget_attributes);
+       ++i) {
+    const char* attribute = g_aria_interactive_widget_attributes[i];
+    if (element.hasAttribute(attribute)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+bool AXObjectImpl::IncludesARIAWidgetRole(const String& role) {
+  static const HashSet<String, CaseFoldingHash>* role_set =
+      CreateARIARoleWidgetSet();
+
+  Vector<String> role_vector;
+  role.Split(' ', role_vector);
+  for (const auto& child : role_vector) {
+    if (role_set->Contains(child))
+      return true;
+  }
+  return false;
+}
+
 bool AXObjectImpl::NameFromContents(bool recursive) const {
   // ARIA 1.1, section 5.2.7.5.
   bool result = false;
@@ -2025,13 +1986,9 @@ bool AXObjectImpl::NameFromContents(bool recursive) const {
     case kRowRole:
     case kRubyRole:
     case kRulerRole:
-      result = recursive || (CanReceiveAccessibilityFocus() && !IsEditable());
-      break;
-
     case kUnknownRole:
     case kNumRoles:
-      LOG(ERROR) << "kUnknownRole for " << GetNode();
-      NOTREACHED();
+      result = recursive || (CanReceiveAccessibilityFocus() && !IsEditable());
       break;
   }
 

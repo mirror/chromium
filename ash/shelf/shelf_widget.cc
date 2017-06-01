@@ -10,14 +10,15 @@
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
 #include "ash/shelf/app_list_button.h"
-#include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_background_animator_observer.h"
 #include "ash/shelf/shelf_constants.h"
 #include "ash/shelf/shelf_layout_manager.h"
 #include "ash/shelf/shelf_view.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/system/status_area_layout_manager.h"
 #include "ash/system/status_area_widget.h"
+#include "ash/wm_window.h"
 #include "base/memory/ptr_util.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
@@ -26,7 +27,6 @@
 #include "ui/views/layout/fill_layout.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
-#include "ui/wm/core/coordinate_conversion.h"
 
 namespace ash {
 
@@ -122,17 +122,17 @@ void ShelfWidget::DelegateView::UpdateShelfBackground(SkColor color) {
   opaque_background_.SetColor(color);
 }
 
-ShelfWidget::ShelfWidget(aura::Window* shelf_container, Shelf* shelf)
-    : shelf_(shelf),
+ShelfWidget::ShelfWidget(WmWindow* shelf_container, WmShelf* wm_shelf)
+    : wm_shelf_(wm_shelf),
       status_area_widget_(nullptr),
       delegate_view_(new DelegateView(this)),
-      shelf_view_(new ShelfView(Shell::Get()->shelf_model(), shelf_, this)),
+      shelf_view_(new ShelfView(Shell::Get()->shelf_model(), wm_shelf_, this)),
       background_animator_(SHELF_BACKGROUND_DEFAULT,
-                           shelf_,
+                           wm_shelf_,
                            Shell::Get()->wallpaper_controller()),
       activating_as_fallback_(false) {
   DCHECK(shelf_container);
-  DCHECK(shelf_);
+  DCHECK(wm_shelf_);
 
   views::Widget::InitParams params(
       views::Widget::InitParams::TYPE_WINDOW_FRAMELESS);
@@ -140,9 +140,9 @@ ShelfWidget::ShelfWidget(aura::Window* shelf_container, Shelf* shelf)
   params.opacity = views::Widget::InitParams::TRANSLUCENT_WINDOW;
   params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
   params.delegate = delegate_view_;
-  RootWindowController::ForWindow(shelf_container)
-      ->ConfigureWidgetInitParamsForContainer(this, shelf_container->id(),
-                                              &params);
+  shelf_container->GetRootWindowController()
+      ->ConfigureWidgetInitParamsForContainer(
+          this, shelf_container->aura_window()->id(), &params);
   Init(params);
 
   // The shelf should not take focus when initially shown.
@@ -155,9 +155,9 @@ ShelfWidget::ShelfWidget(aura::Window* shelf_container, Shelf* shelf)
   shelf_view_->Init();
   GetContentsView()->AddChildView(shelf_view_);
 
-  shelf_layout_manager_ = new ShelfLayoutManager(this, shelf_);
+  shelf_layout_manager_ = new ShelfLayoutManager(this, wm_shelf_);
   shelf_layout_manager_->AddObserver(this);
-  shelf_container->SetLayoutManager(shelf_layout_manager_);
+  shelf_container->aura_window()->SetLayoutManager(shelf_layout_manager_);
   background_animator_.PaintBackground(
       shelf_layout_manager_->GetShelfBackgroundType(),
       AnimationChangeType::IMMEDIATE);
@@ -179,16 +179,18 @@ ShelfWidget::~ShelfWidget() {
   RemoveObserver(this);
 }
 
-void ShelfWidget::CreateStatusAreaWidget(aura::Window* status_container) {
+void ShelfWidget::CreateStatusAreaWidget(WmWindow* status_container) {
   DCHECK(status_container);
   DCHECK(!status_area_widget_);
-  status_area_widget_ = new StatusAreaWidget(status_container, shelf_);
+  status_area_widget_ =
+      new StatusAreaWidget(status_container->aura_window(), wm_shelf_);
   status_area_widget_->CreateTrayViews();
   // NOTE: Container may be hidden depending on login/display state.
   status_area_widget_->Show();
   Shell::Get()->focus_cycler()->AddWidget(status_area_widget_);
   background_animator_.AddObserver(status_area_widget_);
-  status_container->SetLayoutManager(new StatusAreaLayoutManager(this));
+  status_container->aura_window()->SetLayoutManager(
+      new StatusAreaLayoutManager(this));
 }
 
 void ShelfWidget::SetPaintsBackground(ShelfBackgroundType background_type,
@@ -278,20 +280,21 @@ void ShelfWidget::Shutdown() {
   CloseNow();
 }
 
-void ShelfWidget::UpdateIconPositionForPanel(aura::Window* panel) {
-  ShelfID id = ShelfID::Deserialize(panel->GetProperty(kShelfIDKey));
+void ShelfWidget::UpdateIconPositionForPanel(WmWindow* panel) {
+  ShelfID id =
+      ShelfID::Deserialize(panel->aura_window()->GetProperty(kShelfIDKey));
   if (id.IsNull())
     return;
 
-  aura::Window* shelf_window = this->GetNativeWindow();
-  gfx::Rect bounds = panel->GetBoundsInScreen();
-  ::wm::ConvertRectFromScreen(shelf_window, &bounds);
-  shelf_view_->UpdatePanelIconPosition(id, bounds.CenterPoint());
+  WmWindow* shelf_window = WmWindow::Get(this->GetNativeWindow());
+  shelf_view_->UpdatePanelIconPosition(
+      id, shelf_window->ConvertRectFromScreen(panel->GetBoundsInScreen())
+              .CenterPoint());
 }
 
-gfx::Rect ShelfWidget::GetScreenBoundsOfItemIconForWindow(
-    aura::Window* window) {
-  ShelfID id = ShelfID::Deserialize(window->GetProperty(kShelfIDKey));
+gfx::Rect ShelfWidget::GetScreenBoundsOfItemIconForWindow(WmWindow* window) {
+  ShelfID id =
+      ShelfID::Deserialize(window->aura_window()->GetProperty(kShelfIDKey));
   if (id.IsNull())
     return gfx::Rect();
 

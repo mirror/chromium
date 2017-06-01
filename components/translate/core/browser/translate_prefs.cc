@@ -5,13 +5,11 @@
 #include "components/translate/core/browser/translate_prefs.h"
 
 #include <set>
-#include <utility>
 
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
-#include "base/values.h"
 #include "build/build_config.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
@@ -125,13 +123,13 @@ base::ListValue* DenialTimeUpdate::GetDenialTimes() {
   bool has_list = has_value && denial_value->GetAsList(&time_list_);
 
   if (!has_list) {
-    auto time_list = base::MakeUnique<base::ListValue>();
+    time_list_ = new base::ListValue();
     double oldest_denial_time = 0;
     bool has_old_style =
         has_value && denial_value->GetAsDouble(&oldest_denial_time);
     if (has_old_style)
-      time_list->AppendDouble(oldest_denial_time);
-    time_list_ = denial_time_dict->SetList(language_, std::move(time_list));
+      time_list_->AppendDouble(oldest_denial_time);
+    denial_time_dict->Set(language_, base::WrapUnique(time_list_));
   }
   return time_list_;
 }

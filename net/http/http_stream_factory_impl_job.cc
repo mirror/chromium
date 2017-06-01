@@ -12,7 +12,6 @@
 #include "base/feature_list.h"
 #include "base/location.h"
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/sparse_histogram.h"
 #include "base/profiler/scoped_tracker.h"
@@ -128,7 +127,7 @@ std::unique_ptr<base::Value> NetLogHttpStreamJobCallback(
     const AlternativeService* alternative_service,
     RequestPriority priority,
     NetLogCaptureMode /* capture_mode */) {
-  auto dict = base::MakeUnique<base::DictionaryValue>();
+  std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
   if (source.IsValid())
     source.AddToEventParameters(dict.get());
   dict->SetString("original_url", original_url->GetOrigin().spec());
@@ -143,7 +142,7 @@ std::unique_ptr<base::Value> NetLogHttpStreamJobCallback(
 std::unique_ptr<base::Value> NetLogHttpStreamProtoCallback(
     NextProto negotiated_protocol,
     NetLogCaptureMode /* capture_mode */) {
-  auto dict = base::MakeUnique<base::DictionaryValue>();
+  std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
 
   dict->SetString("proto", NextProtoToString(negotiated_protocol));
   return std::move(dict);
@@ -785,7 +784,7 @@ int HttpStreamFactoryImpl::Job::DoResolveProxy() {
 
   return session_->proxy_service()->ResolveProxy(
       origin_url_, request_info_.method, &proxy_info_, io_callback_,
-      &pac_request_, session_->context().proxy_delegate, net_log_);
+      &pac_request_, session_->params().proxy_delegate, net_log_);
 }
 
 int HttpStreamFactoryImpl::Job::DoResolveProxyComplete(int result) {
@@ -1184,8 +1183,8 @@ int HttpStreamFactoryImpl::Job::SetSpdyHttpStreamOrBidirectionalStreamImpl(
   if (delegate_->for_websockets())
     return ERR_NOT_IMPLEMENTED;
   if (stream_type_ == HttpStreamRequest::BIDIRECTIONAL_STREAM) {
-    bidirectional_stream_impl_ = base::MakeUnique<BidirectionalStreamSpdyImpl>(
-        session, net_log_.source());
+    bidirectional_stream_impl_.reset(
+        new BidirectionalStreamSpdyImpl(session, net_log_.source()));
     return OK;
   }
 
@@ -1195,8 +1194,8 @@ int HttpStreamFactoryImpl::Job::SetSpdyHttpStreamOrBidirectionalStreamImpl(
 
   bool use_relative_url =
       direct || request_info_.url.SchemeIs(url::kHttpsScheme);
-  stream_ = base::MakeUnique<SpdyHttpStream>(session, use_relative_url,
-                                             net_log_.source());
+  stream_.reset(
+      new SpdyHttpStream(session, use_relative_url, net_log_.source()));
   return OK;
 }
 
@@ -1213,7 +1212,7 @@ int HttpStreamFactoryImpl::Job::DoCreateStream() {
   if (using_ssl_ && connection_->socket()) {
     SSLClientSocket* ssl_socket =
         static_cast<SSLClientSocket*>(connection_->socket());
-    RecordChannelIDKeyMatch(ssl_socket, session_->context().channel_id_service,
+    RecordChannelIDKeyMatch(ssl_socket, session_->params().channel_id_service,
                             destination_.HostForURL());
   }
 
@@ -1236,9 +1235,9 @@ int HttpStreamFactoryImpl::Job::DoCreateStream() {
           delegate_->websocket_handshake_stream_create_helper()
               ->CreateBasicStream(std::move(connection_), using_proxy);
     } else {
-      stream_ = base::MakeUnique<HttpBasicStream>(
+      stream_.reset(new HttpBasicStream(
           std::move(connection_), using_proxy,
-          session_->params().http_09_on_non_default_ports_enabled);
+          session_->params().http_09_on_non_default_ports_enabled));
     }
     return OK;
   }
@@ -1305,7 +1304,7 @@ int HttpStreamFactoryImpl::Job::DoCreateStreamComplete(int result) {
     return result;
 
   session_->proxy_service()->ReportSuccess(proxy_info_,
-                                           session_->context().proxy_delegate);
+                                           session_->params().proxy_delegate);
   next_state_ = STATE_NONE;
   return OK;
 }
@@ -1485,8 +1484,7 @@ int HttpStreamFactoryImpl::Job::ReconsiderProxyAfterError(int error) {
 
   int rv = session_->proxy_service()->ReconsiderProxyAfterError(
       request_info_.url, request_info_.method, error, &proxy_info_,
-      io_callback_, &pac_request_, session_->context().proxy_delegate,
-      net_log_);
+      io_callback_, &pac_request_, session_->params().proxy_delegate, net_log_);
   if (rv == OK || rv == ERR_IO_PENDING) {
     // If the error was during connection setup, there is no socket to
     // disconnect.

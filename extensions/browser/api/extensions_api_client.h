@@ -9,7 +9,6 @@
 #include <memory>
 
 #include "base/memory/ref_counted.h"
-#include "extensions/browser/api/clipboard/clipboard_api.h"
 #include "extensions/browser/api/declarative_content/content_rules_registry.h"
 #include "extensions/browser/api/storage/settings_namespace.h"
 #include "extensions/common/api/clipboard.h"
@@ -146,7 +145,6 @@ class ExtensionsAPIClient {
   virtual void SaveImageDataToClipboard(
       const std::vector<char>& image_data,
       api::clipboard::ImageType type,
-      AdditionalDataItemList additional_items,
       const base::Closure& success_callback,
       const base::Callback<void(const std::string&)>& error_callback);
 #endif

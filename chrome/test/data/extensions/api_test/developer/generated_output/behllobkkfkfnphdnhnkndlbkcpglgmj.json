@@ -1,4 +1,5 @@
 {
+   "actionButtonHidden": false,
    "dependentExtensions": [  ],
    "description": "__MSG_chrome_extension_description__",
    "disableReasons": {

@@ -9,7 +9,6 @@ import android.view.View;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.snackbar.SnackbarManager;
 import org.chromium.chrome.browser.toolbar.BottomToolbarPhone;
-import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.BottomSheetContent;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentController;
 import org.chromium.chrome.browser.widget.selection.SelectableListToolbar;
@@ -35,11 +34,6 @@ public class HistorySheetContent implements BottomSheetContent {
             public void onThemeColorChanged(boolean isLightTheme) {
                 activity.getBottomSheet().updateHandleTint();
             }
-
-            @Override
-            public void onStartSearch() {
-                activity.getBottomSheet().setSheetState(BottomSheet.SHEET_STATE_FULL, true);
-            }
         });
         ((BottomToolbarPhone) activity.getToolbarManager().getToolbar())
                 .setOtherToolbarStyle(mToolbarView);
@@ -58,11 +52,6 @@ public class HistorySheetContent implements BottomSheetContent {
     @Override
     public boolean isUsingLightToolbarTheme() {
         return mToolbarView.isLightTheme();
-    }
-
-    @Override
-    public boolean isIncognitoThemedContent() {
-        return false;
     }
 
     @Override

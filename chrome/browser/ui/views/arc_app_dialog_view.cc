@@ -128,14 +128,14 @@ ArcAppDialogView::ArcAppDialogView(Profile* profile,
 
   SetLayoutManager(new views::BoxLayout(
       views::BoxLayout::kHorizontal,
+      provider->GetDistanceMetric(DISTANCE_DIALOG_BUTTON_MARGIN),
       provider->GetDistanceMetric(
-          views::DISTANCE_DIALOG_CONTENTS_HORIZONTAL_MARGIN),
+          DISTANCE_PANEL_CONTENT_MARGIN),
       provider->GetDistanceMetric(
-          views::DISTANCE_DIALOG_CONTENTS_VERTICAL_MARGIN),
-      provider->GetDistanceMetric(views::DISTANCE_RELATED_CONTROL_HORIZONTAL)));
+          views::DISTANCE_RELATED_CONTROL_HORIZONTAL)));
 
   icon_view_ = new views::ImageView();
-  icon_view_->SetPreferredSize(gfx::Size(kIconSize, kIconSize));
+  icon_view_->set_preferred_size(gfx::Size(kIconSize, kIconSize));
   AddChildView(icon_view_);
 
   views::View* text_container = new views::View();

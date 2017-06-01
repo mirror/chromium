@@ -15,8 +15,6 @@ aggregate_vector_icons("message_center_vector_icons") {
     "notification_settings_button.icon",
     "notification_close_button.1x.icon",
     "notification_close_button.icon",
-    "product.1x.icon",
-    "product.icon",
   ]
 }
 
@@ -97,10 +95,7 @@ component("message_center") {
     sources += get_target_outputs(":message_center_vector_icons")
 
     if (is_win) {
-      deps += [
-        "//ui/aura",
-        "//ui/wm/public",
-      ]
+      deps += [ "//ui/aura" ]
     }
 
     if (is_mac) {
@@ -118,6 +113,10 @@ component("message_center") {
         "views/bounded_label.cc",
         "views/bounded_label.h",
         "views/constants.h",
+        "views/custom_notification_content_view_delegate.cc",
+        "views/custom_notification_content_view_delegate.h",
+        "views/custom_notification_view.cc",
+        "views/custom_notification_view.h",
         "views/desktop_popup_alignment_delegate.cc",
         "views/desktop_popup_alignment_delegate.h",
         "views/message_bubble_base.cc",
@@ -143,8 +142,6 @@ component("message_center") {
         "views/notification_button.h",
         "views/notification_view.cc",
         "views/notification_view.h",
-        "views/notification_view_md.cc",
-        "views/notification_view_md.h",
         "views/notifier_settings_view.cc",
         "views/notifier_settings_view.h",
         "views/padded_button.cc",
@@ -259,6 +256,7 @@ test("message_center_unittests") {
     if (toolkit_views && !is_mac) {
       sources += [
         "views/bounded_label_unittest.cc",
+        "views/custom_notification_view_unittest.cc",
         "views/message_center_view_unittest.cc",
         "views/message_list_view_unittest.cc",
         "views/message_popup_collection_unittest.cc",

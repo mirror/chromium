@@ -25,7 +25,6 @@
 
 #include <memory>
 #include "core/CoreExport.h"
-#include "core/css/parser/CSSParserMode.h"
 #include "core/dom/QualifiedName.h"
 #include "core/style/ComputedStyleConstants.h"
 #include "platform/wtf/RefCounted.h"
@@ -97,7 +96,7 @@ class CORE_EXPORT CSSSelector {
 
   ~CSSSelector();
 
-  String SelectorText() const;
+  String SelectorText(const String& right_side = "") const;
 
   bool operator==(const CSSSelector&) const;
 
@@ -239,8 +238,7 @@ class CORE_EXPORT CSSSelector {
   PseudoType GetPseudoType() const {
     return static_cast<PseudoType>(pseudo_type_);
   }
-  void UpdatePseudoType(const AtomicString&, bool has_arguments, CSSParserMode);
-  void UpdatePseudoPage(const AtomicString&);
+  void UpdatePseudoType(const AtomicString&, bool has_arguments);
 
   static PseudoType ParsePseudoType(const AtomicString&, bool has_arguments);
   static PseudoId ParsePseudoId(const String&);
@@ -370,7 +368,6 @@ class CORE_EXPORT CSSSelector {
 
   unsigned SpecificityForOneSelector() const;
   unsigned SpecificityForPage() const;
-  const CSSSelector* SerializeCompound(StringBuilder&) const;
 
   // Hide.
   CSSSelector& operator=(const CSSSelector&);

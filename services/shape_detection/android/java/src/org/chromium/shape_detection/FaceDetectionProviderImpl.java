@@ -4,10 +4,11 @@
 
 package org.chromium.shape_detection;
 
+import android.content.Context;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-import org.chromium.base.ContextUtils;
 import org.chromium.mojo.bindings.InterfaceRequest;
 import org.chromium.mojo.system.MojoException;
 import org.chromium.services.service_manager.InterfaceFactory;
@@ -19,18 +20,21 @@ import org.chromium.shape_detection.mojom.FaceDetectorOptions;
  * Service provider to create FaceDetection services
  */
 public class FaceDetectionProviderImpl implements FaceDetectionProvider {
-    public FaceDetectionProviderImpl() {}
+    private final Context mContext;
+
+    public FaceDetectionProviderImpl(Context context) {
+        mContext = context;
+    }
 
     @Override
     public void createFaceDetection(
             InterfaceRequest<FaceDetection> request, FaceDetectorOptions options) {
         final boolean isGmsCoreSupported =
-                GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(
-                        ContextUtils.getApplicationContext())
+                GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(mContext)
                 == ConnectionResult.SUCCESS;
 
         if (isGmsCoreSupported) {
-            FaceDetection.MANAGER.bind(new FaceDetectionImplGmsCore(options), request);
+            FaceDetection.MANAGER.bind(new FaceDetectionImplGmsCore(mContext, options), request);
         } else {
             FaceDetection.MANAGER.bind(new FaceDetectionImpl(options), request);
         }
@@ -46,11 +50,15 @@ public class FaceDetectionProviderImpl implements FaceDetectionProvider {
      * A factory class to register FaceDetectionProvider interface.
      */
     public static class Factory implements InterfaceFactory<FaceDetectionProvider> {
-        public Factory() {}
+        private final Context mContext;
+
+        public Factory(Context context) {
+            mContext = context;
+        }
 
         @Override
         public FaceDetectionProvider createImpl() {
-            return new FaceDetectionProviderImpl();
+            return new FaceDetectionProviderImpl(mContext);
         }
     }
 }

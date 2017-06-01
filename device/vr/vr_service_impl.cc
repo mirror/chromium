@@ -32,7 +32,7 @@ void VRServiceImpl::Create(const service_manager::BindSourceInfo& source_info,
 }
 
 void VRServiceImpl::SetClient(mojom::VRServiceClientPtr service_client,
-                              SetClientCallback callback) {
+                              const SetClientCallback& callback) {
   DCHECK(!client_.get());
   client_ = std::move(service_client);
   VRDeviceManager* device_manager = VRDeviceManager::GetInstance();
@@ -41,7 +41,7 @@ void VRServiceImpl::SetClient(mojom::VRServiceClientPtr service_client,
   // displays. Thereafter it will stay up to date by virtue of listening for new
   // connected events.
   device_manager->AddService(this);
-  std::move(callback).Run(device_manager->GetNumberOfConnectedDevices());
+  callback.Run(device_manager->GetNumberOfConnectedDevices());
 }
 
 void VRServiceImpl::ConnectDevice(VRDevice* device) {

@@ -314,18 +314,18 @@ SDK.RemoteObject = class {
 
   /**
    * @param {!Protocol.Runtime.CallArgument} name
-   * @return {!Promise<string|undefined>}
+   * @param {function(string=)} callback
    */
-  async deleteProperty(name) {
+  deleteProperty(name, callback) {
     throw 'Not implemented';
   }
 
   /**
    * @param {string|!Protocol.Runtime.CallArgument} name
    * @param {string} value
-   * @return {!Promise<string|undefined>}
+   * @param {function(string=)} callback
    */
-  async setPropertyValue(name, value) {
+  setPropertyValue(name, value, callback) {
     throw 'Not implemented';
   }
 
@@ -381,7 +381,14 @@ SDK.RemoteObject = class {
    * @template T
    */
   callFunctionJSONPromise(functionDeclaration, args) {
-    return new Promise(success => this.callFunctionJSON(functionDeclaration, args, success));
+    return new Promise(promiseConstructor.bind(this));
+
+    /**
+     * @this {SDK.RemoteObject}
+     */
+    function promiseConstructor(success) {
+      this.callFunctionJSON(functionDeclaration, args, success);
+    }
   }
 
   release() {
@@ -568,7 +575,7 @@ SDK.RemoteObjectImpl = class extends SDK.RemoteObject {
    * @param {boolean} ownProperties
    * @param {boolean} accessorPropertiesOnly
    * @param {boolean} generatePreview
-   * @param {function(?Array<!SDK.RemoteObjectProperty>, ?Array<!SDK.RemoteObjectProperty>)} callback
+   * @param {function(?Array.<!SDK.RemoteObjectProperty>, ?Array.<!SDK.RemoteObjectProperty>)} callback
    */
   doGetProperties(ownProperties, accessorPropertiesOnly, generatePreview, callback) {
     if (!this._objectId) {
@@ -576,26 +583,23 @@ SDK.RemoteObjectImpl = class extends SDK.RemoteObject {
       return;
     }
 
-    this._runtimeAgent
-        .invoke_getProperties({objectId: this._objectId, ownProperties, accessorPropertiesOnly, generatePreview})
-        .then(remoteObjectBinder.bind(this));
-
     /**
-     * @param {!Protocol.RuntimeAgent.GetPropertiesResponse} response
+     * @param {?Protocol.Error} error
+     * @param {!Array.<!Protocol.Runtime.PropertyDescriptor>} properties
+     * @param {!Array.<!Protocol.Runtime.InternalPropertyDescriptor>=} internalProperties
+     * @param {?Protocol.Runtime.ExceptionDetails=} exceptionDetails
      * @this {SDK.RemoteObjectImpl}
      */
-    function remoteObjectBinder(response) {
-      if (response[Protocol.Error]) {
+    function remoteObjectBinder(error, properties, internalProperties, exceptionDetails) {
+      if (error) {
         callback(null, null);
         return;
       }
-      if (response.exceptionDetails) {
-        this._runtimeModel.exceptionThrown(Date.now(), response.exceptionDetails);
+      if (exceptionDetails) {
+        this._runtimeModel.exceptionThrown(Date.now(), exceptionDetails);
         callback(null, null);
         return;
       }
-      var properties = response.result;
-      var internalProperties = response.internalProperties;
       var result = [];
       for (var i = 0; properties && i < properties.length; ++i) {
         var property = properties[i];
@@ -627,42 +631,47 @@ SDK.RemoteObjectImpl = class extends SDK.RemoteObject {
       }
       callback(result, internalPropertiesResult);
     }
+    this._runtimeAgent.getProperties(
+        this._objectId, ownProperties, accessorPropertiesOnly, generatePreview, remoteObjectBinder.bind(this));
   }
 
   /**
    * @override
    * @param {string|!Protocol.Runtime.CallArgument} name
    * @param {string} value
-   * @return {!Promise<string|undefined>}
+   * @param {function(string=)} callback
    */
-  async setPropertyValue(name, value) {
-    if (!this._objectId)
-      return `Can't set a property of non-object.`;
-
-    var response = await this._runtimeAgent.invoke_evaluate({expression: value, silent: true});
-    if (response[Protocol.Error] || response.exceptionDetails) {
-      return response[Protocol.Error] ||
-          (response.result.type !== 'string' ? response.result.description :
-                                               /** @type {string} */ (response.result.value));
+  setPropertyValue(name, value, callback) {
+    if (!this._objectId) {
+      callback('Can\'t set a property of non-object.');
+      return;
     }
 
-    if (typeof name === 'string')
-      name = SDK.RemoteObject.toCallArgument(name);
+    this._runtimeAgent.invoke_evaluate({expression: value, silent: true}).then(response => {
+      if (response[Protocol.Error] || response.exceptionDetails) {
+        callback(
+            response[Protocol.Error] ||
+            (response.result.type !== 'string' ? response.result.description :
+                                                 /** @type {string} */ (response.result.value)));
+        return;
+      }
 
-    var resultPromise = this.doSetObjectPropertyValue(response.result, name);
+      if (typeof name === 'string')
+        name = SDK.RemoteObject.toCallArgument(name);
 
-    if (response.result.objectId)
-      this._runtimeAgent.releaseObject(response.result.objectId);
+      this.doSetObjectPropertyValue(response.result, name, callback);
 
-    return resultPromise;
+      if (response.result.objectId)
+        this._runtimeAgent.releaseObject(response.result.objectId);
+    });
   }
 
   /**
    * @param {!Protocol.Runtime.RemoteObject} result
    * @param {!Protocol.Runtime.CallArgument} name
-   * @return {!Promise<string|undefined>}
+   * @param {function(string=)} callback
    */
-  async doSetObjectPropertyValue(result, name) {
+  doSetObjectPropertyValue(result, name, callback) {
     // This assignment may be for a regular (data) property, and for an accessor property (with getter/setter).
     // Note the sensitive matter about accessor property: the property may be physically defined in some proto object,
     // but logically it is bound to the object in question. JavaScript passes this object to getters/setters, not the object
@@ -670,30 +679,55 @@ SDK.RemoteObjectImpl = class extends SDK.RemoteObject {
     var setPropertyValueFunction = 'function(a, b) { this[a] = b; }';
 
     var argv = [name, SDK.RemoteObject.toCallArgument(result)];
-    var response = await this._runtimeAgent.invoke_callFunctionOn(
-        {objectId: this._objectId, functionDeclaration: setPropertyValueFunction, arguments: argv, silent: true});
-    var error = response[Protocol.Error];
-    return error || response.exceptionDetails ? error || response.result.description : undefined;
+    this._runtimeAgent.callFunctionOn(
+        this._objectId, setPropertyValueFunction, argv, true, undefined, undefined, undefined, undefined,
+        propertySetCallback);
+
+    /**
+     * @param {?Protocol.Error} error
+     * @param {!Protocol.Runtime.RemoteObject} result
+     * @param {!Protocol.Runtime.ExceptionDetails=} exceptionDetails
+     */
+    function propertySetCallback(error, result, exceptionDetails) {
+      if (error || !!exceptionDetails) {
+        callback(error || result.description);
+        return;
+      }
+      callback();
+    }
   }
 
   /**
    * @override
    * @param {!Protocol.Runtime.CallArgument} name
-   * @return {!Promise<string|undefined>}
+   * @param {function(string=)} callback
    */
-  async deleteProperty(name) {
-    if (!this._objectId)
-      return `Can't delete a property of non-object.`;
+  deleteProperty(name, callback) {
+    if (!this._objectId) {
+      callback('Can\'t delete a property of non-object.');
+      return;
+    }
 
     var deletePropertyFunction = 'function(a) { delete this[a]; return !(a in this); }';
-    var response = await this._runtimeAgent.invoke_callFunctionOn(
-        {objectId: this._objectId, functionDeclaration: deletePropertyFunction, arguments: [name], silent: true});
+    this._runtimeAgent.callFunctionOn(
+        this._objectId, deletePropertyFunction, [name], true, undefined, undefined, undefined, undefined,
+        deletePropertyCallback);
 
-    if (response[Protocol.Error] || response.exceptionDetails)
-      return response[Protocol.Error] || response.result.description;
-
-    if (!response.result.value)
-      return 'Failed to delete property.';
+    /**
+     * @param {?Protocol.Error} error
+     * @param {!Protocol.Runtime.RemoteObject} result
+     * @param {!Protocol.Runtime.ExceptionDetails=} exceptionDetails
+     */
+    function deletePropertyCallback(error, result, exceptionDetails) {
+      if (error || !!exceptionDetails) {
+        callback(error || result.description);
+        return;
+      }
+      if (!result.value)
+        callback('Failed to delete property.');
+      else
+        callback();
+    }
   }
 
   /**
@@ -703,21 +737,24 @@ SDK.RemoteObjectImpl = class extends SDK.RemoteObject {
    * @param {function(?SDK.RemoteObject, boolean=)=} callback
    */
   callFunction(functionDeclaration, args, callback) {
-    this._runtimeAgent
-        .invoke_callFunctionOn({
-          objectId: this._objectId,
-          functionDeclaration: functionDeclaration.toString(),
-          arguments: args,
-          silent: true
-        })
-        .then(response => {
-          if (!callback)
-            return;
-          if (response[Protocol.Error])
-            callback(null, false);
-          else
-            callback(this._runtimeModel.createRemoteObject(response.result), !!response.exceptionDetails);
-        });
+    /**
+     * @param {?Protocol.Error} error
+     * @param {!Protocol.Runtime.RemoteObject} result
+     * @param {!Protocol.Runtime.ExceptionDetails=} exceptionDetails
+     * @this {SDK.RemoteObjectImpl}
+     */
+    function mycallback(error, result, exceptionDetails) {
+      if (!callback)
+        return;
+      if (error)
+        callback(null, false);
+      else
+        callback(this._runtimeModel.createRemoteObject(result), !!exceptionDetails);
+    }
+
+    this._runtimeAgent.callFunctionOn(
+        this._objectId, functionDeclaration.toString(), args, true, undefined, undefined, undefined, undefined,
+        mycallback.bind(this));
   }
 
   /**
@@ -727,16 +764,17 @@ SDK.RemoteObjectImpl = class extends SDK.RemoteObject {
    * @param {function(*)} callback
    */
   callFunctionJSON(functionDeclaration, args, callback) {
-    this._runtimeAgent
-        .invoke_callFunctionOn({
-          objectId: this._objectId,
-          functionDeclaration: functionDeclaration.toString(),
-          arguments: args,
-          silent: true,
-          returnByValue: true
-        })
-        .then(
-            response => callback(response[Protocol.Error] || response.exceptionDetails ? null : response.result.value));
+    /**
+     * @param {?Protocol.Error} error
+     * @param {!Protocol.Runtime.RemoteObject} result
+     * @param {!Protocol.Runtime.ExceptionDetails=} exceptionDetails
+     */
+    function mycallback(error, result, exceptionDetails) {
+      callback((error || !!exceptionDetails) ? null : result.value);
+    }
+
+    this._runtimeAgent.callFunctionOn(
+        this._objectId, functionDeclaration.toString(), args, true, true, false, undefined, undefined, mycallback);
   }
 
   /**
@@ -847,19 +885,30 @@ SDK.ScopeRemoteObject = class extends SDK.RemoteObjectImpl {
    * @override
    * @param {!Protocol.Runtime.RemoteObject} result
    * @param {!Protocol.Runtime.CallArgument} argumentName
-   * @return {!Promise<string|undefined>}
+   * @param {function(string=)} callback
    */
-  async doSetObjectPropertyValue(result, argumentName) {
+  doSetObjectPropertyValue(result, argumentName, callback) {
     var name = /** @type {string} */ (argumentName.value);
-    var error = await this.debuggerModel().setVariableValue(
-        this._scopeRef.number, name, SDK.RemoteObject.toCallArgument(result), this._scopeRef.callFrameId);
-    if (error)
-      return error;
-    if (this._savedScopeProperties) {
-      for (var property of this._savedScopeProperties) {
-        if (property.name === name)
-          property.value = this._runtimeModel.createRemoteObject(result);
+    this.debuggerModel().setVariableValue(
+        this._scopeRef.number, name, SDK.RemoteObject.toCallArgument(result), this._scopeRef.callFrameId,
+        setVariableValueCallback.bind(this));
+
+    /**
+     * @param {string=} error
+     * @this {SDK.ScopeRemoteObject}
+     */
+    function setVariableValueCallback(error) {
+      if (error) {
+        callback(error);
+        return;
       }
+      if (this._savedScopeProperties) {
+        for (var i = 0; i < this._savedScopeProperties.length; i++) {
+          if (this._savedScopeProperties[i].name === name)
+            this._savedScopeProperties[i].value = this._runtimeModel.createRemoteObject(result);
+        }
+      }
+      callback();
     }
   }
 };
@@ -1131,12 +1180,15 @@ SDK.LocalJSONObject = class extends SDK.RemoteObject {
   /**
    * @override
    * @param {function(this:Object, ...)} functionDeclaration
-   * @param {!Array<!Protocol.Runtime.CallArgument>=} args
+   * @param {!Array.<!Protocol.Runtime.CallArgument>=} args
    * @param {function(?SDK.RemoteObject, boolean=)=} callback
    */
   callFunction(functionDeclaration, args, callback) {
     var target = /** @type {?Object} */ (this._value);
-    var rawArgs = args ? args.map(arg => arg.value) : [];
+    var rawArgs = args ? args.map(function(arg) {
+      return arg.value;
+    }) :
+                         [];
 
     var result;
     var wasThrown = false;
@@ -1154,12 +1206,15 @@ SDK.LocalJSONObject = class extends SDK.RemoteObject {
   /**
    * @override
    * @param {function(this:Object)} functionDeclaration
-   * @param {!Array<!Protocol.Runtime.CallArgument>|undefined} args
+   * @param {!Array.<!Protocol.Runtime.CallArgument>|undefined} args
    * @param {function(*)} callback
    */
   callFunctionJSON(functionDeclaration, args, callback) {
     var target = /** @type {?Object} */ (this._value);
-    var rawArgs = args ? args.map(arg => arg.value) : [];
+    var rawArgs = args ? args.map(function(arg) {
+      return arg.value;
+    }) :
+                         [];
 
     var result;
     try {

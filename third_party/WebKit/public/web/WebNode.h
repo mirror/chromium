@@ -39,6 +39,7 @@
 namespace blink {
 
 class Node;
+class WebAXObject;
 class WebDocument;
 class WebElement;
 class WebElementCollection;
@@ -102,6 +103,7 @@ class WebNode {
   BLINK_EXPORT WebPluginContainer* PluginContainer() const;
 
   BLINK_EXPORT bool IsInsideFocusableElementOrARIAWidget() const;
+  BLINK_EXPORT WebAXObject AccessibilityObject();
 
   template <typename T>
   T To();
@@ -109,6 +111,8 @@ class WebNode {
   const T ToConst() const;
 
 #if BLINK_IMPLEMENTATION
+  BLINK_EXPORT static WebPluginContainer* PluginContainerFromNode(const Node*);
+
   BLINK_EXPORT WebNode(Node*);
   BLINK_EXPORT WebNode& operator=(Node*);
   BLINK_EXPORT operator Node*() const;

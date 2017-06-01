@@ -22,7 +22,7 @@ class ThrobberView : public View {
   }
 
   // View::
-  gfx::Size CalculatePreferredSize() const override {
+  gfx::Size GetPreferredSize() const override {
     return gfx::Size(width(), height());
   }
 

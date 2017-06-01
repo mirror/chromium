@@ -70,9 +70,8 @@ bool CSSURIValue::Equals(const CSSURIValue& other) const {
   // If only one has the 'local url' flag set, the URLs can't match.
   if (is_local_ != other.is_local_)
     return false;
-  if (is_local_)
-    return relative_url_ == other.relative_url_;
-  return absolute_url_ == other.absolute_url_;
+  return (is_local_ && relative_url_ == other.relative_url_) ||
+         absolute_url_ == other.absolute_url_;
 }
 
 DEFINE_TRACE_AFTER_DISPATCH(CSSURIValue) {

@@ -33,14 +33,12 @@ static WebPaymentMethodData CreateWebPaymentMethodDataForTest() {
 
 static WebPaymentAppRequest CreateWebPaymentAppRequestForTest() {
   WebPaymentAppRequest web_data;
-  web_data.top_level_origin = WebString::FromUTF8("https://example.com");
-  web_data.payment_request_origin = WebString::FromUTF8("https://example.com");
-  web_data.payment_request_id = WebString::FromUTF8("payment-request-id");
+  web_data.origin = WebString::FromUTF8("https://example.com");
   Vector<WebPaymentMethodData> method_data;
   method_data.push_back(CreateWebPaymentMethodDataForTest());
   web_data.method_data = WebVector<WebPaymentMethodData>(method_data);
   web_data.total = CreateWebPaymentItemForTest();
-  web_data.instrument_key = WebString::FromUTF8("payment-instrument-key");
+  web_data.option_id = WebString::FromUTF8("payment-app-id");
   return web_data;
 }
 
@@ -49,15 +47,6 @@ TEST(PaymentAppRequestConversionTest, ToPaymentAppRequest) {
   WebPaymentAppRequest web_data = CreateWebPaymentAppRequestForTest();
   PaymentAppRequest data = PaymentAppRequestConversion::ToPaymentAppRequest(
       scope.GetScriptState(), web_data);
-
-  ASSERT_TRUE(data.hasTopLevelOrigin());
-  EXPECT_EQ("https://example.com", data.topLevelOrigin());
-
-  ASSERT_TRUE(data.hasPaymentRequestOrigin());
-  EXPECT_EQ("https://example.com", data.paymentRequestOrigin());
-
-  ASSERT_TRUE(data.hasPaymentRequestId());
-  EXPECT_EQ("payment-request-id", data.paymentRequestId());
 
   ASSERT_TRUE(data.hasMethodData());
   ASSERT_EQ(1UL, data.methodData().size());
@@ -83,8 +72,11 @@ TEST(PaymentAppRequestConversionTest, ToPaymentAppRequest) {
   ASSERT_TRUE(data.total().amount().hasValue());
   EXPECT_EQ("9.99", data.total().amount().value());
 
-  ASSERT_TRUE(data.hasInstrumentKey());
-  EXPECT_EQ("payment-instrument-key", data.instrumentKey());
+  ASSERT_TRUE(data.hasOptionId());
+  EXPECT_EQ("payment-app-id", data.optionId());
+
+  ASSERT_TRUE(data.hasOrigin());
+  EXPECT_EQ("https://example.com", data.origin());
 }
 
 }  // namespace

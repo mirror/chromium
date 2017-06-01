@@ -47,7 +47,7 @@ class HpackHuffmanDecoderPeer {
     return HpackHuffmanDecoder::DecodeToCanonical(code_length, bits);
   }
 
-  static uint8_t CanonicalToSource(HuffmanWord canonical) {
+  static char CanonicalToSource(HuffmanWord canonical) {
     return HpackHuffmanDecoder::CanonicalToSource(canonical);
   }
 };
@@ -68,7 +68,8 @@ class HpackHuffmanDecoderTest : public ::testing::Test {
     if (canonical == 256u) {
       return canonical;
     }
-    return HpackHuffmanDecoderPeer::CanonicalToSource(canonical);
+    return static_cast<unsigned char>(
+        HpackHuffmanDecoderPeer::CanonicalToSource(canonical));
   }
 
   void EncodeString(SpdyStringPiece input, SpdyString* encoded) {

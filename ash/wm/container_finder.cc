@@ -12,6 +12,7 @@
 #include "ash/wm/always_on_top_controller.h"
 #include "ash/wm/root_window_finder.h"
 #include "ash/wm/window_state.h"
+#include "ash/wm_window.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
 #include "ui/gfx/geometry/rect.h"
@@ -24,13 +25,14 @@ namespace {
 aura::Window* FindContainerRoot(const gfx::Rect& bounds) {
   if (bounds == gfx::Rect())
     return Shell::GetRootWindowForNewWindows();
-  return GetRootWindowMatching(bounds);
+  WmWindow* root = GetRootWindowMatching(bounds);
+  return root ? root->aura_window() : nullptr;
 }
 
 bool HasTransientParentWindow(const aura::Window* window) {
   const aura::Window* transient_parent = ::wm::GetTransientParent(window);
   return transient_parent &&
-         transient_parent->type() != aura::client::WINDOW_TYPE_UNKNOWN;
+         transient_parent->type() != ui::wm::WINDOW_TYPE_UNKNOWN;
 }
 
 aura::Window* GetSystemModalContainer(aura::Window* root,
@@ -58,9 +60,10 @@ aura::Window* GetSystemModalContainer(aura::Window* root,
 
 aura::Window* GetContainerFromAlwaysOnTopController(aura::Window* root,
                                                     aura::Window* window) {
-  return RootWindowController::ForWindow(root)
-      ->always_on_top_controller()
-      ->GetContainer(window);
+  WmWindow* result = RootWindowController::ForWindow(root)
+                         ->always_on_top_controller()
+                         ->GetContainer(WmWindow::Get(window));
+  return result ? result->aura_window() : nullptr;
 }
 
 }  // namespace
@@ -84,23 +87,23 @@ aura::Window* GetDefaultParent(aura::Window* window, const gfx::Rect& bounds) {
   }
 
   switch (window->type()) {
-    case aura::client::WINDOW_TYPE_NORMAL:
-    case aura::client::WINDOW_TYPE_POPUP:
+    case ui::wm::WINDOW_TYPE_NORMAL:
+    case ui::wm::WINDOW_TYPE_POPUP:
       if (window->GetProperty(aura::client::kModalKey) == ui::MODAL_TYPE_SYSTEM)
         return GetSystemModalContainer(target_root, window);
       if (HasTransientParentWindow(window))
         return GetContainerForWindow(transient_parent);
       return GetContainerFromAlwaysOnTopController(target_root, window);
-    case aura::client::WINDOW_TYPE_CONTROL:
+    case ui::wm::WINDOW_TYPE_CONTROL:
       return target_root->GetChildById(
           kShellWindowId_UnparentedControlContainer);
-    case aura::client::WINDOW_TYPE_PANEL:
+    case ui::wm::WINDOW_TYPE_PANEL:
       if (window->GetProperty(kPanelAttachedKey))
         return target_root->GetChildById(kShellWindowId_PanelContainer);
       return GetContainerFromAlwaysOnTopController(target_root, window);
-    case aura::client::WINDOW_TYPE_MENU:
+    case ui::wm::WINDOW_TYPE_MENU:
       return target_root->GetChildById(kShellWindowId_MenuContainer);
-    case aura::client::WINDOW_TYPE_TOOLTIP:
+    case ui::wm::WINDOW_TYPE_TOOLTIP:
       return target_root->GetChildById(
           kShellWindowId_DragImageAndTooltipContainer);
     default:

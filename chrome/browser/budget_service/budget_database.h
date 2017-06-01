@@ -10,7 +10,6 @@
 #include <memory>
 
 #include "base/callback_forward.h"
-#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "components/leveldb_proto/proto_database.h"
@@ -59,8 +58,6 @@ class BudgetDatabase {
                    const SpendBudgetCallback& callback);
 
  private:
-  FRIEND_TEST_ALL_PREFIXES(BudgetDatabaseTest,
-                           DefaultSiteEngagementInIncognitoProfile);
   friend class BudgetDatabaseTest;
 
   // Used to allow tests to change time for testing.
@@ -137,10 +134,6 @@ class BudgetDatabase {
   void AddEngagementBudget(const url::Origin& origin);
 
   bool CleanupExpiredBudget(const url::Origin& origin);
-
-  // Gets the current Site Engagement Score for |origin|. Will return a fixed
-  // score of zero when |profile_| is off the record.
-  double GetSiteEngagementScoreForOrigin(const url::Origin& origin) const;
 
   Profile* profile_;
 

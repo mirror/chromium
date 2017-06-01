@@ -6,7 +6,6 @@
 
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser_dialogs.h"
-#include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/common/extensions/extension_constants.h"
 #include "chrome/grit/generated_resources.h"
 #include "extensions/browser/extension_system.h"
@@ -17,6 +16,7 @@
 #include "ui/events/event.h"
 #include "ui/views/controls/button/md_text_button.h"
 #include "ui/views/layout/box_layout.h"
+#include "ui/views/layout/layout_constants.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
 
@@ -38,15 +38,10 @@ AppInfoFooterPanel::AppInfoFooterPanel(gfx::NativeWindow parent_window,
       weak_ptr_factory_(this) {
   CreateButtons();
 
-  ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
-
-  SetLayoutManager(new views::BoxLayout(
-      views::BoxLayout::kHorizontal,
-      provider->GetDistanceMetric(
-          views::DISTANCE_DIALOG_CONTENTS_HORIZONTAL_MARGIN),
-      provider->GetDistanceMetric(
-          views::DISTANCE_DIALOG_CONTENTS_VERTICAL_MARGIN),
-      provider->GetDistanceMetric(views::DISTANCE_RELATED_BUTTON_HORIZONTAL)));
+  SetLayoutManager(new views::BoxLayout(views::BoxLayout::kHorizontal,
+                                        views::kButtonHEdgeMargin,
+                                        views::kButtonVEdgeMargin,
+                                        views::kRelatedButtonHSpacing));
 
   LayoutButtons();
 }

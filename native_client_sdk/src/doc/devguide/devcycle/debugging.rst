@@ -1,7 +1,5 @@
 .. _devcycle-debugging:
 
-.. include:: /migration/deprecation.inc
-
 #########
 Debugging
 #########

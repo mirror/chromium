@@ -100,29 +100,24 @@ double CSSToLengthConversionData::ViewportWidthPercent() const {
   // FIXME: Remove style_ from this class. Plumb viewport and rem unit
   // information through as output parameters on functions involved in length
   // resolution.
-  if (style_)
-    const_cast<ComputedStyle*>(style_)->SetHasViewportUnits(true);
+  const_cast<ComputedStyle*>(style_)->SetHasViewportUnits(true);
   return viewport_size_.Width() / 100;
 }
 double CSSToLengthConversionData::ViewportHeightPercent() const {
-  if (style_)
-    const_cast<ComputedStyle*>(style_)->SetHasViewportUnits(true);
+  const_cast<ComputedStyle*>(style_)->SetHasViewportUnits(true);
   return viewport_size_.Height() / 100;
 }
 double CSSToLengthConversionData::ViewportMinPercent() const {
-  if (style_)
-    const_cast<ComputedStyle*>(style_)->SetHasViewportUnits(true);
+  const_cast<ComputedStyle*>(style_)->SetHasViewportUnits(true);
   return std::min(viewport_size_.Width(), viewport_size_.Height()) / 100;
 }
 double CSSToLengthConversionData::ViewportMaxPercent() const {
-  if (style_)
-    const_cast<ComputedStyle*>(style_)->SetHasViewportUnits(true);
+  const_cast<ComputedStyle*>(style_)->SetHasViewportUnits(true);
   return std::max(viewport_size_.Width(), viewport_size_.Height()) / 100;
 }
 
 float CSSToLengthConversionData::RemFontSize() const {
-  if (style_)
-    const_cast<ComputedStyle*>(style_)->SetHasRemUnits();
+  const_cast<ComputedStyle*>(style_)->SetHasRemUnits();
   return font_sizes_.Rem();
 }
 

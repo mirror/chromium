@@ -107,10 +107,7 @@ TEST_F(ResourceFetcherTest, StartLoadAfterFrameDetach) {
   KURL secure_url(kParsedURLString, "https://secureorigin.test/image.png");
   // Try to request a url. The request should fail, and a resource in an error
   // state should be returned, and no resource should be present in the cache.
-  ResourceFetcher* fetcher = ResourceFetcher::Create(
-      &FetchContext::NullInstance(),
-      Platform::Current()->CurrentThread()->GetWebTaskRunner());
-
+  ResourceFetcher* fetcher = ResourceFetcher::Create(nullptr);
   ResourceRequest resource_request(secure_url);
   resource_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
   FetchParameters fetch_params =
@@ -128,8 +125,7 @@ TEST_F(ResourceFetcherTest, StartLoadAfterFrameDetach) {
 }
 
 TEST_F(ResourceFetcherTest, UseExistingResource) {
-  ResourceFetcher* fetcher =
-      ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
+  ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
 
   KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.html");
   ResourceResponse response;
@@ -164,8 +160,7 @@ TEST_F(ResourceFetcherTest, Vary) {
   resource->Finish();
   ASSERT_TRUE(resource->MustReloadDueToVaryHeader(ResourceRequest(url)));
 
-  ResourceFetcher* fetcher =
-      ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
+  ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
   ResourceRequest resource_request(url);
   resource_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
   FetchParameters fetch_params =
@@ -183,8 +178,7 @@ TEST_F(ResourceFetcherTest, NavigationTimingInfo) {
   response.SetURL(url);
   response.SetHTTPStatusCode(200);
 
-  ResourceFetcher* fetcher =
-      ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
+  ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
   ResourceRequest resource_request(url);
   resource_request.SetFrameType(WebURLRequest::kFrameTypeNested);
   resource_request.SetRequestContext(WebURLRequest::kRequestContextForm);
@@ -218,8 +212,7 @@ TEST_F(ResourceFetcherTest, NavigationTimingInfo) {
 }
 
 TEST_F(ResourceFetcherTest, VaryOnBack) {
-  ResourceFetcher* fetcher =
-      ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
+  ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
 
   KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.html");
   Resource* resource =
@@ -244,8 +237,7 @@ TEST_F(ResourceFetcherTest, VaryOnBack) {
 }
 
 TEST_F(ResourceFetcherTest, VaryResource) {
-  ResourceFetcher* fetcher =
-      ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
+  ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
 
   KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.html");
   ResourceResponse response;
@@ -281,8 +273,7 @@ class RequestSameResourceOnComplete
     EXPECT_EQ(resource_, resource);
     MockFetchContext* context =
         MockFetchContext::Create(MockFetchContext::kShouldLoadNewResource);
-    ResourceFetcher* fetcher2 =
-        ResourceFetcher::Create(context, context->GetTaskRunner());
+    ResourceFetcher* fetcher2 = ResourceFetcher::Create(context);
     ResourceRequest resource_request2(resource_->Url());
     resource_request2.SetCachePolicy(WebCachePolicy::kValidatingCacheData);
     FetchParameters fetch_params2(resource_request2, FetchInitiatorInfo());
@@ -312,8 +303,7 @@ TEST_F(ResourceFetcherTest, RevalidateWhileFinishingLoading) {
   response.SetHTTPHeaderField(HTTPNames::Cache_Control, "max-age=3600");
   response.SetHTTPHeaderField(HTTPNames::ETag, "1234567890");
   RegisterMockedURLLoadWithCustomResponse(url, response);
-  ResourceFetcher* fetcher1 =
-      ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
+  ResourceFetcher* fetcher1 = ResourceFetcher::Create(Context());
   ResourceRequest request1(url);
   request1.SetHTTPHeaderField(HTTPNames::Cache_Control, "no-cache");
   FetchParameters fetch_params1 =
@@ -328,8 +318,7 @@ TEST_F(ResourceFetcherTest, RevalidateWhileFinishingLoading) {
 }
 
 TEST_F(ResourceFetcherTest, DontReuseMediaDataUrl) {
-  ResourceFetcher* fetcher =
-      ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
+  ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
   ResourceRequest request(KURL(kParsedURLString, "data:text/html,foo"));
   request.SetRequestContext(WebURLRequest::kRequestContextVideo);
   ResourceLoaderOptions options;
@@ -392,8 +381,7 @@ TEST_F(ResourceFetcherTest, ResponseOnCancel) {
   KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.png");
   RegisterMockedURLLoad(url);
 
-  ResourceFetcher* fetcher =
-      ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
+  ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
   ResourceRequest resource_request(url);
   resource_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
   FetchParameters fetch_params =
@@ -431,8 +419,7 @@ class ScopedMockRedirectRequester {
   }
 
   void Request(const WebString& url) {
-    ResourceFetcher* fetcher =
-        ResourceFetcher::Create(context_, context_->GetTaskRunner());
+    ResourceFetcher* fetcher = ResourceFetcher::Create(context_);
     ResourceRequest resource_request(url);
     resource_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
     FetchParameters fetch_params =
@@ -487,8 +474,7 @@ TEST_F(ResourceFetcherTest, SynchronousRequest) {
   KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.png");
   RegisterMockedURLLoad(url);
 
-  ResourceFetcher* fetcher =
-      ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
+  ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
   ResourceRequest resource_request(url);
   resource_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
   FetchParameters fetch_params(resource_request, FetchInitiatorInfo());
@@ -500,8 +486,7 @@ TEST_F(ResourceFetcherTest, SynchronousRequest) {
 }
 
 TEST_F(ResourceFetcherTest, PreloadResourceTwice) {
-  ResourceFetcher* fetcher =
-      ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
+  ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
 
   KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.png");
   RegisterMockedURLLoad(url);
@@ -529,8 +514,7 @@ TEST_F(ResourceFetcherTest, PreloadResourceTwice) {
 }
 
 TEST_F(ResourceFetcherTest, LinkPreloadResourceAndUse) {
-  ResourceFetcher* fetcher =
-      ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
+  ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
 
   KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.png");
   RegisterMockedURLLoad(url);
@@ -567,8 +551,7 @@ TEST_F(ResourceFetcherTest, LinkPreloadResourceAndUse) {
 }
 
 TEST_F(ResourceFetcherTest, PreloadMatchWithBypassingCache) {
-  ResourceFetcher* fetcher =
-      ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
+  ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
   KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.png");
   RegisterMockedURLLoad(url);
 
@@ -590,10 +573,8 @@ TEST_F(ResourceFetcherTest, PreloadMatchWithBypassingCache) {
 }
 
 TEST_F(ResourceFetcherTest, CrossFramePreloadMatchIsNotAllowed) {
-  ResourceFetcher* fetcher =
-      ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
-  ResourceFetcher* fetcher2 =
-      ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
+  ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
+  ResourceFetcher* fetcher2 = ResourceFetcher::Create(Context());
 
   KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.png");
   RegisterMockedURLLoad(url);
@@ -618,8 +599,7 @@ TEST_F(ResourceFetcherTest, CrossFramePreloadMatchIsNotAllowed) {
 }
 
 TEST_F(ResourceFetcherTest, RepetitiveLinkPreloadShouldBeMerged) {
-  ResourceFetcher* fetcher =
-      ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
+  ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
 
   KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.png");
   RegisterMockedURLLoad(url);
@@ -649,8 +629,7 @@ TEST_F(ResourceFetcherTest, RepetitiveLinkPreloadShouldBeMerged) {
 }
 
 TEST_F(ResourceFetcherTest, RepetitiveSpeculativePreloadShouldBeMerged) {
-  ResourceFetcher* fetcher =
-      ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
+  ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
 
   KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.png");
   RegisterMockedURLLoad(url);
@@ -681,8 +660,7 @@ TEST_F(ResourceFetcherTest, RepetitiveSpeculativePreloadShouldBeMerged) {
 }
 
 TEST_F(ResourceFetcherTest, SpeculativePreloadShouldBePromotedToLinkePreload) {
-  ResourceFetcher* fetcher =
-      ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
+  ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
 
   KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.png");
   RegisterMockedURLLoad(url);
@@ -732,8 +710,7 @@ TEST_F(ResourceFetcherTest, Revalidate304) {
   resource->ResponseReceived(response, nullptr);
   resource->Finish();
 
-  ResourceFetcher* fetcher =
-      ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
+  ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
   ResourceRequest resource_request(url);
   resource_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
   FetchParameters fetch_params =
@@ -747,10 +724,8 @@ TEST_F(ResourceFetcherTest, Revalidate304) {
 }
 
 TEST_F(ResourceFetcherTest, LinkPreloadResourceMultipleFetchersAndMove) {
-  ResourceFetcher* fetcher =
-      ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
-  ResourceFetcher* fetcher2 =
-      ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
+  ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
+  ResourceFetcher* fetcher2 = ResourceFetcher::Create(Context());
 
   KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.png");
   RegisterMockedURLLoad(url);
@@ -775,8 +750,7 @@ TEST_F(ResourceFetcherTest, LinkPreloadResourceMultipleFetchersAndMove) {
 }
 
 TEST_F(ResourceFetcherTest, ContentTypeDataURL) {
-  ResourceFetcher* fetcher =
-      ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
+  ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
   FetchParameters fetch_params = FetchParameters(
       ResourceRequest("data:text/testmimetype,foo"), FetchInitiatorInfo());
   Resource* resource = MockResource::Fetch(fetch_params, fetcher);

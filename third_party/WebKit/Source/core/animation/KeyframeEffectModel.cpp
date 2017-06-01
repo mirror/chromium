@@ -90,8 +90,7 @@ bool KeyframeEffectModelBase::SnapshotNeutralCompositorKeyframes(
   bool updated = false;
   EnsureKeyframeGroups();
   for (CSSPropertyID property : CompositorAnimations::kCompositableProperties) {
-    if (CSSPropertyEquality::PropertiesEqual(PropertyHandle(property),
-                                             old_style, new_style))
+    if (CSSPropertyEquality::PropertiesEqual(property, old_style, new_style))
       continue;
     PropertySpecificKeyframeGroup* keyframe_group =
         keyframe_groups_->at(PropertyHandle(property));

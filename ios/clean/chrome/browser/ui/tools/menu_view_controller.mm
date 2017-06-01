@@ -9,13 +9,11 @@
 #import "base/mac/foundation_util.h"
 #import "base/macros.h"
 #import "ios/chrome/browser/ui/rtl_geometry.h"
-#import "ios/chrome/browser/ui/uikit_ui_util.h"
-#include "ios/chrome/grit/ios_theme_resources.h"
+#import "ios/clean/chrome/browser/ui/commands/find_in_page_visibility_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/navigation_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/tools_menu_commands.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_button+factory.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_button.h"
-#import "ios/clean/chrome/browser/ui/toolbar/toolbar_constants.h"
 #import "ios/clean/chrome/browser/ui/tools/menu_overflow_controls_stackview.h"
 #import "ios/clean/chrome/browser/ui/tools/tools_actions.h"
 #import "ios/clean/chrome/browser/ui/tools/tools_menu_item.h"
@@ -28,8 +26,8 @@
 namespace {
 const CGFloat kMenuWidth = 250.0;
 const CGFloat kMenuItemHeight = 48.0;
-const CGFloat kMenuItemLeadingEdgeInset = 12.0;
-const CGFloat kOverflowControlsMargin = 58.0;
+const CGFloat kMenuItemLeadingEdgeInset = 10.0;
+const CGFloat kOverflowControlsMargin = 50.0;
 const CGFloat kCloseButtonHeight = 44.0;
 }
 
@@ -41,7 +39,6 @@ const CGFloat kCloseButtonHeight = 44.0;
     MenuOverflowControlsStackView* toolbarOverflowStackView;
 @property(nonatomic, assign) BOOL displayOverflowControls;
 @property(nonatomic, strong) ToolbarButton* closeMenuButton;
-@property(nonatomic, assign) BOOL currentPageLoading;
 
 // Sets up the main StackView and creates a button for each Menu item.
 - (void)setupMenuStackView;
@@ -59,7 +56,6 @@ const CGFloat kCloseButtonHeight = 44.0;
 @synthesize displayOverflowControls = _displayOverflowControls;
 @synthesize menuScrollView = _menuScrollView;
 @synthesize closeMenuButton = _closeMenuButton;
-@synthesize currentPageLoading = _currentPageLoading;
 
 #pragma mark - View Lifecycle
 
@@ -83,38 +79,19 @@ const CGFloat kCloseButtonHeight = 44.0;
   self.menuScrollView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:self.menuScrollView];
 
-  [self setupCloseMenuButton];
+  // Add close tools menu button. This button is fixed on the top right corner
+  // and will always be visible.
+  self.closeMenuButton = [ToolbarButton toolsMenuToolbarButton];
+  [self.closeMenuButton addTarget:self.dispatcher
+                           action:@selector(closeToolsMenu)
+                 forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:self.closeMenuButton];
+
   [self setupMenuStackView];
   [self setupConstraints];
 }
 
 #pragma mark - UI Setup
-
-- (void)setupCloseMenuButton {
-  // Add close tools menu button. This button is fixed on the top right corner
-  // and will always be visible.
-  self.closeMenuButton = [ToolbarButton
-      toolbarButtonWithImageForNormalState:
-          NativeImage(IDR_IOS_TOOLBAR_LIGHT_TOOLS_PRESSED)
-                  imageForHighlightedState:NativeImage(
-                                               IDR_IOS_TOOLBAR_LIGHT_TOOLS)
-                     imageForDisabledState:nil];
-  [self.closeMenuButton
-      setImageEdgeInsets:UIEdgeInsetsMakeDirected(0, -3, 0, 0)];
-  [self.closeMenuButton addTarget:self.dispatcher
-                           action:@selector(closeToolsMenu)
-                 forControlEvents:UIControlEventTouchUpInside];
-
-  NSLayoutConstraint* widthConstraint = [self.closeMenuButton.widthAnchor
-      constraintEqualToConstant:kToolbarButtonWidth];
-  widthConstraint.priority = UILayoutPriorityDefaultHigh;
-  NSLayoutConstraint* heightConstraint = [self.closeMenuButton.heightAnchor
-      constraintEqualToConstant:kCloseButtonHeight];
-  heightConstraint.priority = UILayoutPriorityDefaultHigh;
-  [NSLayoutConstraint
-      activateConstraints:@[ widthConstraint, heightConstraint ]];
-  [self.view addSubview:self.closeMenuButton];
-}
 
 - (void)setupMenuStackView {
   NSMutableArray<UIButton*>* buttons =
@@ -124,11 +101,6 @@ const CGFloat kCloseButtonHeight = 44.0;
     UIButton* menuButton = [UIButton buttonWithType:UIButtonTypeSystem];
     menuButton.translatesAutoresizingMaskIntoConstraints = NO;
     menuButton.tintColor = [UIColor blackColor];
-    // Button constraints will be changed in order to match the menu width, for
-    // this reason the content will be centered if no content alignment is set.
-    menuButton.contentHorizontalAlignment =
-        UseRTLLayout() ? UIControlContentHorizontalAlignmentRight
-                       : UIControlContentHorizontalAlignmentLeft;
     [menuButton setTitle:item.title forState:UIControlStateNormal];
     [menuButton setContentEdgeInsets:UIEdgeInsetsMakeDirected(
                                          0, kMenuItemLeadingEdgeInset, 0, 0)];
@@ -151,21 +123,6 @@ const CGFloat kCloseButtonHeight = 44.0;
   self.menuStackView.distribution = UIStackViewDistributionFillEqually;
   self.menuStackView.alignment = UIStackViewAlignmentLeading;
 
-  // Set button constraints so they have the same width as the StackView that
-  // contains them.
-  NSMutableArray* buttonConstraints = [[NSMutableArray alloc] init];
-  for (UIView* view in self.menuStackView.arrangedSubviews) {
-    [buttonConstraints
-        addObject:[view.leadingAnchor
-                      constraintEqualToAnchor:self.menuStackView
-                                                  .leadingAnchor]];
-    [buttonConstraints
-        addObject:[view.trailingAnchor
-                      constraintEqualToAnchor:self.menuStackView
-                                                  .trailingAnchor]];
-  }
-  [NSLayoutConstraint activateConstraints:buttonConstraints];
-
   // Stack view to hold overflow ToolbarButtons.
   if (self.traitCollection.horizontalSizeClass ==
           UIUserInterfaceSizeClassCompact &&
@@ -176,6 +133,8 @@ const CGFloat kCloseButtonHeight = 44.0;
 
 - (void)setUpOverFlowControlsStackView {
   self.toolbarOverflowStackView = [[MenuOverflowControlsStackView alloc] init];
+  // PLACEHOLDER: ToolsMenuButton might end up being part of the MenuVC's view
+  // instead of the StackView. We are waiting confirmation on this.
   for (UIView* view in self.toolbarOverflowStackView.arrangedSubviews) {
     if ([view isKindOfClass:[ToolbarButton class]]) {
       ToolbarButton* button = base::mac::ObjCCastStrict<ToolbarButton>(view);
@@ -184,8 +143,6 @@ const CGFloat kCloseButtonHeight = 44.0;
           forControlEvents:UIControlEventTouchUpInside];
     }
   }
-  self.toolbarOverflowStackView.reloadButton.hidden = self.currentPageLoading;
-  self.toolbarOverflowStackView.stopButton.hidden = !self.currentPageLoading;
   [self.toolbarOverflowStackView.reloadButton
              addTarget:self.dispatcher
                 action:@selector(reloadPage)
@@ -197,17 +154,13 @@ const CGFloat kCloseButtonHeight = 44.0;
 
   [self.menuStackView insertArrangedSubview:self.toolbarOverflowStackView
                                     atIndex:0];
-  NSLayoutConstraint* leadingConstraint =
-      [self.toolbarOverflowStackView.leadingAnchor
-          constraintEqualToAnchor:self.menuStackView.leadingAnchor];
-  leadingConstraint.priority = UILayoutPriorityDefaultHigh;
-  NSLayoutConstraint* trailingConstraint =
-      [self.toolbarOverflowStackView.trailingAnchor
-          constraintEqualToAnchor:self.menuStackView.trailingAnchor
-                         constant:-kOverflowControlsMargin];
-  trailingConstraint.priority = UILayoutPriorityDefaultHigh;
-  [NSLayoutConstraint
-      activateConstraints:@[ leadingConstraint, trailingConstraint ]];
+  [NSLayoutConstraint activateConstraints:@[
+    [self.toolbarOverflowStackView.leadingAnchor
+        constraintEqualToAnchor:self.menuStackView.leadingAnchor],
+    [self.toolbarOverflowStackView.trailingAnchor
+        constraintEqualToAnchor:self.menuStackView.trailingAnchor
+                       constant:-kOverflowControlsMargin],
+  ]];
 }
 
 - (void)setupConstraints {
@@ -234,9 +187,11 @@ const CGFloat kCloseButtonHeight = 44.0;
         constraintEqualToAnchor:self.menuScrollView.widthAnchor],
     [self.menuStackView.heightAnchor
         constraintEqualToConstant:kMenuItemHeight * self.menuItems.count],
-    // CloseMenu Button Constraint.
+    // CloseMenu Button Constraints.
     [self.closeMenuButton.trailingAnchor
         constraintEqualToAnchor:self.view.trailingAnchor],
+    [self.closeMenuButton.heightAnchor
+        constraintEqualToConstant:kCloseButtonHeight],
   ]];
 }
 
@@ -248,19 +203,6 @@ const CGFloat kCloseButtonHeight = 44.0;
 
 - (void)displayOverflowControls:(BOOL)displayOverflowControls {
   self.displayOverflowControls = displayOverflowControls;
-}
-
-- (void)setIsLoading:(BOOL)isLoading {
-  self.currentPageLoading = isLoading;
-}
-
-- (void)setCurrentPageLoading:(BOOL)currentPageLoading {
-  _currentPageLoading = currentPageLoading;
-  // If the OverflowButtons have been initialized update their visibility.
-  if (self.toolbarOverflowStackView) {
-    self.toolbarOverflowStackView.reloadButton.hidden = currentPageLoading;
-    self.toolbarOverflowStackView.stopButton.hidden = !currentPageLoading;
-  }
 }
 
 @end

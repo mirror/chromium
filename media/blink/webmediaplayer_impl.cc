@@ -56,7 +56,6 @@
 #include "third_party/WebKit/public/platform/WebMediaPlayerSource.h"
 #include "third_party/WebKit/public/platform/WebMediaSource.h"
 #include "third_party/WebKit/public/platform/WebRect.h"
-#include "third_party/WebKit/public/platform/WebRuntimeFeatures.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebSize.h"
 #include "third_party/WebKit/public/platform/WebString.h"
@@ -134,14 +133,6 @@ bool IsBackgroundVideoTrackOptimizationEnabled() {
 bool IsBackgroundVideoPauseOptimizationEnabled() {
   return base::FeatureList::IsEnabled(kBackgroundVideoPauseOptimization);
 }
-
-#if defined(OS_ANDROID)
-
-bool IsNewRemotePlaybackPipelineEnabled() {
-  return base::FeatureList::IsEnabled(kNewRemotePlaybackPipeline);
-}
-
-#endif
 
 bool IsNetworkStateError(blink::WebMediaPlayer::NetworkState state) {
   bool result = state == blink::WebMediaPlayer::kNetworkStateFormatError ||
@@ -282,8 +273,8 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
   delegate_id_ = delegate_->AddObserver(this);
   delegate_->SetIdle(delegate_id_, true);
 
-  media_log_->AddEvent(media_log_->CreateCreatedEvent(
-      url::Origin(frame_->GetSecurityOrigin()).GetURL().spec()));
+  media_log_->AddEvent(
+      media_log_->CreateEvent(MediaLogEvent::WEBMEDIAPLAYER_CREATED));
 
   if (params->initial_cdm())
     SetCdm(params->initial_cdm());
@@ -1172,7 +1163,7 @@ void WebMediaPlayerImpl::OnPipelineSeeked(bool time_updated) {
 
 void WebMediaPlayerImpl::OnPipelineSuspended() {
 #if defined(OS_ANDROID)
-  if (IsRemote() && !IsNewRemotePlaybackPipelineEnabled()) {
+  if (IsRemote()) {
     scoped_refptr<VideoFrame> frame = cast_impl_.GetCastingBanner();
     if (frame)
       compositor_->PaintSingleFrame(frame);
@@ -1405,11 +1396,8 @@ void WebMediaPlayerImpl::OnBufferingStateChange(BufferingState state) {
     // Report the number of times we've entered the underflow state. Ensure we
     // only report the value when transitioning from HAVE_ENOUGH to
     // HAVE_NOTHING.
-    if (ready_state_ == WebMediaPlayer::kReadyStateHaveEnoughData &&
-        !seeking_) {
+    if (ready_state_ == WebMediaPlayer::kReadyStateHaveEnoughData)
       underflow_timer_.reset(new base::ElapsedTimer());
-      watch_time_reporter_->OnUnderflow();
-    }
 
     // It shouldn't be possible to underflow if we've not advanced past
     // HAVE_CURRENT_DATA.
@@ -1656,8 +1644,7 @@ void WebMediaPlayerImpl::OnDisconnectedFromRemoteDevice(double t) {
 }
 
 void WebMediaPlayerImpl::SuspendForRemote() {
-  if (pipeline_controller_.IsPipelineSuspended() &&
-      !IsNewRemotePlaybackPipelineEnabled()) {
+  if (pipeline_controller_.IsPipelineSuspended()) {
     scoped_refptr<VideoFrame> frame = cast_impl_.GetCastingBanner();
     if (frame)
       compositor_->PaintSingleFrame(frame);

@@ -232,10 +232,6 @@ class WindowTree : public mojom::WindowTree,
       const gfx::Rect& new_bounds,
       bool originated_change,
       const base::Optional<cc::LocalSurfaceId>& local_surface_id);
-  void ProcessWindowTransformChanged(const ServerWindow* window,
-                                     const gfx::Transform& old_transform,
-                                     const gfx::Transform& new_transform,
-                                     bool originated_change);
   void ProcessClientAreaChanged(
       const ServerWindow* window,
       const gfx::Insets& new_client_area,
@@ -443,9 +439,6 @@ class WindowTree : public mojom::WindowTree,
       Id window_id,
       const gfx::Rect& bounds,
       const base::Optional<cc::LocalSurfaceId>& local_surface_id) override;
-  void SetWindowTransform(uint32_t change_id,
-                          Id window_id,
-                          const gfx::Transform& transform) override;
   void SetWindowVisibility(uint32_t change_id,
                            Id window_id,
                            bool visible) override;
@@ -523,11 +516,6 @@ class WindowTree : public mojom::WindowTree,
                       bool is_primary_display,
                       Id window_id,
                       const SetDisplayRootCallback& callback) override;
-  void SetDisplayConfiguration(
-      const std::vector<display::Display>& displays,
-      std::vector<ui::mojom::WmViewportMetricsPtr> viewport_metrics,
-      int64_t primary_display_id,
-      const SetDisplayConfigurationCallback& callback) override;
   void WmResponse(uint32_t change_id, bool response) override;
   void WmSetBoundsResponse(uint32_t change_id) override;
   void WmRequestClose(Id transport_window_id) override;

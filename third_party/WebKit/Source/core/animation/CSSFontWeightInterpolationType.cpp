@@ -12,8 +12,7 @@
 
 namespace blink {
 
-class InheritedFontWeightChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+class InheritedFontWeightChecker : public InterpolationType::ConversionChecker {
  public:
   static std::unique_ptr<InheritedFontWeightChecker> Create(
       FontWeight font_weight) {
@@ -24,9 +23,10 @@ class InheritedFontWeightChecker
   InheritedFontWeightChecker(FontWeight font_weight)
       : font_weight_(font_weight) {}
 
-  bool IsValid(const StyleResolverState& state,
+  bool IsValid(const InterpolationEnvironment& environment,
                const InterpolationValue&) const final {
-    return font_weight_ == state.ParentStyle()->GetFontWeight();
+    return font_weight_ ==
+           environment.GetState().ParentStyle()->GetFontWeight();
   }
 
   const double font_weight_;

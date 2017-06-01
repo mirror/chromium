@@ -307,6 +307,7 @@ class CONTENT_EXPORT RenderViewImpl
                              blink::WebTextDirection hint) override;
   void HideValidationMessage() override;
   void MoveValidationMessage(const blink::WebRect& anchor_in_viewport) override;
+  void SetStatusText(const blink::WebString& text) override;
   void SetMouseOverURL(const blink::WebURL& url) override;
   void SetKeyboardFocusURL(const blink::WebURL& url) override;
   bool AcceptsLoadDrops() override;
@@ -518,6 +519,8 @@ class CONTENT_EXPORT RenderViewImpl
   void OnClosePage();
   void OnClose();
 
+  void OnShowContextMenu(ui::MenuSourceType source_type,
+                         const gfx::Point& location);
   void OnDeterminePageLanguage();
   void OnDisableScrollbarsForSmallWindows(
       const gfx::Size& disable_scrollbars_size_limit);

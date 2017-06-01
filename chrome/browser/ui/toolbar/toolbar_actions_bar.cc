@@ -28,12 +28,14 @@
 #include "chrome/browser/ui/toolbar/toolbar_actions_bar_delegate.h"
 #include "chrome/browser/ui/toolbar/toolbar_actions_bar_observer.h"
 #include "chrome/common/pref_names.h"
+#include "chrome/grit/theme_resources.h"
 #include "components/crx_file/id_util.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/browser/extension_util.h"
 #include "extensions/browser/runtime_data.h"
 #include "extensions/common/extension.h"
+#include "extensions/common/feature_switch.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/image/image_skia.h"
 
@@ -88,7 +90,10 @@ bool ToolbarActionsBar::disable_animations_for_testing_ = false;
 
 ToolbarActionsBar::PlatformSettings::PlatformSettings()
     : item_spacing(GetLayoutConstant(TOOLBAR_STANDARD_SPACING)),
-      icons_per_overflow_menu_row(1) {}
+      icons_per_overflow_menu_row(1),
+      chevron_enabled(!extensions::FeatureSwitch::extension_action_redesign()->
+                          IsEnabled()) {
+}
 
 ToolbarActionsBar::ToolbarActionsBar(ToolbarActionsBarDelegate* delegate,
                                      Browser* browser,
@@ -151,7 +156,7 @@ void ToolbarActionsBar::RegisterProfilePrefs(
                               0);
 }
 
-gfx::Size ToolbarActionsBar::GetFullSize() const {
+gfx::Size ToolbarActionsBar::GetPreferredSize() const {
   if (in_overflow_mode()) {
     // In overflow, we always have a preferred size of a full row (even if we
     // don't use it), and always of at least one row. The parent may decide to
@@ -262,7 +267,8 @@ bool ToolbarActionsBar::NeedsOverflow() const {
   // popped out action (because the action will pop back into overflow when the
   // menu opens).
   return GetEndIndexInBounds() != toolbar_actions_.size() ||
-         is_drag_in_progress_ || (popped_out_action_ && !is_popped_out_sticky_);
+         (is_drag_in_progress_ && !platform_settings_.chevron_enabled) ||
+         (popped_out_action_ && !is_popped_out_sticky_);
 }
 
 gfx::Rect ToolbarActionsBar::GetFrameForIndex(
@@ -508,7 +514,7 @@ void ToolbarActionsBar::PopOutAction(ToolbarActionViewController* controller,
     delegate_->Redraw(true);
   }
 
-  ResizeDelegate(gfx::Tween::LINEAR);
+  ResizeDelegate(gfx::Tween::LINEAR, false);
   if (!delegate_->IsAnimating()) {
     // Don't call the closure re-entrantly.
     base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, closure);
@@ -526,7 +532,7 @@ void ToolbarActionsBar::UndoPopOut() {
   popped_out_closure_.Reset();
   if (!IsActionVisibleOnMainBar(controller))
     delegate_->Redraw(true);
-  ResizeDelegate(gfx::Tween::LINEAR);
+  ResizeDelegate(gfx::Tween::LINEAR, false);
 }
 
 void ToolbarActionsBar::SetPopupOwner(
@@ -627,12 +633,15 @@ void ToolbarActionsBar::OnToolbarActionAdded(
                           model_->CreateActionForItem(browser_, this, item));
   delegate_->AddViewForAction(toolbar_actions_[index].get(), index);
 
-  // We may need to resize (e.g. to show the new icon). We don't need to check
-  // if an extension is upgrading here, because ResizeDelegate() checks to see
-  // if the container is already the proper size, and because if the action is
-  // newly incognito enabled, even though it's a reload, it's a new extension to
-  // this toolbar.
-  ResizeDelegate(gfx::Tween::LINEAR);
+  // We may need to resize (e.g. to show the new icon, or the chevron). We don't
+  // need to check if an extension is upgrading here, because ResizeDelegate()
+  // checks to see if the container is already the proper size, and because
+  // if the action is newly incognito enabled, even though it's a reload, it's
+  // a new extension to this toolbar.
+  // We suppress the chevron during animation because, if we're expanding to
+  // show a new icon, we don't want to have the chevron visible only for the
+  // duration of the animation.
+  ResizeDelegate(gfx::Tween::LINEAR, true);
 }
 
 void ToolbarActionsBar::OnToolbarActionRemoved(const std::string& action_id) {
@@ -672,7 +681,7 @@ void ToolbarActionsBar::OnToolbarActionRemoved(const std::string& action_id) {
     } else {
       // Either we went from overflow to no-overflow, or we shrunk the no-
       // overflow container by 1.  Either way the size changed, so animate.
-      ResizeDelegate(gfx::Tween::EASE_OUT);
+      ResizeDelegate(gfx::Tween::EASE_OUT, false);
     }
   }
 }
@@ -695,11 +704,12 @@ void ToolbarActionsBar::OnToolbarActionUpdated(const std::string& action_id) {
 }
 
 void ToolbarActionsBar::OnToolbarVisibleCountChanged() {
-  ResizeDelegate(gfx::Tween::EASE_OUT);
+  ResizeDelegate(gfx::Tween::EASE_OUT, false);
 }
 
-void ToolbarActionsBar::ResizeDelegate(gfx::Tween::Type tween_type) {
-  int desired_width = GetFullSize().width();
+void ToolbarActionsBar::ResizeDelegate(gfx::Tween::Type tween_type,
+                                       bool suppress_chevron) {
+  int desired_width = GetPreferredSize().width();
   if (desired_width !=
       delegate_->GetWidth(ToolbarActionsBarDelegate::GET_WIDTH_CURRENT)) {
     delegate_->ResizeAndAnimate(tween_type, desired_width);
@@ -772,7 +782,7 @@ void ToolbarActionsBar::OnToolbarModelInitialized() {
   tracked_objects::ScopedTracker tracking_profile(
       FROM_HERE_WITH_EXPLICIT_FUNCTION(
           "ToolbarActionsBar::OnToolbarModelInitialized"));
-  ResizeDelegate(gfx::Tween::EASE_OUT);
+  ResizeDelegate(gfx::Tween::EASE_OUT, false);
 }
 
 void ToolbarActionsBar::TabInsertedAt(TabStripModel* tab_strip_model,
@@ -797,7 +807,7 @@ void ToolbarActionsBar::ReorderActions() {
   // Our visible browser actions may have changed - re-Layout() and check the
   // size (if we aren't suppressing the layout).
   if (!suppress_layout_) {
-    ResizeDelegate(gfx::Tween::EASE_OUT);
+    ResizeDelegate(gfx::Tween::EASE_OUT, false);
     delegate_->Redraw(true);
   }
 }

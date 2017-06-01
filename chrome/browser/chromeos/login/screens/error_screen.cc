@@ -297,8 +297,9 @@ void ErrorScreen::OnDiagnoseButtonClicked() {
       WindowOpenDisposition::NEW_WINDOW, extensions::SOURCE_CHROME_INTERNAL));
   KioskAppManager::Get()->InitSession(profile, extension_id);
 
-  LoginDisplayHost::default_host()->Finalize(base::BindOnce(
-      [] { session_manager::SessionManager::Get()->SessionStarted(); }));
+  session_manager::SessionManager::Get()->SessionStarted();
+
+  LoginDisplayHost::default_host()->Finalize();
 }
 
 void ErrorScreen::OnLaunchOobeGuestSession() {

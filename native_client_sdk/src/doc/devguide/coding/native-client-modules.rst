@@ -1,7 +1,5 @@
 .. _devcycle-native-client-modules:
 
-.. include:: /migration/deprecation.inc
-
 #####################
 Native Client Modules
 #####################

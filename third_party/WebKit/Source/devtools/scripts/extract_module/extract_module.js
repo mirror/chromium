@@ -11,12 +11,6 @@ const FRONTEND_PATH = path.resolve(__dirname, '..', '..', 'front_end');
 const BUILD_GN_PATH = path.resolve(__dirname, '..', '..', 'BUILD.gn');
 const SPECIAL_CASE_NAMESPACES_PATH = path.resolve(__dirname, '..', 'special_case_namespaces.json');
 
-/*
- * ==========================================
- * START EDITING HERE - TRANSFORMATION INPUTS
- * ==========================================
- */
-
 const APPLICATION_DESCRIPTORS = [
   'inspector.json',
   'toolbox.json',
@@ -26,60 +20,29 @@ const APPLICATION_DESCRIPTORS = [
   'utility_shared_worker.json',
 ];
 
-/*
- * If the transformation removes all the files of a module:
- * ['text_editor']
- */
+// Replace based on specified transformation
 const MODULES_TO_REMOVE = [];
 
-/**
- * If moving to a new module:
- * {file: 'common/Text.js', new: 'a_new_module'}
- *
- * If moving to an existing module:
- * {file: 'ui/SomeFile.js', existing: 'common'}
- */
 const JS_FILES_MAPPING = [
-  {file: 'mobile_throttling/NetworkPriorities.js', new: 'network_priorities'},
+  {file: 'common/Text.js', new: 'text_utils'},
+  {file: 'common/TextUtils.js', new: 'text_utils'},
+  {file: 'common/TextRange.js', new: 'text_utils'},
 ];
 
-/**
- * List all new modules here:
- * mobile_throttling: {
- *   dependencies: ['sdk'],
- *   dependents: ['console'],
- *   applications: ['inspector.json'],
- *   autostart: false,
- * }
- */
 const MODULE_MAPPING = {
-  network_priorities: {
-    dependencies: ['protocol', 'common'],
-    dependents: ['network', 'timeline'],
+  text_utils: {
+    dependencies: [],
+    dependents: ['common'],
     applications: ['inspector.json'],
-    autostart: false,
+    autostart: true,  // set to autostart because of extensions
   },
 };
 
-/**
- * If an existing module will have a new dependency on an existing module:
- * console: ['new_dependency']
- */
 const NEW_DEPENDENCIES_BY_EXISTING_MODULES = {
     // resources: ['components'],
 };
 
-/**
- * If an existing module will no longer have a dependency on a module:
- * console: ['former_dependency']
- */
 const REMOVE_DEPENDENCIES_BY_EXISTING_MODULES = {};
-
-/*
- * ==========================================
- * STOP EDITING HERE
- * ==========================================
- */
 
 const DEPENDENCIES_BY_MODULE = Object.keys(MODULE_MAPPING).reduce((acc, module) => {
   acc[module] = MODULE_MAPPING[module].dependencies;
@@ -673,7 +636,7 @@ function updateApplicationDescriptor(descriptorFileName, newModuleSet) {
         // Need spacing to preserve indentation
         let string;
         if (MODULE_MAPPING[m].autostart)
-          string = `        { "name": "${m}", "type": "autostart" }`;
+          string = `        { "name": "${m}", "type": "autostart"}`;
         else
           string = `        { "name": "${m}" }`;
         if (i !== newModules.length - 1)

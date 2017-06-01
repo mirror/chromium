@@ -34,11 +34,8 @@ const char kSupportedAudioContainer[] = "audio/webm";
 const char kUnsupportedContainer[] = "video/foo";
 
 // TODO(sandersd): Extended codec variants (requires proprietary codec support).
-// TODO(xhwang): Platform Opus is not available on all Android versions, where
-// some encrypted Opus related tests may fail. See PlatformHasOpusSupport()
-// for more details.
-const char kSupportedAudioCodec[] = "opus";
 const char kSupportedVideoCodec[] = "vp8";
+const char kSupportedAudioCodec[] = "opus";
 const char kUnsupportedCodec[] = "foo";
 const char kUnsupportedCodecs[] = "vp8,foo";
 const char kSupportedVideoCodecs[] = "vp8,vp8";

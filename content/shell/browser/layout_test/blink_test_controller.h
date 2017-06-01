@@ -15,8 +15,8 @@
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/scoped_observer.h"
-#include "base/sequence_checker.h"
 #include "base/synchronization/lock.h"
+#include "base/threading/non_thread_safe.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "content/public/browser/bluetooth_chooser.h"
@@ -113,7 +113,8 @@ class BlinkTestResultPrinter {
   DISALLOW_COPY_AND_ASSIGN(BlinkTestResultPrinter);
 };
 
-class BlinkTestController : public WebContentsObserver,
+class BlinkTestController : public base::NonThreadSafe,
+                            public WebContentsObserver,
                             public RenderProcessHostObserver,
                             public NotificationObserver,
                             public GpuDataManagerObserver {
@@ -205,7 +206,6 @@ class BlinkTestController : public WebContentsObserver,
   void OnPrintMessageToStderr(const std::string& message);
   void OnPrintMessage(const std::string& message);
   void OnOverridePreferences(const WebPreferences& prefs);
-  void OnSetPopupBlockingEnabled(bool block_popups);
   void OnTestFinished();
   void OnClearDevToolsLocalStorage();
   void OnShowDevTools(const std::string& settings,
@@ -297,8 +297,6 @@ class BlinkTestController : public WebContentsObserver,
   // waiting on the UI thread while layout tests are being ran.
   ScopedAllowWaitForAndroidLayoutTests reduced_restrictions_;
 #endif
-
-  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(BlinkTestController);
 };

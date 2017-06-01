@@ -44,7 +44,6 @@ class APIBindingsSystem {
   APIBindingsSystem(const binding::RunJSFunction& call_js,
                     const binding::RunJSFunctionSync& call_js_sync,
                     const GetAPISchemaMethod& get_api_schema,
-                    const APIBinding::AvailabilityCallback& is_available,
                     const APIRequestHandler::SendRequestMethod& send_request,
                     const APIEventHandler::EventListenersChangedMethod&
                         event_listeners_changed,
@@ -55,6 +54,7 @@ class APIBindingsSystem {
   v8::Local<v8::Object> CreateAPIInstance(
       const std::string& api_name,
       v8::Local<v8::Context> context,
+      const APIBinding::AvailabilityCallback& is_available,
       APIBindingHooks** hooks_out);
 
   // Responds to the request with the given |request_id|, calling the callback
@@ -134,8 +134,6 @@ class APIBindingsSystem {
   // The method to retrieve the DictionaryValue describing a given extension
   // API. Curried in for testing purposes so we can use fake APIs.
   GetAPISchemaMethod get_api_schema_;
-
-  APIBinding::AvailabilityCallback is_available_;
 
   DISALLOW_COPY_AND_ASSIGN(APIBindingsSystem);
 };

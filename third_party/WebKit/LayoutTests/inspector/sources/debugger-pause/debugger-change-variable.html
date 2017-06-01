@@ -55,10 +55,18 @@ var test = function()
         evalLocalVariables(step4);
     }
 
-    async function step4()
+    function step4()
     {
-        await localScopeObject().setPropertyValue("localObject1", "({ a: -290})");
-        await localScopeObject().setPropertyValue({ value: "localObject2" }, "123");
+        localScopeObject().setPropertyValue("localObject1", "({ a: -290})", step5);
+    }
+
+    function step5()
+    {
+        localScopeObject().setPropertyValue({ value: "localObject2" }, "123", step6);
+    }
+
+    function step6()
+    {
         InspectorTest.addResult("\nEvaluated after modification:");
         evalLocalVariables(step7);
     }

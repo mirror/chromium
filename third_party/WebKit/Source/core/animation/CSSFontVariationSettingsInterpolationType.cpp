@@ -70,7 +70,7 @@ class UnderlyingTagsChecker : public InterpolationType::ConversionChecker {
 };
 
 class InheritedFontVariationSettingsChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+    : public InterpolationType::ConversionChecker {
  public:
   ~InheritedFontVariationSettingsChecker() final {}
 
@@ -83,11 +83,12 @@ class InheritedFontVariationSettingsChecker
   InheritedFontVariationSettingsChecker(const FontVariationSettings* settings)
       : settings_(settings) {}
 
-  bool IsValid(const StyleResolverState& state,
+  bool IsValid(const InterpolationEnvironment& environment,
                const InterpolationValue&) const final {
-    return DataEquivalent(
-        settings_.Get(),
-        state.ParentStyle()->GetFontDescription().VariationSettings());
+    return DataEquivalent(settings_.Get(), environment.GetState()
+                                               .ParentStyle()
+                                               ->GetFontDescription()
+                                               .VariationSettings());
   }
 
   RefPtr<const FontVariationSettings> settings_;

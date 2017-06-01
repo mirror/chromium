@@ -239,7 +239,7 @@ std::unique_ptr<CSSParserSelector> CSSSelectorParser::ConsumeCompoundSelector(
       compound_pseudo_element = compound_selector->GetPseudoType();
   }
   if (context_->IsHTMLDocument())
-    element_name = element_name.LowerASCII();
+    element_name = element_name.DeprecatedLower();
 
   while (std::unique_ptr<CSSParserSelector> simple_selector =
              ConsumeSimpleSelector(range)) {
@@ -388,7 +388,7 @@ std::unique_ptr<CSSParserSelector> CSSSelectorParser::ConsumeAttribute(
   block.ConsumeWhitespace();
 
   if (context_->IsHTMLDocument())
-    attribute_name = attribute_name.LowerASCII();
+    attribute_name = attribute_name.DeprecatedLower();
 
   AtomicString namespace_uri = DetermineNamespace(namespace_prefix);
   if (namespace_uri.IsNull())
@@ -442,7 +442,7 @@ std::unique_ptr<CSSParserSelector> CSSSelectorParser::ConsumePseudo(
 
   AtomicString value = token.Value().ToAtomicString().LowerASCII();
   bool has_arguments = token.GetType() == kFunctionToken;
-  selector->UpdatePseudoType(value, has_arguments, context_->Mode());
+  selector->UpdatePseudoType(value, has_arguments);
 
   if (!RuntimeEnabledFeatures::cssSelectorsFocusWithinEnabled() &&
       selector->GetPseudoType() == CSSSelector::kPseudoFocusWithin)
@@ -762,15 +762,13 @@ void CSSSelectorParser::PrependTypeSelectorIfNeeded(
   // ::cue, ::shadow), we need a universal selector to set the combinator
   // (relation) on in the cases where there are no simple selectors preceding
   // the pseudo element.
-  bool is_host_pseudo = compound_selector->IsHostPseudoSelector();
-  if (is_host_pseudo && element_name.IsNull() && namespace_prefix.IsNull())
-    return;
-  if (tag != AnyQName() || is_host_pseudo ||
-      compound_selector->NeedsImplicitShadowCombinatorForMatching()) {
+  bool explicit_for_host =
+      compound_selector->IsHostPseudoSelector() && !element_name.IsNull();
+  if (tag != AnyQName() || explicit_for_host ||
+      compound_selector->NeedsImplicitShadowCombinatorForMatching())
     compound_selector->PrependTagSelector(
         tag, determined_prefix == g_null_atom &&
-                 determined_element_name == g_star_atom && !is_host_pseudo);
-  }
+                 determined_element_name == g_star_atom && !explicit_for_host);
 }
 
 std::unique_ptr<CSSParserSelector>

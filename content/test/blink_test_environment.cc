@@ -9,7 +9,6 @@
 #include "base/command_line.h"
 #include "base/run_loop.h"
 #include "base/strings/string_tokenizer.h"
-#include "base/task_scheduler/task_scheduler.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/test/test_discardable_memory_allocator.h"
 #include "base/third_party/dynamic_annotations/dynamic_annotations.h"
@@ -19,8 +18,8 @@
 #include "content/public/test/test_content_client_initializer.h"
 #include "content/test/test_blink_web_unit_test_support.h"
 #include "third_party/WebKit/public/platform/WebCache.h"
-#include "third_party/WebKit/public/platform/WebRuntimeFeatures.h"
 #include "third_party/WebKit/public/web/WebKit.h"
+#include "third_party/WebKit/public/web/WebRuntimeFeatures.h"
 #include "url/url_util.h"
 
 #if defined(OS_WIN)
@@ -51,15 +50,12 @@ class TestEnvironment {
   ~TestEnvironment() {
   }
 
-  // This returns when both the main thread and the TaskSchedules queues are
-  // empty.
-  void RunUntilIdle() { scoped_task_environment_.RunUntilIdle(); }
-
  private:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
 
   // Must be instantiated after ScopedTaskEnvironment.
   TestBlinkWebUnitTestSupport blink_test_support_;
+
   TestContentClientInitializer content_initializer_;
   base::TestDiscardableMemoryAllocator discardable_memory_allocator_;
 };
@@ -90,7 +86,7 @@ void SetUpBlinkTestEnvironment() {
 void TearDownBlinkTestEnvironment() {
   // Flush any remaining messages before we kill ourselves.
   // http://code.google.com/p/chromium/issues/detail?id=9500
-  test_environment->RunUntilIdle();
+  base::RunLoop().RunUntilIdle();
 
   if (RunningOnValgrind())
     blink::WebCache::Clear();

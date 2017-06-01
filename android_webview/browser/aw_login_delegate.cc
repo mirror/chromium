@@ -87,7 +87,7 @@ void AwLoginDelegate::HandleHttpAuthRequestOnUIThread(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   aw_http_auth_handler_.reset(
-      new AwHttpAuthHandler(this, auth_info_.get(), first_auth_attempt));
+      AwHttpAuthHandler::Create(this, auth_info_.get(), first_auth_attempt));
 
   RenderFrameHost* render_frame_host = RenderFrameHost::FromID(
       render_process_id_, render_frame_id_);

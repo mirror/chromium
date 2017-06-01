@@ -69,7 +69,7 @@ class BluetoothAdapterMacTest : public testing::Test {
     }
     base::scoped_nsobject<MockCBPeripheral> mock_peripheral(
         [[MockCBPeripheral alloc] initWithUTF8StringIdentifier:identifier]);
-    return [[mock_peripheral peripheral] retain];
+    return [mock_peripheral.get().peripheral retain];
   }
 
   NSDictionary* AdvertisementData() {
@@ -100,7 +100,7 @@ class BluetoothAdapterMacTest : public testing::Test {
     mock_central_manager_.reset([[MockCentralManager alloc] init]);
     [mock_central_manager_ setState:desired_state];
     CBCentralManager* centralManager =
-        static_cast<CBCentralManager*>(mock_central_manager_.get());
+        (CBCentralManager*)mock_central_manager_.get();
     adapter_mac_->SetCentralManagerForTesting(centralManager);
     return true;
   }
@@ -234,7 +234,7 @@ TEST_F(BluetoothAdapterMacTest, CheckGetPeripheralHashAddress) {
     return;
   base::scoped_nsobject<CBPeripheral> mock_peripheral(
       CreateMockPeripheral(kTestNSUUID));
-  if (!mock_peripheral)
+  if (mock_peripheral.get() == nil)
     return;
   EXPECT_EQ(kTestHashAddress, GetHashAddress(mock_peripheral));
 }
@@ -244,7 +244,7 @@ TEST_F(BluetoothAdapterMacTest, LowEnergyDeviceUpdatedNewDevice) {
     return;
   base::scoped_nsobject<CBPeripheral> mock_peripheral(
       CreateMockPeripheral(kTestNSUUID));
-  if (!mock_peripheral)
+  if (mock_peripheral.get() == nil)
     return;
   base::scoped_nsobject<NSDictionary> advertisement_data(AdvertisementData());
 

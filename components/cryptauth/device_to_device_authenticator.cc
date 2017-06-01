@@ -154,7 +154,7 @@ void DeviceToDeviceAuthenticator::OnResponderAuthTimedOut() {
 
 void DeviceToDeviceAuthenticator::OnResponderAuthValidated(
     bool validated,
-    const SessionKeys& session_keys) {
+    const std::string& session_symmetric_key) {
   if (!validated) {
     Fail("Unable to validated [Responder Auth]");
     return;
@@ -163,11 +163,12 @@ void DeviceToDeviceAuthenticator::OnResponderAuthValidated(
   PA_LOG(INFO) << "Successfully validated [Responder Auth]! "
                << "Sending [Initiator Auth]...";
   state_ = State::VALIDATED_RESPONDER_AUTH;
-  session_keys_ = session_keys;
+  session_symmetric_key_ = session_symmetric_key;
 
   // Create the [Initiator Auth] message to send to the remote device.
   DeviceToDeviceInitiatorOperations::CreateInitiatorAuthMessage(
-      session_keys_, connection_->remote_device().persistent_symmetric_key,
+      session_symmetric_key,
+      connection_->remote_device().persistent_symmetric_key,
       responder_auth_message_, secure_message_delegate_.get(),
       base::Bind(&DeviceToDeviceAuthenticator::OnInitiatorAuthCreated,
                  weak_ptr_factory_.GetWeakPtr()));
@@ -203,8 +204,7 @@ void DeviceToDeviceAuthenticator::Fail(const std::string& error_message,
 
 void DeviceToDeviceAuthenticator::Succeed() {
   DCHECK(state_ == State::SENT_INITIATOR_AUTH);
-  DCHECK(!session_keys_.initiator_encode_key().empty());
-  DCHECK(!session_keys_.responder_encode_key().empty());
+  DCHECK(!session_symmetric_key_.empty());
   PA_LOG(INFO) << "Authentication succeeded!";
 
   state_ = State::AUTHENTICATION_SUCCESS;
@@ -212,7 +212,7 @@ void DeviceToDeviceAuthenticator::Succeed() {
   callback_.Run(
       Result::SUCCESS,
       base::MakeUnique<DeviceToDeviceSecureContext>(
-          std::move(secure_message_delegate_), session_keys_,
+          std::move(secure_message_delegate_), session_symmetric_key_,
           responder_auth_message_, SecureContext::PROTOCOL_VERSION_THREE_ONE));
 }
 

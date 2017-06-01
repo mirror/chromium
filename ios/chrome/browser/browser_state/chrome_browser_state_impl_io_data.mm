@@ -58,7 +58,7 @@ ChromeBrowserStateImplIOData::Handle::Handle(
 ChromeBrowserStateImplIOData::Handle::~Handle() {
   DCHECK_CURRENTLY_ON(web::WebThread::UI);
   if (io_data_->http_server_properties_manager_)
-    io_data_->http_server_properties_manager_->ShutdownOnPrefSequence();
+    io_data_->http_server_properties_manager_->ShutdownOnPrefThread();
 
   io_data_->ShutdownOnUIThread(GetAllContextGetters());
 }
@@ -215,7 +215,7 @@ void ChromeBrowserStateImplIOData::InitializeInternal(
   ApplyProfileParamsToContext(main_context);
 
   if (http_server_properties_manager_)
-    http_server_properties_manager_->InitializeOnNetworkSequence();
+    http_server_properties_manager_->InitializeOnNetworkThread();
 
   main_context->set_transport_security_state(transport_security_state());
 
@@ -305,12 +305,11 @@ ChromeBrowserStateImplIOData::InitializeAppRequestContext(
       new net::ChannelIDService(new net::DefaultChannelIDStore(nullptr)));
 
   // Build a new HttpNetworkSession that uses the new ChannelIDService.
-  net::HttpNetworkSession::Context session_context =
-      http_network_session_->context();
-  session_context.channel_id_service = channel_id_service.get();
+  net::HttpNetworkSession::Params network_params =
+      http_network_session_->params();
+  network_params.channel_id_service = channel_id_service.get();
   std::unique_ptr<net::HttpNetworkSession> http_network_session(
-      new net::HttpNetworkSession(http_network_session_->params(),
-                                  session_context));
+      new net::HttpNetworkSession(network_params));
 
   // Use a separate HTTP disk cache for isolated apps.
   std::unique_ptr<net::HttpCache::BackendFactory> app_backend =

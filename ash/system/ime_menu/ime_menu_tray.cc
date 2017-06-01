@@ -6,10 +6,11 @@
 
 #include "ash/accessibility_delegate.h"
 #include "ash/ash_constants.h"
+#include "ash/public/cpp/shell_window_ids.h"
 #include "ash/resources/grit/ash_resources.h"
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
-#include "ash/shelf/shelf.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/strings/grit/ash_strings.h"
@@ -279,8 +280,8 @@ class ImeMenuListView : public ImeListView {
 
 }  // namespace
 
-ImeMenuTray::ImeMenuTray(Shelf* shelf)
-    : TrayBackgroundView(shelf),
+ImeMenuTray::ImeMenuTray(WmShelf* wm_shelf)
+    : TrayBackgroundView(wm_shelf),
       label_(new ImeMenuLabel()),
       show_keyboard_(false),
       force_show_keyboard_(false),
@@ -322,17 +323,13 @@ void ImeMenuTray::ShowImeMenuBubble() {
 }
 
 void ImeMenuTray::ShowImeMenuBubbleInternal() {
-  views::TrayBubbleView::InitParams init_params;
-  init_params.delegate = this;
-  init_params.parent_window = GetBubbleWindowContainer();
-  init_params.anchor_view = GetBubbleAnchor();
-  init_params.anchor_alignment = GetAnchorAlignment();
-  init_params.min_width = kTrayMenuMinimumWidth;
-  init_params.max_width = kTrayMenuMinimumWidth;
+  views::TrayBubbleView::InitParams init_params(
+      GetAnchorAlignment(), kTrayMenuMinimumWidth, kTrayMenuMinimumWidth);
   init_params.can_activate = true;
   init_params.close_on_deactivate = true;
 
-  views::TrayBubbleView* bubble_view = new views::TrayBubbleView(init_params);
+  views::TrayBubbleView* bubble_view =
+      views::TrayBubbleView::Create(GetBubbleAnchor(), this, &init_params);
   bubble_view->set_anchor_view_insets(GetBubbleAnchorInsets());
 
   // Add a title item with a separator on the top of the IME menu.
@@ -472,6 +469,16 @@ void ImeMenuTray::OnMouseExitedView() {}
 
 base::string16 ImeMenuTray::GetAccessibleNameForBubble() {
   return l10n_util::GetStringUTF16(IDS_ASH_IME_MENU_ACCESSIBLE_NAME);
+}
+
+void ImeMenuTray::OnBeforeBubbleWidgetInit(
+    views::Widget* anchor_widget,
+    views::Widget* bubble_widget,
+    views::Widget::InitParams* params) const {
+  // Place the bubble in the same root window as |anchor_widget|.
+  RootWindowController::ForWindow(anchor_widget->GetNativeWindow())
+      ->ConfigureWidgetInitParamsForContainer(
+          bubble_widget, kShellWindowId_SettingBubbleContainer, params);
 }
 
 void ImeMenuTray::HideBubble(const views::TrayBubbleView* bubble_view) {

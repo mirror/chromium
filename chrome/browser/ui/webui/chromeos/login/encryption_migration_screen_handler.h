@@ -8,7 +8,6 @@
 #include <memory>
 
 #include "base/macros.h"
-#include "base/optional.h"
 #include "chrome/browser/chromeos/login/screens/encryption_migration_screen_view.h"
 #include "chrome/browser/ui/webui/chromeos/login/base_screen_handler.h"
 #include "chromeos/cryptohome/cryptohome_parameters.h"
@@ -111,7 +110,7 @@ class EncryptionMigrationScreenHandler : public EncryptionMigrationScreenView,
   bool should_resume_ = false;
 
   // The current battery level.
-  base::Optional<double> current_battery_percent_;
+  double current_battery_percent_ = 0.0;
 
   // True if the migration should start immediately once the battery level gets
   // sufficient.

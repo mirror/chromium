@@ -1,6 +1,5 @@
 #include "core/exported/WebViewBase.h"
-#include "core/frame/LocalFrameView.h"
-#include "core/frame/WebLocalFrameBase.h"
+#include "core/frame/FrameView.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoader.h"
 #include "platform/testing/URLTestHelpers.h"
@@ -15,6 +14,7 @@
 #include "public/web/WebSettings.h"
 #include "public/web/WebView.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "web/WebLocalFrameImpl.h"
 #include "web/tests/FrameTestHelpers.h"
 
 namespace blink {

@@ -10,7 +10,6 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
-#include "content/common/content_export.h"
 
 namespace content {
 
@@ -25,7 +24,7 @@ class ServiceWorkerProviderHost;
 // pendant of ServiceWorkerNavigationHandle. See the
 // ServiceWorkerNavigationHandle header for more details about the lifetime of
 // both classes.
-class CONTENT_EXPORT ServiceWorkerNavigationHandleCore {
+class ServiceWorkerNavigationHandleCore {
  public:
   ServiceWorkerNavigationHandleCore(
       base::WeakPtr<ServiceWorkerNavigationHandle> ui_handle,

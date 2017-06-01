@@ -424,19 +424,13 @@ gfx::Rect View::GetBoundsInScreen() const {
 gfx::Size View::GetPreferredSize() const {
   if (preferred_size_)
     return *preferred_size_;
+  if (layout_manager_.get())
+    return layout_manager_->GetPreferredSize(this);
   return CalculatePreferredSize();
 }
 
 int View::GetBaseline() const {
   return -1;
-}
-
-void View::SetPreferredSize(const gfx::Size& size) {
-  if (preferred_size_ && *preferred_size_ == size)
-    return;
-
-  preferred_size_ = size;
-  PreferredSizeChanged();
 }
 
 void View::SizeToPreferredSize() {
@@ -581,14 +575,9 @@ int View::GetMirroredX() const {
   return parent_ ? parent_->GetMirroredXForRect(bounds_) : x();
 }
 
-int View::GetMirroredXForRect(const gfx::Rect& rect) const {
-  return base::i18n::IsRTL() ? (width() - rect.x() - rect.width()) : rect.x();
-}
-
-gfx::Rect View::GetMirroredRect(const gfx::Rect& rect) const {
-  gfx::Rect mirrored_rect = rect;
-  mirrored_rect.set_x(GetMirroredXForRect(rect));
-  return mirrored_rect;
+int View::GetMirroredXForRect(const gfx::Rect& bounds) const {
+  return base::i18n::IsRTL() ?
+      (width() - bounds.x() - bounds.width()) : bounds.x();
 }
 
 int View::GetMirroredXInView(int x) const {
@@ -1491,8 +1480,6 @@ bool View::HasObserver(const ViewObserver* observer) const {
 // Size and disposition --------------------------------------------------------
 
 gfx::Size View::CalculatePreferredSize() const {
-  if (layout_manager_.get())
-    return layout_manager_->GetPreferredSize(this);
   return gfx::Size();
 }
 

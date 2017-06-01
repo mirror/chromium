@@ -173,8 +173,9 @@ void HistoryEventRouter::DispatchEvent(
     const std::string& event_name,
     std::unique_ptr<base::ListValue> event_args) {
   if (profile && EventRouter::Get(profile)) {
-    auto event = base::MakeUnique<Event>(histogram_value, event_name,
-                                         std::move(event_args), profile);
+    std::unique_ptr<Event> event(
+        new Event(histogram_value, event_name, std::move(event_args)));
+    event->restrict_to_browser_context = profile;
     EventRouter::Get(profile)->BroadcastEvent(std::move(event));
   }
 }

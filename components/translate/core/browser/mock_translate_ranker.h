@@ -20,6 +20,8 @@ class TranslateEventProto;
 
 namespace translate {
 
+class TranslatePrefs;
+
 namespace testing {
 
 class MockTranslateRanker : public TranslateRanker {
@@ -41,6 +43,9 @@ class MockTranslateRanker : public TranslateRanker {
   // TranslateRanker Implementation:
   uint32_t GetModelVersion() const override;
   bool ShouldOfferTranslation(
+      const TranslatePrefs& translate_prefs,
+      const std::string& src_lang,
+      const std::string& dst_lang,
       metrics::TranslateEventProto* translate_events) override;
   void FlushTranslateEvents(
       std::vector<metrics::TranslateEventProto>* events) override;

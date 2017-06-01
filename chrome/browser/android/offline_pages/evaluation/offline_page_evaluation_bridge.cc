@@ -174,8 +174,7 @@ std::unique_ptr<KeyedService> GetTestBackgroundLoaderRequestCoordinator(
   std::unique_ptr<OfflinerPolicy> policy(new OfflinerPolicy());
   std::unique_ptr<Offliner> offliner(new BackgroundLoaderOffliner(
       context, policy.get(),
-      OfflinePageModelFactory::GetForBrowserContext(context),
-      nullptr));  // no need to connect LoadTerminationListener for harness.
+      OfflinePageModelFactory::GetForBrowserContext(context)));
   return GetTestingRequestCoordinator(context, std::move(policy),
                                       std::move(offliner));
 }

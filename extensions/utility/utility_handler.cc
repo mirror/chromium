@@ -42,13 +42,12 @@ class ExtensionUnpackerImpl : public extensions::mojom::ExtensionUnpacker {
   // extensions::mojom::ExtensionUnpacker:
   void Unzip(const base::FilePath& file,
              const base::FilePath& path,
-             UnzipCallback callback) override {
+             const UnzipCallback& callback) override {
     std::unique_ptr<base::DictionaryValue> manifest;
     if (UnzipFileManifestIntoPath(file, path, &manifest)) {
-      std::move(callback).Run(
-          UnzipFileIntoPath(file, path, std::move(manifest)));
+      callback.Run(UnzipFileIntoPath(file, path, std::move(manifest)));
     } else {
-      std::move(callback).Run(false);
+      callback.Run(false);
     }
   }
 
@@ -56,7 +55,7 @@ class ExtensionUnpackerImpl : public extensions::mojom::ExtensionUnpacker {
               const std::string& extension_id,
               Manifest::Location location,
               int32_t creation_flags,
-              UnpackCallback callback) override {
+              const UnpackCallback& callback) override {
     CHECK_GT(location, Manifest::INVALID_LOCATION);
     CHECK_LT(location, Manifest::NUM_LOCATIONS);
     DCHECK(ExtensionsClient::Get());
@@ -66,9 +65,9 @@ class ExtensionUnpackerImpl : public extensions::mojom::ExtensionUnpacker {
     Unpacker unpacker(path.DirName(), path, extension_id, location,
                       creation_flags);
     if (unpacker.Run()) {
-      std::move(callback).Run(base::string16(), unpacker.TakeParsedManifest());
+      callback.Run(base::string16(), unpacker.TakeParsedManifest());
     } else {
-      std::move(callback).Run(unpacker.error_message(), nullptr);
+      callback.Run(unpacker.error_message(), nullptr);
     }
   }
 
@@ -114,13 +113,13 @@ class ManifestParserImpl : public extensions::mojom::ManifestParser {
   }
 
  private:
-  void Parse(const std::string& xml, ParseCallback callback) override {
+  void Parse(const std::string& xml, const ParseCallback& callback) override {
     UpdateManifest manifest;
     if (manifest.Parse(xml)) {
-      std::move(callback).Run(manifest.results());
+      callback.Run(manifest.results());
     } else {
       LOG(WARNING) << "Error parsing update manifest:\n" << manifest.errors();
-      std::move(callback).Run(base::nullopt);
+      callback.Run(base::nullopt);
     }
   }
 

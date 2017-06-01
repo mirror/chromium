@@ -70,10 +70,6 @@
     -webkit-align-content: space-around;
     align-content: space-around;
 }
-.align-content-space-around {
-    -webkit-align-content: space-evenly;
-    align-content: space-evenly;
-}
 .align-content-stretch {
     -webkit-align-content: stretch;
     align-content: stretch;
@@ -144,8 +140,4 @@
 .justify-content-space-around {
     -webkit-justify-content: space-around;
     justify-content: space-around;
-}
-.justify-content-space-around {
-    -webkit-justify-content: space-evenly;
-    justify-content: space-evenly;
 }

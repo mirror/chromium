@@ -296,10 +296,8 @@ void NotifyMacEvent(AXPlatformNodeCocoa* target, ui::AXEvent event_type) {
 
 - (id)accessibilityHitTest:(NSPoint)point {
   for (AXPlatformNodeCocoa* child in [self AXChildren]) {
-    if (![child accessibilityIsIgnored] &&
-        NSPointInRect(point, child.boundsInScreen)) {
+    if (NSPointInRect(point, child.boundsInScreen))
       return [child accessibilityHitTest:point];
-    }
   }
   return NSAccessibilityUnignoredAncestor(self);
 }

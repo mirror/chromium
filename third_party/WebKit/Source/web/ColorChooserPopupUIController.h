@@ -31,7 +31,7 @@
 
 namespace blink {
 
-class ChromeClient;
+class ChromeClientImpl;
 class ColorChooserClient;
 class PagePopup;
 
@@ -41,7 +41,7 @@ class ColorChooserPopupUIController final : public ColorChooserUIController,
 
  public:
   static ColorChooserPopupUIController* Create(LocalFrame* frame,
-                                               ChromeClient* chrome_client,
+                                               ChromeClientImpl* chrome_client,
                                                ColorChooserClient* client) {
     return new ColorChooserPopupUIController(frame, chrome_client, client);
   }
@@ -68,13 +68,13 @@ class ColorChooserPopupUIController final : public ColorChooserUIController,
 
  private:
   ColorChooserPopupUIController(LocalFrame*,
-                                ChromeClient*,
+                                ChromeClientImpl*,
                                 ColorChooserClient*);
 
   void OpenPopup();
   void Dispose();
 
-  Member<ChromeClient> chrome_client_;
+  Member<ChromeClientImpl> chrome_client_;
   PagePopup* popup_;
   Locale& locale_;
 };

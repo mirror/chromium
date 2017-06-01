@@ -50,10 +50,10 @@ enum PresentationErrorType {
   PRESENTATION_ERROR_UNKNOWN,
 };
 
-// Struct returned when an attempt to create a presentation fails.
-// Defaults to PRESENTATION_ERROR_UNKNOWN with an empty message.
+// Struct returned when an attempt to create a presentation failed.
 struct CONTENT_EXPORT PresentationError {
-  PresentationError();
+  // TODO(mfoltz): Should this initialize error_type to UNKNOWN?
+  PresentationError() = default;
   PresentationError(PresentationErrorType error_type,
                     const std::string& message);
   ~PresentationError();

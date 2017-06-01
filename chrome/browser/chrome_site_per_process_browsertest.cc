@@ -38,9 +38,7 @@
 #include "url/gurl.h"
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)
-#include "components/spellcheck/common/spellcheck.mojom.h"
 #include "components/spellcheck/common/spellcheck_messages.h"
-#include "services/service_manager/public/cpp/bind_source_info.h"
 #endif
 
 class ChromeSitePerProcessTest : public InProcessBrowserTest {
@@ -519,130 +517,59 @@ IN_PROC_BROWSER_TEST_F(ChromeSitePerProcessTest,
   ASSERT_EQ(2, browser()->tab_strip_model()->count());
 }
 
-IN_PROC_BROWSER_TEST_F(ChromeSitePerProcessTest, PrintIgnoredInUnloadHandler) {
-  ui_test_utils::NavigateToURL(
-      browser(), GURL(embedded_test_server()->GetURL("a.com", "/title1.html")));
-
-  content::WebContents* active_web_contents =
-      browser()->tab_strip_model()->GetActiveWebContents();
-
-  // Create 2 iframes and navigate them to b.com.
-  EXPECT_TRUE(ExecuteScript(active_web_contents,
-                            "var i = document.createElement('iframe'); i.id = "
-                            "'child-0'; document.body.appendChild(i);"));
-  EXPECT_TRUE(ExecuteScript(active_web_contents,
-                            "var i = document.createElement('iframe'); i.id = "
-                            "'child-1'; document.body.appendChild(i);"));
-  EXPECT_TRUE(NavigateIframeToURL(
-      active_web_contents, "child-0",
-      GURL(embedded_test_server()->GetURL("b.com", "/title1.html"))));
-  EXPECT_TRUE(NavigateIframeToURL(
-      active_web_contents, "child-1",
-      GURL(embedded_test_server()->GetURL("b.com", "/title1.html"))));
-
-  content::RenderFrameHost* child_0 =
-      ChildFrameAt(active_web_contents->GetMainFrame(), 0);
-  content::RenderFrameHost* child_1 =
-      ChildFrameAt(active_web_contents->GetMainFrame(), 1);
-
-  // Add an unload handler that calls print() to child-0 iframe.
-  EXPECT_TRUE(ExecuteScript(
-      child_0, "document.body.onunload = function() { print(); }"));
-
-  // Transfer child-0 to a new process hosting c.com.
-  EXPECT_TRUE(NavigateIframeToURL(
-      active_web_contents, "child-0",
-      GURL(embedded_test_server()->GetURL("c.com", "/title1.html"))));
-
-  // Check that b.com's process is still alive.
-  bool renderer_alive = false;
-  EXPECT_TRUE(ExecuteScriptAndExtractBool(
-      child_1, "window.domAutomationController.send(true);", &renderer_alive));
-  EXPECT_TRUE(renderer_alive);
-}
-
 #if BUILDFLAG(ENABLE_SPELLCHECK)
-// Class to sniff incoming spellcheck IPC / Mojo SpellCheckHost messages.
-class TestSpellCheckMessageFilter : public content::BrowserMessageFilter,
-                                    spellcheck::mojom::SpellCheckHost {
+// Class to sniff incoming IPCs for spell check messages.
+class TestSpellCheckMessageFilter : public content::BrowserMessageFilter {
  public:
   explicit TestSpellCheckMessageFilter(content::RenderProcessHost* process_host)
       : content::BrowserMessageFilter(SpellCheckMsgStart),
         process_host_(process_host),
         text_received_(false),
         message_loop_runner_(
-            base::MakeRefCounted<content::MessageLoopRunner>()),
-        binding_(this) {}
+            base::MakeRefCounted<content::MessageLoopRunner>()) {}
 
-  content::RenderProcessHost* process() const { return process_host_; }
+  bool OnMessageReceived(const IPC::Message& message) override {
+    IPC_BEGIN_MESSAGE_MAP(TestSpellCheckMessageFilter, message)
+#if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
+      IPC_MESSAGE_HANDLER(SpellCheckHostMsg_CallSpellingService, HandleMessage)
+#else
+      IPC_MESSAGE_HANDLER(SpellCheckHostMsg_RequestTextCheck, HandleMessage)
+#endif
+    IPC_END_MESSAGE_MAP()
+    return false;
+  }
 
-  const base::string16& text() const { return text_; }
+  base::string16 last_text() const { return last_text_; }
 
   void Wait() {
     if (!text_received_)
       message_loop_runner_->Run();
   }
 
-  bool OnMessageReceived(const IPC::Message& message) override {
-#if BUILDFLAG(USE_BROWSER_SPELLCHECKER)
-    IPC_BEGIN_MESSAGE_MAP(TestSpellCheckMessageFilter, message)
-      // TODO(crbug.com/714480): convert the RequestTextCheck IPC to mojo.
-      IPC_MESSAGE_HANDLER(SpellCheckHostMsg_RequestTextCheck, HandleMessage)
-    IPC_END_MESSAGE_MAP()
-#endif
-    return false;
-  }
-
-#if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
-  void ShellCheckHostRequest(const service_manager::BindSourceInfo& source_info,
-                             spellcheck::mojom::SpellCheckHostRequest request) {
-    EXPECT_FALSE(binding_.is_bound());
-    binding_.Bind(std::move(request));
-  }
-#endif
+  content::RenderProcessHost* process() const { return process_host_; }
 
  private:
   ~TestSpellCheckMessageFilter() override {}
 
-#if BUILDFLAG(USE_BROWSER_SPELLCHECKER)
   void HandleMessage(int, int, const base::string16& text) {
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
-        base::BindOnce(&TestSpellCheckMessageFilter::HandleMessageOnUIThread,
-                       this, text));
+        base::BindOnce(&TestSpellCheckMessageFilter::HandleMessageOnUI, this,
+                       text));
   }
-#endif
 
-  void HandleMessageOnUIThread(const base::string16& text) {
+  void HandleMessageOnUI(const base::string16& text) {
+    last_text_ = text;
     if (!text_received_) {
       text_received_ = true;
-      text_ = text;
       message_loop_runner_->Quit();
-    } else {
-      NOTREACHED();
     }
-  }
-
-  // spellcheck::mojom::SpellCheckHost:
-  void RequestDictionary() override {}
-
-  void NotifyChecked(const base::string16& word, bool misspelled) override {}
-
-  void CallSpellingService(const base::string16& text,
-                           CallSpellingServiceCallback callback) override {
-#if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
-    DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-    std::move(callback).Run(true, std::vector<SpellCheckResult>());
-    binding_.Close();
-    HandleMessageOnUIThread(text);
-#endif
   }
 
   content::RenderProcessHost* process_host_;
   bool text_received_;
-  base::string16 text_;
+  base::string16 last_text_;
   scoped_refptr<content::MessageLoopRunner> message_loop_runner_;
-  mojo::Binding<spellcheck::mojom::SpellCheckHost> binding_;
 
   DISALLOW_COPY_AND_ASSIGN(TestSpellCheckMessageFilter);
 };
@@ -659,28 +586,6 @@ class TestBrowserClientForSpellCheck : public ChromeContentBrowserClient {
     process_host->AddFilter(filters_.back().get());
     ChromeContentBrowserClient::RenderProcessWillLaunch(process_host);
   }
-
-#if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
-  void ExposeInterfacesToRenderer(
-      service_manager::BinderRegistry* registry,
-      content::AssociatedInterfaceRegistry* associated_registry,
-      content::RenderProcessHost* render_process_host) override {
-    // Expose the default interfaces.
-    ChromeContentBrowserClient::ExposeInterfacesToRenderer(
-        registry, associated_registry, render_process_host);
-
-    scoped_refptr<TestSpellCheckMessageFilter> filter =
-        GetSpellCheckMessageFilterForProcess(render_process_host);
-    CHECK(filter);
-
-    // Override the default SpellCheckHost interface.
-    auto ui_task_runner = content::BrowserThread::GetTaskRunnerForThread(
-        content::BrowserThread::UI);
-    registry->AddInterface(
-        base::Bind(&TestSpellCheckMessageFilter::ShellCheckHostRequest, filter),
-        ui_task_runner);
-  }
-#endif  // !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
 
   // Retrieves the registered filter for the given RenderProcessHost. It will
   // return nullptr if the RenderProcessHost was initialized while a different
@@ -714,15 +619,14 @@ IN_PROC_BROWSER_TEST_F(ChromeSitePerProcessTest, OOPIFSpellCheckTest) {
 
   content::WebContents* web_contents =
       browser()->tab_strip_model()->GetActiveWebContents();
-  content::RenderFrameHost* cross_site_subframe =
+  content::RenderFrameHost* subframe =
       ChildFrameAt(web_contents->GetMainFrame(), 0);
-
   scoped_refptr<TestSpellCheckMessageFilter> filter =
       browser_client.GetSpellCheckMessageFilterForProcess(
-          cross_site_subframe->GetProcess());
+          subframe->GetProcess());
   filter->Wait();
 
-  EXPECT_EQ(base::ASCIIToUTF16("zz."), filter->text());
+  EXPECT_EQ(base::ASCIIToUTF16("zz."), filter->last_text());
 
   content::SetBrowserClientForTesting(old_browser_client);
 }

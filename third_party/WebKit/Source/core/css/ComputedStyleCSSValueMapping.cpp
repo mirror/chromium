@@ -503,7 +503,13 @@ static CSSValueList* ValueForItemPositionWithOverflowAlignment(
   CSSValueList* result = CSSValueList::CreateSpaceSeparated();
   if (data.PositionType() == kLegacyPosition)
     result->Append(*CSSIdentifierValue::Create(CSSValueLegacy));
-  if (data.GetPosition() == kItemPositionBaseline) {
+  if (data.GetPosition() == kItemPositionAuto) {
+    // To avoid needing to copy the RareNonInheritedData, we repurpose the
+    // 'auto' flag to not just mean 'auto' prior to running the StyleAdjuster
+    // but also mean 'normal' after running it.
+    result->Append(*CSSIdentifierValue::Create(
+        ComputedStyle::InitialDefaultAlignment().GetPosition()));
+  } else if (data.GetPosition() == kItemPositionBaseline) {
     result->Append(
         *CSSValuePair::Create(CSSIdentifierValue::Create(CSSValueBaseline),
                               CSSIdentifierValue::Create(CSSValueBaseline),
@@ -1168,9 +1174,9 @@ static CSSValue* ValueForTextDecorationStyle(
 static CSSValue* ValueForTextDecorationSkip(
     TextDecorationSkip text_decoration_skip) {
   CSSValueList* list = CSSValueList::CreateSpaceSeparated();
-  if (EnumHasFlags(text_decoration_skip, TextDecorationSkip::kObjects))
+  if (text_decoration_skip & kTextDecorationSkipObjects)
     list->Append(*CSSIdentifierValue::Create(CSSValueObjects));
-  if (EnumHasFlags(text_decoration_skip, TextDecorationSkip::kInk))
+  if (text_decoration_skip & kTextDecorationSkipInk)
     list->Append(*CSSIdentifierValue::Create(CSSValueInk));
 
   DCHECK(list->length());
@@ -2607,10 +2613,7 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyIsolation:
       return CSSIdentifierValue::Create(style.Isolation());
     case CSSPropertyJustifyItems:
-      return ValueForItemPositionWithOverflowAlignment(
-          style.JustifyItems().GetPosition() == kItemPositionAuto
-              ? ComputedStyle::InitialDefaultAlignment()
-              : style.JustifyItems());
+      return ValueForItemPositionWithOverflowAlignment(style.JustifyItems());
     case CSSPropertyJustifySelf:
       return ValueForItemPositionWithOverflowAlignment(style.JustifySelf());
     case CSSPropertyLeft:
@@ -2823,7 +2826,7 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyTextAlign:
       return CSSIdentifierValue::Create(style.GetTextAlign());
     case CSSPropertyTextAlignLast:
-      return CSSIdentifierValue::Create(style.TextAlignLast());
+      return CSSIdentifierValue::Create(style.GetTextAlignLast());
     case CSSPropertyTextDecoration:
       if (RuntimeEnabledFeatures::css3TextDecorationsEnabled())
         return ValuesForShorthandProperty(textDecorationShorthand(), style,
@@ -2853,18 +2856,18 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       return CSSIdentifierValue::Create(style.GetTextEmphasisPosition());
     case CSSPropertyWebkitTextEmphasisStyle:
       switch (style.GetTextEmphasisMark()) {
-        case TextEmphasisMark::kNone:
+        case kTextEmphasisMarkNone:
           return CSSIdentifierValue::Create(CSSValueNone);
-        case TextEmphasisMark::kCustom:
+        case kTextEmphasisMarkCustom:
           return CSSStringValue::Create(style.TextEmphasisCustomMark());
-        case TextEmphasisMark::kAuto:
+        case kTextEmphasisMarkAuto:
           NOTREACHED();
         // Fall through
-        case TextEmphasisMark::kDot:
-        case TextEmphasisMark::kCircle:
-        case TextEmphasisMark::kDoubleCircle:
-        case TextEmphasisMark::kTriangle:
-        case TextEmphasisMark::kSesame: {
+        case kTextEmphasisMarkDot:
+        case kTextEmphasisMarkCircle:
+        case kTextEmphasisMarkDoubleCircle:
+        case kTextEmphasisMarkTriangle:
+        case kTextEmphasisMarkSesame: {
           CSSValueList* list = CSSValueList::CreateSpaceSeparated();
           list->Append(
               *CSSIdentifierValue::Create(style.GetTextEmphasisFill()));
@@ -2877,11 +2880,11 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       CSSValueList* list = CSSValueList::CreateSpaceSeparated();
       list->Append(*ZoomAdjustedPixelValueForLength(style.TextIndent(), style));
       if (RuntimeEnabledFeatures::css3TextEnabled() &&
-          (style.GetTextIndentLine() == TextIndentLine::kEachLine ||
-           style.GetTextIndentType() == TextIndentType::kHanging)) {
-        if (style.GetTextIndentLine() == TextIndentLine::kEachLine)
+          (style.GetTextIndentLine() == kTextIndentEachLine ||
+           style.GetTextIndentType() == kTextIndentHanging)) {
+        if (style.GetTextIndentLine() == kTextIndentEachLine)
           list->Append(*CSSIdentifierValue::Create(CSSValueEachLine));
-        if (style.GetTextIndentType() == TextIndentType::kHanging)
+        if (style.GetTextIndentType() == kTextIndentHanging)
           list->Append(*CSSIdentifierValue::Create(CSSValueHanging));
       }
       return list;
@@ -3301,12 +3304,12 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
     case CSSPropertyWebkitWritingMode:
       return CSSIdentifierValue::Create(style.GetWritingMode());
     case CSSPropertyWebkitTextCombine:
-      if (style.TextCombine() == ETextCombine::kAll)
+      if (style.GetTextCombine() == kTextCombineAll)
         return CSSIdentifierValue::Create(CSSValueHorizontal);
     case CSSPropertyTextCombineUpright:
-      return CSSIdentifierValue::Create(style.TextCombine());
+      return CSSIdentifierValue::Create(style.GetTextCombine());
     case CSSPropertyWebkitTextOrientation:
-      if (style.GetTextOrientation() == ETextOrientation::kMixed)
+      if (style.GetTextOrientation() == kTextOrientationMixed)
         return CSSIdentifierValue::Create(CSSValueVerticalRight);
     case CSSPropertyTextOrientation:
       return CSSIdentifierValue::Create(style.GetTextOrientation());
@@ -3496,7 +3499,6 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       return nullptr;
 
     // Unimplemented @font-face properties.
-    case CSSPropertyFontDisplay:
     case CSSPropertySrc:
     case CSSPropertyUnicodeRange:
       return nullptr;

@@ -43,7 +43,6 @@ struct Entry {
 
   Entry();
   Entry(const Entry& other);
-  explicit Entry(const DownloadParams& params);
   ~Entry();
 
   // The feature that is requesting this download.

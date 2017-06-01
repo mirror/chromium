@@ -16,7 +16,7 @@ namespace blink {
 
 namespace {
 
-class IsMonospaceChecker : public CSSInterpolationType::CSSConversionChecker {
+class IsMonospaceChecker : public InterpolationType::ConversionChecker {
  public:
   static std::unique_ptr<IsMonospaceChecker> Create(bool is_monospace) {
     return WTF::WrapUnique(new IsMonospaceChecker(is_monospace));
@@ -25,16 +25,16 @@ class IsMonospaceChecker : public CSSInterpolationType::CSSConversionChecker {
  private:
   IsMonospaceChecker(bool is_monospace) : is_monospace_(is_monospace) {}
 
-  bool IsValid(const StyleResolverState& state,
+  bool IsValid(const InterpolationEnvironment& environment,
                const InterpolationValue&) const final {
-    return is_monospace_ == state.Style()->GetFontDescription().IsMonospace();
+    return is_monospace_ ==
+           environment.GetState().Style()->GetFontDescription().IsMonospace();
   }
 
   const bool is_monospace_;
 };
 
-class InheritedFontSizeChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+class InheritedFontSizeChecker : public InterpolationType::ConversionChecker {
  public:
   static std::unique_ptr<InheritedFontSizeChecker> Create(
       const FontDescription::Size& inherited_font_size) {
@@ -45,10 +45,10 @@ class InheritedFontSizeChecker
   InheritedFontSizeChecker(const FontDescription::Size& inherited_font_size)
       : inherited_font_size_(inherited_font_size.value) {}
 
-  bool IsValid(const StyleResolverState& state,
+  bool IsValid(const InterpolationEnvironment& environment,
                const InterpolationValue&) const final {
     return inherited_font_size_ ==
-           state.ParentFontDescription().GetSize().value;
+           environment.GetState().ParentFontDescription().GetSize().value;
   }
 
   const float inherited_font_size_;

@@ -865,9 +865,9 @@ void AutofillManager::DidShowSuggestions(bool is_new_popup,
     }
 
     if (autofill_field->Type().group() == CREDIT_CARD) {
-      credit_card_form_event_logger_->OnDidShowSuggestions(*autofill_field);
+      credit_card_form_event_logger_->OnDidShowSuggestions();
     } else {
-      address_form_event_logger_->OnDidShowSuggestions(*autofill_field);
+      address_form_event_logger_->OnDidShowSuggestions();
     }
   }
 }
@@ -1097,11 +1097,10 @@ void AutofillManager::OnDidGetUploadDetails(
 
 void AutofillManager::OnDidUploadCard(AutofillClient::PaymentsRpcResult result,
                                       const std::string& server_id) {
-  // We don't do anything user-visible if the upload attempt fails. If the
-  // upload succeeds and we can store unmasked cards on this OS, we will keep a
-  // copy of the card as a full server card on the device.
-  if (result == AutofillClient::SUCCESS && !server_id.empty() &&
-      OfferStoreUnmaskedCards()) {
+  // We don't do anything user-visible if the upload attempt fails.
+  // If the upload succeeds, we will keep a copy of the card as a full server
+  // card on the device.
+  if (result == AutofillClient::SUCCESS && !server_id.empty()) {
     upload_request_.card.set_record_type(CreditCard::FULL_SERVER_CARD);
     upload_request_.card.SetServerStatus(CreditCard::OK);
     upload_request_.card.set_server_id(server_id);
@@ -1286,8 +1285,8 @@ void AutofillManager::ImportFormData(const FormStructure& submitted_form) {
     // Upload requires that recently used or modified addresses meet the
     // client-side validation rules.
     std::string rappor_metric_name;
-    int upload_decision_metrics = SetProfilesForCreditCardUpload(
-        *imported_credit_card, &upload_request_, &rappor_metric_name);
+    int upload_decision_metrics = GetProfilesForCreditCardUpload(
+        *imported_credit_card, &upload_request_.profiles, &rappor_metric_name);
 
     pending_upload_request_url_ = GURL(submitted_form.source_url());
 
@@ -1296,10 +1295,7 @@ void AutofillManager::ImportFormData(const FormStructure& submitted_form) {
       should_cvc_be_requested_ =
           (!upload_decision_metrics &&
            IsAutofillUpstreamRequestCvcIfMissingExperimentEnabled());
-      if (should_cvc_be_requested_) {
-        upload_request_.active_experiments.push_back(
-            kAutofillUpstreamRequestCvcIfMissing.name);
-      } else {
+      if (!should_cvc_be_requested_) {
         upload_decision_metrics |= GetCVCCardUploadDecisionMetric();
         rappor_metric_name = "Autofill.CardUploadNotOfferedNoCvc";
       }
@@ -1314,9 +1310,7 @@ void AutofillManager::ImportFormData(const FormStructure& submitted_form) {
     }
 
     // All required data is available, start the upload process.
-    payments_client_->GetUploadDetails(upload_request_.profiles,
-                                       upload_request_.active_experiments,
-                                       app_locale_);
+    payments_client_->GetUploadDetails(upload_request_.profiles, app_locale_);
   }
 }
 
@@ -1331,9 +1325,9 @@ AutofillManager::GetCVCCardUploadDecisionMetric() const {
                : AutofillMetrics::CVC_FIELD_NOT_FOUND;
 }
 
-int AutofillManager::SetProfilesForCreditCardUpload(
+int AutofillManager::GetProfilesForCreditCardUpload(
     const CreditCard& card,
-    payments::PaymentsClient::UploadRequestDetails* upload_request,
+    std::vector<AutofillProfile>* profiles,
     std::string* rappor_metric_name) const {
   std::vector<AutofillProfile> candidate_profiles;
   const base::Time now = AutofillClock::Now();
@@ -1357,20 +1351,17 @@ int AutofillManager::SetProfilesForCreditCardUpload(
       has_modified_profile);
 
   // If there are no recently used or modified profiles and experiment to use
-  // profiles that were not recently used is enabled, collect the profiles that
-  // used within the maximum time specified in the experiment.
+  // profiles that were not recently is enabled, collect the profiles that were
+  // not recently used but used within the maximum time specified in the
+  // experiment.
   if (candidate_profiles.empty()) {
     const base::TimeDelta max_time_since_use =
         GetMaxTimeSinceAutofillProfileUseForCardUpload();
-    if (!max_time_since_use.is_zero()) {
+    if (!max_time_since_use.is_zero())
       for (AutofillProfile* profile : personal_data_->GetProfiles())
         if ((now - profile->modification_date()) < max_time_since_use ||
             (now - profile->use_date()) < max_time_since_use)
           candidate_profiles.push_back(*profile);
-      if (!candidate_profiles.empty())
-        upload_request->active_experiments.push_back(
-            kAutofillUpstreamUseNotRecentlyUsedAutofillProfile.name);
-    }
   }
 
   if (candidate_profiles.empty()) {
@@ -1380,12 +1371,6 @@ int AutofillManager::SetProfilesForCreditCardUpload(
             : AutofillMetrics::UPLOAD_NOT_OFFERED_NO_ADDRESS_PROFILE;
     *rappor_metric_name = "Autofill.CardUploadNotOfferedNoAddress";
   }
-
-  std::unique_ptr<AutofillProfileComparator> comparator;
-  if (!candidate_profiles.empty() &&
-      (base::FeatureList::IsEnabled(
-          kAutofillUpstreamUseAutofillProfileComparator)))
-    comparator = base::MakeUnique<AutofillProfileComparator>(app_locale_);
 
   // If any of the names on the card or the addresses don't match the
   // candidate set is invalid. This matches the rules for name matching applied
@@ -1398,19 +1383,19 @@ int AutofillManager::SetProfilesForCreditCardUpload(
     verified_name = card_name;
   } else {
     bool found_conflicting_names = false;
-    if (comparator) {
-      upload_request->active_experiments.push_back(
-          kAutofillUpstreamUseAutofillProfileComparator.name);
-      verified_name = comparator->NormalizeForComparison(card_name);
+    if (base::FeatureList::IsEnabled(
+            kAutofillUpstreamUseAutofillProfileComparatorForName)) {
+      AutofillProfileComparator comparator(app_locale_);
+      verified_name = comparator.NormalizeForComparison(card_name);
       for (const AutofillProfile& profile : candidate_profiles) {
-        const base::string16 address_name = comparator->NormalizeForComparison(
+        const base::string16 address_name = comparator.NormalizeForComparison(
             profile.GetInfo(AutofillType(NAME_FULL), app_locale_));
         if (address_name.empty())
           continue;
         if (verified_name.empty() ||
-            comparator->IsNameVariantOf(address_name, verified_name)) {
+            comparator.IsNameVariantOf(address_name, verified_name)) {
           verified_name = address_name;
-        } else if (!comparator->IsNameVariantOf(verified_name, address_name)) {
+        } else if (!comparator.IsNameVariantOf(verified_name, address_name)) {
           found_conflicting_names = true;
           break;
         }
@@ -1450,29 +1435,13 @@ int AutofillManager::SetProfilesForCreditCardUpload(
   // If any of the candidate addresses have a non-empty zip that doesn't match
   // any other non-empty zip, then the candidate set is invalid.
   base::string16 verified_zip;
-  base::string16 normalized_verified_zip;
-  const AutofillType kZipCode(ADDRESS_HOME_ZIP);
   for (const AutofillProfile& profile : candidate_profiles) {
-    const base::string16 zip = comparator
-                                   ? profile.GetInfo(kZipCode, app_locale_)
-                                   : profile.GetRawInfo(ADDRESS_HOME_ZIP);
-    const base::string16 normalized_zip =
-        comparator ? comparator->NormalizeForComparison(
-                         zip, AutofillProfileComparator::DISCARD_WHITESPACE)
-                   : base::string16();
+    // TODO(jdonnelly): Use GetInfo instead of GetRawInfo once zip codes are
+    // canonicalized. See http://crbug.com/587465.
+    const base::string16 zip = profile.GetRawInfo(ADDRESS_HOME_ZIP);
     if (!zip.empty()) {
       if (verified_zip.empty()) {
         verified_zip = zip;
-        normalized_verified_zip = normalized_zip;
-      } else if (comparator) {
-        if (normalized_zip.find(normalized_verified_zip) ==
-                base::string16::npos &&
-            normalized_verified_zip.find(normalized_zip) ==
-                base::string16::npos) {
-          upload_decision_metrics |=
-              AutofillMetrics::UPLOAD_NOT_OFFERED_CONFLICTING_ZIPS;
-          break;
-        }
       } else {
         // To compare two zips, we check to see if either is a prefix of the
         // other. This allows us to consider a 5-digit zip and a zip+4 to be a
@@ -1499,8 +1468,7 @@ int AutofillManager::SetProfilesForCreditCardUpload(
     upload_decision_metrics |= AutofillMetrics::UPLOAD_NOT_OFFERED_NO_ZIP_CODE;
 
   if (!upload_decision_metrics) {
-    upload_request->profiles.assign(candidate_profiles.begin(),
-                                    candidate_profiles.end());
+    profiles->assign(candidate_profiles.begin(), candidate_profiles.end());
     if (!has_modified_profile)
       for (const AutofillProfile& profile : candidate_profiles)
         UMA_HISTOGRAM_COUNTS_1000(

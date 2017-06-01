@@ -253,6 +253,7 @@ void ImmersiveFullscreenController::OnPointerEventObserved(
 
 void ImmersiveFullscreenController::OnWidgetDestroying(views::Widget* widget) {
   EnableWindowObservers(false);
+  widget_window_ = nullptr;
 
   // Set |enabled_| to false such that any calls to MaybeStartReveal() and
   // MaybeEndReveal() have no effect.

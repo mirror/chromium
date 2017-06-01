@@ -333,8 +333,7 @@ std::unique_ptr<URLFetcher> TestURLFetcherFactory::CreateURLFetcher(
     int id,
     const GURL& url,
     URLFetcher::RequestType request_type,
-    URLFetcherDelegate* d,
-    NetworkTrafficAnnotationTag traffic_annotation) {
+    URLFetcherDelegate* d) {
   TestURLFetcher* fetcher = new TestURLFetcher(id, url, d);
   if (remove_fetcher_on_delete_)
     fetcher->set_owner(this);
@@ -443,8 +442,7 @@ std::unique_ptr<URLFetcher> FakeURLFetcherFactory::CreateURLFetcher(
     int id,
     const GURL& url,
     URLFetcher::RequestType request_type,
-    URLFetcherDelegate* d,
-    NetworkTrafficAnnotationTag traffic_annotation) {
+    URLFetcherDelegate* d) {
   FakeResponseMap::const_iterator it = fake_responses_.find(url);
   if (it == fake_responses_.end()) {
     if (default_factory_ == NULL) {
@@ -452,8 +450,7 @@ std::unique_ptr<URLFetcher> FakeURLFetcherFactory::CreateURLFetcher(
       DLOG(ERROR) << "No baked response for URL: " << url.spec();
       return NULL;
     } else {
-      return default_factory_->CreateURLFetcher(id, url, request_type, d,
-                                                traffic_annotation);
+      return default_factory_->CreateURLFetcher(id, url, request_type, d);
     }
   }
 
@@ -488,10 +485,9 @@ std::unique_ptr<URLFetcher> URLFetcherImplFactory::CreateURLFetcher(
     int id,
     const GURL& url,
     URLFetcher::RequestType request_type,
-    URLFetcherDelegate* d,
-    NetworkTrafficAnnotationTag traffic_annotation) {
+    URLFetcherDelegate* d) {
   return std::unique_ptr<URLFetcher>(
-      new URLFetcherImpl(url, request_type, d, traffic_annotation));
+      new URLFetcherImpl(url, request_type, d, TRAFFIC_ANNOTATION_FOR_TESTS));
 }
 
 }  // namespace net

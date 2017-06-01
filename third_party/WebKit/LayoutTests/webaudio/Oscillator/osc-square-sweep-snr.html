@@ -1,30 +1,31 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <title>
-      Test Oscillator Node: square
-    </title>
+    <title>Test Oscillator Node: square</title>
     <script src="../../resources/testharness.js"></script>
-    <script src="../../resources/testharnessreport.js"></script>
+    <script src="../../resources/testharnessreport.js"></script> 
     <script src="../resources/audit-util.js"></script>
     <script src="../resources/audit.js"></script>
     <script src="../resources/buffer-loader.js"></script>
     <script src="../resources/oscillator-testing.js"></script>
   </head>
+
   <body>
-    <script id="layout-test-code">
+    <script>
       let audit = Audit.createTaskRunner();
       let tester = OscillatorTestingUtils;
 
-      audit.define('test', (task, should) => {
-        let context = new OfflineAudioContext(
-            1, tester.sampleRate * tester.lengthInSeconds, tester.sampleRate);
+      audit.define("test", (task, should) => {
+        let context = new OfflineAudioContext(1, tester.sampleRate *
+          tester.lengthInSeconds, tester.sampleRate);
 
         // The thresholds are experimentally determined.
-        tester.setThresholds({snr: 93.325, maxDiff: 0.00011});
-        tester.runTest(
-            context, 'square', 'Square Oscillator with Exponential Sweep', task,
-            should);
+        tester.setThresholds({
+          snr: 93.325,
+          maxDiff: 0.00011
+        });
+        tester.runTest(context, "square",
+          "Square Oscillator with Exponential Sweep", task, should);
       });
 
       audit.run();

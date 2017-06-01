@@ -51,19 +51,24 @@ namespace {
 
 class PathBuilderPkitsTestDelegate {
  public:
-  static void RunTest(std::vector<std::string> cert_ders,
-                      std::vector<std::string> crl_ders,
-                      const PkitsTestInfo& info) {
-    ASSERT_FALSE(cert_ders.empty());
+  static bool Verify(std::vector<std::string> cert_ders,
+                     std::vector<std::string> crl_ders) {
+    if (cert_ders.empty()) {
+      ADD_FAILURE() << "cert_ders is empty";
+      return false;
+    }
     ParsedCertificateList certs;
     for (const std::string& der : cert_ders) {
       CertErrors errors;
-      ASSERT_TRUE(ParsedCertificate::CreateAndAddToVector(
-          bssl::UniquePtr<CRYPTO_BUFFER>(
-              CRYPTO_BUFFER_new(reinterpret_cast<const uint8_t*>(der.data()),
-                                der.size(), nullptr)),
-          {}, &certs, &errors))
-          << errors.ToDebugString();
+      if (!ParsedCertificate::CreateAndAddToVector(
+              bssl::UniquePtr<CRYPTO_BUFFER>(CRYPTO_BUFFER_new(
+                  reinterpret_cast<const uint8_t*>(der.data()), der.size(),
+                  nullptr)),
+              {}, &certs, &errors)) {
+        ADD_FAILURE() << "ParseCertificate::CreateAndAddToVector() failed:\n"
+                      << errors.ToDebugString();
+        return false;
+      }
     }
     // First entry in the PKITS chain is the trust anchor.
     // TODO(mattm): test with all possible trust anchors in the trust store?
@@ -80,15 +85,18 @@ class PathBuilderPkitsTestDelegate {
 
     SimpleSignaturePolicy signature_policy(1024);
 
+    // Run all tests at the time the PKITS was published.
+    der::GeneralizedTime time = {2011, 4, 15, 0, 0, 0};
+
     CertPathBuilder::Result result;
     CertPathBuilder path_builder(std::move(target_cert), &trust_store,
-                                 &signature_policy, info.time,
-                                 KeyPurpose::ANY_EKU, &result);
+                                 &signature_policy, time, KeyPurpose::ANY_EKU,
+                                 &result);
     path_builder.AddCertIssuerSource(&cert_issuer_source);
 
     path_builder.Run();
 
-    ASSERT_EQ(info.should_validate, result.HasValidPath());
+    return result.HasValidPath();
   }
 };
 
@@ -104,10 +112,7 @@ TEST_F(PkitsTest01SignatureVerificationCustomPathBuilderFoo,
                                "ValidDSASignaturesTest4EE"};
   const char* const crls[] = {"TrustAnchorRootCRL", "DSACACRL"};
   // DSA signatures are intentionally unsupported.
-  PkitsTestInfo info;
-  info.should_validate = false;
-
-  this->RunTest(certs, crls, info);
+  ASSERT_FALSE(this->Verify(certs, crls));
 }
 
 // Modified version of 4.1.5 Valid DSA Parameter Inheritance Test5
@@ -119,10 +124,7 @@ TEST_F(PkitsTest01SignatureVerificationCustomPathBuilderFoo,
   const char* const crls[] = {"TrustAnchorRootCRL", "DSACACRL",
                               "DSAParametersInheritedCACRL"};
   // DSA signatures are intentionally unsupported.
-  PkitsTestInfo info;
-  info.should_validate = false;
-
-  this->RunTest(certs, crls, info);
+  ASSERT_FALSE(this->Verify(certs, crls));
 }
 
 class PkitsTest13SignatureVerificationCustomPathBuilderFoo
@@ -137,10 +139,7 @@ TEST_F(PkitsTest13SignatureVerificationCustomPathBuilderFoo,
   const char* const crls[] = {"TrustAnchorRootCRL",
                               "nameConstraintsRFC822CA1CRL"};
   // Name constraints on rfc822Names are not supported.
-  PkitsTestInfo info;
-  info.should_validate = false;
-
-  this->RunTest(certs, crls, info);
+  ASSERT_FALSE(this->Verify(certs, crls));
 }
 
 // Modified version of 4.13.23 Valid RFC822 nameConstraints Test23
@@ -152,10 +151,7 @@ TEST_F(PkitsTest13SignatureVerificationCustomPathBuilderFoo,
   const char* const crls[] = {"TrustAnchorRootCRL",
                               "nameConstraintsRFC822CA2CRL"};
   // Name constraints on rfc822Names are not supported.
-  PkitsTestInfo info;
-  info.should_validate = false;
-
-  this->RunTest(certs, crls, info);
+  ASSERT_FALSE(this->Verify(certs, crls));
 }
 
 // Modified version of 4.13.25 Valid RFC822 nameConstraints Test25
@@ -167,10 +163,7 @@ TEST_F(PkitsTest13SignatureVerificationCustomPathBuilderFoo,
   const char* const crls[] = {"TrustAnchorRootCRL",
                               "nameConstraintsRFC822CA3CRL"};
   // Name constraints on rfc822Names are not supported.
-  PkitsTestInfo info;
-  info.should_validate = false;
-
-  this->RunTest(certs, crls, info);
+  ASSERT_FALSE(this->Verify(certs, crls));
 }
 
 // Modified version of 4.13.27 Valid DN and RFC822 nameConstraints Test27
@@ -183,10 +176,7 @@ TEST_F(PkitsTest13SignatureVerificationCustomPathBuilderFoo,
   const char* const crls[] = {"TrustAnchorRootCRL", "nameConstraintsDN1CACRL",
                               "nameConstraintsDN1subCA3CRL"};
   // Name constraints on rfc822Names are not supported.
-  PkitsTestInfo info;
-  info.should_validate = false;
-
-  this->RunTest(certs, crls, info);
+  ASSERT_FALSE(this->Verify(certs, crls));
 }
 
 // Modified version of 4.13.34 Valid URI nameConstraints Test34
@@ -197,10 +187,7 @@ TEST_F(PkitsTest13SignatureVerificationCustomPathBuilderFoo,
                                "ValidURInameConstraintsTest34EE"};
   const char* const crls[] = {"TrustAnchorRootCRL", "nameConstraintsURI1CACRL"};
   // Name constraints on uniformResourceIdentifiers are not supported.
-  PkitsTestInfo info;
-  info.should_validate = false;
-
-  this->RunTest(certs, crls, info);
+  ASSERT_FALSE(this->Verify(certs, crls));
 }
 
 // Modified version of 4.13.36 Valid URI nameConstraints Test36
@@ -211,10 +198,7 @@ TEST_F(PkitsTest13SignatureVerificationCustomPathBuilderFoo,
                                "ValidURInameConstraintsTest36EE"};
   const char* const crls[] = {"TrustAnchorRootCRL", "nameConstraintsURI2CACRL"};
   // Name constraints on uniformResourceIdentifiers are not supported.
-  PkitsTestInfo info;
-  info.should_validate = false;
-
-  this->RunTest(certs, crls, info);
+  ASSERT_FALSE(this->Verify(certs, crls));
 }
 
 INSTANTIATE_TYPED_TEST_CASE_P(PathBuilder,

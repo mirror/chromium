@@ -354,22 +354,6 @@
                    file="certificate_manager_page/certificates_error_dialog.html"
                    type="chrome_html" />
       </if>
-      <if expr="is_win">
-        <structure name="IDR_SETTINGS_CHROME_CLEANUP_PROXY_HTML"
-                   file="chrome_cleanup_page/chrome_cleanup_proxy.html"
-                   type="chrome_html" />
-        <structure name="IDR_SETTINGS_CHROME_CLEANUP_PROXY_JS"
-                   file="chrome_cleanup_page/chrome_cleanup_proxy.js"
-                   type="chrome_html" />
-        <structure name="IDR_SETTINGS_CHROME_CLEANUP_PAGE_HTML"
-                   file="chrome_cleanup_page/chrome_cleanup_page.html"
-                   type="chrome_html"
-                   preprocess="true" />
-        <structure name="IDR_SETTINGS_CHROME_CLEANUP_PAGE_JS"
-                   file="chrome_cleanup_page/chrome_cleanup_page.js"
-                   type="chrome_html"
-                   preprocess="true" />
-      </if>
       <structure name="IDR_SETTINGS_CLEAR_BROWSING_DATA_BROWSER_PROXY_HTML"
                  file="clear_browsing_data_dialog/clear_browsing_data_browser_proxy.html"
                  type="chrome_html" />
@@ -1107,12 +1091,6 @@
         <structure name="IDR_SETTINGS_DATE_TIME_PAGE_JS"
                    file="date_time_page/date_time_page.js"
                    type="chrome_html" />
-        <structure name="IDR_SETTINGS_INTERNET_CONFIG_HTML"
-                   file="internet_page/internet_config.html"
-                   type="chrome_html" />
-        <structure name="IDR_SETTINGS_INTERNET_CONFIG_JS"
-                   file="internet_page/internet_config.js"
-                   type="chrome_html" />
         <structure name="IDR_SETTINGS_INTERNET_DETAIL_PAGE_HTML"
                    file="internet_page/internet_detail_page.html"
                    type="chrome_html" />
@@ -1145,18 +1123,6 @@
                    type="chrome_html" />
         <structure name="IDR_SETTINGS_NETWORK_APNLIST_JS"
                    file="internet_page/network_apnlist.js"
-                   type="chrome_html" />
-        <structure name="IDR_SETTINGS_NETWORK_CONFIG_INPUT_HTML"
-                   file="internet_page/network_config_input.html"
-                   type="chrome_html" />
-        <structure name="IDR_SETTINGS_NETWORK_CONFIG_INPUT_JS"
-                   file="internet_page/network_config_input.js"
-                   type="chrome_html" />
-        <structure name="IDR_SETTINGS_NETWORK_CONFIG_SELECT_HTML"
-                   file="internet_page/network_config_select.html"
-                   type="chrome_html" />
-        <structure name="IDR_SETTINGS_NETWORK_CONFIG_SELECT_JS"
-                   file="internet_page/network_config_select.js"
                    type="chrome_html" />
         <structure name="IDR_SETTINGS_NETWORK_IP_CONFIG_HTML"
                    file="internet_page/network_ip_config.html"

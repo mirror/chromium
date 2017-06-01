@@ -408,6 +408,9 @@ class CONTENT_EXPORT DownloadItemImpl
   // this is.
   void Init(bool active, DownloadType download_type);
 
+  // Start a series of events that result in the file being downloaded.
+  void StartDownload();
+
   // Callback from file thread when we initialize the DownloadFile.
   void OnDownloadFileInitialized(DownloadInterruptReason result);
 
@@ -503,6 +506,9 @@ class CONTENT_EXPORT DownloadItemImpl
   // request. Should only be called if the resumption request was successful.
   virtual void UpdateValidatorsOnResumption(
       const DownloadCreateInfo& new_create_info);
+
+  // Cancel a particular request that starts from |offset|.
+  void CancelRequestWithOffset(int64_t offset);
 
   static DownloadState InternalToExternalState(
       DownloadInternalState internal_state);

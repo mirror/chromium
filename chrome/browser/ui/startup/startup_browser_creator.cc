@@ -297,7 +297,8 @@ bool ShowUserManagerOnStartupIfNeeded(Profile* last_used_profile,
       command_line.HasSwitch(switches::kShowAppList) ?
           profiles::USER_MANAGER_SELECT_PROFILE_APP_LAUNCHER :
           profiles::USER_MANAGER_SELECT_PROFILE_NO_ACTION;
-  UserManager::Show(base::FilePath(), action);
+  UserManager::Show(
+      base::FilePath(), profiles::USER_MANAGER_NO_TUTORIAL, action);
   return true;
 }
 

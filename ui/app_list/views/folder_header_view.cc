@@ -11,6 +11,7 @@
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_folder_item.h"
 #include "ui/app_list/app_list_switches.h"
+#include "ui/app_list/resources/grit/app_list_resources.h"
 #include "ui/app_list/views/app_list_folder_view.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/canvas.h"
@@ -137,7 +138,7 @@ bool FolderHeaderView::IsFolderNameEnabledForTest() const {
   return folder_name_view_->enabled();
 }
 
-gfx::Size FolderHeaderView::CalculatePreferredSize() const {
+gfx::Size FolderHeaderView::GetPreferredSize() const {
   return gfx::Size(kPreferredWidth, kPreferredHeight);
 }
 

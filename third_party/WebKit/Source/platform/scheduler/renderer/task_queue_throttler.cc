@@ -202,7 +202,6 @@ void TaskQueueThrottler::OnQueueNextWakeUpChanged(
     return;
 
   base::TimeTicks now = tick_clock_->NowTicks();
-  next_wake_up = std::max(now, next_wake_up);
 
   auto find_it = queue_details_.find(queue);
   if (find_it == queue_details_.end())
@@ -251,11 +250,8 @@ void TaskQueueThrottler::MaybeSchedulePumpThrottledTasks(
   if (!allow_throttling_)
     return;
 
-  // TODO(altimin): Consider removing alignment here.
   base::TimeTicks runtime =
-      std::max(now, unaligned_runtime)
-          .SnappedToNextTick(base::TimeTicks(),
-                             base::TimeDelta::FromSeconds(1));
+      AlignedThrottledRunTime(std::max(now, unaligned_runtime));
   DCHECK_LE(now, runtime);
 
   // If there is a pending call to PumpThrottledTasks and it's sooner than

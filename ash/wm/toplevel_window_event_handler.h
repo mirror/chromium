@@ -22,9 +22,12 @@ class RunLoop;
 }
 
 namespace ash {
+namespace wm {
+}
 
-class ASH_EXPORT ToplevelWindowEventHandler : public ui::EventHandler,
-                                              public ::wm::WindowMoveClient {
+class ASH_EXPORT ToplevelWindowEventHandler
+    : public ui::EventHandler,
+      public aura::client::WindowMoveClient {
  public:
   ToplevelWindowEventHandler();
   ~ToplevelWindowEventHandler() override;
@@ -34,11 +37,11 @@ class ASH_EXPORT ToplevelWindowEventHandler : public ui::EventHandler,
   void OnMouseEvent(ui::MouseEvent* event) override;
   void OnGestureEvent(ui::GestureEvent* event) override;
 
-  // Overridden form wm::WindowMoveClient:
-  ::wm::WindowMoveResult RunMoveLoop(
+  // Overridden form aura::client::WindowMoveClient:
+  aura::client::WindowMoveResult RunMoveLoop(
       aura::Window* source,
       const gfx::Vector2d& drag_offset,
-      ::wm::WindowMoveSource move_source) override;
+      aura::client::WindowMoveSource move_source) override;
   void EndMoveLoop() override;
 
  private:

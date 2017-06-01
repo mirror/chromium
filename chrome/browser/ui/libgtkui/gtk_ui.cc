@@ -37,6 +37,8 @@
 #include "chrome/browser/ui/libgtkui/skia_utils_gtk.h"
 #include "chrome/browser/ui/libgtkui/unity_service.h"
 #include "chrome/browser/ui/libgtkui/x11_input_method_context_impl_gtk.h"
+#include "chrome/grit/theme_resources.h"
+#include "components/grit/components_scaled_resources.h"
 #include "printing/features/features.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "third_party/skia/include/core/SkCanvas.h"
@@ -54,6 +56,7 @@
 #include "ui/gfx/skia_util.h"
 #include "ui/gfx/x/x11_types.h"
 #include "ui/native_theme/native_theme.h"
+#include "ui/resources/grit/ui_resources.h"
 #include "ui/views/controls/button/blue_button.h"
 #include "ui/views/controls/button/label_button.h"
 #include "ui/views/controls/button/label_button_border.h"
@@ -312,27 +315,14 @@ gfx::FontRenderParams GetGtkFontRenderParams() {
   return params;
 }
 
-float GtkDpiToScaleFactor(int dpi) {
-  // GTK multiplies the DPI by 1024 before storing it.
-  return dpi / (1024 * kDefaultDPI);
-}
+float GetGdkWindowScalingFactor() {
+  GValue scale = G_VALUE_INIT;
+  g_value_init(&scale, G_TYPE_INT);
+  if (!gdk_screen_get_setting(gdk_screen_get_default(),
+                              "gdk-window-scaling-factor", &scale))
+    return -1;
 
-gint GetGdkScreenSettingInt(const char* setting_name) {
-  GValue value = G_VALUE_INIT;
-  g_value_init(&value, G_TYPE_INT);
-  if (!gdk_screen_get_setting(gdk_screen_get_default(), setting_name, &value))
-    return -1;
-  return g_value_get_int(&value);
-}
-
-float GetScaleFromGdkScreenSettings() {
-  gint window_scale = GetGdkScreenSettingInt("gdk-window-scaling-factor");
-  if (window_scale <= 0)
-    return -1;
-  gint font_dpi = GetGdkScreenSettingInt("gdk-unscaled-dpi");
-  if (font_dpi <= 0)
-    return -1;
-  return window_scale * GtkDpiToScaleFactor(font_dpi);
+  return g_value_get_int(&scale);
 }
 
 float GetScaleFromXftDPI() {
@@ -340,16 +330,15 @@ float GetScaleFromXftDPI() {
   CHECK(gtk_settings);
   gint gtk_dpi = -1;
   g_object_get(gtk_settings, "gtk-xft-dpi", &gtk_dpi, nullptr);
-  if (gtk_dpi <= 0)
-    return -1;
-  return GtkDpiToScaleFactor(gtk_dpi);
+  // GTK multiplies the DPI by 1024 before storing it.
+  return (gtk_dpi > 0) ? gtk_dpi / (1024 * kDefaultDPI) : -1;
 }
 
 float GetRawDeviceScaleFactor() {
   if (display::Display::HasForceDeviceScaleFactor())
     return display::Display::GetForcedDeviceScaleFactor();
 
-  float scale = GetScaleFromGdkScreenSettings();
+  float scale = GetGdkWindowScalingFactor();
   if (scale > 0)
     return scale;
 

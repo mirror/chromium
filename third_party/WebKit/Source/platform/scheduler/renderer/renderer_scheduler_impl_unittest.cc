@@ -880,8 +880,8 @@ TEST_F(RendererSchedulerImplTest,
   RunUntilIdle();
   EXPECT_THAT(run_order,
               testing::ElementsAre(std::string("L1"), std::string("D1"),
-                                   std::string("D2"), std::string("C1"),
-                                   std::string("C2"), std::string("I1")));
+                                   std::string("D2"), std::string("I1"),
+                                   std::string("C1"), std::string("C2")));
   EXPECT_EQ(RendererSchedulerImpl::UseCase::COMPOSITOR_GESTURE,
             CurrentUseCase());
 }
@@ -914,8 +914,8 @@ TEST_F(RendererSchedulerImplTest,
   RunUntilIdle();
   EXPECT_THAT(run_order,
               testing::ElementsAre(std::string("L1"), std::string("D1"),
-                                   std::string("D2"), std::string("C1"),
-                                   std::string("C2"), std::string("I1")));
+                                   std::string("D2"), std::string("I1"),
+                                   std::string("C1"), std::string("C2")));
   EXPECT_EQ(RendererSchedulerImpl::UseCase::COMPOSITOR_GESTURE,
             CurrentUseCase());
 }
@@ -963,8 +963,8 @@ TEST_F(RendererSchedulerImplTest,
   RunUntilIdle();
   EXPECT_THAT(run_order,
               testing::ElementsAre(std::string("L1"), std::string("D1"),
-                                   std::string("D2"), std::string("C1"),
-                                   std::string("C2"), std::string("I1")));
+                                   std::string("D2"), std::string("I1"),
+                                   std::string("C1"), std::string("C2")));
   EXPECT_EQ(RendererSchedulerImpl::UseCase::COMPOSITOR_GESTURE,
             CurrentUseCase());
 }
@@ -1072,8 +1072,8 @@ TEST_F(RendererSchedulerImplTest, TestCompositorPolicy_DidAnimateForInput) {
   RunUntilIdle();
   EXPECT_THAT(run_order,
               testing::ElementsAre(std::string("D1"), std::string("D2"),
-                                   std::string("C1"), std::string("C2"),
-                                   std::string("I1")));
+                                   std::string("I1"), std::string("C1"),
+                                   std::string("C2")));
   EXPECT_EQ(RendererSchedulerImpl::UseCase::COMPOSITOR_GESTURE,
             CurrentUseCase());
 }
@@ -1340,8 +1340,8 @@ TEST_F(RendererSchedulerImplTest,
             CurrentUseCase());
   EXPECT_THAT(run_order,
               testing::ElementsAre(std::string("D1"), std::string("D2"),
-                                   std::string("C1"), std::string("C2"),
-                                   std::string("I1")));
+                                   std::string("I1"), std::string("C1"),
+                                   std::string("C2")));
 }
 
 TEST_F(RendererSchedulerImplTest,
@@ -1443,8 +1443,8 @@ TEST_F(RendererSchedulerImplTest, EventConsumedOnCompositorThread_MouseWheel) {
   // Note compositor tasks are not prioritized.
   EXPECT_THAT(run_order,
               testing::ElementsAre(std::string("D1"), std::string("D2"),
-                                   std::string("C1"), std::string("C2"),
-                                   std::string("I1")));
+                                   std::string("I1"), std::string("C1"),
+                                   std::string("C2")));
   EXPECT_EQ(RendererSchedulerImpl::UseCase::COMPOSITOR_GESTURE,
             CurrentUseCase());
 }
@@ -1518,8 +1518,8 @@ TEST_F(
   // Note compositor tasks are not prioritized.
   EXPECT_THAT(run_order,
               testing::ElementsAre(std::string("D1"), std::string("D2"),
-                                   std::string("C1"), std::string("C2"),
-                                   std::string("I1")));
+                                   std::string("I1"), std::string("C1"),
+                                   std::string("C2")));
   EXPECT_EQ(RendererSchedulerImpl::UseCase::COMPOSITOR_GESTURE,
             CurrentUseCase());
 }
@@ -3837,10 +3837,8 @@ void RecordingTimeTestTask(std::vector<base::TimeTicks>* run_times,
 
 }  // namespace
 
-// TODO(altimin@): Re-enable after splitting the timer policy into separate
-// policies.
 TEST_F(RendererSchedulerImplTest,
-       DISABLED_DefaultTimerTasksAreThrottledWhenBackgrounded) {
+       DefaultTimerTasksAreThrottledWhenBackgrounded) {
   ScopedAutoAdvanceNowEnabler enable_auto_advance_now(mock_task_runner_);
 
   scheduler_->OnRendererBackgrounded();

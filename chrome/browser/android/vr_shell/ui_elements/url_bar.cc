@@ -19,10 +19,9 @@ constexpr int64_t kUpdateDelayMS = 50;
 
 }  // namespace
 
-UrlBar::UrlBar(int preferred_width,
-               const base::Callback<void(UiUnsupportedMode)>& failure_callback)
+UrlBar::UrlBar(int preferred_width)
     : TexturedElement(preferred_width),
-      texture_(base::MakeUnique<UrlBarTexture>(failure_callback)) {}
+      texture_(base::MakeUnique<UrlBarTexture>()) {}
 
 UrlBar::~UrlBar() = default;
 
@@ -83,11 +82,7 @@ void UrlBar::SetURL(const GURL& gurl) {
   texture_->SetURL(gurl);
 }
 
-void UrlBar::SetHistoryButtonsEnabled(bool can_go_back) {
-  texture_->SetHistoryButtonsEnabled(can_go_back);
-}
-
-void UrlBar::SetSecurityLevel(security_state::SecurityLevel level) {
+void UrlBar::SetSecurityLevel(int level) {
   texture_->SetSecurityLevel(level);
 }
 

@@ -8,11 +8,8 @@
 #include <memory>
 #include <vector>
 
-#include "base/callback.h"
 #include "base/macros.h"
 #include "chrome/browser/android/vr_shell/textures/ui_texture.h"
-#include "chrome/browser/android/vr_shell/ui_unsupported_mode.h"
-#include "components/security_state/core/security_state.h"
 #include "url/gurl.h"
 
 namespace gfx {
@@ -22,9 +19,6 @@ class RenderText;
 
 namespace vr_shell {
 
-class RenderTextWrapper;
-struct ColorScheme;
-
 class UrlBarTexture : public UiTexture {
  public:
   enum DrawFlags {
@@ -32,15 +26,13 @@ class UrlBarTexture : public UiTexture {
     FLAG_BACK_DOWN = 1 << 1,
   };
 
-  explicit UrlBarTexture(
-      const base::Callback<void(UiUnsupportedMode)>& failure_callback);
+  UrlBarTexture();
   ~UrlBarTexture() override;
   gfx::Size GetPreferredTextureSize(int width) const override;
   gfx::SizeF GetDrawnSize() const override;
 
   void SetURL(const GURL& gurl);
-  void SetHistoryButtonsEnabled(bool can_go_back);
-  void SetSecurityLevel(security_state::SecurityLevel level);
+  void SetSecurityLevel(int level);
 
   bool HitsBackButton(const gfx::PointF& position) const;
   bool HitsUrlBar(const gfx::PointF& position) const;
@@ -48,33 +40,18 @@ class UrlBarTexture : public UiTexture {
   void SetHovered(bool hovered);
   void SetPressed(bool pressed);
 
-  // Public for testability.
-  static void ApplyUrlStyling(const base::string16& formatted_url,
-                              const url::Parsed& parsed,
-                              security_state::SecurityLevel security_level,
-                              vr_shell::RenderTextWrapper* render_text,
-                              const ColorScheme& color_scheme);
-
  private:
   void Draw(SkCanvas* canvas, const gfx::Size& texture_size) override;
   float ToPixels(float meters) const;
   bool HitsTransparentRegion(const gfx::PointF& meters, bool left) const;
-  void RenderUrl(const gfx::Size& texture_size, const gfx::Rect& bounds);
-  void OnSetMode() override;
-  const ColorScheme& color_scheme() const;
 
   gfx::SizeF size_;
+  int security_level_;
   bool hovered_ = false;
   bool pressed_ = false;
-  bool can_go_back_ = false;
-
   GURL gurl_;
-  security_state::SecurityLevel security_level_;
-
-  std::unique_ptr<gfx::RenderText> url_render_text_;
   GURL last_drawn_gurl_;
-  security_state::SecurityLevel last_drawn_security_level_;
-  base::Callback<void(UiUnsupportedMode)> failure_callback_;
+  std::vector<std::unique_ptr<gfx::RenderText>> gurl_render_texts_;
 
   DISALLOW_COPY_AND_ASSIGN(UrlBarTexture);
 };

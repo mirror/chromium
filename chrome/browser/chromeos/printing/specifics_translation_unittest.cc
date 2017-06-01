@@ -22,7 +22,6 @@ const char uri[] = "ipps://notaprinter.chromium.org/ipp/print";
 const char uuid[] = "UUIDUUIDUUID";
 const base::Time kUpdateTime = base::Time::FromInternalValue(22114455660000);
 
-const char kUserSuppliedPPD[] = "file://foo/bar/baz/eeaaaffccdd00";
 const char effective_make_and_model[] = "Manufacturer Model T1000";
 
 }  // namespace
@@ -57,7 +56,6 @@ TEST(SpecificsTranslationTest, SpecificsToPrinter) {
 
   EXPECT_EQ(effective_make_and_model,
             result->ppd_reference().effective_make_and_model);
-  EXPECT_FALSE(result->IsIppEverywhere());
 }
 
 TEST(SpecificsTranslationTest, PrinterToSpecifics) {
@@ -99,7 +97,7 @@ TEST(SpecificsTranslationTest, SpecificsToPrinterRoundTrip) {
   printer.set_uuid(uuid);
 
   Printer::PpdReference ppd;
-  ppd.autoconf = true;
+  ppd.effective_make_and_model = effective_make_and_model;
   *printer.mutable_ppd_reference() = ppd;
 
   std::unique_ptr<sync_pb::PrinterSpecifics> temp = PrinterToSpecifics(printer);
@@ -113,58 +111,8 @@ TEST(SpecificsTranslationTest, SpecificsToPrinterRoundTrip) {
   EXPECT_EQ(uri, result->uri());
   EXPECT_EQ(uuid, result->uuid());
 
-  EXPECT_TRUE(result->ppd_reference().effective_make_and_model.empty());
-  EXPECT_TRUE(result->ppd_reference().autoconf);
-}
-
-TEST(SpecificsTranslationTest, MergePrinterToSpecifics) {
-  sync_pb::PrinterSpecifics original;
-  original.set_id(id);
-  original.mutable_ppd_reference()->set_autoconf(true);
-
-  Printer printer(id);
-  printer.mutable_ppd_reference()->effective_make_and_model =
-      effective_make_and_model;
-
-  MergePrinterToSpecifics(printer, &original);
-
-  EXPECT_EQ(id, original.id());
   EXPECT_EQ(effective_make_and_model,
-            original.ppd_reference().effective_make_and_model());
-
-  // Verify that autoconf is cleared.
-  EXPECT_FALSE(original.ppd_reference().autoconf());
-}
-
-// Tests that the autoconf value overrides other PpdReference fields.
-TEST(SpecificsTranslationTest, AutoconfOverrides) {
-  sync_pb::PrinterSpecifics original;
-  original.set_id(id);
-  auto* ppd_reference = original.mutable_ppd_reference();
-  ppd_reference->set_autoconf(true);
-  ppd_reference->set_user_supplied_ppd_url(kUserSuppliedPPD);
-
-  auto printer = SpecificsToPrinter(original);
-
-  EXPECT_TRUE(printer->ppd_reference().autoconf);
-  EXPECT_TRUE(printer->ppd_reference().user_supplied_ppd_url.empty());
-  EXPECT_TRUE(printer->ppd_reference().effective_make_and_model.empty());
-}
-
-// Tests that user_supplied_ppd_url overwrites other PpdReference fields if
-// autoconf is false.
-TEST(SpecificsTranslationTest, UserSuppliedOverrides) {
-  sync_pb::PrinterSpecifics original;
-  original.set_id(id);
-  auto* ppd_reference = original.mutable_ppd_reference();
-  ppd_reference->set_user_supplied_ppd_url(kUserSuppliedPPD);
-  ppd_reference->set_effective_make_and_model(effective_make_and_model);
-
-  auto printer = SpecificsToPrinter(original);
-
-  EXPECT_FALSE(printer->ppd_reference().autoconf);
-  EXPECT_FALSE(printer->ppd_reference().user_supplied_ppd_url.empty());
-  EXPECT_TRUE(printer->ppd_reference().effective_make_and_model.empty());
+            result->ppd_reference().effective_make_and_model);
 }
 
 }  // namespace printing

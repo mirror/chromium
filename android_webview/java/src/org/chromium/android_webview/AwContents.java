@@ -2269,17 +2269,8 @@ public class AwContents implements SmartClipProvider {
         if (callback != null) {
             jsCallback = new JavaScriptCallback() {
                 @Override
-                public void handleJavaScriptResult(final String jsonResult) {
-                    // Post the application callback back to the current thread to ensure the
-                    // application callback is executed without any native code on the stack. This
-                    // so that any exception thrown by the application callback won't have to be
-                    // propagated through a native call stack.
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            callback.onReceiveValue(jsonResult);
-                        }
-                    });
+                public void handleJavaScriptResult(String jsonResult) {
+                    callback.onReceiveValue(jsonResult);
                 }
             };
         }
@@ -2954,20 +2945,8 @@ public class AwContents implements SmartClipProvider {
      * @return true if the WebView is visible
      */
     @VisibleForTesting
-    @CalledByNative
     protected boolean canShowInterstitial() {
         return mIsAttachedToWindow && mIsViewVisible;
-    }
-
-    @CalledByNative
-    private int getErrorUiType() {
-        if (extendsOutOfWindow()) {
-            return ErrorUiType.QUIET_GIANT;
-        } else if (canShowBigInterstitial()) {
-            return ErrorUiType.LOUD;
-        } else {
-            return ErrorUiType.QUIET_SMALL;
-        }
     }
 
     /**
@@ -2978,7 +2957,11 @@ public class AwContents implements SmartClipProvider {
      * @return true if the WebView should display the large interstitial
      */
     @VisibleForTesting
+    @CalledByNative
     protected boolean canShowBigInterstitial() {
+        if (!canShowInterstitial()) return false;
+        if (extendsOutOfWindow()) return false;
+
         double percentOfScreenHeight =
                 (double) mContainerView.getHeight() / mContainerView.getRootView().getHeight();
 
@@ -3123,7 +3106,7 @@ public class AwContents implements SmartClipProvider {
             // Workaround for bug in libhwui on N that does not swap if inserting functor is the
             // only operation in a canvas. See crbug.com/704212.
             if (Build.VERSION.SDK_INT == Build.VERSION_CODES.N
-                    || Build.VERSION.SDK_INT == Build.VERSION_CODES.N_MR1) {
+                    || Build.VERSION.SDK_INT == 25 /* N_MR1 */) {
                 if (mPaintForNWorkaround == null) {
                     mPaintForNWorkaround = new Paint();
                     // Note a completely transparent color will get optimized out. So draw almost
@@ -3196,7 +3179,7 @@ public class AwContents implements SmartClipProvider {
 
         @Override
         public boolean onDragEvent(DragEvent event) {
-            return mWebContents.getEventForwarder().onDragEvent(event, mContainerView);
+            return mContentViewCore.onDragEvent(event);
         }
 
         @Override

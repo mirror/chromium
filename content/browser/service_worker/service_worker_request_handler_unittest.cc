@@ -44,10 +44,9 @@ class ServiceWorkerRequestHandlerTest : public testing::Test {
 
     // An empty host.
     std::unique_ptr<ServiceWorkerProviderHost> host =
-        CreateProviderHostForWindow(helper_->mock_render_process_id(),
-                                    kMockProviderId,
-                                    true /* is_parent_frame_secure */,
-                                    context()->AsWeakPtr(), &remote_endpoint_);
+        CreateProviderHostForWindow(
+            helper_->mock_render_process_id(), kMockProviderId,
+            true /* is_parent_frame_secure */, context()->AsWeakPtr());
     provider_host_ = host->AsWeakPtr();
     context()->AddProviderHost(std::move(host));
   }
@@ -112,7 +111,6 @@ class ServiceWorkerRequestHandlerTest : public testing::Test {
   net::URLRequestContext url_request_context_;
   net::TestDelegate url_request_delegate_;
   storage::BlobStorageContext blob_storage_context_;
-  ServiceWorkerRemoteProviderEndpoint remote_endpoint_;
 };
 
 TEST_F(ServiceWorkerRequestHandlerTest, InitializeHandler_FTP) {

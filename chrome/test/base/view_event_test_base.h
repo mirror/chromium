@@ -49,9 +49,8 @@ class ViewEventTestPlatformPart;
 //
 // ViewEventTestBase creates a Window with the View returned from
 // CreateContentsView. The preferred size for the view can be customized by
-// overriding GetPreferredSizeForContents. If you do not override
-// GetPreferredSizeForContents the preferred size of the view returned from
-// CreateContentsView is used.
+// overriding GetPreferredSize. If you do not override GetPreferredSize the
+// preferred size of the view returned from CreateContentsView is used.
 //
 // Subclasses of ViewEventTestBase must implement two methods:
 // . DoTestOnMessageLoop: invoked when the message loop is running. Run your
@@ -93,7 +92,7 @@ class ViewEventTestBase : public views::WidgetDelegate,
   // Returns an empty Size. Subclasses that want a preferred size other than
   // that of the View returned by CreateContentsView should override this
   // appropriately.
-  virtual gfx::Size GetPreferredSizeForContents() const;
+  virtual gfx::Size GetPreferredSize() const;
 
   // Overridden from views::WidgetDelegate:
   bool CanResize() const override;

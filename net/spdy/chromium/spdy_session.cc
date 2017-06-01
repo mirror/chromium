@@ -1591,7 +1591,7 @@ void SpdySession::TryCreatePushStream(SpdyStreamId stream_id,
   GURL gurl = GetUrlFromHeaderBlock(headers);
   if (!gurl.is_valid()) {
     EnqueueResetStreamFrame(
-        stream_id, request_priority, ERROR_CODE_REFUSED_STREAM,
+        stream_id, request_priority, ERROR_CODE_PROTOCOL_ERROR,
         "Pushed stream url was invalid: " + gurl.possibly_invalid_spec());
     return;
   }
@@ -1660,7 +1660,7 @@ void SpdySession::TryCreatePushStream(SpdyStreamId stream_id,
   if (pushed_it != unclaimed_pushed_streams_.end() &&
       pushed_it->first == gurl) {
     EnqueueResetStreamFrame(
-        stream_id, request_priority, ERROR_CODE_REFUSED_STREAM,
+        stream_id, request_priority, ERROR_CODE_PROTOCOL_ERROR,
         "Received duplicate pushed stream with url: " + gurl.spec());
     return;
   }

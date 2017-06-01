@@ -380,9 +380,6 @@ const char kEnableOfflineAutoReloadVisibleOnly[] =
 const char kEnablePermissionActionReporting[] =
     "enable-permission-action-reporting";
 
-// Enables the picture in picture feature for videos.
-const char kEnablePictureInPicture[] = "enable-picture-in-picture";
-
 // Enables a number of potentially annoying security features (strict mixed
 // content mode, powerful feature restrictions, etc.)
 const char kEnablePotentiallyAnnoyingSecurityFeatures[] =
@@ -507,6 +504,10 @@ const char kForceVariationIds[]             = "force-variation-ids";
 // http://google.com.
 const char kHomePage[]                      = "homepage";
 
+// The maximum number of retry attempts to resolve the host. Set this to zero
+// to disable host resolver retry attempts.
+const char kHostResolverRetryAttempts[]     = "host-resolver-retry-attempts";
+
 // Comma-separated list of rules that control how hostnames are mapped.
 //
 // For example:
@@ -523,19 +524,6 @@ const char kHomePage[]                      = "homepage";
 // connect and host resolver in a direct connection, and the CONNECT in an http
 // proxy connection, and the endpoint host in a SOCKS proxy connection).
 const char kHostRules[]                     = "host-rules";
-
-// A set of public key hashes for which to ignore certificate-related errors.
-//
-// If the certificate chain presented by the server does not validate, and one
-// or more certificates have public key hashes that match a key from this list,
-// the error is ignored.
-//
-// The switch value must a be a comma-separated list of Base64-encoded SHA-256
-// SPKI Fingerprints (RFC 7469, Section 2.4).
-//
-// This switch has no effect unless --user-data-dir is also present.
-const char kIgnoreCertificateErrorsSPKIList[] =
-    "ignore-certificate-errors-spki-list";
 
 // Causes net::URLFetchers to ignore requests for SSL client certificates,
 // causing them to attempt an unauthenticated SSL/TLS session. This is intended
@@ -888,9 +876,6 @@ const char kLocalNtpReload[]                = "local-ntp-reload";
 // Android authentication account type for SPNEGO authentication
 const char kAuthAndroidNegotiateAccountType[] = "auth-spnego-account-type";
 
-// Android authentication account type for SPNEGO authentication
-const char kChromeHomeSwipeLogicType[] = "chrome-home-swipe-logic";
-
 // Disables Contextual Search.
 const char kDisableContextualSearch[] = "disable-contextual-search";
 
@@ -1161,10 +1146,6 @@ extern const char kEnableNewAppMenuIcon[] = "enable-new-app-menu-icon";
 bool ExtensionsDisabled(const base::CommandLine& command_line) {
   return command_line.HasSwitch(switches::kDisableExtensions) ||
          command_line.HasSwitch(switches::kDisableExtensionsExcept);
-}
-
-bool ExtensionsDisabled() {
-  return ExtensionsDisabled(*base::CommandLine::ForCurrentProcess());
 }
 
 bool MdFeedbackEnabled() {

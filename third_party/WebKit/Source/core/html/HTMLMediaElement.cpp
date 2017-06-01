@@ -40,9 +40,9 @@
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/dom/shadow/ShadowRoot.h"
 #include "core/events/Event.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
@@ -155,7 +155,8 @@ void ReportContentTypeResultToUMA(String content_type,
                                   MIMETypeRegistry::SupportsType result) {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(
       EnumerationHistogram, content_type_parseable_histogram,
-      ("Media.MediaElement.ContentTypeParseable", kContentTypeParseableMax));
+      new EnumerationHistogram("Media.MediaElement.ContentTypeParseable",
+                               kContentTypeParseableMax));
   ParsedContentType parsed_content_type(content_type);
   ContentTypeParseableResult uma_result = kIsNotSupportedNotParseable;
   switch (result) {
@@ -629,8 +630,7 @@ void HTMLMediaElement::ParseAttribute(
     UseCounter::Count(GetDocument(),
                       UseCounter::kHTMLMediaElementControlsListAttribute);
     if (params.old_value != params.new_value) {
-      controls_list_->DidUpdateAttributeValue(params.old_value,
-                                              params.new_value);
+      controls_list_->setValue(params.new_value);
       if (GetMediaControls())
         GetMediaControls()->OnControlsListUpdated();
     }
@@ -1413,11 +1413,8 @@ bool HTMLMediaElement::IsSafeToLoadURL(const KURL& url,
 
   LocalFrame* frame = GetDocument().GetFrame();
   if (!frame || !GetDocument().GetSecurityOrigin()->CanDisplay(url)) {
-    if (action_if_invalid == kComplain) {
-      GetDocument().AddConsoleMessage(ConsoleMessage::Create(
-          kSecurityMessageSource, kErrorMessageLevel,
-          "Not allowed to load local resource: " + url.ElidedString()));
-    }
+    if (action_if_invalid == kComplain)
+      FrameLoader::ReportLocalLoadFailed(frame, url.ElidedString());
     BLINK_MEDIA_LOG << "isSafeToLoadURL(" << (void*)this << ", "
                     << UrlForLoggingMedia(url)
                     << ") -> FALSE rejected by SecurityOrigin";
@@ -2438,6 +2435,15 @@ DOMTokenList* HTMLMediaElement::controlsList() const {
 
 HTMLMediaElementControlsList* HTMLMediaElement::ControlsListInternal() const {
   return controls_list_.Get();
+}
+
+void HTMLMediaElement::ControlsListValueWasSet() {
+  if (FastGetAttribute(controlslistAttr) == controls_list_->value())
+    return;
+
+  SetSynchronizedLazyAttribute(controlslistAttr, controls_list_->value());
+  if (GetMediaControls())
+    GetMediaControls()->OnControlsListUpdated();
 }
 
 double HTMLMediaElement::volume() const {

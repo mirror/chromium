@@ -12,6 +12,7 @@
 #include "ash/system/tray/system_tray_notifier.h"
 #include "ash/wm/window_util.h"
 #include "ash/wm/workspace/backdrop_delegate.h"
+#include "ash/wm_window.h"
 #include "base/auto_reset.h"
 #include "chromeos/audio/chromeos_sounds.h"
 #include "ui/aura/client/aura_constants.h"
@@ -209,7 +210,7 @@ aura::Window* BackdropController::GetTopmostWindowWithBackdrop() {
        ++window_iter) {
     aura::Window* window = *window_iter;
     if (window != backdrop_window_ && window->layer()->GetTargetVisibility() &&
-        window->type() == aura::client::WINDOW_TYPE_NORMAL &&
+        window->type() == ui::wm::WINDOW_TYPE_NORMAL &&
         ::wm::CanActivateWindow(window) && WindowShouldHaveBackdrop(window)) {
       return window;
     }

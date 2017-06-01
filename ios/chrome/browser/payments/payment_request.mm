@@ -5,7 +5,6 @@
 #include "ios/chrome/browser/payments/payment_request.h"
 
 #include "base/containers/adapters.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/autofill/core/browser/autofill_data_util.h"
 #include "components/autofill/core/browser/autofill_profile.h"
@@ -52,39 +51,16 @@ PaymentRequest::PaymentRequest(
       selected_shipping_option_(nullptr),
       profile_comparator_(GetApplicationContext()->GetApplicationLocale(),
                           *this) {
-  PopulateAvailableShippingOptions();
+  PopulateShippingOptionCache();
   PopulateProfileCache();
-  PopulateAvailableProfiles();
   PopulateCreditCardCache();
-  PopulateAvailableCreditCards();
-
-  SetSelectedShippingOption();
-
-  // If the merchant provided a default shipping option, and the highest-ranking
-  // shipping profile is usable, select it.
-  if (selected_shipping_option_ && !shipping_profiles_.empty() &&
-      profile_comparator_.IsShippingComplete(shipping_profiles_[0])) {
-    selected_shipping_profile_ = shipping_profiles_[0];
-  }
-
-  // If the highest-ranking contact profile is usable, select it. Otherwise,
-  // select none.
-  if (!contact_profiles_.empty() &&
-      profile_comparator_.IsContactInfoComplete(contact_profiles_[0])) {
-    selected_contact_profile_ = contact_profiles_[0];
-  }
-
-  // Select the highest ranking credit card.
-  if (!credit_cards_.empty())
-    selected_credit_card_ = credit_cards_[0];
 }
 
 PaymentRequest::~PaymentRequest() {}
 
 void PaymentRequest::UpdatePaymentDetails(const web::PaymentDetails& details) {
   web_payment_request_.details = details;
-  PopulateAvailableShippingOptions();
-  SetSelectedShippingOption();
+  PopulateShippingOptionCache();
 }
 
 bool PaymentRequest::request_shipping() const {
@@ -127,14 +103,21 @@ autofill::RegionDataLoader* PaymentRequest::GetRegionDataLoader() {
       GetApplicationContext()->GetApplicationLocale());
 }
 
-autofill::AutofillProfile* PaymentRequest::AddAutofillProfile(
-    const autofill::AutofillProfile& profile) {
-  profile_cache_.push_back(
-      base::MakeUnique<autofill::AutofillProfile>(profile));
+autofill::CreditCard* PaymentRequest::AddCreditCard(
+    const autofill::CreditCard& credit_card) {
+  credit_card_cache_.insert(credit_card_cache_.begin(), credit_card);
 
-  PopulateAvailableProfiles();
+  // Reconstruct the vector of references to the cached credit cards because the
+  // old references may be invalid as a result of the previous operation.
+  credit_cards_.clear();
+  credit_cards_.reserve(credit_card_cache_.size());
+  for (auto& credit_card : credit_card_cache_)
+    credit_cards_.push_back(&credit_card);
+  return credit_cards_.front();
+}
 
-  return profile_cache_.back().get();
+bool PaymentRequest::CanMakePayment() const {
+  return !credit_cards_.empty();
 }
 
 void PaymentRequest::PopulateProfileCache() {
@@ -145,45 +128,36 @@ void PaymentRequest::PopulateProfileCache() {
     return;
 
   profile_cache_.reserve(profiles_to_suggest.size());
-
   for (const auto* profile : profiles_to_suggest) {
-    profile_cache_.push_back(
-        base::MakeUnique<autofill::AutofillProfile>(*profile));
-  }
-}
-
-void PaymentRequest::PopulateAvailableProfiles() {
-  if (profile_cache_.empty())
-    return;
-
-  std::vector<autofill::AutofillProfile*> raw_profiles_for_filtering;
-  raw_profiles_for_filtering.reserve(profile_cache_.size());
-
-  for (auto const& profile : profile_cache_) {
-    raw_profiles_for_filtering.push_back(profile.get());
+    profile_cache_.push_back(*profile);
+    shipping_profiles_.push_back(&profile_cache_.back());
   }
 
-  // Contact profiles are deduped and ordered by completeness.
+  // If the merchant provided a shipping option, select a suitable default
+  // shipping profile. We pick the profile that is most complete, going down
+  // the list in Frecency order.
+  // TODO(crbug.com/719652): Have a proper ordering of shipping addresses by
+  // completeness.
+  if (selected_shipping_option_) {
+    selected_shipping_profile_ = shipping_profiles_[0];
+    for (autofill::AutofillProfile* profile : shipping_profiles_) {
+      if (profile_comparator_.IsShippingComplete(profile)) {
+        selected_shipping_profile_ = profile;
+        break;
+      }
+    }
+  }
+
+  // Contact profiles are deduped and ordered in completeness.
   contact_profiles_ =
-      profile_comparator_.FilterProfilesForContact(raw_profiles_for_filtering);
+      profile_comparator_.FilterProfilesForContact(shipping_profiles_);
 
-  // Shipping profiles are ordered by completeness.
-  shipping_profiles_ =
-      profile_comparator_.FilterProfilesForShipping(raw_profiles_for_filtering);
-}
-
-autofill::CreditCard* PaymentRequest::AddCreditCard(
-    const autofill::CreditCard& credit_card) {
-  credit_card_cache_.push_back(
-      base::MakeUnique<autofill::CreditCard>(credit_card));
-
-  PopulateAvailableCreditCards();
-
-  return credit_card_cache_.back().get();
-}
-
-bool PaymentRequest::CanMakePayment() const {
-  return !credit_cards_.empty();
+  // If the highest-ranking contact profile is usable, select it. Otherwise,
+  // select none.
+  if (!contact_profiles_.empty() &&
+      profile_comparator_.IsContactInfoComplete(contact_profiles_[0])) {
+    selected_contact_profile_ = contact_profiles_[0];
+  }
 }
 
 void PaymentRequest::PopulateCreditCardCache() {
@@ -194,10 +168,6 @@ void PaymentRequest::PopulateCreditCardCache() {
 
   const std::vector<autofill::CreditCard*>& credit_cards_to_suggest =
       personal_data_manager_->GetCreditCardsToSuggest();
-  // Return early if the user has no stored credit cards.
-  if (credit_cards_to_suggest.empty())
-    return;
-
   credit_card_cache_.reserve(credit_cards_to_suggest.size());
 
   for (const auto* credit_card : credit_cards_to_suggest) {
@@ -207,26 +177,18 @@ void PaymentRequest::PopulateCreditCardCache() {
     if (std::find(supported_card_networks_.begin(),
                   supported_card_networks_.end(),
                   spec_issuer_network) != supported_card_networks_.end()) {
-      credit_card_cache_.push_back(
-          base::MakeUnique<autofill::CreditCard>(*credit_card));
+      credit_card_cache_.push_back(*credit_card);
+      credit_cards_.push_back(&credit_card_cache_.back());
     }
   }
-}
-
-void PaymentRequest::PopulateAvailableCreditCards() {
-  if (credit_card_cache_.empty())
-    return;
-
-  credit_cards_.clear();
-  credit_cards_.reserve(credit_card_cache_.size());
 
   // TODO(crbug.com/602666): Implement prioritization rules for credit cards.
-  for (auto const& credit_card : credit_card_cache_) {
-    credit_cards_.push_back(credit_card.get());
-  }
+
+  if (!credit_cards_.empty())
+    selected_credit_card_ = credit_cards_[0];
 }
 
-void PaymentRequest::PopulateAvailableShippingOptions() {
+void PaymentRequest::PopulateShippingOptionCache() {
   shipping_options_.clear();
   selected_shipping_option_ = nullptr;
   if (web_payment_request_.details.shipping_options.empty())
@@ -238,13 +200,11 @@ void PaymentRequest::PopulateAvailableShippingOptions() {
                  std::end(web_payment_request_.details.shipping_options),
                  std::back_inserter(shipping_options_),
                  [](web::PaymentShippingOption& option) { return &option; });
-}
 
-void PaymentRequest::SetSelectedShippingOption() {
-  // If more than one option has |selected| set, the last one in the sequence
-  // should be treated as the selected item.
   for (auto* shipping_option : base::Reversed(shipping_options_)) {
     if (shipping_option->selected) {
+      // If more than one option has |selected| set, the last one in the
+      // sequence should be treated as the selected item.
       selected_shipping_option_ = shipping_option;
       break;
     }

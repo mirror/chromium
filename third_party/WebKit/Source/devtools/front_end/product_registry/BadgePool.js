@@ -3,40 +3,29 @@
 // found in the LICENSE file.
 
 ProductRegistry.BadgePool = class {
-  /**
-   * @param {boolean=} forceShow
-   */
-  constructor(forceShow) {
-    this._showTitles = false;
-    /** @type {!Map<!Element, function():!Promise<!Common.ParsedURL>>} */
+  constructor() {
+    this._setting = Common.settings.moduleSetting('product_registry.badges-visible');
+    this._setting.addChangeListener(this._settingUpdated.bind(this));
+    /** @type {!Map<!Element, function():!Promise<!Common.ParsedURL>>}*/
     this._badgeElements = new Map();
-    if (!forceShow) {
-      this._setting = Common.settings.moduleSetting('product_registry.badges-visible');
-      this._setting.addChangeListener(this._settingUpdated.bind(this));
-    }
-  }
-
-  /**
-   * @param {boolean} value
-   */
-  setShowTitles(value) {
-    this._showTitles = value;
   }
 
   /**
    * @param {!SDK.ResourceTreeFrame} frame
+   * @param {boolean=} showTitle
    * @return {!Element}
    */
-  badgeForFrame(frame) {
-    return this._badgeForFrameOrUrl(this._resolveUrl.bind(this, frame));
+  badgeForFrame(frame, showTitle) {
+    return this._badgeForFrameOrUrl(this._resolveUrl.bind(this, frame), showTitle);
   }
 
   /**
    * @param {!Common.ParsedURL} parsedUrl
+   * @param {boolean=} showTitle
    * @return {!Element}
    */
-  badgeForURL(parsedUrl) {
-    return this._badgeForFrameOrUrl(() => Promise.resolve(parsedUrl));
+  badgeForURL(parsedUrl, showTitle) {
+    return this._badgeForFrameOrUrl(() => Promise.resolve(parsedUrl), showTitle);
   }
 
   reset() {
@@ -45,20 +34,22 @@ ProductRegistry.BadgePool = class {
 
   /**
    * @param {function():!Promise<!Common.ParsedURL>} urlResolver
+   * @param {boolean=} showTitle
    * @return {!Element}
    */
-  _badgeForFrameOrUrl(urlResolver) {
+  _badgeForFrameOrUrl(urlResolver, showTitle) {
     var element = createElementWithClass('span', 'hidden');
     var root = UI.createShadowRootWithCoreStyles(element, 'product_registry/badge.css');
     var badgeElement = root.createChild('span');
-    badgeElement.classList.toggle('hide-badge-title', !this._showTitles);
+    badgeElement.classList.toggle('hide-badge-title', !showTitle);
     badgeElement.addEventListener('mousedown', event => event.consume());
     badgeElement.addEventListener('click', event => {
       this._showPopup(badgeElement);
       event.consume();
     }, false);
     this._badgeElements.set(badgeElement, urlResolver);
-    this._renderBadge(badgeElement);
+    if (this._setting.get())
+      this._renderBadge(badgeElement);
     return element;
   }
 
@@ -85,14 +76,16 @@ ProductRegistry.BadgePool = class {
    * @param {!Element} badgeElement
    */
   async _renderBadge(badgeElement) {
-    if (badgeElement.children.length || !this._isVisible(badgeElement)) {
-      this._updateBadgeElementVisibility(badgeElement);
+    if (!this._badgeElements.has(badgeElement))
+      return;
+    if (badgeElement.children.length) {
+      this._setBadgeElementHidden(badgeElement, false);
       return;
     }
 
     var parsedUrl = await this._badgeElements.get(badgeElement)();
     var registry = await ProductRegistry.instance();
-    var entryName = parsedUrl && registry.nameForUrl(parsedUrl);
+    var entryName = registry.nameForUrl(parsedUrl);
     if (!entryName)
       return;
 
@@ -109,28 +102,26 @@ ProductRegistry.BadgePool = class {
     iconElement.style.backgroundColor = ProductRegistry.BadgePool.colorForEntryName(entryName);
 
     badgeElement.createChild('span', 'product-registry-badge-title').textContent = entryName;
-    this._updateBadgeElementVisibility(badgeElement);
+    this._setBadgeElementHidden(badgeElement, !this._setting.get());
   }
 
   _settingUpdated() {
+    var enabled = this._setting.get();
+    if (!enabled) {
+      for (var badgeElement of this._badgeElements.keys())
+        this._setBadgeElementHidden(badgeElement, true);
+      return;
+    }
     for (var badgeElement of this._badgeElements.keys())
       this._renderBadge(badgeElement);
   }
 
   /**
    * @param {!Element} badgeElement
-   * @return {boolean}
+   * @param {boolean} hide
    */
-  _isVisible(badgeElement) {
-    return !this._setting || this._setting.get();
-  }
-
-  /**
-   * @param {!Element} badgeElement
-   */
-  _updateBadgeElementVisibility(badgeElement) {
-    badgeElement.parentNodeOrShadowHost().parentNodeOrShadowHost().classList.toggle(
-        'hidden', !this._isVisible(badgeElement));
+  _setBadgeElementHidden(badgeElement, hide) {
+    badgeElement.parentNodeOrShadowHost().parentNodeOrShadowHost().classList.toggle('hidden', hide);
   }
 
   /**

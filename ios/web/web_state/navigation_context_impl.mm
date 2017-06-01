@@ -9,20 +9,14 @@
 #include "base/memory/ptr_util.h"
 #include "net/http/http_response_headers.h"
 
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
-
 namespace web {
 
 // static
 std::unique_ptr<NavigationContextImpl>
-NavigationContextImpl::CreateNavigationContext(
-    WebState* web_state,
-    const GURL& url,
-    ui::PageTransition page_transition) {
+NavigationContextImpl::CreateNavigationContext(WebState* web_state,
+                                               const GURL& url) {
   std::unique_ptr<NavigationContextImpl> result(
-      new NavigationContextImpl(web_state, url, page_transition));
+      new NavigationContextImpl(web_state, url));
   return result;
 }
 
@@ -44,16 +38,8 @@ const GURL& NavigationContextImpl::GetUrl() const {
   return url_;
 }
 
-ui::PageTransition NavigationContextImpl::GetPageTransition() const {
-  return page_transition_;
-}
-
 bool NavigationContextImpl::IsSameDocument() const {
   return is_same_document_;
-}
-
-bool NavigationContextImpl::IsPost() const {
-  return is_post_;
 }
 
 NSError* NavigationContextImpl::GetError() const {
@@ -66,10 +52,6 @@ net::HttpResponseHeaders* NavigationContextImpl::GetResponseHeaders() const {
 
 void NavigationContextImpl::SetIsSameDocument(bool is_same_document) {
   is_same_document_ = is_same_document;
-}
-
-void NavigationContextImpl::SetIsPost(bool is_post) {
-  is_post_ = is_post;
 }
 
 void NavigationContextImpl::SetError(NSError* error) {
@@ -90,11 +72,9 @@ void NavigationContextImpl::SetNavigationItemUniqueID(int unique_id) {
 }
 
 NavigationContextImpl::NavigationContextImpl(WebState* web_state,
-                                             const GURL& url,
-                                             ui::PageTransition page_transition)
+                                             const GURL& url)
     : web_state_(web_state),
       url_(url),
-      page_transition_(page_transition),
       is_same_document_(false),
       error_(nil),
       response_headers_(nullptr) {}

@@ -646,14 +646,14 @@ void WebContentsAndroid::DismissTextHandles(
     view->DismissTextHandles();
 }
 
-void WebContentsAndroid::ShowContextMenuAtTouchHandle(
+void WebContentsAndroid::ShowContextMenuAtPoint(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& obj,
     int x,
     int y) {
   RenderWidgetHostViewAndroid* view = GetRenderWidgetHostViewAndroid();
   if (view)
-    view->ShowContextMenuAtTouchHandle(gfx::Point(x, y));
+    view->ShowContextMenuAtPoint(gfx::Point(x, y));
 }
 
 void WebContentsAndroid::SetHasPersistentVideo(

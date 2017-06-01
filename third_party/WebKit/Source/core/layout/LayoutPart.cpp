@@ -26,8 +26,8 @@
 
 #include "core/dom/AXObjectCache.h"
 #include "core/frame/FrameOrPlugin.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/RemoteFrameView.h"
 #include "core/html/HTMLFrameElementBase.h"
 #include "core/html/HTMLPlugInElement.h"
@@ -36,7 +36,6 @@
 #include "core/layout/LayoutView.h"
 #include "core/layout/api/LayoutAPIShim.h"
 #include "core/layout/api/LayoutViewItem.h"
-#include "core/page/scrolling/RootScrollerUtil.h"
 #include "core/paint/PartPainter.h"
 #include "core/plugins/PluginView.h"
 
@@ -77,9 +76,8 @@ void LayoutPart::Destroy() {
   WillBeDestroyed();
   // We call clearNode here because LayoutPart is ref counted. This call to
   // destroy may not actually destroy the layout object. We can keep it around
-  // because of references from the LocalFrameView class. (The actual
-  // destruction of the class happens in PostDestroy() which is called from
-  // Deref()).
+  // because of references from the FrameView class. (The actual destruction of
+  // the class happens in postDestroy() which is called from deref()).
   //
   // But, we've told the system we've destroyed the layoutObject, which happens
   // when the DOM node is destroyed. So there is a good change the DOM node this
@@ -93,10 +91,10 @@ LayoutPart::~LayoutPart() {
   DCHECK_LE(ref_count_, 0);
 }
 
-LocalFrameView* LayoutPart::ChildFrameView() const {
+FrameView* LayoutPart::ChildFrameView() const {
   FrameOrPlugin* frame_or_plugin = GetFrameOrPlugin();
-  if (frame_or_plugin && frame_or_plugin->IsLocalFrameView())
-    return ToLocalFrameView(frame_or_plugin);
+  if (frame_or_plugin && frame_or_plugin->IsFrameView())
+    return ToFrameView(frame_or_plugin);
   return nullptr;
 }
 
@@ -175,7 +173,7 @@ bool LayoutPart::NodeAtPoint(HitTestResult& result,
                              const HitTestLocation& location_in_container,
                              const LayoutPoint& accumulated_offset,
                              HitTestAction action) {
-  LocalFrameView* frame_view = ChildFrameView();
+  FrameView* frame_view = ChildFrameView();
   if (!frame_view || !result.GetHitTestRequest().AllowsChildFrameContent()) {
     return NodeAtPointOverFrameViewBase(result, location_in_container,
                                         accumulated_offset, action);
@@ -260,7 +258,7 @@ void LayoutPart::StyleDidChange(StyleDifference diff,
     return;
 
   // If the iframe has custom scrollbars, recalculate their style.
-  if (LocalFrameView* frame_view = ChildFrameView())
+  if (FrameView* frame_view = ChildFrameView())
     frame_view->RecalculateCustomScrollbarStyle();
 
   if (Style()->Visibility() != EVisibility::kVisible) {
@@ -303,11 +301,6 @@ LayoutRect LayoutPart::ReplacedContentRect() const {
   // cause the sub-frame to layout due to the 1px snap difference. In order to
   // avoid that, the size of sub-frame is rounded in advance.
   LayoutRect size_rounded_rect = ContentBoxRect();
-
-  // IFrames set as the root scroller should get their size from their parent.
-  if (ChildFrameView() && View() && RootScrollerUtil::IsEffective(*this))
-    size_rounded_rect = LayoutRect(LayoutPoint(), View()->ViewRect().Size());
-
   size_rounded_rect.SetSize(
       LayoutSize(RoundedIntSize(size_rounded_rect.Size())));
   return size_rounded_rect;
@@ -348,7 +341,7 @@ void LayoutPart::UpdateGeometry() {
   // frame's page to make sure that the frame isn't in the process of being
   // destroyed. If iframe scrollbars needs reconstruction from native to custom
   // scrollbar, then also we need to layout the frameview.
-  LocalFrameView* frame_view = ChildFrameView();
+  FrameView* frame_view = ChildFrameView();
   if (frame_view && frame_view->GetFrame().GetPage() &&
       (bounds_will_change || frame_view->NeedsScrollbarReconstruction()))
     frame_view->SetNeedsLayout();
@@ -357,7 +350,7 @@ void LayoutPart::UpdateGeometry() {
 
   // If view needs layout, either because bounds have changed or possibly
   // indicating content size is wrong, we have to do a layout to set the right
-  // LocalFrameView size.
+  // FrameView size.
   if (frame_view && frame_view->NeedsLayout() &&
       frame_view->GetFrame().GetPage())
     frame_view->UpdateLayout();
@@ -378,10 +371,10 @@ void LayoutPart::UpdateGeometryInternal(FrameOrPlugin& frame_or_plugin) {
                      PixelSnappedIntRect(absolute_replaced_rect).Size());
   // Normally the location of the frame rect is ignored by the painter, but
   // currently it is still used by a family of coordinate conversion function in
-  // LocalFrameView. This is incorrect because coordinate conversion
+  // FrameView. This is incorrect because coordinate conversion
   // needs to take transform and into account. A few callers still use the
   // family of conversion function, including but not exhaustive:
-  // LocalFrameView::updateViewportIntersectionIfNeeded()
+  // FrameView::updateViewportIntersectionIfNeeded()
   // RemoteFrameView::frameRectsChanged().
   // WebPluginContainerImpl::reportGeometry()
   // TODO(trchen): Remove this hack once we fixed all callers.
@@ -396,7 +389,7 @@ void LayoutPart::UpdateGeometryInternal(FrameOrPlugin& frame_or_plugin) {
 
 void LayoutPart::DeprecatedInvalidatePaintOfSubtrees(
     const PaintInvalidationState& paint_invalidation_state) {
-  LocalFrameView* frame_view = ChildFrameView();
+  FrameView* frame_view = ChildFrameView();
   if (frame_view && !IsThrottledFrameView()) {
     // |childFrameView| is in another document, which could be
     // missing its LayoutView. TODO(jchaffraix): Ideally we should
@@ -413,7 +406,7 @@ void LayoutPart::DeprecatedInvalidatePaintOfSubtrees(
 }
 
 bool LayoutPart::IsThrottledFrameView() const {
-  if (LocalFrameView* frame_view = ChildFrameView())
+  if (FrameView* frame_view = ChildFrameView())
     return frame_view->ShouldThrottleRendering();
   return false;
 }

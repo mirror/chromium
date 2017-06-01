@@ -109,7 +109,7 @@ UiElement::UiElement() = default;
 
 UiElement::~UiElement() = default;
 
-void UiElement::Render(UiElementRenderer* renderer,
+void UiElement::Render(VrShellRenderer* renderer,
                        vr::Mat4f view_proj_matrix) const {
   NOTREACHED();
 }
@@ -230,14 +230,5 @@ bool UiElement::HitTest(const gfx::PointF& point) const {
   return point.x() >= 0.0f && point.x() <= 1.0f && point.y() >= 0.0f &&
          point.y() <= 1.0f;
 }
-
-void UiElement::SetMode(ColorScheme::Mode mode) {
-  if (mode_ == mode)
-    return;
-  mode_ = mode;
-  OnSetMode();
-}
-
-void UiElement::OnSetMode() {}
 
 }  // namespace vr_shell

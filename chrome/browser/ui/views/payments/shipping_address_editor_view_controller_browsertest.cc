@@ -11,8 +11,6 @@
 #include "chrome/browser/ui/views/payments/payment_request_dialog_view_ids.h"
 #include "chrome/browser/ui/views/payments/validating_textfield.h"
 #include "components/autofill/core/browser/autofill_country.h"
-#include "components/autofill/core/browser/autofill_profile.h"
-#include "components/autofill/core/browser/autofill_test_utils.h"
 #include "components/autofill/core/browser/country_combobox_model.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
 #include "components/autofill/core/browser/region_combobox_model.h"
@@ -23,7 +21,6 @@
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/null_storage.h"
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/source.h"
 #include "ui/views/controls/combobox/combobox.h"
-#include "ui/views/controls/label.h"
 
 namespace payments {
 
@@ -34,7 +31,8 @@ const char kNameFull[] = "Bob Jones";
 const char kHomeAddress[] = "42 Answers-All Avenue";
 const char kHomeCity[] = "Question-City";
 const char kHomeZip[] = "ziiiiiip";
-const char kHomePhone[] = "+1 575-555-5555";  // +1 555-555-5555 is invalid :-(.
+const char kHomePhone[] = "5755555555";  // 5555555555 is invalid :-(.
+const char kFormattedHomePhone[] = "(575) 555-5555";
 const char kAnyState[] = "any state";
 const char kCountryWithoutStates[] = "Albania";
 const char kCountryWithoutStatesPhoneNumber[] = "42223446";
@@ -143,10 +141,12 @@ class PaymentRequestShippingAddressEditorTest
       // The phone can be empty when restored from a saved state, or it may be
       // formatted based on the currently selected country.
       if (!accept_empty_phone_number) {
-        EXPECT_EQ(base::ASCIIToUTF16("+1 575-555-5555"), textfield_text);
+        EXPECT_EQ(base::ASCIIToUTF16(kHomePhone), textfield_text);
       } else if (textfield_text.empty()) {
         if (unset_types)
           unset_types->insert(autofill::PHONE_HOME_WHOLE_NUMBER);
+      } else if (textfield_text != base::ASCIIToUTF16(kHomePhone)) {
+        EXPECT_EQ(base::ASCIIToUTF16(kFormattedHomePhone), textfield_text);
       }
     } else if (unset_types) {
       unset_types->insert(autofill::PHONE_HOME_WHOLE_NUMBER);
@@ -554,7 +554,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
 }
 
 IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
-                       FocusFirstField_Name) {
+                       FocusFirstInvalidField_Name) {
   InvokePaymentRequestUI();
   SetRegionDataLoader(&test_region_data_loader_);
 
@@ -567,14 +567,13 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
           EditorViewController::GetInputFieldViewId(autofill::NAME_FULL)));
   DCHECK(textfield);
   EXPECT_TRUE(textfield->text().empty());
-  // Field is not invalid because there is nothing in it.
-  EXPECT_FALSE(textfield->invalid());
+  EXPECT_TRUE(textfield->invalid());
   EXPECT_TRUE(textfield->HasFocus());
 }
 
 IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
                        FocusFirstInvalidField_NotName) {
-  // Add address with only the name set, so that another view takes focus.
+  // Add address with the name set, so that another view takes focus.
   autofill::AutofillProfile profile;
   profile.SetInfo(autofill::AutofillType(autofill::NAME_FULL),
                   base::ASCIIToUTF16(kNameFull), "fr_CA");
@@ -600,83 +599,6 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
   // that a view has focus. Unfortunately, we can't cast it to a specific type
   // that we could query for validity (it could be either text or combobox).
   EXPECT_NE(textfield->GetFocusManager()->GetFocusedView(), nullptr);
-}
-
-// Tests that the editor accepts an international phone from another country.
-IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
-                       AddInternationalPhoneNumberFromOtherCountry) {
-  InvokePaymentRequestUI();
-  OpenShippingAddressEditorScreen();
-
-  SetCommonFields();
-
-  // Set an Australian phone number in international format.
-  SetEditorTextfieldValue(base::UTF8ToUTF16("+61 2 9374 4000"),
-                          autofill::PHONE_HOME_WHOLE_NUMBER);
-
-  ResetEventObserver(DialogEvent::BACK_TO_PAYMENT_SHEET_NAVIGATION);
-  ClickOnDialogViewAndWait(DialogViewID::SAVE_ADDRESS_BUTTON);
-}
-
-// Tests that the editor doesn't accept a local phone from another country.
-IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
-                       AddLocalPhoneNumberFromOtherCountry) {
-  InvokePaymentRequestUI();
-  OpenShippingAddressEditorScreen();
-
-  SetCommonFields();
-
-  // Set an Australian phone number in international format.
-  SetEditorTextfieldValue(base::UTF8ToUTF16("02 9374 4000"),
-                          autofill::PHONE_HOME_WHOLE_NUMBER);
-
-  EXPECT_TRUE(IsEditorTextfieldInvalid(autofill::PHONE_HOME_WHOLE_NUMBER));
-}
-
-// Tests that there is no error label for an international phone from another
-// country.
-IN_PROC_BROWSER_TEST_F(
-    PaymentRequestShippingAddressEditorTest,
-    NoErrorLabelForInternationalPhoneNumberFromOtherCountry) {
-  // Create a profile in the US and add a valid AU phone number in international
-  // format.
-  autofill::AutofillProfile california = autofill::test::GetFullProfile();
-  california.SetRawInfo(autofill::PHONE_HOME_WHOLE_NUMBER,
-                        base::UTF8ToUTF16("+61 2 9374 4000"));
-  AddAutofillProfile(california);
-
-  InvokePaymentRequestUI();
-  OpenShippingAddressSectionScreen();
-
-  // There should be no error label.
-  views::View* sheet = dialog_view()->GetViewByID(
-      static_cast<int>(DialogViewID::SHIPPING_ADDRESS_SHEET_LIST_VIEW));
-  ASSERT_EQ(1, sheet->child_count());
-  EXPECT_EQ(nullptr, sheet->child_at(0)->GetViewByID(
-                         static_cast<int>(DialogViewID::PROFILE_LABEL_ERROR)));
-}
-
-// Tests that there is an error label for an local phone from another country.
-IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
-                       ErrorLabelForLocalPhoneNumberFromOtherCountry) {
-  // Create a profile in the US and add a valid AU phone number in local format.
-  autofill::AutofillProfile california = autofill::test::GetFullProfile();
-  california.set_use_count(50U);
-  california.SetRawInfo(autofill::PHONE_HOME_WHOLE_NUMBER,
-                        base::UTF8ToUTF16("02 9374 4000"));
-  AddAutofillProfile(california);
-
-  InvokePaymentRequestUI();
-  OpenShippingAddressSectionScreen();
-
-  // There should be an error label for the phone number.
-  views::View* sheet = dialog_view()->GetViewByID(
-      static_cast<int>(DialogViewID::SHIPPING_ADDRESS_SHEET_LIST_VIEW));
-  ASSERT_EQ(1, sheet->child_count());
-  views::View* error_label = sheet->child_at(0)->GetViewByID(
-      static_cast<int>(DialogViewID::PROFILE_LABEL_ERROR));
-  EXPECT_EQ(base::ASCIIToUTF16("Phone number required"),
-            static_cast<views::Label*>(error_label)->text());
 }
 
 }  // namespace payments

@@ -4,15 +4,10 @@
 
 #include "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl.h"
 
-#include <memory>
-#include <utility>
-
 #include "base/bind.h"
 #include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
-#include "base/metrics/user_metrics.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "components/feature_engagement_tracker/internal/availability_model_impl.h"
 #include "components/feature_engagement_tracker/internal/chrome_variations_configuration.h"
 #include "components/feature_engagement_tracker/internal/editable_configuration.h"
 #include "components/feature_engagement_tracker/internal/feature_config_condition_validator.h"
@@ -20,12 +15,9 @@
 #include "components/feature_engagement_tracker/internal/in_memory_store.h"
 #include "components/feature_engagement_tracker/internal/init_aware_model.h"
 #include "components/feature_engagement_tracker/internal/model_impl.h"
-#include "components/feature_engagement_tracker/internal/never_availability_model.h"
 #include "components/feature_engagement_tracker/internal/never_storage_validator.h"
 #include "components/feature_engagement_tracker/internal/once_condition_validator.h"
 #include "components/feature_engagement_tracker/internal/persistent_store.h"
-#include "components/feature_engagement_tracker/internal/proto/availability.pb.h"
-#include "components/feature_engagement_tracker/internal/stats.h"
 #include "components/feature_engagement_tracker/internal/system_time_provider.h"
 #include "components/feature_engagement_tracker/public/feature_constants.h"
 #include "components/feature_engagement_tracker/public/feature_list.h"
@@ -34,8 +26,6 @@
 namespace feature_engagement_tracker {
 
 namespace {
-const char kEventDBStorageDir[] = "EventDB";
-const char kAvailabilityDBStorageDir[] = "AvailabilityDB";
 
 // Creates a FeatureEngagementTrackerImpl that is usable for a demo mode.
 std::unique_ptr<FeatureEngagementTracker>
@@ -59,8 +49,7 @@ CreateDemoModeFeatureEngagementTracker() {
 
   return base::MakeUnique<FeatureEngagementTrackerImpl>(
       base::MakeUnique<InitAwareModel>(std::move(raw_model)),
-      base::MakeUnique<NeverAvailabilityModel>(), std::move(configuration),
-      base::MakeUnique<OnceConditionValidator>(),
+      std::move(configuration), base::MakeUnique<OnceConditionValidator>(),
       base::MakeUnique<SystemTimeProvider>());
 }
 
@@ -80,64 +69,39 @@ FeatureEngagementTracker* FeatureEngagementTracker::Create(
       base::MakeUnique<leveldb_proto::ProtoDatabaseImpl<Event>>(
           background_task_runner);
 
-  base::FilePath event_storage_dir = storage_dir.Append(kEventDBStorageDir);
-  auto store =
-      base::MakeUnique<PersistentStore>(event_storage_dir, std::move(db));
-
-  auto configuration = base::MakeUnique<ChromeVariationsConfiguration>();
-  configuration->ParseFeatureConfigs(GetAllFeatures());
-
+  auto store = base::MakeUnique<PersistentStore>(storage_dir, std::move(db));
   auto storage_validator = base::MakeUnique<FeatureConfigStorageValidator>();
-  storage_validator->InitializeFeatures(GetAllFeatures(), *configuration);
-
   auto raw_model = base::MakeUnique<ModelImpl>(std::move(store),
                                                std::move(storage_validator));
 
   auto model = base::MakeUnique<InitAwareModel>(std::move(raw_model));
+  auto configuration = base::MakeUnique<ChromeVariationsConfiguration>();
   auto condition_validator =
       base::MakeUnique<FeatureConfigConditionValidator>();
   auto time_provider = base::MakeUnique<SystemTimeProvider>();
 
-  base::FilePath availability_storage_dir =
-      storage_dir.Append(kAvailabilityDBStorageDir);
-  auto availability_db =
-      base::MakeUnique<leveldb_proto::ProtoDatabaseImpl<Availability>>(
-          background_task_runner);
-  auto availability_store_loader = base::BindOnce(
-      &AvailabilityStore::LoadAndUpdateStore, availability_storage_dir,
-      std::move(availability_db), GetAllFeatures());
-
-  auto availability_model = base::MakeUnique<AvailabilityModelImpl>(
-      std::move(availability_store_loader));
+  // Initialize the configuration.
+  configuration->ParseFeatureConfigs(GetAllFeatures());
+  storage_validator->InitializeFeatures(GetAllFeatures(), *configuration);
 
   return new FeatureEngagementTrackerImpl(
-      std::move(model), std::move(availability_model), std::move(configuration),
+      std::move(model), std::move(configuration),
       std::move(condition_validator), std::move(time_provider));
 }
 
 FeatureEngagementTrackerImpl::FeatureEngagementTrackerImpl(
     std::unique_ptr<Model> model,
-    std::unique_ptr<AvailabilityModel> availability_model,
     std::unique_ptr<Configuration> configuration,
     std::unique_ptr<ConditionValidator> condition_validator,
     std::unique_ptr<TimeProvider> time_provider)
     : model_(std::move(model)),
-      availability_model_(std::move(availability_model)),
       configuration_(std::move(configuration)),
       condition_validator_(std::move(condition_validator)),
       time_provider_(std::move(time_provider)),
-      event_model_initialization_finished_(false),
-      availability_model_initialization_finished_(false),
+      initialization_finished_(false),
       weak_ptr_factory_(this) {
   model_->Initialize(
-      base::Bind(
-          &FeatureEngagementTrackerImpl::OnEventModelInitializationFinished,
-          weak_ptr_factory_.GetWeakPtr()),
-      time_provider_->GetCurrentDay());
-
-  availability_model_->Initialize(
-      base::Bind(&FeatureEngagementTrackerImpl::
-                     OnAvailabilityModelInitializationFinished,
+      base::Bind(&FeatureEngagementTrackerImpl::OnModelInitializationFinished,
                  weak_ptr_factory_.GetWeakPtr()),
       time_provider_->GetCurrentDay());
 }
@@ -145,16 +109,19 @@ FeatureEngagementTrackerImpl::FeatureEngagementTrackerImpl(
 FeatureEngagementTrackerImpl::~FeatureEngagementTrackerImpl() = default;
 
 void FeatureEngagementTrackerImpl::NotifyEvent(const std::string& event) {
+  // TODO(nyquist): Track this event in UMA.
   model_->IncrementEvent(event, time_provider_->GetCurrentDay());
-  stats::RecordNotifyEvent(event, configuration_.get(), model_->IsReady());
 }
 
 bool FeatureEngagementTrackerImpl::ShouldTriggerHelpUI(
     const base::Feature& feature) {
-  ConditionValidator::Result result = condition_validator_->MeetsConditions(
-      feature, configuration_->GetFeatureConfig(feature), *model_,
-      *availability_model_, time_provider_->GetCurrentDay());
-  if (result.NoErrors()) {
+  // TODO(nyquist): Track this event in UMA.
+  bool result =
+      condition_validator_
+          ->MeetsConditions(feature, configuration_->GetFeatureConfig(feature),
+                            *model_, time_provider_->GetCurrentDay())
+          .NoErrors();
+  if (result) {
     condition_validator_->NotifyIsShowing(feature);
     FeatureConfig feature_config = configuration_->GetFeatureConfig(feature);
     DCHECK_NE("", feature_config.trigger.name);
@@ -162,58 +129,36 @@ bool FeatureEngagementTrackerImpl::ShouldTriggerHelpUI(
                            time_provider_->GetCurrentDay());
   }
 
-  stats::RecordShouldTriggerHelpUI(feature, result);
-  return result.NoErrors();
+  return result;
 }
 
 void FeatureEngagementTrackerImpl::Dismissed(const base::Feature& feature) {
+  // TODO(nyquist): Track this event in UMA.
   condition_validator_->NotifyDismissed(feature);
-  stats::RecordUserDismiss();
 }
 
 bool FeatureEngagementTrackerImpl::IsInitialized() {
-  return model_->IsReady() && availability_model_->IsReady();
+  return model_->IsReady();
 }
 
 void FeatureEngagementTrackerImpl::AddOnInitializedCallback(
     OnInitializedCallback callback) {
-  if (IsInitializationFinished()) {
+  if (initialization_finished_) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(callback, IsInitialized()));
+        FROM_HERE, base::Bind(callback, model_->IsReady()));
     return;
   }
 
   on_initialized_callbacks_.push_back(callback);
 }
 
-void FeatureEngagementTrackerImpl::OnEventModelInitializationFinished(
-    bool success) {
+void FeatureEngagementTrackerImpl::OnModelInitializationFinished(bool success) {
   DCHECK_EQ(success, model_->IsReady());
-  event_model_initialization_finished_ = true;
-
-  MaybePostInitializedCallbacks();
-}
-
-void FeatureEngagementTrackerImpl::OnAvailabilityModelInitializationFinished(
-    bool success) {
-  DCHECK_EQ(success, availability_model_->IsReady());
-  availability_model_initialization_finished_ = true;
-
-  MaybePostInitializedCallbacks();
-}
-
-bool FeatureEngagementTrackerImpl::IsInitializationFinished() const {
-  return event_model_initialization_finished_ &&
-         availability_model_initialization_finished_;
-}
-
-void FeatureEngagementTrackerImpl::MaybePostInitializedCallbacks() {
-  if (!IsInitializationFinished())
-    return;
+  initialization_finished_ = true;
 
   for (auto& callback : on_initialized_callbacks_) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(callback, IsInitialized()));
+        FROM_HERE, base::Bind(callback, success));
   }
 
   on_initialized_callbacks_.clear();

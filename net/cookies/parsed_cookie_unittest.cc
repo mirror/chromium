@@ -611,5 +611,4 @@ TEST(ParsedCookieTest, ValidNonAlphanumericChars) {
   EXPECT_TRUE(pc8.IsValid());
   EXPECT_EQ(pc8_literal, pc8.ToCookieLine());
 }
-
-}  // namespace net
+}

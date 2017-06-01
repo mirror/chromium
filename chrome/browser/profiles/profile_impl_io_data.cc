@@ -131,7 +131,7 @@ ProfileImplIOData::Handle::~Handle() {
   }
 
   if (io_data_->http_server_properties_manager_)
-    io_data_->http_server_properties_manager_->ShutdownOnPrefSequence();
+    io_data_->http_server_properties_manager_->ShutdownOnPrefThread();
 
   // io_data_->data_reduction_proxy_io_data() might be NULL if Init() was
   // never called.
@@ -472,14 +472,14 @@ void ProfileImplIOData::InitializeInternal(
   ApplyProfileParamsToContext(main_context);
 
   if (lazy_params_->http_server_properties_manager) {
-    lazy_params_->http_server_properties_manager->InitializeOnNetworkSequence();
+    lazy_params_->http_server_properties_manager->InitializeOnNetworkThread();
     main_context_storage->set_http_server_properties(
         std::move(lazy_params_->http_server_properties_manager));
   }
 
   main_context->set_transport_security_state(transport_security_state());
   main_context->set_ct_policy_enforcer(
-      io_thread_globals->system_request_context->ct_policy_enforcer());
+      io_thread_globals->ct_policy_enforcer.get());
 
   main_context->set_net_log(io_thread->net_log());
 
@@ -546,8 +546,6 @@ void ProfileImplIOData::InitializeInternal(
   request_interceptors.insert(
       request_interceptors.begin(),
       data_reduction_proxy_io_data()->CreateInterceptor());
-  data_reduction_proxy_io_data()->SetDataUseAscriber(
-      io_thread_globals->data_use_ascriber.get());
   main_context_storage->set_job_factory(SetUpJobFactoryDefaults(
       std::move(main_job_factory), std::move(request_interceptors),
       std::move(profile_params->protocol_handler_interceptor),
@@ -651,17 +649,15 @@ net::URLRequestContext* ProfileImplIOData::InitializeAppRequestContext(
   cookie_store->SetChannelIDServiceID(channel_id_service->GetUniqueID());
 
   // Build a new HttpNetworkSession that uses the new ChannelIDService.
-  // TODO(mmenke):  It's weird to combine state from
+  // TODO(mmenke):  It weird to combine state from
   // main_request_context_storage() objects and the argumet to this method,
   // |main_context|.  Remove |main_context| as an argument, and just use
   // main_context() instead.
-  net::HttpNetworkSession::Context session_context =
-      main_request_context_storage()->http_network_session()->context();
-  session_context.channel_id_service = channel_id_service.get();
+  net::HttpNetworkSession::Params network_params =
+      main_request_context_storage()->http_network_session()->params();
+  network_params.channel_id_service = channel_id_service.get();
   std::unique_ptr<net::HttpNetworkSession> http_network_session(
-      new net::HttpNetworkSession(
-          main_request_context_storage()->http_network_session()->params(),
-          session_context));
+      new net::HttpNetworkSession(network_params));
   std::unique_ptr<net::HttpCache> app_http_cache =
       CreateMainHttpFactory(http_network_session.get(), std::move(app_backend));
 

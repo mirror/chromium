@@ -17,7 +17,6 @@
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
 #include "base/path_service.h"
-#include "base/sequence_checker.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/values.h"
@@ -134,7 +133,8 @@ const char* const kInternetConnectedTitle = "Title Of Awesomeness";
 // A URL request job that hangs until FailJobs() is called.  Started jobs
 // are stored in a static class variable containing a linked list so that
 // FailJobs() can locate them.
-class URLRequestTimeoutOnDemandJob : public net::URLRequestJob {
+class URLRequestTimeoutOnDemandJob : public net::URLRequestJob,
+                                     public base::NonThreadSafe {
  public:
   // net::URLRequestJob:
   void Start() override;
@@ -211,8 +211,6 @@ class URLRequestTimeoutOnDemandJob : public net::URLRequestJob {
   // The next job that had been started but not yet timed out.
   URLRequestTimeoutOnDemandJob* next_job_;
 
-  SEQUENCE_CHECKER(sequence_checker_);
-
   DISALLOW_COPY_AND_ASSIGN(URLRequestTimeoutOnDemandJob);
 };
 
@@ -222,7 +220,7 @@ int URLRequestTimeoutOnDemandJob::num_jobs_started_ = 0;
 URLRequestTimeoutOnDemandJob* URLRequestTimeoutOnDemandJob::job_list_ = NULL;
 
 void URLRequestTimeoutOnDemandJob::Start() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  EXPECT_TRUE(CalledOnValidThread());
 
   // Insert at start of the list.
   next_job_ = job_list_;
@@ -278,7 +276,6 @@ URLRequestTimeoutOnDemandJob::URLRequestTimeoutOnDemandJob(
 }
 
 URLRequestTimeoutOnDemandJob::~URLRequestTimeoutOnDemandJob() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   // All hanging jobs should have failed or been abandoned before being
   // destroyed.
   EXPECT_FALSE(RemoveFromList());

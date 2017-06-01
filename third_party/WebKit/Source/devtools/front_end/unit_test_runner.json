@@ -15,11 +15,7 @@
         { "name": "test_runner", "type": "autostart" },
         { "name": "quick_open" },
         { "name": "inline_editor" },
-        { "name": "sdk" },
-        { "name": "protocol" },
-        { "name": "data_grid" },
-        { "name": "product_registry" },
-        { "name": "product_registry_impl" }
+        { "name": "data_grid" }
     ],
     "has_html": true
 }

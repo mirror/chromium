@@ -212,12 +212,8 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 #define SK_DISABLE_DEFERRED_PROXIES
 #endif
 
-#ifndef SK_SUPPORT_LEGACY_GRADIENT_ALPHATRUNC
-#define SK_SUPPORT_LEGACY_GRADIENT_ALPHATRUNC
-#endif
-
-#ifndef SK_SUPPORT_LEGACY_RASTERPIPELINE
-#define SK_SUPPORT_LEGACY_RASTERPIPELINE
+#ifndef SK_LEGACY_SWEEP_GRADIENT
+#define SK_LEGACY_SWEEP_GRADIENT
 #endif
 
 ///////////////////////// Imported from BUILD.gn and skia_common.gypi

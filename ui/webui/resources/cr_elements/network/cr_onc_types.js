@@ -71,9 +71,6 @@ CrOnc.APNProperties;
 /** @typedef {chrome.networkingPrivate.CellularSimState} */
 CrOnc.CellularSimState;
 
-/** @typedef {chrome.networkingPrivate.DeviceStateProperties} */
-CrOnc.DeviceStateProperties;
-
 /** @typedef {chrome.networkingPrivate.IPConfigProperties} */
 CrOnc.IPConfigProperties;
 
@@ -110,9 +107,6 @@ CrOnc.ActivationState = chrome.networkingPrivate.ActivationStateType;
 CrOnc.ConnectionState = chrome.networkingPrivate.ConnectionStateType;
 
 /** @enum {string} */
-CrOnc.DeviceState = chrome.networkingPrivate.DeviceStateType;
-
-/** @enum {string} */
 CrOnc.IPConfigType = chrome.networkingPrivate.IPConfigType;
 
 /** @enum {string} */
@@ -125,14 +119,6 @@ CrOnc.Type = chrome.networkingPrivate.NetworkType;
 CrOnc.IPType = {
   IPV4: 'IPv4',
   IPV6: 'IPv6',
-};
-
-/** @enum {string} */
-CrOnc.EAPType = {
-  LEAP: 'LEAP',
-  PEAP: 'PEAP',
-  EAP_TLS: 'EAP-TLS',
-  EAP_TTLS: 'EAP-TTLS',
 };
 
 /** @enum {string} */
@@ -585,15 +571,4 @@ CrOnc.shouldShowTetherDialogBeforeConnection = function(networkProperties) {
   // and they indicate that a connection has not yet occurred to this host.
   return !networkProperties.Tether ||
       !networkProperties.Tether.HasConnectedToHost;
-};
-
-/**
- * Returns a valid CrOnc.Type, or undefined.
- * @param {string} typeStr
- * @return {!CrOnc.Type|undefined}
- */
-CrOnc.getValidType = function(typeStr) {
-  if (Object.values(CrOnc.Type).indexOf(typeStr) >= 0)
-    return /** @type {!CrOnc.Type} */ (typeStr);
-  return undefined;
-};
+}

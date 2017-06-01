@@ -41,11 +41,13 @@ import org.chromium.android_webview.AwContentsClient;
 import org.chromium.android_webview.AwContentsStatics;
 import org.chromium.android_webview.AwCookieManager;
 import org.chromium.android_webview.AwDevToolsServer;
+import org.chromium.android_webview.AwMetricsServiceClient;
 import org.chromium.android_webview.AwNetworkChangeNotifierRegistrationPolicy;
 import org.chromium.android_webview.AwQuotaManagerBridge;
 import org.chromium.android_webview.AwResource;
 import org.chromium.android_webview.AwSettings;
 import org.chromium.android_webview.HttpAuthDatabase;
+import org.chromium.android_webview.PlatformServiceBridge;
 import org.chromium.android_webview.ResourcesContextWrapperFactory;
 import org.chromium.android_webview.command_line.CommandLineUtil;
 import org.chromium.base.BuildConfig;
@@ -275,7 +277,8 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
     }
 
     static void checkStorageIsNotDeviceProtected(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && context.isDeviceProtectedStorage()) {
+        if ((Build.VERSION.CODENAME.equals("N") || Build.VERSION.SDK_INT > Build.VERSION_CODES.M)
+                && context.isDeviceProtectedStorage()) {
             throw new IllegalArgumentException(
                     "WebView cannot be used with device protected storage");
         }
@@ -414,14 +417,26 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
         initPlatSupportLibrary();
         doNetworkInitializations(context);
         final boolean isExternalService = true;
-        // The WebView package name is used to locate the separate Service to which we copy crash
-        // minidumps. This package name must be set before a render process has a chance to crash -
-        // otherwise we might try to copy a minidump without knowing what process to copy it to.
-        AwBrowserProcess.setWebViewPackageName(webViewPackageName);
         AwBrowserProcess.configureChildProcessLauncher(webViewPackageName, isExternalService);
         AwBrowserProcess.start();
-        AwBrowserProcess.handleMinidumpsAndSetMetricsConsent(
-                webViewPackageName, true /* updateMetricsConsent */);
+
+        final boolean enableMinidumpUploadingForTesting = CommandLine.getInstance().hasSwitch(
+                CommandLineUtil.CRASH_UPLOADS_ENABLED_FOR_TESTING_SWITCH);
+        if (enableMinidumpUploadingForTesting) {
+            AwBrowserProcess.handleMinidumps(webViewPackageName, true /* enabled */);
+        }
+
+        PlatformServiceBridge.getInstance().queryMetricsSetting(new ValueCallback<Boolean>() {
+            // Actions conditioned on whether the Android Checkbox is toggled on
+            public void onReceiveValue(Boolean enabled) {
+                ThreadUtils.assertOnUiThread();
+                AwMetricsServiceClient.setConsentSetting(context, enabled);
+
+                if (!enableMinidumpUploadingForTesting) {
+                    AwBrowserProcess.handleMinidumps(webViewPackageName, enabled);
+                }
+            }
+        });
 
         if (CommandLineUtil.isBuildDebuggable()) {
             setWebContentsDebuggingEnabled(true);
@@ -552,26 +567,6 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
                     public Uri[] parseFileChooserResult(int resultCode, Intent intent) {
                         return AwContentsClient.parseFileChooserResult(resultCode, intent);
                     }
-
-                    /**
-                     * Starts Safe Browsing initialization. This should only be called once.
-                     * @param context is the activity context the WebView will be used in.
-                     * @param callback will be called with the value true if initialization is
-                     * successful. The callback will be run on the UI thread.
-                     */
-                    // TODO(ntfschr): add @Override once next android SDK rolls
-                    public void initSafeBrowsing(Context context, ValueCallback<Boolean> callback) {
-                        AwContentsStatics.initSafeBrowsing(context, callback);
-                    }
-
-                    /**
-                     * Shuts down Safe Browsing. This should only be called once.
-                     */
-                    // TODO(ntfschr): add @Override once next android SDK rolls
-                    public void shutdownSafeBrowsing() {
-                        AwContentsStatics.shutdownSafeBrowsing();
-                    }
-
                 };
             }
         }

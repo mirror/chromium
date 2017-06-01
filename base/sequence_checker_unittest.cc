@@ -271,17 +271,16 @@ class SequenceCheckerMacroTest : public SequenceCheckerTest {
 
   void ExpectDeathOnOtherSequence() {
 #if DCHECK_IS_ON()
-    EXPECT_DCHECK_DEATH({
-      DCHECK_CALLED_ON_VALID_SEQUENCE(my_sequence_checker_) << "Error message.";
-    });
+    EXPECT_DCHECK_DEATH(
+        { DCHECK_CALLED_ON_VALID_SEQUENCE(my_sequence_checker_); });
 #else
     // Happily no-ops on non-dcheck builds.
-    DCHECK_CALLED_ON_VALID_SEQUENCE(my_sequence_checker_) << "Error message.";
+    DCHECK_CALLED_ON_VALID_SEQUENCE(my_sequence_checker_);
 #endif
   }
 
   void ExpectNoDeathOnOtherSequenceAfterDetach() {
-    DCHECK_CALLED_ON_VALID_SEQUENCE(my_sequence_checker_) << "Error message.";
+    DCHECK_CALLED_ON_VALID_SEQUENCE(my_sequence_checker_);
   }
 
  protected:

@@ -21,7 +21,7 @@ class VirtualKeyboardTray : public TrayBackgroundView,
                             public KeyboardUIObserver,
                             public keyboard::KeyboardControllerObserver {
  public:
-  explicit VirtualKeyboardTray(Shelf* shelf);
+  explicit VirtualKeyboardTray(WmShelf* wm_shelf);
   ~VirtualKeyboardTray() override;
 
   // TrayBackgroundView:
@@ -44,7 +44,7 @@ class VirtualKeyboardTray : public TrayBackgroundView,
   // Weak pointer, will be parented by TrayContainer for its lifetime.
   views::ImageView* icon_;
 
-  Shelf* shelf_;
+  WmShelf* wm_shelf_;
 
   DISALLOW_COPY_AND_ASSIGN(VirtualKeyboardTray);
 };

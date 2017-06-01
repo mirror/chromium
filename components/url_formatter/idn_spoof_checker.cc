@@ -236,7 +236,6 @@ bool IDNSpoofChecker::SafeToDisplayAsUnicode(base::StringPiece16 label,
     //   Letter Co) to be next to Latin.
     // - Disallow Latin 'o' and 'g' next to Armenian.
     // - Disalow mixing of Latin and Canadian Syllabary.
-    // - Disalow mixing of Latin and Tifinagh.
     // - Disallow combining diacritical mark (U+0300-U+0339) after a non-LGC
     //   character. Other combining diacritical marks are not in the allowed
     //   character set.
@@ -255,7 +254,6 @@ bool IDNSpoofChecker::SafeToDisplayAsUnicode(base::StringPiece16 label,
             R"(^[og]+[\p{scx=armn}]|[\p{scx=armn}][og]+$|)"
             R"([\p{scx=armn}][og]+[\p{scx=armn}]|)"
             R"([\p{sc=cans}].*[a-z]|[a-z].*[\p{sc=cans}]|)"
-            R"([\p{sc=tfng}].*[a-z]|[a-z].*[\p{sc=tfng}]|)"
             R"([^\p{scx=latn}\p{scx=grek}\p{scx=cyrl}][\u0300-\u0339])",
             -1, US_INV),
         0, status);
@@ -368,35 +366,19 @@ void IDNSpoofChecker::SetAllowedUnicodeSet(UErrorCode* status) {
   // blacklisted by Mozilla. We keep it, even though it can look like a double
   // quotation mark. Using it in Hebrew should be safe. When used with a
   // non-Hebrew script, it'd be filtered by other checks in place.
-
-  // The following 5 characters are disallowed because they're in NV8 (invalid
-  // in IDNA 2008).
-  allowed_set.remove(0x58au);  // Armenian Hyphen
+  //
   // U+2010 (Hyphen) is in the inclusion set, but we drop it because it can be
   // confused with an ASCII U+002D (Hyphen-Minus).
   allowed_set.remove(0x2010u);
-  // U+2019 is hard to notice when sitting next to a regular character.
-  allowed_set.remove(0x2019u);  // Right Single Quotation Mark
   // U+2027 (Hyphenation Point) is in the inclusion set, but is blacklisted by
   // Mozilla. It is dropped, as it can be confused with U+30FB (Katakana Middle
   // Dot).
   allowed_set.remove(0x2027u);
-  allowed_set.remove(0x30a0u);  // Katakana-Hiragana Double Hyphen
-
-  // Block {Single,double}-quotation-mark look-alikes.
-  allowed_set.remove(0x2bbu);  // Modifier Letter Turned Comma
-  allowed_set.remove(0x2bcu);  // Modifier Letter Apostrophe
-  // No need to block U+144A (Canadian Syllabics West-Cree P) separately
-  // because it's blocked from mixing with other scripts including Latin.
 
 #if defined(OS_MACOSX)
   // The following characters are reported as present in the default macOS
   // system UI font, but they render as blank. Remove them from the allowed
-  // set to prevent spoofing until the font issue is resolved.
-
-  // Arabic letter KASHMIRI YEH. Not used in Arabic and Persian.
-  allowed_set.remove(0x0620u);
-
+  // set to prevent spoofing.
   // Tibetan characters used for transliteration of ancient texts:
   allowed_set.remove(0x0F8Cu);
   allowed_set.remove(0x0F8Du);

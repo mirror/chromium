@@ -31,7 +31,6 @@
 #ifndef ElementAnimation_h
 #define ElementAnimation_h
 
-#include "base/gtest_prod_util.h"
 #include "bindings/core/v8/DictionarySequenceOrDictionary.h"
 #include "bindings/core/v8/UnrestrictedDoubleOrKeyframeAnimationOptions.h"
 #include "core/animation/DocumentTimeline.h"
@@ -48,8 +47,6 @@
 #include "platform/wtf/Allocator.h"
 
 namespace blink {
-
-// Implements the interface in ElementAnimation.idl.
 
 class ElementAnimation {
   STATIC_ONLY(ElementAnimation);
@@ -73,11 +70,11 @@ class ElementAnimation {
       return nullptr;
 
     if (options.isKeyframeAnimationOptions()) {
-      Animation* animation = animateInternal(element, effect, timing);
+      Animation* animation = animate(element, effect, timing);
       animation->setId(options.getAsKeyframeAnimationOptions().id());
       return animation;
     }
-    return animateInternal(element, effect, timing);
+    return animate(element, effect, timing);
   }
 
   static Animation* animate(ScriptState* script_state,
@@ -89,7 +86,15 @@ class ElementAnimation {
         exception_state);
     if (exception_state.HadException())
       return nullptr;
-    return animateInternal(element, effect, Timing());
+    return animate(element, effect, Timing());
+  }
+
+  static Animation* animate(Element& element,
+                            EffectModel* effect,
+                            const Timing& timing) {
+    KeyframeEffect* keyframe_effect =
+        KeyframeEffect::Create(&element, effect, timing);
+    return element.GetDocument().Timeline().Play(keyframe_effect);
   }
 
   static HeapVector<Member<Animation>> getAnimations(Element& element) {
@@ -107,17 +112,6 @@ class ElementAnimation {
         animations.push_back(animation);
     }
     return animations;
-  }
-
- private:
-  FRIEND_TEST_ALL_PREFIXES(AnimationSimTest, CustomPropertyBaseComputedStyle);
-
-  static Animation* animateInternal(Element& element,
-                                    EffectModel* effect,
-                                    const Timing& timing) {
-    KeyframeEffect* keyframe_effect =
-        KeyframeEffect::Create(&element, effect, timing);
-    return element.GetDocument().Timeline().Play(keyframe_effect);
   }
 };
 

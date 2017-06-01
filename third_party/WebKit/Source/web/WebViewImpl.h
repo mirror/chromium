@@ -32,13 +32,10 @@
 #define WebViewImpl_h
 
 #include <memory>
-#include "core/editing/spellcheck/SpellCheckerClientImpl.h"
 #include "core/exported/WebViewBase.h"
 #include "core/frame/ResizeViewportAnchor.h"
-#include "core/page/ChromeClient.h"
 #include "core/page/ContextMenuProvider.h"
 #include "core/page/EventWithHitTestResults.h"
-#include "core/page/PageWidgetDelegate.h"
 #include "platform/animation/CompositorAnimationTimeline.h"
 #include "platform/geometry/IntPoint.h"
 #include "platform/geometry/IntRect.h"
@@ -63,9 +60,12 @@
 #include "public/platform/WebVector.h"
 #include "public/web/WebNavigationPolicy.h"
 #include "public/web/WebPageImportanceSignals.h"
+#include "web/ChromeClientImpl.h"
 #include "web/ContextMenuClientImpl.h"
 #include "web/EditorClientImpl.h"
 #include "web/MediaKeysClientImpl.h"
+#include "web/PageWidgetDelegate.h"
+#include "web/SpellCheckerClientImpl.h"
 #include "web/StorageClientImpl.h"
 #include "web/WebExport.h"
 #include "web/WebPagePopupImpl.h"
@@ -85,11 +85,12 @@ class UserGestureToken;
 class WebActiveGestureAnimation;
 class WebDevToolsAgentImpl;
 class WebElement;
-class WebInputMethodController;
+class WebInputMethodControllerImpl;
 class WebLayerTreeView;
 class WebLocalFrame;
-class WebLocalFrameBase;
+class WebLocalFrameImpl;
 class CompositorMutatorImpl;
+class WebPlugin;
 class WebRemoteFrame;
 class WebSettingsImpl;
 class WebViewScheduler;
@@ -150,7 +151,6 @@ class WEB_EXPORT WebViewImpl final
   void DidAcquirePointerLock() override;
   void DidNotAcquirePointerLock() override;
   void DidLosePointerLock() override;
-  void ShowContextMenu(WebMenuSourceType) override;
 
   // WebView methods:
   virtual bool IsWebView() const { return true; }
@@ -173,6 +173,8 @@ class WEB_EXPORT WebViewImpl final
                                  float browser_controls_height,
                                  bool browser_controls_shrink_layout) override;
   WebFrame* MainFrame() override;
+  WebFrame* FindFrameByName(const WebString& name,
+                            WebFrame* relative_to_frame) override;
   WebLocalFrame* FocusedFrame() override;
   void SetFocusedFrame(WebFrame*) override;
   void FocusDocumentView(WebFrame*) override;
@@ -223,11 +225,13 @@ class WEB_EXPORT WebViewImpl final
   unsigned long CreateUniqueIdentifierForRequest() override;
   void EnableDeviceEmulation(const WebDeviceEmulationParams&) override;
   void DisableDeviceEmulation() override;
+  WebAXObject AccessibilityObject() override;
   void SetSelectionColors(unsigned active_background_color,
                           unsigned active_foreground_color,
                           unsigned inactive_background_color,
                           unsigned inactive_foreground_color) override;
   void PerformCustomContextMenuAction(unsigned action) override;
+  void ShowContextMenu() override;
   void DidCloseContextMenu() override;
   void HidePopups() override;
   void SetPageOverlayColor(WebColor) override;
@@ -306,7 +310,7 @@ class WEB_EXPORT WebViewImpl final
 
   // Returns the main frame associated with this view. This may be null when
   // the page is shutting down, but will be valid at all other times.
-  WebLocalFrameBase* MainFrameImpl() const override;
+  WebLocalFrameImpl* MainFrameImpl() const override;
 
   // Event related methods:
   void MouseContextMenu(const WebMouseEvent&);
@@ -345,8 +349,8 @@ class WEB_EXPORT WebViewImpl final
   //   2) Calling updateAllLifecyclePhases() is a no-op.
   // After calling WebWidget::updateAllLifecyclePhases(), expect to get this
   // notification unless the view did not need a layout.
-  void LayoutUpdated() override;
-  void ResizeAfterLayout() override;
+  void LayoutUpdated(WebLocalFrameImpl*) override;
+  void ResizeAfterLayout(WebLocalFrameImpl*) override;
 
   void DidChangeContentsSize() override;
   void PageScaleFactorChanged() override;
@@ -493,15 +497,15 @@ class WEB_EXPORT WebViewImpl final
     return last_frame_time_monotonic_;
   }
 
-  class ChromeClient& GetChromeClient() const override {
-    return *chrome_client_.Get();
+  class ChromeClient& ChromeClient() const override {
+    return *chrome_client_impl_.Get();
   }
 
   // Returns the currently active WebInputMethodController which is the one
   // corresponding to the focused frame. It will return nullptr if there is no
   // focused frame, or if the there is one but it belongs to a different local
   // root.
-  WebInputMethodController* GetActiveWebInputMethodController() const;
+  WebInputMethodControllerImpl* GetActiveWebInputMethodController() const;
 
   void SetLastHiddenPagePopup(WebPagePopupImpl* page_popup) override {
     last_hidden_page_popup_ = page_popup;
@@ -576,10 +580,12 @@ class WEB_EXPORT WebViewImpl final
   WebInputEventResult HandleSyntheticWheelFromTouchpadPinchEvent(
       const WebGestureEvent&);
 
+  WebPlugin* FocusedPluginIfInputMethodSupported(LocalFrame*);
+
   WebGestureEvent CreateGestureScrollEventFromFling(WebInputEvent::Type,
                                                     WebGestureDevice) const;
 
-  void EnablePopupMouseWheelEventListener(WebLocalFrameBase* local_root);
+  void EnablePopupMouseWheelEventListener(WebLocalFrameImpl* local_root);
   void DisablePopupMouseWheelEventListener();
 
   void CancelPagePopup();
@@ -600,7 +606,7 @@ class WEB_EXPORT WebViewImpl final
   WebViewClient* client_;  // Can be 0 (e.g. unittests, shared workers, etc.)
   WebSpellCheckClient* spell_check_client_;
 
-  Persistent<ChromeClient> chrome_client_;
+  Persistent<ChromeClientImpl> chrome_client_impl_;
   ContextMenuClientImpl context_menu_client_impl_;
   EditorClientImpl editor_client_impl_;
   SpellCheckerClientImpl spell_checker_client_impl_;
@@ -723,7 +729,7 @@ class WEB_EXPORT WebViewImpl final
 
   // The local root whose document has |popup_mouse_wheel_event_listener_|
   // registered.
-  WeakPersistent<WebLocalFrameBase> local_root_with_empty_mouse_wheel_listener_;
+  WeakPersistent<WebLocalFrameImpl> local_root_with_empty_mouse_wheel_listener_;
 
   WebPageImportanceSignals page_importance_signals_;
 

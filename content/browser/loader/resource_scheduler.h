@@ -14,7 +14,7 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
-#include "base/sequence_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "content/common/content_export.h"
 #include "net/base/priority_queue.h"
 #include "net/base/request_priority.h"
@@ -52,7 +52,7 @@ class ResourceThrottle;
 // The scheduler may defer issuing the request via the ResourceThrottle
 // interface or it may alter the request's priority by calling set_priority() on
 // the URLRequest.
-class CONTENT_EXPORT ResourceScheduler {
+class CONTENT_EXPORT ResourceScheduler : public base::NonThreadSafe {
  public:
   ResourceScheduler();
   ~ResourceScheduler();
@@ -149,8 +149,6 @@ class CONTENT_EXPORT ResourceScheduler {
   // start resource requests.
   bool yielding_scheduler_enabled_;
   int max_requests_before_yielding_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(ResourceScheduler);
 };

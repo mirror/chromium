@@ -83,7 +83,7 @@ void CredentialManagerImpl::Store(const CredentialInfo& credential,
   // is only available on HTTPS origins.
   auto form_fetcher = base::MakeUnique<FormFetcherImpl>(
       PasswordStore::FormDigest(*observed_form), client_, false, false);
-  form_manager_ = base::MakeRefCounted<CredentialManagerPasswordFormManager>(
+  form_manager_ = base::MakeUnique<CredentialManagerPasswordFormManager>(
       client_, GetDriver(), *observed_form, std::move(form), this, nullptr,
       std::move(form_fetcher));
 }
@@ -126,11 +126,11 @@ void CredentialManagerImpl::OnProvisionalSaveComplete() {
   client_->PromptUserToSaveOrUpdatePassword(std::move(form_manager_), false);
 }
 
-void CredentialManagerImpl::PreventSilentAccess(
-    PreventSilentAccessCallback callback) {
+void CredentialManagerImpl::RequireUserMediation(
+    RequireUserMediationCallback callback) {
   if (password_manager_util::IsLoggingActive(client_)) {
     CredentialManagerLogger(client_->GetLogManager())
-        .LogPreventSilentAccess(web_contents()->GetLastCommittedURL());
+        .LogRequireUserMediation(web_contents()->GetLastCommittedURL());
   }
   // Send acknowledge response back.
   std::move(callback).Run();
@@ -142,7 +142,7 @@ void CredentialManagerImpl::PreventSilentAccess(
 
   if (!pending_require_user_mediation_) {
     pending_require_user_mediation_.reset(
-        new CredentialManagerPendingPreventSilentAccessTask(this));
+        new CredentialManagerPendingRequireUserMediationTask(this));
   }
   pending_require_user_mediation_->AddOrigin(GetSynthesizedFormForOrigin());
 }

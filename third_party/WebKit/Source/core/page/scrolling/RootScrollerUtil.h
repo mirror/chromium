@@ -7,7 +7,6 @@
 
 namespace blink {
 
-class LayoutBox;
 class Node;
 class PaintLayer;
 class ScrollableArea;
@@ -23,10 +22,6 @@ ScrollableArea* ScrollableAreaForRootScroller(const Node*);
 // <html> element and document Node, this returns the LayoutView's PaintLayer
 // rather than <html>'s since scrolling is handled by LayoutView.
 PaintLayer* PaintLayerForRootScroller(const Node*);
-
-// Returns true if the given LayoutBox is the effective root scroller in its
-// Document. See |effective root scroller| in README.md.
-bool IsEffective(const LayoutBox&);
 
 }  // namespace RootScrollerUtil
 

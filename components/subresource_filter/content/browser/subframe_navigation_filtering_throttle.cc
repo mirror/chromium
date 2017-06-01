@@ -9,7 +9,6 @@
 #include "base/metrics/histogram_macros.h"
 #include "components/subresource_filter/core/common/time_measurements.h"
 #include "content/public/browser/navigation_handle.h"
-#include "content/public/common/browser_side_navigation_policy.h"
 
 namespace subresource_filter {
 
@@ -39,12 +38,12 @@ SubframeNavigationFilteringThrottle::~SubframeNavigationFilteringThrottle() {
 
 content::NavigationThrottle::ThrottleCheckResult
 SubframeNavigationFilteringThrottle::WillStartRequest() {
-  return DeferToCalculateLoadPolicy(ThrottlingStage::WillStartRequest);
+  return DeferToCalculateLoadPolicy();
 }
 
 content::NavigationThrottle::ThrottleCheckResult
 SubframeNavigationFilteringThrottle::WillRedirectRequest() {
-  return DeferToCalculateLoadPolicy(ThrottlingStage::WillRedirectRequest);
+  return DeferToCalculateLoadPolicy();
 }
 
 const char* SubframeNavigationFilteringThrottle::GetNameForLogging() {
@@ -52,34 +51,26 @@ const char* SubframeNavigationFilteringThrottle::GetNameForLogging() {
 }
 
 content::NavigationThrottle::ThrottleCheckResult
-SubframeNavigationFilteringThrottle::DeferToCalculateLoadPolicy(
-    ThrottlingStage stage) {
+SubframeNavigationFilteringThrottle::DeferToCalculateLoadPolicy() {
   parent_frame_filter_->GetLoadPolicyForSubdocument(
       navigation_handle()->GetURL(),
       base::Bind(&SubframeNavigationFilteringThrottle::OnCalculatedLoadPolicy,
-                 weak_ptr_factory_.GetWeakPtr(), stage));
+                 weak_ptr_factory_.GetWeakPtr()));
   last_defer_timestamp_ = base::TimeTicks::Now();
   return content::NavigationThrottle::ThrottleCheckResult::DEFER;
 }
 
 void SubframeNavigationFilteringThrottle::OnCalculatedLoadPolicy(
-    ThrottlingStage stage,
     LoadPolicy policy) {
   DCHECK(!last_defer_timestamp_.is_null());
   total_defer_time_ += base::TimeTicks::Now() - last_defer_timestamp_;
   // TODO(csharrison): Support WouldDisallow pattern and expose the policy for
-  // metrics.
+  // metrics. Also, cancel with BLOCK_AND_COLLAPSE when it is implemented.
   if (policy == LoadPolicy::DISALLOW) {
     disallowed_ = true;
     parent_frame_filter_->ReportDisallowedLoad();
-
-    const bool block_and_collapse_is_supported =
-        content::IsBrowserSideNavigationEnabled() ||
-        stage == ThrottlingStage::WillStartRequest;
     navigation_handle()->CancelDeferredNavigation(
-        block_and_collapse_is_supported
-            ? content::NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE
-            : content::NavigationThrottle::CANCEL);
+        content::NavigationThrottle::CANCEL);
   } else {
     navigation_handle()->Resume();
   }

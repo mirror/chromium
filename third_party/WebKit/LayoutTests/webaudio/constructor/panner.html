@@ -1,20 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <title>
-      Test Constructor: Panner
-    </title>
+    <title>Test Constructor: Panner</title>
     <script src="../../resources/testharness.js"></script>
     <script src="../../resources/testharnessreport.js"></script>
     <script src="../resources/audit-util.js"></script>
     <script src="../resources/audit.js"></script>
     <script src="audionodeoptions.js"></script>
   </head>
-  <body>
-    <script id="layout-test-code">
-      let context;
 
-      let audit = Audit.createTaskRunner();
+  <body>
+    <script>
+      var context;
+
+      var audit = Audit.createTaskRunner();
 
       audit.define('initialize', (task, should) => {
         context = initializeContext(should);
@@ -76,11 +75,11 @@
       audit.define('test AudioNodeOptions', (task, should) => {
         // Can't use testAudioNodeOptions because the constraints for this node
         // are not supported there.
-        let node;
-        let success = true;
+        var node;
+        var success = true;
 
         // Test that we can set the channel count to 1 or 2.
-        let options = {channelCount: 1};
+        var options = {channelCount: 1};
         should(
             () => {
               node = new PannerNode(context, options);
@@ -196,9 +195,9 @@
       });
 
       audit.define('constructor with options', (task, should) => {
-        let node;
-        let success = true;
-        let options = {
+        var node;
+        var success = true;
+        var options = {
           panningModel: 'HRTF',
           // We use full double float values here to verify also that the actual
           // AudioParam value is properly rounded to a float.  The actual value

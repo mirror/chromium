@@ -20,7 +20,6 @@
 #import "ios/public/provider/chrome/browser/chrome_browser_provider.h"
 #import "ios/public/provider/chrome/browser/signin/fake_chrome_identity_service.h"
 #include "net/http/http_status_code.h"
-#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "net/url_request/url_fetcher_delegate.h"
 #include "net/url_request/url_request_status.h"
@@ -39,8 +38,7 @@ class MergeSessionFakeURLFetcherFactory : public net::FakeURLFetcherFactory {
       int id,
       const GURL& url,
       net::URLFetcher::RequestType request_type,
-      net::URLFetcherDelegate* d,
-      net::NetworkTrafficAnnotationTag traffic_annotation) override {
+      net::URLFetcherDelegate* d) override {
     const GURL kMergeSessionURL =
         GURL("https://accounts.google.com/MergeSession");
     url::Replacements<char> replacements;
@@ -48,8 +46,8 @@ class MergeSessionFakeURLFetcherFactory : public net::FakeURLFetcherFactory {
     replacements.ClearQuery();
     if (url.ReplaceComponents(replacements) != kMergeSessionURL) {
       // URL is not a MergeSession GET. Use the default method.
-      return net::FakeURLFetcherFactory::CreateURLFetcher(
-          id, url, request_type, d, traffic_annotation);
+      return net::FakeURLFetcherFactory::CreateURLFetcher(id, url, request_type,
+                                                          d);
     }
     // Actual MergeSession request. Answer is ignored by the AccountReconcilor,
     // so it can also be empty.

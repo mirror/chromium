@@ -132,9 +132,9 @@ bool BookmarkEditorView::Accept() {
   return true;
 }
 
-gfx::Size BookmarkEditorView::CalculatePreferredSize() const {
+gfx::Size BookmarkEditorView::GetPreferredSize() const {
   if (!show_tree_)
-    return views::View::CalculatePreferredSize();
+    return views::View::GetPreferredSize();
 
   return gfx::Size(views::Widget::GetLocalizedContentsSize(
       IDS_EDITBOOKMARK_DIALOG_WIDTH_CHARS,

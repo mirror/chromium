@@ -8,7 +8,6 @@
 #include "base/timer/mock_timer.h"
 #include "chromeos/components/tether/ble_constants.h"
 #include "chromeos/components/tether/proto/tether.pb.h"
-#include "chromeos/components/tether/timer_factory.h"
 #include "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.h"
 #include "components/cryptauth/bluetooth_throttler.h"
 #include "components/cryptauth/connection.h"
@@ -59,14 +58,6 @@ struct ReceivedMessage {
 
   cryptauth::RemoteDevice remote_device;
   std::string payload;
-};
-
-class MockTimerFactory : public TimerFactory {
- public:
-  std::unique_ptr<base::Timer> CreateOneShotTimer() override {
-    return base::MakeUnique<base::MockTimer>(false /* retains_user_task */,
-                                             false /* is_repeating */);
-  }
 };
 
 class TestObserver : public BleConnectionManager::Observer {
@@ -236,6 +227,14 @@ class BleConnectionManagerTest : public testing::Test {
 
    private:
     std::string expected_device_address_;
+  };
+
+  class MockTimerFactory : public BleConnectionManager::TimerFactory {
+   public:
+    std::unique_ptr<base::Timer> CreateTimer() override {
+      return base::MakeUnique<base::MockTimer>(false /* retains_user_task */,
+                                               false /* is_repeating */);
+    }
   };
 
   BleConnectionManagerTest() : test_devices_(CreateTestDevices(4)) {

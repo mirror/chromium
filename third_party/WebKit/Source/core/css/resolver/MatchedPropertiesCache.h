@@ -110,7 +110,6 @@ class MatchedPropertiesCache {
   void ClearViewportDependent();
 
   static bool IsCacheable(const StyleResolverState&);
-  static bool IsStyleCacheable(const ComputedStyle&);
 
   DECLARE_TRACE();
 

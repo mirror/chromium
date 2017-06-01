@@ -6,7 +6,6 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/timer/timer.h"
 #include "chrome/browser/page_load_metrics/metrics_web_contents_observer.h"
 #if defined(OS_ANDROID)
 #include "chrome/browser/page_load_metrics/observers/android_page_load_metrics_observer.h"
@@ -56,7 +55,6 @@ class PageLoadMetricsEmbedder
   // page_load_metrics::PageLoadMetricsEmbedderInterface:
   bool IsNewTabPageUrl(const GURL& url) override;
   void RegisterObservers(page_load_metrics::PageLoadTracker* tracker) override;
-  std::unique_ptr<base::Timer> CreateTimer() override;
 
  private:
   bool IsPrerendering() const;
@@ -144,10 +142,6 @@ bool PageLoadMetricsEmbedder::IsPrerendering() const {
          nullptr;
 }
 
-std::unique_ptr<base::Timer> PageLoadMetricsEmbedder::CreateTimer() {
-  return base::MakeUnique<base::OneShotTimer>();
-}
-
 bool PageLoadMetricsEmbedder::IsNewTabPageUrl(const GURL& url) {
   Profile* profile =
       Profile::FromBrowserContext(web_contents_->GetBrowserContext());
@@ -159,11 +153,9 @@ bool PageLoadMetricsEmbedder::IsNewTabPageUrl(const GURL& url) {
 }  // namespace
 
 void InitializePageLoadMetricsForWebContents(
-    content::WebContents* web_contents,
-    const base::Optional<content::WebContents::CreateParams>& create_params) {
+    content::WebContents* web_contents) {
   page_load_metrics::MetricsWebContentsObserver::CreateForWebContents(
-      web_contents, create_params,
-      base::MakeUnique<PageLoadMetricsEmbedder>(web_contents));
+      web_contents, base::MakeUnique<PageLoadMetricsEmbedder>(web_contents));
 }
 
 }  // namespace chrome

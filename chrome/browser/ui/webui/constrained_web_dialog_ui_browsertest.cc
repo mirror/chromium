@@ -37,7 +37,7 @@ static const char kTestDataURL[] = "data:text/html,<!doctype html>"
 
 bool IsEqualSizes(gfx::Size expected,
                   ConstrainedWebDialogDelegate* dialog_delegate) {
-  return expected == dialog_delegate->GetConstrainedWebDialogPreferredSize();
+  return expected == dialog_delegate->GetPreferredSize();
 }
 
 std::string GetChangeDimensionsScript(int dimension) {
@@ -189,12 +189,11 @@ IN_PROC_BROWSER_TEST_F(ConstrainedWebDialogBrowserTest,
   ASSERT_TRUE(dialog_delegate);
   EXPECT_TRUE(dialog_delegate->GetNativeDialog());
   ASSERT_FALSE(IsShowingWebContentsModalDialog(web_contents));
-  EXPECT_EQ(min_size, dialog_delegate->GetConstrainedWebDialogMinimumSize());
-  EXPECT_EQ(max_size, dialog_delegate->GetConstrainedWebDialogMaximumSize());
+  EXPECT_EQ(min_size, dialog_delegate->GetMinimumSize());
+  EXPECT_EQ(max_size, dialog_delegate->GetMaximumSize());
 
   // Check for initial sizing. Dialog was created as a 400x400 dialog.
-  ASSERT_EQ(initial_dialog_size,
-            dialog_delegate->GetConstrainedWebDialogPreferredSize());
+  ASSERT_EQ(initial_dialog_size, dialog_delegate->GetPreferredSize());
 
   observer.Wait();
 
@@ -257,8 +256,7 @@ IN_PROC_BROWSER_TEST_F(ConstrainedWebDialogBrowserTest,
   delegate->GetDialogSize(&initial_dialog_size);
 
   // Check for initial sizing. Dialog was created as a 400x400 dialog.
-  ASSERT_EQ(initial_dialog_size,
-            dialog_delegate->GetConstrainedWebDialogPreferredSize());
+  ASSERT_EQ(initial_dialog_size, dialog_delegate->GetPreferredSize());
 
   // Resize <body> to dimension smaller than dialog.
   EXPECT_TRUE(ExecuteScript(dialog_delegate->GetWebContents(),

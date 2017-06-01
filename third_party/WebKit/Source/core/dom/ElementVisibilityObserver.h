@@ -5,8 +5,6 @@
 #ifndef ElementVisibilityObserver_h
 #define ElementVisibilityObserver_h
 
-#include <limits>
-
 #include "core/CoreExport.h"
 #include "core/dom/IntersectionObserver.h"
 #include "platform/heap/Heap.h"
@@ -36,9 +34,7 @@ class CORE_EXPORT ElementVisibilityObserver final
   virtual ~ElementVisibilityObserver();
 
   // The |threshold| is the minimum fraction that needs to be visible.
-  // See https://github.com/WICG/IntersectionObserver/issues/164 for why this
-  // defaults to std::numeric_limits<float>::min() rather than zero.
-  void Start(float threshold = std::numeric_limits<float>::min());
+  void Start(float threshold = 0.0);
   void Stop();
 
   void DeliverObservationsForTesting();

@@ -43,7 +43,7 @@
 #include "core/exported/WebDataSourceImpl.h"
 #include "core/exported/WebPluginContainerBase.h"
 #include "core/exported/WebViewBase.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
 #include "core/frame/WebLocalFrameBase.h"
@@ -54,7 +54,6 @@
 #include "core/html/HTMLInputElement.h"
 #include "core/html/HTMLMediaElement.h"
 #include "core/html/HTMLPlugInElement.h"
-#include "core/input/ContextMenuAllowedScope.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutPart.h"
@@ -81,6 +80,7 @@
 #include "public/web/WebSearchableFormData.h"
 #include "public/web/WebTextCheckClient.h"
 #include "public/web/WebViewClient.h"
+#include "web/ContextMenuAllowedScope.h"
 
 namespace blink {
 
@@ -529,6 +529,7 @@ static void PopulateSubMenuItems(const Vector<ContextMenuItem>& input_menu,
 
     WebMenuItemInfo output_item;
     output_item.label = input_item->Title();
+    output_item.icon = input_item->Icon();
     output_item.enabled = input_item->Enabled();
     output_item.checked = input_item->Checked();
     output_item.action = static_cast<unsigned>(input_item->Action() -

@@ -547,7 +547,7 @@ VISIT_PROTO_FIELDS(const sync_pb::LanguageDetection::Language& proto) {
 
 VISIT_PROTO_FIELDS(const sync_pb::LanguageDetection& proto) {
   VISIT_REP(detected_languages);
-  VISIT(adopted_language_code);
+  VISIT(adopted_language);
 }
 
 VISIT_PROTO_FIELDS(const sync_pb::LinkedAppIconInfo& proto) {
@@ -669,7 +669,6 @@ VISIT_PROTO_FIELDS(const sync_pb::PreferenceSpecifics& proto) {
 VISIT_PROTO_FIELDS(const sync_pb::PrinterPPDReference& proto) {
   VISIT(user_supplied_ppd_url);
   VISIT(effective_make_and_model);
-  VISIT(autoconf);
 }
 
 VISIT_PROTO_FIELDS(const sync_pb::PrinterSpecifics& proto) {
@@ -847,12 +846,6 @@ VISIT_PROTO_FIELDS(const sync_pb::TimeRangeDirective& proto) {
   VISIT(end_time_usec);
 }
 
-VISIT_PROTO_FIELDS(const sync_pb::Translation& proto) {
-  VISIT(from_language_code);
-  VISIT(to_language_code);
-  VISIT_ENUM(interaction);
-}
-
 VISIT_PROTO_FIELDS(const sync_pb::TypeHint& proto) {
   VISIT(data_type_id);
   VISIT(has_valid_hint);
@@ -879,7 +872,6 @@ VISIT_PROTO_FIELDS(const sync_pb::UserEventSpecifics& proto) {
   VISIT(session_id);
   VISIT(field_trial_event);
   VISIT(language_detection);
-  VISIT(translation);
 }
 
 VISIT_PROTO_FIELDS(const sync_pb::WalletMaskedCreditCard& proto) {

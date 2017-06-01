@@ -9,7 +9,6 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
-#include "chrome/browser/ui/views/harmony/chrome_typography.h"
 #include "chrome/browser/ui/views/payments/payment_request_dialog_view_ids.h"
 #include "chrome/browser/ui/views/payments/payment_request_sheet_controller.h"
 #include "chrome/grit/chromium_strings.h"
@@ -20,9 +19,7 @@
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/field_types.h"
 #include "components/payments/core/payment_options_provider.h"
-#include "components/payments/core/payment_request_data_util.h"
 #include "components/payments/core/payments_profile_comparator.h"
-#include "components/payments/core/strings_util.h"
 #include "ui/base/default_style.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -51,6 +48,23 @@ namespace payments {
 
 namespace {
 
+// TODO(tmartino): Consider combining this with the Android equivalent in
+// PersonalDataManager.java
+base::string16 GetAddressFromProfile(const autofill::AutofillProfile& profile,
+                                     const std::string& locale) {
+  std::vector<autofill::ServerFieldType> fields;
+  fields.push_back(autofill::COMPANY_NAME);
+  fields.push_back(autofill::ADDRESS_HOME_LINE1);
+  fields.push_back(autofill::ADDRESS_HOME_LINE2);
+  fields.push_back(autofill::ADDRESS_HOME_DEPENDENT_LOCALITY);
+  fields.push_back(autofill::ADDRESS_HOME_CITY);
+  fields.push_back(autofill::ADDRESS_HOME_STATE);
+  fields.push_back(autofill::ADDRESS_HOME_ZIP);
+  fields.push_back(autofill::ADDRESS_HOME_SORTING_CODE);
+
+  return profile.ConstructInferredLabel(fields, fields.size(), locale);
+}
+
 // |s1|, |s2|, and |s3| are lines identifying the profile. |s1| is the
 // "headline" which may be emphasized depending on |type|. If |disabled_state|
 // is true, the labels will look disabled.
@@ -67,11 +81,11 @@ std::unique_ptr<views::View> GetBaseProfileLabel(AddressStyleType type,
   container->SetLayoutManager(layout.release());
 
   if (!s1.empty()) {
-    const int text_style = type == AddressStyleType::DETAILED
-                               ? static_cast<int>(STYLE_EMPHASIZED)
-                               : static_cast<int>(views::style::STYLE_PRIMARY);
-    std::unique_ptr<views::Label> label = base::MakeUnique<views::Label>(
-        s1, views::style::CONTEXT_LABEL, text_style);
+    std::unique_ptr<views::Label> label = base::MakeUnique<views::Label>(s1);
+    if (type == AddressStyleType::DETAILED) {
+      const gfx::FontList& font_list = label->font_list();
+      label->SetFontList(font_list.DeriveWithWeight(gfx::Font::Weight::BOLD));
+    }
     label->set_id(static_cast<int>(DialogViewID::PROFILE_LABEL_LINE_1));
     label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
     if (disabled_state) {
@@ -115,11 +129,10 @@ std::unique_ptr<views::View> GetShippingAddressLabel(
   base::string16 name =
       profile.GetInfo(autofill::AutofillType(autofill::NAME_FULL), locale);
 
-  base::string16 address =
-      GetShippingAddressLabelFormAutofillProfile(profile, locale);
+  base::string16 address = GetAddressFromProfile(profile, locale);
 
-  base::string16 phone =
-      data_util::GetFormattedPhoneNumberForDisplay(profile, locale);
+  base::string16 phone = profile.GetInfo(
+      autofill::AutofillType(autofill::PHONE_HOME_WHOLE_NUMBER), locale);
 
   return GetBaseProfileLabel(type, name, address, phone, disabled_state);
 }
@@ -127,8 +140,9 @@ std::unique_ptr<views::View> GetShippingAddressLabel(
 std::unique_ptr<views::Label> GetLabelForMissingInformation(
     const base::string16& missing_info) {
   std::unique_ptr<views::Label> label =
-      base::MakeUnique<views::Label>(missing_info, CONTEXT_DEPRECATED_SMALL);
+      base::MakeUnique<views::Label>(missing_info);
   label->set_id(static_cast<int>(DialogViewID::PROFILE_LABEL_ERROR));
+  label->SetFontList(label->GetDefaultFontList().DeriveWithSizeDelta(-1));
   // Missing information typically has a nice shade of blue.
   label->SetEnabledColor(label->GetNativeTheme()->GetSystemColor(
       ui::NativeTheme::kColorId_LinkEnabled));
@@ -186,16 +200,16 @@ std::unique_ptr<views::View> CreateSheetHeaderView(
 
   views::ColumnSet* columns = layout->AddColumnSet(0);
   // A column for the optional back arrow.
-  columns->AddColumn(views::GridLayout::LEADING, views::GridLayout::CENTER, 0,
-                     views::GridLayout::USE_PREF, 0, 0);
+  columns->AddColumn(views::GridLayout::LEADING, views::GridLayout::CENTER,
+                     0, views::GridLayout::USE_PREF, 0, 0);
 
   constexpr int kPaddingBetweenArrowAndTitle = 16;
   if (show_back_arrow)
     columns->AddPaddingColumn(0, kPaddingBetweenArrowAndTitle);
 
   // A column for the title.
-  columns->AddColumn(views::GridLayout::FILL, views::GridLayout::CENTER, 1,
-                     views::GridLayout::USE_PREF, 0, 0);
+  columns->AddColumn(views::GridLayout::FILL, views::GridLayout::CENTER,
+                     1, views::GridLayout::USE_PREF, 0, 0);
 
   layout->StartRow(0, 0);
   if (!show_back_arrow) {
@@ -206,15 +220,17 @@ std::unique_ptr<views::View> CreateSheetHeaderView(
     constexpr int kBackArrowSize = 16;
     back_arrow->SetSize(gfx::Size(kBackArrowSize, kBackArrowSize));
     back_arrow->SetFocusBehavior(views::View::FocusBehavior::ALWAYS);
-    back_arrow->set_tag(
-        static_cast<int>(PaymentRequestCommonTags::BACK_BUTTON_TAG));
+    back_arrow->set_tag(static_cast<int>(
+        PaymentRequestCommonTags::BACK_BUTTON_TAG));
     back_arrow->set_id(static_cast<int>(DialogViewID::BACK_BUTTON));
     layout->AddView(back_arrow);
   }
 
-  views::Label* title_label =
-      new views::Label(title, views::style::CONTEXT_DIALOG_TITLE);
+  views::Label* title_label = new views::Label(title);
   title_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+  title_label->SetFontList(
+      title_label->GetDefaultFontList().DeriveWithSizeDelta(
+          ui::kTitleFontSizeDelta));
   layout->AddView(title_label);
 
   return container;
@@ -222,8 +238,7 @@ std::unique_ptr<views::View> CreateSheetHeaderView(
 
 std::unique_ptr<views::ImageView> CreateInstrumentIconView(
     int icon_resource_id,
-    const base::string16& tooltip_text,
-    float opacity) {
+    const base::string16& tooltip_text) {
   std::unique_ptr<views::ImageView> card_icon_view =
       base::MakeUnique<views::ImageView>();
   card_icon_view->set_can_process_events_within_subtree(false);
@@ -231,9 +246,6 @@ std::unique_ptr<views::ImageView> CreateInstrumentIconView(
                                .GetImageNamed(icon_resource_id)
                                .AsImageSkia());
   card_icon_view->SetTooltipText(tooltip_text);
-  card_icon_view->SetPaintToLayer();
-  card_icon_view->layer()->SetFillsBoundsOpaquely(false);
-  card_icon_view->layer()->SetOpacity(opacity);
   return card_icon_view;
 }
 
@@ -270,9 +282,9 @@ std::unique_ptr<views::View> GetShippingAddressLabelWithError(
       GetShippingAddressLabel(type, locale, profile, disabled_state);
 
   if (!error.empty()) {
-    std::unique_ptr<views::Label> label =
-        base::MakeUnique<views::Label>(error, CONTEXT_DEPRECATED_SMALL);
+    std::unique_ptr<views::Label> label = base::MakeUnique<views::Label>(error);
     label->set_id(static_cast<int>(DialogViewID::PROFILE_LABEL_ERROR));
+    label->SetFontList(label->GetDefaultFontList().DeriveWithSizeDelta(-1));
     // Error information is typically in red.
     label->SetEnabledColor(label->GetNativeTheme()->GetSystemColor(
         ui::NativeTheme::kColorId_AlertSeverityHigh));
@@ -310,7 +322,9 @@ std::unique_ptr<views::View> GetContactInfoLabel(
 
   base::string16 phone =
       options.request_payer_phone()
-          ? data_util::GetFormattedPhoneNumberForDisplay(profile, locale)
+          ? profile.GetInfo(
+                autofill::AutofillType(autofill::PHONE_HOME_WHOLE_NUMBER),
+                locale)
           : base::string16();
 
   base::string16 email =
@@ -337,17 +351,11 @@ std::unique_ptr<views::Border> CreatePaymentRequestRowBorder(
 }
 
 std::unique_ptr<views::Label> CreateBoldLabel(const base::string16& text) {
-  return base::MakeUnique<views::Label>(text, views::style::CONTEXT_LABEL,
-                                        STYLE_EMPHASIZED);
-}
-
-std::unique_ptr<views::Label> CreateMediumLabel(const base::string16& text) {
-  // TODO(tapted): This should refer to a style in the Chrome typography spec.
-  // Also, it needs to handle user setups where the default font is BOLD already
-  // since asking for a MEDIUM font will give a lighter font.
   std::unique_ptr<views::Label> label = base::MakeUnique<views::Label>(text);
-  label->SetFontList(ResourceBundle::GetSharedInstance().GetFontListWithDelta(
-      ui::kLabelFontSizeDelta, gfx::Font::NORMAL, gfx::Font::Weight::MEDIUM));
+
+  label->SetFontList(
+      label->font_list().DeriveWithWeight(gfx::Font::Weight::BOLD));
+
   return label;
 }
 
@@ -364,13 +372,16 @@ std::unique_ptr<views::View> CreateShippingOptionLabel(
   container->SetLayoutManager(layout.release());
 
   if (shipping_option) {
-    const base::string16& text = base::UTF8ToUTF16(shipping_option->label);
     std::unique_ptr<views::Label> shipping_label =
-        emphasize_label ? CreateMediumLabel(text)
-                        : base::MakeUnique<views::Label>(text);
+        base::MakeUnique<views::Label>(
+            base::UTF8ToUTF16(shipping_option->label));
     shipping_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
     shipping_label->set_id(
         static_cast<int>(DialogViewID::SHIPPING_OPTION_DESCRIPTION));
+    if (emphasize_label) {
+      shipping_label->SetFontList(shipping_label->font_list().DeriveWithWeight(
+          gfx::Font::Weight::MEDIUM));
+    }
     container->AddChildView(shipping_label.release());
 
     std::unique_ptr<views::Label> amount_label =

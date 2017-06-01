@@ -15,7 +15,9 @@
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/native_theme/common_theme.h"
 #include "ui/native_theme/native_theme.h"
+#include "ui/resources/grit/ui_resources.h"
 #include "ui/vector_icons/vector_icons.h"
+#include "ui/views/resources/grit/views_resources.h"
 
 namespace views {
 
@@ -60,7 +62,7 @@ void Throbber::SetChecked(bool checked) {
   SchedulePaint();
 }
 
-gfx::Size Throbber::CalculatePreferredSize() const {
+gfx::Size Throbber::GetPreferredSize() const {
   return gfx::Size(kDefaultDiameter, kDefaultDiameter);
 }
 

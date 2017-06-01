@@ -231,12 +231,12 @@ void CredentialManagerClient::DispatchStore(
                  base::Owned(new NotificationCallbacksWrapper(callbacks))));
 }
 
-void CredentialManagerClient::DispatchPreventSilentAccess(
+void CredentialManagerClient::DispatchRequireUserMediation(
     blink::WebCredentialManagerClient::NotificationCallbacks* callbacks) {
   DCHECK(callbacks);
   ConnectToMojoCMIfNeeded();
 
-  mojo_cm_service_->PreventSilentAccess(
+  mojo_cm_service_->RequireUserMediation(
       base::Bind(&RespondToNotificationCallback,
                  base::Owned(new NotificationCallbacksWrapper(callbacks))));
 }

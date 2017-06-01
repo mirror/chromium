@@ -22,14 +22,14 @@ class VibrationManagerEmptyImpl : public mojom::VibrationManager {
   VibrationManagerEmptyImpl() {}
   ~VibrationManagerEmptyImpl() override {}
 
-  void Vibrate(int64_t milliseconds, VibrateCallback callback) override {
+  void Vibrate(int64_t milliseconds, const VibrateCallback& callback) override {
     VibrationManagerImpl::milli_seconds_for_testing_ = milliseconds;
-    std::move(callback).Run();
+    callback.Run();
   }
 
-  void Cancel(CancelCallback callback) override {
+  void Cancel(const CancelCallback& callback) override {
     VibrationManagerImpl::cancelled_for_testing_ = true;
-    std::move(callback).Run();
+    callback.Run();
   }
 };
 

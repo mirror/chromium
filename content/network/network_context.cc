@@ -14,7 +14,6 @@
 #include "content/public/common/content_switches.h"
 #include "net/dns/host_resolver.h"
 #include "net/dns/mapped_host_resolver.h"
-#include "net/http/http_network_session.h"
 #include "net/proxy/proxy_config.h"
 #include "net/proxy/proxy_config_service_fixed.h"
 #include "net/url_request/url_request_context.h"
@@ -26,7 +25,7 @@ namespace {
 
 std::unique_ptr<net::URLRequestContext> MakeURLRequestContext() {
   net::URLRequestContextBuilder builder;
-  net::HttpNetworkSession::Params params;
+  net::URLRequestContextBuilder::HttpNetworkSessionParams params;
   const base::CommandLine* command_line =
       base::CommandLine::ForCurrentProcess();
   if (command_line->HasSwitch(switches::kIgnoreCertificateErrors))

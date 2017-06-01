@@ -26,8 +26,6 @@ var Command = {
   OPEN_NEW_TAB: 'open-new-tab',
   OPEN_NEW_WINDOW: 'open-new-window',
   OPEN_INCOGNITO: 'open-incognito',
-  UNDO: 'undo',
-  REDO: 'redo',
   // OPEN triggers when you double-click an item.
   OPEN: 'open',
 };

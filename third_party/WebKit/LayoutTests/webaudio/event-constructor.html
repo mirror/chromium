@@ -1,17 +1,16 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <title>
-      Test Event Constructors
-    </title>
+    <title>Test Event Constructors</title>
     <script src="../resources/testharness.js"></script>
     <script src="../resources/testharnessreport.js"></script>
     <script src="resources/audit-util.js"></script>
     <script src="resources/audit.js"></script>
   </head>
+
   <body>
-    <script id="layout-test-code">
-      let audit = Audit.createTaskRunner();
+    <script>
+      var audit = Audit.createTaskRunner();
 
       audit.define('offline-constructor', (task, should) => {
         should(function() {
@@ -36,8 +35,8 @@
             'new OfflineAudioCompletionEvent("complete", {foo: 42})')
             .throw('TypeError');
 
-        let context = new OfflineAudioContext(1, 100, 48000);
-        let buffer = new AudioBuffer(context, {length: 42});
+        var context = new OfflineAudioContext(1, 100, 48000);
+        var buffer = new AudioBuffer(context, {length: 42});
 
         should(
             function() {
@@ -53,12 +52,12 @@
       audit.define('offline-event', (task, should) => {
         // Only need the context for constructing the AudioBuffers for the
         // tests.
-        let context = new OfflineAudioContext(1, 100, 48000);
+        var context = new OfflineAudioContext(1, 100, 48000);
 
         // Just an arbitrary AudioBuffer.
-        let buffer = new AudioBuffer(context, {length: 10});
+        var buffer = new AudioBuffer(context, {length: 10});
 
-        let event;
+        var event;
         should(function() {
           event =
               new OfflineAudioCompletionEvent('foo', {renderedBuffer: buffer});
@@ -73,12 +72,12 @@
       audit.define('audio-processing', (task, should) => {
         // Only need the context for constructing the AudioBuffers for the
         // tests.
-        let context = new OfflineAudioContext(1, 100, 48000);
+        var context = new OfflineAudioContext(1, 100, 48000);
 
         // Fairly arbitrary buffers and time
-        let input = new AudioBuffer(context, {length: 10});
-        let output = new AudioBuffer(context, {length: 20});
-        let time = Math.PI;
+        var input = new AudioBuffer(context, {length: 10});
+        var output = new AudioBuffer(context, {length: 20});
+        var time = Math.PI;
 
         // Verify required arguments.
         should(function() {
@@ -122,7 +121,7 @@
 
 
         // Finally test valid call
-        let event;
+        var event;
         should(
             function() {
               event = new AudioProcessingEvent('proc', {

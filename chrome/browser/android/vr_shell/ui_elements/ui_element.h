@@ -10,10 +10,8 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "chrome/browser/android/vr_shell/color_scheme.h"
 #include "chrome/browser/android/vr_shell/ui_elements/ui_element_debug_id.h"
 #include "device/vr/vr_types.h"
-#include "third_party/skia/include/core/SkColor.h"
 
 namespace base {
 class TimeTicks;
@@ -22,7 +20,7 @@ class TimeTicks;
 namespace vr_shell {
 
 class Animation;
-class UiElementRenderer;
+class VrShellRenderer;
 
 enum XAnchoring {
   XNONE = 0,
@@ -107,7 +105,7 @@ class UiElement : public WorldRectangle {
   // Indicates whether the element should be tested for cursor input.
   bool IsHitTestable() const;
 
-  virtual void Render(UiElementRenderer* renderer,
+  virtual void Render(VrShellRenderer* renderer,
                       vr::Mat4f view_proj_matrix) const;
 
   virtual void Initialize();
@@ -207,16 +205,15 @@ class UiElement : public WorldRectangle {
   Fill fill() const { return fill_; }
   void set_fill(Fill fill) { fill_ = fill; }
 
-  SkColor edge_color() const { return edge_color_; }
-  void set_edge_color(const SkColor& edge_color) { edge_color_ = edge_color; }
-
-  SkColor center_color() const { return center_color_; }
-  void set_center_color(const SkColor& center_color) {
-    center_color_ = center_color;
+  vr::Colorf edge_color() const { return edge_color_; }
+  void set_edge_color(const vr::Colorf& edge_color) {
+    edge_color_ = edge_color;
   }
 
-  SkColor grid_color() const { return grid_color_; }
-  void set_grid_color(const SkColor& grid_color) { grid_color_ = grid_color; }
+  vr::Colorf center_color() const { return center_color_; }
+  void set_center_color(const vr::Colorf& center_color) {
+    center_color_ = center_color;
+  }
 
   int gridline_count() const { return gridline_count_; }
   void set_gridline_count(int gridline_count) {
@@ -246,12 +243,6 @@ class UiElement : public WorldRectangle {
   // By default, sets an element to be visible or not. This may be overridden to
   // allow finer control of element visibility.
   virtual void SetEnabled(bool enabled);
-
-  void SetMode(ColorScheme::Mode mode);
-  ColorScheme::Mode mode() const { return mode_; }
-
- protected:
-  virtual void OnSetMode();
 
  private:
   // Valid IDs are non-negative.
@@ -308,9 +299,8 @@ class UiElement : public WorldRectangle {
 
   Fill fill_ = Fill::NONE;
 
-  SkColor edge_color_ = SK_ColorWHITE;
-  SkColor center_color_ = SK_ColorWHITE;
-  SkColor grid_color_ = SK_ColorWHITE;
+  vr::Colorf edge_color_ = {1.0f, 1.0f, 1.0f, 1.0f};
+  vr::Colorf center_color_ = {1.0f, 1.0f, 1.0f, 1.0f};
 
   int gridline_count_ = 1;
 
@@ -326,8 +316,6 @@ class UiElement : public WorldRectangle {
   UiElementDebugId debug_id_ = UiElementDebugId::kNone;
 
   Transform transform_;
-
-  ColorScheme::Mode mode_ = ColorScheme::kModeNormal;
 
   DISALLOW_COPY_AND_ASSIGN(UiElement);
 };

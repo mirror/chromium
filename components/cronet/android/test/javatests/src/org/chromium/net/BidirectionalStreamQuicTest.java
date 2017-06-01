@@ -21,7 +21,7 @@ import java.util.HashSet;
  * Tests functionality of BidirectionalStream's QUIC implementation.
  */
 public class BidirectionalStreamQuicTest extends CronetTestBase {
-    private ExperimentalCronetEngine mCronetEngine;
+    private CronetTestFramework mTestFramework;
     private enum QuicBidirectionalStreams {
         ENABLED,
         DISABLED,
@@ -52,7 +52,7 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
         CronetTestUtil.setMockCertVerifierForTesting(
                 builder, QuicTestServer.createMockCertVerifier());
 
-        mCronetEngine = builder.build();
+        mTestFramework = startCronetTestFrameworkWithUrlAndCronetEngineBuilder(null, builder);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
         String quicURL = QuicTestServer.getServerURL() + path;
         TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
         BidirectionalStream stream =
-                mCronetEngine
+                mTestFramework.mCronetEngine
                         .newBidirectionalStreamBuilder(quicURL, callback, callback.getExecutor())
                         .setHttpMethod("GET")
                         .build();
@@ -97,9 +97,9 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
         callback.addWriteData("1234567890".getBytes());
         callback.addWriteData("woot!".getBytes());
         TestRequestFinishedListener requestFinishedListener = new TestRequestFinishedListener();
-        mCronetEngine.addRequestFinishedListener(requestFinishedListener);
+        mTestFramework.mCronetEngine.addRequestFinishedListener(requestFinishedListener);
         BidirectionalStream stream =
-                mCronetEngine
+                mTestFramework.mCronetEngine
                         .newBidirectionalStreamBuilder(quicURL, callback, callback.getExecutor())
                         .addHeader("foo", "bar")
                         .addHeader("empty", "")
@@ -139,7 +139,7 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
             callback.addWriteData("Test String".getBytes(), false);
             callback.addWriteData("1234567890".getBytes(), false);
             callback.addWriteData("woot!".getBytes(), true);
-            BidirectionalStream stream = mCronetEngine
+            BidirectionalStream stream = mTestFramework.mCronetEngine
                                                  .newBidirectionalStreamBuilder(
                                                          quicURL, callback, callback.getExecutor())
                                                  .delayRequestHeadersUntilFirstFlush(i == 0)
@@ -175,7 +175,7 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
             callback.addWriteData("Test String".getBytes(), false);
             callback.addWriteData("1234567890".getBytes(), false);
             callback.addWriteData("woot!".getBytes(), true);
-            BidirectionalStream stream = mCronetEngine
+            BidirectionalStream stream = mTestFramework.mCronetEngine
                                                  .newBidirectionalStreamBuilder(
                                                          quicURL, callback, callback.getExecutor())
                                                  .delayRequestHeadersUntilFirstFlush(i == 0)
@@ -212,7 +212,7 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
                 }
             };
             BidirectionalStream stream =
-                    mCronetEngine
+                    mTestFramework.mCronetEngine
                             .newBidirectionalStreamBuilder(url, callback, callback.getExecutor())
                             .setHttpMethod("GET")
                             .delayRequestHeadersUntilFirstFlush(i == 0)
@@ -250,7 +250,7 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
             TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
             callback.addWriteData("Test String".getBytes(), true);
             BidirectionalStream stream =
-                    mCronetEngine
+                    mTestFramework.mCronetEngine
                             .newBidirectionalStreamBuilder(url, callback, callback.getExecutor())
                             .delayRequestHeadersUntilFirstFlush(i == 0)
                             .addHeader("foo", "bar")
@@ -278,7 +278,7 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
 
         TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
         BidirectionalStream stream =
-                mCronetEngine
+                mTestFramework.mCronetEngine
                         .newBidirectionalStreamBuilder(quicURL, callback, callback.getExecutor())
                         .setHttpMethod("GET")
                         .build();
@@ -318,7 +318,7 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
         callback.addWriteData("woot!".getBytes());
 
         BidirectionalStream stream =
-                mCronetEngine
+                mTestFramework.mCronetEngine
                         .newBidirectionalStreamBuilder(quicURL, callback, callback.getExecutor())
                         .addHeader("foo", "bar")
                         .addHeader("empty", "")
@@ -346,7 +346,7 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
         String quicURL = QuicTestServer.getServerURL() + path;
         TestBidirectionalStreamCallback callback = new TestBidirectionalStreamCallback();
         BidirectionalStream stream =
-                mCronetEngine
+                mTestFramework.mCronetEngine
                         .newBidirectionalStreamBuilder(quicURL, callback, callback.getExecutor())
                         .setHttpMethod("GET")
                         .build();
@@ -357,7 +357,7 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
         assertEquals("This is a simple text file served by QUIC.\n", callback.mResponseAsString);
         assertEquals("quic/1+spdy/3", callback.mResponseInfo.getNegotiatedProtocol());
 
-        String serialized_data = mCronetEngine.getCertVerifierData(100);
+        String serialized_data = mTestFramework.mCronetEngine.getCertVerifierData(100);
         assertFalse(serialized_data.isEmpty());
 
         // Create a new builder and verify that the |serialized_data| is deserialized correctly.
@@ -368,7 +368,9 @@ public class BidirectionalStreamQuicTest extends CronetTestBase {
                 builder, QuicTestServer.createMockCertVerifier());
         builder.setCertVerifierData(serialized_data);
 
-        String deserialized_data = builder.build().getCertVerifierData(100);
+        CronetTestFramework testFramework =
+                startCronetTestFrameworkWithUrlAndCronetEngineBuilder(null, builder);
+        String deserialized_data = testFramework.mCronetEngine.getCertVerifierData(100);
         assertEquals(deserialized_data, serialized_data);
     }
 }

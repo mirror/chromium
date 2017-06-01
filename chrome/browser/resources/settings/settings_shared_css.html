@@ -5,6 +5,14 @@
 <dom-module id="settings-shared">
   <template>
     <style include="cr-shared-style">
+      :host-context([dir=rtl]) button[is='paper-icon-button-light'] {
+        transform: scaleX(-1);  /* Flip on the X axis (aka mirror). */
+      }
+
+      :host-context([dir=rtl]) paper-icon-button[icon='settings:arrow-back'] {
+        transform: scaleX(-1);  /* Flip on the X axis (aka mirror). */
+      }
+
       /* Use <h2> as the "sub-header" mentioned in the UX design docs. */
       h2 {
         align-items: center;
@@ -25,18 +33,6 @@
       iron-icon[icon='cr:check'],
       iron-icon[icon='settings:done'] {
        --iron-icon-fill-color: var(--google-green-500);
-      }
-
-      paper-icon-button {
-        -webkit-margin-end: var(--cr-icon-ripple-margin);
-        -webkit-margin-start: 16px;
-        color: var(--paper-grey-600);
-        flex-shrink: 0;
-      }
-
-      .separator + button[is='paper-icon-button-light'],
-      .separator + paper-icon-button {
-        -webkit-margin-start: var(--cr-icon-ripple-margin));
       }
 
       /* See notes in .primary-button.
@@ -62,19 +58,8 @@
         background-color: var(--paper-grey-300);
       }
 
-      /* If a button is at the end of the row, shift it to overlap the end of
-       * the row. */
-      .settings-box paper-button:last-of-type {
+      .settings-box paper-button {
         -webkit-margin-end: calc(var(--settings-button-edge-spacing) * -1);
-      }
-
-      /* Space out multiple buttons in the same row. */
-      .settings-box paper-button + paper-button {
-        -webkit-margin-start: 16px;
-      }
-
-      /* Adjust the margin between the separator and the first button. */
-      .settings-box .separator + paper-button {
         -webkit-margin-start: calc(var(--settings-button-edge-spacing) * -1);
       }
 
@@ -329,7 +314,8 @@
         flex: 1;
       }
 
-      .no-outline {
+      .no-outline,
+      [scrollable] .no-outline {
         background: none;
         outline: none;
       }

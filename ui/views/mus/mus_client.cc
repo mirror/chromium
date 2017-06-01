@@ -171,10 +171,6 @@ MusClient::ConfigurePropertiesFromParams(
   properties[WindowManager::kFocusable_InitProperty] =
       mojo::ConvertTo<TransportType>(init_params.CanActivate());
 
-  properties[WindowManager::kTranslucent_InitProperty] =
-      mojo::ConvertTo<TransportType>(init_params.opacity ==
-                                     Widget::InitParams::TRANSLUCENT_WINDOW);
-
   if (!init_params.bounds.IsEmpty()) {
     properties[WindowManager::kBounds_InitProperty] =
         mojo::ConvertTo<TransportType>(init_params.bounds);

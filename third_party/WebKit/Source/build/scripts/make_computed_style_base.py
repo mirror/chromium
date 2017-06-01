@@ -25,11 +25,11 @@ from itertools import chain
 # TODO(shend): Put alignment sizes into code form, rather than linking to a CL which may disappear.
 ALIGNMENT_ORDER = [
     'double',
-    'AtomicString', 'RefPtr', 'Persistent', 'Font', 'FillLayer', 'NinePieceImage',  # Aligns like a pointer (can be 32 or 64 bits)
-    'LengthBox', 'LengthSize', 'Length', 'TextSizeAdjust', 'TabSize', 'float',
-    'StyleColor', 'Color', 'LayoutUnit', 'unsigned', 'int',
+    'Font', 'FillLayer', 'NinePieceImage',  # Aligns like a void * (can be 32 or 64 bits)
+    'LengthBox', 'LengthSize', 'Length', 'float',
+    'StyleColor', 'Color', 'unsigned', 'int',
     'short',
-    'uint8_t', 'char',
+    'char',
     'bool'
 ]
 
@@ -86,7 +86,6 @@ class DiffGroup(object):
         self.group_name = group_name
         self.subgroups = []
         self.expressions = []
-        self.predicates = []
 
 
 class Field(object):
@@ -111,7 +110,6 @@ class Field(object):
             Should be in upper camel case.
         property_name: Name of the property that the field is part of.
         type_name: Name of the C++ type exposed by the generated interface (e.g. EClear, int).
-        wrapper_pointer_name: Name of the pointer type that wraps this field (e.g. RefPtr).
         field_template: Determines the interface generated for the field. Can be one of:
            keyword, flag, or monotonic_flag.
         field_group: The name of the group that this field is inside.
@@ -119,22 +117,19 @@ class Field(object):
         default_value: Default value for this field when it is first initialized.
     """
 
-    def __init__(self, field_role, name_for_methods, property_name, type_name, wrapper_pointer_name,
-                 field_template, field_group, size, default_value, custom_copy, custom_compare,
+    def __init__(self, field_role, name_for_methods, property_name, type_name,
+                 field_template, field_group, size, default_value, has_custom_compare_and_copy,
                  getter_method_name, setter_method_name, initial_method_name, **kwargs):
         """Creates a new field."""
         self.name = class_member_name(name_for_methods)
         self.property_name = property_name
         self.type_name = type_name
-        self.wrapper_pointer_name = wrapper_pointer_name
-        self.alignment_type = self.wrapper_pointer_name or self.type_name
         self.field_template = field_template
         self.group_name = field_group
         self.group_member_name = class_member_name(join_name(field_group, 'data')) if field_group else None
         self.size = size
         self.default_value = default_value
-        self.custom_copy = custom_copy
-        self.custom_compare = custom_compare
+        self.has_custom_compare_and_copy = has_custom_compare_and_copy
 
         # Field role: one of these must be true
         self.is_property = field_role == 'property'
@@ -175,7 +170,8 @@ def _get_include_paths(properties):
     """
     include_paths = set()
     for property_ in properties:
-        include_paths.update(property_['include_paths'])
+        if property_['field_type_path'] is not None:
+            include_paths.add(property_['field_type_path'] + '.h')
     return list(sorted(include_paths))
 
 
@@ -193,36 +189,29 @@ def _group_fields(fields):
 def _create_diff_groups_map(diff_function_inputs, root_group):
     diff_functions_map = {}
     for entry in diff_function_inputs:
-        diff_functions_map[entry['name']] = _create_diff_groups(entry['fields_to_diff'],
-                                                                entry['methods_to_diff'], entry['predicates_to_test'], root_group)
+        diff_functions_map[entry['name']] = _create_diff_groups(entry['fields_to_diff'], entry['methods_to_diff'], root_group)
     return diff_functions_map
 
 
-def _list_field_dependencies(entries_with_field_dependencies):
+def _list_field_dependencies(methods_to_diff):
     field_dependencies = []
-    for entry in entries_with_field_dependencies:
+    for entry in methods_to_diff:
         field_dependencies += entry['field_dependencies']
     return field_dependencies
 
 
-def _create_diff_groups(fields_to_diff, methods_to_diff, predicates_to_test, root_group):
+def _create_diff_groups(fields_to_diff, methods_to_diff, root_group):
     diff_group = DiffGroup(root_group.member_name)
-    field_dependencies = _list_field_dependencies(methods_to_diff + predicates_to_test)
+    field_dependencies = _list_field_dependencies(methods_to_diff)
     for subgroup in root_group.subgroups:
         if any(field.property_name in (fields_to_diff + field_dependencies) for field in subgroup.all_fields):
-            diff_group.subgroups.append(_create_diff_groups(fields_to_diff, methods_to_diff, predicates_to_test, subgroup))
-    for entry in fields_to_diff:
-        for field in root_group.fields:
-            if not field.is_inherited_flag and entry == field.property_name:
-                diff_group.expressions.append(field.getter_expression)
-    for entry in methods_to_diff:
-        for field in root_group.fields:
-            if not field.is_inherited_flag and field.property_name in entry['field_dependencies']:
+            diff_group.subgroups.append(_create_diff_groups(fields_to_diff, methods_to_diff, subgroup))
+    for field in root_group.fields:
+        if field.property_name in fields_to_diff:
+            diff_group.expressions.append(field.getter_expression)
+        for entry in methods_to_diff:
+            if field.property_name in entry['field_dependencies']:
                 diff_group.expressions.append(entry['method'])
-    for entry in predicates_to_test:
-        for field in root_group.fields:
-            if not field.is_inherited_flag and field.property_name in entry['field_dependencies']:
-                diff_group.predicates.append(entry['predicate'])
     return diff_group
 
 
@@ -232,8 +221,8 @@ def _create_enums(properties):
     """
     enums = {}
     for property_ in properties:
-        # Only generate enums for keyword properties that do not require includes.
-        if property_['field_template'] == 'keyword' and len(property_['include_paths']) == 0:
+        # Only generate enums for keyword properties that use the default field_type_path.
+        if property_['field_template'] == 'keyword' and property_['field_type_path'] is None:
             enum_name = property_['type_name']
             enum_values = [enum_value_name(k) for k in property_['keywords']]
 
@@ -283,10 +272,6 @@ def _create_property_field(property_):
         default_value = 'false'
         size = 1
 
-    if property_['wrapper_pointer_name']:
-        assert property_['field_template'] == 'storage_only'
-        type_name = '{}<{}>'.format(property_['wrapper_pointer_name'], type_name)
-
     return Field(
         'property',
         name_for_methods,
@@ -294,13 +279,11 @@ def _create_property_field(property_):
         inherited=property_['inherited'],
         independent=property_['independent'],
         type_name=type_name,
-        wrapper_pointer_name=property_['wrapper_pointer_name'],
         field_template=property_['field_template'],
         field_group=property_['field_group'],
         size=size,
         default_value=default_value,
-        custom_copy=property_['custom_copy'],
-        custom_compare=property_['custom_compare'],
+        has_custom_compare_and_copy=property_['has_custom_compare_and_copy'],
         getter_method_name=property_['getter'],
         setter_method_name=property_['setter'],
         initial_method_name=property_['initial'],
@@ -318,13 +301,11 @@ def _create_inherited_flag_field(property_):
         name_for_methods,
         property_name=property_['name'],
         type_name='bool',
-        wrapper_pointer_name=None,
         field_template='primitive',
         field_group=property_['field_group'],
         size=1,
         default_value='true',
-        custom_copy=False,
-        custom_compare=False,
+        has_custom_compare_and_copy=False,
         getter_method_name=method_name(name_for_methods),
         setter_method_name=method_name(join_name('set', name_for_methods)),
         initial_method_name=method_name(join_name('initial', name_for_methods)),
@@ -382,9 +363,9 @@ def _reorder_non_bit_fields(non_bit_fields):
     # A general rule of thumb is to sort members by their alignment requirement
     # (from biggest aligned to smallest).
     for field in non_bit_fields:
-        assert field.alignment_type in ALIGNMENT_ORDER, \
-            "Type {} has unknown alignment. Please update ALIGNMENT_ORDER to include it.".format(field.alignment_type)
-    return list(sorted(non_bit_fields, key=lambda f: ALIGNMENT_ORDER.index(f.alignment_type)))
+        assert field.type_name in ALIGNMENT_ORDER, \
+            "Type {} has unknown alignment. Please update ALIGNMENT_ORDER to include it.".format(field.type_name)
+    return list(sorted(non_bit_fields, key=lambda f: ALIGNMENT_ORDER.index(f.type_name)))
 
 
 def _reorder_fields(fields):
@@ -413,9 +394,8 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
         css_properties = [value for value in self._properties.values() if not value['longhands']]
 
         for property_ in css_properties:
-            # All CSS properties from CSSProperties.json5 do not have custom comparison and copy logic.
-            property_['custom_copy'] = False
-            property_['custom_compare'] = False
+            # All CSS properties that are generated do not have custom comparison and copy logic.
+            property_['has_custom_compare_and_copy'] = False
 
         # Read extra fields using the parameter specification from the CSS properties file.
         extra_fields = json5_generator.Json5File.load_from_files(
@@ -427,6 +407,11 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
             make_style_builder.apply_property_naming_defaults(property_)
 
         all_properties = css_properties + extra_fields
+
+        # Override the type name when field_type_path is specified
+        for property_ in all_properties:
+            if property_['field_type_path']:
+                property_['type_name'] = property_['field_type_path'].split('/')[-1]
 
         self._generated_enums = _create_enums(all_properties)
 

@@ -50,9 +50,8 @@ struct StructTraits<net::interfaces::HostResolverRequestInfoDataView,
 
 template <>
 struct StructTraits<net::interfaces::IPEndPointDataView, net::IPEndPoint> {
-  static const std::vector<uint8_t> address(const net::IPEndPoint& obj) {
-    // TODO(rch): avoid creating a vector here.
-    return obj.address().CopyBytesToVector();
+  static const std::vector<uint8_t>& address(const net::IPEndPoint& obj) {
+    return obj.address().bytes();
   }
   static uint16_t port(const net::IPEndPoint& obj) { return obj.port(); }
 

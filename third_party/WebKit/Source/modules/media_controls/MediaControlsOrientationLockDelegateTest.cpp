@@ -5,14 +5,15 @@
 #include "modules/media_controls/MediaControlsOrientationLockDelegate.h"
 
 #include "core/dom/Document.h"
+#include "core/dom/DocumentUserGestureToken.h"
 #include "core/dom/Fullscreen.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/frame/ScreenOrientationController.h"
 #include "core/html/HTMLAudioElement.h"
 #include "core/html/HTMLVideoElement.h"
 #include "core/loader/EmptyClients.h"
 #include "core/testing/DummyPageHolder.h"
 #include "modules/media_controls/MediaControlsImpl.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/testing/EmptyWebMediaPlayer.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "public/platform/WebSize.h"
@@ -136,7 +137,8 @@ class MediaControlsOrientationLockDelegateTest : public ::testing::Test {
   }
 
   void SimulateEnterFullscreen() {
-    UserGestureIndicator gesture(UserGestureToken::Create(&GetDocument()));
+    UserGestureIndicator gesture(
+        DocumentUserGestureToken::Create(&GetDocument()));
 
     Fullscreen::RequestFullscreen(Video());
     Fullscreen::From(GetDocument()).DidEnterFullscreen();
@@ -186,8 +188,8 @@ class MediaControlsOrientationLockDelegateTest : public ::testing::Test {
   }
 
   bool DelegateWillUnlockFullscreen() const {
-    return MediaControls()->orientation_lock_delegate_->locked_orientation_ !=
-           kWebScreenOrientationLockDefault /* unlocked */;
+    return MediaControls()
+        ->orientation_lock_delegate_->should_unlock_orientation_;
   }
 
   WebScreenOrientationLockType ComputeOrientationLock() const {

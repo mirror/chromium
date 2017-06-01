@@ -46,7 +46,8 @@ const char kIdentityDirective[] = "identity";
 // The legacy Chrome-Proxy response header directive for LoFi images.
 const char kLegacyChromeProxyLoFiResponseDirective[] = "q=low";
 
-const char kChromeProxyForceLitePageExperiment[] = "force_lite_page";
+const char kChromeProxyLitePageIngoreBlacklistDirective[] =
+    "exp=ignore_preview_blacklist";
 
 const char kIfHeavyQualifier[] = "if-heavy";
 
@@ -154,8 +155,8 @@ const char* identity_directive() {
   return kIdentityDirective;
 }
 
-const char* chrome_proxy_force_lite_page_experiment() {
-  return kChromeProxyForceLitePageExperiment;
+const char* chrome_proxy_lite_page_ignore_blacklist_directive() {
+  return kChromeProxyLitePageIngoreBlacklistDirective;
 }
 
 const char* if_heavy_qualifier() {

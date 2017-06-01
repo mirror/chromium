@@ -15,6 +15,7 @@
 #include "ui/views/controls/label.h"
 #include "ui/views/controls/table/table_view.h"
 #include "ui/views/layout/box_layout.h"
+#include "ui/views/layout/layout_constants.h"
 #include "ui/views/window/dialog_client_view.h"
 #include "url/gurl.h"
 
@@ -80,14 +81,11 @@ WebShareTargetPickerView::WebShareTargetPickerView(
     : targets_(targets),
       table_model_(base::MakeUnique<TargetPickerTableModel>(&targets_)),
       close_callback_(std::move(close_callback)) {
-  const ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
-  views::BoxLayout* layout = new views::BoxLayout(
-      views::BoxLayout::kVertical,
-      provider->GetDistanceMetric(
-          views::DISTANCE_BUBBLE_CONTENTS_HORIZONTAL_MARGIN),
-      provider->GetDistanceMetric(
-          views::DISTANCE_BUBBLE_CONTENTS_VERTICAL_MARGIN),
-      provider->GetDistanceMetric(views::DISTANCE_RELATED_CONTROL_VERTICAL));
+  const int panel_margin = ChromeLayoutProvider::Get()->GetDistanceMetric(
+      DISTANCE_PANEL_CONTENT_MARGIN);
+  views::BoxLayout* layout =
+      new views::BoxLayout(views::BoxLayout::kVertical, panel_margin,
+                           panel_margin, views::kRelatedControlVerticalSpacing);
   SetLayoutManager(layout);
 
   views::Label* overview_label = new views::Label(
@@ -120,7 +118,7 @@ WebShareTargetPickerView::~WebShareTargetPickerView() {
   table_->SetModel(nullptr);
 }
 
-gfx::Size WebShareTargetPickerView::CalculatePreferredSize() const {
+gfx::Size WebShareTargetPickerView::GetPreferredSize() const {
   return gfx::Size(kDialogWidth, kDialogHeight);
 }
 

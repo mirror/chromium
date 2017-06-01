@@ -223,17 +223,15 @@ void DOMWindow::postMessage(PassRefPtr<SerializedScriptValue> message,
                                            ->ToString());
   if (MixedContentChecker::IsMixedContent(source_document->GetSecurityOrigin(),
                                           target_url)) {
-    UseCounter::Count(source->GetFrame(),
-                      UseCounter::kPostMessageFromSecureToInsecure);
+    UseCounter::Count(GetFrame(), UseCounter::kPostMessageFromSecureToInsecure);
   } else if (MixedContentChecker::IsMixedContent(
                  GetFrame()->GetSecurityContext()->GetSecurityOrigin(),
                  source_document->Url())) {
-    UseCounter::Count(source->GetFrame(),
-                      UseCounter::kPostMessageFromInsecureToSecure);
+    UseCounter::Count(GetFrame(), UseCounter::kPostMessageFromInsecureToSecure);
     if (MixedContentChecker::IsMixedContent(
             GetFrame()->Tree().Top().GetSecurityContext()->GetSecurityOrigin(),
             source_document->Url())) {
-      UseCounter::Count(source->GetFrame(),
+      UseCounter::Count(GetFrame(),
                         UseCounter::kPostMessageFromInsecureToSecureToplevel);
     }
   }
@@ -242,8 +240,7 @@ void DOMWindow::postMessage(PassRefPtr<SerializedScriptValue> message,
           target_url, RedirectStatus::kNoRedirect,
           SecurityViolationReportingPolicy::kSuppressReporting)) {
     UseCounter::Count(
-        source->GetFrame(),
-        UseCounter::kPostMessageOutgoingWouldBeBlockedByConnectSrc);
+        GetFrame(), UseCounter::kPostMessageOutgoingWouldBeBlockedByConnectSrc);
   }
 
   MessageEvent* event =

@@ -16,7 +16,6 @@
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "components/keyed_service/core/keyed_service.h"
-#include "third_party/WebKit/public/platform/WebFeaturePolicyFeature.h"
 
 #if defined(OS_ANDROID)
 class PermissionQueueController;
@@ -59,8 +58,7 @@ using BrowserPermissionCallback = base::Callback<void(ContentSetting)>;
 class PermissionContextBase : public KeyedService {
  public:
   PermissionContextBase(Profile* profile,
-                        ContentSettingsType content_settings_type,
-                        blink::WebFeaturePolicyFeature feature_policy_feature);
+                        const ContentSettingsType content_settings_type);
   ~PermissionContextBase() override;
 
   // A field trial used to enable the global permissions kill switch.
@@ -182,8 +180,6 @@ class PermissionContextBase : public KeyedService {
  private:
   friend class PermissionContextBaseTests;
 
-  bool PermissionAllowedByFeaturePolicy(content::RenderFrameHost* rfh) const;
-
   // Called when a request is no longer used so it can be cleaned up.
   void CleanUpRequest(const PermissionRequestID& id);
 
@@ -208,7 +204,6 @@ class PermissionContextBase : public KeyedService {
 
   Profile* profile_;
   const ContentSettingsType content_settings_type_;
-  const blink::WebFeaturePolicyFeature feature_policy_feature_;
 #if defined(OS_ANDROID)
   std::unique_ptr<PermissionQueueController> permission_queue_controller_;
 #endif

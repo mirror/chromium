@@ -116,16 +116,7 @@ struct CORE_EXPORT PaintInfo {
 
   const CullRect& GetCullRect() const { return cull_rect_; }
 
-  void UpdateCullRect(const AffineTransform& local_to_parent_transform) {
-    cull_rect_.UpdateCullRect(local_to_parent_transform);
-  }
-
-  void UpdateCullRectForScrollingContents(
-      const IntRect& overflow_clip_rect,
-      const AffineTransform& local_to_parent_transform) {
-    cull_rect_.UpdateForScrollingContents(overflow_clip_rect,
-                                          local_to_parent_transform);
-  }
+  void UpdateCullRect(const AffineTransform& local_to_parent_transform);
 
   // FIXME: Introduce setters/getters at some point. Requires a lot of changes
   // throughout layout/.
@@ -134,9 +125,9 @@ struct CORE_EXPORT PaintInfo {
 
  private:
   CullRect cull_rect_;
-
-  // The box model object that originates the current painting.
-  const LayoutBoxModelObject* paint_container_;
+  const LayoutBoxModelObject* paint_container_;  // the box model object that
+                                                 // originates the current
+                                                 // painting
 
   const PaintLayerFlags paint_flags_;
   const GlobalPaintFlags global_paint_flags_;

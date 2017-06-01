@@ -46,6 +46,8 @@ OfflineAudioDestinationHandler::OfflineAudioDestinationHandler(
     AudioBuffer* render_target)
     : AudioDestinationHandler(node),
       render_target_(render_target),
+      render_thread_(
+          Platform::Current()->CreateThread("offline audio renderer")),
       frames_processed_(0),
       frames_to_process_(0),
       is_rendering_started_(false),
@@ -136,10 +138,10 @@ size_t OfflineAudioDestinationHandler::CallbackBufferSize() const {
   NOTREACHED();
   return 0;
 }
+WebThread* OfflineAudioDestinationHandler::OfflineRenderThread() {
+  DCHECK(render_thread_);
 
-void OfflineAudioDestinationHandler::InitializeOfflineRenderThread() {
-  DCHECK(IsMainThread());
-  render_thread_ = Platform::Current()->CreateThread("offline audio renderer");
+  return render_thread_.get();
 }
 
 void OfflineAudioDestinationHandler::StartOfflineRendering() {
@@ -251,11 +253,6 @@ void OfflineAudioDestinationHandler::NotifySuspend(size_t frame) {
 }
 
 void OfflineAudioDestinationHandler::NotifyComplete() {
-  DCHECK(IsMainThread());
-
-  // Nullify the rendering thread to save the system resource.
-  render_thread_.reset();
-
   // The OfflineAudioContext might be gone.
   if (Context())
     Context()->FireCompletionEvent();

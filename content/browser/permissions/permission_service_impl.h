@@ -10,7 +10,6 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "content/browser/permissions/permission_service_context.h"
-#include "content/common/content_export.h"
 #include "third_party/WebKit/public/platform/modules/permissions/permission.mojom.h"
 #include "url/origin.h"
 
@@ -25,19 +24,25 @@ enum class PermissionType;
 // to have some information about the current context. That enables the service
 // to know whether it can show UI and have knowledge of the associated
 // WebContents for example.
-class CONTENT_EXPORT PermissionServiceImpl
-    : public blink::mojom::PermissionService {
+class PermissionServiceImpl : public blink::mojom::PermissionService {
  public:
   PermissionServiceImpl(PermissionServiceContext* context);
   ~PermissionServiceImpl() override;
 
  private:
-  friend class PermissionServiceImplTest;
-
   using PermissionStatusCallback =
       base::Callback<void(blink::mojom::PermissionStatus)>;
 
-  class PendingRequest;
+  struct PendingRequest {
+    PendingRequest(const RequestPermissionsCallback& callback,
+                   int request_count);
+    ~PendingRequest();
+
+    // Request ID received from the PermissionManager.
+    int id;
+    RequestPermissionsCallback callback;
+    int request_count;
+  };
   using RequestsMap = IDMap<std::unique_ptr<PendingRequest>>;
 
   // blink::mojom::PermissionService.
@@ -62,6 +67,8 @@ class CONTENT_EXPORT PermissionServiceImpl
       blink::mojom::PermissionStatus last_known_status,
       blink::mojom::PermissionObserverPtr observer) override;
 
+  void OnRequestPermissionResponse(int pending_request_id,
+                                   blink::mojom::PermissionStatus status);
   void OnRequestPermissionsResponse(
       int pending_request_id,
       const std::vector<blink::mojom::PermissionStatus>& result);

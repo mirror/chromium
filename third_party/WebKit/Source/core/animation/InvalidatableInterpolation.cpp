@@ -4,10 +4,10 @@
 
 #include "core/animation/InvalidatableInterpolation.h"
 
-#include <memory>
-#include "core/animation/CSSInterpolationEnvironment.h"
+#include "core/animation/InterpolationEnvironment.h"
 #include "core/animation/StringKeyframe.h"
 #include "core/css/resolver/StyleResolverState.h"
+#include <memory>
 
 namespace blink {
 
@@ -198,9 +198,7 @@ void InvalidatableInterpolation::SetFlagIfInheritUsed(
     InterpolationEnvironment& environment) const {
   if (!property_.IsCSSProperty() && !property_.IsPresentationAttribute())
     return;
-  StyleResolverState& state =
-      ToCSSInterpolationEnvironment(environment).GetState();
-  if (!state.ParentStyle())
+  if (!environment.GetState().ParentStyle())
     return;
   const CSSValue* start_value =
       ToCSSPropertySpecificKeyframe(*start_keyframe_).Value();
@@ -208,7 +206,7 @@ void InvalidatableInterpolation::SetFlagIfInheritUsed(
       ToCSSPropertySpecificKeyframe(*end_keyframe_).Value();
   if ((start_value && start_value->IsInheritedValue()) ||
       (end_value && end_value->IsInheritedValue())) {
-    state.ParentStyle()->SetHasExplicitlyInheritedProperties();
+    environment.GetState().ParentStyle()->SetHasExplicitlyInheritedProperties();
   }
 }
 

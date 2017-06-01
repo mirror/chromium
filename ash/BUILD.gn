@@ -186,7 +186,7 @@ component("ash") {
     "host/root_window_transformer.h",
     "host/transformer_helper.cc",
     "host/transformer_helper.h",
-    "ime/ime_switch_type.h",
+    "ime_control_delegate.h",
     "key_event_watcher.cc",
     "key_event_watcher.h",
     "keyboard/keyboard_observer_register.cc",
@@ -261,6 +261,7 @@ component("ash") {
     "session/session_controller.h",
     "session/session_observer.cc",
     "session/session_observer.h",
+    "session/session_state_delegate.h",
     "shared/immersive_context.cc",
     "shared/immersive_context.h",
     "shared/immersive_focus_watcher.h",
@@ -283,8 +284,6 @@ component("ash") {
     "shelf/overflow_bubble_view.h",
     "shelf/overflow_button.cc",
     "shelf/overflow_button.h",
-    "shelf/shelf.cc",
-    "shelf/shelf.h",
     "shelf/shelf_alignment_menu.cc",
     "shelf/shelf_alignment_menu.h",
     "shelf/shelf_application_menu_model.cc",
@@ -309,7 +308,6 @@ component("ash") {
     "shelf/shelf_model.cc",
     "shelf/shelf_model.h",
     "shelf/shelf_model_observer.h",
-    "shelf/shelf_observer.h",
     "shelf/shelf_tooltip_manager.cc",
     "shelf/shelf_tooltip_manager.h",
     "shelf/shelf_view.cc",
@@ -322,6 +320,9 @@ component("ash") {
     "shelf/shelf_window_watcher.h",
     "shelf/shelf_window_watcher_item_delegate.cc",
     "shelf/shelf_window_watcher_item_delegate.h",
+    "shelf/wm_shelf.cc",
+    "shelf/wm_shelf.h",
+    "shelf/wm_shelf_observer.h",
     "shell.cc",
     "shell.h",
     "shell_delegate.h",
@@ -420,8 +421,6 @@ component("ash") {
     "system/networking_config_delegate.h",
     "system/night_light/night_light_controller.cc",
     "system/night_light/night_light_controller.h",
-    "system/night_light/night_light_toggle_button.cc",
-    "system/night_light/night_light_toggle_button.h",
     "system/night_light/tray_night_light.cc",
     "system/night_light/tray_night_light.h",
     "system/overview/overview_button_tray.cc",
@@ -659,8 +658,6 @@ component("ash") {
     "wm/immersive_gesture_handler_aura.h",
     "wm/immersive_handler_factory_ash.cc",
     "wm/immersive_handler_factory_ash.h",
-    "wm/lock_action_handler_layout_manager.cc",
-    "wm/lock_action_handler_layout_manager.h",
     "wm/lock_layout_manager.cc",
     "wm/lock_layout_manager.h",
     "wm/lock_state_controller.cc",
@@ -692,8 +689,13 @@ component("ash") {
     "wm/overview/cleanup_animation_observer.cc",
     "wm/overview/cleanup_animation_observer.h",
     "wm/overview/overview_animation_type.h",
-    "wm/overview/scoped_overview_animation_settings.cc",
     "wm/overview/scoped_overview_animation_settings.h",
+    "wm/overview/scoped_overview_animation_settings_aura.cc",
+    "wm/overview/scoped_overview_animation_settings_aura.h",
+    "wm/overview/scoped_overview_animation_settings_factory.cc",
+    "wm/overview/scoped_overview_animation_settings_factory.h",
+    "wm/overview/scoped_overview_animation_settings_factory_aura.cc",
+    "wm/overview/scoped_overview_animation_settings_factory_aura.h",
     "wm/overview/scoped_transform_overview_window.cc",
     "wm/overview/scoped_transform_overview_window.h",
     "wm/overview/window_grid.cc",
@@ -820,6 +822,9 @@ component("ash") {
     "wm/workspace_controller.cc",
     "wm/workspace_controller.h",
     "wm_display_observer.h",
+    "wm_transient_window_observer.h",
+    "wm_window.cc",
+    "wm_window.h",
   ]
 
   configs += [ "//build/config:precompiled_headers" ]
@@ -897,7 +902,6 @@ component("ash") {
     "//ui/vector_icons",
     "//ui/views",
     "//ui/wm",
-    "//ui/wm/public",
     "//url",
   ]
 
@@ -1135,7 +1139,6 @@ test("ash_content_unittests") {
     "//ui/views:test_support",
     "//ui/views/controls/webview:test_support",
     "//ui/web_dialogs:test_support",
-    "//ui/wm/public",
   ]
 
   data_deps = [
@@ -1170,8 +1173,6 @@ source_set("common_unittests") {
     "laser/laser_pointer_points_unittest.cc",
     "laser/laser_segment_utils_unittest.cc",
     "login/lock_screen_controller_unittest.cc",
-    "login/mock_lock_screen_client.cc",
-    "login/mock_lock_screen_client.h",
     "metrics/desktop_task_switch_metric_recorder_unittest.cc",
     "metrics/pointer_metrics_recorder_unittest.cc",
     "metrics/task_switch_metrics_recorder_unittest.cc",
@@ -1188,7 +1189,6 @@ source_set("common_unittests") {
     "shelf/shelf_application_menu_model_unittest.cc",
     "shelf/shelf_background_animator_unittest.cc",
     "shelf/shelf_button_pressed_metric_tracker_unittest.cc",
-    "shelf/shelf_controller_unittest.cc",
     "shelf/shelf_layout_manager_unittest.cc",
     "shelf/shelf_locking_manager_unittest.cc",
     "shelf/shelf_model_unittest.cc",
@@ -1316,7 +1316,6 @@ source_set("common_unittests") {
     "//ui/views:test_support",
     "//ui/wm",
     "//ui/wm:test_support",
-    "//ui/wm/public",
   ]
   public_deps = [
     "//ash/test:test_support_without_content",
@@ -1404,10 +1403,6 @@ test("ash_unittests") {
 
     # TODO: fails because keyboard is not enabled in mash.
     # http://crbug.com/648733.
-    "wm/lock_action_handler_layout_manager_unittest.cc",
-
-    # TODO: fails because keyboard is not enabled in mash.
-    # http://crbug.com/648733.
     "wm/lock_layout_manager_unittest.cc",
 
     # TODO: investigate failures in mash. http://crbug.com/698092.
@@ -1487,7 +1482,6 @@ test("ash_unittests") {
     "//ui/views",
     "//ui/views:test_support",
     "//ui/wm",
-    "//ui/wm/public",
     "//url",
   ]
 

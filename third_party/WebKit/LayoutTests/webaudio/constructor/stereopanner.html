@@ -1,20 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <title>
-      Test Constructor: StereoPanner
-    </title>
+    <title>Test Constructor: StereoPanner</title>
     <script src="../../resources/testharness.js"></script>
     <script src="../../resources/testharnessreport.js"></script>
     <script src="../resources/audit-util.js"></script>
     <script src="../resources/audit.js"></script>
     <script src="audionodeoptions.js"></script>
   </head>
-  <body>
-    <script id="layout-test-code">
-      let context;
 
-      let audit = Audit.createTaskRunner();
+  <body>
+    <script>
+      var context;
+
+      var audit = Audit.createTaskRunner();
 
       audit.define('initialize', (task, should) => {
         context = initializeContext(should);
@@ -45,10 +44,10 @@
       audit.define('test AudioNodeOptions', (task, should) => {
         // Can't use testAudioNodeOptions because the constraints for this node
         // are not supported there.
-        let node;
+        var node;
 
         // Test that we can set the channel count to 1 or 2.
-        let options = {channelCount: 1};
+        var options = {channelCount: 1};
         should(
             () => {
               node = new StereoPannerNode(context, options);
@@ -162,8 +161,8 @@
       });
 
       audit.define('constructor with options', (task, should) => {
-        let node;
-        let options = {
+        var node;
+        var options = {
           pan: 0.75,
         };
 

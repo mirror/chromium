@@ -30,6 +30,7 @@
 #include "core/html/track/TextTrackContainer.h"
 
 #include "core/dom/ResizeObserver.h"
+#include "core/dom/ResizeObserverCallback.h"
 #include "core/dom/ResizeObserverEntry.h"
 #include "core/html/HTMLVideoElement.h"
 #include "core/html/track/CueTimeline.h"
@@ -40,13 +41,13 @@ namespace blink {
 
 namespace {
 
-class VideoElementResizeDelegate final : public ResizeObserver::Delegate {
+class VideoElementResizeCallback final : public ResizeObserverCallback {
  public:
-  VideoElementResizeDelegate(TextTrackContainer& container)
-      : ResizeObserver::Delegate(), text_track_container_(container) {}
+  VideoElementResizeCallback(TextTrackContainer& container)
+      : ResizeObserverCallback(), text_track_container_(container) {}
 
-  void OnResize(
-      const HeapVector<Member<ResizeObserverEntry>>& entries) override {
+  void handleEvent(const HeapVector<Member<ResizeObserverEntry>>& entries,
+                   ResizeObserver*) override {
     DCHECK_EQ(entries.size(), 1u);
     DCHECK(isHTMLVideoElement(entries[0]->target()));
     text_track_container_->UpdateDefaultFontSize(
@@ -55,7 +56,7 @@ class VideoElementResizeDelegate final : public ResizeObserver::Delegate {
 
   DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(text_track_container_);
-    ResizeObserver::Delegate::Trace(visitor);
+    ResizeObserverCallback::Trace(visitor);
   }
 
  private:
@@ -89,7 +90,7 @@ LayoutObject* TextTrackContainer::CreateLayoutObject(const ComputedStyle&) {
 
 void TextTrackContainer::ObserveSizeChanges(Element& element) {
   video_size_observer_ = ResizeObserver::Create(
-      GetDocument(), new VideoElementResizeDelegate(*this));
+      GetDocument(), new VideoElementResizeCallback(*this));
   video_size_observer_->observe(&element);
 }
 

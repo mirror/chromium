@@ -53,10 +53,11 @@ class ProfileStatistics : public KeyedService {
 
   explicit ProfileStatistics(Profile* profile);
   ~ProfileStatistics() override;
+  void RegisterAggregator(ProfileStatisticsAggregator* const aggregator);
   void DeregisterAggregator();
 
   Profile* profile_;
-  scoped_refptr<ProfileStatisticsAggregator> aggregator_;
+  ProfileStatisticsAggregator* aggregator_;
   base::WeakPtrFactory<ProfileStatistics> weak_ptr_factory_;
 };
 

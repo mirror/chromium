@@ -20,12 +20,11 @@ StreamRegistry::StreamRegistry()
 }
 
 StreamRegistry::~StreamRegistry() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(register_observers_.empty());
 }
 
 void StreamRegistry::RegisterStream(Stream* stream) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(stream);
   DCHECK(!stream->url().is_empty());
 
@@ -42,7 +41,7 @@ void StreamRegistry::RegisterStream(Stream* stream) {
 }
 
 scoped_refptr<Stream> StreamRegistry::GetStream(const GURL& url) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   StreamMap::const_iterator stream = streams_.find(url);
   if (stream != streams_.end())
     return stream->second;
@@ -51,7 +50,7 @@ scoped_refptr<Stream> StreamRegistry::GetStream(const GURL& url) {
 }
 
 bool StreamRegistry::CloneStream(const GURL& url, const GURL& src_url) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   scoped_refptr<Stream> stream(GetStream(src_url));
   if (stream.get()) {
     streams_[url] = stream;
@@ -61,7 +60,7 @@ bool StreamRegistry::CloneStream(const GURL& url, const GURL& src_url) {
 }
 
 void StreamRegistry::UnregisterStream(const GURL& url) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   StreamMap::iterator iter = streams_.find(url);
   if (iter == streams_.end())
@@ -81,7 +80,7 @@ void StreamRegistry::UnregisterStream(const GURL& url) {
 bool StreamRegistry::UpdateMemoryUsage(const GURL& url,
                                        size_t current_size,
                                        size_t increase) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   StreamMap::iterator iter = streams_.find(url);
   // A Stream must be registered with its parent registry to get memory.
@@ -104,18 +103,18 @@ bool StreamRegistry::UpdateMemoryUsage(const GURL& url,
 
 void StreamRegistry::SetRegisterObserver(const GURL& url,
                                          StreamRegisterObserver* observer) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(register_observers_.find(url) == register_observers_.end());
   register_observers_[url] = observer;
 }
 
 void StreamRegistry::RemoveRegisterObserver(const GURL& url) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   register_observers_.erase(url);
 }
 
 void StreamRegistry::AbortPendingStream(const GURL& url) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   reader_aborted_urls_.insert(url);
 }
 

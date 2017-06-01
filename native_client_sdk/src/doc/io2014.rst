@@ -1,7 +1,5 @@
 .. _io2014:
 
-.. include:: /migration/deprecation.inc
-
 ###################
 Building a NaCl App
 ###################

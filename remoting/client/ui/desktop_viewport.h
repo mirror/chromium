@@ -35,11 +35,10 @@ class DesktopViewport {
   DesktopViewport();
   ~DesktopViewport();
 
-  // Sets the |desktop_size_| and (re)initializes the viewport.
+  // Sets the |desktop_size_| and initializes the viewport when necessary.
   void SetDesktopSize(int desktop_width, int desktop_height);
 
-  // Sets the |surface_size_| and (re)initializes the viewport if both
-  // dimensions are changed.
+  // Sets the |surface_size_| and initializes the viewport when necessary.
   void SetSurfaceSize(int surface_width, int surface_height);
 
   // Translates the desktop on the surface's reference frame by <dx, dy>.
@@ -57,9 +56,6 @@ class DesktopViewport {
 
   // Returns the current center of the viewport on the desktop's coordinate.
   ViewMatrix::Point GetViewportCenter() const;
-
-  // Returns true if |point| is within the bounds of the desktop.
-  bool IsPointWithinDesktopBounds(const ViewMatrix::Point& point) const;
 
   // Constrains |point| within the bounds of the desktop. Do nothing if the
   // desktop size is not set.

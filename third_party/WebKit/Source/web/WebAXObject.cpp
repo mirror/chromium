@@ -37,13 +37,10 @@
 #include "core/dom/Node.h"
 #include "core/editing/markers/DocumentMarker.h"
 #include "core/exported/WebViewBase.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/VisualViewport.h"
 #include "core/frame/WebLocalFrameBase.h"
 #include "core/input/KeyboardEventManager.h"
-#include "core/layout/LayoutObject.h"
-#include "core/layout/api/LayoutAPIShim.h"
-#include "core/layout/api/LayoutViewItem.h"
 #include "core/page/Page.h"
 #include "core/style/ComputedStyle.h"
 #include "modules/accessibility/AXObjectCacheImpl.h"
@@ -61,7 +58,6 @@
 #include "public/web/WebDocument.h"
 #include "public/web/WebElement.h"
 #include "public/web/WebNode.h"
-#include "public/web/WebView.h"
 
 namespace blink {
 
@@ -164,7 +160,9 @@ int WebAXObject::GenerateAXID() const {
 bool WebAXObject::UpdateLayoutAndCheckValidity() {
   if (!IsDetached()) {
     Document* document = private_->GetDocument();
-    if (!document || !document->View())
+    // TODO(szager): Investigate whether/why document->IsDetached() can be
+    // true when this->IsDetached() is false.
+    if (!document || !document->View() || document->IsDetached())
       return false;
     document->View()->UpdateLifecycleToCompositingCleanPlusScrolling();
   }
@@ -1562,51 +1560,6 @@ WebAXObject& WebAXObject::operator=(AXObjectImpl* object) {
 
 WebAXObject::operator AXObjectImpl*() const {
   return private_.Get();
-}
-
-// static
-WebAXObject WebAXObject::FromWebNode(WebNode& web_node) {
-  WebDocument web_document = web_node.GetDocument();
-  const Document* doc = web_document.ConstUnwrap<Document>();
-  AXObjectCacheBase* cache = ToAXObjectCacheBase(doc->ExistingAXObjectCache());
-  Node* node = web_node.Unwrap<Node>();
-  return cache ? WebAXObject(cache->Get(node)) : WebAXObject();
-}
-
-// static
-WebAXObject WebAXObject::FromWebView(WebView& web_view) {
-  auto main_frame = web_view.MainFrame();
-  if (!main_frame)
-    return WebAXObject();
-
-  Document* document = main_frame->GetDocument();
-  return WebAXObject(ToAXObjectCacheImpl(document->AxObjectCache())->Root());
-}
-
-// static
-WebAXObject WebAXObject::FromWebDocument(const WebDocument& web_document) {
-  const Document* document = web_document.ConstUnwrap<Document>();
-  AXObjectCacheImpl* cache = ToAXObjectCacheImpl(document->AxObjectCache());
-  return cache ? WebAXObject(cache->GetOrCreate(
-                     ToLayoutView(LayoutAPIShim::LayoutObjectFrom(
-                         document->GetLayoutViewItem()))))
-               : WebAXObject();
-}
-
-// static
-WebAXObject WebAXObject::FromWebDocumentByID(const WebDocument& web_document,
-                                             int ax_id) {
-  const Document* document = web_document.ConstUnwrap<Document>();
-  AXObjectCacheImpl* cache = ToAXObjectCacheImpl(document->AxObjectCache());
-  return cache ? WebAXObject(cache->ObjectFromAXID(ax_id)) : WebAXObject();
-}
-
-// static
-WebAXObject WebAXObject::FromWebDocumentFocused(
-    const WebDocument& web_document) {
-  const Document* document = web_document.ConstUnwrap<Document>();
-  AXObjectCacheImpl* cache = ToAXObjectCacheImpl(document->AxObjectCache());
-  return cache ? WebAXObject(cache->FocusedObject()) : WebAXObject();
 }
 
 }  // namespace blink

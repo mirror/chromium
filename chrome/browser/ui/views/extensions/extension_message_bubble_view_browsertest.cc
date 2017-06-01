@@ -5,7 +5,6 @@
 #include "base/auto_reset.h"
 #include "base/macros.h"
 #include "chrome/browser/ui/extensions/extension_message_bubble_browsertest.h"
-#include "chrome/browser/ui/extensions/settings_api_bubble_helpers.h"
 #include "chrome/browser/ui/test/test_browser_dialog.h"
 #include "chrome/browser/ui/views/toolbar/toolbar_actions_bar_bubble_views.h"
 #include "ui/accessibility/ax_node_data.h"
@@ -69,6 +68,17 @@ class ExtensionMessageBubbleViewBrowserTest
   bool block_close_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionMessageBubbleViewBrowserTest);
+};
+
+class ExtensionMessageBubbleViewBrowserTestLegacy
+    : public ExtensionMessageBubbleViewBrowserTest {
+ protected:
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    ExtensionMessageBubbleViewBrowserTest::SetUpCommandLine(command_line);
+    override_redesign_.reset();
+    override_redesign_.reset(new extensions::FeatureSwitch::ScopedOverride(
+        extensions::FeatureSwitch::extension_action_redesign(), false));
+  }
 };
 
 void ExtensionMessageBubbleViewBrowserTest::SetUpCommandLine(
@@ -153,12 +163,12 @@ IN_PROC_BROWSER_TEST_F(ExtensionMessageBubbleViewBrowserTest,
   TestBubbleAnchoredToExtensionAction();
 }
 
-IN_PROC_BROWSER_TEST_F(ExtensionMessageBubbleViewBrowserTest,
+IN_PROC_BROWSER_TEST_F(ExtensionMessageBubbleViewBrowserTestLegacy,
                        ExtensionBubbleAnchoredToAppMenu) {
   TestBubbleAnchoredToAppMenu();
 }
 
-IN_PROC_BROWSER_TEST_F(ExtensionMessageBubbleViewBrowserTest,
+IN_PROC_BROWSER_TEST_F(ExtensionMessageBubbleViewBrowserTestLegacy,
                        ExtensionBubbleAnchoredToAppMenuWithOtherAction) {
   TestBubbleAnchoredToAppMenuWithOtherAction();
 }
@@ -189,6 +199,11 @@ IN_PROC_BROWSER_TEST_F(ExtensionMessageBubbleViewBrowserTest,
 IN_PROC_BROWSER_TEST_F(ExtensionMessageBubbleViewBrowserTest,
                        TestControlledNewTabPageMessageBubble) {
   TestControlledNewTabPageBubbleShown(false);
+}
+
+IN_PROC_BROWSER_TEST_F(ExtensionMessageBubbleViewBrowserTest,
+                       TestControlledNewTabPageMessageBubbleLearnMore) {
+  TestControlledNewTabPageBubbleShown(true);
 }
 
 IN_PROC_BROWSER_TEST_F(ExtensionMessageBubbleViewBrowserTest,
@@ -256,28 +271,4 @@ IN_PROC_BROWSER_TEST_F(ExtensionMessageBubbleViewBrowserTest,
 IN_PROC_BROWSER_TEST_F(ExtensionMessageBubbleViewBrowserTest,
                        InvokeDialog_devmode_warning) {
   RunDialog();
-}
-
-class NtpExtensionBubbleViewBrowserTest
-    : public ExtensionMessageBubbleViewBrowserTest {
- public:
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    ExtensionMessageBubbleViewBrowserTest::SetUpCommandLine(command_line);
-// The NTP bubble is disabled by default on non-windows platforms.
-#if !defined(OS_WIN)
-    extensions::SetNtpBubbleEnabledForTesting(true);
-#endif
-  }
-
-  void TearDownOnMainThread() override {
-#if !defined(OS_WIN)
-    extensions::SetNtpBubbleEnabledForTesting(false);
-#endif
-    ExtensionMessageBubbleViewBrowserTest::TearDownOnMainThread();
-  }
-};
-
-IN_PROC_BROWSER_TEST_F(NtpExtensionBubbleViewBrowserTest,
-                       TestControlledNewTabPageMessageBubbleLearnMore) {
-  TestControlledNewTabPageBubbleShown(true);
 }

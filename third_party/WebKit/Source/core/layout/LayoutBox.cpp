@@ -30,8 +30,8 @@
 #include <algorithm>
 #include "core/dom/Document.h"
 #include "core/editing/EditingUtilities.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLElement.h"
 #include "core/html/HTMLFrameElementBase.h"
@@ -58,7 +58,6 @@
 #include "core/page/AutoscrollController.h"
 #include "core/page/Page.h"
 #include "core/page/scrolling/RootScrollerController.h"
-#include "core/page/scrolling/RootScrollerUtil.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
 #include "core/page/scrolling/SnapCoordinator.h"
 #include "core/paint/BackgroundImageGeometry.h"
@@ -71,6 +70,21 @@
 #include "platform/geometry/FloatQuad.h"
 #include "platform/geometry/FloatRoundedRect.h"
 #include "platform/wtf/PtrUtil.h"
+
+namespace {
+
+// Node that is currently being used as the scrolling root of a frame. See
+// |effective rootScroller| in core/page/scrolling/README.md.
+bool IsEffectiveRootScroller(const blink::LayoutBox* box) {
+  if (!box || !box->GetNode())
+    return false;
+
+  return box->GetNode() == &box->GetDocument()
+                                .GetRootScrollerController()
+                                .EffectiveRootScroller();
+}
+
+}  // namespace
 
 namespace blink {
 
@@ -112,7 +126,7 @@ PaintLayerType LayoutBox::LayerTypeRequired() const {
       HasHiddenBackface() || HasReflection() || Style()->SpecifiesColumns() ||
       Style()->IsStackingContext() ||
       Style()->ShouldCompositeForCurrentAnimations() ||
-      RootScrollerUtil::IsEffective(*this))
+      IsEffectiveRootScroller(this))
     return kNormalPaintLayer;
 
   if (HasOverflowClip())
@@ -632,7 +646,7 @@ void LayoutBox::ScrollToPosition(const FloatPoint& position,
 // Returns true iff we are attempting an autoscroll inside an iframe with
 // scrolling="no".
 static bool IsDisallowedAutoscroll(HTMLFrameOwnerElement* owner_element,
-                                   LocalFrameView* frame_view) {
+                                   FrameView* frame_view) {
   if (owner_element && IsHTMLFrameElementBase(*owner_element)) {
     HTMLFrameElementBase* frame_element_base =
         ToHTMLFrameElementBase(owner_element);
@@ -680,7 +694,7 @@ void LayoutBox::ScrollRectToVisible(const LayoutRect& rect,
     if (new_rect.IsEmpty())
       return;
   } else if (!parent_box && CanBeProgramaticallyScrolled()) {
-    if (LocalFrameView* frame_view = this->GetFrameView()) {
+    if (FrameView* frame_view = this->GetFrameView()) {
       HTMLFrameOwnerElement* owner_element = GetDocument().LocalOwner();
       if (!IsDisallowedAutoscroll(owner_element, frame_view)) {
         if (make_visible_in_visual_viewport) {
@@ -971,17 +985,6 @@ int LayoutBox::HorizontalScrollbarHeight() const {
   return GetScrollableArea()->HorizontalScrollbarHeight();
 }
 
-LayoutUnit LayoutBox::VerticalScrollbarWidthClampedToContentBox() const {
-  LayoutUnit width(VerticalScrollbarWidth());
-  DCHECK_GE(width, LayoutUnit());
-  if (width) {
-    LayoutUnit minimum_width = LogicalWidth() - BorderAndPaddingLogicalWidth();
-    DCHECK_GE(minimum_width, LayoutUnit());
-    width = std::min(width, minimum_width);
-  }
-  return width;
-}
-
 ScrollResult LayoutBox::Scroll(ScrollGranularity granularity,
                                const FloatSize& delta) {
   // Presumably the same issue as in setScrollTop. See crbug.com/343132.
@@ -1020,7 +1023,7 @@ void LayoutBox::Autoscroll(const IntPoint& position_in_root_frame) {
   if (!frame)
     return;
 
-  LocalFrameView* frame_view = frame->View();
+  FrameView* frame_view = frame->View();
   if (!frame_view)
     return;
 
@@ -1047,7 +1050,7 @@ IntSize LayoutBox::CalculateAutoscrollDirection(
   if (!GetFrame())
     return IntSize();
 
-  LocalFrameView* frame_view = GetFrame()->View();
+  FrameView* frame_view = GetFrame()->View();
   if (!frame_view)
     return IntSize();
 
@@ -1495,7 +1498,7 @@ bool LayoutBox::NodeAtPoint(HitTestResult& result,
                             HitTestAction action) {
   LayoutPoint adjusted_location = accumulated_offset + Location();
 
-  if (!RootScrollerUtil::IsEffective(*this)) {
+  if (!IsEffectiveRootScroller(this)) {
     // Check if we need to do anything at all.
     // If we have clipping, then we can't have any spillout.
     LayoutRect overflow_box =
@@ -1891,7 +1894,7 @@ PaintInvalidationReason LayoutBox::InvalidatePaint(
 LayoutRect LayoutBox::OverflowClipRect(
     const LayoutPoint& location,
     OverlayScrollbarClipBehavior overlay_scrollbar_clip_behavior) const {
-  if (RootScrollerUtil::IsEffective(*this))
+  if (IsEffectiveRootScroller(this))
     return View()->ViewRect();
 
   // FIXME: When overflow-clip (CSS3) is implemented, we'll obtain the property
@@ -2389,8 +2392,7 @@ bool LayoutBox::NeedsForcedBreakBefore(
 }
 
 bool LayoutBox::PaintedOutputOfObjectHasNoEffectRegardlessOfSize() const {
-  if (HasNonCompositedScrollbars() ||
-      GetSelectionState() != SelectionState::kNone ||
+  if (HasNonCompositedScrollbars() || GetSelectionState() != SelectionNone ||
       HasBoxDecorationBackground() || StyleRef().HasBoxDecorations() ||
       StyleRef().HasVisualOverflowingEffect())
     return false;
@@ -2836,7 +2838,7 @@ bool LayoutBox::ColumnFlexItemHasStretchAlignment() const {
   return StyleRef()
              .ResolvedAlignSelf(
                  ContainingBlock()->SelfAlignmentNormalBehavior(),
-                 &parent_style)
+                 IsAnonymous() ? &parent_style : nullptr)
              .GetPosition() == kItemPositionStretch;
 }
 
@@ -2870,14 +2872,15 @@ bool LayoutBox::HasStretchedLogicalWidth() const {
     // Flexbox Items, which obviously should have a container.
     return false;
   }
+  const ComputedStyle* parent_style = IsAnonymous() ? cb->Style() : nullptr;
   if (cb->IsHorizontalWritingMode() != IsHorizontalWritingMode())
     return style
                .ResolvedAlignSelf(cb->SelfAlignmentNormalBehavior(this),
-                                  cb->Style())
+                                  parent_style)
                .GetPosition() == kItemPositionStretch;
   return style
              .ResolvedJustifySelf(cb->SelfAlignmentNormalBehavior(this),
-                                  cb->Style())
+                                  parent_style)
              .GetPosition() == kItemPositionStretch;
 }
 
@@ -3752,7 +3755,7 @@ LayoutUnit LayoutBox::ContainingBlockLogicalWidthForPositioned(
   if (Style()->GetPosition() == EPosition::kFixed &&
       containing_block->IsLayoutView() && !GetDocument().Printing()) {
     const LayoutView* view = ToLayoutView(containing_block);
-    if (LocalFrameView* frame_view = view->GetFrameView()) {
+    if (FrameView* frame_view = view->GetFrameView()) {
       // Don't use visibleContentRect since the PaintLayer's size has not been
       // set yet.
       LayoutSize viewport_size(
@@ -3814,7 +3817,7 @@ LayoutUnit LayoutBox::ContainingBlockLogicalHeightForPositioned(
   if (Style()->GetPosition() == EPosition::kFixed &&
       containing_block->IsLayoutView() && !GetDocument().Printing()) {
     const LayoutView* view = ToLayoutView(containing_block);
-    if (LocalFrameView* frame_view = view->GetFrameView()) {
+    if (FrameView* frame_view = view->GetFrameView()) {
       // Don't use visibleContentRect since the PaintLayer's size has not been
       // set yet.
       LayoutSize viewport_size(
@@ -4893,8 +4896,14 @@ bool LayoutBox::ShouldBeConsideredAsReplaced() const {
           isHTMLImageElement(ToElement(node)));
 }
 
+DISABLE_CFI_PERF
 bool LayoutBox::AvoidsFloats() const {
-  return true;
+  // crbug.com/460704: This should be merged with createsNewFormattingContext().
+  return ShouldBeConsideredAsReplaced() || HasOverflowClip() || IsHR() ||
+         IsLegend() || IsWritingModeRoot() || IsFlexItemIncludingDeprecated() ||
+         Style()->GetColumnSpan() == kColumnSpanAll ||
+         Style()->ContainsPaint() || Style()->ContainsLayout() ||
+         Style()->Display() == EDisplay::kFlowRoot;
 }
 
 bool LayoutBox::HasNonCompositedScrollbars() const {
@@ -5783,14 +5792,13 @@ LayoutUnit LayoutBox::CalculatePaginationStrutToFitContent(
     LayoutUnit content_logical_height) const {
   DCHECK_EQ(strut_to_next_page, PageRemainingLogicalHeightForOffset(
                                     offset, kAssociateWithLatterPage));
-  // If we're inside a cell in a row that straddles a page then avoid the
-  // repeating header group if necessary. If we're a table section we're
-  // already accounting for it.
-  if (!IsTableSection()) {
-    LayoutState* layout_state = View()->GetLayoutState();
-    strut_to_next_page += layout_state->HeightOffsetForTableHeaders();
+  // If we're a cell in a row that straddles a page then avoid the repeating
+  // header group if necessary.
+  if (IsTableCell()) {
+    const LayoutTableCell* cell = ToLayoutTableCell(this);
+    if (!cell->Row()->IsFirstRowInSectionAfterHeader())
+      strut_to_next_page += cell->Table()->RowOffsetFromRepeatingHeader();
   }
-
   LayoutUnit next_page_logical_top = offset + strut_to_next_page;
   if (PageLogicalHeightForOffset(next_page_logical_top) >=
       content_logical_height)

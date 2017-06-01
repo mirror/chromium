@@ -33,8 +33,8 @@
 #include "core/editing/FrameSelection.h"
 #include "core/events/EventListener.h"
 #include "core/frame/Deprecation.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/svg/LayoutSVGModelObject.h"
 #include "core/layout/svg/LayoutSVGRoot.h"
@@ -130,8 +130,7 @@ class SVGCurrentTranslateTearOff : public SVGPointTearOff {
   SVGCurrentTranslateTearOff(SVGSVGElement* context_element)
       : SVGPointTearOff(context_element->translation_,
                         context_element,
-                        kPropertyIsNotAnimVal,
-                        QualifiedName::Null()) {}
+                        kPropertyIsNotAnimVal) {}
 };
 
 SVGPointTearOff* SVGSVGElement::currentTranslateFromJavascript() {
@@ -422,19 +421,21 @@ void SVGSVGElement::deselectAll() {
 }
 
 SVGNumberTearOff* SVGSVGElement::createSVGNumber() {
-  return SVGNumberTearOff::CreateDetached();
+  return SVGNumberTearOff::Create(SVGNumber::Create(0.0f), 0,
+                                  kPropertyIsNotAnimVal);
 }
 
 SVGLengthTearOff* SVGSVGElement::createSVGLength() {
-  return SVGLengthTearOff::CreateDetached();
+  return SVGLengthTearOff::Create(SVGLength::Create(), 0,
+                                  kPropertyIsNotAnimVal);
 }
 
 SVGAngleTearOff* SVGSVGElement::createSVGAngle() {
-  return SVGAngleTearOff::CreateDetached();
+  return SVGAngleTearOff::Create(SVGAngle::Create(), 0, kPropertyIsNotAnimVal);
 }
 
 SVGPointTearOff* SVGSVGElement::createSVGPoint() {
-  return SVGPointTearOff::CreateDetached(FloatPoint(0, 0));
+  return SVGPointTearOff::Create(SVGPoint::Create(), 0, kPropertyIsNotAnimVal);
 }
 
 SVGMatrixTearOff* SVGSVGElement::createSVGMatrix() {
@@ -442,11 +443,12 @@ SVGMatrixTearOff* SVGSVGElement::createSVGMatrix() {
 }
 
 SVGRectTearOff* SVGSVGElement::createSVGRect() {
-  return SVGRectTearOff::CreateDetached(FloatRect(0, 0, 0, 0));
+  return SVGRectTearOff::Create(SVGRect::Create(), 0, kPropertyIsNotAnimVal);
 }
 
 SVGTransformTearOff* SVGSVGElement::createSVGTransform() {
-  return SVGTransformTearOff::CreateDetached();
+  return SVGTransformTearOff::Create(SVGTransform::Create(kSvgTransformMatrix),
+                                     0, kPropertyIsNotAnimVal);
 }
 
 SVGTransformTearOff* SVGSVGElement::createSVGTransformFromMatrix(
@@ -472,7 +474,7 @@ AffineTransform SVGSVGElement::LocalCoordinateSpaceTransform(
       // performs the same operation as
       // Document::adjustFloatRectForScrollAndAbsoluteZoom, but in
       // transformation matrix form.)
-      if (LocalFrameView* view = GetDocument().View()) {
+      if (FrameView* view = GetDocument().View()) {
         LayoutRect visible_content_rect(view->VisibleContentRect());
         transform.Translate(-visible_content_rect.X(),
                             -visible_content_rect.Y());
@@ -502,8 +504,8 @@ AffineTransform SVGSVGElement::LocalCoordinateSpaceTransform(
 
 bool SVGSVGElement::LayoutObjectIsNeeded(const ComputedStyle& style) {
   // FIXME: We should respect display: none on the documentElement svg element
-  // but many things in LocalFrameView and SVGImage depend on the LayoutSVGRoot
-  // when they should instead depend on the LayoutView.
+  // but many things in FrameView and SVGImage depend on the LayoutSVGRoot when
+  // they should instead depend on the LayoutView.
   // https://bugs.webkit.org/show_bug.cgi?id=103493
   if (GetDocument().documentElement() == this)
     return true;

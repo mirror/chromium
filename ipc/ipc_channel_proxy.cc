@@ -439,7 +439,7 @@ ChannelProxy::ChannelProxy(
 }
 
 ChannelProxy::~ChannelProxy() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   Close();
 }
@@ -463,7 +463,7 @@ void ChannelProxy::Init(const IPC::ChannelHandle& channel_handle,
 
 void ChannelProxy::Init(std::unique_ptr<ChannelFactory> factory,
                         bool create_pipe_now) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(!did_init_);
 
   if (create_pipe_now) {
@@ -503,7 +503,7 @@ void ChannelProxy::Flush() {
 }
 
 void ChannelProxy::Close() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   // Clear the backpointer to the listener so that any pending calls to
   // Context::OnDispatchMessage or OnDispatchError will be ignored.  It is
@@ -539,13 +539,13 @@ bool ChannelProxy::Send(Message* message) {
 }
 
 void ChannelProxy::AddFilter(MessageFilter* filter) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   context_->AddFilter(filter);
 }
 
 void ChannelProxy::RemoveFilter(MessageFilter* filter) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   context_->ipc_task_runner()->PostTask(
       FROM_HERE, base::Bind(&Context::OnRemoveFilter, context_,
@@ -567,7 +567,7 @@ void ChannelProxy::GetGenericRemoteAssociatedInterface(
 }
 
 void ChannelProxy::ClearIPCTaskRunner() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   context()->ClearIPCTaskRunner();
 }
 

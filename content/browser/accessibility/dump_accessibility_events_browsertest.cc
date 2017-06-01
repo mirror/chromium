@@ -151,6 +151,28 @@ void DumpAccessibilityEventsTest::RunEventTest(
   RunTest(event_file, "accessibility/event");
 }
 
+// TODO(dmazzoni): port these tests to run on all platforms.
+#if defined(OS_WIN) || defined(OS_MACOSX)
+
+// This is tasteless, but then so's the snippet it's replacing.
+#if defined(OS_WIN)
+#define DISABLED_ON_WIN(name) DISABLED_ ## name
+#else
+#define DISABLED_ON_WIN(name) name
+#endif
+
+#if defined(OS_MACOSX)
+#define DISABLED_ON_MAC(name) DISABLED_##name
+#else
+#define DISABLED_ON_MAC(name) name
+#endif
+
+#if defined(OS_WIN) || defined(OS_MACOSX)
+#define DISABLED_ON_WIN_AND_MAC(name) DISABLED_ ## name
+#else
+#define DISABLED_ON_WIN_AND_MAC(name) name
+#endif
+
 IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
                        AccessibilityEventsAriaComboBoxCollapse) {
   RunEventTest(FILE_PATH_LITERAL("aria-combo-box-collapse.html"));
@@ -161,23 +183,9 @@ IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
   RunEventTest(FILE_PATH_LITERAL("aria-combo-box-expand.html"));
 }
 
+// https://crbug.com/719030
 IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
-                       AccessibilityEventsAriaTreeCollapse) {
-  RunEventTest(FILE_PATH_LITERAL("aria-tree-collapse.html"));
-}
-
-IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
-                       AccessibilityEventsAriaTreeExpand) {
-  RunEventTest(FILE_PATH_LITERAL("aria-tree-expand.html"));
-}
-
-IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
-                       AccessibilityEventsAriaTreeItemFocus) {
-  RunEventTest(FILE_PATH_LITERAL("aria-treeitem-focus.html"));
-}
-
-IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
-                       AccessibilityEventsAriaComboBoxFocus) {
+    DISABLED_ON_WIN_AND_MAC(AccessibilityEventsAriaComboBoxFocus)) {
   RunEventTest(FILE_PATH_LITERAL("aria-combo-box-focus.html"));
 }
 
@@ -251,14 +259,11 @@ IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
   RunEventTest(FILE_PATH_LITERAL("inner-html-change.html"));
 }
 
-IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
-                       AccessibilityEventsInputTypeTextValueChanged) {
+// http://crbug.com/719030
+IN_PROC_BROWSER_TEST_F(
+    DumpAccessibilityEventsTest,
+    DISABLED_ON_MAC(AccessibilityEventsInputTypeTextValueChanged)) {
   RunEventTest(FILE_PATH_LITERAL("input-type-text-value-changed.html"));
-}
-
-IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
-                       AccessibilityEventsInvalidStatusChange) {
-  RunEventTest(FILE_PATH_LITERAL("invalid-status-change.html"));
 }
 
 IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
@@ -272,33 +277,13 @@ IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
 }
 
 IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
-                       AccessibilityEventsLiveRegionAdd) {
-  RunEventTest(FILE_PATH_LITERAL("live-region-add.html"));
-}
-
-IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
-                       AccessibilityEventsLiveRegionChange) {
-  RunEventTest(FILE_PATH_LITERAL("live-region-change.html"));
-}
-
-IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
-                       AccessibilityEventsLiveRegionCreate) {
-  RunEventTest(FILE_PATH_LITERAL("live-region-create.html"));
-}
-
-IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
-                       AccessibilityEventsLiveRegionRemove) {
-  RunEventTest(FILE_PATH_LITERAL("live-region-remove.html"));
-}
-
-IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
                        AccessibilityEventsMenuListCollapse) {
   RunEventTest(FILE_PATH_LITERAL("menulist-collapse.html"));
 }
 
 // https://crbug.com/719030
 IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
-                       DISABLED_AccessibilityEventsMenuListExpand) {
+    DISABLED_ON_WIN_AND_MAC(AccessibilityEventsMenuListExpand)) {
   RunEventTest(FILE_PATH_LITERAL("menulist-expand.html"));
 }
 
@@ -309,7 +294,7 @@ IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
 
 // https://crbug.com/719030
 IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
-                       DISABLED_AccessibilityEventsMenuListNext) {
+    DISABLED_ON_WIN_AND_MAC(AccessibilityEventsMenuListNext)) {
   RunEventTest(FILE_PATH_LITERAL("menulist-next.html"));
 }
 
@@ -349,5 +334,7 @@ IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
                        AccessibilityEventsTextChanged) {
   RunEventTest(FILE_PATH_LITERAL("text-changed.html"));
 }
+
+#endif  // defined(OS_WIN) || defined(OS_MACOSX)
 
 }  // namespace content

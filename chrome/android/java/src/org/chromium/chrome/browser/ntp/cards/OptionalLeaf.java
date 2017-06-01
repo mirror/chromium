@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.ntp.cards;
 import android.support.annotation.CallSuper;
 
 import org.chromium.base.Callback;
+import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
 
 import java.util.Collections;
 import java.util.Set;
@@ -40,6 +41,12 @@ public abstract class OptionalLeaf extends ChildNode {
     }
 
     @Override
+    public SnippetArticle getSuggestionAt(int position) {
+        checkIndex(position);
+        return null;
+    }
+
+    @Override
     public Set<Integer> getItemDismissalGroup(int position) {
         checkIndex(position);
         return canBeDismissed() ? Collections.singleton(0) : Collections.<Integer>emptySet();
@@ -49,11 +56,6 @@ public abstract class OptionalLeaf extends ChildNode {
     public void dismissItem(int position, Callback<String> itemRemovedCallback) {
         checkIndex(position);
         dismiss(itemRemovedCallback);
-    }
-
-    @Override
-    public final void visitItems(NodeVisitor visitor) {
-        if (mVisible) visitOptionalItem(visitor);
     }
 
     /** @return Whether the optional item is currently visible. */
@@ -110,10 +112,4 @@ public abstract class OptionalLeaf extends ChildNode {
     protected void dismiss(Callback<String> itemRemovedCallback) {
         assert false;
     }
-
-    /**
-     * Visits this item. This method is called iff the optional item is currently visible.
-     * @param visitor The visitor with which to visit this item.
-     */
-    protected abstract void visitOptionalItem(NodeVisitor visitor);
 }

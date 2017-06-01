@@ -346,15 +346,15 @@ bool XSLTProcessor::TransformToString(Node* source_node,
     // Read permissions are checked by docLoaderFunc.
     if (0 != xsltSetSecurityPrefs(security_prefs, XSLT_SECPREF_WRITE_FILE,
                                   xsltSecurityForbid))
-      IMMEDIATE_CRASH();
+      CRASH();
     if (0 != xsltSetSecurityPrefs(security_prefs, XSLT_SECPREF_CREATE_DIRECTORY,
                                   xsltSecurityForbid))
-      IMMEDIATE_CRASH();
+      CRASH();
     if (0 != xsltSetSecurityPrefs(security_prefs, XSLT_SECPREF_WRITE_NETWORK,
                                   xsltSecurityForbid))
-      IMMEDIATE_CRASH();
+      CRASH();
     if (0 != xsltSetCtxtSecurityPrefs(security_prefs, transform_context))
-      IMMEDIATE_CRASH();
+      CRASH();
 
     // <http://bugs.webkit.org/show_bug.cgi?id=16077>: XSLT processor
     // <xsl:sort> algorithm only compares by code point.

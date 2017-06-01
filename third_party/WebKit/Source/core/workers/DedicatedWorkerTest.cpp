@@ -37,10 +37,13 @@ const double kMaxIntervalInSec = 0.02;
 
 class DedicatedWorkerThreadForTest final : public DedicatedWorkerThread {
  public:
-  DedicatedWorkerThreadForTest(InProcessWorkerObjectProxy& worker_object_proxy)
-      : DedicatedWorkerThread(nullptr /* ThreadableLoadingContext */,
-                              worker_object_proxy,
-                              MonotonicallyIncreasingTime()) {
+  DedicatedWorkerThreadForTest(
+      WorkerLoaderProxyProvider* worker_loader_proxy_provider,
+      InProcessWorkerObjectProxy& worker_object_proxy)
+      : DedicatedWorkerThread(
+            WorkerLoaderProxy::Create(worker_loader_proxy_provider),
+            worker_object_proxy,
+            MonotonicallyIncreasingTime()) {
     worker_backing_thread_ = WorkerBackingThread::CreateForTest("Test thread");
   }
 
@@ -118,8 +121,10 @@ class InProcessWorkerMessagingProxyForTest
                                       nullptr /* workerClients */) {
     worker_object_proxy_ = WTF::MakeUnique<InProcessWorkerObjectProxyForTest>(
         weak_ptr_factory_.CreateWeakPtr(), GetParentFrameTaskRunners());
-    worker_thread_ =
-        WTF::MakeUnique<DedicatedWorkerThreadForTest>(WorkerObjectProxy());
+    worker_loader_proxy_provider_ =
+        WTF::MakeUnique<WorkerLoaderProxyProvider>();
+    worker_thread_ = WTF::WrapUnique(new DedicatedWorkerThreadForTest(
+        worker_loader_proxy_provider_.get(), WorkerObjectProxy()));
     mock_worker_thread_lifecycle_observer_ =
         new MockWorkerThreadLifecycleObserver(
             worker_thread_->GetWorkerThreadLifecycleContext());
@@ -130,6 +135,8 @@ class InProcessWorkerMessagingProxyForTest
 
   ~InProcessWorkerMessagingProxyForTest() override {
     EXPECT_FALSE(blocking_);
+    worker_thread_->GetWorkerLoaderProxy()->DetachProvider(
+        worker_loader_proxy_provider_.get());
   }
 
   void StartWithSourceCode(const String& source) {
@@ -217,6 +224,7 @@ class InProcessWorkerMessagingProxyForTest
   }
 
  private:
+  std::unique_ptr<WorkerLoaderProxyProvider> worker_loader_proxy_provider_;
   Persistent<MockWorkerThreadLifecycleObserver>
       mock_worker_thread_lifecycle_observer_;
   RefPtr<SecurityOrigin> security_origin_;

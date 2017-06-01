@@ -34,9 +34,9 @@
 #include "core/dom/MutationObserverInit.h"
 #include "core/dom/MutationRecord.h"
 #include "core/dom/ResizeObserver.h"
+#include "core/dom/ResizeObserverCallback.h"
 #include "core/dom/ResizeObserverEntry.h"
 #include "core/dom/TaskRunnerHelper.h"
-#include "core/events/KeyboardEvent.h"
 #include "core/events/MouseEvent.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
@@ -47,7 +47,6 @@
 #include "core/html/track/TextTrackList.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutTheme.h"
-#include "core/page/SpatialNavigation.h"
 #include "modules/media_controls/MediaControlsMediaEventListener.h"
 #include "modules/media_controls/MediaControlsOrientationLockDelegate.h"
 #include "modules/media_controls/MediaControlsRotateToFullscreenDelegate.h"
@@ -178,17 +177,17 @@ class MediaControlsImpl::BatchedControlUpdate {
 // Count of number open batches for controls visibility.
 int MediaControlsImpl::BatchedControlUpdate::batch_depth_ = 0;
 
-class MediaControlsImpl::MediaControlsResizeObserverDelegate final
-    : public ResizeObserver::Delegate {
+class MediaControlsImpl::MediaControlsResizeObserverCallback final
+    : public ResizeObserverCallback {
  public:
-  explicit MediaControlsResizeObserverDelegate(MediaControlsImpl* controls)
+  explicit MediaControlsResizeObserverCallback(MediaControlsImpl* controls)
       : controls_(controls) {
     DCHECK(controls);
   }
-  ~MediaControlsResizeObserverDelegate() override = default;
+  ~MediaControlsResizeObserverCallback() override = default;
 
-  void OnResize(
-      const HeapVector<Member<ResizeObserverEntry>>& entries) override {
+  void handleEvent(const HeapVector<Member<ResizeObserverEntry>>& entries,
+                   ResizeObserver* observer) override {
     DCHECK_EQ(1u, entries.size());
     DCHECK_EQ(entries[0]->target(), controls_->MediaElement());
     controls_->NotifyElementSizeChanged(entries[0]->contentRect());
@@ -196,7 +195,7 @@ class MediaControlsImpl::MediaControlsResizeObserverDelegate final
 
   DEFINE_INLINE_TRACE() {
     visitor->Trace(controls_);
-    ResizeObserver::Delegate::Trace(visitor);
+    ResizeObserverCallback::Trace(visitor);
   }
 
  private:
@@ -297,7 +296,7 @@ MediaControlsImpl::MediaControlsImpl(HTMLMediaElement& media_element)
       is_paused_for_scrubbing_(false),
       resize_observer_(ResizeObserver::Create(
           media_element.GetDocument(),
-          new MediaControlsResizeObserverDelegate(this))),
+          new MediaControlsResizeObserverCallback(this))),
       element_size_changed_timer_(
           TaskRunnerHelper::Get(TaskType::kUnspecedTimer,
                                 &media_element.GetDocument()),
@@ -314,18 +313,20 @@ MediaControlsImpl* MediaControlsImpl::Create(HTMLMediaElement& media_element,
   controls->InitializeControls();
   controls->Reset();
 
-  if (RuntimeEnabledFeatures::videoFullscreenOrientationLockEnabled() &&
-      media_element.IsHTMLVideoElement()) {
-    // Initialize the orientation lock when going fullscreen feature.
-    controls->orientation_lock_delegate_ =
-        new MediaControlsOrientationLockDelegate(
-            toHTMLVideoElement(media_element));
-  }
+  // RotateToFullscreen and FullscreenOrientationLock are not yet compatible
+  // so enabling RotateToFullscreen disables FullscreenOrientationLock.
+  // TODO(johnme): Make it possible to use both features simultaneously.
   if (RuntimeEnabledFeatures::videoRotateToFullscreenEnabled() &&
       media_element.IsHTMLVideoElement()) {
     // Initialize the rotate-to-fullscreen feature.
     controls->rotate_to_fullscreen_delegate_ =
         new MediaControlsRotateToFullscreenDelegate(
+            toHTMLVideoElement(media_element));
+  } else if (RuntimeEnabledFeatures::videoFullscreenOrientationLockEnabled() &&
+             media_element.IsHTMLVideoElement()) {
+    // Initialize the orientation lock when going fullscreen feature.
+    controls->orientation_lock_delegate_ =
+        new MediaControlsOrientationLockDelegate(
             toHTMLVideoElement(media_element));
   }
 
@@ -483,7 +484,7 @@ Node::InsertionNotificationRequest MediaControlsImpl::InsertedInto(
   if (!resize_observer_) {
     resize_observer_ =
         ResizeObserver::Create(MediaElement().GetDocument(),
-                               new MediaControlsResizeObserverDelegate(this));
+                               new MediaControlsResizeObserverCallback(this));
     HTMLMediaElement& html_media_element = MediaElement();
     resize_observer_->observe(&html_media_element);
   }
@@ -851,24 +852,6 @@ void MediaControlsImpl::DefaultEventHandler(Event* event) {
   if (event->type() == EventTypeNames::focusin ||
       event->type() == EventTypeNames::input)
     ResetHideMediaControlsTimer();
-
-  if (event->IsKeyboardEvent() &&
-      !IsSpatialNavigationEnabled(GetDocument().GetFrame())) {
-    const String& key = ToKeyboardEvent(event)->key();
-    if (key == "Enter" || ToKeyboardEvent(event)->keyCode() == ' ') {
-      play_button_->OnMediaKeyboardEvent(event);
-      return;
-    }
-    if (key == "ArrowLeft" || key == "ArrowRight" || key == "Home" ||
-        key == "End") {
-      timeline_->OnMediaKeyboardEvent(event);
-      return;
-    }
-    if (key == "ArrowDown" || key == "ArrowUp") {
-      volume_slider_->OnMediaKeyboardEvent(event);
-      return;
-    }
-  }
 }
 
 void MediaControlsImpl::HideMediaControlsTimerFired(TimerBase*) {

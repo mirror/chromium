@@ -15,10 +15,6 @@
 class GURL;
 class PrefService;
 
-namespace aura {
-class Window;
-}
-
 namespace gfx {
 class Image;
 }
@@ -40,10 +36,12 @@ namespace ash {
 class AccessibilityDelegate;
 class GPUSupport;
 class PaletteDelegate;
-class Shelf;
-struct ShelfItem;
+class SessionStateDelegate;
 class SystemTrayDelegate;
+struct ShelfItem;
 class WallpaperDelegate;
+class WmShelf;
+class WmWindow;
 
 // Delegate of the Shell.
 class ASH_EXPORT ShellDelegate {
@@ -66,7 +64,7 @@ class ASH_EXPORT ShellDelegate {
 
   // Returns true if |window| can be shown for the delegate's concept of current
   // user.
-  virtual bool CanShowWindowForUser(aura::Window* window) const = 0;
+  virtual bool CanShowWindowForUser(WmWindow* window) const = 0;
 
   // Returns true if the first window shown on first run should be
   // unconditionally maximized, overriding the heuristic that normally chooses
@@ -101,14 +99,17 @@ class ASH_EXPORT ShellDelegate {
   // Creates a wallpaper delegate. Shell takes ownership of the delegate.
   virtual std::unique_ptr<WallpaperDelegate> CreateWallpaperDelegate() = 0;
 
+  // Creates a session state delegate. Shell takes ownership of the delegate.
+  virtual SessionStateDelegate* CreateSessionStateDelegate() = 0;
+
   // Creates a accessibility delegate. Shell takes ownership of the delegate.
   virtual AccessibilityDelegate* CreateAccessibilityDelegate() = 0;
 
   virtual std::unique_ptr<PaletteDelegate> CreatePaletteDelegate() = 0;
 
-  // Creates a menu model for the |shelf| and optional shelf |item|.
+  // Creates a menu model for the |wm_shelf| and optional shelf |item|.
   // If |item| is null, this creates a context menu for the wallpaper or shelf.
-  virtual ui::MenuModel* CreateContextMenu(Shelf* shelf,
+  virtual ui::MenuModel* CreateContextMenu(WmShelf* wm_shelf,
                                            const ShelfItem* item) = 0;
 
   // Creates a GPU support object. Shell takes ownership of the object.
@@ -138,9 +139,6 @@ class ASH_EXPORT ShellDelegate {
 
   // Toggles the status of touchpad between enabled and disabled.
   virtual void ToggleTouchpad() {}
-
-  // Suspends all WebContents-associated media sessions to stop managed players.
-  virtual void SuspendMediaSessions() {}
 };
 
 }  // namespace ash

@@ -42,8 +42,7 @@ PreviewsPageLoadMetricsObserver::~PreviewsPageLoadMetricsObserver() {}
 
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy
 PreviewsPageLoadMetricsObserver::OnCommit(
-    content::NavigationHandle* navigation_handle,
-    ukm::SourceId source_id) {
+    content::NavigationHandle* navigation_handle) {
   return IsOfflinePreview(navigation_handle->GetWebContents())
              ? CONTINUE_OBSERVING
              : STOP_OBSERVING;

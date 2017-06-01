@@ -19,13 +19,10 @@
 #include "components/safe_browsing_db/database_manager.h"
 #include "components/safe_browsing_db/v4_protocol_manager_util.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/web_contents.h"
 #include "google_apis/google_api_keys.h"
 #include "net/base/escape.h"
-#include "net/base/url_util.h"
 
 using content::BrowserThread;
-using content::WebContents;
 using history::HistoryService;
 
 namespace safe_browsing {
@@ -108,15 +105,6 @@ void PasswordProtectionService::CheckCsdWhitelistOnIOThread(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   *check_result =
       url.is_valid() ? database_manager_->MatchCsdWhitelistUrl(url) : true;
-}
-
-bool PasswordProtectionService::CanGetReputationOfURL(const GURL& url) {
-  if (!url.is_valid() || !url.SchemeIsHTTPOrHTTPS())
-    return false;
-
-  const std::string& hostname = url.HostNoBrackets();
-  return !net::IsLocalhost(hostname) && !net::IsHostnameNonUnique(hostname) &&
-         hostname.find('.') != std::string::npos;
 }
 
 LoginReputationClientResponse::VerdictType
@@ -264,7 +252,6 @@ void PasswordProtectionService::CleanUpExpiredVerdicts() {
 }
 
 void PasswordProtectionService::StartRequest(
-    WebContents* web_contents,
     const GURL& main_frame_url,
     const GURL& password_form_action,
     const GURL& password_form_frame_url,
@@ -272,8 +259,7 @@ void PasswordProtectionService::StartRequest(
     LoginReputationClientRequest::TriggerType type) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   scoped_refptr<PasswordProtectionRequest> request(
-      new PasswordProtectionRequest(web_contents, main_frame_url,
-                                    password_form_action,
+      new PasswordProtectionRequest(main_frame_url, password_form_action,
                                     password_form_frame_url, saved_domain, type,
                                     this, GetRequestTimeoutInMS()));
   DCHECK(request);
@@ -282,39 +268,44 @@ void PasswordProtectionService::StartRequest(
 }
 
 void PasswordProtectionService::MaybeStartPasswordFieldOnFocusRequest(
-    WebContents* web_contents,
     const GURL& main_frame_url,
     const GURL& password_form_action,
     const GURL& password_form_frame_url) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (CanSendPing(kPasswordFieldOnFocusPinging, main_frame_url)) {
-    StartRequest(web_contents, main_frame_url, password_form_action,
-                 password_form_frame_url,
-                 std::string(), /* saved_domain: not used for this type */
-                 LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE);
+  RequestOutcome request_outcome;
+  if (!IsPingingEnabled(kPasswordFieldOnFocusPinging, &request_outcome)) {
+    RecordPingingDisabledReason(kPasswordFieldOnFocusPinging, request_outcome);
+    return;
   }
+
+  // Skip URLs that we can't get a reliable reputation for.
+  if (!main_frame_url.is_valid() || !main_frame_url.SchemeIsHTTPOrHTTPS()) {
+    return;
+  }
+
+  StartRequest(main_frame_url, password_form_action, password_form_frame_url,
+               std::string(), /* saved_domain: not used for this type */
+               LoginReputationClientRequest::UNFAMILIAR_LOGIN_PAGE);
 }
 
 void PasswordProtectionService::MaybeStartProtectedPasswordEntryRequest(
-    WebContents* web_contents,
     const GURL& main_frame_url,
     const std::string& saved_domain) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (CanSendPing(kProtectedPasswordEntryPinging, main_frame_url)) {
-    StartRequest(web_contents, main_frame_url, GURL(), GURL(), saved_domain,
-                 LoginReputationClientRequest::PASSWORD_REUSE_EVENT);
+  RequestOutcome request_outcome;
+  if (!IsPingingEnabled(kProtectedPasswordEntryPinging, &request_outcome)) {
+    RecordPingingDisabledReason(kProtectedPasswordEntryPinging,
+                                request_outcome);
+    return;
   }
-}
 
-bool PasswordProtectionService::CanSendPing(const base::Feature& feature,
-                                            const GURL& main_frame_url) {
-  RequestOutcome request_outcome = URL_NOT_VALID_FOR_REPUTATION_COMPUTING;
-  if (IsPingingEnabled(kPasswordFieldOnFocusPinging, &request_outcome) &&
-      CanGetReputationOfURL(main_frame_url)) {
-    return true;
+  // Skip URLs that we can't get a reliable reputation for.
+  if (!main_frame_url.is_valid() || !main_frame_url.SchemeIsHTTPOrHTTPS()) {
+    return;
   }
-  RecordNoPingingReason(feature, request_outcome);
-  return false;
+
+  StartRequest(main_frame_url, GURL(), GURL(), saved_domain,
+               LoginReputationClientRequest::PASSWORD_REUSE_EVENT);
 }
 
 void PasswordProtectionService::RequestFinished(
@@ -323,7 +314,9 @@ void PasswordProtectionService::RequestFinished(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   DCHECK(request);
-  if (response)
+  // TODO(jialiul): We don't cache verdict for incognito mode for now.
+  // Later we may consider temporarily caching verdict.
+  if (response && !IsIncognito())
     CacheVerdict(request->main_frame_url(), response.get(), base::Time::Now());
 
   // Finished processing this request. Remove it from pending list.
@@ -553,7 +546,7 @@ PasswordProtectionService::CreateDictionaryFromVerdict(
   return result;
 }
 
-void PasswordProtectionService::RecordNoPingingReason(
+void PasswordProtectionService::RecordPingingDisabledReason(
     const base::Feature& feature,
     RequestOutcome reason) {
   DCHECK(feature.name == kProtectedPasswordEntryPinging.name ||

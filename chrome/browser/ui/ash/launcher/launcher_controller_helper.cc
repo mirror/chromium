@@ -31,7 +31,6 @@
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_set.h"
 #include "net/base/url_util.h"
-#include "ui/display/types/display_constants.h"
 #include "ui/events/event_constants.h"
 
 namespace {
@@ -169,8 +168,7 @@ bool LauncherControllerHelper::IsValidIDForCurrentUser(
 
 void LauncherControllerHelper::LaunchApp(const ash::ShelfID& id,
                                          ash::ShelfLaunchSource source,
-                                         int event_flags,
-                                         int64_t display_id) {
+                                         int event_flags) {
   const std::string& app_id = id.app_id;
   const ArcAppListPrefs* arc_prefs = GetArcAppListPrefs();
   if (arc_prefs && arc_prefs->IsRegistered(app_id)) {
@@ -196,8 +194,7 @@ void LauncherControllerHelper::LaunchApp(const ash::ShelfID& id,
 
   // The app will be created for the currently active profile.
   AppLaunchParams params = CreateAppLaunchParamsWithEventFlags(
-      profile_, extension, event_flags, extensions::SOURCE_APP_LAUNCHER,
-      display_id);
+      profile_, extension, event_flags, extensions::SOURCE_APP_LAUNCHER);
   if (source != ash::LAUNCH_FROM_UNKNOWN &&
       app_id == extensions::kWebStoreAppId) {
     // Get the corresponding source string.
@@ -219,7 +216,7 @@ ArcAppListPrefs* LauncherControllerHelper::GetArcAppListPrefs() const {
 
 void LauncherControllerHelper::ExtensionEnableFlowFinished() {
   LaunchApp(ash::ShelfID(extension_enable_flow_->extension_id()),
-            ash::LAUNCH_FROM_UNKNOWN, ui::EF_NONE, display::kInvalidDisplayId);
+            ash::LAUNCH_FROM_UNKNOWN, ui::EF_NONE);
   extension_enable_flow_.reset();
 }
 

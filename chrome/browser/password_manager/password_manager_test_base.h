@@ -94,11 +94,6 @@ class BubbleObserver {
   // PasswordManagerBrowserTestBase.
   void WaitForManagementState() const;
 
-  // Returns once the save prompt pops up or it's already shown.
-  // |web_contents| must be the custom one returned by
-  // PasswordManagerBrowserTestBase.
-  void WaitForSavePrompt() const;
-
  private:
   ManagePasswordsUIController* const passwords_ui_controller_;
 
@@ -137,10 +132,6 @@ class PasswordManagerBrowserTestBase : public InProcessBrowserTest {
   // waits until the "change" event is fired for the element. This also
   // guarantees that once the real value matches the expected, the JavaScript
   // event loop is spun to allow all other possible events to take place.
-  // WARNING:
-  // - the function waits only for the first "onchange" event.
-  // - "onchange" event is triggered by autofill. However, if user's typing is
-  // simulated then the event is triggered only when control looses focus.
   void WaitForElementValue(const std::string& element_id,
                            const std::string& expected_value);
   // Same as above except the element |element_id| is in iframe |iframe_id|

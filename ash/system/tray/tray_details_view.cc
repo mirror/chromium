@@ -35,7 +35,6 @@
 #include "ui/views/controls/scroll_view.h"
 #include "ui/views/controls/separator.h"
 #include "ui/views/layout/box_layout.h"
-#include "ui/views/layout/fill_layout.h"
 #include "ui/views/view_targeter.h"
 #include "ui/views/view_targeter_delegate.h"
 
@@ -237,39 +236,6 @@ const int kTitleRowPaddingBottom =
 
 }  // namespace
 
-////////////////////////////////////////////////////////////////////////////////
-// TrayDetailsView::InfoLabel:
-
-TrayDetailsView::InfoLabel::InfoLabel(int message_id)
-    : label_(TrayPopupUtils::CreateDefaultLabel()) {
-  SetLayoutManager(new views::FillLayout);
-
-  TrayPopupItemStyle style(TrayPopupItemStyle::FontStyle::SYSTEM_INFO);
-  style.SetupLabel(label_);
-
-  TriView* tri_view = TrayPopupUtils::CreateMultiTargetRowView();
-  tri_view->SetInsets(gfx::Insets(0,
-                                  kMenuExtraMarginFromLeftEdge +
-                                      kTrayPopupPaddingHorizontal -
-                                      kTrayPopupLabelHorizontalPadding,
-                                  0, kTrayPopupPaddingHorizontal));
-  tri_view->SetContainerVisible(TriView::Container::START, false);
-  tri_view->SetContainerVisible(TriView::Container::END, false);
-  tri_view->AddView(TriView::Container::CENTER, label_);
-  AddChildView(tri_view);
-
-  SetMessage(message_id);
-}
-
-TrayDetailsView::InfoLabel::~InfoLabel() {}
-
-void TrayDetailsView::InfoLabel::SetMessage(int message_id) {
-  label_->SetText(l10n_util::GetStringUTF16(message_id));
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// TrayDetailsView:
-
 TrayDetailsView::TrayDetailsView(SystemTrayItem* owner)
     : owner_(owner),
       box_layout_(new views::BoxLayout(views::BoxLayout::kVertical, 0, 0, 0)),
@@ -370,23 +336,6 @@ HoverHighlightView* TrayDetailsView::AddScrollListCheckableItem(
     const base::string16& text,
     bool checked) {
   return AddScrollListCheckableItem(gfx::kNoneIcon, text, checked);
-}
-
-void TrayDetailsView::SetupConnectedScrollListItem(HoverHighlightView* view) {
-  DCHECK(view->is_populated());
-
-  view->SetSubText(
-      l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_NETWORK_STATUS_CONNECTED));
-  TrayPopupItemStyle style(TrayPopupItemStyle::FontStyle::CAPTION);
-  style.set_color_style(TrayPopupItemStyle::ColorStyle::CONNECTED);
-  style.SetupLabel(view->sub_text_label());
-}
-
-void TrayDetailsView::SetupConnectingScrollListItem(HoverHighlightView* view) {
-  DCHECK(view->is_populated());
-
-  view->SetSubText(
-      l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_NETWORK_STATUS_CONNECTING));
 }
 
 TriView* TrayDetailsView::AddScrollListSubHeader(const gfx::VectorIcon& icon,

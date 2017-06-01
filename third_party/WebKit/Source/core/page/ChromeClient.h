@@ -183,6 +183,7 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
                             const String& message,
                             const String& default_value,
                             String& result);
+  virtual void SetStatusbarText(const String&) = 0;
   virtual bool TabsToLinks() = 0;
 
   virtual void* WebView() const = 0;
@@ -214,8 +215,8 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
     return scale;
   }
   virtual void MainFrameScrollOffsetChanged() const {}
-  virtual void ResizeAfterLayout() const {}
-  virtual void LayoutUpdated() const {}
+  virtual void ResizeAfterLayout(LocalFrame*) const {}
+  virtual void LayoutUpdated(LocalFrame*) const {}
 
   void MouseDidMoveOverElement(LocalFrame&, const HitTestResult&);
   virtual void SetToolTip(LocalFrame&, const String&, TextDirection) = 0;
@@ -298,8 +299,7 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
     kAlertDialog = 0,
     kConfirmDialog = 1,
     kPromptDialog = 2,
-    kHTMLDialog = 3,
-    kPrintDialog = 4
+    kHTMLDialog = 3
   };
   virtual bool ShouldOpenModalDialogDuringPageDismissal(
       LocalFrame&,

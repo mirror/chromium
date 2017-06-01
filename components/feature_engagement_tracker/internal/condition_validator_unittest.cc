@@ -18,7 +18,7 @@ TEST(ConditionValidatorResultTest, TestAllErrors) {
 
 TEST(ConditionValidatorResultTest, TestModelNotReady) {
   ConditionValidator::Result result(true);
-  result.event_model_ready_ok = false;
+  result.model_ready_ok = false;
   EXPECT_FALSE(result.NoErrors());
 }
 
@@ -61,18 +61,6 @@ TEST(ConditionValidatorResultTest, TestPreconditionsFailed) {
 TEST(ConditionValidatorResultTest, TestSessionRateFailed) {
   ConditionValidator::Result result(true);
   result.session_rate_ok = false;
-  EXPECT_FALSE(result.NoErrors());
-}
-
-TEST(ConditionValidatorResultTest, TestAvailabilityModelNotReady) {
-  ConditionValidator::Result result(true);
-  result.availability_model_ready_ok = false;
-  EXPECT_FALSE(result.NoErrors());
-}
-
-TEST(ConditionValidatorResultTest, TestAvailabilityFailed) {
-  ConditionValidator::Result result(true);
-  result.availability_ok = false;
   EXPECT_FALSE(result.NoErrors());
 }
 

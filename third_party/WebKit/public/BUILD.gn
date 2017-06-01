@@ -224,7 +224,6 @@ source_set("blink_headers") {
     "platform/WebInputEvent.h",
     "platform/WebInputEventResult.h",
     "platform/WebInsecureRequestPolicy.h",
-    "platform/WebIsolatedWorldIds.h",
     "platform/WebKeyboardEvent.h",
     "platform/WebLayer.h",
     "platform/WebLayerPositionConstraint.h",
@@ -304,7 +303,6 @@ source_set("blink_headers") {
     "platform/WebRect.h",
     "platform/WebReferrerPolicy.h",
     "platform/WebRenderingStats.h",
-    "platform/WebRuntimeFeatures.h",
     "platform/WebScreenInfo.h",
     "platform/WebScrollbar.h",
     "platform/WebScrollbarBehavior.h",
@@ -467,7 +465,6 @@ source_set("blink_headers") {
     "web/WebColorSuggestion.h",
     "web/WebCompositionUnderline.h",
     "web/WebConsoleMessage.h",
-    "web/WebContextFeatures.h",
     "web/WebContextMenuData.h",
     "web/WebCryptoNormalize.h",
     "web/WebCustomElement.h",
@@ -533,7 +530,6 @@ source_set("blink_headers") {
     "web/WebMediaStreamRegistry.h",
     "web/WebMemoryStatistics.h",
     "web/WebMenuItemInfo.h",
-    "web/WebMenuSourceType.h",
     "web/WebMetaElement.h",
     "web/WebNavigationPolicy.h",
     "web/WebNavigationType.h",
@@ -561,6 +557,7 @@ source_set("blink_headers") {
     "web/WebRemoteFrame.h",
     "web/WebRemoteFrameClient.h",
     "web/WebRenderTheme.h",
+    "web/WebRuntimeFeatures.h",
     "web/WebSandboxFlags.h",
     "web/WebScopedUserGesture.h",
     "web/WebScopedWindowFocusAllowedIndicator.h",
@@ -717,6 +714,7 @@ mojom("mojo_bindings") {
     "platform/modules/fetch/fetch_api_request.mojom",
     "platform/modules/hyphenation/hyphenation.mojom",
     "platform/modules/keyboard_lock/keyboard_lock.mojom",
+    "platform/modules/mediasession/media_session.mojom",
     "platform/modules/notifications/notification.mojom",
     "platform/modules/notifications/notification_service.mojom",
     "platform/modules/permissions/permission.mojom",
@@ -757,9 +755,6 @@ mojom("mojo_bindings") {
 
   # TODO(crbug.com/714018): Convert the implementation to use OnceCallback.
   use_once_callback = false
-
-  # TODO(crbug.com/699569): Convert to use the new JS bindings.
-  use_new_js_bindings = false
 }
 
 mojom("android_mojo_bindings") {
@@ -770,13 +765,10 @@ mojom("android_mojo_bindings") {
     "platform/modules/installation/installation.mojom",
     "platform/modules/installedapp/installed_app_provider.mojom",
     "platform/modules/installedapp/related_application.mojom",
-    "platform/modules/mediasession/media_session.mojom",
     "platform/modules/webshare/webshare.mojom",
   ]
   public_deps = [
     "//components/payments/mojom",
-    "//mojo/common:common_custom_types",
-    "//ui/gfx/geometry/mojo",
     "//url/mojo:url_mojom_gurl",
   ]
 
@@ -792,9 +784,6 @@ mojom("android_mojo_bindings") {
 
   # TODO(crbug.com/714018): Convert the implementation to use OnceCallback.
   use_once_callback = false
-
-  # TODO(crbug.com/699569): Convert to use the new JS bindings.
-  use_new_js_bindings = false
 }
 
 # The offscreen_canvas_mojo_bindings is separated from the rest of mojom files

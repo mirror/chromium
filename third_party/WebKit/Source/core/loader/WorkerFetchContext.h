@@ -16,35 +16,35 @@ class ResourceFetcher;
 class WebTaskRunner;
 class WebURLLoader;
 class WebWorkerFetchContext;
+class WorkerGlobalScope;
 class WorkerClients;
-class WorkerOrWorkletGlobalScope;
 
 CORE_EXPORT void ProvideWorkerFetchContextToWorker(
     WorkerClients*,
     std::unique_ptr<WebWorkerFetchContext>);
 
 // The WorkerFetchContext is a FetchContext for workers (dedicated, shared and
-// service workers) and threaded worklets (animation and audio worklets). This
-// class is used only when off-main-thread-fetch is enabled, and is still under
-// development.
+// service workers). This class is used only when off-main-thread-fetch is
+// enabled, and is still under development.
 // TODO(horo): Implement all methods of FetchContext. crbug.com/443374
 class WorkerFetchContext final : public BaseFetchContext {
  public:
-  static WorkerFetchContext* Create(WorkerOrWorkletGlobalScope&);
+  static WorkerFetchContext* Create(WorkerGlobalScope&);
   virtual ~WorkerFetchContext();
 
   ResourceFetcher* GetResourceFetcher();
   KURL FirstPartyForCookies() const;
-  RefPtr<WebTaskRunner> GetTaskRunner() { return loading_task_runner_; }
 
   // BaseFetchContext implementation:
   ContentSettingsClient* GetContentSettingsClient() const override;
   Settings* GetSettings() const override;
   SubresourceFilter* GetSubresourceFilter() const override;
+  SecurityContext* GetParentSecurityContext() const override;
   bool ShouldBlockRequestByInspector(const ResourceRequest&) const override;
   void DispatchDidBlockRequest(const ResourceRequest&,
                                const FetchInitiatorInfo&,
                                ResourceRequestBlockedReason) const override;
+  void ReportLocalLoadFailed(const KURL&) const override;
   bool ShouldBypassMainWorldCSP() const override;
   bool IsSVGImageChromeClient() const override;
   void CountUsage(UseCounter::Feature) const override;
@@ -53,21 +53,13 @@ class WorkerFetchContext final : public BaseFetchContext {
       const ResourceRequest&,
       const KURL&,
       SecurityViolationReportingPolicy) const override;
-  ReferrerPolicy GetReferrerPolicy() const override;
-  String GetOutgoingReferrer() const override;
-  const KURL& Url() const override;
-  const SecurityOrigin* GetParentSecurityOrigin() const override;
-  Optional<WebAddressSpace> GetAddressSpace() const override;
-  const ContentSecurityPolicy* GetContentSecurityPolicy() const override;
-  void AddConsoleMessage(ConsoleMessage*) const override;
 
   // FetchContext implementation:
   // TODO(horo): Implement more methods.
-  SecurityOrigin* GetSecurityOrigin() const override;
-  std::unique_ptr<WebURLLoader> CreateURLLoader(
-      const ResourceRequest&) override;
+  std::unique_ptr<WebURLLoader> CreateURLLoader() override;
   void PrepareRequest(ResourceRequest&, RedirectType) override;
   bool IsControlledByServiceWorker() const override;
+  RefPtr<WebTaskRunner> LoadingTaskRunner() const override;
 
   void AddAdditionalRequestHeaders(ResourceRequest&,
                                    FetchResourceType) override;
@@ -90,10 +82,10 @@ class WorkerFetchContext final : public BaseFetchContext {
   DECLARE_VIRTUAL_TRACE();
 
  private:
-  WorkerFetchContext(WorkerOrWorkletGlobalScope&,
+  WorkerFetchContext(WorkerGlobalScope&,
                      std::unique_ptr<WebWorkerFetchContext>);
 
-  Member<WorkerOrWorkletGlobalScope> global_scope_;
+  Member<WorkerGlobalScope> worker_global_scope_;
   std::unique_ptr<WebWorkerFetchContext> web_context_;
   Member<ResourceFetcher> resource_fetcher_;
   RefPtr<WebTaskRunner> loading_task_runner_;

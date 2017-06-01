@@ -594,11 +594,6 @@ NetworkingPrivateLinux::GetGlobalPolicy() {
   return base::MakeUnique<base::DictionaryValue>();
 }
 
-std::unique_ptr<base::DictionaryValue>
-NetworkingPrivateLinux ::GetCertificateLists() {
-  return base::MakeUnique<base::DictionaryValue>();
-}
-
 bool NetworkingPrivateLinux::EnableNetworkType(const std::string& type) {
   return false;
 }

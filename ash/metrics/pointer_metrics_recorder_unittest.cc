@@ -9,9 +9,8 @@
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/wm/maximize_mode/maximize_mode_controller.h"
+#include "ash/wm_window.h"
 #include "base/test/histogram_tester.h"
-#include "ui/aura/client/aura_constants.h"
-#include "ui/aura/window.h"
 #include "ui/events/event.h"
 #include "ui/views/pointer_watcher.h"
 #include "ui/views/widget/widget.h"
@@ -159,29 +158,25 @@ TEST_F(PointerMetricsRecorderTest, DownEventPerDestination) {
       ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_MOUSE, 0),
       base::TimeTicks());
 
-  aura::Window* window = target->GetNativeWindow();
+  WmWindow* window = WmWindow::Get(target->GetNativeWindow());
   CHECK(window);
 
-  window->SetProperty(aura::client::kAppType,
-                      static_cast<int>(AppType::OTHERS));
+  window->SetAppType(static_cast<int>(AppType::OTHERS));
   pointer_metrics_recorder_->OnPointerEventObserved(pointer_event, gfx::Point(),
                                                     target.get());
   histogram_tester_->ExpectBucketCount(kDestinationHistogramName, 0, 1);
 
-  window->SetProperty(aura::client::kAppType,
-                      static_cast<int>(AppType::BROWSER));
+  window->SetAppType(static_cast<int>(AppType::BROWSER));
   pointer_metrics_recorder_->OnPointerEventObserved(pointer_event, gfx::Point(),
                                                     target.get());
   histogram_tester_->ExpectBucketCount(kDestinationHistogramName, 1, 1);
 
-  window->SetProperty(aura::client::kAppType,
-                      static_cast<int>(AppType::CHROME_APP));
+  window->SetAppType(static_cast<int>(AppType::CHROME_APP));
   pointer_metrics_recorder_->OnPointerEventObserved(pointer_event, gfx::Point(),
                                                     target.get());
   histogram_tester_->ExpectBucketCount(kDestinationHistogramName, 2, 1);
 
-  window->SetProperty(aura::client::kAppType,
-                      static_cast<int>(AppType::ARC_APP));
+  window->SetAppType(static_cast<int>(AppType::ARC_APP));
   pointer_metrics_recorder_->OnPointerEventObserved(pointer_event, gfx::Point(),
                                                     target.get());
   histogram_tester_->ExpectBucketCount(kDestinationHistogramName, 3, 1);

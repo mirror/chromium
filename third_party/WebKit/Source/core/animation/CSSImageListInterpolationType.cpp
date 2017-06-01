@@ -15,8 +15,7 @@
 
 namespace blink {
 
-class UnderlyingImageListChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+class UnderlyingImageListChecker : public InterpolationType::ConversionChecker {
  public:
   ~UnderlyingImageListChecker() final {}
 
@@ -29,7 +28,7 @@ class UnderlyingImageListChecker
   UnderlyingImageListChecker(const InterpolationValue& underlying)
       : underlying_(underlying.Clone()) {}
 
-  bool IsValid(const StyleResolverState&,
+  bool IsValid(const InterpolationEnvironment&,
                const InterpolationValue& underlying) const final {
     return ListInterpolationFunctions::EqualValues(
         underlying_, underlying,
@@ -67,8 +66,7 @@ InterpolationValue CSSImageListInterpolationType::MaybeConvertStyleImageList(
       });
 }
 
-class InheritedImageListChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+class InheritedImageListChecker : public InterpolationType::ConversionChecker {
  public:
   ~InheritedImageListChecker() final {}
 
@@ -84,11 +82,11 @@ class InheritedImageListChecker
                             const StyleImageList& inherited_image_list)
       : property_(property), inherited_image_list_(inherited_image_list) {}
 
-  bool IsValid(const StyleResolverState& state,
+  bool IsValid(const InterpolationEnvironment& environment,
                const InterpolationValue& underlying) const final {
     StyleImageList inherited_image_list;
-    ImageListPropertyFunctions::GetImageList(property_, *state.ParentStyle(),
-                                             inherited_image_list);
+    ImageListPropertyFunctions::GetImageList(
+        property_, *environment.GetState().ParentStyle(), inherited_image_list);
     return inherited_image_list_ == inherited_image_list;
   }
 

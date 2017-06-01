@@ -5,16 +5,12 @@
 #ifndef EXTENSIONS_BROWSER_API_CLIPBOARD_CLIPBOARD_API_H_
 #define EXTENSIONS_BROWSER_API_CLIPBOARD_CLIPBOARD_API_H_
 
-#include <vector>
-
 #include "extensions/browser/browser_context_keyed_api_factory.h"
 #include "extensions/browser/extension_function.h"
 #include "extensions/common/api/clipboard.h"
 #include "ui/base/clipboard/clipboard_observer.h"
 
 namespace extensions {
-
-using AdditionalDataItemList = std::vector<api::clipboard::AdditionalDataItem>;
 
 class ClipboardAPI : public BrowserContextKeyedAPI,
                      public ui::ClipboardObserver {
@@ -47,9 +43,6 @@ class ClipboardSetImageDataFunction : public UIThreadExtensionFunction {
 
   void OnSaveImageDataSuccess();
   void OnSaveImageDataError(const std::string& error);
-
- private:
-  bool IsAdditionalItemsParamValid(const AdditionalDataItemList& items);
 };
 
 }  // namespace extensions

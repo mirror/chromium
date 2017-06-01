@@ -15,7 +15,6 @@
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/renderer_resources.h"
 #include "chrome/renderer/extensions/app_bindings.h"
-#include "chrome/renderer/extensions/app_hooks_delegate.h"
 #include "chrome/renderer/extensions/automation_internal_custom_bindings.h"
 #include "chrome/renderer/extensions/media_galleries_custom_bindings.h"
 #include "chrome/renderer/extensions/notifications_native_handler.h"
@@ -34,7 +33,6 @@
 #include "extensions/common/permissions/permission_set.h"
 #include "extensions/common/permissions/permissions_data.h"
 #include "extensions/common/switches.h"
-#include "extensions/renderer/api_bindings_system.h"
 #include "extensions/renderer/css_native_handler.h"
 #include "extensions/renderer/dispatcher.h"
 #include "extensions/renderer/i18n_custom_bindings.h"
@@ -165,6 +163,7 @@ void ChromeExtensionsDispatcherDelegate::RegisterNativeHandlers(
 void ChromeExtensionsDispatcherDelegate::PopulateSourceMap(
     extensions::ResourceBundleSourceMap* source_map) {
   // Custom bindings.
+  source_map->RegisterSource("app", IDR_APP_CUSTOM_BINDINGS_JS);
   source_map->RegisterSource("automation", IDR_AUTOMATION_CUSTOM_BINDINGS_JS);
   source_map->RegisterSource("automationEvent", IDR_AUTOMATION_EVENT_JS);
   source_map->RegisterSource("automationNode", IDR_AUTOMATION_NODE_JS);
@@ -260,6 +259,8 @@ void ChromeExtensionsDispatcherDelegate::PopulateSourceMap(
                              IDR_CHROME_DIRECT_SETTING_JS);
 
   // Platform app sources that are not API-specific..
+  source_map->RegisterSource("fileEntryBindingUtil",
+                             IDR_FILE_ENTRY_BINDING_UTIL_JS);
   source_map->RegisterSource("chromeWebViewInternal",
                              IDR_CHROME_WEB_VIEW_INTERNAL_CUSTOM_BINDINGS_JS);
   source_map->RegisterSource("chromeWebView", IDR_CHROME_WEB_VIEW_JS);
@@ -281,10 +282,6 @@ void ChromeExtensionsDispatcherDelegate::PopulateSourceMap(
                              IDR_MOJO_IP_ADDRESS_MOJOM_JS);
   source_map->RegisterSource("url/mojo/origin.mojom", IDR_ORIGIN_MOJOM_JS);
   source_map->RegisterSource("url/mojo/url.mojom", IDR_MOJO_URL_MOJOM_JS);
-
-  // These bindings are unnecessary with native bindings enabled.
-  if (!extensions::FeatureSwitch::native_crx_bindings()->IsEnabled())
-    source_map->RegisterSource("app", IDR_APP_CUSTOM_BINDINGS_JS);
 }
 
 void ChromeExtensionsDispatcherDelegate::RequireAdditionalModules(
@@ -306,13 +303,4 @@ void ChromeExtensionsDispatcherDelegate::OnActiveExtensionsUpdated(
           ::switches::kSingleProcess))
     return;
   crash_keys::SetActiveExtensions(extension_ids);
-}
-
-void ChromeExtensionsDispatcherDelegate::InitializeBindingsSystem(
-    extensions::Dispatcher* dispatcher,
-    extensions::APIBindingsSystem* bindings_system) {
-  DCHECK(extensions::FeatureSwitch::native_crx_bindings()->IsEnabled());
-  bindings_system->GetHooksForAPI("app")->SetDelegate(
-      base::MakeUnique<extensions::AppHooksDelegate>(
-          dispatcher, bindings_system->request_handler()));
 }

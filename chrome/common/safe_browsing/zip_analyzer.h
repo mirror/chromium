@@ -12,14 +12,13 @@
 #include "components/safe_browsing/csd.pb.h"
 
 namespace safe_browsing {
-
-struct ArchiveAnalyzerResults;
-
 namespace zip_analyzer {
+
+struct Results;
 
 void AnalyzeZipFile(base::File zip_file,
                     base::File temp_file,
-                    ArchiveAnalyzerResults* results);
+                    Results* results);
 
 }  // namespace zip_analyzer
 }  // namespace safe_browsing

@@ -87,8 +87,7 @@ class PaymentsClientTest : public testing::Test, public PaymentsClientDelegate {
   void StartGettingUploadDetails() {
     token_service_->AddAccount("example@gmail.com");
     identity_provider_->LogIn("example@gmail.com");
-    client_->GetUploadDetails(BuildTestProfiles(), std::vector<const char*>(),
-                              "language-LOCALE");
+    client_->GetUploadDetails(BuildTestProfiles(), "language-LOCALE");
   }
 
   void StartUploading() {

@@ -464,13 +464,14 @@ Audits.AuditRules.UnusedCssRule = class extends Audits.AuditRule {
             return;
           }
           var effectiveSelector = selectors[i].replace(pseudoSelectorRegexp, '');
-          domModel.querySelector(document.id, effectiveSelector)
-              .then(queryCallback.bind(
+          domModel.querySelector(
+              document.id, effectiveSelector,
+              queryCallback.bind(
                   null, i === selectors.length - 1 ? selectorsCallback.bind(null, styleSheets) : null, selectors[i]));
         }
       }
 
-      domModel.requestDocumentPromise().then(documentLoaded.bind(null, selectors));
+      domModel.requestDocument(documentLoaded.bind(null, selectors));
     }
 
     var styleSheetInfos = cssModel.allStyleSheets();
@@ -924,14 +925,14 @@ Audits.AuditRules.ImageDimensionsRule = class extends Audits.AuditRule {
         callback(null);
         return;
       }
-      domModel.querySelectorAll(root.id, 'img[src]').then(getStyles);
+      domModel.querySelectorAll(root.id, 'img[src]', getStyles);
     }
 
     if (progress.isCanceled()) {
       callback(null);
       return;
     }
-    domModel.requestDocumentPromise().then(onDocumentAvailable);
+    domModel.requestDocument(onDocumentAvailable);
   }
 };
 
@@ -1026,8 +1027,8 @@ Audits.AuditRules.CssInHeadRule = class extends Audits.AuditRule {
 
       if (!nodeIds)
         return;
-      domModel.querySelectorAll(root.id, 'body link[rel~=\'stylesheet\'][href]')
-          .then(externalStylesheetsReceived.bind(null, root, nodeIds));
+      domModel.querySelectorAll(
+          root.id, 'body link[rel~=\'stylesheet\'][href]', externalStylesheetsReceived.bind(null, root, nodeIds));
     }
 
     /**
@@ -1039,10 +1040,10 @@ Audits.AuditRules.CssInHeadRule = class extends Audits.AuditRule {
         return;
       }
 
-      domModel.querySelectorAll(root.id, 'body style').then(inlineStylesReceived.bind(null, root));
+      domModel.querySelectorAll(root.id, 'body style', inlineStylesReceived.bind(null, root));
     }
 
-    domModel.requestDocumentPromise().then(onDocumentAvailable);
+    domModel.requestDocument(onDocumentAvailable);
   }
 };
 
@@ -1069,33 +1070,51 @@ Audits.AuditRules.StylesScriptsOrderRule = class extends Audits.AuditRule {
       return;
     }
 
-    domModel.requestDocumentPromise().then(onDocumentAvailable).then(callback);
+    function evalCallback(resultValue) {
+      if (progress.isCanceled()) {
+        callback(null);
+        return;
+      }
+
+      if (!resultValue)
+        return callback(null);
+
+      var lateCssUrls = resultValue[0];
+      var cssBeforeInlineCount = resultValue[1];
+
+      if (lateCssUrls.length) {
+        var entry = result.addChild(
+            Common.UIString(
+                'The following external CSS files were included after an external JavaScript file in the document head. To ensure CSS files are downloaded in parallel, always include external CSS before external JavaScript.'),
+            true);
+        entry.addURLs(lateCssUrls);
+        result.violationCount += lateCssUrls.length;
+      }
+
+      if (cssBeforeInlineCount) {
+        result.addChild(Common.UIString(
+            ' %d inline script block%s found in the head between an external CSS file and another resource. To allow parallel downloading, move the inline script before the external CSS file, or after the next resource.',
+            cssBeforeInlineCount, cssBeforeInlineCount > 1 ? 's were' : ' was'));
+        result.violationCount += cssBeforeInlineCount;
+      }
+      callback(result);
+    }
 
     /**
-     * @param {!SDK.DOMDocument} root
-     * @return {!Promise<?Audits.AuditRuleResult>}
+     * @param {!Array.<!Protocol.DOM.NodeId>} lateStyleIds
+     * @param {?Array.<!Protocol.DOM.NodeId>} nodeIds
      */
-    async function onDocumentAvailable(root) {
-      if (progress.isCanceled())
-        return null;
+    function cssBeforeInlineReceived(lateStyleIds, nodeIds) {
+      if (progress.isCanceled()) {
+        callback(null);
+        return;
+      }
 
-      var lateStyleIds = await domModel.querySelectorAll(root.id, 'head script[src] ~ link[rel~=\'stylesheet\'][href]');
-
-      if (progress.isCanceled())
-        return null;
-      if (!lateStyleIds)
-        return null;
-
-      var nodeIds =
-          await domModel.querySelectorAll(root.id, 'head link[rel~=\'stylesheet\'][href] ~ script:not([src])');
-
-      if (progress.isCanceled())
-        return null;
       if (!nodeIds)
-        return null;
+        return;
 
       var cssBeforeInlineCount = nodeIds.length;
-      var resultValue = null;
+      var result = null;
       if (lateStyleIds.length || cssBeforeInlineCount) {
         var lateStyleUrls = [];
         for (var i = 0; i < lateStyleIds.length; ++i) {
@@ -1104,38 +1123,44 @@ Audits.AuditRules.StylesScriptsOrderRule = class extends Audits.AuditRule {
               Common.ParsedURL.completeURL(lateStyleNode.ownerDocument.baseURL, lateStyleNode.getAttribute('href'));
           lateStyleUrls.push(completeHref || '<empty>');
         }
-        resultValue = [lateStyleUrls, cssBeforeInlineCount];
+        result = [lateStyleUrls, cssBeforeInlineCount];
       }
 
-      if (progress.isCanceled())
-        return null;
-      if (!resultValue)
-        return null;
-
-      var lateCssUrls = resultValue[0];
-      cssBeforeInlineCount = resultValue[1];
-
-      if (lateCssUrls.length) {
-        var entry = result.addChild(
-            Common.UIString(
-                'The following external CSS files were included after an external JavaScript file in the ' +
-                'document head. To ensure CSS files are downloaded in parallel, always include external CSS ' +
-                'before external JavaScript.'),
-            true);
-        entry.addURLs(lateCssUrls);
-        result.violationCount += lateCssUrls.length;
-      }
-
-      if (cssBeforeInlineCount) {
-        result.addChild(Common.UIString(
-            ' %d inline script %s found in the head between an external CSS file and another resource. ' +
-                'To allow parallel downloading, move the inline script before the external CSS file, ' +
-                'or after the next resource.',
-            cssBeforeInlineCount, cssBeforeInlineCount > 1 ? 'blocks were' : 'block was'));
-        result.violationCount += cssBeforeInlineCount;
-      }
-      return result;
+      evalCallback(result);
     }
+
+    /**
+     * @param {!SDK.DOMDocument} root
+     * @param {?Array<!Protocol.DOM.NodeId>} nodeIds
+     */
+    function lateStylesReceived(root, nodeIds) {
+      if (progress.isCanceled()) {
+        callback(null);
+        return;
+      }
+
+      if (!nodeIds)
+        return;
+
+      domModel.querySelectorAll(
+          root.id, 'head link[rel~=\'stylesheet\'][href] ~ script:not([src])',
+          cssBeforeInlineReceived.bind(null, nodeIds));
+    }
+
+    /**
+     * @param {!SDK.DOMDocument} root
+     */
+    function onDocumentAvailable(root) {
+      if (progress.isCanceled()) {
+        callback(null);
+        return;
+      }
+
+      domModel.querySelectorAll(
+          root.id, 'head script[src] ~ link[rel~=\'stylesheet\'][href]', lateStylesReceived.bind(null, root));
+    }
+
+    domModel.requestDocument(onDocumentAvailable);
   }
 };
 
@@ -1292,7 +1317,7 @@ Audits.AuditRules.CookieRuleBase = class extends Audits.AuditRule {
     const nonDataUrls = requests.map(r => r.url()).filter(url => url && url.asParsedURL());
     var cookieModel = target.model(SDK.CookieModel);
     if (cookieModel)
-      cookieModel.getCookies(nonDataUrls).then(resultCallback);
+      cookieModel.getCookiesAsync(nonDataUrls, resultCallback);
     else
       callback(result);
   }

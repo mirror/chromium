@@ -38,7 +38,6 @@
 #include "core/css/StylePropertySet.h"
 #include "core/dom/DocumentFragment.h"
 #include "core/dom/TagCollection.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/editing/EditingStyleUtilities.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/FrameSelection.h"
@@ -54,8 +53,8 @@
 #include "core/editing/serializers/Serialization.h"
 #include "core/editing/spellcheck/SpellChecker.h"
 #include "core/events/Event.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLFontElement.h"
 #include "core/html/HTMLHRElement.h"
@@ -68,6 +67,7 @@
 #include "core/page/Page.h"
 #include "platform/Histogram.h"
 #include "platform/KillRing.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/scroll/Scrollbar.h"
 #include "platform/wtf/StringExtras.h"
 #include "platform/wtf/text/AtomicString.h"
@@ -1787,11 +1787,9 @@ static bool ExecuteSelectToMark(LocalFrame& frame,
   EphemeralRange selection = frame.GetEditor().SelectedRange();
   if (mark.IsNull() || selection.IsNull())
     return false;
-  frame.Selection().SetSelection(
-      SelectionInDOMTree::Builder()
-          .SetBaseAndExtent(UnionEphemeralRanges(mark, selection))
-          .Build(),
-      FrameSelection::kCloseTyping);
+  frame.Selection().SetSelectedRange(
+      UnionEphemeralRanges(mark, selection), TextAffinity::kDownstream,
+      SelectionDirectionalMode::kNonDirectional, FrameSelection::kCloseTyping);
   return true;
 }
 
@@ -2024,12 +2022,8 @@ static bool EnabledVisibleSelection(LocalFrame& frame,
 
 static bool EnabledVisibleSelectionAndMark(LocalFrame& frame,
                                            Event* event,
-                                           EditorCommandSource source) {
+                                           EditorCommandSource) {
   frame.GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
-
-  if (source == kCommandFromMenuOrKeyBinding &&
-      !frame.Selection().SelectionHasFocus())
-    return false;
 
   const VisibleSelection& selection =
       frame.GetEditor().SelectionForCommand(event);
@@ -2855,7 +2849,6 @@ Editor::Command Editor::CreateCommand(const String& command_name,
 bool Editor::ExecuteCommand(const String& command_name) {
   // Specially handling commands that Editor::execCommand does not directly
   // support.
-  DCHECK(GetFrame().GetDocument()->IsActive());
   if (command_name == "DeleteToEndOfParagraph") {
     if (!DeleteWithDirection(DeleteDirection::kForward, kParagraphBoundary,
                              true, false))
@@ -2892,7 +2885,6 @@ bool Editor::ExecuteCommand(const String& command_name) {
 bool Editor::ExecuteCommand(const String& command_name, const String& value) {
   // moveToBeginningOfDocument and moveToEndfDocument are only handled by WebKit
   // for editable nodes.
-  DCHECK(GetFrame().GetDocument()->IsActive());
   if (!CanEdit() && command_name == "moveToBeginningOfDocument")
     return GetFrame().GetEventHandler().BubblingScroll(
         kScrollUpIgnoringWritingMode, kScrollByDocument);

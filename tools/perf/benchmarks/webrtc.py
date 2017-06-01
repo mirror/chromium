@@ -27,8 +27,7 @@ class WebrtcPerfBenchmark(perf_benchmark.PerfBenchmark):
         '-*',
         'toplevel',
         # WebRTC
-        # TODO(ehmaldonado): Re-enable once http://crbug.com/725502 is fixed.
-        # 'webrtc',
+        'webrtc',
     ]
 
     category_filter = chrome_trace_category_filter.ChromeTraceCategoryFilter(
@@ -36,14 +35,10 @@ class WebrtcPerfBenchmark(perf_benchmark.PerfBenchmark):
     options = timeline_based_measurement.Options(category_filter)
     options.SetTimelineBasedMetrics([
         'cpuTimeMetric',
-        # TODO(ehmaldonado): Re-enable once http://crbug.com/725502 is fixed.
-        # 'webrtcRenderingMetric',
+        'webrtcRenderingMetric',
     ])
     return options
 
   def SetExtraBrowserOptions(self, options):
     options.AppendExtraBrowserArgs('--use-fake-device-for-media-stream')
     options.AppendExtraBrowserArgs('--use-fake-ui-for-media-stream')
-
-  def GetExpectations(self):
-    return page_sets.WebrtcExpectations()

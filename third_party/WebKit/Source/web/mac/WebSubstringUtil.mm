@@ -41,11 +41,10 @@
 #include "core/editing/FrameSelection.h"
 #include "core/editing/PlainTextRange.h"
 #include "core/editing/iterators/TextIterator.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/VisualViewport.h"
 #include "core/frame/WebFrameWidgetBase.h"
-#include "core/frame/WebLocalFrameBase.h"
 #include "core/html/HTMLElement.h"
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutObject.h"
@@ -58,6 +57,7 @@
 #include "public/web/WebHitTestResult.h"
 #include "public/web/WebLocalFrame.h"
 #include "public/web/WebRange.h"
+#include "web/WebLocalFrameImpl.h"
 
 using namespace blink;
 
@@ -136,7 +136,7 @@ static NSAttributedString* attributedSubstringFromRange(
   return [string autorelease];
 }
 
-WebPoint getBaselinePoint(LocalFrameView* frameView,
+WebPoint getBaselinePoint(FrameView* frameView,
                           const EphemeralRange& range,
                           NSAttributedString* string) {
   // TODO(yosin): We shold avoid to create |Range| object. See crbug.com/529985.
@@ -198,7 +198,7 @@ NSAttributedString* WebSubstringUtil::AttributedSubstringInRange(
     size_t location,
     size_t length,
     WebPoint* baseline_point) {
-  LocalFrame* frame = ToWebLocalFrameBase(web_frame)->GetFrame();
+  LocalFrame* frame = ToWebLocalFrameImpl(web_frame)->GetFrame();
   if (frame->View()->NeedsLayout())
     frame->View()->UpdateLayout();
 

@@ -16,6 +16,7 @@
 #include "chrome/browser/plugins/plugins_field_trial.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
 #include "components/strings/grit/components_chromium_strings.h"
@@ -341,9 +342,6 @@ base::string16 PageInfoUI::PermissionDecisionReasonToUIString(
         break;
     }
   }
-
-  if (permission.type == CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER)
-    message_id = IDS_PAGE_INFO_PERMISSION_SUBRESOURCE_FILTER_SUBTITLE;
 
   if (message_id == kInvalidResourceID)
     return base::string16();

@@ -103,13 +103,6 @@ public class UiUtils {
     }
 
     /**
-     * Returns whether a photo picker should be called.
-     */
-    public static boolean shouldShowPhotoPicker() {
-        return sPhotoPickerDelegate != null;
-    }
-
-    /**
      * Called to display the photo picker.
      * @param context  The context to use.
      * @param listener The listener that will be notified of the action the user took in the

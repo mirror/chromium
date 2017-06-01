@@ -25,6 +25,8 @@
 #include "chrome/browser/ui/omnibox/chrome_omnibox_client.h"
 #include "chrome/browser/ui/omnibox/clipboard_utils.h"
 #include "chrome/grit/generated_resources.h"
+#include "chrome/grit/theme_resources.h"
+#include "components/grit/components_scaled_resources.h"
 #include "components/omnibox/browser/autocomplete_input.h"
 #include "components/omnibox/browser/autocomplete_match.h"
 #include "components/omnibox/browser/omnibox_edit_controller.h"
@@ -349,11 +351,6 @@ void OmniboxViewMac::SetWindowTextAndCaretPos(const base::string16& text,
 
   if (notify_text_changed)
     TextChanged();
-}
-
-void OmniboxViewMac::SetCaretPos(size_t caret_pos) {
-  size_t pos = std::min(caret_pos, GetTextLength());
-  SetSelectedRange(NSMakeRange(pos, 0));
 }
 
 void OmniboxViewMac::EnterKeywordModeForDefaultSearchProvider() {
@@ -827,9 +824,19 @@ bool OmniboxViewMac::OnDoCommandBySelector(SEL cmd) {
      (cmd == @selector(noop:) &&
       ([event type] == NSKeyDown || [event type] == NSKeyUp) &&
       [event keyCode] == kVK_Return)) {
+    // If the user hasn't entered any text in keyword search mode, we need to
+    // return early in order to avoid cancelling the search.
+    if (GetTextLength() == 0)
+      return true;
+
     WindowOpenDisposition disposition =
         ui::WindowOpenDispositionFromNSEvent(event);
     model()->AcceptInput(disposition, false);
+    // Opening a URL in a background tab should also revert the omnibox contents
+    // to their original state.  We cannot do a blanket revert in OpenURL()
+    // because middle-clicks also open in a new background tab, but those should
+    // not revert the omnibox text.
+    RevertAll();
     return true;
   }
 

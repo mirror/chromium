@@ -117,7 +117,10 @@ void ContentLoFiDecider::MaybeSetAcceptTransformHeader(
     if (!(request_info->GetPreviewsState() & content::SERVER_LITE_PAGE_ON))
       accept_transform_value += base::StringPrintf(";%s", if_heavy_qualifier());
   } else if (lofi_enabled_via_flags_or_field_trial &&
-             !lite_page_enabled_via_flags_or_field_trial &&
+             // Only use Lo-Fi if Lite Pages aren't enabled or fallback from
+             // Lite Pages to Lo-Fi is enabled.
+             (!lite_page_enabled_via_flags_or_field_trial ||
+              params::IsLitePageFallbackEnabled()) &&
              resource_type_supports_empty_image &&
              !(request_info->GetPreviewsState() &
                content::SERVER_LITE_PAGE_ON)) {
@@ -175,6 +178,22 @@ bool ContentLoFiDecider::IsLitePagePreviewRequested(
 void ContentLoFiDecider::RemoveAcceptTransformHeader(
     net::HttpRequestHeaders* headers) const {
   headers->RemoveHeader(chrome_proxy_accept_transform_header());
+}
+
+void ContentLoFiDecider::MaybeSetIgnorePreviewsBlacklistDirective(
+    net::HttpRequestHeaders* headers) const {
+  if (!headers || !params::AreLitePagesEnabledViaFlags() ||
+      !IsLitePagePreviewRequested(*headers)) {
+    return;
+  }
+  std::string chrome_proxy_header_value;
+  headers->GetHeader(chrome_proxy_header(), &chrome_proxy_header_value);
+  headers->RemoveHeader(chrome_proxy_header());
+  if (!chrome_proxy_header_value.empty())
+    chrome_proxy_header_value += ", ";
+  chrome_proxy_header_value +=
+      chrome_proxy_lite_page_ignore_blacklist_directive();
+  headers->SetHeader(chrome_proxy_header(), chrome_proxy_header_value);
 }
 
 bool ContentLoFiDecider::ShouldRecordLoFiUMA(

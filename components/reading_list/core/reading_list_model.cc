@@ -10,7 +10,6 @@
 ReadingListModel::ReadingListModel() : current_batch_updates_count_(0) {}
 
 ReadingListModel::~ReadingListModel() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   for (auto& observer : observers_) {
     observer.ReadingListModelBeingDeleted(this);
   }
@@ -18,7 +17,7 @@ ReadingListModel::~ReadingListModel() {
 
 // Observer methods.
 void ReadingListModel::AddObserver(ReadingListModelObserver* observer) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(observer);
   observers_.AddObserver(observer);
   if (loaded()) {
@@ -27,13 +26,13 @@ void ReadingListModel::AddObserver(ReadingListModelObserver* observer) {
 }
 
 void ReadingListModel::RemoveObserver(ReadingListModelObserver* observer) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   observers_.RemoveObserver(observer);
 }
 
 // Batch update methods.
 bool ReadingListModel::IsPerformingBatchUpdates() const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   return current_batch_updates_count_ > 0;
 }
 
@@ -44,7 +43,7 @@ ReadingListModel::CreateBatchToken() {
 
 std::unique_ptr<ReadingListModel::ScopedReadingListBatchUpdate>
 ReadingListModel::BeginBatchUpdates() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   auto token = CreateBatchToken();
 
   ++current_batch_updates_count_;
@@ -55,13 +54,13 @@ ReadingListModel::BeginBatchUpdates() {
 }
 
 void ReadingListModel::EnteringBatchUpdates() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   for (auto& observer : observers_)
     observer.ReadingListModelBeganBatchUpdates(this);
 }
 
 void ReadingListModel::EndBatchUpdates() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(IsPerformingBatchUpdates());
   DCHECK(current_batch_updates_count_ > 0);
   --current_batch_updates_count_;
@@ -71,7 +70,7 @@ void ReadingListModel::EndBatchUpdates() {
 }
 
 void ReadingListModel::LeavingBatchUpdates() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   for (auto& observer : observers_)
     observer.ReadingListModelCompletedBatchUpdates(this);
 }

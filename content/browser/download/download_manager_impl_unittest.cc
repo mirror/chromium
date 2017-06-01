@@ -38,6 +38,7 @@
 #include "content/public/browser/download_interrupt_reasons.h"
 #include "content/public/browser/download_item.h"
 #include "content/public/browser/download_manager_delegate.h"
+#include "content/public/browser/zoom_level_delegate.h"
 #include "content/public/test/mock_download_item.h"
 #include "content/public/test/test_browser_context.h"
 #include "content/public/test/test_browser_thread.h"
@@ -46,10 +47,6 @@
 #include "testing/gmock_mutant.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/origin.h"
-
-#if !defined(OS_ANDROID)
-#include "content/public/browser/zoom_level_delegate.h"
-#endif  // !defined(OS_ANDROID)
 
 using ::testing::AllOf;
 using ::testing::DoAll;
@@ -307,10 +304,8 @@ class MockBrowserContext : public BrowserContext {
   ~MockBrowserContext() {}
 
   MOCK_CONST_METHOD0(GetPath, base::FilePath());
-#if !defined(OS_ANDROID)
   MOCK_METHOD1(CreateZoomLevelDelegateMock,
                ZoomLevelDelegate*(const base::FilePath&));
-#endif  // !defined(OS_ANDROID)
   MOCK_CONST_METHOD0(IsOffTheRecord, bool());
   MOCK_METHOD0(GetResourceContext, ResourceContext*());
   MOCK_METHOD0(GetDownloadManagerDelegate, DownloadManagerDelegate*());
@@ -320,7 +315,6 @@ class MockBrowserContext : public BrowserContext {
   MOCK_METHOD0(GetSSLHostStateDelegate, SSLHostStateDelegate*());
   MOCK_METHOD0(GetPermissionManager, PermissionManager*());
   MOCK_METHOD0(GetBackgroundSyncController, BackgroundSyncController*());
-  MOCK_METHOD0(GetBrowsingDataRemoverDelegate, BrowsingDataRemoverDelegate*());
   MOCK_METHOD0(CreateMediaRequestContext,
                net::URLRequestContextGetter*());
   MOCK_METHOD2(CreateMediaRequestContextForStoragePartition,
@@ -344,13 +338,12 @@ class MockBrowserContext : public BrowserContext {
       URLRequestInterceptorScopedVector request_interceptors) override {
     return nullptr;
   }
-#if !defined(OS_ANDROID)
+
   std::unique_ptr<ZoomLevelDelegate> CreateZoomLevelDelegate(
       const base::FilePath& path) override {
     return std::unique_ptr<ZoomLevelDelegate>(
         CreateZoomLevelDelegateMock(path));
   }
-#endif  // !defined(OS_ANDROID)
 };
 
 class MockDownloadManagerObserver : public DownloadManager::Observer {

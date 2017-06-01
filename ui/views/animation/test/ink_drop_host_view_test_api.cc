@@ -28,10 +28,6 @@ void InkDropHostViewTestApi::SetInkDrop(std::unique_ptr<InkDrop> ink_drop) {
   SetInkDrop(std::move(ink_drop), true);
 }
 
-bool InkDropHostViewTestApi::HasInkDrop() const {
-  return host_view_->HasInkDrop();
-}
-
 InkDrop* InkDropHostViewTestApi::GetInkDrop() {
   return host_view_->GetInkDrop();
 }

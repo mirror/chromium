@@ -106,33 +106,6 @@ void JourneyLogger::SetShowCalled() {
   was_show_called_ = true;
 }
 
-void JourneyLogger::SetCompleted() {
-  UMA_HISTOGRAM_BOOLEAN("PaymentRequest.CheckoutFunnel.Completed", true);
-
-  RecordJourneyStatsHistograms(COMPLETION_STATUS_COMPLETED);
-}
-
-void JourneyLogger::SetAborted(AbortReason reason) {
-  base::UmaHistogramEnumeration("PaymentRequest.CheckoutFunnel.Aborted", reason,
-                                ABORT_REASON_MAX);
-
-  if (reason == ABORT_REASON_ABORTED_BY_USER)
-    RecordJourneyStatsHistograms(COMPLETION_STATUS_USER_ABORTED);
-  else
-    RecordJourneyStatsHistograms(COMPLETION_STATUS_OTHER_ABORTED);
-}
-
-#ifdef OS_ANDROID
-void JourneyLogger::SetNotShown(NotShownReason reason) {
-  base::UmaHistogramEnumeration("PaymentRequest.CheckoutFunnel.NoShow", reason,
-                                NOT_SHOWN_REASON_MAX);
-
-  // Record that that Payment Request was initiated here, because nothing else
-  // will be recorded for a Payment Request that was not shown to the user.
-  UMA_HISTOGRAM_BOOLEAN("PaymentRequest.CheckoutFunnel.Initiated", true);
-}
-#endif
-
 void JourneyLogger::SetEventOccurred(Event event) {
   events_ |= event;
 }
@@ -242,12 +215,12 @@ void JourneyLogger::RecordCanMakePaymentEffectOnShow() {
 
   int effect_on_show = 0;
   if (was_show_called_)
-    effect_on_show |= CMP_EFFECT_ON_SHOW_DID_SHOW;
+    effect_on_show |= CMP_SHOW_DID_SHOW;
   if (could_make_payment_)
-    effect_on_show |= CMP_EFFECT_ON_SHOW_COULD_MAKE_PAYMENT;
+    effect_on_show |= CMP_SHOW_COULD_MAKE_PAYMENT;
 
   UMA_HISTOGRAM_ENUMERATION("PaymentRequest.CanMakePayment.Used.EffectOnShow",
-                            effect_on_show, CMP_EFFECT_ON_SHOW_MAX);
+                            effect_on_show, CMP_SHOW_MAX);
 }
 
 void JourneyLogger::RecordCanMakePaymentEffectOnCompletion(

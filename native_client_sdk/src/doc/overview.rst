@@ -1,7 +1,5 @@
 .. _overview:
 
-.. include:: /migration/deprecation.inc
-
 ##################
 Technical Overview
 ##################

@@ -21,6 +21,7 @@ class BASE_EXPORT CurrentProcessInfo {
 };
 
 #if defined(OS_WIN)
+
 enum IntegrityLevel {
   INTEGRITY_UNKNOWN,
   LOW_INTEGRITY,
@@ -28,10 +29,14 @@ enum IntegrityLevel {
   HIGH_INTEGRITY,
 };
 
-// Returns the integrity level of the process. Returns INTEGRITY_UNKNOWN in the
-// case of an underlying system failure.
+// Returns the integrity level of the process. Returns INTEGRITY_UNKNOWN if the
+// system does not support integrity levels (pre-Vista) or in the case of an
+// underlying system failure.
 BASE_EXPORT IntegrityLevel GetCurrentProcessIntegrityLevel();
+
 #endif  // defined(OS_WIN)
+
+
 
 }  // namespace base
 

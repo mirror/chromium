@@ -192,11 +192,11 @@ CBCharacteristicProperties GattCharacteristicPropertyToCBCharacteristicProperty(
   scoped_nsobject<MockCBDescriptor> descriptor_mock([[MockCBDescriptor alloc]
       initWithCharacteristic:self.characteristic
                       CBUUID:uuid]);
-  [_descriptors addObject:descriptor_mock];
+  [_descriptors.get() addObject:descriptor_mock];
 }
 
 - (CBUUID*)UUID {
-  return _UUID;
+  return _UUID.get();
 }
 
 - (CBCharacteristic*)characteristic {
@@ -216,7 +216,7 @@ CBCharacteristicProperties GattCharacteristicPropertyToCBCharacteristicProperty(
 }
 
 - (id)value {
-  return _value;
+  return _value.get();
 }
 
 - (BOOL)isNotifying {

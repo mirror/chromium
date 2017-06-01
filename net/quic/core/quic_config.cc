@@ -232,8 +232,10 @@ QuicErrorCode QuicFixedTagVector::ProcessPeerHello(
     HelloType hello_type,
     string* error_details) {
   DCHECK(error_details != nullptr);
-  QuicTagVector values;
-  QuicErrorCode error = peer_hello.GetTaglist(tag_, &values);
+  const QuicTag* received_tags;
+  size_t received_tags_length;
+  QuicErrorCode error =
+      peer_hello.GetTaglist(tag_, &received_tags, &received_tags_length);
   switch (error) {
     case QUIC_CRYPTO_MESSAGE_PARAMETER_NOT_FOUND:
       if (presence_ == PRESENCE_OPTIONAL) {
@@ -244,8 +246,9 @@ QuicErrorCode QuicFixedTagVector::ProcessPeerHello(
     case QUIC_NO_ERROR:
       QUIC_DVLOG(1) << "Received Connection Option tags from receiver.";
       has_receive_values_ = true;
-      receive_values_.insert(receive_values_.end(), values.begin(),
-                             values.end());
+      for (size_t i = 0; i < received_tags_length; ++i) {
+        receive_values_.push_back(received_tags[i]);
+      }
       break;
     default:
       *error_details = "Bad " + QuicTagToString(tag_);

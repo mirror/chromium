@@ -47,7 +47,8 @@ unsigned DOMWrapperWorld::number_of_non_main_worlds_in_main_thread_ = 0;
 // (see https://crbug.com/704778#c6).
 using WorldMap = HashMap<int, DOMWrapperWorld*>;
 static WorldMap& GetWorldMap() {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific<WorldMap>, map, ());
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific<WorldMap>, map,
+                                  new ThreadSpecific<WorldMap>);
   return *map;
 }
 
@@ -261,7 +262,8 @@ void DOMWrapperWorld::WeakCallbackForDOMObjectHolder(
 
 // static
 int DOMWrapperWorld::GenerateWorldIdForType(WorldType world_type) {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific<int>, next_world_id, ());
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific<int>, next_world_id,
+                                  new ThreadSpecific<int>);
   if (!next_world_id.IsSet())
     *next_world_id = WorldId::kUnspecifiedWorldIdStart;
   switch (world_type) {
@@ -275,9 +277,9 @@ int DOMWrapperWorld::GenerateWorldIdForType(WorldType world_type) {
     case WorldType::kInspectorIsolated: {
       DCHECK(IsMainThread());
       static int next_devtools_isolated_world_id =
-          IsolatedWorldId::kDevToolsFirstIsolatedWorldId;
+          WorldId::kDevToolsFirstIsolatedWorldId;
       if (next_devtools_isolated_world_id >
-          IsolatedWorldId::kDevToolsLastIsolatedWorldId)
+          WorldId::kDevToolsLastIsolatedWorldId)
         return WorldId::kInvalidWorldId;
       return next_devtools_isolated_world_id++;
     }

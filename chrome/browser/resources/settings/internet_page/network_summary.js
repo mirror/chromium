@@ -7,24 +7,27 @@
  * by type: Ethernet, WiFi, Cellular, WiMAX, and VPN.
  */
 
+/** @typedef {chrome.networkingPrivate.DeviceStateProperties} */
+var DeviceStateProperties;
+
 /**
  * @typedef {{
- *   Ethernet: (!CrOnc.DeviceStateProperties|undefined),
- *   WiFi: (!CrOnc.DeviceStateProperties|undefined),
- *   Cellular: (!CrOnc.DeviceStateProperties|undefined),
- *   WiMAX: (!CrOnc.DeviceStateProperties|undefined),
- *   VPN: (!CrOnc.DeviceStateProperties|undefined)
+ *   Ethernet: (DeviceStateProperties|undefined),
+ *   WiFi: (DeviceStateProperties|undefined),
+ *   Cellular: (DeviceStateProperties|undefined),
+ *   WiMAX: (DeviceStateProperties|undefined),
+ *   VPN: (DeviceStateProperties|undefined)
  * }}
  */
 var DeviceStateObject;
 
 /**
  * @typedef {{
- *   Ethernet: (Array<!CrOnc.NetworkStateProperties>|undefined),
- *   WiFi: (Array<!CrOnc.NetworkStateProperties>|undefined),
- *   Cellular: (Array<!CrOnc.NetworkStateProperties>|undefined),
- *   WiMAX: (Array<!CrOnc.NetworkStateProperties>|undefined),
- *   VPN: (Array<!CrOnc.NetworkStateProperties>|undefined)
+ *   Ethernet: (Array<CrOnc.NetworkStateProperties>|undefined),
+ *   WiFi: (Array<CrOnc.NetworkStateProperties>|undefined),
+ *   Cellular: (Array<CrOnc.NetworkStateProperties>|undefined),
+ *   WiMAX: (Array<CrOnc.NetworkStateProperties>|undefined),
+ *   VPN: (Array<CrOnc.NetworkStateProperties>|undefined)
  * }}
  */
 var NetworkStateListObject;
@@ -47,7 +50,7 @@ Polymer({
 
     /**
      * Interface for networkingPrivate calls, passed from internet_page.
-     * @type {!NetworkingPrivate}
+     * @type {NetworkingPrivate}
      */
     networkingPrivate: Object,
 
@@ -55,13 +58,16 @@ Polymer({
      * The device state for each network device type. We initialize this to
      * include a disabled WiFi type since WiFi is always present. This reduces
      * the amount of visual change on first load.
-     * @private {!DeviceStateObject}
+     * @private {DeviceStateObject}
      */
     deviceStates: {
       type: Object,
       value: function() {
         return {
-          WiFi: {Type: CrOnc.Type.WI_FI, State: CrOnc.DeviceState.DISABLED},
+          WiFi: {
+            Type: chrome.networkingPrivate.NetworkType.WI_FI,
+            State: chrome.networkingPrivate.DeviceStateType.DISABLED
+          },
         };
       },
       notify: true,
@@ -75,13 +81,13 @@ Polymer({
     activeNetworkStates_: {
       type: Array,
       value: function() {
-        return [{GUID: '', Type: CrOnc.Type.WI_FI}];
+        return [{GUID: '', Type: chrome.networkingPrivate.NetworkType.WI_FI}];
       },
     },
 
     /**
      * List of network state data for each network type.
-     * @private {!NetworkStateListObject}
+     * @private {NetworkStateListObject}
      */
     networkStateLists_: {
       type: Object,
@@ -93,26 +99,30 @@ Polymer({
 
   /**
    * Listener function for chrome.networkingPrivate.onNetworkListChanged event.
-   * @private {?function(!Array<string>)}
+   * @type {?function(!Array<string>)}
+   * @private
    */
   networkListChangedListener_: null,
 
   /**
    * Listener function for chrome.networkingPrivate.onDeviceStateListChanged
    * event.
-   * @private {?function(!Array<string>)}
+   * @type {?function(!Array<string>)}
+   * @private
    */
   deviceStateListChangedListener_: null,
 
   /**
    * Listener function for chrome.networkingPrivate.onNetworksChanged event.
-   * @private {?function(!Array<string>)}
+   * @type {?function(!Array<string>)}
+   * @private
    */
   networksChangedListener_: null,
 
   /**
    * Set of GUIDs identifying active networks, one for each type.
-   * @private {?Set<string>}
+   * @type {?Set<string>}
+   * @private
    */
   activeNetworkIds_: null,
 
@@ -184,7 +194,7 @@ Polymer({
   /**
    * networkingPrivate.getState event callback for an active state.
    * @param {string} id The id of the requested state.
-   * @param {!CrOnc.NetworkStateProperties} state
+   * @param {!chrome.networkingPrivate.NetworkStateProperties} state
    * @private
    */
   getActiveStateCallback_: function(id, state) {
@@ -233,17 +243,18 @@ Polymer({
    * Requests the list of network states from Chrome. Updates
    * activeNetworkStates and networkStateLists once the results are returned
    * from Chrome.
-   * @param {!Array<!CrOnc.DeviceStateProperties>} deviceStates
+   * @param {!Array<!DeviceStateProperties>=} opt_deviceStates
+   *     Optional list of state properties for all available devices.
    * @private
    */
-  getNetworkStates_: function(deviceStates) {
+  getNetworkStates_: function(opt_deviceStates) {
     var filter = {
-      networkType: CrOnc.Type.ALL,
+      networkType: chrome.networkingPrivate.NetworkType.ALL,
       visible: true,
       configured: false
     };
     this.networkingPrivate.getNetworks(filter, function(networkStates) {
-      this.updateNetworkStates_(networkStates, deviceStates);
+      this.updateNetworkStates_(networkStates, opt_deviceStates);
     }.bind(this));
   },
 
@@ -251,14 +262,21 @@ Polymer({
    * Called after network states are received from getNetworks.
    * @param {!Array<!CrOnc.NetworkStateProperties>} networkStates The state
    *     properties for all visible networks.
-   * @param {!Array<!CrOnc.DeviceStateProperties>} deviceStates
+   * @param {!Array<!DeviceStateProperties>=} opt_deviceStates
+   *     Optional list of state properties for all available devices. If not
+   *     defined the existing list of device states will be used.
    * @private
    */
-  updateNetworkStates_: function(networkStates, deviceStates) {
-    var newDeviceStates = /** @type {!DeviceStateObject} */ ({});
-    for (var i = 0; i < deviceStates.length; ++i) {
-      var state = deviceStates[i];
-      newDeviceStates[state.Type] = state;
+  updateNetworkStates_: function(networkStates, opt_deviceStates) {
+    var newDeviceStates;
+    if (opt_deviceStates) {
+      newDeviceStates = /** @type {!DeviceStateObject} */ ({});
+      for (var i = 0; i < opt_deviceStates.length; ++i) {
+        var state = opt_deviceStates[i];
+        newDeviceStates[state.Type] = state;
+      }
+    } else {
+      newDeviceStates = Object.assign({}, this.deviceStates);
     }
 
     // Clear any current networks.
@@ -292,10 +310,10 @@ Polymer({
 
     // Create a VPN entry in deviceStates if there are any VPN networks.
     if (newNetworkStateLists.VPN && newNetworkStateLists.VPN.length > 0) {
-      newDeviceStates.VPN = {
+      newDeviceStates.VPN = /** @type {DeviceStateProperties} */ ({
         Type: CrOnc.Type.VPN,
-        State: CrOnc.DeviceState.ENABLED
-      };
+        State: chrome.networkingPrivate.DeviceStateType.ENABLED
+      });
     }
 
     // Push the active networks onto newActiveNetworkStates in order based on
@@ -313,7 +331,7 @@ Polymer({
         continue;
       var state = activeNetworkStatesByType.get(type) || {GUID: '', Type: type};
       if (state.Source === undefined &&
-          device.State == CrOnc.DeviceState.PROHIBITED) {
+          device.State == chrome.networkingPrivate.DeviceStateType.PROHIBITED) {
         // Prohibited technologies are enforced by the device policy.
         state.Source = CrOnc.Source.DEVICE_POLICY;
       }

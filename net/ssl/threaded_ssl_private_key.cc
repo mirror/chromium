@@ -25,8 +25,7 @@ void DoCallback(const base::WeakPtr<ThreadedSSLPrivateKey>& key,
     return;
   callback.Run(error, *signature);
 }
-
-}  // anonymous namespace
+}
 
 class ThreadedSSLPrivateKey::Core
     : public base::RefCountedThreadSafe<ThreadedSSLPrivateKey::Core> {

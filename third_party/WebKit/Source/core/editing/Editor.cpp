@@ -64,8 +64,8 @@
 #include "core/events/KeyboardEvent.h"
 #include "core/events/ScopedEventQueue.h"
 #include "core/events/TextEvent.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLBodyElement.h"
@@ -655,9 +655,15 @@ void Editor::ReplaceSelectionWithFragment(DocumentFragment* fragment,
                                           bool match_style,
                                           InputEvent::InputType input_type) {
   DCHECK(!GetFrame().GetDocument()->NeedsLayoutTreeUpdate());
-  const VisibleSelection& selection =
-      GetFrame().Selection().ComputeVisibleSelectionInDOMTree();
-  if (selection.IsNone() || !selection.IsContentEditable() || !fragment)
+  if (GetFrame()
+          .Selection()
+          .ComputeVisibleSelectionInDOMTreeDeprecated()
+          .IsNone() ||
+      !GetFrame()
+           .Selection()
+           .ComputeVisibleSelectionInDOMTreeDeprecated()
+           .IsContentEditable() ||
+      !fragment)
     return;
 
   ReplaceSelectionCommand::CommandOptions options =
@@ -1034,6 +1040,7 @@ Editor::Editor(LocalFrame& frame)
 Editor::~Editor() {}
 
 void Editor::Clear() {
+  GetFrame().GetInputMethodController().Clear();
   should_style_with_css_ = false;
   default_paragraph_separator_ = kEditorParagraphSeparatorIsDiv;
   last_edit_command_ = nullptr;
@@ -1083,8 +1090,10 @@ bool Editor::InsertLineBreak() {
   if (!CanEdit())
     return false;
 
-  VisiblePosition caret =
-      GetFrame().Selection().ComputeVisibleSelectionInDOMTree().VisibleStart();
+  VisiblePosition caret = GetFrame()
+                              .Selection()
+                              .ComputeVisibleSelectionInDOMTreeDeprecated()
+                              .VisibleStart();
   bool align_to_edge = IsEndOfEditableOrNonEditableContent(caret);
   DCHECK(GetFrame().GetDocument());
   if (!TypingCommand::InsertLineBreak(*GetFrame().GetDocument()))
@@ -1103,8 +1112,10 @@ bool Editor::InsertParagraphSeparator() {
   if (!CanEditRichly())
     return InsertLineBreak();
 
-  VisiblePosition caret =
-      GetFrame().Selection().ComputeVisibleSelectionInDOMTree().VisibleStart();
+  VisiblePosition caret = GetFrame()
+                              .Selection()
+                              .ComputeVisibleSelectionInDOMTreeDeprecated()
+                              .VisibleStart();
   bool align_to_edge = IsEndOfEditableOrNonEditableContent(caret);
   DCHECK(GetFrame().GetDocument());
   EditingState editing_state;
@@ -1489,11 +1500,7 @@ void Editor::ChangeSelectionAfterCommand(
   // Ranges for selections that are no longer valid
   bool selection_did_not_change_dom_position =
       new_selection == GetFrame().Selection().GetSelectionInDOMTree();
-  GetFrame().Selection().SetSelection(
-      SelectionInDOMTree::Builder(new_selection)
-          .SetIsHandleVisible(GetFrame().Selection().IsHandleVisible())
-          .Build(),
-      options);
+  GetFrame().Selection().SetSelection(new_selection, options);
 
   // Some editing operations change the selection visually without affecting its
   // position within the DOM. For example when you press return in the following

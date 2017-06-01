@@ -64,13 +64,7 @@ source_set("tests") {
     "memory_instrumentation/process_map_unittest.cc",
     "public/cpp/memory_instrumentation/client_process_impl_unittest.cc",
     "public/cpp/tracing/chrome_trace_event_agent_unittest.cc",
-    "tracing/agent_registry_unittest.cc",
-    "tracing/recorder_unittest.cc",
   ]
-
-  if (!is_android) {
-    sources += [ "resource_coordinator_service_unittest.cc" ]
-  }
 
   deps = [
     ":lib",
@@ -78,7 +72,27 @@ source_set("tests") {
     "//base/test:test_support",
     "//mojo/public/cpp/bindings",
     "//services/resource_coordinator/public/cpp:resource_coordinator_cpp",
-    "//services/resource_coordinator/tracing:lib",
+    "//testing/gtest",
+  ]
+
+  data_deps = [
+    ":lib",
+  ]
+}
+
+service_test("resource_coordinator_unittests") {
+  testonly = true
+
+  sources = [
+    "resource_coordinator_service_unittest.cc",
+  ]
+
+  catalog = ":resource_coordinator_unittests_catalog"
+
+  deps = [
+    "//base",
+    "//mojo/public/cpp/bindings",
+    "//services/resource_coordinator/public/cpp:resource_coordinator_cpp",
     "//services/service_manager/public/cpp",
     "//services/service_manager/public/cpp:service_test_support",
     "//services/service_manager/public/interfaces",
@@ -87,7 +101,6 @@ source_set("tests") {
 
   data_deps = [
     ":resource_coordinator",
-    ":lib",
   ]
 }
 
@@ -96,8 +109,7 @@ service_manifest("unittest_manifest") {
   source = "unittest_manifest.json"
 }
 
-catalog("tests_catalog") {
-  testonly = true
+catalog("resource_coordinator_unittests_catalog") {
   embedded_services = [ ":unittest_manifest" ]
   standalone_services = [ ":manifest" ]
 }

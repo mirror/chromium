@@ -83,10 +83,8 @@ void RecordRendererMainEntryTime(base::TimeTicks ticks);
 void RecordFirstWebContentsMainFrameLoad(base::TimeTicks ticks);
 
 // Call this with the time when the first web contents had a non-empty paint,
-// only if the first web contents was unimpeded in its attempt to do so.
-void RecordFirstWebContentsNonEmptyPaint(
-    base::TimeTicks now,
-    base::TimeTicks render_process_host_init_time);
+// only if the first web contents was unimpended in its attempt to do so.
+void RecordFirstWebContentsNonEmptyPaint(base::TimeTicks ticks);
 
 // Call this with the time when the first web contents began navigating its main
 // frame. Adds a suffix to its metrics according to |workload|.

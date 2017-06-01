@@ -10,7 +10,6 @@ import static android.content.ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.ComponentName;
 import android.util.Pair;
 
 import org.junit.After;
@@ -67,12 +66,11 @@ public class BindingManagerImplTest {
          * connection is established: with initial binding bound and no strong binding.
          */
         private TestChildProcessConnection(int pid) {
-            super(null /* context */, new ComponentName("org.chromium.test", "TestService"),
-                    false /* isExternalService */, null /* childProcessCommonParameters */,
+            super(null /* context */, null /* deathCallback */,
+                    "TestService" /* serviceClassName */, null /* childProcessCommonParameters */,
                     new ChildProcessCreationParams("org.chromium.test",
                             false /* isExternalService */, 0 /* libraryProcessType */,
-                            false /* bindToCallerCheck */),
-                    null /* deathCallback */);
+                            false /* bindToCallerCheck */));
             mPid = pid;
         }
 

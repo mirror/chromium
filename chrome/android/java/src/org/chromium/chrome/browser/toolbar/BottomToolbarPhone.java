@@ -71,12 +71,8 @@ public class BottomToolbarPhone extends ToolbarPhone {
             if (isMovingUp && !mAnimatingToolbarButtonDisappearance
                     && mToolbarButtonVisibilityPercent != 0.f) {
                 animateToolbarButtonVisibility(false);
-            } else if (isMovingDown && heightFraction < 0.40f && !mAnimatingToolbarButtonAppearance
+            } else if (isMovingDown && heightFraction <= 0.5f && !mAnimatingToolbarButtonAppearance
                     && mToolbarButtonVisibilityPercent != 1.f) {
-                // If the sheet is moving down and the height is less than 45% of the max, start
-                // showing the toolbar buttons. 45% is used rather than 50% so that the buttons
-                // aren't shown in the half height state if the user is dragging the sheet down
-                // slowly and releases at exactly the half way point.
                 animateToolbarButtonVisibility(true);
             }
 
@@ -461,14 +457,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
 
         mUseToolbarHandle = !FeatureUtilities.isChromeHomeExpandButtonEnabled();
 
-        if (!mUseToolbarHandle) {
-            initExpandButton();
-        } else {
-            setFocusable(true);
-            setFocusableInTouchMode(true);
-            setContentDescription(
-                    getResources().getString(R.string.bottom_sheet_accessibility_toolbar));
-        }
+        if (!mUseToolbarHandle) initExpandButton();
     }
 
     /**
@@ -512,12 +501,6 @@ public class BottomToolbarPhone extends ToolbarPhone {
             ColorStateList tint = mUseLightToolbarDrawables ? mLightModeTint : mDarkModeTint;
             mExpandButton.setTint(tint);
         }
-    }
-
-    @Override
-    protected void onPrimaryColorChanged(boolean shouldAnimate) {
-        // Intentionally not calling super to avoid needless work.
-        getProgressBar().setThemeColor(getProgressBarColor(), isIncognito());
     }
 
     @Override
@@ -639,12 +622,9 @@ public class BottomToolbarPhone extends ToolbarPhone {
                 mToolbarButtonsContainer.setVisibility(View.VISIBLE);
                 mToolbarButtonsContainer.setTranslationX(0);
 
-                if (!mUseToolbarHandle) {
-                    mExpandButton.setAlpha(1.f);
-                    mExpandButton.setVisibility(View.VISIBLE);
-                    mExpandButton.setTranslationX(0);
-                }
-
+                mExpandButton.setAlpha(1.f);
+                mExpandButton.setVisibility(View.VISIBLE);
+                mExpandButton.setTranslationX(0);
                 requestLayout();
             } else {
                 mToolbarButtonVisibilityPercent = 0.f;

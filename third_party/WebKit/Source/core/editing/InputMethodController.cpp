@@ -465,8 +465,9 @@ void InputMethodController::AddCompositionUnderlines(
       continue;
 
     GetDocument().Markers().AddCompositionMarker(
-        ephemeral_line_range, underline.GetColor(), underline.Thick(),
-        underline.BackgroundColor());
+        ephemeral_line_range.StartPosition(),
+        ephemeral_line_range.EndPosition(), underline.GetColor(),
+        underline.Thick(), underline.BackgroundColor());
   }
 }
 
@@ -689,7 +690,8 @@ void InputMethodController::SetComposition(
 
   if (underlines.IsEmpty()) {
     GetDocument().Markers().AddCompositionMarker(
-        EphemeralRange(composition_range_), Color::kBlack, false,
+        composition_range_->StartPosition(), composition_range_->EndPosition(),
+        Color::kBlack, false,
         LayoutTheme::GetTheme().PlatformDefaultCompositionBackgroundColor());
     return;
   }
@@ -928,7 +930,7 @@ void InputMethodController::DeleteSurroundingText(int before, int after) {
   int selection_start = static_cast<int>(selection_offsets.Start());
   int selection_end = static_cast<int>(selection_offsets.end());
 
-  // Select the text to be deleted before SelectionState::kStart.
+  // Select the text to be deleted before selectionStart.
   if (before > 0 && selection_start > 0) {
     // In case of exceeding the left boundary.
     const int start = std::max(selection_start - before, 0);
@@ -952,7 +954,7 @@ void InputMethodController::DeleteSurroundingText(int before, int after) {
     selection_start = adjusted_start;
   }
 
-  // Select the text to be deleted after SelectionState::kEnd.
+  // Select the text to be deleted after selectionEnd.
   if (after > 0) {
     // Adjust the deleted range in case of exceeding the right boundary.
     const PlainTextRange range(0, selection_end + after);

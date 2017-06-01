@@ -304,7 +304,7 @@ void ToastContentsView::Layout() {
   }
 }
 
-gfx::Size ToastContentsView::CalculatePreferredSize() const {
+gfx::Size ToastContentsView::GetPreferredSize() const {
   return child_count() ? GetToastSizeForView(child_at(0)) : gfx::Size();
 }
 

@@ -9,23 +9,22 @@
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/frame/LocalFrame.h"
-#include "platform/DataResourceHelper.h"
+#include "platform/PlatformResourceLoader.h"
 #include "platform/bindings/DOMWrapperWorld.h"
 #include "platform/bindings/V8PerIsolateData.h"
 
 namespace blink {
 
 void TransformDocumentToXMLTreeView(Document& document) {
-  String script_string =
-      GetDataResourceAsASCIIString("DocumentXMLTreeViewer.js");
-  String css_string = GetDataResourceAsASCIIString("DocumentXMLTreeViewer.css");
+  String script_string = LoadResourceAsASCIIString("DocumentXMLTreeViewer.js");
+  String css_string = LoadResourceAsASCIIString("DocumentXMLTreeViewer.css");
 
   HeapVector<ScriptSourceCode> sources;
   sources.push_back(ScriptSourceCode(script_string));
   v8::HandleScope handle_scope(V8PerIsolateData::MainThreadIsolate());
 
   document.GetFrame()->GetScriptController().ExecuteScriptInIsolatedWorld(
-      IsolatedWorldId::kDocumentXMLTreeViewerWorldId, sources, nullptr);
+      DOMWrapperWorld::kDocumentXMLTreeViewerWorldId, sources, nullptr);
 
   Element* element = document.getElementById("xml-viewer-style");
   if (element) {

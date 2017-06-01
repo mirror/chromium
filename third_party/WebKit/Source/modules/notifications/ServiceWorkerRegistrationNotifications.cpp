@@ -100,7 +100,8 @@ ScriptPromise ServiceWorkerRegistrationNotifications::showNotification(
   //     17+  -> overflow bucket.
   DEFINE_THREAD_SAFE_STATIC_LOCAL(
       EnumerationHistogram, notification_count_histogram,
-      ("Notifications.PersistentNotificationActionCount", 17));
+      new EnumerationHistogram(
+          "Notifications.PersistentNotificationActionCount", 17));
   notification_count_histogram.Count(options.actions().size());
 
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
@@ -173,7 +174,7 @@ void ServiceWorkerRegistrationNotifications::PrepareShow(
   RefPtr<SecurityOrigin> origin = GetExecutionContext()->GetSecurityOrigin();
   NotificationResourcesLoader* loader = new NotificationResourcesLoader(
       WTF::Bind(&ServiceWorkerRegistrationNotifications::DidLoadResources,
-                WrapWeakPersistent(this), std::move(origin), data,
+                WrapWeakPersistent(this), origin.Release(), data,
                 WTF::Passed(std::move(callbacks))));
   loaders_.insert(loader);
   loader->Start(GetExecutionContext(), data);

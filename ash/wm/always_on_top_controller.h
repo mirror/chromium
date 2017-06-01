@@ -13,6 +13,7 @@
 
 namespace ash {
 
+class WmWindow;
 class WorkspaceLayoutManager;
 
 // AlwaysOnTopController puts window into proper containers based on its
@@ -21,11 +22,11 @@ class WorkspaceLayoutManager;
 // |always_on_top_container_|.
 class ASH_EXPORT AlwaysOnTopController : public aura::WindowObserver {
  public:
-  explicit AlwaysOnTopController(aura::Window* viewport);
+  explicit AlwaysOnTopController(WmWindow* viewport);
   ~AlwaysOnTopController() override;
 
   // Gets container for given |window| based on its "AlwaysOnTop" property.
-  aura::Window* GetContainer(aura::Window* window) const;
+  WmWindow* GetContainer(WmWindow* window) const;
 
   WorkspaceLayoutManager* GetLayoutManager() const;
 
@@ -40,7 +41,7 @@ class ASH_EXPORT AlwaysOnTopController : public aura::WindowObserver {
                                intptr_t old) override;
   void OnWindowDestroying(aura::Window* window) override;
 
-  aura::Window* always_on_top_container_;
+  WmWindow* always_on_top_container_;
 
   DISALLOW_COPY_AND_ASSIGN(AlwaysOnTopController);
 };

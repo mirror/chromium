@@ -626,11 +626,12 @@ bool RenderWidgetHostViewEventHandler::CanRendererHandleEvent(
 }
 
 void RenderWidgetHostViewEventHandler::FinishImeCompositionSession() {
-  // RenderWidgetHostViewAura keeps track of existing composition texts. The
-  // call to finish composition text should be made through the RWHVA itself
-  // otherwise the following call to cancel composition will lead to an extra
-  // IPC for finishing the ongoing composition (see https://crbug.com/723024).
-  host_view_->GetTextInputClient()->ConfirmCompositionText();
+  if (!host_view_->GetTextInputClient()->HasCompositionText())
+    return;
+
+  TextInputManager* text_input_manager = host_view_->GetTextInputManager();
+  if (!!text_input_manager && !!text_input_manager->GetActiveWidget())
+    text_input_manager->GetActiveWidget()->ImeFinishComposingText(false);
   host_view_->ImeCancelComposition();
 }
 

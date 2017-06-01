@@ -7,7 +7,6 @@
 
 #include "core/CoreExport.h"
 #include "platform/bindings/ScriptWrappable.h"
-#include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
@@ -16,7 +15,6 @@ class Document;
 class Element;
 class ResizeObserverCallback;
 class ResizeObserverController;
-class ResizeObserverEntry;
 class ResizeObservation;
 
 // ResizeObserver represents ResizeObserver javascript api:
@@ -27,17 +25,7 @@ class CORE_EXPORT ResizeObserver final
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  // This delegate is an internal (non-web-exposed) version of ResizeCallback.
-  class Delegate : public GarbageCollectedFinalized<Delegate> {
-   public:
-    virtual ~Delegate() = default;
-    virtual void OnResize(
-        const HeapVector<Member<ResizeObserverEntry>>& entries) = 0;
-    DEFINE_INLINE_VIRTUAL_TRACE() {}
-  };
-
   static ResizeObserver* Create(Document&, ResizeObserverCallback*);
-  static ResizeObserver* Create(Document&, Delegate*);
 
   virtual ~ResizeObserver(){};
 
@@ -54,18 +42,13 @@ class CORE_EXPORT ResizeObserver final
   void ElementSizeChanged();
   bool HasElementSizeChanged() { return element_size_changed_; }
   DECLARE_TRACE();
-  DECLARE_TRACE_WRAPPERS();
 
  private:
   ResizeObserver(ResizeObserverCallback*, Document&);
-  ResizeObserver(Delegate*, Document&);
 
   using ObservationList = HeapLinkedHashSet<WeakMember<ResizeObservation>>;
 
-  // Either of |callback_| and |delegate_| should be non-null.
-  const TraceWrapperMember<ResizeObserverCallback> callback_;
-  const Member<Delegate> delegate_;
-
+  Member<ResizeObserverCallback> callback_;
   // List of elements we are observing
   ObservationList observations_;
   // List of elements that have changes

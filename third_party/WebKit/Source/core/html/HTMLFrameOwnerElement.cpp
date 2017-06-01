@@ -25,9 +25,9 @@
 #include "core/dom/AXObjectCache.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/events/Event.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/RemoteFrameView.h"
 #include "core/layout/LayoutPart.h"
 #include "core/layout/api/LayoutPartItem.h"
@@ -41,7 +41,7 @@
 namespace blink {
 
 using FrameOrPluginToParentMap =
-    HeapHashMap<Member<FrameOrPlugin>, Member<LocalFrameView>>;
+    HeapHashMap<Member<FrameOrPlugin>, Member<FrameView>>;
 
 static FrameOrPluginToParentMap& FrameOrPluginNewParentMap() {
   DEFINE_STATIC_LOCAL(FrameOrPluginToParentMap, map,
@@ -80,16 +80,16 @@ void HTMLFrameOwnerElement::UpdateSuspendScope::
   FrameOrPluginNewParentMap().swap(map);
   for (const auto& entry : map) {
     FrameOrPlugin* child = entry.key;
-    bool current_attached = child->IsAttached();
-    bool new_attached = entry.value;
-    if (new_attached != current_attached) {
-      if (current_attached)
-        child->Detach();
-
-      if (new_attached)
-        child->Attach();
-
-      if (current_attached && !new_attached)
+    FrameView* current_parent = child->Parent();
+    FrameView* new_parent = entry.value;
+    if (new_parent != current_parent) {
+      if (current_parent)
+        current_parent->RemoveChild(child);
+      if (new_parent) {
+        DCHECK(child != new_parent && !child->Parent());
+        child->SetParent(new_parent);
+      }
+      if (current_parent && !new_parent)
         child->Dispose();
     }
   }
@@ -97,8 +97,8 @@ void HTMLFrameOwnerElement::UpdateSuspendScope::
   FrameOrPluginSet remove_set;
   FrameOrPluginsPendingTemporaryRemovalFromParent().swap(remove_set);
   for (const auto& child : remove_set) {
-    if (child->IsAttached())
-      child->Detach();
+    if (child->Parent())
+      child->Parent()->RemoveChild(child);
   }
 
   FrameOrPluginSet dispose_set;
@@ -120,19 +120,18 @@ void TemporarilyRemoveFrameOrPluginFromParentSoon(FrameOrPlugin* child) {
   if (g_update_suspend_count) {
     FrameOrPluginsPendingTemporaryRemovalFromParent().insert(child);
   } else {
-    if (child->IsAttached())
-      child->Detach();
+    if (child->Parent())
+      child->Parent()->RemoveChild(child);
   }
 }
 
-void MoveFrameOrPluginToParentSoon(FrameOrPlugin* child,
-                                   LocalFrameView* parent) {
+void MoveFrameOrPluginToParentSoon(FrameOrPlugin* child, FrameView* parent) {
   if (!g_update_suspend_count) {
     if (parent) {
-      DCHECK(child != parent && !child->IsAttached());
-      child->Attach();
-    } else if (child->IsAttached()) {
-      child->Detach();
+      DCHECK(child != parent && !child->Parent());
+      child->SetParent(parent);
+    } else if (child->Parent()) {
+      child->Parent()->RemoveChild(child);
       child->Dispose();
     }
     return;
@@ -290,7 +289,7 @@ void HTMLFrameOwnerElement::SetWidget(FrameOrPlugin* frame_or_plugin) {
   }
 
   if (widget_) {
-    if (widget_->IsAttached())
+    if (widget_->Parent())
       MoveFrameOrPluginToParentSoon(widget_, nullptr);
   }
 
@@ -317,7 +316,7 @@ void HTMLFrameOwnerElement::SetWidget(FrameOrPlugin* frame_or_plugin) {
 FrameOrPlugin* HTMLFrameOwnerElement::ReleaseWidget() {
   if (!widget_)
     return nullptr;
-  if (widget_->IsAttached())
+  if (widget_->Parent())
     TemporarilyRemoveFrameOrPluginFromParentSoon(widget_);
   LayoutPart* layout_part = ToLayoutPart(GetLayoutObject());
   if (layout_part) {
@@ -338,6 +337,11 @@ bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
     ContentFrame()->Navigate(GetDocument(), url, replace_current_item,
                              UserGestureStatus::kNone);
     return true;
+  }
+
+  if (!GetDocument().GetSecurityOrigin()->CanDisplay(url)) {
+    FrameLoader::ReportLocalLoadFailed(parent_frame, url.GetString());
+    return false;
   }
 
   if (!SubframeLoadingDisabler::CanLoadFrame(*this))

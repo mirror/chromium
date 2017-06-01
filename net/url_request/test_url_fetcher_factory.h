@@ -22,7 +22,6 @@
 #include "base/threading/non_thread_safe.h"
 #include "net/http/http_request_headers.h"
 #include "net/http/http_status_code.h"
-#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_fetcher_factory.h"
 #include "net/url_request/url_request_status.h"
 #include "url/gurl.h"
@@ -256,8 +255,7 @@ class TestURLFetcherFactory : public URLFetcherFactory,
       int id,
       const GURL& url,
       URLFetcher::RequestType request_type,
-      URLFetcherDelegate* d,
-      NetworkTrafficAnnotationTag traffic_annotation) override;
+      URLFetcherDelegate* d) override;
   TestURLFetcher* GetFetcherByID(int id) const;
   void RemoveFetcherFromMap(int id);
   void SetDelegateForTests(TestURLFetcherDelegateForTests* delegate_for_tests);
@@ -419,8 +417,7 @@ class FakeURLFetcherFactory : public URLFetcherFactory,
       int id,
       const GURL& url,
       URLFetcher::RequestType request_type,
-      URLFetcherDelegate* d,
-      NetworkTrafficAnnotationTag traffic_annotation) override;
+      URLFetcherDelegate* d) override;
 
   // Sets the fake response for a given URL. The |response_data| may be empty.
   // The |response_code| may be any HttpStatusCode. For instance, HTTP_OK will
@@ -473,8 +470,7 @@ class URLFetcherImplFactory : public URLFetcherFactory {
       int id,
       const GURL& url,
       URLFetcher::RequestType request_type,
-      URLFetcherDelegate* d,
-      NetworkTrafficAnnotationTag traffic_annotation) override;
+      URLFetcherDelegate* d) override;
 };
 
 }  // namespace net

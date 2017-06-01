@@ -28,6 +28,7 @@
 #include "gpu/command_buffer/common/gpu_memory_buffer_support.h"
 #include "gpu/command_buffer/common/sync_token.h"
 #include "gpu/command_buffer/service/command_buffer_service.h"
+#include "gpu/command_buffer/service/command_executor.h"
 #include "gpu/command_buffer/service/context_group.h"
 #include "gpu/command_buffer/service/gl_context_virtual.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
@@ -220,16 +221,27 @@ bool InProcessCommandBuffer::MakeCurrent() {
   CheckSequencedThread();
   command_buffer_lock_.AssertAcquired();
 
-  if (error::IsError(command_buffer_->GetState().error)) {
+  if (error::IsError(command_buffer_->GetLastState().error)) {
     DLOG(ERROR) << "MakeCurrent failed because context lost.";
     return false;
   }
   if (!decoder_->MakeCurrent()) {
     DLOG(ERROR) << "Context lost because MakeCurrent failed.";
+    command_buffer_->SetContextLostReason(decoder_->GetContextLostReason());
     command_buffer_->SetParseError(gpu::error::kLostContext);
     return false;
   }
   return true;
+}
+
+void InProcessCommandBuffer::PumpCommandsOnGpuThread() {
+  CheckSequencedThread();
+  command_buffer_lock_.AssertAcquired();
+
+  if (!MakeCurrent())
+    return;
+
+  executor_->PutChanged();
 }
 
 bool InProcessCommandBuffer::Initialize(
@@ -288,6 +300,12 @@ bool InProcessCommandBuffer::InitializeOnGpuThread(
   gpu_thread_weak_ptr_ = gpu_thread_weak_ptr_factory_.GetWeakPtr();
 
   transfer_buffer_manager_ = base::MakeUnique<TransferBufferManager>(nullptr);
+  std::unique_ptr<CommandBufferService> command_buffer(
+      new CommandBufferService(transfer_buffer_manager_.get()));
+  command_buffer->SetPutOffsetChangeCallback(base::Bind(
+      &InProcessCommandBuffer::PumpCommandsOnGpuThread, gpu_thread_weak_ptr_));
+  command_buffer->SetParseErrorCallback(base::Bind(
+      &InProcessCommandBuffer::OnContextLostOnGpuThread, gpu_thread_weak_ptr_));
 
   gl_share_group_ = params.context_group ? params.context_group->gl_share_group_
                                          : service_->share_group();
@@ -308,10 +326,13 @@ bool InProcessCommandBuffer::InitializeOnGpuThread(
 
   decoder_.reset(gles2::GLES2Decoder::Create(context_group_.get()));
 
-  command_buffer_ = base::MakeUnique<CommandBufferService>(
-      this, transfer_buffer_manager_.get(), decoder_.get());
+  executor_.reset(new CommandExecutor(command_buffer.get(), decoder_.get(),
+                                      decoder_.get()));
+  command_buffer->SetGetBufferChangeCallback(base::Bind(
+      &CommandExecutor::SetGetBuffer, base::Unretained(executor_.get())));
+  command_buffer_ = std::move(command_buffer);
 
-  decoder_->set_command_buffer_service(command_buffer_.get());
+  decoder_->set_engine(executor_.get());
 
   if (!surface_.get()) {
     if (params.is_offscreen) {
@@ -470,12 +491,7 @@ void InProcessCommandBuffer::CheckSequencedThread() {
   DCHECK(!sequence_checker_ || sequence_checker_->CalledOnValidSequence());
 }
 
-CommandBufferServiceClient::CommandBatchProcessedResult
-InProcessCommandBuffer::OnCommandBatchProcessed() {
-  return kContinueExecution;
-}
-
-void InProcessCommandBuffer::OnParseError() {
+void InProcessCommandBuffer::OnContextLostOnGpuThread() {
   if (!origin_task_runner_)
     return OnContextLost();  // Just kidding, we're on the client thread.
   origin_task_runner_->PostTask(
@@ -514,15 +530,14 @@ void InProcessCommandBuffer::QueueTask(bool out_of_order,
 }
 
 void InProcessCommandBuffer::ProcessTasksOnGpuThread() {
-  while (command_buffer_->scheduled()) {
+  while (executor_->scheduled()) {
     base::AutoLock lock(task_queue_lock_);
     if (task_queue_.empty())
       break;
     GpuTask* task = task_queue_.front().get();
     sync_point_order_data_->BeginProcessingOrderNumber(task->order_number);
     task->callback.Run();
-    if (!command_buffer_->scheduled() &&
-        !service_->BlockThreadOnWaitSyncToken()) {
+    if (!executor_->scheduled() && !service_->BlockThreadOnWaitSyncToken()) {
       sync_point_order_data_->PauseProcessingOrderNumber(task->order_number);
       // Don't pop the task if it was preempted - it may have been preempted, so
       // we need to execute it again later.
@@ -543,8 +558,7 @@ void InProcessCommandBuffer::UpdateLastStateOnGpuThread() {
   CheckSequencedThread();
   command_buffer_lock_.AssertAcquired();
   base::AutoLock lock(last_state_lock_);
-  command_buffer_->UpdateState();
-  State state = command_buffer_->GetState();
+  State state = command_buffer_->GetLastState();
   if (state.generation - last_state_.generation < 0x80000000U)
     last_state_ = state;
 }
@@ -569,17 +583,14 @@ void InProcessCommandBuffer::FlushOnGpuThread(
     }
   }
 
-  if (!MakeCurrent())
-    return;
-
   command_buffer_->Flush(put_offset);
   // Update state before signaling the flush event.
   UpdateLastStateOnGpuThread();
 
   // If we've processed all pending commands but still have pending queries,
   // pump idle work until the query is passed.
-  if (put_offset == command_buffer_->GetState().get_offset &&
-      (decoder_->HasMoreIdleWork() || decoder_->HasPendingQueries())) {
+  if (put_offset == command_buffer_->GetLastState().get_offset &&
+      (executor_->HasMoreIdleWork() || executor_->HasPendingQueries())) {
     ScheduleDelayedWorkOnGpuThread();
   }
 }
@@ -589,9 +600,9 @@ void InProcessCommandBuffer::PerformDelayedWorkOnGpuThread() {
   delayed_work_pending_ = false;
   base::AutoLock lock(command_buffer_lock_);
   if (MakeCurrent()) {
-    decoder_->PerformIdleWork();
-    decoder_->ProcessPendingQueries(false);
-    if (decoder_->HasMoreIdleWork() || decoder_->HasPendingQueries()) {
+    executor_->PerformIdleWork();
+    executor_->ProcessPendingQueries();
+    if (executor_->HasMoreIdleWork() || executor_->HasPendingQueries()) {
       ScheduleDelayedWorkOnGpuThread();
     }
   }
@@ -890,7 +901,7 @@ bool InProcessCommandBuffer::WaitSyncTokenOnGpuThread(
     return false;
   }
 
-  command_buffer_->SetScheduled(false);
+  executor_->SetScheduled(false);
   return true;
 }
 
@@ -901,25 +912,25 @@ void InProcessCommandBuffer::OnWaitSyncTokenCompleted(
       decoder_->GetContextGroup()->mailbox_manager();
   mailbox_manager->PullTextureUpdates(sync_token);
   waiting_for_sync_point_ = false;
-  command_buffer_->SetScheduled(true);
+  executor_->SetScheduled(true);
   service_->ScheduleTask(base::Bind(
       &InProcessCommandBuffer::ProcessTasksOnGpuThread, gpu_thread_weak_ptr_));
 }
 
 void InProcessCommandBuffer::DescheduleUntilFinishedOnGpuThread() {
   if (!service_->BlockThreadOnWaitSyncToken()) {
-    DCHECK(command_buffer_->scheduled());
-    DCHECK(decoder_->HasPollingWork());
+    DCHECK(executor_->scheduled());
+    DCHECK(executor_->HasPollingWork());
 
-    command_buffer_->SetScheduled(false);
+    executor_->SetScheduled(false);
   }
 }
 
 void InProcessCommandBuffer::RescheduleAfterFinishedOnGpuThread() {
   if (!service_->BlockThreadOnWaitSyncToken()) {
-    DCHECK(!command_buffer_->scheduled());
+    DCHECK(!executor_->scheduled());
 
-    command_buffer_->SetScheduled(true);
+    executor_->SetScheduled(true);
     ProcessTasksOnGpuThread();
   }
 }

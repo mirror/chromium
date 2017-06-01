@@ -22,7 +22,6 @@
 #include "net/base/net_errors.h"
 #include "net/url_request/redirect_info.h"
 #include "net/url_request/url_request_context_getter.h"
-#include "storage/browser/fileapi/file_system_context.h"
 
 namespace content {
 
@@ -39,7 +38,6 @@ NavigationURLLoaderImplCore::~NavigationURLLoaderImplCore() {}
 void NavigationURLLoaderImplCore::Start(
     ResourceContext* resource_context,
     net::URLRequestContextGetter* url_request_context_getter,
-    storage::FileSystemContext* upload_file_system_context,
     ServiceWorkerNavigationHandleCore* service_worker_handle_core,
     AppCacheNavigationHandleCore* appcache_handle_core,
     std::unique_ptr<NavigationRequestInfo> request_info,
@@ -55,9 +53,8 @@ void NavigationURLLoaderImplCore::Start(
   if (ResourceDispatcherHostImpl::Get()) {
     ResourceDispatcherHostImpl::Get()->BeginNavigationRequest(
         resource_context, url_request_context_getter->GetURLRequestContext(),
-        upload_file_system_context, *request_info,
-        std::move(navigation_ui_data), this, service_worker_handle_core,
-        appcache_handle_core);
+        *request_info, std::move(navigation_ui_data), this,
+        service_worker_handle_core, appcache_handle_core);
   }
 }
 

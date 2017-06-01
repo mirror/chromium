@@ -7,7 +7,6 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <limits.h>
-#include <poll.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <sys/ioctl.h>
@@ -143,42 +142,44 @@ size_t SyncSocket::ReceiveWithTimeout(void* buffer,
   DCHECK_LE(length, kMaxMessageLength);
   DCHECK_NE(handle_, kInvalidHandle);
 
+  // TODO(dalecurtis): There's an undiagnosed issue on OSX where we're seeing
+  // large numbers of open files which prevents select() from being used.  In
+  // this case, the best we can do is Peek() to see if we can Receive() now or
+  // return a timeout error (0) if not.  See http://crbug.com/314364.
+  if (handle_ >= FD_SETSIZE)
+    return Peek() < length ? 0 : Receive(buffer, length);
+
   // Only timeouts greater than zero and less than one second are allowed.
   DCHECK_GT(timeout.InMicroseconds(), 0);
   DCHECK_LT(timeout.InMicroseconds(),
-            TimeDelta::FromSeconds(1).InMicroseconds());
+            base::TimeDelta::FromSeconds(1).InMicroseconds());
 
   // Track the start time so we can reduce the timeout as data is read.
   TimeTicks start_time = TimeTicks::Now();
   const TimeTicks finish_time = start_time + timeout;
 
-  struct pollfd pollfd;
-  pollfd.fd = handle_;
-  pollfd.events = POLLIN;
-  pollfd.revents = 0;
+  fd_set read_fds;
+  size_t bytes_read_total;
+  for (bytes_read_total = 0;
+       bytes_read_total < length && timeout.InMicroseconds() > 0;
+       timeout = finish_time - base::TimeTicks::Now()) {
+    FD_ZERO(&read_fds);
+    FD_SET(handle_, &read_fds);
 
-  size_t bytes_read_total = 0;
-  while (bytes_read_total < length) {
-    const TimeDelta this_timeout = finish_time - TimeTicks::Now();
-    const int timeout_ms =
-        static_cast<int>(this_timeout.InMillisecondsRoundedUp());
-    if (timeout_ms <= 0)
-      break;
-    const int poll_result = poll(&pollfd, 1, timeout_ms);
+    // Wait for data to become available.
+    struct timeval timeout_struct =
+        { 0, static_cast<suseconds_t>(timeout.InMicroseconds()) };
+    const int select_result =
+        select(handle_ + 1, &read_fds, NULL, NULL, &timeout_struct);
     // Handle EINTR manually since we need to update the timeout value.
-    if (poll_result == -1 && errno == EINTR)
+    if (select_result == -1 && errno == EINTR)
       continue;
-    // Return if other type of error or a timeout.
-    if (poll_result <= 0)
+    if (select_result <= 0)
       return bytes_read_total;
 
-    // poll() only tells us that data is ready for reading, not how much.  We
+    // select() only tells us that data is ready for reading, not how much.  We
     // must Peek() for the amount ready for reading to avoid blocking.
-    // At hang up (POLLHUP), the write end has been closed and there might still
-    // be data to be read.
-    // No special handling is needed for error (POLLERR); we can let any of the
-    // following operations fail and handle it there.
-    DCHECK(pollfd.revents & (POLLIN | POLLHUP | POLLERR)) << pollfd.revents;
+    DCHECK(FD_ISSET(handle_, &read_fds));
     const size_t bytes_to_read = std::min(Peek(), length - bytes_read_total);
 
     // There may be zero bytes to read if the socket at the other end closed.

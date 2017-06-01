@@ -28,7 +28,7 @@ class VIEWS_EXPORT Throbber : public View {
   void SetChecked(bool checked);
 
   // Overridden from View:
-  gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetPreferredSize() const override;
   void OnPaint(gfx::Canvas* canvas) override;
 
  protected:

@@ -4,12 +4,12 @@
 
 #include "core/dom/ResizeObserver.h"
 
-#include "bindings/core/v8/ResizeObserverCallback.h"
 #include "core/dom/Element.h"
 #include "core/dom/ResizeObservation.h"
+#include "core/dom/ResizeObserverCallback.h"
 #include "core/dom/ResizeObserverController.h"
 #include "core/dom/ResizeObserverEntry.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 
 namespace blink {
 
@@ -18,26 +18,11 @@ ResizeObserver* ResizeObserver::Create(Document& document,
   return new ResizeObserver(callback, document);
 }
 
-ResizeObserver* ResizeObserver::Create(Document& document, Delegate* delegate) {
-  return new ResizeObserver(delegate, document);
-}
-
 ResizeObserver::ResizeObserver(ResizeObserverCallback* callback,
                                Document& document)
-    : callback_(this, callback),
+    : callback_(callback),
       skipped_observations_(false),
       element_size_changed_(false) {
-  DCHECK(callback_);
-  controller_ = &document.EnsureResizeObserverController();
-  controller_->AddObserver(*this);
-}
-
-ResizeObserver::ResizeObserver(Delegate* delegate, Document& document)
-    : callback_(this, nullptr),
-      delegate_(delegate),
-      skipped_observations_(false),
-      element_size_changed_(false) {
-  DCHECK(delegate_);
   controller_ = &document.EnsureResizeObserverController();
   controller_->AddObserver(*this);
 }
@@ -51,7 +36,7 @@ void ResizeObserver::observe(Element* target) {
   observations_.insert(observation);
   observer_map.Set(this, observation);
 
-  if (LocalFrameView* frame_view = target->GetDocument().View())
+  if (FrameView* frame_view = target->GetDocument().View())
     frame_view->ScheduleAnimation();
 }
 
@@ -115,11 +100,7 @@ void ResizeObserver::DeliverObservations() {
                                          LayoutRect(location, size));
     entries.push_back(entry);
   }
-  DCHECK(callback_ || delegate_);
-  if (callback_)
-    callback_->call(this, entries, this);
-  if (delegate_)
-    delegate_->OnResize(entries);
+  callback_->handleEvent(entries, this);
   ClearObservations();
 }
 
@@ -136,14 +117,9 @@ void ResizeObserver::ElementSizeChanged() {
 
 DEFINE_TRACE(ResizeObserver) {
   visitor->Trace(callback_);
-  visitor->Trace(delegate_);
   visitor->Trace(observations_);
   visitor->Trace(active_observations_);
   visitor->Trace(controller_);
-}
-
-DEFINE_TRACE_WRAPPERS(ResizeObserver) {
-  visitor->TraceWrappers(callback_);
 }
 
 }  // namespace blink

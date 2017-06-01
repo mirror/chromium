@@ -121,11 +121,8 @@ ServiceConfiguration GetServiceConfigurationForSigninScreen() {
 
 }  // anonymous namespace.
 
-TimeZoneResolverManager::TimeZoneResolverManager() : weak_factory_(this) {
-  g_browser_process->local_state()->AddPrefInitObserver(
-      base::Bind(&TimeZoneResolverManager::OnLocalStateInitialized,
-                 weak_factory_.GetWeakPtr()));
-
+TimeZoneResolverManager::TimeZoneResolverManager()
+    : primary_user_prefs_(nullptr) {
   local_state_pref_change_registrar_.Init(g_browser_process->local_state());
   local_state_pref_change_registrar_.Add(
       prefs::kSystemTimezoneAutomaticDetectionPolicy,
@@ -171,19 +168,10 @@ int TimeZoneResolverManager::GetTimezoneManagementSetting() {
 }
 
 void TimeZoneResolverManager::UpdateTimezoneResolver() {
-  initialized_ = true;
-  chromeos::TimeZoneResolver* resolver =
-      g_browser_process->platform_part()->GetTimezoneResolver();
-  // Local state becomes initialized when policy data is loaded,
-  // and we need policies to decide whether resolver can be started.
-  if (!local_state_initialized_) {
-    resolver->Stop();
-    return;
-  }
   if (TimeZoneResolverShouldBeRunning())
-    resolver->Start();
+    g_browser_process->platform_part()->GetTimezoneResolver()->Start();
   else
-    resolver->Stop();
+    g_browser_process->platform_part()->GetTimezoneResolver()->Stop();
 }
 
 bool TimeZoneResolverManager::ShouldApplyResolvedTimezone() {
@@ -206,12 +194,6 @@ bool TimeZoneResolverManager::TimeZoneResolverShouldBeRunning() {
     }
   }
   return result == SHOULD_START;
-}
-
-void TimeZoneResolverManager::OnLocalStateInitialized(bool initialized) {
-  local_state_initialized_ = initialized;
-  if (initialized_)
-    UpdateTimezoneResolver();
 }
 
 }  // namespace system

@@ -18,14 +18,6 @@
       'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
     {
-      'target_name': 'media_router_browser_api',
-      'dependencies': [
-        'media_router_data',
-        '<(EXTERNS_GYP):chrome_send',
-      ],
-      'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi'],
-    },
-    {
       'target_name': 'media_router_data',
       'dependencies': [
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
@@ -36,10 +28,9 @@
     {
       'target_name': 'media_router_ui_interface',
       'dependencies': [
-        'media_router_browser_api',
+        '<(EXTERNS_GYP):chrome_send',
         'elements/media_router_header/compiled_resources2.gyp:media_router_header',
-        'elements/media_router_container/compiled_resources2.gyp:media_router_container_interface',
-        'elements/route_controls/compiled_resources2.gyp:route_controls_interface',
+        'elements/media_router_container/compiled_resources2.gyp:media_router_container',
       ],
       'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi'],
     },

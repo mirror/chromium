@@ -11,6 +11,8 @@ source_set("payments") {
     "address_edit_coordinator.mm",
     "address_edit_mediator.h",
     "address_edit_mediator.mm",
+    "address_edit_view_controller.h",
+    "address_edit_view_controller.mm",
     "country_selection_coordinator.h",
     "country_selection_coordinator.mm",
     "credit_card_edit_coordinator.h",
@@ -80,7 +82,6 @@ source_set("payments") {
     "//ios/third_party/material_roboto_font_loader_ios",
     "//ios/web",
     "//third_party/libaddressinput",
-    "//third_party/libaddressinput:strings_grit",
     "//ui/base",
   ]
   libs = [ "UIKit.framework" ]
@@ -89,11 +90,15 @@ source_set("payments") {
 source_set("payments_ui") {
   configs += [ "//build/config/compiler:enable_arc" ]
   sources = [
+    "credit_card_edit_view_controller.h",
+    "credit_card_edit_view_controller.mm",
+    "credit_card_edit_view_controller_data_source.h",
     "payment_items_display_view_controller.h",
     "payment_items_display_view_controller.mm",
     "payment_items_display_view_controller_actions.h",
     "payment_items_display_view_controller_data_source.h",
     "payment_request_edit_consumer.h",
+    "payment_request_edit_view_controller+internal.h",
     "payment_request_edit_view_controller.h",
     "payment_request_edit_view_controller.mm",
     "payment_request_edit_view_controller_actions.h",
@@ -137,11 +142,11 @@ source_set("unit_tests") {
     "address_edit_coordinator_unittest.mm",
     "country_selection_coordinator_unittest.mm",
     "credit_card_edit_coordinator_unittest.mm",
+    "credit_card_edit_view_controller_unittest.mm",
     "payment_items_display_coordinator_unittest.mm",
     "payment_items_display_view_controller_unittest.mm",
     "payment_method_selection_coordinator_unittest.mm",
     "payment_request_coordinator_unittest.mm",
-    "payment_request_edit_view_controller_unittest.mm",
     "payment_request_error_coordinator_unittest.mm",
     "payment_request_error_view_controller_unittest.mm",
     "payment_request_selector_view_controller_unittest.mm",
@@ -158,7 +163,6 @@ source_set("unit_tests") {
     "//components/autofill/core/browser",
     "//components/autofill/core/browser:test_support",
     "//components/payments/core",
-    "//components/prefs:prefs",
     "//components/strings",
     "//ios/chrome/app/strings",
     "//ios/chrome/browser",
@@ -175,10 +179,9 @@ source_set("unit_tests") {
     "//ios/testing:ocmock_support",
     "//ios/third_party/material_components_ios",
     "//ios/web",
-    "//ios/web/public/test",
+    "//ios/web:test_support",
     "//testing/gmock",
     "//testing/gtest",
     "//third_party/ocmock",
-    "//ui/base",
   ]
 }

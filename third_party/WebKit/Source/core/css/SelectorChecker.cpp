@@ -928,9 +928,13 @@ bool SelectorChecker::CheckPseudoClass(const SelectorCheckingContext& context,
     case CSSSelector::kPseudoFocus:
       if (mode_ == kSharingRules)
         return true;
-      if (mode_ == kResolvingStyle && !context.in_rightmost_compound) {
-        element_style_->SetUnique();
-        element.SetChildrenOrSiblingsAffectedByFocus();
+      if (mode_ == kResolvingStyle) {
+        if (context.in_rightmost_compound) {
+          element_style_->SetAffectedByFocus();
+        } else {
+          element_style_->SetUnique();
+          element.SetChildrenOrSiblingsAffectedByFocus();
+        }
       }
       return MatchesFocusPseudoClass(element);
     case CSSSelector::kPseudoFocusWithin:
@@ -1059,12 +1063,11 @@ bool SelectorChecker::CheckPseudoClass(const SelectorCheckingContext& context,
     case CSSSelector::kPseudoFullScreenAncestor:
       return element.ContainsFullScreenElement();
     case CSSSelector::kPseudoVideoPersistent:
-      DCHECK(is_ua_rule_);
-      return isHTMLVideoElement(element) &&
-             toHTMLVideoElement(element).IsPersistent();
+      if (!is_ua_rule_ || !isHTMLVideoElement(element))
+        return false;
+      return toHTMLVideoElement(element).IsPersistent();
     case CSSSelector::kPseudoVideoPersistentAncestor:
-      DCHECK(is_ua_rule_);
-      return element.ContainsPersistentVideo();
+      return is_ua_rule_ && element.ContainsPersistentVideo();
     case CSSSelector::kPseudoInRange:
       if (mode_ == kResolvingStyle)
         element.GetDocument().SetContainsValidityStyleRules();
@@ -1092,13 +1095,12 @@ bool SelectorChecker::CheckPseudoClass(const SelectorCheckingContext& context,
     case CSSSelector::kPseudoHostContext:
       return CheckPseudoHost(context, result);
     case CSSSelector::kPseudoSpatialNavigationFocus:
-      DCHECK(is_ua_rule_);
-      return MatchesSpatialNavigationFocusPseudoClass(element);
+      return is_ua_rule_ && MatchesSpatialNavigationFocusPseudoClass(element);
     case CSSSelector::kPseudoListBox:
-      DCHECK(is_ua_rule_);
-      return MatchesListBoxPseudoClass(element);
+      return is_ua_rule_ && MatchesListBoxPseudoClass(element);
     case CSSSelector::kPseudoHostHasAppearance:
-      DCHECK(is_ua_rule_);
+      if (!is_ua_rule_)
+        return false;
       if (ShadowRoot* root = element.ContainingShadowRoot()) {
         if (root->GetType() != ShadowRootType::kUserAgent)
           return false;
@@ -1162,7 +1164,8 @@ bool SelectorChecker::CheckPseudoElement(const SelectorCheckingContext& context,
       return false;
     }
     case CSSSelector::kPseudoBlinkInternalElement:
-      DCHECK(is_ua_rule_);
+      if (!is_ua_rule_)
+        return false;
       if (ShadowRoot* root = element.ContainingShadowRoot())
         return root->GetType() == ShadowRootType::kUserAgent &&
                element.ShadowPseudoId() == selector.Value();

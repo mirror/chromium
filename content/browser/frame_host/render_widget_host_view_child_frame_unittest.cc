@@ -53,8 +53,6 @@ class MockRenderWidgetHostDelegate : public RenderWidgetHostDelegate {
   void SelectAll() override {}
 };
 
-}  // namespace
-
 class MockCrossProcessFrameConnector : public CrossProcessFrameConnector {
  public:
   MockCrossProcessFrameConnector() : CrossProcessFrameConnector(nullptr) {}
@@ -65,16 +63,14 @@ class MockCrossProcessFrameConnector : public CrossProcessFrameConnector {
     last_surface_info_ = surface_info;
   }
 
-  void SetViewportIntersection(const gfx::Rect& intersection) {
-    viewport_intersection_rect_ = intersection;
-  }
-
   RenderWidgetHostViewBase* GetParentRenderWidgetHostView() override {
     return nullptr;
   }
 
   cc::SurfaceInfo last_surface_info_;
 };
+
+}  // namespace
 
 class RenderWidgetHostViewChildFrameTest : public testing::Test {
  public:
@@ -248,25 +244,49 @@ TEST_F(RenderWidgetHostViewChildFrameTest, FrameEviction) {
   EXPECT_TRUE(view_->has_frame());
 }
 
-// Tests that the viewport intersection rect is dispatched to the RenderWidget
-// whenever screen rects are updated.
-TEST_F(RenderWidgetHostViewChildFrameTest, ViewportIntersectionUpdated) {
-  gfx::Rect intersection_rect(5, 5, 100, 80);
-  test_frame_connector_->SetViewportIntersection(intersection_rect);
+// Tests that BeginFrameAcks are forwarded correctly from the
+// SwapCompositorFrame and DidNotProduceFrame IPCs through the
+// CompositorFrameSinkSupport.
+TEST_F(RenderWidgetHostViewChildFrameTest, ForwardsBeginFrameAcks) {
+  gfx::Size view_size(100, 100);
+  gfx::Rect view_rect(view_size);
+  float scale_factor = 1.f;
 
-  MockRenderProcessHost* process =
-      static_cast<MockRenderProcessHost*>(widget_host_->GetProcess());
-  process->Init();
+  view_->SetSize(view_size);
+  view_->Show();
 
-  widget_host_->Init();
+  // Replace BeginFrameSource so that we can observe acknowledgments.
+  cc::FakeExternalBeginFrameSource source(0.f, false);
+  uint32_t source_id = source.source_id();
+  view_->support_->SetBeginFrameSource(&source);
+  view_->SetNeedsBeginFrames(true);
 
-  const IPC::Message* intersection_update =
-      process->sink().GetUniqueMessageMatching(
-          ViewMsg_SetViewportIntersection::ID);
-  ASSERT_TRUE(intersection_update);
-  std::tuple<gfx::Rect> sent_rect;
-  ViewMsg_SetViewportIntersection::Read(intersection_update, &sent_rect);
-  EXPECT_EQ(intersection_rect, std::get<0>(sent_rect));
+  {
+    cc::BeginFrameArgs args =
+        cc::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, source_id, 5u);
+    source.TestOnBeginFrame(args);
+
+    // Ack from CompositorFrame is forwarded.
+    cc::BeginFrameAck ack(source_id, 5, 4, true);
+    cc::CompositorFrame frame =
+        CreateDelegatedFrame(scale_factor, view_size, view_rect);
+    frame.metadata.begin_frame_ack = ack;
+    view_->SubmitCompositorFrame(kArbitraryLocalSurfaceId, std::move(frame));
+    EXPECT_EQ(ack, source.LastAckForObserver(view_->support_.get()));
+  }
+
+  {
+    cc::BeginFrameArgs args =
+        cc::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, source_id, 6u);
+    source.TestOnBeginFrame(args);
+
+    // Explicit ack through OnDidNotProduceFrame is forwarded.
+    cc::BeginFrameAck ack(source_id, 6, 4, false);
+    view_->OnDidNotProduceFrame(ack);
+    EXPECT_EQ(ack, source.LastAckForObserver(view_->support_.get()));
+  }
+
+  view_->SetNeedsBeginFrames(false);
 }
 
 }  // namespace content

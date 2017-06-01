@@ -26,7 +26,6 @@
 #include "platform/bindings/V8PrivateProperty.h"
 #include "platform/wtf/GetPtr.h"
 #include "platform/wtf/RefPtr.h"
-#include "public/platform/WebFeature.h"
 
 namespace blink {
 
@@ -398,7 +397,7 @@ void V8TestInterfaceConstructorConstructor::NamedConstructorAttributeGetter(
 }
 
 void V8TestInterfaceConstructor::constructorCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
-  UseCounter::Count(CurrentExecutionContext(info.GetIsolate()), WebFeature::kTestFeature);
+  UseCounter::Count(CurrentExecutionContext(info.GetIsolate()), UseCounter::kTestFeature);
   if (!info.IsConstructCall()) {
     V8ThrowException::ThrowTypeError(info.GetIsolate(), ExceptionMessages::ConstructorNotCallableAsFunction("TestInterfaceConstructor"));
     return;

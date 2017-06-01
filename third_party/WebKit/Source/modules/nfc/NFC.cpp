@@ -22,7 +22,6 @@
 #include "public/platform/Platform.h"
 
 namespace {
-const char kJsonMimePostfix[] = "+json";
 const char kJsonMimePrefix[] = "application/";
 const char kJsonMimeType[] = "application/json";
 const char kOpaqueMimeType[] = "application/octet-stream";
@@ -34,20 +33,20 @@ const char kCharSetUTF8[] = ";charset=UTF-8";
 // Mojo type converters
 namespace mojo {
 
-using device::mojom::blink::NFCMessage;
-using device::mojom::blink::NFCMessagePtr;
-using device::mojom::blink::NFCRecord;
-using device::mojom::blink::NFCRecordPtr;
-using device::mojom::blink::NFCRecordType;
-using device::mojom::blink::NFCRecordTypeFilter;
-using device::mojom::blink::NFCPushOptions;
-using device::mojom::blink::NFCPushOptionsPtr;
-using device::mojom::blink::NFCPushTarget;
-using device::mojom::blink::NFCWatchMode;
-using device::mojom::blink::NFCWatchOptions;
-using device::mojom::blink::NFCWatchOptionsPtr;
+using device::nfc::mojom::blink::NFCMessage;
+using device::nfc::mojom::blink::NFCMessagePtr;
+using device::nfc::mojom::blink::NFCRecord;
+using device::nfc::mojom::blink::NFCRecordPtr;
+using device::nfc::mojom::blink::NFCRecordType;
+using device::nfc::mojom::blink::NFCRecordTypeFilter;
+using device::nfc::mojom::blink::NFCPushOptions;
+using device::nfc::mojom::blink::NFCPushOptionsPtr;
+using device::nfc::mojom::blink::NFCPushTarget;
+using device::nfc::mojom::blink::NFCWatchMode;
+using device::nfc::mojom::blink::NFCWatchOptions;
+using device::nfc::mojom::blink::NFCWatchOptionsPtr;
 
-NFCPushTarget toNFCPushTarget(const String& target) {
+NFCPushTarget toNFCPushTarget(const WTF::String& target) {
   if (target == "tag")
     return NFCPushTarget::TAG;
 
@@ -57,7 +56,7 @@ NFCPushTarget toNFCPushTarget(const String& target) {
   return NFCPushTarget::ANY;
 }
 
-NFCRecordType toNFCRecordType(const String& recordType) {
+NFCRecordType toNFCRecordType(const WTF::String& recordType) {
   if (recordType == "empty")
     return NFCRecordType::EMPTY;
 
@@ -77,7 +76,7 @@ NFCRecordType toNFCRecordType(const String& recordType) {
   return NFCRecordType::EMPTY;
 }
 
-NFCWatchMode toNFCWatchMode(const String& watchMode) {
+NFCWatchMode toNFCWatchMode(const WTF::String& watchMode) {
   if (watchMode == "web-nfc-only")
     return NFCWatchMode::WEBNFC_ONLY;
 
@@ -115,39 +114,39 @@ NFCRecordType deduceRecordTypeFromDataType(const blink::NFCRecord& record) {
 }
 
 void setMediaType(NFCRecordPtr& recordPtr,
-                  const String& recordMediaType,
-                  const String& defaultMediaType) {
+                  const WTF::String& recordMediaType,
+                  const WTF::String& defaultMediaType) {
   recordPtr->media_type =
       recordMediaType.IsEmpty() ? defaultMediaType : recordMediaType;
 }
 
 template <>
-struct TypeConverter<Vector<uint8_t>, String> {
-  static Vector<uint8_t> Convert(const String& string) {
-    CString utf8String = string.Utf8();
-    Vector<uint8_t> array;
+struct TypeConverter<WTF::Vector<uint8_t>, WTF::String> {
+  static WTF::Vector<uint8_t> Convert(const WTF::String& string) {
+    WTF::CString utf8String = string.Utf8();
+    WTF::Vector<uint8_t> array;
     array.Append(utf8String.data(), utf8String.length());
     return array;
   }
 };
 
 template <>
-struct TypeConverter<Vector<uint8_t>, blink::DOMArrayBuffer*> {
-  static Vector<uint8_t> Convert(blink::DOMArrayBuffer* buffer) {
-    Vector<uint8_t> array;
+struct TypeConverter<WTF::Vector<uint8_t>, blink::DOMArrayBuffer*> {
+  static WTF::Vector<uint8_t> Convert(blink::DOMArrayBuffer* buffer) {
+    WTF::Vector<uint8_t> array;
     array.Append(static_cast<uint8_t*>(buffer->Data()), buffer->ByteLength());
     return array;
   }
 };
 
 template <>
-struct TypeConverter<NFCRecordPtr, String> {
-  static NFCRecordPtr Convert(const String& string) {
+struct TypeConverter<NFCRecordPtr, WTF::String> {
+  static NFCRecordPtr Convert(const WTF::String& string) {
     NFCRecordPtr record = NFCRecord::New();
     record->record_type = NFCRecordType::TEXT;
     record->media_type = kPlainTextMimeType;
     record->media_type.append(kCharSetUTF8);
-    record->data = mojo::ConvertTo<Vector<uint8_t>>(string);
+    record->data = mojo::ConvertTo<WTF::Vector<uint8_t>>(string);
     return record;
   }
 };
@@ -158,14 +157,14 @@ struct TypeConverter<NFCRecordPtr, blink::DOMArrayBuffer*> {
     NFCRecordPtr record = NFCRecord::New();
     record->record_type = NFCRecordType::OPAQUE_RECORD;
     record->media_type = kOpaqueMimeType;
-    record->data = mojo::ConvertTo<Vector<uint8_t>>(buffer);
+    record->data = mojo::ConvertTo<WTF::Vector<uint8_t>>(buffer);
     return record;
   }
 };
 
 template <>
-struct TypeConverter<NFCMessagePtr, String> {
-  static NFCMessagePtr Convert(const String& string) {
+struct TypeConverter<NFCMessagePtr, WTF::String> {
+  static NFCMessagePtr Convert(const WTF::String& string) {
     NFCMessagePtr message = NFCMessage::New();
     message->data.push_back(NFCRecord::From(string));
     return message;
@@ -173,43 +172,35 @@ struct TypeConverter<NFCMessagePtr, String> {
 };
 
 template <>
-struct TypeConverter<Optional<Vector<uint8_t>>, blink::ScriptValue> {
-  static Optional<Vector<uint8_t>> Convert(
+struct TypeConverter<WTF::Optional<WTF::Vector<uint8_t>>, blink::ScriptValue> {
+  static WTF::Optional<WTF::Vector<uint8_t>> Convert(
       const blink::ScriptValue& scriptValue) {
     v8::Local<v8::Value> value = scriptValue.V8Value();
 
-    if (value->IsNumber()) {
-      return mojo::ConvertTo<Vector<uint8_t>>(
-          String::Number(value.As<v8::Number>()->Value()));
-    }
+    if (value->IsNumber())
+      return mojo::ConvertTo<WTF::Vector<uint8_t>>(
+          WTF::String::Number(value.As<v8::Number>()->Value()));
 
     if (value->IsString()) {
       blink::V8StringResource<> stringResource = value;
       if (stringResource.Prepare()) {
-        return mojo::ConvertTo<Vector<uint8_t>>(String(stringResource));
+        return mojo::ConvertTo<WTF::Vector<uint8_t>>(
+            WTF::String(stringResource));
       }
     }
 
     if (value->IsObject() && !value->IsArray() && !value->IsArrayBuffer()) {
       v8::Local<v8::String> jsonString;
-      v8::Isolate* isolate = scriptValue.GetIsolate();
-      v8::TryCatch try_catch(isolate);
-
-      // https://w3c.github.io/web-nfc/#mapping-json-to-ndef
-      // If serialization throws, reject promise with a "SyntaxError" exception.
-      if (!v8::JSON::Stringify(scriptValue.GetContext(), value.As<v8::Object>())
-               .ToLocal(&jsonString) ||
-          try_catch.HasCaught()) {
-        return WTF::nullopt;
+      if (v8::JSON::Stringify(scriptValue.GetContext(), value.As<v8::Object>())
+              .ToLocal(&jsonString)) {
+        WTF::String wtfString = blink::V8StringToWebCoreString<WTF::String>(
+            jsonString, blink::kDoNotExternalize);
+        return mojo::ConvertTo<WTF::Vector<uint8_t>>(wtfString);
       }
-
-      String string = blink::V8StringToWebCoreString<String>(
-          jsonString, blink::kDoNotExternalize);
-      return mojo::ConvertTo<Vector<uint8_t>>(string);
     }
 
     if (value->IsArrayBuffer())
-      return mojo::ConvertTo<Vector<uint8_t>>(
+      return mojo::ConvertTo<WTF::Vector<uint8_t>>(
           blink::V8ArrayBuffer::toImpl(value.As<v8::Object>()));
 
     return WTF::nullopt;
@@ -248,7 +239,8 @@ struct TypeConverter<NFCRecordPtr, blink::NFCRecord> {
         break;
     }
 
-    auto recordData = mojo::ConvertTo<Optional<Vector<uint8_t>>>(record.data());
+    auto recordData =
+        mojo::ConvertTo<WTF::Optional<WTF::Vector<uint8_t>>>(record.data());
     // If JS object cannot be converted to uint8_t array, return null,
     // interrupt NFCMessage conversion algorithm and reject promise with
     // SyntaxError exception.
@@ -361,93 +353,49 @@ struct TypeConverter<NFCWatchOptionsPtr, blink::NFCWatchOptions> {
 namespace blink {
 namespace {
 
-ScriptPromise RejectWithTypeError(ScriptState* script_state,
-                                  const String& message) {
-  return ScriptPromise::Reject(
-      script_state,
-      V8ThrowException::CreateTypeError(script_state->GetIsolate(), message));
-}
-
-ScriptPromise RejectWithDOMException(ScriptState* script_state,
-                                     ExceptionCode ec,
-                                     const String& message) {
-  return ScriptPromise::RejectWithDOMException(
-      script_state, DOMException::Create(ec, message));
-}
-
-ScriptPromise RejectIfInvalidTextRecord(ScriptState* script_state,
-                                        const NFCRecord& record) {
+bool IsValidTextRecord(const NFCRecord& record) {
   v8::Local<v8::Value> value = record.data().V8Value();
   if (!value->IsString() &&
-      !(value->IsNumber() && !std::isnan(value.As<v8::Number>()->Value()))) {
-    return RejectWithTypeError(script_state,
-                               "The data for 'text' NFCRecords must be of "
-                               "String or UnrestrctedDouble type.");
-  }
+      !(value->IsNumber() && !std::isnan(value.As<v8::Number>()->Value())))
+    return false;
 
   if (record.hasMediaType() &&
       !record.mediaType().StartsWith(kPlainTextMimePrefix,
-                                     kTextCaseUnicodeInsensitive)) {
-    return RejectWithDOMException(script_state, kSyntaxError,
-                                  "Invalid media type for 'text' record.");
-  }
+                                     kTextCaseUnicodeInsensitive))
+    return false;
 
-  return ScriptPromise();
+  return true;
 }
 
-ScriptPromise RejectIfInvalidURLRecord(ScriptState* script_state,
-                                       const NFCRecord& record) {
-  if (!record.data().V8Value()->IsString()) {
-    return RejectWithTypeError(
-        script_state, "The data for 'url' NFCRecord must be of String type.");
-  }
+bool IsValidURLRecord(const NFCRecord& record) {
+  if (!record.data().V8Value()->IsString())
+    return false;
 
   blink::V8StringResource<> string_resource = record.data().V8Value();
-  if (!string_resource.Prepare() || !KURL(KURL(), string_resource).IsValid()) {
-    return RejectWithDOMException(script_state, kSyntaxError,
-                                  "Cannot parse data for 'url' record.");
-  }
+  if (!string_resource.Prepare())
+    return false;
 
-  return ScriptPromise();
+  return KURL(KURL(), string_resource).IsValid();
 }
 
-ScriptPromise RejectIfInvalidJSONRecord(ScriptState* script_state,
-                                        const NFCRecord& record) {
+bool IsValidJSONRecord(const NFCRecord& record) {
   v8::Local<v8::Value> value = record.data().V8Value();
-  if (!value->IsObject() || value->IsArrayBuffer()) {
-    return RejectWithTypeError(
-        script_state, "The data for 'json' NFCRecord must be of Object type.");
-  }
+  if (!value->IsObject() || value->IsArrayBuffer())
+    return false;
 
-  // If JSON record has media type, it must be equal to "application/json" or
-  // start with "application/" and end with "+json".
-  if (record.hasMediaType() &&
-      (record.mediaType() != kJsonMimeType &&
-       !(record.mediaType().StartsWith(kJsonMimePrefix,
-                                       kTextCaseASCIIInsensitive) &&
-         record.mediaType().EndsWith(kJsonMimePostfix,
-                                     kTextCaseASCIIInsensitive)))) {
-    return RejectWithDOMException(script_state, kSyntaxError,
-                                  "Invalid media type for 'json' record.");
-  }
+  if (record.hasMediaType() && !record.mediaType().StartsWith(
+                                   kJsonMimePrefix, kTextCaseASCIIInsensitive))
+    return false;
 
-  return ScriptPromise();
+  return true;
 }
 
-ScriptPromise RejectIfInvalidOpaqueRecord(ScriptState* script_state,
-                                          const NFCRecord& record) {
-  if (!record.data().V8Value()->IsArrayBuffer()) {
-    return RejectWithTypeError(
-        script_state,
-        "The data for 'opaque' NFCRecord must be of ArrayBuffer type.");
-  }
-
-  return ScriptPromise();
+bool IsValidOpaqueRecord(const NFCRecord& record) {
+  return record.data().V8Value()->IsArrayBuffer();
 }
 
-ScriptPromise RejectIfInvalidNFCRecord(ScriptState* script_state,
-                                       const NFCRecord& record) {
-  device::mojom::blink::NFCRecordType type;
+bool IsValidNFCRecord(const NFCRecord& record) {
+  device::nfc::mojom::blink::NFCRecordType type;
   if (record.hasRecordType()) {
     type = mojo::toNFCRecordType(record.recordType());
   } else {
@@ -455,76 +403,66 @@ ScriptPromise RejectIfInvalidNFCRecord(ScriptState* script_state,
 
     // https://w3c.github.io/web-nfc/#creating-web-nfc-message
     // If NFCRecord.recordType is not set and record type cannot be deduced
-    // from NFCRecord.data, reject promise with TypeError.
-    if (type == device::mojom::blink::NFCRecordType::EMPTY)
-      return RejectWithTypeError(script_state, "Unknown NFCRecord type.");
+    // from NFCRecord.data, reject promise with SyntaxError.
+    if (type == device::nfc::mojom::blink::NFCRecordType::EMPTY)
+      return false;
   }
 
   // Non-empty records must have data.
   if (!record.hasData() &&
-      (type != device::mojom::blink::NFCRecordType::EMPTY)) {
-    return RejectWithTypeError(script_state,
-                               "Nonempty NFCRecord must have data.");
+      (type != device::nfc::mojom::blink::NFCRecordType::EMPTY)) {
+    return false;
   }
 
   switch (type) {
-    case device::mojom::blink::NFCRecordType::TEXT:
-      return RejectIfInvalidTextRecord(script_state, record);
-    case device::mojom::blink::NFCRecordType::URL:
-      return RejectIfInvalidURLRecord(script_state, record);
-    case device::mojom::blink::NFCRecordType::JSON:
-      return RejectIfInvalidJSONRecord(script_state, record);
-    case device::mojom::blink::NFCRecordType::OPAQUE_RECORD:
-      return RejectIfInvalidOpaqueRecord(script_state, record);
-    case device::mojom::blink::NFCRecordType::EMPTY:
-      return ScriptPromise();
+    case device::nfc::mojom::blink::NFCRecordType::TEXT:
+      return IsValidTextRecord(record);
+    case device::nfc::mojom::blink::NFCRecordType::URL:
+      return IsValidURLRecord(record);
+    case device::nfc::mojom::blink::NFCRecordType::JSON:
+      return IsValidJSONRecord(record);
+    case device::nfc::mojom::blink::NFCRecordType::OPAQUE_RECORD:
+      return IsValidOpaqueRecord(record);
+    case device::nfc::mojom::blink::NFCRecordType::EMPTY:
+      return !record.hasData() && record.mediaType().IsEmpty();
   }
 
   NOTREACHED();
-  return RejectWithTypeError(script_state,
-                             "Invalid NFCRecordType was provided.");
+  return false;
 }
 
-ScriptPromise RejectIfInvalidNFCRecordArray(
-    ScriptState* script_state,
-    const HeapVector<NFCRecord>& records) {
+bool IsValidNFCRecordArray(const HeapVector<NFCRecord>& records) {
+  if (records.IsEmpty())
+    return false;
+
   for (const auto& record : records) {
-    ScriptPromise isValidRecord =
-        RejectIfInvalidNFCRecord(script_state, record);
-    if (!isValidRecord.IsEmpty())
-      return isValidRecord;
+    if (!IsValidNFCRecord(record))
+      return false;
   }
 
-  return ScriptPromise();
+  return true;
 }
 
-ScriptPromise RejectIfInvalidNFCPushMessage(
-    ScriptState* script_state,
-    const NFCPushMessage& push_message) {
+bool IsValidNFCPushMessage(const NFCPushMessage& message) {
   // If NFCPushMessage of invalid type, reject promise with TypeError
-  if (!push_message.isNFCMessage() && !push_message.isString() &&
-      !push_message.isArrayBuffer()) {
-    return RejectWithTypeError(script_state,
-                               "Invalid NFCPushMessage type was provided.");
-  }
+  if (!message.isNFCMessage() && !message.isString() &&
+      !message.isArrayBuffer())
+    return false;
 
-  if (push_message.isNFCMessage()) {
+  if (message.isNFCMessage()) {
     // https://w3c.github.io/web-nfc/#the-push-method
     // If NFCMessage.data is empty, reject promise with TypeError
-    const NFCMessage& message = push_message.getAsNFCMessage();
-    if (!message.hasData() || message.data().IsEmpty()) {
-      return RejectWithTypeError(script_state,
-                                 "Empty NFCMessage was provided.");
-    }
+    if (!message.getAsNFCMessage().hasData())
+      return false;
 
-    return RejectIfInvalidNFCRecordArray(script_state, message.data());
+    return IsValidNFCRecordArray(message.getAsNFCMessage().data());
   }
 
-  return ScriptPromise();
+  return true;
 }
 
 bool SetURL(const String& origin,
-            device::mojom::blink::NFCMessagePtr& message) {
+            device::nfc::mojom::blink::NFCMessagePtr& message) {
   KURL origin_url(kParsedURLString, origin);
 
   if (!message->url.IsEmpty() && origin_url.CanSetPathname()) {
@@ -535,17 +473,17 @@ bool SetURL(const String& origin,
   return origin_url.IsValid();
 }
 
-String ToNFCRecordType(const device::mojom::blink::NFCRecordType& type) {
+String ToNFCRecordType(const device::nfc::mojom::blink::NFCRecordType& type) {
   switch (type) {
-    case device::mojom::blink::NFCRecordType::TEXT:
+    case device::nfc::mojom::blink::NFCRecordType::TEXT:
       return "text";
-    case device::mojom::blink::NFCRecordType::URL:
+    case device::nfc::mojom::blink::NFCRecordType::URL:
       return "url";
-    case device::mojom::blink::NFCRecordType::JSON:
+    case device::nfc::mojom::blink::NFCRecordType::JSON:
       return "json";
-    case device::mojom::blink::NFCRecordType::OPAQUE_RECORD:
+    case device::nfc::mojom::blink::NFCRecordType::OPAQUE_RECORD:
       return "opaque";
-    case device::mojom::blink::NFCRecordType::EMPTY:
+    case device::nfc::mojom::blink::NFCRecordType::EMPTY:
       return "empty";
   }
 
@@ -553,12 +491,13 @@ String ToNFCRecordType(const device::mojom::blink::NFCRecordType& type) {
   return String();
 }
 
-v8::Local<v8::Value> ToV8(ScriptState* script_state,
-                          const device::mojom::blink::NFCRecordPtr& record) {
+v8::Local<v8::Value> ToV8(
+    ScriptState* script_state,
+    const device::nfc::mojom::blink::NFCRecordPtr& record) {
   switch (record->record_type) {
-    case device::mojom::blink::NFCRecordType::TEXT:
-    case device::mojom::blink::NFCRecordType::URL:
-    case device::mojom::blink::NFCRecordType::JSON: {
+    case device::nfc::mojom::blink::NFCRecordType::TEXT:
+    case device::nfc::mojom::blink::NFCRecordType::URL:
+    case device::nfc::mojom::blink::NFCRecordType::JSON: {
       String string_data;
       if (!record->data.IsEmpty()) {
         string_data = String::FromUTF8WithLatin1Fallback(
@@ -570,7 +509,8 @@ v8::Local<v8::Value> ToV8(ScriptState* script_state,
       v8::Local<v8::String> string = V8String(isolate, string_data);
 
       // Stringified JSON must be converted back to an Object.
-      if (record->record_type == device::mojom::blink::NFCRecordType::JSON) {
+      if (record->record_type ==
+          device::nfc::mojom::blink::NFCRecordType::JSON) {
         v8::Local<v8::Value> json_object;
         v8::TryCatch try_catch(isolate);
         if (!v8::JSON::Parse(isolate, string).ToLocal(&json_object)) {
@@ -583,7 +523,7 @@ v8::Local<v8::Value> ToV8(ScriptState* script_state,
       return string;
     }
 
-    case device::mojom::blink::NFCRecordType::OPAQUE_RECORD: {
+    case device::nfc::mojom::blink::NFCRecordType::OPAQUE_RECORD: {
       if (!record->data.IsEmpty()) {
         DOMArrayBuffer* buffer = DOMArrayBuffer::Create(
             static_cast<void*>(&record->data.front()), record->data.size());
@@ -594,7 +534,7 @@ v8::Local<v8::Value> ToV8(ScriptState* script_state,
       return v8::Null(script_state->GetIsolate());
     }
 
-    case device::mojom::blink::NFCRecordType::EMPTY:
+    case device::nfc::mojom::blink::NFCRecordType::EMPTY:
       return v8::Null(script_state->GetIsolate());
   }
 
@@ -603,7 +543,7 @@ v8::Local<v8::Value> ToV8(ScriptState* script_state,
 }
 
 NFCRecord ToNFCRecord(ScriptState* script_state,
-                      const device::mojom::blink::NFCRecordPtr& record) {
+                      const device::nfc::mojom::blink::NFCRecordPtr& record) {
   NFCRecord nfc_record;
   nfc_record.setMediaType(record->media_type);
   nfc_record.setRecordType(ToNFCRecordType(record->record_type));
@@ -611,8 +551,9 @@ NFCRecord ToNFCRecord(ScriptState* script_state,
   return nfc_record;
 }
 
-NFCMessage ToNFCMessage(ScriptState* script_state,
-                        const device::mojom::blink::NFCMessagePtr& message) {
+NFCMessage ToNFCMessage(
+    ScriptState* script_state,
+    const device::nfc::mojom::blink::NFCMessagePtr& message) {
   NFCMessage nfc_message;
   nfc_message.setURL(message->url);
   blink::HeapVector<NFCRecord> records;
@@ -622,7 +563,8 @@ NFCMessage ToNFCMessage(ScriptState* script_state,
   return nfc_message;
 }
 
-size_t GetNFCMessageSize(const device::mojom::blink::NFCMessagePtr& message) {
+size_t GetNFCMessageSize(
+    const device::nfc::mojom::blink::NFCMessagePtr& message) {
   size_t message_size = message->url.CharactersSizeInBytes();
   for (size_t i = 0; i < message->data.size(); ++i) {
     message_size += message->data[i]->media_type.CharactersSizeInBytes();
@@ -679,37 +621,41 @@ ScriptPromise NFC::push(ScriptState* script_state,
   if (!promise.IsEmpty())
     return promise;
 
-  ScriptPromise isValidMessage =
-      RejectIfInvalidNFCPushMessage(script_state, push_message);
-  if (!isValidMessage.IsEmpty())
-    return isValidMessage;
+  if (!IsValidNFCPushMessage(push_message)) {
+    return ScriptPromise::Reject(
+        script_state, V8ThrowException::CreateTypeError(
+                          script_state->GetIsolate(),
+                          "Invalid NFCPushMessage type was provided."));
+  }
 
   // https://w3c.github.io/web-nfc/#dom-nfc-push
   // 9. If timeout value is NaN or negative, reject promise with "TypeError"
   // and abort these steps.
   if (options.hasTimeout() &&
       (std::isnan(options.timeout()) || options.timeout() < 0)) {
-    return RejectWithTypeError(
-        script_state, "Invalid NFCPushOptions.timeout value was provided.");
+    return ScriptPromise::Reject(
+        script_state,
+        V8ThrowException::CreateTypeError(
+            script_state->GetIsolate(),
+            "Invalid NFCPushOptions.timeout value was provided."));
   }
 
-  device::mojom::blink::NFCMessagePtr message =
-      device::mojom::blink::NFCMessage::From(push_message);
-  if (!message) {
-    return RejectWithDOMException(script_state, kSyntaxError,
-                                  "Cannot convert NFCMessage.");
-  }
+  device::nfc::mojom::blink::NFCMessagePtr message =
+      device::nfc::mojom::blink::NFCMessage::From(push_message);
+  if (!message)
+    return ScriptPromise::RejectWithDOMException(
+        script_state, DOMException::Create(kSyntaxError));
 
   if (!SetURL(
           ExecutionContext::From(script_state)->GetSecurityOrigin()->ToString(),
-          message)) {
-    return RejectWithDOMException(script_state, kSyntaxError,
-                                  "Cannot set WebNFC Id.");
-  }
+          message))
+    return ScriptPromise::RejectWithDOMException(
+        script_state, DOMException::Create(kSyntaxError));
 
-  if (GetNFCMessageSize(message) > device::mojom::blink::NFCMessage::kMaxSize) {
-    return RejectWithDOMException(script_state, kNotSupportedError,
-                                  "NFCMessage exceeds maximum supported size.");
+  if (GetNFCMessageSize(message) >
+      device::nfc::mojom::blink::NFCMessage::kMaxSize) {
+    return ScriptPromise::RejectWithDOMException(
+        script_state, DOMException::Create(kNotSupportedError));
   }
 
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
@@ -718,7 +664,8 @@ ScriptPromise NFC::push(ScriptState* script_state,
                                                   WrapPersistent(this),
                                                   WrapPersistent(resolver)));
   nfc_->Push(std::move(message),
-             device::mojom::blink::NFCPushOptions::From(options), callback);
+             device::nfc::mojom::blink::NFCPushOptions::From(options),
+             callback);
 
   return resolver->Promise();
 }
@@ -754,7 +701,7 @@ ScriptPromise NFC::watch(ScriptState* script_state,
   auto watch_callback = ConvertToBaseCallback(
       WTF::Bind(&NFC::OnWatchRegistered, WrapPersistent(this),
                 WrapPersistent(callback), WrapPersistent(resolver)));
-  nfc_->Watch(device::mojom::blink::NFCWatchOptions::From(options),
+  nfc_->Watch(device::nfc::mojom::blink::NFCWatchOptions::From(options),
               watch_callback);
   return resolver->Promise();
 }
@@ -768,8 +715,8 @@ ScriptPromise NFC::cancelWatch(ScriptState* script_state, long id) {
   if (id) {
     callbacks_.erase(id);
   } else {
-    return RejectWithDOMException(script_state, kNotFoundError,
-                                  "Provided watch id cannot be found.");
+    return ScriptPromise::RejectWithDOMException(
+        script_state, DOMException::Create(kNotFoundError));
   }
 
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
@@ -810,7 +757,7 @@ void NFC::PageVisibilityChanged() {
 }
 
 void NFC::OnRequestCompleted(ScriptPromiseResolver* resolver,
-                             device::mojom::blink::NFCErrorPtr error) {
+                             device::nfc::mojom::blink::NFCErrorPtr error) {
   if (!requests_.Contains(resolver))
     return;
 
@@ -829,13 +776,13 @@ void NFC::OnConnectionError() {
   // disabled, reject promise with NotSupportedError exception.
   for (ScriptPromiseResolver* resolver : requests_)
     resolver->Reject(NFCError::Take(
-        resolver, device::mojom::blink::NFCErrorType::NOT_SUPPORTED));
+        resolver, device::nfc::mojom::blink::NFCErrorType::NOT_SUPPORTED));
 
   requests_.clear();
 }
 
-void NFC::OnWatch(const Vector<uint32_t>& ids,
-                  device::mojom::blink::NFCMessagePtr message) {
+void NFC::OnWatch(const WTF::Vector<uint32_t>& ids,
+                  device::nfc::mojom::blink::NFCMessagePtr message) {
   for (const auto& id : ids) {
     auto it = callbacks_.find(id);
     if (it != callbacks_.end()) {
@@ -870,12 +817,13 @@ ScriptPromise NFC::RejectIfNotSupported(ScriptState* script_state) {
   String error_message;
   if (!IsSupportedInContext(ExecutionContext::From(script_state),
                             error_message)) {
-    return RejectWithDOMException(script_state, kSecurityError, error_message);
+    return ScriptPromise::RejectWithDOMException(
+        script_state, DOMException::Create(kSecurityError, error_message));
   }
 
   if (!nfc_) {
-    return RejectWithDOMException(script_state, kNotSupportedError,
-                                  "WebNFC is not supported.");
+    return ScriptPromise::RejectWithDOMException(
+        script_state, DOMException::Create(kNotSupportedError));
   }
 
   return ScriptPromise();
@@ -884,7 +832,7 @@ ScriptPromise NFC::RejectIfNotSupported(ScriptState* script_state) {
 void NFC::OnWatchRegistered(MessageCallback* callback,
                             ScriptPromiseResolver* resolver,
                             uint32_t id,
-                            device::mojom::blink::NFCErrorPtr error) {
+                            device::nfc::mojom::blink::NFCErrorPtr error) {
   requests_.erase(resolver);
 
   // Invalid id was returned.
@@ -893,7 +841,7 @@ void NFC::OnWatchRegistered(MessageCallback* callback,
   // and abort these steps.
   if (!id) {
     resolver->Reject(NFCError::Take(
-        resolver, device::mojom::blink::NFCErrorType::NOT_SUPPORTED));
+        resolver, device::nfc::mojom::blink::NFCErrorType::NOT_SUPPORTED));
     return;
   }
 

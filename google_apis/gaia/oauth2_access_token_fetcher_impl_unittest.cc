@@ -18,7 +18,6 @@
 #include "google_apis/gaia/oauth2_access_token_consumer.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_status_code.h"
-#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_fetcher_delegate.h"
@@ -66,22 +65,19 @@ class MockUrlFetcherFactory : public ScopedURLFetcherFactory,
   MockUrlFetcherFactory() : ScopedURLFetcherFactory(this) {}
   virtual ~MockUrlFetcherFactory() {}
 
-  MOCK_METHOD5(
-      CreateURLFetcherMock,
-      URLFetcher*(int id,
-                  const GURL& url,
-                  URLFetcher::RequestType request_type,
-                  URLFetcherDelegate* d,
-                  net::NetworkTrafficAnnotationTag traffic_annotation));
+  MOCK_METHOD4(CreateURLFetcherMock,
+               URLFetcher*(int id,
+                           const GURL& url,
+                           URLFetcher::RequestType request_type,
+                           URLFetcherDelegate* d));
 
   std::unique_ptr<URLFetcher> CreateURLFetcher(
       int id,
       const GURL& url,
       URLFetcher::RequestType request_type,
-      URLFetcherDelegate* d,
-      net::NetworkTrafficAnnotationTag traffic_annotation) override {
+      URLFetcherDelegate* d) override {
     return std::unique_ptr<URLFetcher>(
-        CreateURLFetcherMock(id, url, request_type, d, traffic_annotation));
+        CreateURLFetcherMock(id, url, request_type, d));
   }
 };
 
@@ -123,7 +119,7 @@ class OAuth2AccessTokenFetcherImplTest : public testing::Test {
     if (!body.empty())
       url_fetcher->SetResponseString(body);
 
-    EXPECT_CALL(factory_, CreateURLFetcherMock(_, url, _, _, _))
+    EXPECT_CALL(factory_, CreateURLFetcherMock(_, url, _, _))
         .WillOnce(Return(url_fetcher));
     return url_fetcher;
   }

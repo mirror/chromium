@@ -647,12 +647,10 @@ void GLRenderingVDAClient::CreateAndStartDecoder() {
   LOG_ASSERT(decoder_deleted());
   LOG_ASSERT(!decoder_.get());
 
-  VideoDecodeAccelerator::Config config(profile_);
-
   if (fake_decoder_) {
     decoder_.reset(new FakeVideoDecodeAccelerator(
         frame_size_, base::Bind(&DoNothingReturnTrue)));
-    LOG_ASSERT(decoder_->Initialize(config, this));
+    LOG_ASSERT(decoder_->Initialize(profile_, this));
   } else {
     if (!vda_factory_) {
       vda_factory_ = GpuVideoDecodeAcceleratorFactory::Create(
@@ -662,6 +660,7 @@ void GLRenderingVDAClient::CreateAndStartDecoder() {
       LOG_ASSERT(vda_factory_);
     }
 
+    VideoDecodeAccelerator::Config config(profile_);
     if (g_test_import) {
       config.output_mode = VideoDecodeAccelerator::Config::OutputMode::IMPORT;
     }

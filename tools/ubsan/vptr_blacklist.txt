@@ -15,7 +15,6 @@ fun:*LifecycleNotifier*addObserver*
 fun:*LifecycleNotifier*removeObserver*
 fun:*toWebInputElement*
 type:*base*MessageLoopForIO*
-type:*base*MessageLoopForUI*
 type:*BlockRefType*
 type:*SkAutoTUnref*
 type:*WDResult*
@@ -49,7 +48,7 @@ fun:*content*RenderViewObserverTracker*RenderView*
 fun:*DatabaseContext*contextDestroyed*
 
 # FIXME: Cannot handle template function LifecycleObserver<>::setContext,
-# so exclude source file for now.
+# so exclude source file for now. 
 src:*LifecycleObserver.h*
 
 #############################################################################

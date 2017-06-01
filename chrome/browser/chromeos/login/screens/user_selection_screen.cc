@@ -151,9 +151,15 @@ bool ShouldCheckNeedDircryptoMigration() {
 
 // Returns true if the user can run ARC based on the user type.
 bool IsUserAllowedForARC(const AccountId& account_id) {
-  return user_manager::UserManager::IsInitialized() &&
-         arc::IsArcAllowedForUser(
-             user_manager::UserManager::Get()->FindUser(account_id));
+  if (!user_manager::UserManager::IsInitialized())
+    return false;
+
+  const user_manager::User* user =
+      user_manager::UserManager::Get()->FindUser(account_id);
+  if (!user)
+    return false;
+
+  return user->HasGaiaAccount() || user->IsActiveDirectoryUser();
 }
 
 }  // namespace
@@ -399,8 +405,10 @@ void UserSelectionScreen::SetView(UserBoardView* view) {
   view_ = view;
 }
 
-void UserSelectionScreen::Init(const user_manager::UserList& users) {
+void UserSelectionScreen::Init(const user_manager::UserList& users,
+                               bool show_guest) {
   users_ = users;
+  show_guest_ = show_guest;
 
   ui::UserActivityDetector* activity_detector = ui::UserActivityDetector::Get();
   if (activity_detector && !activity_detector->HasObserver(this))
@@ -538,7 +546,7 @@ void UserSelectionScreen::SendUserList() {
     users_list.Append(std::move(user_dict));
   }
 
-  handler_->LoadUsers(users_to_send, users_list);
+  handler_->LoadUsers(users_list, show_guest_);
 }
 
 void UserSelectionScreen::HandleGetUsers() {

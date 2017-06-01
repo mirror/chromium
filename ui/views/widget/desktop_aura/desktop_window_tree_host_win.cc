@@ -113,7 +113,7 @@ void DesktopWindowTreeHostWin::Init(aura::Window* content_window,
   content_window_ = content_window;
   wants_mouse_events_when_inactive_ = params.wants_mouse_events_when_inactive;
 
-  wm::SetAnimationHost(content_window_, this);
+  aura::client::SetAnimationHost(content_window_, this);
 
   ConfigureWindowStyles(message_handler_.get(), params,
                         GetWidget()->widget_delegate(),
@@ -153,10 +153,10 @@ void DesktopWindowTreeHostWin::OnNativeWidgetCreated(
   window()->SetProperty(kDesktopWindowTreeHostKey, this);
 
   should_animate_window_close_ =
-      content_window_->type() != aura::client::WINDOW_TYPE_NORMAL &&
+      content_window_->type() != ui::wm::WINDOW_TYPE_NORMAL &&
       !wm::WindowAnimationsDisabled(content_window_);
 
-  // TODO this is not invoked *after* Init(), but should be ok.
+// TODO this is not invoked *after* Init(), but should be ok.
   SetWindowTransparency();
 }
 
@@ -581,7 +581,7 @@ void DesktopWindowTreeHostWin::MoveCursorToScreenLocationInPixels(
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// DesktopWindowTreeHostWin, wm::AnimationHost implementation:
+// DesktopWindowTreeHostWin, aura::AnimationHost implementation:
 
 void DesktopWindowTreeHostWin::SetHostTransitionOffsets(
     const gfx::Vector2d& top_left_delta,
@@ -901,7 +901,8 @@ bool DesktopWindowTreeHostWin::HandleTooltipNotify(int w_param,
 
 void DesktopWindowTreeHostWin::HandleMenuLoop(bool in_menu_loop) {
   if (in_menu_loop) {
-    tooltip_disabler_.reset(new wm::ScopedTooltipDisabler(window()));
+    tooltip_disabler_.reset(
+        new aura::client::ScopedTooltipDisabler(window()));
   } else {
     tooltip_disabler_.reset();
   }

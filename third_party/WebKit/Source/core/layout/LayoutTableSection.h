@@ -204,6 +204,17 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
   void AppendEffectiveColumn(unsigned pos);
   void SplitEffectiveColumn(unsigned pos, unsigned first);
 
+  enum BlockBorderSide { kBorderBefore, kBorderAfter };
+  int CalcBlockDirectionOuterBorder(BlockBorderSide) const;
+  enum InlineBorderSide { kBorderStart, kBorderEnd };
+  int CalcInlineDirectionOuterBorder(InlineBorderSide) const;
+  void RecalcOuterBorder();
+
+  int OuterBorderBefore() const { return outer_border_before_; }
+  int OuterBorderAfter() const { return outer_border_after_; }
+  int OuterBorderStart() const { return outer_border_start_; }
+  int OuterBorderEnd() const { return outer_border_end_; }
+
   unsigned NumRows() const {
     DCHECK(!NeedsCellRecalc());
     return grid_.size();
@@ -284,17 +295,13 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
       TransformState&,
       VisualRectFlags = kDefaultVisualRectFlags) const override;
 
-  bool IsRepeatingHeaderGroup() const { return is_repeating_header_group_; };
+  bool IsRepeatingHeaderGroup() const;
 
   void UpdateLayout() override;
 
   CellSpan FullSectionRowSpan() const { return CellSpan(0, grid_.size()); }
   CellSpan FullTableEffectiveColumnSpan() const {
     return CellSpan(0, Table()->NumEffectiveColumns());
-  }
-
-  void DetermineIfHeaderGroupShouldRepeat() {
-    is_repeating_header_group_ = HeaderGroupShouldRepeat();
   }
 
  protected:
@@ -386,8 +393,6 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
 
   bool PaintedOutputOfObjectHasNoEffectRegardlessOfSize() const override;
 
-  bool HeaderGroupShouldRepeat() const;
-
   struct TableGridRow {
     DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
@@ -428,6 +433,11 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
   unsigned c_col_;
   unsigned c_row_;
 
+  int outer_border_start_;
+  int outer_border_end_;
+  int outer_border_before_;
+  int outer_border_after_;
+
   bool needs_cell_recalc_;
 
   // This HashSet holds the overflowing cells for the partial paint path. If we
@@ -445,9 +455,6 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
 
   // Whether any cell spans multiple rows or cols.
   bool has_spanning_cells_;
-
-  // Header group should be painted on every page.
-  bool is_repeating_header_group_;
 };
 
 DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutTableSection, IsTableSection());

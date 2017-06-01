@@ -1,20 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <title>
-      Test Constructor: DynamicsCompressor
-    </title>
+    <title>Test Constructor: DynamicsCompressor</title>
     <script src="../../resources/testharness.js"></script>
     <script src="../../resources/testharnessreport.js"></script>
     <script src="../resources/audit-util.js"></script>
     <script src="../resources/audit.js"></script>
     <script src="audionodeoptions.js"></script>
   </head>
-  <body>
-    <script id="layout-test-code">
-      let context;
 
-      let audit = Audit.createTaskRunner();
+  <body>
+    <script>
+      var context;
+
+      var audit = Audit.createTaskRunner();
 
       audit.define('initialize', (task, should) => {
         context = initializeContext(should);
@@ -54,8 +53,8 @@
       });
 
       audit.define('constructor with options', (task, should) => {
-        let node;
-        let options =
+        var node;
+        var options =
             {threshold: -33, knee: 15, ratio: 7, attack: 0.625, release: 0.125};
 
         should(

@@ -7,7 +7,7 @@
 /**
  * Creates a new OpenPDFParamsParser. This parses the open pdf parameters
  * passed in the url to set initial viewport settings for opening the pdf.
- * @param {!Function} getNamedDestinationsFunction The function called to fetch
+ * @param {Object} getNamedDestinationsFunction The function called to fetch
  *     the page number for a named destination.
  * @constructor
  */

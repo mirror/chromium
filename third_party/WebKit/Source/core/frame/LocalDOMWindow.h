@@ -146,7 +146,7 @@ class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
   double pageXOffset() const { return scrollX(); }
   double pageYOffset() const { return scrollY(); }
 
-  DOMVisualViewport* view();
+  DOMVisualViewport* visualViewport();
 
   const AtomicString& name() const;
   void setName(const AtomicString&);
@@ -264,6 +264,9 @@ class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
 
   unsigned PendingUnloadEventListeners() const;
 
+  bool AllowPopUp();  // Call on first window, not target window.
+  static bool AllowPopUp(LocalFrame& first_frame);
+
   Element* frameElement() const;
 
   DOMWindow* open(const String& url_string,
@@ -344,7 +347,7 @@ class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
   void ClearDocument();
 
   Member<Document> document_;
-  Member<DOMVisualViewport> view_;
+  Member<DOMVisualViewport> visual_viewport_;
   TaskRunnerTimer<LocalDOMWindow> unused_preloads_timer_;
 
   bool should_print_when_finished_loading_;

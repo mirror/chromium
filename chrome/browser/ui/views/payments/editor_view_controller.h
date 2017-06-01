@@ -48,8 +48,7 @@ struct EditorField {
     TEXTFIELD,
     TEXTFIELD_NUMBER,
     COMBOBOX,
-    CUSTOMFIELD,
-    READONLY_LABEL
+    CUSTOMFIELD
   };
 
   EditorField(autofill::ServerFieldType type,

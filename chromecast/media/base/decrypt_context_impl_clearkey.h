@@ -29,7 +29,7 @@ class DecryptContextImplClearKey : public DecryptContextImpl {
   void DecryptAsync(CastDecoderBuffer* buffer,
                     uint8_t* output,
                     size_t data_offset,
-                    DecryptCB decrypt_cb) override;
+                    const DecryptCB& decrypt_cb) override;
 
   bool CanDecryptToBuffer() const override;
 

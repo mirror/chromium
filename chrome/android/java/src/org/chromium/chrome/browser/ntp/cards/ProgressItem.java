@@ -23,9 +23,4 @@ class ProgressItem extends OptionalLeaf {
         assert holder instanceof ProgressViewHolder;
         ((ProgressViewHolder) holder).onBindViewHolder(this);
     }
-
-    @Override
-    protected void visitOptionalItem(NodeVisitor visitor) {
-        visitor.visitProgressItem();
-    }
 }

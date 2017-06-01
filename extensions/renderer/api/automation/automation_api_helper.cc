@@ -58,7 +58,7 @@ void AutomationApiHelper::OnQuerySelector(int request_id,
   blink::WebNode start_node = document;
   if (acc_obj_id > 0) {
     blink::WebAXObject start_acc_obj =
-        blink::WebAXObject::FromWebDocumentByID(document, acc_obj_id);
+        document.AccessibilityObjectFromID(acc_obj_id);
     if (start_acc_obj.IsNull()) {
       error.value =
           ExtensionHostMsg_AutomationQuerySelector_Error::kNodeDestroyed;
@@ -77,7 +77,7 @@ void AutomationApiHelper::OnQuerySelector(int request_id,
   blink::WebElement result_element = start_node.QuerySelector(web_selector);
   int result_acc_obj_id = 0;
   if (!result_element.IsNull()) {
-    auto result_acc_obj = blink::WebAXObject::FromWebNode(result_element);
+    blink::WebAXObject result_acc_obj = result_element.AccessibilityObject();
     if (!result_acc_obj.IsDetached()) {
       while (result_acc_obj.AccessibilityIsIgnored())
         result_acc_obj = result_acc_obj.ParentObject();

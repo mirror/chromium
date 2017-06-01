@@ -56,7 +56,6 @@ QuicHttpStream::QuicHttpStream(
       has_response_status_(false),
       response_status_(ERR_UNEXPECTED),
       response_headers_received_(false),
-      trailing_headers_received_(false),
       headers_bytes_received_(0),
       headers_bytes_sent_(0),
       closed_stream_received_bytes_(0),
@@ -358,20 +357,14 @@ int QuicHttpStream::ReadResponseBody(IOBuffer* buf,
   if (!stream_)
     return GetResponseStatus();
 
-  int rv = stream_->ReadBody(buf, buf_len,
-                             base::Bind(&QuicHttpStream::OnReadBodyComplete,
-                                        weak_factory_.GetWeakPtr()));
-  if (rv == ERR_IO_PENDING) {
-    callback_ = callback;
-    user_buffer_ = buf;
-    user_buffer_len_ = buf_len;
-    return ERR_IO_PENDING;
-  }
-
-  if (rv < 0)
+  int rv = ReadAvailableData(buf, buf_len);
+  if (rv != ERR_IO_PENDING)
     return rv;
 
-  return HandleReadComplete(rv);
+  callback_ = callback;
+  user_buffer_ = buf;
+  user_buffer_len_ = buf_len;
+  return ERR_IO_PENDING;
 }
 
 void QuicHttpStream::Close(bool /*not_reusable*/) {
@@ -465,23 +458,10 @@ void QuicHttpStream::OnReadResponseHeadersComplete(int rv) {
   }
 }
 
-void QuicHttpStream::ReadTrailingHeaders() {
-  if (!stream_)
-    return;
-
-  int rv = stream_->ReadTrailingHeaders(
-      &trailing_header_block_,
-      base::Bind(&QuicHttpStream::OnReadTrailingHeadersComplete,
-                 weak_factory_.GetWeakPtr()));
-
-  if (rv != ERR_IO_PENDING)
-    OnReadTrailingHeadersComplete(rv);
-}
-
-void QuicHttpStream::OnReadTrailingHeadersComplete(int rv) {
+void QuicHttpStream::OnTrailingHeadersAvailable(const SpdyHeaderBlock& headers,
+                                                size_t frame_len) {
   DCHECK(response_headers_received_);
-  if (rv > 0)
-    headers_bytes_received_ += rv;
+  headers_bytes_received_ += frame_len;
 
   // QuicHttpStream ignores trailers.
   if (stream_->IsDoneReading()) {
@@ -490,6 +470,26 @@ void QuicHttpStream::OnReadTrailingHeadersComplete(int rv) {
     stream_->OnFinRead();
     SetResponseStatus(OK);
   }
+}
+
+void QuicHttpStream::OnDataAvailable() {
+  if (callback_.is_null()) {
+    // Data is available, but can't be delivered
+    return;
+  }
+
+  CHECK(user_buffer_.get());
+  CHECK_NE(0, user_buffer_len_);
+  int rv = ReadAvailableData(user_buffer_.get(), user_buffer_len_);
+  if (rv == ERR_IO_PENDING) {
+    // This was a spurrious notification. Wait for the next one.
+    return;
+  }
+
+  CHECK(!callback_.is_null());
+  user_buffer_ = nullptr;
+  user_buffer_len_ = 0;
+  DoCallback(rv);
 }
 
 void QuicHttpStream::OnClose() {
@@ -765,23 +765,18 @@ int QuicHttpStream::ProcessResponseHeaders(const SpdyHeaderBlock& headers) {
   // Populate |connect_timing_| when response headers are received. This should
   // take care of 0-RTT where request is sent before handshake is confirmed.
   connect_timing_ = quic_session()->GetConnectTiming();
-
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(&QuicHttpStream::ReadTrailingHeaders,
-                            weak_factory_.GetWeakPtr()));
-
   return OK;
 }
 
-void QuicHttpStream::OnReadBodyComplete(int rv) {
-  CHECK(callback_);
-  user_buffer_ = nullptr;
-  user_buffer_len_ = 0;
-  rv = HandleReadComplete(rv);
-  DoCallback(rv);
-}
-
-int QuicHttpStream::HandleReadComplete(int rv) {
+int QuicHttpStream::ReadAvailableData(IOBuffer* buf, int buf_len) {
+  int rv = stream_->Read(buf, buf_len);
+  // TODO(rtenneti): Temporary fix for crbug.com/585591. Added a check for null
+  // |stream_| to fix crash bug. Delete |stream_| check and histogram after fix
+  // is merged.
+  bool null_stream = stream_ == nullptr;
+  UMA_HISTOGRAM_BOOLEAN("Net.QuicReadAvailableData.NullStream", null_stream);
+  if (null_stream)
+    return rv;
   if (stream_->IsDoneReading()) {
     stream_->ClearDelegate();
     stream_->OnFinRead();
@@ -796,12 +791,6 @@ void QuicHttpStream::ResetStream() {
     push_handle_->Cancel();
     push_handle_ = nullptr;
   }
-
-  // If |request_body_stream_| is non-NULL, Reset it, to abort any in progress
-  // read.
-  if (request_body_stream_)
-    request_body_stream_->Reset();
-
   if (!stream_)
     return;
   DCHECK_LE(stream_->NumBytesConsumed(), stream_->stream_bytes_read());
@@ -811,6 +800,11 @@ void QuicHttpStream::ResetStream() {
   closed_is_first_stream_ = stream_->IsFirstStream();
   stream_->ClearDelegate();
   stream_ = nullptr;
+
+  // If |request_body_stream_| is non-NULL, Reset it, to abort any in progress
+  // read.
+  if (request_body_stream_)
+    request_body_stream_->Reset();
 }
 
 int QuicHttpStream::GetResponseStatus() {

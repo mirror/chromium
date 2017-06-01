@@ -185,6 +185,23 @@ TriView* TrayPopupUtils::CreateSubHeaderRowView(bool start_visible) {
   return tri_view;
 }
 
+views::View* TrayPopupUtils::CreateInfoLabelRowView(int message_id) {
+  views::Label* label = TrayPopupUtils::CreateDefaultLabel();
+  label->SetText(l10n_util::GetStringUTF16(message_id));
+  TrayPopupItemStyle style(TrayPopupItemStyle::FontStyle::SYSTEM_INFO);
+  style.SetupLabel(label);
+
+  TriView* tri_view = CreateMultiTargetRowView();
+  tri_view->SetInsets(
+      gfx::Insets(0, kMenuExtraMarginFromLeftEdge + kTrayPopupPaddingHorizontal,
+                  0, kTrayPopupPaddingHorizontal));
+  tri_view->SetContainerVisible(TriView::Container::START, false);
+  tri_view->SetContainerVisible(TriView::Container::END, false);
+  tri_view->AddView(TriView::Container::CENTER, label);
+
+  return tri_view;
+}
+
 TriView* TrayPopupUtils::CreateMultiTargetRowView() {
   TriView* tri_view = new TriView(0 /* padding_between_items */);
 
@@ -217,14 +234,14 @@ views::Label* TrayPopupUtils::CreateDefaultLabel() {
 
 views::ImageView* TrayPopupUtils::CreateMainImageView() {
   auto* image = new views::ImageView;
-  image->SetPreferredSize(
+  image->set_preferred_size(
       gfx::Size(kTrayPopupItemMinStartWidth, kTrayPopupItemMinHeight));
   return image;
 }
 
 views::ImageView* TrayPopupUtils::CreateMoreImageView() {
   auto* image = new views::ImageView;
-  image->SetPreferredSize(gfx::Size(gfx::Size(kMenuIconSize, kMenuIconSize)));
+  image->set_preferred_size(gfx::Size(gfx::Size(kMenuIconSize, kMenuIconSize)));
   image->EnableCanvasFlippingForRTLUI(true);
   image->SetImage(
       gfx::CreateVectorIcon(kSystemMenuArrowRightIcon, kMenuIconColor));
@@ -258,7 +275,10 @@ std::unique_ptr<views::Painter> TrayPopupUtils::CreateFocusPainter() {
 }
 
 void TrayPopupUtils::ConfigureTrayPopupButton(views::CustomButton* button) {
-  button->SetFocusPainter(TrayPopupUtils::CreateFocusPainter());
+  // All buttons that call into here want this focus painter, but
+  // SetFocusPainter is defined separately on derived classes and isn't part of
+  // CustomButton. TODO(estade): Address this.
+  // button->SetFocusPainter(TrayPopupUtils::CreateFocusPainter());
   button->SetFocusForPlatform();
 
   button->SetInkDropMode(views::InkDropHostView::InkDropMode::ON);

@@ -81,11 +81,23 @@ bool InitializeStaticGLXInternal() {
   return true;
 }
 
-bool InitializeStaticEGLInternal(GLImplementation implementation) {
+bool InitializeStaticEGLInternal() {
   base::FilePath glesv2_path(kGLESv2LibraryName);
   base::FilePath egl_path(kEGLLibraryName);
 
-  if (implementation == kGLImplementationSwiftShaderGL) {
+  const base::CommandLine* command_line =
+      base::CommandLine::ForCurrentProcess();
+  const std::string use_gl =
+      command_line->GetSwitchValueASCII(switches::kUseGL);
+  if (use_gl == kGLImplementationANGLEName) {
+    base::FilePath module_path;
+    if (!PathService::Get(base::DIR_MODULE, &module_path))
+      return false;
+
+    glesv2_path = module_path.Append(kGLESv2ANGLELibraryName);
+    egl_path = module_path.Append(kEGLANGLELibraryName);
+  } else if ((use_gl == kGLImplementationSwiftShaderName) ||
+             (use_gl == kGLImplementationSwiftShaderForWebGLName)) {
 #if BUILDFLAG(ENABLE_SWIFTSHADER)
     base::FilePath module_path;
     if (!PathService::Get(base::DIR_MODULE, &module_path))
@@ -97,13 +109,6 @@ bool InitializeStaticEGLInternal(GLImplementation implementation) {
 #else
     return false;
 #endif
-  } else {
-    base::FilePath module_path;
-    if (!PathService::Get(base::DIR_MODULE, &module_path))
-      return false;
-
-    glesv2_path = module_path.Append(kGLESv2ANGLELibraryName);
-    egl_path = module_path.Append(kEGLANGLELibraryName);
   }
 
   base::NativeLibrary gles_library = LoadLibraryAndPrintError(glesv2_path);
@@ -189,7 +194,7 @@ bool InitializeStaticGLBindings(GLImplementation implementation) {
       return InitializeStaticGLXInternal();
     case kGLImplementationSwiftShaderGL:
     case kGLImplementationEGLGLES2:
-      return InitializeStaticEGLInternal(implementation);
+      return InitializeStaticEGLInternal();
     case kGLImplementationMockGL:
     case kGLImplementationStubGL:
       SetGLImplementation(implementation);

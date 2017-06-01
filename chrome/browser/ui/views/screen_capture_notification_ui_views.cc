@@ -90,7 +90,7 @@ class ScreenCaptureNotificationUIViews
   gfx::NativeViewId OnStarted(const base::Closure& stop_callback) override;
 
   // views::View overrides.
-  gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetPreferredSize() const override;
   void Layout() override;
 
   // views::WidgetDelegateView overrides.
@@ -219,7 +219,7 @@ gfx::NativeViewId ScreenCaptureNotificationUIViews::OnStarted(
 #endif
 }
 
-gfx::Size ScreenCaptureNotificationUIViews::CalculatePreferredSize() const {
+gfx::Size ScreenCaptureNotificationUIViews::GetPreferredSize() const {
   gfx::Size grip_size = gripper_->GetPreferredSize();
   gfx::Size label_size = label_->GetPreferredSize();
   gfx::Size stop_button_size = stop_button_->GetPreferredSize();

@@ -12,7 +12,7 @@
 #include "ui/views/controls/label.h"
 #include "ui/views/view.h"
 
-class DesktopIOSPromotionBubbleController;
+class DesktopIOSPromotionController;
 class Profile;
 
 // The DesktopIOSPromotionBubbleView has the basic layout for the
@@ -28,6 +28,9 @@ class DesktopIOSPromotionBubbleView : public DesktopIOSPromotionView,
       desktop_ios_promotion::PromotionEntryPoint entry_point);
   ~DesktopIOSPromotionBubbleView() override;
 
+  // Update Bubble Height to fit the content.
+  void UpdateBubbleHeight();
+
   // DesktopIOSPromotionView:
   void UpdateRecoveryPhoneLabel() override;
 
@@ -39,7 +42,7 @@ class DesktopIOSPromotionBubbleView : public DesktopIOSPromotionView,
   views::Button* no_button_ = nullptr;
   // The text that will appear on the promotion body.
   views::Label* promotion_text_label_;
-  std::unique_ptr<DesktopIOSPromotionBubbleController> promotion_controller_;
+  std::unique_ptr<DesktopIOSPromotionController> promotion_controller_;
 
   DISALLOW_COPY_AND_ASSIGN(DesktopIOSPromotionBubbleView);
 };

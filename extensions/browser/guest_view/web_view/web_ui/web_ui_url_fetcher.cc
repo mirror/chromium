@@ -15,12 +15,12 @@ WebUIURLFetcher::WebUIURLFetcher(content::BrowserContext* context,
                                  int render_process_id,
                                  int render_frame_id,
                                  const GURL& url,
-                                 WebUILoadFileCallback callback)
+                                 const WebUILoadFileCallback& callback)
     : context_(context),
       render_process_id_(render_process_id),
       render_frame_id_(render_frame_id),
       url_(url),
-      callback_(std::move(callback)) {}
+      callback_(callback) {}
 
 WebUIURLFetcher::~WebUIURLFetcher() {
 }
@@ -67,5 +67,9 @@ void WebUIURLFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
     DCHECK(result);
   }
   fetcher_.reset();
-  std::move(callback_).Run(result, std::move(data));
+  // We cache the callback and reset it so that any references stored within it
+  // are destroyed at the end of the method.
+  auto callback_cache = callback_;
+  callback_.Reset();
+  callback_cache.Run(result, std::move(data));
 }

@@ -40,7 +40,7 @@ AlternativeProxyUsage ConvertProtocolUsageToProxyUsage(
   }
 }
 
-}  // anonymous namespace
+}  // namespace anonymous
 
 const char kAlternativeServiceHeader[] = "Alt-Svc";
 

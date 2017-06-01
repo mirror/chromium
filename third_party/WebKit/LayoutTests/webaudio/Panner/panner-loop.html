@@ -1,47 +1,44 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <title>
-      panner-loop.html
-    </title>
     <script src="../../resources/testharness.js"></script>
-    <script src="../../resources/testharnessreport.js"></script>
+    <script src="../../resources/testharnessreport.js"></script> 
     <script src="../resources/audit-util.js"></script>
     <script src="../resources/audit.js"></script>
     <script src="../resources/panner-model-testing.js"></script>
   </head>
+
   <body>
-    <script id="layout-test-code">
+    <script>
       let audit = Audit.createTaskRunner();
 
       // See crbug.com/331446.
 
-      // Create a simple feedback loop and make sure the panner node processes
-      // it correctly.
+      // Create a simple feedback loop and make sure the panner node processes it correctly.
 
       audit.define(
           {label: 'test', description: 'PannerNode handling of feedback loops'},
           (task, should) => {
 
-            let sampleRate = 44100;
-            let renderLengthSeconds = 1;
+            var sampleRate = 44100;
+            var renderLengthSeconds = 1;
 
             // Create offline audio context.
-            let context = new OfflineAudioContext(
+            var context = new OfflineAudioContext(
                 2, sampleRate * renderLengthSeconds, sampleRate);
 
             // Create nodes in graph. This is based on the test given in
             // crbug.com/331446.
-            let source = context.createBufferSource();
+            var source = context.createBufferSource();
             source.buffer =
                 createImpulseBuffer(context, sampleRate * renderLengthSeconds);
-            let activateNode = context.createGain();
-            let dry = context.createGain();
-            let wet = context.createGain();
-            let filter = context.createBiquadFilter();
-            let delay = context.createDelay();
-            let feedbackNode = context.createGain();
-            let output = context.createGain();
+            var activateNode = context.createGain();
+            var dry = context.createGain();
+            var wet = context.createGain();
+            var filter = context.createBiquadFilter();
+            var delay = context.createDelay();
+            var feedbackNode = context.createGain();
+            var output = context.createGain();
 
             delay.delayTime.value = 0.1;
             wet.gain.value = 0.5;
@@ -59,7 +56,7 @@
             wet.connect(output);
             dry.connect(output);
 
-            let panner = context.createPanner();
+            var panner = context.createPanner();
             panner.coneOuterGain = 0.1;
             panner.coneOuterAngle = 180;
             panner.coneInnerAngle = 0;
@@ -77,5 +74,6 @@
 
       audit.run();
     </script>
+    
   </body>
 </html>

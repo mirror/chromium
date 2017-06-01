@@ -11,50 +11,31 @@ static_library("internal") {
   visibility = [
     ":*",
     "//components/download",
-    "//components/download/content",
     "//components/download/internal/test:test_support",
   ]
 
   sources = [
-    "client_set.cc",
-    "client_set.h",
     "config.cc",
     "config.h",
-    "controller.h",
-    "controller_impl.cc",
-    "controller_impl.h",
-    "download_driver.h",
     "download_service_impl.cc",
     "download_service_impl.h",
-    "download_store.cc",
-    "download_store.h",
-    "driver_entry.cc",
-    "driver_entry.h",
     "entry.cc",
     "entry.h",
-    "entry_utils.cc",
-    "entry_utils.h",
     "model.h",
     "model_impl.cc",
     "model_impl.h",
-    "proto_conversions.cc",
-    "proto_conversions.h",
+    "noop_store.cc",
+    "noop_store.h",
     "scheduler/battery_listener.cc",
     "scheduler/battery_listener.h",
     "scheduler/network_listener.cc",
     "scheduler/network_listener.h",
-    "startup_status.cc",
-    "startup_status.h",
-    "stats.cc",
-    "stats.h",
     "store.h",
   ]
 
   deps = [
     "//base",
-    "//components/download/internal/proto",
     "//components/download/public",
-    "//components/leveldb_proto",
     "//net",
   ]
 }
@@ -65,12 +46,7 @@ source_set("unit_tests") {
   visibility = [ "//components/download:unit_tests" ]
 
   sources = [
-    "client_set_unittest.cc",
-    "controller_impl_unittest.cc",
-    "download_store_unittest.cc",
-    "entry_utils_unittest.cc",
     "model_impl_unittest.cc",
-    "proto_conversions_unittest.cc",
     "scheduler/battery_listener_unittest.cc",
     "scheduler/network_listener_unittest.cc",
   ]
@@ -78,9 +54,7 @@ source_set("unit_tests") {
   deps = [
     ":internal",
     "//base/test:test_support",
-    "//components/download/internal/proto",
     "//components/download/internal/test:test_support",
-    "//components/leveldb_proto:test_support",
     "//testing/gmock",
     "//testing/gtest",
   ]

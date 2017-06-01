@@ -11,8 +11,6 @@
 #include "components/feature_engagement_tracker/internal/condition_validator.h"
 
 namespace feature_engagement_tracker {
-class AvailabilityModel;
-struct Comparator;
 struct EventConfig;
 class Model;
 
@@ -27,7 +25,6 @@ class FeatureConfigConditionValidator : public ConditionValidator {
       const base::Feature& feature,
       const FeatureConfig& config,
       const Model& model,
-      const AvailabilityModel& availability_model,
       uint32_t current_day) const override;
   void NotifyIsShowing(const base::Feature& feature) override;
   void NotifyDismissed(const base::Feature& feature) override;
@@ -36,11 +33,6 @@ class FeatureConfigConditionValidator : public ConditionValidator {
   bool EventConfigMeetsConditions(const EventConfig& event_config,
                                   const Model& model,
                                   uint32_t current_day) const;
-
-  bool AvailabilityMeetsConditions(const base::Feature& feature,
-                                   Comparator comparator,
-                                   const AvailabilityModel& availability_model,
-                                   uint32_t current_day) const;
 
   // Whether in-product help is currently being shown.
   bool currently_showing_;

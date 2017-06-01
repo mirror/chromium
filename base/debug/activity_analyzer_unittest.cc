@@ -103,8 +103,6 @@ TEST_F(ActivityAnalyzerTest, ThreadAnalyzerConstruction) {
 
 // GlobalActivityAnalyzer tests below.
 
-namespace {
-
 class SimpleActivityThread : public SimpleThread {
  public:
   SimpleActivityThread(const std::string& name,
@@ -159,8 +157,6 @@ class SimpleActivityThread : public SimpleThread {
 
   DISALLOW_COPY_AND_ASSIGN(SimpleActivityThread);
 };
-
-}  // namespace
 
 TEST_F(ActivityAnalyzerTest, GlobalAnalyzerConstruction) {
   GlobalActivityTracker::CreateWithLocalMemory(kMemorySize, 0, "", 3, 0);

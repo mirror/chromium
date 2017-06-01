@@ -1,7 +1,5 @@
 .. _publications_and_presentations:
 
-.. include:: /migration/deprecation.inc
-
 ##############################
 Publications and Presentations
 ##############################

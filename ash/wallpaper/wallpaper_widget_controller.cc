@@ -8,7 +8,7 @@
 #include "ash/root_window_controller.h"
 #include "ash/shell.h"
 #include "ash/wallpaper/wallpaper_delegate.h"
-#include "ui/aura/window.h"
+#include "ash/wm_window.h"
 #include "ui/compositor/layer_animation_observer.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/views/widget/widget.h"
@@ -62,10 +62,11 @@ class ShowWallpaperAnimationObserver : public ui::ImplicitAnimationObserver,
 }  // namespace
 
 WallpaperWidgetController::WallpaperWidgetController(views::Widget* widget)
-    : widget_(widget), widget_parent_(widget->GetNativeWindow()->parent()) {
+    : widget_(widget),
+      widget_parent_(WmWindow::Get(widget->GetNativeWindow())->GetParent()) {
   DCHECK(widget_);
   widget_->AddObserver(this);
-  widget_parent_->AddObserver(this);
+  widget_parent_->aura_window()->AddObserver(this);
 }
 
 WallpaperWidgetController::~WallpaperWidgetController() {
@@ -85,14 +86,13 @@ void WallpaperWidgetController::SetBounds(const gfx::Rect& bounds) {
     widget_->SetBounds(bounds);
 }
 
-bool WallpaperWidgetController::Reparent(aura::Window* root_window,
-                                         int container) {
+bool WallpaperWidgetController::Reparent(WmWindow* root_window, int container) {
   if (widget_) {
-    widget_parent_->RemoveObserver(this);
-    aura::Window* window = widget_->GetNativeWindow();
-    root_window->GetChildById(container)->AddChild(window);
-    widget_parent_ = widget_->GetNativeWindow()->parent();
-    widget_parent_->AddObserver(this);
+    widget_parent_->aura_window()->RemoveObserver(this);
+    WmWindow* window = WmWindow::Get(widget_->GetNativeWindow());
+    root_window->GetChildByShellWindowId(container)->AddChild(window);
+    widget_parent_ = WmWindow::Get(widget_->GetNativeWindow())->GetParent();
+    widget_parent_->aura_window()->AddObserver(this);
     return true;
   }
   // Nothing to reparent.
@@ -100,7 +100,7 @@ bool WallpaperWidgetController::Reparent(aura::Window* root_window,
 }
 
 void WallpaperWidgetController::RemoveObservers() {
-  widget_parent_->RemoveObserver(this);
+  widget_parent_->aura_window()->RemoveObserver(this);
   widget_->RemoveObserver(this);
   widget_ = nullptr;
 }

@@ -4,14 +4,10 @@
 
 package org.chromium.chrome.browser.webapps;
 
-import static org.chromium.webapk.lib.common.WebApkConstants.WEBAPK_PACKAGE_PREFIX;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 
-import org.chromium.base.ActivityState;
-import org.chromium.base.ApplicationStatus;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.base.metrics.RecordHistogram;
@@ -23,7 +19,6 @@ import org.chromium.chrome.browser.tab.InterceptNavigationDelegateImpl;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabDelegateFactory;
 import org.chromium.chrome.browser.tab.TabRedirectHandler;
-import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.components.navigation_interception.NavigationParams;
 import org.chromium.webapk.lib.client.WebApkServiceConnectionManager;
 
@@ -46,9 +41,6 @@ public class WebApkActivity extends WebappActivity {
     /** The start time that the activity becomes focused. */
     private long mStartTime;
 
-    /** Records whether we're currently showing a disclosure notification. */
-    private boolean mNotificationShowing;
-
     @Override
     protected WebappInfo createWebappInfo(Intent intent) {
         return (intent == null) ? WebApkInfo.createEmpty() : WebApkInfo.create(intent);
@@ -65,7 +57,7 @@ public class WebApkActivity extends WebappActivity {
         return new WebappDelegateFactory(this) {
             @Override
             public InterceptNavigationDelegateImpl createInterceptNavigationDelegate(Tab tab) {
-                return new WebappInterceptNavigationDelegate(WebApkActivity.this, tab) {
+                return new InterceptNavigationDelegateImpl(tab) {
                     @Override
                     public ExternalNavigationParams.Builder buildExternalNavigationParams(
                             NavigationParams navigationParams,
@@ -75,11 +67,6 @@ public class WebApkActivity extends WebappActivity {
                                         navigationParams, tabRedirectHandler, shouldCloseTab);
                         builder.setWebApkPackageName(getWebApkPackageName());
                         return builder;
-                    }
-
-                    @Override
-                    protected boolean isUrlOutsideWebappScope(WebappInfo info, String url) {
-                        return !UrlUtilities.isUrlWithinScope(url, info.scopeUri().toString());
                     }
                 };
             }
@@ -115,23 +102,8 @@ public class WebApkActivity extends WebappActivity {
     }
 
     @Override
-    public void onStartWithNative() {
-        super.onStartWithNative();
-        // If WebappStorage is available, check whether to show a disclosure notification. If it's
-        // not available, this check will happen once deferred startup returns with the storage
-        // instance.
-        WebappDataStorage storage =
-                WebappRegistry.getInstance().getWebappDataStorage(mWebappInfo.id());
-        if (storage != null) maybeShowDisclosure(storage);
-    }
-
-    @Override
     public void onStopWithNative() {
         super.onStopWithNative();
-        if (mNotificationShowing) {
-            WebApkDisclosureNotificationManager.dismissNotification(mWebappInfo);
-            mNotificationShowing = false;
-        }
         if (mUpdateManager != null && mUpdateManager.requestPendingUpdate()) {
             WebApkUma.recordUpdateRequestSent(WebApkUma.UPDATE_REQUEST_SENT_ONSTOP);
         }
@@ -178,32 +150,15 @@ public class WebApkActivity extends WebappActivity {
 
         mUpdateManager = new WebApkUpdateManager(WebApkActivity.this, storage);
         mUpdateManager.updateIfNeeded(getActivityTab(), info);
-
-        maybeShowDisclosure(storage);
-    }
-
-    /**
-     * If we're showing a WebApk that's not with an expected package, it must be an
-     * "Unbound WebApk" (crbug.com/714735) so show a notification that it's running in Chrome.
-     */
-    private void maybeShowDisclosure(WebappDataStorage storage) {
-        if (!getWebApkPackageName().startsWith(WEBAPK_PACKAGE_PREFIX)
-                && !storage.hasDismissedDisclosure() && !mNotificationShowing) {
-            int activityState = ApplicationStatus.getStateForActivity(this);
-            if (activityState == ActivityState.STARTED || activityState == ActivityState.RESUMED
-                    || activityState == ActivityState.PAUSED) {
-                mNotificationShowing = true;
-                WebApkDisclosureNotificationManager.showDisclosure(mWebappInfo);
-            }
-        }
     }
 
     @Override
     protected void onDeferredStartupWithNullStorage() {
         super.onDeferredStartupWithNullStorage();
 
-        // Register the WebAPK. The WebAPK was registered when it was created, but may also become
-        // unregistered after a user clears Chrome's data.
+        // Register the WebAPK. The WebAPK is not registered when it is created so it has to be
+        // registered now. The WebAPK may also become unregistered after a user clears Chrome's
+        // data.
         WebappRegistry.getInstance().register(
                 mWebappInfo.id(), new WebappRegistry.FetchWebappDataStorageCallback() {
                     @Override

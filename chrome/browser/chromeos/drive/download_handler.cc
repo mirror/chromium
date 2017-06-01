@@ -6,8 +6,6 @@
 
 #include <stddef.h>
 
-#include <utility>
-
 #include "base/bind.h"
 #include "base/files/file_util.h"
 #include "base/macros.h"
@@ -106,10 +104,10 @@ void MoveDownloadedFile(const base::FilePath& downloaded_file,
 
 // Used to implement CheckForFileExistence().
 void ContinueCheckingForFileExistence(
-    content::CheckForFileExistenceCallback callback,
+    const content::CheckForFileExistenceCallback& callback,
     FileError error,
     std::unique_ptr<ResourceEntry> entry) {
-  std::move(callback).Run(error == FILE_ERROR_OK);
+  callback.Run(error == FILE_ERROR_OK);
 }
 
 // Returns true if |download| is a Drive download created from data persisted
@@ -249,11 +247,11 @@ bool DownloadHandler::IsDriveDownload(const DownloadItem* download) {
 
 void DownloadHandler::CheckForFileExistence(
     const DownloadItem* download,
-    content::CheckForFileExistenceCallback callback) {
+    const content::CheckForFileExistenceCallback& callback) {
   file_system_->GetResourceEntry(
       util::ExtractDrivePath(GetTargetPath(download)),
       base::Bind(&ContinueCheckingForFileExistence,
-                 base::Passed(std::move(callback))));
+                 callback));
 }
 
 void DownloadHandler::SetFreeDiskSpaceDelayForTesting(
@@ -287,9 +285,8 @@ void DownloadHandler::FreeDiskSpaceIfNeeded() {
     return;
 
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE,
-      base::BindOnce(&DownloadHandler::FreeDiskSpaceIfNeededImmediately,
-                     weak_ptr_factory_.GetWeakPtr()),
+      FROM_HERE, base::Bind(&DownloadHandler::FreeDiskSpaceIfNeededImmediately,
+                            weak_ptr_factory_.GetWeakPtr()),
       free_disk_space_delay_);
 
   has_pending_free_disk_space_ = true;
@@ -323,11 +320,12 @@ void DownloadHandler::OnDownloadCreated(DownloadManager* manager,
   // Remove any persisted Drive DownloadItem. crbug.com/171384
   if (IsPersistedDriveDownload(drive_tmp_download_path_, download)) {
     // Remove download later, since doing it here results in a crash.
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        base::BindOnce(&DownloadHandler::RemoveDownload,
-                       weak_ptr_factory_.GetWeakPtr(),
-                       static_cast<void*>(manager), download->GetId()));
+    BrowserThread::PostTask(BrowserThread::UI,
+                            FROM_HERE,
+                            base::Bind(&DownloadHandler::RemoveDownload,
+                                       weak_ptr_factory_.GetWeakPtr(),
+                                       static_cast<void*>(manager),
+                                       download->GetId()));
   }
 }
 

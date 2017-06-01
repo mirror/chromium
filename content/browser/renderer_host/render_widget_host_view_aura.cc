@@ -435,7 +435,7 @@ void RenderWidgetHostViewAura::InitAsChild(
     gfx::NativeView parent_view) {
   CreateDelegatedFrameHostClient();
 
-  CreateAuraWindow(aura::client::WINDOW_TYPE_CONTROL);
+  CreateAuraWindow(ui::wm::WINDOW_TYPE_CONTROL);
 
   if (parent_view)
     parent_view->AddChild(GetNativeView());
@@ -468,7 +468,7 @@ void RenderWidgetHostViewAura::InitAsPopup(
     old_child->popup_parent_host_view_ = NULL;
   }
   popup_parent_host_view_->SetPopupChild(this);
-  CreateAuraWindow(aura::client::WINDOW_TYPE_MENU);
+  CreateAuraWindow(ui::wm::WINDOW_TYPE_MENU);
 
   // Setting the transient child allows for the popup to get mouse events when
   // in a system modal dialog. Do this before calling ParentWindowWithContext
@@ -496,7 +496,7 @@ void RenderWidgetHostViewAura::InitAsFullscreen(
     RenderWidgetHostView* reference_host_view) {
   is_fullscreen_ = true;
   CreateDelegatedFrameHostClient();
-  CreateAuraWindow(aura::client::WINDOW_TYPE_NORMAL);
+  CreateAuraWindow(ui::wm::WINDOW_TYPE_NORMAL);
   window_->SetProperty(aura::client::kShowStateKey, ui::SHOW_STATE_FULLSCREEN);
 
   aura::Window* parent = NULL;
@@ -655,10 +655,12 @@ void RenderWidgetHostViewAura::OnSetNeedsFlushInput() {
   UpdateNeedsBeginFramesInternal();
 }
 
-void RenderWidgetHostViewAura::OnBeginFrame() {
+void RenderWidgetHostViewAura::OnBeginFrame(
+    const cc::BeginFrameArgs& args) {
   needs_flush_input_ = false;
   host_->OnBeginFrame();
   UpdateNeedsBeginFramesInternal();
+  host_->Send(new ViewMsg_BeginFrame(host_->GetRoutingID(), args));
 }
 
 RenderFrameHostImpl* RenderWidgetHostViewAura::GetFocusedFrame() {
@@ -825,7 +827,8 @@ void RenderWidgetHostViewAura::SetTooltipText(
     const base::string16& tooltip_text) {
   tooltip_ = tooltip_text;
   aura::Window* root_window = window_->GetRootWindow();
-  wm::TooltipClient* tooltip_client = wm::GetTooltipClient(root_window);
+  aura::client::TooltipClient* tooltip_client =
+      aura::client::GetTooltipClient(root_window);
   if (tooltip_client) {
     tooltip_client->UpdateTooltip(window_);
     // Content tooltips should be visible indefinitely.
@@ -915,6 +918,7 @@ void RenderWidgetHostViewAura::SubmitCompositorFrame(
   UpdateBackgroundColorFromRenderer(frame.metadata.root_background_color);
 
   last_scroll_offset_ = frame.metadata.root_scroll_offset;
+
   cc::Selection<gfx::SelectionBound> selection = frame.metadata.selection;
   if (IsUseZoomForDSFEnabled()) {
     float viewportToDIPScale = 1.0f / current_device_scale_factor_;
@@ -936,12 +940,8 @@ void RenderWidgetHostViewAura::SubmitCompositorFrame(
     delegated_frame_host_->SubmitCompositorFrame(local_surface_id,
                                                  std::move(frame));
   }
-  if (selection.start != selection_start_ || selection.end != selection_end_) {
-    selection_start_ = selection.start;
-    selection_end_ = selection.end;
-    selection_controller_client_->UpdateClientSelectionBounds(selection_start_,
-                                                              selection_end_);
-  }
+  selection_controller_->OnSelectionBoundsChanged(selection.start,
+                                                  selection.end);
 }
 
 void RenderWidgetHostViewAura::OnDidNotProduceFrame(
@@ -1428,7 +1428,7 @@ void RenderWidgetHostViewAura::ExtendSelectionAndDelete(
     size_t before, size_t after) {
   RenderFrameHostImpl* rfh = GetFocusedFrame();
   if (rfh)
-    rfh->GetFrameInputHandler()->ExtendSelectionAndDelete(before, after);
+    rfh->ExtendSelectionAndDelete(before, after);
 }
 
 void RenderWidgetHostViewAura::EnsureCaretNotInRect(
@@ -1737,7 +1737,7 @@ void RenderWidgetHostViewAura::OnGestureEvent(ui::GestureEvent* event) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// RenderWidgetHostViewAura, wm::ActivationDelegate implementation:
+// RenderWidgetHostViewAura, aura::client::ActivationDelegate implementation:
 
 bool RenderWidgetHostViewAura::ShouldActivate() const {
   aura::WindowTreeHost* host = window_->GetHost();
@@ -1789,10 +1789,6 @@ void RenderWidgetHostViewAura::OnWindowFocused(aura::Window* gained_focus,
 
     DetachFromInputMethod();
 
-    // TODO(wjmaclean): Do we need to let TouchSelectionControllerClientAura
-    // handle this, just in case it stomps on a new highlight in another view
-    // that has just become focused? So far it doesn't appear to be a problem,
-    // but we should keep an eye on it.
     selection_controller_->HideAndDisallowShowingAutomatically();
 
     if (overscroll_controller_)
@@ -1864,7 +1860,7 @@ RenderWidgetHostViewAura::~RenderWidgetHostViewAura() {
     if (window_->GetHost())
       window_->GetHost()->RemoveObserver(this);
     UnlockMouse();
-    wm::SetTooltipText(window_, NULL);
+    aura::client::SetTooltipText(window_, NULL);
     display::Screen::GetScreen()->RemoveObserver(this);
 
     // This call is usually no-op since |this| object is already removed from
@@ -1903,7 +1899,7 @@ RenderWidgetHostViewAura::~RenderWidgetHostViewAura() {
     text_input_manager_->RemoveObserver(this);
 }
 
-void RenderWidgetHostViewAura::CreateAuraWindow(aura::client::WindowType type) {
+void RenderWidgetHostViewAura::CreateAuraWindow(ui::wm::WindowType type) {
   DCHECK(!window_);
   window_ = new aura::Window(this);
   window_->SetName("RenderWidgetHostViewAura");
@@ -1912,8 +1908,8 @@ void RenderWidgetHostViewAura::CreateAuraWindow(aura::client::WindowType type) {
   event_handler_->set_window(window_);
   window_observer_.reset(new WindowObserver(this));
 
-  wm::SetTooltipText(window_, &tooltip_);
-  wm::SetActivationDelegate(window_, this);
+  aura::client::SetTooltipText(window_, &tooltip_);
+  aura::client::SetActivationDelegate(window_, this);
   aura::client::SetFocusChangeObserver(window_, this);
   display::Screen::GetScreen()->AddObserver(this);
 
@@ -2042,11 +2038,6 @@ void RenderWidgetHostViewAura::Shutdown() {
   }
 }
 
-TouchSelectionControllerClientManager*
-RenderWidgetHostViewAura::touch_selection_controller_client_manager() {
-  return selection_controller_client_.get();
-}
-
 bool RenderWidgetHostViewAura::NeedsInputGrab() {
   return popup_type_ == blink::kWebPopupTypePage;
 }
@@ -2063,7 +2054,7 @@ void RenderWidgetHostViewAura::SetTooltipsEnabled(bool enable) {
     tooltip_disabler_.reset();
   } else {
     tooltip_disabler_.reset(
-        new wm::ScopedTooltipDisabler(window_->GetRootWindow()));
+        new aura::client::ScopedTooltipDisabler(window_->GetRootWindow()));
   }
 }
 
@@ -2383,7 +2374,7 @@ void RenderWidgetHostViewAura::OnTextSelectionChanged(
 #if defined(USE_X11) && !defined(OS_CHROMEOS)
   const TextInputManager::TextSelection* selection =
       GetTextInputManager()->GetTextSelection(focused_view);
-  if (selection->selected_text().length()) {
+  if (selection->selected_text().length() && selection->user_initiated()) {
     // Set the CLIPBOARD_TYPE_SELECTION to the ui::Clipboard.
     ui::ScopedClipboardWriter clipboard_writer(ui::CLIPBOARD_TYPE_SELECTION);
     clipboard_writer.WriteText(selection->selected_text());

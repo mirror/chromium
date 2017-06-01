@@ -9,6 +9,7 @@
 #include "ash/wm/widget_finder.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
+#include "ash/wm_window.h"
 #include "ui/views/accessible_pane_view.h"
 #include "ui/views/focus/focus_search.h"
 #include "ui/views/widget/widget.h"
@@ -39,9 +40,9 @@ void FocusCycler::RemoveWidget(views::Widget* widget) {
 }
 
 void FocusCycler::RotateFocus(Direction direction) {
-  aura::Window* window = wm::GetActiveWindow();
+  WmWindow* window = WmWindow::Get(wm::GetActiveWindow());
   if (window) {
-    views::Widget* widget = GetInternalWidgetForWindow(window);
+    views::Widget* widget = GetInternalWidgetForWindow(window->aura_window());
     // First try to rotate focus within the active widget. If that succeeds,
     // we're done.
     if (widget &&
@@ -84,9 +85,9 @@ void FocusCycler::RotateFocus(Direction direction) {
           Shell::Get()->mru_window_tracker()->BuildMruWindowList());
       if (mru_windows.empty())
         break;
-      auto* window = mru_windows.front();
-      wm::GetWindowState(window)->Activate();
-      views::Widget* widget = GetInternalWidgetForWindow(window);
+      WmWindow* window = mru_windows.front();
+      window->GetWindowState()->Activate();
+      views::Widget* widget = GetInternalWidgetForWindow(window->aura_window());
       if (!widget)
         break;
       views::FocusManager* focus_manager = widget->GetFocusManager();

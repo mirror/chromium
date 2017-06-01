@@ -28,7 +28,7 @@
 #include "core/dom/Element.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/exported/WebViewBase.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/page/ChromeClient.h"
 #include "platform/PlatformChromeClient.h"
 #include "platform/wtf/CurrentTime.h"
@@ -52,7 +52,7 @@ ValidationMessageClientImpl* ValidationMessageClientImpl::Create(
 
 ValidationMessageClientImpl::~ValidationMessageClientImpl() {}
 
-LocalFrameView* ValidationMessageClientImpl::CurrentView() {
+FrameView* ValidationMessageClientImpl::CurrentView() {
   return current_anchor_->GetDocument().View();
 }
 
@@ -85,7 +85,7 @@ void ValidationMessageClientImpl::ShowValidationMessage(
   web_view_.Client()->ShowValidationMessage(
       anchor_in_viewport, message_, ToWebTextDirection(message_dir),
       sub_message, ToWebTextDirection(sub_message_dir));
-  web_view_.GetChromeClient().RegisterPopupOpeningObserver(this);
+  web_view_.ChromeClient().RegisterPopupOpeningObserver(this);
 
   finish_time_ =
       MonotonicallyIncreasingTime() +
@@ -107,7 +107,7 @@ void ValidationMessageClientImpl::HideValidationMessage(const Element& anchor) {
   message_ = String();
   finish_time_ = 0;
   web_view_.Client()->HideValidationMessage();
-  web_view_.GetChromeClient().UnregisterPopupOpeningObserver(this);
+  web_view_.ChromeClient().UnregisterPopupOpeningObserver(this);
 }
 
 bool ValidationMessageClientImpl::IsValidationMessageVisible(

@@ -484,7 +484,7 @@ void StatusBubbleViews::StatusView::OnPaint(gfx::Canvas* canvas) {
                       popup_size_.height());
   text_rect.Inset(kShadowThickness, kShadowThickness);
   // Make sure the text is aligned to the right on RTL UIs.
-  text_rect = GetMirroredRect(text_rect);
+  text_rect.set_x(GetMirroredXForRect(text_rect));
 
   // Text color is the foreground tab text color at 60% alpha.
   SkColor blended_text_color = color_utils::AlphaBlend(
@@ -678,7 +678,7 @@ void StatusBubbleViews::Reposition() {
   // Overlap the client edge that's shown in restored mode, or when there is no
   // client edge this makes the bubble snug with the corner of the window.
   int overlap = kShadowThickness;
-  int height = GetPreferredHeight();
+  int height = GetPreferredSize().height();
   int base_view_height = base_view()->bounds().height();
   gfx::Point origin(-overlap, base_view_height - height + overlap);
   SetBounds(origin.x(), origin.y(), base_view()->bounds().width() / 3, height);
@@ -698,8 +698,8 @@ void StatusBubbleViews::RepositionPopup() {
   }
 }
 
-int StatusBubbleViews::GetPreferredHeight() {
-  return gfx::FontList().GetHeight() + kTotalVerticalPadding;
+gfx::Size StatusBubbleViews::GetPreferredSize() {
+  return gfx::Size(0, gfx::FontList().GetHeight() + kTotalVerticalPadding);
 }
 
 void StatusBubbleViews::SetBounds(int x, int y, int w, int h) {

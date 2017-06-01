@@ -42,8 +42,7 @@ class AppListControllerDelegateAsh : public AppListControllerDelegate {
   void LaunchApp(Profile* profile,
                  const extensions::Extension* extension,
                  AppListSource source,
-                 int event_flags,
-                 int64_t display_id) override;
+                 int event_flags) override;
 
  private:
   ash::ShelfLaunchSource AppListSourceToLaunchSource(AppListSource source);

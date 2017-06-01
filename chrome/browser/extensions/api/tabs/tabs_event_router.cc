@@ -16,6 +16,7 @@
 #include "chrome/browser/extensions/api/tabs/tabs_windows_api.h"
 #include "chrome/browser/extensions/api/tabs/windows_event_router.h"
 #include "chrome/browser/extensions/extension_tab_util.h"
+#include "chrome/browser/memory/tab_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
@@ -203,9 +204,9 @@ void TabsEventRouter::TabCreatedAt(WebContents* contents,
                                    bool active) {
   Profile* profile = Profile::FromBrowserContext(contents->GetBrowserContext());
   std::unique_ptr<base::ListValue> args(new base::ListValue);
-  auto event = base::MakeUnique<Event>(events::TABS_ON_CREATED,
-                                       tabs::OnCreated::kEventName,
-                                       std::move(args), profile);
+  std::unique_ptr<Event> event(new Event(
+      events::TABS_ON_CREATED, tabs::OnCreated::kEventName, std::move(args)));
+  event->restrict_to_browser_context = profile;
   event->user_gesture = EventRouter::USER_GESTURE_NOT_ENABLED;
   event->will_dispatch_callback =
       base::Bind(&WillDispatchTabCreatedEvent, contents, active);
@@ -426,8 +427,9 @@ void TabsEventRouter::DispatchEvent(
   if (!profile_->IsSameProfile(profile) || !event_router)
     return;
 
-  auto event = base::MakeUnique<Event>(histogram_value, event_name,
-                                       std::move(args), profile);
+  std::unique_ptr<Event> event(
+      new Event(histogram_value, event_name, std::move(args)));
+  event->restrict_to_browser_context = profile;
   event->user_gesture = user_gesture;
   event_router->BroadcastEvent(std::move(event));
 }
@@ -453,9 +455,10 @@ void TabsEventRouter::DispatchTabUpdatedEvent(
   // WillDispatchTabUpdatedEvent.
   Profile* profile = Profile::FromBrowserContext(contents->GetBrowserContext());
 
-  auto event = base::MakeUnique<Event>(events::TABS_ON_UPDATED,
-                                       tabs::OnUpdated::kEventName,
-                                       std::move(args_base), profile);
+  std::unique_ptr<Event> event(new Event(events::TABS_ON_UPDATED,
+                                         tabs::OnUpdated::kEventName,
+                                         std::move(args_base)));
+  event->restrict_to_browser_context = profile;
   event->user_gesture = EventRouter::USER_GESTURE_NOT_ENABLED;
   event->will_dispatch_callback =
       base::Bind(&WillDispatchTabUpdatedEvent, contents,

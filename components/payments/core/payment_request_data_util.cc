@@ -13,7 +13,6 @@
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/field_types.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
-#include "components/autofill/core/browser/validation.h"
 #include "components/payments/core/basic_card_response.h"
 #include "components/payments/core/payment_address.h"
 #include "components/payments/core/payment_method_data.h"
@@ -151,32 +150,6 @@ void ParseBasicCardSupportedNetworks(
       }
     }
   }
-}
-
-base::string16 GetFormattedPhoneNumberForDisplay(
-    const autofill::AutofillProfile& profile,
-    const std::string& locale) {
-  // Since the "+" is removed for some country's phone numbers, try to add a "+"
-  // and see if it is a valid phone number for a country.
-  // Having two "+" in front of a number has no effect on the formatted number.
-  // The reason for this is international phone numbers for another country. For
-  // example, without adding a "+", the US number 1-415-123-1234 for an AU
-  // address would be wrongly formatted as +61 1-415-123-1234 which is invalid.
-  std::string phone = base::UTF16ToUTF8(profile.GetInfo(
-      autofill::AutofillType(autofill::PHONE_HOME_WHOLE_NUMBER), locale));
-  std::string tentative_intl_phone = "+" + phone;
-
-  // Always favor the tentative international phone number if it's determined as
-  // being a valid number.
-  if (autofill::IsValidPhoneNumber(
-          base::UTF8ToUTF16(tentative_intl_phone),
-          GetCountryCodeWithFallback(&profile, locale))) {
-    return base::UTF8ToUTF16(FormatPhoneForDisplay(
-        tentative_intl_phone, GetCountryCodeWithFallback(&profile, locale)));
-  }
-
-  return base::UTF8ToUTF16(FormatPhoneForDisplay(
-      phone, GetCountryCodeWithFallback(&profile, locale)));
 }
 
 std::string FormatPhoneForDisplay(const std::string& phone_number,

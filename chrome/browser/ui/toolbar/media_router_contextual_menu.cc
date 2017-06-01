@@ -74,10 +74,8 @@ MediaRouterContextualMenu::MediaRouterContextualMenu(Browser* browser,
                                   GetChangeVisibilityTextId());
   menu_model_.AddSeparator(ui::NORMAL_SEPARATOR);
 #if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_CHROMEOS)
-  if (!browser_->profile()->IsOffTheRecord()) {
-    menu_model_.AddItemWithStringId(IDC_MEDIA_ROUTER_MANAGE_DEVICES,
-                                    IDS_MEDIA_ROUTER_MANAGE_DEVICES);
-  }
+  menu_model_.AddItemWithStringId(IDC_MEDIA_ROUTER_MANAGE_DEVICES,
+                                  IDS_MEDIA_ROUTER_MANAGE_DEVICES);
 #endif
   menu_model_.AddCheckItemWithStringId(IDC_MEDIA_ROUTER_CLOUD_SERVICES_TOGGLE,
                                        IDS_MEDIA_ROUTER_CLOUD_SERVICES_TOGGLE);

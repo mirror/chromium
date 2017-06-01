@@ -10,6 +10,7 @@
 #include "chrome/browser/extensions/extension_message_bubble_controller.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/grit/generated_resources.h"
+#include "components/grit/components_scaled_resources.h"
 #include "extensions/browser/extension_registry.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/vector_icons/vector_icons.h"
@@ -51,13 +52,10 @@ base::string16 ExtensionMessageBubbleBridge::GetItemListText() {
 base::string16 ExtensionMessageBubbleBridge::GetActionButtonText() {
   const extensions::ExtensionIdList& list = controller_->GetExtensionIdList();
   DCHECK(!list.empty());
-  // Normally, the extension is enabled, but this might not be the case (such as
-  // for the SuspiciousExtensionBubbleDelegate, which warns the user about
-  // disabled extensions).
   const extensions::Extension* extension =
       extensions::ExtensionRegistry::Get(controller_->profile())
-          ->GetExtensionById(list[0],
-                             extensions::ExtensionRegistry::EVERYTHING);
+          ->enabled_extensions()
+          .GetByID(list[0]);
 
   DCHECK(extension);
   // An empty string is returned so that we don't display the button prompting

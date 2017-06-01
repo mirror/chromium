@@ -98,7 +98,7 @@ class ExtensionInstallPrompt {
     explicit Prompt(PromptType type);
     ~Prompt();
 
-    void AddPermissions(const extensions::PermissionMessages& permissions,
+    void SetPermissions(const extensions::PermissionMessages& permissions,
                         PermissionsType permissions_type);
     void SetIsShowingDetails(DetailsType type,
                              size_t index,

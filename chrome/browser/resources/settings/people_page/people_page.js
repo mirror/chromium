@@ -107,8 +107,7 @@ Polymer({
             settings.Route.CHANGE_PICTURE.path,
             '#picture-subpage-trigger .subpage-arrow');
         map.set(
-            settings.Route.LOCK_SCREEN.path,
-            '#lock-screen-subpage-trigger .subpage-arrow');
+            settings.Route.LOCK_SCREEN.path, '#lockScreenSubpageTrigger');
         map.set(
             settings.Route.ACCOUNTS.path,
             '#manage-other-people-subpage-trigger .subpage-arrow');

@@ -26,7 +26,6 @@
 #include "components/exo/surface_delegate.h"
 #include "components/exo/surface_observer.h"
 #include "third_party/khronos/GLES2/gl2.h"
-#include "ui/aura/client/aura_constants.h"
 #include "ui/aura/env.h"
 #include "ui/aura/window_delegate.h"
 #include "ui/aura/window_targeter.h"
@@ -52,10 +51,6 @@ namespace {
 // A property key containing the surface that is associated with
 // window. If unset, no surface is associated with window.
 DEFINE_UI_CLASS_PROPERTY_KEY(Surface*, kSurfaceKey, nullptr);
-
-// A property key to store whether the surface should only consume
-// stylus input events.
-DEFINE_UI_CLASS_PROPERTY_KEY(bool, kStylusOnlyKey, false);
 
 // Helper function that returns an iterator to the first entry in |list|
 // with |key|.
@@ -145,24 +140,6 @@ class CustomWindowTargeter : public aura::WindowTargeter {
   ~CustomWindowTargeter() override {}
 
   // Overridden from aura::WindowTargeter:
-  bool SubtreeCanAcceptEvent(aura::Window* window,
-                             const ui::LocatedEvent& event) const override {
-    Surface* surface = Surface::AsSurface(window);
-    if (!surface)
-      return false;
-
-    if (surface->IsStylusOnly()) {
-      ui::EventPointerType type = ui::EventPointerType::POINTER_TYPE_UNKNOWN;
-      if (event.IsTouchEvent()) {
-        auto* touch_event = static_cast<const ui::TouchEvent*>(&event);
-        type = touch_event->pointer_details().pointer_type;
-      }
-      if (type != ui::EventPointerType::POINTER_TYPE_PEN)
-        return false;
-    }
-    return aura::WindowTargeter::SubtreeCanAcceptEvent(window, event);
-  }
-
   bool EventLocationInsideBounds(aura::Window* window,
                                  const ui::LocatedEvent& event) const override {
     Surface* surface = Surface::AsSurface(window);
@@ -190,7 +167,7 @@ class CustomWindowTargeter : public aura::WindowTargeter {
 // BeginFrame hierarchy should be an internal implementation detail of aura or
 // mus in aura-mus.
 Surface::Surface() : window_(new aura::Window(new CustomWindowDelegate(this))) {
-  window_->SetType(aura::client::WINDOW_TYPE_CONTROL);
+  window_->SetType(ui::wm::WINDOW_TYPE_CONTROL);
   window_->SetName("ExoSurface");
   window_->SetProperty(kSurfaceKey, this);
   window_->Init(ui::LAYER_SOLID_COLOR);
@@ -451,14 +428,14 @@ void Surface::Commit() {
 
   if (current_begin_frame_ack_.sequence_number !=
       cc::BeginFrameArgs::kInvalidFrameNumber) {
+    if (begin_frame_source_)
+      begin_frame_source_->DidFinishFrame(this, current_begin_frame_ack_);
     if (!current_begin_frame_ack_.has_damage) {
       compositor_frame_sink_holder_->GetCompositorFrameSink()
           ->DidNotProduceFrame(current_begin_frame_ack_);
     }
     current_begin_frame_ack_.sequence_number =
         cc::BeginFrameArgs::kInvalidFrameNumber;
-    if (begin_frame_source_)
-      begin_frame_source_->DidFinishFrame(this);
   }
 }
 
@@ -655,14 +632,6 @@ bool Surface::OnBeginFrameDerivedImpl(const cc::BeginFrameArgs& args) {
 void Surface::CheckIfSurfaceHierarchyNeedsCommitToNewSurfaces() {
   if (HasLayerHierarchyChanged())
     SetSurfaceHierarchyNeedsCommitToNewSurfaces();
-}
-
-bool Surface::IsStylusOnly() {
-  return window_->GetProperty(kStylusOnlyKey);
-}
-
-void Surface::SetStylusOnly() {
-  window_->SetProperty(kStylusOnlyKey, true);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

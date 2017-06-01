@@ -35,7 +35,6 @@
 #include "platform/loader/fetch/FetchContext.h"
 #include "platform/loader/fetch/FetchInitiatorTypeNames.h"
 #include "platform/loader/fetch/MemoryCache.h"
-#include "platform/loader/fetch/RawResource.h"
 #include "platform/loader/fetch/ResourceLoader.h"
 #include "platform/loader/fetch/ResourceLoadingLog.h"
 #include "platform/loader/fetch/ResourceTimingInfo.h"
@@ -70,13 +69,14 @@ enum SriResourceIntegrityMismatchEvent {
   kSriResourceIntegrityMismatchEventCount
 };
 
-#define DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, name)                      \
-  case Resource::k##name: {                                                 \
-    DEFINE_THREAD_SAFE_STATIC_LOCAL(                                        \
-        EnumerationHistogram, resource_histogram,                           \
-        ("Blink.MemoryCache.RevalidationPolicy." prefix #name, kLoad + 1)); \
-    resource_histogram.Count(policy);                                       \
-    break;                                                                  \
+#define DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, name)                         \
+  case Resource::k##name: {                                                    \
+    DEFINE_THREAD_SAFE_STATIC_LOCAL(                                           \
+        EnumerationHistogram, resource_histogram,                              \
+        new EnumerationHistogram(                                              \
+            "Blink.MemoryCache.RevalidationPolicy." prefix #name, kLoad + 1)); \
+    resource_histogram.Count(policy);                                          \
+    break;                                                                     \
   }
 
 #define DEFINE_RESOURCE_HISTOGRAM(prefix)                    \
@@ -112,9 +112,10 @@ void AddRedirectsToTimingInfo(Resource* resource, ResourceTimingInfo* info) {
 
 void RecordSriResourceIntegrityMismatchEvent(
     SriResourceIntegrityMismatchEvent event) {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(EnumerationHistogram, integrity_histogram,
-                                  ("sri.resource_integrity_mismatch_event",
-                                   kSriResourceIntegrityMismatchEventCount));
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      EnumerationHistogram, integrity_histogram,
+      new EnumerationHistogram("sri.resource_integrity_mismatch_event",
+                               kSriResourceIntegrityMismatchEventCount));
   integrity_histogram.Count(event);
 }
 
@@ -149,23 +150,6 @@ ResourceLoadPriority TypeToPriority(Resource::Type type) {
 
   NOTREACHED();
   return kResourceLoadPriorityUnresolved;
-}
-
-bool ShouldResourceBeAddedToMemoryCache(const FetchParameters& params,
-                                        Resource* resource) {
-  if (!IsMainThread())
-    return false;
-  if (params.Options().data_buffering_policy == kDoNotBufferData)
-    return false;
-
-  // TODO(yhirano): Stop adding RawResources to MemoryCache completely.
-  if (resource->GetType() == Resource::kMainResource)
-    return false;
-  if (IsRawResource(*resource) &&
-      (params.IsSpeculativePreload() || params.IsLinkPreload())) {
-    return false;
-  }
-  return true;
 }
 
 }  // namespace
@@ -279,12 +263,14 @@ WebURLRequest::RequestContext ResourceFetcher::DetermineRequestContext(
   return WebURLRequest::kRequestContextSubresource;
 }
 
-ResourceFetcher::ResourceFetcher(FetchContext* new_context,
-                                 RefPtr<WebTaskRunner> task_runner)
+ResourceFetcher::ResourceFetcher(FetchContext* new_context)
     : context_(new_context),
       archive_(Context().IsMainFrame() ? nullptr : Context().Archive()),
+      // loadingTaskRunner() is null in tests that use the null fetch context.
       resource_timing_report_timer_(
-          std::move(task_runner),
+          Context().LoadingTaskRunner()
+              ? Context().LoadingTaskRunner()
+              : Platform::Current()->CurrentThread()->GetWebTaskRunner(),
           this,
           &ResourceFetcher::ResourceTimingReportTimerFired),
       auto_load_images_(true),
@@ -345,7 +331,7 @@ void ResourceFetcher::RequestLoadStarted(unsigned long identifier,
     PopulateTimingInfo(info.Get(), resource);
     info->ClearLoadTimings();
     info->SetLoadFinishTime(info->InitialTime());
-    scheduled_resource_timing_reports_.push_back(std::move(info));
+    scheduled_resource_timing_reports_.push_back(info.Release());
     if (!resource_timing_report_timer_.IsActive())
       resource_timing_report_timer_.StartOneShot(0, BLINK_FROM_HERE);
   }
@@ -456,10 +442,8 @@ Resource* ResourceFetcher::ResourceForStaticData(
   resource->SetCacheIdentifier(cache_identifier);
   resource->Finish();
 
-  if (ShouldResourceBeAddedToMemoryCache(params, resource) &&
-      !substitute_data.IsValid()) {
+  if (!substitute_data.IsValid())
     GetMemoryCache()->Add(resource);
-  }
 
   return resource;
 }
@@ -813,8 +797,12 @@ Resource* ResourceFetcher::CreateResourceForLoading(
   }
   resource->SetCacheIdentifier(cache_identifier);
 
-  if (ShouldResourceBeAddedToMemoryCache(params, resource))
+  // - Don't add main resource to cache to prevent reuse.
+  // - Don't add the resource if its body will not be stored.
+  if (IsMainThread() && factory.GetType() != Resource::kMainResource &&
+      params.Options().data_buffering_policy != kDoNotBufferData) {
     GetMemoryCache()->Add(resource);
+  }
   return resource;
 }
 
@@ -852,7 +840,7 @@ void ResourceFetcher::StorePerformanceTimingInitiatorInformation(
 
   if (!is_main_resource ||
       Context().UpdateTimingInfoForIFrameNavigation(info.Get())) {
-    resource_timing_info_map_.insert(resource, std::move(info));
+    resource_timing_info_map_.insert(resource, info.Release());
   }
 }
 

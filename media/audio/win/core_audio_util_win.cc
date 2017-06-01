@@ -460,7 +460,7 @@ std::string CoreAudioUtil::GetMatchingOutputDeviceID(
         GetAudioControllerID(output_device.Get(), enumerator.Get()));
     if (output_controller_id == controller_id)
       break;
-    output_device = nullptr;
+    output_device = NULL;
   }
 
   return output_device.Get() ? GetDeviceID(output_device.Get()) : std::string();

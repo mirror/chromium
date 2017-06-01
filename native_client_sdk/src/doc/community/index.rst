@@ -1,7 +1,5 @@
 .. _community:
 
-.. include:: /migration/deprecation.inc
-
 #########
 Community
 #########

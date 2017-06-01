@@ -10,7 +10,6 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/time/clock.h"
 #include "components/cryptauth/remote_device.h"
 #include "components/proximity_auth/remote_device_life_cycle.h"
 #include "components/proximity_auth/screenlock_bridge.h"
@@ -19,7 +18,6 @@
 namespace proximity_auth {
 
 class ProximityAuthClient;
-class ProximityAuthPrefManager;
 class RemoteDeviceLifeCycle;
 class UnlockManager;
 
@@ -71,9 +69,7 @@ class ProximityAuthSystem : public RemoteDeviceLifeCycle::Observer,
   // Exposed for testing.
   ProximityAuthSystem(ScreenlockType screenlock_type,
                       ProximityAuthClient* proximity_auth_client,
-                      std::unique_ptr<UnlockManager> unlock_manager,
-                      std::unique_ptr<base::Clock> clock,
-                      std::unique_ptr<ProximityAuthPrefManager> pref_manager);
+                      std::unique_ptr<UnlockManager> unlock_manager);
 
   // Creates the RemoteDeviceLifeCycle for |remote_device|.
   // Exposed for testing.
@@ -96,10 +92,6 @@ class ProximityAuthSystem : public RemoteDeviceLifeCycle::Observer,
   // timeout.
   void ResumeAfterWakeUpTimeout();
 
-  // Returns true if the user should be forced to use a password to authenticate
-  // rather than EasyUnlock.
-  bool ShouldForcePassword();
-
   // Lists of remote devices, keyed by user account id.
   std::map<AccountId, cryptauth::RemoteDeviceList> remote_devices_map_;
 
@@ -112,12 +104,6 @@ class ProximityAuthSystem : public RemoteDeviceLifeCycle::Observer,
 
   // Handles the interaction with the lock screen UI.
   std::unique_ptr<UnlockManager> unlock_manager_;
-
-  // Used to get the current timestamp.
-  std::unique_ptr<base::Clock> clock_;
-
-  // Fetches EasyUnlock preferences.
-  std::unique_ptr<ProximityAuthPrefManager> pref_manager_;
 
   // True if the system is suspended.
   bool suspended_;

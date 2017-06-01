@@ -218,18 +218,13 @@ const base::Feature kBackgroundVideoPauseOptimization{
 const base::Feature kMemoryPressureBasedSourceBufferGC{
     "MemoryPressureBasedSourceBufferGC", base::FEATURE_DISABLED_BY_DEFAULT};
 
-// On systems where pepper CDMs are enabled, use mojo CDM instead of PPAPI CDM.
-// Note that mojo CDM support is still under development. Some features are
-// still missing and this feature should only be enabled for testing.
-const base::Feature kMojoCdm{"MojoCdm", base::FEATURE_DISABLED_BY_DEFAULT};
-
 // Use the new Remote Playback / media flinging pipeline.
 const base::Feature kNewRemotePlaybackPipeline{
     "NewRemotePlaybackPipeline", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // CanPlayThrough issued according to standard.
 const base::Feature kSpecCompliantCanPlayThrough{
-    "SpecCompliantCanPlayThrough", base::FEATURE_DISABLED_BY_DEFAULT};
+    "CanPlayThrough", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Use shared block-based buffering for media.
 const base::Feature kUseNewMediaCache{"use-new-media-cache",
@@ -281,11 +276,6 @@ const base::Feature kMediaDrmPersistentLicense{
 // This is completely insecure - DO NOT USE except for testing.
 const base::Feature kD3D11VideoDecoding{"D3D11VideoDecoding",
                                         base::FEATURE_DISABLED_BY_DEFAULT};
-
-// Does NV12->NV12 video copy on the main thread right before the texture's
-// used by GL.
-const base::Feature kDelayCopyNV12Textures{"DelayCopyNV12Textures",
-                                           base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Enables H264 HW encode acceleration using Media Foundation for Windows.
 const base::Feature kMediaFoundationH264Encoding{

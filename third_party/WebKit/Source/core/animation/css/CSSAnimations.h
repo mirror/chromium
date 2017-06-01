@@ -64,6 +64,7 @@ class CSSAnimations final {
   static bool IsAnimationAffectingProperty(CSSPropertyID);
   static bool IsAffectedByKeyframesFromScope(const Element&, const TreeScope&);
   static bool IsAnimatingCustomProperties(const ElementAnimations*);
+  static bool IsCustomPropertyHandle(const PropertyHandle&);
   static void CalculateAnimationUpdate(CSSAnimationUpdate&,
                                        const Element* animating_element,
                                        Element&,
@@ -143,9 +144,9 @@ class CSSAnimations final {
     DEFINE_INLINE_TRACE() { visitor->Trace(animation); }
 
     Member<Animation> animation;
-    RefPtr<const ComputedStyle> from;
-    RefPtr<const ComputedStyle> to;
-    RefPtr<const ComputedStyle> reversing_adjusted_start_value;
+    RefPtr<AnimatableValue> from;
+    RefPtr<AnimatableValue> to;
+    RefPtr<AnimatableValue> reversing_adjusted_start_value;
     double reversing_shortening_factor;
   };
 
@@ -156,9 +157,7 @@ class CSSAnimations final {
 
   CSSAnimationUpdate pending_update_;
 
-  ActiveInterpolationsMap previous_active_interpolations_for_custom_animations_;
-  ActiveInterpolationsMap
-      previous_active_interpolations_for_standard_animations_;
+  ActiveInterpolationsMap previous_active_interpolations_for_animations_;
 
   struct TransitionUpdateState {
     STACK_ALLOCATED();
@@ -166,7 +165,6 @@ class CSSAnimations final {
     Member<const Element> animating_element;
     const ComputedStyle& old_style;
     const ComputedStyle& style;
-    RefPtr<const ComputedStyle> cloned_style;
     const TransitionMap* active_transitions;
     HashSet<PropertyHandle>& listed_properties;
     const CSSTransitionData& transition_data;

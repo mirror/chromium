@@ -35,8 +35,6 @@ static_library("core") {
     "payments_profile_comparator.h",
     "strings_util.cc",
     "strings_util.h",
-    "subkey_requester.cc",
-    "subkey_requester.h",
   ]
 
   deps = [
@@ -86,7 +84,6 @@ source_set("unit_tests") {
     "payment_method_data_unittest.cc",
     "payment_request_data_util_unittest.cc",
     "payments_profile_comparator_unittest.cc",
-    "subkey_requester_unittest.cc",
   ]
 
   deps = [

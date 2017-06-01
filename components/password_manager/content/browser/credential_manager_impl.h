@@ -9,12 +9,11 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
-#include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "components/password_manager/content/common/credential_manager.mojom.h"
 #include "components/password_manager/core/browser/credential_manager_password_form_manager.h"
-#include "components/password_manager/core/browser/credential_manager_pending_prevent_silent_access_task.h"
 #include "components/password_manager/core/browser/credential_manager_pending_request_task.h"
+#include "components/password_manager/core/browser/credential_manager_pending_require_user_mediation_task.h"
 #include "components/password_manager/core/browser/password_store_consumer.h"
 #include "components/password_manager/core/common/credential_manager_types.h"
 #include "components/prefs/pref_member.h"
@@ -43,7 +42,7 @@ class CredentialManagerImpl
       public content::WebContentsObserver,
       public CredentialManagerPasswordFormManagerDelegate,
       public CredentialManagerPendingRequestTaskDelegate,
-      public CredentialManagerPendingPreventSilentAccessTaskDelegate {
+      public CredentialManagerPendingRequireUserMediationTaskDelegate {
  public:
   CredentialManagerImpl(content::WebContents* web_contents,
                         PasswordManagerClient* client);
@@ -53,7 +52,7 @@ class CredentialManagerImpl
 
   // mojom::CredentialManager methods:
   void Store(const CredentialInfo& credential, StoreCallback callback) override;
-  void PreventSilentAccess(PreventSilentAccessCallback callback) override;
+  void RequireUserMediation(RequireUserMediationCallback callback) override;
   void Get(CredentialMediationRequirement mediation,
            bool include_passwords,
            const std::vector<GURL>& federations,
@@ -85,7 +84,7 @@ class CredentialManagerImpl
   virtual base::WeakPtr<PasswordManagerDriver> GetDriver();
 
   PasswordManagerClient* client_;
-  scoped_refptr<CredentialManagerPasswordFormManager> form_manager_;
+  std::unique_ptr<CredentialManagerPasswordFormManager> form_manager_;
 
   // Set to false to disable automatic signing in.
   BooleanPrefMember auto_signin_enabled_;
@@ -95,7 +94,7 @@ class CredentialManagerImpl
   // they can properly respond to the request once the PasswordStore gives
   // us data.
   std::unique_ptr<CredentialManagerPendingRequestTask> pending_request_;
-  std::unique_ptr<CredentialManagerPendingPreventSilentAccessTask>
+  std::unique_ptr<CredentialManagerPendingRequireUserMediationTask>
       pending_require_user_mediation_;
 
   mojo::BindingSet<mojom::CredentialManager> bindings_;

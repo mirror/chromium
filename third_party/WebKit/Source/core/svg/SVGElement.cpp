@@ -31,8 +31,8 @@
 #include "core/animation/DocumentAnimations.h"
 #include "core/animation/EffectStack.h"
 #include "core/animation/ElementAnimations.h"
+#include "core/animation/InterpolationEnvironment.h"
 #include "core/animation/InvalidatableInterpolation.h"
-#include "core/animation/SVGInterpolationEnvironment.h"
 #include "core/animation/SVGInterpolationTypesMap.h"
 #include "core/css/resolver/StyleResolver.h"
 #include "core/dom/Document.h"
@@ -214,7 +214,7 @@ void SVGElement::ApplyActiveWebAnimations() {
   for (auto& entry : active_interpolations_map) {
     const QualifiedName& attribute = entry.key.SvgAttribute();
     SVGInterpolationTypesMap map;
-    SVGInterpolationEnvironment environment(
+    InterpolationEnvironment environment(
         map, *this, PropertyFromAttribute(attribute)->BaseValueBase());
     InvalidatableInterpolation::ApplyStack(entry.value, environment);
   }
@@ -1178,7 +1178,7 @@ bool SVGElement::IsAnimatableAttribute(const QualifiedName& name) const {
   // This static is atomically initialized to dodge a warning about
   // a race when dumping debug data for a layer.
   DEFINE_THREAD_SAFE_STATIC_LOCAL(HashSet<QualifiedName>, animatable_attributes,
-                                  ({
+                                  new HashSet<QualifiedName>({
                                       SVGNames::amplitudeAttr,
                                       SVGNames::azimuthAttr,
                                       SVGNames::baseFrequencyAttr,

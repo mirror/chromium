@@ -50,7 +50,7 @@ class SVGTransformListTearOff final
       SVGTransformList* target,
       SVGElement* context_element,
       PropertyIsAnimValType property_is_anim_val,
-      const QualifiedName& attribute_name) {
+      const QualifiedName& attribute_name = QualifiedName::Null()) {
     return new SVGTransformListTearOff(target, context_element,
                                        property_is_anim_val, attribute_name);
   }

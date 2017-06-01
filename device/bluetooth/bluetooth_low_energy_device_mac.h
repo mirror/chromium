@@ -56,9 +56,6 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothLowEnergyDeviceMac
   bool ExpectingPasskey() const override;
   bool ExpectingConfirmation() const override;
   void GetConnectionInfo(const ConnectionInfoCallback& callback) override;
-  void SetConnectionLatency(ConnectionLatency connection_latency,
-                            const base::Closure& callback,
-                            const ErrorCallback& error_callback) override;
   void Connect(PairingDelegate* pairing_delegate,
                const base::Closure& callback,
                const ConnectErrorCallback& error_callback) override;
@@ -129,11 +126,11 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothLowEnergyDeviceMac
   CBPeripheral* GetPeripheral();
 
   // Returns BluetoothRemoteGattServiceMac based on the CBService.
-  BluetoothRemoteGattServiceMac* GetBluetoothRemoteGattServiceMac(
+  BluetoothRemoteGattServiceMac* GetBluetoothRemoteGattService(
       CBService* service) const;
 
   // Returns BluetoothRemoteGattDescriptorMac based on the CBDescriptor.
-  BluetoothRemoteGattDescriptorMac* GetBluetoothRemoteGattDescriptorMac(
+  BluetoothRemoteGattDescriptorMac* GetBluetoothRemoteGattDescriptor(
       CBDescriptor* cb_descriptor) const;
 
   // Callback used when the CoreBluetooth Peripheral is disconnected.

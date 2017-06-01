@@ -22,6 +22,7 @@ namespace ash {
 class ShutdownController;
 
 namespace test {
+class LockStateControllerTest;
 class LockStateControllerTestApi;
 }
 
@@ -51,6 +52,20 @@ class LockStateControllerTestApi;
 class ASH_EXPORT LockStateController : public aura::WindowTreeHostObserver,
                                        public SessionObserver {
  public:
+  // Amount of time to wait for our lock requests to be honored before giving
+  // up.
+  static const int kLockFailTimeoutMs;
+
+  // When the button has been held continuously from the unlocked state, amount
+  // of time that we wait after the screen locker window is shown before
+  // starting the pre-shutdown animation.
+  static const int kLockToShutdownTimeoutMs;
+
+  // Additional time (beyond kFastCloseAnimMs) to wait after starting the
+  // fast-close shutdown animation before actually requesting shutdown, to give
+  // the animation time to finish.
+  static const int kShutdownRequestDelayMs;
+
   explicit LockStateController(ShutdownController* shutdown_controller);
   ~LockStateController() override;
 
@@ -115,6 +130,7 @@ class ASH_EXPORT LockStateController : public aura::WindowTreeHostObserver,
   }
 
  private:
+  friend class test::LockStateControllerTest;
   friend class test::LockStateControllerTestApi;
 
   struct UnlockedStateProperties {
@@ -183,20 +199,20 @@ class ASH_EXPORT LockStateController : public aura::WindowTreeHostObserver,
   std::unique_ptr<SessionStateAnimator> animator_;
 
   // Current lock status.
-  bool system_is_locked_ = false;
+  bool system_is_locked_;
 
   // Are we in the process of shutting the machine down?
-  bool shutting_down_ = false;
+  bool shutting_down_;
 
   // Indicates whether controller should proceed to (cancellable) shutdown after
   // locking.
-  bool shutdown_after_lock_ = false;
+  bool shutdown_after_lock_;
 
   // Indicates that controller displays lock animation.
-  bool animating_lock_ = false;
+  bool animating_lock_;
 
   // Indicates that lock animation can be undone.
-  bool can_cancel_lock_animation_ = false;
+  bool can_cancel_lock_animation_;
 
   std::unique_ptr<UnlockedStateProperties> unlocked_properties_;
 

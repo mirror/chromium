@@ -10,6 +10,7 @@
 #include "ash/gpu_support_stub.h"
 #include "ash/palette_delegate.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/session/session_state_delegate.h"
 #include "ash/shell.h"
 #include "ash/shell/context_menu.h"
 #include "ash/shell/example_factory.h"
@@ -58,6 +59,27 @@ class PaletteDelegateImpl : public PaletteDelegate {
   DISALLOW_COPY_AND_ASSIGN(PaletteDelegateImpl);
 };
 
+class SessionStateDelegateImpl : public SessionStateDelegate {
+ public:
+  SessionStateDelegateImpl() : user_info_(new user_manager::UserInfoImpl()) {}
+
+  ~SessionStateDelegateImpl() override {}
+
+  // SessionStateDelegate:
+  bool ShouldShowAvatar(WmWindow* window) const override {
+    return !user_info_->GetImage().isNull();
+  }
+  gfx::ImageSkia GetAvatarImageForWindow(WmWindow* window) const override {
+    return gfx::ImageSkia();
+  }
+
+ private:
+  // A pseudo user info.
+  std::unique_ptr<user_manager::UserInfo> user_info_;
+
+  DISALLOW_COPY_AND_ASSIGN(SessionStateDelegateImpl);
+};
+
 }  // namespace
 
 ShellDelegateImpl::ShellDelegateImpl() {}
@@ -80,7 +102,7 @@ bool ShellDelegateImpl::IsRunningInForcedAppMode() const {
   return false;
 }
 
-bool ShellDelegateImpl::CanShowWindowForUser(aura::Window* window) const {
+bool ShellDelegateImpl::CanShowWindowForUser(WmWindow* window) const {
   return true;
 }
 
@@ -115,6 +137,10 @@ ShellDelegateImpl::CreateWallpaperDelegate() {
   return base::MakeUnique<DefaultWallpaperDelegate>();
 }
 
+SessionStateDelegate* ShellDelegateImpl::CreateSessionStateDelegate() {
+  return new SessionStateDelegateImpl;
+}
+
 AccessibilityDelegate* ShellDelegateImpl::CreateAccessibilityDelegate() {
   return new DefaultAccessibilityDelegate;
 }
@@ -123,9 +149,9 @@ std::unique_ptr<PaletteDelegate> ShellDelegateImpl::CreatePaletteDelegate() {
   return base::MakeUnique<PaletteDelegateImpl>();
 }
 
-ui::MenuModel* ShellDelegateImpl::CreateContextMenu(Shelf* shelf,
+ui::MenuModel* ShellDelegateImpl::CreateContextMenu(WmShelf* wm_shelf,
                                                     const ShelfItem* item) {
-  return new ContextMenu(shelf);
+  return new ContextMenu(wm_shelf);
 }
 
 GPUSupport* ShellDelegateImpl::CreateGPUSupport() {

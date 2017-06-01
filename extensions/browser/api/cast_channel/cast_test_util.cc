@@ -34,7 +34,9 @@ MockCastTransportDelegate::MockCastTransportDelegate() {
 MockCastTransportDelegate::~MockCastTransportDelegate() {
 }
 
-MockCastSocket::MockCastSocket() : mock_transport_(new MockCastTransport()) {}
+MockCastSocket::MockCastSocket()
+    : CastSocket(kTestExtensionId), mock_transport_(new MockCastTransport) {
+}
 MockCastSocket::~MockCastSocket() {
 }
 

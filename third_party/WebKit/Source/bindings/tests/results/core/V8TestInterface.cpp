@@ -36,9 +36,9 @@
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8ObjectConstructor.h"
+#include "platform/bindings/V8PrivateProperty.h"
 #include "platform/wtf/GetPtr.h"
 #include "platform/wtf/RefPtr.h"
-#include "public/platform/WebFeature.h"
 
 namespace blink {
 
@@ -374,7 +374,18 @@ static void staticReadOnlyStringAttributeAttributeGetter(const v8::FunctionCallb
 }
 
 static void staticReadOnlyReturnDOMWrapperAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
-  V8SetReturnValue(info, WTF::GetPtr(TestInterfaceImplementation::staticReadOnlyReturnDOMWrapperAttribute()), info.GetIsolate()->GetCurrentContext()->Global());
+  TestInterfaceImplementation* cppValue(WTF::GetPtr(TestInterfaceImplementation::staticReadOnlyReturnDOMWrapperAttribute()));
+
+  // Keep the wrapper object for the return value alive as long as |this|
+  // object is alive in order to save creation time of the wrapper object.
+  if (cppValue && DOMDataStore::SetReturnValue(info.GetReturnValue(), cppValue))
+    return;
+  v8::Local<v8::Value> v8Value(ToV8(cppValue, holder, info.GetIsolate()));
+  V8PrivateProperty::GetSymbol(
+      info.GetIsolate(), "KeepAlive#TestInterface#staticReadOnlyReturnDOMWrapperAttribute")
+      .Set(holder, v8Value);
+
+  V8SetReturnValue(info, v8Value);
 }
 
 static void staticConditionalReadOnlyLongAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
@@ -2152,7 +2163,7 @@ static void indexedPropertyDeleter(uint32_t index, const v8::PropertyCallbackInf
 } // namespace TestInterfaceImplementationV8Internal
 
 void V8TestInterface::testInterfaceAttributeAttributeGetterCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
-  UseCounter::Count(CurrentExecutionContext(info.GetIsolate()), WebFeature::kV8TestInterface_TestInterfaceAttribute_AttributeGetter);
+  UseCounter::Count(CurrentExecutionContext(info.GetIsolate()), UseCounter::kV8TestInterface_TestInterfaceAttribute_AttributeGetter);
 
   TestInterfaceImplementationV8Internal::testInterfaceAttributeAttributeGetter(info);
 }
@@ -2160,7 +2171,7 @@ void V8TestInterface::testInterfaceAttributeAttributeGetterCallback(const v8::Fu
 void V8TestInterface::testInterfaceAttributeAttributeSetterCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Local<v8::Value> v8Value = info[0];
 
-  UseCounter::Count(CurrentExecutionContext(info.GetIsolate()), WebFeature::kV8TestInterface_TestInterfaceAttribute_AttributeSetter);
+  UseCounter::Count(CurrentExecutionContext(info.GetIsolate()), UseCounter::kV8TestInterface_TestInterfaceAttribute_AttributeSetter);
 
   TestInterfaceImplementationV8Internal::testInterfaceAttributeAttributeSetter(v8Value, info);
 }

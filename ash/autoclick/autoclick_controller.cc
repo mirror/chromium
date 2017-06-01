@@ -9,6 +9,7 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/shell.h"
 #include "ash/wm/root_window_finder.h"
+#include "ash/wm_window.h"
 #include "base/timer/timer.h"
 #include "ui/aura/window_observer.h"
 #include "ui/aura/window_tree_host.h"
@@ -137,7 +138,8 @@ void AutoclickControllerImpl::OnScrollEvent(ui::ScrollEvent* event) {
 
 views::Widget* AutoclickControllerImpl::CreateAutoclickRingWidget(
     const gfx::Point& event_location) {
-  aura::Window* target = ash::wm::GetRootWindowAt(event_location);
+  aura::Window* target =
+      WmWindow::GetAuraWindow(ash::wm::GetRootWindowAt(event_location));
   SetTapDownTarget(target);
   aura::Window* root_window = target->GetRootWindow();
   widget_.reset(new views::Widget);
@@ -158,7 +160,8 @@ views::Widget* AutoclickControllerImpl::CreateAutoclickRingWidget(
 void AutoclickControllerImpl::UpdateAutoclickRingWidget(
     views::Widget* widget,
     const gfx::Point& event_location) {
-  aura::Window* target = ash::wm::GetRootWindowAt(event_location);
+  aura::Window* target =
+      WmWindow::GetAuraWindow(ash::wm::GetRootWindowAt(event_location));
   SetTapDownTarget(target);
   aura::Window* root_window = target->GetRootWindow();
   if (widget->GetNativeView()->GetRootWindow() != root_window) {
@@ -170,7 +173,8 @@ void AutoclickControllerImpl::UpdateAutoclickRingWidget(
 
 void AutoclickControllerImpl::DoAutoclick(const gfx::Point& event_location,
                                           const int mouse_event_flags) {
-  aura::Window* root_window = wm::GetRootWindowAt(event_location);
+  aura::Window* root_window =
+      WmWindow::GetAuraWindow(wm::GetRootWindowAt(event_location));
   DCHECK(root_window) << "Root window not found while attempting autoclick.";
 
   gfx::Point click_location(event_location);

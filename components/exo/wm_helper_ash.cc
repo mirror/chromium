@@ -107,7 +107,7 @@ bool WMHelperAsh::IsMaximizeModeWindowManagerEnabled() const {
 }
 
 void WMHelperAsh::OnWindowActivated(
-    wm::ActivationChangeObserver::ActivationReason reason,
+    aura::client::ActivationChangeObserver::ActivationReason reason,
     aura::Window* gained_active,
     aura::Window* lost_active) {
   NotifyWindowActivated(gained_active, lost_active);

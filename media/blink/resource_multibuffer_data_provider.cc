@@ -115,13 +115,15 @@ void ResourceMultiBufferDataProvider::Start() {
     WebAssociatedURLLoaderOptions options;
     if (url_data_->cors_mode() == UrlData::CORS_UNSPECIFIED) {
       options.allow_credentials = true;
-      options.fetch_request_mode = WebURLRequest::kFetchRequestModeNoCORS;
+      options.cross_origin_request_policy =
+          WebAssociatedURLLoaderOptions::kCrossOriginRequestPolicyAllow;
     } else {
       options.expose_all_response_headers = true;
       // The author header set is empty, no preflight should go ahead.
       options.preflight_policy =
           WebAssociatedURLLoaderOptions::kPreventPreflight;
-      options.fetch_request_mode = WebURLRequest::kFetchRequestModeCORS;
+      options.cross_origin_request_policy = WebAssociatedURLLoaderOptions::
+          kCrossOriginRequestPolicyUseAccessControl;
       if (url_data_->cors_mode() == UrlData::CORS_USE_CREDENTIALS)
         options.allow_credentials = true;
     }
@@ -449,10 +451,6 @@ void ResourceMultiBufferDataProvider::DidFinishLoading(double finishTime) {
 
   url_data_->set_length(size);
   fifo_.push_back(DataBuffer::CreateEOSBuffer());
-
-  if (url_data_->url_index()) {
-    url_data_->url_index()->TryInsert(url_data_);
-  }
 
   DCHECK(Available());
   url_data_->multibuffer()->OnDataProviderEvent(this);

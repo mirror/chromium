@@ -34,6 +34,8 @@ class TranslateEventProto;
 
 namespace translate {
 
+class TranslatePrefs;
+
 // Features used to enable ranker query, enforcement and logging. Note that
 // enabling enforcement implies (forces) enabling queries.
 extern const base::Feature kTranslateRankerQuery;
@@ -51,7 +53,10 @@ struct TranslateRankerFeatures {
                           const std::string& cntry,
                           const std::string& locale);
 
-  TranslateRankerFeatures(const metrics::TranslateEventProto& tep);
+  TranslateRankerFeatures(const TranslatePrefs& prefs,
+                          const std::string& src,
+                          const std::string& dst,
+                          const std::string& locale);
 
   ~TranslateRankerFeatures();
 
@@ -96,6 +101,9 @@ class TranslateRankerImpl : public TranslateRanker {
   // TranslateRanker...
   uint32_t GetModelVersion() const override;
   bool ShouldOfferTranslation(
+      const TranslatePrefs& translate_prefs,
+      const std::string& src_lang,
+      const std::string& dst_lang,
       metrics::TranslateEventProto* translate_event) override;
   void FlushTranslateEvents(
       std::vector<metrics::TranslateEventProto>* events) override;
@@ -112,8 +120,8 @@ class TranslateRankerImpl : public TranslateRanker {
       std::unique_ptr<chrome_intelligence::RankerModel> model);
 
   // Get the model decision on whether we should show the translate
-  // UI or not given |translate_event|.
-  bool GetModelDecision(const metrics::TranslateEventProto& translate_event);
+  // UI or not given |features|.
+  bool GetModelDecision(const TranslateRankerFeatures& features);
 
   // Check if the ModelLoader has been initialized. Used to test ModelLoader
   // logic.

@@ -828,15 +828,26 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         'vector-dynamic-indexing-swizzled-lvalue.html',
         ['linux', 'intel'], bug=709874)
 
+    self.Fail('deqp/functional/gles3/texturefiltering/3d_formats_04.html',
+        ['linux', 'intel'], bug=715881)
+    self.Fail('deqp/functional/gles3/texturefiltering/3d_formats_05.html',
+        ['linux', 'intel'], bug=715881)
+    self.Fail('deqp/functional/gles3/texturefiltering/3d_formats_08.html',
+        ['linux', 'intel'], bug=715881)
+    self.Fail('deqp/functional/gles3/texturefiltering/3d_formats_09.html',
+        ['linux', 'intel'], bug=715881)
+
     # Intermittently running out of memory.
-    self.Flaky('deqp/functional/gles3/texturefiltering/*',
-        ['linux', 'intel'], bug=725664)
-    self.Flaky('deqp/functional/gles3/textureformat/*',
-        ['linux', 'intel'], bug=725664)
-    self.Flaky('deqp/functional/gles3/textureshadow/*',
-        ['linux', 'intel'], bug=725664)
-    self.Flaky('deqp/functional/gles3/texturespecification/*',
-        ['linux', 'intel'], bug=725664)
+    self.Flaky('deqp/functional/gles3/texturefiltering/3d_sizes_00.html',
+        ['linux', 'intel'], bug=717023)
+    self.Flaky('deqp/functional/gles3/texturefiltering/3d_sizes_01.html',
+        ['linux', 'intel'], bug=717023)
+    self.Flaky('deqp/functional/gles3/texturefiltering/3d_sizes_02.html',
+        ['linux', 'intel'], bug=717023)
+    self.Flaky('deqp/functional/gles3/texturefiltering/3d_sizes_03.html',
+        ['linux', 'intel'], bug=717023)
+    self.Flaky('deqp/functional/gles3/texturefiltering/3d_sizes_04.html',
+        ['linux', 'intel'], bug=717023)
 
     # Linux AMD only.
     # It looks like AMD shader compiler rejects many valid ES3 semantics.
@@ -1078,6 +1089,7 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
     self.Fail('conformance2/textures/webgl_canvas/' +
         'tex-2d-rgba8ui-rgba_integer-unsigned_byte.html',
         ['linux', ('amd', 0x6613)], bug=710392)
+
     self.Fail('conformance2/textures/image_bitmap_from_video/' +
         'tex-2d-rgba16f-rgba-float.html',
         ['linux', ('amd', 0x6613)], bug=701138)
@@ -1092,15 +1104,6 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         ['linux', ('amd', 0x6613)], bug=701138)
     self.Fail('conformance2/textures/image_bitmap_from_video/' +
         'tex-2d-rgba4-rgba-unsigned_short_4_4_4_4.html',
-        ['linux', ('amd', 0x6613)], bug=701138)
-    self.Fail('conformance2/textures/image_data/' +
-        'tex-3d-rgb565-rgb-unsigned_byte.html',
-        ['linux', ('amd', 0x6613)], bug=701138)
-    self.Fail('conformance2/textures/image_data/' +
-        'tex-3d-rgb565-rgb-unsigned_short_5_6_5.html',
-        ['linux', ('amd', 0x6613)], bug=701138)
-    self.Fail('conformance2/textures/image_data/' +
-        'tex-3d-rgb5_a1-rgba-unsigned_byte.html',
         ['linux', ('amd', 0x6613)], bug=701138)
 
     # Conflicting expectations to test that the

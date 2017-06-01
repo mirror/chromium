@@ -32,8 +32,7 @@ class CORE_EXPORT ThreadedWorkletGlobalScope : public WorkletGlobalScope {
                              const String& user_agent,
                              PassRefPtr<SecurityOrigin>,
                              v8::Isolate*,
-                             WorkerThread*,
-                             WorkerClients*);
+                             WorkerThread*);
 
  private:
   friend class ThreadedWorkletThreadForTest;

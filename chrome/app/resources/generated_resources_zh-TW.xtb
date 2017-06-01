@@ -234,6 +234,7 @@
 <translation id="1358032944105037487">日文鍵盤</translation>
 <translation id="1358735829858566124">檔案或目錄無法使用。</translation>
 <translation id="1358741672408003399">拼字與文法</translation>
+<translation id="1359381790106966506">更新權限</translation>
 <translation id="1361164813881551742">手動新增</translation>
 <translation id="1361655923249334273">未使用</translation>
 <translation id="136180453919764941">電池 - <ph name="STATUS" /></translation>
@@ -835,6 +836,7 @@
 <translation id="2224551243087462610">編輯資料夾名稱</translation>
 <translation id="2226449515541314767">這個網站已遭封鎖，無法完整控制 MIDI 裝置。</translation>
 <translation id="2226720438730111184">將發生的狀況告訴我們</translation>
+<translation id="222903405933288376">Google 會使用你的位置資訊，為你提供當地的相關內容。你可以在<ph name="SETTINGS_LINK" />中變更這項設定。</translation>
 <translation id="2229161054156947610">剩下 1 個多小時</translation>
 <translation id="222931766245975952">檔案已遭截斷</translation>
 <translation id="222949136907494149"><ph name="URL" /> 要求使用電腦的位置資訊。</translation>
@@ -1086,6 +1088,7 @@
 <translation id="2575247648642144396">畫面上顯示這個圖示時，表示擴充功能可在目前網頁上運作。如要啟用這項擴充功能，請按一下圖示或按下 <ph name="EXTENSION_SHORTCUT" />。</translation>
 <translation id="2576842806987913196">已有一個 CRX 檔案使用這個名稱。</translation>
 <translation id="2579575372772932244">正在重新建立設定檔，請稍候...</translation>
+<translation id="2580168606262715640">找不到您的手機。請確認手機是否在一個手臂的距離範圍內。</translation>
 <translation id="2580889980133367162">永遠允許 <ph name="HOST" /> 下載多個檔案</translation>
 <translation id="2580924999637585241">總計：<ph name="NUMBER_OF_SHEETS" /> <ph name="SHEETS_LABEL" /></translation>
 <translation id="258095186877893873">長</translation>
@@ -1438,6 +1441,7 @@
 <translation id="3038675903128704560">不允許任何網站使用外掛程式存取你的電腦</translation>
 <translation id="3039828483675273919">正在移動 $1 個項目...</translation>
 <translation id="304009983491258911">變更 SIM 卡 PIN</translation>
+<translation id="3046838483509668188">ChromeVox 選項</translation>
 <translation id="3046910703532196514">完整的網頁</translation>
 <translation id="304826556400666995">開啟多個分頁音訊</translation>
 <translation id="3053013834507634016">憑證金鑰用途</translation>
@@ -1468,7 +1472,6 @@
 <translation id="3088325635286126843">重新命名(&amp;R)...</translation>
 <translation id="308903551226753393">自動設定</translation>
 <translation id="3089231390674410424">您的憑證似乎發生問題。請確認您已登入系統，然後再試一次。</translation>
-<translation id="3090193911106258841">正在存取音訊和視訊輸入</translation>
 <translation id="3090819949319990166">無法將外部 crx 檔案複製到 <ph name="TEMP_CRX_FILE" />。</translation>
 <translation id="3090871774332213558">「<ph name="DEVICE_NAME" />」已配對</translation>
 <translation id="3095995014811312755">版本</translation>
@@ -1515,6 +1518,7 @@
 <translation id="3154351730702813399">裝置管理員可能會監控你的瀏覽活動。</translation>
 <translation id="3154429428035006212">離線超過一個月</translation>
 <translation id="3157931365184549694">還原</translation>
+<translation id="3159386328383139451">Google 會使用你的位置資訊，為你提供更符合當地需求的服務體驗。你可以在<ph name="SETTINGS_LINK" />中變更這項設定。</translation>
 <translation id="3160041952246459240">你的檔案具備可以識別這些伺服器的憑證：</translation>
 <translation id="316125635462764134">移除應用程式</translation>
 <translation id="3161522574479303604">所有語言</translation>
@@ -2146,7 +2150,6 @@
 <translation id="4095507791297118304">主要顯示畫面</translation>
 <translation id="409579654357498729">新增至雲端列印</translation>
 <translation id="4096508467498758490">停用開發人員模式擴充功能</translation>
-<translation id="4096824249111507322">正在準備安全模組，請稍候 (這可能需要幾分鐘的時間)...</translation>
 <translation id="4099060993766194518">要還原預設搜尋引擎嗎？</translation>
 <translation id="4100733287846229632">裝置空間嚴重不足</translation>
 <translation id="4104163789986725820">匯出(&amp;X)...</translation>
@@ -2169,6 +2172,7 @@
 <translation id="4130207949184424187">這個擴充功能已變更您使用網址列搜尋時所顯示的網頁。</translation>
 <translation id="413121957363593859">元件</translation>
 <translation id="4131410914670010031">黑白</translation>
+<translation id="4135054690906486073">有其他使用者共用這個網路</translation>
 <translation id="4135450933899346655">你的憑證</translation>
 <translation id="4138267921960073861">在登入畫面中顯示使用者名稱和相片</translation>
 <translation id="4140559601186535628">推送訊息</translation>
@@ -2429,6 +2433,7 @@
 <translation id="4590324241397107707">資料庫儲存空間</translation>
 <translation id="4593021220803146968">前往 <ph name="URL" />(&amp;G)</translation>
 <translation id="4594109696316595112">只需啟用一次：輸入您的密碼即可在這部 <ph name="DEVICE_TYPE" /> 上啟用 Smart Lock。有了 Smart Lock，您不需輸入密碼即可使用手機解鎖這部裝置。如要變更或關閉這項功能，請前往 <ph name="DEVICE_TYPE" /> 的設定。</translation>
+<translation id="4594538246438948697">按住搜尋鍵，然後直接點選或拖曳，即可讓系統朗讀畫面上的任何文字</translation>
 <translation id="4595560905247879544">只有管理員 (<ph name="CUSTODIAN_NAME" />) 可以修改應用程式和擴充功能。</translation>
 <translation id="4596295440756783523">您儲存了這些伺服器的識別憑證</translation>
 <translation id="4598556348158889687">儲存空間管理</translation>
@@ -2473,7 +2478,6 @@
 <translation id="4657031070957997341">一律允許在 <ph name="HOST" /> 執行外掛程式</translation>
 <translation id="4662788913887017617">在 iPhone 上取得這個書籤</translation>
 <translation id="4664482161435122549">PKCS #12 匯出錯誤</translation>
-<translation id="466481852929361583">正在設定安全模組，可能需要幾分鐘的時間，請耐心等候。</translation>
 <translation id="4665014895760275686">製造商</translation>
 <translation id="4667176955651319626">封鎖第三方 Cookie 和網站資料</translation>
 <translation id="4668721319092543482">按一下即可啟用「<ph name="PLUGIN_NAME" />」</translation>
@@ -2570,6 +2574,9 @@
 <translation id="4813345808229079766">連線</translation>
 <translation id="4813512666221746211">網路錯誤</translation>
 <translation id="4816492930507672669">依頁面大小自動調整</translation>
+<translation id="4816617200045929931">請說明你在收到設定檔錯誤訊息前執行的確切動作：
+
+****請勿變更本行以下內容****</translation>
 <translation id="4820334425169212497">否，我沒有看到</translation>
 <translation id="4821086771593057290">你的密碼已變更，請使用你的新密碼再試一次。</translation>
 <translation id="4821935166599369261">分析已啟用(&amp;P)</translation>
@@ -2642,6 +2649,7 @@
 <translation id="490074449735753175">使用網路服務來協助解決拼字錯誤</translation>
 <translation id="49027928311173603">從伺服器下載的政策無效：<ph name="VALIDATION_ERROR" />。</translation>
 <translation id="4903369323166982260">執行 Chrome 清理工具</translation>
+<translation id="4906679076183257864">重設為預設值</translation>
 <translation id="4907161631261076876">一般使用者不常下載這個檔案，代表這個檔案可能不安全。</translation>
 <translation id="4907306957610201395">權限類別</translation>
 <translation id="4909038193460299775">這個帳戶是由 <ph name="DOMAIN" /> 所管理，因此系統會將你的書籤、歷史紀錄、密碼和其他設定從這個裝置上清除。不過，你的資料仍會儲存在你的 Google 帳戶中，並可透過 <ph name="BEGIN_LINK" />Google 資訊主頁<ph name="END_LINK" />管理。</translation>
@@ -2933,6 +2941,7 @@
 <translation id="5340217413897845242">檔案櫃項目 6</translation>
 <translation id="5341390997810576190">使用行動數據</translation>
 <translation id="5342091991439452114">PIN 至少需有 <ph name="MINIMUM" /> 碼</translation>
+<translation id="5342344590724511265">分頁當機意見回饋。</translation>
 <translation id="5342451237681332106">使用 <ph name="PHONE_NAME" /></translation>
 <translation id="534916491091036097">左括弧</translation>
 <translation id="5350965906220856151">糟糕！</translation>
@@ -3204,7 +3213,6 @@
 <translation id="5764483294734785780">將音訊另存為(&amp;V)...</translation>
 <translation id="57646104491463491">已修改日期</translation>
 <translation id="5764797882307050727">請在裝置上釋出一些空間。</translation>
-<translation id="5765425701854290211">很抱歉，部分檔案已損毀，因此無法更新。已同步的檔案則未受影響。</translation>
 <translation id="5765491088802881382">沒有可用的網路</translation>
 <translation id="5765780083710877561">說明：</translation>
 <translation id="5771585441665576801">音譯 (geia → γεια)</translation>
@@ -3215,7 +3223,6 @@
 <translation id="5774515636230743468">資訊：</translation>
 <translation id="577624874850706961">搜尋 Cookie</translation>
 <translation id="5778550464785688721">MIDI 裝置完整控制</translation>
-<translation id="5778747455497889540">以下是你的電腦專用的安全模組密碼 (由系統隨機產生)。</translation>
 <translation id="5780066559993805332">(最佳)</translation>
 <translation id="5780973441651030252">處理優先順序</translation>
 <translation id="5781865261247219930">傳送指令給「<ph name="EXTENSION_NAME" />」</translation>
@@ -3274,7 +3281,6 @@
 <translation id="5854409662653665676">如果你經常遇到問題，可嘗試執行下列步驟，以使用這個模組解決問題：</translation>
 <translation id="5854912040170951372">披薩</translation>
 <translation id="5855119960719984315">視窗切換鍵</translation>
-<translation id="5855773610748894548">糟糕，發生安全模組錯誤。</translation>
 <translation id="5856721540245522153">啟用偵錯功能</translation>
 <translation id="5857090052475505287">新資料夾</translation>
 <translation id="5859272821192576954">設定程序已完成，你可開始使用 Hangouts</translation>
@@ -3365,7 +3371,6 @@
 <translation id="6005695835120147974">媒體路由器</translation>
 <translation id="6006484371116297560">傳統版</translation>
 <translation id="6007237601604674381">移動失敗，<ph name="ERROR_MESSAGE" /></translation>
-<translation id="6010869025736512584">正在存取視訊輸入</translation>
 <translation id="6011193465932186973">指紋</translation>
 <translation id="6011449291337289699">清除網站資料</translation>
 <translation id="6015796118275082299">年</translation>
@@ -3791,7 +3796,6 @@
 <translation id="6629841649550503054">所有檔案都已備份到 <ph name="BEGIN_LINK" />Google 雲端硬碟<ph name="END_LINK" />！</translation>
 <translation id="6630752851777525409">「<ph name="EXTENSION_NAME" />」要求永久存取可代您驗證其自身的憑證。</translation>
 <translation id="6639554308659482635">SQLite 記憶體使用量</translation>
-<translation id="6641138807883536517">無法使用隨機產生的安全模組密碼。在執行 Powerwash 之後，這是正常情況。</translation>
 <translation id="6643016212128521049">清除</translation>
 <translation id="6644846457769259194">正在更新你的裝置 (<ph name="PROGRESS_PERCENT" />)</translation>
 <translation id="6647228709620733774">Netscape 憑證授權撤銷網址</translation>
@@ -3882,6 +3886,7 @@
 <translation id="6790497603648687708">「<ph name="EXTENSION_NAME" />」是從遠端新增的項目</translation>
 <translation id="6790820461102226165">新增使用者...</translation>
 <translation id="6791443592650989371">啟用狀態：</translation>
+<translation id="6792045489562677072">朗讀所選文字選項</translation>
 <translation id="6792072150955115067">「<ph name="APP_NAME" />」要求與 <ph name="TARGET_NAME" /> 分享畫面內容，請選擇你要分享的內容。</translation>
 <translation id="6793604637258913070">文字插入點出現或移動時醒目顯示</translation>
 <translation id="6797493596609571643">糟糕，發生錯誤。</translation>
@@ -4011,7 +4016,6 @@
 <translation id="6991128190741664836">稍後</translation>
 <translation id="6991665348624301627">選取印表機</translation>
 <translation id="699220179437400583">自動將疑似安全性事件的詳細資料回報給 Google</translation>
-<translation id="6996946928646015361">安全模組已停用或遺失。</translation>
 <translation id="6998711733709403587">已選取 <ph name="SELCTED_FOLDERS_COUNT" /> 個資料夾</translation>
 <translation id="6998872712520806535">{NUM_PAGES,plural, =1{以下這個網頁無回應。您可以等待網頁回應，也可以關閉網頁。}other{以下這些網頁無回應。您可以等待網頁回應，也可以關閉網頁。}}</translation>
 <translation id="7002055706763150362">如要設定 Chromebook 專用 Smart Lock，請先輸入您的密碼，讓 Google 確認操作者是您本人。</translation>
@@ -4417,7 +4421,6 @@
 <translation id="7615910377284548269">管理無沙箱防護的外掛程式封鎖設定...</translation>
 <translation id="7617366389578322136">正在連線至「<ph name="DEVICE_NAME" />」</translation>
 <translation id="761779991806306006">沒有儲存任何密碼。</translation>
-<translation id="7622114377921274169">充電中。</translation>
 <translation id="7624154074265342755">無線網路</translation>
 <translation id="7624337243375417909">大寫鎖定模式已關閉</translation>
 <translation id="7627790789328695202">糟糕！已存在名為 <ph name="FILE_NAME" /> 的檔案。請重新命名檔案並再試一次。</translation>
@@ -4501,6 +4504,7 @@
 <translation id="7765158879357617694">移動</translation>
 <translation id="7766807826975222231">觀看導覽</translation>
 <translation id="7767646430896201896">選項：</translation>
+<translation id="7768784765476638775">朗讀所選文字</translation>
 <translation id="7769353642898261262">如何確保手機的安全性</translation>
 <translation id="7769672763586021400">型號 ID</translation>
 <translation id="7771452384635174008">配置</translation>
@@ -4546,7 +4550,6 @@
 <translation id="7825423931463735974">坦米爾文鍵盤 (Tamil99)</translation>
 <translation id="782590969421016895">使用目前的網頁</translation>
 <translation id="782886543891417279">目前使用的 Wi-Fi 網路 (<ph name="WIFI_NAME" />) 可能會要求您造訪登入網頁。</translation>
-<translation id="7829298379596169484">正在存取音訊輸入</translation>
 <translation id="7831368056091621108">即可在所有裝置上取得這個擴充功能、你的瀏覽紀錄以及其他 Chrome 設定。</translation>
 <translation id="7831493768366098287">Google Print</translation>
 <translation id="7831754656372780761"><ph name="TAB_TITLE" /> <ph name="EMOJI_MUTING" /></translation>
@@ -4857,7 +4860,6 @@
 <translation id="8270242299912238708">PDF 文件</translation>
 <translation id="827097179112817503">顯示 [首頁] 按鈕</translation>
 <translation id="8272443605911821513">如要管理擴充功能，只需按一下 [其他工具] 選單裡的 [擴充功能] 即可。</translation>
-<translation id="8274924778568117936">完成更新前，請勿將 <ph name="DEVICE_TYPE" /> 關機。<ph name="DEVICE_TYPE" /> 會在安裝完成後重新啟動。</translation>
 <translation id="8275038454117074363">匯入</translation>
 <translation id="8276560076771292512">清除快取並強制重新載入</translation>
 <translation id="8279388322240498158">索拉尼庫爾德式英文鍵盤</translation>
@@ -5068,7 +5070,6 @@
 <translation id="8631032106121706562">朵朵</translation>
 <translation id="8631271110654520730">正在複製還原映像檔...</translation>
 <translation id="8632275030377321303">這位使用者無法修改 Proxy。</translation>
-<translation id="8637542770513281060">你的電腦含有安全模組，用於實作 Chrome 作業系統中許多重要的安全性功能。如需瞭解詳情，請造訪 Chromebook 說明中心：https://support.google.com/chromebook/?p=sm</translation>
 <translation id="8637688295594795546">可安裝系統更新，正在準備下載…</translation>
 <translation id="8639963783467694461">自動填入設定</translation>
 <translation id="8642171459927087831">存取憑證</translation>
@@ -5178,6 +5179,7 @@
 <translation id="8785622406424941542">觸控筆</translation>
 <translation id="8787254343425541995">允許共用網路使用 Proxy</translation>
 <translation id="878763818693997570">名稱過長</translation>
+<translation id="8789375980715484686">管理其他使用者</translation>
 <translation id="8791534160414513928">將「不追蹤」要求與瀏覽流量一併送出</translation>
 <translation id="8794025342371547160">受限 IP</translation>
 <translation id="879413103056696865">無線基地台開啟時，你的「<ph name="PHONE_NAME" />」會：</translation>
@@ -5298,6 +5300,7 @@
 <translation id="8963572037665351978">結束展示模式</translation>
 <translation id="8965037249707889821">輸入先前的密碼</translation>
 <translation id="8965697826696209160">空間不足。</translation>
+<translation id="8968527460726243404">Chrome 作業系統映像檔寫入工具</translation>
 <translation id="8970203673128054105">查看投放模式清單</translation>
 <translation id="89720367119469899">Escape</translation>
 <translation id="8972513834460200407">請與網路管理員聯絡，確認防火牆並未封鎖從 Google 伺服器下載的內容。</translation>
@@ -5472,7 +5475,6 @@
 <translation id="93766956588638423">修復擴充功能</translation>
 <translation id="938470336146445890">請安裝使用者憑證。</translation>
 <translation id="938582441709398163">鍵盤自訂快速鍵</translation>
-<translation id="939519157834106403">SSID</translation>
 <translation id="939598580284253335">請輸入通關密語</translation>
 <translation id="939736085109172342">新增資料夾</translation>
 <translation id="940425055435005472">字型大小：</translation>

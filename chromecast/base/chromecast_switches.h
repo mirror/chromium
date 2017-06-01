@@ -50,7 +50,6 @@ extern const char kAlsaVolumeElementName[];
 extern const char kAlsaMuteDeviceName[];
 extern const char kAlsaMuteElementName[];
 extern const char kMaxOutputVolumeDba1m[];
-extern const char kAudioOutputChannels[];
 
 // Memory pressure switches
 extern const char kMemPressureSystemReservedKb[];

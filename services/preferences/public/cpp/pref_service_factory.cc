@@ -41,45 +41,34 @@ void DoNothingHandleReadError(PersistentPrefStore::PrefReadError error) {}
 scoped_refptr<PrefStore> CreatePrefStoreClient(
     PrefValueStore::PrefStoreType store_type,
     std::unordered_map<PrefValueStore::PrefStoreType,
-                       mojom::PrefStoreConnectionPtr>* connections,
-    base::flat_map<PrefValueStore::PrefStoreType, scoped_refptr<PrefStore>>*
-        local_layered_pref_stores) {
-  auto local_pref_store_it = local_layered_pref_stores->find(store_type);
-  if (local_pref_store_it != local_layered_pref_stores->end()) {
-    return std::move(local_pref_store_it->second);
-  }
+                       mojom::PrefStoreConnectionPtr>* connections) {
   auto pref_store_it = connections->find(store_type);
   if (pref_store_it != connections->end()) {
-    return base::MakeRefCounted<PrefStoreClient>(
-        std::move(pref_store_it->second));
+    return make_scoped_refptr(
+        new PrefStoreClient(std::move(pref_store_it->second)));
+  } else {
+    return nullptr;
   }
-  return nullptr;
 }
 
 void OnConnect(
     scoped_refptr<RefCountedInterfacePtr<mojom::PrefStoreConnector>>
         connector_ptr,
     scoped_refptr<PrefRegistry> pref_registry,
-    base::flat_map<PrefValueStore::PrefStoreType, scoped_refptr<PrefStore>>
-        local_layered_pref_stores,
     ConnectCallback callback,
     mojom::PersistentPrefStoreConnectionPtr persistent_pref_store_connection,
     std::unordered_map<PrefValueStore::PrefStoreType,
                        mojom::PrefStoreConnectionPtr> connections) {
-  scoped_refptr<PrefStore> managed_prefs = CreatePrefStoreClient(
-      PrefValueStore::MANAGED_STORE, &connections, &local_layered_pref_stores);
-  scoped_refptr<PrefStore> supervised_user_prefs =
-      CreatePrefStoreClient(PrefValueStore::SUPERVISED_USER_STORE, &connections,
-                            &local_layered_pref_stores);
+  scoped_refptr<PrefStore> managed_prefs =
+      CreatePrefStoreClient(PrefValueStore::MANAGED_STORE, &connections);
+  scoped_refptr<PrefStore> supervised_user_prefs = CreatePrefStoreClient(
+      PrefValueStore::SUPERVISED_USER_STORE, &connections);
   scoped_refptr<PrefStore> extension_prefs =
-      CreatePrefStoreClient(PrefValueStore::EXTENSION_STORE, &connections,
-                            &local_layered_pref_stores);
+      CreatePrefStoreClient(PrefValueStore::EXTENSION_STORE, &connections);
   scoped_refptr<PrefStore> command_line_prefs =
-      CreatePrefStoreClient(PrefValueStore::COMMAND_LINE_STORE, &connections,
-                            &local_layered_pref_stores);
+      CreatePrefStoreClient(PrefValueStore::COMMAND_LINE_STORE, &connections);
   scoped_refptr<PrefStore> recommended_prefs =
-      CreatePrefStoreClient(PrefValueStore::RECOMMENDED_STORE, &connections,
-                            &local_layered_pref_stores);
+      CreatePrefStoreClient(PrefValueStore::RECOMMENDED_STORE, &connections);
   // TODO(crbug.com/719770): Once owning registrations are supported, pass the
   // default values of owned prefs to the service and connect to the service's
   // defaults pref store instead of using a local one.
@@ -110,15 +99,9 @@ void OnConnectError(
 void ConnectToPrefService(
     service_manager::Connector* connector,
     scoped_refptr<PrefRegistry> pref_registry,
-    base::flat_map<PrefValueStore::PrefStoreType, scoped_refptr<PrefStore>>
-        local_layered_pref_stores,
+    std::vector<PrefValueStore::PrefStoreType> already_connected_types,
     ConnectCallback callback,
     base::StringPiece service_name) {
-  std::vector<PrefValueStore::PrefStoreType> already_connected_types;
-  already_connected_types.reserve(local_layered_pref_stores.size());
-  for (const auto& store : local_layered_pref_stores) {
-    already_connected_types.push_back(store.first);
-  }
   already_connected_types.push_back(PrefValueStore::DEFAULT_STORE);
   auto connector_ptr = make_scoped_refptr(
       new RefCountedInterfacePtr<mojom::PrefStoreConnector>());
@@ -129,7 +112,6 @@ void ConnectToPrefService(
   connector_ptr->get()->Connect(
       std::move(serialized_pref_registry), std::move(already_connected_types),
       base::Bind(&OnConnect, connector_ptr, base::Passed(&pref_registry),
-                 base::Passed(&local_layered_pref_stores),
                  base::Passed(&callback)));
 }
 

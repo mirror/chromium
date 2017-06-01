@@ -44,8 +44,8 @@ class OffscreenCanvasSurfaceReferenceFactory
   }
 
   void SatisfySequence(const cc::SurfaceSequence& sequence) const override {
-    if (bridge_)
-      bridge_->SatisfyCallback(sequence);
+    DCHECK(bridge_);
+    bridge_->SatisfyCallback(sequence);
   }
 
   base::WeakPtr<CanvasSurfaceLayerBridge> bridge_;

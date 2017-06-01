@@ -26,7 +26,8 @@ process_entry() {
     log_error_and_exit $localpath does not start with /
   fi
   local entry="$root$localpath"
-  echo $entry
+  echo -L$entry
+  echo -Wl,-rpath-link=$entry
 }
 
 process_ld_so_conf() {

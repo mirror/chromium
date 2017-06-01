@@ -52,14 +52,14 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
                 true, "Jon Doe", "Google", "340 Main St", "CA", "Los Angeles", "", "90291", "",
                 "US", "650-253-0000", "", "en-US"));
         mHelper.setCreditCard(new CreditCard("", "https://example.com", true, true, "Jon Doe",
-                "4111111111111111", "1111", "12", "2050", "visa", R.drawable.visa_card,
+                "4111111111111111", "1111", "12", "2050", "visa", R.drawable.pr_visa,
                 mBillingAddressId, "" /* serverId */));
         // The user also has an incomplete address and an incomplete card saved.
         String mIncompleteAddressId = mHelper.setProfile(new AutofillProfile("",
                 "https://example.com", true, "In Complete", "Google", "344 Main St", "CA", "", "",
                 "90291", "", "US", "650-253-0000", "", "en-US"));
         mHelper.setCreditCard(new CreditCard("", "https://example.com", true, true, "",
-                "4111111111111111", "1111", "18", "2075", "visa", R.drawable.visa_card,
+                "4111111111111111", "1111", "18", "2075", "visa", R.drawable.pr_visa,
                 mIncompleteAddressId, "" /* serverId */));
     }
 
@@ -140,7 +140,7 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
             throws InterruptedException, ExecutionException, TimeoutException {
         // Complete a Payment Request with a credit card.
         mPaymentRequestTestRule.triggerUIAndWait("ccBuy", mPaymentRequestTestRule.getReadyToPay());
-        mPaymentRequestTestRule.clickInShippingAddressAndWait(
+        mPaymentRequestTestRule.clickInShippingSummaryAndWait(
                 R.id.payments_section, mPaymentRequestTestRule.getReadyForInput());
 
         // Select the incomplete address and edit it.
@@ -184,7 +184,7 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
             throws InterruptedException, ExecutionException, TimeoutException {
         // Complete a Payment Request with a credit card.
         mPaymentRequestTestRule.triggerUIAndWait("ccBuy", mPaymentRequestTestRule.getReadyToPay());
-        mPaymentRequestTestRule.clickInShippingAddressAndWait(
+        mPaymentRequestTestRule.clickInShippingSummaryAndWait(
                 R.id.payments_section, mPaymentRequestTestRule.getReadyForInput());
 
         // Add a new shipping address.

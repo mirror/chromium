@@ -158,14 +158,6 @@ Polymer({
 
     this.showAndroidApps_ = loadTimeData.valueExists('androidAppsAllowed') &&
         loadTimeData.getBoolean('androidAppsAllowed');
-
-    this.addEventListener('show-container', function() {
-      this.$.container.style.visibility = 'visible';
-    }.bind(this));
-
-    this.addEventListener('hide-container', function() {
-      this.$.container.style.visibility = 'hidden';
-    }.bind(this));
   },
 
   /** @private {?IntersectionObserver} */
@@ -256,9 +248,7 @@ Polymer({
 
     settings.navigateTo(
         settings.Route.BASIC,
-        query.length > 0 ?
-            new URLSearchParams('search=' + encodeURIComponent(query)) :
-            undefined,
+        query.length > 0 ? new URLSearchParams('search=' + query) : undefined,
         /* removeSearch */ true);
   },
 

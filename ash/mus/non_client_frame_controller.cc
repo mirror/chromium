@@ -21,7 +21,7 @@
 #include "ash/shared/immersive_fullscreen_controller_delegate.h"
 #include "ash/wm/panels/panel_frame_view.h"
 #include "ash/wm/window_properties.h"
-#include "ash/wm/window_util.h"
+#include "ash/wm_window.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -39,7 +39,6 @@
 #include "ui/gfx/geometry/vector2d.h"
 #include "ui/views/widget/native_widget_aura.h"
 #include "ui/views/widget/widget.h"
-#include "ui/wm/core/coordinate_conversion.h"
 
 DECLARE_UI_CLASS_PROPERTY_TYPE(ash::mus::NonClientFrameController*);
 
@@ -120,8 +119,8 @@ class ImmersiveFullscreenControllerDelegateMus
     // DCHECK is to ensure when parent changes this code is updated.
     // http://crbug.com/640392.
     DCHECK_EQ(frame_window_->parent(), title_area_window->parent());
-    ::wm::ConvertRectToScreen(title_area_window, &visible_bounds);
-    result.push_back(visible_bounds);
+    result.push_back(
+        WmWindow::Get(title_area_window)->ConvertRectToScreen(visible_bounds));
     return result;
   }
 
@@ -213,7 +212,7 @@ class WmNativeWidgetAura : public views::NativeWidgetAura {
     // marked as transparent content (see below in NonClientFrameController()
     // ctor). So, it is necessary to provide a texture-layer for the header
     // view.
-    views::View* header_view = custom_frame_view_->GetHeaderView();
+    views::View* header_view = custom_frame_view_->header_view();
     header_view->SetPaintToLayer(ui::LAYER_TEXTURED);
     header_view->layer()->SetFillsBoundsOpaquely(false);
 
@@ -263,8 +262,8 @@ class ClientViewMus : public views::ClientView {
   DISALLOW_COPY_AND_ASSIGN(ClientViewMus);
 };
 
-// Returns the frame insets to use when ShouldUseExtendedHitRegionForWindow()
-// returns true.
+// Returns the frame insets to use when ShouldUseExtendedHitRegion() returns
+// true.
 gfx::Insets GetExtendedHitRegion() {
   return gfx::Insets(kResizeOutsideBoundsSize, kResizeOutsideBoundsSize,
                      kResizeOutsideBoundsSize, kResizeOutsideBoundsSize);
@@ -333,9 +332,10 @@ NonClientFrameController::NonClientFrameController(
   layer->SetColor(SK_ColorTRANSPARENT);
   layer->SetFillsBoundsOpaquely(true);
 
+  WmWindow* wm_window = WmWindow::Get(window_);
   const gfx::Insets extended_hit_region =
-      wm::ShouldUseExtendedHitRegionForWindow(window_) ? GetExtendedHitRegion()
-                                                       : gfx::Insets();
+      wm_window->ShouldUseExtendedHitRegion() ? GetExtendedHitRegion()
+                                              : gfx::Insets();
   window_manager_client_->SetExtendedHitArea(window_, extended_hit_region);
 
   aura::client::GetTransientWindowClient()->AddObserver(this);
@@ -387,18 +387,15 @@ base::string16 NonClientFrameController::GetWindowTitle() const {
 }
 
 bool NonClientFrameController::CanResize() const {
-  return window_ && (window_->GetProperty(aura::client::kResizeBehaviorKey) &
-                     ui::mojom::kResizeBehaviorCanResize) != 0;
+  return window_ && WmWindow::Get(window_)->CanResize();
 }
 
 bool NonClientFrameController::CanMaximize() const {
-  return window_ && (window_->GetProperty(aura::client::kResizeBehaviorKey) &
-                     ui::mojom::kResizeBehaviorCanMaximize) != 0;
+  return window_ && WmWindow::Get(window_)->CanMaximize();
 }
 
 bool NonClientFrameController::CanMinimize() const {
-  return window_ && (window_->GetProperty(aura::client::kResizeBehaviorKey) &
-                     ui::mojom::kResizeBehaviorCanMinimize) != 0;
+  return window_ && WmWindow::Get(window_)->CanMinimize();
 }
 
 bool NonClientFrameController::ShouldShowWindowTitle() const {

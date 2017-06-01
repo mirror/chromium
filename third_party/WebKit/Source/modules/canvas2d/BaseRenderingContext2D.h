@@ -13,8 +13,8 @@
 #include "modules/canvas2d/CanvasPath.h"
 #include "modules/canvas2d/CanvasRenderingContext2DState.h"
 #include "modules/canvas2d/CanvasStyle.h"
-#include "platform/graphics/CanvasHeuristicParameters.h"
 #include "platform/graphics/ColorBehavior.h"
+#include "platform/graphics/ExpensiveCanvasHeuristicParameters.h"
 #include "platform/graphics/paint/PaintCanvas.h"
 #include "third_party/skia/include/effects/SkComposeImageFilter.h"
 
@@ -248,6 +248,8 @@ class MODULES_EXPORT BaseRenderingContext2D : public GarbageCollectedMixin,
 
   virtual bool isContextLost() const = 0;
 
+  virtual ColorBehavior DrawImageColorBehavior() const = 0;
+
   virtual void WillDrawImage(CanvasImageSource*) const {}
 
   virtual CanvasColorSpace ColorSpace() const {
@@ -350,7 +352,15 @@ class MODULES_EXPORT BaseRenderingContext2D : public GarbageCollectedMixin,
   HeapVector<Member<CanvasRenderingContext2DState>> state_stack_;
   AntiAliasingMode clip_antialiasing_;
 
+  void TrackDrawCall(DrawCallType,
+                     Path2D* path2d = nullptr,
+                     int width = 0,
+                     int height = 0);
+
   mutable UsageCounters usage_counters_;
+
+  float EstimateRenderingCost(
+      ExpensiveCanvasHeuristicParameters::RenderingModeCostIndex) const;
 
   virtual void NeedsFinalizeFrame(){};
 

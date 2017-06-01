@@ -5,7 +5,6 @@
 #ifndef CONTENT_PUBLIC_BROWSER_BROWSER_THREAD_H_
 #define CONTENT_PUBLIC_BROWSER_BROWSER_THREAD_H_
 
-#include <memory>
 #include <string>
 #include <utility>
 
@@ -172,13 +171,6 @@ class CONTENT_EXPORT BrowserThread {
                          const tracked_objects::Location& from_here,
                          const T* object) {
     return GetTaskRunnerForThread(identifier)->DeleteSoon(from_here, object);
-  }
-
-  template <class T>
-  static bool DeleteSoon(ID identifier,
-                         const tracked_objects::Location& from_here,
-                         std::unique_ptr<T> object) {
-    return DeleteSoon(identifier, from_here, object.release());
   }
 
   template <class T>

@@ -30,7 +30,6 @@ class WebInputEvent;
 
 namespace gl {
 class GLContext;
-class GLFence;
 class GLSurface;
 class ScopedJavaSurface;
 class SurfaceTexture;
@@ -44,7 +43,6 @@ namespace vr_shell {
 
 class FPSMeter;
 class MailboxToSurfaceBridge;
-class SlidingAverage;
 class UiElement;
 class UiScene;
 class VrBrowserInterface;
@@ -115,10 +113,6 @@ class VrShellGl : public device::mojom::VRVSyncProvider {
   void GvrInit(gvr_context* gvr_api);
   void InitializeRenderer();
   void DrawFrame(int16_t frame_index);
-  void DrawFrameSubmitWhenReady(int16_t frame_index,
-                                gvr_frame* frame_ptr,
-                                const vr::Mat4f& head_pose,
-                                std::unique_ptr<gl::GLFence> fence);
   void DrawWorldElements(const vr::Mat4f& head_pose);
   void DrawOverlayElements(const vr::Mat4f& head_pose);
   void DrawHeadLockedElements();
@@ -177,16 +171,16 @@ class VrShellGl : public device::mojom::VRVSyncProvider {
   void CreateUiSurface();
   void OnContentFrameAvailable();
   void OnWebVRFrameAvailable();
-  int64_t GetPredictedFrameTimeNanos();
+  bool GetPixelEncodedFrameIndex(uint16_t* frame_index);
 
   void OnVSync();
 
   // VRVSyncProvider
-  void GetVSync(GetVSyncCallback callback) override;
+  void GetVSync(const GetVSyncCallback& callback) override;
 
   void ForceExitVr();
 
-  void SendVSync(base::TimeDelta time, GetVSyncCallback callback);
+  void SendVSync(base::TimeDelta time, const GetVSyncCallback& callback);
 
   // samplerExternalOES texture data for main content image.
   int content_texture_id_ = 0;
@@ -223,7 +217,6 @@ class VrShellGl : public device::mojom::VRVSyncProvider {
 
   std::unique_ptr<VrShellRenderer> vr_shell_renderer_;
 
-  bool cardboard_ = false;
   bool touch_pending_ = false;
   vr::Quatf controller_quat_;
 
@@ -278,9 +271,6 @@ class VrShellGl : public device::mojom::VRVSyncProvider {
   gfx::Vector3dF controller_start_direction_;
 
   std::unique_ptr<FPSMeter> fps_meter_;
-
-  std::unique_ptr<SlidingAverage> webvr_js_time_;
-  std::unique_ptr<SlidingAverage> webvr_render_time_;
 
   gfx::Point3F pointer_start_;
 

@@ -30,7 +30,8 @@ void ManifestFetcher::Start(blink::WebFrame* frame,
 
   blink::WebAssociatedURLLoaderOptions options;
   options.allow_credentials = use_credentials;
-  options.fetch_request_mode = blink::WebURLRequest::kFetchRequestModeCORS;
+  options.cross_origin_request_policy = blink::WebAssociatedURLLoaderOptions::
+      kCrossOriginRequestPolicyUseAccessControl;
   fetcher_->SetLoaderOptions(options);
 
   fetcher_->Start(

@@ -14,8 +14,8 @@
 #include "core/editing/SelectionController.h"
 #include "core/events/DragEvent.h"
 #include "core/events/MouseEvent.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLCanvasElement.h"
 #include "core/input/EventHandler.h"
@@ -30,7 +30,6 @@
 #include "core/page/FocusController.h"
 #include "core/paint/PaintLayer.h"
 #include "core/svg/SVGDocumentExtensions.h"
-#include "platform/Histogram.h"
 #include "platform/geometry/FloatQuad.h"
 
 namespace blink {
@@ -96,7 +95,6 @@ void MouseEventManager::Clear() {
   mouse_pressed_ = false;
   click_count_ = 0;
   click_element_ = nullptr;
-  mouse_down_element_ = nullptr;
   mouse_down_pos_ = IntPoint();
   mouse_down_timestamp_ = TimeTicks();
   mouse_down_ = WebMouseEvent();
@@ -114,7 +112,6 @@ DEFINE_TRACE(MouseEventManager) {
   visitor->Trace(node_under_mouse_);
   visitor->Trace(mouse_press_node_);
   visitor->Trace(click_element_);
-  visitor->Trace(mouse_down_element_);
   SynchronousMutationObserver::Trace(visitor);
 }
 
@@ -252,10 +249,9 @@ WebInputEventResult MouseEventManager::DispatchMouseClickIfNeeded(
 #endif
 
   const bool should_dispatch_click_event =
-      click_count_ > 0 && !context_menu_event && mouse_down_element_ &&
+      click_count_ > 0 && !context_menu_event && click_element_ &&
       mouse_release_target.CanParticipateInFlatTree() &&
-      mouse_down_element_->CanParticipateInFlatTree() &&
-      mouse_down_element_->isConnected() &&
+      click_element_->CanParticipateInFlatTree() &&
       !(frame_->GetEventHandler()
             .GetSelectionController()
             .HasExtendedSelection() &&
@@ -264,45 +260,27 @@ WebInputEventResult MouseEventManager::DispatchMouseClickIfNeeded(
     return WebInputEventResult::kNotHandled;
 
   Node* click_target_node = nullptr;
-  if (mouse_down_element_ == mouse_release_target) {
-    click_target_node = mouse_down_element_;
-  } else if (mouse_down_element_->GetDocument() ==
+  if (click_element_ == mouse_release_target) {
+    click_target_node = click_element_;
+  } else if (click_element_->GetDocument() ==
              mouse_release_target.GetDocument()) {
     // Updates distribution because a 'mouseup' event listener can make the
     // tree dirty at dispatchMouseEvent() invocation above.
     // Unless distribution is updated, commonAncestor would hit ASSERT.
-    mouse_down_element_->UpdateDistribution();
+    click_element_->UpdateDistribution();
     mouse_release_target.UpdateDistribution();
     click_target_node = mouse_release_target.CommonAncestor(
-        *mouse_down_element_, EventHandlingUtil::ParentForClickEvent);
+        *click_element_, EventHandlingUtil::ParentForClickEvent);
   }
   if (!click_target_node)
     return WebInputEventResult::kNotHandled;
-
-  DEFINE_STATIC_LOCAL(BooleanHistogram, histogram,
-                      ("Event.ClickNotFiredDueToDomManipulation"));
-
-  if (click_element_ && click_element_->CanParticipateInFlatTree() &&
-      click_element_->isConnected()) {
-    DCHECK(click_element_ == mouse_down_element_);
-    histogram.Count(false);
-  } else {
-    histogram.Count(true);
-  }
-
-  if ((click_element_ && click_element_->CanParticipateInFlatTree() &&
-       click_element_->isConnected()) ||
-      RuntimeEnabledFeatures::clickRetargettingEnabled()) {
-    return DispatchMouseEvent(
-        click_target_node,
-        !RuntimeEnabledFeatures::auxclickEnabled() ||
-                (mev.Event().button == WebPointerProperties::Button::kLeft)
-            ? EventTypeNames::click
-            : EventTypeNames::auxclick,
-        mev.Event(), mev.CanvasRegionId(), nullptr);
-  }
-
-  return WebInputEventResult::kNotHandled;
+  return DispatchMouseEvent(
+      click_target_node,
+      !RuntimeEnabledFeatures::auxclickEnabled() ||
+              (mev.Event().button == WebPointerProperties::Button::kLeft)
+          ? EventTypeNames::click
+          : EventTypeNames::auxclick,
+      mev.Event(), mev.CanvasRegionId(), nullptr);
 }
 
 void MouseEventManager::FakeMouseMoveEventTimerFired(TimerBase* timer) {
@@ -313,7 +291,7 @@ void MouseEventManager::FakeMouseMoveEventTimerFired(TimerBase* timer) {
   if (is_mouse_position_unknown_)
     return;
 
-  LocalFrameView* view = frame_->View();
+  FrameView* view = frame_->View();
   if (!view)
     return;
 
@@ -363,7 +341,7 @@ void MouseEventManager::SetNodeUnderMouse(
        node_under_mouse_->GetDocument() != frame_->GetDocument())) {
     // The mouse has moved between frames.
     if (LocalFrame* frame = last_node_under_mouse->GetDocument().GetFrame()) {
-      if (LocalFrameView* frame_view = frame->View())
+      if (FrameView* frame_view = frame->View())
         frame_view->MouseExitedContentArea();
     }
   } else if (page && (layer_for_last_node &&
@@ -380,7 +358,7 @@ void MouseEventManager::SetNodeUnderMouse(
        last_node_under_mouse->GetDocument() != frame_->GetDocument())) {
     // The mouse has moved between frames.
     if (LocalFrame* frame = node_under_mouse_->GetDocument().GetFrame()) {
-      if (LocalFrameView* frame_view = frame->View())
+      if (FrameView* frame_view = frame->View())
         frame_view->MouseEnteredContentArea();
     }
   } else if (page && (layer_for_node_under_mouse &&
@@ -408,9 +386,6 @@ void MouseEventManager::NodeChildrenWillBeRemoved(ContainerNode& container) {
   if (!container.IsShadowIncludingInclusiveAncestorOf(click_element_.Get()))
     return;
   click_element_ = nullptr;
-
-  // TODO(crbug.com/716694): Do not reset mouse_down_element_ for the purpose of
-  // gathering data.
 }
 
 void MouseEventManager::NodeWillBeRemoved(Node& node_to_be_removed) {
@@ -419,9 +394,6 @@ void MouseEventManager::NodeWillBeRemoved(Node& node_to_be_removed) {
     // We don't dispatch click events if the mousedown node is removed
     // before a mouseup event. It is compatible with IE and Firefox.
     click_element_ = nullptr;
-
-    // TODO(crbug.com/716694): Do not reset mouse_down_element_ for the purpose
-    // of gathering data.
   }
 }
 
@@ -551,7 +523,7 @@ void MouseEventManager::HandleMousePressEventUpdateStates(
   mouse_down_timestamp_ =
       TimeTicks::FromSeconds(mouse_event.TimeStampSeconds());
 
-  if (LocalFrameView* view = frame_->View()) {
+  if (FrameView* view = frame_->View()) {
     mouse_down_pos_ = view->RootFrameToContents(
         FlooredIntPoint(mouse_event.PositionInRootFrame()));
   } else {
@@ -592,7 +564,7 @@ void MouseEventManager::DispatchFakeMouseMoveEventSoon() {
 
 void MouseEventManager::DispatchFakeMouseMoveEventSoonInQuad(
     const FloatQuad& quad) {
-  LocalFrameView* view = frame_->View();
+  FrameView* view = frame_->View();
   if (!view)
     return;
 
@@ -612,7 +584,7 @@ WebInputEventResult MouseEventManager::HandleMousePressEvent(
 
   frame_->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  if (LocalFrameView* frame_view = frame_->View()) {
+  if (FrameView* frame_view = frame_->View()) {
     if (frame_view->IsPointInScrollbarCorner(
             FlooredIntPoint(event.Event().PositionInRootFrame())))
       return WebInputEventResult::kNotHandled;
@@ -746,17 +718,10 @@ WebInputEventResult MouseEventManager::HandleMouseDraggedEvent(
   //    that ends as a result of a mouse release does not send a mouse release
   //    event. As a result, m_mousePressed also ends up remaining true until
   //    the next mouse release event seen by the EventHandler.
-  // 3. When pressing Esc key while dragging and the object is outside of the
-  //    we get a mouse leave event here
-  if (event.Event().button != WebPointerProperties::Button::kLeft ||
-      event.Event().GetType() == WebInputEvent::kMouseLeave)
+  if (event.Event().button != WebPointerProperties::Button::kLeft)
     mouse_pressed_ = false;
 
   if (!mouse_pressed_)
-    return WebInputEventResult::kNotHandled;
-
-  if (event.Event().pointer_type ==
-      blink::WebPointerProperties::PointerType::kPen)
     return WebInputEventResult::kNotHandled;
 
   if (HandleDrag(event, DragInitiator::kMouse))
@@ -810,8 +775,8 @@ WebInputEventResult MouseEventManager::HandleMouseDraggedEvent(
 bool MouseEventManager::HandleDrag(const MouseEventWithHitTestResults& event,
                                    DragInitiator initiator) {
   DCHECK(event.Event().GetType() == WebInputEvent::kMouseMove);
-  // Callers must protect the reference to LocalFrameView, since this function
-  // may dispatch DOM events, causing page/LocalFrameView to go away.
+  // Callers must protect the reference to FrameView, since this function may
+  // dispatch DOM events, causing page/FrameView to go away.
   DCHECK(frame_);
   DCHECK(frame_->View());
   if (!frame_->GetPage())
@@ -948,7 +913,7 @@ WebInputEventResult MouseEventManager::DispatchDragEvent(
     Node* related_target,
     const WebMouseEvent& event,
     DataTransfer* data_transfer) {
-  LocalFrameView* view = frame_->View();
+  FrameView* view = frame_->View();
   // FIXME: We might want to dispatch a dragleave even if the view is gone.
   if (!view)
     return WebInputEventResult::kNotHandled;
@@ -1016,7 +981,7 @@ void MouseEventManager::ResetDragState() {
 
 bool MouseEventManager::DragThresholdExceeded(
     const IntPoint& drag_location_in_root_frame) const {
-  LocalFrameView* view = frame_->View();
+  FrameView* view = frame_->View();
   if (!view)
     return false;
   IntPoint drag_location =
@@ -1052,7 +1017,6 @@ bool MouseEventManager::HandleSvgPanIfNeeded(bool is_release_event) {
 void MouseEventManager::InvalidateClick() {
   click_count_ = 0;
   click_element_ = nullptr;
-  mouse_down_element_ = nullptr;
 }
 
 bool MouseEventManager::MousePressed() {
@@ -1082,7 +1046,6 @@ void MouseEventManager::SetMousePressNode(Node* node) {
 void MouseEventManager::SetClickElement(Element* element) {
   SetContext(element ? element->ownerDocument() : nullptr);
   click_element_ = element;
-  mouse_down_element_ = element;
 }
 
 void MouseEventManager::SetClickCount(int click_count) {

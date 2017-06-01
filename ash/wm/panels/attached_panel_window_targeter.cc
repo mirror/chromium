@@ -4,9 +4,10 @@
 
 #include "ash/wm/panels/attached_panel_window_targeter.h"
 
-#include "ash/shelf/shelf.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/wm/panels/panel_layout_manager.h"
+#include "ash/wm_window.h"
 #include "ui/aura/window.h"
 
 namespace ash {
@@ -30,17 +31,17 @@ AttachedPanelWindowTargeter::~AttachedPanelWindowTargeter() {
 }
 
 void AttachedPanelWindowTargeter::OnShelfCreatedForRootWindow(
-    aura::Window* root_window) {
-  UpdateTouchExtend(root_window);
+    WmWindow* root_window) {
+  UpdateTouchExtend(WmWindow::GetAuraWindow(root_window));
 }
 
 void AttachedPanelWindowTargeter::OnShelfAlignmentChanged(
-    aura::Window* root_window) {
+    WmWindow* root_window) {
   // Don't update the touch insets if the shelf has not yet been created.
   if (!panel_layout_manager_->shelf())
     return;
 
-  UpdateTouchExtend(root_window);
+  UpdateTouchExtend(WmWindow::GetAuraWindow(root_window));
 }
 
 void AttachedPanelWindowTargeter::UpdateTouchExtend(aura::Window* root_window) {
@@ -51,7 +52,7 @@ void AttachedPanelWindowTargeter::UpdateTouchExtend(aura::Window* root_window) {
 
   DCHECK(panel_layout_manager_->shelf());
   gfx::Insets touch(default_touch_extend_);
-  switch (panel_layout_manager_->shelf()->alignment()) {
+  switch (panel_layout_manager_->shelf()->GetAlignment()) {
     case SHELF_ALIGNMENT_BOTTOM:
     case SHELF_ALIGNMENT_BOTTOM_LOCKED:
       set_touch_extend(

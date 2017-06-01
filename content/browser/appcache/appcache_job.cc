@@ -32,9 +32,7 @@ std::unique_ptr<AppCacheJob> AppCacheJob::Create(
   return job;
 }
 
-AppCacheJob::~AppCacheJob() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-}
+AppCacheJob::~AppCacheJob() {}
 
 base::WeakPtr<AppCacheJob> AppCacheJob::GetWeakPtr() {
   return weak_factory_.GetWeakPtr();

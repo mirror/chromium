@@ -1520,21 +1520,24 @@ void ThreadState::CollectGarbage(BlinkGC::StackState stack_state,
 
       DEFINE_THREAD_SAFE_STATIC_LOCAL(
           CustomCountHistogram, marking_time_histogram,
-          ("BlinkGC.CollectGarbage", 0, 10 * 1000, 50));
+          new CustomCountHistogram("BlinkGC.CollectGarbage", 0, 10 * 1000, 50));
       marking_time_histogram.Count(marking_time_in_milliseconds);
       DEFINE_THREAD_SAFE_STATIC_LOCAL(
           CustomCountHistogram, total_object_space_histogram,
-          ("BlinkGC.TotalObjectSpace", 0, 4 * 1024 * 1024, 50));
+          new CustomCountHistogram("BlinkGC.TotalObjectSpace", 0,
+                                   4 * 1024 * 1024, 50));
       total_object_space_histogram.Count(
           ProcessHeap::TotalAllocatedObjectSize() / 1024);
       DEFINE_THREAD_SAFE_STATIC_LOCAL(
           CustomCountHistogram, total_allocated_space_histogram,
-          ("BlinkGC.TotalAllocatedSpace", 0, 4 * 1024 * 1024, 50));
+          new CustomCountHistogram("BlinkGC.TotalAllocatedSpace", 0,
+                                   4 * 1024 * 1024, 50));
       total_allocated_space_histogram.Count(ProcessHeap::TotalAllocatedSpace() /
                                             1024);
       DEFINE_THREAD_SAFE_STATIC_LOCAL(
           EnumerationHistogram, gc_reason_histogram,
-          ("BlinkGC.GCReason", BlinkGC::kLastGCReason + 1));
+          new EnumerationHistogram("BlinkGC.GCReason",
+                                   BlinkGC::kLastGCReason + 1));
       gc_reason_histogram.Count(reason);
 
       Heap().last_gc_reason_ = reason;

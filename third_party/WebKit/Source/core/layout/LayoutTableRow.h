@@ -86,7 +86,7 @@ class CORE_EXPORT LayoutTableRow final : public LayoutTableBoxComponent {
 
   void SetRowIndex(unsigned row_index) {
     if (UNLIKELY(row_index > kMaxRowIndex))
-      IMMEDIATE_CRASH();
+      CRASH();
 
     row_index_ = row_index;
   }
@@ -139,6 +139,8 @@ class CORE_EXPORT LayoutTableRow final : public LayoutTableBoxComponent {
   bool BackgroundIsKnownToBeOpaqueInRect(const LayoutRect&) const override {
     return false;
   }
+
+  bool IsFirstRowInSectionAfterHeader() const;
 
  private:
   void AddOverflowFromCell(const LayoutTableCell*);

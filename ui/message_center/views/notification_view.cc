@@ -31,6 +31,7 @@
 #include "ui/message_center/views/padded_button.h"
 #include "ui/message_center/views/proportional_image_view.h"
 #include "ui/native_theme/native_theme.h"
+#include "ui/resources/grit/ui_resources.h"
 #include "ui/strings/grit/ui_strings.h"
 #include "ui/views/background.h"
 #include "ui/views/border.h"
@@ -220,7 +221,7 @@ NotificationView::NotificationView(MessageCenterController* controller,
 NotificationView::~NotificationView() {
 }
 
-gfx::Size NotificationView::CalculatePreferredSize() const {
+gfx::Size NotificationView::GetPreferredSize() const {
   int top_width = top_view_->GetPreferredSize().width() +
                   icon_view_->GetPreferredSize().width();
   int bottom_width = bottom_view_->GetPreferredSize().width();
@@ -343,11 +344,6 @@ gfx::NativeCursor NotificationView::GetCursor(const ui::MouseEvent& event) {
     return views::View::GetCursor(event);
 
   return views::GetNativeHandCursor();
-}
-
-void NotificationView::OnMouseMoved(const ui::MouseEvent& event) {
-  MessageView::OnMouseMoved(event);
-  UpdateControlButtonsVisibility();
 }
 
 void NotificationView::OnMouseEntered(const ui::MouseEvent& event) {

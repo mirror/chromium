@@ -7,6 +7,7 @@
 #include "ash/shell.h"
 #include "ash/wm/screen_pinning_controller.h"
 #include "ash/wm/window_state.h"
+#include "ash/wm_window.h"
 #include "base/metrics/user_metrics.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/manager/managed_display_info.h"
@@ -43,10 +44,10 @@ void ResetInternalDisplayZoom() {
 }
 
 void Unpin() {
-  aura::Window* pinned_window =
+  WmWindow* pinned_window =
       Shell::Get()->screen_pinning_controller()->pinned_window();
   if (pinned_window)
-    wm::GetWindowState(pinned_window)->Restore();
+    pinned_window->GetWindowState()->Restore();
 }
 
 }  // namespace accelerators

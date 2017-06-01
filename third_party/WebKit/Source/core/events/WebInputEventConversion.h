@@ -42,10 +42,10 @@
 
 namespace blink {
 
+class FrameView;
 class KeyboardEvent;
-class LayoutItem;
-class LocalFrameView;
 class MouseEvent;
+class LayoutItem;
 class TouchEvent;
 class WebGestureEvent;
 class WebKeyboardEvent;
@@ -60,12 +60,8 @@ class CORE_EXPORT WebMouseEventBuilder
   // NOTE: This is only implemented for mousemove, mouseover, mouseout,
   // mousedown and mouseup. If the event mapping fails, the event type will
   // be set to Undefined.
-  WebMouseEventBuilder(const LocalFrameView*,
-                       const LayoutItem,
-                       const MouseEvent&);
-  WebMouseEventBuilder(const LocalFrameView*,
-                       const LayoutItem,
-                       const TouchEvent&);
+  WebMouseEventBuilder(const FrameView*, const LayoutItem, const MouseEvent&);
+  WebMouseEventBuilder(const FrameView*, const LayoutItem, const TouchEvent&);
 };
 
 // Converts a KeyboardEvent to a corresponding WebKeyboardEvent.
@@ -89,22 +85,22 @@ class CORE_EXPORT WebTouchEventBuilder
 
 // Return a new transformed WebGestureEvent by applying the Widget's scale
 // and translation.
-CORE_EXPORT WebGestureEvent TransformWebGestureEvent(LocalFrameView*,
+CORE_EXPORT WebGestureEvent TransformWebGestureEvent(FrameView*,
                                                      const WebGestureEvent&);
-CORE_EXPORT WebMouseEvent TransformWebMouseEvent(LocalFrameView*,
+CORE_EXPORT WebMouseEvent TransformWebMouseEvent(FrameView*,
                                                  const WebMouseEvent&);
 
 CORE_EXPORT WebMouseWheelEvent
-TransformWebMouseWheelEvent(LocalFrameView*, const WebMouseWheelEvent&);
+TransformWebMouseWheelEvent(FrameView*, const WebMouseWheelEvent&);
 
-CORE_EXPORT WebTouchEvent TransformWebTouchEvent(LocalFrameView*,
+CORE_EXPORT WebTouchEvent TransformWebTouchEvent(FrameView*,
                                                  const WebTouchEvent&);
 
 Vector<WebMouseEvent> CORE_EXPORT
-TransformWebMouseEventVector(LocalFrameView*,
+TransformWebMouseEventVector(FrameView*,
                              const std::vector<const WebInputEvent*>&);
 Vector<WebTouchEvent> CORE_EXPORT
-TransformWebTouchEventVector(LocalFrameView*,
+TransformWebTouchEventVector(FrameView*,
                              const std::vector<const WebInputEvent*>&);
 
 }  // namespace blink

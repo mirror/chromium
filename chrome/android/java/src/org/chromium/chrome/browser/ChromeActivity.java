@@ -460,7 +460,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
                 if (controlContainerLayoutId == R.layout.bottom_control_container) {
                     View coordinator = findViewById(R.id.coordinator);
                     mBottomSheet = (BottomSheet) findViewById(R.id.bottom_sheet);
-                    mBottomSheet.init(coordinator, controlContainer.getView(), this);
+                    mBottomSheet.init(coordinator, controlContainer.getView());
                 }
             } finally {
                 StrictMode.setThreadPolicy(oldPolicy);
@@ -1184,7 +1184,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
 
         // The window background color is used as the resizing background color in Android N+
         // multi-window mode. See crbug.com/602366.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (Build.VERSION.CODENAME.equals("N") || Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             getWindow().setBackgroundDrawable(new ColorDrawable(
                     ApiCompatibilityUtils.getColor(getResources(),
                             R.color.resizing_background_color)));

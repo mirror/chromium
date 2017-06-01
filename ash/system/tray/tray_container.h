@@ -9,13 +9,13 @@
 #include "ui/views/view.h"
 
 namespace ash {
-class Shelf;
+class WmShelf;
 
 // Base class for tray containers. Sets the border and layout. The container
 // auto-resizes the widget when necessary.
 class TrayContainer : public views::View {
  public:
-  explicit TrayContainer(Shelf* shelf);
+  explicit TrayContainer(WmShelf* wm_shelf);
   ~TrayContainer() override;
 
   void UpdateAfterShelfAlignmentChange();
@@ -32,7 +32,7 @@ class TrayContainer : public views::View {
  private:
   void UpdateLayout();
 
-  Shelf* const shelf_;
+  WmShelf* const wm_shelf_;
 
   int main_axis_margin_ = 0;
   int cross_axis_margin_ = 0;

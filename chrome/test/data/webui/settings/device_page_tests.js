@@ -174,11 +174,6 @@ cr.define('device_page_tests', function() {
             type: chrome.settingsPrivate.PrefType.NUMBER,
             value: 500,
           },
-        },
-        note_taking_app_enabled_on_lock_screen: {
-          key: 'settings.note_taking_app_enabled_on_lock_screen',
-          type: chrome.settingsPrivate.PrefType.BOOLEAN,
-          value: false
         }
       }
     };
@@ -222,8 +217,7 @@ cr.define('device_page_tests', function() {
     function showAndGetDeviceSubpage(subpage, expectedRoute) {
       return new Promise(function(resolve, reject) {
         var row = assert(devicePage.$$('#main #' + subpage + 'Row'));
-        devicePage.$$('#pages').addEventListener(
-            'neon-animation-finish', resolve);
+        devicePage.$.pages.addEventListener('neon-animation-finish', resolve);
         MockInteractions.tap(row);
       }).then(function() {
         assertEquals(expectedRoute, settings.getCurrentRoute());
@@ -234,7 +228,7 @@ cr.define('device_page_tests', function() {
 
     /**
      * @param {!HTMLElement} pointersPage
-     * @param {boolean} expected
+     * @param {Boolean} expected
      */
     function expectNaturalScrollValue(pointersPage, expected) {
       var naturalScrollOff =
@@ -251,16 +245,16 @@ cr.define('device_page_tests', function() {
     }
 
     test(assert(TestNames.DevicePage), function() {
-      expectLT(0, devicePage.$$('#pointersRow').offsetHeight);
-      expectLT(0, devicePage.$$('#keyboardRow').offsetHeight);
-      expectLT(0, devicePage.$$('#displayRow').offsetHeight);
+      expectLT(0, devicePage.$.pointersRow.offsetHeight);
+      expectLT(0, devicePage.$.keyboardRow.offsetHeight);
+      expectLT(0, devicePage.$.displayRow.offsetHeight);
 
       cr.webUIListenerCallback('has-mouse-changed', false);
-      expectLT(0, devicePage.$$('#pointersRow').offsetHeight);
+      expectLT(0, devicePage.$.pointersRow.offsetHeight);
       cr.webUIListenerCallback('has-touchpad-changed', false);
-      expectEquals(0, devicePage.$$('#pointersRow').offsetHeight);
+      expectEquals(0, devicePage.$.pointersRow.offsetHeight);
       cr.webUIListenerCallback('has-mouse-changed', true);
-      expectLT(0, devicePage.$$('#pointersRow').offsetHeight);
+      expectLT(0, devicePage.$.pointersRow.offsetHeight);
     });
 
     suite(assert(TestNames.Pointers), function() {
@@ -275,22 +269,21 @@ cr.define('device_page_tests', function() {
 
       test('subpage responds to pointer attach/detach', function() {
         assertEquals(settings.Route.POINTERS, settings.getCurrentRoute());
-        assertLT(0, pointersPage.$$('#mouse').offsetHeight);
-        assertLT(0, pointersPage.$$('#touchpad').offsetHeight);
+        assertLT(0, pointersPage.$.mouse.offsetHeight);
+        assertLT(0, pointersPage.$.touchpad.offsetHeight);
         assertLT(0, pointersPage.$$('#mouse h2').offsetHeight);
         assertLT(0, pointersPage.$$('#touchpad h2').offsetHeight);
 
         cr.webUIListenerCallback('has-touchpad-changed', false);
         assertEquals(settings.Route.POINTERS, settings.getCurrentRoute());
-        assertLT(0, pointersPage.$$('#mouse').offsetHeight);
-        assertEquals(0, pointersPage.$$('#touchpad').offsetHeight);
+        assertLT(0, pointersPage.$.mouse.offsetHeight);
+        assertEquals(0, pointersPage.$.touchpad.offsetHeight);
         assertEquals(0, pointersPage.$$('#mouse h2').offsetHeight);
         assertEquals(0, pointersPage.$$('#touchpad h2').offsetHeight);
 
         // Wait for the transition back to the main page.
         return new Promise(function(resolve, reject) {
-          devicePage.$$('#pages').addEventListener(
-              'neon-animation-finish', resolve);
+          devicePage.$.pages.addEventListener('neon-animation-finish', resolve);
 
           cr.webUIListenerCallback('has-mouse-changed', false);
         }).then(function() {
@@ -301,29 +294,28 @@ cr.define('device_page_tests', function() {
           assertLT(0, devicePage.$$('#main #pointersRow').offsetHeight);
           return showAndGetDeviceSubpage('pointers', settings.Route.POINTERS);
         }).then(function(page) {
-          assertEquals(0, pointersPage.$$('#mouse').offsetHeight);
-          assertLT(0, pointersPage.$$('#touchpad').offsetHeight);
+          assertEquals(0, pointersPage.$.mouse.offsetHeight);
+          assertLT(0, pointersPage.$.touchpad.offsetHeight);
           assertEquals(0, pointersPage.$$('#mouse h2').offsetHeight);
           assertEquals(0, pointersPage.$$('#touchpad h2').offsetHeight);
 
           cr.webUIListenerCallback('has-mouse-changed', true);
           assertEquals(settings.Route.POINTERS, settings.getCurrentRoute());
-          assertLT(0, pointersPage.$$('#mouse').offsetHeight);
-          assertLT(0, pointersPage.$$('#touchpad').offsetHeight);
+          assertLT(0, pointersPage.$.mouse.offsetHeight);
+          assertLT(0, pointersPage.$.touchpad.offsetHeight);
           assertLT(0, pointersPage.$$('#mouse h2').offsetHeight);
           assertLT(0, pointersPage.$$('#touchpad h2').offsetHeight);
         });
       });
 
       test('mouse', function() {
-        expectLT(0, pointersPage.$$('#mouse').offsetHeight);
+        expectLT(0, pointersPage.$.mouse.offsetHeight);
 
         expectFalse(pointersPage.$$('#mouse settings-toggle-button').checked);
 
         var slider = assert(pointersPage.$$('#mouse settings-slider'));
         expectEquals(4, slider.pref.value);
-        MockInteractions.pressAndReleaseKeyOn(
-            slider.$$('#slider'), 37 /* left */);
+        MockInteractions.pressAndReleaseKeyOn(slider.$.slider, 37 /* left */);
         expectEquals(3, devicePage.prefs.settings.mouse.sensitivity2.value);
 
         pointersPage.set('prefs.settings.mouse.sensitivity2.value', 5);
@@ -331,15 +323,14 @@ cr.define('device_page_tests', function() {
       });
 
       test('touchpad', function() {
-        expectLT(0, pointersPage.$$('#touchpad').offsetHeight);
+        expectLT(0, pointersPage.$.touchpad.offsetHeight);
 
         expectTrue(pointersPage.$$('#touchpad #enableTapToClick').checked);
         expectFalse(pointersPage.$$('#touchpad #enableTapDragging').checked);
 
         var slider = assert(pointersPage.$$('#touchpad settings-slider'));
         expectEquals(3, slider.pref.value);
-        MockInteractions.pressAndReleaseKeyOn(
-            slider.$$('#slider'), 39 /* right */);
+        MockInteractions.pressAndReleaseKeyOn(slider.$.slider, 39 /* right */);
         expectEquals(4, devicePage.prefs.settings.touchpad.sensitivity2.value);
 
         pointersPage.set('prefs.settings.touchpad.sensitivity2.value', 2);
@@ -409,14 +400,14 @@ cr.define('device_page_tests', function() {
         assertTrue(!!collapse);
         expectTrue(collapse.opened);
 
-        expectEquals(500, keyboardPage.$$('#delaySlider').pref.value);
-        expectEquals(500, keyboardPage.$$('#repeatRateSlider').pref.value);
+        expectEquals(500, keyboardPage.$.delaySlider.pref.value);
+        expectEquals(500, keyboardPage.$.repeatRateSlider.pref.value);
 
         // Test interaction with the settings-slider's underlying paper-slider.
         MockInteractions.pressAndReleaseKeyOn(
-            keyboardPage.$$('#delaySlider').$$('#slider'), 37 /* left */);
+            keyboardPage.$.delaySlider.$.slider, 37 /* left */);
         MockInteractions.pressAndReleaseKeyOn(
-            keyboardPage.$$('#repeatRateSlider').$$('#slider'), 39 /* right */);
+            keyboardPage.$.repeatRateSlider.$.slider, 39 /* right */);
         var language = devicePage.prefs.settings.language;
         expectEquals(1000, language.xkb_auto_repeat_delay_r2.value);
         expectEquals(300, language.xkb_auto_repeat_interval_r2.value);
@@ -424,19 +415,19 @@ cr.define('device_page_tests', function() {
         // Test sliders change when prefs change.
         devicePage.set(
             'prefs.settings.language.xkb_auto_repeat_delay_r2.value', 1500);
-        expectEquals(1500, keyboardPage.$$('#delaySlider').pref.value);
+        expectEquals(1500, keyboardPage.$.delaySlider.pref.value);
         devicePage.set(
             'prefs.settings.language.xkb_auto_repeat_interval_r2.value',
             2000);
-        expectEquals(2000, keyboardPage.$$('#repeatRateSlider').pref.value);
+        expectEquals(2000, keyboardPage.$.repeatRateSlider.pref.value);
 
         // Test sliders round to nearest value when prefs change.
         devicePage.set(
             'prefs.settings.language.xkb_auto_repeat_delay_r2.value', 600);
-        expectEquals(500, keyboardPage.$$('#delaySlider').pref.value);
+        expectEquals(500, keyboardPage.$.delaySlider.pref.value);
         devicePage.set(
             'prefs.settings.language.xkb_auto_repeat_interval_r2.value', 45);
-        expectEquals(50, keyboardPage.$$('#repeatRateSlider').pref.value);
+        expectEquals(50, keyboardPage.$.repeatRateSlider.pref.value);
 
         devicePage.set(
             'prefs.settings.language.xkb_auto_repeat_enabled_r2.value',
@@ -702,7 +693,6 @@ cr.define('device_page_tests', function() {
       var waitingDiv;
       var selectAppDiv;
 
-
       suiteSetup(function() {
         // Always show stylus settings.
         loadTimeData.overrideValues({
@@ -727,54 +717,33 @@ cr.define('device_page_tests', function() {
       });
 
       // Helper function to allocate a note app entry.
-      function entry(name, value, preferred, supportsLockScreen) {
+      function entry(name, value, preferred) {
         return {
           name: name,
           value: value,
-          preferred: preferred,
-          supportsLockScreen: supportsLockScreen
+          preferred: preferred
         };
-      }
-
-      /**
-       * @return {Element | undefined}
-       */
-      function enableAppOnLockScreenToggle() {
-        return stylusPage.$$('#enable-app-on-lock-screen-toggle');
-      }
-
-      /**
-       * @param {Element|undefined} element
-       */
-      function isVisible(element) {
-        return !!element && element.offsetWidth > 0 && element.offsetHeight > 0;
       }
 
       test('initial app choice selector value', function() {
         // Selector chooses the first value in list if there is no preferred
         // value set.
-        browserProxy.onNoteTakingAppsUpdated_([
-          entry('n1', 'v1', false, false),
-          entry('n2', 'v2', false, false)
-        ], false);
+        browserProxy.onNoteTakingAppsUpdated_(
+            [entry('n1', 'v1', false), entry('n2', 'v2', false)], false);
         Polymer.dom.flush();
         assertEquals('v1', appSelector.value);
 
         // Selector chooses the preferred value if set.
-        browserProxy.onNoteTakingAppsUpdated_([
-          entry('n1', 'v1', false, false),
-          entry('n2', 'v2', true, false)
-        ], false);
+        browserProxy.onNoteTakingAppsUpdated_(
+            [entry('n1', 'v1', false), entry('n2', 'v2', true)], false);
         Polymer.dom.flush();
         assertEquals('v2', appSelector.value);
       });
 
       test('change preferred app', function() {
         // Load app list.
-        browserProxy.onNoteTakingAppsUpdated_([
-          entry('n1', 'v1', false, false),
-          entry('n2', 'v2', true, false)
-        ], false);
+        browserProxy.onNoteTakingAppsUpdated_(
+            [entry('n1', 'v1', false), entry('n2', 'v2', true)], false);
         Polymer.dom.flush();
         assertEquals('', browserProxy.setPreferredNoteTakingApp_);
 
@@ -795,22 +764,16 @@ cr.define('device_page_tests', function() {
         Polymer.dom.flush();
         assertEquals('', browserProxy.setPreferredNoteTakingApp_);
 
-        browserProxy.onNoteTakingAppsUpdated_([
-          entry('n', 'v', false, false)
-        ], true);
+        browserProxy.onNoteTakingAppsUpdated_([entry('n', 'v', false)], true);
         Polymer.dom.flush();
         assertEquals('', browserProxy.setPreferredNoteTakingApp_);
 
-        browserProxy.onNoteTakingAppsUpdated_([
-          entry('n', 'v', false, false)
-        ], false);
+        browserProxy.onNoteTakingAppsUpdated_([entry('n', 'v', false)], false);
         Polymer.dom.flush();
         assertEquals('', browserProxy.setPreferredNoteTakingApp_);
 
-        browserProxy.onNoteTakingAppsUpdated_([
-          entry('n1', 'v1', false, false),
-          entry('n2', 'v2', true, false)
-        ], false);
+        browserProxy.onNoteTakingAppsUpdated_(
+            [entry('n1', 'v1', false), entry('n2', 'v2', true)], false);
         Polymer.dom.flush();
         assertEquals('', browserProxy.setPreferredNoteTakingApp_);
       });
@@ -828,145 +791,16 @@ cr.define('device_page_tests', function() {
         assert(!waitingDiv.hidden);
         assert(selectAppDiv.hidden);
 
-        browserProxy.onNoteTakingAppsUpdated_([
-          entry('n', 'v', false, false)
-        ], true);
+        browserProxy.onNoteTakingAppsUpdated_([entry('n', 'v', false)], true);
         assert(noAppsDiv.hidden);
         assert(!waitingDiv.hidden);
         assert(selectAppDiv.hidden);
 
         // Apps loaded, show selector.
-        browserProxy.onNoteTakingAppsUpdated_([
-          entry('n', 'v', false, false)
-        ], false);
+        browserProxy.onNoteTakingAppsUpdated_([entry('n', 'v', false)], false);
         assert(noAppsDiv.hidden);
         assert(waitingDiv.hidden);
         assert(!selectAppDiv.hidden);
-      });
-
-      test('enabled-on-lock-screen', function() {
-        expectFalse(isVisible(enableAppOnLockScreenToggle()));
-
-        return new Promise(function(resolve) {
-          // No apps available.
-          browserProxy.onNoteTakingAppsUpdated_([], false);
-          stylusPage.async(resolve);
-        }).then(function() {
-          Polymer.dom.flush();
-          expectFalse(isVisible(enableAppOnLockScreenToggle()));
-
-          // Single app which does not support lock screen note taking.
-          browserProxy.onNoteTakingAppsUpdated_([
-            entry('n1', 'v1', false, false)
-          ], false);
-          return new Promise(function(resolve) {stylusPage.async(resolve);});
-        }).then(function() {
-          Polymer.dom.flush();
-          expectFalse(isVisible(enableAppOnLockScreenToggle()));
-
-          // Add an app with lock screen support, but do not select it yet.
-          browserProxy.onNoteTakingAppsUpdated_([
-            entry('n1', 'v1', false, false),
-            entry('n2', 'v2', false, true)
-          ], false);
-          return new Promise(function(resolve) { stylusPage.async(resolve); });
-        }).then(function() {
-          Polymer.dom.flush();
-          expectFalse(isVisible(enableAppOnLockScreenToggle()));
-
-          // Select the app with lock screen app support.
-          appSelector.value = 'v2';
-          stylusPage.onSelectedAppChanged_();
-          assertEquals('v2', browserProxy.setPreferredNoteTakingApp_);
-
-          Polymer.dom.flush();
-          assert(isVisible(enableAppOnLockScreenToggle()));
-          expectFalse(enableAppOnLockScreenToggle().checked);
-
-          devicePage.set(
-              'prefs.settings.note_taking_app_enabled_on_lock_screen.value',
-              true);
-          Polymer.dom.flush();
-          assert(isVisible(enableAppOnLockScreenToggle()));
-          expectTrue(enableAppOnLockScreenToggle().checked);
-
-          // Select the app that does not support lock screen again.
-          appSelector.value = 'v1';
-          stylusPage.onSelectedAppChanged_();
-          assertEquals('v1', browserProxy.setPreferredNoteTakingApp_);
-
-          Polymer.dom.flush();
-          expectFalse(isVisible(enableAppOnLockScreenToggle()));
-        });
-      });
-
-      test('initial-app-lock-screen-enabled', function() {
-        return new Promise(function(resolve) {
-          // No apps available.
-          browserProxy.onNoteTakingAppsUpdated_([
-            entry('n1', 'v1', true, true)
-          ], false);
-          stylusPage.async(resolve);
-        }).then(function() {
-          Polymer.dom.flush();
-
-          assert(isVisible(enableAppOnLockScreenToggle()));
-          expectFalse(enableAppOnLockScreenToggle().checked);
-
-          devicePage.set(
-              'prefs.settings.note_taking_app_enabled_on_lock_screen.value',
-              true);
-          Polymer.dom.flush();
-          assert(isVisible(enableAppOnLockScreenToggle()));
-          expectTrue(enableAppOnLockScreenToggle().checked);
-
-          devicePage.set(
-              'prefs.settings.note_taking_app_enabled_on_lock_screen.value',
-              false);
-          Polymer.dom.flush();
-          assert(isVisible(enableAppOnLockScreenToggle()));
-          expectFalse(enableAppOnLockScreenToggle().checked);
-
-          browserProxy.onNoteTakingAppsUpdated_([], false);
-          return new Promise(function(resolve) { stylusPage.async(resolve); });
-        }).then(function() {
-          Polymer.dom.flush();
-          expectFalse(isVisible(enableAppOnLockScreenToggle()));
-        });
-      });
-
-      test('tap-on-enable-note-taking-on-lock-screen', function() {
-        return new Promise(function(resolve) {
-          // No apps available.
-          browserProxy.onNoteTakingAppsUpdated_([
-            entry('n1', 'v1', true, true)
-          ], false);
-          stylusPage.async(resolve);
-        }).then(function() {
-          Polymer.dom.flush();
-
-          assert(isVisible(enableAppOnLockScreenToggle()));
-          expectFalse(enableAppOnLockScreenToggle().checked);
-
-          expectFalse(
-              devicePage.prefs.settings.note_taking_app_enabled_on_lock_screen
-                  .value);
-          Polymer.dom.flush();
-          assert(isVisible(enableAppOnLockScreenToggle()));
-          expectFalse(enableAppOnLockScreenToggle().checked);
-
-          MockInteractions.tap(enableAppOnLockScreenToggle().$$('#control'));
-          expectTrue(enableAppOnLockScreenToggle().checked);
-          expectTrue(
-              devicePage.prefs.settings.note_taking_app_enabled_on_lock_screen
-                  .value);
-
-          MockInteractions.tap(enableAppOnLockScreenToggle().$$('#control'));
-          expectFalse(enableAppOnLockScreenToggle().checked);
-          expectFalse(
-              devicePage.prefs.settings.note_taking_app_enabled_on_lock_screen
-                  .value);
-        });
       });
     });
   });

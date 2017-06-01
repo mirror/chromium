@@ -100,12 +100,12 @@ BluetoothAdapterMac::BluetoothAdapterMac()
             initWithDiscoveryManager:low_energy_discovery_manager_.get()
                           andAdapter:this]);
     low_energy_central_manager_.reset([[CBCentralManager alloc]
-        initWithDelegate:low_energy_central_manager_delegate_
+        initWithDelegate:low_energy_central_manager_delegate_.get()
                    queue:dispatch_get_main_queue()]);
     low_energy_discovery_manager_->SetCentralManager(
-        low_energy_central_manager_);
+        low_energy_central_manager_.get());
   }
-  DCHECK(classic_discovery_manager_);
+  DCHECK(classic_discovery_manager_.get());
 }
 
 BluetoothAdapterMac::~BluetoothAdapterMac() {
@@ -293,7 +293,8 @@ void BluetoothAdapterMac::SetCentralManagerForTesting(
   central_manager.delegate = low_energy_central_manager_delegate_;
   low_energy_central_manager_.reset(central_manager,
                                     base::scoped_policy::RETAIN);
-  low_energy_discovery_manager_->SetCentralManager(low_energy_central_manager_);
+  low_energy_discovery_manager_->SetCentralManager(
+      low_energy_central_manager_.get());
 }
 
 CBCentralManager* BluetoothAdapterMac::GetCentralManager() {
@@ -544,14 +545,12 @@ void BluetoothAdapterMac::LowEnergyDeviceUpdated(
   NSArray* service_uuids =
       [advertisement_data objectForKey:CBAdvertisementDataServiceUUIDsKey];
   for (CBUUID* uuid in service_uuids) {
-    advertised_uuids.push_back(
-        BluetoothAdapterMac::BluetoothUUIDWithCBUUID(uuid));
+    advertised_uuids.push_back(BluetoothUUID([[uuid UUIDString] UTF8String]));
   }
   NSArray* overflow_service_uuids = [advertisement_data
       objectForKey:CBAdvertisementDataOverflowServiceUUIDsKey];
   for (CBUUID* uuid in overflow_service_uuids) {
-    advertised_uuids.push_back(
-        BluetoothAdapterMac::BluetoothUUIDWithCBUUID(uuid));
+    advertised_uuids.push_back(BluetoothUUID([[uuid UUIDString] UTF8String]));
   }
 
   // Get Service Data.
@@ -562,7 +561,7 @@ void BluetoothAdapterMac::LowEnergyDeviceUpdated(
     NSData* data = [service_data objectForKey:uuid];
     const uint8_t* bytes = static_cast<const uint8_t*>([data bytes]);
     size_t length = [data length];
-    service_data_map.emplace(BluetoothAdapterMac::BluetoothUUIDWithCBUUID(uuid),
+    service_data_map.emplace(BluetoothUUID([[uuid UUIDString] UTF8String]),
                              std::vector<uint8_t>(bytes, bytes + length));
   }
 
@@ -588,27 +587,10 @@ void BluetoothAdapterMac::LowEnergyDeviceUpdated(
   }
 }
 
-// TODO(crbug.com/511025): Handle state < CBCentralManagerStatePoweredOff.
+// TODO(krstnmnlsn): Implement. crbug.com/511025
 void BluetoothAdapterMac::LowEnergyCentralManagerUpdatedState() {
   VLOG(1) << "Central manager state updated: "
           << [low_energy_central_manager_ state];
-  // A state with a value lower than CBCentralManagerStatePoweredOn implies that
-  // scanning has stopped and that any connected peripherals have been
-  // disconnected. Call DidDisconnectPeripheral manually to update the devices'
-  // states since macOS doesn't call it.
-  // See
-  // https://developer.apple.com/reference/corebluetooth/cbcentralmanagerdelegate/1518888-centralmanagerdidupdatestate?language=objc
-  if ([low_energy_central_manager_ state] < CBCentralManagerStatePoweredOn) {
-    VLOG(1)
-        << "Central no longer powered on. Notifying of device disconnection.";
-    for (BluetoothDevice* device : GetDevices()) {
-      BluetoothLowEnergyDeviceMac* device_mac =
-          static_cast<BluetoothLowEnergyDeviceMac*>(device);
-      if (device_mac->IsGattConnected()) {
-        device_mac->DidDisconnectPeripheral(nullptr);
-      }
-    }
-  }
 }
 
 void BluetoothAdapterMac::AddPairedDevices() {

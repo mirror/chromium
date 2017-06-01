@@ -477,19 +477,21 @@ void HttpStreamFactoryImpl::JobController::OnNewSpdySessionReady(
 
     MarkRequestComplete(was_alpn_negotiated, negotiated_protocol, using_spdy);
 
+    std::unique_ptr<HttpStream> stream;
+    std::unique_ptr<BidirectionalStreamImpl> bidirectional_stream_impl;
+
     if (for_websockets()) {
       // TODO(ricea): Re-instate this code when WebSockets over SPDY is
       // implemented.
       NOTREACHED();
     } else if (job->stream_type() == HttpStreamRequest::BIDIRECTIONAL_STREAM) {
-      std::unique_ptr<BidirectionalStreamImpl> bidirectional_stream_impl =
-          job->ReleaseBidirectionalStream();
+      bidirectional_stream_impl = job->ReleaseBidirectionalStream();
       DCHECK(bidirectional_stream_impl);
       delegate_->OnBidirectionalStreamImplReady(
           used_ssl_config, used_proxy_info,
           bidirectional_stream_impl.release());
     } else {
-      std::unique_ptr<HttpStream> stream = job->ReleaseStream();
+      stream = job->ReleaseStream();
       DCHECK(stream);
       delegate_->OnStreamReady(used_ssl_config, used_proxy_info,
                                stream.release());
@@ -869,7 +871,7 @@ void HttpStreamFactoryImpl::JobController::ReportBrokenAlternativeService() {
   }
 
   if (failed_alternative_proxy_server_.is_valid()) {
-    ProxyDelegate* proxy_delegate = session_->context().proxy_delegate;
+    ProxyDelegate* proxy_delegate = session_->params().proxy_delegate;
     if (proxy_delegate) {
       proxy_delegate->OnAlternativeProxyBroken(
           failed_alternative_proxy_server_);
@@ -892,7 +894,8 @@ void HttpStreamFactoryImpl::JobController::MaybeNotifyFactoryOfCompletion() {
 GURL HttpStreamFactoryImpl::JobController::ApplyHostMappingRules(
     const GURL& url,
     HostPortPair* endpoint) {
-  if (session_->params().host_mapping_rules.RewriteHost(endpoint)) {
+  const HostMappingRules* mapping_rules = session_->params().host_mapping_rules;
+  if (mapping_rules && mapping_rules->RewriteHost(endpoint)) {
     url::Replacements<char> replacements;
     const std::string port_str = base::UintToString(endpoint->port());
     replacements.SetPort(port_str.c_str(), url::Component(0, port_str.size()));
@@ -1081,7 +1084,7 @@ bool HttpStreamFactoryImpl::JobController::
     return false;
   }
 
-  ProxyDelegate* proxy_delegate = session_->context().proxy_delegate;
+  ProxyDelegate* proxy_delegate = session_->params().proxy_delegate;
   if (!proxy_delegate)
     return false;
 

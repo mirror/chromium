@@ -329,19 +329,17 @@ GaiaAuthFetcherIOS::GaiaAuthFetcherIOS(GaiaAuthConsumer* consumer,
 GaiaAuthFetcherIOS::~GaiaAuthFetcherIOS() {
 }
 
-void GaiaAuthFetcherIOS::CreateAndStartGaiaFetcher(
-    const std::string& body,
-    const std::string& headers,
-    const GURL& gaia_gurl,
-    int load_flags,
-    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
+void GaiaAuthFetcherIOS::CreateAndStartGaiaFetcher(const std::string& body,
+                                                   const std::string& headers,
+                                                   const GURL& gaia_gurl,
+                                                   int load_flags) {
   DCHECK(!HasPendingFetch()) << "Tried to fetch two things at once!";
 
   bool cookies_required = !(load_flags & (net::LOAD_DO_NOT_SEND_COOKIES |
                                           net::LOAD_DO_NOT_SAVE_COOKIES));
   if (!ShouldUseGaiaAuthFetcherIOS() || !cookies_required) {
     GaiaAuthFetcher::CreateAndStartGaiaFetcher(body, headers, gaia_gurl,
-                                               load_flags, traffic_annotation);
+                                               load_flags);
     return;
   }
 

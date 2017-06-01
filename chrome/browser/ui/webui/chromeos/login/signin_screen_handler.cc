@@ -34,6 +34,7 @@
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/app_mode/kiosk_app_manager.h"
+#include "chrome/browser/chromeos/input_method/input_method_util.h"
 #include "chrome/browser/chromeos/language_preferences.h"
 #include "chrome/browser/chromeos/lock_screen_apps/state_controller.h"
 #include "chrome/browser/chromeos/login/error_screens_histogram_helper.h"
@@ -71,6 +72,7 @@
 #include "chrome/common/channel_info.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
+#include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -99,7 +101,6 @@
 #include "ui/base/ime/chromeos/ime_keyboard.h"
 #include "ui/base/ime/chromeos/input_method_descriptor.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
-#include "ui/base/ime/chromeos/input_method_util.h"
 #include "ui/base/webui/web_ui_util.h"
 
 namespace {
@@ -722,7 +723,7 @@ void SigninScreenHandler::ShowImpl() {
     OnShowAddUser();
   } else {
     // Populates account picker. Animation is turned off for now until we
-    // figure out how to make it fast enough. This will call LoadUsers.
+    // figure out how to make it fast enough.
     delegate_->HandleGetUsers();
 
     // Reset Caps Lock state when login screen is shown.
@@ -1339,8 +1340,8 @@ void SigninScreenHandler::HandleToggleKioskAutolaunchScreen() {
     delegate_->ShowKioskAutolaunchScreen();
 }
 
-void SigninScreenHandler::LoadUsers(const user_manager::UserList& users,
-                                    const base::ListValue& users_list) {
+void SigninScreenHandler::LoadUsers(const base::ListValue& users_list,
+                                    bool showGuest) {
   CallJSOrDefer("login.AccountPickerScreen.loadUsers", users_list,
                 delegate_->IsShowGuest());
 }

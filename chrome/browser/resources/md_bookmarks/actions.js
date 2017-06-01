@@ -93,7 +93,7 @@ cr.define('bookmarks.actions', function() {
       name: 'refresh-nodes',
       nodes: nodeMap,
     };
-  }
+  };
 
   /**
    * @param {string} id
@@ -191,32 +191,6 @@ cr.define('bookmarks.actions', function() {
   }
 
   /**
-   * @param {Array<string>} ids
-   * @param {BookmarksPageState} state
-   * @return {!Action}
-   */
-  function selectAll(ids, state) {
-    return {
-      name: 'select-items',
-      clear: true,
-      toggle: false,
-      anchor: state.selection.anchor,
-      items: ids,
-    };
-  }
-
-  /**
-   * @param {string} id
-   * @return {!Action}
-   */
-  function updateAnchor(id) {
-    return {
-      name: 'update-anchor',
-      anchor: id,
-    };
-  }
-
-  /**
    * @param {string} term
    * @return {!Action}
    */
@@ -251,11 +225,9 @@ cr.define('bookmarks.actions', function() {
     refreshNodes: refreshNodes,
     removeBookmark: removeBookmark,
     reorderChildren: reorderChildren,
-    selectAll: selectAll,
     selectFolder: selectFolder,
     selectItem: selectItem,
     setSearchResults: setSearchResults,
     setSearchTerm: setSearchTerm,
-    updateAnchor: updateAnchor,
   };
 });

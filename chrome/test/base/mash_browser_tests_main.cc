@@ -109,8 +109,17 @@ class MashTestLauncherDelegate : public ChromeTestLauncherDelegate {
           base::MakeUnique<MojoTestConnector>(ReadCatalogManifest(), config_);
       mojo_test_connector_->Init();
     }
-    return mojo_test_connector_->PrepareForTest(command_line,
-                                                test_launch_options);
+    return mojo_test_connector_->PrepareForTest(
+        command_line, test_launch_options,
+        base::BindOnce(&MashTestLauncherDelegate::OnTestProcessLaunched,
+                       base::Unretained(this)));
+  }
+
+  void OnTestProcessLaunched() {
+    // Start default apps after chrome, as they may try to connect to chrome on
+    // startup. Attempt to connect once per test in case a previous test crashed
+    // mash_session.
+    mojo_test_connector_->StartService(mash::session::mojom::kServiceName);
   }
 
   void OnDoneRunningTests() override {
@@ -144,11 +153,9 @@ class MashTestLauncherDelegate : public ChromeTestLauncherDelegate {
 
 std::unique_ptr<content::ServiceManagerConnection>
     CreateServiceManagerConnection(MashTestLauncherDelegate* delegate) {
-  delegate->GetMojoTestConnectorForSingleProcess()->Init();
   std::unique_ptr<content::ServiceManagerConnection> connection(
       content::ServiceManagerConnection::Create(
-          delegate->GetMojoTestConnectorForSingleProcess()
-              ->InitBackgroundServiceManager(),
+          delegate->GetMojoTestConnectorForSingleProcess()->Init(),
           base::ThreadTaskRunnerHandle::Get()));
   connection->Start();
   connection->GetConnector()->StartService(mash::session::mojom::kServiceName);

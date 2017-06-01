@@ -32,11 +32,10 @@
 #include "core/editing/FrameSelection.h"
 #include "core/editing/SurroundingText.h"
 #include "core/editing/VisiblePosition.h"
-#include "core/frame/LocalFrame.h"
-#include "core/frame/WebLocalFrameBase.h"
 #include "core/layout/LayoutObject.h"
 #include "public/platform/WebPoint.h"
 #include "public/web/WebHitTestResult.h"
+#include "web/WebLocalFrameImpl.h"
 
 namespace blink {
 
@@ -71,15 +70,16 @@ void WebSurroundingText::Initialize(const WebNode& web_node,
 
 void WebSurroundingText::InitializeFromCurrentSelection(WebLocalFrame* frame,
                                                         size_t max_length) {
-  LocalFrame* web_frame = ToWebLocalFrameBase(frame)->GetFrame();
+  LocalFrame* web_frame = ToWebLocalFrameImpl(frame)->GetFrame();
 
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
   // needs to be audited.  See http://crbug.com/590369 for more details.
   web_frame->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  if (Range* range = CreateRange(web_frame->Selection()
-                                     .ComputeVisibleSelectionInDOMTree()
-                                     .ToNormalizedEphemeralRange())) {
+  if (Range* range =
+          CreateRange(web_frame->Selection()
+                          .ComputeVisibleSelectionInDOMTreeDeprecated()
+                          .ToNormalizedEphemeralRange())) {
     // TODO(xiaochengh): The followinng SurroundingText can hold a null Range,
     // in which case we should prevent it from being stored in |m_private|.
     private_.reset(new SurroundingText(*range, max_length));

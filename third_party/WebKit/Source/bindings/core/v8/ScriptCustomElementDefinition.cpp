@@ -84,6 +84,23 @@ ScriptCustomElementDefinition* ScriptCustomElementDefinition::ForConstructor(
   return static_cast<ScriptCustomElementDefinition*>(definition);
 }
 
+using SymbolGetter = V8PrivateProperty::Symbol (*)(v8::Isolate*);
+
+template <typename T>
+static void KeepAlive(v8::Local<v8::Object>& object,
+                      SymbolGetter symbol_getter,
+                      const v8::Local<T>& value,
+                      ScopedPersistent<T>& persistent,
+                      ScriptState* script_state) {
+  if (value.IsEmpty())
+    return;
+
+  v8::Isolate* isolate = script_state->GetIsolate();
+  symbol_getter(isolate).Set(object, value);
+  persistent.Set(isolate, value);
+  persistent.SetPhantom();
+}
+
 ScriptCustomElementDefinition* ScriptCustomElementDefinition::Create(
     ScriptState* script_state,
     CustomElementRegistry* registry,
@@ -93,11 +110,11 @@ ScriptCustomElementDefinition* ScriptCustomElementDefinition::Create(
     const v8::Local<v8::Function>& disconnected_callback,
     const v8::Local<v8::Function>& adopted_callback,
     const v8::Local<v8::Function>& attribute_changed_callback,
-    HashSet<AtomicString>&& observed_attributes) {
+    const HashSet<AtomicString>& observed_attributes) {
   ScriptCustomElementDefinition* definition = new ScriptCustomElementDefinition(
       script_state, descriptor, constructor, connected_callback,
       disconnected_callback, adopted_callback, attribute_changed_callback,
-      std::move(observed_attributes));
+      observed_attributes);
 
   // Add a constructor -> name mapping to the registry.
   v8::Local<v8::Value> name_value =
@@ -106,6 +123,22 @@ ScriptCustomElementDefinition* ScriptCustomElementDefinition::Create(
       EnsureCustomElementRegistryMap(script_state, registry);
   map->Set(script_state->GetContext(), constructor, name_value)
       .ToLocalChecked();
+  definition->constructor_.SetPhantom();
+
+  // We add the callbacks here to keep them alive. We use the name as
+  // the key because it is unique per-registry.
+  v8::Local<v8::Object> object = v8::Object::New(script_state->GetIsolate());
+  KeepAlive(object, V8PrivateProperty::GetCustomElementConnectedCallback,
+            connected_callback, definition->connected_callback_, script_state);
+  KeepAlive(object, V8PrivateProperty::GetCustomElementDisconnectedCallback,
+            disconnected_callback, definition->disconnected_callback_,
+            script_state);
+  KeepAlive(object, V8PrivateProperty::GetCustomElementAdoptedCallback,
+            adopted_callback, definition->adopted_callback_, script_state);
+  KeepAlive(object, V8PrivateProperty::GetCustomElementAttributeChangedCallback,
+            attribute_changed_callback, definition->attribute_changed_callback_,
+            script_state);
+  map->Set(script_state->GetContext(), name_value, object).ToLocalChecked();
 
   return definition;
 }
@@ -118,32 +151,10 @@ ScriptCustomElementDefinition::ScriptCustomElementDefinition(
     const v8::Local<v8::Function>& disconnected_callback,
     const v8::Local<v8::Function>& adopted_callback,
     const v8::Local<v8::Function>& attribute_changed_callback,
-    HashSet<AtomicString>&& observed_attributes)
-    : CustomElementDefinition(descriptor, std::move(observed_attributes)),
+    const HashSet<AtomicString>& observed_attributes)
+    : CustomElementDefinition(descriptor, observed_attributes),
       script_state_(script_state),
-      constructor_(script_state->GetIsolate(), this, constructor),
-      connected_callback_(this),
-      disconnected_callback_(this),
-      adopted_callback_(this),
-      attribute_changed_callback_(this) {
-  v8::Isolate* isolate = script_state->GetIsolate();
-  if (!connected_callback.IsEmpty())
-    connected_callback_.Set(isolate, connected_callback);
-  if (!disconnected_callback.IsEmpty())
-    disconnected_callback_.Set(isolate, disconnected_callback);
-  if (!adopted_callback.IsEmpty())
-    adopted_callback_.Set(isolate, adopted_callback);
-  if (!attribute_changed_callback.IsEmpty())
-    attribute_changed_callback_.Set(isolate, attribute_changed_callback);
-}
-
-DEFINE_TRACE_WRAPPERS(ScriptCustomElementDefinition) {
-  visitor->TraceWrappers(constructor_.Cast<v8::Value>());
-  visitor->TraceWrappers(connected_callback_.Cast<v8::Value>());
-  visitor->TraceWrappers(disconnected_callback_.Cast<v8::Value>());
-  visitor->TraceWrappers(adopted_callback_.Cast<v8::Value>());
-  visitor->TraceWrappers(attribute_changed_callback_.Cast<v8::Value>());
-}
+      constructor_(script_state->GetIsolate(), constructor) {}
 
 static void DispatchErrorEvent(v8::Isolate* isolate,
                                v8::Local<v8::Value> exception,

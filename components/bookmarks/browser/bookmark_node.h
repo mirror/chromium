@@ -10,7 +10,6 @@
 #include <memory>
 
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/task/cancelable_task_tracker.h"
 #include "base/time/time.h"
 #include "components/bookmarks/browser/titled_url_node.h"
@@ -70,7 +69,7 @@ class BookmarkNode : public ui::TreeNode<BookmarkNode>, public TitledUrlNode {
 
   // Returns the favicon's URL. Returns an empty URL if there is no favicon
   // associated with this bookmark.
-  const GURL* icon_url() const { return icon_url_ ? icon_url_.get() : nullptr; }
+  const GURL& icon_url() const { return icon_url_; }
 
   Type type() const { return type_; }
   void set_type(Type type) { type_ = type; }
@@ -135,7 +134,7 @@ class BookmarkNode : public ui::TreeNode<BookmarkNode>, public TitledUrlNode {
 
   // Sets the favicon's URL.
   void set_icon_url(const GURL& icon_url) {
-    icon_url_ = base::MakeUnique<GURL>(icon_url);
+    icon_url_ = icon_url;
   }
 
   // Returns the favicon. In nearly all cases you should use the method
@@ -180,7 +179,7 @@ class BookmarkNode : public ui::TreeNode<BookmarkNode>, public TitledUrlNode {
   favicon_base::IconType favicon_type_;
 
   // The URL of the node's favicon.
-  std::unique_ptr<GURL> icon_url_;
+  GURL icon_url_;
 
   // The loading state of the favicon.
   FaviconState favicon_state_;

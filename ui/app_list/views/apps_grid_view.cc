@@ -628,7 +628,7 @@ bool AppsGridView::IsAnimatingView(AppListItemView* view) {
   return bounds_animator_.IsAnimating(view);
 }
 
-gfx::Size AppsGridView::CalculatePreferredSize() const {
+gfx::Size AppsGridView::GetPreferredSize() const {
   const gfx::Insets insets(GetInsets());
   // If we are in a folder, ignore the page switcher for height calculations.
   int page_switcher_height =

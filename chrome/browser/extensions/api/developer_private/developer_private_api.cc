@@ -22,6 +22,7 @@
 #include "chrome/browser/extensions/api/developer_private/entry_picker.h"
 #include "chrome/browser/extensions/api/developer_private/extension_info_generator.h"
 #include "chrome/browser/extensions/api/developer_private/show_permissions_dialog_helper.h"
+#include "chrome/browser/extensions/api/extension_action/extension_action_api.h"
 #include "chrome/browser/extensions/devtools_util.h"
 #include "chrome/browser/extensions/extension_commands_global_registry.h"
 #include "chrome/browser/extensions/extension_service.h"
@@ -77,6 +78,7 @@
 #include "extensions/common/manifest_handlers/options_page_info.h"
 #include "extensions/common/manifest_url_handlers.h"
 #include "extensions/common/permissions/permissions_data.h"
+#include "extensions/grit/extensions_browser_resources.h"
 #include "storage/browser/fileapi/external_mount_points.h"
 #include "storage/browser/fileapi/file_system_context.h"
 #include "storage/browser/fileapi/file_system_operation.h"
@@ -241,6 +243,7 @@ DeveloperPrivateEventRouter::DeveloperPrivateEventRouter(Profile* profile)
       error_console_observer_(this),
       process_manager_observer_(this),
       app_window_registry_observer_(this),
+      extension_action_api_observer_(this),
       warning_service_observer_(this),
       extension_prefs_observer_(this),
       extension_management_observer_(this),
@@ -252,6 +255,7 @@ DeveloperPrivateEventRouter::DeveloperPrivateEventRouter(Profile* profile)
   error_console_observer_.Add(ErrorConsole::Get(profile));
   process_manager_observer_.Add(ProcessManager::Get(profile));
   app_window_registry_observer_.Add(AppWindowRegistry::Get(profile));
+  extension_action_api_observer_.Add(ExtensionActionAPI::Get(profile));
   warning_service_observer_.Add(WarningService::Get(profile));
   extension_prefs_observer_.Add(ExtensionPrefs::Get(profile));
   extension_management_observer_.Add(
@@ -365,6 +369,12 @@ void DeveloperPrivateEventRouter::OnExtensionCommandRemoved(
     const Command& removed_command) {
   BroadcastItemStateChanged(developer::EVENT_TYPE_PREFS_CHANGED,
                             extension_id);
+}
+
+void DeveloperPrivateEventRouter::OnExtensionActionVisibilityChanged(
+    const std::string& extension_id,
+    bool is_now_visible) {
+  BroadcastItemStateChanged(developer::EVENT_TYPE_PREFS_CHANGED, extension_id);
 }
 
 void DeveloperPrivateEventRouter::OnExtensionDisableReasonsChanged(
@@ -710,6 +720,11 @@ DeveloperPrivateUpdateExtensionConfigurationFunction::Run() {
           Error("Cannot modify all urls of extension: " + extension->id()));
     }
     modifier.SetAllowedOnAllUrls(*update.run_on_all_urls);
+  }
+  if (update.show_action_button) {
+    ExtensionActionAPI::Get(browser_context())->SetBrowserActionVisibility(
+        extension->id(),
+        *update.show_action_button);
   }
 
   return RespondNow(NoArguments());

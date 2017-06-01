@@ -10,7 +10,6 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebSettings;
 
 import org.chromium.content.browser.SelectionPopupController;
 
@@ -24,9 +23,11 @@ public abstract class ActionModeCallbackHelper {
     /** Google search doesn't support requests slightly larger than this. */
     public static final int MAX_SEARCH_QUERY_LENGTH = 1000;
 
-    public static final int MENU_ITEM_SHARE = WebSettings.MENU_ITEM_SHARE;
-    public static final int MENU_ITEM_WEB_SEARCH = WebSettings.MENU_ITEM_WEB_SEARCH;
-    public static final int MENU_ITEM_PROCESS_TEXT = WebSettings.MENU_ITEM_PROCESS_TEXT;
+    // TODO(hush): Use these constants from android.webkit.WebSettings, when they are made
+    // available. crbug.com/546762.
+    public static final int MENU_ITEM_SHARE = 1 << 0;
+    public static final int MENU_ITEM_WEB_SEARCH = 1 << 1;
+    public static final int MENU_ITEM_PROCESS_TEXT = 1 << 2;
 
     public static final EmptyActionCallback EMPTY_CALLBACK = new EmptyActionCallback();
 

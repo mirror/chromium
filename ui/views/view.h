@@ -273,13 +273,16 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   virtual int GetBaseline() const;
 
   // Get the size the View would like to be, if enough space were available.
-  // First checks |preferred_size_|, then CalculatePreferredSize().
-  gfx::Size GetPreferredSize() const;
+  // First checks |preferred_size_|, then |layout_manager_|, then
+  // CalculatePreferredSize().
+  // TODO(estade): migrate existing GetPreferredSize() overrides to
+  // CalculatePreferredSize() and make this function non-virtual.
+  virtual gfx::Size GetPreferredSize() const;
 
   // Sets the size that this View will request during layout. The actual size
   // may differ. It should rarely be necessary to set this; usually the right
   // approach is controlling the parent's layout via a LayoutManager.
-  void SetPreferredSize(const gfx::Size& size);
+  void set_preferred_size(const gfx::Size& size) { preferred_size_ = size; }
 
   // Convenience method that sizes this view to its preferred size.
   void SizeToPreferredSize();
@@ -374,10 +377,6 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // no need to call this routine from anywhere within your subclass
   // implementation.
   int GetMirroredXForRect(const gfx::Rect& rect) const;
-
-  // Given a rectangle specified in this View's coordinate system, the function
-  // computes the mirrored rectangle.
-  gfx::Rect GetMirroredRect(const gfx::Rect& rect) const;
 
   // Given the X coordinate of a point inside the View, this function returns
   // the mirrored X coordinate of the point if the View's UI layout is
@@ -817,8 +816,7 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // IMPORTANT NOTE: loops in the focus hierarchy are not supported.
   void SetNextFocusableView(View* view);
 
-  // Gets/sets |focus_behavior|. SetFocusBehavior() advances focus if necessary.
-  FocusBehavior focus_behavior() const { return focus_behavior_; }
+  // Sets |focus_behavior| and advances focus if necessary.
   void SetFocusBehavior(FocusBehavior focus_behavior);
 
   // Returns true if this view is focusable, |enabled_| and drawn.
@@ -1213,6 +1211,9 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   virtual DragInfo* GetDragInfo();
 
   // Focus ---------------------------------------------------------------------
+
+  // Returns last set focus behavior.
+  FocusBehavior focus_behavior() const { return focus_behavior_; }
 
   // Override to be notified when focus has changed either to or from this View.
   virtual void OnFocus();

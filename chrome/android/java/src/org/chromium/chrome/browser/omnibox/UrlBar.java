@@ -15,7 +15,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.StrictMode;
 import android.os.SystemClock;
-import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.Layout;
 import android.text.Selection;
@@ -28,8 +27,6 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.accessibility.AccessibilityNodeInfo;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputConnection;
 import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
@@ -57,11 +54,6 @@ public class UrlBar extends AutocompleteEditText {
     private static final String TAG = "cr_UrlBar";
 
     private static final boolean DEBUG = false;
-
-    // TODO(tedchoc): Replace with EditorInfoCompat#IME_FLAG_NO_PERSONALIZED_LEARNING or
-    //                EditorInfo#IME_FLAG_NO_PERSONALIZED_LEARNING as soon as either is available in
-    //                all build config types.
-    private static final int IME_FLAG_NO_PERSONALIZED_LEARNING = 0x1000000;
 
     // TextView becomes very slow on long strings, so we limit maximum length
     // of what is displayed to the user, see limitDisplayableLength().
@@ -144,15 +136,9 @@ public class UrlBar extends AutocompleteEditText {
      */
     public interface UrlBarDelegate {
         /**
-         * @return The current active {@link Tab}. May be null.
+         * @return The current active {@link Tab}.
          */
-        @Nullable
         Tab getCurrentTab();
-
-        /**
-         * @return Whether the keyboard should be allowed to learn from the user input.
-         */
-        boolean allowKeyboardLearning();
 
         /**
          * Called when the text state has changed and the autocomplete suggestions should be
@@ -203,8 +189,6 @@ public class UrlBar extends AutocompleteEditText {
         // the first draw.
         setFocusable(false);
         setFocusableInTouchMode(false);
-
-        setHint(OmniboxPlaceholderFieldTrial.getOmniboxPlaceholder());
 
         mGestureDetector = new GestureDetector(
                 getContext(), new GestureDetector.SimpleOnGestureListener() {
@@ -381,7 +365,7 @@ public class UrlBar extends AutocompleteEditText {
 
     @Override
     public View focusSearch(int direction) {
-        if (direction == View.FOCUS_BACKWARD && mUrlBarDelegate.getCurrentTab() != null
+        if (direction == View.FOCUS_BACKWARD
                 && mUrlBarDelegate.getCurrentTab().getView() != null) {
             return mUrlBarDelegate.getCurrentTab().getView();
         } else {
@@ -650,18 +634,9 @@ public class UrlBar extends AutocompleteEditText {
         if (urlComponents.first.length() > 1) {
             bringPointIntoView(1);
         }
-        setSelection(urlComponents.first.length());
+        bringPointIntoView(urlComponents.first.length());
 
         return true;
-    }
-
-    @Override
-    public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
-        InputConnection connection = super.onCreateInputConnection(outAttrs);
-        if (mUrlBarDelegate == null || !mUrlBarDelegate.allowKeyboardLearning()) {
-            outAttrs.imeOptions |= IME_FLAG_NO_PERSONALIZED_LEARNING;
-        }
-        return connection;
     }
 
     @Override

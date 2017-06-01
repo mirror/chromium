@@ -17,7 +17,7 @@
 #include "base/containers/hash_tables.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/sequence_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "content/common/content_export.h"
@@ -57,7 +57,8 @@ class BrowserChildProcessHostImpl;
 
 class GpuProcessHost : public BrowserChildProcessHostDelegate,
                        public IPC::Sender,
-                       public ui::mojom::GpuHost {
+                       public ui::mojom::GpuHost,
+                       public base::NonThreadSafe {
  public:
   enum GpuProcessKind {
     GPU_PROCESS_KIND_UNSANDBOXED,
@@ -248,6 +249,10 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
   bool swiftshader_rendering_;
   GpuProcessKind kind_;
 
+  // The GPUInfo for the connected process. Only valid after initialized_ is
+  // true.
+  gpu::GPUInfo gpu_info_;
+
   std::unique_ptr<base::Thread> in_process_gpu_thread_;
 
   // Whether we actually launched a GPU process.
@@ -290,8 +295,6 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
   ui::mojom::GpuServicePtr gpu_service_ptr_;
   mojo::Binding<ui::mojom::GpuHost> gpu_host_binding_;
   gpu::GpuProcessHostActivityFlags activity_flags_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
 
   base::WeakPtrFactory<GpuProcessHost> weak_ptr_factory_;
 

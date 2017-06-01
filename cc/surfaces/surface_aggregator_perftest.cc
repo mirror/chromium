@@ -10,7 +10,6 @@
 #include "cc/surfaces/compositor_frame_sink_support.h"
 #include "cc/surfaces/surface_aggregator.h"
 #include "cc/surfaces/surface_manager.h"
-#include "cc/test/compositor_frame_helpers.h"
 #include "cc/test/fake_output_surface_client.h"
 #include "cc/test/fake_resource_provider.h"
 #include "cc/test/test_context_provider.h"
@@ -27,6 +26,14 @@ constexpr bool kHandlesFrameSinkIdInvalidation = true;
 constexpr bool kNeedsSyncPoints = true;
 
 const base::UnguessableToken kArbitraryToken = base::UnguessableToken::Create();
+
+CompositorFrame MakeCompositorFrame() {
+  CompositorFrame frame;
+  frame.metadata.begin_frame_ack.source_id = BeginFrameArgs::kManualSourceId;
+  frame.metadata.begin_frame_ack.sequence_number =
+      BeginFrameArgs::kStartingFrameNumber;
+  return frame;
+}
 
 class SurfaceAggregatorPerfTest : public testing::Test {
  public:
@@ -56,11 +63,8 @@ class SurfaceAggregatorPerfTest : public testing::Test {
                                             optimize_damage));
     for (int i = 0; i < num_surfaces; i++) {
       LocalSurfaceId local_surface_id(i + 1, kArbitraryToken);
-
       std::unique_ptr<RenderPass> pass(RenderPass::Create());
-      pass->output_rect = gfx::Rect(0, 0, 1, 2);
-
-      CompositorFrame frame = test::MakeEmptyCompositorFrame();
+      CompositorFrame frame = MakeCompositorFrame();
 
       SharedQuadState* sqs = pass->CreateAndAppendSharedQuadState();
       for (int j = 0; j < num_textures; j++) {
@@ -112,7 +116,7 @@ class SurfaceAggregatorPerfTest : public testing::Test {
     timer_.Reset();
     do {
       std::unique_ptr<RenderPass> pass(RenderPass::Create());
-      CompositorFrame frame = test::MakeEmptyCompositorFrame();
+      CompositorFrame frame = MakeCompositorFrame();
 
       SharedQuadState* sqs = pass->CreateAndAppendSharedQuadState();
       SurfaceDrawQuad* surface_quad =
@@ -122,8 +126,6 @@ class SurfaceAggregatorPerfTest : public testing::Test {
           SurfaceId(FrameSinkId(1, num_surfaces),
                     LocalSurfaceId(num_surfaces, kArbitraryToken)),
           SurfaceDrawQuadType::PRIMARY, nullptr);
-
-      pass->output_rect = gfx::Rect(0, 0, 100, 100);
 
       if (full_damage)
         pass->damage_rect = gfx::Rect(0, 0, 100, 100);

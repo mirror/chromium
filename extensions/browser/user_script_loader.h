@@ -95,8 +95,7 @@ class UserScriptLoader : public content::NotificationObserver {
   void RemoveObserver(Observer* observer);
 
  protected:
-  // Allows the derived classes to have different ways to load user scripts.
-  // This may not be synchronous with the calls to Add/Remove/Clear scripts.
+  // Allows the derived classes have different ways to load user scripts.
   virtual void LoadScripts(std::unique_ptr<UserScriptList> user_scripts,
                            const std::set<HostID>& changed_hosts,
                            const std::set<int>& added_script_ids,

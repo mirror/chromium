@@ -20,6 +20,7 @@
 #include "content/renderer/render_frame_impl.h"
 #include "content/renderer/render_frame_proxy.h"
 #include "content/renderer/render_view_impl.h"
+#include "content/renderer/web_frame_utils.h"
 #include "third_party/WebKit/public/platform/WebFloatRect.h"
 #include "third_party/WebKit/public/platform/WebRect.h"
 #include "third_party/WebKit/public/platform/WebSize.h"
@@ -40,8 +41,6 @@
 using base::ASCIIToUTF16;
 using base::UTF16ToUTF8;
 using blink::WebAXObject;
-using blink::WebAXObjectAttribute;
-using blink::WebAXObjectVectorAttribute;
 using blink::WebDocument;
 using blink::WebElement;
 using blink::WebFloatRect;
@@ -97,13 +96,13 @@ class AXContentNodeDataSparseAttributeAdapter
     }
   }
 
-  void AddObjectAttribute(WebAXObjectAttribute attribute,
-                          const WebAXObject& value) override {
+  void AddObjectAttribute(blink::WebAXObjectAttribute attribute,
+                          const blink::WebAXObject& value) override {
     switch (attribute) {
-      case WebAXObjectAttribute::kAriaActiveDescendant:
+      case blink::WebAXObjectAttribute::kAriaActiveDescendant:
         dst_->AddIntAttribute(ui::AX_ATTR_ACTIVEDESCENDANT_ID, value.AxID());
         break;
-      case WebAXObjectAttribute::kAriaErrorMessage:
+      case blink::WebAXObjectAttribute::kAriaErrorMessage:
         dst_->AddIntAttribute(ui::AX_ATTR_ERRORMESSAGE_ID, value.AxID());
         break;
       default:
@@ -112,18 +111,18 @@ class AXContentNodeDataSparseAttributeAdapter
   }
 
   void AddObjectVectorAttribute(
-      WebAXObjectVectorAttribute attribute,
+      blink::WebAXObjectVectorAttribute attribute,
       const blink::WebVector<WebAXObject>& value) override {
     switch (attribute) {
-      case WebAXObjectVectorAttribute::kAriaControls:
+      case blink::WebAXObjectVectorAttribute::kAriaControls:
         AddIntListAttributeFromWebObjects(ui::AX_ATTR_CONTROLS_IDS, value,
                                           dst_);
         break;
-      case WebAXObjectVectorAttribute::kAriaDetails:
+      case blink::WebAXObjectVectorAttribute::kAriaDetails:
         AddIntListAttributeFromWebObjects(ui::AX_ATTR_DETAILS_IDS, value,
                                           dst_);
         break;
-      case WebAXObjectVectorAttribute::kAriaFlowTo:
+      case blink::WebAXObjectVectorAttribute::kAriaFlowTo:
         AddIntListAttributeFromWebObjects(ui::AX_ATTR_FLOWTO_IDS, value, dst_);
         break;
       default:
@@ -219,7 +218,7 @@ void BlinkAXTreeSource::Freeze() {
   root_ = ComputeRoot();
 
   if (!document_.IsNull())
-    focus_ = WebAXObject::FromWebDocumentFocused(document_);
+    focus_ = document_.FocusedAccessibilityObject();
   else
     focus_ = WebAXObject();
 }
@@ -229,12 +228,12 @@ void BlinkAXTreeSource::Thaw() {
   frozen_ = false;
 }
 
-void BlinkAXTreeSource::SetRoot(WebAXObject root) {
+void BlinkAXTreeSource::SetRoot(blink::WebAXObject root) {
   CHECK(!frozen_);
   explicit_root_ = root;
 }
 
-bool BlinkAXTreeSource::IsInTree(WebAXObject node) const {
+bool BlinkAXTreeSource::IsInTree(blink::WebAXObject node) const {
   CHECK(frozen_);
   while (IsValid(node)) {
     if (node.Equals(root()))
@@ -290,36 +289,36 @@ bool BlinkAXTreeSource::GetTreeData(AXContentTreeData* tree_data) const {
     blink::WebFrame* parent_web_frame = web_frame->Parent();
     if (parent_web_frame) {
       tree_data->parent_routing_id =
-          RenderFrame::GetRoutingIdForWebFrame(parent_web_frame);
+          GetRoutingIdForFrameOrProxy(parent_web_frame);
     }
   }
 
   return true;
 }
 
-WebAXObject BlinkAXTreeSource::GetRoot() const {
+blink::WebAXObject BlinkAXTreeSource::GetRoot() const {
   if (frozen_)
     return root_;
   else
     return ComputeRoot();
 }
 
-WebAXObject BlinkAXTreeSource::GetFromId(int32_t id) const {
-  return WebAXObject::FromWebDocumentByID(GetMainDocument(), id);
+blink::WebAXObject BlinkAXTreeSource::GetFromId(int32_t id) const {
+  return GetMainDocument().AccessibilityObjectFromID(id);
 }
 
-int32_t BlinkAXTreeSource::GetId(WebAXObject node) const {
+int32_t BlinkAXTreeSource::GetId(blink::WebAXObject node) const {
   return node.AxID();
 }
 
 void BlinkAXTreeSource::GetChildren(
-    WebAXObject parent,
-    std::vector<WebAXObject>* out_children) const {
+    blink::WebAXObject parent,
+    std::vector<blink::WebAXObject>* out_children) const {
   CHECK(frozen_);
 
   if (parent.Role() == blink::kWebAXRoleStaticText) {
     int32_t focus_id = focus().AxID();
-    WebAXObject ancestor = parent;
+    blink::WebAXObject ancestor = parent;
     while (!ancestor.IsDetached()) {
       if (ancestor.AxID() == accessibility_focus_id_ ||
           (ancestor.AxID() == focus_id && ancestor.IsEditable())) {
@@ -336,7 +335,7 @@ void BlinkAXTreeSource::GetChildren(
     is_iframe = node.To<WebElement>().HasHTMLTagName("iframe");
 
   for (unsigned i = 0; i < parent.ChildCount(); i++) {
-    WebAXObject child = parent.ChildAt(i);
+    blink::WebAXObject child = parent.ChildAt(i);
 
     // The child may be invalid due to issues in blink accessibility code.
     if (child.IsDetached())
@@ -351,7 +350,8 @@ void BlinkAXTreeSource::GetChildren(
   }
 }
 
-WebAXObject BlinkAXTreeSource::GetParent(WebAXObject node) const {
+blink::WebAXObject BlinkAXTreeSource::GetParent(
+    blink::WebAXObject node) const {
   CHECK(frozen_);
 
   // Blink returns ignored objects when walking up the parent chain,
@@ -359,26 +359,27 @@ WebAXObject BlinkAXTreeSource::GetParent(WebAXObject node) const {
   // element.
   do {
     if (node.Equals(root()))
-      return WebAXObject();
+      return blink::WebAXObject();
     node = node.ParentObject();
   } while (!node.IsDetached() && node.AccessibilityIsIgnored());
 
   return node;
 }
 
-bool BlinkAXTreeSource::IsValid(WebAXObject node) const {
+bool BlinkAXTreeSource::IsValid(blink::WebAXObject node) const {
   return !node.IsDetached();  // This also checks if it's null.
 }
 
-bool BlinkAXTreeSource::IsEqual(WebAXObject node1, WebAXObject node2) const {
+bool BlinkAXTreeSource::IsEqual(blink::WebAXObject node1,
+                                blink::WebAXObject node2) const {
   return node1.Equals(node2);
 }
 
-WebAXObject BlinkAXTreeSource::GetNull() const {
-  return WebAXObject();
+blink::WebAXObject BlinkAXTreeSource::GetNull() const {
+  return blink::WebAXObject();
 }
 
-void BlinkAXTreeSource::SerializeNode(WebAXObject src,
+void BlinkAXTreeSource::SerializeNode(blink::WebAXObject src,
                                       AXContentNodeData* dst) const {
   dst->role = AXRoleFromBlink(src.Role());
   dst->state = AXStateFromBlink(src);
@@ -402,7 +403,7 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
   src.GetSparseAXAttributes(sparse_attribute_adapter);
 
   blink::WebAXNameFrom nameFrom;
-  blink::WebVector<WebAXObject> nameObjects;
+  blink::WebVector<blink::WebAXObject> nameObjects;
   blink::WebString web_name = src.GetName(nameFrom, nameObjects);
   if ((!web_name.IsEmpty() && !web_name.IsNull()) ||
       nameFrom == blink::kWebAXNameFromAttributeExplicitlyEmpty) {
@@ -413,7 +414,7 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
   }
 
   blink::WebAXDescriptionFrom descriptionFrom;
-  blink::WebVector<WebAXObject> descriptionObjects;
+  blink::WebVector<blink::WebAXObject> descriptionObjects;
   blink::WebString web_description =
       src.Description(nameFrom, descriptionFrom, descriptionObjects);
   if (!web_description.IsEmpty()) {
@@ -448,7 +449,7 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
       dst->AddIntAttribute(ui::AX_ATTR_COLOR_VALUE, src.ColorValue());
 
     if (dst->role == ui::AX_ROLE_LINK) {
-      WebAXObject target = src.InPageLinkTarget();
+      blink::WebAXObject target = src.InPageLinkTarget();
       if (!target.IsNull()) {
         int32_t target_id = target.AxID();
         dst->AddIntAttribute(ui::AX_ATTR_IN_PAGE_LINK_TARGET_ID, target_id);
@@ -833,8 +834,9 @@ void BlinkAXTreeSource::SerializeNode(WebAXObject src,
     // Frames and iframes.
     WebFrame* frame = WebFrame::FromFrameOwnerElement(element);
     if (frame) {
-      dst->AddContentIntAttribute(AX_CONTENT_ATTR_CHILD_ROUTING_ID,
-                                  RenderFrame::GetRoutingIdForWebFrame(frame));
+      dst->AddContentIntAttribute(
+          AX_CONTENT_ATTR_CHILD_ROUTING_ID,
+          GetRoutingIdForFrameOrProxy(frame));
     }
   }
 
@@ -889,7 +891,7 @@ WebAXObject BlinkAXTreeSource::ComputeRoot() const {
 
   WebDocument document = render_frame_->GetWebFrame()->GetDocument();
   if (!document.IsNull())
-    return WebAXObject::FromWebDocument(document);
+    return document.AccessibilityObject();
 
   return WebAXObject();
 }

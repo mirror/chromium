@@ -29,7 +29,7 @@ class DialDeviceDescriptionParserImpl
   // extensions::mojom::DialDeviceDescriptionParser:
   void ParseDialDeviceDescription(
       const std::string& device_description_xml_data,
-      ParseDialDeviceDescriptionCallback callback) override;
+      const ParseDialDeviceDescriptionCallback& callback) override;
 
   // Processes the result of getting device description. Returns valid
   // DialDeviceDescriptionPtr if processing succeeds; otherwise returns nullptr.

@@ -163,7 +163,6 @@ group("gn_all") {
       "//content/test:content_perftests",
       "//content/test:content_unittests",
       "//device:device_unittests",
-      "//google_apis/gcm:mcs_probe",
       "//gpu:gpu_unittests",
       "//gpu/ipc/service:gpu_ipc_service_unittests",
       "//ipc:ipc_tests",
@@ -178,7 +177,7 @@ group("gn_all") {
       "//mojo/edk/test:mojo_public_bindings_unittests",
       "//mojo/edk/test:mojo_public_system_unittests",
       "//net:net_perftests",
-      "//services:services_unittests",
+      "//services:service_unittests",
       "//services/service_manager/public/cpp",
       "//storage:storage_unittests",
       "//third_party/WebKit/Source/platform:blink_platform_unittests",
@@ -415,6 +414,7 @@ group("gn_all") {
       "//device:device_unittests",
       "//gin:gin_shell",
       "//gin:gin_unittests",
+      "//google_apis/gcm:mcs_probe",
       "//gpu:gl_tests",
       "//gpu:gpu_perftests",
       "//ipc:ipc_perftests",
@@ -603,6 +603,10 @@ group("gn_all") {
     # component builds, due to duplicate symbol definitions.
     if (is_win && is_component_build) {
       deps -= [ "//media/mojo/services:media_service_unittests" ]
+    }
+
+    if (use_ozone && is_chromeos) {
+      deps += [ "//services/ui/display:display_service_unittests" ]
     }
   }
 

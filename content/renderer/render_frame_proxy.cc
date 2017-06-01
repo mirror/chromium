@@ -279,7 +279,6 @@ bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_DidStopLoading, OnDidStopLoading)
     IPC_MESSAGE_HANDLER(FrameMsg_DidUpdateFramePolicy, OnDidUpdateFramePolicy)
     IPC_MESSAGE_HANDLER(FrameMsg_DispatchLoad, OnDispatchLoad)
-    IPC_MESSAGE_HANDLER(FrameMsg_Collapse, OnCollapse)
     IPC_MESSAGE_HANDLER(FrameMsg_DidUpdateName, OnDidUpdateName)
     IPC_MESSAGE_HANDLER(FrameMsg_AddContentSecurityPolicies,
                         OnAddContentSecurityPolicies)
@@ -350,10 +349,6 @@ void RenderFrameProxy::OnDispatchLoad() {
   web_frame_->DispatchLoadEventOnFrameOwner();
 }
 
-void RenderFrameProxy::OnCollapse(bool collapsed) {
-  web_frame_->Collapse(collapsed);
-}
-
 void RenderFrameProxy::OnDidUpdateName(const std::string& name,
                                        const std::string& unique_name) {
   web_frame_->SetReplicatedName(blink::WebString::FromUTF8(name));
@@ -412,6 +407,8 @@ void RenderFrameProxy::OnSetHasReceivedUserGesture() {
 
 void RenderFrameProxy::FrameDetached(DetachType type) {
   if (type == DetachType::kRemove && web_frame_->Parent()) {
+    web_frame_->Parent()->RemoveChild(web_frame_);
+
     // Let the browser process know this subframe is removed, so that it is
     // destroyed in its current process.
     Send(new FrameHostMsg_Detach(routing_id_));

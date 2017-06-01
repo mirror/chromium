@@ -6,7 +6,6 @@
 
 #include <memory>
 #include "core/StylePropertyShorthand.h"
-#include "core/animation/CSSInterpolationEnvironment.h"
 #include "core/animation/StringKeyframe.h"
 #include "core/css/CSSCustomPropertyDeclaration.h"
 #include "core/css/CSSValue.h"
@@ -23,8 +22,7 @@
 
 namespace blink {
 
-class ResolvedVariableChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+class ResolvedVariableChecker : public InterpolationType::ConversionChecker {
  public:
   static std::unique_ptr<ResolvedVariableChecker> Create(
       CSSPropertyID property,
@@ -42,14 +40,15 @@ class ResolvedVariableChecker
         variable_reference_(variable_reference),
         resolved_value_(resolved_value) {}
 
-  bool IsValid(const StyleResolverState& state,
+  bool IsValid(const InterpolationEnvironment& environment,
                const InterpolationValue& underlying) const final {
     // TODO(alancutter): Just check the variables referenced instead of doing a
     // full CSSValue resolve.
     bool omit_animation_tainted = false;
     const CSSValue* resolved_value =
-        CSSVariableResolver(state).ResolveVariableReferences(
-            property_, *variable_reference_, omit_animation_tainted);
+        CSSVariableResolver::ResolveVariableReferences(
+            environment.GetState(), property_, *variable_reference_,
+            omit_animation_tainted);
     return DataEquivalent(resolved_value_.Get(), resolved_value);
   }
 
@@ -59,7 +58,7 @@ class ResolvedVariableChecker
 };
 
 class InheritedCustomPropertyChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+    : public InterpolationType::ConversionChecker {
  public:
   static std::unique_ptr<InheritedCustomPropertyChecker> Create(
       const AtomicString& property,
@@ -80,11 +79,11 @@ class InheritedCustomPropertyChecker
         inherited_value_(inherited_value),
         initial_value_(initial_value) {}
 
-  bool IsValid(const StyleResolverState& state,
+  bool IsValid(const InterpolationEnvironment& environment,
                const InterpolationValue&) const final {
     const CSSValue* inherited_value =
-        state.ParentStyle()->GetRegisteredVariable(name_,
-                                                   is_inherited_property_);
+        environment.GetState().ParentStyle()->GetRegisteredVariable(
+            name_, is_inherited_property_);
     if (!inherited_value) {
       inherited_value = initial_value_.Get();
     }
@@ -129,8 +128,7 @@ InterpolationValue CSSInterpolationType::MaybeConvertSingleInternal(
     const InterpolationValue& underlying,
     ConversionCheckers& conversion_checkers) const {
   const CSSValue* value = ToCSSPropertySpecificKeyframe(keyframe).Value();
-  const StyleResolverState& state =
-      ToCSSInterpolationEnvironment(environment).GetState();
+  const StyleResolverState& state = environment.GetState();
 
   if (!value)
     return MaybeConvertNeutral(underlying, conversion_checkers);
@@ -144,8 +142,8 @@ InterpolationValue CSSInterpolationType::MaybeConvertSingleInternal(
       value->IsPendingSubstitutionValue()) {
     bool omit_animation_tainted = false;
     const CSSValue* resolved_value =
-        CSSVariableResolver(state).ResolveVariableReferences(
-            CssProperty(), *value, omit_animation_tainted);
+        CSSVariableResolver::ResolveVariableReferences(
+            state, CssProperty(), *value, omit_animation_tainted);
     conversion_checkers.push_back(
         ResolvedVariableChecker::Create(CssProperty(), value, resolved_value));
     value = resolved_value;
@@ -245,8 +243,7 @@ CSSInterpolationType::MaybeConvertCustomPropertyDeclarationInternal(
 
 InterpolationValue CSSInterpolationType::MaybeConvertUnderlyingValue(
     const InterpolationEnvironment& environment) const {
-  const ComputedStyle& style =
-      ToCSSInterpolationEnvironment(environment).Style();
+  const ComputedStyle& style = environment.Style();
   if (!GetProperty().IsCSSCustomProperty()) {
     return MaybeConvertStandardPropertyUnderlyingValue(style);
   }
@@ -274,8 +271,7 @@ void CSSInterpolationType::Apply(
     const InterpolableValue& interpolable_value,
     const NonInterpolableValue* non_interpolable_value,
     InterpolationEnvironment& environment) const {
-  StyleResolverState& state =
-      ToCSSInterpolationEnvironment(environment).GetState();
+  StyleResolverState& state = environment.GetState();
 
   if (GetProperty().IsCSSCustomProperty()) {
     ApplyCustomPropertyValue(interpolable_value, non_interpolable_value, state);

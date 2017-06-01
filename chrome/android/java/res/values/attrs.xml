@@ -5,7 +5,7 @@
 
 <resources>
     <declare-styleable name="TintedImage">
-        <attr name="chrometint" format="color" />
+        <attr name="tint" format="color" />
     </declare-styleable>
 
     <declare-styleable name="HyperlinkPreference">

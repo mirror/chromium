@@ -67,7 +67,7 @@ class APP_LIST_EXPORT TileItemView : public views::CustomButton,
   void UpdateBackgroundColor();
 
   // Overridden from views::View:
-  gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetPreferredSize() const override;
   bool GetTooltipText(const gfx::Point& p,
                       base::string16* tooltip) const override;
 

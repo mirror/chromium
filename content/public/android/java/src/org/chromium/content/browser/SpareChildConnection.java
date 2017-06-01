@@ -5,9 +5,9 @@
 package org.chromium.content.browser;
 
 import android.content.Context;
+import android.os.Bundle;
 
 import org.chromium.base.Log;
-import org.chromium.base.VisibleForTesting;
 import org.chromium.base.process_launcher.ChildProcessCreationParams;
 
 /**
@@ -16,24 +16,6 @@ import org.chromium.base.process_launcher.ChildProcessCreationParams;
  */
 public class SpareChildConnection {
     private static final String TAG = "SpareChildConn";
-
-    // Factory interface used to create the actual connection.
-    interface ConnectionFactory {
-        /**
-         * @param deathCallback Callback that should be invoked when the connection is lost.
-         */
-        ChildProcessConnection allocateBoundConnection(Context context,
-                ChildProcessCreationParams creationParams,
-                ChildProcessConnection.StartCallback startCallback,
-                ChildProcessConnection.DeathCallback deathCallback);
-    }
-
-    // The parameters passed to the Connectionfactory when creating the connection.
-    // Also used to identify the connection when the connection is retrieved.
-    private final ChildProcessCreationParams mCreationParams;
-
-    // Whether the connection is sandboxed.
-    private final boolean mSandoxed;
 
     // The actual spare connection.
     private ChildProcessConnection mConnection;
@@ -45,14 +27,22 @@ public class SpareChildConnection {
     // connection was retrieved but was not bound yet.
     private ChildProcessConnection.StartCallback mConnectionStartCallback;
 
+    // Properties of the spare connection.
+    private boolean mSandboxed;
+    private boolean mAlwaysInForegound;
+    private ChildProcessCreationParams mCreationParams;
+
+    // An interface used to abstract connection creation so tests can use custom connections.
+    interface ConnectionFactory {
+        ChildProcessConnection allocateBoundConnection(ChildSpawnData spawnData,
+                ChildProcessConnection.StartCallback startCallback, boolean queueIfNoneAvailable);
+    }
+
     /** Creates and binds a ChildProcessConnection using the specified parameters. */
     public SpareChildConnection(Context context, ConnectionFactory connectionFactory,
-            ChildProcessCreationParams creationParams, boolean sandboxed) {
+            Bundle serviceBundle, boolean sandboxed, boolean alwaysInForeground,
+            ChildProcessCreationParams creationParams) {
         assert LauncherThread.runningOnLauncherThread();
-
-        mCreationParams = creationParams;
-        mSandoxed = sandboxed;
-
         ChildProcessConnection.StartCallback startCallback =
                 new ChildProcessConnection.StartCallback() {
                     @Override
@@ -78,29 +68,28 @@ public class SpareChildConnection {
                     }
                 };
 
-        mConnection = connectionFactory.allocateBoundConnection(context, mCreationParams,
-                startCallback, new ChildProcessConnection.DeathCallback() {
-                    @Override
-                    public void onChildProcessDied(ChildProcessConnection connection) {
-                        assert LauncherThread.runningOnLauncherThread();
-                        if (mConnection == null) {
-                            return;
-                        }
-                        assert connection == mConnection;
-                        clearConnection();
-                    }
-                });
+        mSandboxed = sandboxed;
+        mAlwaysInForegound = alwaysInForeground;
+        mCreationParams = creationParams;
+        ChildSpawnData spawnData = new ChildSpawnData(context, serviceBundle, null /* connection */,
+                null /* launchCallback */, null /* child process callback */, sandboxed,
+                alwaysInForeground, creationParams);
+        mConnection = connectionFactory.allocateBoundConnection(
+                spawnData, startCallback, false /* queueIfNoneAvailable */);
     }
 
     /**
      * @return a connection that has been bound or is being bound matching the given paramters, null
      * otherwise.
      */
-    public ChildProcessConnection getConnection(ChildProcessCreationParams creationParams,
-            boolean sandboxed, final ChildProcessConnection.StartCallback startCallback) {
+    public ChildProcessConnection getConnection(Context context, boolean sandboxed,
+            boolean alwaysInForeground, ChildProcessCreationParams creationParams,
+            final ChildProcessConnection.StartCallback startCallback) {
         assert LauncherThread.runningOnLauncherThread();
-        if (mConnection == null || creationParams != mCreationParams || sandboxed != mSandoxed
-                || mConnectionStartCallback != null) {
+        if (mConnection == null || mSandboxed != sandboxed
+                || mAlwaysInForegound != alwaysInForeground || mCreationParams != creationParams
+                || mConnectionStartCallback != null
+                || !mConnection.getPackageName().equals(getPackageName(mCreationParams, context))) {
             return null;
         }
 
@@ -123,9 +112,18 @@ public class SpareChildConnection {
         return connection;
     }
 
-    /** Returns true if no connection is available (so getConnection will always return null), */
-    public boolean isEmpty() {
-        return mConnection == null;
+    /**
+     * Called when a connection is freed to give an opportunity to this class to clean up its
+     * connection if it's the one that's been freed.
+     * TODO(jcivelli): use the ChildProcessConnection.DeathCallback of the actuall connection so we
+     * don't need this anymore once the CPL has been simplified.
+     */
+    public boolean onConnectionFreed(ChildProcessConnection connection) {
+        if (mConnection != connection) {
+            return false;
+        }
+        clearConnection();
+        return true;
     }
 
     private void clearConnection() {
@@ -135,8 +133,8 @@ public class SpareChildConnection {
         mConnectionStartCallback = null;
     }
 
-    @VisibleForTesting
-    public ChildProcessConnection getConnection() {
-        return mConnection;
+    private static String getPackageName(
+            ChildProcessCreationParams creationParams, Context context) {
+        return creationParams != null ? creationParams.getPackageName() : context.getPackageName();
     }
 }

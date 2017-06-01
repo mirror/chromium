@@ -9,7 +9,7 @@
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
 #include "ash/wm/wm_event.h"
-#include "ui/aura/window.h"
+#include "ash/wm_window.h"
 #include "ui/events/event.h"
 
 namespace ash {
@@ -38,18 +38,18 @@ bool MaximizeModeEventHandler::ToggleFullscreen(const ui::TouchEvent& event) {
   }
 
   // Find the active window (from the primary screen) to un-fullscreen.
-  aura::Window* window = GetActiveWindow();
+  WmWindow* window = WmWindow::Get(GetActiveWindow());
   if (!window)
     return false;
 
-  WindowState* window_state = GetWindowState(window);
+  WindowState* window_state = window->GetWindowState();
   if (!window_state->IsFullscreen() || window_state->in_immersive_fullscreen())
     return false;
 
   // Test that the touch happened in the top or bottom lines.
   int y = event.y();
   if (y >= kLeaveFullScreenAreaHeightInPixel &&
-      y < (window->bounds().height() - kLeaveFullScreenAreaHeightInPixel)) {
+      y < (window->GetBounds().height() - kLeaveFullScreenAreaHeightInPixel)) {
     return false;
   }
 
@@ -58,7 +58,7 @@ bool MaximizeModeEventHandler::ToggleFullscreen(const ui::TouchEvent& event) {
     return false;
 
   WMEvent toggle_fullscreen(WM_EVENT_TOGGLE_FULLSCREEN);
-  GetWindowState(window)->OnWMEvent(&toggle_fullscreen);
+  window->GetWindowState()->OnWMEvent(&toggle_fullscreen);
   return true;
 }
 

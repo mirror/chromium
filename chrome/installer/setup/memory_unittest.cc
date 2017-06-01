@@ -6,7 +6,6 @@
 
 #include <limits>
 
-#include "base/allocator/features.h"
 #include "base/process/memory.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -14,7 +13,7 @@
 #include "base/allocator/allocator_interception_mac.h"
 #endif
 
-#if BUILDFLAG(USE_ALLOCATOR_SHIM)
+#if defined(ALLOCATOR_SHIM)
 // Test that the allocator shim is in-place so that base::UncheckedMalloc works.
 TEST(OutOfMemoryHandledTest, UncheckedMalloc) {
   // Enable termination on OOM - just as setup.exe does at early initialization
@@ -41,4 +40,4 @@ TEST(OutOfMemoryHandledTest, UncheckedMalloc) {
   base::allocator::UninterceptMallocZonesForTesting();
 #endif
 }
-#endif  // BUILDFLAG(USE_ALLOCATOR_SHIM)
+#endif  // ALLOCATOR_SHIM

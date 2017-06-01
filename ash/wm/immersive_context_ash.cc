@@ -5,12 +5,12 @@
 #include "ash/wm/immersive_context_ash.h"
 
 #include "ash/shared/immersive_fullscreen_controller.h"
-#include "ash/shelf/shelf.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
-#include "ash/wm/resize_handle_window_targeter.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
+#include "ash/wm_window.h"
 #include "base/logging.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
@@ -24,29 +24,27 @@ ImmersiveContextAsh::~ImmersiveContextAsh() {}
 
 void ImmersiveContextAsh::InstallResizeHandleWindowTargeter(
     ImmersiveFullscreenController* controller) {
-  wm::InstallResizeHandleWindowTargeterForWindow(
-      controller->widget()->GetNativeWindow(), controller);
+  WmWindow* window = WmWindow::Get(controller->widget()->GetNativeWindow());
+  window->InstallResizeHandleWindowTargeter(controller);
 }
 
 void ImmersiveContextAsh::OnEnteringOrExitingImmersive(
     ImmersiveFullscreenController* controller,
     bool entering) {
-  aura::Window* window = controller->widget()->GetNativeWindow();
-  wm::WindowState* window_state = wm::GetWindowState(window);
+  WmWindow* window = WmWindow::Get(controller->widget()->GetNativeWindow());
+  wm::WindowState* window_state = window->GetWindowState();
   // Auto hide the shelf in immersive fullscreen instead of hiding it.
   window_state->set_hide_shelf_when_fullscreen(!entering);
   // Update the window's immersive mode state for the window manager.
   window_state->set_in_immersive_fullscreen(entering);
 
   for (aura::Window* root_window : Shell::GetAllRootWindows())
-    Shelf::ForWindow(root_window)->UpdateVisibilityState();
+    WmShelf::ForWindow(root_window)->UpdateVisibilityState();
 }
 
 gfx::Rect ImmersiveContextAsh::GetDisplayBoundsInScreen(views::Widget* widget) {
-  display::Display display =
-      display::Screen::GetScreen()->GetDisplayNearestWindow(
-          widget->GetNativeWindow());
-  return display.bounds();
+  WmWindow* window = WmWindow::Get(widget->GetNativeWindow());
+  return window->GetDisplayNearestWindow().bounds();
 }
 
 void ImmersiveContextAsh::AddPointerWatcher(

@@ -58,8 +58,7 @@ static ClipAutos GetClipAutos(const ComputedStyle& style) {
                    style.ClipBottom().IsAuto(), style.ClipLeft().IsAuto());
 }
 
-class InheritedAutosChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+class InheritedAutosChecker : public InterpolationType::ConversionChecker {
  public:
   static std::unique_ptr<InheritedAutosChecker> Create(
       const ClipAutos& inherited_autos) {
@@ -70,9 +69,10 @@ class InheritedAutosChecker
   InheritedAutosChecker(const ClipAutos& inherited_autos)
       : inherited_autos_(inherited_autos) {}
 
-  bool IsValid(const StyleResolverState& state,
+  bool IsValid(const InterpolationEnvironment& environment,
                const InterpolationValue& underlying) const final {
-    return inherited_autos_ == GetClipAutos(*state.ParentStyle());
+    return inherited_autos_ ==
+           GetClipAutos(*environment.GetState().ParentStyle());
   }
 
   const ClipAutos inherited_autos_;
@@ -103,8 +103,7 @@ class CSSClipNonInterpolableValue : public NonInterpolableValue {
 DEFINE_NON_INTERPOLABLE_VALUE_TYPE(CSSClipNonInterpolableValue);
 DEFINE_NON_INTERPOLABLE_VALUE_TYPE_CASTS(CSSClipNonInterpolableValue);
 
-class UnderlyingAutosChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+class UnderlyingAutosChecker : public InterpolationType::ConversionChecker {
  public:
   ~UnderlyingAutosChecker() final {}
 
@@ -124,7 +123,7 @@ class UnderlyingAutosChecker
   UnderlyingAutosChecker(const ClipAutos& underlying_autos)
       : underlying_autos_(underlying_autos) {}
 
-  bool IsValid(const StyleResolverState&,
+  bool IsValid(const InterpolationEnvironment&,
                const InterpolationValue& underlying) const final {
     return underlying_autos_ == GetUnderlyingAutos(underlying);
   }

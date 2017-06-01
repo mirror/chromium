@@ -20,19 +20,19 @@ let mockFaceDetectionProviderReady = define(
     }
 
     createFaceDetection(request, options) {
-      this.mockService_ = new MockFaceDetection(request, options);
+      this.mock_service_ = new MockFaceDetection(request, options);
     }
 
     getFrameData() {
-      return this.mockService_.bufferData_;
+      return this.mock_service_.buffer_data_;
     }
 
     getMaxDetectedFaces() {
-     return this.mockService_.maxDetectedFaces_;
+     return this.mock_service_.maxDetectedFaces_;
     }
 
     getFastMode () {
-      return this.mockService_.fastMode_;
+      return this.mock_service_.fastMode_;
     }
   }
 
@@ -46,7 +46,7 @@ let mockFaceDetectionProviderReady = define(
 
     detect(frame_data, width, height) {
       let receivedStruct = mojo.mapBuffer(frame_data, 0, width*height*4, 0);
-      this.bufferData_ = new Uint32Array(receivedStruct.buffer);
+      this.buffer_data_ = new Uint32Array(receivedStruct.buffer);
       return Promise.resolve({
         results: [
           {

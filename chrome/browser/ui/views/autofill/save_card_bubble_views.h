@@ -8,7 +8,6 @@
 #include "base/macros.h"
 #include "chrome/browser/ui/autofill/save_card_bubble_view.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_bubble_delegate_view.h"
-#include "chrome/browser/ui/views/payments/view_stack.h"
 #include "components/autofill/core/browser/ui/save_card_bubble_controller.h"
 #include "ui/views/controls/link_listener.h"
 #include "ui/views/controls/styled_label_listener.h"
@@ -51,12 +50,13 @@ class SaveCardBubbleViews : public SaveCardBubbleView,
   bool Accept() override;
   bool Cancel() override;
   bool Close() override;
+  int GetDialogButtons() const override;
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const override;
   bool IsDialogButtonEnabled(ui::DialogButton button) const override;
   bool ShouldDefaultButtonBeBlue() const override;
 
   // views::View
-  gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetPreferredSize() const override;
 
   // views::WidgetDelegate
   base::string16 GetWindowTitle() const override;
@@ -85,11 +85,9 @@ class SaveCardBubbleViews : public SaveCardBubbleView,
 
   SaveCardBubbleController* controller_;  // Weak reference.
 
-  ViewStack* view_stack_ = nullptr;
+  views::Textfield* cvc_textfield_;
 
-  views::Textfield* cvc_textfield_ = nullptr;
-
-  views::Link* learn_more_link_ = nullptr;
+  views::Link* learn_more_link_;
 
   DISALLOW_COPY_AND_ASSIGN(SaveCardBubbleViews);
 };

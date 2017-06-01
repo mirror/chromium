@@ -7,10 +7,6 @@
 <dom-module id="cr-shared-style">
   <template>
     <style include="cr-hidden-style">
-      :host-context([dir=rtl]) button[is='paper-icon-button-light'] {
-        transform: scaleX(-1);  /* Flip on the X axis (aka mirror). */
-      }
-
       /* Chrome spinners should be blue. */
       paper-spinner {
         --paper-spinner-layer-1-color: var(--google-blue-500);
@@ -40,8 +36,8 @@
       .action-button,
       .cancel-button {
         font-weight: 500;
-        line-height: 154%;
-        padding: 8px 16px;
+        padding-left: 16px;
+        padding-right: 16px;
       }
 
       [actionable] {
@@ -49,8 +45,7 @@
       }
 
       button[is='paper-icon-button-light'] {
-        -webkit-margin-end: var(--cr-icon-ripple-margin);
-        -webkit-margin-start: 16px;
+        @apply(--cr-paper-icon-button-margin);
         background-position: center;
         background-repeat: no-repeat;
         background-size: var(--cr-icon-size);
@@ -102,12 +97,12 @@
       [scrollable].can-scroll:not(.scrolled-to-bottom) {
         border-bottom-color: var(--google-grey-300);
       }
-      [scrollable] iron-list > * {
-        @apply(--cr-actionable);
-      }
-      [scrollable] iron-list > :not(.no-outline):focus {
+      [scrollable] :focus {
         @apply(--cr-list-item-focus);
         @apply(--cr-selectable-focus);
+      }
+      [scrollable] iron-list > * {
+        @apply(--cr-actionable);
       }
 
       .scroll-container {

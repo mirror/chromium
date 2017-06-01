@@ -13,7 +13,6 @@
 #include "third_party/WebKit/public/platform/WebCursorInfo.h"
 #include "third_party/WebKit/public/platform/WebKeyboardEvent.h"
 #include "third_party/WebKit/public/platform/WebMouseEvent.h"
-#include "ui/base/ui_base_types.h"
 #include "ui/events/base_event_utils.h"
 #include "ui/events/blink/blink_event_util.h"
 #include "ui/events/gesture_detection/gesture_provider_config_helper.h"
@@ -161,10 +160,8 @@ bool TouchEmulator::HandleMouseEvent(const WebMouseEvent& mouse_event) {
 
   if (mouse_event.button == WebMouseEvent::Button::kRight &&
       mouse_event.GetType() == WebInputEvent::kMouseDown) {
-    client_->ShowContextMenuAtPoint(
-        gfx::Point(mouse_event.PositionInWidget().x,
-                   mouse_event.PositionInWidget().y),
-        ui::MENU_SOURCE_MOUSE);
+    client_->ShowContextMenuAtPoint(gfx::Point(
+        mouse_event.PositionInWidget().x, mouse_event.PositionInWidget().y));
   }
 
   if (mouse_event.button != WebMouseEvent::Button::kLeft)

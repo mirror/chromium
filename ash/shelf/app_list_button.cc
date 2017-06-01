@@ -9,16 +9,14 @@
 
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/shelf/ink_drop_button_listener.h"
-#include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_constants.h"
 #include "ash/shelf/shelf_view.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/tray/tray_popup_utils.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
-#include "base/metrics/user_metrics.h"
-#include "base/metrics/user_metrics_action.h"
 #include "chromeos/chromeos_switches.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/app_list/presenter/app_list.h"
@@ -34,16 +32,16 @@ namespace ash {
 
 AppListButton::AppListButton(InkDropButtonListener* listener,
                              ShelfView* shelf_view,
-                             Shelf* shelf)
+                             WmShelf* wm_shelf)
     : views::ImageButton(nullptr),
       is_showing_app_list_(false),
       background_color_(kShelfDefaultBaseColor),
       listener_(listener),
       shelf_view_(shelf_view),
-      shelf_(shelf) {
+      wm_shelf_(wm_shelf) {
   DCHECK(listener_);
   DCHECK(shelf_view_);
-  DCHECK(shelf_);
+  DCHECK(wm_shelf_);
 
   SetInkDropMode(InkDropMode::ON_NO_GESTURE_HANDLER);
   set_ink_drop_base_color(kShelfInkDropBaseColor);
@@ -60,13 +58,13 @@ AppListButton::~AppListButton() {}
 void AppListButton::OnAppListShown() {
   AnimateInkDrop(views::InkDropState::ACTIVATED, nullptr);
   is_showing_app_list_ = true;
-  shelf_->UpdateAutoHideState();
+  wm_shelf_->UpdateAutoHideState();
 }
 
 void AppListButton::OnAppListDismissed() {
   AnimateInkDrop(views::InkDropState::DEACTIVATED, nullptr);
   is_showing_app_list_ = false;
-  shelf_->UpdateAutoHideState();
+  wm_shelf_->UpdateAutoHideState();
 }
 
 void AppListButton::UpdateShelfItemBackground(SkColor color) {
@@ -97,8 +95,6 @@ void AppListButton::OnGestureEvent(ui::GestureEvent* event) {
       break;
     case ui::ET_GESTURE_LONG_PRESS:
       if (chromeos::switches::IsVoiceInteractionEnabled()) {
-        base::RecordAction(base::UserMetricsAction(
-            "VoiceInteraction.Started.AppListButtonLongPress"));
         Shell::Get()->app_list()->StartVoiceInteractionSession();
         event->SetHandled();
       } else {
@@ -144,6 +140,43 @@ bool AppListButton::OnMouseDragged(const ui::MouseEvent& event) {
   return true;
 }
 
+void AppListButton::OnPaint(gfx::Canvas* canvas) {
+  // Call the base class first to paint any background/borders.
+  View::OnPaint(canvas);
+
+  gfx::PointF circle_center(GetCenterPoint());
+
+  // Paint the circular background.
+  cc::PaintFlags bg_flags;
+  bg_flags.setColor(background_color_);
+  bg_flags.setAntiAlias(true);
+  bg_flags.setStyle(cc::PaintFlags::kFill_Style);
+  canvas->DrawCircle(circle_center, kAppListButtonRadius, bg_flags);
+
+  // Paint a white ring as the foreground. The ceil/dsf math assures that the
+  // ring draws sharply and is centered at all scale factors.
+  const float kRingOuterRadiusDp = 7.f;
+  const float kRingThicknessDp = 1.5f;
+
+  {
+    gfx::ScopedCanvas scoped_canvas(canvas);
+    const float dsf = canvas->UndoDeviceScaleFactor();
+    circle_center.Scale(dsf);
+
+    cc::PaintFlags fg_flags;
+    fg_flags.setAntiAlias(true);
+    fg_flags.setStyle(cc::PaintFlags::kStroke_Style);
+    fg_flags.setColor(kShelfIconColor);
+    const float thickness = std::ceil(kRingThicknessDp * dsf);
+    const float radius = std::ceil(kRingOuterRadiusDp * dsf) - thickness / 2;
+    fg_flags.setStrokeWidth(thickness);
+    // Make sure the center of the circle lands on pixel centers.
+    canvas->DrawCircle(circle_center, radius, fg_flags);
+  }
+
+  views::Painter::PaintFocusPainter(this, canvas, focus_painter());
+}
+
 void AppListButton::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->role = ui::AX_ROLE_BUTTON;
   node_data->SetName(shelf_view_->GetTitleForView(this));
@@ -187,38 +220,6 @@ std::unique_ptr<views::InkDropMask> AppListButton::CreateInkDropMask() const {
                                                     kAppListButtonRadius);
 }
 
-void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
-  gfx::PointF circle_center(GetCenterPoint());
-
-  // Paint the circular background.
-  cc::PaintFlags bg_flags;
-  bg_flags.setColor(background_color_);
-  bg_flags.setAntiAlias(true);
-  bg_flags.setStyle(cc::PaintFlags::kFill_Style);
-  canvas->DrawCircle(circle_center, kAppListButtonRadius, bg_flags);
-
-  // Paint a white ring as the foreground. The ceil/dsf math assures that the
-  // ring draws sharply and is centered at all scale factors.
-  const float kRingOuterRadiusDp = 7.f;
-  const float kRingThicknessDp = 1.5f;
-
-  {
-    gfx::ScopedCanvas scoped_canvas(canvas);
-    const float dsf = canvas->UndoDeviceScaleFactor();
-    circle_center.Scale(dsf);
-
-    cc::PaintFlags fg_flags;
-    fg_flags.setAntiAlias(true);
-    fg_flags.setStyle(cc::PaintFlags::kStroke_Style);
-    fg_flags.setColor(kShelfIconColor);
-    const float thickness = std::ceil(kRingThicknessDp * dsf);
-    const float radius = std::ceil(kRingOuterRadiusDp * dsf) - thickness / 2;
-    fg_flags.setStrokeWidth(thickness);
-    // Make sure the center of the circle lands on pixel centers.
-    canvas->DrawCircle(circle_center, radius, fg_flags);
-  }
-}
-
 gfx::Point AppListButton::GetCenterPoint() const {
   // For a bottom-aligned shelf, the button bounds could have a larger height
   // than width (in the case of touch-dragging the shelf updwards) or a larger
@@ -227,7 +228,7 @@ gfx::Point AppListButton::GetCenterPoint() const {
   // adjust the x-position for a left- or right-aligned shelf.
   const int x_mid = width() / 2.f;
   const int y_mid = height() / 2.f;
-  ShelfAlignment alignment = shelf_->alignment();
+  ShelfAlignment alignment = wm_shelf_->GetAlignment();
   if (alignment == SHELF_ALIGNMENT_BOTTOM ||
       alignment == SHELF_ALIGNMENT_BOTTOM_LOCKED) {
     return gfx::Point(x_mid, x_mid);

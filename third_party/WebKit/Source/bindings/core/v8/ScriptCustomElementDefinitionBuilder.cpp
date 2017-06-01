@@ -17,15 +17,25 @@
 
 namespace blink {
 
+ScriptCustomElementDefinitionBuilder*
+    ScriptCustomElementDefinitionBuilder::stack_ = nullptr;
+
 ScriptCustomElementDefinitionBuilder::ScriptCustomElementDefinitionBuilder(
     ScriptState* script_state,
     CustomElementRegistry* registry,
     const ScriptValue& constructor,
     ExceptionState& exception_state)
-    : script_state_(script_state),
+    : prev_(stack_),
+      script_state_(script_state),
       registry_(registry),
       constructor_value_(constructor.V8Value()),
-      exception_state_(exception_state) {}
+      exception_state_(exception_state) {
+  stack_ = this;
+}
+
+ScriptCustomElementDefinitionBuilder::~ScriptCustomElementDefinitionBuilder() {
+  stack_ = prev_;
+}
 
 bool ScriptCustomElementDefinitionBuilder::CheckConstructorIntrinsics() {
   DCHECK(script_state_->World().IsMainWorld());
@@ -44,15 +54,26 @@ bool ScriptCustomElementDefinitionBuilder::CheckConstructorIntrinsics() {
 }
 
 bool ScriptCustomElementDefinitionBuilder::CheckConstructorNotRegistered() {
-  if (!ScriptCustomElementDefinition::ForConstructor(script_state_.Get(),
-                                                     registry_, constructor_))
-    return true;
-
-  // Constructor is already registered.
-  exception_state_.ThrowDOMException(
-      kNotSupportedError,
-      "this constructor has already been used with this registry");
-  return false;
+  if (ScriptCustomElementDefinition::ForConstructor(script_state_.Get(),
+                                                    registry_, constructor_)) {
+    // Constructor is already registered.
+    exception_state_.ThrowDOMException(
+        kNotSupportedError,
+        "this constructor has already been used with this registry");
+    return false;
+  }
+  for (auto builder = prev_; builder; builder = builder->prev_) {
+    CHECK(!builder->constructor_.IsEmpty());
+    if (registry_ != builder->registry_ ||
+        constructor_ != builder->constructor_) {
+      continue;
+    }
+    exception_state_.ThrowDOMException(
+        kNotSupportedError,
+        "this constructor is already being defined in this registry");
+    return false;
+  }
+  return true;
 }
 
 bool ScriptCustomElementDefinitionBuilder::ValueForName(
@@ -138,7 +159,7 @@ CustomElementDefinition* ScriptCustomElementDefinitionBuilder::Build(
   return ScriptCustomElementDefinition::Create(
       script_state_.Get(), registry_, descriptor, constructor_,
       connected_callback_, disconnected_callback_, adopted_callback_,
-      attribute_changed_callback_, std::move(observed_attributes_));
+      attribute_changed_callback_, observed_attributes_);
 }
 
 }  // namespace blink

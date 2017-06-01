@@ -10,8 +10,7 @@ policies and contribution forms [3].
 [3] http://www.w3.org/2004/10/27-testcases
 */
 
-/* Documentation: http://web-platform-tests.org/writing-tests/testharness-api.html
- * (../docs/_writing-tests/testharness-api.md) */
+/* Documentation is in docs/api.md */
 
 (function ()
 {

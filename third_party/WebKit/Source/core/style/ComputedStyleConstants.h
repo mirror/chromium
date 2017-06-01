@@ -118,6 +118,8 @@ enum class EVerticalAlign : unsigned {
   kLength
 };
 
+enum TextCombine { kTextCombineNone, kTextCombineAll };
+
 enum EFillAttachment {
   kScrollBackgroundAttachment,
   kLocalBackgroundAttachment,
@@ -171,9 +173,19 @@ enum EFlexDirection {
 };
 enum EFlexWrap { kFlexNoWrap, kFlexWrap, kFlexWrapReverse };
 
+enum class ETextSecurity { kNone, kDisc, kCircle, kSquare };
+
+// CSS3 User Modify Properties
+
+enum class EUserModify { kReadOnly, kReadWrite, kReadWritePlaintextOnly };
+
 // CSS3 User Drag Values
 
 enum EUserDrag { DRAG_AUTO, DRAG_NONE, DRAG_ELEMENT };
+
+// CSS3 User Select Values
+
+enum class EUserSelect { kNone, kText, kAll };
 
 // CSS3 Image Values
 enum ObjectFit {
@@ -183,6 +195,14 @@ enum ObjectFit {
   kObjectFitNone,
   kObjectFitScaleDown
 };
+
+// Word Break Values. Matches WinIE and CSS3
+
+enum class EWordBreak { kNormal, kBreakAll, kKeepAll, kBreakWord };
+
+enum class EOverflowWrap { kNormal, kBreakWord };
+
+enum class LineBreak { kAuto, kLoose, kNormal, kStrict, kAfterWhiteSpace };
 
 enum EResize { RESIZE_NONE, RESIZE_BOTH, RESIZE_HORIZONTAL, RESIZE_VERTICAL };
 
@@ -220,12 +240,11 @@ enum TextDecorationStyle {
 };
 
 static const size_t kTextDecorationSkipBits = 3;
-enum class TextDecorationSkip { kNone = 0x0, kObjects = 0x1, kInk = 0x2 };
-inline TextDecorationSkip operator&(TextDecorationSkip a,
-                                    TextDecorationSkip b) {
-  return TextDecorationSkip(static_cast<unsigned>(a) &
-                            static_cast<unsigned>(b));
-}
+enum TextDecorationSkip {
+  kTextDecorationSkipNone = 0x0,
+  kTextDecorationSkipObjects = 0x1,
+  kTextDecorationSkipInk = 0x2
+};
 inline TextDecorationSkip operator|(TextDecorationSkip a,
                                     TextDecorationSkip b) {
   return TextDecorationSkip(static_cast<unsigned>(a) |
@@ -236,10 +255,20 @@ inline TextDecorationSkip& operator|=(TextDecorationSkip& a,
   return a = a | b;
 }
 
-enum class TextUnderlinePosition {
+enum TextAlignLast {
+  kTextAlignLastAuto,
+  kTextAlignLastStart,
+  kTextAlignLastEnd,
+  kTextAlignLastLeft,
+  kTextAlignLastRight,
+  kTextAlignLastCenter,
+  kTextAlignLastJustify
+};
+
+enum TextUnderlinePosition {
   // FIXME: Implement support for 'under left' and 'under right' values.
-  kAuto,
-  kUnder
+  kTextUnderlinePositionAuto,
+  kTextUnderlinePositionUnder
 };
 
 enum ETransformStyle3D { kTransformStyle3DFlat, kTransformStyle3DPreserve3D };
@@ -253,26 +282,52 @@ enum EBackfaceVisibility {
 
 enum ELineClampType { kLineClampLineCount, kLineClampPercentage };
 
-enum class TextEmphasisMark {
+enum class Hyphens { kNone, kManual, kAuto };
+
+enum class ESpeak {
   kNone,
-  kAuto,
-  kDot,
-  kCircle,
-  kDoubleCircle,
-  kTriangle,
-  kSesame,
-  kCustom
+  kNormal,
+  kSpellOut,
+  kDigits,
+  kLiteralPunctuation,
+  kNoPunctuation
+};
+
+enum TextEmphasisFill { kTextEmphasisFillFilled, kTextEmphasisFillOpen };
+
+enum TextEmphasisMark {
+  kTextEmphasisMarkNone,
+  kTextEmphasisMarkAuto,
+  kTextEmphasisMarkDot,
+  kTextEmphasisMarkCircle,
+  kTextEmphasisMarkDoubleCircle,
+  kTextEmphasisMarkTriangle,
+  kTextEmphasisMarkSesame,
+  kTextEmphasisMarkCustom
+};
+
+enum TextEmphasisPosition {
+  kTextEmphasisPositionOver,
+  kTextEmphasisPositionUnder
+};
+
+enum TextOrientation {
+  kTextOrientationMixed,
+  kTextOrientationUpright,
+  kTextOrientationSideways
 };
 
 enum TextOverflow { kTextOverflowClip = 0, kTextOverflowEllipsis };
 
-enum class EImageRendering {
-  kAuto,
-  kOptimizeSpeed,
-  kOptimizeQuality,
-  kOptimizeContrast,
-  kPixelated
+enum EImageRendering {
+  kImageRenderingAuto,
+  kImageRenderingOptimizeSpeed,
+  kImageRenderingOptimizeQuality,
+  kImageRenderingOptimizeContrast,
+  kImageRenderingPixelated
 };
+
+enum RubyPosition { kRubyPositionBefore, kRubyPositionAfter };
 
 static const size_t kGridAutoFlowBits = 4;
 enum InternalGridAutoFlowAlgorithm {
@@ -323,7 +378,8 @@ inline Containment& operator|=(Containment& a, Containment b) {
 }
 
 enum ItemPosition {
-  kItemPositionAuto,
+  kItemPositionAuto,  // It will mean 'normal' after running the StyleAdjuster
+                      // to avoid resolving the initial values.
   kItemPositionNormal,
   kItemPositionStretch,
   kItemPositionBaseline,
@@ -372,6 +428,9 @@ enum ContentDistributionType {
 // platforms (such as Windows).
 static const float kMaximumAllowedFontSize = 10000.0f;
 
+enum TextIndentLine { kTextIndentFirstLine, kTextIndentEachLine };
+enum TextIndentType { kTextIndentNormal, kTextIndentHanging };
+
 enum CSSBoxType {
   kBoxMissing = 0,
   kMarginBox,
@@ -387,16 +446,6 @@ enum ScrollSnapType {
 };
 
 enum AutoRepeatType { kNoAutoRepeat, kAutoFill, kAutoFit };
-
-// Page size type.
-// StyleRareNonInheritedData::page_size_ is meaningful only when
-// StyleRareNonInheritedData::page_size_type_ is kResolved.
-enum class PageSizeType {
-  kAuto,       // size: auto
-  kLandscape,  // size: landscape
-  kPortrait,   // size: portrait
-  kResolved    // Size is fully resolved.
-};
 
 // In order to conserve memory, the border width uses fixed point,
 // which can be bitpacked.  This fixed point implementation is

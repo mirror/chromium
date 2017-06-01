@@ -47,7 +47,6 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/thread_safe_interface_ptr.h"
 #include "net/base/network_change_notifier.h"
-#include "net/nqe/effective_connection_type.h"
 #include "third_party/WebKit/public/platform/WebConnectionType.h"
 #include "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h"
 #include "third_party/WebKit/public/web/WebMemoryStatistics.h"
@@ -127,6 +126,7 @@ class DomStorageDispatcher;
 class FrameSwapMessageQueue;
 class IndexedDBDispatcher;
 class InputHandlerManager;
+class MemoryObserver;
 class MidiMessageFilter;
 class P2PSocketDispatcher;
 class PeerConnectionDependencyFactory;
@@ -248,6 +248,7 @@ class CONTENT_EXPORT RenderThreadImpl
   cc::TaskGraphRunner* GetTaskGraphRunner() override;
   bool IsThreadedAnimationEnabled() override;
   bool IsScrollAnimatorEnabled() override;
+  bool IsSurfaceSynchronizationEnabled() override;
 
   // blink::scheduler::RendererScheduler::RAILModeObserver implementation.
   void OnRAILModeChanged(v8::RAILMode rail_mode) override;
@@ -509,6 +510,10 @@ class CONTENT_EXPORT RenderThreadImpl
     return needs_to_record_first_active_paint_;
   }
 
+  mojom::FrameSinkProvider* GetFrameSinkProvider() {
+    return frame_sink_provider_.get();
+  }
+
  protected:
   RenderThreadImpl(
       const InProcessChildThreadParams& params,
@@ -565,8 +570,7 @@ class CONTENT_EXPORT RenderThreadImpl
   void OnNetworkConnectionChanged(
       net::NetworkChangeNotifier::ConnectionType type,
       double max_bandwidth_mbps) override;
-  void OnNetworkQualityChanged(net::EffectiveConnectionType type,
-                               base::TimeDelta http_rtt,
+  void OnNetworkQualityChanged(base::TimeDelta http_rtt,
                                base::TimeDelta transport_rtt,
                                double bandwidth_kbps) override;
   void SetWebKitSharedTimersSuspended(bool suspend) override;
@@ -721,6 +725,7 @@ class CONTENT_EXPORT RenderThreadImpl
 
   std::unique_ptr<base::MemoryPressureListener> memory_pressure_listener_;
 
+  std::unique_ptr<MemoryObserver> memory_observer_;
   std::unique_ptr<ChildMemoryCoordinatorImpl> memory_coordinator_;
 
   std::unique_ptr<ui::Gpu> gpu_;
@@ -741,6 +746,7 @@ class CONTENT_EXPORT RenderThreadImpl
   cc::BufferToTextureTargetMap buffer_to_texture_target_map_;
   bool is_threaded_animation_enabled_;
   bool is_scroll_animator_enabled_;
+  bool is_surface_synchronization_enabled_;
 
   class PendingFrameCreate : public base::RefCounted<PendingFrameCreate> {
    public:

@@ -10,14 +10,10 @@
 #include <utility>
 
 #include "base/bind.h"
-#include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/permission_manager.h"
 #include "content/public/browser/permission_type.h"
-#include "content/public/browser/render_frame_host.h"
-#include "content/public/common/content_features.h"
-#include "third_party/WebKit/public/platform/WebFeaturePolicy.h"
 
 using blink::mojom::PermissionDescriptorPtr;
 using blink::mojom::PermissionName;
@@ -60,56 +56,8 @@ PermissionType PermissionDescriptorToPermissionType(
   return PermissionType::NUM;
 }
 
-blink::WebFeaturePolicyFeature PermissionTypeToFeaturePolicyFeature(
-    PermissionType type) {
-  switch (type) {
-    case PermissionType::MIDI:
-    case PermissionType::MIDI_SYSEX:
-      return blink::WebFeaturePolicyFeature::kMidiFeature;
-    case PermissionType::GEOLOCATION:
-      return blink::WebFeaturePolicyFeature::kGeolocation;
-    case PermissionType::PROTECTED_MEDIA_IDENTIFIER:
-      return blink::WebFeaturePolicyFeature::kEme;
-    case PermissionType::AUDIO_CAPTURE:
-      return blink::WebFeaturePolicyFeature::kMicrophone;
-    case PermissionType::VIDEO_CAPTURE:
-      return blink::WebFeaturePolicyFeature::kCamera;
-    case PermissionType::PUSH_MESSAGING:
-    case PermissionType::NOTIFICATIONS:
-    case PermissionType::DURABLE_STORAGE:
-    case PermissionType::BACKGROUND_SYNC:
-    case PermissionType::FLASH:
-    case PermissionType::NUM:
-      // These aren't exposed by feature policy.
-      return blink::WebFeaturePolicyFeature::kNotFound;
-  }
-
-  NOTREACHED();
-  return blink::WebFeaturePolicyFeature::kNotFound;
-}
-
-bool AllowedByFeaturePolicy(RenderFrameHost* rfh, PermissionType type) {
-  if (!base::FeatureList::IsEnabled(
-          features::kUseFeaturePolicyForPermissions)) {
-    // Default to ignoring the feature policy.
-    return true;
-  }
-
-  blink::WebFeaturePolicyFeature feature_policy_feature =
-      PermissionTypeToFeaturePolicyFeature(type);
-  if (feature_policy_feature == blink::WebFeaturePolicyFeature::kNotFound)
-    return true;
-
-  // If there is no frame, there is no policy, so disable the feature for
-  // safety.
-  if (!rfh)
-    return false;
-
-  return rfh->IsFeatureEnabled(feature_policy_feature);
-}
-
-// This function allows the usage of the the multiple request map with single
-// requests.
+// This function allows the usage of the the multiple request map
+// with single requests.
 void PermissionRequestResponseCallbackWrapper(
     const base::Callback<void(PermissionStatus)>& callback,
     const std::vector<PermissionStatus>& vector) {
@@ -119,56 +67,20 @@ void PermissionRequestResponseCallbackWrapper(
 
 } // anonymous namespace
 
-class PermissionServiceImpl::PendingRequest {
- public:
-  PendingRequest(std::vector<PermissionType> types,
-                 const RequestPermissionsCallback& callback)
-      : types_(types),
-        callback_(callback),
-        has_result_been_set_(types.size(), false),
-        results_(types.size(), PermissionStatus::DENIED) {}
+PermissionServiceImpl::PendingRequest::PendingRequest(
+    const RequestPermissionsCallback& callback,
+    int request_count)
+    : callback(callback),
+      request_count(request_count) {
+}
 
-  ~PendingRequest() {
-    if (callback_.is_null())
-      return;
+PermissionServiceImpl::PendingRequest::~PendingRequest() {
+  if (callback.is_null())
+    return;
 
-    std::vector<PermissionStatus> result(types_.size(),
-                                         PermissionStatus::DENIED);
-    callback_.Run(result);
-  }
-
-  int id() const { return id_; }
-  void set_id(int id) { id_ = id; }
-
-  size_t RequestSize() const { return types_.size(); }
-
-  void SetResult(int index, PermissionStatus result) {
-    DCHECK_EQ(false, has_result_been_set_[index]);
-    has_result_been_set_[index] = true;
-    results_[index] = result;
-  }
-
-  bool HasResultBeenSet(size_t index) const {
-    return has_result_been_set_[index];
-  }
-
-  void RunCallback() {
-    // Check that all results have been set.
-    DCHECK(std::find(has_result_been_set_.begin(), has_result_been_set_.end(),
-                     false) == has_result_been_set_.end());
-    callback_.Run(results_);
-    callback_.Reset();
-  }
-
- private:
-  // Request ID received from the PermissionManager.
-  int id_;
-  std::vector<PermissionType> types_;
-  RequestPermissionsCallback callback_;
-
-  std::vector<bool> has_result_been_set_;
-  std::vector<PermissionStatus> results_;
-};
+  std::vector<PermissionStatus> result(request_count, PermissionStatus::DENIED);
+  callback.Run(result);
+}
 
 PermissionServiceImpl::PermissionServiceImpl(PermissionServiceContext* context)
     : context_(context), weak_factory_(this) {}
@@ -184,7 +96,7 @@ PermissionServiceImpl::~PermissionServiceImpl() {
   // Cancel pending requests.
   for (RequestsMap::Iterator<PendingRequest> it(&pending_requests_);
        !it.IsAtEnd(); it.Advance()) {
-    permission_manager->CancelPermissionRequest(it.GetCurrentValue()->id());
+    permission_manager->CancelPermissionRequest(it.GetCurrentValue()->id);
   }
   pending_requests_.Clear();
 }
@@ -194,11 +106,44 @@ void PermissionServiceImpl::RequestPermission(
     const url::Origin& origin,
     bool user_gesture,
     const PermissionStatusCallback& callback) {
-  std::vector<PermissionDescriptorPtr> permissions;
-  permissions.push_back(std::move(permission));
-  RequestPermissions(
-      std::move(permissions), origin, user_gesture,
-      base::Bind(&PermissionRequestResponseCallbackWrapper, callback));
+  // This condition is valid if the call is coming from a ChildThread instead of
+  // a RenderFrame. Some consumers of the service run in Workers and some in
+  // Frames. In the context of a Worker, it is not possible to show a
+  // permission prompt because there is no tab. In the context of a Frame, we
+  // can. Even if the call comes from a context where it is not possible to show
+  // any UI, we want to still return something relevant so the current
+  // permission status is returned.
+  BrowserContext* browser_context = context_->GetBrowserContext();
+  DCHECK(browser_context);
+  if (!context_->render_frame_host() ||
+      !browser_context->GetPermissionManager()) {
+    callback.Run(GetPermissionStatus(permission, origin));
+    return;
+  }
+
+  int pending_request_id =
+      pending_requests_.Add(base::MakeUnique<PendingRequest>(
+          base::Bind(&PermissionRequestResponseCallbackWrapper, callback), 1));
+  int id = browser_context->GetPermissionManager()->RequestPermission(
+      PermissionDescriptorToPermissionType(permission),
+      context_->render_frame_host(), origin.GetURL(), user_gesture,
+      base::Bind(&PermissionServiceImpl::OnRequestPermissionResponse,
+                 weak_factory_.GetWeakPtr(), pending_request_id));
+
+  // Check if the request still exists. It might have been removed by the
+  // callback if it was run synchronously.
+  PendingRequest* pending_request = pending_requests_.Lookup(
+      pending_request_id);
+  if (!pending_request)
+      return;
+  pending_request->id = id;
+}
+
+void PermissionServiceImpl::OnRequestPermissionResponse(
+    int pending_request_id,
+    PermissionStatus status) {
+  OnRequestPermissionsResponse(pending_request_id,
+                               std::vector<PermissionStatus>(1, status));
 }
 
 void PermissionServiceImpl::RequestPermissions(
@@ -228,53 +173,30 @@ void PermissionServiceImpl::RequestPermissions(
   for (size_t i = 0; i < types.size(); ++i)
     types[i] = PermissionDescriptorToPermissionType(permissions[i]);
 
-  std::unique_ptr<PendingRequest> pending_request =
-      base::MakeUnique<PendingRequest>(types, callback);
-  std::vector<PermissionType> request_types;
-  for (size_t i = 0; i < types.size(); ++i) {
-    // Check feature policy.
-    if (!AllowedByFeaturePolicy(context_->render_frame_host(), types[i]))
-      pending_request->SetResult(i, PermissionStatus::DENIED);
-    else
-      request_types.push_back(types[i]);
-  }
-
-  int pending_request_id = pending_requests_.Add(std::move(pending_request));
+  int pending_request_id = pending_requests_.Add(
+      base::MakeUnique<PendingRequest>(callback, permissions.size()));
   int id = browser_context->GetPermissionManager()->RequestPermissions(
-      request_types, context_->render_frame_host(), origin.GetURL(),
-      user_gesture,
+      types, context_->render_frame_host(), origin.GetURL(), user_gesture,
       base::Bind(&PermissionServiceImpl::OnRequestPermissionsResponse,
                  weak_factory_.GetWeakPtr(), pending_request_id));
 
   // Check if the request still exists. It may have been removed by the
   // the response callback.
-  PendingRequest* in_progress_request =
-      pending_requests_.Lookup(pending_request_id);
-  if (!in_progress_request)
-    return;
-  in_progress_request->set_id(id);
+  PendingRequest* pending_request = pending_requests_.Lookup(
+      pending_request_id);
+  if (!pending_request)
+      return;
+  pending_request->id = id;
 }
 
 void PermissionServiceImpl::OnRequestPermissionsResponse(
     int pending_request_id,
-    const std::vector<PermissionStatus>& partial_result) {
+    const std::vector<PermissionStatus>& result) {
   PendingRequest* request = pending_requests_.Lookup(pending_request_id);
-  auto partial_result_it = partial_result.begin();
-  // Fill in the unset results in the request. Some results in the request are
-  // set synchronously because they are blocked by feature policy. Others are
-  // determined by a call to RequestPermission. All unset results will be
-  // contained in |partial_result| in the same order that they were requested.
-  // We fill in the unset results in the request with |partial_result|.
-  for (size_t i = 0; i < request->RequestSize(); ++i) {
-    if (!request->HasResultBeenSet(i)) {
-      request->SetResult(i, *partial_result_it);
-      ++partial_result_it;
-    }
-  }
-  DCHECK(partial_result.end() == partial_result_it);
-
-  request->RunCallback();
+  RequestPermissionsCallback callback(request->callback);
+  request->callback.Reset();
   pending_requests_.Remove(pending_request_id);
+  callback.Run(result);
 }
 
 void PermissionServiceImpl::HasPermission(
@@ -332,10 +254,8 @@ PermissionStatus PermissionServiceImpl::GetPermissionStatusFromType(
     const url::Origin& origin) {
   BrowserContext* browser_context = context_->GetBrowserContext();
   DCHECK(browser_context);
-  if (!browser_context->GetPermissionManager() ||
-      !AllowedByFeaturePolicy(context_->render_frame_host(), type)) {
+  if (!browser_context->GetPermissionManager())
     return PermissionStatus::DENIED;
-  }
 
   GURL requesting_origin(origin.Serialize());
   // If the embedding_origin is empty we'll use |origin| instead.

@@ -394,8 +394,7 @@ class BasicNetworkDelegate : public net::NetworkDelegateImpl {
   }
 
   bool OnCanAccessFile(const net::URLRequest& request,
-                       const base::FilePath& original_path,
-                       const base::FilePath& absolute_path) const override {
+                       const base::FilePath& path) const override {
     return false;
   }
 
@@ -490,9 +489,9 @@ CronetURLRequestContextAdapter::~CronetURLRequestContextAdapter() {
   DCHECK(GetNetworkTaskRunner()->BelongsToCurrentThread());
 
   if (http_server_properties_manager_)
-    http_server_properties_manager_->ShutdownOnPrefSequence();
+    http_server_properties_manager_->ShutdownOnPrefThread();
   if (network_qualities_prefs_manager_)
-    network_qualities_prefs_manager_->ShutdownOnPrefSequence();
+    network_qualities_prefs_manager_->ShutdownOnPrefThread();
   if (pref_service_)
     pref_service_->CommitPendingWrite();
   if (network_quality_estimator_) {
@@ -660,7 +659,7 @@ void CronetURLRequestContextAdapter::InitializeOnNetworkThread(
         http_server_properties_manager(new net::HttpServerPropertiesManager(
             new PrefServiceAdapter(pref_service_.get()),
             base::ThreadTaskRunnerHandle::Get(), GetNetworkTaskRunner()));
-    http_server_properties_manager->InitializeOnNetworkSequence();
+    http_server_properties_manager->InitializeOnNetworkThread();
     http_server_properties_manager_ = http_server_properties_manager.get();
     context_builder.SetHttpServerProperties(
         std::move(http_server_properties_manager));

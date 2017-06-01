@@ -57,7 +57,7 @@ function testDrag(source)
 {
     dragFromSourceToTarget(source, dragTarget);
     if (!droppedFiles)
-        testFailed("Drop of " + source.tagName + " never occurred!");
+        testFailed("Drop of " + source.tagName + " never occured!");
     else if (droppedFiles.length == 0)
         testPassed("Drag of " + source.tagName + " resulted in empty files array.");
     else

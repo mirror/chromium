@@ -56,6 +56,6 @@ class IncognitoTabModelImplCreator implements IncognitoTabModelDelegate {
 
     @Override
     public boolean doIncognitoTabsExist() {
-        return !TabWindowManager.getInstance().canDestroyIncognitoProfile();
+        return TabWindowManager.getInstance().getIncognitoTabCount() > 0;
     }
 }

@@ -28,14 +28,16 @@ void ComputeChunkBoundsAndOpaqueness(const DisplayItemList& display_items,
       if (!item.IsDrawing())
         continue;
       const auto& drawing = static_cast<const DrawingDisplayItem&>(item);
-      if (drawing.GetPaintRecord() && drawing.KnownToBeOpaque()) {
-        // TODO(pdr): It may be too conservative to round in to the
-        // EnclosedIntRect.
-        SkIRect conservative_rounded_rect;
-        const SkRect& record_bounds = drawing.GetPaintRecordBounds();
-        record_bounds.roundIn(&conservative_rounded_rect);
-        known_to_be_opaque_region.op(conservative_rounded_rect,
-                                     SkRegion::kUnion_Op);
+      if (const PaintRecord* record = drawing.GetPaintRecord().get()) {
+        if (drawing.KnownToBeOpaque()) {
+          // TODO(pdr): It may be too conservative to round in to the
+          // enclosedIntRect.
+          SkIRect conservative_rounded_rect;
+          const SkRect& cull_rect = record->cullRect();
+          cull_rect.roundIn(&conservative_rounded_rect);
+          known_to_be_opaque_region.op(conservative_rounded_rect,
+                                       SkRegion::kUnion_Op);
+        }
       }
     }
     chunk.bounds = bounds;
@@ -46,35 +48,38 @@ void ComputeChunkBoundsAndOpaqueness(const DisplayItemList& display_items,
 
 }  // namespace
 
-PaintArtifact::PaintArtifact() : display_item_list_(0) {}
+PaintArtifact::PaintArtifact()
+    : display_item_list_(0), is_suitable_for_gpu_rasterization_(true) {}
 
 PaintArtifact::PaintArtifact(DisplayItemList display_items,
                              Vector<PaintChunk> paint_chunks,
-                             int num_slow_paths)
+                             bool is_suitable_for_gpu_rasterization_arg)
     : display_item_list_(std::move(display_items)),
       paint_chunks_(std::move(paint_chunks)),
-      num_slow_paths_(num_slow_paths) {
+      is_suitable_for_gpu_rasterization_(
+          is_suitable_for_gpu_rasterization_arg) {
   ComputeChunkBoundsAndOpaqueness(display_item_list_, paint_chunks_);
 }
 
 PaintArtifact::PaintArtifact(PaintArtifact&& source)
     : display_item_list_(std::move(source.display_item_list_)),
       paint_chunks_(std::move(source.paint_chunks_)),
-      num_slow_paths_(source.num_slow_paths_) {}
+      is_suitable_for_gpu_rasterization_(
+          source.is_suitable_for_gpu_rasterization_) {}
 
 PaintArtifact::~PaintArtifact() {}
 
 PaintArtifact& PaintArtifact::operator=(PaintArtifact&& source) {
   display_item_list_ = std::move(source.display_item_list_);
   paint_chunks_ = std::move(source.paint_chunks_);
-  num_slow_paths_ = source.num_slow_paths_;
+  is_suitable_for_gpu_rasterization_ =
+      source.is_suitable_for_gpu_rasterization_;
   return *this;
 }
 
 void PaintArtifact::Reset() {
   display_item_list_.Clear();
   paint_chunks_.clear();
-  num_slow_paths_ = 0;
 }
 
 size_t PaintArtifact::ApproximateUnsharedMemoryUsage() const {
@@ -112,13 +117,15 @@ void PaintArtifact::Replay(const FloatRect& bounds,
 }
 
 DISABLE_CFI_PERF
-void PaintArtifact::AppendToWebDisplayItemList(
-    const LayoutSize& visual_rect_offset,
-    WebDisplayItemList* list) const {
+void PaintArtifact::AppendToWebDisplayItemList(WebDisplayItemList* list) const {
   TRACE_EVENT0("blink,benchmark", "PaintArtifact::appendToWebDisplayItemList");
-  for (const DisplayItem& item : display_item_list_)
-    item.AppendToWebDisplayItemList(visual_rect_offset, list);
-  list->SetNumSlowPaths(num_slow_paths_);
+  size_t visual_rect_index = 0;
+  for (const DisplayItem& display_item : display_item_list_) {
+    display_item.AppendToWebDisplayItemList(
+        display_item_list_.VisualRect(visual_rect_index), list);
+    visual_rect_index++;
+  }
+  list->SetIsSuitableForGpuRasterization(IsSuitableForGpuRasterization());
 }
 
 }  // namespace blink

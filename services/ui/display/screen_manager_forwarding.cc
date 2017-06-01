@@ -117,7 +117,7 @@ void ScreenManagerForwarding::GetDisplays(const GetDisplaysCallback& callback) {
 
 void ScreenManagerForwarding::Configure(
     int64_t display_id,
-    base::Optional<std::unique_ptr<display::DisplayMode>> mode,
+    std::unique_ptr<display::DisplayMode> mode,
     const gfx::Point& origin,
     const ConfigureCallback& callback) {
   DCHECK(native_display_delegate_);
@@ -130,7 +130,7 @@ void ScreenManagerForwarding::Configure(
   // We need a pointer to the mode in |snapshot|, not the equivalent mode we
   // received over Mojo.
   const DisplayMode* snapshot_mode =
-      mode ? GetCorrespondingMode(*snapshot, mode->get()) : nullptr;
+      GetCorrespondingMode(*snapshot, mode.get());
   native_display_delegate_->Configure(
       *snapshot, snapshot_mode, origin,
       base::Bind(&ScreenManagerForwarding::ForwardConfigure,

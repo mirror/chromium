@@ -55,6 +55,9 @@ class PixelExpectations(GpuTestExpectations):
     # TODO(zakerinasab): check / generate reference images.
     self.Fail('Pixel_Canvas2DUntagged', bug=713632)
 
+    # TODO(jbauman): Fix this.
+    self.Fail('Pixel_DirectComposition_Video_MP4', ['win', 'intel'], bug=704389)
+
     # Failures on Haswell GPUs on macOS after upgrade to 10.12.4.
     self.Fail('Pixel_OffscreenCanvas2DResizeOnWorker',
               ['mac', ('intel', 0x0a2e)], bug=718183)
@@ -66,6 +69,6 @@ class PixelExpectations(GpuTestExpectations):
               ['mac', ('intel', 0x0a2e)], bug=718183)
 
     self.Flaky('Pixel_OffscreenCanvasTransferBeforeStyleResize',
-              ['mac', 'linux', 'win', 'android'], bug=720188)
+              ['mac', 'linux', 'win'], bug=720188)
     self.Flaky('Pixel_OffscreenCanvasTransferAfterStyleResize',
-              ['mac', 'linux', 'win', 'android'], bug=719144)
+              ['mac', 'win'], bug=719144)

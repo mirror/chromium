@@ -123,11 +123,13 @@ class BrowserAddedForProfileObserver : public chrome::BrowserListObserver {
 };
 
 // Called after a |system_profile| is available to be used by the user manager.
-// Runs |callback|, if it exists. Depending on the value of
+// Based on the value of |tutorial_mode| we determine a url to be displayed
+// by the webui and run the |callback|, if it exists. Depending on the value of
 // |user_manager_action|, executes an action once the user manager displays or
 // after a profile is opened.
 void OnUserManagerSystemProfileCreated(
     const base::FilePath& profile_path_to_focus,
+    profiles::UserManagerTutorialMode tutorial_mode,
     profiles::UserManagerAction user_manager_action,
     const base::Callback<void(Profile*, const std::string&)>& callback,
     Profile* system_profile,
@@ -138,7 +140,9 @@ void OnUserManagerSystemProfileCreated(
   // Tell the webui which user should be focused.
   std::string page = chrome::kChromeUIMdUserManagerUrl;
 
-  if (!profile_path_to_focus.empty()) {
+  if (tutorial_mode == profiles::USER_MANAGER_TUTORIAL_OVERVIEW) {
+    page += profiles::kUserManagerDisplayTutorial;
+  } else if (!profile_path_to_focus.empty()) {
     // The file path is processed in the same way as base::CreateFilePathValue
     // (i.e. convert to std::string with AsUTF8Unsafe()), and then URI encoded.
     page += "#";
@@ -182,6 +186,7 @@ void ProfileLoadedCallback(ProfileManager::CreateCallback callback,
 namespace profiles {
 
 // User Manager parameters are prefixed with hash.
+const char kUserManagerDisplayTutorial[] = "#tutorial";
 const char kUserManagerOpenCreateUserPage[] = "#create-user";
 const char kUserManagerSelectProfileTaskManager[] = "#task-manager";
 const char kUserManagerSelectProfileAboutChrome[] = "#about-chrome";
@@ -355,6 +360,7 @@ void CreateAndSwitchToNewProfile(ProfileManager::CreateCallback callback,
 
 void ProfileBrowserCloseSuccess(const base::FilePath& profile_path) {
   UserManager::Show(base::FilePath(),
+                    profiles::USER_MANAGER_NO_TUTORIAL,
                     profiles::USER_MANAGER_SELECT_PROFILE_NO_ACTION);
 }
 
@@ -385,6 +391,7 @@ void LockBrowserCloseSuccess(const base::FilePath& profile_path) {
 
   chrome::HideTaskManager();
   UserManager::Show(profile_path,
+                    profiles::USER_MANAGER_NO_TUTORIAL,
                     profiles::USER_MANAGER_SELECT_PROFILE_NO_ACTION);
 }
 
@@ -440,6 +447,7 @@ void CloseProfileWindows(Profile* profile) {
 
 void CreateSystemProfileForUserManager(
     const base::FilePath& profile_path_to_focus,
+    profiles::UserManagerTutorialMode tutorial_mode,
     profiles::UserManagerAction user_manager_action,
     const base::Callback<void(Profile*, const std::string&)>& callback) {
   // Create the system profile, if necessary, and open the User Manager
@@ -448,6 +456,7 @@ void CreateSystemProfileForUserManager(
       ProfileManager::GetSystemProfilePath(),
       base::Bind(&OnUserManagerSystemProfileCreated,
                  profile_path_to_focus,
+                 tutorial_mode,
                  user_manager_action,
                  callback),
       base::string16(),
@@ -455,8 +464,24 @@ void CreateSystemProfileForUserManager(
       std::string());
 }
 
-void BubbleViewModeFromAvatarBubbleMode(BrowserWindow::AvatarBubbleMode mode,
-                                        BubbleViewMode* bubble_view_mode) {
+void ShowUserManagerMaybeWithTutorial(Profile* profile) {
+  // Guest users cannot appear in the User Manager, nor display a tutorial.
+  if (!profile || profile->IsGuestSession()) {
+    UserManager::Show(base::FilePath(),
+                      profiles::USER_MANAGER_NO_TUTORIAL,
+                      profiles::USER_MANAGER_SELECT_PROFILE_NO_ACTION);
+    return;
+  }
+  UserManager::Show(base::FilePath(),
+                    profiles::USER_MANAGER_TUTORIAL_OVERVIEW,
+                    profiles::USER_MANAGER_SELECT_PROFILE_NO_ACTION);
+}
+
+void BubbleViewModeFromAvatarBubbleMode(
+    BrowserWindow::AvatarBubbleMode mode,
+    BubbleViewMode* bubble_view_mode,
+    TutorialMode* tutorial_mode) {
+  *tutorial_mode = TUTORIAL_MODE_NONE;
   switch (mode) {
     case BrowserWindow::AVATAR_BUBBLE_MODE_ACCOUNT_MANAGEMENT:
       *bubble_view_mode = BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT;
@@ -472,13 +497,27 @@ void BubbleViewModeFromAvatarBubbleMode(BrowserWindow::AvatarBubbleMode mode,
       return;
     case BrowserWindow::AVATAR_BUBBLE_MODE_CONFIRM_SIGNIN:
       *bubble_view_mode = BUBBLE_VIEW_MODE_PROFILE_CHOOSER;
+      *tutorial_mode = TUTORIAL_MODE_CONFIRM_SIGNIN;
       return;
     case BrowserWindow::AVATAR_BUBBLE_MODE_SHOW_ERROR:
       *bubble_view_mode = BUBBLE_VIEW_MODE_PROFILE_CHOOSER;
+      *tutorial_mode = TUTORIAL_MODE_SHOW_ERROR;
       return;
     default:
       *bubble_view_mode = profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER;
   }
+}
+
+bool ShouldShowWelcomeUpgradeTutorial(
+    Profile* profile, TutorialMode tutorial_mode) {
+  const int show_count = profile->GetPrefs()->GetInteger(
+      prefs::kProfileAvatarTutorialShown);
+  // Do not show the tutorial if user has dismissed it.
+  if (show_count > signin_ui_util::kUpgradeWelcomeTutorialShowMax)
+    return false;
+
+  return tutorial_mode == TUTORIAL_MODE_WELCOME_UPGRADE ||
+         show_count != signin_ui_util::kUpgradeWelcomeTutorialShowMax;
 }
 
 }  // namespace profiles

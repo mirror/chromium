@@ -49,10 +49,11 @@ SignInScreenController::~SignInScreenController() {
   instance_ = nullptr;
 }
 
-void SignInScreenController::Init(const user_manager::UserList& users) {
+void SignInScreenController::Init(const user_manager::UserList& users,
+                                  bool show_guest) {
   // TODO(antrim) : This dependency should be inverted, screen should ask about
   // users.
-  user_selection_screen_->Init(users);
+  user_selection_screen_->Init(users, show_guest);
 }
 
 void SignInScreenController::OnSigninScreenReady() {

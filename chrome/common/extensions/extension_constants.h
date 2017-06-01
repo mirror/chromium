@@ -209,6 +209,11 @@ extern const char kSwitchAccessExtensionPath[];
 // Name of the manifest file in an extension when a special manifest is used
 // for guest mode.
 extern const char kGuestManifestFilename[];
+// Extension id, path (relative to |chrome::DIR_RESOURCES|) and IME engine
+// id for the builtin-in Braille IME extension.
+extern const char kBrailleImeExtensionId[];
+extern const char kBrailleImeExtensionPath[];
+extern const char kBrailleImeEngineId[];
 // Path to preinstalled Connectivity Diagnostics extension.
 extern const char kConnectivityDiagnosticsPath[];
 extern const char kConnectivityDiagnosticsLauncherPath[];

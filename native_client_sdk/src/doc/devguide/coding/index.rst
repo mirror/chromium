@@ -1,7 +1,5 @@
 .. _coding:
 
-.. include:: /migration/deprecation.inc
-
 #######################
 Coding Your Application
 #######################

@@ -47,18 +47,19 @@ InspectorTest.showPanel = function(panelId)
     return UI.inspectorView.showPanel(panelId);
 }
 
-InspectorTest.runExtensionTests = async function()
+InspectorTest.runExtensionTests = function()
 {
-    var result = await InspectorTest.RuntimeAgent.evaluate("location.href", "console", false);
-    if (!result)
-        return;
-    var pageURL = result.value;
-    var extensionURL = (/^https?:/.test(pageURL) ?
-        pageURL.replace(/^(https?:\/\/[^/]*\/).*$/,"$1") :
-        pageURL.replace(/\/inspector\/extensions\/[^/]*$/, "/http/tests")) +
-        "/inspector/resources/extension-main.html";
-    InspectorFrontendAPI.addExtensions([{ startPage: extensionURL, name: "test extension", exposeWebInspectorNamespace: true }]);
-    Extensions.extensionServer.initializeExtensions();
+    InspectorTest.RuntimeAgent.evaluate("location.href", "console", false, function(error, result) {
+        if (error)
+            return;
+        var pageURL = result.value;
+        var extensionURL = (/^https?:/.test(pageURL) ?
+            pageURL.replace(/^(https?:\/\/[^/]*\/).*$/,"$1") :
+            pageURL.replace(/\/inspector\/extensions\/[^/]*$/, "/http/tests")) +
+            "/inspector/resources/extension-main.html";
+        InspectorFrontendAPI.addExtensions([{ startPage: extensionURL, name: "test extension", exposeWebInspectorNamespace: true }]);
+        Extensions.extensionServer.initializeExtensions();
+    });
 }
 
 }

@@ -53,7 +53,6 @@
 #include "core/dom/CSSSelectorWatch.h"
 #include "core/dom/ClientRect.h"
 #include "core/dom/ClientRectList.h"
-#include "core/dom/DOMTokenList.h"
 #include "core/dom/DatasetDOMStringMap.h"
 #include "core/dom/ElementDataCache.h"
 #include "core/dom/ElementIntersectionObserverData.h"
@@ -91,15 +90,16 @@
 #include "core/editing/serializers/Serialization.h"
 #include "core/events/EventDispatcher.h"
 #include "core/events/FocusEvent.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/HostsUsingFeatures.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/ScrollToOptions.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/frame/VisualViewport.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
+#include "core/html/ClassList.h"
 #include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLCollection.h"
 #include "core/html/HTMLDocument.h"
@@ -1099,7 +1099,7 @@ bool Element::HasNonEmptyLayoutSize() const {
 IntRect Element::BoundsInViewport() const {
   GetDocument().EnsurePaintLocationDataValidForNode(this);
 
-  LocalFrameView* view = GetDocument().View();
+  FrameView* view = GetDocument().View();
   if (!view)
     return IntRect();
 
@@ -1355,10 +1355,6 @@ void Element::AttributeChanged(const AttributeModificationParams& params) {
     }
   } else if (name == classAttr) {
     ClassAttributeChanged(params.new_value);
-    if (HasRareData() && GetElementRareData()->GetClassList()) {
-      GetElementRareData()->GetClassList()->DidUpdateAttributeValue(
-          params.old_value, params.new_value);
-    }
   } else if (name == HTMLNames::nameAttr) {
     SetHasName(!params.new_value.IsNull());
   } else if (IsStyledElement()) {
@@ -1459,6 +1455,9 @@ void Element::ClassAttributeChanged(const AtomicString& new_class_string) {
     else
       GetElementData()->ClearClass();
   }
+
+  if (HasRareData())
+    GetElementRareData()->ClearClassListValueForQuirksMode();
 }
 
 bool Element::ShouldInvalidateDistributionWhenAttributeChanged(
@@ -1488,9 +1487,10 @@ bool Element::ShouldInvalidateDistributionWhenAttributeChanged(
     if (ClassStringHasClassName(new_class_string) ==
         ClassStringContent::kHasClasses) {
       const SpaceSplitString& old_classes = GetElementData()->ClassNames();
-      const SpaceSplitString new_classes(GetDocument().InQuirksMode()
-                                             ? new_class_string.LowerASCII()
-                                             : new_class_string);
+      const SpaceSplitString new_classes(
+          new_class_string, GetDocument().InQuirksMode()
+                                ? SpaceSplitString::kShouldFoldCase
+                                : SpaceSplitString::kShouldNotFoldCase);
       if (feature_set.CheckSelectorsForClassChange(old_classes, new_classes))
         return true;
     } else {
@@ -1634,6 +1634,7 @@ Node::InsertionNotificationRequest Element::InsertedInto(
 
   if (HasRareData()) {
     ElementRareData* rare_data = GetElementRareData();
+    rare_data->ClearClassListValueForQuirksMode();
     if (rare_data->IntersectionObserverData())
       rare_data->IntersectionObserverData()->ActivateValidIntersectionObservers(
           *this);
@@ -3073,19 +3074,14 @@ void Element::setPointerCapture(int pointer_id,
                                 ExceptionState& exception_state) {
   if (GetDocument().GetFrame()) {
     if (!GetDocument().GetFrame()->GetEventHandler().IsPointerEventActive(
-            pointer_id)) {
+            pointer_id))
       exception_state.ThrowDOMException(kInvalidPointerId, "InvalidPointerId");
-    } else if (!isConnected() ||
-               (GetDocument().GetPage() && GetDocument()
-                                               .GetPage()
-                                               ->GetPointerLockController()
-                                               .GetElement())) {
+    else if (!isConnected())
       exception_state.ThrowDOMException(kInvalidStateError,
                                         "InvalidStateError");
-    } else {
+    else
       GetDocument().GetFrame()->GetEventHandler().SetPointerCapture(pointer_id,
                                                                     this);
-    }
   }
 }
 
@@ -3515,11 +3511,8 @@ Element* Element::closest(const AtomicString& selectors,
 
 DOMTokenList& Element::classList() {
   ElementRareData& rare_data = EnsureElementRareData();
-  if (!rare_data.GetClassList()) {
-    DOMTokenList* class_list = DOMTokenList::Create(*this, classAttr);
-    class_list->DidUpdateAttributeValue(g_null_atom, getAttribute(classAttr));
-    rare_data.SetClassList(class_list);
-  }
+  if (!rare_data.GetClassList())
+    rare_data.SetClassList(ClassList::Create(this));
   return *rare_data.GetClassList();
 }
 
@@ -4250,8 +4243,6 @@ void Element::AddPropertyToPresentationAttributeStyle(
 }
 
 bool Element::SupportsStyleSharing() const {
-  if (!RuntimeEnabledFeatures::styleSharingEnabled())
-    return false;
   if (!IsStyledElement() || !ParentOrShadowHostElement())
     return false;
   // If the element has inline style it is probably unique.

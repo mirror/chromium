@@ -70,7 +70,6 @@ class CORE_EXPORT Modulator : public GarbageCollectedFinalized<Modulator>,
   virtual WebTaskRunner* TaskRunner() = 0;
   virtual ReferrerPolicy GetReferrerPolicy() = 0;
   virtual SecurityOrigin* GetSecurityOrigin() = 0;
-  virtual ScriptState* GetScriptState() = 0;
 
   // https://html.spec.whatwg.org/multipage/webappapis.html#fetch-a-module-script-tree
   virtual void FetchTree(const ModuleScriptFetchRequest&,
@@ -94,8 +93,7 @@ class CORE_EXPORT Modulator : public GarbageCollectedFinalized<Modulator>,
 
   // Synchronously retrieves a single module script from existing module map
   // entry.
-  // Note: returns nullptr if the module map entry doesn't exist, or
-  // is still "fetching".
+  // Note: returns nullptr if the module map entry is still "fetching".
   virtual ModuleScript* GetFetchedModuleScript(const KURL&) = 0;
 
   // https://html.spec.whatwg.org/#resolve-a-module-specifier

@@ -8,6 +8,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "base/macros.h"
 #include "base/observer_list.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/common/content_export.h"
@@ -62,13 +63,6 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
 
     // In this mode, subframes will be hosted in a designated RenderProcessHost.
     USE_DEFAULT_SUBFRAME_PROCESS,
-
-    // In this mode, the site will be rendered in a RenderProcessHost that is
-    // already in use for the site, either for a pending navigation or a
-    // committed navigation.  If none exists, a new process will be created.  If
-    // multiple such processes exist, ones that have foreground frames are given
-    // priority, and otherwise one is selected randomly.
-    REUSE_PENDING_OR_COMMITTED_SITE,
 
     // By default, a new RenderProcessHost will be created unless the process
     // limit has been reached. The RenderProcessHost reused will be chosen

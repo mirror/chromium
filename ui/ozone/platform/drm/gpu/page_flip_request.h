@@ -17,7 +17,7 @@ namespace ui {
 
 class PageFlipRequest : public base::RefCounted<PageFlipRequest> {
  public:
-  PageFlipRequest(int crtc_count, SwapCompletionOnceCallback callback);
+  PageFlipRequest(int crtc_count, const SwapCompletionCallback& callback);
 
   void Signal(gfx::SwapResult result);
 
@@ -25,7 +25,7 @@ class PageFlipRequest : public base::RefCounted<PageFlipRequest> {
   friend class base::RefCounted<PageFlipRequest>;
   ~PageFlipRequest();
 
-  SwapCompletionOnceCallback callback_;
+  SwapCompletionCallback callback_;
   int crtc_count_;
   gfx::SwapResult result_ = gfx::SwapResult::SWAP_ACK;
 

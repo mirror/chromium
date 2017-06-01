@@ -5,8 +5,9 @@
 #include "ash/shelf/shelf_window_targeter.h"
 
 #include "ash/public/cpp/shelf_types.h"
-#include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_constants.h"
+#include "ash/shelf/wm_shelf.h"
+#include "ash/wm_window.h"
 #include "ui/aura/window.h"
 
 namespace ash {
@@ -23,11 +24,13 @@ gfx::Insets GetInsetsForAlignment(int distance, ShelfAlignment alignment) {
 
 }  // namespace
 
-ShelfWindowTargeter::ShelfWindowTargeter(aura::Window* container, Shelf* shelf)
-    : ::wm::EasyResizeWindowTargeter(container, gfx::Insets(), gfx::Insets()),
+ShelfWindowTargeter::ShelfWindowTargeter(WmWindow* container, WmShelf* shelf)
+    : ::wm::EasyResizeWindowTargeter(WmWindow::GetAuraWindow(container),
+                                     gfx::Insets(),
+                                     gfx::Insets()),
       shelf_(shelf) {
   WillChangeVisibilityState(shelf_->GetVisibilityState());
-  container->AddObserver(this);
+  container->aura_window()->AddObserver(this);
   shelf_->AddObserver(this);
 }
 
@@ -49,13 +52,13 @@ void ShelfWindowTargeter::WillChangeVisibilityState(
   if (new_state == SHELF_VISIBLE) {
     // Let clicks at the very top of the shelf through so windows can be
     // resized with the bottom-right corner and bottom edge.
-    mouse_insets =
-        GetInsetsForAlignment(kWorkspaceAreaVisibleInset, shelf_->alignment());
+    mouse_insets = GetInsetsForAlignment(kWorkspaceAreaVisibleInset,
+                                         shelf_->GetAlignment());
   } else if (new_state == SHELF_AUTO_HIDE) {
     // Extend the touch hit target out a bit to allow users to drag shelf out
     // while hidden.
     touch_insets = GetInsetsForAlignment(-kWorkspaceAreaAutoHideInset,
-                                         shelf_->alignment());
+                                         shelf_->GetAlignment());
   }
 
   set_mouse_extend(mouse_insets);

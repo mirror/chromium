@@ -16,7 +16,6 @@ enum {
   MESSAGE_COMPLETE_SETUP,
   MESSAGE_ERROR,
   MESSAGE_ADD_NETWORK,
-  MESSAGE_REBOOT,
   NUM_MESSAGES,
 };
 }
@@ -113,12 +112,6 @@ bool ProtoDecoder::DecodeIOBuffer(int size,
         observer_->OnAddNetworkMessage(message);
       }
       break;
-    case MESSAGE_REBOOT: {
-        pairing_api::Reboot message;
-        message.ParseFromArray(&buffer[0], buffer.size());
-        observer_->OnRebootMessage(message);
-      }
-      break;
 
     default:
       LOG(WARNING) << "Skipping unknown message type: " << next_message_type_;
@@ -185,16 +178,6 @@ ProtoDecoder::IOBufferRefPtr ProtoDecoder::SendError(
     NOTREACHED();
 
   return SendMessage(MESSAGE_ERROR, serialized_proto, size);
-}
-
-ProtoDecoder::IOBufferRefPtr ProtoDecoder::SendRebootHost(
-    const pairing_api::Reboot& message,
-    int* size) {
-  std::string serialized_proto;
-  if (!message.SerializeToString(&serialized_proto))
-    NOTREACHED();
-
-  return SendMessage(MESSAGE_REBOOT, serialized_proto, size);
 }
 
 ProtoDecoder::IOBufferRefPtr ProtoDecoder::SendMessage(

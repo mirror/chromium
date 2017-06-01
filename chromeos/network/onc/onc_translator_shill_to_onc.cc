@@ -638,29 +638,14 @@ void ShillToONCTranslator::TranslateEap() {
   CopyPropertiesAccordingToSignature();
 
   // Translate EAP Outer and Inner values if EAP.EAP exists and is not empty.
-  std::string shill_eap_method;
+  std::string shill_eap;
   if (shill_dictionary_->GetStringWithoutPathExpansion(
-          shill::kEapMethodProperty, &shill_eap_method) &&
-      !shill_eap_method.empty()) {
+          shill::kEapMethodProperty, &shill_eap) &&
+      !shill_eap.empty()) {
     TranslateWithTableAndSet(shill::kEapMethodProperty, kEAPOuterTable,
                              ::onc::eap::kOuter);
-    std::string shill_phase2_auth;
-    if (shill_dictionary_->GetStringWithoutPathExpansion(
-            shill::kEapPhase2AuthProperty, &shill_phase2_auth) &&
-        !shill_phase2_auth.empty()) {
-      TranslateWithTableAndSet(shill::kEapPhase2AuthProperty,
-                               kEAP_TTLS_InnerTable, ::onc::eap::kInner);
-    }
-  }
-
-  std::string shill_cert_id;
-  if (shill_dictionary_->GetStringWithoutPathExpansion(
-          shill::kEapCertIdProperty, &shill_cert_id)) {
-    // Note: shill::kEapKeyIdProperty == shill::kEapCertIdProperty.
-    onc_object_->SetStringWithoutPathExpansion(
-        ::onc::client_cert::kClientCertType, ::onc::client_cert::kPKCS11Id);
-    onc_object_->SetStringWithoutPathExpansion(
-        ::onc::client_cert::kClientCertPKCS11Id, shill_cert_id);
+    TranslateWithTableAndSet(shill::kEapPhase2AuthProperty,
+                             kEAP_TTLS_InnerTable, ::onc::eap::kInner);
   }
 }
 

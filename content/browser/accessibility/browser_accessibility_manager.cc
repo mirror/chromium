@@ -48,6 +48,9 @@ base::LazyInstance<AXTreeIDMap>::DestructorAtExit g_ax_tree_id_map =
 base::LazyInstance<base::Closure>::DestructorAtExit
     g_focus_change_callback_for_testing = LAZY_INSTANCE_INITIALIZER;
 
+// A flag for use in tests to ensure focus events aren't suppressed.
+bool g_never_suppress_focus_events_for_testing = false;
+
 }  // namespace
 
 ui::AXTreeUpdate MakeAXTreeUpdate(
@@ -184,11 +187,6 @@ void BrowserAccessibilityManager::Initialize(
   }
 }
 
-// A flag for use in tests to ensure events aren't suppressed or delayed.
-// static
-bool BrowserAccessibilityManager::never_suppress_or_delay_events_for_testing_ =
-    false;
-
 // static
 ui::AXTreeUpdate
 BrowserAccessibilityManager::GetEmptyDocument() {
@@ -213,7 +211,7 @@ void BrowserAccessibilityManager::FireFocusEventsIfNeeded(
 
   // Don't fire focus events if the window itself doesn't have focus.
   // Bypass this check for some tests.
-  if (!never_suppress_or_delay_events_for_testing_ &&
+  if (!g_never_suppress_focus_events_for_testing &&
       !g_focus_change_callback_for_testing.Get()) {
     if (delegate_ && !delegate_->AccessibilityViewHasFocus())
       focus = nullptr;
@@ -391,11 +389,8 @@ void BrowserAccessibilityManager::OnAccessibilityEvents(
 
   // Fire any events related to changes to the tree.
   for (auto& event : tree_events_) {
-    BrowserAccessibility* event_target = GetFromID(event.second);
-    if (!event_target)
-      continue;
     NotifyAccessibilityEvent(BrowserAccessibilityEvent::FromTreeChange,
-                             event.first, event_target);
+                             event.first, event.second);
   }
   tree_events_.clear();
 
@@ -619,8 +614,8 @@ void BrowserAccessibilityManager::SetFocusChangeCallbackForTesting(
 }
 
 // static
-void BrowserAccessibilityManager::NeverSuppressOrDelayEventsForTesting() {
-  never_suppress_or_delay_events_for_testing_ = true;
+void BrowserAccessibilityManager::NeverSuppressFocusEventsForTesting() {
+  g_never_suppress_focus_events_for_testing = true;
 }
 
 void BrowserAccessibilityManager::Decrement(
@@ -1195,12 +1190,11 @@ void BrowserAccessibilityManager::OnAtomicUpdateFinished(
     DCHECK(created_node);
     BrowserAccessibility* object = GetFromAXNode(created_node);
     if (object && object->HasStringAttribute(ui::AX_ATTR_LIVE_STATUS)) {
-      int32_t id = object->GetId();
       if (object->GetRole() == ui::AX_ROLE_ALERT) {
-        tree_events_.push_back(std::make_pair(ui::AX_EVENT_ALERT, id));
+        tree_events_.push_back(std::make_pair(ui::AX_EVENT_ALERT, object));
       } else {
         tree_events_.push_back(
-            std::make_pair(ui::AX_EVENT_LIVE_REGION_CREATED, id));
+            std::make_pair(ui::AX_EVENT_LIVE_REGION_CREATED, object));
       }
     }
   }

@@ -32,7 +32,7 @@
 
 #include "SkPixelRef.h"  // FIXME: qualify this skia header file.
 #include "core/dom/Document.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLImageElement.h"
 #include "core/html/HTMLVideoElement.h"
@@ -75,8 +75,8 @@ class ImageBitmapTest : public ::testing::Test {
         RuntimeEnabledFeatures::experimentalCanvasFeaturesEnabled();
     color_correct_rendering =
         RuntimeEnabledFeatures::colorCorrectRenderingEnabled();
-    color_canvas_extensions =
-        RuntimeEnabledFeatures::colorCanvasExtensionsEnabled();
+    color_correct_rendering_default_mode =
+        RuntimeEnabledFeatures::colorCorrectRenderingDefaultModeEnabled();
   }
   virtual void TearDown() {
     // Garbage collection is required prior to switching out the
@@ -91,19 +91,18 @@ class ImageBitmapTest : public ::testing::Test {
         experimental_canvas_features);
     RuntimeEnabledFeatures::setColorCorrectRenderingEnabled(
         color_correct_rendering);
-    RuntimeEnabledFeatures::setColorCanvasExtensionsEnabled(
-        color_canvas_extensions);
+    RuntimeEnabledFeatures::setColorCorrectRenderingDefaultModeEnabled(
+        color_correct_rendering_default_mode);
   }
 
   sk_sp<SkImage> image_, image2_;
   Persistent<MemoryCache> global_memory_cache_;
   bool experimental_canvas_features;
   bool color_correct_rendering;
-  bool color_canvas_extensions;
+  bool color_correct_rendering_default_mode;
 };
 
 TEST_F(ImageBitmapTest, ImageResourceConsistency) {
-  RuntimeEnabledFeatures::setColorCanvasExtensionsEnabled(true);
   const ImageBitmapOptions default_options;
   HTMLImageElement* image_element =
       HTMLImageElement::Create(*Document::Create());
@@ -148,7 +147,6 @@ TEST_F(ImageBitmapTest, ImageResourceConsistency) {
 // Verifies that ImageBitmaps constructed from HTMLImageElements hold a
 // reference to the original Image if the HTMLImageElement src is changed.
 TEST_F(ImageBitmapTest, ImageBitmapSourceChanged) {
-  RuntimeEnabledFeatures::setColorCanvasExtensionsEnabled(true);
   HTMLImageElement* image = HTMLImageElement::Create(*Document::Create());
   ImageResourceContent* original_image_resource =
       ImageResourceContent::CreateLoaded(
@@ -219,22 +217,12 @@ static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
                ColorSpaceConversion::DEFAULT_NOT_COLOR_CORRECTED);
   RuntimeEnabledFeatures::setExperimentalCanvasFeaturesEnabled(true);
   RuntimeEnabledFeatures::setColorCorrectRenderingEnabled(flag);
-  RuntimeEnabledFeatures::setColorCanvasExtensionsEnabled(true);
+  RuntimeEnabledFeatures::setColorCorrectRenderingDefaultModeEnabled(!flag);
 
   return options;
 }
 
-// This test is failing on Android Arm 64 Official Test Bot.
-// See <http://crbug.com/721819>.
-#if OS(ANDROID)
-#define MAYBE_ImageBitmapColorSpaceConversionHTMLImageElement \
-  DISABLED_ImageBitmapColorSpaceConversionHTMLImageElement
-#else
-#define MAYBE_ImageBitmapColorSpaceConversionHTMLImageElement \
-  ImageBitmapColorSpaceConversionHTMLImageElement
-#endif
-
-TEST_F(ImageBitmapTest, MAYBE_ImageBitmapColorSpaceConversionHTMLImageElement) {
+TEST_F(ImageBitmapTest, ImageBitmapColorSpaceConversionHTMLImageElement) {
   HTMLImageElement* image_element =
       HTMLImageElement::Create(*Document::Create());
 
@@ -346,16 +334,6 @@ TEST_F(ImageBitmapTest, MAYBE_ImageBitmapColorSpaceConversionHTMLImageElement) {
   }
 }
 
-// This test is failing on Android Arm 64 Official Test Bot.
-// See <http://crbug.com/721819>.
-#if OS(ANDROID)
-#define MAYBE_ImageBitmapColorSpaceConversionImageBitmap \
-  DISABLED_ImageBitmapColorSpaceConversionImageBitmap
-#else
-#define MAYBE_ImageBitmapColorSpaceConversionImageBitmap \
-  ImageBitmapColorSpaceConversionImageBitmap
-#endif
-
 TEST_F(ImageBitmapTest, ImageBitmapColorSpaceConversionImageBitmap) {
   HTMLImageElement* image_element =
       HTMLImageElement::Create(*Document::Create());
@@ -464,16 +442,6 @@ TEST_F(ImageBitmapTest, ImageBitmapColorSpaceConversionImageBitmap) {
     ASSERT_EQ(compare, 0);
   }
 }
-
-// This test is failing on Android Arm 64 Official Test Bot.
-// See <http://crbug.com/721819>.
-#if OS(ANDROID)
-#define MAYBE_ImageBitmapColorSpaceConversionStaticBitmapImage \
-  DISABLED_ImageBitmapColorSpaceConversionStaticBitmapImage
-#else
-#define MAYBE_ImageBitmapColorSpaceConversionStaticBitmapImage \
-  ImageBitmapColorSpaceConversionStaticBitmapImage
-#endif
 
 TEST_F(ImageBitmapTest, ImageBitmapColorSpaceConversionStaticBitmapImage) {
   SkPaint p;

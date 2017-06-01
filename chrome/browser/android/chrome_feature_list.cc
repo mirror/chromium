@@ -40,7 +40,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &features::kConsistentOmniboxGeolocation,
     &features::kCopylessPaste,
     &features::kImportantSitesInCbd,
-    &features::kMaterialDesignIncognitoNTP,
     &features::kServiceWorkerPaymentApps,
     &features::kSimplifiedFullscreenUI,
     &features::kVrShell,
@@ -54,8 +53,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kCCTPostMessageAPI,
     &kChromeHomeFeature,
     &kChromeHomeExpandButton,
-    &kChromeHomeSwipeLogic,
-    &kContentSuggestionsCategories,
     &kContentSuggestionsSettings,
     &kContentSuggestionsShowSummary,
     &kContextualSearchSingleActions,
@@ -83,7 +80,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kSpecialLocaleWrapper,
     &kTabReparenting,
     &kVideoPersistence,
-    &kVrBrowsingFeedback,
     &kVrCustomTabBrowsing,
     &kWebPaymentsModifiers,
     &kWebPaymentsSingleAppUiSkip,
@@ -138,12 +134,6 @@ const base::Feature kChromeHomeFeature{"ChromeHome",
 const base::Feature kChromeHomeExpandButton{"ChromeHomeExpandButton",
                                             base::FEATURE_DISABLED_BY_DEFAULT};
 
-const base::Feature kChromeHomeSwipeLogic{"ChromeHomeSwipeLogic",
-                                          base::FEATURE_DISABLED_BY_DEFAULT};
-
-const base::Feature kContentSuggestionsCategories{
-    "ContentSuggestionsCategories", base::FEATURE_DISABLED_BY_DEFAULT};
-
 const base::Feature kContentSuggestionsSettings{
     "ContentSuggestionsSettings", base::FEATURE_DISABLED_BY_DEFAULT};
 
@@ -172,7 +162,7 @@ const base::Feature kDownloadHomeShowStorageInfo{
     "DownloadHomeShowStorageInfo", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kFullscreenActivity{"FullscreenActivity",
-                                        base::FEATURE_ENABLED_BY_DEFAULT};
+                                        base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Makes "Add to Home screen" in the app menu generate an APK for the shortcut
 // URL which opens Chrome in fullscreen.
@@ -230,14 +220,11 @@ const base::Feature kUserMediaScreenCapturing{
 const base::Feature kVideoPersistence{"VideoPersistence",
                                       base::FEATURE_ENABLED_BY_DEFAULT};
 
-const base::Feature kVrBrowsingFeedback{"VrBrowsingFeedback",
-                                        base::FEATURE_ENABLED_BY_DEFAULT};
-
 const base::Feature kVrCustomTabBrowsing{"VrCustomTabBrowsing",
                                          base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kWebPaymentsModifiers{"WebPaymentsModifiers",
-                                          base::FEATURE_ENABLED_BY_DEFAULT};
+                                          base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kWebPaymentsSingleAppUiSkip{
     "WebPaymentsSingleAppUiSkip", base::FEATURE_ENABLED_BY_DEFAULT};

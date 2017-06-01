@@ -16,10 +16,10 @@
 #include "ui/views/bubble/tray_bubble_view.h"
 
 namespace ash {
-class Shelf;
 class TrayBackground;
 class TrayContainer;
 class TrayEventFilter;
+class WmShelf;
 
 // Base class for some children of StatusAreaWidget. This class handles setting
 // and animating the background when the Launcher is shown/hidden. It also
@@ -31,7 +31,7 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
  public:
   static const char kViewClassName[];
 
-  explicit TrayBackgroundView(Shelf* shelf);
+  explicit TrayBackgroundView(WmShelf* wm_shelf);
   ~TrayBackgroundView() override;
 
   // Called after the tray has been added to the widget containing it.
@@ -46,12 +46,12 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
   void ChildPreferredSizeChanged(views::View* child) override;
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
   void AboutToRequestFocusFromTabTraversal(bool reverse) override;
+  void OnPaint(gfx::Canvas* canvas) override;
 
   // ActionableView:
   std::unique_ptr<views::InkDropRipple> CreateInkDropRipple() const override;
   std::unique_ptr<views::InkDropHighlight> CreateInkDropHighlight()
       const override;
-  void PaintButtonContents(gfx::Canvas* canvas) override;
 
   // Called whenever the shelf alignment changes.
   virtual void UpdateAfterShelfAlignmentChange();
@@ -81,7 +81,7 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
 
   TrayContainer* tray_container() const { return tray_container_; }
   TrayEventFilter* tray_event_filter() { return tray_event_filter_.get(); }
-  Shelf* shelf() { return shelf_; }
+  WmShelf* shelf() { return wm_shelf_; }
 
   // Updates the arrow visibility based on the launcher visibility.
   void UpdateBubbleViewArrow(views::TrayBubbleView* bubble_view);
@@ -99,9 +99,6 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
   // tray_container().
   gfx::Insets GetBubbleAnchorInsets() const;
 
-  // Returns the container window for the bubble (on the proper display).
-  aura::Window* GetBubbleWindowContainer() const;
-
  protected:
   // ActionableView:
   std::unique_ptr<views::InkDropMask> CreateInkDropMask() const override;
@@ -109,6 +106,7 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
   bool PerformAction(const ui::Event& event) override;
   void HandlePerformActionResult(bool action_performed,
                                  const ui::Event& event) override;
+  void OnPaintFocus(gfx::Canvas* canvas) override;
 
  private:
   class TrayWidgetObserver;
@@ -129,7 +127,7 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
   gfx::Rect GetBackgroundBounds() const;
 
   // The shelf containing the system tray for this view.
-  Shelf* shelf_;
+  WmShelf* wm_shelf_;
 
   // Convenience pointer to the contents view.
   TrayContainer* tray_container_;

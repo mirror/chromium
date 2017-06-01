@@ -68,7 +68,6 @@ UI.Toolbar = class {
     /** @type {?Element} */
     var longClickGlyph = null;
     toggled();
-    button.setEnabled(action.enabled());
     return button;
 
     /**

@@ -38,17 +38,18 @@
 #include "chrome/browser/about_flags.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/defaults.h"
+#include "chrome/browser/memory/tab_manager.h"
+#include "chrome/browser/memory/tab_stats.h"
 #include "chrome/browser/net/predictor.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
-#include "chrome/browser/resource_coordinator/tab_manager.h"
-#include "chrome/browser/resource_coordinator/tab_stats.h"
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
+#include "chrome/grit/locale_settings.h"
 #include "components/grit/components_resources.h"
 #include "components/strings/grit/components_locale_settings.h"
 #include "content/public/browser/browser_thread.h"
@@ -465,13 +466,12 @@ std::string BuildAboutDiscardsRunPage() {
 }
 
 std::vector<std::string> GetHtmlTabDescriptorsForDiscardPage() {
-  resource_coordinator::TabManager* tab_manager =
-      g_browser_process->GetTabManager();
-  resource_coordinator::TabStatsList stats = tab_manager->GetTabStats();
+  memory::TabManager* tab_manager = g_browser_process->GetTabManager();
+  memory::TabStatsList stats = tab_manager->GetTabStats();
   std::vector<std::string> titles;
   titles.reserve(stats.size());
-  for (resource_coordinator::TabStatsList::iterator it = stats.begin();
-       it != stats.end(); ++it) {
+  for (memory::TabStatsList::iterator it = stats.begin(); it != stats.end();
+       ++it) {
     std::string str;
     str.reserve(4096);
     str += "<b>";
@@ -500,8 +500,7 @@ std::vector<std::string> GetHtmlTabDescriptorsForDiscardPage() {
 std::string AboutDiscards(const std::string& path) {
   std::string output;
   int64_t web_content_id;
-  resource_coordinator::TabManager* tab_manager =
-      g_browser_process->GetTabManager();
+  memory::TabManager* tab_manager = g_browser_process->GetTabManager();
 
   std::vector<std::string> path_split = base::SplitString(
       path, "/", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);

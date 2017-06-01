@@ -138,20 +138,20 @@ class EventListenerMap {
   void RemoveListenersForProcess(const content::RenderProcessHost* process);
 
   // Returns true if there are any listeners on the event named |event_name|.
-  bool HasListenerForEvent(const std::string& event_name) const;
+  bool HasListenerForEvent(const std::string& event_name);
 
   // Returns true if there are any listeners on |event_name| from
   // |extension_id|.
   bool HasListenerForExtension(const std::string& extension_id,
-                               const std::string& event_name) const;
+                               const std::string& event_name);
 
   // Returns true if this map contains an EventListener that .Equals()
   // |listener|.
-  bool HasListener(const EventListener* listener) const;
+  bool HasListener(const EventListener* listener);
 
   // Returns true if there is a listener for |extension_id| in |process|.
   bool HasProcessListener(content::RenderProcessHost* process,
-                          const std::string& extension_id) const;
+                          const std::string& extension_id);
 
   // Removes any listeners that |extension_id| has added, both lazy and regular.
   void RemoveListenersForExtension(const std::string& extension_id);
@@ -172,7 +172,7 @@ class EventListenerMap {
 
  private:
   // The key here is an event name.
-  using ListenerMap = std::map<std::string, ListenerList>;
+  typedef std::map<std::string, ListenerList> ListenerMap;
 
   void CleanupListener(EventListener* listener);
   bool IsFilteredEvent(const Event& event) const;
@@ -180,7 +180,7 @@ class EventListenerMap {
       base::DictionaryValue* filter_dict);
 
   // Listens for removals from this map.
-  Delegate* const delegate_;
+  Delegate* delegate_;
 
   std::set<std::string> filtered_events_;
   ListenerMap listeners_;

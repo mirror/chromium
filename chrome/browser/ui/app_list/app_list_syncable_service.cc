@@ -407,10 +407,8 @@ void AppListSyncableService::BuildModel() {
       arc_apps_builder_->InitializeWithProfile(profile_, model_.get());
   }
 
-  if (app_list::switches::IsDriveAppsInAppListEnabled() &&
-      !::switches::ExtensionsDisabled()) {
+  if (app_list::switches::IsDriveAppsInAppListEnabled())
     drive_app_provider_.reset(new DriveAppProvider(profile_, this));
-  }
 
   HandleUpdateFinished();
 }

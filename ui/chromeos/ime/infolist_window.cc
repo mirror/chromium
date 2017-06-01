@@ -97,7 +97,7 @@ class InfolistEntryView : public views::View {
 
  private:
   // views::View implementation.
-  gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetPreferredSize() const override;
 
   void UpdateBackground();
 
@@ -146,7 +146,7 @@ void InfolistEntryView::SetEntry(const ui::InfolistEntry& entry) {
   UpdateBackground();
 }
 
-gfx::Size InfolistEntryView::CalculatePreferredSize() const {
+gfx::Size InfolistEntryView::GetPreferredSize() const {
   return gfx::Size(kInfolistEntryWidth, GetHeightForWidth(kInfolistEntryWidth));
 }
 

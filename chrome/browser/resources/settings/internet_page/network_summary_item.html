@@ -59,8 +59,7 @@
         </cr-policy-indicator>
       </template>
 
-      <template is="dom-if" if="[[showDetailsIsVisible_(activeNetworkState,
-          deviceState, networkStateList)]]">
+      <template is="dom-if" if="[[showDetailsIsVisible_(deviceState)]]">
         <button class="subpage-arrow" is="paper-icon-button-light"
             aria-label$="[[getDetailsA11yString_(activeNetworkState,
                 deviceState, networkStateList)]]">

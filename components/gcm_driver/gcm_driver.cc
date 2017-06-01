@@ -288,8 +288,7 @@ void GCMDriver::DispatchMessageInternal(
 
   switch (result) {
     case GCMEncryptionProvider::DECRYPTION_RESULT_UNENCRYPTED:
-    case GCMEncryptionProvider::DECRYPTION_RESULT_DECRYPTED_DRAFT_03:
-    case GCMEncryptionProvider::DECRYPTION_RESULT_DECRYPTED_DRAFT_08: {
+    case GCMEncryptionProvider::DECRYPTION_RESULT_DECRYPTED: {
       GCMAppHandler* handler = GetAppHandler(app_id);
       if (handler)
         handler->OnMessage(app_id, message);
@@ -303,7 +302,6 @@ void GCMDriver::DispatchMessageInternal(
     case GCMEncryptionProvider::DECRYPTION_RESULT_NO_KEYS:
     case GCMEncryptionProvider::DECRYPTION_RESULT_INVALID_SHARED_SECRET:
     case GCMEncryptionProvider::DECRYPTION_RESULT_INVALID_PAYLOAD:
-    case GCMEncryptionProvider::DECRYPTION_RESULT_INVALID_BINARY_HEADER:
       RecordDecryptionFailure(app_id, result);
       return;
   }

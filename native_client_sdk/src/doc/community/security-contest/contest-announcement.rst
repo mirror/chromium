@@ -1,7 +1,5 @@
 .. _contest_announcement:
 
-.. include:: /migration/deprecation.inc
-
 ##############################
 Native Client Security Contest
 ##############################

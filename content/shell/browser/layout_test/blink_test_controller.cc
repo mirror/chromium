@@ -45,7 +45,6 @@
 #include "content/public/common/content_switches.h"
 #include "content/public/common/url_constants.h"
 #include "content/shell/browser/layout_test/layout_test_bluetooth_chooser_factory.h"
-#include "content/shell/browser/layout_test/layout_test_content_browser_client.h"
 #include "content/shell/browser/layout_test/layout_test_devtools_bindings.h"
 #include "content/shell/browser/layout_test/layout_test_first_device_bluetooth_chooser.h"
 #include "content/shell/browser/shell.h"
@@ -278,7 +277,7 @@ BlinkTestController::BlinkTestController()
 }
 
 BlinkTestController::~BlinkTestController() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   CHECK(instance_ == this);
   CHECK(test_phase_ == BETWEEN_TESTS);
   GpuDataManager::GetInstance()->RemoveObserver(this);
@@ -291,7 +290,7 @@ bool BlinkTestController::PrepareForLayoutTest(
     const base::FilePath& current_working_directory,
     bool enable_pixel_dumping,
     const std::string& expected_pixel_hash) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   test_phase_ = DURING_TEST;
   current_working_directory_ = current_working_directory;
   enable_pixel_dumping_ = enable_pixel_dumping;
@@ -366,7 +365,7 @@ bool BlinkTestController::PrepareForLayoutTest(
 }
 
 bool BlinkTestController::ResetAfterLayoutTest() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   printer_->PrintTextFooter();
   printer_->PrintImageFooter();
   printer_->CloseStderr();
@@ -378,7 +377,6 @@ bool BlinkTestController::ResetAfterLayoutTest() {
   test_url_ = GURL();
   prefs_ = WebPreferences();
   should_override_prefs_ = false;
-  LayoutTestContentBrowserClient::Get()->SetPopupBlockingEnabled(false);
 
 #if defined(OS_ANDROID)
   // Re-using the shell's main window on Android causes issues with networking
@@ -393,7 +391,7 @@ void BlinkTestController::SetTempPath(const base::FilePath& temp_path) {
 }
 
 void BlinkTestController::RendererUnresponsive() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   LOG(WARNING) << "renderer unresponsive";
 }
 
@@ -443,7 +441,7 @@ std::unique_ptr<BluetoothChooser> BlinkTestController::RunBluetoothChooser(
 }
 
 bool BlinkTestController::OnMessageReceived(const IPC::Message& message) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(BlinkTestController, message)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_PrintMessage, OnPrintMessage)
@@ -456,8 +454,6 @@ bool BlinkTestController::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_AudioDump, OnAudioDump)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_OverridePreferences,
                         OnOverridePreferences)
-    IPC_MESSAGE_HANDLER(ShellViewHostMsg_SetPopupBlockingEnabled,
-                        OnSetPopupBlockingEnabled)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_TestFinished, OnTestFinished)
     IPC_MESSAGE_HANDLER(ShellViewHostMsg_ClearDevToolsLocalStorage,
                         OnClearDevToolsLocalStorage)
@@ -501,7 +497,7 @@ bool BlinkTestController::OnMessageReceived(
 
 void BlinkTestController::PluginCrashed(const base::FilePath& plugin_path,
                                         base::ProcessId plugin_pid) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   printer_->AddErrorMessage(
       base::StringPrintf("#CRASHED - plugin (pid %d)", plugin_pid));
   base::ThreadTaskRunnerHandle::Get()->PostTask(
@@ -512,12 +508,12 @@ void BlinkTestController::PluginCrashed(const base::FilePath& plugin_path,
 
 void BlinkTestController::RenderFrameCreated(
     RenderFrameHost* render_frame_host) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   HandleNewRenderFrameHost(render_frame_host);
 }
 
 void BlinkTestController::DevToolsProcessCrashed() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   printer_->AddErrorMessage("#CRASHED - devtools");
   devtools_bindings_.reset();
   if (devtools_window_)
@@ -526,7 +522,7 @@ void BlinkTestController::DevToolsProcessCrashed() {
 }
 
 void BlinkTestController::WebContentsDestroyed() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   printer_->AddErrorMessage("FAIL: main window was destroyed");
   DiscardMainWindow();
 }
@@ -542,7 +538,7 @@ void BlinkTestController::RenderProcessExited(
     RenderProcessHost* render_process_host,
     base::TerminationStatus status,
     int exit_code) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   switch (status) {
     case base::TerminationStatus::TERMINATION_STATUS_NORMAL_TERMINATION:
     case base::TerminationStatus::TERMINATION_STATUS_STILL_RUNNING:
@@ -571,7 +567,7 @@ void BlinkTestController::RenderProcessExited(
 void BlinkTestController::Observe(int type,
                                   const NotificationSource& source,
                                   const NotificationDetails& details) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   switch (type) {
     case NOTIFICATION_RENDERER_PROCESS_CREATED: {
       if (!main_window_)
@@ -594,7 +590,7 @@ void BlinkTestController::Observe(int type,
 
 void BlinkTestController::OnGpuProcessCrashed(
     base::TerminationStatus exit_code) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   printer_->AddErrorMessage("#CRASHED - gpu");
   DiscardMainWindow();
 }
@@ -823,10 +819,6 @@ void BlinkTestController::OnOverridePreferences(const WebPreferences& prefs) {
   RenderViewHost* main_render_view_host =
       main_window_->web_contents()->GetRenderViewHost();
   main_render_view_host->OnWebkitPreferencesChanged();
-}
-
-void BlinkTestController::OnSetPopupBlockingEnabled(bool block_popups) {
-  LayoutTestContentBrowserClient::Get()->SetPopupBlockingEnabled(block_popups);
 }
 
 void BlinkTestController::OnClearDevToolsLocalStorage() {

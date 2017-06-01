@@ -78,8 +78,7 @@ GLES2DecoderPassthroughImpl::GLES2DecoderPassthroughImpl(ContextGroup* group)
       context_(),
       offscreen_(false),
       group_(group),
-      feature_info_(new FeatureInfo),
-      weak_ptr_factory_(this) {
+      feature_info_(new FeatureInfo) {
   DCHECK(group);
 }
 
@@ -146,8 +145,12 @@ GLES2Decoder::Error GLES2DecoderPassthroughImpl::DoCommands(
   return result;
 }
 
-base::WeakPtr<GLES2Decoder> GLES2DecoderPassthroughImpl::AsWeakPtr() {
-  return weak_ptr_factory_.GetWeakPtr();
+const char* GLES2DecoderPassthroughImpl::GetCommandName(
+    unsigned int command_id) const {
+  if (command_id >= kFirstGLES2Command && command_id < kNumCommands) {
+    return gles2::GetCommandName(static_cast<CommandId>(command_id));
+  }
+  return GetCommonCommandName(static_cast<cmd::CommandId>(command_id));
 }
 
 bool GLES2DecoderPassthroughImpl::Initialize(
@@ -207,16 +210,9 @@ bool GLES2DecoderPassthroughImpl::Initialize(
   active_texture_unit_ = 0;
   bound_textures_[GL_TEXTURE_2D].resize(num_texture_units, 0);
   bound_textures_[GL_TEXTURE_CUBE_MAP].resize(num_texture_units, 0);
-  if (feature_info_->gl_version_info().IsAtLeastGLES(3, 0)) {
+  if (feature_info_->IsWebGL2OrES3Context()) {
     bound_textures_[GL_TEXTURE_2D_ARRAY].resize(num_texture_units, 0);
     bound_textures_[GL_TEXTURE_3D].resize(num_texture_units, 0);
-  }
-  if (feature_info_->gl_version_info().IsAtLeastGLES(3, 1)) {
-    bound_textures_[GL_TEXTURE_2D_MULTISAMPLE].resize(num_texture_units, 0);
-  }
-  if (feature_info_->feature_flags().oes_egl_image_external ||
-      feature_info_->feature_flags().nv_egl_stream_consumer_external) {
-    bound_textures_[GL_TEXTURE_EXTERNAL_OES].resize(num_texture_units, 0);
   }
 
   if (group_->gpu_preferences().enable_gpu_driver_debug_logging &&
@@ -376,13 +372,14 @@ gpu::Capabilities GLES2DecoderPassthroughImpl::GetCapabilities() {
       feature_info_->feature_flags().ext_render_buffer_format_bgra8888;
   caps.occlusion_query_boolean =
       feature_info_->feature_flags().occlusion_query_boolean;
-  caps.timer_queries = feature_info_->feature_flags().ext_disjoint_timer_query;
-  caps.post_sub_buffer = surface_->SupportsPostSubBuffer();
-  caps.surfaceless = !offscreen_ && surface_->IsSurfaceless();
-  caps.flips_vertically = !offscreen_ && surface_->FlipsVertically();
 
   // TODO:
+  // caps.timer_queries
+  // caps.post_sub_buffer
   // caps.commit_overlay_planes
+  // caps.surfaceless
+  // caps.is_offscreen
+  // caps.flips_vertically
 
   return caps;
 }
@@ -504,6 +501,11 @@ bool GLES2DecoderPassthroughImpl::GetServiceTextureId(
     uint32_t* service_texture_id) {
   return resources_->texture_id_map.GetServiceID(client_texture_id,
                                                  service_texture_id);
+}
+
+gpu::error::ContextLostReason
+GLES2DecoderPassthroughImpl::GetContextLostReason() {
+  return error::kUnknown;
 }
 
 bool GLES2DecoderPassthroughImpl::ClearLevel(Texture* texture,
@@ -767,7 +769,7 @@ bool GLES2DecoderPassthroughImpl::IsEmulatedQueryTarget(GLenum target) const {
 error::Error GLES2DecoderPassthroughImpl::ProcessQueries(bool did_finish) {
   while (!pending_queries_.empty()) {
     const PendingQuery& query = pending_queries_.front();
-    GLuint result_available = GL_FALSE;
+    GLint result_available = GL_FALSE;
     GLuint64 result = 0;
     switch (query.target) {
       case GL_COMMANDS_ISSUED_CHROMIUM:
@@ -798,18 +800,11 @@ error::Error GLES2DecoderPassthroughImpl::ProcessQueries(bool did_finish) {
         if (did_finish) {
           result_available = GL_TRUE;
         } else {
-          glGetQueryObjectuiv(query.service_id, GL_QUERY_RESULT_AVAILABLE,
-                              &result_available);
+          glGetQueryObjectiv(query.service_id, GL_QUERY_RESULT_AVAILABLE,
+                             &result_available);
         }
         if (result_available == GL_TRUE) {
-          if (feature_info_->feature_flags().ext_disjoint_timer_query) {
-            glGetQueryObjectui64v(query.service_id, GL_QUERY_RESULT, &result);
-          } else {
-            GLuint temp_result = 0;
-            glGetQueryObjectuiv(query.service_id, GL_QUERY_RESULT,
-                                &temp_result);
-            result = temp_result;
-          }
+          glGetQueryObjectui64v(query.service_id, GL_QUERY_RESULT, &result);
         }
         break;
     }

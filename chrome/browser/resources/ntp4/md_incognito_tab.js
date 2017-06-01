@@ -2,9 +2,25 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// Handle the bookmark bar and theme change requests from the C++ side.
+var ntp = {
+  /** @param {string} attached */
+  setBookmarkBarAttached: function(attached) {
+    document.documentElement.setAttribute('bookmarkbarattached', attached);
+  },
+
+  /** @param {!{hasCustomBackground: boolean}} themeData */
+  themeChanged: function(themeData) {
+    document.documentElement.setAttribute('hascustombackground',
+                                          themeData.hasCustomBackground);
+    $('incognitothemecss').href =
+        'chrome://theme/css/incognito_new_tab_theme.css?' + Date.now();
+  },
+};
+
 // Let the width of two lists of bulletpoints in a horizontal alignment
 // determine the maximum content width.
-function recomputeLayoutWidth() {
+window.addEventListener('load', function() {
   var bulletpoints = document.querySelectorAll('.bulletpoints');
   var content = document.querySelector('.content');
 
@@ -23,34 +39,11 @@ function recomputeLayoutWidth() {
   // Limit the maximum width to 600px. That might force the two lists
   // of bulletpoints under each other, in which case we must swap the left
   // and right margin.
-  var MAX_ALLOWED_WIDTH = 600;
-  var tooWide = maxWidth > MAX_ALLOWED_WIDTH;
-  bulletpoints[1].classList.toggle('too-wide', tooWide);
-  if (tooWide)
-    maxWidth = MAX_ALLOWED_WIDTH;
+  if (maxWidth > 600) {
+    maxWidth = 600;
+
+    bulletpoints[1].classList.add('tooWide');
+  }
 
   content.style.maxWidth = maxWidth + "px";
-}
-
-window.addEventListener('load', recomputeLayoutWidth);
-
-// Handle the bookmark bar, theme, and font size change requests
-// from the C++ side.
-var ntp = {
-  /** @param {string} attached */
-  setBookmarkBarAttached: function(attached) {
-    document.documentElement.setAttribute('bookmarkbarattached', attached);
-  },
-
-  /** @param {!{hasCustomBackground: boolean}} themeData */
-  themeChanged: function(themeData) {
-    document.documentElement.setAttribute('hascustombackground',
-                                          themeData.hasCustomBackground);
-    $('incognitothemecss').href =
-        'chrome://theme/css/incognito_new_tab_theme.css?' + Date.now();
-  },
-
-  defaultFontSizeChanged: function() {
-    setTimeout(recomputeLayoutWidth, 100);
-  }
-};
+});

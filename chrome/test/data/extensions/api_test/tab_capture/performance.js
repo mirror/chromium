@@ -10,32 +10,16 @@
 
 // Global to prevent gc from eating the video tag.
 var video = null;
-var captureStream = null;
+var capture_stream = null;
 
-function stopStream(stream) {
-  const tracks = stream.getTracks();
-  for (let i = 0; i < tracks.length; ++i) {
-    tracks[i].stop();
-  }
-  chrome.test.assertFalse(stream.active);
-}
-
-function connectToVideoAndRunTest(stream) {
-  if (!stream) {
-    chrome.test.fail(chrome.runtime.lastError.message || 'null stream');
-    return;
-  }
-
-  // Create the video element, to play out the captured video; but there's no
-  // need to append it to the DOM.
+function TestStream(stream) {
+  // Create video and canvas elements, but no need to append them to the
+  // DOM.
   video = document.createElement("video");
   video.width = 1920;
   video.height = 1080;
   video.addEventListener("error", chrome.test.fail);
 
-  // Create a canvas and add it to the test page being captured. The draw()
-  // function below will update the canvas's content, triggering tab capture for
-  // each animation frame.
   var canvas = document.createElement("canvas");
   canvas.width = video.width;
   canvas.height = video.height;
@@ -49,23 +33,22 @@ function connectToVideoAndRunTest(stream) {
 
   var frame = 0;
   function draw() {
-    // Run for 15 seconds.
-    if (new Date().getTime() - start_time > 15000) {
+    // Run for 10 seconds.
+    if (new Date().getTime() - start_time > 10000) {
       chrome.test.succeed();
       // Note that the API testing framework might not terminate if we keep
       // animating and capturing, so we have to make sure that we stop doing
       // that here.
-      if (captureStream) {
-        stopStream(captureStream);
-        captureStream = null;
+      if (capture_stream) {
+        capture_stream.stop();
       }
-      stopStream(stream);
+      stream.stop();
       return;
     }
     requestAnimationFrame(draw);
     frame = frame + 1;
     context.fillStyle = 'rgb(255,255,255)';
-    context.fillRect(0, 0, canvas.width, canvas.height );
+    context.fillRect( 0, 0, canvas.width, canvas.height );
     for (var j = 0; j < 200; j++) {
       var i = (j + frame) % 200;
       var t = (frame + 3000) * (0.01 + i / 8000.0);
@@ -85,7 +68,7 @@ function connectToVideoAndRunTest(stream) {
 
 // Set up a WebRTC connection and pipe |stream| through it.
 function testThroughWebRTC(stream) {
-  captureStream = stream;
+  capture_stream = stream;
   console.log("Testing through webrtc.");
   var sender = new RTCPeerConnection();
   var receiver = new RTCPeerConnection();
@@ -100,7 +83,7 @@ function testThroughWebRTC(stream) {
     }
   };
   receiver.onaddstream = function (event) {
-    connectToVideoAndRunTest(event.stream);
+    TestStream(event.stream);
   };
   sender.addStream(stream);
   sender.createOffer(function (sender_description) {
@@ -116,7 +99,7 @@ function testThroughWebRTC(stream) {
 }
 
 function tabCapturePerformanceTest() {
-  var f = connectToVideoAndRunTest;
+  var f = TestStream;
   if (parseInt(window.location.href.split('?WebRTC=')[1])) {
     f = testThroughWebRTC;
   }

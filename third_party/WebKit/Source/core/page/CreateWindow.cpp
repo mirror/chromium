@@ -28,7 +28,6 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/Document.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/frame/FrameClient.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
@@ -39,6 +38,7 @@
 #include "core/page/Page.h"
 #include "core/page/WindowFeatures.h"
 #include "core/probe/CoreProbes.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"
@@ -82,9 +82,6 @@ static Frame* CreateNewWindow(LocalFrame& opener_frame,
                                                         features, policy);
   if (!page)
     return nullptr;
-
-  if (page == old_page)
-    return &opener_frame.Tree().Top();
 
   DCHECK(page->MainFrame());
   LocalFrame& frame = *ToLocalFrame(page->MainFrame());
@@ -159,6 +156,10 @@ static Frame* CreateWindowHelper(LocalFrame& opener_frame,
               "frame whose 'allow-popups' permission is not set."));
       return nullptr;
     }
+
+    if (opener_frame.GetSettings() &&
+        !opener_frame.GetSettings()->GetSupportsMultipleWindows())
+      window = &opener_frame.Tree().Top();
   }
 
   if (window) {
@@ -268,6 +269,9 @@ void CreateWindowForRequest(const FrameLoadRequest& request,
 
   if (opener_frame.GetDocument() &&
       opener_frame.GetDocument()->IsSandboxed(kSandboxPopups))
+    return;
+
+  if (!LocalDOMWindow::AllowPopUp(opener_frame))
     return;
 
   if (policy == kNavigationPolicyCurrentTab)

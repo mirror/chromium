@@ -156,13 +156,13 @@ void RecordSigninNewAccountUserActionForAccessPoint(
 
 - (void)identityAvatarUpdated:(UIImage*)identityAvatar {
   _identityAvatar = identityAvatar;
-  [self sendConsumerNotificationWithIdentityChanged:NO];
+  [self sendConsumerNotificationWithNewIdentity:NO];
 }
 
-- (void)sendConsumerNotificationWithIdentityChanged:(BOOL)identityChanged {
+- (void)sendConsumerNotificationWithNewIdentity:(BOOL)newIdentity {
   SigninPromoViewConfigurator* configurator = [self createConfigurator];
-  [_consumer configureSigninPromoWithConfigurator:configurator
-                                  identityChanged:identityChanged];
+  [_consumer configureSigninPromoViewWithNewIdentity:newIdentity
+                                        configurator:configurator];
 }
 
 #pragma mark - ChromeIdentityServiceObserver
@@ -177,13 +177,13 @@ void RecordSigninNewAccountUserActionForAccessPoint(
   }
   if (newIdentity != _defaultIdentity) {
     [self selectIdentity:newIdentity];
-    [self sendConsumerNotificationWithIdentityChanged:YES];
+    [self sendConsumerNotificationWithNewIdentity:YES];
   }
 }
 
 - (void)onProfileUpdate:(ChromeIdentity*)identity {
   if (identity == _defaultIdentity) {
-    [self sendConsumerNotificationWithIdentityChanged:NO];
+    [self sendConsumerNotificationWithNewIdentity:NO];
   }
 }
 

@@ -14,14 +14,12 @@
 @property(nonatomic, copy) NSString* createdTime;
 @property(nonatomic, copy) NSString* hostId;
 @property(nonatomic, copy) NSString* hostName;
-@property(nonatomic, copy) NSString* hostOs;
-@property(nonatomic, copy) NSString* hostOsVersion;
 @property(nonatomic, copy) NSString* hostVersion;
 @property(nonatomic, copy) NSString* jabberId;
 @property(nonatomic, copy) NSString* kind;
 @property(nonatomic, copy) NSString* publicKey;
 @property(nonatomic, copy) NSString* status;
-@property(nonatomic, copy) NSString* updatedTime;
+@property(nonatomic, copy) NSDate* updatedTime;
 // True when |status| is @"ONLINE", anything else is False.
 @property(nonatomic, readonly) bool isOnline;
 

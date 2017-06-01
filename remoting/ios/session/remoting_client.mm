@@ -20,9 +20,9 @@
 #include "remoting/client/chromoting_client_runtime.h"
 #include "remoting/client/chromoting_session.h"
 #include "remoting/client/connect_to_host_info.h"
-#include "remoting/client/display/renderer_proxy.h"
-#include "remoting/client/gesture_interpreter.h"
 #include "remoting/client/input/keyboard_interpreter.h"
+#include "remoting/client/ui/gesture_interpreter.h"
+#include "remoting/client/ui/renderer_proxy.h"
 #include "remoting/ios/session/remoting_client_session_delegate.h"
 #include "remoting/protocol/session.h"
 #include "remoting/protocol/video_renderer.h"
@@ -84,9 +84,6 @@ NSString* const kHostSessionPin = @"kHostSessionPin";
   info.host_jid = base::SysNSStringToUTF8(hostInfo.jabberId);
   info.host_id = base::SysNSStringToUTF8(hostInfo.hostId);
   info.host_pubkey = base::SysNSStringToUTF8(hostInfo.publicKey);
-  info.host_os = base::SysNSStringToUTF8(hostInfo.hostOs);
-  info.host_os_version = base::SysNSStringToUTF8(hostInfo.hostOsVersion);
-  info.host_version = base::SysNSStringToUTF8(hostInfo.hostVersion);
   // TODO(nicholss): If iOS supports pairing, pull the stored data and
   // insert it here.
   info.pairing_id = "";
@@ -95,6 +92,9 @@ NSString* const kHostSessionPin = @"kHostSessionPin";
   // TODO(nicholss): I am not sure about the following fields yet.
   // info.capabilities =
   // info.flags =
+  // info.host_version =
+  // info.host_os =
+  // info.host_os_version =
 
   remoting::protocol::ClientAuthenticationConfig client_auth_config;
   client_auth_config.host_id = info.host_id;

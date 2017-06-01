@@ -5,16 +5,19 @@
 #include "components/spellcheck/renderer/spellcheck_provider_test.h"
 
 #include "base/memory/ptr_util.h"
-#include "base/message_loop/message_loop.h"
-#include "base/run_loop.h"
-#include "components/spellcheck/common/spellcheck.mojom.h"
-#include "components/spellcheck/common/spellcheck_result.h"
+#include "base/stl_util.h"
+#include "components/spellcheck/common/spellcheck_messages.h"
 #include "components/spellcheck/renderer/spellcheck.h"
 #include "components/spellcheck/spellcheck_build_features.h"
-#include "ipc/ipc_message.h"
+#include "ipc/ipc_message_macros.h"
+
+class MockSpellcheck: public SpellCheck {
+};
 
 FakeTextCheckingCompletion::FakeTextCheckingCompletion()
-    : completion_count_(0), cancellation_count_(0) {}
+: completion_count_(0),
+  cancellation_count_(0) {
+}
 
 FakeTextCheckingCompletion::~FakeTextCheckingCompletion() {}
 
@@ -29,76 +32,62 @@ void FakeTextCheckingCompletion::DidCancelCheckingText() {
 }
 
 TestingSpellCheckProvider::TestingSpellCheckProvider()
-    : SpellCheckProvider(nullptr, new SpellCheck),
-      spelling_service_call_count_(0),
-      binding_(this) {}
+      : SpellCheckProvider(NULL, new MockSpellcheck),
+        spelling_service_call_count_(0) {
+}
 
-TestingSpellCheckProvider::TestingSpellCheckProvider(SpellCheck* spellcheck)
+TestingSpellCheckProvider::TestingSpellCheckProvider(
+    SpellCheck* spellcheck)
     : SpellCheckProvider(nullptr, spellcheck),
-      spelling_service_call_count_(0),
-      binding_(this) {}
+      spelling_service_call_count_(0) {
+}
 
 TestingSpellCheckProvider::~TestingSpellCheckProvider() {
-  binding_.Close();
   delete spellcheck_;
 }
 
-void TestingSpellCheckProvider::RequestTextChecking(
-    const base::string16& text,
-    blink::WebTextCheckingCompletion* completion) {
+bool TestingSpellCheckProvider::Send(IPC::Message* message)  {
 #if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
-  if (!loop_ && !base::MessageLoop::current())
-    loop_ = base::MakeUnique<base::MessageLoop>();
-  if (!binding_.is_bound())
-    SetSpellCheckHostForTesting(binding_.CreateInterfacePtrAndBind());
-  SpellCheckProvider::RequestTextChecking(text, completion);
-  base::RunLoop().RunUntilIdle();
-#else
-  SpellCheckProvider::RequestTextChecking(text, completion);
-#endif
-}
+  // Call our mock message handlers.
+  bool handled = true;
+  IPC_BEGIN_MESSAGE_MAP(TestingSpellCheckProvider, *message)
+    IPC_MESSAGE_HANDLER(SpellCheckHostMsg_CallSpellingService,
+                        OnCallSpellingService)
+    IPC_MESSAGE_UNHANDLED(handled = false)
+  IPC_END_MESSAGE_MAP()
 
-bool TestingSpellCheckProvider::Send(IPC::Message* message) {
+  if (handled) {
+    delete message;
+    return true;
+  }
+#endif
+
   messages_.push_back(base::WrapUnique<IPC::Message>(message));
   return true;
 }
 
-void TestingSpellCheckProvider::RequestDictionary() {}
-
-void TestingSpellCheckProvider::NotifyChecked(const base::string16& word,
-                                              bool misspelled) {}
-
-void TestingSpellCheckProvider::CallSpellingService(
-    const base::string16& text,
-    CallSpellingServiceCallback callback) {
-#if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
-  OnCallSpellingService(text);
-  std::move(callback).Run(true, std::vector<SpellCheckResult>());
-#else
-  NOTREACHED();
-#endif
-}
-
 void TestingSpellCheckProvider::OnCallSpellingService(
+    int route_id,
+    int identifier,
     const base::string16& text) {
-#if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
+#if BUILDFLAG(USE_BROWSER_SPELLCHECKER)
+  NOTREACHED();
+#else
   ++spelling_service_call_count_;
   blink::WebTextCheckingCompletion* completion =
-      text_check_completions_.Lookup(last_identifier_);
+      text_check_completions_.Lookup(identifier);
   if (!completion) {
     ResetResult();
     return;
   }
   text_.assign(text);
-  text_check_completions_.Remove(last_identifier_);
+  text_check_completions_.Remove(identifier);
   std::vector<blink::WebTextCheckingResult> results;
   results.push_back(blink::WebTextCheckingResult(
       blink::kWebTextDecorationTypeSpelling, 0, 5, blink::WebString("hello")));
   completion->DidFinishCheckingText(results);
   last_request_ = text;
   last_results_ = results;
-#else
-  NOTREACHED();
 #endif
 }
 

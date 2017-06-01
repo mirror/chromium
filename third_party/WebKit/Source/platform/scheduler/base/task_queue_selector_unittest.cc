@@ -173,21 +173,13 @@ TEST_F(TaskQueueSelectorTest, TestHighPriority) {
   EXPECT_THAT(PopTasks(), testing::ElementsAre(2, 0, 1, 3, 4));
 }
 
-TEST_F(TaskQueueSelectorTest, TestLowPriority) {
-  size_t queue_order[] = {0, 1, 2, 3, 4};
-  PushTasks(queue_order, 5);
-  selector_.SetQueuePriority(task_queues_[2].get(), TaskQueue::LOW_PRIORITY);
-  EXPECT_THAT(PopTasks(), testing::ElementsAre(0, 1, 3, 4, 2));
-}
-
 TEST_F(TaskQueueSelectorTest, TestBestEffortPriority) {
   size_t queue_order[] = {0, 1, 2, 3, 4};
   PushTasks(queue_order, 5);
   selector_.SetQueuePriority(task_queues_[0].get(),
                              TaskQueue::BEST_EFFORT_PRIORITY);
-  selector_.SetQueuePriority(task_queues_[2].get(), TaskQueue::LOW_PRIORITY);
-  selector_.SetQueuePriority(task_queues_[3].get(), TaskQueue::HIGH_PRIORITY);
-  EXPECT_THAT(PopTasks(), testing::ElementsAre(3, 1, 4, 2, 0));
+  selector_.SetQueuePriority(task_queues_[2].get(), TaskQueue::HIGH_PRIORITY);
+  EXPECT_THAT(PopTasks(), testing::ElementsAre(2, 1, 3, 4, 0));
 }
 
 TEST_F(TaskQueueSelectorTest, TestControlPriority) {
@@ -301,7 +293,7 @@ TEST_F(TaskQueueSelectorTest, TestControlStarvesOthers) {
                              TaskQueue::BEST_EFFORT_PRIORITY);
   for (int i = 0; i < 100; i++) {
     WorkQueue* chosen_work_queue = nullptr;
-    ASSERT_TRUE(selector_.SelectWorkQueueToService(&chosen_work_queue));
+    EXPECT_TRUE(selector_.SelectWorkQueueToService(&chosen_work_queue));
     EXPECT_EQ(task_queues_[3].get(), chosen_work_queue->task_queue());
     // Don't remove task from queue to simulate all queues still being full.
   }
@@ -316,7 +308,7 @@ TEST_F(TaskQueueSelectorTest, TestHighPriorityDoesNotStarveNormal) {
   size_t counts[] = {0, 0, 0};
   for (int i = 0; i < 100; i++) {
     WorkQueue* chosen_work_queue = nullptr;
-    ASSERT_TRUE(selector_.SelectWorkQueueToService(&chosen_work_queue));
+    EXPECT_TRUE(selector_.SelectWorkQueueToService(&chosen_work_queue));
     size_t chosen_queue_index =
         queue_to_index_map_.find(chosen_work_queue->task_queue())->second;
     counts[chosen_queue_index]++;
@@ -324,46 +316,6 @@ TEST_F(TaskQueueSelectorTest, TestHighPriorityDoesNotStarveNormal) {
   }
   EXPECT_GT(counts[0], 0ul);        // Check high doesn't starve normal.
   EXPECT_GT(counts[2], counts[0]);  // Check high gets more chance to run.
-  EXPECT_EQ(0ul, counts[1]);        // Check best effort is starved.
-}
-
-TEST_F(TaskQueueSelectorTest, TestHighPriorityDoesNotStarveNormalOrLow) {
-  size_t queue_order[] = {0, 1, 2};
-  PushTasks(queue_order, 3);
-  selector_.SetQueuePriority(task_queues_[2].get(), TaskQueue::HIGH_PRIORITY);
-  selector_.SetQueuePriority(task_queues_[1].get(), TaskQueue::LOW_PRIORITY);
-  size_t counts[] = {0, 0, 0};
-  for (int i = 0; i < 100; i++) {
-    WorkQueue* chosen_work_queue = nullptr;
-    ASSERT_TRUE(selector_.SelectWorkQueueToService(&chosen_work_queue));
-    size_t chosen_queue_index =
-        queue_to_index_map_.find(chosen_work_queue->task_queue())->second;
-    counts[chosen_queue_index]++;
-    // Don't remove task from queue to simulate all queues still being full.
-  }
-  EXPECT_GT(counts[0], 0ul);        // Check high doesn't starve normal.
-  EXPECT_GT(counts[2], counts[0]);  // Check high gets more chance to run.
-  EXPECT_GT(counts[1], 0ul);        // Check low isn't starved.
-  EXPECT_GT(counts[0], counts[1]);  // Check normal gets more chance to run.
-}
-
-TEST_F(TaskQueueSelectorTest, TestNormalPriorityDoesNotStarveLow) {
-  size_t queue_order[] = {0, 1, 2};
-  PushTasks(queue_order, 3);
-  selector_.SetQueuePriority(task_queues_[0].get(), TaskQueue::LOW_PRIORITY);
-  selector_.SetQueuePriority(task_queues_[1].get(),
-                             TaskQueue::BEST_EFFORT_PRIORITY);
-  size_t counts[] = {0, 0, 0};
-  for (int i = 0; i < 100; i++) {
-    WorkQueue* chosen_work_queue = nullptr;
-    ASSERT_TRUE(selector_.SelectWorkQueueToService(&chosen_work_queue));
-    size_t chosen_queue_index =
-        queue_to_index_map_.find(chosen_work_queue->task_queue())->second;
-    counts[chosen_queue_index]++;
-    // Don't remove task from queue to simulate all queues still being full.
-  }
-  EXPECT_GT(counts[0], 0ul);        // Check normal doesn't starve low.
-  EXPECT_GT(counts[2], counts[0]);  // Check normal gets more chance to run.
   EXPECT_EQ(0ul, counts[1]);        // Check best effort is starved.
 }
 
@@ -375,20 +327,20 @@ TEST_F(TaskQueueSelectorTest, TestBestEffortGetsStarved) {
   EXPECT_EQ(TaskQueue::NORMAL_PRIORITY, task_queues_[1]->GetQueuePriority());
   WorkQueue* chosen_work_queue = nullptr;
   for (int i = 0; i < 100; i++) {
-    ASSERT_TRUE(selector_.SelectWorkQueueToService(&chosen_work_queue));
+    EXPECT_TRUE(selector_.SelectWorkQueueToService(&chosen_work_queue));
     EXPECT_EQ(task_queues_[1].get(), chosen_work_queue->task_queue());
     // Don't remove task from queue to simulate all queues still being full.
   }
   selector_.SetQueuePriority(task_queues_[1].get(), TaskQueue::HIGH_PRIORITY);
   for (int i = 0; i < 100; i++) {
-    ASSERT_TRUE(selector_.SelectWorkQueueToService(&chosen_work_queue));
+    EXPECT_TRUE(selector_.SelectWorkQueueToService(&chosen_work_queue));
     EXPECT_EQ(task_queues_[1].get(), chosen_work_queue->task_queue());
     // Don't remove task from queue to simulate all queues still being full.
   }
   selector_.SetQueuePriority(task_queues_[1].get(),
                              TaskQueue::CONTROL_PRIORITY);
   for (int i = 0; i < 100; i++) {
-    ASSERT_TRUE(selector_.SelectWorkQueueToService(&chosen_work_queue));
+    EXPECT_TRUE(selector_.SelectWorkQueueToService(&chosen_work_queue));
     EXPECT_EQ(task_queues_[1].get(), chosen_work_queue->task_queue());
     // Don't remove task from queue to simulate all queues still being full.
   }

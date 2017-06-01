@@ -5,7 +5,6 @@
 package org.chromium.chrome.browser.payments.ui;
 
 import android.content.Context;
-import android.support.v7.content.res.AppCompatResources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,8 +47,8 @@ class EditorIconsField {
         ApiCompatibilityUtils.setMarginEnd(layoutParams, margin);
         for (int i = 0; i < fieldModel.getIconResourceIds().size(); i++) {
             ImageView icon = new ImageView(context);
-            icon.setImageDrawable(AppCompatResources.getDrawable(
-                    context, fieldModel.getIconResourceIds().get(i)));
+            icon.setImageResource(fieldModel.getIconResourceIds().get(i));
+            icon.setBackgroundResource(R.drawable.payments_ui_logo_bg);
             icon.setContentDescription(context.getString(
                     fieldModel.getIconDescriptionsForAccessibility().get(i)));
             icon.setAdjustViewBounds(true);

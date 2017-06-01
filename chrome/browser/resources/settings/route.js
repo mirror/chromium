@@ -116,7 +116,6 @@ cr.define('settings', function() {
 // <if expr="chromeos">
   r.INTERNET = r.BASIC.createSection('/internet', 'internet');
   r.INTERNET_NETWORKS = r.INTERNET.createChild('/networks');
-  r.NETWORK_CONFIG = r.INTERNET.createChild('/networkConfig');
   r.NETWORK_DETAIL = r.INTERNET.createChild('/networkDetail');
   r.KNOWN_NETWORKS = r.INTERNET.createChild('/knownNetworks');
   r.BLUETOOTH = r.BASIC.createSection('/bluetooth', 'bluetooth');
@@ -308,7 +307,7 @@ cr.define('settings', function() {
   var currentQueryParameters = new URLSearchParams();
 
   /** @private {boolean} */
-  var wasLastRouteChangePopstate = false;
+  var lastRouteChangeWasPopstate_ = false;
 
   /** @private */
   var initializeRouteFromUrlCalled = false;
@@ -332,7 +331,7 @@ cr.define('settings', function() {
 
   function resetRouteForTesting() {
     initializeRouteFromUrlCalled = false;
-    wasLastRouteChangePopstate = false;
+    lastRouteChangeWasPopstate_ = false;
     currentRoute = Route.BASIC;
     currentQueryParameters = new URLSearchParams();
   }
@@ -347,7 +346,7 @@ cr.define('settings', function() {
     var oldRoute = currentRoute;
     currentRoute = route;
     currentQueryParameters = queryParameters;
-    wasLastRouteChangePopstate = isPopstate;
+    lastRouteChangeWasPopstate_ = isPopstate;
     routeObservers.forEach(function(observer) {
       observer.currentRouteChanged(currentRoute, oldRoute);
     });
@@ -363,7 +362,7 @@ cr.define('settings', function() {
 
   /** @return {boolean} */
   var lastRouteChangeWasPopstate = function() {
-    return wasLastRouteChangePopstate;
+    return lastRouteChangeWasPopstate_;
   };
 
   /**

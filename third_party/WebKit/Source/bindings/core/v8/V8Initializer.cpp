@@ -76,7 +76,7 @@ static void ReportFatalErrorInMainThread(const char* location,
   int memory_usage_mb = Platform::Current()->ActualMemoryUsageMB();
   DVLOG(1) << "V8 error: " << message << " (" << location
            << ").  Current memory usage: " << memory_usage_mb << " MB";
-  IMMEDIATE_CRASH();
+  CRASH();
 }
 
 static void ReportOOMErrorInMainThread(const char* location, bool is_js_heap) {
@@ -407,8 +407,8 @@ class ArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
 
 static void AdjustAmountOfExternalAllocatedMemory(int64_t diff) {
 #if DCHECK_IS_ON()
-  static int64_t process_total = 0;
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(Mutex, mutex, ());
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(int64_t, process_total, new int64_t(0));
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(Mutex, mutex, new Mutex);
   {
     MutexLocker locker(mutex);
 
@@ -485,7 +485,7 @@ static void ReportFatalErrorInWorker(const char* location,
                                      const char* message) {
   // FIXME: We temporarily deal with V8 internal error situations such as
   // out-of-memory by crashing the worker.
-  IMMEDIATE_CRASH();
+  CRASH();
 }
 
 static void MessageHandlerInWorker(v8::Local<v8::Message> message,

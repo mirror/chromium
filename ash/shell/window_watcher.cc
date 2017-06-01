@@ -15,6 +15,7 @@
 #include "ash/shell/window_watcher_shelf_item_delegate.h"
 #include "ash/shell_port.h"
 #include "ash/wm/window_util.h"
+#include "ash/wm_window.h"
 #include "base/strings/string_number_conversions.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_event_dispatcher.h"
@@ -98,9 +99,8 @@ void WindowWatcher::OnWindowAdded(aura::Window* new_window) {
   static int image_count = 0;
   ShelfModel* model = Shell::Get()->shelf_model();
   ShelfItem item;
-  item.type = new_window->type() == aura::client::WINDOW_TYPE_PANEL
-                  ? TYPE_APP_PANEL
-                  : TYPE_APP;
+  item.type = new_window->type() == ui::wm::WINDOW_TYPE_PANEL ? TYPE_APP_PANEL
+                                                              : TYPE_APP;
   static int shelf_id = 0;
   item.id = ShelfID(base::IntToString(shelf_id++));
   id_to_window_[item.id] = new_window;

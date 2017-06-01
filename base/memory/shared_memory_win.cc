@@ -9,7 +9,6 @@
 #include <stdint.h>
 
 #include "base/logging.h"
-#include "base/memory/shared_memory_tracker.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/rand_util.h"
 #include "base/strings/stringprintf.h"
@@ -310,7 +309,6 @@ bool SharedMemory::MapAt(off_t offset, size_t bytes) {
     DCHECK_EQ(0U, reinterpret_cast<uintptr_t>(memory_) &
         (SharedMemory::MAP_MINIMUM_ALIGNMENT - 1));
     mapped_size_ = GetMemorySectionSize(memory_);
-    SharedMemoryTracker::GetInstance()->IncrementMemoryUsage(*this);
     return true;
   }
   return false;
@@ -320,7 +318,6 @@ bool SharedMemory::Unmap() {
   if (memory_ == NULL)
     return false;
 
-  SharedMemoryTracker::GetInstance()->DecrementMemoryUsage(*this);
   UnmapViewOfFile(memory_);
   memory_ = NULL;
   return true;

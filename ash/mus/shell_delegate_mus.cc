@@ -12,6 +12,7 @@
 #include "ash/mus/system_tray_delegate_mus.h"
 #include "ash/mus/wallpaper_delegate_mus.h"
 #include "ash/palette_delegate.h"
+#include "ash/session/session_state_delegate.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
@@ -19,6 +20,32 @@
 #include "ui/gfx/image/image.h"
 
 namespace ash {
+namespace {
+
+class SessionStateDelegateStub : public SessionStateDelegate {
+ public:
+  SessionStateDelegateStub() : user_info_(new user_manager::UserInfoImpl()) {}
+
+  ~SessionStateDelegateStub() override {}
+
+  // SessionStateDelegate:
+  bool ShouldShowAvatar(WmWindow* window) const override {
+    NOTIMPLEMENTED();
+    return !user_info_->GetImage().isNull();
+  }
+  gfx::ImageSkia GetAvatarImageForWindow(WmWindow* window) const override {
+    NOTIMPLEMENTED();
+    return gfx::ImageSkia();
+  }
+
+ private:
+  // A pseudo user info.
+  std::unique_ptr<user_manager::UserInfo> user_info_;
+
+  DISALLOW_COPY_AND_ASSIGN(SessionStateDelegateStub);
+};
+
+}  // namespace
 
 ShellDelegateMus::ShellDelegateMus(service_manager::Connector* connector)
     : connector_(connector) {}
@@ -44,7 +71,7 @@ bool ShellDelegateMus::IsRunningInForcedAppMode() const {
   return false;
 }
 
-bool ShellDelegateMus::CanShowWindowForUser(aura::Window* window) const {
+bool ShellDelegateMus::CanShowWindowForUser(WmWindow* window) const {
   NOTIMPLEMENTED();
   return true;
 }
@@ -91,6 +118,12 @@ std::unique_ptr<WallpaperDelegate> ShellDelegateMus::CreateWallpaperDelegate() {
   return base::MakeUnique<WallpaperDelegateMus>();
 }
 
+SessionStateDelegate* ShellDelegateMus::CreateSessionStateDelegate() {
+  // TODO: http://crbug.com/647416.
+  NOTIMPLEMENTED() << " Using a stub SessionStateDeleagte implementation";
+  return new SessionStateDelegateStub;
+}
+
 AccessibilityDelegate* ShellDelegateMus::CreateAccessibilityDelegate() {
   return new AccessibilityDelegateMus(connector_);
 }
@@ -101,9 +134,9 @@ std::unique_ptr<PaletteDelegate> ShellDelegateMus::CreatePaletteDelegate() {
   return nullptr;
 }
 
-ui::MenuModel* ShellDelegateMus::CreateContextMenu(Shelf* shelf,
+ui::MenuModel* ShellDelegateMus::CreateContextMenu(WmShelf* wm_shelf,
                                                    const ShelfItem* item) {
-  return new ContextMenuMus(shelf);
+  return new ContextMenuMus(wm_shelf);
 }
 
 GPUSupport* ShellDelegateMus::CreateGPUSupport() {

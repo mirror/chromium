@@ -72,11 +72,11 @@ ASSERT_SIZE(BorderValue, SameSizeAsBorderValue);
 // re-create the same structure for an accurate size comparison.
 struct SameSizeAsComputedStyle : public RefCounted<SameSizeAsComputedStyle> {
   struct ComputedStyleBase {
-    void* data_refs[6];
+    void* data_refs[5];
     unsigned bitfields_[4];
   } base_;
 
-  void* data_refs[1];
+  void* data_refs[2];
   void* own_ptrs[1];
   void* data_ref_svg_style;
 };
@@ -92,11 +92,11 @@ ASSERT_SIZE(ComputedStyleBase<ComputedStyle>, SameSizeAsComputedStyleBase);
 // ComputedStyle.
 ASSERT_SIZE(ComputedStyle, SameSizeAsComputedStyle);
 
-RefPtr<ComputedStyle> ComputedStyle::Create() {
+PassRefPtr<ComputedStyle> ComputedStyle::Create() {
   return AdoptRef(new ComputedStyle(InitialStyle()));
 }
 
-RefPtr<ComputedStyle> ComputedStyle::CreateInitialStyle() {
+PassRefPtr<ComputedStyle> ComputedStyle::CreateInitialStyle() {
   return AdoptRef(new ComputedStyle());
 }
 
@@ -111,7 +111,7 @@ void ComputedStyle::InvalidateInitialStyle() {
   MutableInitialStyle().SetTapHighlightColor(InitialTapHighlightColor());
 }
 
-RefPtr<ComputedStyle> ComputedStyle::CreateAnonymousStyleWithDisplay(
+PassRefPtr<ComputedStyle> ComputedStyle::CreateAnonymousStyleWithDisplay(
     const ComputedStyle& parent_style,
     EDisplay display) {
   RefPtr<ComputedStyle> new_style = ComputedStyle::Create();
@@ -121,7 +121,7 @@ RefPtr<ComputedStyle> ComputedStyle::CreateAnonymousStyleWithDisplay(
   return new_style;
 }
 
-RefPtr<ComputedStyle> ComputedStyle::Clone(const ComputedStyle& other) {
+PassRefPtr<ComputedStyle> ComputedStyle::Clone(const ComputedStyle& other) {
   return AdoptRef(new ComputedStyle(other));
 }
 
@@ -138,6 +138,7 @@ ALWAYS_INLINE ComputedStyle::ComputedStyle()
   rare_non_inherited_data_.Access()->grid_.Init();
   rare_non_inherited_data_.Access()->grid_item_.Init();
   rare_non_inherited_data_.Access()->scroll_snap_.Init();
+  rare_inherited_data_.Init();
   svg_style_.Init();
 }
 
@@ -145,6 +146,7 @@ ALWAYS_INLINE ComputedStyle::ComputedStyle(const ComputedStyle& o)
     : ComputedStyleBase(o),
       RefCounted<ComputedStyle>(),
       rare_non_inherited_data_(o.rare_non_inherited_data_),
+      rare_inherited_data_(o.rare_inherited_data_),
       svg_style_(o.svg_style_) {}
 
 static StyleRecalcChange DiffPseudoStyles(const ComputedStyle& old_style,
@@ -185,7 +187,7 @@ StyleRecalcChange ComputedStyle::StylePropagationDiff(
   if (old_style->Display() != new_style->Display() ||
       old_style->HasPseudoStyle(kPseudoIdFirstLetter) !=
           new_style->HasPseudoStyle(kPseudoIdFirstLetter) ||
-      !old_style->ContentDataEquivalent(*new_style) ||
+      !old_style->ContentDataEquivalent(new_style) ||
       old_style->HasTextCombine() != new_style->HasTextCombine())
     return kReattach;
 
@@ -199,6 +201,7 @@ StyleRecalcChange ComputedStyle::StylePropagationDiff(
   }
 
   if (!old_style->LoadingCustomFontsEqual(*new_style) ||
+      old_style->AlignItems() != new_style->AlignItems() ||
       old_style->JustifyItems() != new_style->JustifyItems())
     return kInherit;
 
@@ -219,6 +222,9 @@ void ComputedStyle::PropagateIndependentInheritedProperties(
 StyleSelfAlignmentData ResolvedSelfAlignment(
     const StyleSelfAlignmentData& value,
     ItemPosition normal_value_behavior) {
+  // To avoid needing to copy the RareNonInheritedData, we repurpose the 'auto'
+  // flag to not just mean 'auto' prior to running the StyleAdjuster but also
+  // mean 'normal' after running it.
   if (value.GetPosition() == kItemPositionNormal ||
       value.GetPosition() == kItemPositionAuto)
     return {normal_value_behavior, kOverflowAlignmentDefault};
@@ -240,6 +246,9 @@ StyleSelfAlignmentData ComputedStyle::ResolvedAlignSelf(
   if (!parent_style || AlignSelfPosition() != kItemPositionAuto)
     return ResolvedSelfAlignment(AlignSelf(), normal_value_behaviour);
 
+  // We shouldn't need to resolve any 'auto' value in post-adjusment
+  // ComputedStyle, but some layout models can generate anonymous boxes that may
+  // need 'auto' value resolution during layout.
   // The 'auto' keyword computes to the parent's align-items computed value.
   return parent_style->ResolvedAlignItems(normal_value_behaviour);
 }
@@ -259,6 +268,9 @@ StyleSelfAlignmentData ComputedStyle::ResolvedJustifySelf(
   if (!parent_style || JustifySelfPosition() != kItemPositionAuto)
     return ResolvedSelfAlignment(JustifySelf(), normal_value_behaviour);
 
+  // We shouldn't need to resolve any 'auto' value in post-adjusment
+  // ComputedStyle, but some layout models can generate anonymous boxes that may
+  // need 'auto' value resolution during layout.
   // The auto keyword computes to the parent's justify-items computed value.
   return parent_style->ResolvedJustifyItems(normal_value_behaviour);
 }
@@ -310,6 +322,7 @@ void ComputedStyle::InheritFrom(const ComputedStyle& inherit_parent,
   EUserModify current_user_modify = UserModify();
 
   ComputedStyleBase::InheritFrom(inherit_parent, is_at_shadow_boundary);
+  rare_inherited_data_ = inherit_parent.rare_inherited_data_;
   if (svg_style_ != inherit_parent.svg_style_)
     svg_style_.Access()->InheritFrom(inherit_parent.svg_style_.Get());
 
@@ -321,8 +334,6 @@ void ComputedStyle::InheritFrom(const ComputedStyle& inherit_parent,
 }
 
 void ComputedStyle::CopyNonInheritedFromCached(const ComputedStyle& other) {
-  DCHECK(MatchedPropertiesCache::IsStyleCacheable(other));
-
   ComputedStyleBase::CopyNonInheritedFromCached(other);
   rare_non_inherited_data_ = other.rare_non_inherited_data_;
 
@@ -330,12 +341,23 @@ void ComputedStyle::CopyNonInheritedFromCached(const ComputedStyle& other) {
   // bunch of stuff other than real style data.
   // See comments for each skipped flag below.
 
+  // These are not generated in ComputedStyleBase
+  SetHasViewportUnits(other.HasViewportUnits());
+  SetHasRemUnitsInternal(other.HasRemUnits());
+
   // Correctly set during selector matching:
   // m_styleType
   // m_pseudoBits
 
   // Set correctly while computing style for children:
   // m_explicitInheritance
+
+  // unique() styles are not cacheable.
+  DCHECK(!other.Unique());
+
+  // styles with non inherited properties that reference variables are not
+  // cacheable.
+  DCHECK(!other.HasVariableReferenceFromNonInheritedProperty());
 
   // The following flags are set during matching before we decide that we get a
   // match in the MatchedPropertiesCache which in turn calls this method. The
@@ -358,6 +380,7 @@ void ComputedStyle::CopyNonInheritedFromCached(const ComputedStyle& other) {
 
   if (svg_style_ != other.svg_style_)
     svg_style_.Access()->CopyNonInheritedFromCached(other.svg_style_.Get());
+  DCHECK_EQ(Zoom(), InitialZoom());
 }
 
 bool ComputedStyle::operator==(const ComputedStyle& o) const {
@@ -439,7 +462,8 @@ bool ComputedStyle::IndependentInheritedEqual(
 bool ComputedStyle::NonIndependentInheritedEqual(
     const ComputedStyle& other) const {
   return ComputedStyleBase::NonIndependentInheritedEqual(other) &&
-         svg_style_->InheritedEqual(*other.svg_style_);
+         svg_style_->InheritedEqual(*other.svg_style_) &&
+         rare_inherited_data_ == other.rare_inherited_data_;
 }
 
 bool ComputedStyle::LoadingCustomFontsEqual(const ComputedStyle& other) const {
@@ -456,7 +480,8 @@ bool ComputedStyle::NonInheritedEqual(const ComputedStyle& other) const {
 bool ComputedStyle::InheritedDataShared(const ComputedStyle& other) const {
   // This is a fast check that only looks if the data structures are shared.
   return ComputedStyleBase::InheritedDataShared(other) &&
-         svg_style_.Get() == other.svg_style_.Get();
+         svg_style_.Get() == other.svg_style_.Get() &&
+         rare_inherited_data_.Get() == other.rare_inherited_data_.Get();
 }
 
 static bool DependenceOnContentHeightHasChanged(const ComputedStyle& a,
@@ -536,6 +561,9 @@ StyleDifference ComputedStyle::VisualInvalidationDiff(
 bool ComputedStyle::ScrollAnchorDisablingPropertyChanged(
     const ComputedStyle& other,
     const StyleDifference& diff) const {
+  if (GetPosition() != other.GetPosition())
+    return true;
+
   if (ComputedStyleBase::ScrollAnchorDisablingPropertyChanged(other))
     return true;
 
@@ -560,19 +588,20 @@ bool ComputedStyle::DiffNeedsFullLayoutAndPaintInvalidation(
   if (rare_non_inherited_data_.Get() != other.rare_non_inherited_data_.Get()) {
     if (rare_non_inherited_data_->appearance_ !=
             other.rare_non_inherited_data_->appearance_ ||
-        rare_non_inherited_data_->margin_before_collapse_ !=
-            other.rare_non_inherited_data_->margin_before_collapse_ ||
-        rare_non_inherited_data_->margin_after_collapse_ !=
-            other.rare_non_inherited_data_->margin_after_collapse_ ||
-        rare_non_inherited_data_->line_clamp_ !=
-            other.rare_non_inherited_data_->line_clamp_ ||
-        rare_non_inherited_data_->text_overflow_ !=
-            other.rare_non_inherited_data_->text_overflow_ ||
+        rare_non_inherited_data_->margin_before_collapse !=
+            other.rare_non_inherited_data_->margin_before_collapse ||
+        rare_non_inherited_data_->margin_after_collapse !=
+            other.rare_non_inherited_data_->margin_after_collapse ||
+        rare_non_inherited_data_->line_clamp !=
+            other.rare_non_inherited_data_->line_clamp ||
+        rare_non_inherited_data_->text_overflow !=
+            other.rare_non_inherited_data_->text_overflow ||
         rare_non_inherited_data_->shape_margin_ !=
             other.rare_non_inherited_data_->shape_margin_ ||
         rare_non_inherited_data_->order_ !=
             other.rare_non_inherited_data_->order_ ||
-        HasFilters() != other.HasFilters())
+        rare_non_inherited_data_->HasFilters() !=
+            other.rare_non_inherited_data_->HasFilters())
       return true;
 
     if (rare_non_inherited_data_->grid_.Get() !=
@@ -618,7 +647,8 @@ bool ComputedStyle::DiffNeedsFullLayoutAndPaintInvalidation(
     // could trigger a change
     // in us being a stacking context.
     if (IsStackingContext() != other.IsStackingContext() &&
-        HasOpacity() != other.HasOpacity()) {
+        rare_non_inherited_data_->HasOpacity() !=
+            other.rare_non_inherited_data_->HasOpacity()) {
       // FIXME: We would like to use SimplifiedLayout here, but we can't quite
       // do that yet.  We need to make sure SimplifiedLayout can operate
       // correctly on LayoutInlines (we will need to add a
@@ -630,9 +660,95 @@ bool ComputedStyle::DiffNeedsFullLayoutAndPaintInvalidation(
     }
   }
 
+  if (rare_inherited_data_.Get() != other.rare_inherited_data_.Get()) {
+    if (rare_inherited_data_->highlight_ !=
+            other.rare_inherited_data_->highlight_ ||
+        rare_inherited_data_->text_indent_ !=
+            other.rare_inherited_data_->text_indent_ ||
+        rare_inherited_data_->text_align_last_ !=
+            other.rare_inherited_data_->text_align_last_ ||
+        rare_inherited_data_->text_indent_line_ !=
+            other.rare_inherited_data_->text_indent_line_ ||
+        rare_inherited_data_->effective_zoom_ !=
+            other.rare_inherited_data_->effective_zoom_ ||
+        rare_inherited_data_->word_break_ !=
+            other.rare_inherited_data_->word_break_ ||
+        rare_inherited_data_->overflow_wrap_ !=
+            other.rare_inherited_data_->overflow_wrap_ ||
+        rare_inherited_data_->line_break_ !=
+            other.rare_inherited_data_->line_break_ ||
+        rare_inherited_data_->text_security_ !=
+            other.rare_inherited_data_->text_security_ ||
+        rare_inherited_data_->hyphens_ !=
+            other.rare_inherited_data_->hyphens_ ||
+        rare_inherited_data_->hyphenation_limit_before_ !=
+            other.rare_inherited_data_->hyphenation_limit_before_ ||
+        rare_inherited_data_->hyphenation_limit_after_ !=
+            other.rare_inherited_data_->hyphenation_limit_after_ ||
+        rare_inherited_data_->hyphenation_string_ !=
+            other.rare_inherited_data_->hyphenation_string_ ||
+        rare_inherited_data_->respect_image_orientation_ !=
+            other.rare_inherited_data_->respect_image_orientation_ ||
+        rare_inherited_data_->ruby_position_ !=
+            other.rare_inherited_data_->ruby_position_ ||
+        rare_inherited_data_->text_emphasis_mark_ !=
+            other.rare_inherited_data_->text_emphasis_mark_ ||
+        rare_inherited_data_->text_emphasis_position_ !=
+            other.rare_inherited_data_->text_emphasis_position_ ||
+        rare_inherited_data_->text_emphasis_custom_mark_ !=
+            other.rare_inherited_data_->text_emphasis_custom_mark_ ||
+        rare_inherited_data_->text_justify_ !=
+            other.rare_inherited_data_->text_justify_ ||
+        rare_inherited_data_->text_orientation_ !=
+            other.rare_inherited_data_->text_orientation_ ||
+        rare_inherited_data_->text_combine_ !=
+            other.rare_inherited_data_->text_combine_ ||
+        rare_inherited_data_->tab_size_ !=
+            other.rare_inherited_data_->tab_size_ ||
+        rare_inherited_data_->text_size_adjust_ !=
+            other.rare_inherited_data_->text_size_adjust_ ||
+        rare_inherited_data_->list_style_image_ !=
+            other.rare_inherited_data_->list_style_image_ ||
+        rare_inherited_data_->line_height_step_ !=
+            other.rare_inherited_data_->line_height_step_ ||
+        rare_inherited_data_->text_stroke_width_ !=
+            other.rare_inherited_data_->text_stroke_width_)
+      return true;
+
+    if (!TextShadowDataEquivalent(other))
+      return true;
+
+    if (!QuotesDataEquivalent(other))
+      return true;
+  }
+
+  if (inherited_data_->text_autosizing_multiplier_ !=
+      other.inherited_data_->text_autosizing_multiplier_)
+    return true;
+
+  if (inherited_data_->font_.LoadingCustomFonts() !=
+      other.inherited_data_->font_.LoadingCustomFonts())
+    return true;
+
+  if (BoxDirection() != other.BoxDirection() ||
+      RtlOrdering() != other.RtlOrdering() ||
+      GetTextAlign() != other.GetTextAlign() ||
+      TextTransform() != other.TextTransform() ||
+      Direction() != other.Direction() || WhiteSpace() != other.WhiteSpace() ||
+      GetWritingMode() != other.GetWritingMode())
+    return true;
+
+  if (OverflowX() != other.OverflowX() || OverflowY() != other.OverflowY() ||
+      Clear() != other.Clear() || GetUnicodeBidi() != other.GetUnicodeBidi() ||
+      Floating() != other.Floating() ||
+      OriginalDisplay() != other.OriginalDisplay())
+    return true;
+
   if (IsDisplayTableType(Display())) {
-    if (ComputedStyleBase::
-            DiffNeedsFullLayoutAndPaintInvalidationDisplayTableType(other))
+    if (BorderCollapse() != other.BorderCollapse() ||
+        EmptyCells() != other.EmptyCells() ||
+        CaptionSide() != other.CaptionSide() ||
+        TableLayout() != other.TableLayout())
       return true;
 
     // In the collapsing border model, 'hidden' suppresses other borders, while
@@ -656,13 +772,17 @@ bool ComputedStyle::DiffNeedsFullLayoutAndPaintInvalidation(
           other.BorderRightStyle() == EBorderStyle::kHidden)))
       return true;
   } else if (Display() == EDisplay::kListItem) {
-    if (ComputedStyleBase::
-            DiffNeedsFullLayoutAndPaintInvalidationDisplayListItem(other))
+    if (ListStyleType() != other.ListStyleType() ||
+        ListStylePosition() != other.ListStylePosition())
       return true;
   }
 
   if ((Visibility() == EVisibility::kCollapse) !=
       (other.Visibility() == EVisibility::kCollapse))
+    return true;
+
+  if (HasPseudoStyle(kPseudoIdScrollbar) !=
+      other.HasPseudoStyle(kPseudoIdScrollbar))
     return true;
 
   // Movement of non-static-positioned object is special cased in
@@ -727,22 +847,35 @@ bool ComputedStyle::DiffNeedsPaintInvalidationSubtree(
 
 bool ComputedStyle::DiffNeedsPaintInvalidationObject(
     const ComputedStyle& other) const {
-  if (ComputedStyleBase::DiffNeedsPaintInvalidationObject(other))
+  if (Visibility() != other.Visibility() ||
+      PrintColorAdjust() != other.PrintColorAdjust() ||
+      InsideLink() != other.InsideLink() || !BorderVisuallyEqual(other) ||
+      !RadiiEqual(other) || *background_data_ != *other.background_data_)
     return true;
 
-  if (!BorderVisuallyEqual(other) || !RadiiEqual(other) ||
-      *background_data_ != *other.background_data_)
-    return true;
+  if (rare_inherited_data_.Get() != other.rare_inherited_data_.Get()) {
+    if (rare_inherited_data_->user_modify_ !=
+            other.rare_inherited_data_->user_modify_ ||
+        rare_inherited_data_->user_select_ !=
+            other.rare_inherited_data_->user_select_ ||
+        rare_inherited_data_->image_rendering_ !=
+            other.rare_inherited_data_->image_rendering_)
+      return true;
+  }
 
   if (rare_non_inherited_data_.Get() != other.rare_non_inherited_data_.Get()) {
-    if (rare_non_inherited_data_->user_drag_ !=
-            other.rare_non_inherited_data_->user_drag_ ||
+    if (rare_non_inherited_data_->user_drag !=
+            other.rare_non_inherited_data_->user_drag ||
         rare_non_inherited_data_->object_fit_ !=
             other.rare_non_inherited_data_->object_fit_ ||
         rare_non_inherited_data_->object_position_ !=
             other.rare_non_inherited_data_->object_position_ ||
-        !BoxShadowDataEquivalent(other) || !ShapeOutsideDataEquivalent(other) ||
-        !ClipPathDataEquivalent(other) ||
+        !rare_non_inherited_data_->ShadowDataEquivalent(
+            *other.rare_non_inherited_data_.Get()) ||
+        !rare_non_inherited_data_->ShapeOutsideDataEquivalent(
+            *other.rare_non_inherited_data_.Get()) ||
+        !rare_non_inherited_data_->ClipPathDataEquivalent(
+            *other.rare_non_inherited_data_.Get()) ||
         !rare_non_inherited_data_->outline_.VisuallyEqual(
             other.rare_non_inherited_data_->outline_) ||
         (VisitedLinkBorderLeftColor() != other.VisitedLinkBorderLeftColor() &&
@@ -789,8 +922,7 @@ bool ComputedStyle::DiffNeedsPaintInvalidationObjectForPaintImage(
     // TODO(ikilpatrick): remove IsInterpolableProperty check once
     // CSSPropertyEquality::PropertiesEqual correctly handles all properties.
     if (!CSSPropertyMetadata::IsInterpolableProperty(property_id) ||
-        !CSSPropertyEquality::PropertiesEqual(PropertyHandle(property_id),
-                                              *this, other))
+        !CSSPropertyEquality::PropertiesEqual(property_id, *this, other))
       return true;
   }
 
@@ -811,7 +943,7 @@ bool ComputedStyle::DiffNeedsPaintInvalidationObjectForPaintImage(
 bool ComputedStyle::DiffNeedsVisualRectUpdate(
     const ComputedStyle& other) const {
   // Visual rect is empty if visibility is hidden.
-  if (ComputedStyleBase::DiffNeedsVisualRectUpdate(other))
+  if (Visibility() != other.Visibility())
     return true;
 
   // Need to update visual rect of the resizer.
@@ -842,27 +974,22 @@ void ComputedStyle::UpdatePropertySpecificDifferences(
   }
 
   if (rare_non_inherited_data_.Get() != other.rare_non_inherited_data_.Get()) {
-    if (rare_non_inherited_data_->opacity_ !=
-        other.rare_non_inherited_data_->opacity_)
+    if (rare_non_inherited_data_->opacity !=
+        other.rare_non_inherited_data_->opacity)
       diff.SetOpacityChanged();
   }
 
   if (rare_non_inherited_data_.Get() != other.rare_non_inherited_data_.Get()) {
-    if ((rare_non_inherited_data_->filter_ !=
-         other.rare_non_inherited_data_->filter_) ||
-        !ReflectionDataEquivalent(other))
+    if (rare_non_inherited_data_->filter_ !=
+        other.rare_non_inherited_data_->filter_)
       diff.SetFilterChanged();
   }
 
   if (rare_non_inherited_data_.Get() != other.rare_non_inherited_data_.Get()) {
-    if (!BoxShadowDataEquivalent(other) ||
-        !rare_non_inherited_data_->outline_.VisuallyEqual(
-            other.rare_non_inherited_data_->outline_))
+    if (!rare_non_inherited_data_->ShadowDataEquivalent(
+            *other.rare_non_inherited_data_.Get()))
       diff.SetNeedsRecomputeOverflow();
   }
-
-  if (!BorderVisualOverflowEqual(other))
-    diff.SetNeedsRecomputeOverflow();
 
   if (rare_non_inherited_data_.Get() != other.rare_non_inherited_data_.Get()) {
     if (rare_non_inherited_data_->backdrop_filter_ !=
@@ -870,43 +997,63 @@ void ComputedStyle::UpdatePropertySpecificDifferences(
       diff.SetBackdropFilterChanged();
   }
 
+  if (rare_non_inherited_data_.Get() != other.rare_non_inherited_data_.Get()) {
+    if (!rare_non_inherited_data_->ReflectionDataEquivalent(
+            *other.rare_non_inherited_data_.Get()))
+      diff.SetFilterChanged();
+  }
+
+  if (rare_non_inherited_data_.Get() != other.rare_non_inherited_data_.Get()) {
+    if (!rare_non_inherited_data_->outline_.VisuallyEqual(
+            other.rare_non_inherited_data_->outline_))
+      diff.SetNeedsRecomputeOverflow();
+  }
+
+  if (!BorderVisualOverflowEqual(other))
+    diff.SetNeedsRecomputeOverflow();
+
   if (!diff.NeedsFullPaintInvalidation()) {
-    if ((inherited_data_->color_ != other.inherited_data_->color_ ||
-         inherited_data_->visited_link_color_ !=
-             other.inherited_data_->visited_link_color_ ||
-         HasSimpleUnderlineInternal() != other.HasSimpleUnderlineInternal() ||
-         visual_data_->text_decoration_ !=
-             other.visual_data_->text_decoration_) ||
-        (rare_non_inherited_data_.Get() !=
-             other.rare_non_inherited_data_.Get() &&
-         (rare_non_inherited_data_->text_decoration_style_ !=
-              other.rare_non_inherited_data_->text_decoration_style_ ||
-          rare_non_inherited_data_->text_decoration_color_ !=
-              other.rare_non_inherited_data_->text_decoration_color_ ||
-          rare_non_inherited_data_->visited_link_text_decoration_color_ !=
-              other.rare_non_inherited_data_
-                  ->visited_link_text_decoration_color_)) ||
-        (rare_inherited_data_.Get() != other.rare_inherited_data_.Get() &&
-         (TextFillColor() != other.TextFillColor() ||
-          TextStrokeColor() != other.TextStrokeColor() ||
-          TextEmphasisColor() != other.TextEmphasisColor() ||
-          VisitedLinkTextFillColor() != other.VisitedLinkTextFillColor() ||
-          VisitedLinkTextStrokeColor() != other.VisitedLinkTextStrokeColor() ||
-          VisitedLinkTextEmphasisColor() !=
-              other.VisitedLinkTextEmphasisColor() ||
-          rare_inherited_data_->text_emphasis_fill_ !=
-              other.rare_inherited_data_->text_emphasis_fill_ ||
-          rare_inherited_data_->text_underline_position_ !=
-              other.rare_inherited_data_->text_underline_position_ ||
-          rare_inherited_data_->text_decoration_skip_ !=
-              other.rare_inherited_data_->text_decoration_skip_ ||
-          rare_inherited_data_->applied_text_decorations_ !=
-              other.rare_inherited_data_->applied_text_decorations_ ||
-          CaretColor() != CaretColor() ||
-          VisitedLinkCaretColor() != other.VisitedLinkCaretColor())) ||
-        ComputedStyleBase::
-            UpdatePropertySpecificDifferencesTextDecorationOrColor(other)) {
+    if (inherited_data_->color_ != other.inherited_data_->color_ ||
+        inherited_data_->visited_link_color_ !=
+            other.inherited_data_->visited_link_color_ ||
+        HasSimpleUnderlineInternal() != other.HasSimpleUnderlineInternal() ||
+        visual_data_->text_decoration_ !=
+            other.visual_data_->text_decoration_) {
       diff.SetTextDecorationOrColorChanged();
+    } else {
+      if (rare_non_inherited_data_.Get() !=
+              other.rare_non_inherited_data_.Get() &&
+          (rare_non_inherited_data_->text_decoration_style_ !=
+               other.rare_non_inherited_data_->text_decoration_style_ ||
+           rare_non_inherited_data_->text_decoration_color_ !=
+               other.rare_non_inherited_data_->text_decoration_color_ ||
+           rare_non_inherited_data_->visited_link_text_decoration_color_ !=
+               other.rare_non_inherited_data_
+                   ->visited_link_text_decoration_color_)) {
+        diff.SetTextDecorationOrColorChanged();
+      } else {
+        if (rare_inherited_data_.Get() != other.rare_inherited_data_.Get() &&
+            (TextFillColor() != other.TextFillColor() ||
+             TextStrokeColor() != other.TextStrokeColor() ||
+             TextEmphasisColor() != other.TextEmphasisColor() ||
+             VisitedLinkTextFillColor() != other.VisitedLinkTextFillColor() ||
+             VisitedLinkTextStrokeColor() !=
+                 other.VisitedLinkTextStrokeColor() ||
+             VisitedLinkTextEmphasisColor() !=
+                 other.VisitedLinkTextEmphasisColor() ||
+             rare_inherited_data_->text_emphasis_fill_ !=
+                 other.rare_inherited_data_->text_emphasis_fill_ ||
+             rare_inherited_data_->text_underline_position_ !=
+                 other.rare_inherited_data_->text_underline_position_ ||
+             rare_inherited_data_->text_decoration_skip_ !=
+                 other.rare_inherited_data_->text_decoration_skip_ ||
+             rare_inherited_data_->applied_text_decorations_ !=
+                 other.rare_inherited_data_->applied_text_decorations_ ||
+             CaretColor() != CaretColor() ||
+             VisitedLinkCaretColor() != other.VisitedLinkCaretColor())) {
+          diff.SetTextDecorationOrColorChanged();
+        }
+      }
     }
   }
 
@@ -1151,11 +1298,6 @@ void ComputedStyle::ApplyTransform(
   if (apply_transform_origin) {
     result.Translate3d(-origin_x, -origin_y, -origin_z);
   }
-}
-
-bool ComputedStyle::HasFilters() const {
-  return rare_non_inherited_data_->filter_.Get() &&
-         !rare_non_inherited_data_->filter_->operations_.IsEmpty();
 }
 
 void ComputedStyle::ApplyMotionPathTransform(
@@ -1443,56 +1585,56 @@ const AtomicString& ComputedStyle::HyphenString() const {
 
 const AtomicString& ComputedStyle::TextEmphasisMarkString() const {
   switch (GetTextEmphasisMark()) {
-    case TextEmphasisMark::kNone:
+    case kTextEmphasisMarkNone:
       return g_null_atom;
-    case TextEmphasisMark::kCustom:
+    case kTextEmphasisMarkCustom:
       return TextEmphasisCustomMark();
-    case TextEmphasisMark::kDot: {
+    case kTextEmphasisMarkDot: {
       DEFINE_STATIC_LOCAL(AtomicString, filled_dot_string,
                           (&kBulletCharacter, 1));
       DEFINE_STATIC_LOCAL(AtomicString, open_dot_string,
                           (&kWhiteBulletCharacter, 1));
-      return GetTextEmphasisFill() == TextEmphasisFill::kFilled
+      return GetTextEmphasisFill() == kTextEmphasisFillFilled
                  ? filled_dot_string
                  : open_dot_string;
     }
-    case TextEmphasisMark::kCircle: {
+    case kTextEmphasisMarkCircle: {
       DEFINE_STATIC_LOCAL(AtomicString, filled_circle_string,
                           (&kBlackCircleCharacter, 1));
       DEFINE_STATIC_LOCAL(AtomicString, open_circle_string,
                           (&kWhiteCircleCharacter, 1));
-      return GetTextEmphasisFill() == TextEmphasisFill::kFilled
+      return GetTextEmphasisFill() == kTextEmphasisFillFilled
                  ? filled_circle_string
                  : open_circle_string;
     }
-    case TextEmphasisMark::kDoubleCircle: {
+    case kTextEmphasisMarkDoubleCircle: {
       DEFINE_STATIC_LOCAL(AtomicString, filled_double_circle_string,
                           (&kFisheyeCharacter, 1));
       DEFINE_STATIC_LOCAL(AtomicString, open_double_circle_string,
                           (&kBullseyeCharacter, 1));
-      return GetTextEmphasisFill() == TextEmphasisFill::kFilled
+      return GetTextEmphasisFill() == kTextEmphasisFillFilled
                  ? filled_double_circle_string
                  : open_double_circle_string;
     }
-    case TextEmphasisMark::kTriangle: {
+    case kTextEmphasisMarkTriangle: {
       DEFINE_STATIC_LOCAL(AtomicString, filled_triangle_string,
                           (&kBlackUpPointingTriangleCharacter, 1));
       DEFINE_STATIC_LOCAL(AtomicString, open_triangle_string,
                           (&kWhiteUpPointingTriangleCharacter, 1));
-      return GetTextEmphasisFill() == TextEmphasisFill::kFilled
+      return GetTextEmphasisFill() == kTextEmphasisFillFilled
                  ? filled_triangle_string
                  : open_triangle_string;
     }
-    case TextEmphasisMark::kSesame: {
+    case kTextEmphasisMarkSesame: {
       DEFINE_STATIC_LOCAL(AtomicString, filled_sesame_string,
                           (&kSesameDotCharacter, 1));
       DEFINE_STATIC_LOCAL(AtomicString, open_sesame_string,
                           (&kWhiteSesameDotCharacter, 1));
-      return GetTextEmphasisFill() == TextEmphasisFill::kFilled
+      return GetTextEmphasisFill() == kTextEmphasisFillFilled
                  ? filled_sesame_string
                  : open_sesame_string;
     }
-    case TextEmphasisMark::kAuto:
+    case kTextEmphasisMarkAuto:
       NOTREACHED();
       return g_null_atom;
   }
@@ -2125,44 +2267,6 @@ float ComputedStyle::BorderUnderWidth() const {
   return IsHorizontalWritingMode() ? BorderBottomWidth() : BorderLeftWidth();
 }
 
-EBorderStyle ComputedStyle::BorderBeforeStyle() const {
-  switch (GetWritingMode()) {
-    case WritingMode::kHorizontalTb:
-      return BorderTopStyle();
-    case WritingMode::kVerticalLr:
-      return BorderLeftStyle();
-    case WritingMode::kVerticalRl:
-      return BorderRightStyle();
-  }
-  NOTREACHED();
-  return BorderTopStyle();
-}
-
-EBorderStyle ComputedStyle::BorderAfterStyle() const {
-  switch (GetWritingMode()) {
-    case WritingMode::kHorizontalTb:
-      return BorderBottomStyle();
-    case WritingMode::kVerticalLr:
-      return BorderRightStyle();
-    case WritingMode::kVerticalRl:
-      return BorderLeftStyle();
-  }
-  NOTREACHED();
-  return BorderBottomStyle();
-}
-
-EBorderStyle ComputedStyle::BorderStartStyle() const {
-  if (IsHorizontalWritingMode())
-    return IsLeftToRightDirection() ? BorderLeftStyle() : BorderRightStyle();
-  return IsLeftToRightDirection() ? BorderTopStyle() : BorderBottomStyle();
-}
-
-EBorderStyle ComputedStyle::BorderEndStyle() const {
-  if (IsHorizontalWritingMode())
-    return IsLeftToRightDirection() ? BorderRightStyle() : BorderLeftStyle();
-  return IsLeftToRightDirection() ? BorderBottomStyle() : BorderTopStyle();
-}
-
 void ComputedStyle::SetMarginStart(const Length& margin) {
   if (IsHorizontalWritingMode()) {
     if (IsLeftToRightDirection())
@@ -2227,13 +2331,17 @@ bool ComputedStyle::ColumnRuleEquivalent(
 TextEmphasisMark ComputedStyle::GetTextEmphasisMark() const {
   TextEmphasisMark mark =
       static_cast<TextEmphasisMark>(rare_inherited_data_->text_emphasis_mark_);
-  if (mark != TextEmphasisMark::kAuto)
+  if (mark != kTextEmphasisMarkAuto)
     return mark;
 
   if (IsHorizontalWritingMode())
-    return TextEmphasisMark::kDot;
+    return kTextEmphasisMarkDot;
 
-  return TextEmphasisMark::kSesame;
+  return kTextEmphasisMarkSesame;
+}
+
+Color ComputedStyle::InitialTapHighlightColor() {
+  return LayoutTheme::TapHighlightColor();
 }
 
 const FilterOperations& ComputedStyle::InitialFilter() {

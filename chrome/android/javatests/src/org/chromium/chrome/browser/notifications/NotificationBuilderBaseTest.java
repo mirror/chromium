@@ -19,7 +19,6 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
-import org.chromium.chrome.browser.notifications.channels.ChannelDefinitions;
 import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.chrome.browser.widget.RoundedIconGenerator;
 import org.chromium.content.browser.test.NativeLibraryTestRule;
@@ -66,8 +65,7 @@ public class NotificationBuilderBaseTest {
 
         String origin = "https://example.com";
 
-        NotificationBuilderBase notificationBuilder = new NotificationBuilderBase(resources,
-                ChannelDefinitions.CHANNEL_ID_BROWSER) {
+        NotificationBuilderBase notificationBuilder = new NotificationBuilderBase(resources) {
             @Override
             public Notification build() {
                 return null;

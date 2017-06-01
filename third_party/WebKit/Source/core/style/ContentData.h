@@ -200,15 +200,11 @@ class QuoteContentData final : public ContentData {
 DEFINE_CONTENT_DATA_TYPE_CASTS(Quote);
 
 inline bool operator==(const ContentData& a, const ContentData& b) {
-  const ContentData* ptr_a = &a;
-  const ContentData* ptr_b = &b;
+  return a.Equals(b);
+}
 
-  while (ptr_a && ptr_b && ptr_a->Equals(*ptr_b)) {
-    ptr_a = ptr_a->Next();
-    ptr_b = ptr_b->Next();
-  }
-
-  return !ptr_a && !ptr_b;
+inline bool operator!=(const ContentData& a, const ContentData& b) {
+  return !(a == b);
 }
 
 }  // namespace blink

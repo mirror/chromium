@@ -48,7 +48,8 @@ class LeakDetectorRemoteController : public mojom::LeakDetector {
                      mojom::LeakDetectorRequest request);
 
   // mojom::LeakDetector:
-  void GetParams(mojom::LeakDetector::GetParamsCallback callback) override;
+  void GetParams(
+      const mojom::LeakDetector::GetParamsCallback& callback) override;
   void SendLeakReports(std::vector<mojom::MemoryLeakReportPtr>) override;
 
   // Sets a global pointer to a LocalController implementation. The global

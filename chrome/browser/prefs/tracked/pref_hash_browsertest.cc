@@ -44,8 +44,7 @@
 #endif
 
 #if defined(OS_WIN)
-#include "base/win/registry.h"
-#include "chrome/install_static/install_util.h"
+#include "base/test/test_reg_util_win.h"
 #endif
 
 namespace {
@@ -68,25 +67,9 @@ enum AllowedBuckets {
 
 #if defined(OS_WIN)
 base::string16 GetRegistryPathForTestProfile() {
-  // Cleanup follow-up to http://crbug.com/721245 for the previous location of
-  // this test key which had similar problems (to a lesser extent). It's
-  // redundant but harmless to have multiple callers hit this on the same
-  // machine. TODO(gab): remove this mid-june 2017.
-  base::win::RegKey key;
-  if (key.Open(HKEY_CURRENT_USER, L"SOFTWARE\\Chromium\\PrefHashBrowserTest",
-               KEY_SET_VALUE | KEY_WOW64_32KEY) == ERROR_SUCCESS) {
-    LONG result = key.DeleteKey(L"");
-    EXPECT_TRUE(result == ERROR_SUCCESS || result == ERROR_FILE_NOT_FOUND);
-  }
-
   base::FilePath profile_dir;
   EXPECT_TRUE(PathService::Get(chrome::DIR_USER_DATA, &profile_dir));
-
-  // Use a location under the real PreferenceMACs path so that the backup
-  // cleanup logic in ChromeTestLauncherDelegate::PreSharding() for interrupted
-  // tests covers this test key as well.
-  return install_static::GetRegistryPath() +
-         L"\\PreferenceMACs\\PrefHashBrowserTest\\" +
+  return L"SOFTWARE\\Chromium\\PrefHashBrowserTest\\" +
          profile_dir.BaseName().value();
 }
 #endif
@@ -314,6 +297,8 @@ class PrefHashBrowserTestBase
   void TearDown() override {
 #if defined(OS_WIN)
     // When done, delete the Registry key to avoid polluting the registry.
+    // TODO(proberge): it would be nice to delete keys from interrupted tests
+    // as well.
     if (!IsPRETest()) {
       base::string16 registry_key = GetRegistryPathForTestProfile();
       base::win::RegKey key;
@@ -534,7 +519,9 @@ class PrefHashBrowserTestUnchangedDefault : public PrefHashBrowserTestBase {
   }
 };
 
-PREF_HASH_BROWSER_TEST(PrefHashBrowserTestUnchangedDefault, UnchangedDefault);
+// Test is flaky. crbug.com/723639
+PREF_HASH_BROWSER_TEST(PrefHashBrowserTestUnchangedDefault,
+                       DISABLED_UnchangedDefault);
 
 // Augments PrefHashBrowserTestUnchangedDefault to confirm that nothing is reset
 // when nothing is tampered with, even if Chrome itself wrote custom prefs in
@@ -561,7 +548,9 @@ class PrefHashBrowserTestUnchangedCustom
   }
 };
 
-PREF_HASH_BROWSER_TEST(PrefHashBrowserTestUnchangedCustom, UnchangedCustom);
+// Test is flaky. crbug.com/723639
+PREF_HASH_BROWSER_TEST(PrefHashBrowserTestUnchangedCustom,
+                       DISABLED_UnchangedCustom);
 
 // Verifies that cleared prefs are reported.
 class PrefHashBrowserTestClearedAtomic : public PrefHashBrowserTestBase {
@@ -633,7 +622,9 @@ class PrefHashBrowserTestClearedAtomic : public PrefHashBrowserTestBase {
   }
 };
 
-PREF_HASH_BROWSER_TEST(PrefHashBrowserTestClearedAtomic, ClearedAtomic);
+// Test is flaky. crbug.com/723639
+PREF_HASH_BROWSER_TEST(PrefHashBrowserTestClearedAtomic,
+                       DISABLED_ClearedAtomic);
 
 // Verifies that clearing the MACs results in untrusted Initialized pings for
 // non-null protected prefs.
@@ -767,8 +758,9 @@ class PrefHashBrowserTestUntrustedInitialized : public PrefHashBrowserTestBase {
   }
 };
 
+// Test is flaky. crbug.com/723639
 PREF_HASH_BROWSER_TEST(PrefHashBrowserTestUntrustedInitialized,
-                       UntrustedInitialized);
+                       DISABLED_UntrustedInitialized);
 
 // Verifies that changing an atomic pref results in it being reported (and reset
 // if the protection level allows it).
@@ -866,7 +858,9 @@ class PrefHashBrowserTestChangedAtomic : public PrefHashBrowserTestBase {
   }
 };
 
-PREF_HASH_BROWSER_TEST(PrefHashBrowserTestChangedAtomic, ChangedAtomic);
+// Test is flaky. crbug.com/723639
+PREF_HASH_BROWSER_TEST(PrefHashBrowserTestChangedAtomic,
+                       DISABLED_ChangedAtomic);
 
 // Verifies that changing or adding an entry in a split pref results in both
 // items being reported (and remove if the protection level allows it).
@@ -973,7 +967,9 @@ class PrefHashBrowserTestChangedSplitPref : public PrefHashBrowserTestBase {
   }
 };
 
-PREF_HASH_BROWSER_TEST(PrefHashBrowserTestChangedSplitPref, ChangedSplitPref);
+// Test is flaky. crbug.com/723639
+PREF_HASH_BROWSER_TEST(PrefHashBrowserTestChangedSplitPref,
+                       DISABLED_ChangedSplitPref);
 
 // Verifies that adding a value to unprotected preferences for a key which is
 // still using the default (i.e. has no value stored in protected preferences)
@@ -1057,8 +1053,9 @@ class PrefHashBrowserTestUntrustedAdditionToPrefs
   }
 };
 
+// Test is flaky. crbug.com/723639
 PREF_HASH_BROWSER_TEST(PrefHashBrowserTestUntrustedAdditionToPrefs,
-                       UntrustedAdditionToPrefs);
+                       DISABLED_UntrustedAdditionToPrefs);
 
 // Verifies that adding a value to unprotected preferences while wiping a
 // user-selected value from protected preferences doesn't allow that value to
@@ -1144,8 +1141,9 @@ class PrefHashBrowserTestUntrustedAdditionToPrefsAfterWipe
   }
 };
 
+// Test is flaky. crbug.com/723639
 PREF_HASH_BROWSER_TEST(PrefHashBrowserTestUntrustedAdditionToPrefsAfterWipe,
-                       UntrustedAdditionToPrefsAfterWipe);
+                       DISABLED_UntrustedAdditionToPrefsAfterWipe);
 
 #if defined(OS_WIN)
 class PrefHashBrowserTestRegistryValidationFailure
@@ -1188,8 +1186,9 @@ class PrefHashBrowserTestRegistryValidationFailure
   }
 };
 
+// Test is flaky. crbug.com/723639
 PREF_HASH_BROWSER_TEST(PrefHashBrowserTestRegistryValidationFailure,
-                       RegistryValidationFailure);
+                       DISABLED_RegistryValidationFailure);
 #endif
 
 // Verifies that all preferences related to choice of default search engine are
@@ -1294,4 +1293,6 @@ class PrefHashBrowserTestDefaultSearch : public PrefHashBrowserTestBase {
   }
 };
 
-PREF_HASH_BROWSER_TEST(PrefHashBrowserTestDefaultSearch, SearchProtected);
+// Test is flaky. crbug.com/723639
+PREF_HASH_BROWSER_TEST(PrefHashBrowserTestDefaultSearch,
+                       DISABLED_SearchProtected);

@@ -40,7 +40,7 @@ namespace blink {
 class MockBaseFetchContext final : public BaseFetchContext {
  public:
   explicit MockBaseFetchContext(ExecutionContext* execution_context)
-      : execution_context_(execution_context) {}
+      : BaseFetchContext(execution_context) {}
   ~MockBaseFetchContext() override {}
 
   // BaseFetchContext overrides:
@@ -49,12 +49,14 @@ class MockBaseFetchContext final : public BaseFetchContext {
   }
   Settings* GetSettings() const override { return nullptr; }
   SubresourceFilter* GetSubresourceFilter() const override { return nullptr; }
+  SecurityContext* GetParentSecurityContext() const override { return nullptr; }
   bool ShouldBlockRequestByInspector(const ResourceRequest&) const override {
     return false;
   }
   void DispatchDidBlockRequest(const ResourceRequest&,
                                const FetchInitiatorInfo&,
                                ResourceRequestBlockedReason) const override {}
+  void ReportLocalLoadFailed(const KURL&) const override {}
   bool ShouldBypassMainWorldCSP() const override { return false; }
   bool IsSVGImageChromeClient() const override { return false; }
   void CountUsage(UseCounter::Feature) const override {}
@@ -65,33 +67,6 @@ class MockBaseFetchContext final : public BaseFetchContext {
       SecurityViolationReportingPolicy) const override {
     return false;
   }
-  ReferrerPolicy GetReferrerPolicy() const override {
-    return execution_context_->GetReferrerPolicy();
-  }
-  String GetOutgoingReferrer() const override {
-    return execution_context_->OutgoingReferrer();
-  }
-  const KURL& Url() const override { return execution_context_->Url(); }
-
-  const SecurityOrigin* GetParentSecurityOrigin() const override {
-    return nullptr;
-  }
-  Optional<WebAddressSpace> GetAddressSpace() const override {
-    return WTF::make_optional(
-        execution_context_->GetSecurityContext().AddressSpace());
-  }
-  const ContentSecurityPolicy* GetContentSecurityPolicy() const override {
-    return execution_context_->GetContentSecurityPolicy();
-  }
-  void AddConsoleMessage(ConsoleMessage*) const override {}
-
-  DEFINE_INLINE_TRACE() {
-    visitor->Trace(execution_context_);
-    BaseFetchContext::Trace(visitor);
-  }
-
- private:
-  Member<ExecutionContext> execution_context_;
 };
 
 class BaseFetchContextTest : public ::testing::Test {

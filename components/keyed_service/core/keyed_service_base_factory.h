@@ -7,7 +7,7 @@
 
 #include <set>
 
-#include "base/sequence_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "components/keyed_service/core/dependency_node.h"
 #include "components/keyed_service/core/keyed_service_export.h"
 
@@ -29,7 +29,8 @@ class PrefRegistrySyncable;
 // This object describes general dependency management between factories while
 // direct subclasses react to lifecycle events and implement memory management.
 class KEYED_SERVICE_EXPORT KeyedServiceBaseFactory
-    : NON_EXPORTED_BASE(public DependencyNode) {
+    : public base::NonThreadSafe,
+      NON_EXPORTED_BASE(public DependencyNode) {
  public:
 #ifndef NDEBUG
   // Returns our name. We don't keep track of this in release mode.
@@ -110,8 +111,6 @@ class KEYED_SERVICE_EXPORT KeyedServiceBaseFactory
 
   // Mark context has having preferences registered.
   void MarkPreferencesSetOn(base::SupportsUserData* context);
-
-  SEQUENCE_CHECKER(sequence_checker_);
 
  private:
   friend class DependencyManager;

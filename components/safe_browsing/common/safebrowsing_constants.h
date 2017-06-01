@@ -11,9 +11,6 @@ namespace safe_browsing {
 
 extern const base::FilePath::CharType kSafeBrowsingBaseFilename[];
 
-// Filename suffix for the cookie database.
-extern const base::FilePath::CharType kCookiesFile[];
-extern const base::FilePath::CharType kChannelIDFile[];
 }
 
 #endif  // COMPONENTS_SAFE_BROWSING_COMMON_SAFEBROWSING_CONSTANTS_H_

@@ -7,7 +7,6 @@
 #include "bindings/core/v8/WindowProxy.h"
 #include "bindings/core/v8/WindowProxyManager.h"
 #include "core/dom/RemoteSecurityContext.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/RemoteDOMWindow.h"
 #include "core/frame/RemoteFrameClient.h"
@@ -18,6 +17,7 @@
 #include "core/loader/FrameLoader.h"
 #include "core/paint/PaintLayer.h"
 #include "platform/PluginScriptForbiddenScope.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/weborigin/SecurityPolicy.h"
@@ -123,7 +123,7 @@ bool RemoteFrame::ShouldClose() {
 
 void RemoteFrame::SetView(RemoteFrameView* view) {
   // Oilpan: as RemoteFrameView performs no finalization actions,
-  // no explicit Dispose() of it needed here. (cf. LocalFrameView::Dispose().)
+  // no explicit dispose() of it needed here. (cf. FrameView::dispose().)
   view_ = view;
 }
 

@@ -4,7 +4,6 @@
 
 #include "cc/output/dc_layer_overlay.h"
 
-#include "base/metrics/histogram_macros.h"
 #include "cc/base/math_util.h"
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/yuv_video_draw_quad.h"
@@ -69,11 +68,6 @@ gfx::RectF GetOcclusionBounds(const gfx::RectF& target_quad,
   return occlusion_bounding_box;
 }
 
-void RecordDCLayerResult(DCLayerOverlayProcessor::DCLayerResult result) {
-  UMA_HISTOGRAM_ENUMERATION("GPU.DirectComposition.DCLayerResult", result,
-                            DCLayerOverlayProcessor::DC_LAYER_FAILED_MAX);
-}
-
 }  // namespace
 
 DCLayerOverlay::DCLayerOverlay() : filter(GL_LINEAR) {}
@@ -91,7 +85,7 @@ DCLayerOverlayProcessor::DCLayerResult DCLayerOverlayProcessor::FromDrawQuad(
   if (quad->shared_quad_state->blend_mode != SkBlendMode::kSrcOver)
     return DC_LAYER_FAILED_QUAD_BLEND_MODE;
 
-  DCLayerResult result;
+  DCLayerResult result = DC_LAYER_FAILED_UNKNOWN;
   switch (quad->material) {
     case DrawQuad::YUV_VIDEO_CONTENT:
       result =
@@ -99,7 +93,7 @@ DCLayerOverlayProcessor::DCLayerResult DCLayerOverlayProcessor::FromDrawQuad(
                       ca_layer_overlay);
       break;
     default:
-      return DC_LAYER_FAILED_UNSUPPORTED_QUAD;
+      return DC_LAYER_FAILED_UNKNOWN;
   }
   if (result != DC_LAYER_SUCCESS)
     return result;
@@ -134,16 +128,13 @@ void DCLayerOverlayProcessor::Process(ResourceProvider* resource_provider,
     DCLayerOverlay ca_layer;
     DCLayerResult result = FromDrawQuad(resource_provider, display_rect,
                                         quad_list->begin(), it, &ca_layer);
-    if (result != DC_LAYER_SUCCESS) {
-      RecordDCLayerResult(result);
+    if (result != DC_LAYER_SUCCESS)
       continue;
-    }
 
     if (!it->shared_quad_state->quad_to_target_transform
              .Preserves2dAxisAlignment() &&
         !base::FeatureList::IsEnabled(
             features::kDirectCompositionComplexOverlays)) {
-      RecordDCLayerResult(DC_LAYER_FAILED_COMPLEX_TRANSFORM);
       continue;
     }
 
@@ -161,7 +152,6 @@ void DCLayerOverlayProcessor::Process(ResourceProvider* resource_provider,
       quad_list->EraseAndInvalidateAllPointers(it);
     } else if (!base::FeatureList::IsEnabled(
                    features::kDirectCompositionUnderlays)) {
-      RecordDCLayerResult(DC_LAYER_FAILED_OCCLUDED);
       continue;
     } else {
       // The quad is occluded, so replace it with a black solid color quad and
@@ -205,7 +195,6 @@ void DCLayerOverlayProcessor::Process(ResourceProvider* resource_provider,
     }
     overlay_damage_rect->Union(quad_rectangle);
 
-    RecordDCLayerResult(DC_LAYER_SUCCESS);
     ca_layer_overlays->push_back(ca_layer);
     // Only allow one overlay for now.
     break;

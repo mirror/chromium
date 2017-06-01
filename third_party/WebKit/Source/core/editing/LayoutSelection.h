@@ -30,42 +30,6 @@ namespace blink {
 
 class FrameSelection;
 
-// This class represents a selection range in layout tree for painting and
-// paint invalidation.
-// The current selection to be painted is represented as 2 pairs of
-// (LayoutObject, offset).
-// 2 LayoutObjects are only valid for |Text| node without 'transform' or
-// 'first-letter'.
-// TODO(editing-dev): Clarify the meaning of "offset".
-// editing/ passes them as offsets in the DOM tree but layout uses them as
-// offset in the layout tree. This doesn't work in the cases of
-// CSS first-letter or character transform. See crbug.com/17528.
-class SelectionPaintRange {
-  DISALLOW_NEW();
-
- public:
-  SelectionPaintRange() = default;
-  SelectionPaintRange(LayoutObject* start_layout_object,
-                      int start_offset,
-                      LayoutObject* end_layout_object,
-                      int end_offset);
-
-  bool operator==(const SelectionPaintRange& other) const;
-
-  LayoutObject* StartLayoutObject() const;
-  int StartOffset() const;
-  LayoutObject* EndLayoutObject() const;
-  int EndOffset() const;
-
-  bool IsNull() const { return !start_layout_object_; }
-
- private:
-  LayoutObject* start_layout_object_ = nullptr;
-  int start_offset_ = -1;
-  LayoutObject* end_layout_object_ = nullptr;
-  int end_offset_ = -1;
-};
-
 class LayoutSelection final : public GarbageCollected<LayoutSelection> {
  public:
   static LayoutSelection* Create(FrameSelection& frame_selection) {
@@ -78,7 +42,16 @@ class LayoutSelection final : public GarbageCollected<LayoutSelection> {
 
   IntRect SelectionBounds();
   void InvalidatePaintForSelection();
-
+  enum SelectionPaintInvalidationMode {
+    kPaintInvalidationNewXOROld,
+    kPaintInvalidationNewMinusOld
+  };
+  void SetSelection(
+      LayoutObject* start,
+      int start_pos,
+      LayoutObject*,
+      int end_pos,
+      SelectionPaintInvalidationMode = kPaintInvalidationNewXOROld);
   void ClearSelection();
   std::pair<int, int> SelectionStartEnd();
   void OnDocumentShutdown();
@@ -88,10 +61,30 @@ class LayoutSelection final : public GarbageCollected<LayoutSelection> {
  private:
   LayoutSelection(FrameSelection&);
 
+  SelectionInFlatTree CalcVisibleSelection(
+      const VisibleSelectionInFlatTree&) const;
+
   Member<FrameSelection> frame_selection_;
   bool has_pending_selection_ : 1;
 
-  SelectionPaintRange paint_range_;
+  // The current selection represented as 2 boundaries.
+  // Selection boundaries are represented in LayoutView by a tuple
+  // (LayoutObject, DOM node offset).
+  // See http://www.w3.org/TR/dom/#range for more information.
+  //
+  // |m_selectionStartPos| and |m_selectionEndPos| are only valid for
+  // |Text| node without 'transform' or 'first-letter'.
+  //
+  // Those are used for selection painting and paint invalidation upon
+  // selection change.
+  LayoutObject* selection_start_;
+  LayoutObject* selection_end_;
+
+  // TODO(yosin): Clarify the meaning of these variables. editing/ passes
+  // them as offsets in the DOM tree  but layout uses them as offset in the
+  // layout tree.
+  int selection_start_pos_;
+  int selection_end_pos_;
 };
 
 }  // namespace blink

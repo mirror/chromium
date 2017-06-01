@@ -9,8 +9,6 @@
 
 namespace blink {
 
-class IntRect;
-
 // Implementation of DocumentMarkerList for TextMatch markers.
 // Markers are kept sorted by start offset, under the assumption that
 // TextMatch markers are typically inserted in an order.
@@ -35,25 +33,11 @@ class CORE_EXPORT TextMatchMarkerListImpl final : public DocumentMarkerList {
                     unsigned new_length) final;
   DECLARE_VIRTUAL_TRACE();
 
-  // TextMatchMarkerListImpl-specific
-  Vector<IntRect> RenderedRects(const Node&) const;
-  // Returns true if markers within a range defined by |startOffset| and
-  // |endOffset| are found.
-  bool SetTextMatchMarkersActive(unsigned start_offset,
-                                 unsigned end_offset,
-                                 bool);
-
  private:
   HeapVector<Member<DocumentMarker>> markers_;
 
   DISALLOW_COPY_AND_ASSIGN(TextMatchMarkerListImpl);
 };
-
-DEFINE_TYPE_CASTS(TextMatchMarkerListImpl,
-                  DocumentMarkerList,
-                  list,
-                  list->MarkerType() == DocumentMarker::kTextMatch,
-                  list.MarkerType() == DocumentMarker::kTextMatch);
 
 }  // namespace blink
 

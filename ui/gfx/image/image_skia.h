@@ -150,10 +150,6 @@ class GFX_EXPORT ImageSkia {
   // the state change in the storage is agnostic to the caller.
   void EnsureRepsForSupportedScales() const;
 
-  // Clears cached representations for non-supported scale factors that are
-  // based on |scale|.
-  void RemoveUnsupportedRepresentationsForScale(float scale);
-
  private:
   friend class test::TestOnThread;
   FRIEND_TEST_ALL_PREFIXES(ImageSkiaTest, EmptyOnThreadTest);

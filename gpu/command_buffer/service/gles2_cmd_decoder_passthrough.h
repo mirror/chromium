@@ -77,7 +77,7 @@ class GLES2DecoderPassthroughImpl : public GLES2Decoder {
                    int num_entries,
                    int* entries_processed) override;
 
-  base::WeakPtr<GLES2Decoder> AsWeakPtr() override;
+  const char* GetCommandName(unsigned int command_id) const override;
 
   bool Initialize(const scoped_refptr<gl::GLSurface>& surface,
                   const scoped_refptr<gl::GLContext>& context,
@@ -189,6 +189,8 @@ class GLES2DecoderPassthroughImpl : public GLES2Decoder {
                            uint32_t* service_texture_id) override;
 
   // Provides detail about a lost context if one occurred.
+  error::ContextLostReason GetContextLostReason() override;
+
   // Clears a level sub area of a texture
   // Returns false if a GL error should be generated.
   bool ClearLevel(Texture* texture,
@@ -395,8 +397,6 @@ class GLES2DecoderPassthroughImpl : public GLES2Decoder {
 
   // Cache of scratch memory
   std::vector<uint8_t> scratch_memory_;
-
-  base::WeakPtrFactory<GLES2DecoderPassthroughImpl> weak_ptr_factory_;
 
 // Include the prototypes of all the doer functions from a separate header to
 // keep this file clean.

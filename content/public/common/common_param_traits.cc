@@ -6,7 +6,6 @@
 
 #include <string>
 
-#include "base/containers/stack_container.h"
 #include "content/public/common/content_constants.h"
 #include "content/public/common/page_state.h"
 #include "content/public/common/referrer.h"
@@ -125,30 +124,25 @@ void ParamTraits<net::IPEndPoint>::Log(const param_type& p, std::string* l) {
 
 void ParamTraits<net::IPAddress>::GetSize(base::PickleSizer* s,
                                           const param_type& p) {
-  base::StackVector<uint8_t, 16> bytes;
-  for (uint8_t byte : p.bytes())
-    bytes->push_back(byte);
-  GetParamSize(s, bytes);
+  GetParamSize(s, p.bytes());
 }
 
 void ParamTraits<net::IPAddress>::Write(base::Pickle* m, const param_type& p) {
-  base::StackVector<uint8_t, 16> bytes;
-  for (uint8_t byte : p.bytes())
-    bytes->push_back(byte);
-  WriteParam(m, bytes);
+  WriteParam(m, p.bytes());
 }
 
 bool ParamTraits<net::IPAddress>::Read(const base::Pickle* m,
                                        base::PickleIterator* iter,
                                        param_type* p) {
-  base::StackVector<uint8_t, 16> bytes;
+  std::vector<uint8_t> bytes;
   if (!ReadParam(m, iter, &bytes))
     return false;
-  if (bytes->size() && bytes->size() != net::IPAddress::kIPv4AddressSize &&
-      bytes->size() != net::IPAddress::kIPv6AddressSize) {
+  if (bytes.size() &&
+      bytes.size() != net::IPAddress::kIPv4AddressSize &&
+      bytes.size() != net::IPAddress::kIPv6AddressSize) {
     return false;
   }
-  *p = net::IPAddress(bytes->data(), bytes->size());
+  *p = net::IPAddress(bytes);
   return true;
 }
 

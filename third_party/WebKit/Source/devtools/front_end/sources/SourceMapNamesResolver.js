@@ -476,25 +476,31 @@ Sources.SourceMapNamesResolver.RemoteObject = class extends SDK.RemoteObject {
    * @override
    * @param {string|!Protocol.Runtime.CallArgument} argumentName
    * @param {string} value
-   * @return {!Promise<string|undefined>}
+   * @param {function(string=)} callback
    */
-  async setPropertyValue(argumentName, value) {
-    var namesMapping = await Sources.SourceMapNamesResolver._resolveScope(this._scope);
+  setPropertyValue(argumentName, value, callback) {
+    Sources.SourceMapNamesResolver._resolveScope(this._scope).then(resolveName.bind(this));
 
-    var name;
-    if (typeof argumentName === 'string')
-      name = argumentName;
-    else
-      name = /** @type {string} */ (argumentName.value);
+    /**
+     * @param {!Map<string, string>} namesMapping
+     * @this {Sources.SourceMapNamesResolver.RemoteObject}
+     */
+    function resolveName(namesMapping) {
+      var name;
+      if (typeof argumentName === 'string')
+        name = argumentName;
+      else
+        name = /** @type {string} */ (argumentName.value);
 
-    var actualName = name;
-    for (var compiledName of namesMapping.keys()) {
-      if (namesMapping.get(compiledName) === name) {
-        actualName = compiledName;
-        break;
+      var actualName = name;
+      for (var compiledName of namesMapping.keys()) {
+        if (namesMapping.get(compiledName) === name) {
+          actualName = compiledName;
+          break;
+        }
       }
+      this._object.setPropertyValue(actualName, value, callback);
     }
-    return this._object.setPropertyValue(actualName, value);
   }
 
   /**
@@ -509,10 +515,10 @@ Sources.SourceMapNamesResolver.RemoteObject = class extends SDK.RemoteObject {
   /**
    * @override
    * @param {!Protocol.Runtime.CallArgument} name
-   * @return {!Promise<string|undefined>}
+   * @param {function(string=)} callback
    */
-  async deleteProperty(name) {
-    return this._object.deleteProperty(name);
+  deleteProperty(name, callback) {
+    this._object.deleteProperty(name, callback);
   }
 
   /**

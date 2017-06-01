@@ -42,10 +42,11 @@ class SVGPointListTearOff final
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static SVGPointListTearOff* Create(SVGPointList* target,
-                                     SVGElement* context_element,
-                                     PropertyIsAnimValType property_is_anim_val,
-                                     const QualifiedName& attribute_name) {
+  static SVGPointListTearOff* Create(
+      SVGPointList* target,
+      SVGElement* context_element,
+      PropertyIsAnimValType property_is_anim_val,
+      const QualifiedName& attribute_name = QualifiedName::Null()) {
     return new SVGPointListTearOff(target, context_element,
                                    property_is_anim_val, attribute_name);
   }
@@ -55,10 +56,11 @@ class SVGPointListTearOff final
   }
 
  private:
-  SVGPointListTearOff(SVGPointList* target,
-                      SVGElement* context_element,
-                      PropertyIsAnimValType property_is_anim_val,
-                      const QualifiedName& attribute_name)
+  SVGPointListTearOff(
+      SVGPointList* target,
+      SVGElement* context_element,
+      PropertyIsAnimValType property_is_anim_val,
+      const QualifiedName& attribute_name = QualifiedName::Null())
       : SVGListPropertyTearOffHelper<SVGPointListTearOff, SVGPointList>(
             target,
             context_element,

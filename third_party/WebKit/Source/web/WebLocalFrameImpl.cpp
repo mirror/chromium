@@ -38,7 +38,7 @@
 //    |           WebFrame
 //    |              O
 //    |              |
-//   Page O------- LocalFrame (main_frame_) O-------O LocalFrameView
+//   Page O------- LocalFrame (m_mainFrame) O-------O FrameView
 //                   ||
 //                   ||
 //               FrameLoader
@@ -53,13 +53,13 @@
 // corresponding LocalFrame in blink.
 //
 // Oilpan: the middle objects + Page in the above diagram are Oilpan heap
-// allocated, WebView and LocalFrameView are currently not. In terms of
-// ownership and control, the relationships stays the same, but the references
-// from the off-heap WebView to the on-heap Page is handled by a Persistent<>,
-// not a RefPtr<>. Similarly, the mutual strong references between the on-heap
-// LocalFrame and the off-heap LocalFrameView is through a RefPtr (from
-// LocalFrame to LocalFrameView), and a Persistent refers to the LocalFrame in
-// the other direction.
+// allocated, WebView and FrameView are currently not. In terms of ownership
+// and control, the relationships stays the same, but the references from the
+// off-heap WebView to the on-heap Page is handled by a Persistent<>, not a
+// RefPtr<>. Similarly, the mutual strong references between the on-heap
+// LocalFrame and the off-heap FrameView is through a RefPtr (from LocalFrame
+// to FrameView), and a Persistent refers to the LocalFrame in the other
+// direction.
 //
 // From the embedder's point of view, the use of Oilpan brings no changes.
 // close() must still be used to signal that the embedder is through with the
@@ -101,11 +101,11 @@
 #include "bindings/core/v8/V8GCController.h"
 #include "core/HTMLNames.h"
 #include "core/dom/Document.h"
+#include "core/dom/DocumentUserGestureToken.h"
 #include "core/dom/IconURL.h"
 #include "core/dom/MessagePort.h"
 #include "core/dom/Node.h"
 #include "core/dom/NodeTraversal.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/dom/shadow/ShadowRoot.h"
 #include "core/editing/CompositionUnderlineVectorBuilder.h"
 #include "core/editing/EditingUtilities.h"
@@ -119,14 +119,13 @@
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/editing/serializers/Serialization.h"
 #include "core/editing/spellcheck/SpellChecker.h"
-#include "core/editing/spellcheck/TextCheckerClientImpl.h"
 #include "core/exported/SharedWorkerRepositoryClientImpl.h"
 #include "core/exported/WebAssociatedURLLoaderImpl.h"
 #include "core/exported/WebDataSourceImpl.h"
 #include "core/exported/WebPluginContainerBase.h"
 #include "core/exported/WebViewBase.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalDOMWindow.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/PageScaleConstraintsSet.h"
 #include "core/frame/RemoteFrame.h"
 #include "core/frame/ScreenOrientationController.h"
@@ -166,6 +165,7 @@
 #include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
 #include "platform/ScriptForbiddenScope.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/bindings/DOMWrapperWorld.h"
 #include "platform/bindings/V8PerIsolateData.h"
@@ -228,6 +228,7 @@
 #include "public/web/WebTreeScopeType.h"
 #include "skia/ext/platform_canvas.h"
 #include "web/RemoteFrameOwner.h"
+#include "web/TextCheckerClientImpl.h"
 #include "web/TextFinder.h"
 #include "web/WebDevToolsAgentImpl.h"
 #include "web/WebFrameWidgetImpl.h"
@@ -243,6 +244,30 @@ static HeapVector<ScriptSourceCode> CreateSourcesVector(
   HeapVector<ScriptSourceCode> sources;
   sources.Append(sources_in, num_sources);
   return sources;
+}
+
+WebPluginContainerBase* WebLocalFrameImpl::PluginContainerFromFrame(
+    LocalFrame* frame) {
+  if (!frame)
+    return 0;
+  if (!frame->GetDocument() || !frame->GetDocument()->IsPluginDocument())
+    return 0;
+  PluginDocument* plugin_document = ToPluginDocument(frame->GetDocument());
+  return ToWebPluginContainerBase(plugin_document->GetPluginView());
+}
+
+WebPluginContainerBase* WebLocalFrameImpl::CurrentPluginContainer(
+    LocalFrame* frame,
+    Node* node) {
+  WebPluginContainerBase* plugin_container = PluginContainerFromFrame(frame);
+  if (plugin_container)
+    return plugin_container;
+
+  if (!node) {
+    DCHECK(frame->GetDocument());
+    node = frame->GetDocument()->FocusedElement();
+  }
+  return ToWebPluginContainerBase(WebNode::PluginContainerFromNode(node));
 }
 
 // Simple class to override some of PrintContext behavior. Some of the methods
@@ -561,7 +586,7 @@ void WebLocalFrameImpl::SetSharedWorkerRepositoryClient(
 }
 
 ScrollableArea* WebLocalFrameImpl::LayoutViewportScrollableArea() const {
-  if (LocalFrameView* view = GetFrameView())
+  if (FrameView* view = GetFrameView())
     return view->LayoutViewportScrollableArea();
   return nullptr;
 }
@@ -589,7 +614,7 @@ void WebLocalFrameImpl::SetScrollOffset(const WebSize& offset) {
 }
 
 WebSize WebLocalFrameImpl::ContentsSize() const {
-  if (LocalFrameView* view = GetFrameView())
+  if (FrameView* view = GetFrameView())
     return view->ContentsSize();
   return WebSize();
 }
@@ -601,13 +626,13 @@ bool WebLocalFrameImpl::HasVisibleContent() const {
     return false;
   }
 
-  if (LocalFrameView* view = GetFrameView())
+  if (FrameView* view = GetFrameView())
     return view->VisibleWidth() > 0 && view->VisibleHeight() > 0;
   return false;
 }
 
 WebRect WebLocalFrameImpl::VisibleContentRect() const {
-  if (LocalFrameView* view = GetFrameView())
+  if (FrameView* view = GetFrameView())
     return view->VisibleContentRect();
   return WebRect();
 }
@@ -1039,7 +1064,7 @@ bool WebLocalFrameImpl::ExecuteCommand(const WebString& name) {
   Node* plugin_lookup_context_node =
       context_menu_node_ && name == "Copy" ? context_menu_node_ : nullptr;
   WebPluginContainerBase* plugin_container =
-      GetFrame()->GetWebPluginContainerBase(plugin_lookup_context_node);
+      CurrentPluginContainer(GetFrame(), plugin_lookup_context_node);
   if (plugin_container && plugin_container->ExecuteEditCommand(name))
     return true;
 
@@ -1050,8 +1075,7 @@ bool WebLocalFrameImpl::ExecuteCommand(const WebString& name,
                                        const WebString& value) {
   DCHECK(GetFrame());
 
-  WebPluginContainerBase* plugin_container =
-      GetFrame()->GetWebPluginContainerBase();
+  WebPluginContainerBase* plugin_container = CurrentPluginContainer(GetFrame());
   if (plugin_container && plugin_container->ExecuteEditCommand(name, value))
     return true;
 
@@ -1077,7 +1101,7 @@ void WebLocalFrameImpl::ReplaceMisspelledRange(const WebString& text) {
   // If this caret selection has two or more markers, this function replace the
   // range covered by the first marker with the specified word as Microsoft Word
   // does.
-  if (GetFrame()->GetWebPluginContainerBase())
+  if (PluginContainerFromFrame(GetFrame()))
     return;
 
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
@@ -1099,9 +1123,8 @@ void WebLocalFrameImpl::RemoveSpellingMarkersUnderWords(
 }
 
 bool WebLocalFrameImpl::HasSelection() const {
-  DCHECK(GetFrame());
   WebPluginContainerBase* plugin_container =
-      GetFrame()->GetWebPluginContainerBase();
+      PluginContainerFromFrame(GetFrame());
   if (plugin_container)
     return plugin_container->Plugin()->HasSelection();
 
@@ -1127,9 +1150,8 @@ WebRange WebLocalFrameImpl::SelectionRange() const {
 }
 
 WebString WebLocalFrameImpl::SelectionAsText() const {
-  DCHECK(GetFrame());
   WebPluginContainerBase* plugin_container =
-      GetFrame()->GetWebPluginContainerBase();
+      PluginContainerFromFrame(GetFrame());
   if (plugin_container)
     return plugin_container->Plugin()->SelectionAsText();
 
@@ -1148,7 +1170,7 @@ WebString WebLocalFrameImpl::SelectionAsText() const {
 
 WebString WebLocalFrameImpl::SelectionAsMarkup() const {
   WebPluginContainerBase* plugin_container =
-      GetFrame()->GetWebPluginContainerBase();
+      PluginContainerFromFrame(GetFrame());
   if (plugin_container)
     return plugin_container->Plugin()->SelectionAsMarkup();
 
@@ -1173,22 +1195,17 @@ void WebLocalFrameImpl::SelectWordAroundPosition(LocalFrame* frame,
 
 bool WebLocalFrameImpl::SelectWordAroundCaret() {
   TRACE_EVENT0("blink", "WebLocalFrameImpl::selectWordAroundCaret");
-
   FrameSelection& selection = GetFrame()->Selection();
+  if (selection.ComputeVisibleSelectionInDOMTreeDeprecated().IsNone() ||
+      selection.ComputeVisibleSelectionInDOMTreeDeprecated().IsRange())
+    return false;
 
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
   // needs to be audited.  see http://crbug.com/590369 for more details.
   GetFrame()->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  // TODO(editing-dev): The use of VisibleSelection needs to be audited. See
-  // http://crbug.com/657237 for more details.
-  if (selection.ComputeVisibleSelectionInDOMTree().IsNone() ||
-      selection.ComputeVisibleSelectionInDOMTree().IsRange()) {
-    return false;
-  }
-
   return GetFrame()->Selection().SelectWordAroundPosition(
-      selection.ComputeVisibleSelectionInDOMTree().VisibleStart());
+      selection.ComputeVisibleSelectionInDOMTreeDeprecated().VisibleStart());
 }
 
 void WebLocalFrameImpl::SelectRange(const WebPoint& base_in_viewport,
@@ -1365,7 +1382,8 @@ VisiblePosition WebLocalFrameImpl::VisiblePositionForViewportPoint(
 }
 
 WebPlugin* WebLocalFrameImpl::FocusedPluginIfInputMethodSupported() {
-  WebPluginContainerBase* container = GetFrame()->GetWebPluginContainerBase();
+  WebPluginContainerBase* container =
+      WebLocalFrameImpl::CurrentPluginContainer(GetFrame());
   if (container && container->SupportsInputMethod())
     return container->Plugin();
   return 0;
@@ -1378,7 +1396,7 @@ int WebLocalFrameImpl::PrintBegin(const WebPrintParams& print_params,
   if (constrain_to_node.IsNull()) {
     // If this is a plugin document, check if the plugin supports its own
     // printing. If it does, we will delegate all printing to that.
-    plugin_container = GetFrame()->GetWebPluginContainerBase();
+    plugin_container = PluginContainerFromFrame(GetFrame());
   } else {
     // We only support printing plugin nodes for now.
     plugin_container =
@@ -1422,9 +1440,8 @@ void WebLocalFrameImpl::PrintEnd() {
 }
 
 bool WebLocalFrameImpl::IsPrintScalingDisabledForPlugin(const WebNode& node) {
-  DCHECK(GetFrame());
   WebPluginContainerBase* plugin_container =
-      node.IsNull() ? GetFrame()->GetWebPluginContainerBase()
+      node.IsNull() ? PluginContainerFromFrame(GetFrame())
                     : ToWebPluginContainerBase(node.PluginContainer());
 
   if (!plugin_container || !plugin_container->SupportsPaginatedPrint())
@@ -1437,7 +1454,7 @@ bool WebLocalFrameImpl::GetPrintPresetOptionsForPlugin(
     const WebNode& node,
     WebPrintPresetOptions* preset_options) {
   WebPluginContainerBase* plugin_container =
-      node.IsNull() ? GetFrame()->GetWebPluginContainerBase()
+      node.IsNull() ? PluginContainerFromFrame(GetFrame())
                     : ToWebPluginContainerBase(node.PluginContainer());
 
   if (!plugin_container || !plugin_container->SupportsPaginatedPrint())
@@ -1450,7 +1467,7 @@ bool WebLocalFrameImpl::HasCustomPageSizeStyle(int page_index) {
   return GetFrame()
              ->GetDocument()
              ->StyleForPage(page_index)
-             ->GetPageSizeType() != PageSizeType::kAuto;
+             ->GetPageSizeType() != PAGE_SIZE_AUTO;
 }
 
 bool WebLocalFrameImpl::IsPageBoxVisible(int page_index) {
@@ -1566,17 +1583,6 @@ WebLocalFrameImpl* WebLocalFrameImpl::CreateProvisional(
         ->SetSandboxFlags(static_cast<SandboxFlags>(flags));
   }
   return web_frame;
-}
-
-WebLocalFrameImpl* WebLocalFrameImpl::CreateLocalChild(
-    WebTreeScopeType scope,
-    WebFrameClient* client,
-    blink::InterfaceProvider* interface_provider,
-    blink::InterfaceRegistry* interface_registry) {
-  WebLocalFrameImpl* frame = new WebLocalFrameImpl(
-      scope, client, interface_provider, interface_registry);
-  AppendChild(frame);
-  return frame;
 }
 
 WebLocalFrameImpl::WebLocalFrameImpl(
@@ -1910,7 +1916,7 @@ void WebLocalFrameImpl::DidFail(const ResourceError& error,
   WebHistoryCommitType web_commit_type =
       static_cast<WebHistoryCommitType>(commit_type);
 
-  if (WebPluginContainerBase* plugin = GetFrame()->GetWebPluginContainerBase())
+  if (WebPluginContainerBase* plugin = PluginContainerFromFrame(GetFrame()))
     plugin->DidFailLoading(error);
 
   if (was_provisional)
@@ -1923,14 +1929,14 @@ void WebLocalFrameImpl::DidFinish() {
   if (!Client())
     return;
 
-  if (WebPluginContainerBase* plugin = GetFrame()->GetWebPluginContainerBase())
+  if (WebPluginContainerBase* plugin = PluginContainerFromFrame(GetFrame()))
     plugin->DidFinishLoading();
 
   Client()->DidFinishLoad();
 }
 
 void WebLocalFrameImpl::SetCanHaveScrollbars(bool can_have_scrollbars) {
-  if (LocalFrameView* view = GetFrameView())
+  if (FrameView* view = GetFrameView())
     view->SetCanHaveScrollbars(can_have_scrollbars);
 }
 
@@ -1967,7 +1973,7 @@ void WebLocalFrameImpl::LoadJavaScriptURL(const KURL& url) {
 
   String script = DecodeURLEscapeSequences(
       url.GetString().Substring(strlen("javascript:")));
-  UserGestureIndicator gesture_indicator(UserGestureToken::Create(
+  UserGestureIndicator gesture_indicator(DocumentUserGestureToken::Create(
       GetFrame()->GetDocument(), UserGestureToken::kNewGesture));
   v8::HandleScope handle_scope(ToIsolate(GetFrame()));
   v8::Local<v8::Value> result =
@@ -2029,11 +2035,6 @@ WebLocalFrameImpl* WebLocalFrameImpl::LocalRoot() {
   while (local_root->Parent() && local_root->Parent()->IsWebLocalFrame())
     local_root = ToWebLocalFrameImpl(local_root->Parent());
   return local_root;
-}
-
-WebFrame* WebLocalFrameImpl::FindFrameByName(const WebString& name) {
-  Frame* result = GetFrame()->Tree().Find(name);
-  return WebFrame::FromFrame(result);
 }
 
 void WebLocalFrameImpl::SendPings(const WebURL& destination_url) {
@@ -2563,7 +2564,7 @@ base::SingleThreadTaskRunner* WebLocalFrameImpl::UnthrottledTaskRunner() {
       ->ToSingleThreadTaskRunner();
 }
 
-WebInputMethodController* WebLocalFrameImpl::GetInputMethodController() {
+WebInputMethodControllerImpl* WebLocalFrameImpl::GetInputMethodController() {
   return &input_method_controller_;
 }
 

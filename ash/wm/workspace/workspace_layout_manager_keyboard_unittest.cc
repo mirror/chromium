@@ -9,9 +9,10 @@
 
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
-#include "ash/shelf/shelf.h"
+#include "ash/session/session_state_delegate.h"
 #include "ash/shelf/shelf_constants.h"
 #include "ash/shelf/shelf_layout_manager.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/shell_observer.h"
 #include "ash/shell_port.h"
@@ -21,6 +22,7 @@
 #include "ash/wm/window_util.h"
 #include "ash/wm/wm_event.h"
 #include "ash/wm/workspace/workspace_window_resizer.h"
+#include "ash/wm_window.h"
 #include "base/command_line.h"
 #include "ui/base/ui_base_switches.h"
 #include "ui/base/ui_base_types.h"
@@ -62,13 +64,14 @@ class WorkspaceLayoutManagerKeyboardTest2 : public test::AshTestBase {
     restore_work_area_insets_ =
         display::Screen::GetScreen()->GetPrimaryDisplay().GetWorkAreaInsets();
     ShellPort::Get()->SetDisplayWorkAreaInsets(
-        Shell::GetPrimaryRootWindow(),
+        WmWindow::Get(Shell::GetPrimaryRootWindow()),
         gfx::Insets(0, 0, keyboard_bounds_.height(), 0));
   }
 
   void HideKeyboard() {
-    ShellPort::Get()->SetDisplayWorkAreaInsets(Shell::GetPrimaryRootWindow(),
-                                               restore_work_area_insets_);
+    ShellPort::Get()->SetDisplayWorkAreaInsets(
+        WmWindow::Get(Shell::GetPrimaryRootWindow()),
+        restore_work_area_insets_);
     layout_manager_->OnKeyboardBoundsChanging(gfx::Rect());
   }
 

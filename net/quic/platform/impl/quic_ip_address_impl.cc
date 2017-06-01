@@ -107,7 +107,9 @@ bool QuicIpAddressImpl::FromPackedString(const char* data, size_t length) {
     QUIC_BUG << "Invalid packed IP address of length " << length;
     return false;
   }
-  ip_address_ = IPAddress(reinterpret_cast<const uint8_t*>(data), length);
+  std::vector<uint8_t> ip(length);
+  memcpy(&ip[0], data, length);
+  ip_address_ = IPAddress(ip);
   return true;
 }
 

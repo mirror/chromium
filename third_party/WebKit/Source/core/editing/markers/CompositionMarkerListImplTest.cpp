@@ -5,7 +5,7 @@
 #include "core/editing/markers/CompositionMarkerListImpl.h"
 
 #include "core/editing/EditingTestBase.h"
-#include "core/editing/markers/CompositionMarker.h"
+#include "core/editing/markers/RenderedDocumentMarker.h"
 
 namespace blink {
 
@@ -15,8 +15,8 @@ class CompositionMarkerListImplTest : public EditingTestBase {
       : marker_list_(new CompositionMarkerListImpl()) {}
 
   DocumentMarker* CreateMarker(unsigned start_offset, unsigned end_offset) {
-    return new CompositionMarker(start_offset, end_offset, Color::kBlack, false,
-                                 Color::kBlack);
+    return new DocumentMarker(start_offset, end_offset, Color::kBlack, false,
+                              Color::kBlack);
   }
 
   Persistent<CompositionMarkerListImpl> marker_list_;

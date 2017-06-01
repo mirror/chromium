@@ -26,9 +26,7 @@ namespace test {
 // RunLoop::Run(UntilIdle) or ScopedTaskEnvironment::RunUntilIdle is called on
 // the thread where the ScopedTaskEnvironment lives.
 //
-// Tasks posted through base/task_scheduler/post_task.h run on dedicated
-// threads. If ExecutionMode is QUEUED, they run when RunUntilIdle() or
-// ~ScopedTaskEnvironment is called. If ExecutionMode is ASYNC, they run
+// Tasks posted through base/task_scheduler/post_task.h run on dedicated threads
 // as they are posted.
 //
 // All methods of ScopedTaskEnvironment must be called from the same thread.
@@ -63,18 +61,8 @@ class ScopedTaskEnvironment {
     IO,
   };
 
-  enum class ExecutionMode {
-    // Tasks are queued and only executed when RunUntilIdle() is explicitly
-    // called.
-    QUEUED,
-    // Tasks run as they are posted. RunUntilIdle() can still be used to block
-    // until done.
-    ASYNC,
-  };
-
   ScopedTaskEnvironment(
-      MainThreadType main_thread_type = MainThreadType::DEFAULT,
-      ExecutionMode execution_control_mode = ExecutionMode::ASYNC);
+      MainThreadType main_thread_type = MainThreadType::DEFAULT);
 
   // Waits until no undelayed TaskScheduler tasks remain. Then, unregisters the
   // TaskScheduler and the (Thread|Sequenced)TaskRunnerHandle.
@@ -83,24 +71,17 @@ class ScopedTaskEnvironment {
   // Returns a TaskRunner that schedules tasks on the main thread.
   scoped_refptr<base::SingleThreadTaskRunner> GetMainThreadTaskRunner();
 
-  // Runs tasks until both the (Thread|Sequenced)TaskRunnerHandle and the
-  // TaskScheduler queues are empty.
+  // Synchronously runs (Thread|Sequenced)TaskRunnerHandle tasks until no
+  // undelayed (Thread|Sequenced)TaskRunnerHandle or TaskScheduler tasks remain.
   void RunUntilIdle();
 
  private:
-  class TestTaskTracker;
-
-  const ExecutionMode execution_control_mode_;
-
   // Note: |message_loop_| is an implementation detail and will be replaced in
   // the future, do NOT rely on the presence of a MessageLoop beyond
   // (Thread|Sequenced)TaskRunnerHandle and RunLoop.
   MessageLoop message_loop_;
 
   const TaskScheduler* task_scheduler_ = nullptr;
-
-  // Owned by |task_scheduler_|.
-  TestTaskTracker* const task_tracker_;
 
   DISALLOW_COPY_AND_ASSIGN(ScopedTaskEnvironment);
 };

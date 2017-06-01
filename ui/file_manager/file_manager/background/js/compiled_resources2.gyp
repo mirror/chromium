@@ -125,14 +125,6 @@
         '../../../externs/compiled_resources2.gyp:file_operation_progress_event',
         '../../common/js/compiled_resources2.gyp:async_util',
         '../../common/js/compiled_resources2.gyp:util',
-        'metadata_proxy',
-      ],
-      'includes': ['../../../compile_js2.gypi'],
-    },
-    {
-      'target_name': 'metadata_proxy',
-      'dependencies': [
-        '../../common/js/compiled_resources2.gyp:lru_cache',
       ],
       'includes': ['../../../compile_js2.gypi'],
     },
@@ -144,7 +136,6 @@
         '../../common/js/compiled_resources2.gyp:metrics',
         '../../common/js/compiled_resources2.gyp:metrics_events',
         '../../common/js/compiled_resources2.gyp:util',
-        'metadata_proxy',
       ],
       'includes': ['../../../compile_js2.gypi'],
     },

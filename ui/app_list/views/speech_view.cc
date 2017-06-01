@@ -197,7 +197,7 @@ void SpeechView::Layout() {
       speech_height);
 }
 
-gfx::Size SpeechView::CalculatePreferredSize() const {
+gfx::Size SpeechView::GetPreferredSize() const {
   return gfx::Size(0, kSpeechViewMaxHeight);
 }
 

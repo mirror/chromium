@@ -39,7 +39,7 @@ void MockCredentialManagerClient::DispatchStore(
   delete callbacks;
 }
 
-void MockCredentialManagerClient::DispatchPreventSilentAccess(
+void MockCredentialManagerClient::DispatchRequireUserMediation(
     NotificationCallbacks* callbacks) {
   callbacks->OnSuccess();
   delete callbacks;

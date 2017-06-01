@@ -30,7 +30,6 @@
 #include "modules/webdatabase/DatabaseError.h"
 #include "modules/webdatabase/sqlite/SQLiteDatabase.h"
 #include "platform/bindings/ScriptWrappable.h"
-#include "platform/bindings/TraceWrapperMember.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Deque.h"
 #include "platform/wtf/text/WTFString.h"
@@ -39,7 +38,6 @@ namespace blink {
 
 class ChangeVersionData;
 class DatabaseAuthorizer;
-class DatabaseCallback;
 class DatabaseContext;
 class ExecutionContext;
 class SQLTransaction;
@@ -57,7 +55,6 @@ class Database final : public GarbageCollectedFinalized<Database>,
  public:
   virtual ~Database();
   DECLARE_TRACE();
-  DECLARE_TRACE_WRAPPERS();
 
   bool OpenAndVerifyVersion(bool set_version_in_new_database,
                             DatabaseError&,
@@ -130,12 +127,10 @@ class Database final : public GarbageCollectedFinalized<Database>,
            const String& name,
            const String& expected_version,
            const String& display_name,
-           unsigned estimated_size,
-           DatabaseCallback* creation_callback);
+           unsigned estimated_size);
   bool PerformOpenAndVerify(bool set_version_in_new_database,
                             DatabaseError&,
                             String& error_message);
-  void RunCreationCallback();
 
   void ScheduleTransaction();
 
@@ -201,7 +196,7 @@ class Database final : public GarbageCollectedFinalized<Database>,
   SQLiteDatabase sqlite_database_;
 
   Member<DatabaseAuthorizer> database_authorizer_;
-  TraceWrapperMember<DatabaseCallback> creation_callback_;
+
   Deque<CrossThreadPersistent<SQLTransactionBackend>> transaction_queue_;
   Mutex transaction_in_progress_mutex_;
   bool transaction_in_progress_;

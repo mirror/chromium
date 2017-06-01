@@ -29,9 +29,9 @@
 #include "core/dom/Node.h"
 #include "core/dom/shadow/ShadowRoot.h"
 #include "core/events/Event.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/HTMLContentElement.h"
@@ -94,10 +94,6 @@ DEFINE_TRACE(HTMLPlugInElement) {
   visitor->Trace(image_loader_);
   visitor->Trace(persisted_plugin_);
   HTMLFrameOwnerElement::Trace(visitor);
-}
-
-bool HTMLPlugInElement::HasPendingActivity() const {
-  return image_loader_ && image_loader_->HasPendingActivity();
 }
 
 void HTMLPlugInElement::SetPersistedPlugin(PluginView* plugin) {
@@ -623,6 +619,11 @@ bool HTMLPlugInElement::AllowedToLoadObject(const KURL& url,
 
   if (MIMETypeRegistry::IsJavaAppletMIMEType(mime_type))
     return false;
+
+  if (!GetDocument().GetSecurityOrigin()->CanDisplay(url)) {
+    FrameLoader::ReportLocalLoadFailed(frame, url.GetString());
+    return false;
+  }
 
   AtomicString declared_mime_type = FastGetAttribute(HTMLNames::typeAttr);
   if (!GetDocument().GetContentSecurityPolicy()->AllowObjectFromSource(url) ||

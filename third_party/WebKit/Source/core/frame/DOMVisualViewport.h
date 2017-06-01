@@ -58,13 +58,13 @@ class DOMVisualViewport final : public EventTargetWithInlineData {
   const AtomicString& InterfaceName() const override;
   ExecutionContext* GetExecutionContext() const override;
 
-  float offsetLeft() const;
-  float offsetTop() const;
-  float pageLeft() const;
-  float pageTop() const;
-  double width() const;
-  double height() const;
-  double scale() const;
+  float scrollLeft();
+  float scrollTop();
+  float pageX();
+  float pageY();
+  double clientWidth();
+  double clientHeight();
+  double scale();
 
  private:
   explicit DOMVisualViewport(LocalDOMWindow*);

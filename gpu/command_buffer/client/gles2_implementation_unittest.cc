@@ -131,7 +131,6 @@ class MockTransferBuffer : public TransferBufferInterface {
 
   ~MockTransferBuffer() override {}
 
-  base::SharedMemoryHandle shared_memory_handle() const override;
   bool Initialize(unsigned int starting_buffer_size,
                   unsigned int result_size,
                   unsigned int /* min_buffer_size */,
@@ -243,10 +242,6 @@ class MockTransferBuffer : public TransferBufferInterface {
 
   DISALLOW_COPY_AND_ASSIGN(MockTransferBuffer);
 };
-
-base::SharedMemoryHandle MockTransferBuffer::shared_memory_handle() const {
-  return base::SharedMemoryHandle();
-}
 
 bool MockTransferBuffer::Initialize(
     unsigned int starting_buffer_size,
@@ -503,7 +498,7 @@ class GLES2ImplementationTest : public testing::Test {
 
       scoped_refptr<Buffer> ring_buffer = helper_->get_ring_buffer();
       commands_ = static_cast<CommandBufferEntry*>(ring_buffer->memory()) +
-                  command_buffer()->GetServicePutOffset();
+                  command_buffer()->GetPutOffset();
       ClearCommands();
       EXPECT_TRUE(transfer_buffer_->InSync());
 

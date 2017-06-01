@@ -33,7 +33,6 @@
 #include "core/dom/SynchronousMutationObserver.h"
 #include "core/editing/iterators/TextIterator.h"
 #include "core/editing/markers/DocumentMarker.h"
-#include "core/editing/markers/TextMatchMarker.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/HashMap.h"
@@ -43,6 +42,7 @@ namespace blink {
 
 class DocumentMarkerList;
 class Node;
+class RenderedDocumentMarker;
 
 class CORE_EXPORT DocumentMarkerController final
     : public GarbageCollected<DocumentMarkerController>,
@@ -54,12 +54,13 @@ class CORE_EXPORT DocumentMarkerController final
   explicit DocumentMarkerController(Document&);
 
   void Clear();
-  void AddSpellingMarker(const EphemeralRange&,
-                         const String& description = g_empty_string);
-  void AddGrammarMarker(const EphemeralRange&,
-                        const String& description = g_empty_string);
-  void AddTextMatchMarker(const EphemeralRange&, TextMatchMarker::MatchStatus);
-  void AddCompositionMarker(const EphemeralRange&,
+  void AddMarker(const Position& start,
+                 const Position& end,
+                 DocumentMarker::MarkerType,
+                 const String& description = g_empty_string);
+  void AddTextMatchMarker(const EphemeralRange&, DocumentMarker::MatchStatus);
+  void AddCompositionMarker(const Position& start,
+                            const Position& end,
                             Color underline_color,
                             bool thick,
                             Color background_color);
@@ -94,6 +95,7 @@ class CORE_EXPORT DocumentMarkerController final
       DocumentMarker::MarkerTypes = DocumentMarker::AllMarkers());
   DocumentMarkerVector Markers();
   Vector<IntRect> RenderedRectsForTextMatchMarkers();
+  void UpdateMarkerRenderedRectIfNeeded(const Node&, RenderedDocumentMarker&);
   void InvalidateRectsForAllTextMatchMarkers();
   void InvalidateRectsForTextMatchMarkersInNode(const Node&);
 
@@ -110,13 +112,7 @@ class CORE_EXPORT DocumentMarkerController final
                               unsigned new_length) final;
 
  private:
-  void AddMarkerInternal(
-      const EphemeralRange&,
-      std::function<DocumentMarker*(int, int)> create_marker_from_offsets);
-  void AddMarkerToNode(Node*, DocumentMarker*);
-  void AddSpellCheckMarker(const EphemeralRange&,
-                           DocumentMarker::MarkerType,
-                           const String& description = g_empty_string);
+  void AddMarker(Node*, DocumentMarker*);
 
   using MarkerLists = HeapVector<Member<DocumentMarkerList>,
                                  DocumentMarker::kMarkerTypeIndexesCount>;

@@ -52,7 +52,6 @@
 #include "ui/events/event_constants.h"
 #include "ui/gfx/geometry/safe_integer_conversions.h"
 #include "ui/gfx/image/image_skia.h"
-#include "ui/gfx/image/image_unittest_util.h"
 
 namespace {
 
@@ -447,34 +446,7 @@ class ArcAppModelBuilderTest : public extensions::ExtensionServiceTestBase,
   DISALLOW_COPY_AND_ASSIGN(ArcAppModelBuilderTest);
 };
 
-class ArcAppModelBuilderRecreate : public ArcAppModelBuilderTest {
- public:
-  ArcAppModelBuilderRecreate() = default;
-  ~ArcAppModelBuilderRecreate() override = default;
-
- protected:
-  // Simulates ARC restart.
-  void RestartArc() {
-    arc_test()->TearDown();
-    ResetBuilder();
-
-    ArcAppListPrefsFactory::GetInstance()->RecreateServiceInstanceForTesting(
-        profile_.get());
-    arc_test()->SetUp(profile_.get());
-    CreateBuilder();
-  }
-
-  // ArcAppModelBuilderTest:
-  void OnBeforeArcTestSetup() override {
-    arc::ArcPackageSyncableServiceFactory::GetInstance()->SetTestingFactory(
-        profile_.get(), nullptr);
-  }
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(ArcAppModelBuilderRecreate);
-};
-
-class ArcDefaulAppTest : public ArcAppModelBuilderRecreate {
+class ArcDefaulAppTest : public ArcAppModelBuilderTest {
  public:
   ArcDefaulAppTest() = default;
   ~ArcDefaulAppTest() override = default;
@@ -484,7 +456,8 @@ class ArcDefaulAppTest : public ArcAppModelBuilderRecreate {
   void OnBeforeArcTestSetup() override {
     ArcDefaultAppList::UseTestAppsDirectory();
     arc_test()->set_wait_default_apps(IsWaitDefaultAppsNeeded());
-    ArcAppModelBuilderRecreate::OnBeforeArcTestSetup();
+    arc::ArcPackageSyncableServiceFactory::GetInstance()->SetTestingFactory(
+        profile_.get(), nullptr);
   }
 
   // Returns true if test needs to wait for default apps on setup.
@@ -573,6 +546,22 @@ class ArcDefaulAppForManagedUserTest : public ArcPlayStoreAppTest {
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ArcDefaulAppForManagedUserTest);
+};
+
+class ArcAppModelBuilderRecreate : public ArcAppModelBuilderTest {
+ public:
+  ArcAppModelBuilderRecreate() = default;
+  ~ArcAppModelBuilderRecreate() override = default;
+
+ protected:
+  // ArcAppModelBuilderTest:
+  void OnBeforeArcTestSetup() override {
+    arc::ArcPackageSyncableServiceFactory::GetInstance()->SetTestingFactory(
+        profile_.get(), nullptr);
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(ArcAppModelBuilderRecreate);
 };
 
 TEST_P(ArcAppModelBuilderTest, ArcPackagePref) {
@@ -1107,7 +1096,13 @@ TEST_P(ArcAppModelBuilderRecreate, AppModelRestart) {
   EXPECT_EQ(apps1.size(), GetArcItemCount());
 
   // Simulate restart.
-  RestartArc();
+  arc_test()->TearDown();
+  ResetBuilder();
+
+  ArcAppListPrefsFactory::GetInstance()->RecreateServiceInstanceForTesting(
+      profile_.get());
+  arc_test()->SetUp(profile_.get());
+  CreateBuilder();
 
   // On restart new model contains last apps.
   ValidateHaveApps(apps1);
@@ -1200,26 +1195,23 @@ TEST_P(ArcAppModelBuilderTest, IconLoaderForShelfGroup) {
 
   // Shortcut exists, icon is requested from shortcut.
   icon_loader.FetchImage(id_shortcut_exist);
-  // Icon was sent on request and loader should be updated.
-  delegate.WaitForIconUpdates(ui::GetSupportedScaleFactors().size());
+  EXPECT_EQ(1UL, delegate.update_image_cnt());
   EXPECT_EQ(id_shortcut_exist, delegate.app_id());
-
   content::RunAllBlockingPoolTasksUntilIdle();
   const size_t shortcut_request_cnt =
       app_instance()->shortcut_icon_requests().size();
   EXPECT_NE(0U, shortcut_request_cnt);
   EXPECT_EQ(initial_icon_request_count, app_instance()->icon_requests().size());
-  for (const auto& request : app_instance()->shortcut_icon_requests())
+  for (const auto& request : app_instance()->shortcut_icon_requests()) {
     EXPECT_EQ(shortcuts[0].icon_resource_id, request->icon_resource_id());
+  }
 
   // Fallback when shortcut is not found for shelf group id, use app id instead.
   // Remove the IconRequestRecord for |app_id| to observe the icon request for
   // |app_id| is re-sent.
-  const size_t update_image_count_before = delegate.update_image_cnt();
   MaybeRemoveIconRequestRecord(app_id);
   icon_loader.FetchImage(id_shortcut_absent);
-  // Expected default update.
-  EXPECT_EQ(update_image_count_before + 1, delegate.update_image_cnt());
+  EXPECT_EQ(2UL, delegate.update_image_cnt());
   content::RunAllBlockingPoolTasksUntilIdle();
   EXPECT_TRUE(app_instance()->icon_requests().size() >
               initial_icon_request_count);
@@ -1341,150 +1333,6 @@ TEST_P(ArcAppModelBuilderTest, IconLoader) {
   EXPECT_EQ(1 + scale_factors.size(), delegate.update_image_cnt());
 }
 
-TEST_P(ArcAppModelBuilderRecreate, IconInvalidation) {
-  std::vector<ui::ScaleFactor> supported_scale_factors;
-  supported_scale_factors.push_back(ui::SCALE_FACTOR_100P);
-  supported_scale_factors.push_back(ui::SCALE_FACTOR_200P);
-  ui::test::ScopedSetSupportedScaleFactors scoped_supported_scale_factors(
-      supported_scale_factors);
-
-  ASSERT_FALSE(fake_apps().empty());
-  std::vector<arc::mojom::AppInfo> apps = std::vector<arc::mojom::AppInfo>(
-      fake_apps().begin(), fake_apps().begin() + 1);
-
-  const arc::mojom::AppInfo& app = apps[0];
-  const std::string app_id = ArcAppTest::GetAppId(app);
-
-  ArcAppListPrefs* prefs = ArcAppListPrefs::Get(profile_.get());
-  ASSERT_NE(nullptr, prefs);
-
-  app_instance()->RefreshAppList();
-  app_instance()->SendRefreshAppList(apps);
-
-  prefs->MaybeRequestIcon(app_id, ui::SCALE_FACTOR_100P);
-
-  std::string png_data;
-  EXPECT_TRUE(app_instance()->GenerateAndSendIcon(
-      app, arc::mojom::ScaleFactor::SCALE_FACTOR_100P, &png_data));
-  WaitForIconUpdates(profile_.get(), app_id, 1);
-
-  // Simulate ARC restart.
-  RestartArc();
-
-  prefs = ArcAppListPrefs::Get(profile_.get());
-  ASSERT_NE(nullptr, prefs);
-  app_instance()->RefreshAppList();
-  app_instance()->SendRefreshAppList(apps);
-
-  // No icon update requests on restart. Icons were not invalidated.
-  EXPECT_TRUE(app_instance()->icon_requests().empty());
-
-  // Send new apps for the package. This should invalidate app icons.
-  app_instance()->SendPackageAppListRefreshed(apps[0].package_name, apps);
-  base::RunLoop().RunUntilIdle();
-
-  // Requests to reload icons are issued for all supported scales.
-  const std::vector<std::unique_ptr<arc::FakeAppInstance::IconRequest>>&
-      icon_requests = app_instance()->icon_requests();
-  ASSERT_EQ(2U, icon_requests.size());
-  EXPECT_TRUE(icon_requests[0]->IsForApp(app));
-  EXPECT_EQ(icon_requests[0]->scale_factor(), ui::SCALE_FACTOR_100P);
-  EXPECT_TRUE(icon_requests[1]->IsForApp(app));
-  EXPECT_EQ(icon_requests[1]->scale_factor(), ui::SCALE_FACTOR_200P);
-
-  EXPECT_TRUE(app_instance()->GenerateAndSendIcon(
-      app, arc::mojom::ScaleFactor::SCALE_FACTOR_100P, &png_data));
-  EXPECT_TRUE(app_instance()->GenerateAndSendIcon(
-      app, arc::mojom::ScaleFactor::SCALE_FACTOR_200P, &png_data));
-  WaitForIconUpdates(profile_.get(), app_id, 2);
-
-  // Simulate ARC restart again.
-  RestartArc();
-
-  prefs = ArcAppListPrefs::Get(profile_.get());
-  ASSERT_NE(nullptr, prefs);
-  app_instance()->RefreshAppList();
-  app_instance()->SendRefreshAppList(apps);
-
-  // No new icon update requests on restart. Icons were invalidated and updated.
-  EXPECT_TRUE(app_instance()->icon_requests().empty());
-}
-
-TEST_P(ArcAppModelBuilderTest, IconLoadNonSupportedScales) {
-  std::vector<ui::ScaleFactor> supported_scale_factors;
-  supported_scale_factors.push_back(ui::SCALE_FACTOR_100P);
-  supported_scale_factors.push_back(ui::SCALE_FACTOR_200P);
-  ui::test::ScopedSetSupportedScaleFactors scoped_supported_scale_factors(
-      supported_scale_factors);
-
-  // Initialize one ARC app.
-  const arc::mojom::AppInfo& app = fake_apps()[0];
-  const std::string app_id = ArcAppTest::GetAppId(app);
-  ArcAppListPrefs* prefs = ArcAppListPrefs::Get(profile_.get());
-  ASSERT_NE(nullptr, prefs);
-  app_instance()->RefreshAppList();
-  app_instance()->SendRefreshAppList(std::vector<arc::mojom::AppInfo>(
-      fake_apps().begin(), fake_apps().begin() + 1));
-
-  FakeAppIconLoaderDelegate delegate;
-  ArcAppIconLoader icon_loader(profile(), app_list::kListIconSize, &delegate);
-  icon_loader.FetchImage(app_id);
-  // Expected 1 update with default image and 2 representations should be
-  // allocated.
-  EXPECT_EQ(1U, delegate.update_image_cnt());
-  gfx::ImageSkia app_icon = delegate.image();
-  EXPECT_EQ(2U, app_icon.image_reps().size());
-  EXPECT_TRUE(app_icon.HasRepresentation(1.0f));
-  EXPECT_TRUE(app_icon.HasRepresentation(2.0f));
-
-  // Request non-supported scales. Cached supported representations with
-  // default image should be used. 1.0 is used to scale 1.15 and
-  // 2.0 is used to scale 1.25.
-  app_icon.GetRepresentation(1.15f);
-  app_icon.GetRepresentation(1.25f);
-  EXPECT_EQ(1U, delegate.update_image_cnt());
-  EXPECT_EQ(4U, app_icon.image_reps().size());
-  EXPECT_TRUE(app_icon.HasRepresentation(1.0f));
-  EXPECT_TRUE(app_icon.HasRepresentation(2.0f));
-  EXPECT_TRUE(app_icon.HasRepresentation(1.15f));
-  EXPECT_TRUE(app_icon.HasRepresentation(1.25f));
-
-  // Keep default images for reference.
-  const SkBitmap bitmap_1_0 = app_icon.GetRepresentation(1.0f).sk_bitmap();
-  const SkBitmap bitmap_1_15 = app_icon.GetRepresentation(1.15f).sk_bitmap();
-  const SkBitmap bitmap_1_25 = app_icon.GetRepresentation(1.25f).sk_bitmap();
-  const SkBitmap bitmap_2_0 = app_icon.GetRepresentation(2.0f).sk_bitmap();
-
-  // Send icon image for 100P. 1.0 and 1.15 should be updated.
-  std::string png_data;
-  EXPECT_TRUE(app_instance()->GenerateAndSendIcon(
-      app, arc::mojom::ScaleFactor::SCALE_FACTOR_100P, &png_data));
-  delegate.WaitForIconUpdates(1);
-
-  EXPECT_FALSE(gfx::test::AreBitmapsEqual(
-      app_icon.GetRepresentation(1.0f).sk_bitmap(), bitmap_1_0));
-  EXPECT_FALSE(gfx::test::AreBitmapsEqual(
-      app_icon.GetRepresentation(1.15f).sk_bitmap(), bitmap_1_15));
-  EXPECT_TRUE(gfx::test::AreBitmapsEqual(
-      app_icon.GetRepresentation(1.25f).sk_bitmap(), bitmap_1_25));
-  EXPECT_TRUE(gfx::test::AreBitmapsEqual(
-      app_icon.GetRepresentation(2.0f).sk_bitmap(), bitmap_2_0));
-
-  // Send icon image for 200P. 2.0 and 1.25 should be updated.
-  EXPECT_TRUE(app_instance()->GenerateAndSendIcon(
-      app, arc::mojom::ScaleFactor::SCALE_FACTOR_200P, &png_data));
-  delegate.WaitForIconUpdates(1);
-
-  EXPECT_FALSE(gfx::test::AreBitmapsEqual(
-      app_icon.GetRepresentation(1.0f).sk_bitmap(), bitmap_1_0));
-  EXPECT_FALSE(gfx::test::AreBitmapsEqual(
-      app_icon.GetRepresentation(1.15f).sk_bitmap(), bitmap_1_15));
-  EXPECT_FALSE(gfx::test::AreBitmapsEqual(
-      app_icon.GetRepresentation(1.25f).sk_bitmap(), bitmap_1_25));
-  EXPECT_FALSE(gfx::test::AreBitmapsEqual(
-      app_icon.GetRepresentation(2.0f).sk_bitmap(), bitmap_2_0));
-}
-
 TEST_P(ArcAppModelBuilderTest, AppLauncher) {
   ArcAppListPrefs* prefs = ArcAppListPrefs::Get(profile());
   ASSERT_NE(nullptr, prefs);
@@ -1557,7 +1405,7 @@ TEST_P(ArcAppModelBuilderTest, ArcAppsAndShortcutsOnPackageChange) {
   ASSERT_NE(nullptr, prefs);
 
   std::vector<arc::mojom::AppInfo> apps = fake_apps();
-  ASSERT_GE(apps.size(), 3U);
+  ASSERT_GE(3u, apps.size());
   apps[0].package_name = apps[2].package_name;
   apps[1].package_name = apps[2].package_name;
 
@@ -1659,7 +1507,12 @@ TEST_P(ArcDefaulAppTest, DefaultApps) {
   ValidateHaveApps(all_apps);
 
   // Sign-out and sign-in again. Removed default app should not appear.
-  RestartArc();
+  arc_test()->TearDown();
+  ResetBuilder();
+  ArcAppListPrefsFactory::GetInstance()->RecreateServiceInstanceForTesting(
+      profile_.get());
+  arc_test()->SetUp(profile_.get());
+  CreateBuilder();
 
   // Prefs are changed.
   prefs = ArcAppListPrefs::Get(profile_.get());

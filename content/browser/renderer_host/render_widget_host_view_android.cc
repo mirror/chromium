@@ -83,7 +83,6 @@
 #include "ui/android/window_android.h"
 #include "ui/android/window_android_compositor.h"
 #include "ui/base/layout.h"
-#include "ui/base/ui_base_types.h"
 #include "ui/events/android/motion_event_android.h"
 #include "ui/events/base_event_utils.h"
 #include "ui/events/blink/blink_event_util.h"
@@ -1262,7 +1261,7 @@ void RenderWidgetHostViewAndroid::AcknowledgeBeginFrame(
   latest_confirmed_begin_frame_sequence_number_ =
       ack.latest_confirmed_sequence_number;
   if (begin_frame_source_)
-    begin_frame_source_->DidFinishFrame(this);
+    begin_frame_source_->DidFinishFrame(this, ack);
 }
 
 void RenderWidgetHostViewAndroid::ClearCompositorFrame() {
@@ -1627,12 +1626,9 @@ void RenderWidgetHostViewAndroid::SendBeginFrame(cc::BeginFrameArgs args) {
   // switches to Surfaces and the Browser's commit isn't in the critical path.
   args.deadline = sync_compositor_ ? base::TimeTicks()
   : args.frame_time + (args.interval * 0.6);
-  if (sync_compositor_) {
-    host_->Send(new ViewMsg_BeginFrame(host_->GetRoutingID(), args));
+  host_->Send(new ViewMsg_BeginFrame(host_->GetRoutingID(), args));
+  if (sync_compositor_)
     sync_compositor_->DidSendBeginFrame(view_.GetWindowAndroid());
-  } else if (renderer_compositor_frame_sink_) {
-    renderer_compositor_frame_sink_->OnBeginFrame(args);
-  }
 }
 
 bool RenderWidgetHostViewAndroid::Animate(base::TimeTicks frame_time) {
@@ -1866,10 +1862,10 @@ void RenderWidgetHostViewAndroid::MoveCaret(const gfx::Point& point) {
     host_->MoveCaret(point);
 }
 
-void RenderWidgetHostViewAndroid::ShowContextMenuAtTouchHandle(
+void RenderWidgetHostViewAndroid::ShowContextMenuAtPoint(
     const gfx::Point& point) {
   if (host_)
-    host_->ShowContextMenuAtPoint(point, ui::MENU_SOURCE_TOUCH_HANDLE);
+    host_->ShowContextMenuAtPoint(point);
 }
 
 void RenderWidgetHostViewAndroid::DismissTextHandles() {

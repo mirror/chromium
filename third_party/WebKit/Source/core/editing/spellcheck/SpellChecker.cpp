@@ -45,7 +45,6 @@
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/editing/spellcheck/IdleSpellCheckCallback.h"
 #include "core/editing/spellcheck/SpellCheckRequester.h"
-#include "core/editing/spellcheck/SpellCheckerClient.h"
 #include "core/editing/spellcheck/TextCheckingParagraph.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
@@ -53,6 +52,7 @@
 #include "core/layout/LayoutTextControl.h"
 #include "core/loader/EmptyClients.h"
 #include "core/page/Page.h"
+#include "core/page/SpellCheckerClient.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/text/TextBreakIterator.h"
 #include "platform/text/TextCheckerClient.h"
@@ -305,7 +305,9 @@ void SpellChecker::AdvanceToNextMisspelling(bool start_before_selection) {
                                             .Build());
     GetFrame().Selection().RevealSelection();
     GetSpellCheckerClient().UpdateSpellingUIWithMisspelledWord(misspelled_word);
-    GetFrame().GetDocument()->Markers().AddSpellingMarker(misspelling_range);
+    GetFrame().GetDocument()->Markers().AddMarker(
+        misspelling_range.StartPosition(), misspelling_range.EndPosition(),
+        DocumentMarker::kSpelling);
   }
 }
 
@@ -537,8 +539,6 @@ static void AddMarker(Document* document,
                       int location,
                       int length,
                       const String& description) {
-  DCHECK(type == DocumentMarker::kSpelling || type == DocumentMarker::kGrammar)
-      << type;
   DCHECK_GT(length, 0);
   DCHECK_GE(location, 0);
   const EphemeralRange& range_to_mark =
@@ -547,14 +547,8 @@ static void AddMarker(Document* document,
     return;
   if (!SpellChecker::IsSpellCheckingEnabledAt(range_to_mark.EndPosition()))
     return;
-
-  if (type == DocumentMarker::kSpelling) {
-    document->Markers().AddSpellingMarker(range_to_mark, description);
-    return;
-  }
-
-  DCHECK_EQ(type, DocumentMarker::kGrammar);
-  document->Markers().AddGrammarMarker(range_to_mark, description);
+  document->Markers().AddMarker(range_to_mark.StartPosition(),
+                                range_to_mark.EndPosition(), type, description);
 }
 
 void SpellChecker::MarkAndReplaceFor(
@@ -600,6 +594,7 @@ void SpellChecker::MarkAndReplaceFor(
   // and should be rewritten.
   // Expand the range to encompass entire paragraphs, since text checking needs
   // that much context.
+  int selection_offset = 0;
   int ambiguous_boundary_offset = -1;
 
   if (GetFrame().Selection().ComputeVisibleSelectionInDOMTree().IsCaret()) {
@@ -608,11 +603,7 @@ void SpellChecker::MarkAndReplaceFor(
     // Attempt to save the caret position so we can restore it later if needed
     const Position& caret_position =
         GetFrame().Selection().ComputeVisibleSelectionInDOMTree().end();
-    const Position& paragraph_start = checking_range.StartPosition();
-    const int selection_offset =
-        paragraph_start < caret_position
-            ? TextIterator::RangeLength(paragraph_start, caret_position)
-            : 0;
+    selection_offset = paragraph.OffsetTo(caret_position);
     if (selection_offset > 0 &&
         static_cast<unsigned>(selection_offset) <=
             paragraph.GetText().length() &&
@@ -1087,8 +1078,6 @@ DEFINE_TRACE(SpellChecker) {
 
 void SpellChecker::PrepareForLeakDetection() {
   spell_check_requester_->PrepareForLeakDetection();
-  if (RuntimeEnabledFeatures::idleTimeSpellCheckingEnabled())
-    idle_spell_check_callback_->Deactivate();
 }
 
 Vector<TextCheckingResult> SpellChecker::FindMisspellings(const String& text) {

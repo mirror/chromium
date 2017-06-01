@@ -8,6 +8,9 @@
 namespace extensions {
 namespace events {
 
+// TODO(kalman): I am still in the process of migrating Event construction away
+// from using "UNKNOWN" to their real histogram values. See crbug.com/503402.
+//
 // Short version:
 //  *Never* reorder or delete entries in the |HistogramValue| enumeration.
 //  When creating a new extension event, add a new entry at the end of the
@@ -424,7 +427,6 @@ enum HistogramValue {
   ACCESSIBILITY_PRIVATE_ON_TWO_FINGER_TOUCH_START,
   ACCESSIBILITY_PRIVATE_ON_TWO_FINGER_TOUCH_STOP,
   MEDIA_PERCEPTION_PRIVATE_ON_MEDIA_PERCEPTION,
-  NETWORKING_PRIVATE_ON_CERTIFICATE_LISTS_CHANGED,
   // Last entry: Add new entries above, then run:
   // python tools/metrics/histograms/update_extension_histograms.py
   ENUM_BOUNDARY

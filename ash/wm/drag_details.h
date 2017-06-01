@@ -10,18 +10,16 @@
 #include "ui/gfx/geometry/rect.h"
 #include "ui/wm/public/window_move_client.h"
 
-namespace aura {
-class Window;
-}
-
 namespace ash {
 
+class WmWindow;
+
 struct ASH_EXPORT DragDetails {
-  DragDetails(aura::Window* window,
+  DragDetails(WmWindow* window,
               const gfx::Point& location,
               int window_component,
               // TODO(sky): make wm type.
-              ::wm::WindowMoveSource source);
+              aura::client::WindowMoveSource source);
   ~DragDetails();
 
   ash::wm::WindowStateType initial_state_type;
@@ -55,7 +53,7 @@ struct ASH_EXPORT DragDetails {
   const bool is_resizable;
 
   // Source of the event initiating the drag.
-  const ::wm::WindowMoveSource source;
+  const aura::client::WindowMoveSource source;
 
   // True if the window should attach to the shelf after releasing.
   bool should_attach_to_shelf;

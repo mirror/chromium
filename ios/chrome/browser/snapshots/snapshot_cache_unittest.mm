@@ -41,7 +41,7 @@ class SnapshotCacheTest : public PlatformTest {
     testSessions_.reset(
         [[NSMutableArray alloc] initWithCapacity:kSessionCount]);
 
-    CGFloat scale = [snapshotCache_ snapshotScaleForDevice];
+    CGFloat scale = [SnapshotCache snapshotScaleForDevice];
     UIGraphicsBeginImageContextWithOptions(
         CGSizeMake(kSnapshotPixelSize, kSnapshotPixelSize), NO, scale);
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -105,7 +105,7 @@ class SnapshotCacheTest : public PlatformTest {
     __block BOOL foundImage = NO;
     __block NSUInteger numCallbacks = 0;
     for (sessionID in testSessions_.get()) {
-      base::FilePath path([cache imagePathForSessionID:sessionID]);
+      base::FilePath path([SnapshotCache imagePathForSessionID:sessionID]);
 
       // Checks that the snapshot is not on disk.
       EXPECT_FALSE(base::PathExists(path));
@@ -147,7 +147,7 @@ class SnapshotCacheTest : public PlatformTest {
       for (NSUInteger i = 0; i < count; ++i) {
         // Check that images are on the disk.
         NSString* sessionID = [testSessions_ objectAtIndex:i];
-        base::FilePath path([cache imagePathForSessionID:sessionID]);
+        base::FilePath path([SnapshotCache imagePathForSessionID:sessionID]);
         EXPECT_TRUE(base::PathExists(path));
       }
     }
@@ -215,7 +215,9 @@ class SnapshotCacheTest : public PlatformTest {
 TEST_F(SnapshotCacheTest, Cache) {
   SnapshotCache* cache = GetSnapshotCache();
 
-  NSUInteger expectedCacheSize = MIN(kSessionCount, [cache lruCacheMaxSize]);
+  NSUInteger expectedCacheSize = kSessionCount;
+  if ([cache usesLRUCache])
+    expectedCacheSize = MIN(kSessionCount, [cache lruCacheMaxSize]);
 
   // Put all images in the cache.
   for (NSUInteger i = 0; i < expectedCacheSize; ++i) {
@@ -258,7 +260,7 @@ TEST_F(SnapshotCacheTest, SaveToDisk) {
     // Check that images are on the disk.
     NSString* sessionID = [testSessions_ objectAtIndex:i];
 
-    base::FilePath path([cache imagePathForSessionID:sessionID]);
+    base::FilePath path([SnapshotCache imagePathForSessionID:sessionID]);
     EXPECT_TRUE(base::PathExists(path));
 
     // Check image colors by comparing the first pixel against the reference
@@ -322,7 +324,7 @@ TEST_F(SnapshotCacheTest, Purge) {
     // Check that images are on the disk.
     NSString* sessionID = [testSessions_ objectAtIndex:i];
 
-    base::FilePath path([cache imagePathForSessionID:sessionID]);
+    base::FilePath path([SnapshotCache imagePathForSessionID:sessionID]);
     EXPECT_TRUE(base::PathExists(path));
   }
 
@@ -335,7 +337,7 @@ TEST_F(SnapshotCacheTest, Purge) {
     // Check that images are on the disk.
     NSString* sessionID = [testSessions_ objectAtIndex:i];
 
-    base::FilePath path([cache imagePathForSessionID:sessionID]);
+    base::FilePath path([SnapshotCache imagePathForSessionID:sessionID]);
     if (i == 0)
       EXPECT_TRUE(base::PathExists(path));
     else
@@ -480,6 +482,7 @@ TEST_F(SnapshotCacheTest, MostRecentGreyBlock) {
 
 // Test the function used to save a grey copy of a color snapshot fully on a
 // background thread when the application is backgrounded.
+// Disabled due to the greyImage crash.  b/8048597
 TEST_F(SnapshotCacheTest, GreyImageAllInBackground) {
   LoadAllColorImagesIntoCache(true);
 
@@ -495,7 +498,7 @@ TEST_F(SnapshotCacheTest, GreyImageAllInBackground) {
   FlushRunLoops();
 
   for (NSString* sessionID in testSessions_.get()) {
-    base::FilePath path([cache greyImagePathForSessionID:sessionID]);
+    base::FilePath path([SnapshotCache greyImagePathForSessionID:sessionID]);
     EXPECT_TRUE(base::PathExists(path));
     base::DeleteFile(path, false);
   }
@@ -504,10 +507,8 @@ TEST_F(SnapshotCacheTest, GreyImageAllInBackground) {
 // Verifies that image size and scale are preserved when writing and reading
 // from disk.
 TEST_F(SnapshotCacheTest, SizeAndScalePreservation) {
-  SnapshotCache* cache = GetSnapshotCache();
-
   // Create an image with the expected snapshot scale.
-  CGFloat scale = [cache snapshotScaleForDevice];
+  CGFloat scale = [SnapshotCache snapshotScaleForDevice];
   UIGraphicsBeginImageContextWithOptions(
       CGSizeMake(kSnapshotPixelSize, kSnapshotPixelSize), NO, scale);
   CGContextRef context = UIGraphicsGetCurrentContext();
@@ -516,6 +517,7 @@ TEST_F(SnapshotCacheTest, SizeAndScalePreservation) {
 
   // Add the image to the cache then call handle low memory to ensure the image
   // is read from disk instead of the in-memory cache.
+  SnapshotCache* cache = GetSnapshotCache();
   NSString* const kSession = @"foo";
   [cache setImage:image withSessionID:kSession];
   FlushRunLoops();  // ensure the file is written to disk.
@@ -538,8 +540,7 @@ TEST_F(SnapshotCacheTest, SizeAndScalePreservation) {
 
 // Verifies that retina-scale images are deleted properly.
 TEST_F(SnapshotCacheTest, DeleteRetinaImages) {
-  SnapshotCache* cache = GetSnapshotCache();
-  if ([cache snapshotScaleForDevice] != 2.0) {
+  if ([SnapshotCache snapshotScaleForDevice] != 2.0) {
     return;
   }
 
@@ -552,13 +553,14 @@ TEST_F(SnapshotCacheTest, DeleteRetinaImages) {
 
   // Add the image to the cache then call handle low memory to ensure the image
   // is read from disk instead of the in-memory cache.
+  SnapshotCache* cache = GetSnapshotCache();
   NSString* const kSession = @"foo";
   [cache setImage:image withSessionID:kSession];
   FlushRunLoops();  // ensure the file is written to disk.
   TriggerMemoryWarning();
 
   // Verify the file was writted with @2x in the file name.
-  base::FilePath retinaFile = [cache imagePathForSessionID:kSession];
+  base::FilePath retinaFile = [SnapshotCache imagePathForSessionID:kSession];
   EXPECT_TRUE(base::PathExists(retinaFile));
 
   // Delete the image.

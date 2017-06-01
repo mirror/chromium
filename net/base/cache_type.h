@@ -24,6 +24,6 @@ enum BackendType {
   CACHE_BACKEND_SIMPLE  // The |SimpleBackendImpl|.
 };
 
-}  // namespace net
+}  // namespace disk_cache
 
 #endif  // NET_BASE_CACHE_TYPE_H_

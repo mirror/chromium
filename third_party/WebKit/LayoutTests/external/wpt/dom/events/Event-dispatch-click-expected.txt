@@ -12,6 +12,6 @@ PASS disabled checkbox still has activation behavior
 PASS disabled checkbox still has activation behavior, part 2 
 PASS disconnected checkbox should be checked 
 PASS disconnected radio should be checked 
-PASS disconnected form should not submit 
+FAIL disconnected form should not submit assert_false: expected false got true
 Harness: the test ran to completion.
 

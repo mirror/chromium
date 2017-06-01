@@ -10,7 +10,7 @@
 #include "ash/public/cpp/config.h"
 #include "ash/root_window_controller.h"
 #include "ash/screen_util.h"
-#include "ash/shelf/shelf.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/test/ash_test_base.h"
@@ -24,6 +24,7 @@
 #include "ash/wm/window_state_observer.h"
 #include "ash/wm/window_util.h"
 #include "ash/wm/wm_event.h"
+#include "ash/wm_window.h"
 #include "base/command_line.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
@@ -45,9 +46,8 @@ class MaximizeModeWindowManagerTest : public test::AshTestBase {
   ~MaximizeModeWindowManagerTest() override {}
 
   // Creates a window which has a fixed size.
-  aura::Window* CreateFixedSizeNonMaximizableWindow(
-      aura::client::WindowType type,
-      const gfx::Rect& bounds) {
+  aura::Window* CreateFixedSizeNonMaximizableWindow(ui::wm::WindowType type,
+                                                    const gfx::Rect& bounds) {
     return CreateWindowInWatchedContainer(type, bounds, gfx::Size(), false,
                                           false);
   }
@@ -55,15 +55,14 @@ class MaximizeModeWindowManagerTest : public test::AshTestBase {
   // Creates a window which can not be maximized, but resized. |max_size|
   // denotes the maximal possible size, if the size is empty, the window has no
   // upper limit. Note: This function will only work with a single root window.
-  aura::Window* CreateNonMaximizableWindow(aura::client::WindowType type,
+  aura::Window* CreateNonMaximizableWindow(ui::wm::WindowType type,
                                            const gfx::Rect& bounds,
                                            const gfx::Size& max_size) {
     return CreateWindowInWatchedContainer(type, bounds, max_size, false, true);
   }
 
   // Creates a maximizable and resizable window.
-  aura::Window* CreateWindow(aura::client::WindowType type,
-                             const gfx::Rect bounds) {
+  aura::Window* CreateWindow(ui::wm::WindowType type, const gfx::Rect bounds) {
     return CreateWindowInWatchedContainer(type, bounds, gfx::Size(), true,
                                           true);
   }
@@ -120,7 +119,7 @@ class MaximizeModeWindowManagerTest : public test::AshTestBase {
   // MaximizeModeWindowManager. Note that this only works with one root window.
   // If |can_maximize| is not set, |max_size| is the upper limiting size for
   // the window, whereas an empty size means that there is no limit.
-  aura::Window* CreateWindowInWatchedContainer(aura::client::WindowType type,
+  aura::Window* CreateWindowInWatchedContainer(ui::wm::WindowType type,
                                                const gfx::Rect& bounds,
                                                const gfx::Size& max_size,
                                                bool can_maximize,
@@ -166,21 +165,21 @@ TEST_F(MaximizeModeWindowManagerTest, PreCreateWindows) {
   // Bounds for anything else.
   gfx::Rect rect(80, 90, 100, 110);
   std::unique_ptr<aura::Window> w1(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect1));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect1));
   std::unique_ptr<aura::Window> w2(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect2));
-  std::unique_ptr<aura::Window> w3(CreateFixedSizeNonMaximizableWindow(
-      aura::client::WINDOW_TYPE_NORMAL, rect3));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect2));
+  std::unique_ptr<aura::Window> w3(
+      CreateFixedSizeNonMaximizableWindow(ui::wm::WINDOW_TYPE_NORMAL, rect3));
   std::unique_ptr<aura::Window> w4(
-      CreateWindow(aura::client::WINDOW_TYPE_PANEL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_PANEL, rect));
   std::unique_ptr<aura::Window> w5(
-      CreateWindow(aura::client::WINDOW_TYPE_POPUP, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_POPUP, rect));
   std::unique_ptr<aura::Window> w6(
-      CreateWindow(aura::client::WINDOW_TYPE_CONTROL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_CONTROL, rect));
   std::unique_ptr<aura::Window> w7(
-      CreateWindow(aura::client::WINDOW_TYPE_MENU, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_MENU, rect));
   std::unique_ptr<aura::Window> w8(
-      CreateWindow(aura::client::WINDOW_TYPE_TOOLTIP, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_TOOLTIP, rect));
   EXPECT_FALSE(wm::GetWindowState(w1.get())->IsMaximized());
   EXPECT_FALSE(wm::GetWindowState(w2.get())->IsMaximized());
   EXPECT_FALSE(wm::GetWindowState(w3.get())->IsMaximized());
@@ -236,21 +235,21 @@ TEST_F(MaximizeModeWindowManagerTest, GoingToMaximizedWithModalDialogPresent) {
   // Bounds for anything else.
   gfx::Rect rect(80, 90, 100, 110);
   std::unique_ptr<aura::Window> w1(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect1));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect1));
   std::unique_ptr<aura::Window> w2(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect2));
-  std::unique_ptr<aura::Window> w3(CreateFixedSizeNonMaximizableWindow(
-      aura::client::WINDOW_TYPE_NORMAL, rect3));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect2));
+  std::unique_ptr<aura::Window> w3(
+      CreateFixedSizeNonMaximizableWindow(ui::wm::WINDOW_TYPE_NORMAL, rect3));
   std::unique_ptr<aura::Window> w4(
-      CreateWindow(aura::client::WINDOW_TYPE_PANEL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_PANEL, rect));
   std::unique_ptr<aura::Window> w5(
-      CreateWindow(aura::client::WINDOW_TYPE_POPUP, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_POPUP, rect));
   std::unique_ptr<aura::Window> w6(
-      CreateWindow(aura::client::WINDOW_TYPE_CONTROL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_CONTROL, rect));
   std::unique_ptr<aura::Window> w7(
-      CreateWindow(aura::client::WINDOW_TYPE_MENU, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_MENU, rect));
   std::unique_ptr<aura::Window> w8(
-      CreateWindow(aura::client::WINDOW_TYPE_TOOLTIP, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_TOOLTIP, rect));
   EXPECT_FALSE(wm::GetWindowState(w1.get())->IsMaximized());
   EXPECT_FALSE(wm::GetWindowState(w2.get())->IsMaximized());
   EXPECT_FALSE(wm::GetWindowState(w3.get())->IsMaximized());
@@ -309,13 +308,12 @@ TEST_F(MaximizeModeWindowManagerTest,
   gfx::Rect rect(10, 10, 200, 50);
   gfx::Size max_size(300, 200);
   gfx::Size empty_size;
-  std::unique_ptr<aura::Window> unlimited_window(CreateNonMaximizableWindow(
-      aura::client::WINDOW_TYPE_NORMAL, rect, empty_size));
-  std::unique_ptr<aura::Window> limited_window(CreateNonMaximizableWindow(
-      aura::client::WINDOW_TYPE_NORMAL, rect, max_size));
+  std::unique_ptr<aura::Window> unlimited_window(
+      CreateNonMaximizableWindow(ui::wm::WINDOW_TYPE_NORMAL, rect, empty_size));
+  std::unique_ptr<aura::Window> limited_window(
+      CreateNonMaximizableWindow(ui::wm::WINDOW_TYPE_NORMAL, rect, max_size));
   std::unique_ptr<aura::Window> fixed_window(
-      CreateFixedSizeNonMaximizableWindow(aura::client::WINDOW_TYPE_NORMAL,
-                                          rect));
+      CreateFixedSizeNonMaximizableWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   EXPECT_FALSE(wm::GetWindowState(unlimited_window.get())->IsMaximized());
   EXPECT_EQ(rect.ToString(), unlimited_window->bounds().ToString());
   EXPECT_FALSE(wm::GetWindowState(limited_window.get())->IsMaximized());
@@ -373,21 +371,21 @@ TEST_F(MaximizeModeWindowManagerTest, CreateWindows) {
   // One rect for anything else.
   gfx::Rect rect(80, 90, 100, 110);
   std::unique_ptr<aura::Window> w1(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect1));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect1));
   std::unique_ptr<aura::Window> w2(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect2));
-  std::unique_ptr<aura::Window> w3(CreateFixedSizeNonMaximizableWindow(
-      aura::client::WINDOW_TYPE_NORMAL, rect3));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect2));
+  std::unique_ptr<aura::Window> w3(
+      CreateFixedSizeNonMaximizableWindow(ui::wm::WINDOW_TYPE_NORMAL, rect3));
   std::unique_ptr<aura::Window> w4(
-      CreateWindow(aura::client::WINDOW_TYPE_PANEL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_PANEL, rect));
   std::unique_ptr<aura::Window> w5(
-      CreateWindow(aura::client::WINDOW_TYPE_POPUP, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_POPUP, rect));
   std::unique_ptr<aura::Window> w6(
-      CreateWindow(aura::client::WINDOW_TYPE_CONTROL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_CONTROL, rect));
   std::unique_ptr<aura::Window> w7(
-      CreateWindow(aura::client::WINDOW_TYPE_MENU, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_MENU, rect));
   std::unique_ptr<aura::Window> w8(
-      CreateWindow(aura::client::WINDOW_TYPE_TOOLTIP, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_TOOLTIP, rect));
   EXPECT_TRUE(wm::GetWindowState(w1.get())->IsMaximized());
   EXPECT_TRUE(wm::GetWindowState(w2.get())->IsMaximized());
   EXPECT_EQ(3, manager->GetNumberOfManagedWindows());
@@ -443,7 +441,7 @@ TEST_F(MaximizeModeWindowManagerTest,
   // particular size.
   gfx::Rect empty_rect(0, 0, 0, 0);
   std::unique_ptr<aura::Window> window(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, empty_rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, empty_rect));
   EXPECT_TRUE(wm::GetWindowState(window.get())->IsMaximized());
   EXPECT_NE(empty_rect.ToString(), window->bounds().ToString());
   gfx::Rect maximized_size = window->bounds();
@@ -467,13 +465,12 @@ TEST_F(MaximizeModeWindowManagerTest, CreateNonMaximizableButResizableWindows) {
   gfx::Rect rect(10, 10, 200, 50);
   gfx::Size max_size(300, 200);
   gfx::Size empty_size;
-  std::unique_ptr<aura::Window> unlimited_window(CreateNonMaximizableWindow(
-      aura::client::WINDOW_TYPE_NORMAL, rect, empty_size));
-  std::unique_ptr<aura::Window> limited_window(CreateNonMaximizableWindow(
-      aura::client::WINDOW_TYPE_NORMAL, rect, max_size));
+  std::unique_ptr<aura::Window> unlimited_window(
+      CreateNonMaximizableWindow(ui::wm::WINDOW_TYPE_NORMAL, rect, empty_size));
+  std::unique_ptr<aura::Window> limited_window(
+      CreateNonMaximizableWindow(ui::wm::WINDOW_TYPE_NORMAL, rect, max_size));
   std::unique_ptr<aura::Window> fixed_window(
-      CreateFixedSizeNonMaximizableWindow(aura::client::WINDOW_TYPE_NORMAL,
-                                          rect));
+      CreateFixedSizeNonMaximizableWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
 
   gfx::Size workspace_size =
       ScreenUtil::GetMaximizedWindowBoundsInParent(unlimited_window.get())
@@ -582,11 +579,11 @@ TEST_F(MaximizeModeWindowManagerTest, PreCreateWindowsDeleteWhileActive) {
     // Bounds for anything else.
     gfx::Rect rect(80, 90, 100, 110);
     std::unique_ptr<aura::Window> w1(
-        CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect1));
+        CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect1));
     std::unique_ptr<aura::Window> w2(
-        CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect2));
-    std::unique_ptr<aura::Window> w3(CreateFixedSizeNonMaximizableWindow(
-        aura::client::WINDOW_TYPE_NORMAL, rect3));
+        CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect2));
+    std::unique_ptr<aura::Window> w3(
+        CreateFixedSizeNonMaximizableWindow(ui::wm::WINDOW_TYPE_NORMAL, rect3));
 
     // Create the manager and make sure that all qualifying windows were
     // detected and changed.
@@ -609,12 +606,12 @@ TEST_F(MaximizeModeWindowManagerTest, CreateWindowsAndDeleteWhileActive) {
     gfx::Rect rect1(10, 10, 200, 50);
     gfx::Rect rect2(10, 60, 200, 50);
     gfx::Rect rect3(20, 140, 100, 100);
-    std::unique_ptr<aura::Window> w1(CreateWindow(
-        aura::client::WINDOW_TYPE_NORMAL, gfx::Rect(10, 10, 200, 50)));
-    std::unique_ptr<aura::Window> w2(CreateWindow(
-        aura::client::WINDOW_TYPE_NORMAL, gfx::Rect(10, 60, 200, 50)));
+    std::unique_ptr<aura::Window> w1(
+        CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, gfx::Rect(10, 10, 200, 50)));
+    std::unique_ptr<aura::Window> w2(
+        CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, gfx::Rect(10, 60, 200, 50)));
     std::unique_ptr<aura::Window> w3(CreateFixedSizeNonMaximizableWindow(
-        aura::client::WINDOW_TYPE_NORMAL, gfx::Rect(20, 140, 100, 100)));
+        ui::wm::WINDOW_TYPE_NORMAL, gfx::Rect(20, 140, 100, 100)));
     // Check that the windows got automatically maximized as well.
     EXPECT_EQ(3, manager->GetNumberOfManagedWindows());
     EXPECT_TRUE(wm::GetWindowState(w1.get())->IsMaximized());
@@ -630,7 +627,7 @@ TEST_F(MaximizeModeWindowManagerTest, MaximizedShouldRemainMaximized) {
   // Bounds for windows we know can be controlled.
   gfx::Rect rect(10, 10, 200, 50);
   std::unique_ptr<aura::Window> window(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::GetWindowState(window.get())->Maximize();
 
   // Create the manager and make sure that the window gets detected.
@@ -653,11 +650,11 @@ TEST_F(MaximizeModeWindowManagerTest, MinimizedWindowBehavior) {
   // Bounds for windows we know can be controlled.
   gfx::Rect rect(10, 10, 200, 50);
   std::unique_ptr<aura::Window> initially_minimized_window(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   std::unique_ptr<aura::Window> initially_normal_window(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   std::unique_ptr<aura::Window> initially_maximized_window(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::GetWindowState(initially_minimized_window.get())->Minimize();
   wm::GetWindowState(initially_maximized_window.get())->Maximize();
 
@@ -696,14 +693,14 @@ TEST_F(MaximizeModeWindowManagerTest, DesktopSizeChangeMovesUnmaximizable) {
   UpdateDisplay("400x400");
   // This window will move because it does not fit the new bounds.
   gfx::Rect rect(20, 300, 100, 100);
-  std::unique_ptr<aura::Window> window1(CreateFixedSizeNonMaximizableWindow(
-      aura::client::WINDOW_TYPE_NORMAL, rect));
+  std::unique_ptr<aura::Window> window1(
+      CreateFixedSizeNonMaximizableWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   EXPECT_EQ(rect.ToString(), window1->bounds().ToString());
 
   // This window will not move because it does fit the new bounds.
   gfx::Rect rect2(20, 140, 100, 100);
-  std::unique_ptr<aura::Window> window2(CreateFixedSizeNonMaximizableWindow(
-      aura::client::WINDOW_TYPE_NORMAL, rect2));
+  std::unique_ptr<aura::Window> window2(
+      CreateFixedSizeNonMaximizableWindow(ui::wm::WINDOW_TYPE_NORMAL, rect2));
 
   // Turning on the manager will reposition (but not resize) the window.
   MaximizeModeWindowManager* manager = CreateMaximizeModeWindowManager();
@@ -731,8 +728,8 @@ TEST_F(MaximizeModeWindowManagerTest, DesktopSizeChangeMovesUnmaximizable) {
 // something else and back while in maximize mode.
 TEST_F(MaximizeModeWindowManagerTest, SizeChangeReturnWindowToOriginalPos) {
   gfx::Rect rect(20, 140, 100, 100);
-  std::unique_ptr<aura::Window> window(CreateFixedSizeNonMaximizableWindow(
-      aura::client::WINDOW_TYPE_NORMAL, rect));
+  std::unique_ptr<aura::Window> window(
+      CreateFixedSizeNonMaximizableWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
 
   // Turning on the manager will reposition (but not resize) the window.
   MaximizeModeWindowManager* manager = CreateMaximizeModeWindowManager();
@@ -760,21 +757,21 @@ TEST_F(MaximizeModeWindowManagerTest, SizeChangeReturnWindowToOriginalPos) {
 // order of windows.
 TEST_F(MaximizeModeWindowManagerTest, ModeChangeKeepsMRUOrder) {
   gfx::Rect rect(20, 140, 100, 100);
-  std::unique_ptr<aura::Window> w1(CreateFixedSizeNonMaximizableWindow(
-      aura::client::WINDOW_TYPE_NORMAL, rect));
+  std::unique_ptr<aura::Window> w1(
+      CreateFixedSizeNonMaximizableWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   std::unique_ptr<aura::Window> w2(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   std::unique_ptr<aura::Window> w3(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
-  std::unique_ptr<aura::Window> w4(CreateFixedSizeNonMaximizableWindow(
-      aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
+  std::unique_ptr<aura::Window> w4(
+      CreateFixedSizeNonMaximizableWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   std::unique_ptr<aura::Window> w5(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
 
   // The windows should be in the reverse order of creation in the MRU list.
   {
-    aura::Window::Windows windows =
-        Shell::Get()->mru_window_tracker()->BuildMruWindowList();
+    aura::Window::Windows windows = WmWindow::ToAuraWindows(
+        Shell::Get()->mru_window_tracker()->BuildMruWindowList());
 
     EXPECT_EQ(w1.get(), windows[4]);
     EXPECT_EQ(w2.get(), windows[3]);
@@ -788,8 +785,8 @@ TEST_F(MaximizeModeWindowManagerTest, ModeChangeKeepsMRUOrder) {
   ASSERT_TRUE(manager);
   EXPECT_EQ(5, manager->GetNumberOfManagedWindows());
   {
-    aura::Window::Windows windows =
-        Shell::Get()->mru_window_tracker()->BuildMruWindowList();
+    aura::Window::Windows windows = WmWindow::ToAuraWindows(
+        Shell::Get()->mru_window_tracker()->BuildMruWindowList());
     // We do not test maximization here again since that was done already.
     EXPECT_EQ(w1.get(), windows[4]);
     EXPECT_EQ(w2.get(), windows[3]);
@@ -801,8 +798,8 @@ TEST_F(MaximizeModeWindowManagerTest, ModeChangeKeepsMRUOrder) {
   // Destroying should still keep the order.
   DestroyMaximizeModeWindowManager();
   {
-    aura::Window::Windows windows =
-        Shell::Get()->mru_window_tracker()->BuildMruWindowList();
+    aura::Window::Windows windows = WmWindow::ToAuraWindows(
+        Shell::Get()->mru_window_tracker()->BuildMruWindowList());
     // We do not test maximization here again since that was done already.
     EXPECT_EQ(w1.get(), windows[4]);
     EXPECT_EQ(w2.get(), windows[3]);
@@ -816,7 +813,7 @@ TEST_F(MaximizeModeWindowManagerTest, ModeChangeKeepsMRUOrder) {
 TEST_F(MaximizeModeWindowManagerTest, IgnoreRestoreStateChages) {
   gfx::Rect rect(20, 140, 100, 100);
   std::unique_ptr<aura::Window> w1(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::WindowState* window_state = wm::GetWindowState(w1.get());
   CreateMaximizeModeWindowManager();
   EXPECT_TRUE(window_state->IsMaximized());
@@ -833,7 +830,7 @@ TEST_F(MaximizeModeWindowManagerTest, IgnoreRestoreStateChages) {
 TEST_F(MaximizeModeWindowManagerTest, TestMinimize) {
   gfx::Rect rect(10, 10, 100, 100);
   std::unique_ptr<aura::Window> window(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::WindowState* window_state = wm::GetWindowState(window.get());
   EXPECT_EQ(rect.ToString(), window->bounds().ToString());
   Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
@@ -865,10 +862,10 @@ TEST_F(MaximizeModeWindowManagerTest, TestMinimize) {
 TEST_F(MaximizeModeWindowManagerTest, KeepFullScreenModeOn) {
   gfx::Rect rect(20, 140, 100, 100);
   std::unique_ptr<aura::Window> w1(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::WindowState* window_state = wm::GetWindowState(w1.get());
 
-  Shelf* shelf = GetPrimaryShelf();
+  WmShelf* shelf = GetPrimaryShelf();
 
   // Allow the shelf to hide.
   shelf->SetAutoHideBehavior(SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS);
@@ -910,7 +907,7 @@ TEST_F(MaximizeModeWindowManagerTest, KeepPinnedModeOn_Case1) {
   // then unpin.
   gfx::Rect rect(20, 140, 100, 100);
   std::unique_ptr<aura::Window> w1(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::WindowState* window_state = wm::GetWindowState(w1.get());
   EXPECT_FALSE(window_state->IsPinned());
 
@@ -941,7 +938,7 @@ TEST_F(MaximizeModeWindowManagerTest, KeepPinnedModeOn_Case2) {
   // mode, then unpin.
   gfx::Rect rect(20, 140, 100, 100);
   std::unique_ptr<aura::Window> w1(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::WindowState* window_state = wm::GetWindowState(w1.get());
   EXPECT_FALSE(window_state->IsPinned());
 
@@ -980,7 +977,7 @@ TEST_F(MaximizeModeWindowManagerTest, KeepPinnedModeOn_Case3) {
   // exit from the maximized mode, then unpin.
   gfx::Rect rect(20, 140, 100, 100);
   std::unique_ptr<aura::Window> w1(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::WindowState* window_state = wm::GetWindowState(w1.get());
   EXPECT_FALSE(window_state->IsPinned());
 
@@ -1019,7 +1016,7 @@ TEST_F(MaximizeModeWindowManagerTest, KeepPinnedModeOn_Case4) {
   // mode, enter back to the maximized mode, then unpin.
   gfx::Rect rect(20, 140, 100, 100);
   std::unique_ptr<aura::Window> w1(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::WindowState* window_state = wm::GetWindowState(w1.get());
   EXPECT_FALSE(window_state->IsPinned());
 
@@ -1060,10 +1057,10 @@ TEST_F(MaximizeModeWindowManagerTest, KeepPinnedModeOn_Case4) {
 TEST_F(MaximizeModeWindowManagerTest, MinimizePreservedAfterLeavingFullscreen) {
   gfx::Rect rect(20, 140, 100, 100);
   std::unique_ptr<aura::Window> w1(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::WindowState* window_state = wm::GetWindowState(w1.get());
 
-  Shelf* shelf = GetPrimaryShelf();
+  WmShelf* shelf = GetPrimaryShelf();
 
   // Allow the shelf to hide and enter full screen.
   shelf->SetAutoHideBehavior(SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS);
@@ -1087,10 +1084,10 @@ TEST_F(MaximizeModeWindowManagerTest, MinimizePreservedAfterLeavingFullscreen) {
 TEST_F(MaximizeModeWindowManagerTest, AllowFullScreenMode) {
   gfx::Rect rect(20, 140, 100, 100);
   std::unique_ptr<aura::Window> w1(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::WindowState* window_state = wm::GetWindowState(w1.get());
 
-  Shelf* shelf = GetPrimaryShelf();
+  WmShelf* shelf = GetPrimaryShelf();
 
   // Allow the shelf to hide.
   shelf->SetAutoHideBehavior(SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS);
@@ -1129,7 +1126,7 @@ TEST_F(MaximizeModeWindowManagerTest,
 
   gfx::Rect rect(20, 140, 100, 100);
   std::unique_ptr<aura::Window> w1(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::WindowState* window_state = wm::GetWindowState(w1.get());
   wm::WMEvent event_full_screen(wm::WM_EVENT_TOGGLE_FULLSCREEN);
   window_state->OnWMEvent(&event_full_screen);
@@ -1146,7 +1143,7 @@ TEST_F(MaximizeModeWindowManagerTest,
        FullScreenModeRemainsThroughMaximizeModeSwitch) {
   gfx::Rect rect(20, 140, 100, 100);
   std::unique_ptr<aura::Window> w1(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::WindowState* window_state = wm::GetWindowState(w1.get());
   wm::WMEvent event_full_screen(wm::WM_EVENT_TOGGLE_FULLSCREEN);
   window_state->OnWMEvent(&event_full_screen);
@@ -1164,7 +1161,7 @@ TEST_F(MaximizeModeWindowManagerTest,
   CreateMaximizeModeWindowManager();
   gfx::Rect rect;
   std::unique_ptr<aura::Window> w1(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   w1->Show();
   wm::WindowState* window_state = wm::GetWindowState(w1.get());
   EXPECT_TRUE(window_state->IsMaximized());
@@ -1193,7 +1190,7 @@ TEST_F(MaximizeModeWindowManagerTest,
 TEST_F(MaximizeModeWindowManagerTest, SnapModeTests) {
   gfx::Rect rect(20, 140, 100, 100);
   std::unique_ptr<aura::Window> w1(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::WindowState* window_state = wm::GetWindowState(w1.get());
   wm::WMEvent event_left(wm::WM_EVENT_SNAP_LEFT);
   wm::WMEvent event_right(wm::WM_EVENT_SNAP_RIGHT);
@@ -1220,8 +1217,8 @@ TEST_F(MaximizeModeWindowManagerTest, SnapModeTests) {
 // Check that non maximizable windows cannot be dragged by the user.
 TEST_F(MaximizeModeWindowManagerTest, TryToDesktopSizeDragUnmaximizable) {
   gfx::Rect rect(10, 10, 100, 100);
-  std::unique_ptr<aura::Window> window(CreateFixedSizeNonMaximizableWindow(
-      aura::client::WINDOW_TYPE_NORMAL, rect));
+  std::unique_ptr<aura::Window> window(
+      CreateFixedSizeNonMaximizableWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   EXPECT_EQ(rect.ToString(), window->bounds().ToString());
 
   // 1. Move the mouse over the caption and check that dragging the window does
@@ -1273,9 +1270,9 @@ TEST_F(MaximizeModeWindowManagerTest, ExitsOverview) {
   gfx::Rect rect1(10, 10, 200, 50);
   gfx::Rect rect2(10, 60, 200, 50);
   std::unique_ptr<aura::Window> w1(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect1));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect1));
   std::unique_ptr<aura::Window> w2(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect2));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect2));
 
   WindowSelectorController* window_selector_controller =
       Shell::Get()->window_selector_controller();
@@ -1301,9 +1298,9 @@ TEST_F(MaximizeModeWindowManagerTest, ExitFullScreenWithEdgeSwipeFromTop) {
 
   gfx::Rect rect(10, 10, 200, 50);
   std::unique_ptr<aura::Window> background_window(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   std::unique_ptr<aura::Window> foreground_window(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::WindowState* background_window_state =
       wm::GetWindowState(background_window.get());
   wm::WindowState* foreground_window_state =
@@ -1345,9 +1342,9 @@ TEST_F(MaximizeModeWindowManagerTest, ExitFullScreenWithEdgeSwipeFromBottom) {
 
   gfx::Rect rect(10, 10, 200, 50);
   std::unique_ptr<aura::Window> background_window(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   std::unique_ptr<aura::Window> foreground_window(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::WindowState* background_window_state =
       wm::GetWindowState(background_window.get());
   wm::WindowState* foreground_window_state =
@@ -1383,9 +1380,9 @@ TEST_F(MaximizeModeWindowManagerTest, ExitFullScreenWithEdgeTouchAtTop) {
 
   gfx::Rect rect(10, 10, 200, 50);
   std::unique_ptr<aura::Window> background_window(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   std::unique_ptr<aura::Window> foreground_window(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::WindowState* background_window_state =
       wm::GetWindowState(background_window.get());
   wm::WindowState* foreground_window_state =
@@ -1423,9 +1420,9 @@ TEST_F(MaximizeModeWindowManagerTest, ExitFullScreenWithEdgeTouchAtBottom) {
 
   gfx::Rect rect(10, 10, 200, 50);
   std::unique_ptr<aura::Window> background_window(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   std::unique_ptr<aura::Window> foreground_window(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
   wm::WindowState* background_window_state =
       wm::GetWindowState(background_window.get());
   wm::WindowState* foreground_window_state =
@@ -1460,8 +1457,8 @@ TEST_F(MaximizeModeWindowManagerTest, ExitFullScreenWithEdgeTouchAtBottom) {
 // Test that an edge swipe from the top on an immersive mode window will not end
 // full screen mode.
 TEST_F(MaximizeModeWindowManagerTest, NoExitImmersiveModeWithEdgeSwipeFromTop) {
-  std::unique_ptr<aura::Window> window(CreateWindow(
-      aura::client::WINDOW_TYPE_NORMAL, gfx::Rect(10, 10, 200, 50)));
+  std::unique_ptr<aura::Window> window(
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, gfx::Rect(10, 10, 200, 50)));
   wm::WindowState* window_state = wm::GetWindowState(window.get());
   wm::ActivateWindow(window.get());
   CreateMaximizeModeWindowManager();
@@ -1490,8 +1487,8 @@ TEST_F(MaximizeModeWindowManagerTest, NoExitImmersiveModeWithEdgeSwipeFromTop) {
 // Test that an edge swipe from the bottom will not end immersive mode.
 TEST_F(MaximizeModeWindowManagerTest,
        NoExitImmersiveModeWithEdgeSwipeFromBottom) {
-  std::unique_ptr<aura::Window> window(CreateWindow(
-      aura::client::WINDOW_TYPE_NORMAL, gfx::Rect(10, 10, 200, 50)));
+  std::unique_ptr<aura::Window> window(
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, gfx::Rect(10, 10, 200, 50)));
   wm::WindowState* window_state = wm::GetWindowState(window.get());
   wm::ActivateWindow(window.get());
   CreateMaximizeModeWindowManager();
@@ -1527,9 +1524,9 @@ TEST_F(MaximizeModeWindowManagerTest, AlwaysOnTopWindows) {
 
   // Create two windows with the always-on-top property.
   std::unique_ptr<aura::Window> w1(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect1));
-  std::unique_ptr<aura::Window> w2(CreateFixedSizeNonMaximizableWindow(
-      aura::client::WINDOW_TYPE_NORMAL, rect2));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect1));
+  std::unique_ptr<aura::Window> w2(
+      CreateFixedSizeNonMaximizableWindow(ui::wm::WINDOW_TYPE_NORMAL, rect2));
   w1->SetProperty(aura::client::kAlwaysOnTopKey, true);
   w2->SetProperty(aura::client::kAlwaysOnTopKey, true);
   EXPECT_FALSE(wm::GetWindowState(w1.get())->IsMaximized());
@@ -1595,7 +1592,7 @@ TEST_F(MaximizeModeWindowManagerTest, AlwaysOnTopWindows) {
 TEST_F(MaximizeModeWindowManagerTest, DontMaximizeClientManagedWindows) {
   gfx::Rect rect(10, 10, 200, 50);
   std::unique_ptr<aura::Window> window(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
 
   wm::GetWindowState(window.get())->set_allow_set_bounds_direct(true);
 
@@ -1656,7 +1653,7 @@ TEST_F(MaximizeModeWindowManagerTest, StateTyepChange) {
   TestObserver observer;
   gfx::Rect rect(10, 10, 200, 50);
   std::unique_ptr<aura::Window> window(
-      CreateWindow(aura::client::WINDOW_TYPE_NORMAL, rect));
+      CreateWindow(ui::wm::WINDOW_TYPE_NORMAL, rect));
 
   CreateMaximizeModeWindowManager();
 

@@ -61,10 +61,10 @@
 #include "third_party/WebKit/public/platform/WebCompositeAndReadbackAsyncCallback.h"
 #include "third_party/WebKit/public/platform/WebCompositorMutatorClient.h"
 #include "third_party/WebKit/public/platform/WebLayoutAndPaintAsyncCallback.h"
-#include "third_party/WebKit/public/platform/WebRuntimeFeatures.h"
 #include "third_party/WebKit/public/platform/WebSize.h"
 #include "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h"
 #include "third_party/WebKit/public/web/WebKit.h"
+#include "third_party/WebKit/public/web/WebRuntimeFeatures.h"
 #include "third_party/WebKit/public/web/WebSelection.h"
 #include "ui/gfx/switches.h"
 #include "ui/gl/gl_switches.h"
@@ -222,11 +222,6 @@ gfx::Size CalculateDefaultTileSize(float initial_device_scale_factor,
 #endif
 
   return gfx::Size(default_tile_size, default_tile_size);
-}
-
-bool IsRunningInMash() {
-  const base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
-  return cmdline->HasSwitch(switches::kIsRunningInMash);
 }
 
 // Check cc::BrowserControlsState, and blink::WebBrowserControlsState
@@ -393,7 +388,7 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
       cmd.HasSwitch(switches::kEnableColorCorrectRendering);
   settings.renderer_settings.enable_color_correct_rendering =
       cmd.HasSwitch(switches::kEnableColorCorrectRendering);
-  settings.buffer_to_texture_target_map =
+  settings.renderer_settings.buffer_to_texture_target_map =
       compositor_deps->GetBufferToTextureTargetMap();
 
   // Build LayerTreeSettings from command line args.
@@ -427,7 +422,6 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
   settings.initial_debug_state.SetRecordRenderingStats(
       cmd.HasSwitch(cc::switches::kEnableGpuBenchmarking));
   settings.enable_surface_synchronization =
-      IsRunningInMash() ||
       cmd.HasSwitch(cc::switches::kEnableSurfaceSynchronization);
 
   if (cmd.HasSwitch(cc::switches::kSlowDownRasterScaleFactor)) {
@@ -477,7 +471,7 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
     // and are disabled for Android WebView as it doesn't support the format.
     if (!cmd.HasSwitch(switches::kDisableRGBA4444Textures) &&
         base::SysInfo::AmountOfPhysicalMemoryMB() <= 512)
-      settings.preferred_tile_format = cc::RGBA_4444;
+      settings.renderer_settings.preferred_tile_format = cc::RGBA_4444;
   } else {
     // On other devices we have increased memory excessively to avoid
     // raster-on-demand already, so now we reserve 50% _only_ to avoid
@@ -528,11 +522,11 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
 
   if (cmd.HasSwitch(switches::kEnableRGBA4444Textures) &&
       !cmd.HasSwitch(switches::kDisableRGBA4444Textures)) {
-    settings.preferred_tile_format = cc::RGBA_4444;
+    settings.renderer_settings.preferred_tile_format = cc::RGBA_4444;
   }
 
   if (cmd.HasSwitch(cc::switches::kEnableTileCompression)) {
-    settings.preferred_tile_format = cc::ETC1;
+    settings.renderer_settings.preferred_tile_format = cc::ETC1;
   }
 
   settings.max_staging_buffer_usage_in_bytes = 32 * 1024 * 1024;  // 32MB

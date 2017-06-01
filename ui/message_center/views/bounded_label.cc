@@ -316,7 +316,7 @@ int BoundedLabel::GetBaseline() const {
   return label_->GetBaseline();
 }
 
-gfx::Size BoundedLabel::CalculatePreferredSize() const {
+gfx::Size BoundedLabel::GetPreferredSize() const {
   return visible() ? label_->GetSizeForWidthAndLines(-1, -1) : gfx::Size();
 }
 

@@ -9,14 +9,12 @@
 #include "ash/devtools/widget_element.h"
 #include "ash/devtools/window_element.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/root_window_controller.h"
+#include "ash/shell.h"
 #include "components/ui_devtools/devtools_server.h"
 #include "third_party/skia/include/core/SkColor.h"
-#include "ui/aura/client/screen_position_client.h"
-#include "ui/aura/env.h"
 #include "ui/aura/window.h"
-#include "ui/aura/window_tree_host.h"
 #include "ui/display/display.h"
-#include "ui/display/screen.h"
 #include "ui/views/background.h"
 #include "ui/views/border.h"
 #include "ui/views/view.h"
@@ -118,12 +116,9 @@ std::unique_ptr<DOM::Node> BuildDomNodeFromUIElement(UIElement* root) {
 
 }  // namespace
 
-AshDevToolsDOMAgent::AshDevToolsDOMAgent() : is_building_tree_(false) {
-  aura::Env::GetInstance()->AddObserver(this);
-}
+AshDevToolsDOMAgent::AshDevToolsDOMAgent() : is_building_tree_(false) {}
 
 AshDevToolsDOMAgent::~AshDevToolsDOMAgent() {
-  aura::Env::GetInstance()->RemoveObserver(this);
   Reset();
 }
 
@@ -214,10 +209,6 @@ UIElement* AshDevToolsDOMAgent::GetElementFromNodeId(int node_id) {
   return node_id_to_ui_element_[node_id];
 }
 
-void AshDevToolsDOMAgent::OnHostInitialized(aura::WindowTreeHost* host) {
-  root_windows_.push_back(host->window());
-}
-
 void AshDevToolsDOMAgent::OnNodeBoundsChanged(int node_id) {
   for (auto& observer : observers_)
     observer.OnNodeBoundsChanged(node_id);
@@ -230,12 +221,11 @@ AshDevToolsDOMAgent::BuildInitialTree() {
 
   // TODO(thanhph): Root of UIElement tree shoudn't be WindowElement
   // but maybe a new different element type.
-  window_element_root_ =
-      base::MakeUnique<WindowElement>(nullptr, this, nullptr);
+  window_element_root_ = new WindowElement(nullptr, this, nullptr);
 
-  for (aura::Window* window : root_windows()) {
+  for (aura::Window* window : Shell::GetAllRootWindows()) {
     UIElement* window_element =
-        new WindowElement(window, this, window_element_root_.get());
+        new WindowElement(window, this, window_element_root_);
 
     children->addItem(BuildTreeForUIElement(window_element));
     window_element_root_->AddChild(window_element);
@@ -333,7 +323,7 @@ void AshDevToolsDOMAgent::RemoveDomNode(UIElement* ui_element) {
 void AshDevToolsDOMAgent::Reset() {
   is_building_tree_ = false;
   widget_for_highlighting_.reset();
-  window_element_root_.reset();
+  delete window_element_root_;
   node_id_to_ui_element_.clear();
   observers_.Clear();
 }
@@ -347,6 +337,10 @@ void AshDevToolsDOMAgent::InitializeHighlightingWidget() {
   params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
   params.opacity = views::Widget::InitParams::WindowOpacity::TRANSLUCENT_WINDOW;
   params.name = "HighlightingWidget";
+  Shell::GetPrimaryRootWindowController()
+      ->ConfigureWidgetInitParamsForContainer(widget_for_highlighting_.get(),
+                                              kShellWindowId_OverlayContainer,
+                                              &params);
   params.keep_on_top = true;
   params.accept_events = false;
   widget_for_highlighting_->Init(params);
@@ -364,18 +358,8 @@ void AshDevToolsDOMAgent::UpdateHighlight(
   display::Display display =
       display::Screen::GetScreen()->GetDisplayNearestWindow(
           window_and_bounds.first);
-  aura::Window* root = window_and_bounds.first->GetRootWindow();
-  if (root != widget_for_highlighting_->GetNativeWindow()->GetRootWindow())
-    root->AddChild(widget_for_highlighting_->GetNativeWindow());
-
-  aura::client::ScreenPositionClient* screen_position_client =
-      aura::client::GetScreenPositionClient(root);
-
-  gfx::Rect bounds(window_and_bounds.second);
-  gfx::Point origin = bounds.origin();
-  screen_position_client->ConvertPointFromScreen(root, &origin);
-  bounds.set_origin(origin);
-  widget_for_highlighting_->GetNativeWindow()->SetBounds(bounds);
+  widget_for_highlighting_->GetNativeWindow()->SetBoundsInScreen(
+      window_and_bounds.second, display);
 }
 
 ui::devtools::protocol::Response AshDevToolsDOMAgent::HighlightNode(

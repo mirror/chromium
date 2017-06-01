@@ -35,7 +35,6 @@
 #include "ui/gl/android/surface_texture.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
-#include "ui/gl/gl_fence_egl.h"
 #include "ui/gl/gl_surface.h"
 #include "ui/gl/init/gl_factory.h"
 
@@ -83,19 +82,9 @@ static constexpr int kViewportListHeadlockedOffset = 2;
 // 2-3 frames.
 static constexpr unsigned kPoseRingBufferSize = 8;
 
-// Number of frames to use for sliding averages for pose timings,
-// as used for estimating prediction times.
-static constexpr unsigned kWebVRSlidingAverageSize = 5;
-
 // Criteria for considering holding the app button in combination with
 // controller movement as a gesture.
 static constexpr float kMinAppButtonGestureAngleRad = 0.25;
-
-// Interval for checking for the WebVR rendering GL fence. Ideally we'd want to
-// wait for completion with a short timeout, but GLFenceEGL doesn't currently
-// support that, see TODO(klausw,crbug.com/726026).
-static constexpr base::TimeDelta kWebVRFenceCheckInterval =
-    base::TimeDelta::FromMicroseconds(250);
 
 static constexpr gfx::PointF kInvalidTargetPoint =
     gfx::PointF(std::numeric_limits<float>::max(),
@@ -234,9 +223,9 @@ VrShellGl::VrShellGl(VrBrowserInterface* browser,
       binding_(this),
       browser_(browser),
       scene_(scene),
+#if DCHECK_IS_ON()
       fps_meter_(new FPSMeter()),
-      webvr_js_time_(new SlidingAverage(kWebVRSlidingAverageSize)),
-      webvr_render_time_(new SlidingAverage(kWebVRSlidingAverageSize)),
+#endif
       weak_ptr_factory_(this) {
   GvrInit(gvr_api);
 }
@@ -288,7 +277,6 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
     ForceExitVr();
     return;
   }
-
   context_ = gl::init::CreateGLContext(nullptr, surface_.get(),
                                        gl::GLContextAttribs());
   if (!context_.get()) {
@@ -400,6 +388,13 @@ void VrShellGl::SubmitWebVRFrame(int16_t frame_index,
     // OnWebVRFrameAvailable where we'd normally report that.
     submit_client_->OnSubmitFrameRendered();
   }
+
+  TRACE_EVENT0("gpu", "VrShellGl::glFinish");
+  // This is a load-bearing glFinish, please don't remove it without
+  // before/after timing comparisons. Goal is to clear the GPU queue
+  // of the native GL context to avoid stalls later in GVR frame
+  // acquire/submit.
+  glFinish();
 }
 
 void VrShellGl::SetSubmitClient(
@@ -428,6 +423,15 @@ void VrShellGl::OnWebVRFrameAvailable() {
   TRACE_EVENT1("gpu", "VrShellGl::OnWebVRFrameAvailable", "frame", frame_index);
   pending_frames_.pop();
 
+  // It is legal for the WebVR client to submit a new frame now, since
+  // we've consumed the image. TODO(klausw): would timing be better if
+  // we move the "rendered" notification after draw, or suppress
+  // the next vsync until that's done?
+
+  if (submit_client_) {
+    submit_client_->OnSubmitFrameRendered();
+  }
+
   DrawFrame(frame_index);
 }
 
@@ -450,11 +454,6 @@ void VrShellGl::GvrInit(gvr_context* gvr_api) {
   }
   UMA_HISTOGRAM_ENUMERATION("VRViewerType", static_cast<int>(viewerType),
                             static_cast<int>(ViewerType::VIEWER_TYPE_MAX));
-
-  cardboard_ = (viewerType == ViewerType::CARDBOARD);
-  if (cardboard_ && web_vr_mode_) {
-    browser_->ToggleCardboardGamepad(true);
-  }
 }
 
 void VrShellGl::InitializeRenderer() {
@@ -539,8 +538,7 @@ void VrShellGl::UpdateController(const gfx::Vector3dF& head_direction) {
   controller_->UpdateState(head_direction);
   pointer_start_ = controller_->GetPointerStart();
 
-  device::GvrGamepadData controller_data = controller_->GetGamepadData();
-  browser_->UpdateGamepadData(controller_data);
+  browser_->UpdateGamepadData(controller_->GetGamepadData());
 }
 
 void VrShellGl::HandleControllerInput(const gfx::Vector3dF& head_direction) {
@@ -1054,43 +1052,12 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
     frame.Unbind();
   }
 
-  if (ShouldDrawWebVr() && surfaceless_rendering_) {
-    // Continue with submit once a GL fence signals that current drawing
-    // operations have completed.
-    std::unique_ptr<gl::GLFence> fence = base::MakeUnique<gl::GLFenceEGL>();
-    task_runner_->PostDelayedTask(
-        FROM_HERE,
-        base::Bind(&VrShellGl::DrawFrameSubmitWhenReady,
-                   weak_ptr_factory_.GetWeakPtr(), frame_index, frame.release(),
-                   head_pose, base::Passed(&fence)),
-        kWebVRFenceCheckInterval);
-  } else {
-    // Continue with submit immediately.
-    DrawFrameSubmitWhenReady(frame_index, frame.release(), head_pose, nullptr);
+  {
+    TRACE_EVENT0("gpu", "VrShellGl::Submit");
+    gvr::Mat4f mat;
+    MatfToGvrMat(head_pose, &mat);
+    frame.Submit(*buffer_viewport_list_, mat);
   }
-}
-
-void VrShellGl::DrawFrameSubmitWhenReady(int16_t frame_index,
-                                         gvr_frame* frame_ptr,
-                                         const vr::Mat4f& head_pose,
-                                         std::unique_ptr<gl::GLFence> fence) {
-  if (fence && !fence->HasCompleted()) {
-    task_runner_->PostDelayedTask(
-        FROM_HERE,
-        base::Bind(&VrShellGl::DrawFrameSubmitWhenReady,
-                   weak_ptr_factory_.GetWeakPtr(), frame_index, frame_ptr,
-                   head_pose, base::Passed(&fence)),
-        kWebVRFenceCheckInterval);
-    return;
-  }
-
-  TRACE_EVENT1("gpu", "VrShellGl::DrawFrameSubmitWhenReady", "frame",
-               frame_index);
-
-  gvr::Frame frame(frame_ptr);
-  gvr::Mat4f mat;
-  MatfToGvrMat(head_pose, &mat);
-  frame.Submit(*buffer_viewport_list_, mat);
 
   // No need to swap buffers for surfaceless rendering.
   if (!surfaceless_rendering_) {
@@ -1099,19 +1066,12 @@ void VrShellGl::DrawFrameSubmitWhenReady(int16_t frame_index,
     surface_->SwapBuffers();
   }
 
-  // Report rendering completion to WebVR so that it's permitted to submit
-  // a fresh frame. We could do this earlier, as soon as the frame got pulled
-  // off the transfer surface, but that appears to result in overstuffed
-  // buffers.
-  if (submit_client_) {
-    submit_client_->OnSubmitFrameRendered();
-  }
-
+#if DCHECK_IS_ON()
   // After saving the timestamp, fps will be available via GetFPS().
   // TODO(vollick): enable rendering of this framerate in a HUD.
-  fps_meter_->AddFrame(base::TimeTicks::Now());
+  fps_meter_->AddFrame(current_time);
   DVLOG(1) << "fps: " << fps_meter_->GetFPS();
-  TRACE_COUNTER1("gpu", "WebVR FPS", fps_meter_->GetFPS());
+#endif
 }
 
 void VrShellGl::DrawWorldElements(const vr::Mat4f& head_pose) {
@@ -1131,11 +1091,9 @@ void VrShellGl::DrawWorldElements(const vr::Mat4f& head_pose) {
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
 
-    const SkColor backgroundColor = scene_->GetBackgroundColor();
-    glClearColor(SkColorGetR(backgroundColor) / 255.0,
-                 SkColorGetG(backgroundColor) / 255.0,
-                 SkColorGetB(backgroundColor) / 255.0,
-                 SkColorGetA(backgroundColor) / 255.0);
+    const vr::Colorf& backgroundColor = scene_->GetBackgroundColor();
+    glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b,
+                 backgroundColor.a);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   }
   std::vector<const UiElement*> elements = scene_->GetWorldElements();
@@ -1215,8 +1173,8 @@ void VrShellGl::DrawUiView(const vr::Mat4f& head_pose,
 
     DrawElements(view_proj_matrix, sorted_elements, draw_reticle);
     if (draw_reticle) {
-      DrawController(view_proj_matrix);
       DrawLaser(view_proj_matrix);
+      DrawController(view_proj_matrix);
     }
   }
 }
@@ -1261,8 +1219,7 @@ void VrShellGl::DrawElement(const vr::Mat4f& view_proj_matrix,
     case Fill::GRID_GRADIENT: {
       vr_shell_renderer_->GetGradientGridRenderer()->Draw(
           transform, element.edge_color(), element.center_color(),
-          element.grid_color(), element.gridline_count(),
-          element.computed_opacity());
+          element.gridline_count(), element.computed_opacity());
       break;
     }
     case Fill::CONTENT: {
@@ -1445,11 +1402,6 @@ void VrShellGl::OnResume() {
 
 void VrShellGl::SetWebVrMode(bool enabled) {
   web_vr_mode_ = enabled;
-
-  if (cardboard_) {
-    browser_->ToggleCardboardGamepad(enabled);
-  }
-
   if (!enabled) {
     submit_client_.reset();
   }
@@ -1526,22 +1478,19 @@ void VrShellGl::OnRequest(device::mojom::VRVSyncProviderRequest request) {
   binding_.Bind(std::move(request));
 }
 
-void VrShellGl::GetVSync(GetVSyncCallback callback) {
-  // In surfaceless (reprojecting) rendering, stay locked
-  // to vsync intervals. Otherwise, for legacy Cardboard mode,
-  // run requested animation frames now if it missed a vsync.
-  if (surfaceless_rendering_ || !pending_vsync_) {
+void VrShellGl::GetVSync(const GetVSyncCallback& callback) {
+  if (!pending_vsync_) {
     if (!callback_.is_null()) {
       mojo::ReportBadMessage(
           "Requested VSync before waiting for response to previous request.");
       binding_.Close();
       return;
     }
-    callback_ = std::move(callback);
+    callback_ = callback;
     return;
   }
   pending_vsync_ = false;
-  SendVSync(pending_time_, std::move(callback));
+  SendVSync(pending_time_, callback);
 }
 
 void VrShellGl::UpdateVSyncInterval(int64_t timebase_nanos,
@@ -1557,39 +1506,20 @@ void VrShellGl::ForceExitVr() {
   browser_->ForceExitVr();
 }
 
-int64_t VrShellGl::GetPredictedFrameTimeNanos() {
-  int64_t frame_time_micros = vsync_interval_.InMicroseconds();
-  // If we aim to submit at vsync, that frame will start scanning out
-  // one vsync later. Add a half frame to split the difference between
-  // left and right eye.
-  int64_t js_micros = webvr_js_time_->GetAverageOrDefault(frame_time_micros);
-  int64_t render_micros =
-      webvr_render_time_->GetAverageOrDefault(frame_time_micros);
-  int64_t overhead_micros = frame_time_micros * 3 / 2;
-  int64_t expected_frame_micros = js_micros + render_micros + overhead_micros;
-  TRACE_COUNTER2("gpu", "WebVR frame time (ms)", "javascript",
-                 js_micros / 1000.0, "rendering", render_micros / 1000.0);
-  TRACE_COUNTER1("gpu", "WebVR pose prediction (ms)",
-                 expected_frame_micros / 1000.0);
-  return expected_frame_micros * 1000;
-}
-
-void VrShellGl::SendVSync(base::TimeDelta time, GetVSyncCallback callback) {
+void VrShellGl::SendVSync(base::TimeDelta time,
+                          const GetVSyncCallback& callback) {
   uint8_t frame_index = frame_index_++;
 
   TRACE_EVENT1("input", "VrShellGl::SendVSync", "frame", frame_index);
 
-  int64_t prediction_nanos = GetPredictedFrameTimeNanos();
-
   vr::Mat4f head_mat;
   device::mojom::VRPosePtr pose =
-      device::GvrDelegate::GetVRPosePtrWithNeckModel(gvr_api_.get(), &head_mat,
-                                                     prediction_nanos);
+      device::GvrDelegate::GetVRPosePtrWithNeckModel(gvr_api_.get(), &head_mat);
 
   webvr_head_pose_[frame_index % kPoseRingBufferSize] = head_mat;
 
-  std::move(callback).Run(std::move(pose), time, frame_index,
-                          device::mojom::VRVSyncProvider::Status::SUCCESS);
+  callback.Run(std::move(pose), time, frame_index,
+               device::mojom::VRVSyncProvider::Status::SUCCESS);
 }
 
 void VrShellGl::CreateVRDisplayInfo(

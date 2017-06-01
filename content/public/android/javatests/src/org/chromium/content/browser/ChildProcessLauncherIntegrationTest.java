@@ -4,7 +4,6 @@
 
 package org.chromium.content.browser;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.test.filters.MediumTest;
@@ -43,13 +42,11 @@ public class ChildProcessLauncherIntegrationTest {
         private final List<TestChildProcessConnection> mConnections = new ArrayList<>();
 
         @Override
-        public ChildProcessConnection createConnection(Context context, ComponentName serviceName,
-                boolean bindAsExternalService, Bundle serviceBundle,
-                ChildProcessCreationParams creationParams,
-                ChildProcessConnection.DeathCallback deathCallback) {
-            TestChildProcessConnection connection =
-                    new TestChildProcessConnection(context, serviceName, bindAsExternalService,
-                            serviceBundle, creationParams, deathCallback);
+        public ChildProcessConnection createConnection(ChildSpawnData spawnData,
+                ChildProcessConnection.DeathCallback deathCallback, String serviceClassName) {
+            TestChildProcessConnection connection = new TestChildProcessConnection(
+                    spawnData.getContext(), deathCallback, serviceClassName,
+                    spawnData.getServiceBundle(), spawnData.getCreationParams());
             mConnections.add(connection);
             return connection;
         }
@@ -62,12 +59,11 @@ public class ChildProcessLauncherIntegrationTest {
     private static class TestChildProcessConnection extends ChildProcessConnection {
         private RuntimeException mRemovedBothInitialAndStrongBinding;
 
-        public TestChildProcessConnection(Context context, ComponentName serviceName,
-                boolean bindAsExternalService, Bundle childProcessCommonParameters,
-                ChildProcessCreationParams creationParams,
-                ChildProcessConnection.DeathCallback deathCallback) {
-            super(context, serviceName, bindAsExternalService, childProcessCommonParameters,
-                    creationParams, deathCallback);
+        public TestChildProcessConnection(Context context,
+                ChildProcessConnection.DeathCallback deathCallback, String serviceClassName,
+                Bundle childProcessCommonParameters, ChildProcessCreationParams creationParams) {
+            super(context, deathCallback, serviceClassName, childProcessCommonParameters,
+                    creationParams);
         }
 
         @Override

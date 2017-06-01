@@ -28,8 +28,6 @@ import org.chromium.base.library_loader.LibraryLoader;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.firstrun.FirstRunFlowSequencer;
-import org.chromium.chrome.browser.locale.LocaleManager;
-import org.chromium.chrome.browser.locale.LocaleManager.SearchEnginePromoType;
 import org.chromium.chrome.browser.omnibox.LocationBarLayout;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService.LoadListener;
@@ -152,9 +150,6 @@ public class SearchWidgetProvider extends AppWidgetProvider {
             service.addObserver(sObserver);
             if (!service.isLoaded()) service.load();
         }
-        int[] ids = getDelegate().getAllSearchWidgetIds();
-        LocaleManager.getInstance().recordLocaleBasedSearchWidgetMetrics(
-                ids != null && ids.length > 0);
     }
 
     /** Nukes all cached information and forces all widgets to start with a blank slate. */
@@ -392,10 +387,7 @@ public class SearchWidgetProvider extends AppWidgetProvider {
     static boolean shouldShowFullString() {
         Intent freIntent = FirstRunFlowSequencer.checkIfFirstRunIsNecessary(
                 getDelegate().getContext(), null, false);
-        @SearchEnginePromoType
-        int type = LocaleManager.getInstance().getSearchEnginePromoShowType(true);
-        return freIntent == null && type != LocaleManager.SEARCH_ENGINE_PROMO_SHOW_EXISTING
-                && type != LocaleManager.SEARCH_ENGINE_PROMO_SHOW_NEW;
+        return freIntent == null;
     }
 
     /** Sets an {@link SearchWidgetProviderDelegate} to interact with. */

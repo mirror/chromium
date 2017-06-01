@@ -75,18 +75,26 @@ class EventRouterForwarder;
 }
 
 namespace net {
+class CTPolicyEnforcer;
 class CertVerifier;
 class CTLogVerifier;
 class HostMappingRules;
 class HostResolver;
 class HttpAuthPreferences;
+class HttpServerProperties;
+class HttpTransactionFactory;
+class HttpUserAgentSettings;
 class LoggingNetworkChangeObserver;
+class NetworkDelegate;
 class NetworkQualityEstimator;
 class ProxyConfigService;
+class ProxyService;
 class SSLConfigService;
+class TransportSecurityState;
 class URLRequestContext;
 class URLRequestContextGetter;
 class URLRequestContextStorage;
+class URLRequestJobFactory;
 
 namespace ct {
 class STHObserver;
@@ -138,12 +146,35 @@ class IOThread : public content::BrowserThreadDelegate {
     std::unique_ptr<chrome::android::ExternalDataUseObserver>
         external_data_use_observer;
 #endif  // defined(OS_ANDROID)
+    // The "system" NetworkDelegate, used for Profile-agnostic network events.
+    std::unique_ptr<net::NetworkDelegate> system_network_delegate;
     std::unique_ptr<net::HostResolver> host_resolver;
     std::unique_ptr<net::CertVerifier> cert_verifier;
+    // This TransportSecurityState doesn't load or save any state. It's only
+    // used to enforce pinning for system requests and will only use built-in
+    // pins.
+    std::unique_ptr<net::TransportSecurityState> transport_security_state;
     std::vector<scoped_refptr<const net::CTLogVerifier>> ct_logs;
     std::unique_ptr<net::CTVerifier> cert_transparency_verifier;
+    std::unique_ptr<net::CTPolicyEnforcer> ct_policy_enforcer;
+    scoped_refptr<net::SSLConfigService> ssl_config_service;
     std::unique_ptr<net::HttpAuthHandlerFactory> http_auth_handler_factory;
+    std::unique_ptr<net::HttpServerProperties> http_server_properties;
+    std::unique_ptr<net::ProxyService> proxy_script_fetcher_proxy_service;
+    std::unique_ptr<net::HttpNetworkSession>
+        proxy_script_fetcher_http_network_session;
+    std::unique_ptr<net::HttpTransactionFactory>
+        proxy_script_fetcher_http_transaction_factory;
+    std::unique_ptr<net::URLRequestJobFactory>
+        proxy_script_fetcher_url_request_job_factory;
     std::unique_ptr<net::HttpAuthPreferences> http_auth_preferences;
+    // TODO(willchan): Remove proxy script fetcher context since it's not
+    // necessary now that I got rid of refcounting URLRequestContexts.
+    //
+    // The first URLRequestContext is |system_url_request_context|. We introduce
+    // |proxy_script_fetcher_context| for the second context. It has a direct
+    // ProxyService, since we always directly connect to fetch the PAC script.
+    std::unique_ptr<net::URLRequestContext> proxy_script_fetcher_context;
     std::unique_ptr<net::URLRequestContextStorage>
         system_request_context_storage;
     std::unique_ptr<net::URLRequestContext> system_request_context;
@@ -153,6 +184,7 @@ class IOThread : public content::BrowserThreadDelegate {
         extension_event_router_forwarder;
 #endif
     std::unique_ptr<net::HostMappingRules> host_mapping_rules;
+    std::unique_ptr<net::HttpUserAgentSettings> http_user_agent_settings;
     std::unique_ptr<net::NetworkQualityEstimator> network_quality_estimator;
     std::unique_ptr<
         net::NetworkQualityEstimator::RTTAndThroughputEstimatesObserver>
@@ -271,6 +303,14 @@ class IOThread : public content::BrowserThreadDelegate {
       bool http_09_on_non_default_ports_enabled,
       net::HttpNetworkSession::Params* params);
 
+  // TODO(willchan): Remove proxy script fetcher context since it's not
+  // necessary now that I got rid of refcounting URLRequestContexts.
+  // See IOThread::Globals for details.
+  static net::URLRequestContext* ConstructProxyScriptFetcherContext(
+      IOThread::Globals* globals,
+      const net::HttpNetworkSession::Params& params,
+      net::NetLog* net_log);
+
   // The NetLog is owned by the browser process, to allow logging from other
   // threads during shutdown, but is used most frequently on the IOThread.
   net_log::ChromeNetLog* net_log_;
@@ -291,7 +331,7 @@ class IOThread : public content::BrowserThreadDelegate {
 
   Globals* globals_;
 
-  net::HttpNetworkSession::Params session_params_;
+  net::HttpNetworkSession::Params params_;
 
   // Observer that logs network changes to the ChromeNetLog.
   std::unique_ptr<net::LoggingNetworkChangeObserver> network_change_observer_;

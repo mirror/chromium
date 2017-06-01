@@ -45,19 +45,20 @@ DOMMimeType* DOMMimeTypeArray::item(unsigned index) {
   PluginData* data = GetPluginData();
   if (!data)
     return nullptr;
-  const HeapVector<Member<MimeClassInfo>>& mimes = data->Mimes();
+  const Vector<MimeClassInfo>& mimes = data->Mimes();
   if (index >= mimes.size())
     return nullptr;
-  return DOMMimeType::Create(GetFrame(), *mimes[index]);
+  return DOMMimeType::Create(data, GetFrame(), index);
 }
 
 DOMMimeType* DOMMimeTypeArray::namedItem(const AtomicString& property_name) {
   PluginData* data = GetPluginData();
   if (!data)
     return nullptr;
-  for (const MimeClassInfo* mime : data->Mimes()) {
-    if (mime->Type() == property_name)
-      return DOMMimeType::Create(GetFrame(), *mime);
+  const Vector<MimeClassInfo>& mimes = data->Mimes();
+  for (unsigned i = 0; i < mimes.size(); ++i) {
+    if (mimes[i].type == property_name)
+      return DOMMimeType::Create(data, GetFrame(), i);
   }
   return nullptr;
 }

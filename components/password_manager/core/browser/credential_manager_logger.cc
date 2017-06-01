@@ -60,7 +60,7 @@ void CredentialManagerLogger::LogStoreCredential(const GURL& url,
   log_manager_->LogSavePasswordProgress(s);
 }
 
-void CredentialManagerLogger::LogPreventSilentAccess(const GURL& url) {
+void CredentialManagerLogger::LogRequireUserMediation(const GURL& url) {
   std::string s("CM API sign out: origin=" +
                 SavePasswordProgressLogger::ScrubURL(url));
   log_manager_->LogSavePasswordProgress(s);

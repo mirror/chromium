@@ -133,7 +133,7 @@ void InlineFlowBox::AddToLine(InlineBox* child) {
           should_clear_descendants_have_same_line_height_and_baseline = true;
       }
       if (child_style.HasTextCombine() ||
-          child_style.GetTextEmphasisMark() != TextEmphasisMark::kNone)
+          child_style.GetTextEmphasisMark() != kTextEmphasisMarkNone)
         should_clear_descendants_have_same_line_height_and_baseline = true;
     } else {
       if (child->GetLineLayoutItem().IsBR()) {
@@ -166,7 +166,7 @@ void InlineFlowBox::AddToLine(InlineBox* child) {
       const ComputedStyle& child_style =
           child->GetLineLayoutItem().StyleRef(IsFirstLineStyle());
       if (child_style.LetterSpacing() < 0 || child_style.TextShadow() ||
-          child_style.GetTextEmphasisMark() != TextEmphasisMark::kNone ||
+          child_style.GetTextEmphasisMark() != kTextEmphasisMarkNone ||
           child_style.TextStrokeWidth())
         child->ClearKnownToHaveNoOverflow();
     } else if (child->GetLineLayoutItem().IsAtomicInlineLevel()) {
@@ -794,7 +794,7 @@ void InlineFlowBox::PlaceBoxesInBlockDirection(
         // been done as line layout and not done using inline-block.
         if (GetLineLayoutItem().Style()->IsFlippedLinesWritingMode() ==
             (curr->GetLineLayoutItem().Style()->GetRubyPosition() ==
-             RubyPosition::kAfter))
+             kRubyPositionAfter))
           has_annotations_before = true;
         else
           has_annotations_after = true;
@@ -824,7 +824,7 @@ void InlineFlowBox::PlaceBoxesInBlockDirection(
                 curr->GetLineLayoutItem().StyleRef(IsFirstLineStyle()),
                 emphasis_mark_position)) {
           bool emphasis_mark_is_over =
-              emphasis_mark_position == TextEmphasisPosition::kOver;
+              emphasis_mark_position == kTextEmphasisPositionOver;
           if (emphasis_mark_is_over != curr->GetLineLayoutItem()
                                            .Style(IsFirstLineStyle())
                                            ->IsFlippedLinesWritingMode())
@@ -1047,11 +1047,11 @@ inline void InlineFlowBox::AddTextBoxVisualOverflow(
   float right_glyph_overflow = stroke_overflow + right_glyph_edge;
 
   TextEmphasisPosition emphasis_mark_position;
-  if (style.GetTextEmphasisMark() != TextEmphasisMark::kNone &&
+  if (style.GetTextEmphasisMark() != kTextEmphasisMarkNone &&
       text_box->GetEmphasisMarkPosition(style, emphasis_mark_position)) {
     float emphasis_mark_height =
         style.GetFont().EmphasisMarkHeight(style.TextEmphasisMarkString());
-    if ((emphasis_mark_position == TextEmphasisPosition::kOver) ==
+    if ((emphasis_mark_position == kTextEmphasisPositionOver) ==
         (!style.IsFlippedLinesWritingMode()))
       top_glyph_overflow = std::min(top_glyph_overflow, -emphasis_mark_height);
     else
@@ -1437,7 +1437,7 @@ InlineBox* InlineFlowBox::LastLeafChild() const {
 }
 
 SelectionState InlineFlowBox::GetSelectionState() const {
-  return SelectionState::kNone;
+  return SelectionNone;
 }
 
 bool InlineFlowBox::CanAccommodateEllipsis(bool ltr,
@@ -1513,7 +1513,7 @@ LayoutUnit InlineFlowBox::ComputeOverAnnotationAdjustment(
     if (curr->GetLineLayoutItem().IsAtomicInlineLevel() &&
         curr->GetLineLayoutItem().IsRubyRun() &&
         curr->GetLineLayoutItem().Style()->GetRubyPosition() ==
-            RubyPosition::kBefore) {
+            kRubyPositionBefore) {
       LineLayoutRubyRun ruby_run = LineLayoutRubyRun(curr->GetLineLayoutItem());
       LineLayoutRubyText ruby_text = ruby_run.RubyText();
       if (!ruby_text)
@@ -1546,10 +1546,10 @@ LayoutUnit InlineFlowBox::ComputeOverAnnotationAdjustment(
       const ComputedStyle& style =
           curr->GetLineLayoutItem().StyleRef(IsFirstLineStyle());
       TextEmphasisPosition emphasis_mark_position;
-      if (style.GetTextEmphasisMark() != TextEmphasisMark::kNone &&
+      if (style.GetTextEmphasisMark() != kTextEmphasisMarkNone &&
           ToInlineTextBox(curr)->GetEmphasisMarkPosition(
               style, emphasis_mark_position) &&
-          emphasis_mark_position == TextEmphasisPosition::kOver) {
+          emphasis_mark_position == kTextEmphasisPositionOver) {
         if (!style.IsFlippedLinesWritingMode()) {
           int top_of_emphasis_mark =
               (curr->LogicalTop() - style.GetFont().EmphasisMarkHeight(
@@ -1584,7 +1584,7 @@ LayoutUnit InlineFlowBox::ComputeUnderAnnotationAdjustment(
     if (curr->GetLineLayoutItem().IsAtomicInlineLevel() &&
         curr->GetLineLayoutItem().IsRubyRun() &&
         curr->GetLineLayoutItem().Style()->GetRubyPosition() ==
-            RubyPosition::kAfter) {
+            kRubyPositionAfter) {
       LineLayoutRubyRun ruby_run = LineLayoutRubyRun(curr->GetLineLayoutItem());
       LineLayoutRubyText ruby_text = ruby_run.RubyText();
       if (!ruby_text)
@@ -1616,8 +1616,8 @@ LayoutUnit InlineFlowBox::ComputeUnderAnnotationAdjustment(
     if (curr->IsInlineTextBox()) {
       const ComputedStyle& style =
           curr->GetLineLayoutItem().StyleRef(IsFirstLineStyle());
-      if (style.GetTextEmphasisMark() != TextEmphasisMark::kNone &&
-          style.GetTextEmphasisPosition() == TextEmphasisPosition::kUnder) {
+      if (style.GetTextEmphasisMark() != kTextEmphasisMarkNone &&
+          style.GetTextEmphasisPosition() == kTextEmphasisPositionUnder) {
         if (!style.IsFlippedLinesWritingMode()) {
           LayoutUnit bottom_of_emphasis_mark =
               curr->LogicalBottom() + style.GetFont().EmphasisMarkHeight(

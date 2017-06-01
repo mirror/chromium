@@ -10,19 +10,21 @@
 #include "base/macros.h"
 #include "ui/wm/public/activation_change_observer.h"
 
+namespace aura {
+
+class Window;
+
+namespace client {
+class ActivationClient;
+}
+}
+
 class AppWindowLauncherItemController;
 class ChromeLauncherController;
 class Profile;
 
-namespace aura {
-class Window;
-}
-
-namespace wm {
-class ActivationClient;
-}
-
-class AppWindowLauncherController : public wm::ActivationChangeObserver {
+class AppWindowLauncherController
+    : public aura::client::ActivationChangeObserver {
  public:
   ~AppWindowLauncherController() override;
 
@@ -35,9 +37,10 @@ class AppWindowLauncherController : public wm::ActivationChangeObserver {
   virtual void AdditionalUserAddedToSession(Profile* profile) {}
 
   // Overriden from client::ActivationChangeObserver:
-  void OnWindowActivated(wm::ActivationChangeObserver::ActivationReason reason,
-                         aura::Window* gained_active,
-                         aura::Window* lost_active) override;
+  void OnWindowActivated(
+      aura::client::ActivationChangeObserver::ActivationReason reason,
+      aura::Window* gained_active,
+      aura::Window* lost_active) override;
 
  protected:
   explicit AppWindowLauncherController(ChromeLauncherController* owner);
@@ -50,7 +53,7 @@ class AppWindowLauncherController : public wm::ActivationChangeObserver {
  private:
   // Unowned pointers.
   ChromeLauncherController* owner_;
-  wm::ActivationClient* activation_client_ = nullptr;
+  aura::client::ActivationClient* activation_client_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(AppWindowLauncherController);
 };

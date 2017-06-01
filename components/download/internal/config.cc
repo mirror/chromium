@@ -16,29 +16,29 @@ namespace download {
 namespace {
 
 // Default value for max concurrent downloads configuration.
-const uint32_t kDefaultMaxConcurrentDownloads = 4;
+const int kDefaultMaxConcurrentDownloads = 4;
 
 // Default value for maximum running downloads of the download service.
-const uint32_t kDefaultMaxRunningDownloads = 1;
+const int kDefaultMaxRunningDownloads = 1;
 
 // Default value for maximum scheduled downloads.
-const uint32_t kDefaultMaxScheduledDownloads = 15;
+const int kDefaultMaxScheduledDownloads = 15;
 
 // Default value for maximum retry count.
-const uint32_t kDefaultMaxRetryCount = 5;
+const int kDefaultMaxRetryCount = 5;
 
 // Default value for file keep alive time in minutes, keep the file alive for
 // 12 hours by default.
-const uint32_t kDefaultFileKeepAliveTimeMinutes = 12 * 60;
+const int kDefaultFileKeepAliveTimeMinutes = 12 * 60;
 
 // Helper routine to get Finch experiment parameter. If no Finch seed was found,
 // use the |default_value|. The |name| should match an experiment
 // parameter in Finch server configuration.
-uint32_t GetFinchConfigUInt(const std::string& name, uint32_t default_value) {
+int GetFinchConfigInt(const std::string& name, int default_value) {
   std::string finch_value =
       base::GetFieldTrialParamValueByFeature(kDownloadServiceFeature, name);
-  uint32_t result;
-  return base::StringToUint(finch_value, &result) ? result : default_value;
+  int result;
+  return base::StringToInt(finch_value, &result) ? result : default_value;
 }
 
 }  // namespace
@@ -46,17 +46,16 @@ uint32_t GetFinchConfigUInt(const std::string& name, uint32_t default_value) {
 // static
 std::unique_ptr<Configuration> Configuration::CreateFromFinch() {
   std::unique_ptr<Configuration> config(new Configuration());
-  config->max_concurrent_downloads = GetFinchConfigUInt(
+  config->max_concurrent_downloads = GetFinchConfigInt(
       kMaxConcurrentDownloadsConfig, kDefaultMaxConcurrentDownloads);
-  config->max_running_downloads = GetFinchConfigUInt(
+  config->max_running_downloads = GetFinchConfigInt(
       kMaxRunningDownloadsConfig, kDefaultMaxRunningDownloads);
-  config->max_scheduled_downloads = GetFinchConfigUInt(
+  config->max_scheduled_downloads = GetFinchConfigInt(
       kMaxScheduledDownloadsConfig, kDefaultMaxScheduledDownloads);
   config->max_retry_count =
-      GetFinchConfigUInt(kMaxRetryCountConfig, kDefaultMaxRetryCount);
-  config->file_keep_alive_time =
-      base::TimeDelta::FromMinutes(base::saturated_cast<int>(GetFinchConfigUInt(
-          kFileKeepAliveTimeMinutesConfig, kDefaultFileKeepAliveTimeMinutes)));
+      GetFinchConfigInt(kMaxRetryCountConfig, kDefaultMaxRetryCount);
+  config->file_keep_alive_time = base::TimeDelta::FromMinutes(GetFinchConfigInt(
+      kFileKeepAliveTimeMinutesConfig, kDefaultFileKeepAliveTimeMinutes));
   return config;
 }
 
@@ -65,7 +64,7 @@ Configuration::Configuration()
       max_running_downloads(kDefaultMaxRunningDownloads),
       max_scheduled_downloads(kDefaultMaxScheduledDownloads),
       max_retry_count(kDefaultMaxRetryCount),
-      file_keep_alive_time(base::TimeDelta::FromMinutes(
-          base::saturated_cast<int>(kDefaultFileKeepAliveTimeMinutes))) {}
+      file_keep_alive_time(
+          base::TimeDelta::FromMinutes(kDefaultFileKeepAliveTimeMinutes)) {}
 
 }  // namespace download

@@ -8,8 +8,8 @@
 
 #include "ash/display/display_util.h"
 #include "ash/screen_util.h"
-#include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_widget.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/ash_test_helper.h"
@@ -62,7 +62,7 @@ class Resetter {
 class TestObserver : public WindowTreeHostManager::Observer,
                      public display::DisplayObserver,
                      public aura::client::FocusChangeObserver,
-                     public ::wm::ActivationChangeObserver {
+                     public aura::client::ActivationChangeObserver {
  public:
   TestObserver()
       : changing_count_(0),
@@ -78,7 +78,8 @@ class TestObserver : public WindowTreeHostManager::Observer,
     display::Screen::GetScreen()->AddObserver(this);
     aura::client::GetFocusClient(Shell::GetPrimaryRootWindow())
         ->AddObserver(this);
-    ::wm::GetActivationClient(Shell::GetPrimaryRootWindow())->AddObserver(this);
+    aura::client::GetActivationClient(Shell::GetPrimaryRootWindow())
+        ->AddObserver(this);
   }
 
   ~TestObserver() override {
@@ -86,7 +87,7 @@ class TestObserver : public WindowTreeHostManager::Observer,
     display::Screen::GetScreen()->RemoveObserver(this);
     aura::client::GetFocusClient(Shell::GetPrimaryRootWindow())
         ->RemoveObserver(this);
-    ::wm::GetActivationClient(Shell::GetPrimaryRootWindow())
+    aura::client::GetActivationClient(Shell::GetPrimaryRootWindow())
         ->RemoveObserver(this);
   }
 
@@ -116,9 +117,9 @@ class TestObserver : public WindowTreeHostManager::Observer,
     focus_changed_count_++;
   }
 
-  // Overridden from wm::ActivationChangeObserver
+  // Overridden from aura::client::ActivationChangeObserver
   void OnWindowActivated(
-      ::wm::ActivationChangeObserver::ActivationReason reason,
+      aura::client::ActivationChangeObserver::ActivationReason reason,
       aura::Window* gained_active,
       aura::Window* lost_active) override {
     activation_changed_count_++;

@@ -4,12 +4,11 @@
 #include "core/css/properties/CSSPropertyAPIFragmentation.h"
 
 #include "core/css/parser/CSSPropertyParserHelpers.h"
-class CSSParserLocalContext;
 namespace blink {
 const CSSValue* CSSPropertyAPIFragmentation::parseSingleValue(
     CSSParserTokenRange& range,
     const CSSParserContext& context,
-    const CSSParserLocalContext&) {
+    CSSPropertyID) {
   return CSSPropertyParserHelpers::ConsumePositiveInteger(range);
 }
 }  // namespace blink

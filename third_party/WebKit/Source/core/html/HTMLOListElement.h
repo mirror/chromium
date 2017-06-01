@@ -33,7 +33,9 @@ class HTMLOListElement final : public HTMLElement {
  public:
   DECLARE_NODE_FACTORY(HTMLOListElement);
 
-  int start() const;
+  int start() const {
+    return has_explicit_start_ ? start_ : (is_reversed_ ? ItemCount() : 1);
+  }
   void setStart(int);
 
   bool IsReversed() const { return is_reversed_; }

@@ -25,16 +25,14 @@ AppLaunchParams::AppLaunchParams(Profile* profile,
                                  extensions::LaunchContainer container,
                                  WindowOpenDisposition disposition,
                                  extensions::AppLaunchSource source,
-                                 bool set_playstore_status,
-                                 int64_t display_id)
+                                 bool set_playstore_status)
     : profile(profile),
       extension_id(extension ? extension->id() : std::string()),
       container(container),
       disposition(disposition),
       command_line(base::CommandLine::NO_PROGRAM),
       source(source),
-      play_store_status(PlayStoreStatus::PLAY_STORE_STATUS_UNKNOWN),
-      display_id(display_id) {
+      play_store_status(PlayStoreStatus::PLAY_STORE_STATUS_UNKNOWN) {
 #if defined(OS_CHROMEOS)
   // TODO(b/34478891): Remove this from app launch.
   if (set_playstore_status) {
@@ -67,8 +65,7 @@ AppLaunchParams CreateAppLaunchParamsWithEventFlags(
     Profile* profile,
     const extensions::Extension* extension,
     int event_flags,
-    extensions::AppLaunchSource source,
-    int64_t display_id) {
+    extensions::AppLaunchSource source) {
   WindowOpenDisposition raw_disposition =
       ui::DispositionFromEventFlags(event_flags);
 
@@ -88,6 +85,5 @@ AppLaunchParams CreateAppLaunchParamsWithEventFlags(
         extensions::GetLaunchContainer(ExtensionPrefs::Get(profile), extension);
     disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
   }
-  return AppLaunchParams(profile, extension, container, disposition, source,
-                         false, display_id);
+  return AppLaunchParams(profile, extension, container, disposition, source);
 }

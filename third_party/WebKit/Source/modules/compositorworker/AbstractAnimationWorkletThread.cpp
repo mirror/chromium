@@ -5,7 +5,6 @@
 #include "modules/compositorworker/AbstractAnimationWorkletThread.h"
 
 #include <memory>
-#include "core/loader/ThreadableLoadingContext.h"
 #include "core/workers/WorkerBackingThread.h"
 #include "core/workers/WorkletThreadHolder.h"
 #include "platform/CrossThreadFunctional.h"
@@ -19,9 +18,9 @@ namespace blink {
 template class WorkletThreadHolder<AbstractAnimationWorkletThread>;
 
 AbstractAnimationWorkletThread::AbstractAnimationWorkletThread(
-    ThreadableLoadingContext* loading_context,
+    PassRefPtr<WorkerLoaderProxy> worker_loader_proxy,
     WorkerReportingProxy& worker_reporting_proxy)
-    : WorkerThread(loading_context, worker_reporting_proxy) {}
+    : WorkerThread(std::move(worker_loader_proxy), worker_reporting_proxy) {}
 
 AbstractAnimationWorkletThread::~AbstractAnimationWorkletThread() {}
 

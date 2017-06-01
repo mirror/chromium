@@ -12,10 +12,9 @@
 #include "ash/shell.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
-#include "ui/aura/client/aura_constants.h"
+#include "ash/wm_window.h"
 #include "ui/aura/window.h"
 #include "ui/events/event_constants.h"
-#include "ui/wm/core/window_animations.h"
 
 namespace ash {
 
@@ -31,7 +30,7 @@ ShelfItemType GetShelfItemType(const ShelfID& id) {
 
 ShelfWindowWatcherItemDelegate::ShelfWindowWatcherItemDelegate(
     const ShelfID& id,
-    aura::Window* window)
+    WmWindow* window)
     : ShelfItemDelegate(id), window_(window) {
   DCHECK(!id.IsNull());
   DCHECK(window_);
@@ -46,24 +45,24 @@ void ShelfWindowWatcherItemDelegate::ItemSelected(
     ItemSelectedCallback callback) {
   // Move panels attached on another display to the current display.
   if (GetShelfItemType(shelf_id()) == TYPE_APP_PANEL &&
-      window_->GetProperty(kPanelAttachedKey) &&
-      wm::MoveWindowToDisplay(window_, display_id)) {
-    wm::ActivateWindow(window_);
+      window_->aura_window()->GetProperty(kPanelAttachedKey) &&
+      wm::MoveWindowToDisplay(window_->aura_window(), display_id)) {
+    window_->Activate();
     std::move(callback).Run(SHELF_ACTION_WINDOW_ACTIVATED, base::nullopt);
     return;
   }
 
-  if (wm::IsActiveWindow(window_)) {
+  if (window_->IsActive()) {
     if (event && event->type() == ui::ET_KEY_RELEASED) {
-      ::wm::AnimateWindow(window_, ::wm::WINDOW_ANIMATION_TYPE_BOUNCE);
+      window_->Animate(::wm::WINDOW_ANIMATION_TYPE_BOUNCE);
       std::move(callback).Run(SHELF_ACTION_NONE, base::nullopt);
       return;
     }
-    window_->SetProperty(aura::client::kShowStateKey, ui::SHOW_STATE_MINIMIZED);
+    window_->Minimize();
     std::move(callback).Run(SHELF_ACTION_WINDOW_MINIMIZED, base::nullopt);
     return;
   }
-  wm::ActivateWindow(window_);
+  window_->Activate();
   std::move(callback).Run(SHELF_ACTION_WINDOW_ACTIVATED, base::nullopt);
 }
 
@@ -71,7 +70,7 @@ void ShelfWindowWatcherItemDelegate::ExecuteCommand(uint32_t command_id,
                                                     int32_t event_flags) {}
 
 void ShelfWindowWatcherItemDelegate::Close() {
-  wm::CloseWidgetForWindow(window_);
+  window_->CloseWidget();
 }
 
 }  // namespace ash

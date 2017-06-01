@@ -8,16 +8,11 @@
 #include "core/dom/Document.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/Deprecation.h"
-#include "core/frame/WebLocalFrameBase.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/ThreadableLoadingContext.h"
-#include "core/loader/WorkerFetchContext.h"
 #include "core/workers/WorkerInspectorProxy.h"
 #include "core/workers/WorkerThreadStartupData.h"
-#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/wtf/CurrentTime.h"
-#include "public/platform/WebWorkerFetchContext.h"
-#include "public/web/WebFrameClient.h"
 
 namespace blink {
 
@@ -28,10 +23,8 @@ static int g_live_messaging_proxy_count = 0;
 }  // namespace
 
 ThreadedMessagingProxyBase::ThreadedMessagingProxyBase(
-    ExecutionContext* execution_context,
-    WorkerClients* worker_clients)
+    ExecutionContext* execution_context)
     : execution_context_(execution_context),
-      worker_clients_(worker_clients),
       worker_inspector_proxy_(WorkerInspectorProxy::Create()),
       parent_frame_task_runners_(ParentFrameTaskRunners::Create(
           ToDocument(execution_context_.Get())->GetFrame())),
@@ -39,25 +32,12 @@ ThreadedMessagingProxyBase::ThreadedMessagingProxyBase(
       asked_to_terminate_(false) {
   DCHECK(IsParentContextThread());
   g_live_messaging_proxy_count++;
-
-  if (RuntimeEnabledFeatures::offMainThreadFetchEnabled()) {
-    Document* document = ToDocument(execution_context_);
-    WebLocalFrameBase* web_frame =
-        WebLocalFrameBase::FromFrame(document->GetFrame());
-    std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
-        web_frame->Client()->CreateWorkerFetchContext();
-    DCHECK(web_worker_fetch_context);
-    // TODO(horo): Set more information about the context (ex:
-    // AppCacheHostID) to |web_worker_fetch_context|.
-    web_worker_fetch_context->SetDataSaverEnabled(
-        document->GetFrame()->GetSettings()->GetDataSaverEnabled());
-    ProvideWorkerFetchContextToWorker(worker_clients,
-                                      std::move(web_worker_fetch_context));
-  }
 }
 
 ThreadedMessagingProxyBase::~ThreadedMessagingProxyBase() {
   DCHECK(IsParentContextThread());
+  if (loader_proxy_)
+    loader_proxy_->DetachProvider(this);
   g_live_messaging_proxy_count--;
 }
 
@@ -81,6 +61,7 @@ void ThreadedMessagingProxyBase::InitializeWorkerThread(
           ? document->Loader()->GetTiming().ReferenceMonotonicTime()
           : MonotonicallyIncreasingTime();
 
+  loader_proxy_ = WorkerLoaderProxy::Create(this);
   worker_thread_ = CreateWorkerThread(origin_time);
   worker_thread_->Start(std::move(startup_data), GetParentFrameTaskRunners());
   WorkerThreadCreated();
@@ -89,7 +70,11 @@ void ThreadedMessagingProxyBase::InitializeWorkerThread(
 ThreadableLoadingContext*
 ThreadedMessagingProxyBase::GetThreadableLoadingContext() {
   DCHECK(IsParentContextThread());
-  return ThreadableLoadingContext::Create(*ToDocument(execution_context_));
+  if (!loading_context_) {
+    loading_context_ =
+        ThreadableLoadingContext::Create(*ToDocument(execution_context_));
+  }
+  return loading_context_;
 }
 
 void ThreadedMessagingProxyBase::CountFeature(UseCounter::Feature feature) {
@@ -172,10 +157,6 @@ void ThreadedMessagingProxyBase::PostMessageToPageInspector(
   DCHECK(IsParentContextThread());
   if (worker_inspector_proxy_)
     worker_inspector_proxy_->DispatchMessageFromWorker(message);
-}
-
-WorkerClients* ThreadedMessagingProxyBase::ReleaseWorkerClients() {
-  return worker_clients_.Release();
 }
 
 bool ThreadedMessagingProxyBase::IsParentContextThread() const {

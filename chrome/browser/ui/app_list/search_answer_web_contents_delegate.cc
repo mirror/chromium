@@ -21,7 +21,6 @@
 #include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_model.h"
 #include "ui/app_list/search_box_model.h"
-#include "ui/views/controls/webview/web_contents_set_background_color.h"
 #include "ui/views/controls/webview/webview.h"
 #include "ui/views/widget/widget.h"
 
@@ -73,6 +72,11 @@ class SearchAnswerWebView : public views::WebView {
   DISALLOW_COPY_AND_ASSIGN(SearchAnswerWebView);
 };
 
+bool IsCardSizeOk(const gfx::Size& size) {
+  return size.width() <= features::AnswerCardMaxWidth() &&
+         size.height() <= features::AnswerCardMaxHeight();
+}
+
 }  // namespace
 
 SearchAnswerWebContentsDelegate::SearchAnswerWebContentsDelegate(
@@ -101,11 +105,6 @@ SearchAnswerWebContentsDelegate::SearchAnswerWebContentsDelegate(
     web_view_->SetFocusBehavior(views::View::FocusBehavior::NEVER);
 
   model->AddObserver(this);
-
-  // Make the webview transparent since it's going to be shown on top of a
-  // highlightable button.
-  views::WebContentsSetBackgroundColor::CreateForWebContentsWithColor(
-      web_contents_.get(), SK_ColorTRANSPARENT);
 }
 
 SearchAnswerWebContentsDelegate::~SearchAnswerWebContentsDelegate() {
@@ -127,6 +126,7 @@ void SearchAnswerWebContentsDelegate::Update() {
   model_->SetSearchAnswerAvailable(false);
   current_request_url_ = GURL();
   server_request_start_time_ = answer_loaded_time_ = base::TimeTicks();
+  is_card_size_ok_ = false;
 
   if (model_->search_box()->is_voice_query()) {
     // No need to send a server request and show a card because launcher
@@ -164,9 +164,12 @@ void SearchAnswerWebContentsDelegate::Update() {
 void SearchAnswerWebContentsDelegate::UpdatePreferredSize(
     content::WebContents* web_contents,
     const gfx::Size& pref_size) {
-  model_->SetSearchAnswerAvailable(received_answer_ && IsCardSizeOk() &&
+  is_card_size_ok_ =
+      IsCardSizeOk(pref_size) || features::IsAnswerCardDarkRunEnabled();
+  model_->SetSearchAnswerAvailable(is_card_size_ok_ && received_answer_ &&
                                    !web_contents_->IsLoading());
-  web_view_->SetPreferredSize(pref_size);
+  if (!features::IsAnswerCardDarkRunEnabled())
+    web_view_->SetPreferredSize(pref_size);
   if (!answer_loaded_time_.is_null()) {
     UMA_HISTOGRAM_TIMES("SearchAnswer.ResizeAfterLoadTime",
                         base::TimeTicks::Now() - answer_loaded_time_);
@@ -246,7 +249,7 @@ void SearchAnswerWebContentsDelegate::DidStopLoading() {
   if (!received_answer_)
     return;
 
-  if (IsCardSizeOk())
+  if (is_card_size_ok_)
     model_->SetSearchAnswerAvailable(true);
   answer_loaded_time_ = base::TimeTicks::Now();
   UMA_HISTOGRAM_TIMES("SearchAnswer.LoadingTime",
@@ -264,15 +267,6 @@ void SearchAnswerWebContentsDelegate::OnSearchEngineIsGoogleChanged(
   Update();
 }
 
-bool SearchAnswerWebContentsDelegate::IsCardSizeOk() const {
-  if (features::IsAnswerCardDarkRunEnabled())
-    return true;
-
-  const gfx::Size size = web_contents_->GetPreferredSize();
-  return size.width() <= features::AnswerCardMaxWidth() &&
-         size.height() <= features::AnswerCardMaxHeight();
-}
-
 void SearchAnswerWebContentsDelegate::RecordReceivedAnswerFinalResult() {
   // Recording whether a server response with an answer contains a card of a
   // fitting size, or a too large one. Cannot do this in DidStopLoading() or
@@ -282,9 +276,10 @@ void SearchAnswerWebContentsDelegate::RecordReceivedAnswerFinalResult() {
     return;
 
   RecordRequestResult(
-      IsCardSizeOk() ? SearchAnswerRequestResult::REQUEST_RESULT_RECEIVED_ANSWER
-                     : SearchAnswerRequestResult::
-                           REQUEST_RESULT_RECEIVED_ANSWER_TOO_LARGE);
+      is_card_size_ok_
+          ? SearchAnswerRequestResult::REQUEST_RESULT_RECEIVED_ANSWER
+          : SearchAnswerRequestResult::
+                REQUEST_RESULT_RECEIVED_ANSWER_TOO_LARGE);
 }
 
 }  // namespace app_list

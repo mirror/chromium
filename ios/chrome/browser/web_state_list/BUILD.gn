@@ -60,7 +60,7 @@ source_set("unit_tests") {
     "//base",
     "//ios/chrome/browser/sessions:serialisation",
     "//ios/web",
-    "//ios/web/public/test/fakes",
+    "//ios/web:test_support",
     "//net",
     "//testing/gtest",
     "//ui/base",

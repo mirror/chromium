@@ -31,7 +31,7 @@ SyncPrefs::SyncPrefs(PrefService* pref_service) : pref_service_(pref_service) {
 SyncPrefs::SyncPrefs() : pref_service_(nullptr) {}
 
 SyncPrefs::~SyncPrefs() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 }
 
 // static
@@ -93,17 +93,17 @@ void SyncPrefs::RegisterProfilePrefs(
 }
 
 void SyncPrefs::AddSyncPrefObserver(SyncPrefObserver* sync_pref_observer) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   sync_pref_observers_.AddObserver(sync_pref_observer);
 }
 
 void SyncPrefs::RemoveSyncPrefObserver(SyncPrefObserver* sync_pref_observer) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   sync_pref_observers_.RemoveObserver(sync_pref_observer);
 }
 
 void SyncPrefs::ClearPreferences() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   pref_service_->ClearPref(prefs::kSyncLastSyncedTime);
   pref_service_->ClearPref(prefs::kSyncLastPollTime);
   pref_service_->ClearPref(prefs::kSyncFirstSetupComplete);
@@ -123,74 +123,74 @@ void SyncPrefs::ClearPreferences() {
 }
 
 bool SyncPrefs::IsFirstSetupComplete() const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   return pref_service_->GetBoolean(prefs::kSyncFirstSetupComplete);
 }
 
 void SyncPrefs::SetFirstSetupComplete() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   pref_service_->SetBoolean(prefs::kSyncFirstSetupComplete, true);
 }
 
 bool SyncPrefs::SyncHasAuthError() const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   return pref_service_->GetBoolean(prefs::kSyncHasAuthError);
 }
 
 void SyncPrefs::SetSyncAuthError(bool error) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   pref_service_->SetBoolean(prefs::kSyncHasAuthError, error);
 }
 
 bool SyncPrefs::IsSyncRequested() const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   // IsSyncRequested is the inverse of the old SuppressStart pref.
   // Since renaming a pref value is hard, here we still use the old one.
   return !pref_service_->GetBoolean(prefs::kSyncSuppressStart);
 }
 
 void SyncPrefs::SetSyncRequested(bool is_requested) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   // See IsSyncRequested for why we use this pref and !is_requested.
   pref_service_->SetBoolean(prefs::kSyncSuppressStart, !is_requested);
 }
 
 base::Time SyncPrefs::GetLastSyncedTime() const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   return base::Time::FromInternalValue(
       pref_service_->GetInt64(prefs::kSyncLastSyncedTime));
 }
 
 void SyncPrefs::SetLastSyncedTime(base::Time time) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   pref_service_->SetInt64(prefs::kSyncLastSyncedTime, time.ToInternalValue());
 }
 
 base::Time SyncPrefs::GetLastPollTime() const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   return base::Time::FromInternalValue(
       pref_service_->GetInt64(prefs::kSyncLastSyncedTime));
 }
 
 void SyncPrefs::SetLastPollTime(base::Time time) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   pref_service_->SetInt64(prefs::kSyncLastPollTime, time.ToInternalValue());
 }
 
 bool SyncPrefs::HasKeepEverythingSynced() const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   return pref_service_->GetBoolean(prefs::kSyncKeepEverythingSynced);
 }
 
 void SyncPrefs::SetKeepEverythingSynced(bool keep_everything_synced) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   pref_service_->SetBoolean(prefs::kSyncKeepEverythingSynced,
                             keep_everything_synced);
 }
 
 ModelTypeSet SyncPrefs::GetPreferredDataTypes(
     ModelTypeSet registered_types) const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   if (pref_service_->GetBoolean(prefs::kSyncKeepEverythingSynced)) {
     return registered_types;
@@ -208,7 +208,7 @@ ModelTypeSet SyncPrefs::GetPreferredDataTypes(
 
 void SyncPrefs::SetPreferredDataTypes(ModelTypeSet registered_types,
                                       ModelTypeSet preferred_types) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   preferred_types = ResolvePrefGroups(registered_types, preferred_types);
   DCHECK(registered_types.HasAll(preferred_types));
   for (ModelTypeSet::Iterator i = registered_types.First(); i.Good(); i.Inc()) {
@@ -217,37 +217,37 @@ void SyncPrefs::SetPreferredDataTypes(ModelTypeSet registered_types,
 }
 
 bool SyncPrefs::IsManaged() const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   return pref_service_->GetBoolean(prefs::kSyncManaged);
 }
 
 std::string SyncPrefs::GetEncryptionBootstrapToken() const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   return pref_service_->GetString(prefs::kSyncEncryptionBootstrapToken);
 }
 
 void SyncPrefs::SetEncryptionBootstrapToken(const std::string& token) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   pref_service_->SetString(prefs::kSyncEncryptionBootstrapToken, token);
 }
 
 std::string SyncPrefs::GetKeystoreEncryptionBootstrapToken() const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   return pref_service_->GetString(prefs::kSyncKeystoreEncryptionBootstrapToken);
 }
 
 void SyncPrefs::SetKeystoreEncryptionBootstrapToken(const std::string& token) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   pref_service_->SetString(prefs::kSyncKeystoreEncryptionBootstrapToken, token);
 }
 
 std::string SyncPrefs::GetSyncSessionsGUID() const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   return pref_service_->GetString(prefs::kSyncSessionsGUID);
 }
 
 void SyncPrefs::SetSyncSessionsGUID(const std::string& guid) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   pref_service_->SetString(prefs::kSyncSessionsGUID, guid);
 }
 
@@ -340,24 +340,24 @@ const char* SyncPrefs::GetPrefNameForDataType(ModelType type) {
 
 #if defined(OS_CHROMEOS)
 std::string SyncPrefs::GetSpareBootstrapToken() const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   return pref_service_->GetString(prefs::kSyncSpareBootstrapToken);
 }
 
 void SyncPrefs::SetSpareBootstrapToken(const std::string& token) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   pref_service_->SetString(prefs::kSyncSpareBootstrapToken, token);
 }
 #endif
 
 void SyncPrefs::OnSyncManagedPrefChanged() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   for (auto& observer : sync_pref_observers_)
     observer.OnSyncManagedPrefChange(*pref_sync_managed_);
 }
 
 void SyncPrefs::SetManagedForTest(bool is_managed) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   pref_service_->SetBoolean(prefs::kSyncManaged, is_managed);
 }
 
@@ -406,7 +406,7 @@ void SyncPrefs::RegisterDataTypePreferredPref(
 }
 
 bool SyncPrefs::GetDataTypePreferred(ModelType type) const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   const char* pref_name = GetPrefNameForDataType(type);
   if (!pref_name) {
     NOTREACHED();
@@ -429,7 +429,7 @@ bool SyncPrefs::GetDataTypePreferred(ModelType type) const {
 }
 
 void SyncPrefs::SetDataTypePreferred(ModelType type, bool is_preferred) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   const char* pref_name = GetPrefNameForDataType(type);
   if (!pref_name) {
     NOTREACHED();

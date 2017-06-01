@@ -24,7 +24,7 @@ void PostToIOThread(const base::Callback<void(T)>& callback, T result) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(callback, base::Passed(std::move(result))));
+      base::Bind(callback, base::Passed(std::move(result))));
 }
 
 void GetFileSizeOnUIThread(const GURL& url,
@@ -156,8 +156,7 @@ void ObserverIOThreadWrapper::OnWatchersCleared() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&ObserverIOThreadWrapper::OnWatchersClearedOnIOThread,
-                     this));
+      base::Bind(&ObserverIOThreadWrapper::OnWatchersClearedOnIOThread, this));
 }
 
 void ObserverIOThreadWrapper::OnWatchersClearedOnIOThread() {
@@ -172,8 +171,8 @@ void GetFileSizeOnIOThread(const GURL& url,
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&GetFileSizeOnUIThread, url,
-                     base::Bind(&PostToIOThread<int64_t>, callback)));
+      base::Bind(&GetFileSizeOnUIThread, url,
+                 base::Bind(&PostToIOThread<int64_t>, callback)));
 }
 
 void OpenFileToReadOnIOThread(const GURL& url,
@@ -181,9 +180,8 @@ void OpenFileToReadOnIOThread(const GURL& url,
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(
-          &OpenFileToReadOnUIThread, url,
-          base::Bind(&PostToIOThread<mojo::ScopedHandle>, callback)));
+      base::Bind(&OpenFileToReadOnUIThread, url,
+                 base::Bind(&PostToIOThread<mojo::ScopedHandle>, callback)));
 }
 
 void GetDocumentOnIOThread(const std::string& authority,
@@ -192,9 +190,8 @@ void GetDocumentOnIOThread(const std::string& authority,
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(
-          &GetDocumentOnUIThread, authority, document_id,
-          base::Bind(&PostToIOThread<mojom::DocumentPtr>, callback)));
+      base::Bind(&GetDocumentOnUIThread, authority, document_id,
+                 base::Bind(&PostToIOThread<mojom::DocumentPtr>, callback)));
 }
 
 void GetChildDocumentsOnIOThread(const std::string& authority,
@@ -203,7 +200,7 @@ void GetChildDocumentsOnIOThread(const std::string& authority,
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(
+      base::Bind(
           &GetChildDocumentsOnUIThread, authority, parent_document_id,
           base::Bind(
               &PostToIOThread<base::Optional<std::vector<mojom::DocumentPtr>>>,
@@ -217,7 +214,7 @@ void AddWatcherOnIOThread(const std::string& authority,
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(
+      base::Bind(
           &AddWatcherOnUIThread, authority, document_id,
           base::Bind(&PostToIOThread<ArcFileSystemOperationRunner::ChangeType>,
                      watcher_callback),
@@ -229,14 +226,14 @@ void RemoveWatcherOnIOThread(int64_t watcher_id,
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&RemoveWatcherOnUIThread, watcher_id,
-                     base::Bind(&PostToIOThread<bool>, callback)));
+      base::Bind(&RemoveWatcherOnUIThread, watcher_id,
+                 base::Bind(&PostToIOThread<bool>, callback)));
 }
 
 void AddObserverOnIOThread(scoped_refptr<ObserverIOThreadWrapper> observer) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(&AddObserverOnUIThread, observer));
+                          base::Bind(&AddObserverOnUIThread, observer));
 }
 
 void RemoveObserverOnIOThread(scoped_refptr<ObserverIOThreadWrapper> observer) {
@@ -245,7 +242,7 @@ void RemoveObserverOnIOThread(scoped_refptr<ObserverIOThreadWrapper> observer) {
   // called after this function returns.
   observer->Disable();
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(&RemoveObserverOnUIThread, observer));
+                          base::Bind(&RemoveObserverOnUIThread, observer));
 }
 
 }  // namespace file_system_operation_runner_util

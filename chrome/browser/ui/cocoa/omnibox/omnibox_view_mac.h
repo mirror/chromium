@@ -66,7 +66,6 @@ class OmniboxViewMac : public OmniboxView,
                                 size_t caret_pos,
                                 bool update_popup,
                                 bool notify_text_changed) override;
-  void SetCaretPos(size_t caret_pos) override;
   void EnterKeywordModeForDefaultSearchProvider() override;
   bool IsSelectAll() const override;
   bool DeleteAtEndPressed() override;

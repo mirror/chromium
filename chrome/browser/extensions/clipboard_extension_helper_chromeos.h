@@ -9,7 +9,6 @@
 #include <vector>
 
 #include "base/callback.h"
-#include "extensions/browser/api/clipboard/clipboard_api.h"
 #include "extensions/common/api/clipboard.h"
 
 class SkBitmap;
@@ -27,7 +26,6 @@ class ClipboardExtensionHelper {
   void DecodeAndSaveImageData(
       const std::vector<char>& data,
       api::clipboard::ImageType type,
-      AdditionalDataItemList additional_items,
       const base::Closure& success_callback,
       const base::Callback<void(const std::string&)>& error_callback);
 
@@ -45,7 +43,6 @@ class ClipboardExtensionHelper {
   std::unique_ptr<ClipboardImageDataDecoder> clipboard_image_data_decoder_;
   base::Closure image_save_success_callback_;
   base::Callback<void(const std::string&)> image_save_error_callback_;
-  AdditionalDataItemList additonal_items_;
 
   DISALLOW_COPY_AND_ASSIGN(ClipboardExtensionHelper);
 };

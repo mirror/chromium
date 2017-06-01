@@ -13,4 +13,4 @@ TransportSecurityStateEntry::~TransportSecurityStateEntry() {}
 
 }  // namespace transport_security_state
 
-}  // namespace net
+}  // namespace

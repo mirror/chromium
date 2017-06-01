@@ -4,7 +4,6 @@
 
 #import "ios/web_view/internal/web_view_web_client.h"
 
-#include "base/memory/ptr_util.h"
 #include "base/strings/sys_string_conversions.h"
 #include "ios/web/public/user_agent.h"
 #include "ios/web_view/internal/web_view_browser_state.h"
@@ -18,12 +17,13 @@
 
 namespace ios_web_view {
 
-WebViewWebClient::WebViewWebClient() = default;
+WebViewWebClient::WebViewWebClient() : web_main_parts_(nullptr) {}
 
 WebViewWebClient::~WebViewWebClient() = default;
 
-std::unique_ptr<web::WebMainParts> WebViewWebClient::CreateWebMainParts() {
-  return base::MakeUnique<WebViewWebMainParts>();
+web::WebMainParts* WebViewWebClient::CreateWebMainParts() {
+  web_main_parts_ = new WebViewWebMainParts();
+  return web_main_parts_;
 }
 
 std::string WebViewWebClient::GetProduct() const {

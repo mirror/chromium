@@ -2,15 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Add additional setup steps to the object from webvr_e2e.js if it exists.
-if (typeof initializationSteps !== "undefined") {
-  initializationSteps["getVRDisplays"] = false;
-} else {
-  // Create here if it doesn't exist so we can access it later without checking
-  // if it's defined.
-  var initializationSteps = {};
-}
-
 var webglCanvas = document.getElementById("webgl-canvas");
 var glAttribs = {
   alpha: false,
@@ -76,10 +67,10 @@ if (navigator.getVRDisplays) {
       vrDisplay = displays[0];
     }
   }).then( () => {
-    initializationSteps["getVRDisplays"] = true;
+    vrDisplayPromiseDone = true;
   });
 } else {
-  initializationSteps["getVRDisplays"] = true;
+  vrDisplayPromiseDone = true;
 }
 
 gl.clearColor(1.0, 0.0, 0.0, 1.0);

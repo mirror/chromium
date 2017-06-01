@@ -1314,12 +1314,18 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
 
     console.assert(!treeElement.isClosingTag());
 
-    treeElement.node().getChildNodes(children => {
+    treeElement.node().getChildNodes(childNodesLoaded.bind(this));
+
+    /**
+     * @param {?Array.<!SDK.DOMNode>} children
+     * @this {Elements.ElementsTreeOutline}
+     */
+    function childNodesLoaded(children) {
       // FIXME: sort this out, it should not happen.
       if (!children)
         return;
       this._innerUpdateChildren(treeElement);
-    });
+    }
   }
 
   /**

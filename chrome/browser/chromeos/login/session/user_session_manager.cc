@@ -12,7 +12,6 @@
 
 #include "base/base_paths.h"
 #include "base/bind.h"
-#include "base/callback_helpers.h"
 #include "base/command_line.h"
 #include "base/location.h"
 #include "base/logging.h"
@@ -37,6 +36,7 @@
 #include "chrome/browser/chromeos/boot_times_recorder.h"
 #include "chrome/browser/chromeos/first_run/first_run.h"
 #include "chrome/browser/chromeos/first_run/goodies_displayer.h"
+#include "chrome/browser/chromeos/input_method/input_method_util.h"
 #include "chrome/browser/chromeos/login/auth/chrome_cryptohome_authenticator.h"
 #include "chrome/browser/chromeos/login/chrome_restart_request.h"
 #include "chrome/browser/chromeos/login/demo_mode/demo_app_launcher.h"
@@ -119,7 +119,6 @@
 #include "rlz/features/features.h"
 #include "ui/base/ime/chromeos/input_method_descriptor.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
-#include "ui/base/ime/chromeos/input_method_util.h"
 #include "ui/message_center/message_center.h"
 #include "url/gurl.h"
 
@@ -253,8 +252,8 @@ base::FilePath GetRlzDisabledFlagPath() {
 }
 #endif
 
-// Callback to GetNSSCertDatabaseForProfile. It passes the user-specific NSS
-// database to CertLoader. It must be called for primary user only.
+// Callback to GetNSSCertDatabaseForProfile. It starts CertLoader using the
+// provided NSS database. It must be called for primary user only.
 void OnGetNSSCertDatabaseForUser(net::NSSCertDatabase* database) {
   if (!CertLoader::IsInitialized())
     return;
@@ -867,20 +866,6 @@ void UserSessionManager::OnSessionRestoreStateChanged(
 
   login_manager->RemoveObserver(this);
 
-  // Terminate user session if merge session fails for an online sign-in.
-  // Otherwise, auth token dependent code would be in an invalid state.
-  // Important piece such as policy code might be broken because of this and
-  // subject to an exploit. See http://crbug.com/677312.
-  const bool is_online_signin =
-      user_context_.GetAuthFlow() == UserContext::AUTH_FLOW_GAIA_WITH_SAML ||
-      user_context_.GetAuthFlow() == UserContext::AUTH_FLOW_GAIA_WITHOUT_SAML;
-  if (is_online_signin && state == OAuth2LoginManager::SESSION_RESTORE_FAILED) {
-    LOG(ERROR)
-        << "Session restore failed for online sign-in, terminating session.";
-    chrome::AttemptUserExit();
-    return;
-  }
-
   if (exit_after_session_restore_ &&
       (state  == OAuth2LoginManager::SESSION_RESTORE_DONE ||
        state  == OAuth2LoginManager::SESSION_RESTORE_FAILED ||
@@ -1240,9 +1225,7 @@ void UserSessionManager::FinalizePrepareProfile(Profile* profile) {
 
     arc::ArcServiceLauncher::Get()->OnPrimaryUserProfilePrepared(profile);
 
-    TetherService* tether_service = TetherService::Get(profile);
-    if (tether_service)
-      tether_service->StartTetherIfEnabled();
+    TetherService::Get(profile)->StartTetherIfEnabled();
   }
 
   UpdateEasyUnlockKeys(user_context_);
@@ -1765,6 +1748,11 @@ void UserSessionManager::DoBrowserLaunchInternal(Profile* profile,
 
   BootTimesRecorder::Get()->AddLoginTimeMarker("BrowserLaunched", false);
 
+  // Mark user session as started before creating browser window. Otherwise,
+  // ash would not activate the created browser window because it thinks
+  // user session is blocked.
+  session_manager::SessionManager::Get()->SessionStarted();
+
   VLOG(1) << "Launching browser...";
   TRACE_EVENT0("login", "LaunchBrowser");
 
@@ -1817,18 +1805,11 @@ void UserSessionManager::DoBrowserLaunchInternal(Profile* profile,
         std::make_pair(profile, fingerprint_feature_notification_controller));
   }
 
-  base::OnceClosure login_host_finalized_callback = base::BindOnce(
-      [] { session_manager::SessionManager::Get()->SessionStarted(); });
-
   // Mark login host for deletion after browser starts.  This
   // guarantees that the message loop will be referenced by the
   // browser before it is dereferenced by the login host.
-  if (login_host) {
-    login_host->Finalize(std::move(login_host_finalized_callback));
-  } else {
-    base::ResetAndReturn(&login_host_finalized_callback).Run();
-  }
-
+  if (login_host)
+    login_host->Finalize();
   chromeos::BootTimesRecorder::Get()->LoginDone(
       user_manager::UserManager::Get()->IsCurrentUserNew());
 

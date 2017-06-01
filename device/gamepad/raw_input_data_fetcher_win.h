@@ -18,6 +18,7 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/message_loop/message_loop.h"
 #include "base/scoped_native_library.h"
 #include "base/win/message_window.h"
 #include "build/build_config.h"
@@ -58,7 +59,8 @@ struct RawGamepadInfo {
 };
 
 class RawInputDataFetcher : public GamepadDataFetcher,
-                            public base::SupportsWeakPtr<RawInputDataFetcher> {
+                            public base::SupportsWeakPtr<RawInputDataFetcher>,
+                            public base::MessageLoop::DestructionObserver {
  public:
   typedef GamepadDataFetcherFactoryImpl<RawInputDataFetcher,
                                         GAMEPAD_SOURCE_WIN_RAW>
@@ -68,6 +70,9 @@ class RawInputDataFetcher : public GamepadDataFetcher,
   ~RawInputDataFetcher() override;
 
   GamepadSource source() override;
+
+  // DestructionObserver overrides.
+  void WillDestroyCurrentMessageLoop() override;
 
   void GetGamepadData(bool devices_changed_hint) override;
   void PauseHint(bool paused) override;

@@ -25,8 +25,8 @@
 #include "core/dom/Text.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/Editor.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutObject.h"
@@ -140,7 +140,7 @@ bool ProvidesContextMenuItems(Node* node) {
       return true;
     // Only the selected part of the layoutObject is a valid target, but this
     // will be corrected in appendContextSubtargetsForNode.
-    if (node->GetLayoutObject()->GetSelectionState() != SelectionState::kNone)
+    if (node->GetLayoutObject()->GetSelectionState() != SelectionNone)
       return true;
   }
   return false;
@@ -202,24 +202,24 @@ static inline void AppendContextSubtargetsForNode(
       last_offset = offset;
     }
   } else {
-    if (text_layout_object->GetSelectionState() == SelectionState::kNone)
+    if (text_layout_object->GetSelectionState() == SelectionNone)
       return AppendBasicSubtargetsForNode(node, subtargets);
     // If selected, make subtargets out of only the selected part of the text.
     int start_pos, end_pos;
     switch (text_layout_object->GetSelectionState()) {
-      case SelectionState::kInside:
+      case SelectionInside:
         start_pos = 0;
         end_pos = text_layout_object->TextLength();
         break;
-      case SelectionState::kStart:
+      case SelectionStart:
         std::tie(start_pos, end_pos) = text_layout_object->SelectionStartEnd();
         end_pos = text_layout_object->TextLength();
         break;
-      case SelectionState::kEnd:
+      case SelectionEnd:
         std::tie(start_pos, end_pos) = text_layout_object->SelectionStartEnd();
         start_pos = 0;
         break;
-      case SelectionState::kStartAndEnd:
+      case SelectionBoth:
         std::tie(start_pos, end_pos) = text_layout_object->SelectionStartEnd();
         break;
       default:
@@ -406,7 +406,7 @@ float HybridDistanceFunction(const IntPoint& touch_hotspot,
   return hybrid_score;
 }
 
-FloatPoint ContentsToRootFrame(LocalFrameView* view, FloatPoint pt) {
+FloatPoint ContentsToRootFrame(FrameView* view, FloatPoint pt) {
   int x = static_cast<int>(pt.X() + 0.5f);
   int y = static_cast<int>(pt.Y() + 0.5f);
   IntPoint adjusted = view->ContentsToRootFrame(IntPoint(x, y));
@@ -431,7 +431,7 @@ bool SnapTo(const SubtargetGeometry& geom,
             const IntPoint& touch_point,
             const IntRect& touch_area,
             IntPoint& adjusted_point) {
-  LocalFrameView* view = geom.GetNode()->GetDocument().View();
+  FrameView* view = geom.GetNode()->GetDocument().View();
   FloatQuad quad = geom.Quad();
 
   if (quad.IsRectilinear()) {

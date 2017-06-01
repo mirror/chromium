@@ -18,7 +18,6 @@ class Layer;
 }
 
 namespace ui {
-class DragEventAndroid;
 class EventForwarder;
 class MotionEventAndroid;
 class ViewClient;
@@ -64,8 +63,7 @@ class UI_ANDROID_EXPORT ViewAndroid {
   };
 
   // Layout parameters used to set the view's position and size.
-  // Position is in parent's coordinate space, and all the values
-  // are in CSS pixel.
+  // Position is in parent's coordinate space.
   struct LayoutParams {
     static LayoutParams MatchParent() { return {true, 0, 0, 0, 0}; }
     static LayoutParams Normal(int x, int y, int width, int height) {
@@ -160,35 +158,25 @@ class UI_ANDROID_EXPORT ViewAndroid {
   friend class EventForwarder;
   friend class ViewAndroidBoundsTest;
 
-  bool OnDragEvent(const DragEventAndroid& event);
+  using ViewClientCallback =
+      const base::Callback<bool(ViewClient*, const MotionEventAndroid&)>;
+
   bool OnTouchEvent(const MotionEventAndroid& event, bool for_touch_handle);
   bool OnMouseEvent(const MotionEventAndroid& event);
   bool OnMouseWheelEvent(const MotionEventAndroid& event);
 
   void RemoveChild(ViewAndroid* child);
 
-  template <typename E>
-  using ViewClientCallback =
-      const base::Callback<bool(ViewClient*, const E&, const gfx::PointF&)>;
+  bool HitTest(ViewClientCallback send_to_client,
+               const MotionEventAndroid& event);
 
-  template <typename E>
-  bool HitTest(ViewClientCallback<E> send_to_client,
-               const E& event,
-               const gfx::PointF& point);
-
-  static bool SendDragEventToClient(ViewClient* client,
-                                    const DragEventAndroid& event,
-                                    const gfx::PointF& point);
   static bool SendTouchEventToClient(bool for_touch_handle,
                                      ViewClient* client,
-                                     const MotionEventAndroid& event,
-                                     const gfx::PointF& point);
+                                     const MotionEventAndroid& event);
   static bool SendMouseEventToClient(ViewClient* client,
-                                     const MotionEventAndroid& event,
-                                     const gfx::PointF& point);
+                                     const MotionEventAndroid& event);
   static bool SendMouseWheelEventToClient(ViewClient* client,
-                                          const MotionEventAndroid& event,
-                                          const gfx::PointF& point);
+                                          const MotionEventAndroid& event);
 
   bool has_event_forwarder() const { return !!event_forwarder_; }
 

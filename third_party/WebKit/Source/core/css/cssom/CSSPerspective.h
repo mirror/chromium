@@ -6,7 +6,7 @@
 #define CSSPerspective_h
 
 #include "core/CoreExport.h"
-#include "core/css/cssom/CSSNumericValue.h"
+#include "core/css/cssom/CSSLengthValue.h"
 #include "core/css/cssom/CSSTransformComponent.h"
 
 namespace blink {
@@ -18,12 +18,12 @@ class CORE_EXPORT CSSPerspective : public CSSTransformComponent {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static CSSPerspective* Create(const CSSNumericValue*, ExceptionState&);
+  static CSSPerspective* Create(const CSSLengthValue*, ExceptionState&);
   static CSSPerspective* FromCSSValue(const CSSFunctionValue&);
 
   // Bindings require a non const return value.
-  CSSNumericValue* length() const {
-    return const_cast<CSSNumericValue*>(length_.Get());
+  CSSLengthValue* length() const {
+    return const_cast<CSSLengthValue*>(length_.Get());
   }
 
   TransformComponentType GetType() const override { return kPerspectiveType; }
@@ -39,9 +39,9 @@ class CORE_EXPORT CSSPerspective : public CSSTransformComponent {
   }
 
  private:
-  CSSPerspective(const CSSNumericValue* length) : length_(length) {}
+  CSSPerspective(const CSSLengthValue* length) : length_(length) {}
 
-  Member<const CSSNumericValue> length_;
+  Member<const CSSLengthValue> length_;
 };
 
 }  // namespace blink

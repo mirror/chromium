@@ -44,6 +44,7 @@
 #include "ui/views/controls/separator.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/fill_layout.h"
+#include "ui/views/layout/layout_constants.h"
 #include "ui/views/widget/widget.h"
 
 namespace {
@@ -81,7 +82,7 @@ class ZoomValue : public views::Label {
   ~ZoomValue() override {}
 
   // views::Label:
-  gfx::Size CalculatePreferredSize() const override {
+  gfx::Size GetPreferredSize() const override {
     return gfx::Size(max_width_, GetHeightForWidth(max_width_));
   }
 
@@ -236,10 +237,6 @@ ZoomBubbleView::ZoomBubbleView(
 ZoomBubbleView::~ZoomBubbleView() {
   if (immersive_mode_controller_)
     immersive_mode_controller_->RemoveObserver(this);
-}
-
-int ZoomBubbleView::GetDialogButtons() const {
-  return ui::DIALOG_BUTTON_NONE;
 }
 
 void ZoomBubbleView::OnGestureEvent(ui::GestureEvent* event) {

@@ -172,7 +172,6 @@ Console.ConsoleViewMessage = class {
 
     if (flatValues.length) {
       this._dataGrid = DataGrid.SortableDataGrid.create(columnNames, flatValues);
-      this._dataGrid.setStriped(true);
 
       var formattedResult = createElementWithClass('span', 'console-message-text');
       var tableElement = formattedResult.createChild('div', 'console-message-formatted-table');
@@ -285,9 +284,7 @@ Console.ConsoleViewMessage = class {
         anchorElement = this._linkifyLocation(this._message.url, this._message.line, this._message.column);
       }
     } else if (this._message.url) {
-      anchorElement = Components.Linkifier.linkifyURL(
-          this._message.url, undefined, undefined, undefined, undefined, undefined,
-          Console.ConsoleViewMessage.MaxLengthForLinks);
+      anchorElement = Components.Linkifier.linkifyURL(this._message.url, undefined);
     }
 
     // Append a space to prevent the anchor text from being glued to the console message when the user selects and copies the console messages.
@@ -1279,9 +1276,3 @@ Console.ConsoleGroupViewMessage = class extends Console.ConsoleViewMessage {
     return this._element;
   }
 };
-
-/**
- * @const
- * @type {number}
- */
-Console.ConsoleViewMessage.MaxLengthForLinks = 40;

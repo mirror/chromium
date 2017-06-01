@@ -73,8 +73,7 @@ class CORE_EXPORT WorkletGlobalScope
   WorkletGlobalScope(const KURL&,
                      const String& user_agent,
                      PassRefPtr<SecurityOrigin>,
-                     v8::Isolate*,
-                     WorkerClients*);
+                     v8::Isolate*);
 
  private:
   const KURL& VirtualURL() const final { return url_; }

@@ -119,8 +119,7 @@ float GetDeviceScaleFactorFromView(NSView* view) {
 bool PositionWindowInScreenCoordinates(views::Widget* widget,
                                        views::Widget::InitParams::Type type) {
   // Replicate the logic in desktop_aura/desktop_screen_position_client.cc.
-  if (views::GetAuraWindowTypeForWidgetType(type) ==
-      aura::client::WINDOW_TYPE_POPUP)
+  if (views::GetAuraWindowTypeForWidgetType(type) == ui::wm::WINDOW_TYPE_POPUP)
     return true;
 
   return widget && widget->is_top_level();
@@ -1275,8 +1274,7 @@ void BridgedNativeWidget::CreateCompositor() {
   compositor_widget_.reset(new ui::AcceleratedWidgetMac());
   compositor_.reset(new ui::Compositor(
       context_factory_private->AllocateFrameSinkId(), context_factory,
-      context_factory_private, GetCompositorTaskRunner(),
-      false /* enable_surface_synchronization */));
+      context_factory_private, GetCompositorTaskRunner()));
   compositor_->SetAcceleratedWidget(compositor_widget_->accelerated_widget());
   compositor_widget_->SetNSView(this);
 }

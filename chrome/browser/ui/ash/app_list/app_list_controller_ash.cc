@@ -4,6 +4,8 @@
 
 #include "chrome/browser/ui/ash/app_list/app_list_controller_ash.h"
 
+#include "ash/shelf/shelf_model.h"
+#include "ash/shell.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller_util.h"
@@ -13,7 +15,6 @@
 #include "extensions/common/extension.h"
 #include "ui/app_list/presenter/app_list_presenter_impl.h"
 #include "ui/app_list/views/app_list_view.h"
-#include "ui/display/types/display_constants.h"
 
 AppListControllerDelegateAsh::AppListControllerDelegateAsh(
     app_list::AppListPresenterImpl* app_list_presenter)
@@ -37,7 +38,7 @@ gfx::Rect AppListControllerDelegateAsh::GetAppListBounds() {
 }
 
 bool AppListControllerDelegateAsh::IsAppPinned(const std::string& app_id) {
-  return ChromeLauncherController::instance()->IsAppPinned(app_id);
+  return ash::Shell::Get()->shelf_model()->IsAppPinned(app_id);
 }
 
 bool AppListControllerDelegateAsh::IsAppOpen(const std::string& app_id) const {
@@ -45,11 +46,11 @@ bool AppListControllerDelegateAsh::IsAppOpen(const std::string& app_id) const {
 }
 
 void AppListControllerDelegateAsh::PinApp(const std::string& app_id) {
-  ChromeLauncherController::instance()->PinAppWithID(app_id);
+  ash::Shell::Get()->shelf_model()->PinAppWithID(app_id);
 }
 
 void AppListControllerDelegateAsh::UnpinApp(const std::string& app_id) {
-  ChromeLauncherController::instance()->UnpinAppWithID(app_id);
+  ash::Shell::Get()->shelf_model()->UnpinAppWithID(app_id);
 }
 
 AppListControllerDelegate::Pinnable AppListControllerDelegateAsh::GetPinnable(
@@ -95,8 +96,7 @@ void AppListControllerDelegateAsh::ActivateApp(
   // Platform apps treat activations as a launch. The app can decide whether to
   // show a new window or focus an existing window as it sees fit.
   if (extension->is_platform_app()) {
-    LaunchApp(profile, extension, source, event_flags,
-              display::kInvalidDisplayId);
+    LaunchApp(profile, extension, source, event_flags);
     return;
   }
 
@@ -112,11 +112,10 @@ void AppListControllerDelegateAsh::LaunchApp(
     Profile* profile,
     const extensions::Extension* extension,
     AppListSource source,
-    int event_flags,
-    int64_t display_id) {
+    int event_flags) {
   ChromeLauncherController::instance()->LaunchApp(
       ash::ShelfID(extension->id()), AppListSourceToLaunchSource(source),
-      event_flags, display_id);
+      event_flags);
   DismissView();
 }
 

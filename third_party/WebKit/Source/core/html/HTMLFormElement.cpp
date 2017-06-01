@@ -34,7 +34,6 @@
 #include "core/dom/Document.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/NodeListsNodeData.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/events/Event.h"
 #include "core/events/ScopedEventQueue.h"
 #include "core/frame/LocalDOMWindow.h"
@@ -57,6 +56,7 @@
 #include "core/loader/FrameLoader.h"
 #include "core/loader/MixedContentChecker.h"
 #include "core/loader/NavigationScheduler.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/wtf/AutoReset.h"
 #include "platform/wtf/text/AtomicString.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
@@ -286,13 +286,6 @@ void HTMLFormElement::PrepareForSubmission(
   if (!frame || is_submitting_ || in_user_js_submit_event_)
     return;
 
-  if (!isConnected()) {
-    GetDocument().AddConsoleMessage(ConsoleMessage::Create(
-        kJSMessageSource, kWarningMessageLevel,
-        "Form submission canceled because the form is not connected"));
-    return;
-  }
-
   if (GetDocument().IsSandboxed(kSandboxForms)) {
     GetDocument().AddConsoleMessage(ConsoleMessage::Create(
         kSecurityMessageSource, kErrorMessageLevel,
@@ -370,7 +363,7 @@ void HTMLFormElement::SubmitDialog(FormSubmission* form_submission) {
 
 void HTMLFormElement::Submit(Event* event,
                              HTMLFormControlElement* submit_button) {
-  LocalFrameView* view = GetDocument().View();
+  FrameView* view = GetDocument().View();
   LocalFrame* frame = GetDocument().GetFrame();
   if (!view || !frame || !frame->GetPage())
     return;
@@ -460,6 +453,9 @@ void HTMLFormElement::ScheduleFormSubmission(FormSubmission* submission) {
   Frame* target_frame = GetDocument().GetFrame()->FindFrameForNavigation(
       submission->Target(), *GetDocument().GetFrame());
   if (!target_frame) {
+    if (!LocalDOMWindow::AllowPopUp(*GetDocument().GetFrame()) &&
+        !UserGestureIndicator::ProcessingUserGesture())
+      return;
     target_frame = GetDocument().GetFrame();
   } else {
     submission->ClearTarget();

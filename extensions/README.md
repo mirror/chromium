@@ -6,10 +6,4 @@ Some extensions code that is not Chrome-specific still lives in
 [//chrome/browser/extensions](/chrome/browser/extensions) and will be moved
 here.
 
-Technical Documentation:
-
-* [Extension and App Types](/extensions/docs/extension_and_app_types.md)
-
-* [Features System](/chrome/common/extensions/api/_features.md)
-
-* [Bindings System](/extensions/renderer/bindings.md)
+See [//extensions/docs](/extensions/docs) for technical documentation.

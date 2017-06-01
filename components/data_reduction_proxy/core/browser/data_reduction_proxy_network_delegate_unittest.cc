@@ -77,99 +77,33 @@ const char kOtherProxy[] = "testproxy:17";
 const char kTestURL[] = "http://www.google.com/";
 const char kSecureTestURL[] = "https://www.google.com/";
 
-const char kReceivedValidOCLHistogramName[] =
+const std::string kReceivedValidOCLHistogramName =
     "Net.HttpContentLengthWithValidOCL";
-const char kOriginalValidOCLHistogramName[] =
+const std::string kOriginalValidOCLHistogramName =
     "Net.HttpOriginalContentLengthWithValidOCL";
-const char kDifferenceValidOCLHistogramName[] =
+const std::string kDifferenceValidOCLHistogramName =
     "Net.HttpContentLengthDifferenceWithValidOCL";
 
-// HTTP original content length
-const char kOriginalInsecureDirectHistogramName[] =
-    "Net.HttpOriginalContentLength.Http.Direct";
-const char kOriginalInsecureViaDRPHistogramName[] =
-    "Net.HttpOriginalContentLength.Http.ViaDRP";
-const char kOriginalInsecureBypassedHistogramName[] =
-    "Net.HttpOriginalContentLength.Http.BypassedDRP";
-const char kOriginalInsecureOtherHistogramName[] =
-    "Net.HttpOriginalContentLength.Http.Other";
-// HTTP video original content length
-const char kOriginalVideoInsecureDirectHistogramName[] =
-    "Net.HttpOriginalContentLength.Http.Direct.Video";
-const char kOriginalVideoInsecureViaDRPHistogramName[] =
-    "Net.HttpOriginalContentLength.Http.ViaDRP.Video";
-const char kOriginalVideoInsecureBypassedHistogramName[] =
-    "Net.HttpOriginalContentLength.Http.BypassedDRP.Video";
-const char kOriginalVideoInsecureOtherHistogramName[] =
-    "Net.HttpOriginalContentLength.Http.Other.Video";
-// HTTPS original content length
-const char kOriginalSecureDirectHistogramName[] =
-    "Net.HttpOriginalContentLength.Https.Direct";
-const char kOriginalSecureViaDRPHistogramName[] =
-    "Net.HttpOriginalContentLength.Https.ViaDRP";
-const char kOriginalSecureBypassedHistogramName[] =
-    "Net.HttpOriginalContentLength.Https.BypassedDRP";
-const char kOriginalSecureOtherHistogramName[] =
-    "Net.HttpOriginalContentLength.Https.Other";
-// HTTPS video original content length
-const char kOriginalVideoSecureDirectHistogramName[] =
-    "Net.HttpOriginalContentLength.Https.Direct.Video";
-const char kOriginalVideoSecureViaDRPHistogramName[] =
-    "Net.HttpOriginalContentLength.Https.ViaDRP.Video";
-const char kOriginalVideoSecureBypassedHistogramName[] =
-    "Net.HttpOriginalContentLength.Https.BypassedDRP.Video";
-const char kOriginalVideoSecureOtherHistogramName[] =
-    "Net.HttpOriginalContentLength.Https.Other.Video";
-
 // Lo-Fi histograms.
-const char kReceivedValidOCLLoFiOnHistogramName[] =
+const std::string kReceivedValidOCLLoFiOnHistogramName =
     "Net.HttpContentLengthWithValidOCL.LoFiOn";
-const char kOriginalValidOCLLoFiOnHistogramName[] =
+const std::string kOriginalValidOCLLoFiOnHistogramName =
     "Net.HttpOriginalContentLengthWithValidOCL.LoFiOn";
-const char kDifferenceValidOCLLoFiOnHistogramName[] =
+const std::string kDifferenceValidOCLLoFiOnHistogramName =
     "Net.HttpContentLengthDifferenceWithValidOCL.LoFiOn";
 
-const char kReceivedHistogramName[] = "Net.HttpContentLength";
-const char kReceivedInsecureDirectHistogramName[] =
-    "Net.HttpContentLength.Http.Direct";
-const char kReceivedInsecureViaDRPHistogramName[] =
-    "Net.HttpContentLength.Http.ViaDRP";
-const char kReceivedInsecureBypassedHistogramName[] =
-    "Net.HttpContentLength.Http.BypassedDRP";
-const char kReceivedInsecureOtherHistogramName[] =
-    "Net.HttpContentLength.Http.Other";
-const char kReceivedSecureDirectHistogramName[] =
-    "Net.HttpContentLength.Https.Direct";
-const char kReceivedSecureViaDRPHistogramName[] =
-    "Net.HttpContentLength.Https.ViaDRP";
-const char kReceivedSecureBypassedHistogramName[] =
-    "Net.HttpContentLength.Https.BypassedDRP";
-const char kReceivedSecureOtherHistogramName[] =
-    "Net.HttpContentLength.Https.Other";
-const char kReceivedVideoInsecureDirectHistogramName[] =
-    "Net.HttpContentLength.Http.Direct.Video";
-const char kReceivedVideoInsecureViaDRPHistogramName[] =
-    "Net.HttpContentLength.Http.ViaDRP.Video";
-const char kReceivedVideoInsecureBypassedHistogramName[] =
-    "Net.HttpContentLength.Http.BypassedDRP.Video";
-const char kReceivedVideoInsecureOtherHistogramName[] =
-    "Net.HttpContentLength.Http.Other.Video";
-const char kReceivedVideoSecureDirectHistogramName[] =
-    "Net.HttpContentLength.Https.Direct.Video";
-const char kReceivedVideoSecureViaDRPHistogramName[] =
-    "Net.HttpContentLength.Https.ViaDRP.Video";
-const char kReceivedVideoSecureBypassedHistogramName[] =
-    "Net.HttpContentLength.Https.BypassedDRP.Video";
-const char kReceivedVideoSecureOtherHistogramName[] =
-    "Net.HttpContentLength.Https.Other.Video";
-const char kOriginalHistogramName[] = "Net.HttpOriginalContentLength";
-const char kDifferenceHistogramName[] = "Net.HttpContentLengthDifference";
-const char kFreshnessLifetimeHistogramName[] =
+const std::string kReceivedHistogramName = "Net.HttpContentLength";
+const std::string kReceivedInsecureHistogramName = "Net.HttpContentLength.Http";
+const std::string kReceivedSecureHistogramName = "Net.HttpContentLength.Https";
+const std::string kReceivedVideoHistogramName = "Net.HttpContentLength.Video";
+const std::string kOriginalHistogramName = "Net.HttpOriginalContentLength";
+const std::string kDifferenceHistogramName = "Net.HttpContentLengthDifference";
+const std::string kFreshnessLifetimeHistogramName =
     "Net.HttpContentFreshnessLifetime";
-const char kCacheableHistogramName[] = "Net.HttpContentLengthCacheable";
-const char kCacheable4HoursHistogramName[] =
+const std::string kCacheableHistogramName = "Net.HttpContentLengthCacheable";
+const std::string kCacheable4HoursHistogramName =
     "Net.HttpContentLengthCacheable4Hours";
-const char kCacheable24HoursHistogramName[] =
+const std::string kCacheable24HoursHistogramName =
     "Net.HttpContentLengthCacheable24Hours";
 const int64_t kResponseContentLength = 100;
 const int64_t kOriginalContentLength = 200;
@@ -260,6 +194,9 @@ class TestLoFiDecider : public LoFiDecider {
     headers->RemoveHeader(chrome_proxy_accept_transform_header());
   }
 
+  void MaybeSetIgnorePreviewsBlacklistDirective(
+      net::HttpRequestHeaders* headers) const override {}
+
   bool ShouldRecordLoFiUMA(const net::URLRequest& request) const override {
     return should_request_lofi_resource_;
   }
@@ -327,7 +264,9 @@ enum ProxyTestConfig { USE_SECURE_PROXY, USE_INSECURE_PROXY, BYPASS_PROXY };
 class DataReductionProxyNetworkDelegateTest : public testing::Test {
  public:
   DataReductionProxyNetworkDelegateTest()
-      : lofi_decider_(nullptr),
+      : context_(true),
+        context_storage_(&context_),
+        lofi_decider_(nullptr),
         lofi_ui_service_(nullptr),
         ssl_socket_data_provider_(net::ASYNC, net::OK) {
     ssl_socket_data_provider_.next_proto = net::kProtoHTTP11;
@@ -350,18 +289,13 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
                                                  net::ProxyServer::SCHEME_HTTP);
         break;
     }
-    context_.reset(new net::TestURLRequestContext(true));
-    context_storage_.reset(new net::URLRequestContextStorage(context_.get()));
     proxy_service_ =
         net::ProxyService::CreateFixedFromPacResult(proxy_server.ToPacString());
-    context_->set_proxy_service(proxy_service_.get());
-
-    mock_socket_factory_.reset(new net::MockClientSocketFactory());
-
+    context_.set_proxy_service(proxy_service_.get());
     DataReductionProxyTestContext::Builder builder;
     builder = builder.WithClient(kClient)
-                  .WithMockClientSocketFactory(mock_socket_factory_.get())
-                  .WithURLRequestContext(context_.get());
+                  .WithMockClientSocketFactory(&mock_socket_factory_)
+                  .WithURLRequestContext(&context_);
 
     if (proxy_config != BYPASS_PROXY) {
       builder = builder.WithProxiesForHttp({DataReductionProxyServer(
@@ -370,8 +304,8 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
 
     test_context_ = builder.Build();
 
-    context_->set_client_socket_factory(mock_socket_factory_.get());
-    test_context_->AttachToURLRequestContext(context_storage_.get());
+    context_.set_client_socket_factory(&mock_socket_factory_);
+    test_context_->AttachToURLRequestContext(&context_storage_);
 
     std::unique_ptr<TestLoFiDecider> lofi_decider(new TestLoFiDecider());
     lofi_decider_ = lofi_decider.get();
@@ -381,9 +315,9 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
     lofi_ui_service_ = lofi_ui_service.get();
     test_context_->io_data()->set_lofi_ui_service(std::move(lofi_ui_service));
 
-    context_->set_enable_brotli(enable_brotli_globally);
-    context_->set_network_quality_estimator(&test_network_quality_estimator_);
-    context_->Init();
+    context_.set_enable_brotli(enable_brotli_globally);
+    context_.set_network_quality_estimator(&test_network_quality_estimator_);
+    context_.Init();
 
     test_context_->EnableDataReductionProxyWithSecureProxyCheckSuccess();
   }
@@ -437,7 +371,7 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
         io_data()->test_request_options()->GetHeaderValueForTesting() +
         std::string("\r\n\r\n");
 
-    mock_socket_factory_->AddSSLSocketDataProvider(&ssl_socket_data_provider_);
+    mock_socket_factory_.AddSSLSocketDataProvider(&ssl_socket_data_provider_);
 
     for (net::EffectiveConnectionType effective_connection_type :
          effective_connection_types) {
@@ -458,7 +392,7 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
     socket_ = base::MakeUnique<net::StaticSocketDataProvider>(
         reads_list->data(), reads_list->size(), writes_list->data(),
         writes_list->size());
-    mock_socket_factory_->AddSocketDataProvider(socket_.get());
+    mock_socket_factory_.AddSocketDataProvider(socket_.get());
   }
 
   static void VerifyHeaders(bool expected_data_reduction_proxy_used,
@@ -507,10 +441,10 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
                              net::MockRead(response_body.c_str()),
                              net::MockRead(net::SYNCHRONOUS, net::OK)};
     net::StaticSocketDataProvider socket(reads, arraysize(reads), nullptr, 0);
-    mock_socket_factory_->AddSocketDataProvider(&socket);
+    mock_socket_factory_.AddSocketDataProvider(&socket);
 
     net::TestDelegate delegate;
-    std::unique_ptr<net::URLRequest> request = context_->CreateRequest(
+    std::unique_ptr<net::URLRequest> request = context_.CreateRequest(
         url, net::IDLE, &delegate, TRAFFIC_ANNOTATION_FOR_TESTS);
     if (request_headers)
       request->SetExtraRequestHeaders(*request_headers);
@@ -563,7 +497,7 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
           std::string(base::checked_cast<size_t>(response_body_size), ' ');
     }
 
-    mock_socket_factory_->AddSSLSocketDataProvider(&ssl_socket_data_provider_);
+    mock_socket_factory_.AddSSLSocketDataProvider(&ssl_socket_data_provider_);
 
     net::MockRead reads[] = {net::MockRead(response_headers.c_str()),
                              net::MockRead(response_body.c_str()),
@@ -621,10 +555,10 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
     net::MockWrite writes[] = {net::MockWrite(mock_write.c_str())};
     net::StaticSocketDataProvider socket(reads, arraysize(reads), writes,
                                          arraysize(writes));
-    mock_socket_factory_->AddSocketDataProvider(&socket);
+    mock_socket_factory_.AddSocketDataProvider(&socket);
 
     net::TestDelegate delegate;
-    std::unique_ptr<net::URLRequest> request = context_->CreateRequest(
+    std::unique_ptr<net::URLRequest> request = context_.CreateRequest(
         url, net::IDLE, &delegate, TRAFFIC_ANNOTATION_FOR_TESTS);
     if (request_headers)
       request->SetExtraRequestHeaders(*request_headers);
@@ -688,7 +622,7 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
     std::string response_body =
         std::string(base::checked_cast<size_t>(response_body_size), ' ');
 
-    mock_socket_factory_->AddSSLSocketDataProvider(&ssl_socket_data_provider_);
+    mock_socket_factory_.AddSSLSocketDataProvider(&ssl_socket_data_provider_);
 
     net::MockRead redirect_reads[] = {
         net::MockRead("HTTP/1.1 302 Redirect\r\n"),
@@ -731,10 +665,10 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
           arraysize(redirect_writes));
     }
 
-    mock_socket_factory_->AddSocketDataProvider(socket.get());
+    mock_socket_factory_.AddSocketDataProvider(socket.get());
 
     net::TestDelegate delegate;
-    std::unique_ptr<net::URLRequest> request = context_->CreateRequest(
+    std::unique_ptr<net::URLRequest> request = context_.CreateRequest(
         url, net::IDLE, &delegate, TRAFFIC_ANNOTATION_FOR_TESTS);
     if (!page_id_value.empty()) {
       request->SetLoadFlags(request->load_flags() |
@@ -757,7 +691,7 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
         effective_connection_type);
 
     net::TestDelegate delegate;
-    std::unique_ptr<net::URLRequest> request = context_->CreateRequest(
+    std::unique_ptr<net::URLRequest> request = context_.CreateRequest(
         GURL(kTestURL), net::IDLE, &delegate, TRAFFIC_ANNOTATION_FOR_TESTS);
 
     request->Start();
@@ -811,13 +745,13 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
   }
 
   net::MockClientSocketFactory* mock_socket_factory() {
-    return mock_socket_factory_.get();
+    return &mock_socket_factory_;
   }
 
-  net::TestURLRequestContext* context() { return context_.get(); }
+  net::TestURLRequestContext* context() { return &context_; }
 
   net::NetworkDelegate* network_delegate() const {
-    return context_->network_delegate();
+    return context_.network_delegate();
   }
 
   TestDataReductionProxyParams* params() const {
@@ -844,10 +778,10 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
 
  private:
   base::MessageLoopForIO message_loop_;
-  std::unique_ptr<net::MockClientSocketFactory> mock_socket_factory_;
+  net::MockClientSocketFactory mock_socket_factory_;
   std::unique_ptr<net::ProxyService> proxy_service_;
-  std::unique_ptr<net::TestURLRequestContext> context_;
-  std::unique_ptr<net::URLRequestContextStorage> context_storage_;
+  net::TestURLRequestContext context_;
+  net::URLRequestContextStorage context_storage_;
 
   TestLoFiDecider* lofi_decider_;
   TestLoFiUIService* lofi_ui_service_;
@@ -954,7 +888,7 @@ TEST_F(DataReductionProxyNetworkDelegateTest, LoFiTransitions) {
           GURL(kTestURL), net::IDLE, &delegate, TRAFFIC_ANNOTATION_FOR_TESTS);
       fake_request->SetLoadFlags(net::LOAD_MAIN_FRAME_DEPRECATED);
       lofi_decider()->SetIsUsingLoFi(config()->ShouldEnableLoFi(
-          *fake_request.get(), test_previews_decider));
+          *fake_request.get(), &test_previews_decider));
       NotifyNetworkDelegate(fake_request.get(), data_reduction_proxy_info,
                             proxy_retry_info, &headers);
 
@@ -962,7 +896,7 @@ TEST_F(DataReductionProxyNetworkDelegateTest, LoFiTransitions) {
       VerifyDataReductionProxyData(
           *fake_request, tests[i].is_data_reduction_proxy,
           config()->ShouldEnableLoFi(*fake_request.get(),
-                                     test_previews_decider));
+                                     &test_previews_decider));
     }
 
     {
@@ -1037,13 +971,13 @@ TEST_F(DataReductionProxyNetworkDelegateTest, LoFiTransitions) {
           GURL(kTestURL), net::IDLE, &delegate, TRAFFIC_ANNOTATION_FOR_TESTS);
       fake_request->SetLoadFlags(net::LOAD_MAIN_FRAME_DEPRECATED);
       lofi_decider()->SetIsUsingLoFi(config()->ShouldEnableLoFi(
-          *fake_request.get(), test_previews_decider));
+          *fake_request.get(), &test_previews_decider));
       NotifyNetworkDelegate(fake_request.get(), data_reduction_proxy_info,
                             proxy_retry_info, &headers);
       VerifyDataReductionProxyData(
           *fake_request, tests[i].is_data_reduction_proxy,
           config()->ShouldEnableLoFi(*fake_request.get(),
-                                     test_previews_decider));
+                                     &test_previews_decider));
     }
   }
 }
@@ -1267,20 +1201,16 @@ TEST_F(DataReductionProxyNetworkDelegateTest, NetHistograms) {
                                       kResponseContentLength, 1);
   histogram_tester.ExpectUniqueSample(kOriginalValidOCLHistogramName,
                                       kOriginalContentLength, 1);
-  histogram_tester.ExpectUniqueSample(kOriginalInsecureViaDRPHistogramName,
-                                      kOriginalContentLength, 1);
   histogram_tester.ExpectUniqueSample(
       kDifferenceValidOCLHistogramName,
       kOriginalContentLength - kResponseContentLength, 1);
   histogram_tester.ExpectUniqueSample(kReceivedHistogramName,
                                       kResponseContentLength, 1);
-  histogram_tester.ExpectUniqueSample(kReceivedInsecureViaDRPHistogramName,
+  histogram_tester.ExpectUniqueSample(kReceivedInsecureHistogramName,
                                       kResponseContentLength, 1);
-  histogram_tester.ExpectTotalCount(kReceivedInsecureDirectHistogramName, 0);
-  histogram_tester.ExpectTotalCount(kReceivedSecureDirectHistogramName, 0);
-  histogram_tester.ExpectTotalCount(kReceivedVideoInsecureViaDRPHistogramName,
-                                    0);
-  histogram_tester.ExpectUniqueSample(kReceivedInsecureViaDRPHistogramName,
+  histogram_tester.ExpectTotalCount(kReceivedSecureHistogramName, 0);
+  histogram_tester.ExpectTotalCount(kReceivedVideoHistogramName, 0);
+  histogram_tester.ExpectUniqueSample(kReceivedInsecureHistogramName,
                                       kResponseContentLength, 1);
   histogram_tester.ExpectUniqueSample(kOriginalHistogramName,
                                       kOriginalContentLength, 1);
@@ -1340,8 +1270,8 @@ TEST_F(DataReductionProxyNetworkDelegateTest, NetHistograms) {
 
     // Needed as a parameter, but functionality is not tested.
     TestPreviewsDecider test_previews_decider;
-    lofi_decider()->SetIsUsingLoFi(
-        config()->ShouldEnableLoFi(*fake_request.get(), test_previews_decider));
+    lofi_decider()->SetIsUsingLoFi(config()->ShouldEnableLoFi(
+        *fake_request.get(), &test_previews_decider));
 
     fake_request = (FetchURLRequest(GURL(kTestURL), nullptr, response_headers,
                                     kResponseContentLength, 0));
@@ -1392,216 +1322,35 @@ TEST_F(DataReductionProxyNetworkDelegateTest, NetVideoHistograms) {
   FetchURLRequest(GURL(kTestURL), nullptr, video_response_headers,
                   kResponseContentLength, 0);
 
-  histogram_tester.ExpectUniqueSample(kReceivedInsecureViaDRPHistogramName,
+  histogram_tester.ExpectUniqueSample(kReceivedInsecureHistogramName,
                                       kResponseContentLength, 1);
-  histogram_tester.ExpectTotalCount(kReceivedInsecureDirectHistogramName, 0);
-  histogram_tester.ExpectTotalCount(kReceivedInsecureBypassedHistogramName, 0);
-  histogram_tester.ExpectTotalCount(kReceivedInsecureOtherHistogramName, 0);
-  histogram_tester.ExpectTotalCount(kReceivedSecureViaDRPHistogramName, 0);
-  histogram_tester.ExpectTotalCount(kReceivedSecureDirectHistogramName, 0);
-  histogram_tester.ExpectTotalCount(kReceivedSecureBypassedHistogramName, 0);
-  histogram_tester.ExpectTotalCount(kReceivedSecureOtherHistogramName, 0);
-  histogram_tester.ExpectUniqueSample(kReceivedVideoInsecureViaDRPHistogramName,
+  histogram_tester.ExpectTotalCount(kReceivedSecureHistogramName, 0);
+  histogram_tester.ExpectUniqueSample(kReceivedVideoHistogramName,
                                       kResponseContentLength, 1);
-  histogram_tester.ExpectTotalCount(kReceivedVideoInsecureDirectHistogramName,
-                                    0);
-  histogram_tester.ExpectTotalCount(kReceivedVideoInsecureBypassedHistogramName,
-                                    0);
-  histogram_tester.ExpectTotalCount(kReceivedVideoInsecureOtherHistogramName,
-                                    0);
-  histogram_tester.ExpectTotalCount(kReceivedVideoSecureViaDRPHistogramName, 0);
-  histogram_tester.ExpectTotalCount(kReceivedVideoSecureDirectHistogramName, 0);
-  histogram_tester.ExpectTotalCount(kReceivedVideoSecureBypassedHistogramName,
-                                    0);
-  histogram_tester.ExpectTotalCount(kReceivedVideoSecureOtherHistogramName, 0);
 }
 
-struct ExpectedHistogram {
-  const std::string name;
-  int64_t value;
-};
+TEST_F(DataReductionProxyNetworkDelegateTest, NetSSLHistograms) {
+  Init(BYPASS_PROXY, false);
 
-bool operator<(const ExpectedHistogram& hist1, const ExpectedHistogram& hist2) {
-  return hist1.name < hist2.name;
-}
+  base::HistogramTester histogram_tester;
 
-TEST_F(DataReductionProxyNetworkDelegateTest, DetailedNetHistograms) {
-  // List of all the histograms we're concerned with.
-  // Each test case can define interesting histograms from this list.
-  // Any histogram not called out in an invidual test will have an expected
-  // count of 0 samples.
-  const std::set<std::string> all_new_net_histograms{
-      // HTTP received content length
-      kReceivedInsecureDirectHistogramName,
-      kReceivedInsecureViaDRPHistogramName,
-      kReceivedInsecureBypassedHistogramName,
-      kReceivedInsecureOtherHistogramName,
-      // HTTP video received content length
-      kReceivedVideoInsecureDirectHistogramName,
-      kReceivedVideoInsecureViaDRPHistogramName,
-      kReceivedVideoInsecureBypassedHistogramName,
-      kReceivedVideoInsecureOtherHistogramName,
-      // HTTPS received content length
-      kReceivedSecureDirectHistogramName, kReceivedSecureViaDRPHistogramName,
-      kReceivedSecureBypassedHistogramName, kReceivedSecureOtherHistogramName,
-      // HTTPS video received content length
-      kReceivedVideoSecureDirectHistogramName,
-      kReceivedVideoSecureViaDRPHistogramName,
-      kReceivedVideoSecureBypassedHistogramName,
-      kReceivedVideoSecureOtherHistogramName,
-      // HTTP Original content length
-      kOriginalInsecureDirectHistogramName,
-      kOriginalInsecureViaDRPHistogramName,
-      kOriginalInsecureBypassedHistogramName,
-      kOriginalInsecureOtherHistogramName,
-      // HTTP video Original content length
-      kOriginalVideoInsecureDirectHistogramName,
-      kOriginalVideoInsecureViaDRPHistogramName,
-      kOriginalVideoInsecureBypassedHistogramName,
-      kOriginalVideoInsecureOtherHistogramName,
-      // HTTPS Original content length
-      kOriginalSecureDirectHistogramName, kOriginalSecureViaDRPHistogramName,
-      kOriginalSecureBypassedHistogramName, kOriginalSecureOtherHistogramName,
-      // HTTPS video Original content length
-      kOriginalVideoSecureDirectHistogramName,
-      kOriginalVideoSecureViaDRPHistogramName,
-      kOriginalVideoSecureBypassedHistogramName,
-      kOriginalVideoSecureOtherHistogramName,
-  };
+  // Check https
+  std::string secure_response_headers =
+      "HTTP/1.1 200 OK\r\n"
+      "Date: Wed, 28 Nov 2007 09:40:09 GMT\r\n"
+      "Expires: Mon, 24 Nov 2014 12:45:26 GMT\r\n"
+      "Via: 1.1 Chrome-Compression-Proxy\r\n"
+      "x-original-content-length: " +
+      base::Int64ToString(kOriginalContentLength) + "\r\n\r\n";
 
-  const struct {
-    const std::string name;
-    bool is_video;
-    bool is_https;
-    ProxyTestConfig proxy_config;
-    int64_t original_content_length;
-    int64_t content_length;
-    // Any histogram listed in all_new_net_histograms but not here should have
-    // no samples.
-    const std::set<ExpectedHistogram> expected_histograms;
-  } tests[] = {
-      {"HTTP nonvideo request via DRP",
-       false,
-       false,
-       USE_INSECURE_PROXY,
-       kOriginalContentLength,
-       kResponseContentLength,
-       {
-           {kReceivedInsecureViaDRPHistogramName, kResponseContentLength},
-           {kOriginalInsecureViaDRPHistogramName, kOriginalContentLength},
-       }},
-      {"HTTP video request via DRP",
-       true,
-       false,
-       USE_INSECURE_PROXY,
-       kOriginalContentLength,
-       kResponseContentLength,
-       {
-           {kReceivedInsecureViaDRPHistogramName, kResponseContentLength},
-           {kOriginalInsecureViaDRPHistogramName, kOriginalContentLength},
-           {kReceivedVideoInsecureViaDRPHistogramName, kResponseContentLength},
-           {kOriginalVideoInsecureViaDRPHistogramName, kOriginalContentLength},
-       }},
-      {"DRP not configured for http",
-       false,
-       false,
-       BYPASS_PROXY,
-       kOriginalContentLength,
-       kResponseContentLength,
-       {
-           {kReceivedInsecureOtherHistogramName, kResponseContentLength},
-           {kOriginalInsecureOtherHistogramName, kResponseContentLength},
-       }},
-      {"DRP not configured for http video",
-       true,
-       false,
-       BYPASS_PROXY,
-       kOriginalContentLength,
-       kResponseContentLength,
-       {
-           {kReceivedInsecureOtherHistogramName, kResponseContentLength},
-           {kOriginalInsecureOtherHistogramName, kResponseContentLength},
-           {kReceivedVideoInsecureOtherHistogramName, kResponseContentLength},
-           {kOriginalVideoInsecureOtherHistogramName, kResponseContentLength},
-       }},
-      {"nonvideo over https",
-       false,
-       true,
-       BYPASS_PROXY,
-       kOriginalContentLength,
-       kResponseContentLength,
-       {
-           {kReceivedSecureDirectHistogramName, kResponseContentLength},
-           {kOriginalSecureDirectHistogramName, kResponseContentLength},
-       }},
-      {"video over https",
-       true,
-       true,
-       BYPASS_PROXY,
-       kOriginalContentLength,
-       kResponseContentLength,
-       {
-           {kReceivedSecureDirectHistogramName, kResponseContentLength},
-           {kOriginalSecureDirectHistogramName, kResponseContentLength},
-           {kReceivedVideoSecureDirectHistogramName, kResponseContentLength},
-           {kOriginalVideoSecureDirectHistogramName, kResponseContentLength},
-       }},
-  };
+  mock_socket_factory()->AddSSLSocketDataProvider(ssl_socket_data_provider());
+  FetchURLRequest(GURL(kSecureTestURL), nullptr, secure_response_headers,
+                  kResponseContentLength, 0);
 
-  for (const auto& test : tests) {
-    LOG(INFO) << "NetHistograms: " << test.name;
-    Init(test.proxy_config, false);
-    base::HistogramTester histogram_tester;
-
-    GURL test_url = GURL(kTestURL);
-
-    if (test.is_https) {
-      test_url = GURL(kSecureTestURL);
-      mock_socket_factory()->AddSSLSocketDataProvider(
-          ssl_socket_data_provider());
-    }
-
-    std::string via_header = "";
-    std::string ocl_header = "";
-
-    if (test.proxy_config == USE_INSECURE_PROXY) {
-      via_header = "Via: 1.1 Chrome-Compression-Proxy\r\n";
-      ocl_header = "x-original-content-length: " +
-                   base::Int64ToString(kOriginalContentLength) + "\r\n";
-    }
-    if (test.is_video) {
-      // Check video
-      std::string video_response_headers =
-          "HTTP/1.1 200 OK\r\n"
-          "Date: Wed, 28 Nov 2007 09:40:09 GMT\r\n"
-          "Expires: Mon, 24 Nov 2014 12:45:26 GMT\r\n"
-          "Content-Type: video/mp4\r\n" +
-          via_header + ocl_header + "\r\n";
-
-      FetchURLRequest(test_url, nullptr, video_response_headers,
-                      kResponseContentLength, 0);
-    } else {
-      // Check https
-      std::string response_headers =
-          "HTTP/1.1 200 OK\r\n"
-          "Date: Wed, 28 Nov 2007 09:40:09 GMT\r\n"
-          "Expires: Mon, 24 Nov 2014 12:45:26 GMT\r\n" +
-          via_header + ocl_header + "\r\n\r\n";
-
-      FetchURLRequest(test_url, nullptr, response_headers,
-                      kResponseContentLength, 0);
-    }
-
-    for (const auto& histogram : all_new_net_histograms) {
-      auto expected_it = test.expected_histograms.find({histogram, 0});
-      if (expected_it == test.expected_histograms.end()) {
-        histogram_tester.ExpectTotalCount(histogram, 0);
-      } else {
-        histogram_tester.ExpectUniqueSample(expected_it->name,
-                                            expected_it->value, 1);
-      }
-    }
-  }
+  histogram_tester.ExpectTotalCount(kReceivedInsecureHistogramName, 0);
+  histogram_tester.ExpectUniqueSample(kReceivedSecureHistogramName,
+                                      kResponseContentLength, 1);
+  histogram_tester.ExpectTotalCount(kReceivedVideoHistogramName, 0);
 }
 
 TEST_F(DataReductionProxyNetworkDelegateTest, OnCompletedInternalLoFi) {

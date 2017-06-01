@@ -707,13 +707,6 @@ void OfflinePageRequestJob::OnOfflineRedirectAvailabe(
   URLRequestJob::NotifyHeadersComplete();
 }
 
-// Returns true to disable the file path checking for file: scheme in
-// URLRequestFileJob, that's not relevant for this class.
-bool OfflinePageRequestJob::CanAccessFile(const base::FilePath& original_path,
-                                          const base::FilePath& absolute_path) {
-  return true;
-}
-
 void OfflinePageRequestJob::SetDelegateForTesting(
     std::unique_ptr<Delegate> delegate) {
   delegate_ = std::move(delegate);

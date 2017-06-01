@@ -83,9 +83,10 @@ void ResourceLoader::Start(const ResourceRequest& request) {
     return;
   }
 
-  loader_ = fetcher_->Context().CreateURLLoader(request);
+  loader_ = fetcher_->Context().CreateURLLoader();
   DCHECK(loader_);
   loader_->SetDefersLoading(Context().DefersLoading());
+  loader_->SetLoadingTaskRunner(Context().LoadingTaskRunner().Get());
 
   if (is_cache_aware_loading_activated_) {
     // Override cache policy for cache-aware loading. If this request fails, a

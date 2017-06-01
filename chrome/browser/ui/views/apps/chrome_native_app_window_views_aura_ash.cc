@@ -19,6 +19,7 @@
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_state_delegate.h"
 #include "ash/wm/window_state_observer.h"
+#include "ash/wm_window.h"
 #include "chrome/browser/chromeos/note_taking_helper.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/ash/ash_util.h"
@@ -59,12 +60,13 @@ class NativeAppWindowStateDelegate : public ash::wm::WindowStateDelegate,
     // control.
     // TODO(pkotwicz): This is a hack. Remove ASAP. http://crbug.com/319048
     window_state_->AddObserver(this);
-    window_state_->window()->AddObserver(this);
+    ash::WmWindow::GetAuraWindow(window_state_->window())->AddObserver(this);
   }
   ~NativeAppWindowStateDelegate() override {
     if (window_state_) {
       window_state_->RemoveObserver(this);
-      window_state_->window()->RemoveObserver(this);
+      ash::WmWindow::GetAuraWindow(window_state_->window())
+          ->RemoveObserver(this);
     }
   }
 
@@ -106,8 +108,8 @@ class NativeAppWindowStateDelegate : public ash::wm::WindowStateDelegate,
   // Overridden from aura::WindowObserver:
   void OnWindowDestroying(aura::Window* window) override {
     window_state_->RemoveObserver(this);
-    window_state_->window()->RemoveObserver(this);
-    window_state_ = nullptr;
+    ash::WmWindow::GetAuraWindow(window_state_->window())->RemoveObserver(this);
+    window_state_ = NULL;
   }
 
   // Not owned.

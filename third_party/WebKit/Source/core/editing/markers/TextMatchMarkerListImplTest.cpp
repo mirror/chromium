@@ -5,7 +5,7 @@
 #include "core/editing/markers/TextMatchMarkerListImpl.h"
 
 #include "core/editing/EditingTestBase.h"
-#include "core/editing/markers/TextMatchMarker.h"
+#include "core/editing/markers/RenderedDocumentMarker.h"
 
 namespace blink {
 
@@ -14,16 +14,12 @@ class TextMatchMarkerListImplTest : public EditingTestBase {
   TextMatchMarkerListImplTest() : marker_list_(new TextMatchMarkerListImpl()) {}
 
   DocumentMarker* CreateMarker(unsigned start_offset, unsigned end_offset) {
-    return new TextMatchMarker(start_offset, end_offset,
-                               TextMatchMarker::MatchStatus::kInactive);
+    return new DocumentMarker(start_offset, end_offset,
+                              DocumentMarker::MatchStatus::kInactive);
   }
 
   Persistent<TextMatchMarkerListImpl> marker_list_;
 };
-
-TEST_F(TextMatchMarkerListImplTest, MarkerType) {
-  EXPECT_EQ(DocumentMarker::kTextMatch, marker_list_->MarkerType());
-}
 
 TEST_F(TextMatchMarkerListImplTest, Add) {
   EXPECT_EQ(0u, marker_list_->GetMarkers().size());

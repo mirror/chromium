@@ -129,11 +129,6 @@ DOMMatrixReadOnly* DOMMatrixReadOnly::Create(
   return nullptr;
 }
 
-DOMMatrixReadOnly* DOMMatrixReadOnly::CreateForSerialization(double sequence[],
-                                                             int size) {
-  return new DOMMatrixReadOnly(sequence, size);
-}
-
 DOMMatrixReadOnly* DOMMatrixReadOnly::fromFloat32Array(
     NotShared<DOMFloat32Array> float32_array,
     ExceptionState& exception_state) {
@@ -169,6 +164,7 @@ DOMMatrixReadOnly* DOMMatrixReadOnly::fromMatrix(
     DCHECK(exception_state.HadException());
     return nullptr;
   }
+
   if (other.is2D()) {
     double args[] = {other.m11(), other.m12(), other.m21(),
                      other.m22(), other.m41(), other.m42()};

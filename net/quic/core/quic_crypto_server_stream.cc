@@ -64,13 +64,15 @@ QuicCryptoServerStreamBase::QuicCryptoServerStreamBase(QuicSession* session)
 // static
 bool QuicCryptoServerStreamBase::DoesPeerSupportStatelessRejects(
     const CryptoHandshakeMessage& message) {
-  QuicTagVector received_tags;
-  QuicErrorCode error = message.GetTaglist(kCOPT, &received_tags);
+  const QuicTag* received_tags;
+  size_t received_tags_length;
+  QuicErrorCode error =
+      message.GetTaglist(kCOPT, &received_tags, &received_tags_length);
   if (error != QUIC_NO_ERROR) {
     return false;
   }
-  for (const QuicTag tag : received_tags) {
-    if (tag == kSREJ) {
+  for (size_t i = 0; i < received_tags_length; ++i) {
+    if (received_tags[i] == kSREJ) {
       return true;
     }
   }

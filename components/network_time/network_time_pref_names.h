@@ -10,8 +10,6 @@ namespace prefs {
 
 extern const char kNetworkTimeMapping[];
 
-extern const char kNetworkTimeQueriesEnabled[];
-
 }  // namespace prefs
 }  // namespace network_time
 

@@ -53,7 +53,7 @@ class PLATFORM_EXPORT DisplayItemClient {
 
   // The visual rect of this DisplayItemClient, in the object space of the
   // object that owns the GraphicsLayer, i.e. offset by
-  // GraphicsLayer::OffsetFromLayoutObjectWithSubpixelAccumulation().
+  // offsetFromLayoutObjectWithSubpixelAccumulation().
   virtual LayoutRect VisualRect() const = 0;
 
   // This is declared here instead of in LayoutObject for verifying the
@@ -141,11 +141,9 @@ class PLATFORM_EXPORT DisplayItemClient {
     }
 
     PaintInvalidationReason GetPaintInvalidationReason() const {
-      if (value_ == kJustCreated)
-        return PaintInvalidationReason::kAppeared;
-      if (value_ < kJustCreated)
-        return static_cast<PaintInvalidationReason>(value_);
-      return PaintInvalidationReason::kNone;
+      return value_ < kJustCreated
+                 ? static_cast<PaintInvalidationReason>(value_)
+                 : PaintInvalidationReason::kNone;
     }
 
     bool IsJustCreated() const { return value_ == kJustCreated; }

@@ -35,7 +35,6 @@ namespace blink {
 
 class DocumentMarker;
 class GraphicsContext;
-class TextMatchMarker;
 
 // The two truncation values below are used as tokens representing truncation
 // state for the text box, are intended to be relative to |m_start|, and are set
@@ -149,12 +148,12 @@ class CORE_EXPORT InlineTextBox : public InlineBox {
                                    bool grammar) const;
   virtual void PaintTextMatchMarkerForeground(const PaintInfo&,
                                               const LayoutPoint& box_origin,
-                                              const TextMatchMarker&,
+                                              const DocumentMarker&,
                                               const ComputedStyle&,
                                               const Font&) const;
   virtual void PaintTextMatchMarkerBackground(const PaintInfo&,
                                               const LayoutPoint& box_origin,
-                                              const TextMatchMarker&,
+                                              const DocumentMarker&,
                                               const ComputedStyle&,
                                               const Font&) const;
 

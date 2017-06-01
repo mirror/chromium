@@ -30,10 +30,9 @@
 #include "core/frame/BrowserControls.h"
 
 #include "core/dom/ClientRect.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/VisualViewport.h"
-#include "core/frame/WebLocalFrameBase.h"
 #include "core/page/Page.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
@@ -44,6 +43,7 @@
 #include "public/web/WebSettings.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "web/WebLocalFrameImpl.h"
 #include "web/tests/FrameTestHelpers.h"
 
 namespace blink {
@@ -707,8 +707,7 @@ TEST_F(BrowserControlsTest, MAYBE(DontAffectLayoutHeight)) {
   EXPECT_FLOAT_EQ(150.f, abs_pos->getBoundingClientRect()->height());
   EXPECT_FLOAT_EQ(150.f, fixed_pos->getBoundingClientRect()->height());
 
-  // The layout size on the LocalFrameView should not include the browser
-  // controls.
+  // The layout size on the FrameView should not include the browser controls.
   EXPECT_EQ(300,
             GetFrame()->View()->GetLayoutSize(kIncludeScrollbars).Height());
 
@@ -955,7 +954,7 @@ TEST_F(BrowserControlsTest,
   web_view->GetBrowserControls().SetShownRatio(1);
   web_view->UpdateAllLifecyclePhases();
 
-  LocalFrameView* view = GetFrame()->View();
+  FrameView* view = GetFrame()->View();
   ScrollableArea* root_viewport = GetFrame()->View()->GetScrollableArea();
 
   int expected_visual_offset =

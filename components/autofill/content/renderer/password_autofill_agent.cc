@@ -6,7 +6,6 @@
 
 #include <stddef.h>
 
-#include <algorithm>
 #include <memory>
 #include <string>
 #include <utility>
@@ -277,23 +276,9 @@ bool DoUsernamesMatch(const base::string16& username1,
                                                            true);
 }
 
-// Returns whether the given |element| is editable.
+// Returns |true| if the given element is editable. Otherwise, returns |false|.
 bool IsElementAutocompletable(const blink::WebInputElement& element) {
   return IsElementEditable(element);
-}
-
-// Returns whether the |username_element| is allowed to be autofilled.
-//
-// Note that if the user interacts with the |password_field| and the
-// |username_element| is user-defined (i.e., non-empty and non-autofilled), then
-// this function returns false. This is a precaution, to not override the field
-// if it has been classified as username by accident.
-bool IsUsernameAmendable(const blink::WebInputElement& username_element,
-                         bool is_password_field_selected) {
-  return !username_element.IsNull() &&
-         IsElementAutocompletable(username_element) &&
-         (!is_password_field_selected || username_element.IsAutofilled() ||
-          username_element.Value().IsEmpty());
 }
 
 // Return true if either password_value or new_password_value is not empty and
@@ -608,41 +593,6 @@ bool HasPasswordField(const blink::WebLocalFrame& frame) {
   return false;
 }
 
-// Returns the closest visible autocompletable non-password text element
-// preceding the |password_element| either in a form, if it belongs to one, or
-// in the |frame|.
-blink::WebInputElement FindUsernameElementPrecedingPasswordElement(
-    blink::WebFrame* frame,
-    const blink::WebInputElement& password_element) {
-  DCHECK(!password_element.IsNull());
-
-  std::vector<blink::WebFormControlElement> elements;
-  if (password_element.Form().IsNull()) {
-    elements = form_util::GetUnownedAutofillableFormFieldElements(
-        frame->GetDocument().All(), nullptr);
-  } else {
-    blink::WebVector<blink::WebFormControlElement> web_control_elements;
-    password_element.Form().GetFormControlElements(web_control_elements);
-    elements.assign(web_control_elements.begin(), web_control_elements.end());
-  }
-
-  auto iter = std::find(elements.begin(), elements.end(), password_element);
-  if (iter == elements.end())
-    return blink::WebInputElement();
-
-  for (auto begin = elements.begin(); iter != begin;) {
-    --iter;
-    const blink::WebInputElement* input = blink::ToWebInputElement(&*iter);
-    if (input && input->IsTextField() && !input->IsPasswordField() &&
-        IsElementAutocompletable(*input) &&
-        form_util::IsWebElementVisible(*input)) {
-      return *input;
-    }
-  }
-
-  return blink::WebInputElement();
-}
-
 }  // namespace
 
 class PasswordAutofillAgent::FormElementObserverCallback
@@ -811,7 +761,7 @@ bool PasswordAutofillAgent::FillSuggestion(
 
   blink::WebInputElement username_element;
   blink::WebInputElement password_element;
-  PasswordInfo* password_info = nullptr;
+  PasswordInfo* password_info;
 
   if (!FindPasswordInfoForElement(*element, &username_element,
                                   &password_element, &password_info) ||
@@ -823,9 +773,8 @@ bool PasswordAutofillAgent::FillSuggestion(
   if (element->IsPasswordField()) {
     password_info->password_field_suggestion_was_accepted = true;
     password_info->password_field = password_element;
-  }
-
-  if (IsUsernameAmendable(username_element, element->IsPasswordField())) {
+  } else if (!username_element.IsNull() &&
+             IsElementAutocompletable(username_element)) {
     username_element.SetAutofillValue(blink::WebString::FromUTF16(username));
     username_element.SetAutofilled(true);
     UpdateFieldValueAndPropertiesMaskMap(username_element, &username,
@@ -865,7 +814,8 @@ bool PasswordAutofillAgent::PreviewSuggestion(
     return false;
   }
 
-  if (IsUsernameAmendable(username_element, element->IsPasswordField())) {
+  if (!element->IsPasswordField() && !username_element.IsNull() &&
+      IsElementAutocompletable(username_element)) {
     if (username_query_prefix_.empty())
       username_query_prefix_ = username_element.Value().Utf16();
 
@@ -893,9 +843,8 @@ bool PasswordAutofillAgent::DidClearAutofillSelection(
   PasswordInfo* password_info;
 
   if (!FindPasswordInfoForElement(*element, &username_element,
-                                  &password_element, &password_info)) {
+                                  &password_element, &password_info))
     return false;
-  }
 
   ClearPreview(&username_element, &password_element);
   return true;
@@ -919,37 +868,33 @@ bool PasswordAutofillAgent::FindPasswordInfoForElement(
       return false;
     }
 
-    *password_element = element;
-
     WebInputToPasswordInfoMap::iterator iter =
         web_input_to_password_info_.find(element);
-    if (iter == web_input_to_password_info_.end()) {
-      PasswordToLoginMap::const_iterator password_iter =
-          password_to_username_.find(element);
-      if (password_iter == password_to_username_.end()) {
-        if (web_input_to_password_info_.empty())
-          return false;
-        // Now all PasswordInfo items refer to the same set of credentials for
-        // fill, so it is ok to take any of them.
-        iter = web_input_to_password_info_.begin();
-      } else {
-        *username_element = password_iter->second;
-      }
-    }
-
     if (iter != web_input_to_password_info_.end()) {
-      // It's a password field without corresponding username field. Try to find
-      // the username field based on visibility.
-      *username_element = FindUsernameElementPrecedingPasswordElement(
-          render_frame()->GetWebFrame(), *password_element);
+      // It's a password field without corresponding username field.
+      *password_element = element;
       *password_info = &iter->second;
       return true;
     }
-    // Otherwise |username_element| has been set above.
+    PasswordToLoginMap::const_iterator password_iter =
+        password_to_username_.find(element);
+    if (password_iter == password_to_username_.end()) {
+      if (web_input_to_password_info_.empty())
+        return false;
+
+      *password_element = element;
+      // Now all PasswordInfo items refer to the same set of credentials for
+      // fill, so it is ok to take any of them.
+      *password_info = &web_input_to_password_info_.begin()->second;
+      return true;
+    }
+    *username_element = password_iter->second;
+    *password_element = element;
   }
 
   WebInputToPasswordInfoMap::iterator iter =
       web_input_to_password_info_.find(*username_element);
+
   if (iter == web_input_to_password_info_.end())
     return false;
 

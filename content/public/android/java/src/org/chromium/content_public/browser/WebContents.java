@@ -149,9 +149,9 @@ public interface WebContents extends Parcelable {
 
     // TODO (amaralp): Only used in content. Should be moved out of public interface.
     /**
-     * Shows paste popup menu at the touch handle at specified location.
+     * Shows paste popup menu at point
      */
-    void showContextMenuAtTouchHandle(int x, int y);
+    void showContextMenuAtPoint(int x, int y);
 
     /**
      * Suspends all media players for this WebContents.  Note: There may still

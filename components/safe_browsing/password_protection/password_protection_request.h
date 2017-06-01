@@ -40,8 +40,7 @@ class PasswordProtectionRequest : public base::RefCountedThreadSafe<
                                       content::BrowserThread::DeleteOnUIThread>,
                                   public net::URLFetcherDelegate {
  public:
-  PasswordProtectionRequest(content::WebContents* web_contents,
-                            const GURL& main_frame_url,
+  PasswordProtectionRequest(const GURL& main_frame_url,
                             const GURL& password_form_action,
                             const GURL& password_form_frame_url,
                             const std::string& saved_domain,
@@ -104,9 +103,6 @@ class PasswordProtectionRequest : public base::RefCountedThreadSafe<
   void Finish(PasswordProtectionService::RequestOutcome outcome,
               std::unique_ptr<LoginReputationClientResponse> response);
 
-  // WebContents of the password protection event.
-  content::WebContents* web_contents_;
-
   // Main frame URL of the login form.
   const GURL main_frame_url_;
 
@@ -131,6 +127,10 @@ class PasswordProtectionRequest : public base::RefCountedThreadSafe<
   // The PasswordProtectionService instance owns |this|.
   // Can only be accessed on UI thread.
   PasswordProtectionService* password_protection_service_;
+
+  // Safe Browsing database manager used to look up CSD whitelist.
+  // Can only be accessed on IO thread.
+  scoped_refptr<SafeBrowsingDatabaseManager> database_manager_;
 
   // If we haven't receive response after this period of time, we cancel this
   // request.

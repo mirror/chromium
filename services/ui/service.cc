@@ -29,7 +29,6 @@
 #include "services/ui/ime/ime_server_impl.h"
 #include "services/ui/ws/accessibility_manager.h"
 #include "services/ui/ws/display_binding.h"
-#include "services/ui/ws/display_creation_config.h"
 #include "services/ui/ws/display_manager.h"
 #include "services/ui/ws/gpu_host.h"
 #include "services/ui/ws/user_activity_monitor.h"
@@ -101,9 +100,9 @@ Service::~Service() {
 #endif
 }
 
-bool Service::InitializeResources(service_manager::Connector* connector) {
+void Service::InitializeResources(service_manager::Connector* connector) {
   if (ui::ResourceBundle::HasSharedInstance())
-    return true;
+    return;
 
   std::set<std::string> resource_paths;
   resource_paths.insert(kResourceFileStrings);
@@ -113,10 +112,7 @@ bool Service::InitializeResources(service_manager::Connector* connector) {
   catalog::ResourceLoader loader;
   filesystem::mojom::DirectoryPtr directory;
   connector->BindInterface(catalog::mojom::kServiceName, &directory);
-  if (!loader.OpenFiles(std::move(directory), resource_paths)) {
-    LOG(ERROR) << "Service failed to open resource files.";
-    return false;
-  }
+  CHECK(loader.OpenFiles(std::move(directory), resource_paths));
 
   ui::RegisterPathProvider();
 
@@ -129,7 +125,6 @@ bool Service::InitializeResources(service_manager::Connector* connector) {
                          ui::SCALE_FACTOR_100P);
   rb.AddDataPackFromFile(loader.TakeFile(kResourceFile200),
                          ui::SCALE_FACTOR_200P);
-  return true;
 }
 
 Service::UserState* Service::GetUserState(
@@ -161,11 +156,7 @@ void Service::OnStart() {
   if (test_config_)
     ui::test::EnableTestConfigForPlatformWindows();
 
-  // If resources are unavailable do not complete start-up.
-  if (!InitializeResources(context()->connector())) {
-    context()->QuitNow();
-    return;
-  }
+  InitializeResources(context()->connector());
 
 #if defined(USE_OZONE)
   // The ozone platform can provide its own event source. So initialize the
@@ -289,19 +280,15 @@ bool Service::IsTestConfig() const {
 
 void Service::OnWillCreateTreeForWindowManager(
     bool automatically_create_display_roots) {
-  if (window_server_->display_creation_config() !=
-      ws::DisplayCreationConfig::UNKNOWN) {
+  if (screen_manager_config_ != ScreenManagerConfig::UNKNOWN)
     return;
-  }
 
   DVLOG(3) << "OnWillCreateTreeForWindowManager "
            << automatically_create_display_roots;
-  ws::DisplayCreationConfig config = automatically_create_display_roots
-                                         ? ws::DisplayCreationConfig::AUTOMATIC
-                                         : ws::DisplayCreationConfig::MANUAL;
-  window_server_->SetDisplayCreationConfig(config);
-  if (window_server_->display_creation_config() ==
-      ws::DisplayCreationConfig::MANUAL) {
+  screen_manager_config_ = automatically_create_display_roots
+                               ? ScreenManagerConfig::INTERNAL
+                               : ScreenManagerConfig::FORWARDING;
+  if (screen_manager_config_ == ScreenManagerConfig::FORWARDING) {
 #if defined(USE_OZONE) && defined(OS_CHROMEOS)
     screen_manager_ = base::MakeUnique<display::ScreenManagerForwarding>();
 #else
@@ -339,9 +326,8 @@ void Service::BindClipboardRequest(
 void Service::BindDisplayManagerRequest(
     const service_manager::BindSourceInfo& source_info,
     mojom::DisplayManagerRequest request) {
-  // Wait for the DisplayManager to be configured before binding display
-  // requests. Otherwise the client sees no displays.
-  if (!window_server_->display_manager()->IsReady()) {
+  // DisplayManagerObservers generally expect there to be at least one display.
+  if (!window_server_->display_manager()->has_displays()) {
     std::unique_ptr<PendingRequest> pending_request(new PendingRequest);
     pending_request->source_info = source_info;
     pending_request->dm_request.reset(
@@ -398,7 +384,7 @@ void Service::BindWindowTreeFactoryRequest(
     const service_manager::BindSourceInfo& source_info,
     mojom::WindowTreeFactoryRequest request) {
   AddUserIfNecessary(source_info.identity);
-  if (!window_server_->display_manager()->IsReady()) {
+  if (!window_server_->display_manager()->has_displays()) {
     std::unique_ptr<PendingRequest> pending_request(new PendingRequest);
     pending_request->source_info = source_info;
     pending_request->wtf_request.reset(

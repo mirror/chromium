@@ -5,36 +5,18 @@
 #ifndef ASH_WM_OVERVIEW_SCOPED_OVERVIEW_ANIMATION_SETTINGS_H_
 #define ASH_WM_OVERVIEW_SCOPED_OVERVIEW_ANIMATION_SETTINGS_H_
 
-#include <memory>
-
-#include "ash/wm/overview/overview_animation_type.h"
-#include "base/macros.h"
-
-namespace aura {
-class Window;
-}  // namespace aura
-
 namespace ui {
 class ImplicitAnimationObserver;
-class ScopedLayerAnimationSettings;
 }  // namespace ui
 
 namespace ash {
 
 // ScopedOverviewAnimationSettings correctly configures the animation
-// settings for an aura::Window given an OverviewAnimationType.
+// settings for a WmWindow given an OverviewAnimationType.
 class ScopedOverviewAnimationSettings {
  public:
-  ScopedOverviewAnimationSettings(OverviewAnimationType animation_type,
-                                  aura::Window* window);
-  ~ScopedOverviewAnimationSettings();
-  void AddObserver(ui::ImplicitAnimationObserver* observer);
-
- private:
-  // The managed animation settings.
-  std::unique_ptr<ui::ScopedLayerAnimationSettings> animation_settings_;
-
-  DISALLOW_COPY_AND_ASSIGN(ScopedOverviewAnimationSettings);
+  virtual ~ScopedOverviewAnimationSettings() {}
+  virtual void AddObserver(ui::ImplicitAnimationObserver* observer) = 0;
 };
 
 }  // namespace ash

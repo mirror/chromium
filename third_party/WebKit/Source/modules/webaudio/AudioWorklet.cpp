@@ -7,7 +7,6 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/Document.h"
 #include "core/frame/LocalFrame.h"
-#include "core/workers/WorkerClients.h"
 #include "modules/webaudio/AudioWorkletMessagingProxy.h"
 #include "modules/webaudio/AudioWorkletThread.h"
 
@@ -31,9 +30,8 @@ void AudioWorklet::Initialize() {
   DCHECK(!worklet_messaging_proxy_);
   DCHECK(GetExecutionContext());
 
-  WorkerClients* worker_clients = WorkerClients::Create();
   worklet_messaging_proxy_ =
-      new AudioWorkletMessagingProxy(GetExecutionContext(), worker_clients);
+      new AudioWorkletMessagingProxy(GetExecutionContext());
   worklet_messaging_proxy_->Initialize();
 }
 

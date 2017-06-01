@@ -1,37 +1,39 @@
 <!DOCTYPE html>
+
 <!--
 Verifies GainNode attributes and their type.
 -->
+
 <html>
-  <head>
-    <title>
-      gain-basic.html
-    </title>
-    <script src="../../resources/testharness.js"></script>
-    <script src="../../resources/testharnessreport.js"></script>
-    <script src="../resources/audit-util.js"></script>
-    <script src="../resources/audit.js"></script>
-  </head>
-  <body>
-    <script id="layout-test-code">
-      let audit = Audit.createTaskRunner();
+<head>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script> 
+<script src="../resources/audit-util.js"></script>
+<script src="../resources/audit.js"></script>
 
-      audit.define('test', function(task, should) {
-        // Create audio context.
-        let context = new AudioContext();
+</head>
+<body>
 
-        // Create gain node.
-        let gainNode = context.createGain();
+<script>
+let audit = Audit.createTaskRunner();
 
-        should(
-            gainNode.gain instanceof AudioParam,
-            'gainNode.gain instanceof AudioParam')
-            .beTrue();
+audit.define('test', function(task, should) {
+  // Create audio context.
+  let context = new AudioContext();
 
-        task.done();
-      });
+  // Create gain node.
+  let gainNode = context.createGain();
 
-      audit.run();
-    </script>
-  </body>
+  should(
+      gainNode.gain instanceof AudioParam,
+      'gainNode.gain instanceof AudioParam')
+      .beTrue();
+
+  task.done();
+});
+
+audit.run();
+</script>
+
+</body>
 </html>

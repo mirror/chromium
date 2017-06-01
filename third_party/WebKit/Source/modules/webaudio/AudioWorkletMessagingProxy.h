@@ -18,7 +18,7 @@ class AudioWorkletMessagingProxy final : public ThreadedWorkletMessagingProxy {
   USING_FAST_MALLOC(AudioWorkletMessagingProxy);
 
  public:
-  AudioWorkletMessagingProxy(ExecutionContext*, WorkerClients*);
+  explicit AudioWorkletMessagingProxy(ExecutionContext*);
 
  protected:
   ~AudioWorkletMessagingProxy() override;

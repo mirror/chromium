@@ -19,6 +19,7 @@
 #include "ui/views/controls/button/button.h"
 #include "ui/views/controls/button/menu_button_listener.h"
 #include "ui/views/mouse_constants.h"
+#include "ui/views/resources/grit/views_resources.h"
 #include "ui/views/widget/root_view.h"
 #include "ui/views/widget/widget.h"
 
@@ -177,14 +178,21 @@ bool MenuButton::IsTriggerableEventType(const ui::Event& event) {
   return event.type() == ui::ET_GESTURE_TAP;
 }
 
+void MenuButton::OnPaint(gfx::Canvas* canvas) {
+  LabelButton::OnPaint(canvas);
+
+  if (show_menu_marker_)
+    PaintMenuMarker(canvas);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 //
 // MenuButton - Events
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-gfx::Size MenuButton::CalculatePreferredSize() const {
-  gfx::Size prefsize = LabelButton::CalculatePreferredSize();
+gfx::Size MenuButton::GetPreferredSize() const {
+  gfx::Size prefsize = LabelButton::GetPreferredSize();
   if (show_menu_marker_) {
     prefsize.Enlarge(menu_marker_->width() + kMenuMarkerPaddingLeft +
                          kMenuMarkerPaddingRight,
@@ -357,11 +365,6 @@ void MenuButton::NotifyClick(const ui::Event& event) {
   // We don't forward events to the normal button listener, instead using the
   // MenuButtonListener.
   Activate(&event);
-}
-
-void MenuButton::PaintButtonContents(gfx::Canvas* canvas) {
-  if (show_menu_marker_)
-    PaintMenuMarker(canvas);
 }
 
 void MenuButton::IncrementPressedLocked(bool snap_ink_drop_to_activated,

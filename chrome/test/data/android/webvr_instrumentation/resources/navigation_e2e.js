@@ -13,3 +13,4 @@ function onFullscreenChange() {
   finishJavaScriptStep();
 }
 document.addEventListener('webkitfullscreenchange', onFullscreenChange, false);
+window.addEventListener('load', finishJavaScriptStep, false);

@@ -42,7 +42,6 @@ const char kSyncLogJS[] = "sync_log.js";
 const char kSyncNodeBrowserJS[] = "sync_node_browser.js";
 const char kSyncSearchJS[] = "sync_search.js";
 const char kTypesJS[] = "types.js";
-const char kUserEventsJS[] = "user_events.js";
 
 // Message handlers.
 const char kDispatchEvent[] = "chrome.sync.dispatchEvent";
@@ -52,10 +51,6 @@ const char kRegisterForEvents[] = "registerForEvents";
 const char kRegisterForPerTypeCounters[] = "registerForPerTypeCounters";
 const char kRequestListOfTypes[] = "requestListOfTypes";
 const char kRequestUpdatedAboutInfo[] = "requestUpdatedAboutInfo";
-const char kRequestUserEventsVisibility[] = "requestUserEventsVisibility";
-const char kUserEventsVisibilityCallback[] =
-    "chrome.sync.userEventsVisibilityCallback";
-const char kWriteUserEvent[] = "writeUserEvent";
 
 // Other strings.
 const char kCommit[] = "commit";
@@ -283,6 +278,7 @@ std::string GetConnectionStatus(const SyncService::SyncTokenStatus& status) {
 // classes defined above.
 std::unique_ptr<base::DictionaryValue> ConstructAboutInformation(
     SyncService* service,
+    SigninManagerBase* signin,
     version_info::Channel channel) {
   std::unique_ptr<base::DictionaryValue> about_info(
       new base::DictionaryValue());
@@ -438,8 +434,8 @@ std::unique_ptr<base::DictionaryValue> ConstructAboutInformation(
     sync_id.SetValue(full_status.sync_id);
   if (is_status_valid && !full_status.invalidator_client_id.empty())
     invalidator_id.SetValue(full_status.invalidator_client_id);
-  if (service->signin())
-    username.SetValue(service->signin()->GetAuthenticatedAccountInfo().email);
+  if (signin)
+    username.SetValue(signin->GetAuthenticatedAccountInfo().email);
 
   const SyncService::SyncTokenStatus& token_status =
       service->GetSyncTokenStatus();

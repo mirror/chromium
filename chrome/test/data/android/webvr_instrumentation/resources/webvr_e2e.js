@@ -4,27 +4,13 @@
 
 var testPassed = false;
 var resultString = "";
+var asyncCounter = 0;
 var javascriptDone = false;
-var initializationSteps = {load: false};
+var vrDisplayPromiseDone = false;
 
 function finishJavaScriptStep() {
   javascriptDone = true;
 }
-
-// Used to check when JavaScript is in an acceptable state to start testing
-// after a page load, as Chrome thinking that the page has finished loading
-// is not always sufficient. By default waits until the load event is fired.
-function isInitializationComplete() {
-  for (var step in initializationSteps) {
-    if (!initializationSteps[step]) {
-      return false;
-    }
-  }
-  return true;
-}
-
-window.addEventListener("load",
-    () => {initializationSteps["load"] = true;}, false);
 
 function checkResultsForFailures(tests, harness_status) {
   testPassed = true;
@@ -48,13 +34,9 @@ function checkResultsForFailures(tests, harness_status) {
   }
 }
 
-// Only interact with testharness.js if it was actually included on the page
-// before this file
-if (typeof add_completion_callback !== "undefined") {
-  add_completion_callback( (tests, harness_status) => {
-    checkResultsForFailures(tests, harness_status);
-    console.debug("Test result: " + (testPassed ? "Pass" : "Fail"));
-    console.debug("Test result string: " + resultString);
-    finishJavaScriptStep();
-  });
-}
+add_completion_callback( (tests, harness_status) => {
+  checkResultsForFailures(tests, harness_status);
+  console.debug("Test result: " + (testPassed ? "Pass" : "Fail"));
+  console.debug("Test result string: " + resultString);
+  finishJavaScriptStep();
+});

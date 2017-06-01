@@ -1,31 +1,30 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
-    <title>
-      convolver-setBuffer-null.html
-    </title>
-    <script src="../../resources/testharness.js"></script>
-    <script src="../../resources/testharnessreport.js"></script>
-    <script src="../resources/audit-util.js"></script>
-    <script src="../resources/audit.js"></script>
-  </head>
-  <body>
-    <script id="layout-test-code">
-      let audit = Audit.createTaskRunner();
+<head>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script> 
+<script src="../resources/audit-util.js"></script>
+<script src="../resources/audit.js"></script>
+</head>
 
-      audit.define('test', function(task, should) {
-        let context = new AudioContext();
-        let conv = context.createConvolver();
+<body>
+<script>
+let audit = Audit.createTaskRunner();
 
-        should(() => {
-          conv.buffer = null;
-        }, 'Setting ConvolverNode impulse response buffer to null').notThrow();
-        should(conv.buffer === null, 'conv.buffer === null').beTrue();
+audit.define('test', function(task, should) {
+  let context = new AudioContext();
+  let conv = context.createConvolver();
 
-        task.done();
-      });
+  should(() => {
+    conv.buffer = null;
+  }, 'Setting ConvolverNode impulse response buffer to null').notThrow();
+  should(conv.buffer === null, 'conv.buffer === null').beTrue();
 
-      audit.run();
-    </script>
-  </body>
+  task.done();
+});
+
+audit.run();
+</script>
+
+</body>
 </html>

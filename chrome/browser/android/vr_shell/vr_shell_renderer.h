@@ -10,7 +10,6 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "chrome/browser/android/vr_shell/ui_element_renderer.h"
 #include "chrome/browser/android/vr_shell/vr_controller_model.h"
 #include "device/vr/vr_types.h"
 #include "ui/gl/gl_bindings.h"
@@ -234,8 +233,8 @@ class GradientQuadRenderer : public BaseQuadRenderer {
   ~GradientQuadRenderer() override;
 
   void Draw(const vr::Mat4f& view_proj_matrix,
-            SkColor edge_color,
-            SkColor center_color,
+            const vr::Colorf& edge_color,
+            const vr::Colorf& center_color,
             float opacity);
 
  private:
@@ -248,46 +247,36 @@ class GradientQuadRenderer : public BaseQuadRenderer {
   DISALLOW_COPY_AND_ASSIGN(GradientQuadRenderer);
 };
 
-class GradientGridRenderer : public BaseQuadRenderer {
+class GradientGridRenderer : public BaseRenderer {
  public:
   GradientGridRenderer();
   ~GradientGridRenderer() override;
 
   void Draw(const vr::Mat4f& view_proj_matrix,
-            SkColor edge_color,
-            SkColor center_color,
-            SkColor grid_color,
+            const vr::Colorf& edge_color,
+            const vr::Colorf& center_color,
             int gridline_count,
             float opacity);
 
  private:
+  void MakeGridLines(int gridline_count);
+
+  GLuint vertex_buffer_ = 0;
   GLuint model_view_proj_matrix_handle_;
   GLuint scene_radius_handle_;
   GLuint center_color_handle_;
   GLuint edge_color_handle_;
-  GLuint grid_color_handle_;
   GLuint opacity_handle_;
-  GLuint lines_count_handle_;
+  std::vector<Line3d> grid_lines_;
 
   DISALLOW_COPY_AND_ASSIGN(GradientGridRenderer);
 };
 
-class VrShellRenderer : public UiElementRenderer {
+class VrShellRenderer {
  public:
   VrShellRenderer();
-  ~VrShellRenderer() override;
+  ~VrShellRenderer();
 
-  // UiElementRenderer interface (exposed to UI elements).
-  void DrawTexturedQuad(int texture_data_handle,
-                        const vr::Mat4f& view_proj_matrix,
-                        const gfx::RectF& copy_rect,
-                        float opacity) override;
-  void DrawGradientQuad(const vr::Mat4f& view_proj_matrix,
-                        const SkColor edge_color,
-                        const SkColor center_color,
-                        float opacity) override;
-
-  // VrShell's internal GL rendering API.
   ExternalTexturedQuadRenderer* GetExternalTexturedQuadRenderer();
   TexturedQuadRenderer* GetTexturedQuadRenderer();
   WebVrRenderer* GetWebVrRenderer();

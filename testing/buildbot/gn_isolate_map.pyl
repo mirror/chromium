@@ -435,6 +435,10 @@
     "label": "//ui/display:display_unittests",
     "type": "console_test_launcher",
   },
+  "display_service_unittests": {
+    "label": "//services/ui/display:display_service_unittests",
+    "type": "console_test_launcher",
+  },
   "dump_syms" : {
     "label": "//breakpad:dump_syms",
     "type": "additional_compile_target",
@@ -750,6 +754,10 @@
     "label": "//mash:mash_unittests",
     "type": "windowed_test_launcher",
   },
+  "mus_gpu_unittests": {
+    "label": "//services/ui/gpu:mus_gpu_unittests",
+    "type": "console_test_launcher",
+  },
   "nacl_helper_nonsfi_unittests": {
     "label": "//components/nacl/loader:nacl_helper_nonsfi_unittests",
     "type": "raw",
@@ -833,8 +841,8 @@
     "label": "//services:service_junit_tests",
     "type": "junit_test",
   },
-  "services_unittests": {
-    "label": "//services:services_unittests",
+  "service_unittests": {
+    "label": "//services:service_unittests",
     "type": "windowed_test_launcher",
   },
   "setup_unittests": {
@@ -1007,11 +1015,16 @@
   },
   "ui_arc_unittests": {
     "label": "//ui/arc:ui_arc_unittests",
-    "type": "windowed_test_launcher",
+    "type": "raw",
+    "args": [],
   },
   "ui_junit_tests": {
     "label": "//ui/android:ui_junit_tests",
     "type": "junit_test",
+  },
+  "ui_service_unittests": {
+    "label": "//services/ui/ws:ui_service_unittests",
+    "type": "windowed_test_launcher",
   },
   "ui_touch_selection_unittests": {
     "label": "//ui/touch_selection:ui_touch_selection_unittests",

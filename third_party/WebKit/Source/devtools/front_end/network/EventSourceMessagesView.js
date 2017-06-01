@@ -22,7 +22,6 @@ Network.EventSourceMessagesView = class extends UI.VBox {
     ]);
 
     this._dataGrid = new DataGrid.SortableDataGrid(columns);
-    this._dataGrid.setStriped(true);
     this._dataGrid.setStickToBottom(true);
     this._dataGrid.markColumnAsSortedBy('time', DataGrid.DataGrid.Order.Ascending);
     this._sortItems();

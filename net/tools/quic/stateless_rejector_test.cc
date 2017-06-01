@@ -239,9 +239,11 @@ TEST_P(StatelessRejectorTest, RejectChlo) {
   ASSERT_EQ(StatelessRejector::REJECTED, rejector_->state());
   const CryptoHandshakeMessage& reply = rejector_->reply();
   EXPECT_EQ(kSREJ, reply.tag());
-  QuicTagVector reject_reasons;
-  EXPECT_EQ(QUIC_NO_ERROR, reply.GetTaglist(kRREJ, &reject_reasons));
-  EXPECT_EQ(1u, reject_reasons.size());
+  const uint32_t* reject_reasons;
+  size_t num_reject_reasons;
+  EXPECT_EQ(QUIC_NO_ERROR,
+            reply.GetTaglist(kRREJ, &reject_reasons, &num_reject_reasons));
+  EXPECT_EQ(1u, num_reject_reasons);
   EXPECT_EQ(INVALID_EXPECTED_LEAF_CERTIFICATE,
             static_cast<HandshakeFailureReason>(reject_reasons[0]));
 }

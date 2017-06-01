@@ -25,7 +25,6 @@
 #include "components/autofill/core/browser/validation.h"
 #include "components/autofill/core/common/autofill_constants.h"
 #include "components/payments/content/payment_request_state.h"
-#include "components/payments/core/payment_request_data_util.h"
 #include "components/payments/core/payments_profile_comparator.h"
 #include "components/strings/grit/components_strings.h"
 #include "third_party/libaddressinput/messages.h"
@@ -78,11 +77,6 @@ base::string16 ShippingAddressEditorViewController::GetInitialValueForType(
 
   if (!profile_to_edit_)
     return base::string16();
-
-  if (type == autofill::PHONE_HOME_WHOLE_NUMBER) {
-    return data_util::GetFormattedPhoneNumberForDisplay(
-        *profile_to_edit_, state()->GetApplicationLocale());
-  }
 
   return profile_to_edit_->GetInfo(autofill::AutofillType(type),
                                    state()->GetApplicationLocale());
@@ -452,23 +446,6 @@ ShippingAddressEditorViewController::ShippingAddressValidationDelegate::
     ~ShippingAddressValidationDelegate() {}
 
 bool ShippingAddressEditorViewController::ShippingAddressValidationDelegate::
-    ShouldFormat() {
-  return field_.type == autofill::PHONE_HOME_WHOLE_NUMBER;
-}
-
-base::string16
-ShippingAddressEditorViewController::ShippingAddressValidationDelegate::Format(
-    const base::string16& text) {
-  if (controller_->chosen_country_index_ < controller_->countries_.size()) {
-    return base::UTF8ToUTF16(data_util::FormatPhoneForDisplay(
-        base::UTF16ToUTF8(text),
-        controller_->countries_[controller_->chosen_country_index_].first));
-  } else {
-    return text;
-  }
-}
-
-bool ShippingAddressEditorViewController::ShippingAddressValidationDelegate::
     IsValidTextfield(views::Textfield* textfield) {
   return ValidateValue(textfield->text(), nullptr);
 }
@@ -480,10 +457,7 @@ bool ShippingAddressEditorViewController::ShippingAddressValidationDelegate::
 }
 
 bool ShippingAddressEditorViewController::ShippingAddressValidationDelegate::
-    TextfieldValueChanged(views::Textfield* textfield, bool was_blurred) {
-  if (!was_blurred)
-    return true;
-
+    TextfieldValueChanged(views::Textfield* textfield) {
   base::string16 error_message;
   bool is_valid = ValidateValue(textfield->text(), &error_message);
   controller_->DisplayErrorMessageForField(field_.type, error_message);

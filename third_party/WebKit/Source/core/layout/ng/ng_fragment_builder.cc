@@ -22,17 +22,8 @@ NGFragmentBuilder::NGFragmentBuilder(NGPhysicalFragment::NGFragmentType type,
       writing_mode_(kHorizontalTopBottom),
       direction_(TextDirection::kLtr),
       node_(node),
-      layout_object_(node->GetLayoutObject()),
-      did_break_(false),
-      border_edges_(NGBorderEdges::kAll) {}
-
-NGFragmentBuilder::NGFragmentBuilder(NGPhysicalFragment::NGFragmentType type,
-                                     LayoutObject* layout_object)
-    : type_(type),
-      writing_mode_(kHorizontalTopBottom),
-      direction_(TextDirection::kLtr),
-      layout_object_(layout_object),
-      did_break_(false) {}
+      did_break_(false) {
+}
 
 NGFragmentBuilder& NGFragmentBuilder::SetWritingMode(
     NGWritingMode writing_mode) {
@@ -94,10 +85,8 @@ NGFragmentBuilder& NGFragmentBuilder::AddChild(
   switch (child->Type()) {
     case NGPhysicalBoxFragment::kFragmentBox:
       // Update if we have fragmented in this flow.
-      if (child->BreakToken()) {
-        did_break_ |= !child->BreakToken()->IsFinished();
-        child_break_tokens_.push_back(child->BreakToken());
-      }
+      did_break_ |= !child->BreakToken()->IsFinished();
+      child_break_tokens_.push_back(child->BreakToken());
       break;
     case NGPhysicalBoxFragment::kFragmentLineBox:
       // NGInlineNode produces multiple line boxes in an anonymous box. Only
@@ -204,18 +193,16 @@ RefPtr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
   }
 
   RefPtr<NGBreakToken> break_token;
-  if (node_) {
-    if (last_inline_break_token_) {
-      DCHECK(!last_inline_break_token_->IsFinished());
-      child_break_tokens_.push_back(std::move(last_inline_break_token_));
-      did_break_ = true;
-    }
-    if (did_break_) {
-      break_token = NGBlockBreakToken::Create(node_.Get(), used_block_size_,
-                                              child_break_tokens_);
-    } else {
-      break_token = NGBlockBreakToken::Create(node_.Get());
-    }
+  if (last_inline_break_token_) {
+    DCHECK(!last_inline_break_token_->IsFinished());
+    child_break_tokens_.push_back(std::move(last_inline_break_token_));
+    did_break_ = true;
+  }
+  if (did_break_) {
+    break_token = NGBlockBreakToken::Create(node_.Get(), used_block_size_,
+                                            child_break_tokens_);
+  } else {
+    break_token = NGBlockBreakToken::Create(node_.Get());
   }
 
   for (auto& positioned_float : positioned_floats_) {
@@ -227,10 +214,9 @@ RefPtr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
   }
 
   RefPtr<NGPhysicalBoxFragment> fragment = AdoptRef(new NGPhysicalBoxFragment(
-      layout_object_, physical_size, overflow_.ConvertToPhysical(writing_mode_),
-      children_, positioned_floats_, bfc_offset_, end_margin_strut_,
-      NGBorderEdges::ToPhysical(border_edges_, writing_mode_),
-      std::move(break_token)));
+      node_->GetLayoutObject(), physical_size,
+      overflow_.ConvertToPhysical(writing_mode_), children_, positioned_floats_,
+      bfc_offset_, end_margin_strut_, std::move(break_token)));
 
   return AdoptRef(
       new NGLayoutResult(std::move(fragment), out_of_flow_descendants_,

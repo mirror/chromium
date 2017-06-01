@@ -60,7 +60,7 @@ using base::scoped_nsobject;
 }
 
 - (CBUUID*)UUID {
-  return _UUID;
+  return _UUID.get();
 }
 
 - (void)addCharacteristicWithUUID:(CBUUID*)cb_uuid properties:(int)properties {
@@ -68,11 +68,11 @@ using base::scoped_nsobject;
       [[MockCBCharacteristic alloc] initWithService:self.service
                                              CBUUID:cb_uuid
                                          properties:properties]);
-  [_characteristics addObject:characteristic_mock];
+  [_characteristics.get() addObject:characteristic_mock];
 }
 
 - (void)removeCharacteristicMock:(MockCBCharacteristic*)characteristic_mock {
-  [_characteristics removeObject:characteristic_mock];
+  [_characteristics.get() removeObject:characteristic_mock];
 }
 
 - (CBService*)service {
@@ -80,7 +80,7 @@ using base::scoped_nsobject;
 }
 
 - (NSArray*)characteristics {
-  return _characteristics;
+  return _characteristics.get();
 }
 
 @end

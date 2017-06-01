@@ -40,8 +40,7 @@ class CORE_EXPORT SubresourceFilter final
   SubresourceFilter(DocumentLoader*,
                     std::unique_ptr<WebDocumentSubresourceFilter>);
 
-  void ReportLoad(const KURL& resource_url,
-                  WebDocumentSubresourceFilter::LoadPolicy);
+  void ReportLoad(WebDocumentSubresourceFilter::LoadPolicy);
 
   Member<DocumentLoader> document_loader_;
   std::unique_ptr<WebDocumentSubresourceFilter> subresource_filter_;

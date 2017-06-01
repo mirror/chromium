@@ -31,7 +31,6 @@ AttachmentStoreFrontend::AttachmentStoreFrontend(
 }
 
 AttachmentStoreFrontend::~AttachmentStoreFrontend() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(backend_);
   // To delete backend post task that doesn't do anything, but binds backend
   // through base::Passed. This way backend will be deleted regardless whether
@@ -42,7 +41,7 @@ AttachmentStoreFrontend::~AttachmentStoreFrontend() {
 
 void AttachmentStoreFrontend::Init(
     const AttachmentStore::InitCallback& callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   backend_task_runner_->PostTask(
       FROM_HERE, base::Bind(&AttachmentStoreBackend::Init,
                             base::Unretained(backend_.get()), callback));
@@ -52,7 +51,7 @@ void AttachmentStoreFrontend::Read(
     AttachmentStore::Component component,
     const AttachmentIdList& ids,
     const AttachmentStore::ReadCallback& callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   backend_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&AttachmentStoreBackend::Read,
@@ -63,7 +62,7 @@ void AttachmentStoreFrontend::Write(
     AttachmentStore::Component component,
     const AttachmentList& attachments,
     const AttachmentStore::WriteCallback& callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   backend_task_runner_->PostTask(
       FROM_HERE, base::Bind(&AttachmentStoreBackend::Write,
                             base::Unretained(backend_.get()), component,
@@ -72,7 +71,7 @@ void AttachmentStoreFrontend::Write(
 
 void AttachmentStoreFrontend::SetReference(AttachmentStore::Component component,
                                            const AttachmentIdList& ids) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   backend_task_runner_->PostTask(
       FROM_HERE, base::Bind(&AttachmentStoreBackend::SetReference,
                             base::Unretained(backend_.get()), component, ids));
@@ -82,7 +81,7 @@ void AttachmentStoreFrontend::DropReference(
     AttachmentStore::Component component,
     const AttachmentIdList& ids,
     const AttachmentStore::DropCallback& callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   backend_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&AttachmentStoreBackend::DropReference,
@@ -93,7 +92,7 @@ void AttachmentStoreFrontend::ReadMetadataById(
     AttachmentStore::Component component,
     const AttachmentIdList& ids,
     const AttachmentStore::ReadMetadataCallback& callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   backend_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&AttachmentStoreBackend::ReadMetadataById,
@@ -103,7 +102,7 @@ void AttachmentStoreFrontend::ReadMetadataById(
 void AttachmentStoreFrontend::ReadMetadata(
     AttachmentStore::Component component,
     const AttachmentStore::ReadMetadataCallback& callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   backend_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&AttachmentStoreBackend::ReadMetadata,

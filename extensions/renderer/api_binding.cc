@@ -14,7 +14,6 @@
 #include "base/values.h"
 #include "extensions/common/extension_api.h"
 #include "extensions/renderer/api_binding_hooks.h"
-#include "extensions/renderer/api_binding_types.h"
 #include "extensions/renderer/api_event_handler.h"
 #include "extensions/renderer/api_invocation_errors.h"
 #include "extensions/renderer/api_request_handler.h"
@@ -104,8 +103,6 @@ struct APIBinding::EventData {
             std::string full_name,
             bool supports_filters,
             bool supports_rules,
-            int max_listeners,
-            bool notify_on_change,
             std::vector<std::string> actions,
             std::vector<std::string> conditions,
             APIBinding* binding)
@@ -113,8 +110,6 @@ struct APIBinding::EventData {
         full_name(std::move(full_name)),
         supports_filters(supports_filters),
         supports_rules(supports_rules),
-        max_listeners(max_listeners),
-        notify_on_change(notify_on_change),
         actions(std::move(actions)),
         conditions(std::move(conditions)),
         binding(binding) {}
@@ -130,12 +125,6 @@ struct APIBinding::EventData {
 
   // Whether the event supports rules.
   bool supports_rules;
-
-  // The maximum number of listeners this event supports.
-  int max_listeners;
-
-  // Whether to notify the browser of listener changes.
-  bool notify_on_change;
 
   // The associated actions and conditions for declarative events.
   std::vector<std::string> actions;
@@ -175,7 +164,6 @@ APIBinding::APIBinding(const std::string& api_name,
                        const base::ListValue* event_definitions,
                        const base::DictionaryValue* property_definitions,
                        const CreateCustomType& create_custom_type,
-                       const AvailabilityCallback& is_available,
                        std::unique_ptr<APIBindingHooks> binding_hooks,
                        APITypeReferenceMap* type_refs,
                        APIRequestHandler* request_handler,
@@ -183,7 +171,6 @@ APIBinding::APIBinding(const std::string& api_name,
     : api_name_(api_name),
       property_definitions_(property_definitions),
       create_custom_type_(create_custom_type),
-      is_available_(is_available),
       binding_hooks_(std::move(binding_hooks)),
       type_refs_(type_refs),
       request_handler_(request_handler),
@@ -271,8 +258,6 @@ APIBinding::APIBinding(const std::string& api_name,
       std::vector<std::string> rule_conditions;
       const base::DictionaryValue* options = nullptr;
       bool supports_rules = false;
-      bool notify_on_change = true;
-      int max_listeners = binding::kNoListenerMax;
       if (event_dict->GetDictionary("options", &options)) {
         bool temp_supports_filters = false;
         // TODO(devlin): For some reason, schemas indicate supporting filters
@@ -299,17 +284,12 @@ APIBinding::APIBinding(const std::string& api_name,
           get_values("actions", &rule_actions);
           get_values("conditions", &rule_conditions);
         }
-
-        options->GetInteger("maxListeners", &max_listeners);
-        bool unmanaged = false;
-        if (options->GetBoolean("unmanaged", &unmanaged))
-          notify_on_change = !unmanaged;
       }
 
       events_.push_back(base::MakeUnique<EventData>(
           std::move(name), std::move(full_name), supports_filters,
-          supports_rules, max_listeners, notify_on_change,
-          std::move(rule_actions), std::move(rule_conditions), this));
+          supports_rules, std::move(rule_actions), std::move(rule_conditions),
+          this));
     }
   }
 }
@@ -317,7 +297,8 @@ APIBinding::APIBinding(const std::string& api_name,
 APIBinding::~APIBinding() {}
 
 v8::Local<v8::Object> APIBinding::CreateInstance(
-    v8::Local<v8::Context> context) {
+    v8::Local<v8::Context> context,
+    const AvailabilityCallback& is_available) {
   DCHECK(IsContextValid(context));
   v8::Isolate* isolate = context->GetIsolate();
   if (object_template_.IsEmpty())
@@ -333,8 +314,10 @@ v8::Local<v8::Object> APIBinding::CreateInstance(
   // TODO(devlin): Ideally, we'd only do this check on the methods that are
   // conditionally exposed. Or, we could have multiple templates for different
   // configurations, assuming there are a small number of possibilities.
+  // TODO(devlin): enums should always be exposed, but there may be events that
+  // are restricted. Investigate.
   for (const auto& key_value : methods_) {
-    if (!is_available_.Run(context, key_value.second->full_name)) {
+    if (!is_available.Run(key_value.second->full_name)) {
       v8::Maybe<bool> success = object->Delete(
           context, gin::StringToSymbol(isolate, key_value.first));
       CHECK(success.IsJust());
@@ -342,7 +325,7 @@ v8::Local<v8::Object> APIBinding::CreateInstance(
     }
   }
   for (const auto& event : events_) {
-    if (!is_available_.Run(context, event->full_name)) {
+    if (!is_available.Run(event->full_name)) {
       v8::Maybe<bool> success = object->Delete(
           context, gin::StringToSymbol(isolate, event->exposed_name));
       CHECK(success.IsJust());
@@ -490,8 +473,7 @@ void APIBinding::GetEventObject(
     retval = event.ToV8();
   } else {
     retval = event_data->binding->event_handler_->CreateEventInstance(
-        event_data->full_name, event_data->supports_filters,
-        event_data->max_listeners, event_data->notify_on_change, context);
+        event_data->full_name, event_data->supports_filters, context);
   }
   info.GetReturnValue().Set(retval);
 }
@@ -529,15 +511,6 @@ void APIBinding::HandleCall(const std::string& name,
   // Since this is called synchronously from the JS entry point,
   // GetCurrentContext() should always be correct.
   v8::Local<v8::Context> context = isolate->GetCurrentContext();
-
-  if (!is_available_.Run(context, name)) {
-    // TODO(devlin): Do we need handle this for events as well? I'm not sure the
-    // currrent system does (though perhaps it should). Investigate.
-    isolate->ThrowException(v8::Exception::Error(gin::StringToV8(
-        isolate, base::StringPrintf("'%s' is not available in this context.",
-                                    name.c_str()))));
-    return;
-  }
 
   std::vector<v8::Local<v8::Value>> argument_list = arguments->GetAll();
 

@@ -19,6 +19,7 @@ namespace internal {
 
 namespace {
 
+
 class TaskSchedulerSequenceTest : public testing::Test {
  public:
   TaskSchedulerSequenceTest()

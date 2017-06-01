@@ -12,6 +12,7 @@
 #include "ash/system/tray/system_tray_notifier.h"
 #include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/wm/window_util.h"
+#include "ash/wm_window.h"
 #include "base/command_line.h"
 #include "base/strings/string_util.h"
 #include "ui/display/display.h"
@@ -137,8 +138,7 @@ void VirtualKeyboardController::MoveKeyboardToTouchableDisplay() {
     // Move the virtual keyboard to the focused display if that display has
     // touch capability or keyboard is locked
     const display::Display focused_display =
-        display::Screen::GetScreen()->GetDisplayNearestWindow(
-            wm::GetFocusedWindow());
+        WmWindow::Get(wm::GetFocusedWindow())->GetDisplayNearestWindow();
     if (current_display.id() != focused_display.id() &&
         focused_display.id() != display::kInvalidDisplayId &&
         focused_display.touch_support() ==

@@ -38,8 +38,6 @@ class SafeBrowsingLoudErrorUI
   void PopulateStringsForHtml(base::DictionaryValue* load_time_data) override;
   void HandleCommand(SecurityInterstitialCommands command) override;
 
-  int GetHTMLTemplateId() const override;
-
  private:
   // Fills the passed dictionary with the values to be passed to the template
   // when creating the HTML.

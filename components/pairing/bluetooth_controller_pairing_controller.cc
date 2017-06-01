@@ -72,12 +72,9 @@ void BluetoothControllerPairingController::DeviceFound(
     device::BluetoothDevice* device) {
   DCHECK_EQ(current_stage_, STAGE_DEVICES_DISCOVERY);
   DCHECK(thread_checker_.CalledOnValidThread());
-
-  device::BluetoothDevice::UUIDSet uuids = device->GetUUIDs();
   if (base::StartsWith(device->GetNameForDisplay(),
                        base::ASCIIToUTF16(kDeviceNamePrefix),
-                       base::CompareCase::INSENSITIVE_ASCII) &&
-      base::ContainsKey(uuids, device::BluetoothUUID(kPairingServiceUUID))) {
+                       base::CompareCase::INSENSITIVE_ASCII)) {
     discovered_devices_.insert(device->GetAddress());
     for (ControllerPairingController::Observer& observer : observers_)
       observer.DiscoveredDevicesListChanged();
@@ -399,13 +396,6 @@ void BluetoothControllerPairingController::OnHostStatusMessage(
   } else if (enrollment_status ==
              pairing_api::HostStatusParameters::ENROLLMENT_STATUS_FAILURE) {
     ChangeStage(STAGE_HOST_ENROLLMENT_ERROR);
-    // Reboot the host if enrollment failed.
-    pairing_api::Reboot reboot;
-    reboot.set_api_version(kPairingAPIVersion);
-    int size = 0;
-    scoped_refptr<net::IOBuffer> io_buffer(
-        ProtoDecoder::SendRebootHost(reboot, &size));
-    SendBuffer(io_buffer, size);
   } else if (update_status ==
       pairing_api::HostStatusParameters::UPDATE_STATUS_UPDATING) {
     ChangeStage(STAGE_HOST_UPDATE_IN_PROGRESS);
@@ -453,11 +443,6 @@ void BluetoothControllerPairingController::OnErrorMessage(
 
 void BluetoothControllerPairingController::OnAddNetworkMessage(
     const pairing_api::AddNetwork& message) {
-  NOTREACHED();
-}
-
-void BluetoothControllerPairingController::OnRebootMessage(
-    const pairing_api::Reboot& message) {
   NOTREACHED();
 }
 

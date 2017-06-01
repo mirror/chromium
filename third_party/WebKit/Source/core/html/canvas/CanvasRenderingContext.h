@@ -93,6 +93,7 @@ class CORE_EXPORT CanvasRenderingContext
   WTF::String PixelFormatAsString() const;
 
   const CanvasColorParams& color_params() const { return color_params_; }
+  ColorBehavior ColorBehaviorForMediaDrawnToCanvas() const;
 
   virtual PassRefPtr<Image> GetImage(AccelerationHint,
                                      SnapshotReason) const = 0;
@@ -161,6 +162,7 @@ class CORE_EXPORT CanvasRenderingContext
     return HitTestCanvasResult::Create(String(), nullptr);
   }
   virtual String GetIdFromControl(const Element* element) { return String(); }
+  virtual bool IsAccelerationOptimalForCanvasContent() const { return true; }
   virtual void ResetUsageTracking(){};
 
   // WebGL-specific interface

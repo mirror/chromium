@@ -485,7 +485,6 @@ void RenderWidgetHostImpl::SendScreenRects() {
 
   last_view_screen_rect_ = view_->GetViewBounds();
   last_window_screen_rect_ = view_->GetBoundsInRootWindow();
-  view_->WillSendScreenRects();
   Send(new ViewMsg_UpdateScreenRects(
       GetRoutingID(), last_view_screen_rect_, last_window_screen_rect_));
   waiting_for_screen_rects_ack_ = true;
@@ -1328,10 +1327,9 @@ void RenderWidgetHostImpl::SetCursor(const WebCursor& cursor) {
   view_->UpdateCursor(cursor);
 }
 
-void RenderWidgetHostImpl::ShowContextMenuAtPoint(
-    const gfx::Point& point,
-    const ui::MenuSourceType source_type) {
-  Send(new ViewMsg_ShowContextMenu(GetRoutingID(), source_type, point));
+void RenderWidgetHostImpl::ShowContextMenuAtPoint(const gfx::Point& point) {
+  Send(new ViewMsg_ShowContextMenu(
+      GetRoutingID(), ui::MENU_SOURCE_MOUSE, point));
 }
 
 void RenderWidgetHostImpl::SendCursorVisibilityState(bool is_visible) {
@@ -1528,15 +1526,19 @@ const NativeWebKeyboardEvent*
 
 void RenderWidgetHostImpl::SelectionChanged(const base::string16& text,
                                             uint32_t offset,
-                                            const gfx::Range& range) {
-  if (view_)
-    view_->SelectionChanged(text, static_cast<size_t>(offset), range);
+                                            const gfx::Range& range,
+                                            bool user_initiated) {
+  if (view_) {
+    view_->SelectionChanged(text, static_cast<size_t>(offset), range,
+                            user_initiated);
+  }
 }
 
 void RenderWidgetHostImpl::OnSelectionBoundsChanged(
     const ViewHostMsg_SelectionBounds_Params& params) {
-  if (view_)
+  if (view_) {
     view_->SelectionBoundsChanged(params);
+  }
 }
 
 void RenderWidgetHostImpl::OnSetNeedsBeginFrames(bool needs_begin_frames) {

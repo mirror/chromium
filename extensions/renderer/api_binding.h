@@ -47,10 +47,9 @@ class APIBinding {
       const std::string& property_name,
       const base::ListValue* property_values)>;
 
-  // The callback for determining if a given API feature (specified by |name|)
-  // is available in the given context.
-  using AvailabilityCallback =
-      base::Callback<bool(v8::Local<v8::Context>, const std::string& name)>;
+  // The callback for determining if a given API method (specified by |name|)
+  // is available.
+  using AvailabilityCallback = base::Callback<bool(const std::string& name)>;
 
   // The callback type for handling an API call.
   using HandlerCallback = base::Callback<void(gin::Arguments*)>;
@@ -64,7 +63,6 @@ class APIBinding {
              const base::ListValue* event_definitions,
              const base::DictionaryValue* property_definitions,
              const CreateCustomType& create_custom_type,
-             const AvailabilityCallback& is_available,
              std::unique_ptr<APIBindingHooks> binding_hooks,
              APITypeReferenceMap* type_refs,
              APIRequestHandler* request_handler,
@@ -72,7 +70,9 @@ class APIBinding {
   ~APIBinding();
 
   // Returns a new v8::Object for the API this APIBinding represents.
-  v8::Local<v8::Object> CreateInstance(v8::Local<v8::Context> context);
+  v8::Local<v8::Object> CreateInstance(
+      v8::Local<v8::Context> context,
+      const AvailabilityCallback& is_available);
 
   APIBindingHooks* hooks() { return binding_hooks_.get(); }
 
@@ -129,9 +129,6 @@ class APIBinding {
 
   // The callback for constructing a custom type.
   CreateCustomType create_custom_type_;
-
-  // The callback for checking availability of an API feature.
-  AvailabilityCallback is_available_;
 
   // The registered hooks for this API.
   std::unique_ptr<APIBindingHooks> binding_hooks_;

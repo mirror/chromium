@@ -34,12 +34,10 @@ ParallelDownloadJob::ParallelDownloadJob(
 
 ParallelDownloadJob::~ParallelDownloadJob() = default;
 
-void ParallelDownloadJob::OnDownloadFileInitialized(
-    const DownloadFile::InitializeCallback& callback,
-    DownloadInterruptReason result) {
-  DownloadJobImpl::OnDownloadFileInitialized(callback, result);
-  if (result == DOWNLOAD_INTERRUPT_REASON_NONE)
-    BuildParallelRequestAfterDelay();
+void ParallelDownloadJob::Start() {
+  DownloadJobImpl::Start();
+
+  BuildParallelRequestAfterDelay();
 }
 
 void ParallelDownloadJob::Cancel(bool user_cancel) {
@@ -211,7 +209,6 @@ void ParallelDownloadJob::CreateRequest(int64_t offset, int64_t length) {
       BrowserContext::GetStoragePartitionForSite(
           download_item_->GetBrowserContext(), download_item_->GetSiteUrl());
 
-  // The parallel requests only use GET method.
   std::unique_ptr<DownloadUrlParameters> download_params(
       new DownloadUrlParameters(download_item_->GetURL(),
                                 storage_partition->GetURLRequestContext()));

@@ -92,12 +92,12 @@ function runSetterTests(
     test(function() {
       element.style = '';
       element.styleMap.set(propertyName, validObject);
-      assert_equals(element.style[propertyName], validObject.toString());
+      assert_equals(element.style[propertyName], validObject.cssText);
       // Force a style recalc to check for crashes in style recalculation.
       getComputedStyle(element)[propertyName];
-      assert_equals(element.style[propertyName], validObject.toString());
+      assert_equals(element.style[propertyName], validObject.cssText);
     }, 'Setting ' + propertyName + ' to ' + validObject.constructor.name +
-        ' with value ' +  validObject.toString());
+        ' with value ' +  validObject.cssText);
   }
 
   // Negative tests
@@ -120,19 +120,19 @@ function runGetterTests(
 
       let result = element.styleMap.get(propertyName);
       assert_equals(result.constructor.name, CSSKeywordValue.name);
-      assert_equals(result.toString(), keyword);
+      assert_equals(result.cssText, keyword);
     }, 'Getting ' + propertyName + ' when it is set to ' + keyword);
   }
   for (let validObject of validObjects) {
     test(function() {
-      element.style[propertyName] = validObject.toString();
+      element.style[propertyName] = validObject.cssText;
 
       let result = element.styleMap.get(propertyName);
       assert_equals(result.constructor.name, validObject.constructor.name,
           'typeof result');
-      assert_equals(result.toString(), validObject.toString());
+      assert_equals(result.cssText, validObject.cssText);
     }, 'Getting ' + propertyName + ' with a ' + validObject.constructor.name +
-        ' whose value is ' + validObject.toString());
+        ' whose value is ' + validObject.cssText);
   }
   for (let cssText in validStringMappings) {
     test(function() {
@@ -142,7 +142,7 @@ function runGetterTests(
       assert_equals(result.constructor.name,
           validStringMappings[cssText].constructor.name,
           'typeof result');
-      assert_equals(result.toString(), validStringMappings[cssText].toString());
+      assert_equals(result.cssText, validStringMappings[cssText].cssText);
     }, 'Getting ' + propertyName + ' when it is set to "' +
         cssText + '" via a string');
   }
@@ -154,13 +154,13 @@ function runSequenceSetterTests(
     element.style = '';
     element.styleMap.set(propertyName, [validObject, validObject]);
     assert_equals(
-        element.style[propertyName], validObject.toString() + ', ' +
-        validObject.toString());
+        element.style[propertyName], validObject.cssText + ', ' +
+        validObject.cssText);
     // Force a style recalc to check for crashes in style recalculation.
     getComputedStyle(element)[propertyName];
     assert_equals(
-        element.style[propertyName], validObject.toString() + ', ' +
-        validObject.toString());
+        element.style[propertyName], validObject.cssText + ', ' +
+        validObject.cssText);
   }, 'Set ' + propertyName + ' to a sequence');
 
   test(function() {
@@ -177,17 +177,17 @@ function runAppendTests(
     element.style = '';
 
     element.styleMap.append(propertyName, validObject);
-    assert_equals(element.style[propertyName], validObject.toString());
+    assert_equals(element.style[propertyName], validObject.cssText);
 
     element.styleMap.append(propertyName, validObject);
     assert_equals(
-        element.style[propertyName], validObject.toString() + ', ' +
-        validObject.toString());
+        element.style[propertyName], validObject.cssText + ', ' +
+        validObject.cssText);
     // Force a style recalc to check for crashes in style recalculation.
     getComputedStyle(element)[propertyName];
     assert_equals(
-        element.style[propertyName], validObject.toString() + ', ' +
-        validObject.toString());
+        element.style[propertyName], validObject.cssText + ', ' +
+        validObject.cssText);
   }, 'Appending a ' + validObject.constructor.name + ' to ' + propertyName);
 
   test(function() {
@@ -195,13 +195,13 @@ function runAppendTests(
 
     element.styleMap.append(propertyName, [validObject, validObject]);
     assert_equals(
-        element.style[propertyName], validObject.toString() + ', ' +
-        validObject.toString());
+        element.style[propertyName], validObject.cssText + ', ' +
+        validObject.cssText);
     // Force a style recalc to check for crashes in style recalculation.
     getComputedStyle(element)[propertyName];
     assert_equals(
-        element.style[propertyName], validObject.toString() + ', ' +
-        validObject.toString());
+        element.style[propertyName], validObject.cssText + ', ' +
+        validObject.cssText);
   }, 'Append a sequence to ' + propertyName);
 
   // Negative tests
@@ -225,14 +225,14 @@ function runGetAllTests(
     element.style = '';
     assert_array_equals(element.styleMap.getAll(propertyName), []);
 
-    element.style[propertyName] = validObject.toString();
+    element.style[propertyName] = validObject.cssText;
     let result = element.styleMap.getAll(propertyName);
     assert_equals(result.length, 1,
         'Expected getAll to retrieve an array containing a ' +
         'single CSSStyleValue');
     assert_equals(result[0].constructor.name, validObject.constructor.name,
         'Returned type is incorrect:');
-    assert_equals(result[0].toString(), validObject.toString());
+    assert_equals(result[0].cssText, validObject.cssText);
   }, 'getAll for single-valued ' + propertyName);
 
   if (supportsMultiple) {
@@ -245,15 +245,15 @@ function runGetAllTests(
           'of ' + validObject.constructor.name);
       assert_equals(result[0].constructor.name, validObject.constructor.name);
       assert_equals(result[1].constructor.name, validObject.constructor.name);
-      assert_equals(result[0].toString(), validObject.toString());
-      assert_equals(result[1].toString(), validObject.toString());
+      assert_equals(result[0].cssText, validObject.cssText);
+      assert_equals(result[1].cssText, validObject.cssText);
     }, 'getAll for list-valued ' + propertyName);
   }
 }
 
 function runDeletionTests(propertyName, validObject, element) {
   test(function() {
-    element.style[propertyName] = validObject.toString();
+    element.style[propertyName] = validObject.cssText;
 
     assert_not_equals(element.styleMap.get(propertyName), null);
 

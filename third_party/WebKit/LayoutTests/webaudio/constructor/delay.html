@@ -1,20 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <title>
-      Test Constructor: Delay
-    </title>
+    <title>Test Constructor: Delay</title>
     <script src="../../resources/testharness.js"></script>
     <script src="../../resources/testharnessreport.js"></script>
     <script src="../resources/audit-util.js"></script>
     <script src="../resources/audit.js"></script>
     <script src="audionodeoptions.js"></script>
   </head>
-  <body>
-    <script id="layout-test-code">
-      let context;
 
-      let audit = Audit.createTaskRunner();
+  <body>
+    <script>
+      var context;
+
+      var audit = Audit.createTaskRunner();
 
       audit.define('initialize', (task, should) => {
         context = initializeContext(should);
@@ -49,8 +48,8 @@
       });
 
       audit.define('constructor options', (task, should) => {
-        let node;
-        let options = {
+        var node;
+        var options = {
           delayTime: 0.5,
           maxDelayTime: 1.5,
         };

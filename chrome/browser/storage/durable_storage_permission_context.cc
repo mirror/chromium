@@ -29,8 +29,7 @@ using bookmarks::BookmarkModel;
 DurableStoragePermissionContext::DurableStoragePermissionContext(
     Profile* profile)
     : PermissionContextBase(profile,
-                            CONTENT_SETTINGS_TYPE_DURABLE_STORAGE,
-                            blink::WebFeaturePolicyFeature::kNotFound) {}
+                            CONTENT_SETTINGS_TYPE_DURABLE_STORAGE) {}
 
 void DurableStoragePermissionContext::DecidePermission(
     content::WebContents* web_contents,

@@ -22,9 +22,9 @@
 #include "ash/wm/wm_event.h"
 #include "ash/wm/workspace/phantom_window_controller.h"
 #include "ash/wm/workspace/two_step_edge_cycler.h"
+#include "ash/wm_window.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
-#include "ui/aura/client/window_types.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_delegate.h"
 #include "ui/base/hit_test.h"
@@ -33,6 +33,7 @@
 #include "ui/display/screen.h"
 #include "ui/gfx/transform.h"
 #include "ui/wm/core/coordinate_conversion.h"
+#include "ui/wm/public/window_types.h"
 
 namespace ash {
 
@@ -40,7 +41,7 @@ std::unique_ptr<WindowResizer> CreateWindowResizer(
     aura::Window* window,
     const gfx::Point& point_in_parent,
     int window_component,
-    ::wm::WindowMoveSource source) {
+    aura::client::WindowMoveSource source) {
   DCHECK(window);
   wm::WindowState* window_state = wm::GetWindowState(window);
   // No need to return a resizer when the window cannot get resized or when a
@@ -85,7 +86,7 @@ std::unique_ptr<WindowResizer> CreateWindowResizer(
   }
   window_resizer = ShellPort::Get()->CreateDragWindowResizer(
       std::move(window_resizer), window_state);
-  if (window->type() == aura::client::WINDOW_TYPE_PANEL) {
+  if (window->type() == ui::wm::WINDOW_TYPE_PANEL) {
     window_resizer.reset(
         PanelWindowResizer::Create(window_resizer.release(), window_state));
   }
@@ -328,7 +329,7 @@ void WorkspaceWindowResizer::Drag(const gfx::Point& location_in_parent,
   if (event_flags & ui::EF_CONTROL_DOWN) {
     sticky_size = 0;
   } else if ((details().bounds_change & kBoundsChange_Resizes) &&
-             details().source == ::wm::WINDOW_MOVE_SOURCE_TOUCH) {
+             details().source == aura::client::WINDOW_MOVE_SOURCE_TOUCH) {
     sticky_size = kScreenEdgeInsetForTouchDrag;
   } else {
     sticky_size = kScreenEdgeInset;
@@ -488,7 +489,7 @@ WorkspaceWindowResizer::WorkspaceWindowResizer(
 
   // A mousemove should still show the cursor even if the window is
   // being moved or resized with touch, so do not lock the cursor.
-  if (details().source != ::wm::WINDOW_MOVE_SOURCE_TOUCH) {
+  if (details().source != aura::client::WINDOW_MOVE_SOURCE_TOUCH) {
     ShellPort::Get()->LockCursor();
     did_lock_cursor_ = true;
   }
@@ -715,14 +716,14 @@ bool WorkspaceWindowResizer::UpdateMagnetismWindow(const gfx::Rect& bounds,
     for (auto i = children.rbegin();
          i != children.rend() && !matcher.AreEdgesObscured(); ++i) {
       wm::WindowState* other_state = wm::GetWindowState(*i);
-      if (other_state->window() == GetTarget() ||
+      if (other_state->window()->aura_window() == GetTarget() ||
           !other_state->window()->IsVisible() ||
           !other_state->IsNormalOrSnapped() || !other_state->CanResize()) {
         continue;
       }
       if (matcher.ShouldAttach(other_state->window()->GetBoundsInScreen(),
                                &magnetism_edge_)) {
-        magnetism_window_ = other_state->window();
+        magnetism_window_ = other_state->window()->aura_window();
         window_tracker_.Add(magnetism_window_);
         return true;
       }
@@ -894,7 +895,7 @@ void WorkspaceWindowResizer::UpdateSnapPhantomWindow(const gfx::Point& location,
 
   if (!snap_phantom_window_controller_) {
     snap_phantom_window_controller_ =
-        base::MakeUnique<PhantomWindowController>(GetTarget());
+        base::MakeUnique<PhantomWindowController>(WmWindow::Get(GetTarget()));
   }
   gfx::Rect phantom_bounds_in_screen(phantom_bounds);
   ::wm::ConvertRectToScreen(GetTarget()->parent(), &phantom_bounds_in_screen);
@@ -935,7 +936,7 @@ WorkspaceWindowResizer::SnapType WorkspaceWindowResizer::GetSnapType(
   // TODO: this likely only wants total display area, not the area of a single
   // display.
   gfx::Rect area(ScreenUtil::GetDisplayWorkAreaBoundsInParent(GetTarget()));
-  if (details().source == ::wm::WINDOW_MOVE_SOURCE_TOUCH) {
+  if (details().source == aura::client::WINDOW_MOVE_SOURCE_TOUCH) {
     // Increase tolerance for touch-snapping near the screen edges. This is only
     // necessary when the work area left or right edge is same as screen edge.
     gfx::Rect display_bounds(ScreenUtil::GetDisplayBoundsInParent(GetTarget()));

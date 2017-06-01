@@ -5,7 +5,6 @@
 #include "chromeos/components/tether/ble_connection_manager.h"
 
 #include "chromeos/components/tether/ble_constants.h"
-#include "chromeos/components/tether/timer_factory.h"
 #include "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.h"
 #include "components/cryptauth/cryptauth_service.h"
 #include "components/proximity_auth/logging/logging.h"
@@ -166,6 +165,10 @@ void BleConnectionManager::ConnectionMetadata::OnMessageReceived(
   manager_->SendMessageReceivedEvent(remote_device_, payload);
 }
 
+std::unique_ptr<base::Timer> BleConnectionManager::TimerFactory::CreateTimer() {
+  return base::MakeUnique<base::OneShotTimer>();
+}
+
 BleConnectionManager::BleConnectionManager(
     cryptauth::CryptAuthService* cryptauth_service,
     scoped_refptr<device::BluetoothAdapter> adapter,
@@ -180,7 +183,7 @@ BleConnectionManager::BleConnectionManager(
                                           local_device_data_provider,
                                           remote_beacon_seed_fetcher),
           base::MakeUnique<BleAdvertisementDeviceQueue>(),
-          base::MakeUnique<TimerFactory>(),
+          base::WrapUnique<TimerFactory>(new TimerFactory()),
           bluetooth_throttler) {}
 
 BleConnectionManager::BleConnectionManager(
@@ -369,7 +372,7 @@ BleConnectionManager::AddMetadataForDevice(
     return existing_data;
   }
 
-  std::unique_ptr<base::Timer> timer = timer_factory_->CreateOneShotTimer();
+  std::unique_ptr<base::Timer> timer = timer_factory_->CreateTimer();
   device_to_metadata_map_.insert(
       std::pair<cryptauth::RemoteDevice, std::shared_ptr<ConnectionMetadata>>(
           remote_device,

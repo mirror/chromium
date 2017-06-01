@@ -139,9 +139,9 @@ void WMHelperMus::SetFocusedWindow(aura::Window* window) {
   NotifyWindowFocused(focused_window_, lost_focus);
 }
 
-wm::ActivationClient* WMHelperMus::GetActivationClient() {
+aura::client::ActivationClient* WMHelperMus::GetActivationClient() {
   return root_with_active_focus_client_
-             ? wm::GetActivationClient(root_with_active_focus_client_)
+             ? aura::client::GetActivationClient(root_with_active_focus_client_)
              : nullptr;
 }
 

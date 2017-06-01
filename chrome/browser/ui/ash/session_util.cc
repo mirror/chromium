@@ -44,11 +44,6 @@ bool CanShowWindowForUser(
 }
 
 gfx::ImageSkia GetAvatarImageForContext(content::BrowserContext* context) {
-  return GetAvatarImageForUser(chromeos::ProfileHelper::Get()->GetUserByProfile(
-      Profile::FromBrowserContext(context)));
-}
-
-gfx::ImageSkia GetAvatarImageForUser(const user_manager::User* user) {
   static const gfx::ImageSkia* holder =
       ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
           IDR_AVATAR_HOLDER);
@@ -56,7 +51,11 @@ gfx::ImageSkia GetAvatarImageForUser(const user_manager::User* user) {
       ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
           IDR_AVATAR_HOLDER_MASK);
 
-  gfx::ImageSkia user_image = user->GetImage();
+  gfx::ImageSkia user_image =
+      chromeos::ProfileHelper::Get()
+          ->GetUserByProfile(Profile::FromBrowserContext(context))
+          ->GetImage();
+
   gfx::ImageSkia resized = gfx::ImageSkiaOperations::CreateResizedImage(
       user_image, skia::ImageOperations::RESIZE_BEST, holder->size());
   gfx::ImageSkia masked =

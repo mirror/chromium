@@ -83,8 +83,7 @@ TestCompositorHostOzone::TestCompositorHostOzone(
       compositor_(context_factory_private->AllocateFrameSinkId(),
                   context_factory,
                   context_factory_private,
-                  base::ThreadTaskRunnerHandle::Get(),
-                  false /* enable_surface_synchronization */) {}
+                  base::ThreadTaskRunnerHandle::Get()) {}
 
 TestCompositorHostOzone::~TestCompositorHostOzone() {}
 

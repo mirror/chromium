@@ -5,7 +5,6 @@
 callback MojoWatchCallback = void (MojoResult result);
 
 [
-    ContextEnabled=MojoJS,
     RuntimeEnabled=MojoJS,
 ] interface MojoHandle {
     void close();

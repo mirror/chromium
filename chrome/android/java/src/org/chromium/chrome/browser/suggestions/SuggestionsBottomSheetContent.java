@@ -100,8 +100,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
                 mRecyclerView.getScrollEventReporter().reset();
 
                 if (ChromeFeatureList.isEnabled(
-                            ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL)
-                        && sheet.getActiveTab() != null) {
+                            ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL)) {
                     updateContextualSuggestions(sheet.getActiveTab().getUrl());
                 }
 
@@ -168,11 +167,6 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
 
     @Override
     public boolean isUsingLightToolbarTheme() {
-        return false;
-    }
-
-    @Override
-    public boolean isIncognitoThemedContent() {
         return false;
     }
 

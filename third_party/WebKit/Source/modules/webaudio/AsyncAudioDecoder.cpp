@@ -83,7 +83,7 @@ void AsyncAudioDecoder::DecodeOnBackgroundThread(
                         WrapCrossThreadPersistent(audio_data),
                         WrapCrossThreadPersistent(success_callback),
                         WrapCrossThreadPersistent(error_callback),
-                        std::move(bus), WrapCrossThreadPersistent(resolver),
+                        bus.Release(), WrapCrossThreadPersistent(resolver),
                         WrapCrossThreadPersistent(context)));
   }
 }

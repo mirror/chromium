@@ -10,16 +10,19 @@
 #include "ash/palette_delegate.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
-#include "ash/shelf/shelf.h"
+#include "ash/session/session_state_delegate.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/shell_observer.h"
 #include "ash/system/tray/system_tray_notifier.h"
 #include "ash/test/test_accessibility_delegate.h"
 #include "ash/test/test_keyboard_ui.h"
+#include "ash/test/test_session_state_delegate.h"
 #include "ash/test/test_system_tray_delegate.h"
 #include "ash/test/test_wallpaper_delegate.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
+#include "ash/wm_window.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "ui/aura/window.h"
@@ -36,8 +39,8 @@ class ShelfInitializer : public ShellObserver {
   ~ShelfInitializer() override { Shell::Get()->RemoveShellObserver(this); }
 
   // ShellObserver:
-  void OnShelfCreatedForRootWindow(aura::Window* root_window) override {
-    Shelf* shelf = RootWindowController::ForWindow(root_window)->shelf();
+  void OnShelfCreatedForRootWindow(WmWindow* root_window) override {
+    WmShelf* shelf = root_window->GetRootWindowController()->GetShelf();
     // Do not override the custom initialization performed by some unit tests.
     if (shelf->alignment() == SHELF_ALIGNMENT_BOTTOM_LOCKED &&
         shelf->auto_hide_behavior() == SHELF_AUTO_HIDE_ALWAYS_HIDDEN) {
@@ -51,9 +54,14 @@ class ShelfInitializer : public ShellObserver {
   DISALLOW_COPY_AND_ASSIGN(ShelfInitializer);
 };
 
-TestShellDelegate::TestShellDelegate() = default;
+TestShellDelegate::TestShellDelegate()
+    : num_exit_requests_(0),
+      multi_profiles_enabled_(false),
+      force_maximize_on_first_run_(false),
+      touchscreen_enabled_in_local_pref_(true),
+      active_user_pref_service_(nullptr) {}
 
-TestShellDelegate::~TestShellDelegate() = default;
+TestShellDelegate::~TestShellDelegate() {}
 
 ::service_manager::Connector* TestShellDelegate::GetShellConnector() const {
   return nullptr;
@@ -71,7 +79,7 @@ bool TestShellDelegate::IsRunningInForcedAppMode() const {
   return false;
 }
 
-bool TestShellDelegate::CanShowWindowForUser(aura::Window* window) const {
+bool TestShellDelegate::CanShowWindowForUser(WmWindow* window) const {
   return true;
 }
 
@@ -110,6 +118,10 @@ TestShellDelegate::CreateWallpaperDelegate() {
   return base::MakeUnique<TestWallpaperDelegate>();
 }
 
+TestSessionStateDelegate* TestShellDelegate::CreateSessionStateDelegate() {
+  return new TestSessionStateDelegate();
+}
+
 AccessibilityDelegate* TestShellDelegate::CreateAccessibilityDelegate() {
   return new TestAccessibilityDelegate();
 }
@@ -118,7 +130,7 @@ std::unique_ptr<PaletteDelegate> TestShellDelegate::CreatePaletteDelegate() {
   return nullptr;
 }
 
-ui::MenuModel* TestShellDelegate::CreateContextMenu(Shelf* shelf,
+ui::MenuModel* TestShellDelegate::CreateContextMenu(WmShelf* wm_shelf,
                                                     const ShelfItem* item) {
   return nullptr;
 }
@@ -152,10 +164,6 @@ void TestShellDelegate::SetTouchscreenEnabledInPrefs(bool enabled,
 }
 
 void TestShellDelegate::UpdateTouchscreenStatusFromPrefs() {}
-
-void TestShellDelegate::SuspendMediaSessions() {
-  media_sessions_suspended_ = true;
-}
 
 }  // namespace test
 }  // namespace ash

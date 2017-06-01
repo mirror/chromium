@@ -7,9 +7,10 @@
 #include "ash/accessibility_types.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
-#include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_layout_manager.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
+#include "ash/wm_window.h"
 #include "base/macros.h"
 #include "chrome/browser/chromeos/accessibility/accessibility_manager.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
@@ -190,7 +191,7 @@ void ChromeVoxPanel::UpdateWidgetBounds() {
 
   // If we're in full-screen mode, give the panel a height of 0 unless
   // it's active.
-  if (ash::RootWindowController::ForWindow(GetRootWindow())
+  if (ash::GetRootWindowController(GetRootWindow())
           ->GetWindowForFullscreenMode() &&
       !widget_->IsActive()) {
     bounds.set_height(0);
@@ -201,7 +202,7 @@ void ChromeVoxPanel::UpdateWidgetBounds() {
 
 void ChromeVoxPanel::SendPanelHeightToAsh(int panel_height) {
   // TODO(mash): Replace with shelf mojo API.
-  ash::Shelf* shelf = ash::Shelf::ForWindow(GetRootWindow());
+  ash::WmShelf* shelf = ash::WmShelf::ForWindow(GetRootWindow());
   ash::ShelfLayoutManager* shelf_layout_manager =
       shelf ? shelf->shelf_layout_manager() : nullptr;
   if (shelf_layout_manager)

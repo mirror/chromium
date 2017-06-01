@@ -426,7 +426,7 @@ class MockQuicConnection : public QuicConnection {
     QuicConnection::ProcessUdpPacket(self_address, peer_address, packet);
   }
 
-  bool OnProtocolVersionMismatch(QuicVersion version) override;
+  bool OnProtocolVersionMismatch(QuicVersion version) override { return false; }
 
   void ReallySendGoAway(QuicErrorCode error,
                         QuicStreamId last_good_stream_id,
@@ -465,8 +465,13 @@ class MockQuicSession : public QuicSession {
   explicit MockQuicSession(QuicConnection* connection);
   ~MockQuicSession() override;
 
-  QuicCryptoStream* GetMutableCryptoStream() override;
-  const QuicCryptoStream* GetCryptoStream() const override;
+  QuicCryptoStream* GetMutableCryptoStream() override {
+    return crypto_stream_.get();
+  }
+
+  const QuicCryptoStream* GetCryptoStream() const override {
+    return crypto_stream_.get();
+  }
 
   MOCK_METHOD3(OnConnectionClosed,
                void(QuicErrorCode error,
@@ -527,8 +532,12 @@ class MockQuicSpdySession : public QuicSpdySession {
   explicit MockQuicSpdySession(QuicConnection* connection);
   ~MockQuicSpdySession() override;
 
-  QuicCryptoStream* GetMutableCryptoStream() override;
-  const QuicCryptoStream* GetCryptoStream() const override;
+  QuicCryptoStream* GetMutableCryptoStream() override {
+    return crypto_stream_.get();
+  }
+  const QuicCryptoStream* GetCryptoStream() const override {
+    return crypto_stream_.get();
+  }
   const SpdyHeaderBlock& GetWriteHeaders() { return write_headers_; }
 
   // From QuicSession.
@@ -587,7 +596,10 @@ class MockQuicSpdySession : public QuicSpdySession {
                       bool fin,
                       SpdyPriority priority,
                       QuicReferenceCountedPointer<QuicAckListenerInterface>
-                          ack_listener) override;
+                          ack_listener) override {
+    write_headers_ = std::move(headers);
+    return WriteHeadersMock(id, write_headers_, fin, priority, ack_listener);
+  }
   MOCK_METHOD5(
       WriteHeadersMock,
       size_t(QuicStreamId id,

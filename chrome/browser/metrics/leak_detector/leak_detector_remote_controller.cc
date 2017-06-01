@@ -4,8 +4,6 @@
 
 #include "chrome/browser/metrics/leak_detector/leak_detector_remote_controller.h"
 
-#include <utility>
-
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
@@ -42,7 +40,7 @@ void LeakDetectorRemoteController::Create(
 }
 
 void LeakDetectorRemoteController::GetParams(
-    mojom::LeakDetector::GetParamsCallback callback) {
+    const mojom::LeakDetector::GetParamsCallback& callback) {
   // If no controller exists, send an empty param protobuf. The remote caller
   // should not initialize anything if the params are empty.
   MemoryLeakReportProto_Params params;
@@ -58,7 +56,7 @@ void LeakDetectorRemoteController::GetParams(
   leak_detector::protobuf_to_mojo_converter::ParamsToMojo(params,
                                                           mojo_params.get());
 
-  std::move(callback).Run(std::move(mojo_params));
+  callback.Run(std::move(mojo_params));
 }
 
 void LeakDetectorRemoteController::SendLeakReports(

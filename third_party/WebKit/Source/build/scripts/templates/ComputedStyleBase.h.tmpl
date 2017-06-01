@@ -11,7 +11,6 @@
 #include "core/style/DataRef.h"
 #include "core/style/StyleDifference.h"
 #include "platform/wtf/SizeAssertions.h"
-#include "core/layout/LayoutTheme.h"
 {% for path in include_paths %}
 #include "{{path}}"
 {% endfor %}
@@ -47,45 +46,12 @@ struct SameSizeAsComputedStyleBase {
 
 // The generated portion of ComputedStyle. For more info, see the header comment
 // in ComputedStyle.h.
-//
-// ComputedStyleBase is a generated class that stores data members or 'fields'
-// used in ComputedStyle. These fields can represent CSS properties or internal
-// style information.
-//
-// STORAGE:
-//
-// Fields are organised in a tree structure, where a node (called a 'group')
-// stores a set of fields and a set of pointers to child nodes (called
-// 'subgroups'). We can visualise the tree structure with ComputedStyleBase as
-// the root node:
-//
-// ComputedStyleBase (fields: display, vertical-align, ...)
-//  |- StyleSurroundData (fields: padding, border, ...)
-//  |- StyleBoxData (fields: width, height, ...)
-//  |- ...
-//  |- StyleRareNonInheritedData (fields: box-shadow, text-overflow, ...)
-//      |- StyleFlexibleBoxData (fields: flex-direction, flex-wrap, ...)
-//      |- ...
-//
-// This design saves memory by allowing multiple ComputedStyleBases to share the
-// same instance of a subgroup. For example, if a page never uses flex box
-// properties, then every ComputedStyleBase can share the same instance of
-// StyleFlexibleBoxData. Without this sharing, we would need to allocate a copy
-// of all the flex box fields for every ComputedStyleBase. Similarly, when an
-// element inherits from its parent, its ComputedStyleBase can simply share all
-// of its subgroups with the parent's.
-//
-// INTERFACE:
-//
-// The functions generated for a field is determined by its 'template'. For
-// example, a field with the 'keyword' template has only one setter, whereas an
-// 'external' field has an extra setter that takes an rvalue reference. A list
-// of the available templates can be found in CSSProperties.json5.
-//
-// ComputedStyleBase is a template class to allow it to use functions on
-// ComputedStyle. This allows ComputedStyleBase to use hand written functions it
-// would otherwise not know about.  It should only be templated with the
-// ComputedStyle class and no other class is allowed.
+
+// ComputedStyleBase is a templated class to allow it to use functions
+// on ComputedStyle. This allows ComputedStyleBase to use hand written 
+// functions it would otherwise not know about.
+// It should only be templated with the ComputedStyle class and no other class
+// is allowed.
 template <class ComputedStyleFinal>
 class CORE_EXPORT ComputedStyleBase {
  public:
@@ -121,6 +87,7 @@ class CORE_EXPORT ComputedStyleBase {
     return (
         {{fieldwise_compare(computed_style, computed_style.all_fields
             |selectattr("is_property")
+            |rejectattr("has_custom_compare_and_copy")
             |rejectattr("is_inherited")
             |list
           )|indent(8)}}
@@ -180,7 +147,7 @@ class CORE_EXPORT ComputedStyleBase {
   // TODO(sashab): Remove initialFoo() static methods and update callers to
   // use resetFoo(), which can be more efficient.
 
-  {% for field in computed_style.all_fields|sort(attribute='name') %}
+  {% for field in computed_style.all_fields %}
   // {{field.property_name}}
   {{field_templates[field.field_template].decl_public_methods(field)|indent(2)}}
 
@@ -199,13 +166,12 @@ class CORE_EXPORT ComputedStyleBase {
       {{field.name}}({{encode(field, field.default_value)}}){{print_if(not loop.last, ',')}}
   {% endfor %}
   {
-    static_assert(std::is_same<ComputedStyle, ComputedStyleFinal>::value, "ComputedStyleBase can only be templated with ComputedStyle");
     {% for subgroup in computed_style.subgroups %}
     {{subgroup.member_name}}.Init();
     {% endfor %}
   }
 
-  {% for field in computed_style.all_fields|sort(attribute='name') %}
+  {% for field in computed_style.all_fields %}
   {% if field.field_template in ('storage_only', 'monotonic_flag', 'external') %}
   // {{field.property_name}}
   {{field_templates[field.field_template].decl_protected_methods(field)|indent(2)}}

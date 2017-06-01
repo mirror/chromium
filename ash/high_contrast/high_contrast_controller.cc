@@ -5,6 +5,7 @@
 #include "ash/high_contrast/high_contrast_controller.h"
 
 #include "ash/shell.h"
+#include "ash/wm_window.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/compositor/layer.h"
 
@@ -33,8 +34,8 @@ void HighContrastController::UpdateDisplay(aura::Window* root_window) {
   root_window->layer()->SetLayerInverted(enabled_);
 }
 
-void HighContrastController::OnRootWindowAdded(aura::Window* root_window) {
-  UpdateDisplay(root_window);
+void HighContrastController::OnRootWindowAdded(WmWindow* root_window) {
+  UpdateDisplay(WmWindow::GetAuraWindow(root_window));
 }
 
 }  // namespace ash

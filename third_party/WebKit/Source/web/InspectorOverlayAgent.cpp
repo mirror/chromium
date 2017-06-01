@@ -40,12 +40,11 @@
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/events/WebInputEventConversion.h"
 #include "core/exported/WebViewBase.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
-#include "core/frame/WebLocalFrameBase.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/input/EventHandler.h"
 #include "core/inspector/IdentifiersFactory.h"
@@ -66,6 +65,7 @@
 #include "public/platform/WebData.h"
 #include "v8/include/v8.h"
 #include "web/PageOverlay.h"
+#include "web/WebLocalFrameImpl.h"
 
 namespace blink {
 
@@ -155,7 +155,7 @@ class InspectorOverlayAgent::InspectorPageOverlayDelegate final
     if (overlay_->IsEmpty())
       return;
 
-    LocalFrameView* view = overlay_->OverlayMainFrame()->View();
+    FrameView* view = overlay_->OverlayMainFrame()->View();
     DCHECK(!view->NeedsLayout());
     view->Paint(graphics_context,
                 CullRect(IntRect(0, 0, view->Width(), view->Height())));
@@ -211,7 +211,7 @@ class InspectorOverlayAgent::InspectorOverlayChromeClient final
 };
 
 InspectorOverlayAgent::InspectorOverlayAgent(
-    WebLocalFrameBase* frame_impl,
+    WebLocalFrameImpl* frame_impl,
     InspectedFrames* inspected_frames,
     v8_inspector::V8InspectorSession* v8_session,
     InspectorDOMAgent* dom_agent)
@@ -681,7 +681,7 @@ void InspectorOverlayAgent::ScheduleUpdate() {
 }
 
 void InspectorOverlayAgent::RebuildOverlayPage() {
-  LocalFrameView* view = frame_impl_->GetFrameView();
+  FrameView* view = frame_impl_->GetFrameView();
   LocalFrame* frame = frame_impl_->GetFrame();
   if (!view || !frame)
     return;
@@ -828,14 +828,14 @@ Page* InspectorOverlayAgent::OverlayPage() {
 
   LocalFrame* frame =
       LocalFrame::Create(&dummy_local_frame_client, *overlay_page_, 0);
-  frame->SetView(LocalFrameView::Create(*frame));
+  frame->SetView(FrameView::Create(*frame));
   frame->Init();
   FrameLoader& loader = frame->Loader();
   frame->View()->SetCanHaveScrollbars(false);
   frame->View()->SetBaseBackgroundColor(Color::kTransparent);
 
   const WebData& overlay_page_html_resource =
-      Platform::Current()->GetDataResource("InspectorOverlayPage.html");
+      Platform::Current()->LoadResource("InspectorOverlayPage.html");
   loader.Load(
       FrameLoadRequest(0, ResourceRequest(BlankURL()),
                        SubstituteData(overlay_page_html_resource, "text/html",

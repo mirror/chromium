@@ -91,15 +91,14 @@ void BleAdvertiser::IndividualAdvertisement::OnAdvertisementRegisteredCallback(
   is_initializing_advertising_ = false;
   advertisement_ = advertisement;
   PA_LOG(INFO) << "Advertisement registered. "
-               << "Service data: " << advertisement_data_->DataInHex() << ".";
+               << "Service data: " << ServiceDataInHex() << ".";
 }
 
 void BleAdvertiser::IndividualAdvertisement::OnAdvertisementErrorCallback(
     device::BluetoothAdvertisement::ErrorCode error_code) {
   is_initializing_advertising_ = false;
   PA_LOG(WARNING) << "Error registering advertisement. "
-                  << "Service data: " << advertisement_data_->DataInHex()
-                  << ", "
+                  << "Service data: " << ServiceDataInHex() << ", "
                   << "Error code: " << error_code;
 }
 
@@ -137,6 +136,17 @@ BleAdvertiser::IndividualAdvertisement::CreateServiceData() const {
   service_data->insert(std::pair<std::string, std::vector<uint8_t>>(
       std::string(kAdvertisingServiceUuid), data_as_vector));
   return service_data;
+}
+
+std::string BleAdvertiser::IndividualAdvertisement::ServiceDataInHex() const {
+  std::stringstream ss;
+  ss << "0x" << std::hex;
+
+  for (size_t i = 0; i < advertisement_data_->data.size(); i++) {
+    ss << static_cast<int>(advertisement_data_->data.data()[i]);
+  }
+
+  return ss.str();
 }
 
 BleAdvertiser::BleAdvertiser(

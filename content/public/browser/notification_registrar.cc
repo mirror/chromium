@@ -36,18 +36,17 @@ NotificationRegistrar::NotificationRegistrar() {
   NotificationServiceImpl::current();
   // It is OK to create a NotificationRegistrar instance on one thread and then
   // use it (exclusively) on another, so we detach from the initial thread.
-  DETACH_FROM_SEQUENCE(sequence_checker_);
+  DetachFromThread();
 }
 
 NotificationRegistrar::~NotificationRegistrar() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   RemoveAll();
 }
 
 void NotificationRegistrar::Add(NotificationObserver* observer,
                                 int type,
                                 const NotificationSource& source) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(!IsRegistered(observer, type, source)) << "Duplicate registration.";
 
   Record record = { observer, type, source };
@@ -59,7 +58,7 @@ void NotificationRegistrar::Add(NotificationObserver* observer,
 void NotificationRegistrar::Remove(NotificationObserver* observer,
                                    int type,
                                    const NotificationSource& source) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   Record record = { observer, type, source };
   RecordVector::iterator found = std::find(
@@ -76,7 +75,7 @@ void NotificationRegistrar::Remove(NotificationObserver* observer,
 }
 
 void NotificationRegistrar::RemoveAll() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  CHECK(CalledOnValidThread());
   // Early-exit if no registrations, to avoid calling
   // NotificationService::current.  If we've constructed an object with a
   // NotificationRegistrar member, but haven't actually used the notification
@@ -100,14 +99,14 @@ void NotificationRegistrar::RemoveAll() {
 }
 
 bool NotificationRegistrar::IsEmpty() const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   return registered_.empty();
 }
 
 bool NotificationRegistrar::IsRegistered(NotificationObserver* observer,
                                          int type,
                                          const NotificationSource& source) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   Record record = { observer, type, source };
   return std::find(registered_.begin(), registered_.end(), record) !=
       registered_.end();

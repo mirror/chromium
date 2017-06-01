@@ -232,43 +232,6 @@ void ShowInactiveSync(Widget* widget) {
   RunPendingMessagesForActiveStatusChange();
 }
 
-// Wait until |callback| returns |expected_value|, but no longer than 1 second.
-class PropertyWaiter {
- public:
-  PropertyWaiter(const base::Callback<bool(void)>& callback,
-                 bool expected_value)
-      : callback_(callback), expected_value_(expected_value) {}
-
-  bool Wait() {
-    if (callback_.Run() == expected_value_) {
-      success_ = true;
-      return success_;
-    }
-    start_time_ = base::TimeTicks::Now();
-    timer_.Start(FROM_HERE, base::TimeDelta(), this, &PropertyWaiter::Check);
-    run_loop_.Run();
-    return success_;
-  }
-
- private:
-  void Check() {
-    DCHECK(!success_);
-    success_ = callback_.Run() == expected_value_;
-    if (success_ || base::TimeTicks::Now() - start_time_ > kTimeout) {
-      timer_.Stop();
-      run_loop_.Quit();
-    }
-  }
-
-  const base::TimeDelta kTimeout = base::TimeDelta::FromSeconds(1);
-  base::Callback<bool(void)> callback_;
-  const bool expected_value_;
-  bool success_ = false;
-  base::TimeTicks start_time_;
-  base::RunLoop run_loop_;
-  base::RepeatingTimer timer_;
-};
-
 }  // namespace
 
 class WidgetTestInteractive : public WidgetTest {
@@ -329,8 +292,8 @@ TEST_F(WidgetTestInteractive, DesktopNativeWidgetAuraActivationAndFocusTest) {
   focusable_view1->RequestFocus();
 
   EXPECT_TRUE(root_window1 != NULL);
-  wm::ActivationClient* activation_client1 =
-      wm::GetActivationClient(root_window1);
+  aura::client::ActivationClient* activation_client1 =
+      aura::client::GetActivationClient(root_window1);
   EXPECT_TRUE(activation_client1 != NULL);
   EXPECT_EQ(activation_client1->GetActiveWindow(), widget1->GetNativeView());
 
@@ -343,8 +306,8 @@ TEST_F(WidgetTestInteractive, DesktopNativeWidgetAuraActivationAndFocusTest) {
   focusable_view2->RequestFocus();
   ActivatePlatformWindow(widget2);
 
-  wm::ActivationClient* activation_client2 =
-      wm::GetActivationClient(root_window2);
+  aura::client::ActivationClient* activation_client2 =
+      aura::client::GetActivationClient(root_window2);
   EXPECT_TRUE(activation_client2 != NULL);
   EXPECT_EQ(activation_client2->GetActiveWindow(), widget2->GetNativeView());
   EXPECT_EQ(activation_client1->GetActiveWindow(),
@@ -1251,24 +1214,6 @@ TEST_F(WidgetTestInteractive, InitialFocus) {
   widget->Show();
   EXPECT_TRUE(delegate.view()->HasFocus());
   EXPECT_EQ(delegate.view(), widget->GetFocusManager()->GetStoredFocusView());
-}
-
-TEST_F(WidgetTestInteractive, RestoreAfterMinimize) {
-  Widget* widget = CreateWidget();
-  ShowSync(widget);
-  ASSERT_FALSE(widget->IsMinimized());
-
-  PropertyWaiter minimize_waiter(
-      base::Bind(&Widget::IsMinimized, base::Unretained(widget)), true);
-  widget->Minimize();
-  EXPECT_TRUE(minimize_waiter.Wait());
-
-  PropertyWaiter restore_waiter(
-      base::Bind(&Widget::IsMinimized, base::Unretained(widget)), false);
-  widget->Restore();
-  EXPECT_TRUE(restore_waiter.Wait());
-
-  widget->CloseNow();
 }
 
 namespace {

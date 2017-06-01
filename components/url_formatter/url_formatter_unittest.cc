@@ -204,11 +204,6 @@ const IDNTestCase idn_cases[] = {
   {"xn--ab1-p6q.com", L"ab1\x14BF.com", false},
   {"xn--1ab-m6qd.com", L"\x14BF" L"1ab.com", false},
   {"xn--ab-jymc.com", L"\x14BF" L"ab.com", false},
-  // Tifinagh + Latin
-  {"xn--liy-go4a.com", L"li\u24dfy.com", false},
-  {"xn--rol-ho4a.com", L"rol\u24df.com", false},
-  {"xn--ily-eo4a.com", L"\u24dfily.com", false},
-  {"xn--1ly-eo4a.com", L"\u24df1ly.com", false},
 
   // Invisibility check
   // Thai tone mark malek(U+0E48) repeated
@@ -414,11 +409,8 @@ const IDNTestCase idn_cases[] = {
   // Hebrew Gershayim with Arabic is disallowed.
   {"xn--5eb7h.eg", L"\x0628\x05f4.eg", false},
 #if defined(OS_MACOSX)
-  // These characters are blocked due to a font issue on Mac.
-  // Tibetan transliteration characters.
+  // Tibetan transliteration characters are disallowed on Mac.
   {"xn--com-luma.test.pl", L"\u0f8c.test.pl", false},
-  // Arabic letter KASHMIRI YEH
-  {"xn--fgb.com", L"\u0620.com", false},
 #endif
 
   // Hyphens (http://unicode.org/cldr/utility/confusables.jsp?a=-)
@@ -448,30 +440,6 @@ const IDNTestCase idn_cases[] = {
   {"xn--abcdef-yy8d.com", L"abc\x2cba" L"def.com", false},
   // Small Em Dash
   {"xn--abcdef-5g0c.com", L"abc\xfe58" L"def.com", false},
-
-  // Block NV8 (Not valid in IDN 2008) characters.
-  // U+058A (֊)
-  {"xn--ab-vfd.com", L"a\x058a" L"b.com", false},
-  {"xn--y9ac3j.com", L"\x0561\x058a\x0562.com", false},
-  // U+2019 (’)
-  {"xn--ab-n2t.com", L"a\x2019" L"b.com", false},
-  // U+2027 (‧)
-  {"xn--ab-u3t.com", L"a\x2027" L"b.com", false},
-  // U+30A0 (゠)
-  {"xn--ab-bg4a.com", L"a\x30a0" L"b.com", false},
-  {"xn--9bk3828aea.com", L"\xac00\x30a0\xac01.com", false},
-  {"xn--9bk279fba.com", L"\x4e00\x30a0\x4e00.com", false},
-  {"xn--n8jl2x.com", L"\x304a\x30a0\x3044.com", false},
-  {"xn--fbke7f.com", L"\x3082\x30a0\x3084.com", false},
-
-  // Block single/double-quote-like characters.
-  // U+02BB (ʻ)
-  {"xn--ab-8nb.com", L"a\x02bb" L"b.com", false},
-  // U+02BC (ʼ)
-  {"xn--ab-cob.com", L"a\x02bc" L"b.com", false},
-  // U+144A: Not allowed to mix with scripts other than Canadian Syllabics.
-  {"xn--ab-jom.com", L"a\x144a" L"b.com", false},
-  {"xn--xcec9s.com", L"\x1401\x144a\x1402.com", true},
 
   // Custom dangerous patterns
   // Two Katakana-Hiragana combining mark in a row

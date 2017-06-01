@@ -31,9 +31,7 @@ class TestBubbleDialogDelegateView : public views::BubbleDialogDelegateView {
   ~TestBubbleDialogDelegateView() override {}
 
   // BubbleDialogDelegateView overrides:
-  gfx::Size CalculatePreferredSize() const override {
-    return gfx::Size(200, 150);
-  }
+  gfx::Size GetPreferredSize() const override { return gfx::Size(200, 150); }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TestBubbleDialogDelegateView);

@@ -10,7 +10,7 @@
 #include "ash/ash_export.h"
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/session/session_observer.h"
-#include "ash/shelf/shelf.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell_observer.h"
 #include "ash/wm/lock_state_observer.h"
 #include "ash/wm/wm_snap_to_pixel_layout_manager.h"
@@ -37,10 +37,10 @@ namespace ash {
 
 enum class AnimationChangeType;
 class PanelLayoutManagerTest;
-class Shelf;
 class ShelfLayoutManagerObserver;
 class ShelfLayoutManagerTest;
 class ShelfWidget;
+class WmShelf;
 
 // ShelfLayoutManager is the layout manager responsible for the shelf and
 // status widgets. The shelf is given the total available width and told the
@@ -51,13 +51,13 @@ class ShelfWidget;
 // On mus, widget bounds management is handled by the window manager.
 class ASH_EXPORT ShelfLayoutManager
     : public ShellObserver,
-      public ::wm::ActivationChangeObserver,
+      public aura::client::ActivationChangeObserver,
       public keyboard::KeyboardControllerObserver,
       public LockStateObserver,
       public wm::WmSnapToPixelLayoutManager,
       public SessionObserver {
  public:
-  ShelfLayoutManager(ShelfWidget* shelf_widget, Shelf* shelf);
+  ShelfLayoutManager(ShelfWidget* shelf_widget, WmShelf* wm_shelf);
   ~ShelfLayoutManager() override;
 
   bool updating_bounds() const { return updating_bounds_; }
@@ -134,12 +134,12 @@ class ASH_EXPORT ShelfLayoutManager
                       const gfx::Rect& requested_bounds) override;
 
   // Overridden from ShellObserver:
-  void OnShelfAutoHideBehaviorChanged(aura::Window* root_window) override;
-  void OnPinnedStateChanged(aura::Window* pinned_window) override;
+  void OnShelfAutoHideBehaviorChanged(WmWindow* root_window) override;
+  void OnPinnedStateChanged(WmWindow* pinned_window) override;
   void OnVirtualKeyboardStateChanged(bool activated,
                                      aura::Window* root_window) override;
 
-  // Overridden from wm::ActivationChangeObserver:
+  // Overridden from aura::client::ActivationChangeObserver:
   void OnWindowActivated(ActivationReason reason,
                          aura::Window* gained_active,
                          aura::Window* lost_active) override;
@@ -159,7 +159,7 @@ class ASH_EXPORT ShelfLayoutManager
   // A helper function for choosing values specific to a shelf alignment.
   template <typename T>
   T SelectValueForShelfAlignment(T bottom, T left, T right) const {
-    switch (shelf_->alignment()) {
+    switch (wm_shelf_->GetAlignment()) {
       case SHELF_ALIGNMENT_BOTTOM:
       case SHELF_ALIGNMENT_BOTTOM_LOCKED:
         return bottom;
@@ -174,7 +174,7 @@ class ASH_EXPORT ShelfLayoutManager
 
   template <typename T>
   T PrimaryAxisValue(T horizontal, T vertical) const {
-    return shelf_->IsHorizontalAlignment() ? horizontal : vertical;
+    return wm_shelf_->IsHorizontalAlignment() ? horizontal : vertical;
   }
 
   // Returns how the shelf background should be painted.
@@ -308,7 +308,7 @@ class ASH_EXPORT ShelfLayoutManager
   State state_;
 
   ShelfWidget* shelf_widget_;
-  Shelf* shelf_;
+  WmShelf* wm_shelf_;
 
   // Do any windows overlap the shelf? This is maintained by WorkspaceManager.
   bool window_overlaps_shelf_;

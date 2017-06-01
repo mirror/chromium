@@ -67,8 +67,8 @@
 #include "platform/Histogram.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/graphics/Canvas2DImageBufferSurface.h"
-#include "platform/graphics/CanvasHeuristicParameters.h"
 #include "platform/graphics/CanvasMetrics.h"
+#include "platform/graphics/ExpensiveCanvasHeuristicParameters.h"
 #include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/RecordingImageBufferSurface.h"
 #include "platform/graphics/StaticBitmapImage.h"
@@ -142,7 +142,9 @@ inline HTMLCanvasElement::HTMLCanvasElement(Document& document)
       externally_allocated_memory_(0),
       origin_clean_(true),
       did_fail_to_create_image_buffer_(false),
-      image_buffer_is_clear_(false) {
+      image_buffer_is_clear_(false),
+      num_frames_since_last_rendering_mode_switch_(0),
+      pending_rendering_mode_switch_(false) {
   CanvasMetrics::CountCanvasContextUsage(CanvasMetrics::kCanvasCreated);
   UseCounter::Count(document, UseCounter::kHTMLCanvasElement);
 }
@@ -427,6 +429,37 @@ void HTMLCanvasElement::DoDeferredPaintInvalidation() {
   }
   dirty_rect_ = FloatRect();
 
+  num_frames_since_last_rendering_mode_switch_++;
+  if (RuntimeEnabledFeatures::
+          enableCanvas2dDynamicRenderingModeSwitchingEnabled() &&
+      !RuntimeEnabledFeatures::canvas2dFixedRenderingModeEnabled()) {
+    if (Is2d() && GetImageBuffer() && GetImageBuffer()->IsAccelerated() &&
+        num_frames_since_last_rendering_mode_switch_ >=
+            ExpensiveCanvasHeuristicParameters::kMinFramesBeforeSwitch &&
+        !pending_rendering_mode_switch_) {
+      if (!context_->IsAccelerationOptimalForCanvasContent()) {
+        // The switch must be done asynchronously in order to avoid switching
+        // during the paint invalidation step.
+        Platform::Current()->CurrentThread()->GetWebTaskRunner()->PostTask(
+            BLINK_FROM_HERE,
+            WTF::Bind(
+                [](WeakPtr<ImageBuffer> buffer) {
+                  if (buffer) {
+                    buffer->DisableAcceleration();
+                  }
+                },
+                image_buffer_->weak_ptr_factory_.CreateWeakPtr()));
+        num_frames_since_last_rendering_mode_switch_ = 0;
+        pending_rendering_mode_switch_ = true;
+      }
+    }
+  }
+
+  if (pending_rendering_mode_switch_ && GetOrCreateImageBuffer() &&
+      !GetOrCreateImageBuffer()->IsAccelerated()) {
+    pending_rendering_mode_switch_ = false;
+  }
+
   DCHECK(dirty_rect_.IsEmpty());
 }
 
@@ -534,7 +567,7 @@ void HTMLCanvasElement::Paint(GraphicsContext& context, const LayoutRect& r) {
 
   const ComputedStyle* style = EnsureComputedStyle();
   SkFilterQuality filter_quality =
-      (style && style->ImageRendering() == EImageRendering::kPixelated)
+      (style && style->ImageRendering() == kImageRenderingPixelated)
           ? kNone_SkFilterQuality
           : kLow_SkFilterQuality;
 
@@ -680,17 +713,20 @@ String HTMLCanvasElement::ToDataURLInternal(
   if (encoding_mime_type == "image/png") {
     DEFINE_THREAD_SAFE_STATIC_LOCAL(
         CustomCountHistogram, scoped_us_counter_png,
-        ("Blink.Canvas.ToDataURL.PNG", 0, 10000000, 50));
+        new CustomCountHistogram("Blink.Canvas.ToDataURL.PNG", 0, 10000000,
+                                 50));
     timer.emplace(scoped_us_counter_png);
   } else if (encoding_mime_type == "image/jpeg") {
     DEFINE_THREAD_SAFE_STATIC_LOCAL(
         CustomCountHistogram, scoped_us_counter_jpeg,
-        ("Blink.Canvas.ToDataURL.JPEG", 0, 10000000, 50));
+        new CustomCountHistogram("Blink.Canvas.ToDataURL.JPEG", 0, 10000000,
+                                 50));
     timer.emplace(scoped_us_counter_jpeg);
   } else if (encoding_mime_type == "image/webp") {
     DEFINE_THREAD_SAFE_STATIC_LOCAL(
         CustomCountHistogram, scoped_us_counter_webp,
-        ("Blink.Canvas.ToDataURL.WEBP", 0, 10000000, 50));
+        new CustomCountHistogram("Blink.Canvas.ToDataURL.WEBP", 0, 10000000,
+                                 50));
     timer.emplace(scoped_us_counter_webp);
   } else {
     // Currently we only support three encoding types.
@@ -822,8 +858,8 @@ bool HTMLCanvasElement::ShouldAccelerate(AccelerationCriteria criteria) const {
             return false;
 #endif
     // If the GPU resources would be very expensive, prefer a display list.
-    if (canvas_pixel_count >
-        CanvasHeuristicParameters::kPreferDisplayListOverGpuSizeThreshold)
+    if (canvas_pixel_count > ExpensiveCanvasHeuristicParameters::
+                                 kPreferDisplayListOverGpuSizeThreshold)
       return false;
   }
 
@@ -861,9 +897,6 @@ bool HTMLCanvasElement::ShouldUseDisplayList() {
 
   if (RuntimeEnabledFeatures::forceDisplayList2dCanvasEnabled())
     return true;
-
-  if (MemoryCoordinator::IsLowEndDevice())
-    return false;
 
   if (!RuntimeEnabledFeatures::displayList2dCanvasEnabled())
     return false;
@@ -913,9 +946,6 @@ HTMLCanvasElement::CreateAcceleratedImageBufferSurface(OpacityMode opacity_mode,
         CanvasMetrics::kGPUAccelerated2DCanvasImageBufferCreationFailed);
     return nullptr;
   }
-
-  if (MemoryCoordinator::IsLowEndDevice())
-    surface->DisableDeferral(kDisableDeferralReasonLowEndDevice);
 
   CanvasMetrics::CountCanvasContextUsage(
       CanvasMetrics::kGPUAccelerated2DCanvasImageBufferCreated);
@@ -1195,7 +1225,7 @@ void HTMLCanvasElement::DidMoveToNewDocument(Document& old_document) {
 }
 
 void HTMLCanvasElement::WillDrawImageTo2DContext(CanvasImageSource* source) {
-  if (CanvasHeuristicParameters::kEnableAccelerationToAvoidReadbacks &&
+  if (ExpensiveCanvasHeuristicParameters::kEnableAccelerationToAvoidReadbacks &&
       SharedGpuContext::AllowSoftwareToAcceleratedCanvasUpgrade() &&
       source->IsAccelerated() && !GetOrCreateImageBuffer()->IsAccelerated() &&
       ShouldAccelerate(kIgnoreResourceLimitCriteria)) {
@@ -1257,7 +1287,8 @@ PassRefPtr<Image> HTMLCanvasElement::GetSourceImageForCanvas(
       sk_image = CreateTransparentSkImage(Size());
     }
   } else {
-    if (CanvasHeuristicParameters::kDisableAccelerationToAvoidReadbacks &&
+    if (ExpensiveCanvasHeuristicParameters::
+            kDisableAccelerationToAvoidReadbacks &&
         !RuntimeEnabledFeatures::canvas2dFixedRenderingModeEnabled() &&
         hint == kPreferNoAcceleration && GetImageBuffer() &&
         GetImageBuffer()->IsAccelerated()) {

@@ -26,10 +26,7 @@
 
 // static
 TetherService* TetherService::Get(Profile* profile) {
-  if (IsFeatureFlagEnabled())
-    return TetherServiceFactory::GetForBrowserContext(profile);
-
-  return nullptr;
+  return TetherServiceFactory::GetForBrowserContext(profile);
 }
 
 // static
@@ -37,12 +34,6 @@ void TetherService::RegisterProfilePrefs(PrefRegistrySimple* registry) {
   registry->RegisterBooleanPref(prefs::kInstantTetheringAllowed, true);
   registry->RegisterBooleanPref(prefs::kInstantTetheringEnabled, true);
   chromeos::tether::Initializer::RegisterProfilePrefs(registry);
-}
-
-// static
-bool TetherService::IsFeatureFlagEnabled() {
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-      chromeos::switches::kEnableTether);
 }
 
 TetherService::TetherService(
@@ -185,12 +176,6 @@ void TetherService::OnPrefsChanged() {
   UpdateTetherTechnologyState();
 }
 
-bool TetherService::HasSyncedTetherHosts() const {
-  return !cryptauth_service_->GetCryptAuthDeviceManager()
-              ->GetTetherHosts()
-              .empty();
-}
-
 void TetherService::UpdateTetherTechnologyState() {
   chromeos::NetworkStateHandler::TechnologyState tether_technology_state =
       GetTetherTechnologyState();
@@ -208,7 +193,7 @@ void TetherService::UpdateTetherTechnologyState() {
 chromeos::NetworkStateHandler::TechnologyState
 TetherService::GetTetherTechnologyState() {
   if (shut_down_ || suspended_ || session_manager_client_->IsScreenLocked() ||
-      !HasSyncedTetherHosts()) {
+      !IsFeatureFlagEnabled() || !HasSyncedTetherHosts()) {
     return chromeos::NetworkStateHandler::TechnologyState::
         TECHNOLOGY_UNAVAILABLE;
   } else if (!IsAllowedByPolicy()) {
@@ -233,6 +218,17 @@ void TetherService::OnBluetoothAdapterFetched(
   adapter_ = adapter;
   adapter_->AddObserver(this);
   UpdateTetherTechnologyState();
+}
+
+bool TetherService::HasSyncedTetherHosts() const {
+  return !cryptauth_service_->GetCryptAuthDeviceManager()
+              ->GetTetherHosts()
+              .empty();
+}
+
+bool TetherService::IsFeatureFlagEnabled() const {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      chromeos::switches::kEnableTether);
 }
 
 bool TetherService::IsBluetoothAvailable() const {

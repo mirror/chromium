@@ -24,12 +24,10 @@
       width: var(--cr-icon-size);
     }
 
-    --cr-icon-ripple-margin: calc(var(--cr-icon-ripple-padding) * -1);
-
     --cr-paper-icon-button-margin: {
       /* Shift button so ripple overlaps the end of the row. */
-      -webkit-margin-end: var(--cr-icon-ripple-margin);
-      -webkit-margin-start: var(--cr-icon-ripple-margin);
+      -webkit-margin-end: calc(var(--cr-icon-ripple-padding) * -1);
+      -webkit-margin-start: calc(var(--cr-icon-ripple-padding) * -1);
     }
 
     --cr-selectable-focus: {

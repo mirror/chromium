@@ -56,14 +56,11 @@ class TabletPowerButtonControllerTest : public AshTestBase {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kAshEnableTouchView);
     AshTestBase::SetUp();
-    // Trigger an accelerometer update so that |tablet_controller_| can be
-    // initialized.
-    SendAccelerometerUpdate();
+
+    lock_state_controller_ = Shell::Get()->lock_state_controller();
     tablet_controller_ = Shell::Get()
                              ->power_button_controller()
                              ->tablet_power_button_controller_for_test();
-
-    lock_state_controller_ = Shell::Get()->lock_state_controller();
     test_api_ = base::MakeUnique<TabletPowerButtonController::TestApi>(
         tablet_controller_);
     lock_state_test_api_ =
@@ -88,13 +85,6 @@ class TabletPowerButtonControllerTest : public AshTestBase {
   }
 
  protected:
-  void SendAccelerometerUpdate() {
-    scoped_refptr<chromeos::AccelerometerUpdate> update(
-        new chromeos::AccelerometerUpdate());
-    update->Set(chromeos::ACCELEROMETER_SOURCE_SCREEN, 1.0f, 0.0f, 0.0f);
-    Shell::Get()->power_button_controller()->OnAccelerometerUpdated(update);
-  }
-
   void PressPowerButton() {
     tablet_controller_->OnPowerButtonEvent(true, base::TimeTicks::Now());
   }
@@ -531,41 +521,11 @@ TEST_F(TabletPowerButtonControllerTest, SyncTouchscreenStatus) {
   Shell::Get()
       ->power_button_controller()
       ->ResetTabletPowerButtonControllerForTest();
-  SendAccelerometerUpdate();
 
   // Check that the local state of touchscreen enabled state is in line with
   // backlights forced off state.
   EXPECT_FALSE(GetBacklightsForcedOff());
   EXPECT_TRUE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
-}
-
-// Tests that tablet power button behavior is enabled on having seen
-// accelerometer update, otherwise it is disabled.
-TEST_F(TabletPowerButtonControllerTest, EnableOnAccelerometerUpdate) {
-  ASSERT_TRUE(tablet_controller_);
-  Shell::Get()
-      ->power_button_controller()
-      ->ResetTabletPowerButtonControllerForTest();
-  tablet_controller_ = Shell::Get()
-                           ->power_button_controller()
-                           ->tablet_power_button_controller_for_test();
-  EXPECT_FALSE(tablet_controller_);
-
-  SendAccelerometerUpdate();
-  tablet_controller_ = Shell::Get()
-                           ->power_button_controller()
-                           ->tablet_power_button_controller_for_test();
-  EXPECT_TRUE(tablet_controller_);
-}
-
-// Tests that when backlights get forced off due to tablet power button, media
-// sessions should be suspended.
-TEST_F(TabletPowerButtonControllerTest, SuspendMediaSessions) {
-  ASSERT_FALSE(shell_delegate_->media_sessions_suspended());
-  PressPowerButton();
-  ReleasePowerButton();
-  ASSERT_TRUE(GetBacklightsForcedOff());
-  EXPECT_TRUE(shell_delegate_->media_sessions_suspended());
 }
 
 }  // namespace test

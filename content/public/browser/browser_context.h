@@ -18,15 +18,12 @@
 #include "base/memory/linked_ptr.h"
 #include "base/supports_user_data.h"
 #include "content/common/content_export.h"
+#include "content/public/browser/zoom_level_delegate.h"
 #include "content/public/common/push_event_payload.h"
 #include "content/public/common/push_messaging_status.h"
 #include "content/public/common/service_info.h"
 #include "net/url_request/url_request_interceptor.h"
 #include "net/url_request/url_request_job_factory.h"
-
-#if !defined(OS_ANDROID)
-#include "content/public/browser/zoom_level_delegate.h"
-#endif
 
 class GURL;
 
@@ -194,12 +191,10 @@ class CONTENT_EXPORT BrowserContext : public base::SupportsUserData {
   // StoragePartition can have time to do necessary cleanups on IO thread.
   void ShutdownStoragePartitions();
 
-#if !defined(OS_ANDROID)
   // Creates a delegate to initialize a HostZoomMap and persist its information.
   // This is called during creation of each StoragePartition.
   virtual std::unique_ptr<ZoomLevelDelegate> CreateZoomLevelDelegate(
       const base::FilePath& partition_path) = 0;
-#endif
 
   // Returns the path of the directory where this context's data is stored.
   virtual base::FilePath GetPath() const = 0;
@@ -240,7 +235,7 @@ class CONTENT_EXPORT BrowserContext : public base::SupportsUserData {
 
   // Returns the BrowsingDataRemoverDelegate for this context. This will be
   // called once per context. It's valid to return nullptr.
-  virtual BrowsingDataRemoverDelegate* GetBrowsingDataRemoverDelegate() = 0;
+  virtual BrowsingDataRemoverDelegate* GetBrowsingDataRemoverDelegate();
 
   // Creates the main net::URLRequestContextGetter. It's called only once.
   virtual net::URLRequestContextGetter* CreateRequestContext(

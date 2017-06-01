@@ -50,7 +50,7 @@ class ASH_EXPORT WebNotificationTray
       public base::SupportsWeakPtr<WebNotificationTray>,
       public ui::SimpleMenuModel::Delegate {
  public:
-  WebNotificationTray(Shelf* shelf,
+  WebNotificationTray(WmShelf* shelf,
                       aura::Window* status_area_window,
                       SystemTray* system_tray);
   ~WebNotificationTray() override;
@@ -92,6 +92,10 @@ class ASH_EXPORT WebNotificationTray
   void OnMouseEnteredView() override;
   void OnMouseExitedView() override;
   base::string16 GetAccessibleNameForBubble() override;
+  void OnBeforeBubbleWidgetInit(
+      views::Widget* anchor_widget,
+      views::Widget* bubble_widget,
+      views::Widget::InitParams* params) const override;
   void HideBubble(const views::TrayBubbleView* bubble_view) override;
 
   // Overridden from MessageCenterTrayDelegate.

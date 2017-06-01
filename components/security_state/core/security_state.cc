@@ -17,15 +17,12 @@ namespace security_state {
 
 namespace {
 
-// These values are written to logs. New enum values can be added, but existing
-// enums must never be renumbered or deleted and reused.
+// Do not change or reorder this enum, and add new values at the end. It is used
+// in the MarkHttpAs histogram.
 enum MarkHttpStatus {
-  NEUTRAL = 0,  // Deprecated
-  NON_SECURE = 1,
-  HTTP_SHOW_WARNING_ON_SENSITIVE_FIELDS = 2,
-  NON_SECURE_AFTER_EDITING = 3,
-  NON_SECURE_WHILE_INCOGNITO = 4,
-  NON_SECURE_WHILE_INCOGNITO_OR_EDITING = 5,
+  NEUTRAL /* deprecated */,
+  NON_SECURE,
+  HTTP_SHOW_WARNING_ON_SENSITIVE_FIELDS,
   LAST_STATUS
 };
 

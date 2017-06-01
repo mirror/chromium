@@ -102,6 +102,7 @@ static const CGFloat kHostCardIconSize = 45.f;
   _hostInfo = hostInfo;
 
   _titleLabel.text = _hostInfo.hostName;
+  _statusLabel.text = _hostInfo.status;
 
   _imageView.image = [UIImage imageNamed:@"ic_desktop"];
 
@@ -109,11 +110,8 @@ static const CGFloat kHostCardIconSize = 45.f;
   // Need to update to the values in the mocks.
   if ([_hostInfo.status isEqualToString:@"ONLINE"]) {
     _imageView.backgroundColor = UIColor.greenColor;
-    _statusLabel.text = @"Online";
   } else {
     _imageView.backgroundColor = UIColor.lightGrayColor;
-    _statusLabel.text =
-        [NSString stringWithFormat:@"Last online: %@", hostInfo.updatedTime];
   }
 }
 

@@ -18,14 +18,13 @@
 
 #include "base/logging.h"
 #include "gpu/command_buffer/service/async_api_interface.h"
+#include "gpu/command_buffer/service/cmd_buffer_engine.h"
 #include "gpu/command_buffer/service/memory_tracking.h"
 #include "gpu/command_buffer/service/program_cache.h"
 #include "gpu/command_buffer/service/shader_translator.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 namespace gpu {
-
-class CommandBufferServiceBase;
 
 // Mocks an AsyncAPIInterface, using GMock.
 class AsyncAPIMock : public AsyncAPIInterface {
@@ -60,9 +59,6 @@ class AsyncAPIMock : public AsyncAPIInterface {
     volatile CommandBufferEntry* args_;
   };
 
-  void BeginDecoding() override {}
-  void EndDecoding() override {}
-
   MOCK_METHOD3(DoCommand,
                error::Error(unsigned int command,
                             unsigned int arg_count,
@@ -74,13 +70,12 @@ class AsyncAPIMock : public AsyncAPIInterface {
                             int num_entries,
                             int* entries_processed));
 
-  base::StringPiece GetLogPrefix() override { return "None"; }
+  const char* GetCommandName(unsigned int command_id) const {
+    return "";
+  };
 
   // Sets the engine, to forward SetToken commands to it.
-  void set_command_buffer_service(
-      CommandBufferServiceBase* command_buffer_service) {
-    command_buffer_service_ = command_buffer_service;
-  }
+  void set_engine(CommandBufferEngine *engine) { engine_ = engine; }
 
   // Forwards the SetToken commands to the engine.
   void SetToken(unsigned int command,
@@ -88,7 +83,7 @@ class AsyncAPIMock : public AsyncAPIInterface {
                 const volatile void* _args);
 
  private:
-  CommandBufferServiceBase* command_buffer_service_;
+  CommandBufferEngine *engine_;
 };
 
 namespace gles2 {

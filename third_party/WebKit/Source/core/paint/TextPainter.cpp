@@ -174,8 +174,7 @@ void TextPainter::PaintDecorationUnderOrOverLine(
     float decoration_offset) {
   AppliedDecorationPainter decoration_painter(
       context, decoration_info, line_offset, decoration, decoration_offset, 1);
-  if (EnumHasFlags(decoration_info.style->GetTextDecorationSkip(),
-                   TextDecorationSkip::kInk)) {
+  if (decoration_info.style->GetTextDecorationSkip() & kTextDecorationSkipInk) {
     FloatRect decoration_bounds = decoration_painter.Bounds();
     ClipDecorationsStripe(-decoration_info.baseline + decoration_bounds.Y() -
                               decoration_info.local_origin.Y(),

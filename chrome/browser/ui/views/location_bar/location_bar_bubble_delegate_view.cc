@@ -91,6 +91,10 @@ void LocationBarBubbleDelegateView::ShowForReason(DisplayReason reason) {
   }
 }
 
+int LocationBarBubbleDelegateView::GetDialogButtons() const {
+  return ui::DIALOG_BUTTON_NONE;
+}
+
 void LocationBarBubbleDelegateView::Observe(
     int type,
     const content::NotificationSource& source,

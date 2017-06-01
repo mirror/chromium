@@ -31,7 +31,6 @@
 
 #include <memory>
 
-#include "base/macros.h"
 #include "bindings/core/v8/ScriptValue.h"
 #include "core/dom/DOMStringList.h"
 #include "core/dom/SuspendableObject.h"
@@ -47,8 +46,6 @@
 #include "platform/blob/BlobData.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/HashMap.h"
-#include "platform/wtf/RefPtr.h"
-#include "platform/wtf/Time.h"
 #include "public/platform/WebBlobInfo.h"
 #include "public/platform/modules/indexeddb/WebIDBCursor.h"
 #include "public/platform/modules/indexeddb/WebIDBTypes.h"
@@ -68,39 +65,7 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
   USING_GARBAGE_COLLECTED_MIXIN(IDBRequest);
 
  public:
-  // Records async tracing, starting on contruction and ending on destruction or
-  // a call to |RecordAndReset()|.
-  class AsyncTraceState {
-   public:
-    AsyncTraceState() {}
-    AsyncTraceState(const char* tracing_name, void*);
-    ~AsyncTraceState();
-    AsyncTraceState(AsyncTraceState&& other) {
-      this->tracing_name_ = other.tracing_name_;
-      this->id_ = other.id_;
-      other.tracing_name_ = nullptr;
-    }
-    AsyncTraceState& operator=(AsyncTraceState&& rhs) {
-      this->tracing_name_ = rhs.tracing_name_;
-      this->id_ = rhs.id_;
-      rhs.tracing_name_ = nullptr;
-      return *this;
-    }
-
-    bool is_valid() const { return tracing_name_; }
-    void RecordAndReset();
-
-   private:
-    const char* tracing_name_ = nullptr;
-    void* id_;
-
-    DISALLOW_COPY_AND_ASSIGN(AsyncTraceState);
-  };
-
-  static IDBRequest* Create(ScriptState*,
-                            IDBAny* source,
-                            IDBTransaction*,
-                            AsyncTraceState);
+  static IDBRequest* Create(ScriptState*, IDBAny* source, IDBTransaction*);
   ~IDBRequest() override;
   DECLARE_VIRTUAL_TRACE();
 
@@ -147,53 +112,23 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
   void SetPendingCursor(IDBCursor*);
   void Abort();
 
-  // Blink's delivery of results from IndexedDB's backing store to script is
-  // more complicated than prescribed in the IndexedDB specification.
-  //
-  // IDBValue, which holds responses from the backing store, is either the
-  // serialized V8 value, or a reference to a Blob that holds the serialized
-  // value. IDBValueWrapping.h has the motivation and details. This introduces
-  // the following complexities.
-  //
-  // 1) De-serialization is expensive, so it is done lazily in
-  // IDBRequest::result(), which is called synchronously from script. On the
-  // other hand, Blob data can only be fetched asynchronously. So, IDBValues
-  // that reference serialized data stored in Blobs must be processed before
-  // IDBRequest event handlers are invoked, because the event handler script may
-  // call IDBRequest::result().
-  //
-  // 2) The IDBRequest events must be dispatched (enqueued in DOMWindow's event
-  // queue) in the order in which the requests were issued. If an IDBValue
-  // references a Blob, the Blob processing must block event dispatch for all
-  // following IDBRequests in the same transaction.
-  //
-  // The Blob de-referencing and IDBRequest blocking is performed in the
-  // HandleResponse() overloads below. Each HandleResponse() overload is paired
-  // with a matching EnqueueResponse() overload, which is called when an
-  // IDBRequest's result event can be delivered to the application. All the
-  // HandleResponse() variants include a fast path that calls directly into
-  // EnqueueResponse() if no queueing is required.
-  //
-  // Some types of requests, such as indexedDB.openDatabase(), cannot be issued
-  // after a request that needs Blob processing, so their results are handled by
-  // having WebIDBCallbacksImpl call directly into EnqueueResponse(),
-  // EnqueueBlocked(), or EnqueueUpgradeNeeded().
-
-  void HandleResponse(DOMException*);
-  void HandleResponse(IDBKey*);
-  void HandleResponse(std::unique_ptr<WebIDBCursor>,
-                      IDBKey*,
-                      IDBKey* primary_key,
-                      RefPtr<IDBValue>&&);
-  void HandleResponse(IDBKey*, IDBKey* primary_key, RefPtr<IDBValue>&&);
-  void HandleResponse(RefPtr<IDBValue>&&);
-  void HandleResponse(const Vector<RefPtr<IDBValue>>&);
-  void HandleResponse(int64_t);
-  void HandleResponse();
+  void EnqueueResponse(DOMException*);
+  void EnqueueResponse(std::unique_ptr<WebIDBCursor>,
+                       IDBKey*,
+                       IDBKey* primary_key,
+                       PassRefPtr<IDBValue>);
+  void EnqueueResponse(IDBKey*);
+  void EnqueueResponse(PassRefPtr<IDBValue>);
+  void EnqueueResponse(const Vector<RefPtr<IDBValue>>&);
+  void EnqueueResponse();
+  void EnqueueResponse(IDBKey*, IDBKey* primary_key, PassRefPtr<IDBValue>);
 
   // Only used in webkitGetDatabaseNames(), which is deprecated and hopefully
   // going away soon.
   void EnqueueResponse(const Vector<String>&);
+
+  // Overridden by IDBOpenDBRequest.
+  virtual void EnqueueResponse(int64_t);
 
   // Only IDBOpenDBRequest instances should receive these:
   virtual void EnqueueBlocked(int64_t old_version) { NOTREACHED(); }
@@ -227,54 +162,23 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
 
   IDBCursor* GetResultCursor() const;
 
-  // Used to hang onto Blobs until the browser process handles the request.
-  //
-  // Blobs are ref-counted on the browser side, and BlobDataHandles manage
-  // references from renderers. When a BlobDataHandle gets destroyed, the
-  // browser-side Blob gets derefenced, which might cause it to be destroyed as
-  // well.
-  //
-  // After script uses a Blob in a put() request, the Blink-side Blob object
-  // (which hangs onto the BlobDataHandle) may get garbage-collected. IDBRequest
-  // needs to hang onto the BlobDataHandle as well, to avoid having the
-  // browser-side Blob get destroyed before the IndexedDB request is processed.
-  inline Vector<RefPtr<BlobDataHandle>>* transit_blob_handles() {
-    return &transit_blob_handles_;
-  }
-
-#if DCHECK_IS_ON()
-  inline bool TransactionHasQueuedResults() const {
-    return transaction_ && transaction_->HasQueuedResults();
-  }
-#endif  // DCHECK_IS_ON()
-
-#if DCHECK_IS_ON()
-  inline IDBRequestQueueItem* QueueItem() const { return queue_item_; }
-#endif  // DCHECK_IS_ON()
-
-  void AssignNewMetrics(AsyncTraceState metrics) {
-    DCHECK(!metrics_.is_valid());
-    metrics_ = std::move(metrics);
+  void StorePutOperationBlobs(
+      HashMap<String, RefPtr<BlobDataHandle>> blob_handles) {
+    transit_blob_handles_ = std::move(blob_handles);
   }
 
  protected:
-  IDBRequest(ScriptState*, IDBAny* source, IDBTransaction*, AsyncTraceState);
+  IDBRequest(ScriptState*, IDBAny* source, IDBTransaction*);
   void EnqueueEvent(Event*);
   void DequeueEvent(Event*);
   virtual bool ShouldEnqueueEvent() const;
   void EnqueueResultInternal(IDBAny*);
   void SetResult(IDBAny*);
 
-  // Overridden by IDBOpenDBRequest.
-  virtual void EnqueueResponse(int64_t);
-
   // EventTarget
   DispatchEventResult DispatchEventInternal(Event*) override;
 
-  // Can be nullptr for requests that are not associated with a transaction,
-  // i.e. delete requests and completed or unsuccessful open requests.
   Member<IDBTransaction> transaction_;
-
   ReadyState ready_state_ = PENDING;
   bool request_aborted_ = false;  // May be aborted by transaction then receive
                                   // async onsuccess; ignore vs. assert.
@@ -283,34 +187,18 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
   v8::Isolate* isolate_;
 
  private:
-  // Calls EnqueueResponse().
-  friend class IDBRequestQueueItem;
-
   void SetResultCursor(IDBCursor*,
                        IDBKey*,
                        IDBKey* primary_key,
-                       RefPtr<IDBValue>&&);
+                       PassRefPtr<IDBValue>);
   void AckReceivedBlobs(const IDBValue*);
   void AckReceivedBlobs(const Vector<RefPtr<IDBValue>>&);
-
-  void EnqueueResponse(DOMException*);
-  void EnqueueResponse(IDBKey*);
-  void EnqueueResponse(std::unique_ptr<WebIDBCursor>,
-                       IDBKey*,
-                       IDBKey* primary_key,
-                       RefPtr<IDBValue>&&);
-  void EnqueueResponse(IDBKey*, IDBKey* primary_key, RefPtr<IDBValue>&&);
-  void EnqueueResponse(RefPtr<IDBValue>&&);
-  void EnqueueResponse(const Vector<RefPtr<IDBValue>>&);
-  void EnqueueResponse();
 
   void ClearPutOperationBlobs() { transit_blob_handles_.clear(); }
 
   Member<IDBAny> source_;
   Member<IDBAny> result_;
   Member<DOMException> error_;
-
-  AsyncTraceState metrics_;
 
   bool has_pending_activity_ = true;
   HeapVector<Member<Event>> enqueued_events_;
@@ -327,7 +215,7 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
   Member<IDBKey> cursor_primary_key_;
   RefPtr<IDBValue> cursor_value_;
 
-  Vector<RefPtr<BlobDataHandle>> transit_blob_handles_;
+  HashMap<String, RefPtr<BlobDataHandle>> transit_blob_handles_;
 
   bool did_fire_upgrade_needed_event_ = false;
   bool prevent_propagation_ = false;
@@ -342,12 +230,6 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
   // Pointer back to the WebIDBCallbacks that holds a persistent reference to
   // this object.
   WebIDBCallbacks* web_callbacks_ = nullptr;
-
-  // Non-null while this request is queued behind other requests that are still
-  // getting post-processed.
-  //
-  // The IDBRequestQueueItem is owned by the result queue in IDBTransaction.
-  IDBRequestQueueItem* queue_item_ = nullptr;
 };
 
 }  // namespace blink

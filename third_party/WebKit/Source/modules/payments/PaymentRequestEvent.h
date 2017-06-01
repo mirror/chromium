@@ -31,14 +31,7 @@ class MODULES_EXPORT PaymentRequestEvent final : public ExtendableEvent {
 
   const AtomicString& InterfaceName() const override;
 
-  const String& topLevelOrigin() const;
-  const String& paymentRequestOrigin() const;
-  const String& paymentRequestId() const;
-  const HeapVector<PaymentMethodData>& methodData() const;
-  void total(PaymentItem& value) const;
-  const HeapVector<PaymentDetailsModifier>& modifiers() const;
-  const String& instrumentKey() const;
-
+  void appRequest(PaymentAppRequest&) const;
   void respondWith(ScriptState*, ScriptPromise, ExceptionState&);
 
   DECLARE_VIRTUAL_TRACE();
@@ -48,15 +41,7 @@ class MODULES_EXPORT PaymentRequestEvent final : public ExtendableEvent {
                       const PaymentAppRequest&,
                       RespondWithObserver*,
                       WaitUntilObserver*);
-
-  String top_level_origin_;
-  String payment_request_origin_;
-  String payment_request_id_;
-  HeapVector<PaymentMethodData> method_data_;
-  PaymentItem total_;
-  HeapVector<PaymentDetailsModifier> modifiers_;
-  String instrument_key_;
-
+  PaymentAppRequest app_request_;
   Member<RespondWithObserver> observer_;
 };
 

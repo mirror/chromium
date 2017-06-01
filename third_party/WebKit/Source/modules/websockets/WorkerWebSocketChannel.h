@@ -53,6 +53,7 @@ class KURL;
 class ThreadableLoadingContext;
 class WebSocketChannelSyncHelper;
 class WorkerGlobalScope;
+class WorkerLoaderProxy;
 
 class WorkerWebSocketChannel final : public WebSocketChannel {
   WTF_MAKE_NONCOPYABLE(WorkerWebSocketChannel);
@@ -97,6 +98,7 @@ class WorkerWebSocketChannel final : public WebSocketChannel {
 
    public:
     Peer(Bridge*,
+         PassRefPtr<WorkerLoaderProxy>,
          RefPtr<WebTaskRunner>,
          WorkerThreadLifecycleContext*);
     ~Peer() override;
@@ -135,6 +137,7 @@ class WorkerWebSocketChannel final : public WebSocketChannel {
 
    private:
     CrossThreadWeakPersistent<Bridge> bridge_;
+    RefPtr<WorkerLoaderProxy> loader_proxy_;
     RefPtr<WebTaskRunner> worker_networking_task_runner_;
     Member<WebSocketChannel> main_web_socket_channel_;
   };
@@ -164,7 +167,7 @@ class WorkerWebSocketChannel final : public WebSocketChannel {
     void Disconnect();
 
     void ConnectOnMainThread(std::unique_ptr<SourceLocation>,
-                             ThreadableLoadingContext*,
+                             RefPtr<WorkerLoaderProxy>,
                              RefPtr<WebTaskRunner>,
                              WorkerThreadLifecycleContext*,
                              const KURL&,
@@ -181,6 +184,7 @@ class WorkerWebSocketChannel final : public WebSocketChannel {
    private:
     Member<WebSocketChannelClient> client_;
     Member<WorkerGlobalScope> worker_global_scope_;
+    RefPtr<WorkerLoaderProxy> loader_proxy_;
     CrossThreadPersistent<ParentFrameTaskRunners> parent_frame_task_runners_;
     CrossThreadPersistent<Peer> peer_;
   };

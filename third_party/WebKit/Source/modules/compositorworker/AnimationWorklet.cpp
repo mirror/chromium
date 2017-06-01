@@ -9,7 +9,6 @@
 #include "core/dom/Document.h"
 #include "core/frame/LocalFrame.h"
 #include "core/page/ChromeClient.h"
-#include "core/workers/WorkerClients.h"
 #include "modules/compositorworker/AnimationWorkletMessagingProxy.h"
 #include "modules/compositorworker/AnimationWorkletThread.h"
 
@@ -38,9 +37,8 @@ void AnimationWorklet::Initialize() {
       document->GetFrame()->GetChromeClient().CreateAnimationWorkletProxyClient(
           document->GetFrame());
 
-  WorkerClients* worker_clients = WorkerClients::Create();
-  worklet_messaging_proxy_ = new AnimationWorkletMessagingProxy(
-      GetExecutionContext(), worker_clients, proxy_client);
+  worklet_messaging_proxy_ =
+      new AnimationWorkletMessagingProxy(GetExecutionContext(), proxy_client);
   worklet_messaging_proxy_->Initialize();
 }
 

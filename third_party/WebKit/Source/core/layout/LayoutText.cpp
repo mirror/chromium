@@ -29,7 +29,7 @@
 #include "core/dom/Text.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/iterators/TextIterator.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/Settings.h"
 #include "core/layout/LayoutBlock.h"
 #include "core/layout/LayoutTableCell.h"
@@ -110,7 +110,7 @@ static void MakeCapitalized(String* string, UChar previous) {
   const StringImpl& input = *string->Impl();
 
   if (length >= std::numeric_limits<unsigned>::max())
-    IMMEDIATE_CRASH();
+    CRASH();
 
   StringBuffer<UChar> string_with_previous(length + 1);
   string_with_previous[0] =
@@ -348,6 +348,54 @@ static FloatRect LocalQuadForTextBox(InlineTextBox* box,
     return FloatRect(r);
   }
   return FloatRect();
+}
+
+void LayoutText::AbsoluteRectsForRange(Vector<IntRect>& rects,
+                                       unsigned start,
+                                       unsigned end) const {
+  // Work around signed/unsigned issues. This function takes unsigneds, and is
+  // often passed UINT_MAX to mean "all the way to the end". InlineTextBox
+  // coordinates are unsigneds, so changing this function to take ints causes
+  // various internal mismatches. But selectionRect takes ints, and passing
+  // UINT_MAX to it causes trouble. Ideally we'd change selectionRect to take
+  // unsigneds, but that would cause many ripple effects, so for now we'll just
+  // clamp our unsigned parameters to INT_MAX.
+  DCHECK(end == UINT_MAX || end <= INT_MAX);
+  DCHECK_LE(start, static_cast<unsigned>(INT_MAX));
+  start = std::min(start, static_cast<unsigned>(INT_MAX));
+  end = std::min(end, static_cast<unsigned>(INT_MAX));
+
+  // This function is always called in sequence that this check should work.
+  bool has_checked_box_in_range = !rects.IsEmpty();
+
+  for (InlineTextBox* box = FirstTextBox(); box; box = box->NextTextBox()) {
+    // Note: box->end() returns the index of the last character, not the index
+    // past it
+    if (start <= box->Start() && box->end() < end) {
+      FloatRect r(box->FrameRect());
+      if (!has_checked_box_in_range) {
+        has_checked_box_in_range = true;
+        rects.clear();
+      }
+      rects.push_back(LocalToAbsoluteQuad(r).EnclosingBoundingBox());
+    } else if ((box->Start() <= start && start <= box->end()) ||
+               (box->Start() < end && end <= box->end())) {
+      FloatRect rect = LocalQuadForTextBox(box, start, end);
+      if (!rect.IsZero()) {
+        if (!has_checked_box_in_range) {
+          has_checked_box_in_range = true;
+          rects.clear();
+        }
+        rects.push_back(LocalToAbsoluteQuad(rect).EnclosingBoundingBox());
+      }
+    } else if (!has_checked_box_in_range) {
+      // FIXME: This code is wrong. It's converting local to absolute twice.
+      // http://webkit.org/b/65722
+      FloatRect rect = LocalQuadForTextBox(box, start, end);
+      if (!rect.IsZero())
+        rects.push_back(LocalToAbsoluteQuad(rect).EnclosingBoundingBox());
+    }
+  }
 }
 
 static IntRect EllipsisRectForBox(InlineTextBox* box,
@@ -1444,17 +1492,17 @@ void LayoutText::SetSelectionState(SelectionState state) {
   LayoutObject::SetSelectionState(state);
 
   if (CanUpdateSelectionOnRootLineBoxes()) {
-    if (state == SelectionState::kStart || state == SelectionState::kEnd ||
-        state == SelectionState::kStartAndEnd) {
+    if (state == SelectionStart || state == SelectionEnd ||
+        state == SelectionBoth) {
       int start_pos, end_pos;
       std::tie(start_pos, end_pos) = SelectionStartEnd();
-      if (GetSelectionState() == SelectionState::kStart) {
+      if (GetSelectionState() == SelectionStart) {
         end_pos = TextLength();
 
         // to handle selection from end of text to end of line
         if (start_pos && start_pos == end_pos)
           start_pos = end_pos - 1;
-      } else if (GetSelectionState() == SelectionState::kEnd) {
+      } else if (GetSelectionState() == SelectionEnd) {
         start_pos = 0;
       }
 
@@ -1465,7 +1513,7 @@ void LayoutText::SetSelectionState(SelectionState state) {
       }
     } else {
       for (InlineTextBox* box = FirstTextBox(); box; box = box->NextTextBox()) {
-        box->Root().SetHasSelectedChildren(state == SelectionState::kInside);
+        box->Root().SetHasSelectedChildren(state == SelectionInside);
       }
     }
   }
@@ -1899,7 +1947,7 @@ LayoutRect LayoutText::LocalVisualRect() const {
 LayoutRect LayoutText::LocalSelectionRect() const {
   DCHECK(!NeedsLayout());
 
-  if (GetSelectionState() == SelectionState::kNone)
+  if (GetSelectionState() == SelectionNone)
     return LayoutRect();
   LayoutBlock* cb = ContainingBlock();
   if (!cb)
@@ -1908,15 +1956,15 @@ LayoutRect LayoutText::LocalSelectionRect() const {
   // Now calculate startPos and endPos for painting selection.
   // We include a selection while endPos > 0
   int start_pos, end_pos;
-  if (GetSelectionState() == SelectionState::kInside) {
+  if (GetSelectionState() == SelectionInside) {
     // We are fully selected.
     start_pos = 0;
     end_pos = TextLength();
   } else {
     std::tie(start_pos, end_pos) = SelectionStartEnd();
-    if (GetSelectionState() == SelectionState::kStart)
+    if (GetSelectionState() == SelectionStart)
       end_pos = TextLength();
-    else if (GetSelectionState() == SelectionState::kEnd)
+    else if (GetSelectionState() == SelectionEnd)
       start_pos = 0;
   }
 

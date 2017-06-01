@@ -5,10 +5,10 @@
 #include "core/input/GestureManager.h"
 
 #include "core/dom/Document.h"
-#include "core/dom/UserGestureIndicator.h"
+#include "core/dom/DocumentUserGestureToken.h"
 #include "core/editing/SelectionController.h"
 #include "core/events/GestureEvent.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
 #include "core/input/EventHandler.h"
@@ -134,7 +134,7 @@ WebInputEventResult GestureManager::HandleGestureTapDown(
 
 WebInputEventResult GestureManager::HandleGestureTap(
     const GestureEventWithHitTestResults& targeted_event) {
-  LocalFrameView* frame_view(frame_->View());
+  FrameView* frame_view(frame_->View());
   const WebGestureEvent& gesture_event = targeted_event.Event();
   HitTestRequest::HitTestRequestType hit_type =
       GetHitTypeForGestureType(gesture_event.GetType());
@@ -189,7 +189,7 @@ WebInputEventResult GestureManager::HandleGestureTap(
       FlooredIntPoint(gesture_event.PositionInRootFrame());
   Node* tapped_node = current_hit_test.InnerNode();
   Element* tapped_element = current_hit_test.InnerElement();
-  UserGestureIndicator gesture_indicator(UserGestureToken::Create(
+  UserGestureIndicator gesture_indicator(DocumentUserGestureToken::Create(
       tapped_node ? &tapped_node->GetDocument() : nullptr));
 
   mouse_event_manager_->SetClickElement(tapped_element);
@@ -387,10 +387,11 @@ WebInputEventResult GestureManager::SendContextMenuEventForGesture(
     event_type = WebInputEvent::kMouseUp;
 
   WebMouseEvent mouse_event(
-      event_type, gesture_event, WebPointerProperties::Button::kNoButton,
-      /* clickCount */ 0,
+      event_type, gesture_event, WebPointerProperties::Button::kRight,
+      /* clickCount */ 1,
       static_cast<WebInputEvent::Modifiers>(
-          modifiers | WebInputEvent::kIsCompatibilityEventForTouch),
+          modifiers | WebInputEvent::Modifiers::kRightButtonDown |
+          WebInputEvent::kIsCompatibilityEventForTouch),
       gesture_event.TimeStampSeconds());
 
   if (!suppress_mouse_events_from_gestures_ && frame_->View()) {
@@ -412,12 +413,12 @@ WebInputEventResult GestureManager::SendContextMenuEventForGesture(
 WebInputEventResult GestureManager::HandleGestureShowPress() {
   last_show_press_timestamp_ = TimeTicks::Now();
 
-  LocalFrameView* view = frame_->View();
+  FrameView* view = frame_->View();
   if (!view)
     return WebInputEventResult::kNotHandled;
   if (ScrollAnimatorBase* scroll_animator = view->ExistingScrollAnimator())
     scroll_animator->CancelAnimation();
-  const LocalFrameView::ScrollableAreaSet* areas = view->ScrollableAreas();
+  const FrameView::ScrollableAreaSet* areas = view->ScrollableAreas();
   if (!areas)
     return WebInputEventResult::kNotHandled;
   for (const ScrollableArea* scrollable_area : *areas) {

@@ -36,7 +36,7 @@ class PrePaintTreeWalkTest
         RenderingTest(EmptyLocalFrameClient::Create()) {}
 
   const TransformPaintPropertyNode* FramePreTranslation() {
-    LocalFrameView* frame_view = GetDocument().View();
+    FrameView* frame_view = GetDocument().View();
     if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
       return frame_view->GetLayoutView()
           ->PaintProperties()
@@ -46,7 +46,7 @@ class PrePaintTreeWalkTest
   }
 
   const TransformPaintPropertyNode* FrameScrollTranslation() {
-    LocalFrameView* frame_view = GetDocument().View();
+    FrameView* frame_view = GetDocument().View();
     if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
       return frame_view->GetLayoutView()
           ->PaintProperties()

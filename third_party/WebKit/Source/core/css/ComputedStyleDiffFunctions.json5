@@ -6,26 +6,14 @@
     // The name parameter represents the name of the function to be created.
 
     fields_to_diff: {
-      default: [],
     },
 
     // A list of methods to diff (these can be public getters of fields or 
     // functions that use fields to determine a value).
-    // Each entry is expressed as a dict of two fields:
-    // 1. method: the method to be diffed
-    // 2. field_dependencies: lists the properties this method depends on.
+    // Each entry is expressed as a dict of two fields.
+    // The fields are method - the method to be diffed and field_dependencies
+    // which lists the properties this method depends on.
     methods_to_diff: {
-      default: [],
-    },
-
-    // A list of predicates that have the diff logic built into them and are only
-    // called by the diff functions in ComputedStyle.
-    // Each entry is expressed as a dict of two fields:
-    // 1. predicate: the predicate to be tested
-    // 2. field_dependencies: lists the properties this predicate test depends on.
-    // TODO: Note that you also have to pass in the arguments for the predicate. 
-    // This may be removed in the future if we are always passing the other ComputedStyle
-    predicates_to_test: {
       default: [],
     },
   },
@@ -34,33 +22,15 @@
         name: "ScrollAnchorDisablingPropertyChanged",
         fields_to_diff: ["width", "min-width", "max-width", "height", "min-height", "max-height", "margin-top", "margin-left", "margin-right", "margin-bottom", 
                   "left", "right", "top", "bottom", "padding-top", 
-                  "padding-left", "padding-right", "padding-bottom"],
-        methods_to_diff: [
-          {
-            method: "GetPosition()",
-            field_dependencies: ["position"]
-          },
-        ]
+                  "padding-left", "padding-right", "padding-bottom"]
     },
     {
         name: "DiffNeedsFullLayoutAndPaintInvalidation",
         fields_to_diff: ["padding-top", "padding-left", "padding-right", 
-                "padding-bottom", "-webkit-highlight", "text-indent", 
-                "text-align-last", "TextIndentLine", "EffectiveZoom", 
-                "word-break", "overflow-wrap", "-webkit-line-break", 
-                "-webkit-text-security", "hyphens", "HyphenationLimitBefore", 
-                "HyphenationLimitAfter", "-webkit-hyphenate-character", 
-                "RespectImageOrientation", "-webkit-ruby-position", 
-                "TextEmphasisMark", "TextEmphasisPosition", 
-                "TextEmphasisCustomMark", "text-justify", "text-orientation", 
-                "text-combine-upright", "tab-size", "text-size-adjust", 
-                "list-style-image", "line-height-step", 
-                "-webkit-text-stroke-width", "line-height", "font", 
-                "-webkit-border-horizontal-spacing", 
-                "-webkit-border-vertical-spacing", "TextAutosizingMultiplier"],
+                "padding-bottom", "line-height", "font", "-webkit-border-horizontal-spacing", "-webkit-border-vertical-spacing"],
         methods_to_diff: [
           {
-            method: "BorderLeftWidth()",
+            method: "BorderLeftWidth()", 
             field_dependencies: ["border-left-width"]
           },
           {
@@ -74,181 +44,12 @@
           {
             method: "BorderRightWidth()",
             field_dependencies: ["border-right-width"]
-          },
-          {
-            method: "FontInternal().LoadingCustomFonts()",
-            field_dependencies: ["font"]
-          },
-          {
-            method: "HasPseudoStyle(kPseudoIdScrollbar)",
-            field_dependencies: ["StyleType"]
-          },
-          {
-            method: "BoxDirection()",
-            field_dependencies: ["-webkit-box-direction"]
-          },
-          {
-            method: "RtlOrdering()",
-            field_dependencies: ["-webkit-rtl-ordering"]
-          },
-          {
-            method: "GetTextAlign()",
-            field_dependencies: ["text-align"]
-          },
-          {
-            method: "TextTransform()",
-            field_dependencies: ["text-transform"]
-          },
-          {
-            method: "Direction()",
-            field_dependencies: ["direction"]
-          },
-          {
-            method: "WhiteSpace()",
-            field_dependencies: ["white-space"]
-          },
-          {
-            method: "GetWritingMode()",
-            field_dependencies: ["writing-mode"]
-          },
-          {
-            method: "OverflowX()",
-            field_dependencies: ["overflow-x"]
-          },
-          {
-            method: "OverflowY()",
-            field_dependencies: ["overflow-y"]
-          },
-          {
-            method: "Clear()",
-            field_dependencies: ["clear"]
-          },
-          {
-            method: "GetUnicodeBidi()",
-            field_dependencies: ["unicode-bidi"]
-          },
-          {
-            method: "Floating()",
-            field_dependencies: ["float"]
-          },
-          {
-            method: "OriginalDisplay()",
-            field_dependencies: ["OriginalDisplay"]
           }
-        ],
-        predicates_to_test: [
-          {
-            predicate: "TextShadowDataEquivalent(other)",
-            field_dependencies: ["text-shadow"]
-          },
-          {
-            predicate: "QuotesDataEquivalent(other)",
-            field_dependencies: ["quotes"]
-          },
-        ]
-    },
-    {
-        name: "DiffNeedsFullLayoutAndPaintInvalidationDisplayTableType",
-        methods_to_diff: [
-          {
-            method: "BorderCollapse()",
-            field_dependencies: ["border-collapse"]
-          },
-          {
-            method: "EmptyCells()",
-            field_dependencies: ["empty-cells"]
-          },
-          {
-            method: "CaptionSide()",
-            field_dependencies: ["caption-side"]
-          },
-          {
-            method: "TableLayout()",
-            field_dependencies: ["table-layout"]
-          },
-        ]
-    },
-    {
-        name: "DiffNeedsFullLayoutAndPaintInvalidationDisplayListItem",
-        methods_to_diff: [
-          {
-            method: "ListStyleType()",
-            field_dependencies: ["list-style-type"]
-          },
-          {
-            method: "ListStylePosition()",
-            field_dependencies: ["list-style-position"]
-          },
         ]
     },
     {
         name: "DiffNeedsFullLayout",
         fields_to_diff: ["width", "min-width", "max-width", "height", "min-height", "max-height", "box-sizing"]
-    },
-    {
-        name: "DiffNeedsPaintInvalidationObject",
-        fields_to_diff: ["-webkit-user-modify", "user-select", "image-rendering"],
-        methods_to_diff: [
-          {
-            method: "Visibility()",
-            field_dependencies: ["visibility"]
-          },
-          {
-            method: "PrintColorAdjust()",
-            field_dependencies: ["-webkit-print-color-adjust"]
-          },
-          {
-            method: "InsideLink()",
-            field_dependencies: ["InsideLink"]
-          }
-        ]
-    },
-    {
-        name: "DiffNeedsVisualRectUpdate",
-        methods_to_diff: [
-          {
-            method: "Visibility()",
-            field_dependencies: ["visibility"]
-          }
-        ]
-    },
-    {
-        name: "UpdatePropertySpecificDifferencesTextDecorationOrColor",
-        fields_to_diff: ["TextEmphasisFill", "text-underline-position", "text-decoration-skip", "AppliedTextDecorations"],
-        methods_to_diff: [
-          {
-            method: "TextFillColor()",
-            field_dependencies: ["-webkit-text-fill-color"]
-          },
-          {
-            method: "TextStrokeColor()",
-            field_dependencies: ["-webkit-text-stroke-color"]
-          },
-          {
-            method: "TextEmphasisColor()",
-            field_dependencies: ["-webkit-text-emphasis-color"]
-          },
-          {
-            method: "VisitedLinkTextFillColor()",
-            field_dependencies: ["VisitedLinkTextFillColor"]
-          },
-          {
-            method: "VisitedLinkTextStrokeColor()",
-            field_dependencies: ["VisitedLinkTextStrokeColor"]
-          },
-          {
-            method: "VisitedLinkTextEmphasisColor()",
-            field_dependencies: ["VisitedLinkTextEmphasisColor"]
-          },
-          {
-            method: "CaretColor()",
-            field_dependencies: ["caret-color"]
-          },
-          {
-            method: "VisitedLinkCaretColor()",
-            field_dependencies: ["VisitedLinkCaretColor"]
-          },
-        ]
-    },
+    }
   ],
 }

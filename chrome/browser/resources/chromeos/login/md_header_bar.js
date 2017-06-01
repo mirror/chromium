@@ -128,7 +128,7 @@ cr.define('login', function() {
       if (active == this.isMoreSettingsActive)
         return;
       this.getMoreSettingsMenu.classList.toggle('active', active);
-      $('more-settings-button').tabIndex = active ? -1 : 4;
+      $('more-settings-button').tabIndex = active ? -1 : 0;
     },
 
     /**

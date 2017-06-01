@@ -35,8 +35,10 @@ void SerializeOnBlockingTask(
 }  // namespace
 
 struct WebUIUserScriptLoader::UserScriptRenderInfo {
-  const int render_process_id;
-  const int render_frame_id;
+  int render_process_id;
+  int render_frame_id;
+
+  UserScriptRenderInfo() : render_process_id(-1), render_frame_id(-1) {}
 
   UserScriptRenderInfo(int render_process_id, int render_frame_id)
       : render_process_id(render_process_id),
@@ -91,22 +93,14 @@ void WebUIUserScriptLoader::LoadScripts(
     int render_process_id = iter->second.render_process_id;
     int render_frame_id = iter->second.render_frame_id;
 
-    content::RenderProcessHost* render_process_host =
-        content::RenderProcessHost::FromID(render_process_id);
+    content::BrowserContext* browser_context =
+        content::RenderProcessHost::FromID(render_process_id)
+            ->GetBrowserContext();
 
-    // LoadScripts may not be synchronous with AddScripts. Hence the
-    // |render_process_host| may no longer be alive. This should fix
-    // crbug.com/720331. TODO(karandeepb): Investigate if there are any side
-    // effects of the render process host no longer being alive and add a test.
-    if (render_process_host) {
-      content::BrowserContext* browser_context =
-          render_process_host->GetBrowserContext();
-
-      CreateWebUIURLFetchers(script->js_scripts(), browser_context,
-                             render_process_id, render_frame_id);
-      CreateWebUIURLFetchers(script->css_scripts(), browser_context,
-                             render_process_id, render_frame_id);
-    }
+    CreateWebUIURLFetchers(script->js_scripts(), browser_context,
+                           render_process_id, render_frame_id);
+    CreateWebUIURLFetchers(script->css_scripts(), browser_context,
+                           render_process_id, render_frame_id);
 
     script_render_info_map_.erase(script->id());
   }

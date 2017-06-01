@@ -1,7 +1,5 @@
 .. _contest_archive:
 
-.. include:: /migration/deprecation.inc
-
 ########################
 Security Contest Archive
 ########################

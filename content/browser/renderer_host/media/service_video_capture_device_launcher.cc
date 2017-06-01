@@ -57,9 +57,7 @@ void ConcludeLaunchDeviceWithFailure(
 
 ServiceVideoCaptureDeviceLauncher::ServiceVideoCaptureDeviceLauncher(
     video_capture::mojom::DeviceFactoryPtr* device_factory)
-    : device_factory_(device_factory),
-      state_(State::READY_TO_LAUNCH),
-      callbacks_(nullptr) {}
+    : device_factory_(device_factory), state_(State::READY_TO_LAUNCH) {}
 
 ServiceVideoCaptureDeviceLauncher::~ServiceVideoCaptureDeviceLauncher() {
   DCHECK(sequence_checker_.CalledOnValidSequence());
@@ -90,27 +88,15 @@ void ServiceVideoCaptureDeviceLauncher::LaunchDeviceAsync(
     return;
   }
   video_capture::mojom::DevicePtr device;
-  auto device_request = mojo::MakeRequest(&device);
-  // Ownership of |done_cb| is moved to |this|. It is not sufficient to attach
-  // it to the callback passed to |(*device_factory_)->CreateDevice()|, because
-  // |device_factory_| may get torn down before the callback is invoked.
-  done_cb_ = std::move(done_cb);
-  callbacks_ = callbacks;
-  // Use of Unretained(this) is safe, because |done_cb_| guarantees that |this|
-  // stays alive.
-  device.set_connection_error_handler(
-      base::Bind(&ServiceVideoCaptureDeviceLauncher::
-                     OnConnectionLostWhileWaitingForCallback,
-                 base::Unretained(this)));
   (*device_factory_)
       ->CreateDevice(
-          device_id, std::move(device_request),
+          device_id, mojo::MakeRequest(&device),
           base::Bind(
-              // Use of Unretained |this| is safe, because |done_cb_| guarantees
+              // Use of Unretained |this| is safe, because |done_cb| guarantees
               // that |this| stays alive.
               &ServiceVideoCaptureDeviceLauncher::OnCreateDeviceCallback,
               base::Unretained(this), params, base::Passed(&device),
-              std::move(receiver)));
+              std::move(receiver), callbacks, base::Passed(&done_cb)));
   state_ = State::DEVICE_START_IN_PROGRESS;
 }
 
@@ -124,39 +110,24 @@ void ServiceVideoCaptureDeviceLauncher::OnCreateDeviceCallback(
     const media::VideoCaptureParams& params,
     video_capture::mojom::DevicePtr device,
     base::WeakPtr<media::VideoFrameReceiver> receiver,
+    Callbacks* callbacks,
+    base::OnceClosure done_cb,
     video_capture::mojom::DeviceAccessResultCode result_code) {
   DCHECK(sequence_checker_.CalledOnValidSequence());
-  DCHECK(callbacks_);
-  DCHECK(done_cb_);
-  device.set_connection_error_handler(base::Bind(&base::DoNothing));
   const bool abort_requested = (state_ == State::DEVICE_START_ABORTING);
   state_ = State::READY_TO_LAUNCH;
-  Callbacks* callbacks = callbacks_;
-  callbacks_ = nullptr;
   switch (result_code) {
     case video_capture::mojom::DeviceAccessResultCode::SUCCESS:
       ConcludeLaunchDeviceWithSuccess(abort_requested, params,
                                       std::move(device), std::move(receiver),
-                                      callbacks, std::move(done_cb_));
+                                      callbacks, std::move(done_cb));
       return;
     case video_capture::mojom::DeviceAccessResultCode::ERROR_DEVICE_NOT_FOUND:
     case video_capture::mojom::DeviceAccessResultCode::NOT_INITIALIZED:
       ConcludeLaunchDeviceWithFailure(abort_requested, callbacks,
-                                      std::move(done_cb_));
+                                      std::move(done_cb));
       return;
   }
-}
-
-void ServiceVideoCaptureDeviceLauncher::
-    OnConnectionLostWhileWaitingForCallback() {
-  DCHECK(sequence_checker_.CalledOnValidSequence());
-  DCHECK(callbacks_);
-  const bool abort_requested = (state_ == State::DEVICE_START_ABORTING);
-  state_ = State::READY_TO_LAUNCH;
-  Callbacks* callbacks = callbacks_;
-  callbacks_ = nullptr;
-  ConcludeLaunchDeviceWithFailure(abort_requested, callbacks,
-                                  std::move(done_cb_));
 }
 
 }  // namespace content

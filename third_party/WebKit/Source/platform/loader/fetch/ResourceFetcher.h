@@ -65,9 +65,8 @@ class PLATFORM_EXPORT ResourceFetcher
   USING_PRE_FINALIZER(ResourceFetcher, ClearPreloads);
 
  public:
-  static ResourceFetcher* Create(FetchContext* context,
-                                 RefPtr<WebTaskRunner> task_runner) {
-    return new ResourceFetcher(context, std::move(task_runner));
+  static ResourceFetcher* Create(FetchContext* context) {
+    return new ResourceFetcher(context);
   }
   virtual ~ResourceFetcher();
   DECLARE_VIRTUAL_TRACE();
@@ -161,7 +160,7 @@ class PLATFORM_EXPORT ResourceFetcher
  private:
   friend class ResourceCacheValidationSuppressor;
 
-  ResourceFetcher(FetchContext*, RefPtr<WebTaskRunner>);
+  explicit ResourceFetcher(FetchContext*);
 
   void InitializeRevalidation(ResourceRequest&, Resource*);
   Resource* CreateResourceForLoading(FetchParameters&,

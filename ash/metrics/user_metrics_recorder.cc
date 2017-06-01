@@ -9,11 +9,13 @@
 #include "ash/public/cpp/shelf_item.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/session/session_controller.h"
-#include "ash/shelf/shelf.h"
+#include "ash/session/session_state_delegate.h"
 #include "ash/shelf/shelf_model.h"
 #include "ash/shelf/shelf_view.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/wm/window_state.h"
+#include "ash/wm_window.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
@@ -331,7 +333,7 @@ void UserMetricsRecorder::RecordUserMetricsAction(UserMetricsAction action) {
     case UMA_STATUS_AREA_CHANGED_VOLUME_POPUP:
       RecordAction(UserMetricsAction("StatusArea_Volume_ChangedPopup"));
       break;
-    case UMA_STATUS_AREA_DETAILED_ACCESSIBILITY:
+    case UMA_STATUS_AREA_DETAILED_ACCESSABILITY:
       RecordAction(UserMetricsAction("StatusArea_Accessability_DetailedView"));
       break;
     case UMA_STATUS_AREA_DETAILED_AUDIO_VIEW:
@@ -622,7 +624,7 @@ void UserMetricsRecorder::OnShellShuttingDown() {
 }
 
 void UserMetricsRecorder::RecordPeriodicMetrics() {
-  Shelf* shelf = Shelf::ForWindow(Shell::GetPrimaryRootWindow());
+  WmShelf* shelf = WmShelf::ForWindow(Shell::GetPrimaryRootWindow());
   // TODO(bruthig): Investigating whether the check for |manager| is necessary
   // and add tests if it is.
   if (shelf) {

@@ -63,13 +63,13 @@ void DialDeviceDescriptionParserImpl::Create(
 
 void DialDeviceDescriptionParserImpl::ParseDialDeviceDescription(
     const std::string& device_description_xml_data,
-    ParseDialDeviceDescriptionCallback callback) {
+    const ParseDialDeviceDescriptionCallback& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(!callback.is_null());
 
   chrome::mojom::DialDeviceDescriptionPtr device_description =
       Parse(device_description_xml_data);
-  std::move(callback).Run(std::move(device_description));
+  callback.Run(std::move(device_description));
 }
 
 chrome::mojom::DialDeviceDescriptionPtr DialDeviceDescriptionParserImpl::Parse(

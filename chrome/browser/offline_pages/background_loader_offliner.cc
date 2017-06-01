@@ -73,7 +73,7 @@ void RecordErrorCauseUMA(const ClientId& client_id, net::Error error_code) {
       std::abs(error_code));
 }
 
-void HandleLoadTerminationCancel(
+void HandleApplicationStateChangeCancel(
     const Offliner::CompletionCallback& completion_callback,
     const SavePageRequest& canceled_request) {
   completion_callback.Run(canceled_request,
@@ -85,12 +85,11 @@ void HandleLoadTerminationCancel(
 BackgroundLoaderOffliner::BackgroundLoaderOffliner(
     content::BrowserContext* browser_context,
     const OfflinerPolicy* policy,
-    OfflinePageModel* offline_page_model,
-    std::unique_ptr<LoadTerminationListener> load_termination_listener)
+    OfflinePageModel* offline_page_model)
     : browser_context_(browser_context),
       offline_page_model_(offline_page_model),
       policy_(policy),
-      load_termination_listener_(std::move(load_termination_listener)),
+      is_low_end_device_(base::SysInfo::IsLowEndDevice()),
       save_state_(NONE),
       page_load_state_(SUCCESS),
       network_bytes_(0LL),
@@ -99,7 +98,6 @@ BackgroundLoaderOffliner::BackgroundLoaderOffliner(
       weak_ptr_factory_(this) {
   DCHECK(offline_page_model_);
   DCHECK(browser_context_);
-  load_termination_listener_->set_offliner(this);
 }
 
 BackgroundLoaderOffliner::~BackgroundLoaderOffliner() {}
@@ -184,6 +182,11 @@ bool BackgroundLoaderOffliner::LoadAndSave(
   completion_callback_ = completion_callback;
   progress_callback_ = progress_callback;
 
+  // Listen for app foreground/background change.
+  app_listener_.reset(new base::android::ApplicationStatusListener(
+      base::Bind(&BackgroundLoaderOffliner::OnApplicationStateChange,
+                 weak_ptr_factory_.GetWeakPtr())));
+
   // Load page attempt.
   loader_.get()->LoadPage(request.url());
 
@@ -214,13 +217,6 @@ bool BackgroundLoaderOffliner::Cancel(const CancelCallback& callback) {
       FROM_HERE, base::Bind(callback, *pending_request_.get()));
   ResetState();
   return true;
-}
-
-void BackgroundLoaderOffliner::TerminateLoadIfInProgress() {
-  if (!pending_request_)
-    return;
-
-  Cancel(base::Bind(HandleLoadTerminationCancel, completion_callback_));
 }
 
 bool BackgroundLoaderOffliner::HandleTimeout(int64_t request_id) {
@@ -471,6 +467,20 @@ void BackgroundLoaderOffliner::AttachObservers() {
   content::WebContents* contents = loader_->web_contents();
   content::WebContentsObserver::Observe(contents);
   OfflinerData::AddToWebContents(contents, this);
+}
+
+void BackgroundLoaderOffliner::OnApplicationStateChange(
+    base::android::ApplicationState application_state) {
+  if (pending_request_ && is_low_end_device_ &&
+      application_state ==
+          base::android::APPLICATION_STATE_HAS_RUNNING_ACTIVITIES) {
+    DVLOG(1) << "App became active, canceling current offlining request";
+    // No need to check the return value or complete early, as false would
+    // indicate that there was no request, in which case the state change is
+    // ignored.
+    Cancel(
+        base::Bind(HandleApplicationStateChangeCancel, completion_callback_));
+  }
 }
 
 void BackgroundLoaderOffliner::AddLoadingSignal(const char* signal_name) {

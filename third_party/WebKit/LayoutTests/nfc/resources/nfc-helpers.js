@@ -70,7 +70,7 @@ function createUrlRecord(url) {
 function nfc_mocks(mojo) {
   return define('NFC mocks', [
     'mojo/public/js/bindings',
-    'services/device/public/interfaces/nfc.mojom',
+    'device/nfc/nfc.mojom',
   ], (bindings, nfc) => {
 
     function toMojoNFCRecordType(type) {

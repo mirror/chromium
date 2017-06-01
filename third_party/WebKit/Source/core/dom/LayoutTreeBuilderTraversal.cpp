@@ -161,7 +161,7 @@ static Node* PseudoAwareLastChild(const Node& node) {
 Node* LayoutTreeBuilderTraversal::Previous(const Node& node,
                                            const Node* stay_within) {
   if (node == stay_within)
-    return nullptr;
+    return 0;
 
   if (Node* previous_node = PseudoAwarePreviousSibling(node)) {
     while (Node* previous_last_child = PseudoAwareLastChild(*previous_node))
@@ -212,18 +212,18 @@ static Node* NextAncestorSibling(const Node& node, const Node* stay_within) {
        parent_node;
        parent_node = LayoutTreeBuilderTraversal::Parent(*parent_node)) {
     if (parent_node == stay_within)
-      return nullptr;
+      return 0;
     if (Node* next_node = PseudoAwareNextSibling(*parent_node))
       return next_node;
   }
-  return nullptr;
+  return 0;
 }
 
 Node* LayoutTreeBuilderTraversal::NextSkippingChildren(
     const Node& node,
     const Node* stay_within) {
   if (node == stay_within)
-    return nullptr;
+    return 0;
   if (Node* next_node = PseudoAwareNextSibling(node))
     return next_node;
   return NextAncestorSibling(node, stay_within);
@@ -334,7 +334,7 @@ LayoutObject* LayoutTreeBuilderTraversal::PreviousSiblingLayoutObject(
 LayoutObject* LayoutTreeBuilderTraversal::NextInTopLayer(
     const Element& element) {
   if (!element.IsInTopLayer())
-    return nullptr;
+    return 0;
   const HeapVector<Member<Element>>& top_layer_elements =
       element.GetDocument().TopLayerElements();
   size_t position = top_layer_elements.Find(&element);
@@ -343,7 +343,7 @@ LayoutObject* LayoutTreeBuilderTraversal::NextInTopLayer(
     if (LayoutObject* layout_object = top_layer_elements[i]->GetLayoutObject())
       return layout_object;
   }
-  return nullptr;
+  return 0;
 }
 
 }  // namespace blink

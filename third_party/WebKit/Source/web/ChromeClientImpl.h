@@ -108,6 +108,7 @@ class WEB_EXPORT ChromeClientImpl final : public ChromeClient {
                                     const String& message,
                                     const String& default_value,
                                     String& result) override;
+  void SetStatusbarText(const String& message) override;
   bool TabsToLinks() override;
   void InvalidateRect(const IntRect&) override;
   void ScheduleAnimation(const PlatformFrameView*) override;
@@ -120,8 +121,8 @@ class WEB_EXPORT ChromeClientImpl final : public ChromeClient {
   void PageScaleFactorChanged() const override;
   float ClampPageScaleFactorToLimits(float scale) const override;
   void MainFrameScrollOffsetChanged() const override;
-  void ResizeAfterLayout() const override;
-  void LayoutUpdated() const override;
+  void ResizeAfterLayout(LocalFrame*) const override;
+  void LayoutUpdated(LocalFrame*) const override;
   void ShowMouseOverURL(const HitTestResult&) override;
   void SetToolTip(LocalFrame&, const String&, TextDirection) override;
   void DispatchViewportPropertiesDidChange(

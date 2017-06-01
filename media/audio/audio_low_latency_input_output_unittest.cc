@@ -216,7 +216,7 @@ class FullDuplexAudioSinkSource
     return 0;
   }
 
-  void OnError() override {}
+  void OnError(AudioOutputStream* stream) override {}
 
  protected:
   // Converts from bytes to milliseconds taking the sample rate and size

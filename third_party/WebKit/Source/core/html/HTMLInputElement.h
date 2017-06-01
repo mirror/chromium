@@ -30,7 +30,6 @@
 #include "core/html/TextControlElement.h"
 #include "core/html/forms/StepRange.h"
 #include "platform/FileChooser.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 
 namespace blink {
 
@@ -47,18 +46,13 @@ class ListAttributeTargetObserver;
 class RadioButtonGroupScope;
 struct DateTimeChooserParameters;
 
-class CORE_EXPORT HTMLInputElement
-    : public TextControlElement,
-      public ActiveScriptWrappable<HTMLInputElement> {
+class CORE_EXPORT HTMLInputElement : public TextControlElement {
   DEFINE_WRAPPERTYPEINFO();
-  USING_GARBAGE_COLLECTED_MIXIN(HTMLInputElement);
 
  public:
   static HTMLInputElement* Create(Document&, bool created_by_parser);
   ~HTMLInputElement() override;
   DECLARE_VIRTUAL_TRACE();
-
-  bool HasPendingActivity() const final;
 
   DEFINE_ATTRIBUTE_EVENT_LISTENER(webkitspeechchange);
 

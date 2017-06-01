@@ -17,7 +17,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
-#include "base/sequence_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
@@ -69,7 +69,7 @@ namespace syncer {
 // }
 //
 template <typename T>
-class TaskQueue {
+class TaskQueue : base::NonThreadSafe {
  public:
   // A callback provided by users of the TaskQueue to handle tasks.
   //
@@ -93,8 +93,6 @@ class TaskQueue {
   TaskQueue(const HandleTaskCallback& callback,
             const base::TimeDelta& initial_backoff_delay,
             const base::TimeDelta& max_backoff_delay);
-
-  ~TaskQueue();
 
   // Add |task| to the end of the queue.
   //
@@ -159,8 +157,6 @@ class TaskQueue {
   std::unique_ptr<base::Timer> backoff_timer_;
   base::TimeDelta delay_;
 
-  SEQUENCE_CHECKER(sequence_checker_);
-
   // Must be last data member.
   base::WeakPtrFactory<TaskQueue> weak_ptr_factory_;
 
@@ -195,13 +191,8 @@ TaskQueue<T>::TaskQueue(const HandleTaskCallback& callback,
 }
 
 template <typename T>
-TaskQueue<T>::~TaskQueue() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-}
-
-template <typename T>
 void TaskQueue<T>::AddToQueue(const T& task) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   // Ignore duplicates.
   if (tasks_.find(task) == tasks_.end()) {
     queue_.push_back(task);
@@ -212,7 +203,7 @@ void TaskQueue<T>::AddToQueue(const T& task) {
 
 template <typename T>
 void TaskQueue<T>::MarkAsSucceeded(const T& task) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   FinishTask(task);
   // The task succeeded.  Stop any pending timer, reset (clear) the backoff, and
   // reschedule a dispatch.
@@ -223,7 +214,7 @@ void TaskQueue<T>::MarkAsSucceeded(const T& task) {
 
 template <typename T>
 void TaskQueue<T>::MarkAsFailed(const T& task) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   FinishTask(task);
   backoff_entry_->InformOfRequest(false);
   ScheduleDispatch();
@@ -231,7 +222,7 @@ void TaskQueue<T>::MarkAsFailed(const T& task) {
 
 template <typename T>
 void TaskQueue<T>::Cancel(const T& task) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   FinishTask(task);
   ScheduleDispatch();
 }
@@ -245,14 +236,14 @@ void TaskQueue<T>::ResetBackoff() {
 
 template <typename T>
 void TaskQueue<T>::SetTimerForTest(std::unique_ptr<base::Timer> timer) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(timer.get());
   backoff_timer_ = std::move(timer);
 }
 
 template <typename T>
 void TaskQueue<T>::FinishTask(const T& task) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_GE(num_in_progress_, 1);
   --num_in_progress_;
   const size_t num_erased = tasks_.erase(task);
@@ -261,7 +252,7 @@ void TaskQueue<T>::FinishTask(const T& task) {
 
 template <typename T>
 void TaskQueue<T>::ScheduleDispatch() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (backoff_timer_->IsRunning() || !ShouldDispatch()) {
     return;
   }
@@ -272,7 +263,7 @@ void TaskQueue<T>::ScheduleDispatch() {
 
 template <typename T>
 void TaskQueue<T>::Dispatch() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (!ShouldDispatch()) {
     return;
   }

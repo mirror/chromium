@@ -42,9 +42,8 @@
 #include "core/events/WebInputEventConversion.h"
 #include "core/exported/WebFileChooserCompletionImpl.h"
 #include "core/exported/WebPluginContainerBase.h"
-#include "core/exported/WebSettingsImpl.h"
 #include "core/exported/WebViewBase.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/frame/VisualViewport.h"
@@ -52,9 +51,6 @@
 #include "core/html/forms/ColorChooser.h"
 #include "core/html/forms/ColorChooserClient.h"
 #include "core/html/forms/DateTimeChooser.h"
-#include "core/html/forms/DateTimeChooserClient.h"
-#include "core/html/forms/DateTimeChooserImpl.h"
-#include "core/inspector/DevToolsEmulator.h"
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutPart.h"
 #include "core/layout/compositing/CompositedSelection.h"
@@ -118,6 +114,8 @@
 #include "web/AudioOutputDeviceClientImpl.h"
 #include "web/ColorChooserPopupUIController.h"
 #include "web/ColorChooserUIController.h"
+#include "web/DateTimeChooserImpl.h"
+#include "web/DevToolsEmulator.h"
 #include "web/ExternalDateTimeChooser.h"
 #include "web/ExternalPopupMenu.h"
 #include "web/IndexedDBClientImpl.h"
@@ -127,6 +125,7 @@
 #include "web/WebFrameWidgetImpl.h"
 #include "web/WebLocalFrameImpl.h"
 #include "web/WebRemoteFrameImpl.h"
+#include "web/WebSettingsImpl.h"
 
 namespace blink {
 
@@ -140,8 +139,6 @@ const char* DialogTypeToString(ChromeClient::DialogType dialog_type) {
       return "confirm";
     case ChromeClient::kPromptDialog:
       return "prompt";
-    case ChromeClient::kPrintDialog:
-      return "print";
     case ChromeClient::kHTMLDialog:
       NOTREACHED();
   }
@@ -546,6 +543,12 @@ bool ChromeClientImpl::OpenJavaScriptPromptDelegate(LocalFrame* frame,
   }
   return false;
 }
+
+void ChromeClientImpl::SetStatusbarText(const String& message) {
+  if (web_view_->Client())
+    web_view_->Client()->SetStatusText(message);
+}
+
 bool ChromeClientImpl::TabsToLinks() {
   return web_view_->TabsToLinks();
 }
@@ -557,9 +560,9 @@ void ChromeClientImpl::InvalidateRect(const IntRect& update_rect) {
 
 void ChromeClientImpl::ScheduleAnimation(
     const PlatformFrameView* platform_frame_view) {
-  DCHECK(platform_frame_view->IsLocalFrameView());
+  DCHECK(platform_frame_view->IsFrameView());
   LocalFrame& frame =
-      ToLocalFrameView(platform_frame_view)->GetFrame().LocalFrameRoot();
+      ToFrameView(platform_frame_view)->GetFrame().LocalFrameRoot();
   // If the frame is still being created, it might not yet have a WebWidget.
   // FIXME: Is this the right thing to do? Is there a way to avoid having
   // a local frame root that doesn't have a WebWidget? During initialization
@@ -574,8 +577,8 @@ IntRect ChromeClientImpl::ViewportToScreen(
     const PlatformFrameView* platform_frame_view) const {
   WebRect screen_rect(rect_in_viewport);
 
-  DCHECK(platform_frame_view->IsLocalFrameView());
-  const LocalFrameView* view = ToLocalFrameView(platform_frame_view);
+  DCHECK(platform_frame_view->IsFrameView());
+  const FrameView* view = ToFrameView(platform_frame_view);
   LocalFrame& frame = view->GetFrame().LocalFrameRoot();
 
   WebWidgetClient* client =
@@ -628,12 +631,12 @@ float ChromeClientImpl::ClampPageScaleFactorToLimits(float scale) const {
   return web_view_->ClampPageScaleFactorToLimits(scale);
 }
 
-void ChromeClientImpl::ResizeAfterLayout() const {
-  web_view_->ResizeAfterLayout();
+void ChromeClientImpl::ResizeAfterLayout(LocalFrame* frame) const {
+  web_view_->ResizeAfterLayout(WebLocalFrameImpl::FromFrame(frame));
 }
 
-void ChromeClientImpl::LayoutUpdated() const {
-  web_view_->LayoutUpdated();
+void ChromeClientImpl::LayoutUpdated(LocalFrame* frame) const {
+  web_view_->LayoutUpdated(WebLocalFrameImpl::FromFrame(frame));
 }
 
 void ChromeClientImpl::ShowMouseOverURL(const HitTestResult& result) {
@@ -703,10 +706,6 @@ ColorChooser* ChromeClientImpl::OpenColorChooser(
     const Color&) {
   NotifyPopupOpeningObservers();
   ColorChooserUIController* controller = nullptr;
-
-  if (frame->GetDocument()->GetSettings()->GetPagePopupsSuppressed())
-    return nullptr;
-
   if (RuntimeEnabledFeatures::pagePopupEnabled())
     controller =
         ColorChooserPopupUIController::Create(frame, this, chooser_client);
@@ -719,12 +718,6 @@ ColorChooser* ChromeClientImpl::OpenColorChooser(
 DateTimeChooser* ChromeClientImpl::OpenDateTimeChooser(
     DateTimeChooserClient* picker_client,
     const DateTimeChooserParameters& parameters) {
-  if (picker_client->OwnerElement()
-          .GetDocument()
-          .GetSettings()
-          ->GetPagePopupsSuppressed())
-    return nullptr;
-
   NotifyPopupOpeningObservers();
   if (RuntimeEnabledFeatures::inputMultipleFieldsUIEnabled())
     return DateTimeChooserImpl::Create(this, picker_client, parameters);
@@ -925,9 +918,6 @@ bool ChromeClientImpl::HasOpenedPopup() const {
 
 PopupMenu* ChromeClientImpl::OpenPopupMenu(LocalFrame& frame,
                                            HTMLSelectElement& select) {
-  if (frame.GetDocument()->GetSettings()->GetPagePopupsSuppressed())
-    return nullptr;
-
   NotifyPopupOpeningObservers();
   if (WebViewBase::UseExternalPopupMenus())
     return new ExternalPopupMenu(frame, select, *web_view_);

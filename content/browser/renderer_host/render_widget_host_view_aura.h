@@ -35,7 +35,6 @@
 #include "third_party/skia/include/core/SkRegion.h"
 #include "ui/aura/client/cursor_client_observer.h"
 #include "ui/aura/client/focus_change_observer.h"
-#include "ui/aura/client/window_types.h"
 #include "ui/aura/window_delegate.h"
 #include "ui/aura/window_tree_host_observer.h"
 #include "ui/base/ime/text_input_client.h"
@@ -44,9 +43,12 @@
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/selection_bound.h"
 #include "ui/wm/public/activation_delegate.h"
+#include "ui/wm/public/window_types.h"
 
-namespace wm {
+namespace aura {
+namespace client {
 class ScopedTooltipDisabler;
+}
 }
 
 namespace gfx {
@@ -84,7 +86,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
       public display::DisplayObserver,
       public aura::WindowTreeHostObserver,
       public aura::WindowDelegate,
-      public wm::ActivationDelegate,
+      public aura::client::ActivationDelegate,
       public aura::client::FocusChangeObserver,
       public aura::client::CursorClientObserver {
  public:
@@ -259,7 +261,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   void OnTouchEvent(ui::TouchEvent* event) override;
   void OnGestureEvent(ui::GestureEvent* event) override;
 
-  // Overridden from wm::ActivationDelegate:
+  // Overridden from aura::client::ActivationDelegate:
   bool ShouldActivate() const override;
 
   // Overridden from aura::client::CursorClientObserver:
@@ -324,9 +326,6 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
     return event_handler_.get();
   }
 
-  TouchSelectionControllerClientManager*
-  touch_selection_controller_client_manager() override;
-
  protected:
   ~RenderWidgetHostViewAura() override;
 
@@ -387,7 +386,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   class WindowAncestorObserver;
   friend class WindowAncestorObserver;
 
-  void CreateAuraWindow(aura::client::WindowType type);
+  void CreateAuraWindow(ui::wm::WindowType type);
 
   void CreateDelegatedFrameHostClient();
 
@@ -442,7 +441,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   void OnTextSelectionChanged(TextInputManager* text_input_mangager,
                               RenderWidgetHostViewBase* updated_view) override;
 
-  void OnBeginFrame();
+  void OnBeginFrame(const cc::BeginFrameArgs& args);
 
   // Detaches |this| from the input method object.
   void DetachFromInputMethod();
@@ -576,15 +575,11 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   // The last scroll offset of the view.
   gfx::Vector2dF last_scroll_offset_;
 
-  // The last selection bounds reported to the view.
-  gfx::SelectionBound selection_start_;
-  gfx::SelectionBound selection_end_;
-
   gfx::Insets insets_;
 
   std::vector<ui::LatencyInfo> software_latency_info_;
 
-  std::unique_ptr<wm::ScopedTooltipDisabler> tooltip_disabler_;
+  std::unique_ptr<aura::client::ScopedTooltipDisabler> tooltip_disabler_;
 
   // True when this view acts as a platform view hack for a
   // RenderWidgetHostViewGuest.

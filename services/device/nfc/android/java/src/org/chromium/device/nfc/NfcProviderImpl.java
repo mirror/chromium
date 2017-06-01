@@ -4,8 +4,10 @@
 
 package org.chromium.device.nfc;
 
-import org.chromium.device.mojom.Nfc;
-import org.chromium.device.mojom.NfcProvider;
+import android.content.Context;
+
+import org.chromium.device.nfc.mojom.Nfc;
+import org.chromium.device.nfc.mojom.NfcProvider;
 import org.chromium.mojo.bindings.InterfaceRequest;
 import org.chromium.mojo.system.MojoException;
 import org.chromium.services.service_manager.InterfaceFactory;
@@ -15,9 +17,11 @@ import org.chromium.services.service_manager.InterfaceFactory;
  */
 public class NfcProviderImpl implements NfcProvider {
     private static final String TAG = "NfcProviderImpl";
+    private Context mContext;
     private NfcDelegate mDelegate;
 
-    public NfcProviderImpl(NfcDelegate delegate) {
+    public NfcProviderImpl(Context context, NfcDelegate delegate) {
+        mContext = context;
         mDelegate = delegate;
     }
 
@@ -29,22 +33,24 @@ public class NfcProviderImpl implements NfcProvider {
 
     @Override
     public void getNfcForHost(int hostId, InterfaceRequest<Nfc> request) {
-        Nfc.MANAGER.bind(new NfcImpl(hostId, mDelegate), request);
+        Nfc.MANAGER.bind(new NfcImpl(mContext, hostId, mDelegate), request);
     }
 
     /**
      * A factory for implementations of the NfcProvider interface.
      */
     public static class Factory implements InterfaceFactory<NfcProvider> {
+        private Context mContext;
         private NfcDelegate mDelegate;
 
-        public Factory(NfcDelegate delegate) {
+        public Factory(Context context, NfcDelegate delegate) {
+            mContext = context;
             mDelegate = delegate;
         }
 
         @Override
         public NfcProvider createImpl() {
-            return new NfcProviderImpl(mDelegate);
+            return new NfcProviderImpl(mContext, mDelegate);
         }
     }
 }

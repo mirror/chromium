@@ -15,7 +15,6 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/WebKeyboardEvent.h"
 #include "third_party/WebKit/public/platform/WebMouseWheelEvent.h"
-#include "ui/base/ui_base_types.h"
 #include "ui/events/blink/web_input_event_traits.h"
 
 using blink::WebGestureEvent;
@@ -88,8 +87,7 @@ class TouchEmulatorTest : public testing::Test,
     cursor_ = cursor;
   }
 
-  void ShowContextMenuAtPoint(const gfx::Point& point,
-                              const ui::MenuSourceType source_type) override {}
+  void ShowContextMenuAtPoint(const gfx::Point& point) override {}
 
  protected:
   TouchEmulator* emulator() const {

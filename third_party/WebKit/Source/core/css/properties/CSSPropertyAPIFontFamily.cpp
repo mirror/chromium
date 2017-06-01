@@ -9,13 +9,12 @@
 
 class CSSParserContext;
 
-class CSSParserLocalContext;
 namespace blink {
 
 const CSSValue* CSSPropertyAPIFontFamily::parseSingleValue(
     CSSParserTokenRange& range,
     const CSSParserContext&,
-    const CSSParserLocalContext&) {
+    CSSPropertyID) {
   return CSSPropertyFontUtils::ConsumeFontFamily(range);
 }
 

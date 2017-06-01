@@ -47,8 +47,8 @@
 #include "core/editing/state_machines/BackspaceStateMachine.h"
 #include "core/editing/state_machines/BackwardGraphemeBoundaryStateMachine.h"
 #include "core/editing/state_machines/ForwardGraphemeBoundaryStateMachine.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLBRElement.h"
 #include "core/html/HTMLDivElement.h"
@@ -992,7 +992,7 @@ EUserSelect UsedValueOfUserSelect(const Node& node) {
 }
 
 template <typename Strategy>
-TextDirection DirectionOfEnclosingBlockOfAlgorithm(
+TextDirection DirectionOfEnclosingBlockAlgorithm(
     const PositionTemplate<Strategy>& position) {
   Element* enclosing_block_element =
       EnclosingBlock(PositionTemplate<Strategy>::FirstPositionInOrBeforeNode(
@@ -1005,12 +1005,12 @@ TextDirection DirectionOfEnclosingBlockOfAlgorithm(
                        : TextDirection::kLtr;
 }
 
-TextDirection DirectionOfEnclosingBlockOf(const Position& position) {
-  return DirectionOfEnclosingBlockOfAlgorithm<EditingStrategy>(position);
+TextDirection DirectionOfEnclosingBlock(const Position& position) {
+  return DirectionOfEnclosingBlockAlgorithm<EditingStrategy>(position);
 }
 
-TextDirection DirectionOfEnclosingBlockOf(const PositionInFlatTree& position) {
-  return DirectionOfEnclosingBlockOfAlgorithm<EditingInFlatTreeStrategy>(
+TextDirection DirectionOfEnclosingBlock(const PositionInFlatTree& position) {
+  return DirectionOfEnclosingBlockAlgorithm<EditingInFlatTreeStrategy>(
       position);
 }
 

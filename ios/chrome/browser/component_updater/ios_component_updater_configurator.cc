@@ -7,7 +7,8 @@
 #include <string>
 #include <vector>
 
-#include "base/task_scheduler/post_task.h"
+#include "base/sequenced_task_runner.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/version.h"
 #include "components/component_updater/configurator_impl.h"
 #include "components/update_client/out_of_process_patcher.h"
@@ -15,6 +16,7 @@
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/google/google_brand.h"
 #include "ios/chrome/common/channel_info.h"
+#include "ios/web/public/web_thread.h"
 
 namespace component_updater {
 
@@ -154,9 +156,10 @@ bool IOSConfigurator::EnabledCupSigning() const {
 
 scoped_refptr<base::SequencedTaskRunner>
 IOSConfigurator::GetSequencedTaskRunner() const {
-  return base::CreateSequencedTaskRunnerWithTraits(
-      {base::MayBlock(), base::TaskPriority::BACKGROUND,
-       base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
+  return web::WebThread::GetBlockingPool()
+      ->GetSequencedTaskRunnerWithShutdownBehavior(
+          web::WebThread::GetBlockingPool()->GetSequenceToken(),
+          base::SequencedWorkerPool::SKIP_ON_SHUTDOWN);
 }
 
 PrefService* IOSConfigurator::GetPrefService() const {

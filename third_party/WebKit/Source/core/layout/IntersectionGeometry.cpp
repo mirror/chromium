@@ -4,8 +4,8 @@
 
 #include "core/layout/IntersectionGeometry.h"
 
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutView.h"
@@ -104,12 +104,8 @@ void IntersectionGeometry::InitializeGeometry() {
 }
 
 void IntersectionGeometry::InitializeTargetRect() {
-  if (target_->IsBoxModelObject()) {
-    target_rect_ =
-        LayoutRect(ToLayoutBoxModelObject(target_)->BorderBoundingBox());
-  } else {
-    target_rect_ = ToLayoutText(target_)->LinesBoundingBox();
-  }
+  target_rect_ =
+      LayoutRect(ToLayoutBoxModelObject(Target())->BorderBoundingBox());
 }
 
 void IntersectionGeometry::InitializeRootRect() {

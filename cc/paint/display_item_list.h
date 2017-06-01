@@ -125,8 +125,10 @@ class CC_PAINT_EXPORT DisplayItemList
   // applicable, create an internally cached SkPicture.
   void Finalize();
 
-  void SetNumSlowPaths(int num_slow_paths) { num_slow_paths_ = num_slow_paths; }
-  int NumSlowPaths() const { return num_slow_paths_; }
+  void SetIsSuitableForGpuRasterization(bool is_suitable) {
+    all_items_are_suitable_for_gpu_rasterization_ = is_suitable;
+  }
+  bool IsSuitableForGpuRasterization() const;
 
   size_t OpCount() const;
   size_t ApproximateMemoryUsage() const;
@@ -198,7 +200,7 @@ class CC_PAINT_EXPORT DisplayItemList
   std::vector<size_t> begin_item_indices_;
 
   size_t op_count_ = 0u;
-  int num_slow_paths_ = 0;
+  bool all_items_are_suitable_for_gpu_rasterization_ = true;
   // For testing purposes only. Whether to keep visual rects across calls to
   // Finalize().
   bool retain_visual_rects_ = false;

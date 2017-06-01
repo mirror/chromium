@@ -306,10 +306,7 @@ cr.define('print_preview', function() {
       });
       // Update the existing items, add the new ones (preserve the focused one).
       var listEl = this.getChildElement('.destination-list > ul');
-      // We need to use activeElement instead of :focus selector, which doesn't
-      // work in an inactive page. See crbug.com/723579.
-      var focusedEl = listEl.contains(document.activeElement) ?
-          document.activeElement : null;
+      var focusedEl = listEl.querySelector(':focus');
       for (var i = 0; i < numItems; i++) {
         var destination = assert(destinations[i]);
         var listItem = visibleListItems[destination.id];
@@ -335,8 +332,7 @@ cr.define('print_preview', function() {
 
       var itemEl = listItem.getElement();
       // Preserve focused inner element, if there's one.
-      var focusedInnerEl = focusedEl && itemEl.contains(focusedEl) ?
-          focusedEl : null;
+      var focusedInnerEl = focusedEl ? itemEl.querySelector(':focus') : null;
       if (focusedEl)
         itemEl.classList.add('moving');
       // Move it to the end of the list.

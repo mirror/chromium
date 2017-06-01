@@ -37,6 +37,7 @@
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/gpu/gpu_data_manager_impl.h"
 #include "content/browser/gpu/gpu_process_host.h"
+#include "content/browser/host_zoom_map_impl.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/renderer_host/input/timeout_monitor.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
@@ -98,10 +99,6 @@
 #include "ui/display/win/screen_win.h"
 #include "ui/gfx/geometry/dip_util.h"
 #include "ui/gfx/platform_font_win.h"
-#endif
-
-#if !defined(OS_ANDROID)
-#include "content/browser/host_zoom_map_impl.h"
 #endif
 
 using base::TimeDelta;
@@ -528,6 +525,10 @@ WebPreferences RenderViewHostImpl::ComputeWebkitPrefs() {
   prefs.color_correct_rendering_enabled =
       command_line.HasSwitch(switches::kEnableColorCorrectRendering);
 
+  prefs.color_correct_rendering_default_mode_enabled =
+      command_line.HasSwitch(
+          switches::kEnableColorCorrectRenderingDefaultMode);
+
   prefs.spatial_navigation_enabled = command_line.HasSwitch(
       switches::kEnableSpatialNavigation);
 
@@ -838,13 +839,11 @@ void RenderViewHostImpl::OnDocumentAvailableInMainFrame(
   if (!uses_temporary_zoom_level)
     return;
 
-#if !defined(OS_ANDROID)
   HostZoomMapImpl* host_zoom_map =
       static_cast<HostZoomMapImpl*>(HostZoomMap::Get(GetSiteInstance()));
   host_zoom_map->SetTemporaryZoomLevel(GetProcess()->GetID(),
                                        GetRoutingID(),
                                        host_zoom_map->GetDefaultZoomLevel());
-#endif  // !defined(OS_ANDROID)
 }
 
 void RenderViewHostImpl::OnDidContentsPreferredSizeChange(

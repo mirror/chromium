@@ -34,8 +34,7 @@ static CSSBasicShapeCircleValue* ConsumeBasicShapeCircle(
   if (ConsumeIdent<CSSValueAt>(args)) {
     CSSValue* center_x = nullptr;
     CSSValue* center_y = nullptr;
-    if (!ConsumePosition(args, context, UnitlessQuirk::kForbid,
-                         UseCounter::kThreeValuedPositionBasicShape, center_x,
+    if (!ConsumePosition(args, context.Mode(), UnitlessQuirk::kForbid, center_x,
                          center_y))
       return nullptr;
     shape->SetCenterX(center_x);
@@ -58,8 +57,7 @@ static CSSBasicShapeEllipseValue* ConsumeBasicShapeEllipse(
   if (ConsumeIdent<CSSValueAt>(args)) {
     CSSValue* center_x = nullptr;
     CSSValue* center_y = nullptr;
-    if (!ConsumePosition(args, context, UnitlessQuirk::kForbid,
-                         UseCounter::kThreeValuedPositionBasicShape, center_x,
+    if (!ConsumePosition(args, context.Mode(), UnitlessQuirk::kForbid, center_x,
                          center_y))
       return nullptr;
     shape->SetCenterX(center_x);

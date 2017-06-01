@@ -18,6 +18,7 @@ public interface ContextualSearchRankerLogger {
         OUTCOME_WAS_QUICK_ANSWER_SEEN,
         // Features:
         DURATION_AFTER_SCROLL_MS,
+        DURATION_BEFORE_SCROLL_MS,
         SCREEN_TOP_DPS,
         WAS_SCREEN_BOTTOM,
         // User usage features:
@@ -29,7 +30,7 @@ public interface ContextualSearchRankerLogger {
 
     /**
      * Sets up logging for the page with the given URL.
-     * This method must be called before calling {@link #logFeature} or {@link #logOutcome}.
+     * This method must be called before calling {@link #log} or {@link #logOutcome}.
      * @param basePageUrl The URL of the base page to log with Ranker.
      */
     void setupLoggingForPage(URL basePageUrl);
@@ -39,7 +40,7 @@ public interface ContextualSearchRankerLogger {
      * @param feature The feature to log.
      * @param value The value to log, which is associated with the given key.
      */
-    void logFeature(Feature feature, Object value);
+    void log(Feature feature, Object value);
 
     /**
      * Logs an outcome value at training time that indicates an ML label as a key/value pair.
@@ -49,30 +50,10 @@ public interface ContextualSearchRankerLogger {
     void logOutcome(Feature feature, Object value);
 
     /**
-     * Infers whether the UI should be suppressed or not, based on the features already logged.
-     * @return {@code true} if the UI should not be shown.
-     */
-    boolean inferUiSuppression();
-
-    /**
-     * Reports whether the UI <b><i>would have been</i></b> suppressed if the ML model was active.
-     * TODO(donnd): remove once the Ranker model has been evaluated and launched -- this is only
-     * needed for evaluation.
-     * @return Whether the UI <b><i>would have been</i></b> suppressed.
-     */
-    boolean wasUiSuppressionInfered();
-
-    /**
-     * Resets the logger so that future log calls accumulate into a new record.
-     * Any accumulated logging for the current record is discarded.
-     */
-    void reset();
-
-    /**
      * Writes all the accumulated log entries and resets the logger so that future log calls
      * accumulate into a new record.
      * After calling this method another call to {@link #setupLoggingForPage} is required before
-     * additional {@link #logFeature} or {@link #logOutcome} calls.
+     * additional {@link #log} or {@link #logOutcome} calls.
      */
     void writeLogAndReset();
 }

@@ -13,12 +13,12 @@ WeakXmppClient::WeakXmppClient(rtc::TaskParent* parent)
       weak_ptr_factory_(this) {}
 
 WeakXmppClient::~WeakXmppClient() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   Invalidate();
 }
 
 void WeakXmppClient::Invalidate() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   // We don't want XmppClient raising any signals once its invalidated.
   SignalStateChange.disconnect_all();
   SignalLogInput.disconnect_all();
@@ -27,12 +27,12 @@ void WeakXmppClient::Invalidate() {
 }
 
 base::WeakPtr<WeakXmppClient> WeakXmppClient::AsWeakPtr() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   return weak_ptr_factory_.GetWeakPtr();
 }
 
 void WeakXmppClient::Stop() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   // We don't want XmppClient used after it has been stopped.
   Invalidate();
   buzz::XmppClient::Stop();

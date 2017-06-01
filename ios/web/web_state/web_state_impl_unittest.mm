@@ -350,9 +350,7 @@ TEST_F(WebStateImplTest, ObserverTest) {
   ASSERT_FALSE(observer->did_finish_navigation_info());
   const GURL url("http://test");
   std::unique_ptr<web::NavigationContext> context =
-      NavigationContextImpl::CreateNavigationContext(
-          web_state_.get(), url,
-          ui::PageTransition::PAGE_TRANSITION_AUTO_BOOKMARK);
+      NavigationContextImpl::CreateNavigationContext(web_state_.get(), url);
   web_state_->OnNavigationFinished(context.get());
   ASSERT_TRUE(observer->did_finish_navigation_info());
   EXPECT_EQ(web_state_.get(),
@@ -360,10 +358,7 @@ TEST_F(WebStateImplTest, ObserverTest) {
   NavigationContext* actual_context =
       observer->did_finish_navigation_info()->context.get();
   EXPECT_EQ(context->GetUrl(), actual_context->GetUrl());
-  EXPECT_TRUE(PageTransitionTypeIncludingQualifiersIs(
-      context->GetPageTransition(), actual_context->GetPageTransition()));
   EXPECT_FALSE(actual_context->IsSameDocument());
-  EXPECT_FALSE(actual_context->IsPost());
   EXPECT_FALSE(actual_context->GetError());
   EXPECT_FALSE(actual_context->GetResponseHeaders());
 
@@ -374,10 +369,7 @@ TEST_F(WebStateImplTest, ObserverTest) {
   EXPECT_EQ(web_state_.get(), observer->did_start_navigation_info()->web_state);
   actual_context = observer->did_start_navigation_info()->context.get();
   EXPECT_EQ(context->GetUrl(), actual_context->GetUrl());
-  EXPECT_TRUE(PageTransitionTypeIncludingQualifiersIs(
-      context->GetPageTransition(), actual_context->GetPageTransition()));
   EXPECT_FALSE(actual_context->IsSameDocument());
-  EXPECT_FALSE(actual_context->IsPost());
   EXPECT_FALSE(actual_context->GetError());
   EXPECT_FALSE(actual_context->GetResponseHeaders());
 

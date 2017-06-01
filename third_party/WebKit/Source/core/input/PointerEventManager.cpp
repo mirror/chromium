@@ -4,11 +4,11 @@
 
 #include "core/input/PointerEventManager.h"
 
+#include "core/dom/DocumentUserGestureToken.h"
 #include "core/dom/ElementTraversal.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/dom/shadow/FlatTreeTraversal.h"
 #include "core/events/MouseEvent.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLCanvasElement.h"
 #include "core/input/EventHandler.h"
@@ -311,8 +311,8 @@ WebInputEventResult PointerEventManager::HandleTouchEvents(
   if (event.GetType() == WebInputEvent::kTouchEnd &&
       !in_canceled_state_for_pointer_type_touch_ && !touch_infos.IsEmpty() &&
       touch_infos[0].target_frame) {
-    possible_gesture_token =
-        UserGestureToken::Create(touch_infos[0].target_frame->GetDocument());
+    possible_gesture_token = DocumentUserGestureToken::Create(
+        touch_infos[0].target_frame->GetDocument());
   }
   UserGestureIndicator holder(possible_gesture_token);
 
@@ -549,8 +549,6 @@ bool PointerEventManager::GetPointerCaptureState(
   return pointer_capture_target_temp != pending_pointercapture_target_temp;
 }
 
-// TODO(lanwei): Replace the last two parameters by a single WebMouseEvent
-// pointer which defaults to null, crbug.com/727333.
 EventTarget* PointerEventManager::ProcessCaptureAndPositionOfPointerEvent(
     PointerEvent* pointer_event,
     EventTarget* hit_test_target,
@@ -610,14 +608,6 @@ void PointerEventManager::ProcessPendingPointerCapture(
   }
 }
 
-void PointerEventManager::ProcessPendingPointerCaptureForPointerLock(
-    const WebMouseEvent& mouse_event) {
-  PointerEvent* pointer_event = pointer_event_factory_.Create(
-      EventTypeNames::mousemove, mouse_event, Vector<WebMouseEvent>(),
-      frame_->GetDocument()->domWindow());
-  ProcessPendingPointerCapture(pointer_event);
-}
-
 void PointerEventManager::RemoveTargetFromPointerCapturingMapping(
     PointerCapturingMap& map,
     const EventTarget* target) {
@@ -675,10 +665,6 @@ void PointerEventManager::ReleasePointerCapture(int pointer_id,
   // capturing of a particular |pointerId|. See crbug.com/614481.
   if (pending_pointer_capture_target_.at(pointer_id) == target)
     ReleasePointerCapture(pointer_id);
-}
-
-void PointerEventManager::ReleaseMousePointerCapture() {
-  ReleasePointerCapture(PointerEventFactory::kMouseId);
 }
 
 bool PointerEventManager::HasPointerCapture(int pointer_id,

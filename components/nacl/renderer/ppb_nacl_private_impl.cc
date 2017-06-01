@@ -329,7 +329,9 @@ blink::WebAssociatedURLLoader* CreateAssociatedURLLoader(
   if (document.GetSecurityOrigin().CanRequest(gurl)) {
     options.allow_credentials = true;
   } else {
-    options.fetch_request_mode = blink::WebURLRequest::kFetchRequestModeCORS;
+    // Allow CORS.
+    options.cross_origin_request_policy = blink::WebAssociatedURLLoaderOptions::
+        kCrossOriginRequestPolicyUseAccessControl;
   }
   return document.GetFrame()->CreateAssociatedURLLoader(options);
 }

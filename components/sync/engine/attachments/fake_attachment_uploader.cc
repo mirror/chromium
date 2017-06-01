@@ -14,16 +14,16 @@
 namespace syncer {
 
 FakeAttachmentUploader::FakeAttachmentUploader() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 }
 
 FakeAttachmentUploader::~FakeAttachmentUploader() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 }
 
 void FakeAttachmentUploader::UploadAttachment(const Attachment& attachment,
                                               const UploadCallback& callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(!attachment.GetId().GetProto().unique_id().empty());
 
   UploadResult result = UPLOAD_SUCCESS;

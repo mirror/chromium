@@ -41,24 +41,23 @@ import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowLooper;
 
 import org.chromium.base.Callback;
-import org.chromium.base.ContextUtils;
 import org.chromium.base.test.util.Feature;
-import org.chromium.device.mojom.Nfc.CancelAllWatchesResponse;
-import org.chromium.device.mojom.Nfc.CancelPushResponse;
-import org.chromium.device.mojom.Nfc.CancelWatchResponse;
-import org.chromium.device.mojom.Nfc.PushResponse;
-import org.chromium.device.mojom.Nfc.WatchResponse;
-import org.chromium.device.mojom.NfcClient;
-import org.chromium.device.mojom.NfcError;
-import org.chromium.device.mojom.NfcErrorType;
-import org.chromium.device.mojom.NfcMessage;
-import org.chromium.device.mojom.NfcPushOptions;
-import org.chromium.device.mojom.NfcPushTarget;
-import org.chromium.device.mojom.NfcRecord;
-import org.chromium.device.mojom.NfcRecordType;
-import org.chromium.device.mojom.NfcRecordTypeFilter;
-import org.chromium.device.mojom.NfcWatchMode;
-import org.chromium.device.mojom.NfcWatchOptions;
+import org.chromium.device.nfc.mojom.Nfc.CancelAllWatchesResponse;
+import org.chromium.device.nfc.mojom.Nfc.CancelPushResponse;
+import org.chromium.device.nfc.mojom.Nfc.CancelWatchResponse;
+import org.chromium.device.nfc.mojom.Nfc.PushResponse;
+import org.chromium.device.nfc.mojom.Nfc.WatchResponse;
+import org.chromium.device.nfc.mojom.NfcClient;
+import org.chromium.device.nfc.mojom.NfcError;
+import org.chromium.device.nfc.mojom.NfcErrorType;
+import org.chromium.device.nfc.mojom.NfcMessage;
+import org.chromium.device.nfc.mojom.NfcPushOptions;
+import org.chromium.device.nfc.mojom.NfcPushTarget;
+import org.chromium.device.nfc.mojom.NfcRecord;
+import org.chromium.device.nfc.mojom.NfcRecordType;
+import org.chromium.device.nfc.mojom.NfcRecordTypeFilter;
+import org.chromium.device.nfc.mojom.NfcWatchMode;
+import org.chromium.device.nfc.mojom.NfcWatchOptions;
 import org.chromium.testing.local.LocalRobolectricTestRunner;
 
 import java.io.IOException;
@@ -107,7 +106,7 @@ public class NFCTest {
      */
     private static class TestNfcImpl extends NfcImpl {
         public TestNfcImpl(Context context, NfcDelegate delegate) {
-            super(0, delegate);
+            super(context, 0, delegate);
         }
 
         public void processPendingOperationsForTesting(NfcTagHandler handler) {
@@ -158,7 +157,6 @@ public class NFCTest {
             doNothing().when(mNfcTagHandler).close();
         } catch (IOException | FormatException e) {
         }
-        ContextUtils.initApplicationContextForTests(mContext);
     }
 
     /**

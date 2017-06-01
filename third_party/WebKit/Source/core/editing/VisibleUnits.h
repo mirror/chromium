@@ -183,6 +183,10 @@ CORE_EXPORT VisiblePositionInFlatTree
 EndOfWord(const VisiblePositionInFlatTree&, EWordSide = kRightWordIfOnBoundary);
 VisiblePosition PreviousWordPosition(const VisiblePosition&);
 VisiblePosition NextWordPosition(const VisiblePosition&);
+VisiblePosition RightWordPosition(const VisiblePosition&,
+                                  bool skips_space_when_moving_right);
+VisiblePosition LeftWordPosition(const VisiblePosition&,
+                                 bool skips_space_when_moving_right);
 
 // sentences
 CORE_EXPORT VisiblePosition StartOfSentence(const VisiblePosition&);
@@ -240,6 +244,8 @@ CORE_EXPORT VisiblePositionInFlatTree
 LogicalEndOfLine(const VisiblePositionInFlatTree&);
 CORE_EXPORT bool IsLogicalEndOfLine(const VisiblePosition&);
 CORE_EXPORT bool IsLogicalEndOfLine(const VisiblePositionInFlatTree&);
+VisiblePosition LeftBoundaryOfLine(const VisiblePosition&, TextDirection);
+VisiblePosition RightBoundaryOfLine(const VisiblePosition&, TextDirection);
 
 // paragraphs (perhaps a misnomer, can be divided by line break elements)
 // TODO(yosin) Since return value of |startOfParagraph()| with |VisiblePosition|
@@ -338,19 +344,7 @@ CORE_EXPORT PositionInFlatTree SkipWhitespace(const PositionInFlatTree&);
 
 CORE_EXPORT IntRect ComputeTextRect(const EphemeralRange&);
 IntRect ComputeTextRect(const EphemeralRangeInFlatTree&);
-FloatRect ComputeTextFloatRect(const EphemeralRange&);
-
-// Export below functions only for |SelectionModifier|.
-VisiblePosition HonorEditingBoundaryAtOrBefore(const VisiblePosition&,
-                                               const Position&);
-
-Position NextRootInlineBoxCandidatePosition(Node*,
-                                            const VisiblePosition&,
-                                            EditableType);
-
-Position PreviousRootInlineBoxCandidatePosition(Node*,
-                                                const VisiblePosition&,
-                                                EditableType);
+CORE_EXPORT Vector<FloatQuad> ComputeTextQuads(const EphemeralRange&);
 
 }  // namespace blink
 

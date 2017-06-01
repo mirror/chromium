@@ -76,18 +76,9 @@ public class BottomSheetContentController extends BottomNavigationView
     private final BottomSheetObserver mBottomSheetObserver = new EmptyBottomSheetObserver() {
         @Override
         public void onSheetOffsetChanged(float heightFraction) {
-            // If the omnibox is not focused, allow the navigation bar to set its Y translation.
-            if (!mOmniboxHasFocus) {
-                float offsetY =
-                        (mBottomSheet.getMinOffset() - mBottomSheet.getSheetOffsetFromBottom())
-                        + mDistanceBelowToolbarPx;
-                setTranslationY(Math.max(offsetY, 0f));
-
-                if (mBottomSheet.getTargetSheetState() != BottomSheet.SHEET_STATE_PEEK
-                        && mSelectedItemId == PLACEHOLDER_ID) {
-                    showBottomSheetContent(R.id.action_home);
-                }
-            }
+            float offsetY = (mBottomSheet.getMinOffset() - mBottomSheet.getSheetOffsetFromBottom())
+                    + mDistanceBelowToolbarPx;
+            setTranslationY((int) Math.max(offsetY, 0f));
             setVisibility(MathUtils.areFloatsEqual(heightFraction, 0f) ? View.GONE : View.VISIBLE);
 
             mSnackbarManager.dismissAllSnackbars();
@@ -124,19 +115,12 @@ public class BottomSheetContentController extends BottomNavigationView
 
         @Override
         public void onSheetContentChanged(BottomSheetContent newContent) {
-            if (mBottomSheet.isSheetOpen()) announceBottomSheetContentSelected();
-
             if (!mShouldOpenSheetOnNextContentChange) return;
 
             mShouldOpenSheetOnNextContentChange = false;
             if (!mBottomSheet.isSheetOpen()) {
                 mBottomSheet.setSheetState(BottomSheet.SHEET_STATE_FULL, true);
             }
-        }
-
-        @Override
-        public void onSheetLayout(int windowHeight, int containerHeight) {
-            setTranslationY(containerHeight - windowHeight);
         }
     };
 
@@ -148,13 +132,9 @@ public class BottomSheetContentController extends BottomNavigationView
     private boolean mDefaultContentInitialized;
     private ChromeActivity mActivity;
     private boolean mShouldOpenSheetOnNextContentChange;
-    private PlaceholderSheetContent mPlaceholderContent;
-    private boolean mOmniboxHasFocus;
 
     public BottomSheetContentController(Context context, AttributeSet atts) {
         super(context, atts);
-
-        mPlaceholderContent = new PlaceholderSheetContent(context);
     }
 
     /**
@@ -175,7 +155,6 @@ public class BottomSheetContentController extends BottomNavigationView
             public void onTabModelSelected(TabModel newModel, TabModel oldModel) {
                 updateVisuals(newModel.isIncognito());
                 showBottomSheetContent(R.id.action_home);
-                mPlaceholderContent.setIsIncognito(newModel.isIncognito());
 
                 // Release incognito bottom sheet content so that it can be garbage collected.
                 if (!newModel.isIncognito()
@@ -233,23 +212,23 @@ public class BottomSheetContentController extends BottomNavigationView
      * @param hasFocus Whether or not the omnibox has focus.
      */
     public void onOmniboxFocusChange(boolean hasFocus) {
-        mOmniboxHasFocus = hasFocus;
+        BottomSheetContent placeHolder = getSheetContentForId(PLACEHOLDER_ID);
 
         // If the omnibox is being focused, show the placeholder.
         if (hasFocus && mBottomSheet.getSheetState() != BottomSheet.SHEET_STATE_HALF
                 && mBottomSheet.getSheetState() != BottomSheet.SHEET_STATE_FULL) {
-            mBottomSheet.showContent(mPlaceholderContent);
+            mBottomSheet.showContent(placeHolder);
             mBottomSheet.endTransitionAnimations();
-            if (mSelectedItemId > 0) getMenu().findItem(mSelectedItemId).setChecked(false);
-            mSelectedItemId = PLACEHOLDER_ID;
+        }
+
+        if (!hasFocus && mBottomSheet.getCurrentSheetContent() == placeHolder) {
+            showBottomSheetContent(R.id.action_home);
         }
     }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         if (mSelectedItemId == item.getItemId()) return false;
-
-        mBottomSheet.defocusOmnibox();
 
         mSnackbarManager.dismissAllSnackbars();
         showBottomSheetContent(item.getItemId());
@@ -297,6 +276,8 @@ public class BottomSheetContentController extends BottomNavigationView
             content = new HistorySheetContent(mActivity, mSnackbarManager);
         } else if (navItemId == INCOGNITO_HOME_ID) {
             content = new IncognitoBottomSheetContent(mActivity);
+        } else if (navItemId == PLACEHOLDER_ID) {
+            content = new PlaceholderSheetContent(getContext());
         }
 
         mBottomSheetContents.put(navItemId, content);
@@ -307,24 +288,11 @@ public class BottomSheetContentController extends BottomNavigationView
         // There are some bugs related to programatically selecting menu items that are fixed in
         // newer support library versions.
         // TODO(twellington): remove this after the support library is rolled.
-        if (mSelectedItemId > 0) getMenu().findItem(mSelectedItemId).setChecked(false);
+        if (mSelectedItemId != 0) getMenu().findItem(mSelectedItemId).setChecked(false);
         mSelectedItemId = navItemId;
         getMenu().findItem(mSelectedItemId).setChecked(true);
 
-        BottomSheetContent newContent = getSheetContentForId(mSelectedItemId);
-        mBottomSheet.showContent(newContent);
-    }
-
-    private void announceBottomSheetContentSelected() {
-        if (mSelectedItemId == R.id.action_home) {
-            announceForAccessibility(getResources().getString(R.string.bottom_sheet_home_tab));
-        } else if (mSelectedItemId == R.id.action_downloads) {
-            announceForAccessibility(getResources().getString(R.string.bottom_sheet_downloads_tab));
-        } else if (mSelectedItemId == R.id.action_bookmarks) {
-            announceForAccessibility(getResources().getString(R.string.bottom_sheet_bookmarks_tab));
-        } else if (mSelectedItemId == R.id.action_history) {
-            announceForAccessibility(getResources().getString(R.string.bottom_sheet_history_tab));
-        }
+        mBottomSheet.showContent(getSheetContentForId(mSelectedItemId));
     }
 
     private void updateVisuals(boolean isIncognitoTabModelSelected) {

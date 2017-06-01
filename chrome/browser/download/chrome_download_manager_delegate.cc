@@ -5,7 +5,6 @@
 #include "chrome/browser/download/chrome_download_manager_delegate.h"
 
 #include <string>
-#include <utility>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -18,6 +17,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_runner.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
@@ -42,7 +42,6 @@
 #include "chrome/browser/ui/scoped_tabbed_browser_displayer.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/features.h"
-#include "chrome/common/pdf_uma.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/safe_browsing/file_type_policies.h"
 #include "chrome/grit/generated_resources.h"
@@ -213,11 +212,8 @@ ChromeDownloadManagerDelegate::ChromeDownloadManagerDelegate(Profile* profile)
     : profile_(profile),
       next_download_id_(content::DownloadItem::kInvalidId),
       download_prefs_(new DownloadPrefs(profile)),
-      check_for_file_existence_task_runner_(
-          base::CreateSequencedTaskRunnerWithTraits(
-              {base::MayBlock(), base::TaskPriority::BACKGROUND,
-               base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN})),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+}
 
 ChromeDownloadManagerDelegate::~ChromeDownloadManagerDelegate() {
   // If a DownloadManager was set for this, Shutdown() must be called.
@@ -287,11 +283,6 @@ void ChromeDownloadManagerDelegate::ReturnNextId(
 bool ChromeDownloadManagerDelegate::DetermineDownloadTarget(
     DownloadItem* download,
     const content::DownloadTargetCallback& callback) {
-  if (download->GetTargetFilePath().empty() &&
-      download->GetMimeType() == kPDFMimeType && !download->HasUserGesture()) {
-    ReportPDFLoadStatus(PDFLoadStatus::kTriggeredNoGestureDriveByDownload);
-  }
-
   DownloadTargetDeterminer::CompletionCallback target_determined_callback =
       base::Bind(&ChromeDownloadManagerDelegate::OnDownloadTargetDetermined,
                  weak_ptr_factory_.GetWeakPtr(),
@@ -542,28 +533,29 @@ void ChromeDownloadManagerDelegate::ShowDownloadInShell(
   platform_util::ShowItemInFolder(profile_, platform_path);
 }
 
-void ContinueCheckingForFileExistence(
-    content::CheckForFileExistenceCallback callback) {
-  std::move(callback).Run(false);
-}
-
 void ChromeDownloadManagerDelegate::CheckForFileExistence(
     DownloadItem* download,
-    content::CheckForFileExistenceCallback callback) {
+    const content::CheckForFileExistenceCallback& callback) {
 #if defined(OS_CHROMEOS)
   drive::DownloadHandler* drive_download_handler =
       drive::DownloadHandler::GetForProfile(profile_);
   if (drive_download_handler &&
       drive_download_handler->IsDriveDownload(download)) {
-    drive_download_handler->CheckForFileExistence(download,
-                                                  std::move(callback));
+    drive_download_handler->CheckForFileExistence(download, callback);
     return;
   }
 #endif
+  static const char kSequenceToken[] = "ChromeDMD-FileExistenceChecker";
+  base::SequencedWorkerPool* worker_pool = BrowserThread::GetBlockingPool();
+  scoped_refptr<base::SequencedTaskRunner> task_runner =
+      worker_pool->GetSequencedTaskRunnerWithShutdownBehavior(
+          worker_pool->GetNamedSequenceToken(kSequenceToken),
+          base::SequencedWorkerPool::SKIP_ON_SHUTDOWN);
   base::PostTaskAndReplyWithResult(
-      check_for_file_existence_task_runner_.get(), FROM_HERE,
-      base::BindOnce(&base::PathExists, download->GetTargetFilePath()),
-      std::move(callback));
+      task_runner.get(),
+      FROM_HERE,
+      base::Bind(&base::PathExists, download->GetTargetFilePath()),
+      callback);
 }
 
 std::string

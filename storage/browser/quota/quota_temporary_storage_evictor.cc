@@ -56,7 +56,6 @@ QuotaTemporaryStorageEvictor::QuotaTemporaryStorageEvictor(
 }
 
 QuotaTemporaryStorageEvictor::~QuotaTemporaryStorageEvictor() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 }
 
 void QuotaTemporaryStorageEvictor::GetStatistics(
@@ -136,7 +135,7 @@ void QuotaTemporaryStorageEvictor::OnEvictionRoundFinished() {
 }
 
 void QuotaTemporaryStorageEvictor::Start() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   base::AutoReset<bool> auto_reset(&timer_disabled_for_testing_, false);
   StartEvictionTimerWithDelay(0);
@@ -229,7 +228,7 @@ void QuotaTemporaryStorageEvictor::OnGotEvictionRoundInfo(
 }
 
 void QuotaTemporaryStorageEvictor::OnGotEvictionOrigin(const GURL& origin) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   if (origin.is_empty()) {
     StartEvictionTimerWithDelay(interval_ms_);
@@ -247,7 +246,7 @@ void QuotaTemporaryStorageEvictor::OnGotEvictionOrigin(const GURL& origin) {
 
 void QuotaTemporaryStorageEvictor::OnEvictionComplete(
     QuotaStatusCode status) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   // Just calling ConsiderEviction() or StartEvictionTimerWithDelay() here is
   // ok.  No need to deal with the case that all of the Delete operations fail

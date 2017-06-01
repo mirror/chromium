@@ -18,7 +18,7 @@ namespace blink {
 namespace {
 
 class UnderlyingFilterListChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+    : public InterpolationType::ConversionChecker {
  public:
   static std::unique_ptr<UnderlyingFilterListChecker> Create(
       PassRefPtr<NonInterpolableList> non_interpolable_list) {
@@ -26,7 +26,7 @@ class UnderlyingFilterListChecker
         new UnderlyingFilterListChecker(std::move(non_interpolable_list)));
   }
 
-  bool IsValid(const StyleResolverState&,
+  bool IsValid(const InterpolationEnvironment&,
                const InterpolationValue& underlying) const final {
     const NonInterpolableList& underlying_non_interpolable_list =
         ToNonInterpolableList(*underlying.non_interpolable_value);
@@ -50,8 +50,7 @@ class UnderlyingFilterListChecker
   RefPtr<NonInterpolableList> non_interpolable_list_;
 };
 
-class InheritedFilterListChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+class InheritedFilterListChecker : public InterpolationType::ConversionChecker {
  public:
   static std::unique_ptr<InheritedFilterListChecker> Create(
       CSSPropertyID property,
@@ -60,12 +59,13 @@ class InheritedFilterListChecker
         new InheritedFilterListChecker(property, filter_operations));
   }
 
-  bool IsValid(const StyleResolverState& state,
+  bool IsValid(const InterpolationEnvironment& environment,
                const InterpolationValue&) const final {
     const FilterOperations& filter_operations =
         filter_operations_wrapper_->Operations();
-    return filter_operations == FilterListPropertyFunctions::GetFilterList(
-                                    property_, *state.ParentStyle());
+    return filter_operations ==
+           FilterListPropertyFunctions::GetFilterList(
+               property_, *environment.GetState().ParentStyle());
   }
 
  private:

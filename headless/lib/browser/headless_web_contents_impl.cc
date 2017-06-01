@@ -75,15 +75,12 @@ class HeadlessWebContentsImpl::Delegate : public content::WebContentsDelegate {
   explicit Delegate(HeadlessBrowserContextImpl* browser_context)
       : browser_context_(browser_context) {}
 
-  void WebContentsCreated(
-      content::WebContents* source_contents,
-      int opener_render_process_id,
-      int opener_render_frame_id,
-      const std::string& frame_name,
-      const GURL& target_url,
-      content::WebContents* new_contents,
-      const base::Optional<content::WebContents::CreateParams>& create_params)
-      override {
+  void WebContentsCreated(content::WebContents* source_contents,
+                          int opener_render_process_id,
+                          int opener_render_frame_id,
+                          const std::string& frame_name,
+                          const GURL& target_url,
+                          content::WebContents* new_contents) override {
     std::unique_ptr<HeadlessWebContentsImpl> web_contents =
         HeadlessWebContentsImpl::CreateFromWebContents(new_contents,
                                                        browser_context_);
@@ -161,11 +158,9 @@ std::unique_ptr<HeadlessWebContentsImpl> HeadlessWebContentsImpl::Create(
           content::WebContents::Create(create_params),
           builder->browser_context_));
 
-  if (builder->tab_socket_type_ != Builder::TabSocketType::NONE) {
+  if (builder->create_tab_socket_) {
     headless_web_contents->headless_tab_socket_ =
         base::MakeUnique<HeadlessTabSocketImpl>();
-    headless_web_contents->inject_mojo_services_into_isolated_world_ =
-        builder->tab_socket_type_ == Builder::TabSocketType::ISOLATED_WORLD;
 
     builder->mojo_services_.emplace_back(
         TabSocket::Name_,
@@ -197,9 +192,6 @@ HeadlessWebContentsImpl::CreateFromWebContents(
 }
 
 void HeadlessWebContentsImpl::InitializeScreen(const gfx::Size& initial_size) {
-  static int window_id = 1;
-  window_id_ = window_id++;
-  window_state_ = "normal";
   browser()->PlatformInitializeWebContents(initial_size, this);
 }
 
@@ -211,7 +203,6 @@ HeadlessWebContentsImpl::HeadlessWebContentsImpl(
           new HeadlessWebContentsImpl::Delegate(browser_context)),
       web_contents_(web_contents),
       agent_host_(content::DevToolsAgentHost::GetOrCreateFor(web_contents)),
-      inject_mojo_services_into_isolated_world_(false),
       browser_context_(browser_context),
       render_process_host_(web_contents->GetRenderProcessHost()) {
 #if BUILDFLAG(ENABLE_BASIC_PRINTING) && !defined(CHROME_MULTIPLE_DLL_CHILD)
@@ -231,10 +222,7 @@ HeadlessWebContentsImpl::~HeadlessWebContentsImpl() {
 void HeadlessWebContentsImpl::RenderFrameCreated(
     content::RenderFrameHost* render_frame_host) {
   if (!mojo_services_.empty()) {
-    render_frame_host->AllowBindings(
-        inject_mojo_services_into_isolated_world_
-            ? content::BINDINGS_POLICY_HEADLESS_ISOLATED_WORLD
-            : content::BINDINGS_POLICY_HEADLESS_MAIN_WORLD);
+    render_frame_host->AllowBindings(content::BINDINGS_POLICY_HEADLESS);
   }
 
   service_manager::BinderRegistry* interface_registry =
@@ -396,9 +384,9 @@ HeadlessWebContents::Builder& HeadlessWebContents::Builder::SetWindowSize(
   return *this;
 }
 
-HeadlessWebContents::Builder& HeadlessWebContents::Builder::SetTabSocketType(
-    TabSocketType type) {
-  tab_socket_type_ = type;
+HeadlessWebContents::Builder& HeadlessWebContents::Builder::CreateTabSocket(
+    bool create_tab_socket) {
+  create_tab_socket_ = create_tab_socket;
   return *this;
 }
 

@@ -16,6 +16,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/process/process_metrics.h"
 #include "base/run_loop.h"
+#include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/test/test_file_util.h"
 #include "build/build_config.h"
@@ -29,7 +30,6 @@
 #include "content/public/common/content_switches.h"
 #include "content/public/test/test_launcher.h"
 #include "content/public/test/test_utils.h"
-#include "services/service_manager/runner/common/switches.h"
 #include "ui/base/test/ui_controls.h"
 
 #if defined(OS_MACOSX)
@@ -53,6 +53,7 @@
 #endif
 
 #if defined(OS_WIN)
+#include <shellapi.h>
 #include "base/win/registry.h"
 #include "chrome/app/chrome_crash_reporter_client_win.h"
 #include "chrome/install_static/install_util.h"
@@ -62,12 +63,6 @@ ChromeTestSuiteRunner::ChromeTestSuiteRunner() {}
 ChromeTestSuiteRunner::~ChromeTestSuiteRunner() {}
 
 int ChromeTestSuiteRunner::RunTestSuite(int argc, char** argv) {
-#if defined(USE_AURA)
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  if (command_line->HasSwitch(service_manager::switches::kServicePipeToken))
-    content::GetContentMainParams()->env_mode = aura::Env::Mode::MUS;
-#endif  // defined(USE_AURA)
-
   return ChromeTestSuite(argc, argv).Run();
 }
 
@@ -107,24 +102,37 @@ ChromeTestLauncherDelegate::CreateContentMainDelegate() {
 
 void ChromeTestLauncherDelegate::PreSharding() {
 #if defined(OS_WIN)
-  // Pre-test cleanup for registry state keyed off the profile dir (which can
-  // proliferate with the use of uniquely named scoped_dirs):
-  // https://crbug.com/721245. This needs to be here in order not to be racy
-  // with any tests that will access that state.
-  base::win::RegKey distrubution_key;
-  LONG result = distrubution_key.Open(HKEY_CURRENT_USER,
-                                      install_static::GetRegistryPath().c_str(),
-                                      KEY_SET_VALUE);
+  // Construct the distribution specific equivalent of
+  // "delete HKCU\\SOFTWARE\\Chromium\\PreferenceMACs /f".
+  base::string16 operation(L"delete HKCU\\");
+  operation.append(install_static::GetRegistryPath());
+  operation.append(L"\\PreferenceMACs /f");
+  // TODO(gab): This is a nuclear option while the cleanup below doesn't work as
+  // the bots are in such bad shape per https://crbug.com/721245 that doing any
+  // registry operations from C++ results in fatal error 1450 (insufficient
+  // resources). Hopefully ShellExecute works...
+  ::ShellExecute(NULL, NULL, L"reg.exe", operation.c_str(), NULL, 0);
 
-  if (result != ERROR_SUCCESS) {
-    LOG_IF(ERROR, result != ERROR_FILE_NOT_FOUND)
-        << "Failed to open distribution key for cleanup: " << result;
-    return;
-  }
+// // Pre-test cleanup for registry state keyed off the profile dir (which can
+// // proliferate with the use of uniquely named scoped_dirs):
+// // https://crbug.com/721245. This needs to be here in order not to be racy
+// // with any tests that will access that state.
+// base::win::RegKey distrubution_key;
+// LONG result = distrubution_key.Open(
+//     HKEY_CURRENT_USER, install_static::GetRegistryPath().c_str(),
+//     KEY_SET_VALUE);
 
-  result = distrubution_key.DeleteKey(L"PreferenceMACs");
-  LOG_IF(ERROR, result != ERROR_SUCCESS && result != ERROR_FILE_NOT_FOUND)
-      << "Failed to cleanup PreferenceMACs: " << result;
+// if (result != ERROR_SUCCESS && result != ERROR_FILE_NOT_FOUND) {
+//   LOG(ERROR) << "Failed to open distribution key for cleanup: " << result;
+//   return;
+// }
+
+// result = distrubution_key.DeleteKey(L"PreferenceMACs");
+
+// if (result != ERROR_SUCCESS && result != ERROR_FILE_NOT_FOUND) {
+//   LOG(ERROR) << "Failed to cleanup PreferenceMACs: " << result;
+//   return;
+// }
 #endif
 }
 

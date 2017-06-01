@@ -30,9 +30,9 @@
 #include "core/HTMLNames.h"
 #include "core/dom/Attribute.h"
 #include "core/dom/Document.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/RemoteFrame.h"
 #include "core/frame/RemoteFrameView.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
@@ -208,8 +208,14 @@ void HTMLFrameElementBase::DidNotifySubtreeInsertionsToDocument() {
 void HTMLFrameElementBase::AttachLayoutTree(const AttachContext& context) {
   HTMLFrameOwnerElement::AttachLayoutTree(context);
 
-  if (GetLayoutPart() && ContentFrame())
-    SetWidget(ContentFrame()->View());
+  if (GetLayoutPart()) {
+    if (Frame* frame = ContentFrame()) {
+      if (frame->IsLocalFrame())
+        SetWidget(ToLocalFrame(frame)->View());
+      else if (frame->IsRemoteFrame())
+        SetWidget(ToRemoteFrame(frame)->View());
+    }
+  }
 }
 
 void HTMLFrameElementBase::SetLocation(const String& str) {

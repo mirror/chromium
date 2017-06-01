@@ -32,6 +32,9 @@ class ButtonFromView : public views::CustomButton {
   // views::View:
   void OnMouseEntered(const ui::MouseEvent& event) override;
   void OnMouseExited(const ui::MouseEvent& event) override;
+  void OnPaint(gfx::Canvas* canvas) override;
+  void OnFocus() override;
+  void OnBlur() override;
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
   void Layout() override;
 

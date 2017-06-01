@@ -11,7 +11,6 @@
 
 #include "base/macros.h"
 #include "net/reporting/reporting_context.h"
-#include "net/reporting/reporting_delegate.h"
 #include "net/reporting/reporting_uploader.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -77,28 +76,6 @@ class TestReportingUploader : public ReportingUploader {
   DISALLOW_COPY_AND_ASSIGN(TestReportingUploader);
 };
 
-class TestReportingDelegate : public ReportingDelegate {
- public:
-  TestReportingDelegate();
-
-  // ReportingDelegate implementation:
-
-  ~TestReportingDelegate() override;
-
-  bool CanQueueReport(const url::Origin& origin) const override;
-
-  bool CanSendReport(const url::Origin& origin) const override;
-
-  bool CanSetClient(const url::Origin& origin,
-                    const GURL& endpoint) const override;
-
-  bool CanUseClient(const url::Origin& origin,
-                    const GURL& endpoint) const override;
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(TestReportingDelegate);
-};
-
 // A test implementation of ReportingContext that uses test versions of
 // Clock, TickClock, Timer, and ReportingUploader.
 class TestReportingContext : public ReportingContext {
@@ -118,9 +95,6 @@ class TestReportingContext : public ReportingContext {
   }
   TestReportingUploader* test_uploader() {
     return reinterpret_cast<TestReportingUploader*>(uploader());
-  }
-  TestReportingDelegate* test_delegate() {
-    return reinterpret_cast<TestReportingDelegate*>(delegate());
   }
 
  private:

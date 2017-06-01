@@ -77,7 +77,8 @@ void ProcessHeap::ResetHeapCounters() {
 
 CrossThreadPersistentRegion& ProcessHeap::GetCrossThreadPersistentRegion() {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(CrossThreadPersistentRegion,
-                                  persistent_region, ());
+                                  persistent_region,
+                                  new CrossThreadPersistentRegion());
   return persistent_region;
 }
 
@@ -376,7 +377,8 @@ void ThreadHeap::WeakProcessing(Visitor* visitor) {
   double time_for_weak_processing = WTF::CurrentTimeMS() - start_time;
   DEFINE_THREAD_SAFE_STATIC_LOCAL(
       CustomCountHistogram, weak_processing_time_histogram,
-      ("BlinkGC.TimeForGlobalWeakProcessing", 1, 10 * 1000, 50));
+      new CustomCountHistogram("BlinkGC.TimeForGlobalWeakProcessing", 1,
+                               10 * 1000, 50));
   weak_processing_time_histogram.Count(time_for_weak_processing);
 }
 
@@ -399,7 +401,8 @@ void ThreadHeap::ReportMemoryUsageHistogram() {
     // we've ever seen.
     DEFINE_THREAD_SAFE_STATIC_LOCAL(
         EnumerationHistogram, commited_size_histogram,
-        ("BlinkGC.CommittedSize", supported_max_size_in_mb));
+        new EnumerationHistogram("BlinkGC.CommittedSize",
+                                 supported_max_size_in_mb));
     commited_size_histogram.Count(size_in_mb);
     observed_max_size_in_mb = size_in_mb;
   }

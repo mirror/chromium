@@ -254,6 +254,12 @@ class BlinkPerfBindings(_BlinkPerfBenchmark):
   subdir = 'Bindings'
 
 
+@benchmark.Enabled('content-shell')
+class BlinkPerfBlinkGC(_BlinkPerfBenchmark):
+  tag = 'blink_gc'
+  subdir = 'BlinkGC'
+
+
 @benchmark.Owner(emails=['rune@opera.com'])
 class BlinkPerfCSS(_BlinkPerfBenchmark):
   tag = 'css'

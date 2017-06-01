@@ -81,19 +81,17 @@
 #include "core/events/UIEvent.h"
 #include "core/events/WheelEvent.h"
 #include "core/frame/EventHandlerRegistry.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLDialogElement.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/HTMLSlotElement.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutBox.h"
-#include "core/layout/LayoutPart.h"
 #include "core/page/ContextMenuController.h"
 #include "core/page/Page.h"
-#include "core/plugins/PluginView.h"
 #include "core/svg/SVGElement.h"
 #include "core/svg/graphics/SVGImage.h"
 #include "platform/EventDispatchForbiddenScope.h"
@@ -755,9 +753,8 @@ void Node::MarkAncestorsWithChildNeedsStyleInvalidation() {
 void Node::MarkAncestorsWithChildNeedsDistributionRecalc() {
   ScriptForbiddenScope forbid_script_during_raw_iteration;
   for (Node* node = this; node && !node->ChildNeedsDistributionRecalc();
-       node = node->ParentOrShadowHostNode()) {
+       node = node->ParentOrShadowHostNode())
     node->SetChildNeedsDistributionRecalc();
-  }
   GetDocument().ScheduleLayoutTreeUpdateIfNeeded();
 }
 
@@ -849,27 +846,11 @@ bool Node::ShouldHaveFocusAppearance() const {
 }
 
 bool Node::IsInert() const {
-  if (!isConnected() || !CanParticipateInFlatTree())
-    return true;
-
-  DCHECK(!ChildNeedsDistributionRecalc());
-
   const HTMLDialogElement* dialog = GetDocument().ActiveModalDialog();
   if (dialog && this != GetDocument() &&
-      !FlatTreeTraversal::ContainsIncludingPseudoElement(*dialog, *this)) {
+      (!CanParticipateInFlatTree() ||
+       !FlatTreeTraversal::ContainsIncludingPseudoElement(*dialog, *this)))
     return true;
-  }
-
-  if (RuntimeEnabledFeatures::inertAttributeEnabled()) {
-    const Element* element = this->IsElementNode()
-                                 ? ToElement(this)
-                                 : FlatTreeTraversal::ParentElement(*this);
-    while (element) {
-      if (element->hasAttribute(HTMLNames::inertAttr))
-        return true;
-      element = FlatTreeTraversal::ParentElement(*element);
-    }
-  }
   return GetDocument().LocalOwner() && GetDocument().LocalOwner()->IsInert();
 }
 
@@ -2245,7 +2226,7 @@ void Node::CreateAndDispatchPointerEvent(const AtomicString& mouse_event_name,
   IntPoint location_in_frame_zoomed;
   if (view && view->GetFrame() && view->GetFrame()->View()) {
     LocalFrame* frame = view->GetFrame();
-    LocalFrameView* frame_view = frame->View();
+    FrameView* frame_view = frame->View();
     IntPoint location_in_contents = frame_view->RootFrameToContents(
         FlooredIntPoint(mouse_event.PositionInRootFrame()));
     location_in_frame_zoomed =
@@ -2596,22 +2577,6 @@ void Node::CheckSlotChange(SlotChangeType slot_change_type) {
       }
     }
   }
-}
-
-WebPluginContainerBase* Node::GetWebPluginContainerBase() const {
-  if (!isHTMLObjectElement(this) && !isHTMLEmbedElement(this)) {
-    return nullptr;
-  }
-
-  LayoutObject* object = GetLayoutObject();
-  if (object && object->IsLayoutPart()) {
-    PluginView* plugin = ToLayoutPart(object)->Plugin();
-    if (plugin) {
-      return plugin->GetWebPluginContainerBase();
-    }
-  }
-
-  return nullptr;
 }
 
 DEFINE_TRACE(Node) {

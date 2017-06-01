@@ -76,6 +76,7 @@ void TabletPowerButtonController::TestApi::TriggerShutdownTimeout() {
 TabletPowerButtonController::TabletPowerButtonController(
     LockStateController* controller)
     : tick_clock_(new base::DefaultTickClock()),
+      force_off_on_button_up_(true),
       controller_(controller),
       weak_ptr_factory_(this) {
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(
@@ -220,9 +221,6 @@ void TabletPowerButtonController::SetDisplayForcedOff(bool forced_off) {
       ->SetBacklightsForcedOff(forced_off);
   backlights_forced_off_ = forced_off;
   UpdateTouchscreenStatus();
-
-  if (backlights_forced_off_)
-    Shell::Get()->shell_delegate()->SuspendMediaSessions();
 
   // Send an a11y alert.
   Shell::Get()->accessibility_delegate()->TriggerAccessibilityAlert(

@@ -27,7 +27,6 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
-import org.chromium.components.url_formatter.UrlFormatter;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.payments.mojom.PaymentCurrencyAmount;
 import org.chromium.payments.mojom.PaymentDetailsModifier;
@@ -38,7 +37,6 @@ import org.chromium.ui.base.WindowAndroid;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -77,7 +75,6 @@ public class AndroidPaymentApp
     private static final String EXTRA_MERCHANT_NAME = "merchantName";
     private static final String EXTRA_METHOD_DATA = "methodData";
     private static final String EXTRA_METHOD_NAMES = "methodNames";
-    private static final String EXTRA_MODIFIERS = "modifiers";
     private static final String EXTRA_PAYMENT_REQUEST_ID = "paymentRequestId";
     private static final String EXTRA_PAYMENT_REQUEST_ORIGIN = "paymentRequestOrigin";
     private static final String EXTRA_TOP_LEVEL_CERTIFICATE_CHAIN = "topLevelCertificateChain";
@@ -169,9 +166,9 @@ public class AndroidPaymentApp
             public void onServiceDisconnected(ComponentName name) {}
         };
 
-        mIsReadyToPayIntent.putExtras(buildExtras(null /* id */, null /* merchantName */,
-                removeUrlScheme(origin), removeUrlScheme(iframeOrigin), certificateChain,
-                methodDataMap, total, null /* displayItems */, null /* modifiers */));
+        mIsReadyToPayIntent.putExtras(buildExtras(null /* id */, null /* merchantName */, origin,
+                iframeOrigin, certificateChain, methodDataMap, total, null /* displayItems */,
+                null /* modifiers */));
         try {
             if (!ContextUtils.getApplicationContext().bindService(
                         mIsReadyToPayIntent, mServiceConnection, Context.BIND_AUTO_CREATE)) {
@@ -267,19 +264,17 @@ public class AndroidPaymentApp
     }
 
     @Override
-    public void invokePaymentApp(final String id, final String merchantName, String origin,
-            String iframeOrigin, final byte[][] certificateChain,
+    public void invokePaymentApp(final String id, final String merchantName, final String origin,
+            final String iframeOrigin, final byte[][] certificateChain,
             final Map<String, PaymentMethodData> methodDataMap, final PaymentItem total,
             final List<PaymentItem> displayItems,
             final Map<String, PaymentDetailsModifier> modifiers,
             InstrumentDetailsCallback callback) {
         mInstrumentDetailsCallback = callback;
 
-        final String schemelessOrigin = removeUrlScheme(origin);
-        final String schemelessIframeOrigin = removeUrlScheme(iframeOrigin);
         if (!mIsIncognito) {
-            launchPaymentApp(id, merchantName, schemelessOrigin, schemelessIframeOrigin,
-                    certificateChain, methodDataMap, total, displayItems, modifiers);
+            launchPaymentApp(id, merchantName, origin, iframeOrigin, certificateChain,
+                    methodDataMap, total, displayItems, modifiers);
             return;
         }
 
@@ -296,9 +291,9 @@ public class AndroidPaymentApp
                         new OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                launchPaymentApp(id, merchantName, schemelessOrigin,
-                                        schemelessIframeOrigin, certificateChain, methodDataMap,
-                                        total, displayItems, modifiers);
+                                launchPaymentApp(id, merchantName, origin, iframeOrigin,
+                                        certificateChain, methodDataMap, total, displayItems,
+                                        modifiers);
                             }
                         })
                 .setNegativeButton(R.string.cancel,
@@ -315,10 +310,6 @@ public class AndroidPaymentApp
                     }
                 })
                 .show();
-    }
-
-    private static String removeUrlScheme(String url) {
-        return UrlFormatter.formatUrlForSecurityDisplay(url, false /* omit scheme */);
     }
 
     private void launchPaymentApp(String id, String merchantName, String origin,
@@ -377,10 +368,6 @@ public class AndroidPaymentApp
                                                   : methodData.getValue().stringifiedData);
         }
         extras.putParcelable(EXTRA_METHOD_DATA, methodDataBundle);
-
-        if (modifiers != null) {
-            extras.putString(EXTRA_MODIFIERS, serializeModifiers(modifiers.values()));
-        }
 
         String serializedTotalAmount = serializeTotalAmount(total.amount);
         extras.putString(EXTRA_TOTAL,
@@ -501,51 +488,6 @@ public class AndroidPaymentApp
 
         json.endObject();
         // }}} item
-    }
-
-    private static String serializeModifiers(Collection<PaymentDetailsModifier> modifiers) {
-        StringWriter stringWriter = new StringWriter();
-        JsonWriter json = new JsonWriter(stringWriter);
-        try {
-            json.beginArray();
-            for (PaymentDetailsModifier modifier : modifiers) {
-                serializeModifier(modifier, json);
-            }
-            json.endArray();
-        } catch (IOException e) {
-            return EMPTY_JSON_DATA;
-        }
-        return stringWriter.toString();
-    }
-
-    private static void serializeModifier(PaymentDetailsModifier modifier, JsonWriter json)
-            throws IOException {
-        // {{{
-        json.beginObject();
-
-        // total {{{
-        if (modifier.total != null) {
-            json.name("total");
-            serializePaymentItem(modifier.total, json);
-        } else {
-            json.name("total").nullValue();
-        }
-        // }}} total
-
-        // supportedMethods {{{
-        json.name("supportedMethods").beginArray();
-        for (String method : modifier.methodData.supportedMethods) {
-            json.value(method);
-        }
-        json.endArray();
-        // }}} supportedMethods
-
-        // data {{{
-        json.name("data").value(modifier.methodData.stringifiedData);
-        // }}}
-
-        json.endObject();
-        // }}}
     }
 
     @Override

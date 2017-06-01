@@ -4,7 +4,7 @@
 
 #include "core/paint/ViewPainter.h"
 
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/Settings.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutView.h"
@@ -29,7 +29,7 @@ void ViewPainter::Paint(const PaintInfo& paint_info,
   DCHECK(LayoutPoint(IntPoint(paint_offset.X().ToInt(),
                               paint_offset.Y().ToInt())) == paint_offset);
 
-  const LocalFrameView* frame_view = layout_view_.GetFrameView();
+  const FrameView* frame_view = layout_view_.GetFrameView();
   if (frame_view->ShouldThrottleRendering())
     return;
 
@@ -84,7 +84,7 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
     return;
 
   const Document& document = layout_view_.GetDocument();
-  const LocalFrameView& frame_view = *layout_view_.GetFrameView();
+  const FrameView& frame_view = *layout_view_.GetFrameView();
   bool is_main_frame = document.IsInMainFrame();
   bool paints_base_background =
       is_main_frame && (frame_view.BaseBackgroundColor().Alpha() > 0);
@@ -163,8 +163,7 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
   bool should_draw_background_in_separate_buffer =
       BoxPainter(layout_view_)
           .CalculateFillLayerOcclusionCulling(
-              reversed_paint_list, layout_view_.Style()->BackgroundLayers(),
-              layout_view_.GetDocument(), layout_view_.StyleRef());
+              reversed_paint_list, layout_view_.Style()->BackgroundLayers());
   DCHECK(reversed_paint_list.size());
 
   // If the root background color is opaque, isolation group can be skipped

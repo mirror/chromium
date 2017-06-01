@@ -25,8 +25,8 @@
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/editing/FrameSelection.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLIFrameElement.h"
 #include "core/layout/HitTestResult.h"
@@ -140,11 +140,11 @@ bool LayoutView::HitTestNoLifecycleUpdate(HitTestResult& result) {
   } else {
     hit_layer = Layer()->HitTest(result);
 
-    // LocalFrameView scrollbars are not the same as Layer scrollbars tested by
-    // Layer::hitTestOverflowControls, so we need to test LocalFrameView
-    // scrollbars separately here. Note that it's important we do this after the
-    // hit test above, because that may overwrite the entire HitTestResult when
-    // it finds a hit.
+    // FrameView scrollbars are not the same as Layer scrollbars tested by
+    // Layer::hitTestOverflowControls, so we need to test FrameView scrollbars
+    // separately here. Note that it's important we do this after the hit test
+    // above, because that may overwrite the entire HitTestResult when it finds
+    // a hit.
     IntPoint frame_point = GetFrameView()->ContentsToFrame(
         result.GetHitTestLocation().RoundedPoint());
     if (Scrollbar* frame_scrollbar =
@@ -669,8 +669,8 @@ void LayoutView::CalculateScrollbarModes(ScrollbarMode& h_mode,
       RETURN_SCROLLBAR_MODE(kScrollbarAlwaysOff);
   }
 
-  if (LocalFrameView* frameView = GetFrameView()) {
-    // Scrollbars can be disabled by LocalFrameView::setCanHaveScrollbars.
+  if (FrameView* frameView = GetFrameView()) {
+    // Scrollbars can be disabled by FrameView::setCanHaveScrollbars.
     if (!frameView->CanHaveScrollbars())
       RETURN_SCROLLBAR_MODE(kScrollbarAlwaysOff);
   }
@@ -790,15 +790,14 @@ void LayoutView::UpdateAfterLayout() {
   // layout viewport size.  The call to AdjustViewSize() will update the
   // frame's contents size, which will also update the page's minimum scale
   // factor.  The call to ResizeAfterLayout() will calculate the layout viewport
-  // size based on the page minimum scale factor, and then update the
-  // LocalFrameView with the new size.
+  // size based on the page minimum scale factor, and then update the FrameView
+  // with the new size.
   if (HasOverflowClip())
     GetScrollableArea()->ClampScrollOffsetAfterOverflowChange();
   LocalFrame& frame = GetFrameView()->GetFrame();
   if (!GetDocument().Printing())
     GetFrameView()->AdjustViewSize();
-  if (frame.IsMainFrame())
-    frame.GetChromeClient().ResizeAfterLayout();
+  frame.GetChromeClient().ResizeAfterLayout(&frame);
   LayoutBlockFlow::UpdateAfterLayout();
 }
 
@@ -902,13 +901,6 @@ LayoutRect LayoutView::DebugRect() const {
   rect.SetHeight(LayoutUnit(ViewHeight(kIncludeScrollbars)));
 
   return rect;
-}
-
-bool LayoutView::UpdateLogicalWidthAndColumnWidth() {
-  bool relayout_children = LayoutBlockFlow::UpdateLogicalWidthAndColumnWidth();
-  // When we're printing, the size of LayoutView is changed outside of layout,
-  // so we'll fail to detect any changes here. Just return true.
-  return relayout_children || ShouldUsePrintingLayout();
 }
 
 bool LayoutView::PaintedOutputOfObjectHasNoEffectRegardlessOfSize() const {

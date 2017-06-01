@@ -75,7 +75,6 @@
 #include "third_party/WebKit/public/platform/WebMouseEvent.h"
 #include "third_party/WebKit/public/platform/WebPoint.h"
 #include "third_party/WebKit/public/platform/WebRect.h"
-#include "third_party/WebKit/public/platform/WebRuntimeFeatures.h"
 #include "third_party/WebKit/public/platform/WebSize.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/scheduler/renderer/render_widget_scheduling_state.h"
@@ -89,6 +88,7 @@
 #include "third_party/WebKit/public/web/WebPagePopup.h"
 #include "third_party/WebKit/public/web/WebPopupMenuInfo.h"
 #include "third_party/WebKit/public/web/WebRange.h"
+#include "third_party/WebKit/public/web/WebRuntimeFeatures.h"
 #include "third_party/WebKit/public/web/WebView.h"
 #include "third_party/WebKit/public/web/WebWidget.h"
 #include "third_party/skia/include/core/SkShader.h"
@@ -615,7 +615,6 @@ bool RenderWidget::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(InputMsg_SetFocus, OnSetFocus)
     IPC_MESSAGE_HANDLER(InputMsg_SyntheticGestureCompleted,
                         OnSyntheticGestureCompleted)
-    IPC_MESSAGE_HANDLER(ViewMsg_ShowContextMenu, OnShowContextMenu)
     IPC_MESSAGE_HANDLER(ViewMsg_Close, OnClose)
     IPC_MESSAGE_HANDLER(ViewMsg_Resize, OnResize)
     IPC_MESSAGE_HANDLER(ViewMsg_EnableDeviceEmulation,
@@ -838,10 +837,6 @@ void RenderWidget::SendInputEventAck(blink::WebInputEvent::Type type,
   InputEventAck ack(InputEventAckSource::MAIN_THREAD, type, ack_result,
                     touch_event_id);
   Send(new InputHostMsg_HandleInputEvent_ACK(routing_id_, ack));
-}
-
-scoped_refptr<MainThreadEventQueue> RenderWidget::GetInputEventQueue() {
-  return input_event_queue_;
 }
 
 void RenderWidget::OnCursorVisibilityChange(bool is_visible) {
@@ -1589,18 +1584,6 @@ void RenderWidget::SetPendingWindowRect(const WebRect& rect) {
     window_screen_rect_ = rect;
     view_screen_rect_ = rect;
   }
-}
-
-void RenderWidget::OnShowContextMenu(ui::MenuSourceType source_type,
-                                     const gfx::Point& location) {
-  input_handler_->set_context_menu_source_type(source_type);
-  has_host_context_menu_location_ = true;
-  host_context_menu_location_ = location;
-  if (GetWebWidget()) {
-    GetWebWidget()->ShowContextMenu(
-        static_cast<blink::WebMenuSourceType>(source_type));
-  }
-  has_host_context_menu_location_ = false;
 }
 
 void RenderWidget::OnImeSetComposition(

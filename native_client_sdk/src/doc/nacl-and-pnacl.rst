@@ -1,7 +1,5 @@
 .. _nacl-and-pnacl:
 
-.. include:: /migration/deprecation.inc
-
 ##############
 NaCl and PNaCl
 ##############

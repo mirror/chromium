@@ -231,21 +231,14 @@ class URL_EXPORT CharsetConverter {
 //
 // Therefore, callers should not use the buffer, since it may actually be empty,
 // use the computed pointer and |*output_len| instead.
-//
-// If |input| contained both removable whitespace and a raw `<` character,
-// |potentially_dangling_markup| will be set to `true`. Otherwise, it will be
-// left untouched.
-URL_EXPORT const char* RemoveURLWhitespace(const char* input,
-                                           int input_len,
+URL_EXPORT const char* RemoveURLWhitespace(const char* input, int input_len,
                                            CanonOutputT<char>* buffer,
-                                           int* output_len,
-                                           bool* potentially_dangling_markup);
+                                           int* output_len);
 URL_EXPORT const base::char16* RemoveURLWhitespace(
     const base::char16* input,
     int input_len,
     CanonOutputT<base::char16>* buffer,
-    int* output_len,
-    bool* potentially_dangling_markup);
+    int* output_len);
 
 // IDN ------------------------------------------------------------------------
 

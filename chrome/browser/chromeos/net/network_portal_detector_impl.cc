@@ -245,7 +245,7 @@ NetworkPortalDetectorImpl::NetworkPortalDetectorImpl(
 
 NetworkPortalDetectorImpl::~NetworkPortalDetectorImpl() {
   NET_LOG(EVENT) << "NetworkPortalDetectorImpl::~NetworkPortalDetectorImpl()";
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   attempt_task_.Cancel();
   attempt_timeout_.Cancel();
@@ -260,13 +260,13 @@ NetworkPortalDetectorImpl::~NetworkPortalDetectorImpl() {
 }
 
 void NetworkPortalDetectorImpl::AddObserver(Observer* observer) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (observer && !observers_.HasObserver(observer))
     observers_.AddObserver(observer);
 }
 
 void NetworkPortalDetectorImpl::AddAndFireObserver(Observer* observer) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (!observer)
     return;
   AddObserver(observer);
@@ -278,7 +278,7 @@ void NetworkPortalDetectorImpl::AddAndFireObserver(Observer* observer) {
 }
 
 void NetworkPortalDetectorImpl::RemoveObserver(Observer* observer) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (observer)
     observers_.RemoveObserver(observer);
 }
@@ -286,7 +286,7 @@ void NetworkPortalDetectorImpl::RemoveObserver(Observer* observer) {
 bool NetworkPortalDetectorImpl::IsEnabled() { return enabled_; }
 
 void NetworkPortalDetectorImpl::Enable(bool start_detection) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (enabled_)
     return;
 
@@ -304,7 +304,7 @@ void NetworkPortalDetectorImpl::Enable(bool start_detection) {
 
 NetworkPortalDetectorImpl::CaptivePortalState
 NetworkPortalDetectorImpl::GetCaptivePortalState(const std::string& guid) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   CaptivePortalStateMap::const_iterator it = portal_state_map_.find(guid);
   if (it == portal_state_map_.end())
     return CaptivePortalState();
@@ -334,7 +334,7 @@ void NetworkPortalDetectorImpl::OnLockScreenRequest() {
 
 void NetworkPortalDetectorImpl::DefaultNetworkChanged(
     const NetworkState* default_network) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   if (!default_network) {
     NET_LOG(EVENT) << "Default network changed: None";
@@ -459,7 +459,7 @@ void NetworkPortalDetectorImpl::StartAttempt() {
 }
 
 void NetworkPortalDetectorImpl::OnAttemptTimeout() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(is_checking_for_portal());
 
   NET_LOG(ERROR) << "Portal detection timeout: "
@@ -474,7 +474,7 @@ void NetworkPortalDetectorImpl::OnAttemptTimeout() {
 
 void NetworkPortalDetectorImpl::OnAttemptCompleted(
     const CaptivePortalDetector::Results& results) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(is_checking_for_portal());
 
   captive_portal::CaptivePortalResult result = results.result;
@@ -553,8 +553,15 @@ void NetworkPortalDetectorImpl::OnAttemptCompleted(
   }
 
   // Observers (via OnDetectionCompleted) may already schedule new attempt.
-  if (is_idle())
-    ScheduleAttempt(results.retry_after_delta);
+  if (!is_idle())
+    return;
+
+  // If behind a captive portal and the response code was 200 (OK), do not
+  // schedule a new attempt.
+  if (state.status == CAPTIVE_PORTAL_STATUS_PORTAL && response_code == 200)
+    return;
+
+  ScheduleAttempt(results.retry_after_delta);
 }
 
 void NetworkPortalDetectorImpl::Observe(

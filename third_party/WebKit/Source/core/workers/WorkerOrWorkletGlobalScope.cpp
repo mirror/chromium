@@ -13,21 +13,14 @@
 #include "core/workers/WorkerReportingProxy.h"
 #include "core/workers/WorkerThread.h"
 #include "platform/CrossThreadFunctional.h"
-#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/wtf/Functional.h"
 
 namespace blink {
 
-WorkerOrWorkletGlobalScope::WorkerOrWorkletGlobalScope(
-    v8::Isolate* isolate,
-    WorkerClients* worker_clients)
-    : worker_clients_(worker_clients),
-      script_controller_(
+WorkerOrWorkletGlobalScope::WorkerOrWorkletGlobalScope(v8::Isolate* isolate)
+    : script_controller_(
           WorkerOrWorkletScriptController::Create(this, isolate)),
-      used_features_(UseCounter::kNumberOfFeatures) {
-  if (worker_clients_)
-    worker_clients_->ReattachThread();
-}
+      used_features_(UseCounter::kNumberOfFeatures) {}
 
 WorkerOrWorkletGlobalScope::~WorkerOrWorkletGlobalScope() = default;
 
@@ -54,15 +47,6 @@ void WorkerOrWorkletGlobalScope::CountDeprecation(UseCounter::Feature feature) {
                              Deprecation::DeprecationMessage(feature)));
 
   ReportDeprecation(feature);
-}
-
-WorkerFetchContext* WorkerOrWorkletGlobalScope::GetFetchContext() {
-  DCHECK(RuntimeEnabledFeatures::offMainThreadFetchEnabled());
-  DCHECK(!IsMainThreadWorkletGlobalScope());
-  if (fetch_context_)
-    return fetch_context_;
-  fetch_context_ = WorkerFetchContext::Create(*this);
-  return fetch_context_;
 }
 
 bool WorkerOrWorkletGlobalScope::IsJSExecutionForbidden() const {
@@ -93,11 +77,6 @@ void WorkerOrWorkletGlobalScope::PostTask(
                                            is_instrumented));
 }
 
-bool WorkerOrWorkletGlobalScope::CanExecuteScripts(
-    ReasonForCallingCanExecuteScripts) {
-  return !IsJSExecutionForbidden();
-}
-
 void WorkerOrWorkletGlobalScope::Dispose() {
   DCHECK(script_controller_);
   script_controller_->Dispose();
@@ -105,7 +84,6 @@ void WorkerOrWorkletGlobalScope::Dispose() {
 }
 
 DEFINE_TRACE(WorkerOrWorkletGlobalScope) {
-  visitor->Trace(fetch_context_);
   visitor->Trace(script_controller_);
   ExecutionContext::Trace(visitor);
 }

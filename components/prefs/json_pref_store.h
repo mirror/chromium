@@ -19,8 +19,8 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
-#include "base/sequence_checker.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/threading/non_thread_safe.h"
 #include "components/prefs/base_prefs_export.h"
 #include "components/prefs/persistent_pref_store.h"
 #include "components/prefs/pref_filter.h"
@@ -48,7 +48,8 @@ FORWARD_DECLARE_TEST(JsonPrefStoreTest, WriteCountHistogramTestPeriodWithGaps);
 class COMPONENTS_PREFS_EXPORT JsonPrefStore
     : public PersistentPrefStore,
       public base::ImportantFileWriter::DataSerializer,
-      public base::SupportsWeakPtr<JsonPrefStore> {
+      public base::SupportsWeakPtr<JsonPrefStore>,
+      public base::NonThreadSafe {
  public:
   struct ReadResult;
 
@@ -251,8 +252,6 @@ class COMPONENTS_PREFS_EXPORT JsonPrefStore
   base::Closure on_next_successful_write_reply_;
 
   WriteCountHistogram write_count_histogram_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(JsonPrefStore);
 };

@@ -61,8 +61,7 @@ InterpolationValue CSSLengthListInterpolationType::MaybeConvertInitial(
   return MaybeConvertLengthList(initial_length_list, 1);
 }
 
-class InheritedLengthListChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+class InheritedLengthListChecker : public InterpolationType::ConversionChecker {
  public:
   ~InheritedLengthListChecker() final {}
 
@@ -78,11 +77,12 @@ class InheritedLengthListChecker
                              const Vector<Length>& inherited_length_list)
       : property_(property), inherited_length_list_(inherited_length_list) {}
 
-  bool IsValid(const StyleResolverState& state,
+  bool IsValid(const InterpolationEnvironment& environment,
                const InterpolationValue& underlying) const final {
     Vector<Length> inherited_length_list;
-    LengthListPropertyFunctions::GetLengthList(property_, *state.ParentStyle(),
-                                               inherited_length_list);
+    LengthListPropertyFunctions::GetLengthList(
+        property_, *environment.GetState().ParentStyle(),
+        inherited_length_list);
     return inherited_length_list_ == inherited_length_list;
   }
 

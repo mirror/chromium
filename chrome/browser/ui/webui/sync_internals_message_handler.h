@@ -18,8 +18,9 @@
 #include "components/sync/engine/events/protocol_event_observer.h"
 #include "components/sync/js/js_controller.h"
 #include "components/sync/js/js_event_handler.h"
-#include "components/version_info/channel.h"
 #include "content/public/browser/web_ui_message_handler.h"
+
+class SigninManagerBase;
 
 namespace browser_sync {
 class ProfileSyncService;
@@ -28,6 +29,17 @@ class ProfileSyncService;
 namespace syncer {
 class SyncService;
 }  //  namespace syncer
+
+// Interface to abstract away the creation of the about-sync value dictionary.
+class AboutSyncDataExtractor {
+ public:
+  // Given state about sync, extracts various interesting fields and populates
+  // a tree of base::Value objects.
+  virtual std::unique_ptr<base::DictionaryValue> ConstructAboutInformation(
+      syncer::SyncService* service,
+      SigninManagerBase* signin) = 0;
+  virtual ~AboutSyncDataExtractor() {}
+};
 
 // The implementation for the chrome://sync-internals page.
 class SyncInternalsMessageHandler : public content::WebUIMessageHandler,
@@ -39,8 +51,6 @@ class SyncInternalsMessageHandler : public content::WebUIMessageHandler,
   SyncInternalsMessageHandler();
   ~SyncInternalsMessageHandler() override;
 
-  // content::WebUIMessageHandler implementation.
-  void OnJavascriptDisallowed() override;
   void RegisterMessages() override;
 
   // Sets up observers to receive events and forward them to the UI.
@@ -58,12 +68,6 @@ class SyncInternalsMessageHandler : public content::WebUIMessageHandler,
   // Handler for getAllNodes message.  Needs a |request_id| argument.
   void HandleGetAllNodes(const base::ListValue* args);
 
-  // Handler for requests to get UserEvents tab visibility.
-  void HandleRequestUserEventsVisibility(const base::ListValue* args);
-
-  // Handler for writeUserEvent message.
-  void HandleWriteUserEvent(const base::ListValue* args);
-
   // syncer::JsEventHandler implementation.
   void HandleJsEvent(const std::string& name,
                      const syncer::JsEventDetails& details) override;
@@ -75,10 +79,10 @@ class SyncInternalsMessageHandler : public content::WebUIMessageHandler,
   // syncer::SyncServiceObserver implementation.
   void OnStateChanged(syncer::SyncService* sync) override;
 
-  // syncer::ProtocolEventObserver implementation.
+  // ProtocolEventObserver implementation.
   void OnProtocolEvent(const syncer::ProtocolEvent& e) override;
 
-  // syncer::TypeDebugInfoObserver implementation.
+  // TypeDebugInfoObserver implementation.
   void OnCommitCountersUpdated(syncer::ModelType type,
                                const syncer::CommitCounters& counters) override;
   void OnUpdateCountersUpdated(syncer::ModelType type,
@@ -96,30 +100,16 @@ class SyncInternalsMessageHandler : public content::WebUIMessageHandler,
                          std::unique_ptr<base::DictionaryValue> value);
 
  protected:
-  using AboutSyncDataDelegate =
-      base::RepeatingCallback<std::unique_ptr<base::DictionaryValue>(
-          syncer::SyncService* service,
-          version_info::Channel channel)>;
-
-  // Constructor used for unit testing to override dependencies.
-  explicit SyncInternalsMessageHandler(
-      AboutSyncDataDelegate about_sync_data_delegate);
+  // Constructor used for unit testing to override the about sync info.
+  SyncInternalsMessageHandler(
+      std::unique_ptr<AboutSyncDataExtractor> about_sync_data_extractor);
 
  private:
   // Fetches updated aboutInfo and sends it to the page in the form of an
   // onAboutInfoUpdated event.
   void SendAboutInfo();
 
-  // Gets the ProfileSyncService of the underlying original profile. May return
-  // nullptr (e.g., if sync is disabled on the command line).
-  syncer::SyncService* GetSyncService();
-
-  // Sends a dispatch event to the UI. Javascript must be enabled.
-  void DispatchEvent(const std::string& name, const base::Value& details_value);
-
-  // Unregisters for notifications from all notifications coming from the sync
-  // machinery. Leaves notifications hooked into the UI alone.
-  void UnregisterModelNotifications();
+  browser_sync::ProfileSyncService* GetProfileSyncService();
 
   base::WeakPtr<syncer::JsController> js_controller_;
 
@@ -131,7 +121,7 @@ class SyncInternalsMessageHandler : public content::WebUIMessageHandler,
   bool is_registered_for_counters_ = false;
 
   // An abstraction of who creates the about sync info value map.
-  AboutSyncDataDelegate about_sync_data_delegate_;
+  std::unique_ptr<AboutSyncDataExtractor> about_sync_data_extractor_;
 
   base::WeakPtrFactory<SyncInternalsMessageHandler> weak_ptr_factory_;
 

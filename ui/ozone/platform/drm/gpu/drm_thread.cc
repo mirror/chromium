@@ -12,7 +12,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "ui/display/types/display_mode.h"
 #include "ui/ozone/platform/drm/common/drm_util.h"
 #include "ui/ozone/platform/drm/gpu/drm_buffer.h"
 #include "ui/ozone/platform/drm/gpu/drm_device_generator.h"
@@ -167,12 +166,12 @@ void DrmThread::GetScanoutFormats(
 
 void DrmThread::SchedulePageFlip(gfx::AcceleratedWidget widget,
                                  const std::vector<OverlayPlane>& planes,
-                                 SwapCompletionOnceCallback callback) {
+                                 const SwapCompletionCallback& callback) {
   DrmWindow* window = screen_manager_->GetWindow(widget);
   if (window)
-    window->SchedulePageFlip(planes, std::move(callback));
+    window->SchedulePageFlip(planes, callback);
   else
-    std::move(callback).Run(gfx::SwapResult::SWAP_ACK);
+    callback.Run(gfx::SwapResult::SWAP_ACK);
 }
 
 void DrmThread::GetVSyncParameters(
@@ -234,11 +233,11 @@ void DrmThread::RefreshNativeDisplays(
 
 void DrmThread::ConfigureNativeDisplay(
     int64_t id,
-    std::unique_ptr<const display::DisplayMode> mode,
+    const DisplayMode_Params& mode,
     const gfx::Point& origin,
     base::OnceCallback<void(int64_t, bool)> callback) {
-  std::move(callback).Run(
-      id, display_manager_->ConfigureDisplay(id, *mode, origin));
+  std::move(callback).Run(id,
+                          display_manager_->ConfigureDisplay(id, mode, origin));
 }
 
 void DrmThread::DisableNativeDisplay(

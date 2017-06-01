@@ -34,12 +34,11 @@
 #include "core/dom/Document.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/editing/EditingUtilities.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLAreaElement.h"
 #include "core/html/HTMLCanvasElement.h"
-#include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/HTMLImageElement.h"
 #include "core/html/HTMLInputElement.h"
 #include "core/html/HTMLLabelElement.h"
@@ -592,8 +591,11 @@ void AXObjectCacheImpl::TextChanged(AXObjectImpl* obj) {
   if (!obj)
     return;
 
+  bool parent_already_exists = obj->ParentObjectIfExists();
   obj->TextChanged();
   PostNotification(obj, AXObjectCacheImpl::kAXTextChanged);
+  if (parent_already_exists)
+    obj->NotifyIfIgnoredValueChanged();
 }
 
 void AXObjectCacheImpl::UpdateCacheAfterNodeIsAttached(Node* node) {
@@ -1197,8 +1199,7 @@ void AXObjectCacheImpl::HandleScrolledToAnchor(const Node* anchor_node) {
   PostPlatformNotification(obj, kAXScrolledToAnchor);
 }
 
-void AXObjectCacheImpl::HandleScrollPositionChanged(
-    LocalFrameView* frame_view) {
+void AXObjectCacheImpl::HandleScrollPositionChanged(FrameView* frame_view) {
   AXObjectImpl* target_ax_object =
       GetOrCreate(frame_view->GetFrame().GetDocument());
   PostPlatformNotification(target_ax_object, kAXScrollPositionChanged);

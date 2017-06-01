@@ -8,11 +8,11 @@
 #include "ash/shell.h"
 #include "ash/shell_delegate.h"
 #include "ash/wm/window_state.h"
-#include "ui/aura/window.h"
+#include "ash/wm_window.h"
 
 namespace ash {
 
-bool IsToplevelWindow(aura::Window* window) {
+bool IsToplevelWindow(WmWindow* window) {
   DCHECK(window);
   // The window must in a valid hierarchy.
   if (!window->GetRootWindow())
@@ -20,10 +20,10 @@ bool IsToplevelWindow(aura::Window* window) {
 
   // The window must exist within a container that supports activation.
   // The window cannot be blocked by a modal transient.
-  return IsActivatableShellWindowId(window->parent()->id());
+  return IsActivatableShellWindowId(window->GetParent()->aura_window()->id());
 }
 
-bool IsWindowConsideredActivatable(aura::Window* window) {
+bool IsWindowConsideredActivatable(WmWindow* window) {
   DCHECK(window);
   // Only toplevel windows can be activated.
   if (!IsToplevelWindow(window))
@@ -33,7 +33,7 @@ bool IsWindowConsideredActivatable(aura::Window* window) {
   return IsWindowConsideredVisibleForActivation(window);
 }
 
-bool IsWindowConsideredVisibleForActivation(aura::Window* window) {
+bool IsWindowConsideredVisibleForActivation(WmWindow* window) {
   DCHECK(window);
   // If the |window| doesn't belong to the current active user and also doesn't
   // show for the current active user, then it should not be activated.
@@ -45,13 +45,13 @@ bool IsWindowConsideredVisibleForActivation(aura::Window* window) {
 
   // Minimized windows are hidden in their minimized state, but they can always
   // be activated.
-  if (wm::GetWindowState(window)->IsMinimized())
+  if (window->GetWindowState()->IsMinimized())
     return true;
 
-  if (!window->TargetVisibility())
+  if (!window->GetTargetVisibility())
     return false;
 
-  const int parent_shell_window_id = window->parent()->id();
+  const int parent_shell_window_id = window->GetParent()->aura_window()->id();
   return parent_shell_window_id == kShellWindowId_DefaultContainer ||
          parent_shell_window_id == kShellWindowId_LockScreenContainer;
 }

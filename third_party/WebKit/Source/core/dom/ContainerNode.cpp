@@ -41,7 +41,7 @@
 #include "core/dom/shadow/ElementShadow.h"
 #include "core/dom/shadow/ShadowRoot.h"
 #include "core/events/MutationEvent.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/html/HTMLCollection.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/HTMLTagCollection.h"
@@ -1067,15 +1067,16 @@ void ContainerNode::FocusStateChanged() {
   if (!GetLayoutObject())
     return;
 
-  StyleChangeType change_type =
-      GetComputedStyle()->HasPseudoStyle(kPseudoIdFirstLetter)
-          ? kSubtreeStyleChange
-          : kLocalStyleChange;
-  SetNeedsStyleRecalc(
-      change_type,
-      StyleChangeReasonForTracing::CreateWithExtraData(
-          StyleChangeReason::kPseudoClass, StyleChangeExtraData::g_focus));
-
+  if (GetComputedStyle()->AffectedByFocus()) {
+    StyleChangeType change_type =
+        GetComputedStyle()->HasPseudoStyle(kPseudoIdFirstLetter)
+            ? kSubtreeStyleChange
+            : kLocalStyleChange;
+    SetNeedsStyleRecalc(
+        change_type,
+        StyleChangeReasonForTracing::CreateWithExtraData(
+            StyleChangeReason::kPseudoClass, StyleChangeExtraData::g_focus));
+  }
   if (IsElementNode() && ToElement(this)->ChildrenOrSiblingsAffectedByFocus())
     ToElement(this)->PseudoStateChanged(CSSSelector::kPseudoFocus);
 

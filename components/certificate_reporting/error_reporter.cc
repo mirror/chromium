@@ -100,9 +100,7 @@ bool EncryptSerializedReport(const uint8_t* server_public_key,
 }
 
 constexpr net::NetworkTrafficAnnotationTag kTrafficAnnotation =
-    net::DefineNetworkTrafficAnnotation(
-        "safe_browsing_certificate_error_reporting",
-        R"(
+    net::DefineNetworkTrafficAnnotation("safe_browsing_extended_reporting", R"(
         semantics {
           sender: "Safe Browsing Extended Reporting"
           description:

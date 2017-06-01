@@ -95,9 +95,7 @@ class CaptivePortalBlockingPageForTesting : public CaptivePortalBlockingPage {
 
 class CaptivePortalBlockingPageTest : public InProcessBrowserTest {
  public:
-  CaptivePortalBlockingPageTest() {
-    CertReportHelper::SetFakeOfficialBuildForTesting();
-  }
+  CaptivePortalBlockingPageTest() {}
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     command_line->AppendSwitchASCII(

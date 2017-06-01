@@ -123,11 +123,6 @@
     },
     {
       name: "Budget",
-      status: "stable",
-    },
-    {
-      name: "BudgetQuery",
-      origin_trial_feature_name: "BudgetQuery",
       status: "experimental",
     },
     {
@@ -143,10 +138,6 @@
       status: "experimental",
     },
     {
-      name: "ClickRetargetting",
-      status: "experimental",
-    },
-    {
       name: "ClientHints",
       status: "stable",
     },
@@ -155,10 +146,11 @@
       status: "stable",
     },
     {
-      name: "ColorCanvasExtensions",
+      name: "ColorCorrectRendering",
+      status: "experimental",
     },
     {
-      name: "ColorCorrectRendering",
+      name: "ColorCorrectRenderingDefaultMode",
       status: "experimental",
     },
     {
@@ -225,7 +217,7 @@
     },
     {
       name: "CSSFontDisplay",
-      status: "stable",
+      status: "experimental",
     },
     {
       name: "CSSFontSizeAdjust",
@@ -348,10 +340,6 @@
       status: "experimental",
     },
     {
-      name: "DeviceRAMHeader",
-      status: "test",
-    },
-    {
       name: "DisplayList2dCanvas",
       status: "stable",
     },
@@ -381,6 +369,10 @@
     },
     {
       name: "EmbedderCSPEnforcement",
+      status: "experimental",
+    },
+    {
+      name: "EnableCanvas2dDynamicRenderingModeSwitching",
       status: "experimental",
     },
     {
@@ -511,10 +503,6 @@
     {
       name: "ImageOrientation",
       status: "test",
-    },
-    {
-      name: "InertAttribute",
-      status: "experimental",
     },
     {
       name: "InertTopControls",
@@ -650,9 +638,6 @@
       status: "experimental",
     },
     {
-      name: "MojoBlobs",
-    },
-    {
       name: "MojoJS",
       status: "test",
     },
@@ -670,10 +655,6 @@
     {
       name: "NetInfoDownlinkMax",
       status: "stable",
-    },
-    {
-      name: "NetInfoEffectiveType",
-      status: "experimental",
     },
     {
       name: "NetInfoRtt",
@@ -784,7 +765,7 @@
     },
     {
       name: "PerformancePaintTiming",
-      status: "stable",
+      status: "experimental",
     },
     {
       name: "PermissionDelegation",
@@ -855,7 +836,7 @@
     },
     {
       name: "RestrictCanRequestURLCharacterSet",
-      status: "stable",
+      status: "experimental",
     },
     // Handles frame scrolling via the root PaintLayer instead of the FrameView.
     // crbug.com/417782 tracks enabling this by default.
@@ -953,11 +934,11 @@
     },
     {
       name: "StorageEstimate",
-      status: "stable",
+      status: "experimental",
     },
     {
       name: "StyleSharing",
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "Suborigins",
@@ -1090,9 +1071,7 @@
       name: "WebVRExperimentalRendering",
       // Don't mark this as depends_on: ["WebVR"], we want to be able to turn
       // it on for just origin trial sites where the dependency is unset.
-      // We also need it for tests since the default mode requires re-entrant
-      // mojo event handling, and the Javascript mocks don't support that.
-      status: "test",
+      status: "experimental",
     },
     {
       name: "WebVTTRegions",

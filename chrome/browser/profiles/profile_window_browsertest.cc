@@ -257,6 +257,7 @@ IN_PROC_BROWSER_TEST_F(ProfileWindowWebUIBrowserTest,
   base::RunLoop run_loop;
   profiles::CreateSystemProfileForUserManager(
       browser()->profile()->GetPath(),
+      profiles::USER_MANAGER_NO_TUTORIAL,
       profiles::USER_MANAGER_SELECT_PROFILE_NO_ACTION,
       base::Bind(&ProfileWindowWebUIBrowserTest::OnSystemProfileCreated,
                  base::Unretained(this),
@@ -280,6 +281,7 @@ IN_PROC_BROWSER_TEST_F(ProfileWindowWebUIBrowserTest,
   base::RunLoop run_loop;
   profiles::CreateSystemProfileForUserManager(
       expected_path,
+      profiles::USER_MANAGER_NO_TUTORIAL,
       profiles::USER_MANAGER_SELECT_PROFILE_NO_ACTION,
       base::Bind(&ProfileWindowWebUIBrowserTest::OnSystemProfileCreated,
                  base::Unretained(this),

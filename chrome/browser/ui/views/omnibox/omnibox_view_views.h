@@ -135,7 +135,6 @@ class OmniboxViewViews
                                 size_t caret_pos,
                                 bool update_popup,
                                 bool notify_text_changed) override;
-  void SetCaretPos(size_t caret_pos) override;
   bool IsSelectAll() const override;
   bool DeleteAtEndPressed() override;
   void UpdatePopup() override;

@@ -10,7 +10,6 @@
 
 #include "base/macros.h"
 #include "base/strings/string16.h"
-#include "chrome/browser/android/vr_shell/color_scheme.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
@@ -40,8 +39,6 @@ class UiTexture {
 
   bool dirty() const { return dirty_; }
 
-  void SetMode(ColorScheme::Mode mode);
-
  protected:
   enum TextAlignment {
     kTextAlignmentNone,
@@ -56,9 +53,6 @@ class UiTexture {
   };
 
   virtual void Draw(SkCanvas* canvas, const gfx::Size& texture_size) = 0;
-
-  virtual void OnSetMode();
-  ColorScheme::Mode mode() const { return mode_; }
 
   // Prepares a set of RenderText objects with the given color and fonts.
   // Attempts to fit the text within the provided size. |flags| specifies how
@@ -84,14 +78,10 @@ class UiTexture {
 
   static bool IsRTL();
   static gfx::FontList GetDefaultFontList(int size);
-  static bool GetFontList(int size,
-                          base::string16 text,
-                          gfx::FontList* font_list);
-  static void SetForceFontFallbackFailureForTesting(bool force);
+  static gfx::FontList GetFontList(int size, base::string16 text);
 
  private:
   bool dirty_ = true;
-  ColorScheme::Mode mode_ = ColorScheme::kModeNormal;
 
   DISALLOW_COPY_AND_ASSIGN(UiTexture);
 };

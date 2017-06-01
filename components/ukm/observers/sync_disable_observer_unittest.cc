@@ -28,7 +28,7 @@ class MockSyncService : public syncer::FakeSyncService {
     }
   }
 
-  void Shutdown() override {
+  void Shutdown() {
     for (auto& observer : observers_) {
       observer.OnSyncShutdown(this);
     }

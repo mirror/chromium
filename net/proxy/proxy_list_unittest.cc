@@ -311,6 +311,6 @@ TEST(ProxyListTest, UpdateRetryInfoOnFallback) {
   }
 }
 
-}  // anonymous namespace
+}  // namesapce
 
 }  // namespace net

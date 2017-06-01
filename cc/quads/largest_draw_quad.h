@@ -12,7 +12,6 @@
 namespace cc {
 
 CC_EXPORT size_t LargestDrawQuadSize();
-CC_EXPORT size_t LargestDrawQuadAlignment();
 
 }  // namespace cc
 

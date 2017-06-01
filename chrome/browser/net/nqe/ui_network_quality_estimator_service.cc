@@ -188,7 +188,7 @@ void UINetworkQualityEstimatorService::Shutdown() {
     (void)deleted;
   }
   if (prefs_manager_) {
-    prefs_manager_->ShutdownOnPrefSequence();
+    prefs_manager_->ShutdownOnPrefThread();
     bool deleted = content::BrowserThread::DeleteSoon(
         content::BrowserThread::IO, FROM_HERE, prefs_manager_.release());
     DCHECK(deleted);

@@ -4,7 +4,6 @@
 
 #include "media/base/media.h"
 
-#include "base/allocator/features.h"
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/metrics/field_trial.h"
@@ -40,10 +39,10 @@ class MediaInitializer {
     // Disable logging as it interferes with layout tests.
     av_log_set_level(AV_LOG_QUIET);
 
-#if BUILDFLAG(USE_ALLOCATOR_SHIM)
+#if defined(ALLOCATOR_SHIM)
     // Remove allocation limit from ffmpeg, so calls go down to shim layer.
     av_max_alloc(0);
-#endif  // BUILDFLAG(USE_ALLOCATOR_SHIM)
+#endif  // defined(ALLOCATOR_SHIM)
 
 #endif  // !defined(MEDIA_DISABLE_FFMPEG)
   }

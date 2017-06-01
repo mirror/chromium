@@ -16,7 +16,6 @@
 #include "services/ui/public/interfaces/cursor/cursor.mojom.h"
 #include "services/ui/public/interfaces/window_manager.mojom.h"
 #include "services/ui/ws/drag_cursor_updater.h"
-#include "services/ui/ws/event_targeter.h"
 #include "services/ui/ws/modal_window_controller.h"
 #include "services/ui/ws/server_window_observer.h"
 #include "ui/gfx/geometry/rect_f.h"
@@ -30,6 +29,7 @@ class PointerEvent;
 namespace ws {
 
 class Accelerator;
+struct DeepestWindow;
 class DragController;
 class DragSource;
 class DragTargetConnection;
@@ -59,12 +59,10 @@ class EventDispatcher : public ServerWindowObserver, public DragCursorUpdater {
   // any events to the delegate.
   void Reset();
 
-  void SetMousePointerDisplayLocation(const gfx::Point& display_location,
-                                      const int64_t display_id);
+  void SetMousePointerScreenLocation(const gfx::Point& screen_location);
   const gfx::Point& mouse_pointer_last_location() const {
     return mouse_pointer_last_location_;
   }
-  int64_t mouse_pointer_display_id() const { return mouse_pointer_display_id_; }
 
   // Returns the cursor for the current target, or POINTER if the mouse is not
   // over a valid target.
@@ -144,12 +142,31 @@ class EventDispatcher : public ServerWindowObserver, public DragCursorUpdater {
   // ANY and there is a matching accelerator with PRE_TARGET found, than only
   // OnAccelerator() is called. The expectation is after the PRE_TARGET has been
   // handled this is again called with an AcceleratorMatchPhase of POST_ONLY.
-  void ProcessEvent(const ui::Event& event,
-                    const int64_t display_id,
-                    AcceleratorMatchPhase match_phase);
+  void ProcessEvent(const ui::Event& event, AcceleratorMatchPhase match_phase);
 
  private:
   friend class test::EventDispatcherTestApi;
+
+  // Keeps track of state associated with an active pointer.
+  struct PointerTarget {
+    PointerTarget()
+        : window(nullptr),
+          is_mouse_event(false),
+          in_nonclient_area(false),
+          is_pointer_down(false) {}
+
+    // The target window, which may be null. null is used in two situations:
+    // when there is no valid window target, or there was a target but the
+    // window is destroyed before a corresponding release/cancel.
+    ServerWindow* window;
+
+    bool is_mouse_event;
+
+    // Did the pointer event start in the non-client area.
+    bool in_nonclient_area;
+
+    bool is_pointer_down;
+  };
 
   void SetMouseCursorSourceWindow(ServerWindow* window);
 
@@ -184,6 +201,11 @@ class EventDispatcher : public ServerWindowObserver, public DragCursorUpdater {
   void UpdateTargetForPointer(int32_t pointer_id,
                               const ui::LocatedEvent& event);
 
+  // Returns a PointerTarget for the supplied event. If there is no valid
+  // event target for the specified location |window| in the returned value is
+  // null.
+  PointerTarget PointerTargetForEvent(const ui::LocatedEvent& event);
+
   // Returns true if any pointers are in the pressed/down state.
   bool AreAnyPointersDown() const;
 
@@ -212,6 +234,8 @@ class EventDispatcher : public ServerWindowObserver, public DragCursorUpdater {
   Accelerator* FindAccelerator(const ui::KeyEvent& event,
                                const ui::mojom::AcceleratorPhase phase);
 
+  DeepestWindow FindDeepestVisibleWindowForEvents(const gfx::Point& location);
+
   // Clears the implicit captures in |pointer_targets_|, with the exception of
   // |window|. |window| may be null. |client_id| is the target client of
   // |window|.
@@ -237,21 +261,13 @@ class EventDispatcher : public ServerWindowObserver, public DragCursorUpdater {
 
   ModalWindowController modal_window_controller_;
 
-  std::unique_ptr<EventTargeter> event_targeter_;
-
   bool mouse_button_down_;
   ServerWindow* mouse_cursor_source_window_;
   bool mouse_cursor_in_non_client_area_;
 
-  // The location of the mouse pointer in display coordinates. This can be
-  // outside the bounds of |mouse_cursor_source_window_|, which can capture the
-  // cursor.
+  // The on screen location of the mouse pointer. This can be outside the
+  // bounds of |mouse_cursor_source_window_|, which can capture the cursor.
   gfx::Point mouse_pointer_last_location_;
-  // Id of the display |mouse_pointer_last_location_| is on.
-  int64_t mouse_pointer_display_id_ = display::kInvalidDisplayId;
-
-  // Id of the display the most recent event is on.
-  int64_t event_display_id_ = display::kInvalidDisplayId;
 
   std::map<uint32_t, std::unique_ptr<Accelerator>> accelerators_;
 

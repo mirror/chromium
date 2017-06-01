@@ -1,7 +1,5 @@
 .. _arm-32-bit-sandbox:
 
-.. include:: /migration/deprecation.inc
-
 ==================
 ARM 32-bit Sandbox
 ==================

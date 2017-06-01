@@ -293,8 +293,7 @@
       'filepath': 'chrome_elf',
     },
     'chrome_grc': {
-      'filepath': 'chrome/browser/resource_coordinator/'\
-                  '|services/resource_coordinator/',
+      'filepath': 'services/resource_coordinator',
     },
     'chrome_views': {
       'filepath': 'chrome/browser/ui/views',
@@ -597,25 +596,25 @@
                   'chrome/common/search_types.*',
     },
     'ios': {
-      'filepath': 'ios/',
+      'filepath': 'ios',
     },
     'ios_chrome': {
-      'filepath': 'ios/chrome/',
+      'filepath': 'ios/chrome',
     },
     'ios_clean': {
-      'filepath': 'ios/clean/',
+      'filepath': 'ios/clean',
     },
     'ios_showcase': {
-      'filepath': 'ios/showcase/',
+      'filepath': 'ios/showcase',
     },
     'ios_test': {
-      'filepath': 'ios/chrome/test/|'\
-                  'ios/testing/|'\
-                  'ios/web/public/test/|'\
-                  'ios/web/test/',
+      'filepath': 'ios/chrome/test|'\
+                  'ios/testing|'\
+                  'ios/web/public/test|'\
+                  'ios/web/test',
     },
     'ios_web': {
-      'filepath': 'ios/web(_view)?/',
+      'filepath': 'ios/web',
     },
     'ipc': {
       'filepath': 'ipc/ipc',
@@ -1159,9 +1158,6 @@
                   '|ios/chrome/app/strings/ios(_.+)*_strings.grd'\
                   '|ui/strings/ui_strings.grd',
     },
-    'use_counter_features': {
-      'filepath': 'third_party/WebKit/public/platform/UseCounterFeature.def',
-    },
     'valgrind': {
       'filepath': 'valgrind',
     },
@@ -1508,20 +1504,6 @@
       'filepath': 'third_party/WebKit/Source/modules/screen_orientation/' \
                   '|third_party/WebKit/public/platform/modules/screen_orientation',
     },
-    'blink_script': {
-      'filepath': 'third_party/WebKit/Source/bindings/core/v8/.*Module.*' \
-                  '|third_party/WebKit/Source/bindings/core/v8/ScriptController.*' \
-                  '|third_party/WebKit/Source/bindings/core/v8/ScriptSourceCode.*' \
-                  '|third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.*'
-                  '|third_party/WebKit/Source/core/dom/.*Modul.*' \
-                  '|third_party/WebKit/Source/core/dom/.*Script.*' \
-                  '|third_party/WebKit/Source/core/html/HTMLScriptElement.*' \
-                  '|third_party/WebKit/Source/core/html/parser/HTMLParserScriptRunner.*' \
-                  '|third_party/WebKit/Source/core/loader/modulescript/' \
-                  '|third_party/WebKit/Source/core/loader/resource/ScriptResource.*' \
-                  '|third_party/WebKit/Source/core/svg/SVGScriptElement.*' \
-                  '|third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.*'
-    },
     'blink_scheduler': {
       'filepath': 'third_party/WebKit/Source/platform/scheduler' \
                   '|third_party/WebKit/Source/core/html/parser/.*Scheduler'
@@ -1790,8 +1772,7 @@
                         'cbiesinger@chromium.org',
                         'glebl+reviews@chromium.org',
                         'dgrogan+ng@chromium.org',
-                        'atotic+reviews@chromium.org',
-                        'lchoi+reviews@chromium.org'],
+                        'atotic+reviews@chromium.org'],
     'blink_loader': ['gavinp+loader@chromium.org',
                      'japhet@chromium.org',
                      'loading-reviews@chromium.org',
@@ -1838,9 +1819,6 @@
                     'tzik@chromium.org'],
     'blink_scheduler': ['scheduler-bugs@chromium.org'],
     'blink_screen_orientation': ['mlamouri+watch-blink@chromium.org'],
-    'blink_script': ['kouhei+script@chromium.org',
-                     'hiroshige+script@chromium.org',
-                     'kochi+script@chromium.org'],
     'blink_serviceworkers': ['falken+watch@chromium.org',
                              'horo+watch@chromium.org',
                              'jsbell+serviceworker@chromium.org',
@@ -1871,8 +1849,7 @@
     'blink_vibration': ['mlamouri+watch-blink@chromium.org'],
     'blink_viewport_interaction': ['kenneth.christiansen@gmail.com'],
     'blink_w3ctests': ['blink-reviews-w3ctests@chromium.org'],
-    'blink_web': ['kinuko+watch@chromium.org',
-                  'platform-architecture-syd+reviews-web@chromium.org'],
+    'blink_web': ['kinuko+watch@chromium.org'],
     'blink_webcomponents': ['dglazkov+blink@chromium.org',
                             'webcomponents-bugzilla@chromium.org'],
     'blink_webp': ['jzern@chromium.org',
@@ -2025,7 +2002,6 @@
             'zea+watch@chromium.org'],
     'generic_sensor': ['alexander.shalamov@intel.com',
                        'mikhail.pozdnyakov@intel.com',
-                       'timvolodine@chromium.org',
                        'wanming.lin@intel.com'],
     'geolocation': ['mcasas+geolocation@chromium.org',
                     'mlamouri+watch-geolocation@chromium.org'],
@@ -2063,6 +2039,7 @@
                 'skanuj+watch@chromium.org'],
     'ios': ['ios-reviews@chromium.org'],
     'ios_chrome': ['ios-reviews+chrome@chromium.org',
+                   'pkl@chromium.org',
                    'noyau+watch@chromium.org',
                    'marq+watch@chromium.org'],
     'ios_clean': ['ios-reviews+clean@chromium.org',
@@ -2275,7 +2252,6 @@
     'ui_display_win': ['robliao+watch@chromium.org'],
     'ui_resources': ['oshima+watch@chromium.org'],
     'ui_strings': ['srahim+watch@chromium.org'],
-    'use_counter_features': ['lunalu@chromium.org'],
     'valgrind': ['bruening+watch@chromium.org',
                  'glider+watch@chromium.org'],
     'version_assembly': ['caitkp+watch@chromium.org',

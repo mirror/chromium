@@ -7,11 +7,12 @@
 #include <memory>
 #include "bindings/modules/v8/MediaSessionActionHandler.h"
 #include "core/dom/Document.h"
+#include "core/dom/DocumentUserGestureToken.h"
 #include "core/dom/ExecutionContext.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/frame/LocalFrame.h"
 #include "modules/mediasession/MediaMetadata.h"
 #include "modules/mediasession/MediaMetadataSanitizer.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/wtf/Optional.h"
 #include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
@@ -221,7 +222,8 @@ void MediaSession::DidReceiveAction(
     blink::mojom::blink::MediaSessionAction action) {
   DCHECK(GetExecutionContext()->IsDocument());
   Document* document = ToDocument(GetExecutionContext());
-  UserGestureIndicator gesture_indicator(UserGestureToken::Create(document));
+  UserGestureIndicator gesture_indicator(
+      DocumentUserGestureToken::Create(document));
 
   auto iter = action_handlers_.find(MojomActionToActionName(action));
   if (iter == action_handlers_.end())

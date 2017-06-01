@@ -32,8 +32,8 @@
 
 #include <memory>
 #include "core/editing/Editor.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLDialogElement.h"
 #include "core/layout/HitTestLocation.h"
@@ -621,7 +621,7 @@ void LayoutBlockFlow::DetermineLogicalLeftPositionForChild(LayoutBox& child) {
   LayoutUnit start_position = BorderStart() + PaddingStart();
   LayoutUnit initial_start_position = start_position;
   if (ShouldPlaceBlockDirectionScrollbarOnLogicalLeft())
-    start_position -= VerticalScrollbarWidthClampedToContentBox();
+    start_position -= VerticalScrollbarWidth();
   LayoutUnit total_available_logical_width =
       BorderAndPaddingLogicalWidth() + AvailableLogicalWidth();
 
@@ -1130,8 +1130,7 @@ void LayoutBlockFlow::AdjustLinePositionForPagination(RootInlineBox& line_box,
   logical_offset += delta;
   line_box.SetPaginationStrut(LayoutUnit());
   line_box.SetIsFirstAfterPageBreak(false);
-  LayoutState* layout_state = View()->GetLayoutState();
-  if (!layout_state->IsPaginated())
+  if (!View()->GetLayoutState()->IsPaginated())
     return;
   LayoutUnit page_logical_height = PageLogicalHeightForOffset(logical_offset);
   if (!page_logical_height)
@@ -1195,22 +1194,14 @@ void LayoutBlockFlow::AdjustLinePositionForPagination(RootInlineBox& line_box,
     // up in the next column or page. Setting a strut on the block is also
     // important when it comes to satisfying orphan requirements.
     if (ShouldSetStrutOnBlock(*this, line_box, logical_offset, line_index,
-                              page_logical_height)) {
-      DCHECK(!IsTableCell());
-      strut_to_propagate =
-          logical_offset + layout_state->HeightOffsetForTableHeaders();
-    } else if (LayoutUnit pagination_strut =
-                   layout_state->HeightOffsetForTableHeaders()) {
-      delta += pagination_strut;
-      line_box.SetPaginationStrut(pagination_strut);
-    }
+                              page_logical_height))
+      strut_to_propagate = logical_offset;
   } else if (line_box == FirstRootBox() && AllowsPaginationStrut()) {
     // This is the first line in the block. The block may still start in the
     // previous column or page, and if that's the case, attempt to pull it over
     // to where this line is, so that we don't split the top border or padding.
-    LayoutUnit strut = remaining_logical_height + logical_offset +
-                       layout_state->HeightOffsetForTableHeaders() -
-                       page_logical_height;
+    LayoutUnit strut =
+        remaining_logical_height + logical_offset - page_logical_height;
     if (strut > LayoutUnit()) {
       // The block starts in a previous column or page. Set a strut on the block
       // if there's room for the top border, padding and the line in one column
@@ -4255,72 +4246,13 @@ void LayoutBlockFlow::PositionSpannerDescendant(
   DetermineLogicalLeftPositionForChild(spanner);
 }
 
-DISABLE_CFI_PERF
-bool LayoutBlockFlow::CreatesNewFormattingContext() const {
-  if (IsInline() || IsFloatingOrOutOfFlowPositioned() || HasOverflowClip() ||
-      IsFlexItemIncludingDeprecated() || IsTableCell() || IsTableCaption() ||
-      IsFieldset() || IsDocumentElement() || IsGridItem() ||
-      IsWritingModeRoot() || Style()->Display() == EDisplay::kFlowRoot ||
-      Style()->ContainsPaint() || Style()->ContainsLayout() ||
-      Style()->SpecifiesColumns() ||
-      Style()->GetColumnSpan() == kColumnSpanAll) {
-    // The specs require this object to establish a new formatting context.
-    return true;
-  }
-
-  // The remaining checks here are not covered by any spec, but we still need to
-  // establish new formatting contexts in some cases, for various reasons.
-
-  if (IsRubyText()) {
-    // Ruby text objects are pushed around after layout, to become flush with
-    // the associated ruby base. As such, we cannot let floats leak out from
-    // ruby text objects.
-    return true;
-  }
-
-  if (IsLayoutFlowThread()) {
-    // The spec requires multicol containers to establish new formatting
-    // contexts. Blink uses an anonymous flow thread child of the multicol
-    // container to actually perform layout inside. Therefore we need to
-    // propagate the BFCness down to the flow thread, so that floats are fully
-    // contained by the flow thread, and thereby the multicol container.
-    return true;
-  }
-
-  if (IsHR()) {
-    // Not mentioned in the spec, but we want HR elements to be pushed to the
-    // side by floats (and all engines seem to do that), since we use borders to
-    // render HR (and it would just ugly to let those borders be painted under
-    // the float).
-    return true;
-  }
-
-  if (IsLegend()) {
-    // This is wrong; see crbug.com/727378 . It may be that our current
-    // implementation requires the rendered legend inside a FIELDSET to create a
-    // new formatting context. That should probably be fixed too, but more
-    // importantly: We should never create a new formatting context for LEGEND
-    // elements that aren't associated with a FIELDSET.
-    return true;
-  }
-
-  if (IsTextControl()) {
-    // INPUT and other replaced elements rendered by Blink itself should be
-    // completely contained.
-    return true;
-  }
-
-  if (IsSVGForeignObject()) {
-    // This is the root of a foreign object. Don't let anything inside it escape
-    // to our ancestors.
-    return true;
-  }
-
-  return false;
-}
-
 bool LayoutBlockFlow::AvoidsFloats() const {
-  return ShouldBeConsideredAsReplaced() || CreatesNewFormattingContext();
+  // Floats can't intrude into our box if we have a non-auto column count or
+  // width.
+  // Note: we need to use LayoutBox::avoidsFloats here since
+  // LayoutBlock::avoidsFloats is always true.
+  return LayoutBox::AvoidsFloats() || !Style()->HasAutoColumnCount() ||
+         !Style()->HasAutoColumnWidth();
 }
 
 void LayoutBlockFlow::MoveChildrenTo(LayoutBoxModelObject* to_box_model_object,
@@ -4486,7 +4418,7 @@ void LayoutBlockFlow::PositionDialog() {
     return;
   }
 
-  LocalFrameView* frame_view = GetDocument().View();
+  FrameView* frame_view = GetDocument().View();
   LayoutUnit top = LayoutUnit((Style()->GetPosition() == EPosition::kFixed)
                                   ? 0
                                   : frame_view->ScrollOffsetInt().Height());

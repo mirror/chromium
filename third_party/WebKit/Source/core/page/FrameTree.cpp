@@ -22,8 +22,8 @@
 
 #include "core/dom/Document.h"
 #include "core/frame/FrameClient.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/RemoteFrame.h"
 #include "core/frame/RemoteFrameView.h"
 #include "core/frame/UseCounter.h"
@@ -51,14 +51,8 @@ FrameTree::~FrameTree() {}
 const AtomicString& FrameTree::GetName() const {
   // TODO(andypaicu): remove this once we have gathered the data
   if (experimental_set_nulled_name_) {
-    const LocalFrame* frame =
-        this_frame_->IsLocalFrame()
-            ? ToLocalFrame(this_frame_)
-            : (Top().IsLocalFrame() ? ToLocalFrame(&Top()) : nullptr);
-    if (frame) {
-      UseCounter::Count(frame,
-                        UseCounter::kCrossOriginMainFrameNulledNameAccessed);
-    }
+    UseCounter::Count(this_frame_.Get(),
+                      UseCounter::kCrossOriginMainFrameNulledNameAccessed);
   }
   return name_;
 }
@@ -155,9 +149,6 @@ unsigned FrameTree::ChildCount() const {
 }
 
 Frame* FrameTree::Find(const AtomicString& name) const {
-  // Named frame lookup should always be relative to a local frame.
-  DCHECK(this_frame_->IsLocalFrame());
-
   if (EqualIgnoringASCIICase(name, "_self") ||
       EqualIgnoringASCIICase(name, "_current") || name.IsEmpty())
     return this_frame_;
@@ -279,7 +270,7 @@ static void printFrames(const blink::Frame* frame,
     printIndent(indent);
   }
 
-  blink::LocalFrameView* view =
+  blink::FrameView* view =
       frame->IsLocalFrame() ? ToLocalFrame(frame)->View() : 0;
   printf("Frame %p %dx%d\n", frame, view ? view->Width() : 0,
          view ? view->Height() : 0);

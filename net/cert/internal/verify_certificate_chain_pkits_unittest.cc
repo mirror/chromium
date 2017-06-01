@@ -47,37 +47,41 @@ namespace {
 
 class VerifyCertificateChainPkitsTestDelegate {
  public:
-  static void RunTest(std::vector<std::string> cert_ders,
-                      std::vector<std::string> crl_ders,
-                      const PkitsTestInfo& info) {
-    ASSERT_FALSE(cert_ders.empty());
+  static bool Verify(std::vector<std::string> cert_ders,
+                     std::vector<std::string> crl_ders) {
+    if (cert_ders.empty()) {
+      ADD_FAILURE() << "cert_ders is empty";
+      return false;
+    }
 
-    // PKITS lists chains from trust anchor to target, whereas
-    // VerifyCertificateChain takes them starting with the target and ending
-    // with the trust anchor.
+    // PKITS lists chains from trust anchor to target, VerifyCertificateChain
+    // takes them starting with the target and not including the trust anchor.
     std::vector<scoped_refptr<net::ParsedCertificate>> input_chain;
     CertErrors parsing_errors;
     for (auto i = cert_ders.rbegin(); i != cert_ders.rend(); ++i) {
-      ASSERT_TRUE(net::ParsedCertificate::CreateAndAddToVector(
-          bssl::UniquePtr<CRYPTO_BUFFER>(CRYPTO_BUFFER_new(
-              reinterpret_cast<const uint8_t*>(i->data()), i->size(), nullptr)),
-          {}, &input_chain, &parsing_errors))
-          << parsing_errors.ToDebugString();
+      if (!net::ParsedCertificate::CreateAndAddToVector(
+              bssl::UniquePtr<CRYPTO_BUFFER>(
+                  CRYPTO_BUFFER_new(reinterpret_cast<const uint8_t*>(i->data()),
+                                    i->size(), nullptr)),
+              {}, &input_chain, &parsing_errors)) {
+        ADD_FAILURE() << "Cert failed to parse:\n"
+                      << parsing_errors.ToDebugString();
+        return false;
+      }
     }
 
     SimpleSignaturePolicy signature_policy(1024);
 
+    // Run all tests at the time the PKITS was published.
+    der::GeneralizedTime time = {2011, 4, 15, 0, 0, 0};
+
     CertPathErrors path_errors;
     VerifyCertificateChain(input_chain, CertificateTrust::ForTrustAnchor(),
-                           &signature_policy, info.time, KeyPurpose::ANY_EKU,
+                           &signature_policy, time, KeyPurpose::ANY_EKU,
                            &path_errors);
-    bool did_succeed = !path_errors.ContainsHighSeverityErrors();
 
     //  TODO(crbug.com/634443): Test errors on failure?
-    if (info.should_validate != did_succeed) {
-      ASSERT_EQ(info.should_validate, did_succeed)
-          << path_errors.ToDebugString(input_chain);
-    }
+    return !path_errors.ContainsHighSeverityErrors();
   }
 };
 
@@ -93,10 +97,7 @@ TEST_F(PkitsTest01SignatureVerificationCustom,
                                "ValidDSASignaturesTest4EE"};
   const char* const crls[] = {"TrustAnchorRootCRL", "DSACACRL"};
   // DSA signatures are intentionally unsupported.
-  PkitsTestInfo info;
-  info.should_validate = false;
-
-  this->RunTest(certs, crls, info);
+  ASSERT_FALSE(this->Verify(certs, crls));
 }
 
 // Modified version of 4.1.5 Valid DSA Parameter Inheritance Test5
@@ -108,10 +109,7 @@ TEST_F(PkitsTest01SignatureVerificationCustom,
   const char* const crls[] = {"TrustAnchorRootCRL", "DSACACRL",
                               "DSAParametersInheritedCACRL"};
   // DSA signatures are intentionally unsupported.
-  PkitsTestInfo info;
-  info.should_validate = false;
-
-  this->RunTest(certs, crls, info);
+  ASSERT_FALSE(this->Verify(certs, crls));
 }
 
 class PkitsTest13SignatureVerificationCustom
@@ -126,10 +124,7 @@ TEST_F(PkitsTest13SignatureVerificationCustom,
   const char* const crls[] = {"TrustAnchorRootCRL",
                               "nameConstraintsRFC822CA1CRL"};
   // Name constraints on rfc822Names are not supported.
-  PkitsTestInfo info;
-  info.should_validate = false;
-
-  this->RunTest(certs, crls, info);
+  ASSERT_FALSE(this->Verify(certs, crls));
 }
 
 // Modified version of 4.13.23 Valid RFC822 nameConstraints Test23
@@ -141,10 +136,7 @@ TEST_F(PkitsTest13SignatureVerificationCustom,
   const char* const crls[] = {"TrustAnchorRootCRL",
                               "nameConstraintsRFC822CA2CRL"};
   // Name constraints on rfc822Names are not supported.
-  PkitsTestInfo info;
-  info.should_validate = false;
-
-  this->RunTest(certs, crls, info);
+  ASSERT_FALSE(this->Verify(certs, crls));
 }
 
 // Modified version of 4.13.25 Valid RFC822 nameConstraints Test25
@@ -156,10 +148,7 @@ TEST_F(PkitsTest13SignatureVerificationCustom,
   const char* const crls[] = {"TrustAnchorRootCRL",
                               "nameConstraintsRFC822CA3CRL"};
   // Name constraints on rfc822Names are not supported.
-  PkitsTestInfo info;
-  info.should_validate = false;
-
-  this->RunTest(certs, crls, info);
+  ASSERT_FALSE(this->Verify(certs, crls));
 }
 
 // Modified version of 4.13.27 Valid DN and RFC822 nameConstraints Test27
@@ -172,10 +161,7 @@ TEST_F(PkitsTest13SignatureVerificationCustom,
   const char* const crls[] = {"TrustAnchorRootCRL", "nameConstraintsDN1CACRL",
                               "nameConstraintsDN1subCA3CRL"};
   // Name constraints on rfc822Names are not supported.
-  PkitsTestInfo info;
-  info.should_validate = false;
-
-  this->RunTest(certs, crls, info);
+  ASSERT_FALSE(this->Verify(certs, crls));
 }
 
 // Modified version of 4.13.34 Valid URI nameConstraints Test34
@@ -186,10 +172,7 @@ TEST_F(PkitsTest13SignatureVerificationCustom,
                                "ValidURInameConstraintsTest34EE"};
   const char* const crls[] = {"TrustAnchorRootCRL", "nameConstraintsURI1CACRL"};
   // Name constraints on uniformResourceIdentifiers are not supported.
-  PkitsTestInfo info;
-  info.should_validate = false;
-
-  this->RunTest(certs, crls, info);
+  ASSERT_FALSE(this->Verify(certs, crls));
 }
 
 // Modified version of 4.13.36 Valid URI nameConstraints Test36
@@ -200,10 +183,7 @@ TEST_F(PkitsTest13SignatureVerificationCustom,
                                "ValidURInameConstraintsTest36EE"};
   const char* const crls[] = {"TrustAnchorRootCRL", "nameConstraintsURI2CACRL"};
   // Name constraints on uniformResourceIdentifiers are not supported.
-  PkitsTestInfo info;
-  info.should_validate = false;
-
-  this->RunTest(certs, crls, info);
+  ASSERT_FALSE(this->Verify(certs, crls));
 }
 
 INSTANTIATE_TYPED_TEST_CASE_P(VerifyCertificateChain,

@@ -82,3 +82,23 @@ Host.fontFamily = function() {
   }
   return Host._fontFamily;
 };
+
+/**
+ * @return {string}
+ */
+Host.monospaceFontFamily = function() {
+  if (Host._monospaceFontFamily)
+    return Host._monospaceFontFamily;
+  switch (Host.platform()) {
+    case 'linux':
+      Host._monospaceFontFamily = 'dejavu sans mono, monospace';
+      break;
+    case 'mac':
+      Host._monospaceFontFamily = 'Menlo, monospace';
+      break;
+    case 'windows':
+      Host._monospaceFontFamily = 'Consolas, monospace';
+      break;
+  }
+  return Host._monospaceFontFamily;
+};

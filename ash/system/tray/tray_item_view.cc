@@ -5,7 +5,7 @@
 #include "ash/system/tray/tray_item_view.h"
 
 #include "ash/public/cpp/shelf_types.h"
-#include "ash/shelf/shelf.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/system/tray/system_tray_item.h"
 #include "ash/system/tray/tray_constants.h"
@@ -85,7 +85,7 @@ int TrayItemView::GetAnimationDurationMS() {
 
 gfx::Size TrayItemView::CalculatePreferredSize() const {
   DCHECK_EQ(1, child_count());
-  gfx::Size inner_size = views::View::CalculatePreferredSize();
+  gfx::Size inner_size = views::View::GetPreferredSize();
   if (image_view_)
     inner_size = gfx::Size(kTrayIconSize, kTrayIconSize);
   gfx::Rect rect(inner_size);

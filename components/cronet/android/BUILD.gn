@@ -543,6 +543,7 @@ android_library("cronet_test_apk_java") {
 
   java_files = [
     "test/src/org/chromium/net/CronetTestApplication.java",
+    "test/src/org/chromium/net/CronetTestFramework.java",
     "test/src/org/chromium/net/CronetTestUtil.java",
     "test/src/org/chromium/net/Http2TestHandler.java",
     "test/src/org/chromium/net/Http2TestServer.java",
@@ -673,7 +674,6 @@ android_library("cronet_javatests") {
     "test/javatests/src/org/chromium/net/Criteria.java",
     "test/javatests/src/org/chromium/net/CronetEngineBuilderTest.java",
     "test/javatests/src/org/chromium/net/CronetTestBase.java",
-    "test/javatests/src/org/chromium/net/CronetTestBaseTest.java",
     "test/javatests/src/org/chromium/net/CronetUploadTest.java",
     "test/javatests/src/org/chromium/net/CronetUrlRequestContextTest.java",
     "test/javatests/src/org/chromium/net/CronetUrlRequestTest.java",
@@ -1344,7 +1344,6 @@ copy("cronet_package_copy_test_files") {
     "//net/data/ssl/certificates/quic_test.example.com.crt",
     "//net/data/ssl/certificates/quic_test.example.com.key",
     "//net/data/ssl/certificates/quic_test.example.com.key.pkcs8",
-    "//net/data/ssl/certificates/quic_test.example.com.key.pkcs8.pem",
     "//net/data/ssl/certificates/quic_test.example.com.key.sct",
   ]
   outputs = [

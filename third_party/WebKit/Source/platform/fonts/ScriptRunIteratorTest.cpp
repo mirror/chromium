@@ -30,7 +30,9 @@ class MockScriptData : public ScriptData {
   ~MockScriptData() override {}
 
   static const MockScriptData* Instance() {
-    DEFINE_THREAD_SAFE_STATIC_LOCAL(const MockScriptData, mock_script_data, ());
+    DEFINE_THREAD_SAFE_STATIC_LOCAL(const MockScriptData, mock_script_data,
+                                    (new MockScriptData()));
+
     return &mock_script_data;
   }
 

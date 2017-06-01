@@ -16,7 +16,6 @@
 #include "components/autofill/core/common/autofill_constants.h"
 #include "components/payments/content/payment_request_spec.h"
 #include "components/payments/content/payment_request_state.h"
-#include "components/payments/core/payment_request_data_util.h"
 #include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/models/simple_combobox_model.h"
@@ -69,11 +68,6 @@ base::string16 ContactInfoEditorViewController::GetInitialValueForType(
     autofill::ServerFieldType type) {
   if (!profile_to_edit_)
     return base::string16();
-
-  if (type == autofill::PHONE_HOME_WHOLE_NUMBER) {
-    return data_util::GetFormattedPhoneNumberForDisplay(
-        *profile_to_edit_, state()->GetApplicationLocale());
-  }
 
   return profile_to_edit_->GetInfo(autofill::AutofillType(type),
                                    state()->GetApplicationLocale());
@@ -159,28 +153,12 @@ ContactInfoEditorViewController::ContactInfoValidationDelegate::
     ~ContactInfoValidationDelegate() {}
 
 bool ContactInfoEditorViewController::ContactInfoValidationDelegate::
-    ShouldFormat() {
-  return field_.type == autofill::PHONE_HOME_WHOLE_NUMBER;
-}
-
-base::string16
-ContactInfoEditorViewController::ContactInfoValidationDelegate::Format(
-    const base::string16& text) {
-  return base::UTF8ToUTF16(data_util::FormatPhoneForDisplay(
-      base::UTF16ToUTF8(text),
-      autofill::AutofillCountry::CountryCodeForLocale(locale_)));
-}
-
-bool ContactInfoEditorViewController::ContactInfoValidationDelegate::
     IsValidTextfield(views::Textfield* textfield) {
   return ValidateTextfield(textfield, nullptr);
 }
 
 bool ContactInfoEditorViewController::ContactInfoValidationDelegate::
-    TextfieldValueChanged(views::Textfield* textfield, bool was_blurred) {
-  if (!was_blurred)
-    return true;
-
+    TextfieldValueChanged(views::Textfield* textfield) {
   base::string16 error_message;
   bool is_valid = ValidateTextfield(textfield, &error_message);
   controller_->DisplayErrorMessageForField(field_.type, error_message);

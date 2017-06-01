@@ -64,8 +64,6 @@ class ModuleScriptLoaderTestModulator final : public DummyModulator {
     return security_origin_.Get();
   }
 
-  ScriptState* GetScriptState() override { return script_state_.Get(); }
-
   ScriptModule CompileModule(const String& script,
                              const String& url_str,
                              AccessControlStatus access_control_status,
@@ -112,9 +110,8 @@ void ModuleScriptLoaderTest::SetUp() {
   platform_->AdvanceClockSeconds(1.);  // For non-zero DocumentParserTimings
   dummy_page_holder_ = DummyPageHolder::Create(IntSize(500, 500));
   GetDocument().SetURL(KURL(KURL(), "https://example.test"));
-  auto* context =
-      MockFetchContext::Create(MockFetchContext::kShouldLoadNewResource);
-  fetcher_ = ResourceFetcher::Create(context, context->GetTaskRunner().Get());
+  fetcher_ = ResourceFetcher::Create(
+      MockFetchContext::Create(MockFetchContext::kShouldLoadNewResource));
   modulator_ = new ModuleScriptLoaderTestModulator(
       ToScriptStateForMainWorld(&GetFrame()),
       GetDocument().GetSecurityOrigin());

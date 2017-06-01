@@ -791,25 +791,15 @@ TEST_F(MediaControlsImplTest, MAYBE_TimelineMetricsDragBackAndForth) {
       "Media.Timeline.DragTimeDelta.128_255", 9 /* (-4m, -2m] */, 1);
 }
 
-namespace {
-
-class MediaControlsImplTestWithMockScheduler : public MediaControlsImplTest {
- protected:
-  void SetUp() override {
-    // DocumentParserTiming has DCHECKS to make sure time > 0.0.
-    platform_->AdvanceClockSeconds(1);
-
-    MediaControlsImplTest::SetUp();
-  }
-
+TEST_F(MediaControlsImplTest, ControlsRemainVisibleDuringKeyboardInteraction) {
   ScopedTestingPlatformSupport<TestingPlatformSupportWithMockScheduler>
-      platform_;
-};
+      platform;
 
-}  // namespace
+  // DocumentParserTiming has DCHECKS to make sure time > 0.0.
+  platform->AdvanceClockSeconds(1);
 
-TEST_F(MediaControlsImplTestWithMockScheduler,
-       ControlsRemainVisibleDuringKeyboardInteraction) {
+  // Need to reinitialize page since we changed the platform.
+  InitializePage();
   EnsureSizing();
 
   Element* panel = MediaControls().PanelElement();
@@ -823,23 +813,23 @@ TEST_F(MediaControlsImplTestWithMockScheduler,
   EXPECT_TRUE(IsElementVisible(*panel));
 
   // Tabbing between controls prevents controls from hiding.
-  platform_->RunForPeriodSeconds(2);
+  platform->RunForPeriodSeconds(2);
   MediaControls().DispatchEvent(Event::Create("focusin"));
-  platform_->RunForPeriodSeconds(2);
+  platform->RunForPeriodSeconds(2);
   EXPECT_TRUE(IsElementVisible(*panel));
 
   // Seeking on the timeline or volume bar prevents controls from hiding.
   MediaControls().DispatchEvent(Event::Create("input"));
-  platform_->RunForPeriodSeconds(2);
+  platform->RunForPeriodSeconds(2);
   EXPECT_TRUE(IsElementVisible(*panel));
 
   // Pressing a key prevents controls from hiding.
   MediaControls().PanelElement()->DispatchEvent(Event::Create("keypress"));
-  platform_->RunForPeriodSeconds(2);
+  platform->RunForPeriodSeconds(2);
   EXPECT_TRUE(IsElementVisible(*panel));
 
   // Once user interaction stops, controls can hide.
-  platform_->RunForPeriodSeconds(2);
+  platform->RunForPeriodSeconds(2);
   EXPECT_FALSE(IsElementVisible(*panel));
 }
 

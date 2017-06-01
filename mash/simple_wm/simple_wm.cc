@@ -138,7 +138,7 @@ class SimpleWM::WindowListView : public views::WidgetDelegateView,
     stroke_bounds.set_height(1);
     canvas->FillRect(stroke_bounds, SK_ColorDKGRAY);
   }
-  gfx::Size CalculatePreferredSize() const override {
+  gfx::Size GetPreferredSize() const override {
     std::unique_ptr<views::MdTextButton> measure_button(
         views::MdTextButton::Create(nullptr, base::UTF8ToUTF16("Sample")));
     int height =
@@ -526,7 +526,7 @@ void SimpleWM::OnWmNewDisplay(
       std::move(frame_decoration_values));
   focus_controller_ = base::MakeUnique<wm::FocusController>(this);
   aura::client::SetFocusClient(display_root_, focus_controller_.get());
-  wm::SetActivationClient(display_root_, focus_controller_.get());
+  aura::client::SetActivationClient(display_root_, focus_controller_.get());
   display_root_->AddPreTargetHandler(focus_controller_.get());
 }
 
@@ -589,8 +589,8 @@ SimpleWM::FrameView* SimpleWM::GetFrameViewForClientWindow(
 
 void SimpleWM::OnWindowListViewItemActivated(aura::Window* window) {
   window->Show();
-  wm::ActivationClient* activation_client =
-      wm::GetActivationClient(window->GetRootWindow());
+  aura::client::ActivationClient* activation_client =
+      aura::client::GetActivationClient(window->GetRootWindow());
   activation_client->ActivateWindow(window);
 }
 

@@ -16,6 +16,52 @@
 
 namespace blink {
 
+class RespondWithObserver::ThenFunction final : public ScriptFunction {
+ public:
+  enum ResolveType {
+    kFulfilled,
+    kRejected,
+  };
+
+  static v8::Local<v8::Function> CreateFunction(ScriptState* script_state,
+                                                RespondWithObserver* observer,
+                                                ResolveType type) {
+    ThenFunction* self = new ThenFunction(script_state, observer, type);
+    return self->BindToV8Function();
+  }
+
+  DEFINE_INLINE_VIRTUAL_TRACE() {
+    visitor->Trace(observer_);
+    ScriptFunction::Trace(visitor);
+  }
+
+ private:
+  ThenFunction(ScriptState* script_state,
+               RespondWithObserver* observer,
+               ResolveType type)
+      : ScriptFunction(script_state),
+        observer_(observer),
+        resolve_type_(type) {}
+
+  ScriptValue Call(ScriptValue value) override {
+    DCHECK(observer_);
+    DCHECK(resolve_type_ == kFulfilled || resolve_type_ == kRejected);
+    if (resolve_type_ == kRejected) {
+      observer_->ResponseWasRejected(
+          kWebServiceWorkerResponseErrorPromiseRejected);
+      value =
+          ScriptPromise::Reject(value.GetScriptState(), value).GetScriptValue();
+    } else {
+      observer_->ResponseWasFulfilled(value);
+    }
+    observer_ = nullptr;
+    return value;
+  }
+
+  Member<RespondWithObserver> observer_;
+  ResolveType resolve_type_;
+};
+
 void RespondWithObserver::ContextDestroyed(ExecutionContext*) {
   if (observer_) {
     DCHECK_EQ(kPending, state_);
@@ -34,12 +80,13 @@ void RespondWithObserver::DidDispatchEvent(
   if (state_ != kInitial)
     return;
 
-  if (dispatch_result == DispatchEventResult::kNotCanceled) {
-    OnNoResponse();
-  } else {
-    OnResponseRejected(kWebServiceWorkerResponseErrorDefaultPrevented);
+  if (dispatch_result != DispatchEventResult::kNotCanceled) {
+    observer_->IncrementPendingActivity();
+    ResponseWasRejected(kWebServiceWorkerResponseErrorDefaultPrevented);
+    return;
   }
 
+  OnNoResponse();
   state_ = kDone;
   observer_.Clear();
 }
@@ -54,25 +101,25 @@ void RespondWithObserver::RespondWith(ScriptState* script_state,
   }
 
   state_ = kPending;
-  observer_->WaitUntil(
-      script_state, script_promise, exception_state,
-      WTF::Bind(&RespondWithObserver::ResponseWasFulfilled,
-                WrapPersistent(this)),
-      WTF::Bind(&RespondWithObserver::ResponseWasRejected, WrapPersistent(this),
-                kWebServiceWorkerResponseErrorPromiseRejected));
+  observer_->IncrementPendingActivity();
+  script_promise.Then(ThenFunction::CreateFunction(script_state, this,
+                                                   ThenFunction::kFulfilled),
+                      ThenFunction::CreateFunction(script_state, this,
+                                                   ThenFunction::kRejected));
 }
 
 void RespondWithObserver::ResponseWasRejected(
-    WebServiceWorkerResponseError error,
-    const ScriptValue& value) {
+    WebServiceWorkerResponseError error) {
   OnResponseRejected(error);
   state_ = kDone;
+  observer_->DecrementPendingActivity();
   observer_.Clear();
 }
 
 void RespondWithObserver::ResponseWasFulfilled(const ScriptValue& value) {
   OnResponseFulfilled(value);
   state_ = kDone;
+  observer_->DecrementPendingActivity();
   observer_.Clear();
 }
 

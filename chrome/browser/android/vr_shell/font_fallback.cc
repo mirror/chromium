@@ -85,16 +85,13 @@ class CachedFontSet {
     }
   }
 
-  bool GetFallbackFontNameForChar(UChar32 c, std::string* font_name) {
+  std::string GetFallbackFontNameForChar(UChar32 c) {
     if (unknown_chars_.find(c) != unknown_chars_.end())
-      return false;
-
+      return "";
     for (SkFontID font_id : font_ids_) {
       std::unique_ptr<CachedFont>& font = g_fonts.Get()[font_id];
-      if (font->HasGlyphForCharacter(c)) {
-        *font_name = font->GetFontName();
-        return true;
-      }
+      if (font->HasGlyphForCharacter(c))
+        return font->GetFontName();
     }
     sk_sp<SkFontMgr> font_mgr(SkFontMgr::RefDefault());
     const char* bcp47_locales[] = {locale_.c_str()};
@@ -107,11 +104,10 @@ class CachedFontSet {
       std::unique_ptr<CachedFont>& cached_font = g_fonts.Get()[font_id];
       if (!cached_font)
         cached_font = CachedFont::CreateForTypeface(tf);
-      *font_name = cached_font->GetFontName();
-      return true;
+      return cached_font->GetFontName();
     }
     unknown_chars_.insert(c);
-    return false;
+    return std::string();
   }
 
  private:
@@ -137,17 +133,14 @@ bool FontSupportsChar(const gfx::Font& font, UChar32 c) {
 
 }  // namespace
 
-bool GetFallbackFontNameForChar(const gfx::Font& default_font,
-                                UChar32 c,
-                                const std::string& locale,
-                                std::string* font_name) {
-  if (FontSupportsChar(default_font, c)) {
-    *font_name = std::string();
-    return true;
-  }
+std::string GetFallbackFontNameForChar(const gfx::Font& default_font,
+                                       UChar32 c,
+                                       const std::string& locale) {
+  if (FontSupportsChar(default_font, c))
+    return std::string();
   CachedFontSet& cached_font_set = g_cached_font_set.Get();
   cached_font_set.SetLocale(locale);
-  return cached_font_set.GetFallbackFontNameForChar(c, font_name);
+  return cached_font_set.GetFallbackFontNameForChar(c);
 }
 
 }  // namespace vr_shell

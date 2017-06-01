@@ -190,11 +190,6 @@ Polymer({
     this.showDoNotTrackDialog_ = false;
   },
 
-  /** @private */
-  onDoNotTrackDialogClosed_: function() {
-    cr.ui.focusWithoutInk(this.$.doNotTrack);
-  },
-
   /**
    * Handles the shared proxy confirmation dialog 'Confirm' button.
    * @private

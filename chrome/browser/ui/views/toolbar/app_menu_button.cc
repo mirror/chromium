@@ -25,6 +25,7 @@
 #include "chrome/browser/ui/views/toolbar/toolbar_button.h"
 #include "chrome/browser/ui/views/toolbar/toolbar_view.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/grit/theme_resources.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/theme_provider.h"
 #include "ui/gfx/canvas.h"
@@ -126,7 +127,7 @@ void AppMenuButton::RemoveMenuListener(views::MenuListener* listener) {
   menu_listeners_.RemoveObserver(listener);
 }
 
-gfx::Size AppMenuButton::CalculatePreferredSize() const {
+gfx::Size AppMenuButton::GetPreferredSize() const {
   gfx::Rect rect(gfx::Size(kIconSize, kIconSize));
   rect.Inset(gfx::Insets(-ToolbarButton::kInteriorPadding));
   return rect.size();
@@ -142,9 +143,9 @@ void AppMenuButton::Layout() {
   views::MenuButton::Layout();
 }
 
-void AppMenuButton::PaintButtonContents(gfx::Canvas* canvas) {
+void AppMenuButton::OnPaint(gfx::Canvas* canvas) {
   if (!animation_) {
-    views::MenuButton::PaintButtonContents(canvas);
+    views::MenuButton::OnPaint(canvas);
     return;
   }
 

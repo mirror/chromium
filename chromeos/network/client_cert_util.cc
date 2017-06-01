@@ -27,9 +27,9 @@ namespace chromeos {
 
 namespace client_cert {
 
-const char kDefaultTPMPin[] = "111111";
-
 namespace {
+
+const char kDefaultTPMPin[] = "111111";
 
 std::string GetStringFromDictionary(const base::DictionaryValue& dict,
                                     const std::string& key) {

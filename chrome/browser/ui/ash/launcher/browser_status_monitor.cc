@@ -121,7 +121,7 @@ void BrowserStatusMonitor::UpdateBrowserItemState() {
 }
 
 void BrowserStatusMonitor::OnWindowActivated(
-    wm::ActivationChangeObserver::ActivationReason reason,
+    aura::client::ActivationChangeObserver::ActivationReason reason,
     aura::Window* gained_active,
     aura::Window* lost_active) {
   DCHECK(initialized_);

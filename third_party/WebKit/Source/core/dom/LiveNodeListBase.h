@@ -149,7 +149,7 @@ Element* LiveNodeListBase::TraverseMatchingElementsForwardToOffset(
     if (++current_offset == offset)
       return next;
   }
-  return nullptr;
+  return 0;
 }
 
 template <typename MatchFunc>
@@ -167,7 +167,7 @@ Element* LiveNodeListBase::TraverseMatchingElementsBackwardToOffset(
     if (--current_offset == offset)
       return previous;
   }
-  return nullptr;
+  return 0;
 }
 
 }  // namespace blink

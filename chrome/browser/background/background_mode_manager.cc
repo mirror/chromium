@@ -644,6 +644,7 @@ void BackgroundModeManager::ExecuteCommand(int command_id, int event_flags) {
         chrome::ShowAboutChrome(bmd->GetBrowserWindow());
       } else {
         UserManager::Show(base::FilePath(),
+                          profiles::USER_MANAGER_NO_TUTORIAL,
                           profiles::USER_MANAGER_SELECT_PROFILE_ABOUT_CHROME);
       }
       break;
@@ -653,6 +654,7 @@ void BackgroundModeManager::ExecuteCommand(int command_id, int event_flags) {
         chrome::OpenTaskManager(bmd->GetBrowserWindow());
       } else {
         UserManager::Show(base::FilePath(),
+                          profiles::USER_MANAGER_NO_TUTORIAL,
                           profiles::USER_MANAGER_SELECT_PROFILE_TASK_MANAGER);
       }
       break;
@@ -681,6 +683,7 @@ void BackgroundModeManager::ExecuteCommand(int command_id, int event_flags) {
         bmd->ExecuteCommand(command_id, event_flags);
       } else {
         UserManager::Show(base::FilePath(),
+                          profiles::USER_MANAGER_NO_TUTORIAL,
                           profiles::USER_MANAGER_SELECT_PROFILE_NO_ACTION);
       }
       break;

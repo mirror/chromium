@@ -181,9 +181,6 @@ ScriptPromise CredentialsContainer::get(
   String mediation = "optional";
   if (options.hasUnmediated() && !options.hasMediation()) {
     mediation = options.unmediated() ? "silent" : "optional";
-    UseCounter::Count(
-        context,
-        UseCounter::kCredentialManagerCredentialRequestOptionsOnlyUnmediated);
   } else if (options.hasMediation()) {
     mediation = options.mediation();
     if (options.hasUnmediated() &&
@@ -277,7 +274,7 @@ ScriptPromise CredentialsContainer::create(
   return promise;
 }
 
-ScriptPromise CredentialsContainer::preventSilentAccess(
+ScriptPromise CredentialsContainer::requireUserMediation(
     ScriptState* script_state) {
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   ScriptPromise promise = resolver->Promise();
@@ -285,13 +282,8 @@ ScriptPromise CredentialsContainer::preventSilentAccess(
     return promise;
 
   CredentialManagerClient::From(ExecutionContext::From(script_state))
-      ->DispatchPreventSilentAccess(new NotificationCallbacks(resolver));
+      ->DispatchRequireUserMediation(new NotificationCallbacks(resolver));
   return promise;
-}
-
-ScriptPromise CredentialsContainer::requireUserMediation(
-    ScriptState* script_state) {
-  return preventSilentAccess(script_state);
 }
 
 }  // namespace blink

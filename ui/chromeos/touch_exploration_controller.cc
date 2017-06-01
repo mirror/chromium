@@ -72,11 +72,6 @@ void TouchExplorationController::SetExcludeBounds(const gfx::Rect& bounds) {
   exclude_bounds_ = bounds;
 }
 
-void TouchExplorationController::SetLiftActivationBounds(
-    const gfx::Rect& bounds) {
-  lift_activation_bounds_ = bounds;
-}
-
 ui::EventRewriteStatus TouchExplorationController::RewriteEvent(
     const ui::Event& event,
     std::unique_ptr<ui::Event>* rewritten_event) {
@@ -328,7 +323,6 @@ ui::EventRewriteStatus TouchExplorationController::InSingleTapPressed(
       passthrough_timer_.Stop();
     if (current_touch_ids_.size() == 0 &&
         event.pointer_details().id == initial_press_->pointer_details().id) {
-      MaybeSendSimulatedTapInLiftActivationBounds(event);
       SET_STATE(SINGLE_TAP_RELEASED);
     } else if (current_touch_ids_.size() == 0) {
       SET_STATE(NO_FINGERS_DOWN);
@@ -439,7 +433,7 @@ ui::EventRewriteStatus TouchExplorationController::InDoubleTapPending(
     if (current_touch_ids_.size() != 0)
       return EVENT_REWRITE_DISCARD;
 
-    SendSimulatedClickOrTap();
+    SendSimulatedClick();
 
     SET_STATE(NO_FINGERS_DOWN);
     return ui::EVENT_REWRITE_DISCARD;
@@ -458,7 +452,7 @@ ui::EventRewriteStatus TouchExplorationController::InTouchReleasePending(
     if (current_touch_ids_.size() != 0)
       return EVENT_REWRITE_DISCARD;
 
-    SendSimulatedClickOrTap();
+    SendSimulatedClick();
     SET_STATE(NO_FINGERS_DOWN);
     return ui::EVENT_REWRITE_DISCARD;
   }
@@ -479,7 +473,6 @@ ui::EventRewriteStatus TouchExplorationController::InTouchExploration(
   } else if (type == ui::ET_TOUCH_RELEASED || type == ui::ET_TOUCH_CANCELLED) {
     initial_press_.reset(new TouchEvent(event));
     StartTapTimer();
-    MaybeSendSimulatedTapInLiftActivationBounds(event);
     SET_STATE(TOUCH_EXPLORE_RELEASED);
   } else if (type != ui::ET_TOUCH_MOVED) {
     NOTREACHED();
@@ -621,7 +614,7 @@ ui::EventRewriteStatus TouchExplorationController::InTouchExploreSecondPress(
     if (current_touch_ids_.size() != 1)
       return EVENT_REWRITE_DISCARD;
 
-    SendSimulatedClickOrTap();
+    SendSimulatedClick();
 
     SET_STATE(TOUCH_EXPLORATION);
     EnterTouchToMouseMode();
@@ -643,17 +636,19 @@ void TouchExplorationController::PlaySoundForTimer() {
   delegate_->PlayVolumeAdjustEarcon();
 }
 
-void TouchExplorationController::SendSimulatedClickOrTap() {
+void TouchExplorationController::SendSimulatedClick() {
   // If we got an anchor point from ChromeVox, send a double-tap gesture
   // and let ChromeVox handle the click.
   if (anchor_point_state_ == ANCHOR_POINT_EXPLICITLY_SET) {
     delegate_->HandleAccessibilityGesture(ui::AX_GESTURE_CLICK);
     return;
   }
-  SendSimulatedTap();
-}
 
-void TouchExplorationController::SendSimulatedTap() {
+  // If we don't have an anchor point, we can't send a simulated click.
+  if (anchor_point_state_ == ANCHOR_POINT_NONE)
+    return;
+
+  // Otherwise send a simulated press/release at the anchor point.
   std::unique_ptr<ui::TouchEvent> touch_press;
   touch_press.reset(new ui::TouchEvent(ui::ET_TOUCH_PRESSED, gfx::Point(),
                                        Now(),
@@ -669,16 +664,6 @@ void TouchExplorationController::SendSimulatedTap() {
   touch_release->set_location_f(anchor_point_);
   touch_release->set_root_location_f(anchor_point_);
   DispatchEvent(touch_release.get());
-}
-
-void TouchExplorationController::MaybeSendSimulatedTapInLiftActivationBounds(
-    const ui::TouchEvent& event) {
-  gfx::Point location = event.location();
-  root_window_->GetHost()->ConvertScreenInPixelsToDIP(&location);
-  if (lift_activation_bounds_.Contains(anchor_point_.x(), anchor_point_.y()) &&
-      lift_activation_bounds_.Contains(location)) {
-    SendSimulatedTap();
-  }
 }
 
 ui::EventRewriteStatus TouchExplorationController::InSlideGesture(

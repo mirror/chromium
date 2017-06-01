@@ -166,6 +166,16 @@ public class PaymentRequestTestRule extends ChromeActivityTestRule<ChromeTabbedA
         mTestCommon.clickAndWait(resourceId, helper);
     }
 
+    /**
+     * Clicks on an element in the "Shipping summary" section of the payments UI. This section
+     * combines both shipping address and shipping option. It is replaced by "Shipping address" and
+     * "Shipping option" sections upon expanding the payments UI.
+     */
+    protected void clickInShippingSummaryAndWait(final int resourceId, CallbackHelper helper)
+            throws InterruptedException, TimeoutException {
+        mTestCommon.clickInShippingSummaryAndWait(resourceId, helper);
+    }
+
     /** Clicks on an element in the "Shipping address" section of the payments UI. */
     protected void clickInShippingAddressAndWait(final int resourceId, CallbackHelper helper)
             throws InterruptedException, TimeoutException {
@@ -208,8 +218,8 @@ public class PaymentRequestTestRule extends ChromeActivityTestRule<ChromeTabbedA
     }
 
     /** Gets the button state for the shipping summary section. */
-    protected int getShippingAddressSectionButtonState() throws ExecutionException {
-        return mTestCommon.getShippingAddressSectionButtonState();
+    protected int getSummarySectionButtonState() throws ExecutionException {
+        return mTestCommon.getSummarySectionButtonState();
     }
 
     /** Gets the button state for the contact details section. */
@@ -220,16 +230,6 @@ public class PaymentRequestTestRule extends ChromeActivityTestRule<ChromeTabbedA
     /**  Returns the label corresponding to the payment instrument at the specified |index|. */
     protected String getPaymentInstrumentLabel(final int index) throws ExecutionException {
         return mTestCommon.getPaymentInstrumentLabel(index);
-    }
-
-    /** Returns the label of the selected payment instrument. */
-    protected String getSelectedPaymentInstrumentLabel() throws ExecutionException {
-        return mTestCommon.getSelectedPaymentInstrumentLabel();
-    }
-
-    /**  Returns the total amount in order summary section. */
-    protected String getOrderSummaryTotal() throws ExecutionException {
-        return mTestCommon.getOrderSummaryTotal();
     }
 
     /**
@@ -258,20 +258,6 @@ public class PaymentRequestTestRule extends ChromeActivityTestRule<ChromeTabbedA
     protected String getShippingAddressSuggestionLabel(final int suggestionIndex)
             throws ExecutionException {
         return mTestCommon.getShippingAddressSuggestionLabel(suggestionIndex);
-    }
-
-    /**
-     *  Returns the summary text of the shipping address section.
-     */
-    protected String getShippingAddressSummaryLabel() throws ExecutionException {
-        return mTestCommon.getShippingAddressSummary();
-    }
-
-    /**
-     *  Returns the summary text of the shipping option section.
-     */
-    protected String getShippingOptionSummaryLabel() throws ExecutionException {
-        return mTestCommon.getShippingOptionSummary();
     }
 
     /** Returns the focused view in the card editor view. */
@@ -312,7 +298,7 @@ public class PaymentRequestTestRule extends ChromeActivityTestRule<ChromeTabbedA
     }
 
     /**
-     *  Returns the number of shipping address suggestions.
+     *  Returns the the number of shipping address suggestions.
      */
     protected int getNumberOfShippingAddressSuggestions() throws ExecutionException {
         return mTestCommon.getNumberOfShippingAddressSuggestions();

@@ -21,8 +21,7 @@ PageLoadExtraInfo::PageLoadExtraInfo(
     UserInitiatedInfo page_end_user_initiated_info,
     const base::Optional<base::TimeDelta>& page_end_time,
     const mojom::PageLoadMetadata& main_frame_metadata,
-    const mojom::PageLoadMetadata& subframe_metadata,
-    ukm::SourceId source_id)
+    const mojom::PageLoadMetadata& subframe_metadata)
     : navigation_start(navigation_start),
       first_background_time(first_background_time),
       first_foreground_time(first_foreground_time),
@@ -35,8 +34,7 @@ PageLoadExtraInfo::PageLoadExtraInfo(
       page_end_user_initiated_info(page_end_user_initiated_info),
       page_end_time(page_end_time),
       main_frame_metadata(main_frame_metadata),
-      subframe_metadata(subframe_metadata),
-      source_id(source_id) {}
+      subframe_metadata(subframe_metadata) {}
 
 PageLoadExtraInfo::PageLoadExtraInfo(const PageLoadExtraInfo& other) = default;
 
@@ -55,7 +53,7 @@ PageLoadExtraInfo PageLoadExtraInfo::CreateForTesting(
       page_load_metrics::END_NONE,
       page_load_metrics::UserInitiatedInfo::NotUserInitiated(),
       base::TimeDelta(), page_load_metrics::mojom::PageLoadMetadata(),
-      page_load_metrics::mojom::PageLoadMetadata(), 0 /* source_id */);
+      page_load_metrics::mojom::PageLoadMetadata());
 }
 
 ExtraRequestCompleteInfo::ExtraRequestCompleteInfo(
@@ -104,8 +102,7 @@ PageLoadMetricsObserver::ObservePolicy PageLoadMetricsObserver::OnRedirect(
 }
 
 PageLoadMetricsObserver::ObservePolicy PageLoadMetricsObserver::OnCommit(
-    content::NavigationHandle* navigation_handle,
-    ukm::SourceId source_id) {
+    content::NavigationHandle* navigation_handle) {
   return CONTINUE_OBSERVING;
 }
 
@@ -129,14 +126,9 @@ PageLoadMetricsObserver::FlushMetricsOnAppEnterBackground(
 PageLoadMetricsObserver::ObservePolicy
 PageLoadMetricsObserver::ShouldObserveMimeType(
     const std::string& mime_type) const {
-  return IsStandardWebPageMimeType(mime_type) ? CONTINUE_OBSERVING
-                                              : STOP_OBSERVING;
-}
-
-// static
-bool PageLoadMetricsObserver::IsStandardWebPageMimeType(
-    const std::string& mime_type) {
-  return mime_type == "text/html" || mime_type == "application/xhtml+xml";
+  return mime_type == "text/html" || mime_type == "application/xhtml+xml"
+             ? CONTINUE_OBSERVING
+             : STOP_OBSERVING;
 }
 
 }  // namespace page_load_metrics

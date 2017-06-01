@@ -53,11 +53,9 @@ constexpr base::TimeDelta kThrottlingDelayAfterAudioIsPlayed =
     base::TimeDelta::FromSeconds(5);
 constexpr base::TimeDelta kQueueingTimeWindowDuration =
     base::TimeDelta::FromSeconds(1);
-// Threshold for discarding ultra-long tasks. It is assumed that ultra-long
-// tasks are reporting glitches (e.g. system falling asleep in the middle
-// of the task).
-constexpr base::TimeDelta kLongTaskDiscardingThreshold =
-    base::TimeDelta::FromSeconds(30);
+// Maximal bound on task duration for reporting.
+constexpr base::TimeDelta kMaxTaskDurationForReporting =
+    base::TimeDelta::FromMinutes(1);
 
 void ReportForegroundRendererTaskLoad(base::TimeTicks time, double load) {
   if (!blink::RuntimeEnabledFeatures::timerThrottlingForBackgroundTabsEnabled())
@@ -66,8 +64,8 @@ void ReportForegroundRendererTaskLoad(base::TimeTicks time, double load) {
   int load_percentage = static_cast<int>(load * 100);
   DCHECK_LE(load_percentage, 100);
 
-  UMA_HISTOGRAM_PERCENTAGE(
-      "RendererScheduler.ForegroundRendererMainThreadLoad2", load_percentage);
+  UMA_HISTOGRAM_PERCENTAGE("RendererScheduler.ForegroundRendererMainThreadLoad",
+                           load_percentage);
   TRACE_COUNTER1(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
                  "RendererScheduler.ForegroundRendererLoad", load_percentage);
 }
@@ -79,8 +77,8 @@ void ReportBackgroundRendererTaskLoad(base::TimeTicks time, double load) {
   int load_percentage = static_cast<int>(load * 100);
   DCHECK_LE(load_percentage, 100);
 
-  UMA_HISTOGRAM_PERCENTAGE(
-      "RendererScheduler.BackgroundRendererMainThreadLoad2", load_percentage);
+  UMA_HISTOGRAM_PERCENTAGE("RendererScheduler.BackgroundRendererMainThreadLoad",
+                           load_percentage);
   TRACE_COUNTER1(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
                  "RendererScheduler.BackgroundRendererLoad", load_percentage);
 }
@@ -219,14 +217,14 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
       in_idle_period_for_testing(false),
       use_virtual_time(false),
       is_audio_playing(false),
-      virtual_time_paused(false),
       rail_mode_observer(nullptr),
       wake_up_budget_pool(nullptr),
-      task_duration_reporter("RendererScheduler.TaskDurationPerQueueType2"),
-      foreground_task_duration_reporter(
-          "RendererScheduler.TaskDurationPerQueueType2.Foreground"),
-      background_task_duration_reporter(
-          "RendererScheduler.TaskDurationPerQueueType2.Background") {
+      task_duration_per_queue_type_histogram(base::Histogram::FactoryGet(
+          "RendererScheduler.TaskDurationPerQueueType",
+          1,
+          static_cast<int>(TaskQueue::QueueType::COUNT),
+          static_cast<int>(TaskQueue::QueueType::COUNT) + 1,
+          base::HistogramBase::kUmaTargetedHistogramFlag)) {
   foreground_main_thread_load_tracker.Resume(now);
 }
 
@@ -370,8 +368,6 @@ scoped_refptr<TaskQueue> RendererSchedulerImpl::NewTimerTaskQueue(
       TimeDomainType::THROTTLED) {
     task_queue_throttler_->IncreaseThrottleRefCount(timer_task_queue.get());
   }
-  if (GetMainThreadOnly().virtual_time_paused)
-    timer_task_queue->InsertFence(TaskQueue::InsertFencePosition::NOW);
   timer_task_queue->AddTaskObserver(
       &GetMainThreadOnly().timer_task_cost_estimator);
   AddQueueToWakeUpBudgetPool(timer_task_queue.get());
@@ -1042,7 +1038,8 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
         // seem to be safe. Instead we do that by proxy by deprioritizing
         // compositor tasks. This should be safe since we've already gone to the
         // pain of fixing ordering issues with them.
-        new_policy.compositor_queue_policy.priority = TaskQueue::LOW_PRIORITY;
+        new_policy.compositor_queue_policy.priority =
+            TaskQueue::BEST_EFFORT_PRIORITY;
       }
       break;
 
@@ -1168,6 +1165,13 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
   new_policy.should_disable_throttling =
       ShouldDisableThrottlingBecauseOfAudio(now) ||
       GetMainThreadOnly().use_virtual_time;
+
+  // TODO(altimin): Consider adding default timer tq to background time
+  // budget pool.
+  if (GetMainThreadOnly().renderer_backgrounded &&
+      RuntimeEnabledFeatures::timerThrottlingForBackgroundTabsEnabled()) {
+    new_policy.timer_queue_policy.time_domain_type = TimeDomainType::THROTTLED;
+  }
 
   // Tracing is done before the early out check, because it's quite possible we
   // will otherwise miss this information in traces.
@@ -1407,25 +1411,6 @@ void RendererSchedulerImpl::ResumeTimerQueue() {
   ForceUpdatePolicy();
 }
 
-void RendererSchedulerImpl::VirtualTimePaused() {
-  DCHECK(!GetMainThreadOnly().virtual_time_paused);
-  GetMainThreadOnly().virtual_time_paused = true;
-  for (const auto& pair : timer_task_runners_) {
-    DCHECK(!task_queue_throttler_->IsThrottled(pair.first.get()));
-    DCHECK(!pair.first->HasFence());
-    pair.first->InsertFence(TaskQueue::InsertFencePosition::NOW);
-  }
-}
-
-void RendererSchedulerImpl::VirtualTimeResumed() {
-  DCHECK(GetMainThreadOnly().virtual_time_paused);
-  GetMainThreadOnly().virtual_time_paused = false;
-  for (const auto& pair : timer_task_runners_) {
-    DCHECK(!task_queue_throttler_->IsThrottled(pair.first.get()));
-    pair.first->RemoveFence();
-  }
-}
-
 void RendererSchedulerImpl::SetTimerQueueSuspensionWhenBackgroundedEnabled(
     bool enabled) {
   // Note that this will only take effect for the next backgrounded signal.
@@ -1540,8 +1525,6 @@ RendererSchedulerImpl::AsValueLocked(base::TimeTicks optional_now) const {
                        .timer_task_cost_estimator.expected_task_duration()
                        .InMillisecondsF());
   state->SetBoolean("is_audio_playing", GetMainThreadOnly().is_audio_playing);
-  state->SetBoolean("virtual_time_paused",
-                    GetMainThreadOnly().virtual_time_paused);
 
   state->BeginDictionary("web_view_schedulers");
   for (WebViewSchedulerImpl* web_view_scheduler :
@@ -1856,42 +1839,47 @@ void RendererSchedulerImpl::DidProcessTask(TaskQueue* task_queue,
   task_queue_throttler()->OnTaskRunTimeReported(task_queue, start_time_ticks,
                                                 end_time_ticks);
 
-  // TODO(altimin): Per-page metrics should also be considered.
-  RecordTaskMetrics(task_queue->GetQueueType(), start_time_ticks,
-                    end_time_ticks);
-}
-
-void RendererSchedulerImpl::RecordTaskMetrics(TaskQueue::QueueType queue_type,
-                                              base::TimeTicks start_time,
-                                              base::TimeTicks end_time) {
-  base::TimeDelta duration = end_time - start_time;
-  if (duration > kLongTaskDiscardingThreshold)
-    return;
-
-  UMA_HISTOGRAM_CUSTOM_COUNTS("RendererScheduler.TaskTime2",
-                              duration.InMicroseconds(), 1, 1000 * 1000, 50);
-
   // We want to measure thread time here, but for efficiency reasons
   // we stick with wall time.
   GetMainThreadOnly().foreground_main_thread_load_tracker.RecordTaskTime(
-      start_time, end_time);
+      start_time_ticks, end_time_ticks);
   GetMainThreadOnly().background_main_thread_load_tracker.RecordTaskTime(
-      start_time, end_time);
+      start_time_ticks, end_time_ticks);
+
+  // TODO(altimin): Per-page metrics should also be considered.
+  RecordTaskMetrics(task_queue->GetQueueType(),
+                    end_time_ticks - start_time_ticks);
+}
+
+void RendererSchedulerImpl::RecordTaskMetrics(TaskQueue::QueueType queue_type,
+                                              base::TimeDelta duration) {
+  UMA_HISTOGRAM_CUSTOM_COUNTS("RendererScheduler.TaskTime",
+                              duration.InMicroseconds(), 1, 1000 * 1000, 50);
 
   // TODO(altimin): See whether this metric is still useful after
   // adding RendererScheduler.TaskDurationPerQueueType.
-  UMA_HISTOGRAM_ENUMERATION("RendererScheduler.NumberOfTasksPerQueueType2",
+  UMA_HISTOGRAM_ENUMERATION("RendererScheduler.NumberOfTasksPerQueueType",
                             static_cast<int>(queue_type),
                             static_cast<int>(TaskQueue::QueueType::COUNT));
 
-  GetMainThreadOnly().task_duration_reporter.RecordTask(queue_type, duration);
+  RecordTaskDurationPerQueueType(queue_type, duration);
+}
 
-  if (GetMainThreadOnly().renderer_backgrounded) {
-    GetMainThreadOnly().background_task_duration_reporter.RecordTask(queue_type,
-                                                                     duration);
-  } else {
-    GetMainThreadOnly().foreground_task_duration_reporter.RecordTask(queue_type,
-                                                                     duration);
+void RendererSchedulerImpl::RecordTaskDurationPerQueueType(
+    TaskQueue::QueueType queue_type,
+    base::TimeDelta duration) {
+  duration = std::min(duration, kMaxTaskDurationForReporting);
+
+  // Report only whole milliseconds to avoid overflow.
+  base::TimeDelta& unreported_duration =
+      GetMainThreadOnly()
+          .unreported_task_duration[static_cast<int>(queue_type)];
+  unreported_duration += duration;
+  int64_t milliseconds = unreported_duration.InMilliseconds();
+  if (milliseconds > 0) {
+    unreported_duration -= base::TimeDelta::FromMilliseconds(milliseconds);
+    GetMainThreadOnly().task_duration_per_queue_type_histogram->AddCount(
+        static_cast<int>(queue_type), static_cast<int>(milliseconds));
   }
 }
 

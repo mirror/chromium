@@ -20,10 +20,6 @@ namespace base {
 class FilePath;
 }
 
-namespace url {
-class Origin;
-}
-
 namespace net {
 
 class CookieOptions;
@@ -90,8 +86,7 @@ class NET_EXPORT NetworkDelegateImpl : public NetworkDelegate {
                       CookieOptions* options) override;
 
   bool OnCanAccessFile(const URLRequest& request,
-                       const base::FilePath& original_path,
-                       const base::FilePath& absolute_path) const override;
+                       const base::FilePath& path) const override;
 
   bool OnCanEnablePrivacyMode(
       const GURL& url,
@@ -103,16 +98,6 @@ class NET_EXPORT NetworkDelegateImpl : public NetworkDelegate {
       const URLRequest& request,
       const GURL& target_url,
       const GURL& referrer_url) const override;
-
-  bool OnCanQueueReportingReport(const url::Origin& origin) const override;
-
-  bool OnCanSendReportingReport(const url::Origin& origin) const override;
-
-  bool OnCanSetReportingClient(const url::Origin& origin,
-                               const GURL& endpoint) const override;
-
-  bool OnCanUseReportingClient(const url::Origin& origin,
-                               const GURL& endpoint) const override;
 };
 
 }  // namespace net

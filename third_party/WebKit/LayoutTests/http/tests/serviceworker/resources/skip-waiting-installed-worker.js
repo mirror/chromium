@@ -23,9 +23,8 @@ self.addEventListener('message', function(event) {
             return;
           }
           if (self.state !== 'activating') {
-            port.postMessage('This assertion passes in current Chromium ' +
-                '(i.e., self.state is "activating"), ' +
-                'but it should fail. See https://crbug.com/725616');
+            port.postMessage(
+                'FAIL: Promise should be resolved after worker activated');
             return;
           }
           port.postMessage('PASS');

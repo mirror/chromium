@@ -1,7 +1,5 @@
 .. _devguide-index:
 
-.. include:: /migration/deprecation.inc
-
 #################
 Developer's Guide
 #################

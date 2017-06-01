@@ -3,4 +3,4 @@
 
 
 This test is solely making sure we don't crash. 
-If this page loaded then no crash occurred.
+If this page loaded then no crash occured.

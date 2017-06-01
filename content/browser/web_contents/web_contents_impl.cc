@@ -35,7 +35,6 @@
 #include "build/build_config.h"
 #include "components/mime_util/mime_util.h"
 #include "components/rappor/public/rappor_utils.h"
-#include "components/ukm/public/ukm_recorder.h"
 #include "components/url_formatter/url_formatter.h"
 #include "content/browser/accessibility/browser_accessibility_state_impl.h"
 #include "content/browser/bad_message.h"
@@ -58,6 +57,8 @@
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/browser/frame_host/render_frame_proxy_host.h"
 #include "content/browser/frame_host/render_widget_host_view_child_frame.h"
+#include "content/browser/host_zoom_map_impl.h"
+#include "content/browser/host_zoom_map_observer.h"
 #include "content/browser/loader/loader_io_thread_notifier.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/manifest/manifest_manager_host.h"
@@ -151,9 +152,6 @@
 #include "content/browser/media/android/media_web_contents_observer_android.h"
 #include "content/browser/web_contents/web_contents_android.h"
 #include "services/device/public/interfaces/nfc.mojom.h"
-#else  // !OS_ANDROID
-#include "content/browser/host_zoom_map_impl.h"
-#include "content/browser/host_zoom_map_observer.h"
 #endif  // OS_ANDROID
 
 #if defined(OS_MACOSX)
@@ -510,9 +508,7 @@ WebContentsImpl::WebContentsImpl(BrowserContext* browser_context)
       audio_stream_monitor_(this),
       bluetooth_connected_device_count_(0),
       virtual_keyboard_requested_(false),
-#if !defined(OS_ANDROID)
       page_scale_factor_is_one_(true),
-#endif  // !defined(OS_ANDROID)
       mouse_lock_widget_(nullptr),
       is_overlay_content_(false),
       loading_weak_factory_(this),
@@ -530,9 +526,7 @@ WebContentsImpl::WebContentsImpl(BrowserContext* browser_context)
 #endif
 
   loader_io_thread_notifier_.reset(new LoaderIOThreadNotifier(this));
-#if !defined(OS_ANDROID)
   host_zoom_map_observer_.reset(new HostZoomMapObserver(this));
-#endif  // !defined(OS_ANDROID)
 }
 
 WebContentsImpl::~WebContentsImpl() {
@@ -1068,7 +1062,6 @@ void WebContentsImpl::RequestAXTreeSnapshot(
   }
 }
 
-#if !defined(OS_ANDROID)
 void WebContentsImpl::SetTemporaryZoomLevel(double level,
                                             bool temporary_zoom_enabled) {
   SendPageMessage(new PageMsg_SetZoomLevel(
@@ -1101,7 +1094,6 @@ void WebContentsImpl::UpdateZoomIfNecessary(const std::string& scheme,
 
   UpdateZoom(level);
 }
-#endif  // !defined(OS_ANDROID)
 
 base::Closure WebContentsImpl::AddBindingSet(
     const std::string& interface_name,
@@ -2299,9 +2291,9 @@ void WebContentsImpl::CreateNewWindow(
   }
 
   if (delegate_) {
-    delegate_->WebContentsCreated(
-        this, render_process_id, opener->GetRoutingID(), params.frame_name,
-        params.target_url, new_contents, create_params);
+    delegate_->WebContentsCreated(this, render_process_id,
+                                  opener->GetRoutingID(), params.frame_name,
+                                  params.target_url, new_contents);
   }
 
   if (opener) {
@@ -2665,7 +2657,7 @@ device::mojom::WakeLockService* WebContentsImpl::GetRendererWakeLock() {
 }
 
 #if defined(OS_ANDROID)
-void WebContentsImpl::GetNFC(device::mojom::NFCRequest request) {
+void WebContentsImpl::GetNFC(device::nfc::mojom::NFCRequest request) {
   if (!nfc_host_)
     nfc_host_.reset(new NFCHost(this));
   nfc_host_->GetNFC(std::move(request));
@@ -2752,7 +2744,8 @@ void WebContentsImpl::MoveRangeSelectionExtent(const gfx::Point& extent) {
   if (!focused_frame)
     return;
 
-  focused_frame->GetFrameInputHandler()->MoveRangeSelectionExtent(extent);
+  focused_frame->Send(new InputMsg_MoveRangeSelectionExtent(
+      focused_frame->GetRoutingID(), extent));
 }
 
 void WebContentsImpl::SelectRange(const gfx::Point& base,
@@ -2761,7 +2754,8 @@ void WebContentsImpl::SelectRange(const gfx::Point& base,
   if (!focused_frame)
     return;
 
-  focused_frame->GetFrameInputHandler()->SelectRange(base, extent);
+  focused_frame->Send(
+      new InputMsg_SelectRange(focused_frame->GetRoutingID(), base, extent));
 }
 
 void WebContentsImpl::AdjustSelectionByCharacterOffset(int start_adjust,
@@ -2770,8 +2764,8 @@ void WebContentsImpl::AdjustSelectionByCharacterOffset(int start_adjust,
   if (!focused_frame)
     return;
 
-  focused_frame->GetFrameInputHandler()->AdjustSelectionByCharacterOffset(
-      start_adjust, end_adjust);
+  focused_frame->Send(new InputMsg_AdjustSelectionByCharacterOffset(
+      focused_frame->GetRoutingID(), start_adjust, end_adjust));
 }
 
 void WebContentsImpl::UpdatePreferredSize(const gfx::Size& pref_size) {
@@ -2931,7 +2925,7 @@ void WebContentsImpl::Undo() {
   if (!focused_frame)
     return;
 
-  focused_frame->GetFrameInputHandler()->Undo();
+  focused_frame->Send(new InputMsg_Undo(focused_frame->GetRoutingID()));
   RecordAction(base::UserMetricsAction("Undo"));
 }
 
@@ -2939,7 +2933,7 @@ void WebContentsImpl::Redo() {
   RenderFrameHost* focused_frame = GetFocusedFrame();
   if (!focused_frame)
     return;
-  focused_frame->GetFrameInputHandler()->Redo();
+  focused_frame->Send(new InputMsg_Redo(focused_frame->GetRoutingID()));
   RecordAction(base::UserMetricsAction("Redo"));
 }
 
@@ -2948,7 +2942,7 @@ void WebContentsImpl::Cut() {
   if (!focused_frame)
     return;
 
-  focused_frame->GetFrameInputHandler()->Cut();
+  focused_frame->Send(new InputMsg_Cut(focused_frame->GetRoutingID()));
   RecordAction(base::UserMetricsAction("Cut"));
 }
 
@@ -2957,7 +2951,7 @@ void WebContentsImpl::Copy() {
   if (!focused_frame)
     return;
 
-  focused_frame->GetFrameInputHandler()->Copy();
+  focused_frame->Send(new InputMsg_Copy(focused_frame->GetRoutingID()));
   RecordAction(base::UserMetricsAction("Copy"));
 }
 
@@ -2968,7 +2962,8 @@ void WebContentsImpl::CopyToFindPboard() {
     return;
 
   // Windows/Linux don't have the concept of a find pasteboard.
-  focused_frame->GetFrameInputHandler()->CopyToFindPboard();
+  focused_frame->Send(
+      new InputMsg_CopyToFindPboard(focused_frame->GetRoutingID()));
   RecordAction(base::UserMetricsAction("CopyToFindPboard"));
 #endif
 }
@@ -2978,7 +2973,7 @@ void WebContentsImpl::Paste() {
   if (!focused_frame)
     return;
 
-  focused_frame->GetFrameInputHandler()->Paste();
+  focused_frame->Send(new InputMsg_Paste(focused_frame->GetRoutingID()));
   RecordAction(base::UserMetricsAction("Paste"));
 }
 
@@ -2987,7 +2982,8 @@ void WebContentsImpl::PasteAndMatchStyle() {
   if (!focused_frame)
     return;
 
-  focused_frame->GetFrameInputHandler()->PasteAndMatchStyle();
+  focused_frame->Send(new InputMsg_PasteAndMatchStyle(
+      focused_frame->GetRoutingID()));
   RecordAction(base::UserMetricsAction("PasteAndMatchStyle"));
 }
 
@@ -2996,7 +2992,7 @@ void WebContentsImpl::Delete() {
   if (!focused_frame)
     return;
 
-  focused_frame->GetFrameInputHandler()->Delete();
+  focused_frame->Send(new InputMsg_Delete(focused_frame->GetRoutingID()));
   RecordAction(base::UserMetricsAction("DeleteSelection"));
 }
 
@@ -3005,7 +3001,7 @@ void WebContentsImpl::SelectAll() {
   if (!focused_frame)
     return;
 
-  focused_frame->GetFrameInputHandler()->SelectAll();
+  focused_frame->Send(new InputMsg_SelectAll(focused_frame->GetRoutingID()));
   RecordAction(base::UserMetricsAction("SelectAll"));
 }
 
@@ -3014,7 +3010,8 @@ void WebContentsImpl::CollapseSelection() {
   if (!focused_frame)
     return;
 
-  focused_frame->GetFrameInputHandler()->CollapseSelection();
+  focused_frame->Send(
+      new InputMsg_CollapseSelection(focused_frame->GetRoutingID()));
 }
 
 void WebContentsImpl::Replace(const base::string16& word) {
@@ -3022,7 +3019,8 @@ void WebContentsImpl::Replace(const base::string16& word) {
   if (!focused_frame)
     return;
 
-  focused_frame->GetFrameInputHandler()->Replace(word);
+  focused_frame->Send(new InputMsg_Replace(
+      focused_frame->GetRoutingID(), word));
 }
 
 void WebContentsImpl::ReplaceMisspelling(const base::string16& word) {
@@ -3030,7 +3028,8 @@ void WebContentsImpl::ReplaceMisspelling(const base::string16& word) {
   if (!focused_frame)
     return;
 
-  focused_frame->GetFrameInputHandler()->ReplaceMisspelling(word);
+  focused_frame->Send(new InputMsg_ReplaceMisspelling(
+      focused_frame->GetRoutingID(), word));
 }
 
 void WebContentsImpl::NotifyContextMenuClosed(
@@ -3851,9 +3850,6 @@ void WebContentsImpl::OnUpdateZoomLimits(RenderViewHostImpl* source,
 
 void WebContentsImpl::OnPageScaleFactorChanged(RenderViewHostImpl* source,
                                                float page_scale_factor) {
-#if !defined(OS_ANDROID)
-  // While page scale factor is used on mobile, this PageScaleFactorIsOne logic
-  // is only needed on desktop.
   bool is_one = page_scale_factor == 1.f;
   if (is_one != page_scale_factor_is_one_) {
     page_scale_factor_is_one_ = is_one;
@@ -3867,7 +3863,6 @@ void WebContentsImpl::OnPageScaleFactorChanged(RenderViewHostImpl* source,
           page_scale_factor_is_one_);
     }
   }
-#endif  // !defined(OS_ANDROID)
 
   for (auto& observer : observers_)
     observer.OnPageScaleFactorChanged(page_scale_factor);
@@ -4462,7 +4457,6 @@ WebContents* WebContentsImpl::GetAsWebContents() {
   return this;
 }
 
-#if !defined(OS_ANDROID)
 double WebContentsImpl::GetPendingPageZoomLevel() {
   NavigationEntry* pending_entry = GetController().GetPendingEntry();
   if (!pending_entry)
@@ -4472,7 +4466,6 @@ double WebContentsImpl::GetPendingPageZoomLevel() {
   return HostZoomMap::GetForWebContents(this)->GetZoomLevelForHostAndScheme(
       url.scheme(), net::GetHostOrSpecFromURL(url));
 }
-#endif  // !defined(OS_ANDROID)
 
 bool WebContentsImpl::HideDownloadUI() const {
   return is_overlay_content_;
@@ -5584,18 +5577,10 @@ void WebContentsImpl::RemoveBindingSet(const std::string& interface_name) {
 }
 
 bool WebContentsImpl::AddDomainInfoToRapporSample(rappor::Sample* sample) {
-  // Here we associate this metric to the main frame URL regardless of what
-  // caused it.
   sample->SetStringField("Domain", ::rappor::GetDomainAndRegistrySampleFromGURL(
                                        GetLastCommittedURL()));
-  return true;
-}
 
-void WebContentsImpl::UpdateUrlForUkmSource(ukm::UkmRecorder* service,
-                                            ukm::SourceId ukm_source_id) {
-  // Here we associate this metric to the main frame URL regardless of what
-  // caused it.
-  service->UpdateSourceURL(ukm_source_id, GetLastCommittedURL());
+  return true;
 }
 
 void WebContentsImpl::FocusedNodeTouched(bool editable) {

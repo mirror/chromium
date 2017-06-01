@@ -246,7 +246,6 @@ void CrossProcessFrameConnector::OnFrameRectChanged(
 
 void CrossProcessFrameConnector::OnUpdateViewportIntersection(
     const gfx::Rect& viewport_intersection) {
-  viewport_intersection_rect_ = viewport_intersection;
   if (view_)
     view_->UpdateViewportIntersection(viewport_intersection);
 }
@@ -302,10 +301,6 @@ void CrossProcessFrameConnector::SetRect(const gfx::Rect& frame_rect) {
 
 RenderWidgetHostViewBase*
 CrossProcessFrameConnector::GetRootRenderWidgetHostView() {
-  // Tests may not have frame_proxy_in_parent_renderer_ set.
-  if (!frame_proxy_in_parent_renderer_)
-    return nullptr;
-
   RenderFrameHostImpl* top_host = frame_proxy_in_parent_renderer_->
       frame_tree_node()->frame_tree()->root()->current_frame_host();
 

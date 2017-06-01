@@ -75,11 +75,7 @@ void ForwardingDisplayDelegate::Configure(const DisplaySnapshot& snapshot,
     return;
   }
 
-  base::Optional<std::unique_ptr<DisplayMode>> transport_mode;
-  if (mode)
-    transport_mode = mode->Clone();
-  delegate_->Configure(snapshot.display_id(), std::move(transport_mode), origin,
-                       callback);
+  delegate_->Configure(snapshot.display_id(), mode->Clone(), origin, callback);
 }
 
 void ForwardingDisplayDelegate::CreateFrameBuffer(const gfx::Size& size) {}

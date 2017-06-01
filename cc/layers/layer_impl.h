@@ -287,9 +287,6 @@ class CC_EXPORT LayerImpl {
   ViewportLayerType viewport_layer_type() const {
     return static_cast<ViewportLayerType>(viewport_layer_type_);
   }
-  bool is_viewport_layer_type() const {
-    return viewport_layer_type() != NOT_VIEWPORT_LAYER;
-  }
 
   void SetCurrentScrollOffset(const gfx::ScrollOffset& scroll_offset);
   gfx::ScrollOffset CurrentScrollOffset() const;
@@ -429,6 +426,14 @@ class CC_EXPORT LayerImpl {
 
   float GetIdealContentsScale() const;
 
+  bool was_ever_ready_since_last_transform_animation() const {
+    return was_ever_ready_since_last_transform_animation_;
+  }
+
+  void set_was_ever_ready_since_last_transform_animation(bool was_ready) {
+    was_ever_ready_since_last_transform_animation_ = was_ready;
+  }
+
   void NoteLayerPropertyChanged();
 
   void SetHasWillChangeTransformHint(bool has_will_change);
@@ -443,10 +448,12 @@ class CC_EXPORT LayerImpl {
   void set_needs_show_scrollbars(bool yes) { needs_show_scrollbars_ = yes; }
   bool needs_show_scrollbars() { return needs_show_scrollbars_; }
 
-  void set_raster_even_if_not_drawn(bool yes) {
-    raster_even_if_not_drawn_ = yes;
+  void set_raster_even_if_not_in_rsll(bool yes) {
+    raster_even_if_not_in_rsll_ = yes;
   }
-  bool raster_even_if_not_drawn() const { return raster_even_if_not_drawn_; }
+  bool raster_even_if_not_in_rsll() const {
+    return raster_even_if_not_in_rsll_;
+  }
 
  protected:
   LayerImpl(LayerTreeImpl* layer_impl,
@@ -507,6 +514,10 @@ class CC_EXPORT LayerImpl {
   bool draws_content_ : 1;
   bool contributes_to_drawn_render_surface_ : 1;
 
+  // This is true if and only if the layer was ever ready since it last animated
+  // (all content was complete).
+  bool was_ever_ready_since_last_transform_animation_ : 1;
+
   static_assert(LAST_VIEWPORT_LAYER_TYPE < (1u << 3),
                 "enough bits for ViewportLayerType (viewport_layer_type_)");
   uint8_t viewport_layer_type_ : 3;  // ViewportLayerType
@@ -565,11 +576,7 @@ class CC_EXPORT LayerImpl {
   // layers) and consumed by LayerTreeImpl::PushPropertiesTo during activation.
   bool needs_show_scrollbars_ : 1;
 
-  // This is set for layers that have a property because of which they are not
-  // drawn (singular transforms), but they can become visible soon (the property
-  // is being animated). For this reason, while these layers are not drawn, they
-  // are still rasterized.
-  bool raster_even_if_not_drawn_ : 1;
+  bool raster_even_if_not_in_rsll_ : 1;
 
   DISALLOW_COPY_AND_ASSIGN(LayerImpl);
 };

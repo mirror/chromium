@@ -41,11 +41,11 @@ void TextPainterBase::SetEmphasisMark(const AtomicString& emphasis_mark,
 
   if (!font_data || emphasis_mark.IsNull()) {
     emphasis_mark_offset_ = 0;
-  } else if (position == TextEmphasisPosition::kOver) {
+  } else if (position == kTextEmphasisPositionOver) {
     emphasis_mark_offset_ = -font_data->GetFontMetrics().Ascent() -
                             font_.EmphasisMarkDescent(emphasis_mark);
   } else {
-    DCHECK(position == TextEmphasisPosition::kUnder);
+    DCHECK(position == kTextEmphasisPositionUnder);
     emphasis_mark_offset_ = font_data->GetFontMetrics().Descent() +
                             font_.EmphasisMarkAscent(emphasis_mark);
   }
@@ -199,9 +199,9 @@ static ResolvedUnderlinePosition ResolveUnderlinePosition(
   switch (baseline_type) {
     case kAlphabeticBaseline:
       switch (style.GetTextUnderlinePosition()) {
-        case TextUnderlinePosition::kAuto:
+        case kTextUnderlinePositionAuto:
           return ResolvedUnderlinePosition::kRoman;
-        case TextUnderlinePosition::kUnder:
+        case kTextUnderlinePositionUnder:
           return ResolvedUnderlinePosition::kUnder;
       }
       break;

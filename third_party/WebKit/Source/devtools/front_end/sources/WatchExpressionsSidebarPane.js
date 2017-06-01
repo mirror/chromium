@@ -35,9 +35,8 @@
  */
 Sources.WatchExpressionsSidebarPane = class extends UI.ThrottledWidget {
   constructor() {
-    super(true);
+    super();
     this.registerRequiredCSS('object_ui/objectValue.css');
-    this.registerRequiredCSS('sources/watchExpressionsSidebarPane.css');
 
     /** @type {!Array.<!Sources.WatchExpression>} */
     this._watchExpressions = [];
@@ -48,8 +47,8 @@ Sources.WatchExpressionsSidebarPane = class extends UI.ThrottledWidget {
     this._refreshButton = new UI.ToolbarButton(Common.UIString('Refresh'), 'largeicon-refresh');
     this._refreshButton.addEventListener(UI.ToolbarButton.Events.Click, this.update, this);
 
-    this.contentElement.classList.add('watch-expressions');
-    this.contentElement.addEventListener('contextmenu', this._contextMenu.bind(this), false);
+    this._bodyElement = this.element.createChild('div', 'vbox watch-expressions');
+    this._bodyElement.addEventListener('contextmenu', this._contextMenu.bind(this), false);
     this._expandController = new ObjectUI.ObjectPropertiesSectionExpandController();
 
     UI.context.addFlavorChangeListener(SDK.ExecutionContext, this.update, this);
@@ -94,9 +93,9 @@ Sources.WatchExpressionsSidebarPane = class extends UI.ThrottledWidget {
    */
   doUpdate() {
     this._linkifier.reset();
-    this.contentElement.removeChildren();
+    this._bodyElement.removeChildren();
     this._watchExpressions = [];
-    this._emptyElement = this.contentElement.createChild('div', 'gray-info-message');
+    this._emptyElement = this._bodyElement.createChild('div', 'gray-info-message');
     this._emptyElement.textContent = Common.UIString('No Watch Expressions');
     var watchExpressionStrings = this._watchExpressionsSetting.get();
     for (var i = 0; i < watchExpressionStrings.length; ++i) {
@@ -118,7 +117,7 @@ Sources.WatchExpressionsSidebarPane = class extends UI.ThrottledWidget {
     var watchExpression = new Sources.WatchExpression(expression, this._expandController, this._linkifier);
     watchExpression.addEventListener(
         Sources.WatchExpression.Events.ExpressionUpdated, this._watchExpressionUpdated, this);
-    this.contentElement.appendChild(watchExpression.element());
+    this._bodyElement.appendChild(watchExpression.element());
     this._watchExpressions.push(watchExpression);
     return watchExpression;
   }
@@ -130,7 +129,7 @@ Sources.WatchExpressionsSidebarPane = class extends UI.ThrottledWidget {
     var watchExpression = /** @type {!Sources.WatchExpression} */ (event.data);
     if (!watchExpression.expression()) {
       this._watchExpressions.remove(watchExpression);
-      this.contentElement.removeChild(watchExpression.element());
+      this._bodyElement.removeChild(watchExpression.element());
       this._emptyElement.classList.toggle('hidden', !!this._watchExpressions.length);
     }
 

@@ -18,6 +18,7 @@
 #include "ash/wallpaper/wallpaper_delegate.h"
 #include "ash/wallpaper/wallpaper_view.h"
 #include "ash/wallpaper/wallpaper_widget_controller.h"
+#include "ash/wm_window.h"
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/logging.h"
@@ -186,7 +187,7 @@ void WallpaperController::OnDisplayConfigurationChanged() {
   }
 }
 
-void WallpaperController::OnRootWindowAdded(aura::Window* root_window) {
+void WallpaperController::OnRootWindowAdded(WmWindow* root_window) {
   // The wallpaper hasn't been set yet.
   if (wallpaper_mode_ == WALLPAPER_NONE)
     return;
@@ -290,7 +291,7 @@ void WallpaperController::OnColorCalculationComplete() {
   SetProminentColor(color);
 }
 
-void WallpaperController::InstallDesktopController(aura::Window* root_window) {
+void WallpaperController::InstallDesktopController(WmWindow* root_window) {
   WallpaperWidgetController* component = nullptr;
   int container_id = GetWallpaperContainerId(locked_);
 
@@ -305,29 +306,30 @@ void WallpaperController::InstallDesktopController(aura::Window* root_window) {
       return;
   }
 
-  RootWindowController* controller =
-      RootWindowController::ForWindow(root_window);
+  RootWindowController* controller = root_window->GetRootWindowController();
   controller->SetAnimatingWallpaperWidgetController(
       new AnimatingWallpaperWidgetController(component));
   component->StartAnimating(controller);
 }
 
 void WallpaperController::InstallDesktopControllerForAllWindows() {
-  for (aura::Window* root : Shell::GetAllRootWindows())
+  for (WmWindow* root : ShellPort::Get()->GetAllRootWindows())
     InstallDesktopController(root);
   current_max_display_size_ = GetMaxDisplaySizeInNative();
 }
 
 bool WallpaperController::ReparentWallpaper(int container) {
   bool moved = false;
-  for (auto* root_window_controller : Shell::GetAllRootWindowControllers()) {
+  for (WmWindow* root_window : ShellPort::Get()->GetAllRootWindows()) {
+    RootWindowController* root_window_controller =
+        root_window->GetRootWindowController();
     // In the steady state (no animation playing) the wallpaper widget
     // controller exists in the RootWindowController.
     WallpaperWidgetController* wallpaper_widget_controller =
         root_window_controller->wallpaper_widget_controller();
     if (wallpaper_widget_controller) {
       moved |= wallpaper_widget_controller->Reparent(
-          root_window_controller->GetRootWindow(), container);
+          root_window_controller->GetWindow(), container);
     }
     // During wallpaper show animations the controller lives in
     // AnimatingWallpaperWidgetController owned by RootWindowController.
@@ -341,7 +343,7 @@ bool WallpaperController::ReparentWallpaper(int container) {
             : nullptr;
     if (animating_controller) {
       moved |= animating_controller->Reparent(
-          root_window_controller->GetRootWindow(), container);
+          root_window_controller->GetWindow(), container);
     }
   }
   return moved;

@@ -46,7 +46,7 @@ public class PaymentRequestShippingAddressChangeTest implements MainActivityStar
                 true, "Jon Doe", "Google", "340 Main St", "California", "Los Angeles", "", "90291",
                 "", "US", "650-253-0000", "", "en-US"));
         helper.setCreditCard(new CreditCard("", "https://example.com", true, true, "Jon Doe",
-                "4111111111111111", "1111", "12", "2050", "visa", R.drawable.visa_card,
+                "4111111111111111", "1111", "12", "2050", "visa", R.drawable.pr_visa,
                 billingAddressId, "" /* serverId */));
     }
 
@@ -61,7 +61,7 @@ public class PaymentRequestShippingAddressChangeTest implements MainActivityStar
             throws InterruptedException, ExecutionException, TimeoutException {
         // Select a shipping address and cancel out.
         mPaymentRequestTestRule.triggerUIAndWait(mPaymentRequestTestRule.getReadyForInput());
-        mPaymentRequestTestRule.clickInShippingAddressAndWait(
+        mPaymentRequestTestRule.clickInShippingSummaryAndWait(
                 R.id.payments_section, mPaymentRequestTestRule.getReadyForInput());
         mPaymentRequestTestRule.clickOnShippingAddressSuggestionOptionAndWait(
                 0, mPaymentRequestTestRule.getReadyForInput());

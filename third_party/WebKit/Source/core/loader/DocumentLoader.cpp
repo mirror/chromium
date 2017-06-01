@@ -32,11 +32,9 @@
 #include <memory>
 #include "core/dom/Document.h"
 #include "core/dom/DocumentParser.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/dom/WeakIdentifierMap.h"
 #include "core/events/Event.h"
 #include "core/frame/Deprecation.h"
-#include "core/frame/FrameConsole.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
@@ -66,6 +64,7 @@
 #include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
 #include "platform/HTTPNames.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/loader/fetch/FetchInitiatorTypeNames.h"
 #include "platform/loader/fetch/FetchParameters.h"
@@ -468,9 +467,7 @@ bool DocumentLoader::RedirectReceived(
   RefPtr<SecurityOrigin> redirecting_origin =
       SecurityOrigin::Create(redirect_response.Url());
   if (!redirecting_origin->CanDisplay(request_url)) {
-    frame_->Console().AddMessage(ConsoleMessage::Create(
-        kSecurityMessageSource, kErrorMessageLevel,
-        "Not allowed to load local resource: " + request_url.GetString()));
+    FrameLoader::ReportLocalLoadFailed(frame_, request_url.GetString());
     fetcher_->StopFetching();
     return false;
   }
@@ -667,6 +664,7 @@ void DocumentLoader::EnsureWriter(const AtomicString& mime_type,
   }
   DocumentInit init(owner, Url(), frame_);
   init.WithNewRegistrationContext();
+  frame_->Loader().Clear();
   DCHECK(frame_->GetPage());
 
   ParserSynchronizationPolicy parsing_policy = kAllowAsynchronousParsing;
@@ -995,6 +993,33 @@ void DocumentLoader::DidCommitNavigation() {
   frame_->GetPage()->DidCommitLoad(frame_);
 }
 
+void SetFeaturePolicy(Document* document, const String& feature_policy_header) {
+  if (!RuntimeEnabledFeatures::featurePolicyEnabled())
+    return;
+  LocalFrame* frame = document->GetFrame();
+  WebFeaturePolicy* parent_feature_policy =
+      frame->IsMainFrame()
+          ? nullptr
+          : frame->Tree().Parent()->GetSecurityContext()->GetFeaturePolicy();
+  Vector<String> messages;
+  const WebParsedFeaturePolicy& parsed_header = ParseFeaturePolicy(
+      feature_policy_header, frame->GetSecurityContext()->GetSecurityOrigin(),
+      &messages);
+  WebParsedFeaturePolicy container_policy;
+  if (frame->Owner())
+    container_policy = frame->Owner()->ContainerPolicy();
+  frame->GetSecurityContext()->InitializeFeaturePolicy(
+      parsed_header, container_policy, parent_feature_policy);
+
+  for (auto& message : messages) {
+    document->AddConsoleMessage(
+        ConsoleMessage::Create(kOtherMessageSource, kErrorMessageLevel,
+                               "Error with Feature-Policy header: " + message));
+  }
+  if (!parsed_header.empty())
+    frame->Client()->DidSetFeaturePolicyHeader(parsed_header);
+}
+
 // static
 bool DocumentLoader::ShouldClearWindowName(
     const LocalFrame& frame,
@@ -1021,11 +1046,6 @@ void DocumentLoader::InstallNewDocument(
   DCHECK_EQ(init.GetFrame(), frame_);
   DCHECK(!frame_->GetDocument() || !frame_->GetDocument()->IsActive());
   DCHECK_EQ(frame_->Tree().ChildCount(), 0u);
-
-  if (GetFrameLoader().StateMachine()->IsDisplayingInitialEmptyDocument()) {
-    GetFrameLoader().StateMachine()->AdvanceTo(
-        FrameLoaderStateMachine::kCommittedFirstRealLoad);
-  }
 
   SecurityOrigin* previous_security_origin = nullptr;
   if (frame_->GetDocument())
@@ -1061,8 +1081,8 @@ void DocumentLoader::InstallNewDocument(
   // FeaturePolicy is reset in the browser process on commit, so this needs to
   // be initialized and replicated to the browser process after commit messages
   // are sent in didCommitNavigation().
-  document->SetFeaturePolicy(
-      response_.HttpHeaderField(HTTPNames::Feature_Policy));
+  SetFeaturePolicy(document,
+                   response_.HttpHeaderField(HTTPNames::Feature_Policy));
 
   GetFrameLoader().DispatchDidClearDocumentOfWindowObject();
 }

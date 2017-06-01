@@ -4,9 +4,6 @@
 
 package org.chromium.device.screen_orientation;
 
-import android.provider.Settings;
-
-import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
@@ -35,12 +32,5 @@ class ScreenOrientationListener {
                 DisplayAndroid.stopAccurateListening();
             }
         });
-    }
-
-    @CalledByNative
-    static boolean isAutoRotateEnabledByUser() {
-        return Settings.System.getInt(ContextUtils.getApplicationContext().getContentResolver(),
-                       Settings.System.ACCELEROMETER_ROTATION, 0)
-                == 1;
     }
 }

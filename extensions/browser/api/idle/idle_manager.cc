@@ -50,9 +50,10 @@ void DefaultEventDelegate::OnStateChanged(const std::string& extension_id,
                                           ui::IdleState new_state) {
   std::unique_ptr<base::ListValue> args(new base::ListValue());
   args->Append(IdleManager::CreateIdleValue(new_state));
-  auto event = base::MakeUnique<Event>(events::IDLE_ON_STATE_CHANGED,
-                                       idle::OnStateChanged::kEventName,
-                                       std::move(args), context_);
+  std::unique_ptr<Event> event(new Event(events::IDLE_ON_STATE_CHANGED,
+                                         idle::OnStateChanged::kEventName,
+                                         std::move(args)));
+  event->restrict_to_browser_context = context_;
   EventRouter::Get(context_)
       ->DispatchEventToExtension(extension_id, std::move(event));
 }

@@ -71,18 +71,17 @@ static_assert(sizeof(StyleRareNonInheritedData) ==
               "StyleRareNonInheritedData_should_stay_small");
 
 StyleRareNonInheritedData::StyleRareNonInheritedData()
-    : opacity_(ComputedStyle::InitialOpacity()),
+    : opacity(ComputedStyle::InitialOpacity()),
       perspective_(ComputedStyle::InitialPerspective()),
       shape_image_threshold_(ComputedStyle::InitialShapeImageThreshold()),
       order_(ComputedStyle::InitialOrder()),
       perspective_origin_(ComputedStyle::InitialPerspectiveOrigin()),
       object_position_(ComputedStyle::InitialObjectPosition()),
-      line_clamp_(ComputedStyle::InitialLineClamp()),
-      draggable_region_mode_(static_cast<unsigned>(kDraggableRegionNone)),
+      line_clamp(ComputedStyle::InitialLineClamp()),
+      draggable_region_mode_(kDraggableRegionNone),
       shape_outside_(ComputedStyle::InitialShapeOutside()),
       clip_path_(ComputedStyle::InitialClipPath()),
       mask_(kMaskFillLayer, true),
-      mask_box_image_(NinePieceImage::MaskDefaults()),
       page_size_(),
       shape_margin_(ComputedStyle::InitialShapeMargin()),
       text_decoration_color_(StyleColor::CurrentColor()),
@@ -100,13 +99,13 @@ StyleRareNonInheritedData::StyleRareNonInheritedData()
       justify_content_(ComputedStyle::InitialContentAlignment()),
       justify_items_(ComputedStyle::InitialSelfAlignment()),
       justify_self_(ComputedStyle::InitialSelfAlignment()),
-      page_size_type_(static_cast<unsigned>(PageSizeType::kAuto)),
-      transform_style_3d_(ComputedStyle::InitialTransformStyle3D()),
+      page_size_type_(PAGE_SIZE_AUTO),
+      transform_style3d_(ComputedStyle::InitialTransformStyle3D()),
       backface_visibility_(ComputedStyle::InitialBackfaceVisibility()),
-      user_drag_(ComputedStyle::InitialUserDrag()),
-      text_overflow_(ComputedStyle::InitialTextOverflow()),
-      margin_before_collapse_(kMarginCollapseCollapse),
-      margin_after_collapse_(kMarginCollapseCollapse),
+      user_drag(ComputedStyle::InitialUserDrag()),
+      text_overflow(ComputedStyle::InitialTextOverflow()),
+      margin_before_collapse(kMarginCollapseCollapse),
+      margin_after_collapse(kMarginCollapseCollapse),
       appearance_(ComputedStyle::InitialAppearance()),
       text_decoration_style_(ComputedStyle::InitialTextDecorationStyle()),
       has_current_opacity_animation_(false),
@@ -130,18 +129,20 @@ StyleRareNonInheritedData::StyleRareNonInheritedData()
       resize_(ComputedStyle::InitialResize()),
       has_compositor_proxy_(false),
       has_author_background_(false),
-      has_author_border_(false) {}
+      has_author_border_(false) {
+  mask_box_image_.SetMaskDefaults();
+}
 
 StyleRareNonInheritedData::StyleRareNonInheritedData(
     const StyleRareNonInheritedData& o)
     : RefCounted<StyleRareNonInheritedData>(),
-      opacity_(o.opacity_),
+      opacity(o.opacity),
       perspective_(o.perspective_),
       shape_image_threshold_(o.shape_image_threshold_),
       order_(o.order_),
       perspective_origin_(o.perspective_origin_),
       object_position_(o.object_position_),
-      line_clamp_(o.line_clamp_),
+      line_clamp(o.line_clamp),
       draggable_region_mode_(o.draggable_region_mode_),
       deprecated_flexible_box_(o.deprecated_flexible_box_),
       flexible_box_(o.flexible_box_),
@@ -154,7 +155,7 @@ StyleRareNonInheritedData::StyleRareNonInheritedData(
       grid_item_(o.grid_item_),
       scroll_snap_(o.scroll_snap_),
       content_(o.content_ ? o.content_->Clone() : nullptr),
-      counter_directives_(o.counter_directives_ ? o.counter_directives_->Clone()
+      counter_directives_(o.counter_directives_ ? Clone(*o.counter_directives_)
                                                 : nullptr),
       animations_(o.animations_ ? o.animations_->Clone() : nullptr),
       transitions_(o.transitions_ ? o.transitions_->Clone() : nullptr),
@@ -176,7 +177,7 @@ StyleRareNonInheritedData::StyleRareNonInheritedData(
       visited_link_border_right_color_(o.visited_link_border_right_color_),
       visited_link_border_top_color_(o.visited_link_border_top_color_),
       visited_link_border_bottom_color_(o.visited_link_border_bottom_color_),
-      variables_(o.variables_ ? o.variables_->Clone() : nullptr),
+      variables_(o.variables_ ? o.variables_->Copy() : nullptr),
       align_content_(o.align_content_),
       align_items_(o.align_items_),
       align_self_(o.align_self_),
@@ -184,12 +185,12 @@ StyleRareNonInheritedData::StyleRareNonInheritedData(
       justify_items_(o.justify_items_),
       justify_self_(o.justify_self_),
       page_size_type_(o.page_size_type_),
-      transform_style_3d_(o.transform_style_3d_),
+      transform_style3d_(o.transform_style3d_),
       backface_visibility_(o.backface_visibility_),
-      user_drag_(o.user_drag_),
-      text_overflow_(o.text_overflow_),
-      margin_before_collapse_(o.margin_before_collapse_),
-      margin_after_collapse_(o.margin_after_collapse_),
+      user_drag(o.user_drag),
+      text_overflow(o.text_overflow),
+      margin_before_collapse(o.margin_before_collapse),
+      margin_after_collapse(o.margin_after_collapse),
       appearance_(o.appearance_),
       text_decoration_style_(o.text_decoration_style_),
       has_current_opacity_animation_(o.has_current_opacity_animation_),
@@ -225,28 +226,23 @@ StyleRareNonInheritedData::~StyleRareNonInheritedData() {}
 
 bool StyleRareNonInheritedData::operator==(
     const StyleRareNonInheritedData& o) const {
-  return opacity_ == o.opacity_ && perspective_ == o.perspective_ &&
+  return opacity == o.opacity && perspective_ == o.perspective_ &&
          shape_image_threshold_ == o.shape_image_threshold_ &&
          order_ == o.order_ && perspective_origin_ == o.perspective_origin_ &&
-         object_position_ == o.object_position_ &&
-         line_clamp_ == o.line_clamp_ &&
+         object_position_ == o.object_position_ && line_clamp == o.line_clamp &&
          draggable_region_mode_ == o.draggable_region_mode_ &&
          deprecated_flexible_box_ == o.deprecated_flexible_box_ &&
          flexible_box_ == o.flexible_box_ && multi_col_ == o.multi_col_ &&
          transform_ == o.transform_ && will_change_ == o.will_change_ &&
          filter_ == o.filter_ && backdrop_filter_ == o.backdrop_filter_ &&
          grid_ == o.grid_ && grid_item_ == o.grid_item_ &&
-         scroll_snap_ == o.scroll_snap_ &&
-         DataEquivalent(content_, o.content_) &&
-         DataEquivalent(counter_directives_, o.counter_directives_) &&
-         DataEquivalent(box_shadow_, o.box_shadow_) &&
-         DataEquivalent(box_reflect_, o.box_reflect_) &&
-         DataEquivalent(animations_, o.animations_) &&
-         DataEquivalent(transitions_, o.transitions_) &&
-         DataEquivalent(shape_outside_, o.shape_outside_) && mask_ == o.mask_ &&
-         mask_box_image_ == o.mask_box_image_ && page_size_ == o.page_size_ &&
-         shape_margin_ == o.shape_margin_ && outline_ == o.outline_ &&
-         DataEquivalent(clip_path_, o.clip_path_) &&
+         scroll_snap_ == o.scroll_snap_ && ContentDataEquivalent(o) &&
+         CounterDataEquivalent(o) && ShadowDataEquivalent(o) &&
+         ReflectionDataEquivalent(o) && AnimationDataEquivalent(o) &&
+         TransitionDataEquivalent(o) && ShapeOutsideDataEquivalent(o) &&
+         mask_ == o.mask_ && mask_box_image_ == o.mask_box_image_ &&
+         page_size_ == o.page_size_ && shape_margin_ == o.shape_margin_ &&
+         outline_ == o.outline_ && ClipPathDataEquivalent(o) &&
          text_decoration_color_ == o.text_decoration_color_ &&
          visited_link_text_decoration_color_ ==
              o.visited_link_text_decoration_color_ &&
@@ -266,11 +262,11 @@ bool StyleRareNonInheritedData::operator==(
          justify_items_ == o.justify_items_ &&
          justify_self_ == o.justify_self_ &&
          page_size_type_ == o.page_size_type_ &&
-         transform_style_3d_ == o.transform_style_3d_ &&
+         transform_style3d_ == o.transform_style3d_ &&
          backface_visibility_ == o.backface_visibility_ &&
-         user_drag_ == o.user_drag_ && text_overflow_ == o.text_overflow_ &&
-         margin_before_collapse_ == o.margin_before_collapse_ &&
-         margin_after_collapse_ == o.margin_after_collapse_ &&
+         user_drag == o.user_drag && text_overflow == o.text_overflow &&
+         margin_before_collapse == o.margin_before_collapse &&
+         margin_after_collapse == o.margin_after_collapse &&
          appearance_ == o.appearance_ &&
          text_decoration_style_ == o.text_decoration_style_ &&
          has_current_opacity_animation_ == o.has_current_opacity_animation_ &&
@@ -292,6 +288,70 @@ bool StyleRareNonInheritedData::operator==(
          has_compositor_proxy_ == o.has_compositor_proxy_ &&
          has_author_background_ == o.has_author_background_ &&
          has_author_border_ == o.has_author_border_;
+}
+
+bool StyleRareNonInheritedData::ContentDataEquivalent(
+    const StyleRareNonInheritedData& o) const {
+  ContentData* a = content_.Get();
+  ContentData* b = o.content_.Get();
+
+  while (a && b && *a == *b) {
+    a = a->Next();
+    b = b->Next();
+  }
+
+  return !a && !b;
+}
+
+bool StyleRareNonInheritedData::CounterDataEquivalent(
+    const StyleRareNonInheritedData& o) const {
+  return DataEquivalent(counter_directives_, o.counter_directives_);
+}
+
+bool StyleRareNonInheritedData::ShadowDataEquivalent(
+    const StyleRareNonInheritedData& o) const {
+  return DataEquivalent(box_shadow_, o.box_shadow_);
+}
+
+bool StyleRareNonInheritedData::ReflectionDataEquivalent(
+    const StyleRareNonInheritedData& o) const {
+  return DataEquivalent(box_reflect_, o.box_reflect_);
+}
+
+bool StyleRareNonInheritedData::AnimationDataEquivalent(
+    const StyleRareNonInheritedData& o) const {
+  if (!animations_ && !o.animations_)
+    return true;
+  if (!animations_ || !o.animations_)
+    return false;
+  return animations_->AnimationsMatchForStyleRecalc(*o.animations_);
+}
+
+bool StyleRareNonInheritedData::TransitionDataEquivalent(
+    const StyleRareNonInheritedData& o) const {
+  if (!transitions_ && !o.transitions_)
+    return true;
+  if (!transitions_ || !o.transitions_)
+    return false;
+  return transitions_->TransitionsMatchForStyleRecalc(*o.transitions_);
+}
+
+bool StyleRareNonInheritedData::HasFilters() const {
+  return filter_.Get() && !filter_->operations_.IsEmpty();
+}
+
+bool StyleRareNonInheritedData::HasBackdropFilters() const {
+  return backdrop_filter_.Get() && !backdrop_filter_->operations_.IsEmpty();
+}
+
+bool StyleRareNonInheritedData::ShapeOutsideDataEquivalent(
+    const StyleRareNonInheritedData& o) const {
+  return DataEquivalent(shape_outside_, o.shape_outside_);
+}
+
+bool StyleRareNonInheritedData::ClipPathDataEquivalent(
+    const StyleRareNonInheritedData& o) const {
+  return DataEquivalent(clip_path_, o.clip_path_);
 }
 
 }  // namespace blink

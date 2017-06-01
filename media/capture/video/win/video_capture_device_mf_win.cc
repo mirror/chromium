@@ -189,16 +189,16 @@ bool VideoCaptureDeviceMFWin::FormatFromGuid(const GUID& guid,
 VideoCaptureDeviceMFWin::VideoCaptureDeviceMFWin(
     const VideoCaptureDeviceDescriptor& device_descriptor)
     : descriptor_(device_descriptor), capture_(0) {
-  DETACH_FROM_SEQUENCE(sequence_checker_);
+  DetachFromThread();
 }
 
 VideoCaptureDeviceMFWin::~VideoCaptureDeviceMFWin() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 }
 
 bool VideoCaptureDeviceMFWin::Init(
     const base::win::ScopedComPtr<IMFMediaSource>& source) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(!reader_.Get());
 
   ScopedComPtr<IMFAttributes> attributes;
@@ -215,7 +215,7 @@ bool VideoCaptureDeviceMFWin::Init(
 void VideoCaptureDeviceMFWin::AllocateAndStart(
     const VideoCaptureParams& params,
     std::unique_ptr<VideoCaptureDevice::Client> client) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   base::AutoLock lock(lock_);
 
@@ -253,7 +253,7 @@ void VideoCaptureDeviceMFWin::AllocateAndStart(
 }
 
 void VideoCaptureDeviceMFWin::StopAndDeAllocate() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   base::WaitableEvent flushed(base::WaitableEvent::ResetPolicy::AUTOMATIC,
                               base::WaitableEvent::InitialState::NOT_SIGNALED);
   const int kFlushTimeOutInMs = 1000;

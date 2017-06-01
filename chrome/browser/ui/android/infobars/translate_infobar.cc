@@ -12,7 +12,6 @@
 #include "base/android/jni_array.h"
 #include "base/android/jni_string.h"
 #include "base/android/jni_weak_ref.h"
-#include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/translate/android/translate_utils.h"
 #include "chrome/browser/translate/chrome_translate_client.h"
@@ -28,7 +27,7 @@ using base::android::ScopedJavaLocalRef;
 
 std::unique_ptr<infobars::InfoBar> ChromeTranslateClient::CreateInfoBar(
     std::unique_ptr<translate::TranslateInfoBarDelegate> delegate) const {
-  if (base::FeatureList::IsEnabled(translate::kTranslateCompactUI))
+  if (translate::TranslateInfoBarDelegate::IsCompactUIEnabled())
     return base::MakeUnique<TranslateCompactInfoBar>(std::move(delegate));
   else
     return base::MakeUnique<TranslateInfoBar>(std::move(delegate));

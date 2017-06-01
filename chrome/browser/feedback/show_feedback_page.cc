@@ -14,8 +14,6 @@
 #include "chrome/browser/ui/webui/md_feedback/md_feedback_dialog_controller.h"
 #include "chrome/common/chrome_switches.h"
 
-namespace feedback_private = extensions::api::feedback_private;
-
 namespace chrome {
 
 void ShowFeedbackPage(Browser* browser,
@@ -46,11 +44,9 @@ void ShowFeedbackPage(Browser* browser,
   extensions::FeedbackPrivateAPI* api =
       extensions::FeedbackPrivateAPI::GetFactoryInstance()->Get(profile);
 
-  api->RequestFeedbackForFlow(
-      description_template, category_tag, page_url,
-      source == kFeedbackSourceSadTabPage
-          ? feedback_private::FeedbackFlow::FEEDBACK_FLOW_SADTABCRASH
-          : feedback_private::FeedbackFlow::FEEDBACK_FLOW_REGULAR);
+  api->RequestFeedback(description_template,
+                       category_tag,
+                       page_url);
 }
 
 }  // namespace chrome

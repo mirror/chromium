@@ -23,10 +23,6 @@
 #include "mojo/public/cpp/bindings/interface_ptr_set.h"
 #include "ui/gfx/geometry/vector3d_f.h"
 
-namespace aura {
-class Window;
-}
-
 namespace base {
 class TickClock;
 }
@@ -41,7 +37,7 @@ class MaximizeModeControllerTest;
 class ScopedDisableInternalMouseAndKeyboard;
 class MaximizeModeWindowManager;
 class MaximizeModeWindowManagerTest;
-
+class WmWindow;
 namespace test {
 class MultiUserWindowManagerChromeOSTest;
 class VirtualKeyboardControllerTest;
@@ -88,7 +84,7 @@ class ASH_EXPORT MaximizeModeController
   // only required for special windows which are handled by other window
   // managers like the |MultiUserWindowManager|.
   // If the maximize mode is not enabled no action will be performed.
-  void AddWindow(aura::Window* window);
+  void AddWindow(WmWindow* window);
 
   // Binds the mojom::TouchViewManager interface request to this object.
   void BindRequest(mojom::TouchViewManagerRequest request);

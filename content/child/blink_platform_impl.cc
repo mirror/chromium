@@ -610,7 +610,7 @@ const DataResource kDataResources[] = {
 
 }  // namespace
 
-WebData BlinkPlatformImpl::GetDataResource(const char* name) {
+WebData BlinkPlatformImpl::LoadResource(const char* name) {
   // Some clients will call into this method with an empty |name| when they have
   // optional resources.  For example, the PopupMenuChromium code can have icons
   // for some Autofill items but not for others.

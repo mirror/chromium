@@ -8,6 +8,7 @@
 
 #include <memory>
 
+#include "gpu/command_buffer/service/gles2_cmd_decoder.h"
 #include "gpu/command_buffer/service/texture_manager.h"
 #include "media/base/android/media_codec_bridge_impl.h"
 #include "media/gpu/avda_shared_state.h"
@@ -19,10 +20,12 @@ namespace media {
 
 AVDACodecImage::AVDACodecImage(
     const scoped_refptr<AVDASharedState>& shared_state,
-    MediaCodecBridge* codec)
+    MediaCodecBridge* codec,
+    const base::WeakPtr<gpu::gles2::GLES2Decoder>& decoder)
     : shared_state_(shared_state),
       codec_buffer_index_(kInvalidCodecBufferIndex),
       media_codec_(codec),
+      decoder_(decoder),
       has_surface_texture_(false),
       texture_(0) {}
 

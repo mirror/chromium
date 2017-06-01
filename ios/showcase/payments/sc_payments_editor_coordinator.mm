@@ -28,8 +28,6 @@
 
 @property(nonatomic, strong) ProtocolAlerter* alerter;
 
-@property(nonatomic, strong) EditorField* province;
-
 @end
 
 @implementation SCPaymentsEditorCoordinator
@@ -39,7 +37,6 @@
 @synthesize paymentRequestEditViewController =
     _paymentRequestEditViewController;
 @synthesize alerter = _alerter;
-@synthesize province = _province;
 
 - (void)start {
   self.alerter = [[ProtocolAlerter alloc] initWithProtocols:@[
@@ -58,12 +55,6 @@
                       self.alerter)];
   [self.paymentRequestEditViewController setValidatorDelegate:self];
   [self.paymentRequestEditViewController loadModel];
-  // Set the options for the province field after the model is loaded.
-  NSArray<NSString*>* options = @[ @"Ontario", @"Quebec" ];
-  self.province.value = options[1];
-  self.province.enabled = YES;
-  [self.paymentRequestEditViewController setOptions:options
-                                     forEditorField:self.province];
   [self.baseViewController
       pushViewController:self.paymentRequestEditViewController
                 animated:YES];
@@ -73,45 +64,32 @@
 
 - (NSArray<EditorField*>*)editorFields {
   EditorField* name =
-      [[EditorField alloc] initWithAutofillUIType:AutofillUITypeProfileFullName
+      [[EditorField alloc] initWithAutofillUIType:AutofillUITypeUnknown
                                         fieldType:EditorFieldTypeTextField
                                             label:@"Name"
                                             value:@"John Doe"
                                          required:YES];
-  EditorField* country = [[EditorField alloc]
-      initWithAutofillUIType:AutofillUITypeProfileHomeAddressCountry
-                   fieldType:EditorFieldTypeSelector
-                       label:@"Country"
-                       value:@"CAN"
-                    required:YES];
+  EditorField* country =
+      [[EditorField alloc] initWithAutofillUIType:AutofillUITypeUnknown
+                                        fieldType:EditorFieldTypeSelector
+                                            label:@"Country"
+                                            value:@"CAN"
+                                         required:YES];
   [country setDisplayValue:@"Canada"];
-  self.province = [[EditorField alloc]
-      initWithAutofillUIType:AutofillUITypeProfileHomeAddressState
-                   fieldType:EditorFieldTypeTextField
-                       label:@"Province"
-                       value:@"Loading..."
-                    required:YES];
-  self.province.enabled = NO;
-  EditorField* address = [[EditorField alloc]
-      initWithAutofillUIType:AutofillUITypeProfileHomeAddressStreet
-                   fieldType:EditorFieldTypeTextField
-                       label:@"Address"
-                       value:@""
-                    required:YES];
-  EditorField* postalCode = [[EditorField alloc]
-      initWithAutofillUIType:AutofillUITypeProfileHomeAddressZip
-                   fieldType:EditorFieldTypeTextField
-                       label:@"Postal Code"
-                       value:@""
-                    required:NO];
-  EditorField* save = [[EditorField alloc]
-      initWithAutofillUIType:AutofillUITypeCreditCardSaveToChrome
-                   fieldType:EditorFieldTypeSwitch
-                       label:@"Save"
-                       value:@"YES"
-                    required:NO];
+  EditorField* address =
+      [[EditorField alloc] initWithAutofillUIType:AutofillUITypeUnknown
+                                        fieldType:EditorFieldTypeTextField
+                                            label:@"Address"
+                                            value:@""
+                                         required:YES];
+  EditorField* postalCode =
+      [[EditorField alloc] initWithAutofillUIType:AutofillUITypeUnknown
+                                        fieldType:EditorFieldTypeTextField
+                                            label:@"Postal Code"
+                                            value:@""
+                                         required:NO];
 
-  return @[ name, country, self.province, address, postalCode, save ];
+  return @[ name, country, address, postalCode ];
 }
 
 #pragma mark - PaymentRequestEditViewControllerDataSource
@@ -124,16 +102,17 @@
   return NO;
 }
 
-- (UIImage*)iconIdentifyingEditorField:(EditorField*)field {
-  return nil;
-}
-
 #pragma mark - PaymentRequestEditViewControllerValidator
 
 - (NSString*)paymentRequestEditViewController:
                  (PaymentRequestEditViewController*)controller
                                 validateField:(EditorField*)field {
-  return (!field.value.length && field.isRequired) ? @"Field is required" : nil;
+  if (field.value.length)
+    return nil;
+  else if (field.isRequired)
+    return @"Field is required";
+  else
+    return nil;
 }
 
 @end

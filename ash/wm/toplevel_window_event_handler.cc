@@ -6,6 +6,7 @@
 
 #include "ash/shell.h"
 #include "ash/wm/window_state.h"
+#include "ash/wm_window.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "ui/aura/client/cursor_client.h"
@@ -33,23 +34,24 @@ void ToplevelWindowEventHandler::OnKeyEvent(ui::KeyEvent* event) {
 
 void ToplevelWindowEventHandler::OnMouseEvent(ui::MouseEvent* event) {
   aura::Window* target = static_cast<aura::Window*>(event->target());
-  wm_toplevel_window_event_handler_.OnMouseEvent(event, target);
+  wm_toplevel_window_event_handler_.OnMouseEvent(event, WmWindow::Get(target));
 }
 
 void ToplevelWindowEventHandler::OnGestureEvent(ui::GestureEvent* event) {
   aura::Window* target = static_cast<aura::Window*>(event->target());
-  wm_toplevel_window_event_handler_.OnGestureEvent(event, target);
+  wm_toplevel_window_event_handler_.OnGestureEvent(event,
+                                                   WmWindow::Get(target));
 }
 
-::wm::WindowMoveResult ToplevelWindowEventHandler::RunMoveLoop(
+aura::client::WindowMoveResult ToplevelWindowEventHandler::RunMoveLoop(
     aura::Window* source,
     const gfx::Vector2d& drag_offset,
-    ::wm::WindowMoveSource move_source) {
+    aura::client::WindowMoveSource move_source) {
   DCHECK(!in_move_loop_);  // Can only handle one nested loop at a time.
   aura::Window* root_window = source->GetRootWindow();
   DCHECK(root_window);
   gfx::Point drag_location;
-  if (move_source == ::wm::WINDOW_MOVE_SOURCE_TOUCH &&
+  if (move_source == aura::client::WINDOW_MOVE_SOURCE_TOUCH &&
       aura::Env::GetInstance()->is_touch_down()) {
     gfx::PointF drag_location_f;
     bool has_point = ui::GestureRecognizer::Get()->GetLastTouchPointForTarget(
@@ -74,10 +76,10 @@ void ToplevelWindowEventHandler::OnGestureEvent(ui::GestureEvent* event) {
   wm::WmToplevelWindowEventHandler::DragResult result =
       wm::WmToplevelWindowEventHandler::DragResult::SUCCESS;
   if (!wm_toplevel_window_event_handler_.AttemptToStartDrag(
-          source, drag_location, HTCAPTION, move_source,
+          WmWindow::Get(source), drag_location, HTCAPTION, move_source,
           base::Bind(&ToplevelWindowEventHandler::OnDragCompleted,
                      weak_factory_.GetWeakPtr(), &result, &run_loop))) {
-    return ::wm::MOVE_CANCELED;
+    return aura::client::MOVE_CANCELED;
   }
 
   in_move_loop_ = true;
@@ -96,7 +98,7 @@ void ToplevelWindowEventHandler::OnGestureEvent(ui::GestureEvent* event) {
   run_loop.Run();
 
   if (!weak_ptr)
-    return ::wm::MOVE_CANCELED;
+    return aura::client::MOVE_CANCELED;
 
   // Make sure the window hasn't been deleted.
   if (tracker.Contains(source))
@@ -104,8 +106,8 @@ void ToplevelWindowEventHandler::OnGestureEvent(ui::GestureEvent* event) {
 
   in_move_loop_ = false;
   return result == wm::WmToplevelWindowEventHandler::DragResult::SUCCESS
-             ? ::wm::MOVE_SUCCESSFUL
-             : ::wm::MOVE_CANCELED;
+             ? aura::client::MOVE_SUCCESSFUL
+             : aura::client::MOVE_CANCELED;
 }
 
 void ToplevelWindowEventHandler::EndMoveLoop() {

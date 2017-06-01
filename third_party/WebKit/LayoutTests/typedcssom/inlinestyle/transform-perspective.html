@@ -29,7 +29,7 @@ test(function() {
     testElement.style.transform = cssText;
 
     var result = testElement.styleMap.get('transform');
-    assert_equals(result.toString(), cssText);
+    assert_equals(result.cssText, cssText);
     assert_equals(result.constructor.name, CSSTransformValue.name);
 
     var components = [...result.values()];
@@ -43,7 +43,7 @@ test(function() {
   for (var i = 0; i < supportedUnits.length; i++) {
     var unit = supportedUnits[i];
     var perspective = new CSSTransformValue([
-        new CSSPerspective(new CSSUnitValue(i, unit))]);
+        new CSSPerspective(new CSSSimpleLength(i, unit))]);
     testElement.styleMap.set('transform', perspective);
 
     var cssText = 'perspective(' + i + unit + ')';

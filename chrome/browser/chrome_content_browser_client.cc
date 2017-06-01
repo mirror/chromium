@@ -153,7 +153,6 @@
 #include "components/task_scheduler_util/browser/initialization.h"
 #include "components/task_scheduler_util/common/variations_util.h"
 #include "components/translate/core/common/translate_switches.h"
-#include "components/ukm/ukm_interface.h"
 #include "components/url_formatter/url_fixer.h"
 #include "components/variations/variations_associated_data.h"
 #include "components/version_info/version_info.h"
@@ -360,7 +359,7 @@
 #endif
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)
-#include "chrome/browser/spellchecker/spell_check_host_impl.h"
+#include "chrome/browser/spellchecker/spellcheck_message_filter.h"
 #endif
 
 #if BUILDFLAG(USE_BROWSER_SPELLCHECKER)
@@ -1205,6 +1204,9 @@ void ChromeContentBrowserClient::RenderProcessWillLaunch(
 #endif
 #if BUILDFLAG(ENABLE_PRINTING)
   host->AddFilter(new printing::PrintingMessageFilter(id, profile));
+#endif
+#if BUILDFLAG(ENABLE_SPELLCHECK)
+  host->AddFilter(new SpellCheckMessageFilter(id));
 #endif
 #if BUILDFLAG(USE_BROWSER_SPELLCHECKER)
   host->AddFilter(new SpellCheckMessageFilterPlatform(id));
@@ -2597,6 +2599,8 @@ void ChromeContentBrowserClient::OverrideWebkitPrefs(
 
   web_prefs->default_encoding = prefs->GetString(prefs::kDefaultCharset);
 
+  web_prefs->javascript_can_open_windows_automatically =
+      prefs->GetBoolean(prefs::kWebKitJavascriptCanOpenWindowsAutomatically);
   web_prefs->dom_paste_enabled =
       prefs->GetBoolean(prefs::kWebKitDomPasteEnabled);
   web_prefs->tabs_to_links = prefs->GetBoolean(prefs::kWebkitTabsToLinks);
@@ -2921,10 +2925,6 @@ void ChromeContentBrowserClient::GetURLRequestAutoMountHandlers(
   return g_browser_process->rappor_service();
 }
 
-::ukm::UkmRecorder* ChromeContentBrowserClient::GetUkmRecorder() {
-  return g_browser_process->ukm_recorder();
-}
-
 void ChromeContentBrowserClient::GetAdditionalFileSystemBackends(
     content::BrowserContext* browser_context,
     const base::FilePath& storage_partition_path,
@@ -3069,17 +3069,9 @@ void ChromeContentBrowserClient::ExposeInterfacesToRenderer(
   registry->AddInterface(
       base::Bind(&BudgetServiceImpl::Create, render_process_host->GetID()),
       ui_task_runner);
-#if BUILDFLAG(ENABLE_SPELLCHECK)
-  registry->AddInterface(
-      base::Bind(&SpellCheckHostImpl::Create, render_process_host->GetID()),
-      ui_task_runner);
-#endif
   registry->AddInterface(
       base::Bind(&rappor::RapporRecorderImpl::Create,
                  g_browser_process->rappor_service()),
-      ui_task_runner);
-  registry->AddInterface(
-      base::Bind(&ukm::UkmInterface::Create, g_browser_process->ukm_recorder()),
       ui_task_runner);
   if (NetBenchmarking::CheckBenchmarkingEnabled()) {
     Profile* profile =
@@ -3261,6 +3253,10 @@ void ChromeContentBrowserClient::RegisterInProcessServices(
 
 void ChromeContentBrowserClient::RegisterOutOfProcessServices(
       OutOfProcessServiceMap* services) {
+#if defined(ENABLE_MOJO_MEDIA_IN_UTILITY_PROCESS)
+  services->emplace("media", base::ASCIIToUTF16("Media Service"));
+#endif
+
 #if BUILDFLAG(ENABLE_PRINTING)
   services->emplace(printing::mojom::kServiceName,
                     base::ASCIIToUTF16("PDF Compositor Service"));

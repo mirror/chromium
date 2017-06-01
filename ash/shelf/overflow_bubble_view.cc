@@ -8,9 +8,10 @@
 
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
-#include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_constants.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
+#include "ash/wm_window.h"
 #include "base/i18n/rtl.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
@@ -31,15 +32,15 @@ const int kDistanceToMainShelf = 4;
 
 }  // namespace
 
-OverflowBubbleView::OverflowBubbleView(Shelf* shelf)
-    : shelf_(shelf),
+OverflowBubbleView::OverflowBubbleView(WmShelf* wm_shelf)
+    : wm_shelf_(wm_shelf),
       shelf_view_(nullptr),
       background_animator_(SHELF_BACKGROUND_OVERLAP,
-                           // Don't pass the Shelf so the translucent color is
+                           // Don't pass the WmShelf so the translucent color is
                            // always used.
                            nullptr,
                            Shell::Get()->wallpaper_controller()) {
-  DCHECK(shelf_);
+  DCHECK(wm_shelf_);
 
   background_animator_.AddObserver(this);
 }
@@ -55,7 +56,7 @@ void OverflowBubbleView::InitOverflowBubble(views::View* anchor,
   SetAnchorView(anchor);
   set_arrow(views::BubbleBorder::NONE);
   set_background(nullptr);
-  if (shelf_->IsHorizontalAlignment())
+  if (wm_shelf_->IsHorizontalAlignment())
     set_margins(gfx::Insets(0, kEndPadding));
   else
     set_margins(gfx::Insets(kEndPadding, 0));
@@ -102,7 +103,7 @@ gfx::Size OverflowBubbleView::CalculatePreferredSize() const {
           ->GetDisplayNearestPoint(GetAnchorRect().CenterPoint())
           .work_area();
   if (!monitor_rect.IsEmpty()) {
-    if (shelf_->IsHorizontalAlignment()) {
+    if (wm_shelf_->IsHorizontalAlignment()) {
       preferred_size.set_width(std::min(
           preferred_size.width(), monitor_rect.width() - 2 * kEndPadding));
     } else {
@@ -126,7 +127,7 @@ void OverflowBubbleView::ChildPreferredSizeChanged(views::View* child) {
   SizeToContents();
 
   // Ensures |shelf_view_| is still visible.
-  if (shelf_->IsHorizontalAlignment())
+  if (wm_shelf_->IsHorizontalAlignment())
     ScrollByXOffset(0);
   else
     ScrollByYOffset(0);
@@ -138,7 +139,7 @@ bool OverflowBubbleView::OnMouseWheel(const ui::MouseWheelEvent& event) {
   // recently, but the behavior of this function was retained to continue
   // using Y offsets only. Might be good to simply scroll in both
   // directions as in OverflowBubbleView::OnScrollEvent.
-  if (shelf_->IsHorizontalAlignment())
+  if (wm_shelf_->IsHorizontalAlignment())
     ScrollByXOffset(-event.y_offset());
   else
     ScrollByYOffset(-event.y_offset());
@@ -162,7 +163,8 @@ void OverflowBubbleView::OnBeforeBubbleWidgetInit(
     views::Widget::InitParams* params,
     views::Widget* bubble_widget) const {
   // Place the bubble in the same root window as the anchor.
-  RootWindowController::ForWindow(anchor_widget()->GetNativeWindow())
+  WmWindow::Get(anchor_widget()->GetNativeWindow())
+      ->GetRootWindowController()
       ->ConfigureWidgetInitParamsForContainer(
           bubble_widget, kShellWindowId_ShelfBubbleContainer, params);
 }
@@ -175,7 +177,7 @@ gfx::Rect OverflowBubbleView::GetBubbleBounds() {
           ->GetDisplayNearestPoint(anchor_rect.CenterPoint())
           .work_area();
 
-  if (shelf_->IsHorizontalAlignment()) {
+  if (wm_shelf_->IsHorizontalAlignment()) {
     gfx::Rect bounds(
         base::i18n::IsRTL()
             ? anchor_rect.x() - kEndPadding
@@ -191,7 +193,7 @@ gfx::Rect OverflowBubbleView::GetBubbleBounds() {
   gfx::Rect bounds(
       0, anchor_rect.bottom() - content_size.height() - kEndPadding,
       content_size.width(), content_size.height() + 2 * kEndPadding);
-  if (shelf_->alignment() == SHELF_ALIGNMENT_LEFT)
+  if (wm_shelf_->alignment() == SHELF_ALIGNMENT_LEFT)
     bounds.set_x(anchor_rect.right() + kDistanceToMainShelf);
   else
     bounds.set_x(anchor_rect.x() - kDistanceToMainShelf - content_size.width());

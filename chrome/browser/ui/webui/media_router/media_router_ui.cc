@@ -82,7 +82,7 @@ std::string TruncateHost(const std::string& host) {
 
 base::TimeDelta GetRouteRequestTimeout(MediaCastMode cast_mode) {
   switch (cast_mode) {
-    case PRESENTATION:
+    case DEFAULT:
       return base::TimeDelta::FromSeconds(kCreateRouteTimeoutSeconds);
     case TAB_MIRROR:
       return base::TimeDelta::FromSeconds(kCreateRouteTimeoutSecondsForTab);
@@ -220,8 +220,7 @@ MediaRouterUI::~MediaRouterUI() {
   if (create_session_request_) {
     bool presentation_sinks_available = std::any_of(
         sinks_.begin(), sinks_.end(), [](const MediaSinkWithCastModes& sink) {
-          return base::ContainsValue(sink.cast_modes,
-                                     MediaCastMode::PRESENTATION);
+          return base::ContainsValue(sink.cast_modes, MediaCastMode::DEFAULT);
         });
     if (presentation_sinks_available) {
       create_session_request_->InvokeErrorCallback(content::PresentationError(
@@ -287,7 +286,7 @@ void MediaRouterUI::InitCommon(content::WebContents* initiator) {
   // Presentation requests from content must show the origin requesting
   // presentation: crbug.com/704964
   if (create_session_request_)
-    forced_cast_mode_ = MediaCastMode::PRESENTATION;
+    forced_cast_mode_ = MediaCastMode::DEFAULT;
 
   router_->OnUserGesture();
 
@@ -347,8 +346,7 @@ void MediaRouterUI::OnDefaultPresentationChanged(
   std::vector<MediaSource> sources = presentation_request.GetMediaSources();
   presentation_request_.reset(new PresentationRequest(presentation_request));
   query_result_manager_->SetSourcesForCastMode(
-      MediaCastMode::PRESENTATION, sources,
-      presentation_request_->frame_origin());
+      MediaCastMode::DEFAULT, sources, presentation_request_->frame_origin());
   // Register for MediaRoute updates.  NOTE(mfoltz): If there are multiple
   // sources that can be connected to via the dialog, this will break.  We will
   // need to observe multiple sources (keyed by sinks) in that case.  As this is
@@ -365,7 +363,7 @@ void MediaRouterUI::OnDefaultPresentationChanged(
 
 void MediaRouterUI::OnDefaultPresentationRemoved() {
   presentation_request_.reset();
-  query_result_manager_->RemoveSourcesForCastMode(MediaCastMode::PRESENTATION);
+  query_result_manager_->RemoveSourcesForCastMode(MediaCastMode::DEFAULT);
 
   // This should not be set if the dialog was initiated with a default
   // presentation request from the top level frame.  However, clear it just to
@@ -467,15 +465,15 @@ bool MediaRouterUI::SetRouteParameters(
   }
   *source_id = source->id();
 
-  bool for_presentation_source = cast_mode == MediaCastMode::PRESENTATION;
-  if (for_presentation_source && !presentation_request_) {
+  bool for_default_source = cast_mode == MediaCastMode::DEFAULT;
+  if (for_default_source && !presentation_request_) {
     DLOG(ERROR) << "Requested to create a route for presentation, but "
                 << "presentation request is missing.";
     return false;
   }
 
   current_route_request_id_ = ++route_request_counter_;
-  *origin = for_presentation_source
+  *origin = for_default_source
                 ? presentation_request_->frame_origin()
                 : url::Origin(GURL(chrome::kChromeUIMediaRouterURL));
   DVLOG(1) << "DoCreateRoute: origin: " << *origin;
@@ -491,13 +489,13 @@ bool MediaRouterUI::SetRouteParameters(
   // PresentationServiceDelegateImpl will have to be notified. Note that we
   // treat subsequent route requests from a Presentation API-initiated dialogs
   // as browser-initiated.
-  if (!for_presentation_source || !create_session_request_) {
+  if (!for_default_source || !create_session_request_) {
     route_response_callbacks->push_back(base::Bind(
         &MediaRouterUI::OnRouteResponseReceived, weak_factory_.GetWeakPtr(),
         current_route_request_id_, sink_id, cast_mode,
         base::UTF8ToUTF16(GetTruncatedPresentationRequestSourceName())));
   }
-  if (for_presentation_source) {
+  if (for_default_source) {
     if (create_session_request_) {
       // |create_session_request_| will be nullptr after this call, as the
       // object will be transferred to the callback.
@@ -527,10 +525,9 @@ bool MediaRouterUI::ConnectRoute(const MediaSink::Id& sink_id,
   std::vector<MediaRouteResponseCallback> route_response_callbacks;
   base::TimeDelta timeout;
   bool incognito;
-  if (!SetRouteParameters(sink_id, MediaCastMode::PRESENTATION, &source_id,
-                          &origin, &route_response_callbacks, &timeout,
-                          &incognito)) {
-    SendIssueForUnableToCast(MediaCastMode::PRESENTATION);
+  if (!SetRouteParameters(sink_id, MediaCastMode::DEFAULT, &source_id, &origin,
+                          &route_response_callbacks, &timeout, &incognito)) {
+    SendIssueForUnableToCast(MediaCastMode::DEFAULT);
     return false;
   }
   router_->ConnectRouteByRouteId(source_id, route_id, origin, initiator_,
@@ -580,7 +577,7 @@ void MediaRouterUI::RecordCastModeSelection(MediaCastMode cast_mode) {
                         prefs::kMediaRouterTabMirroringSources);
 
   switch (cast_mode) {
-    case MediaCastMode::PRESENTATION:
+    case MediaCastMode::DEFAULT:
       update->Remove(base::Value(GetSerializedInitiatorOrigin()), nullptr);
       break;
     case MediaCastMode::TAB_MIRROR:
@@ -707,7 +704,7 @@ void MediaRouterUI::SendIssueForRouteTimeout(
     const base::string16& presentation_request_source_name) {
   std::string issue_title;
   switch (cast_mode) {
-    case PRESENTATION:
+    case DEFAULT:
       DLOG_IF(ERROR, presentation_request_source_name.empty())
           << "Empty presentation request source name.";
       issue_title =

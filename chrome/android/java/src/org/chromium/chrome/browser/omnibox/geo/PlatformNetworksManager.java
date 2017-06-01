@@ -5,10 +5,9 @@
 package org.chromium.chrome.browser.omnibox.geo;
 
 import android.Manifest;
+import android.Manifest.permission;
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
@@ -44,7 +43,7 @@ import javax.annotation.Nullable;
 /**
  * Util methods for platform networking APIs.
  */
-class PlatformNetworksManager {
+public class PlatformNetworksManager {
     @VisibleForTesting
     static TimeProvider sTimeProvider = new TimeProvider();
 
@@ -55,28 +54,10 @@ class PlatformNetworksManager {
     static final String UNKNOWN_SSID = "<unknown ssid>";
 
     static VisibleWifi getConnectedWifi(Context context, WifiManager wifiManager) {
-        if (hasLocationAndWifiPermission(context)) {
-            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-            return connectedWifiInfoToVisibleWifi(wifiInfo);
+        if (!hasLocationAndWifiPermission(context)) {
+            return VisibleWifi.NO_WIFI_INFO;
         }
-        if (hasLocationPermission(context)) {
-            // Only location permission, so fallback to pre-marshmallow.
-            return getConnectedWifiPreMarshmallow(context);
-        }
-        return VisibleWifi.NO_WIFI_INFO;
-    }
-
-    static VisibleWifi getConnectedWifiPreMarshmallow(Context context) {
-        Intent intent = context.getApplicationContext().registerReceiver(
-                null, new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION));
-        if (intent != null) {
-            WifiInfo wifiInfo = intent.getParcelableExtra(WifiManager.EXTRA_WIFI_INFO);
-            return connectedWifiInfoToVisibleWifi(wifiInfo);
-        }
-        return VisibleWifi.NO_WIFI_INFO;
-    }
-
-    private static VisibleWifi connectedWifiInfoToVisibleWifi(@Nullable WifiInfo wifiInfo) {
+        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
         if (wifiInfo == null) {
             return VisibleWifi.NO_WIFI_INFO;
         }
@@ -277,7 +258,7 @@ class PlatformNetworksManager {
      *     not connected. This should only be true when performing a background non-synchronous
      *     call, since including not connected networks can degrade latency.
      */
-    static VisibleNetworks computeVisibleNetworks(
+    public static VisibleNetworks computeVisibleNetworks(
             Context context, boolean includeAllVisibleNotConnectedNetworks) {
         WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(
                 Context.WIFI_SERVICE);
@@ -331,18 +312,18 @@ class PlatformNetworksManager {
      * Wrapper around static time providers that allows us to mock the implementation in
      * tests.
      */
-    static class TimeProvider {
+    public static class TimeProvider {
         /**
          * Get current time in milliseconds.
          */
-        long getCurrentTime() {
+        public long getCurrentTime() {
             return System.currentTimeMillis();
         }
 
         /**
          * Get elapsed real time in milliseconds.
          */
-        long getElapsedRealtime() {
+        public long getElapsedRealtime() {
             return SystemClock.elapsedRealtime();
         }
     }

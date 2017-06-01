@@ -4,7 +4,6 @@
 
 #include "cc/trees/layer_tree_settings.h"
 
-#include "cc/resources/platform_color.h"
 #include "third_party/khronos/GLES2/gl2.h"
 
 namespace cc {
@@ -18,8 +17,7 @@ LayerTreeSettings::LayerTreeSettings()
                         ManagedMemoryPolicy::kDefaultNumResourcesLimit),
       software_memory_policy(128 * 1024 * 1024,
                              gpu::MemoryAllocation::CUTOFF_ALLOW_NICE_TO_HAVE,
-                             ManagedMemoryPolicy::kDefaultNumResourcesLimit),
-      preferred_tile_format(PlatformColor::BestTextureFormat()) {}
+                             ManagedMemoryPolicy::kDefaultNumResourcesLimit) {}
 
 LayerTreeSettings::LayerTreeSettings(const LayerTreeSettings& other) = default;
 LayerTreeSettings::~LayerTreeSettings() = default;

@@ -51,7 +51,6 @@ import org.chromium.chrome.browser.IntentHandler.IntentHandlerDelegate;
 import org.chromium.chrome.browser.IntentHandler.TabOpenType;
 import org.chromium.chrome.browser.appmenu.AppMenuPropertiesDelegate;
 import org.chromium.chrome.browser.bookmarks.BookmarkUtils;
-import org.chromium.chrome.browser.browseractions.BrowserActionsContextMenuItemDelegate;
 import org.chromium.chrome.browser.compositor.CompositorViewHolder;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.StateChangeReason;
 import org.chromium.chrome.browser.compositor.layouts.Layout;
@@ -244,7 +243,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
     /**
      * Whether an initial tab needs to be created during UI initialization.
      */
-    private Runnable mDelayedInitialTabBehaviorDuringUiInit;
+    private boolean mCreateInitialTabDuringUiInit;
 
     /**
      * Keeps track of whether or not a specific tab was created based on the startup intent.
@@ -320,40 +319,12 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
         @Override
         public Tab launchUrl(
                 String url, TabModel.TabLaunchType type, Intent intent, long intentTimestamp) {
-            if (openNtpBottomSheet(url)) return null;
-            return super.launchUrl(url, type, intent, intentTimestamp);
-        }
-
-        @Override
-        public Tab createNewTab(
-                LoadUrlParams loadUrlParams, TabLaunchType type, Tab parent, Intent intent) {
-            if (openNtpBottomSheet(loadUrlParams.getUrl())) return null;
-            return super.createNewTab(loadUrlParams, type, parent, intent);
-        }
-
-        /**
-         * Handles opening the NTP in the bottom sheet if supported.
-         *
-         * @param url The URL that is used to determine if this is an NTP being opened.
-         * @return Whether the NTP experience is opened in the bottom sheet without a corresponding
-         *         Tab associated with it.
-         */
-        private boolean openNtpBottomSheet(String url) {
             if (getBottomSheet() != null && NewTabPage.isNTPUrl(url)) {
-                if (!mUIInitialized) {
-                    assert mDelayedInitialTabBehaviorDuringUiInit == null;
-                    mDelayedInitialTabBehaviorDuringUiInit = new Runnable() {
-                        @Override
-                        public void run() {
-                            getBottomSheet().displayNewTabUi(mIsIncognito);
-                        }
-                    };
-                } else {
-                    getBottomSheet().displayNewTabUi(mIsIncognito);
-                }
-                return true;
+                getBottomSheet().displayNewTabUi(mIsIncognito);
+                return null;
             }
-            return false;
+
+            return super.launchUrl(url, type, intent, intentTimestamp);
         }
     }
 
@@ -455,32 +426,13 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
 
             refreshSignIn();
 
-            initializeUI();
-
-            // The dataset has already been created, we need to initialize our state.
-            mTabModelSelectorImpl.notifyChanged();
-
-            ApiCompatibilityUtils.setWindowIndeterminateProgress(getWindow());
-
-            // Check for incognito tabs to handle the case where Chrome was swiped away in the
-            // background.
-            if (TabWindowManager.getInstance().canDestroyIncognitoProfile()) {
-                IncognitoNotificationManager.dismissIncognitoNotification();
-            }
-
-            // LocaleManager can only function after the native library is loaded.
-            mLocaleManager = LocaleManager.getInstance();
-            boolean searchEnginePromoShown =
-                    mLocaleManager.showSearchEnginePromoIfNeeded(this, null);
-
             ChromePreferenceManager preferenceManager = ChromePreferenceManager.getInstance();
             // Promos can only be shown when we start with ACTION_MAIN intent and
             // after FRE is complete. Native initialization can finish before the FRE flow is
-            // complete, and this will only show promos on the second opportunity. This is
-            // because the FRE is shown on the first opportunity, and we don't want to show such
-            // content back to back.
-            if (!searchEnginePromoShown && !mIntentWithEffect
-                    && FirstRunStatus.getFirstRunFlowComplete()
+            // complete, and this will only show promos on the second opportunity. This is because
+            // the FRE is shown on the first opportunity, and we don't want to show such content
+            // back to back.
+            if (!mIntentWithEffect && FirstRunStatus.getFirstRunFlowComplete()
                     && preferenceManager.getPromosSkippedOnFirstStart()) {
                 // Data reduction promo should be temporarily suppressed if the sign in promo is
                 // shown to avoid nagging users too much.
@@ -490,6 +442,22 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
             } else {
                 preferenceManager.setPromosSkippedOnFirstStart(true);
             }
+
+            initializeUI();
+
+            // The dataset has already been created, we need to initialize our state.
+            mTabModelSelectorImpl.notifyChanged();
+
+            ApiCompatibilityUtils.setWindowIndeterminateProgress(getWindow());
+
+            // Check for incognito tabs to handle the case where Chrome was swiped away in the
+            // background.
+            int incognitoCount = TabWindowManager.getInstance().getIncognitoTabCount();
+            if (incognitoCount == 0) IncognitoNotificationManager.dismissIncognitoNotification();
+
+            // LocaleManager can only function after the native library is loaded.
+            mLocaleManager = LocaleManager.getInstance();
+            mLocaleManager.showSearchEnginePromoIfNeeded(this, null);
 
             super.finishNativeInitialization();
         } finally {
@@ -538,7 +506,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
         // any have incognito tabs exist.  If all are alive and no tabs exist, we should ensure that
         // we delete the incognito profile if one is around still.
         if (tabbedModeTaskIds.size() == 0) {
-            return TabWindowManager.getInstance().canDestroyIncognitoProfile()
+            return TabWindowManager.getInstance().getIncognitoTabCount() == 0
                     && Profile.getLastUsedProfile().hasOffTheRecordProfile();
         }
 
@@ -617,9 +585,10 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
     @Override
     public void onStartWithNative() {
         super.onStartWithNative();
-
-        setInitialOverviewState();
-        BrowserActionsContextMenuItemDelegate.cancelBrowserActionsNotification();
+        // If we don't have a current tab, show the overview mode.
+        if (getActivityTab() == null && !mLayoutManager.overviewVisible()) {
+            mLayoutManager.showOverview(false);
+        }
 
         resetSavedInstanceState();
     }
@@ -670,18 +639,6 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
         } else if (MemoryPressureListener.handleDebugIntent(ChromeTabbedActivity.this,
                 intent.getAction())) {
             // Handled.
-        }
-    }
-
-    private void setInitialOverviewState() {
-        boolean isOverviewVisible = mLayoutManager.overviewVisible();
-        if (getActivityTab() == null && !isOverviewVisible) {
-            toggleOverview();
-        }
-
-        if (BrowserActionsContextMenuItemDelegate.toggleOverviewByBrowserActions(
-                    getIntent(), isOverviewVisible)) {
-            toggleOverview();
         }
     }
 
@@ -764,9 +721,8 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
                 bgViewWrapper.initialize();
             }
 
-            if (mDelayedInitialTabBehaviorDuringUiInit != null) {
-                mDelayedInitialTabBehaviorDuringUiInit.run();
-                mDelayedInitialTabBehaviorDuringUiInit = null;
+            if (mCreateInitialTabDuringUiInit) {
+                getTabCreator(false).launchNTP();
             } else {
                 mLayoutManager.hideOverview(false);
             }
@@ -1001,7 +957,12 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
      */
     private void createInitialTab() {
         String url = HomepageManager.getHomepageUri(getApplicationContext());
-        if (TextUtils.isEmpty(url) || NewTabPage.isNTPUrl(url)) {
+        if (TextUtils.isEmpty(url)) {
+            if (getBottomSheet() != null) {
+                mCreateInitialTabDuringUiInit = true;
+                return;
+            }
+
             url = UrlConstants.NTP_URL;
         }
 
@@ -1073,14 +1034,11 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
             }
 
             if (getBottomSheet() != null) {
-                // If the bottom sheet new tab UI is showing and the tab open type is not
-                // already OPEN_NEW_TAB or OPEN_NEW_INCOGNITO_TAB, set the open type so that a real
-                // new tab will be created and added to the appropriate model.
-                if (getBottomSheet().isShowingNewTab() && tabOpenType != TabOpenType.OPEN_NEW_TAB
-                        && tabOpenType != TabOpenType.OPEN_NEW_INCOGNITO_TAB) {
+                if (getBottomSheet().isShowingNewTab()) {
                     tabOpenType = mTabModelSelectorImpl.isIncognitoSelected()
                             ? TabOpenType.OPEN_NEW_INCOGNITO_TAB
                             : TabOpenType.OPEN_NEW_TAB;
+                    getBottomSheet().onProcessUrlViewIntent();
                 }
 
                 // Either a new tab is opening, a tab is being clobbered, or a tab is being brought
@@ -1242,15 +1200,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
             // Create a new tab.
             Tab newTab =
                     launchIntent(url, referer, headers, externalAppId, forceNewTab, intent);
-            if (newTab != null) {
-                newTab.setIsAllowedToReturnToExternalApp(isAllowedToReturnToExternalApp);
-            } else {
-                // TODO(twellington): This should only happen for NTPs created in Chrome Home.  See
-                //                    if we should be caching setIsAllowedToReturnToExternalApp
-                //                    in those cases.
-                assert NewTabPage.isNTPUrl(url);
-                assert getBottomSheet() != null;
-            }
+            newTab.setIsAllowedToReturnToExternalApp(isAllowedToReturnToExternalApp);
             logMobileReceivedExternalIntent(externalAppId, intent);
         }
 
@@ -1835,12 +1785,8 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
 
     private void toggleOverview() {
         Tab currentTab = getActivityTab();
-        // If we don't have a current tab, show the overview mode.
-        if (currentTab == null) {
-            mLayoutManager.showOverview(false);
-            return;
-        }
-        ContentViewCore contentViewCore = currentTab.getContentViewCore();
+        ContentViewCore contentViewCore =
+                currentTab != null ? currentTab.getContentViewCore() : null;
 
         if (!mLayoutManager.overviewVisible()) {
             getCompositorViewHolder().hideKeyboard(new Runnable() {

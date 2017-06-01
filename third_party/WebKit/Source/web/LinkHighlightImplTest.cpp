@@ -30,8 +30,7 @@
 #include "core/dom/Node.h"
 #include "core/events/WebInputEventConversion.h"
 #include "core/exported/WebViewBase.h"
-#include "core/frame/LocalFrameView.h"
-#include "core/frame/WebLocalFrameBase.h"
+#include "core/frame/FrameView.h"
 #include "core/input/EventHandler.h"
 #include "core/page/Page.h"
 #include "core/page/TouchDisambiguation.h"
@@ -50,6 +49,7 @@
 #include "public/web/WebFrameClient.h"
 #include "public/web/WebViewClient.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "web/WebLocalFrameImpl.h"
 #include "web/tests/FrameTestHelpers.h"
 
 namespace blink {

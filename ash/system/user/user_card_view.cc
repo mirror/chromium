@@ -65,9 +65,8 @@ views::View* CreateUserAvatarView(LoginStatus login_status, int user_index) {
     image_view->SetImage(icon, icon.size());
   } else {
     SessionController* controller = Shell::Get()->session_controller();
-    image_view->SetImage(
-        controller->GetUserSession(user_index)->user_info->avatar,
-        gfx::Size(kTrayItemSize, kTrayItemSize));
+    image_view->SetImage(controller->GetUserSession(user_index)->avatar,
+                         gfx::Size(kTrayItemSize, kTrayItemSize));
   }
 
   image_view->SetBorder(views::CreateEmptyBorder(gfx::Insets(
@@ -117,11 +116,8 @@ PublicAccountUserDetails::PublicAccountUserDetails() : learn_more_(nullptr) {
   // Retrieve the user's display name and wrap it with markers.
   // Note that since this is a public account it always has to be the primary
   // user.
-  base::string16 display_name =
-      base::UTF8ToUTF16(Shell::Get()
-                            ->session_controller()
-                            ->GetUserSession(0)
-                            ->user_info->display_name);
+  base::string16 display_name = base::UTF8ToUTF16(
+      Shell::Get()->session_controller()->GetUserSession(0)->display_name);
   base::RemoveChars(display_name, kDisplayNameMark, &display_name);
   display_name = kDisplayNameMark[0] + display_name + kDisplayNameMark[0];
   // Retrieve the domain managing the device and wrap it with markers.
@@ -274,7 +270,7 @@ void PublicAccountUserDetails::DeterminePreferredSize() {
   const int line_height = font_list.GetHeight();
   const int link_extra_height = std::max(
       link_size.height() - learn_more_->GetInsets().top() - line_height, 0);
-  SetPreferredSize(gfx::Size(
+  set_preferred_size(gfx::Size(
       min_width + insets.width(),
       line_count * line_height + link_extra_height + insets.height()));
 }
@@ -386,8 +382,8 @@ void UserCardView::AddUserContent(views::BoxLayout* layout,
   base::string16 user_name_string =
       login_status == LoginStatus::GUEST
           ? l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_GUEST_LABEL)
-          : base::UTF8ToUTF16(controller->GetUserSession(user_index_)
-                                  ->user_info->display_name);
+          : base::UTF8ToUTF16(
+                controller->GetUserSession(user_index_)->display_name);
   user_name_ = new views::Label(user_name_string);
   user_name_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   TrayPopupItemStyle user_name_style(
@@ -402,8 +398,8 @@ void UserCardView::AddUserContent(views::BoxLayout* layout,
     user_email_string =
         Shell::Get()->session_controller()->IsUserSupervised()
             ? l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_SUPERVISED_LABEL)
-            : base::UTF8ToUTF16(controller->GetUserSession(user_index_)
-                                    ->user_info->display_email);
+            : base::UTF8ToUTF16(
+                  controller->GetUserSession(user_index_)->display_email);
   }
   user_email->SetText(user_email_string);
   user_email->SetHorizontalAlignment(gfx::ALIGN_LEFT);

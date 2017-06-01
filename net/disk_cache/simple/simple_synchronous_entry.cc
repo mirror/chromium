@@ -43,8 +43,7 @@ enum OpenEntryResult {
   OPEN_ENTRY_KEY_MISMATCH = 6,
   OPEN_ENTRY_KEY_HASH_MISMATCH = 7,
   OPEN_ENTRY_SPARSE_OPEN_FAILED = 8,
-  OPEN_ENTRY_INVALID_FILE_LENGTH = 9,
-  OPEN_ENTRY_MAX = 10,
+  OPEN_ENTRY_MAX = 9,
 };
 
 // Used in histograms, please only add entries at the end.
@@ -952,11 +951,6 @@ bool SimpleSynchronousEntry::OpenFiles(SimpleEntryStat* out_entry_stat) {
     // 0, stream 1 and one EOF record. The exact distribution of sizes between
     // stream 1 and stream 0 is only determined after reading the EOF record
     // for stream 0 in ReadAndValidateStream0.
-    if (!base::IsValueInRangeForNumericType<int>(file_info.size)) {
-      RecordSyncOpenResult(cache_type_, OPEN_ENTRY_INVALID_FILE_LENGTH,
-                           had_index_);
-      return false;
-    }
     out_entry_stat->set_data_size(i + 1, static_cast<int>(file_info.size));
   }
   SIMPLE_CACHE_UMA(CUSTOM_COUNTS,

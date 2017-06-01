@@ -7,9 +7,10 @@
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
-#include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_constants.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
+#include "ash/wm_window.h"
 #include "base/i18n/rtl.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
@@ -25,13 +26,13 @@ namespace {
 const int kToastMarginX = 7;
 
 // If there should be no margin for the first item, this value needs to be
-// subtracted to flush the message to the shelf (the width of the border +
+// substracted to flush the message to the shelf (the width of the border +
 // shadow).
 const int kNoToastMarginBorderAndShadowOffset = 2;
 
 }  // namespace
 
-AshPopupAlignmentDelegate::AshPopupAlignmentDelegate(Shelf* shelf)
+AshPopupAlignmentDelegate::AshPopupAlignmentDelegate(WmShelf* shelf)
     : screen_(NULL), shelf_(shelf), tray_bubble_height_(0) {
   shelf_->AddObserver(this);
 }
@@ -115,7 +116,8 @@ void AshPopupAlignmentDelegate::ConfigureWidgetInitParamsForContainer(
   init_params->shadow_type = views::Widget::InitParams::SHADOW_TYPE_DROP;
   init_params->shadow_elevation = ::wm::ShadowElevation::MEDIUM;
   // On ash, popups go in the status container.
-  RootWindowController::ForWindow(shelf_->GetWindow())
+  shelf_->GetWindow()
+      ->GetRootWindowController()
       ->ConfigureWidgetInitParamsForContainer(
           widget, kShellWindowId_StatusContainer, init_params);
 }
@@ -126,12 +128,11 @@ bool AshPopupAlignmentDelegate::IsPrimaryDisplayForNotification() const {
 }
 
 ShelfAlignment AshPopupAlignmentDelegate::GetAlignment() const {
-  return shelf_->alignment();
+  return shelf_->GetAlignment();
 }
 
 display::Display AshPopupAlignmentDelegate::GetCurrentDisplay() const {
-  return display::Screen::GetScreen()->GetDisplayNearestWindow(
-      shelf_->GetWindow());
+  return shelf_->GetWindow()->GetDisplayNearestWindow();
 }
 
 void AshPopupAlignmentDelegate::UpdateWorkArea() {
@@ -140,7 +141,7 @@ void AshPopupAlignmentDelegate::UpdateWorkArea() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// ShelfObserver:
+// WmShelfObserver:
 
 void AshPopupAlignmentDelegate::WillChangeVisibilityState(
     ShelfVisibilityState new_state) {

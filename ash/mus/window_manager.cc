@@ -6,7 +6,6 @@
 
 #include <stdint.h>
 
-#include <limits>
 #include <utility>
 
 #include "ash/drag_drop/drag_image_view.h"
@@ -33,6 +32,7 @@
 #include "ash/wm/ash_focus_rules.h"
 #include "ash/wm/container_finder.h"
 #include "ash/wm/window_state.h"
+#include "ash/wm_window.h"
 #include "base/memory/ptr_util.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "services/service_manager/public/cpp/connector.h"
@@ -126,21 +126,29 @@ void WindowManager::Init(
   DCHECK_EQ(nullptr, ash::Shell::window_tree_client());
   ash::Shell::set_window_tree_client(window_tree_client_.get());
 
-  // TODO(sky): remove and use MUS code. This should really be
-  // ShouldEnableSimplifiedDisplayManagement(), but as ShellPort hasn't been
-  // created yet it can't be used here.
+  // TODO(sky): remove and use MUS code.
   if (config_ == Config::MASH) {
     // |connector_| is null in some tests.
     if (connector_)
       connector_->BindInterface(ui::mojom::kServiceName, &display_controller_);
     screen_ = base::MakeUnique<ScreenMus>(display_controller_.get());
     display::Screen::SetScreenInstance(screen_.get());
-    InstallFrameDecorationValues();
   }
 
   pointer_watcher_event_router_ =
       base::MakeUnique<views::PointerWatcherEventRouter>(
           window_tree_client_.get());
+
+  ui::mojom::FrameDecorationValuesPtr frame_decoration_values =
+      ui::mojom::FrameDecorationValues::New();
+  const gfx::Insets client_area_insets =
+      NonClientFrameController::GetPreferredClientAreaInsets();
+  frame_decoration_values->normal_client_area_insets = client_area_insets;
+  frame_decoration_values->maximized_client_area_insets = client_area_insets;
+  frame_decoration_values->max_title_bar_button_width =
+      NonClientFrameController::GetMaxTitleBarButtonWidth();
+  window_manager_client_->SetFrameDecorationValues(
+      std::move(frame_decoration_values));
 
   // Notify PointerWatcherEventRouter and CaptureSynchronizer that the capture
   // client has been set.
@@ -229,7 +237,8 @@ void WindowManager::CreateShell(
   ShellInitParams init_params;
   ShellPortMash* shell_port =
       new ShellPortMash(window_tree_host ? window_tree_host->window() : nullptr,
-                        this, pointer_watcher_event_router_.get());
+                        this, pointer_watcher_event_router_.get(),
+                        create_session_state_delegate_stub_for_test_);
   // Shell::CreateInstance() takes ownership of ShellDelegate.
   init_params.delegate = shell_delegate_ ? shell_delegate_.release()
                                          : new ShellDelegateMus(connector_);
@@ -250,19 +259,6 @@ void WindowManager::CreateAndRegisterRootWindowController(
       new RootWindowController(nullptr, window_tree_host.release()));
   root_window_controller->Init(root_window_type);
   root_window_controllers_.insert(std::move(root_window_controller));
-}
-
-void WindowManager::InstallFrameDecorationValues() {
-  ui::mojom::FrameDecorationValuesPtr frame_decoration_values =
-      ui::mojom::FrameDecorationValues::New();
-  const gfx::Insets client_area_insets =
-      NonClientFrameController::GetPreferredClientAreaInsets();
-  frame_decoration_values->normal_client_area_insets = client_area_insets;
-  frame_decoration_values->maximized_client_area_insets = client_area_insets;
-  frame_decoration_values->max_title_bar_button_width =
-      NonClientFrameController::GetMaxTitleBarButtonWidth();
-  window_manager_client_->SetFrameDecorationValues(
-      std::move(frame_decoration_values));
 }
 
 void WindowManager::DestroyRootWindowController(
@@ -345,14 +341,13 @@ void WindowManager::OnWmConnected() {
   CreateShell(nullptr);
   if (show_primary_host_on_connect_)
     Shell::GetPrimaryRootWindow()->GetHost()->Show();
-  InstallFrameDecorationValues();
 }
 
 void WindowManager::OnWmSetBounds(aura::Window* window,
                                   const gfx::Rect& bounds) {
   // TODO(sky): this indirectly sets bounds, which is against what
   // OnWmSetBounds() recommends doing. Remove that restriction, or fix this.
-  window->SetBounds(bounds);
+  WmWindow::Get(window)->SetBounds(bounds);
 }
 
 bool WindowManager::OnWmSetProperty(
@@ -531,22 +526,24 @@ void WindowManager::OnWmPerformMoveLoop(
     ui::mojom::MoveLoopSource source,
     const gfx::Point& cursor_location,
     const base::Callback<void(bool)>& on_done) {
-  MoveEventHandler* handler = MoveEventHandler::GetForWindow(window);
+  WmWindow* child_window = WmWindow::Get(window);
+  MoveEventHandler* handler = MoveEventHandler::GetForWindow(child_window);
   if (!handler) {
     on_done.Run(false);
     return;
   }
 
   DCHECK(!handler->IsDragInProgress());
-  ::wm::WindowMoveSource aura_source =
+  aura::client::WindowMoveSource aura_source =
       source == ui::mojom::MoveLoopSource::MOUSE
-          ? ::wm::WINDOW_MOVE_SOURCE_MOUSE
-          : ::wm::WINDOW_MOVE_SOURCE_TOUCH;
+          ? aura::client::WINDOW_MOVE_SOURCE_MOUSE
+          : aura::client::WINDOW_MOVE_SOURCE_TOUCH;
   handler->AttemptToStartDrag(cursor_location, HTCAPTION, aura_source, on_done);
 }
 
 void WindowManager::OnWmCancelMoveLoop(aura::Window* window) {
-  MoveEventHandler* handler = MoveEventHandler::GetForWindow(window);
+  WmWindow* child_window = WmWindow::Get(window);
+  MoveEventHandler* handler = MoveEventHandler::GetForWindow(child_window);
   if (handler)
     handler->RevertDrag();
 }

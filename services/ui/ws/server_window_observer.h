@@ -16,12 +16,13 @@
 namespace gfx {
 class Insets;
 class Rect;
-class Transform;
 }
 
 namespace ui {
-
 struct TextInputState;
+}
+
+namespace ui {
 
 namespace ws {
 
@@ -49,10 +50,6 @@ class ServerWindowObserver {
   virtual void OnWindowBoundsChanged(ServerWindow* window,
                                      const gfx::Rect& old_bounds,
                                      const gfx::Rect& new_bounds) {}
-
-  virtual void OnWindowTransformChanged(ServerWindow* window,
-                                        const gfx::Transform& old_transform,
-                                        const gfx::Transform& new_transform) {}
 
   virtual void OnWindowClientAreaChanged(
       ServerWindow* window,
@@ -99,6 +96,7 @@ class ServerWindowObserver {
 };
 
 }  // namespace ws
+
 }  // namespace ui
 
 #endif  // SERVICES_UI_WS_SERVER_WINDOW_OBSERVER_H_

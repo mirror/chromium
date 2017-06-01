@@ -60,7 +60,7 @@ public class PaymentRequestCanMakePaymentMetricsTest implements MainActivityStar
     @Test
     @MediumTest
     @Feature({"Payments"})
-    public void testCannotMakePayment_UserAbort()
+    public void testCannotMakePayment_Abort()
             throws InterruptedException, ExecutionException, TimeoutException {
         // Initiate a payment request.
         mPaymentRequestTestRule.triggerUIAndWait(
@@ -81,20 +81,20 @@ public class PaymentRequestCanMakePaymentMetricsTest implements MainActivityStar
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CanMakePayment.Usage",
-                        CanMakePaymentUsage.CAN_MAKE_PAYMENT_USED));
+                        JourneyLogger.CAN_MAKE_PAYMENT_USED));
 
         // The CanMakePayment effect on show should be recorded as being false and shown.
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CanMakePayment.Used.EffectOnShow",
-                        CanMakePaymentEffectOnShow.DID_SHOW));
+                        JourneyLogger.CMP_SHOW_DID_SHOW));
 
         // There should be a record for an abort when CanMakePayment is false but the PR is shown to
         // the user.
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CanMakePayment.Used.FalseWithShowEffectOnCompletion",
-                        CompletionStatus.USER_ABORTED));
+                        JourneyLogger.COMPLETION_STATUS_USER_ABORTED));
     }
 
     /**
@@ -133,31 +133,31 @@ public class PaymentRequestCanMakePaymentMetricsTest implements MainActivityStar
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CanMakePayment.Usage",
-                        CanMakePaymentUsage.CAN_MAKE_PAYMENT_USED));
+                        JourneyLogger.CAN_MAKE_PAYMENT_USED));
 
         // The CanMakePayment effect on show should be recorded as being false and shown.
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CanMakePayment.Used.EffectOnShow",
-                        CanMakePaymentEffectOnShow.DID_SHOW));
+                        JourneyLogger.CMP_SHOW_DID_SHOW));
 
         // There should be a record for a completion when CanMakePayment is false but the PR is
         // shown to the user.
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CanMakePayment.Used.FalseWithShowEffectOnCompletion",
-                        CompletionStatus.COMPLETED));
+                        JourneyLogger.COMPLETION_STATUS_COMPLETED));
     }
 
     /**
      * Tests that the CanMakePayment metrics are correctly logged for the case of a merchant
-     * calling it, receiving yes as a response, showing the Payment Request and the merchant aborts
-     * the flow.
+     * calling it, receiving yeas as a response, showing the Payment Request and the user aborts the
+     * flow.
      */
     @Test
     @MediumTest
     @Feature({"Payments"})
-    public void testCanMakePayment_MerchantAbort()
+    public void testCanMakePayment_Abort()
             throws InterruptedException, ExecutionException, TimeoutException {
         // Install the app so CanMakePayment returns true.
         mPaymentRequestTestRule.installPaymentApp(HAVE_INSTRUMENTS, IMMEDIATE_RESPONSE);
@@ -166,34 +166,41 @@ public class PaymentRequestCanMakePaymentMetricsTest implements MainActivityStar
         mPaymentRequestTestRule.triggerUIAndWait(
                 "queryShow", mPaymentRequestTestRule.getReadyForInput());
 
-        // Simulate an abort by the merchant.
-        mPaymentRequestTestRule.clickNodeAndWait("abort", mPaymentRequestTestRule.getDismissed());
-        mPaymentRequestTestRule.expectResultContains(new String[] {"Abort"});
+        // Press the back button.
+        int callCount = mPaymentRequestTestRule.getDismissed().getCallCount();
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mPaymentRequestTestRule.getPaymentRequestUI().getDialogForTest().onBackPressed();
+            }
+        });
+        mPaymentRequestTestRule.getDismissed().waitForCallback(callCount);
+        mPaymentRequestTestRule.expectResultContains(new String[] {"Request cancelled"});
 
         // CanMakePayment was queried.
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CanMakePayment.Usage",
-                        CanMakePaymentUsage.CAN_MAKE_PAYMENT_USED));
+                        JourneyLogger.CAN_MAKE_PAYMENT_USED));
 
         // The CanMakePayment effect on show should be recorded as being false and shown.
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CanMakePayment.Used.EffectOnShow",
-                        CanMakePaymentEffectOnShow.DID_SHOW
-                                | CanMakePaymentEffectOnShow.COULD_MAKE_PAYMENT));
+                        JourneyLogger.CMP_SHOW_DID_SHOW
+                                | JourneyLogger.CMP_SHOW_COULD_MAKE_PAYMENT));
 
         // There should be a record for an abort when CanMakePayment is false but the PR is shown to
         // the user.
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CanMakePayment.Used.TrueWithShowEffectOnCompletion",
-                        CompletionStatus.OTHER_ABORTED));
+                        JourneyLogger.COMPLETION_STATUS_USER_ABORTED));
     }
 
     /**
      * Tests that the CanMakePayment metrics are correctly logged for the case of a merchant
-     * calling it, receiving yes as a response, showing the Payment Request and the user completes
+     * calling it, receiving yeas as a response, showing the Payment Request and the user completes
      * the flow.
      */
     @Test
@@ -214,21 +221,21 @@ public class PaymentRequestCanMakePaymentMetricsTest implements MainActivityStar
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CanMakePayment.Usage",
-                        CanMakePaymentUsage.CAN_MAKE_PAYMENT_USED));
+                        JourneyLogger.CAN_MAKE_PAYMENT_USED));
 
         // The CanMakePayment effect on show should be recorded as being false and shown.
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CanMakePayment.Used.EffectOnShow",
-                        CanMakePaymentEffectOnShow.DID_SHOW
-                                | CanMakePaymentEffectOnShow.COULD_MAKE_PAYMENT));
+                        JourneyLogger.CMP_SHOW_DID_SHOW
+                                | JourneyLogger.CMP_SHOW_COULD_MAKE_PAYMENT));
 
         // There should be a record for an abort when CanMakePayment is false but the PR is shown to
         // the user.
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CanMakePayment.Used.TrueWithShowEffectOnCompletion",
-                        CompletionStatus.COMPLETED));
+                        JourneyLogger.COMPLETION_STATUS_COMPLETED));
     }
 
     /**
@@ -238,7 +245,7 @@ public class PaymentRequestCanMakePaymentMetricsTest implements MainActivityStar
     @Test
     @MediumTest
     @Feature({"Payments"})
-    public void testNoQuery_UserAbort()
+    public void testNoQuery_Abort()
             throws InterruptedException, ExecutionException, TimeoutException {
         // Initiate a payment request.
         mPaymentRequestTestRule.triggerUIAndWait(
@@ -259,14 +266,14 @@ public class PaymentRequestCanMakePaymentMetricsTest implements MainActivityStar
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CanMakePayment.Usage",
-                        CanMakePaymentUsage.CAN_MAKE_PAYMENT_NOT_USED));
+                        JourneyLogger.CAN_MAKE_PAYMENT_NOT_USED));
 
         // There should be a record for an abort when CanMakePayment is not called but the PR is
         // shown to the user.
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CanMakePayment.NotUsed.WithShowEffectOnCompletion",
-                        CompletionStatus.USER_ABORTED));
+                        JourneyLogger.COMPLETION_STATUS_USER_ABORTED));
     }
 
     /**
@@ -276,7 +283,7 @@ public class PaymentRequestCanMakePaymentMetricsTest implements MainActivityStar
     @Test
     @MediumTest
     @Feature({"Payments"})
-    public void testNoQuery_Complete()
+    public void testNoQuery_Completes()
             throws InterruptedException, ExecutionException, TimeoutException {
         // Install the app so the user can complete the Payment Request.
         mPaymentRequestTestRule.installPaymentApp(HAVE_INSTRUMENTS, IMMEDIATE_RESPONSE);
@@ -291,13 +298,13 @@ public class PaymentRequestCanMakePaymentMetricsTest implements MainActivityStar
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CanMakePayment.Usage",
-                        CanMakePaymentUsage.CAN_MAKE_PAYMENT_NOT_USED));
+                        JourneyLogger.CAN_MAKE_PAYMENT_NOT_USED));
 
         // There should be a record for a completion when CanMakePayment is not called but the PR is
         // shown to the user.
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CanMakePayment.NotUsed.WithShowEffectOnCompletion",
-                        CompletionStatus.COMPLETED));
+                        JourneyLogger.COMPLETION_STATUS_COMPLETED));
     }
 }

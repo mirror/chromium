@@ -6,7 +6,6 @@
 
 #import "base/mac/scoped_nsobject.h"
 #import "base/strings/sys_string_conversions.h"
-#include "ios/web/navigation/navigation_manager_util.h"
 #import "ios/web/public/navigation_item.h"
 #import "ios/web/public/navigation_manager.h"
 #include "ios/web/public/ssl_status.h"
@@ -126,25 +125,29 @@ using web::SecurityStyle;
                                 host:(NSString*)host
                    withSecurityStyle:(SecurityStyle)style
                           certStatus:(CertStatus)certStatus {
-  web::NavigationItem* item =
-      web::GetCommittedItemWithUniqueID(_navigationManager, navigationItemID);
-  if (!item)
-    return;
+  // The searched item almost always be the last one, so walk backward rather
+  // than forward.
+  for (int i = _navigationManager->GetItemCount() - 1; 0 <= i; i--) {
+    web::NavigationItem* item = _navigationManager->GetItemAtIndex(i);
+    if (item->GetUniqueID() != navigationItemID)
+      continue;
 
-  // NavigationItem's UniqueID is preserved even after redirects, so
-  // checking that cert and URL match is necessary.
-  scoped_refptr<net::X509Certificate> cert(web::CreateCertFromTrust(trust));
-  std::string GURLHost = base::SysNSStringToUTF8(host);
-  web::SSLStatus& SSLStatus = item->GetSSL();
-  if (item->GetURL().SchemeIsCryptographic() && !!SSLStatus.certificate &&
-      SSLStatus.certificate->Equals(cert.get()) &&
-      item->GetURL().host() == GURLHost) {
-    web::SSLStatus previousSSLStatus = item->GetSSL();
-    SSLStatus.cert_status = certStatus;
-    SSLStatus.security_style = style;
-    if (!previousSSLStatus.Equals(SSLStatus)) {
-      [self didChangeSSLStatusForNavigationItem:item];
+    // NavigationItem's UniqueID is preserved even after redirects, so
+    // checking that cert and URL match is necessary.
+    scoped_refptr<net::X509Certificate> cert(web::CreateCertFromTrust(trust));
+    std::string GURLHost = base::SysNSStringToUTF8(host);
+    web::SSLStatus& SSLStatus = item->GetSSL();
+    if (item->GetURL().SchemeIsCryptographic() && !!SSLStatus.certificate &&
+        SSLStatus.certificate->Equals(cert.get()) &&
+        item->GetURL().host() == GURLHost) {
+      web::SSLStatus previousSSLStatus = item->GetSSL();
+      SSLStatus.cert_status = certStatus;
+      SSLStatus.security_style = style;
+      if (!previousSSLStatus.Equals(SSLStatus)) {
+        [self didChangeSSLStatusForNavigationItem:item];
+      }
     }
+    return;
   }
 }
 

@@ -13,7 +13,6 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/optional.h"
 #include "base/strings/string16.h"
@@ -39,8 +38,7 @@ using FieldTypeMap = std::map<base::string16, autofill::ServerFieldType>;
 
 // This class helps with filling the observed form (both HTML and from HTTP
 // auth) and with saving/updating the stored information about it.
-class PasswordFormManager : public FormFetcher::Consumer,
-                            public base::RefCounted<PasswordFormManager> {
+class PasswordFormManager : public FormFetcher::Consumer {
  public:
   // |password_manager| owns |this|, |client| and |driver| serve to
   // communicate with embedder, |observed_form| is the associated form |this|
@@ -58,6 +56,7 @@ class PasswordFormManager : public FormFetcher::Consumer,
                       const autofill::PasswordForm& observed_form,
                       std::unique_ptr<FormSaver> form_saver,
                       FormFetcher* form_fetcher);
+  ~PasswordFormManager() override;
 
   // Flags describing the result of comparing two forms as performed by
   // DoesMatch. Individual flags are only relevant for HTML forms, but
@@ -256,16 +255,12 @@ class PasswordFormManager : public FormFetcher::Consumer,
   void GrabFetcher(std::unique_ptr<FormFetcher> fetcher);
 
  protected:
-  ~PasswordFormManager() override;
-
   // FormFetcher::Consumer:
   void ProcessMatches(
       const std::vector<const autofill::PasswordForm*>& non_federated,
       size_t filtered_count) override;
 
  private:
-  friend class base::RefCounted<PasswordFormManager>;
-
   // ManagerAction - What does the manager do with this form? Either it
   // fills it, or it doesn't. If it doesn't fill it, that's either
   // because it has no match or it is disabled via the AUTOCOMPLETE=off
@@ -276,13 +271,6 @@ class PasswordFormManager : public FormFetcher::Consumer,
     kManagerActionAutofilled,
     kManagerActionBlacklisted_Obsolete,
     kManagerActionMax
-  };
-
-  // Same as above, without the obsoleted 'Blacklisted' action.
-  enum ManagerActionNew {
-    kManagerActionNewNone,
-    kManagerActionNewAutofilled,
-    kManagerActionNewMax
   };
 
   // UserAction - What does the user do with this form? If they do nothing
@@ -336,30 +324,6 @@ class PasswordFormManager : public FormFetcher::Consumer,
   // This is used when recording the actions taken by the form in UMA.
   static const int kMaxNumActionsTaken =
       kManagerActionMax * kUserActionMax * kSubmitResultMax;
-
-  // Enumerates whether there were `suppressed` credentials. These are stored
-  // credentials that were not filled, even though they might be related to the
-  // |observed_form_|. See FormFetcher::GetSuppressed* for details.
-  //
-  // If suppressed credentials exist, it is also recorded whether their username
-  // and/or password matched those submitted.
-  enum SuppressedAccountExistence {
-    kSuppressedAccountNone,
-    // Recorded when there exists a suppressed account, but there was no
-    // submitted form to compare its username and password to.
-    kSuppressedAccountExists,
-    // Recorded when there was a submitted form.
-    kSuppressedAccountExistsDifferentUsername,
-    kSuppressedAccountExistsSameUsername,
-    kSuppressedAccountExistsSameUsernameAndPassword,
-    kSuppressedAccountExistenceMax,
-  };
-
-  // The maximum number of combinations recorded into histograms in the
-  // PasswordManager.SuppressedAccount.* family.
-  static constexpr int kMaxSuppressedAccountStats =
-      kSuppressedAccountExistenceMax * kManagerActionNewMax * kUserActionMax *
-      kSubmitResultMax;
 
   // Through |driver|, supply the associated frame with appropriate information
   // (fill data, whether to allow password generation, etc.).
@@ -435,23 +399,6 @@ class PasswordFormManager : public FormFetcher::Consumer,
   // UMA.
   int GetActionsTaken() const;
 
-  // When supplied with the list of all |suppressed_forms| that belong to
-  // certain suppressed credential type (see FormFetcher::GetSuppressed*),
-  // filters that list down to forms that are either |manual_or_generated|, and
-  // based on that, computes the histogram sample that is a mixed-based
-  // representation of a combination of four attributes:
-  //  -- whether there were suppressed credentials (and if so, their relation to
-  //     the submitted username/password).
-  //  -- whether the |observed_form_| got ultimately submitted
-  //  -- what action the password manager performed (|manager_action_|),
-  //  -- and what action the user performed (|user_action_|_).
-  int GetHistogramSampleForSuppressedAccounts(
-      const std::vector<const autofill::PasswordForm*> suppressed_forms,
-      autofill::PasswordForm::Type manual_or_generated) const;
-
-  // Records all histograms in the PasswordManager.SuppressedAccount.* family.
-  void RecordHistogramsOnSuppressedAccounts() const;
-
   // Tries to set all votes (e.g. autofill field types, generation vote) to
   // a |FormStructure| and upload it to the server. Returns true on success.
   bool UploadPasswordVote(const autofill::PasswordForm& form_to_upload,
@@ -522,7 +469,7 @@ class PasswordFormManager : public FormFetcher::Consumer,
   // Set of blacklisted forms from the PasswordStore that best match the current
   // form. They are owned by |form_fetcher_|, with the exception that if
   // |new_blacklisted_| is not null, the address of that form is also inside
-  // |blacklisted_matches_|.
+  // |blacklisted_matches_|..
   std::vector<const autofill::PasswordForm*> blacklisted_matches_;
 
   // If the observed form gets blacklisted through |this|, the blacklist entry

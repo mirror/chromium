@@ -36,7 +36,8 @@ MultiResolutionImageResourceFetcher::MultiResolutionImageResourceFetcher(
 
   WebAssociatedURLLoaderOptions options;
   options.allow_credentials = true;
-  options.fetch_request_mode = WebURLRequest::kFetchRequestModeNoCORS;
+  options.cross_origin_request_policy =
+      WebAssociatedURLLoaderOptions::kCrossOriginRequestPolicyAllow;
   fetcher_->SetLoaderOptions(options);
 
   // To prevent cache tainting, the favicon requests have to by-pass the service

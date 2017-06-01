@@ -52,10 +52,6 @@ Timeline.TimelinePanel = class extends UI.Panel {
     this._millisecondsToRecordAfterLoadEvent = 3000;
     this._toggleRecordAction =
         /** @type {!UI.Action }*/ (UI.actionRegistry.action('timeline.toggle-recording'));
-    this._recordReloadAction =
-        /** @type {!UI.Action }*/ (UI.actionRegistry.action('timeline.record-reload'));
-    this._historyManager =
-        Runtime.experiments.isEnabled('timelineKeepHistory') ? new Timeline.TimelineHistoryManager() : null;
 
     /** @type {!Array<!TimelineModel.TimelineModelFilter>} */
     this._filters = [];
@@ -71,7 +67,7 @@ Timeline.TimelinePanel = class extends UI.Panel {
     /** @type {?Timeline.PerformanceModel} */
     this._pendingPerformanceModel = null;
 
-    this._cpuThrottlingManager = new MobileThrottling.CPUThrottlingManager();
+    this._cpuThrottlingManager = new Components.CPUThrottlingManager();
 
     this._viewModeSetting =
         Common.settings.createSetting('timelineViewMode', Timeline.TimelinePanel.ViewMode.FlameChart);
@@ -162,8 +158,6 @@ Timeline.TimelinePanel = class extends UI.Panel {
    */
   willHide() {
     UI.context.setFlavor(Timeline.TimelinePanel, null);
-    if (this._historyManager)
-      this._historyManager.cancelIfShowing();
   }
 
   /**
@@ -222,15 +216,10 @@ Timeline.TimelinePanel = class extends UI.Panel {
   _populateToolbar() {
     // Record
     this._panelToolbar.appendToolbarItem(UI.Toolbar.createActionButton(this._toggleRecordAction));
-    this._panelToolbar.appendToolbarItem(UI.Toolbar.createActionButton(this._recordReloadAction));
+    this._panelToolbar.appendToolbarItem(UI.Toolbar.createActionButtonForId('timeline.record-reload'));
     this._clearButton = new UI.ToolbarButton(Common.UIString('Clear'), 'largeicon-clear');
-    this._clearButton.addEventListener(UI.ToolbarButton.Events.Click, () => this._onClearButton());
+    this._clearButton.addEventListener(UI.ToolbarButton.Events.Click, () => this._clear());
     this._panelToolbar.appendToolbarItem(this._clearButton);
-    // History
-    if (this._historyManager) {
-      this._panelToolbar.appendSeparator();
-      this._panelToolbar.appendToolbarItem(this._historyManager.button());
-    }
     this._panelToolbar.appendSeparator();
 
     // View
@@ -260,7 +249,7 @@ Timeline.TimelinePanel = class extends UI.Panel {
     SDK.multitargetNetworkManager.addEventListener(
         SDK.MultitargetNetworkManager.Events.ConditionsChanged, this._updateShowSettingsToolbarButton, this);
     this._cpuThrottlingManager.addEventListener(
-        MobileThrottling.CPUThrottlingManager.Events.RateChanged, this._updateShowSettingsToolbarButton, this);
+        Components.CPUThrottlingManager.Events.RateChanged, this._updateShowSettingsToolbarButton, this);
     this._disableCaptureJSProfileSetting.addChangeListener(this._updateShowSettingsToolbarButton, this);
     this._captureLayersAndPicturesSetting.addChangeListener(this._updateShowSettingsToolbarButton, this);
 
@@ -324,7 +313,7 @@ Timeline.TimelinePanel = class extends UI.Panel {
   _createNetworkConditionsSelect() {
     var toolbarItem = new UI.ToolbarComboBox(null);
     toolbarItem.setMaxWidth(140);
-    MobileThrottling.NetworkConditionsSelector.decorateSelect(toolbarItem.selectElement());
+    NetworkConditions.NetworkConditionsSelector.decorateSelect(toolbarItem.selectElement());
     return toolbarItem;
   }
 
@@ -375,12 +364,6 @@ Timeline.TimelinePanel = class extends UI.Panel {
     }
     stream.open(fileName, callback.bind(this));
     return true;
-  }
-
-  async _showHistory() {
-    var model = await this._historyManager.showHistoryDropDown();
-    if (model && model !== this._performanceModel)
-      this._setModel(model);
   }
 
   /**
@@ -570,9 +553,6 @@ Timeline.TimelinePanel = class extends UI.Panel {
     var state = Timeline.TimelinePanel.State;
     this._toggleRecordAction.setToggled(this._state === state.Recording);
     this._toggleRecordAction.setEnabled(this._state === state.Recording || this._state === state.Idle);
-    this._recordReloadAction.setEnabled(this._state === state.Idle);
-    if (this._historyManager)
-      this._historyManager.setEnabled(this._state === state.Idle);
     this._clearButton.setEnabled(this._state === state.Idle);
     this._panelToolbar.setEnabled(this._state !== state.Loading);
     this._dropTarget.setEnabled(this._state === state.Idle);
@@ -594,12 +574,6 @@ Timeline.TimelinePanel = class extends UI.Panel {
     this._startRecording();
   }
 
-  _onClearButton() {
-    if (this._historyManager)
-      this._historyManager.clear();
-    this._clear();
-  }
-
   _clear() {
     this._showLandingPage();
     this._reset();
@@ -615,7 +589,7 @@ Timeline.TimelinePanel = class extends UI.Panel {
    * @param {?Timeline.PerformanceModel} model
    */
   _setModel(model) {
-    if (this._performanceModel && !this._historyManager)
+    if (this._performanceModel)
       this._performanceModel.dispose();
     this._performanceModel = model;
     this._currentView.setModel(model);
@@ -637,6 +611,7 @@ Timeline.TimelinePanel = class extends UI.Panel {
     } else {
       this.requestWindowTimes(0, Infinity);
     }
+    this._overviewPane.scheduleUpdate();
 
     this.select(null);
     if (this._flameChart)
@@ -794,8 +769,6 @@ Timeline.TimelinePanel = class extends UI.Panel {
     performanceModel.setTracingModel(tracingModel);
     this._backingStorage = backingStorage;
     this._setModel(performanceModel);
-    if (this._historyManager)
-      this._historyManager.addRecording(performanceModel);
   }
 
   _showRecordingStarted() {
@@ -1330,9 +1303,6 @@ Timeline.TimelinePanel.ActionDelegate = class {
         return true;
       case 'timeline.jump-to-next-frame':
         panel._jumpToFrame(1);
-        return true;
-      case 'timeline.show-history':
-        panel._showHistory();
         return true;
     }
     return false;

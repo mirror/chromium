@@ -133,7 +133,7 @@ bool ChromeCleanerDialog::Close() {
 
 // View overrides.
 
-gfx::Size ChromeCleanerDialog::CalculatePreferredSize() const {
+gfx::Size ChromeCleanerDialog::GetPreferredSize() const {
   return gfx::Size(kDialogWidth, GetHeightForWidth(kDialogWidth));
 }
 

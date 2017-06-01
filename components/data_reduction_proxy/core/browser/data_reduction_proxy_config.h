@@ -19,7 +19,6 @@
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_server.h"
-#include "components/previews/core/previews_experiments.h"
 #include "net/base/net_errors.h"
 #include "net/base/network_change_notifier.h"
 #include "net/base/network_interfaces.h"
@@ -198,16 +197,17 @@ class DataReductionProxyConfig
 
   // Returns true when Lo-Fi Previews should be activated. Records metrics for
   // Lo-Fi state changes. |request| is used to get the network quality estimator
-  // from the URLRequestContext. |previews_decider| is used to check if
-  // |request| is locally blacklisted.
+  // from the URLRequestContext. |previews_decider| is a non-null object that
+  // determines eligibility of showing the preview based on past opt outs.
   bool ShouldEnableLoFi(const net::URLRequest& request,
-                        const previews::PreviewsDecider& previews_decider);
+                        previews::PreviewsDecider* previews_decider);
 
   // Returns true when Lite Page Previews should be activated. |request| is used
   // to get the network quality estimator from the URLRequestContext.
-  // |previews_decider| is used to check if |request| is locally blacklisted.
+  // |previews_decider| is a non-null object that determines eligibility of
+  // showing the preview based on past opt outs.
   bool ShouldEnableLitePages(const net::URLRequest& request,
-                             const previews::PreviewsDecider& previews_decider);
+                             previews::PreviewsDecider* previews_decider);
 
   // Returns true if the data saver has been enabled by the user, and the data
   // saver proxy is reachable.
@@ -254,9 +254,6 @@ class DataReductionProxyConfig
   FRIEND_TEST_ALL_PREFIXES(DataReductionProxyConfigTest,
                            LoFiAccuracyNonZeroDelay);
   FRIEND_TEST_ALL_PREFIXES(DataReductionProxyConfigTest, WarmupURL);
-  FRIEND_TEST_ALL_PREFIXES(DataReductionProxyConfigTest,
-                           ShouldAcceptServerLoFi);
-  FRIEND_TEST_ALL_PREFIXES(DataReductionProxyConfigTest, ShouldAcceptLitePages);
 
   // Values of the estimated network quality at the beginning of the most
   // recent query of the Network Quality Estimator.
@@ -303,40 +300,13 @@ class DataReductionProxyConfig
       bool is_https,
       base::TimeDelta* min_retry_delay) const;
 
-  // Returns whether the request is blacklisted (or if Lo-Fi is disabled).
-  bool IsBlackListedOrDisabled(
-      const net::URLRequest& request,
-      const previews::PreviewsDecider& previews_decider,
-      previews::PreviewsType previews_type) const;
-
-  // Returns whether the client should report to the data reduction proxy that
-  // it is willing to accept the Server Lo-Fi optimization for |request|.
-  // |previews_decider| is used to check if |request| is locally blacklisted.
-  // Should only be used if the kDataReductionProxyDecidesTransform feature is
-  // enabled.
-  bool ShouldAcceptServerLoFi(
-      const net::URLRequest& request,
-      const previews::PreviewsDecider& previews_decider) const;
-
-  // Returns whether the client should report to the data reduction proxy that
-  // it is willing to accept a LitePage optimization for |request|.
-  // |previews_decider| is used to check if |request| is locally blacklisted.
-  // Should only be used if the kDataReductionProxyDecidesTransform feature is
-  // enabled.
-  bool ShouldAcceptLitePages(
-      const net::URLRequest& request,
-      const previews::PreviewsDecider& previews_decider) const;
-
   // Returns true when Lo-Fi Previews should be activated. Determines if Lo-Fi
   // Previews should be activated by checking the Lo-Fi flags and if the network
   // quality is prohibitively slow. |network_quality_estimator| may be NULL.
   // |previews_decider| is a non-null object that determines eligibility of the
   // showing the preview based on past opt outs.
-  // Should NOT be used if the kDataReductionProxyDecidesTransform feature is
-  // enabled.
-  bool ShouldEnableLoFiInternal(
-      const net::URLRequest& request,
-      const previews::PreviewsDecider& previews_decider);
+  bool ShouldEnableLoFiInternal(const net::URLRequest& request,
+                                previews::PreviewsDecider* previews_decider);
 
   // Returns true when Lite Page Previews should be activated. Determines if
   // Lite Page Previewsmode should be activated by checking the Lite Page
@@ -344,11 +314,9 @@ class DataReductionProxyConfig
   // |network_quality_estimator| may be NULL. |previews_decider| is a non-null
   // object that determines eligibility of showing the preview based on past opt
   // outs.
-  // Should NOT be used if the kDataReductionProxyDecidesTransform feature is
-  // enabled.
   bool ShouldEnableLitePagesInternal(
       const net::URLRequest& request,
-      const previews::PreviewsDecider& previews_decider);
+      previews::PreviewsDecider* previews_decider);
 
   // Returns true if the network quality is at least as poor as the one
   // specified in the Auto Lo-Fi field trial parameters.

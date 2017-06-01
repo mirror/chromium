@@ -100,7 +100,8 @@ PassRefPtr<StyleReflection> StyleBuilderConverter::ConvertBoxReflect(
     reflection->SetOffset(reflect_value.Offset()->ConvertToLength(
         state.CssToLengthConversionData()));
   if (reflect_value.Mask()) {
-    NinePieceImage mask = NinePieceImage::MaskDefaults();
+    NinePieceImage mask;
+    mask.SetMaskDefaults();
     CSSToStyleMap::MapNinePieceImage(state, CSSPropertyWebkitBoxReflect,
                                      *reflect_value.Mask(), mask);
     reflection->SetMask(mask);
@@ -1143,7 +1144,7 @@ ShapeValue* StyleBuilderConverter::ConvertShapeValue(StyleResolverState& state,
   }
 
   if (shape)
-    return ShapeValue::CreateShapeValue(std::move(shape), css_box);
+    return ShapeValue::CreateShapeValue(shape.Release(), css_box);
 
   DCHECK_NE(css_box, kBoxMissing);
   return ShapeValue::CreateBoxShapeValue(css_box);

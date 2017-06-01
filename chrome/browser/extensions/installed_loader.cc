@@ -311,6 +311,8 @@ void InstalledLoader::LoadAllExtensions() {
       Load(*extensions_info->at(i), should_write_prefs);
   }
 
+  extension_service_->OnLoadedInstalledExtensions();
+
   // The histograms Extensions.ManifestReload* allow us to validate
   // the assumption that reloading manifest is a rare event.
   UMA_HISTOGRAM_COUNTS_100("Extensions.ManifestReloadNotNeeded",

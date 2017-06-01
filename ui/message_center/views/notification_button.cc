@@ -17,7 +17,12 @@
 namespace message_center {
 
 NotificationButton::NotificationButton(views::ButtonListener* listener)
-    : views::CustomButton(listener), icon_(NULL), title_(NULL) {
+    : views::CustomButton(listener),
+      icon_(NULL),
+      title_(NULL),
+      focus_painter_(views::Painter::CreateSolidFocusPainter(
+          message_center::kFocusBorderColor,
+          gfx::Insets(1, 2, 2, 2))) {
   SetFocusForPlatform();
   // Create a background so that it does not change when the MessageView
   // background changes to show touch feedback
@@ -29,8 +34,6 @@ NotificationButton::NotificationButton(views::ButtonListener* listener)
                            message_center::kButtonHorizontalPadding,
                            kButtonVecticalPadding,
                            message_center::kButtonIconToTitlePadding));
-  SetFocusPainter(views::Painter::CreateSolidFocusPainter(
-      message_center::kFocusBorderColor, gfx::Insets(1, 2, 2, 2)));
 }
 
 NotificationButton::~NotificationButton() {
@@ -71,7 +74,7 @@ void NotificationButton::SetTitle(const base::string16& title) {
   SetAccessibleName(title);
 }
 
-gfx::Size NotificationButton::CalculatePreferredSize() const {
+gfx::Size NotificationButton::GetPreferredSize() const {
   return gfx::Size(message_center::kNotificationWidth,
                    message_center::kButtonHeight);
 }
@@ -80,9 +83,22 @@ int NotificationButton::GetHeightForWidth(int width) const {
   return message_center::kButtonHeight;
 }
 
+void NotificationButton::OnPaint(gfx::Canvas* canvas) {
+  CustomButton::OnPaint(canvas);
+  views::Painter::PaintFocusPainter(this, canvas, focus_painter_.get());
+}
+
 void NotificationButton::OnFocus() {
   views::CustomButton::OnFocus();
   ScrollRectToVisible(GetLocalBounds());
+  // We render differently when focused.
+  SchedulePaint();
+ }
+
+void NotificationButton::OnBlur() {
+  views::CustomButton::OnBlur();
+  // We render differently when focused.
+  SchedulePaint();
 }
 
 void NotificationButton::ViewHierarchyChanged(

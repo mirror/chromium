@@ -149,10 +149,8 @@ Components.Linkifier = class {
    * @return {?Element}
    */
   maybeLinkifyScriptLocation(target, scriptId, sourceURL, lineNumber, columnNumber, classes) {
-    var fallbackAnchor = sourceURL ?
-        Components.Linkifier.linkifyURL(
-            sourceURL, undefined, classes, lineNumber, columnNumber, undefined, this._maxLength) :
-        null;
+    var fallbackAnchor =
+        sourceURL ? Components.Linkifier.linkifyURL(sourceURL, undefined, classes, lineNumber, columnNumber) : null;
     if (!target || target.isDisposed())
       return fallbackAnchor;
     var debuggerModel = target.model(SDK.DebuggerModel);
@@ -189,8 +187,7 @@ Components.Linkifier = class {
    */
   linkifyScriptLocation(target, scriptId, sourceURL, lineNumber, columnNumber, classes) {
     return this.maybeLinkifyScriptLocation(target, scriptId, sourceURL, lineNumber, columnNumber, classes) ||
-        Components.Linkifier.linkifyURL(
-            sourceURL, undefined, classes, lineNumber, columnNumber, undefined, this._maxLength);
+        Components.Linkifier.linkifyURL(sourceURL, undefined, classes, lineNumber, columnNumber);
   }
 
   /**
@@ -226,8 +223,8 @@ Components.Linkifier = class {
     console.assert(stackTrace.callFrames && stackTrace.callFrames.length);
 
     var topFrame = stackTrace.callFrames[0];
-    var fallbackAnchor = Components.Linkifier.linkifyURL(
-        topFrame.url, undefined, classes, topFrame.lineNumber, topFrame.columnNumber, undefined, this._maxLength);
+    var fallbackAnchor =
+        Components.Linkifier.linkifyURL(topFrame.url, undefined, classes, topFrame.lineNumber, topFrame.columnNumber);
     if (target.isDisposed())
       return fallbackAnchor;
 
@@ -329,10 +326,9 @@ Components.Linkifier = class {
    * @param {number=} lineNumber
    * @param {number=} columnNumber
    * @param {boolean=} preventClick
-   * @param {number=} maxLength
    * @return {!Element}
    */
-  static linkifyURL(url, text, className, lineNumber, columnNumber, preventClick, maxLength) {
+  static linkifyURL(url, text, className, lineNumber, columnNumber, preventClick) {
     if (!url || url.trim().toLowerCase().startsWith('javascript:')) {
       var element = createElementWithClass('span', className);
       element.textContent = text || url || Common.UIString('(unknown)');
@@ -344,7 +340,7 @@ Components.Linkifier = class {
       linkText += ':' + (lineNumber + 1);
     var title = linkText !== url ? url : '';
     var link = Components.Linkifier._createLink(
-        linkText, className || '', maxLength || UI.MaxLengthForDisplayedURLs, title, url, preventClick);
+        linkText, className || '', UI.MaxLengthForDisplayedURLs, title, url, preventClick);
     var info = Components.Linkifier._linkInfo(link);
     if (typeof lineNumber === 'number')
       info.lineNumber = lineNumber;
@@ -481,7 +477,7 @@ Components.Linkifier = class {
   static _handleClick(event) {
     var link = /** @type {!Element} */ (event.currentTarget);
     event.consume(true);
-    if (UI.isBeingEdited(/** @type {!Node} */ (event.target)))
+    if (link.preventFollow || UI.isBeingEdited(/** @type {!Node} */ (event.target)))
       return;
     var actions = Components.Linkifier._linkActions(link);
     if (actions.length)

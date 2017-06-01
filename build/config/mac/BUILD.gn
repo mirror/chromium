@@ -54,7 +54,7 @@ config("compiler") {
 config("runtime_library") {
   common_flags = [
     "-isysroot",
-    rebase_path(sysroot, root_build_dir),
+    sysroot,
     "-mmacosx-version-min=$mac_deployment_target",
   ]
 

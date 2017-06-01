@@ -25,9 +25,13 @@ struct SPDY_EXPORT_PRIVATE SpdyPinnableBufferPiece {
   SpdyPinnableBufferPiece();
   ~SpdyPinnableBufferPiece();
 
-  const char* buffer() const { return buffer_; }
+  const char * buffer() const {
+    return buffer_;
+  }
 
-  size_t length() const { return length_; }
+  size_t length() const {
+    return length_;
+  }
 
   explicit operator SpdyStringPiece() const {
     return SpdyStringPiece(buffer_, length_);
@@ -44,7 +48,7 @@ struct SPDY_EXPORT_PRIVATE SpdyPinnableBufferPiece {
  private:
   friend class SpdyPrefixedBufferReader;
 
-  const char* buffer_;
+  const char * buffer_;
   size_t length_;
   // Null iff |buffer_| isn't pinned.
   std::unique_ptr<char[]> storage_;

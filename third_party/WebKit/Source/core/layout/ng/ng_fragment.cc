@@ -37,15 +37,6 @@ LayoutUnit NGFragment::BlockOffset() const {
              : physical_fragment_->Offset().left;
 }
 
-NGLogicalOffset NGFragment::Offset() const {
-  return NGLogicalOffset(InlineOffset(), BlockOffset());
-}
-
-NGBorderEdges::Logical NGFragment::BorderEdges() const {
-  return NGBorderEdges::ToLogical(physical_fragment_->BorderEdges(),
-                                  WritingMode());
-}
-
 NGPhysicalFragment::NGFragmentType NGFragment::Type() const {
   return physical_fragment_->Type();
 }

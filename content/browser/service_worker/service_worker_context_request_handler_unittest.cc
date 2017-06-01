@@ -91,8 +91,7 @@ class ServiceWorkerContextRequestHandlerTest : public testing::Test {
     std::unique_ptr<ServiceWorkerProviderHost> host =
         CreateProviderHostForServiceWorkerContext(
             helper_->mock_render_process_id(), 1 /* provider_id */,
-            true /* is_parent_frame_secure */, context()->AsWeakPtr(),
-            &remote_endpoint_);
+            true /* is_parent_frame_secure */, context()->AsWeakPtr());
     provider_host_ = host->AsWeakPtr();
     context()->AddProviderHost(std::move(host));
     provider_host_->running_hosted_version_ = version_;
@@ -137,7 +136,6 @@ class ServiceWorkerContextRequestHandlerTest : public testing::Test {
   GURL scope_;
   GURL script_url_;
   GURL import_script_url_;
-  ServiceWorkerRemoteProviderEndpoint remote_endpoint_;
   storage::BlobStorageContext blob_storage_context_;
 };
 

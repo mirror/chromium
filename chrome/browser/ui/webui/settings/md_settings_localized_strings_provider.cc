@@ -44,13 +44,10 @@
 #include "chromeos/chromeos_switches.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
+#include "ui/chromeos/strings/grit/ui_chromeos_strings.h"
 #include "ui/display/display_switches.h"
 #else
 #include "chrome/browser/ui/webui/settings/system_handler.h"
-#endif
-
-#if defined(OS_WIN)
-#include "chrome/browser/safe_browsing/chrome_cleaner/srt_field_trial_win.h"
 #endif
 
 namespace settings {
@@ -635,8 +632,6 @@ void AddDeviceStrings(content::WebUIDataSource* html_source) {
       {"stylusFindMoreAppsSecondary",
        IDS_SETTINGS_STYLUS_FIND_MORE_APPS_SECONDARY},
       {"stylusNoteTakingApp", IDS_SETTINGS_STYLUS_NOTE_TAKING_APP_LABEL},
-      {"stylusNoteTakingAppEnabledOnLockScreen",
-       IDS_SETTINGS_STYLUS_NOTE_TAKING_APP_LOCK_SCREEN_CHECKBOX},
       {"stylusNoteTakingAppNoneAvailable",
        IDS_SETTINGS_STYLUS_NOTE_TAKING_APP_NONE_AVAILABLE},
       {"stylusNoteTakingAppWaitingForAndroid",
@@ -650,14 +645,6 @@ void AddDeviceStrings(content::WebUIDataSource* html_source) {
       {"displayArrangementTitle", IDS_SETTINGS_DISPLAY_ARRANGEMENT_TITLE},
       {"displayMirror", IDS_SETTINGS_DISPLAY_MIRROR},
       {"displayNightLightLabel", IDS_SETTINGS_DISPLAY_NIGHT_LIGHT_LABEL},
-      {"displayNightLightScheduleCustom",
-       IDS_SETTINGS_DISPLAY_NIGHT_LIGHT_SCHEDULE_CUSTOM},
-      {"displayNightLightScheduleLabel",
-       IDS_SETTINGS_DISPLAY_NIGHT_LIGHT_SCHEDULE_LABEL},
-      {"displayNightLightScheduleNever",
-       IDS_SETTINGS_DISPLAY_NIGHT_LIGHT_SCHEDULE_NEVER},
-      {"displayNightLightScheduleSunsetToSunRise",
-       IDS_SETTINGS_DISPLAY_NIGHT_LIGHT_SCHEDULE_SUNSET_TO_SUNRISE},
       {"displayNightLightText", IDS_SETTINGS_DISPLAY_NIGHT_LIGHT_TEXT},
       {"displayNightLightTemperatureLabel",
        IDS_SETTINGS_DISPLAY_NIGHT_LIGHT_TEMPERATURE_LABEL},
@@ -758,29 +745,6 @@ void AddDownloadsStrings(content::WebUIDataSource* html_source) {
   AddLocalizedStringsBulk(html_source, localized_strings,
                           arraysize(localized_strings));
 }
-
-#if defined(OS_WIN)
-void AddChromeCleanupStrings(content::WebUIDataSource* html_source) {
-  LocalizedString localized_strings[] = {
-      {"chromeCleanupExplanation", IDS_CHROME_CLEANUP_WEBUI_EXPLANATION},
-      {"chromeCleanupDoneButtonLabel",
-       IDS_CHROME_CLEANUP_WEBUI_DONE_BUTTON_LABEL},
-      {"chromeCleanupLinkShowFiles", IDS_CHROME_CLEANUP_WEBUI_LINK_SHOW_FILES},
-      {"chromeCleanupRemoveButtonLabel",
-       IDS_CHROME_CLEANUP_WEBUI_REMOVE_BUTTON_LABEL},
-      {"chromeCleanupRestartButtonLabel",
-       IDS_CHROME_CLEANUP_WEBUI_RESTART_BUTTON_LABEL},
-      {"chromeCleanupTitleErrorCantRemove",
-       IDS_CHROME_CLEANUP_WEBUI_TITLE_ERROR_CANT_REMOVE},
-      {"chromeCleanupTitleRemove", IDS_CHROME_CLEANUP_WEBUI_TITLE_REMOVE},
-      {"chromeCleanupTitleRemoved", IDS_CHROME_CLEANUP_WEBUI_TITLE_REMOVED},
-      {"chromeCleanupTitleRemoving", IDS_CHROME_CLEANUP_WEBUI_TITLE_REMOVING},
-      {"chromeCleanupTitleRestart", IDS_CHROME_CLEANUP_WEBUI_TITLE_RESTART},
-  };
-  AddLocalizedStringsBulk(html_source, localized_strings,
-                          arraysize(localized_strings));
-}
-#endif  // defined(OS_WIN)
 
 void AddResetStrings(content::WebUIDataSource* html_source) {
   LocalizedString localized_strings[] = {
@@ -911,7 +875,6 @@ void AddInternetStrings(content::WebUIDataSource* html_source) {
       {"internetAddThirdPartyVPN", IDS_SETTINGS_INTERNET_ADD_THIRD_PARTY_VPN},
       {"internetAddVPN", IDS_SETTINGS_INTERNET_ADD_VPN},
       {"internetAddWiFi", IDS_SETTINGS_INTERNET_ADD_WIFI},
-      {"internetConfigTitle", IDS_SETTINGS_INTERNET_CONFIG},
       {"internetDetailPageTitle", IDS_SETTINGS_INTERNET_DETAIL},
       {"internetDeviceEnabling", IDS_SETTINGS_INTERNET_DEVICE_ENABLING},
       {"internetKnownNetworksPageTitle", IDS_SETTINGS_INTERNET_KNOWN_NETWORKS},
@@ -947,9 +910,6 @@ void AddInternetStrings(content::WebUIDataSource* html_source) {
       {"networkButtonForget", IDS_SETTINGS_INTERNET_BUTTON_FORGET},
       {"networkButtonViewAccount", IDS_SETTINGS_INTERNET_BUTTON_VIEW_ACCOUNT},
       {"networkConnectNotAllowed", IDS_SETTINGS_INTERNET_CONNECT_NOT_ALLOWED},
-      {"networkConfigSaveCredentials",
-       IDS_SETTINGS_INTERNET_CONFIG_SAVE_CREDENTIALS},
-      {"networkConfigShare", IDS_SETTINGS_INTERNET_CONFIG_SHARE},
       {"networkIPAddress", IDS_SETTINGS_INTERNET_NETWORK_IP_ADDRESS},
       {"networkIPConfigAuto", IDS_SETTINGS_INTERNET_NETWORK_IP_CONFIG_AUTO},
       {"networkPrefer", IDS_SETTINGS_INTERNET_NETWORK_PREFER},
@@ -1048,9 +1008,6 @@ void AddInternetStrings(content::WebUIDataSource* html_source) {
   };
   AddLocalizedStringsBulk(html_source, localized_strings,
                           arraysize(localized_strings));
-  html_source->AddBoolean("networkSettingsConfig",
-                          base::CommandLine::ForCurrentProcess()->HasSwitch(
-                              chromeos::switches::kNetworkSettingsConfig));
 }
 #endif
 
@@ -2037,23 +1994,6 @@ void AddOncStrings(content::WebUIDataSource* html_source) {
        IDS_ONC_CELLULAR_SERVING_OPERATOR_NAME},
       {"OncConnected", IDS_ONC_CONNECTED},
       {"OncConnecting", IDS_ONC_CONNECTING},
-      {"OncEAP-AnonymousIdentity", IDS_ONC_EAP_ANONYMOUS_IDENTITY},
-      {"OncEAP-Identity", IDS_ONC_EAP_IDENTITY},
-      {"OncEAP-Inner", IDS_ONC_EAP_INNER},
-      {"OncEAP-Inner_Automatic", IDS_ONC_EAP_INNER_AUTOMATIC},
-      {"OncEAP-Inner_CHAP", IDS_ONC_EAP_INNER_CHAP},
-      {"OncEAP-Inner_GTC", IDS_ONC_EAP_INNER_GTC},
-      {"OncEAP-Inner_MD5", IDS_ONC_EAP_INNER_MD5},
-      {"OncEAP-Inner_MSCHAP", IDS_ONC_EAP_INNER_MSCHAP},
-      {"OncEAP-Inner_MSCHAPv2", IDS_ONC_EAP_INNER_MSCHAPV2},
-      {"OncEAP-Inner_PAP", IDS_ONC_EAP_INNER_PAP},
-      {"OncEAP-Outer", IDS_ONC_EAP_OUTER},
-      {"OncEAP-Outer_LEAP", IDS_ONC_EAP_OUTER_LEAP},
-      {"OncEAP-Outer_PEAP", IDS_ONC_EAP_OUTER_PEAP},
-      {"OncEAP-Outer_EAP-TLS", IDS_ONC_EAP_OUTER_TLS},
-      {"OncEAP-Outer_EAP-TTLS", IDS_ONC_EAP_OUTER_TTLS},
-      {"OncEAP-Password", IDS_ONC_WIFI_PASSWORD},
-      {"OncEAP-SubjectMatch", IDS_ONC_EAP_SUBJECT_MATCH},
       {"OncMacAddress", IDS_ONC_MAC_ADDRESS},
       {"OncNotConnected", IDS_ONC_NOT_CONNECTED},
       {"OncRestrictedConnectivity", IDS_ONC_RESTRICTED_CONNECTIVITY},
@@ -2077,14 +2017,19 @@ void AddOncStrings(content::WebUIDataSource* html_source) {
        IDS_ONC_VPN_THIRD_PARTY_VPN_PROVIDER_NAME},
       {"OncVPN-Type", IDS_ONC_VPN_TYPE},
       {"OncWiFi-Frequency", IDS_ONC_WIFI_FREQUENCY},
-      {"OncWiFi-Passphrase", IDS_ONC_WIFI_PASSWORD},
-      {"OncWiFi-SSID", IDS_ONC_WIFI_SSID},
+      {"OncWiFi-EAP-AnonymousIdentity", IDS_ONC_WIFI_EAP_ANONYMOUS_IDENTITY},
+      {"OncWiFi-EAP-Identity", IDS_ONC_WIFI_EAP_IDENTITY},
+      {"OncWiFi-EAP-Inner", IDS_ONC_WIFI_EAP_INNER},
+      {"OncWiFi-EAP-Inner_Automatic", IDS_ONC_WIFI_EAP_INNER_AUTOMATIC},
+      {"OncWiFi-EAP-Inner_MD5", IDS_ONC_WIFI_EAP_INNER_MD5},
+      {"OncWiFi-EAP-Inner_MSCHAP", IDS_ONC_WIFI_EAP_INNER_MSCHAP},
+      {"OncWiFi-EAP-Inner_MSCHAPv2", IDS_ONC_WIFI_EAP_INNER_MSCHAPV2},
+      {"OncWiFi-EAP-Inner_PAP", IDS_ONC_WIFI_EAP_INNER_PAP},
+      {"OncWiFi-EAP-Inner_CHAP", IDS_ONC_WIFI_EAP_INNER_CHAP},
+      {"OncWiFi-EAP-Inner_GTC", IDS_ONC_WIFI_EAP_INNER_GTC},
+      {"OncWiFi-EAP-Outer", IDS_ONC_WIFI_EAP_OUTER},
+      {"OncWiFi-EAP-SubjectMatch", IDS_ONC_WIFI_EAP_SUBJECT_MATCH},
       {"OncWiFi-Security", IDS_ONC_WIFI_SECURITY},
-      {"OncWiFi-Security_None", IDS_ONC_WIFI_SECURITY_NONE},
-      {"OncWiFi-Security_WEP-PSK", IDS_ONC_WIFI_SECURITY_WEP},
-      {"OncWiFi-Security_WPA-EAP", IDS_ONC_WIFI_SECURITY_EAP},
-      {"OncWiFi-Security_WPA-PSK", IDS_ONC_WIFI_SECURITY_PSK},
-      {"OncWiFi-Security_WEP-8021X", IDS_ONC_WIFI_SECURITY_EAP},
       {"OncWiFi-SignalStrength", IDS_ONC_WIFI_SIGNAL_STRENGTH},
       {"OncWiMAX-EAP-Identity", IDS_ONC_WIMAX_EAP_IDENTITY},
       {"Oncipv4-Gateway", IDS_ONC_IPV4_GATEWAY},
@@ -2104,11 +2049,6 @@ void AddLocalizedStrings(content::WebUIDataSource* html_source,
   AddA11yStrings(html_source);
   AddAboutStrings(html_source);
   AddAppearanceStrings(html_source, profile);
-
-#if defined(OS_WIN)
-  AddChromeCleanupStrings(html_source);
-#endif  // defined(OS_WIN)
-
   AddClearBrowsingDataStrings(html_source);
   AddCommonStrings(html_source, profile);
   AddDownloadsStrings(html_source);

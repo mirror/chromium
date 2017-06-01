@@ -17,10 +17,6 @@ namespace base {
 class CommandLine;
 }  // namespace base
 
-namespace user_manager {
-class User;
-}  // namespace user_manager
-
 namespace arc {
 
 // Returns true if ARC is installed and the current device is officially
@@ -66,13 +62,6 @@ void SetArcAvailableCommandLineForTesting(base::CommandLine* command_line);
 // should also return true in that case.
 bool IsArcKioskMode();
 
-// Returns true if ARC is allowed for the given user. Note this should not be
-// used as a signal of whether ARC is allowed alone because it only considers
-// user meta data. e.g. a user could be allowed for ARC but if the user signs in
-// as a secondary user or signs in to create a supervised user, ARC should be
-// disabled for such cases.
-bool IsArcAllowedForUser(const user_manager::User* user);
-
 // Checks if opt-in verification was disabled by switch in command line.
 // In most cases, it is disabled for testing purpose.
 bool IsArcOptInVerificationDisabled();
@@ -80,11 +69,6 @@ bool IsArcOptInVerificationDisabled();
 // Returns true if the |window|'s aura::client::kAppType is ARC_APP. When
 // |window| is nullptr, returns false.
 bool IsArcAppWindow(aura::Window* window);
-
-// Adjusts the amount of CPU the ARC instance is allowed to use. When
-// |do_restrict| is true, the limit is adjusted so ARC can only use tightly
-// restricted CPU resources.
-void SetArcCpuRestriction(bool do_restrict);
 
 }  // namespace arc
 

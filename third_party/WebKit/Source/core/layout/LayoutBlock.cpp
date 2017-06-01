@@ -33,7 +33,7 @@
 #include "core/editing/DragCaret.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/FrameSelection.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLMarqueeElement.h"
 #include "core/layout/HitTestLocation.h"
@@ -556,6 +556,18 @@ void LayoutBlock::AddVisualOverflowFromTheme() {
   AddSelfVisualOverflow(LayoutRect(inflated_rect));
 }
 
+DISABLE_CFI_PERF
+bool LayoutBlock::CreatesNewFormattingContext() const {
+  return IsInlineBlockOrInlineTable() || IsFloatingOrOutOfFlowPositioned() ||
+         HasOverflowClip() || IsFlexItemIncludingDeprecated() ||
+         Style()->SpecifiesColumns() || IsLayoutFlowThread() || IsTableCell() ||
+         IsTableCaption() || IsFieldset() || IsWritingModeRoot() ||
+         IsDocumentElement() || IsGridItem() ||
+         Style()->GetColumnSpan() == kColumnSpanAll ||
+         Style()->ContainsPaint() || Style()->ContainsLayout() ||
+         IsSVGForeignObject() || Style()->Display() == EDisplay::kFlowRoot;
+}
+
 static inline bool ChangeInAvailableLogicalHeightAffectsChild(
     LayoutBlock* parent,
     LayoutBox& child) {
@@ -918,10 +930,8 @@ LayoutUnit LayoutBlock::LogicalRightSelectionOffset(
 void LayoutBlock::SetSelectionState(SelectionState state) {
   LayoutBox::SetSelectionState(state);
 
-  if (InlineBoxWrapper() && CanUpdateSelectionOnRootLineBoxes()) {
-    InlineBoxWrapper()->Root().SetHasSelectedChildren(state !=
-                                                      SelectionState::kNone);
-  }
+  if (InlineBoxWrapper() && CanUpdateSelectionOnRootLineBoxes())
+    InlineBoxWrapper()->Root().SetHasSelectedChildren(state != SelectionNone);
 }
 
 TrackedLayoutBoxListHashSet* LayoutBlock::PositionedObjectsInternal() const {
@@ -2039,8 +2049,7 @@ bool LayoutBlock::RecalcOverflowAfterStyleChange() {
   if (ChildNeedsOverflowRecalcAfterStyleChange())
     children_overflow_changed = RecalcChildOverflowAfterStyleChange();
 
-  bool self_needs_overflow_recalc = SelfNeedsOverflowRecalcAfterStyleChange();
-  if (!self_needs_overflow_recalc && !children_overflow_changed)
+  if (!SelfNeedsOverflowRecalcAfterStyleChange() && !children_overflow_changed)
     return false;
 
   ClearSelfNeedsOverflowRecalcAfterStyleChange();
@@ -2057,7 +2066,7 @@ bool LayoutBlock::RecalcOverflowAfterStyleChange() {
   if (HasOverflowClip())
     Layer()->GetScrollableArea()->UpdateAfterOverflowRecalc();
 
-  return !HasOverflowClip() || self_needs_overflow_recalc;
+  return !HasOverflowClip();
 }
 
 // Called when a positioned object moves but doesn't necessarily change size.

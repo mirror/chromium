@@ -21,7 +21,6 @@ import org.junit.runner.RunWith;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.test.util.CommandLineFlags;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
@@ -59,7 +58,7 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
                 true, "Jon Doe", "Google", "340 Main St", "CA", "Los Angeles", "", "90291", "",
                 "US", "650-253-0000", "", "en-US"));
         mHelper.setCreditCard(new CreditCard("", "https://example.com", true, true, "Jon Doe",
-                "4111111111111111", "1111", "12", "2050", "visa", R.drawable.visa_card,
+                "4111111111111111", "1111", "12", "2050", "visa", R.drawable.pr_visa,
                 mBillingAddressId, "" /* serverId */));
     }
 
@@ -112,7 +111,7 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
     public void testAbortMetrics_AbortedByUser_CancelButton()
             throws InterruptedException, ExecutionException, TimeoutException {
         mPaymentRequestTestRule.triggerUIAndWait("ccBuy", mPaymentRequestTestRule.getReadyToPay());
-        mPaymentRequestTestRule.clickInShippingAddressAndWait(
+        mPaymentRequestTestRule.clickInShippingSummaryAndWait(
                 R.id.payments_section, mPaymentRequestTestRule.getReadyForInput());
 
         // Cancel the Payment Request.
@@ -129,7 +128,8 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
         mPaymentRequestTestRule.getDismissed().waitForCallback(callCount);
         mPaymentRequestTestRule.expectResultContains(new String[] {"Request cancelled"});
 
-        mPaymentRequestTestRule.assertOnlySpecificAbortMetricLogged(AbortReason.ABORTED_BY_USER);
+        mPaymentRequestTestRule.assertOnlySpecificAbortMetricLogged(
+                PaymentRequestMetrics.ABORT_REASON_ABORTED_BY_USER);
     }
 
     /**
@@ -142,7 +142,7 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
     public void testAbortMetrics_AbortedByUser_XButton()
             throws InterruptedException, ExecutionException, TimeoutException {
         mPaymentRequestTestRule.triggerUIAndWait("ccBuy", mPaymentRequestTestRule.getReadyToPay());
-        mPaymentRequestTestRule.clickInShippingAddressAndWait(
+        mPaymentRequestTestRule.clickInShippingSummaryAndWait(
                 R.id.payments_section, mPaymentRequestTestRule.getReadyForInput());
 
         // Press the [X] button.
@@ -150,7 +150,8 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
                 R.id.close_button, mPaymentRequestTestRule.getDismissed());
         mPaymentRequestTestRule.expectResultContains(new String[] {"Request cancelled"});
 
-        mPaymentRequestTestRule.assertOnlySpecificAbortMetricLogged(AbortReason.ABORTED_BY_USER);
+        mPaymentRequestTestRule.assertOnlySpecificAbortMetricLogged(
+                PaymentRequestMetrics.ABORT_REASON_ABORTED_BY_USER);
     }
 
     /**
@@ -163,7 +164,7 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
     public void testAbortMetrics_AbortedByUser_BackButton()
             throws InterruptedException, ExecutionException, TimeoutException {
         mPaymentRequestTestRule.triggerUIAndWait("ccBuy", mPaymentRequestTestRule.getReadyToPay());
-        mPaymentRequestTestRule.clickInShippingAddressAndWait(
+        mPaymentRequestTestRule.clickInShippingSummaryAndWait(
                 R.id.payments_section, mPaymentRequestTestRule.getReadyForInput());
 
         // Press the back button.
@@ -177,7 +178,8 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
         mPaymentRequestTestRule.getDismissed().waitForCallback(callCount);
         mPaymentRequestTestRule.expectResultContains(new String[] {"Request cancelled"});
 
-        mPaymentRequestTestRule.assertOnlySpecificAbortMetricLogged(AbortReason.ABORTED_BY_USER);
+        mPaymentRequestTestRule.assertOnlySpecificAbortMetricLogged(
+                PaymentRequestMetrics.ABORT_REASON_ABORTED_BY_USER);
     }
 
     /**
@@ -190,7 +192,7 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
     public void testAbortMetrics_AbortedByUser_TabClosed()
             throws InterruptedException, ExecutionException, TimeoutException {
         mPaymentRequestTestRule.triggerUIAndWait("ccBuy", mPaymentRequestTestRule.getReadyToPay());
-        mPaymentRequestTestRule.clickInShippingAddressAndWait(
+        mPaymentRequestTestRule.clickInShippingSummaryAndWait(
                 R.id.payments_section, mPaymentRequestTestRule.getReadyForInput());
 
         // Press the back button.
@@ -198,7 +200,7 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
                 mPaymentRequestTestRule.getActivity());
 
         mPaymentRequestTestRule.assertOnlySpecificAbortMetricLogged(
-                AbortReason.MOJO_RENDERER_CLOSING);
+                PaymentRequestMetrics.ABORT_REASON_MOJO_RENDERER_CLOSING);
     }
 
     /**
@@ -217,7 +219,7 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
         mPaymentRequestTestRule.expectResultContains(new String[] {"Abort"});
 
         mPaymentRequestTestRule.assertOnlySpecificAbortMetricLogged(
-                AbortReason.ABORTED_BY_MERCHANT);
+                PaymentRequestMetrics.ABORT_REASON_ABORTED_BY_MERCHANT);
     }
 
     /**
@@ -246,7 +248,7 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CheckoutFunnel.NoShow",
-                        NotShownReason.NO_MATCHING_PAYMENT_METHOD));
+                        PaymentRequestMetrics.NO_SHOW_NO_MATCHING_PAYMENT_METHOD));
     }
 
     /**
@@ -271,7 +273,7 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CheckoutFunnel.NoShow",
-                        NotShownReason.NO_SUPPORTED_PAYMENT_METHOD));
+                        PaymentRequestMetrics.NO_SHOW_NO_SUPPORTED_PAYMENT_METHOD));
     }
 
     /**
@@ -292,7 +294,8 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
         mPaymentRequestTestRule.clickCardUnmaskButtonAndWait(
                 DialogInterface.BUTTON_POSITIVE, mPaymentRequestTestRule.getDismissed());
 
-        assertOnlySpecificSelectedPaymentMethodMetricLogged(SelectedPaymentMethod.CREDIT_CARD);
+        assertOnlySpecificSelectedPaymentMethodMetricLogged(
+                PaymentRequestMetrics.SELECTED_METHOD_CREDIT_CARD);
     }
 
     /**
@@ -312,7 +315,8 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
         mPaymentRequestTestRule.clickAndWait(
                 R.id.button_primary, mPaymentRequestTestRule.getDismissed());
 
-        assertOnlySpecificSelectedPaymentMethodMetricLogged(SelectedPaymentMethod.ANDROID_PAY);
+        assertOnlySpecificSelectedPaymentMethodMetricLogged(
+                PaymentRequestMetrics.SELECTED_METHOD_ANDROID_PAY);
     }
 
     /**
@@ -375,14 +379,13 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
     @Test
     @MediumTest
     @Feature({"Payments"})
-    @DisabledTest(message = "Flaky. See crbug.com/727558")
     public void testShownLoggedOnlyOnce()
             throws InterruptedException, ExecutionException, TimeoutException {
         // Initiate a payment request.
         mPaymentRequestTestRule.triggerUIAndWait("ccBuy", mPaymentRequestTestRule.getReadyToPay());
 
         // Add a shipping address, which triggers a second "Show".
-        mPaymentRequestTestRule.clickInShippingAddressAndWait(
+        mPaymentRequestTestRule.clickInShippingSummaryAndWait(
                 R.id.payments_section, mPaymentRequestTestRule.getReadyForInput());
         mPaymentRequestTestRule.clickInShippingAddressAndWait(
                 R.id.payments_add_option_button, mPaymentRequestTestRule.getReadyToEdit());
@@ -411,7 +414,7 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
      *                      have a record.
      */
     private void assertOnlySpecificSelectedPaymentMethodMetricLogged(int paymentMethod) {
-        for (int i = 0; i < SelectedPaymentMethod.MAX; ++i) {
+        for (int i = 0; i < PaymentRequestMetrics.SELECTED_METHOD_MAX; ++i) {
             Assert.assertEquals((i == paymentMethod ? 1 : 0),
                     RecordHistogram.getHistogramValueCountForTesting(
                             "PaymentRequest.SelectedPaymentMethod", i));

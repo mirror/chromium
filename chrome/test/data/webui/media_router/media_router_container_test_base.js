@@ -91,20 +91,20 @@ cr.define('media_router_container_test_base', function() {
     ];
 
     /**
-     * The list of CastModes to show with non-PRESENTATION modes only.
+     * The list of CastModes to show with non-default modes only.
      * @type {!Array<!media_router.CastMode>}
      */
-    var fakeCastModeListWithNonPresentationModesOnly = [
+    var fakeCastModeListWithNonDefaultModesOnly = [
       new media_router.CastMode(0x2, 'Description 1', null, false),
       new media_router.CastMode(0x4, 'Description 2', null, false),
       new media_router.CastMode(0x8, 'Description 3', null, false),
     ];
 
     /**
-     * The list of CastModes to show with PRESENTATION forced.
+     * The list of CastModes to show with DEFAULT forced.
      * @type {!Array<!media_router.CastMode>}
      */
-    var fakeCastModeListWithPresentationModeForced = [
+    var fakeCastModeListWithDefaultModeForced = [
       new media_router.CastMode(0x1, 'Cast google.com', 'google.com', true),
       new media_router.CastMode(0x4, 'Description 2', null, false),
       new media_router.CastMode(0x8, 'Description 3', null, false),
@@ -198,10 +198,10 @@ cr.define('media_router_container_test_base', function() {
       checkElementText: checkElementText,
       fakeBlockingIssue: fakeBlockingIssue,
       fakeCastModeList: fakeCastModeList,
-      fakeCastModeListWithNonPresentationModesOnly:
-          fakeCastModeListWithNonPresentationModesOnly,
-      fakeCastModeListWithPresentationModeForced:
-          fakeCastModeListWithPresentationModeForced,
+      fakeCastModeListWithNonDefaultModesOnly:
+          fakeCastModeListWithNonDefaultModesOnly,
+      fakeCastModeListWithDefaultModeForced:
+          fakeCastModeListWithDefaultModeForced,
       fakeNonBlockingIssue: fakeNonBlockingIssue,
       fakeRouteList: fakeRouteList,
       fakeRouteListWithLocalRoutesOnly: fakeRouteListWithLocalRoutesOnly,

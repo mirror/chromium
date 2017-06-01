@@ -15,10 +15,10 @@ InspectorTest.setUpTestSuite = function(next)
     function step2(node)
     {
         InspectorTest.containerId = node.id;
-        InspectorTest.DOMAgent.getOuterHTML(InspectorTest.containerId).then(step3);
+        InspectorTest.DOMAgent.getOuterHTML(InspectorTest.containerId, step3);
     }
 
-    function step3(text)
+    function step3(error, text)
     {
         InspectorTest.containerText = text;
 
@@ -73,38 +73,41 @@ InspectorTest.setOuterHTMLUseUndo = function(newText, next)
 {
     InspectorTest.innerSetOuterHTML(newText, false, bringBack);
 
-    async function bringBack()
+    function bringBack()
     {
         InspectorTest.addResult("\nBringing things back\n");
-        await InspectorTest.domModel.undo();
-        InspectorTest._dumpOuterHTML(true, next);
+        InspectorTest.domModel.undo(InspectorTest._dumpOuterHTML.bind(InspectorTest, true, next));
     }
 }
 
-InspectorTest.innerSetOuterHTML = async function(newText, last, next)
+InspectorTest.innerSetOuterHTML = function(newText, last, next)
 {
-    await InspectorTest.DOMAgent.setOuterHTML(InspectorTest.containerId, newText);
-    InspectorTest._dumpOuterHTML(last, next);
+    InspectorTest.DOMAgent.setOuterHTML(InspectorTest.containerId, newText, InspectorTest._dumpOuterHTML.bind(InspectorTest, last, next));
 }
 
-InspectorTest._dumpOuterHTML = async function(last, next)
+InspectorTest._dumpOuterHTML = function(last, next)
 {
-    var result = await InspectorTest.RuntimeAgent.evaluate("document.getElementById(\"identity\").wrapperIdentity");
+    InspectorTest.RuntimeAgent.evaluate("document.getElementById(\"identity\").wrapperIdentity", dumpIdentity);
+    function dumpIdentity(error, result)
+    {
+        InspectorTest.addResult("Wrapper identity: " + result.value);
+        InspectorTest.events.sort();
+        for (var i = 0; i < InspectorTest.events.length; ++i)
+            InspectorTest.addResult(InspectorTest.events[i]);
+        InspectorTest.events = [];
+    }
 
-    InspectorTest.addResult("Wrapper identity: " + result.value);
-    InspectorTest.events.sort();
-    for (var i = 0; i < InspectorTest.events.length; ++i)
-        InspectorTest.addResult(InspectorTest.events[i]);
-    InspectorTest.events = [];
+    InspectorTest.DOMAgent.getOuterHTML(InspectorTest.containerId, callback);
 
-    var text = await InspectorTest.DOMAgent.getOuterHTML(InspectorTest.containerId);
-
-    InspectorTest.addResult("==========8<==========");
-    InspectorTest.addResult(text);
-    InspectorTest.addResult("==========>8==========");
-    if (last)
-        InspectorTest.addResult("\n\n\n");
-    next();
+    function callback(error, text)
+    {
+        InspectorTest.addResult("==========8<==========");
+        InspectorTest.addResult(text);
+        InspectorTest.addResult("==========>8==========");
+        if (last)
+            InspectorTest.addResult("\n\n\n");
+        next();
+    }
 }
 
 };

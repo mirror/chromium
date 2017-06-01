@@ -4,14 +4,13 @@
 
 import("//testing/test.gni")
 
-# Only depend on this target if you're trying to implement a custom service
-# test runner.
-source_set("common_initialization") {
+# NOTE: Don't depend on this target directly. Instead use the service_test
+# template from //services/service_manager/public/tools/test/service_test.gni.
+source_set("run_all_service_tests") {
   testonly = true
 
   sources = [
-    "common_initialization.cc",
-    "common_initialization.h",
+    "run_all_service_tests.cc",
     "service_test_catalog.h",
   ]
 
@@ -27,20 +26,4 @@ source_set("common_initialization") {
   if (is_android) {
     deps += [ "//mojo/android:libsystem_java" ]
   }
-}
-
-# NOTE: Don't depend on this target directly. Instead use the service_test
-# template from //services/service_manager/public/tools/test/service_test.gni.
-source_set("run_all_service_tests") {
-  testonly = true
-
-  sources = [
-    "run_all_service_tests.cc",
-  ]
-
-  deps = [
-    ":common_initialization",
-    "//base",
-    "//base/test:test_support",
-  ]
 }

@@ -181,7 +181,7 @@ TEST_F(RootWindowControllerTest, MoveWindows_Basic) {
             unparented_control->GetNativeView()->parent()->id());
 
   aura::Window* panel = CreateTestWindowInShellWithDelegateAndType(
-      NULL, aura::client::WINDOW_TYPE_PANEL, 0, gfx::Rect(700, 100, 100, 100));
+      NULL, ui::wm::WINDOW_TYPE_PANEL, 0, gfx::Rect(700, 100, 100, 100));
   EXPECT_EQ(root_windows[1], panel->GetRootWindow());
   EXPECT_EQ(kShellWindowId_PanelContainer, panel->parent()->id());
 
@@ -560,32 +560,32 @@ TEST_F(RootWindowControllerTest, MultipleDisplaysGetWindowForFullscreenMode) {
   EXPECT_EQ(NULL, controllers[1]->GetWindowForFullscreenMode());
 }
 
-// Test that ForWindow() works with multiple displays and child widgets.
-TEST_F(RootWindowControllerTest, ForWindow) {
+// Test that GetRootWindowController() works with multiple displays and
+// child widgets.
+TEST_F(RootWindowControllerTest, GetRootWindowController) {
   UpdateDisplay("600x600,600x600");
   Shell::RootWindowControllerList controllers =
       Shell::Get()->GetAllRootWindowControllers();
   ASSERT_EQ(2u, controllers.size());
 
-  // Test a root window.
-  EXPECT_EQ(controllers[0],
-            RootWindowController::ForWindow(Shell::GetPrimaryRootWindow()));
+  // Test null.
+  EXPECT_FALSE(GetRootWindowController(nullptr));
 
   // Test a widget on the first display.
   Widget* w1 = CreateTestWidget(gfx::Rect(0, 0, 100, 100));
   EXPECT_EQ(controllers[0],
-            RootWindowController::ForWindow(w1->GetNativeWindow()));
+            GetRootWindowController(w1->GetNativeWindow()->GetRootWindow()));
 
   // Test a child widget.
   Widget* w2 = Widget::CreateWindowWithParentAndBounds(
       nullptr, w1->GetNativeWindow(), gfx::Rect(0, 0, 100, 100));
   EXPECT_EQ(controllers[0],
-            RootWindowController::ForWindow(w2->GetNativeWindow()));
+            GetRootWindowController(w2->GetNativeWindow()->GetRootWindow()));
 
   // Test a widget on the second display.
   Widget* w3 = CreateTestWidget(gfx::Rect(600, 0, 100, 100));
   EXPECT_EQ(controllers[1],
-            RootWindowController::ForWindow(w3->GetNativeWindow()));
+            GetRootWindowController(w3->GetNativeWindow()->GetRootWindow()));
 }
 
 // Test that user session window can't be focused if user session blocked by
@@ -653,19 +653,19 @@ TEST_F(RootWindowControllerTest, DontDeleteWindowsNotOwnedByParent) {
   DestroyedWindowObserver observer1;
   aura::test::TestWindowDelegate delegate1;
   aura::Window* window1 = new aura::Window(&delegate1);
-  window1->SetType(aura::client::WINDOW_TYPE_CONTROL);
+  window1->SetType(ui::wm::WINDOW_TYPE_CONTROL);
   window1->set_owned_by_parent(false);
   observer1.SetWindow(window1);
   window1->Init(ui::LAYER_NOT_DRAWN);
-  aura::client::ParentWindowWithContext(window1, Shell::GetPrimaryRootWindow(),
-                                        gfx::Rect());
+  aura::client::ParentWindowWithContext(
+      window1, Shell::Get()->GetPrimaryRootWindow(), gfx::Rect());
 
   DestroyedWindowObserver observer2;
   aura::Window* window2 = new aura::Window(NULL);
   window2->set_owned_by_parent(false);
   observer2.SetWindow(window2);
   window2->Init(ui::LAYER_NOT_DRAWN);
-  Shell::GetPrimaryRootWindow()->AddChild(window2);
+  Shell::Get()->GetPrimaryRootWindow()->AddChild(window2);
 
   Shell::GetPrimaryRootWindowController()->CloseChildWindows();
 
@@ -1179,7 +1179,7 @@ TEST_F(VirtualKeyboardRootWindowControllerTest, ZOrderTest) {
   aura::test::TestWindowDelegate delegate;
   std::unique_ptr<aura::Window> normal(
       CreateTestWindowInShellWithDelegateAndType(
-          &delegate, aura::client::WINDOW_TYPE_NORMAL, 0,
+          &delegate, ui::wm::WINDOW_TYPE_NORMAL, 0,
           gfx::Rect(0, 0, window_width, window_height)));
   normal->set_owned_by_parent(false);
   normal->Show();
@@ -1198,7 +1198,7 @@ TEST_F(VirtualKeyboardRootWindowControllerTest, ZOrderTest) {
   // Menu overlaps virtual keyboard.
   aura::test::TestWindowDelegate delegate2;
   std::unique_ptr<aura::Window> menu(CreateTestWindowInShellWithDelegateAndType(
-      &delegate2, aura::client::WINDOW_TYPE_MENU, 0,
+      &delegate2, ui::wm::WINDOW_TYPE_MENU, 0,
       gfx::Rect(window_width, 0, window_width, window_height)));
   menu->set_owned_by_parent(false);
   menu->Show();

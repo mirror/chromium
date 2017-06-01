@@ -7,23 +7,31 @@
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "bindings/core/v8/ScriptSourceCode.h"
 #include "bindings/core/v8/V8BindingForCore.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/LocalFrame.h"
 #include "core/workers/WorkletGlobalScopeProxy.h"
 #include "core/workers/WorkletPendingTasks.h"
-#include "platform/WebTaskRunner.h"
 #include "platform/wtf/WTF.h"
+#include "public/platform/WebURLRequest.h"
 
 namespace blink {
 
-MainThreadWorklet::MainThreadWorklet(LocalFrame* frame) : Worklet(frame) {}
+namespace {
 
-WorkletGlobalScopeProxy* MainThreadWorklet::FindAvailableGlobalScope() const {
-  DCHECK(IsMainThread());
-  // TODO(nhiroki): Support the case where there are multiple global scopes.
-  DCHECK_EQ(1u, GetNumberOfGlobalScopes());
-  return proxies_.begin()->get();
+WebURLRequest::FetchCredentialsMode ParseCredentialsOption(
+    const String& credentials_option) {
+  if (credentials_option == "omit")
+    return WebURLRequest::kFetchCredentialsModeOmit;
+  if (credentials_option == "same-origin")
+    return WebURLRequest::kFetchCredentialsModeSameOrigin;
+  if (credentials_option == "include")
+    return WebURLRequest::kFetchCredentialsModeInclude;
+  NOTREACHED();
+  return WebURLRequest::kFetchCredentialsModeOmit;
 }
+
+}  // namespace
+
+MainThreadWorklet::MainThreadWorklet(LocalFrame* frame) : Worklet(frame) {}
 
 // Implementation of the second half of the "addModule(moduleURL, options)"
 // algorithm:
@@ -41,12 +49,9 @@ void MainThreadWorklet::FetchAndInvokeScript(const KURL& module_url_record,
       ParseCredentialsOption(options.credentials());
 
   // Step 7: "Let outsideSettings be the relevant settings object of this."
-  // In the specification, outsideSettings is used for posting a task to the
-  // document's responsible event loop. In our implementation, we use the
-  // document's UnspecedLoading task runner as that is what we commonly use for
-  // module loading.
-  RefPtr<WebTaskRunner> outside_settings_task_runner =
-      TaskRunnerHelper::Get(TaskType::kUnspecedLoading, GetExecutionContext());
+  // TODO(nhiroki): outsideSettings will be used for posting a task to the
+  // document's responsible event loop. We could use a task runner for the
+  // purpose.
 
   // Step 8: "Let moduleResponsesMap be worklet's module responses map."
   // TODO(nhiroki): Implement moduleResponsesMap (https://crbug.com/627945).
@@ -62,14 +67,15 @@ void MainThreadWorklet::FetchAndInvokeScript(const KURL& module_url_record,
   //   10.2: "Add the WorkletGlobalScope to worklet's WorkletGlobalScopes."
   // "Depending on the type of worklet the user agent may create additional
   // WorkletGlobalScopes at this time."
-  while (NeedsToCreateGlobalScope())
-    proxies_.insert(CreateGlobalScope());
-  DCHECK_EQ(1u, GetNumberOfGlobalScopes());
+  // TODO(nhiroki): Create WorkletGlobalScopes at this point.
 
   // Step 11: "Let pendingTaskStruct be a new pending tasks struct with counter
   // initialized to the length of worklet's WorkletGlobalScopes."
+  // TODO(nhiroki): Introduce the concept of "worklet's WorkletGlobalScopes" and
+  // use the length of it here.
+  constexpr int number_of_global_scopes = 1;
   WorkletPendingTasks* pending_tasks =
-      new WorkletPendingTasks(GetNumberOfGlobalScopes(), resolver);
+      new WorkletPendingTasks(number_of_global_scopes, resolver);
 
   // Step 12: "For each workletGlobalScope in the worklet's
   // WorkletGlobalScopes, queue a task on the workletGlobalScope to fetch and
@@ -77,16 +83,13 @@ void MainThreadWorklet::FetchAndInvokeScript(const KURL& module_url_record,
   // moduleResponsesMap, credentialOptions, outsideSettings, pendingTaskStruct,
   // and promise."
   // TODO(nhiroki): Queue a task instead of executing this here.
-  for (const auto& proxy : proxies_) {
-    proxy->FetchAndInvokeScript(module_url_record, credentials_mode,
-                                outside_settings_task_runner, pending_tasks);
-  }
+  GetWorkletGlobalScopeProxy()->FetchAndInvokeScript(
+      module_url_record, credentials_mode, pending_tasks);
 }
 
 void MainThreadWorklet::ContextDestroyed(ExecutionContext* execution_context) {
   DCHECK(IsMainThread());
-  for (const auto& proxy : proxies_)
-    proxy->TerminateWorkletGlobalScope();
+  GetWorkletGlobalScopeProxy()->TerminateWorkletGlobalScope();
 }
 
 DEFINE_TRACE(MainThreadWorklet) {

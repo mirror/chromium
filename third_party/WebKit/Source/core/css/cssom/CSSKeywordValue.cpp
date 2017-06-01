@@ -11,11 +11,10 @@
 #include "core/css/CSSInitialValue.h"
 #include "core/css/CSSUnsetValue.h"
 #include "core/css/parser/CSSPropertyParser.h"
-#include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
-CSSKeywordValue* CSSKeywordValue::Create(const String& keyword,
+CSSKeywordValue* CSSKeywordValue::Create(const AtomicString& keyword,
                                          ExceptionState& exception_state) {
   if (keyword.IsEmpty()) {
     exception_state.ThrowTypeError(
@@ -49,12 +48,12 @@ CSSKeywordValue* CSSKeywordValue::FromCSSValue(const CSSValue& value) {
   return nullptr;
 }
 
-CSSKeywordValue* CSSKeywordValue::Create(const String& keyword) {
+CSSKeywordValue* CSSKeywordValue::Create(const AtomicString& keyword) {
   DCHECK(!keyword.IsEmpty());
   return new CSSKeywordValue(keyword);
 }
 
-const String& CSSKeywordValue::value() const {
+const AtomicString& CSSKeywordValue::keywordValue() const {
   return keyword_value_;
 }
 
@@ -72,7 +71,7 @@ CSSValue* CSSKeywordValue::ToCSSValue() const {
     case (CSSValueUnset):
       return CSSUnsetValue::Create();
     case (CSSValueInvalid):
-      return CSSCustomIdentValue::Create(AtomicString(keyword_value_));
+      return CSSCustomIdentValue::Create(keyword_value_);
     default:
       return CSSIdentifierValue::Create(keyword_id);
   }

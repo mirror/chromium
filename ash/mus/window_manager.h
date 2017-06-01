@@ -7,11 +7,8 @@
 
 #include <stdint.h>
 
-#include <map>
 #include <memory>
 #include <set>
-#include <string>
-#include <vector>
 
 #include "ash/root_window_controller.h"
 #include "ash/shell_delegate.h"
@@ -141,9 +138,6 @@ class WindowManager : public aura::WindowManagerDelegate,
       const display::Display& display,
       ash::RootWindowController::RootWindowType root_window_type);
 
-  // Sets the frame decoration values on the server.
-  void InstallFrameDecorationValues();
-
   // Deletes the specified RootWindowController. Called when a display is
   // removed. |in_shutdown| is true if called from Shutdown().
   void DestroyRootWindowController(RootWindowController* root_window_controller,
@@ -236,6 +230,9 @@ class WindowManager : public aura::WindowManagerDelegate,
   // The ShellDelegate to install. This may be null, in which case
   // ShellDelegateMus is used.
   std::unique_ptr<ShellDelegate> shell_delegate_;
+
+  // See ShellPortMash's constructor for details. Tests may set to false.
+  bool create_session_state_delegate_stub_for_test_ = true;
 
   // State that is only valid during a drag.
   struct DragState;

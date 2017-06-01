@@ -81,12 +81,7 @@ class VIZ_EXPORT MojoFrameSinkManager
   // cc::SurfaceObserver implementation.
   void OnSurfaceCreated(const cc::SurfaceInfo& surface_info) override;
   void OnSurfaceDamaged(const cc::SurfaceId& surface_id,
-                        const cc::BeginFrameAck& ack,
                         bool* changed) override;
-  void OnSurfaceDiscarded(const cc::SurfaceId& surface_id) override;
-  void OnSurfaceDestroyed(const cc::SurfaceId& surface_id) override;
-  void OnSurfaceDamageExpected(const cc::SurfaceId& surface_id,
-                               const cc::BeginFrameArgs& args) override;
 
   // GpuCompositorFrameSinkDelegate implementation.
   void OnClientConnectionLost(const cc::FrameSinkId& frame_sink_id,
@@ -98,8 +93,6 @@ class VIZ_EXPORT MojoFrameSinkManager
   // destroyed in order to ensure that all other objects that depend on it have
   // access to a valid pointer for the entirety of their lifetimes.
   cc::SurfaceManager manager_;
-
-  std::unique_ptr<cc::SurfaceDependencyTracker> dependency_tracker_;
 
   // Provides a cc::Display for CreateRootCompositorFrameSink().
   DisplayProvider* const display_provider_;

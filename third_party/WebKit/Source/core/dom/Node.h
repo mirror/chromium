@@ -74,7 +74,6 @@ using StaticNodeList = StaticNodeTypeList<Node>;
 class StyleChangeReasonForTracing;
 class Text;
 class WebMouseEvent;
-class WebPluginContainerBase;
 
 const int kNodeStyleChangeShift = 18;
 const int kNodeCustomElementShift = 20;
@@ -161,6 +160,14 @@ class Node;
 WILL_NOT_BE_EAGERLY_TRACED_CLASS(Node);
 
 // A Node is a base class for all objects in the DOM tree.
+
+// The following interfaces all inherit from Node:
+// 1. ContainerNode (which Document, Element, DocumentFragment inherit from) -
+//    can have node children,
+// 2. CharacterData (which Text (which CDATASection inherits), Comment, and
+//    ProcessingInstruction inherit from) - contains text,
+// 3. DocumentType
+
 // The spec governing this interface can be found here:
 // https://dom.spec.whatwg.org/#interface-node
 class CORE_EXPORT Node : public EventTarget {
@@ -544,11 +551,8 @@ class CORE_EXPORT Node : public EventTarget {
   // This is called only when the node is focused.
   virtual bool ShouldHaveFocusAppearance() const;
 
-  // Whether the node is inert:
-  // https://html.spec.whatwg.org/multipage/interaction.html#inert
-  // https://github.com/WICG/inert/blob/master/README.md
-  // This can't be in Element because text nodes must be recognized as
-  // inert to prevent text selection.
+  // Whether the node is inert. This can't be in Element because text nodes
+  // must be recognized as inert to prevent text selection.
   bool IsInert() const;
 
   virtual LayoutRect BoundingBox() const;
@@ -644,7 +648,7 @@ class CORE_EXPORT Node : public EventTarget {
   // Attaches this node to the layout tree. This calculates the style to be
   // applied to the node and creates an appropriate LayoutObject which will be
   // inserted into the tree (except when the style has display: none). This
-  // makes the node visible in the LocalFrameView.
+  // makes the node visible in the FrameView.
   virtual void AttachLayoutTree(const AttachContext& = AttachContext());
 
   // Detaches the node from the layout tree, making it invisible in the rendered
@@ -824,9 +828,6 @@ class CORE_EXPORT Node : public EventTarget {
   void CheckSlotChangeBeforeRemoved() {
     CheckSlotChange(SlotChangeType::kInitial);
   }
-
-  // If the node is a plugin, then this returns its WebPluginContainerBase.
-  WebPluginContainerBase* GetWebPluginContainerBase() const;
 
   DECLARE_VIRTUAL_TRACE();
 

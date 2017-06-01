@@ -20,14 +20,11 @@
 #include "chrome/browser/notifications/notification_permission_infobar_delegate.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_features.h"
-#include "chrome/grit/generated_resources.h"
 #include "components/variations/variations_associated_data.h"
-#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
 #include "jni/PermissionDialogController_jni.h"
 #include "jni/PermissionDialogDelegate_jni.h"
 #include "ui/android/window_android.h"
-#include "ui/base/l10n/l10n_util.h"
 #include "ui/base/window_open_disposition.h"
 
 using base::android::ConvertUTF16ToJavaString;
@@ -42,28 +39,11 @@ const char kModalParamsUserGestureKey[] = "require_gesture";
 // static
 void PermissionDialogDelegate::Create(
     content::WebContents* web_contents,
-    PermissionPromptAndroid* permission_prompt) {
-  DCHECK(web_contents);
-
-  // If we don't have a tab, just act as though the prompt was dismissed.
-  TabAndroid* tab = TabAndroid::FromWebContents(web_contents);
-  if (!tab) {
-    permission_prompt->Closing();
-    return;
-  }
-
-  // Dispatch the dialog to Java, which manages the lifetime of this object.
-  new PermissionDialogDelegate(tab, /*infobar_delegate=*/nullptr,
-                               permission_prompt);
-}
-
-// static
-void PermissionDialogDelegate::Create(content::WebContents* web_contents,
-                                      ContentSettingsType type,
-                                      const GURL& requesting_frame,
-                                      bool user_gesture,
-                                      Profile* profile,
-                                      const PermissionSetCallback& callback) {
+    ContentSettingsType type,
+    const GURL& requesting_frame,
+    bool user_gesture,
+    Profile* profile,
+    const PermissionSetCallback& callback) {
   DCHECK(web_contents);
 
   // If we don't have a tab, just act as though the prompt was dismissed.
@@ -75,10 +55,8 @@ void PermissionDialogDelegate::Create(content::WebContents* web_contents,
 
   // Dispatch the dialog to Java, which manages the lifetime of this object.
   new PermissionDialogDelegate(
-      tab,
-      PermissionInfoBarDelegate::CreateDelegate(
-          type, requesting_frame, user_gesture, profile, callback),
-      /*permission_prompt=*/nullptr);
+      tab, PermissionInfoBarDelegate::CreateDelegate(
+               type, requesting_frame, user_gesture, profile, callback));
 }
 
 // static
@@ -102,8 +80,7 @@ void PermissionDialogDelegate::CreateMediaStreamDialog(
       user_gesture, std::move(request)));
 
   // Dispatch the dialog to Java, which manages the lifetime of this object.
-  new PermissionDialogDelegate(tab, std::move(infobar_delegate),
-                               /*permission_prompt=*/nullptr);
+  new PermissionDialogDelegate(tab, std::move(infobar_delegate));
 }
 
 // static
@@ -125,82 +102,45 @@ bool PermissionDialogDelegate::RegisterPermissionDialogDelegate(JNIEnv* env) {
   return RegisterNativesImpl(env);
 }
 
-void PermissionDialogDelegate::CreateJavaDelegate(JNIEnv* env) {
-  base::android::ScopedJavaLocalRef<jstring> primaryButtonText =
-      ConvertUTF16ToJavaString(env,
-                               l10n_util::GetStringUTF16(IDS_PERMISSION_ALLOW));
-  base::android::ScopedJavaLocalRef<jstring> secondaryButtonText =
-      ConvertUTF16ToJavaString(env,
-                               l10n_util::GetStringUTF16(IDS_PERMISSION_DENY));
-
-  if (infobar_delegate_) {
-    std::vector<int> content_settings_types{
-        infobar_delegate_->content_settings_types()};
-
-    j_delegate_.Reset(Java_PermissionDialogDelegate_create(
-        env, reinterpret_cast<uintptr_t>(this), tab_->GetJavaObject(),
-        base::android::ToJavaIntArray(env, content_settings_types).obj(),
-        ResourceMapper::MapFromChromiumId(infobar_delegate_->GetIconId()),
-        ConvertUTF16ToJavaString(env, infobar_delegate_->GetMessageText()),
-        ConvertUTF16ToJavaString(env, infobar_delegate_->GetLinkText()),
-        primaryButtonText, secondaryButtonText,
-        infobar_delegate_->ShouldShowPersistenceToggle()));
-    return;
-  }
-
-  // TODO(timloh): Handle grouped media permissions (camera + microphone).
-  DCHECK_EQ(1u, permission_prompt_->PermissionCount());
-
+ScopedJavaLocalRef<jobject> PermissionDialogDelegate::CreateJavaDelegate(
+    JNIEnv* env) {
   std::vector<int> content_settings_types{
-      permission_prompt_->GetContentSettingType(0)};
+      infobar_delegate_->content_settings_types()};
 
-  j_delegate_.Reset(Java_PermissionDialogDelegate_create(
-      env, reinterpret_cast<uintptr_t>(this), tab_->GetJavaObject(),
+  return Java_PermissionDialogDelegate_create(
+      env, reinterpret_cast<uintptr_t>(this),
+      tab_->GetJavaObject(),
       base::android::ToJavaIntArray(env, content_settings_types).obj(),
-      ResourceMapper::MapFromChromiumId(
-          permission_prompt_->GetIconIdForPermission(0)),
-      ConvertUTF16ToJavaString(env, permission_prompt_->GetMessageText(0)),
-      // TODO(timloh): Pass the actual link text for EME.
-      ConvertUTF16ToJavaString(env, base::string16()), primaryButtonText,
-      secondaryButtonText,
-      // TODO(timloh): Hook up the persistence toggle.
-      false));
+      ResourceMapper::MapFromChromiumId(infobar_delegate_->GetIconId()),
+      ConvertUTF16ToJavaString(env, infobar_delegate_->GetMessageText()),
+      ConvertUTF16ToJavaString(env, infobar_delegate_->GetLinkText()),
+      ConvertUTF16ToJavaString(env, infobar_delegate_->GetButtonLabel(
+                                        PermissionInfoBarDelegate::BUTTON_OK)),
+      ConvertUTF16ToJavaString(env,
+                               infobar_delegate_->GetButtonLabel(
+                                   PermissionInfoBarDelegate::BUTTON_CANCEL)),
+      infobar_delegate_->ShouldShowPersistenceToggle());
 }
 
 void PermissionDialogDelegate::Accept(JNIEnv* env,
                                       const JavaParamRef<jobject>& obj,
                                       jboolean persist) {
-  if (infobar_delegate_) {
-    if (infobar_delegate_->ShouldShowPersistenceToggle())
-      infobar_delegate_->set_persist(persist);
-    infobar_delegate_->Accept();
-    return;
-  }
-
-  permission_prompt_->Accept();
+  if (infobar_delegate_->ShouldShowPersistenceToggle())
+    infobar_delegate_->set_persist(persist);
+  infobar_delegate_->Accept();
 }
 
 void PermissionDialogDelegate::Cancel(JNIEnv* env,
                                       const JavaParamRef<jobject>& obj,
                                       jboolean persist) {
-  if (infobar_delegate_) {
-    if (infobar_delegate_->ShouldShowPersistenceToggle())
-      infobar_delegate_->set_persist(persist);
-    infobar_delegate_->Cancel();
-    return;
-  }
-
-  permission_prompt_->Deny();
+  if (infobar_delegate_->ShouldShowPersistenceToggle())
+    infobar_delegate_->set_persist(persist);
+  infobar_delegate_->Cancel();
 }
 
 void PermissionDialogDelegate::Dismissed(JNIEnv* env,
                                          const JavaParamRef<jobject>& obj) {
-  if (infobar_delegate_) {
-    infobar_delegate_->InfoBarDismissed();
-    return;
-  }
-
-  permission_prompt_->Closing();
+  infobar_delegate_->InfoBarDismissed();
 }
 
 void PermissionDialogDelegate::LinkClicked(JNIEnv* env,
@@ -209,14 +149,10 @@ void PermissionDialogDelegate::LinkClicked(JNIEnv* env,
   // InfoBarService as an owner() to open the link. That will fail since the
   // wrapped delegate has no owner (it hasn't been added as an infobar).
   if (tab_->web_contents()) {
-    if (infobar_delegate_) {
-      tab_->web_contents()->OpenURL(content::OpenURLParams(
-          infobar_delegate_->GetLinkURL(), content::Referrer(),
-          WindowOpenDisposition::NEW_FOREGROUND_TAB, ui::PAGE_TRANSITION_LINK,
-          false));
-    }
-    // TODO(timloh): Show a 'learn more' link in the PermissionRequestManager
-    // codepath for EME.
+    tab_->web_contents()->OpenURL(content::OpenURLParams(
+        infobar_delegate_->GetLinkURL(), content::Referrer(),
+        WindowOpenDisposition::NEW_FOREGROUND_TAB, ui::PAGE_TRANSITION_LINK,
+        false));
   }
 }
 
@@ -227,45 +163,20 @@ void PermissionDialogDelegate::Destroy(JNIEnv* env,
 
 PermissionDialogDelegate::PermissionDialogDelegate(
     TabAndroid* tab,
-    std::unique_ptr<PermissionInfoBarDelegate> infobar_delegate,
-    PermissionPromptAndroid* permission_prompt)
-    : content::WebContentsObserver(tab->web_contents()),
-      tab_(tab),
-      infobar_delegate_(std::move(infobar_delegate)),
-      permission_prompt_(permission_prompt) {
+    std::unique_ptr<PermissionInfoBarDelegate> infobar_delegate)
+    : tab_(tab), infobar_delegate_(std::move(infobar_delegate)) {
   DCHECK(tab_);
-  // Only one of the PermissionPromptAndroid and PermissionInfoBarDelegate is
-  // used, depending on whether the PermissionRequestManager is enabled or not.
-  DCHECK(!!permission_prompt_ ^ !!infobar_delegate_);
+  DCHECK(infobar_delegate_);
 
   // Create our Java counterpart, which manages our lifetime.
   JNIEnv* env = base::android::AttachCurrentThread();
-  CreateJavaDelegate(env);
+  base::android::ScopedJavaLocalRef<jobject> j_delegate =
+      CreateJavaDelegate(env);
 
   // Send the Java delegate to the Java PermissionDialogController for display.
   // The controller takes over lifetime management; when the Java delegate is no
   // longer needed it will in turn free the native delegate.
-  Java_PermissionDialogController_createDialog(env, j_delegate_.obj());
+  Java_PermissionDialogController_createDialog(env, j_delegate.obj());
 }
 
 PermissionDialogDelegate::~PermissionDialogDelegate() {}
-
-void PermissionDialogDelegate::DismissDialog() {
-  JNIEnv* env = base::android::AttachCurrentThread();
-  Java_PermissionDialogDelegate_dismissFromNative(env, j_delegate_.obj());
-}
-
-void PermissionDialogDelegate::DidFinishNavigation(
-    content::NavigationHandle* navigation_handle) {
-  if (!navigation_handle->IsInMainFrame() ||
-      !navigation_handle->HasCommitted() ||
-      navigation_handle->IsSameDocument()) {
-    return;
-  }
-
-  DismissDialog();
-}
-
-void PermissionDialogDelegate::WebContentsDestroyed() {
-  DismissDialog();
-}

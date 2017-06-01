@@ -182,9 +182,6 @@ std::string BuildProtocolRequest(
   if (!additional_attributes.empty())
     base::StringAppendF(&request, "%s ", additional_attributes.c_str());
 
-  // Constant information for this updater.
-  base::StringAppendF(&request, "dedup=\"cr\" acceptformat=\"crx2,crx3\" ");
-
   // Chrome version and platform information.
   base::StringAppendF(
       &request,

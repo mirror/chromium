@@ -30,15 +30,15 @@
 
 #include "core/InputTypeNames.h"
 #include "core/dom/AccessibleNode.h"
+#include "core/dom/DocumentUserGestureToken.h"
 #include "core/dom/Element.h"
 #include "core/dom/NodeTraversal.h"
 #include "core/dom/QualifiedName.h"
 #include "core/dom/Text.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/dom/shadow/FlatTreeTraversal.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/markers/DocumentMarkerController.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/html/HTMLAnchorElement.h"
 #include "core/html/HTMLDListElement.h"
 #include "core/html/HTMLDivElement.h"
@@ -67,6 +67,7 @@
 #include "core/layout/LayoutObject.h"
 #include "core/svg/SVGElement.h"
 #include "modules/accessibility/AXObjectCacheImpl.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/text/PlatformLocale.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/text/StringBuilder.h"
@@ -539,14 +540,6 @@ AccessibilityRole AXNodeObject::NativeAccessibilityRoleIgnoringAria() const {
     return select_element.IsMultiple() ? kListBoxRole : kPopUpButtonRole;
   }
 
-  if (isHTMLOptionElement(*GetNode())) {
-    HTMLSelectElement* select_element =
-        toHTMLOptionElement(GetNode())->OwnerSelectElement();
-    return !select_element || select_element->IsMultiple()
-               ? kListBoxOptionRole
-               : kMenuListOptionRole;
-  }
-
   if (isHTMLTextAreaElement(*GetNode()))
     return kTextFieldRole;
 
@@ -692,7 +685,17 @@ AccessibilityRole AXNodeObject::DetermineAccessibilityRole() {
     return kStaticTextRole;
 
   AccessibilityRole role = NativeAccessibilityRoleIgnoringAria();
-  return role == kUnknownRole ? kGenericContainerRole : role;
+  if (role != kUnknownRole)
+    return role;
+  if (GetNode()->IsElementNode()) {
+    Element* element = ToElement(GetNode());
+    // A generic element with tabIndex explicitly set gets GroupRole.
+    // The layout checks for focusability aren't critical here; a false
+    // positive would be harmless.
+    if (element->IsInCanvasSubtree() && element->SupportsFocus())
+      return kGenericContainerRole;
+  }
+  return kUnknownRole;
 }
 
 AccessibilityRole AXNodeObject::DetermineAriaRoleAttribute() const {
@@ -1286,15 +1289,6 @@ bool AXNodeObject::CanSetFocusAttribute() const {
   if (IsDisabledFormControl(node))
     return false;
 
-  // Check for options here because AXListBoxOption and AXMenuListOption
-  // don't help when the <option> is canvas fallback, and because
-  // a common case for aria-owns from a textbox that points to a list
-  // does not change the hierarchy (textboxes don't suport children)
-  if ((RoleValue() == kListBoxOptionRole ||
-       RoleValue() == kMenuListOptionRole) &&
-      IsEnabled())
-    return true;
-
   return node->IsElementNode() && ToElement(node)->SupportsFocus();
 }
 
@@ -1314,13 +1308,11 @@ bool AXNodeObject::CanSetValueAttribute() const {
 }
 
 bool AXNodeObject::CanSetSelectedAttribute() const {
-  const AccessibilityRole role = AriaRoleAttribute();
-  // These elements can be selected if not disabled (native or ARIA)
-  if ((role == kListBoxOptionRole || role == kMenuListOptionRole ||
-       role == kTreeItemRole || role == kCellRole || role == kTabRole) &&
-      IsEnabled() && CanSetFocusAttribute()) {
+  // ARIA list box options can be selected if they are children of an element
+  // with an aria-activedescendant attribute.
+  if (AriaRoleAttribute() == kListBoxOptionRole &&
+      AncestorExposesActiveDescendant())
     return true;
-  }
   return AXObjectImpl::CanSetSelectedAttribute();
 }
 
@@ -1342,8 +1334,9 @@ int AXNodeObject::HeadingLevel() const {
     return 0;
 
   if (RoleValue() == kHeadingRole) {
-    uint32_t level;
-    if (HasAOMPropertyOrARIAAttribute(AOMUIntProperty::kLevel, level)) {
+    String level_str = GetAttribute(aria_levelAttr);
+    if (!level_str.IsEmpty()) {
+      int level = level_str.ToInt();
       if (level >= 1 && level <= 9)
         return level;
       return 1;
@@ -1376,13 +1369,15 @@ int AXNodeObject::HeadingLevel() const {
 }
 
 unsigned AXNodeObject::HierarchicalLevel() const {
-  Element* element = GetElement();
-  if (!element)
+  Node* node = this->GetNode();
+  if (!node || !node->IsElementNode())
     return 0;
 
-  uint32_t level;
-  if (HasAOMPropertyOrARIAAttribute(AOMUIntProperty::kLevel, level)) {
-    if (level >= 1 && level <= 9)
+  Element* element = ToElement(node);
+  String level_str = element->getAttribute(aria_levelAttr);
+  if (!level_str.IsEmpty()) {
+    int level = level_str.ToInt();
+    if (level > 0)
       return level;
     return 1;
   }
@@ -1393,7 +1388,7 @@ unsigned AXNodeObject::HierarchicalLevel() const {
 
   // Hierarchy leveling starts at 1, to match the aria-level spec.
   // We measure tree hierarchy by the number of groups that the item is within.
-  level = 1;
+  unsigned level = 1;
   for (AXObjectImpl* parent = ParentObject(); parent;
        parent = parent->ParentObject()) {
     AccessibilityRole parent_role = parent->RoleValue();
@@ -1664,9 +1659,13 @@ InvalidState AXNodeObject::GetInvalidState() const {
 
 int AXNodeObject::PosInSet() const {
   if (SupportsSetSizeAndPosInSet()) {
-    uint32_t pos_in_set;
-    if (HasAOMPropertyOrARIAAttribute(AOMUIntProperty::kPosInSet, pos_in_set))
-      return pos_in_set;
+    String pos_in_set_str = GetAttribute(aria_posinsetAttr);
+    if (!pos_in_set_str.IsEmpty()) {
+      int pos_in_set = pos_in_set_str.ToInt();
+      if (pos_in_set > 0)
+        return pos_in_set;
+      return 1;
+    }
 
     return AXObjectImpl::IndexInParent() + 1;
   }
@@ -1676,9 +1675,13 @@ int AXNodeObject::PosInSet() const {
 
 int AXNodeObject::SetSize() const {
   if (SupportsSetSizeAndPosInSet()) {
-    int32_t set_size;
-    if (HasAOMPropertyOrARIAAttribute(AOMIntProperty::kSetSize, set_size))
-      return set_size;
+    String set_size_str = GetAttribute(aria_setsizeAttr);
+    if (!set_size_str.IsEmpty()) {
+      int set_size = set_size_str.ToInt();
+      if (set_size > 0)
+        return set_size;
+      return 1;
+    }
 
     if (ParentObject()) {
       const auto& siblings = ParentObject()->Children();
@@ -1705,9 +1708,8 @@ String AXNodeObject::ValueDescription() const {
 }
 
 float AXNodeObject::ValueForRange() const {
-  float value_now;
-  if (HasAOMPropertyOrARIAAttribute(AOMFloatProperty::kValueNow, value_now))
-    return value_now;
+  if (HasAttribute(aria_valuenowAttr))
+    return GetAttribute(aria_valuenowAttr).ToFloat();
 
   if (IsNativeSlider())
     return toHTMLInputElement(*GetNode()).valueAsNumber();
@@ -1719,9 +1721,8 @@ float AXNodeObject::ValueForRange() const {
 }
 
 float AXNodeObject::MaxValueForRange() const {
-  float value_max;
-  if (HasAOMPropertyOrARIAAttribute(AOMFloatProperty::kValueMax, value_max))
-    return value_max;
+  if (HasAttribute(aria_valuemaxAttr))
+    return GetAttribute(aria_valuemaxAttr).ToFloat();
 
   if (IsNativeSlider())
     return toHTMLInputElement(*GetNode()).Maximum();
@@ -1733,9 +1734,8 @@ float AXNodeObject::MaxValueForRange() const {
 }
 
 float AXNodeObject::MinValueForRange() const {
-  float value_min;
-  if (HasAOMPropertyOrARIAAttribute(AOMFloatProperty::kValueMin, value_min))
-    return value_min;
+  if (HasAttribute(aria_valueminAttr))
+    return GetAttribute(aria_valueminAttr).ToFloat();
 
   if (IsNativeSlider())
     return toHTMLInputElement(*GetNode()).Minimum();
@@ -2239,18 +2239,15 @@ bool AXNodeObject::CanHaveChildren() const {
   switch (role) {
     case kImageRole:
     case kButtonRole:
+    case kPopUpButtonRole:
     case kCheckBoxRole:
     case kRadioButtonRole:
     case kSwitchRole:
     case kTabRole:
     case kToggleButtonRole:
     case kListBoxOptionRole:
-    case kMenuButtonRole:
-    case kMenuListOptionRole:
     case kScrollBarRole:
       return false;
-    case kPopUpButtonRole:
-      return isHTMLSelectElement(GetNode());
     case kStaticTextRole:
       if (!AxObjectCache().InlineTextBoxAccessibilityEnabled())
         return false;
@@ -2392,14 +2389,14 @@ void AXNodeObject::SetFocused(bool on) {
 }
 
 void AXNodeObject::Increment() {
-  UserGestureIndicator gesture_indicator(
-      UserGestureToken::Create(GetDocument(), UserGestureToken::kNewGesture));
+  UserGestureIndicator gesture_indicator(DocumentUserGestureToken::Create(
+      GetDocument(), UserGestureToken::kNewGesture));
   AlterSliderValue(true);
 }
 
 void AXNodeObject::Decrement() {
-  UserGestureIndicator gesture_indicator(
-      UserGestureToken::Create(GetDocument(), UserGestureToken::kNewGesture));
+  UserGestureIndicator gesture_indicator(DocumentUserGestureToken::Create(
+      GetDocument(), UserGestureToken::kNewGesture));
   AlterSliderValue(false);
 }
 

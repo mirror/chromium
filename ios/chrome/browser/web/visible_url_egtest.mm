@@ -18,9 +18,9 @@
 #import "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h"
 #import "ios/chrome/test/earl_grey/chrome_matchers.h"
 #import "ios/chrome/test/earl_grey/chrome_test_case.h"
-#include "ios/web/public/test/http_server/html_response_provider.h"
-#import "ios/web/public/test/http_server/http_server.h"
-#include "ios/web/public/test/http_server/http_server_util.h"
+#import "ios/web/public/test/http_server.h"
+#include "ios/web/public/test/http_server_util.h"
+#include "ios/web/public/test/response_providers/html_response_provider.h"
 #include "ios/web/public/test/url_test_util.h"
 #include "url/gurl.h"
 
@@ -402,8 +402,8 @@ class PausableResponseProvider : public HtmlResponseProvider {
   // pending URL.
   [[EarlGrey selectElementWithMatcher:chrome_test_util::BackButton()]
       performAction:grey_tap()];
-  // TODO(crbug.com/724560): Re-evaluate if necessary to check receiving URL1
-  // request here.
+  GREYAssert([self waitForServerToReceiveRequestWithURL:_testURL1],
+             @"Last request URL: %@", self.lastRequestURLSpec);
   [[EarlGrey selectElementWithMatcher:OmniboxText(_testURL2.GetContent())]
       assertWithMatcher:grey_notNil()];
 
@@ -432,8 +432,8 @@ class PausableResponseProvider : public HtmlResponseProvider {
   // even though URL1 is a pending URL.
   [[EarlGrey selectElementWithMatcher:chrome_test_util::BackButton()]
       performAction:grey_tap()];
-  // TODO(crbug.com/724560): Re-evaluate if necessary to check receiving URL1
-  // request here.
+  GREYAssert([self waitForServerToReceiveRequestWithURL:_testURL1],
+             @"Last request URL: %@", self.lastRequestURLSpec);
   [[EarlGrey selectElementWithMatcher:OmniboxText(_testURL2.GetContent())]
       assertWithMatcher:grey_notNil()];
 

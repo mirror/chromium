@@ -33,10 +33,10 @@ class PagePopup;
 class PagePopupClient;
 class PageScaleConstraintsSet;
 class WebInputEvent;
-class WebInputMethodController;
+class WebInputMethodControllerImpl;
 class WebKeyboardEvent;
 class WebLayer;
-class WebLocalFrameBase;
+class WebLocalFrameImpl;
 class WebLayerTreeView;
 class WebPagePopupImpl;
 class WebSettingsImpl;
@@ -71,7 +71,7 @@ class WebViewBase : public WebView, public RefCounted<WebViewBase> {
 
   // Returns the main frame associated with this view. This may be null when
   // the page is shutting down, but will be valid at all other times.
-  virtual WebLocalFrameBase* MainFrameImpl() const = 0;
+  virtual WebLocalFrameImpl* MainFrameImpl() const = 0;
 
   virtual float DefaultMinimumPageScaleFactor() const = 0;
   virtual float DefaultMaximumPageScaleFactor() const = 0;
@@ -132,16 +132,13 @@ class WebViewBase : public WebView, public RefCounted<WebViewBase> {
   virtual LocalDOMWindow* PagePopupWindow() const = 0;
 
   virtual void InvalidateRect(const IntRect&) = 0;
-
-  // These functions only apply to the main frame.
-  //
-  // LayoutUpdated() indicates two things:
+  // Indicates two things:
   //   1) This view may have a new layout now.
-  //   2) Calling UpdateAllLifecyclePhases() is a now a no-op.
-  // After calling WebWidget::UpdateAllLifecyclePhases(), expect to get this
+  //   2) Calling updateAllLifecyclePhases() is a no-op.
+  // After calling WebWidget::updateAllLifecyclePhases(), expect to get this
   // notification unless the view did not need a layout.
-  virtual void LayoutUpdated() = 0;
-  virtual void ResizeAfterLayout() = 0;
+  virtual void LayoutUpdated(WebLocalFrameImpl*) = 0;
+  virtual void ResizeAfterLayout(WebLocalFrameImpl*) = 0;
 
   virtual void UpdatePageDefinedViewportConstraints(
       const ViewportDescription&) = 0;
@@ -174,7 +171,7 @@ class WebViewBase : public WebView, public RefCounted<WebViewBase> {
   // corresponding to the focused frame. It will return nullptr if there is no
   // focused frame, or if there is one but it belongs to a different local
   // root.
-  virtual WebInputMethodController* GetActiveWebInputMethodController()
+  virtual WebInputMethodControllerImpl* GetActiveWebInputMethodController()
       const = 0;
   virtual void ScheduleAnimationForWidget() = 0;
   virtual CompositorWorkerProxyClient* CreateCompositorWorkerProxyClient() = 0;
@@ -184,7 +181,7 @@ class WebViewBase : public WebView, public RefCounted<WebViewBase> {
   virtual CompositorAnimationHost* AnimationHost() const = 0;
   virtual HitTestResult CoreHitTestResultAt(const WebPoint&) = 0;
 
-  virtual class ChromeClient& GetChromeClient() const = 0;
+  virtual class ChromeClient& ChromeClient() const = 0;
 
   // These methods are consumed by test code only.
   virtual BrowserControls& GetBrowserControls() = 0;

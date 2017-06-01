@@ -15,7 +15,7 @@
 #import "chrome/browser/certificate_viewer.h"
 #include "chrome/browser/infobars/infobar_service.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/ui/cocoa/browser_dialogs_views_mac.h"
+#include "chrome/browser/ui/browser_dialogs.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
 #import "chrome/browser/ui/cocoa/info_bubble_view.h"
 #import "chrome/browser/ui/cocoa/info_bubble_window.h"
@@ -25,10 +25,11 @@
 #include "chrome/browser/ui/page_info/permission_menu_model.h"
 #import "chrome/browser/ui/tab_dialogs.h"
 #include "chrome/common/url_constants.h"
+#include "chrome/grit/chromium_strings.h"
+#include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
 #include "components/strings/grit/components_chromium_strings.h"
 #include "components/strings/grit/components_strings.h"
-#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/page_navigator.h"
 #include "content/public/browser/ssl_host_state_delegate.h"
 #include "content/public/browser/web_contents.h"
@@ -1272,14 +1273,9 @@ void PageInfoUIBridge::Show(gfx::NativeWindow parent,
                             const GURL& virtual_url,
                             const security_state::SecurityInfo& security_info) {
   if (ui::MaterialDesignController::IsSecondaryUiMaterial()) {
-    BrowserWindowController* controller =
-        [BrowserWindowController browserWindowControllerForWindow:parent];
-    LocationBarViewMac* location_bar = [controller locationBarBridge];
-    LocationBarDecoration* decoration =
-        location_bar ? location_bar->GetPageInfoDecoration() : nullptr;
     chrome::ShowPageInfoBubbleViewsAtPoint(
         gfx::ScreenPointFromNSPoint(AnchorPointForWindow(parent)), profile,
-        web_contents, virtual_url, security_info, decoration);
+        web_contents, virtual_url, security_info);
     return;
   }
 
@@ -1334,14 +1330,4 @@ void PageInfoUIBridge::SetPermissionInfo(
     ChosenObjectInfoList chosen_object_info_list) {
   [bubble_controller_ setPermissionInfo:permission_info_list
                        andChosenObjects:std::move(chosen_object_info_list)];
-}
-
-void PageInfoUIBridge::DidFinishNavigation(
-    content::NavigationHandle* navigation_handle) {
-  if (!navigation_handle->IsInMainFrame() ||
-      !navigation_handle->HasCommitted()) {
-    return;
-  }
-  // If the browser navigates to another page, close the bubble.
-  [bubble_controller_ close];
 }

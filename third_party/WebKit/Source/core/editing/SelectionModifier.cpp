@@ -37,24 +37,6 @@
 
 namespace blink {
 
-namespace {
-
-VisiblePosition LeftBoundaryOfLine(const VisiblePosition& c,
-                                   TextDirection direction) {
-  DCHECK(c.IsValid()) << c;
-  return direction == TextDirection::kLtr ? LogicalStartOfLine(c)
-                                          : LogicalEndOfLine(c);
-}
-
-VisiblePosition RightBoundaryOfLine(const VisiblePosition& c,
-                                    TextDirection direction) {
-  DCHECK(c.IsValid()) << c;
-  return direction == TextDirection::kLtr ? LogicalEndOfLine(c)
-                                          : LogicalStartOfLine(c);
-}
-
-}  // namespace
-
 LayoutUnit NoXPosForVerticalArrowNavigation() {
   return LayoutUnit::Min();
 }
@@ -78,7 +60,7 @@ SelectionModifier::SelectionModifier(const LocalFrame& frame,
     : SelectionModifier(frame, selection, NoXPosForVerticalArrowNavigation()) {}
 
 TextDirection SelectionModifier::DirectionOfEnclosingBlock() const {
-  return DirectionOfEnclosingBlockOf(selection_.Extent());
+  return blink::DirectionOfEnclosingBlock(selection_.Extent());
 }
 
 static TextDirection DirectionOf(const VisibleSelection& visible_selection) {
@@ -95,7 +77,7 @@ static TextDirection DirectionOf(const VisibleSelection& visible_selection) {
   if (start_box && end_box && start_box->Direction() == end_box->Direction())
     return start_box->Direction();
 
-  return DirectionOfEnclosingBlockOf(visible_selection.Extent());
+  return DirectionOfEnclosingBlock(visible_selection.Extent());
 }
 
 TextDirection SelectionModifier::DirectionOfSelection() const {
@@ -282,22 +264,28 @@ VisiblePosition SelectionModifier::ModifyExtendingForward(
 
 VisiblePosition SelectionModifier::ModifyMovingRight(
     TextGranularity granularity) {
+  VisiblePosition pos;
   switch (granularity) {
     case kCharacterGranularity:
-      if (!selection_.IsRange()) {
-        return RightPositionOf(
+      if (selection_.IsRange()) {
+        if (DirectionOfSelection() == TextDirection::kLtr)
+          pos = CreateVisiblePosition(selection_.end(), selection_.Affinity());
+        else
+          pos =
+              CreateVisiblePosition(selection_.Start(), selection_.Affinity());
+      } else {
+        pos = RightPositionOf(
             CreateVisiblePosition(selection_.Extent(), selection_.Affinity()));
       }
-      if (DirectionOfSelection() == TextDirection::kLtr)
-        return CreateVisiblePosition(selection_.end(), selection_.Affinity());
-      return CreateVisiblePosition(selection_.Start(), selection_.Affinity());
+      break;
     case kWordGranularity: {
-      const bool skips_space_when_moving_right =
+      bool skips_space_when_moving_right =
           GetFrame() &&
           GetFrame()->GetEditor().Behavior().ShouldSkipSpaceWhenMovingRight();
-      return RightWordPosition(
+      pos = RightWordPosition(
           CreateVisiblePosition(selection_.Extent(), selection_.Affinity()),
           skips_space_when_moving_right);
+      break;
     }
     case kSentenceGranularity:
     case kLineGranularity:
@@ -305,14 +293,15 @@ VisiblePosition SelectionModifier::ModifyMovingRight(
     case kSentenceBoundary:
     case kParagraphBoundary:
     case kDocumentBoundary:
-      // TODO(editing-dev): Implement all of the above.
-      return ModifyMovingForward(granularity);
+      // FIXME: Implement all of the above.
+      pos = ModifyMovingForward(granularity);
+      break;
     case kLineBoundary:
-      return RightBoundaryOfLine(StartForPlatform(),
-                                 DirectionOfEnclosingBlock());
+      pos =
+          RightBoundaryOfLine(StartForPlatform(), DirectionOfEnclosingBlock());
+      break;
   }
-  NOTREACHED() << granularity;
-  return VisiblePosition();
+  return pos;
 }
 
 VisiblePosition SelectionModifier::ModifyMovingForward(
@@ -466,22 +455,28 @@ VisiblePosition SelectionModifier::ModifyExtendingBackward(
 
 VisiblePosition SelectionModifier::ModifyMovingLeft(
     TextGranularity granularity) {
+  VisiblePosition pos;
   switch (granularity) {
     case kCharacterGranularity:
-      if (!selection_.IsRange()) {
-        return LeftPositionOf(
+      if (selection_.IsRange()) {
+        if (DirectionOfSelection() == TextDirection::kLtr)
+          pos =
+              CreateVisiblePosition(selection_.Start(), selection_.Affinity());
+        else
+          pos = CreateVisiblePosition(selection_.end(), selection_.Affinity());
+      } else {
+        pos = LeftPositionOf(
             CreateVisiblePosition(selection_.Extent(), selection_.Affinity()));
       }
-      if (DirectionOfSelection() == TextDirection::kLtr)
-        return CreateVisiblePosition(selection_.Start(), selection_.Affinity());
-      return CreateVisiblePosition(selection_.end(), selection_.Affinity());
+      break;
     case kWordGranularity: {
-      const bool skips_space_when_moving_right =
+      bool skips_space_when_moving_right =
           GetFrame() &&
           GetFrame()->GetEditor().Behavior().ShouldSkipSpaceWhenMovingRight();
-      return LeftWordPosition(
+      pos = LeftWordPosition(
           CreateVisiblePosition(selection_.Extent(), selection_.Affinity()),
           skips_space_when_moving_right);
+      break;
     }
     case kSentenceGranularity:
     case kLineGranularity:
@@ -490,13 +485,13 @@ VisiblePosition SelectionModifier::ModifyMovingLeft(
     case kParagraphBoundary:
     case kDocumentBoundary:
       // FIXME: Implement all of the above.
-      return ModifyMovingBackward(granularity);
+      pos = ModifyMovingBackward(granularity);
+      break;
     case kLineBoundary:
-      return LeftBoundaryOfLine(StartForPlatform(),
-                                DirectionOfEnclosingBlock());
+      pos = LeftBoundaryOfLine(StartForPlatform(), DirectionOfEnclosingBlock());
+      break;
   }
-  NOTREACHED() << granularity;
-  return VisiblePosition();
+  return pos;
 }
 
 VisiblePosition SelectionModifier::ModifyMovingBackward(

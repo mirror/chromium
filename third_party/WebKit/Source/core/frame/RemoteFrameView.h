@@ -5,9 +5,8 @@
 #ifndef RemoteFrameView_h
 #define RemoteFrameView_h
 
-#include "core/dom/DocumentLifecycle.h"
+#include "core/frame/FrameOrPlugin.h"
 #include "core/frame/FrameView.h"
-#include "core/frame/LocalFrameView.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/heap/Handle.h"
 
@@ -18,7 +17,7 @@ class GraphicsContext;
 class RemoteFrame;
 
 class RemoteFrameView final : public GarbageCollectedFinalized<RemoteFrameView>,
-                              public FrameView {
+                              public FrameOrPlugin {
   USING_GARBAGE_COLLECTED_MIXIN(RemoteFrameView);
 
  public:
@@ -26,9 +25,8 @@ class RemoteFrameView final : public GarbageCollectedFinalized<RemoteFrameView>,
 
   ~RemoteFrameView() override;
 
-  void Attach() override;
-  void Detach() override;
-  bool IsAttached() const override { return is_attached_; }
+  void SetParent(FrameView*) override;
+  FrameView* Parent() const override { return parent_; }
 
   RemoteFrame& GetFrame() const {
     DCHECK(remote_frame_);
@@ -46,23 +44,21 @@ class RemoteFrameView final : public GarbageCollectedFinalized<RemoteFrameView>,
   void Show() override;
   void SetParentVisible(bool) override;
 
-  void UpdateViewportIntersectionsForSubtree(
-      DocumentLifecycle::LifecycleState) override;
+  void UpdateRemoteViewportIntersection();
 
   DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit RemoteFrameView(RemoteFrame*);
 
-  LocalFrameView* ParentFrameView() const;
   IntRect ConvertFromRootFrame(const IntRect&) const;
 
   // The properties and handling of the cycle between RemoteFrame
   // and its RemoteFrameView corresponds to that between LocalFrame
-  // and LocalFrameView. Please see the LocalFrameView::frame_ comment for
+  // and FrameView. Please see the FrameView::m_frame comment for
   // details.
   Member<RemoteFrame> remote_frame_;
-  bool is_attached_;
+  Member<FrameView> parent_;
   IntRect last_viewport_intersection_;
   IntRect frame_rect_;
   bool self_visible_;

@@ -11,26 +11,21 @@
 #include "base/strings/string16.h"
 #include "components/infobars/core/confirm_infobar_delegate.h"
 #include "components/infobars/core/infobar_delegate.h"
-#include "content/public/browser/web_contents_observer.h"
 
-class InstantAppsInfoBarDelegate : public ConfirmInfoBarDelegate,
-                                   public content::WebContentsObserver {
+class InfoBarService;
+
+class InstantAppsInfoBarDelegate : public ConfirmInfoBarDelegate {
  public:
   ~InstantAppsInfoBarDelegate() override;
 
-  static void Create(content::WebContents* web_contents,
+  static void Create(InfoBarService* infobar_service,
                      const jobject jdata,
                      const std::string& url);
 
   base::android::ScopedJavaGlobalRef<jobject> data() { return data_; }
 
-  // WebContentsObserver:
-  void DidFinishNavigation(
-      content::NavigationHandle* navigation_handle) override;
-
  private:
-  explicit InstantAppsInfoBarDelegate(content::WebContents* web_contents,
-                                      const jobject jdata,
+  explicit InstantAppsInfoBarDelegate(const jobject jdata,
                                       const std::string& url);
 
   // ConfirmInfoBarDelegate:

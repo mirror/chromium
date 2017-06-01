@@ -37,11 +37,7 @@ bool CSSTransformValue::is2D() const {
 const CSSValue* CSSTransformValue::ToCSSValue() const {
   CSSValueList* transform_css_value = CSSValueList::CreateSpaceSeparated();
   for (size_t i = 0; i < transform_components_.size(); i++) {
-    const CSSValue* component = transform_components_[i]->ToCSSValue();
-    // TODO(meade): Remove this check once numbers and lengths are rewritten.
-    if (!component)
-      return nullptr;
-    transform_css_value->Append(*component);
+    transform_css_value->Append(*transform_components_[i]->ToCSSValue());
   }
   return transform_css_value;
 }

@@ -23,7 +23,6 @@
 #include "base/memory/shared_memory.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
 #include "base/process/process_metrics.h"
@@ -60,6 +59,7 @@
 #include "content/child/blob_storage/blob_message_filter.h"
 #include "content/child/child_histogram_message_filter.h"
 #include "content/child/child_resource_message_filter.h"
+#include "content/child/content_child_helpers.h"
 #include "content/child/db_message_filter.h"
 #include "content/child/indexed_db/indexed_db_dispatcher.h"
 #include "content/child/memory/child_memory_coordinator_impl.h"
@@ -102,7 +102,6 @@
 #include "content/renderer/dom_storage/dom_storage_dispatcher.h"
 #include "content/renderer/dom_storage/webstoragearea_impl.h"
 #include "content/renderer/dom_storage/webstoragenamespace_impl.h"
-#include "content/renderer/effective_connection_type_helper.h"
 #include "content/renderer/gpu/compositor_external_begin_frame_source.h"
 #include "content/renderer/gpu/compositor_forwarding_message_filter.h"
 #include "content/renderer/gpu/frame_swap_message_queue.h"
@@ -160,7 +159,6 @@
 #include "third_party/WebKit/public/platform/WebImageGenerator.h"
 #include "third_party/WebKit/public/platform/WebMemoryCoordinator.h"
 #include "third_party/WebKit/public/platform/WebNetworkStateNotifier.h"
-#include "third_party/WebKit/public/platform/WebRuntimeFeatures.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/WebThread.h"
 #include "third_party/WebKit/public/platform/scheduler/child/webthread_base.h"
@@ -169,6 +167,7 @@
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
 #include "third_party/WebKit/public/web/WebKit.h"
+#include "third_party/WebKit/public/web/WebRuntimeFeatures.h"
 #include "third_party/WebKit/public/web/WebScriptController.h"
 #include "third_party/WebKit/public/web/WebSecurityPolicy.h"
 #include "third_party/WebKit/public/web/WebView.h"
@@ -421,6 +420,22 @@ void CreateSingleSampleMetricsProvider(
 
 }  // namespace
 
+// For measuring memory usage after each task. Behind a command line flag.
+class MemoryObserver : public base::MessageLoop::TaskObserver {
+ public:
+  MemoryObserver() {}
+  ~MemoryObserver() override {}
+
+  void WillProcessTask(const base::PendingTask& pending_task) override {}
+
+  void DidProcessTask(const base::PendingTask& pending_task) override {
+    LOCAL_HISTOGRAM_MEMORY_KB("Memory.RendererUsed", GetMemoryUsageKB());
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MemoryObserver);
+};
+
 RenderThreadImpl::HistogramCustomizer::HistogramCustomizer() {
   custom_histograms_.insert("V8.MemoryExternalFragmentationTotal");
   custom_histograms_.insert("V8.MemoryHeapSampleTotalCommitted");
@@ -608,6 +623,7 @@ RenderThreadImpl::RenderThreadImpl(
       main_message_loop_(std::move(main_message_loop)),
       categorized_worker_pool_(new CategorizedWorkerPool()),
       is_scroll_animator_enabled_(false),
+      is_surface_synchronization_enabled_(false),
       renderer_binding_(this),
       field_trial_syncer_(this) {
   scoped_refptr<base::SingleThreadTaskRunner> test_task_counter;
@@ -764,6 +780,9 @@ void RenderThreadImpl::Init(
 
   is_threaded_animation_enabled_ =
       !command_line.HasSwitch(cc::switches::kDisableThreadedAnimation);
+
+  is_surface_synchronization_enabled_ =
+      command_line.HasSwitch(cc::switches::kEnableSurfaceSynchronization);
 
   is_zero_copy_enabled_ = command_line.HasSwitch(switches::kEnableZeroCopy);
   is_partial_raster_enabled_ =
@@ -1226,6 +1245,11 @@ void RenderThreadImpl::InitializeWebKit(
   SkGraphics::SetImageGeneratorFromEncodedDataFactory(
       blink::WebImageGenerator::Create);
 
+  if (command_line.HasSwitch(switches::kMemoryMetrics)) {
+    memory_observer_.reset(new MemoryObserver());
+    message_loop()->AddTaskObserver(memory_observer_.get());
+  }
+
   if (command_line.HasSwitch(switches::kExplicitlyAllowedPorts)) {
     std::string allowed_ports =
         command_line.GetSwitchValueASCII(switches::kExplicitlyAllowedPorts);
@@ -1600,6 +1624,10 @@ bool RenderThreadImpl::IsScrollAnimatorEnabled() {
   return is_scroll_animator_enabled_;
 }
 
+bool RenderThreadImpl::IsSurfaceSynchronizationEnabled() {
+  return is_surface_synchronization_enabled_;
+}
+
 void RenderThreadImpl::OnRAILModeChanged(v8::RAILMode rail_mode) {
   blink::MainThreadIsolate()->SetRAILMode(rail_mode);
   blink::SetRAILModeOnWorkerThreadIsolates(rail_mode);
@@ -1667,21 +1695,6 @@ void RenderThreadImpl::OnProcessPurgeAndSuspend() {
     return;
 
   purge_and_suspend_memory_metrics_ = memory_metrics;
-  GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
-      FROM_HERE,
-      base::Bind(&RenderThreadImpl::RecordPurgeAndSuspendMemoryGrowthMetrics,
-                 base::Unretained(this), "30min", process_foregrounded_count_),
-      base::TimeDelta::FromMinutes(30));
-  GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
-      FROM_HERE,
-      base::Bind(&RenderThreadImpl::RecordPurgeAndSuspendMemoryGrowthMetrics,
-                 base::Unretained(this), "60min", process_foregrounded_count_),
-      base::TimeDelta::FromMinutes(60));
-  GetRendererScheduler()->DefaultTaskRunner()->PostDelayedTask(
-      FROM_HERE,
-      base::Bind(&RenderThreadImpl::RecordPurgeAndSuspendMemoryGrowthMetrics,
-                 base::Unretained(this), "90min", process_foregrounded_count_),
-      base::TimeDelta::FromMinutes(90));
 }
 
 // TODO(tasak): Replace the following GetMallocUsage() with memory-infra
@@ -1783,12 +1796,12 @@ bool RenderThreadImpl::GetRendererMemoryMetrics(
        ? current.allocator - previous.allocator         \
        : 0)
 
-static void RecordPurgeAndSuspendMemoryGrowthKB(const char* basename,
-                                                const char* suffix,
-                                                int memory_usage) {
-  std::string histogram_name = base::StringPrintf("%s.%s", basename, suffix);
-  base::UmaHistogramMemoryKB(histogram_name, memory_usage);
-}
+#define UMA_HISTOGRAM_MEMORY_GROWTH_KB(basename, suffix, memory_usage) \
+  {                                                                    \
+    std::string histogram_name =                                       \
+        base::StringPrintf("%s.%s", basename, suffix);                 \
+    UMA_HISTOGRAM_MEMORY_KB(histogram_name, memory_usage);             \
+  }
 
 void RenderThreadImpl::RecordPurgeAndSuspendMemoryGrowthMetrics(
     const char* suffix,
@@ -1803,29 +1816,29 @@ void RenderThreadImpl::RecordPurgeAndSuspendMemoryGrowthMetrics(
   if (!GetRendererMemoryMetrics(&memory_metrics))
     return;
 
-  RecordPurgeAndSuspendMemoryGrowthKB(
+  UMA_HISTOGRAM_MEMORY_GROWTH_KB(
       "PurgeAndSuspend.Experimental.MemoryGrowth.PartitionAllocKB", suffix,
       GET_MEMORY_GROWTH(memory_metrics, purge_and_suspend_memory_metrics_,
                         partition_alloc_kb));
-  RecordPurgeAndSuspendMemoryGrowthKB(
+  UMA_HISTOGRAM_MEMORY_GROWTH_KB(
       "PurgeAndSuspend.Experimental.MemoryGrowth.BlinkGCKB", suffix,
       GET_MEMORY_GROWTH(memory_metrics, purge_and_suspend_memory_metrics_,
                         blink_gc_kb));
-  RecordPurgeAndSuspendMemoryGrowthKB(
+  UMA_HISTOGRAM_MEMORY_GROWTH_KB(
       "PurgeAndSuspend.Experimental.MemoryGrowth.MallocKB", suffix,
       GET_MEMORY_GROWTH(memory_metrics, purge_and_suspend_memory_metrics_,
                         malloc_mb) *
           1024);
-  RecordPurgeAndSuspendMemoryGrowthKB(
+  UMA_HISTOGRAM_MEMORY_GROWTH_KB(
       "PurgeAndSuspend.Experimental.MemoryGrowth.DiscardableKB", suffix,
       GET_MEMORY_GROWTH(memory_metrics, purge_and_suspend_memory_metrics_,
                         discardable_kb));
-  RecordPurgeAndSuspendMemoryGrowthKB(
+  UMA_HISTOGRAM_MEMORY_GROWTH_KB(
       "PurgeAndSuspend.Experimental.MemoryGrowth.V8MainThreadIsolateKB", suffix,
       GET_MEMORY_GROWTH(memory_metrics, purge_and_suspend_memory_metrics_,
                         v8_main_thread_isolate_mb) *
           1024);
-  RecordPurgeAndSuspendMemoryGrowthKB(
+  UMA_HISTOGRAM_MEMORY_GROWTH_KB(
       "PurgeAndSuspend.Experimental.MemoryGrowth.TotalAllocatedKB", suffix,
       GET_MEMORY_GROWTH(memory_metrics, purge_and_suspend_memory_metrics_,
                         total_allocated_mb) *
@@ -1891,24 +1904,15 @@ void RenderThreadImpl::RequestNewCompositorFrameSink(
   }
 #endif
 
-  cc::mojom::MojoCompositorFrameSinkPtrInfo sink_info;
-  cc::mojom::MojoCompositorFrameSinkRequest sink_request =
-      mojo::MakeRequest(&sink_info);
-  cc::mojom::MojoCompositorFrameSinkClientPtr client;
-  cc::mojom::MojoCompositorFrameSinkClientRequest client_request =
-      mojo::MakeRequest(&client);
-
   if (command_line.HasSwitch(switches::kEnableVulkan)) {
     scoped_refptr<cc::VulkanContextProvider> vulkan_context_provider =
         cc::VulkanInProcessContextProvider::Create();
     if (vulkan_context_provider) {
       DCHECK(!layout_test_mode());
-      frame_sink_provider_->CreateForWidget(routing_id, std::move(sink_request),
-                                            std::move(client));
       callback.Run(base::MakeUnique<RendererCompositorFrameSink>(
           routing_id, std::move(synthetic_begin_frame_source),
-          std::move(vulkan_context_provider), std::move(sink_info),
-          std::move(client_request), std::move(frame_swap_message_queue)));
+          std::move(vulkan_context_provider),
+          std::move(frame_swap_message_queue)));
       return;
     }
   }
@@ -1931,12 +1935,9 @@ void RenderThreadImpl::RequestNewCompositorFrameSink(
 
   if (use_software) {
     DCHECK(!layout_test_mode());
-    frame_sink_provider_->CreateForWidget(routing_id, std::move(sink_request),
-                                          std::move(client));
     callback.Run(base::MakeUnique<RendererCompositorFrameSink>(
         routing_id, std::move(synthetic_begin_frame_source), nullptr, nullptr,
-        nullptr, shared_bitmap_manager(), std::move(sink_info),
-        std::move(client_request), std::move(frame_swap_message_queue)));
+        nullptr, shared_bitmap_manager(), std::move(frame_swap_message_queue)));
     return;
   }
 
@@ -2003,13 +2004,11 @@ void RenderThreadImpl::RequestNewCompositorFrameSink(
     return;
   }
 #endif
-  frame_sink_provider_->CreateForWidget(routing_id, std::move(sink_request),
-                                        std::move(client));
   callback.Run(base::WrapUnique(new RendererCompositorFrameSink(
       routing_id, std::move(synthetic_begin_frame_source),
       std::move(context_provider), std::move(worker_context_provider),
-      GetGpuMemoryBufferManager(), nullptr, std::move(sink_info),
-      std::move(client_request), std::move(frame_swap_message_queue))));
+      GetGpuMemoryBufferManager(), nullptr,
+      std::move(frame_swap_message_queue))));
 }
 
 AssociatedInterfaceRegistry*
@@ -2139,14 +2138,12 @@ void RenderThreadImpl::OnNetworkConnectionChanged(
 }
 
 void RenderThreadImpl::OnNetworkQualityChanged(
-    net::EffectiveConnectionType type,
     base::TimeDelta http_rtt,
     base::TimeDelta transport_rtt,
     double downlink_throughput_kbps) {
   UMA_HISTOGRAM_BOOLEAN("NQE.RenderThreadNotified", true);
-  WebNetworkStateNotifier::SetNetworkQuality(
-      EffectiveConnectionTypeToWebEffectiveConnectionType(type), http_rtt,
-      transport_rtt, downlink_throughput_kbps);
+  WebNetworkStateNotifier::SetNetworkQuality(http_rtt, transport_rtt,
+                                             downlink_throughput_kbps);
 }
 
 void RenderThreadImpl::SetWebKitSharedTimersSuspended(bool suspend) {

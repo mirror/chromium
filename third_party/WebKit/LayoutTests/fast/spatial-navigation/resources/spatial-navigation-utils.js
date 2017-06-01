@@ -63,7 +63,7 @@ function doMove()
   if (window.testRunner && direction)
     eventSender.keyDown(direction);
 
-  requestAnimationFrame(verifyAndAdvance);
+  setTimeout(verifyAndAdvance, 15);
 }
 
 function verifyAndAdvance()

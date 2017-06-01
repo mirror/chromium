@@ -138,10 +138,6 @@ class ChromotingHost : public base::NonThreadSafe,
     return weak_factory_.GetWeakPtr();
   }
 
-  scoped_refptr<protocol::TransportContext> transport_context_for_tests() {
-    return transport_context_;
-  }
-
  private:
   friend class ChromotingHostTest;
 

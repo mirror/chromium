@@ -1,7 +1,5 @@
 .. _distributing:
 
-.. include:: /migration/deprecation.inc
-
 #############################
 Distributing Your Application
 #############################

@@ -18,12 +18,12 @@ EventWithCallback::EventWithCallback(
     WebScopedInputEvent event,
     const LatencyInfo& latency,
     base::TimeTicks timestamp_now,
-    InputHandlerProxy::EventDispositionCallback callback)
+    const InputHandlerProxy::EventDispositionCallback& callback)
     : event_(WebInputEventTraits::Clone(*event)),
       latency_(latency),
       creation_timestamp_(timestamp_now),
       last_coalesced_timestamp_(timestamp_now) {
-  original_events_.emplace_back(std::move(event), std::move(callback));
+  original_events_.emplace_back(std::move(event), callback);
 }
 
 EventWithCallback::EventWithCallback(
@@ -78,16 +78,15 @@ void EventWithCallback::RunCallbacks(
       did_overscroll_params_copy =
           base::MakeUnique<DidOverscrollParams>(*did_overscroll_params);
     }
-    std::move(original_event.callback_)
-        .Run(disposition, std::move(original_event.event_), latency,
-             std::move(did_overscroll_params));
+    original_event.callback_.Run(disposition, std::move(original_event.event_),
+                                 latency, std::move(did_overscroll_params));
   }
 }
 
 EventWithCallback::OriginalEventWithCallback::OriginalEventWithCallback(
     WebScopedInputEvent event,
-    InputHandlerProxy::EventDispositionCallback callback)
-    : event_(std::move(event)), callback_(std::move(callback)) {}
+    const InputHandlerProxy::EventDispositionCallback& callback)
+    : event_(std::move(event)), callback_(callback) {}
 
 EventWithCallback::OriginalEventWithCallback::~OriginalEventWithCallback() {}
 

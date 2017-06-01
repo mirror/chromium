@@ -70,9 +70,9 @@ TEST_F(CredentialManagerLoggerTest, LogStoreCredential) {
                               CredentialType::CREDENTIAL_TYPE_PASSWORD);
 }
 
-TEST_F(CredentialManagerLoggerTest, LogPreventSilentAccess) {
+TEST_F(CredentialManagerLoggerTest, LogRequireUserMediation) {
   EXPECT_CALL(log_manager(), LogSavePasswordProgress(HasSubstr(kSiteOrigin)));
-  logger().LogPreventSilentAccess(GURL(kSiteOrigin));
+  logger().LogRequireUserMediation(GURL(kSiteOrigin));
 }
 
 }  // namespace

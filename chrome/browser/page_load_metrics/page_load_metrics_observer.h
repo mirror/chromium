@@ -12,7 +12,6 @@
 #include "base/optional.h"
 #include "chrome/common/page_load_metrics/page_load_timing.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_data.h"
-#include "components/ukm/ukm_source.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/resource_type.h"
@@ -124,8 +123,7 @@ struct PageLoadExtraInfo {
       UserInitiatedInfo page_end_user_initiated_info,
       const base::Optional<base::TimeDelta>& page_end_time,
       const mojom::PageLoadMetadata& main_frame_metadata,
-      const mojom::PageLoadMetadata& subframe_metadata,
-      ukm::SourceId source_id);
+      const mojom::PageLoadMetadata& subframe_metadata);
 
   // Simplified version of the constructor, intended for use in tests.
   static PageLoadExtraInfo CreateForTesting(const GURL& url,
@@ -198,9 +196,6 @@ struct PageLoadExtraInfo {
 
   // PageLoadMetadata for subframes of the current page load.
   const mojom::PageLoadMetadata subframe_metadata;
-
-  // UKM SourceId for the current page load.
-  const ukm::SourceId source_id;
 };
 
 // Container for various information about a completed request within a page
@@ -279,8 +274,6 @@ class PageLoadMetricsObserver {
 
   virtual ~PageLoadMetricsObserver() {}
 
-  static bool IsStandardWebPageMimeType(const std::string& mime_type);
-
   // The page load started, with the given navigation handle.
   // currently_committed_url contains the URL of the committed page load at the
   // time the navigation for navigation_handle was initiated, or the empty URL
@@ -303,8 +296,7 @@ class PageLoadMetricsObserver {
   // reference to it.
   // Observers that return STOP_OBSERVING will not receive any additional
   // callbacks, and will be deleted after invocation of this method returns.
-  virtual ObservePolicy OnCommit(content::NavigationHandle* navigation_handle,
-                                 ukm::SourceId source_id);
+  virtual ObservePolicy OnCommit(content::NavigationHandle* navigation_handle);
 
   // OnDidFinishSubFrameNavigation is triggered when a sub-frame of the
   // committed page has finished navigating. It has either committed, aborted,
@@ -344,16 +336,13 @@ class PageLoadMetricsObserver {
   // tracked at the time a navigation commits will not receive any of the
   // callbacks below.
 
-  // OnTimingUpdate is triggered when an updated PageLoadTiming is available at
-  // the page (page is essentially main frame, with merged values across all
-  // frames for some paint timing values) or subframe level. This method may be
-  // called multiple times over the course of the page load. This method is
-  // currently only intended for use in testing. Most implementers should
-  // implement one of the On* callbacks, such as OnFirstContentfulPaint or
-  // OnDomContentLoadedEventStart. Please email loading-dev@chromium.org if you
-  // intend to override this method.
-  virtual void OnTimingUpdate(bool is_subframe,
-                              const mojom::PageLoadTiming& timing,
+  // OnTimingUpdate is triggered when an updated PageLoadTiming is
+  // available. This method may be called multiple times over the course of the
+  // page load. This method is currently only intended for use in testing. Most
+  // implementers should implement one of the On* callbacks, such as
+  // OnFirstContentfulPaint or OnDomContentLoadedEventStart. Please email
+  // loading-dev@chromium.org if you intend to override this method.
+  virtual void OnTimingUpdate(const mojom::PageLoadTiming& timing,
                               const PageLoadExtraInfo& extra_info) {}
 
   // OnUserInput is triggered when a new user input is passed in to

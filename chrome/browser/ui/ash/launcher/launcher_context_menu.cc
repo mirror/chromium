@@ -6,13 +6,13 @@
 
 #include <string>
 
-#include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_model.h"
-#include "ash/shelf/shelf_widget.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/wallpaper/wallpaper_delegate.h"
+#include "ash/wm_window.h"
 #include "build/build_config.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/fullscreen.h"
@@ -44,29 +44,29 @@ bool CanUserModifyShelfAutoHideBehavior(const Profile* profile) {
 LauncherContextMenu* LauncherContextMenu::Create(
     ChromeLauncherController* controller,
     const ash::ShelfItem* item,
-    ash::Shelf* shelf) {
+    ash::WmShelf* wm_shelf) {
   DCHECK(controller);
-  DCHECK(shelf);
+  DCHECK(wm_shelf);
   // Create DesktopShellLauncherContextMenu if no item is selected.
   if (!item || item->id.IsNull())
-    return new DesktopShellLauncherContextMenu(controller, item, shelf);
+    return new DesktopShellLauncherContextMenu(controller, item, wm_shelf);
 
   // Create ArcLauncherContextMenu if the item is an ARC app.
   if (arc::IsArcItem(controller->profile(), item->id.app_id))
-    return new ArcLauncherContextMenu(controller, item, shelf);
+    return new ArcLauncherContextMenu(controller, item, wm_shelf);
 
   // Create ExtensionLauncherContextMenu for the item.
-  return new ExtensionLauncherContextMenu(controller, item, shelf);
+  return new ExtensionLauncherContextMenu(controller, item, wm_shelf);
 }
 
 LauncherContextMenu::LauncherContextMenu(ChromeLauncherController* controller,
                                          const ash::ShelfItem* item,
-                                         ash::Shelf* shelf)
+                                         ash::WmShelf* wm_shelf)
     : ui::SimpleMenuModel(nullptr),
       controller_(controller),
       item_(item ? *item : ash::ShelfItem()),
-      shelf_alignment_menu_(shelf),
-      shelf_(shelf) {
+      shelf_alignment_menu_(wm_shelf),
+      wm_shelf_(wm_shelf) {
   set_delegate(this);
 }
 
@@ -83,7 +83,8 @@ base::string16 LauncherContextMenu::GetLabelForCommandId(int command_id) const {
 
 bool LauncherContextMenu::IsCommandIdChecked(int command_id) const {
   if (command_id == MENU_AUTO_HIDE) {
-    return shelf_->auto_hide_behavior() == ash::SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS;
+    return wm_shelf_->auto_hide_behavior() ==
+           ash::SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS;
   }
   DCHECK(command_id < MENU_ITEM_COUNT);
   return false;
@@ -108,11 +109,7 @@ bool LauncherContextMenu::IsCommandIdEnabled(int command_id) const {
 void LauncherContextMenu::ExecuteCommand(int command_id, int event_flags) {
   switch (static_cast<MenuItem>(command_id)) {
     case MENU_OPEN_NEW:
-      controller_->LaunchApp(item_.id, ash::LAUNCH_FROM_UNKNOWN, ui::EF_NONE,
-                             display::Screen::GetScreen()
-                                 ->GetDisplayNearestWindow(
-                                     shelf_->shelf_widget()->GetNativeWindow())
-                                 .id());
+      controller_->Launch(item_.id, ui::EF_NONE);
       break;
     case MENU_CLOSE:
       if (item_.type == ash::TYPE_DIALOG) {
@@ -134,10 +131,11 @@ void LauncherContextMenu::ExecuteCommand(int command_id, int event_flags) {
         controller_->PinAppWithID(item_.id.app_id);
       break;
     case MENU_AUTO_HIDE:
-      shelf_->SetAutoHideBehavior(shelf_->auto_hide_behavior() ==
-                                          ash::SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS
-                                      ? ash::SHELF_AUTO_HIDE_BEHAVIOR_NEVER
-                                      : ash::SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS);
+      wm_shelf_->SetAutoHideBehavior(
+          wm_shelf_->auto_hide_behavior() ==
+                  ash::SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS
+              ? ash::SHELF_AUTO_HIDE_BEHAVIOR_NEVER
+              : ash::SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS);
       break;
     case MENU_ALIGNMENT_MENU:
       break;
@@ -176,15 +174,13 @@ void LauncherContextMenu::AddShelfOptionsMenu() {
   // on the type of fullscreen. Do not show the auto-hide menu item while in
   // fullscreen per display because it is confusing when the preference appears
   // not to apply.
-  display::Display display =
-      display::Screen::GetScreen()->GetDisplayNearestWindow(
-          shelf_->GetWindow()->GetRootWindow());
-  if (!IsFullScreenMode(display.id()) &&
+  int64_t display_id = wm_shelf_->GetWindow()->GetDisplayNearestWindow().id();
+  if (!IsFullScreenMode(display_id) &&
       CanUserModifyShelfAutoHideBehavior(controller_->profile())) {
     AddCheckItemWithStringId(MENU_AUTO_HIDE,
                              IDS_ASH_SHELF_CONTEXT_MENU_AUTO_HIDE);
   }
-  if (ash::Shelf::CanChangeShelfAlignment() &&
+  if (ash::WmShelf::CanChangeShelfAlignment() &&
       !session_manager::SessionManager::Get()->IsScreenLocked()) {
     AddSubMenuWithStringId(MENU_ALIGNMENT_MENU,
                            IDS_ASH_SHELF_CONTEXT_MENU_POSITION,

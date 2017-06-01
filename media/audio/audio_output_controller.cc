@@ -12,7 +12,6 @@
 #include "base/bind.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/numerics/safe_conversions.h"
-#include "base/strings/stringprintf.h"
 #include "base/task_runner_util.h"
 #include "base/threading/platform_thread.h"
 #include "base/time/time.h"
@@ -22,10 +21,6 @@
 using base::TimeDelta;
 
 namespace media {
-namespace {
-// Time in seconds between two successive measurements of audio power levels.
-constexpr int kPowerMonitorLogIntervalSeconds = 15;
-}  // namespace
 
 AudioOutputController::AudioOutputController(
     AudioManager* audio_manager,
@@ -112,8 +107,6 @@ void AudioOutputController::DoCreate(bool is_for_device_change) {
   DCHECK(message_loop_->BelongsToCurrentThread());
   SCOPED_UMA_HISTOGRAM_TIMER("Media.AudioOutputController.CreateTime");
   TRACE_EVENT0("audio", "AudioOutputController::DoCreate");
-  handler_->OnLog(base::StringPrintf("AOC::DoCreate (for device change: %s)",
-                                     is_for_device_change ? "yes" : "no"));
 
   // Close() can be called before DoCreate() is executed.
   if (state_ == kClosed)
@@ -158,7 +151,6 @@ void AudioOutputController::DoPlay() {
   DCHECK(message_loop_->BelongsToCurrentThread());
   SCOPED_UMA_HISTOGRAM_TIMER("Media.AudioOutputController.PlayTime");
   TRACE_EVENT0("audio", "AudioOutputController::DoPlay");
-  handler_->OnLog("AOC::DoPlay");
 
   // We can start from created or paused state.
   if (state_ != kCreated && state_ != kPaused)
@@ -168,10 +160,6 @@ void AudioOutputController::DoPlay() {
   sync_reader_->RequestMoreData(base::TimeDelta(), base::TimeTicks(), 0);
 
   state_ = kPlaying;
-
-  if (will_monitor_audio_levels()) {
-    last_audio_level_log_time_ = base::TimeTicks::Now();
-  }
 
   stream_->Start(this);
 
@@ -201,10 +189,6 @@ void AudioOutputController::StopStream() {
     wedge_timer_.reset();
     stream_->Stop();
 
-    if (will_monitor_audio_levels()) {
-      LogAudioPowerLevel("StopStream");
-    }
-
     // A stopped stream is silent, and power_montior_.Scan() is no longer being
     // called; so we must reset the power monitor.
     power_monitor_.Reset();
@@ -217,7 +201,6 @@ void AudioOutputController::DoPause() {
   DCHECK(message_loop_->BelongsToCurrentThread());
   SCOPED_UMA_HISTOGRAM_TIMER("Media.AudioOutputController.PauseTime");
   TRACE_EVENT0("audio", "AudioOutputController::DoPause");
-  handler_->OnLog("AOC::DoPause");
 
   StopStream();
 
@@ -236,7 +219,6 @@ void AudioOutputController::DoClose() {
   DCHECK(message_loop_->BelongsToCurrentThread());
   SCOPED_UMA_HISTOGRAM_TIMER("Media.AudioOutputController.CloseTime");
   TRACE_EVENT0("audio", "AudioOutputController::DoClose");
-  handler_->OnLog("AOC::DoClose");
 
   if (state_ != kClosed) {
     DoStopCloseAndClearStream();
@@ -300,16 +282,8 @@ int AudioOutputController::OnMoreData(base::TimeDelta delay,
             std::move(copy), reference_time));
   }
 
-  if (will_monitor_audio_levels()) {
+  if (will_monitor_audio_levels())
     power_monitor_.Scan(*dest, frames);
-
-    const auto now = base::TimeTicks::Now();
-    if ((now - last_audio_level_log_time_).InSeconds() >
-        kPowerMonitorLogIntervalSeconds) {
-      LogAudioPowerLevel("OnMoreData");
-      last_audio_level_log_time_ = now;
-    }
-  }
 
   return frames;
 }
@@ -333,14 +307,7 @@ void AudioOutputController::BroadcastDataToDuplicationTargets(
   (*duplication_targets_.begin())->OnData(std::move(audio_bus), reference_time);
 }
 
-void AudioOutputController::LogAudioPowerLevel(const std::string& call_name) {
-  std::pair<float, bool> power_and_clip =
-      power_monitor_.ReadCurrentPowerAndClip();
-  handler_->OnLog(base::StringPrintf("AOC::%s: average audio level=%.2f dBFS",
-                                     call_name.c_str(), power_and_clip.first));
-}
-
-void AudioOutputController::OnError() {
+void AudioOutputController::OnError(AudioOutputStream* stream) {
   {
     base::AutoLock auto_lock(error_lock_);
     if (ignore_errors_during_stop_close_)
@@ -385,27 +352,6 @@ void AudioOutputController::OnDeviceChange() {
   DCHECK(message_loop_->BelongsToCurrentThread());
   SCOPED_UMA_HISTOGRAM_TIMER("Media.AudioOutputController.DeviceChangeTime");
   TRACE_EVENT0("audio", "AudioOutputController::OnDeviceChange");
-
-  auto state_to_string = [](State state) {
-    switch (state) {
-      case AudioOutputController::kEmpty:
-        return "empty";
-      case AudioOutputController::kCreated:
-        return "created";
-      case AudioOutputController::kPlaying:
-        return "playing";
-      case AudioOutputController::kPaused:
-        return "paused";
-      case AudioOutputController::kClosed:
-        return "closed";
-      case AudioOutputController::kError:
-        return "error";
-    };
-    return "unknown";
-  };
-
-  handler_->OnLog(base::StringPrintf("AOC::OnDeviceChange while in state: %s",
-                                     state_to_string(state_)));
 
   // TODO(dalecurtis): Notify the renderer side that a device change has
   // occurred.  Currently querying the hardware information here will lead to

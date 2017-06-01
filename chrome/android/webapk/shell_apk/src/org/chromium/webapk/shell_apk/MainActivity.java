@@ -172,8 +172,7 @@ public class MainActivity extends Activity {
     /** Retrieves URL from the intent's data. Returns null if a URL could not be retrieved. */
     private String getOverrideUrl() {
         String overrideUrl = getIntent().getDataString();
-        if (overrideUrl != null
-                && (overrideUrl.startsWith("https:") || overrideUrl.startsWith("http:"))) {
+        if (overrideUrl != null && overrideUrl.startsWith("https:")) {
             return overrideUrl;
         }
         return null;

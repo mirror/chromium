@@ -123,11 +123,11 @@ using base::scoped_nsobject;
 }
 
 - (void)removeAllServices {
-  [_services removeAllObjects];
+  [_services.get() removeAllObjects];
 }
 
 - (void)addServices:(NSArray*)services {
-  if (!_services) {
+  if (!_services.get()) {
     _services.reset([[NSMutableArray alloc] init]);
   }
   for (CBUUID* uuid in services) {
@@ -135,7 +135,7 @@ using base::scoped_nsobject;
         initWithPeripheral:self.peripheral
                     CBUUID:uuid
                    primary:YES]);
-    [_services addObject:[service service]];
+    [_services.get() addObject:service.get().service];
   }
 }
 
@@ -147,7 +147,7 @@ using base::scoped_nsobject;
   base::scoped_nsobject<CBService> serviceToRemove(service,
                                                    base::scoped_policy::RETAIN);
   DCHECK(serviceToRemove);
-  [_services removeObject:serviceToRemove];
+  [_services.get() removeObject:serviceToRemove];
   [self didModifyServices:@[ serviceToRemove ]];
 }
 
@@ -200,15 +200,15 @@ using base::scoped_nsobject;
 }
 
 - (NSUUID*)identifier {
-  return _identifier;
+  return _identifier.get();
 }
 
 - (NSString*)name {
-  return _name;
+  return _name.get();
 }
 
 - (NSArray*)services {
-  return _services;
+  return _services.get();
 }
 
 - (CBPeripheral*)peripheral {

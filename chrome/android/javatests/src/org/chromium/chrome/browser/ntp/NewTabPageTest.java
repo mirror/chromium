@@ -44,7 +44,7 @@ import org.chromium.chrome.test.ChromeTabbedActivityTestRule;
 import org.chromium.chrome.test.util.ChromeTabUtils;
 import org.chromium.chrome.test.util.NewTabPageTestUtils;
 import org.chromium.chrome.test.util.OmniboxTestUtils;
-import org.chromium.chrome.test.util.RenderTestRule;
+import org.chromium.chrome.test.util.RenderUtils.ViewRenderer;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.KeyUtils;
@@ -73,9 +73,6 @@ import java.util.concurrent.TimeUnit;
 public class NewTabPageTest {
     @Rule
     public ChromeTabbedActivityTestRule mActivityTestRule = new ChromeTabbedActivityTestRule();
-    @Rule
-    public RenderTestRule mRenderTestRule =
-            new RenderTestRule("chrome/test/data/android/render_tests");
 
     private static final String TEST_PAGE = "/chrome/test/data/android/navigate/simple.html";
 
@@ -122,9 +119,11 @@ public class NewTabPageTest {
     @MediumTest
     @Feature({"NewTabPage", "RenderTest"})
     public void testRender() throws IOException {
-        mRenderTestRule.render(mTileGridLayout, "most_visited");
-        mRenderTestRule.render(mFakebox, "fakebox");
-        mRenderTestRule.render(mNtp.getView().getRootView(), "new_tab_page");
+        ViewRenderer viewRenderer = new ViewRenderer(mActivityTestRule.getActivity(),
+                "chrome/test/data/android/render_tests", "NewTabPageTest");
+        viewRenderer.renderAndCompare(mTileGridLayout, "most_visited");
+        viewRenderer.renderAndCompare(mFakebox, "fakebox");
+        viewRenderer.renderAndCompare(mNtp.getView().getRootView(), "new_tab_page");
 
         // Scroll to search bar
         final NewTabPageRecyclerView recyclerView = mNtp.getNewTabPageView().getRecyclerView();
@@ -143,7 +142,7 @@ public class NewTabPageTest {
             }
         });
 
-        mRenderTestRule.render(mNtp.getView().getRootView(), "new_tab_page_scrolled");
+        viewRenderer.renderAndCompare(mNtp.getView().getRootView(), "new_tab_page_scrolled");
     }
 
     @Test

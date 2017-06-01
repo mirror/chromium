@@ -55,7 +55,7 @@ class WorkspaceEventHandlerTest : public test::AshTestBase {
   aura::Window* CreateTestWindow(aura::WindowDelegate* delegate,
                                  const gfx::Rect& bounds) {
     aura::Window* window = new aura::Window(delegate);
-    window->SetType(aura::client::WINDOW_TYPE_NORMAL);
+    window->SetType(ui::wm::WINDOW_TYPE_NORMAL);
     window->Init(ui::LAYER_TEXTURED);
     ParentWindowInPrimaryRootWindow(window);
     window->SetBounds(bounds);
@@ -463,11 +463,11 @@ TEST_F(WorkspaceEventHandlerTest, DeleteWhileInRunLoop) {
   std::unique_ptr<aura::Window> window(CreateTestWindow(&delegate, bounds));
   delegate.set_window_component(HTCAPTION);
 
-  ASSERT_TRUE(::wm::GetWindowMoveClient(window->GetRootWindow()));
+  ASSERT_TRUE(aura::client::GetWindowMoveClient(window->GetRootWindow()));
   base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, window.get());
-  ::wm::GetWindowMoveClient(window->GetRootWindow())
+  aura::client::GetWindowMoveClient(window->GetRootWindow())
       ->RunMoveLoop(window.release(), gfx::Vector2d(),
-                    ::wm::WINDOW_MOVE_SOURCE_MOUSE);
+                    aura::client::WINDOW_MOVE_SOURCE_MOUSE);
 }
 
 // Verifies that double clicking in the header does not maximize if the target

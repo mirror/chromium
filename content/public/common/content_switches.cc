@@ -174,6 +174,9 @@ const char kDisableLowResTiling[] = "disable-low-res-tiling";
 // Disable the GPU process sandbox.
 const char kDisableGpuSandbox[]             = "disable-gpu-sandbox";
 
+// Disable GPU service scheduler.
+const char kDisableGpuScheduler[] = "disable-gpu-scheduler";
+
 // Suppresses hang monitor dialogs in renderer processes.  This may allow slow
 // unload handlers on a page to prevent the tab from closing, but the Task
 // Manager can be used to terminate the offending process in this case.
@@ -276,10 +279,6 @@ const char kDisableSetuidSandbox[]          = "disable-setuid-sandbox";
 // Disable shared workers.
 const char kDisableSharedWorkers[]          = "disable-shared-workers";
 
-// Do not use runtime-detected high-end CPU optimizations in Skia.  This is
-// useful for forcing a baseline code path for e.g. layout tests.
-const char kDisableSkiaRuntimeOpts[]        = "disable-skia-runtime-opts";
-
 // Disable paint invalidation based on slimming paint.
 // See kEnableSlimmingPaintInvalidation.
 const char kDisableSlimmingPaintInvalidation[] =
@@ -353,6 +352,13 @@ const char kEnableBlinkFeatures[]           = "enable-blink-features";
 // PlzNavigate: Use the experimental browser-side navigation path.
 const char kEnableBrowserSideNavigation[]   = "enable-browser-side-navigation";
 
+// Changes the behavior of the "default" color space conversion mode in
+// createImageBitmap. When enabled without the kEnableColorCorrectRendering
+// flag, "default" means color correct the image bitmap to the display color
+// space.
+const char kEnableColorCorrectRenderingDefaultMode[] =
+    "enable-color-correct-rendering-default-mode";
+
 // Enables display list based 2d canvas implementation. Options:
 //  1. Enable: allow browser to use display list for 2d canvas (browser makes
 //     decision).
@@ -360,6 +366,11 @@ const char kEnableBrowserSideNavigation[]   = "enable-browser-side-navigation";
 const char kEnableDisplayList2dCanvas[]     = "enable-display-list-2d-canvas";
 const char kForceDisplayList2dCanvas[]      = "force-display-list-2d-canvas";
 const char kDisableDisplayList2dCanvas[]    = "disable-display-list-2d-canvas";
+
+// Enables dynamic rendering pipeline switching to optimize the
+// performance of 2d canvas
+const char kEnableCanvas2dDynamicRenderingModeSwitching[] =
+    "enable-canvas-2d-dynamic-rendering-mode-switching";
 
 // Enable experimental canvas features, e.g. canvas 2D context attributes
 const char kEnableExperimentalCanvasFeatures[] =
@@ -381,6 +392,9 @@ const char kEnableWebFontsInterventionV2SwitchValueEnabledWith3G[] =
 const char kEnableWebFontsInterventionV2SwitchValueEnabledWithSlow2G[] =
     "enabled-slow2g";
 const char kEnableWebFontsInterventionV2SwitchValueDisabled[] = "disabled";
+
+// Enables GPU channel scheduler.
+const char kEnableGpuScheduler[] = "enable-gpu-scheduler";
 
 // Makes the GL worker context run asynchronously by using a separate stream.
 const char kEnableGpuAsyncWorkerContext[] = "enable-gpu-async-worker-context";
@@ -589,11 +603,6 @@ const char kInProcessGPU[]                  = "in-process-gpu";
 // connection from the browser before killing itself.
 const char kIPCConnectionTimeout[]          = "ipc-connection-timeout";
 
-// Require dedicated processes for a set of origins, specified as a
-// comma-separated list. For example:
-//   --isolate-origins=https://www.foo.com,https://www.bar.com
-const char kIsolateOrigins[] = "isolate-origins";
-
 // Chrome is running in Mash.
 const char kIsRunningInMash[] = "is-running-in-mash";
 
@@ -626,15 +635,16 @@ const char kMainFrameResizesAreOrientationChanges[] =
 const char kMaxUntiledLayerHeight[]         = "max-untiled-layer-height";
 const char kMaxUntiledLayerWidth[]          = "max-untiled-layer-width";
 
+// Sample memory usage with high frequency and store the results to the
+// Renderer.Memory histogram. Used in memory tests.
+const char kMemoryMetrics[]                 = "memory-metrics";
+
 // Sets options for MHTML generator to skip no-store resources:
 //   "skip-nostore-main" - fails to save a page if main frame is 'no-store'
 //   "skip-nostore-all" - also skips no-store subresources.
 const char kMHTMLGeneratorOption[]          = "mhtml-generator-option";
 const char kMHTMLSkipNostoreMain[]          = "skip-nostore-main";
 const char kMHTMLSkipNostoreAll[]           = "skip-nostore-all";
-
-// Use Mojo-based Input Event routing.
-const char kMojoInputMessages[] = "mojo-input-messages";
 
 // Use a Mojo-based LocalStorage implementation.
 const char kMojoLocalStorage[]              = "mojo-local-storage";

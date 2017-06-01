@@ -106,7 +106,6 @@ FrameTreeNode::FrameTreeNode(FrameTree* frame_tree,
       original_opener_(nullptr),
       original_opener_observer_(nullptr),
       has_committed_real_load_(false),
-      is_collapsed_(false),
       replication_state_(
           scope,
           name,
@@ -261,15 +260,6 @@ void FrameTreeNode::SetCurrentOrigin(
       is_potentially_trustworthy_unique_origin;
 }
 
-void FrameTreeNode::SetCollapsed(bool collapsed) {
-  DCHECK(!IsMainFrame());
-  if (is_collapsed_ == collapsed)
-    return;
-
-  is_collapsed_ = collapsed;
-  render_manager_.OnDidChangeCollapsedState(collapsed);
-}
-
 void FrameTreeNode::SetFrameName(const std::string& name,
                                  const std::string& unique_name) {
   if (name == replication_state_.name) {
@@ -410,7 +400,7 @@ void FrameTreeNode::CreatedNavigationRequest(
   // RenderFrameHostManager will take care of updates to the speculative
   // RenderFrameHost in DidCreateNavigationRequest below.
   if (was_previously_loading) {
-    if (navigation_request_ && navigation_request_->navigation_handle()) {
+    if (navigation_request_) {
       // Mark the old request as aborted.
       navigation_request_->navigation_handle()->set_net_error_code(
           net::ERR_ABORTED);
@@ -513,14 +503,10 @@ void FrameTreeNode::DidChangeLoadProgress(double load_progress) {
 bool FrameTreeNode::StopLoading() {
   if (IsBrowserSideNavigationEnabled()) {
     if (navigation_request_) {
-      int expected_pending_nav_entry_id = navigation_request_->nav_entry_id();
-      if (navigation_request_->navigation_handle()) {
-        navigation_request_->navigation_handle()->set_net_error_code(
-            net::ERR_ABORTED);
-        expected_pending_nav_entry_id =
-            navigation_request_->navigation_handle()->pending_nav_entry_id();
-      }
-      navigator_->DiscardPendingEntryIfNeeded(expected_pending_nav_entry_id);
+      navigation_request_->navigation_handle()->set_net_error_code(
+          net::ERR_ABORTED);
+      navigator_->DiscardPendingEntryIfNeeded(
+          navigation_request_->navigation_handle());
     }
     ResetNavigationRequest(false, true);
   }
@@ -555,11 +541,6 @@ void FrameTreeNode::BeforeUnloadCanceled() {
         render_manager_.speculative_frame_host();
     if (speculative_frame_host)
       speculative_frame_host->ResetLoadingState();
-    // Note: there is no need to set an error code on the NavigationHandle here
-    // as it has not been created yet. It is only created when the
-    // BeforeUnloadACK is received.
-    if (navigation_request_)
-      ResetNavigationRequest(false, true);
   } else {
     RenderFrameHostImpl* pending_frame_host =
         render_manager_.pending_frame_host();

@@ -22,7 +22,6 @@
 #include "gin/interceptor.h"
 #include "gin/object_template_builder.h"
 #include "gin/wrappable.h"
-#include "third_party/WebKit/public/platform/WebURLRequest.h"
 #include "third_party/WebKit/public/web/WebAssociatedURLLoader.h"
 #include "third_party/WebKit/public/web/WebAssociatedURLLoaderOptions.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
@@ -152,7 +151,8 @@ void MimeHandlerViewContainer::OnReady() {
   blink::WebAssociatedURLLoaderOptions options;
   // The embedded plugin is allowed to be cross-origin and we should always
   // send credentials/cookies with the request.
-  options.fetch_request_mode = blink::WebURLRequest::kFetchRequestModeNoCORS;
+  options.cross_origin_request_policy =
+      blink::WebAssociatedURLLoaderOptions::kCrossOriginRequestPolicyAllow;
   options.allow_credentials = true;
   DCHECK(!loader_);
   loader_.reset(frame->CreateAssociatedURLLoader(options));

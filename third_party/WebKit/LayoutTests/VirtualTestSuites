@@ -3,7 +3,7 @@
     "prefix": "color_space",
     "base": "fast/canvas/color-space",
     "args": ["--enable-color-correct-rendering",
-             "--enable-blink-features=ColorCanvasExtensions"]
+             "--enable-true-color-rendering"]
   },
   {
     "prefix": "gpu",
@@ -166,7 +166,7 @@
   {
     "prefix": "origin-trials-runtimeflags-disabled",
     "base": "http/tests/origin_trials/webexposed",
-    "args": ["--disable-blink-features=BudgetQuery,ForeignFetch,InstalledApp,LinkServiceWorker,LongTaskObserver,SetRootScroller,WebUSB,WebVR,WebShare"]
+    "args": ["--disable-blink-features=ForeignFetch,InstalledApp,LinkServiceWorker,LongTaskObserver,SetRootScroller,WebUSB,WebVR,WebShare"]
   },
   {
     "prefix": "android",

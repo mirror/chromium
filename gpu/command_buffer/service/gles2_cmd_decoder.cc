@@ -33,7 +33,6 @@
 #include "gpu/command_buffer/common/mailbox.h"
 #include "gpu/command_buffer/common/sync_token.h"
 #include "gpu/command_buffer/service/buffer_manager.h"
-#include "gpu/command_buffer/service/command_buffer_service.h"
 #include "gpu/command_buffer/service/context_group.h"
 #include "gpu/command_buffer/service/context_state.h"
 #include "gpu/command_buffer/service/error_state.h"
@@ -492,8 +491,10 @@ void GLES2Decoder::BeginDecoding() {}
 
 void GLES2Decoder::EndDecoding() {}
 
-base::StringPiece GLES2Decoder::GetLogPrefix() {
-  return GetLogger()->GetLogPrefix();
+error::Error GLES2Decoder::DoCommand(unsigned int command,
+                                     unsigned int arg_count,
+                                     const volatile void* cmd_data) {
+  return DoCommands(1, cmd_data, arg_count + 1, 0);
 }
 
 // This class implements GLES2Decoder so we don't have to expose all the GLES2
@@ -514,8 +515,10 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
                               int num_entries,
                               int* entries_processed);
 
+  // Overridden from AsyncAPIInterface.
+  const char* GetCommandName(unsigned int command_id) const override;
+
   // Overridden from GLES2Decoder.
-  base::WeakPtr<GLES2Decoder> AsWeakPtr() override;
   bool Initialize(const scoped_refptr<gl::GLSurface>& surface,
                   const scoped_refptr<gl::GLContext>& context,
                   bool offscreen,
@@ -629,6 +632,8 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   bool BoundFramebufferHasDepthAttachment();
   bool BoundFramebufferHasStencilAttachment();
 
+  error::ContextLostReason GetContextLostReason() override;
+
   // Overriden from ErrorStateClient.
   void OnContextLostError() override;
   void OnOutOfMemoryError() override;
@@ -675,8 +680,6 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
     kBindBufferBase,
     kBindBufferRange
   };
-
-  const char* GetCommandName(unsigned int command_id) const;
 
   // Initialize or re-initialize the shader translator.
   bool InitializeShaderTranslator();
@@ -1916,16 +1919,9 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   // state of |texture| is updated to reflect the new state.
   void DoCopyTexImage(Texture* texture, GLenum textarget, gl::GLImage* image);
 
-  // If the texture has an image but that image is not bound or copied to the
-  // texture, this will first attempt to bind it, and if that fails
-  // DoCopyTexImage on it. texture_unit is the texture unit it should be bound
-  // to, or 0 if it doesn't matter - setting it to 0 will cause the previous
-  // binding to be restored after the operation. This returns true if a copy
-  // or bind happened and the caller needs to restore the previous texture
-  // binding.
-  bool DoBindOrCopyTexImageIfNeeded(Texture* texture,
-                                    GLenum textarget,
-                                    GLuint texture_unit);
+  // This will call DoCopyTexImage if texture has an image but that image is
+  // not bound or copied to the texture.
+  void DoCopyTexImageIfNeeded(Texture* texture, GLenum textarget);
 
   // Returns false if textures were replaced.
   bool PrepareTexturesForRender();
@@ -2386,6 +2382,7 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   int commands_to_process_;
 
   bool has_robustness_extension_;
+  error::ContextLostReason context_lost_reason_;
   bool context_was_lost_;
   bool reset_by_robustness_extension_;
   bool supports_post_sub_buffer_;
@@ -2501,8 +2498,6 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
 
   std::unique_ptr<DCLayerSharedState> dc_layer_shared_state_;
 
-  base::WeakPtrFactory<GLES2DecoderImpl> weak_ptr_factory_;
-
   DISALLOW_COPY_AND_ASSIGN(GLES2DecoderImpl);
 };
 
@@ -2529,12 +2524,9 @@ ScopedGLErrorSuppressor::~ScopedGLErrorSuppressor() {
   ERRORSTATE_CLEAR_REAL_GL_ERRORS(error_state_, function_name_);
 }
 
-static void RestoreCurrentTextureBindings(ContextState* state,
-                                          GLenum target,
-                                          GLuint texture_unit) {
+static void RestoreCurrentTextureBindings(ContextState* state, GLenum target) {
   DCHECK(!state->texture_units.empty());
-  DCHECK_LT(texture_unit, state->texture_units.size());
-  TextureUnit& info = state->texture_units[texture_unit];
+  TextureUnit& info = state->texture_units[0];
   GLuint last_id;
   TextureRef* texture_ref = info.GetInfoForTarget(target);
   if (texture_ref) {
@@ -2544,6 +2536,7 @@ static void RestoreCurrentTextureBindings(ContextState* state,
   }
 
   glBindTexture(target, last_id);
+  glActiveTexture(GL_TEXTURE0 + state->active_texture_unit);
 }
 
 ScopedTextureBinder::ScopedTextureBinder(ContextState* state,
@@ -2563,8 +2556,7 @@ ScopedTextureBinder::ScopedTextureBinder(ContextState* state,
 ScopedTextureBinder::~ScopedTextureBinder() {
   ScopedGLErrorSuppressor suppressor(
       "ScopedTextureBinder::dtor", state_->GetErrorState());
-  RestoreCurrentTextureBindings(state_, target_, 0);
-  state_->RestoreActiveTexture();
+  RestoreCurrentTextureBindings(state_, target_);
 }
 
 ScopedRenderBufferBinder::ScopedRenderBufferBinder(ContextState* state,
@@ -3097,6 +3089,7 @@ GLES2DecoderImpl::GLES2DecoderImpl(ContextGroup* group)
       feature_info_(group_->feature_info()),
       frame_number_(0),
       has_robustness_extension_(false),
+      context_lost_reason_(error::kUnknown),
       context_was_lost_(false),
       reset_by_robustness_extension_(false),
       supports_post_sub_buffer_(false),
@@ -3124,16 +3117,11 @@ GLES2DecoderImpl::GLES2DecoderImpl(ContextGroup* group)
       validation_fbo_multisample_(0),
       validation_fbo_(0),
       texture_manager_service_id_generation_(0),
-      force_shader_name_hashing_for_test(false),
-      weak_ptr_factory_(this) {
+      force_shader_name_hashing_for_test(false) {
   DCHECK(group);
 }
 
 GLES2DecoderImpl::~GLES2DecoderImpl() {
-}
-
-base::WeakPtr<GLES2Decoder> GLES2DecoderImpl::AsWeakPtr() {
-  return weak_ptr_factory_.GetWeakPtr();
 }
 
 bool GLES2DecoderImpl::Initialize(
@@ -4316,7 +4304,7 @@ bool GLES2DecoderImpl::MakeCurrent() {
 
 void GLES2DecoderImpl::ProcessFinishedAsyncTransfers() {
   ProcessPendingReadPixels(false);
-  if (command_buffer_service() && query_manager_.get())
+  if (engine() && query_manager_.get())
     query_manager_->ProcessPendingTransferQueries();
 }
 
@@ -5229,7 +5217,6 @@ error::Error GLES2DecoderImpl::DoCommandsImpl(unsigned int num_commands,
                                               const volatile void* buffer,
                                               int num_entries,
                                               int* entries_processed) {
-  DCHECK(entries_processed);
   commands_to_process_ = num_commands;
   error::Error result = error::kNoError;
   const volatile CommandBufferEntry* cmd_data =
@@ -5310,7 +5297,8 @@ error::Error GLES2DecoderImpl::DoCommandsImpl(unsigned int num_commands,
     }
   }
 
-  *entries_processed = process_pos;
+  if (entries_processed)
+    *entries_processed = process_pos;
 
   if (error::IsError(result)) {
     LOG(ERROR) << "Error: " << result << " for Command "
@@ -7792,7 +7780,7 @@ void GLES2DecoderImpl::DoFramebufferTexture2DCommon(
   }
 
   if (texture_ref)
-    DoBindOrCopyTexImageIfNeeded(texture_ref->texture(), textarget, 0);
+    DoCopyTexImageIfNeeded(texture_ref->texture(), textarget);
 
   std::vector<GLenum> attachments;
   if (attachment == GL_DEPTH_STENCIL_ATTACHMENT) {
@@ -9670,33 +9658,20 @@ void GLES2DecoderImpl::DoCopyTexImage(Texture* texture,
   DCHECK(rv) << "CopyTexImage() failed";
 }
 
-bool GLES2DecoderImpl::DoBindOrCopyTexImageIfNeeded(Texture* texture,
-                                                    GLenum textarget,
-                                                    GLuint texture_unit) {
+void GLES2DecoderImpl::DoCopyTexImageIfNeeded(Texture* texture,
+                                              GLenum textarget) {
   // Image is already in use if texture is attached to a framebuffer.
   if (texture && !texture->IsAttachedToFramebuffer()) {
     Texture::ImageState image_state;
     gl::GLImage* image = texture->GetLevelImage(textarget, 0, &image_state);
     if (image && image_state == Texture::UNBOUND) {
       ScopedGLErrorSuppressor suppressor(
-          "GLES2DecoderImpl::DoBindOrCopyTexImageIfNeeded", GetErrorState());
-      if (texture_unit)
-        glActiveTexture(texture_unit);
+          "GLES2DecoderImpl::DoCopyTexImageIfNeeded", GetErrorState());
       glBindTexture(textarget, texture->service_id());
-      if (image->BindTexImage(textarget)) {
-        image_state = Texture::BOUND;
-      } else {
-        DoCopyTexImage(texture, textarget, image);
-      }
-      if (!texture_unit) {
-        RestoreCurrentTextureBindings(&state_, textarget,
-                                      state_.active_texture_unit);
-        return false;
-      }
-      return true;
+      DoCopyTexImage(texture, textarget, image);
+      RestoreCurrentTextureBindings(&state_, textarget);
     }
   }
-  return false;
 }
 
 void GLES2DecoderImpl::DoCopyBufferSubData(GLenum readtarget,
@@ -9751,9 +9726,16 @@ bool GLES2DecoderImpl::PrepareTexturesForRender() {
 
         if (textarget != GL_TEXTURE_CUBE_MAP) {
           Texture* texture = texture_ref->texture();
-          if (DoBindOrCopyTexImageIfNeeded(texture, textarget,
-                                           GL_TEXTURE0 + texture_unit_index)) {
+          Texture::ImageState image_state;
+          gl::GLImage* image =
+              texture->GetLevelImage(textarget, 0, &image_state);
+          if (image && image_state == Texture::UNBOUND &&
+              !texture->IsAttachedToFramebuffer()) {
+            ScopedGLErrorSuppressor suppressor(
+                "GLES2DecoderImpl::PrepareTexturesForRender", GetErrorState());
             textures_set = true;
+            glActiveTexture(GL_TEXTURE0 + texture_unit_index);
+            DoCopyTexImage(texture, textarget, image);
             continue;
           }
         }
@@ -11738,8 +11720,8 @@ error::Error GLES2DecoderImpl::HandleReadPixels(uint32_t immediate_data_size,
         glReadPixels(x, y, width, height, format, type, 0);
         pending_readpixel_fences_.push(FenceCallback());
         WaitForReadPixels(base::Bind(
-            &GLES2DecoderImpl::FinishReadPixels, weak_ptr_factory_.GetWeakPtr(),
-            width, height, format, type, pixels_shm_id, pixels_shm_offset,
+            &GLES2DecoderImpl::FinishReadPixels, base::AsWeakPtr(this), width,
+            height, format, type, pixels_shm_id, pixels_shm_offset,
             result_shm_id, result_shm_offset, state_.pack_alignment,
             read_format, buffer));
         glBindBuffer(GL_PIXEL_PACK_BUFFER_ARB, 0);
@@ -11951,7 +11933,7 @@ error::Error GLES2DecoderImpl::HandlePostSubBufferCHROMIUM(
     surface_->PostSubBufferAsync(
         c.x, c.y, c.width, c.height,
         base::Bind(&GLES2DecoderImpl::FinishAsyncSwapBuffers,
-                   weak_ptr_factory_.GetWeakPtr()));
+                   base::AsWeakPtr(this)));
   } else {
     FinishSwapBuffers(surface_->PostSubBuffer(c.x, c.y, c.width, c.height));
   }
@@ -15620,9 +15602,8 @@ void GLES2DecoderImpl::DoSwapBuffers() {
     ++pending_swaps_;
     TRACE_EVENT_ASYNC_BEGIN0("gpu", "AsyncSwapBuffers", async_swap_id);
 
-    surface_->SwapBuffersAsync(
-        base::Bind(&GLES2DecoderImpl::FinishAsyncSwapBuffers,
-                   weak_ptr_factory_.GetWeakPtr()));
+    surface_->SwapBuffersAsync(base::Bind(
+        &GLES2DecoderImpl::FinishAsyncSwapBuffers, base::AsWeakPtr(this)));
   } else {
     FinishSwapBuffers(surface_->SwapBuffers());
   }
@@ -15668,7 +15649,7 @@ void GLES2DecoderImpl::DoCommitOverlayPlanes() {
   ClearScheduleDCLayerState();
   if (supports_async_swap_) {
     surface_->CommitOverlayPlanesAsync(base::Bind(
-        &GLES2DecoderImpl::FinishSwapBuffers, weak_ptr_factory_.GetWeakPtr()));
+        &GLES2DecoderImpl::FinishSwapBuffers, base::AsWeakPtr(this)));
   } else {
     FinishSwapBuffers(surface_->CommitOverlayPlanes());
   }
@@ -15952,6 +15933,10 @@ error::Error GLES2DecoderImpl::HandleGetTransformFeedbackVaryingsCHROMIUM(
   return error::kNoError;
 }
 
+error::ContextLostReason GLES2DecoderImpl::GetContextLostReason() {
+  return context_lost_reason_;
+}
+
 error::ContextLostReason GLES2DecoderImpl::GetContextLostReasonFromResetStatus(
     GLenum reset_status) const {
   switch (reset_status) {
@@ -15985,7 +15970,7 @@ void GLES2DecoderImpl::MarkContextLost(error::ContextLostReason reason) {
     return;
 
   // Don't make GL calls in here, the context might not be current.
-  command_buffer_service()->SetContextLostReason(reason);
+  context_lost_reason_ = reason;
   current_decoder_error_ = error::kLostContext;
   context_was_lost_ = true;
 
@@ -16937,8 +16922,7 @@ void GLES2DecoderImpl::DoCopyTextureCHROMIUM(
                  dest_type, nullptr);
     GLenum error = LOCAL_PEEK_GL_ERROR(kFunctionName);
     if (error != GL_NO_ERROR) {
-      RestoreCurrentTextureBindings(&state_, dest_binding_target,
-                                    state_.active_texture_unit);
+      RestoreCurrentTextureBindings(&state_, dest_binding_target);
       return;
     }
 
@@ -16963,7 +16947,7 @@ void GLES2DecoderImpl::DoCopyTextureCHROMIUM(
       return;
   }
 
-  DoBindOrCopyTexImageIfNeeded(source_texture, source_target, 0);
+  DoCopyTexImageIfNeeded(source_texture, source_target);
 
   // GL_TEXTURE_EXTERNAL_OES texture requires that we apply a transform matrix
   // before presenting.
@@ -17175,7 +17159,7 @@ void GLES2DecoderImpl::DoCopySubTextureCHROMIUM(
     }
   }
 
-  DoBindOrCopyTexImageIfNeeded(source_texture, source_target, 0);
+  DoCopyTexImageIfNeeded(source_texture, source_target);
 
   // GL_TEXTURE_EXTERNAL_OES texture requires apply a transform matrix
   // before presenting.
@@ -17352,8 +17336,7 @@ void GLES2DecoderImpl::DoCompressedCopyTextureCHROMIUM(GLuint source_id,
                              NULL);
       GLenum error = LOCAL_PEEK_GL_ERROR(kFunctionName);
       if (error != GL_NO_ERROR) {
-        RestoreCurrentTextureBindings(&state_, dest_texture->target(),
-                                      state_.active_texture_unit);
+        RestoreCurrentTextureBindings(&state_, dest_texture->target());
         return;
       }
 
@@ -17374,7 +17357,7 @@ void GLES2DecoderImpl::DoCompressedCopyTextureCHROMIUM(GLuint source_id,
       "gpu",
       "GLES2DecoderImpl::DoCompressedCopyTextureCHROMIUM, fallback");
 
-  DoBindOrCopyTexImageIfNeeded(source_texture, source_texture->target(), 0);
+  DoCopyTexImageIfNeeded(source_texture, source_texture->target());
 
   // As a fallback, copy into a non-compressed GL_RGBA texture.
   LOCAL_COPY_REAL_GL_ERRORS_TO_WRAPPER(kFunctionName);
@@ -17382,8 +17365,7 @@ void GLES2DecoderImpl::DoCompressedCopyTextureCHROMIUM(GLuint source_id,
                0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
   GLenum error = LOCAL_PEEK_GL_ERROR(kFunctionName);
   if (error != GL_NO_ERROR) {
-    RestoreCurrentTextureBindings(&state_, dest_texture->target(),
-                                  state_.active_texture_unit);
+    RestoreCurrentTextureBindings(&state_, dest_texture->target());
     return;
   }
 
@@ -17701,7 +17683,7 @@ void GLES2DecoderImpl::EnsureTextureForClientId(
     texture_ref = CreateTexture(client_id, service_id);
     texture_manager()->SetTarget(texture_ref, target);
     glBindTexture(target, service_id);
-    RestoreCurrentTextureBindings(&state_, target, state_.active_texture_unit);
+    RestoreCurrentTextureBindings(&state_, target);
   }
 }
 

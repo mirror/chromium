@@ -4,9 +4,9 @@
 
 #include "core/layout/DepthOrderedLayoutObjectList.h"
 
-#include <algorithm>
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/layout/LayoutObject.h"
+#include <algorithm>
 
 namespace blink {
 

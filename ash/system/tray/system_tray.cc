@@ -14,7 +14,7 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
-#include "ash/shelf/shelf.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/strings/grit/ash_strings.h"
@@ -92,7 +92,7 @@ class PaddingTrayItem : public SystemTrayItem {
     // The other tray items already have some padding baked in so we have to
     // subtract that off.
     constexpr int side = kTrayEdgePadding - kTrayImageItemPadding;
-    padding->SetPreferredSize(gfx::Size(side, side));
+    padding->set_preferred_size(gfx::Size(side, side));
     return padding;
   }
 
@@ -151,7 +151,8 @@ class SystemBubbleWrapper {
 
 // An activation observer to close the bubble if the window other
 // than system bubble nor popup notification is activated.
-class SystemTray::ActivationObserver : public ::wm::ActivationChangeObserver {
+class SystemTray::ActivationObserver
+    : public aura::client::ActivationChangeObserver {
  public:
   explicit ActivationObserver(SystemTray* tray) : tray_(tray) {
     DCHECK(tray_);
@@ -198,7 +199,7 @@ class SystemTray::ActivationObserver : public ::wm::ActivationChangeObserver {
 
 // SystemTray
 
-SystemTray::SystemTray(Shelf* shelf) : TrayBackgroundView(shelf) {
+SystemTray::SystemTray(WmShelf* wm_shelf) : TrayBackgroundView(wm_shelf) {
   SetInkDropMode(InkDropMode::ON);
 
   // Since user avatar is on the right hand side of System tray of a
@@ -450,10 +451,8 @@ void SystemTray::ShowItems(const std::vector<SystemTrayItem*>& items,
     // (like network) replaces most of the menu.
     full_system_tray_menu_ = items.size() > 1;
 
-    TrayBubbleView::InitParams init_params;
-    init_params.anchor_alignment = GetAnchorAlignment();
-    init_params.min_width = kTrayMenuMinimumWidth;
-    init_params.max_width = kTrayPopupMaxWidth;
+    TrayBubbleView::InitParams init_params(
+        GetAnchorAlignment(), kTrayMenuMinimumWidth, kTrayPopupMaxWidth);
     // TODO(oshima): Change TrayBubbleView itself.
     init_params.can_activate = false;
     // The bubble is not initially activatable, but will become activatable if
@@ -580,6 +579,16 @@ void SystemTray::OnMouseExitedView() {
 
 base::string16 SystemTray::GetAccessibleNameForBubble() {
   return GetAccessibleNameForTray();
+}
+
+void SystemTray::OnBeforeBubbleWidgetInit(
+    views::Widget* anchor_widget,
+    views::Widget* bubble_widget,
+    views::Widget::InitParams* params) const {
+  // Place the bubble in the same root window as |anchor_widget|.
+  RootWindowController::ForWindow(anchor_widget->GetNativeWindow())
+      ->ConfigureWidgetInitParamsForContainer(
+          bubble_widget, kShellWindowId_SettingBubbleContainer, params);
 }
 
 void SystemTray::HideBubble(const TrayBubbleView* bubble_view) {

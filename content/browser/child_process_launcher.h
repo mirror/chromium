@@ -13,7 +13,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/process/kill.h"
 #include "base/process/process.h"
-#include "base/sequence_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "build/build_config.h"
 #include "content/browser/child_process_launcher_helper.h"
 #include "content/common/content_export.h"
@@ -52,7 +52,7 @@ static_assert(static_cast<int>(LAUNCH_RESULT_START) >
 // Launches a process asynchronously and notifies the client of the process
 // handle when it's available.  It's used to avoid blocking the calling thread
 // on the OS since often it can take > 100 ms to create the process.
-class CONTENT_EXPORT ChildProcessLauncher {
+class CONTENT_EXPORT ChildProcessLauncher : public base::NonThreadSafe {
  public:
   class CONTENT_EXPORT Client {
    public:
@@ -171,8 +171,6 @@ class CONTENT_EXPORT ChildProcessLauncher {
   const bool terminate_child_on_shutdown_;
 
   scoped_refptr<internal::ChildProcessLauncherHelper> helper_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
 
   base::WeakPtrFactory<ChildProcessLauncher> weak_factory_;
 

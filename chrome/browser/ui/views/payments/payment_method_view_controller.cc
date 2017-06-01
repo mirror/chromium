@@ -13,7 +13,6 @@
 #include "base/callback_forward.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/ui/views/harmony/chrome_typography.h"
 #include "chrome/browser/ui/views/payments/payment_request_dialog_view.h"
 #include "chrome/browser/ui/views/payments/payment_request_dialog_view_ids.h"
 #include "chrome/browser/ui/views/payments/payment_request_row_view.h"
@@ -92,7 +91,7 @@ class PaymentMethodListItem : public payments::PaymentRequestItemList::Item {
   // payments::PaymentRequestItemList::Item:
   std::unique_ptr<views::View> CreateExtraView() override {
     std::unique_ptr<views::ImageView> card_icon_view = CreateInstrumentIconView(
-        instrument_->icon_resource_id(), instrument_->GetLabel());
+        instrument_->icon_resource_id(), instrument_->label());
     card_icon_view->SetImageSize(gfx::Size(32, 20));
     return std::move(card_icon_view);
   }
@@ -109,16 +108,17 @@ class PaymentMethodListItem : public payments::PaymentRequestItemList::Item {
         views::BoxLayout::CROSS_AXIS_ALIGNMENT_START);
     card_info_container->SetLayoutManager(box_layout.release());
 
-    base::string16 label = instrument_->GetLabel();
-    if (!label.empty())
-      card_info_container->AddChildView(new views::Label(label));
-    base::string16 sublabel = instrument_->GetSublabel();
-    if (!sublabel.empty())
-      card_info_container->AddChildView(new views::Label(sublabel));
+    if (!instrument_->label().empty())
+      card_info_container->AddChildView(new views::Label(instrument_->label()));
+    if (!instrument_->sublabel().empty()) {
+      card_info_container->AddChildView(
+          new views::Label(instrument_->sublabel()));
+    }
     if (!instrument_->IsCompleteForPayment()) {
       std::unique_ptr<views::Label> missing_info_label =
-          base::MakeUnique<views::Label>(instrument_->GetMissingInfoLabel(),
-                                         CONTEXT_DEPRECATED_SMALL);
+          base::MakeUnique<views::Label>(instrument_->GetMissingInfoLabel());
+      missing_info_label->SetFontList(
+          missing_info_label->GetDefaultFontList().DeriveWithSizeDelta(-1));
       missing_info_label->SetEnabledColor(
           missing_info_label->GetNativeTheme()->GetSystemColor(
               ui::NativeTheme::kColorId_LinkEnabled));

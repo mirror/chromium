@@ -8,10 +8,9 @@
 
 #include "ash/ash_constants.h"
 #include "ash/shelf/ink_drop_button_listener.h"
-#include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_constants.h"
 #include "ash/shelf/shelf_view.h"
-#include "ash/system/tray/tray_popup_utils.h"
+#include "ash/shelf/wm_shelf.h"
 #include "base/memory/ptr_util.h"
 #include "base/time/time.h"
 #include "skia/ext/image_operations.h"
@@ -27,7 +26,6 @@
 #include "ui/views/animation/ink_drop_impl.h"
 #include "ui/views/animation/square_ink_drop_ripple.h"
 #include "ui/views/controls/image_view.h"
-#include "ui/views/painter.h"
 
 namespace {
 
@@ -235,8 +233,6 @@ ShelfButton::ShelfButton(InkDropButtonListener* listener, ShelfView* shelf_view)
 
   AddChildView(indicator_);
   AddChildView(icon_view_);
-
-  SetFocusPainter(TrayPopupUtils::CreateFocusPainter());
 }
 
 ShelfButton::~ShelfButton() {
@@ -358,8 +354,8 @@ void ShelfButton::GetAccessibleNodeData(ui::AXNodeData* node_data) {
 
 void ShelfButton::Layout() {
   const gfx::Rect button_bounds(GetContentsBounds());
-  Shelf* shelf = shelf_view_->shelf();
-  const bool is_horizontal_shelf = shelf->IsHorizontalAlignment();
+  WmShelf* wm_shelf = shelf_view_->wm_shelf();
+  const bool is_horizontal_shelf = wm_shelf->IsHorizontalAlignment();
   const int icon_pad =
       is_horizontal_shelf ? kIconPaddingHorizontal : kIconPaddingVertical;
   int x_offset = is_horizontal_shelf ? 0 : icon_pad;
@@ -370,7 +366,7 @@ void ShelfButton::Layout() {
 
   // If on the left or top 'invert' the inset so the constant gap is on
   // the interior (towards the center of display) edge of the shelf.
-  if (SHELF_ALIGNMENT_LEFT == shelf->alignment())
+  if (SHELF_ALIGNMENT_LEFT == wm_shelf->GetAlignment())
     x_offset = button_bounds.width() - (kIconSize + icon_pad);
 
   // Center icon with respect to the secondary axis.
@@ -399,7 +395,7 @@ void ShelfButton::Layout() {
   DCHECK_LE(icon_width, kIconSize);
   DCHECK_LE(icon_height, kIconSize);
 
-  switch (shelf->alignment()) {
+  switch (wm_shelf->GetAlignment()) {
     case SHELF_ALIGNMENT_BOTTOM:
     case SHELF_ALIGNMENT_BOTTOM_LOCKED:
       indicator_midpoint.set_y(button_bounds.bottom() - kIndicatorRadiusDip -
@@ -434,6 +430,14 @@ void ShelfButton::OnFocus() {
 void ShelfButton::OnBlur() {
   ClearState(STATE_FOCUSED);
   CustomButton::OnBlur();
+}
+
+void ShelfButton::OnPaint(gfx::Canvas* canvas) {
+  CustomButton::OnPaint(canvas);
+  if (HasFocus()) {
+    canvas->DrawSolidFocusRect(gfx::RectF(GetLocalBounds()), kFocusBorderColor,
+                               kFocusBorderThickness);
+  }
 }
 
 void ShelfButton::OnGestureEvent(ui::GestureEvent* event) {
@@ -497,7 +501,7 @@ void ShelfButton::UpdateState() {
                           state_ & STATE_RUNNING));
 
   const bool is_horizontal_shelf =
-      shelf_view_->shelf()->IsHorizontalAlignment();
+      shelf_view_->wm_shelf()->IsHorizontalAlignment();
   icon_view_->SetHorizontalAlignment(is_horizontal_shelf
                                          ? views::ImageView::CENTER
                                          : views::ImageView::LEADING);

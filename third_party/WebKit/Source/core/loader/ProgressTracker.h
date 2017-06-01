@@ -63,7 +63,6 @@ class CORE_EXPORT ProgressTracker final
   void ProgressCompleted();
 
   void FinishedParsing();
-  void DidFirstContentfulPaint();
 
   void WillStartLoading(unsigned long identifier, ResourceLoadPriority);
   void IncrementProgress(unsigned long identifier, const ResourceResponse&);
@@ -79,13 +78,10 @@ class CORE_EXPORT ProgressTracker final
   void SendFinalProgress();
   void Reset();
 
-  bool HaveParsedAndPainted();
-
   Member<LocalFrame> frame_;
   double last_notified_progress_value_;
   double last_notified_progress_time_;
   bool finished_parsing_;
-  bool did_first_contentful_paint_;
   double progress_value_;
 
   HashMap<unsigned long, std::unique_ptr<ProgressItem>> progress_items_;

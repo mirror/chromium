@@ -47,7 +47,6 @@
 #include "components/ntp_snippets/sessions/foreign_sessions_suggestions_provider.h"
 #include "components/ntp_snippets/sessions/tab_delegate_sync_adapter.h"
 #include "components/ntp_snippets/user_classifier.h"
-#include "components/offline_pages/features/features.h"
 #include "components/prefs/pref_service.h"
 #include "components/safe_json/safe_json_parser.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
@@ -63,25 +62,30 @@
 #if defined(OS_ANDROID)
 #include "chrome/browser/android/chrome_feature_list.h"
 #include "chrome/browser/android/ntp/ntp_snippets_launcher.h"
+#include "chrome/browser/android/offline_pages/offline_page_model_factory.h"
+#include "chrome/browser/android/offline_pages/request_coordinator_factory.h"
 #include "chrome/browser/download/download_core_service.h"
 #include "chrome/browser/download/download_core_service_factory.h"
 #include "chrome/browser/download/download_history.h"
 #include "chrome/browser/ntp_snippets/download_suggestions_provider.h"
-#include "components/ntp_snippets/physical_web_pages/physical_web_page_suggestions_provider.h"
-#include "components/physical_web/data_source/physical_web_data_source.h"
-#endif
-
-#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
-#include "chrome/browser/android/offline_pages/offline_page_model_factory.h"
-#include "chrome/browser/android/offline_pages/request_coordinator_factory.h"
-#include "chrome/browser/offline_pages/prefetch/prefetch_service_factory.h"
 #include "components/ntp_snippets/offline_pages/recent_tab_suggestions_provider.h"
+#include "components/ntp_snippets/physical_web_pages/physical_web_page_suggestions_provider.h"
+#include "components/offline_pages/content/suggested_articles_observer.h"
 #include "components/offline_pages/core/background/request_coordinator.h"
 #include "components/offline_pages/core/offline_page_feature.h"
 #include "components/offline_pages/core/offline_page_model.h"
-#include "components/offline_pages/core/prefetch/suggested_articles_observer.h"
 #include "components/offline_pages/core/recent_tabs/recent_tabs_ui_adapter_delegate.h"
-#endif
+#include "components/physical_web/data_source/physical_web_data_source.h"
+
+using content::DownloadManager;
+using ntp_snippets::PhysicalWebPageSuggestionsProvider;
+using ntp_snippets::RecentTabSuggestionsProvider;
+using offline_pages::OfflinePageModel;
+using offline_pages::RequestCoordinator;
+using offline_pages::OfflinePageModelFactory;
+using offline_pages::RequestCoordinatorFactory;
+using physical_web::PhysicalWebDataSource;
+#endif  // OS_ANDROID
 
 using bookmarks::BookmarkModel;
 using content::BrowserThread;
@@ -103,20 +107,6 @@ using ntp_snippets::UserClassifier;
 using suggestions::ImageDecoderImpl;
 using syncer::SyncService;
 using translate::LanguageModel;
-
-#if defined(OS_ANDROID)
-using content::DownloadManager;
-using ntp_snippets::PhysicalWebPageSuggestionsProvider;
-using physical_web::PhysicalWebDataSource;
-#endif  // OS_ANDROID
-
-#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
-using ntp_snippets::RecentTabSuggestionsProvider;
-using offline_pages::OfflinePageModel;
-using offline_pages::RequestCoordinator;
-using offline_pages::OfflinePageModelFactory;
-using offline_pages::RequestCoordinatorFactory;
-#endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
 
 // For now, ContentSuggestionsService must only be instantiated on Android.
 // See also crbug.com/688366.
@@ -140,7 +130,7 @@ bool IsChromeHomeEnabled() {
 #endif
 }
 
-#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#if defined(OS_ANDROID)
 
 bool IsRecentTabProviderEnabled() {
   return base::FeatureList::IsEnabled(
@@ -161,10 +151,6 @@ void RegisterRecentTabProvider(OfflinePageModel* offline_page_model,
   service->RegisterProvider(std::move(provider));
 }
 
-#endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
-
-#if defined(OS_ANDROID)
-
 void RegisterDownloadsProvider(OfflinePageModel* offline_page_model,
                                DownloadManager* download_manager,
                                DownloadHistory* download_history,
@@ -179,9 +165,10 @@ void RegisterDownloadsProvider(OfflinePageModel* offline_page_model,
 #endif  // OS_ANDROID
 
 void RegisterBookmarkProvider(BookmarkModel* bookmark_model,
-                              ContentSuggestionsService* service) {
-  auto provider =
-      base::MakeUnique<BookmarkSuggestionsProvider>(service, bookmark_model);
+                              ContentSuggestionsService* service,
+                              PrefService* pref_service) {
+  auto provider = base::MakeUnique<BookmarkSuggestionsProvider>(
+      service, bookmark_model, pref_service);
   service->RegisterProvider(std::move(provider));
 }
 
@@ -299,10 +286,9 @@ ContentSuggestionsServiceFactory::ContentSuggestionsServiceFactory()
   DependsOn(BookmarkModelFactory::GetInstance());
   DependsOn(HistoryServiceFactory::GetInstance());
   DependsOn(LargeIconServiceFactory::GetInstance());
-#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#if defined(OS_ANDROID)
   DependsOn(OfflinePageModelFactory::GetInstance());
-  DependsOn(offline_pages::PrefetchServiceFactory::GetInstance());
-#endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#endif  // OS_ANDROID
   DependsOn(ProfileOAuth2TokenServiceFactory::GetInstance());
   DependsOn(ProfileSyncServiceFactory::GetInstance());
   DependsOn(SigninManagerFactory::GetInstance());
@@ -347,7 +333,7 @@ KeyedService* ContentSuggestionsServiceFactory::BuildServiceInstanceFor(
       pref_service, std::move(category_ranker), std::move(user_classifier),
       std::move(scheduler));
 
-#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#if defined(OS_ANDROID)
   OfflinePageModel* offline_page_model =
       OfflinePageModelFactory::GetForBrowserContext(profile);
   if (IsRecentTabProviderEnabled()) {
@@ -357,12 +343,6 @@ KeyedService* ContentSuggestionsServiceFactory::BuildServiceInstanceFor(
                               pref_service);
   }
 
-  offline_pages::PrefetchService* prefetch_service =
-      offline_pages::PrefetchServiceFactory::GetForBrowserContext(profile);
-  prefetch_service->ObserveContentSuggestionsService(service);
-#endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
-
-#if defined(OS_ANDROID)
   bool show_asset_downloads =
       !IsChromeHomeEnabled() &&
       base::FeatureList::IsEnabled(features::kAssetDownloadSuggestionsFeature);
@@ -382,6 +362,9 @@ KeyedService* ContentSuggestionsServiceFactory::BuildServiceInstanceFor(
         show_asset_downloads ? download_manager : nullptr, download_history,
         service, pref_service);
   }
+
+  offline_pages::SuggestedArticlesObserver::ObserveContentSuggestionsService(
+      profile, service);
 #endif  // OS_ANDROID
 
   // |bookmark_model| can be null in tests.
@@ -389,7 +372,7 @@ KeyedService* ContentSuggestionsServiceFactory::BuildServiceInstanceFor(
       BookmarkModelFactory::GetForBrowserContext(profile);
   if (base::FeatureList::IsEnabled(ntp_snippets::kBookmarkSuggestionsFeature) &&
       bookmark_model && !IsChromeHomeEnabled()) {
-    RegisterBookmarkProvider(bookmark_model, service);
+    RegisterBookmarkProvider(bookmark_model, service, pref_service);
   }
 
 #if defined(OS_ANDROID)

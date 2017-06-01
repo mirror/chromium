@@ -173,7 +173,8 @@ SVGRectTearOff* SVGGraphicsElement::getBBoxFromJavascript() {
   FloatRect boundingBox;
   if (GetLayoutObject())
     boundingBox = GetBBox();
-  return SVGRectTearOff::CreateDetached(boundingBox);
+  return SVGRectTearOff::Create(SVGRect::Create(boundingBox), 0,
+                                kPropertyIsNotAnimVal);
 }
 
 }  // namespace blink

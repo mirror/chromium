@@ -110,7 +110,7 @@ TEST_F(SizeRangeLayoutTest, InternalLayoutManagerPreferredSizeIsUsed) {
   const gfx::Size kSize(7, 8);
   std::unique_ptr<views::test::TestLayoutManager> child_layout =
       base::MakeUnique<views::test::TestLayoutManager>();
-  child_layout->SetPreferredSize(kSize);
+  child_layout->set_preferred_size(kSize);
 
   SizeRangeLayout layout;
   EXPECT_NE(kSize, layout.GetPreferredSize(&host_));
@@ -125,7 +125,7 @@ TEST_F(SizeRangeLayoutTest, SmallPreferredSizeIsClamped) {
   const gfx::Size kLayoutPreferredSize(5, 5);
   std::unique_ptr<views::test::TestLayoutManager> child_layout =
       base::MakeUnique<views::test::TestLayoutManager>();
-  child_layout->SetPreferredSize(kLayoutPreferredSize);
+  child_layout->set_preferred_size(kLayoutPreferredSize);
 
   SizeRangeLayout layout;
   layout.SetLayoutManager(std::move(child_layout));
@@ -140,7 +140,7 @@ TEST_F(SizeRangeLayoutTest, LargePreferredSizeIsClamped) {
   const gfx::Size kLayoutPreferredSize(25, 25);
   std::unique_ptr<views::test::TestLayoutManager> child_layout =
       base::MakeUnique<views::test::TestLayoutManager>();
-  child_layout->SetPreferredSize(kLayoutPreferredSize);
+  child_layout->set_preferred_size(kLayoutPreferredSize);
 
   SizeRangeLayout layout;
   layout.SetLayoutManager(std::move(child_layout));

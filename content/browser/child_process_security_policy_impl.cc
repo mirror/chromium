@@ -14,24 +14,18 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "build/build_config.h"
 #include "content/browser/site_instance_impl.h"
-#include "content/common/resource_request_body_impl.h"
 #include "content/common/site_isolation_policy.h"
-#include "content/public/browser/browser_context.h"
-#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/child_process_data.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_process_host.h"
-#include "content/public/browser/storage_partition.h"
 #include "content/public/common/bindings_policy.h"
 #include "content/public/common/url_constants.h"
 #include "net/base/filename_util.h"
 #include "net/url_request/url_request.h"
 #include "storage/browser/fileapi/file_permission_policy.h"
-#include "storage/browser/fileapi/file_system_context.h"
 #include "storage/browser/fileapi/file_system_url.h"
 #include "storage/browser/fileapi/isolated_context.h"
 #include "storage/common/fileapi/file_system_util.h"
@@ -258,10 +252,14 @@ class ChildProcessSecurityPolicyImpl::SecurityState {
     return false;
   }
 
-  bool CanAccessDataForOrigin(const GURL& site_url) {
+  bool CanAccessDataForOrigin(const GURL& gurl) {
     if (origin_lock_.is_empty())
       return true;
-    return origin_lock_ == site_url;
+    // TODO(creis): We must pass the valid browser_context to convert hosted
+    // apps URLs.  Currently, hosted apps cannot set cookies in this mode.
+    // See http://crbug.com/160576.
+    GURL site_gurl = SiteInstanceImpl::GetSiteForURL(NULL, gurl);
+    return origin_lock_ == site_gurl;
   }
 
   void LockToOrigin(const GURL& gurl) {
@@ -746,68 +744,6 @@ bool ChildProcessSecurityPolicyImpl::CanReadAllFiles(
                      });
 }
 
-bool ChildProcessSecurityPolicyImpl::CanReadRequestBody(
-    int child_id,
-    const storage::FileSystemContext* file_system_context,
-    const scoped_refptr<ResourceRequestBodyImpl>& body) {
-  if (!body)
-    return true;
-
-  for (const ResourceRequestBodyImpl::Element& element : *body->elements()) {
-    switch (element.type()) {
-      case ResourceRequestBodyImpl::Element::TYPE_FILE:
-        if (!CanReadFile(child_id, element.path()))
-          return false;
-        break;
-
-      case ResourceRequestBodyImpl::Element::TYPE_FILE_FILESYSTEM:
-        if (!CanReadFileSystemFile(child_id, file_system_context->CrackURL(
-                                                 element.filesystem_url())))
-          return false;
-        break;
-
-      case ResourceRequestBodyImpl::Element::TYPE_DISK_CACHE_ENTRY:
-        // TYPE_DISK_CACHE_ENTRY can't be sent via IPC according to
-        // content/common/resource_messages.cc
-        NOTREACHED();
-        return false;
-
-      case ResourceRequestBodyImpl::Element::TYPE_BYTES:
-      case ResourceRequestBodyImpl::Element::TYPE_BYTES_DESCRIPTION:
-        // Data is self-contained within |body| - no need to check access.
-        break;
-
-      case ResourceRequestBodyImpl::Element::TYPE_BLOB:
-        // No need to validate - the unguessability of the uuid of the blob is a
-        // sufficient defense against access from an unrelated renderer.
-        break;
-
-      case ResourceRequestBodyImpl::Element::TYPE_UNKNOWN:
-      default:
-        // Fail safe - deny access.
-        NOTREACHED();
-        return false;
-    }
-  }
-  return true;
-}
-
-bool ChildProcessSecurityPolicyImpl::CanReadRequestBody(
-    SiteInstance* site_instance,
-    const scoped_refptr<ResourceRequestBodyImpl>& body) {
-  DCHECK(site_instance);
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
-  int child_id = site_instance->GetProcess()->GetID();
-
-  StoragePartition* storage_partition = BrowserContext::GetStoragePartition(
-      site_instance->GetBrowserContext(), site_instance);
-  const storage::FileSystemContext* file_system_context =
-      storage_partition->GetFileSystemContext();
-
-  return CanReadRequestBody(child_id, file_system_context, body);
-}
-
 bool ChildProcessSecurityPolicyImpl::CanCreateReadWriteFile(
     int child_id,
     const base::FilePath& file) {
@@ -985,16 +921,7 @@ bool ChildProcessSecurityPolicyImpl::ChildProcessHasPermissionsForFile(
 }
 
 bool ChildProcessSecurityPolicyImpl::CanAccessDataForOrigin(int child_id,
-                                                            const GURL& url) {
-  // It's important to call GetSiteForURL before acquiring |lock_|, since
-  // GetSiteForURL consults IsIsolatedOrigin, which needs to grab the same
-  // lock.
-  //
-  // TODO(creis): We must pass the valid browser_context to convert hosted apps
-  // URLs. Currently, hosted apps cannot set cookies in this mode. See
-  // http://crbug.com/160576.
-  GURL site_url = SiteInstanceImpl::GetSiteForURL(NULL, url);
-
+                                                            const GURL& gurl) {
   base::AutoLock lock(lock_);
   SecurityStateMap::iterator state = security_state_.find(child_id);
   if (state == security_state_.end()) {
@@ -1002,7 +929,7 @@ bool ChildProcessSecurityPolicyImpl::CanAccessDataForOrigin(int child_id,
     // workaround for https://crbug.com/600441
     return true;
   }
-  return state->second->CanAccessDataForOrigin(site_url);
+  return state->second->CanAccessDataForOrigin(gurl);
 }
 
 bool ChildProcessSecurityPolicyImpl::HasSpecificPermissionForOrigin(
@@ -1064,34 +991,6 @@ bool ChildProcessSecurityPolicyImpl::CanSendMidiSysExMessage(int child_id) {
     return false;
 
   return state->second->can_send_midi_sysex();
-}
-
-void ChildProcessSecurityPolicyImpl::AddIsolatedOrigin(
-    const url::Origin& origin) {
-  CHECK(!origin.unique())
-      << "Cannot register a unique origin as an isolated origin.";
-  CHECK(!IsIsolatedOrigin(origin))
-      << "Duplicate isolated origin: " << origin.Serialize();
-
-  base::AutoLock lock(lock_);
-  isolated_origins_.insert(origin);
-}
-
-void ChildProcessSecurityPolicyImpl::AddIsolatedOriginsFromCommandLine(
-    const std::string& origin_list) {
-  for (const base::StringPiece& origin_piece :
-       base::SplitStringPiece(origin_list, ",", base::TRIM_WHITESPACE,
-                              base::SPLIT_WANT_NONEMPTY)) {
-    url::Origin origin((GURL(origin_piece)));
-    if (!origin.unique())
-      AddIsolatedOrigin(origin);
-  }
-}
-
-bool ChildProcessSecurityPolicyImpl::IsIsolatedOrigin(
-    const url::Origin& origin) {
-  base::AutoLock lock(lock_);
-  return isolated_origins_.find(origin) != isolated_origins_.end();
 }
 
 }  // namespace content

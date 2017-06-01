@@ -26,7 +26,6 @@
 
 #include "core/CoreExport.h"
 #include "core/html/HTMLFrameOwnerElement.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/bindings/SharedPersistent.h"
 #include "v8/include/v8.h"
 
@@ -42,16 +41,10 @@ enum PreferPlugInsForImagesOption {
   kShouldNotPreferPlugInsForImages
 };
 
-class CORE_EXPORT HTMLPlugInElement
-    : public HTMLFrameOwnerElement,
-      public ActiveScriptWrappable<HTMLPlugInElement> {
-  USING_GARBAGE_COLLECTED_MIXIN(HTMLPlugInElement);
-
+class CORE_EXPORT HTMLPlugInElement : public HTMLFrameOwnerElement {
  public:
   ~HTMLPlugInElement() override;
   DECLARE_VIRTUAL_TRACE();
-
-  bool HasPendingActivity() const final;
 
   void SetFocused(bool, WebFocusType) override;
   void ResetInstance();

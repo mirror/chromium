@@ -25,6 +25,7 @@
 #include "ui/views/animation/square_ink_drop_ripple.h"
 #include "ui/views/background.h"
 #include "ui/views/controls/button/label_button_border.h"
+#include "ui/views/layout/layout_constants.h"
 #include "ui/views/layout/layout_provider.h"
 #include "ui/views/painter.h"
 #include "ui/views/style/platform_style.h"
@@ -179,7 +180,11 @@ void LabelButton::SetImageLabelSpacing(int spacing) {
   InvalidateLayout();
 }
 
-gfx::Size LabelButton::CalculatePreferredSize() const {
+void LabelButton::SetFocusPainter(std::unique_ptr<Painter> focus_painter) {
+  focus_painter_ = std::move(focus_painter);
+}
+
+gfx::Size LabelButton::GetPreferredSize() const {
   if (cached_preferred_size_valid_)
     return cached_preferred_size_;
 
@@ -331,6 +336,11 @@ gfx::Rect LabelButton::GetChildAreaBounds() {
 
 bool LabelButton::ShouldUseFloodFillInkDrop() const {
   return !GetText().empty();
+}
+
+void LabelButton::OnPaint(gfx::Canvas* canvas) {
+  View::OnPaint(canvas);
+  Painter::PaintFocusPainter(this, canvas, focus_painter_.get());
 }
 
 void LabelButton::OnFocus() {

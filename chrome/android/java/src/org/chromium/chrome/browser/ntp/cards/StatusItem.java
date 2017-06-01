@@ -45,11 +45,6 @@ public abstract class StatusItem extends OptionalLeaf implements StatusCardViewH
         public void performAction(Context context) {
             assert false;
         }
-
-        @Override
-        protected void visitOptionalItem(NodeVisitor visitor) {
-            visitor.visitNoSuggestionsItem();
-        }
     }
 
     @Override

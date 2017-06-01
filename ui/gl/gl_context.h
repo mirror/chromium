@@ -39,25 +39,6 @@ struct GLVersionInfo;
 class RealGLApi;
 class TraceGLApi;
 
-// Where available, choose a GL context priority for devices that support it.
-// Currently this requires the EGL_IMG_context_priority extension that is
-// present on Daydream ready Android devices. Default is Medium, and the
-// attribute is ignored if the extension is missing.
-//
-// "High" priority must only be used for special cases with strong realtime
-// requirements, it is incompatible with other critical system GL work such as
-// the GVR library's asynchronous reprojection for VR viewing. Please avoid
-// using it for any GL contexts that may be used during VR presentation,
-// see crbug.com/727800.
-//
-// Instead, consider using "Low" priority for possibly-slow GL work such as
-// user WebGL content.
-enum ContextPriority {
-  ContextPriorityLow,
-  ContextPriorityMedium,
-  ContextPriorityHigh
-};
-
 struct GLContextAttribs {
   GpuPreference gpu_preference = PreferIntegratedGpu;
   bool bind_generates_resource = true;
@@ -65,7 +46,6 @@ struct GLContextAttribs {
   bool global_texture_share_group = false;
   int client_major_es_version = 3;
   int client_minor_es_version = 0;
-  ContextPriority context_priority = ContextPriorityMedium;
 };
 
 // Encapsulates an OpenGL context, hiding platform specific management.

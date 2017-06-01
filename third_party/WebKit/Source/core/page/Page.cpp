@@ -34,7 +34,7 @@
 #include "core/frame/DOMTimer.h"
 #include "core/frame/EventHandlerRegistry.h"
 #include "core/frame/FrameConsole.h"
-#include "core/frame/LocalFrameView.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/PageScaleConstraints.h"
 #include "core/frame/PageScaleConstraintsSet.h"
 #include "core/frame/RemoteFrame.h"
@@ -116,7 +116,6 @@ Page::Page(PageClients& page_clients)
       overscroll_controller_(
           OverscrollController::Create(GetVisualViewport(), GetChromeClient())),
       main_frame_(nullptr),
-      plugin_data_(nullptr),
       editor_client_(page_clients.editor_client),
       spell_checker_client_(page_clients.spell_checker_client),
       use_counter_(page_clients.chrome_client &&
@@ -291,18 +290,14 @@ void Page::RefreshPlugins() {
   for (const Page* page : AllPages()) {
     // Clear out the page's plugin data.
     if (page->plugin_data_)
-      page->plugin_data_->ResetPluginData();
+      page->plugin_data_ = nullptr;
   }
 }
 
-PluginData* Page::GetPluginData(SecurityOrigin* main_frame_origin) {
-  if (!plugin_data_)
-    plugin_data_ = PluginData::Create();
-
-  if (!plugin_data_->Origin() ||
+PluginData* Page::GetPluginData(SecurityOrigin* main_frame_origin) const {
+  if (!plugin_data_ ||
       !main_frame_origin->IsSameSchemeHostPort(plugin_data_->Origin()))
-    plugin_data_->UpdatePluginList(main_frame_origin);
-
+    plugin_data_ = PluginData::Create(main_frame_origin);
   return plugin_data_.Get();
 }
 
@@ -341,7 +336,7 @@ void Page::SetDefaultPageScaleLimits(float min_scale, float max_scale) {
   if (!MainFrame() || !MainFrame()->IsLocalFrame())
     return;
 
-  LocalFrameView* root_view = DeprecatedLocalMainFrame()->View();
+  FrameView* root_view = DeprecatedLocalMainFrame()->View();
 
   if (!root_view)
     return;
@@ -359,7 +354,7 @@ void Page::SetUserAgentPageScaleConstraints(
   if (!MainFrame() || !MainFrame()->IsLocalFrame())
     return;
 
-  LocalFrameView* root_view = DeprecatedLocalMainFrame()->View();
+  FrameView* root_view = DeprecatedLocalMainFrame()->View();
 
   if (!root_view)
     return;
@@ -574,7 +569,7 @@ void Page::UpdateAcceleratedCompositingSettings() {
        frame = frame->Tree().TraverseNext()) {
     if (!frame->IsLocalFrame())
       continue;
-    if (LocalFrameView* view = ToLocalFrame(frame)->View())
+    if (FrameView* view = ToLocalFrame(frame)->View())
       view->UpdateAcceleratedCompositingSettings();
   }
 }
@@ -633,7 +628,6 @@ DEFINE_TRACE(Page) {
   visitor->Trace(visual_viewport_);
   visitor->Trace(overscroll_controller_);
   visitor->Trace(main_frame_);
-  visitor->Trace(plugin_data_);
   visitor->Trace(validation_message_client_);
   visitor->Trace(use_counter_);
   Supplementable<Page>::Trace(visitor);
@@ -641,13 +635,13 @@ DEFINE_TRACE(Page) {
 }
 
 void Page::LayerTreeViewInitialized(WebLayerTreeView& layer_tree_view,
-                                    LocalFrameView* view) {
+                                    FrameView* view) {
   if (GetScrollingCoordinator())
     GetScrollingCoordinator()->LayerTreeViewInitialized(layer_tree_view, view);
 }
 
 void Page::WillCloseLayerTreeView(WebLayerTreeView& layer_tree_view,
-                                  LocalFrameView* view) {
+                                  FrameView* view) {
   if (scrolling_coordinator_)
     scrolling_coordinator_->WillCloseLayerTreeView(layer_tree_view, view);
 }

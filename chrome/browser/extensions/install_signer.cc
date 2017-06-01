@@ -399,9 +399,7 @@ void InstallSigner::GetSignature(const SignatureCallback& callback) {
           chrome_policy {
             ExtensionInstallBlacklist {
               policy_options {mode: MANDATORY}
-              ExtensionInstallBlacklist: {
-                entries: '*'
-              }
+              ExtensionInstallBlacklist: '*'
             }
           }
         })");

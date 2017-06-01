@@ -11,22 +11,21 @@
 
 namespace blink {
 
+class FrameView;
 class LayoutObject;
-class LocalFrameView;
 class PropertyTreeState;
 struct PrePaintTreeWalkContext;
 
-// This class walks the whole layout tree, beginning from the root
-// LocalFrameView, across frame boundaries. Helper classes are called for each
-// tree node to perform actual actions.  It expects to be invoked in InPrePaint
-// phase.
+// This class walks the whole layout tree, beginning from the root FrameView,
+// across frame boundaries. Helper classes are called for each tree node to
+// perform actual actions.  It expects to be invoked in InPrePaint phase.
 class CORE_EXPORT PrePaintTreeWalk {
  public:
   PrePaintTreeWalk() {}
-  void Walk(LocalFrameView& root_frame);
+  void Walk(FrameView& root_frame);
 
  private:
-  void Walk(LocalFrameView&, const PrePaintTreeWalkContext&);
+  void Walk(FrameView&, const PrePaintTreeWalkContext&);
   void Walk(const LayoutObject&, const PrePaintTreeWalkContext&);
 
   // Invalidates paint-layer painting optimizations, such as subsequence caching
@@ -51,7 +50,7 @@ class CORE_EXPORT PrePaintTreeWalk {
       const LayoutPoint& ancestor_paint_offset);
 
   bool ALWAYS_INLINE
-  NeedsTreeBuilderContextUpdate(const LocalFrameView&,
+  NeedsTreeBuilderContextUpdate(const FrameView&,
                                 const PrePaintTreeWalkContext&);
   bool ALWAYS_INLINE
   NeedsTreeBuilderContextUpdate(const LayoutObject&,

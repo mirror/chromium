@@ -49,8 +49,7 @@ class WebMessagePortChannelImpl final : public WebMessagePortChannel {
 int LLVMFuzzerInitialize(int* argc, char*** argv) {
   const char kExposeGC[] = "--expose_gc";
   v8::V8::SetFlagsFromString(kExposeGC, sizeof(kExposeGC));
-  static BlinkFuzzerTestSupport fuzzer_support =
-      BlinkFuzzerTestSupport(*argc, *argv);
+  InitializeBlinkFuzzTest(argc, argv);
   g_page_holder = DummyPageHolder::Create().release();
   g_page_holder->GetFrame().GetSettings()->SetScriptEnabled(true);
   g_blob_info_array = new WebBlobInfoArray();
@@ -73,14 +72,14 @@ int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   SerializedScriptValue::DeserializeOptions options;
 
   // If message ports are requested, make some.
+  MessagePortArray* message_ports = nullptr;
   if (hash & kFuzzMessagePorts) {
-    MessagePortArray* message_ports = new MessagePortArray(3);
+    options.message_ports = new MessagePortArray(3);
     std::generate(message_ports->begin(), message_ports->end(), []() {
       MessagePort* port = MessagePort::Create(g_page_holder->GetDocument());
       port->Entangle(WTF::MakeUnique<WebMessagePortChannelImpl>());
       return port;
     });
-    options.message_ports = message_ports;
   }
 
   // If blobs are requested, supply blob info.

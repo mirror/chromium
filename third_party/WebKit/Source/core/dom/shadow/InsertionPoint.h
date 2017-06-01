@@ -111,14 +111,14 @@ inline bool IsActiveShadowInsertionPoint(const Node& node) {
 inline ElementShadow* ShadowWhereNodeCanBeDistributedForV0(const Node& node) {
   Node* parent = node.parentNode();
   if (!parent)
-    return nullptr;
+    return 0;
   if (parent->IsShadowRoot() && !ToShadowRoot(parent)->IsYoungest())
     return node.OwnerShadowHost()->Shadow();
   if (IsActiveInsertionPoint(*parent))
     return node.OwnerShadowHost()->Shadow();
   if (parent->IsElementNode())
     return ToElement(parent)->Shadow();
-  return nullptr;
+  return 0;
 }
 
 const InsertionPoint* ResolveReprojection(const Node*);

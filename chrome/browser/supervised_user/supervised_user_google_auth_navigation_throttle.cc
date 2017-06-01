@@ -106,7 +106,6 @@ void SupervisedUserGoogleAuthNavigationThrottle::OnGoogleAuthStateChanged(
       break;
     }
     case content::NavigationThrottle::BLOCK_REQUEST:
-    case content::NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE:
     case content::NavigationThrottle::BLOCK_RESPONSE: {
       NOTREACHED();
     }

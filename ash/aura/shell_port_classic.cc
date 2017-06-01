@@ -18,6 +18,7 @@
 #include "ash/magnifier/partial_magnification_controller.h"
 #include "ash/metrics/task_switch_metrics_recorder.h"
 #include "ash/public/cpp/config.h"
+#include "ash/session/session_state_delegate.h"
 #include "ash/shared/immersive_fullscreen_controller.h"
 #include "ash/shell.h"
 #include "ash/shell_delegate.h"
@@ -33,6 +34,7 @@
 #include "ash/wm/window_util.h"
 #include "ash/wm/workspace/workspace_event_handler_aura.h"
 #include "ash/wm_display_observer.h"
+#include "ash/wm_window.h"
 #include "base/memory/ptr_util.h"
 #include "ui/aura/env.h"
 #include "ui/display/manager/chromeos/default_touch_transform_setter.h"
@@ -46,6 +48,7 @@
 
 #if defined(USE_OZONE)
 #include "ash/wm/maximize_mode/scoped_disable_internal_mouse_and_keyboard_ozone.h"
+#include "ui/display/types/native_display_delegate.h"
 #include "ui/ozone/public/ozone_platform.h"
 #endif
 
@@ -109,11 +112,11 @@ bool ShellPortClassic::IsInUnifiedModeIgnoreMirroring() const {
          display::DisplayManager::UNIFIED;
 }
 
-void ShellPortClassic::SetDisplayWorkAreaInsets(aura::Window* window,
+void ShellPortClassic::SetDisplayWorkAreaInsets(WmWindow* window,
                                                 const gfx::Insets& insets) {
   Shell::Get()
       ->window_tree_host_manager()
-      ->UpdateWorkAreaOfDisplayNearestWindow(window, insets);
+      ->UpdateWorkAreaOfDisplayNearestWindow(window->aura_window(), insets);
 }
 
 std::unique_ptr<display::TouchTransformSetter>
@@ -149,8 +152,13 @@ bool ShellPortClassic::IsMouseEventsEnabled() {
   return Shell::Get()->cursor_manager()->IsMouseEventsEnabled();
 }
 
-std::vector<aura::Window*> ShellPortClassic::GetAllRootWindows() {
-  return Shell::Get()->window_tree_host_manager()->GetAllRootWindows();
+std::vector<WmWindow*> ShellPortClassic::GetAllRootWindows() {
+  aura::Window::Windows root_windows =
+      Shell::Get()->window_tree_host_manager()->GetAllRootWindows();
+  std::vector<WmWindow*> wm_windows(root_windows.size());
+  for (size_t i = 0; i < root_windows.size(); ++i)
+    wm_windows[i] = WmWindow::Get(root_windows[i]);
+  return wm_windows;
 }
 
 void ShellPortClassic::RecordUserMetricsAction(UserMetricsAction action) {
@@ -183,7 +191,7 @@ ShellPortClassic::CreateMaximizeModeEventHandler() {
 }
 
 std::unique_ptr<WorkspaceEventHandler>
-ShellPortClassic::CreateWorkspaceEventHandler(aura::Window* workspace_window) {
+ShellPortClassic::CreateWorkspaceEventHandler(WmWindow* workspace_window) {
   return base::MakeUnique<WorkspaceEventHandlerAura>(workspace_window);
 }
 
@@ -208,6 +216,10 @@ std::unique_ptr<KeyboardUI> ShellPortClassic::CreateKeyboardUI() {
 
 std::unique_ptr<KeyEventWatcher> ShellPortClassic::CreateKeyEventWatcher() {
   return base::MakeUnique<KeyEventWatcherAura>();
+}
+
+SessionStateDelegate* ShellPortClassic::GetSessionStateDelegate() {
+  return Shell::Get()->session_state_delegate();
 }
 
 void ShellPortClassic::AddDisplayObserver(WmDisplayObserver* observer) {

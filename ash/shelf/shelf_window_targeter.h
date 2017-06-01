@@ -5,33 +5,34 @@
 #ifndef ASH_SHELF_SHELF_WINDOW_TARGETER_H_
 #define ASH_SHELF_SHELF_WINDOW_TARGETER_H_
 
-#include "ash/shelf/shelf_observer.h"
+#include "ash/shelf/wm_shelf_observer.h"
 #include "base/macros.h"
 #include "ui/aura/window_observer.h"
 #include "ui/wm/core/easy_resize_window_targeter.h"
 
 namespace ash {
 
-class Shelf;
+class WmShelf;
+class WmWindow;
 
 // ShelfWindowTargeter makes it easier to resize windows with the mouse when the
 // window-edge slightly overlaps with the shelf edge. The targeter also makes it
 // easier to drag the shelf out with touch while it is hidden.
 class ShelfWindowTargeter : public ::wm::EasyResizeWindowTargeter,
                             public aura::WindowObserver,
-                            public ShelfObserver {
+                            public WmShelfObserver {
  public:
-  ShelfWindowTargeter(aura::Window* container, Shelf* shelf);
+  ShelfWindowTargeter(WmWindow* container, WmShelf* shelf);
   ~ShelfWindowTargeter() override;
 
  private:
   // aura::WindowObserver:
   void OnWindowDestroying(aura::Window* window) override;
 
-  // ShelfObserver:
+  // WmShelfObserver:
   void WillChangeVisibilityState(ShelfVisibilityState new_state) override;
 
-  Shelf* shelf_;
+  WmShelf* shelf_;
 
   DISALLOW_COPY_AND_ASSIGN(ShelfWindowTargeter);
 };

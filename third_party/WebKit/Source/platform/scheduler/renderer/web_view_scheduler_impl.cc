@@ -100,7 +100,7 @@ WebViewSchedulerImpl::WebViewSchedulerImpl(
       should_throttle_frames_(false),
       disable_background_timer_throttling_(disable_background_timer_throttling),
       allow_virtual_time_to_advance_(true),
-      virtual_time_paused_(false),
+      timers_suspended_(false),
       have_seen_loading_task_(false),
       virtual_time_(false),
       is_audio_playing_(false),
@@ -189,17 +189,15 @@ void WebViewSchedulerImpl::DisableVirtualTimeForTesting() {
 }
 
 void WebViewSchedulerImpl::ApplyVirtualTimePolicyToTimers() {
-  bool virtual_time_should_be_paused =
-      virtual_time_ && !allow_virtual_time_to_advance_;
-  if (virtual_time_should_be_paused == virtual_time_paused_)
-    return;
-
-  if (virtual_time_should_be_paused) {
-    renderer_scheduler_->VirtualTimePaused();
-  } else {
-    renderer_scheduler_->VirtualTimeResumed();
+  if (!virtual_time_ || allow_virtual_time_to_advance_) {
+    if (timers_suspended_) {
+      renderer_scheduler_->ResumeTimerQueue();
+      timers_suspended_ = false;
+    }
+  } else if (!timers_suspended_) {
+    renderer_scheduler_->SuspendTimerQueue();
+    timers_suspended_ = true;
   }
-  virtual_time_paused_ = virtual_time_should_be_paused;
 }
 
 void WebViewSchedulerImpl::SetAllowVirtualTimeToAdvance(

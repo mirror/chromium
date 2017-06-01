@@ -148,9 +148,8 @@ TEST_F(CRWWebUIManagerTest, LoadWebUI) {
   GURL url(kTestWebUIUrl);
   EXPECT_CALL(*web_state_impl_, LoadWebUIHtml(html, url));
   std::unique_ptr<web::NavigationContext> context =
-      NavigationContextImpl::CreateNavigationContext(
-          web_state_impl_.get(), url,
-          ui::PageTransition::PAGE_TRANSITION_AUTO_BOOKMARK);
+      NavigationContextImpl::CreateNavigationContext(web_state_impl_.get(),
+                                                     url);
   web_state_impl_->OnNavigationStarted(context.get());
 }
 

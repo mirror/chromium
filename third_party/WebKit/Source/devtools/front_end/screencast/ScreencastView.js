@@ -215,7 +215,7 @@ Screencast.ScreencastView = class extends UI.VBox {
   /**
    * @param {!Event} event
    */
-  async _handleMouseEvent(event) {
+  _handleMouseEvent(event) {
     if (this._isGlassPaneActive()) {
       event.consume();
       return;
@@ -234,19 +234,24 @@ Screencast.ScreencastView = class extends UI.VBox {
     }
 
     var position = this._convertIntoScreenSpace(event);
-
-    var node = await this._domModel.nodeForLocation(
+    this._domModel.nodeForLocation(
         Math.floor(position.x / this._pageScaleFactor + this._scrollOffsetX),
         Math.floor(position.y / this._pageScaleFactor + this._scrollOffsetY),
-        Common.moduleSetting('showUAShadowDOM').get());
+        Common.moduleSetting('showUAShadowDOM').get(), callback.bind(this));
 
-    if (!node)
-      return;
-    if (event.type === 'mousemove') {
-      this.highlightDOMNode(node, this._inspectModeConfig);
-      this._domModel.overlayModel().nodeHighlightRequested(node.id);
-    } else if (event.type === 'click') {
-      Common.Revealer.reveal(node);
+    /**
+     * @param {?SDK.DOMNode} node
+     * @this {Screencast.ScreencastView}
+     */
+    function callback(node) {
+      if (!node)
+        return;
+      if (event.type === 'mousemove') {
+        this.highlightDOMNode(node, this._inspectModeConfig);
+        this._domModel.overlayModel().nodeHighlightRequested(node.id);
+      } else if (event.type === 'click') {
+        Common.Revealer.reveal(node);
+      }
     }
   }
 
@@ -331,7 +336,13 @@ Screencast.ScreencastView = class extends UI.VBox {
     }
 
     this._node = node;
-    node.boxModel().then(model => {
+    node.boxModel(callback.bind(this));
+
+    /**
+     * @param {?Protocol.DOM.BoxModel} model
+     * @this {Screencast.ScreencastView}
+     */
+    function callback(model) {
       if (!model || !this._pageScaleFactor) {
         this._repaint();
         return;
@@ -339,7 +350,7 @@ Screencast.ScreencastView = class extends UI.VBox {
       this._model = this._scaleModel(model);
       this._config = config;
       this._repaint();
-    });
+    }
   }
 
   /**

@@ -47,7 +47,9 @@ void ValidatingCombobox::OnComboboxModelChanged(
 }
 
 bool ValidatingCombobox::IsValid() {
-  return delegate_->IsValidCombobox(this);
+  bool valid = delegate_->IsValidCombobox(this);
+  SetInvalid(!valid);
+  return valid;
 }
 
 void ValidatingCombobox::Validate() {

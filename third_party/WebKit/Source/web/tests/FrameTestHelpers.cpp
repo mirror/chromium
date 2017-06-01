@@ -30,7 +30,6 @@
 
 #include "web/tests/FrameTestHelpers.h"
 
-#include "core/frame/WebLocalFrameBase.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/testing/WebLayerTreeViewImplForTesting.h"
@@ -49,6 +48,7 @@
 #include "public/web/WebSettings.h"
 #include "public/web/WebTreeScopeType.h"
 #include "public/web/WebViewClient.h"
+#include "web/WebLocalFrameImpl.h"
 #include "web/WebRemoteFrameImpl.h"
 
 namespace blink {
@@ -72,7 +72,7 @@ namespace {
 //    progress, it exits the run loop.
 // 7. At this point, all parsing, resource loads, and layout should be finished.
 TestWebFrameClient* TestClientForFrame(WebFrame* frame) {
-  return static_cast<TestWebFrameClient*>(ToWebLocalFrameBase(frame)->Client());
+  return static_cast<TestWebFrameClient*>(ToWebLocalFrameImpl(frame)->Client());
 }
 
 void RunServeAsyncRequestsTask(TestWebFrameClient* client) {
@@ -149,7 +149,7 @@ WebMouseEvent CreateMouseEvent(WebInputEvent::Type type,
   return result;
 }
 
-WebLocalFrameBase* CreateLocalChild(WebRemoteFrame* parent,
+WebLocalFrameImpl* CreateLocalChild(WebRemoteFrame* parent,
                                     const WebString& name,
                                     WebFrameClient* client,
                                     WebWidgetClient* widget_client,
@@ -158,7 +158,7 @@ WebLocalFrameBase* CreateLocalChild(WebRemoteFrame* parent,
   if (!client)
     client = DefaultWebFrameClient();
 
-  WebLocalFrameBase* frame = ToWebLocalFrameBase(parent->CreateLocalChild(
+  WebLocalFrameImpl* frame = ToWebLocalFrameImpl(parent->CreateLocalChild(
       WebTreeScopeType::kDocument, name, WebSandboxFlags::kNone, client,
       static_cast<TestWebFrameClient*>(client)->GetInterfaceProvider(), nullptr,
       previous_sibling, WebParsedFeaturePolicy(), properties, nullptr));
@@ -219,7 +219,7 @@ WebViewBase* WebViewHelper::InitializeWithOpener(
   web_view_->SetDeviceScaleFactor(
       web_view_client->GetScreenInfo().device_scale_factor);
   web_view_->SetDefaultPageScaleLimits(1, 4);
-  WebLocalFrame* frame = WebLocalFrameBase::Create(
+  WebLocalFrame* frame = WebLocalFrameImpl::Create(
       WebTreeScopeType::kDocument, web_frame_client,
       web_frame_client->GetInterfaceProvider(), nullptr, opener);
   web_view_->SetMainFrame(frame);
@@ -278,7 +278,20 @@ void WebViewHelper::Resize(WebSize size) {
 
 TestWebFrameClient::TestWebFrameClient() {}
 
+// TODO(dcheng): https://crbug.com/578349 tracks the removal of this code. This
+// override exists only to handle the confusing provisional frame case.
 void TestWebFrameClient::FrameDetached(WebLocalFrame* frame, DetachType type) {
+  if (type == DetachType::kRemove && frame->Parent()) {
+    // Since this may be detaching a provisional frame, make sure |child| is
+    // actually linked into the frame tree (i.e. it is present in its parent
+    // node's children list) before trying to remove it as a child.
+    for (WebFrame* child = frame->Parent()->FirstChild(); child;
+         child = child->NextSibling()) {
+      if (child == frame)
+        frame->Parent()->RemoveChild(frame);
+    }
+  }
+
   if (frame->FrameWidget())
     frame->FrameWidget()->Close();
 
@@ -294,7 +307,8 @@ WebLocalFrame* TestWebFrameClient::CreateChildFrame(
     const WebParsedFeaturePolicy& container_policy,
     const WebFrameOwnerProperties& frame_owner_properties) {
   WebLocalFrame* frame =
-      parent->CreateLocalChild(scope, this, GetInterfaceProvider(), nullptr);
+      WebLocalFrame::Create(scope, this, GetInterfaceProvider(), nullptr);
+  parent->AppendChild(frame);
   return frame;
 }
 
@@ -313,6 +327,8 @@ TestWebRemoteFrameClient::TestWebRemoteFrameClient()
                                         nullptr)) {}
 
 void TestWebRemoteFrameClient::FrameDetached(DetachType type) {
+  if (type == DetachType::kRemove && frame_->Parent())
+    frame_->Parent()->RemoveChild(frame_);
   frame_->Close();
 }
 

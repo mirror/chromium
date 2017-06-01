@@ -69,11 +69,6 @@ content::BackgroundSyncController* FakeProfile::GetBackgroundSyncController() {
   return nullptr;
 }
 
-content::BrowsingDataRemoverDelegate*
-FakeProfile::GetBrowsingDataRemoverDelegate() {
-  return nullptr;
-}
-
 net::URLRequestContextGetter* FakeProfile::CreateRequestContext(
     content::ProtocolHandlerMap* protocol_handlers,
     content::URLRequestInterceptorScopedVector request_interceptors) {

@@ -44,7 +44,7 @@ PushManager::PushManager(ServiceWorkerRegistration* registration)
 
 // static
 Vector<String> PushManager::supportedContentEncodings() {
-  return Vector<String>({"aes128gcm", "aesgcm"});
+  return Vector<String>({"aesgcm"});
 }
 
 ScriptPromise PushManager::subscribe(ScriptState* script_state,

@@ -16,7 +16,6 @@ NGPhysicalBoxFragment::NGPhysicalBoxFragment(
     Vector<NGPositionedFloat>& positioned_floats,
     const WTF::Optional<NGLogicalOffset>& bfc_offset,
     const NGMarginStrut& end_margin_strut,
-    NGBorderEdges::Physical border_edges,
     RefPtr<NGBreakToken> break_token)
     : NGPhysicalFragment(layout_object,
                          size,
@@ -27,7 +26,6 @@ NGPhysicalBoxFragment::NGPhysicalBoxFragment(
       bfc_offset_(bfc_offset),
       end_margin_strut_(end_margin_strut) {
   children_.swap(children);
-  border_edge_ = border_edges;
 }
 
 }  // namespace blink

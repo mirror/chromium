@@ -40,21 +40,19 @@ void SyntheticGestureController::QueueSyntheticGesture(
     StartGesture(*pending_gesture_queue_.FrontGesture());
 }
 
-void SyntheticGestureController::StartTimer() {
-  // TODO(sad): Change the interval to allow sending multiple events per begin
-  // frame.
-  dispatch_timer_.Start(
-      FROM_HERE, base::TimeDelta::FromMicroseconds(16666),
-      base::BindRepeating(
-          [](base::WeakPtr<SyntheticGestureController> weak_ptr) {
-            if (weak_ptr)
-              weak_ptr->DispatchNextEvent(base::TimeTicks::Now());
-          },
-          weak_ptr_factory_.GetWeakPtr()));
+void SyntheticGestureController::RequestBeginFrame() {
+  delegate_->RequestBeginFrameForSynthesizedInput(
+      base::BindOnce(&SyntheticGestureController::OnBeginFrame,
+                     weak_ptr_factory_.GetWeakPtr()));
+}
+
+void SyntheticGestureController::OnBeginFrame() {
+  // TODO(sad): Instead of dispatching the events immediately, dispatch after an
+  // offset.
+  DispatchNextEvent();
 }
 
 bool SyntheticGestureController::DispatchNextEvent(base::TimeTicks timestamp) {
-  DCHECK(dispatch_timer_.IsRunning());
   TRACE_EVENT0("input", "SyntheticGestureController::Flush");
   if (pending_gesture_queue_.IsEmpty())
     return false;
@@ -65,22 +63,23 @@ bool SyntheticGestureController::DispatchNextEvent(base::TimeTicks timestamp) {
             timestamp, gesture_target_.get());
 
     if (result == SyntheticGesture::GESTURE_RUNNING) {
+      RequestBeginFrame();
       return true;
     }
     pending_gesture_queue_.mark_current_gesture_complete(result);
   }
 
-  if (!delegate_->HasGestureStopped())
+  if (!delegate_->HasGestureStopped()) {
+    RequestBeginFrame();
     return true;
+  }
 
   StopGesture(*pending_gesture_queue_.FrontGesture(),
               pending_gesture_queue_.FrontCallback(),
               pending_gesture_queue_.current_gesture_result());
   pending_gesture_queue_.Pop();
-  if (pending_gesture_queue_.IsEmpty()) {
-    dispatch_timer_.Stop();
+  if (pending_gesture_queue_.IsEmpty())
     return false;
-  }
   StartGesture(*pending_gesture_queue_.FrontGesture());
   return true;
 }
@@ -89,8 +88,7 @@ void SyntheticGestureController::StartGesture(const SyntheticGesture& gesture) {
   TRACE_EVENT_ASYNC_BEGIN0("input,benchmark",
                            "SyntheticGestureController::running",
                            &gesture);
-  if (!dispatch_timer_.IsRunning())
-    StartTimer();
+  RequestBeginFrame();
 }
 
 void SyntheticGestureController::StopGesture(

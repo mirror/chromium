@@ -36,6 +36,7 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/features.h"
 #include "chrome/common/pause_tabs_field_trial.h"
+#include "chrome/grit/chromium_strings.h"
 #include "components/autofill/core/browser/autofill_experiments.h"
 #include "components/autofill/core/common/autofill_switches.h"
 #include "components/autofill/core/common/autofill_util.h"
@@ -68,6 +69,7 @@
 #include "components/spellcheck/common/spellcheck_switches.h"
 #include "components/spellcheck/spellcheck_build_features.h"
 #include "components/ssl_config/ssl_config_switches.h"
+#include "components/strings/grit/components_strings.h"
 #include "components/suggestions/features.h"
 #include "components/sync/driver/sync_driver_switches.h"
 #include "components/tracing/common/tracing_switches.h"
@@ -233,15 +235,6 @@ const FeatureEntry::Choice kPassiveListenersChoices[] = {
 
 const FeatureEntry::Choice kMarkHttpAsChoices[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
-    {flag_descriptions::kMarkHttpAsNonSecureAfterEditing,
-     security_state::switches::kMarkHttpAs,
-     security_state::switches::kMarkHttpAsNonSecureAfterEditing},
-    {flag_descriptions::kMarkHttpAsNonSecureWhileIncognito,
-     security_state::switches::kMarkHttpAs,
-     security_state::switches::kMarkHttpAsNonSecureWhileIncognito},
-    {flag_descriptions::kMarkHttpAsNonSecureWhileIncognitoOrEditing,
-     security_state::switches::kMarkHttpAs,
-     security_state::switches::kMarkHttpAsNonSecureWhileIncognitoOrEditing},
     {flag_descriptions::kMarkHttpAsDangerous,
      security_state::switches::kMarkHttpAs,
      security_state::switches::kMarkHttpAsDangerous}};
@@ -261,12 +254,6 @@ const FeatureEntry::Choice kDataReductionProxyLoFiChoices[] = {
      data_reduction_proxy::switches::kDataReductionProxyLoFi,
      data_reduction_proxy::switches::
          kDataReductionProxyLoFiValueSlowConnectionsOnly}};
-
-const FeatureEntry::Choice kDataReductionProxyServerExperiment[] = {
-    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
-    {flag_descriptions::kDataReductionProxyServerAlternative,
-     data_reduction_proxy::switches::kDataReductionProxyExperiment,
-     data_reduction_proxy::switches::kDataReductionProxyServerAlternative}};
 
 const FeatureEntry::Choice kShowSavedCopyChoices[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
@@ -324,13 +311,6 @@ const FeatureEntry::Choice kReaderModeHeuristicsChoices[] = {
     {flag_descriptions::kReaderModeHeuristicsAlwaysOff,
      switches::kReaderModeHeuristics, switches::reader_mode_heuristics::kNone},
 };
-
-const FeatureEntry::Choice kChromeHomeSwipeLogicChoices[] = {
-    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
-    {flag_descriptions::kChromeHomeSwipeLogicRestrictArea,
-     switches::kChromeHomeSwipeLogicType, "restrict-area"},
-};
-
 #endif  // OS_ANDROID
 
 const FeatureEntry::Choice kNumRasterThreadsChoices[] = {
@@ -1115,6 +1095,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kDisplayList2dCanvasDescription, kOsAll,
      ENABLE_DISABLE_VALUE_TYPE(switches::kEnableDisplayList2dCanvas,
                                switches::kDisableDisplayList2dCanvas)},
+    {"enable-canvas-2d-dynamic-rendering-mode-switching",
+     flag_descriptions::kEnable2dCanvasDynamicRenderingModeSwitchingName,
+     flag_descriptions::kEnable2dCanvasDynamicRenderingModeSwitchingDescription,
+     kOsAll,
+     SINGLE_VALUE_TYPE(switches::kEnableCanvas2dDynamicRenderingModeSwitching)},
     {"composited-layer-borders", flag_descriptions::kCompositedLayerBordersName,
      flag_descriptions::kCompositedLayerBordersDescription, kOsAll,
      SINGLE_VALUE_TYPE(cc::switches::kShowCompositedLayerBorders)},
@@ -1337,9 +1322,6 @@ const FeatureEntry kFeatureEntries[] = {
      ENABLE_DISABLE_VALUE_TYPE(
          chromeos::switches::kEnableNetworkPortalNotification,
          chromeos::switches::kDisableNetworkPortalNotification)},
-    {"network-settings-config", flag_descriptions::kNetworkSettingsConfigName,
-     flag_descriptions::kNetworkSettingsConfigDescription, kOsCrOS,
-     SINGLE_VALUE_TYPE(chromeos::switches::kNetworkSettingsConfig)},
 #endif  // OS_CHROMEOS
 #if defined(OS_ANDROID)
     {"enable-media-document-download-button",
@@ -1776,9 +1758,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kChromeHomeExpandButtonName,
      flag_descriptions::kChromeHomeExpandButtonDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kChromeHomeExpandButton)},
-    {"chrome-home-swipe-logic", flag_descriptions::kChromeHomeSwipeLogicName,
-     flag_descriptions::kChromeHomeSwipeLogicDescription, kOsAndroid,
-     MULTI_VALUE_TYPE(kChromeHomeSwipeLogicChoices)},
 #endif  // OS_ANDROID
 #if defined(OS_ANDROID)
     {"enable-iph-demo-mode", flag_descriptions::kEnableIphDemoModeName,
@@ -1858,13 +1837,6 @@ const FeatureEntry kFeatureEntries[] = {
      kOsDesktop,
      SINGLE_VALUE_TYPE(
          switches::kEnableMessageCenterAlwaysScrollUpUponNotificationRemoval)},
-    {"enable-message-center-new-style-notification",
-     flag_descriptions::kMessageCenterNewStyleNotificationName,
-     flag_descriptions::kMessageCenterNewStyleNotificationDescription,
-     kOsDesktop,
-     ENABLE_DISABLE_VALUE_TYPE(
-         switches::kEnableMessageCenterNewStyleNotification,
-         switches::kDisableMessageCenterNewStyleNotification)},
 #endif  // !OS_ANDROID
     {"enable-md-policy-page",
      flag_descriptions::kEnableMaterialDesignPolicyPageName,
@@ -1952,10 +1924,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableDataReductionProxyLitePageDescription, kOsAll,
      SINGLE_VALUE_TYPE(
          data_reduction_proxy::switches::kEnableDataReductionProxyLitePage)},
-    {"enable-data-reduction-proxy-server-experiment",
-     flag_descriptions::kEnableDataReductionProxyServerExperimentName,
-     flag_descriptions::kEnableDataReductionProxyServerExperimentDescription,
-     kOsAll, MULTI_VALUE_TYPE(kDataReductionProxyServerExperiment)},
 #if defined(OS_ANDROID)
     {"enable-data-reduction-proxy-savings-promo",
      flag_descriptions::kEnableDataReductionProxySavingsPromoName,
@@ -2234,7 +2202,7 @@ const FeatureEntry kFeatureEntries[] = {
      SINGLE_VALUE_TYPE(switches::kEnableMaterialDesignFeedback)},
     {"enable-md-incognito-ntp",
      flag_descriptions::kMaterialDesignIncognitoNTPName,
-     flag_descriptions::kMaterialDesignIncognitoNTPDescription, kOsAll,
+     flag_descriptions::kMaterialDesignIncognitoNTPDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(features::kMaterialDesignIncognitoNTP)},
     {"enable-md-settings", flag_descriptions::kEnableMaterialDesignSettingsName,
      flag_descriptions::kEnableMaterialDesignSettingsDescription, kOsDesktop,
@@ -2358,11 +2326,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableNtpMostLikelyFaviconsFromServerDescription,
      kOsAndroid,
      FEATURE_VALUE_TYPE(ntp_tiles::kNtpMostLikelyFaviconsFromServerFeature)},
-    {"enable-content-suggestions-categories",
-     flag_descriptions::kEnableContentSuggestionsCategoriesName,
-     flag_descriptions::kEnableContentSuggestionsCategoriesDescription,
-     kOsAndroid,
-     FEATURE_VALUE_TYPE(chrome::android::kContentSuggestionsCategories)},
     {"enable-content-suggestions-settings",
      flag_descriptions::kEnableContentSuggestionsSettingsName,
      flag_descriptions::kEnableContentSuggestionsSettingsDescription,
@@ -2777,6 +2740,12 @@ const FeatureEntry kFeatureEntries[] = {
 #endif  // defined(OS_WIN)
 
 #if defined(OS_CHROMEOS)
+    {"show-arc-files-app", flag_descriptions::kShowArcFilesAppName,
+     flag_descriptions::kShowArcFilesAppDescription, kOsCrOS,
+     FEATURE_VALUE_TYPE(arc::kShowArcFilesAppFeature)},
+#endif // defined(OS_CHROMEOS)
+
+#if defined(OS_CHROMEOS)
     {"force-enable-stylus-tools",
      flag_descriptions::kForceEnableStylusToolsName,
      flag_descriptions::kForceEnableStylusToolsDescription, kOsCrOS,
@@ -2862,11 +2831,6 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-mojo-loading", flag_descriptions::kMojoLoadingName,
      flag_descriptions::kMojoLoadingDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kLoadingWithMojo)},
-
-    {"enable-fetch-keepalive-timeout-setting",
-     flag_descriptions::kFetchKeepaliveTimeoutSettingName,
-     flag_descriptions::kFetchKeepaliveTimeoutSettingDescription, kOsAll,
-     FEATURE_VALUE_TYPE(features::kFetchKeepaliveTimeoutSetting)},
 
 #if defined(OS_CHROMEOS)
     {"force-tablet-mode", flag_descriptions::kForceTabletModeName,
@@ -2985,11 +2949,6 @@ const FeatureEntry kFeatureEntries[] = {
          kOmniboxUIMaxAutocompleteMatchesVariations,
          "OmniboxUIMaxAutocompleteVariations")},
 
-    {"omnibox-ui-vertical-layout",
-     flag_descriptions::kOmniboxUIVerticalLayoutName,
-     flag_descriptions::kOmniboxUIVerticalLayoutDescription, kOsDesktop,
-     FEATURE_VALUE_TYPE(omnibox::kUIExperimentVerticalLayout)},
-
     {"omnibox-ui-vertical-margin",
      flag_descriptions::kOmniboxUIVerticalMarginName,
      flag_descriptions::kOmniboxUIVerticalMarginDescription, kOsDesktop,
@@ -3040,13 +2999,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kDisableNewVirtualKeyboardBehaviorDescription, kOsCrOS,
      SINGLE_DISABLE_VALUE_TYPE(switches::kDisableNewVirtualKeyboardBehavior)},
 #endif  // defined(OS_CHROMEOS)
-
-#if !defined(OS_ANDROID) && !defined(OS_IOS)
-    {"enable-picture-in-picture",
-     flag_descriptions::kEnablePictureInPictureName,
-     flag_descriptions::kEnablePictureInPictureDescription, kOsDesktop,
-     SINGLE_VALUE_TYPE(switches::kEnablePictureInPicture)},
-#endif  // !defined(OS_ANDROID) && !defined(OS_IOS)
 
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in

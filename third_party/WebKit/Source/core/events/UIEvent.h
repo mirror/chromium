@@ -70,7 +70,7 @@ class CORE_EXPORT UIEvent : public Event {
   const AtomicString& InterfaceName() const override;
   bool IsUIEvent() const final;
 
-  virtual unsigned which() const;
+  virtual int which() const;
 
   DECLARE_VIRTUAL_TRACE();
 

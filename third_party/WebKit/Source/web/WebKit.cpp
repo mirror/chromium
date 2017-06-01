@@ -53,7 +53,6 @@
 #include "public/platform/Platform.h"
 #include "public/platform/WebThread.h"
 #include "v8/include/v8.h"
-#include "web/WebFactoryImpl.h"
 
 namespace blink {
 
@@ -84,8 +83,6 @@ void Initialize(Platform* platform) {
   V8Initializer::InitializeMainThread();
 
   GetModulesInitializer().Initialize();
-
-  WebFactoryImpl::Initialize();
 
   // currentThread is null if we are running on a thread without a message loop.
   if (WebThread* current_thread = platform->CurrentThread()) {

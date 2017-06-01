@@ -473,8 +473,8 @@ TEST_F(AccountReconcilorTest, StartReconcileContentSettingsInvalidPattern) {
       AccountReconcilorFactory::GetForProfile(profile());
   ASSERT_TRUE(reconcilor);
 
-  std::unique_ptr<ContentSettingsPattern::BuilderInterface> builder =
-      ContentSettingsPattern::CreateBuilder();
+  std::unique_ptr<ContentSettingsPattern::BuilderInterface> builder(
+      ContentSettingsPattern::CreateBuilder(false));
   builder->Invalid();
 
   SimulateCookieContentSettingsChanged(reconcilor, builder->Build());

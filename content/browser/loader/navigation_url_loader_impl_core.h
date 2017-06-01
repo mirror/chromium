@@ -17,10 +17,6 @@ class URLRequestContextGetter;
 struct RedirectInfo;
 }
 
-namespace storage {
-class FileSystemContext;
-}
-
 namespace content {
 
 class AppCacheNavigationHandleCore;
@@ -49,7 +45,6 @@ class NavigationURLLoaderImplCore
   // Starts the request.
   void Start(ResourceContext* resource_context,
              net::URLRequestContextGetter* url_request_context_getter,
-             storage::FileSystemContext* upload_file_system_context,
              ServiceWorkerNavigationHandleCore* service_worker_handle_core,
              AppCacheNavigationHandleCore* appcache_handle_core,
              std::unique_ptr<NavigationRequestInfo> request_info,

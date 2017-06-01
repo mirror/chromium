@@ -364,7 +364,7 @@ int32_t PepperUDPSocketMessageFilter::OnMsgJoinGroup(
   if (!socket_)
     return PP_ERROR_FAILED;
 
-  net::IPAddressBytes group;
+  std::vector<uint8_t> group;
   uint16_t port;
 
   if (!NetAddressPrivateImpl::NetAddressToIPEndPoint(addr, &group, &port))
@@ -385,7 +385,7 @@ int32_t PepperUDPSocketMessageFilter::OnMsgLeaveGroup(
   if (!socket_)
     return PP_ERROR_FAILED;
 
-  net::IPAddressBytes group;
+  std::vector<uint8_t> group;
   uint16_t port;
 
   if (!NetAddressPrivateImpl::NetAddressToIPEndPoint(addr, &group, &port))
@@ -408,7 +408,7 @@ void PepperUDPSocketMessageFilter::DoBind(
       new net::UDPSocket(net::DatagramSocket::DEFAULT_BIND,
                          net::RandIntCallback(), NULL, net::NetLogSource()));
 
-  net::IPAddressBytes address;
+  std::vector<uint8_t> address;
   uint16_t port;
   if (!NetAddressPrivateImpl::NetAddressToIPEndPoint(addr, &address, &port)) {
     SendBindError(context, PP_ERROR_ADDRESS_INVALID);
@@ -592,7 +592,7 @@ void PepperUDPSocketMessageFilter::DoSendTo(
     return;
   }
 
-  net::IPAddressBytes address;
+  std::vector<uint8_t> address;
   uint16_t port;
   if (!NetAddressPrivateImpl::NetAddressToIPEndPoint(addr, &address, &port)) {
     SendSendToError(context, PP_ERROR_ADDRESS_INVALID);

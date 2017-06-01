@@ -30,8 +30,8 @@
 
 #include "core/layout/ImageQualityController.h"
 
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/layout/LayoutObject.h"
 #include "core/page/ChromeClient.h"
@@ -73,7 +73,7 @@ InterpolationQuality ImageQualityController::ChooseInterpolationQuality(
     Image* image,
     const void* layer,
     const LayoutSize& layout_size) {
-  if (object.Style()->ImageRendering() == EImageRendering::kPixelated)
+  if (object.Style()->ImageRendering() == kImageRenderingPixelated)
     return kInterpolationNone;
 
   if (kInterpolationDefault == kInterpolationLow)
@@ -179,7 +179,7 @@ bool ImageQualityController::ShouldPaintAtLowQuality(
   if (!layer)
     return false;
 
-  if (object.Style()->ImageRendering() == EImageRendering::kOptimizeContrast)
+  if (object.Style()->ImageRendering() == kImageRenderingOptimizeContrast)
     return true;
 
   if (LocalFrame* frame = object.GetFrame()) {

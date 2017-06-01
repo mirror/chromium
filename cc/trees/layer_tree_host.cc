@@ -317,7 +317,6 @@ void LayerTreeHost::FinishCommitOnImplThread(
     PushPropertyTreesTo(sync_tree);
     sync_tree->lifecycle().AdvanceTo(LayerTreeLifecycle::kSyncedPropertyTrees);
 
-    PushSurfaceIdsTo(sync_tree);
     TreeSynchronizer::PushLayerProperties(this, sync_tree);
     sync_tree->lifecycle().AdvanceTo(
         LayerTreeLifecycle::kSyncedLayerProperties);
@@ -1093,20 +1092,6 @@ bool LayerTreeHost::PaintContent(const LayerList& update_layer_list,
   return did_paint_content;
 }
 
-void LayerTreeHost::AddSurfaceLayerId(const SurfaceId& surface_id) {
-  surface_layer_ids_.insert(surface_id);
-  needs_surface_ids_sync_ = true;
-}
-
-void LayerTreeHost::RemoveSurfaceLayerId(const SurfaceId& surface_id) {
-  surface_layer_ids_.erase(surface_id);
-  needs_surface_ids_sync_ = true;
-}
-
-const base::flat_set<SurfaceId>& LayerTreeHost::SurfaceLayerIds() const {
-  return surface_layer_ids_;
-}
-
 void LayerTreeHost::AddLayerShouldPushProperties(Layer* layer) {
   layers_that_should_push_properties_.insert(layer);
 }
@@ -1236,15 +1221,6 @@ void LayerTreeHost::PushLayerTreePropertiesTo(LayerTreeImpl* tree_impl) {
   DCHECK(!tree_impl->ViewportSizeInvalid());
 
   tree_impl->set_has_ever_been_drawn(false);
-}
-
-void LayerTreeHost::PushSurfaceIdsTo(LayerTreeImpl* tree_impl) {
-  if (needs_surface_ids_sync()) {
-    tree_impl->ClearSurfaceLayerIds();
-    tree_impl->SetSurfaceLayerIds(SurfaceLayerIds());
-    // Reset for next update
-    set_needs_surface_ids_sync(false);
-  }
 }
 
 void LayerTreeHost::PushLayerTreeHostPropertiesTo(
@@ -1400,9 +1376,79 @@ void LayerTreeHost::ElementIsAnimatingChanged(
     ElementListType list_type,
     const PropertyAnimationState& mask,
     const PropertyAnimationState& state) {
+  // TODO(weiliangc): Most of the code is duplicated with LayerTeeHostImpl
+  // version of function. Should try to share code.
   DCHECK_EQ(ElementListType::ACTIVE, list_type);
-  property_trees()->ElementIsAnimatingChanged(mutator_host(), element_id,
-                                              list_type, mask, state, true);
+
+  for (int property = TargetProperty::FIRST_TARGET_PROPERTY;
+       property <= TargetProperty::LAST_TARGET_PROPERTY; ++property) {
+    if (!mask.currently_running[property] &&
+        !mask.potentially_animating[property])
+      continue;
+
+    switch (property) {
+      case TargetProperty::TRANSFORM:
+        if (TransformNode* transform_node =
+                property_trees()->transform_tree.FindNodeFromElementId(
+                    element_id)) {
+          if (mask.currently_running[property])
+            transform_node->is_currently_animating =
+                state.currently_running[property];
+          if (mask.potentially_animating[property]) {
+            transform_node->has_potential_animation =
+                state.potentially_animating[property];
+            transform_node->has_only_translation_animations =
+                mutator_host()->HasOnlyTranslationTransforms(element_id,
+                                                             list_type);
+            property_trees()->transform_tree.set_needs_update(true);
+          }
+        } else {
+          if (state.currently_running[property] ||
+              state.potentially_animating[property])
+            DCHECK(property_trees()->needs_rebuild)
+                << "Attempting to animate non existent transform node";
+        }
+        break;
+      case TargetProperty::OPACITY:
+        if (EffectNode* effect_node =
+                property_trees()->effect_tree.FindNodeFromElementId(
+                    element_id)) {
+          if (mask.currently_running[property])
+            effect_node->is_currently_animating_opacity =
+                state.currently_running[property];
+          if (mask.potentially_animating[property]) {
+            effect_node->has_potential_opacity_animation =
+                state.potentially_animating[property];
+            property_trees()->effect_tree.set_needs_update(true);
+          }
+        } else {
+          if (state.currently_running[property] ||
+              state.potentially_animating[property])
+            DCHECK(property_trees()->needs_rebuild)
+                << "Attempting to animate opacity on non existent effect node";
+        }
+        break;
+      case TargetProperty::FILTER:
+        if (EffectNode* effect_node =
+                property_trees()->effect_tree.FindNodeFromElementId(
+                    element_id)) {
+          if (mask.currently_running[property])
+            effect_node->is_currently_animating_filter =
+                state.currently_running[property];
+          if (mask.potentially_animating[property])
+            effect_node->has_potential_filter_animation =
+                state.potentially_animating[property];
+        } else {
+          if (state.currently_running[property] ||
+              state.potentially_animating[property])
+            DCHECK(property_trees()->needs_rebuild)
+                << "Attempting to animate filter on non existent effect node";
+        }
+        break;
+      default:
+        break;
+    }
+  }
 }
 
 gfx::ScrollOffset LayerTreeHost::GetScrollOffsetForAnimation(

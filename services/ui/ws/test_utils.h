@@ -207,11 +207,9 @@ class WindowManagerStateTestApi {
 
   void DispatchInputEventToWindow(ServerWindow* target,
                                   ClientSpecificId client_id,
-                                  const int64_t display_id,
                                   const ui::Event& event,
                                   Accelerator* accelerator) {
-    wms_->DispatchInputEventToWindow(target, client_id, display_id, event,
-                                     accelerator);
+    wms_->DispatchInputEventToWindow(target, client_id, event, accelerator);
   }
 
   ClientSpecificId GetEventTargetClientId(ServerWindow* window,
@@ -453,9 +451,6 @@ class TestWindowTreeClient : public ui::mojom::WindowTreeClient {
       const gfx::Rect& old_bounds,
       const gfx::Rect& new_bounds,
       const base::Optional<cc::LocalSurfaceId>& local_surface_id) override;
-  void OnWindowTransformChanged(uint32_t window,
-                                const gfx::Transform& old_transform,
-                                const gfx::Transform& new_transform) override;
   void OnClientAreaChanged(
       uint32_t window_id,
       const gfx::Insets& new_client_area,
@@ -602,8 +597,6 @@ class TestWindowServerDelegate : public WindowServerDelegate {
       mojom::WindowTreeRequest* tree_request,
       mojom::WindowTreeClientPtr* client) override;
   bool IsTestConfig() const override;
-  void OnWillCreateTreeForWindowManager(
-      bool automatically_create_display_roots) override;
 
  private:
   WindowServer* window_server_ = nullptr;
@@ -693,32 +686,6 @@ class WindowEventTargetingHelper {
   ClientSpecificId next_primary_tree_window_id_ = 1;
 
   DISALLOW_COPY_AND_ASSIGN(WindowEventTargetingHelper);
-};
-
-// -----------------------------------------------------------------------------
-
-class TestDisplayManagerObserver : public mojom::DisplayManagerObserver {
- public:
-  TestDisplayManagerObserver();
-  ~TestDisplayManagerObserver() override;
-
-  mojom::DisplayManagerObserverPtr GetPtr();
-
-  std::string GetAndClearObserverCalls();
-
- private:
-  std::string DisplayIdsToString(
-      const std::vector<mojom::WsDisplayPtr>& wm_displays);
-
-  // mojom::DisplayManagerObserver:
-  void OnDisplaysChanged(std::vector<mojom::WsDisplayPtr> displays,
-                         int64_t primary_display_id,
-                         int64_t internal_display_id) override;
-
-  mojo::Binding<mojom::DisplayManagerObserver> binding_;
-  std::string observer_calls_;
-
-  DISALLOW_COPY_AND_ASSIGN(TestDisplayManagerObserver);
 };
 
 // -----------------------------------------------------------------------------

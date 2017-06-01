@@ -7,7 +7,6 @@
 #include "base/guid.h"
 #include "base/logging.h"
 #include "base/strings/sys_string_conversions.h"
-#include "base/strings/utf_string_conversions.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
 #include "components/autofill/core/browser/validation.h"
@@ -27,45 +26,10 @@
 namespace {
 using ::AutofillUITypeFromAutofillType;
 using ::AutofillTypeFromAutofillUIType;
-
-// Returns true if |card_number| is a supported card type and a valid credit
-// card number and no other credit card with the same number exists.
-// |error_message| can't be null and will be filled with the appropriate error
-// message iff the return value is false.
-bool IsValidCreditCardNumber(const base::string16& card_number,
-                             const PaymentRequest* payment_request,
-                             const autofill::CreditCard* credit_card_to_edit,
-                             base::string16* error_message) {
-  std::set<std::string> supported_card_networks(
-      payment_request->supported_card_networks().begin(),
-      payment_request->supported_card_networks().end());
-  if (!::autofill::IsValidCreditCardNumberForBasicCardNetworks(
-          card_number, supported_card_networks, error_message)) {
-    return false;
-  }
-
-  // Check if another credit card has already been created with this number.
-  // TODO(crbug.com/725604): the UI should offer to load / update the existing
-  // credit card info.
-  autofill::CreditCard* existing_card =
-      payment_request->GetPersonalDataManager()->GetCreditCardByNumber(
-          base::UTF16ToASCII(card_number));
-  // If a card exists, it could be the one currently being edited.
-  if (!existing_card || (credit_card_to_edit && credit_card_to_edit->guid() ==
-                                                    existing_card->guid())) {
-    return true;
-  }
-  if (error_message) {
-    *error_message = l10n_util::GetStringUTF16(
-        IDS_PAYMENTS_VALIDATION_ALREADY_USED_CREDIT_CARD_NUMBER);
-  }
-  return false;
-}
-
 }  // namespace
 
 @interface CreditCardEditCoordinator () {
-  PaymentRequestEditViewController* _viewController;
+  CreditCardEditViewController* _viewController;
 
   CreditCardEditViewControllerMediator* _mediator;
 }
@@ -79,7 +43,7 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
 @synthesize delegate = _delegate;
 
 - (void)start {
-  _viewController = [[PaymentRequestEditViewController alloc] init];
+  _viewController = [[CreditCardEditViewController alloc] init];
   // TODO(crbug.com/602666): Title varies depending on the missing fields.
   NSString* title = _creditCard
                         ? l10n_util::GetNSString(IDS_PAYMENTS_EDIT_CARD)
@@ -114,8 +78,11 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
     base::string16 errorMessage;
     base::string16 valueString = base::SysNSStringToUTF16(field.value);
     if (field.autofillUIType == AutofillUITypeCreditCardNumber) {
-      ::IsValidCreditCardNumber(valueString, _paymentRequest, _creditCard,
-                                &errorMessage);
+      std::set<std::string> supportedCardNetworks(
+          _paymentRequest->supported_card_networks().begin(),
+          _paymentRequest->supported_card_networks().end());
+      autofill::IsValidCreditCardNumberForBasicCardNetworks(
+          valueString, supportedCardNetworks, &errorMessage);
     } else if (field.autofillUIType == AutofillUITypeCreditCardBillingAddress) {
       // TODO(crbug.com/602666): More validation?
       return nil;
@@ -132,7 +99,7 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
   return nil;
 }
 
-#pragma mark - PaymentRequestEditViewControllerDelegate
+#pragma mark - CreditCardEditViewControllerDelegate
 
 - (void)paymentRequestEditViewController:
             (PaymentRequestEditViewController*)controller
@@ -142,21 +109,17 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
   }
 }
 
-- (void)paymentRequestEditViewController:
-            (PaymentRequestEditViewController*)controller
-                  didFinishEditingFields:(NSArray<EditorField*>*)fields {
-  BOOL saveCreditCard = NO;
+- (void)creditCardEditViewController:(CreditCardEditViewController*)controller
+              didFinishEditingFields:(NSArray<EditorField*>*)fields
+                      saveCreditCard:(BOOL)saveCreditCard {
   // Create an empty credit card. If a credit card is being edited, copy over
   // the information.
-  autofill::CreditCard creditCard =
-      _creditCard ? *_creditCard
-                  : autofill::CreditCard(base::GenerateGUID(),
-                                         autofill::kSettingsOrigin);
+  autofill::CreditCard creditCard("", autofill::kSettingsOrigin);
+  if (_creditCard)
+    creditCard = *_creditCard;
 
   for (EditorField* field in fields) {
-    if (field.autofillUIType == AutofillUITypeCreditCardSaveToChrome) {
-      saveCreditCard = [field.value boolValue];
-    } else if (field.autofillUIType == AutofillUITypeCreditCardBillingAddress) {
+    if (field.autofillUIType == AutofillUITypeCreditCardBillingAddress) {
       creditCard.set_billing_address_id(base::SysNSStringToUTF8(field.value));
     } else {
       creditCard.SetRawInfo(
@@ -166,15 +129,15 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
   }
 
   if (!_creditCard) {
-    if (saveCreditCard)
+    if (saveCreditCard) {
+      // The new credit card does not yet have a valid GUID.
+      creditCard.set_guid(base::GenerateGUID());
       _paymentRequest->GetPersonalDataManager()->AddCreditCard(creditCard);
+    }
 
     // Add the credit card to the list of credit cards in |_paymentRequest|.
     _creditCard = _paymentRequest->AddCreditCard(creditCard);
   } else {
-    // Override the origin.
-    creditCard.set_origin(autofill::kSettingsOrigin);
-
     // Update the original credit card instance that is being edited.
     *_creditCard = creditCard;
 
@@ -191,8 +154,8 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
             didFinishEditingCreditCard:_creditCard];
 }
 
-- (void)paymentRequestEditViewControllerDidCancel:
-    (PaymentRequestEditViewController*)controller {
+- (void)creditCardEditViewControllerDidCancel:
+    (CreditCardEditViewController*)controller {
   [_delegate creditCardEditCoordinatorDidCancel:self];
 }
 

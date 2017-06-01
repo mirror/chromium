@@ -42,7 +42,6 @@
           "blink::mojom::EngagementClient",
           "blink::mojom::InstallationService",
           "content::mojom::ImageDownloader",
-          "content::mojom::FrameInputHandler",
           "mojom::MediaDevicesListener"
         ]
       },

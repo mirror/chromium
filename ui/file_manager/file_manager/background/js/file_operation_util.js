@@ -152,7 +152,7 @@ fileOperationUtil.resolveRecursively_ = function(
           onError);
     } else {
       // For a file, annotate the file size.
-      metadataProxy.getEntryMetadata(entry).then(function(metadata) {
+      entry.getMetadata(function(metadata) {
         entry.size = metadata.size;
         --numRunningTasks;
         maybeInvokeCallback();
@@ -411,9 +411,6 @@ fileOperationUtil.copyTo = function(
           break;
 
         case 'error':
-          console.error(
-              'copy failed. sourceUrl: ' + source.toURL() +
-              ' error: ' + status.error);
           chrome.fileManagerPrivate.onCopyProgress.removeListener(
               onCopyProgress);
           errorCallback(util.createDOMError(status.error));

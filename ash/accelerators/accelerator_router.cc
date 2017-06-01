@@ -8,12 +8,11 @@
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/wm/window_state.h"
+#include "ash/wm_window.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
-#include "ui/aura/window.h"
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/events/event.h"
-#include "ui/wm/core/window_util.h"
 
 namespace ash {
 
@@ -44,7 +43,7 @@ AcceleratorRouter::AcceleratorRouter() {}
 
 AcceleratorRouter::~AcceleratorRouter() {}
 
-bool AcceleratorRouter::ProcessAccelerator(aura::Window* target,
+bool AcceleratorRouter::ProcessAccelerator(WmWindow* target,
                                            const ui::KeyEvent& key_event,
                                            const ui::Accelerator& accelerator) {
   // Callers should never supply null.
@@ -86,16 +85,16 @@ void AcceleratorRouter::RecordSearchKeyStats(
   }
 }
 
-bool AcceleratorRouter::CanConsumeSystemKeys(aura::Window* target,
+bool AcceleratorRouter::CanConsumeSystemKeys(WmWindow* target,
                                              const ui::KeyEvent& event) {
   // Uses the top level window so if the target is a web contents window the
   // containing parent window will be checked for the property.
-  aura::Window* top_level = ::wm::GetToplevelWindow(target);
-  return top_level && wm::GetWindowState(top_level)->can_consume_system_keys();
+  WmWindow* top_level = target->GetToplevelWindowForFocus();
+  return top_level && top_level->GetWindowState()->can_consume_system_keys();
 }
 
 bool AcceleratorRouter::ShouldProcessAcceleratorNow(
-    aura::Window* target,
+    WmWindow* target,
     const ui::KeyEvent& event,
     const ui::Accelerator& accelerator) {
   // Callers should never supply null.
@@ -105,7 +104,7 @@ bool AcceleratorRouter::ShouldProcessAcceleratorNow(
   if (accelerator.IsCmdDown())
     return true;
 
-  if (base::ContainsValue(Shell::GetAllRootWindows(), target))
+  if (base::ContainsValue(ShellPort::Get()->GetAllRootWindows(), target))
     return true;
 
   AcceleratorController* accelerator_controller =
@@ -117,8 +116,8 @@ bool AcceleratorRouter::ShouldProcessAcceleratorNow(
 
   // A full screen window has a right to handle all key events including the
   // reserved ones.
-  aura::Window* top_level = ::wm::GetToplevelWindow(target);
-  if (top_level && wm::GetWindowState(top_level)->IsFullscreen()) {
+  WmWindow* top_level = target->GetToplevelWindowForFocus();
+  if (top_level && top_level->GetWindowState()->IsFullscreen()) {
     // On ChromeOS, fullscreen windows are either browser or apps, which
     // send key events to a web content first, then will process keys
     // if the web content didn't consume them.

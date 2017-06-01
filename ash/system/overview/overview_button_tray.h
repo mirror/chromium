@@ -26,7 +26,7 @@ class ASH_EXPORT OverviewButtonTray : public TrayBackgroundView,
                                       public SessionObserver,
                                       public ShellObserver {
  public:
-  explicit OverviewButtonTray(Shelf* shelf);
+  explicit OverviewButtonTray(WmShelf* wm_shelf);
   ~OverviewButtonTray() override;
 
   // Updates the tray's visibility based on the LoginStatus and the current

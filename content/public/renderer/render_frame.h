@@ -94,21 +94,13 @@ class CONTENT_EXPORT RenderFrame : public IPC::Listener,
   };
 
   // Returns the RenderFrame given a WebFrame.
-  // TODO(https://crbug.com/416660): Remove this, as RenderFrames only
-  // correspond to WebLocalFrames.
   static RenderFrame* FromWebFrame(blink::WebFrame* web_frame);
-  static RenderFrame* FromWebFrame(blink::WebLocalFrame* web_frame);
 
   // Returns the RenderFrame given a routing id.
   static RenderFrame* FromRoutingID(int routing_id);
 
   // Visit all live RenderFrames.
   static void ForEach(RenderFrameVisitor* visitor);
-
-  // Returns the routing ID for |web_frame|, whether it is a WebLocalFrame in
-  // this process or a WebRemoteFrame placeholder for a frame in a different
-  // process.
-  static int GetRoutingIdForWebFrame(blink::WebFrame* web_frame);
 
   // Returns the RenderView associated with this frame.
   virtual RenderView* GetRenderView() = 0;
@@ -230,11 +222,6 @@ class CONTENT_EXPORT RenderFrame : public IPC::Listener,
   // Detaches the browser plugin identified by |element_instance_id| from guest
   // content created by the embedder.
   virtual void DetachGuest(int element_instance_id) = 0;
-
-  // Notifies the browser of text selection changes made.
-  virtual void SetSelectedText(const base::string16& selection_text,
-                               size_t offset,
-                               const gfx::Range& range) = 0;
 
   // Ensures that builtin mojo bindings modules are available in |context|.
   virtual void EnsureMojoBuiltinsAreAvailable(

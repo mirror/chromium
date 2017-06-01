@@ -53,7 +53,6 @@ class AshWindowTreeHost;
 class BootSplashScreen;
 enum class LoginStatus;
 class PanelLayoutManager;
-class Shelf;
 class ShelfLayoutManager;
 class StackingController;
 class StatusAreaWidget;
@@ -63,6 +62,7 @@ class SystemWallpaperController;
 class TouchHudDebug;
 class TouchHudProjection;
 class WallpaperWidgetController;
+class WmShelf;
 class WorkspaceController;
 
 namespace mus {
@@ -79,7 +79,7 @@ class RootWindowLayoutManager;
 // indirectly owned and deleted by |WindowTreeHostManager|.
 // The RootWindowController for particular root window is stored in
 // its property (RootWindowSettings) and can be obtained using
-// |RootWindowController::ForWindow(aura::Window*)| function.
+// |GetRootWindowController(aura::WindowEventDispatcher*)| function.
 class ASH_EXPORT RootWindowController : public ShellObserver {
  public:
   // Enumerates the type of display. If there is only a single display then
@@ -124,13 +124,22 @@ class ASH_EXPORT RootWindowController : public ShellObserver {
   aura::Window* GetRootWindow();
   const aura::Window* GetRootWindow() const;
 
+  // TODO(sky): remove these. http://crbug.com/671246.
+  WmWindow* GetWindow() {
+    return const_cast<WmWindow*>(
+        const_cast<const RootWindowController*>(this)->GetWindow());
+  }
+  const WmWindow* GetWindow() const;
+
   WorkspaceController* workspace_controller() {
     return workspace_controller_.get();
   }
 
   wm::WorkspaceWindowState GetWorkspaceWindowState();
 
-  Shelf* shelf() const { return shelf_.get(); }
+  WmShelf* wm_shelf() const { return wm_shelf_.get(); }
+  // TODO(jamescook): Eliminate in favor of wm_shelf().
+  WmShelf* GetShelf() const { return wm_shelf_.get(); }
 
   // Initializes the shelf for this root window and notifies observers.
   void InitializeShelf();
@@ -198,6 +207,14 @@ class ASH_EXPORT RootWindowController : public ShellObserver {
 
   aura::Window* GetContainer(int container_id);
   const aura::Window* GetContainer(int container_id) const;
+
+  // TODO(sky): remove these. http://crbug.com/671246.
+  WmWindow* GetWmContainer(int container_id) {
+    return const_cast<WmWindow*>(
+        const_cast<const RootWindowController*>(this)->GetWmContainer(
+            container_id));
+  }
+  const WmWindow* GetWmContainer(int container_id) const;
 
   WallpaperWidgetController* wallpaper_widget_controller() {
     return wallpaper_widget_controller_.get();
@@ -280,7 +297,7 @@ class ASH_EXPORT RootWindowController : public ShellObserver {
 
   void InitLayoutManagers();
 
-  // Creates the containers (aura::Windows) used by the shell.
+  // Creates the containers (WmWindows) used by the shell.
   void CreateContainers();
 
   // Initializes |system_wallpaper_| and possibly also |boot_splash_screen_|.
@@ -331,7 +348,7 @@ class ASH_EXPORT RootWindowController : public ShellObserver {
   // The shelf controller for this root window. Exists for the entire lifetime
   // of the RootWindowController so that it is safe for observers to be added
   // to it during construction of the shelf widget and status tray.
-  std::unique_ptr<Shelf> shelf_;
+  std::unique_ptr<WmShelf> wm_shelf_;
 
   // TODO(jamescook): Eliminate this. It is left over from legacy shelf code and
   // doesn't mean anything in particular.
@@ -358,6 +375,12 @@ class ASH_EXPORT RootWindowController : public ShellObserver {
 
   DISALLOW_COPY_AND_ASSIGN(RootWindowController);
 };
+
+// On classic ash, returns the RootWindowController for the given |root_window|.
+// On mus ash, returns the RootWindowController for the primary display.
+// See RootWindowController class comment above.
+ASH_EXPORT RootWindowController* GetRootWindowController(
+    const aura::Window* root_window);
 
 }  // namespace ash
 

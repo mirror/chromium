@@ -57,6 +57,7 @@
 #include "core/html/HTMLDimension.h"
 #include "core/html/HTMLFormElement.h"
 #include "core/html/HTMLInputElement.h"
+#include "core/html/HTMLMenuElement.h"
 #include "core/html/HTMLTemplateElement.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/layout/LayoutBoxModelObject.h"
@@ -462,11 +463,6 @@ void HTMLElement::ParseAttribute(const AttributeModificationParams& params) {
     DirAttributeChanged(params.new_value);
   } else if (params.name == langAttr) {
     PseudoStateChanged(CSSSelector::kPseudoLang);
-  } else if (params.name == inertAttr) {
-    UseCounter::Count(GetDocument(), UseCounter::kInertAttribute);
-  } else if (params.name == nonceAttr) {
-    if (params.new_value != g_empty_atom)
-      setNonce(params.new_value);
   } else {
     const AtomicString& event_name = EventNameForAttributeName(params.name);
     if (!event_name.IsNull()) {
@@ -921,11 +917,13 @@ Node::InsertionNotificationRequest HTMLElement::InsertedInto(
   // updated.
   Element::InsertedInto(insertion_point);
 
-  if (RuntimeEnabledFeatures::hideNonceContentAttributeEnabled() &&
-      FastHasAttribute(nonceAttr) &&
-      GetDocument().GetContentSecurityPolicy()->HasHeaderDeliveredPolicy() &&
-      InActiveDocument()) {
-    setAttribute(nonceAttr, g_empty_atom);
+  if (hasAttribute(nonceAttr) && getAttribute(nonceAttr) != g_empty_atom) {
+    setNonce(getAttribute(nonceAttr));
+    if (RuntimeEnabledFeatures::hideNonceContentAttributeEnabled() &&
+        InActiveDocument() &&
+        GetDocument().GetContentSecurityPolicy()->HasHeaderDeliveredPolicy()) {
+      setAttribute(nonceAttr, g_empty_atom);
+    }
   }
 
   return kInsertionDone;
@@ -1065,6 +1063,49 @@ void HTMLElement::AddHTMLColorToStyle(MutableStylePropertySet* style,
 
 bool HTMLElement::IsInteractiveContent() const {
   return false;
+}
+
+HTMLMenuElement* HTMLElement::AssignedContextMenu() const {
+  if (HTMLMenuElement* menu = contextMenu())
+    return menu;
+
+  return parentElement() && parentElement()->IsHTMLElement()
+             ? ToHTMLElement(parentElement())->AssignedContextMenu()
+             : nullptr;
+}
+
+HTMLMenuElement* HTMLElement::contextMenu() const {
+  const AtomicString& context_menu_id(FastGetAttribute(contextmenuAttr));
+  if (context_menu_id.IsNull())
+    return nullptr;
+
+  Element* element = GetTreeScope().getElementById(context_menu_id);
+  // Not checking if the menu element is of type "popup".
+  // Ignoring menu element type attribute is intentional according to the
+  // standard.
+  return isHTMLMenuElement(element) ? toHTMLMenuElement(element) : nullptr;
+}
+
+void HTMLElement::setContextMenu(HTMLMenuElement* context_menu) {
+  if (!context_menu) {
+    setAttribute(contextmenuAttr, "");
+    return;
+  }
+
+  // http://www.whatwg.org/specs/web-apps/current-work/multipage/infrastructure.html#reflecting-content-attributes-in-idl-attributes
+  // On setting, if the given element has an id attribute, and has the same home
+  // subtree as the element of the attribute being set, and the given element is
+  // the first element in that home subtree whose ID is the value of that id
+  // attribute, then the content attribute must be set to the value of that id
+  // attribute.  Otherwise, the content attribute must be set to the empty
+  // string.
+  const AtomicString& context_menu_id(context_menu->FastGetAttribute(idAttr));
+
+  if (!context_menu_id.IsNull() &&
+      context_menu == GetTreeScope().getElementById(context_menu_id))
+    setAttribute(contextmenuAttr, context_menu_id);
+  else
+    setAttribute(contextmenuAttr, "");
 }
 
 void HTMLElement::DefaultEventHandler(Event* event) {

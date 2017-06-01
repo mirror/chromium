@@ -1,7 +1,5 @@
 .. _contest_terms:
 
-.. include:: /migration/deprecation.inc
-
 #####################################
 Security Contest Terms and Conditions
 #####################################

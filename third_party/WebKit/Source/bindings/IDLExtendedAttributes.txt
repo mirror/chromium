@@ -43,7 +43,6 @@ Constructor
 # FIXME: remove [ConstructorCallWith=Document], as can instead use
 # [ConstructorCallWith=ExecutionContext] + toDocument(executionContext)
 ConstructorCallWith=ExecutionContext|ScriptState|Document
-ContextEnabled=*
 CrossOrigin=|Getter|Setter
 Custom=|Getter|Setter|LegacyCallAsFunction|PropertyGetter|PropertyEnumerator|PropertyQuery|CallPrologue|CallEpilogue
 CustomConstructor
@@ -54,6 +53,7 @@ DeprecateAs=*
 DoNotCheckConstants
 DoNotTestNewObject
 EnforceRange
+ExperimentalCallbackFunction
 Exposed=*
 FeaturePolicy=*
 FlexibleArrayBufferView

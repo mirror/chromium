@@ -40,8 +40,6 @@ typedef NS_ENUM(NSInteger, SigninPromoViewMode) {
 @property(nonatomic, readonly) UILabel* textLabel;
 @property(nonatomic, readonly) MDCFlatButton* primaryButton;
 @property(nonatomic, readonly) MDCFlatButton* secondaryButton;
-// Hidden by default.
-@property(nonatomic, readonly) UIButton* closeButton;
 
 // Horizontal padding used for |textLabel|, |primaryButton| and
 // |secondaryButton|. Used to compute the preferred max layout width of

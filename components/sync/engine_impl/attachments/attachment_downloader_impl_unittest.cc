@@ -13,7 +13,6 @@
 #include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "base/sequence_checker.h"
 #include "base/single_thread_task_runner.h"
 #include "base/test/histogram_tester.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -106,7 +105,8 @@ void MockOAuth2TokenService::InvalidateAccessTokenImpl(
 }
 
 class TokenServiceProvider
-    : public OAuth2TokenServiceRequest::TokenServiceProvider {
+    : public OAuth2TokenServiceRequest::TokenServiceProvider,
+      base::NonThreadSafe {
  public:
   explicit TokenServiceProvider(OAuth2TokenService* token_service);
 
@@ -120,8 +120,6 @@ class TokenServiceProvider
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
   OAuth2TokenService* token_service_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
 };
 
 TokenServiceProvider::TokenServiceProvider(OAuth2TokenService* token_service)
@@ -130,9 +128,7 @@ TokenServiceProvider::TokenServiceProvider(OAuth2TokenService* token_service)
   DCHECK(token_service_);
 }
 
-TokenServiceProvider::~TokenServiceProvider() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-}
+TokenServiceProvider::~TokenServiceProvider() {}
 
 scoped_refptr<base::SingleThreadTaskRunner>
 TokenServiceProvider::GetTokenServiceTaskRunner() {

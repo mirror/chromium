@@ -718,11 +718,9 @@ void RecordFirstWebContentsMainFrameLoad(base::TimeTicks ticks) {
       g_process_creation_ticks.Get(), ticks);
 }
 
-void RecordFirstWebContentsNonEmptyPaint(
-    base::TimeTicks now,
-    base::TimeTicks render_process_host_init_time) {
+void RecordFirstWebContentsNonEmptyPaint(base::TimeTicks ticks) {
   static bool is_first_call = true;
-  if (!is_first_call || now.is_null())
+  if (!is_first_call || ticks.is_null())
     return;
   is_first_call = false;
 
@@ -737,16 +735,11 @@ void RecordFirstWebContentsNonEmptyPaint(
       metrics::CallStackProfileMetricsProvider::FIRST_NONEMPTY_PAINT);
   UMA_HISTOGRAM_AND_TRACE_WITH_TEMPERATURE_AND_SAME_VERSION_COUNT(
       UMA_HISTOGRAM_LONG_TIMES_100, "Startup.FirstWebContents.NonEmptyPaint2",
-      g_process_creation_ticks.Get(), now);
+      g_process_creation_ticks.Get(), ticks);
   UMA_HISTOGRAM_WITH_TEMPERATURE(
       UMA_HISTOGRAM_LONG_TIMES_100,
       "Startup.BrowserMessageLoopStart.To.NonEmptyPaint2",
-      now - g_message_loop_start_ticks.Get());
-
-  UMA_HISTOGRAM_WITH_TEMPERATURE(
-      UMA_HISTOGRAM_LONG_TIMES_100,
-      "Startup.FirstWebContents.RenderProcessHostInit.ToNonEmptyPaint",
-      now - render_process_host_init_time);
+      ticks - g_message_loop_start_ticks.Get());
 }
 
 void RecordFirstWebContentsMainNavigationStart(base::TimeTicks ticks,

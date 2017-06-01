@@ -34,6 +34,7 @@
 #include "chrome/browser/chromeos/boot_times_recorder.h"
 #include "chrome/browser/chromeos/first_run/drive_first_run_controller.h"
 #include "chrome/browser/chromeos/first_run/first_run.h"
+#include "chrome/browser/chromeos/input_method/input_method_util.h"
 #include "chrome/browser/chromeos/language_preferences.h"
 #include "chrome/browser/chromeos/login/arc_kiosk_controller.h"
 #include "chrome/browser/chromeos/login/demo_mode/demo_app_launcher.h"
@@ -92,7 +93,6 @@
 #include "ui/aura/window.h"
 #include "ui/base/ime/chromeos/extension_ime_util.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
-#include "ui/base/ime/chromeos/input_method_util.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/compositor/layer.h"
@@ -291,16 +291,6 @@ void ResetKeyboardOverscrollOverride() {
       keyboard::KEYBOARD_OVERSCROLL_OVERRIDE_NONE);
 }
 
-void ScheduleCompletionCallbacks(std::vector<base::OnceClosure>&& callbacks) {
-  for (auto& callback : callbacks) {
-    if (callback.is_null())
-      continue;
-
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  std::move(callback));
-  }
-}
-
 }  // namespace
 
 namespace chromeos {
@@ -483,8 +473,8 @@ LoginDisplayHostImpl::LoginDisplayHostImpl(const gfx::Rect& wallpaper_bounds)
 
   // Disable Drag'n'Drop for the login session.
   if (!ash_util::IsRunningInMash()) {
-    scoped_drag_drop_disabler_.reset(
-        new wm::ScopedDragDropDisabler(ash::Shell::GetPrimaryRootWindow()));
+    scoped_drag_drop_disabler_.reset(new aura::client::ScopedDragDropDisabler(
+        ash::Shell::GetPrimaryRootWindow()));
   } else {
     NOTIMPLEMENTED();
   }
@@ -512,8 +502,6 @@ LoginDisplayHostImpl::~LoginDisplayHostImpl() {
 
   views::FocusManager::set_arrow_key_traversal_enabled(false);
   ResetLoginWindowAndView();
-
-  ScheduleCompletionCallbacks(std::move(completion_callbacks_));
 
   keep_alive_.reset();
 
@@ -548,10 +536,8 @@ void LoginDisplayHostImpl::BeforeSessionStart() {
   session_starting_ = true;
 }
 
-void LoginDisplayHostImpl::Finalize(base::OnceClosure completion_callback) {
+void LoginDisplayHostImpl::Finalize() {
   DVLOG(1) << "Finalizing LoginDisplayHost. User session starting";
-
-  completion_callbacks_.push_back(std::move(completion_callback));
 
   switch (finalize_animation_type_) {
     case ANIMATION_NONE:
@@ -635,11 +621,11 @@ AppLaunchController* LoginDisplayHostImpl::GetAppLaunchController() {
 }
 
 void LoginDisplayHostImpl::StartUserAdding(
-    base::OnceClosure completion_callback) {
+    const base::Closure& completion_callback) {
   DisableKeyboardOverscroll();
 
   restore_path_ = RESTORE_ADD_USER_INTO_SESSION;
-  completion_callbacks_.push_back(std::move(completion_callback));
+  completion_callback_ = completion_callback;
   // Animation is not supported in Mash
   if (!ash_util::IsRunningInMash())
     finalize_animation_type_ = ANIMATION_ADD_USER;
@@ -691,7 +677,7 @@ void LoginDisplayHostImpl::CancelUserAdding() {
   // canceled. Changing to ANIMATION_NONE so that Finalize() shuts down the host
   // immediately.
   finalize_animation_type_ = ANIMATION_NONE;
-  Finalize(base::OnceClosure());
+  Finalize();
 }
 
 void LoginDisplayHostImpl::StartSignInScreen(
@@ -994,10 +980,16 @@ void LoginDisplayHostImpl::OnDisplayAdded(const display::Display& new_display) {
     GetOobeUI()->OnDisplayConfigurationChanged();
 }
 
+void LoginDisplayHostImpl::OnDisplayRemoved(
+    const display::Display& old_display) {
+  if (GetOobeUI())
+    GetOobeUI()->OnDisplayConfigurationChanged();
+}
+
 void LoginDisplayHostImpl::OnDisplayMetricsChanged(
     const display::Display& display,
     uint32_t changed_metrics) {
-  const display::Display primary_display =
+  display::Display primary_display =
       display::Screen::GetScreen()->GetPrimaryDisplay();
   if (display.id() != primary_display.id() ||
       !(changed_metrics & DISPLAY_METRIC_BOUNDS)) {
@@ -1008,9 +1000,6 @@ void LoginDisplayHostImpl::OnDisplayMetricsChanged(
     const gfx::Size& size = primary_display.size();
     GetOobeUI()->GetCoreOobeView()->SetClientAreaSize(size.width(),
                                                       size.height());
-
-    if (changed_metrics & DISPLAY_METRIC_PRIMARY)
-      GetOobeUI()->OnDisplayConfigurationChanged();
   }
 }
 
@@ -1042,6 +1031,11 @@ void LoginDisplayHostImpl::ShutdownDisplayHost(bool post_quit_task) {
   base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
   if (post_quit_task)
     base::MessageLoop::current()->QuitWhenIdle();
+
+  if (!completion_callback_.is_null()) {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                  completion_callback_);
+  }
 }
 
 void LoginDisplayHostImpl::ScheduleWorkspaceAnimation() {
@@ -1049,11 +1043,18 @@ void LoginDisplayHostImpl::ScheduleWorkspaceAnimation() {
     NOTIMPLEMENTED();
     return;
   }
+  if (ash::Shell::GetContainer(ash::Shell::GetPrimaryRootWindow(),
+                               ash::kShellWindowId_WallpaperContainer)
+          ->children()
+          .empty()) {
+    // If there is no wallpaper window, don't perform any animation on the
+    // default and wallpaper layer because there is nothing behind it.
+    return;
+  }
 
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kDisableLoginAnimations)) {
+          switches::kDisableLoginAnimations))
     ash::Shell::Get()->DoInitialWorkspaceAnimation();
-  }
 }
 
 void LoginDisplayHostImpl::ScheduleFadeOutAnimation(int animation_speed_ms) {
@@ -1121,7 +1122,7 @@ void LoginDisplayHostImpl::StartPostponedWebUI() {
       StartSignInScreen(LoginScreenContext());
       break;
     case RESTORE_ADD_USER_INTO_SESSION:
-      StartUserAdding(base::OnceClosure());
+      StartUserAdding(completion_callback_);
       break;
     default:
       NOTREACHED();

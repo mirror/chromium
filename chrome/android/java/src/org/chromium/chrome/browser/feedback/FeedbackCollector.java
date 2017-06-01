@@ -57,7 +57,6 @@ public class FeedbackCollector
     private final String mUrl;
     private final FeedbackResult mCallback;
     private final long mCollectionStartTime;
-    private final boolean mTakeScreenshot;
     // Not final because created during init. Should be used as a final member.
     protected ConnectivityTask mConnectivityTask;
 
@@ -93,11 +92,6 @@ public class FeedbackCollector
     private boolean mResultPosted;
 
     /**
-     * The CategoryTag for the report. This allows Feedback systems to route the report accordingly.
-     */
-    private String mCategoryTag;
-
-    /**
      * A callback for when the gathering of feedback data has finished. This may be called either
      * when all data has been collected, or after a timeout.
      */
@@ -119,25 +113,17 @@ public class FeedbackCollector
      */
     public static FeedbackCollector create(
             Activity activity, Profile profile, @Nullable String url, FeedbackResult callback) {
-        // TODO(ymalik): Remove this constructor once all the references are removed.
-        return create(activity, profile, url, true, callback);
-    }
-
-    public static FeedbackCollector create(Activity activity, Profile profile, @Nullable String url,
-            boolean takeScreenshot, FeedbackResult callback) {
         ThreadUtils.assertOnUiThread();
-        return new FeedbackCollector(activity, profile, url, takeScreenshot, callback);
+        return new FeedbackCollector(activity, profile, url, callback);
     }
 
     @VisibleForTesting
-    FeedbackCollector(Activity activity, Profile profile, String url, boolean takeScreenshot,
-            FeedbackResult callback) {
+    FeedbackCollector(Activity activity, Profile profile, String url, FeedbackResult callback) {
         mData = new HashMap<>();
         mProfile = profile;
         mUrl = url;
         mCallback = callback;
         mCollectionStartTime = SystemClock.elapsedRealtime();
-        mTakeScreenshot = takeScreenshot;
         init(activity);
     }
 
@@ -145,9 +131,7 @@ public class FeedbackCollector
     void init(Activity activity) {
         postTimeoutTask();
         mConnectivityTask = ConnectivityTask.create(mProfile, CONNECTIVITY_CHECK_TIMEOUT_MS, this);
-        if (mTakeScreenshot) {
-            ScreenshotTask.create(activity, this);
-        }
+        ScreenshotTask.create(activity, this);
         if (!mProfile.isOffTheRecord()) {
             mHistograms = StatisticsRecorderAndroid.toJson();
         }
@@ -185,22 +169,14 @@ public class FeedbackCollector
         }, TIMEOUT_MS);
     }
 
-    private boolean shouldWaitForScreenshot() {
-        // We should always wait for the screenshot unless we're not taking one.
-        return mTakeScreenshot && !mScreenshotTaskFinished;
-    }
-
-    private boolean shouldWaitForConnectivityTask() {
-        return !mConnectivityTaskFinished && !hasTimedOut();
-    }
-
     @VisibleForTesting
     void maybePostResult() {
         ThreadUtils.assertOnUiThread();
         if (mCallback == null) return;
         if (mResultPosted) return;
-        if (shouldWaitForScreenshot() || shouldWaitForConnectivityTask()) return;
-
+        // Always wait for screenshot.
+        if (!mScreenshotTaskFinished) return;
+        if (!mConnectivityTaskFinished && !hasTimedOut()) return;
         mResultPosted = true;
         ThreadUtils.postOnUiThread(new Runnable() {
             @Override
@@ -242,23 +218,6 @@ public class FeedbackCollector
     public String getDescription() {
         ThreadUtils.assertOnUiThread();
         return mDescription;
-    }
-
-    /**
-     * Sets the CategoryTag to invoke feedback with.
-     * @param categoryTag the user visible description.
-     */
-    public void setCategoryTag(String categoryTag) {
-        ThreadUtils.assertOnUiThread();
-        mCategoryTag = categoryTag;
-    }
-
-    /**
-     * @return the CategoryTag for the feedback report.
-     */
-    public String getCategoryTag() {
-        ThreadUtils.assertOnUiThread();
-        return mCategoryTag;
     }
 
     /**

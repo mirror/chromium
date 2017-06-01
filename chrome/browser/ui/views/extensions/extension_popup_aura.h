@@ -10,7 +10,7 @@
 #include "ui/wm/public/activation_change_observer.h"
 
 class ExtensionPopupAura : public ExtensionPopup,
-                           public wm::ActivationChangeObserver {
+                           public aura::client::ActivationChangeObserver {
  public:
   ExtensionPopupAura(extensions::ExtensionViewHost* host,
                      views::View* anchor_view,
@@ -21,10 +21,11 @@ class ExtensionPopupAura : public ExtensionPopup,
   // views::WidgetObserver overrides.
   void OnWidgetDestroying(views::Widget* widget) override;
 
-  // wm::ActivationChangeObserver overrides.
-  void OnWindowActivated(wm::ActivationChangeObserver::ActivationReason reason,
-                         aura::Window* gained_active,
-                         aura::Window* lost_active) override;
+  // aura::client::ActivationChangeObserver overrides.
+  void OnWindowActivated(
+      aura::client::ActivationChangeObserver::ActivationReason reason,
+      aura::Window* gained_active,
+      aura::Window* lost_active) override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ExtensionPopupAura);

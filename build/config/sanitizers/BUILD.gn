@@ -13,11 +13,13 @@ if (is_ios) {
   import("//build/config/ios/ios_sdk.gni")
 }
 
-# Contains the dependencies needed for sanitizers to link into
-# executables and shared_libraries. Unconditionally depend upon
-# "//build/config:exe_and_shlib_deps" to pull in this target.
+# Contains the dependencies needed for sanitizers to link into executables and
+# shared_libraries. Unconditionally depend upon this target as it is empty if
+# |is_asan|, |is_lsan|, |is_tsan|, |is_msan| and |use_custom_libcxx| are false.
 group("deps") {
-  visibility = [ "//build/config:exe_and_shlib_deps" ]
+  public_deps = [
+    ":deps_no_options",
+  ]
   if (using_sanitizer) {
     public_configs = [
       ":sanitizer_options_link_helper",
@@ -30,15 +32,32 @@ group("deps") {
     deps = [
       ":options_sources",
     ]
+  }
+  if (use_afl) {
+    deps += [ "//third_party/afl" ]
+  }
+}
+
+group("deps_no_options") {
+  if (using_sanitizer) {
+    public_configs = [
+      # Even when a target removes default_sanitizer_flags, it may be depending
+      # on a library that did not remove default_sanitizer_flags. Thus, we need
+      # to add the ldflags here as well as in default_sanitizer_flags.
+      ":default_sanitizer_ldflags",
+    ]
+    deps = []
+    public_deps = []
+
+    data = [
+      "//tools/valgrind/asan/",
+    ]
     if (is_win) {
       exe = ".exe"
     } else {
       exe = ""
     }
-    data = [
-      "//tools/valgrind/asan/",
-      "$clang_base_path/bin/llvm-symbolizer${exe}",
-    ]
+    data += [ "$clang_base_path/bin/llvm-symbolizer${exe}" ]
     if (is_linux) {
       # llvm-symbolizer needs this.
       data += [ "$clang_base_path/lib/libstdc++.so.6" ]
@@ -47,6 +66,10 @@ group("deps") {
     if (use_prebuilt_instrumented_libraries ||
         use_locally_built_instrumented_libraries) {
       deps += [ "//third_party/instrumented_libraries:deps" ]
+    }
+    if (use_custom_libcxx) {
+      public_deps += [ "//buildtools/third_party/libc++:libcxx_proxy" ]
+      data += [ "$root_out_dir/libc++.so" ]
     }
 
     # ASAN is supported on iOS but the runtime library depends on the compiler
@@ -58,9 +81,7 @@ group("deps") {
       ]
     }
     if (is_mac || (is_ios && !use_xcode_clang)) {
-      public_deps = [
-        ":asan_runtime_bundle_data",
-      ]
+      public_deps += [ ":asan_runtime_bundle_data" ]
     }
   }
 }
@@ -253,6 +274,7 @@ config("default_sanitizer_ldflags") {
 
 config("common_sanitizer_flags") {
   cflags = []
+  cflags_cc = []
 
   # Sanitizers need line table info for stack traces. They don't need type info
   # or variable info, so we can leave that out to speed up the build (unless
@@ -280,14 +302,11 @@ config("common_sanitizer_flags") {
       cflags += [ "/Oy-" ]
     }
   }
-}
 
-# TODO(thomasanderson): Move this out of build/config/sanitizers.
-config("libcxx_flags") {
   if (use_custom_libcxx) {
     prefix = "//buildtools/third_party"
     include = "trunk/include"
-    cflags_cc = [
+    cflags_cc += [
       "-nostdinc++",
       "-isystem" + rebase_path("$prefix/libc++/$include", root_build_dir),
       "-isystem" + rebase_path("$prefix/libc++abi/$include", root_build_dir),
@@ -299,9 +318,9 @@ config("asan_flags") {
   cflags = []
   if (is_asan) {
     cflags += [ "-fsanitize=address" ]
-    if (!is_mac) {
+    if (!is_mac && !is_win) {
       cflags += [ "-fsanitize-address-use-after-scope" ]
-    } else {
+    } else if (!is_win) {
       # https://crbug.com/708707
       cflags += [ "-fno-sanitize-address-use-after-scope" ]
     }
@@ -538,7 +557,6 @@ config("fuzzing_build_mode") {
 
 all_sanitizer_configs = [
   ":common_sanitizer_flags",
-  ":libcxx_flags",
   ":coverage_flags",
   ":default_sanitizer_ldflags",
   ":asan_flags",

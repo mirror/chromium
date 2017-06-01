@@ -15,12 +15,15 @@
 
 namespace ash {
 
+class WmWindow;
+
 // Maintains a most recently used list of windows. This is used for window
 // cycling using Alt+Tab and overview mode.
-class ASH_EXPORT MruWindowTracker : public ::wm::ActivationChangeObserver,
-                                    public aura::WindowObserver {
+class ASH_EXPORT MruWindowTracker
+    : public aura::client::ActivationChangeObserver,
+      public aura::WindowObserver {
  public:
-  using WindowList = std::vector<aura::Window*>;
+  using WindowList = std::vector<WmWindow*>;
 
   MruWindowTracker();
   ~MruWindowTracker() override;
@@ -43,9 +46,9 @@ class ASH_EXPORT MruWindowTracker : public ::wm::ActivationChangeObserver,
  private:
   // Updates the mru_windows_ list to insert/move |active_window| at/to the
   // front.
-  void SetActiveWindow(aura::Window* active_window);
+  void SetActiveWindow(WmWindow* active_window);
 
-  // Overridden from wm::ActivationChangeObserver:
+  // Overridden from aura::client::ActivationChangeObserver:
   void OnWindowActivated(ActivationReason reason,
                          aura::Window* gained_active,
                          aura::Window* lost_active) override;
@@ -55,7 +58,7 @@ class ASH_EXPORT MruWindowTracker : public ::wm::ActivationChangeObserver,
 
   // List of windows that have been activated in containers that we cycle
   // through, sorted by most recently used.
-  std::list<aura::Window*> mru_windows_;
+  std::list<WmWindow*> mru_windows_;
 
   bool ignore_window_activations_;
 

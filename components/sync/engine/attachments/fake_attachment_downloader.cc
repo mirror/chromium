@@ -18,13 +18,13 @@ namespace syncer {
 FakeAttachmentDownloader::FakeAttachmentDownloader() {}
 
 FakeAttachmentDownloader::~FakeAttachmentDownloader() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 }
 
 void FakeAttachmentDownloader::DownloadAttachment(
     const AttachmentId& attachment_id,
     const DownloadCallback& callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   // This is happy fake downloader, it always successfully downloads empty
   // attachment.
   scoped_refptr<base::RefCountedMemory> data(new base::RefCountedBytes());

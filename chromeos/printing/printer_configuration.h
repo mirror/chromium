@@ -36,30 +36,12 @@ class CHROMEOS_EXPORT Printer {
     // Where possible, this is the same as the ipp/ldap
     // printer-make-and-model field.
     std::string effective_make_and_model;
-
-    // True if the printer should be auto-configured and a PPD is unnecessary.
-    bool autoconf = false;
   };
 
   // The location where the printer is stored.
   enum Source {
     SRC_USER_PREFS,
     SRC_POLICY,
-  };
-
-  // An enumeration of printer protocols.
-  // These values are written to logs.  New enum values can be added, but
-  // existing enums must never be renumbered or deleted and reused.
-  enum PrinterProtocol {
-    kUnknown = 0,
-    kUsb = 1,
-    kIpp = 2,
-    kIpps = 3,
-    kHttp = 4,
-    kHttps = 5,
-    kSocket = 6,
-    kLpd = 7,
-    kProtocolMax
   };
 
   // Constructs a printer object that is completely empty.
@@ -108,9 +90,6 @@ class CHROMEOS_EXPORT Printer {
   // IPP Everywhere.  Computed using information from |ppd_reference_| and
   // |uri_|.
   bool IsIppEverywhere() const;
-
-  // Returns the printer protocol the printer is configured with.
-  Printer::PrinterProtocol GetProtocol() const;
 
   Source source() const { return source_; }
   void set_source(const Source source) { source_ = source; }

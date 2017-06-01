@@ -5,24 +5,31 @@
 #import "ios/chrome/browser/snapshots/snapshot_overlay.h"
 
 #include "base/logging.h"
+#import "base/mac/scoped_nsobject.h"
 
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
+@implementation SnapshotOverlay {
+  base::scoped_nsobject<UIView> _view;
+}
 
-@implementation SnapshotOverlay
-
-@synthesize view = _view;
 @synthesize yOffset = _yOffset;
 
 - (instancetype)initWithView:(UIView*)view yOffset:(CGFloat)yOffset {
   self = [super init];
   if (self) {
     DCHECK(view);
-    _view = view;
+    _view.reset([view retain]);
     _yOffset = yOffset;
   }
   return self;
+}
+
+- (instancetype)init {
+  NOTREACHED();
+  return nil;
+}
+
+- (UIView*)view {
+  return _view;
 }
 
 @end

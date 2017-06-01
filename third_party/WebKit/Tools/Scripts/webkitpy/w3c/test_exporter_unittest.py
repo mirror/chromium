@@ -80,15 +80,15 @@ class TestExporterTest(unittest.TestCase):
             'pr_with_position',
             'pr_with_change_id',
             'create_pr',
-            'add_label "default"',
+            'add_label',
             'pr_with_position',
             'pr_with_change_id',
             'create_pr',
-            'add_label "default"',
+            'add_label',
             'pr_with_position',
             'pr_with_change_id',
             'create_pr',
-            'add_label "default"',
+            'add_label',
         ])
         self.assertEqual(test_exporter.wpt_github.pull_requests_created, [
             ('chromium-export-c881563d73', 'older fake text', 'older fake text'),
@@ -141,7 +141,7 @@ class TestExporterTest(unittest.TestCase):
             'merge_pull_request',
             'pr_with_position',
             'create_pr',
-            'add_label "default"',
+            'add_label',
             'pr_with_position',
             'pr_with_position',
             'get_pr_branch',
@@ -178,8 +178,7 @@ class TestExporterTest(unittest.TestCase):
         self.assertEqual(test_exporter.wpt_github.calls, [
             'pr_with_change_id',
             'create_pr',
-            'add_label "default"',
-            'add_label "do not merge yet"',
+            'add_label',
         ])
         self.assertEqual(test_exporter.wpt_github.pull_requests_created, [
             ('chromium-export-cl-1',
@@ -254,16 +253,9 @@ class TestExporterTest(unittest.TestCase):
 
     def test_attempts_to_merge_landed_gerrit_cl(self):
         host = MockHost()
-
-        def mock_command(args):
-            if args[1] != 'footers':
-                return ''
-            if args[2] == '--key':
-                return 'decafbad\n'
-            elif args[2] == '--position':
-                return 'refs/heads/master@{#475994}'
-
-        host.executive = MockExecutive(run_command_fn=mock_command)
+        host.executive = mock_git_commands({
+            'footers': 'decafbad',
+        })
         test_exporter = TestExporter(host, 'gh-username', 'gh-token', gerrit_user=None,
                                      gerrit_token=None, dry_run=False)
         test_exporter.wpt_github = MockWPTGitHub(pull_requests=[
@@ -280,7 +272,6 @@ class TestExporterTest(unittest.TestCase):
 
         self.assertEqual(test_exporter.wpt_github.calls, [
             'pr_with_position',
-            'pr_with_change_id',
             'get_pr_branch',
             'merge_pull_request',
             'delete_remote_branch',

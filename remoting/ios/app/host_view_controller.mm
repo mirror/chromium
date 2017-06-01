@@ -18,14 +18,13 @@
 #import "remoting/ios/session/remoting_client.h"
 
 #include "base/strings/sys_string_conversions.h"
-#include "remoting/client/gesture_interpreter.h"
 #include "remoting/client/input/keyboard_interpreter.h"
+#include "remoting/client/ui/gesture_interpreter.h"
 
 static const CGFloat kFabInset = 15.f;
 static const CGFloat kKeyboardAnimationTime = 0.3;
 
-@interface HostViewController ()<ClientKeyboardDelegate,
-                                 ClientGesturesDelegate> {
+@interface HostViewController ()<ClientKeyboardDelegate> {
   RemotingClient* _client;
   MDCFloatingButton* _floatingButton;
   ClientGestures* _clientGestures;
@@ -101,7 +100,6 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 
   _clientGestures =
       [[ClientGestures alloc] initWithView:self.view client:_client];
-  _clientGestures.delegate = self;
   [[NSNotificationCenter defaultCenter]
       addObserver:self
          selector:@selector(keyboardWillShow:)
@@ -200,16 +198,6 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 
 - (void)clientKeyboardShouldDelete {
   _client.keyboardInterpreter->HandleDeleteEvent(0);
-}
-
-#pragma mark - ClientGesturesDelegate
-
-- (void)keyboardShouldShow {
-  [self showKeyboard];
-}
-
-- (void)keyboardShouldHide {
-  [self hideKeyboard];
 }
 
 #pragma mark - Private

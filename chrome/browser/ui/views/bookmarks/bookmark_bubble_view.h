@@ -7,11 +7,11 @@
 
 #include <memory>
 
+#include "base/compiler_specific.h"
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
-#include "build/build_config.h"
 #include "chrome/browser/ui/bookmarks/recently_used_folders_combo_model.h"
-#include "chrome/browser/ui/desktop_ios_promotion/desktop_ios_promotion_footnote_delegate.h"
 #include "chrome/browser/ui/sync/bubble_sync_promo_delegate.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_bubble_delegate_view.h"
 #include "ui/views/controls/button/button.h"
@@ -26,12 +26,6 @@ namespace bookmarks {
 class BookmarkBubbleObserver;
 }
 
-#if defined(OS_WIN)
-namespace desktop_ios_promotion {
-enum class PromotionEntryPoint;
-}
-#endif
-
 namespace views {
 class LabelButton;
 class Textfield;
@@ -43,8 +37,7 @@ class Textfield;
 // instead use the static Show method.
 class BookmarkBubbleView : public LocationBarBubbleDelegateView,
                            public views::ButtonListener,
-                           public views::ComboboxListener,
-                           public DesktopIOSPromotionFootnoteDelegate {
+                           public views::ComboboxListener {
  public:
   // If |anchor_view| is null, |anchor_rect| is used to anchor the bubble and
   // |parent_window| is used to ensure the bubble closes if the parent closes.
@@ -66,40 +59,27 @@ class BookmarkBubbleView : public LocationBarBubbleDelegateView,
 
   ~BookmarkBubbleView() override;
 
-  // LocationBarBubbleDelegateView:
-  int GetDialogButtons() const override;
-  base::string16 GetDialogButtonLabel(ui::DialogButton button) const override;
-  View* GetInitiallyFocusedView() override;
-  base::string16 GetWindowTitle() const override;
+  // views::WidgetDelegate:
+  void WindowClosing() override;
+  bool AcceleratorPressed(const ui::Accelerator& accelerator) override;
   gfx::ImageSkia GetWindowIcon() override;
   bool ShouldShowWindowIcon() const override;
-  void WindowClosing() override;
-  views::View* CreateExtraView() override;
-  bool GetExtraViewPadding(int* padding) override;
-  views::View* CreateFootnoteView() override;
-  bool Cancel() override;
-  bool Accept() override;
-  bool Close() override;
-  void UpdateButton(views::LabelButton* button, ui::DialogButton type) override;
-  const char* GetClassName() const override;
-  void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
-
-  // views::ButtonListener:
-  void ButtonPressed(views::Button* sender, const ui::Event& event) override;
-
-  // views::ComboboxListener:
-  void OnPerformAction(views::Combobox* combobox) override;
-
-  // DesktopIOSPromotionFootnoteDelegate:
-  void OnIOSPromotionFootnoteLinkClicked() override;
 
  protected:
-  // LocationBarBubbleDelegateView:
+  // views::BubbleDialogDelegateView method.
   void Init() override;
+  base::string16 GetWindowTitle() const override;
 
  private:
   friend class BookmarkBubbleViewTest;
   friend class BookmarkBubbleViewBrowserTest;
+  FRIEND_TEST_ALL_PREFIXES(BookmarkBubbleViewTest, SyncPromoSignedIn);
+  FRIEND_TEST_ALL_PREFIXES(BookmarkBubbleViewTest, SyncPromoNotSignedIn);
+
+  // views::BubbleDialogDelegateView:
+  const char* GetClassName() const override;
+  View* GetInitiallyFocusedView() override;
+  View* CreateFootnoteView() override;
 
   // Creates a BookmarkBubbleView.
   BookmarkBubbleView(views::View* anchor_view,
@@ -109,22 +89,31 @@ class BookmarkBubbleView : public LocationBarBubbleDelegateView,
                      const GURL& url,
                      bool newly_bookmarked);
 
-  // Returns the name of the bookmark.
-  base::string16 GetBookmarkName();
+  // Returns the title to display.
+  base::string16 GetTitle();
+
+  // Overridden from views::View:
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
+
+  // Overridden from views::ButtonListener:
+  // Closes the bubble or opens the edit dialog.
+  void ButtonPressed(views::Button* sender, const ui::Event& event) override;
+
+  // Overridden from views::ComboboxListener:
+  void OnPerformAction(views::Combobox* combobox) override;
+
+  // Handle the message when the user presses a button.
+  void HandleButtonPressed(views::Button* sender);
 
   // Shows the BookmarkEditor.
   void ShowEditor();
 
-  // Sets the bookmark name and parent of the node.
+  // Sets the title and parent of the node.
   void ApplyEdits();
 
 #if defined(OS_WIN)
-  // Check eligibility to show the iOS promotion from a specific entry point.
-  bool IsIOSPromotionEligible(
-      desktop_ios_promotion::PromotionEntryPoint entry_point);
-
   // Shows the iOS promotion.
-  void ShowIOSPromotion(desktop_ios_promotion::PromotionEntryPoint entry_point);
+  void ShowIOSPromotion();
 #endif
 
   // The bookmark bubble, if we're showing one.
@@ -147,34 +136,37 @@ class BookmarkBubbleView : public LocationBarBubbleDelegateView,
 
   RecentlyUsedFoldersComboModel parent_model_;
 
-  // Button to bring up the editor.
-  views::LabelButton* edit_button_ = nullptr;
+  // Button for removing the bookmark.
+  views::LabelButton* remove_button_;
 
-  // Textfield showing the name of the bookmark.
-  views::Textfield* name_field_ = nullptr;
+  // Button to bring up the editor.
+  views::LabelButton* edit_button_;
+
+  // Button to close the window.
+  views::LabelButton* close_button_;
+
+  // Textfield showing the title of the bookmark.
+  views::Textfield* title_tf_;
 
   // Combobox showing a handful of folders the user can choose from, including
   // the current parent.
-  views::Combobox* parent_combobox_ = nullptr;
+  views::Combobox* parent_combobox_;
 
-  // The regular bookmark bubble contents, with all the edit fields and dialog
-  // buttons. TODO(tapted): Move the buttons to the DialogClientView.
-  views::View* bookmark_contents_view_ = nullptr;
+  // Bookmark details view, contains the details of the bookmark with controls
+  // to edit it.
+  std::unique_ptr<View> bookmark_details_view_;
 
   // iOS promotion view.
-  DesktopIOSPromotionBubbleView* ios_promo_view_ = nullptr;
-
-  // Footnote view.
-  views::View* footnote_view_ = nullptr;
+  DesktopIOSPromotionBubbleView* ios_promo_view_;
 
   // When the destructor is invoked should the bookmark be removed?
-  bool remove_bookmark_ = false;
+  bool remove_bookmark_;
 
   // When the destructor is invoked should edits be applied?
-  bool apply_edits_ = true;
+  bool apply_edits_;
 
   // Whether the Windows to iOS promotion is shown to the user.
-  bool is_showing_ios_promotion_ = false;
+  bool is_showing_ios_promotion_;
 
   DISALLOW_COPY_AND_ASSIGN(BookmarkBubbleView);
 };

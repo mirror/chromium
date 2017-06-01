@@ -32,7 +32,7 @@ class ASH_EXPORT ImeMenuTray : public TrayBackgroundView,
                                public keyboard::KeyboardControllerObserver,
                                public VirtualKeyboardObserver {
  public:
-  explicit ImeMenuTray(Shelf* shelf);
+  explicit ImeMenuTray(WmShelf* wm_shelf);
   ~ImeMenuTray() override;
 
   // Shows the IME menu bubble and highlights the button.
@@ -72,6 +72,10 @@ class ASH_EXPORT ImeMenuTray : public TrayBackgroundView,
   void OnMouseEnteredView() override;
   void OnMouseExitedView() override;
   base::string16 GetAccessibleNameForBubble() override;
+  void OnBeforeBubbleWidgetInit(
+      views::Widget* anchor_widget,
+      views::Widget* bubble_widget,
+      views::Widget::InitParams* params) const override;
   void HideBubble(const views::TrayBubbleView* bubble_view) override;
 
   // keyboard::KeyboardControllerObserver:

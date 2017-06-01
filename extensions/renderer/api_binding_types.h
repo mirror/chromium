@@ -14,9 +14,6 @@
 namespace extensions {
 namespace binding {
 
-// A value indicating an event has no maximum listener count.
-extern const int kNoListenerMax;
-
 // Types of changes for event listener registration.
 enum class EventListenersChanged {
   HAS_LISTENERS,  // The event had no listeners, and now does.

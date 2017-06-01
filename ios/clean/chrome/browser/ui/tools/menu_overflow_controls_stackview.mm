@@ -6,29 +6,19 @@
 
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_button+factory.h"
 
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
-
-namespace {
-const CGFloat kStackSpacing = 15.0;
-}
-
 @implementation MenuOverflowControlsStackView
 @synthesize shareButton = _shareButton;
 @synthesize reloadButton = _reloadButton;
 @synthesize stopButton = _stopButton;
-@synthesize starButton = _starButton;
 
 - (instancetype)init {
   if ((self = [super init])) {
+    // PLACEHOLDER: Buttons and UI config is not final and will be improved.
     [self setUpToolbarButtons];
     [self addArrangedSubview:self.shareButton];
-    [self addArrangedSubview:self.starButton];
     [self addArrangedSubview:self.stopButton];
     [self addArrangedSubview:self.reloadButton];
 
-    self.spacing = kStackSpacing;
     self.axis = UILayoutConstraintAxisHorizontal;
     self.distribution = UIStackViewDistributionFillEqually;
   }
@@ -46,9 +36,6 @@ const CGFloat kStackSpacing = 15.0;
 
   // Stop button.
   self.stopButton = [ToolbarButton stopToolbarButton];
-
-  // Star button.
-  self.starButton = [ToolbarButton starToolbarButton];
 }
 
 @end

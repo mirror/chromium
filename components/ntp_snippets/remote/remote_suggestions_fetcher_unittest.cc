@@ -30,7 +30,6 @@
 #include "components/variations/entropy_provider.h"
 #include "components/variations/variations_params_manager.h"
 #include "google_apis/gaia/fake_oauth2_token_service_delegate.h"
-#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "net/url_request/url_request_test_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -183,16 +182,14 @@ class DelegateCallingTestURLFetcherFactory
       int id,
       const GURL& url,
       net::URLFetcher::RequestType request_type,
-      net::URLFetcherDelegate* d,
-      net::NetworkTrafficAnnotationTag traffic_annotation) override {
+      net::URLFetcherDelegate* d) override {
     if (GetFetcherByID(id)) {
       LOG(WARNING) << "The ID " << id << " was already assigned to a fetcher."
                    << "Its delegate will thereforde be called right now.";
       DropAndCallDelegate(id);
     }
     fetchers_.push_back(id);
-    return TestURLFetcherFactory::CreateURLFetcher(id, url, request_type, d,
-                                                   traffic_annotation);
+    return TestURLFetcherFactory::CreateURLFetcher(id, url, request_type, d);
   }
 
   // Returns the raw pointer of the last created URL fetcher.
@@ -238,8 +235,7 @@ class FailingFakeURLFetcherFactory : public net::URLFetcherFactory {
       int id,
       const GURL& url,
       net::URLFetcher::RequestType request_type,
-      net::URLFetcherDelegate* d,
-      net::NetworkTrafficAnnotationTag traffic_annotation) override {
+      net::URLFetcherDelegate* d) override {
     return base::MakeUnique<net::FakeURLFetcher>(
         url, d, /*response_data=*/std::string(), net::HTTP_NOT_FOUND,
         net::URLRequestStatus::FAILED);

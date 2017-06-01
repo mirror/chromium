@@ -303,7 +303,7 @@ RootInlineBox* LayoutBlockFlow::ConstructLine(BidiRunList<BidiRun>& bidi_runs,
       continue;
 
     if (!root_has_selected_children &&
-        box->GetLineLayoutItem().GetSelectionState() != SelectionState::kNone)
+        box->GetLineLayoutItem().GetSelectionState() != SelectionNone)
       root_has_selected_children = true;
 
     // If we have no parent box yet, or if the run is not simply a sibling,
@@ -365,21 +365,21 @@ ETextAlign LayoutBlockFlow::TextAlignmentForLine(
   if (ends_with_soft_break)
     return alignment;
 
-  ETextAlignLast alignment_last = Style()->TextAlignLast();
+  TextAlignLast alignment_last = Style()->GetTextAlignLast();
   switch (alignment_last) {
-    case ETextAlignLast::kStart:
+    case kTextAlignLastStart:
       return ETextAlign::kStart;
-    case ETextAlignLast::kEnd:
+    case kTextAlignLastEnd:
       return ETextAlign::kEnd;
-    case ETextAlignLast::kLeft:
+    case kTextAlignLastLeft:
       return ETextAlign::kLeft;
-    case ETextAlignLast::kRight:
+    case kTextAlignLastRight:
       return ETextAlign::kRight;
-    case ETextAlignLast::kCenter:
+    case kTextAlignLastCenter:
       return ETextAlign::kCenter;
-    case ETextAlignLast::kJustify:
+    case kTextAlignLastJustify:
       return ETextAlign::kJustify;
-    case ETextAlignLast::kAuto:
+    case kTextAlignLastAuto:
       if (alignment == ETextAlign::kJustify)
         return ETextAlign::kStart;
       return alignment;
@@ -754,7 +754,7 @@ void LayoutBlockFlow::UpdateLogicalWidthForAlignment(
       break;
   }
   if (ShouldPlaceBlockDirectionScrollbarOnLogicalLeft())
-    logical_left += VerticalScrollbarWidthClampedToContentBox();
+    logical_left += VerticalScrollbarWidth();
 }
 
 static void UpdateLogicalInlinePositions(LayoutBlockFlow* block,
@@ -2526,11 +2526,8 @@ void LayoutBlockFlow::TryPlacingEllipsisOnAtomicInlines(
   for (InlineBox* box = ltr ? root->FirstChild() : root->LastChild(); box;
        box = ltr ? box->NextOnLine() : box->PrevOnLine()) {
     if (!box->GetLineLayoutItem().IsAtomicInlineLevel() ||
-        !box->GetLineLayoutItem().IsLayoutBlockFlow()) {
-      if (box->GetLineLayoutItem().IsText())
-        logical_left_offset += box->LogicalWidth();
+        !box->GetLineLayoutItem().IsLayoutBlockFlow())
       continue;
-    }
 
     RootInlineBox* first_root_box =
         LineLayoutBlockFlow(box->GetLineLayoutItem()).FirstRootBox();

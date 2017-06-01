@@ -217,7 +217,6 @@ bool SynchronizedMinidumpManager::AcquireLockFile() {
     LOG(ERROR) << "Lockfile did not parse correctly. ";
     if (!InitializeFiles() || !ParseFiles()) {
       LOG(ERROR) << "Failed to create a new lock file!";
-      ReleaseLockFile();
       return false;
     }
   }
@@ -285,10 +284,10 @@ bool SynchronizedMinidumpManager::InitializeFiles() {
   std::unique_ptr<base::DictionaryValue> metadata =
       base::MakeUnique<base::DictionaryValue>();
 
-  auto ratelimit_fields = base::MakeUnique<base::DictionaryValue>();
+  base::DictionaryValue* ratelimit_fields = new base::DictionaryValue();
+  metadata->Set(kLockfileRatelimitKey, base::WrapUnique(ratelimit_fields));
   ratelimit_fields->SetDouble(kLockfileRatelimitPeriodStartKey, 0.0);
   ratelimit_fields->SetInteger(kLockfileRatelimitPeriodDumpsKey, 0);
-  metadata->Set(kLockfileRatelimitKey, std::move(ratelimit_fields));
 
   std::unique_ptr<base::ListValue> dumps = base::MakeUnique<base::ListValue>();
 
@@ -318,7 +317,7 @@ void SynchronizedMinidumpManager::ReleaseLockFile() {
   // flock is associated with the fd entry in the open fd table, so closing
   // all fd's will release the lock. To be safe, we explicitly unlock.
   if (lockfile_fd_ >= 0) {
-    if (dumps_ && metadata_)
+    if (dumps_)
       WriteFiles(dumps_.get(), metadata_.get());
 
     UnlockAndCloseFile(lockfile_fd_);

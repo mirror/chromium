@@ -1133,7 +1133,8 @@ void CertificatesHandler::RejectCallbackWithImportError(
   std::unique_ptr<base::DictionaryValue> error_info(new base::DictionaryValue);
   error_info->SetString(kErrorTitle, title);
   error_info->SetString(kErrorDescription, error);
-  error_info->Set(kCertificateErrors, std::move(cert_error_list));
+  error_info->Set(kCertificateErrors,
+                  base::WrapUnique(cert_error_list.release()));
   RejectCallback(*error_info);
 }
 

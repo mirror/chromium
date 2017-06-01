@@ -90,7 +90,6 @@ LayerTreeImpl::LayerTreeImpl(
       viewport_size_invalid_(false),
       needs_update_draw_properties_(true),
       needs_full_tree_sync_(true),
-      needs_surface_ids_sync_(false),
       next_activation_forces_redraw_(false),
       has_ever_been_drawn_(false),
       handle_visibility_changed_(false),
@@ -178,11 +177,11 @@ void LayerTreeImpl::DidUpdateScrollOffset(int layer_id) {
   // If pending tree topology changed and we still want to notify the pending
   // tree about scroll offset in the active tree, we may not find the
   // corresponding pending layer.
-  if (auto* layer = LayerById(layer_id)) {
+  if (LayerById(layer_id)) {
     // TODO(sunxd): when we have a layer_id to property_tree index map in
     // property trees, use the transform_id parameter instead of looking for
     // indices from LayerImpls.
-    transform_id = layer->transform_tree_index();
+    transform_id = LayerById(layer_id)->transform_tree_index();
   } else {
     DCHECK(!IsActiveTree());
     return;
@@ -219,6 +218,9 @@ void LayerTreeImpl::DidUpdateScrollState(int layer_id) {
 
   int scroll_layer_id, clip_layer_id;
   if (IsViewportLayerId(layer_id)) {
+    if (!InnerViewportContainerLayer())
+      return;
+
     // For scrollbar purposes, a change to any of the four viewport layers
     // should affect the scrollbars tied to the outermost layers, which express
     // the sum of the entire viewport.
@@ -255,15 +257,11 @@ void LayerTreeImpl::UpdateScrollbars(int scroll_layer_id, int clip_layer_id) {
     return;
 
   gfx::ScrollOffset current_offset = scroll_layer->CurrentScrollOffset();
-  float viewport_vertical_adjust = 0;
-
-  bool is_viewport_scrollbar = scroll_layer->is_viewport_layer_type();
-  if (is_viewport_scrollbar) {
+  if (IsViewportLayerId(scroll_layer_id)) {
     current_offset += InnerViewportScrollLayer()->CurrentScrollOffset();
     if (OuterViewportContainerLayer())
       clip_size.SetToMin(OuterViewportContainerLayer()->BoundsForScrolling());
     clip_size.Scale(1 / current_page_scale_factor());
-    viewport_vertical_adjust = clip_layer->ViewportBoundsDelta().y();
   }
 
   bool y_offset_did_change = false;
@@ -277,10 +275,10 @@ void LayerTreeImpl::UpdateScrollbars(int scroll_layer_id, int clip_layer_id) {
       scrollbar->SetClipLayerLength(clip_size.height());
       scrollbar->SetScrollLayerLength(scroll_size.height());
     }
-    scrollbar->SetVerticalAdjust(viewport_vertical_adjust);
+    scrollbar->SetVerticalAdjust(clip_layer->ViewportBoundsDelta().y());
   }
 
-  if (y_offset_did_change && is_viewport_scrollbar)
+  if (y_offset_did_change && IsViewportLayerId(scroll_layer_id))
     TRACE_COUNTER_ID1("cc", "scroll_offset_y", scroll_layer->id(),
                       current_offset.y());
 }
@@ -423,20 +421,10 @@ void LayerTreeImpl::PushPropertyTreesTo(LayerTreeImpl* target_tree) {
   target_tree->SetCurrentlyScrollingNode(scrolling_node);
 }
 
-void LayerTreeImpl::PushSurfaceIdsTo(LayerTreeImpl* target_tree) {
-  if (needs_surface_ids_sync()) {
-    target_tree->ClearSurfaceLayerIds();
-    target_tree->SetSurfaceLayerIds(SurfaceLayerIds());
-    // Reset for next update
-    set_needs_surface_ids_sync(false);
-  }
-}
-
 void LayerTreeImpl::PushPropertiesTo(LayerTreeImpl* target_tree) {
   // The request queue should have been processed and does not require a push.
   DCHECK_EQ(ui_resource_request_queue_.size(), 0u);
 
-  PushSurfaceIdsTo(target_tree);
   target_tree->property_trees()->scroll_tree.PushScrollUpdatesFromPendingTree(
       &property_trees_, target_tree);
 
@@ -623,9 +611,14 @@ void LayerTreeImpl::SetTransformMutated(ElementId element_id,
   DCHECK_EQ(1u, property_trees()->element_id_to_transform_node_index.count(
                     element_id));
   element_id_to_transform_animations_[element_id] = transform;
-  if (property_trees()->transform_tree.OnTransformAnimated(element_id,
-                                                           transform))
-    set_needs_update_draw_properties();
+  if (!property_trees()->transform_tree.OnTransformAnimated(element_id,
+                                                            transform))
+    return;
+
+  if (LayerImpl* layer = LayerByElementId(element_id))
+    layer->set_was_ever_ready_since_last_transform_animation(false);
+
+  set_needs_update_draw_properties();
 }
 
 void LayerTreeImpl::SetOpacityMutated(ElementId element_id, float opacity) {
@@ -669,14 +662,10 @@ void LayerTreeImpl::SetCurrentlyScrollingNode(ScrollNode* node) {
   ElementId new_element_id = node ? node->element_id : ElementId();
 
 #if DCHECK_IS_ON()
-  // In SPv2 scrolling is driven solely by element id and
-  // layer/element-id maps should not be required.
-  if (!settings().use_layer_lists) {
-    int old_layer_id = old_node ? old_node->owning_layer_id : Layer::INVALID_ID;
-    int new_layer_id = node ? node->owning_layer_id : Layer::INVALID_ID;
-    DCHECK(old_layer_id == LayerIdByElementId(old_element_id));
-    DCHECK(new_layer_id == LayerIdByElementId(new_element_id));
-  }
+  int old_layer_id = old_node ? old_node->owning_layer_id : Layer::INVALID_ID;
+  int new_layer_id = node ? node->owning_layer_id : Layer::INVALID_ID;
+  DCHECK(old_layer_id == LayerIdByElementId(old_element_id));
+  DCHECK(new_layer_id == LayerIdByElementId(new_element_id));
 #endif
 
   if (old_element_id == new_element_id)
@@ -1160,7 +1149,7 @@ bool LayerTreeImpl::UpdateDrawProperties(bool update_lcd_text) {
     size_t layers_updated_count = 0;
     bool tile_priorities_updated = false;
     for (PictureLayerImpl* layer : picture_layers_) {
-      if (!layer->HasValidTilePriorities())
+      if (!layer->contributes_to_drawn_render_surface())
         continue;
       ++layers_updated_count;
       tile_priorities_updated |= layer->UpdateTiles();
@@ -1234,24 +1223,7 @@ LayerImpl* LayerTreeImpl::LayerById(int id) const {
   return iter != layer_id_map_.end() ? iter->second : nullptr;
 }
 
-void LayerTreeImpl::SetSurfaceLayerIds(
-    const base::flat_set<SurfaceId>& surface_layer_ids) {
-  DCHECK(surface_layer_ids_.empty());
-  surface_layer_ids_ = surface_layer_ids;
-  needs_surface_ids_sync_ = true;
-}
-
-const base::flat_set<SurfaceId>& LayerTreeImpl::SurfaceLayerIds() const {
-  return surface_layer_ids_;
-}
-
-void LayerTreeImpl::ClearSurfaceLayerIds() {
-  surface_layer_ids_.clear();
-  needs_surface_ids_sync_ = true;
-}
-
 void LayerTreeImpl::AddLayerShouldPushProperties(LayerImpl* layer) {
-  DCHECK(!IsActiveTree()) << "The active tree does not push layer properties";
   layers_that_should_push_properties_.insert(layer);
 }
 
@@ -1770,6 +1742,19 @@ void LayerTreeImpl::UnregisterScrollLayer(LayerImpl* layer) {
   clip_scroll_map_.erase(layer->scroll_clip_layer_id());
 }
 
+void LayerTreeImpl::AddSurfaceLayer(LayerImpl* layer) {
+  DCHECK(std::find(surface_layers_.begin(), surface_layers_.end(), layer) ==
+         surface_layers_.end());
+  surface_layers_.push_back(layer);
+}
+
+void LayerTreeImpl::RemoveSurfaceLayer(LayerImpl* layer) {
+  LayerImplList::iterator it =
+      std::find(surface_layers_.begin(), surface_layers_.end(), layer);
+  DCHECK(it != surface_layers_.end());
+  surface_layers_.erase(it);
+}
+
 static bool PointHitsRect(
     const gfx::PointF& screen_space_point,
     const gfx::Transform& local_space_to_screen_space_transform,
@@ -1920,32 +1905,37 @@ static void FindClosestMatchingLayer(const gfx::PointF& screen_space_point,
                                      const Functor& func,
                                      FindClosestMatchingLayerState* state) {
   // We want to iterate from front to back when hit testing.
-  for (auto* layer : base::Reversed(*root_layer->layer_tree_impl())) {
-    if (!func(layer))
-      continue;
+  {
+    base::ElapsedTimer timer;
+    for (auto* layer : base::Reversed(*root_layer->layer_tree_impl())) {
+      if (!func(layer))
+        continue;
 
-    float distance_to_intersection = 0.f;
-    bool hit = false;
-    if (layer->Is3dSorted())
-      hit =
-          PointHitsLayer(layer, screen_space_point, &distance_to_intersection);
-    else
-      hit = PointHitsLayer(layer, screen_space_point, nullptr);
+      float distance_to_intersection = 0.f;
+      bool hit = false;
+      if (layer->Is3dSorted())
+        hit = PointHitsLayer(layer, screen_space_point,
+                             &distance_to_intersection);
+      else
+        hit = PointHitsLayer(layer, screen_space_point, nullptr);
 
-    if (!hit)
-      continue;
+      if (!hit)
+        continue;
 
-    bool in_front_of_previous_candidate =
-        state->closest_match &&
-        layer->GetSortingContextId() ==
-            state->closest_match->GetSortingContextId() &&
-        distance_to_intersection >
-            state->closest_distance + std::numeric_limits<float>::epsilon();
+      bool in_front_of_previous_candidate =
+          state->closest_match &&
+          layer->GetSortingContextId() ==
+              state->closest_match->GetSortingContextId() &&
+          distance_to_intersection >
+              state->closest_distance + std::numeric_limits<float>::epsilon();
 
-    if (!state->closest_match || in_front_of_previous_candidate) {
-      state->closest_distance = distance_to_intersection;
-      state->closest_match = layer;
+      if (!state->closest_match || in_front_of_previous_candidate) {
+        state->closest_distance = distance_to_intersection;
+        state->closest_match = layer;
+      }
     }
+    UMA_HISTOGRAM_COUNTS("Compositing.LayerTreeImpl.FindClosestMatchingLayerUs",
+                         timer.Elapsed().InMicroseconds());
   }
 }
 

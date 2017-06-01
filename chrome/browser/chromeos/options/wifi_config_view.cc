@@ -59,8 +59,8 @@ class ComboboxWithWidth : public views::Combobox {
         width_(width) {
   }
   ~ComboboxWithWidth() override {}
-  gfx::Size CalculatePreferredSize() const override {
-    gfx::Size size = Combobox::CalculatePreferredSize();
+  gfx::Size GetPreferredSize() const override {
+    gfx::Size size = Combobox::GetPreferredSize();
     size.set_width(width_);
     return size;
   }

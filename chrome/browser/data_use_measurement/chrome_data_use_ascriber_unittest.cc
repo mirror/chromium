@@ -92,28 +92,32 @@ class ChromeDataUseAscriberTest : public testing::Test {
 };
 
 TEST_F(ChromeDataUseAscriberTest, NoRecorderWithoutFrame) {
+  if (content::IsBrowserSideNavigationEnabled())
+    return;
+
   std::unique_ptr<net::URLRequest> request = CreateNewRequest(
       "http://test.com", true, kRequestId, kRenderProcessId, kRenderFrameId);
 
-  // Main frame request causes a recorder to be created.
+  // Main frame request should not cause a recorder to be created, since the
+  // frame does not exist.
   ascriber()->OnBeforeUrlRequest(request.get());
-  EXPECT_EQ(1u, recorders().size());
+  EXPECT_EQ(0u, recorders().size());
 
   // Frame is created.
   ascriber()->RenderFrameCreated(kRenderProcessId, kRenderFrameId, -1, -1);
-  EXPECT_EQ(2u, recorders().size());
+  EXPECT_EQ(1u, recorders().size());
 
-  // Same mainframe request should not cause another recorder to be created.
+  // Request should cause a recorder to be created.
   ascriber()->OnBeforeUrlRequest(request.get());
   EXPECT_EQ(2u, recorders().size());
 
   ascriber()->RenderFrameDeleted(kRenderProcessId, kRenderFrameId, -1, -1);
-  ascriber()->OnUrlRequestDestroyed(request.get());
-
-  EXPECT_EQ(1u, recorders().size());
 }
 
 TEST_F(ChromeDataUseAscriberTest, RenderFrameShownAndHidden) {
+  if (content::IsBrowserSideNavigationEnabled())
+    return;
+
   std::unique_ptr<net::URLRequest> request = CreateNewRequest(
       "http://test.com", true, kRequestId, kRenderProcessId, kRenderFrameId);
 
@@ -137,6 +141,9 @@ TEST_F(ChromeDataUseAscriberTest, RenderFrameShownAndHidden) {
 }
 
 TEST_F(ChromeDataUseAscriberTest, RenderFrameHiddenAndShown) {
+  if (content::IsBrowserSideNavigationEnabled())
+    return;
+
   std::unique_ptr<net::URLRequest> request = CreateNewRequest(
       "http://test.com", true, kRequestId, kRenderProcessId, kRenderFrameId);
 
@@ -160,6 +167,9 @@ TEST_F(ChromeDataUseAscriberTest, RenderFrameHiddenAndShown) {
 }
 
 TEST_F(ChromeDataUseAscriberTest, RenderFrameHostChanged) {
+  if (content::IsBrowserSideNavigationEnabled())
+    return;
+
   std::unique_ptr<net::URLRequest> request = CreateNewRequest(
       "http://test.com", true, kRequestId, kRenderProcessId, kRenderFrameId);
 
@@ -187,6 +197,9 @@ TEST_F(ChromeDataUseAscriberTest, RenderFrameHostChanged) {
 }
 
 TEST_F(ChromeDataUseAscriberTest, MainFrameNavigation) {
+  if (content::IsBrowserSideNavigationEnabled())
+    return;
+
   std::unique_ptr<net::URLRequest> request = CreateNewRequest(
       "http://test.com", true, kRequestId, kRenderProcessId, kRenderFrameId);
 
@@ -228,6 +241,9 @@ TEST_F(ChromeDataUseAscriberTest, MainFrameNavigation) {
 }
 
 TEST_F(ChromeDataUseAscriberTest, FailedMainFrameNavigation) {
+  if (content::IsBrowserSideNavigationEnabled())
+    return;
+
   std::unique_ptr<net::URLRequest> request = CreateNewRequest(
       "http://test.com", true, kRequestId, kRenderProcessId, kRenderFrameId);
 
@@ -251,6 +267,9 @@ TEST_F(ChromeDataUseAscriberTest, FailedMainFrameNavigation) {
 
 TEST_F(ChromeDataUseAscriberTest, PageLoadObserverNotified) {
   // TODO(rajendrant): Handle PlzNavigate (http://crbug/664233).
+  if (content::IsBrowserSideNavigationEnabled())
+    return;
+
   MockPageLoadObserver mock_observer;
   ascriber()->AddObserver(&mock_observer);
 

@@ -131,10 +131,10 @@ class PersonalDataManager : public KeyedService,
       const CreditCard& imported_credit_card);
 
   // Adds |profile| to the web database.
-  virtual void AddProfile(const AutofillProfile& profile);
+  void AddProfile(const AutofillProfile& profile);
 
   // Updates |profile| which already exists in the web database.
-  virtual void UpdateProfile(const AutofillProfile& profile);
+  void UpdateProfile(const AutofillProfile& profile);
 
   // Removes the profile or credit card represented by |guid|.
   virtual void RemoveByGUID(const std::string& guid);
@@ -183,10 +183,6 @@ class PersonalDataManager : public KeyedService,
   // Returns the credit card with the specified |guid|, or nullptr if there is
   // no credit card with the specified |guid|.
   virtual CreditCard* GetCreditCardByGUID(const std::string& guid);
-
-  // Returns the credit card with the specified |number|, or nullptr if there is
-  // no credit card with the specified |number|.
-  virtual CreditCard* GetCreditCardByNumber(const std::string& number);
 
   // Gets the field types availabe in the stored address and credit card data.
   void GetNonEmptyTypes(ServerFieldTypeSet* non_empty_types);

@@ -8,8 +8,8 @@
             document.body.appendChild(localIframeElement);
 
             var result = document.getElementById("result");
-            var frameWindow = document.getElementById("myFrame").contentWindow;
-            if (frameWindow && frameWindow.location != "about:blank")
+            var myFrameDocument = document.getElementById("myFrame").contentDocument;
+            if (myFrameDocument)
                 result.innerHTML = "Test Failed: Local page remotely loaded into iFrame.";
             else
                 result.innerHTML = "Test Passed. Local page not remotely loaded into iFrame.";

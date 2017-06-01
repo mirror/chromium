@@ -27,7 +27,6 @@ import org.chromium.chrome.browser.ApplicationLifetime;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.firstrun.FirstRunGlueImpl;
-import org.chromium.chrome.browser.omnibox.OmniboxPlaceholderFieldTrial;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.tabmodel.DocumentModeAssassin;
 import org.chromium.chrome.browser.webapps.ChromeWebApkHost;
@@ -48,7 +47,6 @@ public class FeatureUtilities {
     private static Boolean sHasGoogleAccountAuthenticator;
     private static Boolean sHasRecognitionIntentHandler;
     private static Boolean sChromeHomeEnabled;
-    private static String sChromeHomeSwipeLogicType;
 
     private static String sCachedHerbFlavor;
     private static boolean sIsHerbFlavorCached;
@@ -190,7 +188,6 @@ public class FeatureUtilities {
         ChromeWebApkHost.cacheEnabledStateForNextLaunch();
         cacheChromeHomeEnabled();
         FirstRunGlueImpl.cacheFirstRunPrefs();
-        OmniboxPlaceholderFieldTrial.cacheOmniboxPlaceholderGroup();
     }
 
     /**
@@ -270,22 +267,7 @@ public class FeatureUtilities {
      * @return Whether or not the expand button for Chrome Home is enabled.
      */
     public static boolean isChromeHomeExpandButtonEnabled() {
-        if (!ChromeFeatureList.isInitialized()) return false;
         return ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_EXPAND_BUTTON);
-    }
-
-    /**
-     * @return The type of swipe logic used for opening the bottom sheet in Chrome Home. Null is
-     *         returned if the command line is not initialized or no experiment is specified.
-     */
-    public static String getChromeHomeSwipeLogicType() {
-        if (sChromeHomeSwipeLogicType == null && CommandLine.isInitialized()) {
-            CommandLine instance = CommandLine.getInstance();
-            sChromeHomeSwipeLogicType =
-                    instance.getSwitchValue(ChromeSwitches.CHROME_HOME_SWIPE_LOGIC);
-        }
-
-        return sChromeHomeSwipeLogicType;
     }
 
     private static native void nativeSetCustomTabVisible(boolean visible);

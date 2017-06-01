@@ -5,11 +5,10 @@
 #include "core/paint/PaintTiming.h"
 
 #include "core/dom/Document.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/loader/DocumentLoader.h"
-#include "core/loader/ProgressTracker.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
 #include "core/timing/DOMWindowPerformance.h"
@@ -91,7 +90,7 @@ void PaintTiming::SetFirstMeaningfulPaintCandidate(double timestamp) {
   if (first_meaningful_paint_candidate_)
     return;
   first_meaningful_paint_candidate_ = timestamp;
-  if (GetFrame() && GetFrame()->View() && !GetFrame()->View()->IsAttached()) {
+  if (GetFrame() && GetFrame()->View() && !GetFrame()->View()->Parent()) {
     GetFrame()->FrameScheduler()->OnFirstMeaningfulPaint();
   }
 }
@@ -162,7 +161,6 @@ void PaintTiming::SetFirstContentfulPaint(double stamp) {
   TRACE_EVENT_INSTANT1("loading,rail,devtools.timeline", "firstContentfulPaint",
                        TRACE_EVENT_SCOPE_PROCESS, "frame", GetFrame());
   RegisterNotifySwapTime(PaintEvent::kFirstContentfulPaint);
-  GetFrame()->Loader().Progress().DidFirstContentfulPaint();
 }
 
 void PaintTiming::RegisterNotifySwapTime(PaintEvent event) {

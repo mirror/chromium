@@ -119,8 +119,8 @@ void StyleBuilder::ApplyProperty(CSSPropertyID id,
     bool omit_animation_tainted =
         CSSAnimations::IsAnimationAffectingProperty(id);
     const CSSValue* resolved_value =
-        CSSVariableResolver(state).ResolveVariableReferences(
-            id, value, omit_animation_tainted);
+        CSSVariableResolver::ResolveVariableReferences(state, id, value,
+                                                       omit_animation_tainted);
     ApplyProperty(id, state, *resolved_value);
 
     if (!state.Style()->HasVariableReferenceFromNonInheritedProperty() &&
@@ -372,7 +372,7 @@ void StyleBuilderFunctions::applyValueCSSPropertySize(StyleResolverState& state,
                                                       const CSSValue& value) {
   state.Style()->ResetPageSizeType();
   FloatSize size;
-  PageSizeType page_size_type = PageSizeType::kAuto;
+  PageSizeType page_size_type = PAGE_SIZE_AUTO;
   const CSSValueList& list = ToCSSValueList(value);
   if (list.length() == 2) {
     // <length>{2} | <page-size> <orientation>
@@ -394,14 +394,14 @@ void StyleBuilderFunctions::applyValueCSSPropertySize(StyleResolverState& state,
       if (ToCSSIdentifierValue(second).GetValueID() == CSSValueLandscape)
         size = size.TransposedSize();
     }
-    page_size_type = PageSizeType::kResolved;
+    page_size_type = PAGE_SIZE_RESOLVED;
   } else {
     DCHECK_EQ(list.length(), 1U);
     // <length> | auto | <page-size> | [ portrait | landscape]
     const CSSValue& first = list.Item(0);
     if (first.IsPrimitiveValue() && ToCSSPrimitiveValue(first).IsLength()) {
       // <length>
-      page_size_type = PageSizeType::kResolved;
+      page_size_type = PAGE_SIZE_RESOLVED;
       float width = ToCSSPrimitiveValue(first).ComputeLength<float>(
           state.CssToLengthConversionData().CopyWithAdjustedZoom(1.0));
       size = FloatSize(width, width);
@@ -409,17 +409,17 @@ void StyleBuilderFunctions::applyValueCSSPropertySize(StyleResolverState& state,
       const CSSIdentifierValue& ident = ToCSSIdentifierValue(first);
       switch (ident.GetValueID()) {
         case CSSValueAuto:
-          page_size_type = PageSizeType::kAuto;
+          page_size_type = PAGE_SIZE_AUTO;
           break;
         case CSSValuePortrait:
-          page_size_type = PageSizeType::kPortrait;
+          page_size_type = PAGE_SIZE_AUTO_PORTRAIT;
           break;
         case CSSValueLandscape:
-          page_size_type = PageSizeType::kLandscape;
+          page_size_type = PAGE_SIZE_AUTO_LANDSCAPE;
           break;
         default:
           // <page-size>
-          page_size_type = PageSizeType::kResolved;
+          page_size_type = PAGE_SIZE_RESOLVED;
           size = GetPageSizeFromName(ident);
       }
     }
@@ -486,10 +486,10 @@ void StyleBuilderFunctions::applyValueCSSPropertyTextIndent(
               .ConvertToLength(state.CssToLengthConversionData());
     } else if (ToCSSIdentifierValue(*list_value).GetValueID() ==
                CSSValueEachLine) {
-      text_indent_line_value = TextIndentLine::kEachLine;
+      text_indent_line_value = kTextIndentEachLine;
     } else if (ToCSSIdentifierValue(*list_value).GetValueID() ==
                CSSValueHanging) {
-      text_indent_type_value = TextIndentType::kHanging;
+      text_indent_type_value = kTextIndentHanging;
     } else {
       NOTREACHED();
     }
@@ -612,8 +612,8 @@ void StyleBuilderFunctions::applyValueCSSPropertyWebkitTextEmphasisStyle(
   }
 
   if (value.IsStringValue()) {
-    state.Style()->SetTextEmphasisFill(TextEmphasisFill::kFilled);
-    state.Style()->SetTextEmphasisMark(TextEmphasisMark::kCustom);
+    state.Style()->SetTextEmphasisFill(kTextEmphasisFillFilled);
+    state.Style()->SetTextEmphasisMark(kTextEmphasisMarkCustom);
     state.Style()->SetTextEmphasisCustomMark(
         AtomicString(ToCSSStringValue(value).Value()));
     return;
@@ -627,9 +627,9 @@ void StyleBuilderFunctions::applyValueCSSPropertyWebkitTextEmphasisStyle(
       identifier_value.GetValueID() == CSSValueOpen) {
     state.Style()->SetTextEmphasisFill(
         identifier_value.ConvertTo<TextEmphasisFill>());
-    state.Style()->SetTextEmphasisMark(TextEmphasisMark::kAuto);
+    state.Style()->SetTextEmphasisMark(kTextEmphasisMarkAuto);
   } else {
-    state.Style()->SetTextEmphasisFill(TextEmphasisFill::kFilled);
+    state.Style()->SetTextEmphasisFill(kTextEmphasisFillFilled);
     state.Style()->SetTextEmphasisMark(
         identifier_value.ConvertTo<TextEmphasisMark>());
   }
@@ -827,14 +827,14 @@ void StyleBuilderFunctions::applyValueCSSPropertyTextOrientation(
     StyleResolverState& state,
     const CSSValue& value) {
   state.SetTextOrientation(
-      ToCSSIdentifierValue(value).ConvertTo<ETextOrientation>());
+      ToCSSIdentifierValue(value).ConvertTo<TextOrientation>());
 }
 
 void StyleBuilderFunctions::applyValueCSSPropertyWebkitTextOrientation(
     StyleResolverState& state,
     const CSSValue& value) {
   state.SetTextOrientation(
-      ToCSSIdentifierValue(value).ConvertTo<ETextOrientation>());
+      ToCSSIdentifierValue(value).ConvertTo<TextOrientation>());
 }
 
 void StyleBuilderFunctions::applyValueCSSPropertyVariable(

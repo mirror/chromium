@@ -48,11 +48,11 @@ using base::scoped_nsobject;
 }
 
 - (CBUUID*)UUID {
-  return _UUID;
+  return _UUID.get();
 }
 
 - (NSData*)value {
-  return _value;
+  return _value.get();
 }
 
 - (CBDescriptor*)descriptor {

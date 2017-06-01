@@ -8,7 +8,7 @@
 #include <memory>
 #include <string>
 
-#include "base/sequence_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "components/reading_list/core/reading_list_model_storage.h"
 #include "components/reading_list/core/reading_list_store_delegate.h"
 #include "components/sync/model/model_error.h"
@@ -21,7 +21,8 @@ class MutableDataBatch;
 class ReadingListModel;
 
 // A ReadingListModelStorage storing and syncing data in protobufs.
-class ReadingListStore : public ReadingListModelStorage {
+class ReadingListStore : public ReadingListModelStorage,
+                         public base::NonThreadSafe {
   using StoreFactoryFunction = base::Callback<void(
       const syncer::ModelTypeStore::InitCallback& callback)>;
 
@@ -166,8 +167,6 @@ class ReadingListStore : public ReadingListModelStorage {
   std::unique_ptr<syncer::ModelTypeStore::WriteBatch> batch_;
 
   base::Clock* clock_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(ReadingListStore);
 };

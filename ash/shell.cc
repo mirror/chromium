@@ -54,10 +54,11 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
-#include "ash/shelf/shelf.h"
+#include "ash/session/session_state_delegate.h"
 #include "ash/shelf/shelf_controller.h"
 #include "ash/shelf/shelf_model.h"
 #include "ash/shelf/shelf_window_watcher.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell_delegate.h"
 #include "ash/shell_init_params.h"
 #include "ash/shell_observer.h"
@@ -101,6 +102,7 @@
 #include "ash/wm/maximize_mode/maximize_mode_window_manager.h"
 #include "ash/wm/mru_window_tracker.h"
 #include "ash/wm/overlay_event_filter.h"
+#include "ash/wm/overview/scoped_overview_animation_settings_factory_aura.h"
 #include "ash/wm/overview/window_selector_controller.h"
 #include "ash/wm/power_button_controller.h"
 #include "ash/wm/resize_shadow_controller.h"
@@ -117,6 +119,7 @@
 #include "ash/wm/window_properties.h"
 #include "ash/wm/window_util.h"
 #include "ash/wm/workspace_controller.h"
+#include "ash/wm_window.h"
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
@@ -250,15 +253,15 @@ void Shell::DeleteInstance() {
 // static
 RootWindowController* Shell::GetPrimaryRootWindowController() {
   CHECK(HasInstance());
-  return RootWindowController::ForWindow(GetPrimaryRootWindow());
+  return GetRootWindowController(GetPrimaryRootWindow());
 }
 
 // static
 Shell::RootWindowControllerList Shell::GetAllRootWindowControllers() {
   CHECK(HasInstance());
   RootWindowControllerList root_window_controllers;
-  for (aura::Window* root : GetAllRootWindows())
-    root_window_controllers.push_back(RootWindowController::ForWindow(root));
+  for (WmWindow* root_window : instance_->shell_port_->GetAllRootWindows())
+    root_window_controllers.push_back(root_window->GetRootWindowController());
   return root_window_controllers;
 }
 
@@ -266,9 +269,9 @@ Shell::RootWindowControllerList Shell::GetAllRootWindowControllers() {
 RootWindowController* Shell::GetRootWindowControllerWithDisplayId(
     int64_t display_id) {
   CHECK(HasInstance());
-  aura::Window* root =
+  aura::Window* root_window =
       instance_->shell_port_->GetRootWindowForDisplayId(display_id);
-  return root ? RootWindowController::ForWindow(root) : nullptr;
+  return GetRootWindowController(root_window);
 }
 
 // static
@@ -289,7 +292,10 @@ aura::Window* Shell::GetRootWindowForNewWindows() {
 // static
 aura::Window::Windows Shell::GetAllRootWindows() {
   CHECK(HasInstance());
-  return instance_->shell_port_->GetAllRootWindows();
+  aura::Window::Windows windows;
+  for (WmWindow* window : instance_->shell_port_->GetAllRootWindows())
+    windows.push_back(window->aura_window());
+  return windows;
 }
 
 // static
@@ -334,7 +340,7 @@ views::NonClientFrameView* Shell::CreateDefaultNonClientFrameView(
 
 void Shell::SetDisplayWorkAreaInsets(Window* contains,
                                      const gfx::Insets& insets) {
-  shell_port_->SetDisplayWorkAreaInsets(contains, insets);
+  shell_port_->SetDisplayWorkAreaInsets(WmWindow::Get(contains), insets);
 }
 
 void Shell::OnCastingSessionStartedOrStopped(bool started) {
@@ -342,7 +348,7 @@ void Shell::OnCastingSessionStartedOrStopped(bool started) {
     observer.OnCastingSessionStartedOrStopped(started);
 }
 
-void Shell::OnRootWindowAdded(aura::Window* root_window) {
+void Shell::OnRootWindowAdded(WmWindow* root_window) {
   for (auto& observer : shell_observers_)
     observer.OnRootWindowAdded(root_window);
 }
@@ -377,13 +383,13 @@ ShelfModel* Shell::shelf_model() {
   return shelf_controller_->model();
 }
 
-::wm::ActivationClient* Shell::activation_client() {
+aura::client::ActivationClient* Shell::activation_client() {
   return focus_controller_.get();
 }
 
 void Shell::UpdateShelfVisibility() {
-  for (aura::Window* root : GetAllRootWindows())
-    Shelf::ForWindow(root)->UpdateVisibilityState();
+  for (WmWindow* root : shell_port_->GetAllRootWindows())
+    root->GetRootWindowController()->GetShelf()->UpdateVisibilityState();
 }
 
 PrefService* Shell::GetActiveUserPrefService() const {
@@ -476,8 +482,10 @@ bool Shell::GetAppListTargetVisibility() const {
 }
 
 void Shell::UpdateAfterLoginStatusChange(LoginStatus status) {
-  for (auto* root_window_controller : GetAllRootWindowControllers())
-    root_window_controller->UpdateAfterLoginStatusChange(status);
+  for (WmWindow* root_window : shell_port_->GetAllRootWindows()) {
+    root_window->GetRootWindowController()->UpdateAfterLoginStatusChange(
+        status);
+  }
 }
 
 void Shell::NotifyMaximizeModeStarted() {
@@ -506,12 +514,12 @@ void Shell::NotifyOverviewModeEnded() {
 }
 
 void Shell::NotifyFullscreenStateChanged(bool is_fullscreen,
-                                         aura::Window* root_window) {
+                                         WmWindow* root_window) {
   for (auto& observer : shell_observers_)
     observer.OnFullscreenStateChanged(is_fullscreen, root_window);
 }
 
-void Shell::NotifyPinnedStateChanged(aura::Window* pinned_window) {
+void Shell::NotifyPinnedStateChanged(WmWindow* pinned_window) {
   for (auto& observer : shell_observers_)
     observer.OnPinnedStateChanged(pinned_window);
 }
@@ -522,17 +530,17 @@ void Shell::NotifyVirtualKeyboardActivated(bool activated,
     observer.OnVirtualKeyboardStateChanged(activated, root_window);
 }
 
-void Shell::NotifyShelfCreatedForRootWindow(aura::Window* root_window) {
+void Shell::NotifyShelfCreatedForRootWindow(WmWindow* root_window) {
   for (auto& observer : shell_observers_)
     observer.OnShelfCreatedForRootWindow(root_window);
 }
 
-void Shell::NotifyShelfAlignmentChanged(aura::Window* root_window) {
+void Shell::NotifyShelfAlignmentChanged(WmWindow* root_window) {
   for (auto& observer : shell_observers_)
     observer.OnShelfAlignmentChanged(root_window);
 }
 
-void Shell::NotifyShelfAutoHideBehaviorChanged(aura::Window* root_window) {
+void Shell::NotifyShelfAutoHideBehaviorChanged(WmWindow* root_window) {
   for (auto& observer : shell_observers_)
     observer.OnShelfAutoHideBehaviorChanged(root_window);
 }
@@ -657,8 +665,8 @@ Shell::~Shell() {
 
   // Destroy SystemTrayDelegate before destroying the status area(s). Make sure
   // to deinitialize the shelf first, as it is initialized after the delegate.
-  for (aura::Window* root : GetAllRootWindows())
-    Shelf::ForWindow(root)->ShutdownShelfWidget();
+  for (WmWindow* root : shell_port_->GetAllRootWindows())
+    root->GetRootWindowController()->GetShelf()->ShutdownShelfWidget();
   tray_bluetooth_helper_.reset();
   DeleteSystemTrayDelegate();
 
@@ -715,7 +723,8 @@ Shell::~Shell() {
 
   // This also deletes all RootWindows. Note that we invoke Shutdown() on
   // WindowTreeHostManager before resetting |window_tree_host_manager_|, since
-  // destruction of its owned RootWindowControllers relies on the value.
+  // destruction
+  // of its owned RootWindowControllers relies on the value.
   ScreenAsh::CreateScreenForShutdown();
   display_configuration_controller_.reset();
 
@@ -799,7 +808,8 @@ void Shell::Init(const ShellInitParams& init_params) {
     auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
     Shell::RegisterPrefs(pref_registry.get());
     prefs::ConnectToPrefService(
-        shell_delegate_->GetShellConnector(), std::move(pref_registry), {},
+        shell_delegate_->GetShellConnector(), std::move(pref_registry),
+        std::vector<PrefValueStore::PrefStoreType>(),
         base::Bind(&Shell::OnPrefServiceInitialized, base::Unretained(this)),
         prefs::mojom::kForwarderServiceName);
   }
@@ -836,6 +846,8 @@ void Shell::Init(const ShellInitParams& init_params) {
   if (config != Config::MASH)
     immersive_handler_factory_ = base::MakeUnique<ImmersiveHandlerFactoryAsh>();
 
+  scoped_overview_animation_settings_factory_.reset(
+      new ScopedOverviewAnimationSettingsFactoryAura);
   window_positioner_ = base::MakeUnique<WindowPositioner>();
 
   if (config == Config::CLASSIC) {
@@ -1033,6 +1045,7 @@ void Shell::Init(const ShellInitParams& init_params) {
 
   event_client_.reset(new EventClientImpl);
 
+  session_state_delegate_.reset(shell_delegate_->CreateSessionStateDelegate());
   // Must occur after Shell has installed its early pre-target handlers (for
   // example, WindowModalityController).
   shell_port_->CreatePointerWatcherAdapter();
@@ -1126,17 +1139,18 @@ void Shell::InitRootWindow(aura::Window* root_window) {
   DCHECK(drag_drop_controller_.get());
 
   aura::client::SetFocusClient(root_window, focus_controller_.get());
-  ::wm::SetActivationClient(root_window, focus_controller_.get());
+  aura::client::SetActivationClient(root_window, focus_controller_.get());
   root_window->AddPreTargetHandler(focus_controller_.get());
   aura::client::SetVisibilityClient(root_window, visibility_controller_.get());
   aura::client::SetDragDropClient(root_window, drag_drop_controller_.get());
   aura::client::SetScreenPositionClient(root_window,
                                         screen_position_controller_.get());
   aura::client::SetCursorClient(root_window, cursor_manager_.get());
-  ::wm::SetTooltipClient(root_window, tooltip_controller_.get());
+  aura::client::SetTooltipClient(root_window, tooltip_controller_.get());
   aura::client::SetEventClient(root_window, event_client_.get());
 
-  ::wm::SetWindowMoveClient(root_window, toplevel_window_event_handler_.get());
+  aura::client::SetWindowMoveClient(root_window,
+                                    toplevel_window_event_handler_.get());
   root_window->AddPreTargetHandler(toplevel_window_event_handler_.get());
   root_window->AddPostTargetHandler(toplevel_window_event_handler_.get());
 }
@@ -1160,13 +1174,14 @@ void Shell::DeleteSystemTrayDelegate() {
 }
 
 void Shell::CloseAllRootWindowChildWindows() {
-  for (aura::Window* root : GetAllRootWindows()) {
-    RootWindowController* controller = RootWindowController::ForWindow(root);
+  for (WmWindow* wm_root_window : shell_port_->GetAllRootWindows()) {
+    aura::Window* root_window = wm_root_window->aura_window();
+    RootWindowController* controller = GetRootWindowController(root_window);
     if (controller) {
       controller->CloseChildWindows();
     } else {
-      while (!root->children().empty()) {
-        aura::Window* child = root->children()[0];
+      while (!root_window->children().empty()) {
+        aura::Window* child = root_window->children()[0];
         delete child;
       }
     }
@@ -1203,7 +1218,7 @@ ui::EventTargeter* Shell::GetEventTargeter() {
 }
 
 void Shell::OnWindowActivated(
-    ::wm::ActivationChangeObserver::ActivationReason reason,
+    aura::client::ActivationChangeObserver::ActivationReason reason,
     aura::Window* gained_active,
     aura::Window* lost_active) {
   if (gained_active)

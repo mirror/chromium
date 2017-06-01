@@ -721,9 +721,10 @@ SourceListDirective::ExposeForNavigationalChecks() const {
 bool SourceListDirective::SubsumesNoncesAndHashes(
     const HashSet<String>& nonces,
     const HashSet<CSPHashValue> hashes) const {
-  if (!nonces.IsEmpty() && nonces_.IsEmpty())
-    return false;
-
+  for (const auto& nonce : nonces) {
+    if (!nonces_.Contains(nonce))
+      return false;
+  }
   for (const auto& hash : hashes) {
     if (!hashes_.Contains(hash))
       return false;

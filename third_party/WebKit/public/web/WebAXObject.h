@@ -50,7 +50,6 @@ class WebNode;
 class WebDocument;
 class WebString;
 class WebURL;
-class WebView;
 struct WebFloatRect;
 struct WebPoint;
 struct WebRect;
@@ -93,12 +92,6 @@ class WebAXObject {
     Assign(o);
     return *this;
   }
-
-  BLINK_EXPORT static WebAXObject FromWebNode(WebNode&);
-  BLINK_EXPORT static WebAXObject FromWebView(WebView&);
-  BLINK_EXPORT static WebAXObject FromWebDocument(const WebDocument&);
-  BLINK_EXPORT static WebAXObject FromWebDocumentByID(const WebDocument&, int);
-  BLINK_EXPORT static WebAXObject FromWebDocumentFocused(const WebDocument&);
 
   BLINK_EXPORT void Reset();
   BLINK_EXPORT void Assign(const WebAXObject&);

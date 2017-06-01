@@ -18,10 +18,8 @@ import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.base.test.util.ScalableTimeout;
-import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.ShortcutHelper;
-import org.chromium.chrome.browser.customtabs.CustomTabActivity;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.util.ChromeTabUtils;
@@ -39,9 +37,6 @@ public class WebApkIntegrationTest {
     public final ChromeActivityTestRule<WebApkActivity> mActivityTestRule =
             new ChromeActivityTestRule<>(WebApkActivity.class);
 
-    @Rule
-    public final TopActivityListener activityListener = new TopActivityListener();
-
     private static final long STARTUP_TIMEOUT = ScalableTimeout.scaleTimeout(10000);
 
     private EmbeddedTestServer mTestServer;
@@ -53,11 +48,9 @@ public class WebApkIntegrationTest {
         intent.putExtra(WebApkConstants.EXTRA_WEBAPK_PACKAGE_NAME, webApkPackageName);
         intent.putExtra(ShortcutHelper.EXTRA_URL, startUrl);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        WebApkActivity webApkActivity =
+        mActivityTestRule.setActivity(
                 (WebApkActivity) InstrumentationRegistry.getInstrumentation().startActivitySync(
-                        intent);
-        mActivityTestRule.setActivity(webApkActivity);
+                        intent));
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
 
         CriteriaHelper.pollInstrumentationThread(new Criteria() {
@@ -101,24 +94,9 @@ public class WebApkIntegrationTest {
     @LargeTest
     @Feature({"WebApk"})
     @RetryOnFailure
-    public void testLaunchAndNavigateOffOrigin() throws Exception {
+    public void testLaunch() throws InterruptedException {
         startWebApkActivity("org.chromium.webapk.test",
                 mTestServer.getURL("/chrome/test/data/android/test.html"));
         waitUntilSplashscreenHides();
-
-        // We navigate outside origin and expect Custom Tab to open on top of WebApkActivity.
-        mActivityTestRule.runJavaScriptCodeInCurrentTab(
-                "window.top.location = 'https://www.google.com/'");
-
-        CriteriaHelper.pollUiThread(new Criteria() {
-            @Override
-            public boolean isSatisfied() {
-                ChromeActivity activity = (ChromeActivity) activityListener.getMostRecentActivity();
-                return activity instanceof CustomTabActivity
-                        && activity.getActivityTab() != null
-                        // Dropping the TLD as Google can redirect to a local site.
-                        && activity.getActivityTab().getUrl().startsWith("https://www.google.");
-            }
-        });
     }
 }

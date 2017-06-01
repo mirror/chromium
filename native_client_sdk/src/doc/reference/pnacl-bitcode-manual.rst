@@ -1,5 +1,3 @@
-.. include:: /migration/deprecation.inc
-
 ===============================
 Contents Of PNaCl Bitcode Files
 ===============================

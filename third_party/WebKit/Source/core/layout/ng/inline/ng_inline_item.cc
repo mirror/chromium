@@ -4,7 +4,6 @@
 
 #include "core/layout/ng/inline/ng_inline_item.h"
 
-#include "core/layout/LayoutInline.h"
 #include "core/layout/LayoutObject.h"
 #include "platform/fonts/CharacterRange.h"
 #include "platform/fonts/shaping/ShapeResultBuffer.h"
@@ -13,8 +12,8 @@ namespace blink {
 namespace {
 
 const char* kNGInlineItemTypeStrings[] = {
-    "Text",     "Control",  "AtomicInline",        "OpenTag",
-    "CloseTag", "Floating", "OutOfFlowPositioned", "BidiControl"};
+    "Text",     "AtomicInline",        "OpenTag",    "CloseTag",
+    "Floating", "OutOfFlowPositioned", "BidiControl"};
 
 }  // namespace
 
@@ -122,18 +121,6 @@ void NGInlineItem::GetFallbackFonts(
 
   // TODO(kojii): Implement |start| and |end|.
   shape_result_->FallbackFonts(fallback_fonts);
-}
-
-bool NGInlineItem::HasStartEdge() const {
-  DCHECK(Type() == kOpenTag || Type() == kCloseTag);
-  // TODO(kojii): Should use break token when NG has its own tree building.
-  return !GetLayoutObject()->IsInlineElementContinuation();
-}
-
-bool NGInlineItem::HasEndEdge() const {
-  DCHECK(Type() == kOpenTag || Type() == kCloseTag);
-  // TODO(kojii): Should use break token when NG has its own tree building.
-  return !ToLayoutInline(GetLayoutObject())->Continuation();
 }
 
 NGInlineItemRange::NGInlineItemRange(Vector<NGInlineItem>* items,

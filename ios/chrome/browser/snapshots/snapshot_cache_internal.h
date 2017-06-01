@@ -15,9 +15,11 @@ class FilePath;
 
 @interface SnapshotCache (Internal)
 // Returns filepath to the color snapshot of |sessionID|.
-- (base::FilePath)imagePathForSessionID:(NSString*)sessionID;
++ (base::FilePath)imagePathForSessionID:(NSString*)sessionID;
 // Returns filepath to the greyscale snapshot of |sessionID|.
-- (base::FilePath)greyImagePathForSessionID:(NSString*)sessionID;
++ (base::FilePath)greyImagePathForSessionID:(NSString*)sessionID;
+// Returns whether the snapshots are cached in a LRU cache.
+- (BOOL)usesLRUCache;
 @end
 
 #endif  // IOS_CHROME_BROWSER_SNAPSHOTS_SNAPSHOT_CACHE_INTERNAL_H_

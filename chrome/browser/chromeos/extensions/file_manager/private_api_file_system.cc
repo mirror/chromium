@@ -138,8 +138,9 @@ void OnCopyProgress(
 
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&NotifyCopyProgress, profile_id, *operation_id, type,
-                     source_url, destination_url, size));
+      base::Bind(&NotifyCopyProgress,
+                 profile_id, *operation_id, type,
+                 source_url, destination_url, size));
 }
 
 // Notifies the copy completion to extensions via event router.
@@ -171,8 +172,9 @@ void OnCopyCompleted(
 
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&NotifyCopyCompletion, profile_id, *operation_id,
-                     source_url, destination_url, error));
+      base::Bind(&NotifyCopyCompletion,
+                 profile_id, *operation_id,
+                 source_url, destination_url, error));
 }
 
 // Starts the copy operation via FileSystemOperationRunner.
@@ -235,7 +237,7 @@ void ComputeChecksumRespondOnUIThread(
     const std::string& hash) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(callback, hash));
+                          base::Bind(callback, hash));
 }
 
 // Calls a response callback on the UI thread.
@@ -245,7 +247,7 @@ void GetFileMetadataRespondOnUIThread(
     const base::File::Info& file_info) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(callback, result, file_info));
+                          base::Bind(callback, result, file_info));
 }
 
 }  // namespace
@@ -309,7 +311,7 @@ void PostResponseCallbackTaskToUIThread(
     bool success) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(callback, success));
+                          base::Bind(callback, success));
 }
 
 void PostNotificationCallbackTaskToUIThread(
@@ -317,7 +319,7 @@ void PostNotificationCallbackTaskToUIThread(
     storage::WatcherManager::ChangeType type) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(callback, type));
+                          base::Bind(callback, type));
 }
 
 }  // namespace
@@ -354,11 +356,10 @@ bool FileWatchFunctionBase::RunAsync() {
   file_manager::EventRouter* const event_router =
       file_manager::EventRouterFactory::GetForProfile(GetProfile());
 
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&FileWatchFunctionBase::RunAsyncOnIOThread, this,
-                     file_system_context, file_system_url,
-                     event_router->GetWeakPtr()));
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                          base::Bind(&FileWatchFunctionBase::RunAsyncOnIOThread,
+                                     this, file_system_context, file_system_url,
+                                     event_router->GetWeakPtr()));
   return true;
 }
 
@@ -374,7 +375,7 @@ void FileWatchFunctionBase::RunAsyncOnIOThread(
   if (!watcher_manager) {
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
-        base::BindOnce(
+        base::Bind(
             &FileWatchFunctionBase::PerformFallbackFileWatchOperationOnUIThread,
             this, file_system_url, event_router));
     return;
@@ -497,11 +498,10 @@ bool FileManagerPrivateGetSizeStatsFunction::RunAsync() {
     uint64_t* remaining_size = new uint64_t(0);
     base::PostTaskWithTraitsAndReply(
         FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
-        base::BindOnce(&GetSizeStatsAsync, volume->mount_path(), total_size,
-                       remaining_size),
-        base::BindOnce(&FileManagerPrivateGetSizeStatsFunction::OnGetSizeStats,
-                       this, base::Owned(total_size),
-                       base::Owned(remaining_size)));
+        base::Bind(&GetSizeStatsAsync, volume->mount_path(), total_size,
+                   remaining_size),
+        base::Bind(&FileManagerPrivateGetSizeStatsFunction::OnGetSizeStats,
+                   this, base::Owned(total_size), base::Owned(remaining_size)));
   }
   return true;
 }
@@ -667,17 +667,16 @@ bool FileManagerPrivateInternalStartCopyFunction::RunAsync() {
       file_manager::util::GetDownloadsMountPointName(GetProfile())) {
     return BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&GetFileMetadataOnIOThread, file_system_context,
-                       source_url_,
-                       storage::FileSystemOperation::GET_METADATA_FIELD_SIZE,
-                       base::Bind(&FileManagerPrivateInternalStartCopyFunction::
-                                      RunAfterGetFileMetadata,
-                                  this)));
+        base::Bind(&GetFileMetadataOnIOThread, file_system_context, source_url_,
+                   storage::FileSystemOperation::GET_METADATA_FIELD_SIZE,
+                   base::Bind(&FileManagerPrivateInternalStartCopyFunction::
+                                  RunAfterGetFileMetadata,
+                              this)));
   }
 
   return BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(
+      base::Bind(
           &FileManagerPrivateInternalStartCopyFunction::RunAfterFreeDiskSpace,
           this, true));
 }
@@ -760,9 +759,10 @@ bool FileManagerPrivateCancelCopyFunction::RunAsync() {
           GetProfile(), render_frame_host());
 
   // We don't much take care about the result of cancellation.
-  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                          base::BindOnce(&CancelCopyOnIOThread,
-                                         file_system_context, params->copy_id));
+  BrowserThread::PostTask(
+      BrowserThread::IO,
+      FROM_HERE,
+      base::Bind(&CancelCopyOnIOThread, file_system_context, params->copy_id));
   SendResponse(true);
   return true;
 }
@@ -873,11 +873,10 @@ bool FileManagerPrivateInternalComputeChecksumFunction::RunAsync() {
       &ComputeChecksumRespondOnUIThread,
       base::Bind(&FileManagerPrivateInternalComputeChecksumFunction::Respond,
                  this));
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&FileStreamMd5Digester::GetMd5Digest,
-                     base::Unretained(digester_.get()), base::Passed(&reader),
-                     result_callback));
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                          base::Bind(&FileStreamMd5Digester::GetMd5Digest,
+                                     base::Unretained(digester_.get()),
+                                     base::Passed(&reader), result_callback));
 
   return true;
 }

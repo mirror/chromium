@@ -7,7 +7,6 @@
 #include <algorithm>
 #include <utility>
 
-#include "ash/public/interfaces/user_info.mojom.h"
 #include "ash/session/session_observer.h"
 #include "ash/shell.h"
 #include "ash/system/power/power_event_observer.h"
@@ -83,18 +82,13 @@ bool SessionController::ShouldLockScreenAutomatically() const {
 }
 
 bool SessionController::IsUserSessionBlocked() const {
-  // User sessions are blocked when session state is not ACTIVE, with two
-  // exceptions:
-  // - LOGGED_IN_NOT_ACTIVE state. This is needed so that browser windows
-  //   created by session restore (or a default new browser window) are properly
-  //   activated before session state changes to ACTIVE.
-  // - LOCKED state with a running unlocking animation. This is needed because
-  //   the unlocking animation hides the lock container at the end. During the
-  //   unlock animation, IsUserSessionBlocked needs to return unblocked so that
-  //   user windows are deemed activatable and ash correctly restores the active
-  //   window before locking.
+  // User sessions are blocked when session state is not ACTIVE, except that
+  // LOCKED state with a running unlocking animation. This is made an exception
+  // because the unlocking animation hides lock container at the end. During the
+  // unlock animation, IsUserSessionBlocked needs to return unblocked so that
+  // user windows are deemed activatable and ash correctly restore the active
+  // window before locking.
   return state_ != SessionState::ACTIVE &&
-         state_ != SessionState::LOGGED_IN_NOT_ACTIVE &&
          !(state_ == SessionState::LOCKED && is_unlocking_);
 }
 
@@ -140,7 +134,7 @@ bool SessionController::IsUserSupervised() const {
   if (!IsActiveUserSessionStarted())
     return false;
 
-  user_manager::UserType active_user_type = GetUserSession(0)->user_info->type;
+  user_manager::UserType active_user_type = GetUserSession(0)->type;
   return active_user_type == user_manager::USER_TYPE_SUPERVISED ||
          active_user_type == user_manager::USER_TYPE_CHILD;
 }
@@ -149,7 +143,7 @@ bool SessionController::IsUserChild() const {
   if (!IsActiveUserSessionStarted())
     return false;
 
-  user_manager::UserType active_user_type = GetUserSession(0)->user_info->type;
+  user_manager::UserType active_user_type = GetUserSession(0)->type;
   return active_user_type == user_manager::USER_TYPE_CHILD;
 }
 
@@ -157,7 +151,7 @@ bool SessionController::IsKioskSession() const {
   if (!IsActiveUserSessionStarted())
     return false;
 
-  user_manager::UserType active_user_type = GetUserSession(0)->user_info->type;
+  user_manager::UserType active_user_type = GetUserSession(0)->type;
   return active_user_type == user_manager::USER_TYPE_KIOSK_APP ||
          active_user_type == user_manager::USER_TYPE_ARC_KIOSK_APP;
 }
@@ -209,7 +203,7 @@ void SessionController::UpdateUserSession(mojom::UserSessionPtr user_session) {
 
   *it = std::move(user_session);
   for (auto& observer : observers_)
-    observer.OnUserSessionUpdated((*it)->user_info->account_id);
+    observer.OnUserSessionUpdated((*it)->account_id);
 
   UpdateLoginStatus();
 }
@@ -239,10 +233,8 @@ void SessionController::SetUserSessionOrder(
   if (user_sessions_[0]->session_id != active_session_id_) {
     active_session_id_ = user_sessions_[0]->session_id;
 
-    for (auto& observer : observers_) {
-      observer.OnActiveUserSessionChanged(
-          user_sessions_[0]->user_info->account_id);
-    }
+    for (auto& observer : observers_)
+      observer.OnActiveUserSessionChanged(user_sessions_[0]->account_id);
 
     UpdateLoginStatus();
   }
@@ -315,7 +307,7 @@ void SessionController::SetSessionState(SessionState state) {
 }
 
 void SessionController::AddUserSession(mojom::UserSessionPtr user_session) {
-  const AccountId account_id(user_session->user_info->account_id);
+  const AccountId account_id(user_session->account_id);
 
   user_sessions_.push_back(std::move(user_session));
 
@@ -353,7 +345,7 @@ LoginStatus SessionController::CalculateLoginStatusForActiveSession() const {
   if (user_sessions_.empty())  // Can be empty in tests.
     return LoginStatus::USER;
 
-  switch (user_sessions_[0]->user_info->type) {
+  switch (user_sessions_[0]->type) {
     case user_manager::USER_TYPE_REGULAR:
       // TODO: This needs to distinguish between owner and non-owner.
       return LoginStatus::USER;

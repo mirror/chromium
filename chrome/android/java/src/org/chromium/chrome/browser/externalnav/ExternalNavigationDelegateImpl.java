@@ -590,8 +590,10 @@ public class ExternalNavigationDelegateImpl implements ExternalNavigationDelegat
         } else if (!isIncomingRedirect) {
             // Check if the navigation is coming from SERP and skip instant app handling.
             if (isSerpReferrer(tab)) return false;
-            return handler.handleNavigation(getAvailableContext(), url,
-                    TextUtils.isEmpty(referrerUrl) ? null : Uri.parse(referrerUrl), tab);
+            return handler.handleNavigation(
+                    getAvailableContext(), url,
+                    TextUtils.isEmpty(referrerUrl) ? null : Uri.parse(referrerUrl),
+                    tab.getWebContents());
         }
         return false;
     }

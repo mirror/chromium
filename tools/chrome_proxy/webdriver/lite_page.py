@@ -10,10 +10,13 @@ import time
 
 class LitePage(IntegrationTest):
 
-  # Checks that a Lite Page is served and the force_lite_page experiment
-  # directive is provided when always-on.
-  def testLitePageForcedExperiment(self):
+  # Checks that a Lite Page is served and that the ignore_preview_blacklist
+  # experiment is being used.
+  def testLitePage(self):
     # If it was attempted to run with another experiment, skip this test.
+    if common.ParseFlags().browser_args and ('--data-reduction-proxy-experiment'
+        in common.ParseFlags().browser_args):
+      self.skipTest('This test cannot be run with other experiments.')
     with TestDriver() as test_driver:
       test_driver.AddChromeArg('--enable-spdy-proxy-auth')
       test_driver.AddChromeArg('--data-reduction-proxy-lo-fi=always-on')
@@ -29,11 +32,8 @@ class LitePage(IntegrationTest):
           continue
         if response.url.startswith('data:'):
           continue
-        if not common.ParseFlags().browser_args or (
-          '--data-reduction-proxy-experiment' not in
-          common.ParseFlags().browser_args):
-            self.assertIn('exp=force_lite_page',
-              response.request_headers['chrome-proxy'])
+        self.assertIn('exp=ignore_preview_blacklist',
+          response.request_headers['chrome-proxy'])
         if (self.checkLitePageResponse(response)):
           lite_page_responses = lite_page_responses + 1
 
@@ -44,6 +44,9 @@ class LitePage(IntegrationTest):
   # of the page and is able to load all resources.
   def testLitePageBTF(self):
     # If it was attempted to run with another experiment, skip this test.
+    if common.ParseFlags().browser_args and ('--data-reduction-proxy-experiment'
+        in common.ParseFlags().browser_args):
+      self.skipTest('This test cannot be run with other experiments.')
     with TestDriver() as test_driver:
       test_driver.AddChromeArg('--enable-spdy-proxy-auth')
       test_driver.AddChromeArg('--data-reduction-proxy-lo-fi=always-on')
@@ -61,11 +64,8 @@ class LitePage(IntegrationTest):
           continue
         if response.url.startswith('data:'):
           continue
-        if not common.ParseFlags().browser_args or (
-          '--data-reduction-proxy-experiment' not in
-          common.ParseFlags().browser_args):
-            self.assertIn('exp=force_lite_page',
-              response.request_headers['chrome-proxy'])
+        self.assertIn('exp=ignore_preview_blacklist',
+          response.request_headers['chrome-proxy'])
         if (self.checkLitePageResponse(response)):
           lite_page_responses = lite_page_responses + 1
       self.assertEqual(1, lite_page_responses)
@@ -89,12 +89,15 @@ class LitePage(IntegrationTest):
         self.assertIn(response.status, [200, 204])
 
   # Lo-Fi fallback is not currently supported via the client. Check that
-  # no Lo-Fi response is received if a Lite Page is not served.
+  # no Lo-Fi response is received if the user is in the
+  # DataCompressionProxyLitePageFallback field trial and a Lite Page is not
+  # served.
   def testLitePageFallback(self):
     with TestDriver() as test_driver:
       test_driver.AddChromeArg('--enable-spdy-proxy-auth')
       test_driver.AddChromeArg('--force-fieldtrials='
-                               'DataCompressionProxyLoFi/Enabled_Preview/')
+                               'DataCompressionProxyLoFi/Enabled_Preview/'
+                               'DataCompressionProxyLitePageFallback/Enabled')
       test_driver.AddChromeArg('--force-fieldtrial-params='
                                'DataCompressionProxyLoFi.Enabled_Preview:'
                                'effective_connection_type/4G')

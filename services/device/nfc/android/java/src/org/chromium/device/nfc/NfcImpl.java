@@ -22,17 +22,16 @@ import android.os.Process;
 import android.util.SparseArray;
 
 import org.chromium.base.Callback;
-import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
-import org.chromium.device.mojom.Nfc;
-import org.chromium.device.mojom.NfcClient;
-import org.chromium.device.mojom.NfcError;
-import org.chromium.device.mojom.NfcErrorType;
-import org.chromium.device.mojom.NfcMessage;
-import org.chromium.device.mojom.NfcPushOptions;
-import org.chromium.device.mojom.NfcPushTarget;
-import org.chromium.device.mojom.NfcWatchMode;
-import org.chromium.device.mojom.NfcWatchOptions;
+import org.chromium.device.nfc.mojom.Nfc;
+import org.chromium.device.nfc.mojom.NfcClient;
+import org.chromium.device.nfc.mojom.NfcError;
+import org.chromium.device.nfc.mojom.NfcErrorType;
+import org.chromium.device.nfc.mojom.NfcMessage;
+import org.chromium.device.nfc.mojom.NfcPushOptions;
+import org.chromium.device.nfc.mojom.NfcPushTarget;
+import org.chromium.device.nfc.mojom.NfcWatchMode;
+import org.chromium.device.nfc.mojom.NfcWatchOptions;
 import org.chromium.mojo.bindings.Callbacks;
 import org.chromium.mojo.system.MojoException;
 
@@ -118,11 +117,11 @@ public class NfcImpl implements Nfc {
      */
     private Runnable mPushTimeoutRunnable;
 
-    public NfcImpl(int hostId, NfcDelegate delegate) {
+    public NfcImpl(Context context, int hostId, NfcDelegate delegate) {
         mHostId = hostId;
         mDelegate = delegate;
-        int permission = ContextUtils.getApplicationContext().checkPermission(
-                Manifest.permission.NFC, Process.myPid(), Process.myUid());
+        int permission =
+                context.checkPermission(Manifest.permission.NFC, Process.myPid(), Process.myUid());
         mHasPermission = permission == PackageManager.PERMISSION_GRANTED;
         Callback<Activity> onActivityUpdatedCallback = new Callback<Activity>() {
             @Override
@@ -138,8 +137,7 @@ public class NfcImpl implements Nfc {
             mNfcAdapter = null;
             mNfcManager = null;
         } else {
-            mNfcManager = (NfcManager) ContextUtils.getApplicationContext().getSystemService(
-                    Context.NFC_SERVICE);
+            mNfcManager = (NfcManager) context.getSystemService(Context.NFC_SERVICE);
             if (mNfcManager == null) {
                 Log.w(TAG, "NFC is not supported.");
                 mNfcAdapter = null;

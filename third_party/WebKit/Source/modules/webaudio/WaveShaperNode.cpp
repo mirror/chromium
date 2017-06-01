@@ -120,7 +120,7 @@ NotShared<DOMFloat32Array> WaveShaperNode::curve() {
   memcpy(new_curve->Data(), curve->data(), sizeof(float) * size);
 
   return NotShared<DOMFloat32Array>(
-      DOMFloat32Array::Create(std::move(new_curve)));
+      DOMFloat32Array::Create(new_curve.Release()));
 }
 
 void WaveShaperNode::setOversample(const String& type) {

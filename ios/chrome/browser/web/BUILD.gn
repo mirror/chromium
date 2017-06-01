@@ -31,7 +31,6 @@ source_set("web") {
     "//base",
     "//components/strings",
     "//ios/chrome/app/strings:ios_strings_grit",
-    "//ios/chrome/browser",
     "//ios/chrome/browser/ui",
     "//ios/chrome/browser/ui/alert_coordinator:alert_coordinator",
     "//ios/chrome/browser/ui/commands:commands",
@@ -74,9 +73,8 @@ source_set("unit_tests") {
     "//ios/chrome/browser/ui:ui",
     "//ios/chrome/browser/ui/sad_tab",
     "//ios/chrome/test:test_support",
+    "//ios/web:test_support",
     "//ios/web:web_arc",
-    "//ios/web/public/test",
-    "//ios/web/public/test/fakes",
     "//testing/gtest",
     "//ui/base:base",
     "//url:url",
@@ -260,7 +258,7 @@ source_set("test_support") {
     "//ios/chrome/browser/ui:ui_internal",
     "//ios/chrome/browser/web",
     "//ios/web",
-    "//ios/web/public/test",
+    "//ios/web:test_support",
   ]
 }
 
@@ -287,8 +285,7 @@ source_set("unit_tests_internal") {
     "//ios/chrome/browser/infobars",
     "//ios/chrome/browser/ui",
     "//ios/web",
-    "//ios/web/public/test",
-    "//ios/web/public/test/fakes",
+    "//ios/web:test_support",
     "//net",
     "//testing/gtest",
     "//third_party/ocmock",
@@ -334,8 +331,7 @@ source_set("eg_tests") {
     "//ios/third_party/earl_grey",
     "//ios/third_party/material_components_ios",
     "//ios/web:earl_grey_test_support",
-    "//ios/web/public/test",
-    "//ios/web/public/test/http_server",
+    "//ios/web:test_support",
     "//net",
     "//ui/base",
     "//url",
@@ -356,8 +352,7 @@ source_set("perf_tests") {
     "//base",
     "//ios/chrome/test/base:perf_test_support",
     "//ios/web",
-    "//ios/web/public/test",
-    "//ios/web/public/test/fakes",
+    "//ios/web:test_support",
   ]
   libs = [ "WebKit.framework" ]
 }

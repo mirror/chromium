@@ -549,7 +549,7 @@ if (is_win) {
     ]
 
     sources = [
-      "app/chrome_exe_main_mac.cc",
+      "app/chrome_exe_main_mac.c",
     ]
 
     extra_configs = [ "//build/config/compiler:wexit_time_destructors" ]
@@ -736,7 +736,7 @@ if (is_win) {
     ]
 
     sources = [
-      "app/chrome_exe_main_mac.cc",
+      "app/chrome_exe_main_mac.c",
     ]
 
     extra_configs = [ "//build/config/compiler:wexit_time_destructors" ]
@@ -746,7 +746,6 @@ if (is_win) {
     deps = [
       "//build/config:exe_and_shlib_deps",
       "//chrome/common:version_header",
-      "//sandbox/mac:seatbelt",
     ]
 
     ldflags = []
@@ -1627,12 +1626,6 @@ if (is_android) {
   java_cpp_enum("page_info_action_javagen") {
     sources = [
       "browser/ui/page_info/page_info.h",
-    ]
-  }
-
-  java_cpp_enum("payments_journey_logger_enum_javagen") {
-    sources = [
-      "../components/payments/core/journey_logger.h",
     ]
   }
 

@@ -10,9 +10,8 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "chrome/browser/android/vr_shell/color_scheme.h"
 #include "chrome/browser/android/vr_shell/ui_elements/ui_element_debug_id.h"
-#include "third_party/skia/include/core/SkColor.h"
+#include "device/vr/vr_types.h"
 
 namespace base {
 class ListValue;
@@ -67,11 +66,8 @@ class UiScene {
   std::vector<const UiElement*> GetHeadLockedElements() const;
   bool HasVisibleHeadLockedElements() const;
 
-  void SetMode(ColorScheme::Mode mode);
-  ColorScheme::Mode mode() const;
-
-  SkColor GetBackgroundColor() const;
-
+  void SetBackgroundColor(const vr::Colorf& color);
+  const vr::Colorf& GetBackgroundColor() const;
   void SetBackgroundDistance(float distance);
   float GetBackgroundDistance() const;
 
@@ -89,8 +85,7 @@ class UiScene {
 
   std::vector<std::unique_ptr<UiElement>> ui_elements_;
   UiElement* content_element_ = nullptr;
-  ColorScheme::Mode mode_ = ColorScheme::kModeNormal;
-
+  vr::Colorf background_color_ = {0.1f, 0.1f, 0.1f, 1.0f};
   float background_distance_ = 10.0f;
   bool webvr_rendering_enabled_ = true;
   bool gl_initialized_ = false;

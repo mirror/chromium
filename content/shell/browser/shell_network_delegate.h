@@ -54,8 +54,7 @@ class ShellNetworkDelegate : public net::NetworkDelegateImpl {
                       const std::string& cookie_line,
                       net::CookieOptions* options) override;
   bool OnCanAccessFile(const net::URLRequest& request,
-                       const base::FilePath& original_path,
-                       const base::FilePath& absolute_path) const override;
+                       const base::FilePath& path) const override;
   bool OnAreExperimentalCookieFeaturesEnabled() const override;
   bool OnCancelURLRequestWithPolicyViolatingReferrerHeader(
       const net::URLRequest& request,

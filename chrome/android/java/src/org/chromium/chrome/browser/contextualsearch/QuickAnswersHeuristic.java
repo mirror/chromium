@@ -57,8 +57,7 @@ class QuickAnswersHeuristic extends ContextualSearchHeuristic {
     }
 
     @Override
-    protected void logRankerTapSuppressionOutcome(ContextualSearchRankerLogger logger) {
-        logger.logOutcome(
-                ContextualSearchRankerLogger.Feature.OUTCOME_WAS_QUICK_ANSWER_SEEN, mDidAnswer);
+    protected void logRankerTapSuppression(ContextualSearchRankerLogger logger) {
+        logger.log(ContextualSearchRankerLogger.Feature.OUTCOME_WAS_QUICK_ANSWER_SEEN, mDidAnswer);
     }
 }

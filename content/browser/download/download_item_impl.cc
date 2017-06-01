@@ -203,8 +203,7 @@ DownloadItemImpl::DownloadItemImpl(DownloadItemImplDelegate* delegate,
                                    uint32_t download_id,
                                    const DownloadCreateInfo& info,
                                    const net::NetLogWithSource& net_log)
-    : guid_(info.guid.empty() ? base::ToUpperASCII(base::GenerateGUID())
-                              : info.guid),
+    : guid_(base::ToUpperASCII(base::GenerateGUID())),
       download_id_(download_id),
       target_disposition_((info.save_info->prompt_for_save_location)
                               ? TARGET_DISPOSITION_PROMPT
@@ -1064,6 +1063,12 @@ void DownloadItemImpl::UpdateValidatorsOnResumption(
   // notified when the download transitions to the IN_PROGRESS state.
 }
 
+void DownloadItemImpl::CancelRequestWithOffset(int64_t offset) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (job_)
+    job_->CancelRequestWithOffset(offset);
+}
+
 void DownloadItemImpl::NotifyRemoved() {
   for (auto& observer : observers_)
     observer.OnDownloadRemoved(this);
@@ -1319,10 +1324,20 @@ void DownloadItemImpl::Start(
 
   TransitionTo(TARGET_PENDING_INTERNAL);
 
-  job_->Start(download_file_.get(),
-              base::Bind(&DownloadItemImpl::OnDownloadFileInitialized,
-                         weak_ptr_factory_.GetWeakPtr()),
-              GetReceivedSlices());
+  job_->Start();
+}
+
+void DownloadItemImpl::StartDownload() {
+  BrowserThread::PostTask(
+      BrowserThread::FILE, FROM_HERE,
+      base::Bind(&DownloadFile::Initialize,
+                 // Safe because we control download file lifetime.
+                 base::Unretained(download_file_.get()),
+                 base::Bind(&DownloadItemImpl::OnDownloadFileInitialized,
+                            weak_ptr_factory_.GetWeakPtr()),
+                 base::Bind(&DownloadItemImpl::CancelRequestWithOffset,
+                            weak_ptr_factory_.GetWeakPtr()),
+                 received_slices_, job_ && job_->IsParallelizable()));
 }
 
 void DownloadItemImpl::OnDownloadFileInitialized(

@@ -269,6 +269,12 @@ void AwBrowserContext::InitUserPrefService() {
   user_prefs::UserPrefs::Set(this, user_pref_service_.get());
 }
 
+std::unique_ptr<content::ZoomLevelDelegate>
+AwBrowserContext::CreateZoomLevelDelegate(
+    const base::FilePath& partition_path) {
+  return nullptr;
+}
+
 base::FilePath AwBrowserContext::GetPath() const {
   return context_storage_path_;
 }
@@ -320,11 +326,6 @@ content::PermissionManager* AwBrowserContext::GetPermissionManager() {
 
 content::BackgroundSyncController*
 AwBrowserContext::GetBackgroundSyncController() {
-  return nullptr;
-}
-
-content::BrowsingDataRemoverDelegate*
-AwBrowserContext::GetBrowsingDataRemoverDelegate() {
   return nullptr;
 }
 

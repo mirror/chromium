@@ -25,14 +25,6 @@ namespace extensions {
 
 namespace {
 
-// Whether the NTP bubble is enabled. By default, this is Windows-only, but can
-// be overridden for testing.
-#if defined(OS_WIN)
-bool g_ntp_bubble_enabled = true;
-#else
-bool g_ntp_bubble_enabled = false;
-#endif
-
 void ShowSettingsApiBubble(SettingsApiOverrideType type,
                            Browser* browser) {
   ToolbarActionsModel* model = ToolbarActionsModel::Get(browser->profile());
@@ -54,10 +46,6 @@ void ShowSettingsApiBubble(SettingsApiOverrideType type,
 }
 
 }  // namespace
-
-void SetNtpBubbleEnabledForTesting(bool enabled) {
-  g_ntp_bubble_enabled = enabled;
-}
 
 void MaybeShowExtensionControlledHomeNotification(Browser* browser) {
 #if !defined(OS_WIN) && !defined(OS_MACOSX)
@@ -84,12 +72,9 @@ void MaybeShowExtensionControlledSearchNotification(
 
 void MaybeShowExtensionControlledNewTabPage(
     Browser* browser, content::WebContents* web_contents) {
-  if (!g_ntp_bubble_enabled)
-    return;
-
-  // Acknowledge existing extensions if necessary.
-  NtpOverriddenBubbleDelegate::MaybeAcknowledgeExistingNtpExtensions(
-      browser->profile());
+#if !defined(OS_WIN)
+  return;
+#endif
 
   content::NavigationEntry* entry =
       web_contents->GetController().GetActiveEntry();

@@ -13,19 +13,20 @@
 namespace blink {
 
 std::unique_ptr<AnimationWorkletThread> AnimationWorkletThread::Create(
-    ThreadableLoadingContext* loading_context,
+    PassRefPtr<WorkerLoaderProxy> worker_loader_proxy,
     WorkerReportingProxy& worker_reporting_proxy) {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("animation-worklet"),
                "AnimationWorkletThread::create");
   DCHECK(IsMainThread());
-  return WTF::WrapUnique(
-      new AnimationWorkletThread(loading_context, worker_reporting_proxy));
+  return WTF::WrapUnique(new AnimationWorkletThread(
+      std::move(worker_loader_proxy), worker_reporting_proxy));
 }
 
 AnimationWorkletThread::AnimationWorkletThread(
-    ThreadableLoadingContext* loading_context,
+    PassRefPtr<WorkerLoaderProxy> worker_loader_proxy,
     WorkerReportingProxy& worker_reporting_proxy)
-    : AbstractAnimationWorkletThread(loading_context, worker_reporting_proxy) {}
+    : AbstractAnimationWorkletThread(std::move(worker_loader_proxy),
+                                     worker_reporting_proxy) {}
 
 AnimationWorkletThread::~AnimationWorkletThread() {}
 
@@ -40,11 +41,11 @@ WorkerOrWorkletGlobalScope* AnimationWorkletThread::CreateWorkerGlobalScope(
     security_origin->TransferPrivilegesFrom(
         std::move(startup_data->starter_origin_privilege_data_));
 
-  // TODO(ikilpatrick): Provide CompositorWorkerProxyClient to WorkerClients.
+  // TODO(ikilpatrick): The AnimationWorkletGlobalScope will need to store a
+  // WorkerClients object for using a CompositorWorkerProxyClient object.
   return AnimationWorkletGlobalScope::Create(
       startup_data->script_url_, startup_data->user_agent_,
-      std::move(security_origin), this->GetIsolate(), this,
-      startup_data->worker_clients_);
+      security_origin.Release(), this->GetIsolate(), this);
 }
 
 }  // namespace blink

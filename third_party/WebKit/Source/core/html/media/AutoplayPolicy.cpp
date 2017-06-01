@@ -6,13 +6,13 @@
 
 #include "core/dom/Document.h"
 #include "core/dom/ElementVisibilityObserver.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/frame/ContentSettingsClient.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLMediaElement.h"
 #include "core/html/media/AutoplayUmaHelper.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/UserGestureIndicator.h"
 #include "public/platform/WebMediaPlayer.h"
 
 namespace blink {
@@ -39,8 +39,8 @@ bool IsDocumentWhitelisted(const Document& document) {
 }
 
 // Return true if and only if the document settings specifies media playback
-// requires user gesture on the element.
-bool ComputeLockPendingUserGestureRequired(const Document& document) {
+// requires user gesture.
+bool ComputeLockedPendingUserGesture(const Document& document) {
   switch (AutoplayPolicy::GetAutoplayPolicyForDocument(document)) {
     case AutoplayPolicy::Type::kNoUserGestureRequired:
       return false;
@@ -48,11 +48,6 @@ bool ComputeLockPendingUserGestureRequired(const Document& document) {
       return IsDocumentCrossOrigin(document);
     case AutoplayPolicy::Type::kUserGestureRequired:
       return true;
-    // kDocumentUserActivationRequired policy does not imply that a user gesture
-    // is required on the element but instead requires a user gesture on the
-    // document, therefore the element is not locked.
-    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
-      return false;
   }
 
   NOTREACHED();
@@ -80,7 +75,7 @@ AutoplayPolicy::AutoplayPolicy(HTMLMediaElement* element)
       autoplay_visibility_observer_(nullptr),
       autoplay_uma_helper_(AutoplayUmaHelper::Create(element)) {
   locked_pending_user_gesture_ =
-      ComputeLockPendingUserGestureRequired(element->GetDocument());
+      ComputeLockedPendingUserGesture(element->GetDocument());
   locked_pending_user_gesture_if_cross_origin_experiment_enabled_ =
       IsDocumentCrossOrigin(element->GetDocument());
 }
@@ -93,9 +88,9 @@ void AutoplayPolicy::DidMoveToNewDocument(Document& old_document) {
   // If any experiment is enabled, then we want to enable a user gesture by
   // default, otherwise the experiment does nothing.
   bool old_document_requires_user_gesture =
-      ComputeLockPendingUserGestureRequired(old_document);
+      ComputeLockedPendingUserGesture(old_document);
   bool new_document_requires_user_gesture =
-      ComputeLockPendingUserGestureRequired(element_->GetDocument());
+      ComputeLockedPendingUserGesture(element_->GetDocument());
   if (new_document_requires_user_gesture && !old_document_requires_user_gesture)
     locked_pending_user_gesture_ = true;
 
@@ -220,13 +215,6 @@ bool AutoplayPolicy::IsAutoplayingMutedInternal(bool muted) const {
 }
 
 bool AutoplayPolicy::IsLockedPendingUserGesture() const {
-  if (GetAutoplayPolicyForDocument(element_->GetDocument()) ==
-      AutoplayPolicy::Type::kDocumentUserActivationRequired) {
-    if (!element_->GetDocument().GetFrame())
-      return true;
-    return !element_->GetDocument().GetFrame()->HasReceivedUserGesture();
-  }
-
   return locked_pending_user_gesture_;
 }
 
@@ -243,7 +231,7 @@ void AutoplayPolicy::UnlockUserGesture() {
 }
 
 bool AutoplayPolicy::IsGestureNeededForPlayback() const {
-  if (!IsLockedPendingUserGesture())
+  if (!locked_pending_user_gesture_)
     return false;
 
   return IsGestureNeededForPlaybackIfPendingUserGestureIsLocked();

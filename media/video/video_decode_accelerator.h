@@ -130,7 +130,9 @@ class MEDIA_EXPORT VideoDecodeAccelerator {
     Config();
     Config(const Config& config);
 
-    explicit Config(VideoCodecProfile profile);
+    // Intentional converting constructor.
+    // TODO(watk): Make this explicit.
+    Config(VideoCodecProfile profile);
 
     ~Config();
 

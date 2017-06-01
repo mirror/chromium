@@ -1,7 +1,5 @@
 .. _devguide-tutorial-index:
 
-.. include:: /migration/deprecation.inc
-
 ########
 Tutorial
 ########

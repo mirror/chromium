@@ -24,9 +24,4 @@ class AboveTheFoldItem extends Leaf {
     protected void onBindViewHolder(NewTabPageViewHolder holder) {
         // Nothing to do.
     }
-
-    @Override
-    public void visitItems(NodeVisitor visitor) {
-        visitor.visitAboveTheFoldItem();
-    }
 }

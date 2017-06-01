@@ -17,9 +17,9 @@ namespace {
 constexpr int64_t kFingerprintSessionTimeoutMs = 150;
 
 // Used to convert mojo Callback to VoidDbusMethodCallback.
-void RunFingerprintCallback(base::OnceCallback<void(bool)> callback,
+void RunFingerprintCallback(const base::Callback<void(bool)>& callback,
                             chromeos::DBusMethodCallStatus result) {
-  std::move(callback).Run(result == chromeos::DBUS_METHOD_CALL_SUCCESS);
+  callback.Run(result == chromeos::DBUS_METHOD_CALL_SUCCESS);
 }
 
 chromeos::BiodClient* GetBiodClient() {
@@ -44,11 +44,10 @@ FingerprintChromeOS::~FingerprintChromeOS() {
 
 void FingerprintChromeOS::GetRecordsForUser(
     const std::string& user_id,
-    GetRecordsForUserCallback callback) {
+    const GetRecordsForUserCallback& callback) {
   chromeos::DBusThreadManager::Get()->GetBiodClient()->GetRecordsForUser(
-      user_id,
-      base::Bind(&FingerprintChromeOS::OnGetRecordsForUser,
-                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&callback)));
+      user_id, base::Bind(&FingerprintChromeOS::OnGetRecordsForUser,
+                          weak_ptr_factory_.GetWeakPtr(), callback));
 }
 
 void FingerprintChromeOS::StartEnrollSession(const std::string& user_id,
@@ -86,37 +85,35 @@ void FingerprintChromeOS::ScheduleStartEnroll(const std::string& user_id,
 }
 
 void FingerprintChromeOS::CancelCurrentEnrollSession(
-    CancelCurrentEnrollSessionCallback callback) {
+    const CancelCurrentEnrollSessionCallback& callback) {
   if (opened_session_ == FingerprintSession::ENROLL) {
     GetBiodClient()->CancelEnrollSession(
-        base::Bind(&RunFingerprintCallback, base::Passed(&callback)));
+        base::Bind(&RunFingerprintCallback, callback));
     opened_session_ = FingerprintSession::NONE;
   } else {
-    std::move(callback).Run(true);
+    callback.Run(true);
   }
 }
 
 void FingerprintChromeOS::RequestRecordLabel(
     const std::string& record_path,
-    RequestRecordLabelCallback callback) {
-  GetBiodClient()->RequestRecordLabel(
-      dbus::ObjectPath(record_path),
-      base::AdaptCallbackForRepeating(std::move(callback)));
+    const RequestRecordLabelCallback& callback) {
+  GetBiodClient()->RequestRecordLabel(dbus::ObjectPath(record_path), callback);
 }
 
-void FingerprintChromeOS::SetRecordLabel(const std::string& new_label,
-                                         const std::string& record_path,
-                                         SetRecordLabelCallback callback) {
+void FingerprintChromeOS::SetRecordLabel(
+    const std::string& new_label,
+    const std::string& record_path,
+    const SetRecordLabelCallback& callback) {
   GetBiodClient()->SetRecordLabel(
       dbus::ObjectPath(record_path), new_label,
-      base::Bind(&RunFingerprintCallback, base::Passed(&callback)));
+      base::Bind(&RunFingerprintCallback, callback));
 }
 
 void FingerprintChromeOS::RemoveRecord(const std::string& record_path,
-                                       RemoveRecordCallback callback) {
-  GetBiodClient()->RemoveRecord(
-      dbus::ObjectPath(record_path),
-      base::Bind(&RunFingerprintCallback, base::Passed(&callback)));
+                                       const RemoveRecordCallback& callback) {
+  GetBiodClient()->RemoveRecord(dbus::ObjectPath(record_path),
+                                base::Bind(&RunFingerprintCallback, callback));
 }
 
 void FingerprintChromeOS::StartAuthSession() {
@@ -149,25 +146,24 @@ void FingerprintChromeOS::ScheduleStartAuth() {
 }
 
 void FingerprintChromeOS::EndCurrentAuthSession(
-    EndCurrentAuthSessionCallback callback) {
+    const EndCurrentAuthSessionCallback& callback) {
   if (opened_session_ == FingerprintSession::AUTH) {
     GetBiodClient()->EndAuthSession(
-        base::Bind(&RunFingerprintCallback, base::Passed(&callback)));
+        base::Bind(&RunFingerprintCallback, callback));
     opened_session_ = FingerprintSession::NONE;
   } else {
-    std::move(callback).Run(true);
+    callback.Run(true);
   }
 }
 
 void FingerprintChromeOS::DestroyAllRecords(
-    DestroyAllRecordsCallback callback) {
+    const DestroyAllRecordsCallback& callback) {
   GetBiodClient()->DestroyAllRecords(
-      base::Bind(&RunFingerprintCallback, base::Passed(&callback)));
+      base::Bind(&RunFingerprintCallback, callback));
 }
 
-void FingerprintChromeOS::RequestType(RequestTypeCallback callback) {
-  GetBiodClient()->RequestType(
-      base::AdaptCallbackForRepeating(std::move(callback)));
+void FingerprintChromeOS::RequestType(const RequestTypeCallback& callback) {
+  GetBiodClient()->RequestType(callback);
 }
 
 void FingerprintChromeOS::AddFingerprintObserver(
@@ -246,28 +242,28 @@ void FingerprintChromeOS::OnStartAuthSession(
 }
 
 void FingerprintChromeOS::OnGetRecordsForUser(
-    GetRecordsForUserCallback callback,
+    const GetRecordsForUserCallback& callback,
     const std::vector<dbus::ObjectPath>& records) {
   records_path_to_label_.clear();
   if (records.size() == 0)
-    std::move(callback).Run(records_path_to_label_);
+    callback.Run(records_path_to_label_);
 
   for (auto& record : records) {
     GetBiodClient()->RequestRecordLabel(
         record, base::Bind(&FingerprintChromeOS::OnGetLabelFromRecordPath,
-                           weak_ptr_factory_.GetWeakPtr(),
-                           base::Passed(&callback), records.size(), record));
+                           weak_ptr_factory_.GetWeakPtr(), callback,
+                           records.size(), record));
   }
 }
 
 void FingerprintChromeOS::OnGetLabelFromRecordPath(
-    GetRecordsForUserCallback callback,
+    const GetRecordsForUserCallback& callback,
     size_t num_records,
     const dbus::ObjectPath& record_path,
     const std::string& label) {
   records_path_to_label_[record_path.value()] = label;
   if (records_path_to_label_.size() == num_records)
-    std::move(callback).Run(records_path_to_label_);
+    callback.Run(records_path_to_label_);
 }
 
 // static

@@ -17,12 +17,11 @@ StartupTaskRunnerService::StartupTaskRunnerService(
 }
 
 StartupTaskRunnerService::~StartupTaskRunnerService() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 }
 
 scoped_refptr<base::DeferredSequencedTaskRunner>
     StartupTaskRunnerService::GetBookmarkTaskRunner() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (!bookmark_task_runner_) {
     bookmark_task_runner_ =
         new base::DeferredSequencedTaskRunner(io_task_runner_);

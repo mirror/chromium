@@ -41,10 +41,10 @@ cr.define('media_router_container_first_run_flow', function() {
       var fakeCastModeList = [];
 
       /**
-       * The list of CastModes to show with non-PRESENTATION modes only.
+       * The list of CastModes to show with non-default modes only.
        * @type {!Array<!media_router.CastMode>}
        */
-      var fakeCastModeListWithNonPresentationModesOnly = [];
+      var fakeCastModeListWithNonDefaultModesOnly = [];
 
       // Import media_router_container.html before running suite.
       suiteSetup(function() {
@@ -65,8 +65,8 @@ cr.define('media_router_container_first_run_flow', function() {
         checkElementsVisibleWithId = test_base.checkElementsVisibleWithId;
         checkElementVisibleWithId = test_base.checkElementVisibleWithId;
         fakeCastModeList = test_base.fakeCastModeList;
-        fakeCastModeListWithNonPresentationModesOnly =
-            test_base.fakeCastModeListWithNonPresentationModesOnly;
+        fakeCastModeListWithNonDefaultModesOnly =
+            test_base.fakeCastModeListWithNonDefaultModesOnly;
 
         container.castModeList = test_base.fakeCastModeList;
 

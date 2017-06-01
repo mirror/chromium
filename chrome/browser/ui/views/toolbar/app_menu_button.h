@@ -56,9 +56,9 @@ class AppMenuButton : public views::MenuButton,
   void RemoveMenuListener(views::MenuListener* listener);
 
   // views::MenuButton:
-  gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetPreferredSize() const override;
   void Layout() override;
-  void PaintButtonContents(gfx::Canvas* canvas) override;
+  void OnPaint(gfx::Canvas* canvas) override;
 
   // TabStripObserver:
   void TabInsertedAt(TabStripModel* tab_strip_model,

@@ -8,15 +8,15 @@
 
 #include "ash/keyboard/keyboard_ui.h"
 #include "ash/resources/vector_icons/vector_icons.h"
-#include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_constants.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/tray/tray_constants.h"
 #include "ash/system/tray/tray_container.h"
+#include "ash/wm_window.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/display/display.h"
-#include "ui/display/screen.h"
 #include "ui/events/event.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/paint_vector_icon.h"
@@ -25,8 +25,10 @@
 
 namespace ash {
 
-VirtualKeyboardTray::VirtualKeyboardTray(Shelf* shelf)
-    : TrayBackgroundView(shelf), icon_(new views::ImageView), shelf_(shelf) {
+VirtualKeyboardTray::VirtualKeyboardTray(WmShelf* wm_shelf)
+    : TrayBackgroundView(wm_shelf),
+      icon_(new views::ImageView),
+      wm_shelf_(wm_shelf) {
   SetInkDropMode(InkDropMode::ON);
 
   gfx::ImageSkia image =
@@ -64,9 +66,8 @@ void VirtualKeyboardTray::HideBubbleWithView(
 void VirtualKeyboardTray::ClickedOutsideBubble() {}
 
 bool VirtualKeyboardTray::PerformAction(const ui::Event& event) {
-  const int64_t display_id = display::Screen::GetScreen()
-                                 ->GetDisplayNearestWindow(shelf_->GetWindow())
-                                 .id();
+  const int64_t display_id =
+      wm_shelf_->GetWindow()->GetDisplayNearestWindow().id();
   Shell::Get()->keyboard_ui()->ShowInDisplay(display_id);
   // Normally, active status is set when virtual keyboard is shown/hidden,
   // however, showing virtual keyboard happens asynchronously and, especially

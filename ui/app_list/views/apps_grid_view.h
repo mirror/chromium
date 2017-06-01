@@ -123,7 +123,7 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   PaginationModel* pagination_model() { return &pagination_model_; }
 
   // Overridden from views::View:
-  gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetPreferredSize() const override;
   void Layout() override;
   bool OnKeyPressed(const ui::KeyEvent& event) override;
   bool OnKeyReleased(const ui::KeyEvent& event) override;

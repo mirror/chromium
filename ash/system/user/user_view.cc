@@ -27,6 +27,7 @@
 #include "ash/system/user/login_status.h"
 #include "ash/system/user/rounded_image_view.h"
 #include "ash/system/user/user_card_view.h"
+#include "ash/wm_window.h"
 #include "base/memory/ptr_util.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "components/user_manager/user_info.h"
@@ -64,7 +65,7 @@ void SwitchUser(UserIndex user_index) {
   MultiProfileUMA::RecordSwitchActiveUser(
       MultiProfileUMA::SWITCH_ACTIVE_USER_BY_TRAY);
   controller->SwitchActiveUser(
-      controller->GetUserSession(user_index)->user_info->account_id);
+      controller->GetUserSession(user_index)->account_id);
 }
 
 bool IsMultiProfileSupportedAndUserActive() {

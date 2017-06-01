@@ -375,7 +375,7 @@ struct CC_PAINT_EXPORT DrawDisplayItemListOp final : PaintOp {
                      const SkMatrix& original_ctm);
   size_t AdditionalBytesUsed() const;
   bool HasDiscardableImages() const;
-  int CountSlowPaths() const;
+  // TODO(enne): DisplayItemList should know number of slow paths.
 
   scoped_refptr<DisplayItemList> list;
 };
@@ -772,36 +772,13 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
   static constexpr size_t PaintOpAlign = ALIGNOF(DrawDRRectOp);
 
   PaintOpBuffer();
+  explicit PaintOpBuffer(const SkRect& cull_rect);
   ~PaintOpBuffer() override;
 
   void Reset();
 
-  void playback(SkCanvas* canvas,
-                SkPicture::AbortCallback* callback = nullptr) const;
-  // This can be used to play back a subset of the PaintOpBuffer.
-  // The |range_starts| array is an increasing set of positions in the
-  // PaintOpBuffer that break the buffer up into arbitrary consecutive chunks
-  // that together cover the entire buffer. The first value in |range_starts|
-  // must be 0. Each value after defines the end of the previous range
-  // (exclusive) and the beginning of the next range (inclusive). The last value
-  // in the array defines the last range which includes all ops to the end of
-  // the buffer. For example, given a PaintOpBuffer with the following ops:
-  // { A, B, C, D, E, F, G, H, I }
-  // And a |range_starts| with the following values:
-  // { 0, 4, 5 }
-  // This defines the following ranges in PaintOpBuffer:
-  // { A, B, C, D }, { E }, { F, G, H, I }.
-  // The |range_indices| is an increasing set of indices into the |range_starts|
-  // array. This defines the set of ranges that will be played back.
-  // Given the above example, if range_indices contains:
-  // { 1, 2 }
-  // Then the 1th and 2th (starting from base 0) ranges as defined in
-  // |range_starts| would be played back, which would be:
-  // { E, F, G, H, I }.
-  void PlaybackRanges(const std::vector<size_t>& range_starts,
-                      const std::vector<size_t>& range_indices,
-                      SkCanvas* canvas,
-                      SkPicture::AbortCallback* callback = nullptr) const;
+  void playback(SkCanvas* canvas) const;
+  void playback(SkCanvas* canvas, SkPicture::AbortCallback* callback) const;
 
   // Returns the size of the paint op buffer. That is, the number of ops
   // contained in it.
@@ -815,6 +792,8 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
 
   // Resize the PaintOpBuffer to exactly fit the current amount of used space.
   void ShrinkToFit();
+
+  const SkRect& cullRect() const { return cull_rect_; }
 
   PaintOp* GetFirstOp() const {
     return const_cast<PaintOp*>(first_op_.data_as<PaintOp>());
@@ -834,6 +813,7 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
                   "T is not a PaintOpWithData");
     static_assert(!std::is_convertible<T, PaintOpWithArrayBase>::value,
                   "Type needs to use push_with_array");
+    DCHECK_GE(bytes, 0u);
     T* op = push_internal<T>(bytes, bytes, std::forward<Args>(args)...);
     memcpy(op->GetData(), data, bytes);
 
@@ -858,6 +838,8 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
                        Args&&... args) {
     static_assert(std::is_convertible<T, PaintOpWithArray<M>>::value,
                   "T is not a PaintOpWithArray");
+    DCHECK_GE(bytes, 0u);
+    DCHECK_GE(count, 0u);
     size_t array_size = sizeof(M) * count;
     size_t total_size = bytes + array_size;
     T* op =
@@ -910,6 +892,7 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
       return *this;
     }
     operator bool() const { return op_idx_ < buffer_->size(); }
+
     size_t op_idx() const { return op_idx_; }
 
    private:
@@ -966,6 +949,7 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
   // Record additional bytes used by referenced sub-records and display lists.
   size_t subrecord_bytes_used_ = 0;
   bool has_discardable_images_ = false;
+  SkRect cull_rect_;
 
   DISALLOW_COPY_AND_ASSIGN(PaintOpBuffer);
 };

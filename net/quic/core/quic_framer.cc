@@ -655,6 +655,9 @@ bool QuicFramer::AppendPacketHeader(const QuicPacketHeader& header,
   if (header.public_header.version_flag) {
     public_flags |= PACKET_PUBLIC_FLAGS_VERSION;
   }
+  if (header.public_header.multipath_flag) {
+    public_flags |= PACKET_PUBLIC_FLAGS_MULTIPATH;
+  }
 
   public_flags |=
       GetPacketNumberFlags(header.public_header.packet_number_length)
@@ -771,12 +774,19 @@ bool QuicFramer::ProcessPublicHeader(QuicDataReader* reader,
     return false;
   }
 
+  public_header->multipath_flag =
+      (public_flags & PACKET_PUBLIC_FLAGS_MULTIPATH) != 0;
   public_header->reset_flag = (public_flags & PACKET_PUBLIC_FLAGS_RST) != 0;
   public_header->version_flag =
       (public_flags & PACKET_PUBLIC_FLAGS_VERSION) != 0;
 
   if (validate_flags_ && !public_header->version_flag &&
-      public_flags > PACKET_PUBLIC_FLAGS_MAX) {
+      public_flags > (FLAGS_quic_reloadable_flag_quic_remove_multipath_bit
+                          ? PACKET_PUBLIC_FLAGS_MAX_WITHOUT_MULTIPATH_FLAG
+                          : PACKET_PUBLIC_FLAGS_MAX)) {
+    if (FLAGS_quic_reloadable_flag_quic_remove_multipath_bit) {
+      QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_remove_multipath_bit, 1, 2);
+    }
     set_detailed_error("Illegal public flags value.");
     return false;
   }
@@ -817,7 +827,13 @@ bool QuicFramer::ProcessPublicHeader(QuicDataReader* reader,
     // If not, this raises an error.
     last_version_tag_ = version_tag;
     QuicVersion version = QuicTagToQuicVersion(version_tag);
-    if (version == quic_version_ && public_flags > PACKET_PUBLIC_FLAGS_MAX) {
+    if (version == quic_version_ &&
+        public_flags > (FLAGS_quic_reloadable_flag_quic_remove_multipath_bit
+                            ? PACKET_PUBLIC_FLAGS_MAX_WITHOUT_MULTIPATH_FLAG
+                            : PACKET_PUBLIC_FLAGS_MAX)) {
+      if (FLAGS_quic_reloadable_flag_quic_remove_multipath_bit) {
+        QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_remove_multipath_bit, 1, 2);
+      }
       set_detailed_error("Illegal public flags value.");
       return false;
     }

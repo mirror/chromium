@@ -25,7 +25,7 @@
 #include "gpu/command_buffer/client/gpu_control.h"
 #include "gpu/command_buffer/common/activity_flags.h"
 #include "gpu/command_buffer/common/command_buffer.h"
-#include "gpu/command_buffer/service/command_buffer_service.h"
+#include "gpu/command_buffer/service/command_executor.h"
 #include "gpu/command_buffer/service/context_group.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/config/gpu_driver_bug_workarounds.h"
@@ -67,7 +67,9 @@ class ProgramCache;
 class ShaderTranslatorCache;
 }
 
+class CommandBufferServiceBase;
 class GpuMemoryBufferManager;
+class CommandExecutor;
 class ImageFactory;
 class TransferBufferManager;
 
@@ -77,7 +79,6 @@ class TransferBufferManager;
 // class) from different client threads is undefined.
 class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
                                           public GpuControl,
-                                          public CommandBufferServiceClient,
                                           public ImageTransportSurfaceDelegate {
  public:
   class Service;
@@ -139,10 +140,6 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   bool CanWaitUnverifiedSyncToken(const SyncToken& sync_token) override;
   void AddLatencyInfo(
       const std::vector<ui::LatencyInfo>& latency_info) override;
-
-  // CommandBufferServiceClient implementation:
-  CommandBatchProcessedResult OnCommandBatchProcessed() override;
-  void OnParseError() override;
 
 // ImageTransportSurfaceDelegate implementation:
 #if defined(OS_WIN)
@@ -275,6 +272,8 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   void SetGetBufferOnGpuThread(int32_t shm_id, base::WaitableEvent* completion);
 
   // Callbacks on the gpu thread.
+  void OnContextLostOnGpuThread();
+  void PumpCommandsOnGpuThread();
   void PerformDelayedWorkOnGpuThread();
   // Callback implementations on the client thread.
   void OnContextLost();
@@ -287,6 +286,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
 
   scoped_refptr<base::SingleThreadTaskRunner> origin_task_runner_;
   std::unique_ptr<TransferBufferManager> transfer_buffer_manager_;
+  std::unique_ptr<CommandExecutor> executor_;
   std::unique_ptr<gles2::GLES2Decoder> decoder_;
   scoped_refptr<gl::GLContext> context_;
   scoped_refptr<gl::GLSurface> surface_;
@@ -317,7 +317,7 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   uint64_t flushed_fence_sync_release_;
 
   // Accessed on both threads:
-  std::unique_ptr<CommandBufferService> command_buffer_;
+  std::unique_ptr<CommandBufferServiceBase> command_buffer_;
   base::Lock command_buffer_lock_;
   base::WaitableEvent flush_event_;
   scoped_refptr<Service> service_;

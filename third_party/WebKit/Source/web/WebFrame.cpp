@@ -8,15 +8,15 @@
 #include "bindings/core/v8/WindowProxyManager.h"
 #include "core/HTMLNames.h"
 #include "core/dom/IncrementLoadEventDelayCount.h"
-#include "core/dom/UserGestureIndicator.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/frame/RemoteFrame.h"
 #include "core/frame/WebLocalFrameBase.h"
 #include "core/frame/WebRemoteFrameBase.h"
 #include "core/html/HTMLFrameElementBase.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/page/Page.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/heap/Handle.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "public/web/WebElement.h"
@@ -181,12 +181,6 @@ void WebFrame::SetFrameOwnerProperties(
   owner->SetAllowedFeatures(properties.allowed_features);
 }
 
-void WebFrame::Collapse(bool collapsed) {
-  FrameOwner* owner = ToCoreFrame(*this)->Owner();
-  DCHECK(owner->IsLocal());
-  ToHTMLFrameOwnerElement(owner)->SetCollapsed(collapsed);
-}
-
 WebFrame* WebFrame::Opener() const {
   return opener_;
 }
@@ -336,15 +330,6 @@ void WebFrame::TraceFrames(Visitor* visitor, WebFrame* frame) {
 
 void WebFrame::Close() {
   opened_frame_tracker_->Dispose();
-}
-
-void WebFrame::DetachFromParent() {
-  // TODO(dcheng): This should really just check if there's a parent, and call
-  // RemoveChild() if so. Once provisional frames are removed, this check can be
-  // simplified to just check Parent(). See https://crbug.com/578349.
-  const blink::Frame* frame = ToCoreFrame(*this);
-  if (frame->Owner() && frame->Owner()->ContentFrame() == frame)
-    Parent()->RemoveChild(this);
 }
 
 void WebFrame::InitializeCoreFrame(WebFrame& frame, Page& page) {

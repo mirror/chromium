@@ -17,11 +17,11 @@ TaskPump::TaskPump()
 }
 
 TaskPump::~TaskPump() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 }
 
 void TaskPump::WakeTasks() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (!stopped_ && !posted_wake_) {
     // Do the requested wake up.
     base::ThreadTaskRunnerHandle::Get()->PostTask(
@@ -32,7 +32,7 @@ void TaskPump::WakeTasks() {
 }
 
 int64_t TaskPump::CurrentTime() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   // Only timeout tasks rely on this function.  Since we're not using
   // libjingle tasks for timeout, it's safe to return 0 here.
   return 0;
@@ -43,7 +43,7 @@ void TaskPump::Stop() {
 }
 
 void TaskPump::CheckAndRunTasks() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (stopped_) {
     return;
   }

@@ -355,7 +355,7 @@ class AudioOutputDelegateTest : public testing::Test {
           &mirroring_manager_, &media_observer_, kStreamId, kRenderFrameId,
           kRenderProcessId, Params(), kDefaultDeviceId);
 
-      delegate.GetControllerForTesting()->OnError();
+      delegate.GetControllerForTesting()->OnError(nullptr);
 
       SyncWithAllThreads();
 
@@ -428,7 +428,7 @@ class AudioOutputDelegateTest : public testing::Test {
           kRenderProcessId, Params(), kDefaultDeviceId);
       SyncWithAllThreads();
 
-      delegate.GetControllerForTesting()->OnError();
+      delegate.GetControllerForTesting()->OnError(nullptr);
     }
     SyncWithAllThreads();
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE, done);

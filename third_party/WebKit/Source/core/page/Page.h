@@ -132,7 +132,7 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
   ViewportDescription GetViewportDescription() const;
 
   static void RefreshPlugins();
-  PluginData* GetPluginData(SecurityOrigin* main_frame_origin);
+  PluginData* GetPluginData(SecurityOrigin* main_frame_origin) const;
 
   EditorClient& GetEditorClient() const { return *editor_client_; }
   SpellCheckerClient& GetSpellCheckerClient() const {
@@ -274,8 +274,8 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
 
   DECLARE_TRACE();
 
-  void LayerTreeViewInitialized(WebLayerTreeView&, LocalFrameView*);
-  void WillCloseLayerTreeView(WebLayerTreeView&, LocalFrameView*);
+  void LayerTreeViewInitialized(WebLayerTreeView&, FrameView*);
+  void WillCloseLayerTreeView(WebLayerTreeView&, FrameView*);
 
   void WillBeDestroyed();
 
@@ -318,13 +318,13 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
   // However, there are several locations (InspectorOverlay, SVGImage, and
   // WebPagePopupImpl) which don't hold a reference to the main frame at all
   // after creating it. These are still safe because they always create a
-  // Frame with a LocalFrameView. LocalFrameView and Frame hold references to
-  // each other, thus keeping each other alive. The call to willBeDestroyed()
+  // Frame with a FrameView. FrameView and Frame hold references to each
+  // other, thus keeping each other alive. The call to willBeDestroyed()
   // breaks this cycle, so the frame is still properly destroyed once no
   // longer needed.
   Member<Frame> main_frame_;
 
-  Member<PluginData> plugin_data_;
+  mutable RefPtr<PluginData> plugin_data_;
 
   EditorClient* const editor_client_;
   SpellCheckerClient* const spell_checker_client_;

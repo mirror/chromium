@@ -24,9 +24,8 @@
 #include "net/base/net_errors.h"
 #include "net/socket/socket.h"
 
-#define VLOG_WITH_CONNECTION(level)                                     \
-  VLOG(level) << "[" << ip_endpoint_.ToString() << ", auth="            \
-              << ::cast_channel::ChannelAuthTypeToString(channel_auth_) \
+#define VLOG_WITH_CONNECTION(level)                                           \
+  VLOG(level) << "[" << ip_endpoint_.ToString() << ", auth=" << channel_auth_ \
               << "] "
 
 namespace extensions {
@@ -42,7 +41,7 @@ CastTransportImpl::CastTransportImpl(net::Socket* socket,
       socket_(socket),
       write_state_(WRITE_STATE_IDLE),
       read_state_(READ_STATE_READ),
-      error_state_(ChannelError::NONE),
+      error_state_(CHANNEL_ERROR_NONE),
       channel_id_(channel_id),
       ip_endpoint_(ip_endpoint),
       channel_auth_(channel_auth),
@@ -57,7 +56,7 @@ CastTransportImpl::CastTransportImpl(net::Socket* socket,
 }
 
 CastTransportImpl::~CastTransportImpl() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   FlushWriteQueue();
 }
 
@@ -120,25 +119,25 @@ proto::WriteState CastTransportImpl::WriteStateToProto(
 // static
 proto::ErrorState CastTransportImpl::ErrorStateToProto(ChannelError state) {
   switch (state) {
-    case ChannelError::NONE:
+    case CHANNEL_ERROR_NONE:
       return proto::CHANNEL_ERROR_NONE;
-    case ChannelError::CHANNEL_NOT_OPEN:
+    case CHANNEL_ERROR_CHANNEL_NOT_OPEN:
       return proto::CHANNEL_ERROR_CHANNEL_NOT_OPEN;
-    case ChannelError::AUTHENTICATION_ERROR:
+    case CHANNEL_ERROR_AUTHENTICATION_ERROR:
       return proto::CHANNEL_ERROR_AUTHENTICATION_ERROR;
-    case ChannelError::CONNECT_ERROR:
+    case CHANNEL_ERROR_CONNECT_ERROR:
       return proto::CHANNEL_ERROR_CONNECT_ERROR;
-    case ChannelError::CAST_SOCKET_ERROR:
+    case CHANNEL_ERROR_SOCKET_ERROR:
       return proto::CHANNEL_ERROR_SOCKET_ERROR;
-    case ChannelError::TRANSPORT_ERROR:
+    case CHANNEL_ERROR_TRANSPORT_ERROR:
       return proto::CHANNEL_ERROR_TRANSPORT_ERROR;
-    case ChannelError::INVALID_MESSAGE:
+    case CHANNEL_ERROR_INVALID_MESSAGE:
       return proto::CHANNEL_ERROR_INVALID_MESSAGE;
-    case ChannelError::INVALID_CHANNEL_ID:
+    case CHANNEL_ERROR_INVALID_CHANNEL_ID:
       return proto::CHANNEL_ERROR_INVALID_CHANNEL_ID;
-    case ChannelError::CONNECT_TIMEOUT:
+    case CHANNEL_ERROR_CONNECT_TIMEOUT:
       return proto::CHANNEL_ERROR_CONNECT_TIMEOUT;
-    case ChannelError::UNKNOWN:
+    case CHANNEL_ERROR_UNKNOWN:
       return proto::CHANNEL_ERROR_UNKNOWN;
     default:
       NOTREACHED();
@@ -147,7 +146,7 @@ proto::ErrorState CastTransportImpl::ErrorStateToProto(ChannelError state) {
 }
 
 void CastTransportImpl::SetReadDelegate(std::unique_ptr<Delegate> delegate) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(delegate);
   delegate_ = std::move(delegate);
   if (started_) {
@@ -166,7 +165,7 @@ void CastTransportImpl::FlushWriteQueue() {
 
 void CastTransportImpl::SendMessage(const CastMessage& message,
                                     const net::CompletionCallback& callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   std::string serialized_message;
   if (!MessageFramer::Serialize(message, &serialized_message)) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
@@ -210,13 +209,12 @@ void CastTransportImpl::SetWriteState(WriteState write_state) {
 }
 
 void CastTransportImpl::SetErrorState(ChannelError error_state) {
-  VLOG_WITH_CONNECTION(2) << "SetErrorState: "
-                          << ::cast_channel::ChannelErrorToString(error_state);
+  VLOG_WITH_CONNECTION(2) << "SetErrorState: " << error_state;
   error_state_ = error_state;
 }
 
 void CastTransportImpl::OnWriteResult(int result) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_NE(WRITE_STATE_IDLE, write_state_);
   if (write_queue_.empty()) {
     SetWriteState(WRITE_STATE_IDLE);
@@ -252,7 +250,7 @@ void CastTransportImpl::OnWriteResult(int result) {
       default:
         NOTREACHED() << "Unknown state in write state machine: " << state;
         SetWriteState(WRITE_STATE_ERROR);
-        SetErrorState(ChannelError::UNKNOWN);
+        SetErrorState(CHANNEL_ERROR_UNKNOWN);
         rv = net::ERR_FAILED;
         break;
     }
@@ -260,7 +258,7 @@ void CastTransportImpl::OnWriteResult(int result) {
 
   if (write_state_ == WRITE_STATE_ERROR) {
     FlushWriteQueue();
-    DCHECK_NE(ChannelError::NONE, error_state_);
+    DCHECK_NE(CHANNEL_ERROR_NONE, error_state_);
     VLOG_WITH_CONNECTION(2) << "Sending OnError().";
     delegate_->OnError(error_state_);
   }
@@ -287,7 +285,7 @@ int CastTransportImpl::DoWriteComplete(int result) {
   DCHECK(!write_queue_.empty());
   if (result <= 0) {  // NOTE that 0 also indicates an error
     logger_->LogSocketEventWithRv(channel_id_, proto::SOCKET_WRITE, result);
-    SetErrorState(ChannelError::CAST_SOCKET_ERROR);
+    SetErrorState(CHANNEL_ERROR_SOCKET_ERROR);
     SetWriteState(WRITE_STATE_HANDLE_ERROR);
     return result == 0 ? net::ERR_FAILED : result;
   }
@@ -325,14 +323,14 @@ int CastTransportImpl::DoWriteCallback() {
 
 int CastTransportImpl::DoWriteHandleError(int result) {
   VLOG_WITH_CONNECTION(2) << "DoWriteHandleError result=" << result;
-  DCHECK_NE(ChannelError::NONE, error_state_);
+  DCHECK_NE(CHANNEL_ERROR_NONE, error_state_);
   DCHECK_LT(result, 0);
   SetWriteState(WRITE_STATE_ERROR);
   return net::ERR_FAILED;
 }
 
 void CastTransportImpl::Start() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(!started_);
   DCHECK_EQ(READ_STATE_READ, read_state_);
   DCHECK(delegate_) << "Read delegate must be set prior to calling Start()";
@@ -345,7 +343,7 @@ void CastTransportImpl::Start() {
 }
 
 void CastTransportImpl::OnReadResult(int result) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   // Network operations can either finish synchronously or asynchronously.
   // This method executes the state machine transitions in a loop so that
   // write state transitions happen even when network operations finish
@@ -374,7 +372,7 @@ void CastTransportImpl::OnReadResult(int result) {
       default:
         NOTREACHED() << "Unknown state in read state machine: " << state;
         SetReadState(READ_STATE_ERROR);
-        SetErrorState(ChannelError::UNKNOWN);
+        SetErrorState(CHANNEL_ERROR_UNKNOWN);
         rv = net::ERR_FAILED;
         break;
     }
@@ -406,7 +404,7 @@ int CastTransportImpl::DoReadComplete(int result) {
   if (result <= 0) {
     logger_->LogSocketEventWithRv(channel_id_, proto::SOCKET_READ, result);
     VLOG_WITH_CONNECTION(1) << "Read error, peer closed the socket.";
-    SetErrorState(ChannelError::CAST_SOCKET_ERROR);
+    SetErrorState(CHANNEL_ERROR_SOCKET_ERROR);
     SetReadState(READ_STATE_HANDLE_ERROR);
     return result == 0 ? net::ERR_FAILED : result;
   }
@@ -415,12 +413,12 @@ int CastTransportImpl::DoReadComplete(int result) {
   DCHECK(!current_message_);
   ChannelError framing_error;
   current_message_ = framer_->Ingest(result, &message_size, &framing_error);
-  if (current_message_.get() && (framing_error == ChannelError::NONE)) {
+  if (current_message_.get() && (framing_error == CHANNEL_ERROR_NONE)) {
     DCHECK_GT(message_size, static_cast<size_t>(0));
     SetReadState(READ_STATE_DO_CALLBACK);
-  } else if (framing_error != ChannelError::NONE) {
+  } else if (framing_error != CHANNEL_ERROR_NONE) {
     DCHECK(!current_message_);
-    SetErrorState(ChannelError::INVALID_MESSAGE);
+    SetErrorState(CHANNEL_ERROR_INVALID_MESSAGE);
     SetReadState(READ_STATE_HANDLE_ERROR);
   } else {
     DCHECK(!current_message_);
@@ -433,7 +431,7 @@ int CastTransportImpl::DoReadCallback() {
   VLOG_WITH_CONNECTION(2) << "DoReadCallback";
   if (!IsCastMessageValid(*current_message_)) {
     SetReadState(READ_STATE_HANDLE_ERROR);
-    SetErrorState(ChannelError::INVALID_MESSAGE);
+    SetErrorState(CHANNEL_ERROR_INVALID_MESSAGE);
     return net::ERR_INVALID_RESPONSE;
   }
   SetReadState(READ_STATE_READ);
@@ -444,7 +442,7 @@ int CastTransportImpl::DoReadCallback() {
 
 int CastTransportImpl::DoReadHandleError(int result) {
   VLOG_WITH_CONNECTION(2) << "DoReadHandleError";
-  DCHECK_NE(ChannelError::NONE, error_state_);
+  DCHECK_NE(CHANNEL_ERROR_NONE, error_state_);
   DCHECK_LE(result, 0);
   SetReadState(READ_STATE_ERROR);
   return net::ERR_FAILED;

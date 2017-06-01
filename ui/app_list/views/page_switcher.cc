@@ -50,17 +50,18 @@ class PageSwitcherButton : public views::CustomButton {
   void set_button_width(int button_width) { button_width_ = button_width; }
 
   // Overridden from views::View:
-  gfx::Size CalculatePreferredSize() const override {
+  gfx::Size GetPreferredSize() const override {
     return gfx::Size(button_width_, kButtonHeight);
   }
 
-  void PaintButtonContents(gfx::Canvas* canvas) override {
+  void OnPaint(gfx::Canvas* canvas) override {
     if (state() == STATE_HOVERED)
       PaintButton(canvas, kPagerHoverColor);
     else
       PaintButton(canvas, kPagerNormalColor);
   }
 
+ private:
   void OnGestureEvent(ui::GestureEvent* event) override {
     CustomButton::OnGestureEvent(event);
 
@@ -72,7 +73,6 @@ class PageSwitcherButton : public views::CustomButton {
     SchedulePaint();
   }
 
- private:
   // Paints a button that has two rounded corner at bottom.
   void PaintButton(gfx::Canvas* canvas, SkColor base_color) {
     gfx::Rect rect(GetContentsBounds());
@@ -177,7 +177,7 @@ void PageSwitcher::UpdateUIForDragPoint(const gfx::Point& point) {
   }
 }
 
-gfx::Size PageSwitcher::CalculatePreferredSize() const {
+gfx::Size PageSwitcher::GetPreferredSize() const {
   // Always return a size with correct height so that container resize is not
   // needed when more pages are added.
   return gfx::Size(buttons_->GetPreferredSize().width(),

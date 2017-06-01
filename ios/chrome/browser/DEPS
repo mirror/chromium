@@ -93,7 +93,6 @@ include_rules = [
   "+crypto",
   "+google_apis",
   "+ios/chrome/app",
-  "+ios/components/io_thread",
   "+ios/net",
   "+ios/public/provider/chrome",
   "+ios/public/provider/components",

@@ -26,7 +26,6 @@
 #include "components/safe_browsing/csd.pb.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/test/test_renderer_host.h"
 #include "content/public/test/web_contents_tester.h"
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
@@ -547,13 +546,6 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails) {
 //      \- <div id=inner bar=baz/> - div and script are at the same level.
 //      \- <script src=kDOMChildURL2>
 TEST_F(ThreatDetailsTest, ThreatDOMDetails_MultipleFrames) {
-  // Create a child renderer inside the main frame to house the inner iframe.
-  // Perform the navigation first in order to manipulate the frame tree.
-  content::WebContentsTester::For(web_contents())
-      ->NavigateAndCommit(GURL(kLandingURL));
-  content::RenderFrameHost* child_rfh =
-      content::RenderFrameHostTester::For(main_rfh())->AppendChild("subframe");
-
   // Define two sets of DOM nodes - one for an outer page containing an iframe,
   // and then another for the inner page containing the contents of that iframe.
   std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> outer_params;
@@ -573,7 +565,6 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails_MultipleFrames) {
   outer_child_iframe.parent = GURL(kDOMParentURL);
   outer_child_iframe.attributes.push_back(std::make_pair("src", kDOMChildURL));
   outer_child_iframe.attributes.push_back(std::make_pair("foo", "bar"));
-  outer_child_iframe.child_frame_routing_id = child_rfh->GetRoutingID();
   outer_params.push_back(outer_child_iframe);
 
   SafeBrowsingHostMsg_ThreatDOMDetails_Node outer_summary_node;
@@ -675,6 +666,9 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails_MultipleFrames) {
   elem_dom_inner_script->add_attribute()->set_name("src");
   elem_dom_inner_script->mutable_attribute(0)->set_value(kDOMChildUrl2);
 
+  content::WebContentsTester::For(web_contents())
+      ->NavigateAndCommit(GURL(kLandingURL));
+
   UnsafeResource resource;
   InitResource(&resource, SB_THREAT_TYPE_URL_UNWANTED,
                true /* is_subresource */, GURL(kThreatURL));
@@ -684,10 +678,10 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails_MultipleFrames) {
     scoped_refptr<ThreatDetailsWrap> report = new ThreatDetailsWrap(
         ui_manager_.get(), web_contents(), resource, NULL, history_service());
 
-    // Send both sets of nodes from different render frames.
-    report->OnReceivedThreatDOMDetails(main_rfh(), outer_params);
-    report->OnReceivedThreatDOMDetails(child_rfh, inner_params);
-
+    // We call AddDOMDetails directly so we can specify different render frame
+    // IDs.
+    report->AddDOMDetails(100, GURL(kDOMParentURL), outer_params);
+    report->AddDOMDetails(200, GURL(kDOMChildURL), inner_params);
     std::string serialized = WaitForSerializedReport(
         report.get(), false /* did_proceed*/, 0 /* num_visit */);
     ClientSafeBrowsingReportRequest actual;
@@ -698,8 +692,8 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails_MultipleFrames) {
   // Try again but with the messages coming in a different order. The IDs change
   // slightly, but everything else remains the same.
   {
-    // Adjust the expected IDs: the inner params come first, so InnerScript
-    // and InnerDiv appear before DomParent
+    // Adjust the expected IDs: the inner params come first, so InnerScript and
+    // appear before DomParent
     res_dom_child2->set_id(2);
     res_dom_child2->set_parent_id(3);
     res_dom_child->set_id(3);
@@ -728,10 +722,10 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails_MultipleFrames) {
     scoped_refptr<ThreatDetailsWrap> report = new ThreatDetailsWrap(
         ui_manager_.get(), web_contents(), resource, NULL, history_service());
 
-    // Send both sets of nodes from different render frames.
-    report->OnReceivedThreatDOMDetails(child_rfh, inner_params);
-    report->OnReceivedThreatDOMDetails(main_rfh(), outer_params);
-
+    // We call AddDOMDetails directly so we can specify different render frame
+    // IDs.
+    report->AddDOMDetails(200, GURL(kDOMChildURL), inner_params);
+    report->AddDOMDetails(100, GURL(kDOMParentURL), outer_params);
     std::string serialized = WaitForSerializedReport(
         report.get(), false /* did_proceed*/, 0 /* num_visit */);
     ClientSafeBrowsingReportRequest actual;
@@ -740,25 +734,18 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails_MultipleFrames) {
   }
 }
 
-// Tests an ambiguous DOM, meaning that an inner render frame can not be mapped
-// to an iframe element in the parent frame, which is a failure to lookup the
-// frames in the frame tree and should not happen.
+// Tests an ambiguous DOM, meaning that an inner render frame has  URL that can
+// not be mapped to an iframe element in the parent frame with that same URL.
+// Typically this happens when the iframe tag has a data URL.
 // We use three layers in this test:
 // kDOMParentURL
-//   \- <frame src=kDataURL>
+//   \- <iframe src=kDataURL>
 //        \- <script src=kDOMChildURL2>
 TEST_F(ThreatDetailsTest, ThreatDOMDetails_AmbiguousDOM) {
   const char kAmbiguousDomMetric[] = "SafeBrowsing.ThreatReport.DomIsAmbiguous";
 
-  // Create a child renderer inside the main frame to house the inner iframe.
-  // Perform the navigation first in order to manipulate the frame tree.
-  content::WebContentsTester::For(web_contents())
-      ->NavigateAndCommit(GURL(kLandingURL));
-  content::RenderFrameHost* child_rfh =
-      content::RenderFrameHostTester::For(main_rfh())->AppendChild("subframe");
-
-  // Define two sets of DOM nodes - one for an outer page containing a frame,
-  // and then another for the inner page containing the contents of that frame.
+  // Define two sets of DOM nodes - one for an outer page containing an iframe,
+  // and then another for the inner page containing the contents of that iframe.
   std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> outer_params;
   SafeBrowsingHostMsg_ThreatDOMDetails_Node outer_child_node;
   outer_child_node.url = GURL(kDataURL);
@@ -769,12 +756,9 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails_AmbiguousDOM) {
   SafeBrowsingHostMsg_ThreatDOMDetails_Node outer_summary_node;
   outer_summary_node.url = GURL(kDOMParentURL);
   outer_summary_node.children.push_back(GURL(kDataURL));
-  // Set |child_frame_routing_id| for this node to something non-sensical so
-  // that the child frame lookup fails.
-  outer_summary_node.child_frame_routing_id = -100;
   outer_params.push_back(outer_summary_node);
 
-  // Now define some more nodes for the body of the frame. The URL of this
+  // Now define some more nodes for the body of the iframe. The URL of this
   // inner frame is "about:blank".
   std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> inner_params;
   SafeBrowsingHostMsg_ThreatDOMDetails_Node inner_child_node;
@@ -839,6 +823,9 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails_AmbiguousDOM) {
   pb_element->add_attribute()->set_name("src");
   pb_element->mutable_attribute(0)->set_value(kDOMChildUrl2);
 
+  content::WebContentsTester::For(web_contents())
+      ->NavigateAndCommit(GURL(kLandingURL));
+
   UnsafeResource resource;
   InitResource(&resource, SB_THREAT_TYPE_URL_UNWANTED,
                true /* is_subresource */, GURL(kThreatURL));
@@ -846,9 +833,11 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails_AmbiguousDOM) {
       ui_manager_.get(), web_contents(), resource, NULL, history_service());
   base::HistogramTester histograms;
 
-  // Send both sets of nodes from different render frames.
-  report->OnReceivedThreatDOMDetails(main_rfh(), outer_params);
-  report->OnReceivedThreatDOMDetails(child_rfh, inner_params);
+  // Send both sets of nodes, from different render frames. We call
+  // AddDOMDetails directly so we can specify different render frame IDs.
+  report->AddDOMDetails(100, GURL(kDOMParentURL), outer_params);
+  // The inner frame was using a data URL so its last committed URL is empty.
+  report->AddDOMDetails(200, GURL(), inner_params);
 
   std::string serialized = WaitForSerializedReport(
       report.get(), false /* did_proceed*/, 0 /* num_visit */);

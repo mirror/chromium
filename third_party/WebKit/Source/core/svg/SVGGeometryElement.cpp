@@ -130,7 +130,8 @@ SVGPointTearOff* SVGGeometryElement::getPointAtLength(float length) {
   FloatPoint point;
   if (GetLayoutObject())
     point = AsPath().PointAtLength(length);
-  return SVGPointTearOff::CreateDetached(point);
+  return SVGPointTearOff::Create(SVGPoint::Create(point), 0,
+                                 kPropertyIsNotAnimVal);
 }
 
 float SVGGeometryElement::ComputePathLength() const {

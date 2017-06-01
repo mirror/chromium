@@ -351,10 +351,8 @@ public class ContextualSearchSelectionController {
      * or #handleNonSuppressedTap() after a possible delay.
      * This should be called when the context is fully built (by gathering surrounding text
      * if needed, etc) but before showing any UX.
-     * @param rankerLogger The {@link ContextualSearchRankerLogger} currently being used to measure
-     *        or suppress the UI by Ranker.
      */
-    void handleShouldSuppressTap(ContextualSearchRankerLogger rankerLogger) {
+    void handleShouldSuppressTap() {
         int x = (int) mX;
         int y = (int) mY;
 
@@ -364,29 +362,25 @@ public class ContextualSearchSelectionController {
                 - prefs.getContextualSearchTapQuickAnswerCount();
         TapSuppressionHeuristics tapHeuristics =
                 new TapSuppressionHeuristics(this, mLastTapState, x, y, adjustedTapsSinceOpen);
-
         // TODO(donnd): Move to be called when the panel closes to work with states that change.
         tapHeuristics.logConditionState();
-
-        tapHeuristics.logRankerTapSuppression(rankerLogger);
         // Tell the manager what it needs in order to log metrics on whether the tap would have
         // been suppressed if each of the heuristics were satisfied.
         mHandler.handleMetricsForWouldSuppressTap(tapHeuristics);
 
-        boolean shouldSuppressTapBasedOnHeuristics = tapHeuristics.shouldSuppressTap();
+        boolean shouldSuppressTap = tapHeuristics.shouldSuppressTap();
         if (mTapTimeNanoseconds != 0) {
             // Remember the tap state for subsequent tap evaluation.
-            mLastTapState = new ContextualSearchTapState(
-                    x, y, mTapTimeNanoseconds, shouldSuppressTapBasedOnHeuristics);
+            mLastTapState =
+                    new ContextualSearchTapState(x, y, mTapTimeNanoseconds, shouldSuppressTap);
         } else {
             mLastTapState = null;
         }
 
-        boolean shouldSuppressTapBasedOnRanker = rankerLogger.inferUiSuppression();
-        if (shouldSuppressTapBasedOnHeuristics || shouldSuppressTapBasedOnRanker) {
+        if (shouldSuppressTap) {
             mHandler.handleSuppressedTap();
         } else {
-            mHandler.handleNonSuppressedTap(mTapTimeNanoseconds);
+            mHandler.handleNonSuppressedTap();
         }
     }
 

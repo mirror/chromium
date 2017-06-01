@@ -24,5 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textColor="@color/snippets_text_color"
-        android:textSize="12sp"/>
+        android:textSize="12sp"
+        android:textStyle="italic"/>
 </FrameLayout>

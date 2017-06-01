@@ -34,7 +34,6 @@
 
 #include <memory>
 #include "bindings/core/v8/ScriptController.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/events/Event.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/LocalFrame.h"
@@ -51,6 +50,7 @@
 #include "core/probe/CoreProbes.h"
 #include "platform/Histogram.h"
 #include "platform/SharedBuffer.h"
+#include "platform/UserGestureIndicator.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/wtf/CurrentTime.h"

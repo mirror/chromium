@@ -65,17 +65,6 @@ cr.define('bookmarks', function() {
   };
 
   /**
-   * @param {SelectionState} selectionState
-   * @param {Action} action
-   * @return {SelectionState}
-   */
-  SelectionState.updateAnchor = function(selectionState, action) {
-    return /** @type {SelectionState} */ (Object.assign({}, selectionState, {
-      anchor: action.anchor,
-    }));
-  };
-
-  /**
    * @param {SelectionState} selection
    * @param {Action} action
    * @return {SelectionState}
@@ -92,8 +81,6 @@ cr.define('bookmarks', function() {
       case 'remove-bookmark':
         return SelectionState.deselectDeletedItems(
             selection, action.descendants);
-      case 'update-anchor':
-        return SelectionState.updateAnchor(selection, action);
       default:
         return selection;
     }
@@ -420,7 +407,7 @@ cr.define('bookmarks', function() {
             closedFolders, action.descendants);
       default:
         return closedFolders;
-    }
+    };
   };
 
   /**

@@ -115,107 +115,13 @@ static gfx::Vector2dF ScrollDelta(LayerImpl* layer_impl) {
   return gfx::Vector2dF(delta.x(), delta.y());
 }
 
-TEST(LayerImplTest, VerifyPendingLayerChangesAreTrackedProperly) {
+TEST(LayerImplTest, VerifyLayerChangesAreTrackedProperly) {
   //
-  // This test checks that LayerPropertyChanged() has the correct behavior.
+  // This test checks that layerPropertyChanged() has the correct behavior.
   //
 
   // The constructor on this will fake that we are on the correct thread.
   // Create a simple LayerImpl tree:
-  FakeImplTaskRunnerProvider task_runner_provider;
-  TestTaskGraphRunner task_graph_runner;
-  std::unique_ptr<CompositorFrameSink> compositor_frame_sink =
-      FakeCompositorFrameSink::Create3d();
-  FakeLayerTreeHostImpl host_impl(&task_runner_provider, &task_graph_runner);
-  host_impl.SetVisible(true);
-  EXPECT_TRUE(host_impl.InitializeRenderer(compositor_frame_sink.get()));
-  host_impl.CreatePendingTree();
-  std::unique_ptr<LayerImpl> root_clip_ptr =
-      LayerImpl::Create(host_impl.pending_tree(), 1);
-  LayerImpl* root_clip = root_clip_ptr.get();
-  std::unique_ptr<LayerImpl> root_ptr =
-      LayerImpl::Create(host_impl.pending_tree(), 2);
-  LayerImpl* root = root_ptr.get();
-  root_clip_ptr->test_properties()->AddChild(std::move(root_ptr));
-  host_impl.pending_tree()->SetRootLayerForTesting(std::move(root_clip_ptr));
-
-  root->test_properties()->force_render_surface = true;
-  root->SetMasksToBounds(true);
-  root->layer_tree_impl()->ResetAllChangeTracking();
-
-  root->test_properties()->AddChild(
-      LayerImpl::Create(host_impl.pending_tree(), 7));
-  LayerImpl* child = root->test_properties()->children[0];
-  child->test_properties()->AddChild(
-      LayerImpl::Create(host_impl.pending_tree(), 8));
-  LayerImpl* grand_child = child->test_properties()->children[0];
-  root->SetScrollClipLayer(root_clip->id());
-  host_impl.pending_tree()->BuildLayerListAndPropertyTreesForTesting();
-
-  // Adding children is an internal operation and should not mark layers as
-  // changed.
-  EXPECT_FALSE(root->LayerPropertyChanged());
-  EXPECT_FALSE(child->LayerPropertyChanged());
-  EXPECT_FALSE(grand_child->LayerPropertyChanged());
-
-  gfx::PointF arbitrary_point_f = gfx::PointF(0.125f, 0.25f);
-  float arbitrary_number = 0.352f;
-  gfx::Size arbitrary_size = gfx::Size(111, 222);
-  gfx::Point arbitrary_point = gfx::Point(333, 444);
-
-  gfx::Rect arbitrary_rect = gfx::Rect(arbitrary_point, arbitrary_size);
-  SkColor arbitrary_color = SkColorSetRGB(10, 20, 30);
-  gfx::Transform arbitrary_transform;
-  arbitrary_transform.Scale3d(0.1f, 0.2f, 0.3f);
-  FilterOperations arbitrary_filters;
-  arbitrary_filters.Append(FilterOperation::CreateOpacityFilter(0.5f));
-
-  // These properties are internal, and should not be considered "change" when
-  // they are used.
-  EXECUTE_AND_VERIFY_NEEDS_PUSH_PROPERTIES_AND_SUBTREE_DID_NOT_CHANGE(
-      root->SetUpdateRect(arbitrary_rect));
-  EXECUTE_AND_VERIFY_ONLY_LAYER_CHANGED(root->SetBounds(arbitrary_size));
-  host_impl.pending_tree()->property_trees()->needs_rebuild = true;
-  host_impl.pending_tree()->BuildLayerListAndPropertyTreesForTesting();
-
-  // Changing these properties affects the entire subtree of layers.
-  EXECUTE_AND_VERIFY_NO_NEED_TO_PUSH_PROPERTIES_AND_SUBTREE_CHANGED(
-      host_impl.pending_tree()->SetFilterMutated(root->element_id(),
-                                                 arbitrary_filters));
-  EXECUTE_AND_VERIFY_NO_NEED_TO_PUSH_PROPERTIES_AND_SUBTREE_CHANGED(
-      host_impl.pending_tree()->SetFilterMutated(root->element_id(),
-                                                 FilterOperations()));
-  EXECUTE_AND_VERIFY_NO_NEED_TO_PUSH_PROPERTIES_AND_SUBTREE_CHANGED(
-      host_impl.pending_tree()->SetOpacityMutated(root->element_id(),
-                                                  arbitrary_number));
-  EXECUTE_AND_VERIFY_NO_NEED_TO_PUSH_PROPERTIES_AND_SUBTREE_CHANGED(
-      host_impl.pending_tree()->SetTransformMutated(root->element_id(),
-                                                    arbitrary_transform));
-
-  // Changing these properties only affects the layer itself.
-  EXECUTE_AND_VERIFY_ONLY_LAYER_CHANGED(root->SetDrawsContent(true));
-  EXECUTE_AND_VERIFY_ONLY_LAYER_CHANGED(
-      root->SetBackgroundColor(arbitrary_color));
-
-  // Changing these properties does not cause the layer to be marked as changed
-  // but does cause the layer to need to push properties.
-  EXECUTE_AND_VERIFY_NEEDS_PUSH_PROPERTIES_AND_SUBTREE_DID_NOT_CHANGE(
-      root->SetElementId(ElementId(2)));
-  EXECUTE_AND_VERIFY_NEEDS_PUSH_PROPERTIES_AND_SUBTREE_DID_NOT_CHANGE(
-      root->SetMutableProperties(MutableProperty::kOpacity);
-      root->SetNeedsPushProperties());
-
-  // After setting all these properties already, setting to the exact same
-  // values again should not cause any change.
-  EXECUTE_AND_VERIFY_SUBTREE_DID_NOT_CHANGE(root->SetMasksToBounds(true));
-  EXECUTE_AND_VERIFY_SUBTREE_DID_NOT_CHANGE(
-      root->SetPosition(arbitrary_point_f));
-  EXECUTE_AND_VERIFY_SUBTREE_DID_NOT_CHANGE(root->SetContentsOpaque(true));
-  EXECUTE_AND_VERIFY_SUBTREE_DID_NOT_CHANGE(root->SetDrawsContent(true));
-  EXECUTE_AND_VERIFY_SUBTREE_DID_NOT_CHANGE(root->SetBounds(root->bounds()));
-}
-
-TEST(LayerImplTest, VerifyActiveLayerChangesAreTrackedProperly) {
   FakeImplTaskRunnerProvider task_runner_provider;
   TestTaskGraphRunner task_graph_runner;
   std::unique_ptr<CompositorFrameSink> compositor_frame_sink =
@@ -232,62 +138,107 @@ TEST(LayerImplTest, VerifyActiveLayerChangesAreTrackedProperly) {
   root_clip_ptr->test_properties()->AddChild(std::move(root_ptr));
   host_impl.active_tree()->SetRootLayerForTesting(std::move(root_clip_ptr));
 
+  // Make root the inner viewport scroll layer. This ensures the later call to
+  // |SetViewportBoundsDelta| will be on a viewport layer.
+  LayerTreeImpl::ViewportLayerIds viewport_ids;
+  viewport_ids.inner_viewport_scroll = root->id();
+  host_impl.active_tree()->SetViewportLayersFromIds(viewport_ids);
+
+  root->test_properties()->force_render_surface = true;
+  root->SetMasksToBounds(true);
+  root->layer_tree_impl()->ResetAllChangeTracking();
+
   root->test_properties()->AddChild(
       LayerImpl::Create(host_impl.active_tree(), 7));
   LayerImpl* child = root->test_properties()->children[0];
+  child->test_properties()->AddChild(
+      LayerImpl::Create(host_impl.active_tree(), 8));
+  LayerImpl* grand_child = child->test_properties()->children[0];
   root->SetScrollClipLayer(root_clip->id());
   host_impl.active_tree()->BuildLayerListAndPropertyTreesForTesting();
 
-  // Make root the inner viewport container layer. This ensures the later call
-  // to |SetViewportBoundsDelta| will be on a viewport layer.
-  LayerTreeImpl::ViewportLayerIds viewport_ids;
-  viewport_ids.inner_viewport_container = root->id();
-  host_impl.active_tree()->SetViewportLayersFromIds(viewport_ids);
+  // Adding children is an internal operation and should not mark layers as
+  // changed.
+  EXPECT_FALSE(root->LayerPropertyChanged());
+  EXPECT_FALSE(child->LayerPropertyChanged());
+  EXPECT_FALSE(grand_child->LayerPropertyChanged());
+
+  gfx::PointF arbitrary_point_f = gfx::PointF(0.125f, 0.25f);
+  float arbitrary_number = 0.352f;
+  gfx::Size arbitrary_size = gfx::Size(111, 222);
+  gfx::Point arbitrary_point = gfx::Point(333, 444);
+  gfx::Vector2d arbitrary_vector2d = gfx::Vector2d(111, 222);
+  gfx::Rect arbitrary_rect = gfx::Rect(arbitrary_point, arbitrary_size);
+  SkColor arbitrary_color = SkColorSetRGB(10, 20, 30);
+  gfx::Transform arbitrary_transform;
+  arbitrary_transform.Scale3d(0.1f, 0.2f, 0.3f);
+  FilterOperations arbitrary_filters;
+  arbitrary_filters.Append(FilterOperation::CreateOpacityFilter(0.5f));
+
+  // These properties are internal, and should not be considered "change" when
+  // they are used.
+  EXECUTE_AND_VERIFY_NEEDS_PUSH_PROPERTIES_AND_SUBTREE_DID_NOT_CHANGE(
+      root->SetUpdateRect(arbitrary_rect));
+  EXECUTE_AND_VERIFY_ONLY_LAYER_CHANGED(root->SetBounds(arbitrary_size));
+  host_impl.active_tree()->property_trees()->needs_rebuild = true;
+  host_impl.active_tree()->BuildLayerListAndPropertyTreesForTesting();
+
+  // Changing these properties affects the entire subtree of layers.
+  EXECUTE_AND_VERIFY_NO_NEED_TO_PUSH_PROPERTIES_AND_SUBTREE_CHANGED(
+      host_impl.active_tree()->SetFilterMutated(root->element_id(),
+                                                arbitrary_filters));
+  EXECUTE_AND_VERIFY_NO_NEED_TO_PUSH_PROPERTIES_AND_SUBTREE_CHANGED(
+      host_impl.active_tree()->SetFilterMutated(root->element_id(),
+                                                FilterOperations()));
+  EXECUTE_AND_VERIFY_NO_NEED_TO_PUSH_PROPERTIES_AND_SUBTREE_CHANGED(
+      host_impl.active_tree()->SetOpacityMutated(root->element_id(),
+                                                 arbitrary_number));
+  EXECUTE_AND_VERIFY_NO_NEED_TO_PUSH_PROPERTIES_AND_SUBTREE_CHANGED(
+      host_impl.active_tree()->SetTransformMutated(root->element_id(),
+                                                   arbitrary_transform));
+  EXECUTE_AND_VERIFY_SUBTREE_CHANGED(root->ScrollBy(arbitrary_vector2d);
+                                     root->SetNeedsPushProperties());
+  // SetViewportBoundsDelta changes subtree only when masks_to_bounds is true
+  // and it doesn't set needs_push_properties as it is always called on active
+  // tree.
+  root->SetMasksToBounds(true);
+  EXECUTE_AND_VERIFY_SUBTREE_CHANGED(
+      root->SetViewportBoundsDelta(arbitrary_vector2d);
+      root->SetNeedsPushProperties());
+
+  // Changing these properties only affects the layer itself.
+  EXECUTE_AND_VERIFY_ONLY_LAYER_CHANGED(root->SetDrawsContent(true));
+  EXECUTE_AND_VERIFY_ONLY_LAYER_CHANGED(
+      root->SetBackgroundColor(arbitrary_color));
+
+  // Special case: check that SetBounds changes behavior depending on
+  // masksToBounds.
+  gfx::Size bounds_size(135, 246);
+  root->SetMasksToBounds(false);
+  EXECUTE_AND_VERIFY_ONLY_LAYER_CHANGED(root->SetBounds(bounds_size));
+  host_impl.active_tree()->property_trees()->needs_rebuild = true;
+  host_impl.active_tree()->BuildLayerListAndPropertyTreesForTesting();
 
   root->SetMasksToBounds(true);
   host_impl.active_tree()->property_trees()->needs_rebuild = true;
   host_impl.active_tree()->BuildLayerListAndPropertyTreesForTesting();
-  root->layer_tree_impl()->ResetAllChangeTracking();
 
-  // SetViewportBoundsDelta changes subtree only when masks_to_bounds is true.
-  root->SetViewportBoundsDelta(gfx::Vector2d(222, 333));
-  EXPECT_TRUE(root->LayerPropertyChanged());
-  EXPECT_TRUE(host_impl.active_tree()->property_trees()->full_tree_damaged);
+  // Changing these properties does not cause the layer to be marked as changed
+  // but does cause the layer to need to push properties.
+  EXECUTE_AND_VERIFY_NEEDS_PUSH_PROPERTIES_AND_SUBTREE_DID_NOT_CHANGE(
+      root->SetElementId(ElementId(2)));
+  EXECUTE_AND_VERIFY_NEEDS_PUSH_PROPERTIES_AND_SUBTREE_DID_NOT_CHANGE(
+      root->SetMutableProperties(MutableProperty::kOpacity);
+      root->SetNeedsPushProperties());
 
-  root->SetMasksToBounds(false);
-  host_impl.active_tree()->property_trees()->needs_rebuild = true;
-  host_impl.active_tree()->BuildLayerListAndPropertyTreesForTesting();
-  root->layer_tree_impl()->ResetAllChangeTracking();
-
-  // SetViewportBoundsDelta does not change the subtree without masks_to_bounds.
-  root->SetViewportBoundsDelta(gfx::Vector2d(333, 444));
-  EXPECT_TRUE(root->LayerPropertyChanged());
-  EXPECT_FALSE(host_impl.active_tree()->property_trees()->full_tree_damaged);
-
-  host_impl.active_tree()->property_trees()->needs_rebuild = true;
-  host_impl.active_tree()->BuildLayerListAndPropertyTreesForTesting();
-  root->layer_tree_impl()->ResetAllChangeTracking();
-
-  // Ensure some node is affected by the inner viewport bounds delta. This
-  // ensures the later call to |SetViewportBoundsDelta| will require a
-  // transform tree update.
-  TransformTree& transform_tree =
-      host_impl.active_tree()->property_trees()->transform_tree;
-  transform_tree.AddNodeAffectedByInnerViewportBoundsDelta(
-      child->transform_tree_index());
-  EXPECT_FALSE(transform_tree.needs_update());
-  root->SetViewportBoundsDelta(gfx::Vector2d(111, 222));
-  EXPECT_TRUE(transform_tree.needs_update());
-
-  host_impl.active_tree()->property_trees()->needs_rebuild = true;
-  host_impl.active_tree()->BuildLayerListAndPropertyTreesForTesting();
-  root->layer_tree_impl()->ResetAllChangeTracking();
-
-  // Ensure scrolling changes the transform tree but does not damage all trees.
-  root->ScrollBy(gfx::Vector2d(7, 9));
-  EXPECT_TRUE(transform_tree.needs_update());
-  EXPECT_TRUE(root->LayerPropertyChanged());
-  EXPECT_FALSE(host_impl.active_tree()->property_trees()->full_tree_damaged);
+  // After setting all these properties already, setting to the exact same
+  // values again should not cause any change.
+  EXECUTE_AND_VERIFY_SUBTREE_DID_NOT_CHANGE(root->SetMasksToBounds(true));
+  EXECUTE_AND_VERIFY_SUBTREE_DID_NOT_CHANGE(
+      root->SetPosition(arbitrary_point_f));
+  EXECUTE_AND_VERIFY_SUBTREE_DID_NOT_CHANGE(root->SetContentsOpaque(true));
+  EXECUTE_AND_VERIFY_SUBTREE_DID_NOT_CHANGE(root->SetDrawsContent(true));
+  EXECUTE_AND_VERIFY_SUBTREE_DID_NOT_CHANGE(root->SetBounds(bounds_size));
 }
 
 TEST(LayerImplTest, VerifyNeedsUpdateDrawProperties) {

@@ -7,7 +7,8 @@
 #include "ui/aura/window.h"
 #include "ui/wm/public/tooltip_client.h"
 
-namespace wm {
+namespace aura {
+namespace client {
 
 ScopedTooltipDisabler::ScopedTooltipDisabler(aura::Window* window)
     : root_(window ? window->GetRootWindow() : NULL) {
@@ -37,4 +38,6 @@ void ScopedTooltipDisabler::OnWindowDestroying(aura::Window* window) {
   EnableTooltips();
 }
 
-}  // namespace wm
+
+}  // namespace client
+}  // namespace aura

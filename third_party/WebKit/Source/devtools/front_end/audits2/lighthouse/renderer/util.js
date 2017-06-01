@@ -18,7 +18,6 @@
 /* globals self URL */
 
 const ELLIPSIS = '\u2026';
-const NBSP = '\xa0';
 
 const RATINGS = {
   PASS: {label: 'pass', minScore: 75},
@@ -58,16 +57,6 @@ class Util {
    */
   static formateBytesToKB(size, decimalPlaces = 2) {
     return (size / 1024).toLocaleString(undefined, {maximumFractionDigits: decimalPlaces});
-  }
-
-  /**
-   * @param {number} ms
-   * @param {number=} granularity Controls how coarse the displayed value is, defaults to 10
-   * @return {string}
-   */
-  static formatMilliseconds(ms, granularity = 10) {
-    const coarseTime = Math.round(ms / granularity) * granularity;
-    return `${coarseTime.toLocaleString()}${NBSP}ms`;
   }
 
   /**

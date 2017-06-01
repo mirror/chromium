@@ -61,8 +61,6 @@ const char* TaskQueue::PriorityToString(QueuePriority priority) {
       return "high";
     case NORMAL_PRIORITY:
       return "normal";
-    case LOW_PRIORITY:
-      return "low";
     case BEST_EFFORT_PRIORITY:
       return "best_effort";
     default:

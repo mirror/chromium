@@ -12,6 +12,7 @@
 #include "ui/base/l10n/l10n_util.h"
 
 using InfoBarUtilities::MoveControl;
+using InfoBarUtilities::VerifyControlOrderAndSpacing;
 
 namespace {
 

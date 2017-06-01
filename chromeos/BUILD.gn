@@ -23,7 +23,6 @@ component("chromeos") {
     ":authpolicy_proto",
     ":biod_proto",
     ":cryptohome_proto",
-    ":login_manager_proto",
     ":media_perception_proto",
     ":power_manager_proto",
     "//base",
@@ -337,8 +336,6 @@ component("chromeos") {
     "network/network_activation_handler.h",
     "network/network_cert_migrator.cc",
     "network/network_cert_migrator.h",
-    "network/network_certificate_handler.cc",
-    "network/network_certificate_handler.h",
     "network/network_change_notifier_chromeos.cc",
     "network/network_change_notifier_chromeos.h",
     "network/network_change_notifier_factory_chromeos.cc",
@@ -748,14 +745,6 @@ proto_library("cryptohome_proto") {
   ]
 
   proto_out_dir = "chromeos/dbus/cryptohome"
-}
-
-proto_library("login_manager_proto") {
-  sources = [
-    "//third_party/cros_system_api/dbus/login_manager/arc.proto",
-  ]
-
-  proto_out_dir = "chromeos/dbus/login_manager"
 }
 
 proto_library("attestation_proto") {

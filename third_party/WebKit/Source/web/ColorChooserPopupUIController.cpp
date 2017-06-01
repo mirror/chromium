@@ -25,14 +25,14 @@
 
 #include "web/ColorChooserPopupUIController.h"
 
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/html/forms/ColorChooserClient.h"
-#include "core/page/ChromeClient.h"
 #include "core/page/PagePopup.h"
 #include "platform/geometry/IntRect.h"
 #include "public/platform/Platform.h"
 #include "public/web/WebColorChooser.h"
+#include "web/ChromeClientImpl.h"
 
 namespace blink {
 
@@ -45,7 +45,7 @@ enum ColorPickerPopupAction {
 
 ColorChooserPopupUIController::ColorChooserPopupUIController(
     LocalFrame* frame,
-    ChromeClient* chrome_client,
+    ChromeClientImpl* chrome_client,
     ColorChooserClient* client)
     : ColorChooserUIController(frame, client),
       chrome_client_(chrome_client),
@@ -93,9 +93,8 @@ void ColorChooserPopupUIController::WriteDocument(SharedBuffer* data) {
 
   PagePopupClient::AddString(
       "<!DOCTYPE html><head><meta charset='UTF-8'><style>\n", data);
-  data->Append(Platform::Current()->GetDataResource("pickerCommon.css"));
-  data->Append(
-      Platform::Current()->GetDataResource("colorSuggestionPicker.css"));
+  data->Append(Platform::Current()->LoadResource("pickerCommon.css"));
+  data->Append(Platform::Current()->LoadResource("colorSuggestionPicker.css"));
   PagePopupClient::AddString(
       "</style></head><body><div id=main>Loading...</div><script>\n"
       "window.dialogArguments = {\n",
@@ -107,9 +106,8 @@ void ColorChooserPopupUIController::WriteDocument(SharedBuffer* data) {
   AddProperty("anchorRectInScreen", anchor_rect_in_screen, data);
   AddProperty("zoomFactor", ZoomFactor(), data);
   PagePopupClient::AddString("};\n", data);
-  data->Append(Platform::Current()->GetDataResource("pickerCommon.js"));
-  data->Append(
-      Platform::Current()->GetDataResource("colorSuggestionPicker.js"));
+  data->Append(Platform::Current()->LoadResource("pickerCommon.js"));
+  data->Append(Platform::Current()->LoadResource("colorSuggestionPicker.js"));
   PagePopupClient::AddString("</script></body>\n", data);
 }
 

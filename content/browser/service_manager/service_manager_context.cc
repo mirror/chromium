@@ -10,7 +10,6 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
-#include "base/feature_list.h"
 #include "base/json/json_reader.h"
 #include "base/lazy_instance.h"
 #include "base/macros.h"
@@ -53,8 +52,6 @@
 #include "services/service_manager/runner/common/client_util.h"
 #include "services/service_manager/service_manager.h"
 #include "services/shape_detection/public/interfaces/constants.mojom.h"
-#include "services/video_capture/public/cpp/constants.h"
-#include "services/video_capture/public/interfaces/constants.mojom.h"
 
 #if defined(OS_ANDROID)
 #include "base/android/jni_android.h"
@@ -367,20 +364,6 @@ ServiceManagerContext::ServiceManagerContext() {
         std::make_pair(content::mojom::kNetworkServiceName,
                        base::ASCIIToUTF16("Network Service")));
   }
-  if (base::FeatureList::IsEnabled(video_capture::kMojoVideoCapture)) {
-    unsandboxed_services.insert(
-        std::make_pair(video_capture::mojom::kServiceName,
-                       base::ASCIIToUTF16("Video Capture Service")));
-  }
-
-#if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_UTILITY_PROCESS)
-  // TODO(xhwang): This is only used for test/experiment for now so it's okay
-  // to run it in an unsandboxed utility process. Fix CDM loading so that we can
-  // run it in the sandboxed utility process. See http://crbug.com/510604
-  // TODO(xhwang): Replace the service name "media" with a constant string.
-  unsandboxed_services.insert(
-      std::make_pair("media", base::ASCIIToUTF16("Media Service")));
-#endif
 
   for (const auto& service : unsandboxed_services) {
     packaged_services_connection_->AddServiceRequestHandler(

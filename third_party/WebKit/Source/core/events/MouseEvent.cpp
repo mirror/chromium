@@ -24,9 +24,9 @@
 
 #include "core/dom/Element.h"
 #include "core/events/EventDispatcher.h"
+#include "core/frame/FrameView.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
 #include "core/input/InputDeviceCapabilities.h"
 #include "core/layout/LayoutObject.h"
 #include "core/paint/PaintLayer.h"
@@ -45,7 +45,7 @@ LayoutSize ContentsScrollOffset(AbstractView* abstract_view) {
   LocalFrame* frame = ToLocalDOMWindow(abstract_view)->GetFrame();
   if (!frame)
     return LayoutSize();
-  LocalFrameView* frame_view = frame->View();
+  FrameView* frame_view = frame->View();
   if (!frame_view)
     return LayoutSize();
   float scale_factor = frame->PageZoomFactor();
@@ -266,7 +266,7 @@ void MouseEvent::InitCoordinatesFromRootFrame(int window_x, int window_y) {
                           ? ToLocalDOMWindow(view())->GetFrame()
                           : nullptr;
   if (frame && HasPosition()) {
-    if (LocalFrameView* frame_view = frame->View()) {
+    if (FrameView* frame_view = frame->View()) {
       adjusted_page_location =
           frame_view->RootFrameToContents(IntPoint(window_x, window_y));
       scroll_offset = frame_view->ScrollOffsetInt();
@@ -396,13 +396,13 @@ short MouseEvent::button() const {
   return button_;
 }
 
-unsigned MouseEvent::which() const {
+int MouseEvent::which() const {
   // For the DOM, the return values for left, middle and right mouse buttons are
   // 0, 1, 2, respectively.
   // For the Netscape "which" property, the return values for left, middle and
   // right mouse buttons are 1, 2, 3, respectively.
   // So we must add 1.
-  return (unsigned)(button_ + 1);
+  return button_ + 1;
 }
 
 Node* MouseEvent::toElement() const {

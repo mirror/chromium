@@ -74,7 +74,7 @@ NSString* const kRootObjectKey = @"root";  // Key for the root object.
   scoped_refptr<base::SequencedTaskRunner> _taskRunner;
 
   // Maps session path to the pending session for the delayed save behaviour.
-  NSMutableDictionary<NSString*, SessionIOSFactory>* _pendingSessions;
+  NSMutableDictionary<NSString*, SessionIOS*>* _pendingSessions;
 }
 
 #pragma mark - NSObject overrides
@@ -108,12 +108,12 @@ NSString* const kRootObjectKey = @"root";  // Key for the root object.
   return self;
 }
 
-- (void)saveSession:(SessionIOSFactory)factory
+- (void)saveSession:(SessionIOS*)session
           directory:(NSString*)directory
         immediately:(BOOL)immediately {
   NSString* sessionPath = [[self class] sessionPathForDirectory:directory];
   BOOL hadPendingSession = [_pendingSessions objectForKey:sessionPath] != nil;
-  [_pendingSessions setObject:factory forKey:sessionPath];
+  [_pendingSessions setObject:session forKey:sessionPath];
   if (immediately) {
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     [self performSaveToPathInBackground:sessionPath];
@@ -194,9 +194,8 @@ NSString* const kRootObjectKey = @"root";  // Key for the root object.
 
   // Serialize to NSData on the main thread to avoid accessing potentially
   // non-threadsafe objects on a background thread.
-  SessionIOSFactory factory = [_pendingSessions objectForKey:sessionPath];
+  SessionIOS* session = [_pendingSessions objectForKey:sessionPath];
   [_pendingSessions removeObjectForKey:sessionPath];
-  SessionIOS* session = factory();
 
   @try {
     NSData* sessionData = [NSKeyedArchiver archivedDataWithRootObject:session];

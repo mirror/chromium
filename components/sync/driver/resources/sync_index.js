@@ -10,20 +10,3 @@ if (cr.isWindows)
   document.documentElement.setAttribute('os', 'win');
 
 cr.ui.decorate('tabbox', cr.ui.TabBox);
-
-cr.define('chrome.sync.index', function() {
-  function setUserEventsTabVisibility(visible) {
-    $('sync-user-events-tab').hidden = !visible;
-  }
-
-  function onLoad() {
-    chrome.sync.userEventsVisibilityCallback = setUserEventsTabVisibility;
-    chrome.sync.requestUserEventsVisibility();
-  }
-
-  return {
-    onLoad: onLoad
-  };
-});
-
-document.addEventListener('DOMContentLoaded', chrome.sync.index.onLoad, false);

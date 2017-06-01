@@ -88,7 +88,7 @@ class FakeLoginDisplayHost : public chromeos::LoginDisplayHost {
     return nullptr;
   }
   void BeforeSessionStart() override {}
-  void Finalize(base::OnceClosure) override {}
+  void Finalize() override {}
   void OpenProxySettings() override {}
   void SetStatusAreaVisible(bool visible) override {}
   void StartWizard(chromeos::OobeScreen first_screen) override {}
@@ -96,7 +96,7 @@ class FakeLoginDisplayHost : public chromeos::LoginDisplayHost {
   chromeos::AppLaunchController* GetAppLaunchController() override {
     return nullptr;
   }
-  void StartUserAdding(base::OnceClosure completion_callback) override {}
+  void StartUserAdding(const base::Closure& completion_callback) override {}
   void CancelUserAdding() override {}
   void StartSignInScreen(const chromeos::LoginScreenContext& context) override {
   }
@@ -130,7 +130,6 @@ class ArcSessionManagerTestBase : public testing::Test {
     SetArcAvailableCommandLineForTesting(
         base::CommandLine::ForCurrentProcess());
     ArcSessionManager::DisableUIForTesting();
-    SetArcBlockedDueToIncompatibleFileSystemForTesting(false);
 
     EXPECT_TRUE(temp_dir_.CreateUniqueTempDir());
     TestingProfile::Builder profile_builder;
@@ -246,38 +245,6 @@ TEST_F(ArcSessionManagerTest, BaseWorkflow) {
 
   ASSERT_EQ(ArcSessionManager::State::ACTIVE, arc_session_manager()->state());
   ASSERT_TRUE(arc_session_manager()->IsSessionRunning());
-
-  arc_session_manager()->Shutdown();
-}
-
-TEST_F(ArcSessionManagerTest, IncompatibleFileSystemBlocksTermsOfService) {
-  SetArcBlockedDueToIncompatibleFileSystemForTesting(true);
-
-  arc_session_manager()->SetProfile(profile());
-
-  // Enables ARC first time. ToS negotiation should NOT happen.
-  arc_session_manager()->RequestEnable();
-  base::RunLoop().RunUntilIdle();
-  ASSERT_EQ(ArcSessionManager::State::STOPPED, arc_session_manager()->state());
-
-  arc_session_manager()->Shutdown();
-}
-
-TEST_F(ArcSessionManagerTest, IncompatibleFileSystemBlocksArcStart) {
-  SetArcBlockedDueToIncompatibleFileSystemForTesting(true);
-
-  // Set up the situation that provisioning is successfully done in the
-  // previous session.
-  PrefService* const prefs = profile()->GetPrefs();
-  prefs->SetBoolean(prefs::kArcTermsAccepted, true);
-  prefs->SetBoolean(prefs::kArcSignedIn, true);
-
-  arc_session_manager()->SetProfile(profile());
-
-  // Enables ARC second time. ARC should NOT start.
-  arc_session_manager()->RequestEnable();
-  base::RunLoop().RunUntilIdle();
-  ASSERT_EQ(ArcSessionManager::State::STOPPED, arc_session_manager()->state());
 
   arc_session_manager()->Shutdown();
 }

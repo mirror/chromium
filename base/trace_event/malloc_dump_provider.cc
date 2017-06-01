@@ -32,7 +32,7 @@ namespace base {
 namespace trace_event {
 
 namespace {
-#if BUILDFLAG(USE_ALLOCATOR_SHIM)
+#if BUILDFLAG(USE_EXPERIMENTAL_ALLOCATOR_SHIM)
 
 using allocator::AllocatorDispatch;
 
@@ -139,7 +139,7 @@ AllocatorDispatch g_allocator_hooks = {
     &HookFreeDefiniteSize, /* free_definite_size_function */
     nullptr,               /* next */
 };
-#endif  // BUILDFLAG(USE_ALLOCATOR_SHIM)
+#endif  // BUILDFLAG(USE_EXPERIMENTAL_ALLOCATOR_SHIM)
 
 #if defined(OS_WIN)
 // A structure containing some information about a given heap.
@@ -298,22 +298,26 @@ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
   // Enclosing all the temporary data structures in a scope, so that the heap
   // profiler does not see unbalanced malloc/free calls from these containers.
   {
+    size_t shim_allocated_objects_size = 0;
+    size_t shim_allocated_objects_count = 0;
     TraceEventMemoryOverhead overhead;
     std::unordered_map<AllocationContext, AllocationMetrics> metrics_by_context;
     if (args.level_of_detail == MemoryDumpLevelOfDetail::DETAILED) {
-      ShardedAllocationRegister::OutputMetrics shim_metrics =
+      ShardedAllocationRegister::OutputMetrics metrics =
           allocation_register_.UpdateAndReturnsMetrics(metrics_by_context);
 
       // Aggregate data for objects allocated through the shim.
-      inner_dump->AddScalar("shim_allocated_objects_size",
-                            MemoryAllocatorDump::kUnitsBytes,
-                            shim_metrics.size);
-      inner_dump->AddScalar("shim_allocator_object_count",
-                            MemoryAllocatorDump::kUnitsObjects,
-                            shim_metrics.count);
+      shim_allocated_objects_size += metrics.size;
+      shim_allocated_objects_count += metrics.count;
     }
     allocation_register_.EstimateTraceMemoryOverhead(&overhead);
 
+    inner_dump->AddScalar("shim_allocated_objects_size",
+                          MemoryAllocatorDump::kUnitsBytes,
+                          shim_allocated_objects_size);
+    inner_dump->AddScalar("shim_allocator_object_count",
+                          MemoryAllocatorDump::kUnitsObjects,
+                          shim_allocated_objects_count);
     pmd->DumpHeapUsage(metrics_by_context, overhead, "malloc");
   }
   tid_dumping_heap_ = kInvalidThreadId;
@@ -322,7 +326,7 @@ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
 }
 
 void MallocDumpProvider::OnHeapProfilingEnabled(bool enabled) {
-#if BUILDFLAG(USE_ALLOCATOR_SHIM)
+#if BUILDFLAG(USE_EXPERIMENTAL_ALLOCATOR_SHIM)
   if (enabled) {
     allocation_register_.SetEnabled();
     allocator::InsertAllocatorDispatch(&g_allocator_hooks);

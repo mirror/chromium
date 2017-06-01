@@ -39,11 +39,10 @@
 namespace blink {
 
 class PluginListBuilder final : public WebPluginListBuilder {
-  STACK_ALLOCATED();
+  DISALLOW_NEW();
 
  public:
-  PluginListBuilder(HeapVector<Member<PluginInfo>>* results)
-      : results_(results) {}
+  PluginListBuilder(Vector<PluginInfo>* results) : results_(results) {}
 
   // WebPluginListBuilder methods:
   void AddPlugin(const WebString& name,
@@ -54,7 +53,7 @@ class PluginListBuilder final : public WebPluginListBuilder {
   void AddFileExtensionToLastMediaType(const WebString& extension) override;
 
  private:
-  Member<HeapVector<Member<PluginInfo>>> results_;
+  Vector<PluginInfo>* results_;
 };
 
 }  // namespace blink

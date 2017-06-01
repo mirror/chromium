@@ -118,7 +118,8 @@ class HidingWindowAnimationObserverBase : public aura::WindowObserver {
   void OnAnimationCompleted() {
     // Window may have been destroyed by this point.
     if (window_) {
-      AnimationHost* animation_host = GetAnimationHost(window_);
+      aura::client::AnimationHost* animation_host =
+          aura::client::GetAnimationHost(window_);
       if (animation_host)
         animation_host->OnWindowHidingAnimationCompleted();
       window_->RemoveObserver(this);
@@ -198,7 +199,7 @@ base::TimeDelta GetWindowVisibilityAnimationDuration(
     const aura::Window& window) {
   int duration =
       window.GetProperty(kWindowVisibilityAnimationDurationKey);
-  if (duration == 0 && window.type() == aura::client::WINDOW_TYPE_MENU) {
+  if (duration == 0 && window.type() == ui::wm::WINDOW_TYPE_MENU) {
     return base::TimeDelta::FromMilliseconds(
         kDefaultAnimationDurationForMenuMS);
   }
@@ -210,8 +211,8 @@ base::TimeDelta GetWindowVisibilityAnimationDuration(
 int GetWindowVisibilityAnimationType(aura::Window* window) {
   int type = window->GetProperty(kWindowVisibilityAnimationTypeKey);
   if (type == WINDOW_VISIBILITY_ANIMATION_TYPE_DEFAULT) {
-    return (window->type() == aura::client::WINDOW_TYPE_MENU ||
-            window->type() == aura::client::WINDOW_TYPE_TOOLTIP)
+    return (window->type() == ui::wm::WINDOW_TYPE_MENU ||
+            window->type() == ui::wm::WINDOW_TYPE_TOOLTIP)
                ? WINDOW_VISIBILITY_ANIMATION_TYPE_FADE
                : WINDOW_VISIBILITY_ANIMATION_TYPE_DROP;
   }
@@ -240,7 +241,8 @@ gfx::Rect GetLayerWorldBoundsAfterTransform(ui::Layer* layer,
 // animation will fit inside of it.
 void AugmentWindowSize(aura::Window* window,
                        const gfx::Transform& end_transform) {
-  AnimationHost* animation_host = GetAnimationHost(window);
+  aura::client::AnimationHost* animation_host =
+      aura::client::GetAnimationHost(window);
   if (!animation_host)
     return;
 

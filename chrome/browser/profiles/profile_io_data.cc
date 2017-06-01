@@ -76,6 +76,7 @@
 #include "components/signin/core/common/signin_pref_names.h"
 #include "components/url_formatter/url_fixer.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/host_zoom_map.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/resource_context.h"
 #include "content/public/common/content_switches.h"
@@ -1309,21 +1310,19 @@ ProfileIOData::CreateHttpNetworkSession(
 
   IOThread* const io_thread = profile_params.io_thread;
 
-  net::HttpNetworkSession::Context session_context;
-  net::URLRequestContextBuilder::SetHttpNetworkSessionComponents(
-      context, &session_context);
+  net::HttpNetworkSession::Params params(io_thread->NetworkSessionParams());
+  net::URLRequestContextBuilder::SetHttpNetworkSessionComponents(context,
+                                                                 &params);
   if (!IsOffTheRecord() && io_thread->globals()->network_quality_estimator) {
-    session_context.socket_performance_watcher_factory =
+    params.socket_performance_watcher_factory =
         io_thread->globals()
             ->network_quality_estimator->GetSocketPerformanceWatcherFactory();
   }
-  if (data_reduction_proxy_io_data_.get()) {
-    session_context.proxy_delegate =
-        data_reduction_proxy_io_data_->proxy_delegate();
-  }
+  if (data_reduction_proxy_io_data_.get())
+    params.proxy_delegate = data_reduction_proxy_io_data_->proxy_delegate();
 
-  return std::unique_ptr<net::HttpNetworkSession>(new net::HttpNetworkSession(
-      io_thread->NetworkSessionParams(), session_context));
+  return std::unique_ptr<net::HttpNetworkSession>(
+      new net::HttpNetworkSession(params));
 }
 
 std::unique_ptr<net::HttpCache> ProfileIOData::CreateMainHttpFactory(

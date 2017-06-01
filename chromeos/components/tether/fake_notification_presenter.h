@@ -34,10 +34,6 @@ class FakeNotificationPresenter : public NotificationPresenter {
   // SINGLE_HOTSPOT_NEARBY_SHOWN when called.
   cryptauth::RemoteDevice& GetPotentialHotspotRemoteDevice();
 
-  bool is_setup_required_notification_shown() {
-    return is_setup_required_notification_shown_;
-  }
-
   bool is_connection_failed_notification_shown() {
     return is_connection_failed_notification_shown_;
   }
@@ -47,15 +43,12 @@ class FakeNotificationPresenter : public NotificationPresenter {
       const cryptauth::RemoteDevice& remote_device) override;
   void NotifyMultiplePotentialHotspotsNearby() override;
   void RemovePotentialHotspotNotification() override;
-  void NotifySetupRequired(const std::string& device_name) override;
-  void RemoveSetupRequiredNotification() override;
   void NotifyConnectionToHostFailed() override;
   void RemoveConnectionToHostFailedNotification() override;
 
  private:
   PotentialHotspotNotificationState potential_hotspot_state_;
   cryptauth::RemoteDevice potential_hotspot_remote_device_;
-  bool is_setup_required_notification_shown_;
   bool is_connection_failed_notification_shown_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeNotificationPresenter);

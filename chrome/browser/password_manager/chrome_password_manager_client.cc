@@ -254,7 +254,7 @@ bool ChromePasswordManagerClient::OnCredentialManagerUsed() {
 }
 
 bool ChromePasswordManagerClient::PromptUserToSaveOrUpdatePassword(
-    scoped_refptr<password_manager::PasswordFormManager> form_to_save,
+    std::unique_ptr<password_manager::PasswordFormManager> form_to_save,
     bool update_password) {
   // Save password infobar and the password bubble prompts in case of
   // "webby" URLs and do not prompt in case of "non-webby" URLS (e.g. file://).
@@ -374,7 +374,7 @@ void ChromePasswordManagerClient::NotifyStorePasswordCalled() {
 }
 
 void ChromePasswordManagerClient::AutomaticPasswordSave(
-    scoped_refptr<password_manager::PasswordFormManager> saved_form) {
+    std::unique_ptr<password_manager::PasswordFormManager> saved_form) {
 #if defined(OS_ANDROID)
   GeneratedPasswordSavedInfoBarDelegateAndroid::Create(web_contents());
 #else
@@ -418,8 +418,10 @@ void ChromePasswordManagerClient::CheckSafeBrowsingReputation(
   safe_browsing::PasswordProtectionService* pps =
       GetPasswordProtectionService();
   if (pps) {
-    pps->MaybeStartPasswordFieldOnFocusRequest(
-        web_contents(), GetMainFrameURL(), form_action, frame_url);
+    // TODO(jialiul): Pass in web_content() instead of GetMainFrameURL(), such
+    // that web_content can be used to display safe browsing interstitial.
+    pps->MaybeStartPasswordFieldOnFocusRequest(GetMainFrameURL(), form_action,
+                                               frame_url);
   }
 }
 
@@ -428,8 +430,10 @@ void ChromePasswordManagerClient::CheckProtectedPasswordEntry(
   safe_browsing::PasswordProtectionService* pps =
       GetPasswordProtectionService();
   if (pps) {
-    pps->MaybeStartProtectedPasswordEntryRequest(
-        web_contents(), GetMainFrameURL(), password_saved_domain);
+    // TODO(jialiul): Pass in web_content() instead of GetMainFrameURL(), such
+    // that web_content can be used to display safe browsing interstitial.
+    pps->MaybeStartProtectedPasswordEntryRequest(GetMainFrameURL(),
+                                                 password_saved_domain);
   }
 }
 #endif

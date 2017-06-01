@@ -24,8 +24,7 @@ FakeAudioRendererSink::FakeAudioRendererSink(
       callback_(nullptr),
       output_device_info_(std::string(),
                           OUTPUT_DEVICE_STATUS_OK,
-                          hardware_params),
-      is_optimized_for_hw_params_(true) {}
+                          hardware_params) {}
 
 FakeAudioRendererSink::~FakeAudioRendererSink() {
   DCHECK(!callback_);
@@ -71,7 +70,7 @@ OutputDeviceInfo FakeAudioRendererSink::GetOutputDeviceInfo() {
 }
 
 bool FakeAudioRendererSink::IsOptimizedForHardwareParameters() {
-  return is_optimized_for_hw_params_;
+  return true;
 }
 
 bool FakeAudioRendererSink::CurrentThreadIsRenderingThread() {
@@ -94,10 +93,6 @@ void FakeAudioRendererSink::OnRenderError() {
   DCHECK_NE(state_, kStopped);
 
   callback_->OnRenderError();
-}
-
-void FakeAudioRendererSink::SetIsOptimizedForHardwareParameters(bool value) {
-  is_optimized_for_hw_params_ = value;
 }
 
 void FakeAudioRendererSink::ChangeState(State new_state) {

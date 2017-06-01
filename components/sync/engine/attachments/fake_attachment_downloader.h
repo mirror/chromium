@@ -6,14 +6,15 @@
 #define COMPONENTS_SYNC_ENGINE_ATTACHMENTS_FAKE_ATTACHMENT_DOWNLOADER_H_
 
 #include "base/macros.h"
-#include "base/sequence_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "components/sync/engine/attachments/attachment_downloader.h"
 
 namespace syncer {
 
 // FakeAttachmentDownloader is for tests. For every request it posts a success
 // callback with empty attachment.
-class FakeAttachmentDownloader : public AttachmentDownloader {
+class FakeAttachmentDownloader : public AttachmentDownloader,
+                                 public base::NonThreadSafe {
  public:
   FakeAttachmentDownloader();
   ~FakeAttachmentDownloader() override;
@@ -23,8 +24,6 @@ class FakeAttachmentDownloader : public AttachmentDownloader {
                           const DownloadCallback& callback) override;
 
  private:
-  SEQUENCE_CHECKER(sequence_checker_);
-
   DISALLOW_COPY_AND_ASSIGN(FakeAttachmentDownloader);
 };
 

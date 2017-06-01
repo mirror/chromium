@@ -24,48 +24,52 @@
 
 namespace blink {
 
-DOMPlugin::DOMPlugin(LocalFrame* frame, const PluginInfo& plugin_info)
-    : ContextClient(frame), plugin_info_(&plugin_info) {}
+DOMPlugin::DOMPlugin(PluginData* plugin_data, LocalFrame* frame, unsigned index)
+    : ContextClient(frame), plugin_data_(plugin_data), index_(index) {}
 
 DOMPlugin::~DOMPlugin() {}
 
 DEFINE_TRACE(DOMPlugin) {
   ContextClient::Trace(visitor);
-  visitor->Trace(plugin_info_);
 }
 
 String DOMPlugin::name() const {
-  return plugin_info_->Name();
+  return GetPluginInfo().name;
 }
 
 String DOMPlugin::filename() const {
-  return plugin_info_->Filename();
+  return GetPluginInfo().file;
 }
 
 String DOMPlugin::description() const {
-  return plugin_info_->Description();
+  return GetPluginInfo().desc;
 }
 
 unsigned DOMPlugin::length() const {
-  return plugin_info_->GetMimeClassInfoSize();
+  return GetPluginInfo().mimes.size();
 }
 
 DOMMimeType* DOMPlugin::item(unsigned index) {
-  const MimeClassInfo* mime = plugin_info_->GetMimeClassInfo(index);
-
-  if (!mime)
+  if (index >= GetPluginInfo().mimes.size())
     return nullptr;
 
-  return DOMMimeType::Create(GetFrame(), *mime);
+  const MimeClassInfo& mime = GetPluginInfo().mimes[index];
+
+  const Vector<MimeClassInfo>& mimes = plugin_data_->Mimes();
+  for (unsigned i = 0; i < mimes.size(); ++i) {
+    if (mimes[i] == mime && plugin_data_->MimePluginIndices()[i] == index_)
+      return DOMMimeType::Create(plugin_data_.Get(), GetFrame(), i);
+  }
+  return nullptr;
 }
 
 DOMMimeType* DOMPlugin::namedItem(const AtomicString& property_name) {
-  const MimeClassInfo* mime = plugin_info_->GetMimeClassInfo(property_name);
-
-  if (!mime)
-    return nullptr;
-
-  return DOMMimeType::Create(GetFrame(), *mime);
+  const Vector<MimeClassInfo>& mimes = plugin_data_->Mimes();
+  for (unsigned i = 0; i < mimes.size(); ++i) {
+    if (mimes[i].type == property_name)
+      return DOMMimeType::Create(plugin_data_.Get(), GetFrame(), i);
+  }
+  return nullptr;
 }
 
 }  // namespace blink

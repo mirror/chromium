@@ -35,7 +35,7 @@ class ChromeShellDelegate : public ash::ShellDelegate,
   bool IsMultiProfilesEnabled() const override;
   bool IsIncognitoAllowed() const override;
   bool IsRunningInForcedAppMode() const override;
-  bool CanShowWindowForUser(aura::Window* window) const override;
+  bool CanShowWindowForUser(ash::WmWindow* window) const override;
   bool IsForceMaximizeOnFirstRun() const override;
   void PreInit() override;
   void PreShutdown() override;
@@ -46,9 +46,10 @@ class ChromeShellDelegate : public ash::ShellDelegate,
   void ShelfShutdown() override;
   ash::SystemTrayDelegate* CreateSystemTrayDelegate() override;
   std::unique_ptr<ash::WallpaperDelegate> CreateWallpaperDelegate() override;
+  ash::SessionStateDelegate* CreateSessionStateDelegate() override;
   ash::AccessibilityDelegate* CreateAccessibilityDelegate() override;
   std::unique_ptr<ash::PaletteDelegate> CreatePaletteDelegate() override;
-  ui::MenuModel* CreateContextMenu(ash::Shelf* shelf,
+  ui::MenuModel* CreateContextMenu(ash::WmShelf* wm_shelf,
                                    const ash::ShelfItem* item) override;
   ash::GPUSupport* CreateGPUSupport() override;
   base::string16 GetProductName() const override;
@@ -60,7 +61,6 @@ class ChromeShellDelegate : public ash::ShellDelegate,
                                     bool use_local_state) override;
   void UpdateTouchscreenStatusFromPrefs() override;
   void ToggleTouchpad() override;
-  void SuspendMediaSessions() override;
 
   // content::NotificationObserver override:
   void Observe(int type,

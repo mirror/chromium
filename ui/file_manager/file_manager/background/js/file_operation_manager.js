@@ -370,18 +370,16 @@ FileOperationManager.prototype.deleteEntries = function(entries) {
   var group = new AsyncUtil.Group();
   for (var i = 0; i < task.entries.length; i++) {
     group.add(function(entry, callback) {
-      metadataProxy.getEntryMetadata(entry).then(
-          function(metadata) {
-            task.entrySize[entry.toURL()] = metadata.size;
-            task.totalBytes += metadata.size;
-            callback();
-          },
-          function() {
-            // Fail to obtain the metadata. Use fake value 1.
-            task.entrySize[entry.toURL()] = 1;
-            task.totalBytes += 1;
-            callback();
-          });
+      entry.getMetadata(function(metadata) {
+        task.entrySize[entry.toURL()] = metadata.size;
+        task.totalBytes += metadata.size;
+        callback();
+      }, function() {
+        // Fail to obtain the metadata. Use fake value 1.
+        task.entrySize[entry.toURL()] = 1;
+        task.totalBytes += 1;
+        callback();
+      });
     }.bind(this, task.entries[i]));
   }
 

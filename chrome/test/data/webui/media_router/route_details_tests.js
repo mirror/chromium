@@ -24,50 +24,48 @@ cr.define('route_details', function() {
        */
       var fakeRouteTwo;
 
-      /**
-       * Fake sink that corresponds to |fakeRouteOne|.
-       * @type {media_router.Sink}
-       */
-      var fakeSinkOne;
-
       // Checks whether |expected| and the text in the span element in
       // the |elementId| element are equal.
       var checkSpanText = function(expected, elementId) {
-        assertEquals(
-            expected,
-            details.$$('#' + elementId).querySelector('span').innerText);
+        assertEquals(expected,
+            details.$[elementId].querySelector('span').innerText);
       };
 
       // Checks the default route view is shown.
       var checkDefaultViewIsShown = function() {
-        assertFalse(details.$$('#route-information').hasAttribute('hidden'));
-        assertTrue(details.$$('extension-view-wrapper').hasAttribute('hidden'));
+        assertFalse(details.$['route-information'].hasAttribute('hidden'));
+        assertTrue(details.$['custom-controller'].hasAttribute('hidden'));
       };
 
-      // Checks the start button is shown.
+      // Checks the default route view is shown.
       var checkStartCastButtonIsShown = function() {
-        assertFalse(details.$$('#start-casting-to-route-button')
-                        .hasAttribute('hidden'));
+        assertFalse(
+            details.$['start-casting-to-route-button'].hasAttribute('hidden'));
       };
 
-      // Checks the start button is not shown.
+      // Checks the default route view is not shown.
       var checkStartCastButtonIsNotShown = function() {
-        assertTrue(details.$$('#start-casting-to-route-button')
-                       .hasAttribute('hidden'));
+        assertTrue(
+            details.$['start-casting-to-route-button'].hasAttribute('hidden'));
       };
 
       // Checks the custom controller is shown.
       var checkCustomControllerIsShown = function() {
-        assertTrue(details.$$('#route-information').hasAttribute('hidden'));
-        assertFalse(
-            details.$$('extension-view-wrapper').hasAttribute('hidden'));
+        assertTrue(details.$['route-information'].hasAttribute('hidden'));
+        assertFalse(details.$['custom-controller'].hasAttribute('hidden'));
       };
 
       // Checks whether |expected| and the text in the |elementId| element
       // are equal given an id.
       var checkElementTextWithId = function(expected, elementId) {
-        assertEquals(expected, details.$$('#' + elementId).innerText);
+        assertEquals(expected, details.$[elementId].innerText);
       };
+
+      /**
+       * Fake sink that corresponds to |fakeRouteOne|.
+       * @type {media_router.Sink}
+       */
+      var fakeSinkOne;
 
       // Import route_details.html before running suite.
       suiteSetup(function() {
@@ -80,7 +78,6 @@ cr.define('route_details', function() {
       setup(function(done) {
         PolymerTest.clearBody();
         details = document.createElement('route-details');
-        details.useWebUiRouteControls = false;
         document.body.appendChild(details);
 
         // Initialize routes and sinks.
@@ -143,7 +140,7 @@ cr.define('route_details', function() {
         details.addEventListener('close-route', function() {
           done();
         });
-        MockInteractions.tap(details.$$('#close-route-button'));
+        MockInteractions.tap(details.$['close-route-button']);
       });
 
       // Tests for 'join-route-click' event firing when the
@@ -152,7 +149,7 @@ cr.define('route_details', function() {
       test('start casting to route button click', function(done) {
         details.addEventListener('join-route-click', function() { done(); });
         details.route = fakeRouteTwo;
-        MockInteractions.tap(details.$$('#start-casting-to-route-button'));
+        MockInteractions.tap(details.$['start-casting-to-route-button']);
       });
 
       // Tests for 'replace-route-click' event firing when the
@@ -163,7 +160,7 @@ cr.define('route_details', function() {
             'change-route-source-click', function() { done(); });
         details.route = fakeRouteOne;
         details.availableCastModes = 1;
-        MockInteractions.tap(details.$$('#start-casting-to-route-button'));
+        MockInteractions.tap(details.$['start-casting-to-route-button']);
       });
 
       // Tests the initial expected text.
@@ -202,31 +199,35 @@ cr.define('route_details', function() {
 
       // Tests when |route| exists, has a custom controller, and it loads.
       test('route has custom controller and loading succeeds', function(done) {
-        details.$$('extension-view-wrapper').$$('#custom-controller').load =
-            function(url) {
-          setTimeout(function() {
-            assertEquals('chrome-extension://123/custom_view.html', url);
-            checkCustomControllerIsShown();
-            done();
-          });
+        var loadInvoked = false;
+        details.$['custom-controller'].load = function(url) {
+          loadInvoked = true;
+          assertEquals('chrome-extension://123/custom_view.html', url);
           return Promise.resolve();
         };
 
         details.route = fakeRouteOne;
+        setTimeout(function() {
+          assertTrue(loadInvoked);
+          checkCustomControllerIsShown();
+          done();
+        });
       });
 
       // Tests when |route| exists, has a custom controller, but fails to load.
       test('route has custom controller but loading fails', function(done) {
-        details.$$('extension-view-wrapper').$$('#custom-controller').load =
-            function(url) {
-          setTimeout(function() {
-            checkDefaultViewIsShown();
-            done();
-          });
+        var loadInvoked = false;
+        details.$['custom-controller'].load = function(url) {
+          loadInvoked = true;
           return Promise.reject();
         };
 
         details.route = fakeRouteOne;
+        setTimeout(function() {
+          assertTrue(loadInvoked);
+          checkDefaultViewIsShown();
+          done();
+        });
       });
     });
   }

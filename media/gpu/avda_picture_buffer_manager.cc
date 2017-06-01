@@ -40,6 +40,31 @@
   } while (0)
 
 namespace media {
+namespace {
+
+// Creates a SurfaceTexture and attaches a new gl texture to it.
+scoped_refptr<SurfaceTextureGLOwner> CreateAttachedSurfaceTexture(
+    base::WeakPtr<gpu::gles2::GLES2Decoder> gl_decoder) {
+  scoped_refptr<SurfaceTextureGLOwner> surface_texture =
+      SurfaceTextureGLOwner::Create();
+  if (!surface_texture)
+    return nullptr;
+
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_EXTERNAL_OES, surface_texture->texture_id());
+  glTexParameteri(GL_TEXTURE_EXTERNAL_OES, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_EXTERNAL_OES, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_EXTERNAL_OES, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_EXTERNAL_OES, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+  gl_decoder->RestoreTextureUnitBindings(0);
+  gl_decoder->RestoreActiveTexture();
+  DCHECK_EQ(static_cast<GLenum>(GL_NO_ERROR), glGetError());
+
+  return surface_texture;
+}
+
+}  // namespace
 
 AVDAPictureBufferManager::AVDAPictureBufferManager(
     AVDAStateProvider* state_provider)
@@ -54,7 +79,8 @@ bool AVDAPictureBufferManager::Initialize(
 
   if (!surface_bundle->overlay) {
     // Create the surface texture.
-    surface_texture_ = SurfaceTextureGLOwner::Create();
+    surface_texture_ =
+        CreateAttachedSurfaceTexture(state_provider_->GetGlDecoder());
     if (!surface_texture_)
       return false;
 
@@ -161,8 +187,8 @@ void AVDAPictureBufferManager::AssignOnePictureBuffer(
     bool have_context) {
   // Attach a GLImage to each texture that will use the surface texture.
   scoped_refptr<gpu::gles2::GLStreamTextureImage> gl_image =
-      codec_images_[picture_buffer.id()] =
-          new AVDACodecImage(shared_state_, media_codec_);
+      codec_images_[picture_buffer.id()] = new AVDACodecImage(
+          shared_state_, media_codec_, state_provider_->GetGlDecoder());
   SetImageForPicture(picture_buffer, gl_image.get());
 }
 
@@ -248,7 +274,7 @@ void AVDAPictureBufferManager::CodecChanged(MediaCodecBridge* codec) {
   media_codec_ = codec;
   for (auto& image_kv : codec_images_)
     image_kv.second->CodecChanged(codec);
-  shared_state_->ClearReleaseTime();
+  shared_state_->clear_release_time();
 }
 
 bool AVDAPictureBufferManager::ArePicturesOverlayable() {

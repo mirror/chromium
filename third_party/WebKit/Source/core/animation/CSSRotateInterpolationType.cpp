@@ -150,17 +150,17 @@ InterpolationValue ConvertRotation(const OptionalRotation& rotation) {
                             CSSRotateNonInterpolableValue::Create(rotation));
 }
 
-class InheritedRotationChecker
-    : public CSSInterpolationType::CSSConversionChecker {
+class InheritedRotationChecker : public InterpolationType::ConversionChecker {
  public:
   static std::unique_ptr<InheritedRotationChecker> Create(
       const OptionalRotation& inherited_rotation) {
     return WTF::WrapUnique(new InheritedRotationChecker(inherited_rotation));
   }
 
-  bool IsValid(const StyleResolverState& state,
+  bool IsValid(const InterpolationEnvironment& environment,
                const InterpolationValue& underlying) const final {
-    OptionalRotation inherited_rotation = GetRotation(*state.ParentStyle());
+    OptionalRotation inherited_rotation =
+        GetRotation(*environment.GetState().ParentStyle());
     if (inherited_rotation_.IsNone() || inherited_rotation.IsNone())
       return inherited_rotation.IsNone() == inherited_rotation.IsNone();
     return inherited_rotation_.GetRotation().axis ==

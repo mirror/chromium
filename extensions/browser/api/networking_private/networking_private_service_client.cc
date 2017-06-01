@@ -358,11 +358,6 @@ NetworkingPrivateServiceClient::GetGlobalPolicy() {
   return base::MakeUnique<base::DictionaryValue>();
 }
 
-std::unique_ptr<base::DictionaryValue>
-NetworkingPrivateServiceClient::GetCertificateLists() {
-  return base::MakeUnique<base::DictionaryValue>();
-}
-
 bool NetworkingPrivateServiceClient::EnableNetworkType(
     const std::string& type) {
   return false;

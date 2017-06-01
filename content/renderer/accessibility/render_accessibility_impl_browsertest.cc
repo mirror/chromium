@@ -126,7 +126,7 @@ TEST_F(RenderAccessibilityImplTest, SendFullAccessibilityTreeOnReload) {
   // we should only send 1 node to the browser.
   sink_->ClearMessages();
   WebDocument document = view()->GetWebView()->MainFrame()->GetDocument();
-  WebAXObject root_obj = WebAXObject::FromWebDocument(document);
+  WebAXObject root_obj = document.AccessibilityObject();
   accessibility->HandleAXEvent(
       root_obj,
       ui::AX_EVENT_LAYOUT_COMPLETE);
@@ -144,7 +144,7 @@ TEST_F(RenderAccessibilityImplTest, SendFullAccessibilityTreeOnReload) {
   // leak any of the old BrowserTreeNodes.
   LoadHTML(html.c_str());
   document = view()->GetWebView()->MainFrame()->GetDocument();
-  root_obj = WebAXObject::FromWebDocument(document);
+  root_obj = document.AccessibilityObject();
   sink_->ClearMessages();
   accessibility->HandleAXEvent(
       root_obj,
@@ -157,7 +157,7 @@ TEST_F(RenderAccessibilityImplTest, SendFullAccessibilityTreeOnReload) {
   // the browser doesn't have the root element.
   LoadHTML(html.c_str());
   document = view()->GetWebView()->MainFrame()->GetDocument();
-  root_obj = WebAXObject::FromWebDocument(document);
+  root_obj = document.AccessibilityObject();
   sink_->ClearMessages();
   const WebAXObject& first_child = root_obj.ChildAt(0);
   accessibility->HandleAXEvent(
@@ -188,7 +188,7 @@ TEST_F(RenderAccessibilityImplTest, HideAccessibilityObject) {
   EXPECT_EQ(4, CountAccessibilityNodesSentToBrowser());
 
   WebDocument document = view()->GetWebView()->MainFrame()->GetDocument();
-  WebAXObject root_obj = WebAXObject::FromWebDocument(document);
+  WebAXObject root_obj = document.AccessibilityObject();
   WebAXObject node_a = root_obj.ChildAt(0);
   WebAXObject node_b = node_a.ChildAt(0);
   WebAXObject node_c = node_b.ChildAt(0);
@@ -246,7 +246,7 @@ TEST_F(RenderAccessibilityImplTest, ShowAccessibilityObject) {
 
   sink_->ClearMessages();
   WebDocument document = view()->GetWebView()->MainFrame()->GetDocument();
-  WebAXObject root_obj = WebAXObject::FromWebDocument(document);
+  WebAXObject root_obj = document.AccessibilityObject();
   WebAXObject node_a = root_obj.ChildAt(0);
   WebAXObject node_b = node_a.ChildAt(0);
   WebAXObject node_c = node_b.ChildAt(0);

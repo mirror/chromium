@@ -11,6 +11,12 @@ import("//printing/features/features.gni")
 import("//third_party/WebKit/public/public_features.gni")
 import("//tools/ipc_fuzzer/ipc_fuzzer.gni")
 
+declare_args() {
+  # Include code in the build that is only needed when using the video
+  # capture Mojo service, which is currently experimental.
+  enable_mojo_video_capture = false
+}
+
 source_set("browser") {
   # Only the public target should depend on this. All other targets (even
   # internal content ones) should depend on the public one.
@@ -49,7 +55,6 @@ source_set("browser") {
     "//components/rappor",
     "//components/tracing",
     "//components/tracing:startup_tracing",
-    "//components/ukm/public",
     "//components/url_formatter",
     "//components/variations",
     "//components/viz/display_compositor",
@@ -126,8 +131,6 @@ source_set("browser") {
     "//services/shape_detection/public/interfaces",
     "//services/ui/gpu/interfaces",
     "//services/ui/public/cpp/gpu",
-    "//services/video_capture/public/cpp",
-    "//services/video_capture/public/interfaces:constants",
     "//skia",
     "//sql",
     "//storage/browser",
@@ -692,8 +695,6 @@ source_set("browser") {
     "frame_host/frame_tree_node.h",
     "frame_host/frame_tree_node_blame_context.cc",
     "frame_host/frame_tree_node_blame_context.h",
-    "frame_host/input/legacy_ipc_frame_input_handler.cc",
-    "frame_host/input/legacy_ipc_frame_input_handler.h",
     "frame_host/interstitial_page_impl.cc",
     "frame_host/interstitial_page_impl.h",
     "frame_host/interstitial_page_navigator_impl.cc",
@@ -772,6 +773,12 @@ source_set("browser") {
     "histogram_subscriber.h",
     "histogram_synchronizer.cc",
     "histogram_synchronizer.h",
+    "host_zoom_level_context.cc",
+    "host_zoom_level_context.h",
+    "host_zoom_map_impl.cc",
+    "host_zoom_map_impl.h",
+    "host_zoom_map_observer.cc",
+    "host_zoom_map_observer.h",
     "image_capture/image_capture_impl.cc",
     "image_capture/image_capture_impl.h",
     "indexed_db/cursor_impl.cc",
@@ -927,7 +934,6 @@ source_set("browser") {
     "loader/upload_progress_tracker.h",
     "loader/url_loader_factory_impl.cc",
     "loader/url_loader_factory_impl.h",
-    "loader/url_loader_request_handler.h",
     "loader/wake_lock_resource_throttle.cc",
     "loader/wake_lock_resource_throttle.h",
     "loader_delegate_impl.cc",
@@ -1174,9 +1180,6 @@ source_set("browser") {
     "renderer_host/input/touch_event_queue.h",
     "renderer_host/input/touch_selection_controller_client_aura.cc",
     "renderer_host/input/touch_selection_controller_client_aura.h",
-    "renderer_host/input/touch_selection_controller_client_child_frame.cc",
-    "renderer_host/input/touch_selection_controller_client_child_frame.h",
-    "renderer_host/input/touch_selection_controller_client_manager.h",
     "renderer_host/input/touch_timeout_handler.cc",
     "renderer_host/input/touch_timeout_handler.h",
     "renderer_host/input/touchpad_tap_suppression_controller.cc",
@@ -1230,12 +1233,6 @@ source_set("browser") {
     "renderer_host/media/renderer_audio_output_stream_factory_context.h",
     "renderer_host/media/renderer_audio_output_stream_factory_context_impl.cc",
     "renderer_host/media/renderer_audio_output_stream_factory_context_impl.h",
-    "renderer_host/media/service_launched_video_capture_device.cc",
-    "renderer_host/media/service_launched_video_capture_device.h",
-    "renderer_host/media/service_video_capture_device_launcher.cc",
-    "renderer_host/media/service_video_capture_device_launcher.h",
-    "renderer_host/media/service_video_capture_provider.cc",
-    "renderer_host/media/service_video_capture_provider.h",
     "renderer_host/media/video_capture_controller.cc",
     "renderer_host/media/video_capture_controller.h",
     "renderer_host/media/video_capture_controller_event_handler.h",
@@ -1247,8 +1244,6 @@ source_set("browser") {
     "renderer_host/media/video_capture_manager.cc",
     "renderer_host/media/video_capture_manager.h",
     "renderer_host/media/video_capture_provider.h",
-    "renderer_host/media/video_capture_provider_switcher.cc",
-    "renderer_host/media/video_capture_provider_switcher.h",
     "renderer_host/native_web_keyboard_event_aura.cc",
     "renderer_host/native_web_keyboard_event_mac.mm",
     "renderer_host/offscreen_canvas_provider_impl.cc",
@@ -1634,6 +1629,22 @@ source_set("browser") {
     ]
   }
 
+  if (enable_mojo_video_capture) {
+    sources += [
+      "renderer_host/media/service_launched_video_capture_device.cc",
+      "renderer_host/media/service_launched_video_capture_device.h",
+      "renderer_host/media/service_video_capture_device_launcher.cc",
+      "renderer_host/media/service_video_capture_device_launcher.h",
+      "renderer_host/media/service_video_capture_provider.cc",
+      "renderer_host/media/service_video_capture_provider.h",
+    ]
+
+    deps += [
+      "//services/video_capture/public/cpp",
+      "//services/video_capture/public/interfaces:constants",
+    ]
+  }
+
   # Desktop screen capture implementations, conditionally built depending on
   # the available implementations for each platform.
   if (is_linux || is_mac || is_win) {
@@ -1957,12 +1968,6 @@ source_set("browser") {
       # Devtools frontend not included in Android
       "devtools/devtools_frontend_host_impl.cc",
       "devtools/devtools_frontend_host_impl.h",
-      "host_zoom_level_context.cc",
-      "host_zoom_level_context.h",
-      "host_zoom_map_impl.cc",
-      "host_zoom_map_impl.h",
-      "host_zoom_map_observer.cc",
-      "host_zoom_map_observer.h",
 
       # Most speech code is non-Android.
       "speech/audio_buffer.cc",
@@ -2014,7 +2019,6 @@ source_set("browser") {
       "//ui/aura_extra",
       "//ui/strings",
       "//ui/wm",
-      "//ui/wm/public",
     ]
     sources += [
       "renderer_host/delegated_frame_host_client_aura.cc",

@@ -10,16 +10,14 @@
 #include "base/macros.h"
 #include "ui/events/event_handler.h"
 
-namespace aura {
-class Window;
-}
-
 namespace ash {
+
+class WmWindow;
 
 class ASH_EXPORT WorkspaceEventHandlerAura : public ui::EventHandler,
                                              public WorkspaceEventHandler {
  public:
-  explicit WorkspaceEventHandlerAura(aura::Window* workspace_window);
+  explicit WorkspaceEventHandlerAura(WmWindow* workspace_window);
   ~WorkspaceEventHandlerAura() override;
 
   // ui::EventHandler:
@@ -27,7 +25,7 @@ class ASH_EXPORT WorkspaceEventHandlerAura : public ui::EventHandler,
   void OnGestureEvent(ui::GestureEvent* event) override;
 
  private:
-  aura::Window* workspace_window_;
+  WmWindow* workspace_window_;
 
   DISALLOW_COPY_AND_ASSIGN(WorkspaceEventHandlerAura);
 };

@@ -26,8 +26,8 @@
 #include "core/layout/LayoutThemeMobile.h"
 
 #include "core/style/ComputedStyle.h"
-#include "platform/DataResourceHelper.h"
 #include "platform/LayoutTestSupport.h"
+#include "platform/PlatformResourceLoader.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebThemeEngine.h"
 
@@ -41,16 +41,16 @@ LayoutThemeMobile::~LayoutThemeMobile() {}
 
 String LayoutThemeMobile::ExtraDefaultStyleSheet() {
   return LayoutThemeDefault::ExtraDefaultStyleSheet() +
-         GetDataResourceAsASCIIString("themeChromiumLinux.css") +
-         GetDataResourceAsASCIIString("themeChromiumAndroid.css");
+         LoadResourceAsASCIIString("themeChromiumLinux.css") +
+         LoadResourceAsASCIIString("themeChromiumAndroid.css");
 }
 
 String LayoutThemeMobile::ExtraMediaControlsStyleSheet() {
-  return GetDataResourceAsASCIIString("mediaControlsAndroid.css");
+  return LoadResourceAsASCIIString("mediaControlsAndroid.css");
 }
 
 String LayoutThemeMobile::ExtraFullscreenStyleSheet() {
-  return GetDataResourceAsASCIIString("fullscreenAndroid.css");
+  return LoadResourceAsASCIIString("fullscreenAndroid.css");
 }
 
 void LayoutThemeMobile::AdjustInnerSpinButtonStyle(ComputedStyle& style) const {

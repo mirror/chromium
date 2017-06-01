@@ -9,12 +9,12 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/root_window_controller.h"
-#include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_button.h"
 #include "ash/shelf/shelf_layout_manager.h"
 #include "ash/shelf/shelf_model.h"
 #include "ash/shelf/shelf_view.h"
 #include "ash/shelf/shelf_widget.h"
+#include "ash/shelf/wm_shelf.h"
 #include "ash/shell.h"
 #include "ash/system/web_notification/web_notification_tray.h"
 #include "ash/test/ash_test_base.h"
@@ -22,6 +22,7 @@
 #include "ash/wm/mru_window_tracker.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
+#include "ash/wm_window.h"
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
 #include "base/i18n/rtl.h"
@@ -86,7 +87,7 @@ class PanelLayoutManagerTest : public test::AshTestBase {
   aura::Window* CreatePanelWindowWithDelegate(aura::WindowDelegate* delegate,
                                               const gfx::Rect& bounds) {
     aura::Window* window = CreateTestWindowInShellWithDelegateAndType(
-        delegate, aura::client::WINDOW_TYPE_PANEL, 0, bounds);
+        delegate, ui::wm::WINDOW_TYPE_PANEL, 0, bounds);
     static int id = 0;
     std::string shelf_id(ShelfID(base::IntToString(id++)).Serialize());
     window->SetProperty(kShelfIDKey, new std::string(shelf_id));
@@ -104,10 +105,12 @@ class PanelLayoutManagerTest : public test::AshTestBase {
   }
 
   views::Widget* GetCalloutWidgetForPanel(aura::Window* panel) {
-    PanelLayoutManager* manager = PanelLayoutManager::Get(panel);
+    WmWindow* wm_panel = WmWindow::Get(panel);
+    PanelLayoutManager* manager = PanelLayoutManager::Get(wm_panel);
     DCHECK(manager);
-    PanelLayoutManager::PanelList::iterator found = std::find(
-        manager->panel_windows_.begin(), manager->panel_windows_.end(), panel);
+    PanelLayoutManager::PanelList::iterator found =
+        std::find(manager->panel_windows_.begin(),
+                  manager->panel_windows_.end(), wm_panel);
     DCHECK(found != manager->panel_windows_.end());
     DCHECK(found->callout_widget);
     return found->CalloutWidget();
@@ -140,8 +143,9 @@ class PanelLayoutManagerTest : public test::AshTestBase {
     // Waits until all shelf view animations are done.
     shelf_view_test()->RunMessageLoopUntilAnimationsDone();
 
-    Shelf* shelf = GetShelfForWindow(panel);
-    gfx::Rect icon_bounds = shelf->GetScreenBoundsOfItemIconForWindow(panel);
+    WmWindow* wm_panel = WmWindow::Get(panel);
+    WmShelf* shelf = wm_panel->GetRootWindowController()->GetShelf();
+    gfx::Rect icon_bounds = shelf->GetScreenBoundsOfItemIconForWindow(wm_panel);
     ASSERT_FALSE(icon_bounds.width() == 0 && icon_bounds.height() == 0);
 
     gfx::Rect window_bounds = panel->GetBoundsInScreen();
@@ -175,8 +179,9 @@ class PanelLayoutManagerTest : public test::AshTestBase {
     base::RunLoop().RunUntilIdle();
     views::Widget* widget = GetCalloutWidgetForPanel(panel);
 
-    Shelf* shelf = GetShelfForWindow(panel);
-    gfx::Rect icon_bounds = shelf->GetScreenBoundsOfItemIconForWindow(panel);
+    WmWindow* wm_panel = WmWindow::Get(panel);
+    WmShelf* shelf = wm_panel->GetRootWindowController()->GetShelf();
+    gfx::Rect icon_bounds = shelf->GetScreenBoundsOfItemIconForWindow(wm_panel);
     ASSERT_FALSE(icon_bounds.IsEmpty());
 
     gfx::Rect panel_bounds = panel->GetBoundsInScreen();
@@ -227,17 +232,17 @@ class PanelLayoutManagerTest : public test::AshTestBase {
     test_api.RunMessageLoopUntilAnimationsDone();
   }
 
-  Shelf* GetShelfForWindow(aura::Window* window) {
-    return RootWindowController::ForWindow(window)->shelf();
+  WmShelf* GetShelfForWindow(aura::Window* window) {
+    return WmWindow::Get(window)->GetRootWindowController()->GetShelf();
   }
 
-  void SetAlignment(aura::Window* window, ShelfAlignment alignment) {
-    GetShelfForWindow(window)->SetAlignment(alignment);
+  void SetAlignment(aura::Window* root_window, ShelfAlignment alignment) {
+    GetShelfForWindow(root_window)->SetAlignment(alignment);
   }
 
   void SetShelfAutoHideBehavior(aura::Window* window,
                                 ShelfAutoHideBehavior behavior) {
-    Shelf* shelf = GetShelfForWindow(window);
+    WmShelf* shelf = GetShelfForWindow(window);
     shelf->SetAutoHideBehavior(behavior);
     test::ShelfViewTestAPI test_api(shelf->GetShelfViewForTesting());
     test_api.RunMessageLoopUntilAnimationsDone();
@@ -245,7 +250,7 @@ class PanelLayoutManagerTest : public test::AshTestBase {
 
   void SetShelfVisibilityState(aura::Window* window,
                                ShelfVisibilityState visibility_state) {
-    Shelf* shelf = GetShelfForWindow(window);
+    WmShelf* shelf = GetShelfForWindow(window);
     shelf->shelf_layout_manager()->SetState(visibility_state);
   }
 
@@ -624,9 +629,11 @@ TEST_F(PanelLayoutManagerTest, FanWindows) {
   int window_x1 = w1->GetBoundsInRootWindow().CenterPoint().x();
   int window_x2 = w2->GetBoundsInRootWindow().CenterPoint().x();
   int window_x3 = w3->GetBoundsInRootWindow().CenterPoint().x();
-  Shelf* shelf = GetPrimaryShelf();
-  int icon_x1 = shelf->GetScreenBoundsOfItemIconForWindow(w1.get()).x();
-  int icon_x2 = shelf->GetScreenBoundsOfItemIconForWindow(w2.get()).x();
+  WmShelf* shelf = GetPrimaryShelf();
+  int icon_x1 =
+      shelf->GetScreenBoundsOfItemIconForWindow(WmWindow::Get(w1.get())).x();
+  int icon_x2 =
+      shelf->GetScreenBoundsOfItemIconForWindow(WmWindow::Get(w2.get())).x();
   // TODO(crbug.com/698887): investigate failure in Mash.
   if (Shell::GetAshConfig() != Config::MASH)
     EXPECT_EQ(window_x2 - window_x1, window_x3 - window_x2);
@@ -845,8 +852,8 @@ TEST_F(PanelLayoutManagerTest, PanelsHideAndRestoreWithShelf) {
 
   // While in full-screen mode, the panel windows should still be in the
   // switchable window list - http://crbug.com/313919.
-  aura::Window::Windows switchable_window_list =
-      Shell::Get()->mru_window_tracker()->BuildMruWindowList();
+  aura::Window::Windows switchable_window_list = WmWindow::ToAuraWindows(
+      Shell::Get()->mru_window_tracker()->BuildMruWindowList());
   EXPECT_EQ(3u, switchable_window_list.size());
   EXPECT_NE(switchable_window_list.end(),
             std::find(switchable_window_list.begin(),

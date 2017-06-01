@@ -28,7 +28,6 @@
 #include "core/dom/AccessibleNode.h"
 #include "core/dom/Attr.h"
 #include "core/dom/CompositorProxiedPropertySet.h"
-#include "core/dom/DOMTokenList.h"
 #include "core/dom/DatasetDOMStringMap.h"
 #include "core/dom/ElementIntersectionObserverData.h"
 #include "core/dom/NamedNodeMap.h"
@@ -38,6 +37,7 @@
 #include "core/dom/custom/CustomElementDefinition.h"
 #include "core/dom/custom/V0CustomElementDefinition.h"
 #include "core/dom/shadow/ElementShadow.h"
+#include "core/html/ClassList.h"
 #include "platform/bindings/ScriptWrappableVisitor.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/HashSet.h"
@@ -96,10 +96,15 @@ class ElementRareData : public NodeRareData {
   }
   void ClearComputedStyle() { computed_style_ = nullptr; }
 
-  DOMTokenList* GetClassList() const { return class_list_.Get(); }
-  void SetClassList(DOMTokenList* class_list) {
+  ClassList* GetClassList() const { return class_list_.Get(); }
+  void SetClassList(ClassList* class_list) {
     class_list_ = class_list;
     ScriptWrappableVisitor::WriteBarrier(this, class_list_);
+  }
+  void ClearClassListValueForQuirksMode() {
+    if (!class_list_)
+      return;
+    class_list_->ClearValueForQuirksMode();
   }
 
   DatasetDOMStringMap* Dataset() const { return dataset_.Get(); }
@@ -204,7 +209,7 @@ class ElementRareData : public NodeRareData {
 
   Member<DatasetDOMStringMap> dataset_;
   Member<ElementShadow> shadow_;
-  Member<DOMTokenList> class_list_;
+  Member<ClassList> class_list_;
   Member<NamedNodeMap> attribute_map_;
   Member<AttrNodeList> attr_node_list_;
   Member<InlineCSSStyleDeclaration> cssom_wrapper_;

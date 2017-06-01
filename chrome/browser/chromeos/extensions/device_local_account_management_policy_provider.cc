@@ -389,9 +389,7 @@ const char* const kSafePermissionStrings[] = {
     // doesn't trigger a permission warning on install though, so blocking is
     // somewhat at odds with the spirit of the API - however I presume the API
     // design assumes user-installed extensions, which we don't have here.
-    // Whitelisted because it's restricted now (asks user for permission the
-    // first time an extension tries to use it).
-    "activeTab",
+    // "activeTab",
 
     // Schedule code to run at future times.
     "alarms",

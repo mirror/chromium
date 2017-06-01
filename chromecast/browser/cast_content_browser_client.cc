@@ -37,7 +37,7 @@
 #include "chromecast/browser/url_request_context_factory.h"
 #include "chromecast/common/global_descriptors.h"
 #include "chromecast/media/audio/cast_audio_manager.h"
-#include "chromecast/media/cma/backend/media_pipeline_backend_factory_impl.h"
+#include "chromecast/media/cma/backend/media_pipeline_backend_factory.h"
 #include "chromecast/media/cma/backend/media_pipeline_backend_manager.h"
 #include "chromecast/public/media/media_pipeline_backend.h"
 #include "components/crash/content/app/breakpad_linux.h"
@@ -177,7 +177,7 @@ CastContentBrowserClient::GetMediaPipelineBackendFactory() {
   DCHECK(GetMediaTaskRunner()->BelongsToCurrentThread());
   if (!media_pipeline_backend_factory_) {
     media_pipeline_backend_factory_.reset(
-        new media::MediaPipelineBackendFactoryImpl(
+        new media::MediaPipelineBackendFactory(
             media_pipeline_backend_manager()));
   }
   return media_pipeline_backend_factory_.get();
@@ -197,15 +197,9 @@ CastContentBrowserClient::media_pipeline_backend_manager() {
 std::unique_ptr<::media::AudioManager>
 CastContentBrowserClient::CreateAudioManager(
     ::media::AudioLogFactory* audio_log_factory) {
-  // TODO(alokp): Consider switching off the mixer on audio platforms
-  // because we already have a mixer in the audio pipeline downstream of
-  // CastAudioManager.
-  bool use_mixer = true;
   return base::MakeUnique<media::CastAudioManager>(
       base::MakeUnique<::media::AudioThreadImpl>(), audio_log_factory,
-      base::MakeUnique<media::MediaPipelineBackendFactoryImpl>(
-          media_pipeline_backend_manager()),
-      GetMediaTaskRunner(), use_mixer);
+      media_pipeline_backend_manager());
 }
 
 std::unique_ptr<::media::CdmFactory>
@@ -318,18 +312,12 @@ void CastContentBrowserClient::AppendExtraCommandLineSwitches(
     command_line->AppendSwitch(switches::kEnableCrashReporter);
   }
 
-  // Command-line for different processes.
+  // Renderer process command-line
   if (process_type == switches::kRendererProcess) {
     // Any browser command-line switches that should be propagated to
     // the renderer go here.
     if (browser_command_line->HasSwitch(switches::kAllowHiddenMediaPlayback))
       command_line->AppendSwitch(switches::kAllowHiddenMediaPlayback);
-  } else if (process_type == switches::kUtilityProcess) {
-    if (browser_command_line->HasSwitch(switches::kAudioOutputChannels)) {
-      command_line->AppendSwitchASCII(switches::kAudioOutputChannels,
-                                      browser_command_line->GetSwitchValueASCII(
-                                          switches::kAudioOutputChannels));
-    }
   }
 
 #if defined(OS_LINUX)

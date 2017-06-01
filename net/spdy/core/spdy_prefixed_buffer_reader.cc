@@ -10,10 +10,11 @@
 
 namespace net {
 
-SpdyPrefixedBufferReader::SpdyPrefixedBufferReader(const char* prefix,
-                                                   size_t prefix_length,
-                                                   const char* suffix,
-                                                   size_t suffix_length)
+SpdyPrefixedBufferReader::SpdyPrefixedBufferReader(
+    const char* prefix,
+    size_t prefix_length,
+    const char* suffix,
+    size_t suffix_length)
     : prefix_(prefix),
       suffix_(suffix),
       prefix_length_(prefix_length),

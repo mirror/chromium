@@ -4,7 +4,6 @@
 
 #include "modules/csspaint/PaintWorklet.h"
 
-#include <memory>
 #include "bindings/core/v8/ScriptSourceCode.h"
 #include "bindings/core/v8/V8GCController.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
@@ -12,9 +11,9 @@
 #include "core/testing/DummyPageHolder.h"
 #include "modules/csspaint/CSSPaintDefinition.h"
 #include "modules/csspaint/PaintWorkletGlobalScope.h"
-#include "modules/csspaint/PaintWorkletGlobalScopeProxy.h"
 #include "modules/csspaint/WindowPaintWorklet.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include <memory>
 
 namespace blink {
 
@@ -22,30 +21,19 @@ class PaintWorkletTest : public testing::Test {
  public:
   PaintWorkletTest() : page_(DummyPageHolder::Create()) {}
 
-  void SetUp() override { proxy_ = GetPaintWorklet()->CreateGlobalScope(); }
-
   PaintWorklet* GetPaintWorklet() {
     return WindowPaintWorklet::From(*page_->GetFrame().DomWindow())
         .paintWorklet();
   }
 
-  PaintWorkletGlobalScopeProxy* GetProxy() {
-    return PaintWorkletGlobalScopeProxy::From(proxy_.get());
-  }
-
-  void Terminate() {
-    page_.reset();
-    proxy_->TerminateWorkletGlobalScope();
-    proxy_.reset();
-  }
-
- private:
+ protected:
   std::unique_ptr<DummyPageHolder> page_;
-  std::unique_ptr<WorkletGlobalScopeProxy> proxy_;
 };
 
 TEST_F(PaintWorkletTest, GarbageCollectionOfCSSPaintDefinition) {
-  PaintWorkletGlobalScope* global_scope = GetProxy()->global_scope();
+  PaintWorkletGlobalScopeProxy* proxy = PaintWorkletGlobalScopeProxy::From(
+      GetPaintWorklet()->GetWorkletGlobalScopeProxy());
+  PaintWorkletGlobalScope* global_scope = proxy->global_scope();
   global_scope->ScriptController()->Evaluate(
       ScriptSourceCode("registerPaint('foo', class { paint() { } });"));
 
@@ -72,7 +60,7 @@ TEST_F(PaintWorkletTest, GarbageCollectionOfCSSPaintDefinition) {
   DCHECK(!handle.IsEmpty());
 
   // Delete the page & associated objects.
-  Terminate();
+  page_.reset();
 
   // Run a GC, the persistent should have been collected.
   ThreadState::Current()->CollectAllGarbage();

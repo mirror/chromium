@@ -13,7 +13,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "cc/surfaces/surface_info.h"
-#include "components/viz/client/client_compositor_frame_sink.h"
+#include "services/ui/public/cpp/client_compositor_frame_sink.h"
 #include "services/ui/public/interfaces/cursor/cursor.mojom.h"
 #include "services/ui/public/interfaces/window_tree.mojom.h"
 #include "services/ui/public/interfaces/window_tree_constants.mojom.h"
@@ -80,6 +80,10 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
       scoped_refptr<cc::ContextProvider> context_provider,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager);
 
+  void AttachCompositorFrameSink(
+      std::unique_ptr<ui::ClientCompositorFrameSinkBinding>
+          compositor_frame_sink_binding);
+
  private:
   friend class WindowPortMusTestApi;
   friend class WindowTreeClient;
@@ -125,7 +129,6 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
     REMOVE,
     REMOVE_TRANSIENT,
     REORDER,
-    TRANSFORM,
     // This is used when a REORDER *may* occur as the result of a transient
     // child being added or removed. As there is no guarantee the move will
     // actually happen (the window may be in place already) this change is not
@@ -145,8 +148,6 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
     bool visible;
     // Applies to PROPERTY.
     std::string property_name;
-    // Applies to TRANSFORM.
-    gfx::Transform transform;
   };
 
   // Used to identify a change the server.
@@ -213,7 +214,6 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
   void SetBoundsFromServer(
       const gfx::Rect& bounds,
       const base::Optional<cc::LocalSurfaceId>& local_surface_id) override;
-  void SetTransformFromServer(const gfx::Transform& transform) override;
   void SetVisibleFromServer(bool visible) override;
   void SetOpacityFromServer(float opacity) override;
   void SetCursorFromServer(const ui::CursorData& cursor) override;
@@ -222,7 +222,7 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
       const std::vector<uint8_t>* property_data) override;
   void SetFrameSinkIdFromServer(const cc::FrameSinkId& frame_sink_id) override;
   const cc::LocalSurfaceId& GetOrAllocateLocalSurfaceId(
-      const gfx::Size& surface_size_in_pixels) override;
+      const gfx::Size& surface_size) override;
   void SetPrimarySurfaceInfo(const cc::SurfaceInfo& surface_info) override;
   void SetFallbackSurfaceInfo(const cc::SurfaceInfo& surface_info) override;
   void DestroyFromServer() override;
@@ -249,8 +249,6 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
   void OnVisibilityChanged(bool visible) override;
   void OnDidChangeBounds(const gfx::Rect& old_bounds,
                          const gfx::Rect& new_bounds) override;
-  void OnDidChangeTransform(const gfx::Transform& old_transform,
-                            const gfx::Transform& new_transform) override;
   std::unique_ptr<ui::PropertyData> OnWillChangeProperty(
       const void* key) override;
   void OnPropertyChanged(const void* key,
@@ -281,7 +279,7 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
 
   cc::LocalSurfaceId local_surface_id_;
   cc::LocalSurfaceIdAllocator local_surface_id_allocator_;
-  gfx::Size last_surface_size_in_pixels_;
+  gfx::Size last_surface_size_;
 
   ui::CursorData cursor_;
 

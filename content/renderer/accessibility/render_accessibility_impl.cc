@@ -118,8 +118,7 @@ RenderAccessibilityImpl::RenderAccessibilityImpl(RenderFrameImpl* render_frame,
     // It's possible that the webview has already loaded a webpage without
     // accessibility being enabled. Initialize the browser's cached
     // accessibility tree by sending it a notification.
-    HandleAXEvent(WebAXObject::FromWebDocument(document),
-                  ui::AX_EVENT_LAYOUT_COMPLETE);
+    HandleAXEvent(document.AccessibilityObject(), ui::AX_EVENT_LAYOUT_COMPLETE);
   }
 }
 
@@ -158,10 +157,10 @@ void RenderAccessibilityImpl::AccessibilityModeChanged() {
     // If there are any events in flight, |HandleAXEvent| will refuse to process
     // our new event.
     pending_events_.clear();
-    auto webax_object = WebAXObject::FromWebDocument(document);
-    ui::AXEvent event = webax_object.IsLoaded() ? ui::AX_EVENT_LOAD_COMPLETE
-                                                : ui::AX_EVENT_LAYOUT_COMPLETE;
-    HandleAXEvent(webax_object, event);
+    ui::AXEvent event = document.AccessibilityObject().IsLoaded()
+                            ? ui::AX_EVENT_LOAD_COMPLETE
+                            : ui::AX_EVENT_LAYOUT_COMPLETE;
+    HandleAXEvent(document.AccessibilityObject(), event);
   }
 }
 
@@ -212,7 +211,7 @@ void RenderAccessibilityImpl::AccessibilityFocusedNodeChanged(
   if (node.IsNull()) {
     // When focus is cleared, implicitly focus the document.
     // TODO(dmazzoni): Make Blink send this notification instead.
-    HandleAXEvent(WebAXObject::FromWebDocument(document), ui::AX_EVENT_BLUR);
+    HandleAXEvent(document.AccessibilityObject(), ui::AX_EVENT_BLUR);
   }
 }
 
@@ -247,9 +246,9 @@ void RenderAccessibilityImpl::HandleAXEvent(
       // TODO(dmazzoni): remove this as soon as
       // https://bugs.webkit.org/show_bug.cgi?id=73460 is fixed.
       last_scroll_offset_ = scroll_offset;
-      auto webax_object = WebAXObject::FromWebDocument(document);
-      if (!obj.Equals(webax_object)) {
-        HandleAXEvent(webax_object, ui::AX_EVENT_LAYOUT_COMPLETE);
+      if (!obj.Equals(document.AccessibilityObject())) {
+        HandleAXEvent(document.AccessibilityObject(),
+                      ui::AX_EVENT_LAYOUT_COMPLETE);
       }
     }
   }
@@ -376,7 +375,7 @@ void RenderAccessibilityImpl::SendPendingAccessibilityEvents() {
     if (event.event_type == ui::AX_EVENT_LAYOUT_COMPLETE)
       had_layout_complete_messages = true;
 
-    auto obj = WebAXObject::FromWebDocumentByID(document, event.id);
+    WebAXObject obj = document.AccessibilityObjectFromID(event.id);
 
     // Make sure the object still exists.
     if (!obj.UpdateLayoutAndCheckValidity())
@@ -498,13 +497,13 @@ void RenderAccessibilityImpl::OnPerformAction(
   if (document.IsNull())
     return;
 
-  auto root = WebAXObject::FromWebDocument(document);
+  WebAXObject root = document.AccessibilityObject();
   if (!root.UpdateLayoutAndCheckValidity())
     return;
 
-  auto target = WebAXObject::FromWebDocumentByID(document, data.target_node_id);
-  auto anchor = WebAXObject::FromWebDocumentByID(document, data.anchor_node_id);
-  auto focus = WebAXObject::FromWebDocumentByID(document, data.focus_node_id);
+  WebAXObject target = document.AccessibilityObjectFromID(data.target_node_id);
+  WebAXObject anchor = document.AccessibilityObjectFromID(data.anchor_node_id);
+  WebAXObject focus = document.AccessibilityObjectFromID(data.focus_node_id);
 
   switch (data.action) {
     case ui::AX_ACTION_BLUR:
@@ -590,7 +589,7 @@ void RenderAccessibilityImpl::OnHitTest(const gfx::Point& point,
   const WebDocument& document = GetMainDocument();
   if (document.IsNull())
     return;
-  auto root_obj = WebAXObject::FromWebDocument(document);
+  WebAXObject root_obj = document.AccessibilityObject();
   if (!root_obj.UpdateLayoutAndCheckValidity())
     return;
 
@@ -662,10 +661,10 @@ void RenderAccessibilityImpl::OnReset(int reset_token) {
   if (!document.IsNull()) {
     // Tree-only mode gets used by the automation extension API which requires a
     // load complete event to invoke listener callbacks.
-    auto webax_object = WebAXObject::FromWebDocument(document);
-    ui::AXEvent evt = webax_object.IsLoaded() ? ui::AX_EVENT_LOAD_COMPLETE
-                                              : ui::AX_EVENT_LAYOUT_COMPLETE;
-    HandleAXEvent(webax_object, evt);
+    ui::AXEvent evt = document.AccessibilityObject().IsLoaded()
+                          ? ui::AX_EVENT_LOAD_COMPLETE
+                          : ui::AX_EVENT_LAYOUT_COMPLETE;
+    HandleAXEvent(document.AccessibilityObject(), evt);
   }
 }
 
@@ -720,7 +719,7 @@ void RenderAccessibilityImpl::ScrollPlugin(int id_to_make_visible) {
   if (document.IsNull())
     return;
 
-  WebAXObject::FromWebDocument(document).ScrollToMakeVisibleWithSubFocus(
+  document.AccessibilityObject().ScrollToMakeVisibleWithSubFocus(
       WebRect(bounds.x(), bounds.y(), bounds.width(), bounds.height()));
 }
 

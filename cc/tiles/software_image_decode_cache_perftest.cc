@@ -68,7 +68,7 @@ class SoftwareImageDecodeCachePerfTest : public testing::Test {
     timer_.Reset();
     do {
       for (auto& image : images)
-        ImageDecodeCacheKey::FromDrawImage(image, RGBA_8888);
+        ImageDecodeCacheKey::FromDrawImage(image);
       timer_.NextLap();
     } while (!timer_.HasTimeLimitExpired());
 

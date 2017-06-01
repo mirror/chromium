@@ -146,8 +146,6 @@ class ModuleTreeLinkerTestModulator final : public DummyModulator {
  private:
   // Implements Modulator:
 
-  ScriptState* GetScriptState() override { return script_state_.Get(); }
-
   void FetchSingle(const ModuleScriptFetchRequest& request,
                    ModuleGraphLevel,
                    SingleModuleClient* client) override {

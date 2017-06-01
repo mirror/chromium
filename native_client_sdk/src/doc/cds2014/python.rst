@@ -1,7 +1,5 @@
 .. _cds2014_python:
 
-.. include:: /migration/deprecation.inc
-
 ########################################
 What a Difference Python Makes - Codelab
 ########################################

@@ -46,23 +46,32 @@ SDK.ScreenCaptureModel = class extends SDK.SDKModel {
    * @return {!Promise<?string>}
    */
   captureScreenshot(format, quality) {
-    return this._agent.captureScreenshot(format, quality, true);
+    var fulfill;
+    var promise = new Promise(callback => fulfill = callback);
+    this._agent.captureScreenshot(format, quality, true, (error, content) => {
+      if (error)
+        console.error(error);
+      fulfill(error ? null : content);
+    });
+    return promise;
   }
 
   /**
    * @return {!Promise<?{viewportX: number, viewportY: number, viewportScale: number, contentWidth: number, contentHeight: number}>}
    */
-  async fetchLayoutMetrics() {
-    var response = await this._agent.invoke_getLayoutMetrics({});
-    if (response[Protocol.Error])
-      return null;
-    return {
-      viewportX: response.visualViewport.pageX,
-      viewportY: response.visualViewport.pageY,
-      viewportScale: response.visualViewport.scale,
-      contentWidth: response.contentSize.width,
-      contentHeight: response.contentSize.height
-    };
+  fetchLayoutMetrics() {
+    var fulfill;
+    var promise = new Promise(callback => fulfill = callback);
+    this._agent.getLayoutMetrics((error, layoutViewport, visualViewport, contentSize) => {
+      fulfill(error ? null : {
+        viewportX: visualViewport.pageX,
+        viewportY: visualViewport.pageY,
+        viewportScale: visualViewport.scale,
+        contentWidth: contentSize.width,
+        contentHeight: contentSize.height
+      });
+    });
+    return promise;
   }
 
   /**

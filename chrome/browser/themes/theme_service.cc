@@ -225,12 +225,11 @@ ThemeService::ThemeService()
       weak_ptr_factory_(this) {}
 
 ThemeService::~ThemeService() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   FreePlatformCaches();
 }
 
 void ThemeService::Init(Profile* profile) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   profile_ = profile;
 
   LoadThemePrefs();
@@ -521,7 +520,7 @@ SkColor ThemeService::GetDefaultColor(int id, bool incognito) const {
 }
 
 color_utils::HSL ThemeService::GetTint(int id, bool incognito) const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   color_utils::HSL hsl;
   if (theme_supplier_ && theme_supplier_->GetTint(id, &hsl))
@@ -695,7 +694,7 @@ gfx::ImageSkia* ThemeService::GetImageSkiaNamed(int id, bool incognito) const {
 }
 
 SkColor ThemeService::GetColor(int id, bool incognito) const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   // For legacy reasons, |theme_supplier_| requires the incognito variants
   // of color IDs.
@@ -759,7 +758,7 @@ base::RefCountedMemory* ThemeService::GetRawData(
 }
 
 gfx::Image ThemeService::GetImageNamed(int id, bool incognito) const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   int adjusted_id = id;
   if (incognito) {

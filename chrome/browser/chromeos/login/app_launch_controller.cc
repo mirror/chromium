@@ -329,7 +329,7 @@ void AppLaunchController::CleanUp() {
   splash_wait_timer_.Stop();
 
   if (host_)
-    host_->Finalize(base::OnceClosure());
+    host_->Finalize();
 }
 
 void AppLaunchController::OnNetworkWaitTimedout() {

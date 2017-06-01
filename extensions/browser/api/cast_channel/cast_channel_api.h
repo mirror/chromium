@@ -12,7 +12,6 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/threading/thread_checker.h"
-#include "components/cast_channel/cast_channel_enum.h"
 #include "extensions/browser/api/api_resource_manager.h"
 #include "extensions/browser/api/async_api_function.h"
 #include "extensions/browser/api/cast_channel/cast_socket.h"
@@ -35,7 +34,6 @@ struct Event;
 
 namespace api {
 namespace cast_channel {
-class CastSocketService;
 class Logger;
 }  // namespace cast_channel
 }  // namespace api
@@ -104,6 +102,9 @@ class CastChannelAsyncApiFunction : public AsyncApiFunction {
   CastChannelAsyncApiFunction();
 
  protected:
+  typedef ApiResourceManager<cast_channel::CastSocket>::ApiResourceData
+      SocketData;
+
   ~CastChannelAsyncApiFunction() override;
 
   // AsyncApiFunction:
@@ -117,7 +118,7 @@ class CastChannelAsyncApiFunction : public AsyncApiFunction {
 
   // Adds |socket| to |manager_| and returns the new channel_id.  |manager_|
   // assumes ownership of |socket|.
-  int AddSocket(std::unique_ptr<cast_channel::CastSocket> socket);
+  int AddSocket(cast_channel::CastSocket* socket);
 
   // Removes the CastSocket corresponding to |channel_id| from the resource
   // manager.
@@ -139,8 +140,8 @@ class CastChannelAsyncApiFunction : public AsyncApiFunction {
   // Sets the function result from |channel_info|.
   void SetResultFromChannelInfo(const cast_channel::ChannelInfo& channel_info);
 
-  // Manages creating and removing cast sockets.
-  api::cast_channel::CastSocketService* cast_socket_service_;
+  // The collection of CastSocket API resources.
+  scoped_refptr<SocketData> sockets_;
 };
 
 class CastChannelOpenFunction : public CastChannelAsyncApiFunction {
@@ -160,8 +161,10 @@ class CastChannelOpenFunction : public CastChannelAsyncApiFunction {
 
   // Defines a callback used to send events to the extension's
   // EventRouter.
-  //     Parameter #0 is a scoped pointer to the event payload.
-  using EventDispatchCallback = base::Callback<void(std::unique_ptr<Event>)>;
+  //     Parameter #0 is the extension's ID.
+  //     Parameter #1 is a scoped pointer to the event payload.
+  using EventDispatchCallback =
+      base::Callback<void(const std::string&, std::unique_ptr<Event>)>;
 
   // Receives incoming messages and errors and provides additional API and
   // origin socket context.
@@ -173,7 +176,7 @@ class CastChannelOpenFunction : public CastChannelAsyncApiFunction {
     ~CastMessageHandler() override;
 
     // CastTransport::Delegate implementation.
-    void OnError(::cast_channel::ChannelError error_state) override;
+    void OnError(cast_channel::ChannelError error_state) override;
     void OnMessage(const cast_channel::CastMessage& message) override;
     void Start() override;
 
@@ -194,14 +197,14 @@ class CastChannelOpenFunction : public CastChannelAsyncApiFunction {
   static net::IPEndPoint* ParseConnectInfo(
       const cast_channel::ConnectInfo& connect_info);
 
-  void OnOpen(::cast_channel::ChannelError result);
+  void OnOpen(cast_channel::ChannelError result);
 
   std::unique_ptr<cast_channel::Open::Params> params_;
   // The id of the newly opened socket.
   int new_channel_id_;
   CastChannelAPI* api_;
   std::unique_ptr<net::IPEndPoint> ip_endpoint_;
-  ::cast_channel::ChannelAuthType channel_auth_;
+  cast_channel::ChannelAuthType channel_auth_;
   base::TimeDelta liveness_timeout_;
   base::TimeDelta ping_interval_;
 

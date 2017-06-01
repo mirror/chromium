@@ -28,8 +28,6 @@ class MockPasswordStore : public PasswordStore {
   MOCK_METHOD1(RemoveLogin, void(const autofill::PasswordForm&));
   MOCK_METHOD2(GetLogins,
                void(const PasswordStore::FormDigest&, PasswordStoreConsumer*));
-  MOCK_METHOD2(GetLoginsForSameOrganizationName,
-               void(const std::string&, PasswordStoreConsumer*));
   MOCK_METHOD1(AddLogin, void(const autofill::PasswordForm&));
   MOCK_METHOD1(UpdateLogin, void(const autofill::PasswordForm&));
   MOCK_METHOD2(UpdateLoginWithPrimaryKey,
@@ -60,10 +58,6 @@ class MockPasswordStore : public PasswordStore {
       PasswordStoreChangeList(const base::Callback<bool(const GURL&)>&));
   std::vector<std::unique_ptr<autofill::PasswordForm>> FillMatchingLogins(
       const PasswordStore::FormDigest& form) override {
-    return std::vector<std::unique_ptr<autofill::PasswordForm>>();
-  }
-  std::vector<std::unique_ptr<autofill::PasswordForm>>
-  FillLoginsForSameOrganizationName(const std::string& signon_realm) override {
     return std::vector<std::unique_ptr<autofill::PasswordForm>>();
   }
   MOCK_METHOD1(FillAutofillableLogins,

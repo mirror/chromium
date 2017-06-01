@@ -14,6 +14,7 @@
 #include "ios/chrome/browser/payments/payment_request.h"
 #include "ios/chrome/browser/payments/payment_request_test_util.h"
 #import "ios/chrome/browser/ui/autofill/autofill_ui_type.h"
+#import "ios/chrome/browser/ui/payments/credit_card_edit_view_controller.h"
 #import "ios/chrome/browser/ui/payments/payment_request_editor_field.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -30,7 +31,6 @@ class MockTestPersonalDataManager : public autofill::TestPersonalDataManager {
  public:
   MockTestPersonalDataManager() : TestPersonalDataManager() {}
   MOCK_METHOD1(AddCreditCard, void(const autofill::CreditCard&));
-  MOCK_METHOD1(UpdateCreditCard, void(const autofill::CreditCard&));
 };
 
 class MockPaymentRequest : public PaymentRequest {
@@ -60,7 +60,7 @@ MATCHER_P5(CreditCardMatches,
          arg.billing_address_id() == billing_address_id;
 }
 
-NSArray<EditorField*>* GetEditorFields(bool save_card) {
+NSArray<EditorField*>* GetEditorFields() {
   return @[
     [[EditorField alloc] initWithAutofillUIType:AutofillUITypeCreditCardNumber
                                       fieldType:EditorFieldTypeTextField
@@ -88,12 +88,6 @@ NSArray<EditorField*>* GetEditorFields(bool save_card) {
                      fieldType:EditorFieldTypeSelector
                          label:@"Billing Address"
                          value:@"12345"
-                      required:YES],
-    [[EditorField alloc]
-        initWithAutofillUIType:AutofillUITypeCreditCardSaveToChrome
-                     fieldType:EditorFieldTypeSwitch
-                         label:@"Save Card"
-                         value:save_card ? @"YES" : @"NO"
                       required:YES],
   ];
 }
@@ -179,15 +173,14 @@ TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidFinishCreatingWithSave) {
               AddCreditCard(CreditCardMatches("4111111111111111", "John Doe",
                                               "12", "2090", "12345")))
       .Times(1);
-  // No credit card should get updated in the PersonalDataManager.
-  EXPECT_CALL(personal_data_manager_, UpdateCreditCard(_)).Times(0);
 
   // Call the controller delegate method.
-  PaymentRequestEditViewController* view_controller =
-      base::mac::ObjCCastStrict<PaymentRequestEditViewController>(
+  CreditCardEditViewController* view_controller =
+      base::mac::ObjCCastStrict<CreditCardEditViewController>(
           navigation_controller.visibleViewController);
-  [coordinator paymentRequestEditViewController:view_controller
-                         didFinishEditingFields:GetEditorFields(true)];
+  [coordinator creditCardEditViewController:view_controller
+                     didFinishEditingFields:GetEditorFields()
+                             saveCreditCard:YES];
 
   EXPECT_OCMOCK_VERIFY(delegate);
 }
@@ -230,15 +223,14 @@ TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidFinishCreatingNoSave) {
       .Times(1);
   // No credit card should get added to the PersonalDataManager.
   EXPECT_CALL(personal_data_manager_, AddCreditCard(_)).Times(0);
-  // No credit card should get updated in the PersonalDataManager.
-  EXPECT_CALL(personal_data_manager_, UpdateCreditCard(_)).Times(0);
 
   // Call the controller delegate method.
-  PaymentRequestEditViewController* view_controller =
-      base::mac::ObjCCastStrict<PaymentRequestEditViewController>(
+  CreditCardEditViewController* view_controller =
+      base::mac::ObjCCastStrict<CreditCardEditViewController>(
           navigation_controller.visibleViewController);
-  [coordinator paymentRequestEditViewController:view_controller
-                         didFinishEditingFields:GetEditorFields(false)];
+  [coordinator creditCardEditViewController:view_controller
+                     didFinishEditingFields:GetEditorFields()
+                             saveCreditCard:NO];
 
   EXPECT_OCMOCK_VERIFY(delegate);
 }
@@ -281,18 +273,14 @@ TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidFinishEditing) {
   EXPECT_CALL(*payment_request_, AddCreditCard(_)).Times(0);
   // No credit card should get added to the PersonalDataManager.
   EXPECT_CALL(personal_data_manager_, AddCreditCard(_)).Times(0);
-  // Expect a credit card to be updated in the PersonalDataManager.
-  EXPECT_CALL(personal_data_manager_,
-              UpdateCreditCard(CreditCardMatches("4111111111111111", "John Doe",
-                                                 "12", "2090", "12345")))
-      .Times(1);
 
   // Call the controller delegate method.
-  PaymentRequestEditViewController* view_controller =
-      base::mac::ObjCCastStrict<PaymentRequestEditViewController>(
+  CreditCardEditViewController* view_controller =
+      base::mac::ObjCCastStrict<CreditCardEditViewController>(
           navigation_controller.visibleViewController);
-  [coordinator paymentRequestEditViewController:view_controller
-                         didFinishEditingFields:GetEditorFields(true)];
+  [coordinator creditCardEditViewController:view_controller
+                     didFinishEditingFields:GetEditorFields()
+                             saveCreditCard:YES];
 
   EXPECT_OCMOCK_VERIFY(delegate);
 }
@@ -324,10 +312,10 @@ TEST_F(PaymentRequestCreditCardEditCoordinatorTest, DidCancel) {
   EXPECT_EQ(2u, navigation_controller.viewControllers.count);
 
   // Call the controller delegate method.
-  PaymentRequestEditViewController* view_controller =
-      base::mac::ObjCCastStrict<PaymentRequestEditViewController>(
+  CreditCardEditViewController* view_controller =
+      base::mac::ObjCCastStrict<CreditCardEditViewController>(
           navigation_controller.visibleViewController);
-  [coordinator paymentRequestEditViewControllerDidCancel:view_controller];
+  [coordinator creditCardEditViewControllerDidCancel:view_controller];
 
   EXPECT_OCMOCK_VERIFY(delegate);
 }

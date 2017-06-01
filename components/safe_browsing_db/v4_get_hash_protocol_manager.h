@@ -20,7 +20,7 @@
 
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
-#include "base/sequence_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "base/time/default_clock.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
@@ -139,7 +139,8 @@ struct FullHashCallbackInfo {
 
 class V4GetHashProtocolManagerFactory;
 
-class V4GetHashProtocolManager : public net::URLFetcherDelegate {
+class V4GetHashProtocolManager : public net::URLFetcherDelegate,
+                                 public base::NonThreadSafe {
  public:
   // Invoked when GetFullHashesWithApis completes.
   // Parameters:
@@ -339,8 +340,6 @@ class V4GetHashProtocolManager : public net::URLFetcherDelegate {
   std::vector<PlatformType> platform_types_;
   std::vector<ThreatEntryType> threat_entry_types_;
   std::vector<ThreatType> threat_types_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(V4GetHashProtocolManager);
 };

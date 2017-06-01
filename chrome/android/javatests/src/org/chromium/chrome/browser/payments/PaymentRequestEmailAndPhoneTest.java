@@ -156,10 +156,11 @@ public class PaymentRequestEmailAndPhoneTest implements MainActivityStartCallbac
         // Start the Payment Request.
         mPaymentRequestTestRule.triggerUIAndWait(mPaymentRequestTestRule.getReadyToPay());
 
-        int appropriateEnumValue = RequestedInformation.EMAIL | RequestedInformation.PHONE;
+        int appropriateEnumValue = PaymentRequestMetrics.REQUESTED_INFORMATION_EMAIL
+                | PaymentRequestMetrics.REQUESTED_INFORMATION_PHONE;
 
         // Make sure that only the appropriate enum value was logged.
-        for (int i = 0; i < RequestedInformation.MAX; ++i) {
+        for (int i = 0; i < PaymentRequestMetrics.REQUESTED_INFORMATION_MAX; ++i) {
             Assert.assertEquals((i == (appropriateEnumValue) ? 1 : 0),
                     RecordHistogram.getHistogramValueCountForTesting(
                             "PaymentRequest.RequestedInformation", i));

@@ -102,9 +102,7 @@ class MODULES_EXPORT ImageCapture final
 
   Member<PhotoCapabilities> photo_capabilities_;
 
-  HeapHashMap<Member<ScriptPromiseResolver>,
-              HeapVector<MediaTrackConstraintSet>>
-      service_requests_;
+  HeapHashSet<Member<ScriptPromiseResolver>> service_requests_;
 };
 
 }  // namespace blink

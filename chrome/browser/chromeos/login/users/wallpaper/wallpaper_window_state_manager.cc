@@ -8,6 +8,7 @@
 #include "ash/wm/mru_window_tracker.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
+#include "ash/wm_window.h"
 #include "chrome/browser/ui/ash/ash_util.h"
 #include "ui/aura/window.h"
 
@@ -65,10 +66,10 @@ void WallpaperWindowStateManager::BuildWindowListAndMinimizeInactiveForUser(
   std::set<aura::Window*>* results =
       &user_id_hash_window_list_map_[user_id_hash];
 
-  aura::Window::Windows windows =
-      ash::Shell::Get()->mru_window_tracker()->BuildWindowListIgnoreModal();
+  std::vector<aura::Window*> windows = ash::WmWindow::ToAuraWindows(
+      ash::Shell::Get()->mru_window_tracker()->BuildWindowListIgnoreModal());
 
-  for (aura::Window::Windows::iterator iter = windows.begin();
+  for (std::vector<aura::Window*>::iterator iter = windows.begin();
        iter != windows.end(); ++iter) {
     // Ignore active window and minimized windows.
     if (*iter == active_window || ash::wm::GetWindowState(*iter)->IsMinimized())

@@ -11,21 +11,21 @@
 namespace blink {
 
 class CullRect;
+class FrameView;
 class GraphicsContext;
 class IntRect;
 
-// FrameOrPlugin is a pure virtual class which is implemented by LocalFrameView,
+// FrameOrPlugin is a pure virtual class which is implemented by FrameView,
 // RemoteFrameView, and PluginView.
 class CORE_EXPORT FrameOrPlugin : public GarbageCollectedMixin {
  public:
   virtual ~FrameOrPlugin() {}
 
-  virtual bool IsLocalFrameView() const { return false; }
+  virtual bool IsFrameView() const { return false; }
   virtual bool IsPluginView() const { return false; }
 
-  virtual void Attach() = 0;
-  virtual void Detach() = 0;
-  virtual bool IsAttached() const = 0;
+  virtual void SetParent(FrameView*) = 0;
+  virtual FrameView* Parent() const = 0;
   virtual void SetParentVisible(bool) = 0;
   virtual void SetFrameRect(const IntRect&) = 0;
   virtual void FrameRectsChanged() = 0;

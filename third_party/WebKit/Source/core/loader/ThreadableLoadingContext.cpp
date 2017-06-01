@@ -52,7 +52,6 @@ class DocumentThreadableLoadingContext final : public ThreadableLoadingContext {
   }
 
   RefPtr<WebTaskRunner> GetTaskRunner(TaskType type) override {
-    DCHECK(IsContextThread());
     return TaskRunnerHelper::Get(type, document_.Get());
   }
 
@@ -113,8 +112,7 @@ class WorkerThreadableLoadingContext : public ThreadableLoadingContext {
   Document* GetLoadingDocument() override { return nullptr; }
 
   RefPtr<WebTaskRunner> GetTaskRunner(TaskType type) override {
-    DCHECK(IsContextThread());
-    return fetch_context_->GetTaskRunner();
+    return fetch_context_->LoadingTaskRunner();
   }
 
   void RecordUseCount(UseCounter::Feature feature) override {

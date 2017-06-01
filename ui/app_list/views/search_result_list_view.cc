@@ -205,7 +205,7 @@ void SearchResultListView::Layout() {
   results_container_->SetBoundsRect(GetLocalBounds());
 }
 
-gfx::Size SearchResultListView::CalculatePreferredSize() const {
+gfx::Size SearchResultListView::GetPreferredSize() const {
   return results_container_->GetPreferredSize();
 }
 

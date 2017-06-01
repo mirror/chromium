@@ -29,21 +29,22 @@ let renderedData;
 // Create a buffer containing the data that we want.  The function f
 // returns the desired value at sample frame k.
 function createSignalBuffer(context, f) {
-  // Make sure the buffer has enough data for all of the possible
-  // grain offsets and durations.  Need to include the extra frames
-  // for HRTF.  The additional 1 is for any round-off errors.
-  let signalLength = Math.floor(
-      1 + extraFramesHRTF +
-      sampleRate * (numberOfTests * grainOffsetStep + duration));
 
-  let buffer = context.createBuffer(2, signalLength, sampleRate);
-  let data = buffer.getChannelData(0);
+    // Make sure the buffer has enough data for all of the possible
+    // grain offsets and durations.  Need to include the extra frames
+    // for HRTF.  The additional 1 is for any round-off errors.
+    let signalLength = Math.floor(
+        1 + extraFramesHRTF +
+        sampleRate * (numberOfTests * grainOffsetStep + duration));
 
-  for (let k = 0; k < signalLength; ++k) {
-    data[k] = f(k);
-  }
+    let buffer = context.createBuffer(2, signalLength, sampleRate);
+    let data = buffer.getChannelData(0);
 
-  return buffer;
+    for (let k = 0; k < signalLength; ++k) {
+      data[k] = f(k);
+    }
+
+    return buffer;
 }
 
 // From the data array, find the start and end sample frame for each
@@ -74,9 +75,9 @@ function findStartAndEndSamples(data) {
         lookForStart = true;
       }
     }
-  }
+    }
 
-  return {start: startTime, end: endTime};
+    return {start : startTime, end : endTime};
 }
 
 function playGrain(context, source, time, offset, duration) {
@@ -100,9 +101,9 @@ function playAllGrains(context, source, numberOfNotes) {
     playGrain(context, source, timeOffset, grainOffset, duration);
     startTimes[k] = timeOffset;
     offsets[k] = grainOffset;
-  }
+    }
 
-  return {startTimes: startTimes, grainOffsetTimes: offsets};
+    return { startTimes : startTimes, grainOffsetTimes : offsets };
 }
 
 // Verify that the start and end frames for each grain match our
@@ -149,8 +150,7 @@ function verifyStartAndEndFrames(startEndFrames, should) {
         .beEqualTo(numberOfTests);
   } else {
     should(
-        errorCountStart,
-        'Number of grains out of ' + numberOfTests +
+        errorCountStart, 'Number of grains out of ' + numberOfTests +
             'that started at the wrong time')
         .beEqualTo(0);
   }
@@ -160,8 +160,7 @@ function verifyStartAndEndFrames(startEndFrames, should) {
         .beEqualTo(numberOfTests);
   } else {
     should(
-        errorCountEnd,
-        'Number of grains out of ' + numberOfTests +
+        errorCountEnd, 'Number of grains out of ' + numberOfTests +
             ' that ended at the wrong time')
         .beEqualTo(0);
   }

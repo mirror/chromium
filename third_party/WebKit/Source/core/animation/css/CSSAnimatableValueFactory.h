@@ -39,13 +39,18 @@
 namespace blink {
 
 class ComputedStyle;
+class PropertyHandle;
 
 class CSSAnimatableValueFactory {
   STATIC_ONLY(CSSAnimatableValueFactory);
 
  public:
-  static PassRefPtr<AnimatableValue> Create(CSSPropertyID,
+  static PassRefPtr<AnimatableValue> Create(const PropertyHandle&,
                                             const ComputedStyle&);
+
+ private:
+  static PassRefPtr<AnimatableValue> CreateFromColor(CSSPropertyID,
+                                                     const ComputedStyle&);
 };
 
 }  // namespace blink
