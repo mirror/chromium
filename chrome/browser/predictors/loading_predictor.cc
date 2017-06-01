@@ -5,14 +5,19 @@
 #include "chrome/browser/predictors/loading_predictor.h"
 
 #include "base/memory/ptr_util.h"
+#include "chrome/browser/predictors/glowplug_stats_collector.h"
 #include "chrome/browser/predictors/resource_prefetch_predictor.h"
 
 namespace predictors {
 
 LoadingPredictor::LoadingPredictor(const LoadingPredictorConfig& config,
-                                   Profile* profile) {
-  resource_prefetch_predictor_ =
-      base::MakeUnique<ResourcePrefetchPredictor>(config, profile);
+                                   Profile* profile)
+    : resource_prefetch_predictor_(
+          base::MakeUnique<ResourcePrefetchPredictor>(config, profile)),
+      stats_collector_(base::MakeUnique<GlowplugStatsCollector>(
+          resource_prefetch_predictor_.get(),
+          config)) {
+  resource_prefetch_predictor_->SetStatsCollector(stats_collector_.get());
 }
 
 LoadingPredictor::~LoadingPredictor() = default;
