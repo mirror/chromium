@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44deaa6a_41139c8b",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-01T14:55:29Z",
+      "side": 1,
+      "message": "So, for the responses that are currently in Chrome\u0027s cache, and are served from cache in future Chrome versions,  the value of |proxy_server| in the response info would be wrong. I think that\u0027s probably not a problem?\n\nBut, then  I am also curious what\u0027s the point of writing the proxy server\u0027s name to the cache? If it is okay for that value to be incorrect, why can we not just skip writing it, and save some disk space? jkarlin/mmenke thoughts?",
+      "range": {
+        "startLine": 91,
+        "startChar": 10,
+        "endLine": 91,
+        "endChar": 13
+      },
+      "revId": "481eca5a507e743408aa6af518a5853b2b87916e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b9e0749_48df6616",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-01T14:55:29Z",
+      "side": 1,
+      "message": "I do not think we need to check for direct here.\nIf a DIRECT proxy was used, we should write that.",
+      "range": {
+        "startLine": 373,
+        "startChar": 34,
+        "endLine": 373,
+        "endChar": 46
+      },
+      "revId": "481eca5a507e743408aa6af518a5853b2b87916e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a835ef23_d504ccca",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-01T14:55:29Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 427,
+        "startChar": 34,
+        "endLine": 427,
+        "endChar": 46
+      },
+      "revId": "481eca5a507e743408aa6af518a5853b2b87916e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
