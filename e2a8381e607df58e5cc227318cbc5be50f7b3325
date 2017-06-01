@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "534179a8_09ead677",
+        "filename": "content/renderer/media/media_stream_constraints_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-06-01T14:52:30Z",
+      "side": 1,
+      "message": "Can you add a comment that this is the name of any of the failed constraints since in fact multiple constraints could be failing and this does not reflect that?",
+      "revId": "e2a8381e607df58e5cc227318cbc5be50f7b3325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3703be12_78bab278",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-06-01T14:52:30Z",
+      "side": 1,
+      "message": "nit: failed constraint (singular), or more accurately, of one of the failed constraints.",
+      "revId": "e2a8381e607df58e5cc227318cbc5be50f7b3325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb3adac_58c40a75",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-06-01T14:52:30Z",
+      "side": 1,
+      "message": "nit: but this is *not* true for",
+      "revId": "e2a8381e607df58e5cc227318cbc5be50f7b3325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e9285d_b02f9db4",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-06-01T14:52:30Z",
+      "side": 1,
+      "message": "nit: use IsDeviceCapture() instead",
+      "range": {
+        "startLine": 276,
+        "startChar": 8,
+        "endLine": 276,
+        "endChar": 16
+      },
+      "revId": "e2a8381e607df58e5cc227318cbc5be50f7b3325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "354016fe_1a9d4b45",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-06-01T14:52:30Z",
+      "side": 1,
+      "message": "Why do we use the device ID when device is not applicable? Wouldn\u0027t empty string make more sense?",
+      "revId": "e2a8381e607df58e5cc227318cbc5be50f7b3325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc74c5d8_96c08659",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-06-01T14:52:30Z",
+      "side": 1,
+      "message": "Remove commented out code.\n\nWould CheckAllDefaults() make more sense than to CheckBool/GeometryDefaults() and device_id separately? Or CheckDeviceDefaults which checks more than just the ID.",
+      "revId": "e2a8381e607df58e5cc227318cbc5be50f7b3325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9954cdf_5d370386",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-06-01T14:52:30Z",
+      "side": 1,
+      "message": "nit: here and in other places: can you check by value instead to make it more readable and remove the assumption about which index correspond to which function/accessor value?\n\nif (set_function \u003d\u003d \u0026blink::BooleanConstraint::SetIdeal \u0026\u0026 ...\n\n(Otherwise add a comment at the declaration saying the order matters)",
+      "revId": "e2a8381e607df58e5cc227318cbc5be50f7b3325",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

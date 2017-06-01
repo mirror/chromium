@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "04febd3f_c2789939",
+        "filename": "content/renderer/media/media_stream_constraints_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-06-01T14:52:30Z",
+      "side": 1,
+      "message": "Ack. Can you add a comment? This looked like output to me along with the other bools but it\u0027s in fact the \"input\" setting of the device.",
+      "parentUuid": "0a8a131e_f05e7fa6",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e482c730_011d6393",
         "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
         "patchSetId": 1
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "What is the concern more specifically here?\nThis class merely puts the device ID and device parameters (as returned by lower layers by querying capabilities) together for easier manipulation by the part of the algorithm that deals with selection. Added a comment that states that.\n\nThe AudioDeviceSet below starts out with a list of all the devices in the system (their IDs and parameters) and the list gets reduced as constraints are applied. Then the final device is chosen among the ones that remain in the list.\nThis is easiest to implement with a single list having all the required info. AudioDeviceInfo is that info. No need to have anything more fancy than that.",
       "parentUuid": "e482c730_011d6393",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db353779_87cd86c2",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-06-01T14:52:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e2b48ccc_bf4a6211",
       "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -247,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "a29f6e55_603a7f2f",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-06-01T14:52:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e022a969_7504c35f",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66cf14d5_62b714c2",
         "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
         "patchSetId": 1
@@ -346,6 +400,24 @@
       "side": 1,
       "message": "Some parts have been generalized, but not all.\nThis one in particular is a special case because it requires input from two constrains and hardware parameters (if available).",
       "parentUuid": "c7f3768b_d7fcf843",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c5e6119_043970c6",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-06-01T14:52:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aa6ddaf6_49e249ad",
       "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
