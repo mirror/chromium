@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
+import org.chromium.chrome.browser.ChromeStringConstants;
 import org.chromium.chrome.browser.help.HelpAndFeedback;
 import org.chromium.chrome.browser.ntp.ContentSuggestionsNotificationHelper;
 import org.chromium.chrome.browser.ntp.snippets.ContentSuggestionsNotificationAction;
@@ -118,7 +119,8 @@ public class ContentSuggestionsPreferences extends PreferenceFragment {
         mIsEnabled = isEnabled;
 
         if (canShowNotificationsSwitch()) {
-            mFeatureSwitch.setSummaryOn(R.string.suggestions_feature_switch_on_summary);
+            mFeatureSwitch.setSummaryOn(
+                    ChromeStringConstants.SUGGESTIONS_FEATURE_SWITCH_ON_SUMMARY);
             setNotificationsPrefState(true);
             mNotificationsSwitch.setChecked(
                     SnippetsBridge.areContentSuggestionsNotificationsEnabled());
