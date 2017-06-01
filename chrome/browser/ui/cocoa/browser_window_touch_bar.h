@@ -22,6 +22,8 @@ class Browser;
 // True if the current page is starred. Used by star touch bar button.
 @property(nonatomic, assign) BOOL isStarred;
 
+@property(nonatomic, assign) BOOL isErrorPage;
+
 // Returns a touch bar item identifier for the given |touchBarId| and |itemId|.
 + (NSString*)identifierForTouchBarId:(NSString*)touchBarId
                               itemId:(NSString*)itemId;

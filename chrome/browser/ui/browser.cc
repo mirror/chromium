@@ -1539,6 +1539,10 @@ void Browser::ActivateContents(WebContents* contents) {
   window_->Activate();
 }
 
+void Browser::SetErrorPage(WebContents* source, bool is_error_page) {
+  command_controller_->SetErrorPage(is_error_page);
+}
+
 void Browser::LoadingStateChanged(WebContents* source,
     bool to_different_document) {
   window_->UpdateLoadingAnimations(tab_strip_model_->TabsAreLoading());

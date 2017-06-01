@@ -88,6 +88,7 @@ class BrowserWindowCocoa
   void HideNewBackShortcutBubble() override;
   LocationBar* GetLocationBar() const override;
   void SetFocusToLocationBar(bool select_all) override;
+  void UpdateErrorPageState(bool is_error_page) override;
   void UpdateReloadStopState(bool is_loading, bool force) override;
   void UpdateToolbar(content::WebContents* contents) override;
   void ResetToolbarTabState(content::WebContents* contents) override;

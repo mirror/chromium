@@ -285,6 +285,9 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 // whether it would be appropriate to show a zoom bubble or not.
 - (void)zoomChangedForActiveTab:(BOOL)canShowBubble;
 
+// Error page.
+- (void)setIsErrorPage:(BOOL)isErrorPage;
+
 // Called to tell the selected tab to update its loading state.
 // |force| is set if the update is due to changing tabs, as opposed to
 // the page-load finishing.  See comment in reload_button_cocoa.h.

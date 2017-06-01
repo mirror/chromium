@@ -486,6 +486,7 @@ Runner.prototype = {
    * Update the game status to started.
    */
   startGame: function() {
+    console.log("Finally found it");
     this.runningTime = 0;
     this.playingIntro = false;
     this.tRex.playingIntro = false;

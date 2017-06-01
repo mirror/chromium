@@ -1202,6 +1202,11 @@ bool IsTabDetachingInFullscreenEnabled() {
   [self invalidateTouchBar];
 }
 
+- (void)setIsErrorPage:(BOOL)isErrorPage {
+  [touchBar_ setIsErrorPage:isErrorPage];
+  [self invalidateTouchBar];
+}
+
 // Make the location bar the first responder, if possible.
 - (void)focusLocationBar:(BOOL)selectAll {
   [toolbarController_ focusLocationBar:selectAll];

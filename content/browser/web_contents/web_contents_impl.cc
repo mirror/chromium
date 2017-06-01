@@ -3580,8 +3580,14 @@ void WebContentsImpl::ReadyToCommitNavigation(
 }
 
 void WebContentsImpl::DidFinishNavigation(NavigationHandle* navigation_handle) {
-  for (auto& observer : observers_)
+  for (auto& observer : observers_) {
     observer.DidFinishNavigation(navigation_handle);
+  }
+  if (navigation_handle->IsErrorPage()) {
+    delegate_->SetErrorPage(this, true);
+  } else {
+    delegate_->SetErrorPage(this, false);
+  }
 
   if (navigation_handle->HasCommitted()) {
     BrowserAccessibilityManager* manager =
