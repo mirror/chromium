@@ -1,0 +1,32 @@
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "bounds": [800, 600],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "paintInvalidations": [
+        {
+          "object": "LayoutIFrame IFRAME id='iframe'",
+          "rect": [8, 72, 732, 94],
+          "reason": "disappeared"
+        }
+      ]
+    }
+  ],
+  "objectPaintInvalidations": [
+    {
+      "object": "LayoutIFrame IFRAME id='iframe'",
+      "reason": "disappeared"
+    },
+    {
+      "object": "LayoutBlockFlow BODY",
+      "reason": "disappeared"
+    },
+    {
+      "object": "LayoutBlockFlow HTML",
+      "reason": "disappeared"
+    }
+  ]
+}
+

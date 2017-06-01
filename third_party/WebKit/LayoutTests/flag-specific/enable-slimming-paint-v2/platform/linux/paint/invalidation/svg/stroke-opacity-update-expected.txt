@@ -1,0 +1,25 @@
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "position": [-1, -1],
+      "bounds": [802, 602],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "paintInvalidations": [
+        {
+          "object": "LayoutSVGEllipse circle",
+          "rect": [0, 0, 205, 205],
+          "reason": "style change"
+        }
+      ]
+    }
+  ],
+  "objectPaintInvalidations": [
+    {
+      "object": "LayoutSVGEllipse circle",
+      "reason": "style change"
+    }
+  ]
+}
+

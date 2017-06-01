@@ -1,0 +1,52 @@
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "bounds": [800, 600],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "paintInvalidations": [
+        {
+          "object": "LayoutSVGText text id='bounce'",
+          "rect": [80, 0, 553, 117],
+          "reason": "appeared"
+        }
+      ]
+    }
+  ],
+  "objectPaintInvalidations": [
+    {
+      "object": "LayoutSVGText text id='bounce'",
+      "reason": "subtree"
+    },
+    {
+      "object": "RootInlineBox",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutSVGInlineText #text",
+      "reason": "subtree"
+    },
+    {
+      "object": "InlineTextBox 'Repaint me!'",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutSVGText text id='bounce'",
+      "reason": "full"
+    },
+    {
+      "object": "RootInlineBox",
+      "reason": "full"
+    },
+    {
+      "object": "LayoutSVGInlineText #text",
+      "reason": "style change"
+    },
+    {
+      "object": "InlineTextBox 'Repaint me!'",
+      "reason": "style change"
+    }
+  ]
+}
+
