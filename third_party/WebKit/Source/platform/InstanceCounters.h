@@ -33,7 +33,7 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/wtf/Allocator.h"
-#include "platform/wtf/Atomics.h"
+#include "platform/wtf/AtomicCounter.h"
 
 namespace blink {
 
@@ -62,12 +62,12 @@ class InstanceCounters {
 
   static inline void IncrementCounter(CounterType type) {
     DCHECK_NE(type, kNodeCounter);
-    AtomicIncrement(&counters_[type]);
+    counters_[type].Increment();
   }
 
   static inline void DecrementCounter(CounterType type) {
     DCHECK_NE(type, kNodeCounter);
-    AtomicDecrement(&counters_[type]);
+    counters_[type].Decrement();
   }
 
   static inline void IncrementNodeCounter() {
@@ -83,7 +83,7 @@ class InstanceCounters {
   PLATFORM_EXPORT static int CounterValue(CounterType);
 
  private:
-  PLATFORM_EXPORT static int counters_[kCounterTypeLength];
+  PLATFORM_EXPORT static WTF::AtomicCounter counters_[kCounterTypeLength];
   PLATFORM_EXPORT static int node_counter_;
 };
 

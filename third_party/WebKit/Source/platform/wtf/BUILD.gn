@@ -50,6 +50,7 @@ component("wtf") {
     "Allocator.h",
     "Assertions.cpp",
     "Assertions.h",
+    "AtomicCounter.h",
     "Atomics.h",
     "AutoReset.h",
     "BitVector.cpp",

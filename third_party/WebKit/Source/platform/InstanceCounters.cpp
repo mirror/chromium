@@ -32,7 +32,7 @@
 
 namespace blink {
 
-int InstanceCounters::counters_[kCounterTypeLength];
+WTF::AtomicCounter InstanceCounters::counters_[kCounterTypeLength];
 
 // Counts only nodes for a performance reason. Many node are created and atomic
 // barriers or locks should be avoided (crbug/641019).
@@ -43,7 +43,7 @@ int InstanceCounters::CounterValue(CounterType type) {
     DCHECK(IsMainThread());
     return node_counter_;
   }
-  return AcquireLoad(&counters_[type]);
+  return counters_[type].GetCount();
 }
 
 }  // namespace blink
