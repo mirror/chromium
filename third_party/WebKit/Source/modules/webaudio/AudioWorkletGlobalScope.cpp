@@ -4,11 +4,15 @@
 
 #include "modules/webaudio/AudioWorkletGlobalScope.h"
 
+#include "bindings/core/v8/IDLTypes.h"
+#include "bindings/core/v8/NativeValueTraitsImpl.h"
 #include "bindings/core/v8/ToV8ForCore.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
+#include "bindings/modules/v8/V8AudioParamDescriptor.h"
 #include "core/dom/ExceptionCode.h"
 #include "modules/webaudio/AudioBuffer.h"
+#include "modules/webaudio/AudioParamDescriptor.h"
 #include "modules/webaudio/AudioWorkletProcessor.h"
 #include "modules/webaudio/AudioWorkletProcessorDefinition.h"
 #include "platform/bindings/V8BindingMacros.h"
@@ -69,8 +73,7 @@ void AudioWorkletGlobalScope::registerProcessor(
   }
 
   v8::Isolate* isolate = ScriptController()->GetScriptState()->GetIsolate();
-  v8::Local<v8::Context> context =
-      ScriptController()->GetScriptState()->GetContext();
+  v8::Local<v8::Context> context = ScriptController()->GetContext();
 
   if (!class_definition.V8Value()->IsFunction()) {
     exception_state.ThrowTypeError(
@@ -79,7 +82,7 @@ void AudioWorkletGlobalScope::registerProcessor(
   }
 
   v8::Local<v8::Function> class_definition_local =
-      class_definition.V8Value().As<v8::Function>();
+      v8::Local<v8::Function>::Cast(class_definition.V8Value());
 
   v8::Local<v8::Value> prototype_value_local;
   bool prototype_extracted =
@@ -88,7 +91,8 @@ void AudioWorkletGlobalScope::registerProcessor(
   DCHECK(prototype_extracted);
 
   v8::Local<v8::Object> prototype_object_local =
-      prototype_value_local.As<v8::Object>();
+      v8::Local<v8::Object>::Cast(prototype_value_local);
+      // prototype_value_local.As<v8::Object>();
 
   v8::Local<v8::Value> process_value_local;
   bool process_extracted =
@@ -109,12 +113,36 @@ void AudioWorkletGlobalScope::registerProcessor(
   }
 
   v8::Local<v8::Function> process_function_local =
-      process_value_local.As<v8::Function>();
+      v8::Local<v8::Function>::Cast(process_value_local);
+      // process_value_local.As<v8::Function>();
 
+  // constructor() and process() functions are successfully collected.
   AudioWorkletProcessorDefinition* definition =
       AudioWorkletProcessorDefinition::Create(
           isolate, name, class_definition_local, process_function_local);
   DCHECK(definition);
+
+  // parameterDescriptors() is optional. Attempt to extract from the class
+  // definition.
+  v8::Local<v8::Value> parameter_descriptors_value_local;
+  bool did_get_parameter_descriptor =
+      class_definition_local->Get(context,
+                                  V8String(isolate, "parameterDescriptors"))
+          .ToLocal(&parameter_descriptors_value_local);
+
+  // We only check if the extracted value is function. This is optional, but
+  // it needs to be a function when exists.
+  if (did_get_parameter_descriptor &&
+      !parameter_descriptors_value_local->IsNullOrUndefined()) {
+    HeapVector<AudioParamDescriptor> audio_param_descriptors =
+        NativeValueTraits<IDLSequence<AudioParamDescriptor>>::NativeValue(
+            isolate, parameter_descriptors_value_local, exception_state);
+
+    if (exception_state.HadException())
+      return;
+
+    definition->SetAudioParamDescriptors(audio_param_descriptors);
+  }
 
   processor_definition_map_.Set(name, definition);
 }
