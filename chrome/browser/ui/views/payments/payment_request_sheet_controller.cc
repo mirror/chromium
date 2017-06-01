@@ -145,6 +145,7 @@ class BorderedScrollView : public views::ScrollView {
   };
 
   BorderedScrollView() : views::ScrollView() {
+    SetBackgroundColor(SK_ColorWHITE);
     SetBorder(views::CreateBorderPainter(
         base::MakeUnique<BorderedScrollViewBorderPainter>(
             GetNativeTheme()->GetSystemColor(
