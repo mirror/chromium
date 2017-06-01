@@ -52,6 +52,24 @@
       "revId": "9028116ddf0080609a28089a0ca28277bfb9f718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0466fac7_e55cd11f",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-01T00:46:09Z",
+      "side": 1,
+      "message": "It shouldn\u0027t be a bug, just unnecessary complexity because there\u0027s a call to UpdateScrollbarGeometries in a weird place (ScrollbarLayerImplBase::CanScrollOrientation). Other than this weird call, UpdateScrollbarGeometries is just called from PrepareToDraw.",
+      "parentUuid": "bd794ded_0d0d0c4d",
+      "revId": "9028116ddf0080609a28089a0ca28277bfb9f718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
