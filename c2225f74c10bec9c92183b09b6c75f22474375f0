@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a613f552_460e60ca",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-01T07:10:24Z",
+      "side": 1,
+      "message": "My questions was basically: \ncannot we (in the future) deprecate DataUseServiceName and infer the right bucket for UMA data use measurements from the NetworkTrafficAnnotations?",
+      "parentUuid": "63301306_b2e4119c",
+      "range": {
+        "startLine": 372,
+        "startChar": 18,
+        "endLine": 373,
+        "endChar": 65
+      },
+      "revId": "c2225f74c10bec9c92183b09b6c75f22474375f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "527ce5e4_9fce8188",
         "filename": "components/ntp_snippets/content_suggestions_service.cc",
         "patchSetId": 5
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "Even the data? You mean nothing is sent?",
       "parentUuid": "50702470_41dcd015",
+      "range": {
+        "startLine": 228,
+        "startChar": 29,
+        "endLine": 234,
+        "endChar": 49
+      },
+      "revId": "c2225f74c10bec9c92183b09b6c75f22474375f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3556420f_a4ae66e8",
+        "filename": "components/ntp_tiles/icon_cacher_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-01T07:10:24Z",
+      "side": 1,
+      "message": "No no, keep the data. A mistake of mine in selecting the snippet to comment on.",
+      "parentUuid": "b990dd2c_cbd632f6",
       "range": {
         "startLine": 228,
         "startChar": 29,
