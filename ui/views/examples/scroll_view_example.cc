@@ -35,11 +35,9 @@ class ScrollViewExample::ScrollableView : public View {
   }
 
   void SetColor(SkColor from, SkColor to) {
-    Background* background = Background::CreateBackgroundPainter(
-        Painter::CreateVerticalGradient(from, to));
-    background->SetNativeControlColor(
-        color_utils::AlphaBlend(from, to, 128));
-    set_background(background);
+    SetBackground(
+        CreateBackgroundFromPainter(Painter::CreateVerticalGradient(from, to)));
+    background()->SetNativeControlColor(color_utils::AlphaBlend(from, to, 128));
   }
 
   void PlaceChildY(int index, int y) {
