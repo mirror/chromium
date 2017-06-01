@@ -78,12 +78,17 @@ While this isn't strictly possible because everything is a service now, we model
 all existing content processes as service instances and provide helpers to make
 interface exposure and consumption between them relatively easy.
 
+See [Using Document-Scoped Interfaces](#Using-Document-Scoped-Interfaces) for
+details on how to consume interfaces from RenderFrames/RenderFrameObservers.
+
 See [Using Content's Connectors](#Using-Content_s-Connectors) for details on
-the recommended way to accomplish this.
+the recommended way to accomplish this for general-purpose interface
+connectivity to/from different content processes.
 
 See
 [Using Content's Interface Registries](#Using-Content_s-Interface-Registries)
-for details on the **deprecated** way to accomplish this.
+for details on the **deprecated** way to accomplish this between content
+processes.
 
 Note that when converting messages to standalone Mojo interfaces, every
 interface connection operates 100% independently of each other. This means that
@@ -213,6 +218,60 @@ instance has direct access to a `Connector`. If you're writing code at or above
 the content layer, the answer is slightly more interesting and is explained in
 the [Using Content's Connectors](#Using-Content_s-Connectors) section below.
 
+## Using Document-Scoped Interfaces
+
+A common scenario is for for renderer code in content or Chrome to implement
+`RenderFrameObserver` as a way of augmenting the frame with some capabilities
+that are exposed to the web layer and implemented by consuming client interfaces
+from the browser or other services.
+
+In many cases -- typically cases where interface acquisition is infrequent -- it
+is sufficient to merely acquire an interface for a one-shot message as needed:
+
+``` cpp
+mojom::FooPtr foo;
+render_frame()->GetRemoteInterfaces()->GetInterface(&foo);
+foo->DoAThing();
+```
+
+Sometimes a `RenderFrameObserver` may wish to retain an interface handle for
+repeat use, but it's important to ensure that this handle is reacquired whenever
+the frame navigates to a new document. For this reason,
+[`DocumentScopedLazyInterfacePtr<T>`](https://cs.chromium.org/chromium/src/content/public/renderer/document_scoped_lazy_interface_ptr.h)
+is recommended in such scenarios. Usage is rather simple,
+requiring only minimal additions to common `RenderFrameObserver` boilerplate:
+
+``` cpp
+class MyGreatFeature : public content::RenderFrameObserver {
+ public:
+  MyGreatFeature(content::RenderFrame* frame)
+      : RenderFrameObserver(frame), pretty_cool_thing_(frame) {}
+
+  // content::RenderFrameObserver:
+  void OnDestruct() override { delete this; }
+
+  void DoAllTheStuff() {
+    // The interface is lazily acquired as needed and automatically reset on
+    // frame navigation to a new document; so you can just use it.
+    pretty_cool_thing_->DoAllTheStuff();
+  }
+
+ private:
+  DocumentScopedLazyInterfacePtr<mojom::PrettyCoolThing> pretty_cool_thing_;
+}
+```
+
+See the [class documentation](https://cs.chromium.org/chromium/src/content/public/renderer/document_scoped_lazy_interface_ptr.h)
+for more details on usage.
+
+In any case, interfaces requests issued via direct calls to
+`RenderFrame::GetRemoteInterfaces()` or uses of
+`DocumentScopedLazyInterfacePtr` are routed to
+`RenderFrameHostImpl::GetInterface()` in the browser process, where they may
+be handled by any callback registered within the frame host's `BinderRegistry`.
+See `RenderFrameHostImpl::RegisterMojoInterfaces` for examples of how
+interface binders are added to this registry.
+
 ## Using Content's Connectors
 
 As explained earlier in this document, all content processes are modeled as
@@ -290,7 +349,11 @@ class Thinger {
 
 **NOTE:** This section is here mainly for posterity and documentation of
 existing usage. Please use `Connector` instead of using an `InterfaceProvider`
-directly.
+when acquiring interfaces between two service or process-level contexts.
+`InterfaceProvider` and `BinderRegistry` should be reserved for specialized use,
+such as acquiring and exposing
+#[document-scoped interfaces](#Using-Document-Scoped-Interfaces) to render
+frames via a browser-side broker.
 
 For convenience the Service Manager's
 [client library](https://cs.chromium.org/chromium/src/services/service_manager/public/cpp/)
