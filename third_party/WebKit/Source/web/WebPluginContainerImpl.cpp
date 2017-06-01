@@ -140,6 +140,10 @@ void WebPluginContainerImpl::UpdateAllLifecyclePhases() {
   web_plugin_->UpdateAllLifecyclePhases();
 }
 
+LayoutPart* WebPluginContainerImpl::OwnerLayoutObject() const {
+  return element_->GetLayoutPart();
+}
+
 void WebPluginContainerImpl::Paint(GraphicsContext& context,
                                    const CullRect& cull_rect) const {
   LocalFrameView* parent = ParentFrameView();

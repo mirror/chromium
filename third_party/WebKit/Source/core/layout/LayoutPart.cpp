@@ -48,7 +48,6 @@ LayoutPart::LayoutPart(Element* element)
       // that.
       ref_count_(1) {
   DCHECK(element);
-  GetFrameView()->AddPart(this);
   SetInline(false);
 }
 
@@ -58,8 +57,6 @@ void LayoutPart::Deref() {
 }
 
 void LayoutPart::WillBeDestroyed() {
-  GetFrameView()->RemovePart(this);
-
   if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache()) {
     cache->ChildrenChanged(this->Parent());
     cache->Remove(this);
