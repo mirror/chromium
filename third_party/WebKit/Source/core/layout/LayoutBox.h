@@ -1276,8 +1276,8 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
                                 VisualRectFlags,
                                 TransformState&) const;
 
-  virtual bool HasRelativeLogicalWidth() const;
-  virtual bool HasRelativeLogicalHeight() const;
+  bool HasRelativeLogicalWidth() const;
+  bool HasRelativeLogicalHeight() const;
 
   bool HasHorizontalLayoutOverflow() const {
     if (!overflow_)
