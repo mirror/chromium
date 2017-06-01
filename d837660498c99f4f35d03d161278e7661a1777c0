@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b33b7f44_7e2743bb",
+        "filename": "base/rand_util_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-01T14:47:18Z",
+      "side": 1,
+      "message": "nit (sorry): \"offset\" is an integer in my mind. \"cursor\", \"cur\", \"buffer\", ...",
+      "range": {
+        "startLine": 21,
+        "startChar": 18,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "d837660498c99f4f35d03d161278e7661a1777c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee98528_73f76235",
+        "filename": "base/rand_util_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-01T14:47:18Z",
+      "side": 1,
+      "message": "why not std::min() (awkward casts?)?\n\nAlso, why is read_len declared outside the loop and not just on this line?",
+      "range": {
+        "startLine": 27,
+        "startChar": 20,
+        "endLine": 27,
+        "endChar": 41
+      },
+      "revId": "d837660498c99f4f35d03d161278e7661a1777c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab2e465_1d21aebd",
+        "filename": "base/rand_util_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-01T14:47:18Z",
+      "side": 1,
+      "message": "Why is actual not declared right above this line?",
+      "range": {
+        "startLine": 29,
+        "startChar": 33,
+        "endLine": 29,
+        "endChar": 34
+      },
+      "revId": "d837660498c99f4f35d03d161278e7661a1777c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8fc8d18_f0706157",
+        "filename": "base/rand_util_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-01T14:47:18Z",
+      "side": 1,
+      "message": "nit: Maybe CHECK(actual \u003e\u003d remaining) too",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 6
+      },
+      "revId": "d837660498c99f4f35d03d161278e7661a1777c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
