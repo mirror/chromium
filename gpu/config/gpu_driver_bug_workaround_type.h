@@ -221,6 +221,8 @@
          disable_non_empty_post_sub_buffers_for_onscreen_surfaces) \
   GPU_OP(AVOID_STENCIL_BUFFERS,                              \
          avoid_stencil_buffers)                              \
+  GPU_OP(MULTISAMPLE_RENDERBUFFER_RESIZE_BROKEN,             \
+         multisample_renderbuffer_resize_broken)             \
 // clang-format on
 
 namespace gpu {
