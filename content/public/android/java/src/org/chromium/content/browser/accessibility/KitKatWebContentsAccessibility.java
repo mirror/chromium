@@ -16,18 +16,17 @@ import org.chromium.content.browser.RenderCoordinates;
 import org.chromium.content_public.browser.WebContents;
 
 /**
- * Subclass of BrowserAccessibilityManager for KitKat.
+ * Subclass of WebContentsAccessibility for KitKat.
  */
 @JNINamespace("content")
 @TargetApi(Build.VERSION_CODES.KITKAT)
-public class KitKatBrowserAccessibilityManager extends BrowserAccessibilityManager {
+public class KitKatWebContentsAccessibility extends WebContentsAccessibility {
     private String mSupportedHtmlElementTypes;
 
-    KitKatBrowserAccessibilityManager(Context context, ViewGroup containerView,
-            WebContents webContents, RenderCoordinates renderCoordiantes) {
+    KitKatWebContentsAccessibility(Context context, ViewGroup containerView,
+            WebContents webContents, RenderCoordinates renderCoordinates) {
         super(context, containerView, webContents, renderCoordinates);
-        mSupportedHtmlElementTypes =
-                nativeGetSupportedHtmlElementTypes(nativeBrowserAccessibilityManager);
+        mSupportedHtmlElementTypes = nativeGetSupportedHtmlElementTypes(mNativeObj);
     }
 
     @Override
@@ -37,8 +36,8 @@ public class KitKatBrowserAccessibilityManager extends BrowserAccessibilityManag
         Bundle bundle = node.getExtras();
         bundle.putCharSequence("AccessibilityNodeInfo.roleDescription", roleDescription);
         if (isRoot) {
-            bundle.putCharSequence("ACTION_ARGUMENT_HTML_ELEMENT_STRING_VALUES",
-                    mSupportedHtmlElementTypes);
+            bundle.putCharSequence(
+                    "ACTION_ARGUMENT_HTML_ELEMENT_STRING_VALUES", mSupportedHtmlElementTypes);
         }
         if (isEditableText) {
             node.setEditable(true);

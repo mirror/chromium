@@ -1091,18 +1091,6 @@ void ContentViewCoreImpl::SetAccessibilityEnabledInternal(bool enabled) {
   BrowserAccessibilityStateImpl* accessibility_state =
       BrowserAccessibilityStateImpl::GetInstance();
   if (enabled) {
-    // First check if we already have a BrowserAccessibilityManager that
-    // just needs to be connected to the ContentViewCore.
-    if (web_contents_) {
-      BrowserAccessibilityManagerAndroid* manager =
-          static_cast<BrowserAccessibilityManagerAndroid*>(
-              web_contents_->GetRootBrowserAccessibilityManager());
-      if (manager) {
-        manager->SetContentViewCore(GetJavaObject());
-        return;
-      }
-    }
-
     // Otherwise, enable accessibility globally unless it was
     // explicitly disallowed by a command-line flag, then enable it for
     // this WebContents if that succeeded.
