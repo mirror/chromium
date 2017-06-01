@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e48de463_7a33f775",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000307
+      },
+      "writtenOn": "2017-06-01T12:11:10Z",
+      "side": 1,
+      "message": "This is not needed. It is already included in the header file.",
+      "parentUuid": "0aa200c8_20174c54",
+      "revId": "fbc7d08fd8069ed7e1dfc89a750f67eccea22fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "537a315e_6764d375",
         "filename": "net/http/http_response_info.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "fbc7d08fd8069ed7e1dfc89a750f67eccea22fb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc57346_0ec7d394",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000307
+      },
+      "writtenOn": "2017-06-01T12:11:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "537a315e_6764d375",
+      "range": {
+        "startLine": 312,
+        "startChar": 15,
+        "endLine": 312,
+        "endChar": 16
+      },
+      "revId": "fbc7d08fd8069ed7e1dfc89a750f67eccea22fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -81,6 +123,30 @@
         "startChar": 11,
         "endLine": 314,
         "endChar": 21
+      },
+      "revId": "fbc7d08fd8069ed7e1dfc89a750f67eccea22fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36bdf566_67f13afd",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000307
+      },
+      "writtenOn": "2017-06-01T12:11:10Z",
+      "side": 1,
+      "message": "See recent discussion on curly braces on chromium-dev: https://groups.google.com/a/chromium.org/d/msgid/chromium-dev/CALaH6DuNpzAMA2OC-gEJ6Wog7pXnkjV-cThO8TSS7fk%2BDinFZg%40mail.gmail.com?utm_medium\u003demail\u0026utm_source\u003dfooter",
+      "parentUuid": "f86aa62a_a77c747c",
+      "range": {
+        "startLine": 314,
+        "startChar": 71,
+        "endLine": 314,
+        "endChar": 72
       },
       "revId": "fbc7d08fd8069ed7e1dfc89a750f67eccea22fb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
