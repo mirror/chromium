@@ -15,6 +15,7 @@
 #include "base/trace_event/trace_event.h"
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
 #include "gpu/command_buffer/service/feature_info.h"
+#include "gpu/command_buffer/service/framebuffer_manager.h"
 #include "gpu/command_buffer/service/gles2_cmd_decoder.h"
 #include "gpu/command_buffer/service/memory_tracking.h"
 #include "ui/gl/gl_implementation.h"
@@ -93,6 +94,21 @@ size_t Renderbuffer::GetSignatureSize() const {
   return sizeof(RenderbufferTag) + sizeof(RenderbufferSignature);
 }
 
+void Renderbuffer::SetInfoAndInvalidate(GLsizei samples,
+                                        GLenum internalformat,
+                                        GLsizei width,
+                                        GLsizei height) {
+  samples_ = samples;
+  internal_format_ = internalformat;
+  width_ = width;
+  height_ = height;
+  cleared_ = false;
+  allocated_ = true;
+  for (auto& point : framebuffer_attachment_points_) {
+    point.first->UnmarkAsComplete();
+  }
+}
+
 void Renderbuffer::AddToSignature(std::string* signature) const {
   DCHECK(signature);
   RenderbufferSignature signature_data(internal_format_,
@@ -112,12 +128,24 @@ Renderbuffer::Renderbuffer(RenderbufferManager* manager,
       client_id_(client_id),
       service_id_(service_id),
       cleared_(true),
+      allocated_(false),
       has_been_bound_(false),
       samples_(0),
       internal_format_(GL_RGBA4),
       width_(0),
       height_(0) {
   manager_->StartTracking(this);
+}
+
+void Renderbuffer::AddFramebufferAttachmentPoint(Framebuffer* framebuffer,
+                                                 GLenum attachment) {
+  framebuffer_attachment_points_.insert(
+      std::make_pair(framebuffer, attachment));
+}
+
+void Renderbuffer::RemoveFramebufferAttachmentPoint(Framebuffer* framebuffer,
+                                                    GLenum attachment) {
+  framebuffer_attachment_points_.erase(std::make_pair(framebuffer, attachment));
 }
 
 Renderbuffer::~Renderbuffer() {
@@ -149,15 +177,17 @@ void RenderbufferManager::StopTracking(Renderbuffer* renderbuffer) {
   memory_type_tracker_->TrackMemFree(renderbuffer->EstimatedSize());
 }
 
-void RenderbufferManager::SetInfo(
-    Renderbuffer* renderbuffer,
-    GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height) {
+void RenderbufferManager::SetInfoAndInvalidate(Renderbuffer* renderbuffer,
+                                               GLsizei samples,
+                                               GLenum internalformat,
+                                               GLsizei width,
+                                               GLsizei height) {
   DCHECK(renderbuffer);
   if (!renderbuffer->cleared()) {
     --num_uncleared_renderbuffers_;
   }
   memory_type_tracker_->TrackMemFree(renderbuffer->EstimatedSize());
-  renderbuffer->SetInfo(samples, internalformat, width, height);
+  renderbuffer->SetInfoAndInvalidate(samples, internalformat, width, height);
   memory_type_tracker_->TrackMemAlloc(renderbuffer->EstimatedSize());
   if (!renderbuffer->cleared()) {
     ++num_uncleared_renderbuffers_;
