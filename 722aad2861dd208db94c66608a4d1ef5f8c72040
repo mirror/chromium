@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "636d03fd_4f1c708c",
+        "filename": "content/browser/resources/media/manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-06-01T07:09:54Z",
+      "side": 1,
+      "message": "Put copyAllAudioButton under a\n\nif (copyAllAudioButton) {\n}\n\nstatement. (Outside the \"if (this.hidePlayersButton)\" block).\n\nSimilarly with copyAllAudioButton.",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 25
+      },
+      "revId": "722aad2861dd208db94c66608a4d1ef5f8c72040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
