@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "870046d6_5d0037d0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-01T14:46:25Z",
+      "side": 1,
+      "message": "getInstance can fail under some conditions, so we need to play it safe here.",
+      "parentUuid": "8cb46319_b077bc82",
+      "revId": "74c5f29a1f0360f6242965a4561e2eab15abd3f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0cdbd0e_29fe11c9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "95847d75_e5a98500",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-01T14:46:25Z",
+      "side": 1,
+      "message": "The problem is we don\u0027t know how to cancel.",
+      "parentUuid": "d0cdbd0e_29fe11c9",
+      "revId": "74c5f29a1f0360f6242965a4561e2eab15abd3f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1edbd964_265057d6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 5
@@ -47,6 +83,30 @@
       "writtenOn": "2017-06-01T14:38:01Z",
       "side": 1,
       "message": "don\u0027t we wanna do this every time we enter VR? If we\u0027re already entering VR here, we shouldn\u0027t expect to get another \"enterVR\" call?",
+      "range": {
+        "startLine": 624,
+        "startChar": 12,
+        "endLine": 624,
+        "endChar": 32
+      },
+      "revId": "74c5f29a1f0360f6242965a4561e2eab15abd3f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71707f4e_951c772f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-01T14:46:25Z",
+      "side": 1,
+      "message": "The if (mInVr) checks above handle this case. The reason we call cancelPendingVrEntry here is mostly to do the teardown of the UI we added for VR entry.",
+      "parentUuid": "1edbd964_265057d6",
       "range": {
         "startLine": 624,
         "startChar": 12,
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "f8ffd978_eca0d3ce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-01T14:46:25Z",
+      "side": 1,
+      "message": "Currently this code never runs while Chrome is paused, but we could easily imagine running it in onStart in the future, before onResume is called (I did play around with this, and it does work). So this is just to be more technically correct here and not make assumptions about what point in the activity lifecycle this code is running.",
+      "parentUuid": "792531ca_28277524",
+      "range": {
+        "startLine": 643,
+        "startChar": 13,
+        "endLine": 643,
+        "endChar": 20
+      },
+      "revId": "74c5f29a1f0360f6242965a4561e2eab15abd3f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab35747c_9cabfcb6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 5
@@ -93,6 +177,24 @@
       "writtenOn": "2017-06-01T14:38:01Z",
       "side": 1,
       "message": "nit: This is redundant because we call shutdownVr  which will do this anyway. I wonder if there\u0027s more cases like this.",
+      "revId": "74c5f29a1f0360f6242965a4561e2eab15abd3f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "088fbbc3_68e83763",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-01T14:46:25Z",
+      "side": 1,
+      "message": "Technically this may be redundant right now, but we have some early returns in pauseVR, so I added it to avoid running into issues in the future in case we add more early returns.\n\n(For example if somebody changes the code to only run shutdownVr if we\u0027re actually in VR)",
+      "parentUuid": "ab35747c_9cabfcb6",
       "revId": "74c5f29a1f0360f6242965a4561e2eab15abd3f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
