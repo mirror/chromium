@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acbe57d_e969f3dc",
+        "filename": "third_party/WebKit/Source/core/dom/DOMTokenList.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-01T07:53:51Z",
+      "side": 1,
+      "message": "Do we do any check the case if |token| \u003d\u003d |new_token|?\nThe case looks handled well in the code below, but can we optimize for the case?",
+      "revId": "ea8f7b0c49357790f49e2d5601923de3c5a9604d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f06d4e_b3c995a3",
+        "filename": "third_party/WebKit/Source/core/dom/DOMTokenList.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-01T07:53:51Z",
+      "side": 1,
+      "message": "if |found_old_token| is true, |did_update| is also true.",
+      "revId": "ea8f7b0c49357790f49e2d5601923de3c5a9604d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
