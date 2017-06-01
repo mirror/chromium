@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35919c30_13ac2606",
+        "filename": "tools/perf/page_sets/loading_mobile.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-06-01T20:29:13Z",
+      "side": 1,
+      "message": "Just wanted to point out that all of the bugs listed here are closed, which is an indicator to me that our process for making sure that closed bugs correspond to follow-up action in the code is broken. It\u0027d be great to have something like \"stale TODOs\" (https://goto.google.com/kjfgvjhywjfmn) to help us make sure that we clean up stale TODOs.",
+      "revId": "ce57152dc3352e04aada8fb273da9ca85a93ae1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
