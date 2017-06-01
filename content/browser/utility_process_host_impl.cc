@@ -132,7 +132,14 @@ UtilityMainThreadFactoryFunction g_utility_main_thread_factory = NULL;
 UtilityProcessHost* UtilityProcessHost::Create(
     const scoped_refptr<UtilityProcessHostClient>& client,
     const scoped_refptr<base::SequencedTaskRunner>& client_task_runner) {
-  return new UtilityProcessHostImpl(client, client_task_runner);
+  return new UtilityProcessHostImpl(client, client_task_runner, "");
+}
+
+UtilityProcessHost* UtilityProcessHost::Create(
+    const scoped_refptr<UtilityProcessHostClient>& client,
+    const scoped_refptr<base::SequencedTaskRunner>& client_task_runner,
+    const std::string& tag) {
+  return new UtilityProcessHostImpl(client, client_task_runner, tag);
 }
 
 void UtilityProcessHostImpl::RegisterUtilityMainThreadFactory(
@@ -142,7 +149,8 @@ void UtilityProcessHostImpl::RegisterUtilityMainThreadFactory(
 
 UtilityProcessHostImpl::UtilityProcessHostImpl(
     const scoped_refptr<UtilityProcessHostClient>& client,
-    const scoped_refptr<base::SequencedTaskRunner>& client_task_runner)
+    const scoped_refptr<base::SequencedTaskRunner>& client_task_runner,
+    const std::string& tag)
     : client_(client),
       client_task_runner_(client_task_runner),
       is_batch_mode_(false),
@@ -157,7 +165,7 @@ UtilityProcessHostImpl::UtilityProcessHostImpl(
       name_(base::ASCIIToUTF16("utility process")),
       weak_ptr_factory_(this) {
   process_.reset(new BrowserChildProcessHostImpl(
-      PROCESS_TYPE_UTILITY, this, mojom::kUtilityServiceName));
+      PROCESS_TYPE_UTILITY, this, mojom::kUtilityServiceName, tag));
 }
 
 UtilityProcessHostImpl::~UtilityProcessHostImpl() {

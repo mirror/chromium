@@ -39,7 +39,8 @@ class CONTENT_EXPORT UtilityProcessHostImpl
 
   UtilityProcessHostImpl(
       const scoped_refptr<UtilityProcessHostClient>& client,
-      const scoped_refptr<base::SequencedTaskRunner>& client_task_runner);
+      const scoped_refptr<base::SequencedTaskRunner>& client_task_runner,
+      const std::string& tag = "");
   ~UtilityProcessHostImpl() override;
 
   // UtilityProcessHost implementation:

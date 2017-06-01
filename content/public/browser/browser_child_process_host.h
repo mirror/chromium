@@ -51,10 +51,23 @@ class CONTENT_EXPORT BrowserChildProcessHost : public IPC::Sender {
       BrowserChildProcessHostDelegate* delegate,
       const std::string& service_name);
 
+  // Used to create a child process host, connecting the process to the
+  // Service Manager as a new service instance identified by |service_name| and
+  // (optional) |instance_id|. Additionally allows the caller to provide a
+  // |tag|, which allows lookup of the created process host via
+  // BrowserChildProcessHost::FromTag().
+  static BrowserChildProcessHost* Create(
+      content::ProcessType process_type,
+      BrowserChildProcessHostDelegate* delegate,
+      const std::string& service_name,
+      const std::string& tag);
+
   // Returns the child process host with unique id |child_process_id|, or
   // nullptr if it doesn't exist. |child_process_id| is NOT the process ID, but
   // is the same unique ID as |ChildProcessData::id|.
   static BrowserChildProcessHost* FromID(int child_process_id);
+
+  static BrowserChildProcessHost* FromTag(const std::string& tag);
 
   ~BrowserChildProcessHost() override {}
 
