@@ -50,6 +50,8 @@ class SpaceSplitString {
   }
   void Add(const AtomicString&);
   bool Remove(const AtomicString&);
+  void Remove(size_t index);
+  void ReplaceAt(size_t index, const AtomicString&);
 
   size_t size() const { return data_ ? data_->size() : 0; }
   bool IsNull() const { return !data_; }
@@ -78,7 +80,8 @@ class SpaceSplitString {
 
     bool IsUnique() const { return key_string_.IsNull(); }
     size_t size() const { return vector_.size(); }
-    const AtomicString& operator[](size_t i) { return vector_[i]; }
+    const AtomicString& operator[](size_t i) const { return vector_[i]; }
+    AtomicString& operator[](size_t i) { return vector_[i]; }
 
    private:
     explicit Data(const AtomicString&);
