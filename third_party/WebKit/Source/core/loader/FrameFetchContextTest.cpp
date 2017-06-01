@@ -43,6 +43,7 @@
 #include "core/page/Page.h"
 #include "core/testing/DummyPageHolder.h"
 #include "platform/loader/fetch/FetchInitiatorInfo.h"
+#include "platform/loader/fetch/FetchInitiatorTypeNames.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/UniqueIdentifier.h"
 #include "platform/loader/testing/MockResource.h"
@@ -56,6 +57,8 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
+
+using Checkpoint = testing::StrictMock<testing::MockFunction<void(int)>>;
 
 class StubLocalFrameClientWithParent final : public EmptyLocalFrameClient {
  public:
@@ -82,6 +85,7 @@ class MockLocalFrameClient : public EmptyLocalFrameClient {
   MOCK_METHOD1(DidDisplayContentWithCertificateErrors, void(const KURL&));
   MOCK_METHOD2(DispatchDidLoadResourceFromMemoryCache,
                void(const ResourceRequest&, const ResourceResponse&));
+  MOCK_METHOD0(UserAgent, String());
 };
 
 class FixedPolicySubresourceFilter : public WebDocumentSubresourceFilter {
@@ -951,6 +955,173 @@ TEST_F(FrameFetchContextSubresourceFilterTest, WouldDisallow) {
 
   EXPECT_EQ(ResourceRequestBlockedReason::kNone, CanRequestPreload());
   EXPECT_EQ(0, GetFilteredLoadCallCount());
+}
+
+TEST_F(FrameFetchContextTest, AddAdditionalRequestHeadersWhenDetached) {
+  const KURL document_url(KURL(), "https://www2.example.com/fuga/hoge.html");
+  const String origin = "https://www2.example.com";
+  ResourceRequest request(KURL(KURL(), "https://localhost/"));
+  request.SetHTTPMethod("PUT");
+
+  Settings* settings = document->GetFrame()->GetSettings();
+  settings->SetDataSaverEnabled(true);
+  document->SetSecurityOrigin(SecurityOrigin::Create(KURL(KURL(), origin)));
+  document->SetURL(document_url);
+  document->SetReferrerPolicy(kReferrerPolicyOrigin);
+  document->SetAddressSpace(kWebAddressSpacePublic);
+
+  dummy_page_holder = nullptr;
+
+  EXPECT_FALSE(request.IsExternalRequest());
+
+  fetch_context->AddAdditionalRequestHeaders(request, kFetchSubresource);
+
+  EXPECT_EQ(origin, request.HttpHeaderField(HTTPNames::Origin));
+  EXPECT_EQ(String(origin + "/"), request.HttpHeaderField(HTTPNames::Referer));
+  EXPECT_EQ(String(), request.HttpHeaderField("Save-Data"));
+  EXPECT_TRUE(request.IsExternalRequest());
+}
+
+TEST_F(FrameFetchContextTest, ResourceRequestCachePolicyWhenDetached) {
+  ResourceRequest request(KURL(KURL(), "https://localhost/"));
+
+  dummy_page_holder = nullptr;
+
+  EXPECT_EQ(WebCachePolicy::kUseProtocolCachePolicy,
+            fetch_context->ResourceRequestCachePolicy(
+                request, Resource::kRaw, FetchParameters::kNoDefer));
+}
+
+TEST_F(FrameFetchContextTest, DispatchDidChangePriorityWhenDetached) {
+  dummy_page_holder = nullptr;
+
+  fetch_context->DispatchDidChangeResourcePriority(2, kResourceLoadPriorityLow,
+                                                   3);
+  // Should not crash.
+}
+
+TEST_F(FrameFetchContextMockedLocalFrameClientTest,
+       PrepareRequestWhenDetached) {
+  Checkpoint checkpoint;
+
+  EXPECT_CALL(checkpoint, Call(1));
+  EXPECT_CALL(*client, UserAgent()).WillOnce(testing::Return(String("hi")));
+  EXPECT_CALL(checkpoint, Call(2));
+
+  checkpoint.Call(1);
+  dummy_page_holder = nullptr;
+  checkpoint.Call(2);
+
+  ResourceRequest request(KURL(KURL(), "https://localhost/"));
+  fetch_context->PrepareRequest(request,
+                                FetchContext::RedirectType::kNotForRedirect);
+
+  EXPECT_EQ("hi", request.HttpHeaderField(HTTPNames::User_Agent));
+}
+
+TEST_F(FrameFetchContextTest, DispatchWillSendRequestWhenDetached) {
+  ResourceRequest request(KURL(KURL(), "https://www.example.com/"));
+  ResourceResponse response;
+  FetchInitiatorInfo initiator_info;
+
+  dummy_page_holder = nullptr;
+
+  fetch_context->DispatchWillSendRequest(1, request, response, initiator_info);
+  // Should not crash.
+}
+
+TEST_F(FrameFetchContextTest,
+       DispatchDidLoadResourceFromMemoryCacheWhenDetached) {
+  ResourceRequest request(KURL(KURL(), "https://www.example.com/"));
+  ResourceResponse response;
+  FetchInitiatorInfo initiator_info;
+
+  dummy_page_holder = nullptr;
+
+  fetch_context->DispatchDidLoadResourceFromMemoryCache(8, request, response);
+  // Should not crash.
+}
+
+TEST_F(FrameFetchContextTest, DispatchDidReceiveResponseWhenDetached) {
+  ResourceRequest request(KURL(KURL(), "https://www.example.com/"));
+  Resource* resource = MockResource::Create(request);
+  ResourceResponse response;
+
+  dummy_page_holder = nullptr;
+
+  fetch_context->DispatchDidReceiveResponse(
+      3, response, WebURLRequest::kFrameTypeTopLevel,
+      WebURLRequest::kRequestContextFetch, resource,
+      FetchContext::ResourceResponseType::kNotFromMemoryCache);
+  // Should not crash.
+}
+
+TEST_F(FrameFetchContextTest, DispatchDidReceiveDataWhenDetached) {
+  dummy_page_holder = nullptr;
+
+  fetch_context->DispatchDidReceiveData(3, "abcd", 4);
+  // Should not crash.
+}
+
+TEST_F(FrameFetchContextTest, DispatchDidReceiveEncodedDataWhenDetached) {
+  dummy_page_holder = nullptr;
+
+  fetch_context->DispatchDidReceiveEncodedData(8, 9);
+  // Should not crash.
+}
+
+TEST_F(FrameFetchContextTest, DispatchDidDownloadDataWhenDetached) {
+  dummy_page_holder = nullptr;
+
+  fetch_context->DispatchDidDownloadData(4, 7, 9);
+  // Should not crash.
+}
+
+TEST_F(FrameFetchContextTest, DispatchDidFinishLoadingWhenDetached) {
+  dummy_page_holder = nullptr;
+
+  fetch_context->DispatchDidFinishLoading(4, 0.3, 8, 10);
+  // Should not crash.
+}
+
+TEST_F(FrameFetchContextTest, DispatchDidFailWhenDetached) {
+  dummy_page_holder = nullptr;
+
+  fetch_context->DispatchDidFail(8, ResourceError(), 5, false);
+  // Should not crash.
+}
+
+TEST_F(FrameFetchContextTest, ShouldLoadNewResourceWhenDetached) {
+  dummy_page_holder = nullptr;
+
+  EXPECT_TRUE(fetch_context->ShouldLoadNewResource(Resource::kImage));
+  EXPECT_TRUE(fetch_context->ShouldLoadNewResource(Resource::kRaw));
+  EXPECT_TRUE(fetch_context->ShouldLoadNewResource(Resource::kScript));
+  EXPECT_TRUE(fetch_context->ShouldLoadNewResource(Resource::kMainResource));
+}
+
+TEST_F(FrameFetchContextTest, RecordLoadingActivityWhenDetached) {
+  ResourceRequest request(KURL(KURL(), "https://www.example.com/"));
+
+  dummy_page_holder = nullptr;
+
+  fetch_context->RecordLoadingActivity(4, request, Resource::kRaw,
+                                       FetchInitiatorTypeNames::xmlhttprequest);
+  // Should not crash.
+
+  fetch_context->RecordLoadingActivity(8, request, Resource::kRaw,
+                                       FetchInitiatorTypeNames::document);
+  // Should not crash.
+}
+
+TEST_F(FrameFetchContextTest, DidLoadResourceWhenDetached) {
+  ResourceRequest request(KURL(KURL(), "https://www.example.com/"));
+  Resource* resource = MockResource::Create(request);
+
+  dummy_page_holder = nullptr;
+
+  fetch_context->DidLoadResource(resource);
+  // Should not crash.
 }
 
 }  // namespace blink
