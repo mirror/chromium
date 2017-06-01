@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1ed6a5f_5f6b9dea",
+        "filename": "third_party/WebKit/Source/core/workers/InProcessWorkerMessagingProxy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-01T06:29:33Z",
+      "side": 1,
+      "message": "Is it safe to keep the worker_clients in ThreadedMessagingProxyBase?\nThe existing code, it is released from InProcessWorkerMessagingProxy.",
+      "range": {
+        "startLine": 116,
+        "startChar": 10,
+        "endLine": 116,
+        "endChar": 26
+      },
+      "revId": "29eac717bd4b1e4ad152d781d4858bb44c5d6451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
