@@ -7372,9 +7372,8 @@ TEST_P(ParameterizedWebFrameTest, BackDuringChildFrameReload) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(base_url_ + "page_with_blank_iframe.html",
                                     true);
-  WebLocalFrame* main_frame = web_view_helper.WebView()->MainFrameImpl();
-  const FrameLoader& main_frame_loader =
-      web_view_helper.WebView()->MainFrameImpl()->GetFrame()->Loader();
+  WebLocalFrameBase* main_frame = web_view_helper.LocalMainFrame();
+  const FrameLoader& main_frame_loader = main_frame->GetFrame()->Loader();
   WebFrame* child_frame = main_frame->FirstChild();
   ASSERT_TRUE(child_frame);
 
@@ -7476,9 +7475,7 @@ class TestCachePolicyWebFrameClient
       const WebFrameOwnerProperties& frame_owner_properties) override {
     DCHECK(child_client_);
     child_frame_creation_count_++;
-    WebLocalFrame* frame =
-        parent->CreateLocalChild(scope, child_client_, nullptr, nullptr);
-    return frame;
+    return CreateLocalChild(parent, scope, child_client_);
   }
 
   virtual void DidStartLoading(bool to_different_document) {
@@ -7738,10 +7735,9 @@ TEST_P(ParameterizedWebFrameTest, SameDocumentHistoryNavigationCommitType) {
   EXPECT_EQ(kWebBackForwardCommit, client.LastCommitType());
 }
 
-class TestHistoryWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
+class TestHistoryChildWebFrameClient
+    : public FrameTestHelpers::TestWebFrameClient {
  public:
-  TestHistoryWebFrameClient() { replaces_current_history_item_ = false; }
-
   void DidStartProvisionalLoad(WebDataSource* data_source,
                                WebURLRequest& request) {
     replaces_current_history_item_ = data_source->ReplacesCurrentHistoryItem();
@@ -7750,7 +7746,25 @@ class TestHistoryWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
   bool ReplacesCurrentHistoryItem() { return replaces_current_history_item_; }
 
  private:
-  bool replaces_current_history_item_;
+  bool replaces_current_history_item_ = false;
+};
+
+class TestHistoryWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
+ public:
+  WebLocalFrame* CreateChildFrame(WebLocalFrame* parent,
+                                  WebTreeScopeType scope,
+                                  const WebString& name,
+                                  const WebString& fallback_name,
+                                  WebSandboxFlags,
+                                  const WebParsedFeaturePolicy&,
+                                  const WebFrameOwnerProperties&) {
+    return CreateLocalChild(parent, scope, &child_client_);
+  }
+
+  TestHistoryChildWebFrameClient& ChildClient() { return child_client_; }
+
+ private:
+  TestHistoryChildWebFrameClient child_client_;
 };
 
 // Tests that the first navigation in an initially blank subframe will result in
@@ -7769,17 +7783,17 @@ TEST_P(ParameterizedWebFrameTest, FirstBlankSubframeNavigation) {
       "document.body.appendChild(document.createElement('iframe'))")));
 
   WebFrame* iframe = frame->FirstChild();
-  ASSERT_EQ(&client, ToWebLocalFrameBase(iframe)->Client());
+  ASSERT_EQ(&client.ChildClient(), ToWebLocalFrameBase(iframe)->Client());
 
   std::string url1 = base_url_ + "history.html";
   FrameTestHelpers::LoadFrame(iframe, url1);
   EXPECT_EQ(url1, iframe->GetDocument().Url().GetString().Utf8());
-  EXPECT_TRUE(client.ReplacesCurrentHistoryItem());
+  EXPECT_TRUE(client.ChildClient().ReplacesCurrentHistoryItem());
 
   std::string url2 = base_url_ + "find.html";
   FrameTestHelpers::LoadFrame(iframe, url2);
   EXPECT_EQ(url2, iframe->GetDocument().Url().GetString().Utf8());
-  EXPECT_FALSE(client.ReplacesCurrentHistoryItem());
+  EXPECT_FALSE(client.ChildClient().ReplacesCurrentHistoryItem());
 }
 
 // Tests that a navigation in a frame with a non-blank initial URL will create
@@ -7809,7 +7823,7 @@ TEST_P(ParameterizedWebFrameTest, FirstNonBlankSubframeNavigation) {
   std::string url2 = base_url_ + "find.html";
   FrameTestHelpers::LoadFrame(iframe, url2);
   EXPECT_EQ(url2, iframe->GetDocument().Url().GetString().Utf8());
-  EXPECT_FALSE(client.ReplacesCurrentHistoryItem());
+  EXPECT_FALSE(client.ChildClient().ReplacesCurrentHistoryItem());
 }
 
 // Test verifies that layout will change a layer's scrollable attibutes
@@ -9189,6 +9203,7 @@ TEST_F(WebFrameSwapTest, SwapParentShouldDetachChildren) {
   FrameTestHelpers::TestWebFrameClient client;
   WebLocalFrame* local_frame = WebLocalFrame::CreateProvisional(
       &client, nullptr, nullptr, remote_frame, WebSandboxFlags::kNone);
+  client.SetFrame(local_frame);
   SwapAndVerifySubframeConsistency("remote->local", target_frame, local_frame);
 
   // FIXME: This almost certainly fires more load events on the iframe element
@@ -10083,6 +10098,7 @@ TEST_P(ParameterizedWebFrameTest,
   FrameTestHelpers::TestWebFrameClient local_client;
   WebLocalFrame* local_root = WebLocalFrame::CreateProvisional(
       &local_client, nullptr, nullptr, remote_root, WebSandboxFlags::kNone);
+  local_client.SetFrame(local_root);
   FrameTestHelpers::TestWebWidgetClient web_widget_client;
   WebFrameWidget::Create(&web_widget_client, local_root);
   remote_root->Swap(local_root);
@@ -11856,13 +11872,15 @@ TEST_F(WebFrameTest, NoLoadingCompletionCallbacksInDetach) {
   class LoadingObserverFrameClient
       : public FrameTestHelpers::TestWebFrameClient {
    public:
-    void FrameDetached(WebLocalFrame*, DetachType) override {
+    void FrameDetached(WebLocalFrame* frame, DetachType type) override {
       did_call_frame_detached_ = true;
+      TestWebFrameClient::FrameDetached(frame, type);
     }
 
     void DidStopLoading() override {
       // TODO(dcheng): Investigate not calling this as well during frame detach.
       did_call_did_stop_loading_ = true;
+      TestWebFrameClient::DidStopLoading();
     }
 
     void DidFailProvisionalLoad(const WebURLError&,
@@ -11914,9 +11932,7 @@ TEST_F(WebFrameTest, NoLoadingCompletionCallbacksInDetach) {
         WebSandboxFlags sandbox_flags,
         const WebParsedFeaturePolicy& container_policy,
         const WebFrameOwnerProperties&) override {
-      WebLocalFrame* frame =
-          parent->CreateLocalChild(scope, &child_client_, nullptr, nullptr);
-      return frame;
+      return CreateLocalChild(parent, scope, &child_client_);
     }
 
     LoadingObserverFrameClient& ChildClient() { return child_client_; }
