@@ -28,9 +28,11 @@ class FakeArcSupport : public extensions::NativeMessageHost::Client {
   // Emulates clicking Close button.
   void Close();
 
-  // Terms of service page emulation.
-  // Emulates clicking Agree button.
+  // Emulates clicking Agree button on the fake terms of service page.
   void ClickAgreeButton();
+
+  // Emulates clicking Next button on the fake Active Directory auth page.
+  void ClickAdAuthNextButton();
 
   bool metrics_mode() const { return metrics_mode_; }
   bool backup_and_restore_mode() const { return backup_and_restore_mode_; }
@@ -50,6 +52,12 @@ class FakeArcSupport : public extensions::NativeMessageHost::Client {
   ArcSupportHost::UIPage ui_page() const { return ui_page_; }
 
  private:
+  // Posts onAgree with the three given bools as arguments.
+  static void PostOnAgree(extensions::NativeMessageHost* native_message_host,
+                          bool metrics_mode,
+                          bool backup_and_restore_mode,
+                          bool location_service_mode);
+
   // extensions::NativeMessageHost::Client:
   void PostMessageFromNativeHost(const std::string& message) override;
   void CloseChannel(const std::string& error_message) override;

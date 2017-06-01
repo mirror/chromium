@@ -722,7 +722,17 @@ chrome.app.runtime.onLaunched.addListener(function() {
       sendNativeMessage('onSendFeedbackClicked');
     };
 
+    var onAdAuthNext = function() {
+      sendNativeMessage('onAgreed', {
+        isMetricsEnabled: false,          // ignored
+        isBackupRestoreEnabled: false,    // ignored
+        isLocationServiceEnabled: false,  // ignored
+      });
+    };
+
     doc.getElementById('button-retry').addEventListener('click', onRetry);
+    doc.getElementById('button-ad-auth-next')
+        .addEventListener('click', onAdAuthNext);
     doc.getElementById('button-send-feedback')
         .addEventListener('click', onSendFeedback);
     doc.getElementById('overlay-close').addEventListener('click', hideOverlay);

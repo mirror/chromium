@@ -104,6 +104,10 @@ bool SetArcPlayStoreEnabledForProfile(Profile* profile, bool enabled);
 // ArcBackupRestoreEnabled and ArcLocationServiceEnabled) are managed.
 bool AreArcAllOptInPreferencesManagedForProfile(const Profile* profile);
 
+// Returns true iff the user that corresponds to |profile| is an Active
+// Directory user. Returns false if no user is associated with |profile|.
+bool IsActiveDirectoryUserForProfile(const Profile* profile);
+
 // Checks and updates the preference value whether the underlying filesystem
 // for the profile is compatible with ARC, when necessary. After it's done (or
 // skipped), |callback| is run either synchronously or asynchronously.
