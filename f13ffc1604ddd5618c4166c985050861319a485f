@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "726b9875_928a1682",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-06-01T02:14:45Z",
+      "side": 1,
+      "message": "I just noticed after uploading, maybe this should be kApprovedExtension, kBothPrefixes? I guess the difference is that it keeps allowing WEBKIT_WEBGL_compressed_texture_s3tc_srgb",
+      "revId": "f13ffc1604ddd5618c4166c985050861319a485f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
