@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8d00c6d9_6ed9d437",
+        "filename": "content/child/blink_platform_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-01T02:27:49Z",
+      "side": 1,
+      "message": "I kept it as is just because (as Yutaka wrote) it\u0027s the same name with ContentClient\u0027s method that\u0027s internally called in impl.\n\nLet me know if you have strong opinion though.",
+      "parentUuid": "a82fa368_ddba915a",
+      "range": {
+        "startLine": 87,
+        "startChar": 17,
+        "endLine": 87,
+        "endChar": 32
+      },
+      "revId": "31fbc8bebd8169b2d736cc81cea932c94f177a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf5b9a98_534857eb",
         "filename": "content/renderer/renderer_blink_platform_impl.h",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-31T10:37:52Z",
       "side": 1,
       "message": "is this intentional change? also, it we want to change, just using a similar name with underlying method, DecodeAudioResource makes much sense? not strong opinion, but for me, GetFoo returning boolean is a little surprising signature.",
+      "range": {
+        "startLine": 154,
+        "startChar": 7,
+        "endLine": 154,
+        "endChar": 23
+      },
+      "revId": "31fbc8bebd8169b2d736cc81cea932c94f177a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d00a65bd_61342057",
+        "filename": "content/renderer/renderer_blink_platform_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-01T02:27:49Z",
+      "side": 1,
+      "message": "Renamed to DecodeAudioFileData.",
+      "parentUuid": "bf5b9a98_534857eb",
       "range": {
         "startLine": 154,
         "startChar": 7,
