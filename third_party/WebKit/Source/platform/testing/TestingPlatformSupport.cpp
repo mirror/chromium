@@ -42,6 +42,7 @@
 #include "cc/test/ordered_simple_task_runner.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "platform/HTTPNames.h"
+#include "platform/bindings/RuntimeCallStats.h"
 #include "platform/heap/Heap.h"
 #include "platform/loader/fetch/FetchInitiatorTypeNames.h"
 #include "platform/network/mime/MockMimeRegistry.h"
@@ -352,6 +353,8 @@ ScopedUnittestsEnvironmentSetup::ScopedUnittestsEnvironmentSetup(int argc,
                                                    nullptr);
   HTTPNames::init();
   FetchInitiatorTypeNames::init();
+
+  RuntimeCallStats::SetRuntimeCallStatsForTesting();
 }
 
 ScopedUnittestsEnvironmentSetup::~ScopedUnittestsEnvironmentSetup() {}

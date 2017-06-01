@@ -25,6 +25,8 @@
 
 #include "platform/graphics/ContentLayerDelegate.h"
 
+#include "platform/bindings/RuntimeCallStats.h"
+#include "platform/bindings/V8PerIsolateData.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/GraphicsLayer.h"
@@ -54,6 +56,9 @@ gfx::Rect ContentLayerDelegate::PaintableRegion() {
 void ContentLayerDelegate::PaintContents(
     WebDisplayItemList* web_display_item_list,
     WebContentLayerClient::PaintingControlSetting painting_control) {
+  RuntimeCallTimerScope runtime_timer_scope(
+      RuntimeCallStats::From(V8PerIsolateData::MainThreadIsolate()),
+      RuntimeCallStats::CounterId::kPaintContents);
   TRACE_EVENT0("blink,benchmark", "ContentLayerDelegate::paintContents");
 
   PaintController& paint_controller = graphics_layer_->GetPaintController();
