@@ -88,6 +88,24 @@
       "revId": "db0a7ff581530d30193789428d45941c83ff107b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e04ef2_e0812a14",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-01T17:44:25Z",
+      "side": 1,
+      "message": "Nice.  I\u0027m glad we can just drop that now.  I suspect veto-to-MSAA instead of veto-to-software helped here too.  Thanks for the investigation.",
+      "parentUuid": "fe7bafc2_c92b64b4",
+      "revId": "db0a7ff581530d30193789428d45941c83ff107b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
