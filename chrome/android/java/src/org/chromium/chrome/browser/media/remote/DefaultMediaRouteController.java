@@ -27,6 +27,7 @@ import org.chromium.base.ApplicationStatus;
 import org.chromium.base.Log;
 import org.chromium.base.annotations.RemovableInRelease;
 import org.chromium.base.annotations.UsedByReflection;
+import org.chromium.chrome.browser.media.MediaUrlResolver;
 import org.chromium.chrome.browser.media.remote.RemoteVideoInfo.PlayerState;
 
 import java.net.URI;
