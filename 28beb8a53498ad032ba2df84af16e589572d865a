@@ -22,6 +22,53 @@
       "revId": "28beb8a53498ad032ba2df84af16e589572d865a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f1d0b67_a010653b",
+        "filename": "ios/chrome/browser/ui/webui/about_ui.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-01T23:33:35Z",
+      "side": 1,
+      "message": "I think chrome://about, and about:about are translated by URLRewriter, and WebUI code does not know anything about these URLs. AboutUI handles 2 other urls however: \n\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/ui/webui/chrome_web_ui_ios_controller_factory.mm?q\u003dGetWebUIIOSFactoryFunction+package:%5Echromium$\u0026l\u003d68",
+      "parentUuid": "0f02eb18_3a5e41d2",
+      "range": {
+        "startLine": 17,
+        "startChar": 34,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "28beb8a53498ad032ba2df84af16e589572d865a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcc18f57_67cbd821",
+        "filename": "ios/chrome/browser/ui/webui/about_ui.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-01T23:33:35Z",
+      "side": 1,
+      "message": "I\u0027m not sure if \"handler\" is a proper word here. WebUI handler means very specific thing (a subclass of web::WebUIIOSMessageHandler).  How about s/handler/controller ?",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 20
+      },
+      "revId": "28beb8a53498ad032ba2df84af16e589572d865a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
