@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d9ef5758_a93ba979",
+        "filename": "components/download/content/factory/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-01T20:01:54Z",
+      "side": 1,
+      "message": "nit: Probably public_deps will make chrome to be able to depend on internal.",
+      "range": {
+        "startLine": 12,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 37
+      },
+      "revId": "6ae43218b1453b6f9f768d83f9b56b22e9da75e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75fbb763_b19bbfc6",
         "filename": "components/download/internal/components_unittests.filter",
         "patchSetId": 1
