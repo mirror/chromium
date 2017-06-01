@@ -22,6 +22,121 @@
       "revId": "ae1df96c046a69c32998722123d412abf883062d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c1cf574_8cdba96e",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-01T07:18:45Z",
+      "side": 1,
+      "message": "Maybe we should move this to FinishReadyStreaming()",
+      "parentUuid": "ed67ad18_aa6c510f",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 43
+      },
+      "revId": "ae1df96c046a69c32998722123d412abf883062d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68eceac7_c13961cf",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-01T07:18:45Z",
+      "side": 1,
+      "message": "Can we put this under RuntimeEnabledFlag controlled by Finch?\nI strongly encourage this as we can have a precise impact measurement.",
+      "revId": "ae1df96c046a69c32998722123d412abf883062d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea56649_38706042",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-01T07:18:45Z",
+      "side": 1,
+      "message": "if (currently_streamed_script_)\n  return;\n\nfor (auto\u0026 async_script : async_scripts_to_execute_soon_) {\n  if (TryStream(async_script, AsynchronousScript))\n    return;\n}",
+      "revId": "ae1df96c046a69c32998722123d412abf883062d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0aff8f9_6ee4a566",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-01T07:18:45Z",
+      "side": 1,
+      "message": "return success;",
+      "revId": "ae1df96c046a69c32998722123d412abf883062d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08f30d62_05147896",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-01T07:18:45Z",
+      "side": 1,
+      "message": "Please avoid bool. Use enum:\nhttps://docs.google.com/document/d/1ZQLiQKw9hCOyDDhDS4JhckhuiJmLqSbw9FLfySMyxgU/edit#heading\u003dh.n3iwacnythgz",
+      "revId": "ae1df96c046a69c32998722123d412abf883062d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3048f2a4_59d7af37",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-01T07:18:45Z",
+      "side": 1,
+      "message": "Would you add a one-line description comment to this member func?\n(and/or more descriptive name if possible, I don\u0027t have a good suggestion)",
+      "range": {
+        "startLine": 89,
+        "startChar": 23,
+        "endLine": 89,
+        "endChar": 0
+      },
+      "revId": "ae1df96c046a69c32998722123d412abf883062d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
