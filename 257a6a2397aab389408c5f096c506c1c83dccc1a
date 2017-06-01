@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ded8daf6_b8fc7577",
+        "filename": "ipc/ipc_descriptors.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-06-01T03:38:50Z",
+      "side": 0,
+      "message": "Note that base::GlobalDescriptors is itself deprecated (http://crbug.com/692619).",
+      "range": {
+        "startLine": 9,
+        "startChar": 9,
+        "endLine": 9,
+        "endChar": 26
+      },
+      "revId": "257a6a2397aab389408c5f096c506c1c83dccc1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
