@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa7f6932_480160f9",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-06-01T14:18:26Z",
+      "side": 1,
+      "message": "We only want to WriteString in the event that RESPONSE_INFO_HAS_PROXY_SERVER is true.",
+      "range": {
+        "startLine": 429,
+        "startChar": 26,
+        "endLine": 429,
+        "endChar": 43
+      },
+      "revId": "54ccdb9bac309eea79a95faa388c88cb61c27b41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
