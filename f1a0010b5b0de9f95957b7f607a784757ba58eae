@@ -22,6 +22,30 @@
       "revId": "f1a0010b5b0de9f95957b7f607a784757ba58eae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dac8d4f_f8830247",
+        "filename": "third_party/WebKit/Source/platform/wtf/StdLibExtras.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-01T14:39:02Z",
+      "side": 1,
+      "message": "Yeah, but the AlignedMemory is only used in the case where we\u0027re doing a static allocation, rather than a dynamic one. Here I do think we need to tell the linker to align the symbol (if only to 8 or 16 bytes, but might as well just use ALIGNOF(T) since it\u0027s at hand). In any case, a greed that it helps communicate intent.",
+      "parentUuid": "cc610e9a_35388ea3",
+      "range": {
+        "startLine": 44,
+        "startChar": 21,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "f1a0010b5b0de9f95957b7f607a784757ba58eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
