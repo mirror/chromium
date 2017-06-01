@@ -65,6 +65,29 @@
     },
     {
       "key": {
+        "uuid": "5b501cfa_0ab159c8",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-06-01T12:08:18Z",
+      "side": 1,
+      "message": "Ah, it looks like the standard way to not bump the version is to use a new flag bit: \n\nif (flags \u0026 RESPONSE_INFO_HAS_PROXY_SERVER) {\n  std::string proxy_server_val;\n  if (!iter.ReadString(\u0026proxy_server_val)\n    return false;\n  proxy_server \u003d ProxyServer::FromPacString(proxy_server_val);\n}\n\nPlease do that instead.",
+      "range": {
+        "startLine": 314,
+        "startChar": 11,
+        "endLine": 314,
+        "endChar": 21
+      },
+      "revId": "fbc7d08fd8069ed7e1dfc89a750f67eccea22fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22842e05_6d5f8bcd",
         "filename": "net/http/http_response_info.h",
         "patchSetId": 3
