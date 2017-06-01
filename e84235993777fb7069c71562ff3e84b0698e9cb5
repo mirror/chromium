@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "41ce18bd_28727af3",
+        "filename": "ios/chrome/browser/ui/payments/cells/page_info_item.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-01T17:06:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fd2f1c8_ea25e3e6",
+      "range": {
+        "startLine": 30,
+        "startChar": 35,
+        "endLine": 30,
+        "endChar": 37
+      },
+      "revId": "e84235993777fb7069c71562ff3e84b0698e9cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19e37317_10826402",
         "filename": "ios/chrome/browser/ui/payments/cells/page_info_item.mm",
         "patchSetId": 12
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-01T10:38:10Z",
       "side": 1,
       "message": "Optional nit: Why not use the baseline anchor of the text label?",
+      "range": {
+        "startLine": 168,
+        "startChar": 51,
+        "endLine": 168,
+        "endChar": 63
+      },
+      "revId": "e84235993777fb7069c71562ff3e84b0698e9cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b875140_591606be",
+        "filename": "ios/chrome/browser/ui/payments/cells/page_info_item.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-01T17:06:02Z",
+      "side": 1,
+      "message": "Agreed--done.",
+      "parentUuid": "19e37317_10826402",
       "range": {
         "startLine": 168,
         "startChar": 51,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "7a015426_72ad9860",
+        "filename": "ios/chrome/browser/ui/payments/cells/page_info_item_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-01T17:06:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1158440_77d05810",
+      "revId": "e84235993777fb7069c71562ff3e84b0698e9cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a500e5d_43aee272",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 12
@@ -85,6 +151,30 @@
       "revId": "e84235993777fb7069c71562ff3e84b0698e9cb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda92f82_bf667af8",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-01T17:06:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a500e5d_43aee272",
+      "range": {
+        "startLine": 436,
+        "startChar": 10,
+        "endLine": 436,
+        "endChar": 20
+      },
+      "revId": "e84235993777fb7069c71562ff3e84b0698e9cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
