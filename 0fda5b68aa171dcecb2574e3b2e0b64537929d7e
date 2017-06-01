@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b58237bb_2ffa6963",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/ui/MediaNotificationFaviconTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-01T21:23:48Z",
+      "side": 1,
+      "message": "What\u0027s the BuildInfo for a JUnit test anyway (they run on the host Linux machine)?\nDo we have coverage for both pre-O and O on the bots and trybots?\nI think the test\u0027d better override the version somehow and test both scenarios independently from how it\u0027s actually run.",
+      "parentUuid": "16fe64a2_0829eafe",
+      "revId": "0fda5b68aa171dcecb2574e3b2e0b64537929d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57455f1b_cfb1d6b5",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/ui/MediaNotificationFaviconTest.java",
         "patchSetId": 2
