@@ -13,6 +13,7 @@
 #include "base/memory/weak_ptr.h"
 #include "content/common/media/media_devices.h"
 #include "content/common/media/media_devices.mojom.h"
+#include "content/public/renderer/document_scoped_lazy_interface_ptr.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "content/public/renderer/render_frame_observer_tracker.h"
 #include "content/renderer/media/media_stream_dispatcher_eventhandler.h"
@@ -104,14 +105,14 @@ class PepperMediaDeviceManager
                       const MediaDeviceInfoArray& enumeration);
 
   MediaStreamDispatcher* GetMediaStreamDispatcher() const;
-  const ::mojom::MediaDevicesDispatcherHostPtr& GetMediaDevicesDispatcher();
 
   int next_id_;
 
   typedef std::map<int, OpenDeviceCallback> OpenCallbackMap;
   OpenCallbackMap open_callbacks_;
 
-  ::mojom::MediaDevicesDispatcherHostPtr media_devices_dispatcher_;
+  DocumentScopedLazyInterfacePtr<::mojom::MediaDevicesDispatcherHost>
+      media_devices_dispatcher_;
 
   DISALLOW_COPY_AND_ASSIGN(PepperMediaDeviceManager);
 };

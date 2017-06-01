@@ -37,6 +37,7 @@ target(link_target_type, "renderer_sources") {
     "content_renderer_client.cc",
     "content_renderer_client.h",
     "context_menu_client.h",
+    "document_scoped_lazy_interface_ptr.h",
     "document_state.cc",
     "document_state.h",
     "navigation_state.cc",
@@ -73,6 +74,7 @@ target(link_target_type, "renderer_sources") {
 
   public_deps = [
     "//media",
+    "//mojo/public/cpp/bindings",
   ]
 
   deps = [
