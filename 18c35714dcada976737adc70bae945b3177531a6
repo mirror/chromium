@@ -52,6 +52,24 @@
       "revId": "18c35714dcada976737adc70bae945b3177531a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4635dd5_5d9770b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T16:18:58Z",
+      "side": 1,
+      "message": "I think that might be not worth the distinction (we don\u0027t track that state yet IIRC).  I tested this out and it will kill the service if the users pauses the download or if the download is interrupted (by dropping the network connection for example).  Pending downloads due to interruption aren\u0027t tracked as active.\n\nThe downside to relying on the active tracking list is we\u0027re relying on effectively synchronous behavior to actions.  e.g. pressing \"resume\" has the following actions:\n\n1. Resume is pressed, intent is sent to service.\n2. Service is started, native library begins to load.\n3. Native library loads, we artificially move the download to resumed.\n4. We tell the delegate to actually resume the download.\n5. The delegate notifies us (through observers) that it has resumed.\n6. We check if we should stop the service.\n\nThis working right relies on 3 (artificially updating the notification even if we haven\u0027t resumed yet) and/or 5 being a synchronous action.  It\u0027s a little more interdependent than I\u0027d like in the long run.",
+      "parentUuid": "4d6881bf_857b8813",
+      "revId": "18c35714dcada976737adc70bae945b3177531a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
