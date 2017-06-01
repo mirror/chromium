@@ -104,6 +104,13 @@ public class SysUtils {
     }
 
     /**
+     * @return Whether or not this device is an Android Go device.
+     */
+    public static boolean isAndroidGoDevice() {
+        return isLowEndDevice() && BuildInfo.isAtLeastO();
+    }
+
+    /**
      * Resets the cached value, if any.
      */
     @VisibleForTesting
