@@ -1,0 +1,42 @@
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "position": [-1, -1],
+      "bounds": [802, 602],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "paintInvalidations": [
+        {
+          "object": "InlineTextBox 'This should not be visible'",
+          "rect": [50, 110, 164, 21],
+          "reason": "disappeared"
+        },
+        {
+          "object": "LayoutSVGRect rect",
+          "rect": [0, 0, 22, 22],
+          "reason": "disappeared"
+        }
+      ]
+    }
+  ],
+  "objectPaintInvalidations": [
+    {
+      "object": "LayoutSVGRect rect",
+      "reason": "disappeared"
+    },
+    {
+      "object": "LayoutSVGInlineText #text",
+      "reason": "disappeared"
+    },
+    {
+      "object": "LayoutSVGText text",
+      "reason": "disappeared"
+    },
+    {
+      "object": "LayoutSVGContainer g id='objectsToRemove'",
+      "reason": "disappeared"
+    }
+  ]
+}
+

@@ -1,0 +1,32 @@
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "bounds": [800, 600],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "paintInvalidations": [
+        {
+          "object": "LayoutEmbeddedObject OBJECT",
+          "rect": [0, 0, 402, 202],
+          "reason": "appeared"
+        }
+      ]
+    }
+  ],
+  "objectPaintInvalidations": [
+    {
+      "object": "LayoutBlockFlow BODY",
+      "reason": "geometry"
+    },
+    {
+      "object": "RootInlineBox",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutEmbeddedObject OBJECT",
+      "reason": "style change"
+    }
+  ]
+}
+
