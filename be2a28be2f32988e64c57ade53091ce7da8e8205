@@ -16,6 +16,24 @@
       "revId": "be2a28be2f32988e64c57ade53091ce7da8e8205",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c8eecd_f9e240e2",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-01T16:36:34Z",
+      "side": 1,
+      "message": "In this case, port_names is either a string or tuple when passed in, and `self.to_list(port_names)` converts it to a list;\n\nThe operator \u0026 means \"intersection\" when used with sets, and the original intent of this line was meant to be:\n\n\"At this point in the code, I\u0027m assuming that port names passed in and the set of ports with no results are disjoint and there\u0027s no overlap.\"\n\nCan you see a way to make this clearer?",
+      "parentUuid": "046131aa_5d62d2e3",
+      "revId": "be2a28be2f32988e64c57ade53091ce7da8e8205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
