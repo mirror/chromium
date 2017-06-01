@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e593d4ac_df67389c",
+        "filename": "testing/scripts/run_fuchsia_test.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-06-01T01:49:37Z",
+      "side": 1,
+      "message": "Ack, will fix.",
+      "parentUuid": "00c095a4_611f77c4",
+      "range": {
+        "startLine": 2,
+        "startChar": 12,
+        "endLine": 2,
+        "endChar": 16
+      },
+      "revId": "11a045f8dda7a7e3c85830fbe45c9e32cd1c7683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcdb5860_212653de",
         "filename": "testing/scripts/run_fuchsia_test.py",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-01T01:28:32Z",
       "side": 1,
       "message": "[nit; Do we do this funcs thing in other scripts? It\u0027s a bit ugly to put it inline here in the __main__ check because it makes a global that causes weird things in other function bodies. Maybe inline in the run_script call.]",
+      "revId": "11a045f8dda7a7e3c85830fbe45c9e32cd1c7683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca21e0a_76bee5ec",
+        "filename": "testing/scripts/run_fuchsia_test.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-06-01T01:49:37Z",
+      "side": 1,
+      "message": "Yes, we do this in other scripts, sadly (I cloned this from another script as you can see from the copyright), but I can tweak this here.\n\nThis whole interface is kinda broken, as the \"compile_targets\" part isn\u0027t as useful as you\u0027d like it to be.",
+      "parentUuid": "fcdb5860_212653de",
       "revId": "11a045f8dda7a7e3c85830fbe45c9e32cd1c7683",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
