@@ -16,6 +16,29 @@
       "revId": "0fda5b68aa171dcecb2574e3b2e0b64537929d7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57455f1b_cfb1d6b5",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/ui/MediaNotificationFaviconTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-06-01T16:29:39Z",
+      "side": 1,
+      "message": "I would put this in tear down, so that if the test crashes earlier, the command line still gets reset",
+      "range": {
+        "startLine": 74,
+        "startChar": 8,
+        "endLine": 74,
+        "endChar": 19
+      },
+      "revId": "0fda5b68aa171dcecb2574e3b2e0b64537929d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
