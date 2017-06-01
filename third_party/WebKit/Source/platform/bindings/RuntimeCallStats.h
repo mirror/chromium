@@ -98,8 +98,15 @@ class PLATFORM_EXPORT RuntimeCallStats {
   static RuntimeCallStats* From(v8::Isolate*);
 
 // Counters
-#define FOR_EACH_COUNTER(V) \
-  V(TestCounter1)           \
+#define FOR_EACH_COUNTER(V)          \
+  V(UpdateStyle)                     \
+  V(UpdateLayout)                    \
+  V(CollectGarbage)                  \
+  V(PerformIdleLazySweep)            \
+  V(UpdateLayerPositionsAfterLayout) \
+  V(PaintContents)                   \
+  V(ProcessStyleSheet)               \
+  V(TestCounter1)                    \
   V(TestCounter2)
 
   enum class CounterId : uint16_t {
@@ -111,7 +118,7 @@ class PLATFORM_EXPORT RuntimeCallStats {
 
   // Enters a new recording scope by pausing the currently running timer that
   // was started by the current instance, and starting <timer>.
-  void Enter(RuntimeCallTimer* timer, CounterId id) {
+  virtual void Enter(RuntimeCallTimer* timer, CounterId id) {
     timer->Start(GetCounter(id), current_timer_);
     current_timer_ = timer;
   }
@@ -119,7 +126,7 @@ class PLATFORM_EXPORT RuntimeCallStats {
   // Exits the current recording scope, by stopping <timer> (and updating the
   // counter associated with <timer>) and resuming the timer that was paused
   // before entering the current scope.
-  void Leave(RuntimeCallTimer* timer) {
+  virtual void Leave(RuntimeCallTimer* timer) {
     DCHECK_EQ(timer, current_timer_);
     current_timer_ = timer->Stop();
   }
@@ -133,11 +140,20 @@ class PLATFORM_EXPORT RuntimeCallStats {
 
   String ToString() const;
 
+  // Only used for testing
+  static void SetRuntimeCallStatsForTesting();
+
  private:
   RuntimeCallTimer* current_timer_ = nullptr;
   RuntimeCallCounter counters_[static_cast<int>(CounterId::kNumberOfCounters)];
   static const int number_of_counters_ =
       static_cast<int>(CounterId::kNumberOfCounters);
+};
+
+// Only used for testing
+class PLATFORM_EXPORT RuntimeCallStatsForTesting : public RuntimeCallStats {
+  void Enter(RuntimeCallTimer*, RuntimeCallStats::CounterId) override {}
+  void Leave(RuntimeCallTimer*) override {}
 };
 
 // A utility class that creates a RuntimeCallTimer and uses it with
