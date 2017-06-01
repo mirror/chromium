@@ -15,6 +15,10 @@
 #define ENABLE_SYNC_CALL_RESTRICTIONS 0
 #endif
 
+namespace sync_preferences {
+class PrefServiceSyncable;
+}
+
 namespace display {
 class ForwardingDisplayDelegate;
 }
@@ -68,6 +72,8 @@ class MOJO_CPP_BINDINGS_EXPORT SyncCallRestrictions {
   friend class leveldb::LevelDBMojoProxy;
   // Pref service connection is sync at startup.
   friend class prefs::PersistentPrefStoreClient;
+  // Incognito pref service instances are created synchronously.
+  friend class sync_preferences::PrefServiceSyncable;
 
   // END ALLOWED USAGE.
 

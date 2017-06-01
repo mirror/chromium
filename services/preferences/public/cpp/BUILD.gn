@@ -12,8 +12,6 @@ source_set("cpp") {
     "pref_registry_serializer.h",
     "pref_service_factory.cc",
     "pref_service_factory.h",
-    "pref_store_adapter.cc",
-    "pref_store_adapter.h",
     "pref_store_client.cc",
     "pref_store_client.h",
     "pref_store_client_mixin.cc",
