@@ -34,6 +34,24 @@
       "revId": "18c35714dcada976737adc70bae945b3177531a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d6881bf_857b8813",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-06-01T04:38:08Z",
+      "side": 1,
+      "message": "for paused download, i think we should kill the service . But for interrupted download, we should keep the service.",
+      "parentUuid": "ffcb599b_e2ef52fc",
+      "revId": "18c35714dcada976737adc70bae945b3177531a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
