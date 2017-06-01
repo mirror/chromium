@@ -17,23 +17,21 @@ namespace media {
 
 constexpr gfx::Size kSizeJustRight = gfx::Size(201, 201);
 
-#define EXPECT_WATCH_TIME(key, value)                                      \
-  do {                                                                     \
-    EXPECT_CALL(                                                           \
-        media_log_,                                                        \
-        OnWatchTimeUpdate(has_video_ ? MediaLog::kWatchTimeAudioVideo##key \
-                                     : MediaLog::kWatchTimeAudio##key,     \
-                          value))                                          \
-        .RetiresOnSaturation();                                            \
+#define EXPECT_WATCH_TIME(key, value)                                    \
+  do {                                                                   \
+    EXPECT_CALL(media_log_,                                              \
+                OnWatchTimeUpdate(has_video_ ? kWatchTimeAudioVideo##key \
+                                             : kWatchTimeAudio##key,     \
+                                  value))                                \
+        .RetiresOnSaturation();                                          \
   } while (0)
 
-#define EXPECT_BACKGROUND_WATCH_TIME(key, value)                           \
-  do {                                                                     \
-    DCHECK(has_video_);                                                    \
-    EXPECT_CALL(media_log_,                                                \
-                OnWatchTimeUpdate(                                         \
-                    MediaLog::kWatchTimeAudioVideoBackground##key, value)) \
-        .RetiresOnSaturation();                                            \
+#define EXPECT_BACKGROUND_WATCH_TIME(key, value)                               \
+  do {                                                                         \
+    DCHECK(has_video_);                                                        \
+    EXPECT_CALL(media_log_,                                                    \
+                OnWatchTimeUpdate(kWatchTimeAudioVideoBackground##key, value)) \
+        .RetiresOnSaturation();                                                \
   } while (0)
 
 #define EXPECT_WATCH_TIME_FINALIZED() \
@@ -59,7 +57,7 @@ class WatchTimeReporterTest : public testing::TestWithParam<bool> {
            it.Advance()) {
         bool finalize;
         if (it.value().GetAsBoolean(&finalize)) {
-          if (it.key() == MediaLog::kWatchTimeFinalize)
+          if (it.key() == kWatchTimeFinalize)
             OnWatchTimeFinalized();
           else
             OnPowerWatchTimeFinalized();
