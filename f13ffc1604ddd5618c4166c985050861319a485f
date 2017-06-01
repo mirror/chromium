@@ -16,6 +16,24 @@
       "revId": "f13ffc1604ddd5618c4166c985050861319a485f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a931be8c_c1ea3de7",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-01T02:17:15Z",
+      "side": 1,
+      "message": "Let\u0027s not allow the WEBKIT_ prefix. We should really remove it for all extensions at this point -- it\u0027s historical and no current code should be relying on it.",
+      "parentUuid": "726b9875_928a1682",
+      "revId": "f13ffc1604ddd5618c4166c985050861319a485f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
