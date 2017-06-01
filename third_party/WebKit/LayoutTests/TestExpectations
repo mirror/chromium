@@ -1340,9 +1340,6 @@ crbug.com/492664 external/wpt/css/css-writing-modes-3/table-progression-vrl-001.
 crbug.com/492664 external/wpt/css/css-writing-modes-3/table-progression-vrl-003.html [ Failure ]
 crbug.com/492664 external/wpt/css/css-writing-modes-3/table-progression-vrl-004.html [ Failure ]
 
-# An animated manual test that should not be run
-crbug.com/728522 external/wpt/css/css-flexbox-1/css-flexbox-height-animation-stretch.html [ Skip ]
-
 crbug.com/637055 fast/css/outline-offset-large.html [ Skip ]
 
 # Either "combo" or split should run: http://testthewebforward.org/docs/css-naming.html
@@ -2156,8 +2153,6 @@ crbug.com/626703 external/wpt/screen-orientation/onchange-event.html [ Timeout ]
 crbug.com/626703 external/wpt/screen-orientation/onchange-event-subframe.html [ Timeout ]
 crbug.com/626703 external/wpt/presentation-api/controlling-ua/getAvailability.https.html [ Timeout ]
 crbug.com/626703 [ Android Linux Win ] external/wpt/css/vendor-imports/mozilla/mozilla-central-reftests/flexbox/flexbox-baseline-multi-item-vert-001b.html [ Failure ]
-crbug.com/626703 [ Android Mac ] external/wpt/pointerevents/pointerevent_disabled_form_control-manual.html [ Timeout ]
-crbug.com/626703 [ Mac ] external/wpt/pointerevents/extension/pointerevent_coalesced_events_attributes-manual.html [ Timeout ]
 crbug.com/626703 crbug.com/717157 external/wpt/fetch/api/basic/integrity-sharedworker.html [ Crash Timeout ]
 crbug.com/626703 external/wpt/compat/webkit-text-fill-color-property-005.html [ Failure ]
 crbug.com/626703 external/wpt/content-security-policy/connect-src/connect-src-eventsource-blocked.sub.html [ Timeout ]
@@ -2176,6 +2171,8 @@ crbug.com/626703 external/wpt/css/vendor-imports/mozilla/mozilla-central-reftest
 crbug.com/626703 external/wpt/css/vendor-imports/mozilla/mozilla-central-reftests/writing-modes-3/logical-physical-mapping-001.html [ Failure ]
 crbug.com/626703 external/wpt/cssom-view/matchMedia.xht [ Timeout ]
 crbug.com/626703 external/wpt/eventsource/eventsource-request-cancellation.htm [ Timeout ]
+crbug.com/626703 [ Android Mac ] external/wpt/pointerevents/pointerevent_disabled_form_control-manual.html [ Timeout ]
+crbug.com/626703 [ Mac ] external/wpt/pointerevents/extension/pointerevent_coalesced_events_attributes-manual.html [ Timeout ]
 crbug.com/626703 external/wpt/fullscreen/api/document-exit-fullscreen-nested-in-iframe-manual.html [ Timeout Pass ]
 crbug.com/626703 external/wpt/html/browsers/offline/no-appcache-in-shared-workers-historical.html [ Timeout ]
 crbug.com/626703 external/wpt/html/browsers/the-window-object/window-open-noopener.html [ Timeout ]
