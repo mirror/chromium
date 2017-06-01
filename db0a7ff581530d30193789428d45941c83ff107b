@@ -34,6 +34,24 @@
       "revId": "db0a7ff581530d30193789428d45941c83ff107b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2e2cef0_39c6335b",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-01T16:56:04Z",
+      "side": 1,
+      "message": "Ah.. this is what should be expected: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d603969#c24\n\n\u003e On my MBP with Intel GPU, the \u0027CSS bouncing clipped rects\u0027 test improves a lot, but subsequent tests (if ran in a row) regress because GPU is off.\n\u003e \n\u003e CSS bouncing clipped rects    +129.26%\n\u003e CSS bouncing gradient circles  -37.80%\n\u003e CSS bouncing blend circles     -69.41%\n\u003e CSS bouncing filter circles    -53.78%\n\u003e CSS bouncing SVG images        -85.35%\n\u003e CSS bouncing tagged images     -79.13%\n\u003e Leaves 2.0                     -36.58%\n\u003e DOM particles, SVG masks       -55.21%\n\nSo I guess you\u0027re right and we should leave it 0 for now?",
+      "parentUuid": "51bc70bb_4efd72d5",
+      "revId": "db0a7ff581530d30193789428d45941c83ff107b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
