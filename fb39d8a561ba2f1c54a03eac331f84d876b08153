@@ -417,6 +417,24 @@
     },
     {
       "key": {
+        "uuid": "b1d5fc38_8cb42081",
+        "filename": "ui/views/bubble/bubble_frame_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-06-01T18:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfcaaefa_0da357f9",
+      "revId": "fb39d8a561ba2f1c54a03eac331f84d876b08153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d68f5689_09b99ffd",
         "filename": "ui/views/layout/box_layout.h",
         "patchSetId": 5
