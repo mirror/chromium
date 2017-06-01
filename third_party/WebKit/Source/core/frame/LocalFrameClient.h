@@ -86,6 +86,7 @@ class WebMediaPlayerSource;
 class WebRemotePlaybackClient;
 class WebRTCPeerConnectionHandler;
 class WebServiceWorkerProvider;
+class WebSpellCheckPanelHost;
 class WebURLLoader;
 
 class CORE_EXPORT LocalFrameClient : public FrameClient {
@@ -334,6 +335,8 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual void SetDevToolsFrameId(const String& devtools_frame_id) {}
 
   virtual void AbortClientNavigation() {}
+
+  virtual WebSpellCheckPanelHost* SpellCheckPanelHost() const = 0;
 
   virtual TextCheckerClient& GetTextCheckerClient() const = 0;
 

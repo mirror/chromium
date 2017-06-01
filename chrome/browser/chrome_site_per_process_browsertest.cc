@@ -40,7 +40,9 @@
 #if BUILDFLAG(ENABLE_SPELLCHECK)
 #include "components/spellcheck/common/spellcheck.mojom.h"
 #include "components/spellcheck/common/spellcheck_messages.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/service_manager/public/cpp/bind_source_info.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #endif
 
 class ChromeSitePerProcessTest : public InProcessBrowserTest {
@@ -726,4 +728,133 @@ IN_PROC_BROWSER_TEST_F(ChromeSitePerProcessTest, OOPIFSpellCheckTest) {
 
   content::SetBrowserClientForTesting(old_browser_client);
 }
+
+#if BUILDFLAG(HAS_SPELLCHECK_PANEL)
+class TestSpellCheckPanelHost : public spellcheck::mojom::SpellCheckPanelHost {
+ public:
+  explicit TestSpellCheckPanelHost(content::RenderProcessHost* process_host)
+      : process_host_(process_host) {}
+
+  ~TestSpellCheckPanelHost() override = default;
+
+  const content::RenderProcessHost* process_host() const {
+    return process_host_;
+  }
+
+  bool SpellingPanelVisible() {
+    if (!show_spelling_panel_called_) {
+      base::RunLoop run_loop;
+      quit_ = run_loop.QuitClosure();
+      run_loop.Run();
+    }
+
+    EXPECT_TRUE(show_spelling_panel_called_);
+    return spelling_panel_visible_;
+  }
+
+  void SpellCheckPanelHostRequest(
+      const service_manager::BindSourceInfo& source_info,
+      spellcheck::mojom::SpellCheckPanelHostRequest request) {
+    bindings_.AddBinding(this, std::move(request));
+  }
+
+ private:
+  // spellcheck::mojom::SpellCheckPanelHost:
+  void ShowSpellingPanel(bool show) override {
+    DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+    show_spelling_panel_called_ = true;
+    spelling_panel_visible_ = show;
+    if (quit_)
+      std::move(quit_).Run();
+  }
+
+  void UpdateSpellingPanelWithMisspelledWord(
+      const base::string16& word) override {
+    DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  }
+
+  mojo::BindingSet<spellcheck::mojom::SpellCheckPanelHost> bindings_;
+  const content::RenderProcessHost* process_host_;
+  bool show_spelling_panel_called_ = false;
+  bool spelling_panel_visible_ = false;
+  base::OnceClosure quit_;
+
+  DISALLOW_COPY_AND_ASSIGN(TestSpellCheckPanelHost);
+};
+
+class TestBrowserClientForSpellCheckPanelHost
+    : public ChromeContentBrowserClient {
+ public:
+  TestBrowserClientForSpellCheckPanelHost() = default;
+  ~TestBrowserClientForSpellCheckPanelHost() override = default;
+
+  // ContentBrowserClient overrides.
+  void ExposeInterfacesToRenderer(
+      service_manager::BinderRegistry* registry,
+      content::AssociatedInterfaceRegistry* associated_registry,
+      content::RenderProcessHost* render_process_host) override {
+    hosts_.push_back(
+        base::MakeUnique<TestSpellCheckPanelHost>(render_process_host));
+
+    // Expose the default interfaces.
+    ChromeContentBrowserClient::ExposeInterfacesToRenderer(
+        registry, associated_registry, render_process_host);
+
+    // Override the default SpellCheckPanelHost interface.
+    auto ui_task_runner = content::BrowserThread::GetTaskRunnerForThread(
+        content::BrowserThread::UI);
+    registry->AddInterface(
+        base::Bind(&TestSpellCheckPanelHost::SpellCheckPanelHostRequest,
+                   base::Unretained(hosts_.back().get())),
+        ui_task_runner);
+  }
+
+  TestSpellCheckPanelHost* GetTestSpellCheckPanelHostForProcess(
+      content::RenderProcessHost* render_process_host) const {
+    for (const auto& host : hosts_) {
+      if (host->process_host() == render_process_host)
+        return host.get();
+    }
+    return nullptr;
+  }
+
+ private:
+  std::vector<std::unique_ptr<TestSpellCheckPanelHost>> hosts_;
+
+  DISALLOW_COPY_AND_ASSIGN(TestBrowserClientForSpellCheckPanelHost);
+};
+
+// Tests that the OSX spell check panel can be opened from an out-of-process
+// subframe. See crbug.com/712395 for details.
+IN_PROC_BROWSER_TEST_F(ChromeSitePerProcessTest, OOPIFSpellCheckPanelTest) {
+  TestBrowserClientForSpellCheckPanelHost browser_client;
+  content::ContentBrowserClient* old_browser_client =
+      content::SetBrowserClientForTesting(&browser_client);
+
+  GURL main_url(embedded_test_server()->GetURL(
+      "a.com", "/page_with_contenteditable_in_cross_site_subframe.html"));
+  ui_test_utils::NavigateToURL(browser(), main_url);
+
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  content::RenderFrameHost* cross_site_subframe =
+      ChildFrameAt(web_contents->GetMainFrame(), 0);
+
+  EXPECT_TRUE(cross_site_subframe->IsCrossProcessSubframe());
+
+  spellcheck::mojom::SpellCheckPanelPtr spell_check_panel_client;
+  cross_site_subframe->GetRemoteInterfaces()->GetInterface(
+      &spell_check_panel_client);
+  spell_check_panel_client->ToggleSpellPanel(false);
+
+  TestSpellCheckPanelHost* host =
+      browser_client.GetTestSpellCheckPanelHostForProcess(
+          cross_site_subframe->GetProcess());
+  EXPECT_TRUE(host->SpellingPanelVisible());
+
+  content::SetBrowserClientForTesting(old_browser_client);
+}
+#endif  // BUILDFLAG(HAS_SPELLCHECK_PANEL)
+
 #endif  // BUILDFLAG(ENABLE_SPELLCHECK)
