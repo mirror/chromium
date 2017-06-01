@@ -85,16 +85,16 @@ const char kUnreliableResultsTag[] = "UNRELIABLE_RESULTS";
 // the test launcher to people looking at the output (no output for a long
 // time is mysterious and gives no info about what is happening) 3) help
 // debugging in case the process hangs anyway.
-const int kOutputTimeoutSeconds = 15;
+const int kOutputTimeoutSeconds = 15000;
 
 // Limit of output snippet lines when printing to stdout.
 // Avoids flooding the logs with amount of output that gums up
 // the infrastructure.
-const size_t kOutputSnippetLinesLimit = 5000;
+const size_t kOutputSnippetLinesLimit = 4294967295U;
 
 // Limit of output snippet size. Exceeding this limit
 // results in truncating the output and failing the test.
-const size_t kOutputSnippetBytesLimit = 300 * 1024;
+const size_t kOutputSnippetBytesLimit = 4294967295U;
 
 // Set of live launch test processes with corresponding lock (it is allowed
 // for callers to launch processes on different threads).

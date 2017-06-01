@@ -269,4 +269,8 @@ TEST_F(RenderWidgetHostViewChildFrameTest, ViewportIntersectionUpdated) {
   EXPECT_EQ(intersection_rect, std::get<0>(sent_rect));
 }
 
+// TODO(eseckler): Add back tests for BeginFrameAck forwarding through
+// RenderWidgetHostViewChildFrame and CompositorFrameSinkSupport when we add
+// plumbing of BeginFrameAcks through SurfaceObservers.
+
 }  // namespace content
