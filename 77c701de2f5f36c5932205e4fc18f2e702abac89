@@ -22,6 +22,30 @@
       "revId": "77c701de2f5f36c5932205e4fc18f2e702abac89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89232c52_8d9b47f8",
+        "filename": "services/preferences/public/cpp/pref_service_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-01T01:01:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "803ece67_ab6a61a8",
+      "range": {
+        "startLine": 80,
+        "startChar": 11,
+        "endLine": 80,
+        "endChar": 20
+      },
+      "revId": "77c701de2f5f36c5932205e4fc18f2e702abac89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
