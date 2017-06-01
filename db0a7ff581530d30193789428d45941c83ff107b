@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef94a040_689cf0a4",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-01T16:12:46Z",
+      "side": 1,
+      "message": "Could you run the animometer bouncing clips test with gpu raster on and see if this makes a difference one way or the other? I kind of suspect that we\u0027ll need to ignore them.  It\u0027s a little odd though, because we can\u0027t quite replicate what the previous code was doing where the DisplayItem ignored but Skia did not.",
+      "revId": "db0a7ff581530d30193789428d45941c83ff107b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -505,6 +505,23 @@
     },
     {
       "key": {
+        "uuid": "679e6edd_d81dbd44",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-01T16:12:46Z",
+      "side": 1,
+      "message": "Why does this go away? I would have expected a zero byte op here to be a noop (and so maybe skipped in RecordPaintCanvas if they occur).  Mostly I\u0027m surprised this would happen at all.",
+      "revId": "c97147b3bcff456df697cbd6fffb91a525f3ac25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f56b9a8_cf9c3e3b",
         "filename": "cc/test/fake_content_layer_client.cc",
         "patchSetId": 9
