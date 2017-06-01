@@ -81,7 +81,7 @@ class DomainReliabilityMonitorTest : public testing::Test {
         "HTTP/1.1 200 OK\n\n");
     request.response_info.was_cached = false;
     request.response_info.network_accessed = true;
-    request.response_info.was_fetched_via_proxy = false;
+    request.response_info.proxy_server = net::ProxyServer::Direct();
     request.load_flags = 0;
     request.upload_depth = 0;
     return request;
@@ -208,7 +208,8 @@ TEST_F(DomainReliabilityMonitorTest, WasFetchedViaProxy) {
   request.status = net::URLRequestStatus::FromError(net::ERR_CONNECTION_RESET);
   request.response_info.socket_address =
       net::HostPortPair::FromString("127.0.0.1:3128");
-  request.response_info.was_fetched_via_proxy = true;
+  request.response_info.proxy_server = net::ProxyServer::FromURI(
+      "http://foo.com:80", net::ProxyServer::SCHEME_HTTP);
   OnRequestLegComplete(request);
 
   BeaconVector beacons;

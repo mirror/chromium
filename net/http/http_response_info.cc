@@ -88,7 +88,8 @@ enum {
   RESPONSE_INFO_WAS_ALPN = 1 << 14,
 
   // This bit is set if the request was fetched via an explicit proxy.
-  RESPONSE_INFO_WAS_PROXY = 1 << 15,
+  // This bit is deprecated.
+  // RESPONSE_INFO_WAS_PROXY = 1 << 15,
 
   // This bit is set if the response info has an SSL connection status field.
   // This contains the ciphersuite used to fetch the resource as well as the
@@ -116,6 +117,9 @@ enum {
   // trust anchor.
   RESPONSE_INFO_PKP_BYPASSED = 1 << 23,
 
+  // This bit is set if the response was proxied.
+  RESPONSE_INFO_HAS_PROXY_SERVER = 1 << 24,
+
   // TODO(darin): Add other bits to indicate alternate request methods.
   // For now, we don't support storing those.
 };
@@ -127,7 +131,6 @@ HttpResponseInfo::HttpResponseInfo()
       network_accessed(false),
       was_fetched_via_spdy(false),
       was_alpn_negotiated(false),
-      was_fetched_via_proxy(false),
       did_use_http_auth(false),
       unused_since_prefetch(false),
       connection_info(CONNECTION_INFO_UNKNOWN) {}
@@ -139,7 +142,6 @@ HttpResponseInfo::HttpResponseInfo(const HttpResponseInfo& rhs)
       network_accessed(rhs.network_accessed),
       was_fetched_via_spdy(rhs.was_fetched_via_spdy),
       was_alpn_negotiated(rhs.was_alpn_negotiated),
-      was_fetched_via_proxy(rhs.was_fetched_via_proxy),
       proxy_server(rhs.proxy_server),
       did_use_http_auth(rhs.did_use_http_auth),
       unused_since_prefetch(rhs.unused_since_prefetch),
@@ -166,7 +168,6 @@ HttpResponseInfo& HttpResponseInfo::operator=(const HttpResponseInfo& rhs) {
   was_fetched_via_spdy = rhs.was_fetched_via_spdy;
   proxy_server = rhs.proxy_server;
   was_alpn_negotiated = rhs.was_alpn_negotiated;
-  was_fetched_via_proxy = rhs.was_fetched_via_proxy;
   did_use_http_auth = rhs.did_use_http_auth;
   unused_since_prefetch = rhs.unused_since_prefetch;
   socket_address = rhs.socket_address;
@@ -311,11 +312,18 @@ bool HttpResponseInfo::InitFromPickle(const base::Pickle& pickle,
       ssl_info.key_exchange_group = key_exchange_group;
   }
 
+  // Read the proxy server. This is optional, because there might be no
+  // proxy involved (i.e., it could have been invalid or direct).
+  if (flags & RESPONSE_INFO_HAS_PROXY_SERVER) {
+    std::string proxy_server_val;
+    if (!iter.ReadString(&proxy_server_val))
+      return false;
+    proxy_server = ProxyServer::FromPacString(proxy_server_val);
+  }
+
   was_fetched_via_spdy = (flags & RESPONSE_INFO_WAS_SPDY) != 0;
 
   was_alpn_negotiated = (flags & RESPONSE_INFO_WAS_ALPN) != 0;
-
-  was_fetched_via_proxy = (flags & RESPONSE_INFO_WAS_PROXY) != 0;
 
   *response_truncated = (flags & RESPONSE_INFO_TRUNCATED) != 0;
 
@@ -352,8 +360,6 @@ void HttpResponseInfo::Persist(base::Pickle* pickle,
     flags |= RESPONSE_INFO_WAS_ALPN;
     flags |= RESPONSE_INFO_HAS_ALPN_NEGOTIATED_PROTOCOL;
   }
-  if (was_fetched_via_proxy)
-    flags |= RESPONSE_INFO_WAS_PROXY;
   if (connection_info != CONNECTION_INFO_UNKNOWN)
     flags |= RESPONSE_INFO_HAS_CONNECTION_INFO;
   if (did_use_http_auth)
@@ -364,6 +370,8 @@ void HttpResponseInfo::Persist(base::Pickle* pickle,
     flags |= RESPONSE_INFO_HAS_SIGNED_CERTIFICATE_TIMESTAMPS;
   if (ssl_info.pkp_bypassed)
     flags |= RESPONSE_INFO_PKP_BYPASSED;
+  if (proxy_server.is_valid() && !proxy_server.is_direct())
+    flags |= RESPONSE_INFO_HAS_PROXY_SERVER;
 
   pickle->WriteInt(flags);
   pickle->WriteInt64(request_time.ToInternalValue());
@@ -415,6 +423,10 @@ void HttpResponseInfo::Persist(base::Pickle* pickle,
 
   if (ssl_info.is_valid() && ssl_info.key_exchange_group != 0)
     pickle->WriteInt(ssl_info.key_exchange_group);
+
+  pickle->WriteString(proxy_server.is_valid() && !proxy_server.is_direct()
+                          ? proxy_server.ToPacString()
+                          : std::string());
 }
 
 bool HttpResponseInfo::DidUseQuic() const {
