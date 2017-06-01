@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa8f0286_dcbc0f45",
+        "filename": "cc/surfaces/display.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-01T21:31:12Z",
+      "side": 1,
+      "message": "Does it seem a bit odd that this class is plumbing thru so many things to the DisplayScheduler when it knows about the BFS now? Should we make it the observer, and just have it call to the Display for damage updates? What\u0027s the plan for that?",
+      "revId": "9e4cde20fa642b5d20cd37795c191e79c431dc07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c1b39d9_6ffecef9",
+        "filename": "cc/surfaces/display_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-01T21:31:12Z",
+      "side": 1,
+      "message": "Can this happen in SetUpDisplay?\n\nAlternately, does this need to be done for these tests even?",
+      "revId": "9e4cde20fa642b5d20cd37795c191e79c431dc07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6299df45_e121d506",
+        "filename": "cc/surfaces/display_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-01T21:31:12Z",
+      "side": 1,
+      "message": "And then this in a TearDownDisplay() than deletes the display? The destructor can DCHECK that TearDownDisplay happened",
+      "revId": "9e4cde20fa642b5d20cd37795c191e79c431dc07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cbf340b_7196e02a",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-01T21:31:12Z",
+      "side": 1,
+      "message": "Why does this check data-\u003edisplay when it\u0027s not used in the block that follows?",
+      "revId": "9e4cde20fa642b5d20cd37795c191e79c431dc07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd13d0c2_b9a94c69",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-01T21:31:12Z",
+      "side": 1,
+      "message": "Can you leave a comment explaining why if (display_) is here?",
+      "revId": "9e4cde20fa642b5d20cd37795c191e79c431dc07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b286cf_0aa9b197",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-01T21:31:12Z",
+      "side": 1,
+      "message": "Do we need to register/unregister each time we make a display or could we do this higher up less often?",
+      "revId": "9e4cde20fa642b5d20cd37795c191e79c431dc07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0329fd3_f968d40c",
+        "filename": "ui/compositor/test/in_process_context_factory.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-01T21:31:12Z",
+      "side": 1,
+      "message": "{}\n\nComment to explain why this if?",
+      "revId": "9e4cde20fa642b5d20cd37795c191e79c431dc07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
