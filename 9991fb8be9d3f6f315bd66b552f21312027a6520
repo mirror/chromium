@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa618a0d_e23d5407",
+        "filename": "third_party/WebKit/LayoutTests/VirtualTestSuites",
+        "patchSetId": 6
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-01T17:25:59Z",
+      "side": 1,
+      "message": "Is there a bug filed to go back and clean up all of these extra test suites once the new pipeline has shipped?",
+      "revId": "9991fb8be9d3f6f315bd66b552f21312027a6520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59521ff9_27efbe71",
+        "filename": "third_party/WebKit/LayoutTests/virtual/new-remote-playback-pipeline/external/wpt/remote-playback/README.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-01T17:25:59Z",
+      "side": 1,
+      "message": "I assume this won\u0027t get upstreamed to WPT.  (Is there documentation on \"virtual\" LayoutTests?)",
+      "revId": "9991fb8be9d3f6f315bd66b552f21312027a6520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
