@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "37f7e9db_7142ceec",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/CanvasRenderingContext2D.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-01T21:25:59Z",
+      "side": 1,
+      "message": "Maybe instead of removing it we could put it behind IS_DCHECK_ENABLED",
+      "parentUuid": "9ed2199a_083b3f15",
+      "range": {
+        "startLine": 86,
+        "startChar": 14,
+        "endLine": 86,
+        "endChar": 18
+      },
+      "revId": "b253ced92661f32416e26031a7da40b486cef19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c97bce05_4fa51658",
         "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
         "patchSetId": 2
