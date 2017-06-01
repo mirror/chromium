@@ -40,6 +40,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -955,6 +956,14 @@ public class LocationBarLayout extends FrameLayout
         if (shouldBeFocused) {
             mUrlBar.requestFocus();
         } else {
+            // If UrlBar is already focused, then clearFocus() will move focus from UrlBar(EditText)
+            // to ToolbarPhone(focusable wrapper). If we do not hide keyboard here, keyboard app may
+            // see null InputConnection from ToolbarPhone briefly until we remove ToolbarPhone
+            // from view hierarchy.
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(
+                    Context.INPUT_METHOD_SERVICE);
+            if (imm.isActive(mUrlBar)) imm.hideSoftInputFromWindow(getWindowToken(), 0, null);
+
             mUrlBar.clearFocus();
         }
     }
