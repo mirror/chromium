@@ -22,6 +22,30 @@
       "revId": "88076d9ce5923d0642cfc09ee9179c64008e0ec9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16422679_5753fe61",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-01T23:45:30Z",
+      "side": 1,
+      "message": "That\u0027s true. I can\u0027t see it triggering any edge cases, but I changed the code so that we\u0027ll highlight based on formatted url",
+      "parentUuid": "e6f828a1_1a0571de",
+      "range": {
+        "startLine": 330,
+        "startChar": 25,
+        "endLine": 330,
+        "endChar": 74
+      },
+      "revId": "88076d9ce5923d0642cfc09ee9179c64008e0ec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
