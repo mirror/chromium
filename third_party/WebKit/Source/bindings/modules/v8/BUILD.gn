@@ -9,7 +9,7 @@ import("//third_party/WebKit/Source/modules/modules_idl_files.gni")
 
 visibility = [ "//third_party/WebKit/*" ]
 
-group("bindings_modules_generated") {
+group("bindings_modules_v8_generated") {
   public_deps = [
     ":bindings_modules_impl_generated",
     ":bindings_modules_v8_generated_init_partial",
@@ -85,6 +85,6 @@ blink_modules_sources("bindings_modules_impl") {
       get_target_outputs(":bindings_modules_v8_generated_init_partial")
 
   deps = [
-    ":bindings_modules_generated",
+    ":bindings_modules_v8_generated",
   ]
 }
