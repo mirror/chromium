@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "26fedd91_1e4b7307",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-06-01T15:05:12Z",
+      "side": 1,
+      "message": "It looks like |proxy_server| is wrong in today\u0027s chrome if the response was built from cache, right?\n\nI assumed that we were now writing proxy_server out to cache because it was desirable for the customer to know about who the proxy server was for requests served from cache. If not, then let\u0027s not store it.",
+      "parentUuid": "44deaa6a_41139c8b",
+      "range": {
+        "startLine": 91,
+        "startChar": 10,
+        "endLine": 91,
+        "endChar": 13
+      },
+      "revId": "481eca5a507e743408aa6af518a5853b2b87916e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b9e0749_48df6616",
         "filename": "net/http/http_response_info.cc",
         "patchSetId": 6
