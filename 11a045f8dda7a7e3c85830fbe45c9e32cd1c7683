@@ -22,6 +22,23 @@
       "revId": "11a045f8dda7a7e3c85830fbe45c9e32cd1c7683",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcdb5860_212653de",
+        "filename": "testing/scripts/run_fuchsia_test.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-01T01:28:32Z",
+      "side": 1,
+      "message": "[nit; Do we do this funcs thing in other scripts? It\u0027s a bit ugly to put it inline here in the __main__ check because it makes a global that causes weird things in other function bodies. Maybe inline in the run_script call.]",
+      "revId": "11a045f8dda7a7e3c85830fbe45c9e32cd1c7683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
