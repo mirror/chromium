@@ -219,6 +219,7 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
       in_idle_period_for_testing(false),
       use_virtual_time(false),
       is_audio_playing(false),
+      compositor_will_send_main_frame_not_expected(false),
       rail_mode_observer(nullptr),
       wake_up_budget_pool(nullptr),
       task_duration_per_queue_type_histogram(base::Histogram::FactoryGet(
@@ -1467,6 +1468,9 @@ RendererSchedulerImpl::AsValueLocked(base::TimeTicks optional_now) const {
                     GetMainThreadOnly().timer_tasks_seem_expensive);
   state->SetBoolean("begin_frame_not_expected_soon",
                     GetMainThreadOnly().begin_frame_not_expected_soon);
+  state->SetBoolean(
+      "compositor_will_send_main_frame_not_expected",
+      GetMainThreadOnly().compositor_will_send_main_frame_not_expected);
   state->SetBoolean("touchstart_expected_soon",
                     GetMainThreadOnly().touchstart_expected_soon);
   state->SetString("idle_period_state",
@@ -1604,6 +1608,22 @@ void RendererSchedulerImpl::OnIdlePeriodEnded() {
       helper_.scheduler_tqm_delegate()->NowTicks();
   GetAnyThread().in_idle_period = false;
   UpdatePolicyLocked(UpdateType::MAY_EARLY_OUT_IF_POLICY_UNCHANGED);
+}
+
+void RendererSchedulerImpl::HasPendingTasksChanged(bool has_tasks) {
+  if (has_tasks ==
+      GetMainThreadOnly().compositor_will_send_main_frame_not_expected)
+    return;
+
+  GetMainThreadOnly().compositor_will_send_main_frame_not_expected = has_tasks;
+
+  TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
+               "RendererSchedulerImpl::HasPendingTasksChanged", "has_tasks",
+               has_tasks);
+  for (WebViewSchedulerImpl* web_view_scheduler :
+       GetMainThreadOnly().web_view_schedulers) {
+    web_view_scheduler->RequestBeginMainFrameNotExpected(has_tasks);
+  }
 }
 
 void RendererSchedulerImpl::AddPendingNavigation(NavigatingFrameType type) {

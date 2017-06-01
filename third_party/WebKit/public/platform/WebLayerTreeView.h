@@ -190,6 +190,8 @@ class WebLayerTreeView {
   // ReportTimeCallback is a callback that should be fired when the
   // corresponding Swap completes (either with DidSwap or DidNotSwap).
   virtual void NotifySwapTime(ReportTimeCallback callback) {}
+
+  virtual void RequestBeginMainFrameNotExpected(bool new_state) {}
 };
 
 }  // namespace blink
