@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f99427ff_d2ccbbd7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-01T13:36:10Z",
+      "side": 1,
+      "message": "*fail",
+      "range": {
+        "startLine": 10,
+        "startChar": 34,
+        "endLine": 10,
+        "endChar": 39
+      },
+      "revId": "e1bcb5388851bc6b2f9513df64307db4ede6814c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b9a2d6e_92ad29f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-01T13:36:10Z",
+      "side": 1,
+      "message": "Should there be a change in ios/chrome/app/BUILD.gn too?",
+      "range": {
+        "startLine": 13,
+        "startChar": 47,
+        "endLine": 13,
+        "endChar": 53
+      },
+      "revId": "e1bcb5388851bc6b2f9513df64307db4ede6814c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
