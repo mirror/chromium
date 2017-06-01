@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "9ec9ae14_2e6d2dd3",
+        "filename": "chrome/browser/android/vr_shell/ui_browser_interface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-06-01T22:08:01Z",
+      "side": 1,
+      "message": "Isn\u0027t cct Android specific?  Or is this file not supposed to be generic to Android?",
+      "range": {
+        "startLine": 21,
+        "startChar": 29,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "541612b034d466ae0390d54d2ad7251aa079e7bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61b38655_b51f12e7",
         "filename": "chrome/browser/android/vr_shell/vr_browser_interface.h",
         "patchSetId": 2
@@ -36,6 +59,30 @@
       "writtenOn": "2017-06-01T21:40:49Z",
       "side": 1,
       "message": "Should this file be removed?",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 23
+      },
+      "revId": "541612b034d466ae0390d54d2ad7251aa079e7bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c167a261_3ff546de",
+        "filename": "chrome/browser/android/vr_shell/vr_browser_interface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-06-01T22:08:01Z",
+      "side": 1,
+      "message": "+1, probably just missed this cleanup.  The build file isn\u0027t referring to it anymore so it\u0027s just taking up space.",
+      "parentUuid": "61b38655_b51f12e7",
       "range": {
         "startLine": 27,
         "startChar": 13,
