@@ -187,6 +187,30 @@
       "revId": "d837660498c99f4f35d03d161278e7661a1777c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72a713cf_1ea48739",
+        "filename": "base/rand_util_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-01T17:59:12Z",
+      "side": 1,
+      "message": "err, remaining \u003e\u003d actual, yes.",
+      "parentUuid": "240f9e61_f5bca81c",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 6
+      },
+      "revId": "d837660498c99f4f35d03d161278e7661a1777c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
