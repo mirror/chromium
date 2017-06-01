@@ -14,11 +14,16 @@ typedef PlatformTest EnvironmentTest;
 
 namespace base {
 
+#if defined(OS_FUCHSIA)
+constexpr char kValidEnvironmentVariable[] = "PWD";
+#else
+constexpr char kValidEnvironmentVariable[] = "PATH";
+#endif
+
 TEST_F(EnvironmentTest, GetVar) {
-  // Every setup should have non-empty PATH...
   std::unique_ptr<Environment> env(Environment::Create());
   std::string env_value;
-  EXPECT_TRUE(env->GetVar("PATH", &env_value));
+  EXPECT_TRUE(env->GetVar(kValidEnvironmentVariable, &env_value));
   EXPECT_NE(env_value, "");
 }
 
@@ -51,9 +56,8 @@ TEST_F(EnvironmentTest, GetVarReverse) {
 }
 
 TEST_F(EnvironmentTest, HasVar) {
-  // Every setup should have PATH...
   std::unique_ptr<Environment> env(Environment::Create());
-  EXPECT_TRUE(env->HasVar("PATH"));
+  EXPECT_TRUE(env->HasVar(kValidEnvironmentVariable));
 }
 
 TEST_F(EnvironmentTest, SetVar) {
