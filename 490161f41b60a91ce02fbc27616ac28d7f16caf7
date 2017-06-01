@@ -86,6 +86,30 @@
       "revId": "490161f41b60a91ce02fbc27616ac28d7f16caf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b23cb3b_3eb8a1b8",
+        "filename": "components/cdm/browser/cdm_message_filter_android.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-06-01T18:11:26Z",
+      "side": 1,
+      "message": "If we have a software decoder running in TEE, is it considered as secure decoder?",
+      "parentUuid": "016ec854_7e5b6d66",
+      "range": {
+        "startLine": 42,
+        "startChar": 13,
+        "endLine": 42,
+        "endChar": 38
+      },
+      "revId": "490161f41b60a91ce02fbc27616ac28d7f16caf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
