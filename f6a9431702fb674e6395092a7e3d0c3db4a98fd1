@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00d23a3d_db4bcb9d",
+        "filename": "chrome/test/data/extensions/api_test/certificate_provider/platform_keys_bridged/sync_cert_and_issuer.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-01T11:39:03Z",
+      "side": 1,
+      "message": "Maybe add more tests against each possible hashes, not only SHA-1?",
+      "range": {
+        "startLine": 26,
+        "startChar": 18,
+        "endLine": 26,
+        "endChar": 22
+      },
+      "revId": "f6a9431702fb674e6395092a7e3d0c3db4a98fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
