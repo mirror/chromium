@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1fad649e_ae96fb43",
+        "filename": "ui/views/examples/scroll_view_example.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-01T16:05:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0d36556_741c4f88",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 24
+      },
+      "revId": "952e3be7e83f419da8a4df10bc48f8ee844c0d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a432b649_481a8fcf",
         "filename": "ui/views/examples/scroll_view_example.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a9347ec5_fa1b2109",
+        "filename": "ui/views/examples/scroll_view_example.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-01T16:05:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a432b649_481a8fcf",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "952e3be7e83f419da8a4df10bc48f8ee844c0d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a78cfc6e_f7147892",
         "filename": "ui/views/examples/scroll_view_example.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-01T00:33:15Z",
       "side": 1,
       "message": "note I think without the SetNativeControlColor(..) call, subpixel AA might get messed up, but that\u0027s probably not important here since the buttons have their own backgrounds.",
+      "range": {
+        "startLine": 49,
+        "startChar": 3,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "952e3be7e83f419da8a4df10bc48f8ee844c0d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c3b587_4c386736",
+        "filename": "ui/views/examples/scroll_view_example.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-01T16:05:00Z",
+      "side": 1,
+      "message": "The radio button doesn\u0027t have its own bg but I don\u0027t think the SetNativeControlColor affects subpixel AA anyway. It might affect the text color via GetReadableColor. For AA, all that matters is that the canvas is filled opaquely before you render text on top of it. The DrawRect call here will do that assuming that SetColor is always called with opaque values.",
+      "parentUuid": "a78cfc6e_f7147892",
       "range": {
         "startLine": 49,
         "startChar": 3,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "83380987_402243fd",
+        "filename": "ui/views/painter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-01T16:05:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8f2792e_fd24e2ed",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "952e3be7e83f419da8a4df10bc48f8ee844c0d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b258bb62_985abce9",
         "filename": "ui/views/painter.cc",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "952e3be7e83f419da8a4df10bc48f8ee844c0d19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "294297cd_7b3a2ad9",
+        "filename": "ui/views/painter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-01T16:05:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b258bb62_985abce9",
+      "range": {
+        "startLine": 10,
+        "startChar": 15,
+        "endLine": 10,
+        "endChar": 21
+      },
+      "revId": "952e3be7e83f419da8a4df10bc48f8ee844c0d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "c42a71b7_9745714d",
+        "filename": "ui/views/painter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-01T16:05:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c92e610_406722e1",
+      "range": {
+        "startLine": 13,
+        "startChar": 27,
+        "endLine": 13,
+        "endChar": 34
+      },
+      "revId": "952e3be7e83f419da8a4df10bc48f8ee844c0d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a869ee1_d3747b29",
         "filename": "ui/views/painter.cc",
         "patchSetId": 2
@@ -151,6 +295,30 @@
       "writtenOn": "2017-06-01T00:33:15Z",
       "side": 1,
       "message": "pretty sure this is no longer used (maybe some others too)",
+      "range": {
+        "startLine": 15,
+        "startChar": 27,
+        "endLine": 15,
+        "endChar": 42
+      },
+      "revId": "952e3be7e83f419da8a4df10bc48f8ee844c0d19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c62bcf7_b3ef1f85",
+        "filename": "ui/views/painter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-01T16:05:00Z",
+      "side": 1,
+      "message": "done and removed others too",
+      "parentUuid": "4a869ee1_d3747b29",
       "range": {
         "startLine": 15,
         "startChar": 27,
