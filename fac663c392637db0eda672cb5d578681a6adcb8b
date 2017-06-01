@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65d6916a_1cc219b6",
+        "filename": "components/download/internal/scheduler/device_status.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-01T18:26:06Z",
+      "side": 1,
+      "message": "Battery status",
+      "revId": "fac663c392637db0eda672cb5d578681a6adcb8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "401a1755_a36b3d8b",
+        "filename": "components/download/internal/scheduler/device_status.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-01T18:26:06Z",
+      "side": 1,
+      "message": "nit: s/Meet/Meets/  and below.",
+      "revId": "fac663c392637db0eda672cb5d578681a6adcb8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "405bedb5_6e604afd",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-01T18:26:06Z",
+      "side": 1,
+      "message": "nit: May be make \ndevice_status.MeetsRequirements(current_params) and remove the parenthesis from \"!(\"",
+      "range": {
+        "startLine": 96,
+        "startChar": 24,
+        "endLine": 96,
+        "endChar": 37
+      },
+      "revId": "fac663c392637db0eda672cb5d578681a6adcb8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd5da6e_2faba02d",
+        "filename": "components/download/internal/scheduler/scheduler_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-01T18:26:06Z",
+      "side": 1,
+      "message": "Should it be std::vector\u003cDownloadClient\u003e ?",
+      "range": {
+        "startLine": 46,
+        "startChar": 14,
+        "endLine": 46,
+        "endChar": 17
+      },
+      "revId": "fac663c392637db0eda672cb5d578681a6adcb8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
