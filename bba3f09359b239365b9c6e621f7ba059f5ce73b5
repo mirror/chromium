@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "600b2a8a_0549b696",
+        "filename": "content/child/runtime_features.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-01T01:35:10Z",
+      "side": 1,
+      "message": "Is there a bug for RemotePlayback on desktop or should I file one?",
+      "parentUuid": "d5c5fcae_598cdfd0",
+      "range": {
+        "startLine": 54,
+        "startChar": 57,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "bba3f09359b239365b9c6e621f7ba059f5ce73b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da6bba31_13bee4c0",
         "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-05-31T18:40:33Z",
       "side": 1,
       "message": "Per spec this should also be NotSupportedError if availability monitoring is disabled.\n\nhttps://w3c.github.io/remote-playback/#prompt-user-for-changing-remote-playback-state",
+      "revId": "bba3f09359b239365b9c6e621f7ba059f5ce73b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34980613_c66cf2ae",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-01T01:35:10Z",
+      "side": 1,
+      "message": "It intentionally throws NotFoundError here.\n\nWhen NotSupportedError for background monitoring is thrown, the web authors are encouraged to show the remote playback initiation UI and call prompt() to start \"foreground\" search for devices (our default cast button should do the same). Which would just throw another NotSupportedError when the backend is disabled, but only after the user gesture with an intent to start remote playback. This would result in a bad user experience.\n\nReturning NotFoundError will cause any website using the API to simply hide the UI.",
+      "parentUuid": "da6bba31_13bee4c0",
       "revId": "bba3f09359b239365b9c6e621f7ba059f5ce73b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
