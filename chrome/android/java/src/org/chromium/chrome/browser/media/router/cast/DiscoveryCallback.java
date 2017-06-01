@@ -43,6 +43,10 @@ public class DiscoveryCallback extends MediaRouter.Callback {
         }
     }
 
+    public boolean hasSourceUrn(String sourceUrn) {
+        return mSourceUrns.contains(sourceUrn);
+    }
+
     public void removeSourceUrn(String sourceUrn) {
         mSourceUrns.remove(sourceUrn);
     }
