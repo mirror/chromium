@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c45d185_e39ba9ef",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-01T18:14:33Z",
+      "side": 1,
+      "message": "Now that the results are loaded by loading \"full_results_jsonp.json\", could this div be removed?",
+      "revId": "f570852b468d32c97ead1eeb95df8e05fb645f23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82084eb_ab1c3e89",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-01T18:14:33Z",
+      "side": 1,
+      "message": "Just wondering, for curiosity: do you know if there\u0027s a difference between this and the the way using the keyword \"class\"? e.g.\n\n    class Traversal { \n      constructor(testRoot) {\n        this.root \u003d testRoot;\n      }\n      \n      traverse(filter, action) {\n        ...\n      }\n\n      reset() {\n        ...\n      }\n    }",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 0
+      },
+      "revId": "f570852b468d32c97ead1eeb95df8e05fb645f23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0faf40b_5ca3412c",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-01T18:14:33Z",
+      "side": 1,
+      "message": "Nit: there\u0027s a four-space indent here, but two-space indent elsewhere.",
+      "revId": "f570852b468d32c97ead1eeb95df8e05fb645f23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "613ef125_b6612867",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-01T18:14:33Z",
+      "side": 1,
+      "message": "Where is this relative to? the layout test results dir in the build dir? Test links still work when this is loaded via file://, right?\nSide note: sometime, third_party/WebKit will likely be moved, but I think at that time we can do a search-replace and update this path.",
+      "revId": "f570852b468d32c97ead1eeb95df8e05fb645f23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c9573ed_c7eb212e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/manager.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-01T18:14:33Z",
+      "side": 1,
+      "message": "This comment now also applies to the new jsonp file; the comments could be updated to explain that full_results_jsonp is used for test-expectations.html and also has a \"callback\" wrapper so that the data can be loaded from a file url.",
+      "range": {
+        "startLine": 504,
+        "startChar": 0,
+        "endLine": 505,
+        "endChar": 75
+      },
+      "revId": "f570852b468d32c97ead1eeb95df8e05fb645f23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
