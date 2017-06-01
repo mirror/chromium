@@ -260,34 +260,14 @@ std::unique_ptr<views::View> CreateProductLogoFooterView() {
   return content_view;
 }
 
-std::unique_ptr<views::View> GetShippingAddressLabelWithError(
-    AddressStyleType type,
-    const std::string& locale,
-    const autofill::AutofillProfile& profile,
-    const base::string16& error,
-    bool disabled_state) {
-  std::unique_ptr<views::View> base_label =
-      GetShippingAddressLabel(type, locale, profile, disabled_state);
-
-  if (!error.empty()) {
-    std::unique_ptr<views::Label> label =
-        base::MakeUnique<views::Label>(error, CONTEXT_DEPRECATED_SMALL);
-    label->set_id(static_cast<int>(DialogViewID::PROFILE_LABEL_ERROR));
-    // Error information is typically in red.
-    label->SetEnabledColor(label->GetNativeTheme()->GetSystemColor(
-        ui::NativeTheme::kColorId_AlertSeverityHigh));
-    base_label->AddChildView(label.release());
-  }
-  return base_label;
-}
-
 std::unique_ptr<views::View> GetShippingAddressLabelWithMissingInfo(
     AddressStyleType type,
     const std::string& locale,
     const autofill::AutofillProfile& profile,
-    const PaymentsProfileComparator& comp) {
+    const PaymentsProfileComparator& comp,
+    bool disabled_state) {
   std::unique_ptr<views::View> base_label =
-      GetShippingAddressLabel(type, locale, profile, /*disabled_state=*/false);
+      GetShippingAddressLabel(type, locale, profile, disabled_state);
 
   base::string16 missing = comp.GetStringForMissingShippingFields(profile);
   if (!missing.empty()) {
