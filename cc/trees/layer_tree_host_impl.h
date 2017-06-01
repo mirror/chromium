@@ -129,6 +129,8 @@ class LayerTreeHostImplClient {
 
   virtual void NeedsImplSideInvalidation() = 0;
 
+  virtual void RequestBeginMainFrameNotExpected(bool new_state) = 0;
+
  protected:
   virtual ~LayerTreeHostImplClient() {}
 };
