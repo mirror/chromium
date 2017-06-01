@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cc571a1_3c02d37a",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/FastSharedBufferReaderTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-06-01T17:01:34Z",
+      "side": 1,
+      "message": "I think you can drop wrapping in an sk_sp, because make_ already puts it in one.",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 23
+      },
+      "revId": "966e05d0cbe681095abe30d172d76d49dda4ee32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01ae9b52_5c783abe",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/FastSharedBufferReaderTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-06-01T17:01:34Z",
+      "side": 1,
+      "message": "Same.",
+      "range": {
+        "startLine": 223,
+        "startChar": 8,
+        "endLine": 223,
+        "endChar": 25
+      },
+      "revId": "966e05d0cbe681095abe30d172d76d49dda4ee32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
