@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "502557ee_aea970bb",
+        "filename": "ios/shared/chrome/browser/ui/browser_list/browser_list_session_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-06-01T10:57:28Z",
+      "side": 1,
+      "message": "\"the block passed to\"",
+      "revId": "15be03f332a24506e7304c70f8fa1037b2363230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3193af38_2739cba3",
+        "filename": "ios/shared/chrome/browser/ui/browser_list/browser_list_session_service_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-06-01T10:57:28Z",
+      "side": 1,
+      "message": "Is this currently only used by the new app, whereas the implementation in TabModel is used by the old app?",
+      "revId": "15be03f332a24506e7304c70f8fa1037b2363230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
