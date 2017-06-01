@@ -217,7 +217,7 @@ void BlinkAXTreeSource::Freeze() {
   root_ = ComputeRoot();
 
   if (!document_.IsNull())
-    focus_ = document_.FocusedAccessibilityObject();
+    focus_ = WebAXObject::FromWebDocumentFocused(document_);
   else
     focus_ = WebAXObject();
 }
@@ -303,7 +303,7 @@ blink::WebAXObject BlinkAXTreeSource::GetRoot() const {
 }
 
 blink::WebAXObject BlinkAXTreeSource::GetFromId(int32_t id) const {
-  return GetMainDocument().AccessibilityObjectFromID(id);
+  return blink::WebAXObject::FromWebDocumentByID(GetMainDocument(), id);
 }
 
 int32_t BlinkAXTreeSource::GetId(blink::WebAXObject node) const {
@@ -889,7 +889,7 @@ WebAXObject BlinkAXTreeSource::ComputeRoot() const {
 
   WebDocument document = render_frame_->GetWebFrame()->GetDocument();
   if (!document.IsNull())
-    return document.AccessibilityObject();
+    return WebAXObject::FromWebDocument(document);
 
   return WebAXObject();
 }
