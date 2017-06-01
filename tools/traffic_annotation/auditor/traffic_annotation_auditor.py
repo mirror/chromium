@@ -11,8 +11,8 @@ import datetime
 import os
 import subprocess
 import sys
-import tempfile
 
+from compute_hash_value import ComputeStringHash
 from traffic_annotation_file_filter import TrafficAnnotationFileFilter
 
 
@@ -23,26 +23,6 @@ PrepareProtobuf()
 
 from google.protobuf import text_format
 import traffic_annotation_pb2
-
-
-def _RecursiveHash(string):
-  if len(string) == 1:
-    return ord(string[0])
-  last_character = ord(string[-1])
-  string = string[:-1]
-  return (_RecursiveHash(string) * 31 + last_character) % 138003713
-
-
-def _ComputeStringHash(unique_id):
-  """Computes the hash value of a string, as in
-  'net/traffic_annotation/network_traffic_annotation.h'.
-  args:
-    unique_id: str The string to be converted to hash code.
-
-  Returns:
-    unsigned int Hash code of the input string
-  """
-  return _RecursiveHash(unique_id) if len(unique_id) else -1
 
 
 def _RunClangTool(src_dir, build_dir, path_filters, prefilter_files):
@@ -135,7 +115,7 @@ def _ParsRawAnnotations(raw_annotations):
 
         new_metadata = {"function_type": lines[current + 4],
                         "extra_id": lines[current + 6],
-                        "unique_id_hash": _ComputeStringHash(unique_id)}
+                        "unique_id_hash": ComputeStringHash(unique_id)}
         # Extract serialized proto.
         current += 7
         annotation_text = ""
@@ -229,7 +209,7 @@ def _WriteHashCodesFile(annotations, metadata, file_path):
   for annotation, meta in zip(annotations.network_traffic_annotation, metadata):
     hash_list += ["%s,%s" % (annotation.unique_id, meta["unique_id_hash"])]
   for keyword in ("test", "test_partial", "undefined", "missing"):
-    hash_list += ["%s,%s" % (keyword, _ComputeStringHash(keyword))]
+    hash_list += ["%s,%s" % (keyword, ComputeStringHash(keyword))]
   open(file_path, "w").write("\n".join(sorted(hash_list)))
 
 
