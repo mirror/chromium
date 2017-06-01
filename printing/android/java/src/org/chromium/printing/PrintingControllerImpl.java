@@ -277,7 +277,6 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
         if (mPrintingState == PRINTING_STATE_STARTED_FROM_ONLAYOUT) {
             PrintDocumentInfo info = new PrintDocumentInfo.Builder(mPrintable.getTitle())
                     .setContentType(PrintDocumentInfo.CONTENT_TYPE_DOCUMENT)
-                    .setPageCount(mLastKnownMaxPages)
                     .build();
             mOnLayoutCallback.onLayoutFinished(info, mNeedNewPdf);
         } else if (mPrintingState == PRINTING_STATE_STARTED_FROM_ONWRITE) {
