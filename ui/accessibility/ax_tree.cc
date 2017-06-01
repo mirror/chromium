@@ -11,6 +11,7 @@
 #include "base/logging.h"
 #include "base/strings/stringprintf.h"
 #include "ui/accessibility/ax_node.h"
+#include "ui/gfx/transform.h"
 
 namespace ui {
 
@@ -158,6 +159,54 @@ void AXTree::UpdateData(const AXTreeData& data) {
   data_ = data;
   if (delegate_)
     delegate_->OnTreeDataChanged(this);
+}
+
+gfx::RectF AXTree::RelativeToTreeBounds(const AXNode* node,
+                                        gfx::RectF bounds) const {
+  if (bounds.IsEmpty()) {
+    bounds = node->data().location;
+    if (bounds.IsEmpty()) {
+      for (size_t i = 0; i < node->children().size(); i++) {
+        ui::AXNode* child = node->children()[i];
+        bounds.Union(GetTreeBounds(child));
+      }
+      return bounds;
+    }
+  } else {
+    bounds.Offset(node->data().location.x(), node->data().location.y());
+  }
+
+  while (node != nullptr) {
+    if (node->data().transform)
+      node->data().transform->TransformRect(&bounds);
+    auto* container = GetFromId(node->data().offset_container_id);
+    if (!container) {
+      if (node == root())
+        container = node->parent();
+      else
+        container = root();
+    }
+    if (!container || container == node)
+      break;
+
+    gfx::RectF container_bounds = container->data().location;
+    bounds.Offset(container_bounds.x(), container_bounds.y());
+
+    int scroll_x = 0;
+    int scroll_y = 0;
+    if (container->data().GetIntAttribute(ui::AX_ATTR_SCROLL_X, &scroll_x) &&
+        container->data().GetIntAttribute(ui::AX_ATTR_SCROLL_Y, &scroll_y)) {
+      bounds.Offset(-scroll_x, -scroll_y);
+    }
+
+    node = container;
+  }
+
+  return bounds;
+}
+
+gfx::RectF AXTree::GetTreeBounds(const AXNode* node) const {
+  return RelativeToTreeBounds(node, gfx::RectF());
 }
 
 bool AXTree::Unserialize(const AXTreeUpdate& update) {

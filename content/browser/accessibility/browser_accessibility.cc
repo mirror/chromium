@@ -1098,36 +1098,21 @@ gfx::Rect BrowserAccessibility::RelativeToAbsoluteBounds(
     bool frame_only) const {
   const BrowserAccessibility* node = this;
   while (node) {
-    if (node->GetData().transform)
-      node->GetData().transform->TransformRect(&bounds);
+    bounds =
+        node->manager()->ax_tree()->RelativeToTreeBounds(node->node(), bounds);
 
-    const BrowserAccessibility* container =
-        node->manager()->GetFromID(node->GetData().offset_container_id);
-    if (!container) {
-      if (node == node->manager()->GetRoot() && !frame_only) {
-        container = node->PlatformGetParent();
-      } else {
-        container = node->manager()->GetRoot();
-      }
-    }
-
-    if (!container || container == node)
-      break;
-
-    gfx::RectF container_bounds = container->GetLocation();
-    bounds.Offset(container_bounds.x(), container_bounds.y());
-
-    if (container->manager()->UseRootScrollOffsetsWhenComputingBounds() ||
-        container->PlatformGetParent()) {
+    // On some platforms we need to unapply root scroll offsets.
+    if (!node->manager()->UseRootScrollOffsetsWhenComputingBounds() &&
+        !node->manager()->GetRoot()->PlatformGetParent()) {
       int sx = 0;
       int sy = 0;
-      if (container->GetIntAttribute(ui::AX_ATTR_SCROLL_X, &sx) &&
-          container->GetIntAttribute(ui::AX_ATTR_SCROLL_Y, &sy)) {
-        bounds.Offset(-sx, -sy);
+      if (node->GetIntAttribute(ui::AX_ATTR_SCROLL_X, &sx) &&
+          node->GetIntAttribute(ui::AX_ATTR_SCROLL_Y, &sy)) {
+        bounds.Offset(sx, sy);
       }
     }
 
-    node = container;
+    node = node->manager()->GetRoot()->PlatformGetParent();
   }
 
   return gfx::ToEnclosingRect(bounds);
