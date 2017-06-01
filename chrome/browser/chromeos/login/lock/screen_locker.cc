@@ -54,6 +54,7 @@
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/session_manager_client.h"
 #include "chromeos/login/auth/authenticator.h"
+#include "chromeos/login/auth/authpolicy_login_helper.h"
 #include "chromeos/login/auth/extended_authenticator.h"
 #include "chromeos/network/portal_detector/network_portal_detector.h"
 #include "components/session_manager/core/session_manager.h"
@@ -418,6 +419,19 @@ void ScreenLocker::Authenticate(const UserContext& user_context) {
                                 weak_factory_.GetWeakPtr(), updated_context)));
       return;
     }
+  }
+
+  if (user_context.GetAccountId().GetAccountType() ==
+      AccountType::ACTIVE_DIRECTORY) {
+    DCHECK(user_context.GetKey()->GetKeyType() == Key::KEY_TYPE_PASSWORD_PLAIN);
+    // Try to get kerberos TGT while we have user's password typed on the lock
+    // screen. Failure to get TGT here is OK - that could mean e.g. Active
+    // Directory server is not reachable. AuthPolicyCredentialsManager regularly
+    // checks TGT status inside the user session.
+    AuthPolicyLoginHelper::TryAuthenticateUser(
+        user_context.GetAccountId().GetUserEmail(),
+        user_context.GetAccountId().GetObjGuid(),
+        user_context.GetKey()->GetSecret());
   }
 
   BrowserThread::PostTask(

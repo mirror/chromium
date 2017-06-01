@@ -402,8 +402,11 @@ ExistingUserController::~ExistingUserController() {
 
 void ExistingUserController::CancelPasswordChangedFlow() {
   login_performer_.reset(nullptr);
-  if (authpolicy_login_helper_)
-    authpolicy_login_helper_->CancelRequestsAndRestart();
+  if (last_login_attempt_account_id_.GetAccountType() ==
+      AccountType::ACTIVE_DIRECTORY) {
+    // Clear authpolicyd state so nothing could leak from one user to another.
+    AuthPolicyLoginHelper::Restart();
+  }
   PerformLoginFinishedActions(true /* start auto login timer */);
 }
 
@@ -488,15 +491,14 @@ void ExistingUserController::PerformLogin(
   if (user_context.GetAccountId().GetAccountType() ==
       AccountType::ACTIVE_DIRECTORY) {
     DCHECK(user_context.GetKey()->GetKeyType() == Key::KEY_TYPE_PASSWORD_PLAIN);
-    if (!authpolicy_login_helper_)
-      authpolicy_login_helper_ = base::MakeUnique<AuthPolicyLoginHelper>();
     // Try to get kerberos TGT while we have user's password typed on the pod
     // screen. Failure to get TGT here is OK - that could mean e.g. Active
     // Directory server is not reachable. We don't want to have user wait for
-    // the Active Directory Authentication on the pod screen. In the follow-up
-    // CL we're gonna create KeyedService inside the user session which would
-    // get status about last authentication and handle possible failures.
-    authpolicy_login_helper_->TryAuthenticateUser(
+    // the Active Directory Authentication on the pod screen.
+    // AuthPolicyCredentialsManager will be created inside the user session
+    // which would get status about last authentication and handle possible
+    // failures.
+    AuthPolicyLoginHelper::TryAuthenticateUser(
         user_context.GetAccountId().GetUserEmail(),
         user_context.GetAccountId().GetObjGuid(),
         user_context.GetKey()->GetSecret());
@@ -757,8 +759,11 @@ void ExistingUserController::OnAuthFailure(const AuthFailure& failure) {
   if (auth_status_consumer_)
     auth_status_consumer_->OnAuthFailure(failure);
 
-  if (authpolicy_login_helper_)
-    authpolicy_login_helper_->CancelRequestsAndRestart();
+  if (last_login_attempt_account_id_.GetAccountType() ==
+      AccountType::ACTIVE_DIRECTORY) {
+    // Clear authpolicyd state so nothing could leak from one user to another.
+    AuthPolicyLoginHelper::Restart();
+  }
   ClearRecordedNames();
 
   // TODO(ginkage): Fix this case once crbug.com/469990 is ready.
@@ -927,8 +932,11 @@ void ExistingUserController::WhiteListCheckFailed(const std::string& email) {
         AuthFailure(AuthFailure::WHITELIST_CHECK_FAILED));
   }
 
-  if (authpolicy_login_helper_)
-    authpolicy_login_helper_->CancelRequestsAndRestart();
+  if (last_login_attempt_account_id_.GetAccountType() ==
+      AccountType::ACTIVE_DIRECTORY) {
+    // Clear authpolicyd state so nothing could leak from one user to another.
+    AuthPolicyLoginHelper::Restart();
+  }
   ClearRecordedNames();
 }
 
@@ -936,8 +944,11 @@ void ExistingUserController::PolicyLoadFailed() {
   ShowError(IDS_LOGIN_ERROR_OWNER_KEY_LOST, "");
 
   PerformLoginFinishedActions(false /* don't start auto login timer */);
-  if (authpolicy_login_helper_)
-    authpolicy_login_helper_->CancelRequestsAndRestart();
+  if (last_login_attempt_account_id_.GetAccountType() ==
+      AccountType::ACTIVE_DIRECTORY) {
+    // Clear authpolicyd state so nothing could leak from one user to another.
+    AuthPolicyLoginHelper::Restart();
+  }
   ClearRecordedNames();
 }
 
