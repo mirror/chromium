@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "adcfd852_377ace91",
+        "filename": "cc/layers/picture_image_layer.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-01T17:31:13Z",
+      "side": 1,
+      "message": "Sure. I copied a similar helper from quad_f.cc to MathUtil and used that.",
+      "parentUuid": "229b193a_2dd89495",
+      "revId": "32cb081efe953180efee062cfd8a3e2e233c712b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "feebed64_7563fc5d",
         "filename": "cc/paint/display_item_list.cc",
         "patchSetId": 31
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-01T17:18:23Z",
       "side": 1,
       "message": "I\u0027m a bit unconvinced that this can\u0027t happen. There can be a layer that has two opposite corners filled with content, but nothing otherwise. So, if we query any tile that isn\u0027t in those opposite corners, we would expect to see nothing.\n\nIn fact, talking to chrishtr, we (or rather he) came up with this example:\n\u003c!doctype HTML\u003e\n\n\u003cstyle\u003e\ndiv {\n  width: 100px;\n  height: 100px;\n  position: absolute;\n}\n.composited {\n    background: lightblue;\n    will-change: transform;\n}\n.notcomposited {\n    background: lightgray;\n}\n\u003c/style\u003e\n\n\u003cdiv id\u003dA class\u003dcomposited style\u003d\"left: 0px; top: 0px;\"\u003e\u003c/div\u003e\n\u003cdiv id\u003dB class\u003dcomposited style\u003d\"left: 300px; top: 300px;\"\u003e\u003c/div\u003e\n\u003cdiv id\u003dC class\u003dnotcomposited style\u003d\"left: 0px; top: 50px;\"\u003e\u003c/div\u003e\n\u003cdiv id\u003dD class\u003dnotcomposited style\u003d\"left: 250px; top: 250px;\"\u003e\u003c/div\u003e\n\nHere, C and D share a layer but nothing between them, so we can push out the layer size to be arbitrarily large so that we get tiles in the blank regions. To be fair, these will probably be determined to be solid color, but since (and iirc) the solid color analysis still goes through the raster path, this case is valid.\n\nI guess, the code here is correct and should remain, it\u0027s just the comment might need to be adjusted to be a description of why this can happen instead of a TODO",
+      "revId": "32cb081efe953180efee062cfd8a3e2e233c712b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14877cc2_19cfcd19",
+        "filename": "cc/paint/display_item_list.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-01T17:31:13Z",
+      "side": 1,
+      "message": "Ok, thanks. Dropped the TODO",
+      "parentUuid": "feebed64_7563fc5d",
       "revId": "32cb081efe953180efee062cfd8a3e2e233c712b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "32cb081efe953180efee062cfd8a3e2e233c712b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fccbc806_3c987dc9",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-01T17:31:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b9b2edb_1594280f",
+      "revId": "32cb081efe953180efee062cfd8a3e2e233c712b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
