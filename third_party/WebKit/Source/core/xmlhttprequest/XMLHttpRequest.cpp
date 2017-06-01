@@ -1304,29 +1304,35 @@ void XMLHttpRequest::overrideMimeType(const AtomicString& mime_type,
 void XMLHttpRequest::setRequestHeader(const AtomicString& name,
                                       const AtomicString& value,
                                       ExceptionState& exception_state) {
-  if (state_ != kOpened || send_flag_) {
+  if (state_ != kOpened) {
     exception_state.ThrowDOMException(kInvalidStateError,
-                                      "The object's state must be OPENED.");
+                                      "The state of the object is not opened.");
+    return;
+  }
+  if (send_flag_) {
+    exception_state.ThrowDOMException(
+        kInvalidStateError, "The the send() flag of the object is set.");
     return;
   }
 
   if (!IsValidHTTPToken(name)) {
     exception_state.ThrowDOMException(
-        kSyntaxError, "'" + name + "' is not a valid HTTP header field name.");
+        kSyntaxError, "The given value '" + name +
+                          "' is not a valid HTTP header field name.");
     return;
   }
 
   if (!IsValidHTTPHeaderValue(value)) {
     exception_state.ThrowDOMException(
-        kSyntaxError,
-        "'" + value + "' is not a valid HTTP header field value.");
+        kSyntaxError, "The given value '" + value +
+                          "' is not a valid HTTP header field value.");
     return;
   }
 
   // No script (privileged or not) can set unsafe headers.
   if (FetchUtils::IsForbiddenHeaderName(name)) {
-    LogConsoleError(GetExecutionContext(),
-                    "Refused to set unsafe header \"" + name + "\"");
+    LogConsoleError(GetExecutionContext(), "The given name '" + name +
+                                               "' is a forbidden header name.");
     return;
   }
 
