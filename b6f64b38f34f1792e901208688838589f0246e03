@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f85cfca5_3454eb01",
+        "filename": "third_party/WebKit/Source/core/dom/custom/CustomElementRegistry.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-01T04:08:55Z",
+      "side": 1,
+      "message": "Can we add DCHECK(id \u003e\u003d 0 \u0026\u0026 id \u003c definitions_.size()) ? The caller site of DefinitionForId should return nullptr if  the id is not in the valid range.",
+      "revId": "b6f64b38f34f1792e901208688838589f0246e03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
