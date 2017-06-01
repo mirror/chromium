@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "a0e6e74f_ee843c8e",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-01T00:20:04Z",
+      "side": 1,
+      "message": "Traceback (most recent call last):\n  File \"../../build/android/gyp/dex.py\", line 247, in \u003cmodule\u003e\n    sys.exit(main(sys.argv[1:]))\n  File \"../../build/android/gyp/dex.py\", line 243, in main\n    pass_changes\u003dTrue)\n  File \"/usr/local/google/code/clankium/src/build/android/gyp/util/build_utils.py\", line 583, in CallAndWriteDepfileIfStale\n    pass_changes\u003dTrue)\n  File \"/usr/local/google/code/clankium/src/build/android/gyp/util/md5_check.py\", line 87, in CallAndRecordIfStale\n    function(*args)\n  File \"/usr/local/google/code/clankium/src/build/android/gyp/util/build_utils.py\", line 566, in on_stale_md5\n    function(*args)\n  File \"../../build/android/gyp/dex.py\", line 237, in \u003clambda\u003e\n    lambda changes: _OnStaleMd5(changes, options, dex_cmd, paths),\n  File \"../../build/android/gyp/dex.py\", line 185, in _OnStaleMd5\n    _RunDx(changes, options, dex_cmd, paths)\n  File \"../../build/android/gyp/dex.py\", line 178, in _RunDx\n    build_utils.CheckOutput(dex_cmd, print_stderr\u003dFalse)\n  File \"/usr/local/google/code/clankium/src/build/android/gyp/util/build_utils.py\", line 170, in CheckOutput\n    raise CalledProcessError(cwd, args, stdout + stderr)\n\n\u003c100 or so lines of listed .dex.jar files\u003e\n\nUNEXPECTED TOP-LEVEL EXCEPTION:\ncom.android.dex.DexException: Multiple dex files define Ljavax/annotation/CheckForNull;\n\tat com.android.dx.merge.DexMerger.readSortableTypes(DexMerger.java:596)\n\tat com.android.dx.merge.DexMerger.getSortedTypes(DexMerger.java:554)\n\tat com.android.dx.merge.DexMerger.mergeClassDefs(DexMerger.java:535)\n\tat com.android.dx.merge.DexMerger.mergeDexes(DexMerger.java:171)\n\tat com.android.dx.merge.DexMerger.merge(DexMerger.java:189)\n\tat com.android.dx.command.dexer.Main.mergeLibraryDexBuffers(Main.java:502)\n\tat com.android.dx.command.dexer.Main.runMonoDex(Main.java:334)\n\tat com.android.dx.command.dexer.Main.run(Main.java:277)\n\tat com.android.dx.command.dexer.Main.main(Main.java:245)\n\tat com.android.dx.command.Main.main(Main.java:106)\n\nMy initial (quite possibly wrong) guess is that this has to do with the //third_party/gvr-android-sdk:controller_test_api_java dependency in chrome_test_vr_java. When we were initially open sourcing that library, we had a number of \"Multiple dex files define X\" errors that were fixed by removing those definitions from the library when it was built. Perhaps it doesn\u0027t like being included in two different APKs.",
+      "parentUuid": "374b305c_9919f95f",
+      "range": {
+        "startLine": 584,
+        "startChar": 17,
+        "endLine": 584,
+        "endChar": 28
+      },
+      "revId": "062d9947153d7926c8ae2437a2acfdb10b80c24d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddc3afa9_4dca85ad",
         "filename": "chrome/android/BUILD.gn",
         "patchSetId": 4
