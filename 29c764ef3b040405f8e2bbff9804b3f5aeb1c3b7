@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ffd75ae_ab874637",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-01T17:59:54Z",
+      "side": 1,
+      "message": "We need to set assert here and skip OOBE negotiator for AD users.",
+      "range": {
+        "startLine": 701,
+        "startChar": 6,
+        "endLine": 701,
+        "endChar": 33
+      },
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a64642f_753314fc",
+        "filename": "chrome/browser/chromeos/arc/optin/arc_active_directory_auth_default_negotiator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-01T17:59:54Z",
+      "side": 1,
+      "message": "nit: Why DEFAULT? Probably ArcActiveDirectoryAuthNegatiator is better",
+      "range": {
+        "startLine": 6,
+        "startChar": 68,
+        "endLine": 6,
+        "endChar": 75
+      },
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a522276e_2b903c58",
+        "filename": "chrome/browser/chromeos/arc/optin/arc_active_directory_auth_default_negotiator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-01T17:59:54Z",
+      "side": 1,
+      "message": "nit: ArcTermsOfServiceDefaultNegotiator has handler. Could we inherit from this and reuse\nvoid ArcTermsOfServiceDefaultNegotiator::OnAuthSucceeded(\nvoid ArcTermsOfServiceDefaultNegotiator::OnSendFeedbackClicked() {",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 22
+      },
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4490ba8_9c873ca0",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-01T17:59:54Z",
+      "side": 1,
+      "message": "Why metrics are ignored?",
+      "range": {
+        "startLine": 727,
+        "startChar": 8,
+        "endLine": 727,
+        "endChar": 24
+      },
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb0b2f84_a353d205",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-01T17:59:54Z",
+      "side": 1,
+      "message": "nit: I would prefer to handle missing param in handler.",
+      "range": {
+        "startLine": 728,
+        "startChar": 8,
+        "endLine": 728,
+        "endChar": 30
+      },
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc54102c_520750e2",
+        "filename": "chrome/browser/resources/chromeos/arc_support/main.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-01T17:59:54Z",
+      "side": 1,
+      "message": "Why there is no button Cancel? What if user closes this page. This should be equivalent to close.",
+      "range": {
+        "startLine": 140,
+        "startChar": 28,
+        "endLine": 140,
+        "endChar": 38
+      },
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
