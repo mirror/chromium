@@ -177,10 +177,27 @@ class PlatformKeysService : public KeyedService {
       const SelectCertificatesCallback& callback,
       content::WebContents* web_contents);
 
+  // If the certificate was found, |error_message| will be empty and
+  // |hash_supported| will be set to true if the certificate supports the
+  // requested hash algorithm. If the certificate was not found or on other
+  // errors, |error_message| will be non-empty.
+  using CertificateSupportsHashCallback =
+      base::Callback<void(bool hash_supported,
+                          const std::string& error_message)>;
+
+  // Tries to find the certificate identified by |public_key| and determines if
+  // it supports signing data using the passed |hash_algorithm|. |callback| will
+  // be invoked with the result.
+  void CertificateSupportsHash(const std::string& token_id,
+                               const std::string& public_key,
+                               platform_keys::HashAlgorithm hash_algorithm,
+                               const CertificateSupportsHashCallback& callback);
+
  private:
   class GenerateRSAKeyTask;
   class SelectTask;
   class SignTask;
+  class CertificateSupportsHashTask;
   class Task;
 
   // Starts |task| eventually. To ensure that at most one |Task| is running at a

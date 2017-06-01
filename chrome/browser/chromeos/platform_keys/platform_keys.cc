@@ -50,6 +50,12 @@ void IntersectOnWorkerThread(const net::CertificateList& certs1,
 const char kTokenIdUser[] = "user";
 const char kTokenIdSystem[] = "system";
 
+const char kErrorInternal[] = "Internal Error.";
+const char kErrorKeyNotFound[] = "Key not found.";
+const char kErrorCertificateNotFound[] = "Certificate could not be found.";
+const char kErrorAlgorithmNotSupported[] = "Algorithm not supported.";
+const char kErrorHashNotSupported[] = "Hash not supported.";
+
 ClientCertificateRequest::ClientCertificateRequest() {
 }
 
