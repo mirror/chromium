@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f32869c3_cf8ec314",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-01T20:35:14Z",
+      "side": 1,
+      "message": "What about good old promises?\nfoo().then(() \u003d\u003e node.remove())",
+      "revId": "c628bebc85586067c70b2cd5f0407a66a78dfbe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
