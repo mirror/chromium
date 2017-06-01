@@ -5,9 +5,11 @@
 #include "net/http/http_response_info.h"
 
 #include "base/pickle.h"
+#include "net/base/host_port_pair.h"
 #include "net/cert/signed_certificate_timestamp.h"
 #include "net/cert/signed_certificate_timestamp_and_status.h"
 #include "net/http/http_response_headers.h"
+#include "net/proxy/proxy_server.h"
 #include "net/ssl/ssl_connection_status_flags.h"
 #include "net/test/cert_test_util.h"
 #include "net/test/ct_test_util.h"
@@ -88,7 +90,7 @@ TEST_F(HttpResponseInfoTest, FailsInitFromPickleWithInvalidSCTStatus) {
   base::Pickle pickle;
   response_info_.Persist(&pickle, false, false);
   bool truncated = false;
-  net::HttpResponseInfo restored_response_info;
+  HttpResponseInfo restored_response_info;
   EXPECT_TRUE(restored_response_info.InitFromPickle(pickle, &truncated));
 
   response_info_.ssl_info.signed_certificate_timestamps.push_back(
@@ -96,7 +98,7 @@ TEST_F(HttpResponseInfoTest, FailsInitFromPickleWithInvalidSCTStatus) {
                                           static_cast<ct::SCTVerifyStatus>(2)));
   base::Pickle pickle_invalid;
   response_info_.Persist(&pickle_invalid, false, false);
-  net::HttpResponseInfo restored_invalid_response;
+  HttpResponseInfo restored_invalid_response;
   EXPECT_FALSE(
       restored_invalid_response.InitFromPickle(pickle_invalid, &truncated));
 }
@@ -111,7 +113,7 @@ TEST_F(HttpResponseInfoTest, KeyExchangeGroupECDHE) {
       0xcca8 /* TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256 */,
       &response_info_.ssl_info.connection_status);
   response_info_.ssl_info.key_exchange_group = 23;  // X25519
-  net::HttpResponseInfo restored_response_info;
+  HttpResponseInfo restored_response_info;
   PickleAndRestore(response_info_, &restored_response_info);
   EXPECT_EQ(23, restored_response_info.ssl_info.key_exchange_group);
 }
@@ -125,7 +127,7 @@ TEST_F(HttpResponseInfoTest, KeyExchangeGroupTLS13) {
   SSLConnectionStatusSetCipherSuite(0x1303 /* TLS_CHACHA20_POLY1305_SHA256 */,
                                     &response_info_.ssl_info.connection_status);
   response_info_.ssl_info.key_exchange_group = 23;  // X25519
-  net::HttpResponseInfo restored_response_info;
+  HttpResponseInfo restored_response_info;
   PickleAndRestore(response_info_, &restored_response_info);
   EXPECT_EQ(23, restored_response_info.ssl_info.key_exchange_group);
 }
@@ -142,7 +144,7 @@ TEST_F(HttpResponseInfoTest, LegacyKeyExchangeInfoDHE) {
       0x0093 /* TLS_DHE_RSA_WITH_AES_128_GCM_SHA256 */,
       &response_info_.ssl_info.connection_status);
   response_info_.ssl_info.key_exchange_group = 1024;
-  net::HttpResponseInfo restored_response_info;
+  HttpResponseInfo restored_response_info;
   PickleAndRestore(response_info_, &restored_response_info);
   EXPECT_EQ(0, restored_response_info.ssl_info.key_exchange_group);
 }
@@ -158,9 +160,34 @@ TEST_F(HttpResponseInfoTest, LegacyKeyExchangeInfoUnknown) {
   SSLConnectionStatusSetCipherSuite(0xffff,
                                     &response_info_.ssl_info.connection_status);
   response_info_.ssl_info.key_exchange_group = 1024;
-  net::HttpResponseInfo restored_response_info;
+  HttpResponseInfo restored_response_info;
   PickleAndRestore(response_info_, &restored_response_info);
   EXPECT_EQ(0, restored_response_info.ssl_info.key_exchange_group);
+}
+
+// Test that the proxy server is stored correctly.
+TEST_F(HttpResponseInfoTest, ProxyServerPreserved) {
+  const struct {
+    ProxyServer proxy_server;
+  } tests[] = {
+      {ProxyServer()},
+      {ProxyServer::Direct()},
+      {ProxyServer(ProxyServer::SCHEME_HTTP, HostPortPair("foo.com", 80))},
+      {ProxyServer(ProxyServer::SCHEME_HTTPS, HostPortPair("foo.com", 443))},
+      {ProxyServer(ProxyServer::SCHEME_QUIC, HostPortPair("foo.com", 443))},
+      {ProxyServer(ProxyServer::SCHEME_SOCKS4, HostPortPair("foo.com", 443))},
+  };
+
+  for (const auto& test : tests) {
+    // Add another field to verify that this field and the proxy server field
+    // are both read correctly.
+    response_info_.unused_since_prefetch = true;
+    response_info_.proxy_server = test.proxy_server;
+    HttpResponseInfo restored_response_info;
+    PickleAndRestore(response_info_, &restored_response_info);
+    EXPECT_EQ(test.proxy_server, restored_response_info.proxy_server);
+    EXPECT_TRUE(restored_response_info.unused_since_prefetch);
+  }
 }
 
 }  // namespace
