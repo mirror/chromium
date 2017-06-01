@@ -810,14 +810,14 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
             private static final int OPTION_ROW_TYPE_WARNING = 3;
 
             private final int mRowType;
-            private final PaymentOption mOption;
-            private final View mButton;
+            @Nullable private final PaymentOption mOption;
+            @Nullable private final View mButton;
             private final TextView mLabel;
-            private final View mOptionIcon;
-            private final View mEditIcon;
+            @Nullable private final View mOptionIcon;
+            @Nullable private final View mEditIcon;
 
-            public OptionRow(GridLayout parent, int rowIndex, int rowType, PaymentOption item,
-                    boolean isSelected) {
+            public OptionRow(GridLayout parent, int rowIndex, int rowType,
+                    @Nullable PaymentOption item, boolean isSelected) {
                 boolean optionIconExists = item != null && item.getDrawableIcon() != null;
                 boolean editIconExists = item != null && item.isEditable() && isSelected;
                 boolean isEnabled = item != null && item.isValid();
@@ -1348,7 +1348,9 @@ public abstract class PaymentRequestSection extends LinearLayout implements View
         }
 
         private CharSequence convertOptionToString(
-                PaymentOption item, boolean useBoldLabel, boolean singleLine) {
+                @Nullable PaymentOption item, boolean useBoldLabel, boolean singleLine) {
+            if (item == null) return "";
+
             SpannableStringBuilder builder = new SpannableStringBuilder(item.getLabel());
             String labelSeparator = singleLine
                     ? getContext().getString(R.string.autofill_address_summary_separator)
