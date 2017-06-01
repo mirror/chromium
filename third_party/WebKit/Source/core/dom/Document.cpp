@@ -1019,9 +1019,9 @@ V0CustomElementMicrotaskRunQueue* Document::CustomElementMicrotaskRunQueue() {
 }
 
 void Document::ClearImportsController() {
-  imports_controller_ = nullptr;
   if (!Loader())
     fetcher_->ClearContext();
+  imports_controller_ = nullptr;
 }
 
 void Document::CreateImportsController() {
