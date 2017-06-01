@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66fd9b4d_07180eda",
+        "filename": "services/identity/public/cpp/google_service_auth_error_struct_traits.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-01T10:42:21Z",
+      "side": 1,
+      "message": "Nit: return a const ref here, and for any other getter that returns a non-trivial value",
+      "range": {
+        "startLine": 31,
+        "startChar": 9,
+        "endLine": 31,
+        "endChar": 20
+      },
+      "revId": "28fe2aacfa11f89ca33599b6be30a3b76ea9679d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f04f500a_346ed849",
+        "filename": "services/identity/public/cpp/google_service_auth_error_struct_traits.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-01T10:42:21Z",
+      "side": 1,
+      "message": "Please out-of-line the Read() methods in this file; they\u0027re all fairly long.",
+      "range": {
+        "startLine": 35,
+        "startChar": 14,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "28fe2aacfa11f89ca33599b6be30a3b76ea9679d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63280f20_77f395af",
+        "filename": "services/identity/public/cpp/google_service_auth_error_struct_traits.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-01T10:42:21Z",
+      "side": 1,
+      "message": "Will we be able to change this to just use a Mojo enum in the long run?",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 72
+      },
+      "revId": "28fe2aacfa11f89ca33599b6be30a3b76ea9679d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99f45dca_4caf8277",
+        "filename": "services/identity/public/cpp/google_service_auth_error_struct_traits.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-01T10:42:21Z",
+      "side": 1,
+      "message": "Any chance we can use Size from https://cs.chromium.org/chromium/src/ui/gfx/geometry/mojo/geometry.mojom?rcl\u003dd7d3d2fee88d26f0e6cb0fd224db028718813eb2\u0026l\u003d17 and get this for free?",
+      "range": {
+        "startLine": 85,
+        "startChar": 8,
+        "endLine": 85,
+        "endChar": 57
+      },
+      "revId": "28fe2aacfa11f89ca33599b6be30a3b76ea9679d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9da3b7_c42700d0",
+        "filename": "services/identity/public/cpp/scope_set_struct_traits.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-01T10:42:21Z",
+      "side": 1,
+      "message": "This is a bit expensive at the moment, because it\u0027s called twice on serialization. The way to get around this is to use SetUpContext/TearDownContext: https://cs.chromium.org/chromium/src/ui/gfx/mojo/buffer_types_struct_traits.cc?rcl\u003dd7d3d2fee88d26f0e6cb0fd224db028718813eb2\u0026l\u003d13\n\nThis seems to keep coming up, maybe we should just fix https://crbug.com/681080",
+      "range": {
+        "startLine": 14,
+        "startChar": 9,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "28fe2aacfa11f89ca33599b6be30a3b76ea9679d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
