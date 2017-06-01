@@ -249,13 +249,17 @@ base::TimeDelta DecoderStream<StreamType>::AverageDuration() const {
 }
 
 template <DemuxerStream::Type StreamType>
-void DecoderStream<StreamType>::SelectDecoder() {
+void DecoderStream<StreamType>::SelectDecoder(
+    BlacklistOption blacklist_option) {
   // If we are already using DecryptingDemuxerStream (DDS), e.g. during
   // fallback, the |stream_| will always be clear. In this case, no need pass in
   // the |cdm_context_|. This will also help prevent creating a new DDS on top
   // of the current DDS.
   CdmContext* cdm_context = decrypting_demuxer_stream_ ? nullptr : cdm_context_;
-  std::string blacklisted_decoder = decoder_ ? decoder_->GetDisplayName() : "";
+  std::string blacklisted_decoder =
+      decoder_ && blacklist_option == BlacklistOption::BLACKLIST_CURRENT_DECODER
+          ? decoder_->GetDisplayName()
+          : "";
 
   decoder_selector_.reset(new DecoderSelector<StreamType>(
       task_runner_, create_decoders_cb_, media_log_));
@@ -688,6 +692,13 @@ void DecoderStream<StreamType>::ReinitializeDecoder() {
   DCHECK_EQ(pending_decode_requests_, 0);
 
   state_ = STATE_REINITIALIZING_DECODER;
+
+  if (traits_.ShouldFindAnotherDecoder(decoder_.get(), stream_)) {
+    LOG(ERROR) << "Attempting a new decoder selection...";
+    SelectDecoder();
+    return;
+  }
+
   // Decoders should not need a new CDM during reinitialization.
   traits_.InitializeDecoder(
       decoder_.get(), StreamTraits::GetDecoderConfig(stream_),
@@ -743,6 +754,7 @@ void DecoderStream<StreamType>::CompleteDecoderReinitialization(bool success) {
     return;
   }
 
+  LOG(ERROR) << __func__ << " : using " << decoder_->GetDisplayName();
   ReadFromDemuxerStream();
 }
 

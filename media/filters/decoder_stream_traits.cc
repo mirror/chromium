@@ -13,6 +13,7 @@
 #include "media/base/audio_decoder_config.h"
 #include "media/base/video_decoder.h"
 #include "media/base/video_frame.h"
+#include "media/filters/gpu_video_decoder.h"
 
 namespace media {
 
@@ -72,6 +73,12 @@ void DecoderStreamTraits<DemuxerStream::AUDIO>::OnStreamReset(
   // build new timestamp expectations.
   audio_ts_validator_.reset(
       new AudioTimestampValidator(stream->audio_decoder_config(), media_log_));
+}
+
+bool DecoderStreamTraits<DemuxerStream::AUDIO>::ShouldFindAnotherDecoder(
+    DecoderType* decoder,
+    DemuxerStream* stream) {
+  return false;
 }
 
 void DecoderStreamTraits<DemuxerStream::AUDIO>::OnDecode(
@@ -142,12 +149,41 @@ void DecoderStreamTraits<DemuxerStream::VIDEO>::InitializeDecoder(
     const OutputCB& output_cb) {
   DCHECK(config.IsValidConfig());
   decoder->Initialize(config, low_delay, cdm_context, init_cb, output_cb);
+  last_coded_size_ = config.coded_size();
 }
 
 void DecoderStreamTraits<DemuxerStream::VIDEO>::OnStreamReset(
     DemuxerStream* stream) {
   DCHECK(stream);
   last_keyframe_timestamp_ = base::TimeDelta();
+}
+
+bool DecoderStreamTraits<DemuxerStream::VIDEO>::ShouldFindAnotherDecoder(
+    DecoderType* decoder,
+    DemuxerStream* stream) {
+  if (!decoder)
+    return false;
+
+  const gfx::Size new_coded_size = stream->video_decoder_config().coded_size();
+  if (new_coded_size == last_coded_size_)
+    return false;
+
+  const bool is_gpu =
+      decoder->GetDisplayName() == GpuVideoDecoder::kDecoderName;
+
+  // If we're already using hardware decoding, don't force reselection unless
+  // the new resolution is above the hardware minimum.
+  if (is_gpu && new_coded_size.height() > 360)
+    return false;
+
+  // If we're not using hardware decoding and the new resolution is below the
+  // minimum for hardware decoding, don't attempt reselection.
+  if (!is_gpu && new_coded_size.height() < 360)
+    return false;
+
+  // We should attempt to promote to the hardware decoder or demote to the
+  // software decoder.
+  return true;
 }
 
 void DecoderStreamTraits<DemuxerStream::VIDEO>::OnDecode(

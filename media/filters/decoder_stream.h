@@ -142,7 +142,9 @@ class MEDIA_EXPORT DecoderStream {
     STATE_ERROR,
   };
 
-  void SelectDecoder();
+  enum class BlacklistOption { BLACKLIST_CURRENT_DECODER, ALLOW_ALL_DECODERS };
+  void SelectDecoder(BlacklistOption blacklist_option =
+                         BlacklistOption::BLACKLIST_CURRENT_DECODER);
 
   // Called when |decoder_selector| selected the |selected_decoder|.
   // |decrypting_demuxer_stream| was also populated if a DecryptingDemuxerStream
