@@ -80,22 +80,25 @@ OriginTrialsComponentInstallerTraits::OnCustomInstall(
 
 void OriginTrialsComponentInstallerTraits::ComponentReady(
     const base::Version& version,
-    const base::FilePath& install_dir,
-    std::unique_ptr<base::DictionaryValue> manifest) {
+    const base::DictionaryValue& manifest,
+    const base::FilePath& install_dir) {
+  // Make a local copy of the manifest since the Swap calls below are not const.
+  auto local_manifest = manifest.CreateDeepCopy();
+
   // Read the configuration from the manifest and set values in browser
   // local_state. These will be used on the next browser restart.
   // If an individual configuration value is missing, treat as a reset to the
   // browser defaults.
   PrefService* local_state = g_browser_process->local_state();
   std::string override_public_key;
-  if (manifest->GetString(kManifestPublicKeyPath, &override_public_key)) {
+  if (local_manifest->GetString(kManifestPublicKeyPath, &override_public_key)) {
     local_state->Set(prefs::kOriginTrialPublicKey,
                      base::Value(override_public_key));
   } else {
     local_state->ClearPref(prefs::kOriginTrialPublicKey);
   }
   base::ListValue* override_disabled_feature_list = nullptr;
-  const bool manifest_has_disabled_features = manifest->GetList(
+  const bool manifest_has_disabled_features = local_manifest->GetList(
       kManifestDisabledFeaturesPath, &override_disabled_feature_list);
   if (manifest_has_disabled_features &&
       !override_disabled_feature_list->empty()) {
@@ -105,7 +108,7 @@ void OriginTrialsComponentInstallerTraits::ComponentReady(
     local_state->ClearPref(prefs::kOriginTrialDisabledFeatures);
   }
   base::ListValue* disabled_tokens_list = nullptr;
-  const bool manifest_has_disabled_tokens = manifest->GetList(
+  const bool manifest_has_disabled_tokens = local_manifest->GetList(
       kManifestDisabledTokenSignaturesPath, &disabled_tokens_list);
   if (manifest_has_disabled_tokens && !disabled_tokens_list->empty()) {
     ListPrefUpdate update(local_state, prefs::kOriginTrialDisabledTokens);

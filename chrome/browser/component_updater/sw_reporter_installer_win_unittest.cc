@@ -250,8 +250,8 @@ class ExperimentalSwReporterInstallerTest : public SwReporterInstallerTest {
 TEST_F(SwReporterInstallerTest, Default) {
   SwReporterInstallerTraits traits(launched_callback_, false);
   ExpectEmptyAttributes(traits);
-  traits.ComponentReady(default_version_, default_path_,
-                        std::make_unique<base::DictionaryValue>());
+  traits.ComponentReady(default_version_, base::DictionaryValue(),
+                        default_path_);
   ExpectDefaultInvocation();
 }
 
@@ -260,8 +260,8 @@ TEST_F(ExperimentalSwReporterInstallerTest, NoExperimentConfig) {
   // be enrolled unless enabled through variations.
   SwReporterInstallerTraits traits(launched_callback_, true);
   ExpectEmptyAttributes(traits);
-  traits.ComponentReady(default_version_, default_path_,
-                        std::make_unique<base::DictionaryValue>());
+  traits.ComponentReady(default_version_, base::DictionaryValue(),
+                        default_path_);
   ExpectDefaultInvocation();
 }
 
@@ -271,8 +271,8 @@ TEST_F(ExperimentalSwReporterInstallerTest, ExperimentUnsupported) {
   SwReporterInstallerTraits traits(launched_callback_, false);
   CreateFeatureWithTag(kExperimentTag);
   ExpectEmptyAttributes(traits);
-  traits.ComponentReady(default_version_, default_path_,
-                        std::make_unique<base::DictionaryValue>());
+  traits.ComponentReady(default_version_, base::DictionaryValue(),
+                        default_path_);
   ExpectDefaultInvocation();
 }
 
@@ -323,8 +323,9 @@ TEST_F(ExperimentalSwReporterInstallerTest, SingleInvocation) {
       "  }"
       "]}";
   traits.ComponentReady(
-      default_version_, default_path_,
-      base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)));
+      default_version_,
+      *base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)),
+      default_path_);
 
   // The SwReporter should be launched once with the given arguments.
   EXPECT_EQ(default_version_, launched_version_);
@@ -383,8 +384,9 @@ TEST_F(ExperimentalSwReporterInstallerTest, MultipleInvocations) {
 
       "]}";
   traits.ComponentReady(
-      default_version_, default_path_,
-      base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)));
+      default_version_,
+      *base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)),
+      default_path_);
 
   // The SwReporter should be launched four times with the given arguments.
   EXPECT_EQ(default_version_, launched_version_);
@@ -427,8 +429,9 @@ TEST_F(ExperimentalSwReporterInstallerTest, MissingSuffix) {
       "  }"
       "]}";
   traits.ComponentReady(
-      default_version_, default_path_,
-      base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)));
+      default_version_,
+      *base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)),
+      default_path_);
 
   ExpectLaunchError();
 }
@@ -445,8 +448,9 @@ TEST_F(ExperimentalSwReporterInstallerTest, EmptySuffix) {
       "  }"
       "]}";
   traits.ComponentReady(
-      default_version_, default_path_,
-      base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)));
+      default_version_,
+      *base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)),
+      default_path_);
 
   ExpectExperimentalInvocation("", L"random argument");
 }
@@ -461,8 +465,9 @@ TEST_F(ExperimentalSwReporterInstallerTest, MissingSuffixAndArgs) {
       "  }"
       "]}";
   traits.ComponentReady(
-      default_version_, default_path_,
-      base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)));
+      default_version_,
+      *base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)),
+      default_path_);
 
   ExpectLaunchError();
 }
@@ -479,8 +484,9 @@ TEST_F(ExperimentalSwReporterInstallerTest, EmptySuffixAndArgs) {
       "  }"
       "]}";
   traits.ComponentReady(
-      default_version_, default_path_,
-      base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)));
+      default_version_,
+      *base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)),
+      default_path_);
 
   ExpectExperimentalInvocation("", L"");
 }
@@ -497,8 +503,9 @@ TEST_F(ExperimentalSwReporterInstallerTest, EmptySuffixAndArgs2) {
       "  }"
       "]}";
   traits.ComponentReady(
-      default_version_, default_path_,
-      base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)));
+      default_version_,
+      *base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)),
+      default_path_);
 
   ExpectExperimentalInvocation("", L"");
 }
@@ -514,8 +521,9 @@ TEST_F(ExperimentalSwReporterInstallerTest, MissingArguments) {
       "  }"
       "]}";
   traits.ComponentReady(
-      default_version_, default_path_,
-      base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)));
+      default_version_,
+      *base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)),
+      default_path_);
 
   ExpectLaunchError();
 }
@@ -532,8 +540,9 @@ TEST_F(ExperimentalSwReporterInstallerTest, EmptyArguments) {
       "  }"
       "]}";
   traits.ComponentReady(
-      default_version_, default_path_,
-      base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)));
+      default_version_,
+      *base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)),
+      default_path_);
 
   ExpectExperimentalInvocation("TestSuffix", L"");
 }
@@ -550,8 +559,9 @@ TEST_F(ExperimentalSwReporterInstallerTest, EmptyArguments2) {
       "  }"
       "]}";
   traits.ComponentReady(
-      default_version_, default_path_,
-      base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)));
+      default_version_,
+      *base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)),
+      default_path_);
 
   ExpectExperimentalInvocation("TestSuffix", L"");
 }
@@ -562,8 +572,9 @@ TEST_F(ExperimentalSwReporterInstallerTest, EmptyManifest) {
 
   static constexpr char kTestManifest[] = "{}";
   traits.ComponentReady(
-      default_version_, default_path_,
-      base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)));
+      default_version_,
+      *base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)),
+      default_path_);
 
   // The SwReporter should not be launched, but no error should be logged.
   // (This tests the case where a non-experimental version of the reporter,
@@ -578,8 +589,9 @@ TEST_F(ExperimentalSwReporterInstallerTest, EmptyLaunchParams) {
 
   static constexpr char kTestManifest[] = "{\"launch_params\": []}";
   traits.ComponentReady(
-      default_version_, default_path_,
-      base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)));
+      default_version_,
+      *base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)),
+      default_path_);
 
   // The SwReporter should not be launched, and an error should be logged.
   EXPECT_TRUE(launched_invocations_.empty());
@@ -593,8 +605,9 @@ TEST_F(ExperimentalSwReporterInstallerTest, EmptyLaunchParams2) {
 
   static constexpr char kTestManifest[] = "{\"launch_params\": {}}";
   traits.ComponentReady(
-      default_version_, default_path_,
-      base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)));
+      default_version_,
+      *base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)),
+      default_path_);
 
   // The SwReporter should not be launched, and an error should be logged.
   EXPECT_TRUE(launched_invocations_.empty());
@@ -614,8 +627,9 @@ TEST_F(ExperimentalSwReporterInstallerTest, BadSuffix) {
       "  }"
       "]}";
   traits.ComponentReady(
-      default_version_, default_path_,
-      base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)));
+      default_version_,
+      *base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)),
+      default_path_);
 
   // The SwReporter should not be launched, and an error should be logged.
   EXPECT_TRUE(launched_invocations_.empty());
@@ -638,8 +652,9 @@ TEST_F(ExperimentalSwReporterInstallerTest, SuffixTooLong) {
   std::string manifest =
       base::StringPrintf(kTestManifest, suffix_too_long.c_str());
   traits.ComponentReady(
-      default_version_, default_path_,
-      base::DictionaryValue::From(base::JSONReader::Read(manifest)));
+      default_version_,
+      *base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)),
+      default_path_);
 
   // The SwReporter should not be launched, and an error should be logged.
   EXPECT_TRUE(launched_invocations_.empty());
@@ -660,8 +675,9 @@ TEST_F(ExperimentalSwReporterInstallerTest, BadTypesInManifest) {
       "  }"
       "]}";
   traits.ComponentReady(
-      default_version_, default_path_,
-      base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)));
+      default_version_,
+      *base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)),
+      default_path_);
 
   // The SwReporter should not be launched, and an error should be logged.
   EXPECT_TRUE(launched_invocations_.empty());
@@ -683,8 +699,9 @@ TEST_F(ExperimentalSwReporterInstallerTest, BadTypesInManifest2) {
       "  }"
       "}";
   traits.ComponentReady(
-      default_version_, default_path_,
-      base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)));
+      default_version_,
+      *base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)),
+      default_path_);
 
   // The SwReporter should not be launched, and an error should be logged.
   EXPECT_TRUE(launched_invocations_.empty());
@@ -705,8 +722,9 @@ TEST_F(ExperimentalSwReporterInstallerTest, BadTypesInManifest3) {
       "  }"
       "]}";
   traits.ComponentReady(
-      default_version_, default_path_,
-      base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)));
+      default_version_,
+      *base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)),
+      default_path_);
 
   // The SwReporter should not be launched, and an error should be logged.
   EXPECT_TRUE(launched_invocations_.empty());
@@ -728,8 +746,9 @@ TEST_F(ExperimentalSwReporterInstallerTest, BadTypesInManifest4) {
       "  }"
       "]}";
   traits.ComponentReady(
-      default_version_, default_path_,
-      base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)));
+      default_version_,
+      *base::DictionaryValue::From(base::JSONReader::Read(kTestManifest)),
+      default_path_);
 
   // The SwReporter should not be launched, and an error should be logged.
   EXPECT_TRUE(launched_invocations_.empty());
