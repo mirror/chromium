@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64851c82_6939317e",
+        "filename": "components/spellcheck/renderer/spellcheck_panel.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-01T01:07:24Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be necessary.",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 31
+      },
+      "revId": "06b164ae7ca5f7ea7503253d27c6c46621006036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b190fe96_83771953",
+        "filename": "components/spellcheck/renderer/spellcheck_panel.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-01T01:07:24Z",
+      "side": 1,
+      "message": "Even if you don\u0027t cache connections, please extract out a helper method/function to create the connection.",
+      "range": {
+        "startLine": 52,
+        "startChar": 44,
+        "endLine": 52,
+        "endChar": 66
+      },
+      "revId": "06b164ae7ca5f7ea7503253d27c6c46621006036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16fa2f18_e591b4cb",
+        "filename": "components/spellcheck/renderer/spellcheck_panel.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-01T01:07:24Z",
+      "side": 1,
+      "message": "GetWebFrame() should never return null.",
+      "range": {
+        "startLine": 69,
+        "startChar": 21,
+        "endLine": 69,
+        "endChar": 34
+      },
+      "revId": "06b164ae7ca5f7ea7503253d27c6c46621006036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4b52ae6_021a21b8",
+        "filename": "components/spellcheck/renderer/spellcheck_panel.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-01T01:07:24Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be used.",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 66
+      },
+      "revId": "06b164ae7ca5f7ea7503253d27c6c46621006036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a47721ed_bdd93484",
+        "filename": "third_party/WebKit/Source/web/WebLocalFrameImpl.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1598,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-01T01:07:24Z",
+      "side": 1,
+      "message": "nullptr",
+      "range": {
+        "startLine": 1598,
+        "startChar": 30,
+        "endLine": 1598,
+        "endChar": 31
+      },
+      "revId": "06b164ae7ca5f7ea7503253d27c6c46621006036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
