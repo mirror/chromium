@@ -130,12 +130,11 @@ class NET_EXPORT HttpResponseInfo {
   // True if ALPN was negotiated for this request.
   bool was_alpn_negotiated;
 
-  // True if the request was fetched via an explicit proxy.  The proxy could
-  // be any type of proxy, HTTP or SOCKS.  Note, we do not know if a
-  // transparent proxy may have been involved. If true, |proxy_server| contains
-  // the proxy server that was used.
-  // TODO(tbansal): crbug.com/653354. Remove |was_fetched_via_proxy|.
-  bool was_fetched_via_proxy;
+  // Proxy server which was used to fetch the request. The proxy could be any
+  // type of proxy, HTTP or SOCKS.  Note, we do not know if a transparent proxy
+  // may have been involved. If proxy was not used to fetch the request, then
+  // the scheme of |proxy_server| would be set to
+  // SCHEME_INVALID or SCHEME_DIRECT.
   ProxyServer proxy_server;
 
   // Whether the request use http proxy or server authentication.
