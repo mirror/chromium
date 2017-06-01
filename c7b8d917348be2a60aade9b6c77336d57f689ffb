@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca68b870_9264a725",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-01T09:44:37Z",
+      "side": 1,
+      "message": "Just to confirm: ThreadedMessagingProxyBase is instantiated on the main thread, right? I\u0027m just curious because it is touching WebFrame.",
+      "revId": "c7b8d917348be2a60aade9b6c77336d57f689ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
