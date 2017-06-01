@@ -122,6 +122,25 @@
     },
     {
       "key": {
+        "uuid": "51a9df5d_0c84e27d",
+        "filename": "third_party/WebKit/Source/core/mojo/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-01T02:34:40Z",
+      "side": 1,
+      "message": "Thanks for the feedback! Previously we introduced a Blink-only InterfaceProvider type and had content implement this by forwarding requests to the real one. This was done due to blanket restrictions against such outside dependencies at the time.",
+      "parentUuid": "5cf374cd_8db1341d",
+      "tag": "mailMessageId\u003d\u003cCA+apAgHZKe-ZsjzfMiSPoedc9+SUBrdC52M2nZrk2WpGeLWkuw@mail.gmail.com\u003e",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff48e4ce_e502db87",
         "filename": "third_party/WebKit/Source/core/mojo/MojoHandle.cpp",
         "patchSetId": 4
