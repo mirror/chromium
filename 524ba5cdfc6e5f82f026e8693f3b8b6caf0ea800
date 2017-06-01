@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3947ad05_368e8f7d",
+        "filename": "third_party/WebKit/LayoutTests/plugins/navigator-pluginarray.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-01T00:51:14Z",
+      "side": 1,
+      "message": "nit: Only this line uses single-quotes.",
+      "revId": "524ba5cdfc6e5f82f026e8693f3b8b6caf0ea800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ecddf78_30d1351d",
+        "filename": "third_party/WebKit/Source/modules/plugins/DOMMimeTypeArray.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-01T00:51:14Z",
+      "side": 1,
+      "message": "nit: old_dom_plugins -\u003e old_mime_types",
+      "revId": "524ba5cdfc6e5f82f026e8693f3b8b6caf0ea800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a86ddc58_681b7e4d",
+        "filename": "third_party/WebKit/Source/modules/plugins/DOMPlugin.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-01T00:51:14Z",
+      "side": 1,
+      "message": "plugin_info -\u003e GetPluginInfo",
+      "revId": "524ba5cdfc6e5f82f026e8693f3b8b6caf0ea800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
