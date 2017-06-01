@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4b8680b_c0630556",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-01T00:19:52Z",
+      "side": 1,
+      "message": "optional nit: remove\u0026add instead of resetting, optionally keep the tracker valid for the lifetime of the FocusManager?",
+      "range": {
+        "startLine": 426,
+        "startChar": 2,
+        "endLine": 426,
+        "endChar": 31
+      },
+      "revId": "3951a34f67ffc9f5f6afce689d19b342e07304df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "415d5327_d6de6399",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-01T00:19:52Z",
+      "side": 1,
+      "message": "optional nit: DCHECK that there\u0027s only one tracked view?",
+      "range": {
+        "startLine": 435,
+        "startChar": 2,
+        "endLine": 435,
+        "endChar": 8
+      },
+      "revId": "3951a34f67ffc9f5f6afce689d19b342e07304df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ce0b6de_56793700",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-01T00:19:52Z",
+      "side": 1,
+      "message": "nit: maybe just say \"Also clear the stored focus view as needed.\" optionally adding something like \"The current |focused_view_| is sometimes also set as the stored focus view.\" (otherwise, this could be misinterpreted as saying \"|focused_view_| should *not* also be the stored focus view\", but that is allowed, right?)",
+      "range": {
+        "startLine": 561,
+        "startChar": 5,
+        "endLine": 561,
+        "endChar": 19
+      },
+      "revId": "3951a34f67ffc9f5f6afce689d19b342e07304df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3197c01_3474ba86",
+        "filename": "ui/views/view_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-01T00:19:52Z",
+      "side": 1,
+      "message": "aside: too bad we can\u0027t generalize ViewTracker as a WindowTrackerTemplate\u003cView, ViewObserver\u003e, just because the names of OnWindowDestroying and OnViewIsDeleting don\u0027t match.",
+      "range": {
+        "startLine": 20,
+        "startChar": 19,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "3951a34f67ffc9f5f6afce689d19b342e07304df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
