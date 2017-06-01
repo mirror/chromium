@@ -16,6 +16,24 @@
       "revId": "6be64086ae28226a81b079fcacd12cf9e39ead1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aedf172_7c737c1f",
+        "filename": "media/gpu/surface_texture_gl_owner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-01T18:54:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08ec4701_932f448d",
+      "revId": "6be64086ae28226a81b079fcacd12cf9e39ead1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
