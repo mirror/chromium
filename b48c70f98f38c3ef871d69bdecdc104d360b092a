@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "736912fa_a3832833",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptCustomElementDefinitionBuilder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-01T07:32:39Z",
+      "side": 1,
+      "message": "Nit: I\u0027m okay with simply returning true unconditionally.\n\nWe normally check ScriptState::ContextIsValid only before we enter the ScriptState::Scope. We should probably check ContextIsValid every time we call a V8 API (just like you\u0027re doing in this CL) but that wouldn\u0027t be acceptable for performance (and code health).",
+      "revId": "b48c70f98f38c3ef871d69bdecdc104d360b092a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "084a6dc9_a6ad3bf9",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptCustomElementDefinitionBuilder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-01T07:32:39Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "b48c70f98f38c3ef871d69bdecdc104d360b092a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
