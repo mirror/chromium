@@ -456,7 +456,7 @@ class NET_EXPORT URLRequest : NON_EXPORTED_BASE(public base::NonThreadSafe),
 
   // Returns true if the URLRequest was delivered through a proxy.
   bool was_fetched_via_proxy() const {
-    return response_info_.was_fetched_via_proxy;
+    return proxy_server_.is_valid() && !proxy_server_.is_direct();
   }
 
   // Returns true if the URLRequest was delivered over SPDY.
