@@ -254,6 +254,8 @@ class WEB_EXPORT WebViewImpl final
   float ExpensiveBackgroundThrottlingMaxBudget() override;
   float ExpensiveBackgroundThrottlingMaxDelay() override;
 
+  void RequestBeginMainFrameNotExpected(bool new_state) override;
+
   void DidUpdateFullscreenSize() override;
 
   float DefaultMinimumPageScaleFactor() const override;

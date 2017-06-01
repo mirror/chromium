@@ -446,6 +446,12 @@ void SingleThreadProxy::NeedsImplSideInvalidation() {
   scheduler_on_impl_thread_->SetNeedsImplSideInvalidation();
 }
 
+void SingleThreadProxy::RequestBeginMainFrameNotExpected(bool new_state) {
+  DCHECK(scheduler_on_impl_thread_);
+  scheduler_on_impl_thread_->NotifyMainThreadWantsBeginMainFrameNotExpected(
+      new_state);
+}
+
 void SingleThreadProxy::CompositeImmediately(base::TimeTicks frame_begin_time) {
   TRACE_EVENT0("cc,benchmark", "SingleThreadProxy::CompositeImmediately");
   DCHECK(task_runner_provider_->IsMainThread());
