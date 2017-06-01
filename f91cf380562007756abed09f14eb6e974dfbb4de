@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc5ea8c9_a46651ec",
+        "filename": "chrome/browser/extensions/extension_management_internal.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-06-01T18:23:34Z",
+      "side": 1,
+      "message": "URLPattern pattern(extension_scheme_mask);",
+      "range": {
+        "startLine": 135,
+        "startChar": 26,
+        "endLine": 135,
+        "endChar": 27
+      },
+      "revId": "f91cf380562007756abed09f14eb6e974dfbb4de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3879ab97_e3f28b08",
+        "filename": "chrome/browser/extensions/extension_management_internal.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-06-01T18:23:34Z",
+      "side": 1,
+      "message": "(think you\u0027ve confused with line numbers on gerrit before) No need to change this, assignment here is fine.",
+      "range": {
+        "startLine": 138,
+        "startChar": 32,
+        "endLine": 138,
+        "endChar": 44
+      },
+      "revId": "f91cf380562007756abed09f14eb6e974dfbb4de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8c312c6_1571628b",
+        "filename": "chrome/browser/extensions/policy_handlers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-06-01T18:23:34Z",
+      "side": 1,
+      "message": "nit: I think this is not adding any helpful info, remove this comment.",
+      "range": {
+        "startLine": 358,
+        "startChar": 28,
+        "endLine": 358,
+        "endChar": 29
+      },
+      "revId": "f91cf380562007756abed09f14eb6e974dfbb4de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6eab105_2c0d4237",
+        "filename": "chrome/browser/extensions/policy_handlers_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-06-01T18:23:34Z",
+      "side": 1,
+      "message": "I think we can add another policy kTestManagementPolicy4 with \"runtime_allowed_hosts\", with very little change. As I don\u0027t see tests covering runtime_allowed_hosts.\n\nauto url_parses_successfully \u003d [](const char* policy, const std::string\u0026 url) {\n  std::string policy \u003d base::StringPrintf(policy, url.c_str());\n  ...\n};\n\nthen\nfor (url: good_urls) {\n  EXPECT_TRUE(url_parses_successfully(kTestManagementPolicy3, url));\n  EXPECT_TRUE(url_parses_successfully(kTestManagementPolicy4, url));\n}",
+      "range": {
+        "startLine": 101,
+        "startChar": 27,
+        "endLine": 101,
+        "endChar": 49
+      },
+      "revId": "f91cf380562007756abed09f14eb6e974dfbb4de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
