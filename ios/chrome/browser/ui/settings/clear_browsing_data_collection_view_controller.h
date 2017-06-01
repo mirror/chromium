@@ -21,6 +21,8 @@ extern NSString* const kClearCacheCellId;
 extern NSString* const kClearSavedPasswordsCellId;
 extern NSString* const kClearAutofillCellId;
 
+// CollectionView for clearing browser data (including history,
+// cookies, caches, passwords, and autofill).
 @interface ClearBrowsingDataCollectionViewController
     : SettingsRootCollectionViewController
 
