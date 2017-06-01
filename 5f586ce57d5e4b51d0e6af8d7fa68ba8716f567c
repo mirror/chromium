@@ -16,6 +16,23 @@
       "revId": "5f586ce57d5e4b51d0e6af8d7fa68ba8716f567c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efdc87f9_c406d231",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1318,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-01T00:10:20Z",
+      "side": 1,
+      "message": "Do we still want all the nested trace events in this function?",
+      "revId": "5f586ce57d5e4b51d0e6af8d7fa68ba8716f567c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
