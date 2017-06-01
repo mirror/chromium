@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffd512e8_8a67fdf4",
+        "filename": "components/download/internal/entry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T20:29:27Z",
+      "side": 1,
+      "message": "We might not need this.  An uninitialized Entry really has no valid fields?",
+      "range": {
+        "startLine": 11,
+        "startChar": 17,
+        "endLine": 11,
+        "endChar": 47
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78ce7061_0eab3831",
+        "filename": "components/download/internal/entry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T20:29:27Z",
+      "side": 1,
+      "message": "This is probably going to be the most common constructor.  Set create_time here too?",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 42
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c5f60d_97e4cdc0",
+        "filename": "components/download/internal/scheduler/device_status.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T20:29:27Z",
+      "side": 1,
+      "message": "Meets?",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 13
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "440fe254_f61649a4",
+        "filename": "components/download/internal/scheduler/scheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T20:29:27Z",
+      "side": 1,
+      "message": "returns -\u003e return",
+      "range": {
+        "startLine": 24,
+        "startChar": 21,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e157313_fa508517",
+        "filename": "components/download/internal/scheduler/scheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T20:29:27Z",
+      "side": 1,
+      "message": "Maybe add TODO\u0027s about dealing with load balancing between clients?\n\nAlso add a TODO to balance based on time remaining on the tasks?",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 77
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "514a45b4_0a7984cd",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T20:29:27Z",
+      "side": 1,
+      "message": "This should be ok.  We just won\u0027t do anything?",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 26
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77c53d74_f518f87a",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T20:29:27Z",
+      "side": 1,
+      "message": "\u003d default?",
+      "range": {
+        "startLine": 22,
+        "startChar": 32,
+        "endLine": 22,
+        "endChar": 34
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bf88aa1_90175188",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T20:29:27Z",
+      "side": 1,
+      "message": "Cancel any outstanding scheduled task here?",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 22
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db9d8800_74bb1aae",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T20:29:27Z",
+      "side": 1,
+      "message": "This is fine, but it might make sense to just add an EntryUtil helper function to return the least restrictive tuple of criteria across all entries.",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 3
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17696c22_a6571530",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T20:29:27Z",
+      "side": 1,
+      "message": "Is it assumed this will cancel any previously scheduled task?  Add a TODO to investigate time windows?",
+      "range": {
+        "startLine": 46,
+        "startChar": 25,
+        "endLine": 46,
+        "endChar": 45
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "215d7a7d_3f773970",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T20:29:27Z",
+      "side": 1,
+      "message": "entry?",
+      "range": {
+        "startLine": 52,
+        "startChar": 9,
+        "endLine": 52,
+        "endChar": 17
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2672432b_6cacf4dd",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T20:29:27Z",
+      "side": 1,
+      "message": "Maybe do a std::map\u003cDownloadClient, Entry\u003e and do something like \"FindBestCandidateForEachClient()\"?",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 46
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab25248_d09cfe1a",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T20:29:27Z",
+      "side": 1,
+      "message": "Make this sort by priority as it goes and/or at the end?  For equal priorities, sort by time until cancel not start time I think?",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 66
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb34ac86_9bd24f0a",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T20:29:27Z",
+      "side": 1,
+      "message": "Use the EntryUtils",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 3
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43f14a39_64eede0f",
+        "filename": "components/download/internal/scheduler/scheduler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T20:29:27Z",
+      "side": 1,
+      "message": "DownloadClient?",
+      "range": {
+        "startLine": 36,
+        "startChar": 27,
+        "endLine": 36,
+        "endChar": 30
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b574ae6_893254a0",
+        "filename": "components/download/internal/scheduler/scheduler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T20:29:27Z",
+      "side": 1,
+      "message": "Can we just make this an std::set\u003cDownloadClient\u003e and store a const_interator?  We could even just expose an iterator on the ClientSet.  That class is effectively immutable.",
+      "range": {
+        "startLine": 46,
+        "startChar": 14,
+        "endLine": 46,
+        "endChar": 17
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
