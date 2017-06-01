@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc8449f6_1f369eeb",
+        "filename": "third_party/WebKit/Source/core/dom/custom/CustomElementRegistry.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-01T03:17:16Z",
+      "side": 1,
+      "message": "Nit: Can\u0027t we use CustomElementDefinition::Id, instead of uint32_t directly, around here?",
+      "revId": "1b37913b1c357abf89abbda18c4865e0c72d1613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
