@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0251560f_3cecf031",
+        "filename": "chrome/browser/extensions/api/identity/identity_get_auth_token_function.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-01T17:02:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "155abda7_303f9824",
+      "revId": "05cdfcc0810719fe99511668e8c14a276e870bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f887bc7f_f88f721d",
         "filename": "chrome/browser/extensions/api/identity/identity_get_auth_token_function.cc",
         "patchSetId": 7
@@ -30,6 +48,30 @@
       "writtenOn": "2017-05-31T12:41:43Z",
       "side": 1,
       "message": "Maybe DCHECK(login_token_request_) (see also comment below at |OnGetTokenSuccess|).",
+      "range": {
+        "startLine": 497,
+        "startChar": 2,
+        "endLine": 497,
+        "endChar": 22
+      },
+      "revId": "05cdfcc0810719fe99511668e8c14a276e870bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c7ee4a_20beb1f3",
+        "filename": "chrome/browser/extensions/api/identity/identity_get_auth_token_function.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-01T17:02:07Z",
+      "side": 1,
+      "message": "Good points. Moved the reset of |login_token_request_| back to the methods that expect there to be one and DCHECK(!login_token_request_) here.",
+      "parentUuid": "f887bc7f_f88f721d",
       "range": {
         "startLine": 497,
         "startChar": 2,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "eade2d97_d98623a2",
+        "filename": "chrome/browser/extensions/api/identity/identity_get_auth_token_function.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-01T17:02:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "276adeae_9092c231",
+      "range": {
+        "startLine": 519,
+        "startChar": 2,
+        "endLine": 519,
+        "endChar": 30
+      },
+      "revId": "05cdfcc0810719fe99511668e8c14a276e870bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a52e3920_cd6c7a60",
         "filename": "chrome/browser/extensions/api/identity/identity_get_auth_token_function.cc",
         "patchSetId": 7
@@ -76,6 +142,30 @@
       "writtenOn": "2017-05-31T12:41:43Z",
       "side": 1,
       "message": "I am split here: Is it better to call OnGetAccessTokenComplete here (where there is an assumption that there was a login_token_request_), or would it be better to call StartGaiaRequest directly (and revert to the trunk version of these method).",
+      "range": {
+        "startLine": 525,
+        "startChar": 2,
+        "endLine": 525,
+        "endChar": 26
+      },
+      "revId": "05cdfcc0810719fe99511668e8c14a276e870bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb3bfb29_966bd855",
+        "filename": "chrome/browser/extensions/api/identity/identity_get_auth_token_function.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-01T17:02:07Z",
+      "side": 1,
+      "message": "I think it\u0027s better to consolidate the code flows to avoid the risk of bugs until I\u0027m able to get rid of the legacy code flow entirely. Moved the reset of |login_token_request_| back to these methods since that\u0027s specific to these callbacks.",
+      "parentUuid": "a52e3920_cd6c7a60",
       "range": {
         "startLine": 525,
         "startChar": 2,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "dcd563d5_24186294",
+        "filename": "chrome/browser/extensions/api/identity/identity_get_auth_token_function.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-01T17:02:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "40863363_d866419f",
+      "range": {
+        "startLine": 538,
+        "startChar": 2,
+        "endLine": 538,
+        "endChar": 26
+      },
+      "revId": "05cdfcc0810719fe99511668e8c14a276e870bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18d2aa19_51a1c03b",
         "filename": "chrome/browser/extensions/api/identity/identity_get_auth_token_function.cc",
         "patchSetId": 7
@@ -122,6 +236,30 @@
       "writtenOn": "2017-05-31T12:41:43Z",
       "side": 1,
       "message": "I think you could move this Chrome OS to the new API, if the new API would support passing different client ID and secret for an access token request (comment related to the TODO in the header file).",
+      "range": {
+        "startLine": 594,
+        "startChar": 41,
+        "endLine": 594,
+        "endChar": 54
+      },
+      "revId": "05cdfcc0810719fe99511668e8c14a276e870bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3182960_6974c99a",
+        "filename": "chrome/browser/extensions/api/identity/identity_get_auth_token_function.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-01T17:02:07Z",
+      "side": 1,
+      "message": "Will do in a followup, thanks!",
+      "parentUuid": "18d2aa19_51a1c03b",
       "range": {
         "startLine": 594,
         "startChar": 41,
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "fa2cef80_b296e5fd",
+        "filename": "services/identity/identity_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-01T17:02:07Z",
+      "side": 1,
+      "message": "Thanks! I thought there had been some discussion about this, but couldn\u0027t find it and couldn\u0027t remember the outcome.",
+      "parentUuid": "c3e39019_e326adde",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 23
+      },
+      "revId": "05cdfcc0810719fe99511668e8c14a276e870bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55a5c147_63584f49",
         "filename": "services/identity/identity_manager.cc",
         "patchSetId": 7
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "a46c7e04_934d990e",
+        "filename": "services/identity/identity_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-01T17:02:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55a5c147_63584f49",
+      "range": {
+        "startLine": 27,
+        "startChar": 28,
+        "endLine": 27,
+        "endChar": 37
+      },
+      "revId": "05cdfcc0810719fe99511668e8c14a276e870bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86fe05a7_7c9834ae",
         "filename": "services/identity/identity_manager.cc",
         "patchSetId": 7
@@ -191,6 +377,30 @@
       "writtenOn": "2017-06-01T11:01:09Z",
       "side": 1,
       "message": "Consider using base::make_optional",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 56
+      },
+      "revId": "05cdfcc0810719fe99511668e8c14a276e870bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "683ba6be_29c7e6c7",
+        "filename": "services/identity/identity_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-01T17:02:07Z",
+      "side": 1,
+      "message": "Just used the implicit constructor instead -- even simpler.",
+      "parentUuid": "86fe05a7_7c9834ae",
       "range": {
         "startLine": 84,
         "startChar": 15,
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "74b3fb15_ee9454c7",
+        "filename": "services/identity/identity_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-01T17:02:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a6b32214_30cfbeaa",
+      "range": {
+        "startLine": 53,
+        "startChar": 25,
+        "endLine": 53,
+        "endChar": 42
+      },
+      "revId": "05cdfcc0810719fe99511668e8c14a276e870bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a867aaa_8d312d02",
         "filename": "services/identity/identity_manager.h",
         "patchSetId": 7
@@ -246,6 +480,30 @@
       "revId": "05cdfcc0810719fe99511668e8c14a276e870bd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccc2bd00_b81d9f2e",
+        "filename": "services/identity/identity_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-01T17:02:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a867aaa_8d312d02",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 23
+      },
+      "revId": "05cdfcc0810719fe99511668e8c14a276e870bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
