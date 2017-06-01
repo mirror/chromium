@@ -1562,6 +1562,8 @@ WebLocalFrameImpl* WebLocalFrameImpl::CreateProvisional(
   LocalFrame* new_frame = web_frame->GetFrame();
   new_frame->SetOwner(old_frame->Owner());
   if (new_frame->Owner() && new_frame->Owner()->IsRemote()) {
+    DCHECK_EQ(new_frame->Owner()->GetSandboxFlags(),
+              static_cast<SandboxFlags>(flags));
     ToRemoteFrameOwner(new_frame->Owner())
         ->SetSandboxFlags(static_cast<SandboxFlags>(flags));
   }
