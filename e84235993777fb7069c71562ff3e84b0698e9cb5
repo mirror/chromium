@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fd2f1c8_ea25e3e6",
+        "filename": "ios/chrome/browser/ui/payments/cells/page_info_item.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-01T10:38:10Z",
+      "side": 1,
+      "message": "s/dp/points.",
+      "range": {
+        "startLine": 30,
+        "startChar": 35,
+        "endLine": 30,
+        "endChar": 37
+      },
+      "revId": "e84235993777fb7069c71562ff3e84b0698e9cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19e37317_10826402",
+        "filename": "ios/chrome/browser/ui/payments/cells/page_info_item.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-01T10:38:10Z",
+      "side": 1,
+      "message": "Optional nit: Why not use the baseline anchor of the text label?",
+      "range": {
+        "startLine": 168,
+        "startChar": 51,
+        "endLine": 168,
+        "endChar": 63
+      },
+      "revId": "e84235993777fb7069c71562ff3e84b0698e9cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1158440_77d05810",
+        "filename": "ios/chrome/browser/ui/payments/cells/page_info_item_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-01T10:38:10Z",
+      "side": 1,
+      "message": "Add a unit test for the secure connection case?",
+      "revId": "e84235993777fb7069c71562ff3e84b0698e9cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a500e5d_43aee272",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-01T10:38:10Z",
+      "side": 1,
+      "message": "Use the format: TODO(crbug.com/123456) mentioning an open bug to track this.",
+      "range": {
+        "startLine": 436,
+        "startChar": 10,
+        "endLine": 436,
+        "endChar": 20
+      },
+      "revId": "e84235993777fb7069c71562ff3e84b0698e9cb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
