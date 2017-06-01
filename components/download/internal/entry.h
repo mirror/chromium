@@ -9,6 +9,10 @@
 #include "components/download/public/clients.h"
 #include "components/download/public/download_params.h"
 
+namespace base {
+class Time;
+}  // namespace base
+
 namespace download {
 
 // An entry in the Model that represents a scheduled download.
@@ -51,6 +55,9 @@ struct Entry {
 
   // A unique GUID that represents this download.  See | base::GenerateGUID()|.
   std::string guid;
+
+  // The time when the entry is created.
+  base::Time create_time;
 
   // The parameters that determine under what device conditions this download
   // will occur.
