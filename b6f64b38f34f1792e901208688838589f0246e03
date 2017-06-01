@@ -16,6 +16,24 @@
       "revId": "b6f64b38f34f1792e901208688838589f0246e03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21b6b76a_b7839a14",
+        "filename": "third_party/WebKit/Source/core/dom/custom/CustomElementRegistry.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-06-01T04:45:16Z",
+      "side": 1,
+      "message": "I\u0027m not going to do that. Vector::operator[] calls at which already has a check. Handling zero here is succinct and effective.",
+      "parentUuid": "f85cfca5_3454eb01",
+      "revId": "b6f64b38f34f1792e901208688838589f0246e03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
