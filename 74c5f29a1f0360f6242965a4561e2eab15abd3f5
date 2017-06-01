@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cb46319_b077bc82",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-06-01T14:38:01Z",
+      "side": 1,
+      "message": "This should never happen because the getInstance all above will always create an instance?",
+      "revId": "74c5f29a1f0360f6242965a4561e2eab15abd3f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0cdbd0e_29fe11c9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-06-01T14:38:01Z",
+      "side": 1,
+      "message": "RE cancelling animation, is the problem that we don\u0027t how to cancel an animation started this way or is it that we don\u0027t know when to cancel?\n\nIf its the latter, then perhaps we can do something like this in addOverlayView: https://stackoverflow.com/questions/10948092/android-need-callback-when-view-is-shown",
+      "revId": "74c5f29a1f0360f6242965a4561e2eab15abd3f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1edbd964_265057d6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-06-01T14:38:01Z",
+      "side": 1,
+      "message": "don\u0027t we wanna do this every time we enter VR? If we\u0027re already entering VR here, we shouldn\u0027t expect to get another \"enterVR\" call?",
+      "range": {
+        "startLine": 624,
+        "startChar": 12,
+        "endLine": 624,
+        "endChar": 32
+      },
+      "revId": "74c5f29a1f0360f6242965a4561e2eab15abd3f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "792531ca_28277524",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-06-01T14:38:01Z",
+      "side": 1,
+      "message": "Could we ever be paused when we\u0027re here. If so, does the code before this still make sense?",
+      "range": {
+        "startLine": 643,
+        "startChar": 13,
+        "endLine": 643,
+        "endChar": 20
+      },
+      "revId": "74c5f29a1f0360f6242965a4561e2eab15abd3f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab35747c_9cabfcb6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-06-01T14:38:01Z",
+      "side": 1,
+      "message": "nit: This is redundant because we call shutdownVr  which will do this anyway. I wonder if there\u0027s more cases like this.",
+      "revId": "74c5f29a1f0360f6242965a4561e2eab15abd3f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
