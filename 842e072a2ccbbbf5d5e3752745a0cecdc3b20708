@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "136427ae_c2b82be3",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-06-01T20:01:58Z",
+      "side": 1,
+      "message": "Will this trigger paint automatically? I can see some of the old code path would trigger SchedulePaint\ne.g. https://cs.chromium.org/chromium/src/ui/views/background.cc?type\u003dcs\u0026l\u003d58 via ThemedSolidBackground .",
+      "range": {
+        "startLine": 823,
+        "startChar": 17,
+        "endLine": 823,
+        "endChar": 33
+      },
+      "revId": "842e072a2ccbbbf5d5e3752745a0cecdc3b20708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2594c59f_3e2560a5",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-06-01T20:01:58Z",
+      "side": 1,
+      "message": "Can we use |background_color|?",
+      "range": {
+        "startLine": 837,
+        "startChar": 56,
+        "endLine": 837,
+        "endChar": 74
+      },
+      "revId": "842e072a2ccbbbf5d5e3752745a0cecdc3b20708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "431df020_1ef9720b",
+        "filename": "ui/views/controls/scroll_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-06-01T20:01:58Z",
+      "side": 1,
+      "message": "Maybe mention that the background would get the color updated whenever the theme changes.",
+      "range": {
+        "startLine": 65,
+        "startChar": 56,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "842e072a2ccbbbf5d5e3752745a0cecdc3b20708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58c23d9e_d7955e26",
+        "filename": "ui/views/controls/scroll_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-06-01T20:01:58Z",
+      "side": 1,
+      "message": "nit: e.g. -\u003e i.e.",
+      "range": {
+        "startLine": 66,
+        "startChar": 44,
+        "endLine": 66,
+        "endChar": 48
+      },
+      "revId": "842e072a2ccbbbf5d5e3752745a0cecdc3b20708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4741823f_0db3d272",
+        "filename": "ui/views/controls/scroll_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-06-01T20:01:58Z",
+      "side": 1,
+      "message": "nit: s/Force/Forces",
+      "range": {
+        "startLine": 130,
+        "startChar": 5,
+        "endLine": 130,
+        "endChar": 10
+      },
+      "revId": "842e072a2ccbbbf5d5e3752745a0cecdc3b20708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b80726_e5aa0684",
+        "filename": "ui/views/controls/scroll_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-06-01T20:01:58Z",
+      "side": 1,
+      "message": "nit: space before }",
+      "range": {
+        "startLine": 211,
+        "startChar": 48,
+        "endLine": 211,
+        "endChar": 49
+      },
+      "revId": "842e072a2ccbbbf5d5e3752745a0cecdc3b20708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
