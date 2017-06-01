@@ -5,8 +5,16 @@
 #ifndef CHROME_BROWSER_PREFS_PREF_SERVICE_SYNCABLE_UTIL_H_
 #define CHROME_BROWSER_PREFS_PREF_SERVICE_SYNCABLE_UTIL_H_
 
+#include <set>
+
+#include "components/prefs/pref_value_store.h"
+
 class PrefStore;
 class Profile;
+
+namespace service_manager {
+class Connector;
+}
 
 namespace sync_preferences {
 class PrefServiceSyncable;
@@ -24,7 +32,8 @@ class PrefServiceSyncable;
 sync_preferences::PrefServiceSyncable* PrefServiceSyncableFromProfile(
     Profile* profile);
 sync_preferences::PrefServiceSyncable* PrefServiceSyncableIncognitoFromProfile(
-    Profile* profile);
+    Profile* profile,
+    service_manager::Connector* incognito_connector = nullptr);
 
 // Creates an incognito copy of |pref_service| that shares most prefs but uses
 // a fresh non-persistent overlay for the user pref store and an individual
@@ -32,6 +41,10 @@ sync_preferences::PrefServiceSyncable* PrefServiceSyncableIncognitoFromProfile(
 // windows).
 sync_preferences::PrefServiceSyncable* CreateIncognitoPrefServiceSyncable(
     sync_preferences::PrefServiceSyncable* pref_service,
-    PrefStore* incognito_extension_pref_store);
+    PrefStore* incognito_extension_pref_store,
+    std::set<PrefValueStore::PrefStoreType> already_connected_types =
+        std::set<PrefValueStore::PrefStoreType>(),
+    service_manager::Connector* incognito_connector = nullptr,
+    service_manager::Connector* user_connector = nullptr);
 
 #endif  // CHROME_BROWSER_PREFS_PREF_SERVICE_SYNCABLE_UTIL_H_
