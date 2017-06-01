@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b199f9f7_4eb7cea2",
+        "filename": "third_party/WebKit/Source/core/dom/DOMTokenList.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-01T08:10:35Z",
+      "side": 1,
+      "message": "IMO, we should not do it.\nFirefox doesn\u0027t have such check.  Firefox shows \u0027a\u0027, not \u0027a a\u0027, with the following code.\n\nvar c \u003d document.createElement(\u0027div\u0027);\nc.className\u003d\u0027a a\u0027;\nc.classList.replace(\u0027a\u0027, \u0027a\u0027);\nalert(c.className);",
+      "parentUuid": "1acbe57d_e969f3dc",
+      "revId": "ea8f7b0c49357790f49e2d5601923de3c5a9604d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32f06d4e_b3c995a3",
         "filename": "third_party/WebKit/Source/core/dom/DOMTokenList.cpp",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-01T07:53:51Z",
       "side": 1,
       "message": "if |found_old_token| is true, |did_update| is also true.",
+      "revId": "ea8f7b0c49357790f49e2d5601923de3c5a9604d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f3a1b0e_8edd96e6",
+        "filename": "third_party/WebKit/Source/core/dom/DOMTokenList.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-01T08:10:35Z",
+      "side": 1,
+      "message": "You\u0027re right.  This statement is redundant.  Removed.",
+      "parentUuid": "32f06d4e_b3c995a3",
       "revId": "ea8f7b0c49357790f49e2d5601923de3c5a9604d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
