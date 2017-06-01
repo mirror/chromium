@@ -30,9 +30,9 @@
 #ifndef ThreadSafeRefCounted_h
 #define ThreadSafeRefCounted_h
 
+#include <atomic>
+
 #include "platform/wtf/Allocator.h"
-#include "platform/wtf/Atomics.h"
-#include "platform/wtf/DynamicAnnotations.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/WTFExport.h"
 
@@ -43,28 +43,27 @@ class WTF_EXPORT ThreadSafeRefCountedBase {
   USING_FAST_MALLOC(ThreadSafeRefCountedBase);
 
  public:
-  ThreadSafeRefCountedBase(int initial_ref_count = 1)
-      : ref_count_(initial_ref_count) {}
+  ThreadSafeRefCountedBase() : ref_count_(1) {}
 
-  void Ref() { AtomicIncrement(&ref_count_); }
+  void Ref() { ref_count_.fetch_add(1, std::memory_order_relaxed); }
 
-  bool HasOneRef() { return RefCount() == 1; }
+  bool HasOneRef() const { return RefCount() == 1; }
 
-  int RefCount() const { return static_cast<int const volatile&>(ref_count_); }
+  // For debugging only. Uses relaxed memory order.
+  int RefCount() const { return ref_count_.load(std::memory_order_relaxed); }
 
  protected:
   // Returns whether the pointer should be freed or not.
   bool DerefBase() {
-    WTF_ANNOTATE_HAPPENS_BEFORE(&ref_count_);
-    if (AtomicDecrement(&ref_count_) <= 0) {
-      WTF_ANNOTATE_HAPPENS_AFTER(&ref_count_);
+    if (ref_count_.fetch_sub(1, std::memory_order_release) == 1) {
+      std::atomic_thread_fence(std::memory_order_acquire);
       return true;
     }
     return false;
   }
 
  private:
-  int ref_count_;
+  std::atomic_int ref_count_;
 };
 
 template <class T>
