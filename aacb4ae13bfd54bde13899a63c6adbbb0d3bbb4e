@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9efeb8ab_544ac982",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/sources/inline-module-export-error-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-06-01T14:30:25Z",
+      "side": 1,
+      "message": "yes, you\u0027re right.",
+      "parentUuid": "64189677_0a4ec2f7",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 6
+      },
+      "revId": "aacb4ae13bfd54bde13899a63c6adbbb0d3bbb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba9b1c29_ab02b2d7",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/sources/inline-module-export-error.html",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-01T14:10:45Z",
       "side": 1,
       "message": "Optional: it would be better to mention that this is testing the line number is correctly reported, because the line number diffs in -expected.txt can look unimportant.",
+      "range": {
+        "startLine": 42,
+        "startChar": 3,
+        "endLine": 42,
+        "endChar": 36
+      },
+      "revId": "aacb4ae13bfd54bde13899a63c6adbbb0d3bbb4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f3309c_f0fdc73e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/sources/inline-module-export-error.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-06-01T14:30:25Z",
+      "side": 1,
+      "message": "changed",
+      "parentUuid": "ba9b1c29_ab02b2d7",
       "range": {
         "startLine": 42,
         "startChar": 3,
