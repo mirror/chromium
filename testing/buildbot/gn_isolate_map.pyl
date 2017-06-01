@@ -768,6 +768,11 @@
     "label": "//net:net_unittests",
     "type": "console_test_launcher",
   },
+  "network_traffic_annotations_unittests": {
+    "label":
+      "//tools/traffic_annotation/tests:network_traffic_annotations_unittests",
+    "type": "console_test_launcher",
+  },
   "next_version_mini_installer": {
     "label": "//chrome/installer/mini_installer:next_version_mini_installer",
     "type": "additional_compile_target",
