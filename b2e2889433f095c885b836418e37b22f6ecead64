@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "b3632f3d_dae1e183",
+        "filename": "tools/checkteamtags/extract_components_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-06-01T22:18:16Z",
+      "side": 1,
+      "message": "Since by default the scripts treats the CWD as the root, we don\u0027t want to have a test that depends on where it\u0027s invoked from. In the previous version the test would pass if invoked from src but fail if run from src/tools/checkteamtags, and that doesn\u0027t seem like appropriate behavior for a unit test.",
+      "parentUuid": "948655d5_5586a5ee",
+      "range": {
+        "startLine": 79,
+        "startChar": 51,
+        "endLine": 79,
+        "endChar": 58
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47161fcf_b7e35812",
         "filename": "tools/checkteamtags/extract_components_test.py",
         "patchSetId": 2
@@ -62,6 +86,30 @@
       "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b32ea1e9_c9b14a3b",
+        "filename": "tools/checkteamtags/extract_components_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-06-01T22:18:16Z",
+      "side": 1,
+      "message": "This is the correct output (look at the input data). There was an issue with the code before where it wasn\u0027t getting the file depth correctly.",
+      "parentUuid": "47161fcf_b7e35812",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 54
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "d2f868c7_dea7d92f",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-06-01T22:18:16Z",
+      "side": 1,
+      "message": "Yes, but if root contains `/..` or if rel_dirname starts with  `./` then counting os.path.sep to obtain the depth (relative to root) doesn\u0027t work, applying relpath removes these intervening `.` and `..` parts of the path so that counting seps works as well.\n\nThis was causing some oddities in some of the tests.\n\nAdded a comment to clarify.",
+      "parentUuid": "ec67520a_3712f1e6",
+      "range": {
+        "startLine": 78,
+        "startChar": 17,
+        "endLine": 78,
+        "endChar": 51
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f134bf9_17a32cd9",
         "filename": "tools/checkteamtags/owners_file_tags.py",
         "patchSetId": 2
@@ -99,6 +171,30 @@
       "writtenOn": "2017-06-01T12:54:08Z",
       "side": 1,
       "message": "Why prefix before the name? AFAIK, in python this is used to mean that the value will not be used in the future, but it\u0027s used on the next line already.",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 7
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72917b9d_fbc2cb99",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-06-01T22:18:16Z",
+      "side": 1,
+      "message": "os is the name of the library imported in line 5, this is to avoid overriding that name.",
+      "parentUuid": "7f134bf9_17a32cd9",
       "range": {
         "startLine": 83,
         "startChar": 4,
@@ -134,6 +230,30 @@
     },
     {
       "key": {
+        "uuid": "f8667c0c_8e8a98a1",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-06-01T22:18:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e04c7114_80a4a751",
+      "range": {
+        "startLine": 85,
+        "startChar": 19,
+        "endLine": 85,
+        "endChar": 25
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8736ea3f_7bd7b166",
         "filename": "tools/checkteamtags/owners_file_tags.py",
         "patchSetId": 2
@@ -154,6 +274,30 @@
       "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89bf1717_33366f1f",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-06-01T22:18:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8736ea3f_7bd7b166",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 97,
+        "endChar": 18
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +324,30 @@
     },
     {
       "key": {
+        "uuid": "480e7d4a_ea9b7c48",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-06-01T22:18:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2beec2c4_478a9647",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 76
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32237b68_65bad1e9",
         "filename": "tools/checkteamtags/owners_file_tags.py",
         "patchSetId": 2
@@ -200,6 +368,30 @@
       "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d05771_0a4d8b06",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-06-01T22:18:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32237b68_65bad1e9",
+      "range": {
+        "startLine": 153,
+        "startChar": 60,
+        "endLine": 153,
+        "endChar": 67
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +418,30 @@
     },
     {
       "key": {
+        "uuid": "05493fd0_ce01f748",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-06-01T22:18:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c7193bd_73c9e1ee",
+      "range": {
+        "startLine": 161,
+        "startChar": 58,
+        "endLine": 161,
+        "endChar": 59
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1179d435_f17eb443",
         "filename": "tools/checkteamtags/owners_file_tags.py",
         "patchSetId": 2
@@ -246,6 +462,30 @@
       "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab930d2_34349cdb",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-06-01T22:18:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1179d435_f17eb443",
+      "range": {
+        "startLine": 163,
+        "startChar": 26,
+        "endLine": 163,
+        "endChar": 27
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
