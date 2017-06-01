@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dc8fcf3b_83678cb9",
+        "filename": "components/feature_engagement_tracker/public/feature_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-01T17:06:11Z",
+      "side": 1,
+      "message": "Great idea! Done!",
+      "parentUuid": "702c2b64_4efcafe4",
+      "range": {
+        "startLine": 15,
+        "startChar": 8,
+        "endLine": 15,
+        "endChar": 23
+      },
+      "revId": "6aa28a6bdb93dc4a9bbd6cf0ce55c11f13019bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ff1ca92_d908b8ce",
         "filename": "components/feature_engagement_tracker/public/feature_list.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "6aa28a6bdb93dc4a9bbd6cf0ce55c11f13019bc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "341eea39_aceb1d81",
+        "filename": "components/feature_engagement_tracker/public/feature_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-01T17:06:11Z",
+      "side": 1,
+      "message": "Sorry, this is in fact the param name that we later read out, so I think it needs to be the same for each and every one. It\u0027s the one defined on line 34 below: \"chosen_feature\".",
+      "parentUuid": "6ff1ca92_d908b8ce",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "6aa28a6bdb93dc4a9bbd6cf0ce55c11f13019bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6d4bf36e_3058610b",
+        "filename": "components/feature_engagement_tracker/public/feature_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-01T17:06:11Z",
+      "side": 1,
+      "message": "Good idea! Done.",
+      "parentUuid": "355f221b_d9382296",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 15
+      },
+      "revId": "6aa28a6bdb93dc4a9bbd6cf0ce55c11f13019bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd3a7b44_f47f78cf",
         "filename": "components/feature_engagement_tracker/public/feature_list.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a6362d2e_2e9b63b1",
+        "filename": "components/feature_engagement_tracker/public/feature_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-01T17:06:11Z",
+      "side": 1,
+      "message": "I want to say \"No reason\" here. Since this was a nit, assuming it\u0027s OK with you, I\u0027ll do that as a follow-up. Pinky promise.",
+      "parentUuid": "dd3a7b44_f47f78cf",
+      "range": {
+        "startLine": 37,
+        "startChar": 21,
+        "endLine": 37,
+        "endChar": 41
+      },
+      "revId": "6aa28a6bdb93dc4a9bbd6cf0ce55c11f13019bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5533b84c_eaf35596",
         "filename": "components/feature_engagement_tracker/public/feature_list.h",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "6aa28a6bdb93dc4a9bbd6cf0ce55c11f13019bc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "169f5e91_32ae9a1a",
+        "filename": "components/feature_engagement_tracker/public/feature_list.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-01T17:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5533b84c_eaf35596",
+      "range": {
+        "startLine": 19,
+        "startChar": 29,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "6aa28a6bdb93dc4a9bbd6cf0ce55c11f13019bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +281,30 @@
       "revId": "6aa28a6bdb93dc4a9bbd6cf0ce55c11f13019bc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a313a73_90a70e1e",
+        "filename": "components/feature_engagement_tracker/public/feature_list.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-01T17:06:11Z",
+      "side": 1,
+      "message": "If I declare it as:\nextern const size_t kIPHDemoModeChoiceVariationsLen;\nextern const flags_ui::FeatureEntry::FeatureVariation\n    kIPHDemoModeChoiceVariations[kIPHDemoModeChoiceVariationsLen];\n\nI get this error:\n../../components/feature_engagement_tracker/public/feature_list.h:28:5: error: variable length array declaration not allowed at file scope\n    kIPHDemoModeChoiceVariations[kIPHDemoModeChoiceVariationsLen];\n    ^                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\nIf I do not specify it at all, arraysize() doesn\u0027t work, because it\u0027s done far away from this file (see pasted error below).\n\nI did something in-between, and declared a size_t in this header, and now refer to it in the comments in feature_list.cc that it must be updated.\n\n###\n../chrome/browser/about_flags.cc -o obj/chrome/browser/browser/about_flags.o\n../../chrome/browser/about_flags.cc:1789:6: error: no matching function for call to \u0027ArraySizeHelper\u0027\n     FEATURE_WITH_PARAMS_VALUE_TYPE(\n     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n../../components/flags_ui/feature_entry_macros.h:38:39: note: expanded from macro \u0027FEATURE_WITH_PARAMS_VALUE_TYPE\u0027\n      nullptr, nullptr, \u0026feature, 3 + arraysize(feature_variations), nullptr, \\\n                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n../../base/macros.h:49:34: note: expanded from macro \u0027arraysize\u0027\n#define arraysize(array) (sizeof(ArraySizeHelper(array)))\n                                 ^~~~~~~~~~~~~~~\n../../base/macros.h:48:40: note: candidate template ignored: could not match \u0027T [N]\u0027 against \u0027const flags_ui::FeatureEntry::FeatureVariation []\u0027\ntemplate \u003ctypename T, size_t N\u003e char (\u0026ArraySizeHelper(T (\u0026array)[N]))[N];\n                                       ^\n../../chrome/browser/about_flags.cc:3071:39: error: no matching function for call to \u0027ArraySizeHelper\u0027\n      : flags_state_(kFeatureEntries, arraysize(kFeatureEntries)) {}\n                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~\n../../base/macros.h:49:34: note: expanded from macro \u0027arraysize\u0027\n#define arraysize(array) (sizeof(ArraySizeHelper(array)))\n                                 ^~~~~~~~~~~~~~~\n../../base/macros.h:48:40: note: candidate template ignored: could not match \u0027T [N]\u0027 against \u0027const flags_ui::FeatureEntry []\u0027\ntemplate \u003ctypename T, size_t N\u003e char (\u0026ArraySizeHelper(T (\u0026array)[N]))[N];\n                                       ^\n../../chrome/browser/about_flags.cc:3281:12: error: no matching function for call to \u0027ArraySizeHelper\u0027\n  *count \u003d arraysize(kFeatureEntries);\n           ^~~~~~~~~~~~~~~~~~~~~~~~~~\n../../base/macros.h:49:34: note: expanded from macro \u0027arraysize\u0027\n#define arraysize(array) (sizeof(ArraySizeHelper(array)))\n                                 ^~~~~~~~~~~~~~~\n../../base/macros.h:48:40: note: candidate template ignored: could not match \u0027T [N]\u0027 against \u0027const flags_ui::FeatureEntry []\u0027\ntemplate \u003ctypename T, size_t N\u003e char (\u0026ArraySizeHelper(T (\u0026array)[N]))[N];\n                                       ^\n3 errors generated.\n###",
+      "parentUuid": "06e08d7b_90749139",
+      "range": {
+        "startLine": 22,
+        "startChar": 33,
+        "endLine": 22,
+        "endChar": 34
+      },
+      "revId": "6aa28a6bdb93dc4a9bbd6cf0ce55c11f13019bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
