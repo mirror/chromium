@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0e432023_64375853",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-01T21:57:18Z",
+      "side": 1,
+      "message": "Good point, I\u0027ve refactored this.",
+      "parentUuid": "d93079a4_d78ca982",
+      "revId": "57ad2d929c1a2ae67ec94dba84a177f285b5eba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1f73a15_32dad842",
         "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "57ad2d929c1a2ae67ec94dba84a177f285b5eba4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac89203f_e13e201c",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-01T21:57:18Z",
+      "side": 1,
+      "message": "Yes, the DCHECK will be hit when used from workers but it\u0027s there on purpose so we know that this code depends on document. The change will be fairly simple (as in checking if the ExecutionContext is a Worker or a Document). Though, it might be interesting to see how to handle autoplay for AudioContext in Workers.",
+      "parentUuid": "f1f73a15_32dad842",
+      "revId": "57ad2d929c1a2ae67ec94dba84a177f285b5eba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1959ce28_9ef43598",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-01T21:57:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e73ac5b4_aa9a8d46",
+      "revId": "57ad2d929c1a2ae67ec94dba84a177f285b5eba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "994447e5_edeaf881",
         "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContextTest.cpp",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-01T15:55:22Z",
       "side": 1,
       "message": "A comment describing what this test is about would be nice.",
+      "revId": "57ad2d929c1a2ae67ec94dba84a177f285b5eba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "025525b3_2d172133",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContextTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-01T21:57:18Z",
+      "side": 1,
+      "message": "Done. For all the tests.",
+      "parentUuid": "994447e5_edeaf881",
       "revId": "57ad2d929c1a2ae67ec94dba84a177f285b5eba4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -90,6 +162,30 @@
       "revId": "57ad2d929c1a2ae67ec94dba84a177f285b5eba4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b4b41e7_6cbcd199",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 80891,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-01T21:57:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a414f4f2_d2834fc6",
+      "range": {
+        "startLine": 80891,
+        "startChar": 76,
+        "endLine": 80891,
+        "endChar": 80
+      },
+      "revId": "57ad2d929c1a2ae67ec94dba84a177f285b5eba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
