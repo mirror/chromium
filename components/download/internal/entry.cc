@@ -4,9 +4,11 @@
 
 #include "components/download/internal/entry.h"
 
+#include "base/time/time.h"
+
 namespace download {
 
-Entry::Entry() = default;
+Entry::Entry() : create_time(base::Time::Now()) {}
 Entry::Entry(const Entry& other) = default;
 
 Entry::Entry(const DownloadParams& params)
