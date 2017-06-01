@@ -54,7 +54,7 @@ PassRefPtr<SegmentReader> CopyToROBufferSegmentReader(
     position += length;
   }
   return SegmentReader::CreateFromSkROBuffer(
-      sk_sp<SkROBuffer>(rw_buffer.newRBufferSnapshot()));
+      sk_sp<SkROBuffer>(rw_buffer.makeROBufferSnapshot()));
 }
 
 PassRefPtr<SegmentReader> CopyToDataSegmentReader(
@@ -220,7 +220,7 @@ TEST(SegmentReaderTest, variableSegments) {
                      .5 * SharedBuffer::kSegmentSize);
 
     segment_reader = SegmentReader::CreateFromSkROBuffer(
-        sk_sp<SkROBuffer>(rw_buffer.newRBufferSnapshot()));
+        sk_sp<SkROBuffer>(rw_buffer.makeROBufferSnapshot()));
   }
 
   const char* segment;
