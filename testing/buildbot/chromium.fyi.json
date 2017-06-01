@@ -10130,6 +10130,20 @@
       }
     ]
   },
+  "Fuchsia": {
+    "scripts": [
+      {
+        "args": [
+          "base_unittests"
+        ],
+        "name": "base_unittests",
+        "override_compile_targets": [
+          "base_unittests"
+        ],
+        "script": "run_fuchsia_test.py"
+      }
+    ]
+  },
   "Headless Linux (dbg)": {
     "additional_compile_targets": [
       "headless_lib",
