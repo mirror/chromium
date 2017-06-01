@@ -1,0 +1,33 @@
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "position": [-2, -2],
+      "bounds": [802, 602],
+      "contentsOpaque": false,
+      "drawsContent": true,
+      "paintInvalidations": [
+        {
+          "object": "LayoutSVGRoot svg",
+          "rect": [0, 0, 120, 120],
+          "reason": "full"
+        }
+      ]
+    }
+  ],
+  "objectPaintInvalidations": [
+    {
+      "object": "LayoutBlockFlow BODY",
+      "reason": "geometry"
+    },
+    {
+      "object": "RootInlineBox",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutSVGRoot svg",
+      "reason": "style change"
+    }
+  ]
+}
+

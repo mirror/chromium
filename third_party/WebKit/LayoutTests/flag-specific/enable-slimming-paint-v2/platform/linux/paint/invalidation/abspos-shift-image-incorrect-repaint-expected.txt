@@ -1,0 +1,107 @@
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "position": [-250, 0],
+      "bounds": [1500, 585],
+      "contentsOpaque": false,
+      "drawsContent": true,
+      "paintInvalidations": [
+        {
+          "object": "LayoutView #document",
+          "rect": [1500, 0, 250, 585],
+          "reason": "incremental"
+        },
+        {
+          "object": "LayoutImage IMG",
+          "rect": [954, 0, 214, 232],
+          "reason": "geometry"
+        },
+        {
+          "object": "LayoutImage IMG",
+          "rect": [704, 0, 214, 232],
+          "reason": "geometry"
+        },
+        {
+          "object": "LayoutImage IMG",
+          "rect": [250, 0, 214, 232],
+          "reason": "geometry"
+        },
+        {
+          "object": "LayoutImage IMG",
+          "rect": [0, 0, 214, 232],
+          "reason": "geometry"
+        },
+        {
+          "object": "InlineTextBox '\n'",
+          "rect": [950, 217, 4, 19],
+          "reason": "geometry"
+        },
+        {
+          "object": "InlineTextBox '\n'",
+          "rect": [700, 217, 4, 19],
+          "reason": "geometry"
+        }
+      ]
+    }
+  ],
+  "objectPaintInvalidations": [
+    {
+      "object": "LayoutView #document",
+      "reason": "incremental"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV id='shiftMe'",
+      "reason": "geometry"
+    },
+    {
+      "object": "RootInlineBox",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutBlockFlow (relative positioned) DIV class='imageWrapper'",
+      "reason": "geometry"
+    },
+    {
+      "object": "RootInlineBox",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutImage IMG",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutText #text",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutText #text",
+      "reason": "geometry"
+    },
+    {
+      "object": "InlineTextBox '\n'",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutBlockFlow (relative positioned) DIV class='imageWrapper'",
+      "reason": "geometry"
+    },
+    {
+      "object": "RootInlineBox",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutImage IMG",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutText #text",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutText #text",
+      "reason": "geometry"
+    }
+  ]
+}
+

@@ -2,28 +2,28 @@
   "layers": [
     {
       "name": "LayoutView #document",
-      "bounds": [800, 2016],
+      "bounds": [800, 600],
       "contentsOpaque": true,
       "drawsContent": true,
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow BODY",
-          "rect": [8, 8, 784, 2000],
+          "rect": [8, 8, 784, 584],
           "reason": "style change"
         },
         {
           "object": "LayoutBlockFlow (positioned) DIV class='absolute green'",
-          "rect": [108, 5100, 100, 100],
+          "rect": [700, 500, 100, 100],
+          "reason": "subtree"
+        },
+        {
+          "object": "LayoutBlockFlow (positioned) DIV id='container' class='fixed blue'",
+          "rect": [600, 400, 100, 100],
           "reason": "subtree"
         },
         {
           "object": "LayoutBlockFlow (positioned) DIV class='absolute green'",
           "rect": [100, 100, 100, 100],
-          "reason": "subtree"
-        },
-        {
-          "object": "LayoutBlockFlow (positioned) DIV id='container' class='fixed blue'",
-          "rect": [8, 5000, 100, 100],
           "reason": "subtree"
         }
       ]

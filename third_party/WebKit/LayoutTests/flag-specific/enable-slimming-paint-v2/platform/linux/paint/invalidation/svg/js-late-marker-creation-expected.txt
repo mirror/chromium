@@ -1,0 +1,25 @@
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "position": [-1, -1],
+      "bounds": [802, 602],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "paintInvalidations": [
+        {
+          "object": "LayoutSVGPath path",
+          "rect": [203, 212, 112, 112],
+          "reason": "style change"
+        }
+      ]
+    }
+  ],
+  "objectPaintInvalidations": [
+    {
+      "object": "LayoutSVGPath path",
+      "reason": "style change"
+    }
+  ]
+}
+

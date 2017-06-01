@@ -1,0 +1,29 @@
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "position": [-1, -1],
+      "bounds": [802, 602],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "paintInvalidations": [
+        {
+          "object": "LayoutSVGRoot svg",
+          "rect": [0, 0, 578, 434],
+          "reason": "appeared"
+        }
+      ]
+    }
+  ],
+  "objectPaintInvalidations": [
+    {
+      "object": "LayoutSVGRoot svg",
+      "reason": "style change"
+    },
+    {
+      "object": "LayoutSVGRect rect",
+      "reason": "style change"
+    }
+  ]
+}
+

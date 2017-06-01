@@ -1,0 +1,154 @@
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "bounds": [800, 600],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "paintInvalidations": [
+        {
+          "object": "InlineTextBox 'PASS '",
+          "rect": [0, 114, 302, 46],
+          "reason": "full"
+        },
+        {
+          "object": "InlineTextBox 'PASS'",
+          "rect": [310, 116, 130, 68],
+          "reason": "disappeared"
+        },
+        {
+          "object": "InlineTextBox 'PASS'",
+          "rect": [310, 114, 92, 46],
+          "reason": "appeared"
+        }
+      ]
+    }
+  ],
+  "objectPaintInvalidations": [
+    {
+      "object": "LayoutSVGContainer g id='text1g'",
+      "reason": "full"
+    },
+    {
+      "object": "LayoutSVGText text",
+      "reason": "geometry"
+    },
+    {
+      "object": "RootInlineBox",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutSVGInlineText #text",
+      "reason": "geometry"
+    },
+    {
+      "object": "InlineTextBox 'PASS '",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutSVGTSpan tspan",
+      "reason": "geometry"
+    },
+    {
+      "object": "InlineFlowBox",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutSVGInlineText #text",
+      "reason": "geometry"
+    },
+    {
+      "object": "InlineTextBox 'PASS'",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutSVGInlineText #text",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutSVGViewportContainer svg",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutSVGText text",
+      "reason": "geometry"
+    },
+    {
+      "object": "RootInlineBox",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutSVGInlineText #text",
+      "reason": "geometry"
+    },
+    {
+      "object": "InlineTextBox 'PASS'",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutSVGContainer g id='text2g'",
+      "reason": "full"
+    },
+    {
+      "object": "LayoutSVGContainer g id='text3g'",
+      "reason": "full"
+    },
+    {
+      "object": "LayoutSVGText text",
+      "reason": "geometry"
+    },
+    {
+      "object": "RootInlineBox",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutSVGInlineText #text",
+      "reason": "geometry"
+    },
+    {
+      "object": "InlineTextBox 'PASS '",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutSVGTSpan tspan",
+      "reason": "geometry"
+    },
+    {
+      "object": "InlineFlowBox",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutSVGInlineText #text",
+      "reason": "geometry"
+    },
+    {
+      "object": "InlineTextBox 'PASS'",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutSVGInlineText #text",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutSVGViewportContainer svg",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutSVGText text",
+      "reason": "geometry"
+    },
+    {
+      "object": "RootInlineBox",
+      "reason": "geometry"
+    },
+    {
+      "object": "LayoutSVGInlineText #text",
+      "reason": "geometry"
+    },
+    {
+      "object": "InlineTextBox 'PASS'",
+      "reason": "geometry"
+    }
+  ]
+}
+
