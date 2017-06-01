@@ -40,6 +40,7 @@ class BASE_EXPORT SchedulerWorkerPoolParams final {
     return standby_thread_policy_;
   }
   int max_threads() const { return max_threads_; }
+  void set_max_threads(int max_threads) { max_threads_ = max_threads; }
   TimeDelta suggested_reclaim_time() const { return suggested_reclaim_time_; }
   SchedulerBackwardCompatibility backward_compatibility() const {
     return backward_compatibility_;
