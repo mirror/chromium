@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed67ad18_aa6c510f",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-01T01:45:12Z",
+      "side": 1,
+      "message": "If ready_state_ was kWaitingForStreaming, then ScriptRunner receives two notifications from StreamingFinished:\none via FinishWaitingForStreaming() -\u003e PendingScript -\u003e ScriptLoader\u003d\u003dPendingScriptClient -\u003e ScriptRunner (normal ready notification), and\none directly via NotifyScriptStreamerFinished().\n\nI think ScriptRunner should be notified only once (basically sending two notifications are prone to errors if some state changes occur in the first notification and the second notification is sent without considering the state changes), but haven\u0027t figured out clear semantics for that.\nFor a short-term, probably we can avoid NotifyScriptStreamerFinished() call when kWaitingForStreaming and let FinishWaitingForStreaming() handle the streaming finish appropriately just as before.",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 43
+      },
+      "revId": "ae1df96c046a69c32998722123d412abf883062d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

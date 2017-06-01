@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46eef69a_86af9822",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-01T01:45:12Z",
+      "side": 1,
+      "message": "Probably it\u0027s better to retain Member\u003cScriptRunner\u003e to ensure we use correct ScriptRunner* here.\n...oh, how should handle cases where ScriptLoader is moved across documents (and thus across ScriptLoader)?\nCurrently ScriptLoader can be moved across documents, while crbug.com/721914 is going to forbid script execution in such cases.",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 26
+      },
+      "revId": "171695a852c20d9a3e5855cc5c0f5bc108285742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8d508dc_04be5a4d",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-01T01:45:12Z",
+      "side": 1,
+      "message": "Is this to allow GetSource() while the state is kReadyStreaming by ignoring ongoing streaming, right?",
+      "range": {
+        "startLine": 214,
+        "startChar": 24,
+        "endLine": 214,
+        "endChar": 53
+      },
+      "revId": "171695a852c20d9a3e5855cc5c0f5bc108285742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2164c545_512ca09a",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-01T01:45:12Z",
+      "side": 1,
+      "message": "[2]\nIf [1a], then we don\u0027t need this block here.\nI\u0027d like to avoid to add this block because this function is implementing a part of HTML script spec, and adding a special case to this might cause unexpected corner-case bugs.",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 3
+      },
+      "revId": "171695a852c20d9a3e5855cc5c0f5bc108285742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f72070_cf946fa9",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-01T01:45:12Z",
+      "side": 1,
+      "message": "[1a] Perhaps, we don\u0027t have to move ScriptLoader between pending_async_scripts_ and currently_streamed_script_, because if script streaming is started while PendingScript is still not ready, ClassicPendingScript will take care of script streaming and call NotifyScriptReady/LoadError(), which moves the ScriptLoader from pending_async_scripts_ appropriately (if we implement so).\n\n[1b] Furthermore, I just start thinking it\u0027s better to manage the streaming state not by currently_streamed_script_ (i.e. ScriptRunner thinks the script is streaming if it is stored in currently_streamed_script_), but rather by a predicate in ScriptLoader/PendingScript side (e.g. IsStreamingInProgress()).\nThis is because the assumptions on which Member\u003cT\u003e contains the reference to the T object might be fragile and can cause crashing/security bugs when broken.",
+      "range": {
+        "startLine": 319,
+        "startChar": 0,
+        "endLine": 321,
+        "endChar": 48
+      },
+      "revId": "171695a852c20d9a3e5855cc5c0f5bc108285742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578d44da_d34c200c",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-01T01:45:12Z",
+      "side": 1,
+      "message": "[3]\nIf [2] and [1b], then we don\u0027t need streamers_, and we can avoid double streaming by checking IsStreamingInProgress() instead.\n\nSimilar to [1b], it\u0027s better to avoid controlling the state by having pointers, and also it\u0027s better to avoid duplicating Member\u003cScriptLoader\u003e to the same ScriptLoader in streamers_ and async_scripts_to_execute_soon_.",
+      "range": {
+        "startLine": 112,
+        "startChar": 60,
+        "endLine": 112,
+        "endChar": 70
+      },
+      "revId": "171695a852c20d9a3e5855cc5c0f5bc108285742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
