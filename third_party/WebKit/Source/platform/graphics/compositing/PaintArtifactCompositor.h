@@ -108,6 +108,7 @@ class PLATFORM_EXPORT PaintArtifactCompositor {
     // to the chunks as Skia commands.
     void Upcast(const PropertyTreeState&);
     FloatRect bounds;
+    float outset_for_raster_effects;
     Vector<const PaintChunk*> paint_chunks;
     bool known_to_be_opaque;
     bool backface_hidden;
