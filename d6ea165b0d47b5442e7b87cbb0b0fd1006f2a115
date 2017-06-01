@@ -16,6 +16,24 @@
       "revId": "d6ea165b0d47b5442e7b87cbb0b0fd1006f2a115",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c260a3c_8012336a",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1709,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-01T00:08:05Z",
+      "side": 0,
+      "message": "There is but it was moved it into the only caller (ScrollbarLayerImplBase::SetScrollElementId). I did this for consistency but with Enne\u0027s suggested refactoring it makes sense to call SetScrollbarGeometriesNeedUpdate here.\n\nIn the latest patch I\u0027ve refactored LayerTreeImpl::RegisterScrollbar to call SetScrollbarGeometriesNeedUpdate.",
+      "parentUuid": "3d62b68b_bf387bd9",
+      "revId": "d6ea165b0d47b5442e7b87cbb0b0fd1006f2a115",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

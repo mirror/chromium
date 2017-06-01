@@ -16,6 +16,24 @@
       "revId": "9028116ddf0080609a28089a0ca28277bfb9f718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77c7c0cd_c7181319",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-01T00:08:05Z",
+      "side": 1,
+      "message": "I like this idea. Done in the latest patch.\n\nI ended up moving the scrollbar geometry update below the call to ReconcileElasticOverscrollAndRootScroll in LayerTreeHostImpl::PrepareToDraw.\n\nOne wrinkle: ScrollbarLayerImplBase::CanScrollOrientation can get called without LayerTreeHostImpl::PrepareToDraw. There was already a TODO in CanScrollOrientation to use the scroll tree instead of layer values, and doing that would also remove the need to call UpdateScrollbarGeometries. For now I\u0027ve added a TODO and a call to UpdateScrollbarGeometries in ScrollbarLayerImplBase::CanScrollOrientation.\n\nI think a useful followup would be to remove ScrollbarLayerImplBase::ComputeThumbQuadRectWithThumbThicknessScale and instead just calculate\u0026cache the quad rect in LayerTreeImpl::UpdateScrollbarGeometries.",
+      "parentUuid": "441e2bde_f670d3f6",
+      "revId": "9028116ddf0080609a28089a0ca28277bfb9f718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
