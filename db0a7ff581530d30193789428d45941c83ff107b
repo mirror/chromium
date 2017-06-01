@@ -16,6 +16,24 @@
       "revId": "db0a7ff581530d30193789428d45941c83ff107b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51bc70bb_4efd72d5",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-01T16:53:15Z",
+      "side": 1,
+      "message": "Oh it is actually the same thing. This is SkPathCounter which is what analyzeClipPath uses to count paths:\n\n    void operator()(const SkRecords::ClipPath\u0026 op) {\n        // TODO: does the SkRegion op matter?                                                                    \n        if (op.opAA.aa() \u0026\u0026 !op.path.isConvex()) {\n            fNumSlowPathsAndDashEffects++;\n        }\n    }\n\nNow I understand.. so I ran the benchmark and it appears to be better when we count the slow paths (letting us fall out of gpu raster)?\n\nSoftware raster with clip path counting: 380.28 -3.21% / +2.65%\nGPU raster with clip path counting: 437.61 -6.44% / +4.43%\n\nSoftware raster with 0 clip path: 380.72 -4.12% / +3.55%\nGPU raster with 0 clip path: 408.99 -3.10% / +2.82%",
+      "parentUuid": "ef94a040_689cf0a4",
+      "revId": "db0a7ff581530d30193789428d45941c83ff107b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
