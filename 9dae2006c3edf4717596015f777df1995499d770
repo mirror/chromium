@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9a4824a_5b46bd14",
+        "filename": "content/shell/test_runner/accessibility_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-01T07:13:52Z",
+      "side": 1,
+      "message": "no auto please",
+      "revId": "9dae2006c3edf4717596015f777df1995499d770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
