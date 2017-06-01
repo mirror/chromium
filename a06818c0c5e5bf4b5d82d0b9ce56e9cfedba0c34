@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff2f9b31_77a25032",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-01T07:49:14Z",
+      "side": 1,
+      "message": "You could highlight a major structural change here: that the picker callback now *includes* the URL template (which was put into the ShareTarget at the start of the process), rather than doing another dictionary lookup after it returns.",
+      "revId": "a06818c0c5e5bf4b5d82d0b9ce56e9cfedba0c34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

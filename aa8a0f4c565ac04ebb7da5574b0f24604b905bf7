@@ -1,0 +1,354 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "987432b8_47367200",
+        "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-01T07:49:14Z",
+      "side": 1,
+      "message": "Yeah: It\u0027s good to keep the name in UTF-8 format the whole way until here, where we are already doing a conversion anyway.",
+      "range": {
+        "startLine": 59,
+        "startChar": 15,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5285b19f_7a7fc05b",
+        "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-01T07:49:14Z",
+      "side": 1,
+      "message": "Hmm... I see what you\u0027re doing but after consideration, I think it\u0027s best to *not* move here. (And set |targets_| back to const).\n\nI think it\u0027s not a problem to std::move this since the dialog should be closing. But it\u0027s a bit scary since TargetPickerTableModel::GetText uses |targets_| to return the text used in the table, and could in theory (if not in practice) be called at any time, even after Accept() is called.\n\nAlso this would only be copying a few strings, once per dialog activation, so there is no major performance problem here.",
+      "range": {
+        "startLine": 149,
+        "startChar": 13,
+        "endLine": 149,
+        "endChar": 22
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66c071ec_4a6e4b30",
+        "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-01T07:49:14Z",
+      "side": 1,
+      "message": "This could be const if you don\u0027t std::move the one chosen target (see my comment below).",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 13
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53900c04_459c6215",
+        "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-01T07:49:14Z",
+      "side": 1,
+      "message": "I don\u0027t think you\u0027re allowed to have static initializers, even in tests. Please make this a constexpr char[] and call the GURL constructor from within the tests.",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 10
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "516cb0cf_8f15ca48",
+        "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-01T07:49:14Z",
+      "side": 1,
+      "message": "Use the vector literal notation:\nstd::vector\u003cShareTarget\u003e targets{\n  ShareTarget(...),\n  ShareTarget(...),\n};",
+      "range": {
+        "startLine": 132,
+        "startChar": 10,
+        "endLine": 132,
+        "endChar": 22
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05dd31dd_5f9ee8eb",
+        "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-01T07:49:14Z",
+      "side": 1,
+      "message": "Same.",
+      "range": {
+        "startLine": 165,
+        "startChar": 10,
+        "endLine": 165,
+        "endChar": 22
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "498d4ec3_b0568063",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-01T07:49:14Z",
+      "side": 1,
+      "message": "As discussed elsewhere, I think this filter logic should remain in GetTargetsWithSufficientEngagement. Therefore the variable should continue to be known as \"sufficiently_engaged_targets\".",
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "500f1318_9196d3c9",
+        "filename": "chrome/browser/webshare/share_service_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-01T07:49:14Z",
+      "side": 1,
+      "message": "This isn\u0027t allowed (I don\u0027t think even in a test) to be a static initializer. Keep it as a const char[].",
+      "range": {
+        "startLine": 32,
+        "startChar": 6,
+        "endLine": 32,
+        "endChar": 10
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "830517d1_74a3b479",
+        "filename": "chrome/browser/webshare/share_service_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-01T07:49:14Z",
+      "side": 1,
+      "message": "GURL\u0026\n\nDon\u0027t deal with null here (see my comment in the test).",
+      "range": {
+        "startLine": 88,
+        "startChar": 28,
+        "endLine": 88,
+        "endChar": 29
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e3d0c85_785e0249",
+        "filename": "chrome/browser/webshare/share_service_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-01T07:49:14Z",
+      "side": 1,
+      "message": "Use the vector literal notation {ShareTarget(...), ShareTarget(...)} rather than emplace_back after initialization.",
+      "range": {
+        "startLine": 206,
+        "startChar": 43,
+        "endLine": 206,
+        "endChar": 44
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a08ef68_582f8148",
+        "filename": "chrome/browser/webshare/share_service_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-01T07:49:14Z",
+      "side": 1,
+      "message": "Don\u0027t use PickTarget here; just call picker_callback().Run(base::nullopt).\n\nThen PickTarget doesn\u0027t have to deal with null.",
+      "range": {
+        "startLine": 239,
+        "startChar": 37,
+        "endLine": 239,
+        "endChar": 44
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b180b2_01fea62b",
+        "filename": "chrome/browser/webshare/share_target.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-01T07:49:14Z",
+      "side": 1,
+      "message": "I think this should read like a call to the constructor (\"ShareTarget(GURL(\"...\"), \"...\", \"...\")\"). Or at least include the word \"ShareTarget\" somewhere.",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 8
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7175dd40_f2cf1804",
+        "filename": "chrome/browser/webshare/share_target.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-01T07:49:14Z",
+      "side": 1,
+      "message": "Nit: No colon required.",
+      "range": {
+        "startLine": 21,
+        "startChar": 21,
+        "endLine": 21,
+        "endChar": 22
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b03cf5_8123b006",
+        "filename": "chrome/browser/webshare/share_target.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-01T07:49:14Z",
+      "side": 1,
+      "message": "This should be called name(), manifest_url() and url_template(), because it is a simpler accessor.",
+      "range": {
+        "startLine": 27,
+        "startChar": 21,
+        "endLine": 27,
+        "endChar": 28
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96776224_a176ebd8",
+        "filename": "chrome/browser/webshare/share_target_pref_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-01T07:49:14Z",
+      "side": 1,
+      "message": "nit: Remove blank line.",
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec4e0d10_a05711f6",
+        "filename": "chrome/browser/webshare/share_target_pref_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-01T07:49:14Z",
+      "side": 1,
+      "message": "It\u0027s good that you\u0027re moving this from ShareServiceImpl, but could it remain as \"GetTargetsWithSufficientEngagement\" and perform the minimum-engagement filtering?\n\n(I don\u0027t like that the caller now has to apply a filter which complicates the logic in ShareServiceImpl::Share).",
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
