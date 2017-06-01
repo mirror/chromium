@@ -980,6 +980,17 @@ void Framebuffer::DoUnbindGLAttachmentsForWorkaround(GLenum target) {
 
 void Framebuffer::AttachRenderbuffer(
     GLenum attachment, Renderbuffer* renderbuffer) {
+  if (renderbuffer) {
+    if (const Attachment* a = GetAttachment(attachment)) {
+      renderbuffer->RemoveFramebufferAttachmentPoint(this, attachment);
+    }
+    renderbuffer->AddFramebufferAttachmentPoint(this, attachment);
+  }
+  AttachRenderbufferImpl(attachment, renderbuffer);
+}
+
+void Framebuffer::AttachRenderbufferImpl(GLenum attachment,
+                                         Renderbuffer* renderbuffer) {
   DCHECK(attachment != GL_DEPTH_STENCIL_ATTACHMENT);
   const Attachment* a = GetAttachment(attachment);
   if (a)
@@ -990,7 +1001,7 @@ void Framebuffer::AttachRenderbuffer(
   } else {
     attachments_.erase(attachment);
   }
-  framebuffer_complete_state_count_id_ = 0;
+  UnmarkAsComplete();
 }
 
 void Framebuffer::AttachTexture(
@@ -1007,7 +1018,7 @@ void Framebuffer::AttachTexture(
   } else {
     attachments_.erase(attachment);
   }
-  framebuffer_complete_state_count_id_ = 0;
+  UnmarkAsComplete();
 }
 
 void Framebuffer::AttachTextureLayer(
@@ -1024,7 +1035,7 @@ void Framebuffer::AttachTextureLayer(
   } else {
     attachments_.erase(attachment);
   }
-  framebuffer_complete_state_count_id_ = 0;
+  UnmarkAsComplete();
 }
 
 const Framebuffer::Attachment*
