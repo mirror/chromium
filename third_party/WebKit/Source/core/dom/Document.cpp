@@ -1748,7 +1748,7 @@ bool Document::NeedsLayoutTreeUpdate() const {
     return true;
   if (ChildNeedsStyleInvalidation())
     return true;
-  if (GetLayoutView() && GetLayoutView()->WasNotifiedOfSubtreeChange())
+  if (GetLayoutViewItem().WasNotifiedOfSubtreeChange())
     return true;
   return false;
 }
