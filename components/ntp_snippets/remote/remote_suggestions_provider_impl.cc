@@ -48,6 +48,11 @@ const int kMaxSuggestionCount = 10;
 // Number of archived suggestions we keep around in memory.
 const int kMaxArchivedSuggestionCount = 200;
 
+// Maximal number of dismissed suggestions to exclude when fetching new
+// suggestions from the server. This limit exists to decrease data
+// usage.
+const int kMaxDismissedExcludedIds = 100;
+
 // Keys for storing CategoryContent info in prefs.
 const char kCategoryContentId[] = "id";
 const char kCategoryContentTitle[] = "title";
@@ -433,7 +438,7 @@ void RemoteSuggestionsProviderImpl::FetchSuggestions(
 
   MarkEmptyCategoriesAsLoading();
 
-  RequestParams params = BuildFetchParams();
+  RequestParams params = BuildFetchParams(/*fetched_category=*/base::nullopt);
   params.interactive_request = interactive_request;
   suggestions_fetcher_->FetchSnippets(
       params,
@@ -466,7 +471,7 @@ void RemoteSuggestionsProviderImpl::Fetch(
       },
       base::Unretained(remote_suggestions_scheduler_), callback);
 
-  RequestParams params = BuildFetchParams();
+  RequestParams params = BuildFetchParams(category);
   params.excluded_ids.insert(known_suggestion_ids.begin(),
                              known_suggestion_ids.end());
   params.interactive_request = true;
@@ -479,14 +484,36 @@ void RemoteSuggestionsProviderImpl::Fetch(
 }
 
 // Builds default fetcher params.
-RequestParams RemoteSuggestionsProviderImpl::BuildFetchParams() const {
+RequestParams RemoteSuggestionsProviderImpl::BuildFetchParams(
+    base::Optional<Category> fetched_category) const {
   RequestParams result;
   result.language_code = application_language_code_;
   result.count_to_fetch = kMaxSuggestionCount;
+  // If this is a fetch for a specific category, its dismissed suggestions are
+  // added first to truncate them less.
+  if (fetched_category.has_value()) {
+    DCHECK(category_contents_.count(*fetched_category));
+    const RemoteSuggestion::PtrVector& dismissed =
+        category_contents_.find(*fetched_category).second->dismissed;
+    // The latest ids are added first, because they are more relevant.
+    for (auto it = dismissed.rbegin(); it != dismissed.rend(); ++it) {
+      if (result.excluded_ids.size() == kMaxDismissedExcludedIds) {
+        break;
+      }
+      result.excluded_ids.insert((*it)->id());
+    }
+  }
   for (const auto& map_entry : category_contents_) {
-    const CategoryContent& content = map_entry.second;
-    for (const auto& dismissed_suggestion : content.dismissed) {
-      result.excluded_ids.insert(dismissed_suggestion->id());
+    if (fetched_category.has_value() && map_entry.first == *fetched_category) {
+      continue;
+    }
+    const RemoteSuggestion::PtrVector& dismissed = map_entry.second.dismissed;
+    // The latest ids are added first, because they are more relevant.
+    for (auto it = dismissed.rbegin(); it != dismissed.rend(); ++it) {
+      if (result.excluded_ids.size() == kMaxDismissedExcludedIds) {
+        break;
+      }
+      result.excluded_ids.insert((*it)->id());
     }
   }
   return result;
