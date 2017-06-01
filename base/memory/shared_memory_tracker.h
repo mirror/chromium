@@ -23,6 +23,8 @@ class BASE_EXPORT SharedMemoryTracker : public trace_event::MemoryDumpProvider {
   // Returns a singleton instance.
   static SharedMemoryTracker* GetInstance();
 
+  static bool UseSharedMemoryOwnershipEdges();
+
   // Records shared memory usage on mapping.
   void IncrementMemoryUsage(const SharedMemory& shared_memory);
 

@@ -4,6 +4,8 @@
 
 #include "base/memory/shared_memory_tracker.h"
 
+#include "base/base_switches.h"
+#include "base/command_line.h"
 #include "base/memory/shared_memory.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/trace_event/memory_dump_manager.h"
@@ -15,6 +17,12 @@ namespace base {
 SharedMemoryTracker* SharedMemoryTracker::GetInstance() {
   static SharedMemoryTracker* instance = new SharedMemoryTracker;
   return instance;
+}
+
+// static
+bool SharedMemoryTracker::UseSharedMemoryOwnershipEdges() {
+  return CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kUseSharedMemoryOwnershipEdges);
 }
 
 void SharedMemoryTracker::IncrementMemoryUsage(
