@@ -14,6 +14,7 @@ namespace web {
 class WebUIIOS;
 }
 
+// The WebUI handler for chrome://chrome-urls.
 class AboutUI : public web::WebUIIOSController {
  public:
   explicit AboutUI(web::WebUIIOS* web_ui, const std::string& name);
