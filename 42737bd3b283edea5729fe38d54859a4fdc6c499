@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "993e1d79_f4763e18",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-01T07:46:12Z",
+      "side": 1,
+      "message": "When I started this patch I hadn\u0027t realize that there was another issue opened to do something similar. I changed the approach to match the one mentioned on the issue.",
+      "parentUuid": "9c93c379_4b179467",
+      "revId": "42737bd3b283edea5729fe38d54859a4fdc6c499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "091d2ec1_dcea05fb",
         "filename": "chrome/browser/ui/browser_dialogs.h",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "d775f059_a1513e00",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-01T07:46:12Z",
+      "side": 1,
+      "message": "See ShareTarget\u0027s constructor. It takes by value so we can avoid a copying the parsed values.",
+      "parentUuid": "091d2ec1_dcea05fb",
+      "range": {
+        "startLine": 160,
+        "startChar": 17,
+        "endLine": 160,
+        "endChar": 28
+      },
+      "revId": "42737bd3b283edea5729fe38d54859a4fdc6c499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4294749_ceafe966",
         "filename": "chrome/browser/ui/browser_dialogs.h",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "42737bd3b283edea5729fe38d54859a4fdc6c499",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a54aadb0_788eb6cf",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-01T07:46:12Z",
+      "side": 1,
+      "message": "Changed to just use a string per suggestion below.",
+      "parentUuid": "e4294749_ceafe966",
+      "revId": "42737bd3b283edea5729fe38d54859a4fdc6c499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "42737bd3b283edea5729fe38d54859a4fdc6c499",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffbb2b37_a6282e8f",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-01T07:46:12Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "31619305_5929771f",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 16
+      },
+      "revId": "42737bd3b283edea5729fe38d54859a4fdc6c499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
