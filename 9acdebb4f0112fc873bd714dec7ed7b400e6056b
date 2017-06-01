@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7de5c3e_87b5700f",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-06-01T18:03:18Z",
+      "side": 1,
+      "message": "It would make sense to just use \u0027auto\u0027 here.",
+      "revId": "9acdebb4f0112fc873bd714dec7ed7b400e6056b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
