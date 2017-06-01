@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9b370a80_e3799a43",
+        "filename": "media/midi/midi_manager_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-01T05:31:40Z",
+      "side": 1,
+      "message": "Here, I wrote some backgrounds why we need to use low level PlatformThreadId. It runs on a thread that //base does not recognize.",
+      "revId": "ec80577a5678248c2665e4677962caf5d6bddb84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "facfeac3_e7bb7513",
         "filename": "media/midi/midi_manager_win.cc",
         "patchSetId": 1
@@ -13,6 +30,30 @@
       "writtenOn": "2017-06-01T02:38:56Z",
       "side": 1,
       "message": "Is this function for general use? If not, I think more concrete names, say, InRunningMidiInGetNumDevs, are easier to understand. Also, you may need only a simple boolean rather than a PlatformThreadId.",
+      "range": {
+        "startLine": 177,
+        "startChar": 5,
+        "endLine": 177,
+        "endChar": 32
+      },
+      "revId": "ec80577a5678248c2665e4677962caf5d6bddb84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48e86df6_c08d8e7b",
+        "filename": "media/midi/midi_manager_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-01T05:31:40Z",
+      "side": 1,
+      "message": "I agreed to rename this, but there is a reason to use PlatformThreadId.\n\nActually, the callback may run on multiple threads simultaneouly. That says another thread, the multimedia thread that operating system internally provides may run the callback even in the period between the enter and leave. In the worst case, two threads enter to the callback simultaneously, I guess. In such case, I need to take a lock for the context running on the multimedia thread, and I want to allow only internally called callback invocations to run without taking a lock.",
+      "parentUuid": "facfeac3_e7bb7513",
       "range": {
         "startLine": 177,
         "startChar": 5,
