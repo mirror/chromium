@@ -43,8 +43,8 @@ class CrOSComponentInstallerTraits : public ComponentInstallerTraits {
   bool VerifyInstallation(const base::DictionaryValue& manifest,
                           const base::FilePath& install_dir) const override;
   void ComponentReady(const base::Version& version,
-                      const base::FilePath& path,
-                      std::unique_ptr<base::DictionaryValue> manifest) override;
+                      const base::DictionaryValue& manifest,
+                      const base::FilePath& path) override;
   base::FilePath GetRelativeInstallDir() const override;
   void GetHash(std::vector<uint8_t>* hash) const override;
   std::string GetName() const override;
