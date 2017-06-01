@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "a3064b56_a478789a",
+        "filename": "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T20:46:36Z",
+      "side": 1,
+      "message": "Maybe get rid of this and just use the chosen_feature_str.empty()?",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 45
+      },
+      "revId": "6aa28a6bdb93dc4a9bbd6cf0ce55c11f13019bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf797850_d5650d61",
+        "filename": "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-01T20:46:36Z",
+      "side": 1,
+      "message": "chosen_feature_name?",
+      "range": {
+        "startLine": 45,
+        "startChar": 14,
+        "endLine": 45,
+        "endChar": 32
+      },
+      "revId": "6aa28a6bdb93dc4a9bbd6cf0ce55c11f13019bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "702c2b64_4efcafe4",
         "filename": "components/feature_engagement_tracker/public/feature_list.cc",
         "patchSetId": 3
