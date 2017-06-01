@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "e10196a6_b102f20c",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-01T13:45:25Z",
+      "side": 1,
+      "message": "Is this necessary?",
+      "range": {
+        "startLine": 13,
+        "startChar": 15,
+        "endLine": 13,
+        "endChar": 22
+      },
+      "revId": "3523ab7ece2ca77a9268453c113b71027c238f76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b67435c5_65605ab6",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedWorkletMessagingProxy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-01T13:45:25Z",
+      "side": 1,
+      "message": "My recent CL introduced WorkerClients in ThreadedMessagingProxyBase to share the code among threaded worklets and dedicated workers. Could you rebase this on that?\n\n[1] https://chromium-review.googlesource.com/c/519022/",
+      "revId": "3523ab7ece2ca77a9268453c113b71027c238f76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d624e2_76464583",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-01T13:45:25Z",
+      "side": 1,
+      "message": "This condition means Mutate() can be called from AnimationWorkletProxyClientImpl after AnimationWorkletGlobalScope::Dispose(), right? Probably we need to call AnimationWorkletProxyClientImpl::Dispose() from AnimationWorkletGlobalScope::Dispose() to avoid it.",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 16
+      },
+      "revId": "3523ab7ece2ca77a9268453c113b71027c238f76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da1b573c_f0e58172",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScopeTest.cpp",
         "patchSetId": 5
@@ -13,6 +76,109 @@
       "writtenOn": "2017-05-31T17:10:39Z",
       "side": 1,
       "message": "Not for this patch probably, but it would be nice to have a test which uses the compositing plumbing to let mutate get called from the scheduler. I think a RenderingTest would have the necessary infrastructure created, and then we could test things being passed all the way from the main thread to the AnimationWorklet.",
+      "revId": "3523ab7ece2ca77a9268453c113b71027c238f76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aad2701_b18adb8e",
+        "filename": "third_party/WebKit/Source/web/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-01T13:45:25Z",
+      "side": 1,
+      "message": "DCHECK(scope-\u003eIsContextThread());",
+      "range": {
+        "startLine": 26,
+        "startChar": 10,
+        "endLine": 26,
+        "endChar": 22
+      },
+      "revId": "3523ab7ece2ca77a9268453c113b71027c238f76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07e89719_02dc902b",
+        "filename": "third_party/WebKit/Source/web/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-01T13:45:25Z",
+      "side": 1,
+      "message": "ditto(thread check)",
+      "revId": "3523ab7ece2ca77a9268453c113b71027c238f76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8c12dc1_3acd302a",
+        "filename": "third_party/WebKit/Source/web/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-01T13:45:25Z",
+      "side": 1,
+      "message": "It looks like this function is not used.",
+      "range": {
+        "startLine": 32,
+        "startChar": 38,
+        "endLine": 32,
+        "endChar": 45
+      },
+      "revId": "3523ab7ece2ca77a9268453c113b71027c238f76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ed9d9a2_f43b197f",
+        "filename": "third_party/WebKit/Source/web/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-01T13:45:25Z",
+      "side": 1,
+      "message": "ditto(thread check)",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "3523ab7ece2ca77a9268453c113b71027c238f76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6f9e9e7_ee72289c",
+        "filename": "third_party/WebKit/Source/web/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-01T13:45:25Z",
+      "side": 1,
+      "message": "nit: A trailing semicolon is not necessary.",
       "revId": "3523ab7ece2ca77a9268453c113b71027c238f76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
