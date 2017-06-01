@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6c127ca6_964b5fa3",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-01T16:40:48Z",
+      "side": 1,
+      "message": "Correct, |proxy_server| has been always wrong, but it would get fixed with this change. But, I am not sure if there are any consumers for it. \n\nSorry, I meant to refer to |was_fetched_via_proxy| (not proxy server):\nThe value of |was_fetched_via_proxy| has been correct so far even for cached responses, but with this CL, it would be incorrect at least for few days when the next Chrome version rolls out.  I am assuming that\u0027s not a problem because AFAIK there are no consumers that are dependent on the value of |was_fetched_via_proxy|  for cached responses. If that\u0027s the case, we can avoid storing |proxy_server| in the cache.",
+      "parentUuid": "26fedd91_1e4b7307",
+      "range": {
+        "startLine": 91,
+        "startChar": 10,
+        "endLine": 91,
+        "endChar": 13
+      },
+      "revId": "481eca5a507e743408aa6af518a5853b2b87916e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b9e0749_48df6616",
         "filename": "net/http/http_response_info.cc",
         "patchSetId": 6
