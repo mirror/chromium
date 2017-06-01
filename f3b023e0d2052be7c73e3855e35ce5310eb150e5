@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "720d97e5_99ae402f",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-01T17:24:30Z",
+      "side": 1,
+      "message": "Nit: Now that this is compiled on all platforms, do you think you could also remove the paragraph about only being available on Android from the README.md file for the component? It\u0027s here:\nhttps://chromium.googlesource.com/chromium/src/+show/f3b023e0d2052be7c73e3855e35ce5310eb150e5/components/feature_engagement_tracker/README.md#16\n\nI was planning on updating the documentation shortly with some more information about how to test things anyway, so I\u0027m happy to do it in that CL too, but it felt kind of related to this CL :-)",
+      "revId": "f3b023e0d2052be7c73e3855e35ce5310eb150e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ea5954b_d411f736",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-01T17:24:30Z",
+      "side": 1,
+      "message": "Nit: Now that this is part of the cross-platform parts, could you remove this line?",
+      "range": {
+        "startLine": 248,
+        "startChar": 6,
+        "endLine": 248,
+        "endChar": 59
+      },
+      "revId": "f3b023e0d2052be7c73e3855e35ce5310eb150e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
