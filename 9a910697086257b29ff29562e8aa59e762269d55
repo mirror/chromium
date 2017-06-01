@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04c22ddd_0b6c0918",
+        "filename": "base/task_scheduler/environment_config.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-01T17:14:12Z",
+      "side": 1,
+      "message": "I also want to change the order of elements in TaskScheduler::InitParams, but I\u0027ll do it in a separate CL as it requires touching a lot of files outside of base/task_scheduler/.",
+      "revId": "9a910697086257b29ff29562e8aa59e762269d55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b1a6492_fdc94667",
+        "filename": "base/task_scheduler/task_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-01T17:14:12Z",
+      "side": 1,
+      "message": "I\u0027m working on this right now. I\u0027ll let you decide if we need to delay landing this CL until this feature is implemented. I\u0027d still like to get a review on this CL in the meantime.",
+      "revId": "9a910697086257b29ff29562e8aa59e762269d55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
