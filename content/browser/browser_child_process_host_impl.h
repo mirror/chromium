@@ -52,7 +52,8 @@ class CONTENT_EXPORT BrowserChildProcessHostImpl
  public:
   BrowserChildProcessHostImpl(content::ProcessType process_type,
                               BrowserChildProcessHostDelegate* delegate,
-                              const std::string& service_name);
+                              const std::string& service_name,
+                              const std::string& tag = "");
   ~BrowserChildProcessHostImpl() override;
 
   // Terminates all child processes and deletes each BrowserChildProcessHost
@@ -116,6 +117,8 @@ class CONTENT_EXPORT BrowserChildProcessHostImpl
 
   IPC::Channel* child_channel() const { return channel_; }
 
+  const std::string& tag() const { return tag_; }
+
   typedef std::list<BrowserChildProcessHostImpl*> BrowserChildProcessList;
  private:
   friend class BrowserChildProcessHostIterator;
@@ -152,6 +155,7 @@ class CONTENT_EXPORT BrowserChildProcessHostImpl
   void OnObjectSignaled(HANDLE object) override;
 #endif
 
+  const std::string tag_;
   ChildProcessData data_;
   BrowserChildProcessHostDelegate* delegate_;
   std::unique_ptr<ChildProcessHost> child_process_host_;

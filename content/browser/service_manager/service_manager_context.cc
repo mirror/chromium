@@ -78,7 +78,7 @@ void StartServiceInUtilityProcess(
     service_manager::mojom::ServiceRequest request) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   UtilityProcessHost* process_host =
-      UtilityProcessHost::Create(nullptr, nullptr);
+      UtilityProcessHost::Create(nullptr, nullptr, service_name);
   process_host->SetName(process_name);
   if (!use_sandbox)
     process_host->DisableSandbox();
