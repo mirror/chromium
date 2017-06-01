@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6f828a1_1a0571de",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-06-01T20:44:31Z",
+      "side": 1,
+      "message": "This worries me. You\u0027re using url_formatter to format a string, but then highlighting it based on the raw url from before formatting. Aren\u0027t there edge cases where the formatter creates a string that doesn\u0027t correspond to the raw url, and then we highlight incorrectly?",
+      "range": {
+        "startLine": 330,
+        "startChar": 25,
+        "endLine": 330,
+        "endChar": 74
+      },
+      "revId": "88076d9ce5923d0642cfc09ee9179c64008e0ec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
