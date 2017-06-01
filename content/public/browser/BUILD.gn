@@ -102,6 +102,7 @@ source_set("browser_sources") {
     "download_danger_type.h",
     "download_interrupt_reason_values.h",
     "download_interrupt_reasons.h",
+    "download_item.cc",
     "download_item.h",
     "download_manager.h",
     "download_manager_delegate.cc",
