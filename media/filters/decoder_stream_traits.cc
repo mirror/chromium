@@ -79,9 +79,10 @@ void DecoderStreamTraits<DemuxerStream::AUDIO>::OnDecode(
   audio_ts_validator_->CheckForTimestampGap(buffer);
 }
 
-void DecoderStreamTraits<DemuxerStream::AUDIO>::OnDecodeDone(
+bool DecoderStreamTraits<DemuxerStream::AUDIO>::OnDecodeDone(
     const scoped_refptr<OutputType>& buffer) {
   audio_ts_validator_->RecordOutputDuration(buffer);
+  return false;
 }
 
 // Video decoder stream traits implementation.
@@ -148,6 +149,7 @@ void DecoderStreamTraits<DemuxerStream::VIDEO>::OnStreamReset(
     DemuxerStream* stream) {
   DCHECK(stream);
   last_keyframe_timestamp_ = base::TimeDelta();
+  drop_frame_.clear();
 }
 
 void DecoderStreamTraits<DemuxerStream::VIDEO>::OnDecode(
@@ -159,6 +161,9 @@ void DecoderStreamTraits<DemuxerStream::VIDEO>::OnDecode(
     last_keyframe_timestamp_ = base::TimeDelta();
     return;
   }
+
+  if (buffer->discard_padding().first == kInfiniteDuration)
+    drop_frame_.insert(buffer->timestamp());
 
   if (!buffer->is_key_frame())
     return;
@@ -174,6 +179,17 @@ void DecoderStreamTraits<DemuxerStream::VIDEO>::OnDecode(
   UMA_HISTOGRAM_MEDIUM_TIMES("Media.Video.KeyFrameDistance", frame_distance);
   last_keyframe_timestamp_ = current_frame_timestamp;
   keyframe_distance_average_.AddSample(frame_distance);
+}
+
+bool DecoderStreamTraits<DemuxerStream::VIDEO>::OnDecodeDone(
+    const scoped_refptr<OutputType>& buffer) {
+  auto it = drop_frame_.find(buffer->timestamp());
+  if (it != drop_frame_.end()) {
+    drop_frame_.erase(it);
+    return true;
+  }
+
+  return false;
 }
 
 }  // namespace media
