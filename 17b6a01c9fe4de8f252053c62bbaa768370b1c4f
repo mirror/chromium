@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11598697_b5e342a3",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115885
+      },
+      "writtenOn": "2017-06-01T15:56:07Z",
+      "side": 1,
+      "message": "I am appending my cmdline here for reference:\n\nqemu-system-x86_64 -m 2048 -nographic -net none -smp 4 -machine q35 -kernel \u003cpath\u003e/magenta.bin -enable-kvm -cpu host,migratable\u003dno -initrd \u003cpath\u003e/bootdata.bin -append \u0027TERM\u003dxterm kernel.entropy\u003d8af455e0ffbbe4b383849aaebbbaefaecb897dd67a8eafe2c9bad24c3c16109f kernel.halt_on_panic\u003dtrue \u0027\n\nThe kernel.entropy is used by the kernel to do aslr, as qemu does not do it, although maybe it does with kvm. I think we can skip that. The kernel.halt_on_panic\u003dtrue is actually useful, since the default behavior is to reboot.\n\nthe -m 2048 would seem ample but a chunk gets eaten by the ramdisks, check the size of bootfs.",
+      "revId": "17b6a01c9fe4de8f252053c62bbaa768370b1c4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
