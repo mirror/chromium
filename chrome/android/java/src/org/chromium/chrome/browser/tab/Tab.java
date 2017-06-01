@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Browser;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
@@ -26,6 +27,7 @@ import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
+import android.widget.PopupWindow.OnDismissListener;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ApplicationStatus;
@@ -85,8 +87,10 @@ import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.tabmodel.TabReparentingParams;
 import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.FeatureUtilities;
+import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
 import org.chromium.components.dom_distiller.core.DomDistillerUrlUtils;
 import org.chromium.components.feature_engagement_tracker.EventConstants;
+import org.chromium.components.feature_engagement_tracker.FeatureConstants;
 import org.chromium.components.feature_engagement_tracker.FeatureEngagementTracker;
 import org.chromium.components.navigation_interception.InterceptNavigationDelegate;
 import org.chromium.components.security_state.ConnectionSecurityLevel;
@@ -372,6 +376,8 @@ public class Tab
      * user started using Chrome).
      */
     private long mDataSavedOnStartPageLoad;
+
+    private Handler mHandler = new Handler();
 
     private final int mDefaultThemeColor;
     private int mThemeColor;
@@ -1545,12 +1551,42 @@ public class Tab
                 DataReductionProxySettings.getInstance().getContentLengthSavedInHistorySummary()
                 - mDataSavedOnStartPageLoad;
 
-        if (dataSaved > 0) {
-            FeatureEngagementTracker tracker =
-                    FeatureEngagementTrackerFactory.getFeatureEngagementTrackerForProfile(
-                            Profile.getLastUsedProfile());
+        final FeatureEngagementTracker tracker =
+                FeatureEngagementTrackerFactory.getFeatureEngagementTrackerForProfile(
+                        Profile.getLastUsedProfile());
+        if (dataSaved > 0L) {
             tracker.notifyEvent(EventConstants.DATA_SAVED_ON_PAGE_LOAD);
         }
+
+        if (!tracker.shouldTriggerHelpUI(FeatureConstants.DATA_SAVER_DETAIL)) return;
+
+        showDataSaverInProductHelp();
+    }
+
+    private void showDataSaverInProductHelp() {
+        ViewAnchoredTextBubble textBubble = new ViewAnchoredTextBubble(getActivity(),
+                getActivity().getToolbarManager().getMenuButton(),
+                R.string.iph_data_saver_detail_text,
+                R.string.iph_data_saver_detail_accessibility_text);
+        textBubble.setDismissOnTouchInteraction(true);
+        getActivity().getAppMenuHandler().setMenuHighlight(R.id.data_reduction_footer);
+        textBubble.addOnDismissListener(new OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        tracker.dismissed(FeatureConstants.DATA_SAVER_DETAIL);
+                        getActivity().getAppMenuHandler().setMenuHighlight(null);
+                    }
+                });
+            }
+        });
+        int yInsetPx = mThemedApplicationContext.getResources().getDimensionPixelOffset(
+                R.dimen.text_bubble_menu_anchor_y_inset);
+        textBubble.setInsetPx(0, FeatureUtilities.isChromeHomeEnabled() ? yInsetPx : 0, 0,
+                FeatureUtilities.isChromeHomeEnabled() ? 0 : yInsetPx);
+        textBubble.show();
     }
 
     /**

@@ -16,6 +16,7 @@ extern const base::Feature kIPHDemoMode;
 // version: org.chromium.components.feature_engagement_tracker.FeatureConstants.
 
 extern const base::Feature kIPHDataSaverPreview;
+extern const base::Feature kIPHDataSaverDetail;
 extern const base::Feature kIPHDownloadPageFeature;
 extern const base::Feature kIPHDownloadHomeFeature;
 

@@ -49,7 +49,6 @@ import org.chromium.chrome.browser.download.DownloadUtils;
 import org.chromium.chrome.browser.feature_engagement_tracker.FeatureEngagementTrackerFactory;
 import org.chromium.chrome.browser.fullscreen.BrowserStateBrowserControlsVisibilityDelegate;
 import org.chromium.chrome.browser.fullscreen.FullscreenManager;
-import org.chromium.chrome.browser.net.spdyproxy.DataReductionProxySettings;
 import org.chromium.chrome.browser.ntp.IncognitoNewTabPage;
 import org.chromium.chrome.browser.ntp.NativePageFactory;
 import org.chromium.chrome.browser.ntp.NewTabPage;
@@ -940,12 +939,10 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
                 RecordUserAction.record("MobileToolbarShowMenu");
                 mToolbar.onMenuShown();
 
-                if (DataReductionProxySettings.getInstance().isDataReductionProxyEnabled()) {
-                    FeatureEngagementTracker tracker =
-                            FeatureEngagementTrackerFactory.getFeatureEngagementTrackerForProfile(
-                                    Profile.getLastUsedProfile());
-                    tracker.notifyEvent(EventConstants.OVERFLOW_OPENED_WITH_DATA_SAVER_SHOWN);
-                }
+                FeatureEngagementTracker tracker =
+                        FeatureEngagementTrackerFactory.getFeatureEngagementTrackerForProfile(
+                                Profile.getLastUsedProfile());
+                tracker.notifyEvent(EventConstants.OVERFLOW_MENU_OPENED);
             }
         });
     }

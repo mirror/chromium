@@ -112,6 +112,6 @@ public class DataReductionMainMenuFooter extends FrameLayout implements View.OnC
         FeatureEngagementTracker tracker =
                 FeatureEngagementTrackerFactory.getFeatureEngagementTrackerForProfile(
                         Profile.getLastUsedProfile());
-        tracker.notifyEvent(EventConstants.DATA_SAVER_DETAIL_OPENED);
+        tracker.notifyEvent(EventConstants.DATA_SAVER_USED);
     }
 }
