@@ -61,8 +61,10 @@ public class ContactDetailsSection extends SectionInformation {
 
         // If the profile is currently being displayed, update the items in anticipation of the
         // contacts section refresh.
-        AutofillContact updatedContact =
+        @Nullable AutofillContact updatedContact =
                 createAutofillContactFromProfile(editedAddress.getProfile());
+        if (null == updatedContact) return;
+
         if (mItems != null) {
             for (int i = 0; i < mItems.size(); i++) {
                 AutofillContact existingContact = (AutofillContact) mItems.get(i);
