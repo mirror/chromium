@@ -141,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "2090bc39_0367ed92",
+        "filename": "third_party/WebKit/Source/core/mojo/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-01T02:41:54Z",
+      "side": 1,
+      "message": "Makes sense.\n\nThe current Blink is heavily using blink::InterfaceProvider via Platform::Current()-\u003eGetInterfaceProvider() etc. Are you planning to replace them with the real InterfaceProvider and deprecate blink::InterfaceProvider? (That totally sounds reasonable to me.)",
+      "parentUuid": "51a9df5d_0c84e27d",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff48e4ce_e502db87",
         "filename": "third_party/WebKit/Source/core/mojo/MojoHandle.cpp",
         "patchSetId": 4
