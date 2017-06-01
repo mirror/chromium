@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "65d0d886_c651adb9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1745,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-01T21:03:26Z",
+      "side": 1,
+      "message": "The CL description explains why we\u0027re in a hurry to get this in and merged back to M60, and avoiding doing a lot of refactoring to non-VR code. It\u0027s not intended to imply that this type of exclusion is temporary.\n\nI actually don\u0027t know whether or not this exclusion is temporary. We\u0027re having discussions about what we want to do long-term here with our UX lead. Depending on where we go with the tab switching UI, we might still want the back button to close tabs like in Clank, or we might want a more desktop-like feel.\n\nI think this TODO reflects what we would like to do if we have to maintain this exclusion.",
+      "parentUuid": "88f3c114_fb60d772",
+      "range": {
+        "startLine": 1745,
+        "startChar": 20,
+        "endLine": 1745,
+        "endChar": 28
+      },
+      "revId": "d06c2ef77172113dc9f9b6bd0b06245e2b6647dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17f59a90_e41e7f8b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "75fe5fdc_53175c7f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-01T21:03:26Z",
+      "side": 1,
+      "message": "Added a TODO. We\u0027ll deal with this when we figure out our CCT VR browsing UX and move to enable that by default.",
+      "parentUuid": "17f59a90_e41e7f8b",
+      "range": {
+        "startLine": 583,
+        "startChar": 36,
+        "endLine": 583,
+        "endChar": 45
+      },
+      "revId": "d06c2ef77172113dc9f9b6bd0b06245e2b6647dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cef580d5_35e28baa",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
         "patchSetId": 5
@@ -62,6 +110,24 @@
       "revId": "d06c2ef77172113dc9f9b6bd0b06245e2b6647dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "526c0916_b3944441",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-01T21:03:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cef580d5_35e28baa",
+      "revId": "d06c2ef77172113dc9f9b6bd0b06245e2b6647dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
