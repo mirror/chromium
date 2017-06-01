@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "f1f73a15_32dad842",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-01T15:55:22Z",
+      "side": 1,
+      "message": "Just out of curious. What happens if the context is created in the Worker scope? If it doesn\u0027t return a valid document object, then the assertion at line 624 will fail. Right?\n\nI want to keep the door open for BaseAudioContext in worker.",
+      "revId": "57ad2d929c1a2ae67ec94dba84a177f285b5eba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e73ac5b4_aa9a8d46",
         "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.h",
         "patchSetId": 1
@@ -30,6 +47,23 @@
       "writtenOn": "2017-06-01T15:46:26Z",
       "side": 1,
       "message": "\"wich\"",
+      "revId": "57ad2d929c1a2ae67ec94dba84a177f285b5eba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "994447e5_edeaf881",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContextTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-01T15:55:22Z",
+      "side": 1,
+      "message": "A comment describing what this test is about would be nice.",
       "revId": "57ad2d929c1a2ae67ec94dba84a177f285b5eba4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
