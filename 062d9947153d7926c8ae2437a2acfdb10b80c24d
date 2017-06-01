@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "ea2b8bf8_26ffe457",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-01T21:15:07Z",
+      "side": 1,
+      "message": "That seems really bonkers and I can\u0027t really imagine how that\u0027s related to moving these files.\n\nNow that this has landed, can you upload a CL that puts these files where they \"should be\" and reproduces this error, and I\u0027ll see if I can work it out? :)",
+      "parentUuid": "a0e6e74f_ee843c8e",
+      "range": {
+        "startLine": 584,
+        "startChar": 17,
+        "endLine": 584,
+        "endChar": 28
+      },
+      "revId": "062d9947153d7926c8ae2437a2acfdb10b80c24d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddc3afa9_4dca85ad",
         "filename": "chrome/android/BUILD.gn",
         "patchSetId": 4
