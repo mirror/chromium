@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36475b44_7ba26cb1",
+        "filename": "chrome/browser/extensions/api/platform_keys/platform_keys_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-06-01T07:45:12Z",
+      "side": 1,
+      "message": "Is this OK? I have two namespace platform_key blocks in this file now.\nReason was:\n- PublicKeyInfo members are used in the following anonymous namespace, so it must be complete by then\n- Moving PublicKeyInfo to header requires including x509_certificate.h because the declaration of PublicKeyInfo references members of X509Certificate",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 23
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de0ce2a2_e39e7350",
+        "filename": "chrome/browser/extensions/api/platform_keys/platform_keys_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-06-01T07:45:12Z",
+      "side": 1,
+      "message": "add hint that the whole input_algorithm param is optional and can be nullptr",
+      "range": {
+        "startLine": 63,
+        "startChar": 48,
+        "endLine": 63,
+        "endChar": 53
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a1f87a_abc4df5c",
+        "filename": "chrome/renderer/resources/extensions/platform_keys/get_public_key.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-06-01T07:45:12Z",
+      "side": 1,
+      "message": "Do you think we should add a comment referencing the SubtleCrypto construction in platform_keys_custom_bindings.js which also passes \u0027\u0027 as token_id?",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 20
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6be0e000_7af8939d",
+        "filename": "chrome/test/data/extensions/api_test/certificate_provider/platform_keys_bridged/basic.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-06-01T07:45:12Z",
+      "side": 1,
+      "message": "Unnecessary, can be removed.",
+      "range": {
+        "startLine": 163,
+        "startChar": 12,
+        "endLine": 163,
+        "endChar": 22
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "108c44e5_e618a12b",
+        "filename": "chrome/test/data/extensions/api_test/certificate_provider/platform_keys_bridged/sync_cert_and_issuer.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-06-01T07:45:12Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 2,
+        "startChar": 12,
+        "endLine": 2,
+        "endChar": 16
+      },
+      "revId": "c895ccca57b514a262e2640b3bd6b169165a2270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
