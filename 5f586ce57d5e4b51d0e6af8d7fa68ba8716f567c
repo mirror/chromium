@@ -33,6 +33,24 @@
       "revId": "5f586ce57d5e4b51d0e6af8d7fa68ba8716f567c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fafe6725_0c2ce43d",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1318,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-06-01T00:18:35Z",
+      "side": 1,
+      "message": "Yeah, I think they\u0027ll still help if anything gets slow.",
+      "parentUuid": "efdc87f9_c406d231",
+      "revId": "5f586ce57d5e4b51d0e6af8d7fa68ba8716f567c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
