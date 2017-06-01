@@ -5,6 +5,7 @@
 package org.chromium.shape_detection;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.media.FaceDetector;
 import android.media.FaceDetector.Face;
@@ -48,7 +49,7 @@ public class FaceDetectionImpl implements FaceDetection {
             return;
         }
 
-        ByteBuffer imageBuffer = frameData.map(0, numPixels * 4, MapFlags.none());
+        ByteBuffer imageBuffer = frameData.map(0L, numPixels * 4, MapFlags.none());
         if (imageBuffer.capacity() <= 0) {
             Log.d(TAG, "Failed to map from SharedBufferHandle.");
             callback.call(new FaceDetectionResult[0]);
@@ -65,6 +66,16 @@ public class FaceDetectionImpl implements FaceDetection {
         // http://crbug.com/655814
         bitmap.copyPixelsFromBuffer(imageBuffer);
 
+        // FaceDetector requires an even width.
+        final int augmentedWidth = width + (width % 2);
+        if (width != augmentedWidth) {
+            Bitmap paddedBitmap =
+                    Bitmap.createBitmap(augmentedWidth, height, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(paddedBitmap);
+            canvas.drawBitmap(bitmap, 0, 0, null);
+            bitmap = paddedBitmap;
+        }
+
         // A Bitmap must be in 565 format for findFaces() to work. See
         // http://androidxref.com/7.0.0_r1/xref/frameworks/base/media/java/android/media/FaceDetector.java#124
         //
@@ -74,17 +85,17 @@ public class FaceDetectionImpl implements FaceDetection {
         // original image is premultiplied. We can use getPixels() which does
         // the unmultiplication while copying to a new array. See
         // http://androidxref.com/7.0.0_r1/xref/frameworks/base/graphics/java/android/graphics/Bitmap.java#538
-        int[] pixels = new int[width * height];
-        bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
+        int[] pixels = new int[augmentedWidth * height];
+        bitmap.getPixels(pixels, 0, augmentedWidth, 0, 0, augmentedWidth, height);
         final Bitmap unPremultipliedBitmap =
-                Bitmap.createBitmap(pixels, width, height, Bitmap.Config.RGB_565);
+                Bitmap.createBitmap(pixels, augmentedWidth, height, Bitmap.Config.RGB_565);
 
         // FaceDetector creation and findFaces() might take a long time and trigger a
         // "StrictMode policy violation": they should happen in a background thread.
         AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
             @Override
             public void run() {
-                final FaceDetector detector = new FaceDetector(width, height, mMaxFaces);
+                final FaceDetector detector = new FaceDetector(augmentedWidth, height, mMaxFaces);
                 Face[] detectedFaces = new Face[mMaxFaces];
                 // findFaces() will stop at |mMaxFaces|.
                 final int numberOfFaces = detector.findFaces(unPremultipliedBitmap, detectedFaces);
