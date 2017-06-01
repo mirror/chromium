@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "763647b7_dd5e87ae",
+        "filename": "services/ui/ws/frame_sink_manager_client_binding.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-06-01T19:37:57Z",
+      "side": 1,
+      "message": "Maybe don\u0027t depend on WindowServer directly here? Can we take in a cc::mojom::FrameSinkManagerClient* instead?",
+      "range": {
+        "startLine": 14,
+        "startChar": 18,
+        "endLine": 14,
+        "endChar": 31
+      },
+      "revId": "dfd1e398fe275003c0fc33465f4021bc7a0098b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4aa08c0_df5fe4aa",
+        "filename": "services/ui/ws/frame_sink_manager_client_binding.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-06-01T19:37:57Z",
+      "side": 1,
+      "message": "Can we pull GpuHost out of WindowServer too?",
+      "revId": "dfd1e398fe275003c0fc33465f4021bc7a0098b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
