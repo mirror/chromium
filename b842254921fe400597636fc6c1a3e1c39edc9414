@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a3aa0170_458af3f2",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-01T09:46:09Z",
+      "side": 1,
+      "message": "\u003e What is it that you expect will explode with NaCl?\nI don\u0027t want to have to think to nacl, that\u0027s all. Every single time we did something saying \"yeah this might just work\" we got it reverted because of nacl. I just want to stay away as much as possible from nacl.",
+      "parentUuid": "b55f6fd5_33505b80",
+      "range": {
+        "startLine": 197,
+        "startChar": 33,
+        "endLine": 197,
+        "endChar": 0
+      },
+      "revId": "b842254921fe400597636fc6c1a3e1c39edc9414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8c12fef_808f0f74",
         "filename": "base/trace_event/memory_dump_manager.cc",
         "patchSetId": 1
@@ -190,6 +214,30 @@
       "side": 1,
       "message": "Looks like enable_memory_task_profiler _defaults_ to being the same as use_allocator_shim - so is that discrepancy what you\u0027re cleaning up?",
       "parentUuid": "dd62ba25_3cbd20df",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 42
+      },
+      "revId": "b842254921fe400597636fc6c1a3e1c39edc9414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23950806_389b4d9d",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-01T09:46:09Z",
+      "side": 1,
+      "message": "correct",
+      "parentUuid": "ce1397f1_6227cda9",
       "range": {
         "startLine": 225,
         "startChar": 0,
