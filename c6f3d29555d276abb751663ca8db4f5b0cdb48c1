@@ -22,6 +22,30 @@
       "revId": "c6f3d29555d276abb751663ca8db4f5b0cdb48c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "612d526c_e3c01088",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleScript.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-01T07:20:58Z",
+      "side": 1,
+      "message": "I\u0027d like to do the rename in a separate CL.",
+      "parentUuid": "60cb9658_231000f2",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 35
+      },
+      "revId": "c6f3d29555d276abb751663ca8db4f5b0cdb48c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
