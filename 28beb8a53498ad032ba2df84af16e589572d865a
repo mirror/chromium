@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f02eb18_3a5e41d2",
+        "filename": "ios/chrome/browser/ui/webui/about_ui.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-06-01T22:31:13Z",
+      "side": 1,
+      "message": "And chrome://about.",
+      "range": {
+        "startLine": 17,
+        "startChar": 34,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "28beb8a53498ad032ba2df84af16e589572d865a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
