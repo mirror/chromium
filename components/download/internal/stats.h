@@ -60,6 +60,20 @@ enum class ModelAction {
   COUNT = 4,
 };
 
+// Enum used by UMA metrics to track various types of cleanup actions taken by
+// the service.
+enum class FileCleanupReason {
+  // Represents that the file was deleted by the service after timeout.
+  TIMEOUT = 0,
+
+  // Represents that the file was not associated with any entries of the
+  // database.
+  ORPHANED = 1,
+
+  // Represents that the deletion failed.
+  DELETE_FAILED = 2
+};
+
 // Logs the results of starting up the Controller.  Will log each failure reason
 // if |status| contains more than one initialization failure.
 void LogControllerStartupStatus(const StartupStatus& status);
@@ -74,6 +88,9 @@ void LogStartDownloadResult(DownloadClient client,
 // Logs statistics about the result of a Model operation.  Used to track failure
 // cases.
 void LogModelOperationResult(ModelAction action, bool success);
+
+// Logs statistics about the result of a file cleanup.
+void LogFileCleanupStatus(FileCleanupReason status, int count);
 
 }  // namespace stats
 }  // namespace download

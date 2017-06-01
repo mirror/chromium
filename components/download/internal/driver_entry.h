@@ -52,6 +52,10 @@ struct DriverEntry {
   // http header is not presented.
   uint64_t expected_total_size;
 
+  // Time the download was marked as complete, base::Time() if the download is
+  // not yet complete.
+  base::Time completion_time;
+
   // The response headers for the most recent download request.
   scoped_refptr<const net::HttpResponseHeaders> response_headers;
 };

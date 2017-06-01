@@ -62,7 +62,7 @@ class DownloadServiceControllerImplTest : public testing::Test {
 
     controller_ = base::MakeUnique<ControllerImpl>(
         std::move(client_set), std::move(config), std::move(driver),
-        std::move(model));
+        std::move(model), base::FilePath());
   }
 
  protected:

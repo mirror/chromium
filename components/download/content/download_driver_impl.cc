@@ -46,6 +46,7 @@ DriverEntry DownloadDriverImpl::CreateDriverEntry(
   entry.paused = item->IsPaused();
   entry.bytes_downloaded = item->GetReceivedBytes();
   entry.expected_total_size = item->GetTotalBytes();
+  entry.completion_time = item->GetEndTime();
   entry.response_headers = item->GetResponseHeaders();
   return entry;
 }
@@ -145,6 +146,19 @@ base::Optional<DriverEntry> DownloadDriverImpl::Find(const std::string& guid) {
   return base::nullopt;
 }
 
+void DownloadDriverImpl::GetPhysicalFilePathForDownloads(
+    std::set<base::FilePath>& paths,
+    const std::vector<std::string>& guids) {
+  if (!download_manager_)
+    return;
+
+  for (std::string guid : guids) {
+    content::DownloadItem* item = download_manager_->GetDownloadByGuid(guid);
+    if (item)
+      paths.insert(item->GetFullPath());
+  }
+}
+
 void DownloadDriverImpl::OnDownloadUpdated(content::DownloadItem* item) {
   DCHECK(client_);
 
@@ -156,6 +170,7 @@ void DownloadDriverImpl::OnDownloadUpdated(content::DownloadItem* item) {
   if (state == DownloadState::COMPLETE) {
     client_->OnDownloadSucceeded(entry, item->GetTargetFilePath());
     item->RemoveObserver(this);
+    item->Remove();
   } else if (state == DownloadState::IN_PROGRESS) {
     client_->OnDownloadUpdated(entry);
   } else if (reason !=

@@ -20,6 +20,7 @@ namespace download {
 
 class ClientSet;
 class DownloadDriver;
+class FileMonitor;
 class Model;
 
 struct Configuration;
@@ -35,7 +36,8 @@ class ControllerImpl : public Controller,
   ControllerImpl(std::unique_ptr<ClientSet> clients,
                  std::unique_ptr<Configuration> config,
                  std::unique_ptr<DownloadDriver> driver,
-                 std::unique_ptr<Model> model);
+                 std::unique_ptr<Model> model,
+                 const base::FilePath& dir);
   ~ControllerImpl() override;
 
   // Controller implementation.
@@ -106,10 +108,14 @@ class ControllerImpl : public Controller,
   // Owned Dependencies.
   std::unique_ptr<DownloadDriver> driver_;
   std::unique_ptr<Model> model_;
+  std::unique_ptr<FileMonitor> file_monitor_;
 
   // Internal state.
   StartupStatus startup_status_;
   std::map<std::string, DownloadParams::StartCallback> start_callbacks_;
+
+  // Target directory of download files.
+  base::FilePath file_dir_;
 
   DISALLOW_COPY_AND_ASSIGN(ControllerImpl);
 };
