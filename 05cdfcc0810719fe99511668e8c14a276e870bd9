@@ -131,6 +131,121 @@
       "revId": "05cdfcc0810719fe99511668e8c14a276e870bd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e39019_e326adde",
+        "filename": "services/identity/identity_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-01T11:01:09Z",
+      "side": 1,
+      "message": "Nit: no self-assignment check. See https://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/ZzfGfgruHxc for some of the background.",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 23
+      },
+      "revId": "05cdfcc0810719fe99511668e8c14a276e870bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a5c147_63584f49",
+        "filename": "services/identity/identity_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-01T11:01:09Z",
+      "side": 1,
+      "message": "Nit: #include \u003cutility\u003e",
+      "range": {
+        "startLine": 27,
+        "startChar": 28,
+        "endLine": 27,
+        "endChar": 37
+      },
+      "revId": "05cdfcc0810719fe99511668e8c14a276e870bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86fe05a7_7c9834ae",
+        "filename": "services/identity/identity_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-01T11:01:09Z",
+      "side": 1,
+      "message": "Consider using base::make_optional",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 56
+      },
+      "revId": "05cdfcc0810719fe99511668e8c14a276e870bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b32214_30cfbeaa",
+        "filename": "services/identity/identity_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-01T11:01:09Z",
+      "side": 1,
+      "message": "Hmm... we should fix this to be passed by value (though that\u0027s out of scope of this CL)",
+      "range": {
+        "startLine": 53,
+        "startChar": 25,
+        "endLine": 53,
+        "endChar": 42
+      },
+      "revId": "05cdfcc0810719fe99511668e8c14a276e870bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a867aaa_8d312d02",
+        "filename": "services/identity/identity_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-01T11:01:09Z",
+      "side": 1,
+      "message": "As this isn\u0027t inherited, can we try changing this to base::Time?",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 23
+      },
+      "revId": "05cdfcc0810719fe99511668e8c14a276e870bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
