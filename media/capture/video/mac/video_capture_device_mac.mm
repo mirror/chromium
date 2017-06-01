@@ -321,8 +321,10 @@ void VideoCaptureDeviceMac::AllocateAndStart(
 
   [capture_device_ setFrameReceiver:this];
 
-  if (![capture_device_ setCaptureDevice:deviceId]) {
-    SetErrorState(FROM_HERE, "Could not open capture device.");
+  std::string errorString;
+  if (![capture_device_ setCaptureDevice:deviceId
+                       outputErrorString:&errorString]) {
+    SetErrorState(FROM_HERE, errorString);
     return;
   }
 
@@ -367,7 +369,10 @@ void VideoCaptureDeviceMac::StopAndDeAllocate() {
   DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK(state_ == kCapturing || state_ == kError) << state_;
 
-  [capture_device_ setCaptureDevice:nil];
+  std::string errorString;
+  if (![capture_device_ setCaptureDevice:nil outputErrorString:&errorString]) {
+    LogMessage(errorString);
+  }
   [capture_device_ setFrameReceiver:nil];
   client_.reset();
   state_ = kIdle;
