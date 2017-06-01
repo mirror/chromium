@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "2ebb6fd3_9f1a5d5d",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-01T21:42:10Z",
+      "side": 1,
+      "message": "The BFS is registered when a Display is created. This is to make sure that there is a BFS to unregister.",
+      "parentUuid": "1cbf340b_7196e02a",
+      "revId": "9e4cde20fa642b5d20cd37795c191e79c431dc07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd13d0c2_b9a94c69",
         "filename": "content/browser/renderer_host/compositor_impl_android.cc",
         "patchSetId": 24
