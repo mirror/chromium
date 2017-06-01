@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5d18c204_8f77c078",
+        "filename": "components/spellcheck/renderer/spellcheck_panel.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-01T02:34:03Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "64851c82_6939317e",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 31
+      },
+      "revId": "06b164ae7ca5f7ea7503253d27c6c46621006036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b190fe96_83771953",
         "filename": "components/spellcheck/renderer/spellcheck_panel.cc",
         "patchSetId": 12
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-01T01:07:24Z",
       "side": 1,
       "message": "Even if you don\u0027t cache connections, please extract out a helper method/function to create the connection.",
+      "range": {
+        "startLine": 52,
+        "startChar": 44,
+        "endLine": 52,
+        "endChar": 66
+      },
+      "revId": "06b164ae7ca5f7ea7503253d27c6c46621006036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a1a1b22_ade9e39c",
+        "filename": "components/spellcheck/renderer/spellcheck_panel.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-01T02:34:03Z",
+      "side": 1,
+      "message": "\u003e Even if you don\u0027t cache connections, please extract out a helper method/function to create the connection.\n\nDone, helper added.",
+      "parentUuid": "b190fe96_83771953",
       "range": {
         "startLine": 52,
         "startChar": 44,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d1e11908_62adbacc",
+        "filename": "components/spellcheck/renderer/spellcheck_panel.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-01T02:34:03Z",
+      "side": 1,
+      "message": "\u003e GetWebFrame() should never return null.\n\nCode left said otherwise.  Used a DCHECK here, and below.",
+      "parentUuid": "16fa2f18_e591b4cb",
+      "range": {
+        "startLine": 69,
+        "startChar": 21,
+        "endLine": 69,
+        "endChar": 34
+      },
+      "revId": "06b164ae7ca5f7ea7503253d27c6c46621006036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4b52ae6_021a21b8",
         "filename": "components/spellcheck/renderer/spellcheck_panel.h",
         "patchSetId": 12
@@ -94,6 +166,47 @@
     },
     {
       "key": {
+        "uuid": "4229dd46_70751ad1",
+        "filename": "components/spellcheck/renderer/spellcheck_panel.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-01T02:34:03Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "f4b52ae6_021a21b8",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 66
+      },
+      "revId": "06b164ae7ca5f7ea7503253d27c6c46621006036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cebca856_4c0a06d7",
+        "filename": "components/spellcheck/renderer/spellcheck_panel.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-01T02:34:03Z",
+      "side": 1,
+      "message": "Should be blink::WebSpellCheckPanelHost, fixed.",
+      "revId": "06b164ae7ca5f7ea7503253d27c6c46621006036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a47721ed_bdd93484",
         "filename": "third_party/WebKit/Source/web/WebLocalFrameImpl.cpp",
         "patchSetId": 12
@@ -105,6 +218,30 @@
       "writtenOn": "2017-06-01T01:07:24Z",
       "side": 1,
       "message": "nullptr",
+      "range": {
+        "startLine": 1598,
+        "startChar": 30,
+        "endLine": 1598,
+        "endChar": 31
+      },
+      "revId": "06b164ae7ca5f7ea7503253d27c6c46621006036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff4f98a7_03eb0436",
+        "filename": "third_party/WebKit/Source/web/WebLocalFrameImpl.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1598,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-01T02:34:03Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a47721ed_bdd93484",
       "range": {
         "startLine": 1598,
         "startChar": 30,
