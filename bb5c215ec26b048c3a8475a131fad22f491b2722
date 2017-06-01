@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d2a41bb_0d3bfd41",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-01T07:12:44Z",
+      "side": 1,
+      "message": "why did you change blink::WebAXObject to auto? It seems like the type would still be right?",
+      "revId": "bb5c215ec26b048c3a8475a131fad22f491b2722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
