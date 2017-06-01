@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "5fb3822a_8a126e3a",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-01T22:51:43Z",
+      "side": 1,
+      "message": "nit: this needs braces now",
+      "revId": "4f4bd3574767318f37c56aacb1b11a9c6c436a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a7798dc_9f9eedd2",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-01T22:51:43Z",
+      "side": 1,
+      "message": "How do you feel about converting this to a CHECK and watching if we get any crashes here on Canary?",
+      "range": {
+        "startLine": 162,
+        "startChar": 9,
+        "endLine": 162,
+        "endChar": 18
+      },
+      "revId": "4f4bd3574767318f37c56aacb1b11a9c6c436a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0797b48_d4d5dca0",
+        "filename": "content/renderer/render_frame_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-01T22:51:43Z",
+      "side": 1,
+      "message": "nit: I think you meant must *not* be null? :)",
+      "range": {
+        "startLine": 97,
+        "startChar": 70,
+        "endLine": 97,
+        "endChar": 74
+      },
+      "revId": "4f4bd3574767318f37c56aacb1b11a9c6c436a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a6b78eb_cf33b177",
         "filename": "content/renderer/render_frame_proxy.h",
         "patchSetId": 2
@@ -13,6 +76,30 @@
       "writtenOn": "2017-06-01T22:06:04Z",
       "side": 1,
       "message": "I could make this return a mutable reference... ;-)",
+      "range": {
+        "startLine": 97,
+        "startChar": 58,
+        "endLine": 98,
+        "endChar": 47
+      },
+      "revId": "4f4bd3574767318f37c56aacb1b11a9c6c436a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c00901c3_152181dc",
+        "filename": "content/renderer/render_frame_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-01T22:51:43Z",
+      "side": 1,
+      "message": "I guess you could, though it won\u0027t be consistent with RenderFrameImpl::FromWebFrame, unless you also change that one. ;)  But maybe before doing that, should we verify that |web_frame| is indeed never null here? (see below)",
+      "parentUuid": "5a6b78eb_cf33b177",
       "range": {
         "startLine": 97,
         "startChar": 58,
