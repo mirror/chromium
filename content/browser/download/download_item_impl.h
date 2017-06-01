@@ -122,28 +122,16 @@ class CONTENT_EXPORT DownloadItemImpl
   bool IsTemporary() const override;
   bool CanResume() const override;
   bool IsDone() const override;
-  const GURL& GetURL() const override;
-  const std::vector<GURL>& GetUrlChain() const override;
-  const GURL& GetOriginalUrl() const override;
-  const GURL& GetReferrerUrl() const override;
-  const GURL& GetSiteUrl() const override;
-  const GURL& GetTabUrl() const override;
-  const GURL& GetTabReferrerUrl() const override;
-  std::string GetSuggestedFilename() const override;
   const scoped_refptr<const net::HttpResponseHeaders>& GetResponseHeaders()
       const override;
   std::string GetContentDisposition() const override;
   std::string GetMimeType() const override;
   std::string GetOriginalMimeType() const override;
-  std::string GetRemoteAddress() const override;
-  bool HasUserGesture() const override;
-  ui::PageTransition GetTransitionType() const override;
   const std::string& GetLastModifiedTime() const override;
   const std::string& GetETag() const override;
   bool IsSavePackageDownload() const override;
   const base::FilePath& GetFullPath() const override;
   const base::FilePath& GetTargetFilePath() const override;
-  const base::FilePath& GetForcedFilePath() const override;
   base::FilePath GetFileNameToReportUser() const override;
   TargetDisposition GetTargetDisposition() const override;
   const std::string& GetHash() const override;
@@ -159,7 +147,6 @@ class CONTENT_EXPORT DownloadItemImpl
   int64_t GetReceivedBytes() const override;
   const std::vector<DownloadItem::ReceivedSlice>& GetReceivedSlices()
       const override;
-  base::Time GetStartTime() const override;
   base::Time GetEndTime() const override;
   bool CanShowInFolder() override;
   bool CanOpenDownload() override;
@@ -537,36 +524,6 @@ class CONTENT_EXPORT DownloadItemImpl
   // Whether the target should be overwritten, uniquified or prompted for.
   TargetDisposition target_disposition_ = TARGET_DISPOSITION_OVERWRITE;
 
-  // The chain of redirects that leading up to and including the final URL.
-  std::vector<GURL> url_chain_;
-
-  // The URL of the page that initiated the download.
-  GURL referrer_url_;
-
-  // Site URL for the site instance that initiated this download.
-  GURL site_url_;
-
-  // The URL of the tab that initiated the download.
-  GURL tab_url_;
-
-  // The URL of the referrer of the tab that initiated the download.
-  GURL tab_referrer_url_;
-
-  // Filename suggestion from DownloadSaveInfo. It could, among others, be the
-  // suggested filename in 'download' attribute of an anchor. Details:
-  // http://www.whatwg.org/specs/web-apps/current-work/#downloading-hyperlinks
-  std::string suggested_filename_;
-
-  // If non-empty, contains an externally supplied path that should be used as
-  // the target path.
-  base::FilePath forced_file_path_;
-
-  // Page transition that triggerred the download.
-  ui::PageTransition transition_type_ = ui::PAGE_TRANSITION_LINK;
-
-  // Whether the download was triggered with a user gesture.
-  bool has_user_gesture_ = false;
-
   // Information from the response.
 
   // The HTTP response headers. This contains a nullptr when the response has
@@ -583,10 +540,6 @@ class CONTENT_EXPORT DownloadItemImpl
   // may be different from |mime_type_|, which may be set based on heuristics
   // which may look at the file extension and first few bytes of the file.
   std::string original_mime_type_;
-
-  // The remote IP address where the download was fetched from.  Copied from
-  // DownloadCreateInfo::remote_address.
-  std::string remote_address_;
 
   // Total bytes expected.
   int64_t total_bytes_ = 0;
@@ -605,9 +558,6 @@ class CONTENT_EXPORT DownloadItemImpl
 
   // The views of this item in the download shelf and download contents.
   base::ObserverList<Observer> observers_;
-
-  // Time the download was started.
-  base::Time start_time_;
 
   // Time the download completed.
   base::Time end_time_;

@@ -31,8 +31,7 @@
 #include "content/public/browser/download_danger_type.h"
 #include "content/public/browser/download_interrupt_reasons.h"
 #include "ui/base/page_transition_types.h"
-
-class GURL;
+#include "url/gurl.h"
 
 namespace base {
 class FilePath;
@@ -107,6 +106,64 @@ class CONTENT_EXPORT DownloadItem : public base::SupportsUserData {
     virtual ~Observer() {}
   };
 
+  // Information about the initial request that triggers the download. Most of
+  // the fields are immutable after the DownloadItem is successfully created.
+  // However, it is possible that the url chain is changed when resuming an
+  // interrupted download. In that case, the download will restart from the
+  // beginning.
+  struct CONTENT_EXPORT RequestInfo {
+    RequestInfo(std::vector<GURL> url_chain,
+                GURL referrer_url,
+                GURL site_url,
+                GURL tab_url,
+                GURL tab_referrer_url,
+                std::string suggested_filename,
+                base::FilePath forced_file_path,
+                ui::PageTransition transition_type,
+                bool has_user_gesture,
+                std::string remote_address,
+                base::Time start_time);
+    RequestInfo();
+    RequestInfo(const RequestInfo& other);
+    ~RequestInfo();
+
+    // The chain of redirects that leading up to and including the final URL.
+    std::vector<GURL> url_chain;
+
+    // The URL of the page that initiated the download.
+    GURL referrer_url;
+
+    // Site URL for the site instance that initiated this download.
+    GURL site_url;
+
+    // The URL of the tab that initiated the download.
+    GURL tab_url;
+
+    // The URL of the referrer of the tab that initiated the download.
+    GURL tab_referrer_url;
+
+    // Filename suggestion from DownloadSaveInfo. It could, among others, be the
+    // suggested filename in 'download' attribute of an anchor. Details:
+    // http://www.whatwg.org/specs/web-apps/current-work/#downloading-hyperlinks
+    std::string suggested_filename;
+
+    // If non-empty, contains an externally supplied path that should be used as
+    // the target path.
+    base::FilePath forced_file_path;
+
+    // Page transition that triggerred the download.
+    ui::PageTransition transition_type = ui::PAGE_TRANSITION_LINK;
+
+    // Whether the download was triggered with a user gesture.
+    bool has_user_gesture = false;
+
+    // The remote IP address where the download was fetched from.
+    std::string remote_address;
+
+    // Time the download was started.
+    base::Time start_time;
+  };
+
   // A slice of the target file that has been received so far, used when
   // parallel downloading is enabled. Slices should have different offsets
   // so that they don't overlap.
@@ -124,6 +181,7 @@ class CONTENT_EXPORT DownloadItem : public base::SupportsUserData {
 
   using ReceivedSlices = std::vector<DownloadItem::ReceivedSlice>;
 
+  DownloadItem(RequestInfo info);
   ~DownloadItem() override {}
 
   // Observation ---------------------------------------------------------------
@@ -221,34 +279,34 @@ class CONTENT_EXPORT DownloadItem : public base::SupportsUserData {
   // Final URL. The primary resource being downloaded is from this URL. This is
   // the tail of GetUrlChain(). May return an empty GURL if there is no valid
   // download URL.
-  virtual const GURL& GetURL() const = 0;
+  virtual const GURL& GetURL() const;
 
   // The complete URL chain including redirects. URL at index i redirected to
   // URL at index i+1.
-  virtual const std::vector<GURL>& GetUrlChain() const = 0;
+  virtual const std::vector<GURL>& GetUrlChain() const;
 
   // The URL that the download request originally attempted to fetch. This may
   // differ from GetURL() if there were redirects. The return value from this
   // accessor is the same as the head of GetUrlChain().
-  virtual const GURL& GetOriginalUrl() const = 0;
+  virtual const GURL& GetOriginalUrl() const;
 
   // URL of document that is considered the referrer for the original URL.
-  virtual const GURL& GetReferrerUrl() const = 0;
+  virtual const GURL& GetReferrerUrl() const;
 
   // Site instance URL. Used to locate the correct storage partition during
   // subsequent browser sessions. This may be different from all of
   // GetOriginalUrl(), GetURL() and GetReferrerUrl().
-  virtual const GURL& GetSiteUrl() const = 0;
+  virtual const GURL& GetSiteUrl() const;
 
   // URL of the top level frame at the time the download was initiated.
-  virtual const GURL& GetTabUrl() const = 0;
+  virtual const GURL& GetTabUrl() const;
 
   // Referrer URL for top level frame.
-  virtual const GURL& GetTabReferrerUrl() const = 0;
+  virtual const GURL& GetTabReferrerUrl() const;
 
   // For downloads initiated via <a download>, this is the suggested download
   // filename from the download attribute.
-  virtual std::string GetSuggestedFilename() const = 0;
+  virtual std::string GetSuggestedFilename() const;
 
   // Returns the HTTP response headers. This contains a nullptr when the
   // response has not yet been received, and, because the headers are not being
@@ -269,13 +327,13 @@ class CONTENT_EXPORT DownloadItem : public base::SupportsUserData {
   virtual std::string GetOriginalMimeType() const = 0;
 
   // Remote address of server serving download contents.
-  virtual std::string GetRemoteAddress() const = 0;
+  virtual std::string GetRemoteAddress() const;
 
   // Whether the download request was initiated in response to a user gesture.
-  virtual bool HasUserGesture() const = 0;
+  virtual bool HasUserGesture() const;
 
   // The page transition type associated with the download request.
-  virtual ui::PageTransition GetTransitionType() const = 0;
+  virtual ui::PageTransition GetTransitionType() const;
 
   // Last-Modified header value.
   virtual const std::string& GetLastModifiedTime() const = 0;
@@ -309,7 +367,7 @@ class CONTENT_EXPORT DownloadItem : public base::SupportsUserData {
 
   // If the download forced a path rather than requesting name determination,
   // return the path requested.
-  virtual const base::FilePath& GetForcedFilePath() const = 0;
+  virtual const base::FilePath& GetForcedFilePath() const;
 
   // Returns the file-name that should be reported to the user. If a display
   // name has been explicitly set using SetDisplayName(), this function returns
@@ -384,7 +442,7 @@ class CONTENT_EXPORT DownloadItem : public base::SupportsUserData {
 
   // Time the download was first started. This timestamp is always valid and
   // doesn't change.
-  virtual base::Time GetStartTime() const = 0;
+  virtual base::Time GetStartTime() const;
 
   // Time the download was marked as complete. Returns base::Time() if the
   // download hasn't reached a completion state yet.
@@ -454,6 +512,10 @@ class CONTENT_EXPORT DownloadItem : public base::SupportsUserData {
 
   // Debug/testing -------------------------------------------------------------
   virtual std::string DebugString(bool verbose) const = 0;
+
+ protected:
+  // Information of the initial request.
+  RequestInfo request_info_;
 };
 
 }  // namespace content

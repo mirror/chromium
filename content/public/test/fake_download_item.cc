@@ -9,7 +9,8 @@
 
 namespace content {
 
-FakeDownloadItem::FakeDownloadItem() = default;
+FakeDownloadItem::FakeDownloadItem()
+    : DownloadItem(DownloadItem::RequestInfo()) {}
 
 FakeDownloadItem::~FakeDownloadItem() {
   NotifyDownloadRemoved();

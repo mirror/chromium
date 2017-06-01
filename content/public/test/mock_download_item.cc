@@ -6,7 +6,8 @@
 
 namespace content {
 
-MockDownloadItem::MockDownloadItem() {}
+MockDownloadItem::MockDownloadItem()
+    : DownloadItem(DownloadItem::RequestInfo()) {}
 
 MockDownloadItem::~MockDownloadItem() {
   for (auto& observer : observers_)
