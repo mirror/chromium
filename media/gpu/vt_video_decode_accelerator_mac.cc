@@ -1226,7 +1226,8 @@ VTVideoDecodeAccelerator::GetSupportedProfiles() {
   for (const auto& supported_profile : kSupportedProfiles) {
     SupportedProfile profile;
     profile.profile = supported_profile;
-    profile.min_resolution.SetSize(16, 16);
+    // Prefer software decoding at lower resolutions; it's power neutral.
+    profile.min_resolution.SetSize(480, 360);
     profile.max_resolution.SetSize(4096, 2160);
     profiles.push_back(profile);
   }
