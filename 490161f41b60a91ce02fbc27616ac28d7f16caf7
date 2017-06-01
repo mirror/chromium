@@ -110,6 +110,30 @@
       "revId": "490161f41b60a91ce02fbc27616ac28d7f16caf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0124a553_f339f528",
+        "filename": "components/cdm/browser/cdm_message_filter_android.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-01T18:38:38Z",
+      "side": 1,
+      "message": "I checked with jtinker@. All \"secure\" decoders satisfy (1) and (2). That being said, if we have a \"secure\" decoder which is actually a software decoder, then it\u0027s still a \"secure\" decoder. I don\u0027t think we care about whether it\u0027s a software or hardware decoder, we care about whether it\u0027s sw-secure or hw-secure.",
+      "parentUuid": "1b23cb3b_3eb8a1b8",
+      "range": {
+        "startLine": 42,
+        "startChar": 13,
+        "endLine": 42,
+        "endChar": 38
+      },
+      "revId": "490161f41b60a91ce02fbc27616ac28d7f16caf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
