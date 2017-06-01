@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e90073a9_5df0b6d7",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasRenderingContextFactory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-06-01T20:29:56Z",
+      "side": 1,
+      "message": "so nice :)\nbut btw, couldn\u0027t we also remove ExecutionContext here? Since CRCHost has a getTopExecutionContext? Or they can be different?",
+      "revId": "b253ced92661f32416e26031a7da40b486cef19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed2199a_083b3f15",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/CanvasRenderingContext2D.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-06-01T20:29:56Z",
+      "side": 1,
+      "message": "I wanted to remove this. :/ but fineeeee....",
+      "range": {
+        "startLine": 86,
+        "startChar": 14,
+        "endLine": 86,
+        "endChar": 18
+      },
+      "revId": "b253ced92661f32416e26031a7da40b486cef19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c97bce05_4fa51658",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-06-01T20:29:56Z",
+      "side": 1,
+      "message": "can\u0027t we replace this with a CRCHost::IsWebGLContextAllowed() or something?",
+      "revId": "b253ced92661f32416e26031a7da40b486cef19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
