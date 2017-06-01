@@ -110,3 +110,4 @@ Modifications:
 - Changed kint64min to not depend on undefined behavior.
 - Fix potential missing nul character in symbol names produced by addr2line-pdb.
 - Remove superfluous size_t value >= 0 check.
+- Replaced atomicops code with a portable implemenation based on C++11 <atomics>
