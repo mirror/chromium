@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "d93079a4_d78ca982",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-01T15:46:26Z",
+      "side": 1,
+      "message": "This looks identical to the code in MaybeUnlockUserGesture().  If they are, can it be refactored into one function?",
+      "revId": "57ad2d929c1a2ae67ec94dba84a177f285b5eba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e73ac5b4_aa9a8d46",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-01T15:46:26Z",
+      "side": 1,
+      "message": "\"wich\"",
+      "revId": "57ad2d929c1a2ae67ec94dba84a177f285b5eba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a414f4f2_d2834fc6",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
