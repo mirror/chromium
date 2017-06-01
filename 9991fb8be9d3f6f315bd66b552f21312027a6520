@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "50c143dc_bd6d6e49",
+        "filename": "third_party/WebKit/LayoutTests/VirtualTestSuites",
+        "patchSetId": 6
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-01T19:46:08Z",
+      "side": 1,
+      "message": "There wasn\u0027t. I filed https://crbug.com/728754 for tracking. \"shipped\" would also mean when the old pipeline is deleted.",
+      "parentUuid": "aa618a0d_e23d5407",
+      "revId": "9991fb8be9d3f6f315bd66b552f21312027a6520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59521ff9_27efbe71",
         "filename": "third_party/WebKit/LayoutTests/virtual/new-remote-playback-pipeline/external/wpt/remote-playback/README.txt",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-01T17:25:59Z",
       "side": 1,
       "message": "I assume this won\u0027t get upstreamed to WPT.  (Is there documentation on \"virtual\" LayoutTests?)",
+      "revId": "9991fb8be9d3f6f315bd66b552f21312027a6520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e1c420e_7b8e61ad",
+        "filename": "third_party/WebKit/LayoutTests/virtual/new-remote-playback-pipeline/external/wpt/remote-playback/README.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-01T19:46:08Z",
+      "side": 1,
+      "message": "No, but this runs external/wpt tests with the --enable-features\u003dNewRemotePlaybackPipeline flag to make sure these are not broken by the new pipeline while it\u0027s developed behind the flag. The documentation is here (the second option on the list): https://chromium.googlesource.com/chromium/src/+/master/docs/testing/layout_tests.md#Testing-Runtime-Flags",
+      "parentUuid": "59521ff9_27efbe71",
       "revId": "9991fb8be9d3f6f315bd66b552f21312027a6520",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
