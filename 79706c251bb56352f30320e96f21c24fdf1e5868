@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9db557a5_00b13efe",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-01T23:09:43Z",
+      "side": 0,
+      "message": "Why did this change? Is GetScriptState() gone?",
+      "revId": "79706c251bb56352f30320e96f21c24fdf1e5868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

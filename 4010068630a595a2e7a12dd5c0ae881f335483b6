@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36821a66_8ea0f285",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamDescriptor.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-01T23:09:43Z",
+      "side": 1,
+      "message": "I wonder if it\u0027s a bug in the spec that we don\u0027t specify defaults for these.  I\u0027m assuming the min and max should default to most negative and most positive float? (Or maybe infinities)/",
+      "revId": "4010068630a595a2e7a12dd5c0ae881f335483b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ae9726_90e2e0a7",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-01T23:09:43Z",
+      "side": 1,
+      "message": "What does \"collected\" mean here?",
+      "revId": "4010068630a595a2e7a12dd5c0ae881f335483b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7906a08_299227d5",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-01T23:09:43Z",
+      "side": 1,
+      "message": "\"when exists\" -\u003e \"when it exists\"?",
+      "revId": "4010068630a595a2e7a12dd5c0ae881f335483b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df50ea7_84048045",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-01T23:09:43Z",
+      "side": 1,
+      "message": "IsNullOrUndefrined() doesn\u0027t sound like it checks that the extracted value is a function.  Is it?",
+      "revId": "4010068630a595a2e7a12dd5c0ae881f335483b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
