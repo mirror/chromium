@@ -52,7 +52,6 @@
 #include "chromeos/dbus/dbus_method_call_status.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/image_loader_client.h"
-#include "content/public/browser/browser_thread.h"
 #elif defined(OS_LINUX)
 #include "chrome/common/component_flash_hint_file_linux.h"
 #endif  // defined(OS_CHROMEOS)
@@ -114,39 +113,39 @@ void ImageLoaderRegistration(const std::string& version,
 
 // Determine whether or not to skip registering flash component updates.
 bool SkipFlashRegistration(ComponentUpdateService* cus) {
-   if (!base::FeatureList::IsEnabled(features::kCrosCompUpdates))
-     return true;
+  if (!base::FeatureList::IsEnabled(features::kCrosCompUpdates))
+    return true;
 
-   // If the version of Chrome is pinned on the device (probably via enterprise
-   // policy), do not component update Flash player.
-   chromeos::CrosSettingsProvider::TrustedStatus status =
-       chromeos::CrosSettings::Get()->PrepareTrustedValues(
-           base::Bind(&RegisterPepperFlashComponent, cus));
+  // If the version of Chrome is pinned on the device (probably via enterprise
+  // policy), do not component update Flash player.
+  chromeos::CrosSettingsProvider::TrustedStatus status =
+      chromeos::CrosSettings::Get()->PrepareTrustedValues(
+          base::Bind(&RegisterPepperFlashComponent, cus));
 
-   // Only if the settings are trusted, read the update settings and allow them
-   // to disable Flash component updates. If the settings are untrusted, then we
-   // fail-safe and allow the security updates.
-   std::string version_prefix;
-   bool update_disabled = false;
-   switch (status) {
-     case chromeos::CrosSettingsProvider::TEMPORARILY_UNTRUSTED:
-       // Return and allow flash registration to occur once the settings are
-       // trusted.
-       return true;
-     case chromeos::CrosSettingsProvider::TRUSTED:
-       chromeos::CrosSettings::Get()->GetBoolean(chromeos::kUpdateDisabled,
-                                                 &update_disabled);
-       chromeos::CrosSettings::Get()->GetString(chromeos::kTargetVersionPrefix,
-                                                &version_prefix);
+  // Only if the settings are trusted, read the update settings and allow them
+  // to disable Flash component updates. If the settings are untrusted, then we
+  // fail-safe and allow the security updates.
+  std::string version_prefix;
+  bool update_disabled = false;
+  switch (status) {
+    case chromeos::CrosSettingsProvider::TEMPORARILY_UNTRUSTED:
+      // Return and allow flash registration to occur once the settings are
+      // trusted.
+      return true;
+    case chromeos::CrosSettingsProvider::TRUSTED:
+      chromeos::CrosSettings::Get()->GetBoolean(chromeos::kUpdateDisabled,
+                                                &update_disabled);
+      chromeos::CrosSettings::Get()->GetString(chromeos::kTargetVersionPrefix,
+                                               &version_prefix);
 
-       return update_disabled || !version_prefix.empty();
-     case chromeos::CrosSettingsProvider::PERMANENTLY_UNTRUSTED:
-       return false;
-   }
+      return update_disabled || !version_prefix.empty();
+    case chromeos::CrosSettingsProvider::PERMANENTLY_UNTRUSTED:
+      return false;
+  }
 
-   // Default to not skipping component flash registration since updates are
-   // security critical.
-   return false;
+  // Default to not skipping component flash registration since updates are
+  // security critical.
+  return false;
 }
 #endif  // defined(OS_CHROMEOS)
 #endif  // defined(GOOGLE_CHROME_BUILD)
@@ -255,8 +254,8 @@ class FlashComponentInstallerTraits : public ComponentInstallerTraits {
   bool VerifyInstallation(const base::DictionaryValue& manifest,
                           const base::FilePath& install_dir) const override;
   void ComponentReady(const base::Version& version,
-                      const base::FilePath& path,
-                      std::unique_ptr<base::DictionaryValue> manifest) override;
+                      const base::DictionaryValue& manifest,
+                      const base::FilePath& path) override;
   base::FilePath GetRelativeInstallDir() const override;
   void GetHash(std::vector<uint8_t>* hash) const override;
   std::string GetName() const override;
@@ -305,8 +304,8 @@ FlashComponentInstallerTraits::OnCustomInstall(
 
 void FlashComponentInstallerTraits::ComponentReady(
     const base::Version& version,
-    const base::FilePath& path,
-    std::unique_ptr<base::DictionaryValue> manifest) {
+    const base::DictionaryValue& manifest,
+    const base::FilePath& path) {
 #if !defined(OS_LINUX)
   // Installation is done. Now tell the rest of chrome. Both the path service
   // and to the plugin service. On Linux, a restart is required to use the new
