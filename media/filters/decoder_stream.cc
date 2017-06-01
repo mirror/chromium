@@ -511,14 +511,15 @@ void DecoderStream<StreamType>::OnDecodeOutputReady(
   if (!reset_cb_.is_null())
     return;
 
-  decoder_produced_a_frame_ = true;
-  traits_.OnDecodeDone(output);
-
   // |decoder_| successfully decoded a frame. No need to keep buffers for a
   // fallback decoder.
   // Note: |fallback_buffers_| might still have buffers, and we will keep
   // reading from there before requesting new buffers from |stream_|.
   pending_buffers_.clear();
+
+  decoder_produced_a_frame_ = true;
+  if (traits_.OnDecodeDone(output))
+    return;
 
   if (!read_cb_.is_null()) {
     // If |ready_outputs_| was non-empty, the read would have already been
