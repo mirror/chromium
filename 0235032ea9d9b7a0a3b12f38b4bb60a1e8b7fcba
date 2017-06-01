@@ -104,6 +104,24 @@
     },
     {
       "key": {
+        "uuid": "5cf374cd_8db1341d",
+        "filename": "third_party/WebKit/Source/core/mojo/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-01T02:29:04Z",
+      "side": 1,
+      "message": "I\u0027m fine with allowing this. We have already allowed services/service_manager/public/cpp/connector.h in Source/DEPS.\n\nJust help me understand: services/service_manager/public/cpp/interface_provider.h was not allowed in Blink before this patch. What were other features doing when they want to bind themselves with the interface provided by the service manager? I\u0027m just curious why we want to start using the file *now*.",
+      "parentUuid": "79ee656f_4e1fbb35",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff48e4ce_e502db87",
         "filename": "third_party/WebKit/Source/core/mojo/MojoHandle.cpp",
         "patchSetId": 4
