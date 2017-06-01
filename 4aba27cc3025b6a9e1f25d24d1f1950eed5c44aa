@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbe2fd86_2050522c",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-01T17:56:23Z",
+      "side": 1,
+      "message": "nit: the tracker should never be empty then, right?",
+      "range": {
+        "startLine": 436,
+        "startChar": 6,
+        "endLine": 436,
+        "endChar": 35
+      },
+      "revId": "4aba27cc3025b6a9e1f25d24d1f1950eed5c44aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62bd0532_95a8738b",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-01T17:56:23Z",
+      "side": 1,
+      "message": "nit: \"being deleted\". So, you\u0027re saying that the SetFocusedView(nullptr) directly above (line 562) will store |view|? I don\u0027t see how that happens from just reading the code... Perhaps we could avoid this workaround by adding a FocusChangeReason::kReasonViewDeleted or similar?",
+      "range": {
+        "startLine": 564,
+        "startChar": 57,
+        "endLine": 564,
+        "endChar": 58
+      },
+      "revId": "4aba27cc3025b6a9e1f25d24d1f1950eed5c44aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2657198_21efc135",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-01T17:56:23Z",
+      "side": 1,
+      "message": "nit: did you mean to complete the trailing sentence, or just have it lead into the code?",
+      "range": {
+        "startLine": 566,
+        "startChar": 48,
+        "endLine": 566,
+        "endChar": 53
+      },
+      "revId": "4aba27cc3025b6a9e1f25d24d1f1950eed5c44aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
