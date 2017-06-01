@@ -82,5 +82,9 @@ base::Optional<DriverEntry> TestDownloadDriver::Find(const std::string& guid) {
   return it->second;
 }
 
+void TestDownloadDriver::GetPhysicalFilePathForDownloads(
+    std::set<base::FilePath>& paths,
+    const std::vector<std::string>& guids) {}
+
 }  // namespace test
 }  // namespace download

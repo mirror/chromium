@@ -38,6 +38,9 @@ class TestDownloadDriver : public DownloadDriver {
   void Pause(const std::string& guid) override;
   void Resume(const std::string& guid) override;
   base::Optional<DriverEntry> Find(const std::string& guid) override;
+  void GetPhysicalFilePathForDownloads(
+      std::set<base::FilePath>& paths,
+      const std::vector<std::string>& guids) override;
 
  private:
   bool is_ready_;

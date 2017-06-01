@@ -44,4 +44,6 @@ message Entry {
 
   // Internal Tracking State.
   optional State state = 5;
+  optional string file_path = 6;
+  optional int64 completion_time = 7;
 }

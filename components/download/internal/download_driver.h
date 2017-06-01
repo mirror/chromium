@@ -5,7 +5,9 @@
 #ifndef COMPONENTS_DOWNLOAD_INTERNAL_DOWNLOAD_DRIVER_H_
 #define COMPONENTS_DOWNLOAD_INTERNAL_DOWNLOAD_DRIVER_H_
 
+#include <set>
 #include <string>
+#include <vector>
 
 #include "base/optional.h"
 #include "components/download/internal/driver_entry.h"
@@ -71,6 +73,11 @@ class DownloadDriver {
 
   // Find a download record from low level download library.
   virtual base::Optional<DriverEntry> Find(const std::string& guid) = 0;
+
+  // Finds the physical file paths for a list of guids.
+  virtual void GetPhysicalFilePathForDownloads(
+      std::set<base::FilePath>& paths,
+      const std::vector<std::string>& guids) = 0;
 };
 
 }  // namespace download

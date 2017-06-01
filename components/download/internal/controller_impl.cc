@@ -13,6 +13,7 @@
 #include "components/download/internal/config.h"
 #include "components/download/internal/entry.h"
 #include "components/download/internal/entry_utils.h"
+#include "components/download/internal/file_monitor.h"
 #include "components/download/internal/model.h"
 #include "components/download/internal/stats.h"
 
@@ -21,11 +22,16 @@ namespace download {
 ControllerImpl::ControllerImpl(std::unique_ptr<ClientSet> clients,
                                std::unique_ptr<Configuration> config,
                                std::unique_ptr<DownloadDriver> driver,
-                               std::unique_ptr<Model> model)
+                               std::unique_ptr<Model> model,
+                               const base::FilePath& dir)
     : clients_(std::move(clients)),
       config_(std::move(config)),
       driver_(std::move(driver)),
-      model_(std::move(model)) {}
+      model_(std::move(model)),
+      file_dir_(dir) {
+  // TODO(shaktisahu): Initialize |file_monitor_|. Pass down the file thread
+  // task runner from above.
+}
 
 ControllerImpl::~ControllerImpl() = default;
 
@@ -69,7 +75,9 @@ void ControllerImpl::StartDownload(const DownloadParams& params) {
   }
 
   start_callbacks_[params.guid] = params.callback;
-  model_->Add(Entry(params));
+  Entry entry(params);
+  entry.file_path = file_dir_.AppendASCII(params.guid);
+  model_->Add(entry);
 }
 
 void ControllerImpl::PauseDownload(const std::string& guid) {
@@ -142,7 +150,12 @@ void ControllerImpl::OnDownloadFailed(const DriverEntry& download, int reason) {
 }
 
 void ControllerImpl::OnDownloadSucceeded(const DriverEntry& download,
-                                         const base::FilePath& path) {}
+                                         const base::FilePath& path) {
+  auto* entry = model_->Get(download.guid);
+  DCHECK(entry);
+  entry->completion_time = download.completion_time;
+  model_->Update(*entry);
+}
 
 void ControllerImpl::OnDownloadUpdated(const DriverEntry& download) {}
 
@@ -199,6 +212,7 @@ void ControllerImpl::AttemptToFinalizeSetup() {
     return;
   }
 
+  file_monitor_->RemoveUnassociatedFiles();
   CancelOrphanedRequests();
   ResolveInitialRequestStates();
   PullCurrentRequestStatus();

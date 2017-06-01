@@ -40,9 +40,9 @@ DownloadService* DownloadService::Create(
   auto driver = base::WrapUnique<DownloadDriver>(nullptr);
   auto model = base::MakeUnique<ModelImpl>(std::move(store));
 
-  std::unique_ptr<Controller> controller =
-      base::MakeUnique<ControllerImpl>(std::move(client_set), std::move(config),
-                                       std::move(driver), std::move(model));
+  std::unique_ptr<Controller> controller = base::MakeUnique<ControllerImpl>(
+      std::move(client_set), std::move(config), std::move(driver),
+      std::move(model), storage_dir);
 
   return new DownloadServiceImpl(std::move(controller));
 }
