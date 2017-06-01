@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "816b4013_cc9bb9a7",
+        "filename": "chrome/browser/chromeos/extensions/device_local_account_management_policy_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-01T23:57:55Z",
+      "side": 1,
+      "message": "Could you use UMA_HISTOGRAM_SPARSE_SLOWLY here instead?  It would likely be more efficient, in terms of not pre-allocating space for a bunch of buckets that typically don\u0027t get used.",
+      "range": {
+        "startLine": 740,
+        "startChar": 2,
+        "endLine": 740,
+        "endChar": 27
+      },
+      "revId": "d6adb3cc246ecacd7619af3caa1709e0e0f67b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
