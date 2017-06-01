@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f67c66c8_9e8e677a",
+        "filename": "services/device/nfc/android/java/src/org/chromium/device/nfc/NfcImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-06-01T12:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a8e8dd0_9ae209c1",
+      "range": {
+        "startLine": 655,
+        "startChar": 0,
+        "endLine": 655,
+        "endChar": 87
+      },
+      "revId": "e4256107da0d3c81637a16693b426b5df853ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4b92522_093f8799",
         "filename": "services/device/nfc/android/java/src/org/chromium/device/nfc/NfcImpl.java",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "e4256107da0d3c81637a16693b426b5df853ab20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "417aeca6_de195cab",
+        "filename": "services/device/nfc/android/java/src/org/chromium/device/nfc/NfcImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-06-01T12:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4b92522_093f8799",
+      "revId": "e4256107da0d3c81637a16693b426b5df853ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "b0ba786d_1cc8aa65",
+        "filename": "services/device/nfc/android/java/src/org/chromium/device/nfc/NfcImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-06-01T12:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48b1c68b_11f6b9b6",
+      "revId": "e4256107da0d3c81637a16693b426b5df853ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aca7daf2_e43da91e",
         "filename": "services/device/nfc/android/java/src/org/chromium/device/nfc/NfcImpl.java",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "e4256107da0d3c81637a16693b426b5df853ab20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0326ef_85657f83",
+        "filename": "services/device/nfc/android/java/src/org/chromium/device/nfc/NfcImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-06-01T12:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aca7daf2_e43da91e",
+      "revId": "e4256107da0d3c81637a16693b426b5df853ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
