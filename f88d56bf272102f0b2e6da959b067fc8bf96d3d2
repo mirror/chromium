@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9b14432_3407202a",
+        "filename": "third_party/WebKit/LayoutTests/NeverFixTests",
+        "patchSetId": 1
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-06-01T17:23:34Z",
+      "side": 1,
+      "message": "The fullscreen tests are automated. Might there be others in this CL that shouldn\u0027t be moved?",
+      "revId": "f88d56bf272102f0b2e6da959b067fc8bf96d3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
