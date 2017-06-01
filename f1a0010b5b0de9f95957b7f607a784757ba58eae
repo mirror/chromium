@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc610e9a_35388ea3",
+        "filename": "third_party/WebKit/Source/platform/wtf/StdLibExtras.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-06-01T05:40:58Z",
+      "side": 1,
+      "message": "AFAIK, AlignedMemory (i.e. alignas) does not work for dynamic allocations. operator new always returns a storage with a sufficient alignment for any primitive types (8 or 16 bytes), so technically you don\u0027t have to use AlignedMemory.\n\nHowever, having AlignedMemory is good for documenting purposes and does not harm performance in any way, so I don\u0027t ask you to remove it.",
+      "range": {
+        "startLine": 44,
+        "startChar": 21,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "f1a0010b5b0de9f95957b7f607a784757ba58eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
