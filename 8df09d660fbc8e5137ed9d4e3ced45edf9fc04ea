@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c34c4a2_56ec2116",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-01T08:29:34Z",
+      "side": 1,
+      "message": "tries",
+      "range": {
+        "startLine": 9,
+        "startChar": 70,
+        "endLine": 9,
+        "endChar": 74
+      },
+      "revId": "8df09d660fbc8e5137ed9d4e3ced45edf9fc04ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "409f6685_36193e7f",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-01T08:29:34Z",
+      "side": 1,
+      "message": "The SWNP doesn\u0027t host the service worker\u0027s context. Is this accurate?\n\nA ServiceWorkerProviderHost instance is created when a ServiceWorkerNetworkProvider is created on the renderer process, which happens 1) when a document or worker (i.e., a service worker client) is created, or 2) during service worker startup.",
+      "revId": "8df09d660fbc8e5137ed9d4e3ced45edf9fc04ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feb2b8fe_3af1d3a8",
+        "filename": "content/common/service_worker/service_worker_provider.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-01T08:29:34Z",
+      "side": 1,
+      "message": "maybe s/to manage/to specify",
+      "range": {
+        "startLine": 11,
+        "startChar": 21,
+        "endLine": 11,
+        "endChar": 31
+      },
+      "revId": "8df09d660fbc8e5137ed9d4e3ced45edf9fc04ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
