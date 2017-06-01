@@ -107,6 +107,7 @@ class TabStripModelObserverBridge;
 
 // Methods for use by subclasses.
 @interface BaseBubbleController (Protected)
+
 // Registers event taps *after* the window is shown so that the bubble is
 // dismissed when it resigns key. This only needs to be called if
 // |-showWindow:| is overriden and does not call super. Noop on OSes <10.7.
