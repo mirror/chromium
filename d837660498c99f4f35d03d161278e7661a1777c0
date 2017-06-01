@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "39fa6b44_ce353fa8",
+        "filename": "base/rand_util_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-01T17:49:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b33b7f44_7e2743bb",
+      "range": {
+        "startLine": 21,
+        "startChar": 18,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "d837660498c99f4f35d03d161278e7661a1777c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eee98528_73f76235",
         "filename": "base/rand_util_fuchsia.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-01T14:47:18Z",
       "side": 1,
       "message": "why not std::min() (awkward casts?)?\n\nAlso, why is read_len declared outside the loop and not just on this line?",
+      "range": {
+        "startLine": 27,
+        "startChar": 20,
+        "endLine": 27,
+        "endChar": 41
+      },
+      "revId": "d837660498c99f4f35d03d161278e7661a1777c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b771ac0f_12c04f59",
+        "filename": "base/rand_util_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-01T17:49:41Z",
+      "side": 1,
+      "message": "Yeah, MX_CPRNG_DRAW_MAX_LEN is just #define X 256, not 256u. Stupid language. Maybe the cast there is better anyway.\n\nFixed read_len location.",
+      "parentUuid": "eee98528_73f76235",
       "range": {
         "startLine": 27,
         "startChar": 20,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b85a24d2_7ceebf57",
+        "filename": "base/rand_util_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-01T17:49:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ab2e465_1d21aebd",
+      "range": {
+        "startLine": 29,
+        "startChar": 33,
+        "endLine": 29,
+        "endChar": 34
+      },
+      "revId": "d837660498c99f4f35d03d161278e7661a1777c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8fc8d18_f0706157",
         "filename": "base/rand_util_fuchsia.cc",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "d837660498c99f4f35d03d161278e7661a1777c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "240f9e61_f5bca81c",
+        "filename": "base/rand_util_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-01T17:49:41Z",
+      "side": 1,
+      "message": "Did you mean actual being the same as read_len? Or remaining \u003e\u003d actual? Added both of those, plus a test that reads more than 256 since I totally blindly added that and it would have been fine until it wasn\u0027t. :)",
+      "parentUuid": "a8fc8d18_f0706157",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 6
+      },
+      "revId": "d837660498c99f4f35d03d161278e7661a1777c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
