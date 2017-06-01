@@ -983,12 +983,33 @@ TEST_F(RemoteSuggestionsProviderImplTest, ReplaceSuggestions) {
               ElementsAre(IdEq(second)));
 }
 
-TEST_F(RemoteSuggestionsProviderImplTest, LoadsAdditionalSuggestions) {
+TEST_F(RemoteSuggestionsProviderImplTest,
+       ShouldResolveFetchedSuggestionThumbnail) {
   auto service = MakeSuggestionsProvider();
 
   LoadFromJSONString(service.get(),
                      GetTestJson({GetSuggestionWithUrl("http://first")}));
-  EXPECT_THAT(service->GetSuggestionsForTesting(articles_category()),
+  ASSERT_THAT(service->GetSuggestionsForTesting(articles_category()),
+              ElementsAre(IdEq("http://first")));
+
+  image_decoder()->SetDecodedImage(gfx::test::CreateImage(1, 1));
+  ServeImageCallback serve_one_by_one_image_callback =
+      base::Bind(&ServeOneByOneImage, &service->GetImageFetcherForTesting());
+  EXPECT_CALL(*image_fetcher(), StartOrQueueNetworkRequest(_, _, _, _))
+      .WillOnce(WithArgs<0, 2>(
+          Invoke(CreateFunctor(serve_one_by_one_image_callback))));
+
+  gfx::Image image = FetchImage(service.get(), MakeArticleID("http://first"));
+  ASSERT_FALSE(image.IsEmpty());
+  EXPECT_EQ(1, image.Width());
+}
+
+TEST_F(RemoteSuggestionsProviderImplTest, ShouldFetchMore) {
+  auto service = MakeSuggestionsProvider();
+
+  LoadFromJSONString(service.get(),
+                     GetTestJson({GetSuggestionWithUrl("http://first")}));
+  ASSERT_THAT(service->GetSuggestionsForTesting(articles_category()),
               ElementsAre(IdEq("http://first")));
 
   auto expect_only_second_suggestion_received =
@@ -1001,20 +1022,32 @@ TEST_F(RemoteSuggestionsProviderImplTest, LoadsAdditionalSuggestions) {
                          GetTestJson({GetSuggestionWithUrl("http://second")}),
                          /*known_ids=*/std::set<std::string>(),
                          expect_only_second_suggestion_received);
+}
 
-  // Verify we can resolve the image of the new suggestions.
-  ServeImageCallback cb =
+TEST_F(RemoteSuggestionsProviderImplTest,
+       ShouldResolveFetchedMoreSuggestionThumbnail) {
+  auto service = MakeSuggestionsProvider();
+
+  auto assert_only_first_suggestion_received =
+      base::Bind([](Status status, std::vector<ContentSuggestion> suggestions) {
+        ASSERT_THAT(suggestions, SizeIs(1));
+        ASSERT_THAT(suggestions[0].id().id_within_category(),
+                    Eq("http://first"));
+      });
+  LoadMoreFromJSONString(service.get(), articles_category(),
+                         GetTestJson({GetSuggestionWithUrl("http://first")}),
+                         /*known_ids=*/std::set<std::string>(),
+                         assert_only_first_suggestion_received);
+
+  image_decoder()->SetDecodedImage(gfx::test::CreateImage(1, 1));
+  ServeImageCallback serve_one_by_one_image_callback =
       base::Bind(&ServeOneByOneImage, &service->GetImageFetcherForTesting());
   EXPECT_CALL(*image_fetcher(), StartOrQueueNetworkRequest(_, _, _, _))
-      .Times(2)
-      .WillRepeatedly(WithArgs<0, 2>(Invoke(CreateFunctor(cb))));
-  image_decoder()->SetDecodedImage(gfx::test::CreateImage(1, 1));
-  gfx::Image image = FetchImage(service.get(), MakeArticleID("http://first"));
-  EXPECT_FALSE(image.IsEmpty());
-  EXPECT_EQ(1, image.Width());
+      .WillOnce(WithArgs<0, 2>(
+          Invoke(CreateFunctor(serve_one_by_one_image_callback))));
 
-  image = FetchImage(service.get(), MakeArticleID("http://second"));
-  EXPECT_FALSE(image.IsEmpty());
+  gfx::Image image = FetchImage(service.get(), MakeArticleID("http://first"));
+  ASSERT_FALSE(image.IsEmpty());
   EXPECT_EQ(1, image.Width());
 }
 
