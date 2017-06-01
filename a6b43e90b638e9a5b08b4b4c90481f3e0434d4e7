@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8da25ef_7a9a19e2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaUrlResolver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-01T10:07:00Z",
+      "side": 1,
+      "message": "The indentation is quite confusing here. I was told once that `git cl format` shouldn\u0027t be used on Java files, FWIW.",
+      "revId": "a6b43e90b638e9a5b08b4b4c90481f3e0434d4e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
