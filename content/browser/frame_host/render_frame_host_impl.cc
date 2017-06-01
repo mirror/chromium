@@ -2857,6 +2857,9 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
   GetInterfaceRegistry()->AddInterface(base::Bind(
       &KeyboardLockServiceImpl::CreateMojoService));
 
+  GetInterfaceRegistry()->AddInterface(base::Bind(
+      &RenderFrameHostImpl::ForwardSVGRendererRequest, base::Unretained(this)));
+
   GetContentClient()->browser()->ExposeInterfacesToFrame(GetInterfaceRegistry(),
                                                          this);
 }
@@ -3827,6 +3830,11 @@ void RenderFrameHostImpl::ResetFeaturePolicy() {
       frame_tree_node()->effective_container_policy();
   feature_policy_ = FeaturePolicy::CreateFromParentPolicy(
       parent_policy, container_policy, last_committed_origin_);
+}
+
+void RenderFrameHostImpl::ForwardSVGRendererRequest(
+    const service_manager::BindSourceInfo& source_info,
+    blink::mojom::SVGRendererRequest request) {
 }
 
 void RenderFrameHostImpl::BindMediaInterfaceFactoryRequest(

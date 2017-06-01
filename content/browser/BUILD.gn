@@ -1297,6 +1297,8 @@ source_set("browser") {
     "renderer_host/render_widget_host_view_mac_editcommand_helper.mm",
     "renderer_host/sandbox_ipc_linux.cc",
     "renderer_host/sandbox_ipc_linux.h",
+    "renderer_host/svg_renderer_impl.cc",
+    "renderer_host/svg_renderer_impl.h",
     "renderer_host/text_input_client_mac.h",
     "renderer_host/text_input_client_mac.mm",
     "renderer_host/text_input_client_message_filter.h",
