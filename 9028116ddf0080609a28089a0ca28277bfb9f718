@@ -34,6 +34,24 @@
       "revId": "9028116ddf0080609a28089a0ca28277bfb9f718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd794ded_0d0d0c4d",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-01T00:31:42Z",
+      "side": 1,
+      "message": "Re the wrinkle: as I understand your comment, wouldn\u0027t you be introducing a bug until the TODO was resolved?",
+      "parentUuid": "77c7c0cd_c7181319",
+      "revId": "9028116ddf0080609a28089a0ca28277bfb9f718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
