@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e888d3c0_d32671c8",
+        "filename": "third_party/WebKit/LayoutTests/media/remoteplayback/prompt-throws-when-backend-disabled.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-01T14:58:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a696ba1d_e04d8929",
+      "revId": "7c79851eebab4c1c01b164c8f8ceb3eca111064b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c03b109c_e466397c",
         "filename": "third_party/WebKit/LayoutTests/media/remoteplayback/prompt-throws-when-backend-disabled.html",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "7c79851eebab4c1c01b164c8f8ceb3eca111064b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f610cf4_52461f0f",
+        "filename": "third_party/WebKit/LayoutTests/media/remoteplayback/prompt-throws-when-backend-disabled.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-01T14:58:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c03b109c_e466397c",
+      "revId": "7c79851eebab4c1c01b164c8f8ceb3eca111064b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4ea3dea9_88e86f83",
+        "filename": "third_party/WebKit/LayoutTests/media/remoteplayback/watch-availability-throws-when-backend-disabled.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-01T14:58:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fd023eb_3af9b4e1",
+      "revId": "7c79851eebab4c1c01b164c8f8ceb3eca111064b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1faf13da_79b75e9f",
         "filename": "third_party/WebKit/LayoutTests/media/remoteplayback/watch-availability-throws-when-backend-disabled.html",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "7c79851eebab4c1c01b164c8f8ceb3eca111064b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f7d32d4_8fb131aa",
+        "filename": "third_party/WebKit/LayoutTests/media/remoteplayback/watch-availability-throws-when-backend-disabled.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-01T14:58:34Z",
+      "side": 1,
+      "message": "I do now.",
+      "parentUuid": "1faf13da_79b75e9f",
+      "revId": "7c79851eebab4c1c01b164c8f8ceb3eca111064b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "260cb3f5_79fa5c81",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-01T14:58:34Z",
+      "side": 1,
+      "message": "Done. That\u0027s how it currently works on desktop and I\u0027ll use the flag to implement it correctly in the follow up patch that actually adds watching availability.",
+      "parentUuid": "2076895d_5bd678df",
+      "revId": "7c79851eebab4c1c01b164c8f8ceb3eca111064b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a3281b2_bdf4153c",
         "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "7c79851eebab4c1c01b164c8f8ceb3eca111064b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d66543ef_d3caa838",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-01T14:58:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a3281b2_bdf4153c",
+      "revId": "7c79851eebab4c1c01b164c8f8ceb3eca111064b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
