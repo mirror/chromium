@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b514d61b_d11a204a",
+        "filename": "tools/perf/benchmarks/dromaeo.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-06-01T17:44:58Z",
+      "side": 1,
+      "message": "I know this is much different than how it is used elsewhere (not being in the story set file) but the dromaeo benchmarks dont have pageset files. I decided to put them here so they are close to where they are used.",
+      "range": {
+        "startLine": 144,
+        "startChar": 6,
+        "endLine": 144,
+        "endChar": 21
+      },
+      "revId": "84c448527b6e62088031ba9a3e54897f8125ec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
