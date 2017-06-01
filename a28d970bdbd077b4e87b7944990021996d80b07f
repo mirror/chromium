@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fef32ea1_1bf6b4ad",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-06-01T22:56:18Z",
+      "side": 1,
+      "message": "I strongly recommend you retain the existing logic as much as possible, and just change the iteration.  There be dragons here.\n\nFor example, ForAllChildViewsAndPlugins will include remote frames, so ToLocalFrameView below is busted.\n\nAlso, the check for GetLayoutViewItem().IsNull() is almost certainly still necessary.\n\nAnd the call to CheckDoesNotNeedsLayout(), and the order of invocation of UpdateGeometry() and ShouldThrottleRendering(), should probably be preserved.\n\nThere\u0027s some questionable existing logic here.  It\u0027s not clear to my why LayoutPart::UpdateGeometry runs layout on the child FrameView.  At the very least, it probably shouldn\u0027t do that if the child FrameView is throttled.\n\nAll of which is to just to affirm my initial point: keep the existing logic.",
+      "range": {
+        "startLine": 1469,
+        "startChar": 2,
+        "endLine": 1469,
+        "endChar": 28
+      },
+      "revId": "a28d970bdbd077b4e87b7944990021996d80b07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c825935_07dcca2e",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 3
