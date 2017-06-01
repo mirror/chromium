@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6d6c2e7_c8f7d192",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-01T19:19:10Z",
+      "side": 1,
+      "message": "It is brought up by danakj@chromium.org, that using base::flat_map would make more sense here since we have at most 2^6 keys in the map. Please change this to base::flat_map.",
+      "revId": "a7bad1836fc4fe18e8c82584cb0e29d4ff3b90ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
