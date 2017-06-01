@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "add36c85_a055fd57",
+        "filename": "chrome/browser/predictors/glowplug_stats_collector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-06-01T13:44:47Z",
+      "side": 1,
+      "message": "The implementation is copied from ResourcePrefetchPredictor.",
+      "range": {
+        "startLine": 17,
+        "startChar": 10,
+        "endLine": 17,
+        "endChar": 35
+      },
+      "revId": "3d0ea4f804f030a2d094f474fb1be2a96201bb8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d30ca3_cb09d0fd",
+        "filename": "chrome/browser/predictors/glowplug_stats_collector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-06-01T13:44:47Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 75,
+        "startChar": 12,
+        "endLine": 75,
+        "endChar": 26
+      },
+      "revId": "3d0ea4f804f030a2d094f474fb1be2a96201bb8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ecbae67_cba4d536",
+        "filename": "chrome/browser/predictors/loading_predictor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-06-01T13:44:47Z",
+      "side": 1,
+      "message": "Now we have a cyclic dependence between ResourcePrefetchPredictor and GlowplugStatsCollector. It should be resolved after LoadingDataCollector refactoring.",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "3d0ea4f804f030a2d094f474fb1be2a96201bb8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
