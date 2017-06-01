@@ -77,6 +77,12 @@ ResourcePrefetchPredictor::URLRequestSummary CreateURLRequestSummary(
     bool has_validators = false,
     bool always_revalidate = false);
 
+ResourcePrefetchPredictor::Prediction CreatePrediction(
+    const std::string& main_frame_key,
+    std::vector<GURL> subresource_urls);
+
+void PopulateTestConfig(LoadingPredictorConfig* config, bool small_db = true);
+
 // For printing failures nicely.
 std::ostream& operator<<(std::ostream& stream, const PrefetchData& data);
 std::ostream& operator<<(std::ostream& stream, const ResourceData& resource);
