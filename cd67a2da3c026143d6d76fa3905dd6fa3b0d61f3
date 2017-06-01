@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd81226e_1815f391",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-01T14:50:27Z",
+      "side": 1,
+      "message": "The comments about which method must be called for which image type don\u0027t seem quite correct. Aren\u0027t all methods (apart from favicon() and thumbnail()) required for all image types?",
+      "revId": "cd67a2da3c026143d6d76fa3905dd6fa3b0d61f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83273766_5fd44d2d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-01T14:50:27Z",
+      "side": 1,
+      "message": "How would the image type end up being LARGE_ICON?",
+      "revId": "cd67a2da3c026143d6d76fa3905dd6fa3b0d61f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
