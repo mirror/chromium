@@ -10,6 +10,7 @@
 #include <string>
 
 #include "base/logging.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
@@ -18,6 +19,8 @@
 #include "extensions/common/manifest.h"
 #include "extensions/common/manifest_constants.h"
 #include "extensions/common/manifest_handlers/app_isolation_info.h"
+#include "extensions/common/permissions/api_permission.h"
+#include "extensions/common/permissions/permissions_info.h"
 #include "ui/base/l10n/l10n_util.h"
 
 namespace chromeos {
@@ -727,6 +730,18 @@ bool ArrayContains(const char* const (&char_array)[N],
   return ArrayContainsImpl(char_array, N, entry);
 }
 
+// Helper method used to log extension permissions UMA stats.
+void LogPermissionUmaStats(const std::string& permission_string) {
+  const auto* permission_info =
+      extensions::PermissionsInfo::GetInstance()->GetByName(permission_string);
+  // Not a real permission.
+  if (!permission_info) return;
+
+  UMA_HISTOGRAM_ENUMERATION("Enterprise.PublicSession.ExtensionPermissions",
+                            permission_info->id(),
+                            extensions::APIPermission::kEnumBoundary);
+}
+
 // Returns true for extensions that are considered safe for Public Sessions,
 // which among other things requires the manifest top-level entries to be
 // contained in the |kSafeManifestEntries| whitelist and all permissions to be
@@ -774,6 +789,7 @@ bool IsSafeForPublicSession(const extensions::Extension* extension) {
           }
           for (base::DictionaryValue::Iterator it3(*dict_value);
                !it3.IsAtEnd(); it3.Advance()) {
+            LogPermissionUmaStats(it3.key());
             if (!ArrayContains(kSafePermissionDicts, it3.key())) {
               LOG(ERROR) << extension->id()
                          << " has non-whitelisted dict in permission list: "
@@ -792,6 +808,7 @@ bool IsSafeForPublicSession(const extensions::Extension* extension) {
           safe = false;
           continue;
         }
+        LogPermissionUmaStats(permission_string);
         // Accept whitelisted permissions.
         if (ArrayContains(kSafePermissionStrings, permission_string)) {
           continue;
