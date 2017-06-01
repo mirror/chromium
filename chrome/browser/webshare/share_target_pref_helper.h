@@ -5,12 +5,15 @@
 #ifndef CHROME_BROWSER_WEBSHARE_SHARE_TARGET_PREF_HELPER_H_
 #define CHROME_BROWSER_WEBSHARE_SHARE_TARGET_PREF_HELPER_H_
 
+#include <vector>
+
 #include "base/optional.h"
 #include "base/strings/string_piece.h"
 #include "content/public/common/manifest.h"
 
 class GURL;
 class PrefService;
+class ShareTarget;
 
 // Adds the Web Share target defined by |manifest_url| to |pref_service| under
 // kWebShareVisitedTargets. It maps the key |manifest_url| to a dictionary that
@@ -22,4 +25,7 @@ void UpdateShareTargetInPrefs(const GURL& manifest_url,
                               const content::Manifest& manifest,
                               PrefService* pref_service);
 
-#endif // CHROME_BROWSER_WEBSHARE_SHARE_TARGET_PREF_HELPER_H_
+// Retrieves all Web Share Targets in prefs.
+std::vector<ShareTarget> GetShareTargetsInPrefs(PrefService* pref_service);
+
+#endif  // CHROME_BROWSER_WEBSHARE_SHARE_TARGET_PREF_HELPER_H_

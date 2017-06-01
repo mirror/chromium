@@ -4,7 +4,9 @@
 
 #include "chrome/browser/ui/views/webshare/webshare_target_picker_view.h"
 
+#include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "base/bind.h"
@@ -24,6 +26,13 @@
 #include "ui/views/window/dialog_client_view.h"
 #include "ui/views/window/dialog_delegate.h"
 #include "url/gurl.h"
+
+constexpr char kAppName1[] = "App One";
+constexpr char kAppName2[] = "App Two";
+constexpr char kTemplate[] = "share?title={title}";
+
+const GURL kUrl1("https://appone.com/path/bits");
+const GURL kUrl2("https://apptwo.xyz");
 
 class WebShareTargetPickerViewTest : public views::ViewsTestBase {
  public:
@@ -59,10 +68,11 @@ class WebShareTargetPickerViewTest : public views::ViewsTestBase {
 
  protected:
   // Creates the WebShareTargetPickerView (available as view()).
-  void CreateView(const std::vector<std::pair<base::string16, GURL>>& targets) {
+  void CreateView(std::vector<ShareTarget> targets) {
     view_ = new WebShareTargetPickerView(
-        targets, base::BindOnce(&WebShareTargetPickerViewTest::OnCallback,
-                                base::Unretained(this)));
+        std::move(targets),
+        base::BindOnce(&WebShareTargetPickerViewTest::OnCallback,
+                       base::Unretained(this)));
     constrained_window::CreateBrowserModalDialogViews(
         view_, parent_widget_->GetNativeWindow())
         ->Show();
@@ -80,11 +90,11 @@ class WebShareTargetPickerViewTest : public views::ViewsTestBase {
   views::TableView* table() { return view_->table_; }
 
   // The result that was returned to the dialog's callback.
-  const base::Optional<std::string>& result() { return result_; }
+  const base::Optional<ShareTarget>& result() { return result_; }
 
  private:
-  void OnCallback(const base::Optional<std::string>& result) {
-    result_ = result;
+  void OnCallback(base::Optional<ShareTarget> result) {
+    result_ = std::move(result);
     if (quit_closure_)
       quit_closure_.Run();
   }
@@ -92,7 +102,7 @@ class WebShareTargetPickerViewTest : public views::ViewsTestBase {
   std::unique_ptr<views::Widget> parent_widget_;
   WebShareTargetPickerView* view_ = nullptr;
 
-  base::Optional<std::string> result_;
+  base::Optional<ShareTarget> result_;
 
   base::Closure quit_closure_;
 
@@ -101,7 +111,7 @@ class WebShareTargetPickerViewTest : public views::ViewsTestBase {
 
 // Table with 0 targets. Choose to cancel.
 TEST_F(WebShareTargetPickerViewTest, EmptyListCancel) {
-  CreateView(std::vector<std::pair<base::string16, GURL>>());
+  CreateView(std::vector<ShareTarget>());
   EXPECT_EQ(0, table()->RowCount());
   EXPECT_EQ(-1, table()->FirstSelectedRow());  // Nothing selected.
   EXPECT_FALSE(view()->IsDialogButtonEnabled(ui::DIALOG_BUTTON_OK));
@@ -118,12 +128,11 @@ TEST_F(WebShareTargetPickerViewTest, EmptyListCancel) {
 
 // Table with 2 targets. Choose second target and share.
 TEST_F(WebShareTargetPickerViewTest, ChooseItem) {
-  std::vector<std::pair<base::string16, GURL>> targets{
-      std::make_pair(base::ASCIIToUTF16("App One"),
-                     GURL("https://appone.com/path/bits")),
-      std::make_pair(base::ASCIIToUTF16("App Two"),
-                     GURL("https://apptwo.xyz"))};
-  CreateView(targets);
+  std::vector<ShareTarget> targets;
+  targets.emplace_back(kUrl1, kAppName1, kTemplate);
+  targets.emplace_back(kUrl2, kAppName2, kTemplate);
+
+  CreateView(std::move(targets));
   EXPECT_EQ(2, table()->RowCount());
   EXPECT_EQ(base::ASCIIToUTF16("App One (https://appone.com/)"),
             table()->model()->GetText(0, 0));
@@ -147,14 +156,15 @@ TEST_F(WebShareTargetPickerViewTest, ChooseItem) {
 
   run_loop.Run();
 
-  EXPECT_EQ(base::Optional<std::string>("https://apptwo.xyz/"), result());
+  EXPECT_EQ(ShareTarget(kUrl2, kAppName2, kTemplate), result());
 }
 
 // Table with 1 target. Select using double-click.
 TEST_F(WebShareTargetPickerViewTest, ChooseItemWithDoubleClick) {
-  std::vector<std::pair<base::string16, GURL>> targets{std::make_pair(
-      base::ASCIIToUTF16("App One"), GURL("https://appone.com/path/bits"))};
-  CreateView(targets);
+  std::vector<ShareTarget> targets;
+  targets.emplace_back(kUrl1, kAppName1, kTemplate);
+
+  CreateView(std::move(targets));
   EXPECT_EQ(1, table()->RowCount());
   EXPECT_EQ(base::ASCIIToUTF16("App One (https://appone.com/)"),
             table()->model()->GetText(0, 0));
@@ -168,6 +178,5 @@ TEST_F(WebShareTargetPickerViewTest, ChooseItemWithDoubleClick) {
 
   run_loop.Run();
 
-  EXPECT_EQ(base::Optional<std::string>("https://appone.com/path/bits"),
-            result());
+  EXPECT_EQ(ShareTarget(kUrl1, kAppName1, kTemplate), result());
 }
