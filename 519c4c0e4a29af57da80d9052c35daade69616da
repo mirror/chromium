@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f16f093_55b0d7f9",
+        "filename": "services/identity/public/interfaces/identity_manager.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-01T10:53:20Z",
+      "side": 0,
+      "message": "Is the plan to get rid of account_id.mojom eventually? What\u0027s the difference between AccountId and AccountInfo?",
+      "range": {
+        "startLine": 17,
+        "startChar": 21,
+        "endLine": 18,
+        "endChar": 27
+      },
+      "revId": "519c4c0e4a29af57da80d9052c35daade69616da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
