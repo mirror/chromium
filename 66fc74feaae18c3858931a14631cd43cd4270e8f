@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bd29919_ecf9f665",
+        "filename": "chrome/browser/ui/views/extensions/extension_dialog.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-01T20:30:59Z",
+      "side": 1,
+      "message": "nullptr",
+      "revId": "66fc74feaae18c3858931a14631cd43cd4270e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb6b664_580fff7b",
+        "filename": "chrome/browser/ui/views/frame/contents_web_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-01T20:30:59Z",
+      "side": 1,
+      "message": "tricky! Much more reasonable using a factory function that tells you what the args are!",
+      "revId": "66fc74feaae18c3858931a14631cd43cd4270e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d08b75_157a006b",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-01T20:30:59Z",
+      "side": 1,
+      "message": "nullptr",
+      "range": {
+        "startLine": 485,
+        "startChar": 14,
+        "endLine": 485,
+        "endChar": 22
+      },
+      "revId": "66fc74feaae18c3858931a14631cd43cd4270e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "131124cf_c1a2c9a0",
+        "filename": "ui/chromeos/ime/infolist_window.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-01T20:30:59Z",
+      "side": 1,
+      "message": "nullptr",
+      "revId": "66fc74feaae18c3858931a14631cd43cd4270e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b988ff_0dafac70",
+        "filename": "ui/views/view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-01T20:30:59Z",
+      "side": 1,
+      "message": "Update comment. In particular the \u0027owned\u0027 part is now obvious.",
+      "revId": "66fc74feaae18c3858931a14631cd43cd4270e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
