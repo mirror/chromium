@@ -269,7 +269,7 @@ CanvasRenderingContext* HTMLCanvasElement::GetCanvasRenderingContext(
     return nullptr;
   }
 
-  context_ = factory->Create(this, attributes, GetDocument());
+  context_ = factory->Create(&GetDocument(), this, attributes);
   if (!context_)
     return nullptr;
 
