@@ -399,6 +399,24 @@
     },
     {
       "key": {
+        "uuid": "dfcaaefa_0da357f9",
+        "filename": "ui/views/bubble/bubble_frame_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-01T17:57:30Z",
+      "side": 1,
+      "message": "Right, I thought about that, but AFAICT from the context we really want the proper values, and the code only sort-of-worked before because people always set symmetrical margins.  I think you should go ahead and change it.",
+      "parentUuid": "a684bcb1_9615fd50",
+      "revId": "fb39d8a561ba2f1c54a03eac331f84d876b08153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d68f5689_09b99ffd",
         "filename": "ui/views/layout/box_layout.h",
         "patchSetId": 5
