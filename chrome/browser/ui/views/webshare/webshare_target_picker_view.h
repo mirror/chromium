@@ -15,7 +15,6 @@
 #include "ui/views/controls/table/table_view_observer.h"
 #include "ui/views/window/dialog_delegate.h"
 
-class GURL;
 class TargetPickerTableModel;
 class WebShareTargetPickerViewTest;
 
@@ -36,9 +35,8 @@ class WebShareTargetPickerView : public views::DialogDelegateView,
   // in a list. If the user picks a target, this calls |callback| with the
   // manifest URL of the chosen target, or returns null if the user cancelled
   // the share.
-  WebShareTargetPickerView(
-      const std::vector<std::pair<base::string16, GURL>>& targets,
-      chrome::WebShareTargetPickerCallback close_callback);
+  WebShareTargetPickerView(std::vector<ShareTarget> targets,
+                           chrome::WebShareTargetPickerCallback close_callback);
   ~WebShareTargetPickerView() override;
 
   // views::View overrides:
@@ -64,7 +62,7 @@ class WebShareTargetPickerView : public views::DialogDelegateView,
 
   views::TableView* table_ = nullptr;
 
-  const std::vector<std::pair<base::string16, GURL>> targets_;
+  std::vector<ShareTarget> targets_;
   std::unique_ptr<TargetPickerTableModel> table_model_;
 
   chrome::WebShareTargetPickerCallback close_callback_;

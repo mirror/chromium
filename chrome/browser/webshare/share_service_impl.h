@@ -19,6 +19,7 @@
 #include "third_party/WebKit/public/platform/modules/webshare/webshare.mojom.h"
 #include "third_party/WebKit/public/platform/site_engagement.mojom.h"
 
+class ShareTarget;
 class DictionaryValue;
 class GURL;
 
@@ -57,19 +58,18 @@ class ShareServiceImpl : public blink::mojom::ShareService {
   // presented to the user. Passes the result to |callback|. If the user picks a
   // target, the result passed to |callback| is the manifest URL of the chosen
   // target, or is null if the user cancelled the share. Virtual for testing.
-  virtual void ShowPickerDialog(
-      const std::vector<std::pair<base::string16, GURL>>& targets,
-      chrome::WebShareTargetPickerCallback callback);
+  virtual void ShowPickerDialog(std::vector<ShareTarget> targets,
+                                chrome::WebShareTargetPickerCallback callback);
 
   // Opens a new tab and navigates to |target_url|.
   // Virtual for testing purposes.
   virtual void OpenTargetURL(const GURL& target_url);
 
-  // Returns all stored Share Targets that have a high enough engagement score
-  // with the user.
-  std::vector<std::pair<base::string16, GURL>>
-  GetTargetsWithSufficientEngagement(
-      const base::DictionaryValue& share_targets);
+  void OnPickerClosed(const std::string& title,
+                      const std::string& text,
+                      const GURL& share_url,
+                      const ShareCallback& callback,
+                      base::Optional<ShareTarget> result);
 
   // Writes to |url_template_filled|, a copy of |url_template| with all
   // instances of "{title}", "{text}", and "{url}" replaced with
@@ -84,13 +84,6 @@ class ShareServiceImpl : public blink::mojom::ShareService {
                                   base::StringPiece text,
                                   const GURL& share_url,
                                   std::string* url_template_filled);
-
-  void OnPickerClosed(std::unique_ptr<base::DictionaryValue> share_targets,
-                      const std::string& title,
-                      const std::string& text,
-                      const GURL& share_url,
-                      const ShareCallback& callback,
-                      const base::Optional<std::string>& result);
 
   base::WeakPtrFactory<ShareServiceImpl> weak_factory_;
 
