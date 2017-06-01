@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0aa200c8_20174c54",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-01T06:05:44Z",
+      "side": 1,
+      "message": "#include \"net/proxy/proxy_server.h\"",
+      "revId": "fbc7d08fd8069ed7e1dfc89a750f67eccea22fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "537a315e_6764d375",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-01T06:05:44Z",
+      "side": 1,
+      "message": "nit: add a comment explaining why reading the proxy server is optional, and why there is no need to return false in case of error.",
+      "range": {
+        "startLine": 312,
+        "startChar": 15,
+        "endLine": 312,
+        "endChar": 16
+      },
+      "revId": "fbc7d08fd8069ed7e1dfc89a750f67eccea22fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f86aa62a_a77c747c",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-01T06:05:44Z",
+      "side": 1,
+      "message": "nit: no parenthesis needed.",
+      "range": {
+        "startLine": 314,
+        "startChar": 71,
+        "endLine": 314,
+        "endChar": 72
+      },
+      "revId": "fbc7d08fd8069ed7e1dfc89a750f67eccea22fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22842e05_6d5f8bcd",
+        "filename": "net/http/http_response_info.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-01T06:05:44Z",
+      "side": 1,
+      "message": "nit: s/net::ProxyServer//",
+      "range": {
+        "startLine": 137,
+        "startChar": 21,
+        "endLine": 137,
+        "endChar": 22
+      },
+      "revId": "fbc7d08fd8069ed7e1dfc89a750f67eccea22fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
