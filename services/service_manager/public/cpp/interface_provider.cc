@@ -72,6 +72,10 @@ void InterfaceProvider::GetInterface(
   }
 }
 
+bool InterfaceProvider::HasBinderForName(const std::string& name) const {
+  return binders_.count(name);
+}
+
 void InterfaceProvider::ClearBinderForName(const std::string& name) {
   binders_.erase(name);
 }
