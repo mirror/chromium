@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5d48bd4_a452149f",
+        "filename": "third_party/WebKit/Source/modules/mediasource/SourceBuffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1259,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-01T19:32:02Z",
+      "side": 1,
+      "message": "We now have this \"retrieve current_time\" logic in 3 places. Please move it into a private helper method.",
+      "range": {
+        "startLine": 1259,
+        "startChar": 9,
+        "endLine": 1259,
+        "endChar": 21
+      },
+      "revId": "9dc2bfa1f0537ea8b2c4b17aea715304964afa5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
