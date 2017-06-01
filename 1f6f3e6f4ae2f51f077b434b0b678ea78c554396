@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eae57963_2ab53b40",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ApplicationCacheModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-01T17:59:43Z",
+      "side": 1,
+      "message": "Do this on previous line.",
+      "range": {
+        "startLine": 86,
+        "startChar": 41,
+        "endLine": 86,
+        "endChar": 47
+      },
+      "revId": "1f6f3e6f4ae2f51f077b434b0b678ea78c554396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
