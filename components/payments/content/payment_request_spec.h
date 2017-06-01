@@ -100,8 +100,8 @@ class PaymentRequestSpec : public PaymentOptionsProvider {
   mojom::PaymentShippingOption* selected_shipping_option() const {
     return selected_shipping_option_;
   }
-  // if |selected_shipping_option()| is nullptr, this may contain a non-empty
-  // error returned by the merchant.
+  // This may contain a non-empty error returned by the merchant. If this
+  // happens, refer to selected_shipping_option_profile().
   const base::string16& selected_shipping_option_error() const {
     return selected_shipping_option_error_;
   }
