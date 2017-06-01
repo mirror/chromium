@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f72668a0_a01c7c64",
+        "filename": "components/feature_engagement_tracker/public/feature_list.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-01T00:55:07Z",
+      "side": 1,
+      "message": "asvitkine: Do you have any idea how I can declare this as a constant or something like that in the .cc file?",
+      "range": {
+        "startLine": 22,
+        "startChar": 33,
+        "endLine": 22,
+        "endChar": 34
+      },
+      "revId": "6aa28a6bdb93dc4a9bbd6cf0ce55c11f13019bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
