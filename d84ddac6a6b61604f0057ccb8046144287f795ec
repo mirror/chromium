@@ -34,6 +34,24 @@
       "revId": "d84ddac6a6b61604f0057ccb8046144287f795ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d4e695_015ad158",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/ClipPathDisplayItem.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-06-01T15:27:43Z",
+      "side": 0,
+      "message": "Yeah, that was disabled \"temporarily\", to \"fix\" a specific regression in a (at-the-time) highly visible benchmark :)\n\nThe root cause IIRC is GPU veto stickiness: pages that trigger it never reconsider, even when the content changes.  Regardless, the workaround is arbitrary and could be easily defeated by other veto paths - so I\u0027m all for removing the exception and doing the right thing in ClipPathOp.  LGTM",
+      "parentUuid": "19f11be7_7ec1d2f4",
+      "revId": "d84ddac6a6b61604f0057ccb8046144287f795ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
