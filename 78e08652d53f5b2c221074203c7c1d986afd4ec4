@@ -16,6 +16,24 @@
       "revId": "78e08652d53f5b2c221074203c7c1d986afd4ec4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1981c00_024fbdaf",
+        "filename": "third_party/WebKit/Source/core/css/CSSToLengthConversionData.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-06-01T15:18:01Z",
+      "side": 1,
+      "message": "I tried to do it. :)\nI think it\u0027s nearly impossible without some major refactor. This is only used by ZoomedComputedPixels() on this file, which is only used in 3 places on the code. But two of them are VERY deep and have no access to document: CSSPrimitiveValue and some animation path primitive.\nI think the solution would be to try to find where in the code the document needs to know that rem/viewport is used and work from there. Maybe this was an optimization that is not needed anymore, etc...",
+      "parentUuid": "835067d2_f95ed91a",
+      "revId": "78e08652d53f5b2c221074203c7c1d986afd4ec4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
