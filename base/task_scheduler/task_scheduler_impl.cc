@@ -25,19 +25,22 @@ TaskSchedulerImpl::TaskSchedulerImpl(
       task_tracker_(std::move(task_tracker)),
       single_thread_task_runner_manager_(task_tracker_.get(),
                                          &delayed_task_manager_) {
-  static_assert(arraysize(worker_pools_) == ENVIRONMENT_COUNT,
-                "The size of |worker_pools_| must match ENVIRONMENT_COUNT.");
   static_assert(
       arraysize(kEnvironmentParams) == ENVIRONMENT_COUNT,
       "The size of |kEnvironmentParams| must match ENVIRONMENT_COUNT.");
 
-  for (int environment_type = 0; environment_type < ENVIRONMENT_COUNT;
+  const int num_environment_to_create = SchedulerHasBackgroundEnvironment()
+                                            ? ENVIRONMENT_COUNT
+                                            : FOREGROUND_ENVIRONMENT_COUNT;
+  for (int environment_type = 0; environment_type < num_environment_to_create;
        ++environment_type) {
-    worker_pools_[environment_type] = MakeUnique<SchedulerWorkerPoolImpl>(
+    DCHECK_EQ(environment_type, static_cast<int>(worker_pools_.size()));
+    worker_pools_.emplace_back(MakeUnique<SchedulerWorkerPoolImpl>(
         name_ + kEnvironmentParams[environment_type].name_suffix,
         kEnvironmentParams[environment_type].priority_hint, task_tracker_.get(),
-        &delayed_task_manager_);
+        &delayed_task_manager_));
   }
+  DCHECK_EQ(num_environment_to_create, static_cast<int>(worker_pools_.size()));
 }
 
 TaskSchedulerImpl::~TaskSchedulerImpl() {
@@ -76,12 +79,28 @@ void TaskSchedulerImpl::Start(const TaskScheduler::InitParams& init_params) {
 
   single_thread_task_runner_manager_.Start();
 
-  worker_pools_[BACKGROUND]->Start(init_params.background_worker_pool_params);
-  worker_pools_[BACKGROUND_BLOCKING]->Start(
-      init_params.background_blocking_worker_pool_params);
+  // When TaskScheduler does not have background pools, BACKGROUND tasks run in
+  // foreground pools. Even though that means that foreground pools have more
+  // tasks to run, there number of thread shouldn't be increased. Since
+  // USER_BLOCKING and USER_VISIBLE are scheduled first, sharing a pool with
+  // BACKGROUND tasks should have a minimal effect on their latency (see TODO
+  // below). Also, since the latency of BACKGROUND tasks is allowed to be
+  // arbitrarily long, there is no need to allocate more threads for them.
+  //
+  // TODO(fdoray): If all threads of a foreground pool are occupied by
+  // BACKGROUND tasks when a USER_BLOCKING or USER_VISIBLE task is posted, its
+  // latency could suffer. This should be addressed by limiting the number of
+  // foreground threads on which BACKGROUND tasks can be scheduled. Fortunately,
+  // this isn't an urgent problem to solve since manual inspection of traces
+  // show that the number of BACKGROUND tasks posted in parallel is usually low.
   worker_pools_[FOREGROUND]->Start(init_params.foreground_worker_pool_params);
   worker_pools_[FOREGROUND_BLOCKING]->Start(
       init_params.foreground_blocking_worker_pool_params);
+  if (SchedulerHasBackgroundEnvironment()) {
+    worker_pools_[BACKGROUND]->Start(init_params.background_worker_pool_params);
+    worker_pools_[BACKGROUND_BLOCKING]->Start(
+        init_params.background_blocking_worker_pool_params);
+  }
 }
 
 void TaskSchedulerImpl::PostDelayedTaskWithTraits(

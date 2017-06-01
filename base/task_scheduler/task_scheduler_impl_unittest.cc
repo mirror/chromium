@@ -17,6 +17,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/synchronization/lock.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/task_scheduler/environment_config.h"
 #include "base/task_scheduler/scheduler_worker_pool_params.h"
 #include "base/task_scheduler/task_traits.h"
 #include "base/task_scheduler/test_task_factory.h"
@@ -69,12 +70,11 @@ bool GetIOAllowed() {
 // to run a Task with |traits|.
 // Note: ExecutionMode is verified inside TestTaskFactory.
 void VerifyTaskEnvironment(const TaskTraits& traits) {
-  const bool supports_background_priority =
-      Lock::HandlesMultipleThreadPriorities() &&
-      PlatformThread::CanIncreaseCurrentThreadPriority();
+  const bool task_should_run_in_background_environment =
+      SchedulerHasBackgroundEnvironment() &&
+      traits.priority() == TaskPriority::BACKGROUND;
 
-  EXPECT_EQ(supports_background_priority &&
-                    traits.priority() == TaskPriority::BACKGROUND
+  EXPECT_EQ(task_should_run_in_background_environment
                 ? ThreadPriority::BACKGROUND
                 : ThreadPriority::NORMAL,
             PlatformThread::GetCurrentThreadPriority());
@@ -89,9 +89,9 @@ void VerifyTaskEnvironment(const TaskTraits& traits) {
   const std::string current_thread_name(PlatformThread::GetName());
   EXPECT_NE(std::string::npos, current_thread_name.find("TaskScheduler"));
   EXPECT_NE(std::string::npos,
-            current_thread_name.find(
-                traits.priority() == TaskPriority::BACKGROUND ? "Background"
-                                                              : "Foreground"));
+            current_thread_name.find(task_should_run_in_background_environment
+                                         ? "Background"
+                                         : "Foreground"));
   EXPECT_EQ(traits.may_block(),
             current_thread_name.find("Blocking") != std::string::npos);
 }
@@ -367,10 +367,19 @@ TEST_F(TaskSchedulerImplTest, MultipleTraitsExecutionModePairs) {
 
 TEST_F(TaskSchedulerImplTest, GetMaxConcurrentTasksWithTraitsDeprecated) {
   StartTaskScheduler();
-  EXPECT_EQ(1, scheduler_.GetMaxConcurrentTasksWithTraitsDeprecated(
-                   {TaskPriority::BACKGROUND}));
-  EXPECT_EQ(3, scheduler_.GetMaxConcurrentTasksWithTraitsDeprecated(
-                   {MayBlock(), TaskPriority::BACKGROUND}));
+
+  if (SchedulerHasBackgroundEnvironment()) {
+    EXPECT_EQ(1, scheduler_.GetMaxConcurrentTasksWithTraitsDeprecated(
+                     {TaskPriority::BACKGROUND}));
+    EXPECT_EQ(3, scheduler_.GetMaxConcurrentTasksWithTraitsDeprecated(
+                     {MayBlock(), TaskPriority::BACKGROUND}));
+  } else {
+    EXPECT_EQ(4, scheduler_.GetMaxConcurrentTasksWithTraitsDeprecated(
+                     {TaskPriority::BACKGROUND}));
+    EXPECT_EQ(12, scheduler_.GetMaxConcurrentTasksWithTraitsDeprecated(
+                      {MayBlock(), TaskPriority::BACKGROUND}));
+  }
+
   EXPECT_EQ(4, scheduler_.GetMaxConcurrentTasksWithTraitsDeprecated(
                    {TaskPriority::USER_VISIBLE}));
   EXPECT_EQ(12, scheduler_.GetMaxConcurrentTasksWithTraitsDeprecated(

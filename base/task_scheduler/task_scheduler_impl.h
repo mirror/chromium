@@ -90,9 +90,7 @@ class BASE_EXPORT TaskSchedulerImpl : public TaskScheduler {
   DelayedTaskManager delayed_task_manager_;
   SchedulerSingleThreadTaskRunnerManager single_thread_task_runner_manager_;
 
-  // There are 4 SchedulerWorkerPoolImpl in this array to match the 4
-  // SchedulerWorkerPoolParams in TaskScheduler::InitParams.
-  std::unique_ptr<SchedulerWorkerPoolImpl> worker_pools_[4];
+  std::vector<std::unique_ptr<SchedulerWorkerPoolImpl>> worker_pools_;
 
 #if DCHECK_IS_ON()
   // Set once JoinForTesting() has returned.

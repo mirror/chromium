@@ -15,10 +15,11 @@ namespace base {
 namespace internal {
 
 enum EnvironmentType {
-  BACKGROUND = 0,
-  BACKGROUND_BLOCKING,
   FOREGROUND,
   FOREGROUND_BLOCKING,
+  FOREGROUND_ENVIRONMENT_COUNT,
+  BACKGROUND = FOREGROUND_ENVIRONMENT_COUNT,
+  BACKGROUND_BLOCKING,
   ENVIRONMENT_COUNT  // Always last.
 };
 
@@ -32,11 +33,14 @@ constexpr struct {
   // priority depends on shutdown state and platform capabilities.
   ThreadPriority priority_hint;
 } kEnvironmentParams[] = {
-    {"Background", base::ThreadPriority::BACKGROUND},
-    {"BackgroundBlocking", base::ThreadPriority::BACKGROUND},
     {"Foreground", base::ThreadPriority::NORMAL},
     {"ForegroundBlocking", base::ThreadPriority::NORMAL},
+    {"Background", base::ThreadPriority::BACKGROUND},
+    {"BackgroundBlocking", base::ThreadPriority::BACKGROUND},
 };
+
+// Returns true if TaskScheduler has threads running at a BACKGROUND priority.
+bool BASE_EXPORT SchedulerHasBackgroundEnvironment();
 
 size_t BASE_EXPORT GetEnvironmentIndexForTraits(const TaskTraits& traits);
 

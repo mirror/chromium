@@ -148,18 +148,11 @@ class SchedulerWorker::Thread : public PlatformThread::Delegate {
   ThreadPriority GetDesiredThreadPriority() {
     DCHECK(outer_);
 
-    // All threads have a NORMAL priority when Lock doesn't handle multiple
-    // thread priorities.
-    if (!Lock::HandlesMultipleThreadPriorities())
-      return ThreadPriority::NORMAL;
-
-    // To avoid shutdown hangs, disallow a priority below NORMAL during
-    // shutdown. If thread priority cannot be increased, never allow a priority
-    // below NORMAL.
+    // To avoid shutdown hangs, bump the priority of a BACKGROUND thread during
+    // shutdown.
     if (static_cast<int>(outer_->priority_hint_) <
             static_cast<int>(ThreadPriority::NORMAL) &&
-        (outer_->task_tracker_->HasShutdownStarted() ||
-         !PlatformThread::CanIncreaseCurrentThreadPriority())) {
+        outer_->task_tracker_->HasShutdownStarted()) {
       return ThreadPriority::NORMAL;
     }
 
