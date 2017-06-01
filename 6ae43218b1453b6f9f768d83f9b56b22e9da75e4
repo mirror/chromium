@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75fbb763_b19bbfc6",
+        "filename": "components/download/internal/components_unittests.filter",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-01T16:34:06Z",
+      "side": 1,
+      "message": "This is cool.",
+      "revId": "6ae43218b1453b6f9f768d83f9b56b22e9da75e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "691d5aed_ca5439e5",
+        "filename": "components/download/internal/entry_utils_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-01T16:34:06Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 22
+      },
+      "revId": "6ae43218b1453b6f9f768d83f9b56b22e9da75e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4caa4ae9_12c65cab",
+        "filename": "components/download/internal/model_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-01T16:34:06Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 11,
+        "startChar": 14,
+        "endLine": 11,
+        "endChar": 15
+      },
+      "revId": "6ae43218b1453b6f9f768d83f9b56b22e9da75e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
