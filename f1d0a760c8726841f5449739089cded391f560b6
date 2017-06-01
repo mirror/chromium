@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ee43ed1_21c10d46",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/webkit_patch.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-01T20:48:39Z",
+      "side": 1,
+      "message": "Nit: keep in alphabetical order.",
+      "revId": "f1d0a760c8726841f5449739089cded391f560b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2cb3bb4_e1d31fff",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/webkit_patch.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-01T20:48:39Z",
+      "side": 1,
+      "message": "Nit: keep in alphabetical order.",
+      "revId": "f1d0a760c8726841f5449739089cded391f560b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
