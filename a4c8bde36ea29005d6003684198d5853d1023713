@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2efd9b76_585c3a39",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/appmenu/ChromeHomeAppMenuTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-06-01T15:17:22Z",
+      "side": 1,
+      "message": "Done. Actually I have created a BottomSheetsTestRule.ENABLE_CHROME_HOME constant incorporating this.",
+      "parentUuid": "e9f9d6e5_4a9c3902",
+      "range": {
+        "startLine": 35,
+        "startChar": 40,
+        "endLine": 35,
+        "endChar": 50
+      },
+      "revId": "a4c8bde36ea29005d6003684198d5853d1023713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7110eaf1_d0a42f4b",
         "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/BottomSheetTestRule.java",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "a4c8bde36ea29005d6003684198d5853d1023713",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c90e8d01_18e35325",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/BottomSheetTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115854
+      },
+      "writtenOn": "2017-06-01T15:17:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7110eaf1_d0a42f4b",
+      "revId": "a4c8bde36ea29005d6003684198d5853d1023713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
