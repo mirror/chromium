@@ -3983,6 +3983,12 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "network_traffic_annotations_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "pdf_unittests"
       },
       {
