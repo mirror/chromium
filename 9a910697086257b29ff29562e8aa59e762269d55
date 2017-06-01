@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "deaae494_ed246760",
+        "filename": "base/task_scheduler/environment_config.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-01T18:35:10Z",
+      "side": 1,
+      "message": "Looks like Mac returns true for this (which is \"correct\" as they \"can\" increase priority), but since they don\u0027t support background priority it\u0027s not quite what we want here...",
+      "range": {
+        "startLine": 18,
+        "startChar": 25,
+        "endLine": 18,
+        "endChar": 57
+      },
+      "revId": "9a910697086257b29ff29562e8aa59e762269d55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04c22ddd_0b6c0918",
         "filename": "base/task_scheduler/environment_config.h",
         "patchSetId": 2
@@ -19,6 +42,75 @@
     },
     {
       "key": {
+        "uuid": "6e32565e_dfb5ddd5",
+        "filename": "base/task_scheduler/task_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-01T18:35:10Z",
+      "side": 1,
+      "message": "size_t and avoid casting below?",
+      "range": {
+        "startLine": 32,
+        "startChar": 8,
+        "endLine": 32,
+        "endChar": 12
+      },
+      "revId": "9a910697086257b29ff29562e8aa59e762269d55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd7edd80_79dcd93b",
+        "filename": "base/task_scheduler/task_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-01T18:35:10Z",
+      "side": 1,
+      "message": "their",
+      "range": {
+        "startLine": 84,
+        "startChar": 19,
+        "endLine": 84,
+        "endChar": 24
+      },
+      "revId": "9a910697086257b29ff29562e8aa59e762269d55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a093c42f_48ec73b3",
+        "filename": "base/task_scheduler/task_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-01T18:35:10Z",
+      "side": 1,
+      "message": "threads",
+      "range": {
+        "startLine": 84,
+        "startChar": 35,
+        "endLine": 84,
+        "endChar": 41
+      },
+      "revId": "9a910697086257b29ff29562e8aa59e762269d55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b1a6492_fdc94667",
         "filename": "base/task_scheduler/task_scheduler_impl.cc",
         "patchSetId": 2
@@ -30,6 +122,24 @@
       "writtenOn": "2017-06-01T17:14:12Z",
       "side": 1,
       "message": "I\u0027m working on this right now. I\u0027ll let you decide if we need to delay landing this CL until this feature is implemented. I\u0027d still like to get a review on this CL in the meantime.",
+      "revId": "9a910697086257b29ff29562e8aa59e762269d55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e65ece_bd2be37c",
+        "filename": "base/task_scheduler/task_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-01T18:35:10Z",
+      "side": 1,
+      "message": "Hmmm, well with the mass migration coming up IMO this is a key aspect to fix (and until the workload is high it\u0027s not a big deal to not land this CL anyways...)",
+      "parentUuid": "4b1a6492_fdc94667",
       "revId": "9a910697086257b29ff29562e8aa59e762269d55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
