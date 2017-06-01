@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88fc4c48_3076677e",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasRenderingContextFactory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-06-01T21:31:39Z",
+      "side": 1,
+      "message": "\u003c3",
+      "revId": "d419dd7990458b70814f90d82fcb3278e4e8d69a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
