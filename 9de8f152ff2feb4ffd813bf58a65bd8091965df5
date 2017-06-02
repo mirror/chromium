@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43bd7737_b0d1397b",
+        "filename": "net/quic/core/crypto/crypto_secret_boxer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-06-02T18:44:14Z",
+      "side": 1,
+      "message": "Sadly, writing directly into a std::string is a huge mess due to C++03 implementations sometimes doing copy-on-write. C++11 forbids this, but libstdc++ still does it for ABI stability. If it turned out out_storage was previously sized to ciphertext_len, I think this would end up clobbering other strings. I believe \u0026(*out_storage)[0] would do the trick since you call the non-const operator[], except that that\u0027s invalid if ciphertext_len is 0. :-/\n\nWe have base::WriteInto, but that also doesn\u0027t let you make ciphertext_len zero. Plus I imagine we want to keep this file vaguely in sync with the internal copy?\n\n(Though, ciphertext_len being 0 is guaranteed to be invalid, so we could just disregard that case.)",
+      "revId": "9de8f152ff2feb4ffd813bf58a65bd8091965df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
