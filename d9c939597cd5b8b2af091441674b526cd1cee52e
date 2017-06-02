@@ -52,6 +52,24 @@
       "revId": "d9c939597cd5b8b2af091441674b526cd1cee52e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1804b9_1847d10a",
+        "filename": "ui/aura/mus/drag_drop_controller_mus.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-02T22:49:32Z",
+      "side": 0,
+      "message": "Sorry, I mean DropDropDelegate. It needs to rename in aura/client, otherwise you end up with a cycle.",
+      "parentUuid": "38f446a3_ebbaf307",
+      "revId": "d9c939597cd5b8b2af091441674b526cd1cee52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
