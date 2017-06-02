@@ -396,7 +396,7 @@ class DrawingBufferImageChromiumTest : public DrawingBufferTest {
     std::unique_ptr<WebGraphicsContext3DProviderForTests> provider =
         WTF::WrapUnique(
             new WebGraphicsContext3DProviderForTests(std::move(gl)));
-    RuntimeEnabledFeatures::setWebGLImageChromiumEnabled(true);
+    RuntimeEnabledFeatures::SetWebGLImageChromiumEnabled(true);
     image_id0_ = gl_->NextImageIdToBeCreated();
     EXPECT_CALL(*gl_, BindTexImage2DMock(image_id0_)).Times(1);
     drawing_buffer_ = DrawingBufferForTests::Create(
@@ -407,7 +407,7 @@ class DrawingBufferImageChromiumTest : public DrawingBufferTest {
   }
 
   void TearDown() override {
-    RuntimeEnabledFeatures::setWebGLImageChromiumEnabled(false);
+    RuntimeEnabledFeatures::SetWebGLImageChromiumEnabled(false);
     platform_.reset();
   }
 

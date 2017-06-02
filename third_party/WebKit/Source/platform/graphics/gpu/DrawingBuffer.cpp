@@ -1171,7 +1171,7 @@ RefPtr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
         gfx::Size(size), buffer_format, gfx::BufferUsage::SCANOUT,
         gpu::kNullSurfaceHandle);
     if (gpu_memory_buffer) {
-      if (RuntimeEnabledFeatures::colorCorrectRenderingEnabled())
+      if (RuntimeEnabledFeatures::ColorCorrectRenderingEnabled())
         gpu_memory_buffer->SetColorSpaceForScanout(color_space_);
       image_id =
           gl_->CreateImageCHROMIUM(gpu_memory_buffer->AsClientBuffer(),
@@ -1379,7 +1379,7 @@ DrawingBuffer::ScopedStateRestorer::~ScopedStateRestorer() {
 }
 
 bool DrawingBuffer::ShouldUseChromiumImage() {
-  return RuntimeEnabledFeatures::webGLImageChromiumEnabled() &&
+  return RuntimeEnabledFeatures::WebGLImageChromiumEnabled() &&
          chromium_image_usage_ == kAllowChromiumImage;
 }
 
