@@ -58,6 +58,10 @@ const AtomicString& FrameTree::GetName() const {
     if (frame) {
       UseCounter::Count(frame,
                         UseCounter::kCrossOriginMainFrameNulledNameAccessed);
+      if (experimental_set_actual_nulled_name_) {
+        UseCounter::Count(
+            frame, UseCounter::kCrossOriginMainFrameActualNulledNameAccessed);
+      }
     }
   }
   return name_;
@@ -66,11 +70,14 @@ const AtomicString& FrameTree::GetName() const {
 // TODO(andypaicu): remove this once we have gathered the data
 void FrameTree::ExperimentalSetNulledName() {
   experimental_set_nulled_name_ = true;
+  if (!name_.IsEmpty())
+    experimental_set_actual_nulled_name_ = true;
 }
 
 void FrameTree::SetName(const AtomicString& name) {
   // TODO(andypaicu): remove this once we have gathered the data
   experimental_set_nulled_name_ = false;
+  experimental_set_actual_nulled_name_ = false;
   name_ = name;
 }
 

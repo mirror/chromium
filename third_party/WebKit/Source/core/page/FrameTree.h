@@ -69,6 +69,7 @@ class CORE_EXPORT FrameTree final {
 
   // TODO(andypaicu): remove this once we have gathered the data
   bool experimental_set_nulled_name_;
+  bool experimental_set_actual_nulled_name_;
 };
 
 }  // namespace blink
