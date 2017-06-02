@@ -2857,6 +2857,9 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
   GetInterfaceRegistry()->AddInterface(base::Bind(
       &KeyboardLockServiceImpl::CreateMojoService));
 
+  GetInterfaceRegistry()->AddInterface(base::Bind(
+      &RenderFrameHostImpl::ForwardSVGRendererRequest, base::Unretained(this)));
+
   GetContentClient()->browser()->ExposeInterfacesToFrame(GetInterfaceRegistry(),
                                                          this);
 }
@@ -3828,6 +3831,14 @@ void RenderFrameHostImpl::ResetFeaturePolicy() {
   feature_policy_ = FeaturePolicy::CreateFromParentPolicy(
       parent_policy, container_policy, last_committed_origin_);
 }
+
+// This method should create a new renderer process, and forward the request
+// to that process directly. Something like:
+// createNewRendererProcess()->GetRemoteInterfaces()->
+// GetInterface(std::move(request));
+void RenderFrameHostImpl::ForwardSVGRendererRequest(
+    const service_manager::BindSourceInfo& source_info,
+    blink::mojom::SVGRendererRequest request) {}
 
 void RenderFrameHostImpl::BindMediaInterfaceFactoryRequest(
     const service_manager::BindSourceInfo& source_info,

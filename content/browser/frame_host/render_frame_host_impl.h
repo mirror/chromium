@@ -52,6 +52,7 @@
 #include "third_party/WebKit/public/platform/WebFocusType.h"
 #include "third_party/WebKit/public/platform/WebInsecureRequestPolicy.h"
 #include "third_party/WebKit/public/platform/modules/bluetooth/web_bluetooth.mojom.h"
+#include "third_party/WebKit/public/platform/modules/imagebitmap/SVGRenderer.mojom.h"
 #include "third_party/WebKit/public/web/WebTextDirection.h"
 #include "third_party/WebKit/public/web/WebTreeScopeType.h"
 #include "ui/accessibility/ax_node_data.h"
@@ -908,6 +909,10 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void BindMediaInterfaceFactoryRequest(
       const service_manager::BindSourceInfo& source_info,
       media::mojom::InterfaceFactoryRequest request);
+
+  void ForwardSVGRendererRequest(
+      const service_manager::BindSourceInfo& source_info,
+      blink::mojom::SVGRendererRequest);
 
   // Callback for connection error on the media::mojom::InterfaceFactory client.
   void OnMediaInterfaceFactoryConnectionError();
