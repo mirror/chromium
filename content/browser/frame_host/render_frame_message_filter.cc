@@ -90,8 +90,27 @@ void DownloadUrlOnUIThread(std::unique_ptr<DownloadUrlParameters> parameters) {
   DownloadManager* download_manager =
       BrowserContext::GetDownloadManager(browser_context);
   RecordDownloadSource(INITIATED_BY_RENDERER);
-  download_manager->DownloadUrl(std::move(parameters),
-                                NO_TRAFFIC_ANNOTATION_YET);
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("...", R"(
+        semantics {
+          sender: "..."
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+        }
+        policy {
+          cookies_allowed: false/true
+          cookies_store: "..."
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
+  download_manager->DownloadUrl(std::move(parameters), traffic_annotation);
 }
 
 // Common functionality for converting a sync renderer message to a callback
