@@ -153,10 +153,11 @@ void WebNode::SimulateClick() {
 
 WebElementCollection WebNode::GetElementsByHTMLTagName(
     const WebString& tag) const {
-  if (private_->IsContainerNode())
+  if (private_->IsContainerNode()) {
     return WebElementCollection(
         ToContainerNode(private_.Get())
             ->getElementsByTagNameNS(HTMLNames::xhtmlNamespaceURI, tag));
+  }
   return WebElementCollection();
 }
 

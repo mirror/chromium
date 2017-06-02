@@ -40,7 +40,7 @@ class Element;
 struct WebRect;
 
 // Provides access to some properties of a DOM element node.
-class WebElement : public WebNode {
+class BLINK_EXPORT WebElement : public WebNode {
  public:
   WebElement() : WebNode() {}
   WebElement(const WebElement& e) : WebNode(e) {}
