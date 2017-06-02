@@ -29,5 +29,9 @@ void LogModelOperationResult(ModelAction action, bool success) {
   // TODO(dtrainor): Log |action|.
 }
 
+void LogFileCleanupStatus(FileCleanupReason status, int count) {
+  // TODO(shaktisahu): Log |status| and |count|.
+}
+
 }  // namespace stats
 }  // namespace download

@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "base/optional.h"
+#include "base/sequenced_task_runner.h"
 #include "components/download/internal/controller.h"
 #include "components/download/internal/download_driver.h"
 #include "components/download/internal/model.h"
@@ -20,6 +21,7 @@ namespace download {
 
 class ClientSet;
 class DownloadDriver;
+class FileMonitor;
 class Model;
 
 struct Configuration;
@@ -32,10 +34,13 @@ class ControllerImpl : public Controller,
                        public Model::Client {
  public:
   // |clients| is externally owned and must be guaranteed to outlive this class.
-  ControllerImpl(std::unique_ptr<ClientSet> clients,
-                 std::unique_ptr<Configuration> config,
-                 std::unique_ptr<DownloadDriver> driver,
-                 std::unique_ptr<Model> model);
+  ControllerImpl(
+      std::unique_ptr<ClientSet> clients,
+      std::unique_ptr<Configuration> config,
+      std::unique_ptr<DownloadDriver> driver,
+      std::unique_ptr<Model> model,
+      const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
+      const base::FilePath& dir);
   ~ControllerImpl() override;
 
   // Controller implementation.
@@ -102,10 +107,12 @@ class ControllerImpl : public Controller,
 
   std::unique_ptr<ClientSet> clients_;
   std::unique_ptr<Configuration> config_;
+  base::FilePath file_dir_;
 
   // Owned Dependencies.
   std::unique_ptr<DownloadDriver> driver_;
   std::unique_ptr<Model> model_;
+  std::unique_ptr<FileMonitor> file_monitor_;
 
   // Internal state.
   StartupStatus startup_status_;

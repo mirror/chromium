@@ -1,0 +1,71 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef COMPONENTS_DOWNLOAD_INTERNAL_FILE_MONITOR_H_
+#define COMPONENTS_DOWNLOAD_INTERNAL_FILE_MONITOR_H_
+
+#include <memory>
+#include <set>
+#include <string>
+#include <vector>
+
+#include "base/callback_forward.h"
+#include "base/files/file_path.h"
+#include "base/macros.h"
+#include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
+#include "base/optional.h"
+#include "base/sequenced_task_runner.h"
+#include "components/download/internal/client_set.h"
+#include "components/download/internal/download_driver.h"
+#include "components/download/internal/model.h"
+#include "components/download/internal/stats.h"
+
+namespace download {
+
+struct Entry;
+
+// An utility class containing various cleanup methods.
+class FileMonitor {
+ public:
+  FileMonitor(
+      Model* model,
+      const base::FilePath& file_dir,
+      const scoped_refptr<base::SequencedTaskRunner>& file_thread_task_runner,
+      base::TimeDelta file_keep_alive_time);
+  ~FileMonitor();
+
+  // Cleans up the entries and associated files if they are not attached to a
+  // client any more.
+  void CancelOrphanedRequests(const ClientSet* clients);
+
+  // Removes the files in storage directory that are not related to any entries
+  // in the database.
+  void RemoveUnassociatedFiles(const Model::EntryList& entries,
+                               const std::vector<DriverEntry>& driver_entries);
+
+  // Removes the entries from the database which have been completed and ready
+  // for cleanup.
+  void RemoveEntriesAfterTimeout();
+
+ private:
+  void RemoveUnassociatedFilesOnFileThread(
+      const std::set<base::FilePath>& paths_in_db);
+  void DeleteFiles(const std::vector<base::FilePath>& paths,
+                   const base::Optional<stats::FileCleanupReason>& reason);
+  void OnFilesDeleted(const std::vector<Entry*>& entries);
+  bool ReadyForCleanup(const Entry* entry);
+
+  Model* model_;
+  base::FilePath file_dir_;
+  const scoped_refptr<base::SequencedTaskRunner>& file_thread_task_runner_;
+  base::TimeDelta file_keep_alive_time_;
+  base::WeakPtrFactory<FileMonitor> weak_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(FileMonitor);
+};
+
+}  // namespace download
+
+#endif  // COMPONENTS_DOWNLOAD_INTERNAL_FILE_MONITOR_H_
