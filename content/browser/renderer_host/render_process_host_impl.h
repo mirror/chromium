@@ -45,6 +45,7 @@
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/interfaces/service.mojom.h"
 #include "services/ui/public/interfaces/gpu.mojom.h"
+#include "third_party/WebKit/public/platform/modules/imagebitmap/SVGRenderer.mojom.h"
 #include "ui/gfx/gpu_memory_buffer.h"
 #include "ui/gl/gpu_switching_observer.h"
 
@@ -382,6 +383,11 @@ class CONTENT_EXPORT RenderProcessHostImpl
 
   void CreateMusGpuRequest(const service_manager::BindSourceInfo& source_info,
                            ui::mojom::GpuRequest request);
+
+  void ForwardSVGRendererRequest(
+      const service_manager::BindSourceInfo& source_info,
+      blink::mojom::SVGRendererRequest);
+
   void CreateOffscreenCanvasProvider(
       const service_manager::BindSourceInfo& source_info,
       blink::mojom::OffscreenCanvasProviderRequest request);
