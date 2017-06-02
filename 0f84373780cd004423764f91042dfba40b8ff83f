@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8efadf83_bad08745",
+        "filename": "cc/scheduler/scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-02T10:09:50Z",
+      "side": 0,
+      "message": "Brian, will you miss this part where we dump the state for unexpected actions?",
+      "range": {
+        "startLine": 37,
+        "startChar": 31,
+        "endLine": 37,
+        "endChar": 45
+      },
+      "revId": "0f84373780cd004423764f91042dfba40b8ff83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
