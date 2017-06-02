@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "428afc93_f4cf756f",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-06-02T00:34:58Z",
+      "side": 1,
+      "message": "Can you pass in a url::Parsed into here, and use the offsets you get back from it to do the formatting? That guarantees that we\u0027re using the same offsets as the string that\u0027s returned.\n\nUse ElideURL (https://cs.chromium.org/chromium/src/components/url_formatter/elide_url.cc?rcl\u003d7fb48db2c5ca7f6525489cea5c2d30cdc52c1edf\u0026l\u003d151) as an example of pulling offsets out of url::Parsed.",
+      "range": {
+        "startLine": 328,
+        "startChar": 35,
+        "endLine": 328,
+        "endChar": 42
+      },
+      "revId": "616172bd22dfe5e3e633c92755cff4fcae4b927a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
