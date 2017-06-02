@@ -1461,34 +1461,35 @@ LayoutReplaced* LocalFrameView::EmbeddedReplacedContent() const {
   return nullptr;
 }
 
-void LocalFrameView::AddPart(LayoutPart* object) {
-  parts_.insert(object);
-}
-
-void LocalFrameView::RemovePart(LayoutPart* object) {
-  parts_.erase(object);
-}
-
 void LocalFrameView::UpdateGeometries() {
-  Vector<RefPtr<LayoutPart>> parts;
-  CopyToVector(parts_, parts);
-
-  for (auto part : parts) {
-    // Script or plugins could detach the frame so abort processing if that
-    // happens.
+  // Update Layouts on local children and plugins.
+  for (Frame* child = frame_->Tree().FirstChild(); child;
+       child = child->Tree().NextSibling()) {
+    // Abort processing if script or plugins detach the frame.
     if (GetLayoutViewItem().IsNull())
       break;
 
-    if (part->GetFrameOrPlugin()) {
-      if (LocalFrameView* frame_view = part->ChildFrameView()) {
-        bool did_need_layout = frame_view->NeedsLayout();
-        part->UpdateGeometry();
-        if (!did_need_layout && !frame_view->ShouldThrottleRendering())
-          frame_view->CheckDoesNotNeedLayout();
-      } else {
-        part->UpdateGeometry();
-      }
-    }
+    if (!child->IsLocalFrame())
+      continue;
+    LocalFrameView* frame_view = ToLocalFrame(child)->View();
+    if (!frame_view)
+      continue;
+    bool did_need_layout = frame_view->NeedsLayout();
+    LayoutPart* part = frame_view->GetFrame().OwnerLayoutObject();
+    if (part)
+      part->UpdateGeometry();
+    if (!did_need_layout && !frame_view->ShouldThrottleRendering())
+      frame_view->CheckDoesNotNeedLayout();
+  }
+
+  for (const auto& plugin : plugins_) {
+    // Abort processing if script or plugins detach the frame.
+    if (GetLayoutViewItem().IsNull())
+      break;
+
+    LayoutPart* part = plugin->Element().GetLayoutPart();
+    if (part)
+      part->UpdateGeometry();
   }
 }
 
