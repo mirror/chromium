@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2c5ecae5_0702a3e4",
+        "filename": "chrome/browser/ui/views/payments/payment_request_item_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-06-02T13:37:30Z",
+      "side": 1,
+      "message": "Perhaps is the gerrit diff tool? I didn\u0027t change much, I agree it\u0027s not ideal",
+      "parentUuid": "6e1b2f8e_cd7e4d90",
+      "revId": "7529e8a6bdce7c9cb378da00ce436bbc730239ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ff91206_b876ff59",
         "filename": "chrome/browser/ui/views/payments/payment_request_views_util.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "7529e8a6bdce7c9cb378da00ce436bbc730239ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d105fb7f_b7a35ad5",
+        "filename": "chrome/browser/ui/views/payments/payment_request_views_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-06-02T13:37:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ff91206_b876ff59",
+      "revId": "7529e8a6bdce7c9cb378da00ce436bbc730239ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
