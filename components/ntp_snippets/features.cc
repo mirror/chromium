@@ -59,6 +59,9 @@ const base::Feature kPublisherFaviconsFromNewServerFeature{
     "ContentSuggestionsFaviconsFromNewServer",
     base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kRemoteSuggestionsM58FetchingSchedule{
+    "RemoteSuggestionsM58FetchingSchedule", base::FEATURE_DISABLED_BY_DEFAULT};
+
 const char kCategoryRankerParameter[] = "category_ranker";
 const char kCategoryRankerConstantRanker[] = "constant";
 const char kCategoryRankerClickBasedRanker[] = "click_based";

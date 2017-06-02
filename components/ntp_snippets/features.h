@@ -49,6 +49,10 @@ extern const base::Feature kCategoryRanker;
 // Feature to allow the new Google favicon server for fetching publisher icons.
 extern const base::Feature kPublisherFaviconsFromNewServerFeature;
 
+// Feature for simple experimental comparision and validation of changes: brings
+// back the M58 Stable fetching schedule.
+extern const base::Feature kRemoteSuggestionsM58FetchingSchedule;
+
 // Parameter and its values for the kCategoryRanker feature flag.
 extern const char kCategoryRankerParameter[];
 extern const char kCategoryRankerConstantRanker[];
