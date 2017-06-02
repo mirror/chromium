@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "4d06c0f1_1c6d418c",
+        "filename": "services/ui/ws/frame_sink_manager_client_binding.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-02T17:57:18Z",
+      "side": 1,
+      "message": "Seems like a heavy workaround for testing. Why not just make a proper binding/connection in tests?\nFor example, I do that with Shelf tests: https://cs.chromium.org/chromium/src/chrome/browser/ui/ash/launcher/chrome_launcher_controller_unittest.cc?l\u003d365",
+      "parentUuid": "2ed576b1_65c4891f",
+      "range": {
+        "startLine": 21,
+        "startChar": 45,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "493b3d3260ceea7b3f706e91500e47aacf040406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23e48f99_e51150e9",
         "filename": "services/ui/ws/frame_sink_manager_client_binding.h",
         "patchSetId": 3
