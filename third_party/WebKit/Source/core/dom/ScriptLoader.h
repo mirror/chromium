@@ -130,6 +130,17 @@ class CORE_EXPORT ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>,
   }
   void SetFetchDocWrittenScriptDeferIdle();
 
+  bool StartStreamingIfPossible(Document* document,
+                                ScriptStreamer::Type type,
+                                std::unique_ptr<WTF::Closure> closure) {
+    return pending_script_->StartStreamingIfPossible(document, type,
+                                                     std::move(closure));
+  }
+  bool HasStreamer() const { return pending_script_->HasStreamer(); }
+  bool IsCurrentlyStreaming() const {
+    return pending_script_->IsCurrentlyStreaming();
+  }
+
  protected:
   ScriptLoader(ScriptElementBase*,
                bool created_by_parser,

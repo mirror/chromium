@@ -612,7 +612,7 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
     pending_script_ = CreatePendingScript();
     async_exec_type_ = ScriptRunner::kAsync;
     pending_script_->StartStreamingIfPossible(&element_->GetDocument(),
-                                              ScriptStreamer::kAsync);
+                                              ScriptStreamer::kAsync, nullptr);
     // TODO(hiroshige): Here |contextDocument| is used as "node document"
     // while Step 14 uses |elementDocument| as "node document". Fix this.
     context_document->GetScriptRunner()->QueueScriptForExecution(
