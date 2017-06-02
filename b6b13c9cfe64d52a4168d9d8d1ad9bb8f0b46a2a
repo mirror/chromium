@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a31e1d9_2a198b6c",
+        "filename": "third_party/WebKit/Source/core/events/EventTarget.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-02T17:15:39Z",
+      "side": 1,
+      "message": "(sorry for the drive-by)\n\nDo you need a null check here?  The comment on Utf8Value says:\n\n\"If conversion to a string fails (e.g. due to an exception in the toString() method of the object) then the length() method returns 0 and the * operator returns NULL.\"\n\nJS can override Function.prototype.toString, so an exception seems entirely possible...",
+      "revId": "b6b13c9cfe64d52a4168d9d8d1ad9bb8f0b46a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
