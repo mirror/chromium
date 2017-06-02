@@ -26,13 +26,9 @@
 namespace blink {
 
 class HTMLCanvasPainterTestForSPv2 : public ::testing::Test,
-                                     public testing::WithParamInterface<bool>,
-                                     private ScopedSlimmingPaintV2ForTest,
-                                     private ScopedRootLayerScrollingForTest {
+                                     private ScopedSlimmingPaintV2ForTest {
  public:
-  HTMLCanvasPainterTestForSPv2()
-      : ScopedSlimmingPaintV2ForTest(true),
-        ScopedRootLayerScrollingForTest(GetParam()) {}
+  HTMLCanvasPainterTestForSPv2() : ScopedSlimmingPaintV2ForTest(true) {}
 
  protected:
   void SetUp() override {
@@ -68,9 +64,7 @@ class HTMLCanvasPainterTestForSPv2 : public ::testing::Test,
   std::unique_ptr<DummyPageHolder> page_holder_;
 };
 
-INSTANTIATE_TEST_CASE_P(All, HTMLCanvasPainterTestForSPv2, ::testing::Bool());
-
-TEST_P(HTMLCanvasPainterTestForSPv2, Canvas2DLayerAppearsInLayerTree) {
+TEST_F(HTMLCanvasPainterTestForSPv2, Canvas2DLayerAppearsInLayerTree) {
   // Insert a <canvas> and force it into accelerated mode.
   GetDocument().body()->setInnerHTML("<canvas width=300 height=200>");
   HTMLCanvasElement* element =

@@ -13,7 +13,12 @@
 
 namespace blink {
 
-typedef std::pair<bool, bool> SlimmingPaintAndRootLayerScrolling;
+enum SlimmingPaintAndRootLayerScrolling {
+  SlimmingPaintV1WithoutRootLayerScrolling,
+  SlimmingPaintV1WithRootLayerScrolling,
+  SlimmingPaintV2,  // RootLayerScrolling is implied.
+};
+
 class PaintLayerTest
     : public ::testing::WithParamInterface<SlimmingPaintAndRootLayerScrolling>,
       private ScopedSlimmingPaintV2ForTest,
@@ -21,8 +26,9 @@ class PaintLayerTest
       public RenderingTest {
  public:
   PaintLayerTest()
-      : ScopedSlimmingPaintV2ForTest(GetParam().first),
-        ScopedRootLayerScrollingForTest(GetParam().second),
+      : ScopedSlimmingPaintV2ForTest(GetParam() == SlimmingPaintV2),
+        ScopedRootLayerScrollingForTest(GetParam() >=
+                                        SlimmingPaintV1WithRootLayerScrolling),
         RenderingTest(SingleChildLocalFrameClient::Create()) {}
 
  protected:
@@ -31,13 +37,12 @@ class PaintLayerTest
   }
 };
 
-SlimmingPaintAndRootLayerScrolling g_foo[] = {
-    SlimmingPaintAndRootLayerScrolling(false, false),
-    SlimmingPaintAndRootLayerScrolling(true, false),
-    SlimmingPaintAndRootLayerScrolling(false, true),
-    SlimmingPaintAndRootLayerScrolling(true, true)};
-
-INSTANTIATE_TEST_CASE_P(All, PaintLayerTest, ::testing::ValuesIn(g_foo));
+INSTANTIATE_TEST_CASE_P(
+    All,
+    PaintLayerTest,
+    ::testing::Values(SlimmingPaintV1WithoutRootLayerScrolling,
+                      SlimmingPaintV1WithRootLayerScrolling,
+                      SlimmingPaintV2));
 
 TEST_P(PaintLayerTest, ChildWithoutPaintLayer) {
   SetBodyInnerHTML(
@@ -138,11 +143,6 @@ TEST_P(PaintLayerTest, ScrollsWithViewportFixedPosition) {
 }
 
 TEST_P(PaintLayerTest, ScrollsWithViewportFixedPositionInsideTransform) {
-  // We don't intend to launch SPv2 without root layer scrolling, so skip this
-  // test in that configuration because it's broken.
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled() &&
-      !RuntimeEnabledFeatures::rootLayerScrollingEnabled())
-    return;
   SetBodyInnerHTML(
       "<div style='transform: translateZ(0)'>"
       "  <div id='target' style='position: fixed'></div>"

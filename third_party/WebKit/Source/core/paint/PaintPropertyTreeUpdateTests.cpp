@@ -12,9 +12,7 @@ namespace blink {
 // Tests covering incremental updates of paint property trees.
 class PaintPropertyTreeUpdateTest : public PaintPropertyTreeBuilderTest {};
 
-INSTANTIATE_TEST_CASE_P(All, PaintPropertyTreeUpdateTest, ::testing::Bool());
-
-TEST_P(PaintPropertyTreeUpdateTest,
+TEST_F(PaintPropertyTreeUpdateTest,
        ThreadedScrollingDisabledMainThreadScrollReason) {
   SetBodyInnerHTML(
       "<style>"
@@ -54,7 +52,7 @@ TEST_P(PaintPropertyTreeUpdateTest,
                   ->ThreadedScrollingDisabled());
 }
 
-TEST_P(PaintPropertyTreeUpdateTest,
+TEST_F(PaintPropertyTreeUpdateTest,
        BackgroundAttachmentFixedMainThreadScrollReasonsWithNestedScrollers) {
   SetBodyInnerHTML(
       "<style>"
@@ -131,7 +129,7 @@ TEST_P(PaintPropertyTreeUpdateTest,
                   ->HasBackgroundAttachmentFixedDescendants());
 }
 
-TEST_P(PaintPropertyTreeUpdateTest, ParentFrameMainThreadScrollReasons) {
+TEST_F(PaintPropertyTreeUpdateTest, ParentFrameMainThreadScrollReasons) {
   SetBodyInnerHTML(
       "<style>"
       "  body { margin: 0; }"
@@ -166,7 +164,7 @@ TEST_P(PaintPropertyTreeUpdateTest, ParentFrameMainThreadScrollReasons) {
   EXPECT_TRUE(FrameScroll(child)->HasBackgroundAttachmentFixedDescendants());
 }
 
-TEST_P(PaintPropertyTreeUpdateTest, ChildFrameMainThreadScrollReasons) {
+TEST_F(PaintPropertyTreeUpdateTest, ChildFrameMainThreadScrollReasons) {
   SetBodyInnerHTML(
       "<style>body { margin: 0; }</style>"
       "<iframe></iframe>"
@@ -202,7 +200,7 @@ TEST_P(PaintPropertyTreeUpdateTest, ChildFrameMainThreadScrollReasons) {
   EXPECT_TRUE(FrameScroll(child)->HasBackgroundAttachmentFixedDescendants());
 }
 
-TEST_P(PaintPropertyTreeUpdateTest,
+TEST_F(PaintPropertyTreeUpdateTest,
        BackgroundAttachmentFixedMainThreadScrollReasonsWithFixedScroller) {
   SetBodyInnerHTML(
       "<style>"
@@ -276,7 +274,7 @@ TEST_P(PaintPropertyTreeUpdateTest,
                    ->HasBackgroundAttachmentFixedDescendants());
 }
 
-TEST_P(PaintPropertyTreeUpdateTest, DescendantNeedsUpdateAcrossFrames) {
+TEST_F(PaintPropertyTreeUpdateTest, DescendantNeedsUpdateAcrossFrames) {
   SetBodyInnerHTML(
       "<style>body { margin: 0; }</style>"
       "<div id='divWithTransform' style='transform: translate3d(1px,2px,3px);'>"
@@ -333,7 +331,7 @@ TEST_P(PaintPropertyTreeUpdateTest, DescendantNeedsUpdateAcrossFrames) {
   EXPECT_FALSE(child_frame_view->NeedsPaintPropertyUpdate());
 }
 
-TEST_P(PaintPropertyTreeUpdateTest, UpdatingFrameViewContentClip) {
+TEST_F(PaintPropertyTreeUpdateTest, UpdatingFrameViewContentClip) {
   SetBodyInnerHTML("hello world.");
   EXPECT_EQ(FloatRoundedRect(0, 0, 800, 600), FrameContentClip()->ClipRect());
   GetDocument().View()->Resize(800, 599);
@@ -350,7 +348,7 @@ TEST_P(PaintPropertyTreeUpdateTest, UpdatingFrameViewContentClip) {
 // There is also FrameThrottlingTest.UpdatePaintPropertiesOnUnthrottling
 // testing with real frame viewport intersection observer. This one tests
 // paint property update with or without AllowThrottlingScope.
-TEST_P(PaintPropertyTreeUpdateTest, BuildingStopsAtThrottledFrames) {
+TEST_F(PaintPropertyTreeUpdateTest, BuildingStopsAtThrottledFrames) {
   SetBodyInnerHTML(
       "<style>body { margin: 0; }</style>"
       "<div id='transform' style='transform: translate3d(4px, 5px, 6px);'>"
@@ -427,7 +425,7 @@ TEST_P(PaintPropertyTreeUpdateTest, BuildingStopsAtThrottledFrames) {
   EXPECT_FALSE(iframe_transform->DescendantNeedsPaintPropertyUpdate());
 }
 
-TEST_P(PaintPropertyTreeUpdateTest, ClipChangesUpdateOverflowClip) {
+TEST_F(PaintPropertyTreeUpdateTest, ClipChangesUpdateOverflowClip) {
   SetBodyInnerHTML(
       "<style>"
       "  body { margin:0 }"
@@ -487,7 +485,7 @@ TEST_P(PaintPropertyTreeUpdateTest, ClipChangesUpdateOverflowClip) {
               !div->GetLayoutObject()->PaintProperties()->OverflowClip());
 }
 
-TEST_P(PaintPropertyTreeUpdateTest, ContainPaintChangesUpdateOverflowClip) {
+TEST_F(PaintPropertyTreeUpdateTest, ContainPaintChangesUpdateOverflowClip) {
   SetBodyInnerHTML(
       "<style>"
       "  body { margin:0 }"
@@ -506,7 +504,7 @@ TEST_P(PaintPropertyTreeUpdateTest, ContainPaintChangesUpdateOverflowClip) {
 }
 
 // A basic sanity check for over-invalidation of paint properties.
-TEST_P(PaintPropertyTreeUpdateTest, NoPaintPropertyUpdateOnBackgroundChange) {
+TEST_F(PaintPropertyTreeUpdateTest, NoPaintPropertyUpdateOnBackgroundChange) {
   SetBodyInnerHTML("<div id='div' style='background-color: blue'>DIV</div>");
   auto* div = GetDocument().getElementById("div");
 
@@ -517,7 +515,7 @@ TEST_P(PaintPropertyTreeUpdateTest, NoPaintPropertyUpdateOnBackgroundChange) {
 }
 
 // Disabled due to stale scrollsOverflow values, see: https://crbug.com/675296.
-TEST_P(PaintPropertyTreeUpdateTest,
+TEST_F(PaintPropertyTreeUpdateTest,
        DISABLED_FrameVisibilityChangeUpdatesProperties) {
   SetBodyInnerHTML(
       "<style>body { margin: 0; }</style>"
@@ -542,7 +540,7 @@ TEST_P(PaintPropertyTreeUpdateTest,
   EXPECT_EQ(nullptr, FrameScroll(child_frame_view));
 }
 
-TEST_P(PaintPropertyTreeUpdateTest,
+TEST_F(PaintPropertyTreeUpdateTest,
        TransformNodeWithAnimationLosesNodeWhenAnimationRemoved) {
   LoadTestData("transform-animation.html");
   Element* target = GetDocument().getElementById("target");
@@ -557,7 +555,7 @@ TEST_P(PaintPropertyTreeUpdateTest,
   EXPECT_EQ(nullptr, target->GetLayoutObject()->PaintProperties());
 }
 
-TEST_P(PaintPropertyTreeUpdateTest,
+TEST_F(PaintPropertyTreeUpdateTest,
        EffectNodeWithAnimationLosesNodeWhenAnimationRemoved) {
   LoadTestData("opacity-animation.html");
   Element* target = GetDocument().getElementById("target");
@@ -571,7 +569,7 @@ TEST_P(PaintPropertyTreeUpdateTest,
   EXPECT_EQ(nullptr, target->GetLayoutObject()->PaintProperties());
 }
 
-TEST_P(PaintPropertyTreeUpdateTest,
+TEST_F(PaintPropertyTreeUpdateTest,
        TransformNodeDoesNotLoseCompositorElementIdWhenAnimationRemoved) {
   LoadTestData("transform-animation.html");
 
@@ -591,7 +589,7 @@ TEST_P(PaintPropertyTreeUpdateTest,
             properties->Transform()->GetCompositorElementId());
 }
 
-TEST_P(PaintPropertyTreeUpdateTest,
+TEST_F(PaintPropertyTreeUpdateTest,
        EffectNodeDoesNotLoseCompositorElementIdWhenAnimationRemoved) {
   LoadTestData("opacity-animation.html");
 
@@ -610,7 +608,7 @@ TEST_P(PaintPropertyTreeUpdateTest,
             properties->Effect()->GetCompositorElementId());
 }
 
-TEST_P(PaintPropertyTreeUpdateTest, PerspectiveOriginUpdatesOnSizeChanges) {
+TEST_F(PaintPropertyTreeUpdateTest, PerspectiveOriginUpdatesOnSizeChanges) {
   SetBodyInnerHTML(
       "<style>"
       "  body { margin: 0 }"
@@ -641,7 +639,7 @@ TEST_P(PaintPropertyTreeUpdateTest, PerspectiveOriginUpdatesOnSizeChanges) {
             perspective->PaintProperties()->Perspective()->Origin());
 }
 
-TEST_P(PaintPropertyTreeUpdateTest, TransformUpdatesOnRelativeLengthChanges) {
+TEST_F(PaintPropertyTreeUpdateTest, TransformUpdatesOnRelativeLengthChanges) {
   SetBodyInnerHTML(
       "<style>"
       "  body { margin: 0 }"
@@ -664,7 +662,7 @@ TEST_P(PaintPropertyTreeUpdateTest, TransformUpdatesOnRelativeLengthChanges) {
             transform_object->PaintProperties()->Transform()->Matrix());
 }
 
-TEST_P(PaintPropertyTreeUpdateTest, CSSClipDependingOnSize) {
+TEST_F(PaintPropertyTreeUpdateTest, CSSClipDependingOnSize) {
   SetBodyInnerHTML(
       "<style>"
       "  body { margin: 0 }"
@@ -693,7 +691,7 @@ TEST_P(PaintPropertyTreeUpdateTest, CSSClipDependingOnSize) {
             clip->PaintProperties()->CssClip()->ClipRect().Rect());
 }
 
-TEST_P(PaintPropertyTreeUpdateTest, ScrollBoundsChange) {
+TEST_F(PaintPropertyTreeUpdateTest, ScrollBoundsChange) {
   SetBodyInnerHTML(
       "<div id='container'"
       "    style='width: 100px; height: 100px; overflow: scroll'>"
@@ -715,7 +713,7 @@ TEST_P(PaintPropertyTreeUpdateTest, ScrollBoundsChange) {
   EXPECT_EQ(IntSize(200, 300), scroll_node->Bounds());
 }
 
-TEST_P(PaintPropertyTreeUpdateTest, ScrollbarWidthChange) {
+TEST_F(PaintPropertyTreeUpdateTest, ScrollbarWidthChange) {
   SetBodyInnerHTML(
       "<style>::-webkit-scrollbar {width: 20px; height: 20px}</style>"
       "<div id='container'"
@@ -736,7 +734,7 @@ TEST_P(PaintPropertyTreeUpdateTest, ScrollbarWidthChange) {
   EXPECT_EQ(FloatSize(60, 60), overflow_clip->ClipRect().Rect().Size());
 }
 
-TEST_P(PaintPropertyTreeUpdateTest, Preserve3DChange) {
+TEST_F(PaintPropertyTreeUpdateTest, Preserve3DChange) {
   SetBodyInnerHTML(
       "<div id='parent'>"
       "  <div id='child' style='transform: translate3D(1px, 2px, 3px)'></div>"
@@ -753,7 +751,7 @@ TEST_P(PaintPropertyTreeUpdateTest, Preserve3DChange) {
   EXPECT_FALSE(transform->FlattensInheritedTransform());
 }
 
-TEST_P(PaintPropertyTreeUpdateTest, MenuListControlClipChange) {
+TEST_F(PaintPropertyTreeUpdateTest, MenuListControlClipChange) {
   SetBodyInnerHTML(
       "<select id='select' style='white-space: normal'>"
       "  <option></option>"

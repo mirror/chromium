@@ -21,10 +21,6 @@ INSTANTIATE_TEST_CASE_P(All,
                         PaintControllerPaintTestForSlimmingPaintV1AndV2,
                         ::testing::Bool());
 
-INSTANTIATE_TEST_CASE_P(All,
-                        PaintControllerPaintTestForSlimmingPaintV2,
-                        ::testing::Bool());
-
 TEST_P(PaintControllerPaintTestForSlimmingPaintV1AndV2,
        FullDocumentPaintingWithCaret) {
   SetBodyInnerHTML(
@@ -117,7 +113,7 @@ TEST_P(PaintControllerPaintTestForSlimmingPaintV1AndV2, InlineRelayout) {
   }
 }
 
-TEST_P(PaintControllerPaintTestForSlimmingPaintV2, ChunkIdClientCacheFlag) {
+TEST_F(PaintControllerPaintTestForSlimmingPaintV2, ChunkIdClientCacheFlag) {
   SetBodyInnerHTML(
       "<div id='div' style='width: 200px; height: 200px; opacity: 0.5'>"
       "  <div style='width: 100px; height: 100px; background-color: "
@@ -153,7 +149,7 @@ TEST_P(PaintControllerPaintTestForSlimmingPaintV2, ChunkIdClientCacheFlag) {
   EXPECT_TRUE(RootPaintController().ClientCacheIsValid(sub_div));
 }
 
-TEST_P(PaintControllerPaintTestForSlimmingPaintV2, CompositingNoFold) {
+TEST_F(PaintControllerPaintTestForSlimmingPaintV2, CompositingNoFold) {
   SetBodyInnerHTML(
       "<div id='div' style='width: 200px; height: 200px; opacity: 0.5'>"
       "  <div style='width: 100px; height: 100px; background-color: "
@@ -167,7 +163,7 @@ TEST_P(PaintControllerPaintTestForSlimmingPaintV2, CompositingNoFold) {
                       TestDisplayItem(sub_div, kBackgroundType));
 }
 
-TEST_P(PaintControllerPaintTestForSlimmingPaintV2, FrameScrollingContents) {
+TEST_F(PaintControllerPaintTestForSlimmingPaintV2, FrameScrollingContents) {
   // TODO(wangxianzhu): Fix cull rect issue when painting layered contents
   // under overflow clip (in this case the LayoutView).
   if (RuntimeEnabledFeatures::rootLayerScrollingEnabled())
@@ -210,7 +206,7 @@ TEST_P(PaintControllerPaintTestForSlimmingPaintV2, FrameScrollingContents) {
 
 // TODO(wangxianzhu): Fix cull rect issue when painting layered contents under
 // overflow clip and add a test case.
-TEST_P(PaintControllerPaintTestForSlimmingPaintV2,
+TEST_F(PaintControllerPaintTestForSlimmingPaintV2,
        BlockScrollingNonLayeredContents) {
   SetBodyInnerHTML(
       "<style>"

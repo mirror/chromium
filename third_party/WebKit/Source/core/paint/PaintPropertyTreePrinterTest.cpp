@@ -14,16 +14,11 @@
 
 namespace blink {
 
-typedef bool TestParamRootLayerScrolling;
-class PaintPropertyTreePrinterTest
-    : public ::testing::WithParamInterface<TestParamRootLayerScrolling>,
-      private ScopedSlimmingPaintV2ForTest,
-      private ScopedRootLayerScrollingForTest,
-      public RenderingTest {
+class PaintPropertyTreePrinterTest : private ScopedSlimmingPaintV2ForTest,
+                                     public RenderingTest {
  public:
   PaintPropertyTreePrinterTest()
       : ScopedSlimmingPaintV2ForTest(true),
-        ScopedRootLayerScrollingForTest(GetParam()),
         RenderingTest(SingleChildLocalFrameClient::Create()) {}
 
  private:
@@ -41,9 +36,7 @@ class PaintPropertyTreePrinterTest
   }
 };
 
-INSTANTIATE_TEST_CASE_P(All, PaintPropertyTreePrinterTest, ::testing::Bool());
-
-TEST_P(PaintPropertyTreePrinterTest, SimpleTransformTree) {
+TEST_F(PaintPropertyTreePrinterTest, SimpleTransformTree) {
   SetBodyInnerHTML("hello world");
   String transform_tree_as_string =
       transformPropertyTreeAsString(*GetDocument().View());
@@ -52,7 +45,7 @@ TEST_P(PaintPropertyTreePrinterTest, SimpleTransformTree) {
                                     "  .*Translation \\(.*\\) .*"));
 }
 
-TEST_P(PaintPropertyTreePrinterTest, SimpleClipTree) {
+TEST_F(PaintPropertyTreePrinterTest, SimpleClipTree) {
   SetBodyInnerHTML("hello world");
   String clip_tree_as_string = clipPropertyTreeAsString(*GetDocument().View());
   EXPECT_THAT(clip_tree_as_string.Ascii().data(),
@@ -60,7 +53,7 @@ TEST_P(PaintPropertyTreePrinterTest, SimpleClipTree) {
                                     "  .*Clip \\(.*\\) .*"));
 }
 
-TEST_P(PaintPropertyTreePrinterTest, SimpleEffectTree) {
+TEST_F(PaintPropertyTreePrinterTest, SimpleEffectTree) {
   SetBodyInnerHTML("<div style='opacity: 0.9;'>hello world</div>");
   String effect_tree_as_string =
       effectPropertyTreeAsString(*GetDocument().View());
@@ -69,7 +62,7 @@ TEST_P(PaintPropertyTreePrinterTest, SimpleEffectTree) {
                                     "  Effect \\(LayoutBlockFlow DIV\\) .*"));
 }
 
-TEST_P(PaintPropertyTreePrinterTest, SimpleScrollTree) {
+TEST_F(PaintPropertyTreePrinterTest, SimpleScrollTree) {
   SetBodyInnerHTML("<div style='height: 4000px;'>hello world</div>");
   String scroll_tree_as_string =
       scrollPropertyTreeAsString(*GetDocument().View());
@@ -78,7 +71,7 @@ TEST_P(PaintPropertyTreePrinterTest, SimpleScrollTree) {
                                     "  Scroll \\(.*\\) .*"));
 }
 
-TEST_P(PaintPropertyTreePrinterTest, SimpleTransformTreePath) {
+TEST_F(PaintPropertyTreePrinterTest, SimpleTransformTreePath) {
   SetBodyInnerHTML(
       "<div id='transform' style='transform: translate3d(10px, 10px, "
       "0px);'></div>");
@@ -95,7 +88,7 @@ TEST_P(PaintPropertyTreePrinterTest, SimpleTransformTreePath) {
                                     "       .* transform.*"));
 }
 
-TEST_P(PaintPropertyTreePrinterTest, SimpleClipTreePath) {
+TEST_F(PaintPropertyTreePrinterTest, SimpleClipTreePath) {
   SetBodyInnerHTML(
       "<div id='clip' style='position: absolute; clip: rect(10px, 80px, 70px, "
       "40px);'></div>");
@@ -110,7 +103,7 @@ TEST_P(PaintPropertyTreePrinterTest, SimpleClipTreePath) {
                                     "    .* rect.*"));
 }
 
-TEST_P(PaintPropertyTreePrinterTest, SimpleEffectTreePath) {
+TEST_F(PaintPropertyTreePrinterTest, SimpleEffectTreePath) {
   SetBodyInnerHTML("<div id='effect' style='opacity: 0.9;'></div>");
   LayoutObject* effect_object =
       GetDocument().getElementById("effect")->GetLayoutObject();
@@ -122,7 +115,7 @@ TEST_P(PaintPropertyTreePrinterTest, SimpleEffectTreePath) {
                                     "  .* opacity.*"));
 }
 
-TEST_P(PaintPropertyTreePrinterTest, SimpleScrollTreePath) {
+TEST_F(PaintPropertyTreePrinterTest, SimpleScrollTreePath) {
   SetBodyInnerHTML(
       "<div id='scroll' style='overflow: scroll; height: 100px;'>"
       "  <div id='forceScroll' style='height: 4000px;'></div>"

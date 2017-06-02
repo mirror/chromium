@@ -275,8 +275,8 @@ PaintResult PaintLayerPainter::PaintLayerContents(
 
   Optional<ScopedPaintChunkProperties> scoped_paint_chunk_properties;
   if (RuntimeEnabledFeatures::slimmingPaintV2Enabled() &&
-      RuntimeEnabledFeatures::rootLayerScrollingEnabled() &&
       paint_layer_.GetLayoutObject().IsLayoutView()) {
+    DCHECK(RuntimeEnabledFeatures::rootLayerScrollingEnabled());
     const auto* local_border_box_properties =
         paint_layer_.GetLayoutObject().LocalBorderBoxProperties();
     DCHECK(local_border_box_properties);
@@ -506,11 +506,10 @@ PaintResult PaintLayerPainter::PaintLayerContents(
   Optional<ScopedPaintChunkProperties> content_scoped_paint_chunk_properties;
   if (RuntimeEnabledFeatures::slimmingPaintV2Enabled() &&
       !scoped_paint_chunk_properties.has_value()) {
-    // If layoutObject() is a LayoutView and root layer scrolling is enabled,
-    // the LayoutView's paint properties will already have been applied at
-    // the top of this method, in scopedPaintChunkProperties.
-    DCHECK(!(RuntimeEnabledFeatures::rootLayerScrollingEnabled() &&
-             paint_layer_.GetLayoutObject().IsLayoutView()));
+    // If layoutObject() is a LayoutView, it's paint properties will already
+    // have been applied at the top of this method, in
+    // scoped_paint_chunk_properties.
+    DCHECK(!paint_layer_.GetLayoutObject().IsLayoutView());
     const auto* local_border_box_properties =
         paint_layer_.GetLayoutObject().LocalBorderBoxProperties();
     DCHECK(local_border_box_properties);
