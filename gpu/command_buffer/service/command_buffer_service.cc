@@ -148,7 +148,6 @@ CommandBuffer::State CommandBufferService::GetState() {
 }
 
 void CommandBufferService::SetReleaseCount(uint64_t release_count) {
-  DCHECK(release_count >= state_.release_count);
   state_.release_count = release_count;
   UpdateState();
 }
