@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f41032ee_d0db5bbd",
+        "filename": "cc/surfaces/display.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-02T11:05:29Z",
+      "side": 1,
+      "message": "Sounds good, done.",
+      "parentUuid": "693c5dad_d8f5e1e0",
+      "range": {
+        "startLine": 414,
+        "startChar": 14,
+        "endLine": 414,
+        "endChar": 29
+      },
+      "revId": "90ad68fdc0075b16039eabf525fbb24c166ef51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c7cc770_2694a2a1",
         "filename": "cc/surfaces/display.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "90ad68fdc0075b16039eabf525fbb24c166ef51c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f1a8bd_00c56ba3",
+        "filename": "cc/surfaces/display.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-02T11:05:29Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "3c7cc770_2694a2a1",
+      "range": {
+        "startLine": 417,
+        "startChar": 4,
+        "endLine": 417,
+        "endChar": 36
+      },
+      "revId": "90ad68fdc0075b16039eabf525fbb24c166ef51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
