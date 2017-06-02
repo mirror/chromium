@@ -346,4 +346,8 @@ source_set("browser_sources") {
       "zoom_level_delegate.h",
     ]
   }
+
+  if (is_chromeos) {
+    sources += [ "//content/browser/tracing/arc_tracing_agent.h" ]
+  }
 }
