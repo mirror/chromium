@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dde7a630_3cc852f5",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1136,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-02T03:21:01Z",
+      "side": 1,
+      "message": "we could still show the cast button for the element if it can be cast. however, we do need to get more info before we can show it confidently so this is not the right place (although proves a concept).",
+      "parentUuid": "4dbcd500_b6937afa",
+      "range": {
+        "startLine": 1136,
+        "startChar": 28,
+        "endLine": 1136,
+        "endChar": 41
+      },
+      "revId": "b7555156f86ab85f7fe56e983b7deb7edd3a17b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70efd8fc_02f4ba03",
         "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "b7555156f86ab85f7fe56e983b7deb7edd3a17b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc286434_94f4a6f7",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3154,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-02T03:21:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "70efd8fc_02f4ba03",
+      "revId": "b7555156f86ab85f7fe56e983b7deb7edd3a17b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "695572a6_aacccc39",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-02T03:21:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d6f8e0e0_771f3a41",
+      "revId": "b7555156f86ab85f7fe56e983b7deb7edd3a17b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc7d637a_e28e332b",
         "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
         "patchSetId": 2
@@ -70,6 +130,24 @@
       "writtenOn": "2017-06-01T10:20:55Z",
       "side": 1,
       "message": "I\u0027m a bit worried about this method being called pretty much everywhere. It will be easy to forget one call.",
+      "revId": "b7555156f86ab85f7fe56e983b7deb7edd3a17b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a736961_52ed67ee",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-02T03:21:01Z",
+      "side": 1,
+      "message": "hm, there\u0027re multiple conditions that get updated via different callbacks, this method must be called whenever any state changes that affects it (here it\u0027s source or callbacks) what pattern do you suggest instead?",
+      "parentUuid": "bc7d637a_e28e332b",
       "revId": "b7555156f86ab85f7fe56e983b7deb7edd3a17b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "33f627e0_2e7e192e",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-02T03:21:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e362ff6e_3e4b2ee5",
+      "revId": "b7555156f86ab85f7fe56e983b7deb7edd3a17b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfa5efcd_b4f655f8",
         "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
         "patchSetId": 2
@@ -107,6 +203,24 @@
       "revId": "b7555156f86ab85f7fe56e983b7deb7edd3a17b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b716601_1426b5ce",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-02T03:21:01Z",
+      "side": 1,
+      "message": "it updates the vector and that\u0027s plural",
+      "parentUuid": "cfa5efcd_b4f655f8",
+      "revId": "b7555156f86ab85f7fe56e983b7deb7edd3a17b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "c866c07d_b7196796",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-02T03:21:01Z",
+      "side": 1,
+      "message": "we\u0027ll need if CORS is correct, frame url, codec information.",
+      "parentUuid": "80fb66cd_ccddd58e",
+      "revId": "b7555156f86ab85f7fe56e983b7deb7edd3a17b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4208f1be_7987e4fe",
         "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
         "patchSetId": 2
@@ -141,6 +273,24 @@
       "revId": "b7555156f86ab85f7fe56e983b7deb7edd3a17b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3877d445_6d68cc9f",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-02T03:21:01Z",
+      "side": 1,
+      "message": "that\u0027s a requirement of the PresentationController API - they expect a reference to a vector of URLs to be returned by the listener.\nI think this will change with the upcoming patch",
+      "parentUuid": "4208f1be_7987e4fe",
+      "revId": "b7555156f86ab85f7fe56e983b7deb7edd3a17b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
