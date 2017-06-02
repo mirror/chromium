@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "087b790d_d86160bc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-02T19:12:00Z",
+      "side": 1,
+      "message": "should this go into onUrlFocusChange(false)?  I think that happens in all situations",
+      "range": {
+        "startLine": 959,
+        "startChar": 25,
+        "endLine": 959,
+        "endChar": 27
+      },
+      "revId": "806098d278c6479e7e92b20ee76231983214768c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
