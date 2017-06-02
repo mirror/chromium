@@ -43,9 +43,6 @@ const double kDefaultScreenCastFrameRate =
 namespace {
 
 using Point = ResolutionSet::Point;
-using StringSet = DiscreteSet<std::string>;
-using BoolSet = DiscreteSet<bool>;
-
 
 constexpr double kMinScreenCastAspectRatio =
     static_cast<double>(kMinScreenCastDimension) /
@@ -53,24 +50,6 @@ constexpr double kMinScreenCastAspectRatio =
 constexpr double kMaxScreenCastAspectRatio =
     static_cast<double>(kMaxScreenCastDimension) /
     static_cast<double>(kMinScreenCastDimension);
-
-StringSet StringSetFromConstraint(const blink::StringConstraint& constraint) {
-  if (!constraint.HasExact())
-    return StringSet::UniversalSet();
-
-  std::vector<std::string> elements;
-  for (const auto& entry : constraint.Exact())
-    elements.push_back(entry.Ascii());
-
-  return StringSet(std::move(elements));
-}
-
-BoolSet BoolSetFromConstraint(const blink::BooleanConstraint& constraint) {
-  if (!constraint.HasExact())
-    return BoolSet::UniversalSet();
-
-  return BoolSet({constraint.Exact()});
-}
 
 using DoubleRangeSet = NumericRangeSet<double>;
 
