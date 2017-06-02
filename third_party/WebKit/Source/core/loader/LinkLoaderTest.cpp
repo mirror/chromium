@@ -125,7 +125,7 @@ TEST_P(LinkLoaderPreloadTest, Preload) {
   if (test_case.expecting_load &&
       test_case.priority != kResourceLoadPriorityUnresolved) {
     ASSERT_EQ(1, fetcher->CountPreloads());
-    Resource* resource = loader->LinkPreloadedResourceForTesting();
+    Resource* resource = loader->GetResource();
     ASSERT_NE(resource, nullptr);
     EXPECT_TRUE(fetcher->ContainsAsPreload(resource));
     EXPECT_EQ(test_case.priority, resource->GetResourceRequest().Priority());
