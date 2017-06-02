@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e75b5e8a_813ab9d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-02T21:58:41Z",
+      "side": 1,
+      "message": "Should we just notify both?  What if each one wants to run a task?",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 96
+      },
+      "revId": "28792d5d19d08ce8e5d7ab77b68fd1e81baa03f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b84675bc_14616c53",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-02T21:58:41Z",
+      "side": 1,
+      "message": "Maybe don\u0027t do this here because:\n1. The task will probably have some asynchronous things it needs to do (like deleting files, updating the database).\n2. If we actually *did* start downloads, we need to let them download!",
+      "range": {
+        "startLine": 34,
+        "startChar": 8,
+        "endLine": 34,
+        "endChar": 37
+      },
+      "revId": "28792d5d19d08ce8e5d7ab77b68fd1e81baa03f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2302199b_6a658bc1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-02T21:58:41Z",
+      "side": 1,
+      "message": "Determines reschedule?  You\u0027ll have to ask native for this as well.",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 20
+      },
+      "revId": "28792d5d19d08ce8e5d7ab77b68fd1e81baa03f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e59a142_31aaca2f",
+        "filename": "chrome/browser/android/download/service/download_task_scheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-02T21:58:41Z",
+      "side": 1,
+      "message": "download_task_scheduler_android.h\n\nAggregator in Java so we can track multiple requests and aggregate?",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 27
+      },
+      "revId": "28792d5d19d08ce8e5d7ab77b68fd1e81baa03f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "223eb5c5_43342544",
+        "filename": "chrome/browser/android/download/service/download_task_scheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-02T21:58:41Z",
+      "side": 1,
+      "message": "Do we always overwrite?",
+      "range": {
+        "startLine": 27,
+        "startChar": 20,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "28792d5d19d08ce8e5d7ab77b68fd1e81baa03f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e792f77e_f93b10a7",
+        "filename": "chrome/browser/android/download/service/download_task_scheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-02T21:58:41Z",
+      "side": 1,
+      "message": "Don\u0027t need?",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "28792d5d19d08ce8e5d7ab77b68fd1e81baa03f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48217590_0a41f99d",
+        "filename": "components/background_task_scheduler/android/java/src/org/chromium/components/background_task_scheduler/TaskIds.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-02T21:58:41Z",
+      "side": 1,
+      "message": "Add to uma!",
+      "range": {
+        "startLine": 19,
+        "startChar": 28,
+        "endLine": 20,
+        "endChar": 57
+      },
+      "revId": "28792d5d19d08ce8e5d7ab77b68fd1e81baa03f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ed54ea_7bb60f7b",
+        "filename": "components/download/internal/controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-02T21:58:41Z",
+      "side": 1,
+      "message": "Make this take a Closure callback for when it\u0027s done?  Maybe have it take a boolean for reschedule?",
+      "range": {
+        "startLine": 56,
+        "startChar": 67,
+        "endLine": 56,
+        "endChar": 68
+      },
+      "revId": "28792d5d19d08ce8e5d7ab77b68fd1e81baa03f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8574e1e7_3423f7fc",
+        "filename": "components/download/internal/controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-02T21:58:41Z",
+      "side": 1,
+      "message": "Need OnStopScheduledTask() as well.  Return a boolean?",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 9
+      },
+      "revId": "28792d5d19d08ce8e5d7ab77b68fd1e81baa03f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "793baf90_1ed0b404",
+        "filename": "components/download/public/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-02T21:58:41Z",
+      "side": 1,
+      "message": "public",
+      "range": {
+        "startLine": 35,
+        "startChar": 19,
+        "endLine": 35,
+        "endChar": 23
+      },
+      "revId": "28792d5d19d08ce8e5d7ab77b68fd1e81baa03f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
