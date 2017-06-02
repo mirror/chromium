@@ -39,6 +39,7 @@
 namespace blink {
 
 class Event;
+class HTMLPlugInElement;
 class ResourceResponse;
 class WebLayer;
 class WebPluginContainerBase;
@@ -52,6 +53,7 @@ class CORE_EXPORT PluginView : public FrameOrPlugin {
 
   bool IsPluginView() const override { return true; }
 
+  virtual HTMLPlugInElement Element() = 0;
   virtual void SetFocused(bool, WebFocusType) = 0;
   virtual void GeometryMayHaveChanged() = 0;
   virtual void HandleEvent(Event*) = 0;
