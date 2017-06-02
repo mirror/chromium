@@ -94,12 +94,14 @@ void ClientCompositorFrameSink::SubmitCompositorFrame(
   DCHECK_LE(cc::BeginFrameArgs::kStartingFrameNumber,
             frame.metadata.begin_frame_ack.sequence_number);
 
+  const auto& frame_size = frame.render_pass_list.back()->output_rect.size();
   if (!enable_surface_synchronization_ &&
-      (!local_surface_id_.is_valid() || ShouldAllocateNewLocalSurfaceId(frame)))
+      (!local_surface_id_.is_valid() || surface_size_ != frame_size ||
+       device_scale_factor_ != frame.metadata.device_scale_factor)) {
     local_surface_id_ = id_allocator_.GenerateId();
-
-  surface_size_ = frame.render_pass_list.back()->output_rect.size();
-  device_scale_factor_ = frame.metadata.device_scale_factor;
+    surface_size_ = frame.render_pass_list.back()->output_rect.size();
+    device_scale_factor_ = frame.metadata.device_scale_factor;
+  }
 
   compositor_frame_sink_->SubmitCompositorFrame(local_surface_id_,
                                                 std::move(frame));
@@ -133,8 +135,8 @@ void ClientCompositorFrameSink::ReclaimResources(
 
 bool ClientCompositorFrameSink::ShouldAllocateNewLocalSurfaceId(
     const cc::CompositorFrame& frame) {
-  gfx::Size frame_size = frame.render_pass_list.back()->output_rect.size();
-  return frame_size != surface_size_ ||
+  const auto& frame_size = frame.render_pass_list.back()->output_rect.size();
+  return surface_size_ != frame_size ||
          device_scale_factor_ != frame.metadata.device_scale_factor;
 }
 
