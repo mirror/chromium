@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6aab55d_dc1c3b5e",
+        "filename": "components/arc/arc_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-02T21:07:53Z",
+      "side": 1,
+      "message": "nit: LOG_IF(ERROR, !HasPlayStore() \u0026\u0026 !ShouldArcAlwaysStart()) \u003c\u003c ...",
+      "revId": "28eb9747f8b79c9f1a49c720bc2ccefcbc9b03d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
