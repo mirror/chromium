@@ -1484,7 +1484,7 @@ void LocalFrameView::UpdateGeometries() {
         bool did_need_layout = frame_view->NeedsLayout();
         part->UpdateGeometry();
         if (!did_need_layout && !frame_view->ShouldThrottleRendering())
-          frame_view->CheckDoesNotNeedLayout();
+          NOTREACHED();
       } else {
         part->UpdateGeometry();
       }
