@@ -152,6 +152,7 @@ class LinuxPort(base.Port):
         self.host.environ['HOME'] = self._original_home
 
     def _start_xvfb(self):
+        """Starts (and verifies the start of) Xvfb on an available display."""
         display = self._find_display()
         if not display:
             _log.critical('Failed to find a free display to start Xvfb.')
@@ -180,24 +181,28 @@ class LinuxPort(base.Port):
         self._original_display = self.host.environ.get('DISPLAY')
         self.host.environ['DISPLAY'] = display
 
-        # Check that xvfb has started correctly via probing using xdpyinfo.
-        # While xvfb is running, the poll() method will return None;
-        # https://docs.python.org/2/library/subprocess.html#subprocess.Popen.poll
-        start_time = self.host.time()
-        while self.host.time() - start_time < self.XVFB_START_TIMEOUT or self._xvfb_process.poll() is not None:
-            # We don't explicitly set the display, as we want to check the
-            # environment value.
-            exit_code = self.host.executive.run_command(
-                ['xdpyinfo'], return_exit_code=True)
-            if exit_code == 0:
-                _log.debug('Successfully started Xvfb with display "%s".', display)
-                return
-            _log.warn('xdpyinfo check failed with exit code %s while starting Xvfb on "%s".', exit_code, display)
-            self.host.sleep(0.1)
+        if self._verify_xvfb_started_successfully(display):
+            return
 
         retcode = self._xvfb_process.poll()
         self._stop_xvfb(save_logs=True)
         _log.critical('Failed to start Xvfb on display "%s" (xvfb retcode: %r).', display, retcode)
+
+    def _verify_xvfb_started_successfully(self, display):
+        """Checks that xvfb has started correctly via probing using xdpyinfo."""
+        # While xvfb is running, the poll() method will return None;
+        # https://docs.python.org/2/library/subprocess.html#subprocess.Popen.poll
+        start_time = self.host.time()
+        while self.host.time() - start_time < self.XVFB_START_TIMEOUT or self._xvfb_process.poll() is not None:
+            # We don't explicitly set the display, as we also want to check that
+            # the environment value is correct.
+            exit_code = self.host.executive.run_command(['xdpyinfo'], return_exit_code=True)
+            if exit_code == 0:
+                _log.debug('Successfully started Xvfb with display "%s".', display)
+                return True
+            _log.warn('xdpyinfo check failed with exit code %s while starting Xvfb on "%s".', exit_code, display)
+            self.host.sleep(0.1)
+        return False
 
     def _find_display(self):
         """Tries to find a free X display, looping if necessary."""
