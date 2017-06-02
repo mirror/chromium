@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee51a0f6_48f31107",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/ui/MediaSessionTabHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-02T14:38:00Z",
+      "side": 1,
+      "message": "I\u0027d also suggest just having the comment not refer to Android Go either, and just say something like \"Disable favicons in notifications for low memory devices on O, where the notification icon is optional\" - that actually explains why there\u0027s an O condition there.",
+      "revId": "dd026b7f996dd980969915eb84cc615084e1e44d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
