@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "625b03e0_b321eff1",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/linux.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-02T22:26:33Z",
+      "side": 1,
+      "message": "This line is the main change in this CL. If it\u0027s more readable, this could also be written as:\n\n    while self.host.time() - start_time \u003c self.XVFB_START_TIMEOUT:\n        if self._xvfb_process.poll() is not None:\n            break\n        ...",
+      "revId": "fd9340d0b0503dbc573f2e52f9cdd0f7f9f1e73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d405a52a_dc293b90",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/linux.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-02T22:26:33Z",
+      "side": 1,
+      "message": "skobes@ tried running run-webkit-tests with patch 1 of this CL applied and pasted the output at https://pastebin.com/raw/UCaqv6w6 -- it appears that we don\u0027t want to try to kill the process if the process is already dead (which should be the case if poll() returns something other than None).",
+      "revId": "fd9340d0b0503dbc573f2e52f9cdd0f7f9f1e73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
