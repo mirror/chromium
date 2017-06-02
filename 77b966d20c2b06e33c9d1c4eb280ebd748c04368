@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12fffc93_c6f0e259",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-02T17:55:32Z",
+      "side": 1,
+      "message": "Now that we\u0027ve mostly converged on this CL, it\u0027s a good time to consider the commit message.\n\nWe want to be as specific while being short as we can in these so that when we go and look through the history we can easily see what sorts of changes were made in the past without going through each diff.\n\nThe format here should be...\n\n\u003cShort Specific Title\u003e\n\n\u003cDetailed description\u003e\nSome things to mention here:\n* The flag platform changes\n* The quick update to feature_engagement_tracker_impl.cc to make it work for Windows (more importantly, the reason for this change)\n* anything else you think would be helpful.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "77b966d20c2b06e33c9d1c4eb280ebd748c04368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b3930ab_9843c59c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-02T17:55:32Z",
+      "side": 1,
+      "message": "Let\u0027s get a crbug for this. Is there an existing one already you can use or do we need to create one?\nGenerally, we like to have a crbug per change for tracking.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "77b966d20c2b06e33c9d1c4eb280ebd748c04368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45afb9c0_0c1c75b9",
+        "filename": "components/feature_engagement_tracker/public/feature_constants.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-02T17:55:32Z",
+      "side": 1,
+      "message": "Is this change supposed to be in a future CL?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 72
+      },
+      "revId": "77b966d20c2b06e33c9d1c4eb280ebd748c04368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
