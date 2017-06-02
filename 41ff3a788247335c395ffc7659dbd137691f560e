@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "63d69e59_4e27ed08",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-02T21:37:59Z",
+      "side": 1,
+      "message": "Alternatively, the following is a bit more efficient.\n\nif (managed) {\n  UMA_HISTOGRAM_...\n} else {\n  UMA_HISTOGRAM_...\n}\n\nalthough i\u0027m fine with new ones.",
+      "parentUuid": "090689a5_c9a46c1d",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 54
+      },
+      "revId": "41ff3a788247335c395ffc7659dbd137691f560e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2ada917_b2b58b9c",
         "filename": "chrome/browser/chromeos/arc/arc_optin_uma.cc",
         "patchSetId": 1
