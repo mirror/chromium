@@ -1,0 +1,209 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f6dda24_5f3394c5",
+        "filename": "services/preferences/persistent_pref_store_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-02T05:36:44Z",
+      "side": 1,
+      "message": "Could you add a simple example?",
+      "revId": "4cfb0be35044f322d5d8167cea74365e927bb3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af9fc1b_4c8c5599",
+        "filename": "services/preferences/pref_store_consistency_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-02T05:36:44Z",
+      "side": 1,
+      "message": "Can you add a sentence about what this class does? Is this right:\n\n// A class that allows the delivery of messages between a number of services to be controlled and to record what happened.",
+      "revId": "4cfb0be35044f322d5d8167cea74365e927bb3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4a9497_3cd5bb3f",
+        "filename": "services/preferences/public/cpp/persistent_pref_store_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-02T05:36:44Z",
+      "side": 1,
+      "message": "Doc:\n\n// Decision on what to do with writes incoming from the service.",
+      "revId": "4cfb0be35044f322d5d8167cea74365e927bb3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d08ce0fa_136457ce",
+        "filename": "services/preferences/public/cpp/persistent_pref_store_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-02T05:36:44Z",
+      "side": 1,
+      "message": "kIgnore?",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 10
+      },
+      "revId": "4cfb0be35044f322d5d8167cea74365e927bb3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcc6f34d_aabcebd0",
+        "filename": "services/preferences/public/cpp/persistent_pref_store_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-02T05:36:44Z",
+      "side": 1,
+      "message": "Are these two fields mutually exclusive?",
+      "revId": "4cfb0be35044f322d5d8167cea74365e927bb3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19681b77_f945ab96",
+        "filename": "services/preferences/public/cpp/persistent_pref_store_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-02T05:36:44Z",
+      "side": 1,
+      "message": "Document what this value represents.",
+      "range": {
+        "startLine": 137,
+        "startChar": 6,
+        "endLine": 137,
+        "endChar": 12
+      },
+      "revId": "4cfb0be35044f322d5d8167cea74365e927bb3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa1ca018_8358e7d8",
+        "filename": "services/preferences/public/cpp/pref_store_client_mixin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-02T05:36:44Z",
+      "side": 1,
+      "message": "Empty line before.",
+      "revId": "4cfb0be35044f322d5d8167cea74365e927bb3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "292d4c80_2f3ccaca",
+        "filename": "services/preferences/public/cpp/pref_store_client_mixin.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-02T05:36:44Z",
+      "side": 1,
+      "message": "Doc:\n\n// Should this client ignore a write received from the service?",
+      "revId": "4cfb0be35044f322d5d8167cea74365e927bb3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "238e1b53_dd2175bb",
+        "filename": "services/preferences/public/interfaces/preferences.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-02T05:36:44Z",
+      "side": 1,
+      "message": "Add:\n\nThis method exists on this interface to make sure acks are ordered with respect to...",
+      "revId": "4cfb0be35044f322d5d8167cea74365e927bb3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce410dc_3e8a0e3c",
+        "filename": "services/preferences/public/interfaces/preferences.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-02T05:36:44Z",
+      "side": 1,
+      "message": "The value will be transmitted over the observe interface previously returned through |Connect|.",
+      "revId": "4cfb0be35044f322d5d8167cea74365e927bb3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0be64e96_8e0d14ca",
+        "filename": "services/preferences/public/interfaces/preferences.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-02T05:36:44Z",
+      "side": 1,
+      "message": "Plural",
+      "range": {
+        "startLine": 140,
+        "startChar": 41,
+        "endLine": 140,
+        "endChar": 54
+      },
+      "revId": "4cfb0be35044f322d5d8167cea74365e927bb3c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
