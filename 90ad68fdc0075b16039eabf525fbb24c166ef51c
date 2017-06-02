@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "693c5dad_d8f5e1e0",
+        "filename": "cc/surfaces/display.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-02T01:05:37Z",
+      "side": 1,
+      "message": "To avoid bugs like this, should we make OnSurfaceDamaged return a bool and make SurfaceManager OR the results? I don\u0027t see a need to pass the result of changed from other observers as SurfaceManager effectively does. What value of changed is passed in depends on the iteration order of observers.\n\nWDYT?",
+      "range": {
+        "startLine": 414,
+        "startChar": 14,
+        "endLine": 414,
+        "endChar": 29
+      },
+      "revId": "90ad68fdc0075b16039eabf525fbb24c166ef51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7cc770_2694a2a1",
+        "filename": "cc/surfaces/display.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-02T01:05:37Z",
+      "side": 1,
+      "message": "nit: Can you move this to where display_damaged is set above?",
+      "range": {
+        "startLine": 417,
+        "startChar": 4,
+        "endLine": 417,
+        "endChar": 36
+      },
+      "revId": "90ad68fdc0075b16039eabf525fbb24c166ef51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
