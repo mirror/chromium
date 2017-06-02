@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52ccb81f_13430ba8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-06-02T16:40:25Z",
+      "side": 1,
+      "message": "nit: personally, this is more clear to me if it reads as:\ncanGoBack \u003d this tab can go back || this is a CTA which is not on NewTabPage.",
+      "range": {
+        "startLine": 597,
+        "startChar": 69,
+        "endLine": 597,
+        "endChar": 89
+      },
+      "revId": "d25d558abb3fa35e1903d3aa3f797fee0b355ab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14f50f01_659d557f",
+        "filename": "chrome/browser/android/vr_shell/ui_elements/url_bar.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-06-02T16:40:25Z",
+      "side": 1,
+      "message": "thanks, I should have added this as part of https://codereview.chromium.org/2906403002/",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 18
+      },
+      "revId": "d25d558abb3fa35e1903d3aa3f797fee0b355ab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
