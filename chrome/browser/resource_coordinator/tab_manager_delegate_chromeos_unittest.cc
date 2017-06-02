@@ -174,28 +174,19 @@ class MockTabManagerDelegate : public TabManagerDelegate {
 
 class MockMemoryStat : public TabManagerDelegate::MemoryStat {
  public:
-  MockMemoryStat() {}
+  MockMemoryStat() : report_low_mem_times_(0) {}
   ~MockMemoryStat() override {}
 
-  int TargetMemoryToFreeKB() override { return target_memory_to_free_kb_; }
-
-  int EstimatedMemoryFreedKB(base::ProcessHandle pid) override {
-    return process_pss_[pid];
-  }
+  // Return true for |report_low_mem_times_ times.
+  bool IsLowMemoryCondition() override { return report_low_mem_times_--; }
 
   // unittest.
-  void SetTargetMemoryToFreeKB(const int target) {
-    target_memory_to_free_kb_ = target;
-  }
-
-  // unittest.
-  void SetProcessPss(base::ProcessHandle pid, int pss) {
-    process_pss_[pid] = pss;
+  void SetReportLowMemoryTimes(const int times) {
+    report_low_mem_times_ = times;
   }
 
  private:
-  int target_memory_to_free_kb_;
-  std::map<base::ProcessHandle, int> process_pss_;
+  int report_low_mem_times_;
 };
 
 TEST_F(TabManagerDelegateTest, SetOomScoreAdj) {
@@ -331,8 +322,7 @@ TEST_F(TabManagerDelegateTest, DoNotKillRecentlyKilledArcProcesses) {
   arc_processes.emplace_back(
       1, 10, "service", arc::mojom::ProcessState::SERVICE, kNotFocused, 500);
 
-  memory_stat->SetTargetMemoryToFreeKB(250000);
-  memory_stat->SetProcessPss(30, 10000);
+  memory_stat->SetReportLowMemoryTimes(1);
   TabStatsList tab_list;
   tab_manager_delegate.LowMemoryKillImpl(tab_list, arc_processes);
 
@@ -399,17 +389,9 @@ TEST_F(TabManagerDelegateTest, KillMultipleProcesses) {
   // tab1              pid: 11  tab_contents_id 1
   // tab5              pid: 12  tab_contents_id 5
   // tab2              pid: 11  tab_contents_id 2
-  memory_stat->SetTargetMemoryToFreeKB(250000);
-  // Entities to be killed.
-  memory_stat->SetProcessPss(11, 50000);
-  memory_stat->SetProcessPss(12, 30000);
-  memory_stat->SetProcessPss(30, 10000);
-  memory_stat->SetProcessPss(50, 60000);
-  // Should not be used.
-  memory_stat->SetProcessPss(60, 500000);
-  memory_stat->SetProcessPss(40, 50000);
-  memory_stat->SetProcessPss(20, 30000);
-  memory_stat->SetProcessPss(10, 100000);
+
+  // Kill 7 times.
+  memory_stat->SetReportLowMemoryTimes(7);
 
   tab_manager_delegate.LowMemoryKillImpl(tab_list, arc_processes);
 
