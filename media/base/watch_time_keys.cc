@@ -60,6 +60,19 @@ const char kMeanTimeBetweenRebuffersAudioVideoMse[] =
 const char kMeanTimeBetweenRebuffersAudioVideoEme[] =
     "Media.MeanTimeBetweenRebuffers.AudioVideo.EME";
 
+const char kWatchTimeSessionHadZeroRebuffersAudioSrc[] =
+    "Media.WatchTimeSessionHadZeroRebuffers.Audio.SRC";
+const char kWatchTimeSessionHadZeroRebuffersAudioMse[] =
+    "Media.WatchTimeSessionHadZeroRebuffers.Audio.MSE";
+const char kWatchTimeSessionHadZeroRebuffersAudioEme[] =
+    "Media.WatchTimeSessionHadZeroRebuffers.Audio.EME";
+const char kWatchTimeSessionHadZeroRebuffersAudioVideoSrc[] =
+    "Media.WatchTimeSessionHadZeroRebuffers.AudioVideo.SRC";
+const char kWatchTimeSessionHadZeroRebuffersAudioVideoMse[] =
+    "Media.WatchTimeSessionHadZeroRebuffers.AudioVideo.MSE";
+const char kWatchTimeSessionHadZeroRebuffersAudioVideoEme[] =
+    "Media.WatchTimeSessionHadZeroRebuffers.AudioVideo.EME";
+
 base::flat_set<base::StringPiece> GetWatchTimeKeys() {
   return base::flat_set<base::StringPiece>(
       {kWatchTimeAudioAll,
