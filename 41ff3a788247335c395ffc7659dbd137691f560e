@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "090689a5_c9a46c1d",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-02T17:38:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1c37578_e8e723a1",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 54
+      },
+      "revId": "41ff3a788247335c395ffc7659dbd137691f560e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2ada917_b2b58b9c",
         "filename": "chrome/browser/chromeos/arc/arc_optin_uma.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-02T02:16:25Z",
       "side": 1,
       "message": "Is 6 minutes large enough to capture the long tail? Just wanted to make sure.",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 37
+      },
+      "revId": "41ff3a788247335c395ffc7659dbd137691f560e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1934b0d2_3d34d209",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-02T17:38:51Z",
+      "side": 1,
+      "message": "Yes, that was also my concern. Let set it 10.",
+      "parentUuid": "a2ada917_b2b58b9c",
       "range": {
         "startLine": 66,
         "startChar": 6,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "a5a73343_f2ed61d7",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-02T17:38:51Z",
+      "side": 1,
+      "message": "Yes, Retry just starts management check again. I think we need refresh this time and measure only successful run,",
+      "parentUuid": "94e214cf_82e087ae",
+      "revId": "41ff3a788247335c395ffc7659dbd137691f560e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bad0b18_f27c5187",
         "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
         "patchSetId": 1
@@ -76,6 +142,24 @@
       "writtenOn": "2017-06-02T02:16:25Z",
       "side": 1,
       "message": "nit: Since the second condition almost always evaluates to false, it\u0027s slightly more efficient if you swap the conditions:\n\n if (!arc_initial_boot_time_.is_null() \u0026\u0026 ...)",
+      "revId": "41ff3a788247335c395ffc7659dbd137691f560e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5587a4d1_9b355016",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-02T17:38:51Z",
+      "side": 1,
+      "message": "good point",
+      "parentUuid": "6bad0b18_f27c5187",
       "revId": "41ff3a788247335c395ffc7659dbd137691f560e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "3239aa4b_ef84bf1c",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-02T17:38:51Z",
+      "side": 1,
+      "message": "Thanks for proposal. Agree that prev name is bit confusing",
+      "parentUuid": "ddc88704_f917f041",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 36
+      },
+      "revId": "41ff3a788247335c395ffc7659dbd137691f560e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b35683c_ce6b02e8",
         "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.h",
         "patchSetId": 1
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "aa6fba2a_f52b4b0e",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-02T17:38:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b35683c_ce6b02e8",
+      "revId": "41ff3a788247335c395ffc7659dbd137691f560e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2db4a639_e87a8eab",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -133,6 +259,24 @@
       "writtenOn": "2017-06-02T02:16:25Z",
       "side": 1,
       "message": "Now 3 UMA metrics use the Managed/Unmanaged suffix, right? I think you probably want to start using \u003chistogram_suffixes\u003e for this.\n\nYou can migrate the other 2 metrics to \u003chistogram_suffixes\u003e (in a separate CL) to simplify the xml.",
+      "revId": "41ff3a788247335c395ffc7659dbd137691f560e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc40729_79636506",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1651,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-02T17:38:51Z",
+      "side": 1,
+      "message": "Nice feature",
+      "parentUuid": "2db4a639_e87a8eab",
       "revId": "41ff3a788247335c395ffc7659dbd137691f560e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
