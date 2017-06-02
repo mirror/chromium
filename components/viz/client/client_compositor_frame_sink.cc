@@ -34,15 +34,12 @@ bool ClientCompositorFrameSink::BindToClient(
     cc::CompositorFrameSinkClient* client) {
   if (!cc::CompositorFrameSink::BindToClient(client))
     return false;
-
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   compositor_frame_sink_.Bind(std::move(compositor_frame_sink_info_));
   client_binding_.reset(
       new mojo::Binding<cc::mojom::MojoCompositorFrameSinkClient>(
           this, std::move(client_request_)));
-
   begin_frame_source_ = base::MakeUnique<cc::ExternalBeginFrameSource>(this);
-
   client->SetBeginFrameSource(begin_frame_source_.get());
   return true;
 }

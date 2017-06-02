@@ -4,10 +4,14 @@
 
 #include "ui/aura/local/window_port_local.h"
 
+#include "base/command_line.h"
 #include "cc/surfaces/surface_manager.h"
+#include "components/viz/client/client_compositor_frame_sink.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "ui/aura/client/cursor_client.h"
 #include "ui/aura/env.h"
 #include "ui/aura/local/compositor_frame_sink_local.h"
+#include "ui/aura/local/compositor_frame_sink_mojo.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_delegate.h"
 #include "ui/display/display.h"
@@ -98,13 +102,36 @@ WindowPortLocal::CreateCompositorFrameSink() {
   auto* context_factory_private =
       aura::Env::GetInstance()->context_factory_private();
   frame_sink_id_ = context_factory_private->AllocateFrameSinkId();
-  auto frame_sink = base::MakeUnique<CompositorFrameSinkLocal>(
-      frame_sink_id_, context_factory_private->GetSurfaceManager());
-  frame_sink->SetSurfaceChangedCallback(base::Bind(
-      &WindowPortLocal::OnSurfaceChanged, weak_factory_.GetWeakPtr()));
   if (window_->GetRootWindow())
     window_->layer()->GetCompositor()->AddFrameSink(frame_sink_id_);
-  return std::move(frame_sink);
+  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+          "mojo-compositor-frame-sink")) {
+    auto frame_sink = base::MakeUnique<CompositorFrameSinkLocal>(
+        frame_sink_id_, context_factory_private->GetSurfaceManager());
+    frame_sink->SetSurfaceChangedCallback(base::Bind(
+        &WindowPortLocal::OnSurfaceChanged, weak_factory_.GetWeakPtr()));
+    return std::move(frame_sink);
+  } else {
+    cc::mojom::MojoCompositorFrameSinkClientPtr frame_sink_client_ptr;
+    cc::mojom::MojoCompositorFrameSinkClientRequest frame_sink_client_request =
+        mojo::MakeRequest(&frame_sink_client_ptr);
+    auto frame_sink_mojo = base::MakeUnique<CompositorFrameSinkMojo>(
+        frame_sink_id_, context_factory_private->GetSurfaceManager(),
+        std::move(frame_sink_client_ptr));
+
+    frame_sink_mojo->SetSurfaceChangedCallback(base::Bind(
+        &WindowPortLocal::OnSurfaceChanged, weak_factory_.GetWeakPtr()));
+
+    cc::mojom::MojoCompositorFrameSinkPtr frame_sink_ptr;
+    cc::mojom::MojoCompositorFrameSinkRequest frame_sink_request =
+        mojo::MakeRequest(&frame_sink_ptr);
+    mojo::MakeStrongBinding(std::move(frame_sink_mojo),
+                            std::move(frame_sink_request));
+    auto frame_sink = base::MakeUnique<viz::ClientCompositorFrameSink>(
+        nullptr, nullptr, frame_sink_ptr.PassInterface(),
+        std::move(frame_sink_client_request), false);
+    return std::move(frame_sink);
+  }
 }
 
 cc::SurfaceId WindowPortLocal::GetSurfaceId() const {
