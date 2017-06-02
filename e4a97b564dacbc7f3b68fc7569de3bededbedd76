@@ -16,6 +16,24 @@
       "revId": "e4a97b564dacbc7f3b68fc7569de3bededbedd76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9516bf9_aca33c6c",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-02T18:15:49Z",
+      "side": 0,
+      "message": "SPV1 still needs to use Layer (and layer inputs) as the API for setting this.",
+      "parentUuid": "d2a9c5e2_09f2c184",
+      "revId": "e4a97b564dacbc7f3b68fc7569de3bededbedd76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
