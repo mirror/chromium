@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "461d1e39_af559347",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-02T22:41:30Z",
+      "side": 1,
+      "message": "I think const is just redundant in this case. Remove?",
+      "range": {
+        "startLine": 223,
+        "startChar": 10,
+        "endLine": 223,
+        "endChar": 15
+      },
+      "revId": "18aa2f3dbf610b53320f8ffc23d9708ebe7c5aa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93b059aa_a791b990",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-02T22:41:30Z",
+      "side": 1,
+      "message": "Hmmmm... does IsLowMemoryCondition() really return false in a timely manner after killing a tab or an app? If it does not, the for-loop may kill way more apps/tabs than necessary.\n\nKillTab() may or may not release memory synchronously (please check), but I don\u0027t think KillArcProcess() synchronously kills an app process at least. The latter is implemented with a mojo call to the container and it\u0027s async without any completion callback. The SIGTERM/SIGKILL delivery on the container side from ActivityManagerService to an app process (or any signal deliveries on Linux in general) are also asynchronous unless ActivityManagerService explicitly waits (waitpid()s) for the app to disappear.\n\nAt the same time, it\u0027s not trivial to change KillAppProcess() synchronous since this function is executed on the UI thread. I think more refactoring is needed to make L559 work. WDYT? Is this still better than the current situation??",
+      "revId": "18aa2f3dbf610b53320f8ffc23d9708ebe7c5aa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
