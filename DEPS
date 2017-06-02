@@ -28,7 +28,7 @@
 
 
 vars = {
-  'chromium_git': 'https://chromium.googlesource.com',
+   'chromium_git': 'https://chromium.googlesource.com',
   'swiftshader_git': 'https://swiftshader.googlesource.com',
   'pdfium_git': 'https://pdfium.googlesource.com',
   'boringssl_git': 'https://boringssl.googlesource.com',
