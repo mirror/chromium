@@ -5,6 +5,8 @@
 #ifndef BASE_TASK_SCHEDULER_TEST_UTILS_H_
 #define BASE_TASK_SCHEDULER_TEST_UTILS_H_
 
+#include "base/task_scheduler/sequence.h"
+
 namespace base {
 namespace internal {
 namespace test {
@@ -12,6 +14,9 @@ namespace test {
 // An enumeration of possible task scheduler TaskRunner types. Used to
 // parametrize relevant task_scheduler tests.
 enum class ExecutionMode { PARALLEL, SEQUENCED, SINGLE_THREADED };
+
+// Creates a sequence and pushes |task| to it. Returns that sequence.
+scoped_refptr<Sequence> generate_sequence(std::unique_ptr<Task> task);
 
 }  // namespace test
 }  // namespace internal
