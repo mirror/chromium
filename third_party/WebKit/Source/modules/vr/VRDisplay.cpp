@@ -105,17 +105,26 @@ void VRDisplay::Update(const device::mojom::blink::VRDisplayInfoPtr& display) {
 }
 
 bool VRDisplay::getFrameData(VRFrameData* frame_data) {
-  if (!FocusedOrPresenting() || !frame_pose_ || display_blurred_)
+  if (!FocusedOrPresenting() || !frame_pose_ || display_blurred_) {
+    LOG(ERROR) << "ASDF 1";
+    LOG(ERROR) << !FocusedOrPresenting() << " " << !frame_pose_ << " " << display_blurred_;
     return false;
+  }
 
-  if (!frame_data)
+  if (!frame_data) {
+    LOG(ERROR) << "ASDF no frame data";
     return false;
+  }
 
-  if (depth_near_ == depth_far_)
+  if (depth_near_ == depth_far_) {
+    LOG(ERROR) << "ASDF depth same";
     return false;
+  }
 
-  return frame_data->Update(frame_pose_, eye_parameters_left_,
+  bool ret_val = frame_data->Update(frame_pose_, eye_parameters_left_,
                             eye_parameters_right_, depth_near_, depth_far_);
+  LOG(ERROR) << "ASDF update returned " << ret_val;
+  return ret_val;
 }
 
 VREyeParameters* VRDisplay::getEyeParameters(const String& which_eye) {
