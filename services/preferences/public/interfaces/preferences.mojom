@@ -30,6 +30,11 @@ interface PrefStoreObserver {
 
   // The PrefStore has been initialized (asynchronously).
   OnInitializationCompleted(bool succeeded);
+
+  // A preference write by this client has been applied. If this
+  // PrefStoreObserver is associated with a PersistentPrefStore, one
+  // OnPrefChangeAck() message is sent in response to each SetValues() message.
+  OnPrefChangeAck();
 };
 
 // Captures the connections to a PrefStore by supplying the initial state of the
@@ -129,6 +134,10 @@ struct PrefUpdate {
 interface PersistentPrefStore {
   // Sets the values for prefs.
   SetValues(array<PrefUpdate> updates);
+
+  // Requests that the pref service transmits its value for a pref (or sub-pref
+  // if |sub_pref_path| is non-empty).
+  RequestValue(string key, array<string> sub_pref_path);
 
   // These mirror the C++ PersistentPrefStore methods.
   CommitPendingWrite();
