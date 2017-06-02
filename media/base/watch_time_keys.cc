@@ -15,6 +15,10 @@ const char kWatchTimeAudioVideoBattery[] = "Media.WatchTime.AudioVideo.Battery";
 const char kWatchTimeAudioVideoAc[] = "Media.WatchTime.AudioVideo.AC";
 const char kWatchTimeAudioVideoEmbeddedExperience[] =
     "Media.WatchTime.AudioVideo.EmbeddedExperience";
+const char kWatchTimeAudioVideoNativeControlsOn[] =
+    "Media.WatchTime.AudioVideo.NativeControlsOn";
+const char kWatchTimeAudioVideoNativeControlsOff[] =
+    "Media.WatchTime.AudioVideo.NativeControlsOff";
 
 // Audio only "watch time" metrics.
 const char kWatchTimeAudioAll[] = "Media.WatchTime.Audio.All";
@@ -25,6 +29,10 @@ const char kWatchTimeAudioBattery[] = "Media.WatchTime.Audio.Battery";
 const char kWatchTimeAudioAc[] = "Media.WatchTime.Audio.AC";
 const char kWatchTimeAudioEmbeddedExperience[] =
     "Media.WatchTime.Audio.EmbeddedExperience";
+const char kWatchTimeAudioNativeControlsOn[] =
+    "Media.WatchTime.Audio.NativeControlsOn";
+const char kWatchTimeAudioNativeControlsOff[] =
+    "Media.WatchTime.Audio.NativeControlsOff";
 
 // Audio+video background watch time metrics.
 const char kWatchTimeAudioVideoBackgroundAll[] =
@@ -41,9 +49,14 @@ const char kWatchTimeAudioVideoBackgroundAc[] =
     "Media.WatchTime.AudioVideo.Background.AC";
 const char kWatchTimeAudioVideoBackgroundEmbeddedExperience[] =
     "Media.WatchTime.AudioVideo.Background.EmbeddedExperience";
+const char kWatchTimeAudioVideoBackgroundNativeControlsOn[] =
+    "Media.WatchTime.AudioVideo.Background.NativeControlsOn";
+const char kWatchTimeAudioVideoBackgroundNativeControlsOff[] =
+    "Media.WatchTime.AudioVideo.Background.NativeControlsOff";
 
 const char kWatchTimeFinalize[] = "FinalizeWatchTime";
 const char kWatchTimeFinalizePower[] = "FinalizePowerWatchTime";
+const char kWatchTimeFinalizeControls[] = "FinalizeControlsWatchTime";
 
 const char kWatchTimeUnderflowCount[] = "UnderflowCount";
 
@@ -69,6 +82,8 @@ base::flat_set<base::StringPiece> GetWatchTimeKeys() {
        kWatchTimeAudioBattery,
        kWatchTimeAudioAc,
        kWatchTimeAudioEmbeddedExperience,
+       kWatchTimeAudioNativeControlsOn,
+       kWatchTimeAudioNativeControlsOff,
        kWatchTimeAudioVideoAll,
        kWatchTimeAudioVideoMse,
        kWatchTimeAudioVideoEme,
@@ -76,13 +91,18 @@ base::flat_set<base::StringPiece> GetWatchTimeKeys() {
        kWatchTimeAudioVideoBattery,
        kWatchTimeAudioVideoAc,
        kWatchTimeAudioVideoEmbeddedExperience,
+       kWatchTimeAudioVideoNativeControlsOn,
+       kWatchTimeAudioVideoNativeControlsOff,
        kWatchTimeAudioVideoBackgroundAll,
        kWatchTimeAudioVideoBackgroundMse,
        kWatchTimeAudioVideoBackgroundEme,
        kWatchTimeAudioVideoBackgroundSrc,
        kWatchTimeAudioVideoBackgroundBattery,
        kWatchTimeAudioVideoBackgroundAc,
-       kWatchTimeAudioVideoBackgroundEmbeddedExperience},
+       kWatchTimeAudioVideoBackgroundEmbeddedExperience,
+       kWatchTimeAudioVideoBackgroundNativeControlsOn,
+       kWatchTimeAudioVideoBackgroundNativeControlsOff,
+      },
       base::KEEP_FIRST_OF_DUPES);
 }
 
@@ -91,6 +111,16 @@ base::flat_set<base::StringPiece> GetWatchTimePowerKeys() {
       {kWatchTimeAudioBattery, kWatchTimeAudioAc, kWatchTimeAudioVideoBattery,
        kWatchTimeAudioVideoAc, kWatchTimeAudioVideoBackgroundBattery,
        kWatchTimeAudioVideoBackgroundAc},
+      base::KEEP_FIRST_OF_DUPES);
+}
+
+base::flat_set<base::StringPiece> GetWatchTimeControlsKeys() {
+  return base::flat_set<base::StringPiece>(
+      {kWatchTimeAudioNativeControlsOn, kWatchTimeAudioNativeControlsOff,
+       kWatchTimeAudioVideoNativeControlsOn,
+       kWatchTimeAudioVideoNativeControlsOff,
+       kWatchTimeAudioVideoBackgroundNativeControlsOn,
+       kWatchTimeAudioVideoBackgroundNativeControlsOff},
       base::KEEP_FIRST_OF_DUPES);
 }
 
