@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af591953_af624980",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamDescriptor.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-02T15:47:39Z",
+      "side": 1,
+      "message": "I\u0027ll file an issue for it, but I think it is not a blocker for this CL.",
+      "parentUuid": "36821a66_8ea0f285",
+      "revId": "4010068630a595a2e7a12dd5c0ae881f335483b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33ae9726_90e2e0a7",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-01T23:09:43Z",
       "side": 1,
       "message": "What does \"collected\" mean here?",
+      "revId": "4010068630a595a2e7a12dd5c0ae881f335483b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d2f8be8_a318a136",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-02T15:47:39Z",
+      "side": 1,
+      "message": "Meaning that actual function objects were successfully parsed from the script source code.",
+      "parentUuid": "33ae9726_90e2e0a7",
       "revId": "4010068630a595a2e7a12dd5c0ae881f335483b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "af7faf7f_714beac8",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-02T15:47:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7906a08_299227d5",
+      "revId": "4010068630a595a2e7a12dd5c0ae881f335483b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6df50ea7_84048045",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-01T23:09:43Z",
       "side": 1,
       "message": "IsNullOrUndefrined() doesn\u0027t sound like it checks that the extracted value is a function.  Is it?",
+      "revId": "4010068630a595a2e7a12dd5c0ae881f335483b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d83b799a_a99babcb",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-02T15:47:39Z",
+      "side": 1,
+      "message": "Oh, I think I need to fix the comment. We don\u0027t necessarily check if the extracted value is a function. So the code is correct whereas the comment is not.",
+      "parentUuid": "6df50ea7_84048045",
       "revId": "4010068630a595a2e7a12dd5c0ae881f335483b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
