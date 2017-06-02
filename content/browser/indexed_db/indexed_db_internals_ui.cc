@@ -299,8 +299,28 @@ void IndexedDBInternalsUI::OnDownloadDataReady(
                                      origin, temp_path, connection_count));
 
   BrowserContext* context = web_contents->GetBrowserContext();
-  BrowserContext::GetDownloadManager(context)->DownloadUrl(
-      std::move(dl_params), NO_TRAFFIC_ANNOTATION_YET);
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("...", R"(
+        semantics {
+          sender: "..."
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+        }
+        policy {
+          cookies_allowed: false/true
+          cookies_store: "..."
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
+  BrowserContext::GetDownloadManager(context)->DownloadUrl(std::move(dl_params),
+                                                           traffic_annotation);
 }
 
 // The entire purpose of this class is to delete the temp file after
