@@ -154,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "62b879c7_6864aaf7",
+        "filename": "chrome/browser/predictors/glowplug_stats_collector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-06-02T11:54:31Z",
+      "side": 1,
+      "message": "Yes, eventually.",
+      "parentUuid": "92c5e8bd_90c5bbd8",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 61
+      },
+      "revId": "753c73d1daeb2225045cb967bbe206bcd7e79f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28e47823_5e8f6975",
         "filename": "chrome/browser/predictors/glowplug_stats_collector_unittest.cc",
         "patchSetId": 4
@@ -183,6 +207,24 @@
       "side": 1,
       "message": "We could move this definition in test_util file. However, I prefer to use StrictMock that means I should explicitly call EXPECT_CALL for all mock methods of class that will be called. If we use a common mock class in both places, we should call EXPECT_CALL for methods that we\u0027re not interested in.",
       "parentUuid": "28e47823_5e8f6975",
+      "revId": "753c73d1daeb2225045cb967bbe206bcd7e79f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3fc2701_6a6024f6",
+        "filename": "chrome/browser/predictors/glowplug_stats_collector_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-06-02T11:54:31Z",
+      "side": 1,
+      "message": "I would still prefer a single mock class. If updating the other use is too cumbersome, you can make it a StrictMock only here, at least initially.",
+      "parentUuid": "df3a97fd_407955bb",
       "revId": "753c73d1daeb2225045cb967bbe206bcd7e79f02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

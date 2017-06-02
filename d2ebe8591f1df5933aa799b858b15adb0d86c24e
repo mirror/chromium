@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "681a1e4d_73deda04",
+        "filename": "chrome/browser/predictors/loading_stats_collector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-06-02T11:54:31Z",
+      "side": 1,
+      "message": "Please add a class level comment.",
+      "revId": "d2ebe8591f1df5933aa799b858b15adb0d86c24e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
