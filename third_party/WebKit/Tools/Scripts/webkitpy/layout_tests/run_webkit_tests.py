@@ -176,9 +176,19 @@ def parse_args(args):
                 '--new-baseline',
                 action='store_true',
                 default=False,
-                help=('Save generated results as new baselines into the *most-specific-platform* '
+                help=('If actual results are different from expected, save actual '
+                      'results as new baselines into the *most-specific-platform* '
                       "directory, overwriting whatever's already there. Equivalent to "
                       '--reset-results --add-platform-exceptions')),
+            optparse.make_option(
+                '--new-baseline-copy',
+                action='store_true',
+                default=False,
+                help=('If actual results are different from expected, copy expected '
+                      'results into the *most-specific-platform* directory. This is '
+                      'useful for creating a base version for code review, so that '
+                      'reviewer can see the difference between the new baselines and '
+                      'the original expected results')),
             optparse.make_option(
                 '--new-test-results',
                 action='store_true',
@@ -508,6 +518,9 @@ def _set_up_derived_options(port, options, args):
         for path in options.additional_platform_directory:
             additional_platform_directories.append(port.host.filesystem.abspath(path))
         options.additional_platform_directory = additional_platform_directories
+
+    if options.new_baseline_copy:
+        options.new_baseline = True
 
     if options.new_baseline:
         options.reset_results = True

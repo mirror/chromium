@@ -236,10 +236,16 @@ class SingleTestRunner(object):
 
         if location == self.VERSION_DIR:
             fallback_path = port.expected_filename(self._test_name, extension)
-            if fallback_path != output_path and fs.sha1(fallback_path) == hashlib.sha1(data).hexdigest():
-                _log.info('Not writing new expected result "%s" because it is the same as "%s"',
-                          port.relative_test_filename(output_path), port.relative_test_filename(fallback_path))
-                return
+            if fallback_path != output_path:
+                if fs.sha1(fallback_path) == hashlib.sha1(data).hexdigest():
+                    _log.info('Not writing new expected result "%s" because it is the same as "%s"',
+                              port.relative_test_filename(output_path), port.relative_test_filename(fallback_path))
+                    return
+                if self._options.new_baseline_copy:
+                    _log.info('Copying "%s" to "%s"',
+                              port.relative_test_filename(fallback_path), port.relative_test_filename(output_path))
+                    fs.copyfile(fallback_path, output_path)
+                    return
 
         _log.info('Writing new expected result "%s"', port.relative_test_filename(output_path))
         port.update_baseline(output_path, data)
