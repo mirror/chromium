@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1cf7f10b_a7719083",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-02T21:19:00Z",
+      "side": 1,
+      "message": "Line 497 executes only if force_rebuild is false. Therefore I think my comments about immediate-rebuild\nwere wrong, and in fact the code is already safe against mutating the wrong opacity.",
+      "parentUuid": "67302099_5e822426",
+      "range": {
+        "startLine": 497,
+        "startChar": 7,
+        "endLine": 497,
+        "endChar": 26
+      },
+      "revId": "60696c05341920be02330721a78b24e8a6f6dd8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2393d5e1_dca5873b",
         "filename": "cc/trees/layer_tree_host_common_unittest.cc",
         "patchSetId": 6
