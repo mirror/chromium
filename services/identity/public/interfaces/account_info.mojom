@@ -1,0 +1,19 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module identity.mojom;
+
+// Information about a specific Google account.
+struct AccountInfo {
+  // The account ID used by OAuth2TokenService.
+  string account_id;
+  string gaia;
+  string email;
+  string full_name;
+  string given_name;
+  string hosted_domain;
+  string locale;
+  string picture_url;
+  bool is_child_account;
+};
