@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cefa100_3c7dcccf",
+        "filename": "services/ui/ws/frame_sink_manager_client_binding.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-02T00:56:21Z",
+      "side": 1,
+      "message": "Is this used?",
+      "range": {
+        "startLine": 8,
+        "startChar": 25,
+        "endLine": 8,
+        "endChar": 38
+      },
+      "revId": "493b3d3260ceea7b3f706e91500e47aacf040406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95f6bfaf_ab62539b",
+        "filename": "services/ui/ws/frame_sink_manager_client_binding.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-02T00:56:21Z",
+      "side": 1,
+      "message": "Why does this binding object implement the FrameSinkManager interface?\nI\u0027m too far removed from this work/code, I\u0027m not an appropriate OWNER :-/\n( OWNERS removal CL: https://codereview.chromium.org/2917023002 )",
+      "range": {
+        "startLine": 21,
+        "startChar": 45,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "493b3d3260ceea7b3f706e91500e47aacf040406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e48f99_e51150e9",
+        "filename": "services/ui/ws/frame_sink_manager_client_binding.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-02T00:56:21Z",
+      "side": 1,
+      "message": "I guess I don\u0027t understand what this \u0027Binding\u0027 class is doing...",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 15
+      },
+      "revId": "493b3d3260ceea7b3f706e91500e47aacf040406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866e8c69_4a1a3a91",
+        "filename": "services/ui/ws/frame_sink_manager_client_binding.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-02T00:56:21Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN?",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "493b3d3260ceea7b3f706e91500e47aacf040406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ba6b6e_9b8c9f41",
+        "filename": "services/ui/ws/window_server.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-02T00:56:21Z",
+      "side": 1,
+      "message": "Add a comment",
+      "revId": "493b3d3260ceea7b3f706e91500e47aacf040406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
