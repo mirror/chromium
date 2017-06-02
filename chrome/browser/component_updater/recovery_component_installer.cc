@@ -8,6 +8,7 @@
 
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "base/base_paths.h"
@@ -259,7 +260,7 @@ class RecoveryComponentInstaller : public update_client::CrxInstaller {
   void OnUpdateError(int error) override;
 
   update_client::CrxInstaller::Result Install(
-      const base::DictionaryValue& manifest,
+      std::unique_ptr<base::DictionaryValue> manifest,
       const base::FilePath& unpack_path) override;
 
   bool GetInstalledFile(const std::string& file,
@@ -270,7 +271,7 @@ class RecoveryComponentInstaller : public update_client::CrxInstaller {
  private:
   ~RecoveryComponentInstaller() override {}
 
-  bool DoInstall(const base::DictionaryValue& manifest,
+  bool DoInstall(std::unique_ptr<base::DictionaryValue> manifest,
                  const base::FilePath& unpack_path);
 
   bool RunInstallCommand(const base::CommandLine& cmdline,
@@ -396,22 +397,22 @@ bool SetPosixExecutablePermission(const base::FilePath& path) {
 #endif  // defined(OS_POSIX)
 
 update_client::CrxInstaller::Result RecoveryComponentInstaller::Install(
-    const base::DictionaryValue& manifest,
+    std::unique_ptr<base::DictionaryValue> manifest,
     const base::FilePath& unpack_path) {
-  return update_client::InstallFunctionWrapper(
-      base::Bind(&RecoveryComponentInstaller::DoInstall, base::Unretained(this),
-                 base::ConstRef(manifest), base::ConstRef(unpack_path)));
+  return update_client::InstallFunctionWrapper(base::Bind(
+      &RecoveryComponentInstaller::DoInstall, base::Unretained(this),
+      base::Passed(std::move(manifest)), base::ConstRef(unpack_path)));
 }
 
 bool RecoveryComponentInstaller::DoInstall(
-    const base::DictionaryValue& manifest,
+    std::unique_ptr<base::DictionaryValue> manifest,
     const base::FilePath& unpack_path) {
   std::string name;
-  manifest.GetStringASCII("name", &name);
+  manifest->GetStringASCII("name", &name);
   if (name != kRecoveryManifestName)
     return false;
   std::string proposed_version;
-  manifest.GetStringASCII("version", &proposed_version);
+  manifest->GetStringASCII("version", &proposed_version);
   base::Version version(proposed_version);
   if (!version.IsValid())
     return false;
@@ -450,7 +451,7 @@ bool RecoveryComponentInstaller::DoInstall(
   // Run the recovery component.
   const bool is_deferred_run = false;
   const auto cmdline = BuildRecoveryInstallCommandLine(
-      main_file, manifest, is_deferred_run, current_version_);
+      main_file, *manifest, is_deferred_run, current_version_);
 
   if (!RunInstallCommand(cmdline, path)) {
     return false;

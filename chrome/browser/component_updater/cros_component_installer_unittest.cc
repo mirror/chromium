@@ -61,10 +61,9 @@ class FakeInstallerTraits : public ComponentInstallerTraits {
     return update_client::CrxInstaller::Result(0);
   }
 
-  void ComponentReady(
-      const base::Version& version,
-      const base::FilePath& install_dir,
-      std::unique_ptr<base::DictionaryValue> manifest) override {}
+  void ComponentReady(const base::Version& version,
+                      const base::DictionaryValue& manifest,
+                      const base::FilePath& install_dir) override {}
 
   base::FilePath GetRelativeInstallDir() const override {
     return base::FilePath(FILE_PATH_LITERAL("fake"));
