@@ -5,9 +5,12 @@
 # found in the LICENSE file.
 
 # Generates the following tree of certificates:
-#     root (self-signed root)
+#     root1 (self-signed root)
 #      \
-#       \--> l1_leaf (end-entity)
+#       \--> root1_l1_leaf (end-entity)
+#     root2 (self-signed root)
+#      \
+#       \--> root2_l1_leaf (end-entity)
 
 try() {
   "$@" || {
@@ -73,8 +76,14 @@ issue_cert() {
 try rm -rf out
 try mkdir out
 
-CN=root \
-  try root_cert root
+CN=root1 \
+  try root_cert root1
 
-CA_ID=root CN=l1_leaf \
-  try issue_cert l1_leaf leaf_cert
+CA_ID=root1 CN=root1_l1_leaf \
+  try issue_cert root1_l1_leaf leaf_cert
+
+CN=root2 \
+  try root_cert root2
+
+CA_ID=root2 CN=root2_l1_leaf \
+  try issue_cert root2_l1_leaf leaf_cert
