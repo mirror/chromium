@@ -126,6 +126,9 @@ deps = {
   'src/breakpad/src':
     Var('chromium_git') + '/breakpad/breakpad/src.git' + '@' + '29e4a2c5dfd36961d9207755e1f78faf2c933b44',
 
+  'src/build/depot_tools':
+    Var('chromium_git') + '/chromium/tools/depot_tools.git' + '@' + '6d0d04458d9c345bc7d77681996d89d6e5fc742c',
+
   'src/buildtools':
     Var('chromium_git') + '/chromium/buildtools.git' + '@' +  Var('buildtools_revision'),
 
@@ -549,6 +552,17 @@ hooks = [
     'action': [
         'python',
         'src/build/landmines.py',
+    ],
+  },
+  {
+    # Ensure that the DEPS'd "depot_tools" has its self-update capability
+    # disabled.
+    'name': 'disable_depot_tools_selfupdate',
+    'pattern': '.',
+    'action': [
+        'python',
+        'src/build/depot_tools/update_depot_tools_toggle.py',
+        '--disable',
     ],
   },
   {
