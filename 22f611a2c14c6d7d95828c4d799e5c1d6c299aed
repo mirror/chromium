@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6327b540_cb11f8f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-02T07:49:19Z",
+      "side": 1,
+      "message": "nit: line wrapping looks weird",
+      "revId": "22f611a2c14c6d7d95828c4d799e5c1d6c299aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8ad2bc0_851a3a14",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-02T07:49:19Z",
+      "side": 1,
+      "message": "Just to be sure, when you call Detach() then EmbeddedWorkerInstance::OnStarted() itself won\u0027t be called right? Might be more direct to just say that. Otherwise it sounds like OnStarted is called and the observers\u0027 OnStarted is not called.\n\nNice CL description!",
+      "revId": "22f611a2c14c6d7d95828c4d799e5c1d6c299aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba24c1e6_d8849bb8",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-02T07:49:19Z",
+      "side": 1,
+      "message": "I like something like OnEventDispatcherConnectionError() better, considering the comment in 190-191, which wouldn\u0027t make much sense in the context of just \"CallDetach\".",
+      "range": {
+        "startLine": 183,
+        "startChar": 5,
+        "endLine": 183,
+        "endChar": 15
+      },
+      "revId": "22f611a2c14c6d7d95828c4d799e5c1d6c299aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
