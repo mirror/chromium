@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "079875c3_4f3db6e9",
+        "filename": "chrome/browser/predictors/glowplug_stats_collector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-06-02T11:29:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4d1d829_a4589283",
+      "revId": "753c73d1daeb2225045cb967bbe206bcd7e79f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc5fb155_33e98f29",
         "filename": "chrome/browser/predictors/glowplug_stats_collector.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f916c836_6aaa54fa",
+        "filename": "chrome/browser/predictors/glowplug_stats_collector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-06-02T11:29:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc5fb155_33e98f29",
+      "revId": "753c73d1daeb2225045cb967bbe206bcd7e79f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3834336_c789067b",
         "filename": "chrome/browser/predictors/glowplug_stats_collector.cc",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "753c73d1daeb2225045cb967bbe206bcd7e79f02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a22b1e9_5825257c",
+        "filename": "chrome/browser/predictors/glowplug_stats_collector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-06-02T11:29:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3834336_c789067b",
+      "revId": "753c73d1daeb2225045cb967bbe206bcd7e79f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "92c5e8bd_90c5bbd8",
+        "filename": "chrome/browser/predictors/glowplug_stats_collector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-06-02T11:29:22Z",
+      "side": 1,
+      "message": "Done\nShouldn\u0027t we rename database related classes glowplug_key_value_{data,table} then as well? I\u0027d postpone it until we finish triggering and data collection refactoring.",
+      "parentUuid": "61029ed6_cbb7f863",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 61
+      },
+      "revId": "753c73d1daeb2225045cb967bbe206bcd7e79f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28e47823_5e8f6975",
         "filename": "chrome/browser/predictors/glowplug_stats_collector_unittest.cc",
         "patchSetId": 4
@@ -87,6 +165,24 @@
       "writtenOn": "2017-06-02T09:33:19Z",
       "side": 1,
       "message": "We have another mock in loading_predictor_unittest.cc.\nIs it possible to use the same in both places?",
+      "revId": "753c73d1daeb2225045cb967bbe206bcd7e79f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df3a97fd_407955bb",
+        "filename": "chrome/browser/predictors/glowplug_stats_collector_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-06-02T11:29:22Z",
+      "side": 1,
+      "message": "We could move this definition in test_util file. However, I prefer to use StrictMock that means I should explicitly call EXPECT_CALL for all mock methods of class that will be called. If we use a common mock class in both places, we should call EXPECT_CALL for methods that we\u0027re not interested in.",
+      "parentUuid": "28e47823_5e8f6975",
       "revId": "753c73d1daeb2225045cb967bbe206bcd7e79f02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
