@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "3d9d96cf_99d8abca",
+        "filename": "chrome/browser/component_updater/recovery_component_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-06-02T22:43:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5a407f5_156b2faa",
+      "range": {
+        "startLine": 404,
+        "startChar": 19,
+        "endLine": 404,
+        "endChar": 20
+      },
+      "revId": "8a698824adfd47f78e4894c7509d302cff99a7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "191d0b6c_0dc30485",
         "filename": "chrome/browser/net/crl_set_fetcher.cc",
         "patchSetId": 1
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "b154a71a_d156615e",
+        "filename": "chrome/browser/net/crl_set_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-06-02T22:43:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "191d0b6c_0dc30485",
+      "range": {
+        "startLine": 173,
+        "startChar": 17,
+        "endLine": 173,
+        "endChar": 31
+      },
+      "revId": "8a698824adfd47f78e4894c7509d302cff99a7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16da8fff_f7322cbd",
         "filename": "ios/chrome/browser/net/crl_set_fetcher.cc",
         "patchSetId": 1
@@ -91,6 +139,30 @@
       "revId": "8a698824adfd47f78e4894c7509d302cff99a7a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5656b28a_6e21fe13",
+        "filename": "ios/chrome/browser/net/crl_set_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-06-02T22:43:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "16da8fff_f7322cbd",
+      "range": {
+        "startLine": 168,
+        "startChar": 17,
+        "endLine": 168,
+        "endChar": 31
+      },
+      "revId": "8a698824adfd47f78e4894c7509d302cff99a7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
