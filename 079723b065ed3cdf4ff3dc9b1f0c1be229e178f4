@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7d1323b_ea3deab7",
+        "filename": "chrome/browser/prefs/pref_service_syncable_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-02T10:58:27Z",
+      "side": 1,
+      "message": "I would not use default arguments here -- if there is only one signature, it avoids duplicate code paths (see also my comment at the call site).",
+      "range": {
+        "startLine": 51,
+        "startChar": 68,
+        "endLine": 52,
+        "endChar": 49
+      },
+      "revId": "079723b065ed3cdf4ff3dc9b1f0c1be229e178f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e582bbf_ad3ceba2",
+        "filename": "chrome/browser/profiles/off_the_record_profile_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-02T10:58:27Z",
+      "side": 1,
+      "message": "Nit: Leaving out braces seems more common in this file.",
+      "range": {
+        "startLine": 134,
+        "startChar": 16,
+        "endLine": 134,
+        "endChar": 34
+      },
+      "revId": "079723b065ed3cdf4ff3dc9b1f0c1be229e178f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c570700_14b1e9e1",
+        "filename": "chrome/browser/profiles/off_the_record_profile_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-02T10:58:27Z",
+      "side": 1,
+      "message": "Maybe return early if PrefService is disabled.",
+      "revId": "079723b065ed3cdf4ff3dc9b1f0c1be229e178f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad7ee75_c4daa85a",
+        "filename": "chrome/browser/profiles/profile.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-02T10:58:27Z",
+      "side": 1,
+      "message": "Nit: Empty line before this comment?",
+      "revId": "079723b065ed3cdf4ff3dc9b1f0c1be229e178f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02367fe_667a9d0a",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-02T10:58:27Z",
+      "side": 1,
+      "message": "Can you implement this method in terms of the one below?",
+      "revId": "079723b065ed3cdf4ff3dc9b1f0c1be229e178f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f176b8_d71ab692",
+        "filename": "components/prefs/pref_value_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-02T10:58:27Z",
+      "side": 1,
+      "message": "No braces, like in other parts of this file.",
+      "revId": "079723b065ed3cdf4ff3dc9b1f0c1be229e178f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13b74c66_462e61c1",
+        "filename": "components/prefs/pref_value_store.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-02T10:58:27Z",
+      "side": 1,
+      "message": "Small nit: I think the |pipes| are only used for variables, not for class names (see e.g. line 105).",
+      "revId": "079723b065ed3cdf4ff3dc9b1f0c1be229e178f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62f77d92_a270eef0",
+        "filename": "components/sync_preferences/pref_service_syncable.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-02T10:58:27Z",
+      "side": 1,
+      "message": "Move this to the top of the file?",
+      "revId": "079723b065ed3cdf4ff3dc9b1f0c1be229e178f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
