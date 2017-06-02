@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "cc2c8df4_69cc0ccb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-02T17:57:10Z",
+      "side": 1,
+      "message": "I think this CL description could be made even better now after your latest changes.\n\nIn general for CL description, I\u0027ve found it incredibly helpful to try to write one paragraph each for the answers to the following questions (you don\u0027t need to write the questions in the description):\n- What is currently happening?\n- Why is that bad?\n- How is this CL making it better?\n\nI think that is particularly helpful for bug fixes, etc.\n\nFor new features like this CL, you can of course tweak the questions / answers a little bit and maybe answer something like:\n- On which platform was this previously available?\n- Why is it now necessary to enable the component on more platforms?\n- What does this CL do to make that happen?\n\nOn that last part, your CL in fact does a few things:\n- Make the whole feature engagement tracker available to all platforms, and update the documentation to reflect this.\n- Enables demo mode in chrome://flags to be cross platform.\n- Add one new In-Product Help feature for new tabs.",
+      "revId": "77b966d20c2b06e33c9d1c4eb280ebd748c04368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b3930ab_9843c59c",
         "filename": "/COMMIT_MSG",
         "patchSetId": 10
@@ -42,6 +59,23 @@
         "endLine": 9,
         "endChar": 4
       },
+      "revId": "77b966d20c2b06e33c9d1c4eb280ebd748c04368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "358dcf28_cea5b2b2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-02T17:57:10Z",
+      "side": 1,
+      "message": "Is there a bug tracking this work? If so, could you refer to it here?",
       "revId": "77b966d20c2b06e33c9d1c4eb280ebd748c04368",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
