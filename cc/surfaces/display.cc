@@ -388,9 +388,9 @@ void Display::SetNeedsRedrawRect(const gfx::Rect& damage_rect) {
   }
 }
 
-void Display::OnSurfaceDamaged(const SurfaceId& surface_id,
-                               const BeginFrameAck& ack,
-                               bool* changed) {
+bool Display::OnSurfaceDamaged(const SurfaceId& surface_id,
+                               const BeginFrameAck& ack) {
+  bool display_damaged = false;
   if (ack.has_damage) {
     if (aggregator_ &&
         aggregator_->previous_contained_surfaces().count(surface_id)) {
@@ -400,17 +400,18 @@ void Display::OnSurfaceDamaged(const SurfaceId& surface_id,
         if (surface->GetActiveFrame().resource_list.empty())
           aggregator_->ReleaseResources(surface_id);
       }
-      *changed = true;
+      display_damaged = true;
+      if (surface_id == current_surface_id_)
+        UpdateRootSurfaceResourcesLocked();
     } else if (surface_id == current_surface_id_) {
-      *changed = true;
+      display_damaged = true;
+      UpdateRootSurfaceResourcesLocked();
     }
   }
 
   if (scheduler_)
-    scheduler_->SurfaceDamaged(surface_id, ack, *changed);
-
-  if (surface_id == current_surface_id_)
-    UpdateRootSurfaceResourcesLocked();
+    scheduler_->SurfaceDamaged(surface_id, ack, display_damaged);
+  return display_damaged;
 }
 
 bool Display::SurfaceHasUndrawnFrame(const SurfaceId& surface_id) const {
