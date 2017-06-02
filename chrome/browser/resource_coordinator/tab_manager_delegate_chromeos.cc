@@ -4,8 +4,12 @@
 
 #include "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.h"
 
+#include <fcntl.h>
 #include <math.h>
 #include <stdint.h>
+#include <sys/select.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 #include <algorithm>
 #include <map>
@@ -18,6 +22,7 @@
 #include "base/files/file_util.h"
 #include "base/memory/memory_pressure_monitor_chromeos.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/posix/eintr_wrapper.h"
 #include "base/process/process_handle.h"  // kNullProcessHandle.
 #include "base/process/process_metrics.h"
 #include "base/strings/string16.h"
@@ -213,66 +218,34 @@ class TabManagerDelegate::FocusedProcess {
 
 // TabManagerDelegate::MemoryStat implementation.
 
-// static
-int TabManagerDelegate::MemoryStat::ReadIntFromFile(const char* file_name,
-                                                    const int default_val) {
-  std::string file_string;
-  if (!base::ReadFileToString(base::FilePath(file_name), &file_string)) {
-    LOG(WARNING) << "Unable to read file" << file_name;
-    return default_val;
+namespace {
+
+const char kLowMemFile[] = "/dev/chromeos-low-mem";
+
+}  // namespace.
+
+TabManagerDelegate::MemoryStat::MemoryStat()
+    : low_mem_file_(HANDLE_EINTR(::open(kLowMemFile, O_RDONLY))) {}
+
+TabManagerDelegate::MemoryStat::~MemoryStat() {}
+
+bool TabManagerDelegate::MemoryStat::IsLowMemoryCondition() {
+  if (!low_mem_file_.is_valid()) {
+    LOG(ERROR) << kLowMemFile << " invalid, unable to decide low memory status";
+    return false;
   }
-  int val = default_val;
-  if (!base::StringToInt(
-          base::TrimWhitespaceASCII(file_string, base::TRIM_TRAILING), &val)) {
-    LOG(WARNING) << "Unable to parse string" << file_string;
-    return default_val;
-  }
-  return val;
-}
 
-// static
-int TabManagerDelegate::MemoryStat::LowMemoryMarginKB() {
-  static const int kDefaultLowMemoryMarginMb = 50;
-  static const char kLowMemoryMarginConfig[] =
-      "/sys/kernel/mm/chromeos-low_mem/margin";
-  return ReadIntFromFile(kLowMemoryMarginConfig, kDefaultLowMemoryMarginMb) *
-         1024;
-}
+  fd_set fds;
+  struct timeval tv;
+  int low_mem_file_fd = low_mem_file_.get();
 
-// The logic of available memory calculation is copied from
-// _is_low_mem_situation() in kernel file include/linux/low-mem-notify.h.
-// Maybe we should let kernel report the number directly.
-int TabManagerDelegate::MemoryStat::TargetMemoryToFreeKB() {
-  static const int kRamVsSwapWeight = 4;
-  static const char kMinFilelistConfig[] = "/proc/sys/vm/min_filelist_kbytes";
-  static const char kMinFreeKbytes[] = "/proc/sys/vm/min_free_kbytes";
+  FD_ZERO(&fds);
+  FD_SET(low_mem_file_fd, &fds);
 
-  base::SystemMemoryInfoKB system_mem;
-  base::GetSystemMemoryInfo(&system_mem);
-  const int file_mem_kb = system_mem.active_file + system_mem.inactive_file;
-  const int min_filelist_kb = ReadIntFromFile(kMinFilelistConfig, 0);
-  const int min_free_kb = ReadIntFromFile(kMinFreeKbytes, 0);
-  // Calculate current available memory in system.
-  // File-backed memory should be easy to reclaim, unless they're dirty.
-  // TODO(cylee): On ChromeOS, kernel reports low memory condition when
-  // available memory is low. The following formula duplicates the logic in
-  // kernel to calculate how much memory should be released. In the future,
-  // kernel should try to report the amount of memory to release directly to
-  // eliminate the duplication here.
-  const int available_mem_kb =
-      system_mem.free + file_mem_kb - system_mem.dirty - min_filelist_kb +
-      system_mem.swap_free / kRamVsSwapWeight - min_free_kb;
+  tv.tv_sec = 0;
+  tv.tv_usec = 0;
 
-  return LowMemoryMarginKB() - available_mem_kb;
-}
-
-int TabManagerDelegate::MemoryStat::EstimatedMemoryFreedKB(
-    base::ProcessHandle pid) {
-  std::unique_ptr<base::ProcessMetrics> process_metrics(
-      base::ProcessMetrics::CreateProcessMetrics(pid));
-  base::WorkingSetKBytes mem_usage;
-  process_metrics->GetWorkingSetKBytes(&mem_usage);
-  return mem_usage.priv;
+  return HANDLE_EINTR(select(low_mem_file_fd + 1, &fds, NULL, NULL, &tv)) > 0;
 }
 
 TabManagerDelegate::TabManagerDelegate(
@@ -570,7 +543,6 @@ void TabManagerDelegate::LowMemoryKillImpl(
   const std::vector<TabManagerDelegate::Candidate> candidates =
       GetSortedCandidates(tab_list, arc_processes);
 
-  int target_memory_to_free_kb = mem_stat_->TargetMemoryToFreeKB();
   const TimeTicks now = TimeTicks::Now();
 
   MEMORY_LOG(ERROR) << "List of low memory kill candidates "
@@ -578,15 +550,17 @@ void TabManagerDelegate::LowMemoryKillImpl(
   for (auto it = candidates.rbegin(); it != candidates.rend(); ++it) {
     MEMORY_LOG(ERROR) << *it;
   }
-  // Kill processes until the estimated amount of freed memory is sufficient to
-  // bring the system memory back to a normal level.
+
+  bool killed;
+  // Kill processes until the system recovers to normal memory level.
   // The list is sorted by descending importance, so we go through the list
   // backwards.
   for (auto it = candidates.rbegin(); it != candidates.rend(); ++it) {
-    MEMORY_LOG(ERROR) << "Target memory to free: " << target_memory_to_free_kb
-                      << " KB";
-    if (target_memory_to_free_kb <= 0)
+    if (!mem_stat_->IsLowMemoryCondition())
       break;
+    MEMORY_LOG(ERROR) << "Trying to kill a candidate";
+
+    killed = false;
     // Never kill selected tab, foreground app, and important apps regardless of
     // whether they're in the active window. Since the user experience would be
     // bad.
@@ -601,40 +575,27 @@ void TabManagerDelegate::LowMemoryKillImpl(
                           << " too often";
         continue;
       }
-      int estimated_memory_freed_kb =
-          mem_stat_->EstimatedMemoryFreedKB(it->app()->pid());
       if (KillArcProcess(it->app()->nspid())) {
         recently_killed_arc_processes_[it->app()->process_name()] = now;
-        target_memory_to_free_kb -= estimated_memory_freed_kb;
-        memory::MemoryKillsMonitor::LogLowMemoryKill("APP",
-                                                     estimated_memory_freed_kb);
+        memory::MemoryKillsMonitor::LogLowMemoryKill("APP");
         MEMORY_LOG(ERROR) << "Killed app " << it->app()->process_name() << " ("
-                          << it->app()->pid() << ")"
-                          << ", estimated " << estimated_memory_freed_kb
-                          << " KB freed";
+                          << it->app()->pid() << ")";
+        killed = true;
       } else {
         MEMORY_LOG(ERROR) << "Failed to kill " << it->app()->process_name();
       }
     } else {
       int64_t tab_id = it->tab()->tab_contents_id;
-      // The estimation is problematic since multiple tabs may share the same
-      // process, while the calculation counts memory used by the whole process.
-      // So |estimated_memory_freed_kb| is an over-estimation.
-      int estimated_memory_freed_kb =
-          mem_stat_->EstimatedMemoryFreedKB(it->tab()->renderer_handle);
       if (KillTab(tab_id)) {
-        target_memory_to_free_kb -= estimated_memory_freed_kb;
-        memory::MemoryKillsMonitor::LogLowMemoryKill("TAB",
-                                                     estimated_memory_freed_kb);
+        memory::MemoryKillsMonitor::LogLowMemoryKill("TAB");
         MEMORY_LOG(ERROR) << "Killed tab " << it->tab()->title << " ("
-                          << it->tab()->renderer_handle << "), estimated "
-                          << estimated_memory_freed_kb << " KB freed";
+                          << it->tab()->renderer_handle << ")";
+        killed = true;
       }
     }
   }
-  if (target_memory_to_free_kb > 0) {
-    MEMORY_LOG(ERROR)
-        << "Unable to kill enough candidates to meet target_memory_to_free_kb ";
+  if (!killed) {
+    MEMORY_LOG(ERROR) << "Unable to find a candidate to kill.";
   }
 }
 

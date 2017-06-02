@@ -58,7 +58,7 @@ class MemoryKillsMonitor : public base::DelegateSimpleThread::Delegate {
   static Handle StartMonitoring();
 
   // Logs a low memory kill event.
-  static void LogLowMemoryKill(const std::string& type, int estimated_freed_kb);
+  static void LogLowMemoryKill(const std::string& type);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(MemoryKillsMonitorTest, TryMatchOomKillLine);

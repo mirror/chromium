@@ -17,9 +17,9 @@ namespace memory {
 using MemoryKillsMonitorTest = testing::Test;
 
 TEST_F(MemoryKillsMonitorTest, LogLowMemoryKill) {
-  MemoryKillsMonitor::LogLowMemoryKill("APP", 123);
-  MemoryKillsMonitor::LogLowMemoryKill("APP", 100);
-  MemoryKillsMonitor::LogLowMemoryKill("TAB", 10000);
+  MemoryKillsMonitor::LogLowMemoryKill("APP");
+  MemoryKillsMonitor::LogLowMemoryKill("APP");
+  MemoryKillsMonitor::LogLowMemoryKill("TAB");
 
   auto* histogram_count =
       base::StatisticsRecorder::FindHistogram("Arc.LowMemoryKiller.Count");
@@ -29,16 +29,6 @@ TEST_F(MemoryKillsMonitorTest, LogLowMemoryKill) {
   EXPECT_EQ(1, count_samples->GetCount(1));
   EXPECT_EQ(1, count_samples->GetCount(2));
   EXPECT_EQ(1, count_samples->GetCount(3));
-
-  auto* histogram_freed_size =
-      base::StatisticsRecorder::FindHistogram("Arc.LowMemoryKiller.FreedSize");
-  ASSERT_TRUE(histogram_freed_size);
-  auto freed_size_samples = histogram_freed_size->SnapshotSamples();
-  EXPECT_EQ(3, freed_size_samples->TotalCount());
-  // 123 and 100 are in the same bucket.
-  EXPECT_EQ(2, freed_size_samples->GetCount(123));
-  EXPECT_EQ(2, freed_size_samples->GetCount(100));
-  EXPECT_EQ(1, freed_size_samples->GetCount(10000));
 
   auto* histogram_time_delta =
       base::StatisticsRecorder::FindHistogram("Arc.LowMemoryKiller.TimeDelta");
