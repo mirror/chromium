@@ -398,4 +398,8 @@ void WebRuntimeFeatures::EnableLocationHardReload(bool enable) {
   RuntimeEnabledFeatures::setLocationHardReloadEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableMediaCastOverlayButton(bool enable) {
+  RuntimeEnabledFeatures::setMediaCastOverlayButtonEnabled(enable);
+}
+
 }  // namespace blink

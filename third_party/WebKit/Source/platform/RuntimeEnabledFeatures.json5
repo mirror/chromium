@@ -590,6 +590,9 @@
       status: "experimental",
     },
     {
+      name: "MediaCastOverlayButton",
+    },
+    {
       name: "MediaControlsOverlayPlayButton",
       settable_from_internals: true,
     },
