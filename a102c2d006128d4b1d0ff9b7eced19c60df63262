@@ -16,6 +16,24 @@
       "revId": "a102c2d006128d4b1d0ff9b7eced19c60df63262",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "335381ba_59c8621e",
+        "filename": "chrome/browser/plugins/plugin_prefs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-06-02T20:37:19Z",
+      "side": 1,
+      "message": "That\u0027s how git cl format formats it, I tried adding brackets, it\u0027s a little different, but not sure if it\u0027s better.",
+      "parentUuid": "b472d863_57a7fcd4",
+      "revId": "a102c2d006128d4b1d0ff9b7eced19c60df63262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
