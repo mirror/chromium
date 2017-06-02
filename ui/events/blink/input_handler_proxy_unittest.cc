@@ -2534,6 +2534,40 @@ TEST_P(InputHandlerProxyTest, TouchStartPassiveAndTouchEndBlocking) {
   VERIFY_AND_RESET_MOCKS();
 }
 
+TEST_P(InputHandlerProxyTest, TouchMoveBlockingAddedAfterPassiveTouchStart) {
+  // The touch start is not in a touch-region but there is a touch end handler
+  // so to maintain targeting we need to dispatch the touch start as
+  // non-blocking but drop all touch moves.
+  expected_disposition_ = InputHandlerProxy::DID_HANDLE_NON_BLOCKING;
+  VERIFY_AND_RESET_MOCKS();
+
+  EXPECT_CALL(
+      mock_input_handler_,
+      GetEventListenerProperties(cc::EventListenerClass::kTouchStartOrMove))
+      .WillOnce(testing::Return(cc::EventListenerProperties::kPassive));
+  EXPECT_CALL(mock_input_handler_, EventListenerTypeForTouchStartAt(testing::_))
+      .WillOnce(testing::Return(
+          cc::InputHandler::TouchStartEventListenerType::NO_HANDLER));
+
+  WebTouchEvent touch(WebInputEvent::kTouchStart, WebInputEvent::kNoModifiers,
+                      WebInputEvent::kTimeStampForTesting);
+  touch.touches_length = 1;
+  touch.touches[0] = CreateWebTouchPoint(WebTouchPoint::kStatePressed, 0, 0);
+  EXPECT_EQ(expected_disposition_, input_handler_->HandleInputEvent(touch));
+
+  EXPECT_CALL(mock_input_handler_, EventListenerTypeForTouchStartAt(testing::_))
+      .WillOnce(testing::Return(
+          cc::InputHandler::TouchStartEventListenerType::HANDLER));
+
+  expected_disposition_ = InputHandlerProxy::DID_NOT_HANDLE;
+  touch.SetType(WebInputEvent::kTouchMove);
+  touch.touches_length = 1;
+  touch.touch_start_or_first_touch_move = true;
+  touch.touches[0] = CreateWebTouchPoint(WebTouchPoint::kStateMoved, 10, 10);
+  EXPECT_EQ(expected_disposition_, input_handler_->HandleInputEvent(touch));
+  VERIFY_AND_RESET_MOCKS();
+}
+
 TEST_P(InputHandlerProxyTest, GestureFlingCancelledByKeyboardEvent) {
   // We shouldn't send any events to the widget for this gesture.
   expected_disposition_ = InputHandlerProxy::DID_HANDLE;
