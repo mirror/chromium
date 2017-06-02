@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6529b2c_eb7724c0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-02T20:03:34Z",
+      "side": 1,
+      "message": "Thought you inlined this one.",
+      "revId": "491cf08be42858ec4df5333c255f1affe6402eac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6168706_1b663bd2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-02T20:03:34Z",
+      "side": 1,
+      "message": "oops!",
+      "revId": "491cf08be42858ec4df5333c255f1affe6402eac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e9b3488_3ce18903",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4536,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-02T20:03:34Z",
+      "side": 1,
+      "message": "I wonder if we just need to make them fields instead. Dmitry, WDYT?",
+      "revId": "491cf08be42858ec4df5333c255f1affe6402eac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95970a35_0be664c4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-02T20:03:34Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "491cf08be42858ec4df5333c255f1affe6402eac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c511d7e3_9c7745b4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-02T20:03:34Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "491cf08be42858ec4df5333c255f1affe6402eac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
