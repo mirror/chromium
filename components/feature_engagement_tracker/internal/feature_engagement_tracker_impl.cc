@@ -92,7 +92,8 @@ FeatureEngagementTracker* FeatureEngagementTracker::Create(
       base::MakeUnique<leveldb_proto::ProtoDatabaseImpl<Event>>(
           background_task_runner);
 
-  base::FilePath event_storage_dir = storage_dir.Append(kEventDBStorageDir);
+  base::FilePath event_storage_dir =
+      storage_dir.AppendASCII(kEventDBStorageDir);
   auto store =
       base::MakeUnique<PersistentStore>(event_storage_dir, std::move(db));
 
@@ -111,7 +112,7 @@ FeatureEngagementTracker* FeatureEngagementTracker::Create(
   auto time_provider = base::MakeUnique<SystemTimeProvider>();
 
   base::FilePath availability_storage_dir =
-      storage_dir.Append(kAvailabilityDBStorageDir);
+      storage_dir.AppendASCII(kAvailabilityDBStorageDir);
   auto availability_db =
       base::MakeUnique<leveldb_proto::ProtoDatabaseImpl<Availability>>(
           background_task_runner);
