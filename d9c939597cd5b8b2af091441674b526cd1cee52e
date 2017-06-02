@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b20283f_dbc7bf4a",
+        "filename": "ui/aura/mus/drag_drop_controller_mus.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000307
+      },
+      "writtenOn": "2017-06-02T18:37:02Z",
+      "side": 0,
+      "message": "Scott, Ben, could you think on how are we going to call this from wm?",
+      "revId": "d9c939597cd5b8b2af091441674b526cd1cee52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
