@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a21aaba9_b1db8239",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1588,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-02T00:00:23Z",
+      "side": 1,
+      "message": "Ah, it\u0027s not. In fact the */ prefix isn\u0027t even needed, I just hadn\u0027t bothered to try using exclude_file_patterns first because I assumed it was incorrect. Fixed.",
+      "parentUuid": "f09d6c5f_c19f2d7f",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ea3817d_623216bb",
         "filename": "content/test/data/OWNERS",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "791072b2_43004592",
+        "filename": "content/test/data/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-02T00:00:23Z",
+      "side": 1,
+      "message": "Hmm nothing. Reverted. I was going to add some other rules but I fixed the presbumit instead.",
+      "parentUuid": "2ea3817d_623216bb",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c5f8256c_dac8c54a",
+        "filename": "third_party/WebKit/LayoutTests/mojo/bind-interface.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-02T00:00:23Z",
+      "side": 1,
+      "message": "Thanks, makes sense. Done",
+      "parentUuid": "3a4e9781_744a3331",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99442c86_c5bd8c0c",
         "filename": "third_party/WebKit/LayoutTests/mojo/bind-interface.html",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "40f3a0e4_99775b90",
+        "filename": "third_party/WebKit/LayoutTests/mojo/bind-interface.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-02T00:00:23Z",
+      "side": 1,
+      "message": "Done (made a simple \"test\")",
+      "parentUuid": "99442c86_c5bd8c0c",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "310ffe7a_e88a6727",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98c6e72d_7957d993",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-02T00:00:23Z",
+      "side": 1,
+      "message": "Well, the API isn\u0027t necessarily better, but it seems more direct to have the InterfaceProvider* be exposed directly by the client impl if the client impl already owns it anyway.\n\nThis avoids having to stick a separate owned object on LocalFrame which forwards to the client\u0027s, or (once blink::InterfaceProvider is gone) having an extra method on WebFrame which just forwards to a method on the client.\n\nUnless you just meant that the documentation should include an explanation of why one is preferred over the other, but I didn\u0027t think that was worth including. \"Just do this instead of that, because that is deprecated\" seemed sufficient. WDYT?",
+      "parentUuid": "310ffe7a_e88a6727",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -159,6 +249,24 @@
     },
     {
       "key": {
+        "uuid": "b4402204_39c5f4e1",
+        "filename": "third_party/WebKit/Source/core/mojo/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-02T00:00:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2090bc39_0367ed92",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff48e4ce_e502db87",
         "filename": "third_party/WebKit/Source/core/mojo/MojoHandle.cpp",
         "patchSetId": 4
@@ -173,6 +281,24 @@
       "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2016118e_a65e10c8",
+        "filename": "third_party/WebKit/Source/core/mojo/MojoHandle.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-02T00:00:23Z",
+      "side": 1,
+      "message": "Docs have been updated in a separate CL to clarify that ScopedHandle does ensure a moved-from handle is reset and no longer valid.",
+      "parentUuid": "ff48e4ce_e502db87",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -193,6 +319,24 @@
     },
     {
       "key": {
+        "uuid": "29fc6802_171864e1",
+        "filename": "third_party/WebKit/Source/core/mojo/MojoInterfaceInterceptor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-02T00:00:23Z",
+      "side": 1,
+      "message": "Done. Class comments added and IDL+sources moved to mojo/testing.",
+      "parentUuid": "489d3158_508b86c7",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6513d688_6b93b211",
         "filename": "third_party/WebKit/Source/core/mojo/MojoInterfaceInterceptor.idl",
         "patchSetId": 4
@@ -207,6 +351,24 @@
       "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b3936b1_92855410",
+        "filename": "third_party/WebKit/Source/core/mojo/MojoInterfaceInterceptor.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-02T00:00:23Z",
+      "side": 1,
+      "message": "OK. I\u0027m not too worried about it. In fact I originally started with exactly the latter approach modulo naming, and ended up with an EventTarget because it felt more correct. I\u0027ll stick with the current approach.",
+      "parentUuid": "6513d688_6b93b211",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -227,6 +389,24 @@
     },
     {
       "key": {
+        "uuid": "675b9041_e41b4e1d",
+        "filename": "third_party/WebKit/Source/core/mojo/MojoInterfaceRequestEvent.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-02T00:00:23Z",
+      "side": 1,
+      "message": "I\u0027m kind of confused by this. It looks like we don\u0027t generated Internals.cpp/h from the IDL at build time but rather they\u0027re committed sources in the repo?",
+      "parentUuid": "4e62b39f_e0dbd8a0",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed7cc903_be708574",
         "filename": "third_party/WebKit/public/web/WebFrameClient.h",
         "patchSetId": 4
@@ -241,6 +421,24 @@
       "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddee5e41_3a67d970",
+        "filename": "third_party/WebKit/public/web/WebFrameClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-02T00:00:23Z",
+      "side": 1,
+      "message": "As discussed with haraken@ already, it is preferable to expose the public service_manager API directly rather than implementing a nominal Blink-only wrapper around it. The goal is to (soon) remove blink::InterfaceProvider.",
+      "parentUuid": "ed7cc903_be708574",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
