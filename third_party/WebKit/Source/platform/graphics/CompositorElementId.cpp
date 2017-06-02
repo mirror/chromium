@@ -51,6 +51,11 @@ CompositorElementIdFromScrollbarId(ScrollbarId id,
   return CreateCompositorElementId(id, namespace_id);
 }
 
+CompositorElementId CompositorElementIdFromAuxiliaryId(uint64_t id) {
+  return CreateCompositorElementId(id,
+                                   CompositorElementIdNamespace::kAuxiliary);
+}
+
 CompositorElementIdNamespace NamespaceFromCompositorElementId(
     CompositorElementId element_id) {
   return static_cast<CompositorElementIdNamespace>(
