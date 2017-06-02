@@ -23,13 +23,12 @@ class RangeStructTraitsTest : public testing::Test,
 
  private:
   // RangeTraitsTestService:
-  void EchoRange(const Range& p, const EchoRangeCallback& callback) override {
-    callback.Run(p);
+  void EchoRange(const Range& p, EchoRangeCallback callback) override {
+    std::move(callback).Run(p);
   }
 
-  void EchoRangeF(const RangeF& p,
-                  const EchoRangeFCallback& callback) override {
-    callback.Run(p);
+  void EchoRangeF(const RangeF& p, EchoRangeFCallback callback) override {
+    std::move(callback).Run(p);
   }
 
   base::MessageLoop loop_;

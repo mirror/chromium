@@ -34,25 +34,24 @@ class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
  private:
   // TraitsTestService:
   void EchoSelectionBound(const SelectionBound& s,
-                          const EchoSelectionBoundCallback& callback) override {
-    callback.Run(s);
+                          EchoSelectionBoundCallback callback) override {
+    std::move(callback).Run(s);
   }
 
   void EchoTransform(const Transform& t,
-                     const EchoTransformCallback& callback) override {
-    callback.Run(t);
+                     EchoTransformCallback callback) override {
+    std::move(callback).Run(t);
   }
 
-  void EchoAcceleratedWidget(
-      const AcceleratedWidget& t,
-      const EchoAcceleratedWidgetCallback& callback) override {
-    callback.Run(t);
+  void EchoAcceleratedWidget(const AcceleratedWidget& t,
+                             EchoAcceleratedWidgetCallback callback) override {
+    std::move(callback).Run(t);
   }
 
   void EchoGpuMemoryBufferHandle(
       const GpuMemoryBufferHandle& handle,
-      const EchoGpuMemoryBufferHandleCallback& callback) override {
-    callback.Run(handle);
+      EchoGpuMemoryBufferHandleCallback callback) override {
+    std::move(callback).Run(handle);
   }
 
   base::MessageLoop loop_;

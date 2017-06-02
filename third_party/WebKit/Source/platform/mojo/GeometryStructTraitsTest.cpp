@@ -24,53 +24,51 @@ class GeometryStructTraitsTest
 
  private:
   // GeometryTraitsTestService:
-  void EchoPoint(gfx::mojom::blink::PointPtr, const EchoPointCallback&) {
+  void EchoPoint(gfx::mojom::blink::PointPtr, EchoPointCallback) {
     // The type map is not specified.
     NOTREACHED();
   }
 
-  void EchoPointF(gfx::mojom::blink::PointFPtr, const EchoPointFCallback&) {
+  void EchoPointF(gfx::mojom::blink::PointFPtr, EchoPointFCallback) {
     // The type map is not specified.
     NOTREACHED();
   }
 
-  void EchoSize(const WebSize& s, const EchoSizeCallback& callback) {
-    callback.Run(s);
+  void EchoSize(const WebSize& s, EchoSizeCallback callback) {
+    std::move(callback).Run(s);
   }
 
-  void EchoSizeF(gfx::mojom::blink::SizeFPtr, const EchoSizeFCallback&) {
+  void EchoSizeF(gfx::mojom::blink::SizeFPtr, EchoSizeFCallback) {
     // The type map is not specified.
     NOTREACHED();
   }
 
-  void EchoRect(gfx::mojom::blink::RectPtr, const EchoRectCallback&) {
+  void EchoRect(gfx::mojom::blink::RectPtr, EchoRectCallback) {
     // The type map is not specified.
     NOTREACHED();
   }
 
-  void EchoRectF(gfx::mojom::blink::RectFPtr, const EchoRectFCallback&) {
+  void EchoRectF(gfx::mojom::blink::RectFPtr, EchoRectFCallback) {
     // The type map is not specified.
     NOTREACHED();
   }
 
-  void EchoInsets(gfx::mojom::blink::InsetsPtr, const EchoInsetsCallback&) {
+  void EchoInsets(gfx::mojom::blink::InsetsPtr, EchoInsetsCallback) {
     // The type map is not specified.
     NOTREACHED();
   }
 
-  void EchoInsetsF(gfx::mojom::blink::InsetsFPtr, const EchoInsetsFCallback&) {
+  void EchoInsetsF(gfx::mojom::blink::InsetsFPtr, EchoInsetsFCallback) {
     // The type map is not specified.
     NOTREACHED();
   }
 
-  void EchoVector2d(gfx::mojom::blink::Vector2dPtr,
-                    const EchoVector2dCallback&) {
+  void EchoVector2d(gfx::mojom::blink::Vector2dPtr, EchoVector2dCallback) {
     // The type map is not specified.
     NOTREACHED();
   }
 
-  void EchoVector2dF(gfx::mojom::blink::Vector2dFPtr,
-                     const EchoVector2dFCallback&) {
+  void EchoVector2dF(gfx::mojom::blink::Vector2dFPtr, EchoVector2dFCallback) {
     // The type map is not specified.
     NOTREACHED();
   }
