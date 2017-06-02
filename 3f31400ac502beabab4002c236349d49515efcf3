@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "6d549d22_ba07d65e",
+        "filename": "chrome/browser/chromeos/extensions/device_local_account_management_policy_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-06-02T12:51:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "679fe8e3_1fa45213",
+      "range": {
+        "startLine": 740,
+        "startChar": 56,
+        "endLine": 740,
+        "endChar": 76
+      },
+      "revId": "3f31400ac502beabab4002c236349d49515efcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c67317c2_f6c69df3",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "9d39b66a_2ba1bf29",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 15627,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-06-02T12:51:33Z",
+      "side": 1,
+      "message": "Well, looks like they have bumped it twice so far :) But I don\u0027t see a better option, naming this .*3 is weird too. Ack.",
+      "parentUuid": "b137348e_0593ca71",
+      "range": {
+        "startLine": 15627,
+        "startChar": 10,
+        "endLine": 15627,
+        "endChar": 30
+      },
+      "revId": "3f31400ac502beabab4002c236349d49515efcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62e4bb1a_f1b8d625",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -187,6 +235,30 @@
       "revId": "3f31400ac502beabab4002c236349d49515efcf3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ae5ba3d_c092ccff",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 15633,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-06-02T12:51:33Z",
+      "side": 1,
+      "message": "Looks good.",
+      "parentUuid": "f324962c_7d983a03",
+      "range": {
+        "startLine": 15633,
+        "startChar": 8,
+        "endLine": 15633,
+        "endChar": 35
+      },
+      "revId": "3f31400ac502beabab4002c236349d49515efcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
