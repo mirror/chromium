@@ -8,10 +8,7 @@
 #include <unordered_map>
 #include <utility>
 
-#include "base/logging.h"
-#include "base/process/process_handle.h"
 #include "base/strings/string_number_conversions.h"
-#include "base/unguessable_token.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/resource_coordinator/public/cpp/coordination_unit_id.h"
 
@@ -28,16 +25,13 @@ CUIDMap& g_cu_map() {
 
 }  // namespace
 
+const double CoordinationUnitImpl::kCPUUsageMinimumForTesting = 0.0;
+const double CoordinationUnitImpl::kCPUUsageUnmeasuredForTesting = -1.0;
+
 CoordinationUnitImpl::CoordinationUnitImpl(
     const CoordinationUnitID& id,
-    std::unique_ptr<service_manager::ServiceContextRef> service_ref) {
-  if (!id.id) {
-    id_ = CoordinationUnitID(id.type,
-                             base::UnguessableToken().Create().ToString());
-  } else {
-    id_ = id;
-  }
-
+    std::unique_ptr<service_manager::ServiceContextRef> service_ref)
+    : id_(id.type, id.id) {
   auto it = g_cu_map().insert(std::make_pair(id_, this));
   DCHECK(it.second);  // Inserted successfully
 
@@ -160,17 +154,33 @@ bool CoordinationUnitImpl::AddChild(CoordinationUnitImpl* child) {
   // We don't recalculate the policy here as policies are only dependent
   // on the current CU or its parents, not its children. In other words,
   // policies only bubble down.
-  return children_.count(child) ? false : children_.insert(child).second;
+  bool success =
+      children_.count(child) ? false : children_.insert(child).second;
+
+  if (success) {
+    for (auto listener : add_child_event_listeners_.GetListeners()) {
+      listener.Run(this, child);
+    }
+  }
+
+  return success;
 }
 
 void CoordinationUnitImpl::RemoveChild(CoordinationUnitImpl* child) {
   size_t children_removed = children_.erase(child);
   DCHECK_EQ(1u, children_removed);
+  for (auto listener : remove_child_event_listeners_.GetListeners()) {
+    listener.Run(this, child);
+  }
 }
 
 void CoordinationUnitImpl::AddParent(CoordinationUnitImpl* parent) {
   DCHECK_EQ(0u, parents_.count(parent));
   parents_.insert(parent);
+
+  for (auto listener : add_parent_event_listeners_.GetListeners()) {
+    listener.Run(this, parent);
+  }
 
   RecalcCoordinationPolicy();
 }
@@ -178,6 +188,12 @@ void CoordinationUnitImpl::AddParent(CoordinationUnitImpl* parent) {
 void CoordinationUnitImpl::RemoveParent(CoordinationUnitImpl* parent) {
   size_t parents_removed = parents_.erase(parent);
   DCHECK_EQ(1u, parents_removed);
+
+  // TODO(matthalp, oysteine) should this go before or
+  // after RecalcCoordinationPolicy?
+  for (auto listener : remove_parent_event_listeners_.GetListeners()) {
+    listener.Run(this, parent);
+  }
 
   RecalcCoordinationPolicy();
 }
@@ -219,7 +235,53 @@ void CoordinationUnitImpl::UnregisterCoordinationPolicyCallback() {
 }
 
 double CoordinationUnitImpl::GetCPUUsageForTesting() {
-  return -1.0;
+  return kCPUUsageUnmeasuredForTesting;
+}
+
+base::Value CoordinationUnitImpl::GetProperty(mojom::PropertyType property) {
+  auto value_it = property_store_.find(property);
+
+  return value_it != property_store_.end() ? value_it->second : base::Value();
+}
+
+void CoordinationUnitImpl::ClearProperty(mojom::PropertyType property) {
+  auto value_it = property_store_.find(property);
+
+  if (value_it != property_store_.end()) {
+    property_store_.erase(value_it);
+
+    for (auto listener :
+         storage_property_changed_event_listeners_.GetListeners()) {
+      listener.Run(this, property);
+    }
+  }
+}
+
+void CoordinationUnitImpl::SetProperty(mojom::PropertyPtr property) {
+  SetProperty(property->property, *property->value);
+}
+
+void CoordinationUnitImpl::SetProperty(mojom::PropertyType property,
+                                       base::Value value) {
+  // setting a property with an empty value is effectively clearing the
+  // value from storage
+  if (value.IsType(base::Value::Type::NONE)) {
+    ClearProperty(property);
+    return;
+  }
+
+  property_store_[property] = value;
+
+  for (auto listener :
+       storage_property_changed_event_listeners_.GetListeners()) {
+    listener.Run(this, property);
+  }
+}
+
+void CoordinationUnitImpl::WillBeDestroyed() {
+  for (auto listener : will_be_destroyed_event_listeners_.GetListeners()) {
+    listener.Run(this);
+  }
 }
 
 }  // namespace resource_coordinator

@@ -1,0 +1,4 @@
+include_rules = [
+    "+services/resource_coordinator/public/cpp",
+    "+services/resource_coordinator/public/interfaces",
+]

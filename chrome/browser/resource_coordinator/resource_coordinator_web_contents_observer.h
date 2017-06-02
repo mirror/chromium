@@ -27,6 +27,8 @@ class ResourceCoordinatorWebContentsObserver
   // WebContentsObserver implementation.
   void WasShown() override;
   void WasHidden() override;
+  void ReadyToCommitNavigation(
+      content::NavigationHandle* navigation_handle) override;
 
  private:
   explicit ResourceCoordinatorWebContentsObserver(
