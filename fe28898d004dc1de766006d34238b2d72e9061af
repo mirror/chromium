@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "46c27161_2dc24437",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-06-02T01:50:51Z",
+      "side": 1,
+      "message": "Renamed to ComputeOverflowFromNGLayout and added comment.\n\n\u003e  But why can\u0027t you use fragment-\u003eOverflowSize().Height()\n\nThe legacy ComputeOverflow uses old_client_after_edge, which is stored in overflow_. I am unsure what old_client_after_edge_ does, but I am sure I can\u0027t compute it correctly. I am being conservative here.\n\n\u003e Why does this not support abspos? \n\nBecause NG computes abspos position independently of Legacy. Abspos descendants are not placed inside Legacy containers. When Legacy tries to compute abspos, it has no access to NG abspos boxes.",
+      "parentUuid": "e94b6c7d_503fdadf",
+      "revId": "fe28898d004dc1de766006d34238b2d72e9061af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43cd16b6_8840c5bf",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.h",
         "patchSetId": 2
