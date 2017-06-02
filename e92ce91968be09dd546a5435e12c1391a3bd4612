@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2e85d722_654376d8",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 864,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-02T11:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "856e3079_32cc0dd3",
+      "range": {
+        "startLine": 864,
+        "startChar": 53,
+        "endLine": 864,
+        "endChar": 69
+      },
+      "revId": "e92ce91968be09dd546a5435e12c1391a3bd4612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6019269b_b15c9407",
         "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "28e3f884_9e65649c",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-02T11:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6019269b_b15c9407",
+      "range": {
+        "startLine": 326,
+        "startChar": 4,
+        "endLine": 326,
+        "endChar": 27
+      },
+      "revId": "e92ce91968be09dd546a5435e12c1391a3bd4612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a355d9d1_7141adfb",
         "filename": "third_party/WebKit/Source/core/loader/resource/FontResourceTest.cpp",
         "patchSetId": 6
@@ -62,6 +110,24 @@
       "revId": "e92ce91968be09dd546a5435e12c1391a3bd4612",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0028f03_37220814",
+        "filename": "third_party/WebKit/Source/core/loader/resource/FontResourceTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-02T11:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a355d9d1_7141adfb",
+      "revId": "e92ce91968be09dd546a5435e12c1391a3bd4612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
