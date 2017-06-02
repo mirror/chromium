@@ -34,12 +34,14 @@ namespace {
 // DEFINE_VARIATION_PARAM below, and also added to the
 // |kIPHDemoModeChoiceVariations| array.
 const base::Feature* kAllFeatures[] = {
-    &kIPHDataSaverPreview, &kIPHDownloadPageFeature, &kIPHDownloadHomeFeature};
+    &kIPHDataSaverPreview, &kIPHDownloadPageFeature, &kIPHDownloadHomeFeature,
+    &kIPHNewTabFeature};
 
 // Defines a flags_ui::FeatureEntry::FeatureParam for each feature.
 DEFINE_VARIATION_PARAM(kIPHDataSaverPreview);
 DEFINE_VARIATION_PARAM(kIPHDownloadPageFeature);
 DEFINE_VARIATION_PARAM(kIPHDownloadHomeFeature);
+DEFINE_VARIATION_PARAM(kIPHNewTabFeature);
 
 }  // namespace
 
@@ -50,6 +52,7 @@ const flags_ui::FeatureEntry::FeatureVariation kIPHDemoModeChoiceVariations[] =
         VARIATION_ENTRY(kIPHDataSaverPreview),
         VARIATION_ENTRY(kIPHDownloadPageFeature),
         VARIATION_ENTRY(kIPHDownloadHomeFeature),
+        VARIATION_ENTRY(kIPHNewTabFeature),
         // Note: When changing the number of entries in this array, the constant
         // kIPHDemoModeChoiceVariationsLen in feature_list.h must also be
         // updated to reflect the real size.

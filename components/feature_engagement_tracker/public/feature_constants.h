@@ -18,6 +18,7 @@ extern const base::Feature kIPHDemoMode;
 extern const base::Feature kIPHDataSaverPreview;
 extern const base::Feature kIPHDownloadPageFeature;
 extern const base::Feature kIPHDownloadHomeFeature;
+extern const base::Feature kIPHNewTabFeature;
 
 }  // namespace feature_engagement_tracker
 
