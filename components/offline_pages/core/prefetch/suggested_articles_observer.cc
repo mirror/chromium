@@ -13,7 +13,6 @@
 #include "components/offline_pages/core/offline_page_feature.h"
 #include "components/offline_pages/core/offline_page_item.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
-#include "components/offline_pages/core/prefetch/prefetch_service_impl.h"
 
 using ntp_snippets::Category;
 using ntp_snippets::ContentSuggestion;
@@ -35,13 +34,9 @@ ClientId CreateClientIDFromSuggestionId(const ContentSuggestion::ID& id) {
 }  // namespace
 
 SuggestedArticlesObserver::SuggestedArticlesObserver(
-    ntp_snippets::ContentSuggestionsService* content_suggestions_service,
-    PrefetchService* prefetch_service)
-    : content_suggestions_service_(content_suggestions_service),
-      prefetch_service_(prefetch_service) {
-  // The content suggestions service can be |nullptr| in tests.
-  if (content_suggestions_service_)
-    content_suggestions_service_->AddObserver(this);
+    PrefetchDispatcher* dispatcher)
+    : prefetch_dispatcher_(dispatcher) {
+  DCHECK(prefetch_dispatcher_);
 }
 
 SuggestedArticlesObserver::~SuggestedArticlesObserver() = default;
@@ -67,12 +62,14 @@ void SuggestedArticlesObserver::OnNewSuggestions(Category category) {
         {CreateClientIDFromSuggestionId(suggestion.id()), suggestion.url()});
   }
 
-  prefetch_service_->GetDispatcher()->AddCandidatePrefetchURLs(prefetch_urls);
+  prefetch_dispatcher_->AddCandidatePrefetchURLs(prefetch_urls);
 }
 
 void SuggestedArticlesObserver::OnCategoryStatusChanged(
     Category category,
     ntp_snippets::CategoryStatus new_status) {
+  DCHECK(prefetch_dispatcher_);
+
   if (category != ArticlesCategory() || category_status_ == new_status)
     return;
 
@@ -82,19 +79,21 @@ void SuggestedArticlesObserver::OnCategoryStatusChanged(
           ntp_snippets::CategoryStatus::CATEGORY_EXPLICITLY_DISABLED ||
       category_status_ ==
           ntp_snippets::CategoryStatus::ALL_SUGGESTIONS_EXPLICITLY_DISABLED) {
-    prefetch_service_->GetDispatcher()->RemoveAllUnprocessedPrefetchURLs(
+    prefetch_dispatcher_->RemoveAllUnprocessedPrefetchURLs(
         kSuggestedArticlesNamespace);
   }
 }
 
 void SuggestedArticlesObserver::OnSuggestionInvalidated(
     const ContentSuggestion::ID& suggestion_id) {
-  prefetch_service_->GetDispatcher()->RemovePrefetchURLsByClientId(
+  DCHECK(prefetch_dispatcher_);
+
+  prefetch_dispatcher_->RemovePrefetchURLsByClientId(
       CreateClientIDFromSuggestionId(suggestion_id));
 }
 
 void SuggestedArticlesObserver::OnFullRefreshRequired() {
-  prefetch_service_->GetDispatcher()->RemoveAllUnprocessedPrefetchURLs(
+  prefetch_dispatcher_->RemoveAllUnprocessedPrefetchURLs(
       kSuggestedArticlesNamespace);
   OnNewSuggestions(ArticlesCategory());
 }

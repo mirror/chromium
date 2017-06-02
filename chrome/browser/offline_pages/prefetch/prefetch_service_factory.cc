@@ -8,8 +8,10 @@
 #include "base/memory/singleton.h"
 #include "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
+#include "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_app_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_service_impl.h"
+#include "components/offline_pages/core/prefetch/suggested_articles_observer.h"
 #include "content/public/browser/browser_context.h"
 
 namespace offline_pages {
@@ -33,11 +35,16 @@ PrefetchService* PrefetchServiceFactory::GetForBrowserContext(
 KeyedService* PrefetchServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
   auto prefetch_gcm_app_handler = base::MakeUnique<PrefetchGCMAppHandler>();
+  auto prefetch_dispatcher = base::MakeUnique<PrefetchDispatcherImpl>();
   auto offline_metrics_collector =
       base::MakeUnique<OfflineMetricsCollectorImpl>();
+  auto suggested_articles_observer =
+      base::MakeUnique<SuggestedArticlesObserver>(prefetch_dispatcher.get());
 
   return new PrefetchServiceImpl(std::move(prefetch_gcm_app_handler),
-                                 std::move(offline_metrics_collector));
+                                 std::move(prefetch_dispatcher),
+                                 std::move(offline_metrics_collector),
+                                 std::move(suggested_articles_observer));
 }
 
 }  // namespace offline_pages
