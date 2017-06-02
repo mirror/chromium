@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3eb7577f_9a58802c",
+        "filename": "cc/surfaces/display.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-02T15:10:46Z",
+      "side": 1,
+      "message": "This sounds like a good idea. The only tricky bit is OnSurfaceDamaged, but DisplayScheduler can probably just forward that to the Display, which can return the display_damaged value to DisplayScheduler. Would play well with the changes in [1], too.\n\n[1] https://chromium-review.googlesource.com/520766",
+      "parentUuid": "1858119a_9c0a9967",
+      "revId": "9e4cde20fa642b5d20cd37795c191e79c431dc07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c1b39d9_6ffecef9",
         "filename": "cc/surfaces/display_unittest.cc",
         "patchSetId": 24

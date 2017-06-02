@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84192172_f35db6f5",
+        "filename": "cc/surfaces/display_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-02T15:10:46Z",
+      "side": 1,
+      "message": "nit: for completeness sake, we should probably check whether SetUpDisplay has happened here, i.e. if (begin_frame_source_) ...",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 12
+      },
+      "revId": "88d144d51c13565396d91d60904cd578644c208f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe681353_81f75c85",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-02T15:10:46Z",
+      "side": 1,
+      "message": "nit: get rid of this provided (un)registering in constructor/destructor works.",
+      "revId": "88d144d51c13565396d91d60904cd578644c208f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
