@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37738b2d_58ebbb7c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-02T21:37:33Z",
+      "side": 0,
+      "message": "This is removed because this adds logic that is triggered other than extra_args, which might create a configuration different from what the user expects from the command line arguments specified in the tests.",
+      "revId": "b87d80f6485276511b3c543e90cde926eed2838d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
