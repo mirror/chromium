@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e5bd73e_321b828e",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-02T09:21:51Z",
+      "side": 1,
+      "message": "What about the other activities such as WebAPK, etc?",
+      "revId": "904336134660ad4966f9e58145190ab0710061d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ad8218_50b3f438",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/PictureInPictureController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-02T09:21:51Z",
+      "side": 1,
+      "message": "I\u0027m going to assume this is basically a copy-paste of the private class.",
+      "revId": "904336134660ad4966f9e58145190ab0710061d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
