@@ -72,6 +72,7 @@ class WEB_EXPORT WebPluginContainerImpl final : public WebPluginContainerBase {
   ~WebPluginContainerImpl() override;
 
   // PluginView methods
+  HTMLPlugInElement* Element() const { return element_; }
   void Attach() override;
   void Detach() override;
   bool IsAttached() const override { return is_attached_; }
