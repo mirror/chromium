@@ -35,4 +35,13 @@ void PrefetchDispatcherStub::BeginBackgroundTask(
 
 void PrefetchDispatcherStub::StopBackgroundTask(ScopedBackgroundTask* task) {}
 
+void PrefetchDispatcherStub::GCMReceivedForOperation(
+    const std::string& operation_name) {
+  operation_list.push_back(operation_name);
+}
+
+OfflineEventLogger* PrefetchDispatcherStub::GetLogger() {
+  return &logger_;
+}
+
 }  // namespace offline_pages

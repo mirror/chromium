@@ -85,6 +85,12 @@ cr.define('offlineInternals', function() {
     setRecordRequestQueue: function(shouldLog) {},
 
     /**
+     * Sets whether to record logs for prefetching.
+     * @param {boolean} shouldLog True if logging should be enabled.
+     */
+    setRecordPrefetchService: function(shouldLog) {},
+
+    /**
      * Gets the currently recorded logs.
      * @return {!Promise<!Array<string>>} A promise firing when the
      *     logs are retrieved.

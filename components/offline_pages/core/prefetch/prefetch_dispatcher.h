@@ -15,6 +15,7 @@
 class GURL;
 
 namespace offline_pages {
+class OfflineEventLogger;
 
 // Serves as the entry point for external signals into the prefetching system.
 // It listens to these events, converts them to the appropriate internal tasks
@@ -71,6 +72,13 @@ class PrefetchDispatcher {
   // this call completes, the system will reschedule the task based on whether
   // SetNeedsReschedule has been called.
   virtual void StopBackgroundTask(ScopedBackgroundTask* task) = 0;
+
+  // Called when the GCM app handler receives a GCM message with an embeddeed
+  // operation name.
+  virtual void GCMReceivedForOperation(const std::string& operation_name) = 0;
+
+  // Retrieves the event logger.
+  virtual OfflineEventLogger* GetLogger() = 0;
 };
 
 }  // namespace offline_pages
