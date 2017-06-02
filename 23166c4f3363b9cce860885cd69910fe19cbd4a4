@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5069865f_703ef7f1",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunnerTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-02T21:38:44Z",
+      "side": 1,
+      "message": "A test in here would trigger a DCHECK inside RuntimeCallTimer::Stop (because the TimeTicks::Now() function is set to always return TimeTicks() by default for tests). In retrospect though, I think I should just stub out RuntimeCallStats for this test.",
+      "parentUuid": "e9da8ac1_ff29e2d0",
+      "revId": "23166c4f3363b9cce860885cd69910fe19cbd4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5df6da1_114a5e23",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 5
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "2e55c916_c198fb82",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-02T21:38:44Z",
+      "side": 1,
+      "message": "Ok, done here and everywhere else.",
+      "parentUuid": "637cf075_061fca8b",
+      "revId": "23166c4f3363b9cce860885cd69910fe19cbd4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c929c88e_9324d155",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 5
@@ -83,6 +119,24 @@
       "writtenOn": "2017-06-02T15:14:28Z",
       "side": 1,
       "message": "Why can\u0027t we use RCScope?\n\nAlso consider moving this to the below TRACE_EVENT. In general it\u0027s not nice that TRACE_EVENT and RCS are measuring different things.",
+      "revId": "23166c4f3363b9cce860885cd69910fe19cbd4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31aa4694_5f45582c",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1449,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-02T21:38:44Z",
+      "side": 1,
+      "message": "|isolate| can be null sometimes and we can\u0027t measure when it is null (and I can\u0027t put a scope inside an if block).",
+      "parentUuid": "c929c88e_9324d155",
       "revId": "23166c4f3363b9cce860885cd69910fe19cbd4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
