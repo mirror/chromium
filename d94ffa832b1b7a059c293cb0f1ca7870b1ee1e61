@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d94dec75_e2511004",
+        "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-02T06:44:30Z",
+      "side": 1,
+      "message": "Ah :(\n\nMaybe you could just make this class copyable since it\u0027s simple? You could even give it an explicit copy constructor so you avoid accidentally copying it but don\u0027t have to do this which is hard to maintain (e.g., if you wanted to add a new field in the future).",
+      "range": {
+        "startLine": 152,
+        "startChar": 13,
+        "endLine": 152,
+        "endChar": 24
+      },
+      "revId": "d94ffa832b1b7a059c293cb0f1ca7870b1ee1e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

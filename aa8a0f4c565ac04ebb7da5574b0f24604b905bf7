@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "3fb016ad_e3bc8611",
+        "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-02T06:44:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1b9e15d1_1050c8e0",
+      "range": {
+        "startLine": 132,
+        "startChar": 10,
+        "endLine": 132,
+        "endChar": 22
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05dd31dd_5f9ee8eb",
         "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view_unittest.cc",
         "patchSetId": 4
@@ -284,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "1a317e1c_f40d18be",
+        "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-02T06:44:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9a695429_9f03a0f4",
+      "range": {
+        "startLine": 165,
+        "startChar": 10,
+        "endLine": 165,
+        "endChar": 22
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "498d4ec3_b0568063",
         "filename": "chrome/browser/webshare/share_service_impl.cc",
         "patchSetId": 4
@@ -313,6 +361,24 @@
       "side": 1,
       "message": "Tests override ShareServiceImpl::GetEngagementLevel() so we will have to change how we test as well. Given that this patch is already pretty big, would it be OK to do that in a follow up?",
       "parentUuid": "498d4ec3_b0568063",
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cffaf6fd_4e8244ae",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-02T06:44:30Z",
+      "side": 1,
+      "message": "This doesn\u0027t affect GetEngagementLevel (the original code in GetTargetsWithSufficientEngagement also calls GetEngagementLevel). I\u0027m essentially asking you to revert some of the change here which would make the CL smaller.\n\n(In fact I was going to ask whether GetTargetsWithSufficientEngagement should actually remain in ShareServiceImpl in this CL so that it would be very clear what you\u0027re changing in that function, as opposed to moving it at the same time.)",
+      "parentUuid": "71400447_0b369e33",
       "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -448,6 +514,30 @@
       "side": 1,
       "message": "We can\u0027t because ShareTarget is move-only. See comment in webshare_target_picker_view_unittest.cc",
       "parentUuid": "3e3d0c85_785e0249",
+      "range": {
+        "startLine": 206,
+        "startChar": 43,
+        "endLine": 206,
+        "endChar": 44
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d927bb7_c9d693ba",
+        "filename": "chrome/browser/webshare/share_service_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-02T06:44:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2a304d6e_ce9d8991",
       "range": {
         "startLine": 206,
         "startChar": 43,
