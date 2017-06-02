@@ -1482,6 +1482,57 @@ TEST_F(LayerTreeHostImplTest, ScrollWithUserUnscrollableLayers) {
   EXPECT_VECTOR_EQ(gfx::Vector2dF(10, 20), overflow->CurrentScrollOffset());
 }
 
+TEST_F(LayerTreeHostImplTest, IsElementInList) {
+  ElementId element_id(42);
+  // Totally absent initially.
+  EXPECT_FALSE(
+      host_impl_->IsElementInList(element_id, ElementListType::ACTIVE));
+  EXPECT_FALSE(
+      host_impl_->IsElementInList(element_id, ElementListType::PENDING));
+
+  SetupRootLayerImpl(LayerImpl::Create(host_impl_->active_tree(), 1));
+  LayerImpl* root = host_impl_->active_tree()->root_layer_for_testing();
+  root->SetElementId(element_id);
+  host_impl_->active_tree()->BuildPropertyTreesForTesting();
+  // Should see present in active tree, but not in pending.
+  EXPECT_TRUE(host_impl_->IsElementInList(element_id, ElementListType::ACTIVE));
+  EXPECT_FALSE(
+      host_impl_->IsElementInList(element_id, ElementListType::PENDING));
+
+  host_impl_->CreatePendingTree();
+  auto pending_root_owned = LayerImpl::Create(host_impl_->pending_tree(), 1);
+  auto* pending_root = pending_root_owned.get();
+  host_impl_->pending_tree()->SetRootLayerForTesting(
+      std::move(pending_root_owned));
+  pending_root->SetBounds(gfx::Size(50, 50));
+  pending_root->SetElementId(element_id);
+  pending_root->test_properties()->force_render_surface = true;
+  host_impl_->pending_tree()->BuildPropertyTreesForTesting();
+  // Should now see present in both pending and active.
+  EXPECT_TRUE(host_impl_->IsElementInList(element_id, ElementListType::ACTIVE));
+  EXPECT_TRUE(
+      host_impl_->IsElementInList(element_id, ElementListType::PENDING));
+
+  root->SetElementId(ElementId());
+  host_impl_->active_tree()->BuildPropertyTreesForTesting();
+  // Having cleared in active, we should now see present only in pending.
+  EXPECT_FALSE(
+      host_impl_->IsElementInList(element_id, ElementListType::ACTIVE));
+  EXPECT_TRUE(
+      host_impl_->IsElementInList(element_id, ElementListType::PENDING));
+
+  host_impl_->ActivateSyncTree();
+  root->SetElementId(ElementId());
+  host_impl_->active_tree()->BuildPropertyTreesForTesting();
+  // Having swapped pending to become active, and then cleared from
+  // active, we should see the element in pending (actually, the
+  // recycle tree) but not in active.
+  EXPECT_FALSE(
+      host_impl_->IsElementInList(element_id, ElementListType::ACTIVE));
+  EXPECT_TRUE(
+      host_impl_->IsElementInList(element_id, ElementListType::PENDING));
+}
+
 TEST_F(LayerTreeHostImplTest, AnimationSchedulingPendingTree) {
   EXPECT_FALSE(host_impl_->CommitToActiveTree());
 
