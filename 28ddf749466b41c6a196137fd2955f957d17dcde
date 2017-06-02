@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5554ac1a_6acaabb3",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-02T00:23:23Z",
+      "side": 1,
+      "message": "Should this type be normalized?",
+      "revId": "28ddf749466b41c6a196137fd2955f957d17dcde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba53cce_85bd8bef",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-02T00:23:23Z",
+      "side": 1,
+      "message": "Should |content_type| be normalized?",
+      "revId": "28ddf749466b41c6a196137fd2955f957d17dcde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496d3009_217a4b5a",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-02T00:23:23Z",
+      "side": 1,
+      "message": "DCHECK(|value| is already normalized)",
+      "range": {
+        "startLine": 1329,
+        "startChar": 52,
+        "endLine": 1329,
+        "endChar": 64
+      },
+      "revId": "28ddf749466b41c6a196137fd2955f957d17dcde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
