@@ -24,6 +24,7 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_user_data.h"
+#include "net/http/http_response_headers.h"
 
 namespace offline_pages {
 
@@ -66,11 +67,11 @@ std::string AddHistogramSuffix(const ClientId& client_id,
   return adjusted_histogram_name;
 }
 
-void RecordErrorCauseUMA(const ClientId& client_id, net::Error error_code) {
+void RecordErrorCauseUMA(const ClientId& client_id, int error_code) {
   UMA_HISTOGRAM_SPARSE_SLOWLY(
       AddHistogramSuffix(client_id,
-                         "OfflinePages.Background.BackgroundLoadingFailedCode"),
-      std::abs(error_code));
+                         "OfflinePages.Background.LoadingErrorStatusCode"),
+      error_code);
 }
 
 void HandleLoadTerminationCancel(
@@ -254,6 +255,10 @@ void BackgroundLoaderOffliner::DocumentAvailableInMainFrame() {
   AddLoadingSignal("DocumentAvailableInMainFrame");
 }
 
+void BackgroundLoaderOffliner::DidFirstVisuallyNonEmptyPaint() {
+  is_low_bar_met_ = true;
+}
+
 void BackgroundLoaderOffliner::DocumentOnLoadCompletedInMainFrame() {
   if (!pending_request_.get()) {
     DVLOG(1) << "DidStopLoading called even though no pending request.";
@@ -302,13 +307,19 @@ void BackgroundLoaderOffliner::DidFinishNavigation(
   // Mark as error page. Resetting here causes RecordNavigationMetrics to crash.
   if (navigation_handle->IsErrorPage()) {
     RecordErrorCauseUMA(pending_request_->client_id(),
-                        navigation_handle->GetNetErrorCode());
+                        static_cast<int>(navigation_handle->GetNetErrorCode()));
     switch (navigation_handle->GetNetErrorCode()) {
       case net::ERR_INTERNET_DISCONNECTED:
         page_load_state_ = DELAY_RETRY;
         break;
       default:
         page_load_state_ = RETRIABLE;
+    }
+  } else {
+    int status_code = navigation_handle->GetResponseHeaders()->response_code();
+    if (status_code == 301 || (status_code >= 400 && status_code != 418)) {
+      RecordErrorCauseUMA(pending_request_->client_id(), status_code);
+      page_load_state_ = RETRIABLE;
     }
   }
 }
@@ -355,7 +366,11 @@ void BackgroundLoaderOffliner::StartSnapshot() {
     }
 
     completion_callback_.Run(request, status);
-    ResetState();
+    // Post cleanup task, as we don't want to delete SnapshotController
+    // while it's calling this method.
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::Bind(&BackgroundLoaderOffliner::ResetState,
+                              weak_ptr_factory_.GetWeakPtr()));
     return;
   }
 

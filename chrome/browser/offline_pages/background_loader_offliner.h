@@ -57,6 +57,7 @@ class BackgroundLoaderOffliner : public Offliner,
   void WebContentsDestroyed() override;
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override;
+  void DidFirstVisuallyNonEmptyPaint() override;
 
   // SnapshotController::Client implementation.
   void StartSnapshot() override;
