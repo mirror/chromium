@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57b58103_4de4cbc8",
+        "filename": "ui/views/controls/scroll_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-06-02T20:32:08Z",
+      "side": 0,
+      "message": "I am assuming we are gonna stick with this method, so can I close the crbug TODO points to?",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 52
+      },
+      "revId": "2937a78aafcd67ce7df6646c062bc2d065b4dac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
