@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a950221_15a10a8d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ContentSuggestionsPreferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-02T11:02:41Z",
+      "side": 0,
+      "message": "This string was just marked as untranslatable temporarily while the wording wasn\u0027t decided yet (to avoid unnecessary translation churn). Can you leave it for now until we figure out what will happen to this UI?",
+      "revId": "aa5ed397afd557d82d067bf9ec5652ed5fef1d10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
