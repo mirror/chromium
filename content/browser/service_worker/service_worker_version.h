@@ -171,6 +171,20 @@ class CONTENT_EXPORT ServiceWorkerVersion
     foreign_fetch_origins_ = origins;
   }
 
+  base::TimeDelta TimeSinceNoControllees() const {
+    if (!no_controllees_time_) {
+      return base::TimeDelta();
+    }
+    return no_controllees_time_.value() - base::TimeTicks::Now();
+  }
+
+  base::TimeDelta TimeSinceSkipWaiting() const {
+    if (!skip_waiting_time_) {
+      return base::TimeDelta();
+    }
+    return skip_waiting_time_.value() - base::TimeTicks::Now();
+  }
+
   // Meaningful only if this version is active.
   const NavigationPreloadState& navigation_preload_state() const {
     DCHECK(status_ == ACTIVATING || status_ == ACTIVATED) << status_;
@@ -764,6 +778,9 @@ class CONTENT_EXPORT ServiceWorkerVersion
   bool in_dtor_ = false;
 
   std::vector<int> pending_skip_waiting_requests_;
+  base::Optional<base::TimeTicks> skip_waiting_time_;
+  base::Optional<base::TimeTicks> no_controllees_time_;
+
   std::unique_ptr<net::HttpResponseInfo> main_script_http_info_;
 
   std::unique_ptr<TrialTokenValidator::FeatureToTokensMap> origin_trial_tokens_;

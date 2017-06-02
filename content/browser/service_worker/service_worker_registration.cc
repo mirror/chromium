@@ -21,6 +21,13 @@ namespace content {
 
 namespace {
 
+// The max time a service worker should be made to wait after calling
+// skipWaiting(). Before this time expires, the service worker still waits for
+// the active worker to finish its pending tasks.
+constexpr base::TimeDelta kMaxSkipWaitingTime = base::TimeDelta::FromMinutes(5);
+constexpr base::TimeDelta kMaxNoControlleeTime =
+    base::TimeDelta::FromMinutes(5);
+
 ServiceWorkerVersionInfo GetVersionInfo(ServiceWorkerVersion* version) {
   if (!version)
     return ServiceWorkerVersionInfo();
@@ -275,6 +282,10 @@ bool ServiceWorkerRegistration::IsReadyToActivate() const {
     return true;
   if (!active->HasWork() &&
       (!active->HasControllee() || waiting_version()->skip_waiting())) {
+    return true;
+  }
+  if (waiting_version()->TimeSinceSkipWaiting() > kMaxSkipWaitingTime ||
+      active->TimeSinceNoControllees() > kMaxNoControlleeTime) {
     return true;
   }
   return false;
