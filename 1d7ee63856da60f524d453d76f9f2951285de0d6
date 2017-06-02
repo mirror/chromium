@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fb9e6f7_fed564ca",
+        "filename": "cc/surfaces/display_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-02T17:38:18Z",
+      "side": 1,
+      "message": "nit: Can you add a more descriptive comment here?",
+      "range": {
+        "startLine": 528,
+        "startChar": 41,
+        "endLine": 528,
+        "endChar": 47
+      },
+      "revId": "1d7ee63856da60f524d453d76f9f2951285de0d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06fdfa8a_2bb3217e",
+        "filename": "cc/surfaces/surface_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-02T17:38:18Z",
+      "side": 1,
+      "message": "nit: changed ||\u003d (logical OR not bitwise OR)",
+      "range": {
+        "startLine": 467,
+        "startChar": 14,
+        "endLine": 467,
+        "endChar": 15
+      },
+      "revId": "1d7ee63856da60f524d453d76f9f2951285de0d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
