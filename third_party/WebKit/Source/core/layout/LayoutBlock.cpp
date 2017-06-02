@@ -514,6 +514,15 @@ void LayoutBlock::ComputeOverflow(LayoutUnit old_client_after_edge, bool) {
     layer->SetNeedsCompositingInputsUpdate();
 }
 
+void LayoutBlock::ComputeOverflowFromNGLayout() {
+  LayoutUnit old_client_after_edge = HasOverflowModel()
+                                         ? overflow_->LayoutClientAfterEdge()
+                                         : ClientLogicalBottom();
+  ComputeOverflow(old_client_after_edge);
+  if (HasOverflowClip())
+    Layer()->GetScrollableArea()->UpdateAfterOverflowRecalc();
+}
+
 void LayoutBlock::AddOverflowFromBlockChildren() {
   for (LayoutBox* child = FirstChildBox(); child;
        child = child->NextSiblingBox()) {

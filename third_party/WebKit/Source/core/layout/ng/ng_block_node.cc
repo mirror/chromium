@@ -278,6 +278,13 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
   intrinsic_logical_height -= border_and_padding.BlockSum();
   layout_box_->SetIntrinsicContentLogicalHeight(intrinsic_logical_height);
 
+  // Without this line,
+  // fast/block/float/overhanging-float-remove-from-fixed-position-block.html
+  // crashes because #t1 ends up as a child of 2 BlockFlow elements.
+  // TODO(ikilpatrick) is this the right thing to do?
+  if (layout_box_->IsLayoutBlockFlow()) {
+    ToLayoutBlockFlow(layout_box_)->RemoveFloatingObjects();
+  }
   for (const NGPositionedFloat& positioned_float : fragment->PositionedFloats())
     FloatingObjectPositionedUpdated(positioned_float, layout_box_);
 
@@ -292,9 +299,14 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
     }
   }
 
-  if (layout_box_->IsLayoutBlock())
+  if (layout_box_->IsLayoutBlock()) {
     ToLayoutBlock(layout_box_)->LayoutPositionedObjects(true);
+    ToLayoutBlock(layout_box_)->ComputeOverflowFromNGLayout();
+  }
+
+  layout_box_->UpdateAfterLayout();
   layout_box_->ClearNeedsLayout();
+
   if (layout_box_->IsLayoutBlockFlow()) {
     ToLayoutBlockFlow(layout_box_)->UpdateIsSelfCollapsing();
   }
