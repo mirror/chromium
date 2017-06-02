@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6bf48f67_d3608d13",
+        "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-02T06:00:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "987432b8_47367200",
+      "range": {
+        "startLine": 59,
+        "startChar": 15,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5285b19f_7a7fc05b",
         "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "030dd6c7_cb5f37fc",
+        "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-02T06:00:04Z",
+      "side": 1,
+      "message": "Ah good catch. Changed to manually copying the ShareTarget and added a test.",
+      "parentUuid": "5285b19f_7a7fc05b",
+      "range": {
+        "startLine": 149,
+        "startChar": 13,
+        "endLine": 149,
+        "endChar": 22
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0c7fb54c_0b890aaf",
+        "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-02T06:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66c071ec_4a6e4b30",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 13
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53900c04_459c6215",
         "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view_unittest.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d343ca_07ce7ac0",
+        "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-02T06:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53900c04_459c6215",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 10
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "1b9e15d1_1050c8e0",
+        "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-02T06:00:04Z",
+      "side": 1,
+      "message": "I always get confused with this part of C++11 but I believe that\u0027s using the initializer_list constructor and we can\u0027t use initializer_lists with move-only types [1].\n\nAlso fyi: uniform initialization is discouraged[2]. \n\n[1] https://stackoverflow.com/a/8468817\n[2] https://www.chromium.org/developers/coding-style/cpp-dos-and-donts?pli\u003d1#TOC-Variable-initialization",
+      "parentUuid": "516cb0cf_8f15ca48",
+      "range": {
+        "startLine": 132,
+        "startChar": 10,
+        "endLine": 132,
+        "endChar": 22
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05dd31dd_5f9ee8eb",
         "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view_unittest.cc",
         "patchSetId": 4
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "9a695429_9f03a0f4",
+        "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-02T06:00:04Z",
+      "side": 1,
+      "message": "See above comment about initializer lists.",
+      "parentUuid": "05dd31dd_5f9ee8eb",
+      "range": {
+        "startLine": 165,
+        "startChar": 10,
+        "endLine": 165,
+        "endChar": 22
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "498d4ec3_b0568063",
         "filename": "chrome/browser/webshare/share_service_impl.cc",
         "patchSetId": 4
@@ -151,6 +295,24 @@
       "writtenOn": "2017-06-01T07:49:14Z",
       "side": 1,
       "message": "As discussed elsewhere, I think this filter logic should remain in GetTargetsWithSufficientEngagement. Therefore the variable should continue to be known as \"sufficiently_engaged_targets\".",
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71400447_0b369e33",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-02T06:00:04Z",
+      "side": 1,
+      "message": "Tests override ShareServiceImpl::GetEngagementLevel() so we will have to change how we test as well. Given that this patch is already pretty big, would it be OK to do that in a follow up?",
+      "parentUuid": "498d4ec3_b0568063",
       "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "f67657fb_37dc6dc8",
+        "filename": "chrome/browser/webshare/share_service_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-02T06:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "500f1318_9196d3c9",
+      "range": {
+        "startLine": 32,
+        "startChar": 6,
+        "endLine": 32,
+        "endChar": 10
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "830517d1_74a3b479",
         "filename": "chrome/browser/webshare/share_service_impl_unittest.cc",
         "patchSetId": 4
@@ -200,6 +386,30 @@
       "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "585edeea_5ec32920",
+        "filename": "chrome/browser/webshare/share_service_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-02T06:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "830517d1_74a3b479",
+      "range": {
+        "startLine": 88,
+        "startChar": 28,
+        "endLine": 88,
+        "endChar": 29
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "2a304d6e_ce9d8991",
+        "filename": "chrome/browser/webshare/share_service_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-02T06:00:04Z",
+      "side": 1,
+      "message": "We can\u0027t because ShareTarget is move-only. See comment in webshare_target_picker_view_unittest.cc",
+      "parentUuid": "3e3d0c85_785e0249",
+      "range": {
+        "startLine": 206,
+        "startChar": 43,
+        "endLine": 206,
+        "endChar": 44
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a08ef68_582f8148",
         "filename": "chrome/browser/webshare/share_service_impl_unittest.cc",
         "patchSetId": 4
@@ -246,6 +480,30 @@
       "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "800d4957_d8910b06",
+        "filename": "chrome/browser/webshare/share_service_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-02T06:00:04Z",
+      "side": 1,
+      "message": "Oh cool. The reason I changed const char kManifestUrlHigh[] to GURL was because I needed the address of the GURL. Since this avoids that we can go back to const char.",
+      "parentUuid": "7a08ef68_582f8148",
+      "range": {
+        "startLine": 239,
+        "startChar": 37,
+        "endLine": 239,
+        "endChar": 44
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "5198529f_62cd6e1e",
+        "filename": "chrome/browser/webshare/share_target.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-02T06:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61b180b2_01fea62b",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 8
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7175dd40_f2cf1804",
         "filename": "chrome/browser/webshare/share_target.h",
         "patchSetId": 4
@@ -292,6 +574,30 @@
       "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68569e07_2ebd7d7c",
+        "filename": "chrome/browser/webshare/share_target.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-02T06:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7175dd40_f2cf1804",
+      "range": {
+        "startLine": 21,
+        "startChar": 21,
+        "endLine": 21,
+        "endChar": 22
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -318,6 +624,30 @@
     },
     {
       "key": {
+        "uuid": "de0fdf01_58b48023",
+        "filename": "chrome/browser/webshare/share_target.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-02T06:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7b03cf5_8123b006",
+      "range": {
+        "startLine": 27,
+        "startChar": 21,
+        "endLine": 27,
+        "endChar": 28
+      },
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96776224_a176ebd8",
         "filename": "chrome/browser/webshare/share_target_pref_helper.cc",
         "patchSetId": 4
@@ -335,6 +665,24 @@
     },
     {
       "key": {
+        "uuid": "ac2c450f_a32b03bb",
+        "filename": "chrome/browser/webshare/share_target_pref_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-02T06:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96776224_a176ebd8",
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec4e0d10_a05711f6",
         "filename": "chrome/browser/webshare/share_target_pref_helper.h",
         "patchSetId": 4
@@ -349,6 +697,24 @@
       "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "119ff088_e141f9b6",
+        "filename": "chrome/browser/webshare/share_target_pref_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-02T06:00:04Z",
+      "side": 1,
+      "message": "Would it be OK to do so in a follow up? The patch is already pretty big and we will need to refactor how testing is done because it\u0027s based on overriding GetEngagementLevel().",
+      "parentUuid": "ec4e0d10_a05711f6",
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
