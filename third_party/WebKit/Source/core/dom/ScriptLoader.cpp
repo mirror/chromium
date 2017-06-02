@@ -721,7 +721,11 @@ bool ScriptLoader::FetchClassicScript(
         DocumentWriteIntervention::kDoNotFetchDocWrittenScript;
   }
 
-  FetchParameters params(resource_request, element_->InitiatorName());
+  ResourceLoaderOptions options;
+  options.allow_credentials = kAllowStoredCredentials;
+  options.credentials_requested = kClientRequestedCredentials;
+  options.initiator_info.name = element_->InitiatorName();
+  FetchParameters params(resource_request, options);
 
   // "... cryptographic nonce, ..."
   params.SetContentSecurityPolicyNonce(nonce);
