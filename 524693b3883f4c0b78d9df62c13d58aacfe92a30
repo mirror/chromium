@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae873827_cdffb011",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 1595,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-02T15:36:27Z",
+      "side": 1,
+      "message": "The previous one has a leading *, but this one might need to be \u0027*/test_*.mojom\u0027, to match stuff with that as a suffix as opposed to its whole path. (At least, that\u0027s true of ordinary Python fnmatch.)",
+      "revId": "524693b3883f4c0b78d9df62c13d58aacfe92a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6ec8ce_58814efb",
+        "filename": "third_party/WebKit/Source/core/mojo/testing/MojoInterfaceInterceptor.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-02T15:36:27Z",
+      "side": 1,
+      "message": "nit (more for future reference than anything else): Doesn\u0027t really matter since this is test-only code, but FWIW this is more efficient (and we should probably provide a shortcut since conversions between WTF::String and std::string are going to be more common), here and above:\n\nStringUTF8Adaptor(interface_name_).AsStringPiece().as_string();\n\nThis avoids an extra heap allocation and copy in the common case where interface_name_ is ASCII.",
+      "revId": "524693b3883f4c0b78d9df62c13d58aacfe92a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "14ca7ea2_3d69cae7",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-02T15:36:27Z",
+      "side": 1,
+      "message": "OK, it just wasn\u0027t clear to me why this one was being deprecated, but that sounds okay (though we might still want to expose it here later on to avoid having to write \"frame-\u003eClient()-\u003eGetInterfaceProvider()\" each time).\n\nIIUC it\u0027s not a drop-in replacement, because content::BlinkInterfaceProviderImpl::GetInterface manages jumping to the right thread, which service_manager::InterfaceProvider does not, but that\u0027s manageable.",
+      "parentUuid": "98c6e72d_7957d993",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79ee656f_4e1fbb35",
         "filename": "third_party/WebKit/Source/core/mojo/DEPS",
         "patchSetId": 4
@@ -372,6 +390,24 @@
     },
     {
       "key": {
+        "uuid": "1d62ec10_8e449b24",
+        "filename": "third_party/WebKit/Source/core/mojo/MojoInterfaceInterceptor.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-02T15:36:27Z",
+      "side": 1,
+      "message": "Yup, current approach seems fine to me.",
+      "parentUuid": "2b3936b1_92855410",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e62b39f_e0dbd8a0",
         "filename": "third_party/WebKit/Source/core/mojo/MojoInterfaceRequestEvent.idl",
         "patchSetId": 4
@@ -407,6 +443,24 @@
     },
     {
       "key": {
+        "uuid": "002a43d6_3875506a",
+        "filename": "third_party/WebKit/Source/core/mojo/MojoInterfaceRequestEvent.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-02T15:36:27Z",
+      "side": 1,
+      "message": "I\u0027m not quite sure what you mean. Internals.cpp/h are ordinary C++ implementation classes, and V8Internals.cpp/h are auto-generated.\n\nThey\u0027re mostly special in that we only link them into test binaries (content_shell) but not Chrome. It seems like it should be reasonably straightforward to take the same approach here, so that this test-only code doesn\u0027t have to ship to users.",
+      "parentUuid": "675b9041_e41b4e1d",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed7cc903_be708574",
         "filename": "third_party/WebKit/public/web/WebFrameClient.h",
         "patchSetId": 4
@@ -436,6 +490,24 @@
       "side": 1,
       "message": "As discussed with haraken@ already, it is preferable to expose the public service_manager API directly rather than implementing a nominal Blink-only wrapper around it. The goal is to (soon) remove blink::InterfaceProvider.",
       "parentUuid": "ed7cc903_be708574",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30268510_aa71a1ef",
+        "filename": "third_party/WebKit/public/web/WebFrameClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-02T15:36:27Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "ddee5e41_3a67d970",
       "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
