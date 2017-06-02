@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acc39c4b_a5e549a1",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4109,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-02T03:12:52Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to condition on this, because all animations come with element ids,\neven in SPv1.",
+      "revId": "6c61f032d3c7581143b2ebf71a201f75f534f3dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
