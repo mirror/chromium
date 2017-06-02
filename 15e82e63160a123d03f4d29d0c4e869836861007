@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4ace36e_d27fc9ba",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-02T20:47:49Z",
+      "side": 1,
+      "message": "nit: For new code, can you prefer constexpr over const?\n\n constexpr char kLowMemFile[] \u003d ...",
+      "revId": "15e82e63160a123d03f4d29d0c4e869836861007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0669345_531e5b28",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-02T20:47:49Z",
+      "side": 1,
+      "message": "nit: remove \u0027.\u0027",
+      "revId": "15e82e63160a123d03f4d29d0c4e869836861007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dcd1c49_a22b34ba",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-02T20:47:49Z",
+      "side": 1,
+      "message": "same, see my comment below:",
+      "revId": "15e82e63160a123d03f4d29d0c4e869836861007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c130258a_cccb6737",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-02T20:47:49Z",
+      "side": 1,
+      "message": "same, for new code, please default to \u003ddefault;.\n\n TabManagerDelegate::MemoryStat::~MemoryStat() \u003d default;",
+      "revId": "15e82e63160a123d03f4d29d0c4e869836861007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89220da9_c5271c8e",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-02T20:47:49Z",
+      "side": 1,
+      "message": "Using raw posix functions in chrome/browser/ seems unusual to me. Can you use base:: utils instead? You can probably use base/files/file_descriptor_watcher_posix.h.",
+      "revId": "15e82e63160a123d03f4d29d0c4e869836861007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
