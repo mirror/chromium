@@ -205,7 +205,7 @@ class WebFrame {
   void ClearOpener() { SetOpener(0); }
 
   // Returns the parent frame or 0 if this is a top-most frame.
-  BLINK_EXPORT WebFrame* Parent() const;
+  virtual BLINK_EXPORT WebFrame* Parent() const;
 
   // Returns the top-most frame in the hierarchy containing this frame.
   BLINK_EXPORT WebFrame* Top() const;
