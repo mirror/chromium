@@ -69,6 +69,9 @@ class PersistentPrefStoreClient
   ~PersistentPrefStoreClient() override;
 
  private:
+  class InFlightWriteTrie;
+  struct InFlightWrite;
+
   void OnConnect(mojom::PersistentPrefStoreConnectionPtr connection,
                  std::unordered_map<PrefValueStore::PrefStoreType,
                                     prefs::mojom::PrefStoreConnectionPtr>
@@ -78,6 +81,13 @@ class PersistentPrefStoreClient
                   std::set<std::vector<std::string>> path_components,
                   uint32_t flags);
   void FlushPendingWrites();
+
+  // prefs::mojom::PreferenceObserver:
+  void OnPrefChangeAck() override;
+
+  bool ShouldSkipWrite(const std::string& key,
+                       const std::vector<std::string>& path,
+                       const base::Value* new_value) override;
 
   mojom::PrefStoreConnectorPtr connector_;
   scoped_refptr<PrefRegistry> pref_registry_;
@@ -89,6 +99,9 @@ class PersistentPrefStoreClient
 
   std::unique_ptr<ReadErrorDelegate> error_delegate_;
   std::vector<PrefValueStore::PrefStoreType> already_connected_types_;
+
+  std::queue<std::vector<InFlightWrite>> in_flight_writes_queue_;
+  std::map<std::string, InFlightWriteTrie> in_flight_writes_tries_;
 
   base::WeakPtrFactory<PersistentPrefStoreClient> weak_factory_;
 
