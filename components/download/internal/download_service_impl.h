@@ -25,6 +25,7 @@ class DownloadServiceImpl : public DownloadService {
   ~DownloadServiceImpl() override;
 
   // DownloadService implementation.
+  void OnScheduledTaskStart(DownloadTaskType task_type) override {}
   ServiceStatus GetStatus() override;
   void StartDownload(const DownloadParams& download_params) override;
   void PauseDownload(const std::string& guid) override;

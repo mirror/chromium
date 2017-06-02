@@ -14,6 +14,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/sequenced_task_runner.h"
 #include "components/download/public/clients.h"
+#include "components/download/public/download_task_types.h"
 #include "components/keyed_service/core/keyed_service.h"
 
 namespace download {
@@ -61,6 +62,9 @@ class DownloadService : public KeyedService {
       std::unique_ptr<DownloadClientMap> clients,
       const base::FilePath& storage_dir,
       const scoped_refptr<base::SequencedTaskRunner>& background_task_runner);
+
+  // This method will be called by the OS to run a pre-scheduled task.
+  virtual void OnScheduledTaskStart(DownloadTaskType task_type) = 0;
 
   // Whether or not the DownloadService is currently available, initialized
   // successfully, and ready to be used.

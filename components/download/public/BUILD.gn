@@ -14,6 +14,7 @@ source_set("public") {
     "download_params.cc",
     "download_params.h",
     "download_service.h",
+    "download_task_types.h",
     "features.cc",
     "features.h",
   ]
@@ -27,4 +28,23 @@ source_set("public") {
     "//net",
     "//url",
   ]
+}
+
+if (is_android) {
+  android_library("core_java") {
+    srcjar_deps = [ ":jni_enums" ]
+
+    deps = [
+      "//base:base_java",
+      "//third_party/android_tools:android_support_annotations_java",
+    ]
+  }
+
+  java_cpp_enum("jni_enums") {
+    visibility = [ "*" ]
+
+    sources = [
+      "download_task_types.h",
+    ]
+  }
 }
