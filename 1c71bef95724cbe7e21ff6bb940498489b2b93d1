@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2595e4f8_1e48ba86",
+        "filename": "components/download/internal/entry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T20:58:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffd512e8_8a67fdf4",
+      "range": {
+        "startLine": 11,
+        "startChar": 17,
+        "endLine": 11,
+        "endChar": 47
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78ce7061_0eab3831",
         "filename": "components/download/internal/entry.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d4fd764_ab3c4a1e",
+        "filename": "components/download/internal/entry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T20:58:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78ce7061_0eab3831",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 42
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "26024139_4d84f325",
+        "filename": "components/download/internal/scheduler/device_status.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T20:58:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87c5f60d_97e4cdc0",
+      "range": {
+        "startLine": 32,
+        "startChar": 9,
+        "endLine": 32,
+        "endChar": 13
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "440fe254_f61649a4",
         "filename": "components/download/internal/scheduler/scheduler.h",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "46fc21c5_16641b4b",
+        "filename": "components/download/internal/scheduler/scheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T20:58:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "440fe254_f61649a4",
+      "range": {
+        "startLine": 24,
+        "startChar": 21,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e157313_fa508517",
         "filename": "components/download/internal/scheduler/scheduler.h",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-06-01T20:29:27Z",
       "side": 1,
       "message": "Maybe add TODO\u0027s about dealing with load balancing between clients?\n\nAlso add a TODO to balance based on time remaining on the tasks?",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 77
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4d68ee_1b43c7dc",
+        "filename": "components/download/internal/scheduler/scheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T20:58:07Z",
+      "side": 1,
+      "message": "Removed, this comment is confusing and doesn\u0027t make sense.",
+      "parentUuid": "0e157313_fa508517",
       "range": {
         "startLine": 25,
         "startChar": 5,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "e3f040a6_e32c2e73",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T20:58:07Z",
+      "side": 1,
+      "message": "Yes,  I think so.",
+      "parentUuid": "514a45b4_0a7984cd",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 26
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77c53d74_f518f87a",
         "filename": "components/download/internal/scheduler/scheduler_impl.cc",
         "patchSetId": 2
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "06b54360_e6e678a9",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T20:58:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77c53d74_f518f87a",
+      "range": {
+        "startLine": 22,
+        "startChar": 32,
+        "endLine": 22,
+        "endChar": 34
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bf88aa1_90175188",
         "filename": "components/download/internal/scheduler/scheduler_impl.cc",
         "patchSetId": 2
@@ -174,6 +342,30 @@
       "writtenOn": "2017-06-01T20:29:27Z",
       "side": 1,
       "message": "Cancel any outstanding scheduled task here?",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 22
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "383da099_3f9784eb",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T20:58:07Z",
+      "side": 1,
+      "message": "Done, Good point.",
+      "parentUuid": "9bf88aa1_90175188",
       "range": {
         "startLine": 25,
         "startChar": 2,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "8c06f28d_3c158121",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T20:58:07Z",
+      "side": 1,
+      "message": "Done, move to util.\n\nI tried to avoid to use SchedulingParams to represent the criteria because it\u0027s actually pretty confusing.",
+      "parentUuid": "db9d8800_74bb1aae",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 3
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17696c22_a6571530",
         "filename": "components/download/internal/scheduler/scheduler_impl.cc",
         "patchSetId": 2
@@ -220,6 +436,30 @@
       "writtenOn": "2017-06-01T20:29:27Z",
       "side": 1,
       "message": "Is it assumed this will cancel any previously scheduled task?  Add a TODO to investigate time windows?",
+      "range": {
+        "startLine": 46,
+        "startChar": 25,
+        "endLine": 46,
+        "endChar": 45
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666271a1_ed621438",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T20:58:07Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "17696c22_a6571530",
       "range": {
         "startLine": 46,
         "startChar": 25,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "4dfa4e3b_623b42aa",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T20:58:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "215d7a7d_3f773970",
+      "range": {
+        "startLine": 52,
+        "startChar": 9,
+        "endLine": 52,
+        "endChar": 17
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2672432b_6cacf4dd",
         "filename": "components/download/internal/scheduler/scheduler_impl.cc",
         "patchSetId": 2
@@ -275,6 +539,30 @@
       "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a236d51_f4bd5359",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T20:58:07Z",
+      "side": 1,
+      "message": "Done. This will take less memory.",
+      "parentUuid": "2672432b_6cacf4dd",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 46
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "33b1dc5d_a7a30578",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T20:58:07Z",
+      "side": 1,
+      "message": "Done, didn\u0027t sort here though. Use the iteration and cache the best described above.",
+      "parentUuid": "6ab25248_d09cfe1a",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 66
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb34ac86_9bd24f0a",
         "filename": "components/download/internal/scheduler/scheduler_impl.cc",
         "patchSetId": 2
@@ -312,6 +624,30 @@
       "writtenOn": "2017-06-01T20:29:27Z",
       "side": 1,
       "message": "Use the EntryUtils",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 3
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca191a7c_5b27541c",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T20:58:07Z",
+      "side": 1,
+      "message": "Done, this is removed. We don\u0027t use extra memory but cache the best candidates.",
+      "parentUuid": "fb34ac86_9bd24f0a",
       "range": {
         "startLine": 56,
         "startChar": 2,
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "666d3b31_15752c07",
+        "filename": "components/download/internal/scheduler/scheduler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T20:58:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43f14a39_64eede0f",
+      "range": {
+        "startLine": 36,
+        "startChar": 27,
+        "endLine": 36,
+        "endChar": 30
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b574ae6_893254a0",
         "filename": "components/download/internal/scheduler/scheduler_impl.h",
         "patchSetId": 2
@@ -358,6 +718,30 @@
       "writtenOn": "2017-06-01T20:29:27Z",
       "side": 1,
       "message": "Can we just make this an std::set\u003cDownloadClient\u003e and store a const_interator?  We could even just expose an iterator on the ClientSet.  That class is effectively immutable.",
+      "range": {
+        "startLine": 46,
+        "startChar": 14,
+        "endLine": 46,
+        "endChar": 17
+      },
+      "revId": "1c71bef95724cbe7e21ff6bb940498489b2b93d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53094128_c22d88ac",
+        "filename": "components/download/internal/scheduler/scheduler_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T20:58:07Z",
+      "side": 1,
+      "message": "Done, changed to const vector\u003cDownloadClient\u003e, vector is a bit better than set for round robin.",
+      "parentUuid": "4b574ae6_893254a0",
       "range": {
         "startLine": 46,
         "startChar": 14,

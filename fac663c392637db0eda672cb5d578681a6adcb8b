@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "76565980_7adc3540",
+        "filename": "components/download/internal/scheduler/device_status.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T20:58:07Z",
+      "side": 1,
+      "message": "Done, my bad.",
+      "parentUuid": "65d6916a_1cc219b6",
+      "revId": "fac663c392637db0eda672cb5d578681a6adcb8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "401a1755_a36b3d8b",
         "filename": "components/download/internal/scheduler/device_status.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "fac663c392637db0eda672cb5d578681a6adcb8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bafaa55a_f5240b2b",
+        "filename": "components/download/internal/scheduler/device_status.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T20:58:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "401a1755_a36b3d8b",
+      "revId": "fac663c392637db0eda672cb5d578681a6adcb8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "36910cf9_84f376c2",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T20:58:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "405bedb5_6e604afd",
+      "range": {
+        "startLine": 96,
+        "startChar": 24,
+        "endLine": 96,
+        "endChar": 37
+      },
+      "revId": "fac663c392637db0eda672cb5d578681a6adcb8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fd5da6e_2faba02d",
         "filename": "components/download/internal/scheduler/scheduler_impl.h",
         "patchSetId": 3
@@ -79,6 +139,30 @@
       "revId": "fac663c392637db0eda672cb5d578681a6adcb8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce2030af_b9dc0aab",
+        "filename": "components/download/internal/scheduler/scheduler_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T20:58:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fd5da6e_2faba02d",
+      "range": {
+        "startLine": 46,
+        "startChar": 14,
+        "endLine": 46,
+        "endChar": 17
+      },
+      "revId": "fac663c392637db0eda672cb5d578681a6adcb8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
