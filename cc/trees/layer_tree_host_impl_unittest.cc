@@ -1446,7 +1446,7 @@ TEST_F(LayerTreeHostImplTest, ScrollWithUserUnscrollableLayers) {
   EXPECT_VECTOR_EQ(gfx::Vector2dF(), scroll_layer->CurrentScrollOffset());
   EXPECT_VECTOR_EQ(gfx::Vector2dF(10, 10), overflow->CurrentScrollOffset());
 
-  overflow->set_user_scrollable_horizontal(false);
+  overflow->test_properties()->user_scrollable_horizontal = false;
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
   DrawFrame();
@@ -1464,7 +1464,7 @@ TEST_F(LayerTreeHostImplTest, ScrollWithUserUnscrollableLayers) {
   EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), scroll_layer->CurrentScrollOffset());
   EXPECT_VECTOR_EQ(gfx::Vector2dF(10, 20), overflow->CurrentScrollOffset());
 
-  overflow->set_user_scrollable_vertical(false);
+  overflow->test_properties()->user_scrollable_vertical = false;
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
   DrawFrame();
 
@@ -3553,7 +3553,9 @@ TEST_F(LayerTreeHostImplTest, CompositorFrameMetadata) {
   {
     host_impl_->active_tree()
         ->OuterViewportScrollLayer()
-        ->set_user_scrollable_horizontal(false);
+        ->test_properties()
+        ->user_scrollable_horizontal = false;
+    host_impl_->active_tree()->BuildPropertyTreesForTesting();
     CompositorFrameMetadata metadata =
         host_impl_->MakeCompositorFrameMetadata();
     EXPECT_TRUE(metadata.root_overflow_x_hidden);
@@ -3561,7 +3563,9 @@ TEST_F(LayerTreeHostImplTest, CompositorFrameMetadata) {
 
     host_impl_->active_tree()
         ->OuterViewportScrollLayer()
-        ->set_user_scrollable_vertical(false);
+        ->test_properties()
+        ->user_scrollable_vertical = false;
+    host_impl_->active_tree()->BuildPropertyTreesForTesting();
     metadata = host_impl_->MakeCompositorFrameMetadata();
     EXPECT_TRUE(metadata.root_overflow_x_hidden);
     EXPECT_TRUE(metadata.root_overflow_y_hidden);
@@ -3571,10 +3575,13 @@ TEST_F(LayerTreeHostImplTest, CompositorFrameMetadata) {
   {
     host_impl_->active_tree()
         ->OuterViewportScrollLayer()
-        ->set_user_scrollable_horizontal(true);
+        ->test_properties()
+        ->user_scrollable_horizontal = true;
     host_impl_->active_tree()
         ->OuterViewportScrollLayer()
-        ->set_user_scrollable_vertical(true);
+        ->test_properties()
+        ->user_scrollable_vertical = true;
+    host_impl_->active_tree()->BuildPropertyTreesForTesting();
     CompositorFrameMetadata metadata =
         host_impl_->MakeCompositorFrameMetadata();
     EXPECT_FALSE(metadata.root_overflow_x_hidden);
@@ -3586,7 +3593,9 @@ TEST_F(LayerTreeHostImplTest, CompositorFrameMetadata) {
   {
     host_impl_->active_tree()
         ->InnerViewportScrollLayer()
-        ->set_user_scrollable_horizontal(false);
+        ->test_properties()
+        ->user_scrollable_horizontal = false;
+    host_impl_->active_tree()->BuildPropertyTreesForTesting();
     CompositorFrameMetadata metadata =
         host_impl_->MakeCompositorFrameMetadata();
     EXPECT_TRUE(metadata.root_overflow_x_hidden);
@@ -3594,7 +3603,9 @@ TEST_F(LayerTreeHostImplTest, CompositorFrameMetadata) {
 
     host_impl_->active_tree()
         ->InnerViewportScrollLayer()
-        ->set_user_scrollable_vertical(false);
+        ->test_properties()
+        ->user_scrollable_vertical = false;
+    host_impl_->active_tree()->BuildPropertyTreesForTesting();
     metadata = host_impl_->MakeCompositorFrameMetadata();
     EXPECT_TRUE(metadata.root_overflow_x_hidden);
     EXPECT_TRUE(metadata.root_overflow_y_hidden);
@@ -10353,8 +10364,8 @@ TEST_F(LayerTreeHostImplVirtualViewportTest,
   SetupVirtualViewportLayers(content_size, outer_viewport, inner_viewport);
   // Make inner viewport unscrollable.
   LayerImpl* inner_scroll = host_impl_->InnerViewportScrollLayer();
-  inner_scroll->set_user_scrollable_horizontal(false);
-  inner_scroll->set_user_scrollable_vertical(false);
+  inner_scroll->test_properties()->user_scrollable_horizontal = false;
+  inner_scroll->test_properties()->user_scrollable_vertical = false;
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
   DrawFrame();
@@ -11357,8 +11368,12 @@ TEST_F(LayerTreeHostImplTimelinesTest, ScrollAnimatedNotUserScrollable) {
   const gfx::Size viewport_size(500, 500);
   CreateBasicVirtualViewportLayers(viewport_size, content_size);
 
-  host_impl_->OuterViewportScrollLayer()->set_user_scrollable_vertical(true);
-  host_impl_->OuterViewportScrollLayer()->set_user_scrollable_horizontal(false);
+  host_impl_->OuterViewportScrollLayer()
+      ->test_properties()
+      ->user_scrollable_vertical = true;
+  host_impl_->OuterViewportScrollLayer()
+      ->test_properties()
+      ->user_scrollable_horizontal = false;
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
   DrawFrame();
