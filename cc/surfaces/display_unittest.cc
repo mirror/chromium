@@ -46,8 +46,9 @@ class TestSoftwareOutputDevice : public SoftwareOutputDevice {
 
 class TestDisplayScheduler : public DisplayScheduler {
  public:
-  explicit TestDisplayScheduler(base::SingleThreadTaskRunner* task_runner)
-      : DisplayScheduler(task_runner, 1),
+  explicit TestDisplayScheduler(BeginFrameSource* begin_frame_source,
+                                base::SingleThreadTaskRunner* task_runner)
+      : DisplayScheduler(begin_frame_source, task_runner, 1),
         damaged(false),
         display_resized_(false),
         has_new_root_surface(false),
@@ -96,7 +97,13 @@ class DisplayTest : public testing::Test {
             true /* needs_sync_points */)),
         task_runner_(new base::NullTaskRunner) {}
 
-  ~DisplayTest() override { support_->EvictCurrentSurface(); }
+  ~DisplayTest() override {
+    // Only call UnregisterBeginFrameSource if SetupDisplay has been called.
+    if (begin_frame_source_)
+      manager_.UnregisterBeginFrameSource(begin_frame_source_.get());
+
+    support_->EvictCurrentSurface();
+  }
 
   void SetUpDisplay(const RendererSettings& settings,
                     std::unique_ptr<TestWebGraphicsContext3D> context) {
@@ -115,16 +122,18 @@ class DisplayTest : public testing::Test {
     }
     output_surface_ = output_surface.get();
 
-    std::unique_ptr<TestDisplayScheduler> scheduler(
-        new TestDisplayScheduler(task_runner_.get()));
+    std::unique_ptr<TestDisplayScheduler> scheduler(new TestDisplayScheduler(
+        begin_frame_source_.get(), task_runner_.get()));
     scheduler_ = scheduler.get();
 
     display_ = base::MakeUnique<Display>(
         &shared_bitmap_manager_, nullptr /* gpu_memory_buffer_manager */,
-        settings, kArbitraryFrameSinkId, begin_frame_source_.get(),
-        std::move(output_surface), std::move(scheduler),
+        settings, kArbitraryFrameSinkId, std::move(output_surface),
+        std::move(scheduler),
         base::MakeUnique<TextureMailboxDeleter>(task_runner_.get()));
     display_->SetVisible(true);
+    manager_.RegisterBeginFrameSource(begin_frame_source_.get(),
+                                      kArbitraryFrameSinkId);
   }
 
  protected:
