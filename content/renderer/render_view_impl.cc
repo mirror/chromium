@@ -1756,6 +1756,9 @@ void RenderViewImpl::DidUpdateLayout() {
 }
 
 void RenderViewImpl::NavigateBackForwardSoon(int offset) {
+  RenderThreadImpl* render_thread_impl = RenderThreadImpl::current();
+  if (render_thread_impl)
+    render_thread_impl->GetRendererScheduler()->OnNavigateBackForwardSoon();
   Send(new ViewHostMsg_GoToEntryAtOffset(GetRoutingID(), offset));
 }
 

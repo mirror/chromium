@@ -609,6 +609,46 @@ TEST_F(WebViewSchedulerImplTest, BackgroundParser_DETERMINISTIC_LOADING) {
   EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
 }
 
+TEST_F(WebViewSchedulerImplTest, ProvisionalLoadCount) {
+  web_view_scheduler_->SetVirtualTimePolicy(
+      VirtualTimePolicy::DETERMINISTIC_LOADING);
+  web_view_scheduler_->DidStartLoading(1u);
+  web_view_scheduler_->DidStopLoading(1u);
+
+  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+
+  // Provisional loads are refcounted.
+  web_view_scheduler_->IncrementProvisionalLoadCount();
+  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+
+  web_view_scheduler_->IncrementProvisionalLoadCount();
+  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+
+  web_view_scheduler_->DecrementProvisionalLoadCount();
+  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+
+  web_view_scheduler_->DecrementProvisionalLoadCount();
+  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+}
+
+TEST_F(WebViewSchedulerImplTest, OnNavigateBackForwardSoon) {
+  web_view_scheduler_->SetVirtualTimePolicy(
+      VirtualTimePolicy::DETERMINISTIC_LOADING);
+  web_view_scheduler_->DidStartLoading(1u);
+  web_view_scheduler_->DidStopLoading(1u);
+
+  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+
+  web_view_scheduler_->OnNavigateBackForwardSoon();
+  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+
+  web_view_scheduler_->IncrementProvisionalLoadCount();
+  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+
+  web_view_scheduler_->DecrementProvisionalLoadCount();
+  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+}
+
 TEST_F(WebViewSchedulerImplTest, SuspendTimersWhileVirtualTimeIsPaused) {
   std::vector<int> run_order;
 

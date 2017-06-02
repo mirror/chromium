@@ -107,7 +107,13 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   void ResumeRenderer() override;
   void AddPendingNavigation(NavigatingFrameType type) override;
   void RemovePendingNavigation(NavigatingFrameType type) override;
-  void OnNavigationStarted() override;
+  void OnNavigate() override;
+  void OnNavigateBackForwardSoon() override;
+  void OnStartProvisionalLoad() override;
+  void OnDidFailProvisionalLoad() override;
+  void OnDidCommitProvisionalLoad(bool is_web_history_inert_commit,
+                                  bool is_reload,
+                                  bool is_main_frame) override;
   bool IsHighPriorityWorkAnticipated() override;
   bool ShouldYieldForHighPriorityWork() override;
   bool CanExceedIdleDeadlineIfRequired() const override;

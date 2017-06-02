@@ -148,10 +148,29 @@ class BLINK_PLATFORM_EXPORT RendererScheduler : public ChildScheduler {
   // Must be called on the main thread.
   virtual void RemovePendingNavigation(NavigatingFrameType type) = 0;
 
-  // Tells the scheduler that a navigation has started.  The scheduler will
-  // prioritize loading tasks for a short duration afterwards.
-  // Must be called from the main thread.
-  virtual void OnNavigationStarted() = 0;
+  // Tells the scheduler that a navigation has started. The scheduler will reset
+  // the task cost estimators and the UserModel. Must be called from the main
+  // thread.
+  virtual void OnNavigate() = 0;
+
+  // Tells the scheduler that a history navigation is expected soon, virtual
+  // time may be paused. Must be called from the main thread.
+  virtual void OnNavigateBackForwardSoon() = 0;
+
+  // Tells the scheduler that a provisional load has started, virtual time may
+  // be paused. Must be called from the main thread.
+  virtual void OnStartProvisionalLoad() = 0;
+
+  // Tells the scheduler that a provisional load has failed, virtual time may be
+  // unpaused. Must be called from the main thread.
+  virtual void OnDidFailProvisionalLoad() = 0;
+
+  // Tells the scheduler that a provisional load has committed, virtual time ma
+  // be unpaused. In addition the scheduler may reset the task cost estimators
+  // and the UserModel. Must be called from the main thread.
+  virtual void OnDidCommitProvisionalLoad(bool is_web_history_inert_commit,
+                                          bool is_reload,
+                                          bool is_main_frame) = 0;
 
   // Returns true if the scheduler has reason to believe that high priority work
   // may soon arrive on the main thread, e.g., if gesture events were observed
