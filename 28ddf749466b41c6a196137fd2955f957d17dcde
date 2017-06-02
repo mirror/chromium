@@ -56,6 +56,30 @@
       "revId": "28ddf749466b41c6a196137fd2955f957d17dcde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d57599_1485a8f0",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1329,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-02T03:36:44Z",
+      "side": 1,
+      "message": "Maybe the plan is to do that separately in https://chromium-review.googlesource.com/c/519144/ ?",
+      "parentUuid": "496d3009_217a4b5a",
+      "range": {
+        "startLine": 1329,
+        "startChar": 52,
+        "endLine": 1329,
+        "endChar": 64
+      },
+      "revId": "28ddf749466b41c6a196137fd2955f957d17dcde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
