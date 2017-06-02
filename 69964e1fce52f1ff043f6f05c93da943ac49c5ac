@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3edd0d2_b66424ac",
+        "filename": "tools/vim/chromium.ycm_extra_conf.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-06-02T13:36:34Z",
+      "side": 1,
+      "message": "Let\u0027s change this to Linux and Mac OS.",
+      "revId": "69964e1fce52f1ff043f6f05c93da943ac49c5ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
