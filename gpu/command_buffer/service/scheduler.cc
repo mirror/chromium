@@ -41,13 +41,15 @@ class Scheduler::Sequence {
   // by wait fences.
   bool IsRunnable() const;
 
+  // If this sequence's scheduling state changed and it needs to be reinserted
+  // into the scheduling queue.
   bool NeedsRescheduling() const;
 
-  void UpdateSchedulingState();
+  // If this sequence should yield to another sequence. Must be called only when
+  // running.
+  bool ShouldYieldTo(const Sequence* other);
 
-  // If this sequence runs before the other sequence.
-  bool RunsBefore(const Sequence* other) const;
-
+  // Enables or disables the sequence.
   void SetEnabled(bool enabled);
 
   // Sets running state to SCHEDULED.
@@ -106,7 +108,7 @@ class Scheduler::Sequence {
   RunningState running_state_ = IDLE;
 
   // Cached scheduling state used for comparison with other sequences using
-  // |RunsBefore|. Updated in |UpdateSchedulingState|.
+  // |ShouldYieldTo|.
   SchedulingState scheduling_state_;
 
   const SequenceId sequence_id_;
@@ -176,8 +178,10 @@ SchedulingPriority Scheduler::Sequence::GetSchedulingPriority() const {
   return priority_;
 }
 
-bool Scheduler::Sequence::RunsBefore(const Scheduler::Sequence* other) const {
-  return scheduling_state_.RunsBefore(other->scheduling_state());
+bool Scheduler::Sequence::ShouldYieldTo(const Sequence* other) {
+  DCHECK_EQ(running_state_, RUNNING);
+  scheduling_state_.priority = GetSchedulingPriority();
+  return other->scheduling_state().RunsBefore(scheduling_state_);
 }
 
 void Scheduler::Sequence::SetEnabled(bool enabled) {
@@ -188,23 +192,14 @@ void Scheduler::Sequence::SetEnabled(bool enabled) {
 }
 
 void Scheduler::Sequence::SetScheduled() {
+  DCHECK(!tasks_.empty());
   DCHECK_NE(running_state_, RUNNING);
-  running_state_ = SCHEDULED;
-  UpdateSchedulingState();
-}
 
-void Scheduler::Sequence::UpdateSchedulingState() {
+  running_state_ = SCHEDULED;
+
   scheduling_state_.sequence_id = sequence_id_;
   scheduling_state_.priority = GetSchedulingPriority();
-
-  uint32_t order_num = UINT32_MAX;  // IDLE
-  if (running_state_ == SCHEDULED) {
-    DCHECK(!tasks_.empty());
-    order_num = tasks_.front().order_num;
-  } else if (running_state_ == RUNNING) {
-    order_num = order_data_->current_order_num();
-  }
-  scheduling_state_.order_num = order_num;
+  scheduling_state_.order_num = tasks_.front().order_num;
 }
 
 void Scheduler::Sequence::ContinueTask(base::OnceClosure closure) {
@@ -223,15 +218,13 @@ uint32_t Scheduler::Sequence::ScheduleTask(base::OnceClosure closure) {
 uint32_t Scheduler::Sequence::BeginTask(base::OnceClosure* closure) {
   DCHECK(closure);
   DCHECK(!tasks_.empty());
-
   DCHECK_EQ(running_state_, SCHEDULED);
+
   running_state_ = RUNNING;
 
   *closure = std::move(tasks_.front().closure);
   uint32_t order_num = tasks_.front().order_num;
   tasks_.pop_front();
-
-  UpdateSchedulingState();
 
   return order_num;
 }
@@ -239,7 +232,6 @@ uint32_t Scheduler::Sequence::BeginTask(base::OnceClosure* closure) {
 void Scheduler::Sequence::FinishTask() {
   DCHECK_EQ(running_state_, RUNNING);
   running_state_ = IDLE;
-  UpdateSchedulingState();
 }
 
 void Scheduler::Sequence::AddWaitFence(const SyncToken& sync_token,
@@ -365,24 +357,24 @@ bool Scheduler::ShouldYield(SequenceId sequence_id) {
   DCHECK(thread_checker_.CalledOnValidThread());
   base::AutoLock auto_lock(lock_);
 
-  Sequence* sequence = GetSequence(sequence_id);
-  DCHECK(sequence);
-  DCHECK(sequence->running());
-
   if (should_yield_)
     return true;
 
   RebuildSchedulingQueue();
 
-  sequence->UpdateSchedulingState();
+  if (scheduling_queue_.empty())
+    return false;
 
-  if (!scheduling_queue_.empty()) {
-    Sequence* next_sequence =
-        GetSequence(scheduling_queue_.front().sequence_id);
-    DCHECK(next_sequence);
-    if (next_sequence->RunsBefore(sequence))
-      should_yield_ = true;
-  }
+  Sequence* running_sequence = GetSequence(sequence_id);
+  DCHECK(running_sequence);
+  DCHECK(running_sequence->running());
+
+  Sequence* next_sequence = GetSequence(scheduling_queue_.front().sequence_id);
+  DCHECK(next_sequence);
+  DCHECK(next_sequence->scheduled());
+
+  if (running_sequence->ShouldYieldTo(next_sequence))
+    should_yield_ = true;
 
   return should_yield_;
 }
