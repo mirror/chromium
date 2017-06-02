@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0c99de70_a610877b",
+        "filename": "chrome/browser/android/download/download_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-06-02T23:26:33Z",
+      "side": 1,
+      "message": "OnDownloadStarted() was only called once by DownloadUIController, and if a download is loaded from history db,   DownloadItemModel::ShouldNotifyUI() will return false. So DownloadUIController will early return",
+      "parentUuid": "8d3885b8_b89a1003",
+      "range": {
+        "startLine": 231,
+        "startChar": 2,
+        "endLine": 231,
+        "endChar": 35
+      },
+      "revId": "f1cae04582147133858d27b96a63b02c42c6464f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a60b084_b275112c",
         "filename": "chrome/browser/android/download/download_controller.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "f1cae04582147133858d27b96a63b02c42c6464f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2fc3eb5_ba66e691",
+        "filename": "chrome/browser/android/download/download_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-06-02T23:26:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a60b084_b275112c",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 45
+      },
+      "revId": "f1cae04582147133858d27b96a63b02c42c6464f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
