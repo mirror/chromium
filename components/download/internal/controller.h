@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "components/download/public/clients.h"
+#include "components/download/public/download_task_types.h"
 
 namespace download {
 
@@ -53,6 +54,9 @@ class Controller {
   // Exposes the owner of the download request for |guid| if one exists.
   // Otherwise returns DownloadClient::INVALID for an unowned entry.
   virtual DownloadClient GetOwnerOfDownload(const std::string& guid) = 0;
+
+  //
+  virtual void OnStartScheduledTask(DownloadTaskType task_type) = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(Controller);

@@ -130,6 +130,20 @@ DownloadClient ControllerImpl::GetOwnerOfDownload(const std::string& guid) {
   return entry ? entry->client : DownloadClient::INVALID;
 }
 
+void ControllerImpl::OnStartScheduledTask(DownloadTaskType task_type) {
+  if (!startup_status_.Complete()) {
+    // Wait for model and driver to be ready.
+    // May be post a callback and return
+  }
+
+  if (task_type == DownloadTaskType::CLEANUP_TASK) {
+    // file_monitor_->RemoveEntriesAfterTimeout();
+  } else if (task_type == DownloadTaskType::DOWNLOAD_TASK) {
+    // Entry* next = scheduler_->Next();
+    // ResumeDownload(entry->guid);
+  }
+}
+
 void ControllerImpl::OnDriverReady(bool success) {
   DCHECK(!startup_status_.driver_ok.has_value());
   startup_status_.driver_ok = success;
