@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "0c479493_9a27f694",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerReportingProxyImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-02T07:38:55Z",
+      "side": 1,
+      "message": "I think this class should be moved to core/workers/.",
+      "revId": "07260e22d62f2ba1aef20ce2a99e0f833ef99803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "714a1577_2ac90e6e",
         "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
         "patchSetId": 1
@@ -47,6 +64,40 @@
       "writtenOn": "2017-06-02T03:51:25Z",
       "side": 1,
       "message": "I think we want reasonably well-defined, similarly looking interfaces for WorkerClients set-up for various workers.  This should be named something like RegisterWorkerClientsProviderCallback.  (Hiroki- maybe we could provide something for these in worker infra?)",
+      "revId": "07260e22d62f2ba1aef20ce2a99e0f833ef99803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "023cd210_5178d248",
+        "filename": "third_party/WebKit/Source/web/WebFactoryImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-02T07:38:55Z",
+      "side": 1,
+      "message": "Would it be better to return WebLocalFrameBase* from this method? CreateWebLocalFrameBase.",
+      "revId": "07260e22d62f2ba1aef20ce2a99e0f833ef99803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b4b93e1_237b878d",
+        "filename": "third_party/WebKit/public/web/WebFrame.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-02T07:38:55Z",
+      "side": 1,
+      "message": "What is this change for?",
       "revId": "07260e22d62f2ba1aef20ce2a99e0f833ef99803",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
