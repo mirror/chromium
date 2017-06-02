@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.chrome.browser.media.remote;
+package org.chromium.chrome.browser.media;
 
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -26,7 +26,6 @@ import java.util.Map;
  * HEAD request to determine if the URL is redirected.
  */
 public class MediaUrlResolver extends AsyncTask<Void, Void, MediaUrlResolver.Result> {
-
     // Cast.Sender.UrlResolveResult UMA histogram values; must match values of
     // RemotePlaybackUrlResolveResult in histograms.xml. Do not change these values, as they are
     // being used in UMA.
@@ -43,13 +42,12 @@ public class MediaUrlResolver extends AsyncTask<Void, Void, MediaUrlResolver.Res
 
     // Acceptal response codes for URL resolving request.
     private static final Integer[] SUCCESS_RESPONSE_CODES = {
-        // Request succeeded.
-        HttpURLConnection.HTTP_OK,
-        HttpURLConnection.HTTP_PARTIAL,
+            // Request succeeded.
+            HttpURLConnection.HTTP_OK, HttpURLConnection.HTTP_PARTIAL,
 
-        // HttpURLConnection only follows up to 5 redirects, this response is unlikely but possible.
-        HttpURLConnection.HTTP_MOVED_PERM,
-        HttpURLConnection.HTTP_MOVED_TEMP,
+            // HttpURLConnection only follows up to 5 redirects, this response is unlikely but
+            // possible.
+            HttpURLConnection.HTTP_MOVED_PERM, HttpURLConnection.HTTP_MOVED_TEMP,
     };
 
     /**
@@ -74,7 +72,6 @@ public class MediaUrlResolver extends AsyncTask<Void, Void, MediaUrlResolver.Res
          */
         void deliverResult(Uri uri, boolean palyable);
     }
-
 
     protected static final class Result {
         private final Uri mUri;
@@ -204,8 +201,9 @@ public class MediaUrlResolver extends AsyncTask<Void, Void, MediaUrlResolver.Res
         if (headers != null && headers.containsKey(CORS_HEADER_NAME)) {
             // Check that the CORS data is valid for Chromecast
             List<String> corsData = headers.get(CORS_HEADER_NAME);
-            if (corsData.isEmpty() || (!corsData.get(0).equals("*")
-                    && !corsData.get(0).equals(CHROMECAST_ORIGIN))) {
+            if (corsData.isEmpty()
+                    || (!corsData.get(0).equals("*")
+                               && !corsData.get(0).equals(CHROMECAST_ORIGIN))) {
                 recordResultHistogram(RESOLVE_RESULT_INCOMPATIBLE_CORS);
                 return false;
             }
@@ -231,18 +229,17 @@ public class MediaUrlResolver extends AsyncTask<Void, Void, MediaUrlResolver.Res
 
     private boolean isEnhancedMedia(Uri uri) {
         int mediaType = getMediaType(uri);
-        return mediaType == MEDIA_TYPE_HLS
-                || mediaType == MEDIA_TYPE_DASH
+        return mediaType == MEDIA_TYPE_HLS || mediaType == MEDIA_TYPE_DASH
                 || mediaType == MEDIA_TYPE_SMOOTHSTREAM;
     }
 
     @VisibleForTesting
     void recordResultHistogram(int result) {
-        RecordHistogram.recordEnumeratedHistogram("Cast.Sender.UrlResolveResult", result,
-                HISTOGRAM_RESULT_COUNT);
+        RecordHistogram.recordEnumeratedHistogram(
+                "Cast.Sender.UrlResolveResult", result, HISTOGRAM_RESULT_COUNT);
     }
 
-    static int getMediaType(Uri uri) {
+    public static int getMediaType(Uri uri) {
         String path = uri.getPath();
 
         if (path == null) return MEDIA_TYPE_UNKNOWN;

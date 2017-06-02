@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.chrome.browser.media.remote;
+package org.chromium.chrome.browser.media;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -12,13 +12,14 @@ import android.net.Uri;
 
 import com.google.android.collect.Lists;
 
-import org.chromium.base.CommandLine;
-import org.chromium.testing.local.LocalRobolectricTestRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowApplication;
+
+import org.chromium.base.CommandLine;
+import org.chromium.testing.local.LocalRobolectricTestRunner;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -31,12 +32,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Unit tests (run on host) for {@link org.chromium.chrome.browser.media.remote.MediaUrlResolver}.
+ * Unit tests (run on host) for {@link org.chromium.chrome.browser.media.MediaUrlResolver}.
  */
 @RunWith(LocalRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 public class MediaUrlResolverTest {
-
     // Constants copied from MediaUrlResolver. Don't use the copies in MediaUrlResolver
     // since we want the tests to detect if these are changed or corrupted.
     private static final String COOKIES_HEADER_NAME = "Cookies";
@@ -89,7 +89,6 @@ public class MediaUrlResolverTest {
      * out to the real network.
      */
     private class DummyUrlConnection extends HttpURLConnection {
-
         private final URL mUrl;
 
         protected DummyUrlConnection(URL u) {
@@ -103,8 +102,7 @@ public class MediaUrlResolverTest {
         }
 
         @Override
-        public void disconnect() {
-        }
+        public void disconnect() {}
 
         @Override
         public Map<String, List<String>> getHeaderFields() {
@@ -130,19 +128,16 @@ public class MediaUrlResolverTest {
         public int getResponseCode() {
             return mReturnedResponseCode;
         }
-
     }
 
     /**
      * Class for plugging in DummyUrlConnection
      */
     private class DummyUrlStreamHandler extends URLStreamHandler {
-
         @Override
         protected URLConnection openConnection(URL u) throws IOException {
             return new DummyUrlConnection(u);
         }
-
     }
 
     private Map<String, String> mRequestProperties;
@@ -170,7 +165,7 @@ public class MediaUrlResolverTest {
     public void testMediaUrlResolver_validMpeg4() throws MalformedURLException {
         // A valid mpeg4 URI is playable and unchanged.
         Uri uri = Uri.parse("http://example.com/test.mp4");
-        TestDelegate delegate =  resolveUri(uri, null, 200, null, null, false);
+        TestDelegate delegate = resolveUri(uri, null, 200, null, null, false);
         assertThat("A valid mp4 uri is unchanged", delegate.getReturnedUri(), equalTo(uri));
         assertThat("A valid mp4 uri is playable", delegate.isPlayable(), equalTo(true));
 
@@ -189,7 +184,7 @@ public class MediaUrlResolverTest {
     @Test
     public void testMediaUrlResolver_nullUri() {
         // An null URL isn't playable
-        TestDelegate delegate =  resolveUri(null, null, 200, null, null, false);
+        TestDelegate delegate = resolveUri(null, null, 200, null, null, false);
 
         assertThat("An empty uri remains empty", delegate.getReturnedUri(), equalTo(Uri.EMPTY));
         assertThat("An empty uri isn't playable", delegate.isPlayable(), equalTo(false));
@@ -201,7 +196,7 @@ public class MediaUrlResolverTest {
     @Test
     public void testMediaUrlResolver_emptyUri() {
         // An empty URL isn't playable
-        TestDelegate delegate =  resolveUri(Uri.EMPTY, null, 200, null, null, false);
+        TestDelegate delegate = resolveUri(Uri.EMPTY, null, 200, null, null, false);
 
         assertThat("An empty uri remains empty", delegate.getReturnedUri(), equalTo(Uri.EMPTY));
         assertThat("An empty uri isn't playable", delegate.isPlayable(), equalTo(false));
@@ -216,10 +211,10 @@ public class MediaUrlResolverTest {
     public void testMediaUrlResolver_cookies() throws MalformedURLException {
         // Check that cookies are sent correctly.
         Uri uri = Uri.parse("http://example.com/test.mp4");
-        TestDelegate delegate =  resolveUri(uri, "Cookies!", 200, null, null, false);
+        TestDelegate delegate = resolveUri(uri, "Cookies!", 200, null, null, false);
 
-        assertThat("The message contained the cookies",
-                mRequestProperties.get(COOKIES_HEADER_NAME), equalTo("Cookies!"));
+        assertThat("The message contained the cookies", mRequestProperties.get(COOKIES_HEADER_NAME),
+                equalTo("Cookies!"));
     }
 
     /**
@@ -232,7 +227,7 @@ public class MediaUrlResolverTest {
     public void testMediaUrlResolver_validHLSNoRange() throws MalformedURLException {
         // Don't set range request header for manifest URLs like HLS.
         Uri uri = Uri.parse("http://example.com/test.m3u8");
-        TestDelegate delegate =  resolveUri(uri, null, 200, null, null, false);
+        TestDelegate delegate = resolveUri(uri, null, 200, null, null, false);
         assertThat("The message didn't have the range header",
                 mRequestProperties.get(RANGE_HEADER_NAME), nullValue());
     }
@@ -248,10 +243,10 @@ public class MediaUrlResolverTest {
         // A redirected URI is retuend and is playable.
         Uri uri = Uri.parse("http://example.com/test.mp4");
         URL returnedUri = new URL("http://cdn.example.com/foo/test.mp4");
-        TestDelegate delegate =  resolveUri(uri, null, 200, returnedUri, null, false);
+        TestDelegate delegate = resolveUri(uri, null, 200, returnedUri, null, false);
 
-        assertThat("A redirected uri is returned",
-                delegate.getReturnedUri(), equalTo(Uri.parse(returnedUri.toString())));
+        assertThat("A redirected uri is returned", delegate.getReturnedUri(),
+                equalTo(Uri.parse(returnedUri.toString())));
         assertThat("A redirected uri is playable", delegate.isPlayable(), equalTo(true));
     }
 
@@ -264,10 +259,10 @@ public class MediaUrlResolverTest {
     public void testMediaUrlResolver_serverError() {
         // A valid URL is unplayable and an empty URL is returned if the server request fails.
         Uri uri = Uri.parse("http://example.com/test.mp4");
-        TestDelegate delegate =  resolveUri(uri, null, 404, null, null, false);
+        TestDelegate delegate = resolveUri(uri, null, 404, null, null, false);
 
-        assertThat("An empty uri is returned on server error",
-                delegate.getReturnedUri(), equalTo(Uri.EMPTY));
+        assertThat("An empty uri is returned on server error", delegate.getReturnedUri(),
+                equalTo(Uri.EMPTY));
         assertThat("Server error means unplayable uri", delegate.isPlayable(), equalTo(false));
     }
 
@@ -280,10 +275,10 @@ public class MediaUrlResolverTest {
     public void testMediaUrlResolver_networkError() throws MalformedURLException {
         // A random, non parsable, URI of unknown type is treated as not playable.
         Uri uri = Uri.parse("http://example.com/test.mp4");
-        TestDelegate delegate =  resolveUri(uri, null, 404, null, null, true);
+        TestDelegate delegate = resolveUri(uri, null, 404, null, null, true);
 
-        assertThat("An empty uri is returned on network error",
-                delegate.getReturnedUri(), equalTo(Uri.EMPTY));
+        assertThat("An empty uri is returned on network error", delegate.getReturnedUri(),
+                equalTo(Uri.EMPTY));
         assertThat("Network error means unplayable uri", delegate.isPlayable(), equalTo(false));
     }
 
@@ -299,9 +294,9 @@ public class MediaUrlResolverTest {
         Uri uri = Uri.parse("http://example.com/test.mp4");
         HashMap<String, List<String>> corsHeaders = new HashMap<String, List<String>>();
         corsHeaders.put(CORS_HEADER_NAME, Lists.newArrayList(CHROMECAST_ORIGIN));
-        TestDelegate delegate =  resolveUri(uri, null, 200, null, corsHeaders, false);
-        assertThat("A valid mp4 uri with CORS is unchanged",
-                delegate.getReturnedUri(), equalTo(uri));
+        TestDelegate delegate = resolveUri(uri, null, 200, null, corsHeaders, false);
+        assertThat(
+                "A valid mp4 uri with CORS is unchanged", delegate.getReturnedUri(), equalTo(uri));
         assertThat("A valid mp4 uri with CORS is playable", delegate.isPlayable(), equalTo(true));
     }
 
@@ -318,11 +313,11 @@ public class MediaUrlResolverTest {
         HashMap<String, List<String>> corsHeaders = new HashMap<String, List<String>>();
         corsHeaders.put(CORS_HEADER_NAME, Lists.newArrayList("http://google.com"));
 
-        TestDelegate delegate =  resolveUri(uri, null, 200, null, corsHeaders, false);
-        assertThat("A valid mp4 uri with incompatible CORS is unchanged",
-                delegate.getReturnedUri(), equalTo(uri));
-        assertThat("A valid mp4 uri with incompatible CORS is not playable",
-                delegate.isPlayable(), equalTo(false));
+        TestDelegate delegate = resolveUri(uri, null, 200, null, corsHeaders, false);
+        assertThat("A valid mp4 uri with incompatible CORS is unchanged", delegate.getReturnedUri(),
+                equalTo(uri));
+        assertThat("A valid mp4 uri with incompatible CORS is not playable", delegate.isPlayable(),
+                equalTo(false));
     }
 
     /**
@@ -334,12 +329,12 @@ public class MediaUrlResolverTest {
     public void testMediaUrlResolver_validHLSNoCORS() throws MalformedURLException {
         // A valid mpeg4 URI is playable and unchanged.
         Uri uri = Uri.parse("http://example.com/test.m3u8");
-        TestDelegate delegate =  resolveUri(uri, null, 200, null, null, false);
+        TestDelegate delegate = resolveUri(uri, null, 200, null, null, false);
 
-        assertThat("A valid HLS uri with no CORS is unchanged",
-                delegate.getReturnedUri(), equalTo(uri));
-        assertThat("A valid HLS uri with no CORS is not playable",
-                delegate.isPlayable(), equalTo(false));
+        assertThat("A valid HLS uri with no CORS is unchanged", delegate.getReturnedUri(),
+                equalTo(uri));
+        assertThat("A valid HLS uri with no CORS is not playable", delegate.isPlayable(),
+                equalTo(false));
     }
 
     /**
@@ -351,41 +346,34 @@ public class MediaUrlResolverTest {
     public void testMediaUrlResolver_unknownMediaType() throws MalformedURLException {
         // A URI with an unknown media type is unchanged but not playable.
         Uri uri = Uri.parse("http://example.com/test.foo");
-        TestDelegate delegate =  resolveUri(uri, null, 200, null, null, false);
+        TestDelegate delegate = resolveUri(uri, null, 200, null, null, false);
 
-        assertThat("A valid uri with unknown media type is unchanged",
-                delegate.getReturnedUri(), equalTo(uri));
-        assertThat("A valid uri with unknown media type is not playable",
-                delegate.isPlayable(), equalTo(false));
+        assertThat("A valid uri with unknown media type is unchanged", delegate.getReturnedUri(),
+                equalTo(uri));
+        assertThat("A valid uri with unknown media type is not playable", delegate.isPlayable(),
+                equalTo(false));
     }
 
-    private TestDelegate resolveUri(
-            final Uri uri,
-            final String cookies,
-            int responseCode,
-            URL returnedUrl,
-            Map<String, List<String>> returnedHeaders,
-            boolean throwIOException) {
+    private TestDelegate resolveUri(final Uri uri, final String cookies, int responseCode,
+            URL returnedUrl, Map<String, List<String>> returnedHeaders, boolean throwIOException) {
         mReturnedResponseCode = responseCode;
         mReturnedUrl = returnedUrl;
-        mReturnedHeaders = returnedHeaders == null ? new HashMap<String, List<String>>()
-                : returnedHeaders;
+        mReturnedHeaders =
+                returnedHeaders == null ? new HashMap<String, List<String>>() : returnedHeaders;
         mRequestProperties = new HashMap<String, String>();
         mThrowIOException = throwIOException;
 
         TestDelegate delegate = new TestDelegate(uri, cookies);
-        MediaUrlResolver resolver = new MediaUrlResolver(delegate, "User agent",
-                new DummyUrlStreamHandler()) {
-            // The RecordHistogram members are static, and call native, so we must prevent any calls
-            // to them by overriding the wrapper.
-            @Override
-            void recordResultHistogram(int result) {
-            }
-        };
+        MediaUrlResolver resolver =
+                new MediaUrlResolver(delegate, "User agent", new DummyUrlStreamHandler()) {
+                    // The RecordHistogram members are static, and call native, so we must prevent
+                    // any calls to them by overriding the wrapper.
+                    @Override
+                    void recordResultHistogram(int result) {}
+                };
         resolver.execute();
         ShadowApplication.runBackgroundTasks();
 
         return delegate;
     }
-
 }
