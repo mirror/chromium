@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56c6bef2_acaad594",
+        "filename": "components/offline_pages/core/prefetch/offline_metrics_collector_stub.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-02T23:16:25Z",
+      "side": 1,
+      "message": "No need to duplicate the base comment.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 39
+      },
+      "revId": "2667398bbdd95fbbb7245bb5a717aa6593bcf74d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1093fcf7_3e93b5a2",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_stub_taco.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-02T23:16:25Z",
+      "side": 1,
+      "message": "Update whole paragraph to refer to prefetch service instead.",
+      "range": {
+        "startLine": 19,
+        "startChar": 47,
+        "endLine": 19,
+        "endChar": 66
+      },
+      "revId": "2667398bbdd95fbbb7245bb5a717aa6593bcf74d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac234f87_39ab8eee",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_stub_taco.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-02T23:16:25Z",
+      "side": 1,
+      "message": "why impl instead of stub?",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "2667398bbdd95fbbb7245bb5a717aa6593bcf74d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9cf4472_0fe63d3a",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_stub_taco.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-02T23:16:25Z",
+      "side": 1,
+      "message": "switch to prefetch service",
+      "range": {
+        "startLine": 36,
+        "startChar": 41,
+        "endLine": 36,
+        "endChar": 65
+      },
+      "revId": "2667398bbdd95fbbb7245bb5a717aa6593bcf74d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
