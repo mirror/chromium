@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "e3c24179_4c124ce6",
+        "filename": "media/base/media_log.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-02T21:42:54Z",
+      "side": 1,
+      "message": "I think it should be dropped. By special case it\u0027s just deleting the code which sends the signal to the background reporter. So doing this requires additional complexity.",
+      "parentUuid": "db9b6d86_e5ef308b",
+      "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8efab5a4_4262e1dc",
         "filename": "media/blink/watch_time_reporter.cc",
         "patchSetId": 2

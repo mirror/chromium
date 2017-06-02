@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d4e6753_c010c9e2",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-02T21:42:54Z",
+      "side": 1,
+      "message": "No {} for single line if.",
+      "revId": "23bded289ce29492cfe094a35b38b97a7fd4c4c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87bce3b8_b5da156a",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-02T21:42:54Z",
+      "side": 1,
+      "message": "Probably this isn\u0027t ideal, but for our sizes it should be fine.",
+      "revId": "23bded289ce29492cfe094a35b38b97a7fd4c4c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13204a34_7abb57ec",
+        "filename": "media/base/watch_time_keys.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-02T21:42:54Z",
+      "side": 1,
+      "message": "Did clang-format do this?",
+      "revId": "23bded289ce29492cfe094a35b38b97a7fd4c4c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b13108a3_8d7313c7",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-02T21:42:54Z",
+      "side": 1,
+      "message": "Drop as indicated on previous comment.",
+      "revId": "23bded289ce29492cfe094a35b38b97a7fd4c4c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38124e9c_de4be192",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-02T21:42:54Z",
+      "side": 1,
+      "message": "Just end_timestamp_for_controls_ !\u003d kNoTimestamp, no need for the extra bool.",
+      "revId": "23bded289ce29492cfe094a35b38b97a7fd4c4c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ee26d1_5caceab0",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-02T21:42:54Z",
+      "side": 1,
+      "message": "Drop.",
+      "revId": "23bded289ce29492cfe094a35b38b97a7fd4c4c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b54720a_8f77a392",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-02T21:42:54Z",
+      "side": 1,
+      "message": "You can infer the right metric to record to without the additional bool based on the presence of the end timestamp and has_native_controls_ value. For consistency this should avoid having additional values.\n\nbool report_native_controls \u003d has_native_controls_ \u0026\u0026 !is_controls_change_pending;",
+      "revId": "23bded289ce29492cfe094a35b38b97a7fd4c4c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb14286c_45bda279",
+        "filename": "media/blink/watch_time_reporter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-02T21:42:54Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed?",
+      "revId": "23bded289ce29492cfe094a35b38b97a7fd4c4c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
