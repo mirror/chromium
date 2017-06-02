@@ -10,8 +10,8 @@
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/task_scheduler/sequence.h"
 #include "base/task_scheduler/task_tracker.h"
-
 #if defined(OS_MACOSX)
 #include "base/mac/scoped_nsautorelease_pool.h"
 #elif defined(OS_WIN)
@@ -76,12 +76,13 @@ class SchedulerWorker::Thread : public PlatformThread::Delegate {
         continue;
       }
 
-      if (outer_->task_tracker_->RunTask(sequence->TakeTask(),
-                                         sequence->token())) {
+      bool sequence_became_empty;
+      const bool ran_task = outer_->task_tracker_->RunNextTask(
+          sequence.get(), &sequence_became_empty);
+
+      if (ran_task) {
         outer_->delegate_->DidRunTask();
       }
-
-      const bool sequence_became_empty = sequence->Pop();
 
       // If |sequence| isn't empty immediately after the pop, re-enqueue it to
       // maintain the invariant that a non-empty Sequence is always referenced
