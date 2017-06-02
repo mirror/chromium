@@ -861,6 +861,7 @@
     // crbug.com/417782 tracks enabling this by default.
     {
       name: "RootLayerScrolling",
+      implied_by: ["SlimmingPaintV2"],
     },
     {
       name: "RTCRtpSender",
