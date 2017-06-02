@@ -36,7 +36,8 @@ struct ContextState;
 
 class MockGLES2Decoder : public GLES2Decoder {
  public:
-  MockGLES2Decoder();
+  explicit MockGLES2Decoder(
+      CommandBufferServiceBase* command_buffer_service = nullptr);
   virtual ~MockGLES2Decoder();
 
   base::WeakPtr<GLES2Decoder> AsWeakPtr() override;
