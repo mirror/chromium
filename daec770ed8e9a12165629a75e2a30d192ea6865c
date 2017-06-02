@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b28ed039_8c7434c3",
+        "filename": "services/ui/ws/window_coordinate_conversions_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-02T20:36:34Z",
+      "side": 0,
+      "message": "I\u0027m nuking this file as I basically removed all the unused function and the new one is covered by other tests.",
+      "range": {
+        "startLine": 1,
+        "startChar": 18,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "daec770ed8e9a12165629a75e2a30d192ea6865c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
