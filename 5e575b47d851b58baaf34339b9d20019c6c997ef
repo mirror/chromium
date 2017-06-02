@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9097f2a1_1b433520",
+        "filename": "base/threading/platform_thread.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1213554
+      },
+      "writtenOn": "2017-06-02T19:51:13Z",
+      "side": 1,
+      "message": "This is an implementation detail. You want:\n\nThis function must not be called from the main thread on Mac. This is to ...",
+      "range": {
+        "startLine": 210,
+        "startChar": 19,
+        "endLine": 210,
+        "endChar": 26
+      },
+      "revId": "5e575b47d851b58baaf34339b9d20019c6c997ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
