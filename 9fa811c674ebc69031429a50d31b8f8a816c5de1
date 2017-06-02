@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cbf8819_e0e9e42e",
+        "filename": "components/offline_pages/core/prefetch/prefetch_gcm_app_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-02T14:44:26Z",
+      "side": 1,
+      "message": "Could you add something like the following here? It would also be great if we could guard this behind a base::Feature to get an explicit kill switch for the GCM functionality. (If we were to start creating tokens for non-Android platforms by accident it could be pretty catastrophic.)\n\n#if !defined(OS_ANDROID)\n  NOTREACHED()\n      \u003c\u003c \"PrefetchGCMAppHandler::GetGCMToken should only be used on Android.\";\n#endif\n\n(I realise that this may mean that the test won\u0027t run on non-Android platforms. Is that a problem?)",
+      "revId": "9fa811c674ebc69031429a50d31b8f8a816c5de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ffd752_89664262",
+        "filename": "components/offline_pages/core/prefetch/prefetch_gcm_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-02T14:44:26Z",
+      "side": 1,
+      "message": "nit: This fulfills the TODO, right?",
+      "revId": "9fa811c674ebc69031429a50d31b8f8a816c5de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
