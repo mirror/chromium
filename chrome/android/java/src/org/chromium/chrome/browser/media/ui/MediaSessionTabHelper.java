@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 
 import org.chromium.base.Log;
+import org.chromium.base.SysUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.blink.mojom.MediaSessionAction;
 import org.chromium.chrome.R;
@@ -46,7 +47,8 @@ public class MediaSessionTabHelper implements MediaImageCallback {
 
     private Tab mTab;
     private Bitmap mPageMediaImage;
-    private Bitmap mFavicon;
+    @VisibleForTesting
+    Bitmap mFavicon;
     private Bitmap mCurrentMediaImage;
     private String mOrigin;
     @VisibleForTesting
@@ -427,6 +429,7 @@ public class MediaSessionTabHelper implements MediaImageCallback {
      */
     private boolean updateFavicon(Bitmap icon) {
         if (icon == null) return false;
+        if (SysUtils.isAndroidGoDevice()) return false;
 
         if (!MediaNotificationManager.isBitmapSuitableAsMediaImage(icon)) return false;
         if (mFavicon != null && (icon.getWidth() < mFavicon.getWidth()
