@@ -48,6 +48,7 @@ def print_landmines():
     print 'Switch to VS2015 Update 3, 14393 SDK'
   print 'Need to clobber everything due to an IDL change in r154579 (blink)'
   print 'Need to clobber everything due to gen file moves in r175513 (Blink)'
+  print 'hoge'
   if (platform() != 'ios'):
     print 'Clobber to get rid of obselete test plugin after r248358'
     print 'Clobber to rebuild GN files for V8'

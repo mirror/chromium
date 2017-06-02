@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/toolchain/goma.gni")
 import("//third_party/WebKit/Source/core/core_idl_files.gni")
 import("//third_party/WebKit/Source/modules/modules_idl_files.gni")
 
@@ -182,10 +183,10 @@ template("idl_compiler") {
     "//third_party/WebKit/Source/core:generated_testing_idls",
   ]
 
-  # On mac spawning a python process per IDL file is slow. Use a single action
-  # instead.
+  # On mac and windows, spawning a python process per IDL file is slow with large -j.
+  # Use a single action instead when goma is enabled.
   # TODO(bashi,tikuta): Use a pool when crbug.com/635308 is fixed.
-  if (is_mac) {
+  if (use_goma && (is_mac || is_win)) {
     action(target_name) {
       script = _script
       inputs = _inputs
