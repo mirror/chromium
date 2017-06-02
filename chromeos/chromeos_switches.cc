@@ -66,6 +66,10 @@ const char kAppOemManifestFile[] = "app-mode-oem-manifest";
 // Secondary profile is an exception where ARC will not start.
 const char kArcAlwaysStart[] = "arc-always-start";
 
+// Indicates ARC image without Play Store support. In this case Play Store
+// related UI is not shown.
+const char kArcNoPlayStore[] = "arc-no-playstore";
+
 // Signals ARC support status on this device. This can take one of the
 // following three values.
 // - none: ARC is not installed on this device. (default)

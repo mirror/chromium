@@ -67,6 +67,11 @@ bool IsArcAvailable() {
        base::FeatureList::IsEnabled(kEnableArcFeature));
 }
 
+bool HasPlayStore() {
+  return !base::CommandLine::ForCurrentProcess()->HasSwitch(
+      chromeos::switches::kArcNoPlayStore);
+}
+
 bool ShouldArcAlwaysStart() {
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
       chromeos::switches::kArcAlwaysStart);
@@ -161,6 +166,13 @@ void SetArcCpuRestriction(bool do_restrict) {
                   : login_manager::CONTAINER_CPU_RESTRICTION_FOREGROUND;
   session_manager_client->SetArcCpuRestriction(
       state, base::Bind(SetArcCpuRestrictionCallback, state));
+}
+
+void ValidateSwitches() {
+  if (!HasPlayStore() && !ShouldArcAlwaysStart()) {
+    LOG(ERROR) << chromeos::switches::kArcNoPlayStore << " flag requires "
+               << chromeos::switches::kArcAlwaysStart << " flag to be set.";
+  }
 }
 
 }  // namespace arc
