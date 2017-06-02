@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "403191cd_ba05b69e",
+        "filename": "chrome/browser/extensions/api/feedback_private/feedback_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-02T20:59:02Z",
+      "side": 1,
+      "message": "Please. :)  Just something like:\n// SystemLogsFetcher manages its own lifetime.",
+      "parentUuid": "5c5b257d_d69d9d85",
+      "range": {
+        "startLine": 61,
+        "startChar": 19,
+        "endLine": 61,
+        "endChar": 47
+      },
+      "revId": "ced1c55eb369d9d644b93580700dbc80026668e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50a5e94b_aeaea269",
         "filename": "chrome/browser/extensions/api/log_private/log_private_api_chromeos.cc",
         "patchSetId": 3
