@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bd2a1c77_61b1a4a2",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-02T13:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07be2bac_52f60b07",
+      "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7d6073b_c10c83b8",
         "filename": "content/browser/media/media_internals.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c47eb4_fcbff316",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-02T13:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7d6073b_c10c83b8",
+      "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c7a10962_91f6d932",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-02T13:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fdbc23c_edc871de",
+      "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a8ec860_33ed04bf",
         "filename": "media/base/media_log.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db9b6d86_e5ef308b",
+        "filename": "media/base/media_log.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-02T13:14:07Z",
+      "side": 1,
+      "message": "Given that we would need to special case this to not record it, I would tend to think we should have a reason to do so. Regarding whether we need the background information, I would say that it would be good to have the overall watch time instead of only the foreground. Whether foreground vs background matters, I don\u0027t think so.\n\n(This said, I have no strong opinion and happy to defer to yours if you feel strongly.)",
+      "parentUuid": "8a8ec860_33ed04bf",
+      "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9f3a2e80_ef518578",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-02T13:14:07Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "8efab5a4_4262e1dc",
+      "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2eb4bc2_c3b0201e",
         "filename": "media/blink/watch_time_reporter.cc",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85fb5861_9efc407e",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-02T13:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2eb4bc2_c3b0201e",
+      "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "3ac0d539_52ae4da5",
+        "filename": "media/blink/watch_time_reporter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-02T13:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d4df3a8_99c69f0a",
+      "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "234e6501_79a1168a",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 2
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "f31bba5d_6c689fb1",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2297,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-02T13:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "234e6501_79a1168a",
+      "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c9a1a14_848bdc63",
         "filename": "third_party/WebKit/public/platform/WebMediaPlayer.h",
         "patchSetId": 2
@@ -152,6 +296,24 @@
       "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd49bbf0_dc0c5f44",
+        "filename": "third_party/WebKit/public/platform/WebMediaPlayer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-02T13:14:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c9a1a14_848bdc63",
+      "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -175,6 +337,30 @@
       "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "420983e7_26ad1a23",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 88506,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-02T13:14:07Z",
+      "side": 1,
+      "message": "Happy to defer to dalecurtis@ on this but my intuition is that these sub-types might not all contain the same types so it might not make sense to have a second layer.",
+      "parentUuid": "93fb93cc_6876ada8",
+      "range": {
+        "startLine": 88506,
+        "startChar": 44,
+        "endLine": 88506,
+        "endChar": 0
+      },
+      "revId": "d4bc6067b02df5562c8a076f2f8ea4c40ae81f0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
