@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aba3c889_d6175f2b",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 1457,
+      "author": {
+        "id": 1192536
+      },
+      "writtenOn": "2017-06-02T19:29:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f672606a_e6abb3f8",
+      "revId": "6fc51a78de1c44ecc5f09aa23fcfc57e0a0b086d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "649d552b_48064aeb",
         "filename": "chrome/browser/ui/BUILD.gn",
         "patchSetId": 8
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "9e9a5d9d_94ffed2a",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1192536
+      },
+      "writtenOn": "2017-06-02T19:29:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "649d552b_48064aeb",
+      "range": {
+        "startLine": 628,
+        "startChar": 6,
+        "endLine": 628,
+        "endChar": 17
+      },
+      "revId": "6fc51a78de1c44ecc5f09aa23fcfc57e0a0b086d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48b41b4a_a05298ad",
         "filename": "content/public/browser/BUILD.gn",
         "patchSetId": 8
@@ -53,6 +95,30 @@
       "writtenOn": "2017-06-02T17:47:30Z",
       "side": 1,
       "message": "Why do you need to add this?",
+      "range": {
+        "startLine": 351,
+        "startChar": 20,
+        "endLine": 351,
+        "endChar": 63
+      },
+      "revId": "6fc51a78de1c44ecc5f09aa23fcfc57e0a0b086d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9363d53b_418048d0",
+        "filename": "content/public/browser/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1192536
+      },
+      "writtenOn": "2017-06-02T19:29:17Z",
+      "side": 1,
+      "message": "This needs to be publicly exported from //content/public/browser because it\u0027s in use in //chrome/browser/chromeos/arc/tracing/arc_tracing_bridge.h.  The file is normally coming from the non-public //content/browser, but there aren\u0027t any public_deps pointing to that.  I think the file should probably be moved out to the public directory eventually, but I didn\u0027t want to add even more complexity in this cl since this is already a de facto dependency.",
+      "parentUuid": "48b41b4a_a05298ad",
       "range": {
         "startLine": 351,
         "startChar": 20,

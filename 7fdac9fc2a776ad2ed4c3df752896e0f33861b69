@@ -16,6 +16,24 @@
       "revId": "7fdac9fc2a776ad2ed4c3df752896e0f33861b69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a8a712_bbe4727a",
+        "filename": "chrome/browser/chromeos/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1192536
+      },
+      "writtenOn": "2017-06-02T19:29:17Z",
+      "side": 0,
+      "message": "Agreed.  Why does the build system even allow you to do that?",
+      "parentUuid": "dcb627ac_3d989f13",
+      "revId": "7fdac9fc2a776ad2ed4c3df752896e0f33861b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
