@@ -1,0 +1,205 @@
+commit ff6a0e9ee0bd553557778bede8d9344c7a337d6d
+Author: miu <miu@chromium.org>
+Date:   Tue Jun 2 15:36:11 2015 -0700
+
+    OffscreenPresentation impl, for Presentation API 1UA mode (Part 1 of 2)
+    
+    This is the first in a 2-part change to support the one user agent (1UA)
+    mode for the new W3C Presentation API.  This part adds a general-purpose
+    off-screen tab rendering implementation.  The second part will add a
+    chrome.tabCapture.capturePresentation API that spawns
+    OffscreenPresentations and captures their content into MediaStreams for
+    transport to a remote display.
+    
+    Since off-screen tabs are used to simulate a remote device rendering a
+    web page, they will not show up in any browser windows, nor will they
+    be visible to other extension APIs, such as chrome.tabs.  This is
+    accomplished by spawning a WebContents instance in its own non-shared,
+    off-the-record profile; and providing it a WebContentsDelegate that
+    blocks all normal user interaction (e.g., keyboard/mouse input,
+    copy/paste to/from the system clipboard, webcam recording, etc.).
+    
+    BUG=490890
+    
+    Review URL: https://codereview.chromium.org/1150613003
+    
+    Cr-Commit-Position: refs/heads/master@{#332481}
+
+commit 6452f50bfa84fa69e5462a7382508b18e484202e
+Author: ericwilligers <ericwilligers@chromium.org>
+Date:   Thu Sep 18 00:21:02 2014 -0700
+
+    Retire obsolete Valgrind supressions ..58564
+    
+    The following supressions are no longer needed:
+    bug_16093
+    bug_16095
+    bug_16128
+    bug_19371
+    bug_27665
+    bug_29675
+    bug_32623
+    bug_43471
+    bug_46250
+    bug_50304
+    bug_50936
+    bug_52831
+    bug_58564
+    
+    BUG=16093,16095,16128,19371,27665,29675,32623,43471,46250,50304,50936,52831,58564
+    TBR=groby@chromium.org
+    NOTRY=true
+    
+    Review URL: https://codereview.chromium.org/583553002
+    
+    Cr-Commit-Position: refs/heads/master@{#295432}
+
+commit c5bbe0e28607eaec46fe76ee44292daa9784e22c
+Author: jww@chromium.org <jww@chromium.org@0039d316-1c4b-4281-b951-d872f2087c98>
+Date:   Fri Aug 1 23:23:30 2014 +0000
+
+    Remember user decisions on invalid certificates behind a flag
+    
+    Currently if a user clicks thorough an invalid certificate, the decision is
+    remembered for the rest of the session, but after session restart, the decision
+    is forgotten. This implements a flag that remembers the decision for a specified
+    length of time across session restarts. Users can specific in the flag how long
+    decisions should be remembered, or they can specify that it should still be
+    reset on restart.
+    
+    BUG=262615
+    NOTRY=true
+    
+    Review URL: https://codereview.chromium.org/369703002
+    
+    git-svn-id: svn://svn.chromium.org/chrome/trunk/src@287118 0039d316-1c4b-4281-b951-d872f2087c98
+
+commit 604d033db0ce3e967e00f4f84f6ffaa217f525f7
+Author: jamescook@chromium.org <jamescook@chromium.org@0039d316-1c4b-4281-b951-d872f2087c98>
+Date:   Tue Jul 22 02:05:20 2014 +0000
+
+    Clean up OffTheRecordProfileImplTest unit test
+    
+    The previous version of this test could create up to 4 TestingProfiles:
+    1. TestingProfile from BrowserWithTestWindowTest::CreateProfile
+    2. TestingProfileWithHostZoomMap in the test body
+    3. An incognito version created by (2) via GetOffTheRecordProfile().
+    4. An incognito version created in the test body
+    
+    Also the master/incognito relationships between these profiles are unclear.
+    
+    Reduce this to the 2 needed instances:
+    1. TestingProfileWithHostZoomMap owned by BrowserWithTestWindowTest
+    2. An incognito version in the test body
+    
+    BUG=395329
+    TEST=unit_tests OffTheRecordProfileImplTest.*
+    
+    Review URL: https://codereview.chromium.org/403103003
+    
+    git-svn-id: svn://svn.chromium.org/chrome/trunk/src@284590 0039d316-1c4b-4281-b951-d872f2087c98
+
+commit 7e26ac973ede2fd0576d40086a437a3177668ea1
+Author: jam@chromium.org <jam@chromium.org@0039d316-1c4b-4281-b951-d872f2087c98>
+Date:   Mon Feb 27 20:15:05 2012 +0000
+
+    Fix race condition where the items on ResourceContext's UserData map were rewritten to the same value as they were read on the IO thread.
+    
+    BUG=115678
+    Review URL: https://chromiumcodereview.appspot.com/9466031
+    
+    git-svn-id: svn://svn.chromium.org/chrome/trunk/src@123794 0039d316-1c4b-4281-b951-d872f2087c98
+
+commit f9cdff2f2d8d3fa895760da14dfbe97b72241e18
+Author: oshima@chromium.org <oshima@chromium.org@0039d316-1c4b-4281-b951-d872f2087c98>
+Date:   Fri Feb 24 20:35:12 2012 +0000
+
+    Suppress race in AutomationUITestBase.IncognitoWindow
+    
+    TBR=huanr@chromium.org
+    BUG=115678
+    TEST=none
+    
+    Review URL: https://chromiumcodereview.appspot.com/9463024
+    
+    git-svn-id: svn://svn.chromium.org/chrome/trunk/src@123534 0039d316-1c4b-4281-b951-d872f2087c98
+
+commit d407cc0d24e3b55a68bbe8098da26bde8ad666b6
+Author: yosin@chromium.org <yosin@chromium.org@0039d316-1c4b-4281-b951-d872f2087c98>
+Date:   Tue Sep 13 16:01:46 2011 +0000
+
+    Summary of changes
+    
+    == chrome/browser/profiles/off_the_record_profile.cc ==
+    == chrome/browser/profiles/off_the_record_profile.h ==
+    * Change GetHostZoomMap for populating from parent's host zoom map.
+    * Install observer in off the record profile to observe original HZM changes
+    * Move object initialization code to Init method for two phase initialization.
+    
+    == content/browser/host_zoom_map.* ==
+    * Populating newly created HostZoomMap(HZM) for off the record profile with zoom level settings from original profile.
+    
+    == content/browser/renderer_host/render_view_host.cc ==
+    Propagate zoom level change to related hosts to update page rendering.
+    
+    BUG=88355
+    TEST=Manual test on Linux/Mac/Win and unit test
+    
+    
+    Review URL: http://codereview.chromium.org/7624013
+    
+    git-svn-id: svn://svn.chromium.org/chrome/trunk/src@100920 0039d316-1c4b-4281-b951-d872f2087c98
+
+commit 7826495e83c49b636ed90f861de02d2c9236d4ff
+Author: thomasvl@chromium.org <thomasvl@chromium.org@0039d316-1c4b-4281-b951-d872f2087c98>
+Date:   Wed Aug 31 14:09:36 2011 +0000
+
+    Move the otr profile into its own .cc file.  Like what was done with the
+    profile io sources.
+    
+    BUG=none
+    TEST=none
+    Review URL: http://codereview.chromium.org/7791031
+    
+    git-svn-id: svn://svn.chromium.org/chrome/trunk/src@98966 0039d316-1c4b-4281-b951-d872f2087c98
+
+commit 5d4451ebf298d9d71f716cc0135f465cec41fcd0
+Author: jbauman@chromium.org <jbauman@chromium.org@0039d316-1c4b-4281-b951-d872f2087c98>
+Date:   Tue Jul 19 15:45:49 2011 +0000
+
+    Roll ANGLE r704:r705
+    
+    BUG=
+    TEST=try
+    
+    Review URL: http://codereview.chromium.org/7375016
+    
+    git-svn-id: svn://svn.chromium.org/chrome/trunk/src@93026 0039d316-1c4b-4281-b951-d872f2087c98
+
+commit d8c37b73320d579fb1cc1c758d597b1e009ec5ac
+Author: timurrrr@chromium.org <timurrrr@chromium.org@0039d316-1c4b-4281-b951-d872f2087c98>
+Date:   Mon Aug 2 12:32:06 2010 +0000
+
+    Widen suppressions for bug 46570, suppress memory leaks in ChromeURLRequestContextFactory/OffTheRecordProfileImpl (50936)
+    TBR=glider
+    BUG=46570,50936
+    Review URL: http://codereview.chromium.org/3086002
+    
+    git-svn-id: svn://svn.chromium.org/chrome/trunk/src@54533 0039d316-1c4b-4281-b951-d872f2087c98
+
+commit 5a0b42e4c702b66ceeaa5c1529b8b03c9d668c74
+Author: pathorn@chromium.org <pathorn@chromium.org@0039d316-1c4b-4281-b951-d872f2087c98>
+Date:   Fri Jul 30 23:42:59 2010 +0000
+
+    Split ProfileImpl out of profile.cc.
+    
+    This is a relatively trivial change which moves ProfileImpl into a separate file to avoid depending on its implementation. The fact that no code references ProfileImpl implies that it doesn't need to be public anyway.
+    
+    Does not affect OffTheRecordProfile, since its dependencies are relatively minimal.
+    
+    BUG=none
+    TEST=none
+    
+    Review URL: http://codereview.chromium.org/2806087
+    
+    git-svn-id: svn://svn.chromium.org/chrome/trunk/src@54409 0039d316-1c4b-4281-b951-d872f2087c98
