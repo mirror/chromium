@@ -30136,6 +30136,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.WatchTimeSessionHadZeroRebuffers" enum="RebufferResult">
+  <owner>dalecurtis@chromium.org</owner>
+  <summary>Indicates if a given watch time session had zero rebuffers.</summary>
+</histogram>
+
 <histogram name="Media.WebAudioSourceProvider.SinkStatus"
     enum="OutputDeviceStatus">
   <owner>olka@chromium.org</owner>
@@ -88926,19 +88931,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="Media.Timeline.Width"/>
 </histogram_suffixes>
 
-<histogram_suffixes name="MediaMtbrCategories" separator=".">
-  <suffix name="Audio.MSE" label="MTBR for MSE media with an audio track."/>
-  <suffix name="Audio.SRC" label="MTBR for SRC media with an audio track."/>
-  <suffix name="Audio.EME" label="MTBR for EME media with an audio track."/>
-  <suffix name="AudioVideo.MSE"
-      label="MTBR for MSE media with both an audio and video track."/>
-  <suffix name="AudioVideo.SRC"
-      label="MTBR for SRC media with both an audio and video track."/>
-  <suffix name="AudioVideo.EME"
-      label="MTBR for EME media with both an audio and video track."/>
-  <affected-histogram name="Media.MeanTimeBetweenRebuffers"/>
-</histogram_suffixes>
-
 <histogram_suffixes name="MediaPipelineStatusForStreams" separator=".">
   <suffix name="AudioVideo.Other"
       label="PipelineStatus for the codecs that dont have an explicit metric."/>
@@ -88987,6 +88979,20 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="VideoOnly" label="PipelineStatus for Video-only streams."/>
   <suffix name="Unsupported" label="PipelineStatus for unsupported streams."/>
   <affected-histogram name="Media.PipelineStatus"/>
+</histogram_suffixes>
+
+<histogram_suffixes name="MediaRebufferingCategories" separator=".">
+  <suffix name="Audio.MSE" label="Metric for MSE media with an audio track."/>
+  <suffix name="Audio.SRC" label="Metric for SRC media with an audio track."/>
+  <suffix name="Audio.EME" label="Metric for EME media with an audio track."/>
+  <suffix name="AudioVideo.MSE"
+      label="Metric for MSE media with both an audio and video track."/>
+  <suffix name="AudioVideo.SRC"
+      label="Metric for SRC media with both an audio and video track."/>
+  <suffix name="AudioVideo.EME"
+      label="Metric for EME media with both an audio and video track."/>
+  <affected-histogram name="Media.MeanTimeBetweenRebuffers"/>
+  <affected-histogram name="Media.WatchTimeSessionHadZeroRebuffers"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="MediaTimelineWidths" separator=".">

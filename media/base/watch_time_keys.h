@@ -53,6 +53,14 @@ MEDIA_EXPORT extern const char kMeanTimeBetweenRebuffersAudioVideoSrc[];
 MEDIA_EXPORT extern const char kMeanTimeBetweenRebuffersAudioVideoMse[];
 MEDIA_EXPORT extern const char kMeanTimeBetweenRebuffersAudioVideoEme[];
 
+// Whether there were any rebuffers within a given watch time report.
+MEDIA_EXPORT extern const char kWatchTimeSessionHadZeroRebuffersAudioSrc[];
+MEDIA_EXPORT extern const char kWatchTimeSessionHadZeroRebuffersAudioMse[];
+MEDIA_EXPORT extern const char kWatchTimeSessionHadZeroRebuffersAudioEme[];
+MEDIA_EXPORT extern const char kWatchTimeSessionHadZeroRebuffersAudioVideoSrc[];
+MEDIA_EXPORT extern const char kWatchTimeSessionHadZeroRebuffersAudioVideoMse[];
+MEDIA_EXPORT extern const char kWatchTimeSessionHadZeroRebuffersAudioVideoEme[];
+
 MEDIA_EXPORT base::flat_set<base::StringPiece> GetWatchTimeKeys();
 MEDIA_EXPORT base::flat_set<base::StringPiece> GetWatchTimePowerKeys();
 

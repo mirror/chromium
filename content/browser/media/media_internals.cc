@@ -367,6 +367,13 @@ class MediaInternals::MediaInternalsUMAHandler {
     RecordWatchTime(key, value, true);
   }
 
+  void RecordWatchTimeSessionHadZeroRebuffers(base::StringPiece key,
+                                              bool had_zero_rebuffers) {
+    base::BooleanHistogram::FactoryGet(
+        key.as_string(), base::HistogramBase::kUmaTargetedHistogramFlag)
+        ->AddBoolean(had_zero_rebuffers);
+  }
+
   enum class FinalizeType { EVERYTHING, POWER_ONLY };
   void FinalizeWatchTime(bool has_video,
                          const GURL& url,
@@ -383,19 +390,20 @@ class MediaInternals::MediaInternalsUMAHandler {
     const bool has_ukm = !!ukm::UkmRecorder::Get();
 
     if (finalize_type == FinalizeType::EVERYTHING) {
-      if (*underflow_count) {
-        // Check for watch times entries that have corresponding MTBR entries
-        // and report the MTBR value using watch_time / |underflow_count|
-        for (auto& kv : mtbr_keys_) {
-          auto it = watch_time_info->find(kv.first);
-          if (it == watch_time_info->end())
-            continue;
-          RecordMeanTimeBetweenRebuffers(kv.second,
+      // Check for watch times entries that have corresponding MTBR entries
+      // and report the MTBR value using watch_time / |underflow_count|
+      for (auto& mapping : rebuffer_keys_) {
+        auto it = watch_time_info->find(mapping.watch_time_key);
+        if (it == watch_time_info->end())
+          continue;
+        if (*underflow_count) {
+          RecordMeanTimeBetweenRebuffers(mapping.mtbr_key,
                                          it->second / *underflow_count);
         }
-
-        *underflow_count = 0;
+        RecordWatchTimeSessionHadZeroRebuffers(mapping.smooth_rate_key,
+                                               *underflow_count == 0);
       }
+      *underflow_count = 0;
 
       std::unique_ptr<ukm::UkmEntryBuilder> builder;
       for (auto& kv : *watch_time_info) {
@@ -454,8 +462,14 @@ class MediaInternals::MediaInternalsUMAHandler {
   // Set of only the power related watch time keys.
   const base::flat_set<base::StringPiece> watch_time_power_keys_;
 
-  // Mapping of WatchTime metric keys to MeanTimeBetweenRebuffers (MTBR) keys.
-  const base::flat_map<base::StringPiece, base::StringPiece> mtbr_keys_;
+  // Mapping of WatchTime metric keys to MeanTimeBetweenRebuffers (MTBR) and
+  // smooth rate (had zero rebuffers) keys.
+  struct RebufferMapping {
+    base::StringPiece watch_time_key;
+    base::StringPiece mtbr_key;
+    base::StringPiece smooth_rate_key;
+  };
+  const std::vector<RebufferMapping> rebuffer_keys_;
 
   content::MediaInternals* const media_internals_;
 
@@ -466,19 +480,22 @@ MediaInternals::MediaInternalsUMAHandler::MediaInternalsUMAHandler(
     content::MediaInternals* media_internals)
     : watch_time_keys_(media::GetWatchTimeKeys()),
       watch_time_power_keys_(media::GetWatchTimePowerKeys()),
-      mtbr_keys_({{media::kWatchTimeAudioSrc,
-                   media::kMeanTimeBetweenRebuffersAudioSrc},
-                  {media::kWatchTimeAudioMse,
-                   media::kMeanTimeBetweenRebuffersAudioMse},
-                  {media::kWatchTimeAudioEme,
-                   media::kMeanTimeBetweenRebuffersAudioEme},
-                  {media::kWatchTimeAudioVideoSrc,
-                   media::kMeanTimeBetweenRebuffersAudioVideoSrc},
-                  {media::kWatchTimeAudioVideoMse,
-                   media::kMeanTimeBetweenRebuffersAudioVideoMse},
-                  {media::kWatchTimeAudioVideoEme,
-                   media::kMeanTimeBetweenRebuffersAudioVideoEme}},
-                 base::KEEP_FIRST_OF_DUPES),
+      rebuffer_keys_(
+          {{media::kWatchTimeAudioSrc, media::kMeanTimeBetweenRebuffersAudioSrc,
+            media::kWatchTimeSessionHadZeroRebuffersAudioSrc},
+           {media::kWatchTimeAudioMse, media::kMeanTimeBetweenRebuffersAudioMse,
+            media::kWatchTimeSessionHadZeroRebuffersAudioMse},
+           {media::kWatchTimeAudioEme, media::kMeanTimeBetweenRebuffersAudioEme,
+            media::kWatchTimeSessionHadZeroRebuffersAudioEme},
+           {media::kWatchTimeAudioVideoSrc,
+            media::kMeanTimeBetweenRebuffersAudioVideoSrc,
+            media::kWatchTimeSessionHadZeroRebuffersAudioVideoSrc},
+           {media::kWatchTimeAudioVideoMse,
+            media::kMeanTimeBetweenRebuffersAudioVideoMse,
+            media::kWatchTimeSessionHadZeroRebuffersAudioVideoMse},
+           {media::kWatchTimeAudioVideoEme,
+            media::kMeanTimeBetweenRebuffersAudioVideoEme,
+            media::kWatchTimeSessionHadZeroRebuffersAudioVideoEme}}),
       media_internals_(media_internals) {}
 
 void MediaInternals::MediaInternalsUMAHandler::SavePlayerState(
