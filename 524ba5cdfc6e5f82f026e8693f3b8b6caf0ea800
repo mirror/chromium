@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e0461907_7045194b",
+        "filename": "third_party/WebKit/LayoutTests/plugins/navigator-pluginarray.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-06-02T20:29:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3947ad05_368e8f7d",
+      "revId": "524ba5cdfc6e5f82f026e8693f3b8b6caf0ea800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ecddf78_30d1351d",
         "filename": "third_party/WebKit/Source/modules/plugins/DOMMimeTypeArray.cpp",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c9d5e752_6b2a8bfe",
+        "filename": "third_party/WebKit/Source/modules/plugins/DOMMimeTypeArray.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-06-02T20:29:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ecddf78_30d1351d",
+      "revId": "524ba5cdfc6e5f82f026e8693f3b8b6caf0ea800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a86ddc58_681b7e4d",
         "filename": "third_party/WebKit/Source/modules/plugins/DOMPlugin.h",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-01T00:51:14Z",
       "side": 1,
       "message": "plugin_info -\u003e GetPluginInfo",
+      "revId": "524ba5cdfc6e5f82f026e8693f3b8b6caf0ea800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76cf1926_529d7372",
+        "filename": "third_party/WebKit/Source/modules/plugins/DOMPlugin.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-06-02T20:29:19Z",
+      "side": 1,
+      "message": "This wasn\u0027t used, so I just removed it.",
+      "parentUuid": "a86ddc58_681b7e4d",
       "revId": "524ba5cdfc6e5f82f026e8693f3b8b6caf0ea800",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
