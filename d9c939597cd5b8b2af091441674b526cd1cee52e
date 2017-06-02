@@ -16,6 +16,24 @@
       "revId": "d9c939597cd5b8b2af091441674b526cd1cee52e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4822165_755f31f2",
+        "filename": "ui/aura/mus/drag_drop_controller_mus.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-02T21:35:33Z",
+      "side": 0,
+      "message": "For this reason drag_drop_client should move to aura/client.",
+      "parentUuid": "2b20283f_dbc7bf4a",
+      "revId": "d9c939597cd5b8b2af091441674b526cd1cee52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
