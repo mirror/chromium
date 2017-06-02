@@ -16,6 +16,24 @@
       "revId": "b19de03ef564c8ac98a33929fe506a5965ef43b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96cf2e13_e9a94bc6",
+        "filename": "content/browser/indexed_db/database_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-02T19:23:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbdd98af_c17630b5",
+      "revId": "b19de03ef564c8ac98a33929fe506a5965ef43b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
