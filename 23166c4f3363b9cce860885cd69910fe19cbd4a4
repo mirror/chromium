@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5df6da1_114a5e23",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-02T02:35:39Z",
+      "side": 1,
+      "message": "Does this mean that if we want to (locally) analyze what DOM attributes/operations are consuming CPU time, we need to introduce 5000+ enums to RuntimeCallStats::CounterId to make RuntimeCallStats work?",
+      "revId": "23166c4f3363b9cce860885cd69910fe19cbd4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
