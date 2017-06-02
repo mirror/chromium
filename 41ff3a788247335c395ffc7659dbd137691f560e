@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1c37578_e8e723a1",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-02T02:16:25Z",
+      "side": 1,
+      "message": "nit: since the same pattern is repeated 3 times, I guess it\u0027s time to add a function like GetHistogramName(const std::string\u0026 base_name, bool managed) or something like that?",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 54
+      },
+      "revId": "41ff3a788247335c395ffc7659dbd137691f560e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ada917_b2b58b9c",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-02T02:16:25Z",
+      "side": 1,
+      "message": "Is 6 minutes large enough to capture the long tail? Just wanted to make sure.",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 37
+      },
+      "revId": "41ff3a788247335c395ffc7659dbd137691f560e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94e214cf_82e087ae",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-02T02:16:25Z",
+      "side": 1,
+      "message": "This could be called multiple times via ArcSessionManager::OnRetryClicked(), correct? Is it okay to overwrite the time with Now() in that case?",
+      "revId": "41ff3a788247335c395ffc7659dbd137691f560e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bad0b18_f27c5187",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-02T02:16:25Z",
+      "side": 1,
+      "message": "nit: Since the second condition almost always evaluates to false, it\u0027s slightly more efficient if you swap the conditions:\n\n if (!arc_initial_boot_time_.is_null() \u0026\u0026 ...)",
+      "revId": "41ff3a788247335c395ffc7659dbd137691f560e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc88704_f917f041",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-02T02:16:25Z",
+      "side": 1,
+      "message": "The term \"initial boot\" seems a bit ambiguous to me because what you\u0027re implementing here is OnArcOptInManagementCheckStarted() which is not directly related to the container boot.\n\nWhat about opt_in_management_check_start_time_ or something like that to match the variable name to the observer?",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 36
+      },
+      "revId": "41ff3a788247335c395ffc7659dbd137691f560e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b35683c_ce6b02e8",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-02T02:16:25Z",
+      "side": 1,
+      "message": "In the code comment at L129, please also mention that the variable is typically set right after the user presses ToS \"Agree\" button, but before opt-in management check and the container are started.",
+      "revId": "41ff3a788247335c395ffc7659dbd137691f560e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db4a639_e87a8eab",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1651,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-02T02:16:25Z",
+      "side": 1,
+      "message": "Now 3 UMA metrics use the Managed/Unmanaged suffix, right? I think you probably want to start using \u003chistogram_suffixes\u003e for this.\n\nYou can migrate the other 2 metrics to \u003chistogram_suffixes\u003e (in a separate CL) to simplify the xml.",
+      "revId": "41ff3a788247335c395ffc7659dbd137691f560e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
