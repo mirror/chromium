@@ -1648,6 +1648,24 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Arc.PlayStoreShown.TimeDelta.Managed" units="ms">
+  <owner>yusukes@google.com</owner>
+  <owner>khmel@google.com</owner>
+  <summary>
+    Elapsed time from the initial ARC boot to the Play Store window is shown for
+    managed users.
+  </summary>
+</histogram>
+
+<histogram name="Arc.PlayStoreShown.TimeDelta.Unmanaged" units="ms">
+  <owner>yusukes@google.com</owner>
+  <owner>khmel@google.com</owner>
+  <summary>
+    Elapsed time from the initial ARC boot to the Play Store window is shown for
+    unmanaged users.
+  </summary>
+</histogram>
+
 <histogram name="Arc.Provisioning.Result" enum="ArcProvisioningResult">
   <obsolete>
     Deprecated on 2016-09-15 and replaced by Arc.Provisioning.Result.Managed and

@@ -15,7 +15,9 @@
 #include "ash/wm/window_util.h"
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
+#include "chrome/browser/chromeos/arc/arc_optin_uma.h"
 #include "chrome/browser/chromeos/arc/arc_util.h"
+#include "chrome/browser/chromeos/arc/policy/arc_policy_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_utils.h"
 #include "chrome/browser/ui/ash/launcher/arc_app_window.h"
@@ -149,6 +151,8 @@ ArcAppWindowLauncherController::ArcAppWindowLauncherController(
   if (arc::IsArcAllowedForProfile(owner->profile())) {
     observed_profile_ = owner->profile();
     StartObserving(observed_profile_);
+
+    arc::ArcSessionManager::Get()->AddObserver(this);
   }
 }
 
@@ -157,6 +161,8 @@ ArcAppWindowLauncherController::~ArcAppWindowLauncherController() {
     StopObserving(observed_profile_);
   if (observing_shell_)
     ash::Shell::Get()->RemoveShellObserver(this);
+  if (arc::ArcSessionManager::Get())
+    arc::ArcSessionManager::Get()->RemoveObserver(this);
 }
 
 void ArcAppWindowLauncherController::ActiveUserChanged(
@@ -490,6 +496,15 @@ ArcAppWindowLauncherController::ControllerForWindow(aura::Window* window) {
   return nullptr;
 }
 
+void ArcAppWindowLauncherController::OnArcOptInManagementCheckStarted() {
+  arc_initial_boot_time_ = base::Time::Now();
+}
+
+void ArcAppWindowLauncherController::OnArcSessionStopped(
+    arc::ArcStopReason stop_reason) {
+  arc_initial_boot_time_ = base::Time();
+}
+
 void ArcAppWindowLauncherController::OnWindowActivated(
     wm::ActivationChangeObserver::ActivationReason reason,
     aura::Window* gained_active,
@@ -575,6 +590,14 @@ void ArcAppWindowLauncherController::RegisterApp(
   owner()->SetItemStatus(shelf_id, ash::STATUS_RUNNING);
   app_window->SetController(controller);
   app_window->set_shelf_id(shelf_id);
+
+  if (app_window_info->app_shelf_id().app_id() == arc::kPlayStoreAppId &&
+      !arc_initial_boot_time_.is_null()) {
+    arc::UpdatePlayStoreShowTime(
+        base::Time::Now() - arc_initial_boot_time_,
+        arc::policy_util::IsAccountManaged(owner()->profile()));
+    arc_initial_boot_time_ = base::Time();
+  }
 }
 
 void ArcAppWindowLauncherController::UnregisterApp(

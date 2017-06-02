@@ -57,6 +57,17 @@ void UpdateProvisioningTiming(const base::TimeDelta& elapsed_time,
       ->AddTime(elapsed_time);
 }
 
+void UpdatePlayStoreShowTime(const base::TimeDelta& elapsed_time,
+                             bool managed) {
+  std::string histogram_name = "Arc.PlayStoreShown.TimeDelta.";
+  histogram_name += managed ? "Managed" : "Unmanaged";
+  base::Histogram::FactoryTimeGet(
+      histogram_name, base::TimeDelta::FromSeconds(1),
+      base::TimeDelta::FromMinutes(6), 50,
+      base::HistogramBase::kUmaTargetedHistogramFlag)
+      ->AddTime(elapsed_time);
+}
+
 void UpdateAuthTiming(const char* histogram_name,
                       base::TimeDelta elapsed_time) {
   base::UmaHistogramCustomTimes(histogram_name, elapsed_time,
