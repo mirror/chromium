@@ -432,6 +432,10 @@ class CORE_EXPORT LayoutBlock : public LayoutBox {
  public:
   virtual void ComputeOverflow(LayoutUnit old_client_after_edge, bool = false);
 
+  // Computes overflow. Should be called by NGLayout when copying
+  // fragment data to LegacyLayout.
+  void ComputeOverflowFromNGLayout();
+
  protected:
   virtual void AddOverflowFromChildren();
   void AddOverflowFromPositionedObjects();
