@@ -27,10 +27,12 @@ enum class DownloadClient {
   // production code.  Callers will be unable to access the DownloadService with
   // these test APIs.
   TEST = 1,
+  TEST_2 = 2,
+  TEST_3 = 3,
 
-  OFFLINE_PAGE_PREFETCH = 2,
+  OFFLINE_PAGE_PREFETCH = 4,
 
-  BOUNDARY = 3,
+  BOUNDARY = 5,
 };
 
 using DownloadClientMap = std::map<DownloadClient, std::unique_ptr<Client>>;
