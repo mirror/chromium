@@ -54,6 +54,10 @@ DownloadServiceImpl::DownloadServiceImpl(std::unique_ptr<Controller> controller)
 
 DownloadServiceImpl::~DownloadServiceImpl() = default;
 
+void DownloadServiceImpl::OnStartScheduledTask(DownloadTaskType task_type) {
+  controller_->OnStartScheduledTask(task_type);
+}
+
 DownloadService::ServiceStatus DownloadServiceImpl::GetStatus() {
   if (!controller_->GetStartupStatus().Complete())
     return DownloadService::ServiceStatus::STARTING_UP;
