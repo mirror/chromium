@@ -57,8 +57,8 @@ class LinuxPortTest(port_testcase.PortTestCase):
 
         self.assert_version_properties('linux', 'trusty', 'linux-trusty', 'trusty')
         self.assert_version_properties('linux-trusty', None, 'linux-trusty', 'trusty')
-        self.assertRaises(AssertionError, self.assert_version_properties,
-                          'linux-utopic', None, 'ignored', 'ignored', 'ignored')
+        with self.assertRaises(AssertionError):
+            self.assert_version_properties('linux-utopic', None, 'ignored', 'ignored', 'ignored')
 
     def assert_baseline_paths(self, port_name, os_version, *expected_paths):
         port = self.make_port(port_name=port_name, os_version=os_version)
@@ -76,7 +76,8 @@ class LinuxPortTest(port_testcase.PortTestCase):
     def test_check_illegal_port_names(self):
         # FIXME: Check that, for now, these are illegal port names.
         # Eventually we should be able to do the right thing here.
-        self.assertRaises(AssertionError, linux.LinuxPort, MockSystemHost(), port_name='linux-x86')
+        with self.assertRaises(AssertionError):
+            linux.LinuxPort(MockSystemHost(), port_name='linux-x86')
 
     def test_operating_system(self):
         self.assertEqual('linux', self.make_port().operating_system())
@@ -91,11 +92,13 @@ class LinuxPortTest(port_testcase.PortTestCase):
         self.assert_build_path(options, ['/mock-checkout/out/Release'], 'foo/Release')
 
     def test_driver_name_option(self):
+        # pylint: disable=protected-access
         self.assertTrue(self.make_port()._path_to_driver().endswith('content_shell'))
         port = self.make_port(options=optparse.Values({'driver_name': 'OtherDriver'}))
-        self.assertTrue(port._path_to_driver().endswith('OtherDriver'))  # pylint: disable=protected-access
+        self.assertTrue(port._path_to_driver().endswith('OtherDriver'))
 
     def test_path_to_image_diff(self):
+        # pylint: disable=protected-access
         self.assertEqual(self.make_port()._path_to_image_diff(), '/mock-checkout/out/Release/image_diff')
 
     def test_dummy_home_dir_is_created_and_cleaned_up(self):
@@ -117,14 +120,10 @@ class LinuxPortTest(port_testcase.PortTestCase):
 
     def test_setup_test_run_starts_xvfb(self):
         def run_command_fake(args):
-            if args[0] == 'xdpyinfo':
-                if '-display' in args:
-                    return 1
-            return 0
+            return 1 if args == ['xdpyinfo', '-display', ':99'] else 0
 
         port = self.make_port()
-        port.host.executive = MockExecutive(
-            run_command_fn=run_command_fake)
+        port.host.executive = MockExecutive(run_command_fn=run_command_fake)
         port.setup_test_run()
         self.assertEqual(
             port.host.executive.calls,
@@ -138,15 +137,11 @@ class LinuxPortTest(port_testcase.PortTestCase):
 
     def test_setup_test_run_starts_xvfb_clears_tmpdir(self):
         def run_command_fake(args):
-            if args[0] == 'xdpyinfo':
-                if '-display' in args:
-                    return 1
-            return 0
+            return 1 if args[0:2] == ['xdpyinfo', '-display'] else 0
 
         port = self.make_port()
         port.host.environ['TMPDIR'] = '/foo/bar'
-        port.host.executive = MockExecutive(
-            run_command_fn=run_command_fake)
+        port.host.executive = MockExecutive(run_command_fn=run_command_fake)
         port.setup_test_run()
 
         self.assertEqual(
@@ -162,15 +157,10 @@ class LinuxPortTest(port_testcase.PortTestCase):
 
     def test_setup_test_runs_finds_free_display(self):
         def run_command_fake(args):
-            if args[0] == 'xdpyinfo':
-                if '-display' in args:
-                    if ':102' in args:
-                        return 1
-            return 0
+            return 1 if args == ['xdpyinfo', '-display', ':102'] else 0
 
         port = self.make_port()
-        port.host.executive = MockExecutive(
-            run_command_fn=run_command_fake)
+        port.host.executive = MockExecutive(run_command_fn=run_command_fake)
         port.setup_test_run()
         self.assertEqual(
             port.host.executive.calls,
@@ -189,17 +179,17 @@ class LinuxPortTest(port_testcase.PortTestCase):
         count = [0]
 
         def run_command_fake(args):
-            if args[0] == 'xdpyinfo':
-                if '-display' in args:
-                    return 1
-                if count[0] < 3:
-                    count[0] += 1
-                    return 1
+            if args[0:2] == ['xdpyinfo', '-display']:
+                return 1
+            # The variable `count` is a list rather than an int so that this
+            # function can increment the value.
+            if args == ['xdpyinfo'] and count[0] < 3:
+                count[0] += 1
+                return 1
             return 0
 
         port = self.make_port()
-        port.host.executive = MockExecutive(
-            run_command_fn=run_command_fake)
+        port.host.executive = MockExecutive(run_command_fn=run_command_fake)
         port.setup_test_run()
         self.assertEqual(
             port.host.executive.calls,
@@ -214,16 +204,13 @@ class LinuxPortTest(port_testcase.PortTestCase):
         env = port.setup_environ_for_server()
         self.assertEqual(env['DISPLAY'], ':99')
 
-    def test_setup_test_runs_eventually_failes_on_failure(self):
+    def test_setup_test_runs_eventually_fails_on_failure(self):
         def run_command_fake(args):
-            if args[0] == 'xdpyinfo':
-                return 1
-            return 0
+            return 1 if args[0] == 'xdpyinfo' else 0
 
         host = MockSystemHost(os_name=self.os_name, os_version=self.os_version)
         port = self.make_port(host=host)
-        port.host.executive = MockExecutive(
-            run_command_fn=run_command_fake)
+        port.host.executive = MockExecutive(run_command_fn=run_command_fake)
         port.setup_test_run()
         self.assertEqual(
             port.host.executive.calls,
