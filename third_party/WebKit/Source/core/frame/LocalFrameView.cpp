@@ -1477,7 +1477,7 @@ void LocalFrameView::UpdateGeometries() {
     // Script or plugins could detach the frame so abort processing if that
     // happens.
     if (GetLayoutViewItem().IsNull())
-      break;
+      NOTREACHED();
 
     if (part->GetFrameOrPlugin()) {
       if (LocalFrameView* frame_view = part->ChildFrameView()) {
