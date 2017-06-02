@@ -28,13 +28,14 @@
 
 import optparse
 
-from webkitpy.common.system.executive_mock import MockExecutive
+from webkitpy.common.system.executive_mock import MockExecutive, MockProcess
 from webkitpy.common.system.system_host_mock import MockSystemHost
 from webkitpy.layout_tests.port import linux
 from webkitpy.layout_tests.port import port_testcase
+from webkitpy.common.system.log_testing import LoggingTestCase
 
 
-class LinuxPortTest(port_testcase.PortTestCase):
+class LinuxPortTest(port_testcase.PortTestCase, LoggingTestCase):
     os_name = 'linux'
     os_version = 'trusty'
     port_name = 'linux'
@@ -145,8 +146,7 @@ class LinuxPortTest(port_testcase.PortTestCase):
 
         port = self.make_port()
         port.host.environ['TMPDIR'] = '/foo/bar'
-        port.host.executive = MockExecutive(
-            run_command_fn=run_command_fake)
+        port.host.executive = MockExecutive(run_command_fn=run_command_fake)
         port.setup_test_run()
 
         self.assertEqual(
@@ -214,7 +214,7 @@ class LinuxPortTest(port_testcase.PortTestCase):
         env = port.setup_environ_for_server()
         self.assertEqual(env['DISPLAY'], ':99')
 
-    def test_setup_test_runs_eventually_failes_on_failure(self):
+    def test_setup_test_runs_eventually_times_out(self):
         def run_command_fake(args):
             if args[0] == 'xdpyinfo':
                 return 1
@@ -233,3 +233,27 @@ class LinuxPortTest(port_testcase.PortTestCase):
             ] + [['xdpyinfo']] * 51)
         env = port.setup_environ_for_server()
         self.assertEqual(env['DISPLAY'], ':99')
+
+    def test_setup_test_runs_terminates_if_xvfb_proc_fails(self):
+        def run_command_fake(args):
+            if args[0] == 'xdpyinfo':
+                return 1
+            return 0
+
+        host = MockSystemHost(os_name=self.os_name, os_version=self.os_version)
+        port = self.make_port(host=host)
+        # Xvfb is started via Executive.popen, which returns an object for the
+        # process. Here we set up a fake process object that acts as if it has
+        # exited with return code 1 immediately.
+        proc = MockProcess(stdout='', stderr='', returncode=1)
+        port.host.executive = MockExecutive(
+            run_command_fn=run_command_fake, proc=proc)
+
+        port.setup_test_run()
+        self.assertEqual(
+            port.host.executive.calls,
+            [
+                ['xdpyinfo', '-display', ':99'],
+                ['Xvfb', ':99', '-screen', '0', '1280x800x24', '-ac', '-dpi', '96']
+            ])
+        self.assertLog(['CRITICAL: Failed to start Xvfb on display ":99" (xvfb retcode: 1).\n'])
