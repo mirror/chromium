@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6220b750_4d3a0a13",
+        "filename": "cc/trees/layer_tree_host_common_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 9854,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-02T21:02:44Z",
+      "side": 1,
+      "message": "No, because effect_tree_index() tells you which affect applies to the layer. It doesn\u0027t tell you\nwhether the effect is *owned* by the layer, as opposed to it being owned by some ancestor.",
+      "parentUuid": "2393d5e1_dca5873b",
+      "revId": "60696c05341920be02330721a78b24e8a6f6dd8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4dce854_efc1fd23",
         "filename": "cc/trees/property_tree.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "60696c05341920be02330721a78b24e8a6f6dd8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d13ed59_ca1a8b54",
+        "filename": "cc/trees/property_tree.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-02T21:02:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f4dce854_efc1fd23",
+      "revId": "60696c05341920be02330721a78b24e8a6f6dd8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
