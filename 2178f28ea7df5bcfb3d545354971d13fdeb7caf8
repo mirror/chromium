@@ -16,6 +16,24 @@
       "revId": "2178f28ea7df5bcfb3d545354971d13fdeb7caf8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9553d2c_f8818599",
+        "filename": "third_party/boringssl/.clang-format",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-06-02T00:00:12Z",
+      "side": 1,
+      "message": "It gets re-enabled by third_party/boringssl/src/.clang-format. I didn\u0027t see an obvious way to do it by filename pattern. Though it\u0027s true that //third_party/boringssl/gtest_main_chromium.cc now loses clang-format. (Also boringssl_unittests.cc, but the intent is to get rid of that one anyway.)",
+      "parentUuid": "6871a715_0b25c168",
+      "revId": "2178f28ea7df5bcfb3d545354971d13fdeb7caf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
