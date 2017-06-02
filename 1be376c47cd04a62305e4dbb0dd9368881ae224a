@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cff9aaad_122198da",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/rebaseline_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-06-02T20:50:56Z",
+      "side": 1,
+      "message": "Should this be \u0027started\u0027?",
+      "range": {
+        "startLine": 148,
+        "startChar": 37,
+        "endLine": 148,
+        "endChar": 46
+      },
+      "revId": "1be376c47cd04a62305e4dbb0dd9368881ae224a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
