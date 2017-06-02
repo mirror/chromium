@@ -80,6 +80,7 @@ float ScrollbarLayerImplBase::vertical_adjust() const {
 }
 
 bool ScrollbarLayerImplBase::CanScrollOrientation() const {
+  // Testing gerrit dependent patchsets.
   // TODO(pdr): Refactor this to not depend on layers by using the associated
   // scroll node's user_scrollable values.
   LayerImpl* scroll_layer =
