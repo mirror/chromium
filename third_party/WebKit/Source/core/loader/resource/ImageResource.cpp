@@ -37,6 +37,7 @@
 #include "platform/loader/fetch/ResourceClient.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ResourceLoader.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceLoadingLog.h"
 #include "platform/network/HTTPParsers.h"
 #include "platform/weborigin/SecurityViolationReportingPolicy.h"
@@ -193,7 +194,10 @@ bool ImageResource::CanUseCacheValidator() const {
 }
 
 ImageResource* ImageResource::Create(const ResourceRequest& request) {
-  return new ImageResource(request, ResourceLoaderOptions(),
+  ResourceLoaderOptions options;
+  options.allow_credentials = kDoNotAllowStoredCredentials;
+  options.credentials_requested = kClientDidNotRequestCredentials;
+  return new ImageResource(request, options,
                            ImageResourceContent::CreateNotStarted(), false);
 }
 
