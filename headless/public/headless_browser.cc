@@ -40,7 +40,7 @@ Options::Options(int argc, const char** argv)
       single_process_mode(false),
       disable_sandbox(false),
 #if !defined(OS_MACOSX)
-      gl_implementation("osmesa"),
+      gl_implementation("swiftshader-webgl"),
 #else
       gl_implementation("any"),
 #endif
