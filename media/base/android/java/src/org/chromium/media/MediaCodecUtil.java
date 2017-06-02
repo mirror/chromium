@@ -633,8 +633,9 @@ class MediaCodecUtil {
      * While 'cbcs' scheme was originally implemented in N, there was a bug (in the
      * DRM code) which means that it didn't really work properly until N-MR1).
      */
-    static boolean platformSupportsCbcsEncryption() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1;
+    @CalledByNative
+    static boolean platformSupportsCbcsEncryption(int sdk) {
+        return sdk >= Build.VERSION_CODES.N_MR1;
     }
 
     /**
