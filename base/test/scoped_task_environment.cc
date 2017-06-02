@@ -10,6 +10,7 @@
 #include "base/synchronization/condition_variable.h"
 #include "base/synchronization/lock.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/sequence.h"
 #include "base/task_scheduler/task_scheduler.h"
 #include "base/task_scheduler/task_scheduler_impl.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -59,7 +60,7 @@ class ScopedTaskEnvironment::TestTaskTracker
 
   // internal::TaskSchedulerImpl::TaskTrackerImpl:
   void PerformRunTask(std::unique_ptr<internal::Task> task,
-                      const SequenceToken& sequence_token) override;
+                      internal::Sequence* sequence) override;
 
   // Synchronizes accesses to members below.
   Lock lock_;
@@ -205,7 +206,7 @@ bool ScopedTaskEnvironment::TestTaskTracker::DisallowRunTasks() {
 
 void ScopedTaskEnvironment::TestTaskTracker::PerformRunTask(
     std::unique_ptr<internal::Task> task,
-    const SequenceToken& sequence_token) {
+    internal::Sequence* sequence) {
   {
     AutoLock auto_lock(lock_);
 
@@ -216,7 +217,7 @@ void ScopedTaskEnvironment::TestTaskTracker::PerformRunTask(
   }
 
   internal::TaskSchedulerImpl::TaskTrackerImpl::PerformRunTask(std::move(task),
-                                                               sequence_token);
+                                                               sequence);
 
   {
     AutoLock auto_lock(lock_);
