@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f093634f_e81720a5",
+        "filename": "chrome/test/chromedriver/capabilities_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-06-02T04:37:56Z",
+      "side": 1,
+      "message": "Changed this to accommodate crrev.com/999f86be50685adb30c783cdf30e97f8044234a3, but I\u0027m not sure if it\u0027s the right way to fix this test.",
+      "revId": "764907063828a66ba3544af1962d430a3ec6cb07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
