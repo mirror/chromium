@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ff91602_fa505920",
+        "filename": "headless/lib/headless_web_contents_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-02T21:34:14Z",
+      "side": 1,
+      "message": "This assignment is a major hack -- it mutates the global command line. Could you please figure out some cleaner way to handle this? Can you not just reinitialize the ScopedCommandLine instance?",
+      "range": {
+        "startLine": 151,
+        "startChar": 21,
+        "endLine": 151,
+        "endChar": 42
+      },
+      "revId": "60d17d7b926bdcd033d8a2bafd22786608be1d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69de55dc_9f9afac2",
+        "filename": "headless/public/headless_browser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-02T21:34:14Z",
+      "side": 1,
+      "message": "I guess I answered my own question here -- not supported on macOS yet -- so please update the CL description to state clearly on which platforms this is supported.",
+      "revId": "60d17d7b926bdcd033d8a2bafd22786608be1d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c00991b_e0e8c986",
+        "filename": "headless/test/headless_browser_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-02T21:34:14Z",
+      "side": 1,
+      "message": "How does this work successfully on all platforms, in particular macOS where SwiftShader isn\u0027t yet supported?",
+      "range": {
+        "startLine": 141,
+        "startChar": 6,
+        "endLine": 141,
+        "endChar": 14
+      },
+      "revId": "60d17d7b926bdcd033d8a2bafd22786608be1d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
