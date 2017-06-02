@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4d1d829_a4589283",
+        "filename": "chrome/browser/predictors/glowplug_stats_collector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-06-02T09:33:19Z",
+      "side": 1,
+      "message": "Since we\u0027re moving the code, emplace?",
+      "revId": "753c73d1daeb2225045cb967bbe206bcd7e79f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc5fb155_33e98f29",
+        "filename": "chrome/browser/predictors/glowplug_stats_collector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-06-02T09:33:19Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "753c73d1daeb2225045cb967bbe206bcd7e79f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3834336_c789067b",
+        "filename": "chrome/browser/predictors/glowplug_stats_collector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-06-02T09:33:19Z",
+      "side": 1,
+      "message": "Seems that this is the only place where we need anything from config_.\nCan we avoid the extra copy?",
+      "revId": "753c73d1daeb2225045cb967bbe206bcd7e79f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61029ed6_cbb7f863",
+        "filename": "chrome/browser/predictors/glowplug_stats_collector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-06-02T09:33:19Z",
+      "side": 1,
+      "message": "Sorry about that, but since all the other classes (save for the KV store) are now named loading_*, can you rename it to be consistent with the rest of the code?",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 61
+      },
+      "revId": "753c73d1daeb2225045cb967bbe206bcd7e79f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e47823_5e8f6975",
+        "filename": "chrome/browser/predictors/glowplug_stats_collector_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-06-02T09:33:19Z",
+      "side": 1,
+      "message": "We have another mock in loading_predictor_unittest.cc.\nIs it possible to use the same in both places?",
+      "revId": "753c73d1daeb2225045cb967bbe206bcd7e79f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
