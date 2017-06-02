@@ -72,6 +72,7 @@ TranslateHelper::TranslateHelper(content::RenderFrame* render_frame,
     : content::RenderFrameObserver(render_frame),
       world_id_(world_id),
       extension_scheme_(extension_scheme),
+      translate_driver_(render_frame),
       binding_(this),
       weak_method_factory_(this) {}
 
@@ -129,7 +130,7 @@ void TranslateHelper::PageCaptured(const base::string16& contents) {
   // For the same render frame with the same url, each time when its texts are
   // captured, it should be treated as a new page to do translation.
   ResetPage();
-  GetTranslateDriver()->RegisterPage(
+  translate_driver_->RegisterPage(
       binding_.CreateInterfacePtrAndBind(), details,
       !details.has_notranslate && !language.empty());
 }
@@ -408,15 +409,6 @@ void TranslateHelper::NotifyBrowserTranslationFailed(
   // Notify the browser there was an error.
   std::move(translate_callback_pending_)
       .Run(false, source_lang_, target_lang_, error);
-}
-
-const mojom::ContentTranslateDriverPtr& TranslateHelper::GetTranslateDriver() {
-  if (!translate_driver_) {
-    render_frame()->GetRemoteInterfaces()->GetInterface(
-        mojo::MakeRequest(&translate_driver_));
-  }
-
-  return translate_driver_;
 }
 
 void TranslateHelper::ResetPage() {

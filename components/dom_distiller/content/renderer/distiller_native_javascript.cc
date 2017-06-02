@@ -23,7 +23,7 @@ namespace dom_distiller {
 
 DistillerNativeJavaScript::DistillerNativeJavaScript(
     content::RenderFrame* render_frame)
-    : render_frame_(render_frame) {}
+    : distiller_js_service_(render_frame) {}
 
 DistillerNativeJavaScript::~DistillerNativeJavaScript() {}
 
@@ -39,22 +39,19 @@ void DistillerNativeJavaScript::AddJavaScriptObjectToFrame(
   v8::Local<v8::Object> distiller_obj =
       GetOrCreateDistillerObject(isolate, context->Global());
 
-  EnsureServiceConnected();
-
   // Many functions can simply call the Mojo interface directly and have no
-  // wrapper function for binding. Note that calling distiller_js_service.get()
-  // does not transfer ownership of the interface.
+  // wrapper function for binding.
   BindFunctionToObject(
       distiller_obj, "closePanel",
       base::Bind(
           &mojom::DistillerJavaScriptService::HandleDistillerClosePanelCall,
-          base::Unretained(distiller_js_service_.get())));
+          distiller_js_service_.GetWeakProxy()));
 
   BindFunctionToObject(
       distiller_obj, "openSettings",
       base::Bind(
           &mojom::DistillerJavaScriptService::HandleDistillerOpenSettingsCall,
-          base::Unretained(distiller_js_service_.get())));
+          distiller_js_service_.GetWeakProxy()));
 }
 
 template<typename Sig>
@@ -67,13 +64,6 @@ void DistillerNativeJavaScript::BindFunctionToObject(
   javascript_object->Set(
       gin::StringToSymbol(isolate, name),
       gin::CreateFunctionTemplate(isolate, callback)->GetFunction());
-}
-
-void DistillerNativeJavaScript::EnsureServiceConnected() {
-  if (!distiller_js_service_ || !distiller_js_service_.is_bound()) {
-    render_frame_->GetRemoteInterfaces()->GetInterface(
-        &distiller_js_service_);
-  }
 }
 
 v8::Local<v8::Object> GetOrCreateDistillerObject(v8::Isolate* isolate,

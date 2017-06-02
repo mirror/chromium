@@ -329,6 +329,7 @@ UserMediaClientImpl::UserMediaClientImpl(
     : RenderFrameObserver(render_frame),
       dependency_factory_(dependency_factory),
       media_stream_dispatcher_(std::move(media_stream_dispatcher)),
+      media_devices_dispatcher_(render_frame),
       worker_task_runner_(worker_task_runner),
       weak_factory_(this) {
   DCHECK(dependency_factory_);
@@ -412,7 +413,7 @@ void UserMediaClientImpl::MaybeProcessNextRequestInfo() {
         enable_automatic_output_device_selection);
 
     if (request_audio_input_devices) {
-      GetMediaDevicesDispatcher()->EnumerateDevices(
+      media_devices_dispatcher_->EnumerateDevices(
           true /* audio_input */, false /* video_input */,
           false /* audio_output */,
           base::Bind(&UserMediaClientImpl::SelectAudioInputDevice,
@@ -460,7 +461,7 @@ void UserMediaClientImpl::SetupVideoInput(
   InitializeTrackControls(user_media_request.VideoConstraints(),
                           &video_controls);
   if (IsDeviceSource(video_controls.stream_source)) {
-    GetMediaDevicesDispatcher()->GetVideoInputCapabilities(
+    media_devices_dispatcher_->GetVideoInputCapabilities(
         base::Bind(&UserMediaClientImpl::SelectVideoDeviceSettings,
                    weak_factory_.GetWeakPtr(), user_media_request));
   } else {
@@ -589,7 +590,7 @@ void UserMediaClientImpl::RequestMediaDevices(
     const blink::WebMediaDevicesRequest& media_devices_request) {
   UpdateWebRTCMethodCount(WEBKIT_GET_MEDIA_DEVICES);
   DCHECK(CalledOnValidThread());
-  GetMediaDevicesDispatcher()->EnumerateDevices(
+  media_devices_dispatcher_->EnumerateDevices(
       true /* audio input */, true /* video input */, true /* audio output */,
       base::Bind(&UserMediaClientImpl::FinalizeEnumerateDevices,
                  weak_factory_.GetWeakPtr(), media_devices_request));
@@ -1219,7 +1220,8 @@ void UserMediaClientImpl::WillCommitProvisionalLoad() {
 
 void UserMediaClientImpl::SetMediaDevicesDispatcherForTesting(
     ::mojom::MediaDevicesDispatcherHostPtr media_devices_dispatcher) {
-  media_devices_dispatcher_ = std::move(media_devices_dispatcher);
+  media_devices_dispatcher_.SetProxyForTesting(
+      std::move(media_devices_dispatcher));
 }
 
 void UserMediaClientImpl::OnLocalSourceStopped(
@@ -1248,16 +1250,6 @@ void UserMediaClientImpl::StopLocalSource(
 
   source_impl->ResetSourceStoppedCallback();
   source_impl->StopSource();
-}
-
-const ::mojom::MediaDevicesDispatcherHostPtr&
-UserMediaClientImpl::GetMediaDevicesDispatcher() {
-  if (!media_devices_dispatcher_) {
-    render_frame()->GetRemoteInterfaces()->GetInterface(
-        mojo::MakeRequest(&media_devices_dispatcher_));
-  }
-
-  return media_devices_dispatcher_;
 }
 
 base::Optional<bool>

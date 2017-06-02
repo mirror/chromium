@@ -65,6 +65,7 @@ ContentAutofillDriver* ContentAutofillDriver::GetForRenderFrameHost(
 }
 
 void ContentAutofillDriver::BindRequest(mojom::AutofillDriverRequest request) {
+  binding_.Close();
   binding_.Bind(std::move(request));
 }
 

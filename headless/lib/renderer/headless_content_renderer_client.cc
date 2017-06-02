@@ -8,6 +8,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "content/public/common/bindings_policy.h"
 #include "content/public/common/isolated_world_ids.h"
+#include "content/public/renderer/document_scoped_lazy_interface_ptr.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "gin/handle.h"
@@ -38,7 +39,9 @@ class HeadlessTabSocketBindings
       public blink::WebScriptExecutionCallback {
  public:
   explicit HeadlessTabSocketBindings(content::RenderFrame* render_frame)
-      : content::RenderFrameObserver(render_frame), weak_ptr_factory_(this) {}
+      : content::RenderFrameObserver(render_frame),
+        tab_socket_ptr_(render_frame),
+        weak_ptr_factory_(this) {}
   ~HeadlessTabSocketBindings() override {}
 
   // content::RenderFrameObserver implementation:
@@ -92,7 +95,7 @@ class HeadlessTabSocketBindings
 
  private:
   void SendImpl(const std::string& message) {
-    EnsureTabSocketPtr()->SendMessageToEmbedder(message);
+    tab_socket_ptr_->SendMessageToEmbedder(message);
   }
 
   v8::Local<v8::Value> GetOnMessage() { return GetOnMessageCallback(); }
@@ -100,7 +103,7 @@ class HeadlessTabSocketBindings
   void SetOnMessage(v8::Local<v8::Function> callback) {
     on_message_callback_.Reset(blink::MainThreadIsolate(), callback);
 
-    EnsureTabSocketPtr()->AwaitNextMessageFromEmbedder(
+    tab_socket_ptr_->AwaitNextMessageFromEmbedder(
         base::Bind(&HeadlessTabSocketBindings::OnNextMessageFromEmbedder,
                    weak_ptr_factory_.GetWeakPtr()));
   }
@@ -117,7 +120,7 @@ class HeadlessTabSocketBindings
         context, GetOnMessageCallback(), context->Global(), arraysize(argv),
         argv, this);
 
-    EnsureTabSocketPtr()->AwaitNextMessageFromEmbedder(
+    tab_socket_ptr_->AwaitNextMessageFromEmbedder(
         base::Bind(&HeadlessTabSocketBindings::OnNextMessageFromEmbedder,
                    weak_ptr_factory_.GetWeakPtr()));
   }
@@ -140,14 +143,6 @@ class HeadlessTabSocketBindings
     context_.Reset(blink::MainThreadIsolate(), context);
   }
 
-  headless::TabSocketPtr& EnsureTabSocketPtr() {
-    if (!tab_socket_ptr_.is_bound()) {
-      render_frame()->GetRemoteInterfaces()->GetInterface(
-          mojo::MakeRequest(&tab_socket_ptr_));
-    }
-    return tab_socket_ptr_;
-  }
-
   v8::Local<v8::Context> GetContext() {
     return v8::Local<v8::Context>::New(blink::MainThreadIsolate(), context_);
   }
@@ -157,7 +152,7 @@ class HeadlessTabSocketBindings
                                         on_message_callback_);
   }
 
-  headless::TabSocketPtr tab_socket_ptr_;
+  content::DocumentScopedLazyInterfacePtr<headless::TabSocket> tab_socket_ptr_;
   v8::UniquePersistent<v8::Context> context_;
   v8::UniquePersistent<v8::Function> on_message_callback_;
   base::WeakPtrFactory<HeadlessTabSocketBindings> weak_ptr_factory_;

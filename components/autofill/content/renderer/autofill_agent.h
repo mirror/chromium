@@ -18,6 +18,7 @@
 #include "components/autofill/content/renderer/form_cache.h"
 #include "components/autofill/content/renderer/page_click_listener.h"
 #include "components/autofill/content/renderer/page_click_tracker.h"
+#include "content/public/renderer/document_scoped_lazy_interface_ptr.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/service_manager/public/cpp/bind_source_info.h"
@@ -62,9 +63,8 @@ class AutofillAgent : public content::RenderFrameObserver,
   void BindRequest(const service_manager::BindSourceInfo& source_info,
                    mojom::AutofillAgentRequest request);
 
-  const mojom::AutofillDriverPtr& GetAutofillDriver();
-
-  const mojom::PasswordManagerDriverPtr& GetPasswordManagerDriver();
+  mojom::AutofillDriver* GetAutofillDriver();
+  mojom::PasswordManagerDriver* GetPasswordManagerDriver();
 
   // mojom::AutofillAgent:
   void FillForm(int32_t id, const FormData& form) override;
@@ -282,7 +282,8 @@ class AutofillAgent : public content::RenderFrameObserver,
 
   mojo::Binding<mojom::AutofillAgent> binding_;
 
-  mojom::AutofillDriverPtr autofill_driver_;
+  content::DocumentScopedLazyInterfacePtr<mojom::AutofillDriver>
+      autofill_driver_;
 
   base::WeakPtrFactory<AutofillAgent> weak_ptr_factory_;
 

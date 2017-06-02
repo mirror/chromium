@@ -58,7 +58,8 @@ void ContextualSearchWrapper::Install(content::RenderFrame* render_frame) {
 
 ContextualSearchWrapper::ContextualSearchWrapper(
     content::RenderFrame* render_frame)
-    : RenderFrameObserver(render_frame) {}
+    : RenderFrameObserver(render_frame),
+      contextual_search_js_api_service_(render_frame) {}
 
 ContextualSearchWrapper::~ContextualSearchWrapper() {}
 
@@ -69,24 +70,11 @@ gin::ObjectTemplateBuilder ContextualSearchWrapper::GetObjectTemplateBuilder(
       .SetMethod(kSetCaptionMethodName, &ContextualSearchWrapper::SetCaption);
 }
 
-bool ContextualSearchWrapper::EnsureServiceConnected() {
-  if (render_frame() && (!contextual_search_js_api_service_ ||
-      !contextual_search_js_api_service_.is_bound())) {
-    render_frame()->GetRemoteInterfaces()->GetInterface(
-        &contextual_search_js_api_service_);
-    return true;
-  } else {
-    return false;
-  }
-}
-
 void ContextualSearchWrapper::OnDestruct() {}
 
 void ContextualSearchWrapper::SetCaption(const std::string& caption,
                                          bool does_answer) {
-  if (EnsureServiceConnected()) {
-    contextual_search_js_api_service_->HandleSetCaption(caption, does_answer);
-  }
+  contextual_search_js_api_service_->HandleSetCaption(caption, does_answer);
 }
 
 }  // namespace contextual_search

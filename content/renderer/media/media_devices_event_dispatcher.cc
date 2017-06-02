@@ -30,7 +30,8 @@ MediaDevicesEventDispatcher::MediaDevicesEventDispatcher(
     RenderFrame* render_frame)
     : RenderFrameObserver(render_frame),
       RenderFrameObserverTracker<MediaDevicesEventDispatcher>(render_frame),
-      current_id_(0) {}
+      current_id_(0),
+      media_devices_dispatcher_(render_frame) {}
 
 MediaDevicesEventDispatcher::~MediaDevicesEventDispatcher() {}
 
@@ -42,7 +43,7 @@ MediaDevicesEventDispatcher::SubscribeDeviceChangeNotifications(
   DCHECK(IsValidMediaDeviceType(type));
 
   SubscriptionId subscription_id = ++current_id_;
-  GetMediaDevicesDispatcher()->SubscribeDeviceChangeNotifications(
+  media_devices_dispatcher_->SubscribeDeviceChangeNotifications(
       type, subscription_id);
   SubscriptionList& subscriptions = device_change_subscriptions_[type];
   subscriptions.push_back(Subscription{subscription_id, callback});
@@ -64,8 +65,8 @@ void MediaDevicesEventDispatcher::UnsubscribeDeviceChangeNotifications(
   if (it == subscriptions.end())
     return;
 
-  GetMediaDevicesDispatcher()->UnsubscribeDeviceChangeNotifications(type,
-                                                                    it->first);
+  media_devices_dispatcher_->UnsubscribeDeviceChangeNotifications(type,
+                                                                  it->first);
   subscriptions.erase(it);
 }
 
@@ -112,17 +113,8 @@ void MediaDevicesEventDispatcher::OnDestruct() {
 
 void MediaDevicesEventDispatcher::SetMediaDevicesDispatcherForTesting(
     ::mojom::MediaDevicesDispatcherHostPtr media_devices_dispatcher) {
-  media_devices_dispatcher_ = std::move(media_devices_dispatcher);
-}
-
-const ::mojom::MediaDevicesDispatcherHostPtr&
-MediaDevicesEventDispatcher::GetMediaDevicesDispatcher() {
-  if (!media_devices_dispatcher_) {
-    render_frame()->GetRemoteInterfaces()->GetInterface(
-        mojo::MakeRequest(&media_devices_dispatcher_));
-  }
-
-  return media_devices_dispatcher_;
+  media_devices_dispatcher_.SetProxyForTesting(
+      std::move(media_devices_dispatcher));
 }
 
 }  // namespace content

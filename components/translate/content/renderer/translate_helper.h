@@ -14,6 +14,7 @@
 #include "base/time/time.h"
 #include "components/translate/content/common/translate.mojom.h"
 #include "components/translate/core/common/translate_errors.h"
+#include "content/public/renderer/document_scoped_lazy_interface_ptr.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "url/gurl.h"
@@ -102,8 +103,6 @@ class TranslateHelper : public content::RenderFrameObserver,
   // Converts language code to the one used in server supporting list.
   static void ConvertLanguageCodeSynonym(std::string* code);
 
-  const mojom::ContentTranslateDriverPtr& GetTranslateDriver();
-
   // Cleanups all states and pending callbacks associated with the current
   // running page translation.
   void ResetPage();
@@ -147,7 +146,8 @@ class TranslateHelper : public content::RenderFrameObserver,
   // The URL scheme for translate extensions.
   std::string extension_scheme_;
 
-  mojom::ContentTranslateDriverPtr translate_driver_;
+  content::DocumentScopedLazyInterfacePtr<mojom::ContentTranslateDriver>
+      translate_driver_;
 
   mojo::Binding<mojom::Page> binding_;
 

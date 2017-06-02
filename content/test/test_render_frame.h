@@ -54,7 +54,7 @@ class TestRenderFrame : public RenderFrameImpl {
   blink::WebNavigationPolicy DecidePolicyForNavigation(
       const blink::WebFrameClient::NavigationPolicyInfo& info) override;
 
-  mojom::FrameHostAssociatedPtr GetFrameHost() override;
+  mojom::FrameHost* GetFrameHost() override;
 
  private:
   void BindFrameHost(mojo::ScopedInterfaceEndpointHandle handle);

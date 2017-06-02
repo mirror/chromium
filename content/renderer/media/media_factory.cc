@@ -75,29 +75,59 @@
 
 namespace content {
 
+namespace {
+
+// Provides an implementation of service_manager::mojom::InterfaceProvider which
+// safely forwards to a RenderFrame's own remote InterfaceProvider.
+class FrameInterfaceProviderAdapter
+    : public service_manager::mojom::InterfaceProvider {
+ public:
+  // |frame| must outlive this object.
+  explicit FrameInterfaceProviderAdapter(RenderFrame* frame) : frame_(frame) {}
+  ~FrameInterfaceProviderAdapter() override {}
+
+  // service_manager::mojom::InterfaceProvider:
+  void GetInterface(const std::string& interface_name,
+                    mojo::ScopedMessagePipeHandle handle) override {
+    frame_->GetRemoteInterfaces()->GetInterface(interface_name,
+                                                std::move(handle));
+  }
+
+ private:
+  RenderFrame* const frame_;
+
+  DISALLOW_COPY_AND_ASSIGN(FrameInterfaceProviderAdapter);
+};
+
+}  // namespace
+
 MediaFactory::MediaFactory(
     RenderFrameImpl* render_frame,
     media::RequestRoutingTokenCallback request_routing_token_cb)
     : render_frame_(render_frame),
+      frame_interface_forwarder_(
+          base::MakeUnique<FrameInterfaceProviderAdapter>(render_frame)),
       request_routing_token_cb_(std::move(request_routing_token_cb)) {}
 
 MediaFactory::~MediaFactory() {}
 
-void MediaFactory::SetupMojo() {
-  // Only do setup once.
-  DCHECK(!remote_interfaces_);
-
-  remote_interfaces_ = render_frame_->GetRemoteInterfaces();
-  DCHECK(remote_interfaces_);
-
+void MediaFactory::BindRemoteInterfaces() {
 #if BUILDFLAG(ENABLE_MEDIA_REMOTING)
+  remoter_factory_.reset();
+  render_frame_->GetRemoteInterfaces()->GetInterface(&remoter_factory_);
+
+  // Reset lazy bindings so they're reacquired as needed.
+  media_interface_provider_.reset();
+  cdm_factory_.reset();
+  decoder_factory_.reset();
+
   // Create the SinkAvailabilityObserver to monitor the remoting sink
   // availablity.
   media::mojom::RemotingSourcePtr remoting_source;
   auto remoting_source_request = mojo::MakeRequest(&remoting_source);
   media::mojom::RemoterPtr remoter;
-  GetRemoterFactory()->Create(std::move(remoting_source),
-                              mojo::MakeRequest(&remoter));
+  remoter_factory_->Create(std::move(remoting_source),
+                           mojo::MakeRequest(&remoter));
   remoting_sink_observer_ =
       base::MakeUnique<media::remoting::SinkAvailabilityObserver>(
           std::move(remoting_source_request), std::move(remoter));
@@ -281,14 +311,12 @@ MediaFactory::CreateRendererFactorySelector(
   auto factory_selector = base::MakeUnique<media::RendererFactorySelector>();
 
 #if defined(OS_ANDROID)
-  DCHECK(remote_interfaces_);
-
   // The only MojoRendererService that is registered at the RenderFrameHost
   // level uses the MediaPlayerRenderer as its underlying media::Renderer.
   auto mojo_media_player_renderer_factory =
       base::MakeUnique<media::MojoRendererFactory>(
           media::MojoRendererFactory::GetGpuFactoriesCB(),
-          remote_interfaces_->get());
+          frame_interface_forwarder_.get());
 
   // Always give |factory_selector| a MediaPlayerRendererClient factory. WMPI
   // might fallback to it if the final redirected URL is an HLS url.
@@ -343,8 +371,8 @@ MediaFactory::CreateRendererFactorySelector(
   media::mojom::RemotingSourcePtr remoting_source;
   auto remoting_source_request = mojo::MakeRequest(&remoting_source);
   media::mojom::RemoterPtr remoter;
-  GetRemoterFactory()->Create(std::move(remoting_source),
-                              mojo::MakeRequest(&remoter));
+  remoter_factory_->Create(std::move(remoting_source),
+                           mojo::MakeRequest(&remoter));
   using RemotingController = media::remoting::RendererController;
   std::unique_ptr<RemotingController> remoting_controller(
       new RemotingController(new media::remoting::SharedSession(
@@ -437,16 +465,6 @@ RendererMediaPlayerManager* MediaFactory::GetMediaPlayerManager() {
 }
 #endif  // defined(OS_ANDROID)
 
-#if BUILDFLAG(ENABLE_MEDIA_REMOTING)
-media::mojom::RemoterFactory* MediaFactory::GetRemoterFactory() {
-  if (!remoter_factory_) {
-    DCHECK(remote_interfaces_);
-    remote_interfaces_->GetInterface(&remoter_factory_);
-  }
-  return remoter_factory_.get();
-}
-#endif
-
 bool MediaFactory::AreSecureCodecsSupported() {
 #if defined(OS_ANDROID)
   // Hardware-secure codecs are only supported if secure surfaces are enabled.
@@ -479,7 +497,7 @@ media::CdmFactory* MediaFactory::GetCdmFactory() {
 
 #if BUILDFLAG(ENABLE_MEDIA_REMOTING)
   cdm_factory_.reset(new media::remoting::RemotingCdmFactory(
-      std::move(cdm_factory_), GetRemoterFactory(),
+      std::move(cdm_factory_), remoter_factory_.get(),
       std::move(remoting_sink_observer_)));
 #endif  // BUILDFLAG(ENABLE_MEDIA_REMOTING)
 
@@ -490,9 +508,8 @@ media::CdmFactory* MediaFactory::GetCdmFactory() {
 service_manager::mojom::InterfaceProvider*
 MediaFactory::GetMediaInterfaceProvider() {
   if (!media_interface_provider_) {
-    DCHECK(remote_interfaces_);
     media_interface_provider_.reset(
-        new MediaInterfaceProvider(remote_interfaces_));
+        new MediaInterfaceProvider(render_frame_->GetRemoteInterfaces()));
   }
 
   return media_interface_provider_.get();

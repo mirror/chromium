@@ -396,6 +396,10 @@ void PresentationDispatcher::SetReceiver(
 void PresentationDispatcher::DidCommitProvisionalLoad(
     bool is_new_navigation,
     bool is_same_document_navigation) {
+  // Ensure the interface is reacquired after any new-document navigation.
+  if (!is_same_document_navigation)
+    presentation_service_.reset();
+
   blink::WebFrame* frame = render_frame()->GetWebFrame();
   // If not top-level navigation.
   if (frame->Parent() || is_same_document_navigation)

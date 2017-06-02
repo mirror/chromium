@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "components/contextual_search/common/contextual_search_js_api_service.mojom.h"
+#include "content/public/renderer/document_scoped_lazy_interface_ptr.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "gin/handle.h"
@@ -46,12 +47,9 @@ class ContextualSearchWrapper : public gin::Wrappable<ContextualSearchWrapper>,
   // just general notification of what kind of answer may be available.
   void SetCaption(const std::string& caption, bool does_answer);
 
-  // Helper function to ensure that this class has connected to the API service.
-  // Returns false if cannot connect.
-  bool EnsureServiceConnected();
-
   // The service to notify when API calls are made.
-  mojom::ContextualSearchJsApiServicePtr contextual_search_js_api_service_;
+  content::DocumentScopedLazyInterfacePtr<mojom::ContextualSearchJsApiService>
+      contextual_search_js_api_service_;
 
   DISALLOW_COPY_AND_ASSIGN(ContextualSearchWrapper);
 };

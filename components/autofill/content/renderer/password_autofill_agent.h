@@ -19,6 +19,7 @@
 #include "components/autofill/core/common/password_form.h"
 #include "components/autofill/core/common/password_form_field_prediction_map.h"
 #include "components/autofill/core/common/password_form_fill_data.h"
+#include "content/public/renderer/document_scoped_lazy_interface_ptr.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "content/public/renderer/render_view_observer.h"
 #include "mojo/public/cpp/bindings/binding.h"
@@ -51,7 +52,7 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
 
   void SetAutofillAgent(AutofillAgent* autofill_agent);
 
-  const mojom::PasswordManagerDriverPtr& GetPasswordManagerDriver();
+  mojom::PasswordManagerDriver* GetPasswordManagerDriver();
 
   // mojom::PasswordAutofillAgent:
   void FillPasswordForm(int key,
@@ -264,8 +265,6 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   void OnSameDocumentNavigationCompleted(
       PasswordForm::SubmissionIndicatorEvent event);
 
-  const mojom::AutofillDriverPtr& GetAutofillDriver();
-
   // The logins we have filled so far with their associated info.
   WebInputToPasswordInfoMap web_input_to_password_info_;
   // A (sort-of) reverse map to |web_input_to_password_info_|.
@@ -308,7 +307,8 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
 
   AutofillAgent* autofill_agent_;  // Weak reference.
 
-  mojom::PasswordManagerDriverPtr password_manager_driver_;
+  content::DocumentScopedLazyInterfacePtr<mojom::PasswordManagerDriver>
+      password_manager_driver_;
 
   mojo::Binding<mojom::PasswordAutofillAgent> binding_;
 

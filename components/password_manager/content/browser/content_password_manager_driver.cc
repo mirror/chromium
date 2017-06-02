@@ -75,6 +75,7 @@ ContentPasswordManagerDriver::GetForRenderFrameHost(
 
 void ContentPasswordManagerDriver::BindRequest(
     autofill::mojom::PasswordManagerDriverRequest request) {
+  password_manager_binding_.Close();
   password_manager_binding_.Bind(std::move(request));
 }
 

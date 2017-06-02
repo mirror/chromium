@@ -8,6 +8,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "components/password_manager/content/common/credential_manager.mojom.h"
+#include "content/public/renderer/document_scoped_lazy_interface_ptr.h"
 #include "content/public/renderer/render_view_observer.h"
 #include "third_party/WebKit/public/platform/WebCredentialManagerClient.h"
 #include "third_party/WebKit/public/platform/WebCredentialManagerError.h"
@@ -57,9 +58,8 @@ class CredentialManagerClient : public blink::WebCredentialManagerClient,
   // RenderViewObserver implementation.
   void OnDestruct() override;
 
-  void ConnectToMojoCMIfNeeded();
-
-  mojom::CredentialManagerPtr mojo_cm_service_;
+  content::DocumentScopedLazyInterfacePtr<mojom::CredentialManager>
+      credential_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(CredentialManagerClient);
 };

@@ -673,6 +673,7 @@ PasswordAutofillAgent::PasswordAutofillAgent(content::RenderFrame* render_frame)
       was_password_autofilled_(false),
       sent_request_to_store_(false),
       checked_safe_browsing_reputation_(false),
+      password_manager_driver_(render_frame),
       binding_(this),
       form_element_observer_(nullptr) {
   // PasswordAutofillAgent is guaranteed to outlive |render_frame|.
@@ -695,6 +696,11 @@ void PasswordAutofillAgent::BindRequest(
 
 void PasswordAutofillAgent::SetAutofillAgent(AutofillAgent* autofill_agent) {
   autofill_agent_ = autofill_agent;
+}
+
+mojom::PasswordManagerDriver*
+PasswordAutofillAgent::GetPasswordManagerDriver() {
+  return password_manager_driver_.get();
 }
 
 PasswordAutofillAgent::PasswordValueGatekeeper::PasswordValueGatekeeper()
@@ -1022,8 +1028,8 @@ bool PasswordAutofillAgent::ShowSuggestions(
                 : form_util::GetCanonicalActionForForm(element.Form());
         blink::WebLocalFrame* frame = render_frame()->GetWebFrame();
         GURL frame_url = GURL(frame->GetDocument().Url());
-        GetPasswordManagerDriver()->CheckSafeBrowsingReputation(action_url,
-                                                                frame_url);
+        password_manager_driver_->CheckSafeBrowsingReputation(action_url,
+                                                              frame_url);
       }
 #endif
       if (ShouldShowNotSecureWarning(element)) {
@@ -1079,7 +1085,7 @@ void PasswordAutofillAgent::ShowNotSecureWarning(
   FormData form;
   FormFieldData field;
   form_util::FindFormAndFieldForFormControlElement(element, &form, &field);
-  GetPasswordManagerDriver()->ShowNotSecureWarning(
+  password_manager_driver_->ShowNotSecureWarning(
       field.text_direction,
       render_frame()->GetRenderView()->ElementBoundsInWindow(element));
 }
@@ -1133,7 +1139,7 @@ void PasswordAutofillAgent::OnSameDocumentNavigationCompleted(
   }
 
   provisionally_saved_form_.SetSubmissionIndicatorEvent(event);
-  GetPasswordManagerDriver()->InPageNavigation(password_form);
+  password_manager_driver_->InPageNavigation(password_form);
   if (form_element_observer_) {
     form_element_observer_->Disconnect();
     form_element_observer_ = nullptr;
@@ -1148,8 +1154,8 @@ void PasswordAutofillAgent::UserGestureObserved() {
 void PasswordAutofillAgent::SendPasswordForms(bool only_visible) {
   std::unique_ptr<RendererSavePasswordProgressLogger> logger;
   if (logging_state_active_) {
-    logger.reset(new RendererSavePasswordProgressLogger(
-        GetPasswordManagerDriver().get()));
+    logger.reset(
+        new RendererSavePasswordProgressLogger(password_manager_driver_.get()));
     logger->LogMessage(Logger::STRING_SEND_PASSWORD_FORMS_METHOD);
     logger->LogBoolean(Logger::STRING_ONLY_VISIBLE, only_visible);
   }
@@ -1244,8 +1250,8 @@ void PasswordAutofillAgent::SendPasswordForms(bool only_visible) {
     // signal to the browser that a pending login attempt succeeded.
     blink::WebFrame* main_frame = render_frame()->GetWebFrame()->Top();
     bool did_stop_loading = !main_frame || !main_frame->IsLoading();
-    GetPasswordManagerDriver()->PasswordFormsRendered(password_forms,
-                                                      did_stop_loading);
+    password_manager_driver_->PasswordFormsRendered(password_forms,
+                                                    did_stop_loading);
   } else {
     // If there is a password field, but the list of password forms is empty for
     // some reason, add a dummy form to the list. It will cause a request to the
@@ -1262,7 +1268,7 @@ void PasswordAutofillAgent::SendPasswordForms(bool only_visible) {
     }
     if (!password_forms.empty()) {
       sent_request_to_store_ = true;
-      GetPasswordManagerDriver()->PasswordFormsParsed(password_forms);
+      password_manager_driver_->PasswordFormsParsed(password_forms);
     }
   }
 }
@@ -1306,7 +1312,7 @@ void PasswordAutofillAgent::FrameDetached() {
       provisionally_saved_form_.IsPasswordValid()) {
     provisionally_saved_form_.SetSubmissionIndicatorEvent(
         PasswordForm::SubmissionIndicatorEvent::FRAME_DETACHED);
-    GetPasswordManagerDriver()->InPageNavigation(
+    password_manager_driver_->InPageNavigation(
         provisionally_saved_form_.password_form());
   }
   FrameClosing();
@@ -1337,8 +1343,8 @@ void PasswordAutofillAgent::WillSendSubmitEvent(
 void PasswordAutofillAgent::WillSubmitForm(const blink::WebFormElement& form) {
   std::unique_ptr<RendererSavePasswordProgressLogger> logger;
   if (logging_state_active_) {
-    logger.reset(new RendererSavePasswordProgressLogger(
-        GetPasswordManagerDriver().get()));
+    logger.reset(
+        new RendererSavePasswordProgressLogger(password_manager_driver_.get()));
     logger->LogMessage(Logger::STRING_WILL_SUBMIT_FORM_METHOD);
     LogHTMLForm(logger.get(), Logger::STRING_HTML_FORM_FOR_SUBMIT, form);
   }
@@ -1373,7 +1379,7 @@ void PasswordAutofillAgent::WillSubmitForm(const blink::WebFormElement& form) {
     // the frame starts loading. If there are redirects that cause a new
     // RenderView to be instantiated (such as redirects to the WebStore)
     // we will never get to finish the load.
-    GetPasswordManagerDriver()->PasswordFormSubmitted(*submitted_form);
+    password_manager_driver_->PasswordFormSubmitted(*submitted_form);
     if (form_element_observer_) {
       form_element_observer_->Disconnect();
       form_element_observer_ = nullptr;
@@ -1393,8 +1399,8 @@ void PasswordAutofillAgent::DidStartProvisionalLoad(
     blink::WebDataSource* data_source) {
   std::unique_ptr<RendererSavePasswordProgressLogger> logger;
   if (logging_state_active_) {
-    logger.reset(new RendererSavePasswordProgressLogger(
-        GetPasswordManagerDriver().get()));
+    logger.reset(
+        new RendererSavePasswordProgressLogger(password_manager_driver_.get()));
     logger->LogMessage(Logger::STRING_DID_START_PROVISIONAL_LOAD_METHOD);
   }
 
@@ -1426,7 +1432,7 @@ void PasswordAutofillAgent::DidStartProvisionalLoad(
       provisionally_saved_form_.SetSubmissionIndicatorEvent(
           PasswordForm::SubmissionIndicatorEvent::
               PROVISIONALLY_SAVED_FORM_ON_START_PROVISIONAL_LOAD);
-      GetPasswordManagerDriver()->PasswordFormSubmitted(
+      password_manager_driver_->PasswordFormSubmitted(
           provisionally_saved_form_.password_form());
       if (form_element_observer_) {
         form_element_observer_->Disconnect();
@@ -1474,7 +1480,7 @@ void PasswordAutofillAgent::DidStartProvisionalLoad(
             logger->LogPasswordForm(Logger::STRING_PASSWORD_FORM_FOUND_ON_PAGE,
                                     *password_form);
           }
-          GetPasswordManagerDriver()->PasswordFormSubmitted(*password_form);
+          password_manager_driver_->PasswordFormSubmitted(*password_form);
           break;
         }
       }
@@ -1496,8 +1502,8 @@ void PasswordAutofillAgent::FillPasswordForm(
   std::vector<blink::WebInputElement> elements;
   std::unique_ptr<RendererSavePasswordProgressLogger> logger;
   if (logging_state_active_) {
-    logger.reset(new RendererSavePasswordProgressLogger(
-        GetPasswordManagerDriver().get()));
+    logger.reset(
+        new RendererSavePasswordProgressLogger(password_manager_driver_.get()));
     logger->LogMessage(Logger::STRING_ON_FILL_PASSWORD_FORM_METHOD);
   }
   GetFillableElementFromFormData(key, form_data, logger.get(), &elements);
@@ -1694,7 +1700,8 @@ bool PasswordAutofillAgent::ShowSuggestionPopup(
 
   if (user_input.IsPasswordField() && !user_input.IsAutofilled() &&
       !user_input.Value().IsEmpty()) {
-    GetAutofillDriver()->HidePopup();
+    if (autofill_agent_)
+      autofill_agent_->GetAutofillDriver()->HidePopup();
     return false;
   }
 
@@ -1712,7 +1719,7 @@ bool PasswordAutofillAgent::ShowSuggestionPopup(
                                      ? base::string16()
                                      : user_input.Value().Utf16());
 
-  GetPasswordManagerDriver()->ShowPasswordSuggestions(
+  password_manager_driver_->ShowPasswordSuggestions(
       password_info.key, field.text_direction, username_string, options,
       render_frame()->GetRenderView()->ElementBoundsInWindow(user_input));
   username_query_prefix_ = username_string;
@@ -1761,21 +1768,6 @@ void PasswordAutofillAgent::ProvisionallySavePassword(
   }
   DCHECK(password_form && (!form.IsNull() || !input.IsNull()));
   provisionally_saved_form_.Set(std::move(password_form), form, input);
-}
-
-const mojom::AutofillDriverPtr& PasswordAutofillAgent::GetAutofillDriver() {
-  DCHECK(autofill_agent_);
-  return autofill_agent_->GetAutofillDriver();
-}
-
-const mojom::PasswordManagerDriverPtr&
-PasswordAutofillAgent::GetPasswordManagerDriver() {
-  if (!password_manager_driver_) {
-    render_frame()->GetRemoteInterfaces()->GetInterface(
-        mojo::MakeRequest(&password_manager_driver_));
-  }
-
-  return password_manager_driver_;
 }
 
 }  // namespace autofill

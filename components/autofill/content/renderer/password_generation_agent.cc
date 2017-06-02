@@ -592,7 +592,7 @@ void PasswordGenerationAgent::UserTriggeredGeneratePassword() {
   ShowGenerationPopup();
 }
 
-const mojom::PasswordManagerDriverPtr&
+mojom::PasswordManagerDriver*
 PasswordGenerationAgent::GetPasswordManagerDriver() {
   DCHECK(password_agent_);
   return password_agent_->GetPasswordManagerDriver();
@@ -611,7 +611,7 @@ PasswordGenerationAgent::GetPasswordManagerClient() {
 void PasswordGenerationAgent::LogMessage(Logger::StringID message_id) {
   if (!password_agent_->logging_state_active())
     return;
-  RendererSavePasswordProgressLogger logger(GetPasswordManagerDriver().get());
+  RendererSavePasswordProgressLogger logger(GetPasswordManagerDriver());
   logger.LogMessage(message_id);
 }
 
@@ -619,7 +619,7 @@ void PasswordGenerationAgent::LogBoolean(Logger::StringID message_id,
                                          bool truth_value) {
   if (!password_agent_->logging_state_active())
     return;
-  RendererSavePasswordProgressLogger logger(GetPasswordManagerDriver().get());
+  RendererSavePasswordProgressLogger logger(GetPasswordManagerDriver());
   logger.LogBoolean(message_id, truth_value);
 }
 
@@ -627,7 +627,7 @@ void PasswordGenerationAgent::LogNumber(Logger::StringID message_id,
                                         int number) {
   if (!password_agent_->logging_state_active())
     return;
-  RendererSavePasswordProgressLogger logger(GetPasswordManagerDriver().get());
+  RendererSavePasswordProgressLogger logger(GetPasswordManagerDriver());
   logger.LogNumber(message_id, number);
 }
 

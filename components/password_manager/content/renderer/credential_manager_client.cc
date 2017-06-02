@@ -208,7 +208,8 @@ void RespondToRequestCallback(RequestCallbacksWrapper* callbacks_wrapper,
 
 CredentialManagerClient::CredentialManagerClient(
     content::RenderView* render_view)
-    : content::RenderViewObserver(render_view) {
+    : content::RenderViewObserver(render_view),
+      credential_manager_(render_view->GetMainRenderFrame()) {
   render_view->GetWebView()->SetCredentialManagerClient(this);
 }
 
@@ -221,11 +222,9 @@ void CredentialManagerClient::DispatchStore(
     const blink::WebCredential& credential,
     blink::WebCredentialManagerClient::NotificationCallbacks* callbacks) {
   DCHECK(callbacks);
-  ConnectToMojoCMIfNeeded();
-
   CredentialInfo info;
   WebCredentialToCredentialInfo(credential, &info);
-  mojo_cm_service_->Store(
+  credential_manager_->Store(
       info,
       base::Bind(&RespondToNotificationCallback,
                  base::Owned(new NotificationCallbacksWrapper(callbacks))));
@@ -234,9 +233,7 @@ void CredentialManagerClient::DispatchStore(
 void CredentialManagerClient::DispatchPreventSilentAccess(
     blink::WebCredentialManagerClient::NotificationCallbacks* callbacks) {
   DCHECK(callbacks);
-  ConnectToMojoCMIfNeeded();
-
-  mojo_cm_service_->PreventSilentAccess(
+  credential_manager_->PreventSilentAccess(
       base::Bind(&RespondToNotificationCallback,
                  base::Owned(new NotificationCallbacksWrapper(callbacks))));
 }
@@ -247,25 +244,15 @@ void CredentialManagerClient::DispatchGet(
     const blink::WebVector<blink::WebURL>& federations,
     RequestCallbacks* callbacks) {
   DCHECK(callbacks);
-  ConnectToMojoCMIfNeeded();
-
   std::vector<GURL> federation_vector;
   for (size_t i = 0; i < std::min(federations.size(), kMaxFederations); ++i)
     federation_vector.push_back(federations[i]);
 
-  mojo_cm_service_->Get(
+  credential_manager_->Get(
       GetCredentialMediationRequirementFromBlink(mediation), include_passwords,
       federation_vector,
       base::Bind(&RespondToRequestCallback,
                  base::Owned(new RequestCallbacksWrapper(callbacks))));
-}
-
-void CredentialManagerClient::ConnectToMojoCMIfNeeded() {
-  if (mojo_cm_service_)
-    return;
-
-  content::RenderFrame* main_frame = render_view()->GetMainRenderFrame();
-  main_frame->GetRemoteInterfaces()->GetInterface(&mojo_cm_service_);
 }
 
 void CredentialManagerClient::OnDestruct() {

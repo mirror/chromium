@@ -19,6 +19,7 @@
 #include "content/common/content_export.h"
 #include "content/common/media/media_devices.h"
 #include "content/common/media/media_devices.mojom.h"
+#include "content/public/renderer/document_scoped_lazy_interface_ptr.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "content/renderer/media/media_devices_event_dispatcher.h"
 #include "content/renderer/media/media_stream_dispatcher_eventhandler.h"
@@ -224,8 +225,6 @@ class CONTENT_EXPORT UserMediaClientImpl
   void StopLocalSource(const blink::WebMediaStreamSource& source,
                        bool notify_dispatcher);
 
-  const ::mojom::MediaDevicesDispatcherHostPtr& GetMediaDevicesDispatcher();
-
   void SelectAudioInputDevice(
       const blink::WebUserMediaRequest& user_media_request,
       const EnumerationResult& device_enumeration);
@@ -262,7 +261,8 @@ class CONTENT_EXPORT UserMediaClientImpl
   // (or RenderFrameObserver) to ensure tear-down occurs in the right order.
   const std::unique_ptr<MediaStreamDispatcher> media_stream_dispatcher_;
 
-  ::mojom::MediaDevicesDispatcherHostPtr media_devices_dispatcher_;
+  DocumentScopedLazyInterfacePtr<::mojom::MediaDevicesDispatcherHost>
+      media_devices_dispatcher_;
 
   LocalStreamSources local_sources_;
   LocalStreamSources pending_local_sources_;

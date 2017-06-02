@@ -93,7 +93,7 @@ class PasswordGenerationAgent : public content::RenderFrameObserver,
   void DidFinishLoad() override;
   void OnDestruct() override;
 
-  const mojom::PasswordManagerDriverPtr& GetPasswordManagerDriver();
+  mojom::PasswordManagerDriver* GetPasswordManagerDriver();
 
   const mojom::PasswordManagerClientAssociatedPtr& GetPasswordManagerClient();
 

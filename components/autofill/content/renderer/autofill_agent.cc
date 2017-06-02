@@ -154,6 +154,7 @@ AutofillAgent::AutofillAgent(content::RenderFrame* render_frame,
       is_generation_popup_possibly_visible_(false),
       page_click_tracker_(new PageClickTracker(render_frame, this)),
       binding_(this),
+      autofill_driver_(render_frame),
       weak_ptr_factory_(this) {
   render_frame->GetWebFrame()->SetAutofillClient(this);
   password_autofill_agent->SetAutofillAgent(this);
@@ -224,7 +225,7 @@ void AutofillAgent::FocusedNodeChanged(const WebNode& node) {
     if (!last_interacted_form_.IsNull()) {
       // Focus moved away from the last interacted form to somewhere else on
       // the page.
-      GetAutofillDriver()->FocusNoLongerOnForm();
+      autofill_driver_->FocusNoLongerOnForm();
     }
     return;
   }
@@ -236,7 +237,7 @@ void AutofillAgent::FocusedNodeChanged(const WebNode& node) {
       (!element || last_interacted_form_ != element->Form())) {
     // The focused element is not part of the last interacted form (could be
     // in a different form).
-    GetAutofillDriver()->FocusNoLongerOnForm();
+    autofill_driver_->FocusNoLongerOnForm();
     return;
   }
 
@@ -267,13 +268,12 @@ void AutofillAgent::FireHostSubmitEvents(const FormData& form_data,
   // because forms with a submit handler may fire both WillSendSubmitEvent
   // and WillSubmitForm, and we don't want duplicate messages.
   if (!submitted_forms_.count(form_data)) {
-    GetAutofillDriver()->WillSubmitForm(form_data, base::TimeTicks::Now());
+    autofill_driver_->WillSubmitForm(form_data, base::TimeTicks::Now());
     submitted_forms_.insert(form_data);
   }
 
-  if (form_submitted) {
-    GetAutofillDriver()->FormSubmitted(form_data);
-  }
+  if (form_submitted)
+    autofill_driver_->FormSubmitted(form_data);
 }
 
 void AutofillAgent::Shutdown() {
@@ -304,7 +304,7 @@ void AutofillAgent::FormControlElementClicked(
 }
 
 void AutofillAgent::TextFieldDidEndEditing(const WebInputElement& element) {
-  GetAutofillDriver()->DidEndTextFieldEditing();
+  autofill_driver_->DidEndTextFieldEditing();
 }
 
 void AutofillAgent::TextFieldDidChange(const WebFormControlElement& element) {
@@ -369,8 +369,7 @@ void AutofillAgent::TextFieldDidChangeImpl(
   FormFieldData field;
   if (form_util::FindFormAndFieldForFormControlElement(element, &form,
                                                        &field)) {
-    GetAutofillDriver()->TextFieldDidChange(form, field,
-                                            base::TimeTicks::Now());
+    autofill_driver_->TextFieldDidChange(form, field, base::TimeTicks::Now());
   }
 }
 
@@ -442,7 +441,7 @@ void AutofillAgent::FillForm(int32_t id, const FormData& form) {
   if (!element_.Form().IsNull())
     last_interacted_form_ = element_.Form();
 
-  GetAutofillDriver()->DidFillAutofillFormData(form, base::TimeTicks::Now());
+  autofill_driver_->DidFillAutofillFormData(form, base::TimeTicks::Now());
 }
 
 void AutofillAgent::PreviewForm(int32_t id, const FormData& form) {
@@ -452,7 +451,7 @@ void AutofillAgent::PreviewForm(int32_t id, const FormData& form) {
   was_query_node_autofilled_ = element_.IsAutofilled();
   form_util::PreviewForm(form, element_);
 
-  GetAutofillDriver()->DidPreviewAutofillFormData();
+  autofill_driver_->DidPreviewAutofillFormData();
 }
 
 void AutofillAgent::FieldTypePredictionsAvailable(
@@ -522,8 +521,8 @@ void AutofillAgent::ShowInitialPasswordAccountSuggestions(
   std::vector<blink::WebInputElement> elements;
   std::unique_ptr<RendererSavePasswordProgressLogger> logger;
   if (password_autofill_agent_->logging_state_active()) {
-    logger.reset(new RendererSavePasswordProgressLogger(
-        GetPasswordManagerDriver().get()));
+    logger.reset(
+        new RendererSavePasswordProgressLogger(GetPasswordManagerDriver()));
     logger->LogMessage(SavePasswordProgressLogger::
                            STRING_ON_SHOW_INITIAL_PASSWORD_ACCOUNT_SUGGESTIONS);
   }
@@ -688,8 +687,8 @@ void AutofillAgent::QueryAutofillSuggestions(
 
   is_popup_possibly_visible_ = true;
 
-  GetAutofillDriver()->SetDataList(data_list_values, data_list_labels);
-  GetAutofillDriver()->QueryFormFieldAutofill(
+  autofill_driver_->SetDataList(data_list_values, data_list_labels);
+  autofill_driver_->QueryFormFieldAutofill(
       autofill_query_id_, form, field,
       render_frame()->GetRenderView()->ElementBoundsInWindow(element_));
 }
@@ -721,7 +720,7 @@ void AutofillAgent::ProcessForms() {
 
   // Always communicate to browser process for topmost frame.
   if (!forms.empty() || !frame->Parent()) {
-    GetAutofillDriver()->FormsSeen(forms, forms_seen_timestamp);
+    autofill_driver_->FormsSeen(forms, forms_seen_timestamp);
   }
 }
 
@@ -731,7 +730,7 @@ void AutofillAgent::HidePopup() {
   is_popup_possibly_visible_ = false;
   is_generation_popup_possibly_visible_ = false;
 
-  GetAutofillDriver()->HidePopup();
+  autofill_driver_->HidePopup();
 }
 
 bool AutofillAgent::IsUserGesture() const {
@@ -777,17 +776,11 @@ void AutofillAgent::AjaxSucceeded() {
   password_autofill_agent_->AJAXSucceeded();
 }
 
-const mojom::AutofillDriverPtr& AutofillAgent::GetAutofillDriver() {
-  if (!autofill_driver_) {
-    render_frame()->GetRemoteInterfaces()->GetInterface(
-        mojo::MakeRequest(&autofill_driver_));
-  }
-
-  return autofill_driver_;
+mojom::AutofillDriver* AutofillAgent::GetAutofillDriver() {
+  return autofill_driver_.get();
 }
 
-const mojom::PasswordManagerDriverPtr&
-AutofillAgent::GetPasswordManagerDriver() {
+mojom::PasswordManagerDriver* AutofillAgent::GetPasswordManagerDriver() {
   DCHECK(password_autofill_agent_);
   return password_autofill_agent_->GetPasswordManagerDriver();
 }
