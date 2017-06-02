@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1858119a_9c0a9967",
+        "filename": "cc/surfaces/display.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-02T14:38:48Z",
+      "side": 1,
+      "message": "I\u0027ll try doing that and see what happens.",
+      "parentUuid": "aa8f0286_dcbc0f45",
+      "revId": "9e4cde20fa642b5d20cd37795c191e79c431dc07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c1b39d9_6ffecef9",
         "filename": "cc/surfaces/display_unittest.cc",
         "patchSetId": 24
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a1b7860a_d6f024a6",
+        "filename": "cc/surfaces/display_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-02T14:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c1b39d9_6ffecef9",
+      "revId": "9e4cde20fa642b5d20cd37795c191e79c431dc07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6299df45_e121d506",
         "filename": "cc/surfaces/display_unittest.cc",
         "patchSetId": 24
@@ -50,6 +86,24 @@
       "revId": "9e4cde20fa642b5d20cd37795c191e79c431dc07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c98be790_662f6ec8",
+        "filename": "cc/surfaces/display_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-02T14:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6299df45_e121d506",
+      "revId": "9e4cde20fa642b5d20cd37795c191e79c431dc07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "a663ce9b_8426821b",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-02T14:38:48Z",
+      "side": 1,
+      "message": "The if was added when the register happened in BindToClient. It\u0027s not needed anymore.",
+      "parentUuid": "2ebb6fd3_9f1a5d5d",
+      "revId": "9e4cde20fa642b5d20cd37795c191e79c431dc07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd13d0c2_b9a94c69",
         "filename": "content/browser/renderer_host/compositor_impl_android.cc",
         "patchSetId": 24
@@ -102,6 +174,24 @@
       "revId": "9e4cde20fa642b5d20cd37795c191e79c431dc07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cadeb7e8_ba80c872",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-02T14:38:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd13d0c2_b9a94c69",
+      "revId": "9e4cde20fa642b5d20cd37795c191e79c431dc07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "682b80d8_db577e72",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-02T14:38:48Z",
+      "side": 1,
+      "message": "eseckler@ suggested doing the register/unregister in CompositorImpl/~CompositorImpl. It can\u0027t go any higher since we register\nand invalidate FrameSinkId there.",
+      "parentUuid": "b1b286cf_0aa9b197",
+      "revId": "9e4cde20fa642b5d20cd37795c191e79c431dc07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0329fd3_f968d40c",
         "filename": "ui/compositor/test/in_process_context_factory.cc",
         "patchSetId": 24
@@ -136,6 +244,24 @@
       "revId": "9e4cde20fa642b5d20cd37795c191e79c431dc07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73b41c4_09bceb99",
+        "filename": "ui/compositor/test/in_process_context_factory.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-02T14:38:48Z",
+      "side": 1,
+      "message": "The if was added back when BFS was registered in DCFS::BindToClient. It\u0027s not needed anymore and I removed the if.",
+      "parentUuid": "a0329fd3_f968d40c",
+      "revId": "9e4cde20fa642b5d20cd37795c191e79c431dc07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
