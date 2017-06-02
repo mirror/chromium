@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5cbc4e0d_29807c4e",
+        "filename": "services/identity/public/cpp/account_info_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-02T07:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "565fa332_04cc8bc2",
+      "range": {
+        "startLine": 17,
+        "startChar": 9,
+        "endLine": 17,
+        "endChar": 20
+      },
+      "revId": "519c4c0e4a29af57da80d9052c35daade69616da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e26e0563_107f79c9",
         "filename": "services/identity/public/cpp/account_info_struct_traits.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "519c4c0e4a29af57da80d9052c35daade69616da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6673ed12_69dfabb7",
+        "filename": "services/identity/public/cpp/account_info_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-02T07:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e26e0563_107f79c9",
+      "range": {
+        "startLine": 42,
+        "startChar": 39,
+        "endLine": 70,
+        "endChar": 3
+      },
+      "revId": "519c4c0e4a29af57da80d9052c35daade69616da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a3016081_cd3db5e8",
+        "filename": "services/identity/public/cpp/account_info_struct_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-02T07:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71f3c69a_125fb3c5",
+      "range": {
+        "startLine": 75,
+        "startChar": 49,
+        "endLine": 78,
+        "endChar": 3
+      },
+      "revId": "519c4c0e4a29af57da80d9052c35daade69616da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb75e8c0_6561f2be",
         "filename": "services/identity/public/interfaces/account_info.mojom",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "82d0894d_3718238a",
+        "filename": "services/identity/public/interfaces/account_info.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-02T07:45:24Z",
+      "side": 1,
+      "message": "Good point. Added documentation. I\u0027m not sure exactly what examples would look like here, but feel free to give any suggestions.",
+      "parentUuid": "eb75e8c0_6561f2be",
+      "range": {
+        "startLine": 11,
+        "startChar": 9,
+        "endLine": 11,
+        "endChar": 13
+      },
+      "revId": "519c4c0e4a29af57da80d9052c35daade69616da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e07a9f6_194bec00",
         "filename": "services/identity/public/interfaces/account_info.mojom",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2017-06-01T00:04:01Z",
       "side": 1,
       "message": "Can we use mojo.common.mojom.Url for this? Similar question applies to hosted_domain.",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 9
+      },
+      "revId": "519c4c0e4a29af57da80d9052c35daade69616da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6779381a_8790e880",
+        "filename": "services/identity/public/interfaces/account_info.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-02T07:45:24Z",
+      "side": 1,
+      "message": "I\u0027m not at a point where I can change the definition of account_info.h, so this would involve constructing a GURL every time we needed to read |hosted_domain| or |picture_url|. I put a TODO to change this when the time comes.",
+      "parentUuid": "9e07a9f6_194bec00",
       "range": {
         "startLine": 17,
         "startChar": 2,
