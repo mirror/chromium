@@ -22,6 +22,30 @@
       "revId": "49feadf0e2a62edb62dcce54b4a8d656361e3f8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135d5daa_ca915c4b",
+        "filename": "third_party/WebKit/Source/platform/wtf/HashTraits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-02T00:33:10Z",
+      "side": 1,
+      "message": "Done.\nI chose -128 and -127.",
+      "parentUuid": "0ed1c81b_4c238bee",
+      "range": {
+        "startLine": 148,
+        "startChar": 48,
+        "endLine": 148,
+        "endChar": 50
+      },
+      "revId": "49feadf0e2a62edb62dcce54b4a8d656361e3f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
