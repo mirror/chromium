@@ -16,6 +16,24 @@
       "revId": "9de8f152ff2feb4ffd813bf58a65bd8091965df5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff0fe51_08b0340e",
+        "filename": "net/quic/core/crypto/crypto_secret_boxer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-06-02T21:18:27Z",
+      "side": 1,
+      "message": "Rejected the ciphertext_len \u003d\u003d 0 case and used base::WriteInto.",
+      "parentUuid": "43bd7737_b0d1397b",
+      "revId": "9de8f152ff2feb4ffd813bf58a65bd8091965df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
