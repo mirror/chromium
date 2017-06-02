@@ -65,13 +65,17 @@ class WEB_EXPORT WebPluginContainerImpl final : public WebPluginContainerBase {
   USING_PRE_FINALIZER(WebPluginContainerImpl, PreFinalize);
 
  public:
-  static WebPluginContainerImpl* Create(HTMLPlugInElement* element,
+  static WebPluginContainerImpl* Create(HTMLPlugInElement& element,
                                         WebPlugin* web_plugin) {
     return new WebPluginContainerImpl(element, web_plugin);
   }
   ~WebPluginContainerImpl() override;
 
   // PluginView methods
+  HTMLPlugInElement& Element() const {
+    DCHECK(element_);
+    return *element_;
+  }
   void Attach() override;
   void Detach() override;
   bool IsAttached() const override { return is_attached_; }
@@ -199,7 +203,7 @@ class WEB_EXPORT WebPluginContainerImpl final : public WebPluginContainerBase {
       IntRect& clipped_local_rect,
       IntRect& unclipped_int_local_rect) const;
 
-  WebPluginContainerImpl(HTMLPlugInElement*, WebPlugin*);
+  WebPluginContainerImpl(HTMLPlugInElement&, WebPlugin*);
 
   WebTouchEvent TransformTouchEvent(const WebInputEvent&);
   WebCoalescedInputEvent TransformCoalescedTouchEvent(
