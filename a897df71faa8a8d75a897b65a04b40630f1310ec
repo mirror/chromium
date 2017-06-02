@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd95c612_80edd258",
+        "filename": "tools/perf/page_sets/top_10_mobile.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-06-02T15:56:35Z",
+      "side": 0,
+      "message": "The only remaining client does not run page interactions nor collects memory dumps.",
+      "range": {
+        "startLine": 69,
+        "startChar": 21,
+        "endLine": 70,
+        "endChar": 41
+      },
+      "revId": "a897df71faa8a8d75a897b65a04b40630f1310ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c585297f_0e192d85",
+        "filename": "tools/perf/page_sets/top_10_mobile.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-06-02T15:56:35Z",
+      "side": 0,
+      "message": "This class is not used anywhere anymore.",
+      "range": {
+        "startLine": 91,
+        "startChar": 6,
+        "endLine": 91,
+        "endChar": 30
+      },
+      "revId": "a897df71faa8a8d75a897b65a04b40630f1310ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
