@@ -10,9 +10,14 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "chrome/browser/ui/blocked_content/app_modal_dialog_helper.h"
 #include "chrome/browser/ui/permission_bubble/permission_prompt.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/views/bubble/bubble_border.h"
+
+namespace content {
+class WebContents;
+}
 
 namespace views {
 class View;
@@ -24,7 +29,7 @@ class Profile;
 
 class PermissionPromptImpl : public PermissionPrompt {
  public:
-  explicit PermissionPromptImpl(Browser* browser);
+  explicit PermissionPromptImpl(content::WebContents* web_contents);
   ~PermissionPromptImpl() override;
 
   // PermissionPrompt:
@@ -59,6 +64,7 @@ class PermissionPromptImpl : public PermissionPrompt {
   Browser* browser_;
   Delegate* delegate_;
   PermissionsBubbleDialogDelegateView* bubble_delegate_;
+  AppModalDialogHelper app_modal_dialog_helper_;
 
   DISALLOW_COPY_AND_ASSIGN(PermissionPromptImpl);
 };

@@ -5,14 +5,18 @@
 #include "chrome/browser/ui/cocoa/permission_bubble/permission_bubble_cocoa.h"
 
 #include "base/memory/ptr_util.h"
+#import "chrome/browser/ui/browser_finder.h"
 #import "chrome/browser/ui/cocoa/base_bubble_controller.h"
 #import "chrome/browser/ui/cocoa/permission_bubble/permission_bubble_controller.h"
 #import "chrome/browser/ui/permission_bubble/permission_prompt.h"
 #include "content/public/browser/web_contents.h"
 #import "ui/base/cocoa/nsview_additions.h"
 
-PermissionBubbleCocoa::PermissionBubbleCocoa(Browser* browser)
-    : browser_(browser), delegate_(nullptr), bubbleController_(nil) {}
+PermissionBubbleCocoa::PermissionBubbleCocoa(content::WebContents* web_contents)
+    : browser_(chrome::FindBrowserWithWebContents(web_contents)),
+      delegate_(nullptr),
+      bubbleController_(nil),
+      app_modal_dialog_helper_(web_contents) {}
 
 PermissionBubbleCocoa::~PermissionBubbleCocoa() {
 }

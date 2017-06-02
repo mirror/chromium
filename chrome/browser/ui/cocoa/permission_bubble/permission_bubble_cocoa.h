@@ -11,6 +11,7 @@
 #include "base/mac/scoped_nsobject.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "chrome/browser/ui/blocked_content/app_modal_dialog_helper.h"
 #include "chrome/browser/ui/cocoa/info_bubble_view.h"
 #include "chrome/browser/ui/permission_bubble/permission_prompt.h"
 #include "content/public/browser/web_contents.h"
@@ -20,7 +21,7 @@ class Browser;
 
 class PermissionBubbleCocoa : public PermissionPrompt {
  public:
-  explicit PermissionBubbleCocoa(Browser* browser);
+  explicit PermissionBubbleCocoa(content::WebContents* web_contents);
   ~PermissionBubbleCocoa() override;
 
   // PermissionPrompt:
@@ -51,6 +52,8 @@ class PermissionBubbleCocoa : public PermissionPrompt {
 
   // Cocoa-side UI controller for the bubble.  Weak, as it will close itself.
   PermissionBubbleController* bubbleController_;
+
+  AppModalDialogHelper app_modal_dialog_helper_;
 
   DISALLOW_COPY_AND_ASSIGN(PermissionBubbleCocoa);
 };

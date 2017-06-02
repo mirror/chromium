@@ -766,6 +766,53 @@ IN_PROC_BROWSER_TEST_F(PopupBlockerBrowserTest, ModalPopUnderViaHTTPAuth) {
   }
 }
 
+IN_PROC_BROWSER_TEST_F(PopupBlockerBrowserTest, PopunderViaPermissions) {
+  net::EmbeddedTestServer ssl_test_server(net::EmbeddedTestServer::TYPE_HTTPS);
+  net::SSLServerConfig ssl_config;
+  ssl_config.client_cert_type =
+      net::SSLServerConfig::ClientCertType::NO_CLIENT_CERT;
+  ssl_test_server.SetSSLConfig(net::EmbeddedTestServer::CERT_OK, ssl_config);
+  ssl_test_server.ServeFilesFromSourceDirectory("chrome/test/data");
+  ASSERT_TRUE(ssl_test_server.Start());
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+  GURL url(ssl_test_server.GetURL("/popup_blocker/popup-window-open.html"));
+  HostContentSettingsMapFactory::GetForProfile(browser()->profile())
+      ->SetContentSettingDefaultScope(url, GURL(), CONTENT_SETTINGS_TYPE_POPUPS,
+                                      std::string(), CONTENT_SETTING_ALLOW);
+
+  NavigateAndCheckPopupShown(url, ExpectPopup);
+
+  Browser* popup_browser = chrome::FindLastActive();
+  ASSERT_NE(popup_browser, browser());
+
+  // Requesting permissions will raise the tab over the popup.
+  {
+#if !defined(OS_MACOSX)
+    // Mac doesn't activate the browser during modal dialogs, see
+    // https://crbug.com/687732 for details.
+    ui_test_utils::BrowserActivationWaiter raised_waiter(browser());
+#endif
+    tab->GetMainFrame()->ExecuteJavaScriptForTests(base::UTF8ToUTF16(
+        "var f = document.createElement('iframe'); f.srcdoc = "
+        "'<script>Notification.requestPermission(() => "
+        "{});navigator.requestMIDIAccess({sysex:true});</script>'; "
+        "document.body.appendChild(f)"));
+#if !defined(OS_MACOSX)
+    if (chrome::FindLastActive() != browser())
+      raised_waiter.WaitForActivation();
+#endif
+  }
+
+  {
+    ui_test_utils::BrowserActivationWaiter waiter(popup_browser);
+    tab->GetMainFrame()->ExecuteJavaScriptForTests(
+        base::UTF8ToUTF16("var f = document.querySelector('iframe'); "
+                          "document.body.removeChild(f)"));
+    waiter.WaitForActivation();
+    ASSERT_EQ(popup_browser, chrome::FindLastActive());
+  }
+}
+
 // Tests that Ctrl+Enter/Cmd+Enter keys on a link open the backgournd tab.
 IN_PROC_BROWSER_TEST_F(PopupBlockerBrowserTest, CtrlEnterKey) {
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();

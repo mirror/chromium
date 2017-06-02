@@ -4,7 +4,6 @@
 
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/ui/browser.h"
-#include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
 #import "chrome/browser/ui/cocoa/bubble_anchor_helper.h"
@@ -37,9 +36,7 @@ views::BubbleBorder::Arrow PermissionPromptImpl::GetAnchorArrow() {
 std::unique_ptr<PermissionPrompt> PermissionPrompt::Create(
     content::WebContents* web_contents) {
   if (ui::MaterialDesignController::IsSecondaryUiMaterial()) {
-    return base::WrapUnique(new PermissionPromptImpl(
-        chrome::FindBrowserWithWebContents(web_contents)));
+    return base::WrapUnique(new PermissionPromptImpl(web_contents));
   }
-  return base::MakeUnique<PermissionBubbleCocoa>(
-      chrome::FindBrowserWithWebContents(web_contents));
+  return base::MakeUnique<PermissionBubbleCocoa>(web_contents);
 }

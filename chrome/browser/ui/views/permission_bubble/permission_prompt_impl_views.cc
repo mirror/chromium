@@ -4,7 +4,6 @@
 
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/ui/browser.h"
-#include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/views/exclusive_access_bubble_views.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
@@ -51,6 +50,5 @@ views::BubbleBorder::Arrow PermissionPromptImpl::GetAnchorArrow() {
 // static
 std::unique_ptr<PermissionPrompt> PermissionPrompt::Create(
     content::WebContents* web_contents) {
-  return base::WrapUnique(new PermissionPromptImpl(
-      chrome::FindBrowserWithWebContents(web_contents)));
+  return base::WrapUnique(new PermissionPromptImpl(web_contents));
 }

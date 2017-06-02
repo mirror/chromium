@@ -14,6 +14,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_dialogs.h"
+#include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/views/exclusive_access_bubble_views.h"
@@ -391,10 +392,11 @@ void PermissionsBubbleDialogDelegateView::UpdateAnchor(
 //////////////////////////////////////////////////////////////////////////////
 // PermissionPromptImpl
 
-PermissionPromptImpl::PermissionPromptImpl(Browser* browser)
-    : browser_(browser),
+PermissionPromptImpl::PermissionPromptImpl(content::WebContents* web_contents)
+    : browser_(chrome::FindBrowserWithWebContents(web_contents)),
       delegate_(nullptr),
-      bubble_delegate_(nullptr) {}
+      bubble_delegate_(nullptr),
+      app_modal_dialog_helper_(web_contents) {}
 
 PermissionPromptImpl::~PermissionPromptImpl() {
 }
