@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98c26434_249721d6",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/platform/linux/fast/backgrounds/animated-svg-as-mask-expected.png",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-02T16:35:59Z",
+      "side": 1,
+      "message": "These rebaseline tests previously crashed, and now produce invisible pixel differences. I rebaseline them to reduce the number of failing tests we need to look at.",
+      "revId": "037dd323e339c6c93fadee26e03e63c645b9cbaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
