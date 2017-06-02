@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a274d1a2_db330c77",
+        "filename": "third_party/WebKit/Source/platform/RuntimeEnabledFeatures.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-02T15:49:07Z",
+      "side": 1,
+      "message": "Maybe add a comment explaining it will be set to reflect the Feature? Mention the feature name too?",
+      "revId": "9e047aa2503e1ee74a1fd01d1bf027334eefe180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
