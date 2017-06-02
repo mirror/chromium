@@ -22,6 +22,30 @@
       "revId": "72838fe31a4a071a5350dc3ec243b90d349fd4c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c46b46_47da5a75",
+        "filename": "components/payments/core/journey_logger.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-06-02T23:02:08Z",
+      "side": 1,
+      "message": "I cannot yet assert because it is not used on Desktop. I\u0027ll be doing that as soon as this lands.",
+      "parentUuid": "763c21e8_2480dd30",
+      "range": {
+        "startLine": 180,
+        "startChar": 49,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "72838fe31a4a071a5350dc3ec243b90d349fd4c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
