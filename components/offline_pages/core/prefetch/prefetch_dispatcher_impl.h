@@ -6,6 +6,7 @@
 #define COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_PREFETCH_DISPATCHER_IMPL_H_
 
 #include "base/macros.h"
+#include "components/offline_pages/core/offline_event_logger.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
 
 namespace offline_pages {
@@ -22,8 +23,12 @@ class PrefetchDispatcherImpl : public PrefetchDispatcher {
   void RemovePrefetchURLsByClientId(const ClientId& client_id) override;
   void BeginBackgroundTask(std::unique_ptr<ScopedBackgroundTask> task) override;
   void StopBackgroundTask(ScopedBackgroundTask* task) override;
+  void GCMReceivedForOperation(const std::string& operation_name) override;
+  OfflineEventLogger* GetLogger() override;
 
  private:
+  OfflineEventLogger event_logger_;
+
   DISALLOW_COPY_AND_ASSIGN(PrefetchDispatcherImpl);
 };
 
