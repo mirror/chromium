@@ -1461,17 +1461,16 @@ LayoutReplaced* LocalFrameView::EmbeddedReplacedContent() const {
   return nullptr;
 }
 
-void LocalFrameView::AddPart(LayoutPart* object) {
-  parts_.insert(object);
-}
-
-void LocalFrameView::RemovePart(LayoutPart* object) {
-  parts_.erase(object);
+LayoutPart* LocalFrameView::OwnerLayoutObject() const {
+  return frame_->OwnerLayoutObject();
 }
 
 void LocalFrameView::UpdateGeometries() {
-  Vector<RefPtr<LayoutPart>> parts;
-  CopyToVector(parts_, parts);
+  Vector<LayoutPart*> parts;
+  ForAllChildViewsAndPlugins([&](FrameOrPlugin& frame_or_plugin) {
+    if (LayoutPart* part = frame_or_plugin.OwnerLayoutObject())
+      parts.push_back(part);
+  });
 
   for (auto part : parts) {
     // Script or plugins could detach the frame so abort processing if that
