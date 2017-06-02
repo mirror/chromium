@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1237dfd_638e5972",
+        "filename": "net/quic/core/crypto/crypto_secret_boxer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-06-02T21:21:47Z",
+      "side": 1,
+      "message": "This could also just be return true, and then return false at the end. Probably don\u0027t even need the extra scope.",
+      "revId": "b992fa8035f4510ad085e29c1362b91270215d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
