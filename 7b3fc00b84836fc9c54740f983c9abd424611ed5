@@ -22,6 +22,30 @@
       "revId": "7b3fc00b84836fc9c54740f983c9abd424611ed5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02da2c9e_8bed31a3",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-06-02T15:28:28Z",
+      "side": 1,
+      "message": "No, this attribute exists in Android N for Android TV.",
+      "parentUuid": "e97ad63d_30e3821b",
+      "range": {
+        "startLine": 354,
+        "startChar": 12,
+        "endLine": 354,
+        "endChar": 44
+      },
+      "revId": "7b3fc00b84836fc9c54740f983c9abd424611ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
