@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1c67026e_f059a702",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-02T04:59:51Z",
+      "side": 1,
+      "message": "Stefan, do you think it is worth changing this code at all?  I wanted to get rid of LocalFrameView::parts_ and then use FrameTree to find the relevant LayoutParts rather than having all LayoutParts having to register / unregister themselves.\n\nI\u0027ve been looking at the GetLayoutViewItem.IsNull, and it has made me realize that my changes might have some big problems if frames start attaching and detaching during this loop.  I don\u0027t know if FrameTree would handle that too well.  Maybe the existing approach where the vector of LayoutPart objects is copied before iteration is important.\n\nI\u0027ve adjusted my approach now to only change how the LayoutPart objects are collected, and left the other logic as-is.",
+      "parentUuid": "fef32ea1_1bf6b4ad",
+      "range": {
+        "startLine": 1469,
+        "startChar": 2,
+        "endLine": 1469,
+        "endChar": 28
+      },
+      "revId": "a28d970bdbd077b4e87b7944990021996d80b07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c825935_07dcca2e",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 3
@@ -57,6 +81,24 @@
       "revId": "a28d970bdbd077b4e87b7944990021996d80b07f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ad38a8_f78bc12e",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-02T04:59:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3949386c_09186da6",
+      "revId": "a28d970bdbd077b4e87b7944990021996d80b07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
