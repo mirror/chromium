@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f672606a_e6abb3f8",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 1457,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-02T17:47:30Z",
+      "side": 1,
+      "message": "Move to chromeos section on line 2430",
+      "revId": "6fc51a78de1c44ecc5f09aa23fcfc57e0a0b086d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "649d552b_48064aeb",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-02T17:47:30Z",
+      "side": 1,
+      "message": "move to block around line 1256 for is_chromeos.",
+      "range": {
+        "startLine": 628,
+        "startChar": 6,
+        "endLine": 628,
+        "endChar": 17
+      },
+      "revId": "6fc51a78de1c44ecc5f09aa23fcfc57e0a0b086d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b41b4a_a05298ad",
+        "filename": "content/public/browser/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-02T17:47:30Z",
+      "side": 1,
+      "message": "Why do you need to add this?",
+      "range": {
+        "startLine": 351,
+        "startChar": 20,
+        "endLine": 351,
+        "endChar": 63
+      },
+      "revId": "6fc51a78de1c44ecc5f09aa23fcfc57e0a0b086d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

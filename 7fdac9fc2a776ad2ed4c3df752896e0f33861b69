@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcb627ac_3d989f13",
+        "filename": "chrome/browser/chromeos/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-02T17:47:30Z",
+      "side": 0,
+      "message": "Wow, there were a lot of dead files listed here!",
+      "revId": "7fdac9fc2a776ad2ed4c3df752896e0f33861b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
