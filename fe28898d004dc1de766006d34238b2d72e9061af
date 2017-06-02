@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "6072ecf9_11f0edd4",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-06-02T20:54:27Z",
+      "side": 1,
+      "message": "\u003e Where does it do that?\n\nFor example: LayoutBlock::SimplifiedLayout https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/LayoutBlock.cpp?type\u003dcs\u0026l\u003d614\n\nI am not convinced that passing fragment-\u003eOverflowSize().Height() will be correct either. My main problem is that I do not understand what old_client_after_edge argument is doing. It looks like it is there to prevent shrinking of height during certain overflow computations?\n\nI was hoping to get rid of overflow on the fragment in future checkins, becasue that overflow is incorrect wrt tranforms, position:relative, etc. \n\nI am happy to go with fragment-\u003eOverflowSize().Height() for an lgtm for now, and can revisit if tests start failing.",
+      "parentUuid": "f9178192_ee89ea38",
+      "revId": "fe28898d004dc1de766006d34238b2d72e9061af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43cd16b6_8840c5bf",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.h",
         "patchSetId": 2
