@@ -1481,8 +1481,10 @@ void LocalFrameView::UpdateGeometries() {
 
     if (part->GetFrameOrPlugin()) {
       if (LocalFrameView* frame_view = part->ChildFrameView()) {
+        bool should_throttle_before = frame_view->ShouldThrottleRendering();
         bool did_need_layout = frame_view->NeedsLayout();
         part->UpdateGeometry();
+        DCHECK_EQ(frame_view->ShouldThrottleRendering(), should_throttle_before);
         if (!did_need_layout && !frame_view->ShouldThrottleRendering())
           frame_view->CheckDoesNotNeedLayout();
       } else {
