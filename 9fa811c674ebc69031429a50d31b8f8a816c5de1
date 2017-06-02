@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e301bc16_941f97e8",
+        "filename": "components/offline_pages/core/prefetch/prefetch_gcm_app_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-02T17:22:11Z",
+      "side": 1,
+      "message": "I\u0027d rather rely on the feature flag than the #ifdef.  How does this look?",
+      "parentUuid": "2cbf8819_e0e9e42e",
+      "revId": "9fa811c674ebc69031429a50d31b8f8a816c5de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36ffd752_89664262",
         "filename": "components/offline_pages/core/prefetch/prefetch_gcm_handler.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "9fa811c674ebc69031429a50d31b8f8a816c5de1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "456a4d27_60d618f4",
+        "filename": "components/offline_pages/core/prefetch/prefetch_gcm_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-02T17:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36ffd752_89664262",
+      "revId": "9fa811c674ebc69031429a50d31b8f8a816c5de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
