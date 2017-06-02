@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "f9178192_ee89ea38",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-02T20:40:03Z",
+      "side": 1,
+      "message": "\u003e The legacy ComputeOverflow uses old_client_after_edge, which is stored in overflow_.\n\nWhere does it do that? See here:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp?type\u003dcs\u0026q\u003dComputeOverflow+package:%5Echromium$\u0026l\u003d485\n\nThat uses unconstrained_client_after_edge, which is ClientLogicalBottom() before it is adjusted by height/min-height/max-height.\n\n\u003e Abspos descendants are not placed inside Legacy containers. \n\nOh, you mean the positioned descendants set. Makes sense.",
+      "parentUuid": "46c27161_2dc24437",
+      "revId": "fe28898d004dc1de766006d34238b2d72e9061af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43cd16b6_8840c5bf",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.h",
         "patchSetId": 2
