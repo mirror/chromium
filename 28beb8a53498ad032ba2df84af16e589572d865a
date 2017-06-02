@@ -69,6 +69,54 @@
       "revId": "28beb8a53498ad032ba2df84af16e589572d865a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085d2a2c_3a5a2102",
+        "filename": "ios/chrome/browser/ui/webui/about_ui.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-02T17:26:24Z",
+      "side": 1,
+      "message": "Duh, it inherits from a class ending with \"Controller\". Thanks!",
+      "parentUuid": "fcc18f57_67cbd821",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 20
+      },
+      "revId": "28beb8a53498ad032ba2df84af16e589572d865a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96eb814e_aec6d05a",
+        "filename": "ios/chrome/browser/ui/webui/about_ui.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-06-02T17:26:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f1d0b67_a010653b",
+      "range": {
+        "startLine": 17,
+        "startChar": 34,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "28beb8a53498ad032ba2df84af16e589572d865a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
