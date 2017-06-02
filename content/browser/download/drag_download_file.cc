@@ -77,8 +77,28 @@ class DragDownloadFile::DragDownloadFileUI : public DownloadItem::Observer {
                                     weak_ptr_factory_.GetWeakPtr()));
     params->set_file_path(file_path);
     params->set_file(std::move(file));  // Nulls file.
+    net::NetworkTrafficAnnotationTag traffic_annotation =
+        net::DefineNetworkTrafficAnnotation("...", R"(
+        semantics {
+          sender: "..."
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+        }
+        policy {
+          cookies_allowed: false/true
+          cookies_store: "..."
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
     BrowserContext::GetDownloadManager(web_contents_->GetBrowserContext())
-        ->DownloadUrl(std::move(params), NO_TRAFFIC_ANNOTATION_YET);
+        ->DownloadUrl(std::move(params), traffic_annotation);
   }
 
   void Cancel() {

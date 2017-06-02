@@ -66,9 +66,29 @@ std::unique_ptr<UrlDownloader, BrowserThread::DeleteOnIOThread> BeginDownload(
     base::WeakPtr<DownloadManagerImpl> download_manager) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("...", R"(
+        semantics {
+          sender: "..."
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+        }
+        policy {
+          cookies_allowed: false/true
+          cookies_store: "..."
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
   std::unique_ptr<net::URLRequest> url_request =
       DownloadRequestCore::CreateRequestOnIOThread(download_id, params.get(),
-                                                   NO_TRAFFIC_ANNOTATION_YET);
+                                                   traffic_annotation);
   std::unique_ptr<storage::BlobDataHandle> blob_data_handle =
       params->GetBlobDataHandle();
   if (blob_data_handle) {
