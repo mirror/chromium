@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "67302099_5e822426",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-06-02T21:13:44Z",
+      "side": 1,
+      "message": "I think this is used for damage computation, and I\u0027m not sure it will be properly set again if as you noted is possible we mutate the wrong node but it\u0027s then immediately rebuilt. There are only a few places where this is set:\n\nhttps://cs.chromium.org/search/?q\u003dfile:cc/+%22effect_changed+%3D%22\u0026type\u003dcs\n\nI\u0027m not sure whether losing this would be impactful. Does the new logic end up mutating the same node it mutates at ToT? If so then it\u0027s fine.",
+      "range": {
+        "startLine": 497,
+        "startChar": 7,
+        "endLine": 497,
+        "endChar": 26
+      },
+      "revId": "60696c05341920be02330721a78b24e8a6f6dd8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2393d5e1_dca5873b",
         "filename": "cc/trees/layer_tree_host_common_unittest.cc",
         "patchSetId": 6
@@ -69,6 +92,29 @@
       "revId": "60696c05341920be02330721a78b24e8a6f6dd8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3905f840_4dafb0b8",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-06-02T21:13:44Z",
+      "side": 1,
+      "message": "Maybe update unit test to ensure/reflect this change?",
+      "range": {
+        "startLine": 418,
+        "startChar": 39,
+        "endLine": 418,
+        "endChar": 61
+      },
+      "revId": "60696c05341920be02330721a78b24e8a6f6dd8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
