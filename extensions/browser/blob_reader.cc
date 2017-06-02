@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/extensions/blob_reader.h"
+#include "extensions/browser/blob_reader.h"
 
 #include <limits>
 #include <utility>
@@ -35,6 +35,8 @@ BlobReader::BlobReader(content::BrowserContext* browser_context,
   }
   DCHECK(blob_url.is_valid());
 
+  // This network request is annotated with NO_TRAFFIC_ANNOTATION_YET as
+  // it is scheduled to be removed in (crbug.com/701851).
   fetcher_ = net::URLFetcher::Create(blob_url, net::URLFetcher::GET, this,
                                      NO_TRAFFIC_ANNOTATION_YET);
   fetcher_->SetRequestContext(
