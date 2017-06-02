@@ -11,69 +11,38 @@ import unittest
 from StringIO import StringIO
 
 import extract_components
+from owners_file_tags_test import mock_file_tree
 
 SRC = os.path.join(os.path.dirname(__file__), os.path.pardir, os.path.pardir)
 sys.path.append(os.path.join(SRC, 'third_party', 'pymock'))
 
 import mock
 
-def mock_file_tree(tree):
-  os_walk_mocks = []
-  file_mocks = {}
-  for path in tree:
-    if tree[path] is not None:
-      os_walk_mocks.append((path, ('ignored'), ('OWNERS', 'dummy.cc')))
-      file_mocks[os.path.join(path, 'OWNERS')] = tree[path]
-    else:
-      os_walk_mocks.append((path, ('ignored'), ('dummy.cc')))
-
-  def custom_mock_open(files_data):
-    def inner_open(path, mode='r'):
-      ret_val = mock.MagicMock()
-      if path in files_data and mode == 'r':
-
-        class mock_opened_file(object):
-          def __enter__(self, *args, **kwargs):
-            return self
-
-          def __iter__(self, *args, **kwargs):
-            return iter(files_data[path].splitlines())
-
-          def __exit__(self, *args, **kwargs):
-            pass
-
-        ret_val = mock_opened_file()
-      return ret_val
-    return inner_open
-
-  def wrapper(func):
-    @mock.patch('owners_file_tags.open', custom_mock_open(file_mocks),
-                create=True)
-    @mock.patch('os.walk', mock.MagicMock(return_value=os_walk_mocks))
-    def inner(*args, **kwargs):
-      return func(*args, **kwargs)
-    return inner
-  return wrapper
-
-
 
 class ExtractComponentsTest(unittest.TestCase):
+  def setUp(self):
+    super(ExtractComponentsTest, self).setUp()
+    self.maxDiff = None
 
-  @mock_file_tree({
-      'src': 'boss@chromium.org\n',
-      'src/dummydir1': 'dummy@chromium.org\n'
-                       '# TEAM: dummy-team@chromium.org\n'
-                       '# COMPONENT: Dummy>Component',
-      'src/dummydir2': 'dummy2@chromium.org\n'
-                       '# TEAM: other-dummy-team@chromium.org\n'
-                       '# COMPONENT: Components>Component2',
-      'src/dummydir1/innerdir1': 'dummy@chromium.org\n'
-                                 '# TEAM: dummy-specialist-team@chromium.org\n'
-                                 '# COMPONENT: Dummy>Component>Subcomponent'})
-  def testBaseCase(self):
+  @mock.patch('extract_components.scrape_owners', return_value={
+      '.': {},
+      'dummydir1': {
+          'team': 'dummy-team@chromium.org',
+          'component': 'Dummy>Component',
+      },
+      'dummydir2': {
+          'team': 'other-dummy-team@chromium.org',
+          'component': 'Components>Component2',
+      },
+      'dummydir1/innerdir1': {
+          'team': 'dummy-specialist-team@chromium.org',
+          'component': 'Dummy>Component>Subcomponent'
+      }
+  })
+  def testBaseCase(self, _):
     saved_output = StringIO()
     with mock.patch('sys.stdout', saved_output):
-      error_code = extract_components.main(['%prog'])
+      error_code = extract_components.main(['%prog', 'src'])
     self.assertEqual(0, error_code)
     result_minus_readme = json.loads(saved_output.getvalue())
     del result_minus_readme['AAA-README']
@@ -84,88 +53,141 @@ class ExtractComponentsTest(unittest.TestCase):
             'Dummy>Component>Subcomponent': 'dummy-specialist-team@chromium.org'
         },
         'dir-to-component': {
-            'tools/checkteamtags/src/dummydir1': 'Dummy>Component',
-            'tools/checkteamtags/src/dummydir1/innerdir1':
+            'dummydir1': 'Dummy>Component',
+            'dummydir1/innerdir1':
                 'Dummy>Component>Subcomponent',
-            'tools/checkteamtags/src/dummydir2': 'Components>Component2'
+            'dummydir2': 'Components>Component2'
         }})
 
-  @mock_file_tree({
-      'src': 'boss@chromium.org\n',
-      'src/dummydir1': 'dummy@chromium.org\n'
-                       '# TEAM: dummy-team@chromium.org\n'
-                       '# COMPONENT: Dummy>Component',
-      'src/dummydir2': 'dummy2@chromium.org\n'
-                       '# TEAM: other-dummy-team@chromium.org\n'
-                       '# COMPONENT: Dummy>Component',
-      'src/dummydir1/innerdir1': 'dummy@chromium.org\n'
-                                 '# TEAM: dummy-specialist-team@chromium.org\n'
-                                 '# COMPONENT: Dummy>Component>Subcomponent'})
-  def testMultipleTeamsOneComponent(self):
+  @mock.patch('extract_components.scrape_owners', return_value={
+      '.': {},
+      'dummydir1': {
+          'team': 'dummy-team@chromium.org',
+          'component': 'Dummy>Component',
+      },
+      'dummydir2': {
+          'team': 'mac-dummy-team@chromium.org',
+          'component': 'Dummy>Component',
+          'os': 'Mac'
+      },
+      'dummydir1/innerdir1': {
+          'team': 'dummy-specialist-team@chromium.org',
+          'component': 'Dummy>Component>Subcomponent'
+      }
+  })
+  def testOsTagBreaksDuplication(self, _):
     saved_output = StringIO()
     with mock.patch('sys.stdout', saved_output):
-      error_code = extract_components.main(['%prog', '-w'])
+      error_code = extract_components.main(['%prog', 'src'])
+    self.assertEqual(0, error_code)
+    result_minus_readme = json.loads(saved_output.getvalue())
+    del result_minus_readme['AAA-README']
+    self.assertEqual(result_minus_readme, {
+        'component-to-team': {
+            'Dummy>Component': 'dummy-team@chromium.org',
+            'Dummy>Component(Mac)': 'mac-dummy-team@chromium.org',
+            'Dummy>Component>Subcomponent': 'dummy-specialist-team@chromium.org'
+        },
+        'dir-to-component': {
+            'dummydir1': 'Dummy>Component',
+            'dummydir1/innerdir1': 'Dummy>Component>Subcomponent',
+            'dummydir2': 'Dummy>Component(Mac)'
+        }})
+
+  @mock.patch('extract_components.scrape_owners', return_value={
+      '.': {},
+      'dummydir1': {
+          'team': 'dummy-team@chromium.org',
+          'component': 'Dummy>Component',
+      },
+      'dummydir2': {
+          'team': 'other-dummy-team@chromium.org',
+          'component': 'Dummy>Component',
+      },
+      'dummydir1/innerdir1': {
+          'team': 'dummy-specialist-team@chromium.org',
+          'component': 'Dummy>Component>Subcomponent'
+      }
+  })
+  def testMultipleTeamsOneComponent(self, _):
+    saved_output = StringIO()
+    with mock.patch('sys.stdout', saved_output):
+      error_code = extract_components.main(['%prog', '-w', 'src'])
     self.assertNotEqual(0, error_code)
     output = saved_output.getvalue()
     self.assertIn('has more than one team assigned to it', output)
     self.assertIn('Not writing to file', output)
 
-  @mock_file_tree({
-      'src': 'boss@chromium.org\n',
-      'src/dummydir1': 'dummy@chromium.org\n'
-                       '# TEAM: dummy-team@chromium.org\n'
-                       '# COMPONENT: Dummy>Component',
-      'src/dummydir2': 'dummy2@chromium.org\n'
-                       '# TEAM: other-dummy-team@chromium.org\n'
-                       '# COMPONENT: Dummy>Component',
-      'src/dummydir1/innerdir1': 'dummy@chromium.org\n'
-                                 '# TEAM: dummy-specialist-team@chromium.org\n'
-                                 '# COMPONENT: Dummy>Component>Subcomponent'})
-  def testVerbose(self):
+  @mock.patch('extract_components.scrape_owners', return_value={
+      '.': {},
+      'dummydir1': {
+          'team': 'dummy-team@chromium.org',
+          'component': 'Dummy>Component',
+      },
+      'dummydir2': {
+          'team': 'other-dummy-team@chromium.org',
+          'component': 'Dummy>Component',
+      },
+      'dummydir1/innerdir1': {
+          'team': 'dummy-specialist-team@chromium.org',
+          'component': 'Dummy>Component>Subcomponent'
+      }
+  })
+  def testVerbose(self, _):
     saved_output = StringIO()
     with mock.patch('sys.stdout', saved_output):
-      extract_components.main(['%prog', '-v'])
+      extract_components.main(['%prog', '-v', 'src'])
     output = saved_output.getvalue()
-    self.assertIn('src/OWNERS has no COMPONENT tag', output)
+    self.assertIn('./OWNERS has no COMPONENT tag', output)
 
-  @mock_file_tree({
-      'src': 'boss@chromium.org\n',
-      'src/dummydir1': 'dummy@chromium.org\n'
-                       '# TEAM: dummy-team@chromium.org\n'
-                       '# COMPONENT: Dummy>Component',
-      'src/dummydir2': 'dummy2@chromium.org\n'
-                       '# COMPONENT: Dummy>Component',
-      'src/dummydir1/innerdir1': 'dummy@chromium.org\n'
-                                 '# TEAM: dummy-specialist-team@chromium.org\n'
-                                 '# COMPONENT: Dummy>Component>Subcomponent'})
-  def testCoverage(self):
+  @mock.patch('extract_components.scrape_owners', return_value={
+      '.': {},
+      'dummydir1': {
+          'team': 'dummy-team@chromium.org',
+          'component': 'Dummy>Component',
+      },
+      'dummydir2': {
+          'component': 'Dummy>Component',
+      },
+      'dummydir1/innerdir1': {
+          'team': 'dummy-specialist-team@chromium.org',
+          'component': 'Dummy>Component>Subcomponent'
+      }
+  })
+  def testCoverage(self, _):
     saved_output = StringIO()
     with mock.patch('sys.stdout', saved_output):
-      extract_components.main(['%prog', '-s 2'])
+      extract_components.main(['%prog', '-s 2', 'src'])
     output = saved_output.getvalue()
     self.assertIn('4 OWNERS files in total.', output)
     self.assertIn('3 (75.00%) OWNERS files have COMPONENT', output)
     self.assertIn('2 (50.00%) OWNERS files have TEAM and COMPONENT', output)
 
-  @mock_file_tree({
-      'src': 'boss@chromium.org\n',
-      'src/dummydir1': 'dummy@chromium.org\n'
-                       '# TEAM: dummy-team@chromium.org\n'
-                       '# COMPONENT: Dummy>Component',
-      'src/dummydir2': 'dummy2@chromium.org\n'
-                       '# COMPONENT: Dummy>Component',
-      'src/dummydir1/innerdir1': 'dummy@chromium.org\n'
-                                 '# TEAM: dummy-specialist-team@chromium.org\n'
-                                 '# COMPONENT: Dummy>Component>Subcomponent'})
-  def testCompleteCoverage(self):
+  @mock.patch('extract_components.scrape_owners', return_value={
+      '.': {},
+      'dummydir1': {
+          'team': 'dummy-team@chromium.org',
+          'component': 'Dummy>Component',
+      },
+      'dummydir2': {
+          'component': 'Dummy>Component',
+      },
+      'dummydir1/innerdir1': {
+          'team': 'dummy-specialist-team@chromium.org',
+          'component': 'Dummy>Component>Subcomponent'
+      }
+  })
+  def testCompleteCoverage(self, _):
     saved_output = StringIO()
     with mock.patch('sys.stdout', saved_output):
-      extract_components.main(['%prog', '-c'])
+      extract_components.main(['%prog', '-c', ''])
     output = saved_output.getvalue()
     self.assertIn('4 OWNERS files in total.', output)
     self.assertIn('3 (75.00%) OWNERS files have COMPONENT', output)
     self.assertIn('2 (50.00%) OWNERS files have TEAM and COMPONENT', output)
-    self.assertIn('4 OWNERS files at depth 0', output)
+    self.assertIn('1 OWNERS files at depth 0', output)
+    self.assertIn('2 OWNERS files at depth 1', output)
+    self.assertIn('1 OWNERS files at depth 2', output)
 
   # We use OrderedDict here to guarantee that mocked version of os.walk returns
   # directories in the specified order (top-down).
@@ -185,7 +207,10 @@ class ExtractComponentsTest(unittest.TestCase):
            '# TEAM: dummy-team-3@chromium.org\n'
            '# COMPONENT: Dummy>Component3\n'),
   ]))
-  def testIncludesSubdirectoriesWithNoOwnersFileOrNoComponentTag(self):
+  def testIncludesSubdirectoriesWithNoOwnersFileOrNoComponentTag(self, *_):
+    # TODO(robertocn): remove this testcase and the auxiliary function
+    # mock_file_tree (that has been moved to owners_file_tags_test) when
+    # sergiyb's scripts are using the data directly from scrape_owners.
     self.maxDiff = None  # This helps to see assertDictEqual errors in full.
     saved_output = StringIO()
     with mock.patch('sys.stdout', saved_output):
@@ -210,20 +235,23 @@ class ExtractComponentsTest(unittest.TestCase):
             u'third_party/WebKit/LayoutTests/foo': u'dummy-team-3@chromium.org',
         }})
 
-  @mock_file_tree({
-      'src': 'boss@chromium.org\n',
-      'src/dummydir1': 'dummy@chromium.org\n'
-                       '# TEAM: dummy-team@chromium.org\n'
-                       '# COMPONENT: Dummy>Component',
-      'src/dummydir1/innerdir1': 'dummy@chromium.org\n'
-                                 '# TEAM: dummy-specialist-team@chromium.org\n'
-                                 '# COMPONENT: Dummy>Component>Subcomponent'})
-  def testDisplayFile(self):
+  @mock.patch('extract_components.scrape_owners', return_value={
+      '.': {},
+      'dummydir1': {
+          'team': 'dummy-team@chromium.org',
+          'component': 'Dummy>Component',
+      },
+      'dummydir1/innerdir1': {
+          'team': 'dummy-specialist-team@chromium.org',
+          'component': 'Dummy>Component>Subcomponent'
+      }
+  })
+  def testDisplayFile(self, _):
     saved_output = StringIO()
     with mock.patch('sys.stdout', saved_output):
-      extract_components.main(['%prog', '-m 2'])
+      extract_components.main(['%prog', '-m 2', 'src'])
     output = saved_output.getvalue()
     self.assertIn('OWNERS files that have missing team and component by depth:',
                   output)
     self.assertIn('at depth 0', output)
-    self.assertIn('[\'tools/checkteamtags/src/OWNERS\']', output)
+    self.assertIn('[\'./OWNERS\']', output)
