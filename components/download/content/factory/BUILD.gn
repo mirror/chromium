@@ -2,25 +2,23 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-if (is_android) {
-  import("//build/config/android/config.gni")
-  import("//build/config/android/rules.gni")
-}
+source_set("factory") {
+  sources = [
+    "download_service_factory.cc",
+    "download_service_factory.h",
+  ]
 
-group("download") {
   public_deps = [
     "//components/download/public",
   ]
 
   deps = [
+    "//base",
+    "//components/download/content/internal",
     "//components/download/internal",
-  ]
-}
-
-group("unit_tests") {
-  testonly = true
-
-  deps = [
-    "//components/download/internal:unit_tests",
+    "//components/download/internal/proto",
+    "//content/public/browser",
+    "//net",
+    "//url",
   ]
 }
