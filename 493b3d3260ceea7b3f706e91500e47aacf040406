@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2ee589f7_9acfc691",
+        "filename": "services/ui/ws/frame_sink_manager_client_binding.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-02T12:53:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cefa100_3c7dcccf",
+      "range": {
+        "startLine": 8,
+        "startChar": 25,
+        "endLine": 8,
+        "endChar": 38
+      },
+      "revId": "493b3d3260ceea7b3f706e91500e47aacf040406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95f6bfaf_ab62539b",
         "filename": "services/ui/ws/frame_sink_manager_client_binding.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "493b3d3260ceea7b3f706e91500e47aacf040406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed576b1_65c4891f",
+        "filename": "services/ui/ws/frame_sink_manager_client_binding.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-02T12:53:31Z",
+      "side": 1,
+      "message": "This binding class is similar to WindowTreeBinding (https://cs.chromium.org/chromium/src/services/ui/ws/window_tree_binding.h?q\u003dwindowtreebinding) and CompositorFrameSinkClientBinding \n(https://cs.chromium.org/chromium/src/services/ui/ws/compositor_frame_sink_client_binding.h?q\u003dcompositorframesinkclientbinding).\n\nIt holds a mojo binding of FrameSinkManagerClient, hence the name. It implements FrameSinkManager so its user \n(WindowServer) can hold a FrameSinkManager* instead of FrameSinkManagerPtr. With this class, we can provide a fake\nFrameSinkManager and unit test WindowServer without having any mojo connections.",
+      "parentUuid": "95f6bfaf_ab62539b",
+      "range": {
+        "startLine": 21,
+        "startChar": 45,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "493b3d3260ceea7b3f706e91500e47aacf040406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d3c02b3d_a44feab7",
+        "filename": "services/ui/ws/frame_sink_manager_client_binding.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-02T12:53:31Z",
+      "side": 1,
+      "message": "The Binding class manages mojo connections. This way, we can provide WindowServer with an empty FrameSinkManager \nimplementation and unit test WindowServer without establishing any mojo connection.",
+      "parentUuid": "23e48f99_e51150e9",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 15
+      },
+      "revId": "493b3d3260ceea7b3f706e91500e47aacf040406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "866e8c69_4a1a3a91",
         "filename": "services/ui/ws/frame_sink_manager_client_binding.h",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "2b1f2198_788065cb",
+        "filename": "services/ui/ws/frame_sink_manager_client_binding.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-02T12:53:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "866e8c69_4a1a3a91",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "493b3d3260ceea7b3f706e91500e47aacf040406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6ba6b6e_9b8c9f41",
         "filename": "services/ui/ws/window_server.h",
         "patchSetId": 3
@@ -108,6 +204,24 @@
       "revId": "493b3d3260ceea7b3f706e91500e47aacf040406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "714c4d26_3c414a70",
+        "filename": "services/ui/ws/window_server.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-02T12:53:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6ba6b6e_9b8c9f41",
+      "revId": "493b3d3260ceea7b3f706e91500e47aacf040406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
