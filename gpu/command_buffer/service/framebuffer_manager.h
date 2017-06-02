@@ -111,6 +111,7 @@ class GPU_EXPORT Framebuffer : public base::RefCounted<Framebuffer> {
   // Pass null to detach.
   void AttachRenderbuffer(
       GLenum attachment, Renderbuffer* renderbuffer);
+  void AttachRenderbufferImpl(GLenum attachment, Renderbuffer* renderbuffer);
 
   // Attaches a texture to a particlar attachment. Pass null to detach.
   void AttachTexture(
@@ -224,6 +225,8 @@ class GPU_EXPORT Framebuffer : public base::RefCounted<Framebuffer> {
   uint32_t draw_buffer_bound_mask() const {
     return draw_buffer_bound_mask_;
   }
+
+  void UnmarkAsComplete() { framebuffer_complete_state_count_id_ = 0; }
 
  private:
   friend class FramebufferManager;
