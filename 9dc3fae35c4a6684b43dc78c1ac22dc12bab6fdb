@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f45eda20_66e4876b",
+        "filename": "services/ui/ws/window_server.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-02T21:57:30Z",
+      "side": 1,
+      "message": "Please use a more descriptive name. \u0027Bind\u0027 is too ambiguous here. Maybe SetFrameSinkManager?",
+      "range": {
+        "startLine": 79,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 11
+      },
+      "revId": "9dc3fae35c4a6684b43dc78c1ac22dc12bab6fdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
