@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "813fb63c_064b98ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1554,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-02T18:09:18Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t think this needs to be final.",
+      "range": {
+        "startLine": 1554,
+        "startChar": 8,
+        "endLine": 1554,
+        "endChar": 14
+      },
+      "revId": "61efb8710423d380f90e36652a9fa5da5fa32316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ed6897e_f7f558b6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1576,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-02T18:09:18Z",
+      "side": 1,
+      "message": "Nit: Is this always going to be the UI thread?\nIf so, could you instead just do: ThreadUtils#postOnUiThread(...) and delete the mHandler member?",
+      "range": {
+        "startLine": 1576,
+        "startChar": 16,
+        "endLine": 1576,
+        "endChar": 24
+      },
+      "revId": "61efb8710423d380f90e36652a9fa5da5fa32316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08281731_f11b6280",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1579,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-02T18:09:18Z",
+      "side": 1,
+      "message": "Just to be safe, could you pass the tracker in as a parameter to showDataSaverInProductHelp(FET tracker) instead, to ensure that we dismiss on the exact same tracker as the one that told us to show the IPH? Profile.getLastUsedProfile() will probably return the same profile and thereby retrieving the same tracker, but then again, better to be safe than sorry :-)",
+      "range": {
+        "startLine": 1579,
+        "startChar": 55,
+        "endLine": 1579,
+        "endChar": 62
+      },
+      "revId": "61efb8710423d380f90e36652a9fa5da5fa32316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
