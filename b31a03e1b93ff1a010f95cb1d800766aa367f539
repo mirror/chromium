@@ -1,0 +1,496 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69fa1ef2_50ad97ad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "Sequence*, to be more precise",
+      "range": {
+        "startLine": 7,
+        "startChar": 39,
+        "endLine": 7,
+        "endChar": 48
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6edfacd_10da1bf3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "To implement SequenceLocalStorage, a pointer to a map owned by Sequence needs\nto be stored in TLS by TaskTracker::PerformRunTask.  A prerequisite to that, fulfilled by\nthis CL, is that TaskTracker::PerformRunTask has access to the Sequence.\n\n(feel free to correct my grammar)",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba498baa_69ad6892",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "base/task_scheduler/sequence.h is included in scheduler_worker.h so it doesn\u0027t need to be included again in scheduler_worker.cc\n\n\"However, any includes present in the related header do not need to be included again in the related cc\"\nhttps://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 41
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee9ce33a_f4979d35",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "Keep the empty line between the main block of includes and the #if.\n\nSee last example in \"Names and Order of Includes\" https://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes",
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82b71d02_ba8a7fef",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "bool sequence_became_empty \u003d false;\nTo avoid undefined behavior if RunNextTask() doesn\u0027t set the value.",
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "885f0e09_9c68420a",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "\"In general, curly braces are not required for single-line statements, but they are allowed if you like them\" https://google.github.io/styleguide/cppguide.html#Conditionals\n\nIn base/, we don\u0027t like them :)",
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65906bb1_8b9500c5",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "DCHECK(sequence);",
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc3b1bb_a13160a0",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "Check this where it\u0027s used, i.e. in PerformRunTask().",
+      "range": {
+        "startLine": 240,
+        "startChar": 2,
+        "endLine": 240,
+        "endChar": 38
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e066d2a_802db8d0",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "This is not used before line 298, so move it just before that.",
+      "range": {
+        "startLine": 284,
+        "startChar": 2,
+        "endLine": 284,
+        "endChar": 58
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ab9ecf_2dcddc53",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "in |sequence| (no the)",
+      "range": {
+        "startLine": 58,
+        "startChar": 24,
+        "endLine": 58,
+        "endChar": 41
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3d1093_fe5a3e1b",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "Then, pops the task from |sequence| (even if it didn\u0027t run).  Returns true if the task ran.  Sets |sequence_became_empty| to true if the sequence was empty right after the task was popped from it.",
+      "range": {
+        "startLine": 59,
+        "startChar": 20,
+        "endLine": 60,
+        "endChar": 79
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5377eca3_44958a33",
+        "filename": "base/task_scheduler/task_tracker_posix_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "RunTask() should be RunNextTask()",
+      "range": {
+        "startLine": 41,
+        "startChar": 22,
+        "endLine": 41,
+        "endChar": 29
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb9c752_79b967e1",
+        "filename": "base/task_scheduler/task_tracker_posix_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "RunTask() should be RunNextTask()",
+      "range": {
+        "startLine": 62,
+        "startChar": 22,
+        "endLine": 62,
+        "endChar": 29
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84c604d0_c523d934",
+        "filename": "base/task_scheduler/test_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "#include \u003cutility\u003e\nBecause you\u0027re using std::move.",
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af2dbc02_0f18768e",
+        "filename": "base/task_scheduler/test_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e\nBecause you\u0027re using std::unique_ptr",
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ed54d36_b1da8601",
+        "filename": "base/task_scheduler/test_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "Interesting fact:\nUsually, if you don\u0027t access any method or member variable of a type in a file, you should have a forward declaration instead of an include https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#Forward-declarations-vs_includes An exception to this rule is scoped_refptr. When you write scoped_refptr\u003cType\u003e in a file, you need the include for Type so that the compiler can tell whether Type supports refcounting.",
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c748d8_d86c1952",
+        "filename": "base/task_scheduler/test_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "class Task;\nForward declaration required here because you have a std::unique_ptr\u003cTask\u003e below. No include required since you\u0027re not accessing any method or member variable or Task.",
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e80cb0_dd608ba0",
+        "filename": "base/task_scheduler/test_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "Sequence with capital S, to make it obvious that you\u0027re referring to the Sequence class",
+      "range": {
+        "startLine": 18,
+        "startChar": 13,
+        "endLine": 18,
+        "endChar": 21
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc8fc23_081b5858",
+        "filename": "base/task_scheduler/test_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "CreateSequenceWithTask()\n\nhttps://google.github.io/styleguide/cppguide.html#Function_Names\n\"Ordinarily, functions should start with a capital letter and have a capital letter for each new word\"\n\nAlso, CreateSequenceWithTask is a better description of what the function does than GenerateSequence.",
+      "range": {
+        "startLine": 19,
+        "startChar": 24,
+        "endLine": 19,
+        "endChar": 41
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7de0afe9_5cf8990f",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "https://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes\n\"If you rely on symbols from bar.h, don\u0027t count on the fact that you included foo.h which (currently) includes bar.h: include bar.h yourself, unless foo.h explicitly demonstrates its intent to provide you the symbols of bar.h. \"\nWe consider that having overridable methods that take Type as argument demonstrates intent to provide you the Type symbol.\n\nSo you don\u0027t need to include sequence.h here.",
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d6511d_7d6ece6c",
+        "filename": "base/test/scoped_task_scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "from -\u003e as part of ?",
+      "range": {
+        "startLine": 79,
+        "startChar": 40,
+        "endLine": 79,
+        "endChar": 44
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f517a670_03160b84",
+        "filename": "base/test/scoped_task_scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "const scoped_refptr\u003cinternal::Sequence\u003e sequence_;\n^^^\nsince it doesn\u0027t change",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 46
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b308f5a_5cbc5736",
+        "filename": "base/test/scoped_task_scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "I feel like the empty line should go after PushTask().\n\nThese two statements are preparing the sequence:\nsequence \u003d sequence ? sequence : MakeRefCounted\u003cinternal::Sequence\u003e();\nsequence-\u003ePushTask(std::move(task));\n\nThis statement does the actual posting:\nreturn MessageLoopTaskRunner()-\u003ePostDelayedTask(...\n\nYou\u0027re not forced to agree with me :)",
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e94b96_a2ccf387",
+        "filename": "base/test/scoped_task_scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-02T19:03:45Z",
+      "side": 1,
+      "message": "Remove the .get(), since TestTaskScheduler::PostTask() takes a scoped_refptr\u003cSequence\u003e. .get() would be appropriate if TestTaskScheduler::PostTask() took a Sequence* as argument.\n\nWe want to prevent this from compiling in the future since it\u0027s misleading.",
+      "range": {
+        "startLine": 310,
+        "startChar": 61,
+        "endLine": 310,
+        "endChar": 67
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
