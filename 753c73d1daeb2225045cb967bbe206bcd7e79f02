@@ -228,6 +228,24 @@
       "revId": "753c73d1daeb2225045cb967bbe206bcd7e79f02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b2980fd_6b4a7a31",
+        "filename": "chrome/browser/predictors/glowplug_stats_collector_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-06-02T13:47:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3fc2701_6a6024f6",
+      "revId": "753c73d1daeb2225045cb967bbe206bcd7e79f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
