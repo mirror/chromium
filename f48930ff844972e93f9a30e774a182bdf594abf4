@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fd44118_68df996a",
+        "filename": "third_party/brotli/README.chromium",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-06-02T01:08:33Z",
+      "side": 1,
+      "message": "Please consider upstreaming these local modifications. Thanks!",
+      "revId": "f48930ff844972e93f9a30e774a182bdf594abf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
