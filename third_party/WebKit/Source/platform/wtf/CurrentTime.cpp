@@ -36,26 +36,26 @@ namespace WTF {
 
 static TimeFunction g_mock_time_function_for_testing = nullptr;
 
-double CurrentTime() {
+WTF_EXPORT double CurrentTime() {
   if (g_mock_time_function_for_testing)
     return g_mock_time_function_for_testing();
   return base::Time::Now().ToDoubleT();
 }
 
-double MonotonicallyIncreasingTime() {
+WTF_EXPORT double MonotonicallyIncreasingTime() {
   if (g_mock_time_function_for_testing)
     return g_mock_time_function_for_testing();
   return base::TimeTicks::Now().ToInternalValue() /
          static_cast<double>(base::Time::kMicrosecondsPerSecond);
 }
 
-TimeFunction SetTimeFunctionsForTesting(TimeFunction new_function) {
+WTF_EXPORT TimeFunction SetTimeFunctionsForTesting(TimeFunction new_function) {
   TimeFunction old_function = g_mock_time_function_for_testing;
   g_mock_time_function_for_testing = new_function;
   return old_function;
 }
 
-TimeFunction GetTimeFunctionForTesting() {
+WTF_EXPORT TimeFunction GetTimeFunctionForTesting() {
   return g_mock_time_function_for_testing;
 }
 

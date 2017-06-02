@@ -9,6 +9,7 @@
 #include "platform/heap/Handle.h"
 #include "platform/scheduler/renderer/web_view_scheduler.h"
 #include "platform/testing/TestingPlatformSupport.h"
+#include "platform/wtf/CurrentTime.cpp"
 #include "public/platform/Platform.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -44,8 +45,12 @@ class ScriptRunnerTest : public testing::Test {
     // loadingTaskRunner() to be initialized before creating ScriptRunner to
     // save it in constructor.
     script_runner_ = ScriptRunner::Create(document_.Get());
+    old_time_function = SetTimeFunctionsForTesting(nullptr);
   }
-  void TearDown() override { script_runner_.Release(); }
+  void TearDown() override {
+    script_runner_.Release();
+    SetTimeFunctionsForTesting(old_time_function);
+  }
 
  protected:
   Persistent<Document> document_;
@@ -53,6 +58,7 @@ class ScriptRunnerTest : public testing::Test {
   WTF::Vector<int> order_;
   ScopedTestingPlatformSupport<TestingPlatformSupportWithMockScheduler>
       platform_;
+  TimeFunction old_time_function;
 };
 
 TEST_F(ScriptRunnerTest, QueueSingleScript_Async) {
