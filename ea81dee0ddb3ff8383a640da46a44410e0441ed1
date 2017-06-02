@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "168ad504_25f2da32",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-02T19:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76a5967a_43572071",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4b7d694_36ddd1ed",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view-expected.txt",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e3946c_51bab2b4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-02T19:04:25Z",
+      "side": 1,
+      "message": "Those are from callbacks for code executing in another context.",
+      "parentUuid": "c4b7d694_36ddd1ed",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "c0597922_69f23a40",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-02T19:04:25Z",
+      "side": 1,
+      "message": "New stile with fixed idents it then.",
+      "parentUuid": "98a5300e_a54a0c0f",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77e9d306_5deb05b5",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view.html",
         "patchSetId": 1
@@ -103,6 +157,24 @@
       "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f0c2de2_e4ff2d97",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-02T19:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77e9d306_5deb05b5",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "4f17eb29_99d523fb",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-02T19:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5f43f46_88b8ccfb",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a73de30_b31e25af",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view.html",
         "patchSetId": 1
@@ -137,6 +227,24 @@
       "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a26404a7_db4f26ec",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-02T19:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a73de30_b31e25af",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "9b2e4813_01a6cbb4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-02T19:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e98749a4_6b96fbda",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31793930_8dede72c",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view.html",
         "patchSetId": 1
@@ -171,6 +297,24 @@
       "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b71acc19_b1fb5927",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-02T19:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31793930_8dede72c",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -197,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "9c215cd6_8d508ec6",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4489,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-02T19:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d283f0b4_1e2b707f",
+      "range": {
+        "startLine": 4489,
+        "startChar": 23,
+        "endLine": 4489,
+        "endChar": 39
+      },
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d23bb49_7d11380d",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 1
@@ -217,6 +385,30 @@
       "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45d0d65_1451c246",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4492,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-02T19:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d23bb49_7d11380d",
+      "range": {
+        "startLine": 4492,
+        "startChar": 21,
+        "endLine": 4492,
+        "endChar": 30
+      },
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +447,24 @@
     },
     {
       "key": {
+        "uuid": "4d88ba4c_acd0563d",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4510,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-02T19:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09945cdc_1dc3e3e0",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8977970d_fd796996",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
         "patchSetId": 1
@@ -278,6 +488,30 @@
     },
     {
       "key": {
+        "uuid": "00fb6e80_ee1aa3a6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-02T19:04:25Z",
+      "side": 1,
+      "message": "I\u0027m all for renaming it. Just don\u0027t think it is necessary to discuss it in the scope of this PR - it will confuse users.",
+      "parentUuid": "8977970d_fd796996",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 13
+      },
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad413059_67038d9d",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
         "patchSetId": 1
@@ -295,6 +529,24 @@
     },
     {
       "key": {
+        "uuid": "5041953a_82979631",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-02T19:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad413059_67038d9d",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbfcf4d7_fd8f2fca",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
         "patchSetId": 1
@@ -309,6 +561,24 @@
       "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364e09ac_25b5acb2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-02T19:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbfcf4d7_fd8f2fca",
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -332,6 +602,30 @@
       "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e6f844d_93980195",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-02T19:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "063cf74f_b60b8cf9",
+      "range": {
+        "startLine": 209,
+        "startChar": 9,
+        "endLine": 209,
+        "endChar": 25
+      },
+      "revId": "ea81dee0ddb3ff8383a640da46a44410e0441ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
