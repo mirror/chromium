@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8dfeda2_16ebb2e2",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorElementId.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-02T18:49:51Z",
+      "side": 1,
+      "message": "Why not name this something more to do with effects? I could see someone using this incorrectly which would lead to bugs.",
+      "revId": "f5eea4975abbc7fb5597e253d6f5ac3497cf1f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
