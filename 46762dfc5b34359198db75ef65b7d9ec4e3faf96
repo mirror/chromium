@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "329528bc_b8b22f35",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamDescriptor.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-02T16:44:21Z",
+      "side": 1,
+      "message": "WFM.\n\nReference: https://github.com/WebAudio/web-audio-api/issues/1230",
+      "parentUuid": "27038d04_298cb6cb",
+      "revId": "46762dfc5b34359198db75ef65b7d9ec4e3faf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "148bd926_47a4d706",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "320dec4a_c2d09157",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-02T16:44:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "148bd926_47a4d706",
+      "revId": "46762dfc5b34359198db75ef65b7d9ec4e3faf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40756b64_0ec2886f",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScopeTest.cpp",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-02T16:14:37Z",
       "side": 1,
       "message": "At this stage, should (can?) there be a test to verify that this worklet actually multiplies the signal by the given gain?  Or will this be handled later with a layout test?",
+      "revId": "46762dfc5b34359198db75ef65b7d9ec4e3faf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e2a5bc5_544dc162",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScopeTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-02T16:44:21Z",
+      "side": 1,
+      "message": "No. I want this to be specifically testing parsing. The reason for that is - the parsing wasn\u0027t really trivial and tents to crash silently when something goes wrong.",
+      "parentUuid": "40756b64_0ec2886f",
       "revId": "46762dfc5b34359198db75ef65b7d9ec4e3faf96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
