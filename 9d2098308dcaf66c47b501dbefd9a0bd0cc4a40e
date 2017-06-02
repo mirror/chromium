@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cd011ad_e53564d5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-02T00:34:04Z",
+      "side": 1,
+      "message": "I can probably make a separate class file for this since the only difference between this and the one in the bottom sheet is the view being manipulated. Thoughts?",
+      "range": {
+        "startLine": 193,
+        "startChar": 58,
+        "endLine": 193,
+        "endChar": 75
+      },
+      "revId": "9d2098308dcaf66c47b501dbefd9a0bd0cc4a40e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
