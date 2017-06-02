@@ -16,6 +16,24 @@
       "revId": "92238201732c9815a9084b8a1daf3fed458216cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3bb526da_68e23d1d",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-02T19:58:03Z",
+      "side": 1,
+      "message": "I will probably remove these comments here, but to answer you -- according to the spec, \"Note: The difference between disabled and readonly is that read-only controls are still focusable, so the user can still select the text and interact with it, whereas disabled controls are entirely non-interactive. (For this reason, only text controls can be made read-only: it wouldn\u0027t make sense for checkboxes or buttons, for instances.)\". So users can click on or tab to readonly textboxes to focus them.",
+      "parentUuid": "c778e758_2f9c80e6",
+      "revId": "92238201732c9815a9084b8a1daf3fed458216cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
