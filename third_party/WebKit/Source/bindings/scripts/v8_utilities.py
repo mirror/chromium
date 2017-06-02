@@ -114,7 +114,7 @@ def uncapitalize(name):
 
 def runtime_enabled_function(name):
     """Returns a function call of a runtime enabled feature."""
-    return 'RuntimeEnabledFeatures::%sEnabled()' % uncapitalize(name)
+    return 'RuntimeEnabledFeatures::%sEnabled()' % name
 
 
 def unique_by(dict_list, key):
