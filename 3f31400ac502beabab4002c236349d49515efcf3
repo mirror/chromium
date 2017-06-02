@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "efccd286_1c8fc511",
+        "filename": "chrome/browser/chromeos/extensions/device_local_account_management_policy_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-06-02T12:43:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4c9d931_a796e761",
+      "range": {
+        "startLine": 737,
+        "startChar": 11,
+        "endLine": 737,
+        "endChar": 15
+      },
+      "revId": "3f31400ac502beabab4002c236349d49515efcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8268dbb3_1256deeb",
         "filename": "chrome/browser/chromeos/extensions/device_local_account_management_policy_provider.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-02T12:10:32Z",
       "side": 1,
       "message": "Maybe call this RequestedExtensionPermissions to make it explicit that this tracks all permissions which were requested, regardless of the result (accepted/rejected)?\nAlso, is it enough data for analysis to report them together or would you want to split them? (I don\u0027t know the usecase).",
+      "range": {
+        "startLine": 740,
+        "startChar": 56,
+        "endLine": 740,
+        "endChar": 76
+      },
+      "revId": "3f31400ac502beabab4002c236349d49515efcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "679fe8e3_1fa45213",
+        "filename": "chrome/browser/chromeos/extensions/device_local_account_management_policy_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-06-02T12:43:44Z",
+      "side": 1,
+      "message": "Nah, I think this one is fine.\n\nGood question - yup it\u0027s enough, the permissions are allowed or blocked based on a whitelist maintained in this file so it\u0027s easy to tell them apart.",
+      "parentUuid": "8268dbb3_1256deeb",
       "range": {
         "startLine": 740,
         "startChar": 56,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b137348e_0593ca71",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 15627,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-06-02T12:43:44Z",
+      "side": 1,
+      "message": "Haha, I don\u0027t think they\u0027ll bump it :)",
+      "parentUuid": "c67317c2_f6c69df3",
+      "range": {
+        "startLine": 15627,
+        "startChar": 10,
+        "endLine": 15627,
+        "endChar": 30
+      },
+      "revId": "3f31400ac502beabab4002c236349d49515efcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62e4bb1a_f1b8d625",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-02T12:10:32Z",
       "side": 1,
       "message": "I think this should say more clearly when those events are generated and what exactly is counted.\nSuggestion:\nThis histogram counts permission requests (both allowed and blocked ones) on extension installation in public sessions.",
+      "range": {
+        "startLine": 15633,
+        "startChar": 8,
+        "endLine": 15633,
+        "endChar": 35
+      },
+      "revId": "3f31400ac502beabab4002c236349d49515efcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f324962c_7d983a03",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 15633,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-06-02T12:43:44Z",
+      "side": 1,
+      "message": "Good point, did some more wordsmith with it. Yell if you still don\u0027t like it.",
+      "parentUuid": "62e4bb1a_f1b8d625",
       "range": {
         "startLine": 15633,
         "startChar": 8,
