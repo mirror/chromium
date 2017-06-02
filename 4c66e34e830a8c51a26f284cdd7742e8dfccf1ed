@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3ff9ad6_6bae771f",
+        "filename": "media/capture/video/mac/video_capture_device_avfoundation_mac.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-02T23:21:55Z",
+      "side": 1,
+      "message": "Hmm although there is nothing wrong with this from C++,\nObjC is a bit more nuanced: you are not defining what is\nthe return NSString, hence it\u0027s kind of undetermined, IOW it \nshould be NSError if this is what you want.  Despite perhaps\nfeeling strange from a C++ perspective, WDYT about:\n\n- (BOOL)setCaptureDevice:(NSString*)deviceId\n                   error:(NSString*)message;\n\nwhich is more Obj-C like (search for \"error:\" in [1] for example)\n\n[1] https://google.github.io/styleguide/objcguide.xml",
+      "revId": "4c66e34e830a8c51a26f284cdd7742e8dfccf1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
