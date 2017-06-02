@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7e12b18f_922765ce",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-06-02T13:10:53Z",
+      "side": 1,
+      "message": "This behaves like it does previously - the stuff inside this supports_video_persistence block is duplicated in all of the other activities (such as WebappActivity0-10).",
+      "parentUuid": "1e5bd73e_321b828e",
+      "revId": "904336134660ad4966f9e58145190ab0710061d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40ad8218_50b3f438",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/PictureInPictureController.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-02T09:21:51Z",
       "side": 1,
       "message": "I\u0027m going to assume this is basically a copy-paste of the private class.",
+      "revId": "904336134660ad4966f9e58145190ab0710061d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "759699fb_3c0fc869",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/PictureInPictureController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-06-02T13:10:53Z",
+      "side": 1,
+      "message": "Almost - I listed the changes in the CL description. For this class:\n- I renamed it to PictureInPictureController.\n- I removed shouldDelayFullscreenModeChange (which was empty and you had a TODO to remove).\n- I used the deprecated enterPictureInPicture zero argument version, just until the second developer release is out and the one argument version is final.",
+      "parentUuid": "40ad8218_50b3f438",
       "revId": "904336134660ad4966f9e58145190ab0710061d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
