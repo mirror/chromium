@@ -218,7 +218,7 @@ void ExtractBaseAddressAndLength(char** base_address,
   frameReceiver_ = frameReceiver;
 }
 
-- (BOOL)setCaptureDevice:(NSString*)deviceId {
+- (NSString*)setCaptureDevice:(NSString*)deviceId {
   DCHECK(captureSession_);
   DCHECK(main_thread_checker_.CalledOnValidThread());
 
@@ -234,16 +234,14 @@ void ExtractBaseAddressAndLength(char** base_address,
       // No need to release |captureDeviceInput_|, is owned by the session.
       captureDeviceInput_ = nil;
     }
-    return YES;
+    return nil;
   }
 
   // Look for input device with requested name.
   captureDevice_ = [AVCaptureDevice deviceWithUniqueID:deviceId];
   if (!captureDevice_) {
-    [self
-        sendErrorString:[NSString stringWithUTF8String:
-                                      "Could not open video capture device."]];
-    return NO;
+    return
+        [NSString stringWithUTF8String:"Could not open video capture device."];
   }
 
   // Create the capture input associated with the device. Easy peasy.
@@ -252,12 +250,10 @@ void ExtractBaseAddressAndLength(char** base_address,
       [AVCaptureDeviceInput deviceInputWithDevice:captureDevice_ error:&error];
   if (!captureDeviceInput_) {
     captureDevice_ = nil;
-    [self sendErrorString:
-              [NSString stringWithFormat:
-                            @"Could not create video capture input (%@): %@",
-                            [error localizedDescription],
-                            [error localizedFailureReason]]];
-    return NO;
+    return [NSString
+        stringWithFormat:@"Could not create video capture input (%@): %@",
+                         [error localizedDescription],
+                         [error localizedFailureReason]];
   }
   [captureSession_ addInput:captureDeviceInput_];
 
@@ -272,9 +268,8 @@ void ExtractBaseAddressAndLength(char** base_address,
   captureVideoDataOutput_.reset([[AVCaptureVideoDataOutput alloc] init]);
   if (!captureVideoDataOutput_) {
     [captureSession_ removeInput:captureDeviceInput_];
-    [self sendErrorString:[NSString stringWithUTF8String:
-                                        "Could not create video data output."]];
-    return NO;
+    return
+        [NSString stringWithUTF8String:"Could not create video data output."];
   }
   [captureVideoDataOutput_ setAlwaysDiscardsLateVideoFrames:true];
   [captureVideoDataOutput_
@@ -283,7 +278,7 @@ void ExtractBaseAddressAndLength(char** base_address,
                                   DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
   [captureSession_ addOutput:captureVideoDataOutput_];
 
-  return YES;
+  return nil;
 }
 
 - (BOOL)setCaptureHeight:(int)height

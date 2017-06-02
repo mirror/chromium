@@ -94,9 +94,9 @@ class VideoCaptureDeviceMac;
 // the deviceId is known, the library objects are created if needed and
 // connected for the capture, and a by default resolution is set. If deviceId is
 // nil, then the eventual capture is stopped and library objects are
-// disconnected. Returns YES on success, NO otherwise. This method should not be
-// called during capture.
-- (BOOL)setCaptureDevice:(NSString*)deviceId;
+// disconnected. Returns nil on success, and an error message otherwise. This
+// method should not be called during capture.
+- (NSString*)setCaptureDevice:(NSString*)deviceId;
 
 // Configures the capture properties for the capture session and the video data
 // output; this means it MUST be called after setCaptureDevice:. Return YES on
