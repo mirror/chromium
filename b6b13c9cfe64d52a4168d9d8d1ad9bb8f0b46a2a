@@ -16,6 +16,24 @@
       "revId": "b6b13c9cfe64d52a4168d9d8d1ad9bb8f0b46a2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c35580_395cb4a4",
+        "filename": "third_party/WebKit/Source/core/events/EventTarget.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-02T17:27:11Z",
+      "side": 1,
+      "message": "This doesn\u0027t invoke Function.prototype.toString; it gets the function\u0027s name from V8 using v8::Function::GetName. I believe that can only be a string or undefined; it shouldn\u0027t be able to throw an exception.",
+      "parentUuid": "3a31e1d9_2a198b6c",
+      "revId": "b6b13c9cfe64d52a4168d9d8d1ad9bb8f0b46a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
