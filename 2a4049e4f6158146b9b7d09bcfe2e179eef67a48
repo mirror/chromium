@@ -16,6 +16,24 @@
       "revId": "2a4049e4f6158146b9b7d09bcfe2e179eef67a48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04f63cc3_dadb822c",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamDescriptor.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-02T17:04:50Z",
+      "side": 1,
+      "message": "Hmm. Why is the justification necessary? We\u0027re also fixing the spec, so the spec will have the reason for this number, not in our implementation.",
+      "parentUuid": "1438dc8b_36a3e367",
+      "revId": "2a4049e4f6158146b9b7d09bcfe2e179eef67a48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
