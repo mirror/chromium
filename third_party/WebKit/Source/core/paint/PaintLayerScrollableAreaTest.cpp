@@ -210,7 +210,7 @@ TEST_F(PaintLayerScrollableAreaTest,
 }
 
 TEST_F(PaintLayerScrollableAreaTest, OpaqueContainedLayersPromoted) {
-  RuntimeEnabledFeatures::setCompositeOpaqueScrollersEnabled(true);
+  RuntimeEnabledFeatures::SetCompositeOpaqueScrollersEnabled(true);
 
   SetBodyInnerHTML(
       "<style>"
@@ -222,7 +222,7 @@ TEST_F(PaintLayerScrollableAreaTest, OpaqueContainedLayersPromoted) {
       "<div id=\"scroller\"><div id=\"scrolled\"></div></div>");
   GetDocument().View()->UpdateAllLifecyclePhases();
 
-  EXPECT_TRUE(RuntimeEnabledFeatures::compositeOpaqueScrollersEnabled());
+  EXPECT_TRUE(RuntimeEnabledFeatures::CompositeOpaqueScrollersEnabled());
   Element* scroller = GetDocument().getElementById("scroller");
   PaintLayer* paint_layer =
       ToLayoutBoxModelObject(scroller->GetLayoutObject())->Layer();
@@ -237,7 +237,7 @@ TEST_F(PaintLayerScrollableAreaTest, OpaqueContainedLayersPromoted) {
 // Promoting the scroller would also require promoting the positioned div
 // which would lose subpixel anti-aliasing due to its transparent background.
 TEST_F(PaintLayerScrollableAreaTest, NonContainedLayersNotPromoted) {
-  RuntimeEnabledFeatures::setCompositeOpaqueScrollersEnabled(true);
+  RuntimeEnabledFeatures::SetCompositeOpaqueScrollersEnabled(true);
 
   SetBodyInnerHTML(
       "<style>"
@@ -253,7 +253,7 @@ TEST_F(PaintLayerScrollableAreaTest, NonContainedLayersNotPromoted) {
       "</div>");
   GetDocument().View()->UpdateAllLifecyclePhases();
 
-  EXPECT_TRUE(RuntimeEnabledFeatures::compositeOpaqueScrollersEnabled());
+  EXPECT_TRUE(RuntimeEnabledFeatures::CompositeOpaqueScrollersEnabled());
   Element* scroller = GetDocument().getElementById("scroller");
   PaintLayer* paint_layer =
       ToLayoutBoxModelObject(scroller->GetLayoutObject())->Layer();
@@ -264,7 +264,7 @@ TEST_F(PaintLayerScrollableAreaTest, NonContainedLayersNotPromoted) {
 }
 
 TEST_F(PaintLayerScrollableAreaTest, TransparentLayersNotPromoted) {
-  RuntimeEnabledFeatures::setCompositeOpaqueScrollersEnabled(true);
+  RuntimeEnabledFeatures::SetCompositeOpaqueScrollersEnabled(true);
 
   SetBodyInnerHTML(
       "<style>"
@@ -276,7 +276,7 @@ TEST_F(PaintLayerScrollableAreaTest, TransparentLayersNotPromoted) {
       "<div id=\"scroller\"><div id=\"scrolled\"></div></div>");
   GetDocument().View()->UpdateAllLifecyclePhases();
 
-  EXPECT_TRUE(RuntimeEnabledFeatures::compositeOpaqueScrollersEnabled());
+  EXPECT_TRUE(RuntimeEnabledFeatures::CompositeOpaqueScrollersEnabled());
   Element* scroller = GetDocument().getElementById("scroller");
   PaintLayer* paint_layer =
       ToLayoutBoxModelObject(scroller->GetLayoutObject())->Layer();
@@ -287,7 +287,7 @@ TEST_F(PaintLayerScrollableAreaTest, TransparentLayersNotPromoted) {
 }
 
 TEST_F(PaintLayerScrollableAreaTest, OpaqueLayersDepromotedOnStyleChange) {
-  RuntimeEnabledFeatures::setCompositeOpaqueScrollersEnabled(true);
+  RuntimeEnabledFeatures::SetCompositeOpaqueScrollersEnabled(true);
 
   SetBodyInnerHTML(
       "<style>"
@@ -298,7 +298,7 @@ TEST_F(PaintLayerScrollableAreaTest, OpaqueLayersDepromotedOnStyleChange) {
       "<div id=\"scroller\"><div id=\"scrolled\"></div></div>");
   GetDocument().View()->UpdateAllLifecyclePhases();
 
-  EXPECT_TRUE(RuntimeEnabledFeatures::compositeOpaqueScrollersEnabled());
+  EXPECT_TRUE(RuntimeEnabledFeatures::CompositeOpaqueScrollersEnabled());
   Element* scroller = GetDocument().getElementById("scroller");
   PaintLayer* paint_layer =
       ToLayoutBoxModelObject(scroller->GetLayoutObject())->Layer();
@@ -318,7 +318,7 @@ TEST_F(PaintLayerScrollableAreaTest, OpaqueLayersDepromotedOnStyleChange) {
 }
 
 TEST_F(PaintLayerScrollableAreaTest, OpaqueLayersPromotedOnStyleChange) {
-  RuntimeEnabledFeatures::setCompositeOpaqueScrollersEnabled(true);
+  RuntimeEnabledFeatures::SetCompositeOpaqueScrollersEnabled(true);
 
   SetBodyInnerHTML(
       "<style>"
@@ -329,7 +329,7 @@ TEST_F(PaintLayerScrollableAreaTest, OpaqueLayersPromotedOnStyleChange) {
       "<div id=\"scroller\"><div id=\"scrolled\"></div></div>");
   GetDocument().View()->UpdateAllLifecyclePhases();
 
-  EXPECT_TRUE(RuntimeEnabledFeatures::compositeOpaqueScrollersEnabled());
+  EXPECT_TRUE(RuntimeEnabledFeatures::CompositeOpaqueScrollersEnabled());
   Element* scroller = GetDocument().getElementById("scroller");
   PaintLayer* paint_layer =
       ToLayoutBoxModelObject(scroller->GetLayoutObject())->Layer();
@@ -365,7 +365,7 @@ TEST_F(PaintLayerScrollableAreaTest, OnlyNonTransformedOpaqueLayersPromoted) {
       "</div>");
   GetDocument().View()->UpdateAllLifecyclePhases();
 
-  EXPECT_TRUE(RuntimeEnabledFeatures::compositeOpaqueScrollersEnabled());
+  EXPECT_TRUE(RuntimeEnabledFeatures::CompositeOpaqueScrollersEnabled());
   Element* parent = GetDocument().getElementById("parent");
   Element* scroller = GetDocument().getElementById("scroller");
   PaintLayer* paint_layer =
@@ -419,7 +419,7 @@ TEST_F(PaintLayerScrollableAreaTest, OnlyOpaqueLayersPromoted) {
       "</div>");
   GetDocument().View()->UpdateAllLifecyclePhases();
 
-  EXPECT_TRUE(RuntimeEnabledFeatures::compositeOpaqueScrollersEnabled());
+  EXPECT_TRUE(RuntimeEnabledFeatures::CompositeOpaqueScrollersEnabled());
   Element* parent = GetDocument().getElementById("parent");
   Element* scroller = GetDocument().getElementById("scroller");
   PaintLayer* paint_layer =
@@ -557,7 +557,7 @@ TEST_F(PaintLayerScrollableAreaTest, HideTooltipWhenScrollPositionChanges) {
 }
 
 TEST_F(PaintLayerScrollableAreaTest, IncludeOverlayScrollbarsInVisibleWidth) {
-  RuntimeEnabledFeatures::setOverlayScrollbarsEnabled(false);
+  RuntimeEnabledFeatures::SetOverlayScrollbarsEnabled(false);
   SetBodyInnerHTML(
       "<style>"
       "#scroller { overflow: overlay; height: 100px; width: 100px; }"
@@ -575,7 +575,7 @@ TEST_F(PaintLayerScrollableAreaTest, IncludeOverlayScrollbarsInVisibleWidth) {
 }
 
 TEST_F(PaintLayerScrollableAreaTest, ShowAutoScrollbarsForVisibleContent) {
-  RuntimeEnabledFeatures::setOverlayScrollbarsEnabled(false);
+  RuntimeEnabledFeatures::SetOverlayScrollbarsEnabled(false);
   SetBodyInnerHTML(
       "<style>"
       "#outerDiv {"
@@ -604,7 +604,7 @@ TEST_F(PaintLayerScrollableAreaTest, ShowAutoScrollbarsForVisibleContent) {
 }
 
 TEST_F(PaintLayerScrollableAreaTest, FloatOverflowInRtlContainer) {
-  RuntimeEnabledFeatures::setOverlayScrollbarsEnabled(false);
+  RuntimeEnabledFeatures::SetOverlayScrollbarsEnabled(false);
   SetBodyInnerHTML(
       "<!DOCTYPE html>"
       "<style>"
