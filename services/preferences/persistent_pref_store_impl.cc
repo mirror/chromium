@@ -57,7 +57,9 @@ class PersistentPrefStoreImpl::Connection : public mojom::PersistentPrefStore {
     pref_store_->SetValues(std::move(updates));
   }
 
-  void CommitPendingWrite() override { pref_store_->CommitPendingWrite(); }
+  void CommitPendingWrite(CommitPendingWriteCallback done_callback) override {
+    pref_store_->CommitPendingWrite(std::move(done_callback));
+  }
   void SchedulePendingLossyWrites() override {
     pref_store_->SchedulePendingLossyWrites();
   }
@@ -171,8 +173,9 @@ void PersistentPrefStoreImpl::SetValues(
   }
 }
 
-void PersistentPrefStoreImpl::CommitPendingWrite() {
-  backing_pref_store_->CommitPendingWrite();
+void PersistentPrefStoreImpl::CommitPendingWrite(
+    base::OnceClosure done_callback) {
+  backing_pref_store_->CommitPendingWrite(std::move(done_callback));
 }
 
 void PersistentPrefStoreImpl::SchedulePendingLossyWrites() {

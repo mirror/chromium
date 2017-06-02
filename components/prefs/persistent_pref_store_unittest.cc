@@ -1,0 +1,26 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "components/prefs/persistent_pref_store.h"
+
+#include "base/bind.h"
+#include "base/run_loop.h"
+#include "base/sequence_checker_impl.h"
+#include "testing/gtest/include/gtest/gtest.h"
+
+// Verify that the callback passed to PersistentPrefStore::CommitPendingWrite()
+// runs asynchronously on the correct sequence. This test function is reused to
+// test multiple PersistentPrefStore implementations.
+void PersistentPrefStoreCommitPendingWriteCallbackTest(
+    PersistentPrefStore* store) {
+  base::RunLoop run_loop;
+  base::SequenceCheckerImpl sequence_checker;
+  store->CommitPendingWrite(base::BindOnce(
+      [](base::SequenceCheckerImpl* sequence_checker, base::RunLoop* run_loop) {
+        EXPECT_TRUE(sequence_checker->CalledOnValidSequence());
+        run_loop->Quit();
+      },
+      base::Unretained(&sequence_checker), base::Unretained(&run_loop)));
+  run_loop.Run();
+}
