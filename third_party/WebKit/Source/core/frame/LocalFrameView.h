@@ -119,6 +119,7 @@ class CORE_EXPORT LocalFrameView final
 
   void Invalidate() { InvalidateRect(IntRect(0, 0, Width(), Height())); }
   void InvalidateRect(const IntRect&);
+  LayoutPart* OwnerLayoutObject() const override;
   void SetFrameRect(const IntRect&) override;
   const IntRect& FrameRect() const override { return frame_rect_; }
   int X() const { return frame_rect_.X(); }
@@ -278,9 +279,6 @@ class CORE_EXPORT LocalFrameView final
   void SetSafeToPropagateScrollToParent(bool is_safe) {
     safe_to_propagate_scroll_to_parent_ = is_safe;
   }
-
-  void AddPart(LayoutPart*);
-  void RemovePart(LayoutPart*);
 
   void UpdateGeometries();
 
@@ -1056,10 +1054,6 @@ class CORE_EXPORT LocalFrameView final
 
   typedef HashSet<RefPtr<LayoutEmbeddedObject>> EmbeddedObjectSet;
   EmbeddedObjectSet part_update_set_;
-
-  // FIXME: These are just "children" of the LocalFrameView and should be
-  // Member<LocalFrameView> instead.
-  HashSet<RefPtr<LayoutPart>> parts_;
 
   Member<LocalFrame> frame_;
 
