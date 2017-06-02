@@ -159,7 +159,27 @@ void BackgroundFetchContext::CreateController(
   if (request_context_getter_) {
     // Start fetching the |initial_requests| immediately. At some point in the
     // future we may want a more elaborate scheduling mechanism here.
-    controller->Start(std::move(initial_requests), NO_TRAFFIC_ANNOTATION_YET);
+    net::NetworkTrafficAnnotationTag traffic_annotation =
+        net::DefineNetworkTrafficAnnotation("...", R"(
+        semantics {
+          sender: "..."
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+        }
+        policy {
+          cookies_allowed: false/true
+          cookies_store: "..."
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
+    controller->Start(std::move(initial_requests), traffic_annotation);
   }
 
   active_fetches_.insert(
