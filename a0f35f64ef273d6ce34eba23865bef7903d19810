@@ -22,6 +22,30 @@
       "revId": "a0f35f64ef273d6ce34eba23865bef7903d19810",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "481a2fec_64d5a8c3",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1208109
+      },
+      "writtenOn": "2017-06-02T14:55:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d80a8243_e42d12a4",
+      "range": {
+        "startLine": 42,
+        "startChar": 52,
+        "endLine": 42,
+        "endChar": 62
+      },
+      "revId": "a0f35f64ef273d6ce34eba23865bef7903d19810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
