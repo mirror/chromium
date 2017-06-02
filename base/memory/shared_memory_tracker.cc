@@ -6,15 +6,34 @@
 
 #include "base/memory/shared_memory.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/trace_event/memory_allocator_dump_guid.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/process_memory_dump.h"
 
 namespace base {
 
+namespace {
+
+std::string GetSharedMemoryDumpName(const UnguessableToken& id) {
+  return "shared_memory/" + id.ToString();
+}
+
+}  // namespace
+
 // static
 SharedMemoryTracker* SharedMemoryTracker::GetInstance() {
   static SharedMemoryTracker* instance = new SharedMemoryTracker;
   return instance;
+}
+
+// static
+void SharedMemoryTracker::AddOwnershipEdge(
+    trace_event::ProcessMemoryDump* pmd,
+    const trace_event::MemoryAllocatorDumpGuid& local_dump_guid,
+    const UnguessableToken& shared_memory_guid) {
+  std::string id_str = GetSharedMemoryDumpName(shared_memory_guid);
+  trace_event::MemoryAllocatorDump* dump = pmd->CreateAllocatorDump(id_str);
+  pmd->AddOwnershipEdge(local_dump_guid, dump->guid());
 }
 
 void SharedMemoryTracker::IncrementMemoryUsage(
@@ -45,14 +64,14 @@ bool SharedMemoryTracker::OnMemoryDump(const trace_event::MemoryDumpArgs& args,
     const UnguessableToken& memory_guid = std::get<0>(usage);
     uintptr_t address = std::get<1>(usage);
     size_t size = std::get<2>(usage);
-    std::string dump_name = "shared_memory/";
+    std::string dump_name;
     if (memory_guid.is_empty()) {
       // TODO(hajimehoshi): As passing ID across mojo is not implemented yet
       // (crbug/713763), ID can be empty. For such case, use an address instead
       // of GUID so that approximate memory usages are available.
-      dump_name += Uint64ToString(address);
+      dump_name = "shared_memory/" + Uint64ToString(address);
     } else {
-      dump_name += memory_guid.ToString();
+      dump_name = GetSharedMemoryDumpName(memory_guid);
     }
     auto dump_guid = trace_event::MemoryAllocatorDumpGuid(dump_name);
     // Discard duplicates that might be seen in single-process mode.

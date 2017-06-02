@@ -48,6 +48,11 @@ size_t GetSystemPageCount(size_t mapped_size, size_t page_size) {
 }
 #endif
 
+bool UseSharedMemoryOwnershipEdges() {
+  return CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kUseSharedMemoryOwnershipEdges);
+}
+
 }  // namespace
 
 // static
@@ -381,6 +386,21 @@ MemoryAllocatorDump* ProcessMemoryDump::GetBlackHoleMad() {
   if (!black_hole_mad_)
     black_hole_mad_.reset(new MemoryAllocatorDump("discarded", this));
   return black_hole_mad_.get();
+}
+
+void ProcessMemoryDump::CreateSharedMemoryOwnershipEdge(
+    const MemoryAllocatorDumpGuid& local_dump_guid,
+    const MemoryAllocatorDumpGuid& global_dump_guid,
+    const UnguessableToken& shared_memory_guid,
+    int importance) {
+  if (UseSharedMemoryOwnershipEdges() && !shared_memory_guid.is_empty()) {
+    SharedMemoryTracker::AddOwnershipEdge(this, local_dump_guid,
+                                          shared_memory_guid);
+    // How do we treat the 'importance' value here?
+  } else {
+    CreateSharedGlobalAllocatorDump(global_dump_guid);
+    AddOwnershipEdge(local_dump_guid, global_dump_guid, importance);
+  }
 }
 
 }  // namespace trace_event

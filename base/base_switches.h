@@ -29,6 +29,7 @@ extern const char kTestChildProcess[];
 extern const char kTestDoNotInitializeIcu[];
 extern const char kTraceToFile[];
 extern const char kTraceToFileName[];
+extern const char kUseSharedMemoryOwnershipEdges[];
 extern const char kV[];
 extern const char kVModule[];
 extern const char kWaitForDebugger[];

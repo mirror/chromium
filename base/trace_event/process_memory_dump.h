@@ -11,9 +11,12 @@
 #include <vector>
 
 #include "base/base_export.h"
+#include "base/base_switches.h"
+#include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/scoped_vector.h"
+#include "base/memory/shared_memory_tracker.h"
 #include "base/trace_event/heap_profiler_serialization_state.h"
 #include "base/trace_event/memory_allocator_dump.h"
 #include "base/trace_event/memory_allocator_dump_guid.h"
@@ -29,6 +32,9 @@
 #endif
 
 namespace base {
+
+class UnguessableToken;
+
 namespace trace_event {
 
 class HeapProfilerSerializationState;
@@ -136,6 +142,12 @@ class BASE_EXPORT ProcessMemoryDump {
                         int importance);
   void AddOwnershipEdge(const MemoryAllocatorDumpGuid& source,
                         const MemoryAllocatorDumpGuid& target);
+
+  void CreateSharedMemoryOwnershipEdge(
+      const MemoryAllocatorDumpGuid& local_dump_guid,
+      const MemoryAllocatorDumpGuid& global_dump_guid,
+      const UnguessableToken& shared_memory_guid,
+      int importance);
 
   const std::vector<MemoryAllocatorDumpEdge>& allocator_dumps_edges() const {
     return allocator_dumps_edges_;
