@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1438dc8b_36a3e367",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamDescriptor.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-02T16:58:23Z",
+      "side": 1,
+      "message": "Nit: Add a comment what this value is.  Otherwise, it pretty much looks like some random number you made up. :-)",
+      "revId": "2a4049e4f6158146b9b7d09bcfe2e179eef67a48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
