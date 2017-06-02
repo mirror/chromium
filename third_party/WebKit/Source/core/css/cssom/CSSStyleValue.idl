@@ -7,7 +7,7 @@
 // base CSSStyleValues.
 // Spec: https://drafts.css-houdini.org/css-typed-om/#stylevalue-objects
 [
-  Exposed=(Window,PaintWorklet),
+  Exposed(Window CSSTypedOM, PaintWorklet CSSPaintAPI),
   RuntimeEnabled=CSSTypedOM,
 ] interface CSSStyleValue {
   stringifier;

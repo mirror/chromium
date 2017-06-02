@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 [
-    Exposed=(Window,PaintWorklet),
+    Exposed(Window CSSTypedOM, PaintWorklet CSSPaintAPI),
     RuntimeEnabled=CSSTypedOM,
 ] interface StylePropertyMapReadonly {
     [RaisesException] CSSStyleValue? get(DOMString property);
