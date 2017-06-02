@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98eabfa9_ad64dacf",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-02T20:42:36Z",
+      "side": 1,
+      "message": "Please update call sites that no longer need to pass in the default values.",
+      "range": {
+        "startLine": 21,
+        "startChar": 33,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "0d5634f76531e67dde89dec59310ab497d8d6747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
