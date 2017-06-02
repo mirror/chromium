@@ -162,6 +162,24 @@
     },
     {
       "key": {
+        "uuid": "0c27e9dc_0af9091e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-02T21:21:21Z",
+      "side": 1,
+      "message": "SimplifiedLayout is a bit of a special case. Since it doesn\u0027t do real layout, it needs to use the old height (interestingly, I think it could probably use intrinsic_content_logical_height_ now). Better look at regular layout.\n\nWhy do you think OverflowSize().Height() (well, the logical version) is wrong? How is it different from the code I linked to?\n\nHere\u0027s the code that uses it:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/LayoutBlock.cpp?l\u003d486\nSo it just makes sure that we include the content size in the overflow. Basically, the padding-box logical height (so I guess our overflow height is not *quite* correct but that can easily be adjusted)\n\nIf you remove the overflow size what will you replace it with? How will you set LayoutBox::intrinsic_content_logical_height_, etc.?",
+      "parentUuid": "6072ecf9_11f0edd4",
+      "revId": "fe28898d004dc1de766006d34238b2d72e9061af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43cd16b6_8840c5bf",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.h",
         "patchSetId": 2
