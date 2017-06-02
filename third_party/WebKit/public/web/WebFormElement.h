@@ -41,7 +41,7 @@ class WebFormControlElement;
 
 // A container for passing around a reference to a form element. Provides some
 // information about the form.
-class WebFormElement final : public WebElement {
+class BLINK_EXPORT WebFormElement final : public WebElement {
  public:
   ~WebFormElement() { Reset(); }
 

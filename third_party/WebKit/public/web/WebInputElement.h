@@ -39,7 +39,7 @@ class HTMLInputElement;
 class WebOptionElement;
 
 // Provides readonly access to some properties of a DOM input element node.
-class WebInputElement final : public WebFormControlElement {
+class BLINK_EXPORT WebInputElement final : public WebFormControlElement {
  public:
   WebInputElement() : WebFormControlElement() {}
   WebInputElement(const WebInputElement& element)

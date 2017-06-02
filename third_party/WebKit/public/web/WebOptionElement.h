@@ -38,7 +38,7 @@ namespace blink {
 class HTMLOptionElement;
 class WebString;
 
-class WebOptionElement final : public WebElement {
+class BLINK_EXPORT WebOptionElement final : public WebElement {
  public:
   WebOptionElement() : WebElement() {}
   WebOptionElement(const WebOptionElement& element) : WebElement(element) {}
