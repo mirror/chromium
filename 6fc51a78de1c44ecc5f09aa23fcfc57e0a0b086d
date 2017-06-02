@@ -152,6 +152,30 @@
       "revId": "6fc51a78de1c44ecc5f09aa23fcfc57e0a0b086d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "744cb177_40ce2d15",
+        "filename": "content/public/browser/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-02T22:54:26Z",
+      "side": 1,
+      "message": "Yikes, sorry for missing that in the review (https://codereview.chromium.org/2699833003). :(  I must not have looked at the rest of the CL carefully enough when looking at the BUILD.gn changes.\n\nshunhsingou, will you be able to write a fix for this?",
+      "parentUuid": "d226cd54_f2c9419c",
+      "range": {
+        "startLine": 351,
+        "startChar": 20,
+        "endLine": 351,
+        "endChar": 63
+      },
+      "revId": "6fc51a78de1c44ecc5f09aa23fcfc57e0a0b086d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
