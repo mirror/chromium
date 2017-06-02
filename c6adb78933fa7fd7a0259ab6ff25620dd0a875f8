@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "060f1145_2ab53547",
+        "filename": "chrome/browser/ui/webui/md_bookmarks/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-06-02T22:55:23Z",
+      "side": 0,
+      "message": "calamity@: we missed this one",
+      "range": {
+        "startLine": 2,
+        "startChar": 15,
+        "endLine": 2,
+        "endChar": 18
+      },
+      "revId": "c6adb78933fa7fd7a0259ab6ff25620dd0a875f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
