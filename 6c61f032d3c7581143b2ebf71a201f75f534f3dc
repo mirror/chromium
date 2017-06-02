@@ -52,6 +52,24 @@
       "revId": "6c61f032d3c7581143b2ebf71a201f75f534f3dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b26cabfc_f0f19dc0",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4109,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-06-02T20:37:16Z",
+      "side": 1,
+      "message": "I think it does. UI-based cc animations made it hard to decipher logging I added while exploring animation instance lifecycle, since Blink and UI animations (clicking reload button, scrollbars, etc.) were usually both firing at same time.\n\nSee refs to cc/animation under ui/compositor. ui/compositor/layer_animator.cc for example. And then refs to LayerAnimator in ui/views:\n\nhttps://cs.chromium.org/search/?q\u003dfile:ui/views+layeranimator+-file:test\u0026type\u003dcs\n\nProbably used for things like the newfangled Material Design animations for example, but has been around longer than that. Other refs exist in other dirs that look ChromeOS related.\n\nIf the CQ tests pass we should be ok and it would be easy to put the condition back if turns out to be needed.",
+      "parentUuid": "86d89c79_6a06295b",
+      "revId": "6c61f032d3c7581143b2ebf71a201f75f534f3dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
