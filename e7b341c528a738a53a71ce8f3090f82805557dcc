@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab24b9a4_431cc5dd",
+        "filename": "chrome/android/java/res/layout/data_reduction_main_menu_footer.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-02T23:55:45Z",
+      "side": 0,
+      "message": "Does this affect the look and feel of the footer normally?  We should pull a layer list drawable out to still support the other background?  If not let me know.",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 34
+      },
+      "revId": "e7b341c528a738a53a71ce8f3090f82805557dcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
