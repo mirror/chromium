@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e12220ea_c5f3764c",
+        "filename": "chrome/browser/feedback/system_logs/chrome_system_logs_fetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-06-02T18:36:56Z",
+      "side": 1,
+      "message": "Weird comment, but it\u0027s a straight-up copy from the original.",
+      "revId": "ced1c55eb369d9d644b93580700dbc80026668e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3ef639e_7bb145cb",
+        "filename": "chrome/browser/feedback/system_logs/system_logs_fetcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-06-02T18:36:56Z",
+      "side": 1,
+      "message": "Mostly just a rename of system_logs_fetcher_base.h.",
+      "revId": "ced1c55eb369d9d644b93580700dbc80026668e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65a5b267_0cd5cfeb",
+        "filename": "chrome/browser/feedback/system_logs/system_logs_fetcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-06-02T18:36:56Z",
+      "side": 1,
+      "message": "This class was made non-virtual and a few methods/members added.",
+      "revId": "ced1c55eb369d9d644b93580700dbc80026668e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
