@@ -536,8 +536,6 @@ void ValidateAndConvertPaymentDetailsInit(const PaymentDetailsInit& input,
 
   ValidateAndConvertPaymentDetailsBase(input, output, shipping_option_output,
                                        execution_context, exception_state);
-  if (exception_state.HadException())
-    return;
 }
 
 void ValidateAndConvertPaymentDetailsUpdate(const PaymentDetailsUpdate& input,
