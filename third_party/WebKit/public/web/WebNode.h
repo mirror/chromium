@@ -50,7 +50,7 @@ class WebPluginContainer;
 // is possible to safely static_cast an instance of one class to the appropriate
 // subclass based on the actual type of the wrapped blink::Node. For the same
 // reason, subclasses must not add any additional data members.
-class WebNode {
+class BLINK_EXPORT WebNode {
  public:
   virtual ~WebNode() { Reset(); }
 

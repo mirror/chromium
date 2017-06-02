@@ -41,7 +41,7 @@ class HTMLFormControlElement;
 
 // Provides readonly access to some properties of a DOM form control element
 // node.
-class WebFormControlElement : public WebElement {
+class BLINK_EXPORT WebFormControlElement : public WebElement {
  public:
   WebFormControlElement() : WebElement() {}
   WebFormControlElement(const WebFormControlElement& e) : WebElement(e) {}
