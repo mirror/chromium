@@ -1042,7 +1042,27 @@ bool DownloadsDownloadFunction::RunAsync() {
 
   DownloadManager* manager = BrowserContext::GetDownloadManager(
       current_profile);
-  manager->DownloadUrl(std::move(download_params), NO_TRAFFIC_ANNOTATION_YET);
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("...", R"(
+        semantics {
+          sender: "..."
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+        }
+        policy {
+          cookies_allowed: false/true
+          cookies_store: "..."
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
+  manager->DownloadUrl(std::move(download_params), traffic_annotation);
   RecordDownloadSource(DOWNLOAD_INITIATED_BY_EXTENSION);
   RecordApiFunctions(DOWNLOADS_FUNCTION_DOWNLOAD);
   return true;
