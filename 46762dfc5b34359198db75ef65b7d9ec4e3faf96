@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27038d04_298cb6cb",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamDescriptor.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-02T16:14:37Z",
+      "side": 1,
+      "message": "Let\u0027s add defaults here, even if the spec doesn\u0027t say.  I\u0027ve filed a spec issue for this and I guessing it will be accepted because some value needs to be specified.",
+      "revId": "46762dfc5b34359198db75ef65b7d9ec4e3faf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "148bd926_47a4d706",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-02T16:14:37Z",
+      "side": 1,
+      "message": "I first read \"Optionally\" as meaning we don\u0027t have to do this.  But the actual meaning of the code is that if param descriptors are given, we create the vector.  I\u0027d rearrange the sentence to put the \"if parameterDescriptor() was parsed...\" to the front and remove \"Optionally\".",
+      "revId": "46762dfc5b34359198db75ef65b7d9ec4e3faf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40756b64_0ec2886f",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScopeTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-02T16:14:37Z",
+      "side": 1,
+      "message": "At this stage, should (can?) there be a test to verify that this worklet actually multiplies the signal by the given gain?  Or will this be handled later with a layout test?",
+      "revId": "46762dfc5b34359198db75ef65b7d9ec4e3faf96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
