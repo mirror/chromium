@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "af917944_5083be07",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 15627,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-06-02T13:29:10Z",
+      "side": 1,
+      "message": "Ah now I see what you meant. They actually have ExtensionPermission, ExtensionPermission2, and ExtensionPermission3 :D",
+      "parentUuid": "9d39b66a_2ba1bf29",
+      "range": {
+        "startLine": 15627,
+        "startChar": 10,
+        "endLine": 15627,
+        "endChar": 30
+      },
+      "revId": "3f31400ac502beabab4002c236349d49515efcf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62e4bb1a_f1b8d625",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
