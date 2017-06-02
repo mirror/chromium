@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16116f3d_ba60d830",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1164,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-02T23:00:19Z",
+      "side": 1,
+      "message": "And, for this new flag, we specifically want to assert that the platform-specific baselines are updated by copying the fallback baseline, not by using the actual results.",
+      "revId": "1c3fdad0118a0757076ae6880ad550e76c16eea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9e4cf5_000b0b1f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-02T23:00:19Z",
+      "side": 1,
+      "message": "Which test.py? port/test.py, right?",
+      "revId": "1c3fdad0118a0757076ae6880ad550e76c16eea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ae048a_2951af9c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1184,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-02T23:00:19Z",
+      "side": 1,
+      "message": "One thing I\u0027m wondering about...\n\nThe baseline fallback paths form a tree, where (currently) if there\u0027s no linux results it will fall back to the win directory, for example (diagram: https://drive.google.com/open?id\u003d0Bzxz6fWz5JOIWlVMQkJXc1Bjd2M).\n\nWhat would happen if there were baselines in win/ and mac/, but no cross-platform baselines? Would win/ baselines be copied to the linux baseline directory?",
+      "revId": "1c3fdad0118a0757076ae6880ad550e76c16eea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
