@@ -42,6 +42,17 @@ v8::Local<v8::Object> WorkletGlobalScope::AssociateWithWrapper(
   return v8::Local<v8::Object>();
 }
 
+bool WorkletGlobalScope::HasPendingActivity() const {
+  // Keep the worklet global scope alive once it is created. It is up to the
+  // specific worklet to manage its scopes and create, destroy them according
+  // to its particular strategy.
+  return !ExecutionContext::IsContextDestroyed();
+}
+
+ExecutionContext* WorkletGlobalScope::GetExecutionContext() const {
+  return const_cast<WorkletGlobalScope*>(this);
+}
+
 bool WorkletGlobalScope::IsSecureContext(String& error_message) const {
   // Until there are APIs that are available in worklets and that
   // require a privileged context test that checks ancestors, just do
