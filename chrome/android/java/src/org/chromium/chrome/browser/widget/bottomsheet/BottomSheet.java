@@ -16,6 +16,7 @@ import android.graphics.Rect;
 import android.graphics.Region;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -44,6 +45,7 @@ import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.EmptyTabModelSelectorObserver;
 import org.chromium.chrome.browser.tabmodel.TabModel;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
+import org.chromium.chrome.browser.toolbar.ActionModeController.ActionBarDelegate;
 import org.chromium.chrome.browser.toolbar.BottomToolbarPhone;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.MathUtils;
@@ -147,6 +149,9 @@ public class BottomSheet
 
     /** The {@link BottomSheetMetrics} used to record user actions and histograms. */
     private final BottomSheetMetrics mMetrics;
+
+    /** A delegate for when the action bar starts showing. */
+    private final ActionBarDelegate mActionBarDelegate;
 
     /**
      * The {@link BottomSheetNewTabController} used to present the new tab UI when
@@ -441,6 +446,31 @@ public class BottomSheet
 
         mMetrics = new BottomSheetMetrics();
         addObserver(mMetrics);
+
+        mActionBarDelegate = new ActionBarDelegate() {
+            @Override
+            public void setControlTopMargin(int margin) {
+                MarginLayoutParams lp = (MarginLayoutParams) BottomSheet.this.getLayoutParams();
+                lp.topMargin = margin;
+                BottomSheet.this.setLayoutParams(lp);
+            }
+
+            @Override
+            public int getControlTopMargin() {
+                return ((MarginLayoutParams) BottomSheet.this.getLayoutParams()).topMargin;
+            }
+
+            @Override
+            public ActionBar getSupportActionBar() {
+                return mActivity.getSupportActionBar();
+            }
+
+            @Override
+            public void setActionBarBackgroundVisibility(boolean visible) {
+                int visibility = visible ? View.VISIBLE : View.GONE;
+                mActivity.findViewById(R.id.action_bar_black_background).setVisibility(visibility);
+            }
+        };
     }
 
     /**
@@ -465,6 +495,14 @@ public class BottomSheet
         if (mContentSwapAnimatorSet == null || !mContentSwapAnimatorSet.isRunning()) return;
         mContentSwapAnimatorSet.end();
         mContentSwapAnimatorSet = null;
+    }
+
+    /**
+     * @return An action bar delegate that appropriately moves the sheet when the action bar is
+     *         shown.
+     */
+    public ActionBarDelegate getActionBarDelegate() {
+        return mActionBarDelegate;
     }
 
     @Override
