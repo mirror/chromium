@@ -38,7 +38,7 @@ WebDataConsumerHandleImpl::ReaderImpl::ReaderImpl(
     scoped_refptr<Context> context,
     Client* client)
     : context_(context),
-      handle_watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::AUTOMATIC),
+      handle_watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL),
       client_(client) {
   if (client_)
     StartWatching();
@@ -110,12 +110,14 @@ Result WebDataConsumerHandleImpl::ReaderImpl::HandleReadResult(
     MojoResult mojo_result) {
   switch (mojo_result) {
     case MOJO_RESULT_OK:
+      handle_watcher_.ArmOrNotify();
       return kOk;
     case MOJO_RESULT_FAILED_PRECONDITION:
       return kDone;
     case MOJO_RESULT_BUSY:
       return kBusy;
     case MOJO_RESULT_SHOULD_WAIT:
+      handle_watcher_.ArmOrNotify();
       return kShouldWait;
     case MOJO_RESULT_RESOURCE_EXHAUSTED:
       return kResourceExhausted;
