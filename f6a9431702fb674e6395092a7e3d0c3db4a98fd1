@@ -46,6 +46,30 @@
       "revId": "f6a9431702fb674e6395092a7e3d0c3db4a98fd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf445a1e_0a11c9ff",
+        "filename": "chrome/test/data/extensions/api_test/certificate_provider/platform_keys_bridged/sync_cert_and_issuer.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-06-02T11:20:53Z",
+      "side": 1,
+      "message": "(Setting Resolved flag which I forgot)",
+      "parentUuid": "5021dc49_ccad6691",
+      "range": {
+        "startLine": 26,
+        "startChar": 18,
+        "endLine": 26,
+        "endChar": 22
+      },
+      "revId": "f6a9431702fb674e6395092a7e3d0c3db4a98fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
