@@ -8,6 +8,7 @@
 
 #include "base/base64.h"
 #include "base/json/json_writer.h"
+#include "base/test/scoped_command_line.h"
 #include "content/public/test/browser_test.h"
 #include "headless/public/devtools/domains/page.h"
 #include "headless/public/devtools/domains/runtime.h"
@@ -145,8 +146,12 @@ class HeadlessWebContentsScreenshotTest
  public:
   void SetUp() override {
     EnablePixelOutput();
-    if (GetParam())
+    if (GetParam()) {
+      // Remove the --use-gpu-in-tests argument to disable GPU rendering.
+      *command_line_.GetProcessCommandLine() =
+          base::CommandLine(base::CommandLine::NO_PROGRAM);
       UseSoftwareCompositing();
+    }
     HeadlessAsyncDevTooledBrowserTest::SetUp();
   }
 
@@ -182,6 +187,9 @@ class HeadlessWebContentsScreenshotTest
     EXPECT_EQ(expected_color, actual_color);
     FinishAsynchronousTest();
   }
+
+ private:
+  base::test::ScopedCommandLine command_line_;
 };
 
 HEADLESS_ASYNC_DEVTOOLED_TEST_P(HeadlessWebContentsScreenshotTest);
