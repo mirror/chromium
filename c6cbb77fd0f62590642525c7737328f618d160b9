@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "513a2d4f_85ad9830",
+        "filename": "components/feature_engagement_tracker/internal/feature_engagement_tracker_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-02T18:42:31Z",
+      "side": 1,
+      "message": "Nit: This is a fine change to do. Just wanted to point out that another way of doing this would be to use a helpful tool from base/files/file_path.h: FILE_PATH_LITERAL on line 38 and 39 above:\n\nconst base::FilePath::CharType kEventDBStorageDir[] \u003d\n    FILE_PATH_LITERAL(\"EventDB\");\n... etc ...\n\nIf you do that, you can continue to leave this as .Append(kEventDBStorageDir), and similarly below.\n\nIt might make future readers a little bit more happy, since the type of the path is then very clear already from the constant type.",
+      "range": {
+        "startLine": 96,
+        "startChar": 18,
+        "endLine": 96,
+        "endChar": 29
+      },
+      "revId": "c6cbb77fd0f62590642525c7737328f618d160b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
