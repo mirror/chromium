@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4e560da7_1b25db56",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-02T23:14:11Z",
+      "side": 1,
+      "message": "You might want to use base::UmaHistogramCustomTimes() rather than calling FactoryTimeGet() directly.  Ditto for other direct uses of FactoryGet() and FactoryTimeGet().",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 1
+      },
+      "revId": "9929e59d728413e7c3819b2a6755775fb3c66279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "036977e8_6f69cabc",
         "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
         "patchSetId": 2
@@ -41,6 +64,29 @@
         "startChar": 22,
         "endLine": 1721,
         "endChar": 42
+      },
+      "revId": "9929e59d728413e7c3819b2a6755775fb3c66279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7742add3_27acc0eb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-02T23:14:11Z",
+      "side": 1,
+      "message": "nit: s/to the/to when the",
+      "range": {
+        "startLine": 1721,
+        "startChar": 43,
+        "endLine": 1721,
+        "endChar": 49
       },
       "revId": "9929e59d728413e7c3819b2a6755775fb3c66279",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
