@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a5b2bbd6_d710fa27",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/ui/MediaNotificationFaviconTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-02T15:04:43Z",
+      "side": 1,
+      "message": "Thanks for clarifying. Does it mean that until Robolectric supports simulating O the new behavior introduced in this change is not tested? Or are the tests already built against the O SDK so the Robolectric\u0027s default config is O?\nI think having a tracking bug and a TODO here to follow up would be nice to have.",
+      "parentUuid": "0c0b5ca8_52d12c14",
+      "revId": "0fda5b68aa171dcecb2574e3b2e0b64537929d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57455f1b_cfb1d6b5",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/ui/MediaNotificationFaviconTest.java",
         "patchSetId": 2
