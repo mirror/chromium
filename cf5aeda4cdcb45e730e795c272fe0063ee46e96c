@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b0fd2939_48802e96",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-06-02T08:14:18Z",
+      "side": 1,
+      "message": "It does, I think. But it didn\u0027t help in this case (I just tried a bunch of values going down to --similarity\u003d5 though and none of them recognised the file move. Also now I don\u0027t know how to delete the patchsets with bad similarity values. :( ) If you want to look at a diff against the other file look at patch set 14 diffed against patch set 13.",
+      "parentUuid": "ec7a10c0_8f070242",
+      "range": {
+        "startLine": 1,
+        "startChar": 40,
+        "endLine": 1,
+        "endChar": 43
+      },
+      "revId": "cf5aeda4cdcb45e730e795c272fe0063ee46e96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62f339fb_937cc25c",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
         "patchSetId": 14
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-02T06:30:49Z",
       "side": 1,
       "message": "I think it would be nice to add something like\n\nASSERT_TRUE(PageInfoBubbleView::GetPageInfoBubble());\nPageInfoBubbleView::GetPageInfoBubble()-\u003eset_close_on_deactivate(false);\n\n\nThat should make the test more robust\n\n(although it\u0027s possible that it\u0027s not flaky now, just because by the time a run loop is spun to see the focus loss (e.g. for content::TitleWatcher) it doesn\u0027t matter that the dialog gets a focus loss, since it\u0027s already done its job...)",
+      "range": {
+        "startLine": 39,
+        "startChar": 1,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "cf5aeda4cdcb45e730e795c272fe0063ee46e96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf2e640_5129afd9",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-06-02T08:14:18Z",
+      "side": 1,
+      "message": "Done, but I changed it to an EXPECT_NE() instead because you can\u0027t have ASSERTs inside non-test fixtures. Is that OK?",
+      "parentUuid": "62f339fb_937cc25c",
       "range": {
         "startLine": 39,
         "startChar": 1,
