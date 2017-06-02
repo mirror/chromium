@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d3885b8_b89a1003",
+        "filename": "chrome/browser/android/download/download_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T22:47:25Z",
+      "side": 1,
+      "message": "I might be wrong, but in DownloadController::OnDownloadStarted, we have called AddObserver.\n\nDownloadController::OnDownloadStarted is called on DownloadManager::OnDownloadCreated? so if it\u0027s a existing download item, after loaded from history db, we probably have been in the observer list.",
+      "range": {
+        "startLine": 231,
+        "startChar": 2,
+        "endLine": 231,
+        "endChar": 35
+      },
+      "revId": "f1cae04582147133858d27b96a63b02c42c6464f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a60b084_b275112c",
+        "filename": "chrome/browser/android/download/download_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-02T22:47:25Z",
+      "side": 1,
+      "message": "nit: Maybe add some comment here, since these are read from previous download records.",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 45
+      },
+      "revId": "f1cae04582147133858d27b96a63b02c42c6464f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
