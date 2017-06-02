@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb08e8fd_03bd0716",
+        "filename": "tools/metrics/rappor/rappor.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-02T15:44:35Z",
+      "side": 1,
+      "message": "Should this be ETLD_PLUS_ONE?",
+      "revId": "778832a6a2ec274c592361f956715d0d557be31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d556950e_c3cca3e9",
+        "filename": "tools/metrics/rappor/rappor.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1207,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-02T15:44:35Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "778832a6a2ec274c592361f956715d0d557be31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
