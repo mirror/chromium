@@ -6,6 +6,8 @@ component("public") {
   output_name = "wm_public"
 
   public = [
+    "drag_drop_client.h",
+    "drag_drop_delegate.h",
     "activation_change_observer.h",
     "activation_client.h",
     "activation_delegate.h",
@@ -17,6 +19,8 @@ component("public") {
   ]
 
   sources = [
+    "drag_drop_client.cc",
+    "drag_drop_delegate.cc",
     "activation_change_observer.cc",
     "activation_client.cc",
     "activation_delegate.cc",

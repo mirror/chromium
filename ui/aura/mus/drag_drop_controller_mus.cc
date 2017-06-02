@@ -15,7 +15,6 @@
 #include "mojo/public/cpp/bindings/map.h"
 #include "services/ui/public/interfaces/window_tree.mojom.h"
 #include "services/ui/public/interfaces/window_tree_constants.mojom.h"
-#include "ui/aura/client/drag_drop_delegate.h"
 #include "ui/aura/mus/drag_drop_controller_host.h"
 #include "ui/aura/mus/mus_types.h"
 #include "ui/aura/mus/os_exchange_data_provider_mus.h"
@@ -23,6 +22,7 @@
 #include "ui/aura/window.h"
 #include "ui/aura/window_tree_host.h"
 #include "ui/base/dragdrop/drop_target_event.h"
+#include "ui/wm/public/drag_drop_delegate.h"
 
 // Interaction with DragDropDelegate assumes constants are the same.
 static_assert(ui::DragDropTypes::DRAG_NONE == ui::mojom::kDropEffectNone,

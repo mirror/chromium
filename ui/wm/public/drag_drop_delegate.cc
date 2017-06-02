@@ -2,27 +2,25 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/aura/client/drag_drop_delegate.h"
+#include "ui/wm/public/drag_drop_delegate.h"
 
 #include "ui/aura/window.h"
 #include "ui/base/class_property.h"
 
-DECLARE_UI_CLASS_PROPERTY_TYPE(aura::client::DragDropDelegate*)
+DECLARE_UI_CLASS_PROPERTY_TYPE(wm::DragDropDelegate*)
 
-namespace aura {
-namespace client {
+namespace wm {
 
 DEFINE_LOCAL_UI_CLASS_PROPERTY_KEY(DragDropDelegate*,
                                  kDragDropDelegateKey,
                                  nullptr);
 
-void SetDragDropDelegate(Window* window, DragDropDelegate* delegate) {
+void SetDragDropDelegate(aura::Window* window, DragDropDelegate* delegate) {
   window->SetProperty(kDragDropDelegateKey, delegate);
 }
 
-DragDropDelegate* GetDragDropDelegate(Window* window) {
+DragDropDelegate* GetDragDropDelegate(aura::Window* window) {
   return window->GetProperty(kDragDropDelegateKey);
 }
 
-}  // namespace client
-}  // namespace aura
+}  // namespace wm

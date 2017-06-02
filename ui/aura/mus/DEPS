@@ -22,4 +22,6 @@ include_rules = [
   "+services/ui/public/cpp/raster_thread_helper.h",
   "+services/ui/public/cpp/client_compositor_frame_sink.h",
   "+ui/gl/gl_bindings.h",
+  "+ui/wm/public/drag_drop_client.h",
+  "+ui/wm/public/drag_drop_delegate.h",
 ]

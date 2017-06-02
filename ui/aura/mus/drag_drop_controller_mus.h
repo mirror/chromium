@@ -11,9 +11,9 @@
 #include <memory>
 #include <vector>
 
-#include "ui/aura/client/drag_drop_client.h"
 #include "ui/aura/window_tracker.h"
 #include "ui/base/dragdrop/drag_drop_types.h"
+#include "ui/wm/public/drag_drop_client.h"
 
 namespace ui {
 class DropTargetEvent;

@@ -61,7 +61,6 @@
 #include "base/time/time.h"
 #include "chromeos/chromeos_switches.h"
 #include "ui/aura/client/aura_constants.h"
-#include "ui/aura/client/drag_drop_client.h"
 #include "ui/aura/client/screen_position_client.h"
 #include "ui/aura/client/window_types.h"
 #include "ui/aura/mus/window_mus.h"
@@ -86,6 +85,7 @@
 #include "ui/wm/core/coordinate_conversion.h"
 #include "ui/wm/core/visibility_controller.h"
 #include "ui/wm/core/window_util.h"
+#include "ui/wm/public/drag_drop_client.h"
 #include "ui/wm/public/tooltip_client.h"
 
 namespace ash {

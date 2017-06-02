@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef UI_AURA_CLIENT_DRAG_DROP_CLIENT_H_
-#define UI_AURA_CLIENT_DRAG_DROP_CLIENT_H_
+#ifndef UI_WM_PUBLIC_DRAG_DROP_CLIENT_H_
+#define UI_WM_PUBLIC_DRAG_DROP_CLIENT_H_
 
-#include "ui/aura/aura_export.h"
 #include "ui/base/dragdrop/drag_drop_types.h"
 #include "ui/gfx/native_widget_types.h"
+#include "ui/wm/public/wm_public_export.h"
 
 namespace gfx {
 class Point;
@@ -19,10 +19,12 @@ class OSExchangeData;
 
 namespace aura {
 class Window;
-namespace client {
+}
+
+namespace wm {
 
 // An interface implemented by an object that controls a drag and drop session.
-class AURA_EXPORT DragDropClient {
+class WM_PUBLIC_EXPORT DragDropClient {
  public:
   virtual ~DragDropClient() {}
 
@@ -43,11 +45,10 @@ class AURA_EXPORT DragDropClient {
   virtual bool IsDragDropInProgress() = 0;
 };
 
-AURA_EXPORT void SetDragDropClient(Window* root_window,
+WM_PUBLIC_EXPORT void SetDragDropClient(aura::Window* root_window,
                                    DragDropClient* client);
-AURA_EXPORT DragDropClient* GetDragDropClient(Window* root_window);
+WM_PUBLIC_EXPORT DragDropClient* GetDragDropClient(aura::Window* root_window);
 
-}  // namespace client
-}  // namespace aura
+}  // namespace wm
 
-#endif  // UI_AURA_CLIENT_DRAG_DROP_CLIENT_H_
+#endif  // UI_WM_PUBLIC_DRAG_DROP_CLIENT_H_
