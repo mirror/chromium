@@ -55,6 +55,7 @@ class RenderWidgetHostImpl;
 class SelectionPopupController;
 class SynchronousCompositorHost;
 class SynchronousCompositorClient;
+class TouchSelectionControllerClientManagerAndroid;
 struct NativeWebKeyboardEvent;
 
 // -----------------------------------------------------------------------------
@@ -91,6 +92,10 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
 
   void AddDestructionObserver(DestructionObserver* connector);
   void RemoveDestructionObserver(DestructionObserver* connector);
+
+  ui::TouchSelectionController* touch_selection_controller() {
+    return touch_selection_controller_.get();
+  }
 
   // RenderWidgetHostView implementation.
   bool OnMessageReceived(const IPC::Message& msg) override;
@@ -405,6 +410,10 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   // Manages selection handle rendering and manipulation.
   // This will always be NULL if |content_view_core_| is NULL.
   std::unique_ptr<ui::TouchSelectionController> touch_selection_controller_;
+  // Keeps track of currently active touch selection controller clients (some
+  // may be representing out-of-process iframes).
+  std::unique_ptr<TouchSelectionControllerClientManagerAndroid>
+      touch_selection_controller_client_manager_;
 
   // Bounds to use if we have no backing ContentViewCore
   gfx::Rect default_bounds_;
