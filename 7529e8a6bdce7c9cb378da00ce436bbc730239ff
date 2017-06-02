@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e1b2f8e_cd7e4d90",
+        "filename": "chrome/browser/ui/views/payments/payment_request_item_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-06-02T13:17:34Z",
+      "side": 1,
+      "message": "Man I imagine it\u0027s a tool moving these functions but it makes it a pain to review. They didn\u0027t change, correct?\n\nIn the future for CLs we want to merge, can we avoid non-functional moves like this? It just helps keep the CL size down and makes me more comfortable about not missing stuff.",
+      "revId": "7529e8a6bdce7c9cb378da00ce436bbc730239ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff91206_b876ff59",
+        "filename": "chrome/browser/ui/views/payments/payment_request_views_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-06-02T13:17:34Z",
+      "side": 1,
+      "message": "nit: \"enabled\" is clearer imo: affirmative \u003e negative",
+      "revId": "7529e8a6bdce7c9cb378da00ce436bbc730239ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
