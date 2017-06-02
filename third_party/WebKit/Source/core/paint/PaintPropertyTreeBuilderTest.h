@@ -14,17 +14,14 @@ class ClipPaintPropertyNode;
 class ScrollPaintPropertyNode;
 class LayoutPoint;
 
-typedef bool TestParamRootLayerScrolling;
-class PaintPropertyTreeBuilderTest
-    : public ::testing::WithParamInterface<TestParamRootLayerScrolling>,
-      private ScopedSlimmingPaintV2ForTest,
-      private ScopedRootLayerScrollingForTest,
-      public RenderingTest {
+class PaintPropertyTreeBuilderTest : private ScopedSlimmingPaintV2ForTest,
+                                     public RenderingTest {
  public:
   PaintPropertyTreeBuilderTest()
       : ScopedSlimmingPaintV2ForTest(true),
-        ScopedRootLayerScrollingForTest(GetParam()),
-        RenderingTest(SingleChildLocalFrameClient::Create()) {}
+        RenderingTest(SingleChildLocalFrameClient::Create()) {
+    DCHECK(RuntimeEnabledFeatures::rootLayerScrollingEnabled());
+  }
 
  protected:
   void LoadTestData(const char* file_name);

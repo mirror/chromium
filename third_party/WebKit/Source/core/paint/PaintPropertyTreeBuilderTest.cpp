@@ -23,40 +23,29 @@ void PaintPropertyTreeBuilderTest::LoadTestData(const char* file_name) {
 const TransformPaintPropertyNode*
 PaintPropertyTreeBuilderTest::FramePreTranslation() {
   LocalFrameView* frame_view = GetDocument().View();
-  if (RuntimeEnabledFeatures::rootLayerScrollingEnabled())
-    return frame_view->GetLayoutView()
-        ->PaintProperties()
-        ->PaintOffsetTranslation();
-  return frame_view->PreTranslation();
+  return frame_view->GetLayoutView()
+      ->PaintProperties()
+      ->PaintOffsetTranslation();
 }
 
 const TransformPaintPropertyNode*
 PaintPropertyTreeBuilderTest::FrameScrollTranslation() {
   LocalFrameView* frame_view = GetDocument().View();
-  if (RuntimeEnabledFeatures::rootLayerScrollingEnabled())
-    return frame_view->GetLayoutView()->PaintProperties()->ScrollTranslation();
-  return frame_view->ScrollTranslation();
+  return frame_view->GetLayoutView()->PaintProperties()->ScrollTranslation();
 }
 
 const ClipPaintPropertyNode* PaintPropertyTreeBuilderTest::FrameContentClip() {
   LocalFrameView* frame_view = GetDocument().View();
-  if (RuntimeEnabledFeatures::rootLayerScrollingEnabled())
-    return frame_view->GetLayoutView()->PaintProperties()->OverflowClip();
-  return frame_view->ContentClip();
+  return frame_view->GetLayoutView()->PaintProperties()->OverflowClip();
 }
 
 const ScrollPaintPropertyNode* PaintPropertyTreeBuilderTest::FrameScroll(
     LocalFrameView* frame_view) {
   if (!frame_view)
     frame_view = GetDocument().View();
-  if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
-    const auto* scroll_translation =
-        frame_view->GetLayoutView()->PaintProperties()->ScrollTranslation();
-    return scroll_translation ? scroll_translation->ScrollNode() : nullptr;
-  }
-  return frame_view->ScrollTranslation()
-             ? frame_view->ScrollTranslation()->ScrollNode()
-             : nullptr;
+  const auto* scroll_translation =
+      frame_view->GetLayoutView()->PaintProperties()->ScrollTranslation();
+  return scroll_translation ? scroll_translation->ScrollNode() : nullptr;
 }
 
 const ObjectPaintProperties*
@@ -120,9 +109,7 @@ void PaintPropertyTreeBuilderTest::TearDown() {
 #define CHECK_EXACT_VISUAL_RECT(expected, source_object, ancestor) \
   CHECK_VISUAL_RECT(expected, source_object, ancestor, 0)
 
-INSTANTIATE_TEST_CASE_P(All, PaintPropertyTreeBuilderTest, ::testing::Bool());
-
-TEST_P(PaintPropertyTreeBuilderTest, FixedPosition) {
+TEST_F(PaintPropertyTreeBuilderTest, FixedPosition) {
   LoadTestData("fixed-position.html");
 
   Element* positioned_scroll = GetDocument().getElementById("positionedScroll");
@@ -189,7 +176,7 @@ TEST_P(PaintPropertyTreeBuilderTest, FixedPosition) {
                           frame_view->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, PositionAndScroll) {
+TEST_F(PaintPropertyTreeBuilderTest, PositionAndScroll) {
   LoadTestData("position-and-scroll.html");
 
   Element* scroller = GetDocument().getElementById("scroller");
@@ -254,7 +241,7 @@ TEST_P(PaintPropertyTreeBuilderTest, PositionAndScroll) {
                           frame_view->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, FrameScrollingTraditional) {
+TEST_F(PaintPropertyTreeBuilderTest, FrameScrollingTraditional) {
   SetBodyInnerHTML("<style> body { height: 10000px; } </style>");
 
   GetDocument().domWindow()->scrollTo(0, 100);
@@ -271,17 +258,12 @@ TEST_P(PaintPropertyTreeBuilderTest, FrameScrollingTraditional) {
   EXPECT_EQ(FloatRoundedRect(0, 0, 800, 600), FrameContentClip()->ClipRect());
   EXPECT_TRUE(FrameContentClip()->Parent()->IsRoot());
 
-  if (!RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
-    // No scroll properties should be present.
-    EXPECT_EQ(nullptr, frame_view->GetLayoutView()->PaintProperties());
-  }
-
   CHECK_EXACT_VISUAL_RECT(LayoutRect(8, 8, 784, 10000),
                           GetDocument().body()->GetLayoutObject(),
                           frame_view->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, Perspective) {
+TEST_F(PaintPropertyTreeBuilderTest, Perspective) {
   SetBodyInnerHTML(
       "<style>"
       "  #perspective {"
@@ -345,7 +327,7 @@ TEST_P(PaintPropertyTreeBuilderTest, Perspective) {
             perspective_properties->Perspective()->Parent());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, Transform) {
+TEST_F(PaintPropertyTreeBuilderTest, Transform) {
   SetBodyInnerHTML(
       "<style> body { margin: 0 } </style>"
       "<div id='transform' style='margin-left: 50px; margin-top: 100px;"
@@ -391,7 +373,7 @@ TEST_P(PaintPropertyTreeBuilderTest, Transform) {
       transform->GetLayoutObject()->PaintProperties()->Transform()->Matrix());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, Preserve3D3DTransformedDescendant) {
+TEST_F(PaintPropertyTreeBuilderTest, Preserve3D3DTransformedDescendant) {
   SetBodyInnerHTML(
       "<style> body { margin: 0 } </style>"
       "<div id='preserve' style='transform-style: preserve-3d'>"
@@ -409,7 +391,7 @@ TEST_P(PaintPropertyTreeBuilderTest, Preserve3D3DTransformedDescendant) {
   EXPECT_TRUE(preserve_properties->Transform()->HasDirectCompositingReasons());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, Perspective3DTransformedDescendant) {
+TEST_F(PaintPropertyTreeBuilderTest, Perspective3DTransformedDescendant) {
   SetBodyInnerHTML(
       "<style> body { margin: 0 } </style>"
       "<div id='perspective' style='perspective: 800px;'>"
@@ -428,7 +410,7 @@ TEST_P(PaintPropertyTreeBuilderTest, Perspective3DTransformedDescendant) {
       perspective_properties->Transform()->HasDirectCompositingReasons());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest,
+TEST_F(PaintPropertyTreeBuilderTest,
        TransformNodeWithActiveAnimationHasDirectCompositingReason) {
   LoadTestData("transform-animation.html");
   EXPECT_TRUE(PaintPropertiesForElement("target")
@@ -436,13 +418,13 @@ TEST_P(PaintPropertyTreeBuilderTest,
                   ->HasDirectCompositingReasons());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest,
+TEST_F(PaintPropertyTreeBuilderTest,
        OpacityAnimationDoesNotCreateTransformNode) {
   LoadTestData("opacity-animation.html");
   EXPECT_EQ(nullptr, PaintPropertiesForElement("target")->Transform());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest,
+TEST_F(PaintPropertyTreeBuilderTest,
        EffectNodeWithActiveAnimationHasDirectCompositingReason) {
   LoadTestData("opacity-animation.html");
   EXPECT_TRUE(PaintPropertiesForElement("target")
@@ -450,7 +432,7 @@ TEST_P(PaintPropertyTreeBuilderTest,
                   ->HasDirectCompositingReasons());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, WillChangeTransform) {
+TEST_F(PaintPropertyTreeBuilderTest, WillChangeTransform) {
   SetBodyInnerHTML(
       "<style> body { margin: 0 } </style>"
       "<div id='transform' style='margin-left: 50px; margin-top: 100px;"
@@ -491,7 +473,7 @@ TEST_P(PaintPropertyTreeBuilderTest, WillChangeTransform) {
       transform->GetLayoutObject()->PaintProperties()->Transform()->Matrix());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, WillChangeContents) {
+TEST_F(PaintPropertyTreeBuilderTest, WillChangeContents) {
   SetBodyInnerHTML(
       "<style> body { margin: 0 } </style>"
       "<div id='transform' style='margin-left: 50px; margin-top: 100px;"
@@ -506,7 +488,7 @@ TEST_P(PaintPropertyTreeBuilderTest, WillChangeContents) {
                           GetDocument().View()->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, RelativePositionInline) {
+TEST_F(PaintPropertyTreeBuilderTest, RelativePositionInline) {
   LoadTestData("relative-position-inline.html");
 
   Element* inline_block = GetDocument().getElementById("inline-block");
@@ -521,7 +503,7 @@ TEST_P(PaintPropertyTreeBuilderTest, RelativePositionInline) {
                           GetDocument().View()->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, NestedOpacityEffect) {
+TEST_F(PaintPropertyTreeBuilderTest, NestedOpacityEffect) {
   SetBodyInnerHTML(
       "<div id='nodeWithoutOpacity' style='width: 100px; height: 200px'>"
       "  <div id='childWithOpacity'"
@@ -575,7 +557,7 @@ TEST_P(PaintPropertyTreeBuilderTest, NestedOpacityEffect) {
                           GetDocument().View()->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, TransformNodeDoesNotAffectEffectNodes) {
+TEST_F(PaintPropertyTreeBuilderTest, TransformNodeDoesNotAffectEffectNodes) {
   SetBodyInnerHTML(
       "<style>"
       "  #nodeWithOpacity {"
@@ -632,7 +614,7 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformNodeDoesNotAffectEffectNodes) {
                           GetDocument().View()->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, EffectNodesAcrossStackingContext) {
+TEST_F(PaintPropertyTreeBuilderTest, EffectNodesAcrossStackingContext) {
   SetBodyInnerHTML(
       "<div id='nodeWithOpacity'"
       "    style='opacity: 0.6; width: 100px; height: 200px'>"
@@ -675,7 +657,7 @@ TEST_P(PaintPropertyTreeBuilderTest, EffectNodesAcrossStackingContext) {
                           GetDocument().View()->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, EffectNodesInSVG) {
+TEST_F(PaintPropertyTreeBuilderTest, EffectNodesInSVG) {
   SetBodyInnerHTML(
       "<svg id='svgRoot'>"
       "  <g id='groupWithOpacity' opacity='0.6'>"
@@ -729,7 +711,7 @@ TEST_P(PaintPropertyTreeBuilderTest, EffectNodesInSVG) {
             tspan_with_opacity_properties->Effect()->Parent());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, EffectNodesAcrossHTMLSVGBoundary) {
+TEST_F(PaintPropertyTreeBuilderTest, EffectNodesAcrossHTMLSVGBoundary) {
   SetBodyInnerHTML(
       "<div id='divWithOpacity' style='opacity: 0.2;'>"
       "  <svg id='svgRootWithOpacity' style='opacity: 0.3;'>"
@@ -761,7 +743,7 @@ TEST_P(PaintPropertyTreeBuilderTest, EffectNodesAcrossHTMLSVGBoundary) {
             rect_with_opacity_properties->Effect()->Parent());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, EffectNodesAcrossSVGHTMLBoundary) {
+TEST_F(PaintPropertyTreeBuilderTest, EffectNodesAcrossSVGHTMLBoundary) {
   SetBodyInnerHTML(
       "<svg id='svgRootWithOpacity' style='opacity: 0.3;'>"
       "  <foreignObject id='foreignObjectWithOpacity' opacity='0.4'>"
@@ -797,7 +779,7 @@ TEST_P(PaintPropertyTreeBuilderTest, EffectNodesAcrossSVGHTMLBoundary) {
             span_with_opacity_properties->Effect()->Parent());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, TransformNodesInSVG) {
+TEST_F(PaintPropertyTreeBuilderTest, TransformNodesInSVG) {
   SetBodyInnerHTML(
       "<style>"
       "  body {"
@@ -855,7 +837,7 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformNodesInSVG) {
             rect_with2d_transform_properties->PaintOffsetTranslation());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, SVGViewBoxTransform) {
+TEST_F(PaintPropertyTreeBuilderTest, SVGViewBoxTransform) {
   SetBodyInnerHTML(
       "<style>"
       "  body {"
@@ -898,7 +880,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SVGViewBoxTransform) {
             rect_properties->Transform()->Parent());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, SVGRootPaintOffsetTransformNode) {
+TEST_F(PaintPropertyTreeBuilderTest, SVGRootPaintOffsetTransformNode) {
   SetBodyInnerHTML(
       "<style>"
       "  body { margin: 0px; }"
@@ -921,7 +903,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SVGRootPaintOffsetTransformNode) {
             svg_properties->SvgLocalToBorderBoxTransform()->Parent());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, SVGRootLocalToBorderBoxTransformNode) {
+TEST_F(PaintPropertyTreeBuilderTest, SVGRootLocalToBorderBoxTransformNode) {
   SetBodyInnerHTML(
       "<style>"
       "  body { margin: 0px; }"
@@ -959,7 +941,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SVGRootLocalToBorderBoxTransformNode) {
             rect_properties->Transform()->Parent());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, SVGNestedViewboxTransforms) {
+TEST_F(PaintPropertyTreeBuilderTest, SVGNestedViewboxTransforms) {
   SetBodyInnerHTML(
       "<style>body { margin: 0px; } </style>"
       "<svg id='svg' width='100px' height='100px' viewBox='0 0 50 50'"
@@ -994,7 +976,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SVGNestedViewboxTransforms) {
             rect_properties->Transform()->Parent());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, TransformNodesAcrossSVGHTMLBoundary) {
+TEST_F(PaintPropertyTreeBuilderTest, TransformNodesAcrossSVGHTMLBoundary) {
   SetBodyInnerHTML(
       "<style> body { margin: 0px; } </style>"
       "<svg id='svgWithTransform'"
@@ -1025,7 +1007,7 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformNodesAcrossSVGHTMLBoundary) {
             div_with_transform_properties->Transform()->Parent());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest,
+TEST_F(PaintPropertyTreeBuilderTest,
        FixedTransformAncestorAcrossSVGHTMLBoundary) {
   SetBodyInnerHTML(
       "<style> body { margin: 0px; } </style>"
@@ -1061,7 +1043,7 @@ TEST_P(PaintPropertyTreeBuilderTest,
             fixed->GetLayoutObject()->LocalBorderBoxProperties()->Transform());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, ControlClip) {
+TEST_F(PaintPropertyTreeBuilderTest, ControlClip) {
   SetBodyInnerHTML(
       "<style>"
       "  body {"
@@ -1090,7 +1072,7 @@ TEST_P(PaintPropertyTreeBuilderTest, ControlClip) {
                           GetDocument().View()->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, BorderRadiusClip) {
+TEST_F(PaintPropertyTreeBuilderTest, BorderRadiusClip) {
   SetBodyInnerHTML(
       "<style>"
       " body {"
@@ -1146,7 +1128,7 @@ TEST_P(PaintPropertyTreeBuilderTest, BorderRadiusClip) {
                           GetDocument().View()->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, TransformNodesAcrossSubframes) {
+TEST_F(PaintPropertyTreeBuilderTest, TransformNodesAcrossSubframes) {
   SetBodyInnerHTML(
       "<style>"
       "  body { margin: 0; }"
@@ -1211,7 +1193,7 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformNodesAcrossSubframes) {
             iframe_pre_translation->Parent());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, TransformNodesInTransformedSubframes) {
+TEST_F(PaintPropertyTreeBuilderTest, TransformNodesInTransformedSubframes) {
   SetBodyInnerHTML(
       "<style>"
       "  body { margin: 0; }"
@@ -1289,7 +1271,7 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformNodesInTransformedSubframes) {
                           frame_view->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, TreeContextClipByNonStackingContext) {
+TEST_F(PaintPropertyTreeBuilderTest, TreeContextClipByNonStackingContext) {
   // This test verifies the tree builder correctly computes and records the
   // property tree context for a (pseudo) stacking context that is scrolled by a
   // containing block that is not one of the painting ancestors.
@@ -1320,7 +1302,7 @@ TEST_P(PaintPropertyTreeBuilderTest, TreeContextClipByNonStackingContext) {
                           frame_view->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest,
+TEST_F(PaintPropertyTreeBuilderTest,
        TreeContextUnclipFromParentStackingContext) {
   // This test verifies the tree builder correctly computes and records the
   // property tree context for a (pseudo) stacking context that has a scrolling
@@ -1363,7 +1345,7 @@ TEST_P(PaintPropertyTreeBuilderTest,
                           GetDocument().View()->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, TableCellLayoutLocation) {
+TEST_F(PaintPropertyTreeBuilderTest, TableCellLayoutLocation) {
   // This test verifies that the border box space of a table cell is being
   // correctly computed.  Table cells have weird location adjustment in our
   // layout/paint implementation.
@@ -1403,7 +1385,7 @@ TEST_P(PaintPropertyTreeBuilderTest, TableCellLayoutLocation) {
                           GetDocument().View()->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, CSSClipFixedPositionDescendant) {
+TEST_F(PaintPropertyTreeBuilderTest, CSSClipFixedPositionDescendant) {
   // This test verifies that clip tree hierarchy being generated correctly for
   // the hard case such that a fixed position element getting clipped by an
   // absolute position CSS clip.
@@ -1457,7 +1439,7 @@ TEST_P(PaintPropertyTreeBuilderTest, CSSClipFixedPositionDescendant) {
                     LayoutUnit::Max());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, CSSClipAbsPositionDescendant) {
+TEST_F(PaintPropertyTreeBuilderTest, CSSClipAbsPositionDescendant) {
   // This test verifies that clip tree hierarchy being generated correctly for
   // the hard case such that a fixed position element getting clipped by an
   // absolute position CSS clip.
@@ -1515,7 +1497,7 @@ TEST_P(PaintPropertyTreeBuilderTest, CSSClipAbsPositionDescendant) {
                     LayoutUnit::Max());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, CSSClipFixedPositionDescendantNonShared) {
+TEST_F(PaintPropertyTreeBuilderTest, CSSClipFixedPositionDescendantNonShared) {
   // This test is similar to CSSClipFixedPositionDescendant above, except that
   // now we have a parent overflow clip that should be escaped by the fixed
   // descendant.
@@ -1591,7 +1573,7 @@ TEST_P(PaintPropertyTreeBuilderTest, CSSClipFixedPositionDescendantNonShared) {
                     LayoutUnit::Max());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, ColumnSpannerUnderRelativePositioned) {
+TEST_F(PaintPropertyTreeBuilderTest, ColumnSpannerUnderRelativePositioned) {
   SetBodyInnerHTML(
       "<style>"
       "  #spanner {"
@@ -1613,7 +1595,7 @@ TEST_P(PaintPropertyTreeBuilderTest, ColumnSpannerUnderRelativePositioned) {
                           GetDocument().View()->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, FractionalPaintOffset) {
+TEST_F(PaintPropertyTreeBuilderTest, FractionalPaintOffset) {
   SetBodyInnerHTML(
       "<style>"
       "  * { margin: 0; }"
@@ -1652,7 +1634,7 @@ TEST_P(PaintPropertyTreeBuilderTest, FractionalPaintOffset) {
                           a, frame_view->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, PaintOffsetWithBasicPixelSnapping) {
+TEST_F(PaintPropertyTreeBuilderTest, PaintOffsetWithBasicPixelSnapping) {
   SetBodyInnerHTML(
       "<style>"
       "  * { margin: 0; }"
@@ -1707,7 +1689,7 @@ TEST_P(PaintPropertyTreeBuilderTest, PaintOffsetWithBasicPixelSnapping) {
                     frame_view->GetLayoutView(), 1);
 }
 
-TEST_P(PaintPropertyTreeBuilderTest,
+TEST_F(PaintPropertyTreeBuilderTest,
        PaintOffsetWithPixelSnappingThroughTransform) {
   SetBodyInnerHTML(
       "<style>"
@@ -1767,7 +1749,7 @@ TEST_P(PaintPropertyTreeBuilderTest,
                     c, frame_view->GetLayoutView(), 1);
 }
 
-TEST_P(PaintPropertyTreeBuilderTest,
+TEST_F(PaintPropertyTreeBuilderTest,
        NonTranslationTransformShouldResetSubpixelPaintOffset) {
   SetBodyInnerHTML(
       "<style>"
@@ -1828,7 +1810,7 @@ TEST_P(PaintPropertyTreeBuilderTest,
                     c, frame_view->GetLayoutView(), c_offset * 10 + 1);
 }
 
-TEST_P(PaintPropertyTreeBuilderTest,
+TEST_F(PaintPropertyTreeBuilderTest,
        PaintOffsetWithPixelSnappingThroughMultipleTransforms) {
   SetBodyInnerHTML(
       "<style>"
@@ -1910,7 +1892,7 @@ TEST_P(PaintPropertyTreeBuilderTest,
                     d, frame_view->GetLayoutView(), 1);
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, PaintOffsetWithPixelSnappingWithFixedPos) {
+TEST_F(PaintPropertyTreeBuilderTest, PaintOffsetWithPixelSnappingWithFixedPos) {
   SetBodyInnerHTML(
       "<style>"
       "  * { margin: 0; }"
@@ -1983,7 +1965,7 @@ TEST_P(PaintPropertyTreeBuilderTest, PaintOffsetWithPixelSnappingWithFixedPos) {
                     d, frame_view->GetLayoutView(), 1);
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, SvgPixelSnappingShouldResetPaintOffset) {
+TEST_F(PaintPropertyTreeBuilderTest, SvgPixelSnappingShouldResetPaintOffset) {
   SetBodyInnerHTML(
       "<style>"
       "  #svg {"
@@ -2019,7 +2001,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SvgPixelSnappingShouldResetPaintOffset) {
             rect_with_transform_properties->Transform()->Parent());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, SvgRootAndForeignObjectPixelSnapping) {
+TEST_F(PaintPropertyTreeBuilderTest, SvgRootAndForeignObjectPixelSnapping) {
   SetBodyInnerHTML(
       "<svg id=svg style='position: relative; left: 0.6px; top: 0.3px'>"
       "  <foreignObject id=foreign x='3.5' y='5.4' transform='translate(1, 1)'>"
@@ -2051,7 +2033,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SvgRootAndForeignObjectPixelSnapping) {
             div->PaintOffset());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, NoRenderingContextByDefault) {
+TEST_F(PaintPropertyTreeBuilderTest, NoRenderingContextByDefault) {
   SetBodyInnerHTML("<div style='transform: translateZ(0)'></div>");
 
   const ObjectPaintProperties* properties =
@@ -2060,7 +2042,7 @@ TEST_P(PaintPropertyTreeBuilderTest, NoRenderingContextByDefault) {
   EXPECT_FALSE(properties->Transform()->HasRenderingContext());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, Preserve3DCreatesSharedRenderingContext) {
+TEST_F(PaintPropertyTreeBuilderTest, Preserve3DCreatesSharedRenderingContext) {
   SetBodyInnerHTML(
       "<div style='transform-style: preserve-3d'>"
       "  <div id='a'"
@@ -2086,7 +2068,7 @@ TEST_P(PaintPropertyTreeBuilderTest, Preserve3DCreatesSharedRenderingContext) {
                           frame_view->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, FlatTransformStyleEndsRenderingContext) {
+TEST_F(PaintPropertyTreeBuilderTest, FlatTransformStyleEndsRenderingContext) {
   SetBodyInnerHTML(
       "<style>"
       "  #a {"
@@ -2125,7 +2107,7 @@ TEST_P(PaintPropertyTreeBuilderTest, FlatTransformStyleEndsRenderingContext) {
                           frame_view->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, NestedRenderingContexts) {
+TEST_F(PaintPropertyTreeBuilderTest, NestedRenderingContexts) {
   SetBodyInnerHTML(
       "<div style='transform-style: preserve-3d'>"
       "  <div id='a'"
@@ -2184,7 +2166,7 @@ static bool SomeNodeFlattensTransform(
   return false;
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, FlatTransformStylePropagatesToChildren) {
+TEST_F(PaintPropertyTreeBuilderTest, FlatTransformStylePropagatesToChildren) {
   SetBodyInnerHTML(
       "<style>"
       "  #a {"
@@ -2221,7 +2203,7 @@ TEST_P(PaintPropertyTreeBuilderTest, FlatTransformStylePropagatesToChildren) {
                           frame_view->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest,
+TEST_F(PaintPropertyTreeBuilderTest,
        Preserve3DTransformStylePropagatesToChildren) {
   SetBodyInnerHTML(
       "<style>"
@@ -2259,7 +2241,7 @@ TEST_P(PaintPropertyTreeBuilderTest,
                           frame_view->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, PerspectiveIsNotFlattened) {
+TEST_F(PaintPropertyTreeBuilderTest, PerspectiveIsNotFlattened) {
   // It's necessary to make nodes from the one that applies perspective to
   // ones that combine with it preserve 3D. Otherwise, the perspective doesn't
   // do anything.
@@ -2287,7 +2269,7 @@ TEST_P(PaintPropertyTreeBuilderTest, PerspectiveIsNotFlattened) {
                           frame_view->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest,
+TEST_F(PaintPropertyTreeBuilderTest,
        PerspectiveDoesNotEstablishRenderingContext) {
   // It's necessary to make nodes from the one that applies perspective to
   // ones that combine with it preserve 3D. Otherwise, the perspective doesn't
@@ -2316,7 +2298,7 @@ TEST_P(PaintPropertyTreeBuilderTest,
                           frame_view->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, CachedProperties) {
+TEST_F(PaintPropertyTreeBuilderTest, CachedProperties) {
   SetBodyInnerHTML(
       "<style>body { margin: 0 }</style>"
       "<div id='a' style='transform: translate(33px, 44px); width: 50px; "
@@ -2435,7 +2417,7 @@ TEST_P(PaintPropertyTreeBuilderTest, CachedProperties) {
                           frame_view->GetLayoutView());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, OverflowClipContentsTreeState) {
+TEST_F(PaintPropertyTreeBuilderTest, OverflowClipContentsTreeState) {
   // This test verifies the tree builder correctly computes and records the
   // property tree context for a (pseudo) stacking context that is scrolled by a
   // containing block that is not one of the painting ancestors.
@@ -2474,7 +2456,7 @@ TEST_P(PaintPropertyTreeBuilderTest, OverflowClipContentsTreeState) {
   CHECK_EXACT_VISUAL_RECT(LayoutRect(0, 0, 500, 600), child, clipper);
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, ContainsPaintContentsTreeState) {
+TEST_F(PaintPropertyTreeBuilderTest, ContainsPaintContentsTreeState) {
   SetBodyInnerHTML(
       "<style>body { margin: 20px 30px; }</style>"
       "<div id='clipper'"
@@ -2510,7 +2492,7 @@ TEST_P(PaintPropertyTreeBuilderTest, ContainsPaintContentsTreeState) {
   CHECK_EXACT_VISUAL_RECT(LayoutRect(0, 0, 400, 500), child, clipper);
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, OverflowScrollContentsTreeState) {
+TEST_F(PaintPropertyTreeBuilderTest, OverflowScrollContentsTreeState) {
   // This test verifies the tree builder correctly computes and records the
   // property tree context for a (pseudo) stacking context that is scrolled by a
   // containing block that is not one of the painting ancestors.
@@ -2550,7 +2532,7 @@ TEST_P(PaintPropertyTreeBuilderTest, OverflowScrollContentsTreeState) {
   CHECK_EXACT_VISUAL_RECT(LayoutRect(0, 0, 500, 600), child, clipper);
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, OverflowScrollWithRoundedRect) {
+TEST_F(PaintPropertyTreeBuilderTest, OverflowScrollWithRoundedRect) {
   SetBodyInnerHTML(
       "<style>"
       "  * { margin: 0; }"
@@ -2595,7 +2577,7 @@ TEST_P(PaintPropertyTreeBuilderTest, OverflowScrollWithRoundedRect) {
             rounded_box_properties->OverflowClip()->Parent());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, CssClipContentsTreeState) {
+TEST_F(PaintPropertyTreeBuilderTest, CssClipContentsTreeState) {
   // This test verifies the tree builder correctly computes and records the
   // property tree context for a (pseudo) stacking context that is scrolled by a
   // containing block that is not one of the painting ancestors.
@@ -2630,7 +2612,7 @@ TEST_P(PaintPropertyTreeBuilderTest, CssClipContentsTreeState) {
   CHECK_EXACT_VISUAL_RECT(LayoutRect(0, 0, 400, 500), child, clipper);
 }
 
-TEST_P(PaintPropertyTreeBuilderTest,
+TEST_F(PaintPropertyTreeBuilderTest,
        SvgLocalToBorderBoxTransformContentsTreeState) {
   SetBodyInnerHTML(
       "<style>"
@@ -2659,7 +2641,7 @@ TEST_P(PaintPropertyTreeBuilderTest,
   EXPECT_EQ(FramePreTranslation(), contents_properties.Transform());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, OverflowHiddenScrollProperties) {
+TEST_F(PaintPropertyTreeBuilderTest, OverflowHiddenScrollProperties) {
   SetBodyInnerHTML(
       "<style>"
       "  body {"
@@ -2704,7 +2686,7 @@ TEST_P(PaintPropertyTreeBuilderTest, OverflowHiddenScrollProperties) {
   EXPECT_FALSE(overflow_hidden_scroll_node->UserScrollableVertical());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, NestedScrollProperties) {
+TEST_F(PaintPropertyTreeBuilderTest, NestedScrollProperties) {
   SetBodyInnerHTML(
       "<style>"
       "  * {"
@@ -2771,7 +2753,7 @@ TEST_P(PaintPropertyTreeBuilderTest, NestedScrollProperties) {
   EXPECT_TRUE(overflow_b_scroll_node->UserScrollableVertical());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, PositionedScrollerIsNotNested) {
+TEST_F(PaintPropertyTreeBuilderTest, PositionedScrollerIsNotNested) {
   SetBodyInnerHTML(
       "<style>"
       "  * {"
@@ -2867,7 +2849,7 @@ TEST_P(PaintPropertyTreeBuilderTest, PositionedScrollerIsNotNested) {
   EXPECT_EQ(IntSize(13, 4000), fixed_overflow_scroll_node->Bounds());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, NestedPositionedScrollProperties) {
+TEST_F(PaintPropertyTreeBuilderTest, NestedPositionedScrollProperties) {
   SetBodyInnerHTML(
       "<style>"
       "  * {"
@@ -2940,7 +2922,7 @@ TEST_P(PaintPropertyTreeBuilderTest, NestedPositionedScrollProperties) {
   EXPECT_TRUE(overflow_b_scroll_node->UserScrollableVertical());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, SVGRootClip) {
+TEST_F(PaintPropertyTreeBuilderTest, SVGRootClip) {
   SetBodyInnerHTML(
       "<svg id='svg' width='100px' height='100px'>"
       "  <rect width='200' height='200' fill='red' />"
@@ -2952,7 +2934,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SVGRootClip) {
   EXPECT_EQ(FloatRoundedRect(8, 8, 100, 100), clip->ClipRect());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, SVGRootNoClip) {
+TEST_F(PaintPropertyTreeBuilderTest, SVGRootNoClip) {
   SetBodyInnerHTML(
       "<svg id='svg' xmlns='http://www.w3.org/2000/svg' width='100px' "
       "height='100px' style='overflow: visible'>"
@@ -2963,7 +2945,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SVGRootNoClip) {
       GetLayoutObjectByElementId("svg")->PaintProperties()->OverflowClip());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, MainThreadScrollReasonsWithoutScrolling) {
+TEST_F(PaintPropertyTreeBuilderTest, MainThreadScrollReasonsWithoutScrolling) {
   SetBodyInnerHTML(
       "<style>"
       "  #overflow {"
@@ -2992,7 +2974,7 @@ TEST_P(PaintPropertyTreeBuilderTest, MainThreadScrollReasonsWithoutScrolling) {
             nullptr);
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, PaintOffsetsUnderMultiColumn) {
+TEST_F(PaintPropertyTreeBuilderTest, PaintOffsetsUnderMultiColumn) {
   SetBodyInnerHTML(
       "<style>"
       "  body { margin: 0; }"
@@ -3049,7 +3031,7 @@ TEST_P(PaintPropertyTreeBuilderTest, PaintOffsetsUnderMultiColumn) {
 
 // Ensures no crash with multi-column containing relative-position inline with
 // spanner with absolute-position children.
-TEST_P(PaintPropertyTreeBuilderTest,
+TEST_F(PaintPropertyTreeBuilderTest,
        MultiColumnInlineRelativeAndSpannerAndAbsPos) {
   SetBodyInnerHTML(
       "<div style='columns:2; width: 200px; column-gap: 0'>"
@@ -3076,7 +3058,7 @@ TEST_P(PaintPropertyTreeBuilderTest,
       GetLayoutObjectByElementId("absolute")->Container()->IsLayoutBlock());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, Reflection) {
+TEST_F(PaintPropertyTreeBuilderTest, Reflection) {
   SetBodyInnerHTML(
       "<div id='filter' style='-webkit-box-reflect: below; height:1000px;'>"
       "</div>");
@@ -3088,7 +3070,7 @@ TEST_P(PaintPropertyTreeBuilderTest, Reflection) {
   EXPECT_EQ(FrameContentClip(), filter_properties->Filter()->OutputClip());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, SimpleFilter) {
+TEST_F(PaintPropertyTreeBuilderTest, SimpleFilter) {
   SetBodyInnerHTML(
       "<div id='filter' style='filter:opacity(0.5); height:1000px;'>"
       "</div>");
@@ -3100,7 +3082,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SimpleFilter) {
   EXPECT_EQ(FrameContentClip(), filter_properties->Filter()->OutputClip());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, FilterReparentClips) {
+TEST_F(PaintPropertyTreeBuilderTest, FilterReparentClips) {
   SetBodyInnerHTML(
       "<div id='clip' style='overflow:hidden;'>"
       "  <div id='filter' style='filter:opacity(0.5); height:1000px;'>"
@@ -3126,7 +3108,7 @@ TEST_P(PaintPropertyTreeBuilderTest, FilterReparentClips) {
   EXPECT_EQ(filter_properties->Filter(), child_paint_state.Effect());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, TransformOriginWithAndWithoutTransform) {
+TEST_F(PaintPropertyTreeBuilderTest, TransformOriginWithAndWithoutTransform) {
   SetBodyInnerHTML(
       "<style>"
       "  body { margin: 0 }"
@@ -3161,7 +3143,7 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformOriginWithAndWithoutTransform) {
             will_change->PaintProperties()->Transform()->Origin());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, TransformOriginWithAndWithoutMotionPath) {
+TEST_F(PaintPropertyTreeBuilderTest, TransformOriginWithAndWithoutMotionPath) {
   SetBodyInnerHTML(
       "<style>"
       "  body { margin: 0 }"
@@ -3199,7 +3181,7 @@ TEST_P(PaintPropertyTreeBuilderTest, TransformOriginWithAndWithoutMotionPath) {
             will_change->PaintProperties()->Transform()->Origin());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, ChangePositionUpdateDescendantProperties) {
+TEST_F(PaintPropertyTreeBuilderTest, ChangePositionUpdateDescendantProperties) {
   SetBodyInnerHTML(
       "<style>"
       "  * { margin: 0; }"
@@ -3222,7 +3204,7 @@ TEST_P(PaintPropertyTreeBuilderTest, ChangePositionUpdateDescendantProperties) {
             descendant->LocalBorderBoxProperties()->Clip());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest,
+TEST_F(PaintPropertyTreeBuilderTest,
        TransformNodeNotAnimatedStillHasCompositorElementId) {
   SetBodyInnerHTML("<div id='target' style='transform: translateX(2em)'></div");
   const ObjectPaintProperties* properties = PaintPropertiesForElement("target");
@@ -3231,7 +3213,7 @@ TEST_P(PaintPropertyTreeBuilderTest,
             properties->Transform()->GetCompositorElementId());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest,
+TEST_F(PaintPropertyTreeBuilderTest,
        EffectNodeNotAnimatedStillHasCompositorElementId) {
   SetBodyInnerHTML("<div id='target' style='opacity: 0.5'></div");
   const ObjectPaintProperties* properties = PaintPropertiesForElement("target");
@@ -3240,7 +3222,7 @@ TEST_P(PaintPropertyTreeBuilderTest,
             properties->Effect()->GetCompositorElementId());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest,
+TEST_F(PaintPropertyTreeBuilderTest,
        TransformNodeAnimatedHasCompositorElementId) {
   LoadTestData("transform-animation.html");
   const ObjectPaintProperties* properties = PaintPropertiesForElement("target");
@@ -3250,7 +3232,7 @@ TEST_P(PaintPropertyTreeBuilderTest,
   EXPECT_TRUE(properties->Transform()->RequiresCompositingForAnimation());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, EffectNodeAnimatedHasCompositorElementId) {
+TEST_F(PaintPropertyTreeBuilderTest, EffectNodeAnimatedHasCompositorElementId) {
   LoadTestData("opacity-animation.html");
   const ObjectPaintProperties* properties = PaintPropertiesForElement("target");
   EXPECT_TRUE(properties->Effect());
@@ -3259,7 +3241,7 @@ TEST_P(PaintPropertyTreeBuilderTest, EffectNodeAnimatedHasCompositorElementId) {
   EXPECT_TRUE(properties->Effect()->RequiresCompositingForAnimation());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, FloatUnderInline) {
+TEST_F(PaintPropertyTreeBuilderTest, FloatUnderInline) {
   SetBodyInnerHTML(
       "<div style='position: absolute; top: 55px; left: 66px'>"
       "  <span id='span'"
@@ -3281,7 +3263,7 @@ TEST_P(PaintPropertyTreeBuilderTest, FloatUnderInline) {
   EXPECT_EQ(effect, target->LocalBorderBoxProperties()->Effect());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, ScrollTranslationHasCompositorElementId) {
+TEST_F(PaintPropertyTreeBuilderTest, ScrollTranslationHasCompositorElementId) {
   SetBodyInnerHTML(
       "<div id='target' style='overflow: auto; width: 100px; height: 100px'>"
       "  <div style='width: 200px; height: 200px'></div>"
@@ -3292,7 +3274,7 @@ TEST_P(PaintPropertyTreeBuilderTest, ScrollTranslationHasCompositorElementId) {
             properties->ScrollTranslation()->GetCompositorElementId());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, OverflowClipSubpixelPosition) {
+TEST_F(PaintPropertyTreeBuilderTest, OverflowClipSubpixelPosition) {
   SetBodyInnerHTML(
       "<style>body { margin: 20px 30px; }</style>"
       "<div id='clipper'"
@@ -3309,7 +3291,7 @@ TEST_P(PaintPropertyTreeBuilderTest, OverflowClipSubpixelPosition) {
             clip_properties->OverflowClip()->ClipRect().Rect());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, MaskSimple) {
+TEST_F(PaintPropertyTreeBuilderTest, MaskSimple) {
   SetBodyInnerHTML(
       "<div id='target' style='width:300px; height:200px; "
       "-webkit-mask:linear-gradient(red,red)'>"
@@ -3335,7 +3317,7 @@ TEST_P(PaintPropertyTreeBuilderTest, MaskSimple) {
   EXPECT_EQ(output_clip, properties->Mask()->OutputClip());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, MaskEscapeClip) {
+TEST_F(PaintPropertyTreeBuilderTest, MaskEscapeClip) {
   // This test verifies an abs-pos element still escape the scroll of a
   // static-pos ancestor, but gets clipped due to the presence of a mask.
   SetBodyInnerHTML(
@@ -3387,7 +3369,7 @@ TEST_P(PaintPropertyTreeBuilderTest, MaskEscapeClip) {
   EXPECT_EQ(mask_clip, absolute->LocalBorderBoxProperties()->Clip());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, MaskInline) {
+TEST_F(PaintPropertyTreeBuilderTest, MaskInline) {
   LoadAhem();
   // This test verifies CSS mask applied on an inline element is clipped to
   // the line box of the said element. In this test the masked element has
@@ -3428,7 +3410,7 @@ TEST_P(PaintPropertyTreeBuilderTest, MaskInline) {
             overflowing->LocalBorderBoxProperties()->Effect());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, MaskClipNodeInvalidation) {
+TEST_F(PaintPropertyTreeBuilderTest, MaskClipNodeInvalidation) {
   // This test verifies the clip node generated for mask's implicit clip
   // is correctly invalidated when a box resizes.
   SetBodyInnerHTML(
@@ -3455,7 +3437,7 @@ TEST_P(PaintPropertyTreeBuilderTest, MaskClipNodeInvalidation) {
   EXPECT_EQ(FloatRoundedRect(8, 8, 100, 200), mask_clip->ClipRect());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, SVGResource) {
+TEST_F(PaintPropertyTreeBuilderTest, SVGResource) {
   SetBodyInnerHTML(
       "<svg id='svg' xmlns='http://www.w3.org/2000/svg' >"
       " <g transform='scale(1000)'>"
@@ -3490,7 +3472,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SVGResource) {
             transform_outside_path_properties->Transform()->Parent());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, SVGHiddenResource) {
+TEST_F(PaintPropertyTreeBuilderTest, SVGHiddenResource) {
   SetBodyInnerHTML(
       "<svg id='svg' xmlns='http://www.w3.org/2000/svg' >"
       " <g transform='scale(1000)'>"
@@ -3522,7 +3504,7 @@ TEST_P(PaintPropertyTreeBuilderTest, SVGHiddenResource) {
             transform_outside_use_properties->Transform()->Parent());
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, SVGRootBlending) {
+TEST_F(PaintPropertyTreeBuilderTest, SVGRootBlending) {
   SetBodyInnerHTML(
       "<svg id='svgroot' 'width=100' height='100'"
       "    style='position: relative; z-index: 0'>"

@@ -38,18 +38,9 @@ void FramePainter::Paint(GraphicsContext& context,
       GetFrameView().Location(), GetFrameView().VisibleContentRect().Size());
   IntPoint content_offset =
       -GetFrameView().Location() + GetFrameView().ScrollOffsetInt();
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled() &&
-      !RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
-    auto content_cull_rect = rect;
-    content_cull_rect.UpdateForScrollingContents(
-        visible_area_without_scrollbars,
-        AffineTransform().Translate(-content_offset.X(), -content_offset.Y()));
-    document_dirty_rect = content_cull_rect.rect_;
-  } else {
-    document_dirty_rect = rect.rect_;
-    document_dirty_rect.Intersect(visible_area_without_scrollbars);
-    document_dirty_rect.MoveBy(content_offset);
-  }
+  document_dirty_rect = rect.rect_;
+  document_dirty_rect.Intersect(visible_area_without_scrollbars);
+  document_dirty_rect.MoveBy(content_offset);
 
   bool should_paint_contents = !document_dirty_rect.IsEmpty();
   bool should_paint_scrollbars = !GetFrameView().ScrollbarsSuppressed() &&
@@ -59,23 +50,6 @@ void FramePainter::Paint(GraphicsContext& context,
     return;
 
   if (should_paint_contents) {
-    // TODO(pdr): Creating frame paint properties here will not be needed once
-    // settings()->rootLayerScrolls() is enabled.
-    // TODO(pdr): Make this conditional on the rootLayerScrolls setting.
-    Optional<ScopedPaintChunkProperties> scoped_paint_chunk_properties;
-    if (RuntimeEnabledFeatures::slimmingPaintV2Enabled() &&
-        !RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
-      if (const PropertyTreeState* contents_state =
-              frame_view_->TotalPropertyTreeStateForContents()) {
-        PaintChunkProperties properties(
-            context.GetPaintController().CurrentPaintChunkProperties());
-        properties.property_tree_state = *contents_state;
-        scoped_paint_chunk_properties.emplace(context.GetPaintController(),
-                                              *GetFrameView().GetLayoutView(),
-                                              properties);
-      }
-    }
-
     TransformRecorder transform_recorder(
         context, *GetFrameView().GetLayoutView(),
         AffineTransform::Translation(
