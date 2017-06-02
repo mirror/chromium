@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "e5745af2_483e9768",
+        "filename": "base/task_scheduler/environment_config.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-02T18:11:23Z",
+      "side": 1,
+      "message": "One of the motivations to keeping a separate pool was to prevent background starving. Won\u0027t this starve background tasks?",
+      "range": {
+        "startLine": 26,
+        "startChar": 11,
+        "endLine": 26,
+        "endChar": 38
+      },
+      "revId": "9a910697086257b29ff29562e8aa59e762269d55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04c22ddd_0b6c0918",
         "filename": "base/task_scheduler/environment_config.h",
         "patchSetId": 2
@@ -36,6 +59,24 @@
       "writtenOn": "2017-06-01T17:14:12Z",
       "side": 1,
       "message": "I also want to change the order of elements in TaskScheduler::InitParams, but I\u0027ll do it in a separate CL as it requires touching a lot of files outside of base/task_scheduler/.",
+      "revId": "9a910697086257b29ff29562e8aa59e762269d55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10f7336f_0e7e93ce",
+        "filename": "base/task_scheduler/environment_config.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-02T18:11:23Z",
+      "side": 1,
+      "message": "What\u0027s the motivation to changing the order?",
+      "parentUuid": "04c22ddd_0b6c0918",
       "revId": "9a910697086257b29ff29562e8aa59e762269d55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
