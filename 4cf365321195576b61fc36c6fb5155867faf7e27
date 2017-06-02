@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9bff3ab_5f78bd64",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-02T08:43:32Z",
+      "side": 1,
+      "message": "I still slightly prefer introducing DetachedFrameFetchContext, but do you feel that\u0027d be a bit too much hassle?",
+      "revId": "4cf365321195576b61fc36c6fb5155867faf7e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a8be7a6_09b352ae",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-02T08:43:32Z",
+      "side": 1,
+      "message": "(Intuitively sending all these when a frame is detached doesn\u0027t make a lot sense...)",
+      "revId": "4cf365321195576b61fc36c6fb5155867faf7e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a3671d_d309b3aa",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-02T08:43:32Z",
+      "side": 1,
+      "message": "Is this new code path introduced by your change or was it broken?",
+      "revId": "4cf365321195576b61fc36c6fb5155867faf7e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40729a32_8fbca3a6",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-02T08:43:32Z",
+      "side": 1,
+      "message": "nit: DCHECK(!IsDetached());",
+      "revId": "4cf365321195576b61fc36c6fb5155867faf7e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
