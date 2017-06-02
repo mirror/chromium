@@ -137,12 +137,28 @@ void JourneyLogger::SetEventOccurred(Event event) {
   events_ |= event;
 }
 
+void JourneyLogger::SetRequestedInformation(bool requested_shipping,
+                                            bool requested_email,
+                                            bool requested_phone,
+                                            bool requested_name) {
+  // This method should only be called once per Payment Request.
+  DCHECK(requested_information_ == -1);
+
+  requested_information_ =
+      (requested_shipping ? REQUESTED_INFORMATION_SHIPPING : 0) |
+      (requested_email ? REQUESTED_INFORMATION_EMAIL : 0) |
+      (requested_phone ? REQUESTED_INFORMATION_PHONE : 0) |
+      (requested_name ? REQUESTED_INFORMATION_NAME : 0);
+}
+
 void JourneyLogger::RecordJourneyStatsHistograms(
     CompletionStatus completion_status) {
   DCHECK(!has_recorded_);
   has_recorded_ = true;
 
   RecordCheckoutFlowMetrics();
+
+  RecordRequestedInformationMetrics();
 
   RecordSectionSpecificStats(completion_status);
 
@@ -168,6 +184,11 @@ void JourneyLogger::RecordCheckoutFlowMetrics() {
 
   if (events_ & EVENT_SKIPPED_SHOW)
     UMA_HISTOGRAM_BOOLEAN("PaymentRequest.CheckoutFunnel.SkippedShow", true);
+}
+
+void JourneyLogger::RecordRequestedInformationMetrics() {
+  UMA_HISTOGRAM_ENUMERATION("PaymentRequest.RequestedInformation",
+                            requested_information_, REQUESTED_INFORMATION_MAX);
 }
 
 void JourneyLogger::RecordSectionSpecificStats(
