@@ -39,8 +39,6 @@ component("web") {
     "AnimationWorkletProxyClientImpl.cpp",
     "AnimationWorkletProxyClientImpl.h",
     "AssertMatchingEnums.cpp",
-    "AudioOutputDeviceClientImpl.cpp",
-    "AudioOutputDeviceClientImpl.h",
     "ChromeClientImpl.cpp",
     "ChromeClientImpl.h",
     "ColorChooserPopupUIController.cpp",

@@ -5,13 +5,14 @@
 #ifndef AudioOutputDeviceClientImpl_h
 #define AudioOutputDeviceClientImpl_h
 
+#include <memory>
+#include "modules/ModulesExport.h"
 #include "modules/audio_output_devices/AudioOutputDeviceClient.h"
 #include "platform/heap/Handle.h"
-#include <memory>
 
 namespace blink {
 
-class AudioOutputDeviceClientImpl
+class MODULES_EXPORT AudioOutputDeviceClientImpl
     : public GarbageCollectedFinalized<AudioOutputDeviceClientImpl>,
       public AudioOutputDeviceClient {
   USING_GARBAGE_COLLECTED_MIXIN(AudioOutputDeviceClientImpl);
