@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <functional>
+#include <map>
 #include <utility>
 
 #include "base/strings/string_util.h"
@@ -17,6 +18,8 @@
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_tabstrip.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/webshare/share_target.h"
+#include "chrome/browser/webshare/share_target_pref_helper.h"
 #include "chrome/common/pref_names.h"
 #include "components/prefs/pref_service.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -105,11 +108,11 @@ bool ShareServiceImpl::ReplacePlaceholders(base::StringPiece url_template,
 }
 
 void ShareServiceImpl::ShowPickerDialog(
-    const std::vector<std::pair<base::string16, GURL>>& targets,
+    std::vector<ShareTarget> targets,
     chrome::WebShareTargetPickerCallback callback) {
   // TODO(mgiuca): Get the browser window as |parent_window|.
-  chrome::ShowWebShareTargetPickerDialog(nullptr /* parent_window */, targets,
-                                         std::move(callback));
+  chrome::ShowWebShareTargetPickerDialog(
+      nullptr /* parent_window */, std::move(targets), std::move(callback));
 }
 
 Browser* ShareServiceImpl::GetBrowser() {
@@ -120,18 +123,6 @@ void ShareServiceImpl::OpenTargetURL(const GURL& target_url) {
   Browser* browser = GetBrowser();
   chrome::AddTabAt(browser, target_url,
                    browser->tab_strip_model()->active_index() + 1, true);
-}
-
-std::string ShareServiceImpl::GetTargetTemplate(
-    const std::string& target_url,
-    const base::DictionaryValue& share_targets) {
-  const base::DictionaryValue* share_target_info_dict = nullptr;
-  share_targets.GetDictionaryWithoutPathExpansion(target_url,
-                                                  &share_target_info_dict);
-
-  std::string url_template;
-  share_target_info_dict->GetString("url_template", &url_template);
-  return url_template;
 }
 
 PrefService* ShareServiceImpl::GetPrefService() {
@@ -145,71 +136,43 @@ blink::mojom::EngagementLevel ShareServiceImpl::GetEngagementLevel(
   return site_engagement_service->GetEngagementLevel(url);
 }
 
-// static
-std::vector<std::pair<base::string16, GURL>>
-ShareServiceImpl::GetTargetsWithSufficientEngagement(
-    const base::DictionaryValue& share_targets) {
-  constexpr blink::mojom::EngagementLevel kMinimumEngagementLevel =
-      blink::mojom::EngagementLevel::LOW;
-
-  std::vector<std::pair<base::string16, GURL>> sufficiently_engaged_targets;
-
-  for (base::DictionaryValue::Iterator it(share_targets); !it.IsAtEnd();
-       it.Advance()) {
-    GURL manifest_url(it.key());
-    if (GetEngagementLevel(manifest_url) >= kMinimumEngagementLevel) {
-      const base::DictionaryValue* share_target_dict;
-      bool result = it.value().GetAsDictionary(&share_target_dict);
-      DCHECK(result);
-
-      std::string name;
-      share_target_dict->GetString("name", &name);
-
-      sufficiently_engaged_targets.push_back(
-          make_pair(base::UTF8ToUTF16(name), manifest_url));
-    }
-  }
-
-  return sufficiently_engaged_targets;
-}
-
 void ShareServiceImpl::Share(const std::string& title,
                              const std::string& text,
                              const GURL& share_url,
                              const ShareCallback& callback) {
-  std::unique_ptr<base::DictionaryValue> share_targets;
+  std::vector<ShareTarget> share_targets =
+      GetShareTargetsInPrefs(GetPrefService());
 
-  share_targets = GetPrefService()
-                      ->GetDictionary(prefs::kWebShareVisitedTargets)
-                      ->CreateDeepCopy();
+  share_targets.erase(
+      std::remove_if(share_targets.begin(), share_targets.end(),
+                     [this](const ShareTarget& target) {
+                       // blink::mojom::EngagementLevel::LOW is the minimum
+                       // required engagement level.
+                       return GetEngagementLevel(target.manifest_url()) <
+                              blink::mojom::EngagementLevel::LOW;
+                     }),
+      share_targets.end());
 
-  std::vector<std::pair<base::string16, GURL>> sufficiently_engaged_targets =
-      GetTargetsWithSufficientEngagement(*share_targets);
-
-  ShowPickerDialog(
-      sufficiently_engaged_targets,
-      base::BindOnce(&ShareServiceImpl::OnPickerClosed,
-                     weak_factory_.GetWeakPtr(), base::Passed(&share_targets),
-                     title, text, share_url, callback));
+  ShowPickerDialog(std::move(share_targets),
+                   base::BindOnce(&ShareServiceImpl::OnPickerClosed,
+                                  weak_factory_.GetWeakPtr(), title, text,
+                                  share_url, callback));
 }
 
-void ShareServiceImpl::OnPickerClosed(
-    std::unique_ptr<base::DictionaryValue> share_targets,
-    const std::string& title,
-    const std::string& text,
-    const GURL& share_url,
-    const ShareCallback& callback,
-    const base::Optional<std::string>& result) {
+void ShareServiceImpl::OnPickerClosed(const std::string& title,
+                                      const std::string& text,
+                                      const GURL& share_url,
+                                      const ShareCallback& callback,
+                                      base::Optional<ShareTarget> result) {
   if (!result.has_value()) {
     callback.Run(blink::mojom::ShareError::CANCELED);
     return;
   }
 
-  std::string chosen_target = result.value();
+  const GURL& chosen_target = result->manifest_url();
 
-  std::string url_template = GetTargetTemplate(chosen_target, *share_targets);
   std::string url_template_filled;
-  if (!ReplacePlaceholders(url_template, title, text, share_url,
+  if (!ReplacePlaceholders(result->url_template(), title, text, share_url,
                            &url_template_filled)) {
     // TODO(mgiuca): This error should not be possible at share time, because
     // targets with invalid templates should not be chooseable. Fix
@@ -220,9 +183,10 @@ void ShareServiceImpl::OnPickerClosed(
 
   // The template is relative to the manifest URL (minus the filename).
   // Concatenate to make an absolute URL.
+  const std::string& chosen_target_spec = chosen_target.spec();
   base::StringPiece url_base(
-      chosen_target.data(),
-      chosen_target.size() - GURL(chosen_target).ExtractFileName().size());
+      chosen_target_spec.data(),
+      chosen_target_spec.size() - chosen_target.ExtractFileName().size());
   const GURL target(url_base.as_string() + url_template_filled);
   // User should not be able to cause an invalid target URL. Possibilities are:
   // - The base URL: can't be invalid since it's derived from the manifest URL.
