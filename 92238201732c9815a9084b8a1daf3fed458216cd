@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c778e758_2f9c80e6",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-06-02T19:32:32Z",
+      "side": 1,
+      "message": "When does it mean you can focus?",
+      "revId": "92238201732c9815a9084b8a1daf3fed458216cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
