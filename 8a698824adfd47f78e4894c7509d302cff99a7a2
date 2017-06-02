@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24e330a9_c7dd7061",
+        "filename": "chrome/browser/component_updater/pnacl_component_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-06-02T21:32:36Z",
+      "side": 1,
+      "message": "Can we just move manifest instead?",
+      "range": {
+        "startLine": 238,
+        "startChar": 17,
+        "endLine": 238,
+        "endChar": 31
+      },
+      "revId": "8a698824adfd47f78e4894c7509d302cff99a7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5a407f5_156b2faa",
+        "filename": "chrome/browser/component_updater/recovery_component_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-06-02T21:32:36Z",
+      "side": 1,
+      "message": "Same deal with moving it. But even if we don\u0027t, ConstRed→ConstRef.",
+      "range": {
+        "startLine": 404,
+        "startChar": 19,
+        "endLine": 404,
+        "endChar": 20
+      },
+      "revId": "8a698824adfd47f78e4894c7509d302cff99a7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "191d0b6c_0dc30485",
+        "filename": "chrome/browser/net/crl_set_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-06-02T21:32:36Z",
+      "side": 1,
+      "message": "Same here - is move possible?",
+      "range": {
+        "startLine": 173,
+        "startChar": 17,
+        "endLine": 173,
+        "endChar": 31
+      },
+      "revId": "8a698824adfd47f78e4894c7509d302cff99a7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16da8fff_f7322cbd",
+        "filename": "ios/chrome/browser/net/crl_set_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-06-02T21:32:36Z",
+      "side": 1,
+      "message": "Same question.",
+      "range": {
+        "startLine": 168,
+        "startChar": 17,
+        "endLine": 168,
+        "endChar": 31
+      },
+      "revId": "8a698824adfd47f78e4894c7509d302cff99a7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
