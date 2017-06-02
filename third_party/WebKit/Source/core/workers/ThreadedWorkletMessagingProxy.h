@@ -9,13 +9,13 @@
 #include "core/loader/WorkletScriptLoader.h"
 #include "core/workers/ThreadedMessagingProxyBase.h"
 #include "core/workers/WorkletGlobalScopeProxy.h"
-#include "core/workers/WorkletPendingTasks.h"
 #include "platform/wtf/WeakPtr.h"
 
 namespace blink {
 
 class ScriptSourceCode;
 class ThreadedWorkletObjectProxy;
+class WorkletPendingTasks;
 
 class CORE_EXPORT ThreadedWorkletMessagingProxy
     : public ThreadedMessagingProxyBase,

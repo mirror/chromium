@@ -10,10 +10,13 @@
 #include "core/dom/MessagePort.h"
 #include "core/workers/ThreadedObjectProxyBase.h"
 #include "core/workers/WorkerReportingProxy.h"
+#include "platform/WebTaskRunner.h"
+#include "public/platform/WebURLRequest.h"
 
 namespace blink {
 
 class ThreadedWorkletMessagingProxy;
+class WorkletPendingTasks;
 class WorkerThread;
 
 // A proxy to talk to the parent worker object. See class comments on
@@ -28,6 +31,11 @@ class CORE_EXPORT ThreadedWorkletObjectProxy : public ThreadedObjectProxyBase {
       ParentFrameTaskRunners*);
   ~ThreadedWorkletObjectProxy() override;
 
+  void FetchAndInvokeScript(const KURL& module_url_record,
+                            WebURLRequest::FetchCredentialsMode,
+                            RefPtr<WebTaskRunner> outside_settings_task_runner,
+                            WorkletPendingTasks*,
+                            WorkerThread*);
   void EvaluateScript(const String& source,
                       const KURL& script_url,
                       WorkerThread*);

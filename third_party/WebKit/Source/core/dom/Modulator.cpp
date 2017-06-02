@@ -9,6 +9,7 @@
 #include "core/dom/ModulatorImpl.h"
 #include "core/frame/LocalFrame.h"
 #include "core/workers/MainThreadWorkletGlobalScope.h"
+#include "core/workers/ThreadedWorkletGlobalScope.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8PerContextData.h"
 
@@ -41,7 +42,15 @@ Modulator* Modulator::From(ScriptState* script_state) {
     modulator = ModulatorImpl::Create(
         script_state, global_scope->GetFrame()->GetDocument()->Fetcher());
     Modulator::SetModulator(script_state, modulator);
+  } else if (execution_context->IsThreadedWorkletGlobalScope()) {
+    ThreadedWorkletGlobalScope* global_scope =
+        ToThreadedWorkletGlobalScope(execution_context);
+    modulator = ModulatorImpl::Create(
+        script_state, global_scope->GetFetchContext()->GetResourceFetcher());
+    Modulator::SetModulator(script_state, modulator);
   } else {
+    // TODO(nhiroki): Support module loading for workers.
+    // (https://crbug.com/680046)
     NOTREACHED();
   }
   return modulator;

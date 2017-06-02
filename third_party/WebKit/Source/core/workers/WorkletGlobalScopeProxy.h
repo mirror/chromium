@@ -27,7 +27,7 @@ class CORE_EXPORT WorkletGlobalScopeProxy {
       const KURL& module_url_record,
       WebURLRequest::FetchCredentialsMode,
       RefPtr<WebTaskRunner> outside_settings_task_runner,
-      WorkletPendingTasks*) {}
+      WorkletPendingTasks*) = 0;
 
   // Terminates the worklet global scope from the main thread.
   virtual void TerminateWorkletGlobalScope() = 0;

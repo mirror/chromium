@@ -24,6 +24,19 @@ std::unique_ptr<ThreadedWorkletObjectProxy> ThreadedWorkletObjectProxy::Create(
 
 ThreadedWorkletObjectProxy::~ThreadedWorkletObjectProxy() {}
 
+void ThreadedWorkletObjectProxy::FetchAndInvokeScript(
+    const KURL& module_url_record,
+    WebURLRequest::FetchCredentialsMode credentials_mode,
+    RefPtr<WebTaskRunner> outside_settings_task_runner,
+    WorkletPendingTasks* pending_tasks,
+    WorkerThread* worker_thread) {
+  ThreadedWorkletGlobalScope* global_scope =
+      ToThreadedWorkletGlobalScope(worker_thread->GlobalScope());
+  global_scope->FetchAndInvokeScript(module_url_record, credentials_mode,
+                                     std::move(outside_settings_task_runner),
+                                     pending_tasks);
+}
+
 void ThreadedWorkletObjectProxy::EvaluateScript(const String& source,
                                                 const KURL& script_url,
                                                 WorkerThread* worker_thread) {

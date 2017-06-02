@@ -7,8 +7,12 @@
 #include <memory>
 #include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
+#include "core/dom/Modulator.h"
 #include "core/inspector/MainThreadDebugger.h"
+#include "core/loader/modulescript/ModuleScriptFetchRequest.h"
 #include "core/probe/CoreProbes.h"
+#include "core/workers/WorkletModuleTreeClient.h"
+#include "core/workers/WorkletPendingTasks.h"
 
 namespace blink {
 
@@ -53,6 +57,34 @@ bool WorkletGlobalScope::IsSecureContext(String& error_message) const {
     return true;
   error_message = GetSecurityOrigin()->IsPotentiallyTrustworthyErrorMessage();
   return false;
+}
+
+// Implementation of the first half of the "fetch and invoke a worklet script"
+// algorithm:
+// https://drafts.css-houdini.org/worklets/#fetch-and-invoke-a-worklet-script
+void WorkletGlobalScope::FetchAndInvokeScript(
+    const KURL& module_url_record,
+    WebURLRequest::FetchCredentialsMode credentials_mode,
+    RefPtr<WebTaskRunner> outside_settings_task_runner,
+    WorkletPendingTasks* pending_tasks) {
+  DCHECK(IsContextThread());
+
+  // Step 1: "Let insideSettings be the workletGlobalScope's associated
+  // environment settings object."
+  // Step 2: "Let script by the result of fetch a worklet script given
+  // moduleURLRecord, moduleResponsesMap, credentialOptions, outsideSettings,
+  // and insideSettings when it asynchronously completes."
+  String nonce = "";
+  ParserDisposition parser_state = kNotParserInserted;
+  Modulator* modulator = Modulator::From(ScriptController()->GetScriptState());
+  ModuleScriptFetchRequest module_request(module_url_record, nonce,
+                                          parser_state, credentials_mode);
+
+  // Step 3 to 5 are implemented in
+  // WorkletModuleTreeClient::NotifyModuleTreeLoadFinished.
+  WorkletModuleTreeClient* client = new WorkletModuleTreeClient(
+      modulator, std::move(outside_settings_task_runner), pending_tasks);
+  modulator->FetchTree(module_request, client);
 }
 
 KURL WorkletGlobalScope::VirtualCompleteURL(const String& url) const {
