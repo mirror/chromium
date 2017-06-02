@@ -12,6 +12,8 @@
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/storage_partition.h"
+#include "storage/browser/quota/quota_manager.h"
+#include "storage/common/quota/quota_status_code.h"
 
 namespace content {
 namespace protocol {
@@ -27,6 +29,46 @@ static const char kWebSQL[] = "websql";
 static const char kServiceWorkers[] = "service_workers";
 static const char kCacheStorage[] = "cache_storage";
 static const char kAll[] = "all";
+
+class UsageAndQuotaDataCollector
+    : public base::RefCounted<UsageAndQuotaDataCollector> {
+ public:
+  using UsageCallbackPtr =
+      std::unique_ptr<StorageHandler::GetUsageAndQuotaCallback>;
+  using UsageData = protocol::Array<protocol::Storage::QuotaAndUsage>;
+
+  explicit UsageAndQuotaDataCollector(UsageCallbackPtr&& callback)
+      : callback_(std::move(callback)), usage_data_(new UsageData()) {}
+
+  void DataCallback(const char* persistence,
+                    storage::QuotaStatusCode code,
+                    int64_t usage,
+                    int64_t quota) {
+    if (!callback_)
+      return;
+    if (code != storage::kQuotaStatusOk) {
+      callback_->sendFailure(
+          Response::Error("Quota information is not available"));
+      callback_.reset();
+      return;
+    }
+    auto builder = Storage::QuotaAndUsage::QuotaAndUsage::Create();
+    usage_data_->addItem(builder.SetPersistence(persistence)
+                             .SetUsage(usage)
+                             .SetQuota(quota)
+                             .Build());
+  }
+
+ private:
+  friend class base::RefCounted<UsageAndQuotaDataCollector>;
+  virtual ~UsageAndQuotaDataCollector() {
+    if (callback_)
+      callback_->sendSuccess(std::move(usage_data_));
+  }
+
+  UsageCallbackPtr callback_;
+  std::unique_ptr<UsageData> usage_data_;
+};
 }
 
 StorageHandler::StorageHandler()
@@ -86,6 +128,28 @@ Response StorageHandler::ClearDataForOrigin(
       partition->GetURLRequestContext(),
       base::Bind(&base::DoNothing));
   return Response::OK();
+}
+
+void StorageHandler::GetUsageAndQuota(
+    const String& origin,
+    std::unique_ptr<GetUsageAndQuotaCallback> callback) {
+  if (!host_)
+    return callback->sendFailure(Response::InternalError());
+
+  scoped_refptr<UsageAndQuotaDataCollector> collector(
+      new UsageAndQuotaDataCollector(std::move(callback)));
+
+  storage::QuotaManager* manager =
+      host_->GetProcess()->GetStoragePartition()->GetQuotaManager();
+  GURL origin_url(origin);
+  manager->GetUsageAndQuotaForWebApps(
+      origin_url, storage::kStorageTypePersistent,
+      base::Bind(&UsageAndQuotaDataCollector::DataCallback, collector,
+                 Storage::QuotaAndUsage::PersistenceEnum::Persistent));
+  manager->GetUsageAndQuotaForWebApps(
+      origin_url, storage::kStorageTypeTemporary,
+      base::Bind(&UsageAndQuotaDataCollector::DataCallback, collector,
+                 Storage::QuotaAndUsage::PersistenceEnum::Temporary));
 }
 
 }  // namespace protocol
