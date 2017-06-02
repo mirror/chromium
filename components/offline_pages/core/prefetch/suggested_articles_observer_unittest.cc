@@ -9,8 +9,10 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/offline_pages/core/client_namespace_constants.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
+#include "components/offline_pages/core/prefetch/prefetch_dispatcher_stub.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_app_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
+#include "components/offline_pages/core/prefetch/prefetch_service_stub_taco.h"
 #include "components/offline_pages/core/stub_offline_page_model.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
@@ -28,71 +30,26 @@ ContentSuggestion ContentSuggestionFromTestURL(const GURL& test_url) {
   return ContentSuggestion(category, test_url.spec(), test_url);
 }
 
-class TestingPrefetchDispatcher : public PrefetchDispatcher {
- public:
-  TestingPrefetchDispatcher() = default;
-
-  void AddCandidatePrefetchURLs(
-      const std::vector<PrefetchURL>& suggested_urls) override {
-    latest_prefetch_urls = suggested_urls;
-    new_suggestions_count++;
-  }
-
-  void RemoveAllUnprocessedPrefetchURLs(
-      const std::string& name_space) override {
-    DCHECK_EQ(name_space, kSuggestedArticlesNamespace);
-    latest_prefetch_urls.clear();
-    remove_all_suggestions_count++;
-  }
-
-  void RemovePrefetchURLsByClientId(const ClientId& client_id) override {
-    DCHECK_EQ(client_id.name_space, kSuggestedArticlesNamespace);
-    remove_by_client_id_count++;
-    last_removed_client_id = base::MakeUnique<ClientId>(client_id);
-  }
-
-  void BeginBackgroundTask(
-      std::unique_ptr<ScopedBackgroundTask> task) override {}
-  void StopBackgroundTask(ScopedBackgroundTask* task) override {}
-
-  std::vector<PrefetchURL> latest_prefetch_urls;
-  std::unique_ptr<ClientId> last_removed_client_id;
-
-  int new_suggestions_count = 0;
-  int remove_all_suggestions_count = 0;
-  int remove_by_client_id_count = 0;
-};
-
-class TestingPrefetchService : public PrefetchService {
- public:
-  TestingPrefetchService() : observer(&dispatcher) {}
-
-  SuggestedArticlesObserver* GetSuggestedArticlesObserver() override {
-    return &observer;
-  }
-  PrefetchDispatcher* GetDispatcher() override { return &dispatcher; };
-  OfflineMetricsCollector* GetOfflineMetricsCollector() override {
-    return nullptr;
-  }
-  PrefetchGCMHandler* GetPrefetchGCMHandler() override { return nullptr; }
-
-  TestingPrefetchDispatcher dispatcher;
-  SuggestedArticlesObserver observer;
-};
 }  // namespace
 
 class OfflinePageSuggestedArticlesObserverTest : public testing::Test {
  public:
-  OfflinePageSuggestedArticlesObserverTest() {}
-
-  SuggestedArticlesObserver* observer() {
-    return &(test_prefetch_service()->observer);
+  OfflinePageSuggestedArticlesObserverTest() {
+    prefetch_dispatcher_stub_ = new PrefetchDispatcherStub();
+    prefetch_service_stub_taco_.SetPrefetchDispatcher(
+        base::WrapUnique(prefetch_dispatcher_stub_));
+    prefetch_service_stub_taco_.SetSuggestedArticlesObserver(
+        base::MakeUnique<SuggestedArticlesObserver>(prefetch_dispatcher_stub_));
+    prefetch_service_stub_taco_.CreatePrefetchService();
   }
 
-  TestingPrefetchService* test_prefetch_service() { return &prefetch_service_; }
+  SuggestedArticlesObserver* observer() {
+    return prefetch_service_stub_taco_.prefetch_service()
+        ->GetSuggestedArticlesObserver();
+  }
 
-  TestingPrefetchDispatcher* test_prefetch_dispatcher() {
-    return &(test_prefetch_service()->dispatcher);
+  PrefetchDispatcherStub* test_prefetch_dispatcher() {
+    return prefetch_dispatcher_stub_;
   }
 
  protected:
@@ -100,7 +57,10 @@ class OfflinePageSuggestedArticlesObserverTest : public testing::Test {
       Category::FromKnownCategory(ntp_snippets::KnownCategories::ARTICLES);
 
  private:
-  TestingPrefetchService prefetch_service_;
+  PrefetchServiceStubTaco prefetch_service_stub_taco_;
+
+  // Owned by the PrefetchServiceStubTaco.
+  PrefetchDispatcherStub* prefetch_dispatcher_stub_;
 };
 
 TEST_F(OfflinePageSuggestedArticlesObserverTest,
