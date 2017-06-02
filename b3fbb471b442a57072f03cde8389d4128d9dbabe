@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fdf09b0_4e59592e",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-02T15:41:26Z",
+      "side": 1,
+      "message": "is this different from base::WeakPtr\u0027s default state on construction?",
+      "revId": "b3fbb471b442a57072f03cde8389d4128d9dbabe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
