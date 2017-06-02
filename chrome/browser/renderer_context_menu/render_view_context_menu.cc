@@ -2222,8 +2222,28 @@ void RenderViewContextMenu::ExecSaveLinkAs() {
   dl_params->set_suggested_name(params_.suggested_filename);
   dl_params->set_prompt(true);
 
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("...", R"(
+        semantics {
+          sender: "..."
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+        }
+        policy {
+          cookies_allowed: false/true
+          cookies_store: "..."
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
   BrowserContext::GetDownloadManager(browser_context_)
-      ->DownloadUrl(std::move(dl_params), NO_TRAFFIC_ANNOTATION_YET);
+      ->DownloadUrl(std::move(dl_params), traffic_annotation);
 }
 
 void RenderViewContextMenu::ExecSaveAs() {
