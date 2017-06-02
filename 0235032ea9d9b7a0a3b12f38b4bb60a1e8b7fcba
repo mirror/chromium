@@ -461,6 +461,24 @@
     },
     {
       "key": {
+        "uuid": "b0be48c7_1d360df7",
+        "filename": "third_party/WebKit/Source/core/mojo/MojoInterfaceRequestEvent.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-02T22:57:24Z",
+      "side": 1,
+      "message": "Ah sorry, was confused. I was really trying to figure out how the bindings were installed, but I\u0027ve since found WebTestingSupport::InstallInternalsObject.\n\nAfter some more thought, we probably want to leave this testing API available to Chrome behind a flag. reillyg@ expressed a strong interest in being able to implement Web USB\u0027s testing API spec in pure JS polyfill that would work with a normal production build of Chrome (behind a runtime flag is OK.) This relatively small API makes that possible for WebUSB and presumably many more API features to come.\n\nWDYT?",
+      "parentUuid": "002a43d6_3875506a",
+      "revId": "0235032ea9d9b7a0a3b12f38b4bb60a1e8b7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed7cc903_be708574",
         "filename": "third_party/WebKit/public/web/WebFrameClient.h",
         "patchSetId": 4
