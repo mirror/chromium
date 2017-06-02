@@ -67,6 +67,9 @@ class PLATFORM_EXPORT WebViewSchedulerImpl : public WebViewScheduler {
   void DecrementBackgroundParserCount();
   void Unregister(WebFrameSchedulerImpl* frame_scheduler);
   void OnNavigation();
+  void OnNavigateBackForwardSoon();
+  void IncrementProvisionalLoadCount();
+  void DecrementProvisionalLoadCount();
 
   bool IsAudioPlaying() const;
 
@@ -108,6 +111,7 @@ class PLATFORM_EXPORT WebViewSchedulerImpl : public WebViewScheduler {
   RefPtr<WebTaskRunnerImpl> virtual_time_control_task_queue_;
   TaskHandle virtual_time_budget_expired_task_handle_;
   int background_parser_count_;
+  int provisional_load_count_;
   bool page_visible_;
   bool should_throttle_frames_;
   bool disable_background_timer_throttling_;
@@ -118,6 +122,7 @@ class PLATFORM_EXPORT WebViewSchedulerImpl : public WebViewScheduler {
   bool is_audio_playing_;
   bool reported_background_throttling_since_navigation_;
   bool has_active_connection_;
+  bool expect_backward_forwards_navigation_;
   CPUTimeBudgetPool* background_time_budget_pool_;  // Not owned.
   CancelableClosureHolder delayed_background_throttling_enabler_;
   WebViewScheduler::WebViewSchedulerSettings* settings_;  // Not owned.

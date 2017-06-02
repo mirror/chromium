@@ -1646,11 +1646,49 @@ void RendererSchedulerImpl::RemovePendingNavigation(NavigatingFrameType type) {
   }
 }
 
-void RendererSchedulerImpl::OnNavigationStarted() {
+void RendererSchedulerImpl::OnNavigate() {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
-               "RendererSchedulerImpl::OnNavigationStarted");
+               "RendererSchedulerImpl::OnNavigate");
   base::AutoLock lock(any_thread_lock_);
   ResetForNavigationLocked();
+}
+
+void RendererSchedulerImpl::OnNavigateBackForwardSoon() {
+  for (WebViewSchedulerImpl* web_view_scheduler_impl :
+       GetMainThreadOnly().web_view_schedulers) {
+    web_view_scheduler_impl->OnNavigateBackForwardSoon();
+  }
+}
+
+void RendererSchedulerImpl::OnStartProvisionalLoad() {
+  for (WebViewSchedulerImpl* web_view_scheduler_impl :
+       GetMainThreadOnly().web_view_schedulers) {
+    web_view_scheduler_impl->IncrementProvisionalLoadCount();
+  }
+}
+
+void RendererSchedulerImpl::OnDidFailProvisionalLoad() {
+  for (WebViewSchedulerImpl* web_view_scheduler_impl :
+       GetMainThreadOnly().web_view_schedulers) {
+    web_view_scheduler_impl->DecrementProvisionalLoadCount();
+  }
+}
+
+void RendererSchedulerImpl::OnDidCommitProvisionalLoad(
+    bool is_web_history_inert_commit,
+    bool is_reload,
+    bool is_main_frame) {
+  for (WebViewSchedulerImpl* web_view_scheduler_impl :
+       GetMainThreadOnly().web_view_schedulers) {
+    web_view_scheduler_impl->DecrementProvisionalLoadCount();
+  }
+
+  if (is_main_frame && (is_web_history_inert_commit || is_reload)) {
+    TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
+                 "RendererSchedulerImpl::OnDidCommitProvisionalLoad");
+    base::AutoLock lock(any_thread_lock_);
+    ResetForNavigationLocked();
+  }
 }
 
 void RendererSchedulerImpl::OnFirstMeaningfulPaint() {

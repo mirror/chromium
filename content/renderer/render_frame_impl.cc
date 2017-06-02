@@ -1670,7 +1670,7 @@ void RenderFrameImpl::OnNavigate(
   RenderThreadImpl* render_thread_impl = RenderThreadImpl::current();
   // Can be NULL in tests.
   if (render_thread_impl)
-    render_thread_impl->GetRendererScheduler()->OnNavigationStarted();
+    render_thread_impl->GetRendererScheduler()->OnNavigate();
   DCHECK(!IsBrowserSideNavigationEnabled());
   TRACE_EVENT2("navigation,rail", "RenderFrameImpl::OnNavigate", "id",
                routing_id_, "url", common_params.url.possibly_invalid_spec());
@@ -3445,6 +3445,11 @@ void RenderFrameImpl::DidStartProvisionalLoad(blink::WebDataSource* data_source,
   for (auto& observer : observers_)
     observer.DidStartProvisionalLoad(data_source);
 
+  RenderThreadImpl* render_thread_impl = RenderThreadImpl::current();
+  // Can be NULL in tests.
+  if (render_thread_impl)
+    render_thread_impl->GetRendererScheduler()->OnStartProvisionalLoad();
+
   std::vector<GURL> redirect_chain;
   GetRedirectChain(data_source, &redirect_chain);
 
@@ -3471,6 +3476,11 @@ void RenderFrameImpl::DidFailProvisionalLoad(
     observer.DidFailProvisionalLoad(frame_, error);
   for (auto& observer : observers_)
     observer.DidFailProvisionalLoad(error);
+
+  RenderThreadImpl* render_thread_impl = RenderThreadImpl::current();
+  // Can be NULL in tests.
+  if (render_thread_impl)
+    render_thread_impl->GetRendererScheduler()->OnDidFailProvisionalLoad();
 
   WebDataSource* ds = frame_->ProvisionalDataSource();
   if (!ds)
@@ -3640,19 +3650,17 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
         is_new_navigation, navigation_state->WasWithinSameDocument());
   }
 
-  if (!frame_->Parent()) {  // Only for top frames.
-    RenderThreadImpl* render_thread_impl = RenderThreadImpl::current();
-    if (render_thread_impl) {  // Can be NULL in tests.
+  RenderThreadImpl* render_thread_impl = RenderThreadImpl::current();
+  if (render_thread_impl) {  // Can be NULL in tests.
+    render_thread_impl->GetRendererScheduler()->OnDidCommitProvisionalLoad(
+        commit_type == blink::kWebHistoryInertCommit,
+        PageTransitionCoreTypeIs(navigation_state->GetTransitionType(),
+                                 ui::PAGE_TRANSITION_RELOAD),
+        frame_->Parent());
+    if (!frame_->Parent()) {  // Only for top frames.
       render_thread_impl->histogram_customizer()->
           RenderViewNavigatedToHost(GURL(GetLoadingUrl()).host(),
                                     RenderView::GetRenderViewCount());
-      // The scheduler isn't interested in history inert commits unless they
-      // are reloads.
-      if (commit_type != blink::kWebHistoryInertCommit ||
-          PageTransitionCoreTypeIs(navigation_state->GetTransitionType(),
-                                   ui::PAGE_TRANSITION_RELOAD)) {
-        render_thread_impl->GetRendererScheduler()->OnNavigationStarted();
-      }
     }
   }
 
@@ -3953,6 +3961,9 @@ void RenderFrameImpl::DidNavigateWithinPage(
   static_cast<NavigationStateImpl*>(document_state->navigation_state())
       ->set_was_within_same_document(true);
 
+  RenderThreadImpl* render_thread_impl = RenderThreadImpl::current();
+  if (render_thread_impl)
+    render_thread_impl->GetRendererScheduler()->OnStartProvisionalLoad();
   DidCommitProvisionalLoad(item, commit_type);
 }
 
