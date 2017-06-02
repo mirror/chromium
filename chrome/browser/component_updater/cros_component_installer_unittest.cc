@@ -67,7 +67,7 @@ class FakeInstallerTraits : public ComponentInstallerTraits {
       std::unique_ptr<base::DictionaryValue> manifest) override {}
 
   base::FilePath GetRelativeInstallDir() const override {
-    return base::FilePath(FILE_PATH_LITERAL("fake"));
+    return base::FilePath(FILE_PATH_L]TERAL("fake"));
   }
 
   void GetHash(std::vector<uint8_t>* hash) const override {}
