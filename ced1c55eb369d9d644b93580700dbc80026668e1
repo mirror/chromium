@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5c5b257d_d69d9d85",
+        "filename": "chrome/browser/extensions/api/feedback_private/feedback_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-06-02T19:43:09Z",
+      "side": 1,
+      "message": "Yes, as explained in the comment for the function in chrome_system_logs_fetcher.h. Should I make that comment here, too?",
+      "parentUuid": "4710d877_87f8c9dd",
+      "range": {
+        "startLine": 61,
+        "startChar": 19,
+        "endLine": 61,
+        "endChar": 47
+      },
+      "revId": "ced1c55eb369d9d644b93580700dbc80026668e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50a5e94b_aeaea269",
         "filename": "chrome/browser/extensions/api/log_private/log_private_api_chromeos.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "ced1c55eb369d9d644b93580700dbc80026668e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9cd4a4f_f5339352",
+        "filename": "chrome/browser/extensions/api/log_private/log_private_api_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-06-02T19:43:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50a5e94b_aeaea269",
+      "range": {
+        "startLine": 430,
+        "startChar": 15,
+        "endLine": 430,
+        "endChar": 32
+      },
+      "revId": "ced1c55eb369d9d644b93580700dbc80026668e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
