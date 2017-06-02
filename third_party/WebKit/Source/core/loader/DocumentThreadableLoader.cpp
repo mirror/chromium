@@ -53,6 +53,7 @@
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/loader/fetch/Resource.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/weborigin/SecurityOrigin.h"
@@ -1025,8 +1026,7 @@ void DocumentThreadableLoader::LoadRequestAsync(
                                 BLINK_FROM_HERE);
   }
 
-  FetchParameters new_params(request, options_.initiator,
-                             resource_loader_options);
+  FetchParameters new_params(request, resource_loader_options);
   if (options_.fetch_request_mode == WebURLRequest::kFetchRequestModeNoCORS)
     new_params.SetOriginRestriction(FetchParameters::kNoOriginRestriction);
   DCHECK(!GetResource());
@@ -1070,8 +1070,7 @@ void DocumentThreadableLoader::LoadRequestAsync(
 void DocumentThreadableLoader::LoadRequestSync(
     const ResourceRequest& request,
     ResourceLoaderOptions resource_loader_options) {
-  FetchParameters fetch_params(request, options_.initiator,
-                               resource_loader_options);
+  FetchParameters fetch_params(request, resource_loader_options);
   if (options_.fetch_request_mode == WebURLRequest::kFetchRequestModeNoCORS)
     fetch_params.SetOriginRestriction(FetchParameters::kNoOriginRestriction);
   Resource* resource = RawResource::FetchSynchronously(

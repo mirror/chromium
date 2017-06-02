@@ -36,6 +36,7 @@
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "platform/HTTPNames.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/network/ContentSecurityPolicyResponseHeaders.h"
 #include "platform/network/NetworkUtils.h"
@@ -80,6 +81,8 @@ void WorkerScriptLoader::LoadSynchronously(
 
   ResourceLoaderOptions resource_loader_options;
   resource_loader_options.allow_credentials = kAllowStoredCredentials;
+  resource_loader_options.credentials_requested =
+      kClientDidNotRequestCredentials;
 
   WorkerThreadableLoader::LoadResourceSynchronously(
       ToWorkerGlobalScope(execution_context), request, *this, options,
@@ -105,6 +108,8 @@ void WorkerScriptLoader::LoadAsynchronously(
 
   ResourceLoaderOptions resource_loader_options;
   resource_loader_options.allow_credentials = kAllowStoredCredentials;
+  resource_loader_options.credentials_requested =
+      kClientDidNotRequestCredentials;
 
   // During create, callbacks may happen which could remove the last reference
   // to this object, while some of the callchain assumes that the client and
