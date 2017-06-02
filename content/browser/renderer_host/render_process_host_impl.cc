@@ -1521,6 +1521,10 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
                  base::Unretained(push_messaging_manager_.get())));
 
   registry->AddInterface(
+      base::Bind(&RenderProcessHostImpl::ForwardSVGRendererRequest,
+                 base::Unretained(this)));
+
+  registry->AddInterface(
       base::Bind(&BackgroundFetchServiceImpl::Create, GetID(),
                  make_scoped_refptr(
                      storage_partition_impl_->GetBackgroundFetchContext())));
@@ -1610,6 +1614,14 @@ void RenderProcessHostImpl::CreateMusGpuRequest(
     gpu_client_.reset(new GpuClient(GetID()));
   gpu_client_->Add(std::move(request));
 }
+
+// This method should create a new renderer process, and forward the request
+// to that process directly. Something like:
+// createNewRendererProcess()->GetRemoteInterfaces()->
+// GetInterface(std::move(request));
+void RenderProcessHostImpl::ForwardSVGRendererRequest(
+    const service_manager::BindSourceInfo& source_info,
+    blink::mojom::SVGRendererRequest request) {}
 
 void RenderProcessHostImpl::CreateOffscreenCanvasProvider(
     const service_manager::BindSourceInfo& source_info,
