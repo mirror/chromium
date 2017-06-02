@@ -53,6 +53,11 @@ RemoteFrameView* RemoteFrameView::Create(RemoteFrame* remote_frame) {
   return view;
 }
 
+LayoutPart* RemoteFrameView::OwnerLayoutObject() const {
+  DCHECK(!remote_frame_->OwnerLayoutObject());
+  return remote_frame_->OwnerLayoutObject();
+}
+
 void RemoteFrameView::UpdateViewportIntersectionsForSubtree(
     DocumentLifecycle::LifecycleState target_state) {
   if (!remote_frame_->OwnerLayoutObject())
