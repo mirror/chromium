@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/containers/hash_tables.h"
+#include "base/files/scoped_file.h"
 #include "base/gtest_prod_util.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -253,23 +254,14 @@ class TabManagerDelegate::Candidate {
 // test get a chance to mock out.
 class TabManagerDelegate::MemoryStat {
  public:
-  MemoryStat() {}
-  virtual ~MemoryStat() {}
+  MemoryStat();
+  virtual ~MemoryStat();
 
-  // Returns target size of memory to free given current memory pressure and
-  // pre-configured low memory margin.
-  virtual int TargetMemoryToFreeKB();
-
-  // Returns estimated memory to be freed if the process |pid| is killed.
-  virtual int EstimatedMemoryFreedKB(base::ProcessHandle pid);
+  // Returns whether system is in low memory status.
+  virtual bool IsLowMemoryCondition();
 
  private:
-  // Returns the low memory margin system config. Low memory condition is
-  // reported if available memory is under the number.
-  static int LowMemoryMarginKB();
-
-  // Reads in an integer.
-  static int ReadIntFromFile(const char* file_name, int default_val);
+  base::ScopedFD low_mem_file_;
 };
 
 }  // namespace resource_coordinator

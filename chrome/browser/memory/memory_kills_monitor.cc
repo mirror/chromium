@@ -149,8 +149,7 @@ MemoryKillsMonitor::Handle MemoryKillsMonitor::StartMonitoring() {
 }
 
 // static
-void MemoryKillsMonitor::LogLowMemoryKill(
-    const std::string& type, int estimated_freed_kb) {
+void MemoryKillsMonitor::LogLowMemoryKill(const std::string& type) {
   static base::Time last_kill_time;
   static int low_memory_kills = 0;
 
@@ -168,9 +167,6 @@ void MemoryKillsMonitor::LogLowMemoryKill(
   ++low_memory_kills;
   UMA_HISTOGRAM_CUSTOM_COUNTS(
       "Arc.LowMemoryKiller.Count", low_memory_kills, 1, 1000, 1001);
-
-  UMA_HISTOGRAM_MEMORY_KB("Arc.LowMemoryKiller.FreedSize",
-                          estimated_freed_kb);
 }
 
 // static
