@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6970eda0_05477ed6",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 14197,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-06-02T12:47:11Z",
+      "side": 1,
+      "message": "This is the automatic tool, not me. Not sure if I should manually put it back.",
+      "revId": "1ba772c1b84392af3acccae8584068a0b60f1e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
