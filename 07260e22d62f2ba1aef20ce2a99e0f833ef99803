@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24986b0a_b1c2d75e",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-02T03:51:25Z",
+      "side": 1,
+      "message": "This is called only on main thread (at least for now)",
+      "revId": "07260e22d62f2ba1aef20ce2a99e0f833ef99803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "714a1577_2ac90e6e",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-02T03:51:25Z",
+      "side": 1,
+      "message": "This comment feels wrong.",
+      "revId": "07260e22d62f2ba1aef20ce2a99e0f833ef99803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae9f5fd8_91021cf0",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-02T03:51:25Z",
+      "side": 1,
+      "message": "I think we want reasonably well-defined, similarly looking interfaces for WorkerClients set-up for various workers.  This should be named something like RegisterWorkerClientsProviderCallback.  (Hiroki- maybe we could provide something for these in worker infra?)",
+      "revId": "07260e22d62f2ba1aef20ce2a99e0f833ef99803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
