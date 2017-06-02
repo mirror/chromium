@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0c0b5ca8_52d12c14",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/ui/MediaNotificationFaviconTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-06-02T09:26:49Z",
+      "side": 1,
+      "message": "The tests are running in Robolectric which can simulate different SDKs. I have added another test that forces a pre-O test. I can\u0027t force an O SDK yet since it isn\u0027t supported.",
+      "parentUuid": "b58237bb_2ffa6963",
+      "revId": "0fda5b68aa171dcecb2574e3b2e0b64537929d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57455f1b_cfb1d6b5",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/ui/MediaNotificationFaviconTest.java",
         "patchSetId": 2
@@ -57,6 +75,30 @@
       "revId": "0fda5b68aa171dcecb2574e3b2e0b64537929d7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c483b44c_e5f990c1",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/ui/MediaNotificationFaviconTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-06-02T09:26:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57455f1b_cfb1d6b5",
+      "range": {
+        "startLine": 74,
+        "startChar": 8,
+        "endLine": 74,
+        "endChar": 19
+      },
+      "revId": "0fda5b68aa171dcecb2574e3b2e0b64537929d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
