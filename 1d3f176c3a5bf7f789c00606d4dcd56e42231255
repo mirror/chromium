@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95618038_a4934f6e",
+        "filename": "courgette/memory_allocator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-02T11:39:00Z",
+      "side": 1,
+      "message": "remove this dcheck -- it\u0027ll never be hit now. you can then remove all of the braces to shrink this thing down a bit.",
+      "range": {
+        "startLine": 204,
+        "startChar": 37,
+        "endLine": 204,
+        "endChar": 52
+      },
+      "revId": "1d3f176c3a5bf7f789c00606d4dcd56e42231255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03376dab_04fb20d4",
+        "filename": "courgette/memory_allocator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-02T11:39:00Z",
+      "side": 1,
+      "message": "nit: remove the text to reduce binary size since it doesn\u0027t provide any info over file+line number.",
+      "range": {
+        "startLine": 207,
+        "startChar": 21,
+        "endLine": 207,
+        "endChar": 37
+      },
+      "revId": "1d3f176c3a5bf7f789c00606d4dcd56e42231255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
