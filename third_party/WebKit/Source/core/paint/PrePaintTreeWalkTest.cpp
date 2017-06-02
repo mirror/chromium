@@ -21,7 +21,12 @@
 
 namespace blink {
 
-typedef std::pair<bool, bool> SlimmingPaintAndRootLayerScrolling;
+enum SlimmingPaintAndRootLayerScrolling {
+  SlimmingPaintV1WithoutRootLayerScrolling,
+  SlimmingPaintV1WithRootLayerScrolling,
+  SlimmingPaintV2,  // RootLayerScrolling is implied.
+};
+
 class PrePaintTreeWalkTest
     : public ::testing::WithParamInterface<SlimmingPaintAndRootLayerScrolling>,
       private ScopedSlimmingPaintV2ForTest,
@@ -30,9 +35,10 @@ class PrePaintTreeWalkTest
       public RenderingTest {
  public:
   PrePaintTreeWalkTest()
-      : ScopedSlimmingPaintV2ForTest(GetParam().second),
+      : ScopedSlimmingPaintV2ForTest(GetParam() == SlimmingPaintV2),
         ScopedSlimmingPaintInvalidationForTest(true),
-        ScopedRootLayerScrollingForTest(GetParam().first),
+        ScopedRootLayerScrollingForTest(GetParam() >=
+                                        SlimmingPaintV1WithRootLayerScrolling),
         RenderingTest(EmptyLocalFrameClient::Create()) {}
 
   const TransformPaintPropertyNode* FramePreTranslation() {
@@ -75,15 +81,12 @@ class PrePaintTreeWalkTest
   }
 };
 
-SlimmingPaintAndRootLayerScrolling g_prepaint_foo[] = {
-    SlimmingPaintAndRootLayerScrolling(false, false),
-    SlimmingPaintAndRootLayerScrolling(true, false),
-    SlimmingPaintAndRootLayerScrolling(false, true),
-    SlimmingPaintAndRootLayerScrolling(true, true)};
-
-INSTANTIATE_TEST_CASE_P(All,
-                        PrePaintTreeWalkTest,
-                        ::testing::ValuesIn(g_prepaint_foo));
+INSTANTIATE_TEST_CASE_P(
+    All,
+    PrePaintTreeWalkTest,
+    ::testing::Values(SlimmingPaintV1WithoutRootLayerScrolling,
+                      SlimmingPaintV1WithRootLayerScrolling,
+                      SlimmingPaintV2));
 
 TEST_P(PrePaintTreeWalkTest, PropertyTreesRebuiltWithBorderInvalidation) {
   SetBodyInnerHTML(

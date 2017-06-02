@@ -95,13 +95,10 @@ class PaintControllerPaintTest : public PaintControllerPaintTestBase {
 };
 
 class PaintControllerPaintTestForSlimmingPaintV2
-    : public PaintControllerPaintTestBase,
-      public testing::WithParamInterface<bool>,
-      private ScopedRootLayerScrollingForTest {
+    : public PaintControllerPaintTestBase {
  public:
   PaintControllerPaintTestForSlimmingPaintV2()
-      : PaintControllerPaintTestBase(true),
-        ScopedRootLayerScrollingForTest(GetParam()) {}
+      : PaintControllerPaintTestBase(true) {}
 };
 
 class PaintControllerPaintTestForSlimmingPaintV1AndV2
