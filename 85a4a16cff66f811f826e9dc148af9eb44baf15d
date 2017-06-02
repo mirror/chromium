@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6cafece_b91b6bf5",
+        "filename": "components/ntp_snippets/features.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-06-02T10:13:14Z",
+      "side": 1,
+      "message": "Can we find a better name for this feature?\n(This name helps only those who knew what the M58 fetcher did)",
+      "range": {
+        "startLine": 54,
+        "startChar": 27,
+        "endLine": 54,
+        "endChar": 64
+      },
+      "revId": "85a4a16cff66f811f826e9dc148af9eb44baf15d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c3b2f23_91c3ffba",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-06-02T10:13:14Z",
+      "side": 1,
+      "message": "So, this variable is a milestone but the code just emulates the previous behavior. In M58, this code wouldn\u0027t even exist.\nIf I wouldn\u0027t know your intention, I had no idea why you would check for a version here.\nI would really advocate for a more descriptive name. What is the defining feature of M58? \nNon-Wifi, Regular, Persistent fetches?\n\nmaybe bool checkRegularNoWifi?",
+      "range": {
+        "startLine": 155,
+        "startChar": 7,
+        "endLine": 155,
+        "endChar": 10
+      },
+      "revId": "85a4a16cff66f811f826e9dc148af9eb44baf15d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8fd7977_e6d0f802",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-06-02T10:13:14Z",
+      "side": 1,
+      "message": "So basically all our expectations are that some functions are not called?\nCould we then add some comments or use EXPECT_CALL().TIMES(0) to make that more explicit?",
+      "range": {
+        "startLine": 872,
+        "startChar": 7,
+        "endLine": 872,
+        "endChar": 49
+      },
+      "revId": "85a4a16cff66f811f826e9dc148af9eb44baf15d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea4da49_653d0ef2",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-06-02T10:13:14Z",
+      "side": 1,
+      "message": "nit: . at the end?",
+      "range": {
+        "startLine": 886,
+        "startChar": 52,
+        "endLine": 886,
+        "endChar": 0
+      },
+      "revId": "85a4a16cff66f811f826e9dc148af9eb44baf15d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "673d4f9c_3e06f92f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-06-02T10:13:14Z",
+      "side": 1,
+      "message": "nit: That\u0027s a great word, but do you mean \u0027neither\u0027?",
+      "range": {
+        "startLine": 886,
+        "startChar": 18,
+        "endLine": 886,
+        "endChar": 24
+      },
+      "revId": "85a4a16cff66f811f826e9dc148af9eb44baf15d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
