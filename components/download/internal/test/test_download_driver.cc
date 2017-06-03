@@ -84,5 +84,9 @@ base::Optional<DriverEntry> TestDownloadDriver::Find(const std::string& guid) {
   return it->second;
 }
 
+void TestDownloadDriver::GetDriverEntries(
+    std::vector<DriverEntry>& driver_entries,
+    const std::vector<Entry*>& model_entries) {}
+
 }  // namespace test
 }  // namespace download

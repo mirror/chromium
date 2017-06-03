@@ -5,7 +5,9 @@
 #ifndef COMPONENTS_DOWNLOAD_INTERNAL_DOWNLOAD_DRIVER_H_
 #define COMPONENTS_DOWNLOAD_INTERNAL_DOWNLOAD_DRIVER_H_
 
+#include <set>
 #include <string>
+#include <vector>
 
 #include "base/optional.h"
 #include "components/download/internal/driver_entry.h"
@@ -18,6 +20,7 @@ class FilePath;
 namespace download {
 
 struct DownloadParams;
+struct Entry;
 
 // The interface that includes all the operations to interact with low level
 // download library functionalities.
@@ -72,8 +75,17 @@ class DownloadDriver {
   // Resumes the download
   virtual void Resume(const std::string& guid) = 0;
 
+  // Removes the entry from download history and database. If the download was
+  // in-progress or interrupted, then the intermediate file will also be
+  // deleted..
+  virtual void Remove(const std::string& guid) = 0;
+
   // Find a download record from low level download library.
   virtual base::Optional<DriverEntry> Find(const std::string& guid) = 0;
+
+  // Creates and returns driver entries for a given list of entries.
+  virtual void GetDriverEntries(std::vector<DriverEntry>& driver_entries,
+                                const std::vector<Entry*>& model_entries) = 0;
 };
 
 }  // namespace download

@@ -41,7 +41,10 @@ class DownloadDriverImpl : public DownloadDriver,
   void Cancel(const std::string& guid) override;
   void Pause(const std::string& guid) override;
   void Resume(const std::string& guid) override;
+  void Remove(const std::string& guid) override;
   base::Optional<DriverEntry> Find(const std::string& guid) override;
+  void GetDriverEntries(std::vector<DriverEntry>& driver_entries,
+                        const std::vector<Entry*>& model_entries) override;
 
  private:
   // content::DownloadItem::Observer implementation.

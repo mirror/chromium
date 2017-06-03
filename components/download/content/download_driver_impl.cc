@@ -46,6 +46,8 @@ DriverEntry DownloadDriverImpl::CreateDriverEntry(
   entry.paused = item->IsPaused();
   entry.bytes_downloaded = item->GetReceivedBytes();
   entry.expected_total_size = item->GetTotalBytes();
+  entry.physical_file_path = item->GetFullPath();
+  entry.completion_time = item->GetEndTime();
   entry.response_headers = item->GetResponseHeaders();
   return entry;
 }
@@ -139,6 +141,14 @@ void DownloadDriverImpl::Resume(const std::string& guid) {
     item->Resume();
 }
 
+void DownloadDriverImpl::Remove(const std::string& guid) {
+  if (!download_manager_)
+    return;
+  content::DownloadItem* item = download_manager_->GetDownloadByGuid(guid);
+  if (item)
+    item->Remove();
+}
+
 base::Optional<DriverEntry> DownloadDriverImpl::Find(const std::string& guid) {
   if (!download_manager_)
     return base::nullopt;
@@ -146,6 +156,19 @@ base::Optional<DriverEntry> DownloadDriverImpl::Find(const std::string& guid) {
   if (item)
     return CreateDriverEntry(item);
   return base::nullopt;
+}
+
+void DownloadDriverImpl::GetDriverEntries(
+    std::vector<DriverEntry>& driver_entries,
+    const std::vector<Entry*>& model_entries) {
+  for (auto* entry : model_entries) {
+    content::DownloadItem* item =
+        download_manager_->GetDownloadByGuid(entry->guid);
+    if (!item)
+      continue;
+
+    driver_entries.push_back(CreateDriverEntry(item));
+  }
 }
 
 void DownloadDriverImpl::OnDownloadUpdated(content::DownloadItem* item) {

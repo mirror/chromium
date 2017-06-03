@@ -13,21 +13,7 @@ bool CompareEntry(const Entry* const& expected, const Entry* const& actual) {
   if (expected == nullptr || actual == nullptr)
     return expected == actual;
 
-  // TODO(shaktisahu): Add operator== in Entry.
-  return expected->client == actual->client && expected->guid == actual->guid &&
-         expected->scheduling_params.cancel_time ==
-             actual->scheduling_params.cancel_time &&
-         expected->scheduling_params.network_requirements ==
-             actual->scheduling_params.network_requirements &&
-         expected->scheduling_params.battery_requirements ==
-             actual->scheduling_params.battery_requirements &&
-         expected->scheduling_params.priority ==
-             actual->scheduling_params.priority &&
-         expected->request_params.url == actual->request_params.url &&
-         expected->request_params.method == actual->request_params.method &&
-         expected->request_params.request_headers.ToString() ==
-             actual->request_params.request_headers.ToString() &&
-         expected->state == actual->state;
+  return *expected == *actual;
 }
 
 bool CompareEntryList(const std::vector<Entry*>& expected,
@@ -36,14 +22,9 @@ bool CompareEntryList(const std::vector<Entry*>& expected,
                              CompareEntry);
 }
 
-bool EntryComparison(const Entry& expected, const Entry& actual) {
-  return CompareEntry(&expected, &actual);
-}
-
 bool CompareEntryList(const std::vector<Entry>& list1,
                       const std::vector<Entry>& list2) {
-  return std::is_permutation(list1.begin(), list1.end(), list2.begin(),
-                             EntryComparison);
+  return std::is_permutation(list1.begin(), list1.end(), list2.begin());
 }
 
 Entry BuildEntry(DownloadClient client, const std::string& guid) {

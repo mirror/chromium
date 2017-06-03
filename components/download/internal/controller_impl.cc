@@ -13,19 +13,30 @@
 #include "components/download/internal/config.h"
 #include "components/download/internal/entry.h"
 #include "components/download/internal/entry_utils.h"
+#include "components/download/internal/file_monitor.h"
 #include "components/download/internal/model.h"
 #include "components/download/internal/stats.h"
+#include "components/download/public/client.h"
 
 namespace download {
 
-ControllerImpl::ControllerImpl(std::unique_ptr<ClientSet> clients,
-                               std::unique_ptr<Configuration> config,
-                               std::unique_ptr<DownloadDriver> driver,
-                               std::unique_ptr<Model> model)
+ControllerImpl::ControllerImpl(
+    std::unique_ptr<ClientSet> clients,
+    std::unique_ptr<Configuration> config,
+    std::unique_ptr<DownloadDriver> driver,
+    std::unique_ptr<Model> model,
+    const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
+    const base::FilePath& dir)
     : clients_(std::move(clients)),
       config_(std::move(config)),
+      file_dir_(dir),
       driver_(std::move(driver)),
-      model_(std::move(model)) {}
+      model_(std::move(model)),
+      file_monitor_(
+          base::MakeUnique<FileMonitor>(file_dir_,
+                                        background_task_runner,
+                                        config_->file_keep_alive_time)),
+      weak_factory_(this) {}
 
 ControllerImpl::~ControllerImpl() = default;
 
@@ -69,7 +80,9 @@ void ControllerImpl::StartDownload(const DownloadParams& params) {
   }
 
   start_callbacks_[params.guid] = params.callback;
-  model_->Add(Entry(params));
+  Entry entry(params);
+  entry.target_file_path = file_dir_.AppendASCII(params.guid);
+  model_->Add(entry);
 }
 
 void ControllerImpl::PauseDownload(const std::string& guid) {
@@ -139,10 +152,21 @@ void ControllerImpl::OnDriverReady(bool success) {
 void ControllerImpl::OnDownloadCreated(const DriverEntry& download) {}
 
 void ControllerImpl::OnDownloadFailed(const DriverEntry& download, int reason) {
+  auto* entry = model_->Get(download.guid);
+  DCHECK(entry);
+  entry->completion_time = download.completion_time;
+  entry->state = Entry::State::COMPLETE;
+  model_->Update(*entry);
 }
 
 void ControllerImpl::OnDownloadSucceeded(const DriverEntry& download,
-                                         const base::FilePath& path) {}
+                                         const base::FilePath& path) {
+  auto* entry = model_->Get(download.guid);
+  DCHECK(entry);
+  entry->completion_time = download.completion_time;
+  entry->state = Entry::State::COMPLETE;
+  model_->Update(*entry);
+}
 
 void ControllerImpl::OnDownloadUpdated(const DriverEntry& download) {}
 
@@ -177,15 +201,38 @@ void ControllerImpl::OnItemAdded(bool success,
 }
 
 void ControllerImpl::OnItemUpdated(bool success,
-                                   DownloadClient client,
+                                   DownloadClient client_id,
                                    const std::string& guid) {
-  // TODO(dtrainor): Fail and clean up the download if necessary.
+  if (!success) {
+    // TODO(shaktisahu): Log UMA?
+    return;
+  }
+
+  auto* entry = model_->Get(guid);
+  if (entry->state == Entry::State::COMPLETE) {
+    base::Optional<DriverEntry> driver_entry = driver_->Find(guid);
+    DCHECK(driver_entry.has_value());
+
+    driver_->Remove(guid);
+    auto* client = clients_->GetClient(client_id);
+    DCHECK(client);
+
+    if (driver_entry.value().state == DriverEntry::State::COMPLETE) {
+      client->OnDownloadSucceeded(entry->guid, entry->target_file_path,
+                                  driver_entry.value().bytes_downloaded);
+    } else {
+      client->OnDownloadFailed(entry->guid);
+    }
+  }
 }
 
 void ControllerImpl::OnItemRemoved(bool success,
                                    DownloadClient client,
                                    const std::string& guid) {
-  // TODO(dtrainor): Fail and clean up the download if necessary.
+  base::Optional<DriverEntry> driver_entry = driver_->Find(guid);
+  if (success && driver_entry.has_value()) {
+    driver_->Remove(guid);
+  }
 }
 
 void ControllerImpl::AttemptToFinalizeSetup() {
@@ -199,27 +246,21 @@ void ControllerImpl::AttemptToFinalizeSetup() {
     return;
   }
 
-  CancelOrphanedRequests();
+  file_monitor_->CancelOrphanedRequests(
+      clients_.get(), model_->PeekEntries(),
+      base::Bind(&ControllerImpl::RemoveEntriesFromModel,
+                 weak_factory_.GetWeakPtr()));
+
+  std::vector<DriverEntry> driver_entries;
+  driver_->GetDriverEntries(driver_entries, model_->PeekEntries());
+  file_monitor_->RemoveUnassociatedFiles(model_->PeekEntries(), driver_entries);
+
   ResolveInitialRequestStates();
   PullCurrentRequestStatus();
 
   // TODO(dtrainor): Post this so that the initialization step is finalized
   // before Clients can take action.
   NotifyClientsOfStartup();
-}
-
-void ControllerImpl::CancelOrphanedRequests() {
-  auto entries = model_->PeekEntries();
-
-  std::vector<std::string> guids_to_remove;
-  for (auto* entry : entries) {
-    if (!clients_->GetClient(entry->client))
-      guids_to_remove.push_back(entry->guid);
-  }
-
-  for (auto guid : guids_to_remove) {
-    // TODO(dtrainor): Remove the download.
-  }
 }
 
 void ControllerImpl::ResolveInitialRequestStates() {
@@ -262,6 +303,13 @@ void ControllerImpl::HandleStartDownloadResponse(
 
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::Bind(callback, guid, result));
+}
+
+void ControllerImpl::RemoveEntriesFromModel(
+    const std::vector<Entry*>& entries) {
+  for (auto* entry : entries) {
+    model_->Remove(entry->guid);
+  }
 }
 
 }  // namespace download

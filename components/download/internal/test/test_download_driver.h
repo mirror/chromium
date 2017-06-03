@@ -41,6 +41,8 @@ class TestDownloadDriver : public DownloadDriver {
   void Pause(const std::string& guid) override;
   void Resume(const std::string& guid) override;
   base::Optional<DriverEntry> Find(const std::string& guid) override;
+  void GetDriverEntries(std::vector<DriverEntry>& driver_entries,
+                        const std::vector<Entry*>& model_entries) override;
 
  private:
   bool is_ready_;
