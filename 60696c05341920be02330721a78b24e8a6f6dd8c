@@ -139,6 +139,30 @@
       "revId": "60696c05341920be02330721a78b24e8a6f6dd8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df77c89_8eed8ea3",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-03T01:42:32Z",
+      "side": 1,
+      "message": "\u003e Maybe update unit test to ensure/reflect this change?\n\nSorry, missed your comment. I\u0027m doing it now in CL 522924.",
+      "parentUuid": "3905f840_4dafb0b8",
+      "range": {
+        "startLine": 418,
+        "startChar": 39,
+        "endLine": 418,
+        "endChar": 61
+      },
+      "revId": "60696c05341920be02330721a78b24e8a6f6dd8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
