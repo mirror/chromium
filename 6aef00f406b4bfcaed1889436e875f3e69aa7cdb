@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "facf902e_d79f2709",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-03T00:15:28Z",
+      "side": 1,
+      "message": "Do we need this here? why not just call pmd-\u003eAddOwnershipEdge()? all the guid are known here.",
+      "range": {
+        "startLine": 397,
+        "startChar": 25,
+        "endLine": 397,
+        "endChar": 41
+      },
+      "revId": "6aef00f406b4bfcaed1889436e875f3e69aa7cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f8b0e1a_918e7d70",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-03T00:15:28Z",
+      "side": 1,
+      "message": "TODO: Add edge between SharedMemoryTracker::GetLocalGuid() and SharedMemoryTracker::GetGlobalGuid() once we have the global dump edges in SharedMemoryTracker are available.",
+      "range": {
+        "startLine": 399,
+        "startChar": 3,
+        "endLine": 399,
+        "endChar": 48
+      },
+      "revId": "6aef00f406b4bfcaed1889436e875f3e69aa7cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38863889_1794caaa",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-03T00:15:28Z",
+      "side": 1,
+      "message": "Please check weakness parameter and call CreateWeakSharedGlobalAllocatorDump if true.",
+      "range": {
+        "startLine": 401,
+        "startChar": 4,
+        "endLine": 401,
+        "endChar": 35
+      },
+      "revId": "6aef00f406b4bfcaed1889436e875f3e69aa7cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d6b8fa_5e33f0e2",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-03T00:15:28Z",
+      "side": 1,
+      "message": "This should be SharedMemory::UnguessableToken",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 22
+      },
+      "revId": "6aef00f406b4bfcaed1889436e875f3e69aa7cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a65005_7ef155d4",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-03T00:15:28Z",
+      "side": 1,
+      "message": "client_local_dump_guid",
+      "range": {
+        "startLine": 147,
+        "startChar": 37,
+        "endLine": 147,
+        "endChar": 52
+      },
+      "revId": "6aef00f406b4bfcaed1889436e875f3e69aa7cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae83cab_b60e5571",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-03T00:15:28Z",
+      "side": 1,
+      "message": "client_global_dump_guid",
+      "range": {
+        "startLine": 148,
+        "startChar": 37,
+        "endLine": 148,
+        "endChar": 53
+      },
+      "revId": "6aef00f406b4bfcaed1889436e875f3e69aa7cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb20a45_297ad849",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-03T00:15:28Z",
+      "side": 1,
+      "message": "Is the token same as GUID? Do we not need to call SharedMemory::GetGuidForToekn to get the guid",
+      "range": {
+        "startLine": 149,
+        "startChar": 30,
+        "endLine": 149,
+        "endChar": 48
+      },
+      "revId": "6aef00f406b4bfcaed1889436e875f3e69aa7cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a26a47c_ea07faf2",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-03T00:15:28Z",
+      "side": 1,
+      "message": "This should also include weakness parameter.",
+      "range": {
+        "startLine": 150,
+        "startChar": 10,
+        "endLine": 150,
+        "endChar": 20
+      },
+      "revId": "6aef00f406b4bfcaed1889436e875f3e69aa7cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
