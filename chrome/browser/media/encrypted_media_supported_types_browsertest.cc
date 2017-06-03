@@ -32,8 +32,8 @@
 #include "url/gurl.h"
 
 #if BUILDFLAG(ENABLE_PEPPER_CDMS)
-#include "chrome/browser/media/pepper_cdm_test_constants.h"
 #include "chrome/browser/media/pepper_cdm_test_helper.h"
+#include "media/cdm/cdm_paths.h"
 #endif
 
 #if defined(OS_ANDROID)
