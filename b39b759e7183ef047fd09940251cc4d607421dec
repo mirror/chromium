@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ffb7119_c22fc50e",
+        "filename": "cc/resources/resource_settings.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-06-03T04:08:59Z",
+      "side": 1,
+      "message": "Why is enable_color_correct_rasterization now in both LayerTreeSettings and ResourceSettings?",
+      "revId": "b39b759e7183ef047fd09940251cc4d607421dec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02dedb8a_21df9316",
+        "filename": "cc/trees/layer_tree_settings.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-06-03T04:08:59Z",
+      "side": 1,
+      "message": "Why is enable_color_correct_rasterization now in both LayerTreeSettings and ResourceSettings?",
+      "revId": "b39b759e7183ef047fd09940251cc4d607421dec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
