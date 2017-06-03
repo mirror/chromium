@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "bfb0047e_cbc8b34c",
+        "filename": "services/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-03T03:23:13Z",
+      "side": 1,
+      "message": "Also, we should add this to //BUILD.gn and to some bots.\n\n(https://codereview.chromium.org/2868693002/ is an example).\nI\u0027m OK if you do it in a follow-up CL as long as this runs \nsuccessfully locally.",
+      "range": {
+        "startLine": 122,
+        "startChar": 19,
+        "endLine": 122,
+        "endChar": 36
+      },
+      "revId": "793938a1e7c3215da7950555a44cd5ab14c4e198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d27e56f3_2ba942cf",
         "filename": "services/shape_detection/android/java/src/org/chromium/shape_detection/FaceDetectionImpl.java",
         "patchSetId": 1
