@@ -11,6 +11,7 @@
 
 #include "base/bind_helpers.h"
 #include "base/callback.h"
+#include "base/files/file_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/metrics/histogram_macros.h"
@@ -33,8 +34,6 @@ const ThreatSeverity kLeastSeverity =
 ListInfos GetListInfos() {
   // NOTE(vakh): When adding a store here, add the corresponding store-specific
   // histograms also.
-  // NOTE(vakh): Delete file "AnyIpMalware.store". It has been renamed to
-  // "IpMalware.store". If it exists, it should be 75 bytes long.
   // The first argument to ListInfo specifies whether to sync hash prefixes for
   // that list. This can be false for two reasons:
   // - The server doesn't support that list yet. Once the server adds support
@@ -82,6 +81,13 @@ ListInfos GetListInfos() {
   // NOTE(vakh): IMPORTANT: Please make sure that the server already supports
   // any list before adding it to this list otherwise the prefix updates break
   // for all Canary users.
+}
+
+// Returns the name of any store files that are no longer used and can be
+// safely deleted from the disk. If any file on this list also appears on the
+// list returned byGetListInfos(), it is skipped.
+std::vector<std::string> GetStoreFilenamesToDelete() {
+  return std::vector<std::string>({"AnyIpMalware.store"});
 }
 
 // Returns the severity information about a given SafeBrowsing list. The lowest
@@ -496,6 +502,25 @@ void V4LocalDatabaseManager::DatabaseUpdated() {
   }
 }
 
+void V4LocalDatabaseManager::DeleteUnusedStoreFiles() {
+  for (auto store_filename_to_delete : GetStoreFilenamesToDelete()) {
+    DCHECK(!store_filename_to_delete.empty());
+    auto it = std::find_if(std::begin(list_infos_), std::end(list_infos_),
+                           [&store_filename_to_delete](ListInfo const& li) {
+                             return li.filename() == store_filename_to_delete;
+                           });
+    if (list_infos_.end() == it) {
+      auto store_path = base_path_.AppendASCII(store_filename_to_delete);
+      task_runner_->PostTask(FROM_HERE,
+                             base::Bind(base::IgnoreResult(&base::DeleteFile),
+                                        store_path, false /* recursive */));
+    } else {
+      NOTREACHED() << "Trying to delete a store file that's in use: "
+                   << store_filename_to_delete;
+    }
+  }
+}
+
 bool V4LocalDatabaseManager::GetPrefixMatches(
     const std::unique_ptr<PendingCheck>& check,
     FullHashToStoreAndHashPrefixesMap* full_hash_to_store_and_hash_prefixes) {
@@ -795,6 +820,11 @@ void V4LocalDatabaseManager::SetupDatabase() {
     base::SequencedWorkerPool* pool = BrowserThread::GetBlockingPool();
     task_runner_ = pool->GetSequencedTaskRunnerWithShutdownBehavior(
         pool->GetSequenceToken(), base::SequencedWorkerPool::SKIP_ON_SHUTDOWN);
+
+    // If the task_runner_ didn't already exist, that means the database manager
+    // has been recently instantiated. This is a good time to delete unused
+    // store files.
+    DeleteUnusedStoreFiles();
   }
 
   // Do not create the database on the IO thread since this may be an expensive
