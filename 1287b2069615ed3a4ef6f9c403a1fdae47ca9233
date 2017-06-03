@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84878eac_c6e462b8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelineFlameChartDataProvider.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-03T01:42:59Z",
+      "side": 1,
+      "message": "nit: inline",
+      "revId": "1287b2069615ed3a4ef6f9c403a1fdae47ca9233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
