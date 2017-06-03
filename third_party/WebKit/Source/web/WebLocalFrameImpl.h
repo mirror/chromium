@@ -71,6 +71,7 @@ class WebNode;
 class WebPerformance;
 class WebPlugin;
 class WebScriptExecutionCallback;
+class WebSpellCheckPanelHost;
 class WebView;
 class WebViewBase;
 enum class WebFrameLoadType;
@@ -179,6 +180,7 @@ class WEB_EXPORT WebLocalFrameImpl final
   bool ExecuteCommand(const WebString&, const WebString& value) override;
   bool IsCommandEnabled(const WebString&) const override;
   void SetTextCheckClient(WebTextCheckClient*) override;
+  void SetSpellCheckPanelHost(WebSpellCheckPanelHost*) override;
   void EnableSpellChecking(bool) override;
   bool IsSpellCheckingEnabled() const override;
   void ReplaceMisspelledRange(const WebString&) override;
@@ -410,6 +412,10 @@ class WEB_EXPORT WebLocalFrameImpl final
     return text_check_client_;
   }
 
+  WebSpellCheckPanelHost* SpellCheckPanelHost() const override {
+    return spell_check_panel_host_;
+  }
+
   TextFinder* GetTextFinder() const override;
   // Returns the text finder object if it already exists.
   // Otherwise creates it and then returns.
@@ -513,6 +519,8 @@ class WEB_EXPORT WebLocalFrameImpl final
   // Stores the TextCheckerClient to bridge SpellChecker and WebTextCheckClient.
   Member<TextCheckerClientImpl> text_checker_client_;
   WebTextCheckClient* text_check_client_;
+
+  WebSpellCheckPanelHost* spell_check_panel_host_;
 
   // Oilpan: WebLocalFrameImpl must remain alive until close() is called.
   // Accomplish that by keeping a self-referential Persistent<>. It is
