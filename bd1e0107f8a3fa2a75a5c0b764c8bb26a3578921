@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d51941ca_3f8edbd6",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-03T05:53:12Z",
+      "side": 1,
+      "message": "This UMA really has nothing to do with \"WatchTime\", how about just Media.HasRebuffer, or Media.NoRebuffer, which is actually more consistent with Media.MeanTimeBetweenRebuffers",
+      "range": {
+        "startLine": 370,
+        "startChar": 7,
+        "endLine": 370,
+        "endChar": 45
+      },
+      "revId": "bd1e0107f8a3fa2a75a5c0b764c8bb26a3578921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f208f400_e9b99c29",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-03T05:53:12Z",
+      "side": 1,
+      "message": "nit: had_zero_rebuffers is the same as had_no_rebuffers which is negative (i.e. 1 means zero_buffers), which is slightly unintuitive. How about s/had_zero_rebuffers/had_rebuffers",
+      "range": {
+        "startLine": 374,
+        "startChar": 21,
+        "endLine": 374,
+        "endChar": 39
+      },
+      "revId": "bd1e0107f8a3fa2a75a5c0b764c8bb26a3578921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c927690d_0ef29394",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-03T05:53:12Z",
+      "side": 1,
+      "message": "I am slightly concerned that this will not be scalable moving forward.\n\nI wonder whether it makes sense to refactor WatchTimeReporter such that in the renderer process instead of reporting watch time for each hardcoded \"key\" separately, we report the watch time for a PlaybackType struct like:\n\nstruct PlaybackType {\n  bool has_audio;\n  bool has_video;\n  bool is_mse;\n  bool is_encrypted;\n  bool is_on_battery;\n  bool is_background;\n  int overflow_count;\n  ...\n};\n\nThen in MediaInternals, we can process the data and generate WatchTime keys at runtime so that we don\u0027t need these hardcoded table. We can also generate keys for MTBR and SmoothPlayback similarly.\n\nThat being said, I think we can land this first and merge it back to M60, then refactor things in trunk.",
+      "range": {
+        "startLine": 498,
+        "startChar": 19,
+        "endLine": 498,
+        "endChar": 65
+      },
+      "revId": "bd1e0107f8a3fa2a75a5c0b764c8bb26a3578921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63f6dbf5_e4d93be4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 30139,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-03T05:53:12Z",
+      "side": 1,
+      "message": "\"Result\" seems odd. About something like \"HasRebufferBoolean\"?",
+      "range": {
+        "startLine": 30139,
+        "startChar": 63,
+        "endLine": 30139,
+        "endChar": 77
+      },
+      "revId": "bd1e0107f8a3fa2a75a5c0b764c8bb26a3578921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8892d128_8c325be4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 30141,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-03T05:53:12Z",
+      "side": 1,
+      "message": "Again, this is what YT does so it\u0027s fine. But I think it\u0027ll make more sense to have a UMA on average number of rebuffering per minute :)",
+      "range": {
+        "startLine": 30141,
+        "startChar": 23,
+        "endLine": 30141,
+        "endChar": 24
+      },
+      "revId": "bd1e0107f8a3fa2a75a5c0b764c8bb26a3578921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
