@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f8bcfa1_c43da053",
+        "filename": "services/shape_detection/android/java/src/org/chromium/shape_detection/FaceDetectionImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-03T03:23:18Z",
+      "side": 1,
+      "message": "Could you add a reference here to https://crbug.com/718329 ?",
+      "revId": "38798a8f38004d78b60bf7e35edbb2dcd6e4e669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8491a1eb_6492462b",
+        "filename": "services/shape_detection/android/java/src/org/chromium/shape_detection/FaceDetectionImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-03T03:23:18Z",
+      "side": 1,
+      "message": "s/augmentedWidth/evenWidth/ ?\nbecause it might not be augmented if |width| is already even.",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "38798a8f38004d78b60bf7e35edbb2dcd6e4e669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
