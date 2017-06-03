@@ -3,9 +3,11 @@
 // found in the LICENSE file.
 
 // Use the <code>chrome.platformKeys</code> API to access client certificates
-// managed by the platform. If the user or policy grants the permission, an
-// extension can use such a certficate in its custom authentication protocol.
-// E.g. this allows usage of platform managed certificates in third party VPNs
+// managed by the platform and client certificates provided by extensions
+// through the <code>chrome.certificateProvider</code> API. If the user or
+// policy grants the permission, an extension can use such a certficate in its
+// custom authentication protocol.  E.g. this allows usage of client
+// certificates in third party VPNs
 // (see $(ref:vpnProvider chrome.vpnProvider)).
 namespace platformKeys {
   [noinline_doc] dictionary Match {
@@ -130,6 +132,10 @@ namespace platformKeys {
     // <p>Currently, this function only supports the "RSASSA-PKCS1-v1_5"
     // algorithm with one of the hashing algorithms "none", "SHA-1", "SHA-256",
     // "SHA-384", and "SHA-512".</p>
+    // <p>Note: If the certificate is provided by another extension through the
+    // $(ref:certificateProvider chrome.certificateProvider) API, the providing
+    // extension decides which hashing algorithms are supported. The hashing
+    // algorithm "none" is not supported for these certificates.</p>
     [nocompile] static void getKeyPair(ArrayBuffer certificate,
                                        object parameters,
                                        GetKeyPairCallback callback);

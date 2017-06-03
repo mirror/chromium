@@ -5,10 +5,16 @@
 #ifndef CHROME_BROWSER_EXTENSIONS_API_PLATFORM_KEYS_PLATFORM_KEYS_API_H_
 #define CHROME_BROWSER_EXTENSIONS_API_PLATFORM_KEYS_PLATFORM_KEYS_API_H_
 
+#include <memory>
 #include <string>
 #include <vector>
 
 #include "chrome/browser/extensions/chrome_extension_function.h"
+#include "net/cert/x509_certificate.h"
+
+namespace base {
+class DictionaryValue;
+}
 
 namespace net {
 class X509Certificate;
@@ -20,6 +26,18 @@ namespace platform_keys {
 
 extern const char kErrorInvalidToken[];
 extern const char kErrorInvalidX509Cert[];
+
+struct PublicKeyInfo {
+  // The X.509 Subject Public Key Info of the key in DER encoding.
+  std::string public_key_spki_der;
+
+  // The type of the key.
+  net::X509Certificate::PublicKeyType key_type =
+      net::X509Certificate::kPublicKeyTypeUnknown;
+
+  // The size of the key in bits.
+  size_t key_size_bits = 0;
+};
 
 // Returns whether |token_id| references a known Token.
 bool ValidateToken(const std::string& token_id,
@@ -52,6 +70,14 @@ class PlatformKeysInternalGetPublicKeyFunction
  private:
   ~PlatformKeysInternalGetPublicKeyFunction() override;
   ResponseAction Run() override;
+
+  // Called when it was determined if the certificate identified by the public
+  // key supports the requested hash function.
+  void OnCertificateSupportsHash(
+      platform_keys::PublicKeyInfo key_info,
+      const base::DictionaryValue& input_algorithm_dict,
+      bool hash_supported,
+      const std::string& error_message);
 
   DECLARE_EXTENSION_FUNCTION("platformKeysInternal.getPublicKey",
                              PLATFORMKEYSINTERNAL_GETPUBLICKEY);

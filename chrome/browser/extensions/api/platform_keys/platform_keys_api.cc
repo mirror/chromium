@@ -5,10 +5,12 @@
 #include "chrome/browser/extensions/api/platform_keys/platform_keys_api.h"
 
 #include <stddef.h>
+#include <memory>
 #include <utility>
 #include <vector>
 
 #include "base/bind.h"
+#include "base/json/json_writer.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/values.h"
@@ -20,7 +22,6 @@
 #include "components/web_modal/web_contents_modal_dialog_manager.h"
 #include "content/public/browser/browser_thread.h"
 #include "net/base/net_errors.h"
-#include "net/cert/x509_certificate.h"
 
 namespace extensions {
 
@@ -29,7 +30,9 @@ namespace api_pki = api::platform_keys_internal;
 
 namespace {
 
+const char kErrorNoAlgorithmNameGiven[] = "No algorithm was given.";
 const char kErrorAlgorithmNotSupported[] = "Algorithm not supported.";
+const char kErrorNoHashNameGiven[] = "No hash name was given.";
 const char kErrorAlgorithmNotPermittedByCertificate[] =
     "The requested Algorithm is not permitted by the certificate.";
 const char kErrorInteractiveCallFromBackground[] =
@@ -38,24 +41,18 @@ const char kErrorInteractiveCallFromBackground[] =
 
 const char kWebCryptoRSASSA_PKCS1_v1_5[] = "RSASSA-PKCS1-v1_5";
 
-struct PublicKeyInfo {
-  // The X.509 Subject Public Key Info of the key in DER encoding.
-  std::string public_key_spki_der;
-
-  // The type of the key.
-  net::X509Certificate::PublicKeyType key_type =
-      net::X509Certificate::kPublicKeyTypeUnknown;
-
-  // The size of the key in bits.
-  size_t key_size_bits = 0;
-};
-
-// Builds a partial WebCrypto Algorithm object from the parameters available in
-// |key_info|, which must the info of an RSA key. This doesn't include sign/hash
-// parameters and thus isn't complete.
-// platform_keys::GetPublicKey() enforced the public exponent 65537.
-void BuildWebCryptoRSAAlgorithmDictionary(const PublicKeyInfo& key_info,
-                                          base::DictionaryValue* algorithm) {
+// Builds a WebCrypto Algorithm object from the parameters available in
+// |key_info|, which must the info of an RSA key.
+// If the optional |input_algorithm| is non-nullptr, hash parameters are copied
+// from |input_algorithm| to the resulting |algorithm|.
+// If |input_algorithm| is nullptr or if it does not contain hash paremters, if
+// they are available there, the resulting |algorithm| does not include
+// sign/hash parameters and thus isn't complete. platform_keys::GetPublicKey()
+// enforced the public exponent 65537.
+void BuildWebCryptoRSAAlgorithmDictionary(
+    const platform_keys::PublicKeyInfo& key_info,
+    const base::DictionaryValue* input_algorithm,
+    base::DictionaryValue* algorithm) {
   CHECK_EQ(net::X509Certificate::kPublicKeyTypeRSA, key_info.key_type);
   algorithm->SetStringWithoutPathExpansion("name", kWebCryptoRSASSA_PKCS1_v1_5);
   algorithm->SetIntegerWithoutPathExpansion("modulusLength",
@@ -68,6 +65,63 @@ void BuildWebCryptoRSAAlgorithmDictionary(const PublicKeyInfo& key_info,
       base::Value::CreateWithCopiedBuffer(
           reinterpret_cast<const char*>(defaultPublicExponent),
           arraysize(defaultPublicExponent)));
+
+  const base::DictionaryValue* hash;
+  if (input_algorithm && input_algorithm->GetDictionary("hash", &hash)) {
+    algorithm->SetDictionary("hash", hash->CreateDeepCopy());
+  }
+}
+
+// Extracts the "name" field from a WebCrypto Algorithm object. If an algorithm
+// name was provided, sets *|algorithm_name| and returns true. Otherwise,
+// returns false.
+bool GetAlgorithmName(const base::DictionaryValue& algorithm_dict,
+                      std::string* algorithm_name) {
+  return algorithm_dict.GetString("name", algorithm_name);
+}
+
+// Extracts the "hash.name" field from a WebCrypto Algorithm object. If a hash
+// algorithm name was provided, sets *|hash_algorithm_name| and returns true.
+// Otherwise, returns false.
+bool GetHashAlgorithmName(const base::DictionaryValue& algorithm_dict,
+                          std::string* hash_algorithm_name) {
+  const base::DictionaryValue* hash_dictionary;
+  if (!algorithm_dict.GetDictionary("hash", &hash_dictionary)) {
+    return false;
+  }
+  if (!hash_dictionary->GetString("name", hash_algorithm_name)) {
+    return false;
+  }
+  return true;
+}
+
+// Defines the mapping of normalized hash algorithm names to supported hash
+// algorithm constants.
+const struct NameHashPair {
+  const char* const name;
+  const chromeos::platform_keys::HashAlgorithm hash_algorithm;
+} kHashAlgorithmNames[] = {
+    {"none", chromeos::platform_keys::HASH_ALGORITHM_NONE},
+    {"SHA-1", chromeos::platform_keys::HASH_ALGORITHM_SHA1},
+    {"SHA-256", chromeos::platform_keys::HASH_ALGORITHM_SHA256},
+    {"SHA-384", chromeos::platform_keys::HASH_ALGORITHM_SHA384},
+    {"SHA-512", chromeos::platform_keys::HASH_ALGORITHM_SHA512},
+};
+
+// Parses a normalized hash algorithm name into a
+// platform_keys::HashAlgorithm enum value. If the hash algorithm name was
+// recognized, sets *|hash_algorithm| and returns true. Otherwise, returns
+// false.
+bool ParseHashAlgorithm(
+    const std::string& hash_algorithm_name,
+    chromeos::platform_keys::HashAlgorithm* hash_algorithm) {
+  for (const NameHashPair& hash_candidate_pair : kHashAlgorithmNames) {
+    if (hash_algorithm_name == hash_candidate_pair.name) {
+      *hash_algorithm = hash_candidate_pair.hash_algorithm;
+      return true;
+    }
+  }
+  return false;
 }
 
 const struct NameValuePair {
@@ -88,6 +142,7 @@ namespace platform_keys {
 const char kErrorInvalidToken[] = "The token is not valid.";
 const char kErrorInvalidX509Cert[] =
     "Certificate is not a valid X.509 certificate.";
+const char kErrorHashNotSupported[] = "Hash not supported.";
 const char kTokenIdUser[] = "user";
 const char kTokenIdSystem[] = "system";
 
@@ -136,7 +191,7 @@ PlatformKeysInternalGetPublicKeyFunction::Run() {
   if (!cert_x509)
     return RespondNow(Error(platform_keys::kErrorInvalidX509Cert));
 
-  PublicKeyInfo key_info;
+  platform_keys::PublicKeyInfo key_info;
   key_info.public_key_spki_der =
       chromeos::platform_keys::GetSubjectPublicKeyInfo(cert_x509);
   if (!chromeos::platform_keys::GetPublicKey(cert_x509, &key_info.key_type,
@@ -148,15 +203,57 @@ PlatformKeysInternalGetPublicKeyFunction::Run() {
   // Currently, the only supported combination is:
   //   A certificate declaring rsaEncryption in the SubjectPublicKeyInfo used
   //   with the RSASSA-PKCS1-v1.5 algorithm.
-  if (params->algorithm_name != kWebCryptoRSASSA_PKCS1_v1_5) {
+  const base::DictionaryValue& algorithm_dict =
+      params->normalized_algorithm.additional_properties;
+  std::string algorithm_name;
+  if (!GetAlgorithmName(algorithm_dict, &algorithm_name)) {
+    return RespondNow(Error(kErrorNoAlgorithmNameGiven));
+  }
+  if (algorithm_name != kWebCryptoRSASSA_PKCS1_v1_5) {
     return RespondNow(Error(kErrorAlgorithmNotPermittedByCertificate));
+  }
+  // The RSASSA-PKCS1-v1.5 algorithm (which we currently only support) requires
+  // a hash function, so query it unconditionally.
+  std::string hash_algorithm_name;
+  if (!GetHashAlgorithmName(algorithm_dict, &hash_algorithm_name)) {
+    return RespondNow(Error(kErrorNoHashNameGiven));
+  }
+  chromeos::platform_keys::HashAlgorithm hash_algorithm;
+  if (!ParseHashAlgorithm(hash_algorithm_name, &hash_algorithm)) {
+    return RespondNow(Error(platform_keys::kErrorHashNotSupported));
+  }
+
+  chromeos::PlatformKeysService* service =
+      chromeos::PlatformKeysServiceFactory::GetForBrowserContext(
+          browser_context());
+  DCHECK(service);
+  service->CertificateSupportsHash(
+      params->token_id, key_info.public_key_spki_der, hash_algorithm,
+      base::Bind(
+          &PlatformKeysInternalGetPublicKeyFunction::OnCertificateSupportsHash,
+          this, key_info, algorithm_dict));
+  return RespondLater();
+}
+
+void PlatformKeysInternalGetPublicKeyFunction::OnCertificateSupportsHash(
+    platform_keys::PublicKeyInfo key_info,
+    const base::DictionaryValue& input_algorithm,
+    bool hash_supported,
+    const std::string& error_message) {
+  if (!error_message.empty()) {
+    Respond(Error(error_message));
+    return;
+  }
+  if (!hash_supported) {
+    Respond(Error(platform_keys::kErrorHashNotSupported));
+    return;
   }
 
   api_pki::GetPublicKey::Results::Algorithm algorithm;
-  BuildWebCryptoRSAAlgorithmDictionary(key_info,
+  BuildWebCryptoRSAAlgorithmDictionary(key_info, &input_algorithm,
                                        &algorithm.additional_properties);
 
-  return RespondNow(ArgumentList(api_pki::GetPublicKey::Results::Create(
+  return Respond(ArgumentList(api_pki::GetPublicKey::Results::Create(
       std::vector<char>(key_info.public_key_spki_der.begin(),
                         key_info.public_key_spki_der.end()),
       algorithm)));
@@ -250,7 +347,7 @@ void PlatformKeysInternalSelectClientCertificatesFunction::
   DCHECK(matches);
   std::vector<api_pk::Match> result_matches;
   for (const scoped_refptr<net::X509Certificate>& match : *matches) {
-    PublicKeyInfo key_info;
+    platform_keys::PublicKeyInfo key_info;
     key_info.public_key_spki_der =
         chromeos::platform_keys::GetSubjectPublicKeyInfo(match);
     if (!chromeos::platform_keys::GetPublicKey(match, &key_info.key_type,
@@ -271,7 +368,8 @@ void PlatformKeysInternalSelectClientCertificatesFunction::
                                     der_encoded_cert.end());
 
     BuildWebCryptoRSAAlgorithmDictionary(
-        key_info, &result_match.key_algorithm.additional_properties);
+        key_info, nullptr /* input_algorithm */,
+        &result_match.key_algorithm.additional_properties);
     result_matches.push_back(std::move(result_match));
   }
   Respond(ArgumentList(
@@ -297,7 +395,11 @@ ExtensionFunction::ResponseAction PlatformKeysInternalSignFunction::Run() {
           browser_context());
   DCHECK(service);
 
-  if (params->hash_algorithm_name == "none") {
+  chromeos::platform_keys::HashAlgorithm hash_algorithm;
+  if (!ParseHashAlgorithm(params->hash_algorithm_name, &hash_algorithm)) {
+    return RespondNow(Error(kErrorAlgorithmNotSupported));
+  }
+  if (hash_algorithm == chromeos::platform_keys::HASH_ALGORITHM_NONE) {
     service->SignRSAPKCS1Raw(
         platform_keys_token_id,
         std::string(params->data.begin(), params->data.end()),
@@ -305,18 +407,6 @@ ExtensionFunction::ResponseAction PlatformKeysInternalSignFunction::Run() {
         extension_id(),
         base::Bind(&PlatformKeysInternalSignFunction::OnSigned, this));
   } else {
-    chromeos::platform_keys::HashAlgorithm hash_algorithm;
-    if (params->hash_algorithm_name == "SHA-1") {
-      hash_algorithm = chromeos::platform_keys::HASH_ALGORITHM_SHA1;
-    } else if (params->hash_algorithm_name == "SHA-256") {
-      hash_algorithm = chromeos::platform_keys::HASH_ALGORITHM_SHA256;
-    } else if (params->hash_algorithm_name == "SHA-384") {
-      hash_algorithm = chromeos::platform_keys::HASH_ALGORITHM_SHA384;
-    } else if (params->hash_algorithm_name == "SHA-512") {
-      hash_algorithm = chromeos::platform_keys::HASH_ALGORITHM_SHA512;
-    } else {
-      return RespondNow(Error(kErrorAlgorithmNotSupported));
-    }
     service->SignRSAPKCS1Digest(
         platform_keys_token_id,
         std::string(params->data.begin(), params->data.end()),

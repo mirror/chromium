@@ -1,0 +1,3 @@
+*.pk8 binary
+*.der binary
+platform_keys_bridge_test_extension/data_signature* binary
