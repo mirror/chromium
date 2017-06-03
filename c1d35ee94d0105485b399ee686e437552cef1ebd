@@ -22,6 +22,23 @@
       "revId": "c1d35ee94d0105485b399ee686e437552cef1ebd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e505dc7a_2cdee609",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-03T08:12:19Z",
+      "side": 1,
+      "message": "This function is called without holding a ScopedAllowIO object, right? Can you run TargetMemoryToFreeKB() in a blocking pool instead of calling it directly on the UI thread?\n\nThis is violating the UI thread\u0027s base::ThreadRestrictions and Debug builds will have lots of NOTREACHED() logs from base::ThreadRestrictions::AssertIOAllowed(), I believe.",
+      "revId": "c1d35ee94d0105485b399ee686e437552cef1ebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
