@@ -72,7 +72,7 @@ static bool UpdateContentClip(
   return true;
 }
 
-static CompositorElementId CreatePaintLayereBasedCompositorElementId(
+static CompositorElementId CreatePaintLayerBasedCompositorElementId(
     const LayoutObject& object) {
   DCHECK(object.IsBoxModelObject() && object.HasLayer());
   return CompositorElementIdFromPaintLayerId(
@@ -96,7 +96,7 @@ static bool UpdateScrollTranslation(
     WebLayerScrollClient* scroll_client) {
   DCHECK(!RuntimeEnabledFeatures::rootLayerScrollingEnabled());
   CompositorElementId compositor_element_id =
-      CreatePaintLayereBasedCompositorElementId(*frame_view.GetLayoutView());
+      CreatePaintLayerBasedCompositorElementId(*frame_view.GetLayoutView());
   if (auto* existing_scroll_translation = frame_view.ScrollTranslation()) {
     auto existing_reasons = existing_scroll_translation->ScrollNode()
                                 ->GetMainThreadScrollingReasons();
@@ -604,7 +604,7 @@ void PaintPropertyTreeBuilder::UpdateEffect(
             properties.Effect(), context.current.transform, output_clip,
             mask_color_filter, CompositorFilterOperations(), 1.f,
             SkBlendMode::kDstIn, kCompositingReasonSquashingDisallowed,
-            CompositorElementId());
+            properties.GetCompositorElementId());
       } else {
         force_subtree_update |= properties.ClearMask();
       }
@@ -1171,7 +1171,7 @@ void PaintPropertyTreeBuilder::UpdatePaintProperties(
         object.GetMutableForPainting().EnsurePaintProperties();
     if (RuntimeEnabledFeatures::slimmingPaintV2Enabled() && object.HasLayer()) {
       paint_properties.SetCompositorElementId(
-          CreatePaintLayereBasedCompositorElementId(object));
+          CreatePaintLayerBasedCompositorElementId(object));
     }
   } else if (!needs_paint_properties && had_paint_properties) {
     object.GetMutableForPainting().ClearPaintProperties();
