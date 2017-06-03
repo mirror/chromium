@@ -74,6 +74,13 @@ struct ModuleInspectionResult {
   CertificateInfo certificate_info;
 };
 
+enum ModuleType {
+  LOADED_MODULE = 1 << 0,
+  SHELL_EXTENSION = 1 << 1,
+};
+
+ModuleType& operator|=(ModuleType& value, ModuleType module_type);
+
 // Contains the inspection result of a module and additional information that is
 // useful to the ModuleDatabase.
 struct ModuleInfoData {
@@ -85,6 +92,8 @@ struct ModuleInfoData {
   // ProcessType enumeration to a bitfield. See "ProcessTypeToBit" and
   // "BitIndexToProcessType" for details.
   uint32_t process_types;
+
+  ModuleType module_type;
 
   // The inspection result obtained via InspectModule().
   std::unique_ptr<ModuleInspectionResult> inspection_result;
