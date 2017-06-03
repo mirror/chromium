@@ -13,7 +13,7 @@
 
 namespace blink {
 
-const int kCompositorNamespaceBitCount = 3;
+const int kCompositorNamespaceBitCount = 4;
 
 enum class CompositorElementIdNamespace {
   kPrimary,
@@ -25,6 +25,7 @@ enum class CompositorElementIdNamespace {
   kLinkHighlight,
   kPrimaryCompositorProxy,
   kScrollCompositorProxy,
+  kEffect,  // SPv2 only.
   // A sentinel to indicate the maximum representable namespace id
   // (the maximum is one less than this value).
   kMaxRepresentableNamespaceId = 1 << kCompositorNamespaceBitCount
@@ -53,6 +54,9 @@ CompositorElementId PLATFORM_EXPORT
 CompositorElementId PLATFORM_EXPORT
     CompositorElementIdFromScrollbarId(ScrollbarId,
                                        CompositorElementIdNamespace);
+
+CompositorElementId PLATFORM_EXPORT
+CompositorElementIdFromEffectId(uint64_t id);
 
 // Note cc::ElementId has a hash function already implemented via
 // ElementIdHash::operator(). However for consistency's sake we choose to use
