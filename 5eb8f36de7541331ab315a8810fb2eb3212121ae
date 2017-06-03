@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33403b62_5df1733c",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1136109
+      },
+      "writtenOn": "2017-06-03T00:18:59Z",
+      "side": 1,
+      "message": "nit: should update the doc.",
+      "range": {
+        "startLine": 44,
+        "startChar": 33,
+        "endLine": 44,
+        "endChar": 51
+      },
+      "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba2bec4a_e2d43203",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1136109
+      },
+      "writtenOn": "2017-06-03T00:18:59Z",
+      "side": 1,
+      "message": "nit: update the Args.",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 7
+      },
+      "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40cbc7c8_a78442d5",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1136109
+      },
+      "writtenOn": "2017-06-03T00:18:59Z",
+      "side": 1,
+      "message": "Does this meaning the \u0027dir-to-team\u0027 mapping will be removed from component_map.json?\n\nIs so, this is different from the document https://docs.google.com/document/d/1TGmugh1RGsQpHwkWA6Yo-J0_F_0vxgMjk06uDSZ5u0s/edit#\n\nFor existing component_map.json:\n\"with the only change being that if present, the contents of the # OS: tag would be appended to the component\"",
+      "range": {
+        "startLine": 103,
+        "startChar": 23,
+        "endLine": 104,
+        "endChar": 76
+      },
+      "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
