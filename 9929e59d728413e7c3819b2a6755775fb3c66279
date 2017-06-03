@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb6d5e4d_57cc9b5d",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-03T00:00:48Z",
+      "side": 1,
+      "message": "Good point. We already use this syntax here and it is nice to have everything in one style. Done.\nPS. I could not update line 43 to UmaHistogramExactLinear because this helper\nconverts range arguments to (1, value_max, value_max + 1)\nbut here we provide (0, SIZE, SIZE + 1).",
+      "parentUuid": "4e560da7_1b25db56",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 1
+      },
+      "revId": "9929e59d728413e7c3819b2a6755775fb3c66279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "036977e8_6f69cabc",
         "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "9929e59d728413e7c3819b2a6755775fb3c66279",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "134d130b_d723f1f8",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-03T00:00:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "036977e8_6f69cabc",
+      "range": {
+        "startLine": 500,
+        "startChar": 16,
+        "endLine": 500,
+        "endChar": 17
+      },
+      "revId": "9929e59d728413e7c3819b2a6755775fb3c66279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -91,6 +139,54 @@
       "revId": "9929e59d728413e7c3819b2a6755775fb3c66279",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67300ab9_b8d405d1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-03T00:00:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7356cbf6_805a86db",
+      "range": {
+        "startLine": 1721,
+        "startChar": 22,
+        "endLine": 1721,
+        "endChar": 42
+      },
+      "revId": "9929e59d728413e7c3819b2a6755775fb3c66279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "453626d6_e0fd571c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-03T00:00:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7742add3_27acc0eb",
+      "range": {
+        "startLine": 1721,
+        "startChar": 43,
+        "endLine": 1721,
+        "endChar": 49
+      },
+      "revId": "9929e59d728413e7c3819b2a6755775fb3c66279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
