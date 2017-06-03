@@ -109,6 +109,7 @@ class CORE_EXPORT HTMLCanvasElement final
   CanvasRenderingContext* GetCanvasRenderingContext(
       const String&,
       const CanvasContextCreationAttributes&);
+  void SetContextCreationWasBlocked() { context_creation_was_blocked_ = true; }
 
   bool IsPaintable() const;
 
@@ -314,6 +315,8 @@ class CORE_EXPORT HTMLCanvasElement final
   IntSize size_;
 
   TraceWrapperMember<CanvasRenderingContext> context_;
+  // Used only for WebGL currently.
+  bool context_creation_was_blocked_;
 
   bool ignore_reset_;
   FloatRect dirty_rect_;

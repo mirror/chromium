@@ -66,6 +66,10 @@ class CORE_EXPORT ImageResourceContent final
           device_scale_factor);  // Returns an image and the image's resolution
                                  // scale factor.
 
+  // Returns an image and the image's resolution scale factor.
+  static std::pair<blink::Image*, float> BrokenCanvas(
+      float device_scale_factor);
+
   bool UsesImageContainerSize() const;
   bool ImageHasRelativeSize() const;
   // The device pixel ratio we got from the server for this image, or 1.0.
