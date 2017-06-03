@@ -13,12 +13,13 @@ struct SupportedKeySystemResponse;
 
 namespace cdm {
 
-// Message filter for EME on android. It is responsible for getting the
+// Message filter for EME on Android. It is responsible for getting the
 // SupportedKeySystems information and passing it back to renderer.
+// TODO(xhwang): Convert this to a mojo interface.
 class CdmMessageFilterAndroid
     : public content::BrowserMessageFilter {
  public:
-  CdmMessageFilterAndroid();
+  explicit CdmMessageFilterAndroid(bool can_use_secure_codecs);
 
  private:
   ~CdmMessageFilterAndroid() override;
@@ -33,6 +34,12 @@ class CdmMessageFilterAndroid
                                SupportedKeySystemResponse* response);
 
   void OnGetPlatformKeySystemNames(std::vector<std::string>* key_systems);
+
+  // Whether secure codecs are supported, e.g. the decoded output can be
+  // renderered correctly.
+  // TODO(xhwang): Instead of a hardcoded value, check whether AndroidOverlay
+  // is supported. See http://crbug.com/459414
+  const bool can_use_secure_codecs_;
 
   DISALLOW_COPY_AND_ASSIGN(CdmMessageFilterAndroid);
 };

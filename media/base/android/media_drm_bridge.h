@@ -63,9 +63,9 @@ class MEDIA_EXPORT MediaDrmBridge : public ContentDecryptionModule,
   // Notification called when MediaCrypto object is ready.
   // Parameters:
   // |media_crypto| - global reference to MediaCrypto object
-  // |needs_protected_surface| - true if protected surface is required.
+  // |requires_secure_codec| - true if secure decoder is required
   using MediaCryptoReadyCB = base::Callback<void(JavaObjectPtr media_crypto,
-                                                 bool needs_protected_surface)>;
+                                                 bool requires_secure_codec)>;
 
   // Checks whether MediaDRM is available and usable, including for decoding.
   // All other static methods check IsAvailable() or equivalent internally.
@@ -145,9 +145,9 @@ class MEDIA_EXPORT MediaDrmBridge : public ContentDecryptionModule,
                      const base::Closure& cdm_unset_cb) override;
   void UnregisterPlayer(int registration_id) override;
 
-  // Helper function to determine whether a protected surface is needed for the
+  // Helper function to determine whether a secure decoder is required for the
   // video playback.
-  bool IsProtectedSurfaceRequired();
+  bool IsSecureCodecRequired();
 
   // Reset the device credentials.
   void ResetDeviceCredentials(const ResetCredentialsCB& callback);
@@ -271,8 +271,6 @@ class MEDIA_EXPORT MediaDrmBridge : public ContentDecryptionModule,
                  const SessionExpirationUpdateCB& session_expiration_update_cb);
 
   ~MediaDrmBridge() override;
-
-  static bool IsSecureDecoderRequired(SecurityLevel security_level);
 
   // Get the security level of the media.
   SecurityLevel GetSecurityLevel();
