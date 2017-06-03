@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4f21097_e0337cdf",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-03T00:02:10Z",
+      "side": 1,
+      "message": "nit: seems like this could be a plain old member (no unique_ptr needed)",
+      "range": {
+        "startLine": 30,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 32
+      },
+      "revId": "65bb46bcf2b027c9e3dbda21f7347e96378165ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6ed8138_e9c9574e",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-03T00:02:10Z",
+      "side": 1,
+      "message": "optional nit: \u003d default? (does that work with initialization lists?)",
+      "range": {
+        "startLine": 31,
+        "startChar": 32,
+        "endLine": 31,
+        "endChar": 33
+      },
+      "revId": "65bb46bcf2b027c9e3dbda21f7347e96378165ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d15640_de56fb9e",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-03T00:02:10Z",
+      "side": 1,
+      "message": "optional nit: \u003d default;",
+      "revId": "65bb46bcf2b027c9e3dbda21f7347e96378165ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94ef085a_e43c5409",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-03T00:02:10Z",
+      "side": 1,
+      "message": "very optional nit: DCHECK_LE(last_focused_view_tracker_-\u003eviews(), 1);",
+      "range": {
+        "startLine": 83,
+        "startChar": 35,
+        "endLine": 83,
+        "endChar": 61
+      },
+      "revId": "65bb46bcf2b027c9e3dbda21f7347e96378165ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3b00e8b_35d2fb5d",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-03T00:02:10Z",
+      "side": 1,
+      "message": "optional nit: RemoveAll()?",
+      "revId": "65bb46bcf2b027c9e3dbda21f7347e96378165ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
