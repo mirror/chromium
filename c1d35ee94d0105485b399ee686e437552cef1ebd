@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "469f6ba1_ace8fbc0",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-06-03T16:16:31Z",
+      "side": 1,
+      "message": "By \"infinite loop\" you mean otherwise tab discarder might kill nothing when kernel reports low memory condition right?",
+      "range": {
+        "startLine": 250,
+        "startChar": 13,
+        "endLine": 250,
+        "endChar": 20
+      },
+      "revId": "c1d35ee94d0105485b399ee686e437552cef1ebd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e505dc7a_2cdee609",
         "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
         "patchSetId": 1
