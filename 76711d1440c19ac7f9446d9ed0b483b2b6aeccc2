@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98f8a6c8_f992730f",
+        "filename": "DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-06-03T00:35:02Z",
+      "side": 1,
+      "message": "Add a comment about why this is here, and change to unpinned, right?\n\nAlso, to address the \"we should have a README\" problem, we should add a README.chromium file to depot_tools itself, I think.",
+      "revId": "76711d1440c19ac7f9446d9ed0b483b2b6aeccc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
