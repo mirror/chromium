@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "417767e6_bbb18e55",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-06-03T10:27:57Z",
+      "side": 1,
+      "message": "seems a constexpr const char ?",
+      "parentUuid": "c4ace36e_d27fc9ba",
+      "revId": "15e82e63160a123d03f4d29d0c4e869836861007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0669345_531e5b28",
         "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "15e82e63160a123d03f4d29d0c4e869836861007",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "875cd4d7_0038bc1c",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-06-03T10:27:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0669345_531e5b28",
+      "revId": "15e82e63160a123d03f4d29d0c4e869836861007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c48334f2_323898ac",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-06-03T10:27:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6dcd1c49_a22b34ba",
+      "revId": "15e82e63160a123d03f4d29d0c4e869836861007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c130258a_cccb6737",
         "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "15e82e63160a123d03f4d29d0c4e869836861007",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82ee26dd_ad90c8c2",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-06-03T10:27:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c130258a_cccb6737",
+      "revId": "15e82e63160a123d03f4d29d0c4e869836861007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -98,6 +170,24 @@
       "writtenOn": "2017-06-03T09:36:54Z",
       "side": 1,
       "message": "Or, base/files/file_util.h also has SetNonBlocking(int fd) API.\n\nEither way, the current code is doing file IO directly on the UI thread which I believe is against Chromium\u0027s threading model. We need to do any file IO either in the FILE thread or in a blocking pool, IIUC.",
+      "parentUuid": "89220da9_c5271c8e",
+      "revId": "15e82e63160a123d03f4d29d0c4e869836861007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f5056c_9bb868dc",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-06-03T10:27:57Z",
+      "side": 1,
+      "message": "Yes, however it looks particularly hard for me to use a callback in the case (inside a for loop? should I use lambda? I\u0027m afraid that it harms readability).\nMoreover, here the timeout is 0, which means the call is always returned immediately. There\u0027ll be no blocking.\n\nThough unusual, the code is actually used somewhere else\nhttps://cs.chromium.org/chromium/src/base/memory/memory_pressure_monitor_chromeos.cc?rcl\u003d5f96a4f208edf90610e14cfb146b71bbc344da05\u0026l\u003d91\n\nOr leave a TODO until we find a better solution?",
       "parentUuid": "89220da9_c5271c8e",
       "revId": "15e82e63160a123d03f4d29d0c4e869836861007",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
