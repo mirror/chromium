@@ -709,6 +709,7 @@ WebGLRenderingContextBase::CreateWebGraphicsContext3DProvider(
   // times via the GL_ARB_robustness extension.
   if (!frame->Loader().Client()->AllowWebGL(settings &&
                                             settings->GetWebGLEnabled())) {
+    canvas->SetContextCreationWasBlocked();
     canvas->DispatchEvent(WebGLContextEvent::Create(
         EventTypeNames::webglcontextcreationerror, false, true,
         "Web page was not allowed to create a WebGL context."));
