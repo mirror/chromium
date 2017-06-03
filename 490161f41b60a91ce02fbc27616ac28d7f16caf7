@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c2d24152_9bbe2ee6",
+        "filename": "chromecast/browser/cast_content_browser_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-03T00:23:16Z",
+      "side": 1,
+      "message": "After more discussion, I\u0027ll keep the code as is for the following reasons:\n- This flag will be removed soon in favor of AndroidOverlay.\n- This flag is only set in internal code, so checking it will be equally confusing.\n- This flag is only set for render process, so checking it in browser process needs more plumbing, including touching internal code.\n- Previous the pref was hardcoded, so hardcode a value here isn\u0027t making anything worse. And we\u0027ll replace this code soon.",
+      "parentUuid": "af469649_04bbb6bd",
+      "range": {
+        "startLine": 254,
+        "startChar": 39,
+        "endLine": 254,
+        "endChar": 58
+      },
+      "revId": "490161f41b60a91ce02fbc27616ac28d7f16caf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddd3648c_1eac15ea",
         "filename": "components/cdm/browser/cdm_message_filter_android.h",
         "patchSetId": 3
