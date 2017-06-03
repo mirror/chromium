@@ -73,6 +73,9 @@ class GPU_EXPORT Scheduler {
       return rhs.RunsBefore(lhs);
     }
 
+    SchedulingState(SequenceId sequence_id,
+                    SchedulingPriority priority,
+                    uint32_t order_num);
     SchedulingState();
     SchedulingState(const SchedulingState& other);
     ~SchedulingState();
