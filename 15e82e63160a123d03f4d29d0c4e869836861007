@@ -84,6 +84,24 @@
       "revId": "15e82e63160a123d03f4d29d0c4e869836861007",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "930a5879_2a4a9edf",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-03T09:36:54Z",
+      "side": 1,
+      "message": "Or, base/files/file_util.h also has SetNonBlocking(int fd) API.\n\nEither way, the current code is doing file IO directly on the UI thread which I believe is against Chromium\u0027s threading model. We need to do any file IO either in the FILE thread or in a blocking pool, IIUC.",
+      "parentUuid": "89220da9_c5271c8e",
+      "revId": "15e82e63160a123d03f4d29d0c4e869836861007",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
