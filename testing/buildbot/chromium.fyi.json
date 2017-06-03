@@ -225,6 +225,13 @@
       }
     ]
   },
+  "Android Builder Goma Canary (dbg)": {
+    "additional_compile_targets": [
+      "all",
+      "chrome",
+      "chromedriver_webview_shell_apk"
+    ]
+  },
   "Android VR Tests": {
     "gtest_tests": [
       {
