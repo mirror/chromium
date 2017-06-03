@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8801c3d_97b869d5",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-06-03T00:17:54Z",
+      "side": 1,
+      "message": "It looks like we are setting a less aggressive low bar.  Have we tested this on a large test run yet?\n\nAlso, this doesn\u0027t seem related to UMA, maybe it belongs in a separate changelist?",
+      "revId": "13e0172b286d2ef6093bcab056ad3fb476683679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e4878a6_faf0c287",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-06-03T00:17:54Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem related to UMA, does it belong in a separate changelist?",
+      "range": {
+        "startLine": 372,
+        "startChar": 31,
+        "endLine": 372,
+        "endChar": 55
+      },
+      "revId": "13e0172b286d2ef6093bcab056ad3fb476683679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfbbbabd_fead9a20",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-06-03T00:17:54Z",
+      "side": 1,
+      "message": "Are you sure the flakiness is fixed now?  Again, maybe this belongs in another changelist assuming the other changes were for fixing the flakiness.",
+      "range": {
+        "startLine": 515,
+        "startChar": 35,
+        "endLine": 515,
+        "endChar": 36
+      },
+      "revId": "13e0172b286d2ef6093bcab056ad3fb476683679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50107866_0dc2b3f0",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-06-03T00:17:54Z",
+      "side": 1,
+      "message": "Same comment here.",
+      "range": {
+        "startLine": 540,
+        "startChar": 37,
+        "endLine": 540,
+        "endChar": 65
+      },
+      "revId": "13e0172b286d2ef6093bcab056ad3fb476683679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
