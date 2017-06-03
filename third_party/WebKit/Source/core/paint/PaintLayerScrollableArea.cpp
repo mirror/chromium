@@ -1849,6 +1849,13 @@ bool PaintLayerScrollableArea::ComputeNeedsCompositedScrolling(
     const LCDTextMode mode,
     const PaintLayer* layer) {
   non_composited_main_thread_scrolling_reasons_ = 0;
+
+  // The root scroller needs composited scrolling layers even if it doesn't
+  // actually have scrolling since CC has these assumptions baked in for the
+  // viewport.
+  if (RootScrollerUtil::IsEffective(*layer))
+    return true;
+
   if (!layer->ScrollsOverflow())
     return false;
 
