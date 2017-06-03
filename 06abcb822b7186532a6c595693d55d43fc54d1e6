@@ -50,6 +50,24 @@
       "revId": "06abcb822b7186532a6c595693d55d43fc54d1e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "727bd7c5_ea8bf1db",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 4536,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-03T00:11:32Z",
+      "side": 1,
+      "message": "In Storage domain, I\u0027d use \"temporary\" and \"persistent\" names.",
+      "parentUuid": "337fd706_f2e6eaf0",
+      "revId": "06abcb822b7186532a6c595693d55d43fc54d1e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
