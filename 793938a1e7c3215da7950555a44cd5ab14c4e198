@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d27e56f3_2ba942cf",
+        "filename": "services/shape_detection/android/java/src/org/chromium/shape_detection/FaceDetectionImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-03T03:19:38Z",
+      "side": 1,
+      "message": "A CL landed recently that changed this to use a\norg.chromium.skia.mojom.Bitmap bitmapData instead,\nyou\u0027ll have to rebase.",
+      "range": {
+        "startLine": 41,
+        "startChar": 23,
+        "endLine": 41,
+        "endChar": 41
+      },
+      "revId": "793938a1e7c3215da7950555a44cd5ab14c4e198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e339f253_98ced679",
+        "filename": "services/shape_detection/android/javatests/src/org/chromium/shape_detection/FaceDetectionImplTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-03T03:19:38Z",
+      "side": 1,
+      "message": "Can you add a TODO + bug to modify Mac\u0027s face detection unit test\nto use this file as well?  Also, the decoded format is image/jpeg, so\nthis might be mona_lisa.jpg ?",
+      "range": {
+        "startLine": 29,
+        "startChar": 59,
+        "endLine": 29,
+        "endChar": 72
+      },
+      "revId": "793938a1e7c3215da7950555a44cd5ab14c4e198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4c0e0d1_8872ce32",
+        "filename": "services/test/data/mona_lisa.png",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-03T03:19:38Z",
+      "side": 1,
+      "message": "mona_lisa.png is decoded as image/jpeg. :?",
+      "revId": "793938a1e7c3215da7950555a44cd5ab14c4e198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
