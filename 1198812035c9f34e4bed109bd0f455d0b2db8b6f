@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5e38bfb_0266e31b",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-03T00:11:49Z",
+      "side": 1,
+      "message": "optional nit: invert this conditional and nest the statement below.",
+      "revId": "1198812035c9f34e4bed109bd0f455d0b2db8b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da6cf8e4_8784d1bc",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-03T00:11:49Z",
+      "side": 1,
+      "message": "nit: plain member? (avoid unique_ptr)",
+      "revId": "1198812035c9f34e4bed109bd0f455d0b2db8b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af67f47_90292aad",
+        "filename": "ui/views/view_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-03T00:11:49Z",
+      "side": 1,
+      "message": "optional nit: move nullptr initializer to the member\u0027s decl.",
+      "range": {
+        "startLine": 11,
+        "startChar": 39,
+        "endLine": 11,
+        "endChar": 44
+      },
+      "revId": "1198812035c9f34e4bed109bd0f455d0b2db8b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c183edb8_8e86054d",
+        "filename": "ui/views/view_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-03T00:11:49Z",
+      "side": 1,
+      "message": "nit: s/ the View is removed/, it\u0027s removed/ for a one-liner",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 73
+      },
+      "revId": "1198812035c9f34e4bed109bd0f455d0b2db8b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c55e16_f7206ac5",
+        "filename": "ui/views/view_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-03T00:11:49Z",
+      "side": 1,
+      "message": "q: Is this okay in the style guide?",
+      "revId": "1198812035c9f34e4bed109bd0f455d0b2db8b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
