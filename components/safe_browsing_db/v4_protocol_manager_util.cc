@@ -141,6 +141,13 @@ ListIdentifier GetUrlUwsId() {
   return ListIdentifier(GetCurrentPlatformType(), URL, UNWANTED_SOFTWARE);
 }
 
+std::string GetUmaSuffixForStore(const base::FilePath& file_path) {
+  DCHECK_EQ(".store", file_path.BaseName().Extension());
+
+  return base::StringPrintf(
+      ".%" PRIsFP, file_path.BaseName().RemoveExtension().value().c_str());
+}
+
 // The Safe Browsing V4 server URL prefix.
 const char kSbV4UrlPrefix[] = "https://safebrowsing.googleapis.com/v4";
 
