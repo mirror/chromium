@@ -433,7 +433,7 @@ void V8TestInterfacePartial::installV8TestInterfaceTemplate(v8::Isolate* isolate
   // Initialize the interface object's template.
   V8TestInterface::installV8TestInterfaceTemplate(isolate, world, interfaceTemplate);
 
-  if (!RuntimeEnabledFeatures::featureNameEnabled()) {
+  if (!RuntimeEnabledFeatures::FeatureNameEnabled()) {
     return;
   }
 
