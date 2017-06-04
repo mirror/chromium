@@ -11,10 +11,11 @@
 
 #include "base/bind_helpers.h"
 #include "base/callback.h"
+#include "base/files/file_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/threading/sequenced_worker_pool.h"
+#include "base/task_scheduler/post_task.h"
 #include "components/safe_browsing_db/v4_feature_list.h"
 #include "components/safe_browsing_db/v4_protocol_manager_util.h"
 #include "content/public/browser/browser_thread.h"
@@ -33,8 +34,6 @@ const ThreatSeverity kLeastSeverity =
 ListInfos GetListInfos() {
   // NOTE(vakh): When adding a store here, add the corresponding store-specific
   // histograms also.
-  // NOTE(vakh): Delete file "AnyIpMalware.store". It has been renamed to
-  // "IpMalware.store". If it exists, it should be 75 bytes long.
   // The first argument to ListInfo specifies whether to sync hash prefixes for
   // that list. This can be false for two reasons:
   // - The server doesn't support that list yet. Once the server adds support
@@ -84,6 +83,13 @@ ListInfos GetListInfos() {
   // for all Canary users.
 }
 
+// Returns the name of any store files that are no longer used and can be
+// safely deleted from the disk. If any file on this list also appears on the
+// list returned byGetListInfos(), it is skipped.
+std::vector<std::string> GetStoreFilenamesToDelete() {
+  return std::vector<std::string>({"AnyIpMalware.store"});
+}
+
 // Returns the severity information about a given SafeBrowsing list. The lowest
 // value is 0, which represents the most severe list.
 ThreatSeverity GetThreatSeverity(const ListIdentifier& list_id) {
@@ -105,6 +111,15 @@ ThreatSeverity GetThreatSeverity(const ListIdentifier& list_id) {
                    << list_id.threat_type();
       return kLeastSeverity;
   }
+}
+
+// Provides a modified expansion of the UMA_HISTOGRAM_BOOLEAN macro adapted to
+// allow for a dynamically suffixed histogram name.
+void LogUMAHistogramBoolean(const std::string& name, bool sample) {
+  // Note: The factory creates and owns the histogram.
+  base::HistogramBase* histogram = base::BooleanHistogram::FactoryGet(
+      name, base::Histogram::kUmaTargetedHistogramFlag);
+  histogram->AddBoolean(sample);
 }
 
 }  // namespace
@@ -156,9 +171,13 @@ V4LocalDatabaseManager::V4LocalDatabaseManager(
     : base_path_(base_path),
       extended_reporting_level_callback_(extended_reporting_level_callback),
       list_infos_(GetListInfos()),
+      task_runner_(base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})),
       weak_factory_(this) {
   DCHECK(!base_path_.empty());
   DCHECK(!list_infos_.empty());
+
+  DeleteUnusedStoreFiles();
 
   DVLOG(1) << "V4LocalDatabaseManager::V4LocalDatabaseManager: "
            << "base_path_: " << base_path_.AsUTF8Unsafe();
@@ -496,6 +515,34 @@ void V4LocalDatabaseManager::DatabaseUpdated() {
   }
 }
 
+void V4LocalDatabaseManager::DeleteUnusedStoreFiles() {
+  for (auto store_filename_to_delete : GetStoreFilenamesToDelete()) {
+    DCHECK(!store_filename_to_delete.empty());
+    auto store_path = base_path_.AppendASCII(store_filename_to_delete);
+    bool path_exists = base::PathExists(store_path);
+    LogUMAHistogramBoolean("SafeBrowsing.V4UnusedStoreFileExists" +
+                               GetUmaSuffixForStore(store_path),
+                           path_exists);
+    if (!path_exists) {
+      continue;
+    }
+
+    // Is the file marked for deletion also being used for a valid V4Store?
+    auto it = std::find_if(std::begin(list_infos_), std::end(list_infos_),
+                           [&store_filename_to_delete](ListInfo const& li) {
+                             return li.filename() == store_filename_to_delete;
+                           });
+    if (list_infos_.end() == it) {
+      task_runner_->PostTask(FROM_HERE,
+                             base::Bind(base::IgnoreResult(&base::DeleteFile),
+                                        store_path, false /* recursive */));
+    } else {
+      NOTREACHED() << "Trying to delete a store file that's in use: "
+                   << store_filename_to_delete;
+    }
+  }
+}
+
 bool V4LocalDatabaseManager::GetPrefixMatches(
     const std::unique_ptr<PendingCheck>& check,
     FullHashToStoreAndHashPrefixesMap* full_hash_to_store_and_hash_prefixes) {
@@ -788,14 +835,6 @@ void V4LocalDatabaseManager::SetupDatabase() {
   DCHECK(!base_path_.empty());
   DCHECK(!list_infos_.empty());
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  // Only get a new task runner if there isn't one already. If the service has
-  // previously been started and stopped, a task runner could already exist.
-  if (!task_runner_) {
-    base::SequencedWorkerPool* pool = BrowserThread::GetBlockingPool();
-    task_runner_ = pool->GetSequencedTaskRunnerWithShutdownBehavior(
-        pool->GetSequenceToken(), base::SequencedWorkerPool::SKIP_ON_SHUTDOWN);
-  }
 
   // Do not create the database on the IO thread since this may be an expensive
   // operation. Instead, do that on the task_runner and when the new database
