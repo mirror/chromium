@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0281d955_1013da27",
+        "filename": "services/identity/identity_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-04T09:36:23Z",
+      "side": 1,
+      "message": "I had to think about this, but this should not be undefined behavior, as computing the value of std::move(access_token_request) doesn\u0027t actually have any side effects -- the actual move happens as a side effect of the assignment. Subtle!",
+      "range": {
+        "startLine": 97,
+        "startChar": 16,
+        "endLine": 97,
+        "endChar": 36
+      },
+      "revId": "7e1872ab650ebb028b1118ab2656f9fb42606baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
