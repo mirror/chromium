@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "093e4c4b_8a28f89d",
+        "filename": "services/ui/ws/frame_sink_manager_client_binding.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-04T14:27:54Z",
+      "side": 1,
+      "message": "We want to isolate the ws code from mojo connections in the unit tests so that we can tell if the flakiness if caused by mojo or ws.",
+      "parentUuid": "a55b5c22_e703df79",
+      "range": {
+        "startLine": 21,
+        "startChar": 45,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "493b3d3260ceea7b3f706e91500e47aacf040406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23e48f99_e51150e9",
         "filename": "services/ui/ws/frame_sink_manager_client_binding.h",
         "patchSetId": 3
