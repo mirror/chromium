@@ -126,11 +126,12 @@ void PropertyTreeManager::SetupRootEffectNode() {
   cc::EffectNode& effect_node =
       *effect_tree.Node(effect_tree.Insert(cc::EffectNode(), kInvalidNodeId));
   DCHECK_EQ(effect_node.id, kSecondaryRootNodeId);
-  effect_node.stable_id = root_layer_->id();
+  effect_node.stable_id =
+      CompositorElementIdFromEffectId(kSecondaryRootNodeId).id_;
   effect_node.transform_id = kRealRootNodeId;
   effect_node.clip_id = kSecondaryRootNodeId;
   effect_node.has_render_surface = true;
-  effect_tree.SetOwningLayerIdForNode(&effect_node, effect_node.stable_id);
+  effect_tree.SetOwningLayerIdForNode(&effect_node, kSecondaryRootNodeId);
 
   effect_stack_.push_back(
       BlinkEffectAndCcIdPair{EffectPaintPropertyNode::Root(), effect_node.id});
@@ -416,7 +417,8 @@ void PropertyTreeManager::BuildEffectNodesRecursively(
 
   cc::EffectNode& effect_node = *GetEffectTree().Node(GetEffectTree().Insert(
       cc::EffectNode(), GetCurrentCompositorEffectNodeIndex()));
-  effect_node.stable_id = dummy_layer->id();
+  effect_node.stable_id = next_effect->GetCompositorElementId().id_;
+  LOG(ERROR) << "id:" << effect_node.stable_id;
   effect_node.clip_id = output_clip_id;
   // Every effect is supposed to have render surface enabled for grouping,
   // but we can get away without one if the effect is opacity-only and has only
