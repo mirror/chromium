@@ -130,7 +130,6 @@ void PropertyTreeManager::SetupRootEffectNode() {
   effect_node.transform_id = kRealRootNodeId;
   effect_node.clip_id = kSecondaryRootNodeId;
   effect_node.has_render_surface = true;
-  effect_tree.SetOwningLayerIdForNode(&effect_node, effect_node.stable_id);
 
   effect_stack_.push_back(
       BlinkEffectAndCcIdPair{EffectPaintPropertyNode::Root(), effect_node.id});
@@ -416,7 +415,7 @@ void PropertyTreeManager::BuildEffectNodesRecursively(
 
   cc::EffectNode& effect_node = *GetEffectTree().Node(GetEffectTree().Insert(
       cc::EffectNode(), GetCurrentCompositorEffectNodeIndex()));
-  effect_node.stable_id = dummy_layer->id();
+  effect_node.stable_id = next_effect->GetCompositorElementId().id_;
   effect_node.clip_id = output_clip_id;
   // Every effect is supposed to have render surface enabled for grouping,
   // but we can get away without one if the effect is opacity-only and has only
@@ -444,7 +443,6 @@ void PropertyTreeManager::BuildEffectNodesRecursively(
     effect_node.filters = next_effect->Filter().AsCcFilterOperations();
   }
   effect_node.blend_mode = next_effect->BlendMode();
-  GetEffectTree().SetOwningLayerIdForNode(&effect_node, dummy_layer->id());
   CompositorElementId compositor_element_id =
       next_effect->GetCompositorElementId();
   if (compositor_element_id) {
