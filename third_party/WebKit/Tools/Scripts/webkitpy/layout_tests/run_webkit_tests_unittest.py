@@ -1091,6 +1091,8 @@ class RebaselineTest(unittest.TestCase, StreamTestingMixin):
         for ext in extensions:
             baseline = file_base + '-expected' + ext
             baseline_msg = 'Writing new expected result "%s"\n' % baseline
+            print file_list
+            print baseline
             self.assertTrue(any(baseline in f for f in file_list))
             self.assert_contains(err, baseline_msg)
 
@@ -1129,8 +1131,9 @@ class RebaselineTest(unittest.TestCase, StreamTestingMixin):
         host = MockHost()
         host.filesystem.write_text_file(
             test.LAYOUT_TEST_DIR + '/failures/unexpected/text-image-checksum-expected.txt',
-            # Make the fallback baseline the same as the actual result of the test.
-            # The value is the same as actual_result of the test defined in test.py.
+            # Make the current text expectation the same as the actual text result of the test.
+            # The value is the same as actual_result of the test defined in
+            # webkitpy.layout_tests.port.test.
             'text-image-checksum_fail-txt')
         details, err, _ = logging_run(
             ['--reset-results', '--add-platform-exceptions',
@@ -1141,6 +1144,32 @@ class RebaselineTest(unittest.TestCase, StreamTestingMixin):
         self.assertEqual(len(file_list), 8)
         self.assert_baselines(file_list,
                               'platform/test-mac-mac10.10/failures/unexpected/text-image-checksum',
+                              ['.png'], err)
+
+    def test_new_flag_specific_baseline(self):
+        # Test that create new baselines under flag-specific directory if the actual results
+        # are different from the current expectations.
+        host = MockHost()
+        host.filesystem.write_text_file(
+            test.LAYOUT_TEST_DIR + '/failures/unexpected/text-image-checksum-expected.txt',
+            # Make the current text expectation the same as the actual text result of the test.
+            # The value is the same as actual_result of the test defined in
+            # webkitpy.layout_tests.port.test.
+            'text-image-checksum_fail-txt')
+        details, err, _ = logging_run(
+            ['--additional-driver-flag=--flag',
+             '--new-flag-specific-baseline',
+             'failures/unexpected/text-image-checksum.html'],
+            tests_included=True, host=host)
+        file_list = host.filesystem.written_files.keys()
+        self.assertEqual(details.exit_code, 0)
+        self.assertEqual(len(file_list), 8)
+        # We should create new pixel baseline only.
+        self.assertFalse(
+            host.filesystem.exists(
+                test.LAYOUT_TEST_DIR + '/flag-specific/flag/failures/unexpected/text-image-checksum-expected.txt'))
+        self.assert_baselines(file_list,
+                              'flag-specific/flag/failures/unexpected/text-image-checksum',
                               ['.png'], err)
 
     def test_reftest_reset_results(self):

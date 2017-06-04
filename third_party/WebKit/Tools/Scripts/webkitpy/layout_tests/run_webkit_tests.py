@@ -117,6 +117,7 @@ def parse_args(args):
 
     option_group_definitions.append(
         ('Results Options', [
+            # TODO(crbug.com/660231): Consider removing this.
             optparse.make_option(
                 '--add-platform-exceptions',
                 action='store_true',
@@ -176,6 +177,7 @@ def parse_args(args):
             optparse.make_option(
                 '--json-failing-test-results',
                 help='Path to write the JSON test results for only *failing* tests.'),
+            # TODO(crbug.com/660231): Consider removing this.
             optparse.make_option(
                 '--new-baseline',
                 action='callback',
@@ -183,6 +185,23 @@ def parse_args(args):
                 help=('Use "webkit-patch rebaseline-cl" instead, or '
                       '"--reset-results --add-platform-exceptions" if you do want to create '
                       'platform-version-specific new baselines locally.')),
+            optparse.make_option(
+                '--new-flag-specific-baseline',
+                action='store_true',
+                default=False,
+                help=('Together with --addtional-driver-flag, if actual results are '
+                      'different from expected, save actual results as new baselines '
+                      'into the flag-specific cross-platform directory')),
+            optparse.make_option(
+                '--new-flag-specific-baseline-copy',
+                action='store_true',
+                default=False,
+                help=('Together with --addtional-driver-flag, if actual results are '
+                      'different from expected, copy the expected results into the '
+                      'flag-specific cross-platform directory. This is useful for code '
+                      'review of new flag-specific baselines. '
+                      'See https://chromium.googlesource.com/chromium/src/+/master/docs/testing/layout_tests.md for details.')),
+            # TODO(crbug.com/660231): Consider removing this.
             optparse.make_option(
                 '--new-test-results',
                 action='callback',
@@ -484,7 +503,12 @@ def parse_args(args):
         option_group.add_options(group_options)
         option_parser.add_option_group(option_group)
 
-    return option_parser.parse_args(args)
+    (options, args) = option_parser.parse_args(args)
+
+    if not options.additional_driver_flag and (options.new_flag_specific_baseline or options.new_flag_specific_baseline_copy):
+        option_parser.error('--new-flag-specific-baseline[-copy] requires --additional-driver-flag')
+
+    return (options, args)
 
 
 def _set_up_derived_options(port, options, args):
@@ -512,6 +536,9 @@ def _set_up_derived_options(port, options, args):
         for path in options.additional_platform_directory:
             additional_platform_directories.append(port.host.filesystem.abspath(path))
         options.additional_platform_directory = additional_platform_directories
+
+    if options.new_flag_specific_baseline or options.new_flag_specific_baseline_copy:
+        options.reset_results = True
 
     if options.pixel_test_directories:
         options.pixel_tests = True
