@@ -15,6 +15,7 @@ CONSOLE MESSAGE: line 147:     getter matrix
 CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147:     setter matrix
 CONSOLE MESSAGE: line 147: interface CSSNumericValue : CSSStyleValue
+CONSOLE MESSAGE: line 147:     static method parse
 CONSOLE MESSAGE: line 147:     method add
 CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147:     method div
@@ -50,7 +51,6 @@ CONSOLE MESSAGE: line 147:     getter ax
 CONSOLE MESSAGE: line 147:     getter ay
 CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147: interface CSSStyleValue
-CONSOLE MESSAGE: line 147:     static method parse
 CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147:     method toString
 CONSOLE MESSAGE: line 147: interface CSSTransformComponent
