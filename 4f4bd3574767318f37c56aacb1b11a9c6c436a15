@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a6596e0a_60216c81",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-05T19:14:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fb3822a_8a126e3a",
+      "revId": "4f4bd3574767318f37c56aacb1b11a9c6c436a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a7798dc_9f9eedd2",
         "filename": "content/renderer/render_frame_proxy.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "a5751099_edf9dd52",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-05T19:14:37Z",
+      "side": 1,
+      "message": "That seems reasonable. I assume you\u0027re OK with turning this into a DCHECK() later?",
+      "parentUuid": "0a7798dc_9f9eedd2",
+      "range": {
+        "startLine": 162,
+        "startChar": 9,
+        "endLine": 162,
+        "endChar": 18
+      },
+      "revId": "4f4bd3574767318f37c56aacb1b11a9c6c436a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0797b48_d4d5dca0",
         "filename": "content/renderer/render_frame_proxy.h",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-06-01T22:51:43Z",
       "side": 1,
       "message": "nit: I think you meant must *not* be null? :)",
+      "range": {
+        "startLine": 97,
+        "startChar": 70,
+        "endLine": 97,
+        "endChar": 74
+      },
+      "revId": "4f4bd3574767318f37c56aacb1b11a9c6c436a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7786f5c1_d90cc6e1",
+        "filename": "content/renderer/render_frame_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-05T19:14:37Z",
+      "side": 1,
+      "message": "Hmm. I think that is what I wrote, am I missing something?",
+      "parentUuid": "a0797b48_d4d5dca0",
       "range": {
         "startLine": 97,
         "startChar": 70,
@@ -109,6 +175,30 @@
       "revId": "4f4bd3574767318f37c56aacb1b11a9c6c436a15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d999c013_c77e373d",
+        "filename": "content/renderer/render_frame_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-05T19:14:37Z",
+      "side": 1,
+      "message": "Sure, I\u0027ll do that. And yes, if we change it, we should make it consistent.",
+      "parentUuid": "c00901c3_152181dc",
+      "range": {
+        "startLine": 97,
+        "startChar": 58,
+        "endLine": 98,
+        "endChar": 47
+      },
+      "revId": "4f4bd3574767318f37c56aacb1b11a9c6c436a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
