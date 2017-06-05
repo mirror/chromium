@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "336f57f4_25421ffd",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-05T19:26:36Z",
+      "side": 1,
+      "message": "Sure.  Are you worried about perf/size if we keep it as a CHECK?",
+      "parentUuid": "a5751099_edf9dd52",
+      "range": {
+        "startLine": 162,
+        "startChar": 9,
+        "endLine": 162,
+        "endChar": 18
+      },
+      "revId": "4f4bd3574767318f37c56aacb1b11a9c6c436a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0797b48_d4d5dca0",
         "filename": "content/renderer/render_frame_proxy.h",
         "patchSetId": 2
@@ -119,6 +143,30 @@
       "side": 1,
       "message": "Hmm. I think that is what I wrote, am I missing something?",
       "parentUuid": "a0797b48_d4d5dca0",
+      "range": {
+        "startLine": 97,
+        "startChar": 70,
+        "endLine": 97,
+        "endChar": 74
+      },
+      "revId": "4f4bd3574767318f37c56aacb1b11a9c6c436a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44b28fb1_add7b290",
+        "filename": "content/renderer/render_frame_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-05T19:26:36Z",
+      "side": 1,
+      "message": "Sorry, I must\u0027ve gotten confused by something when I read that first.  It is indeed correct.",
+      "parentUuid": "7786f5c1_d90cc6e1",
       "range": {
         "startLine": 97,
         "startChar": 70,
