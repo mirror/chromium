@@ -26,6 +26,7 @@ class GestureNavSimple : public OverscrollControllerDelegate {
 
   void AbortGestureAnimation();
   void CompleteGestureAnimation();
+  void OnAffordanceAnimationEnded();
 
   // OverscrollControllerDelegate:
   gfx::Rect GetVisibleBounds() const override;
