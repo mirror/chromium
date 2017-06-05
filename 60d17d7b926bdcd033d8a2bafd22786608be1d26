@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "963265b1_4cb89c6a",
+        "filename": "headless/lib/headless_web_contents_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-05T15:00:44Z",
+      "side": 1,
+      "message": "Good point, I\u0027ve now reworked this to avoid mucking with the command line.",
+      "parentUuid": "4ff91602_fa505920",
+      "range": {
+        "startLine": 151,
+        "startChar": 21,
+        "endLine": 151,
+        "endChar": 42
+      },
+      "revId": "60d17d7b926bdcd033d8a2bafd22786608be1d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69de55dc_9f9afac2",
         "filename": "headless/public/headless_browser.cc",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "703d3dae_d165cde1",
+        "filename": "headless/public/headless_browser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-05T15:00:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69de55dc_9f9afac2",
+      "revId": "60d17d7b926bdcd033d8a2bafd22786608be1d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c00991b_e0e8c986",
         "filename": "headless/test/headless_browser_test.cc",
         "patchSetId": 4
@@ -53,6 +95,30 @@
       "writtenOn": "2017-06-02T21:34:14Z",
       "side": 1,
       "message": "How does this work successfully on all platforms, in particular macOS where SwiftShader isn\u0027t yet supported?",
+      "range": {
+        "startLine": 141,
+        "startChar": 6,
+        "endLine": 141,
+        "endChar": 14
+      },
+      "revId": "60d17d7b926bdcd033d8a2bafd22786608be1d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdc86835_5dea2ca4",
+        "filename": "headless/test/headless_browser_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-05T15:00:44Z",
+      "side": 1,
+      "message": "Updated the description, but basically on macOS we\u0027ll just use the physical GPU since headless is a little less \"headless\" on that platform (we just create an offscreen window essentially).",
+      "parentUuid": "7c00991b_e0e8c986",
       "range": {
         "startLine": 141,
         "startChar": 6,
