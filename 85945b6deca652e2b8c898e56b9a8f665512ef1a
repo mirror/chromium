@@ -22,6 +22,30 @@
       "revId": "85945b6deca652e2b8c898e56b9a8f665512ef1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01eb1346_ef766e2f",
+        "filename": "third_party/WebKit/Source/platform/wtf/ThreadSafeRefCounted.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-05T15:16:45Z",
+      "side": 1,
+      "message": "See, e.g.:\nhttp://www.boost.org/doc/libs/1_57_0/doc/html/atomic/usage_examples.html#boost_atomic.usage_examples.example_reference_counters.discussion\nhttps://groups.google.com/forum/#!topic/comp.programming.threads/GSkj7l-xTZ8\n\nfor discussion. acq_rel would work, but the acquire fence is only needed in the about-to-destroy case, and having the fence otherwise restricts optimization slightly. The acquire fence is needed only so that all changes to the object (prior to references on other threads being dropped) will be made visible to the current thread before the destructor.\n\nAs it happens, on x86, the acquire fence is a no-op.",
+      "parentUuid": "99af1044_9d602ceb",
+      "range": {
+        "startLine": 59,
+        "startChar": 58,
+        "endLine": 59,
+        "endChar": 0
+      },
+      "revId": "85945b6deca652e2b8c898e56b9a8f665512ef1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
