@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f7ea244_1e40db22",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 62347,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-05T15:10:12Z",
+      "side": 1,
+      "message": "Nit: You removed a space here.",
+      "range": {
+        "startLine": 62347,
+        "startChar": 32,
+        "endLine": 62347,
+        "endChar": 41
+      },
+      "revId": "1e926433593ee0d947e3d48423a234d1041118d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
