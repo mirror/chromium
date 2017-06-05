@@ -4621,6 +4621,18 @@ TEST_P(GLES2DecoderTest, TestInitInvalidDiscardableTexture) {
   EXPECT_EQ(GL_INVALID_VALUE, GetGLError());
 }
 
+TEST_P(GLES2DecoderTest, TestInitDiscardableTextureWithMissingBuffer) {
+  EXPECT_EQ(0u, group().discardable_manager()->NumCacheEntriesForTesting());
+
+  // Manually initialize an init command with an invalid buffer.
+  cmds::InitializeDiscardableTextureCHROMIUM cmd;
+  cmd.Init(client_texture_id_, kInvalidSharedMemoryId, 0);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+
+  // We should still have nothing in our cache.
+  EXPECT_EQ(0u, group().discardable_manager()->NumCacheEntriesForTesting());
+}
+
 TEST_P(GLES2DecoderTest, TestUnlockDiscardableTexture) {
   const ContextGroup& context_group = group();
   EXPECT_EQ(0u,
