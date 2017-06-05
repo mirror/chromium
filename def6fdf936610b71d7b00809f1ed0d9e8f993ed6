@@ -55,6 +55,41 @@
     },
     {
       "key": {
+        "uuid": "10a786e1_8d13a55e",
+        "filename": "third_party/WebKit/Source/core/dom/Modulator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-05T06:06:07Z",
+      "side": 1,
+      "message": "\u003e \u003e Looks like MemoryCache is bypassed from isSharable() { return isMainThread(); } check,\n\u003e Yes, the memory cache should be bypassed in the off-main-thread-fetch (+horo for double-check).\n\nAdditional double-checks would be probably good as original off-main-thread-fetch only exercises RawResource cases.\n\n\u003e \u003e but still I strongly suggest exercising all security primitives in LayoutTests\n\u003e I\u0027ll add tests for security in following CLs.\n\u003e Note that the off-main-thread-fetch itself is not a mature feature and it also doesn\u0027t have enough tests at this point. We\u0027re going to make sure them before launching the features.\n\nRight, not all security primitives are plumbed yet.  Also: please note that we have modest number of tests for fetch-from-workers / RawResource cases but module-loading-from-worklets / ScriptResource case could go through different code paths.  It\u0027d imply that this work probably needs its own additional tests.",
+      "parentUuid": "8c89b91c_a2c60ac8",
+      "revId": "def6fdf936610b71d7b00809f1ed0d9e8f993ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76a47d7d_fa838714",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedWorkletMessagingProxy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-05T06:06:07Z",
+      "side": 1,
+      "message": "This feels a bit confusing, !off-main-thread-fetch-enabled \u003d\u003d classic script loading ??",
+      "revId": "def6fdf936610b71d7b00809f1ed0d9e8f993ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc765af1_c5ae1c6b",
         "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.cpp",
         "patchSetId": 1
