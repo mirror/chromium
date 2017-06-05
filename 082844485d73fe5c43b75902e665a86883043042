@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb3c88e5_29f94d1e",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-05T11:22:47Z",
+      "side": 1,
+      "message": "Would you document this early optimization with a comment why this pred is correct?\nI think we should also note that we will actually skip check in such case even though here is inside function \"WithCheck\".\n\nAlso, is there such a case where new_doc.DomTreeVersion() \u003c original_version_for_new_node + 1?",
+      "revId": "082844485d73fe5c43b75902e665a86883043042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
