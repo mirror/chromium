@@ -96,6 +96,29 @@
     },
     {
       "key": {
+        "uuid": "3e859b8e_a492857b",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-05T22:00:32Z",
+      "side": 1,
+      "message": "Please use base::UmaHistogramBoolean",
+      "range": {
+        "startLine": 372,
+        "startChar": 0,
+        "endLine": 374,
+        "endChar": 41
+      },
+      "revId": "bd1e0107f8a3fa2a75a5c0b764c8bb26a3578921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c927690d_0ef29394",
         "filename": "content/browser/media/media_internals.cc",
         "patchSetId": 3
@@ -160,6 +183,29 @@
         "startChar": 19,
         "endLine": 498,
         "endChar": 65
+      },
+      "revId": "bd1e0107f8a3fa2a75a5c0b764c8bb26a3578921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5ed0a98_bb314a75",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 30893,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-05T22:00:32Z",
+      "side": 1,
+      "message": "nit: I\u0027d suggest something like \"Had Rebuffers\" here.",
+      "range": {
+        "startLine": 30893,
+        "startChar": 24,
+        "endLine": 30893,
+        "endChar": 33
       },
       "revId": "bd1e0107f8a3fa2a75a5c0b764c8bb26a3578921",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
