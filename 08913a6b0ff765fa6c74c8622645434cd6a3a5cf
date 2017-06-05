@@ -16,6 +16,24 @@
       "revId": "08913a6b0ff765fa6c74c8622645434cd6a3a5cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc3bd42b_1f14f153",
+        "filename": "extensions/renderer/module_system.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-05T23:55:45Z",
+      "side": 1,
+      "message": "No, not a drop-in replacement, and there is (quite unfortunately) external code which depends on the old stuff - namely media router. Of course I don\u0027t know if we still actively ship the media router extension, maybe we don\u0027t. In that case I\u0027d be happy to delete this.",
+      "parentUuid": "e6afe56b_1da9acd2",
+      "revId": "08913a6b0ff765fa6c74c8622645434cd6a3a5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
