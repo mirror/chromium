@@ -31,9 +31,9 @@
 using content::DesktopMediaID;
 
 namespace views {
-
+// The order in |kSourceTypes| decides the order of tabs in picker.
 const std::vector<DesktopMediaID::Type> kSourceTypes = {
-    DesktopMediaID::TYPE_SCREEN, DesktopMediaID::TYPE_WINDOW,
+    DesktopMediaID::TYPE_WINDOW, DesktopMediaID::TYPE_SCREEN,
     DesktopMediaID::TYPE_WEB_CONTENTS};
 
 class DesktopMediaPickerViewsTest : public testing::Test {
@@ -59,7 +59,7 @@ class DesktopMediaPickerViewsTest : public testing::Test {
 
     picker_views_.reset(new DesktopMediaPickerViews());
     picker_views_->Show(nullptr, test_helper_.GetContext(), nullptr, app_name,
-                        app_name, std::move(screen_list),
+                        app_name, kSourceTypes, std::move(screen_list),
                         std::move(window_list), std::move(tab_list), true,
                         base::Bind(&DesktopMediaPickerViewsTest::OnPickerDone,
                                    base::Unretained(this)));
@@ -85,6 +85,34 @@ class DesktopMediaPickerViewsTest : public testing::Test {
 
     GetPickerDialogView()->GetPaneForTesting()->SelectTabAt(index);
     return true;
+  }
+
+  void PromoteWindowCapture() {
+    test_helper_.test_views_delegate()->set_layout_provider(
+        ChromeLayoutProvider::CreateLayoutProvider());
+    media_lists_[DesktopMediaID::TYPE_SCREEN] = new FakeDesktopMediaList();
+    media_lists_[DesktopMediaID::TYPE_WINDOW] = new FakeDesktopMediaList();
+    media_lists_[DesktopMediaID::TYPE_WEB_CONTENTS] =
+        new FakeDesktopMediaList();
+    // Promote TYPE_WINDOW to be the first one.
+    std::vector<DesktopMediaID::Type> source_types = {
+        DesktopMediaID::TYPE_WINDOW, DesktopMediaID::TYPE_SCREEN,
+        DesktopMediaID::TYPE_WEB_CONTENTS};
+    std::unique_ptr<FakeDesktopMediaList> screen_list(
+        media_lists_[DesktopMediaID::TYPE_SCREEN]);
+    std::unique_ptr<FakeDesktopMediaList> window_list(
+        media_lists_[DesktopMediaID::TYPE_WINDOW]);
+    std::unique_ptr<FakeDesktopMediaList> tab_list(
+        media_lists_[DesktopMediaID::TYPE_WEB_CONTENTS]);
+
+    base::string16 app_name = base::ASCIIToUTF16("foo");
+
+    picker_views_.reset(new DesktopMediaPickerViews());
+    picker_views_->Show(nullptr, test_helper_.GetContext(), nullptr, app_name,
+                        app_name, source_types, std::move(screen_list),
+                        std::move(window_list), std::move(tab_list), true,
+                        base::Bind(&DesktopMediaPickerViewsTest::OnPickerDone,
+                                   base::Unretained(this)));
   }
 
   MOCK_METHOD1(OnPickerDone, void(content::DesktopMediaID));
@@ -322,6 +350,15 @@ TEST_F(DesktopMediaPickerViewsTest, DoneWithAudioShare) {
 
   GetPickerDialogView()->GetDialogClientView()->AcceptWindow();
   base::RunLoop().RunUntilIdle();
+}
+
+// Verifies the order of source types is same as the input in Setup().
+TEST_F(DesktopMediaPickerViewsTest, VerifyOrderOfSourceTypesInPicker) {
+  int index = -1;
+  for (auto source_type : kSourceTypes) {
+    index = GetPickerDialogView()->GetIndexOfSourceTypeForTesting(source_type);
+    EXPECT_EQ(source_type, kSourceTypes.at(index));
+  }
 }
 
 }  // namespace views
