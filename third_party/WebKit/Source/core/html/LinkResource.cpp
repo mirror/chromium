@@ -30,11 +30,14 @@
 
 #include "core/html/LinkResource.h"
 
+#include <memory>
 #include "core/HTMLNames.h"
 #include "core/dom/Document.h"
 #include "core/html/HTMLLinkElement.h"
 #include "core/html/imports/HTMLImportsController.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/weborigin/SecurityPolicy.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -75,7 +78,12 @@ FetchParameters LinkRequestBuilder::Build(bool low_priority) const {
     resource_request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
         referrer_policy, url_, owner_->GetDocument().OutgoingReferrer()));
   }
-  FetchParameters params(resource_request, owner_->localName(), charset_);
+  std::unique_ptr<ResourceLoaderOptions> options =
+      WTF::MakeUnique<ResourceLoaderOptions>(kAllowStoredCredentials,
+                                             kClientRequestedCredentials);
+  options->initiator_info.name = owner_->localName();
+  FetchParameters params(resource_request, std::move(options));
+  params.SetCharset(charset_);
   if (low_priority)
     params.SetDefer(FetchParameters::kLazyLoad);
   params.SetContentSecurityPolicyNonce(owner_->nonce());

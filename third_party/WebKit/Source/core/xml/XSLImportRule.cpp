@@ -21,6 +21,7 @@
 
 #include "core/xml/XSLImportRule.h"
 
+#include <memory>
 #include "core/dom/Document.h"
 #include "core/loader/resource/XSLStyleSheetResource.h"
 #include "platform/SharedBuffer.h"
@@ -28,6 +29,8 @@
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/RawResource.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/TextEncoding.h"
 
 namespace blink {
@@ -87,10 +90,12 @@ void XSLImportRule::LoadSheet() {
       return;
   }
 
-  ResourceLoaderOptions fetch_options(
-      ResourceFetcher::DefaultResourceOptions());
+  std::unique_ptr<ResourceLoaderOptions> fetch_options =
+      WTF::MakeUnique<ResourceLoaderOptions>(kAllowStoredCredentials,
+                                             kClientRequestedCredentials);
+  fetch_options->initiator_info.name = FetchInitiatorTypeNames::xml;
   FetchParameters params(ResourceRequest(owner_document->CompleteURL(abs_href)),
-                         FetchInitiatorTypeNames::xml, fetch_options);
+                         std::move(fetch_options));
   params.SetOriginRestriction(FetchParameters::kRestrictToSameOrigin);
   XSLStyleSheetResource* resource = XSLStyleSheetResource::FetchSynchronously(
       params, owner_document->Fetcher());

@@ -4,6 +4,7 @@
 
 #include "core/inspector/InspectorResourceContentLoader.h"
 
+#include <memory>
 #include "core/css/CSSStyleSheet.h"
 #include "core/css/StyleSheetContents.h"
 #include "core/dom/Document.h"
@@ -19,6 +20,8 @@
 #include "platform/loader/fetch/RawResource.h"
 #include "platform/loader/fetch/Resource.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebCachePolicy.h"
 #include "public/platform/WebURLRequest.h"
 
@@ -124,8 +127,11 @@ void InspectorResourceContentLoader::Start() {
 
     if (!resource_request.Url().GetString().IsEmpty()) {
       urls_to_fetch.insert(resource_request.Url().GetString());
-      FetchParameters params(resource_request,
-                             FetchInitiatorTypeNames::internal);
+      std::unique_ptr<ResourceLoaderOptions> options =
+          WTF::MakeUnique<ResourceLoaderOptions>(kAllowStoredCredentials,
+                                                 kClientRequestedCredentials);
+      options->initiator_info.name = FetchInitiatorTypeNames::internal;
+      FetchParameters params(resource_request, std::move(options));
       Resource* resource = RawResource::Fetch(params, document->Fetcher());
       if (resource) {
         // Prevent garbage collection by holding a reference to this resource.
@@ -148,8 +154,11 @@ void InspectorResourceContentLoader::Start() {
       ResourceRequest resource_request(url);
       resource_request.SetRequestContext(
           WebURLRequest::kRequestContextInternal);
-      FetchParameters params(resource_request,
-                             FetchInitiatorTypeNames::internal);
+      std::unique_ptr<ResourceLoaderOptions> options =
+          WTF::MakeUnique<ResourceLoaderOptions>(kAllowStoredCredentials,
+                                                 kClientRequestedCredentials);
+      options->initiator_info.name = FetchInitiatorTypeNames::internal;
+      FetchParameters params(resource_request, std::move(options));
       Resource* resource =
           CSSStyleSheetResource::Fetch(params, document->Fetcher());
       if (!resource)

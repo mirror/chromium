@@ -24,6 +24,7 @@
 
 #include "core/dom/ScriptLoader.h"
 
+#include <memory>
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/ScriptSourceCode.h"
 #include "bindings/core/v8/V8BindingForCore.h"
@@ -57,6 +58,7 @@
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "platform/wtf/text/StringHash.h"
@@ -721,7 +723,11 @@ bool ScriptLoader::FetchClassicScript(
         DocumentWriteIntervention::kDoNotFetchDocWrittenScript;
   }
 
-  FetchParameters params(resource_request, element_->InitiatorName());
+  std::unique_ptr<ResourceLoaderOptions> options =
+      WTF::MakeUnique<ResourceLoaderOptions>(kAllowStoredCredentials,
+                                             kClientRequestedCredentials);
+  options->initiator_info.name = element_->InitiatorName();
+  FetchParameters params(resource_request, std::move(options));
 
   // "... cryptographic nonce, ..."
   params.SetContentSecurityPolicyNonce(nonce);

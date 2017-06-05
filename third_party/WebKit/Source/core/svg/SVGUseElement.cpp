@@ -25,6 +25,7 @@
 
 #include "core/svg/SVGUseElement.h"
 
+#include <memory>
 #include "core/SVGNames.h"
 #include "core/XLinkNames.h"
 #include "core/dom/Document.h"
@@ -44,6 +45,8 @@
 #include "core/xml/parser/XMLDocumentParser.h"
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Vector.h"
 
 namespace blink {
@@ -210,7 +213,11 @@ void SVGUseElement::UpdateTargetReference() {
       (resource_ &&
        EqualIgnoringFragmentIdentifier(resolved_url, resource_->Url())))
     return;
-  FetchParameters params(ResourceRequest(resolved_url), localName());
+  std::unique_ptr<ResourceLoaderOptions> options =
+      WTF::MakeUnique<ResourceLoaderOptions>(kAllowStoredCredentials,
+                                             kClientRequestedCredentials);
+  options->initiator_info.name = localName();
+  FetchParameters params(ResourceRequest(resolved_url), std::move(options));
   SetDocumentResource(
       DocumentResource::FetchSVGDocument(params, GetDocument().Fetcher()));
 }

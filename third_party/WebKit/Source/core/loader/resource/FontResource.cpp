@@ -83,8 +83,8 @@ FontResource* FontResource::Fetch(FetchParameters& params,
 }
 
 FontResource::FontResource(const ResourceRequest& resource_request,
-                           const ResourceLoaderOptions& options)
-    : Resource(resource_request, kFont, options),
+                           std::unique_ptr<ResourceLoaderOptions> options)
+    : Resource(resource_request, kFont, std::move(options)),
       load_limit_state_(kLoadNotStarted),
       cors_failed_(false),
       font_load_short_limit_timer_(this,

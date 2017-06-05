@@ -4,7 +4,6 @@
 
 #include "modules/notifications/NotificationImageLoader.h"
 
-#include <memory>
 #include "core/dom/ExecutionContext.h"
 #include "platform/Histogram.h"
 #include "platform/image-decoders/ImageDecoder.h"
@@ -15,6 +14,7 @@
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/CurrentTime.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Threading.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/modules/notifications/WebNotificationConstants.h"
@@ -111,19 +111,20 @@ void NotificationImageLoader::Start(
 
   // TODO(mvanouwerkerk): Add an entry for notifications to
   // FetchInitiatorTypeNames and use it.
-  ResourceLoaderOptions resource_loader_options;
-  resource_loader_options.allow_credentials = kAllowStoredCredentials;
+  std::unique_ptr<ResourceLoaderOptions> resource_loader_options =
+      WTF::MakeUnique<ResourceLoaderOptions>(kAllowStoredCredentials,
+                                             kClientDidNotRequestCredentials);
   if (execution_context->IsWorkerGlobalScope())
-    resource_loader_options.request_initiator_context = kWorkerContext;
+    resource_loader_options->request_initiator_context = kWorkerContext;
 
   ResourceRequest resource_request(url);
   resource_request.SetRequestContext(WebURLRequest::kRequestContextImage);
   resource_request.SetPriority(kResourceLoadPriorityMedium);
   resource_request.SetRequestorOrigin(execution_context->GetSecurityOrigin());
 
-  threadable_loader_ = ThreadableLoader::Create(*execution_context, this,
-                                                threadable_loader_options,
-                                                resource_loader_options);
+  threadable_loader_ = ThreadableLoader::Create(
+      *execution_context, this, threadable_loader_options,
+      std::move(resource_loader_options));
   threadable_loader_->Start(resource_request);
 }
 

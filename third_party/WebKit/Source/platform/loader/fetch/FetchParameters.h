@@ -26,10 +26,10 @@
 #ifndef FetchParameters_h
 #define FetchParameters_h
 
+#include <memory>
 #include "platform/CrossOriginAttributeValue.h"
 #include "platform/PlatformExport.h"
 #include "platform/loader/fetch/ClientHintsPreferences.h"
-#include "platform/loader/fetch/FetchInitiatorInfo.h"
 #include "platform/loader/fetch/IntegrityMetadata.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
@@ -74,13 +74,9 @@ class PLATFORM_EXPORT FetchParameters {
     ResourceWidth() : width(0), is_set(false) {}
   };
 
+  explicit FetchParameters(const ResourceRequest&);
   FetchParameters(const ResourceRequest&,
-                  const AtomicString& initiator,
-                  const String& charset = String());
-  FetchParameters(const ResourceRequest&,
-                  const AtomicString& initiator,
-                  const ResourceLoaderOptions&);
-  FetchParameters(const ResourceRequest&, const FetchInitiatorInfo&);
+                  std::unique_ptr<ResourceLoaderOptions>);
   ~FetchParameters();
 
   ResourceRequest& MutableResourceRequest() { return resource_request_; }
@@ -96,7 +92,10 @@ class PLATFORM_EXPORT FetchParameters {
   const String& Charset() const { return charset_; }
   void SetCharset(const String& charset) { charset_ = charset; }
 
-  const ResourceLoaderOptions& Options() const { return options_; }
+  const ResourceLoaderOptions& Options() const { return *options_; }
+  std::unique_ptr<ResourceLoaderOptions> ReleaseOptions() const {
+    return std::move(options_);
+  }
 
   DeferOption Defer() const { return defer_; }
   void SetDefer(DeferOption defer) { defer_ = defer; }
@@ -119,14 +118,16 @@ class PLATFORM_EXPORT FetchParameters {
 
   double PreloadDiscoveryTime() { return preload_discovery_time_; }
 
-  bool IsLinkPreload() const { return options_.initiator_info.is_link_preload; }
+  bool IsLinkPreload() const {
+    return options_->initiator_info.is_link_preload;
+  }
   void SetLinkPreload(bool is_link_preload) {
-    options_.initiator_info.is_link_preload = is_link_preload;
+    options_->initiator_info.is_link_preload = is_link_preload;
   }
 
   void SetContentSecurityCheck(
       ContentSecurityPolicyDisposition content_security_policy_option) {
-    options_.content_security_policy_option = content_security_policy_option;
+    options_->content_security_policy_option = content_security_policy_option;
   }
   void SetCrossOriginAccessControl(SecurityOrigin*, CrossOriginAttributeValue);
   OriginRestriction GetOriginRestriction() const { return origin_restriction_; }
@@ -134,26 +135,26 @@ class PLATFORM_EXPORT FetchParameters {
     origin_restriction_ = restriction;
   }
   const IntegrityMetadataSet IntegrityMetadata() const {
-    return options_.integrity_metadata;
+    return options_->integrity_metadata;
   }
   void SetIntegrityMetadata(const IntegrityMetadataSet& metadata) {
-    options_.integrity_metadata = metadata;
+    options_->integrity_metadata = metadata;
   }
 
   String ContentSecurityPolicyNonce() const {
-    return options_.content_security_policy_nonce;
+    return options_->content_security_policy_nonce;
   }
   void SetContentSecurityPolicyNonce(const String& nonce) {
-    options_.content_security_policy_nonce = nonce;
+    options_->content_security_policy_nonce = nonce;
   }
 
   void SetParserDisposition(ParserDisposition parser_disposition) {
-    options_.parser_disposition = parser_disposition;
+    options_->parser_disposition = parser_disposition;
   }
 
   void SetCacheAwareLoadingEnabled(
       CacheAwareLoadingEnabled cache_aware_loading_enabled) {
-    options_.cache_aware_loading_enabled = cache_aware_loading_enabled;
+    options_->cache_aware_loading_enabled = cache_aware_loading_enabled;
   }
 
   void MakeSynchronous();
@@ -171,7 +172,7 @@ class PLATFORM_EXPORT FetchParameters {
  private:
   ResourceRequest resource_request_;
   String charset_;
-  ResourceLoaderOptions options_;
+  mutable std::unique_ptr<ResourceLoaderOptions> options_;
   SpeculativePreloadType speculative_preload_type_;
   double preload_discovery_time_;
   DeferOption defer_;

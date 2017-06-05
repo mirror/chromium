@@ -26,6 +26,7 @@
 #include <libxslt/security.h>
 #include <libxslt/variables.h>
 #include <libxslt/xsltutils.h>
+#include <memory>
 #include "bindings/core/v8/SourceLocation.h"
 #include "core/dom/Document.h"
 #include "core/dom/TransformSource.h"
@@ -43,10 +44,12 @@
 #include "platform/loader/fetch/Resource.h"
 #include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Assertions.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/allocator/Partitions.h"
 #include "platform/wtf/text/CString.h"
 #include "platform/wtf/text/StringBuffer.h"
@@ -104,10 +107,11 @@ static xmlDocPtr DocLoaderFunc(const xmlChar* uri,
                reinterpret_cast<const char*>(uri));
       xmlFree(base);
 
-      ResourceLoaderOptions fetch_options(
-          ResourceFetcher::DefaultResourceOptions());
-      FetchParameters params(ResourceRequest(url), FetchInitiatorTypeNames::xml,
-                             fetch_options);
+      std::unique_ptr<ResourceLoaderOptions> fetch_options =
+          WTF::MakeUnique<ResourceLoaderOptions>(kAllowStoredCredentials,
+                                                 kClientRequestedCredentials);
+      fetch_options->initiator_info.name = FetchInitiatorTypeNames::xml;
+      FetchParameters params(ResourceRequest(url), std::move(fetch_options));
       params.SetOriginRestriction(FetchParameters::kRestrictToSameOrigin);
       Resource* resource =
           RawResource::FetchSynchronously(params, g_global_resource_fetcher);

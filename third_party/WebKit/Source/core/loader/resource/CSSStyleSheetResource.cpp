@@ -34,8 +34,10 @@
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/loader/fetch/ResourceClientWalker.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/weborigin/SecurityPolicy.h"
 #include "platform/wtf/CurrentTime.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -55,16 +57,20 @@ CSSStyleSheetResource* CSSStyleSheetResource::Fetch(FetchParameters& params,
 CSSStyleSheetResource* CSSStyleSheetResource::CreateForTest(
     const ResourceRequest& request,
     const String& charset) {
-  return new CSSStyleSheetResource(request, ResourceLoaderOptions(), charset);
+  return new CSSStyleSheetResource(
+      request,
+      WTF::MakeUnique<ResourceLoaderOptions>(kDoNotAllowStoredCredentials,
+                                             kClientDidNotRequestCredentials),
+      charset);
 }
 
 CSSStyleSheetResource::CSSStyleSheetResource(
     const ResourceRequest& resource_request,
-    const ResourceLoaderOptions& options,
+    std::unique_ptr<ResourceLoaderOptions> options,
     const String& charset)
     : StyleSheetResource(resource_request,
                          kCSSStyleSheet,
-                         options,
+                         std::move(options),
                          "text/css",
                          charset),
       did_notify_first_data_(false) {}

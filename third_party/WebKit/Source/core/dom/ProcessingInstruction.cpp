@@ -35,6 +35,8 @@
 #include "platform/loader/fetch/FetchInitiatorTypeNames.h"
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -149,8 +151,12 @@ void ProcessingInstruction::Process(const String& href, const String& charset) {
   String url = GetDocument().CompleteURL(href).GetString();
 
   StyleSheetResource* resource = nullptr;
+  std::unique_ptr<ResourceLoaderOptions> options =
+      WTF::MakeUnique<ResourceLoaderOptions>(kAllowStoredCredentials,
+                                             kClientRequestedCredentials);
+  options->initiator_info.name = FetchInitiatorTypeNames::processinginstruction;
   FetchParameters params(ResourceRequest(GetDocument().CompleteURL(href)),
-                         FetchInitiatorTypeNames::processinginstruction);
+                         std::move(options));
   if (is_xsl_) {
     if (RuntimeEnabledFeatures::xsltEnabled())
       resource = XSLStyleSheetResource::Fetch(params, GetDocument().Fetcher());

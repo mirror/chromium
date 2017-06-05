@@ -83,28 +83,13 @@ struct ResourceLoaderOptions {
   USING_FAST_MALLOC(ResourceLoaderOptions);
 
  public:
-  ResourceLoaderOptions()
+  ResourceLoaderOptions(StoredCredentials allow_credentials,
+                        CredentialRequest credentials_requested)
       : data_buffering_policy(kBufferData),
-        allow_credentials(kDoNotAllowStoredCredentials),
-        credentials_requested(kClientDidNotRequestCredentials),
-        content_security_policy_option(kCheckContentSecurityPolicy),
-        request_initiator_context(kDocumentContext),
-        synchronous_policy(kRequestAsynchronously),
-        cors_enabled(kNotCORSEnabled),
-        parser_disposition(kParserInserted),
-        cache_aware_loading_enabled(kNotCacheAwareLoadingEnabled) {}
-
-  ResourceLoaderOptions(
-      DataBufferingPolicy data_buffering_policy,
-      StoredCredentials allow_credentials,
-      CredentialRequest credentials_requested,
-      ContentSecurityPolicyDisposition content_security_policy_option,
-      RequestInitiatorContext request_initiator_context)
-      : data_buffering_policy(data_buffering_policy),
         allow_credentials(allow_credentials),
         credentials_requested(credentials_requested),
-        content_security_policy_option(content_security_policy_option),
-        request_initiator_context(request_initiator_context),
+        content_security_policy_option(kCheckContentSecurityPolicy),
+        request_initiator_context(kDocumentContext),
         synchronous_policy(kRequestAsynchronously),
         cors_enabled(kNotCORSEnabled),
         parser_disposition(kParserInserted),
@@ -125,6 +110,24 @@ struct ResourceLoaderOptions {
     return cors_enabled == other.cors_enabled;
     // securityOrigin has more complicated checks which callers are responsible
     // for.
+  }
+
+  std::unique_ptr<ResourceLoaderOptions> Clone() const {
+    std::unique_ptr<ResourceLoaderOptions> options =
+        WTF::MakeUnique<ResourceLoaderOptions>(allow_credentials,
+                                               credentials_requested);
+    options->data_buffering_policy = data_buffering_policy;
+    options->content_security_policy_option = content_security_policy_option;
+    options->initiator_info = initiator_info;
+    options->request_initiator_context = request_initiator_context;
+    options->synchronous_policy = synchronous_policy;
+    options->cors_enabled = cors_enabled;
+    options->security_origin = security_origin;
+    options->content_security_policy_nonce = content_security_policy_nonce;
+    options->integrity_metadata = integrity_metadata;
+    options->parser_disposition = parser_disposition;
+    options->cache_aware_loading_enabled = cache_aware_loading_enabled;
+    return options;
   }
 
   // When adding members, CrossThreadResourceLoaderOptionsData should be
@@ -150,44 +153,49 @@ struct ResourceLoaderOptions {
   IntegrityMetadataSet integrity_metadata;
   ParserDisposition parser_disposition;
   CacheAwareLoadingEnabled cache_aware_loading_enabled;
+
+ private:
+  // DISALLOW_COPY_AND_ASSIGN(ResourceLoaderOptions);
 };
 
 // Encode AtomicString (in FetchInitiatorInfo) as String to cross threads.
 struct CrossThreadResourceLoaderOptionsData {
   DISALLOW_NEW();
   explicit CrossThreadResourceLoaderOptionsData(
-      const ResourceLoaderOptions& options)
-      : data_buffering_policy(options.data_buffering_policy),
-        allow_credentials(options.allow_credentials),
-        credentials_requested(options.credentials_requested),
-        content_security_policy_option(options.content_security_policy_option),
-        initiator_info(options.initiator_info),
-        request_initiator_context(options.request_initiator_context),
-        synchronous_policy(options.synchronous_policy),
-        cors_enabled(options.cors_enabled),
-        security_origin(options.security_origin
-                            ? options.security_origin->IsolatedCopy()
+      std::unique_ptr<ResourceLoaderOptions> options)
+      : data_buffering_policy(options->data_buffering_policy),
+        allow_credentials(options->allow_credentials),
+        credentials_requested(options->credentials_requested),
+        content_security_policy_option(options->content_security_policy_option),
+        // Converts into a CrossThreadFetchInitiatorInfoData.
+        initiator_info(options->initiator_info),
+        request_initiator_context(options->request_initiator_context),
+        synchronous_policy(options->synchronous_policy),
+        cors_enabled(options->cors_enabled),
+        security_origin(options->security_origin
+                            ? options->security_origin->IsolatedCopy()
                             : nullptr),
-        content_security_policy_nonce(options.content_security_policy_nonce),
-        integrity_metadata(options.integrity_metadata),
-        parser_disposition(options.parser_disposition),
-        cache_aware_loading_enabled(options.cache_aware_loading_enabled) {}
+        content_security_policy_nonce(
+            options->content_security_policy_nonce.IsolatedCopy()),
+        integrity_metadata(options->integrity_metadata),
+        parser_disposition(options->parser_disposition),
+        cache_aware_loading_enabled(options->cache_aware_loading_enabled) {}
 
-  operator ResourceLoaderOptions() const {
-    ResourceLoaderOptions options;
-    options.data_buffering_policy = data_buffering_policy;
-    options.allow_credentials = allow_credentials;
-    options.credentials_requested = credentials_requested;
-    options.content_security_policy_option = content_security_policy_option;
-    options.initiator_info = initiator_info;
-    options.request_initiator_context = request_initiator_context;
-    options.synchronous_policy = synchronous_policy;
-    options.cors_enabled = cors_enabled;
-    options.security_origin = security_origin;
-    options.content_security_policy_nonce = content_security_policy_nonce;
-    options.integrity_metadata = integrity_metadata;
-    options.parser_disposition = parser_disposition;
-    options.cache_aware_loading_enabled = cache_aware_loading_enabled;
+  std::unique_ptr<ResourceLoaderOptions> GetResourceLoaderOptions() const {
+    std::unique_ptr<ResourceLoaderOptions> options =
+        WTF::MakeUnique<ResourceLoaderOptions>(allow_credentials,
+                                               credentials_requested);
+    options->data_buffering_policy = data_buffering_policy;
+    options->content_security_policy_option = content_security_policy_option;
+    options->initiator_info = initiator_info;
+    options->request_initiator_context = request_initiator_context;
+    options->synchronous_policy = synchronous_policy;
+    options->cors_enabled = cors_enabled;
+    options->security_origin = security_origin;
+    options->content_security_policy_nonce = content_security_policy_nonce;
+    options->integrity_metadata = integrity_metadata;
+    options->parser_disposition = parser_disposition;
+    options->cache_aware_loading_enabled = cache_aware_loading_enabled;
     return options;
   }
 
@@ -207,12 +215,9 @@ struct CrossThreadResourceLoaderOptionsData {
 };
 
 template <>
-struct CrossThreadCopier<ResourceLoaderOptions> {
-  using Type = CrossThreadResourceLoaderOptionsData;
-  static Type Copy(const ResourceLoaderOptions& options) {
-    return CrossThreadResourceLoaderOptionsData(options);
-  }
-};
+struct CrossThreadCopier<CrossThreadResourceLoaderOptionsData>
+    : public CrossThreadCopierPassThrough<
+          CrossThreadResourceLoaderOptionsData> {};
 
 }  // namespace blink
 

@@ -26,6 +26,7 @@
 #ifndef FontResource_h
 #define FontResource_h
 
+#include <memory>
 #include "base/gtest_prod_util.h"
 #include "core/CoreExport.h"
 #include "platform/Timer.h"
@@ -77,12 +78,12 @@ class CORE_EXPORT FontResource final : public Resource {
     FontResourceFactory() : ResourceFactory(Resource::kFont) {}
 
     Resource* Create(const ResourceRequest& request,
-                     const ResourceLoaderOptions& options,
+                     std::unique_ptr<ResourceLoaderOptions> options,
                      const String& charset) const override {
-      return new FontResource(request, options);
+      return new FontResource(request, std::move(options));
     }
   };
-  FontResource(const ResourceRequest&, const ResourceLoaderOptions&);
+  FontResource(const ResourceRequest&, std::unique_ptr<ResourceLoaderOptions>);
 
   void CheckNotify() override;
   void FontLoadShortLimitCallback(TimerBase*);

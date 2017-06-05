@@ -29,7 +29,6 @@
 #include <libxml/parser.h>
 #include <libxml/parserInternals.h>
 #include <libxslt/xslt.h>
-#include <memory>
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/ScriptSourceCode.h"
@@ -648,8 +647,11 @@ static void* OpenFunc(const char* uri) {
     Document* document = XMLDocumentParserScope::current_document_;
     XMLDocumentParserScope scope(0);
     // FIXME: We should restore the original global error handler as well.
-    FetchParameters params(ResourceRequest(url), FetchInitiatorTypeNames::xml,
-                           ResourceFetcher::DefaultResourceOptions());
+    std::unique_ptr<ResourceLoaderOptions> options =
+        WTF::MakeUnique<ResourceLoaderOptions>(kAllowStoredCredentials,
+                                               kClientRequestedCredentials);
+    options->initiator_info.name = FetchInitiatorTypeNames::xml;
+    FetchParameters params(ResourceRequest(url), std::move(options));
     Resource* resource =
         RawResource::FetchSynchronously(params, document->Fetcher());
     if (resource && !resource->ErrorOccurred()) {

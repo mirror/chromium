@@ -30,48 +30,31 @@
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/weborigin/Suborigin.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
-FetchParameters::FetchParameters(const ResourceRequest& resource_request,
-                                 const AtomicString& initiator,
-                                 const String& charset)
+FetchParameters::FetchParameters(const ResourceRequest& resource_request)
     : resource_request_(resource_request),
-      charset_(charset),
-      options_(ResourceFetcher::DefaultResourceOptions()),
+      options_(
+          WTF::MakeUnique<ResourceLoaderOptions>(kAllowStoredCredentials,
+                                                 kClientRequestedCredentials)),
+      speculative_preload_type_(SpeculativePreloadType::kNotSpeculative),
+      preload_discovery_time_(0.0),
+      defer_(kNoDefer),
+      origin_restriction_(kUseDefaultOriginRestrictionForType),
+      placeholder_image_request_type_(kDisallowPlaceholder) {}
+
+FetchParameters::FetchParameters(const ResourceRequest& resource_request,
+                                 std::unique_ptr<ResourceLoaderOptions> options)
+    : resource_request_(resource_request),
+      options_(std::move(options)),
       speculative_preload_type_(SpeculativePreloadType::kNotSpeculative),
       preload_discovery_time_(0.0),
       defer_(kNoDefer),
       origin_restriction_(kUseDefaultOriginRestrictionForType),
       placeholder_image_request_type_(kDisallowPlaceholder) {
-  options_.initiator_info.name = initiator;
-}
-
-FetchParameters::FetchParameters(const ResourceRequest& resource_request,
-                                 const AtomicString& initiator,
-                                 const ResourceLoaderOptions& options)
-    : resource_request_(resource_request),
-      options_(options),
-      speculative_preload_type_(SpeculativePreloadType::kNotSpeculative),
-      preload_discovery_time_(0.0),
-      defer_(kNoDefer),
-      origin_restriction_(kUseDefaultOriginRestrictionForType),
-      placeholder_image_request_type_(
-          PlaceholderImageRequestType::kDisallowPlaceholder) {
-  options_.initiator_info.name = initiator;
-}
-
-FetchParameters::FetchParameters(const ResourceRequest& resource_request,
-                                 const FetchInitiatorInfo& initiator)
-    : resource_request_(resource_request),
-      options_(ResourceFetcher::DefaultResourceOptions()),
-      speculative_preload_type_(SpeculativePreloadType::kNotSpeculative),
-      preload_discovery_time_(0.0),
-      defer_(kNoDefer),
-      origin_restriction_(kUseDefaultOriginRestrictionForType),
-      placeholder_image_request_type_(
-          PlaceholderImageRequestType::kDisallowPlaceholder) {
-  options_.initiator_info = initiator;
+  DCHECK(options_.get());
 }
 
 FetchParameters::~FetchParameters() {}
@@ -103,17 +86,17 @@ void FetchParameters::SetCrossOriginAccessControl(
                       : WebURLRequest::kFetchCredentialsModeSameOrigin);
 
   if (is_same_origin_request || use_credentials) {
-    options_.allow_credentials = kAllowStoredCredentials;
+    options_->allow_credentials = kAllowStoredCredentials;
     resource_request_.SetAllowStoredCredentials(true);
   } else {
-    options_.allow_credentials = kDoNotAllowStoredCredentials;
+    options_->allow_credentials = kDoNotAllowStoredCredentials;
     resource_request_.SetAllowStoredCredentials(false);
   }
-  options_.cors_enabled = kIsCORSEnabled;
-  options_.security_origin = origin;
-  options_.credentials_requested = use_credentials
-                                       ? kClientRequestedCredentials
-                                       : kClientDidNotRequestCredentials;
+  options_->cors_enabled = kIsCORSEnabled;
+  options_->security_origin = origin;
+  options_->credentials_requested = use_credentials
+                                        ? kClientRequestedCredentials
+                                        : kClientDidNotRequestCredentials;
 
   // TODO: Credentials should be removed only when the request is cross origin.
   resource_request_.RemoveUserAndPassFromURL();
@@ -141,7 +124,7 @@ void FetchParameters::MakeSynchronous() {
   // renderer.
   resource_request_.SetPriority(kResourceLoadPriorityHighest);
   resource_request_.SetTimeoutInterval(10);
-  options_.synchronous_policy = kRequestSynchronously;
+  options_->synchronous_policy = kRequestSynchronously;
 }
 
 void FetchParameters::SetAllowImagePlaceholder() {

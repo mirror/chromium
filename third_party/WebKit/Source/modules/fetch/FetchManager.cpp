@@ -33,6 +33,7 @@
 #include "platform/bindings/V8ThrowException.h"
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/loader/fetch/ResourceError.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/network/NetworkUtils.h"
@@ -42,6 +43,7 @@
 #include "platform/weborigin/SecurityPolicy.h"
 #include "platform/weborigin/Suborigin.h"
 #include "platform/wtf/HashSet.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebURLRequest.h"
@@ -773,8 +775,6 @@ void FetchManager::Loader::PerformHTTPFetch(bool cors_flag,
   // "request's credentials mode is "same-origin" and request's environment
   // settings object has the suborigin unsafe credentials flag set and the
   // request’s current url is same-physical-origin with request origin."
-  ResourceLoaderOptions resource_loader_options;
-  resource_loader_options.data_buffering_policy = kDoNotBufferData;
   bool suborigin_forces_credentials =
       (request_->Credentials() ==
            WebURLRequest::kFetchCredentialsModeSameOrigin &&
@@ -783,20 +783,26 @@ void FetchManager::Loader::PerformHTTPFetch(bool cors_flag,
            Suborigin::SuboriginPolicyOptions::kUnsafeCredentials) &&
        SecurityOrigin::Create(request_->Url())
            ->IsSameSchemeHostPort(request_->Origin().Get()));
+  StoredCredentials allow_credentials = kDoNotAllowStoredCredentials;
   if (request_->Credentials() == WebURLRequest::kFetchCredentialsModeInclude ||
       request_->Credentials() == WebURLRequest::kFetchCredentialsModePassword ||
       (request_->Credentials() ==
            WebURLRequest::kFetchCredentialsModeSameOrigin &&
        !cors_flag) ||
       suborigin_forces_credentials) {
-    resource_loader_options.allow_credentials = kAllowStoredCredentials;
+    allow_credentials = kAllowStoredCredentials;
   }
+  CredentialRequest credentials_requested = kClientDidNotRequestCredentials;
   if (request_->Credentials() == WebURLRequest::kFetchCredentialsModeInclude ||
       request_->Credentials() == WebURLRequest::kFetchCredentialsModePassword ||
       suborigin_forces_credentials) {
-    resource_loader_options.credentials_requested = kClientRequestedCredentials;
+    credentials_requested = kClientRequestedCredentials;
   }
-  resource_loader_options.security_origin = request_->Origin().Get();
+  std::unique_ptr<ResourceLoaderOptions> resource_loader_options =
+      WTF::MakeUnique<ResourceLoaderOptions>(allow_credentials,
+                                             credentials_requested);
+  resource_loader_options->data_buffering_policy = kDoNotBufferData;
+  resource_loader_options->security_origin = request_->Origin().Get();
 
   ThreadableLoaderOptions threadable_loader_options;
   threadable_loader_options.content_security_policy_enforcement =
@@ -831,7 +837,7 @@ void FetchManager::Loader::PerformHTTPFetch(bool cors_flag,
   probe::willStartFetch(execution_context_, this);
   loader_ = ThreadableLoader::Create(*execution_context_, this,
                                      threadable_loader_options,
-                                     resource_loader_options);
+                                     std::move(resource_loader_options));
   loader_->Start(request);
 }
 
@@ -850,9 +856,9 @@ void FetchManager::Loader::PerformDataFetch() {
   // We intentionally skip 'setExternalRequestStateFromRequestorAddressSpace',
   // as 'data:' can never be external.
 
-  ResourceLoaderOptions resource_loader_options;
-  resource_loader_options.data_buffering_policy = kDoNotBufferData;
-  resource_loader_options.security_origin = request_->Origin().Get();
+  std::unique_ptr<ResourceLoaderOptions> resource_loader_options;
+  resource_loader_options->data_buffering_policy = kDoNotBufferData;
+  resource_loader_options->security_origin = request_->Origin().Get();
 
   ThreadableLoaderOptions threadable_loader_options;
   threadable_loader_options.content_security_policy_enforcement =
@@ -865,7 +871,7 @@ void FetchManager::Loader::PerformDataFetch() {
   probe::willStartFetch(execution_context_, this);
   loader_ = ThreadableLoader::Create(*execution_context_, this,
                                      threadable_loader_options,
-                                     resource_loader_options);
+                                     std::move(resource_loader_options));
   loader_->Start(request);
 }
 

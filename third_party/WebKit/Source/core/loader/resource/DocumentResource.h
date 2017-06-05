@@ -54,12 +54,15 @@ class CORE_EXPORT DocumentResource final : public TextResource {
     SVGDocumentResourceFactory() : ResourceFactory(Resource::kSVGDocument) {}
 
     Resource* Create(const ResourceRequest& request,
-                     const ResourceLoaderOptions& options,
+                     std::unique_ptr<ResourceLoaderOptions> options,
                      const String& charset) const override {
-      return new DocumentResource(request, Resource::kSVGDocument, options);
+      return new DocumentResource(request, Resource::kSVGDocument,
+                                  std::move(options));
     }
   };
-  DocumentResource(const ResourceRequest&, Type, const ResourceLoaderOptions&);
+  DocumentResource(const ResourceRequest&,
+                   Type,
+                   std::unique_ptr<ResourceLoaderOptions>);
 
   bool MimeTypeAllowed() const;
   Document* CreateDocument(const KURL&);

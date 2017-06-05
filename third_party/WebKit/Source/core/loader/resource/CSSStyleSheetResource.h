@@ -26,6 +26,7 @@
 #ifndef CSSStyleSheetResource_h
 #define CSSStyleSheetResource_h
 
+#include <memory>
 #include "core/CoreExport.h"
 #include "core/loader/resource/StyleSheetResource.h"
 #include "platform/heap/Handle.h"
@@ -65,13 +66,13 @@ class CORE_EXPORT CSSStyleSheetResource final : public StyleSheetResource {
         : ResourceFactory(Resource::kCSSStyleSheet) {}
 
     Resource* Create(const ResourceRequest& request,
-                     const ResourceLoaderOptions& options,
+                     std::unique_ptr<ResourceLoaderOptions> options,
                      const String& charset) const override {
-      return new CSSStyleSheetResource(request, options, charset);
+      return new CSSStyleSheetResource(request, std::move(options), charset);
     }
   };
   CSSStyleSheetResource(const ResourceRequest&,
-                        const ResourceLoaderOptions&,
+                        std::unique_ptr<ResourceLoaderOptions>,
                         const String& charset);
 
   bool CanUseSheet(MIMETypeCheck) const;

@@ -44,6 +44,7 @@
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityPolicy.h"
 #include "platform/wtf/Functional.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/debug/Alias.h"
 
 namespace blink {
@@ -193,14 +194,14 @@ WorkerThreadableLoader::WorkerThreadableLoader(
     WorkerGlobalScope& worker_global_scope,
     ThreadableLoaderClient* client,
     const ThreadableLoaderOptions& options,
-    const ResourceLoaderOptions& resource_loader_options,
+    std::unique_ptr<ResourceLoaderOptions> resource_loader_options,
     BlockingBehavior blocking_behavior)
     : worker_global_scope_(&worker_global_scope),
       parent_frame_task_runners_(
           worker_global_scope.GetThread()->GetParentFrameTaskRunners()),
       client_(client),
       threadable_loader_options_(options),
-      resource_loader_options_(resource_loader_options),
+      resource_loader_options_(std::move(resource_loader_options)),
       blocking_behavior_(blocking_behavior) {
   DCHECK(client);
 }
@@ -210,9 +211,10 @@ void WorkerThreadableLoader::LoadResourceSynchronously(
     const ResourceRequest& request,
     ThreadableLoaderClient& client,
     const ThreadableLoaderOptions& options,
-    const ResourceLoaderOptions& resource_loader_options) {
+    std::unique_ptr<ResourceLoaderOptions> resource_loader_options) {
   (new WorkerThreadableLoader(worker_global_scope, &client, options,
-                              resource_loader_options, kLoadSynchronously))
+                              std::move(resource_loader_options),
+                              kLoadSynchronously))
       ->Start(request);
 }
 
@@ -247,7 +249,9 @@ void WorkerThreadableLoader::Start(const ResourceRequest& original_request) {
               std::move(worker_loading_task_runner),
               WrapCrossThreadPersistent(
                   worker_thread->GetWorkerThreadLifecycleContext()),
-              request, threadable_loader_options_, resource_loader_options_,
+              request, threadable_loader_options_,
+              CrossThreadResourceLoaderOptionsData(
+                  std::move(resource_loader_options_)),
               event_with_tasks));
 
   if (blocking_behavior_ == kLoadAsynchronously)
@@ -441,7 +445,7 @@ void WorkerThreadableLoader::MainThreadLoaderHolder::CreateAndStart(
     WorkerThreadLifecycleContext* worker_thread_lifecycle_context,
     std::unique_ptr<CrossThreadResourceRequestData> request,
     const ThreadableLoaderOptions& options,
-    const ResourceLoaderOptions& resource_loader_options,
+    const CrossThreadResourceLoaderOptionsData& resource_loader_options_data,
     PassRefPtr<WaitableEventWithTasks> event_with_tasks) {
   DCHECK(IsMainThread());
   TaskForwarder* forwarder;
@@ -464,8 +468,9 @@ void WorkerThreadableLoader::MainThreadLoaderHolder::CreateAndStart(
       CrossThreadBind(&WorkerThreadableLoader::DidStart,
                       WrapCrossThreadPersistent(worker_loader),
                       WrapCrossThreadPersistent(main_thread_loader_holder)));
-  main_thread_loader_holder->Start(*loading_context, std::move(request),
-                                   options, resource_loader_options);
+  main_thread_loader_holder->Start(
+      *loading_context, std::move(request), options,
+      resource_loader_options_data.GetResourceLoaderOptions());
 }
 
 WorkerThreadableLoader::MainThreadLoaderHolder::~MainThreadLoaderHolder() {
@@ -670,13 +675,11 @@ void WorkerThreadableLoader::MainThreadLoaderHolder::Start(
     ThreadableLoadingContext& loading_context,
     std::unique_ptr<CrossThreadResourceRequestData> request,
     const ThreadableLoaderOptions& options,
-    const ResourceLoaderOptions& original_resource_loader_options) {
+    std::unique_ptr<ResourceLoaderOptions> resource_loader_options) {
   DCHECK(IsMainThread());
-  ResourceLoaderOptions resource_loader_options =
-      original_resource_loader_options;
-  resource_loader_options.request_initiator_context = kWorkerContext;
+  resource_loader_options->request_initiator_context = kWorkerContext;
   main_thread_loader_ = DocumentThreadableLoader::Create(
-      loading_context, this, options, resource_loader_options);
+      loading_context, this, options, std::move(resource_loader_options));
   main_thread_loader_->Start(ResourceRequest(request.get()));
 }
 

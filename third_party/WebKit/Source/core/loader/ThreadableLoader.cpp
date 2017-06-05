@@ -45,7 +45,7 @@ ThreadableLoader* ThreadableLoader::Create(
     ExecutionContext& context,
     ThreadableLoaderClient* client,
     const ThreadableLoaderOptions& options,
-    const ResourceLoaderOptions& resource_loader_options) {
+    std::unique_ptr<ResourceLoaderOptions> resource_loader_options) {
   DCHECK(client);
 
   if (context.IsWorkerGlobalScope()) {
@@ -55,15 +55,16 @@ ThreadableLoader* ThreadableLoader::Create(
       // worker thread when off-main-thread-fetch is enabled.
       return DocumentThreadableLoader::Create(
           *ThreadableLoadingContext::Create(*ToWorkerGlobalScope(&context)),
-          client, options, resource_loader_options);
+          client, options, std::move(resource_loader_options));
     }
     return WorkerThreadableLoader::Create(ToWorkerGlobalScope(context), client,
-                                          options, resource_loader_options);
+                                          options,
+                                          std::move(resource_loader_options));
   }
 
   return DocumentThreadableLoader::Create(
       *ThreadableLoadingContext::Create(*ToDocument(&context)), client, options,
-      resource_loader_options);
+      std::move(resource_loader_options));
 }
 
 void ThreadableLoader::LoadResourceSynchronously(
@@ -71,16 +72,17 @@ void ThreadableLoader::LoadResourceSynchronously(
     const ResourceRequest& request,
     ThreadableLoaderClient& client,
     const ThreadableLoaderOptions& options,
-    const ResourceLoaderOptions& resource_loader_options) {
+    std::unique_ptr<ResourceLoaderOptions> resource_loader_options) {
   if (context.IsWorkerGlobalScope()) {
     WorkerThreadableLoader::LoadResourceSynchronously(
         ToWorkerGlobalScope(context), request, client, options,
-        resource_loader_options);
+        std::move(resource_loader_options));
     return;
   }
 
   DocumentThreadableLoader::LoadResourceSynchronously(
-      ToDocument(context), request, client, options, resource_loader_options);
+      ToDocument(context), request, client, options,
+      std::move(resource_loader_options));
 }
 
 }  // namespace blink

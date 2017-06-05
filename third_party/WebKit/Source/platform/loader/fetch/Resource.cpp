@@ -248,7 +248,7 @@ void Resource::ServiceWorkerResponseCachedMetadataHandler::SendToPlatform() {
 
 Resource::Resource(const ResourceRequest& request,
                    Type type,
-                   const ResourceLoaderOptions& options)
+                   std::unique_ptr<ResourceLoaderOptions> options)
     : load_finish_time_(0),
       identifier_(0),
       encoded_size_(0),
@@ -267,7 +267,7 @@ Resource::Resource(const ResourceRequest& request,
       is_alive_(false),
       is_add_remove_client_prohibited_(false),
       integrity_disposition_(ResourceIntegrityDisposition::kNotChecked),
-      options_(options),
+      options_(std::move(options)),
       response_timestamp_(CurrentTime()),
       cancel_timer_(
           // We use MainThread() for main-thread cases to avoid syscall cost
@@ -283,6 +283,8 @@ Resource::Resource(const ResourceRequest& request,
           this,
           &Resource::CancelTimerFired),
       resource_request_(request) {
+  DCHECK(options_.get());
+
   InstanceCounters::IncrementCounter(InstanceCounters::kResourceCounter);
 
   // Currently we support the metadata caching only for HTTP family.
@@ -334,7 +336,7 @@ void Resource::AppendData(const char* data, size_t length) {
   TRACE_EVENT0("blink", "Resource::appendData");
   DCHECK(!is_revalidating_);
   DCHECK(!ErrorOccurred());
-  if (options_.data_buffering_policy == kDoNotBufferData)
+  if (options_->data_buffering_policy == kDoNotBufferData)
     return;
   if (data_)
     data_->Append(data, length);
@@ -346,7 +348,7 @@ void Resource::AppendData(const char* data, size_t length) {
 void Resource::SetResourceBuffer(PassRefPtr<SharedBuffer> resource_buffer) {
   DCHECK(!is_revalidating_);
   DCHECK(!ErrorOccurred());
-  DCHECK_EQ(options_.data_buffering_policy, kBufferData);
+  DCHECK_EQ(options_->data_buffering_policy, kBufferData);
   data_ = std::move(resource_buffer);
   SetEncodedSize(data_->size());
 }
@@ -358,7 +360,7 @@ void Resource::ClearData() {
 
 void Resource::SetDataBufferingPolicy(
     DataBufferingPolicy data_buffering_policy) {
-  options_.data_buffering_policy = data_buffering_policy;
+  options_->data_buffering_policy = data_buffering_policy;
   ClearData();
   SetEncodedSize(0);
 }

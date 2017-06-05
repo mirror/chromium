@@ -25,7 +25,6 @@
 
 #include "platform/loader/fetch/RawResource.h"
 
-#include <memory>
 #include "platform/HTTPNames.h"
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/MemoryCache.h"
@@ -117,8 +116,8 @@ RawResource* RawResource::FetchManifest(FetchParameters& params,
 
 RawResource::RawResource(const ResourceRequest& resource_request,
                          Type type,
-                         const ResourceLoaderOptions& options)
-    : Resource(resource_request, type, options) {}
+                         std::unique_ptr<ResourceLoaderOptions> options)
+    : Resource(resource_request, type, std::move(options)) {}
 
 void RawResource::AppendData(const char* data, size_t length) {
   Resource::AppendData(data, length);

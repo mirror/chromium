@@ -4,15 +4,18 @@
 
 #include "core/loader/modulescript/ModuleScriptLoader.h"
 
+#include <memory>
 #include "core/dom/Modulator.h"
 #include "core/dom/ModuleScript.h"
 #include "core/loader/modulescript/ModuleScriptLoaderClient.h"
 #include "core/loader/modulescript/ModuleScriptLoaderRegistry.h"
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceLoadingLog.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
 #include "platform/weborigin/SecurityPolicy.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
@@ -90,8 +93,10 @@ void ModuleScriptLoader::Fetch(const ModuleScriptFetchRequest& module_request,
   // -> FetchResourceType is specified by ScriptResource::fetch
 
   // parser metadata is parser state,
-  ResourceLoaderOptions options;
-  options.parser_disposition = module_request.ParserState();
+  std::unique_ptr<ResourceLoaderOptions> options =
+      WTF::MakeUnique<ResourceLoaderOptions>(kDoNotAllowStoredCredentials,
+                                             kClientDidNotRequestCredentials);
+  options->parser_disposition = module_request.ParserState();
   // referrer is referrer,
   if (!module_request.GetReferrer().IsNull()) {
     resource_request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
@@ -103,9 +108,9 @@ void ModuleScriptLoader::Fetch(const ModuleScriptFetchRequest& module_request,
   // As initiator for module script fetch is not specified in HTML spec,
   // we specity "" as initiator per:
   // https://fetch.spec.whatwg.org/#concept-request-initiator
-  const AtomicString& initiator_name = g_empty_atom;
+  options->initiator_info.name = g_empty_atom;
 
-  FetchParameters fetch_params(resource_request, initiator_name, options);
+  FetchParameters fetch_params(resource_request, std::move(options));
   // ... cryptographic nonce metadata is cryptographic nonce, ...
   fetch_params.SetContentSecurityPolicyNonce(module_request.Nonce());
   // Note: The fetch request's "origin" isn't specified in

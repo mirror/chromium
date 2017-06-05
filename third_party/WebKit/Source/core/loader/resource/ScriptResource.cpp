@@ -50,11 +50,11 @@ ScriptResource* ScriptResource::Fetch(FetchParameters& params,
 }
 
 ScriptResource::ScriptResource(const ResourceRequest& resource_request,
-                               const ResourceLoaderOptions& options,
+                               std::unique_ptr<ResourceLoaderOptions> options,
                                const String& charset)
     : TextResource(resource_request,
                    kScript,
-                   options,
+                   std::move(options),
                    "application/javascript",
                    charset) {}
 

@@ -27,6 +27,8 @@
 #include "platform/PlatformExport.h"
 #include "platform/loader/fetch/Resource.h"
 #include "platform/loader/fetch/ResourceClient.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/WeakPtr.h"
 #include "public/platform/WebDataConsumerHandle.h"
 
@@ -52,7 +54,10 @@ class PLATFORM_EXPORT RawResource final : public Resource {
 
   // Exposed for testing
   static RawResource* Create(const ResourceRequest& request, Type type) {
-    return new RawResource(request, type, ResourceLoaderOptions());
+    std::unique_ptr<ResourceLoaderOptions> options =
+        WTF::MakeUnique<ResourceLoaderOptions>(kDoNotAllowStoredCredentials,
+                                               kClientDidNotRequestCredentials);
+    return new RawResource(request, type, std::move(options));
   }
 
   // FIXME: AssociatedURLLoader shouldn't be a DocumentThreadableLoader and
@@ -72,13 +77,15 @@ class PLATFORM_EXPORT RawResource final : public Resource {
     explicit RawResourceFactory(Resource::Type type) : ResourceFactory(type) {}
 
     Resource* Create(const ResourceRequest& request,
-                     const ResourceLoaderOptions& options,
+                     std::unique_ptr<ResourceLoaderOptions> options,
                      const String& charset) const override {
-      return new RawResource(request, type_, options);
+      return new RawResource(request, type_, std::move(options));
     }
   };
 
-  RawResource(const ResourceRequest&, Type, const ResourceLoaderOptions&);
+  RawResource(const ResourceRequest&,
+              Type,
+              std::unique_ptr<ResourceLoaderOptions>);
 
   // Resource implementation
   void DidAddClient(ResourceClient*) override;

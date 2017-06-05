@@ -37,10 +37,12 @@
 #include "platform/loader/fetch/ResourceClient.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ResourceLoader.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceLoadingLog.h"
 #include "platform/network/HTTPParsers.h"
 #include "platform/weborigin/SecurityViolationReportingPolicy.h"
 #include "platform/wtf/CurrentTime.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "public/platform/Platform.h"
 #include "v8/include/v8.h"
@@ -132,9 +134,9 @@ class ImageResource::ImageResourceFactory : public ResourceFactory {
       : ResourceFactory(Resource::kImage), fetch_params_(&fetch_params) {}
 
   Resource* Create(const ResourceRequest& request,
-                   const ResourceLoaderOptions& options,
+                   std::unique_ptr<ResourceLoaderOptions> options,
                    const String&) const override {
-    return new ImageResource(request, options,
+    return new ImageResource(request, std::move(options),
                              ImageResourceContent::CreateNotStarted(),
                              fetch_params_->GetPlaceholderImageRequestType() ==
                                  FetchParameters::kAllowPlaceholder);
@@ -193,15 +195,18 @@ bool ImageResource::CanUseCacheValidator() const {
 }
 
 ImageResource* ImageResource::Create(const ResourceRequest& request) {
-  return new ImageResource(request, ResourceLoaderOptions(),
-                           ImageResourceContent::CreateNotStarted(), false);
+  return new ImageResource(
+      request,
+      WTF::MakeUnique<ResourceLoaderOptions>(kDoNotAllowStoredCredentials,
+                                             kClientDidNotRequestCredentials),
+      ImageResourceContent::CreateNotStarted(), false);
 }
 
 ImageResource::ImageResource(const ResourceRequest& resource_request,
-                             const ResourceLoaderOptions& options,
+                             std::unique_ptr<ResourceLoaderOptions> options,
                              ImageResourceContent* content,
                              bool is_placeholder)
-    : Resource(resource_request, kImage, options),
+    : Resource(resource_request, kImage, std::move(options)),
       content_(content),
       device_pixel_ratio_header_value_(1.0),
       has_device_pixel_ratio_header_value_(false),

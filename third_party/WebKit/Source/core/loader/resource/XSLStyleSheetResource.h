@@ -26,6 +26,7 @@
 #ifndef XSLStyleSheetResource_h
 #define XSLStyleSheetResource_h
 
+#include <memory>
 #include "core/loader/resource/StyleSheetResource.h"
 
 namespace blink {
@@ -50,13 +51,13 @@ class XSLStyleSheetResource final : public StyleSheetResource {
         : ResourceFactory(Resource::kXSLStyleSheet) {}
 
     Resource* Create(const ResourceRequest& request,
-                     const ResourceLoaderOptions& options,
+                     std::unique_ptr<ResourceLoaderOptions> options,
                      const String& charset) const override {
-      return new XSLStyleSheetResource(request, options, charset);
+      return new XSLStyleSheetResource(request, std::move(options), charset);
     }
   };
   XSLStyleSheetResource(const ResourceRequest&,
-                        const ResourceLoaderOptions&,
+                        std::unique_ptr<ResourceLoaderOptions>,
                         const String& charset);
 
   void CheckNotify() override;

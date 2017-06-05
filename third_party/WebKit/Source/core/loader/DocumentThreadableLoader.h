@@ -63,11 +63,12 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
                                         const ResourceRequest&,
                                         ThreadableLoaderClient&,
                                         const ThreadableLoaderOptions&,
-                                        const ResourceLoaderOptions&);
-  static DocumentThreadableLoader* Create(ThreadableLoadingContext&,
-                                          ThreadableLoaderClient*,
-                                          const ThreadableLoaderOptions&,
-                                          const ResourceLoaderOptions&);
+                                        std::unique_ptr<ResourceLoaderOptions>);
+  static DocumentThreadableLoader* Create(
+      ThreadableLoadingContext&,
+      ThreadableLoaderClient*,
+      const ThreadableLoaderOptions&,
+      std::unique_ptr<ResourceLoaderOptions>);
   ~DocumentThreadableLoader() override;
 
   void Start(const ResourceRequest&) override;
@@ -86,7 +87,7 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
                            ThreadableLoaderClient*,
                            BlockingBehavior,
                            const ThreadableLoaderOptions&,
-                           const ResourceLoaderOptions&);
+                           std::unique_ptr<ResourceLoaderOptions>);
 
   void Clear();
 
@@ -145,11 +146,14 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
   void DispatchDidFailAccessControlCheck(const ResourceError&);
   void DispatchDidFail(const ResourceError&);
 
-  void LoadRequestAsync(const ResourceRequest&, ResourceLoaderOptions);
-  void LoadRequestSync(const ResourceRequest&, ResourceLoaderOptions);
+  void LoadRequestAsync(const ResourceRequest&,
+                        std::unique_ptr<ResourceLoaderOptions>);
+  void LoadRequestSync(const ResourceRequest&,
+                       std::unique_ptr<ResourceLoaderOptions>);
 
   void PrepareCrossOriginRequest(ResourceRequest&);
-  void LoadRequest(const ResourceRequest&, ResourceLoaderOptions);
+  void LoadRequest(const ResourceRequest&,
+                   std::unique_ptr<ResourceLoaderOptions>);
   bool IsAllowedRedirect(const KURL&) const;
   // Returns DoNotAllowStoredCredentials if m_forceDoNotAllowStoredCredentials
   // is set. Otherwise, just returns allowCredentials value of
@@ -194,7 +198,7 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
   // Some items may be overridden by m_forceDoNotAllowStoredCredentials and
   // m_securityOrigin. In such a case, build a ResourceLoaderOptions with
   // up-to-date values from them and this variable, and use it.
-  const ResourceLoaderOptions resource_loader_options_;
+  std::unique_ptr<ResourceLoaderOptions> resource_loader_options_;
 
   bool force_do_not_allow_stored_credentials_;
   RefPtr<SecurityOrigin> security_origin_;
@@ -218,7 +222,7 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
   // Holds the original request and options for it during preflight request
   // handling phase.
   ResourceRequest actual_request_;
-  ResourceLoaderOptions actual_options_;
+  std::unique_ptr<ResourceLoaderOptions> actual_options_;
 
   // stores request headers in case of a cross-origin redirect.
   HTTPHeaderMap request_headers_;

@@ -30,11 +30,14 @@
 
 #include "platform/loader/fetch/MemoryCache.h"
 
+#include <memory>
 #include "platform/loader/fetch/RawResource.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/testing/MockResourceClient.h"
 #include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/UnitTestHelpers.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -46,7 +49,10 @@ class MemoryCacheTest : public ::testing::Test {
    public:
     static FakeDecodedResource* Create(const ResourceRequest& request,
                                        Type type) {
-      return new FakeDecodedResource(request, type, ResourceLoaderOptions());
+      std::unique_ptr<ResourceLoaderOptions> options =
+          WTF::MakeUnique<ResourceLoaderOptions>(
+              kDoNotAllowStoredCredentials, kClientDidNotRequestCredentials);
+      return new FakeDecodedResource(request, type, std::move(options));
     }
 
     virtual void AppendData(const char* data, size_t len) {
@@ -57,8 +63,8 @@ class MemoryCacheTest : public ::testing::Test {
    private:
     FakeDecodedResource(const ResourceRequest& request,
                         Type type,
-                        const ResourceLoaderOptions& options)
-        : Resource(request, type, options) {}
+                        std::unique_ptr<ResourceLoaderOptions> options)
+        : Resource(request, type, std::move(options)) {}
 
     void DestroyDecodedDataIfPossible() override { SetDecodedSize(0); }
   };
@@ -66,7 +72,10 @@ class MemoryCacheTest : public ::testing::Test {
   class FakeResource final : public Resource {
    public:
     static FakeResource* Create(const ResourceRequest& request, Type type) {
-      return new FakeResource(request, type, ResourceLoaderOptions());
+      std::unique_ptr<ResourceLoaderOptions> options =
+          WTF::MakeUnique<ResourceLoaderOptions>(
+              kDoNotAllowStoredCredentials, kClientDidNotRequestCredentials);
+      return new FakeResource(request, type, std::move(options));
     }
 
     void FakeEncodedSize(size_t size) { SetEncodedSize(size); }
@@ -74,8 +83,8 @@ class MemoryCacheTest : public ::testing::Test {
    private:
     FakeResource(const ResourceRequest& request,
                  Type type,
-                 const ResourceLoaderOptions& options)
-        : Resource(request, type, options) {}
+                 std::unique_ptr<ResourceLoaderOptions> options)
+        : Resource(request, type, std::move(options)) {}
   };
 
  protected:

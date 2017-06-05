@@ -68,7 +68,6 @@ struct ThreadableLoaderOptions {
   PreflightPolicy preflight_policy;
 
   WebURLRequest::FetchRequestMode fetch_request_mode;
-  AtomicString initiator;
   ContentSecurityPolicyEnforcement content_security_policy_enforcement;
   unsigned long timeout_milliseconds;
 };
@@ -80,7 +79,6 @@ struct CrossThreadThreadableLoaderOptionsData {
       const ThreadableLoaderOptions& options)
       : preflight_policy(options.preflight_policy),
         fetch_request_mode(options.fetch_request_mode),
-        initiator(options.initiator.GetString().IsolatedCopy()),
         content_security_policy_enforcement(
             options.content_security_policy_enforcement),
         timeout_milliseconds(options.timeout_milliseconds) {}
@@ -89,7 +87,6 @@ struct CrossThreadThreadableLoaderOptionsData {
     ThreadableLoaderOptions options;
     options.preflight_policy = preflight_policy;
     options.fetch_request_mode = fetch_request_mode;
-    options.initiator = AtomicString(initiator);
     options.content_security_policy_enforcement =
         content_security_policy_enforcement;
     options.timeout_milliseconds = timeout_milliseconds;
@@ -98,7 +95,6 @@ struct CrossThreadThreadableLoaderOptionsData {
 
   PreflightPolicy preflight_policy;
   WebURLRequest::FetchRequestMode fetch_request_mode;
-  String initiator;
   ContentSecurityPolicyEnforcement content_security_policy_enforcement;
   unsigned long timeout_milliseconds;
 };
@@ -131,7 +127,7 @@ class CORE_EXPORT ThreadableLoader
                                         const ResourceRequest&,
                                         ThreadableLoaderClient&,
                                         const ThreadableLoaderOptions&,
-                                        const ResourceLoaderOptions&);
+                                        std::unique_ptr<ResourceLoaderOptions>);
 
   // This method never returns nullptr.
   //
@@ -167,7 +163,7 @@ class CORE_EXPORT ThreadableLoader
   static ThreadableLoader* Create(ExecutionContext&,
                                   ThreadableLoaderClient*,
                                   const ThreadableLoaderOptions&,
-                                  const ResourceLoaderOptions&);
+                                  std::unique_ptr<ResourceLoaderOptions>);
 
   // The methods on the ThreadableLoaderClient passed on create() call
   // may be called synchronous to start() call.

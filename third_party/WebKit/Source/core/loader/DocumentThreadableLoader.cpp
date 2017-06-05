@@ -31,7 +31,6 @@
 
 #include "core/loader/DocumentThreadableLoader.h"
 
-#include <memory>
 #include "core/dom/Document.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/FrameConsole.h"
@@ -53,6 +52,7 @@
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/loader/fetch/Resource.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/weborigin/SecurityOrigin.h"
@@ -139,10 +139,10 @@ void DocumentThreadableLoader::LoadResourceSynchronously(
     const ResourceRequest& request,
     ThreadableLoaderClient& client,
     const ThreadableLoaderOptions& options,
-    const ResourceLoaderOptions& resource_loader_options) {
+    std::unique_ptr<ResourceLoaderOptions> resource_loader_options) {
   (new DocumentThreadableLoader(*ThreadableLoadingContext::Create(document),
                                 &client, kLoadSynchronously, options,
-                                resource_loader_options))
+                                std::move(resource_loader_options)))
       ->Start(request);
 }
 
@@ -150,10 +150,10 @@ DocumentThreadableLoader* DocumentThreadableLoader::Create(
     ThreadableLoadingContext& loading_context,
     ThreadableLoaderClient* client,
     const ThreadableLoaderOptions& options,
-    const ResourceLoaderOptions& resource_loader_options) {
+    std::unique_ptr<ResourceLoaderOptions> resource_loader_options) {
   return new DocumentThreadableLoader(loading_context, client,
                                       kLoadAsynchronously, options,
-                                      resource_loader_options);
+                                      std::move(resource_loader_options));
 }
 
 DocumentThreadableLoader::DocumentThreadableLoader(
@@ -161,13 +161,13 @@ DocumentThreadableLoader::DocumentThreadableLoader(
     ThreadableLoaderClient* client,
     BlockingBehavior blocking_behavior,
     const ThreadableLoaderOptions& options,
-    const ResourceLoaderOptions& resource_loader_options)
+    std::unique_ptr<ResourceLoaderOptions> resource_loader_options)
     : client_(client),
       loading_context_(&loading_context),
       options_(options),
-      resource_loader_options_(resource_loader_options),
+      resource_loader_options_(std::move(resource_loader_options)),
       force_do_not_allow_stored_credentials_(false),
-      security_origin_(resource_loader_options_.security_origin),
+      security_origin_(resource_loader_options_->security_origin),
       same_origin_request_(false),
       is_using_data_consumer_handle_(false),
       async_(blocking_behavior == kLoadAsynchronously),
@@ -261,7 +261,8 @@ void DocumentThreadableLoader::Start(const ResourceRequest& request) {
         break;
     }
     new_request.SetFetchRequestMode(options_.fetch_request_mode);
-    if (resource_loader_options_.allow_credentials == kAllowStoredCredentials) {
+    if (resource_loader_options_->allow_credentials ==
+        kAllowStoredCredentials) {
       new_request.SetFetchCredentialsMode(
           WebURLRequest::kFetchCredentialsModeInclude);
     } else {
@@ -293,7 +294,7 @@ void DocumentThreadableLoader::Start(const ResourceRequest& request) {
       fallback_request_for_service_worker_.SetServiceWorkerMode(
           WebURLRequest::ServiceWorkerMode::kForeign);
     }
-    LoadRequest(new_request, resource_loader_options_);
+    LoadRequest(new_request, resource_loader_options_->Clone());
     return;
   }
 
@@ -305,7 +306,7 @@ void DocumentThreadableLoader::DispatchInitialRequest(
   if (!request.IsExternalRequest() &&
       (same_origin_request_ ||
        options_.fetch_request_mode == WebURLRequest::kFetchRequestModeNoCORS)) {
-    LoadRequest(request, resource_loader_options_);
+    LoadRequest(request, resource_loader_options_->Clone());
     return;
   }
 
@@ -361,7 +362,8 @@ void DocumentThreadableLoader::MakeCrossOriginAccessRequest(
   }
 
   ResourceRequest cross_origin_request(request);
-  ResourceLoaderOptions cross_origin_options(resource_loader_options_);
+  std::unique_ptr<ResourceLoaderOptions> cross_origin_options =
+      resource_loader_options_->Clone();
 
   cross_origin_request.RemoveUserAndPassFromURL();
 
@@ -388,7 +390,7 @@ void DocumentThreadableLoader::MakeCrossOriginAccessRequest(
                                                request.HttpHeaderFields())) ||
        options_.preflight_policy == kPreventPreflight)) {
     PrepareCrossOriginRequest(cross_origin_request);
-    LoadRequest(cross_origin_request, cross_origin_options);
+    LoadRequest(cross_origin_request, std::move(cross_origin_options));
     return;
   }
 
@@ -415,7 +417,7 @@ void DocumentThreadableLoader::MakeCrossOriginAccessRequest(
           cross_origin_request.HttpHeaderFields());
   if (can_skip_preflight && !should_force_preflight) {
     PrepareCrossOriginRequest(cross_origin_request);
-    LoadRequest(cross_origin_request, cross_origin_options);
+    LoadRequest(cross_origin_request, std::move(cross_origin_options));
     return;
   }
 
@@ -427,13 +429,14 @@ void DocumentThreadableLoader::MakeCrossOriginAccessRequest(
     preflight_request.SetHTTPOrigin(GetSecurityOrigin());
 
   // Create a ResourceLoaderOptions for preflight.
-  ResourceLoaderOptions preflight_options = cross_origin_options;
-  preflight_options.allow_credentials = kDoNotAllowStoredCredentials;
+  std::unique_ptr<ResourceLoaderOptions> preflight_options =
+      cross_origin_options->Clone();
+  preflight_options->allow_credentials = kDoNotAllowStoredCredentials;
 
   actual_request_ = cross_origin_request;
-  actual_options_ = cross_origin_options;
+  actual_options_ = std::move(cross_origin_options);
 
-  LoadRequest(preflight_request, preflight_options);
+  LoadRequest(preflight_request, std::move(preflight_options));
 }
 
 DocumentThreadableLoader::~DocumentThreadableLoader() {
@@ -646,7 +649,7 @@ bool DocumentThreadableLoader::RedirectReceived(
   // Since the request is no longer same-origin, if the user didn't request
   // credentials in the first place, update our state so we neither request them
   // nor expect they must be allowed.
-  if (resource_loader_options_.credentials_requested ==
+  if (resource_loader_options_->credentials_requested ==
       kClientDidNotRequestCredentials)
     force_do_not_allow_stored_credentials_ = true;
 
@@ -978,14 +981,12 @@ void DocumentThreadableLoader::LoadFallbackRequestForServiceWorker() {
 
 void DocumentThreadableLoader::LoadActualRequest() {
   ResourceRequest actual_request = actual_request_;
-  ResourceLoaderOptions actual_options = actual_options_;
   actual_request_ = ResourceRequest();
-  actual_options_ = ResourceLoaderOptions();
 
   ClearResource();
 
   PrepareCrossOriginRequest(actual_request);
-  LoadRequest(actual_request, actual_options);
+  LoadRequest(actual_request, std::move(actual_options_));
 }
 
 void DocumentThreadableLoader::HandlePreflightFailure(
@@ -1014,9 +1015,9 @@ void DocumentThreadableLoader::DispatchDidFail(const ResourceError& error) {
 
 void DocumentThreadableLoader::LoadRequestAsync(
     const ResourceRequest& request,
-    ResourceLoaderOptions resource_loader_options) {
+    std::unique_ptr<ResourceLoaderOptions> resource_loader_options) {
   if (!actual_request_.IsNull())
-    resource_loader_options.data_buffering_policy = kBufferData;
+    resource_loader_options->data_buffering_policy = kBufferData;
 
   // The timer can be active if this is the actual request of a
   // CORS-with-preflight request.
@@ -1025,8 +1026,7 @@ void DocumentThreadableLoader::LoadRequestAsync(
                                 BLINK_FROM_HERE);
   }
 
-  FetchParameters new_params(request, options_.initiator,
-                             resource_loader_options);
+  FetchParameters new_params(request, std::move(resource_loader_options));
   if (options_.fetch_request_mode == WebURLRequest::kFetchRequestModeNoCORS)
     new_params.SetOriginRestriction(FetchParameters::kNoOriginRestriction);
   DCHECK(!GetResource());
@@ -1069,9 +1069,8 @@ void DocumentThreadableLoader::LoadRequestAsync(
 
 void DocumentThreadableLoader::LoadRequestSync(
     const ResourceRequest& request,
-    ResourceLoaderOptions resource_loader_options) {
-  FetchParameters fetch_params(request, options_.initiator,
-                               resource_loader_options);
+    std::unique_ptr<ResourceLoaderOptions> resource_loader_options) {
+  FetchParameters fetch_params(request, std::move(resource_loader_options));
   if (options_.fetch_request_mode == WebURLRequest::kFetchRequestModeNoCORS)
     fetch_params.SetOriginRestriction(FetchParameters::kNoOriginRestriction);
   Resource* resource = RawResource::FetchSynchronously(
@@ -1140,20 +1139,23 @@ void DocumentThreadableLoader::LoadRequestSync(
 
 void DocumentThreadableLoader::LoadRequest(
     const ResourceRequest& request,
-    ResourceLoaderOptions resource_loader_options) {
+    std::unique_ptr<ResourceLoaderOptions> resource_loader_options) {
   // Any credential should have been removed from the cross-site requests.
   const KURL& request_url = request.Url();
   DCHECK(same_origin_request_ || request_url.User().IsEmpty());
   DCHECK(same_origin_request_ || request_url.Pass().IsEmpty());
 
   // Update resourceLoaderOptions with enforced values.
+  //
+  // TODO(tyoshino): It's wrong to update resource_loader_options.
+  // DocumentThreadableLoader must remember the change.
   if (force_do_not_allow_stored_credentials_)
-    resource_loader_options.allow_credentials = kDoNotAllowStoredCredentials;
-  resource_loader_options.security_origin = security_origin_;
+    resource_loader_options->allow_credentials = kDoNotAllowStoredCredentials;
+  resource_loader_options->security_origin = security_origin_;
   if (async_)
-    LoadRequestAsync(request, resource_loader_options);
+    LoadRequestAsync(request, std::move(resource_loader_options));
   else
-    LoadRequestSync(request, resource_loader_options);
+    LoadRequestSync(request, std::move(resource_loader_options));
 }
 
 bool DocumentThreadableLoader::IsAllowedRedirect(const KURL& url) const {
@@ -1166,7 +1168,7 @@ bool DocumentThreadableLoader::IsAllowedRedirect(const KURL& url) const {
 StoredCredentials DocumentThreadableLoader::EffectiveAllowCredentials() const {
   if (force_do_not_allow_stored_credentials_)
     return kDoNotAllowStoredCredentials;
-  return resource_loader_options_.allow_credentials;
+  return resource_loader_options_->allow_credentials;
 }
 
 const SecurityOrigin* DocumentThreadableLoader::GetSecurityOrigin() const {

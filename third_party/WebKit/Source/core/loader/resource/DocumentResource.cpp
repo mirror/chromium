@@ -39,10 +39,15 @@ DocumentResource* DocumentResource::FetchSVGDocument(FetchParameters& params,
       fetcher->RequestResource(params, SVGDocumentResourceFactory()));
 }
 
-DocumentResource::DocumentResource(const ResourceRequest& request,
-                                   Type type,
-                                   const ResourceLoaderOptions& options)
-    : TextResource(request, type, options, "application/xml", String()) {
+DocumentResource::DocumentResource(
+    const ResourceRequest& request,
+    Type type,
+    std::unique_ptr<ResourceLoaderOptions> options)
+    : TextResource(request,
+                   type,
+                   std::move(options),
+                   "application/xml",
+                   String()) {
   // FIXME: We'll support more types to support HTMLImports.
   DCHECK_EQ(type, kSVGDocument);
 }

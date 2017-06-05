@@ -20,10 +20,11 @@ Resource* LinkFetchResource::Fetch(Resource::Type type,
   return fetcher->RequestResource(params, LinkResourceFactory(type));
 }
 
-LinkFetchResource::LinkFetchResource(const ResourceRequest& request,
-                                     Type type,
-                                     const ResourceLoaderOptions& options)
-    : Resource(request, type, options) {}
+LinkFetchResource::LinkFetchResource(
+    const ResourceRequest& request,
+    Type type,
+    std::unique_ptr<ResourceLoaderOptions> options)
+    : Resource(request, type, std::move(options)) {}
 
 LinkFetchResource::~LinkFetchResource() {}
 

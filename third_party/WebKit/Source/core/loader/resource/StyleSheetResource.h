@@ -31,6 +31,7 @@
 #ifndef StyleSheetResource_h
 #define StyleSheetResource_h
 
+#include <memory>
 #include "core/CoreExport.h"
 #include "core/loader/resource/TextResource.h"
 
@@ -44,10 +45,10 @@ class CORE_EXPORT StyleSheetResource : public TextResource {
 
   StyleSheetResource(const ResourceRequest& request,
                      Type type,
-                     const ResourceLoaderOptions& options,
+                     std::unique_ptr<ResourceLoaderOptions> options,
                      const String& mime_type,
                      const String& charset)
-      : TextResource(request, type, options, mime_type, charset) {}
+      : TextResource(request, type, std::move(options), mime_type, charset) {}
 };
 
 }  // namespace blink

@@ -86,14 +86,14 @@ class WorkerThreadableLoader final : public ThreadableLoader {
                                         const ResourceRequest&,
                                         ThreadableLoaderClient&,
                                         const ThreadableLoaderOptions&,
-                                        const ResourceLoaderOptions&);
+                                        std::unique_ptr<ResourceLoaderOptions>);
   static WorkerThreadableLoader* Create(
       WorkerGlobalScope& worker_global_scope,
       ThreadableLoaderClient* client,
       const ThreadableLoaderOptions& options,
-      const ResourceLoaderOptions& resource_loader_options) {
+      std::unique_ptr<ResourceLoaderOptions> resource_loader_options) {
     return new WorkerThreadableLoader(worker_global_scope, client, options,
-                                      resource_loader_options,
+                                      std::move(resource_loader_options),
                                       kLoadAsynchronously);
   }
 
@@ -145,7 +145,7 @@ class WorkerThreadableLoader final : public ThreadableLoader {
                                WorkerThreadLifecycleContext*,
                                std::unique_ptr<CrossThreadResourceRequestData>,
                                const ThreadableLoaderOptions&,
-                               const ResourceLoaderOptions&,
+                               const CrossThreadResourceLoaderOptionsData&,
                                PassRefPtr<WaitableEventWithTasks>);
     ~MainThreadLoaderHolder() override;
 
@@ -177,7 +177,7 @@ class WorkerThreadableLoader final : public ThreadableLoader {
     void Start(ThreadableLoadingContext&,
                std::unique_ptr<CrossThreadResourceRequestData>,
                const ThreadableLoaderOptions&,
-               const ResourceLoaderOptions&);
+               std::unique_ptr<ResourceLoaderOptions>);
 
     Member<TaskForwarder> forwarder_;
     Member<ThreadableLoader> main_thread_loader_;
@@ -189,7 +189,7 @@ class WorkerThreadableLoader final : public ThreadableLoader {
   WorkerThreadableLoader(WorkerGlobalScope&,
                          ThreadableLoaderClient*,
                          const ThreadableLoaderOptions&,
-                         const ResourceLoaderOptions&,
+                         std::unique_ptr<ResourceLoaderOptions>,
                          BlockingBehavior);
   void DidStart(MainThreadLoaderHolder*);
 
@@ -214,7 +214,7 @@ class WorkerThreadableLoader final : public ThreadableLoader {
   ThreadableLoaderClient* client_;
 
   ThreadableLoaderOptions threadable_loader_options_;
-  ResourceLoaderOptions resource_loader_options_;
+  std::unique_ptr<ResourceLoaderOptions> resource_loader_options_;
   BlockingBehavior blocking_behavior_;
 
   // |*m_mainThreadLoaderHolder| lives in the main thread.

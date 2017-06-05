@@ -442,8 +442,8 @@ Resource* ResourceFetcher::ResourceForStaticData(
     response.SetTextEncodingName(archive_resource->TextEncoding());
   }
 
-  Resource* resource = factory.Create(params.GetResourceRequest(),
-                                      params.Options(), params.Charset());
+  Resource* resource = factory.Create(
+      params.GetResourceRequest(), params.ReleaseOptions(), params.Charset());
   resource->SetNeedsSynchronousCacheHit(substitute_data.ForceSynchronousLoad());
   // FIXME: We should provide a body stream here.
   resource->SetStatus(ResourceStatus::kPending);
@@ -468,8 +468,8 @@ Resource* ResourceFetcher::ResourceForBlockedRequest(
     const FetchParameters& params,
     const ResourceFactory& factory,
     ResourceRequestBlockedReason blocked_reason) {
-  Resource* resource = factory.Create(params.GetResourceRequest(),
-                                      params.Options(), params.Charset());
+  Resource* resource = factory.Create(
+      params.GetResourceRequest(), params.ReleaseOptions(), params.Charset());
   resource->SetStatus(ResourceStatus::kPending);
   resource->NotifyStartLoad();
   resource->FinishAsError(ResourceError::CancelledDueToAccessCheckError(
@@ -805,8 +805,8 @@ Resource* ResourceFetcher::CreateResourceForLoading(
   RESOURCE_LOADING_DVLOG(1) << "Loading Resource for "
                             << params.GetResourceRequest().Url().ElidedString();
 
-  Resource* resource =
-      factory.Create(params.GetResourceRequest(), params.Options(), charset);
+  Resource* resource = factory.Create(params.GetResourceRequest(),
+                                      params.ReleaseOptions(), charset);
   resource->SetLinkPreload(params.IsLinkPreload());
   if (params.IsSpeculativePreload()) {
     resource->SetPreloadDiscoveryTime(params.PreloadDiscoveryTime());
@@ -1636,14 +1636,6 @@ void ResourceFetcher::LogPreloadStats(ClearPreloadsPolicy policy) {
     raw_preload_misses.Count(raw_misses);
 }
 
-const ResourceLoaderOptions& ResourceFetcher::DefaultResourceOptions() {
-  DEFINE_STATIC_LOCAL(
-      ResourceLoaderOptions, options,
-      (kBufferData, kAllowStoredCredentials, kClientRequestedCredentials,
-       kCheckContentSecurityPolicy, kDocumentContext));
-  return options;
-}
-
 String ResourceFetcher::GetCacheIdentifier() const {
   if (Context().IsControlledByServiceWorker())
     return String::Number(Context().ServiceWorkerID());
@@ -1659,7 +1651,9 @@ void ResourceFetcher::EmulateLoadStartedForInspector(
     return;
   ResourceRequest resource_request(url);
   resource_request.SetRequestContext(request_context);
-  FetchParameters params(resource_request, initiator_name, resource->Options());
+  std::unique_ptr<ResourceLoaderOptions> options = resource->Options().Clone();
+  options->initiator_info.name = initiator_name;
+  FetchParameters params(resource_request, std::move(options));
   Context().CanRequest(resource->GetType(), resource->LastResourceRequest(),
                        resource->LastResourceRequest().Url(), params.Options(),
                        SecurityViolationReportingPolicy::kReport,

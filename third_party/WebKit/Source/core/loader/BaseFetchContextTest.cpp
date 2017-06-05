@@ -30,8 +30,10 @@
 
 #include "core/loader/BaseFetchContext.h"
 
+#include <memory>
 #include "core/testing/NullExecutionContext.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/wtf/PtrUtil.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -256,12 +258,14 @@ TEST_F(BaseFetchContextTest, RedirectChecksReportedAndEnforcedCSP) {
   KURL url(KURL(), "http://baz.test");
   ResourceRequest resource_request(url);
   resource_request.SetRequestContext(WebURLRequest::kRequestContextScript);
-  EXPECT_EQ(
-      ResourceRequestBlockedReason::CSP,
-      fetch_context_->CanFollowRedirect(
-          Resource::kScript, resource_request, url, ResourceLoaderOptions(),
-          SecurityViolationReportingPolicy::kReport,
-          FetchParameters::kUseDefaultOriginRestrictionForType));
+  std::unique_ptr<ResourceLoaderOptions> options =
+      WTF::MakeUnique<ResourceLoaderOptions>(kDoNotAllowStoredCredentials,
+                                             kClientDidNotRequestCredentials);
+  EXPECT_EQ(ResourceRequestBlockedReason::CSP,
+            fetch_context_->CanFollowRedirect(
+                Resource::kScript, resource_request, url, *options,
+                SecurityViolationReportingPolicy::kReport,
+                FetchParameters::kUseDefaultOriginRestrictionForType));
   EXPECT_EQ(2u, policy->violation_reports_sent_.size());
 }
 
@@ -278,9 +282,12 @@ TEST_F(BaseFetchContextTest, AllowResponseChecksReportedAndEnforcedCSP) {
   KURL url(KURL(), "http://baz.test");
   ResourceRequest resource_request(url);
   resource_request.SetRequestContext(WebURLRequest::kRequestContextScript);
+  std::unique_ptr<ResourceLoaderOptions> options =
+      WTF::MakeUnique<ResourceLoaderOptions>(kDoNotAllowStoredCredentials,
+                                             kClientDidNotRequestCredentials);
   EXPECT_EQ(ResourceRequestBlockedReason::CSP,
             fetch_context_->AllowResponse(Resource::kScript, resource_request,
-                                          url, ResourceLoaderOptions()));
+                                          url, *options));
   EXPECT_EQ(2u, policy->violation_reports_sent_.size());
 }
 

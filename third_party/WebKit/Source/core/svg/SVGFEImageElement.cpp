@@ -21,6 +21,7 @@
 
 #include "core/svg/SVGFEImageElement.h"
 
+#include <memory>
 #include "core/SVGNames.h"
 #include "core/dom/Document.h"
 #include "core/dom/IdTargetObserver.h"
@@ -30,6 +31,8 @@
 #include "platform/graphics/Image.h"
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -70,8 +73,13 @@ void SVGFEImageElement::ClearResourceReferences() {
 }
 
 void SVGFEImageElement::FetchImageResource() {
+  std::unique_ptr<ResourceLoaderOptions> options =
+      WTF::MakeUnique<ResourceLoaderOptions>(kAllowStoredCredentials,
+                                             kClientRequestedCredentials);
+  options->initiator_info.name = localName();
   FetchParameters params(
-      ResourceRequest(GetDocument().CompleteURL(HrefString())), localName());
+      ResourceRequest(GetDocument().CompleteURL(HrefString())),
+      std::move(options));
   cached_image_ = ImageResourceContent::Fetch(params, GetDocument().Fetcher());
 
   if (cached_image_)

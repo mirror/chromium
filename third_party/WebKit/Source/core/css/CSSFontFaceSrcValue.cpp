@@ -25,6 +25,7 @@
 
 #include "core/css/CSSFontFaceSrcValue.h"
 
+#include <memory>
 #include "core/css/CSSMarkup.h"
 #include "core/css/StyleSheetContents.h"
 #include "core/dom/Document.h"
@@ -37,7 +38,9 @@
 #include "platform/loader/fetch/FetchInitiatorTypeNames.h"
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/weborigin/SecurityPolicy.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
@@ -92,7 +95,11 @@ FontResource* CSSFontFaceSrcValue::Fetch(Document* document) const {
     ResourceRequest resource_request(absolute_resource_);
     resource_request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
         referrer_.referrer_policy, resource_request.Url(), referrer_.referrer));
-    FetchParameters params(resource_request, FetchInitiatorTypeNames::css);
+    std::unique_ptr<ResourceLoaderOptions> options =
+        WTF::MakeUnique<ResourceLoaderOptions>(kAllowStoredCredentials,
+                                               kClientRequestedCredentials);
+    options->initiator_info.name = FetchInitiatorTypeNames::css;
+    FetchParameters params(resource_request, std::move(options));
     if (RuntimeEnabledFeatures::webFontsCacheAwareTimeoutAdaptationEnabled())
       params.SetCacheAwareLoadingEnabled(kIsCacheAwareLoadingEnabled);
     params.SetContentSecurityCheck(should_check_content_security_policy_);

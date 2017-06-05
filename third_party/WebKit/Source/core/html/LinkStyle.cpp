@@ -324,8 +324,8 @@ LinkStyle::LoadReturnValue LinkStyle::LoadStylesheetIfNeeded(
   CrossOriginAttributeValue cross_origin = GetCrossOriginAttributeValue(
       owner_->FastGetAttribute(HTMLNames::crossoriginAttr));
   if (cross_origin != kCrossOriginAttributeNotSet) {
-    params.SetCrossOriginAccessControl(GetDocument().GetSecurityOrigin(),
-                                       cross_origin);
+    params->SetCrossOriginAccessControl(GetDocument().GetSecurityOrigin(),
+                                        cross_origin);
     SetFetchFollowingCORS();
   }
 
@@ -333,7 +333,7 @@ LinkStyle::LoadReturnValue LinkStyle::LoadStylesheetIfNeeded(
   if (!integrity_attr.IsEmpty()) {
     IntegrityMetadataSet metadata_set;
     SubresourceIntegrity::ParseIntegrityAttribute(integrity_attr, metadata_set);
-    params.SetIntegrityMetadata(metadata_set);
+    params->SetIntegrityMetadata(metadata_set);
   }
   SetResource(CSSStyleSheetResource::Fetch(params, GetDocument().Fetcher()));
 

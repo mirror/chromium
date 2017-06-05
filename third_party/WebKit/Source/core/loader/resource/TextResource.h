@@ -5,9 +5,10 @@
 #ifndef TextResource_h
 #define TextResource_h
 
+#include <memory>
 #include "core/CoreExport.h"
 #include "platform/loader/fetch/Resource.h"
-#include <memory>
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 
 namespace blink {
 
@@ -25,7 +26,7 @@ class CORE_EXPORT TextResource : public Resource {
  protected:
   TextResource(const ResourceRequest&,
                Type,
-               const ResourceLoaderOptions&,
+               std::unique_ptr<ResourceLoaderOptions>,
                const String& mime_type,
                const String& charset);
   ~TextResource() override;

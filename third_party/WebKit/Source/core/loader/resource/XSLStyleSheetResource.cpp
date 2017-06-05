@@ -70,11 +70,11 @@ XSLStyleSheetResource* XSLStyleSheetResource::Fetch(FetchParameters& params,
 
 XSLStyleSheetResource::XSLStyleSheetResource(
     const ResourceRequest& resource_request,
-    const ResourceLoaderOptions& options,
+    std::unique_ptr<ResourceLoaderOptions> options,
     const String& charset)
     : StyleSheetResource(resource_request,
                          kXSLStyleSheet,
-                         options,
+                         std::move(options),
                          "text/xsl",
                          charset) {}
 

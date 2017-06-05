@@ -114,7 +114,7 @@ class CORE_EXPORT ImageResource final
   class ImageResourceFactory;
 
   ImageResource(const ResourceRequest&,
-                const ResourceLoaderOptions&,
+                std::unique_ptr<ResourceLoaderOptions>,
                 ImageResourceContent*,
                 bool is_placeholder);
 

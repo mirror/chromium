@@ -46,15 +46,12 @@
 #include "platform/loader/fetch/ClientHintsPreferences.h"
 #include "platform/loader/fetch/RawResource.h"
 #include "platform/loader/fetch/ResourceError.h"
-#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/loader/fetch/SubstituteData.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/RefPtr.h"
 #include "public/platform/WebLoadingBehaviorFlag.h"
-
-#include <memory>
 
 namespace blink {
 

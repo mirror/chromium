@@ -30,7 +30,6 @@
 
 #include "core/fileapi/FileReaderLoader.h"
 
-#include <memory>
 #include "core/dom/DOMArrayBuffer.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/fileapi/Blob.h"
@@ -41,10 +40,10 @@
 #include "platform/blob/BlobURL.h"
 #include "platform/loader/fetch/FetchInitiatorTypeNames.h"
 #include "platform/loader/fetch/ResourceError.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/wtf/PassRefPtr.h"
-#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/Base64.h"
@@ -100,20 +99,23 @@ void FileReaderLoader::Start(ExecutionContext* execution_context,
   // FIXME: Is there a directive to which this load should be subject?
   options.content_security_policy_enforcement =
       kDoNotEnforceContentSecurityPolicy;
-  // Use special initiator to hide the request from the inspector.
-  options.initiator = FetchInitiatorTypeNames::internal;
 
-  ResourceLoaderOptions resource_loader_options;
-  resource_loader_options.allow_credentials = kAllowStoredCredentials;
+  std::unique_ptr<ResourceLoaderOptions> resource_loader_options =
+      WTF::MakeUnique<ResourceLoaderOptions>(kAllowStoredCredentials,
+                                             kClientDidNotRequestCredentials);
+  // Use special initiator to hide the request from the inspector.
+  resource_loader_options->initiator_info.name =
+      FetchInitiatorTypeNames::internal;
 
   if (client_) {
     DCHECK(!loader_);
     loader_ = ThreadableLoader::Create(*execution_context, this, options,
-                                       resource_loader_options);
+                                       std::move(resource_loader_options));
     loader_->Start(request);
   } else {
     ThreadableLoader::LoadResourceSynchronously(
-        *execution_context, request, *this, options, resource_loader_options);
+        *execution_context, request, *this, options,
+        std::move(resource_loader_options));
   }
 }
 

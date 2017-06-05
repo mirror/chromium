@@ -56,6 +56,7 @@
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/loader/fetch/UniqueIdentifier.h"
@@ -308,12 +309,14 @@ bool PingLoaderImpl::WillFollowRedirect(
     DCHECK(!redirect_response.IsNull());
 
     String error_description;
-    ResourceLoaderOptions options;
+    std::unique_ptr<ResourceLoaderOptions> options =
+        WTF::MakeUnique<ResourceLoaderOptions>(kDoNotAllowStoredCredentials,
+                                               kClientDidNotRequestCredentials);
     // TODO(tyoshino): Save updated data in options.securityOrigin and pass it
     // on the next time.
     if (!CrossOriginAccessControl::HandleRedirect(
             origin_, new_request, redirect_response, kAllowStoredCredentials,
-            options, error_description)) {
+            *options, error_description)) {
       if (GetFrame()) {
         if (GetFrame()->GetDocument()) {
           GetFrame()->GetDocument()->AddConsoleMessage(ConsoleMessage::Create(

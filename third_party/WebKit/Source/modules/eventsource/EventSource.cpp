@@ -32,7 +32,6 @@
 
 #include "modules/eventsource/EventSource.h"
 
-#include <memory>
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
@@ -53,9 +52,11 @@
 #include "modules/eventsource/EventSourceInit.h"
 #include "platform/HTTPNames.h"
 #include "platform/loader/fetch/ResourceError.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "public/platform/WebURLRequest.h"
 
@@ -156,22 +157,22 @@ void EventSource::Connect() {
           ? kDoNotEnforceContentSecurityPolicy
           : kEnforceContentSecurityPolicy;
 
-  ResourceLoaderOptions resource_loader_options;
-  resource_loader_options.allow_credentials =
-      (origin->CanRequestNoSuborigin(current_url_) || with_credentials_)
-          ? kAllowStoredCredentials
-          : kDoNotAllowStoredCredentials;
-  resource_loader_options.credentials_requested =
-      with_credentials_ ? kClientRequestedCredentials
-                        : kClientDidNotRequestCredentials;
-  resource_loader_options.data_buffering_policy = kDoNotBufferData;
-  resource_loader_options.security_origin = origin;
+  StoredCredentials allow_credentials = kDoNotAllowStoredCredentials;
+  if (origin->CanRequestNoSuborigin(current_url_) || with_credentials_)
+    allow_credentials = kAllowStoredCredentials;
+  std::unique_ptr<ResourceLoaderOptions> resource_loader_options =
+      WTF::MakeUnique<ResourceLoaderOptions>(
+          allow_credentials, with_credentials_
+                                 ? kClientRequestedCredentials
+                                 : kClientDidNotRequestCredentials);
+  resource_loader_options->data_buffering_policy = kDoNotBufferData;
+  resource_loader_options->security_origin = origin;
 
   probe::willSendEventSourceRequest(&execution_context, this);
   // probe::documentThreadableLoaderStartedLoadingForClient
   // will be called synchronously.
   loader_ = ThreadableLoader::Create(execution_context, this, options,
-                                     resource_loader_options);
+                                     std::move(resource_loader_options));
   loader_->Start(request);
 }
 

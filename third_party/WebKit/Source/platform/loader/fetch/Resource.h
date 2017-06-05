@@ -143,8 +143,8 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   // fragment only.
   const KURL& Url() const { return GetResourceRequest().Url(); }
   Type GetType() const { return static_cast<Type>(type_); }
-  const ResourceLoaderOptions& Options() const { return options_; }
-  ResourceLoaderOptions& MutableOptions() { return options_; }
+  const ResourceLoaderOptions& Options() const { return *options_; }
+  ResourceLoaderOptions& MutableOptions() { return *options_; }
 
   void DidChangePriority(ResourceLoadPriority, int intra_priority_value);
   virtual ResourcePriority PriorityFromObservers() {
@@ -244,7 +244,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   bool LoadFailedOrCanceled() const { return !error_.IsNull(); }
 
   DataBufferingPolicy GetDataBufferingPolicy() const {
-    return options_.data_buffering_policy;
+    return options_->data_buffering_policy;
   }
   void SetDataBufferingPolicy(DataBufferingPolicy);
 
@@ -355,7 +355,9 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   };
 
  protected:
-  Resource(const ResourceRequest&, Type, const ResourceLoaderOptions&);
+  Resource(const ResourceRequest&,
+           Type,
+           std::unique_ptr<ResourceLoaderOptions>);
 
   virtual void CheckNotify();
 
@@ -475,7 +477,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   HeapHashCountedSet<WeakMember<ResourceClient>> clients_awaiting_callback_;
   HeapHashCountedSet<WeakMember<ResourceClient>> finished_clients_;
 
-  ResourceLoaderOptions options_;
+  std::unique_ptr<ResourceLoaderOptions> options_;
 
   double response_timestamp_;
 
@@ -494,7 +496,7 @@ class ResourceFactory {
 
  public:
   virtual Resource* Create(const ResourceRequest&,
-                           const ResourceLoaderOptions&,
+                           std::unique_ptr<ResourceLoaderOptions>,
                            const String&) const = 0;
   Resource::Type GetType() const { return type_; }
 

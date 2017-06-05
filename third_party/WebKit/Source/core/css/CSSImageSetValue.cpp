@@ -26,6 +26,7 @@
 #include "core/css/CSSImageSetValue.h"
 
 #include <algorithm>
+#include <memory>
 #include "core/css/CSSImageValue.h"
 #include "core/css/CSSPrimitiveValue.h"
 #include "core/dom/Document.h"
@@ -39,6 +40,7 @@
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityPolicy.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
@@ -113,7 +115,11 @@ StyleImage* CSSImageSetValue::CacheImage(
     ImageWithScale image = BestImageForScaleFactor(device_scale_factor);
     ResourceRequest resource_request(document.CompleteURL(image.image_url));
     resource_request.SetHTTPReferrer(image.referrer);
-    FetchParameters params(resource_request, FetchInitiatorTypeNames::css);
+    std::unique_ptr<ResourceLoaderOptions> options =
+        WTF::MakeUnique<ResourceLoaderOptions>(kAllowStoredCredentials,
+                                               kClientRequestedCredentials);
+    options->initiator_info.name = FetchInitiatorTypeNames::css;
+    FetchParameters params(resource_request, std::move(options));
 
     if (cross_origin != kCrossOriginAttributeNotSet) {
       params.SetCrossOriginAccessControl(document.GetSecurityOrigin(),

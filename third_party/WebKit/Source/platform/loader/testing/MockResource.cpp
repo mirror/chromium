@@ -4,9 +4,11 @@
 
 #include "platform/loader/testing/MockResource.h"
 
+#include <memory>
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -17,9 +19,9 @@ class MockResourceFactory final : public ResourceFactory {
   MockResourceFactory() : ResourceFactory(Resource::kMock) {}
 
   Resource* Create(const ResourceRequest& request,
-                   const ResourceLoaderOptions& options,
+                   std::unique_ptr<ResourceLoaderOptions> options,
                    const String&) const override {
-    return new MockResource(request, options);
+    return new MockResource(request, std::move(options));
   }
 };
 
@@ -35,11 +37,13 @@ MockResource* MockResource::Fetch(FetchParameters& params,
 
 // static
 MockResource* MockResource::Create(const ResourceRequest& request) {
-  return new MockResource(request, ResourceLoaderOptions());
+  return new MockResource(request, WTF::MakeUnique<ResourceLoaderOptions>(
+                                       kDoNotAllowStoredCredentials,
+                                       kClientDidNotRequestCredentials));
 }
 
 MockResource::MockResource(const ResourceRequest& request,
-                           const ResourceLoaderOptions& options)
-    : Resource(request, Resource::kMock, options) {}
+                           std::unique_ptr<ResourceLoaderOptions> options)
+    : Resource(request, Resource::kMock, std::move(options)) {}
 
 }  // namespace blink

@@ -23,7 +23,6 @@
 
 #include "core/xmlhttprequest/XMLHttpRequest.h"
 
-#include <memory>
 #include "bindings/core/v8/ArrayBufferOrArrayBufferViewOrBlobOrDocumentOrStringOrFormDataOrURLSearchParams.h"
 #include "bindings/core/v8/ArrayBufferOrArrayBufferViewOrBlobOrUSVString.h"
 #include "bindings/core/v8/ExceptionState.h"
@@ -79,6 +78,7 @@
 #include "platform/weborigin/Suborigin.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/AutoReset.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/text/CString.h"
 #include "public/platform/WebURLRequest.h"
@@ -1015,33 +1015,34 @@ void XMLHttpRequest::CreateRequest(PassRefPtr<EncodedFormData> http_body,
   options.fetch_request_mode =
       upload_events ? WebURLRequest::kFetchRequestModeCORSWithForcedPreflight
                     : WebURLRequest::kFetchRequestModeCORS;
-  options.initiator = FetchInitiatorTypeNames::xmlhttprequest;
   options.content_security_policy_enforcement =
       ContentSecurityPolicy::ShouldBypassMainWorld(&execution_context)
           ? kDoNotEnforceContentSecurityPolicy
           : kEnforceContentSecurityPolicy;
   options.timeout_milliseconds = timeout_milliseconds_;
 
-  ResourceLoaderOptions resource_loader_options;
-  resource_loader_options.allow_credentials =
-      (same_origin_request_ || include_credentials)
-          ? kAllowStoredCredentials
-          : kDoNotAllowStoredCredentials;
-  resource_loader_options.credentials_requested =
-      include_credentials ? kClientRequestedCredentials
-                          : kClientDidNotRequestCredentials;
-  resource_loader_options.security_origin = GetSecurityOrigin();
+  StoredCredentials allow_credentials = kDoNotAllowStoredCredentials;
+  if (same_origin_request_ || include_credentials)
+    allow_credentials = kAllowStoredCredentials;
+  std::unique_ptr<ResourceLoaderOptions> resource_loader_options =
+      WTF::MakeUnique<ResourceLoaderOptions>(
+          allow_credentials, include_credentials
+                                 ? kClientRequestedCredentials
+                                 : kClientDidNotRequestCredentials);
+  resource_loader_options->security_origin = GetSecurityOrigin();
+  resource_loader_options->initiator_info.name =
+      FetchInitiatorTypeNames::xmlhttprequest;
 
   // When responseType is set to "blob", we redirect the downloaded data to a
   // file-handle directly.
   downloading_to_file_ = GetResponseTypeCode() == kResponseTypeBlob;
   if (downloading_to_file_) {
     request.SetDownloadToFile(true);
-    resource_loader_options.data_buffering_policy = kDoNotBufferData;
+    resource_loader_options->data_buffering_policy = kDoNotBufferData;
   }
 
   if (async_) {
-    resource_loader_options.data_buffering_policy = kDoNotBufferData;
+    resource_loader_options->data_buffering_policy = kDoNotBufferData;
   }
 
   exception_code_ = 0;
@@ -1056,7 +1057,7 @@ void XMLHttpRequest::CreateRequest(PassRefPtr<EncodedFormData> http_body,
     DCHECK(!loader_);
     DCHECK(send_flag_);
     loader_ = ThreadableLoader::Create(execution_context, this, options,
-                                       resource_loader_options);
+                                       std::move(resource_loader_options));
     loader_->Start(request);
 
     return;
@@ -1064,8 +1065,9 @@ void XMLHttpRequest::CreateRequest(PassRefPtr<EncodedFormData> http_body,
 
   // Use count for XHR synchronous requests.
   UseCounter::Count(&execution_context, UseCounter::kXMLHttpRequestSynchronous);
-  ThreadableLoader::LoadResourceSynchronously(execution_context, request, *this,
-                                              options, resource_loader_options);
+  ThreadableLoader::LoadResourceSynchronously(
+      execution_context, request, *this, options,
+      std::move(resource_loader_options));
 
   ThrowForLoadFailureIfNeeded(exception_state, String());
 }

@@ -20,6 +20,7 @@
 
 #include "core/css/CSSImageValue.h"
 
+#include <memory>
 #include "core/css/CSSMarkup.h"
 #include "core/dom/Document.h"
 #include "core/frame/LocalFrame.h"
@@ -30,8 +31,10 @@
 #include "platform/loader/fetch/FetchInitiatorTypeNames.h"
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityPolicy.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -60,9 +63,13 @@ StyleImage* CSSImageValue::CacheImage(const Document& document,
     ResourceRequest resource_request(absolute_url_);
     resource_request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
         referrer_.referrer_policy, resource_request.Url(), referrer_.referrer));
-    FetchParameters params(resource_request, initiator_name_.IsEmpty()
-                                                 ? FetchInitiatorTypeNames::css
-                                                 : initiator_name_);
+    std::unique_ptr<ResourceLoaderOptions> options =
+        WTF::MakeUnique<ResourceLoaderOptions>(kAllowStoredCredentials,
+                                               kClientRequestedCredentials);
+    options->initiator_info.name = initiator_name_.IsEmpty()
+                                       ? FetchInitiatorTypeNames::css
+                                       : initiator_name_;
+    FetchParameters params(resource_request, std::move(options));
 
     if (cross_origin != kCrossOriginAttributeNotSet) {
       params.SetCrossOriginAccessControl(document.GetSecurityOrigin(),

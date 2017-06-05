@@ -31,6 +31,7 @@
 
 #include "core/loader/LinkLoader.h"
 
+#include <memory>
 #include "core/css/MediaList.h"
 #include "core/css/MediaQueryEvaluator.h"
 #include "core/dom/Document.h"
@@ -52,7 +53,9 @@
 #include "platform/loader/fetch/FetchInitiatorTypeNames.h"
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
+#include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebPrerender.h"
 
 namespace blink {
@@ -356,8 +359,12 @@ static Resource* PreloadIfNeeded(const LinkRelAttribute& rel_attribute,
         referrer_policy, href, document.OutgoingReferrer()));
   }
 
-  FetchParameters link_fetch_params(
-      resource_request, FetchInitiatorTypeNames::link, document.EncodingName());
+  std::unique_ptr<ResourceLoaderOptions> options =
+      WTF::MakeUnique<ResourceLoaderOptions>(kAllowStoredCredentials,
+                                             kClientRequestedCredentials);
+  options->initiator_info.name = FetchInitiatorTypeNames::link;
+  FetchParameters link_fetch_params(resource_request, std::move(options));
+  link_fetch_params.SetCharset(document.EncodingName());
 
   if (cross_origin != kCrossOriginAttributeNotSet) {
     link_fetch_params.SetCrossOriginAccessControl(document.GetSecurityOrigin(),
@@ -388,8 +395,11 @@ static Resource* PrefetchIfNeeded(Document& document,
           referrer_policy, href, document.OutgoingReferrer()));
     }
 
-    FetchParameters link_fetch_params(resource_request,
-                                      FetchInitiatorTypeNames::link);
+    std::unique_ptr<ResourceLoaderOptions> options =
+        WTF::MakeUnique<ResourceLoaderOptions>(kAllowStoredCredentials,
+                                               kClientRequestedCredentials);
+    options->initiator_info.name = FetchInitiatorTypeNames::link;
+    FetchParameters link_fetch_params(resource_request, std::move(options));
     if (cross_origin != kCrossOriginAttributeNotSet) {
       link_fetch_params.SetCrossOriginAccessControl(
           document.GetSecurityOrigin(), cross_origin);

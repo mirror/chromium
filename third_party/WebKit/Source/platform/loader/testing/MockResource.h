@@ -5,6 +5,7 @@
 #ifndef MockResource_h
 #define MockResource_h
 
+#include <memory>
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/Resource.h"
 
@@ -22,7 +23,7 @@ class MockResource final : public Resource {
  public:
   static MockResource* Fetch(FetchParameters&, ResourceFetcher*);
   static MockResource* Create(const ResourceRequest&);
-  MockResource(const ResourceRequest&, const ResourceLoaderOptions&);
+  MockResource(const ResourceRequest&, std::unique_ptr<ResourceLoaderOptions>);
 };
 
 }  // namespace blink

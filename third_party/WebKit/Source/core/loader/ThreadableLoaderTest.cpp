@@ -132,10 +132,12 @@ class DocumentThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
       WebURLRequest::FetchRequestMode fetch_request_mode) override {
     ThreadableLoaderOptions options;
     options.fetch_request_mode = fetch_request_mode;
-    ResourceLoaderOptions resource_loader_options;
+    std::unique_ptr<ResourceLoaderOptions> resource_loader_options =
+        WTF::MakeUnique<ResourceLoaderOptions>(kDoNotAllowStoredCredentials,
+                                               kClientDidNotRequestCredentials);
     loader_ = DocumentThreadableLoader::Create(
         *ThreadableLoadingContext::Create(GetDocument()), client, options,
-        resource_loader_options);
+        std::move(resource_loader_options));
   }
 
   void StartLoader(const ResourceRequest& request) override {
@@ -283,7 +285,9 @@ class WorkerThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
 
     ThreadableLoaderOptions options;
     options.fetch_request_mode = fetch_request_mode;
-    ResourceLoaderOptions resource_loader_options;
+    std::unique_ptr<ResourceLoaderOptions> resource_loader_options =
+        WTF::MakeUnique<ResourceLoaderOptions>(kDoNotAllowStoredCredentials,
+                                               kClientDidNotRequestCredentials);
 
     // Ensure that WorkerThreadableLoader is created.
     // ThreadableLoader::create() determines whether it should create
@@ -291,8 +295,9 @@ class WorkerThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
     // isWorkerGlobalScope().
     DCHECK(worker_thread_->GlobalScope()->IsWorkerGlobalScope());
 
-    loader_ = ThreadableLoader::Create(*worker_thread_->GlobalScope(), client,
-                                       options, resource_loader_options);
+    loader_ =
+        ThreadableLoader::Create(*worker_thread_->GlobalScope(), client,
+                                 options, std::move(resource_loader_options));
     DCHECK(loader_);
     event->Signal();
   }

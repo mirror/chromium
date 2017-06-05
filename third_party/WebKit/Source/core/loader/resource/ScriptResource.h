@@ -26,11 +26,14 @@
 #ifndef ScriptResource_h
 #define ScriptResource_h
 
+#include <memory>
 #include "core/CoreExport.h"
 #include "core/loader/resource/TextResource.h"
 #include "platform/loader/fetch/AccessControlStatus.h"
 #include "platform/loader/fetch/IntegrityMetadata.h"
 #include "platform/loader/fetch/ResourceClient.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
+#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -59,7 +62,10 @@ class CORE_EXPORT ScriptResource final : public TextResource {
   // Public for testing
   static ScriptResource* Create(const ResourceRequest& request,
                                 const String& charset) {
-    return new ScriptResource(request, ResourceLoaderOptions(), charset);
+    std::unique_ptr<ResourceLoaderOptions> options =
+        WTF::MakeUnique<ResourceLoaderOptions>(kDoNotAllowStoredCredentials,
+                                               kClientDidNotRequestCredentials);
+    return new ScriptResource(request, std::move(options), charset);
   }
 
   ~ScriptResource() override;
@@ -84,14 +90,14 @@ class CORE_EXPORT ScriptResource final : public TextResource {
     ScriptResourceFactory() : ResourceFactory(Resource::kScript) {}
 
     Resource* Create(const ResourceRequest& request,
-                     const ResourceLoaderOptions& options,
+                     std::unique_ptr<ResourceLoaderOptions> options,
                      const String& charset) const override {
-      return new ScriptResource(request, options, charset);
+      return new ScriptResource(request, std::move(options), charset);
     }
   };
 
   ScriptResource(const ResourceRequest&,
-                 const ResourceLoaderOptions&,
+                 std::unique_ptr<ResourceLoaderOptions>,
                  const String& charset);
 
   AtomicString source_text_;

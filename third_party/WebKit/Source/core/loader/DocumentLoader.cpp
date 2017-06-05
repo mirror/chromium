@@ -29,7 +29,6 @@
 
 #include "core/loader/DocumentLoader.h"
 
-#include <memory>
 #include "core/dom/Document.h"
 #include "core/dom/DocumentParser.h"
 #include "core/dom/UserGestureIndicator.h"
@@ -72,6 +71,7 @@
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceTimingInfo.h"
 #include "platform/mhtml/ArchiveResource.h"
 #include "platform/network/ContentSecurityPolicyResponseHeaders.h"
@@ -82,6 +82,7 @@
 #include "platform/weborigin/SecurityPolicy.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/AutoReset.h"
+#include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/Platform.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
@@ -859,12 +860,12 @@ void DocumentLoader::StartLoadingMainResource() {
     GetTiming().MarkFetchStart();
   }
 
-  DEFINE_STATIC_LOCAL(
-      ResourceLoaderOptions, main_resource_load_options,
-      (kDoNotBufferData, kAllowStoredCredentials, kClientRequestedCredentials,
-       kCheckContentSecurityPolicy, kDocumentContext));
-  FetchParameters fetch_params(request_, FetchInitiatorTypeNames::document,
-                               main_resource_load_options);
+  std::unique_ptr<ResourceLoaderOptions> options =
+      WTF::MakeUnique<ResourceLoaderOptions>(kAllowStoredCredentials,
+                                             kClientRequestedCredentials);
+  options->data_buffering_policy = kDoNotBufferData;
+  options->initiator_info.name = FetchInitiatorTypeNames::document;
+  FetchParameters fetch_params(request_, std::move(options));
   main_resource_ =
       RawResource::FetchMainResource(fetch_params, Fetcher(), substitute_data_);
 
