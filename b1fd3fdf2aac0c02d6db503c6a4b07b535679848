@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eee661ac_03683502",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/scroll-anchoring/opt-out.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-05T20:01:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef71d3ca_777e5c8c",
+      "revId": "b1fd3fdf2aac0c02d6db503c6a4b07b535679848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29fcd82b_8f8fd466",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/scroll-anchoring/opt-out.html",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "b1fd3fdf2aac0c02d6db503c6a4b07b535679848",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22abd565_d3dd84fe",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/scroll-anchoring/opt-out.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-05T20:01:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29fcd82b_8f8fd466",
+      "revId": "b1fd3fdf2aac0c02d6db503c6a4b07b535679848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
