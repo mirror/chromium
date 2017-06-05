@@ -19,6 +19,46 @@
     },
     {
       "key": {
+        "uuid": "d828000f_59188109",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-05T16:39:33Z",
+      "side": 1,
+      "message": "Wouldn\u0027t this benefit from net/http/http_status_code_list.h? You would be able to name the magic numbers then.",
+      "revId": "13e0172b286d2ef6093bcab056ad3fb476683679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc7e8673_53f61aaa",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-05T16:39:33Z",
+      "side": 1,
+      "message": "This is a great find. Did you check all the other calls to ResetState for similar unintended side effect?",
+      "range": {
+        "startLine": 369,
+        "startChar": 12,
+        "endLine": 369,
+        "endChar": 19
+      },
+      "revId": "13e0172b286d2ef6093bcab056ad3fb476683679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e4878a6_faf0c287",
         "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
         "patchSetId": 3
@@ -30,6 +70,30 @@
       "writtenOn": "2017-06-03T00:17:54Z",
       "side": 1,
       "message": "This doesn\u0027t seem related to UMA, does it belong in a separate changelist?",
+      "range": {
+        "startLine": 372,
+        "startChar": 31,
+        "endLine": 372,
+        "endChar": 55
+      },
+      "revId": "13e0172b286d2ef6093bcab056ad3fb476683679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd92575b_81a6ea9f",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-05T16:39:33Z",
+      "side": 1,
+      "message": "This is good point. I think you are fixing 2 issues, but you don\u0027t mention this one in the CL description.",
+      "parentUuid": "1e4878a6_faf0c287",
       "range": {
         "startLine": 372,
         "startChar": 31,
