@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "898fe0a5_b17d1d49",
+        "filename": "chrome/android/java/res/anim/menu_enter_from_bottom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-05T21:28:37Z",
+      "side": 1,
+      "message": "This is exactly the same as menu_enter.xml accept this pivotY.",
+      "range": {
+        "startLine": 14,
+        "startChar": 24,
+        "endLine": 14,
+        "endChar": 27
+      },
+      "revId": "e70fe235e4c4aa9aa8cc76924aecb4c477bcdc79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74470e34_ea0f1132",
+        "filename": "chrome/android/java/res/anim/menu_exit_from_bottom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-05T21:28:37Z",
+      "side": 1,
+      "message": "This is exactly the same as menu_enter.xml accept this pivotY.",
+      "range": {
+        "startLine": 14,
+        "startChar": 24,
+        "endLine": 14,
+        "endChar": 27
+      },
+      "revId": "e70fe235e4c4aa9aa8cc76924aecb4c477bcdc79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
