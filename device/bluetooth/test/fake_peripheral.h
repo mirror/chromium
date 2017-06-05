@@ -39,6 +39,8 @@ class FakePeripheral : public device::BluetoothDevice {
   // with the ConnectErrorCode corresponding to |code|.
   void SetNextGATTConnectionResponse(uint16_t code);
 
+  void SetNextGATTDiscoveryResponse(uint16_t code);
+
   // BluetoothDevice overrides:
   uint32_t GetBluetoothClass() const override;
 #if defined(OS_CHROMEOS) || defined(OS_LINUX)
@@ -89,6 +91,7 @@ class FakePeripheral : public device::BluetoothDevice {
   void CreateGattConnection(
       const GattConnectionCallback& callback,
       const ConnectErrorCallback& error_callback) override;
+  bool IsGattServicesDiscoveryComplete() const override;
 
  protected:
   void CreateGattConnectionImpl() override;
@@ -96,6 +99,7 @@ class FakePeripheral : public device::BluetoothDevice {
 
  private:
   void DispatchConnectionResponse();
+  void DispatchDiscoveryResponse();
 
   const std::string address_;
   base::Optional<std::string> name_;
@@ -110,7 +114,11 @@ class FakePeripheral : public device::BluetoothDevice {
   // CreateGattConnection is called.
   base::Optional<uint16_t> next_connection_response_;
 
-  base::WeakPtrFactory<FakePeripheral> weak_ptr_factory_;
+  base::Optional<uint16_t> next_discovery_response_;
+
+  // Mutable because IsGattServicesDiscoveryComplete needs to post a task but
+  // is const.
+  mutable base::WeakPtrFactory<FakePeripheral> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(FakePeripheral);
 };
