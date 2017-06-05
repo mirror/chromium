@@ -194,6 +194,24 @@
       "revId": "23166c4f3363b9cce860885cd69910fe19cbd4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a5cffc8_f395a9d5",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1449,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-05T15:47:04Z",
+      "side": 1,
+      "message": "TLS lookup isn\u0027t free on all our platforms (though our hack for the main thread help). And I know V8 plumbed Isolate* everywhere to avoid doing it too often. Especially if we do need to do TLS lookup, we should be careful to avoid taking too much of a hit when we don\u0027t want to record RCS (probably using a RuntimeEnabledFeature and making sure non-trivial code size is out-of-lined).\n\nTo some extent I think it comes down to how much RCS is a bindings feature (use of bindings implies an isolate) vs an engine feature.\n\nOne thing we might think about: for the places where we do always have an isolate available, we could consider giving PerIsolateData a direct pointer to WTFThreadData (or whatever thread-global object we end up using), since AFAIK we don\u0027t move isolates between threads. (I\u0027m kinda worried about worklets, but I don\u0027t think they\u0027re currently moving between threads...)",
+      "parentUuid": "36f2bee8_c17ac503",
+      "revId": "23166c4f3363b9cce860885cd69910fe19cbd4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

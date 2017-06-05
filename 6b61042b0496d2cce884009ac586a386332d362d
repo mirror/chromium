@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37667084_2af963d8",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-05T15:47:04Z",
+      "side": 1,
+      "message": "Making these virtual will defeat inlining; is that intentional?",
+      "revId": "6b61042b0496d2cce884009ac586a386332d362d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e412e665_5201d651",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-05T15:47:04Z",
+      "side": 1,
+      "message": "nit (modulo the rest of the discussion): More defensively, you could do:\n\nOptional\u003cRuntimeCallTimerScope\u003e timer_scope;\nif (v8::Isolate* isolate \u003d GetIsolate()) {\n  timer_scope.emplace(\n      RuntimeCallStats::From(isolate),\n      RuntimeCallStats::CounterId::kCollectGarbage);\n}\n\nWhich is guaranteed to be properly matched even in the case of early-return.",
+      "revId": "6b61042b0496d2cce884009ac586a386332d362d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
