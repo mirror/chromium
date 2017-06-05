@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2e4d966_bc61caaf",
+        "filename": "extensions/shell/app/shell_main_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-06-05T23:55:05Z",
+      "side": 1,
+      "message": "Will the logging system automatically rename and save our old logs as it does for Chrome? If not, do document that here with a TODO to fix it.",
+      "range": {
+        "startLine": 89,
+        "startChar": 5,
+        "endLine": 89,
+        "endChar": 29
+      },
+      "revId": "46db75a7d945f0601bbcb31a7f8dde3b9b59cb69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
