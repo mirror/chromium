@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6afe56b_1da9acd2",
+        "filename": "extensions/renderer/module_system.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-05T23:52:13Z",
+      "side": 1,
+      "message": "Are the native versions a drop-in replacement?  If so, why do we need these?  If not, why do we want to publicly expose these to all kiosk apps?  Shouldn\u0027t we at least not expose the ones we\u0027re actively trying to deprecate?",
+      "revId": "08913a6b0ff765fa6c74c8622645434cd6a3a5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
