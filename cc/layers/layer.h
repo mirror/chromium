@@ -212,9 +212,14 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
   gfx::ScrollOffset scroll_offset() const { return inputs_.scroll_offset; }
   void SetScrollOffsetFromImplSide(const gfx::ScrollOffset& scroll_offset);
 
+  // TODO(pdr): Remove scroll_clip_layer_id and instead store the scrolling
+  // bounds directly.
   void SetScrollClipLayerId(int clip_layer_id);
-  bool scrollable() const { return inputs_.scroll_clip_layer_id != INVALID_ID; }
   Layer* scroll_clip_layer() const;
+
+  // TODO(pdr): Comment me.
+  void SetScrollable();
+  bool scrollable() const { return inputs_.scrollable; }
 
   void SetUserScrollable(bool horizontal, bool vertical);
   bool user_scrollable_horizontal() const {
@@ -565,6 +570,7 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
     // transformed relative to this layer, defines the maximum scroll offset
     // for this layer.
     int scroll_clip_layer_id;
+    bool scrollable : 1;
     bool user_scrollable_horizontal : 1;
     bool user_scrollable_vertical : 1;
 
