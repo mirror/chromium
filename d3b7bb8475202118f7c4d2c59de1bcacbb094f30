@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60f4d876_4378bc02",
+        "filename": "third_party/WebKit/Source/platform/mojo/Time.typemap",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-05T00:54:55Z",
+      "side": 1,
+      "message": "2017",
+      "revId": "d3b7bb8475202118f7c4d2c59de1bcacbb094f30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
