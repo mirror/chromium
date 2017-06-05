@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff08045c_ffef9c33",
+        "filename": "ash/system/date/system_info_default_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-05T20:27:42Z",
+      "side": 1,
+      "message": "remove \"gfx::Insets(), 0:",
+      "range": {
+        "startLine": 43,
+        "startChar": 47,
+        "endLine": 43,
+        "endChar": 49
+      },
+      "revId": "99630052f3275b6ed304a9df7eae42b4e570c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d053000b_d9ba8242",
+        "filename": "ash/system/tiles/tiles_default_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-05T20:27:42Z",
+      "side": 1,
+      "message": "remove \", 0\"",
+      "revId": "99630052f3275b6ed304a9df7eae42b4e570c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d171b33_0030e1c7",
+        "filename": "ash/system/tray/tray_popup_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-05T20:27:42Z",
+      "side": 1,
+      "message": "remove \", 0\"",
+      "revId": "99630052f3275b6ed304a9df7eae42b4e570c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70f8a92b_cbf22f23",
+        "filename": "ash/system/tray/tray_popup_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-05T20:27:42Z",
+      "side": 1,
+      "message": "remove \"gfx::Insets(), 0\"",
+      "revId": "99630052f3275b6ed304a9df7eae42b4e570c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd1acfb_372205d0",
+        "filename": "ash/system/tray/tri_view_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-05T20:27:42Z",
+      "side": 1,
+      "message": "remove gfx::Insets(), 0",
+      "revId": "99630052f3275b6ed304a9df7eae42b4e570c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e79c79a8_fb87640e",
+        "filename": "chrome/browser/ui/views/payments/payment_sheet_view_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-05T20:27:42Z",
+      "side": 1,
+      "message": "remove \", 0\"",
+      "revId": "99630052f3275b6ed304a9df7eae42b4e570c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3281032c_f8cc2adf",
+        "filename": "ui/views/layout/box_layout.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-05T20:27:42Z",
+      "side": 1,
+      "message": "nullptr (since you changed this line).",
+      "revId": "99630052f3275b6ed304a9df7eae42b4e570c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
