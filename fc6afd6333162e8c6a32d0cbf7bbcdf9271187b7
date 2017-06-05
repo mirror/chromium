@@ -22,6 +22,30 @@
       "revId": "fc6afd6333162e8c6a32d0cbf7bbcdf9271187b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "331ab2f1_b14b01db",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T20:35:23Z",
+      "side": 1,
+      "message": "RunNextTask returns whether the task ran. RunNextTask also pops a task and knowing whether the sequence became empty after the pop is important.\n\nFor readability purposes (returning both those things is messy) and due to the fact that knowing whether the task ran wasn\u0027t that important in how we were using it, we decided to change the return value.",
+      "parentUuid": "134090f7_8a7088a8",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 49
+      },
+      "revId": "fc6afd6333162e8c6a32d0cbf7bbcdf9271187b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
