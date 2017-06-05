@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "93b0b66e_2d4d3b30",
+        "filename": "third_party/WebKit/LayoutTests/scrollbars/custom-scrollbar-change-style-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-05T19:33:27Z",
+      "side": 1,
+      "message": "I\u0027m not pretty sure. It seems that the scrollbar has not been added into the layout tree yet, but change of window focus status causes style change of the scrollbar.",
+      "parentUuid": "4f6662be_ef665eb2",
+      "range": {
+        "startLine": 20,
+        "startChar": 15,
+        "endLine": 20,
+        "endChar": 36
+      },
+      "revId": "76315fe62427767af24c088fd55c457bfd87b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b70919f_fa97bc5e",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBoxModelObject.cpp",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "76315fe62427767af24c088fd55c457bfd87b098",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57350962_ac77b932",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBoxModelObject.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-05T19:33:27Z",
+      "side": 1,
+      "message": "\u003e Maybe we should add DCHECK(Parent()) to LayoutObject::IsRooted?\n\u003e \n\nWhen !Parent(), IsRooted() just returns false. The crash is because CHECK(IsRooted()) in LayoutObject::ContainerForPaintInvalidation().\n\n\u003e And/or a comment here re: why Parent() being non-null matters? It\u0027s not totally obvious from the code below, except in that someone might conclude that if there\u0027s no parent there\u0027s no reason to invalidate. But that seems worth noting in comment.\n\nIn the latest patch I added\n    if (!object_.IsRooted())\n      return;\nin ObjectPaintInvalidator::InvalidatePaintIncludingNonCompositingDescendants() instead of checking Parent() here. The logic is more obvious at the new place. Also added comment there.",
+      "parentUuid": "4b70919f_fa97bc5e",
+      "range": {
+        "startLine": 275,
+        "startChar": 17,
+        "endLine": 275,
+        "endChar": 23
+      },
+      "revId": "76315fe62427767af24c088fd55c457bfd87b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
