@@ -46,6 +46,7 @@ class TextCheckerClient;
 class TextCheckingParagraph;
 struct TextCheckingResult;
 class TypingCommand;
+class WebSpellCheckPanelHostClient;
 
 class CORE_EXPORT SpellChecker final : public GarbageCollected<SpellChecker> {
   WTF_MAKE_NONCOPYABLE(SpellChecker);
@@ -56,6 +57,7 @@ class CORE_EXPORT SpellChecker final : public GarbageCollected<SpellChecker> {
   DECLARE_TRACE();
 
   SpellCheckerClient& GetSpellCheckerClient() const;
+  WebSpellCheckPanelHostClient& SpellCheckPanelHostClient() const;
   TextCheckerClient& TextChecker() const;
 
   static bool IsSpellCheckingEnabledAt(const Position&);
