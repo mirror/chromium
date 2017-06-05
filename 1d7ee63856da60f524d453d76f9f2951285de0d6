@@ -93,6 +93,30 @@
       "revId": "1d7ee63856da60f524d453d76f9f2951285de0d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b967febb_8d67951b",
+        "filename": "cc/surfaces/surface_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-05T08:14:46Z",
+      "side": 1,
+      "message": "actually, this doesn\u0027t work. C++ doesn\u0027t support logical-or-assignment (compile fails), and for a good reason :)\nWhat we want here is non-logical-or anyway, since we want to notify _every_ observer, even after one has returned true (no short-circuiting).\n\nReverted to |\u003d.",
+      "parentUuid": "3aa6e471_11fe1936",
+      "range": {
+        "startLine": 467,
+        "startChar": 14,
+        "endLine": 467,
+        "endChar": 15
+      },
+      "revId": "1d7ee63856da60f524d453d76f9f2951285de0d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
