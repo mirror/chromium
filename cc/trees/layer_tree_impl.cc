@@ -996,6 +996,9 @@ void LayerTreeImpl::ApplySentScrollAndScaleDeltasFromAbortedCommit() {
 }
 
 void LayerTreeImpl::SetViewportLayersFromIds(const ViewportLayerIds& ids) {
+  if (viewport_layer_ids_ == ids)
+    return;
+
   viewport_layer_ids_ = ids;
 
   // Set the viewport layer types.
