@@ -15,5 +15,5 @@
 
   [RaisesException, NewObject] CSSNumericValue to(DOMString unit);
 
-  [RaisesException, NewObject] static CSSNumericValue parse(DOMString cssText);
+  [RaisesException, NewObject, Exposed=Window] static CSSNumericValue parse(DOMString cssText);
 };
