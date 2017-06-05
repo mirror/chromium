@@ -626,7 +626,7 @@ public class PageInfoPopup implements OnClickListener {
             TextView permissionSubtitle =
                     (TextView) permissionRow.findViewById(R.id.page_info_permission_subtitle);
             permissionSubtitle.setVisibility(View.VISIBLE);
-            permissionSubtitle.setText(R.string.page_info_permission_subresource_filter_subtitle);
+            permissionSubtitle.setText(R.string.page_info_permission_ads_subtitle);
         }
 
         TextView permissionStatus = (TextView) permissionRow.findViewById(
