@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fe4c5d9_6e132c5f",
+        "filename": "components/component_updater/default_component_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-05T13:42:16Z",
+      "side": 1,
+      "message": "Do you need base::Passed with std::move?",
+      "revId": "86c5e348b9b2c95f2cd6efcb2b98da2a367301d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
