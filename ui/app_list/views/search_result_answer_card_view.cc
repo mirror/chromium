@@ -30,7 +30,7 @@ class SearchResultAnswerCardView::SearchAnswerContainerView
         search_results_page_view_(search_results_page_view) {
     // Center the card horizontally in the container.
     views::BoxLayout* answer_container_layout =
-        new views::BoxLayout(views::BoxLayout::kHorizontal, 0, 0, 0);
+        new views::BoxLayout(views::BoxLayout::kHorizontal);
     answer_container_layout->set_main_axis_alignment(
         views::BoxLayout::MAIN_AXIS_ALIGNMENT_CENTER);
     SetLayoutManager(answer_container_layout);
