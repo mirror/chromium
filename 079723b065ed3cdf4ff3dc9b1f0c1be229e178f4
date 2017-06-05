@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b26e6a58_a04d3ca8",
+        "filename": "chrome/browser/prefs/pref_service_syncable_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-05T01:17:32Z",
+      "side": 1,
+      "message": "Done.\n\nYou forget to mention anything at the call site. :)",
+      "parentUuid": "d7d1323b_ea3deab7",
+      "range": {
+        "startLine": 51,
+        "startChar": 68,
+        "endLine": 52,
+        "endChar": 49
+      },
+      "revId": "079723b065ed3cdf4ff3dc9b1f0c1be229e178f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e582bbf_ad3ceba2",
         "filename": "chrome/browser/profiles/off_the_record_profile_impl.cc",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2d123afa_54a52284",
+        "filename": "chrome/browser/profiles/off_the_record_profile_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-05T01:17:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e582bbf_ad3ceba2",
+      "range": {
+        "startLine": 134,
+        "startChar": 16,
+        "endLine": 134,
+        "endChar": 34
+      },
+      "revId": "079723b065ed3cdf4ff3dc9b1f0c1be229e178f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c570700_14b1e9e1",
         "filename": "chrome/browser/profiles/off_the_record_profile_impl.cc",
         "patchSetId": 10
@@ -59,6 +107,24 @@
       "writtenOn": "2017-06-02T10:58:27Z",
       "side": 1,
       "message": "Maybe return early if PrefService is disabled.",
+      "revId": "079723b065ed3cdf4ff3dc9b1f0c1be229e178f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d26a46e_065bb7ba",
+        "filename": "chrome/browser/profiles/off_the_record_profile_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-05T01:17:32Z",
+      "side": 1,
+      "message": "This methods will probably get more service registrations as more of Chrome gets servicified and then early returns won\u0027t work. Probably better establishing a working pattern.\n\nAlso we\u0027re launching the service in M60 and then all the PrefServiceEnabled checks will be deleted.",
+      "parentUuid": "4c570700_14b1e9e1",
       "revId": "079723b065ed3cdf4ff3dc9b1f0c1be229e178f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "9b0f05c8_438d124c",
+        "filename": "chrome/browser/profiles/profile.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-05T01:17:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ad7ee75_c4daa85a",
+      "revId": "079723b065ed3cdf4ff3dc9b1f0c1be229e178f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c02367fe_667a9d0a",
         "filename": "chrome/browser/profiles/profile_impl.cc",
         "patchSetId": 10
@@ -93,6 +177,24 @@
       "writtenOn": "2017-06-02T10:58:27Z",
       "side": 1,
       "message": "Can you implement this method in terms of the one below?",
+      "revId": "079723b065ed3cdf4ff3dc9b1f0c1be229e178f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ea6ded_ba68fe4a",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-05T01:17:32Z",
+      "side": 1,
+      "message": "Done, although in a slightly different way.\n\nNow we just get the OTR profile and then ask it for its prefs. What will happen if the OTR profile doesn\u0027t exist is that GetOffTheRecordProfile will create it, which will in turn cause the below GetOffTheRecordPrefs(service_manager::Connector* otr_connector) method to get called.\n\n(This loop between OTR profile creation and getting the OTR prefs existed before as well, but now we really need the connector to create the OTR prefs and that requires that the OTR profile exists first).",
+      "parentUuid": "c02367fe_667a9d0a",
       "revId": "079723b065ed3cdf4ff3dc9b1f0c1be229e178f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "94e5cf63_7464d5ae",
+        "filename": "components/prefs/pref_value_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-05T01:17:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0f176b8_d71ab692",
+      "revId": "079723b065ed3cdf4ff3dc9b1f0c1be229e178f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13b74c66_462e61c1",
         "filename": "components/prefs/pref_value_store.h",
         "patchSetId": 10
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "0e1cc9bb_85ecfd94",
+        "filename": "components/prefs/pref_value_store.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-05T01:17:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13b74c66_462e61c1",
+      "revId": "079723b065ed3cdf4ff3dc9b1f0c1be229e178f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62f77d92_a270eef0",
         "filename": "components/sync_preferences/pref_service_syncable.cc",
         "patchSetId": 10
@@ -147,6 +285,24 @@
       "revId": "079723b065ed3cdf4ff3dc9b1f0c1be229e178f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f21a38d0_6c3f4bc0",
+        "filename": "components/sync_preferences/pref_service_syncable.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-05T01:17:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62f77d92_a270eef0",
+      "revId": "079723b065ed3cdf4ff3dc9b1f0c1be229e178f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
