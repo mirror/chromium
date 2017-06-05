@@ -19701,9 +19701,12 @@ error::Error GLES2DecoderImpl::HandleInitializeDiscardableTextureCHROMIUM(
                        "Invalid texture ID");
     return error::kNoError;
   }
+  scoped_refptr<gpu::Buffer> buffer = GetSharedMemoryBuffer(c.shm_id);
+  if (!buffer)
+    return error::kNoError;
+
   size_t size = texture->texture()->estimated_size();
-  ServiceDiscardableHandle handle(GetSharedMemoryBuffer(c.shm_id), c.shm_offset,
-                                  c.shm_id);
+  ServiceDiscardableHandle handle(std::move(buffer), c.shm_offset, c.shm_id);
   GetContextGroup()->discardable_manager()->InsertLockedTexture(
       c.texture_id, size, group_->texture_manager(), std::move(handle));
   return error::kNoError;
