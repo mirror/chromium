@@ -79,7 +79,7 @@ class CORE_EXPORT UseCounter {
   UseCounter(Context = kDefaultContext);
 
   enum Feature : uint32_t {
-#include "public/platform/UseCounterFeature.def"
+    kNumberOfFeatures = static_cast<uint32_t>(WebFeature::kNumberOfFeatures)
   };
 
   // An interface to observe UseCounter changes. Note that this is never
@@ -99,16 +99,6 @@ class CORE_EXPORT UseCounter {
   static void Count(const LocalFrame*, WebFeature);
   static void Count(const Document&, WebFeature);
   static void Count(ExecutionContext*, WebFeature);
-  // TODO(lunalu): Deprecate Count() that takes UseCounter::Feature.
-  static void Count(const LocalFrame* frame, Feature feature) {
-    return Count(frame, static_cast<WebFeature>(feature));
-  }
-  static void Count(const Document& document, Feature feature) {
-    return Count(document, static_cast<WebFeature>(feature));
-  }
-  static void Count(ExecutionContext* exec_context, Feature feature) {
-    return Count(exec_context, static_cast<WebFeature>(feature));
-  }
 
   void Count(CSSParserMode, CSSPropertyID);
   void Count(WebFeature, const LocalFrame*);
@@ -119,16 +109,10 @@ class CORE_EXPORT UseCounter {
   // Count only features if they're being used in an iframe which does not
   // have script access into the top level document.
   static void CountCrossOriginIframe(const Document&, WebFeature);
-  static void CountCrossOriginIframe(const Document& doc, Feature feature) {
-    return CountCrossOriginIframe(doc, static_cast<WebFeature>(feature));
-  }
 
   // Return whether the Feature was previously counted for this document.
   // NOTE: only for use in testing.
   static bool IsCounted(Document&, WebFeature);
-  static bool IsCounted(Document& doc, Feature feature) {
-    return IsCounted(doc, static_cast<WebFeature>(feature));
-  }
   // Return whether the CSSPropertyID was previously counted for this document.
   // NOTE: only for use in testing.
   static bool IsCounted(Document&, const String&);
@@ -152,17 +136,11 @@ class CORE_EXPORT UseCounter {
   void UnmuteForInspector();
 
   void RecordMeasurement(WebFeature);
-  void RecordMeasurement(Feature feature) {
-    return RecordMeasurement(static_cast<WebFeature>(feature));
-  }
 
   // Return whether the feature has been seen since the last page load
   // (except when muted).  Does include features seen in documents which have
   // reporting disabled.
   bool HasRecordedMeasurement(WebFeature) const;
-  bool HasRecordedMeasurement(Feature feature) const {
-    return HasRecordedMeasurement(static_cast<WebFeature>(feature));
-  }
 
   DECLARE_TRACE();
 

@@ -1116,7 +1116,7 @@ void Animation::AddedEventListener(
   EventTargetWithInlineData::AddedEventListener(event_type,
                                                 registered_listener);
   if (event_type == EventTypeNames::finish)
-    UseCounter::Count(GetExecutionContext(), UseCounter::kAnimationFinishEvent);
+    UseCounter::Count(GetExecutionContext(), WebFeature::kAnimationFinishEvent);
 }
 
 void Animation::PauseForTesting(double pause_time) {
