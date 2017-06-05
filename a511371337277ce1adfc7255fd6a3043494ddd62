@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "acf58739_658e6b1a",
+        "filename": "chrome/browser/chrome_site_per_process_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-05T08:04:33Z",
+      "side": 1,
+      "message": "Ah yes, not needed, since we are inline here.",
+      "parentUuid": "8a9ff13a_6fc21984",
+      "range": {
+        "startLine": 738,
+        "startChar": 2,
+        "endLine": 738,
+        "endChar": 48
+      },
+      "revId": "a511371337277ce1adfc7255fd6a3043494ddd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0d30f51_0045c101",
         "filename": "chrome/browser/chrome_site_per_process_browsertest.cc",
         "patchSetId": 18
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c64fa365_87dce127",
+        "filename": "chrome/browser/chrome_site_per_process_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-05T08:04:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0d30f51_0045c101",
+      "range": {
+        "startLine": 758,
+        "startChar": 31,
+        "endLine": 758,
+        "endChar": 40
+      },
+      "revId": "a511371337277ce1adfc7255fd6a3043494ddd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a550de39_adf7d207",
         "filename": "chrome/browser/chrome_site_per_process_browsertest.cc",
         "patchSetId": 18
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-04T10:27:46Z",
       "side": 1,
       "message": "Note that |process_host_| can be reassigned--is the intention here to enforce that only const methods on RPH are called, or to enforce that this field is constant for the lifetime of an instance?",
+      "range": {
+        "startLine": 778,
+        "startChar": 2,
+        "endLine": 778,
+        "endChar": 35
+      },
+      "revId": "a511371337277ce1adfc7255fd6a3043494ddd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36fda61f_fc47d617",
+        "filename": "chrome/browser/chrome_site_per_process_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-05T08:04:33Z",
+      "side": 1,
+      "message": "\u003e Note that |process_host_| can be reassigned--\n\nnot in this test, though.\n\n\u003e is the intention here to enforce that only const methods on RPH are called, or to enforce that this field is constant for the lifetime of an instance?\n\nThe later.  Still, looking back at the previous test fixture, no const there.  Made them the same.",
+      "parentUuid": "a550de39_adf7d207",
       "range": {
         "startLine": 778,
         "startChar": 2,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "fd0df7f6_d50b4cc3",
+        "filename": "chrome/browser/chrome_site_per_process_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-05T08:04:33Z",
+      "side": 1,
+      "message": "Cargo culted from the previous test fixture.   Since both fixtures are inline defining their ChromeContentBrowserClient class, removed the dtor definition from both fixtures.",
+      "parentUuid": "00339a2b_e20de411",
+      "range": {
+        "startLine": 789,
+        "startChar": 0,
+        "endLine": 790,
+        "endChar": 64
+      },
+      "revId": "a511371337277ce1adfc7255fd6a3043494ddd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cd80d5f_f8aa9801",
         "filename": "chrome/browser/chrome_site_per_process_browsertest.cc",
         "patchSetId": 18
@@ -105,6 +201,30 @@
       "writtenOn": "2017-06-04T10:27:46Z",
       "side": 1,
       "message": "Hmm, I didn\u0027t know this--basically, the last registration for a given interface name wins?",
+      "range": {
+        "startLine": 807,
+        "startChar": 14,
+        "endLine": 807,
+        "endChar": 26
+      },
+      "revId": "a511371337277ce1adfc7255fd6a3043494ddd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f01f392_5c2abe83",
+        "filename": "chrome/browser/chrome_site_per_process_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-05T08:04:33Z",
+      "side": 1,
+      "message": "\u003e Hmm, I didn\u0027t know this--basically, the last registration for a given interface name wins?\n\nYeap.",
+      "parentUuid": "5cd80d5f_f8aa9801",
       "range": {
         "startLine": 807,
         "startChar": 14,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "ebecdb41_e7005108",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_delegate.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-05T08:04:33Z",
+      "side": 1,
+      "message": "\u003e Just to help me understand: is this object 1-per RVH?\n\n1-per webContents (tab).\n\n\u003e And we could have multiple of these for the same WebContents if there\u0027s an OOPIF?\n\nNope.  1 of these per WebContents (tab).",
+      "parentUuid": "32b107bb_55ce1028",
+      "range": {
+        "startLine": 177,
+        "startChar": 38,
+        "endLine": 178,
+        "endChar": 46
+      },
+      "revId": "a511371337277ce1adfc7255fd6a3043494ddd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6f11ee7_8389a080",
         "filename": "components/spellcheck/common/spellcheck.mojom",
         "patchSetId": 18
@@ -151,6 +295,30 @@
       "writtenOn": "2017-06-04T10:27:46Z",
       "side": 1,
       "message": "One thing that\u0027s a little confusing about this naming is that SpellCheckPanel and SpellCheckPanelHost don\u0027t have a 1:1 correspondence: SpellCheckPanelHost is one per RenderProcessHost, while SpellCheckPanel is one per RenderFrame.\n\nI wonder if we can name SpellCheckPanelHost something else to make it clear that they\u0027re not in a 1:1 relationship?",
+      "range": {
+        "startLine": 60,
+        "startChar": 10,
+        "endLine": 60,
+        "endChar": 25
+      },
+      "revId": "a511371337277ce1adfc7255fd6a3043494ddd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dfa0ca7_544de2ea",
+        "filename": "components/spellcheck/common/spellcheck.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-05T08:04:33Z",
+      "side": 1,
+      "message": "\u003e One thing that\u0027s a little confusing about this naming is that SpellCheckPanel and SpellCheckPanelHost don\u0027t have a 1:1 correspondence: SpellCheckPanelHost is one per RenderProcessHost, while SpellCheckPanel is one per RenderFrame.\n\u003e \n\nThe OOPIF world we find ourselves is a bit confusing :), yeah they are not 1:1\n\n\u003e I wonder if we can name SpellCheckPanelHost something else to make it clear that they\u0027re not in a 1:1 relationship?\n\nNot sure.  I\u0027m ok with the name, I have used this host-side and render-side naming split everywhere else in this mojo file, so I\u0027d like to stick with that.\n\nAlso, the documentation does begin \"Render frame interface exposed to the browser ...\", which does imply one (browser) to many (render frame) ...\n\nIn the reverse direction. \"Browser process interface exposed to the renderer ...\", meaning any renderer, or any part of said renderer including render frames.",
+      "parentUuid": "a6f11ee7_8389a080",
       "range": {
         "startLine": 60,
         "startChar": 10,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "c7455986_7b6b00c0",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-05T08:04:33Z",
+      "side": 1,
+      "message": "\u003e Is this just for tests? \n\nNot just for tests ...\n\n\u003e What\u0027s the reason this might not be set?\n\n... when the OS platform doesn\u0027t have a spelling panel.",
+      "parentUuid": "8ebdae6c_f38d27a9",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 37
+      },
+      "revId": "a511371337277ce1adfc7255fd6a3043494ddd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d3a3de4_b98a8194",
         "filename": "third_party/WebKit/public/platform/WebSpellCheckPanelHost.h",
         "patchSetId": 18
@@ -197,6 +389,24 @@
       "writtenOn": "2017-06-04T10:27:46Z",
       "side": 1,
       "message": "Nit: In Blink, it\u0027s more common to see the term \"Client\" for calling out to the layer above. Let\u0027s keep this named WebSpellCheckPanelClient for consistency with other Blink code.\n\nAlso, any reason for moving it to public/platform? Is that because it doesn\u0027t depend on any web files?",
+      "revId": "a511371337277ce1adfc7255fd6a3043494ddd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e4e5c4b_a5e104ae",
+        "filename": "third_party/WebKit/public/platform/WebSpellCheckPanelHost.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-05T08:04:33Z",
+      "side": 1,
+      "message": "\u003e Nit: In Blink, it\u0027s more common to see the term \"Client\" for calling out to the layer above. Let\u0027s keep this named WebSpellCheckPanelClient for consistency with other Blink code.\n\nI want SpellCheckPanelHost in the name too: so I can search for it in code search and find all the code related to this feature.  So I made it:\n\nWebSpellCheckPanelHostClient\n\n\u003e Also, any reason for moving it to public/platform? Is that because it doesn\u0027t depend on any web files?\n\nThat, and looking to the future were we just call mojo from Platform and delete this code.",
+      "parentUuid": "8d3a3de4_b98a8194",
       "revId": "a511371337277ce1adfc7255fd6a3043494ddd62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
