@@ -136,6 +136,12 @@ class LayoutGrid final : public LayoutBlock {
                                        const ComputedStyle& old_style,
                                        const ComputedStyle& new_style,
                                        const LayoutBox&) const;
+  bool DefaultAlignmentChangedToStretch(GridAxis,
+                                        const ComputedStyle& old_style,
+                                        const ComputedStyle& new_style) const;
+  bool DefaultAlignmentChangedFromStretch(GridAxis,
+                                          const ComputedStyle& old_style,
+                                          const ComputedStyle& new_style) const;
   void StyleDidChange(StyleDifference, const ComputedStyle*) override;
 
   Optional<LayoutUnit> AvailableSpaceForGutters(GridTrackSizingDirection) const;
@@ -229,6 +235,9 @@ class LayoutGrid final : public LayoutBlock {
   StyleSelfAlignmentData SelfAlignmentForChild(
       GridAxis,
       const LayoutBox& child,
+      const ComputedStyle* = nullptr) const;
+  StyleSelfAlignmentData DefaultAlignmentForChild(
+      GridAxis,
       const ComputedStyle* = nullptr) const;
   void ApplyStretchAlignmentToChildIfNeeded(LayoutBox&);
   bool HasAutoSizeInColumnAxis(const LayoutBox& child) const {
