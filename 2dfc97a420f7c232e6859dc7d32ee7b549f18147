@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eb996d4_992fe6cc",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleScript.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-05T05:46:34Z",
+      "side": 1,
+      "message": "nit: consider matching method ordering with that of .h (no need to do that in this CL)",
+      "revId": "2dfc97a420f7c232e6859dc7d32ee7b549f18147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
