@@ -999,14 +999,22 @@ void LayerTreeImpl::SetViewportLayersFromIds(const ViewportLayerIds& ids) {
   viewport_layer_ids_ = ids;
 
   // Set the viewport layer types.
-  if (auto* inner_container = InnerViewportContainerLayer())
-    inner_container->SetViewportLayerType(INNER_VIEWPORT_CONTAINER);
-  if (auto* inner_scroll = InnerViewportScrollLayer())
-    inner_scroll->SetViewportLayerType(INNER_VIEWPORT_SCROLL);
-  if (auto* outer_container = OuterViewportContainerLayer())
-    outer_container->SetViewportLayerType(OUTER_VIEWPORT_CONTAINER);
-  if (auto* outer_scroll = OuterViewportScrollLayer())
-    outer_scroll->SetViewportLayerType(OUTER_VIEWPORT_SCROLL);
+  if (viewport_layer_ids_.inner_viewport_container != Layer::INVALID_ID) {
+    if (auto* inner_container = InnerViewportContainerLayer())
+      inner_container->SetViewportLayerType(INNER_VIEWPORT_CONTAINER);
+  }
+  if (viewport_layer_ids_.inner_viewport_scroll != Layer::INVALID_ID) {
+    if (auto* inner_scroll = InnerViewportScrollLayer())
+      inner_scroll->SetViewportLayerType(INNER_VIEWPORT_SCROLL);
+  }
+  if (viewport_layer_ids_.outer_viewport_container != Layer::INVALID_ID) {
+    if (auto* outer_container = OuterViewportContainerLayer())
+      outer_container->SetViewportLayerType(OUTER_VIEWPORT_CONTAINER);
+  }
+  if (viewport_layer_ids_.outer_viewport_scroll != Layer::INVALID_ID) {
+    if (auto* outer_scroll = OuterViewportScrollLayer())
+      outer_scroll->SetViewportLayerType(OUTER_VIEWPORT_SCROLL);
+  }
 }
 
 void LayerTreeImpl::ClearViewportLayers() {
