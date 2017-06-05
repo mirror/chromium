@@ -12,7 +12,6 @@
 #include "base/containers/linked_list.h"
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/memory/singleton.h"
 #include "base/time/time.h"
 #include "net/base/ip_endpoint.h"
 #include "net/base/net_export.h"
@@ -127,6 +126,8 @@ class NET_EXPORT_PRIVATE WebSocketEndpointLockManager {
   void DelayedUnlockEndpoint(const IPEndPoint& endpoint);
   void EraseSocket(LockInfoMap::iterator lock_info_it);
 
+  static WebSocketEndpointLockManager* instance_;
+
   // If an entry is present in the map for a particular endpoint, then that
   // endpoint is locked. If LockInfo.queue is non-empty, then one or more
   // Waiters are waiting for the lock.
@@ -143,12 +144,6 @@ class NET_EXPORT_PRIVATE WebSocketEndpointLockManager {
 
   // Number of sockets currently pending unlock.
   size_t pending_unlock_count_;
-
-  // The messsage loop holding the unlock delay callback may outlive this
-  // object.
-  base::WeakPtrFactory<WebSocketEndpointLockManager> weak_factory_;
-
-  friend struct base::DefaultSingletonTraits<WebSocketEndpointLockManager>;
 
   DISALLOW_COPY_AND_ASSIGN(WebSocketEndpointLockManager);
 };

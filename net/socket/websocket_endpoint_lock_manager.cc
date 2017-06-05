@@ -24,6 +24,8 @@ const int kUnlockDelayInMs = 10;
 
 }  // namespace
 
+WebSocketEndpointLockManager* WebSocketEndpointLockManager::instance_ = nullptr;
+
 WebSocketEndpointLockManager::Waiter::~Waiter() {
   if (next()) {
     DCHECK(previous());
@@ -32,7 +34,10 @@ WebSocketEndpointLockManager::Waiter::~Waiter() {
 }
 
 WebSocketEndpointLockManager* WebSocketEndpointLockManager::GetInstance() {
-  return base::Singleton<WebSocketEndpointLockManager>::get();
+  if (!instance_) {
+    instance_ = new WebSocketEndpointLockManager();
+  }
+  return instance_;
 }
 
 int WebSocketEndpointLockManager::LockEndpoint(const IPEndPoint& endpoint,
@@ -114,9 +119,7 @@ WebSocketEndpointLockManager::LockInfo::LockInfo(const LockInfo& rhs)
 
 WebSocketEndpointLockManager::WebSocketEndpointLockManager()
     : unlock_delay_(base::TimeDelta::FromMilliseconds(kUnlockDelayInMs)),
-      pending_unlock_count_(0),
-      weak_factory_(this) {
-}
+      pending_unlock_count_(0) {}
 
 WebSocketEndpointLockManager::~WebSocketEndpointLockManager() {
   DCHECK_EQ(lock_info_map_.size(), pending_unlock_count_);
@@ -131,7 +134,7 @@ void WebSocketEndpointLockManager::UnlockEndpointAfterDelay(
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE,
       base::Bind(&WebSocketEndpointLockManager::DelayedUnlockEndpoint,
-                 weak_factory_.GetWeakPtr(), endpoint),
+                 base::Unretained(this), endpoint),
       unlock_delay_);
 }
 
