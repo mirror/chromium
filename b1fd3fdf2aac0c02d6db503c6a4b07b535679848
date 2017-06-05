@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef71d3ca_777e5c8c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/scroll-anchoring/opt-out.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-06-05T19:32:57Z",
+      "side": 1,
+      "message": "Would be nice to put these comments in the assert_equals invocation:\n\nassert_equals(divScroller.scrollTop, 300, \"Scroll anchoring should apply only to #scroller.\");",
+      "revId": "b1fd3fdf2aac0c02d6db503c6a4b07b535679848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29fcd82b_8f8fd466",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/scroll-anchoring/opt-out.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-06-05T19:32:57Z",
+      "side": 1,
+      "message": "Would be nice to provide descriptive test names like this on other test() invocations in other test files.",
+      "revId": "b1fd3fdf2aac0c02d6db503c6a4b07b535679848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
