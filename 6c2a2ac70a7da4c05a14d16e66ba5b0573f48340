@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60d18a92_044842db",
+        "filename": "components/safe_browsing_db/v4_local_database_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-06-05T16:57:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9681791d_187ed3b0",
+      "range": {
+        "startLine": 37,
+        "startChar": 17,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "6c2a2ac70a7da4c05a14d16e66ba5b0573f48340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "850e9f09_539c4ebe",
         "filename": "components/safe_browsing_db/v4_local_database_manager.cc",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "6c2a2ac70a7da4c05a14d16e66ba5b0573f48340",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7865ea74_ee37ce7d",
+        "filename": "components/safe_browsing_db/v4_local_database_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-06-05T16:57:37Z",
+      "side": 1,
+      "message": "Keeping it to be consistent with the rest of the file.",
+      "parentUuid": "850e9f09_539c4ebe",
+      "revId": "6c2a2ac70a7da4c05a14d16e66ba5b0573f48340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
