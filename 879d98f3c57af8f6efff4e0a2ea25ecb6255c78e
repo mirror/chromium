@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbc7a32c_578e6ac2",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-05T20:22:21Z",
+      "side": 1,
+      "message": "This should only be done if the timer isn\u0027t running.",
+      "revId": "879d98f3c57af8f6efff4e0a2ea25ecb6255c78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7164879_5e5d3303",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-05T20:22:21Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "879d98f3c57af8f6efff4e0a2ea25ecb6255c78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81145d52_db30b899",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-05T20:22:21Z",
+      "side": 1,
+      "message": "Set has_native_controls_ \u003d !has_native_controls_.",
+      "revId": "879d98f3c57af8f6efff4e0a2ea25ecb6255c78e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
