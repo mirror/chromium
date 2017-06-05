@@ -46,6 +46,52 @@
       "revId": "025535a63918a2e54f0f238399e25eed031e82ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "545facc0_eea307e0",
+        "filename": "services/preferences/public/interfaces/preferences.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-05T15:44:21Z",
+      "side": 1,
+      "message": "Why wasn\u0027t this required before? \"\u003d\u003e\" defines the return value, right?",
+      "range": {
+        "startLine": 134,
+        "startChar": 23,
+        "endLine": 134,
+        "endChar": 28
+      },
+      "revId": "025535a63918a2e54f0f238399e25eed031e82ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6808dc3_08a2c030",
+        "filename": "services/preferences/public/interfaces/preferences.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-05T15:44:21Z",
+      "side": 1,
+      "message": "Why doesn\u0027t this need to specify the argument type?",
+      "range": {
+        "startLine": 134,
+        "startChar": 20,
+        "endLine": 134,
+        "endChar": 22
+      },
+      "revId": "025535a63918a2e54f0f238399e25eed031e82ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
