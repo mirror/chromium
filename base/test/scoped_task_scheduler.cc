@@ -271,8 +271,7 @@ void TestTaskScheduler::RunNextTask(
   MessageLoop::current()->ClearTaskRunnerForTesting();
 
   // Run the task.
-  bool sequence_became_empty;
-  task_tracker_.RunNextTask(sequence.get(), &sequence_became_empty);
+  task_tracker_.RunNextTask(sequence.get());
 
   // Make sure that any task runner that was registered was also cleaned up.
   DCHECK(!MessageLoop::current()->task_runner());

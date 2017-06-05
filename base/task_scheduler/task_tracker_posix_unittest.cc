@@ -38,9 +38,7 @@ TEST(TaskSchedulerTaskTrackerPosixTest, RunTask) {
 
   EXPECT_TRUE(tracker.WillPostTask(task.get()));
 
-  bool sequence_became_empty;
-  tracker.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
-                      &sequence_became_empty);
+  tracker.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get());
 
   EXPECT_TRUE(did_run);
 }
@@ -60,9 +58,7 @@ TEST(TaskSchedulerTaskTrackerPosixTest, FileDescriptorWatcher) {
 
   EXPECT_TRUE(tracker.WillPostTask(task.get()));
 
-  bool sequence_became_empty;
-  tracker.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
-                      &sequence_became_empty);
+  tracker.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get());
 
   // Run the MessageLoop to allow the read watch to be registered and
   // unregistered. This prevents a memory leak.

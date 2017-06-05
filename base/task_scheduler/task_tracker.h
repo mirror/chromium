@@ -57,10 +57,10 @@ class BASE_EXPORT TaskTracker {
 
   // Runs the next task in |sequence| unless the current shutdown state
   // prevents that. Then, pops the task from |sequence| (even if it didn't run).
-  // Returns true if |task| ran. Sets |sequence_became_empty| to true if
-  // the sequence was empty right after the task was popped from it.
+  // Returns true if the sequence was empty right after the task was popped
+  // from it.
   // WillPostTask() must have allowed |task| to be posted before this is called.
-  void RunNextTask(Sequence* sequence, bool* sequence_became_empty);
+  bool RunNextTask(Sequence* sequence);
 
   // Returns true once shutdown has started (Shutdown() has been called but
   // might not have returned). Note: sequential consistency with the thread

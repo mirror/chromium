@@ -235,9 +235,8 @@ bool TaskTracker::WillPostTask(const Task* task) {
   return true;
 }
 
-void TaskTracker::RunNextTask(Sequence* sequence, bool* sequence_became_empty) {
+bool TaskTracker::RunNextTask(Sequence* sequence) {
   DCHECK(sequence);
-  DCHECK(sequence_became_empty);
 
   std::unique_ptr<Task> task = sequence->TakeTask();
   DCHECK(task);
@@ -255,7 +254,7 @@ void TaskTracker::RunNextTask(Sequence* sequence, bool* sequence_became_empty) {
   if (!is_delayed)
     DecrementNumPendingUndelayedTasks();
 
-  *sequence_became_empty = sequence->Pop();
+  return sequence->Pop();
 }
 
 bool TaskTracker::HasShutdownStarted() const {

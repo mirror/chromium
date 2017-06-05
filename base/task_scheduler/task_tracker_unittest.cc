@@ -115,10 +115,9 @@ class ThreadPostingAndRunningTask : public SimpleThread {
     if (post_succeeded &&
         (action_ == Action::RUN || action_ == Action::WILL_POST_AND_RUN)) {
       EXPECT_TRUE(owned_task_);
-      bool sequence_became_empty;
+
       tracker_->RunNextTask(
-          test::CreateSequenceWithTask(std::move(owned_task_)).get(),
-          &sequence_became_empty);
+          test::CreateSequenceWithTask(std::move(owned_task_)).get());
     }
   }
 
@@ -260,9 +259,8 @@ TEST_P(TaskSchedulerTaskTrackerTest, WillPostAndRunBeforeShutdown) {
 
   // Run the task.
   EXPECT_EQ(0U, NumTasksExecuted());
-  bool sequence_became_empty;
-  tracker_.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
-                       &sequence_became_empty);
+
+  tracker_.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get());
   EXPECT_EQ(1U, NumTasksExecuted());
 
   // Shutdown() shouldn't block.
@@ -336,16 +334,13 @@ TEST_P(TaskSchedulerTaskTrackerTest, WillPostBeforeShutdownRunDuringShutdown) {
   EXPECT_EQ(0U, NumTasksExecuted());
   const bool should_run = GetParam() == TaskShutdownBehavior::BLOCK_SHUTDOWN;
 
-  bool sequence_became_empty;
-  tracker_.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
-                       &sequence_became_empty);
+  tracker_.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get());
   EXPECT_EQ(should_run ? 1U : 0U, NumTasksExecuted());
   VERIFY_ASYNC_SHUTDOWN_IN_PROGRESS();
 
   // Unblock shutdown by running the remaining BLOCK_SHUTDOWN task.
   tracker_.RunNextTask(
-      test::CreateSequenceWithTask(std::move(block_shutdown_task)).get(),
-      &sequence_became_empty);
+      test::CreateSequenceWithTask(std::move(block_shutdown_task)).get());
   EXPECT_EQ(should_run ? 2U : 1U, NumTasksExecuted());
   WAIT_FOR_ASYNC_SHUTDOWN_COMPLETED();
 }
@@ -363,9 +358,7 @@ TEST_P(TaskSchedulerTaskTrackerTest, WillPostBeforeShutdownRunAfterShutdown) {
     VERIFY_ASYNC_SHUTDOWN_IN_PROGRESS();
 
     // Run the task to unblock shutdown.
-    bool sequence_became_empty;
-    tracker_.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
-                         &sequence_became_empty);
+    tracker_.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get());
     EXPECT_EQ(1U, NumTasksExecuted());
     WAIT_FOR_ASYNC_SHUTDOWN_COMPLETED();
 
@@ -376,9 +369,7 @@ TEST_P(TaskSchedulerTaskTrackerTest, WillPostBeforeShutdownRunAfterShutdown) {
     WAIT_FOR_ASYNC_SHUTDOWN_COMPLETED();
 
     // The task shouldn't be allowed to run after shutdown.
-    bool sequence_became_empty;
-    tracker_.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
-                         &sequence_became_empty);
+    tracker_.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get());
     EXPECT_EQ(0U, NumTasksExecuted());
   }
 }
@@ -401,9 +392,7 @@ TEST_P(TaskSchedulerTaskTrackerTest, WillPostAndRunDuringShutdown) {
 
     // Run the BLOCK_SHUTDOWN task.
     EXPECT_EQ(0U, NumTasksExecuted());
-    bool sequence_became_empty;
-    tracker_.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
-                         &sequence_became_empty);
+    tracker_.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get());
     EXPECT_EQ(1U, NumTasksExecuted());
   } else {
     // It shouldn't be allowed to post a non BLOCK_SHUTDOWN task.
@@ -415,10 +404,8 @@ TEST_P(TaskSchedulerTaskTrackerTest, WillPostAndRunDuringShutdown) {
 
   // Unblock shutdown by running |block_shutdown_task|.
   VERIFY_ASYNC_SHUTDOWN_IN_PROGRESS();
-  bool sequence_became_empty;
   tracker_.RunNextTask(
-      test::CreateSequenceWithTask(std::move(block_shutdown_task)).get(),
-      &sequence_became_empty);
+      test::CreateSequenceWithTask(std::move(block_shutdown_task)).get());
   EXPECT_EQ(GetParam() == TaskShutdownBehavior::BLOCK_SHUTDOWN ? 2U : 1U,
             NumTasksExecuted());
   WAIT_FOR_ASYNC_SHUTDOWN_COMPLETED();
@@ -455,14 +442,11 @@ TEST_P(TaskSchedulerTaskTrackerTest, SingletonAllowed) {
   ScopedSetSingletonAllowed scoped_singleton_allowed(!can_use_singletons);
 
   // Running the task should fail iff the task isn't allowed to use singletons.
-  bool sequence_became_empty;
   if (can_use_singletons) {
-    tracker.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
-                        &sequence_became_empty);
+    tracker.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get());
   } else {
     EXPECT_DCHECK_DEATH({
-      tracker.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
-                          &sequence_became_empty);
+      tracker.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get());
     });
   }
 }
@@ -481,10 +465,8 @@ TEST_P(TaskSchedulerTaskTrackerTest, IOAllowed) {
                        }),
                        TaskTraits(MayBlock(), GetParam()), TimeDelta());
   EXPECT_TRUE(tracker.WillPostTask(task_with_may_block.get()));
-  bool sequence_became_empty;
   tracker.RunNextTask(
-      test::CreateSequenceWithTask(std::move(task_with_may_block)).get(),
-      &sequence_became_empty);
+      test::CreateSequenceWithTask(std::move(task_with_may_block)).get());
 
   // Set the IO allowed bit. Expect TaskTracker to unset it before running a
   // task without the MayBlock() trait.
@@ -496,8 +478,7 @@ TEST_P(TaskSchedulerTaskTrackerTest, IOAllowed) {
       TaskTraits(GetParam()), TimeDelta());
   EXPECT_TRUE(tracker.WillPostTask(task_without_may_block.get()));
   tracker.RunNextTask(
-      test::CreateSequenceWithTask(std::move(task_without_may_block)).get(),
-      &sequence_became_empty);
+      test::CreateSequenceWithTask(std::move(task_without_may_block)).get());
 }
 
 static void RunTaskRunnerHandleVerificationTask(
@@ -511,10 +492,8 @@ static void RunTaskRunnerHandleVerificationTask(
   EXPECT_FALSE(ThreadTaskRunnerHandle::IsSet());
   EXPECT_FALSE(SequencedTaskRunnerHandle::IsSet());
 
-  bool sequence_became_empty;
   tracker->RunNextTask(
-      test::CreateSequenceWithTask(std::move(verify_task)).get(),
-      &sequence_became_empty);
+      test::CreateSequenceWithTask(std::move(verify_task)).get());
 
   // TaskRunnerHandle state is reset outside of task's scope.
   EXPECT_FALSE(ThreadTaskRunnerHandle::IsSet());
@@ -604,11 +583,9 @@ TEST_P(TaskSchedulerTaskTrackerTest, FlushPendingUndelayedTask) {
   PlatformThread::Sleep(TestTimeouts::tiny_timeout());
   VERIFY_ASYNC_FLUSH_IN_PROGRESS();
 
-  bool sequence_became_empty;
   // Flush() should return after the undelayed task runs.
   tracker_.RunNextTask(
-      test::CreateSequenceWithTask(std::move(undelayed_task)).get(),
-      &sequence_became_empty);
+      test::CreateSequenceWithTask(std::move(undelayed_task)).get());
   WAIT_FOR_ASYNC_FLUSH_RETURNED();
 }
 
@@ -628,10 +605,8 @@ TEST_P(TaskSchedulerTaskTrackerTest, PostTaskDuringFlush) {
   tracker_.WillPostTask(other_undelayed_task.get());
 
   // Run the first undelayed task.
-  bool sequence_became_empty;
   tracker_.RunNextTask(
-      test::CreateSequenceWithTask(std::move(undelayed_task)).get(),
-      &sequence_became_empty);
+      test::CreateSequenceWithTask(std::move(undelayed_task)).get());
 
   // Flush() shouldn't return before the second undelayed task runs.
   PlatformThread::Sleep(TestTimeouts::tiny_timeout());
@@ -639,8 +614,7 @@ TEST_P(TaskSchedulerTaskTrackerTest, PostTaskDuringFlush) {
 
   // Flush() should return after the second undelayed task runs.
   tracker_.RunNextTask(
-      test::CreateSequenceWithTask(std::move(other_undelayed_task)).get(),
-      &sequence_became_empty);
+      test::CreateSequenceWithTask(std::move(other_undelayed_task)).get());
   WAIT_FOR_ASYNC_FLUSH_RETURNED();
 }
 
@@ -660,10 +634,8 @@ TEST_P(TaskSchedulerTaskTrackerTest, RunDelayedTaskDuringFlush) {
   VERIFY_ASYNC_FLUSH_IN_PROGRESS();
 
   // Run the delayed task.
-  bool sequence_became_empty;
   tracker_.RunNextTask(
-      test::CreateSequenceWithTask(std::move(delayed_task)).get(),
-      &sequence_became_empty);
+      test::CreateSequenceWithTask(std::move(delayed_task)).get());
 
   // Flush() shouldn't return since there is still a pending undelayed
   // task.
@@ -672,8 +644,7 @@ TEST_P(TaskSchedulerTaskTrackerTest, RunDelayedTaskDuringFlush) {
 
   // Run the undelayed task.
   tracker_.RunNextTask(
-      test::CreateSequenceWithTask(std::move(undelayed_task)).get(),
-      &sequence_became_empty);
+      test::CreateSequenceWithTask(std::move(undelayed_task)).get());
 
   // Flush() should now return.
   WAIT_FOR_ASYNC_FLUSH_RETURNED();
@@ -755,8 +726,7 @@ TEST_F(TaskSchedulerTaskTrackerTest, CurrentSequenceToken) {
   sequence->PushTask(std::move(task));
 
   EXPECT_FALSE(SequenceToken::GetForCurrentThread().IsValid());
-  bool sequence_became_empty;
-  tracker_.RunNextTask(sequence.get(), &sequence_became_empty);
+  tracker_.RunNextTask(sequence.get());
   EXPECT_FALSE(SequenceToken::GetForCurrentThread().IsValid());
 }
 
@@ -882,10 +852,8 @@ TEST_F(TaskSchedulerTaskTrackerTest, LoadWillPostAndRunDuringShutdown) {
   VERIFY_ASYNC_SHUTDOWN_IN_PROGRESS();
 
   // Unblock shutdown by running |block_shutdown_task|.
-  bool sequence_became_empty;
   tracker_.RunNextTask(
-      test::CreateSequenceWithTask(std::move(block_shutdown_task)).get(),
-      &sequence_became_empty);
+      test::CreateSequenceWithTask(std::move(block_shutdown_task)).get());
   EXPECT_EQ(kLoadTestNumIterations + 1, NumTasksExecuted());
   WAIT_FOR_ASYNC_SHUTDOWN_COMPLETED();
 }
@@ -909,11 +877,9 @@ class WaitAllowedTestThread : public SimpleThread {
         }),
         TaskTraits(), TimeDelta());
     EXPECT_TRUE(tracker.WillPostTask(task_without_sync_primitives.get()));
-    bool sequence_became_empty;
     tracker.RunNextTask(
         test::CreateSequenceWithTask(std::move(task_without_sync_primitives))
-            .get(),
-        &sequence_became_empty);
+            .get());
 
     // Disallow waiting. Expect TaskTracker to allow it before running a task
     // with the WithBaseSyncPrimitives() trait.
@@ -927,8 +893,7 @@ class WaitAllowedTestThread : public SimpleThread {
     EXPECT_TRUE(tracker.WillPostTask(task_with_sync_primitives.get()));
     tracker.RunNextTask(
         test::CreateSequenceWithTask(std::move(task_with_sync_primitives))
-            .get(),
-        &sequence_became_empty);
+            .get());
   }
 
   DISALLOW_COPY_AND_ASSIGN(WaitAllowedTestThread);
@@ -987,10 +952,8 @@ TEST(TaskSchedulerTaskTrackerHistogramTest, TaskLatency) {
     ASSERT_TRUE(tracker.WillPostTask(task.get()));
 
     HistogramTester tester;
-    bool sequence_became_empty;
 
-    tracker.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
-                        &sequence_became_empty);
+    tracker.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get());
     tester.ExpectTotalCount(test.expected_histogram, 1);
   }
 }
