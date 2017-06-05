@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8c89b91c_a2c60ac8",
+        "filename": "third_party/WebKit/Source/core/dom/Modulator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-05T05:03:01Z",
+      "side": 1,
+      "message": "\u003e Looks like MemoryCache is bypassed from isSharable() { return isMainThread(); } check,\n\nYes, the memory cache should be bypassed in the off-main-thread-fetch (+horo for double-check).\n\n\u003e but still I strongly suggest exercising all security primitives in LayoutTests\n\nI\u0027ll add tests for security in following CLs.\n\nNote that the off-main-thread-fetch itself is not a mature feature and it also doesn\u0027t have enough tests at this point. We\u0027re going to make sure them before launching the features.",
+      "parentUuid": "4386c8c1_0a2df5a8",
+      "revId": "def6fdf936610b71d7b00809f1ed0d9e8f993ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc765af1_c5ae1c6b",
         "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.cpp",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2017-06-04T12:00:49Z",
       "side": 1,
       "message": "(Note: modulator *is* the settings object)\nThis looks like insideSettings to me, but \"Step 2\" specifies outsideSettings?",
+      "revId": "def6fdf936610b71d7b00809f1ed0d9e8f993ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58745c39_7da47d1c",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-05T05:03:01Z",
+      "side": 1,
+      "message": "Good point. I assumed the fetch sequence runs w/ insideSettings.\n\nHmmm... I\u0027m confused about \"fetch client settings object\" and \"module map settings object\" concepts defined in [1].\n\nApparently, the Worklet spec specifies outsideSettings as \"fetch client settings object\" and insideSettings as \"module map settings object\" [2]. Is it the right thing to use different settings for them? I feel it\u0027s a bit strange... do we really want to cache modules fetched w/ a different settings? Also, does our module implementation support this separation?\n\n[1] https://html.spec.whatwg.org/multipage/webappapis.html#fetch-a-module-worker-script-tree\n[2] https://drafts.css-houdini.org/worklets/#fetch-and-invoke-a-worklet-script",
+      "parentUuid": "dc765af1_c5ae1c6b",
       "revId": "def6fdf936610b71d7b00809f1ed0d9e8f993ed6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
