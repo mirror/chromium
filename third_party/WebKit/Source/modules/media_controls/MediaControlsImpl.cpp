@@ -314,14 +314,14 @@ MediaControlsImpl* MediaControlsImpl::Create(HTMLMediaElement& media_element,
   controls->InitializeControls();
   controls->Reset();
 
-  if (RuntimeEnabledFeatures::videoFullscreenOrientationLockEnabled() &&
+  if (RuntimeEnabledFeatures::VideoFullscreenOrientationLockEnabled() &&
       media_element.IsHTMLVideoElement()) {
     // Initialize the orientation lock when going fullscreen feature.
     controls->orientation_lock_delegate_ =
         new MediaControlsOrientationLockDelegate(
             toHTMLVideoElement(media_element));
   }
-  if (RuntimeEnabledFeatures::videoRotateToFullscreenEnabled() &&
+  if (RuntimeEnabledFeatures::VideoRotateToFullscreenEnabled() &&
       media_element.IsHTMLVideoElement()) {
     // Initialize the rotate-to-fullscreen feature.
     controls->rotate_to_fullscreen_delegate_ =
@@ -382,7 +382,7 @@ MediaControlsImpl* MediaControlsImpl::Create(HTMLMediaElement& media_element,
 void MediaControlsImpl::InitializeControls() {
   overlay_enclosure_ = new MediaControlOverlayEnclosureElement(*this);
 
-  if (RuntimeEnabledFeatures::mediaControlsOverlayPlayButtonEnabled()) {
+  if (RuntimeEnabledFeatures::MediaControlsOverlayPlayButtonEnabled()) {
     overlay_play_button_ = new MediaControlOverlayPlayButtonElement(*this);
     overlay_enclosure_->AppendChild(overlay_play_button_);
   }
