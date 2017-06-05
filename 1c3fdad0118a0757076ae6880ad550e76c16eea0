@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66e75fbd_687d4ce8",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1164,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-05T16:50:35Z",
+      "side": 1,
+      "message": "Updated comment to:\n # Test that we copy the current expectations into the most-specific-platform directory\n # if the actual results are different from the current expectations.",
+      "parentUuid": "16116f3d_ba60d830",
+      "revId": "1c3fdad0118a0757076ae6880ad550e76c16eea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d9e4cf5_000b0b1f",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2c1e35bb_7e17fae5",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-05T16:50:35Z",
+      "side": 1,
+      "message": "Updated comment to:\n # Make the current text expectation the same as the actual text result of the test.\n # The value is the same as actual_result of the test defined in\n # webkitpy.layout_tests.port.test.",
+      "parentUuid": "9d9e4cf5_000b0b1f",
+      "revId": "1c3fdad0118a0757076ae6880ad550e76c16eea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02ae048a_2951af9c",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-02T23:00:19Z",
       "side": 1,
       "message": "One thing I\u0027m wondering about...\n\nThe baseline fallback paths form a tree, where (currently) if there\u0027s no linux results it will fall back to the win directory, for example (diagram: https://drive.google.com/open?id\u003d0Bzxz6fWz5JOIWlVMQkJXc1Bjd2M).\n\nWhat would happen if there were baselines in win/ and mac/, but no cross-platform baselines? Would win/ baselines be copied to the linux baseline directory?",
+      "revId": "1c3fdad0118a0757076ae6880ad550e76c16eea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe1aa0f_468aaae1",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1184,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-05T16:50:35Z",
+      "side": 1,
+      "message": "Yes. I think if we say \"the current expectation\" or the \"the current baseline\" , then we can just ignore these details. The current baseline can be already under the most-specific-platform directory (for which --new-baseline-copy will do nothing), under some fallback directory, or under the cross-platform directory.",
+      "parentUuid": "02ae048a_2951af9c",
       "revId": "1c3fdad0118a0757076ae6880ad550e76c16eea0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
