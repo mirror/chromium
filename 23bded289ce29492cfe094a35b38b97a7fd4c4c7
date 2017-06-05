@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b4abe017_671ad95e",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-05T21:20:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d4e6753_c010c9e2",
+      "revId": "23bded289ce29492cfe094a35b38b97a7fd4c4c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87bce3b8_b5da156a",
         "filename": "content/browser/media/media_internals.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "23bded289ce29492cfe094a35b38b97a7fd4c4c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d4d3cc0_67b33880",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-05T21:20:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "87bce3b8_b5da156a",
+      "revId": "23bded289ce29492cfe094a35b38b97a7fd4c4c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a99149f5_2801d717",
+        "filename": "media/base/watch_time_keys.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-05T21:20:52Z",
+      "side": 1,
+      "message": "Yes. Probably because I\u0027ve added a \",\" at the end of the NativeControls metric so it\u0027s easier to append values. Hopefully it\u0027s fine :)",
+      "parentUuid": "13204a34_7abb57ec",
+      "revId": "23bded289ce29492cfe094a35b38b97a7fd4c4c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b13108a3_8d7313c7",
         "filename": "media/blink/watch_time_reporter.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "23bded289ce29492cfe094a35b38b97a7fd4c4c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac216aa3_56d1f6c0",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-05T21:20:52Z",
+      "side": 1,
+      "message": "FWIW, it wasn\u0027t clear that you wanted background to be dropped. I thought it was a suggestion.\n\nFYI, I\u0027ve added a RECORD_CONTROLS_WATCH_TIME in addition of RECORD_WATCH_TIME.",
+      "parentUuid": "b13108a3_8d7313c7",
+      "revId": "23bded289ce29492cfe094a35b38b97a7fd4c4c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -101,6 +173,24 @@
       "revId": "23bded289ce29492cfe094a35b38b97a7fd4c4c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29ca89f0_aa6f0cfe",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-05T21:20:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37ee26d1_5caceab0",
+      "revId": "23bded289ce29492cfe094a35b38b97a7fd4c4c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
