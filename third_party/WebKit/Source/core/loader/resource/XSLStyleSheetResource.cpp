@@ -88,6 +88,8 @@ void XSLStyleSheetResource::DidAddClient(ResourceClient* c) {
 }
 
 void XSLStyleSheetResource::CheckNotify() {
+  TriggerNotificationForAsyncClients();
+
   if (Data())
     sheet_ = DecodedText();
 
