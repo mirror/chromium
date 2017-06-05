@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bac7d57d_2edff54f",
+        "filename": "components/viz/host/frame_sink_manager_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-05T18:27:20Z",
+      "side": 1,
+      "message": "I\u0027m not sure what \"use IPC\" really means for clients. They don\u0027t \"know\" whether the CompositorFrameSink they get uses IPCs or not. Also, which kind of IPC? It sounds like the ordering requirements mean if the CompositorFrameSink and the FrameSinkManagerHost use a different IPC channel/mojo pipe, things would break too?\n\nI guess where I\u0027m getting at is that the ContextFactory/ContextFactoryPrivate implementation (i.e. GPTF) is what \"knows\" these things (because it creates both the FrameSinkManagerHost and the CompositorFrameSinks), and so maybe this concept should be passed by the GPTF - maybe to the constructor or something, and leave the clients out of it. Thoughts?",
+      "revId": "1ac6aa9ac0325de2619d381dcbda479c4b4f9bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
