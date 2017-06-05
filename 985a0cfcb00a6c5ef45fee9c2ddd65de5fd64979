@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d30d397_bdc4c9fe",
+        "filename": "components/safe_browsing_db/v4_local_database_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-05T14:25:59Z",
+      "side": 1,
+      "message": "If this is not dynamic, why have it as a function instead of const char* kStoreFileNamesToDelete[] \u003d {\"AnyIpMalware.store\"};",
+      "range": {
+        "startLine": 91,
+        "startChar": 1,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "985a0cfcb00a6c5ef45fee9c2ddd65de5fd64979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "216543b7_ebc4726e",
+        "filename": "components/safe_browsing_db/v4_local_database_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-05T14:25:59Z",
+      "side": 1,
+      "message": "Instead of adding this function, you can use UmaHistogramBoolean() from histogram_functions.h.\n\nAlso would be good to convert the other uses of the FactoryGet() API to histogram_functions.h for the other suffixed histograms.",
+      "range": {
+        "startLine": 118,
+        "startChar": 5,
+        "endLine": 118,
+        "endChar": 27
+      },
+      "revId": "985a0cfcb00a6c5ef45fee9c2ddd65de5fd64979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d52fe05_35efc34d",
+        "filename": "components/safe_browsing_db/v4_local_database_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-05T14:25:59Z",
+      "side": 1,
+      "message": "const auto\u0026\n\nOtherwise you\u0027re copying the string each iteration.",
+      "range": {
+        "startLine": 519,
+        "startChar": 12,
+        "endLine": 519,
+        "endChar": 36
+      },
+      "revId": "985a0cfcb00a6c5ef45fee9c2ddd65de5fd64979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db12c79a_fa4bf43a",
+        "filename": "components/safe_browsing_db/v4_local_database_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-05T14:25:59Z",
+      "side": 1,
+      "message": "Nit: No {}\u0027s",
+      "range": {
+        "startLine": 526,
+        "startChar": 23,
+        "endLine": 526,
+        "endChar": 0
+      },
+      "revId": "985a0cfcb00a6c5ef45fee9c2ddd65de5fd64979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d14c67_12e133c2",
+        "filename": "components/safe_browsing_db/v4_protocol_manager_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-05T14:25:59Z",
+      "side": 1,
+      "message": "This could use a comment.",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 66
+      },
+      "revId": "985a0cfcb00a6c5ef45fee9c2ddd65de5fd64979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "478478af_42d0eb52",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 62351,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-05T14:25:59Z",
+      "side": 1,
+      "message": "Nit: BooleanExists",
+      "range": {
+        "startLine": 62351,
+        "startChar": 61,
+        "endLine": 62351,
+        "endChar": 68
+      },
+      "revId": "985a0cfcb00a6c5ef45fee9c2ddd65de5fd64979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "470c6c6e_fa69f40b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 62355,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-05T14:25:59Z",
+      "side": 1,
+      "message": "Please mention when this is logged. Once per startup? Periodically on some interval? When some event occurs?",
+      "range": {
+        "startLine": 62355,
+        "startChar": 53,
+        "endLine": 62355,
+        "endChar": 0
+      },
+      "revId": "985a0cfcb00a6c5ef45fee9c2ddd65de5fd64979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
