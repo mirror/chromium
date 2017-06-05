@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f132ef7_78e83634",
+        "filename": "base/task_scheduler/test_utils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-05T14:10:58Z",
+      "side": 1,
+      "message": "To be consistent with other base/task_scheduler/ code, add a blank line before and after forward declarations.\n\nnamespace base {\nnamespace internal {\n\nclass Sequence;\nstruct Task;\n\nnamespace test {\n\n\"If you are editing code, take a few minutes to look at the code around you and determine its style.\"\nhttps://google.github.io/styleguide/cppguide.html#Exceptions_to_the_Rules",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 12
+      },
+      "revId": "1398656c58663100d10c5b98b66fb5c0f146c8c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c0513e_0d80aa7c",
+        "filename": "base/test/scoped_task_scheduler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-05T14:10:58Z",
+      "side": 1,
+      "message": "Remove empty line between comment and code.",
+      "revId": "1398656c58663100d10c5b98b66fb5c0f146c8c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
