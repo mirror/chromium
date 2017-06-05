@@ -22,6 +22,30 @@
       "revId": "616172bd22dfe5e3e633c92755cff4fcae4b927a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c14fcf99_1481d3dd",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-05T17:46:02Z",
+      "side": 1,
+      "message": "Oooh, did not know that exists. Done",
+      "parentUuid": "428afc93_f4cf756f",
+      "range": {
+        "startLine": 328,
+        "startChar": 35,
+        "endLine": 328,
+        "endChar": 42
+      },
+      "revId": "616172bd22dfe5e3e633c92755cff4fcae4b927a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
