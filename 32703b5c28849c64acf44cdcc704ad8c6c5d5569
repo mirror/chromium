@@ -164,6 +164,30 @@
       "revId": "32703b5c28849c64acf44cdcc704ad8c6c5d5569",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33224d30_bfeee707",
+        "filename": "services/preferences/persistent_pref_store_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-05T12:51:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45111b8e_d51e66f2",
+      "range": {
+        "startLine": 60,
+        "startChar": 26,
+        "endLine": 60,
+        "endChar": 52
+      },
+      "revId": "32703b5c28849c64acf44cdcc704ad8c6c5d5569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
