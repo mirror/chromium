@@ -204,7 +204,7 @@ AXObjectImpl* AXObjectCacheImpl::Get(LayoutObject* layout_object) {
 
 // Returns true if |node| is an <option> element and its parent <select>
 // is a menu list (not a list box).
-static bool IsMenuListOption(Node* node) {
+static bool IsMenuListOption(const Node* node) {
   if (!isHTMLOptionElement(node))
     return false;
   HTMLSelectElement* select = toHTMLOptionElement(node)->OwnerSelectElement();
@@ -214,7 +214,7 @@ static bool IsMenuListOption(Node* node) {
   return layout_object && layout_object->IsMenuList();
 }
 
-AXObjectImpl* AXObjectCacheImpl::Get(Node* node) {
+AXObjectImpl* AXObjectCacheImpl::Get(const Node* node) {
   if (!node)
     return 0;
 

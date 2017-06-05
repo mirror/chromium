@@ -2634,6 +2634,10 @@ WebFrame* WebViewImpl::MainFrame() {
   return WebFrame::FromFrame(page_ ? page_->MainFrame() : nullptr);
 }
 
+const WebFrame* WebViewImpl::MainFrame() const {
+  return WebFrame::FromFrame(page_ ? page_->MainFrame() : nullptr);
+}
+
 WebLocalFrame* WebViewImpl::FocusedFrame() {
   Frame* frame = FocusedCoreFrame();
   // TODO(yabinh): focusedCoreFrame() should always return a local frame, and
