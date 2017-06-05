@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7ba42709_8cd4613a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69fa1ef2_50ad97ad",
+      "range": {
+        "startLine": 7,
+        "startChar": 39,
+        "endLine": 7,
+        "endChar": 48
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6edfacd_10da1bf3",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-02T19:03:45Z",
       "side": 1,
       "message": "To implement SequenceLocalStorage, a pointer to a map owned by Sequence needs\nto be stored in TLS by TaskTracker::PerformRunTask.  A prerequisite to that, fulfilled by\nthis CL, is that TaskTracker::PerformRunTask has access to the Sequence.\n\n(feel free to correct my grammar)",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c1227f4_34fe5566",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "I\u0027ve included your suggested description with some slight changes, but:\n\nIs it confusing to say implement \"SequenceLocalStorage\"?  \n\nBy SequenceLocalStorage, you might be talking about implementing the SequenceLocalStorage class, or you might be taking about implementing the ability to store arbitrary data within a sequence.",
+      "parentUuid": "c6edfacd_10da1bf3",
       "range": {
         "startLine": 9,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9fd348d7_49bba127",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba498baa_69ad6892",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 41
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee9ce33a_f4979d35",
         "filename": "base/task_scheduler/scheduler_worker.cc",
         "patchSetId": 4
@@ -85,6 +157,24 @@
       "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e02a9972_709ac9dc",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee9ce33a_f4979d35",
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "4b931cb2_ce900146",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "OK. I set it to true instead because it\u0027ll stand out more for if RunNextTask forgets to set the value.",
+      "parentUuid": "82b71d02_ba8a7fef",
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "885f0e09_9c68420a",
         "filename": "base/task_scheduler/scheduler_worker.cc",
         "patchSetId": 4
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "09c26d10_22dfb4ac",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "885f0e09_9c68420a",
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65906bb1_8b9500c5",
         "filename": "base/task_scheduler/task_tracker.cc",
         "patchSetId": 4
@@ -136,6 +262,24 @@
       "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f360badd_608fafa9",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65906bb1_8b9500c5",
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "bae48d7e_e6aff021",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dc3b1bb_a13160a0",
+      "range": {
+        "startLine": 240,
+        "startChar": 2,
+        "endLine": 240,
+        "endChar": 38
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e066d2a_802db8d0",
         "filename": "base/task_scheduler/task_tracker.cc",
         "patchSetId": 4
@@ -182,6 +350,30 @@
       "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bb172c4_bb3b26c0",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e066d2a_802db8d0",
+      "range": {
+        "startLine": 284,
+        "startChar": 2,
+        "endLine": 284,
+        "endChar": 58
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -208,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "78995913_f8703ac6",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52ab9ecf_2dcddc53",
+      "range": {
+        "startLine": 58,
+        "startChar": 24,
+        "endLine": 58,
+        "endChar": 41
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e3d1093_fe5a3e1b",
         "filename": "base/task_scheduler/task_tracker.h",
         "patchSetId": 4
@@ -228,6 +444,30 @@
       "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c26e4792_a2c72146",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e3d1093_fe5a3e1b",
+      "range": {
+        "startLine": 59,
+        "startChar": 20,
+        "endLine": 60,
+        "endChar": 79
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -254,6 +494,30 @@
     },
     {
       "key": {
+        "uuid": "0416f16c_d61d9470",
+        "filename": "base/task_scheduler/task_tracker_posix_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5377eca3_44958a33",
+      "range": {
+        "startLine": 41,
+        "startChar": 22,
+        "endLine": 41,
+        "endChar": 29
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbb9c752_79b967e1",
         "filename": "base/task_scheduler/task_tracker_posix_unittest.cc",
         "patchSetId": 4
@@ -277,6 +541,30 @@
     },
     {
       "key": {
+        "uuid": "7f3da8bf_2d940961",
+        "filename": "base/task_scheduler/task_tracker_posix_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbb9c752_79b967e1",
+      "range": {
+        "startLine": 62,
+        "startChar": 22,
+        "endLine": 62,
+        "endChar": 29
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84c604d0_c523d934",
         "filename": "base/task_scheduler/test_utils.cc",
         "patchSetId": 4
@@ -291,6 +579,24 @@
       "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bbfeedc_c2941b5f",
+        "filename": "base/task_scheduler/test_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84c604d0_c523d934",
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -311,6 +617,24 @@
     },
     {
       "key": {
+        "uuid": "7aee8baf_766517ee",
+        "filename": "base/task_scheduler/test_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af2dbc02_0f18768e",
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ed54d36_b1da8601",
         "filename": "base/task_scheduler/test_utils.h",
         "patchSetId": 4
@@ -328,6 +652,24 @@
     },
     {
       "key": {
+        "uuid": "5caae439_7d9b4825",
+        "filename": "base/task_scheduler/test_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ed54d36_b1da8601",
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24c748d8_d86c1952",
         "filename": "base/task_scheduler/test_utils.h",
         "patchSetId": 4
@@ -342,6 +684,24 @@
       "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "768ec011_d3173df8",
+        "filename": "base/task_scheduler/test_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24c748d8_d86c1952",
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -368,6 +728,30 @@
     },
     {
       "key": {
+        "uuid": "f16c2fe5_072a6f87",
+        "filename": "base/task_scheduler/test_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52e80cb0_dd608ba0",
+      "range": {
+        "startLine": 18,
+        "startChar": 13,
+        "endLine": 18,
+        "endChar": 21
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cc8fc23_081b5858",
         "filename": "base/task_scheduler/test_utils.h",
         "patchSetId": 4
@@ -391,6 +775,30 @@
     },
     {
       "key": {
+        "uuid": "4c651876_3c4562ec",
+        "filename": "base/task_scheduler/test_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cc8fc23_081b5858",
+      "range": {
+        "startLine": 19,
+        "startChar": 24,
+        "endLine": 19,
+        "endChar": 41
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7de0afe9_5cf8990f",
         "filename": "base/test/scoped_task_environment.cc",
         "patchSetId": 4
@@ -405,6 +813,24 @@
       "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de185f0f_ec341eca",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7de0afe9_5cf8990f",
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -431,6 +857,30 @@
     },
     {
       "key": {
+        "uuid": "6ff7d5e2_f34bdb92",
+        "filename": "base/test/scoped_task_scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78d6511d_7d6ece6c",
+      "range": {
+        "startLine": 79,
+        "startChar": 40,
+        "endLine": 79,
+        "endChar": 44
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f517a670_03160b84",
         "filename": "base/test/scoped_task_scheduler.cc",
         "patchSetId": 4
@@ -454,6 +904,30 @@
     },
     {
       "key": {
+        "uuid": "f3fb8eba_f4326306",
+        "filename": "base/test/scoped_task_scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f517a670_03160b84",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 46
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b308f5a_5cbc5736",
         "filename": "base/test/scoped_task_scheduler.cc",
         "patchSetId": 4
@@ -468,6 +942,24 @@
       "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b5ab012_76d375ff",
+        "filename": "base/test/scoped_task_scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "I agree with you!",
+      "parentUuid": "7b308f5a_5cbc5736",
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -491,6 +983,30 @@
       "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dca46c7_d3d772c0",
+        "filename": "base/test/scoped_task_scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-05T13:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6e94b96_a2ccf387",
+      "range": {
+        "startLine": 310,
+        "startChar": 61,
+        "endLine": 310,
+        "endChar": 67
+      },
+      "revId": "b31a03e1b93ff1a010f95cb1d800766aa367f539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
