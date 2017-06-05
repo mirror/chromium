@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c8843bc2_314b7922",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaFragmentURIParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-05T14:41:23Z",
+      "side": 1,
+      "message": "\u003e Shouldn\u0027t this be `!utf8_name.IsEmpty()` instead of `name`?\n\nThanks for catching that! Absolutely it should! (Changed to CString::IsNull, which is what\u0027s returned on strict conversion failure.)\n\n\u003e Also, maybe move `valid_utf8` out of the condition. Something like:\n\u003e ```\n\u003e CString utf8_name;\n\u003e if (!name.IsEmpty())\n\u003e   utf8_name \u003d name.Utf8(kStrictUTF8Conversion);\n\u003e valid_utf8 \u003d !utf8_name.IsEmpty();\n\u003e ```\n\nThis seems like it would change behaviour (currently, it\u0027s permitted for either name or value to be empty).",
+      "parentUuid": "89905aa8_27a8f972",
+      "revId": "8008e42ee818499ab1f44fbf67ac8001e5d72724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01b3ee6a_253e12cb",
         "filename": "third_party/WebKit/Source/core/html/media/MediaFragmentURIParser.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-05T12:40:33Z",
       "side": 1,
       "message": "Same as above: use `utf8_value`?",
+      "revId": "8008e42ee818499ab1f44fbf67ac8001e5d72724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d85fbeef_dd7fb6cf",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaFragmentURIParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-05T14:41:23Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "01b3ee6a_253e12cb",
       "revId": "8008e42ee818499ab1f44fbf67ac8001e5d72724",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
