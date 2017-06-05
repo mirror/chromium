@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "412af560_6953766b",
+        "filename": "content/test/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-05T17:55:36Z",
+      "side": 1,
+      "message": "Ah yes, updated. It wasn\u0027t true when I started the CL. :)",
+      "parentUuid": "5d79cdee_3aea2230",
+      "revId": "d5ee57ced4e47c44fc446c5f22c54fe3724e8e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "979b89f7_8b121083",
         "filename": "third_party/WebKit/Source/core/mojo/BUILD.gn",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "d5ee57ced4e47c44fc446c5f22c54fe3724e8e51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "308ac3f2_4a77917a",
+        "filename": "third_party/WebKit/Source/core/mojo/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-05T17:55:36Z",
+      "side": 1,
+      "message": "No, we actually want these to be available behind a flag in production.",
+      "parentUuid": "979b89f7_8b121083",
+      "revId": "d5ee57ced4e47c44fc446c5f22c54fe3724e8e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
