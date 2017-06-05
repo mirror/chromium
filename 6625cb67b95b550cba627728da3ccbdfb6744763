@@ -16,6 +16,24 @@
       "revId": "6625cb67b95b550cba627728da3ccbdfb6744763",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17bc79da_ae2e7698",
+        "filename": "third_party/jstemplate/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-06-05T17:59:53Z",
+      "side": 0,
+      "message": "i have no idea why we even need this tech nor how i ended up as an owner :(\nhttps://chromium.googlesource.com/chromium/src/+log/7618182a74f728095506b7fed7e5f676b500eea6/third_party/jstemplate\n\nseems to have been around since initial commit\nhttps://chromium.googlesource.com/chromium/src/+/09911bf300f1a419907a9412154760efd0b7abc3\n\nand only have been referenced by arv@ a few times:\nhttps://chromium.googlesource.com/chromium/src/+/5b207166bf9869e901a0cb10655617965ee37883\nhttps://chromium.googlesource.com/chromium/src/+/9b115d5e9523de6f617b189e5d3bf08f59ef40a7\n\n¯\\_(ツ)_/¯",
+      "parentUuid": "775f0fad_4d12f322",
+      "revId": "6625cb67b95b550cba627728da3ccbdfb6744763",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
