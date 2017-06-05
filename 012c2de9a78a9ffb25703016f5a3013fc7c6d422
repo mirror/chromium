@@ -16,6 +16,24 @@
       "revId": "012c2de9a78a9ffb25703016f5a3013fc7c6d422",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15e7f029_9e954deb",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-06-05T18:24:07Z",
+      "side": 1,
+      "message": "If you mean \"accessed from\", then yes, as a general principle, if you have a const strict codebase. We don\u0027t, so in this CL I\u0027m consting the bare minimum to allow const objects as the parameters of WebAXObject::FromXXX. \n\nThat said, I\u0027ll const the receiving object, (e.g. select above).",
+      "parentUuid": "f592d8c7_7bd1cc26",
+      "revId": "012c2de9a78a9ffb25703016f5a3013fc7c6d422",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
