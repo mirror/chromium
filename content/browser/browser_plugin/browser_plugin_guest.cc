@@ -226,7 +226,7 @@ void BrowserPluginGuest::SetFocus(RenderWidgetHost* rwh,
     static_cast<RenderViewHostImpl*>(RenderViewHost::From(rwh))
         ->SetInitialFocus(focus_type == blink::kWebFocusTypeBackward);
   }
-  rwh->Send(new InputMsg_SetFocus(rwh->GetRoutingID(), focused));
+  rwh->GetWidgetInputHandler()->SetFocus(focused);
   if (!focused && mouse_locked_)
     OnUnlockMouse();
 

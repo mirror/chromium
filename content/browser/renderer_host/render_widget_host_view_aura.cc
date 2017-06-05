@@ -1176,25 +1176,10 @@ void RenderWidgetHostViewAura::SetCompositionText(
   if (!text_input_manager_ || !text_input_manager_->GetActiveWidget())
     return;
 
-  // TODO(suzhe): convert both renderer_host and renderer to use
-  // ui::CompositionText.
-  std::vector<blink::WebCompositionUnderline> underlines;
-  underlines.reserve(composition.underlines.size());
-  for (std::vector<ui::CompositionUnderline>::const_iterator it =
-           composition.underlines.begin();
-       it != composition.underlines.end(); ++it) {
-    underlines.push_back(
-        blink::WebCompositionUnderline(static_cast<unsigned>(it->start_offset),
-                                       static_cast<unsigned>(it->end_offset),
-                                       it->color,
-                                       it->thick,
-                                       it->background_color));
-  }
-
   // TODO(suzhe): due to a bug of webkit, we can't use selection range with
   // composition string. See: https://bugs.webkit.org/show_bug.cgi?id=37788
   text_input_manager_->GetActiveWidget()->ImeSetComposition(
-      composition.text, underlines, gfx::Range::InvalidRange(),
+      composition.text, composition.underlines, gfx::Range::InvalidRange(),
       composition.selection.end(), composition.selection.end());
 
   has_composition_text_ = !composition.text.empty();
@@ -1221,7 +1206,7 @@ void RenderWidgetHostViewAura::InsertText(const base::string16& text) {
   if (text_input_manager_ && text_input_manager_->GetActiveWidget()) {
     if (text.length())
       text_input_manager_->GetActiveWidget()->ImeCommitText(
-          text, std::vector<blink::WebCompositionUnderline>(),
+          text, std::vector<ui::CompositionUnderline>(),
           gfx::Range::InvalidRange(), 0);
     else if (has_composition_text_)
       text_input_manager_->GetActiveWidget()->ImeFinishComposingText(false);
