@@ -822,12 +822,10 @@ bool AXObjectImpl::IsPresentationalChild() const {
 
 bool AXObjectImpl::CanReceiveAccessibilityFocus() const {
   const Node* node = this->GetNode();
-  if (!node)
+  if (!node || !node->IsElementNode())
     return false;
 
   const Element* elem = ToElement(node);
-  if (!elem)
-    return false;
 
   // Focusable, and not forwarding the focus somewhere else
   if (elem->IsFocusable() && !elem->FastHasAttribute(aria_activedescendantAttr))
