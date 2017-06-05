@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/time/time.h"
 
@@ -83,6 +84,18 @@ SequenceSortKey Sequence::GetSortKey() const {
 
   return SequenceSortKey(priority, next_task_sequenced_time);
 }
+
+/*void Set(int slot_id, void* val, void(*dtor)(void*)) {
+    ValDtorPair valDtor;
+    valDtor.val = val;
+    valDtor.dtor = dtor;
+
+    obj_map_[slot_id] = valDtor;
+}
+
+  //Returns the corresponding value in the sequence local storage in slot
+slot_id. void* Get(int slot_id) { return obj_map_[slot_id].val;
+}*/
 
 Sequence::~Sequence() = default;
 
