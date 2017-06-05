@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc2bb5a1_a46d834e",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorElementId.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-05T17:26:02Z",
+      "side": 1,
+      "message": "Need to update this comment re: CompositorElementIdFromPaintLayerId.",
+      "revId": "5682c7081c9ef9af3c6e1ff0721d49933e4f48a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
