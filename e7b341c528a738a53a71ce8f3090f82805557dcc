@@ -22,6 +22,29 @@
       "revId": "e7b341c528a738a53a71ce8f3090f82805557dcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a804d1f2_cc67149e",
+        "filename": "chrome/android/java/res/layout/data_reduction_main_menu_footer.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-05T17:33:05Z",
+      "side": 0,
+      "message": "The background is now added back in and the layer list drawable bug is addressed in this CL: https://chromium-review.googlesource.com/c/524435/",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 36
+      },
+      "revId": "e7b341c528a738a53a71ce8f3090f82805557dcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
