@@ -19694,18 +19694,25 @@ error::Error GLES2DecoderImpl::HandleInitializeDiscardableTextureCHROMIUM(
       *static_cast<
           const volatile gles2::cmds::InitializeDiscardableTextureCHROMIUM*>(
           cmd_data);
-  TextureRef* texture = texture_manager()->GetTexture(c.texture_id);
+  GLuint texture_id = c.texture_id;
+  uint32_t shm_id = c.shm_id;
+  uint32_t shm_offset = c.shm_offset;
+
+  TextureRef* texture = texture_manager()->GetTexture(texture_id);
   if (!texture) {
     LOCAL_SET_GL_ERROR(GL_INVALID_VALUE,
                        "glInitializeDiscardableTextureCHROMIUM",
                        "Invalid texture ID");
     return error::kNoError;
   }
+  scoped_refptr<gpu::Buffer> buffer = GetSharedMemoryBuffer(shm_id);
+  if (!DiscardableHandleBase::ValidateParameters(buffer.get(), shm_offset))
+    return error::kInvalidArguments;
+
   size_t size = texture->texture()->estimated_size();
-  ServiceDiscardableHandle handle(GetSharedMemoryBuffer(c.shm_id), c.shm_offset,
-                                  c.shm_id);
+  ServiceDiscardableHandle handle(std::move(buffer), shm_offset, shm_id);
   GetContextGroup()->discardable_manager()->InsertLockedTexture(
-      c.texture_id, size, group_->texture_manager(), std::move(handle));
+      texture_id, size, group_->texture_manager(), std::move(handle));
   return error::kNoError;
 }
 
