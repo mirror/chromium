@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "784b29b0_6486ebe6",
+        "filename": "chrome/browser/prefs/active_profile_pref_service.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-05T04:49:14Z",
+      "side": 1,
+      "message": "Add a comment explaining why this dance is necessary.",
+      "revId": "4f062ae8797f5c734dee12deed84d97051b8ac43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
