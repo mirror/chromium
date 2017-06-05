@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc559b0e_d691ec82",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-05T17:53:39Z",
+      "side": 1,
+      "message": "nit: you can replace all of this with GetElement() now",
+      "revId": "184ef6f5f931b991be2e4ce24af5b08dfaa77d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
