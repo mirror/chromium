@@ -22,6 +22,30 @@
       "revId": "dd9c20f001c344764e1d7cbf6a95587ebd117f90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0914979_ff9e8682",
+        "filename": "ui/base/win/open_file_name_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-05T15:13:21Z",
+      "side": 1,
+      "message": "Ah, thanks for the tip! Done.",
+      "parentUuid": "f22ef659_8a5c8896",
+      "range": {
+        "startLine": 76,
+        "startChar": 31,
+        "endLine": 76,
+        "endChar": 62
+      },
+      "revId": "dd9c20f001c344764e1d7cbf6a95587ebd117f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
