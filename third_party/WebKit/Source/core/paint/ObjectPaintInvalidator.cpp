@@ -205,6 +205,10 @@ void ObjectPaintInvalidator::InvalidatePaintOfPreviousVisualRect(
 
 void ObjectPaintInvalidator::
     InvalidatePaintIncludingNonCompositingDescendants() {
+  // This may happen when an object changes style before being added into the
+  // layout tree. Paint invalidation doesn't apply to non-rooted objects.
+  if (!object_.IsRooted())
+    return;
   // Since we're only painting non-composited layers, we know that they all
   // share the same paintInvalidationContainer.
   const LayoutBoxModelObject& paint_invalidation_container =
