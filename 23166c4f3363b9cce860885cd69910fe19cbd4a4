@@ -176,6 +176,24 @@
       "revId": "23166c4f3363b9cce860885cd69910fe19cbd4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f80e7c5_fec782a4",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1449,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-05T15:31:19Z",
+      "side": 1,
+      "message": "You\u0027re right. DEFINE_THREAD_SAFE_STATIC_LOCAL(ThreadSpecific\u003c\u003e, ...) will work.\n\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d663632 is about replacing it with PerThreadData to avoid scattering the ThreadSpecific\u003c\u003es all over the code base. However, that\u0027s an orthogonal clean-up, so you can just use ThreadSpecific\u003c\u003e for RCS.",
+      "parentUuid": "36f2bee8_c17ac503",
+      "revId": "23166c4f3363b9cce860885cd69910fe19cbd4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
