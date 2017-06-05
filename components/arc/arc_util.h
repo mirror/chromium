@@ -34,6 +34,9 @@ namespace arc {
 // check, so it is ok to access them directly.
 bool IsArcAvailable();
 
+// Returns true if ARC image has Play Store package.
+bool IsPlayStoreAvailable();
+
 // Returns true if ARC should always start within the primary user session
 // (opted in user or not), and other supported mode such as guest and Kiosk
 // mode.
@@ -85,6 +88,9 @@ bool IsArcAppWindow(aura::Window* window);
 // |do_restrict| is true, the limit is adjusted so ARC can only use tightly
 // restricted CPU resources.
 void SetArcCpuRestriction(bool do_restrict);
+
+// Detects and logs incompatible combinations of ARC switches.
+void ValidateSwitches();
 
 }  // namespace arc
 

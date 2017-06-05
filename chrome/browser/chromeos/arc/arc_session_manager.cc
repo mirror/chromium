@@ -15,7 +15,6 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "chrome/browser/chromeos/arc/arc_auth_context.h"
-#include "chrome/browser/chromeos/arc/arc_auth_notification.h"
 #include "chrome/browser/chromeos/arc/arc_migration_guide_notification.h"
 #include "chrome/browser/chromeos/arc/arc_optin_uma.h"
 #include "chrome/browser/chromeos/arc/arc_support_host.h"
@@ -141,6 +140,7 @@ ArcSessionManager::ArcSessionManager(
   DCHECK(!g_arc_session_manager);
   g_arc_session_manager = this;
   arc_session_runner_->AddObserver(this);
+  ValidateSwitches();
 }
 
 ArcSessionManager::~ArcSessionManager() {
@@ -304,7 +304,8 @@ void ArcSessionManager::OnProvisioningFinished(ProvisioningResult result) {
     //   the whole OptIn flow should happen as seamless as possible for the
     //   user.
     const bool suppress_play_store_app =
-        IsArcOptInVerificationDisabled() || IsArcKioskMode() ||
+        !IsPlayStoreAvailable() || IsArcOptInVerificationDisabled() ||
+        IsArcKioskMode() ||
         (IsArcPlayStoreEnabledPreferenceManagedForProfile(profile_) &&
          AreArcAllOptInPreferencesManagedForProfile(profile_));
     if (!suppress_play_store_app) {
