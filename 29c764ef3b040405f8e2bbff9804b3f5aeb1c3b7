@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c445e4ec_ef07c771",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-05T13:40:44Z",
+      "side": 1,
+      "message": "Clarification: Is the notification a part of PlayStore? I\u0027m confused, because my understanding was browser window is poped up before ARC is started (TOS negotiation timing for non AD user)?",
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ffd75ae_ab874637",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 2
@@ -19,6 +36,81 @@
         "endLine": 701,
         "endChar": 33
       },
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "694eacf4_e66e545b",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-05T13:40:44Z",
+      "side": 1,
+      "message": "Also, if this is not yet implemented, please do not start ARC.",
+      "parentUuid": "4ffd75ae_ab874637",
+      "range": {
+        "startLine": 701,
+        "startChar": 6,
+        "endLine": 701,
+        "endChar": 33
+      },
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88da375c_a2b4f864",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-05T13:40:44Z",
+      "side": 1,
+      "message": "style: based on style guide,\nif ( ... ) {\n  return;\n} else {\n  ...\n}\n\nshould be\nif (...) {\n  return;\n}\n...\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#Code-formatting",
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bc53676_a3de55b2",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-05T13:40:44Z",
+      "side": 1,
+      "message": "nit: You can use testing::Bool(), here (and above line).",
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57bfce69_caeb6e76",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-05T13:40:44Z",
+      "side": 1,
+      "message": "Please add unittest.",
       "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -48,6 +140,23 @@
     },
     {
       "key": {
+        "uuid": "b456854f_68316c33",
+        "filename": "chrome/browser/chromeos/arc/optin/arc_active_directory_auth_default_negotiator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-05T13:40:44Z",
+      "side": 1,
+      "message": "nit: Not used?",
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a522276e_2b903c58",
         "filename": "chrome/browser/chromeos/arc/optin/arc_active_directory_auth_default_negotiator.h",
         "patchSetId": 2
@@ -65,6 +174,40 @@
         "endLine": 33,
         "endChar": 22
       },
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c924b11d_6475d970",
+        "filename": "chrome/browser/chromeos/arc/optin/arc_active_directory_auth_default_negotiator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-05T13:40:44Z",
+      "side": 1,
+      "message": "nit: 2017?",
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655f967c_31680855",
+        "filename": "chrome/browser/chromeos/arc/optin/arc_active_directory_auth_default_negotiator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-05T13:40:44Z",
+      "side": 1,
+      "message": "nit: please swap L58 and L59 to be consistent with SetUp/TearDown order.",
       "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -111,6 +254,23 @@
         "endLine": 728,
         "endChar": 30
       },
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "163d6929_722de94d",
+        "filename": "chrome/browser/resources/chromeos/arc_support/main.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-05T13:40:44Z",
+      "side": 1,
+      "message": "nit: Please move this to L109 (between TOS and lso-loading)?",
       "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
