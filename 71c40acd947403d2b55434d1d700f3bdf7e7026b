@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b687079a_3f9233cf",
+        "filename": "gpu/command_buffer/service/framebuffer_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-06-05T18:19:02Z",
+      "side": 1,
+      "message": "I don\u0027t see a need to add AttachenderbufferImpl() function since it\u0027s only called here. So it only adds unnecessary complexity.\n\nIf you merge two functions, you only need to call GetAttachment() once.",
+      "range": {
+        "startLine": 989,
+        "startChar": 2,
+        "endLine": 989,
+        "endChar": 24
+      },
+      "revId": "71c40acd947403d2b55434d1d700f3bdf7e7026b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "061b1456_2269be29",
+        "filename": "gpu/command_buffer/service/renderbuffer_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-06-05T18:19:02Z",
+      "side": 1,
+      "message": "Should you use  scoped_refptr\u003cFramebuffer\u003e instead?\n\nAlso, attachment isn\u0027t accessed at all, so maybe just remove it?",
+      "range": {
+        "startLine": 133,
+        "startChar": 27,
+        "endLine": 133,
+        "endChar": 38
+      },
+      "revId": "71c40acd947403d2b55434d1d700f3bdf7e7026b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
