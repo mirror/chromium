@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb437b94_03b3f5ed",
+        "filename": "gpu/command_buffer/service/framebuffer_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-06-05T22:39:42Z",
+      "side": 1,
+      "message": "This change was only used in the next patch. However, I realized I overcomplicated things. I\u0027m re-merging these functions.",
+      "parentUuid": "b687079a_3f9233cf",
+      "range": {
+        "startLine": 989,
+        "startChar": 2,
+        "endLine": 989,
+        "endChar": 24
+      },
+      "revId": "71c40acd947403d2b55434d1d700f3bdf7e7026b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "061b1456_2269be29",
         "filename": "gpu/command_buffer/service/renderbuffer_manager.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "71c40acd947403d2b55434d1d700f3bdf7e7026b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3541d0ba_f4f40ebe",
+        "filename": "gpu/command_buffer/service/renderbuffer_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-06-05T22:39:42Z",
+      "side": 1,
+      "message": "\u003e Should you use  scoped_refptr\u003cFramebuffer\u003e instead?\n\nYes, good idea. Done.\n\n\u003e Also, attachment isn\u0027t accessed at all, so maybe just remove it?\n\nIt\u0027s only needed in the follow-up patch which works around the qualcomm bug.",
+      "parentUuid": "061b1456_2269be29",
+      "range": {
+        "startLine": 133,
+        "startChar": 27,
+        "endLine": 133,
+        "endChar": 38
+      },
+      "revId": "71c40acd947403d2b55434d1d700f3bdf7e7026b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
