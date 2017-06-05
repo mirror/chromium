@@ -27,8 +27,11 @@ ModuleDatabase* g_instance = nullptr;
 ModuleDatabase::ModuleDatabase(
     scoped_refptr<base::SequencedTaskRunner> task_runner)
     : task_runner_(std::move(task_runner)),
-      // ModuleDatabase owns |module_inspector_|, so it is safe to use
-      // base::Unretained().
+      // ModuleDatabase owns |shell_extension_enumerator_| and
+      // |module_inspector_|, so it is safe to use base::Unretained().
+      shell_extension_enumerator_(
+          base::Bind(&ModuleDatabase::OnShellExtensionEnumerated,
+                     base::Unretained(this))),
       module_inspector_(base::Bind(&ModuleDatabase::OnModuleInspected,
                                    base::Unretained(this))),
       third_party_metrics_(this),
@@ -88,6 +91,8 @@ void ModuleDatabase::OnModuleLoad(uint32_t process_id,
 
   auto* module_info =
       FindOrCreateModuleInfo(module_path, module_size, module_time_date_stamp);
+
+  module_info->second.module_type |= ModuleType::LOADED_MODULE;
 
   // Update the list of process types that this module has been seen in.
   module_info->second.process_types |=
@@ -343,6 +348,14 @@ void ModuleDatabase::DeleteProcessInfo(uint32_t process_id,
                                        uint64_t creation_time) {
   ProcessInfoKey key(process_id, creation_time, content::PROCESS_TYPE_UNKNOWN);
   processes_.erase(key);
+}
+
+void ModuleDatabase::OnShellExtensionEnumerated(const base::FilePath& path,
+                                                uint32_t size_of_image,
+                                                uint32_t time_date_stamp) {
+  auto* module_info =
+      FindOrCreateModuleInfo(path, size_of_image, time_date_stamp);
+  module_info->second.module_type |= ModuleType::SHELL_EXTENSION;
 }
 
 void ModuleDatabase::OnModuleInspected(

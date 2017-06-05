@@ -17,6 +17,7 @@
 #include "base/sequenced_task_runner.h"
 #include "chrome/browser/conflicts/module_info_win.h"
 #include "chrome/browser/conflicts/module_inspector_win.h"
+#include "chrome/browser/conflicts/shell_extension_enumerator_win.h"
 #include "chrome/browser/conflicts/third_party_metrics_recorder_win.h"
 #include "content/public/common/process_type.h"
 
@@ -156,6 +157,11 @@ class ModuleDatabase {
   // Deletes a process info entry.
   void DeleteProcessInfo(uint32_t process_id, uint64_t creation_time);
 
+  // Callback for ShellExtensionEnumerator.
+  void OnShellExtensionEnumerated(const base::FilePath& path,
+                                  uint32_t size_of_image,
+                                  uint32_t time_date_stamp);
+
   // Callback for ModuleInspector.
   void OnModuleInspected(
       const ModuleInfoKey& module_key,
@@ -166,6 +172,8 @@ class ModuleDatabase {
 
   // A map of all known modules.
   ModuleMap modules_;
+
+  ShellExtensionEnumerator shell_extension_enumerator_;
 
   // Inspects new modules on a blocking task runner.
   ModuleInspector module_inspector_;
