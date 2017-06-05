@@ -15,13 +15,14 @@
 #include "url/gurl.h"
 
 namespace offline_pages {
+class PrefetchDispatcher;
 
 // Receives GCM messages and other channel status messages on behalf of the
 // prefetch system.
 class PrefetchGCMAppHandler : public gcm::GCMAppHandler,
                               public PrefetchGCMHandler {
  public:
-  PrefetchGCMAppHandler();
+  PrefetchGCMAppHandler(PrefetchDispatcher* dispatcher);
   ~PrefetchGCMAppHandler() override;
 
   // gcm::GCMAppHandler implementation.
@@ -42,6 +43,10 @@ class PrefetchGCMAppHandler : public gcm::GCMAppHandler,
   std::string GetAppId() const override;
 
  private:
+  // Not owned, the owner of |PrefetchGCMAppHandler| is responsible for ensuring
+  // PrefetchDispatcher remains alive while |this| is alive.
+  PrefetchDispatcher* dispatcher_;
+
   DISALLOW_COPY_AND_ASSIGN(PrefetchGCMAppHandler);
 };
 

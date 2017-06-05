@@ -17,8 +17,11 @@
 #include "chrome/browser/android/offline_pages/offline_page_model_factory.h"
 #include "chrome/browser/android/offline_pages/prefetch/prefetch_background_task.h"
 #include "chrome/browser/android/offline_pages/request_coordinator_factory.h"
+#include "chrome/browser/offline_pages/prefetch/prefetch_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "components/offline_pages/core/client_namespace_constants.h"
+#include "components/offline_pages/core/offline_page_feature.h"
+#include "components/offline_pages/core/prefetch/prefetch_service.h"
 #include "content/public/browser/web_ui.h"
 #include "net/base/network_change_notifier.h"
 
@@ -27,6 +30,7 @@ namespace offline_internals {
 OfflineInternalsUIMessageHandler::OfflineInternalsUIMessageHandler()
     : offline_page_model_(nullptr),
       request_coordinator_(nullptr),
+      prefetch_service_(nullptr),
       weak_ptr_factory_(this) {}
 
 OfflineInternalsUIMessageHandler::~OfflineInternalsUIMessageHandler() {}
@@ -261,6 +265,16 @@ void OfflineInternalsUIMessageHandler::HandleSetRecordRequestQueue(
     request_coordinator_->GetLogger()->SetIsLogging(should_record);
 }
 
+void OfflineInternalsUIMessageHandler::HandleSetRecordPrefetchService(
+    const base::ListValue* args) {
+  AllowJavascript();
+  bool should_record;
+  CHECK(args->GetBoolean(0, &should_record));
+  if (prefetch_service_)
+    prefetch_service_->GetPrefetchDispatcher()->GetLogger()->SetIsLogging(
+        should_record);
+}
+
 void OfflineInternalsUIMessageHandler::HandleGetLoggingState(
     const base::ListValue* args) {
   AllowJavascript();
@@ -290,6 +304,8 @@ void OfflineInternalsUIMessageHandler::HandleGetEventLogs(
     offline_page_model_->GetLogger()->GetLogs(&logs);
   if (request_coordinator_)
     request_coordinator_->GetLogger()->GetLogs(&logs);
+  if (prefetch_service_)
+    prefetch_service_->GetPrefetchDispatcher()->GetLogger()->GetLogs(&logs);
   std::sort(logs.begin(), logs.end());
 
   base::ListValue result;
@@ -355,6 +371,11 @@ void OfflineInternalsUIMessageHandler::RegisterMessages() {
       base::Bind(&OfflineInternalsUIMessageHandler::HandleSetRecordPageModel,
                  weak_ptr_factory_.GetWeakPtr()));
   web_ui()->RegisterMessageCallback(
+      "setRecordPrefetchService",
+      base::Bind(
+          &OfflineInternalsUIMessageHandler::HandleSetRecordPrefetchService,
+          weak_ptr_factory_.GetWeakPtr()));
+  web_ui()->RegisterMessageCallback(
       "getLoggingState",
       base::Bind(&OfflineInternalsUIMessageHandler::HandleGetLoggingState,
                  weak_ptr_factory_.GetWeakPtr()));
@@ -381,6 +402,11 @@ void OfflineInternalsUIMessageHandler::RegisterMessages() {
       offline_pages::OfflinePageModelFactory::GetForBrowserContext(profile);
   request_coordinator_ =
       offline_pages::RequestCoordinatorFactory::GetForBrowserContext(profile);
+
+  if (offline_pages::IsPrefetchingOfflinePagesEnabled()) {
+    prefetch_service_ =
+        offline_pages::PrefetchServiceFactory::GetForBrowserContext(profile);
+  }
 }
 
 }  // namespace offline_internals

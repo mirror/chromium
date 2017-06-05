@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 
+#include "components/offline_pages/core/offline_event_logger.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
 
 namespace offline_pages {
@@ -28,13 +29,18 @@ class TestPrefetchDispatcher : public PrefetchDispatcher {
   void BeginBackgroundTask(std::unique_ptr<ScopedBackgroundTask> task) override;
   void StopBackgroundTask(ScopedBackgroundTask* task) override;
   void SetService(PrefetchService* service) override;
+  void GCMReceivedForOperation(const std::string& operation_name) override;
+  OfflineEventLogger* GetLogger() override;
 
   std::vector<PrefetchURL> latest_prefetch_urls;
   std::unique_ptr<ClientId> last_removed_client_id;
+  std::vector<std::string> operation_list;
 
   int new_suggestions_count = 0;
   int remove_all_suggestions_count = 0;
   int remove_by_client_id_count = 0;
+
+  OfflineEventLogger logger_;
 };
 
 }  // namespace offline_pages
