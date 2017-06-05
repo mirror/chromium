@@ -16,6 +16,24 @@
       "revId": "86c5e348b9b2c95f2cd6efcb2b98da2a367301d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75489193_d5ecf327",
+        "filename": "components/component_updater/default_component_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-06-05T16:49:38Z",
+      "side": 1,
+      "message": "We still do the both calls.\n\nc:\\src\\chromium\\src\\components\\component_updater\\default_component_installer.cc(160): error C2672: \u0027base::Passed\u0027: no matching overloaded function found\nc:\\src\\chromium\\src\\components\\component_updater\\default_component_installer.cc(160): error C2784: \u0027base::internal::PassedWrapper\u003cT\u003e base::Passed(T *)\u0027: could not deduce template argument for \u0027T *\u0027 from \u0027std::unique_ptr\u003cbase::DictionaryValue,std::default_delete\u003c_Ty\u003e\u003e\u0027\n        with\n        [\n            _Ty\u003dbase::DictionaryValue\n        ]\nc:\\src\\chromium\\src\\base\\bind_helpers.h(447): note: see declaration of \u0027base::Passed\u0027",
+      "parentUuid": "0fe4c5d9_6e132c5f",
+      "revId": "86c5e348b9b2c95f2cd6efcb2b98da2a367301d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
