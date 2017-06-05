@@ -173,7 +173,6 @@ class WEB_EXPORT WebViewImpl final
                                  float browser_controls_height,
                                  bool browser_controls_shrink_layout) override;
   WebFrame* MainFrame() override;
-  const WebFrame* MainFrame() const override;
   WebLocalFrame* FocusedFrame() override;
   void SetFocusedFrame(WebFrame*) override;
   void FocusDocumentView(WebFrame*) override;

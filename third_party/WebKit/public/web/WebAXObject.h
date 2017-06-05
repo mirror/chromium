@@ -94,8 +94,8 @@ class WebAXObject {
     return *this;
   }
 
-  BLINK_EXPORT static WebAXObject FromWebNode(const WebNode&);
-  BLINK_EXPORT static WebAXObject FromWebView(const WebView&);
+  BLINK_EXPORT static WebAXObject FromWebNode(WebNode&);
+  BLINK_EXPORT static WebAXObject FromWebView(WebView&);
   BLINK_EXPORT static WebAXObject FromWebDocument(const WebDocument&);
   BLINK_EXPORT static WebAXObject FromWebDocumentByID(const WebDocument&, int);
   BLINK_EXPORT static WebAXObject FromWebDocumentFocused(const WebDocument&);
@@ -359,7 +359,7 @@ class WebAXObject {
   BLINK_EXPORT void ScrollToGlobalPoint(const WebPoint&) const;
 
 #if BLINK_IMPLEMENTATION
-  WebAXObject(AXObjectImpl*);
+  BLINK_EXPORT WebAXObject(AXObjectImpl*);
   WebAXObject& operator=(AXObjectImpl*);
   operator AXObjectImpl*() const;
 #endif

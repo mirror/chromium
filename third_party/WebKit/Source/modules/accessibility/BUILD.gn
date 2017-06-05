@@ -64,6 +64,7 @@ blink_modules_sources("accessibility") {
     "InspectorAccessibilityAgent.h",
     "InspectorTypeBuilderHelper.cpp",
     "InspectorTypeBuilderHelper.h",
+    "WebAXObject.cpp",
   ]
 
   # The modules/accessibility/ depends closely on core/ --
