@@ -4,8 +4,15 @@
 
 #include "chrome/browser/webshare/share_target_pref_helper.h"
 
+#include <memory>
+#include <string>
+#include <utility>
+#include <vector>
+
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
+#include "chrome/browser/webshare/share_target.h"
 #include "chrome/common/pref_names.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"

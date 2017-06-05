@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_WEBSHARE_SHARE_TARGET_PREF_HELPER_H_
 #define CHROME_BROWSER_WEBSHARE_SHARE_TARGET_PREF_HELPER_H_
 
+#include <vector>
+
 #include "base/optional.h"
 #include "base/strings/string_piece.h"
 #include "content/public/common/manifest.h"
@@ -22,4 +24,4 @@ void UpdateShareTargetInPrefs(const GURL& manifest_url,
                               const content::Manifest& manifest,
                               PrefService* pref_service);
 
-#endif // CHROME_BROWSER_WEBSHARE_SHARE_TARGET_PREF_HELPER_H_
+#endif  // CHROME_BROWSER_WEBSHARE_SHARE_TARGET_PREF_HELPER_H_
