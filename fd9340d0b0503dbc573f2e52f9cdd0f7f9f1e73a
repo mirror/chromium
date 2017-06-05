@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2903d42a_21ce6a45",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/linux.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1146751
+      },
+      "writtenOn": "2017-06-05T00:09:03Z",
+      "side": 1,
+      "message": "I do like this way of doing it.",
+      "parentUuid": "625b03e0_b321eff1",
+      "revId": "fd9340d0b0503dbc573f2e52f9cdd0f7f9f1e73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d405a52a_dc293b90",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/linux.py",
         "patchSetId": 3
@@ -30,6 +48,70 @@
       "writtenOn": "2017-06-02T22:26:33Z",
       "side": 1,
       "message": "skobes@ tried running run-webkit-tests with patch 1 of this CL applied and pasted the output at https://pastebin.com/raw/UCaqv6w6 -- it appears that we don\u0027t want to try to kill the process if the process is already dead (which should be the case if poll() returns something other than None).",
+      "revId": "fd9340d0b0503dbc573f2e52f9cdd0f7f9f1e73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1ac5970_0f9a96ec",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/linux.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1146751
+      },
+      "writtenOn": "2017-06-05T00:09:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d405a52a_dc293b90",
+      "revId": "fd9340d0b0503dbc573f2e52f9cdd0f7f9f1e73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "192ed8fd_ccd2026e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/linux_unittest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1146751
+      },
+      "writtenOn": "2017-06-05T00:09:03Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to use the logging?",
+      "range": {
+        "startLine": 228,
+        "startChar": 13,
+        "endLine": 228,
+        "endChar": 30
+      },
+      "revId": "fd9340d0b0503dbc573f2e52f9cdd0f7f9f1e73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67cb6ac7_d8ae94d1",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/linux_unittest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1146751
+      },
+      "writtenOn": "2017-06-05T00:09:03Z",
+      "side": 1,
+      "message": "We should be checking that there was some type of failure here, right?",
+      "range": {
+        "startLine": 238,
+        "startChar": 13,
+        "endLine": 238,
+        "endChar": 24
+      },
       "revId": "fd9340d0b0503dbc573f2e52f9cdd0f7f9f1e73a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
