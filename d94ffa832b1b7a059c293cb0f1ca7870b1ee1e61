@@ -46,6 +46,30 @@
       "revId": "d94ffa832b1b7a059c293cb0f1ca7870b1ee1e61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d23ff0c_64021854",
+        "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-05T07:10:15Z",
+      "side": 1,
+      "message": "Hmm, I don\u0027t really like having to explicitly mention all the fields here though. Those details shouldn\u0027t be part of this code.\n\n\u003e e.g. I added an explicit copy constructor and which allowed us to copy the |targets| vector without any warnings\n\nDo you mean the vector copy constructor calls the explicit copy constructor of ShareTarget? Weird. What if you just added a Clone() method then, that returns a copy but isn\u0027t considered a copy constructor?",
+      "parentUuid": "b2df5842_b9d24f37",
+      "range": {
+        "startLine": 152,
+        "startChar": 13,
+        "endLine": 152,
+        "endChar": 24
+      },
+      "revId": "d94ffa832b1b7a059c293cb0f1ca7870b1ee1e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

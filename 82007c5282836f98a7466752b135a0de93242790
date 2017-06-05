@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2925f50_6cdaaa86",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-05T07:10:15Z",
+      "side": 1,
+      "message": "Cool, it\u0027s great that this got moved inside of GetTargetsWithSufficientEngagement.",
+      "range": {
+        "startLine": 147,
+        "startChar": 6,
+        "endLine": 147,
+        "endChar": 33
+      },
+      "revId": "82007c5282836f98a7466752b135a0de93242790",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca231cf2_0f0d67b2",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-05T07:10:15Z",
+      "side": 1,
+      "message": "Haha awesome. When Connie wrote this last year, DictionaryValue didn\u0027t support the iterator protocol. I remember that was super weird. Turns out tibell@ just added it.",
+      "range": {
+        "startLine": 151,
+        "startChar": 22,
+        "endLine": 151,
+        "endChar": 23
+      },
+      "revId": "82007c5282836f98a7466752b135a0de93242790",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
