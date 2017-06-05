@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a744c8d6_3f5eae60",
+        "filename": "components/download/internal/entry_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-05T20:53:05Z",
+      "side": 1,
+      "message": "Gets",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 36,
+        "endChar": 6
+      },
+      "revId": "37ef99abfb523a4e29cf64b90242ac5a966d4c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2301ad7c_00234d25",
+        "filename": "components/download/internal/scheduler/scheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-05T20:53:05Z",
+      "side": 1,
+      "message": "FYI, I am moving this out to public/ in my other CL and this will have more params. \nhttps://chromium-review.googlesource.com/c/522383/4/components/download/public/task_scheduler.h",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 9
+      },
+      "revId": "37ef99abfb523a4e29cf64b90242ac5a966d4c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df935c05_3f53f246",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-05T20:53:05Z",
+      "side": 1,
+      "message": "platform_scheduler_ should be not null, so you can remove the if for now. Same for the block below.\nSo you can have :\ncancelDownloadTask();\nif (empty) return\n\nscheduleDownloadTask();",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 27
+      },
+      "revId": "37ef99abfb523a4e29cf64b90242ac5a966d4c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f1e06b_9be9a25d",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-05T20:53:05Z",
+      "side": 1,
+      "message": "DCHECK not needed?",
+      "range": {
+        "startLine": 64,
+        "startChar": 13,
+        "endLine": 64,
+        "endChar": 18
+      },
+      "revId": "37ef99abfb523a4e29cf64b90242ac5a966d4c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9373e72_35a9a202",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-05T20:53:05Z",
+      "side": 1,
+      "message": "Should we have this as current_client_index_ instead?",
+      "range": {
+        "startLine": 67,
+        "startChar": 31,
+        "endLine": 67,
+        "endChar": 36
+      },
+      "revId": "37ef99abfb523a4e29cf64b90242ac5a966d4c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f56d0b91_45d65b0e",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-05T20:53:05Z",
+      "side": 1,
+      "message": "Should we have a function EntryBetterThan(lhs, rhs)?\n\nSo it becomes :\nif (!candidate || EntryBetterThan(entry, candidate)) {\n......\n\nbool EntryBetterThan(lhs, rhs) {\nif (lhs.priority !\u003d rhs.priority) return lhs.priority \u003e rhs.priority\nreturn lhs.cancel_time \u003c rhs.cancel.time;\n}\n\nWe can use this function to sort if needed. Upto you though :)",
+      "range": {
+        "startLine": 98,
+        "startChar": 33,
+        "endLine": 98,
+        "endChar": 34
+      },
+      "revId": "37ef99abfb523a4e29cf64b90242ac5a966d4c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
