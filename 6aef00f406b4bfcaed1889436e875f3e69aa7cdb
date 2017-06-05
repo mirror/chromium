@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "c8d17920_88437e43",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-05T17:35:35Z",
+      "side": 1,
+      "message": "um, SharedMemory using that as an ID is an implementation detail of base::SharedMemory. Why can\u0027t we just pass SharedMemoryHandle here? Anyway all the dump providers use handle-\u003eguid().\n\nWhat should be done here is we take the handle and call Tracker::GetGUIDForTracing(handle);\n\nEssentially we shouldn\u0027t be knowing about how shared memory GUID is implemented.",
+      "parentUuid": "a38a7859_f564cf28",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 22
+      },
+      "revId": "6aef00f406b4bfcaed1889436e875f3e69aa7cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7a65005_7ef155d4",
         "filename": "base/trace_event/process_memory_dump.h",
         "patchSetId": 4
@@ -328,6 +352,30 @@
       "revId": "6aef00f406b4bfcaed1889436e875f3e69aa7cdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac1d8481_adf691c8",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-05T17:35:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b6b5aa4c_b945067e",
+      "range": {
+        "startLine": 149,
+        "startChar": 30,
+        "endLine": 149,
+        "endChar": 48
+      },
+      "revId": "6aef00f406b4bfcaed1889436e875f3e69aa7cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
