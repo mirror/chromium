@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e668d3b4_13623890",
+        "filename": "components/download/content/download_driver_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-05T18:18:21Z",
+      "side": 1,
+      "message": "Add a comment saying this doesn\u0027t erase the file?  Can you help me think through the recovery scenario where the download manager entry doesn\u0027t exist but the file exists on disk, but our service thinks it\u0027s still in the progress of downloading something?",
+      "range": {
+        "startLine": 173,
+        "startChar": 4,
+        "endLine": 173,
+        "endChar": 19
+      },
+      "revId": "d01e161876227db494ae443bc38c5bacceeb80b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b65fd881_c94b2cff",
+        "filename": "components/download/content/download_driver_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-05T18:18:21Z",
+      "side": 1,
+      "message": "Path -\u003e Paths?\n\nMaybe this should just be called GetEntries for a list of guids?",
+      "range": {
+        "startLine": 42,
+        "startChar": 22,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "d01e161876227db494ae443bc38c5bacceeb80b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d107b5b_15f1b9fb",
+        "filename": "components/download/content/download_driver_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-05T18:18:21Z",
+      "side": 1,
+      "message": "out_paths?",
+      "range": {
+        "startLine": 43,
+        "startChar": 32,
+        "endLine": 43,
+        "endChar": 37
+      },
+      "revId": "d01e161876227db494ae443bc38c5bacceeb80b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
