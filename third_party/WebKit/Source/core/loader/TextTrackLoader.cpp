@@ -33,6 +33,7 @@
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/RawResource.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/weborigin/SecurityOrigin.h"
 
 namespace blink {
@@ -125,8 +126,11 @@ bool TextTrackLoader::Load(const KURL& url,
                            CrossOriginAttributeValue cross_origin) {
   CancelLoad();
 
-  FetchParameters cue_fetch_params(ResourceRequest(url),
-                                   FetchInitiatorTypeNames::texttrack);
+  ResourceLoaderOptions options;
+  options.allow_credentials = kAllowStoredCredentials;
+  options.credentials_requested = kClientRequestedCredentials;
+  options.initiator_info.name = FetchInitiatorTypeNames::texttrack;
+  FetchParameters cue_fetch_params(ResourceRequest(url), options);
 
   if (cross_origin != kCrossOriginAttributeNotSet) {
     cue_fetch_params.SetCrossOriginAccessControl(

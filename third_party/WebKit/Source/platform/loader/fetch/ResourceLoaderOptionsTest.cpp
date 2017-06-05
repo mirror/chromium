@@ -34,6 +34,8 @@ TEST(ResourceLoaderOptionsTest, DeepCopy) {
       SecurityOrigin::CreateFromString("http://www.google.com");
   original.security_origin = security_origin;
   original.initiator_info.name = AtomicString("xmlhttprequest");
+  original.allow_credentials = kDoNotAllowStoredCredentials;
+  original.credentials_requested = kClientDidNotRequestCredentials;
 
   CrossThreadResourceLoaderOptionsData copy_data =
       CrossThreadCopier<ResourceLoaderOptions>::Copy(original);

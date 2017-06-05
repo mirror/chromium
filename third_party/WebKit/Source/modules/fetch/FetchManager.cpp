@@ -33,6 +33,7 @@
 #include "platform/bindings/V8ThrowException.h"
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/loader/fetch/ResourceError.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/network/NetworkUtils.h"
@@ -790,11 +791,16 @@ void FetchManager::Loader::PerformHTTPFetch(bool cors_flag,
        !cors_flag) ||
       suborigin_forces_credentials) {
     resource_loader_options.allow_credentials = kAllowStoredCredentials;
+  } else {
+    resource_loader_options.allow_credentials = kDoNotAllowStoredCredentials;
   }
   if (request_->Credentials() == WebURLRequest::kFetchCredentialsModeInclude ||
       request_->Credentials() == WebURLRequest::kFetchCredentialsModePassword ||
       suborigin_forces_credentials) {
     resource_loader_options.credentials_requested = kClientRequestedCredentials;
+  } else {
+    resource_loader_options.credentials_requested =
+        kClientDidNotRequestCredentials;
   }
   resource_loader_options.security_origin = request_->Origin().Get();
 

@@ -53,6 +53,7 @@
 #include "modules/eventsource/EventSourceInit.h"
 #include "platform/HTTPNames.h"
 #include "platform/loader/fetch/ResourceError.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/weborigin/SecurityOrigin.h"

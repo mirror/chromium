@@ -85,26 +85,10 @@ struct ResourceLoaderOptions {
  public:
   ResourceLoaderOptions()
       : data_buffering_policy(kBufferData),
-        allow_credentials(kDoNotAllowStoredCredentials),
-        credentials_requested(kClientDidNotRequestCredentials),
+        allow_credentials(kAllowStoredCredentials),
+        credentials_requested(kClientRequestedCredentials),
         content_security_policy_option(kCheckContentSecurityPolicy),
         request_initiator_context(kDocumentContext),
-        synchronous_policy(kRequestAsynchronously),
-        cors_enabled(kNotCORSEnabled),
-        parser_disposition(kParserInserted),
-        cache_aware_loading_enabled(kNotCacheAwareLoadingEnabled) {}
-
-  ResourceLoaderOptions(
-      DataBufferingPolicy data_buffering_policy,
-      StoredCredentials allow_credentials,
-      CredentialRequest credentials_requested,
-      ContentSecurityPolicyDisposition content_security_policy_option,
-      RequestInitiatorContext request_initiator_context)
-      : data_buffering_policy(data_buffering_policy),
-        allow_credentials(allow_credentials),
-        credentials_requested(credentials_requested),
-        content_security_policy_option(content_security_policy_option),
-        request_initiator_context(request_initiator_context),
         synchronous_policy(kRequestAsynchronously),
         cors_enabled(kNotCORSEnabled),
         parser_disposition(kParserInserted),

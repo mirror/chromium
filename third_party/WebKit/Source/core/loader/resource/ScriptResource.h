@@ -31,6 +31,7 @@
 #include "platform/loader/fetch/AccessControlStatus.h"
 #include "platform/loader/fetch/IntegrityMetadata.h"
 #include "platform/loader/fetch/ResourceClient.h"
+#include "platform/loader/fetch/ResourceLoaderOptions.h"
 
 namespace blink {
 
@@ -59,7 +60,10 @@ class CORE_EXPORT ScriptResource final : public TextResource {
   // Public for testing
   static ScriptResource* Create(const ResourceRequest& request,
                                 const String& charset) {
-    return new ScriptResource(request, ResourceLoaderOptions(), charset);
+    ResourceLoaderOptions options;
+    options.allow_credentials = kDoNotAllowStoredCredentials;
+    options.credentials_requested = kClientDidNotRequestCredentials;
+    return new ScriptResource(request, options, charset);
   }
 
   ~ScriptResource() override;
