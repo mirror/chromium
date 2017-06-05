@@ -20,10 +20,9 @@ Recorder::Recorder(
       data_is_array_(data_is_array),
       on_data_change_callback_(on_data_change_callback),
       background_task_runner_(background_task_runner),
-      binding_(this, std::move(request)),
-      weak_factory_(this) {
+      binding_(this, std::move(request)) {
   binding_.set_connection_error_handler(base::BindRepeating(
-      &Recorder::OnConnectionError, weak_factory_.GetWeakPtr()));
+      &Recorder::OnConnectionError, base::Unretained(this)));
 }
 
 Recorder::~Recorder() = default;
@@ -34,7 +33,7 @@ void Recorder::AddChunk(const std::string& chunk) {
   if (!background_task_runner_->RunsTasksOnCurrentThread()) {
     background_task_runner_->PostTask(
         FROM_HERE, base::BindRepeating(&Recorder::AddChunk,
-                                       weak_factory_.GetWeakPtr(), chunk));
+                                       base::Unretained(this), chunk));
     return;
   }
   if (data_is_array_ && !data_.empty())
@@ -48,8 +47,14 @@ void Recorder::AddMetadata(std::unique_ptr<base::DictionaryValue> metadata) {
 }
 
 void Recorder::OnConnectionError() {
+  if (!background_task_runner_->RunsTasksOnCurrentThread()) {
+    background_task_runner_->PostTask(
+        FROM_HERE, base::BindRepeating(&Recorder::OnConnectionError,
+                                       base::Unretained(this)));
+    return;
+  }
   is_recording_ = false;
-  background_task_runner_->PostTask(FROM_HERE, on_data_change_callback_);
+  on_data_change_callback_.Run();
 }
 
 }  // namespace tracing
