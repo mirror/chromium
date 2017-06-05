@@ -488,6 +488,8 @@ class CC_EXPORT LayerTreeHost : public NON_EXPORTED_BASE(SurfaceReferenceOwner),
   void QueueImageDecode(sk_sp<const SkImage> image,
                         const base::Callback<void(bool)>& callback);
 
+  void RequestBeginMainFrameNotExpected(bool new_state);
+
  protected:
   LayerTreeHost(InitParams* params, CompositorMode mode);
 
