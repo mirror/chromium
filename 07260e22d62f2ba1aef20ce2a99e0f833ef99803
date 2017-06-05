@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "26a5a739_940e3974",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-05T08:02:42Z",
+      "side": 1,
+      "message": "Changed to just DEFINE_STATIC_LOCAL.",
+      "parentUuid": "24986b0a_b1c2d75e",
+      "revId": "07260e22d62f2ba1aef20ce2a99e0f833ef99803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c479493_9a27f694",
         "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerReportingProxyImpl.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7df15978_80d9fce7",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerReportingProxyImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-05T08:02:42Z",
+      "side": 1,
+      "message": "Done \u0026 updated CL desc",
+      "parentUuid": "0c479493_9a27f694",
+      "revId": "07260e22d62f2ba1aef20ce2a99e0f833ef99803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "714a1577_2ac90e6e",
         "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-02T03:51:25Z",
       "side": 1,
       "message": "This comment feels wrong.",
+      "revId": "07260e22d62f2ba1aef20ce2a99e0f833ef99803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a55a8764_fc041bdb",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-05T08:02:42Z",
+      "side": 1,
+      "message": "Oops; it\u0027s out of date. PTAL at new  comment :)",
+      "parentUuid": "714a1577_2ac90e6e",
       "revId": "07260e22d62f2ba1aef20ce2a99e0f833ef99803",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -106,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "80c51e55_4aa9fe1b",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-05T08:02:42Z",
+      "side": 1,
+      "message": "Thanks Hiroki; added the TODO.  Did you want me to do the method rename in this patch? I can rename it in a follow-up patch if you want to add functionality as well.",
+      "parentUuid": "1ed6697a_378afd23",
+      "revId": "07260e22d62f2ba1aef20ce2a99e0f833ef99803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "023cd210_5178d248",
         "filename": "third_party/WebKit/Source/web/WebFactoryImpl.h",
         "patchSetId": 1
@@ -123,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "c0eb00c1_2cc6db99",
+        "filename": "third_party/WebKit/Source/web/WebFactoryImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-05T08:02:42Z",
+      "side": 1,
+      "message": "Yes! Meant to do this -- good idea. Done.",
+      "parentUuid": "023cd210_5178d248",
+      "revId": "07260e22d62f2ba1aef20ce2a99e0f833ef99803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b4b93e1_237b878d",
         "filename": "third_party/WebKit/public/web/WebFrame.h",
         "patchSetId": 1
@@ -137,6 +227,24 @@
       "revId": "07260e22d62f2ba1aef20ce2a99e0f833ef99803",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdcbc842_275bb465",
+        "filename": "third_party/WebKit/public/web/WebFrame.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-05T08:02:42Z",
+      "side": 1,
+      "message": "No longer needed; removed, thanks.",
+      "parentUuid": "7b4b93e1_237b878d",
+      "revId": "07260e22d62f2ba1aef20ce2a99e0f833ef99803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
