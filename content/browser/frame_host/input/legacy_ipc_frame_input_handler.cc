@@ -139,8 +139,9 @@ void LegacyIPCFrameInputHandler::MoveRangeSelectionExtent(
 
 void LegacyIPCFrameInputHandler::SendInput(
     std::unique_ptr<IPC::Message> message) {
-  frame_host_->GetRenderWidgetHost()->input_router()->SendInput(
-      std::move(message));
+  static_cast<InputRouterImpl*>(
+      frame_host_->GetRenderWidgetHost()->input_router())
+      ->SendInput(std::move(message));
 }
 
 }  // namespace content
