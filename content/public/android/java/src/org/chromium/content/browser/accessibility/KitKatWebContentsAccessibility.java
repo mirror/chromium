@@ -1,30 +1,32 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 package org.chromium.content.browser.accessibility;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content.browser.RenderCoordinates;
+import org.chromium.content_public.browser.WebContents;
 
 /**
- * Subclass of BrowserAccessibilityManager for KitKat.
+ * Subclass of WebContentsAccessibility for KitKat.
  */
 @JNINamespace("content")
 @TargetApi(Build.VERSION_CODES.KITKAT)
-public class KitKatBrowserAccessibilityManager extends BrowserAccessibilityManager {
+public class KitKatWebContentsAccessibility extends WebContentsAccessibility {
     private String mSupportedHtmlElementTypes;
 
-    KitKatBrowserAccessibilityManager(long nativeBrowserAccessibilityManagerAndroid,
-            ContentViewCore contentViewCore) {
-        super(nativeBrowserAccessibilityManagerAndroid, contentViewCore);
-        mSupportedHtmlElementTypes = nativeGetSupportedHtmlElementTypes(
-                nativeBrowserAccessibilityManagerAndroid);
+    KitKatWebContentsAccessibility(Context context, ViewGroup containerView,
+            WebContents webContents, RenderCoordinates renderCoordinates) {
+        super(context, containerView, webContents, renderCoordinates);
+        mSupportedHtmlElementTypes = nativeGetSupportedHtmlElementTypes(mNativeObj);
     }
 
     @Override
@@ -34,8 +36,8 @@ public class KitKatBrowserAccessibilityManager extends BrowserAccessibilityManag
         Bundle bundle = node.getExtras();
         bundle.putCharSequence("AccessibilityNodeInfo.roleDescription", roleDescription);
         if (isRoot) {
-            bundle.putCharSequence("ACTION_ARGUMENT_HTML_ELEMENT_STRING_VALUES",
-                    mSupportedHtmlElementTypes);
+            bundle.putCharSequence(
+                    "ACTION_ARGUMENT_HTML_ELEMENT_STRING_VALUES", mSupportedHtmlElementTypes);
         }
         if (isEditableText) {
             node.setEditable(true);

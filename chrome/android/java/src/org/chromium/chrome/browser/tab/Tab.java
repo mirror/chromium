@@ -1658,11 +1658,6 @@ public class Tab
             updateThemeColorIfNeeded(false);
             notifyContentChanged();
 
-            // For browser tabs, we want to set accessibility focus to the page
-            // when it loads. This is not the default behavior for embedded
-            // web views.
-            mContentViewCore.setShouldSetAccessibilityFocusOnPageLoad(true);
-
             setInterceptNavigationDelegate(mDelegateFactory.createInterceptNavigationDelegate(
                     this));
 

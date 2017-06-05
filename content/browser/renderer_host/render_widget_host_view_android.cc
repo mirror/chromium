@@ -36,6 +36,7 @@
 #include "cc/trees/layer_tree_host.h"
 #include "components/viz/display_compositor/gl_helper.h"
 #include "content/browser/accessibility/browser_accessibility_manager_android.h"
+#include "content/browser/accessibility/web_contents_accessibility.h"
 #include "content/browser/android/composited_touch_handle_drawable.h"
 #include "content/browser/android/content_view_core_impl.h"
 #include "content/browser/android/ime_adapter_android.h"
@@ -451,6 +452,7 @@ RenderWidgetHostViewAndroid::RenderWidgetHostViewAndroid(
       content_view_core_(nullptr),
       ime_adapter_android_(nullptr),
       selection_popup_controller_(nullptr),
+      web_contents_accessibility_(nullptr),
       background_color_(SK_ColorWHITE),
       cached_background_color_(SK_ColorWHITE),
       view_(this),
@@ -469,7 +471,6 @@ RenderWidgetHostViewAndroid::RenderWidgetHostViewAndroid(
   // layer is managed by the DelegatedFrameHost.
   view_.SetLayer(cc::Layer::Create());
   view_.SetLayout(ui::ViewAndroid::LayoutParams::MatchParent());
-
   if (using_browser_compositor_) {
     cc::FrameSinkId frame_sink_id =
         host_->AllocateFrameSinkId(false /* is_guest_view_hack */);
@@ -1424,6 +1425,9 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
     ime_adapter_android_->UpdateFrameInfo(frame_metadata.selection.start,
                                           dip_scale, top_shown_pix);
 
+  if (web_contents_accessibility_)
+    web_contents_accessibility_->UpdateFrameInfo();
+
   if (!content_view_core_)
     return;
 
@@ -1746,13 +1750,15 @@ void RenderWidgetHostViewAndroid::OnSetNeedsFlushInput() {
 BrowserAccessibilityManager*
     RenderWidgetHostViewAndroid::CreateBrowserAccessibilityManager(
         BrowserAccessibilityDelegate* delegate, bool for_root_frame) {
-  base::android::ScopedJavaLocalRef<jobject> content_view_core_obj;
-  if (for_root_frame && host_ && content_view_core_)
-    content_view_core_obj = content_view_core_->GetJavaObject();
+  DCHECK(!for_root_frame || web_contents_accessibility_);
   return new BrowserAccessibilityManagerAndroid(
-      content_view_core_obj,
       BrowserAccessibilityManagerAndroid::GetEmptyDocument(),
+      for_root_frame && host_ ? web_contents_accessibility_ : nullptr,
       delegate);
+}
+
+bool RenderWidgetHostViewAndroid::ShouldSetAccessibilityFocusOnPageLoad() {
+  return view_.ShouldSetAccessibilityFocusOnPageLoad();
 }
 
 bool RenderWidgetHostViewAndroid::LockMouse() {
@@ -1951,16 +1957,6 @@ void RenderWidgetHostViewAndroid::SetContentViewCore(
       parent_view->GetLayer()->AddChild(view_.GetLayer());
     }
     content_view_core_ = content_view_core;
-  }
-
-  BrowserAccessibilityManager* manager = NULL;
-  if (host_)
-    manager = host_->GetRootBrowserAccessibilityManager();
-  if (manager) {
-    base::android::ScopedJavaLocalRef<jobject> obj;
-    if (content_view_core_)
-      obj = content_view_core_->GetJavaObject();
-    manager->ToBrowserAccessibilityManagerAndroid()->SetContentViewCore(obj);
   }
 
   if (!content_view_core_) {

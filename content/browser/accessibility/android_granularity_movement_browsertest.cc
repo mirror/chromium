@@ -84,9 +84,8 @@ class AndroidGranularityMovementBrowserTest : public ContentBrowserTest {
     base::string16 text = android_node->GetText();
     base::string16 concatenated;
     int previous_end_index = -1;
-    while (manager->NextAtGranularity(
-               granularity, end_index, android_node,
-               &start_index, &end_index)) {
+    while (manager->NextAtGranularityForTesting(
+        granularity, end_index, android_node, &start_index, &end_index)) {
       int len = (granularity == GRANULARITY_CHARACTER) ?
           1 : end_index - start_index;
       base::string16 selection = text.substr(start_index, len);
@@ -111,7 +110,7 @@ class AndroidGranularityMovementBrowserTest : public ContentBrowserTest {
     base::string16 reverse;
     previous_end_index = -1;
     start_index = end_index;
-    while (manager->PreviousAtGranularity(
+    while (manager->PreviousAtGranularityForTesting(
         granularity, start_index, android_node, &start_index, &end_index)) {
       int len = (granularity == GRANULARITY_CHARACTER) ?
           1 : end_index - start_index;
