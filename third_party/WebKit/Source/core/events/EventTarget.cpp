@@ -745,6 +745,7 @@ bool EventTarget::FireEventListeners(Event* event,
     bool passive_forced = registered_listener.PassiveForcedForDocumentTarget();
 
     probe::UserCallback probe(context, nullptr, event->type(), false, this);
+    context->IncrementScriptExecutionCount();
 
     // To match Mozilla, the AT_TARGET phase fires both capturing and bubbling
     // event listeners, even though that violates some versions of the DOM spec.

@@ -34,6 +34,7 @@
 #include "core/dom/NodeComputedStyle.h"
 #include "core/dom/NodeRareData.h"
 #include "core/dom/NodeTraversal.h"
+#include "core/dom/ScriptExecutionCheckScope.h"
 #include "core/dom/SelectorQuery.h"
 #include "core/dom/StaticNodeList.h"
 #include "core/dom/StyleChangeReason.h"
@@ -184,10 +185,15 @@ bool ContainerNode::CollectChildrenAndRemoveFromOldParentWithCheck(
     Node& new_child,
     NodeVector& new_children,
     ExceptionState& exception_state) const {
-  CollectChildrenAndRemoveFromOldParent(new_child, new_children,
-                                        exception_state);
-  if (exception_state.HadException() || new_children.IsEmpty())
-    return false;
+  {
+    ScriptExecutionCheckScope script_scope(new_child.GetExecutionContext());
+    CollectChildrenAndRemoveFromOldParent(new_child, new_children,
+                                          exception_state);
+    if (exception_state.HadException() || new_children.IsEmpty())
+      return false;
+    if (!script_scope.DidExecuteScript())
+      return true;
+  }
 
   // We need this extra check because collectChildrenAndRemoveFromOldParent()
   // can fire various events.

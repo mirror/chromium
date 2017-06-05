@@ -121,6 +121,11 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
   bool ShouldSanitizeScriptError(const String& source_url, AccessControlStatus);
   void DispatchErrorEvent(ErrorEvent*, AccessControlStatus);
 
+  // ScriptExecutionCount is incremented when an event listener or a <script> is
+  // executed.
+  uint32_t ScriptExecutionCount() const { return script_execution_count_; }
+  void IncrementScriptExecutionCount() { ++script_execution_count_; }
+
   virtual void AddConsoleMessage(ConsoleMessage*) = 0;
   virtual void ExceptionThrown(ErrorEvent*) = 0;
 
@@ -194,6 +199,7 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
  private:
   bool DispatchErrorEventInternal(ErrorEvent*, AccessControlStatus);
 
+  uint32_t script_execution_count_ = 0;
   unsigned circular_sequential_id_;
 
   bool in_dispatch_error_event_;

@@ -880,6 +880,7 @@ bool ScriptLoader::DoExecuteScript(const Script* script) {
   // Note: This is where the script is compiled and actually executed.
   //    - "module":
   //    2. "Run the module script given by the script's script."
+  context_document->IncrementScriptExecutionCount();
   script->RunScript(frame, element_->GetDocument().GetSecurityOrigin());
 
   // 6. "Set the script element's node document's currentScript attribute
