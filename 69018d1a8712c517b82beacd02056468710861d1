@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a4f3695_9733a32d",
+        "filename": "components/offline_pages/core/prefetch/suggested_articles_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-05T21:40:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "794f5b61_cdab30c2",
+      "revId": "69018d1a8712c517b82beacd02056468710861d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8df26f56_8ad389b3",
         "filename": "components/offline_pages/core/prefetch/suggested_articles_observer.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-05T19:01:48Z",
       "side": 1,
       "message": "I don\u0027t have strong feeling here, but what prompted to change form service to dispatcher pointer? On one hand, it\u0027s better to depend on smaller things, however this goes a bit off the pattern, and raises question - for example, should Dispatcher has a pointer to Store etc. \n\nI\u0027d slightly lean toward keeping the pattern of pulling all the parts through accessors on PrefetchService, and not cache them, so there is always clear where they come from. WDYT?",
+      "revId": "69018d1a8712c517b82beacd02056468710861d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46e47f16_30dcb47f",
+        "filename": "components/offline_pages/core/prefetch/suggested_articles_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-05T21:40:52Z",
+      "side": 1,
+      "message": "In this case, it\u0027s for cleaner construction.  If we want to store the service, then the construction looks like:\nSuggestedArticlesObserver* observer \u003d new SuggestedArticlesObserver\nauto delegate \u003d base::MakeUnique\u003cPrefetchDelegate\u003e();\nauto prefetch_service \u003d base::MakeUnique\u003cPrefetchService\u003e(std::move(delegate), base::WrapUnique(observer));\nobserver-\u003eSetService(prefetch_service.get());\n\nWhereas in this patch the delegate is constructed before being passed to the service.\n\nauto delegate \u003d base::MakeUnique\u003cPrefetchDelegate\u003e();\nauto observer \u003d base::MakeUnique\u003cSuggestedArticlesObserver\u003e(delegate.get());\nauto prefetch_service \u003d base::MakeUnique\u003cPrefetchService\u003e(std::move(delegate), std::move(observer));\n\nThe latter seemed cleaner to me, and expressed the actual dependencies that this class has.\n\nI suspect that Dispatcher is a bit of a special case because by design it\u0027s going to have hooks into basically all the other components, whereas input event handlers will basically only have a pointer to dispatcher.",
+      "parentUuid": "8df26f56_8ad389b3",
       "revId": "69018d1a8712c517b82beacd02056468710861d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
