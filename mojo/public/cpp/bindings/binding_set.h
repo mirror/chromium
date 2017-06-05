@@ -154,7 +154,8 @@ class BindingSetBase {
     DCHECK(!is_flushing_);
     is_flushing_ = true;
     for (auto& binding : bindings_)
-      binding.second->FlushForTesting();
+      if (binding.second)
+        binding.second->FlushForTesting();
     is_flushing_ = false;
     // Clean up any bindings that were destroyed.
     for (auto it = bindings_.begin(); it != bindings_.end();) {
