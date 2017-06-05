@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ceab62a8_34da9a5b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-05T22:08:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "389e33f3_a9285979",
+      "revId": "a3a405b4fa3d1afbe589d5addf3096389249a5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86825e37_de764235",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "e4573646_4d23e8b6",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-05T22:08:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86825e37_de764235",
+      "range": {
+        "startLine": 112,
+        "startChar": 10,
+        "endLine": 112,
+        "endChar": 18
+      },
+      "revId": "a3a405b4fa3d1afbe589d5addf3096389249a5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7100a16b_46bbd30b",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "a3a405b4fa3d1afbe589d5addf3096389249a5bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a059f441_c216491a",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-05T22:08:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7100a16b_46bbd30b",
+      "revId": "a3a405b4fa3d1afbe589d5addf3096389249a5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "0652bc9e_0d116e37",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-05T22:08:07Z",
+      "side": 1,
+      "message": "technically voice_interaction_overlay_ is guarded by the same chromeos switch.  Adding a DCHECK to make sure it should never be null.",
+      "parentUuid": "1a889d1b_76387f3d",
+      "revId": "a3a405b4fa3d1afbe589d5addf3096389249a5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3719e317_589c7e6b",
         "filename": "ash/shelf/app_list_button.h",
         "patchSetId": 1
@@ -90,6 +168,24 @@
       "revId": "a3a405b4fa3d1afbe589d5addf3096389249a5bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8722e0a6_d48bd481",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-05T22:08:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3719e317_589c7e6b",
+      "revId": "a3a405b4fa3d1afbe589d5addf3096389249a5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "46ef122d_ac4591b0",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-05T22:08:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5231a0c5_dbf9a8b9",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 5
+      },
+      "revId": "a3a405b4fa3d1afbe589d5addf3096389249a5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27e43eaf_7248419a",
         "filename": "ash/shelf/voice_interaction_overlay.cc",
         "patchSetId": 1
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "b37603d4_41600217",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-05T22:08:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27e43eaf_7248419a",
+      "range": {
+        "startLine": 76,
+        "startChar": 6,
+        "endLine": 76,
+        "endChar": 23
+      },
+      "revId": "a3a405b4fa3d1afbe589d5addf3096389249a5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f54b4b4_334d6a8f",
         "filename": "ash/shelf/voice_interaction_overlay.cc",
         "patchSetId": 1
@@ -150,6 +294,30 @@
       "writtenOn": "2017-06-03T05:47:25Z",
       "side": 1,
       "message": "I\u0027m not sure if this (uniform initializer) is currently allowed for rvalue in chromium(instead of gfx::PointF()). Do you have a pointer?",
+      "range": {
+        "startLine": 79,
+        "startChar": 28,
+        "endLine": 79,
+        "endChar": 34
+      },
+      "revId": "a3a405b4fa3d1afbe589d5addf3096389249a5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ec7c390_c6518b9f",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-05T22:08:07Z",
+      "side": 1,
+      "message": "Changed to constructor",
+      "parentUuid": "7f54b4b4_334d6a8f",
       "range": {
         "startLine": 79,
         "startChar": 28,
@@ -185,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "87efdc26_49826c47",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-05T22:08:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f314495f_ca12b3ae",
+      "range": {
+        "startLine": 119,
+        "startChar": 23,
+        "endLine": 119,
+        "endChar": 24
+      },
+      "revId": "a3a405b4fa3d1afbe589d5addf3096389249a5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d153d81b_b3bb9333",
         "filename": "ash/shelf/voice_interaction_overlay.cc",
         "patchSetId": 1
@@ -199,6 +391,24 @@
       "revId": "a3a405b4fa3d1afbe589d5addf3096389249a5bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d32e9ca_778db065",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-05T22:08:07Z",
+      "side": 1,
+      "message": "compile warning with \u003d default.  It complains that this is an override method and must be marked so.",
+      "parentUuid": "d153d81b_b3bb9333",
+      "revId": "a3a405b4fa3d1afbe589d5addf3096389249a5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -225,6 +435,30 @@
     },
     {
       "key": {
+        "uuid": "0f2552a4_36295977",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-05T22:08:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3f2ee98_aad88713",
+      "range": {
+        "startLine": 127,
+        "startChar": 7,
+        "endLine": 127,
+        "endChar": 13
+      },
+      "revId": "a3a405b4fa3d1afbe589d5addf3096389249a5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e65baa90_f492d000",
         "filename": "ash/shelf/voice_interaction_overlay.cc",
         "patchSetId": 1
@@ -242,6 +476,24 @@
     },
     {
       "key": {
+        "uuid": "8f14bde7_f648f4b3",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-05T22:08:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e65baa90_f492d000",
+      "revId": "a3a405b4fa3d1afbe589d5addf3096389249a5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04eea5c0_f9d6582c",
         "filename": "ash/shelf/voice_interaction_overlay.h",
         "patchSetId": 1
@@ -256,6 +508,24 @@
       "revId": "a3a405b4fa3d1afbe589d5addf3096389249a5bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0886ff24_f58040ab",
+        "filename": "ash/shelf/voice_interaction_overlay.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-05T22:08:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04eea5c0_f9d6582c",
+      "revId": "a3a405b4fa3d1afbe589d5addf3096389249a5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
