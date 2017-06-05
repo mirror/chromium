@@ -8,7 +8,7 @@
 #include "base/android/jni_registrar.h"
 #include "base/macros.h"
 #include "content/browser/accessibility/browser_accessibility_android.h"
-#include "content/browser/accessibility/browser_accessibility_manager_android.h"
+#include "content/browser/accessibility/web_contents_accessibility.h"
 #include "content/browser/android/app_web_message_port.h"
 #include "content/browser/android/background_sync_network_observer_android.h"
 #include "content/browser/android/browser_startup_controller.h"
@@ -49,8 +49,7 @@ base::android::RegistrationMethod kContentRegisteredMethods[] = {
     {"BackgroundSyncNetworkObserverAndroid",
      content::BackgroundSyncNetworkObserverAndroid::Observer::
          RegisterNetworkObserver},
-    {"BrowserAccessibilityManager",
-     content::RegisterBrowserAccessibilityManager},
+    {"WebContentsAccessibility", content::RegisterWebContentsAccessibility},
     {"ContentViewCore", content::RegisterContentViewCore},
     {"ContentViewRenderView",
      content::ContentViewRenderView::RegisterContentViewRenderView},

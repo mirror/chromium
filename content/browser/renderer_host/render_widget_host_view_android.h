@@ -22,7 +22,6 @@
 #include "cc/output/begin_frame_args.h"
 #include "cc/scheduler/begin_frame_source.h"
 #include "components/viz/frame_sinks/frame_evictor.h"
-#include "content/browser/accessibility/browser_accessibility_manager.h"
 #include "content/browser/android/content_view_core_impl_observer.h"
 #include "content/browser/renderer_host/input/stylus_text_selector.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
@@ -56,6 +55,7 @@ class RenderWidgetHostImpl;
 class SelectionPopupController;
 class SynchronousCompositorHost;
 class SynchronousCompositorClient;
+class WebContentsAccessibility;
 struct NativeWebKeyboardEvent;
 
 // -----------------------------------------------------------------------------
@@ -250,6 +250,11 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void set_selection_popup_controller(SelectionPopupController* controller) {
     selection_popup_controller_ = controller;
   }
+  void set_web_contents_accessibility(WebContentsAccessibility* wca) {
+    web_contents_accessibility_ = wca;
+  }
+
+  bool ShouldSetAccessibilityFocusOnPageLoad();
 
   base::WeakPtr<RenderWidgetHostViewAndroid> GetWeakPtrAndroid();
 
@@ -374,6 +379,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
 
   ImeAdapterAndroid* ime_adapter_android_;
   SelectionPopupController* selection_popup_controller_;
+  WebContentsAccessibility* web_contents_accessibility_;
 
   // The background color of the widget.
   SkColor background_color_;

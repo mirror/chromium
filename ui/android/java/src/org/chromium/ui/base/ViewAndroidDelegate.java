@@ -100,6 +100,14 @@ public abstract class ViewAndroidDelegate {
     }
 
     /**
+     * Return whether or not we should set accessibility focus on page load.
+     */
+    @CalledByNative
+    public boolean shouldSetAccessibilityFocusOnPageLoad() {
+        return false;
+    }
+
+    /**
      * Called whenever the background color of the page changes as notified by Blink.
      * @param color The new ARGB color of the page background.
      */

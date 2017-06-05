@@ -135,6 +135,8 @@ class UI_ANDROID_EXPORT ViewAndroid {
   bool StartDragAndDrop(const base::android::JavaRef<jstring>& jtext,
                         const base::android::JavaRef<jobject>& jimage);
 
+  bool ShouldSetAccessibilityFocusOnPageLoad();
+
   gfx::Size GetPhysicalBackingSize();
   void OnPhysicalBackingSizeChanged(const gfx::Size& size);
   void OnBackgroundColorChanged(unsigned int color);
