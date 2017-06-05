@@ -146,6 +146,14 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
   void SetDocumentHasReceivedUserGesture();
   bool HasReceivedUserGesture() const { return has_received_user_gesture_; }
 
+  void SetDocumentHasReceivedUserGestureBeforeNavigation(bool value) {
+    has_received_user_gesture_before_nav_ = value;
+  }
+
+  bool HasReceivedUserGestureBeforeNavigation() const {
+    return has_received_user_gesture_before_nav_;
+  }
+
   bool IsAttached() const {
     return lifecycle_.GetState() == FrameLifecycle::kAttached;
   }
@@ -164,6 +172,7 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
   Member<DOMWindow> dom_window_;
 
   bool has_received_user_gesture_ = false;
+  bool has_received_user_gesture_before_nav_ = false;
 
   FrameLifecycle lifecycle_;
 
