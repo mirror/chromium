@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd91cb08_90615a55",
+        "filename": "base/win/com_init_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-05T14:47:58Z",
+      "side": 1,
+      "message": "Move the ifdef to the header to allow the compiler to optimize it out (I\u0027m not sure we do LTO), in DCHECK builds call AssertComInitializedImpl (e.g. a la SequenceChecker but without a class)",
+      "revId": "2d17724229b268f5195180a408c259f7869538ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
