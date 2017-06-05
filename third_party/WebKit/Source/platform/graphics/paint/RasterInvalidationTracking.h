@@ -54,6 +54,15 @@ struct PLATFORM_EXPORT RasterInvalidationTracking {
   Region invalidation_region_since_last_paint;
   Vector<UnderRasterInvalidation> under_invalidations;
 
+  // Compares the last recording against |new_record|, by rastering both into
+  // bitmaps. Returns a PaintRecord in which any differences outside of
+  // invalidated regions are colored as dark red. The caller can overlay the
+  // returned PaintRecord onto the original drawings to show the under raster
+  // invalidations.
+  sk_sp<PaintRecord> CheckUnderInvalidations(const String& layer_debug_name,
+                                             sk_sp<PaintRecord> new_record,
+                                             const IntRect& new_interest_rect);
+
   void AsJSON(JSONObject*);
 };
 
