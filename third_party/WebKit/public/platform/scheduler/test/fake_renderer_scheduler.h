@@ -43,7 +43,14 @@ class FakeRendererScheduler : public RendererScheduler {
   void ResumeRenderer() override;
   void AddPendingNavigation(NavigatingFrameType type) override;
   void RemovePendingNavigation(NavigatingFrameType type) override;
-  void OnNavigationStarted() override;
+  void OnNavigate() override;
+  void OnNavigateBackForwardSoon() override;
+  void OnStartProvisionalLoad(content::RenderFrame* render_frame) override;
+  void OnDidFailProvisionalLoad(content::RenderFrame* render_frame) override;
+  void OnDidCommitProvisionalLoad(content::RenderFrame* render_frame,
+                                  bool is_web_history_inert_commit,
+                                  bool is_reload,
+                                  bool is_main_frame) override;
   bool IsHighPriorityWorkAnticipated() override;
   bool CanExceedIdleDeadlineIfRequired() const override;
   bool ShouldYieldForHighPriorityWork() override;

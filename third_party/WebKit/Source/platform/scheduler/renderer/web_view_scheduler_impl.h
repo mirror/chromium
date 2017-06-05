@@ -67,6 +67,9 @@ class PLATFORM_EXPORT WebViewSchedulerImpl : public WebViewScheduler {
   void DecrementBackgroundParserCount();
   void Unregister(WebFrameSchedulerImpl* frame_scheduler);
   void OnNavigation();
+  void OnNavigateBackForwardSoon();
+  void OnBeginProvisionalLoad(content::RenderFrame* render_frame);
+  void OnEndProvisionalLoad(content::RenderFrame* render_frame);
 
   bool IsAudioPlaying() const;
 
@@ -102,6 +105,7 @@ class PLATFORM_EXPORT WebViewSchedulerImpl : public WebViewScheduler {
 
   std::set<WebFrameSchedulerImpl*> frame_schedulers_;
   std::set<unsigned long> pending_loads_;
+  std::set<content::RenderFrame*> provisional_loads_;
   WebScheduler::InterventionReporter* intervention_reporter_;  // Not owned.
   RendererSchedulerImpl* renderer_scheduler_;
   VirtualTimePolicy virtual_time_policy_;
@@ -118,6 +122,7 @@ class PLATFORM_EXPORT WebViewSchedulerImpl : public WebViewScheduler {
   bool is_audio_playing_;
   bool reported_background_throttling_since_navigation_;
   bool has_active_connection_;
+  bool expect_backward_forwards_navigation_;
   CPUTimeBudgetPool* background_time_budget_pool_;  // Not owned.
   CancelableClosureHolder delayed_background_throttling_enabler_;
   WebViewScheduler::WebViewSchedulerSettings* settings_;  // Not owned.

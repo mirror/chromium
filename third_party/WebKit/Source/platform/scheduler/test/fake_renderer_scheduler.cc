@@ -84,7 +84,20 @@ void FakeRendererScheduler::AddPendingNavigation(NavigatingFrameType type) {}
 
 void FakeRendererScheduler::RemovePendingNavigation(NavigatingFrameType type) {}
 
-void FakeRendererScheduler::OnNavigationStarted() {}
+void FakeRendererScheduler::OnNavigate() {}
+void FakeRendererScheduler::OnNavigateBackForwardSoon() {}
+
+void FakeRendererScheduler::OnStartProvisionalLoad(
+    content::RenderFrame* render_frame) {}
+
+void FakeRendererScheduler::OnDidFailProvisionalLoad(
+    content::RenderFrame* render_frame) {}
+
+void FakeRendererScheduler::OnDidCommitProvisionalLoad(
+    content::RenderFrame* render_frame,
+    bool is_web_history_inert_commit,
+    bool is_reload,
+    bool is_main_frame) {}
 
 bool FakeRendererScheduler::ShouldYieldForHighPriorityWork() {
   return false;

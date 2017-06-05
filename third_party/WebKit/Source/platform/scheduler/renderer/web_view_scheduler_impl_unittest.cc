@@ -609,6 +609,53 @@ TEST_F(WebViewSchedulerImplTest, BackgroundParser_DETERMINISTIC_LOADING) {
   EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
 }
 
+TEST_F(WebViewSchedulerImplTest, ProvisionalLoads) {
+  web_view_scheduler_->SetVirtualTimePolicy(
+      VirtualTimePolicy::DETERMINISTIC_LOADING);
+  web_view_scheduler_->DidStartLoading(1u);
+  web_view_scheduler_->DidStopLoading(1u);
+
+  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+
+  // The actual value of |frame1| & |frame2| doesn't matter they just need to be
+  // distinct for this test.
+  content::RenderFrame* frame1 = reinterpret_cast<content::RenderFrame*>(0x1);
+  content::RenderFrame* frame2 = reinterpret_cast<content::RenderFrame*>(0x2);
+
+  // Provisional loads are refcounted.
+  web_view_scheduler_->OnBeginProvisionalLoad(frame1);
+  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+
+  web_view_scheduler_->OnBeginProvisionalLoad(frame2);
+  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+
+  web_view_scheduler_->OnEndProvisionalLoad(frame2);
+  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+
+  web_view_scheduler_->OnEndProvisionalLoad(frame1);
+  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+}
+
+TEST_F(WebViewSchedulerImplTest, OnNavigateBackForwardSoon) {
+  web_view_scheduler_->SetVirtualTimePolicy(
+      VirtualTimePolicy::DETERMINISTIC_LOADING);
+  web_view_scheduler_->DidStartLoading(1u);
+  web_view_scheduler_->DidStopLoading(1u);
+
+  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+
+  web_view_scheduler_->OnNavigateBackForwardSoon();
+  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+
+  // The actual value of |frame1| doesn't matter.
+  content::RenderFrame* frame1 = reinterpret_cast<content::RenderFrame*>(0x1);
+  web_view_scheduler_->OnBeginProvisionalLoad(frame1);
+  EXPECT_FALSE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+
+  web_view_scheduler_->OnEndProvisionalLoad(frame1);
+  EXPECT_TRUE(web_view_scheduler_->VirtualTimeAllowedToAdvance());
+}
+
 TEST_F(WebViewSchedulerImplTest, SuspendTimersWhileVirtualTimeIsPaused) {
   std::vector<int> run_order;
 
