@@ -1,0 +1,13 @@
+{
+  "manifest_version": 2,
+  "name": "chrome.mojoPrivate",
+  "version": "1.0",
+  "description": "chrome.mojoPrivate API tests",
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "permissions": [ "mojoPrivate" ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0wmAy07ZWmGACm5gBtOC4RcCExel7d9P6ztd4CQnwzTUcHyDJUpxQhxnxGk2sUQ7B668qjvOfd/K6JmqhVboA159+iHr9hm1EO2ytIm2MuMixlWqu/xo+/5tbVipPMSFbzIFHgQy6kZxNBKKHTUX8fHS6gbCfTfVBENWzGRvLyKZJYriSgTMhY5ZS5lLnsMPdZwROflhTPa/xzOBu7twULUdDkUdql4REcsyP5gqWpH/dO4jZrVb3Ekvyw1d390ElaVDJouTVKF4vWWXaXhR6l84c8s6kqzVtpjX5g0lmo8XRJyduoPDUmOGa/WAlt4L5GEbIbk3ffDdt679avh8fwIDAQAB"
+}

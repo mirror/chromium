@@ -3,6 +3,11 @@
 // found in the LICENSE file.
 
 // The chrome.mojoPrivate API provides access to the mojo modules.
+//
+// NOTE: This API is deprecated and should no longer be used. Access to the
+// mojoPrivate API now implicitly enables use of the core Mojo JS APIs defined
+// in Blink. These should be used in lieu of the module system that's exposed
+// here.
 namespace mojoPrivate {
 
   // |modules| is an array of the values returned by |dependencies| factories.
