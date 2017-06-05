@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bda86481_27939ff5",
+        "filename": "gin/data_object_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-05T23:33:39Z",
+      "side": 1,
+      "message": "Maybe worth adding a simple unittest for this method, for completeness?",
+      "revId": "edb642ea6e5ba7f4bf348da4090d6985d5232ab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
