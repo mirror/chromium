@@ -71,6 +71,7 @@ class OffTheRecordProfileImpl : public Profile {
   net::URLRequestContextGetter* CreateMediaRequestContextForStoragePartition(
       const base::FilePath& partition_path,
       bool in_memory) override;
+  void RegisterInProcessServices(StaticServiceMap* services) override;
   net::SSLConfigService* GetSSLConfigService() override;
   bool IsSameProfile(Profile* profile) override;
   Time GetStartTime() const override;

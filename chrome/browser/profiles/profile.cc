@@ -115,6 +115,11 @@ ChromeZoomLevelPrefs* Profile::GetZoomLevelPrefs() {
 }
 #endif  // !defined(OS_ANDROID)
 
+PrefService* Profile::GetOffTheRecordPrefs(
+    service_manager::Connector* otr_connector) {
+  return GetOffTheRecordPrefs();
+}
+
 Profile::Delegate::~Delegate() {
 }
 
