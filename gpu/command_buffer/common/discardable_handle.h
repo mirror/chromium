@@ -36,6 +36,10 @@ class GPU_EXPORT DiscardableHandleBase {
   int32_t shm_id() const { return shm_id_; }
   uint32_t byte_offset() const { return byte_offset_; }
 
+  // Ensures that the provided values represent a valid allocation for use
+  // with a DiscardableHandleBase.
+  static bool ValidateParameters(const Buffer* buffer, uint32_t byte_offset);
+
   // Test only functions.
   bool IsLockedForTesting() const;
   bool IsDeletedForTesting() const;
