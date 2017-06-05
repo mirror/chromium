@@ -16,6 +16,24 @@
       "revId": "89ae049ca75c89676a79be3ecbafe54a94daad7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c5c88d6_a5d38735",
+        "filename": "cc/trees/clip_node.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-05T22:23:31Z",
+      "side": 1,
+      "message": "WDYT of adding your comment here as a comment in the code w.r.t. using \u00273\u0027 as the initial size?\n\nBtw a previous patch used a flatmap. Just curious: how did the perf look with that vs this patch?",
+      "parentUuid": "175359f6_42e7dcf6",
+      "revId": "89ae049ca75c89676a79be3ecbafe54a94daad7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
