@@ -1,0 +1,300 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66a191b7_27a2feea",
+        "filename": "third_party/WebKit/LayoutTests/NeverFixTests",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-05T21:29:31Z",
+      "side": 1,
+      "message": "The above comment doesn\u0027t quite describe this line; optionally you could add a one-line comment above. In this case, this is not intended to be run as a test.",
+      "revId": "a84fef058ef0bcaf4c14b20e159ed3a96994a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78253975_e4169709",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-05T21:29:31Z",
+      "side": 1,
+      "message": "LayTest -\u003e Layout Test",
+      "revId": "a84fef058ef0bcaf4c14b20e159ed3a96994a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e40c39e2_604a0d23",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-05T21:29:31Z",
+      "side": 1,
+      "message": "For consistency you could add spaces after colons in CSS properties (here and below).",
+      "revId": "a84fef058ef0bcaf4c14b20e159ed3a96994a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59fa1535_9c4c6eb3",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-05T21:29:31Z",
+      "side": 1,
+      "message": "I read somewhere that it\u0027s preferable to describe what a CSS class applies to rather than describing actual style in the class name.\n\nFor example, this could be called .needs-bug -- then, if for some reason we wanted to style it purple instead of red, then the class name wouldn\u0027t need to change.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 1
+      },
+      "revId": "a84fef058ef0bcaf4c14b20e159ed3a96994a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6cd675f_05db33c5",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-05T21:29:31Z",
+      "side": 1,
+      "message": "CSS class names could use dashes to separate words for consistency.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 1
+      },
+      "revId": "a84fef058ef0bcaf4c14b20e159ed3a96994a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84dc775b_5f9bcad6",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-05T21:29:31Z",
+      "side": 1,
+      "message": "line -\u003e lines",
+      "revId": "a84fef058ef0bcaf4c14b20e159ed3a96994a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "960e3e6b_ec7f0784",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-05T21:29:31Z",
+      "side": 1,
+      "message": "Possible rephrasing: Result lines include existing expected values, and make a guess about what the new test expectation line should look like by merging together expected and actual results. The actual result will be shown in bold. For example:",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 52
+      },
+      "revId": "a84fef058ef0bcaf4c14b20e159ed3a96994a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcd88404_45ca29be",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-05T21:29:31Z",
+      "side": 1,
+      "message": "hope is -\u003e the hope is",
+      "revId": "a84fef058ef0bcaf4c14b20e159ed3a96994a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a766b59_d79446f6",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-05T21:29:31Z",
+      "side": 1,
+      "message": "Wontfix -\u003e WontFix\n\n(I think that in test expectations files, these expectations are case-insensitive, but anyway they\u0027re usually written in CamelCase by convention).",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 13
+      },
+      "revId": "a84fef058ef0bcaf4c14b20e159ed3a96994a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ede4a97_f2937f65",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-05T21:29:31Z",
+      "side": 1,
+      "message": "Why is this style in the body rather than in the head with the other style for this page? Also, you could use class (and id) names with dashes separating words.",
+      "revId": "a84fef058ef0bcaf4c14b20e159ed3a96994a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a431c63_3cf48a1d",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-05T21:29:31Z",
+      "side": 1,
+      "message": "There are two blank lines here but not elsewhere. I guess for consistency this could be changed to one blank line.",
+      "revId": "a84fef058ef0bcaf4c14b20e159ed3a96994a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b2144bd_48510428",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-05T21:29:31Z",
+      "side": 1,
+      "message": "If this is unused, it could be removed.",
+      "revId": "a84fef058ef0bcaf4c14b20e159ed3a96994a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59dc638_626e08a2",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-05T21:29:31Z",
+      "side": 1,
+      "message": "This is currently used in one place (loadResult), so I\u0027d suggest putting it next to loadResult below.",
+      "revId": "a84fef058ef0bcaf4c14b20e159ed3a96994a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "556dcf26_07a9a43f",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-05T21:29:31Z",
+      "side": 1,
+      "message": "I generally prefer braces around the body of conditionals and loops even if it\u0027s just one line. But anyway I guess this is a matter of personal preference.",
+      "revId": "a84fef058ef0bcaf4c14b20e159ed3a96994a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693ca0d0_1006e5da",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-05T21:29:31Z",
+      "side": 1,
+      "message": "What is `expectation` here? It\u0027s a DOM element, right?",
+      "revId": "a84fef058ef0bcaf4c14b20e159ed3a96994a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79ceeeb3_66b6bcaa",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/manager.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-05T21:29:31Z",
+      "side": 1,
+      "message": "Could use single quotes for consistency within this file.",
+      "revId": "a84fef058ef0bcaf4c14b20e159ed3a96994a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
