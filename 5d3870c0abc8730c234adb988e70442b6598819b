@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "84c60bfe_2e6075b5",
+        "filename": "base/memory/shared_memory_tracker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-05T22:52:57Z",
+      "side": 1,
+      "message": "As you are worried about exposing implementation, defining `using SharedMemory::ID \u003d UnguessableToken` might be a good idea. Wdyt?",
+      "parentUuid": "0cd3255a_7ecaeac2",
+      "range": {
+        "startLine": 28,
+        "startChar": 12,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "5d3870c0abc8730c234adb988e70442b6598819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c1eb41c_5bf168fe",
         "filename": "base/trace_event/process_memory_dump.cc",
         "patchSetId": 5
