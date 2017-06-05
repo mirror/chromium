@@ -184,10 +184,20 @@ bool ContainerNode::CollectChildrenAndRemoveFromOldParentWithCheck(
     Node& new_child,
     NodeVector& new_children,
     ExceptionState& exception_state) const {
+  Document& new_doc = new_child.GetDocument();
+  Document& this_doc = GetDocument();
+  uint64_t original_version_for_new_node = new_doc.DomTreeVersion();
+  uint64_t original_version_for_this = this_doc.DomTreeVersion();
   CollectChildrenAndRemoveFromOldParent(new_child, new_children,
                                         exception_state);
   if (exception_state.HadException() || new_children.IsEmpty())
     return false;
+  if (new_doc.DomTreeVersion() <= original_version_for_new_node + 1) {
+    if (&new_doc == &this_doc)
+      return true;
+    if (this_doc.DomTreeVersion() == original_version_for_this)
+      return true;
+  }
 
   // We need this extra check because collectChildrenAndRemoveFromOldParent()
   // can fire various events.
