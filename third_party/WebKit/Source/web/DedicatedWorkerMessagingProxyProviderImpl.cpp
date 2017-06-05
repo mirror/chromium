@@ -44,8 +44,6 @@
 #include "public/platform/WebString.h"
 #include "public/web/WebFrameClient.h"
 #include "public/web/WebWorkerContentSettingsClientProxy.h"
-#include "web/IndexedDBClientImpl.h"
-#include "web/LocalFileSystemClient.h"
 
 namespace blink {
 

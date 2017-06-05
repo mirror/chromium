@@ -61,8 +61,6 @@ component("web") {
     "InspectorOverlayAgent.h",
     "LinkHighlightImpl.cpp",
     "LinkHighlightImpl.h",
-    "LocalFileSystemClient.cpp",
-    "LocalFileSystemClient.h",
     "LocalFrameClientImpl.cpp",
     "LocalFrameClientImpl.h",
     "MediaKeysClientImpl.cpp",
