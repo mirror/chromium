@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c88ffdac_a472bf8e",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-06-05T17:55:59Z",
+      "side": 1,
+      "message": "Oops. this seems to be a vestigial left from a different branch. removed",
+      "parentUuid": "a8801c3d_97b869d5",
+      "revId": "13e0172b286d2ef6093bcab056ad3fb476683679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d828000f_59188109",
         "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "13e0172b286d2ef6093bcab056ad3fb476683679",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e403462_6c193a48",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-06-05T17:55:59Z",
+      "side": 1,
+      "message": "i don\u0027t think it benefits a lot.  I want all the status codes \u003e\u003d 400, and I feel like comment makes this more clear than simply status_code \u003e\u003d static_cast\u003cint\u003e(net::HTTP_BAD_REQUEST)\n\nand 418 isn\u0027t listed as a status code in the list anyway :D",
+      "parentUuid": "d828000f_59188109",
+      "revId": "13e0172b286d2ef6093bcab056ad3fb476683679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "13e0172b286d2ef6093bcab056ad3fb476683679",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fec45a3_100af4a2",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-06-05T17:55:59Z",
+      "side": 1,
+      "message": "I did. none of the other ResetState calls are initiated by the snapshot controller and in the same task",
+      "parentUuid": "bc7e8673_53f61aaa",
+      "range": {
+        "startLine": 369,
+        "startChar": 12,
+        "endLine": 369,
+        "endChar": 19
+      },
+      "revId": "13e0172b286d2ef6093bcab056ad3fb476683679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d255a0ed_95811fc1",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-06-05T17:55:59Z",
+      "side": 1,
+      "message": "Updated description. Done",
+      "parentUuid": "dd92575b_81a6ea9f",
+      "range": {
+        "startLine": 372,
+        "startChar": 31,
+        "endLine": 372,
+        "endChar": 55
+      },
+      "revId": "13e0172b286d2ef6093bcab056ad3fb476683679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfbbbabd_fead9a20",
         "filename": "chrome/browser/offline_pages/background_loader_offliner_unittest.cc",
         "patchSetId": 3
@@ -129,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "2d681b95_d0f878c6",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-06-05T17:55:59Z",
+      "side": 1,
+      "message": "I\u0027ve ran both tests 100x locally. Before the fix, we were at 40% crashes. Afterwards, we\u0027re at 100% success.\n\nI put these in the same CL mainly because the 2 disabled flakey tests are the ones that test the actual change I made.... but I can split this out if you think it\u0027s better",
+      "parentUuid": "bfbbbabd_fead9a20",
+      "range": {
+        "startLine": 515,
+        "startChar": 35,
+        "endLine": 515,
+        "endChar": 36
+      },
+      "revId": "13e0172b286d2ef6093bcab056ad3fb476683679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50107866_0dc2b3f0",
         "filename": "chrome/browser/offline_pages/background_loader_offliner_unittest.cc",
         "patchSetId": 3
@@ -149,6 +257,30 @@
       "revId": "13e0172b286d2ef6093bcab056ad3fb476683679",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54592ab_e02def0d",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-06-05T17:55:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "50107866_0dc2b3f0",
+      "range": {
+        "startLine": 540,
+        "startChar": 37,
+        "endLine": 540,
+        "endChar": 65
+      },
+      "revId": "13e0172b286d2ef6093bcab056ad3fb476683679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
