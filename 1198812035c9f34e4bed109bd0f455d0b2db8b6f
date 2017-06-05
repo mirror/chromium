@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8cd2ace0_b9253d4e",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-05T17:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5e38bfb_0266e31b",
+      "revId": "1198812035c9f34e4bed109bd0f455d0b2db8b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6cf8e4_8784d1bc",
         "filename": "ui/views/focus/focus_manager.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "04e71ce5_77285b61",
+        "filename": "ui/views/focus/focus_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-05T17:13:14Z",
+      "side": 1,
+      "message": "Same comment about style guide as other patch.",
+      "parentUuid": "da6cf8e4_8784d1bc",
+      "revId": "1198812035c9f34e4bed109bd0f455d0b2db8b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8af67f47_90292aad",
         "filename": "ui/views/view_tracker.cc",
         "patchSetId": 1
@@ -47,6 +83,30 @@
       "writtenOn": "2017-06-03T00:11:49Z",
       "side": 1,
       "message": "optional nit: move nullptr initializer to the member\u0027s decl.",
+      "range": {
+        "startLine": 11,
+        "startChar": 39,
+        "endLine": 11,
+        "endChar": 44
+      },
+      "revId": "1198812035c9f34e4bed109bd0f455d0b2db8b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e7521e_da68d5d8",
+        "filename": "ui/views/view_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-05T17:13:14Z",
+      "side": 1,
+      "message": "This was actually wrong. I needed view_(view). Fixed.",
+      "parentUuid": "8af67f47_90292aad",
       "range": {
         "startLine": 11,
         "startChar": 39,
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "aaaab25b_0d34329e",
+        "filename": "ui/views/view_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-05T17:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c183edb8_8e86054d",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 73
+      },
+      "revId": "1198812035c9f34e4bed109bd0f455d0b2db8b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99c55e16_f7206ac5",
         "filename": "ui/views/view_tracker.h",
         "patchSetId": 1
@@ -93,6 +177,24 @@
       "writtenOn": "2017-06-03T00:11:49Z",
       "side": 1,
       "message": "q: Is this okay in the style guide?",
+      "revId": "1198812035c9f34e4bed109bd0f455d0b2db8b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c82b8e31_053b3a57",
+        "filename": "ui/views/view_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-05T17:13:14Z",
+      "side": 1,
+      "message": "I believe so. Inline functions may be used when smallish. It\u0027s OK if Clear() is replaced with SetView(nullptr).",
+      "parentUuid": "99c55e16_f7206ac5",
       "revId": "1198812035c9f34e4bed109bd0f455d0b2db8b6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
