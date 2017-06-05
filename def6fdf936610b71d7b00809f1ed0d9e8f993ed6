@@ -122,6 +122,24 @@
       "revId": "def6fdf936610b71d7b00809f1ed0d9e8f993ed6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb4da659_39f8e23c",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-05T11:27:57Z",
+      "side": 1,
+      "message": "+yhirano, domenic FYI\n\n\u003e Hmmm... I\u0027m confused about \"fetch client settings object\" and \"module map settings object\" concepts defined in [1].\nMy very rough understanding is that fetch client settings object corresponds to ResFetcher + FrameFetchContext + SecurityOrigin while module map settings object is more of ScriptState + ModuleMap.\n\n\u003e ... Also, does our module implementation support this separation?\nNo. I assumed those would be always be the same. Let\u0027s discuss f2f in TOK",
+      "parentUuid": "58745c39_7da47d1c",
+      "revId": "def6fdf936610b71d7b00809f1ed0d9e8f993ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
