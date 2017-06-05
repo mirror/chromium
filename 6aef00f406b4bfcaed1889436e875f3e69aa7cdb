@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "80fd75ae_551d1f8b",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-05T08:19:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "facf902e_d79f2709",
+      "range": {
+        "startLine": 397,
+        "startChar": 25,
+        "endLine": 397,
+        "endChar": 41
+      },
+      "revId": "6aef00f406b4bfcaed1889436e875f3e69aa7cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f8b0e1a_918e7d70",
         "filename": "base/trace_event/process_memory_dump.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "6aef00f406b4bfcaed1889436e875f3e69aa7cdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac4e8d50_2d41efcb",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-05T08:19:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f8b0e1a_918e7d70",
+      "range": {
+        "startLine": 399,
+        "startChar": 3,
+        "endLine": 399,
+        "endChar": 48
+      },
+      "revId": "6aef00f406b4bfcaed1889436e875f3e69aa7cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "748e56a8_5d384f0b",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-05T08:19:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38863889_1794caaa",
+      "range": {
+        "startLine": 401,
+        "startChar": 4,
+        "endLine": 401,
+        "endChar": 35
+      },
+      "revId": "6aef00f406b4bfcaed1889436e875f3e69aa7cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0d6b8fa_5e33f0e2",
         "filename": "base/trace_event/process_memory_dump.h",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-03T00:15:28Z",
       "side": 1,
       "message": "This should be SharedMemory::UnguessableToken",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 22
+      },
+      "revId": "6aef00f406b4bfcaed1889436e875f3e69aa7cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a38a7859_f564cf28",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-05T08:19:34Z",
+      "side": 1,
+      "message": "I don\u0027t understand: SharedMemory\u0027s ID is a base::UnguessableToken, right?",
+      "parentUuid": "b0d6b8fa_5e33f0e2",
       "range": {
         "startLine": 36,
         "startChar": 6,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6e50502c_47ac4d1d",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-05T08:19:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7a65005_7ef155d4",
+      "range": {
+        "startLine": 147,
+        "startChar": 37,
+        "endLine": 147,
+        "endChar": 52
+      },
+      "revId": "6aef00f406b4bfcaed1889436e875f3e69aa7cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cae83cab_b60e5571",
         "filename": "base/trace_event/process_memory_dump.h",
         "patchSetId": 4
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "3cab32a0_e77ca7af",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-05T08:19:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cae83cab_b60e5571",
+      "range": {
+        "startLine": 148,
+        "startChar": 37,
+        "endLine": 148,
+        "endChar": 53
+      },
+      "revId": "6aef00f406b4bfcaed1889436e875f3e69aa7cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5eb20a45_297ad849",
         "filename": "base/trace_event/process_memory_dump.h",
         "patchSetId": 4
@@ -151,6 +295,30 @@
       "writtenOn": "2017-06-03T00:15:28Z",
       "side": 1,
       "message": "Is the token same as GUID? Do we not need to call SharedMemory::GetGuidForToekn to get the guid",
+      "range": {
+        "startLine": 149,
+        "startChar": 30,
+        "endLine": 149,
+        "endChar": 48
+      },
+      "revId": "6aef00f406b4bfcaed1889436e875f3e69aa7cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6b5aa4c_b945067e",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-05T08:19:34Z",
+      "side": 1,
+      "message": "This is used to pass SharedMemoryTracker::Get(Global)GUIDForTracing, right?",
+      "parentUuid": "5eb20a45_297ad849",
       "range": {
         "startLine": 149,
         "startChar": 30,
@@ -183,6 +351,30 @@
       "revId": "6aef00f406b4bfcaed1889436e875f3e69aa7cdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d32eaa_5fac222b",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-05T08:19:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a26a47c_ea07faf2",
+      "range": {
+        "startLine": 150,
+        "startChar": 10,
+        "endLine": 150,
+        "endChar": 20
+      },
+      "revId": "6aef00f406b4bfcaed1889436e875f3e69aa7cdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
