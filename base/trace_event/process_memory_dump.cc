@@ -37,11 +37,6 @@ namespace {
 
 const char kEdgeTypeOwnership[] = "ownership";
 
-std::string GetSharedGlobalAllocatorDumpName(
-    const MemoryAllocatorDumpGuid& guid) {
-  return "global/" + guid.ToString();
-}
-
 #if defined(COUNT_RESIDENT_BYTES_SUPPORTED)
 size_t GetSystemPageCount(size_t mapped_size, size_t page_size) {
   return (mapped_size + page_size - 1) / page_size;
@@ -49,6 +44,11 @@ size_t GetSystemPageCount(size_t mapped_size, size_t page_size) {
 #endif
 
 }  // namespace
+
+std::string GetSharedGlobalAllocatorDumpName(
+    const MemoryAllocatorDumpGuid& guid) {
+  return "global/" + guid.ToString();
+}
 
 // static
 bool ProcessMemoryDump::is_black_hole_non_fatal_for_testing_ = false;
