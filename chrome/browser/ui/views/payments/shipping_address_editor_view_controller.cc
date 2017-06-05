@@ -248,9 +248,10 @@ void ShippingAddressEditorViewController::UpdateCountries(
       if (chosen_country == countries_[chosen_country_index_].second)
         break;
     }
-    // Make sure the the country was actually found in |countries_|, otherwise
-    // set |chosen_country_index_| as the default country at index 0.
-    if (chosen_country_index_ >= countries_.size()) {
+    // Make sure the the country was actually found in |countries_| and was not
+    // empty, otherwise set |chosen_country_index_| as the default country at
+    // index 0.
+    if (chosen_country_index_ >= countries_.size() || chosen_country.empty()) {
       // But only if there is at least one country.
       if (countries_.size() > 0) {
         LOG(ERROR) << "Unexpected country: " << chosen_country;

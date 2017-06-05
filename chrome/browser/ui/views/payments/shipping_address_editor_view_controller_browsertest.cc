@@ -681,4 +681,91 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
             static_cast<views::Label*>(error_label)->text());
 }
 
+// Tests that the editor accepts an international phone from another country.
+IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
+                       CountryButNoState) {
+  // Add address with a country but no state.
+  autofill::AutofillProfile profile = autofill::test::GetFullProfile();
+  profile.SetInfo(autofill::AutofillType(autofill::ADDRESS_HOME_STATE),
+                  base::ASCIIToUTF16(""), kLocale);
+  AddAutofillProfile(profile);
+
+  InvokePaymentRequestUI();
+  SetRegionDataLoader(&test_region_data_loader_);
+
+  test_region_data_loader_.set_synchronous_callback(false);
+  OpenShippingAddressSectionScreen();
+
+  // There should be an error label for the address.
+  views::View* sheet = dialog_view()->GetViewByID(
+      static_cast<int>(DialogViewID::SHIPPING_ADDRESS_SHEET_LIST_VIEW));
+  ASSERT_EQ(1, sheet->child_count());
+  views::View* error_label = sheet->child_at(0)->GetViewByID(
+      static_cast<int>(DialogViewID::PROFILE_LABEL_ERROR));
+  EXPECT_EQ(base::ASCIIToUTF16("Enter a valid address"),
+            static_cast<views::Label*>(error_label)->text());
+
+  ResetEventObserver(DialogEvent::SHIPPING_ADDRESS_EDITOR_OPENED);
+  ClickOnChildInListViewAndWait(/*child_index=*/0, /*num_children=*/1,
+                                DialogViewID::SHIPPING_ADDRESS_SHEET_LIST_VIEW);
+  std::vector<std::pair<std::string, std::string>> regions1;
+  regions1.push_back(std::make_pair("AL", "Alabama"));
+  regions1.push_back(std::make_pair("CA", "California"));
+  test_region_data_loader_.SendAsynchronousData(regions1);
+
+  // Expect that the country is set correctly.
+  EXPECT_EQ(base::ASCIIToUTF16("United States"),
+            GetComboboxValue(autofill::ADDRESS_HOME_COUNTRY));
+
+  // Expect that no state is selected.
+  EXPECT_EQ(base::ASCIIToUTF16("---"),
+            GetComboboxValue(autofill::ADDRESS_HOME_STATE));
+  EXPECT_TRUE(IsEditorComboboxInvalid(autofill::ADDRESS_HOME_STATE));
+
+  views::View* sabe_button = dialog_view()->GetViewByID(
+      static_cast<int>(DialogViewID::SAVE_ADDRESS_BUTTON));
+  EXPECT_FALSE(sabe_button->enabled());
+
+  //ResetEventObserver(DialogEvent::BACK_TO_PAYMENT_SHEET_NAVIGATION);
+  //ClickOnDialogViewAndWait(DialogViewID::SAVE_ADDRESS_BUTTON);
+
+  //ResetEventObserver(DialogEvent::BACK_TO_PAYMENT_SHEET_NAVIGATION);
+  //ClickOnDialogViewAndWait(DialogViewID::SAVE_ADDRESS_BUTTON);
+  // There are no state field in |kCountryWithoutStates|.
+  //EXPECT_FALSE(
+  //    GetEditorTextfieldValueIfExists(autofill::ADDRESS_HOME_STATE, nullptr));
+
+  /*
+  // Verifying the data is in the DB.
+  autofill::PersonalDataManager* personal_data_manager = GetDataManager();
+  personal_data_manager->AddObserver(&personal_data_observer_);
+
+  ResetEventObserver(DialogEvent::BACK_TO_PAYMENT_SHEET_NAVIGATION);
+
+  // Wait until the web database has been updated and the notification sent.
+  base::RunLoop data_loop;
+  EXPECT_CALL(personal_data_observer_, OnPersonalDataChanged())
+      .WillOnce(QuitMessageLoop(&data_loop));
+  ClickOnDialogViewAndWait(DialogViewID::SAVE_ADDRESS_BUTTON);
+  data_loop.Run();
+
+  ASSERT_EQ(1UL, personal_data_manager->GetProfiles().size());
+  autofill::AutofillProfile* saved_profile =
+      personal_data_manager->GetProfiles()[0];
+  DCHECK(saved_profile);
+  EXPECT_EQ(
+      base::ASCIIToUTF16(kCountryWithoutStates),
+      saved_profile->GetInfo(
+          autofill::AutofillType(autofill::ADDRESS_HOME_COUNTRY), kLocale));
+  *///ExpectExistingRequiredFields(/*unset_types=*/nullptr,
+    //                           /*accept_empty_phone_number=*/false);
+/*
+  // Still have one shipping address, but the merchant doesn't ship to
+  // kCountryWithoutStates.
+  EXPECT_EQ(1U, request->state()->shipping_profiles().size());
+  EXPECT_EQ(nullptr, request->state()->selected_shipping_profile());
+  EXPECT_EQ(request->state()->shipping_profiles().back(),
+            request->state()->selected_shipping_option_error_profile());*/
+}
+
 }  // namespace payments

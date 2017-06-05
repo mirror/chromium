@@ -511,6 +511,10 @@ void PersonalDataManager::AddProfile(const AutofillProfile& profile) {
   if (FindByContents(web_profiles_, profile))
     return;
 
+  //AutofillProfile test_profile = profile;
+  //test_profile.SetRawInfo(ADDRESS_HOME_COUNTRY, base::UTF8ToUTF16(""));
+  //test_profile.SetRawInfo(ADDRESS_HOME_STATE, base::UTF8ToUTF16(""));
+
   // Add the new profile to the web database.
   database_->AddAutofillProfile(profile);
 
