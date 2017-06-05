@@ -459,11 +459,19 @@ function setUpHealthThermometerAndHeartRateDevices() {
 // TODO(crbug.com/719816): Add services, characteristics and descriptors,
 // and discover all the attributes.
 function getHealthThermometerDevice(options) {
+  return getConnectedHealthThermometerDevice(options)
+    .then(([device, fake_peripheral]) => {
+      return fake_peripheral.setNextGATTDiscoveryResponse({code: HCI_SUCCESS})
+        .then(() => [device, fake_peripheral]);
+    });
+}
+
+function getConnectedHealthThermometerDevice(options) {
   return getDiscoveredHealthThermometerDevice(options)
     .then(([device, fake_peripheral]) => {
       return fake_peripheral.setNextGATTConnectionResponse({code: HCI_SUCCESS})
         .then(() => device.gatt.connect())
-        .then(gatt => [gatt.device, fake_peripheral]);
+        .then(gatt => [device, fake_peripheral]);
     });
 }
 
