@@ -158,6 +158,24 @@
       "revId": "23166c4f3363b9cce860885cd69910fe19cbd4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f2bee8_c17ac503",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1449,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-05T14:43:37Z",
+      "side": 1,
+      "message": "I think directly associating RuntimeCallStats with a thread is a good idea, but I\u0027m not quite sure why I need to create a PerThreadData class instead of just using DEFINE_THREAD_SAFE_STATIC_LOCAL directly to manage RuntimeCallStats instances per thread. Could you explain the advantage of having a separate class to manage per thread instances, instead of directly using the macro?",
+      "parentUuid": "cab2f21f_7dda0eb2",
+      "revId": "23166c4f3363b9cce860885cd69910fe19cbd4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
