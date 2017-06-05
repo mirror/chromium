@@ -22,6 +22,30 @@
       "revId": "025535a63918a2e54f0f238399e25eed031e82ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a15241e3_c1e4f5c4",
+        "filename": "services/preferences/persistent_pref_store_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-05T15:09:01Z",
+      "side": 1,
+      "message": "This is an override of mojom::PersistentPrefStore::CommitPendingWrite(). This method takes a CommitPendingWriteCallback as argument. CommitPendingWriteCallback is defined as  \"using CommitPendingWriteCallback \u003d base::OnceClosure;\" in the header generated from preferences.mojom.",
+      "parentUuid": "aa26df78_8792fdce",
+      "range": {
+        "startLine": 60,
+        "startChar": 26,
+        "endLine": 60,
+        "endChar": 53
+      },
+      "revId": "025535a63918a2e54f0f238399e25eed031e82ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
