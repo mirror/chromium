@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c16c4df_e6d936ec",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/worklet/webexposed/global-interface-listing-paint-worklet-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-06-05T19:57:32Z",
+      "side": 1,
+      "message": "Does this need to have an [Exposed\u003dWindow] on it as well?",
+      "range": {
+        "startLine": 18,
+        "startChar": 31,
+        "endLine": 18,
+        "endChar": 37
+      },
+      "revId": "fb54fc2d8f3bdc3f9618ba74138fd5c0e63b7490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
