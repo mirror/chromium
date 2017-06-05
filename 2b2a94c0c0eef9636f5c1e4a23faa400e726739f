@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94f4b7ce_3e33a45a",
+        "filename": "components/security_interstitials/core/browser/resources/interstitial_webview_quiet.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1119459
+      },
+      "writtenOn": "2017-06-05T11:35:18Z",
+      "side": 1,
+      "message": "Nit: Just Roboto-Regular.\n\nWith regard to the Roboto font, I believe the body font would be set as Roboto when on Android WebView. \n\nwebui::AppendWebUICSSTextDefaults() appends the system fonts at the footer of the page which should be Roboto on WebView. No harm in hard coding it though.",
+      "revId": "2b2a94c0c0eef9636f5c1e4a23faa400e726739f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
