@@ -317,6 +317,7 @@ source_set("browser_tests") {
     "api/display_source/display_source_apitestbase.h",
     "api/dns/dns_apitest.cc",
     "api/hid/hid_apitest.cc",
+    "api/mojo_private/mojo_private_apitest.cc",
     "api/printer_provider/printer_provider_apitest.cc",
     "api/socket/socket_apitest.cc",
     "api/sockets_tcp/sockets_tcp_apitest.cc",
