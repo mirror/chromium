@@ -44,6 +44,9 @@ class DesktopMediaPickerViewsTest : public testing::Test {
   void SetUp() override {
     test_helper_.test_views_delegate()->set_layout_provider(
         ChromeLayoutProvider::CreateLayoutProvider());
+    std::vector<DesktopMediaID::Type> source_types = {
+        DesktopMediaID::TYPE_SCREEN, DesktopMediaID::TYPE_WINDOW,
+        DesktopMediaID::TYPE_WEB_CONTENTS};
     media_lists_[DesktopMediaID::TYPE_SCREEN] = new FakeDesktopMediaList();
     media_lists_[DesktopMediaID::TYPE_WINDOW] = new FakeDesktopMediaList();
     media_lists_[DesktopMediaID::TYPE_WEB_CONTENTS] =
@@ -59,7 +62,7 @@ class DesktopMediaPickerViewsTest : public testing::Test {
 
     picker_views_.reset(new DesktopMediaPickerViews());
     picker_views_->Show(nullptr, test_helper_.GetContext(), nullptr, app_name,
-                        app_name, std::move(screen_list),
+                        app_name, source_types, std::move(screen_list),
                         std::move(window_list), std::move(tab_list), true,
                         base::Bind(&DesktopMediaPickerViewsTest::OnPickerDone,
                                    base::Unretained(this)));

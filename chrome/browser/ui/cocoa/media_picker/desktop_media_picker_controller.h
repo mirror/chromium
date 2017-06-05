@@ -50,6 +50,7 @@
   std::unique_ptr<DesktopMediaList> screenList_;
   std::unique_ptr<DesktopMediaList> windowList_;
   std::unique_ptr<DesktopMediaList> tabList_;
+  std::vector<content::DesktopMediaID::Type> sourceTypes_;
 
   // To be called with the user selection.
   DesktopMediaPicker::DoneCallback doneCallback_;
@@ -82,6 +83,8 @@
                 callback:(const DesktopMediaPicker::DoneCallback&)callback
                  appName:(const base::string16&)appName
               targetName:(const base::string16&)targetName
+             sourceTypes:
+                 (const std::vector<content::DesktopMediaID::Type>&)sourceTypes
             requestAudio:(bool)requestAudio;
 
 @end
