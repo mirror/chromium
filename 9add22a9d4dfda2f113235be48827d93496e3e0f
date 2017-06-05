@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abfd3efd_62926228",
+        "filename": "chrome/browser/profiles/profile.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-05T09:40:33Z",
+      "side": 1,
+      "message": "The second sentence isn\u0027t true anymore, right?",
+      "revId": "9add22a9d4dfda2f113235be48827d93496e3e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf416b70_256260ca",
+        "filename": "chrome/browser/profiles/profile.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-05T09:40:33Z",
+      "side": 1,
+      "message": "I feel like this method should be called CreateOffTheRecordPrefs() and DCHECK that |otr_prefs_| doesn\u0027t exist before creating it instead of creating it lazily, so that it\u0027s clear to a client of Profile which method to use to get an existing incognito PrefService. (I would also ideally move it to ProfileImpl, but that might be a bit too much yak-shaving for this CL.)",
+      "range": {
+        "startLine": 200,
+        "startChar": 23,
+        "endLine": 200,
+        "endChar": 43
+      },
+      "revId": "9add22a9d4dfda2f113235be48827d93496e3e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
