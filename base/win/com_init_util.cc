@@ -7,8 +7,6 @@
 #include <windows.h>
 #include <winternl.h>
 
-#include "base/logging.h"
-
 namespace base {
 namespace win {
 
@@ -53,13 +51,13 @@ ComInitStatus GetComInitStatusForThread() {
 
 }  // namespace
 
-#if DCHECK_IS_ON()
-void AssertComInitialized() {
+namespace internal {
+
+void AssertComInitializedImpl() {
   DCHECK_NE(ComInitStatus::NONE, GetComInitStatusForThread());
 }
-#else   // DCHECK_IS_ON()
-void AssertComInitialized() {}
-#endif  // DCHECK_IS_ON()
+
+}  // namespace internal
 
 }  // namespace win
 }  // namespace base
