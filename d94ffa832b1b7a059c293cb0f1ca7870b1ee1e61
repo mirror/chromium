@@ -22,6 +22,30 @@
       "revId": "d94ffa832b1b7a059c293cb0f1ca7870b1ee1e61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2df5842_b9d24f37",
+        "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-05T03:06:06Z",
+      "side": 1,
+      "message": "I would think the verbosity of the code here is intended. This class is not meant to be copied and if we really need to then we can always manually copy. I think adding a copy constructor even if explicit makes it too easy to do the wrong thing e.g. I added an explicit copy constructor and which allowed us to copy the |targets| vector without any warnings and also run the callback without explicitly calling the copy constructor.",
+      "parentUuid": "d94dec75_e2511004",
+      "range": {
+        "startLine": 152,
+        "startChar": 13,
+        "endLine": 152,
+        "endChar": 24
+      },
+      "revId": "d94ffa832b1b7a059c293cb0f1ca7870b1ee1e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

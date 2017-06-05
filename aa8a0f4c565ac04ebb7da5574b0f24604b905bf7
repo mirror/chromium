@@ -385,6 +385,24 @@
     },
     {
       "key": {
+        "uuid": "6c580a8e_2ca92ee6",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-05T03:06:06Z",
+      "side": 1,
+      "message": "Ah, I got confused with the other comment in share_target_pref_helper.h\n\nRe-introduced GetTargetsWithSufficientEngagement and removed the new function in share_target_pref_helper.h",
+      "parentUuid": "cffaf6fd_4e8244ae",
+      "revId": "aa8a0f4c565ac04ebb7da5574b0f24604b905bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "500f1318_9196d3c9",
         "filename": "chrome/browser/webshare/share_service_impl_unittest.cc",
         "patchSetId": 4
