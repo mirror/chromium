@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0b78cfb1_f9fa068d",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-05T23:28:34Z",
+      "side": 1,
+      "message": "My understanding is that the only reason we have this sub-feature is because we need it for testing, which is unfortunate.  Ideally, we wouldn\u0027t have any test-only feature specifications, and instead tests could specify \"let this feature be available\".  The fact we need both a test-defined feature whitelist and a compile-time-defined feature specification for that test is what I think is the problem.",
+      "parentUuid": "a1374876_61ee2d91",
+      "revId": "1380d562908170958e65e1536dc7f7ccf51189ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3230320d_175a7746",
         "filename": "extensions/common/api/_permission_features.json",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "The context for exposing Mojo APIs is as the CL description implies, a general-purpose alternative to exposing feature-specific private APIs in the future.\n\nNote that my decision to include kiosk.autolaunched here by default is based only on my limited understanding that in general we treat autolaunched kiosk apps with a rather lax security policy and there wouldn\u0027t be a compelling reason to forbid the permission in such cases.\n\nI don\u0027t actually know if we want to do this, it\u0027s just a proof of concept.",
       "parentUuid": "3230320d_175a7746",
+      "revId": "1380d562908170958e65e1536dc7f7ccf51189ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd88b639_fe018747",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-05T23:28:34Z",
+      "side": 1,
+      "message": "We trust kiosk apps more, but shouldn\u0027t expose private APIs to them, because private APIs are often more than just more dangerous.  Authors might not expected non-validated input, the APIs could be more subject to change, etc.  Unless we need this and have discussed it, we shouldn\u0027t whitelist it.",
+      "parentUuid": "35dba87e_00b96b05",
       "revId": "1380d562908170958e65e1536dc7f7ccf51189ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
