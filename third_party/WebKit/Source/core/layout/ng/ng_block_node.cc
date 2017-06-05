@@ -256,6 +256,10 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
   intrinsic_logical_height -= border_and_padding.BlockSum();
   box_->SetIntrinsicContentLogicalHeight(intrinsic_logical_height);
 
+  // TODO(ikilpatrick) is this the right thing to do?
+  if (box_->IsLayoutBlockFlow()) {
+    ToLayoutBlockFlow(box_)->RemoveFloatingObjects();
+  }
   for (const NGPositionedFloat& positioned_float : fragment->PositionedFloats())
     FloatingObjectPositionedUpdated(positioned_float, box_);
 
@@ -270,9 +274,18 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
     }
   }
 
-  if (box_->IsLayoutBlock())
+  if (box_->IsLayoutBlock()) {
     ToLayoutBlock(box_)->LayoutPositionedObjects(true);
+    NGWritingMode writing_mode =
+        FromPlatformWritingMode(Style().GetWritingMode());
+    NGBoxFragment frag(writing_mode, fragment);
+    ToLayoutBlock(box_)->ComputeOverflow(frag.OverflowSize().block_size -
+                                         border_and_padding.block_end);
+  }
+
+  box_->UpdateAfterLayout();
   box_->ClearNeedsLayout();
+
   if (box_->IsLayoutBlockFlow()) {
     ToLayoutBlockFlow(box_)->UpdateIsSelfCollapsing();
   }
