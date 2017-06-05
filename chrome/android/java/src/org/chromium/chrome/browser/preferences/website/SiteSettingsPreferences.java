@@ -217,6 +217,8 @@ public class SiteSettingsPreferences extends PreferenceFragment
             } else if (LOCATION_KEY.equals(prefName) && checked
                     && prefServiceBridge.isLocationAllowedByPolicy()) {
                 p.setSummary(ContentSettingsResources.getGeolocationAllowedSummary());
+            } else if (SUBRESOURCE_FILTER_KEY.equals(prefName) && !checked) {
+                p.setSummary(ContentSettingsResources.getSubresourceFilterBlockedListSummary());
             } else {
                 p.setSummary(ContentSettingsResources.getCategorySummary(contentType, checked));
             }
