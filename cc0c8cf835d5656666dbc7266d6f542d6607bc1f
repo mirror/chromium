@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e514d6d_e33c750c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/CSSModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-05T19:06:05Z",
+      "side": 0,
+      "message": "This catch is gone. Was it useful? Is there a way to restore it?",
+      "range": {
+        "startLine": 239,
+        "startChar": 9,
+        "endLine": 239,
+        "endChar": 23
+      },
+      "revId": "cc0c8cf835d5656666dbc7266d6f542d6607bc1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

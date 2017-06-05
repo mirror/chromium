@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04c1e32c_48a1c1b0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/StylesSourceMapping.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-05T19:06:05Z",
+      "side": 1,
+      "message": "!!error",
+      "range": {
+        "startLine": 231,
+        "startChar": 33,
+        "endLine": 231,
+        "endChar": 38
+      },
+      "revId": "674561c73aee58a0c396c4e1068eeb7c3b439d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "678b4fad_d0f422f1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-05T19:06:05Z",
+      "side": 1,
+      "message": "Why do you need to cast now?",
+      "range": {
+        "startLine": 418,
+        "startChar": 83,
+        "endLine": 418,
+        "endChar": 96
+      },
+      "revId": "674561c73aee58a0c396c4e1068eeb7c3b439d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29dc3678_51aad00e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/CSSModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-05T19:06:05Z",
+      "side": 1,
+      "message": "I don\u0027t like this. Although technically it\u0027s the same, semantic is very different.",
+      "revId": "674561c73aee58a0c396c4e1068eeb7c3b439d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4a78a0d_8e4332f5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/CSSModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-05T19:06:05Z",
+      "side": 1,
+      "message": "Why cast?",
+      "range": {
+        "startLine": 321,
+        "startChar": 24,
+        "endLine": 321,
+        "endChar": 37
+      },
+      "revId": "674561c73aee58a0c396c4e1068eeb7c3b439d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77b502c4_87229157",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/CSSModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-05T19:06:05Z",
+      "side": 1,
+      "message": "Already checked this in line 387.",
+      "range": {
+        "startLine": 389,
+        "startChar": 22,
+        "endLine": 389,
+        "endChar": 45
+      },
+      "revId": "674561c73aee58a0c396c4e1068eeb7c3b439d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9dd1fe1_fd662cb7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/CSSModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-05T19:06:05Z",
+      "side": 1,
+      "message": "Note this will result in undefined, and not null as before.",
+      "range": {
+        "startLine": 391,
+        "startChar": 26,
+        "endLine": 391,
+        "endChar": 50
+      },
+      "revId": "674561c73aee58a0c396c4e1068eeb7c3b439d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
