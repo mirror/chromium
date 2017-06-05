@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0a57e19_4e688836",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/blocklisted-service-in-optionalServices.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-05T17:47:57Z",
+      "side": 1,
+      "message": "Keep the gatt.connect() call to ensure this blocklist error is returned when it matters. Consider code breaking where the blocklist somehow only took effect when not connected, but once connected was ignored.",
+      "revId": "ef71f783fb992595db0229a2fcbfb12128826b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ae25c78_98f1802c",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-05T17:47:57Z",
+      "side": 1,
+      "message": "Describe this and how it\u0027s limited. IIUC we expect operations such as get services to crash in chromium if setNextGATTDiscoveryResponse is not called first?\nfrom:\n  FakePeripheral::DispatchDiscoveryResponse() {\n    DCHECK(next_discovery_response_);\n\nPerhaps we should have discovery default to completing unless an error has been registered?",
+      "range": {
+        "startLine": 469,
+        "startChar": 9,
+        "endLine": 469,
+        "endChar": 44
+      },
+      "revId": "ef71f783fb992595db0229a2fcbfb12128826b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d3976c4_e93eb37b",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/web-bluetooth-test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-05T17:47:57Z",
+      "side": 1,
+      "message": "How about:\nsetNextGATTDiscoveryResponse failed.",
+      "revId": "ef71f783fb992595db0229a2fcbfb12128826b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
