@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9199134_70b2c29a",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 1592,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-06-05T15:47:05Z",
+      "side": 1,
+      "message": "nit: please get a security owner to lgtm this",
+      "range": {
+        "startLine": 1592,
+        "startChar": 27,
+        "endLine": 1592,
+        "endChar": 30
+      },
+      "revId": "130d0d6e77f2ea47673e3914c8e948499ff6af70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
