@@ -43,7 +43,7 @@ class WebDocument;
 class WebMediaConstraints;
 class WebMediaStream;
 
-class WebUserMediaRequest {
+class BLINK_EXPORT WebUserMediaRequest {
  public:
   WebUserMediaRequest() {}
   WebUserMediaRequest(const WebUserMediaRequest& request) { Assign(request); }
