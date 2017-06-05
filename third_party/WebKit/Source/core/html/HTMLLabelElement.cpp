@@ -62,7 +62,7 @@ LabelableElement* HTMLLabelElement::control() const {
         if (!element.IsFormControlElement())
           UseCounter::Count(
               GetDocument(),
-              UseCounter::kHTMLLabelElementControlForNonFormAssociatedElement);
+              WebFeature::kHTMLLabelElementControlForNonFormAssociatedElement);
         return &element;
       }
     }
@@ -78,7 +78,7 @@ LabelableElement* HTMLLabelElement::control() const {
       if (!element->IsFormControlElement())
         UseCounter::Count(
             GetDocument(),
-            UseCounter::kHTMLLabelElementControlForNonFormAssociatedElement);
+            WebFeature::kHTMLLabelElementControlForNonFormAssociatedElement);
       return ToLabelableElement(element);
     }
   }
