@@ -12,23 +12,4 @@ import org.chromium.base.metrics.RecordHistogram;
 public final class PaymentRequestMetrics {
     // There should be no instance of PaymentRequestMetrics created.
     private PaymentRequestMetrics() {}
-
-    /*
-     * Records the metric that keeps track of what user information are requested by merchants to
-     * complete a payment request.
-     *
-     * @param requestEmail    Whether the merchant requested an email address.
-     * @param requestPhone    Whether the merchant requested a phone number.
-     * @param requestShipping Whether the merchant requested a shipping address.
-     * @param requestName     Whether the merchant requestes a name.
-     */
-    public static void recordRequestedInformationHistogram(boolean requestEmail,
-            boolean requestPhone, boolean requestShipping, boolean requestName) {
-        int requestInformation = (requestEmail ? RequestedInformation.EMAIL : 0)
-                | (requestPhone ? RequestedInformation.PHONE : 0)
-                | (requestShipping ? RequestedInformation.SHIPPING : 0)
-                | (requestName ? RequestedInformation.NAME : 0);
-        RecordHistogram.recordEnumeratedHistogram("PaymentRequest.RequestedInformation",
-                requestInformation, RequestedInformation.MAX);
-    }
 }
