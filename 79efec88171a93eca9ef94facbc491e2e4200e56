@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "48ceb075_7740b81f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-06-05T13:51:37Z",
+      "side": 1,
+      "message": "We are not creating any style here, we are just using caller\u0027s style id no one is provided by argument. This is just to have something nicer and clearer when calling this function to resolve the instance owns default alignment, which is the regular case.",
+      "parentUuid": "54553acc_db3a1d63",
+      "revId": "79efec88171a93eca9ef94facbc491e2e4200e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ea8cc23_a9822ce2",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8be3fe91_e95c8ade",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-06-05T13:51:37Z",
+      "side": 1,
+      "message": "I know we can have one function like \"FromOrToStretch\" or whatever we want to name it, eventually. We can have similar refactoring for the self-alignment functions, like so far, the only use of this logic is checking both axis and both kind of style changes. However, I really think such refactoring adds some noise to what is a clear and very specific fix for a performance regression. \n\nI can agree on defining less functions, less general and flexible, but more specific to the use we need so far; although I\u0027d rather implement that as a follow up patch.",
+      "parentUuid": "4ea8cc23_a9822ce2",
+      "revId": "79efec88171a93eca9ef94facbc491e2e4200e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b388a8f_f70e8988",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-05T13:06:53Z",
       "side": 1,
       "message": "...and we\u0027d just need a couple of calls here I guess.",
+      "revId": "79efec88171a93eca9ef94facbc491e2e4200e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc4ac15_869fc396",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-06-05T13:51:37Z",
+      "side": 1,
+      "message": "Yes, if we apply the above mentioned refactoring we would just need a couple of calls. We would miss some expliciyl info about the multi-axis behavior. In any case, I agree but I think it\u0027s better to do it in a different patch, really.",
+      "parentUuid": "9b388a8f_f70e8988",
       "revId": "79efec88171a93eca9ef94facbc491e2e4200e56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
