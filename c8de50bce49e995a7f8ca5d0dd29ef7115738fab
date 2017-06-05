@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e69e215_657706a2",
+        "filename": "third_party/WebKit/Source/core/offscreencanvas/OffscreenCanvas.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-05T18:38:13Z",
+      "side": 1,
+      "message": "I see that this function is public only because the unit tests needs it. Could you put a comment for that?",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 63
+      },
+      "revId": "c8de50bce49e995a7f8ca5d0dd29ef7115738fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b340fd8_e5f5a268",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-05T18:38:13Z",
+      "side": 1,
+      "message": "I don\u0027t think I get the full picture here. I thought it should be || instead of \u0026\u0026. Let\u0027s use the page visibility hidden as an example: say that a page is put in background, then we suspend the animation. Few seconds later, user put that page up in front, would that trigger needs_begin_frame_\u003dtrue?",
+      "range": {
+        "startLine": 454,
+        "startChar": 4,
+        "endLine": 454,
+        "endChar": 78
+      },
+      "revId": "c8de50bce49e995a7f8ca5d0dd29ef7115738fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
