@@ -1588,6 +1588,11 @@ def _CheckIpcOwners(input_api, output_api):
   # matching the above patterns, which trigger false positives.
   exclude_paths = [
       'third_party/crashpad/*',
+
+      # Some exceptions to the above rules to avoid needless security review for
+      # test-only mojoms.
+      '*_test.mojom',
+      '*/test_*.mojom',
   ]
 
   # Dictionary mapping an OWNERS file path to Patterns.
