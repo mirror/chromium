@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7405f21e_e3749187",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-05T18:16:26Z",
+      "side": 1,
+      "message": "That\u0027s not correct, this is in fact highly tied to a given WatchTimeSession. I.e. we are not reporting rebufferings for playbacks \u003c 7s or those that do not match the watch time contract.",
+      "parentUuid": "d51941ca_3f8edbd6",
+      "range": {
+        "startLine": 370,
+        "startChar": 7,
+        "endLine": 370,
+        "endChar": 45
+      },
+      "revId": "bd1e0107f8a3fa2a75a5c0b764c8bb26a3578921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f208f400_e9b99c29",
         "filename": "content/browser/media/media_internals.cc",
         "patchSetId": 3
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "594179c7_5b2e265d",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-05T18:16:26Z",
+      "side": 1,
+      "message": "I think what\u0027s here is highly scalable and what you propose is in fact not easily scalable or maintainable :)\n\nWhat you\u0027re proposing requires essentially splitting the logic of WatchTimeReporter in half; half for reporting every variable listed in the header today plus more for sending event times to the browser side and another half for running the calculations browser side. I originally explored this and found it not to be maintainable. The current design encapsulates all production logic and leaves MediaInternals as a mostly dumb reporter; making the system very testable. \n\nThe rebuffering metrics are required to be slightly different since they need to computed at finalize time and thus must be done in MediaInternals since the process may be killed and prevent the renderer side from initiating finalize. \n\nThe reason I chose this design is that for new metrics you just need to add new key mappings (just a pointer due to StringPiece) or just a new key plus a small amount of recording code. No new code is necessary to add new additions to the metrics. The current design avoids large swaths of copy-paste code with different string values (which is what we originally had) that is not as maintainable.\n\nI think what might make more sense is to remove watch time reporting and rebuffering metrics out of MediaInternals into a new MediaMetricsService; which further scopes the surface area of recording to just be \"dumb\" pass through.",
+      "parentUuid": "c927690d_0ef29394",
+      "range": {
+        "startLine": 498,
+        "startChar": 19,
+        "endLine": 498,
+        "endChar": 65
+      },
+      "revId": "bd1e0107f8a3fa2a75a5c0b764c8bb26a3578921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63f6dbf5_e4d93be4",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -105,6 +153,30 @@
       "writtenOn": "2017-06-03T05:53:12Z",
       "side": 1,
       "message": "Again, this is what YT does so it\u0027s fine. But I think it\u0027ll make more sense to have a UMA on average number of rebuffering per minute :)",
+      "range": {
+        "startLine": 30141,
+        "startChar": 23,
+        "endLine": 30141,
+        "endChar": 24
+      },
+      "revId": "bd1e0107f8a3fa2a75a5c0b764c8bb26a3578921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bac409c8_71bbd2fe",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 30141,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-05T18:16:26Z",
+      "side": 1,
+      "message": "Doing things this way specifically scopes that value to things we care about; i.e. foreground only, actively watched playbacks. Rebuffers per minute without scope of watch time I think will only be useful for relative analysis. Unlike YouTube we can\u0027t differentiate network underflow effects here which we mostly don\u0027t care about, so the more scoping we can have the better.",
+      "parentUuid": "8892d128_8c325be4",
       "range": {
         "startLine": 30141,
         "startChar": 23,
