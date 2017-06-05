@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb9a64d3_c9e52f6c",
+        "filename": "third_party/WebKit/public/web/WebFrame.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-05T08:26:37Z",
+      "side": 1,
+      "message": "Ahh OK, I remember why this needs virtual now. Without it I get the following error when linking liblink_core.so:\n\nobj/third_party/WebKit/Source/core/exported/exported/WebSharedWorkerImpl.o:../../third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp:function blink::WebSharedWorkerImpl::FrameDetached(blink::WebLocalFrame*, blink::WebFrameClient::DetachType): error: undefined reference to \u0027blink::WebFrame::Parent() const\u0027\nclang: error: linker command failed with exit code 1 (use -v to see invocation)\n\nI\u0027m not 100% sure why this is happening, but I think it\u0027s because WebSharedWorkerImpl needs Parent() in this line in web/:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/web/WebEmbeddedWorkerImpl.cpp?rcl\u003dd4fd4e36421025fb37bc556408e6f30b8e94a55a\u0026l\u003d315\nIt\u0027s calling it on a WebLocalFrame, which is in public/web, but the implementation is in web/ which core/ can\u0027t access. When it\u0027s not virtual, it needs access to the specific implementation in web/. But when it is virtual, it only needs access to the declaration in public/web (since it will use the runtime vtable to find the implementation). I\u0027m surprised its a linker error and not a compile error but there you go.\n\nI\u0027ve added a TODO to remove the \"virtual\" once WebFrame.cpp and WebLocalFrameImpl.cpp are in core/.",
+      "revId": "e2b0ef8f56a7792e6e259e85b4317921e088b18c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
