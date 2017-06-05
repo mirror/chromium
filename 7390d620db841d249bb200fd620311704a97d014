@@ -16,6 +16,24 @@
       "revId": "7390d620db841d249bb200fd620311704a97d014",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7665e006_964f10ad",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/webappapis/system-state-and-capabilities/the-navigator-object/navigator-pluginarray.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-06-05T18:31:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f96bbc14_c0c8edd2",
+      "revId": "7390d620db841d249bb200fd620311704a97d014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
