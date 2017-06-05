@@ -97,6 +97,22 @@
         return matches ? matches[1] : null;
     }
 
+    function mockPaymentRequest() {
+        var pathAndBase = pathAndBaseNameInWPT();
+        if (!pathAndBase || !pathAndBase.startsWith('/payment-request/'))
+            return;
+        var automationPath = location.pathname.replace(/\/external\/wpt\/.*$/, '/external/wpt_automation');
+        if (location.hostname == 'web-platform.test')
+            automationPath = '/wpt_automation';
+        var mojoHelpersScript = document.createElement('script');
+        mojoHelpersScript.src = automationPath + '/payment-request/mojo-helpers.js';
+        document.head.appendChild(mojoHelpersScript);
+        var paymentRequestMockScript = document.createElement('script');
+        paymentRequestMockScript.src = automationPath + '/payment-request/payment-request-mock.js';
+        document.head.appendChild(paymentRequestMockScript);
+    }
+    mockPaymentRequest();
+
     function loadAutomationScript() {
         var pathAndBase = pathAndBaseNameInWPT();
         if (!pathAndBase)

@@ -6,35 +6,35 @@
 <script src="/resources/testharness.js"></script>
 <script src="/resources/testharnessreport.js"></script>
 <script>
-'use strict';
+  'use strict';
 
-promise_test(t => {
-  const request1 = new PaymentRequest([{
-    supportedMethods: ['basic-card'],
-  }], {
-    total: {
-      label: 'request1',
-      amount: {
-        currency: 'USD',
-        value: '1.00',
-      },
-    },
-  });
-  const request2 = new PaymentRequest([{
-    supportedMethods: ['basic-card'],
-  }], {
-    total: {
-      label: 'request2',
-      amount: {
-        currency: 'USD',
-        value: '1.00',
-      },
-    },
-  });
-  const result = promise_rejects(t, null, request1.show());
-  promise_rejects(t, 'AbortError', request2.show())
-    .then(t.step_func(() => request1.abort()));
-  return result;
-}, 'If the user agent\'s "payment request is showing" boolean is true, ' +
-   'then return a promise rejected with an "AbortError" DOMException.');
+  promise_test(t => {
+      const request1 = new PaymentRequest([{
+        supportedMethods: ['basic-card'],
+      }], {
+        total: {
+          label: 'request1',
+          amount: {
+            currency: 'USD',
+            value: '1.00',
+          },
+        },
+      });
+      const request2 = new PaymentRequest([{
+        supportedMethods: ['basic-card'],
+      }], {
+        total: {
+          label: 'request2',
+          amount: {
+            currency: 'USD',
+            value: '1.00',
+          },
+        },
+      });
+      const result = promise_rejects(t, 'AbortError', request1.show());
+      promise_rejects(t, 'AbortError', request2.show())
+        .then(t.step_func(() => request1.abort()));
+      return result;
+    }, 'If the user agent\'s "payment request is showing" boolean is true, ' +
+    'then return a promise rejected with an "AbortError" DOMException.');
 </script>
