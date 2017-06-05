@@ -109,6 +109,13 @@ const char kProfilerTimingDisabledValue[]   = "0";
 // for tests.
 const char kProfilingFile[] = "profiling-file";
 
+// Uses shared memory global dumps and ownership edges for them instead of
+// current global dumps. This makes tracing memory-infra dumpes show
+// base::SharedMemory usages. This feature is implemented behind flag until
+// base::SharedMemory's GUID works regarding Mojo (crbug/713763).
+const char kUseSharedMemoryOwnershipEdges[] =
+    "use-shared-memory-ownership-edges";
+
 #if defined(OS_WIN)
 // Disables the USB keyboard detection for blocking the OSK on Win8+.
 const char kDisableUsbKeyboardDetect[]      = "disable-usb-keyboard-detect";
