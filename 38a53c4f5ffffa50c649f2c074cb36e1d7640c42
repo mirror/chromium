@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e59ed01_21418985",
+        "filename": "chromecast/media/cma/backend/android/audio_sink_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1211940
+      },
+      "writtenOn": "2017-06-05T22:12:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dd2ef9f_1fade360",
+      "range": {
+        "startLine": 52,
+        "startChar": 12,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "38a53c4f5ffffa50c649f2c074cb36e1d7640c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19df9186_4d9a6420",
         "filename": "chromecast/media/cma/backend/android/audio_sink_manager.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-03T05:26:38Z",
       "side": 1,
       "message": "why do you need this class?  it doesn\u0027t do anything?",
+      "revId": "38a53c4f5ffffa50c649f2c074cb36e1d7640c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c395e2_a472307d",
+        "filename": "chromecast/media/cma/backend/android/audio_sink_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1211940
+      },
+      "writtenOn": "2017-06-05T22:12:58Z",
+      "side": 1,
+      "message": "That is how Cast code is implementing a singleton pattern. The ctor/dtor of AudioSinkManager are protected and inherited by AudioSinkManagerInstance.  Then you create the singleton instance in lines 30-31 and get access to it in lines 40-42.",
+      "parentUuid": "19df9186_4d9a6420",
       "revId": "38a53c4f5ffffa50c649f2c074cb36e1d7640c42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "7ad2d121_7cd7a0d7",
+        "filename": "chromecast/media/cma/backend/android/audio_sink_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1211940
+      },
+      "writtenOn": "2017-06-05T22:12:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc746ef9_32270bb4",
+      "range": {
+        "startLine": 93,
+        "startChar": 39,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "38a53c4f5ffffa50c649f2c074cb36e1d7640c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "248ddce2_54677315",
         "filename": "chromecast/media/cma/backend/android/audio_sink_manager.h",
         "patchSetId": 1
@@ -79,6 +145,24 @@
       "revId": "38a53c4f5ffffa50c649f2c074cb36e1d7640c42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31693081_eaf4f8da",
+        "filename": "chromecast/media/cma/backend/android/audio_sink_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1211940
+      },
+      "writtenOn": "2017-06-05T22:12:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "248ddce2_54677315",
+      "revId": "38a53c4f5ffffa50c649f2c074cb36e1d7640c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -102,6 +186,30 @@
       "revId": "38a53c4f5ffffa50c649f2c074cb36e1d7640c42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b87c2f3_f6c9e5b4",
+        "filename": "chromecast/media/cma/backend/android/audio_sink_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1211940
+      },
+      "writtenOn": "2017-06-05T22:12:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c5a3be4_c7516335",
+      "range": {
+        "startLine": 58,
+        "startChar": 45,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "38a53c4f5ffffa50c649f2c074cb36e1d7640c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
