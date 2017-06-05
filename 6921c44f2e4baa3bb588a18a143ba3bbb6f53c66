@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f1978a77_2a8d7435",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleScript.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-05T06:38:41Z",
+      "side": 1,
+      "message": "This is addressed in dep CL",
+      "parentUuid": "0d1f9d68_1de4da7b",
+      "range": {
+        "startLine": 122,
+        "startChar": 5,
+        "endLine": 122,
+        "endChar": 15
+      },
+      "revId": "6921c44f2e4baa3bb588a18a143ba3bbb6f53c66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d98479f_d19e9f8c",
         "filename": "third_party/WebKit/Source/core/dom/ModuleScript.cpp",
         "patchSetId": 3
