@@ -141,6 +141,30 @@
       "revId": "cf5aeda4cdcb45e730e795c272fe0063ee46e96c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51b6394a_3453e716",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-06-05T04:08:45Z",
+      "side": 1,
+      "message": "Oops, I realised I did put them in, but in the wrong place. It\u0027s fixed in Patchset 18.\nOh, that makes sense why it wasn\u0027t compiling - thanks for the FYI!",
+      "parentUuid": "94b7449c_f1867877",
+      "range": {
+        "startLine": 39,
+        "startChar": 1,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "cf5aeda4cdcb45e730e795c272fe0063ee46e96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
