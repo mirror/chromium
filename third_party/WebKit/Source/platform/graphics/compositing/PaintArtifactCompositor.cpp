@@ -158,6 +158,20 @@ class PaintArtifactCompositor::ContentLayerClientImpl
     return paint_chunk.id && id_ == *paint_chunk.id;
   }
 
+  void CheckRasterUnderInvalidations(RasterInvalidationTracking& tracking) {
+    PaintRecorder recorder;
+    IntRect rect(0, 0, paintable_region_.width(), paintable_region_.height());
+    recorder.beginRecording(rect);
+    recorder.getRecordingCanvas()->drawDisplayItemList(cc_display_item_list_);
+    if (auto under_invalidation_record = tracking.CheckUnderInvalidations(
+            debug_name_, recorder.finishRecordingAsPicture(), rect)) {
+      cc_display_item_list_->CreateAndAppendDrawingItem<cc::DrawingDisplayItem>(
+          rect, std::move(under_invalidation_record), rect);
+    }
+  }
+
+  String DebugName() const { return debug_name_; }
+
  private:
   PaintChunk::Id id_;
   String debug_name_;
@@ -301,6 +315,7 @@ PaintArtifactCompositor::CompositedLayerForPendingLayer(
   cc_picture_layer->SetIsDrawable(true);
   cc_picture_layer->SetContentsOpaque(pending_layer.known_to_be_opaque);
   content_layer_client->ClearPaintChunkDebugData();
+  RasterInvalidationTracking* cc_tracking = nullptr;
 
   for (const auto& paint_chunk : pending_layer.paint_chunks) {
     if (store_debug_info) {
@@ -326,14 +341,19 @@ PaintArtifactCompositor::CompositedLayerForPendingLayer(
 
       if (!raster_tracking)
         continue;
-      auto& cc_tracking =
-          content_layer_client->EnsureRasterInvalidationTracking();
+
+      if (!cc_tracking)
+        cc_tracking = &content_layer_client->EnsureRasterInvalidationTracking();
       auto info = raster_tracking->invalidations[i];
       info.rect = rect;
-      cc_tracking.invalidations.push_back(info);
-      cc_tracking.invalidation_region_since_last_paint.Unite(rect);
+      cc_tracking->invalidations.push_back(info);
+      cc_tracking->invalidation_region_since_last_paint.Unite(rect);
     }
   }
+
+  if (cc_tracking &&
+      RuntimeEnabledFeatures::paintUnderInvalidationCheckingEnabled())
+    content_layer_client->CheckRasterUnderInvalidations(*cc_tracking);
 
   new_content_layer_clients.push_back(std::move(content_layer_client));
   return cc_picture_layer;
