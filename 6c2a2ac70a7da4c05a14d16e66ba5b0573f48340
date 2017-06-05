@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9681791d_187ed3b0",
+        "filename": "components/safe_browsing_db/v4_local_database_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-06-05T16:24:44Z",
+      "side": 1,
+      "message": "Since you\u0027re NOTREACH()ing if there\u0027s a match, you could say it shouldn\u0027t overlap (i.e. it\u0027s not allowed to overlap)_",
+      "range": {
+        "startLine": 37,
+        "startChar": 17,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "6c2a2ac70a7da4c05a14d16e66ba5b0573f48340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
