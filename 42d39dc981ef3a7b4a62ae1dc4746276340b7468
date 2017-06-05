@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "715c1bac_8b09f7ed",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-06-05T20:45:03Z",
+      "side": 1,
+      "message": "OOC, does \"sample size\" ever have an impact on anything? In Chromium, we always pass audio signal data in planar 32-bit float format.\n\nAlso relevant: http://crbug.com/609890",
+      "range": {
+        "startLine": 53,
+        "startChar": 1,
+        "endLine": 56,
+        "endChar": 3
+      },
+      "revId": "42d39dc981ef3a7b4a62ae1dc4746276340b7468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ff12fe5_107fed16",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-06-05T20:45:03Z",
+      "side": 1,
+      "message": "FWIW, content capture is made by opening a normal AudioInputDevice and should support any sample_rate/channel_count settings that normal audio input devices do. (There is re-mixing of audio in the browser process.)\n\nOr, did you discover some other reason content capture cannot support different device settings? (Maybe some of the code I used to know has changed a lot over the past several years.)",
+      "range": {
+        "startLine": 49,
+        "startChar": 37,
+        "endLine": 51,
+        "endChar": 30
+      },
+      "revId": "42d39dc981ef3a7b4a62ae1dc4746276340b7468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74cad686_fdeb3fb2",
+        "filename": "content/renderer/media/media_stream_constraints_util_sets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-06-05T20:45:03Z",
+      "side": 1,
+      "message": "Something to consider: \u0027StringSet\u0027 and \u0027BoolSet\u0027 are fairly abstract names. I\u0027m worried that there could potentially be namespace clashing in the future. You might want to put these data structures in an inner namespace (e.g., \"blink::media_track_constraints\"), instead of just in the \"blink\" namespace.",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 34
+      },
+      "revId": "42d39dc981ef3a7b4a62ae1dc4746276340b7468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
