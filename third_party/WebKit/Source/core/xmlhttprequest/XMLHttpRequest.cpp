@@ -60,6 +60,7 @@
 #include "core/xmlhttprequest/XMLHttpRequestUpload.h"
 #include "platform/FileMetadata.h"
 #include "platform/HTTPNames.h"
+#include "platform/Histogram.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/SharedBuffer.h"
 #include "platform/bindings/DOMWrapperWorld.h"
@@ -132,6 +133,13 @@ void LogConsoleError(ExecutionContext* context, const String& message) {
       ConsoleMessage::Create(kJSMessageSource, kErrorMessageLevel, message);
   context->AddConsoleMessage(console_message);
 }
+
+enum HeaderValueCategoryByRFC7230 {
+  kHeaderValueInvalid,
+  kHeaderValueAffectedByNormalization,
+  kHeaderValueValid,
+  kHeaderValueCategoryByRFC7230End
+};
 
 bool ValidateOpenArguments(const AtomicString& method,
                            const KURL& url,
@@ -362,8 +370,7 @@ Blob* XMLHttpRequest::ResponseBlob() {
       size_t size = 0;
       if (binary_response_builder_ && binary_response_builder_->size()) {
         binary_response_builder_->ForEachSegment(
-            [&blob_data](const char* segment, size_t segment_size,
-                         size_t segment_offset) {
+            [&blob_data](const char* segment, size_t segment_size) {
               blob_data->AppendBytes(segment, segment_size);
             });
         size = binary_response_builder_->size();
@@ -799,7 +806,7 @@ void XMLHttpRequest::send(Blob* body, ExceptionState& exception_state) {
 
   if (AreMethodAndURLValidForSend()) {
     if (GetRequestHeader(HTTPNames::Content_Type).IsEmpty()) {
-      const String& blob_type = FetchUtils::NormalizeHeaderValue(body->type());
+      const String& blob_type = body->type();
       if (!blob_type.IsEmpty() && ParsedContentType(blob_type).IsValid()) {
         SetRequestHeaderInternal(HTTPNames::Content_Type,
                                  AtomicString(blob_type));
@@ -840,7 +847,7 @@ void XMLHttpRequest::send(FormData* body, ExceptionState& exception_state) {
     if (GetRequestHeader(HTTPNames::Content_Type).IsEmpty()) {
       AtomicString content_type =
           AtomicString("multipart/form-data; boundary=") +
-          FetchUtils::NormalizeHeaderValue(http_body->Boundary().data());
+          http_body->Boundary().data();
       SetRequestHeaderInternal(HTTPNames::Content_Type, content_type);
     }
   }
@@ -1298,36 +1305,28 @@ void XMLHttpRequest::overrideMimeType(const AtomicString& mime_type,
   mime_type_override_ = mime_type;
 }
 
-// https://xhr.spec.whatwg.org/#the-setrequestheader()-method
 void XMLHttpRequest::setRequestHeader(const AtomicString& name,
                                       const AtomicString& value,
                                       ExceptionState& exception_state) {
-  // "1. If |state| is not "opened", throw an InvalidStateError exception.
-  //  2. If the send() flag is set, throw an InvalidStateError exception."
   if (state_ != kOpened || send_flag_) {
     exception_state.ThrowDOMException(kInvalidStateError,
                                       "The object's state must be OPENED.");
     return;
   }
 
-  // "3. Normalize |value|."
-  const String normalized_value = FetchUtils::NormalizeHeaderValue(value);
-
-  // "4. If |name| is not a name or |value| is not a value, throw a SyntaxError
-  //     exception."
   if (!IsValidHTTPToken(name)) {
     exception_state.ThrowDOMException(
         kSyntaxError, "'" + name + "' is not a valid HTTP header field name.");
     return;
   }
-  if (!IsValidHTTPHeaderValue(normalized_value)) {
+
+  if (!IsValidHTTPHeaderValue(value)) {
     exception_state.ThrowDOMException(
         kSyntaxError,
-        "'" + normalized_value + "' is not a valid HTTP header field value.");
+        "'" + value + "' is not a valid HTTP header field value.");
     return;
   }
 
-  // "5. Terminate these steps if |name| is a forbidden header name."
   // No script (privileged or not) can set unsafe headers.
   if (FetchUtils::IsForbiddenHeaderName(name)) {
     LogConsoleError(GetExecutionContext(),
@@ -1335,19 +1334,43 @@ void XMLHttpRequest::setRequestHeader(const AtomicString& name,
     return;
   }
 
-  // "6. Combine |name|/|value| in author request headers."
-  SetRequestHeaderInternal(name, AtomicString(normalized_value));
+  SetRequestHeaderInternal(name, value);
 }
 
 void XMLHttpRequest::SetRequestHeaderInternal(const AtomicString& name,
                                               const AtomicString& value) {
-  DCHECK_EQ(value, FetchUtils::NormalizeHeaderValue(value))
-      << "Header values must be normalized";
+  HeaderValueCategoryByRFC7230 header_value_category = kHeaderValueValid;
+
   HTTPHeaderMap::AddResult result = request_headers_.Add(name, value);
   if (!result.is_new_entry) {
     AtomicString new_value = result.stored_value->value + ", " + value;
+
+    // Without normalization at XHR level here, the actual header value
+    // sent to the network is |newValue| with leading/trailing whitespaces
+    // stripped (i.e. |normalizeHeaderValue(newValue)|).
+    // With normalization at XHR level here as the spec requires, the
+    // actual header value sent to the network is |normalizedNewValue|.
+    // If these two are different, introducing normalization here affects
+    // the header value sent to the network.
+    String normalized_new_value =
+        FetchUtils::NormalizeHeaderValue(result.stored_value->value) + ", " +
+        FetchUtils::NormalizeHeaderValue(value);
+    if (FetchUtils::NormalizeHeaderValue(new_value) != normalized_new_value)
+      header_value_category = kHeaderValueAffectedByNormalization;
+
     result.stored_value->value = new_value;
   }
+
+  String normalized_value = FetchUtils::NormalizeHeaderValue(value);
+  if (!normalized_value.IsEmpty() &&
+      !IsValidHTTPFieldContentRFC7230(normalized_value))
+    header_value_category = kHeaderValueInvalid;
+
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(
+      EnumerationHistogram, header_value_category_histogram,
+      ("Blink.XHR.setRequestHeader.HeaderValueCategoryInRFC7230",
+       kHeaderValueCategoryByRFC7230End));
+  header_value_category_histogram.Count(header_value_category);
 }
 
 const AtomicString& XMLHttpRequest::GetRequestHeader(

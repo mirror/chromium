@@ -33,7 +33,6 @@ class WebFrameWidget;
 class WebInputMethodController;
 class WebRange;
 class WebScriptExecutionCallback;
-class WebSharedWorkerRepositoryClient;
 class WebTextCheckClient;
 class WebURLLoader;
 enum class WebCachePolicy;
@@ -111,8 +110,6 @@ class WebLocalFrame : public WebFrame {
   virtual WebAutofillClient* AutofillClient() = 0;
   virtual void SetDevToolsAgentClient(WebDevToolsAgentClient*) = 0;
   virtual WebDevToolsAgent* DevToolsAgent() = 0;
-  virtual void SetSharedWorkerRepositoryClient(
-      WebSharedWorkerRepositoryClient*) = 0;
 
   // Hierarchy ----------------------------------------------------------
 
@@ -571,11 +568,6 @@ class WebLocalFrame : public WebFrame {
   // Creates and returns a loader. This function can be called only when this
   // frame is attached to a document.
   virtual std::unique_ptr<WebURLLoader> CreateURLLoader() = 0;
-
-  // Geometry -----------------------------------------------------------------
-
-  // If set to false, do not draw scrollbars on this frame's view.
-  virtual void SetCanHaveScrollbars(bool) = 0;
 
  protected:
   explicit WebLocalFrame(WebTreeScopeType scope) : WebFrame(scope) {}

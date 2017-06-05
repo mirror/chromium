@@ -130,8 +130,8 @@ class LayerTreeHostImplTest : public testing::Test,
     LayerTreeSettings settings;
     settings.enable_surface_synchronization = true;
     settings.minimum_occlusion_tracking_size = gfx::Size();
-    settings.renderer_settings.texture_id_allocation_chunk_size = 1;
-    settings.buffer_to_texture_target_map =
+    settings.resource_settings.texture_id_allocation_chunk_size = 1;
+    settings.resource_settings.buffer_to_texture_target_map =
         DefaultBufferToTextureTargetMapForTesting();
     return settings;
   }
@@ -1446,7 +1446,7 @@ TEST_F(LayerTreeHostImplTest, ScrollWithUserUnscrollableLayers) {
   EXPECT_VECTOR_EQ(gfx::Vector2dF(), scroll_layer->CurrentScrollOffset());
   EXPECT_VECTOR_EQ(gfx::Vector2dF(10, 10), overflow->CurrentScrollOffset());
 
-  overflow->test_properties()->user_scrollable_horizontal = false;
+  overflow->set_user_scrollable_horizontal(false);
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
   DrawFrame();
@@ -1464,7 +1464,7 @@ TEST_F(LayerTreeHostImplTest, ScrollWithUserUnscrollableLayers) {
   EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), scroll_layer->CurrentScrollOffset());
   EXPECT_VECTOR_EQ(gfx::Vector2dF(10, 20), overflow->CurrentScrollOffset());
 
-  overflow->test_properties()->user_scrollable_vertical = false;
+  overflow->set_user_scrollable_vertical(false);
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
   DrawFrame();
 
@@ -3226,8 +3226,6 @@ TEST_F(LayerTreeHostImplTest, ScrollbarInnerLargerThanOuter) {
 
   horiz_scrollbar->SetScrollElementId(root_scroll->element_id());
 
-  host_impl_->active_tree()->UpdateScrollbarGeometries();
-
   EXPECT_EQ(300, horiz_scrollbar->clip_layer_length());
 }
 
@@ -3334,7 +3332,6 @@ TEST_F(LayerTreeHostImplTest, ScrollbarRegistration) {
   animation_task_ = base::Closure();
   child_clip_ptr->SetBounds(gfx::Size(200, 200));
   child_ptr->set_needs_show_scrollbars(true);
-  host_impl_->active_tree()->BuildPropertyTreesForTesting();
   host_impl_->active_tree()->HandleScrollbarShowRequestsFromMain();
   EXPECT_FALSE(animation_task_.Equals(base::Closure()));
   animation_task_ = base::Closure();
@@ -3554,9 +3551,7 @@ TEST_F(LayerTreeHostImplTest, CompositorFrameMetadata) {
   {
     host_impl_->active_tree()
         ->OuterViewportScrollLayer()
-        ->test_properties()
-        ->user_scrollable_horizontal = false;
-    host_impl_->active_tree()->BuildPropertyTreesForTesting();
+        ->set_user_scrollable_horizontal(false);
     CompositorFrameMetadata metadata =
         host_impl_->MakeCompositorFrameMetadata();
     EXPECT_TRUE(metadata.root_overflow_x_hidden);
@@ -3564,9 +3559,7 @@ TEST_F(LayerTreeHostImplTest, CompositorFrameMetadata) {
 
     host_impl_->active_tree()
         ->OuterViewportScrollLayer()
-        ->test_properties()
-        ->user_scrollable_vertical = false;
-    host_impl_->active_tree()->BuildPropertyTreesForTesting();
+        ->set_user_scrollable_vertical(false);
     metadata = host_impl_->MakeCompositorFrameMetadata();
     EXPECT_TRUE(metadata.root_overflow_x_hidden);
     EXPECT_TRUE(metadata.root_overflow_y_hidden);
@@ -3576,13 +3569,10 @@ TEST_F(LayerTreeHostImplTest, CompositorFrameMetadata) {
   {
     host_impl_->active_tree()
         ->OuterViewportScrollLayer()
-        ->test_properties()
-        ->user_scrollable_horizontal = true;
+        ->set_user_scrollable_horizontal(true);
     host_impl_->active_tree()
         ->OuterViewportScrollLayer()
-        ->test_properties()
-        ->user_scrollable_vertical = true;
-    host_impl_->active_tree()->BuildPropertyTreesForTesting();
+        ->set_user_scrollable_vertical(true);
     CompositorFrameMetadata metadata =
         host_impl_->MakeCompositorFrameMetadata();
     EXPECT_FALSE(metadata.root_overflow_x_hidden);
@@ -3594,9 +3584,7 @@ TEST_F(LayerTreeHostImplTest, CompositorFrameMetadata) {
   {
     host_impl_->active_tree()
         ->InnerViewportScrollLayer()
-        ->test_properties()
-        ->user_scrollable_horizontal = false;
-    host_impl_->active_tree()->BuildPropertyTreesForTesting();
+        ->set_user_scrollable_horizontal(false);
     CompositorFrameMetadata metadata =
         host_impl_->MakeCompositorFrameMetadata();
     EXPECT_TRUE(metadata.root_overflow_x_hidden);
@@ -3604,9 +3592,7 @@ TEST_F(LayerTreeHostImplTest, CompositorFrameMetadata) {
 
     host_impl_->active_tree()
         ->InnerViewportScrollLayer()
-        ->test_properties()
-        ->user_scrollable_vertical = false;
-    host_impl_->active_tree()->BuildPropertyTreesForTesting();
+        ->set_user_scrollable_vertical(false);
     metadata = host_impl_->MakeCompositorFrameMetadata();
     EXPECT_TRUE(metadata.root_overflow_x_hidden);
     EXPECT_TRUE(metadata.root_overflow_y_hidden);
@@ -4352,99 +4338,6 @@ TEST_F(LayerTreeHostImplBrowserControlsTest,
     ASSERT_EQ(gfx::Size(50, 100), outer_container->bounds());
     EXPECT_EQ(gfx::SizeF(50, 100), active_tree->ScrollableSize());
     EXPECT_EQ(gfx::SizeF(50, 50), content->BoundsForScrolling());
-  }
-
-  host_impl_->browser_controls_manager()->ScrollEnd();
-  host_impl_->ScrollEnd(EndState().get());
-}
-
-// Tests that browser controls affect the position of horizontal scrollbars.
-TEST_F(LayerTreeHostImplBrowserControlsTest,
-       HidingBrowserControlsAdjustsScrollbarPosition) {
-  SetupBrowserControlsAndScrollLayerWithVirtualViewport(
-      gfx::Size(50, 50), gfx::Size(50, 50), gfx::Size(50, 50));
-
-  LayerTreeImpl* active_tree = host_impl_->active_tree();
-
-  // Create a horizontal scrollbar.
-  const int scrollbar_id = 23;
-  gfx::Size scrollbar_size(gfx::Size(50, 15));
-  std::unique_ptr<SolidColorScrollbarLayerImpl> scrollbar =
-      SolidColorScrollbarLayerImpl::Create(host_impl_->active_tree(),
-                                           scrollbar_id, HORIZONTAL, 3, 20,
-                                           false, true);
-  scrollbar->SetScrollElementId(
-      host_impl_->OuterViewportScrollLayer()->element_id());
-  scrollbar->SetDrawsContent(true);
-  scrollbar->SetBounds(scrollbar_size);
-  scrollbar->SetTouchEventHandlerRegion(gfx::Rect(scrollbar_size));
-  scrollbar->SetCurrentPos(0);
-  scrollbar->SetPosition(gfx::PointF(0, 35));
-  host_impl_->active_tree()
-      ->InnerViewportContainerLayer()
-      ->test_properties()
-      ->AddChild(std::move(scrollbar));
-  host_impl_->active_tree()->BuildPropertyTreesForTesting();
-  host_impl_->active_tree()->UpdateScrollbarGeometries();
-
-  DrawFrame();
-
-  LayerImpl* inner_container = active_tree->InnerViewportContainerLayer();
-  LayerImpl* outer_container = active_tree->OuterViewportContainerLayer();
-  SolidColorScrollbarLayerImpl* scrollbar_layer =
-      static_cast<SolidColorScrollbarLayerImpl*>(
-          active_tree->LayerById(scrollbar_id));
-
-  // The browser controls should start off showing so the viewport should be
-  // shrunk.
-  EXPECT_EQ(gfx::Size(50, 50), inner_container->bounds());
-  EXPECT_EQ(gfx::Size(50, 50), outer_container->bounds());
-  EXPECT_EQ(gfx::SizeF(50, 50), active_tree->ScrollableSize());
-  EXPECT_EQ(gfx::Size(50, 15), scrollbar_layer->bounds());
-  EXPECT_EQ(gfx::Rect(20, 0, 10, 3), scrollbar_layer->ComputeThumbQuadRect());
-
-  EXPECT_EQ(InputHandler::SCROLL_ON_IMPL_THREAD,
-            host_impl_
-                ->ScrollBegin(BeginState(gfx::Point()).get(),
-                              InputHandler::TOUCHSCREEN)
-                .thread);
-
-  host_impl_->browser_controls_manager()->ScrollBegin();
-
-  // Hide the browser controls by a bit, the scrollable size should increase but
-  // the actual content bounds shouldn't.
-  {
-    host_impl_->browser_controls_manager()->ScrollBy(gfx::Vector2dF(0.f, 25.f));
-    host_impl_->active_tree()->UpdateScrollbarGeometries();
-    ASSERT_EQ(gfx::Size(50, 75), inner_container->bounds());
-    ASSERT_EQ(gfx::Size(50, 75), outer_container->bounds());
-    EXPECT_EQ(gfx::SizeF(50, 75), active_tree->ScrollableSize());
-    EXPECT_EQ(gfx::Size(50, 15), scrollbar_layer->bounds());
-    EXPECT_EQ(gfx::Rect(20, 25, 10, 3),
-              scrollbar_layer->ComputeThumbQuadRect());
-  }
-
-  // Fully hide the browser controls.
-  {
-    host_impl_->browser_controls_manager()->ScrollBy(gfx::Vector2dF(0.f, 25.f));
-    host_impl_->active_tree()->UpdateScrollbarGeometries();
-    ASSERT_EQ(gfx::Size(50, 100), inner_container->bounds());
-    ASSERT_EQ(gfx::Size(50, 100), outer_container->bounds());
-    EXPECT_EQ(gfx::SizeF(50, 100), active_tree->ScrollableSize());
-    EXPECT_EQ(gfx::Size(50, 15), scrollbar_layer->bounds());
-    EXPECT_EQ(gfx::Rect(20, 50, 10, 3),
-              scrollbar_layer->ComputeThumbQuadRect());
-  }
-
-  // Additional scrolling shouldn't have any effect.
-  {
-    host_impl_->browser_controls_manager()->ScrollBy(gfx::Vector2dF(0.f, 25.f));
-    ASSERT_EQ(gfx::Size(50, 100), inner_container->bounds());
-    ASSERT_EQ(gfx::Size(50, 100), outer_container->bounds());
-    EXPECT_EQ(gfx::SizeF(50, 100), active_tree->ScrollableSize());
-    EXPECT_EQ(gfx::Size(50, 15), scrollbar_layer->bounds());
-    EXPECT_EQ(gfx::Rect(20, 50, 10, 3),
-              scrollbar_layer->ComputeThumbQuadRect());
   }
 
   host_impl_->browser_controls_manager()->ScrollEnd();
@@ -10365,8 +10258,8 @@ TEST_F(LayerTreeHostImplVirtualViewportTest,
   SetupVirtualViewportLayers(content_size, outer_viewport, inner_viewport);
   // Make inner viewport unscrollable.
   LayerImpl* inner_scroll = host_impl_->InnerViewportScrollLayer();
-  inner_scroll->test_properties()->user_scrollable_horizontal = false;
-  inner_scroll->test_properties()->user_scrollable_vertical = false;
+  inner_scroll->set_user_scrollable_horizontal(false);
+  inner_scroll->set_user_scrollable_vertical(false);
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
   DrawFrame();
@@ -11369,12 +11262,8 @@ TEST_F(LayerTreeHostImplTimelinesTest, ScrollAnimatedNotUserScrollable) {
   const gfx::Size viewport_size(500, 500);
   CreateBasicVirtualViewportLayers(viewport_size, content_size);
 
-  host_impl_->OuterViewportScrollLayer()
-      ->test_properties()
-      ->user_scrollable_vertical = true;
-  host_impl_->OuterViewportScrollLayer()
-      ->test_properties()
-      ->user_scrollable_horizontal = false;
+  host_impl_->OuterViewportScrollLayer()->set_user_scrollable_vertical(true);
+  host_impl_->OuterViewportScrollLayer()->set_user_scrollable_horizontal(false);
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
   DrawFrame();
@@ -12232,7 +12121,6 @@ void LayerTreeHostImplTest::SetupMouseMoveAtTestScrollbarStates(
       ->AddChild(std::move(scrollbar_1));
 
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
-  host_impl_->active_tree()->UpdateScrollbarGeometries();
   host_impl_->active_tree()->DidBecomeActive();
 
   DrawFrame();
@@ -12341,7 +12229,6 @@ void LayerTreeHostImplTest::SetupMouseMoveAtTestScrollbarStates(
   root_scroll->test_properties()->AddChild(std::move(child_clip));
 
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
-  host_impl_->active_tree()->UpdateScrollbarGeometries();
   host_impl_->active_tree()->DidBecomeActive();
 
   ScrollbarAnimationController* scrollbar_2_animation_controller =

@@ -121,7 +121,6 @@ class NavigationManagerImpl : public NavigationManager {
       BrowserURLRewriter::URLRewriter rewriter) override;
   int GetItemCount() const override;
   NavigationItem* GetItemAtIndex(size_t index) const override;
-  int GetIndexOfItem(const NavigationItem* item) const override;
   int GetPendingItemIndex() const override;
   int GetLastCommittedItemIndex() const override;
   bool RemoveItemAtIndex(int index) override;

@@ -29,7 +29,6 @@ namespace arc {
 //
 // Content URL based functions are:
 // - GetFileSize()
-// - GetMimeType()
 // - OpenFileToRead()
 // Fake files for those functions can be set up by AddFile().
 //
@@ -57,16 +56,10 @@ class FakeFileSystemInstance : public mojom::FileSystemInstance {
     // The content of a file.
     std::string content;
 
-    // The MIME type of a file.
-    std::string mime_type;
-
     // Whether this file is seekable or not.
     Seekable seekable;
 
-    File(const std::string& url,
-         const std::string& content,
-         const std::string& mime_type,
-         Seekable seekable);
+    File(const std::string& url, const std::string& content, Seekable seekable);
     File(const File& that);
     ~File();
   };
@@ -137,8 +130,6 @@ class FakeFileSystemInstance : public mojom::FileSystemInstance {
                    const GetDocumentCallback& callback) override;
   void GetFileSize(const std::string& url,
                    const GetFileSizeCallback& callback) override;
-  void GetMimeType(const std::string& url,
-                   const GetMimeTypeCallback& callback) override;
   void Init(mojom::FileSystemHostPtr host) override;
   void OpenFileToRead(const std::string& url,
                       const OpenFileToReadCallback& callback) override;

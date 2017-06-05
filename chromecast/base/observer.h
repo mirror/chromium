@@ -114,7 +114,6 @@
 #include "base/memory/ref_counted.h"
 #include "base/sequence_checker.h"
 #include "base/sequenced_task_runner.h"
-#include "base/stl_util.h"
 #include "base/synchronization/lock.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 
@@ -267,14 +266,16 @@ class ObservableInternals
     void AddObserver(Observer<T>* observer) {
       DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
       DCHECK(observer);
-      DCHECK(!base::ContainsValue(observers_, observer));
+      DCHECK(std::find(observers_.begin(), observers_.end(), observer) ==
+             observers_.end());
       observers_.push_back(observer);
     }
 
     void RemoveObserver(Observer<T>* observer) {
       DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
       DCHECK(observer);
-      DCHECK(base::ContainsValue(observers_, observer));
+      DCHECK(std::find(observers_.begin(), observers_.end(), observer) !=
+             observers_.end());
       observers_.erase(
           std::remove(observers_.begin(), observers_.end(), observer),
           observers_.end());

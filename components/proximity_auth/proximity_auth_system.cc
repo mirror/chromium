@@ -25,8 +25,7 @@ const int64_t kPasswordReauthPeriodHours = 20;
 ProximityAuthSystem::ProximityAuthSystem(
     ScreenlockType screenlock_type,
     ProximityAuthClient* proximity_auth_client)
-    : screenlock_type_(screenlock_type),
-      proximity_auth_client_(proximity_auth_client),
+    : proximity_auth_client_(proximity_auth_client),
       unlock_manager_(
           new UnlockManagerImpl(screenlock_type, proximity_auth_client)),
       clock_(new base::DefaultClock()),
@@ -42,8 +41,7 @@ ProximityAuthSystem::ProximityAuthSystem(
     std::unique_ptr<UnlockManager> unlock_manager,
     std::unique_ptr<base::Clock> clock,
     std::unique_ptr<ProximityAuthPrefManager> pref_manager)
-    : screenlock_type_(screenlock_type),
-      proximity_auth_client_(proximity_auth_client),
+    : proximity_auth_client_(proximity_auth_client),
       unlock_manager_(std::move(unlock_manager)),
       clock_(std::move(clock)),
       pref_manager_(std::move(pref_manager)),
@@ -191,11 +189,6 @@ void ProximityAuthSystem::OnFocusedUserChanged(const AccountId& account_id) {
 }
 
 bool ProximityAuthSystem::ShouldForcePassword() {
-  // TODO(tengs): We need to properly propagate the last login time to the login
-  // screen.
-  if (screenlock_type_ == ScreenlockType::SIGN_IN)
-    return false;
-
   // TODO(tengs): Put this force password reauth logic behind an enterprise
   // policy. See crbug.com/724717.
   int64_t now_ms = clock_->Now().ToJavaTime();

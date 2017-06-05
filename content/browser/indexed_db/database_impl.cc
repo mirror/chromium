@@ -871,10 +871,7 @@ void DatabaseImpl::IDBThreadHelper::Abort(int64_t transaction_id) {
   if (!transaction)
     return;
 
-  connection_->AbortTransaction(
-      transaction,
-      IndexedDBDatabaseError(blink::kWebIDBDatabaseExceptionAbortError,
-                             "Transaction aborted by user."));
+  connection_->AbortTransaction(transaction);
 }
 
 void DatabaseImpl::IDBThreadHelper::AbortWithError(

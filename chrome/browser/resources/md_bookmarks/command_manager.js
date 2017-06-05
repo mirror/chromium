@@ -92,7 +92,6 @@ cr.define('bookmarks', function() {
     },
 
     closeCommandMenu: function() {
-      this.menuIds_ = new Set();
       /** @type {!CrActionMenuElement} */ (this.$.dropdown).close();
     },
 
@@ -155,11 +154,8 @@ cr.define('bookmarks', function() {
       switch (command) {
         case Command.OPEN_NEW_TAB:
         case Command.OPEN_NEW_WINDOW:
-          return this.expandUrls_(itemIds).length > 0;
         case Command.OPEN_INCOGNITO:
-          return this.expandUrls_(itemIds).length > 0 &&
-              this.getState().prefs.incognitoAvailability !=
-              IncognitoAvailability.DISABLED;
+          return this.expandUrls_(itemIds).length > 0;
         default:
           return true;
       }
@@ -330,8 +326,8 @@ cr.define('bookmarks', function() {
      * @private
      */
     onCommandClick_: function(e) {
-      this.handle(e.target.getAttribute('command'), assert(this.menuIds_));
       this.closeCommandMenu();
+      this.handle(e.target.getAttribute('command'), assert(this.menuIds_));
     },
 
     /**
@@ -367,7 +363,7 @@ cr.define('bookmarks', function() {
       if (e.path[0] != this.$.dropdown)
         return;
 
-      this.closeCommandMenu();
+      this.$.dropdown.close();
     },
 
     /**
@@ -383,7 +379,7 @@ cr.define('bookmarks', function() {
       var label;
       switch (command) {
         case Command.EDIT:
-          if (this.menuIds_.size != 1)
+          if (this.menuIds_.size > 1)
             return '';
 
           var id = Array.from(this.menuIds_)[0];

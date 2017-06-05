@@ -68,7 +68,7 @@ public class CrashDumpManagerTest extends InstrumentationTestCase {
 
     // @SmallTest
     // @Feature({"Android-AppBase"})
-    @DisabledTest // Flaky, crbug.com/725379.
+    @DisabledTest // Flaky, crbug.com/726976.
     public void testUploadMinidump_FileDoesntExist() {
         registerUploadCallback(new CrashDumpManager.UploadMinidumpCallback() {
             @Override
@@ -83,7 +83,6 @@ public class CrashDumpManagerTest extends InstrumentationTestCase {
 
     @SmallTest
     @Feature({"Android-AppBase"})
-    @DisabledTest // Flaky, crbug.com/725379.
     public void testUploadMinidump_MinidumpPathIsDirectory() throws IOException {
         File directory = new File(mTempDir, "a_directory");
         assertTrue(directory.mkdir());
@@ -100,7 +99,6 @@ public class CrashDumpManagerTest extends InstrumentationTestCase {
 
     @SmallTest
     @Feature({"Android-AppBase"})
-    @DisabledTest // Flaky, crbug.com/725379.
     public void testUploadMinidump_MinidumpPathIsValid() throws IOException {
         final File minidump = new File(mTempDir, "mini.dmp");
         assertTrue(minidump.createNewFile());

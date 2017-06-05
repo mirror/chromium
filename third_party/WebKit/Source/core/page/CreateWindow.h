@@ -39,11 +39,11 @@ namespace blink {
 class ExceptionState;
 class LocalFrame;
 struct FrameLoadRequest;
-struct WebWindowFeatures;
+struct WindowFeatures;
 
 DOMWindow* CreateWindow(const String& url_string,
                         const AtomicString& frame_name,
-                        const String& window_features_string,
+                        const WindowFeatures&,
                         LocalDOMWindow& calling_window,
                         LocalFrame& first_frame,
                         LocalFrame& opener_frame,
@@ -52,15 +52,6 @@ DOMWindow* CreateWindow(const String& url_string,
 void CreateWindowForRequest(const FrameLoadRequest&,
                             LocalFrame& opener_frame,
                             NavigationPolicy);
-
-// Exposed for testing
-CORE_EXPORT NavigationPolicy
-EffectiveNavigationPolicy(NavigationPolicy,
-                          const WebInputEvent* current_event,
-                          bool toolbar_visible);
-
-// Exposed for testing
-CORE_EXPORT WebWindowFeatures GetWindowFeaturesFromString(const String&);
 
 }  // namespace blink
 

@@ -19,7 +19,7 @@ Timeline.TimelineFlameChartView = class extends UI.VBox {
     this._delegate = delegate;
     /** @type {?Timeline.PerformanceModel} */
     this._model = null;
-    /** @type {!Array<number>|undefined} */
+    /** @type {!Array<!SDK.TracingModel.Event>|undefined} */
     this._searchResults;
     this._filters = filters;
 
@@ -268,15 +268,24 @@ Timeline.TimelineFlameChartView = class extends UI.VBox {
   }
 
   /**
+   * @param {!SDK.TracingModel.Event} event
+   */
+  _highlightSearchResult(event) {
+    var timelineSelection = this._mainDataProvider.selectionForEvent(event);
+    if (timelineSelection)
+      this._delegate.select(timelineSelection);
+  }
+
+  /**
    * @override
-   * @param {!Timeline.TimelineSelection} selection
+   * @param {?Timeline.TimelineSelection} selection
    */
   setSelection(selection) {
     var index = this._mainDataProvider.entryIndexForSelection(selection);
     this._mainFlameChart.setSelectedEntry(index);
     index = this._networkDataProvider.entryIndexForSelection(selection);
     this._networkFlameChart.setSelectedEntry(index);
-    if (this._detailsView)
+    if (selection && this._detailsView)
       this._detailsView.setSelection(selection);
   }
 
@@ -321,9 +330,7 @@ Timeline.TimelineFlameChartView = class extends UI.VBox {
   jumpToNextSearchResult() {
     if (!this._searchResults || !this._searchResults.length)
       return;
-    var index = typeof this._selectedSearchResult !== 'undefined' ?
-        this._searchResults.indexOf(this._selectedSearchResult) :
-        -1;
+    var index = this._selectedSearchResult ? this._searchResults.indexOf(this._selectedSearchResult) : -1;
     this._selectSearchResult(mod(index + 1, this._searchResults.length));
   }
 
@@ -333,8 +340,7 @@ Timeline.TimelineFlameChartView = class extends UI.VBox {
   jumpToPreviousSearchResult() {
     if (!this._searchResults || !this._searchResults.length)
       return;
-    var index =
-        typeof this._selectedSearchResult !== 'undefined' ? this._searchResults.indexOf(this._selectedSearchResult) : 0;
+    var index = this._selectedSearchResult ? this._searchResults.indexOf(this._selectedSearchResult) : 0;
     this._selectSearchResult(mod(index - 1, this._searchResults.length));
   }
 
@@ -358,9 +364,9 @@ Timeline.TimelineFlameChartView = class extends UI.VBox {
    * @param {number} index
    */
   _selectSearchResult(index) {
-    this._searchableView.updateCurrentMatchIndex(index);
     this._selectedSearchResult = this._searchResults[index];
-    this._delegate.select(this._mainDataProvider.createSelection(this._selectedSearchResult));
+    this._searchableView.updateCurrentMatchIndex(index);
+    this._highlightSearchResult(this._selectedSearchResult);
   }
 
   /**
@@ -374,12 +380,24 @@ Timeline.TimelineFlameChartView = class extends UI.VBox {
     if (!this._searchRegex)
       return;
 
-    var regExpFilter = new Timeline.TimelineFilters.RegExp(this._searchRegex);
-    this._searchResults = this._mainDataProvider.search(this._windowStartTime, this._windowEndTime, regExpFilter);
-    this._searchableView.updateSearchMatchesCount(this._searchResults.length);
-    if (!shouldJump || !this._searchResults.length)
+    // FIXME: search on all threads.
+    var events = this._model ? this._model.timelineModel().mainThreadEvents() : [];
+    var filters = [...this._filters, new Timeline.TimelineFilters.RegExp(this._searchRegex)];
+    var matches = [];
+    var startIndex = events.lowerBound(this._windowStartTime, (time, event) => time - event.startTime);
+    for (var index = startIndex; index < events.length; ++index) {
+      var event = events[index];
+      if (event.startTime > this._windowEndTime)
+        break;
+      if (TimelineModel.TimelineModel.isVisible(filters, event))
+        matches.push(event);
+    }
+
+    this._searchableView.updateSearchMatchesCount(matches.length);
+    this._searchResults = matches;
+    if (!shouldJump || !matches.length)
       return;
-    var selectedIndex = this._searchResults.indexOf(oldSelectedSearchResult);
+    var selectedIndex = matches.indexOf(oldSelectedSearchResult);
     if (selectedIndex === -1)
       selectedIndex = jumpBackwards ? this._searchResults.length - 1 : 0;
     this._selectSearchResult(selectedIndex);
@@ -389,7 +407,7 @@ Timeline.TimelineFlameChartView = class extends UI.VBox {
    * @override
    */
   searchCanceled() {
-    if (typeof this._selectedSearchResult !== 'undefined')
+    if (this._selectedSearchResult)
       this._delegate.select(null);
     delete this._searchResults;
     delete this._selectedSearchResult;

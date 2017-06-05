@@ -3584,7 +3584,7 @@ void WebViewImpl::SetDomainRelaxationForbidden(bool forbidden,
 }
 
 void WebViewImpl::SetWindowFeatures(const WebWindowFeatures& features) {
-  page_->SetWindowFeatures(features);
+  page_->GetChromeClient().SetWindowFeatures(features);
 }
 
 void WebViewImpl::SetOpenedByDOM() {

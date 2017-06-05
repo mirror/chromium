@@ -28,7 +28,6 @@
 #include "ui/display/display.h"
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/manager/managed_display_info.h"
-#include "ui/display/screen.h"
 #include "ui/gfx/animation/tween.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
@@ -56,6 +55,10 @@ display::Display::Rotation GetCurrentScreenRotation(int64_t display_id) {
       ->display_manager()
       ->GetDisplayInfo(display_id)
       .GetActiveRotation();
+}
+
+bool IsDisplayIdValid(int64_t display_id) {
+  return Shell::Get()->display_manager()->IsDisplayIdValid(display_id);
 }
 
 // 180 degree rotations should animate clock-wise.
@@ -131,19 +134,17 @@ bool IgnoreCopyResult(int64_t request_id, int64_t current_request_id) {
   return request_id < current_request_id;
 }
 
-bool RootWindowChangedForDisplayId(aura::Window* root_window,
-                                   int64_t display_id) {
-  return root_window != GetRootWindow(display_id);
-}
-
-// Creates a mask layer and returns the |mask_layer_tree_owner|.
-std::unique_ptr<ui::LayerTreeOwner> CreateMaskLayerTreeOwner(
+// Creates a black mask layer and returns the |layer_owner|.
+std::unique_ptr<ui::LayerOwner> CreateBlackMaskLayerOwner(
     const gfx::Rect& rect) {
-  std::unique_ptr<ui::Layer> mask_layer =
+  std::unique_ptr<ui::Layer> black_mask_layer =
       base::MakeUnique<ui::Layer>(ui::LAYER_SOLID_COLOR);
-  mask_layer->SetBounds(rect);
-  mask_layer->SetColor(SK_ColorBLACK);
-  return base::MakeUnique<ui::LayerTreeOwner>(std::move(mask_layer));
+  black_mask_layer->SetBounds(rect);
+  black_mask_layer->SetColor(SK_ColorBLACK);
+  std::unique_ptr<ui::LayerOwner> black_mask_layer_owner =
+      base::MakeUnique<ui::LayerOwner>();
+  black_mask_layer_owner->SetLayer(std::move(black_mask_layer));
+  return black_mask_layer_owner;
 }
 
 class ScreenRotationAnimationMetricsReporter
@@ -162,10 +163,8 @@ class ScreenRotationAnimationMetricsReporter
 
 }  // namespace
 
-ScreenRotationAnimator::ScreenRotationAnimator(aura::Window* root_window)
-    : root_window_(root_window),
-      screen_rotation_container_layer_(
-          GetScreenRotationContainer(root_window_)->layer()),
+ScreenRotationAnimator::ScreenRotationAnimator(int64_t display_id)
+    : display_id_(display_id),
       screen_rotation_state_(IDLE),
       rotation_request_id_(0),
       metrics_reporter_(
@@ -174,6 +173,9 @@ ScreenRotationAnimator::ScreenRotationAnimator(aura::Window* root_window)
       has_switch_ash_disable_smooth_screen_rotation_(
           base::CommandLine::ForCurrentProcess()->HasSwitch(
               switches::kAshDisableSmoothScreenRotation)),
+      root_window_(GetRootWindow(display_id_)),
+      screen_rotation_container_layer_(
+          GetScreenRotationContainer(root_window_)->layer()),
       weak_factory_(this) {}
 
 ScreenRotationAnimator::~ScreenRotationAnimator() {
@@ -191,7 +193,7 @@ ScreenRotationAnimator::~ScreenRotationAnimator() {
 void ScreenRotationAnimator::StartRotationAnimation(
     std::unique_ptr<ScreenRotationRequest> rotation_request) {
   const display::Display::Rotation current_rotation =
-      GetCurrentScreenRotation(rotation_request->display_id);
+      GetCurrentScreenRotation(display_id_);
   if (current_rotation == rotation_request->new_rotation) {
     // We need to call |ProcessAnimationQueue()| to prepare for next rotation
     // request.
@@ -214,13 +216,12 @@ void ScreenRotationAnimator::StartRotationAnimation(
 void ScreenRotationAnimator::StartSlowAnimation(
     std::unique_ptr<ScreenRotationRequest> rotation_request) {
   CreateOldLayerTreeForSlowAnimation();
-  SetRotation(rotation_request->display_id, rotation_request->old_rotation,
-              rotation_request->new_rotation, rotation_request->source);
+  SetRotation(rotation_request->old_rotation, rotation_request->new_rotation,
+              rotation_request->source);
   AnimateRotation(std::move(rotation_request));
 }
 
 void ScreenRotationAnimator::SetRotation(
-    int64_t display_id,
     display::Display::Rotation old_rotation,
     display::Display::Rotation new_rotation,
     display::Display::RotationSource source) {
@@ -229,11 +230,11 @@ void ScreenRotationAnimator::SetRotation(
   // and ARC apps.
   ui::Compositor* compositor = root_window_->layer()->GetCompositor();
   compositor->set_allow_locks_to_extend_timeout(true);
-  Shell::Get()->display_manager()->SetDisplayRotation(display_id, new_rotation,
+  Shell::Get()->display_manager()->SetDisplayRotation(display_id_, new_rotation,
                                                       source);
   compositor->set_allow_locks_to_extend_timeout(false);
   const display::Display display =
-      Shell::Get()->display_manager()->GetDisplayForId(display_id);
+      Shell::Get()->display_manager()->GetDisplayForId(display_id_);
   old_layer_tree_owner_->root()->SetTransform(
       CreateScreenRotationOldLayerTransformForDisplay(old_rotation,
                                                       new_rotation, display));
@@ -270,10 +271,8 @@ void ScreenRotationAnimator::OnScreenRotationContainerLayerCopiedBeforeRotation(
     std::unique_ptr<cc::CopyOutputResult> result) {
   if (IgnoreCopyResult(rotation_request->id, rotation_request_id_))
     return;
-  // Abort rotation and animation if the display was removed or the
-  // |root_window| was changed for |display_id|.
-  if (RootWindowChangedForDisplayId(root_window_,
-                                    rotation_request->display_id)) {
+  // Abort rotation and animation if the display was removed.
+  if (!IsDisplayIdValid(display_id_)) {
     ProcessAnimationQueue();
     return;
   }
@@ -283,16 +282,15 @@ void ScreenRotationAnimator::OnScreenRotationContainerLayerCopiedBeforeRotation(
   // request to the compositor. b) The compositor is shutdown.
   if (result->IsEmpty()) {
     Shell::Get()->display_manager()->SetDisplayRotation(
-        rotation_request->display_id, rotation_request->new_rotation,
-        rotation_request->source);
+        display_id_, rotation_request->new_rotation, rotation_request->source);
     ProcessAnimationQueue();
     return;
   }
 
   old_layer_tree_owner_ = CopyLayerTree(std::move(result));
   AddLayerAtTopOfWindowLayers(root_window_, old_layer_tree_owner_->root());
-  SetRotation(rotation_request->display_id, rotation_request->old_rotation,
-              rotation_request->new_rotation, rotation_request->source);
+  SetRotation(rotation_request->old_rotation, rotation_request->new_rotation,
+              rotation_request->source);
   std::unique_ptr<cc::CopyOutputRequest> copy_output_request =
       cc::CopyOutputRequest::CreateRequest(
           CreateAfterCopyCallbackAfterRotation(std::move(rotation_request)));
@@ -306,14 +304,11 @@ void ScreenRotationAnimator::OnScreenRotationContainerLayerCopiedAfterRotation(
     return;
   // In the following cases, abort animation:
   // 1) if the display was removed,
-  // 2) if the |root_window| was changed for |display_id|,
-  // 3) the copy request has been canceled or failed. It would fail if,
+  // 2) the copy request has been canceled or failed. It would fail if,
   // for examples: a) The layer is removed from the compositor and destroye
   // before committing the request to the compositor. b) The compositor is
   // shutdown.
-  if (RootWindowChangedForDisplayId(root_window_,
-                                    rotation_request->display_id) ||
-      result->IsEmpty()) {
+  if (!IsDisplayIdValid(display_id_) || result->IsEmpty()) {
     ProcessAnimationQueue();
     return;
   }
@@ -368,10 +363,10 @@ void ScreenRotationAnimator::AnimateRotation(
   } else {
     new_root_layer = new_layer_tree_owner_->root();
     // Add a black mask layer on top of |screen_rotation_container_layer_|.
-    mask_layer_tree_owner_ = CreateMaskLayerTreeOwner(
+    black_mask_layer_owner_ = CreateBlackMaskLayerOwner(
         gfx::Rect(screen_rotation_container_layer_->size()));
     AddLayerBelowWindowLayer(root_window_, new_root_layer,
-                             mask_layer_tree_owner_->root());
+                             black_mask_layer_owner_->layer());
   }
 
   std::unique_ptr<ScreenRotationAnimation> new_layer_screen_rotation =
@@ -446,10 +441,8 @@ void ScreenRotationAnimator::Rotate(display::Display::Rotation new_rotation,
   // we compare the |rotation_request.id| and |rotation_request_id_| to
   // determine the stale status.
   rotation_request_id_++;
-  const int64_t display_id =
-      display::Screen::GetScreen()->GetDisplayNearestWindow(root_window_).id();
   std::unique_ptr<ScreenRotationRequest> rotation_request =
-      base::MakeUnique<ScreenRotationRequest>(rotation_request_id_, display_id,
+      base::MakeUnique<ScreenRotationRequest>(rotation_request_id_,
                                               new_rotation, source);
   switch (screen_rotation_state_) {
     case IDLE:
@@ -477,12 +470,12 @@ void ScreenRotationAnimator::RemoveScreenRotationAnimatorObserver(
 
 void ScreenRotationAnimator::ProcessAnimationQueue() {
   screen_rotation_state_ = IDLE;
+  if (IsDisplayIdValid(display_id_) && black_mask_layer_owner_)
+    root_window_->layer()->Remove(black_mask_layer_owner_->layer());
   old_layer_tree_owner_.reset();
   new_layer_tree_owner_.reset();
-  mask_layer_tree_owner_.reset();
-  if (last_pending_request_ &&
-      !RootWindowChangedForDisplayId(root_window_,
-                                     last_pending_request_->display_id)) {
+  black_mask_layer_owner_.reset();
+  if (last_pending_request_ && IsDisplayIdValid(display_id_)) {
     StartRotationAnimation(std::move(last_pending_request_));
     return;
   }
@@ -499,7 +492,8 @@ void ScreenRotationAnimator::StopAnimating() {
     old_layer_tree_owner_->root()->GetAnimator()->StopAnimating();
   if (new_layer_tree_owner_)
     new_layer_tree_owner_->root()->GetAnimator()->StopAnimating();
-  mask_layer_tree_owner_.reset();
+  if (IsDisplayIdValid(display_id_) && black_mask_layer_owner_)
+    root_window_->layer()->Remove(black_mask_layer_owner_->layer());
 }
 
 }  // namespace ash

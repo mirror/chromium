@@ -177,8 +177,9 @@ class MockConnectionManager : public ServerConnectionManager {
   // Simple inspectors.
   bool client_stuck() const { return client_stuck_; }
 
-  void SetGUClientCommand(std::unique_ptr<sync_pb::ClientCommand> command);
-  void SetCommitClientCommand(std::unique_ptr<sync_pb::ClientCommand> command);
+  // warning: These take ownership of their input.
+  void SetGUClientCommand(sync_pb::ClientCommand* command);
+  void SetCommitClientCommand(sync_pb::ClientCommand* command);
 
   void SetTransientErrorId(syncable::Id);
 

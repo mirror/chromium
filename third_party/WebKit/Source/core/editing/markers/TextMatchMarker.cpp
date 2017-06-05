@@ -24,38 +24,38 @@ void TextMatchMarker::SetIsActiveMatch(bool active) {
 }
 
 bool TextMatchMarker::IsRendered() const {
-  return layout_status_ == LayoutStatus::kValidNotNull;
+  return layout_state_ == State::kValidNotNull;
 }
 
 bool TextMatchMarker::Contains(const LayoutPoint& point) const {
-  DCHECK_EQ(layout_status_, LayoutStatus::kValidNotNull);
+  DCHECK_EQ(layout_state_, State::kValidNotNull);
   return rendered_rect_.Contains(point);
 }
 
 void TextMatchMarker::SetRenderedRect(const LayoutRect& rect) {
-  if (layout_status_ == LayoutStatus::kValidNotNull && rect == rendered_rect_)
+  if (layout_state_ == State::kValidNotNull && rect == rendered_rect_)
     return;
-  layout_status_ = LayoutStatus::kValidNotNull;
+  layout_state_ = State::kValidNotNull;
   rendered_rect_ = rect;
 }
 
 const LayoutRect& TextMatchMarker::RenderedRect() const {
-  DCHECK_EQ(layout_status_, LayoutStatus::kValidNotNull);
+  DCHECK_EQ(layout_state_, State::kValidNotNull);
   return rendered_rect_;
 }
 
 void TextMatchMarker::NullifyRenderedRect() {
-  layout_status_ = LayoutStatus::kValidNull;
+  layout_state_ = State::kValidNull;
   // Now |rendered_rect_| can not be accessed until |SetRenderedRect| is
   // called.
 }
 
 void TextMatchMarker::Invalidate() {
-  layout_status_ = LayoutStatus::kInvalid;
+  layout_state_ = State::kInvalid;
 }
 
 bool TextMatchMarker::IsValid() const {
-  return layout_status_ != LayoutStatus::kInvalid;
+  return layout_state_ != State::kInvalid;
 }
 
 }  // namespace blink

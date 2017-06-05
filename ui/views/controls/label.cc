@@ -53,19 +53,13 @@ Label::Label(const base::string16& text)
     : Label(text, style::CONTEXT_LABEL, style::STYLE_PRIMARY) {}
 
 Label::Label(const base::string16& text, int text_context, int text_style)
-    : text_context_(text_context), context_menu_contents_(this) {
+    : context_menu_contents_(this) {
   Init(text, style::GetFont(text_context, text_style));
   SetLineHeight(style::GetLineHeight(text_context, text_style));
-
-  // If an explicit style is given, ignore color changes due to the NativeTheme.
-  if (text_style != style::STYLE_PRIMARY) {
-    SetEnabledColor(
-        style::GetColor(text_context, text_style, GetNativeTheme()));
-  }
 }
 
 Label::Label(const base::string16& text, const CustomFont& font)
-    : text_context_(style::CONTEXT_LABEL), context_menu_contents_(this) {
+    : context_menu_contents_(this) {
   Init(text, font.font_list);
 }
 
@@ -109,8 +103,7 @@ void Label::SetEnabledColor(SkColor color) {
   RecalculateColors();
 }
 
-// TODO(tapted): Move this into a subclass used only by LabelButton.
-void Label::SetDisabledColorForLabelButton(SkColor color) {
+void Label::SetDisabledColor(SkColor color) {
   if (disabled_color_set_ && requested_disabled_color_ == color)
     return;
   is_first_paint_text_ = true;
@@ -1005,12 +998,12 @@ void Label::ApplyTextColors() const {
 
 void Label::UpdateColorsFromTheme(const ui::NativeTheme* theme) {
   if (!enabled_color_set_) {
-    requested_enabled_color_ =
-        style::GetColor(text_context_, style::STYLE_PRIMARY, theme);
+    requested_enabled_color_ = theme->GetSystemColor(
+        ui::NativeTheme::kColorId_LabelEnabledColor);
   }
   if (!disabled_color_set_) {
-    requested_disabled_color_ =
-        style::GetColor(text_context_, style::STYLE_DISABLED, theme);
+    requested_disabled_color_ = theme->GetSystemColor(
+        ui::NativeTheme::kColorId_LabelDisabledColor);
   }
   if (!background_color_set_) {
     background_color_ =

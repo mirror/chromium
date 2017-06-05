@@ -8,19 +8,12 @@
 #include "media/gpu/surface_texture_gl_owner.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "ui/gl/gl_bindings.h"
-#include "ui/gl/gl_context.h"
-#include "ui/gl/gl_surface.h"
 
 namespace media {
 
-// This is a mock with a small amount of fake functionality too.
 class MockSurfaceTextureGLOwner : public SurfaceTextureGLOwner {
  public:
-  MockSurfaceTextureGLOwner(GLuint fake_texture_id,
-                            gl::GLContext* fake_context,
-                            gl::GLSurface* fake_surface);
-
+  MockSurfaceTextureGLOwner();
   MOCK_CONST_METHOD0(GetTextureId, GLuint());
   MOCK_CONST_METHOD0(GetContext, gl::GLContext*());
   MOCK_CONST_METHOD0(GetSurface, gl::GLSurface*());
@@ -32,17 +25,6 @@ class MockSurfaceTextureGLOwner : public SurfaceTextureGLOwner {
   MOCK_METHOD0(IgnorePendingRelease, void());
   MOCK_METHOD0(IsExpectingFrameAvailable, bool());
   MOCK_METHOD0(WaitForFrameAvailable, void());
-
-  // Fake implementations that the mocks will call by default.
-  void FakeSetReleaseTimeToNow() { expecting_frame_available = true; }
-  void FakeIgnorePendingRelease() { expecting_frame_available = false; }
-  bool FakeIsExpectingFrameAvailable() { return expecting_frame_available; }
-  void FakeWaitForFrameAvailable() { expecting_frame_available = false; }
-
-  GLuint fake_texture_id;
-  gl::GLContext* fake_context;
-  gl::GLSurface* fake_surface;
-  bool expecting_frame_available;
 
  protected:
   ~MockSurfaceTextureGLOwner();

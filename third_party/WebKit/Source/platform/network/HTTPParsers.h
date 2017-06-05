@@ -96,6 +96,7 @@ using ServerTimingHeaderVector = Vector<std::unique_ptr<ServerTimingHeader>>;
 
 PLATFORM_EXPORT bool IsContentDispositionAttachment(const String&);
 PLATFORM_EXPORT bool IsValidHTTPHeaderValue(const String&);
+PLATFORM_EXPORT bool IsValidHTTPFieldContentRFC7230(const String&);
 // Checks whether the given string conforms to the |token| ABNF production
 // defined in the RFC 7230 or not.
 //

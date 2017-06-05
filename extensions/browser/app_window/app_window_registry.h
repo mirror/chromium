@@ -37,6 +37,8 @@ class AppWindowRegistry : public KeyedService,
    public:
     // Called just after a app window was added.
     virtual void OnAppWindowAdded(AppWindow* app_window);
+    // Called when the window icon changes.
+    virtual void OnAppWindowIconChanged(AppWindow* app_window);
     // Called just after a app window was removed.
     virtual void OnAppWindowRemoved(AppWindow* app_window);
     // Called just after a app window was hidden. This is different from
@@ -65,6 +67,7 @@ class AppWindowRegistry : public KeyedService,
   static AppWindowRegistry* Get(content::BrowserContext* context);
 
   void AddAppWindow(AppWindow* app_window);
+  void AppWindowIconChanged(AppWindow* app_window);
   // Called by |app_window| when it is activated.
   void AppWindowActivated(AppWindow* app_window);
   void AppWindowHidden(AppWindow* app_window);

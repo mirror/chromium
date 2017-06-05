@@ -59,8 +59,11 @@ public class StandardNotificationBuilder extends NotificationBuilderBase {
             addActionToBuilder(builder, mSettingsAction);
         }
         builder.setPriority(mPriority);
-        builder.setDefaults(mDefaults);
-        if (mVibratePattern != null) builder.setVibrate(mVibratePattern);
+        // Browser channel uses silent notifications to avoid disrupting the user.
+        if (!ChannelDefinitions.CHANNEL_ID_BROWSER.equals(mChannelId)) {
+            builder.setDefaults(mDefaults);
+            builder.setVibrate(mVibratePattern);
+        }
         builder.setWhen(mTimestamp);
         builder.setOnlyAlertOnce(!mRenotify);
         setGroupOnBuilder(builder, mOrigin);

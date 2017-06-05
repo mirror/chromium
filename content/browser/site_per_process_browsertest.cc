@@ -6475,20 +6475,9 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, PopupMenuTest) {
 
   filter->Wait();
 
-  RenderWidgetHostViewAura* popup_view = static_cast<RenderWidgetHostViewAura*>(
+  RenderWidgetHostView* popup_view =
       RenderWidgetHost::FromID(process_id, filter->last_routing_id())
-          ->GetView());
-  // The IO thread posts to ViewMsg_ShowWidget handlers in both the message
-  // filter above and the WebContents, which initializes the popup's view.
-  // It is possible for this code to execute before the WebContents handler,
-  // in which case OnMouseEvent would be called on an uninitialized RWHVA.
-  // This loop ensures that the initialization completes before proceeding.
-  while (!popup_view->window()) {
-    base::RunLoop loop;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  loop.QuitClosure());
-    loop.Run();
-  }
+          ->GetView();
 
   RenderWidgetHostMouseEventMonitor popup_monitor(
       popup_view->GetRenderWidgetHost());
@@ -6500,7 +6489,8 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, PopupMenuTest) {
                                 gfx::Point(10, 5), ui::EventTimeForNow(),
                                 ui::EF_LEFT_MOUSE_BUTTON,
                                 ui::EF_LEFT_MOUSE_BUTTON);
-  popup_view->OnMouseEvent(&mouse_up_event);
+  static_cast<RenderWidgetHostViewAura*>(popup_view)
+      ->OnMouseEvent(&mouse_up_event);
 
   // This verifies that the popup actually received the event, and it wasn't
   // diverted to a different RenderWidgetHostView due to mouse capture.

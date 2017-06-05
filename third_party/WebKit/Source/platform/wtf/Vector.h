@@ -1139,16 +1139,17 @@ class Vector
   // insert(position, value)
   //     Insert a single element at |position|.
   // insert(position, buffer, size)
-  // InsertVector(position, vector)
+  // insert(position, vector)
   //     Insert multiple elements represented by either |buffer| and |size|
   //     or |vector| at |position|. The elements will be copied.
+  //
+  // TODO(yutak): Why not insertVector()?
   template <typename U>
   void insert(size_t position, U&&);
   template <typename U>
   void insert(size_t position, const U*, size_t);
   template <typename U, size_t otherCapacity, typename OtherAllocator>
-  void InsertVector(size_t position,
-                    const Vector<U, otherCapacity, OtherAllocator>&);
+  void insert(size_t position, const Vector<U, otherCapacity, OtherAllocator>&);
 
   // Insertion to the front. All of these functions will take O(size())-time.
   // All of the elements in the vector will be moved to the new locations.
@@ -1796,7 +1797,7 @@ void Vector<T, inlineCapacity, Allocator>::insert(size_t position,
 
 template <typename T, size_t inlineCapacity, typename Allocator>
 template <typename U, size_t otherCapacity, typename OtherAllocator>
-inline void Vector<T, inlineCapacity, Allocator>::InsertVector(
+inline void Vector<T, inlineCapacity, Allocator>::insert(
     size_t position,
     const Vector<U, otherCapacity, OtherAllocator>& val) {
   insert(position, val.begin(), val.size());

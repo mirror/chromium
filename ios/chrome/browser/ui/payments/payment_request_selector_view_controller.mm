@@ -98,18 +98,20 @@ typedef NS_ENUM(NSInteger, ItemType) {
     [model addItem:headerItem toSectionWithIdentifier:SectionIdentifierItems];
   }
 
-  [[self.dataSource selectableItems]
-      enumerateObjectsUsingBlock:^(
-          CollectionViewItem<PaymentsHasAccessoryType>* item, NSUInteger index,
-          BOOL* stop) {
-        DCHECK([item respondsToSelector:@selector(accessoryType)]);
-        item.type = ItemTypeSelectableItem;
-        item.accessibilityTraits |= UIAccessibilityTraitButton;
-        item.accessoryType = (index == self.dataSource.selectedItemIndex)
-                                 ? MDCCollectionViewCellAccessoryCheckmark
-                                 : MDCCollectionViewCellAccessoryNone;
-        [model addItem:item toSectionWithIdentifier:SectionIdentifierItems];
-      }];
+  [self.dataSource.selectableItems enumerateObjectsUsingBlock:^(
+                                       CollectionViewItem* item,
+                                       NSUInteger index, BOOL* stop) {
+    DCHECK([item conformsToProtocol:@protocol(PaymentsHasAccessoryType)]);
+    CollectionViewItem<PaymentsHasAccessoryType>* selectableItem =
+        reinterpret_cast<CollectionViewItem<PaymentsHasAccessoryType>*>(item);
+    selectableItem.type = ItemTypeSelectableItem;
+    selectableItem.accessibilityTraits |= UIAccessibilityTraitButton;
+    selectableItem.accessoryType = (index == self.dataSource.selectedItemIndex)
+                                       ? MDCCollectionViewCellAccessoryCheckmark
+                                       : MDCCollectionViewCellAccessoryNone;
+    [model addItem:selectableItem
+        toSectionWithIdentifier:SectionIdentifierItems];
+  }];
 
   CollectionViewItem* addButtonItem = [self.dataSource addButtonItem];
   if (addButtonItem) {
@@ -193,11 +195,10 @@ typedef NS_ENUM(NSInteger, ItemType) {
     case ItemTypeSelectableItem: {
       // Update the currently selected cell, if any.
       if (self.dataSource.selectedItemIndex != NSUIntegerMax) {
-        DCHECK(self.dataSource.selectedItemIndex <
-               [[self.dataSource selectableItems] count]);
         CollectionViewItem<PaymentsHasAccessoryType>* oldSelectedItem =
-            [[self.dataSource selectableItems]
-                objectAtIndex:self.dataSource.selectedItemIndex];
+            reinterpret_cast<CollectionViewItem<PaymentsHasAccessoryType>*>(
+                [self.dataSource
+                    selectableItemAtIndex:self.dataSource.selectedItemIndex]);
         oldSelectedItem.accessoryType = MDCCollectionViewCellAccessoryNone;
         [self reconfigureCellsForItems:@[ oldSelectedItem ]];
       }

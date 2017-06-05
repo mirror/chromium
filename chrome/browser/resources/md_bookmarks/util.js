@@ -70,9 +70,6 @@ cr.define('bookmarks.util', function() {
       nodes: {},
       selectedFolder: '0',
       closedFolders: new Set(),
-      prefs: {
-        incognitoAvailability: IncognitoAvailability.ENABLED,
-      },
       search: {
         term: '',
         inProgress: false,

@@ -88,9 +88,6 @@ class PageInfoBubbleView : public content::WebContentsObserver,
   // Returns the type of the bubble being shown.
   static BubbleType GetShownBubbleType();
 
-  // Returns a weak reference to the page info bubble being shown.
-  static views::BubbleDialogDelegateView* GetPageInfoBubble();
-
  private:
   friend class test::PageInfoBubbleViewTestApi;
 

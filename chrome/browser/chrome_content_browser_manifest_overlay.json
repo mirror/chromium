@@ -26,7 +26,7 @@
       },
       "requires": {
         "accessibility_autoclick": [ "ash:autoclick" ],
-        "ash": [ "ash", "display" ],
+        "ash": [ "ash" ],
         "device": [ "device:fingerprint" ],
         "identity": [ "identity_manager" ],
         "nacl_broker": [ "browser" ],

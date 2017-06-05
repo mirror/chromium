@@ -216,35 +216,6 @@ FileTransferController.DRAG_THUMBNAIL_SIZE_ = 64;
 FileTransferController.DRAG_LABEL_Y_OFFSET_ = -32;
 
 /**
- * Container for defining a copy/move operation.
- *
- * @param {!Array<string>} sourceURLs URLs of source entries.
- * @param {!DirectoryEntry} destinationEntry Destination directory.
- * @param {boolean} isMove true if move, false if copy.
- * @constructor
- * @struct
- */
-FileTransferController.PastePlan = function(
-    sourceURLs, destinationEntry, isMove) {
-  /**
-   * @type {!Array<string>}
-   * @const
-   */
-  this.sourceURLs = sourceURLs;
-
-  /**
-   * @type {!DirectoryEntry}
-   */
-  this.destinationEntry = destinationEntry;
-
-  /**
-   * @type {boolean}
-   * @const
-   */
-  this.isMove = isMove;
-};
-
-/**
  * Converts list of urls to list of Entries with granting R/W permissions to
  * them, which is essential when pasting files from a different profile.
  *
@@ -419,24 +390,21 @@ FileTransferController.prototype.getDragAndDropGlobalData_ = function() {
 };
 
 /**
- * Extracts source root URL from the |clipboardData| or |dragAndDropData|
- * object.
+ * Extracts source root URL from the |clipboardData| object.
  *
  * @param {!ClipboardData} clipboardData DataTransfer object from the event.
- * @param {Object<string>} dragAndDropData The drag and drop data from
- *     getDragAndDropGlobalData_().
  * @return {string} URL or an empty string (if unknown).
  * @private
  */
-FileTransferController.prototype.getSourceRootURL_ = function(
-    clipboardData, dragAndDropData) {
+FileTransferController.prototype.getSourceRootURL_ = function(clipboardData) {
   var sourceRootURL = clipboardData.getData('fs/sourceRootURL');
   if (sourceRootURL)
     return sourceRootURL;
 
   // |clipboardData| in protected mode.
-  if (dragAndDropData)
-    return dragAndDropData.sourceRootURL;
+  var globalData = this.getDragAndDropGlobalData_();
+  if (globalData)
+    return globalData.sourceRootURL;
 
   // Unknown source.
   return '';
@@ -533,31 +501,7 @@ FileTransferController.prototype.getMultiProfileShareEntries_ =
 };
 
 /**
- * Collects parameters of paste operation by the given command and the current
- * system clipboard.
- *
- * @return {FileTransferController.PastePlan}
- */
-FileTransferController.prototype.preparePaste = function(
-    clipboardData, opt_destinationEntry, opt_effect) {
-  var sourceURLs = clipboardData.getData('fs/sources') ?
-      clipboardData.getData('fs/sources').split('\n') : [];
-  // effectAllowed set in copy/paste handlers stay uninitialized. DnD handlers
-  // work fine.
-  var effectAllowed = clipboardData.effectAllowed !== 'uninitialized' ?
-      clipboardData.effectAllowed : clipboardData.getData('fs/effectallowed');
-  var destinationEntry = opt_destinationEntry ||
-      /** @type {DirectoryEntry} */ (this.directoryModel_.getCurrentDirEntry());
-  var toMove = util.isDropEffectAllowed(effectAllowed, 'move') &&
-      (!util.isDropEffectAllowed(effectAllowed, 'copy') ||
-       opt_effect === 'move');
-  return new FileTransferController.PastePlan(
-      sourceURLs, destinationEntry, toMove);
-};
-
-/**
- * Queue up a file copy operation based on the current system clipboard and
- * drag-and-drop global object.
+ * Queue up a file copy operation based on the current system clipboard.
  *
  * @param {!ClipboardData} clipboardData System data transfer object.
  * @param {DirectoryEntry=} opt_destinationEntry Paste destination.
@@ -566,24 +510,20 @@ FileTransferController.prototype.preparePaste = function(
  *     |clipboardData.effectAllowed|.
  * @return {string} Either "copy" or "move".
  */
-FileTransferController.prototype.paste = function(
-    clipboardData, opt_destinationEntry, opt_effect) {
-  var pastePlan =
-      this.preparePaste(clipboardData, opt_destinationEntry, opt_effect);
-  return this.executePaste(pastePlan);
-};
-
-/**
- * Queue up a file copy operation.
- *
- * @param {FileTransferController.PastePlan} pastePlan
- * @return {string} Either "copy" or "move".
- */
-FileTransferController.prototype.executePaste = function(pastePlan) {
-  var sourceURLs = pastePlan.sourceURLs;
-  var toMove = pastePlan.isMove;
-  var destinationEntry = pastePlan.destinationEntry;
-
+FileTransferController.prototype.paste =
+    function(clipboardData, opt_destinationEntry, opt_effect) {
+  var sourceURLs = clipboardData.getData('fs/sources') ?
+      clipboardData.getData('fs/sources').split('\n') : [];
+  // effectAllowed set in copy/paste handlers stay uninitialized. DnD handlers
+  // work fine.
+  var effectAllowed = clipboardData.effectAllowed !== 'uninitialized' ?
+      clipboardData.effectAllowed : clipboardData.getData('fs/effectallowed');
+  var toMove = util.isDropEffectAllowed(effectAllowed, 'move') &&
+      (!util.isDropEffectAllowed(effectAllowed, 'copy') ||
+       opt_effect === 'move');
+  var destinationEntry =
+      opt_destinationEntry ||
+      /** @type {DirectoryEntry} */ (this.directoryModel_.getCurrentDirEntry());
   var entries = [];
   var failureUrls;
   var shareEntries;
@@ -888,8 +828,7 @@ FileTransferController.prototype.onDragOver_ =
   var entry = this.destinationEntry_;
   if (!entry && !onlyIntoDirectories)
     entry = this.directoryModel_.getCurrentDirEntry();
-  var effectAndLabel =
-      this.selectDropEffect_(event, this.getDragAndDropGlobalData_(), entry);
+  var effectAndLabel = this.selectDropEffect_(event, entry);
   event.dataTransfer.dropEffect = effectAndLabel.getDropEffect();
   event.preventDefault();
   var label = effectAndLabel.getLabel();
@@ -988,12 +927,9 @@ FileTransferController.prototype.onDrop_ =
   if (!this.canPasteOrDrop_(event.dataTransfer, destinationEntry))
     return;
   event.preventDefault();
-  this.paste(
-      event.dataTransfer,
-      /** @type {DirectoryEntry} */ (destinationEntry),
-      this.selectDropEffect_(
-              event, this.getDragAndDropGlobalData_(), destinationEntry)
-          .getDropEffect());
+  this.paste(event.dataTransfer,
+             /** @type {DirectoryEntry} */ (destinationEntry),
+             this.selectDropEffect_(event, destinationEntry).getDropEffect());
   this.clearDropTarget_();
 };
 
@@ -1268,9 +1204,8 @@ FileTransferController.prototype.canPasteOrDrop_ =
     return false;  // Unsupported type of content.
 
   // Copying between different sources requires all files to be available.
-  if (this.getSourceRootURL_(
-          clipboardData, this.getDragAndDropGlobalData_()) !==
-          destinationLocationInfo.volumeInfo.fileSystem.root.toURL() &&
+  if (this.getSourceRootURL_(clipboardData) !==
+      destinationLocationInfo.volumeInfo.fileSystem.root.toURL() &&
       this.isMissingFileContents_(clipboardData))
     return false;
 
@@ -1386,8 +1321,6 @@ FileTransferController.prototype.onFileSelectionChangedThrottled_ = function() {
 
 /**
  * @param {!Event} event Drag event.
- * @param {Object<string>} dragAndDropData drag & drop data from
- *     getDragAndDropGlobalData_().
  * @param {DirectoryEntry|FakeEntry} destinationEntry Destination entry.
  * @return {DropEffectAndLabel} Returns the appropriate drop query type
  *     ('none', 'move' or copy') to the current modifiers status and the
@@ -1395,8 +1328,8 @@ FileTransferController.prototype.onFileSelectionChangedThrottled_ = function() {
  *     not allowed.
  * @private
  */
-FileTransferController.prototype.selectDropEffect_ = function(
-    event, dragAndDropData, destinationEntry) {
+FileTransferController.prototype.selectDropEffect_ =
+    function(event, destinationEntry) {
   if (!destinationEntry)
     return new DropEffectAndLabel(DropEffectType.NONE, null);
   var destinationLocationInfo =
@@ -1426,7 +1359,7 @@ FileTransferController.prototype.selectDropEffect_ = function(
       return new DropEffectAndLabel(DropEffectType.MOVE, null);
     // TODO(mtomasz): Use volumeId instead of comparing roots, as soon as
     // volumeId gets unique.
-    if (this.getSourceRootURL_(event.dataTransfer, dragAndDropData) ===
+    if (this.getSourceRootURL_(event.dataTransfer) ===
             destinationLocationInfo.volumeInfo.fileSystem.root.toURL() &&
         !event.ctrlKey) {
       return new DropEffectAndLabel(DropEffectType.MOVE, null);

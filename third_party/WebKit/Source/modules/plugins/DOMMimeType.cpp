@@ -19,14 +19,10 @@
 
 #include "modules/plugins/DOMMimeType.h"
 
-#include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/Navigator.h"
 #include "core/loader/FrameLoader.h"
 #include "core/page/Page.h"
 #include "modules/plugins/DOMPlugin.h"
-#include "modules/plugins/DOMPluginArray.h"
-#include "modules/plugins/NavigatorPlugins.h"
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
@@ -70,8 +66,7 @@ DOMPlugin* DOMMimeType::enabledPlugin() const {
       !GetFrame()->Loader().AllowPlugins(kNotAboutToInstantiatePlugin))
     return nullptr;
 
-  return NavigatorPlugins::plugins(*GetFrame()->DomWindow()->navigator())
-      ->namedItem(AtomicString(mime_class_info_->Plugin()->Name()));
+  return DOMPlugin::Create(GetFrame(), *mime_class_info_->Plugin());
 }
 
 }  // namespace blink

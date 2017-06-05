@@ -40,7 +40,6 @@ source_set("context_menu_ui") {
 
   deps = [
     "//base:base",
-    "//ios/clean/chrome/browser/ui/commands:commands",
   ]
 
   configs += [ "//build/config/compiler:enable_arc" ]

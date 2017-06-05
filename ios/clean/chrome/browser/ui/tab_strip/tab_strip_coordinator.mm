@@ -5,7 +5,6 @@
 #import "ios/clean/chrome/browser/ui/tab_strip/tab_strip_coordinator.h"
 
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
-#import "ios/clean/chrome/browser/ui/commands/tab_grid_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/tab_strip_commands.h"
 #import "ios/clean/chrome/browser/ui/tab_collection/tab_collection_mediator.h"
 #import "ios/clean/chrome/browser/ui/tab_strip/tab_strip_view_controller.h"
@@ -65,9 +64,6 @@
 
 - (void)closeTabStripTabAtIndex:(int)index {
   self.webStateList.CloseWebStateAt(index);
-  if (self.webStateList.empty()) {
-    [static_cast<id<TabGridCommands>>(self.browser->dispatcher()) showTabGrid];
-  }
 }
 
 @end

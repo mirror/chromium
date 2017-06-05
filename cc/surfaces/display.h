@@ -86,8 +86,9 @@ class CC_SURFACES_EXPORT Display : public DisplaySchedulerClient,
       const gpu::TextureInUseResponses& responses) override;
 
   // SurfaceObserver implementation.
-  bool OnSurfaceDamaged(const SurfaceId& surface,
-                        const BeginFrameAck& ack) override;
+  void OnSurfaceDamaged(const SurfaceId& surface,
+                        const BeginFrameAck& ack,
+                        bool* changed) override;
   void OnSurfaceCreated(const SurfaceInfo& surface_info) override;
   void OnSurfaceDiscarded(const SurfaceId& surface_id) override;
   void OnSurfaceDestroyed(const SurfaceId& surface_id) override;

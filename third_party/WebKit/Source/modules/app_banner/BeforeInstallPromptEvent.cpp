@@ -8,7 +8,6 @@
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
-#include "core/dom/UserGestureIndicator.h"
 #include "core/frame/UseCounter.h"
 #include "modules/app_banner/BeforeInstallPromptEventInit.h"
 
@@ -80,8 +79,7 @@ ScriptPromise BeforeInstallPromptEvent::prompt(ScriptState* script_state) {
                     UseCounter::kBeforeInstallPromptEventPrompt);
 
   prompt_called_ = true;
-  banner_service_->DisplayAppBanner(
-      UserGestureIndicator::ProcessingUserGesture());
+  banner_service_->DisplayAppBanner();
   return ScriptPromise::CastUndefined(script_state);
 }
 

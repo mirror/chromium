@@ -57,7 +57,7 @@ class DummyModulator : public Modulator {
                              AccessControlStatus,
                              const TextPosition&) override;
   ScriptValue InstantiateModule(ScriptModule) override;
-  ScriptValue GetError(const ModuleScript*) override;
+  ScriptValue GetInstantiationError(const ModuleScript*) override;
   Vector<String> ModuleRequestsFromScriptModule(ScriptModule) override;
   void ExecuteModule(const ModuleScript*) override;
 

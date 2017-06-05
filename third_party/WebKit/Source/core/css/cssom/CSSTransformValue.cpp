@@ -5,9 +5,7 @@
 #include "core/css/cssom/CSSTransformValue.h"
 
 #include "core/css/CSSValueList.h"
-#include "core/css/cssom/CSSMatrixComponent.h"
 #include "core/css/cssom/CSSTransformComponent.h"
-#include "core/geometry/DOMMatrix.h"
 
 namespace blink {
 
@@ -34,17 +32,6 @@ bool CSSTransformValue::is2D() const {
     }
   }
   return true;
-}
-
-DOMMatrix* CSSTransformValue::toMatrix() const {
-  DOMMatrix* matrix = DOMMatrix::Create();
-  for (size_t i = 0; i < transform_components_.size(); i++) {
-    CSSMatrixComponent* matrixComponent = transform_components_[i]->asMatrix();
-    if (matrixComponent) {
-      matrix->multiplySelf(matrixComponent->matrix());
-    }
-  }
-  return matrix;
 }
 
 const CSSValue* CSSTransformValue::ToCSSValue() const {

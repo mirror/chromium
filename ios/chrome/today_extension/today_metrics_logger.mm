@@ -46,6 +46,9 @@ NSString* const kTodayExtensionMetricsSessionID = @"MetricsSessionID";
 // restart, this log can be written to disk for upload.
 NSString* const kTodayExtensionMetricsCurrentLog = @"MetricsCurrentLog";
 
+// Maximum number of event in a log.
+const int kMaxEventsPerLog = 1000;
+
 // Maximum age of a log.
 const int kMaxLogLifeTimeInSeconds = 86400;
 
@@ -204,9 +207,9 @@ void TodayMetricsLogger::PersistLogs() {
   [[NSUserDefaults standardUserDefaults]
       setObject:ns_encoded_log
          forKey:kTodayExtensionMetricsCurrentLog];
-  log_->TruncateEvents();
-  if ((base::TimeTicks::Now() - log_->creation_time()).InSeconds() >=
-      kMaxLogLifeTimeInSeconds) {
+  if (log_->num_events() >= kMaxEventsPerLog ||
+      (base::TimeTicks::Now() - log_->creation_time()).InSeconds() >=
+          kMaxLogLifeTimeInSeconds) {
     CreateNewLog();
   }
 }

@@ -5,10 +5,7 @@
 #import "ios/chrome/browser/voice/speech_input_locale_match_config.h"
 
 #import "base/mac/foundation_util.h"
-
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
+#import "base/mac/scoped_nsobject.h"
 
 namespace {
 
@@ -21,7 +18,10 @@ NSString* const kMatchingLanguagesKey = @"MatchingLanguages";
 
 #pragma mark - SpeechInputLocaleMatchConfig
 
-@interface SpeechInputLocaleMatchConfig ()
+@interface SpeechInputLocaleMatchConfig () {
+  // Backing object for the property of the same name.
+  base::scoped_nsobject<NSArray> _matches;
+}
 
 // Loads |_matches| from config file |plistFileName|.
 - (void)loadConfigFile:(NSString*)plistFileName;
@@ -29,7 +29,6 @@ NSString* const kMatchingLanguagesKey = @"MatchingLanguages";
 @end
 
 @implementation SpeechInputLocaleMatchConfig
-@synthesize matches = _matches;
 
 + (instancetype)sharedInstance {
   static SpeechInputLocaleMatchConfig* matchConfig;
@@ -48,6 +47,11 @@ NSString* const kMatchingLanguagesKey = @"MatchingLanguages";
   return self;
 }
 
+#pragma mark Accessors
+
+- (NSArray*)matches {
+  return _matches.get();
+}
 
 #pragma mark - Private
 
@@ -59,29 +63,49 @@ NSString* const kMatchingLanguagesKey = @"MatchingLanguages";
   NSMutableArray* matches = [NSMutableArray array];
   for (id item in configData) {
     NSDictionary* matchDict = base::mac::ObjCCastStrict<NSDictionary>(item);
-    SpeechInputLocaleMatch* match =
-        [[SpeechInputLocaleMatch alloc] initWithDictionary:matchDict];
+    base::scoped_nsobject<SpeechInputLocaleMatch> match(
+        [[SpeechInputLocaleMatch alloc] initWithDictionary:matchDict]);
     [matches addObject:match];
   }
-  _matches = [matches copy];
+  _matches.reset([matches copy]);
 }
 
 @end
 
 #pragma mark - SpeechInputLocaleMatch
 
+@interface SpeechInputLocaleMatch () {
+  // Backing objects for properties of the same name.
+  base::scoped_nsobject<NSString> _matchedLocaleCode;
+  base::scoped_nsobject<NSArray> _matchingLocaleCodes;
+  base::scoped_nsobject<NSArray> _matchingLanguages;
+}
+
+@end
+
 @implementation SpeechInputLocaleMatch
-@synthesize matchedLocaleCode = _matchedLocaleCode;
-@synthesize matchingLocaleCodes = _matchingLocaleCodes;
-@synthesize matchingLanguages = _matchingLanguages;
 
 - (instancetype)initWithDictionary:(NSDictionary*)matchDict {
   if ((self = [super init])) {
-    _matchedLocaleCode = [matchDict[kMatchedLocaleKey] copy];
-    _matchingLocaleCodes = [matchDict[kMatchingLocalesKey] copy];
-    _matchingLanguages = [matchDict[kMatchingLanguagesKey] copy];
+    _matchedLocaleCode.reset([matchDict[kMatchedLocaleKey] copy]);
+    _matchingLocaleCodes.reset([matchDict[kMatchingLocalesKey] copy]);
+    _matchingLanguages.reset([matchDict[kMatchingLanguagesKey] copy]);
   }
   return self;
+}
+
+#pragma mark Accessors
+
+- (NSString*)matchedLocaleCode {
+  return _matchedLocaleCode;
+}
+
+- (NSArray*)matchingLocaleCodes {
+  return _matchingLocaleCodes;
+}
+
+- (NSArray*)matchingLanguages {
+  return _matchingLanguages;
 }
 
 @end

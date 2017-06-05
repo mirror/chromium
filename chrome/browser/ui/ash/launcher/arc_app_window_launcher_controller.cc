@@ -6,18 +6,16 @@
 #include <string>
 
 #include "ash/display/screen_orientation_controller_chromeos.h"
-#include "ash/public/cpp/shelf_model.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/shared/app_types.h"
+#include "ash/shelf/shelf_model.h"
 #include "ash/shell.h"
 #include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
-#include "chrome/browser/chromeos/arc/arc_optin_uma.h"
 #include "chrome/browser/chromeos/arc/arc_util.h"
-#include "chrome/browser/chromeos/arc/policy/arc_policy_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_utils.h"
 #include "chrome/browser/ui/ash/launcher/arc_app_window.h"
@@ -151,8 +149,6 @@ ArcAppWindowLauncherController::ArcAppWindowLauncherController(
   if (arc::IsArcAllowedForProfile(owner->profile())) {
     observed_profile_ = owner->profile();
     StartObserving(observed_profile_);
-
-    arc::ArcSessionManager::Get()->AddObserver(this);
   }
 }
 
@@ -161,8 +157,6 @@ ArcAppWindowLauncherController::~ArcAppWindowLauncherController() {
     StopObserving(observed_profile_);
   if (observing_shell_)
     ash::Shell::Get()->RemoveShellObserver(this);
-  if (arc::ArcSessionManager::Get())
-    arc::ArcSessionManager::Get()->RemoveObserver(this);
 }
 
 void ArcAppWindowLauncherController::ActiveUserChanged(
@@ -496,16 +490,6 @@ ArcAppWindowLauncherController::ControllerForWindow(aura::Window* window) {
   return nullptr;
 }
 
-void ArcAppWindowLauncherController::OnArcOptInManagementCheckStarted() {
-  // In case of retry this time is updated and we measure only successful run.
-  opt_in_management_check_start_time_ = base::Time::Now();
-}
-
-void ArcAppWindowLauncherController::OnArcSessionStopped(
-    arc::ArcStopReason stop_reason) {
-  opt_in_management_check_start_time_ = base::Time();
-}
-
 void ArcAppWindowLauncherController::OnWindowActivated(
     wm::ActivationChangeObserver::ActivationReason reason,
     aura::Window* gained_active,
@@ -563,7 +547,7 @@ ArcAppWindowLauncherController::AttachControllerToTask(
 
   std::unique_ptr<ArcAppWindowLauncherItemController> controller =
       base::MakeUnique<ArcAppWindowLauncherItemController>(
-          app_shelf_id.ToString());
+          app_shelf_id.ToString(), owner());
   ArcAppWindowLauncherItemController* item_controller = controller.get();
   const ash::ShelfID shelf_id(app_shelf_id.ToString());
   if (!owner()->GetItem(shelf_id)) {
@@ -591,14 +575,6 @@ void ArcAppWindowLauncherController::RegisterApp(
   owner()->SetItemStatus(shelf_id, ash::STATUS_RUNNING);
   app_window->SetController(controller);
   app_window->set_shelf_id(shelf_id);
-
-  if (!opt_in_management_check_start_time_.is_null() &&
-      app_window_info->app_shelf_id().app_id() == arc::kPlayStoreAppId) {
-    arc::UpdatePlayStoreShowTime(
-        base::Time::Now() - opt_in_management_check_start_time_,
-        arc::policy_util::IsAccountManaged(owner()->profile()));
-    opt_in_management_check_start_time_ = base::Time();
-  }
 }
 
 void ArcAppWindowLauncherController::UnregisterApp(

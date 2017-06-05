@@ -55,6 +55,8 @@ LayerImpl::LayerImpl(LayerTreeImpl* tree_impl, int id)
       scroll_clip_layer_id_(Layer::INVALID_ID),
       main_thread_scrolling_reasons_(
           MainThreadScrollingReason::kNotScrollingOnMain),
+      user_scrollable_horizontal_(true),
+      user_scrollable_vertical_(true),
       should_flatten_transform_from_property_tree_(false),
       layer_property_changed_(false),
       may_contain_video_(false),
@@ -92,6 +94,7 @@ LayerImpl::LayerImpl(LayerTreeImpl* tree_impl, int id)
 LayerImpl::~LayerImpl() {
   DCHECK_EQ(DRAW_MODE_NONE, current_draw_mode_);
 
+  layer_tree_impl_->UnregisterScrollLayer(this);
   layer_tree_impl_->UnregisterLayer(this);
 
   layer_tree_impl_->RemoveFromElementMap(this);
@@ -272,12 +275,10 @@ gfx::Vector2dF LayerImpl::ScrollBy(const gfx::Vector2dF& scroll) {
 void LayerImpl::SetScrollClipLayer(int scroll_clip_layer_id) {
   if (scroll_clip_layer_id_ == scroll_clip_layer_id)
     return;
+
+  layer_tree_impl()->UnregisterScrollLayer(this);
   scroll_clip_layer_id_ = scroll_clip_layer_id;
-
   layer_tree_impl()->RegisterScrollLayer(this);
-
-  // The scrolling bounds are determined from the scroll clip layer's bounds.
-  layer_tree_impl()->SetScrollbarGeometriesNeedUpdate();
 }
 
 LayerImpl* LayerImpl::scroll_clip_layer() const {
@@ -286,6 +287,19 @@ LayerImpl* LayerImpl::scroll_clip_layer() const {
 
 bool LayerImpl::scrollable() const {
   return scroll_clip_layer_id_ != Layer::INVALID_ID;
+}
+
+void LayerImpl::set_user_scrollable_horizontal(bool scrollable) {
+  user_scrollable_horizontal_ = scrollable;
+}
+
+void LayerImpl::set_user_scrollable_vertical(bool scrollable) {
+  user_scrollable_vertical_ = scrollable;
+}
+
+bool LayerImpl::user_scrollable(ScrollbarOrientation orientation) const {
+  return (orientation == HORIZONTAL) ? user_scrollable_horizontal_
+                                     : user_scrollable_vertical_;
 }
 
 std::unique_ptr<LayerImpl> LayerImpl::CreateLayerImpl(
@@ -306,6 +320,8 @@ void LayerImpl::PushPropertiesTo(LayerImpl* layer) {
 
   layer->offset_to_transform_parent_ = offset_to_transform_parent_;
   layer->main_thread_scrolling_reasons_ = main_thread_scrolling_reasons_;
+  layer->user_scrollable_horizontal_ = user_scrollable_horizontal_;
+  layer->user_scrollable_vertical_ = user_scrollable_vertical_;
   layer->should_flatten_transform_from_property_tree_ =
       should_flatten_transform_from_property_tree_;
   layer->masks_to_bounds_ = masks_to_bounds_;
@@ -500,8 +516,7 @@ void LayerImpl::SetBounds(const gfx::Size& bounds) {
 
   bounds_ = bounds;
 
-  // Scrollbar positions depend on scrolling bounds and scroll clip bounds.
-  layer_tree_impl()->SetScrollbarGeometriesNeedUpdate();
+  layer_tree_impl()->DidUpdateScrollState(id());
 
   NoteLayerPropertyChanged();
 }
@@ -528,9 +543,7 @@ void LayerImpl::SetViewportBoundsDelta(const gfx::Vector2dF& bounds_delta) {
       NOTREACHED();
   }
 
-  // Viewport scrollbar positions are determined using the viewport bounds
-  // delta.
-  layer_tree_impl()->SetScrollbarGeometriesNeedUpdate();
+  layer_tree_impl()->DidUpdateScrollState(id());
 
   if (masks_to_bounds()) {
     // If layer is clipping, then update the clip node using the new bounds.
@@ -971,28 +984,6 @@ ScrollTree& LayerImpl::GetScrollTree() const {
 
 TransformTree& LayerImpl::GetTransformTree() const {
   return GetPropertyTrees()->transform_tree;
-}
-
-bool LayerImpl::HasValidPropertyTreeIndices() const {
-  // TODO(crbug.com/726423): LayerImpls should never have invalid PropertyTree
-  // indices.
-  const bool has_valid_transform_node =
-      !!GetTransformTree().Node(transform_tree_index());
-  DCHECK(has_valid_transform_node);
-
-  const bool has_valid_effect_node =
-      !!GetEffectTree().Node(effect_tree_index());
-  DCHECK(has_valid_effect_node);
-
-  const bool has_valid_clip_node = !!GetClipTree().Node(clip_tree_index());
-  DCHECK(has_valid_clip_node);
-
-  const bool has_valid_scroll_node =
-      !!GetScrollTree().Node(scroll_tree_index());
-  DCHECK(has_valid_scroll_node);
-
-  return has_valid_transform_node && has_valid_effect_node &&
-         has_valid_clip_node && has_valid_scroll_node;
 }
 
 }  // namespace cc

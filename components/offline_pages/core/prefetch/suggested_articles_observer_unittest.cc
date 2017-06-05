@@ -32,25 +32,23 @@ class TestingPrefetchDispatcher : public PrefetchDispatcher {
  public:
   TestingPrefetchDispatcher() = default;
 
-  void SetService(PrefetchService* service) override{};
-
   void AddCandidatePrefetchURLs(
-      const std::vector<PrefetchURL>& prefetch_urls) override {
-    latest_prefetch_urls = prefetch_urls;
+      const std::vector<PrefetchURL>& suggested_urls) override {
+    latest_prefetch_urls = suggested_urls;
     new_suggestions_count++;
   }
 
   void RemoveAllUnprocessedPrefetchURLs(
       const std::string& name_space) override {
-    DCHECK_EQ(kSuggestedArticlesNamespace, name_space);
+    DCHECK_EQ(name_space, kSuggestedArticlesNamespace);
     latest_prefetch_urls.clear();
     remove_all_suggestions_count++;
   }
 
   void RemovePrefetchURLsByClientId(const ClientId& client_id) override {
-    DCHECK_EQ(kSuggestedArticlesNamespace, client_id.name_space);
+    DCHECK_EQ(client_id.name_space, kSuggestedArticlesNamespace);
     remove_by_client_id_count++;
-    last_removed_client_id = client_id;
+    last_removed_client_id = base::MakeUnique<ClientId>(client_id);
   }
 
   void BeginBackgroundTask(
@@ -58,7 +56,7 @@ class TestingPrefetchDispatcher : public PrefetchDispatcher {
   void StopBackgroundTask(ScopedBackgroundTask* task) override {}
 
   std::vector<PrefetchURL> latest_prefetch_urls;
-  ClientId last_removed_client_id;
+  std::unique_ptr<ClientId> last_removed_client_id;
 
   int new_suggestions_count = 0;
   int remove_all_suggestions_count = 0;
@@ -69,19 +67,17 @@ class TestingPrefetchService : public PrefetchService {
  public:
   TestingPrefetchService() = default;
 
-  OfflineMetricsCollector* GetOfflineMetricsCollector() override {
-    return nullptr;
-  }
-  PrefetchDispatcher* GetPrefetchDispatcher() override { return &dispatcher; }
-  PrefetchGCMHandler* GetPrefetchGCMHandler() override { return nullptr; }
-  PrefetchStore* GetPrefetchStore() override { return nullptr; }
   void ObserveContentSuggestionsService(
       ntp_snippets::ContentSuggestionsService* content_suggestions_service)
       override {}
+  PrefetchDispatcher* GetDispatcher() override { return &dispatcher; };
+  OfflineMetricsCollector* GetOfflineMetricsCollector() override {
+    return nullptr;
+  }
+  PrefetchGCMHandler* GetPrefetchGCMHandler() override { return nullptr; }
 
   TestingPrefetchDispatcher dispatcher;
 };
-
 }  // namespace
 
 class OfflinePageSuggestedArticlesObserverTest : public testing::Test {
@@ -163,11 +159,8 @@ TEST_F(OfflinePageSuggestedArticlesObserverTest, RemovesClientIdOnInvalidated) {
       ntp_snippets::ContentSuggestion::ID(category, test_url_1.spec()));
 
   EXPECT_EQ(1, test_prefetch_dispatcher()->remove_by_client_id_count);
-  EXPECT_EQ(test_url_1.spec(),
-            test_prefetch_dispatcher()->last_removed_client_id.id);
-  EXPECT_EQ(
-      kSuggestedArticlesNamespace,
-      test_prefetch_dispatcher()->latest_prefetch_urls[0].client_id.name_space);
+  EXPECT_EQ(ClientId(kSuggestedArticlesNamespace, test_url_1.spec()),
+            *test_prefetch_dispatcher()->last_removed_client_id);
 }
 
 }  // namespace offline_pages

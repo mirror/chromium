@@ -268,8 +268,6 @@ void PaymentRequest::OnConnectionTerminated() {
 }
 
 void PaymentRequest::Pay() {
-  journey_logger_.SetSelectedPaymentMethod(
-      JourneyLogger::SELECTED_PAYMENT_METHOD_CREDIT_CARD);
   state_->GeneratePaymentResponse();
 }
 

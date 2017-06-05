@@ -3892,24 +3892,27 @@ Press any key to continue exploring.
     Wi-Fi
   </message>
   <message name="IDS_STATUSBAR_NETWORK_DEVICE_CELLULAR" desc="Label for a cellular network device.">
-    Mobile data
+    Mobile Data
   </message>
-  <message name="IDS_NETWORK_TYPE_ETHERNET" desc="Label for Ethernet networks.">
+  <message name="IDS_NETWORK_TYPE_ETHERNET" desc="The ethernet network type.">
     Ethernet
   </message>
-  <message name="IDS_NETWORK_TYPE_WIFI" desc="Label for WiFi networks.">
+  <message name="IDS_NETWORK_TYPE_TETHER" desc="The Tether network type.">
+    Tether
+  </message>
+  <message name="IDS_NETWORK_TYPE_WIFI" desc="The wifi network type.">
     Wi-Fi
   </message>
-  <message name="IDS_NETWORK_TYPE_WIMAX" desc="Label for WiMAX networks.">
+  <message name="IDS_NETWORK_TYPE_WIMAX" desc="The wimax network type.">
     WiMAX
   </message>
-  <message name="IDS_NETWORK_TYPE_BLUETOOTH" desc="Label for Bluetooth networks.">
+  <message name="IDS_NETWORK_TYPE_BLUETOOTH" desc="The bluetooth network type.">
     Bluetooth
   </message>
-  <message name="IDS_NETWORK_TYPE_MOBILE_DATA" desc="Label for Cellular and Tether networks.">
-    Mobile data
+  <message name="IDS_NETWORK_TYPE_CELLULAR" desc="The cellular network type.">
+    Mobile
   </message>
-  <message name="IDS_NETWORK_TYPE_VPN" desc="Label for VPN networks.">
+  <message name="IDS_NETWORK_TYPE_VPN" desc="The vpn network type.">
     VPN
   </message>
   <message name="IDS_NETWORK_TYPE_VPN_BUILTIN" desc="The built-in VPN types (Open VPN and L2TP/IPSec).">

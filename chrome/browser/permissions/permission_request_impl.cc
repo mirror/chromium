@@ -194,7 +194,8 @@ void PermissionRequestImpl::RequestFinished() {
 }
 
 bool PermissionRequestImpl::ShouldShowPersistenceToggle() const {
-  return PermissionUtil::ShouldShowPersistenceToggle(content_settings_type_);
+  return (content_settings_type_ == CONTENT_SETTINGS_TYPE_GEOLOCATION) &&
+         PermissionUtil::ShouldShowPersistenceToggle();
 }
 
 PermissionRequestType PermissionRequestImpl::GetPermissionRequestType()

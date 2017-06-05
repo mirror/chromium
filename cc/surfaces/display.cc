@@ -184,13 +184,11 @@ void Display::SetOutputIsSecure(bool secure) {
 
 void Display::InitializeRenderer() {
   // Not relevant for display compositor since it's not delegated.
-  bool delegated_sync_points_required = false;
+  constexpr bool delegated_sync_points_required = false;
   resource_provider_.reset(new ResourceProvider(
       output_surface_->context_provider(), bitmap_manager_,
-      gpu_memory_buffer_manager_, nullptr,
-      settings_.texture_id_allocation_chunk_size,
-      delegated_sync_points_required, settings_.use_gpu_memory_buffer_resources,
-      false, settings_.buffer_to_texture_target_map));
+      gpu_memory_buffer_manager_, nullptr, delegated_sync_points_required,
+      settings_.resource_settings));
 
   if (output_surface_->context_provider()) {
     DCHECK(texture_mailbox_deleter_);
@@ -390,9 +388,9 @@ void Display::SetNeedsRedrawRect(const gfx::Rect& damage_rect) {
   }
 }
 
-bool Display::OnSurfaceDamaged(const SurfaceId& surface_id,
-                               const BeginFrameAck& ack) {
-  bool display_damaged = false;
+void Display::OnSurfaceDamaged(const SurfaceId& surface_id,
+                               const BeginFrameAck& ack,
+                               bool* changed) {
   if (ack.has_damage) {
     if (aggregator_ &&
         aggregator_->previous_contained_surfaces().count(surface_id)) {
@@ -402,18 +400,17 @@ bool Display::OnSurfaceDamaged(const SurfaceId& surface_id,
         if (surface->GetActiveFrame().resource_list.empty())
           aggregator_->ReleaseResources(surface_id);
       }
-      display_damaged = true;
-      if (surface_id == current_surface_id_)
-        UpdateRootSurfaceResourcesLocked();
+      *changed = true;
     } else if (surface_id == current_surface_id_) {
-      display_damaged = true;
-      UpdateRootSurfaceResourcesLocked();
+      *changed = true;
     }
   }
 
   if (scheduler_)
-    scheduler_->SurfaceDamaged(surface_id, ack, display_damaged);
-  return display_damaged;
+    scheduler_->SurfaceDamaged(surface_id, ack, *changed);
+
+  if (surface_id == current_surface_id_)
+    UpdateRootSurfaceResourcesLocked();
 }
 
 bool Display::SurfaceHasUndrawnFrame(const SurfaceId& surface_id) const {

@@ -108,6 +108,7 @@
 #include "ios/public/provider/chrome/browser/chrome_browser_provider.h"
 #import "ios/public/provider/chrome/browser/native_app_launcher/native_app_metadata.h"
 #import "ios/public/provider/chrome/browser/native_app_launcher/native_app_whitelist_manager.h"
+#import "ios/web/navigation/crw_session_controller.h"
 #import "ios/web/navigation/navigation_item_impl.h"
 #import "ios/web/navigation/navigation_manager_impl.h"
 #include "ios/web/public/favicon_status.h"
@@ -587,6 +588,13 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
                              sessionID:self.tabId
                           withOverlays:[self snapshotOverlays]
                               callback:callback];
+}
+
+- (const GURL&)url {
+  // See note in header; this method should be removed.
+  web::NavigationItem* item =
+      [self navigationManagerImpl]->GetSessionController().currentItem;
+  return item ? item->GetVirtualURL() : GURL::EmptyGURL();
 }
 
 - (const GURL&)lastCommittedURL {
@@ -1075,9 +1083,14 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
 - (void)goToItem:(const web::NavigationItem*)item {
   DCHECK(item);
-  int index = self.navigationManager->GetIndexOfItem(item);
-  DCHECK_NE(index, -1);
-  self.navigationManager->GoToIndex(index);
+
+  if (self.navigationManager) {
+    CRWSessionController* sessionController =
+        [self navigationManagerImpl]->GetSessionController();
+    NSInteger itemIndex = [sessionController indexOfItem:item];
+    DCHECK_NE(itemIndex, NSNotFound);
+    self.navigationManager->GoToIndex(itemIndex);
+  }
 }
 
 - (BOOL)openExternalURL:(const GURL&)url

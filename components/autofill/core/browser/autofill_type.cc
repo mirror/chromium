@@ -131,7 +131,6 @@ FieldTypeGroup AutofillType::group() const {
 
     case NO_SERVER_DATA:
     case EMPTY_TYPE:
-    case AMBIGUOUS_TYPE:
     case PHONE_FAX_NUMBER:
     case PHONE_FAX_CITY_CODE:
     case PHONE_FAX_COUNTRY_CODE:
@@ -771,9 +770,6 @@ std::string AutofillType::ServerFieldTypeToString(ServerFieldType type) {
       return "PROBABLY_ACCOUNT_CREATION_PASSWORD";
     case CONFIRMATION_PASSWORD:
       return "CONFIRMATION_PASSWORD";
-
-    case AMBIGUOUS_TYPE:
-      return "AMBIGUOUS_TYPE";
 
     case MAX_VALID_FIELD_TYPE:
       return std::string();

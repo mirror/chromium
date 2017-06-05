@@ -180,25 +180,6 @@ int NextTraceId() {
   return trace_id;
 }
 
-void OnEventDispatcherConnectionError(
-    base::WeakPtr<EmbeddedWorkerInstance> embedded_worker) {
-  if (!embedded_worker)
-    return;
-
-  switch (embedded_worker->status()) {
-    case EmbeddedWorkerStatus::STARTING:
-    case EmbeddedWorkerStatus::RUNNING:
-      // In this case the disconnection might be happening because of sudden
-      // renderer shutdown like crash.
-      embedded_worker->Detach();
-      break;
-    case EmbeddedWorkerStatus::STOPPING:
-    case EmbeddedWorkerStatus::STOPPED:
-      // Do nothing
-      break;
-  }
-}
-
 }  // namespace
 
 const int ServiceWorkerVersion::kTimeoutTimerDelaySeconds = 30;
@@ -1024,9 +1005,8 @@ void ServiceWorkerVersion::OnGetClients(
                  weak_factory_.GetWeakPtr(), request_id));
 }
 
-void ServiceWorkerVersion::OnGetClientsFinished(
-    int request_id,
-    std::unique_ptr<ServiceWorkerClients> clients) {
+void ServiceWorkerVersion::OnGetClientsFinished(int request_id,
+                                                ServiceWorkerClients* clients) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   TRACE_EVENT_ASYNC_END1("ServiceWorker", "ServiceWorkerVersion::OnGetClients",
                          request_id, "The number of clients", clients->size());
@@ -1459,8 +1439,6 @@ void ServiceWorkerVersion::StartWorkerInternal() {
       std::move(params), mojo::MakeRequest(&event_dispatcher_),
       base::Bind(&ServiceWorkerVersion::OnStartSentAndScriptEvaluated,
                  weak_factory_.GetWeakPtr()));
-  event_dispatcher_.set_connection_error_handler(base::Bind(
-      &OnEventDispatcherConnectionError, embedded_worker_->AsWeakPtr()));
 }
 
 void ServiceWorkerVersion::StartTimeoutTimer() {

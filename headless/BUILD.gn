@@ -212,8 +212,6 @@ if (headless_fontconfig_utils) {
       "//build/linux:fontconfig",
       "//third_party/freetype",
     ]
-
-    configs += [ ":headless_implementation" ]
   }
 }
 

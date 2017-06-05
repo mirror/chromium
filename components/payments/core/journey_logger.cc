@@ -137,19 +137,12 @@ void JourneyLogger::SetEventOccurred(Event event) {
   events_ |= event;
 }
 
-void JourneyLogger::SetSelectedPaymentMethod(
-    SelectedPaymentMethod payment_method) {
-  payment_method_ = payment_method;
-}
-
 void JourneyLogger::RecordJourneyStatsHistograms(
     CompletionStatus completion_status) {
   DCHECK(!has_recorded_);
   has_recorded_ = true;
 
   RecordCheckoutFlowMetrics();
-
-  RecordPaymentMethodMetric();
 
   RecordSectionSpecificStats(completion_status);
 
@@ -175,11 +168,6 @@ void JourneyLogger::RecordCheckoutFlowMetrics() {
 
   if (events_ & EVENT_SKIPPED_SHOW)
     UMA_HISTOGRAM_BOOLEAN("PaymentRequest.CheckoutFunnel.SkippedShow", true);
-}
-
-void JourneyLogger::RecordPaymentMethodMetric() {
-  base::UmaHistogramEnumeration("PaymentRequest.SelectedPaymentMethod",
-                                payment_method_, SELECTED_PAYMENT_METHOD_MAX);
 }
 
 void JourneyLogger::RecordSectionSpecificStats(

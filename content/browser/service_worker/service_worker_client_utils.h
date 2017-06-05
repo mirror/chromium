@@ -30,8 +30,7 @@ using NavigationCallback =
 using ClientCallback =
     base::Callback<void(const ServiceWorkerClientInfo& client_info)>;
 using ServiceWorkerClients = std::vector<ServiceWorkerClientInfo>;
-using ClientsCallback =
-    base::Callback<void(std::unique_ptr<ServiceWorkerClients> clients)>;
+using ClientsCallback = base::Callback<void(ServiceWorkerClients* clients)>;
 
 // Focuses the window client associated with |provider_host|. |callback| is
 // called with the client information on completion.

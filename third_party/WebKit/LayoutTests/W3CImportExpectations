@@ -159,8 +159,6 @@ external/wpt/css/css-masking-1 [ Skip ]
 external/wpt/css/css-multicol-1 [ Skip ]
 external/wpt/css/css-namespaces-3 [ Skip ]
 external/wpt/css/css-page-3 [ Skip ]
-## Owners: smcgruer@chromium.org
-# external/wpt/css/css-position-3 [ Pass ]
 external/wpt/css/css-pseudo-4 [ Skip ]
 external/wpt/css/css-regions-1 [ Skip ]
 ## Owners: kojii@chromium.org
@@ -420,8 +418,6 @@ external/wpt/webgl [ Skip ]
 # external/wpt/web-nfc [ Pass ]
 ## Owners: worker-dev@chromium.org
 # external/wpt/workers [ Pass ]
-## Owners: zijiehe@chromium.org
-# external/wpt/keyboard-lock [ Pass ]
 
 # Exceptions for individual files that fail due to bugs in the
 # upstream tests that we shouldn't bother importing until they are
@@ -765,3 +761,8 @@ external/wpt/uievents/order-of-events/mouse-events/click-order-manual.html [ Ski
 external/wpt/uievents/order-of-events/mouse-events/mouseevents-mousemove-manual.htm [ Skip ]
 external/wpt/uievents/order-of-events/mouse-events/mousemove-across-manual.html [ Skip ]
 external/wpt/uievents/order-of-events/mouse-events/mousemove-between-manual.html [ Skip ]
+external/wpt/keyboard-lock/idlharness.https.html [ Skip ]
+external/wpt/keyboard-lock/navigator-cancelKeyboardLock.https.html [ Skip ]
+external/wpt/keyboard-lock/navigator-requestKeyboardLock.https.html [ Skip ]
+external/wpt/keyboard-lock/navigator-requestKeyboardLock-two-parallel-requests.https.html [ Skip ]
+external/wpt/keyboard-lock/navigator-requestKeyboardLock-two-sequential-requests.https.html [ Skip ]

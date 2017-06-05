@@ -412,7 +412,11 @@ TEST_P(TaskSchedulerTaskTrackerTest, WillPostAfterShutdown) {
   std::unique_ptr<Task> task(CreateTask(GetParam()));
 
   // |task_tracker_| shouldn't allow a task to be posted after shutdown.
-  EXPECT_FALSE(tracker_.WillPostTask(task.get()));
+  if (GetParam() == TaskShutdownBehavior::BLOCK_SHUTDOWN) {
+    EXPECT_DCHECK_DEATH({ tracker_.WillPostTask(task.get()); });
+  } else {
+    EXPECT_FALSE(tracker_.WillPostTask(task.get()));
+  }
 }
 
 // Verify that BLOCK_SHUTDOWN and SKIP_ON_SHUTDOWN tasks can

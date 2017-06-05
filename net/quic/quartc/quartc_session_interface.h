@@ -11,7 +11,6 @@
 
 #include "net/quic/core/quic_error_codes.h"
 #include "net/quic/core/quic_types.h"
-#include "net/quic/platform/api/quic_export.h"
 #include "net/quic/quartc/quartc_stream_interface.h"
 
 namespace net {

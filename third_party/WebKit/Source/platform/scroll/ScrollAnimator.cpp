@@ -409,7 +409,7 @@ void ScrollAnimator::NotifyAnimationTakeover(
                             scroll_offset_animation_curve->target_value().y());
   if (WillAnimateToOffset(target_value)) {
     animation_curve_ = CompositorScrollOffsetAnimationCurve::Create(
-        scroll_offset_animation_curve);
+        std::move(scroll_offset_animation_curve));
     start_time_ = animation_start_time;
   }
 }

@@ -147,11 +147,6 @@ bool MockRenderProcessHost::IsForGuestsOnly() const {
   return is_for_guests_only_;
 }
 
-RendererAudioOutputStreamFactoryContext*
-MockRenderProcessHost::GetRendererAudioOutputStreamFactoryContext() {
-  return nullptr;
-}
-
 void MockRenderProcessHost::OnAudioStreamAdded() {}
 
 void MockRenderProcessHost::OnAudioStreamRemoved() {}

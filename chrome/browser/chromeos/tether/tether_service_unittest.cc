@@ -9,7 +9,6 @@
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
-#include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/testing_profile.h"
@@ -147,7 +146,6 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
         profile_.get(), fake_power_manager_client_.get(),
         fake_session_manager_client_.get(), fake_cryptauth_service_.get(),
         network_state_handler()));
-    base::RunLoop().RunUntilIdle();
   }
 
   void ShutdownTetherService() {
@@ -242,8 +240,7 @@ TEST_F(TetherServiceTest, TestFeatureFlagEnabled) {
       chromeos::switches::kEnableTether);
 
   TetherService* tether_service = TetherService::Get(profile_.get());
-  ASSERT_TRUE(tether_service);
-  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(tether_service);
   tether_service->Shutdown();
 }
 
@@ -310,19 +307,18 @@ TEST_F(TetherServiceTest, TestEnabled) {
 // state than the user preference.
 TEST_F(TetherServiceTest, TestEnabledMultipleChanges) {
   CreateTetherService();
-  // CreateTetherService calls RunUntilIdle() so OnBluetoothAdapterFetched()
-  // will have been called which calls UpdateTetherTechnologyState().
+
+  EXPECT_EQ(0, tether_service_->updated_technology_state_count());
+
+  SetTetherTechnologyStateEnabled(false);
+  SetTetherTechnologyStateEnabled(false);
+  SetTetherTechnologyStateEnabled(false);
+
   EXPECT_EQ(1, tether_service_->updated_technology_state_count());
 
-  SetTetherTechnologyStateEnabled(false);
-  SetTetherTechnologyStateEnabled(false);
-  SetTetherTechnologyStateEnabled(false);
+  SetTetherTechnologyStateEnabled(true);
+  SetTetherTechnologyStateEnabled(true);
+  SetTetherTechnologyStateEnabled(true);
 
   EXPECT_EQ(2, tether_service_->updated_technology_state_count());
-
-  SetTetherTechnologyStateEnabled(true);
-  SetTetherTechnologyStateEnabled(true);
-  SetTetherTechnologyStateEnabled(true);
-
-  EXPECT_EQ(3, tether_service_->updated_technology_state_count());
 }

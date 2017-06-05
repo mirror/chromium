@@ -6,7 +6,6 @@
 #define IOS_CHROME_BROWSER_UI_PAYMENTS_CREDIT_CARD_EDIT_COORDINATOR_H_
 
 #import "ios/chrome/browser/chrome_coordinator.h"
-#import "ios/chrome/browser/ui/payments/billing_address_selection_coordinator.h"
 #import "ios/chrome/browser/ui/payments/payment_request_edit_view_controller.h"
 
 namespace autofill {
@@ -39,8 +38,7 @@ class PaymentRequest;
 // provided in the initializer.
 @interface CreditCardEditCoordinator
     : ChromeCoordinator<PaymentRequestEditViewControllerDelegate,
-                        PaymentRequestEditViewControllerValidator,
-                        BillingAddressSelectionCoordinatorDelegate>
+                        PaymentRequestEditViewControllerValidator>
 
 // The credit card to be edited, if any. This pointer is not owned by this class
 // and should outlive it.

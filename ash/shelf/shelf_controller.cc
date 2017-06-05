@@ -11,10 +11,8 @@
 #include "ash/shelf/app_list_shelf_item_delegate.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shell.h"
-#include "ash/strings/grit/ash_strings.h"
 #include "base/auto_reset.h"
 #include "base/strings/utf_string_conversions.h"
-#include "ui/base/l10n/l10n_util.h"
 #include "ui/base/models/simple_menu_model.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
@@ -34,14 +32,9 @@ Shelf* GetShelfForDisplay(int64_t display_id) {
 }  // namespace
 
 ShelfController::ShelfController() {
-  // Set the delegate and title string for the app list item.
+  // Create an AppListShelfItemDelegate for the app list item.
   model_.SetShelfItemDelegate(ShelfID(kAppListId),
                               base::MakeUnique<AppListShelfItemDelegate>());
-  DCHECK_EQ(0, model_.ItemIndexByID(ShelfID(kAppListId)));
-  ShelfItem item = model_.items()[0];
-  item.title = l10n_util::GetStringUTF16(IDS_ASH_SHELF_APP_LIST_LAUNCHER_TITLE);
-  model_.Set(0, item);
-
   model_.AddObserver(this);
 }
 
@@ -128,22 +121,22 @@ void ShelfController::SetAutoHideBehavior(ShelfAutoHideBehavior auto_hide,
 }
 
 void ShelfController::AddShelfItem(int32_t index, const ShelfItem& item) {
-  DCHECK_EQ(Shell::GetAshConfig(), Config::MASH) << " Unexpected model sync";
-  DCHECK(!applying_remote_shelf_model_changes_) << " Unexpected model change";
+  DCHECK_EQ(Shell::GetAshConfig(), Config::MASH) << "Unexpected model sync";
+  DCHECK(!applying_remote_shelf_model_changes_) << "Unexpected model change";
   index = index < 0 ? model_.item_count() : index;
-  DCHECK_GT(index, 0) << " Items can not preceed the AppList";
-  DCHECK_LE(index, model_.item_count()) << " Index out of bounds";
+  DCHECK_GT(index, 0) << "Items can not preceed the AppList";
+  DCHECK_LE(index, model_.item_count()) << "Index out of bounds";
   index = std::min(std::max(index, 1), model_.item_count());
   base::AutoReset<bool> reset(&applying_remote_shelf_model_changes_, true);
   model_.AddAt(index, item);
 }
 
 void ShelfController::RemoveShelfItem(const ShelfID& id) {
-  DCHECK_EQ(Shell::GetAshConfig(), Config::MASH) << " Unexpected model sync";
-  DCHECK(!applying_remote_shelf_model_changes_) << " Unexpected model change";
+  DCHECK_EQ(Shell::GetAshConfig(), Config::MASH) << "Unexpected model sync";
+  DCHECK(!applying_remote_shelf_model_changes_) << "Unexpected model change";
   const int index = model_.ItemIndexByID(id);
-  DCHECK_GE(index, 0) << " No item found with the id: " << id;
-  DCHECK_NE(index, 0) << " The AppList shelf item cannot be removed";
+  DCHECK_GE(index, 0) << "Item not found";
+  DCHECK_NE(index, 0) << "The AppList shelf item cannot be removed";
   if (index <= 0)
     return;
   base::AutoReset<bool> reset(&applying_remote_shelf_model_changes_, true);
@@ -151,17 +144,17 @@ void ShelfController::RemoveShelfItem(const ShelfID& id) {
 }
 
 void ShelfController::MoveShelfItem(const ShelfID& id, int32_t index) {
-  DCHECK_EQ(Shell::GetAshConfig(), Config::MASH) << " Unexpected model sync";
-  DCHECK(!applying_remote_shelf_model_changes_) << " Unexpected model change";
+  DCHECK_EQ(Shell::GetAshConfig(), Config::MASH) << "Unexpected model sync";
+  DCHECK(!applying_remote_shelf_model_changes_) << "Unexpected model change";
   const int current_index = model_.ItemIndexByID(id);
-  DCHECK_GE(current_index, 0) << " No item found with the id: " << id;
-  DCHECK_NE(current_index, 0) << " The AppList shelf item cannot be moved";
+  DCHECK_GE(current_index, 0) << "No item found with the given id";
+  DCHECK_NE(current_index, 0) << "The AppList shelf item cannot be moved";
   if (current_index <= 0)
     return;
-  DCHECK_GT(index, 0) << " Items can not preceed the AppList";
-  DCHECK_LT(index, model_.item_count()) << " Index out of bounds";
+  DCHECK_GT(index, 0) << "Items can not preceed the AppList";
+  DCHECK_LT(index, model_.item_count()) << "Index out of bounds";
   index = std::min(std::max(index, 1), model_.item_count() - 1);
-  DCHECK_NE(current_index, index) << " The item is already at the given index";
+  DCHECK_NE(current_index, index) << "The item is already at the given index";
   if (current_index == index)
     return;
   base::AutoReset<bool> reset(&applying_remote_shelf_model_changes_, true);
@@ -169,10 +162,10 @@ void ShelfController::MoveShelfItem(const ShelfID& id, int32_t index) {
 }
 
 void ShelfController::UpdateShelfItem(const ShelfItem& item) {
-  DCHECK_EQ(Shell::GetAshConfig(), Config::MASH) << " Unexpected model sync";
-  DCHECK(!applying_remote_shelf_model_changes_) << " Unexpected model change";
+  DCHECK_EQ(Shell::GetAshConfig(), Config::MASH) << "Unexpected model sync";
+  DCHECK(!applying_remote_shelf_model_changes_) << "Unexpected model change";
   const int index = model_.ItemIndexByID(item.id);
-  DCHECK_GE(index, 0) << " No item found with the id: " << item.id;
+  DCHECK_GE(index, 0) << "No item found with the given id";
   if (index < 0)
     return;
   base::AutoReset<bool> reset(&applying_remote_shelf_model_changes_, true);
@@ -182,8 +175,8 @@ void ShelfController::UpdateShelfItem(const ShelfItem& item) {
 void ShelfController::SetShelfItemDelegate(
     const ShelfID& id,
     mojom::ShelfItemDelegatePtr delegate) {
-  DCHECK_EQ(Shell::GetAshConfig(), Config::MASH) << " Unexpected model sync";
-  DCHECK(!applying_remote_shelf_model_changes_) << " Unexpected model change";
+  DCHECK_EQ(Shell::GetAshConfig(), Config::MASH) << "Unexpected model sync";
+  DCHECK(!applying_remote_shelf_model_changes_) << "Unexpected model change";
   base::AutoReset<bool> reset(&applying_remote_shelf_model_changes_, true);
   if (delegate.is_bound())
     model_.SetShelfItemDelegate(

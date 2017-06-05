@@ -223,10 +223,6 @@ static_library("test_support") {
     sources += [
       "../browser/chromeos/accessibility/speech_monitor.cc",
       "../browser/chromeos/accessibility/speech_monitor.h",
-      "../browser/chromeos/ownership/fake_owner_settings_service.cc",
-      "../browser/chromeos/ownership/fake_owner_settings_service.h",
-      "../browser/chromeos/settings/scoped_cros_settings_test_helper.cc",
-      "../browser/chromeos/settings/scoped_cros_settings_test_helper.h",
     ]
     public_deps += [
       "//components/ownership",
@@ -624,6 +620,7 @@ if (!is_android) {
           "../browser/ui/views/location_bar/location_icon_view_interactive_uitest.cc",
           "../browser/ui/views/location_bar/star_view_browsertest.cc",
           "../browser/ui/views/omnibox/omnibox_view_views_browsertest.cc",
+          "../browser/ui/views/page_info/page_info_bubble_view_interactive_uitest.cc",
           "../browser/ui/views/passwords/manage_passwords_icon_view_interactive_uitest.cc",
           "../browser/ui/views/ssl_client_certificate_selector_browsertest.cc",
           "../browser/ui/views/tabs/tab_drag_controller_interactive_uitest.cc",
@@ -1710,8 +1707,6 @@ test("browser_tests") {
       "../browser/ui/webui/inspect_ui_browsertest.cc",
       "../browser/ui/webui/interstitials/interstitial_ui_browsertest.cc",
       "../browser/ui/webui/log_web_ui_url_browsertest.cc",
-      "../browser/ui/webui/md_bookmarks/md_bookmarks_browsertest.cc",
-      "../browser/ui/webui/md_bookmarks/md_bookmarks_browsertest.h",
       "../browser/ui/webui/media_router/media_router_dialog_controller_impl_browsertest.cc",
       "../browser/ui/webui/net_internals/net_internals_ui_browsertest.cc",
       "../browser/ui/webui/net_internals/net_internals_ui_browsertest.h",
@@ -2030,11 +2025,7 @@ test("browser_tests") {
       }
     }
     if (use_aura) {
-      sources += [
-        "../browser/ui/aura/accessibility/automation_manager_aura_browsertest.cc",
-        "../browser/ui/test/test_app_window_icon_observer.cc",
-        "../browser/ui/test/test_app_window_icon_observer.h",
-      ]
+      sources += [ "../browser/ui/aura/accessibility/automation_manager_aura_browsertest.cc" ]
     }
     if (use_aura || toolkit_views) {
       deps += [ "//ui/events:test_support" ]
@@ -2063,7 +2054,6 @@ test("browser_tests") {
         "../browser/ui/views/payments/payment_request_can_make_payment_browsertest.cc",
         "../browser/ui/views/payments/payment_request_can_make_payment_metrics_browsertest.cc",
         "../browser/ui/views/payments/payment_request_data_url_browsertest.cc",
-        "../browser/ui/views/payments/payment_request_journey_logger_browsertest.cc",
         "../browser/ui/views/payments/payment_request_payment_app_browsertest.cc",
         "../browser/ui/views/payments/payment_request_payment_response_browsertest.cc",
         "../browser/ui/views/payments/payment_request_use_stats_browsertest.cc",
@@ -2100,7 +2090,6 @@ test("browser_tests") {
           "../browser/ui/views/frame/browser_view_browsertest.cc",
           "../browser/ui/views/location_bar/zoom_bubble_view_browsertest.cc",
           "../browser/ui/views/media_router/media_router_ui_browsertest.cc",
-          "../browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
           "../browser/ui/views/passwords/password_dialog_view_browsertest.cc",
           "../browser/ui/views/session_crashed_bubble_view_browsertest.cc",
           "../browser/ui/views/task_manager_view_browsertest.cc",
@@ -2242,6 +2231,8 @@ test("browser_tests") {
         "../browser/chromeos/login/webview_login_browsertest.cc",
         "../browser/chromeos/login/wizard_controller_browsertest.cc",
         "../browser/chromeos/net/network_portal_detector_impl_browsertest.cc",
+        "../browser/chromeos/ownership/fake_owner_settings_service.cc",
+        "../browser/chromeos/ownership/fake_owner_settings_service.h",
         "../browser/chromeos/policy/affiliation_test_helper.cc",
         "../browser/chromeos/policy/affiliation_test_helper.h",
         "../browser/chromeos/policy/blocking_login_browsertest.cc",
@@ -2271,6 +2262,8 @@ test("browser_tests") {
         "../browser/chromeos/power/peripheral_battery_observer_browsertest.cc",
         "../browser/chromeos/preferences_chromeos_browsertest.cc",
         "../browser/chromeos/profiles/profile_helper_browsertest.cc",
+        "../browser/chromeos/settings/scoped_cros_settings_test_helper.cc",
+        "../browser/chromeos/settings/scoped_cros_settings_test_helper.h",
         "../browser/chromeos/shutdown_policy_browsertest.cc",
         "../browser/chromeos/system/device_disabling_browsertest.cc",
         "../browser/chromeos/system/tray_accessibility_browsertest.cc",

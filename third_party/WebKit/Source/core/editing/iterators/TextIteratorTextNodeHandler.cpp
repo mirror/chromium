@@ -330,7 +330,7 @@ void TextIteratorTextNodeHandler::HandleTextBox() {
         // come back again to finish handling this text box; don't advance to
         // the next one.
         if (static_cast<unsigned>(text_state_->PositionEndOffset()) <
-            text_box_end + text_start_offset)
+            text_box_end)
           return;
 
         if (behavior_.DoesNotEmitSpaceBeyondRangeEnd()) {
@@ -450,14 +450,8 @@ void TextIteratorTextNodeHandler::EmitText(Node* text_node,
                                            LayoutText* layout_object,
                                            int text_start_offset,
                                            int text_end_offset) {
-  String string = behavior_.EmitsOriginalText() ? layout_object->OriginalText()
-                                                : layout_object->GetText();
-  if (behavior_.EmitsSpaceForNbsp())
-    string.Replace(kNoBreakSpaceCharacter, kSpaceCharacter);
-  text_state_->EmitText(text_node,
-                        text_start_offset + layout_object->TextStartOffset(),
-                        text_end_offset + layout_object->TextStartOffset(),
-                        string, text_start_offset, text_end_offset);
+  text_state_->EmitText(text_node, layout_object, text_start_offset,
+                        text_end_offset);
   ResetCollapsedWhiteSpaceFixup();
 }
 

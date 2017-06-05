@@ -47,6 +47,8 @@ Timeline.TimelinePanel = class extends UI.Panel {
     this._recordingOptionUIControls = [];
     this._state = Timeline.TimelinePanel.State.Idle;
     this._recordingPageReload = false;
+    this._windowStartTime = 0;
+    this._windowEndTime = Infinity;
     this._millisecondsToRecordAfterLoadEvent = 3000;
     this._toggleRecordAction =
         /** @type {!UI.Action }*/ (UI.actionRegistry.action('timeline.toggle-recording'));
@@ -75,7 +77,7 @@ Timeline.TimelinePanel = class extends UI.Panel {
         Common.settings.createSetting('timelineViewMode', Timeline.TimelinePanel.ViewMode.FlameChart);
 
     this._disableCaptureJSProfileSetting = Common.settings.createSetting('timelineDisableJSSampling', false);
-    this._disableCaptureJSProfileSetting.setTitle(Common.UIString('Disable JavaScript samples'));
+    this._disableCaptureJSProfileSetting.setTitle(Common.UIString('Disable JavaScript Samples'));
     this._captureLayersAndPicturesSetting = Common.settings.createSetting('timelineCaptureLayersAndPictures', false);
     this._captureLayersAndPicturesSetting.setTitle(Common.UIString('Enable advanced paint instrumentation (slow)'));
 
@@ -128,6 +130,9 @@ Timeline.TimelinePanel = class extends UI.Panel {
     Extensions.extensionServer.addEventListener(
         Extensions.ExtensionServer.Events.TraceProviderAdded, this._appendExtensionsToToolbar, this);
     SDK.targetManager.addEventListener(SDK.TargetManager.Events.SuspendStateChanged, this._onSuspendStateChanged, this);
+
+    /** @type {!SDK.TracingModel.Event}|undefined */
+    this._selectedSearchResult;
   }
 
   /**
@@ -165,20 +170,25 @@ Timeline.TimelinePanel = class extends UI.Panel {
    * @param {!Common.Event} event
    */
   _onWindowChanged(event) {
-    var selectionData = this._currentModelSelectionData();
-    if (!selectionData)
-      return;
-    selectionData.windowStartTime = event.data.startTime;
-    selectionData.windowEndTime = event.data.endTime;
+    this._windowStartTime = event.data.startTime;
+    this._windowEndTime = event.data.endTime;
+    this._currentView.setWindowTimes(this._windowStartTime, this._windowEndTime);
 
-    this._currentView.setWindowTimes(selectionData.windowStartTime, selectionData.windowEndTime);
-    if (selectionData.selection.type() === Timeline.TimelineSelection.Type.Range)
+    if (!this._selection || this._selection.type() === Timeline.TimelineSelection.Type.Range)
       this.select(null);
   }
 
   _onMainViewChanged() {
     this._viewModeSetting.set(this._tabbedPane.selectedTabId);
     this._onModeChanged();
+  }
+
+  /**
+   * @param {!Common.Event} event
+   */
+  _onOverviewSelectionChanged(event) {
+    var selection = /** @type {!Timeline.TimelineSelection} */ (event.data);
+    this.select(selection);
   }
 
   /**
@@ -447,9 +457,7 @@ Timeline.TimelinePanel = class extends UI.Panel {
       this._currentView = treeView;
     }
     this._currentView.setModel(this._performanceModel);
-    var selectionData = this._currentModelSelectionData();
-    if (selectionData)
-      this._currentView.setWindowTimes(selectionData.windowStartTime, selectionData.windowEndTime);
+    this._currentView.setWindowTimes(this._windowStartTime, this._windowEndTime);
     if (this._searchableView)
       this._searchableView.detach();
     this._searchableView = new UI.SearchableView(mainView);
@@ -600,6 +608,7 @@ Timeline.TimelinePanel = class extends UI.Panel {
   _reset() {
     PerfUI.LineLevelProfile.instance().reset();
     this._setModel(null);
+    delete this._selection;
   }
 
   /**
@@ -615,14 +624,6 @@ Timeline.TimelinePanel = class extends UI.Panel {
     if (model) {
       this._overviewPane.setBounds(
           model.timelineModel().minimumRecordTime(), model.timelineModel().maximumRecordTime());
-      if (!model[Timeline.TimelinePanel._modelSelectionDataSymbol]) {
-        var times = Timeline.TimelinePanel._autoWindowTimes(model.timelineModel());
-        model[Timeline.TimelinePanel._modelSelectionDataSymbol] = {
-          selection: Timeline.TimelineSelection.fromRange(times.start, times.end),
-          windowStartTime: times.start,
-          windowEndTime: times.end
-        };
-      }
     }
     for (var control of this._overviewControls)
       control.setModel(model);
@@ -631,13 +632,13 @@ Timeline.TimelinePanel = class extends UI.Panel {
       var cpuProfiles = model.timelineModel().cpuProfiles();
       cpuProfiles.forEach(profile => PerfUI.LineLevelProfile.instance().appendCPUProfile(profile));
 
+      this._setAutoWindowTimes(model.timelineModel());
       this._setMarkers(model.timelineModel());
-      var selectionData = this._currentModelSelectionData();
-      this.requestWindowTimes(selectionData.windowStartTime, selectionData.windowEndTime);
-      this._currentView.setSelection(selectionData.selection);
     } else {
       this.requestWindowTimes(0, Infinity);
     }
+
+    this.select(null);
     if (this._flameChart)
       this._flameChart.resizeToPreferredHeights();
   }
@@ -869,8 +870,7 @@ Timeline.TimelinePanel = class extends UI.Panel {
    * @param {number} offset
    */
   _jumpToFrame(offset) {
-    var selection = this._selection();
-    var currentFrame = selection && this._frameForSelection(selection);
+    var currentFrame = this._frameForSelection(this._selection);
     if (!currentFrame)
       return;
     var frames = this._performanceModel.frames();
@@ -886,14 +886,12 @@ Timeline.TimelinePanel = class extends UI.Panel {
   /**
    * @override
    * @param {?Timeline.TimelineSelection} selection
+   * @param {!Timeline.TimelineDetailsView.Tab=} preferredTab
    */
-  select(selection) {
-    var selectionData = this._currentModelSelectionData();
-    if (!selectionData)
-      return;
+  select(selection, preferredTab) {
     if (!selection)
-      selection = Timeline.TimelineSelection.fromRange(selectionData.windowStartTime, selectionData.windowEndTime);
-    selectionData.selection = selection;
+      selection = Timeline.TimelineSelection.fromRange(this._windowStartTime, this._windowEndTime);
+    this._selection = selection;
     this._currentView.setSelection(selection);
   }
 
@@ -930,16 +928,13 @@ Timeline.TimelinePanel = class extends UI.Panel {
    * @param {number} endTime
    */
   _revealTimeRange(startTime, endTime) {
-    var selectionData = this._currentModelSelectionData();
-    if (!selectionData)
-      return;
     var timeShift = 0;
-    if (selectionData.windowEndTime < endTime)
-      timeShift = endTime - selectionData.windowEndTime;
-    else if (selectionData.windowStartTime > startTime)
-      timeShift = startTime - selectionData.windowStartTime;
+    if (this._windowEndTime < endTime)
+      timeShift = endTime - this._windowEndTime;
+    else if (this._windowStartTime > startTime)
+      timeShift = startTime - this._windowStartTime;
     if (timeShift)
-      this.requestWindowTimes(selectionData.windowStartTime + timeShift, selectionData.windowEndTime + timeShift);
+      this.requestWindowTimes(this._windowStartTime + timeShift, this._windowEndTime + timeShift);
   }
 
   /**
@@ -964,13 +959,13 @@ Timeline.TimelinePanel = class extends UI.Panel {
 
   /**
    * @param {!TimelineModel.TimelineModel} timelineModel
-   * @return {!{start: number, end: number}}
    */
-  static _autoWindowTimes(timelineModel) {
+  _setAutoWindowTimes(timelineModel) {
     var tasks = timelineModel.mainThreadTasks();
-    if (!tasks.length)
-      return {start: timelineModel.minimumRecordTime(), end: timelineModel.maximumRecordTime()};
-
+    if (!tasks.length) {
+      this.requestWindowTimes(timelineModel.minimumRecordTime(), timelineModel.maximumRecordTime());
+      return;
+    }
     /**
      * @param {number} startIndex
      * @param {number} stopIndex
@@ -1008,22 +1003,7 @@ Timeline.TimelinePanel = class extends UI.Panel {
       leftTime = Math.max(leftTime - 0.05 * span, timelineModel.minimumRecordTime());
       rightTime = Math.min(rightTime + 0.05 * span, timelineModel.maximumRecordTime());
     }
-    return {start: leftTime, end: rightTime};
-  }
-
-  /**
-   * @return {?Timeline.TimelineSelection}
-   */
-  _selection() {
-    var selectionData = this._currentModelSelectionData();
-    return selectionData && selectionData.selection;
-  }
-
-  /**
-   * return {?Timeline.TimelinePanel.ModelSelectionData}
-   */
-  _currentModelSelectionData() {
-    return this._performanceModel && this._performanceModel[Timeline.TimelinePanel._modelSelectionDataSymbol];
+    this.requestWindowTimes(leftTime, rightTime);
   }
 };
 
@@ -1052,10 +1032,6 @@ Timeline.TimelinePanel.ViewMode = {
 Timeline.TimelinePanel.rowHeight = 18;
 Timeline.TimelinePanel.headerHeight = 20;
 
-Timeline.TimelinePanel._modelSelectionDataSymbol = Symbol('modelSelectionData');
-
-/** @typedef {{selection: ?Timeline.TimelineSelection, windowLeftTime: number, windowRightTime: number}} */
-Timeline.TimelinePanel.ModelSelectionData;
 
 Timeline.TimelineSelection = class {
   /**
@@ -1176,7 +1152,7 @@ Timeline.TimelineModeView.prototype = {
   setWindowTimes(startTime, endTime) {},
 
   /**
-   * @param {!Timeline.TimelineSelection} selection
+   * @param {?Timeline.TimelineSelection} selection
    */
   setSelection(selection) {},
 
@@ -1200,8 +1176,9 @@ Timeline.TimelineModeViewDelegate.prototype = {
 
   /**
    * @param {?Timeline.TimelineSelection} selection
+   * @param {!Timeline.TimelineDetailsView.Tab=} preferredTab
    */
-  select(selection) {},
+  select(selection, preferredTab) {},
 
   /**
    * @param {number} time

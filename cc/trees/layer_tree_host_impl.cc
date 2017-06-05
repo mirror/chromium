@@ -1090,8 +1090,6 @@ DrawResult LayerTreeHostImpl::PrepareToDraw(FrameData* frame) {
   if (input_handler_client_)
     input_handler_client_->ReconcileElasticOverscrollAndRootScroll();
 
-  active_tree_->UpdateScrollbarGeometries();
-
   if (const char* client_name = GetClientNameForMetrics()) {
     size_t total_memory = 0;
     for (const PictureLayerImpl* layer : active_tree()->picture_layers())
@@ -1622,11 +1620,11 @@ CompositorFrameMetadata LayerTreeHostImpl::MakeCompositorFrameMetadata() const {
 
   active_tree_->GetViewportSelection(&metadata.selection);
 
-  if (const auto* outer_viewport_scroll_node = OuterViewportScrollNode()) {
+  if (OuterViewportScrollLayer()) {
     metadata.root_overflow_x_hidden =
-        !outer_viewport_scroll_node->user_scrollable_horizontal;
+        !OuterViewportScrollLayer()->user_scrollable_horizontal();
     metadata.root_overflow_y_hidden =
-        !outer_viewport_scroll_node->user_scrollable_vertical;
+        !OuterViewportScrollLayer()->user_scrollable_vertical();
   }
 
   if (GetDrawMode() == DRAW_MODE_RESOURCELESS_SOFTWARE) {
@@ -1638,14 +1636,13 @@ CompositorFrameMetadata LayerTreeHostImpl::MakeCompositorFrameMetadata() const {
     metadata.referenced_surfaces.push_back(surface_id);
   }
 
-  const auto* inner_viewport_scroll_node = InnerViewportScrollNode();
-  if (!inner_viewport_scroll_node)
+  if (!InnerViewportScrollLayer())
     return metadata;
 
   metadata.root_overflow_x_hidden |=
-      !inner_viewport_scroll_node->user_scrollable_horizontal;
+      !InnerViewportScrollLayer()->user_scrollable_horizontal();
   metadata.root_overflow_y_hidden |=
-      !inner_viewport_scroll_node->user_scrollable_vertical;
+      !InnerViewportScrollLayer()->user_scrollable_vertical();
 
   // TODO(miletus) : Change the metadata to hold ScrollOffset.
   metadata.root_scroll_offset =
@@ -2013,21 +2010,11 @@ LayerImpl* LayerTreeHostImpl::InnerViewportScrollLayer() const {
   return active_tree_->InnerViewportScrollLayer();
 }
 
-ScrollNode* LayerTreeHostImpl::InnerViewportScrollNode() const {
-  const auto* inner_viewport_scroll_layer = InnerViewportScrollLayer();
-  if (!inner_viewport_scroll_layer)
-    return nullptr;
-  ScrollTree& scroll_tree = active_tree_->property_trees()->scroll_tree;
-  return scroll_tree.Node(inner_viewport_scroll_layer->scroll_tree_index());
-}
-
 LayerImpl* LayerTreeHostImpl::OuterViewportScrollLayer() const {
   return active_tree_->OuterViewportScrollLayer();
 }
 
 ScrollNode* LayerTreeHostImpl::OuterViewportScrollNode() const {
-  // TODO(pdr): Refactor this to work like InnerViewportScrollNode and access
-  // OuterViewportScrollLayer instead of MainScrollLayer.
   if (!viewport()->MainScrollLayer())
     return nullptr;
   ScrollTree& scroll_tree = active_tree_->property_trees()->scroll_tree;
@@ -2500,11 +2487,8 @@ bool LayerTreeHostImpl::InitializeRenderer(
       compositor_frame_sink_->shared_bitmap_manager(),
       compositor_frame_sink_->gpu_memory_buffer_manager(),
       task_runner_provider_->blocking_main_thread_task_runner(),
-      settings_.renderer_settings.texture_id_allocation_chunk_size,
       compositor_frame_sink_->capabilities().delegated_sync_points_required,
-      settings_.renderer_settings.use_gpu_memory_buffer_resources,
-      settings_.enable_color_correct_rasterization,
-      settings_.buffer_to_texture_target_map);
+      settings_.resource_settings);
 
   // Since the new context may be capable of MSAA, update status here. We don't
   // need to check the return value since we are recreating all resources
@@ -3385,10 +3369,10 @@ InputHandlerScrollResult LayerTreeHostImpl::ScrollBy(
                                    scroll_state->delta_y());
 
   // When inner viewport is unscrollable, disable overscrolls.
-  if (const auto* inner_viewport_scroll_node = InnerViewportScrollNode()) {
-    if (!inner_viewport_scroll_node->user_scrollable_horizontal)
+  if (InnerViewportScrollLayer()) {
+    if (!InnerViewportScrollLayer()->user_scrollable_horizontal())
       unused_root_delta.set_x(0);
-    if (!inner_viewport_scroll_node->user_scrollable_vertical)
+    if (!InnerViewportScrollLayer()->user_scrollable_vertical())
       unused_root_delta.set_y(0);
   }
 

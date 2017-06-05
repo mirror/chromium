@@ -71,11 +71,6 @@ void PermissionPromptAndroid::Closing() {
     delegate_->Closing();
 }
 
-void PermissionPromptAndroid::TogglePersist(bool value) {
-  if (delegate_)
-    delegate_->TogglePersist(value);
-}
-
 void PermissionPromptAndroid::ToggleAccept(int index, bool value) {
   if (delegate_)
     delegate_->ToggleAccept(index, value);
@@ -93,14 +88,6 @@ void PermissionPromptAndroid::Deny() {
 
 size_t PermissionPromptAndroid::PermissionCount() const {
   return delegate_->Requests().size();
-}
-
-bool PermissionPromptAndroid::ShouldShowPersistenceToggle() const {
-  for (const PermissionRequest* request : delegate_->Requests()) {
-    if (!request->ShouldShowPersistenceToggle())
-      return false;
-  }
-  return true;
 }
 
 ContentSettingsType PermissionPromptAndroid::GetContentSettingType(

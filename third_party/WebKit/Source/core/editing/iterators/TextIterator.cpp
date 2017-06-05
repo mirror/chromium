@@ -187,7 +187,7 @@ TextIteratorAlgorithm<Strategy>::TextIteratorAlgorithm(
       shadow_depth_(
           ShadowDepthOf<Strategy>(*start_container_, *end_container_)),
       behavior_(AdjustBehaviorFlags<Strategy>(behavior)),
-      text_state_(new TextIteratorTextState()),
+      text_state_(new TextIteratorTextState(behavior_)),
       text_node_handler_(
           new TextIteratorTextNodeHandler(behavior_, text_state_)) {
   DCHECK(start_container_);
@@ -875,7 +875,7 @@ template <typename Strategy>
 int TextIteratorAlgorithm<Strategy>::StartOffsetInCurrentContainer() const {
   if (text_state_->PositionNode()) {
     text_state_->FlushPositionOffsets();
-    return text_state_->PositionStartOffset();
+    return text_state_->PositionStartOffset() + text_state_->TextStartOffset();
   }
   DCHECK(end_container_);
   return end_offset_;
@@ -885,7 +885,7 @@ template <typename Strategy>
 int TextIteratorAlgorithm<Strategy>::EndOffsetInCurrentContainer() const {
   if (text_state_->PositionNode()) {
     text_state_->FlushPositionOffsets();
-    return text_state_->PositionEndOffset();
+    return text_state_->PositionEndOffset() + text_state_->TextStartOffset();
   }
   DCHECK(end_container_);
   return end_offset_;

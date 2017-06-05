@@ -437,7 +437,6 @@ class CC_EXPORT LayerTreeHostImpl
 
   // Shortcuts to layers/nodes on the active tree.
   LayerImpl* InnerViewportScrollLayer() const;
-  ScrollNode* InnerViewportScrollNode() const;
   LayerImpl* OuterViewportScrollLayer() const;
   ScrollNode* OuterViewportScrollNode() const;
   ScrollNode* CurrentlyScrollingNode();

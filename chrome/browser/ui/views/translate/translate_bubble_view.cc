@@ -91,7 +91,6 @@ TranslateBubbleView::~TranslateBubbleView() {
 // static
 views::Widget* TranslateBubbleView::ShowBubble(
     views::View* anchor_view,
-    const gfx::Point& anchor_point,
     content::WebContents* web_contents,
     translate::TranslateStep step,
     translate::TranslateErrors::Type error_type,
@@ -132,7 +131,7 @@ views::Widget* TranslateBubbleView::ShowBubble(
   std::unique_ptr<TranslateBubbleModel> model(
       new TranslateBubbleModelImpl(step, std::move(ui_delegate)));
   TranslateBubbleView* view = new TranslateBubbleView(
-      anchor_view, anchor_point, std::move(model), error_type, web_contents);
+      anchor_view, std::move(model), error_type, web_contents);
   views::Widget* bubble_widget =
       views::BubbleDialogDelegateView::CreateBubble(view);
   view->ShowForReason(reason);
@@ -346,11 +345,10 @@ TranslateBubbleModel::ViewState TranslateBubbleView::GetViewState() const {
 
 TranslateBubbleView::TranslateBubbleView(
     views::View* anchor_view,
-    const gfx::Point& anchor_point,
     std::unique_ptr<TranslateBubbleModel> model,
     translate::TranslateErrors::Type error_type,
     content::WebContents* web_contents)
-    : LocationBarBubbleDelegateView(anchor_view, anchor_point, web_contents),
+    : LocationBarBubbleDelegateView(anchor_view, web_contents),
       WebContentsObserver(web_contents),
       before_translate_view_(NULL),
       translating_view_(NULL),

@@ -36,14 +36,14 @@ MockPermissionRequest::MockPermissionRequest(
                              request_type,
                              gesture_type) {}
 
-MockPermissionRequest::MockPermissionRequest(const std::string& text,
-                                             PermissionRequestType request_type,
-                                             const GURL& url)
+MockPermissionRequest::MockPermissionRequest(
+    const std::string& text,
+    const GURL& url)
     : MockPermissionRequest(text,
                             "button",
                             "button",
                             url,
-                            request_type,
+                            PermissionRequestType::UNKNOWN,
                             PermissionRequestGestureType::UNKNOWN) {}
 
 MockPermissionRequest::MockPermissionRequest(

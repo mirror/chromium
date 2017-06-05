@@ -9,11 +9,10 @@
 
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
-#include "content/common/content_export.h"
 
 namespace content {
 
-class CONTENT_EXPORT IndexedDBDatabaseError {
+class IndexedDBDatabaseError {
  public:
   IndexedDBDatabaseError();
   explicit IndexedDBDatabaseError(uint16_t code);

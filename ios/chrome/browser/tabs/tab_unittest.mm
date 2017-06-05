@@ -39,6 +39,7 @@
 #import "ios/public/provider/chrome/browser/native_app_launcher/fake_native_app_whitelist_manager.h"
 #include "ios/public/provider/chrome/browser/test_chrome_browser_provider.h"
 #import "ios/testing/ocmock_complex_type_helper.h"
+#import "ios/web/navigation/crw_session_controller.h"
 #import "ios/web/navigation/navigation_manager_impl.h"
 #include "ios/web/public/navigation_item.h"
 #import "ios/web/public/navigation_manager.h"
@@ -250,7 +251,7 @@ class TabTest : public BlockCleanupTest {
             web_state_impl_.get(), redirectUrl,
             ui::PageTransition::PAGE_TRANSITION_TYPED);
     web_state_impl_->OnNavigationStarted(context2.get());
-    [tab_ navigationManagerImpl]->CommitPendingItem();
+    [[tab_ navigationManagerImpl]->GetSessionController() commitPendingItem];
     web_state_impl_->UpdateHttpResponseHeaders(redirectUrl);
     web_state_impl_->OnNavigationFinished(context2.get());
 

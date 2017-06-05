@@ -163,15 +163,7 @@ function setupEvents() {
     });
   }
 
-  document.addEventListener('click', function(e) {
-    var anchor = findAncestor(/** @type {Node} */ (e.target), function(el) {
-      return el.tagName == 'A';
-    });
-    // Use getAttribute() to prevent URL normalization.
-    if (anchor && anchor.getAttribute('href') == '#')
-      e.preventDefault();
-  });
-
+  preventDefaultOnPoundLinkClicks();
   setupExtendedReportingCheckbox();
   setupSSLDebuggingInfo();
   document.addEventListener('keypress', handleKeypress);

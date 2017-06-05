@@ -11,20 +11,15 @@
 #include "base/containers/flat_set.h"
 #include "content/common/content_export.h"
 #include "content/common/media/renderer_audio_output_stream_factory.mojom.h"
-#include "content/public/browser/browser_thread.h"
 #include "mojo/public/cpp/bindings/binding.h"
-
-namespace url {
-class Origin;
-}
+#include "url/origin.h"
 
 namespace content {
 
 class RendererAudioOutputStreamFactoryContext;
 
 // Handles a RendererAudioOutputStreamFactory request for a render frame host,
-// using the provided RendererAudioOutputStreamFactoryContext. This class may
-// be constructed on any thread, but must be used on the IO thread after that.
+// using the provided RendererAudioOutputStreamFactoryContext.
 class CONTENT_EXPORT RenderFrameAudioOutputStreamFactory
     : public mojom::RendererAudioOutputStreamFactory {
  public:
@@ -76,34 +71,6 @@ class CONTENT_EXPORT RenderFrameAudioOutputStreamFactory
 
   DISALLOW_COPY_AND_ASSIGN(RenderFrameAudioOutputStreamFactory);
 };
-
-// This class is a convenient bundle of factory and binding.
-class CONTENT_EXPORT RenderFrameAudioOutputStreamFactoryHandle {
- public:
-  static std::unique_ptr<RenderFrameAudioOutputStreamFactoryHandle,
-                         BrowserThread::DeleteOnIOThread>
-  CreateFactory(RendererAudioOutputStreamFactoryContext* context,
-                int frame_id,
-                mojom::RendererAudioOutputStreamFactoryRequest request);
-
-  ~RenderFrameAudioOutputStreamFactoryHandle();
-
- private:
-  RenderFrameAudioOutputStreamFactoryHandle(
-      RendererAudioOutputStreamFactoryContext* context,
-      int frame_id);
-
-  void Init(mojom::RendererAudioOutputStreamFactoryRequest request);
-
-  RenderFrameAudioOutputStreamFactory impl_;
-  mojo::Binding<mojom::RendererAudioOutputStreamFactory> binding_;
-
-  DISALLOW_COPY_AND_ASSIGN(RenderFrameAudioOutputStreamFactoryHandle);
-};
-
-using UniqueAudioOutputStreamFactoryPtr =
-    std::unique_ptr<RenderFrameAudioOutputStreamFactoryHandle,
-                    BrowserThread::DeleteOnIOThread>;
 
 }  // namespace content
 

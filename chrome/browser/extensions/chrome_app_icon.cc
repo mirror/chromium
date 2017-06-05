@@ -90,8 +90,7 @@ const Extension* ChromeAppIcon::GetExtension() {
 void ChromeAppIcon::Reload() {
   const Extension* extension = GetExtension();
   icon_ = base::MakeUnique<IconImage>(
-      browser_context_, extension,
-      extension ? IconsInfo::GetIcons(extension) : ExtensionIconSet(),
+      browser_context_, extension, IconsInfo::GetIcons(extension),
       resource_size_in_dip_, util::GetDefaultAppIcon(), this);
   UpdateIcon();
 }

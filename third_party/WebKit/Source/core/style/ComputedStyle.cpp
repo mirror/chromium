@@ -911,18 +911,18 @@ void ComputedStyle::AddPaintImage(StyleImage* image) {
 void ComputedStyle::AddCursor(StyleImage* image,
                               bool hot_spot_specified,
                               const IntPoint& hot_spot) {
-  if (!CursorDataInternal())
-    SetCursorDataInternal(new CursorList);
-  MutableCursorDataInternal()->push_back(
+  if (!rare_inherited_data_.Access()->cursor_data_)
+    rare_inherited_data_.Access()->cursor_data_ = new CursorList;
+  rare_inherited_data_.Access()->cursor_data_->push_back(
       CursorData(image, hot_spot_specified, hot_spot));
 }
 
 void ComputedStyle::SetCursorList(CursorList* other) {
-  SetCursorDataInternal(other);
+  rare_inherited_data_.Access()->cursor_data_ = other;
 }
 
 void ComputedStyle::SetQuotes(RefPtr<QuotesData> q) {
-  SetQuotesInternal(q);
+  rare_inherited_data_.Access()->quotes_ = std::move(q);
 }
 
 bool ComputedStyle::QuotesDataEquivalent(const ComputedStyle& other) const {
@@ -930,8 +930,8 @@ bool ComputedStyle::QuotesDataEquivalent(const ComputedStyle& other) const {
 }
 
 void ComputedStyle::ClearCursorList() {
-  if (CursorDataInternal())
-    SetCursorDataInternal(nullptr);
+  if (rare_inherited_data_->cursor_data_)
+    rare_inherited_data_.Access()->cursor_data_ = nullptr;
 }
 
 static bool HasPropertyThatCreatesStackingContext(
@@ -1207,7 +1207,7 @@ void ComputedStyle::ApplyMotionPathTransform(
 }
 
 void ComputedStyle::SetTextShadow(RefPtr<ShadowList> s) {
-  SetTextShadowInternal(s);
+  rare_inherited_data_.Access()->text_shadow_ = std::move(s);
 }
 
 bool ComputedStyle::TextShadowDataEquivalent(const ComputedStyle& other) const {
@@ -1239,10 +1239,11 @@ static FloatRoundedRect::Radii CalcRadiiFor(const LengthSize& top_left,
 }
 
 StyleImage* ComputedStyle::ListStyleImage() const {
-  return ListStyleImageInternal();
+  return rare_inherited_data_->list_style_image_.Get();
 }
 void ComputedStyle::SetListStyleImage(StyleImage* v) {
-  SetListStyleImageInternal(v);
+  if (rare_inherited_data_->list_style_image_ != v)
+    rare_inherited_data_.Access()->list_style_image_ = v;
 }
 
 Color ComputedStyle::GetColor() const {
@@ -1406,7 +1407,8 @@ Hyphenation* ComputedStyle::GetHyphenation() const {
 }
 
 const AtomicString& ComputedStyle::HyphenString() const {
-  const AtomicString& hyphenation_string = HyphenationString();
+  const AtomicString& hyphenation_string =
+      rare_inherited_data_.Get()->hyphenation_string_;
   if (!hyphenation_string.IsNull())
     return hyphenation_string;
 
@@ -1528,7 +1530,7 @@ FontStretch ComputedStyle::GetFontStretch() const {
 TextDecoration ComputedStyle::TextDecorationsInEffect() const {
   if (HasSimpleUnderlineInternal())
     return TextDecoration::kUnderline;
-  if (!AppliedTextDecorationsInternal())
+  if (!rare_inherited_data_->applied_text_decorations_)
     return TextDecoration::kNone;
 
   TextDecoration decorations = TextDecoration::kNone;
@@ -1555,16 +1557,16 @@ const Vector<AppliedTextDecoration>& ComputedStyle::AppliedTextDecorations()
         VisitedDependentColor(CSSPropertyTextDecorationColor));
     return underline;
   }
-  if (!AppliedTextDecorationsInternal()) {
+  if (!rare_inherited_data_->applied_text_decorations_) {
     DEFINE_STATIC_LOCAL(Vector<AppliedTextDecoration>, empty, ());
     return empty;
   }
 
-  return AppliedTextDecorationsInternal()->GetVector();
+  return rare_inherited_data_->applied_text_decorations_->GetVector();
 }
 
 StyleInheritedVariables* ComputedStyle::InheritedVariables() const {
-  return VariablesInternal().Get();
+  return rare_inherited_data_->variables_.Get();
 }
 
 StyleNonInheritedVariables* ComputedStyle::NonInheritedVariables() const {
@@ -1572,7 +1574,8 @@ StyleNonInheritedVariables* ComputedStyle::NonInheritedVariables() const {
 }
 
 StyleInheritedVariables& ComputedStyle::MutableInheritedVariables() {
-  RefPtr<StyleInheritedVariables>& variables = MutableVariablesInternal();
+  RefPtr<StyleInheritedVariables>& variables =
+      rare_inherited_data_.Access()->variables_;
   if (!variables)
     variables = StyleInheritedVariables::Create();
   else if (!variables->HasOneRef())
@@ -1804,7 +1807,7 @@ void ComputedStyle::SetTextAutosizingMultiplier(float multiplier) {
 void ComputedStyle::AddAppliedTextDecoration(
     const AppliedTextDecoration& decoration) {
   RefPtr<AppliedTextDecorationList>& list =
-      MutableAppliedTextDecorationsInternal();
+      rare_inherited_data_.Access()->applied_text_decorations_;
 
   if (!list)
     list = AppliedTextDecorationList::Create();
@@ -1816,7 +1819,7 @@ void ComputedStyle::AddAppliedTextDecoration(
 
 void ComputedStyle::OverrideTextDecorationColors(Color override_color) {
   RefPtr<AppliedTextDecorationList>& list =
-      MutableAppliedTextDecorationsInternal();
+      rare_inherited_data_.Access()->applied_text_decorations_;
   DCHECK(list);
   if (!list->HasOneRef())
     list = list->Copy();
@@ -1829,7 +1832,8 @@ void ComputedStyle::ApplyTextDecorations(
     const Color& parent_text_decoration_color,
     bool override_existing_colors) {
   if (GetTextDecoration() == TextDecoration::kNone &&
-      !HasSimpleUnderlineInternal() && !AppliedTextDecorationsInternal())
+      !HasSimpleUnderlineInternal() &&
+      !rare_inherited_data_->applied_text_decorations_)
     return;
 
   // If there are any color changes or decorations set by this element, stop
@@ -1844,7 +1848,8 @@ void ComputedStyle::ApplyTextDecorations(
         TextDecoration::kUnderline, kTextDecorationStyleSolid,
         parent_text_decoration_color));
   }
-  if (override_existing_colors && AppliedTextDecorationsInternal())
+  if (override_existing_colors &&
+      rare_inherited_data_->applied_text_decorations_)
     OverrideTextDecorationColors(current_text_decoration_color);
   if (GetTextDecoration() == TextDecoration::kNone)
     return;
@@ -1856,7 +1861,7 @@ void ComputedStyle::ApplyTextDecorations(
   bool is_simple_underline = decoration_lines == TextDecoration::kUnderline &&
                              decoration_style == kTextDecorationStyleSolid &&
                              TextDecorationColor().IsCurrentColor();
-  if (is_simple_underline && !AppliedTextDecorationsInternal()) {
+  if (is_simple_underline && !rare_inherited_data_->applied_text_decorations_) {
     SetHasSimpleUnderlineInternal(true);
     return;
   }
@@ -1868,17 +1873,17 @@ void ComputedStyle::ApplyTextDecorations(
 void ComputedStyle::ClearAppliedTextDecorations() {
   SetHasSimpleUnderlineInternal(false);
 
-  if (AppliedTextDecorationsInternal())
-    SetAppliedTextDecorationsInternal(nullptr);
+  if (rare_inherited_data_->applied_text_decorations_)
+    rare_inherited_data_.Access()->applied_text_decorations_ = nullptr;
 }
 
 void ComputedStyle::RestoreParentTextDecorations(
     const ComputedStyle& parent_style) {
   SetHasSimpleUnderlineInternal(parent_style.HasSimpleUnderlineInternal());
-  if (AppliedTextDecorationsInternal() !=
-      parent_style.AppliedTextDecorationsInternal()) {
-    SetAppliedTextDecorationsInternal(
-        parent_style.AppliedTextDecorationsInternal());
+  if (rare_inherited_data_->applied_text_decorations_ !=
+      parent_style.rare_inherited_data_->applied_text_decorations_) {
+    rare_inherited_data_.Access()->applied_text_decorations_ =
+        parent_style.rare_inherited_data_->applied_text_decorations_;
   }
 }
 
@@ -2202,7 +2207,8 @@ bool ComputedStyle::ColumnRuleEquivalent(
 }
 
 TextEmphasisMark ComputedStyle::GetTextEmphasisMark() const {
-  TextEmphasisMark mark = TextEmphasisMarkInternal();
+  TextEmphasisMark mark =
+      static_cast<TextEmphasisMark>(rare_inherited_data_->text_emphasis_mark_);
   if (mark != TextEmphasisMark::kAuto)
     return mark;
 

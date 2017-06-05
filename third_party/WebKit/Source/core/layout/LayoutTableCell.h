@@ -103,7 +103,9 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
   void ColSpanOrRowSpanChanged();
 
   void SetAbsoluteColumnIndex(unsigned column) {
-    CHECK_LE(column, kMaxColumnIndex);
+    if (UNLIKELY(column > kMaxColumnIndex))
+      IMMEDIATE_CRASH();
+
     absolute_column_index_ = column;
   }
 

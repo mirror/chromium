@@ -11,13 +11,6 @@
 NonPersistentNotificationHandler::NonPersistentNotificationHandler() = default;
 NonPersistentNotificationHandler::~NonPersistentNotificationHandler() = default;
 
-void NonPersistentNotificationHandler::OnShow(
-    Profile* profile,
-    const std::string& notification_id) {
-  content::NotificationEventDispatcher::GetInstance()
-      ->DispatchNonPersistentShowEvent(notification_id);
-}
-
 void NonPersistentNotificationHandler::OnClose(
     Profile* profile,
     const std::string& origin,

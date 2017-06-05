@@ -35,6 +35,9 @@ class WEB_EXPORT WebRemoteFrameImpl final
   WebString AssignedName() const override;
   void SetName(const WebString&) override;
   WebVector<WebIconURL> IconURLs(int icon_types_mask) const override;
+  void SetSharedWorkerRepositoryClient(
+      WebSharedWorkerRepositoryClient*) override;
+  void SetCanHaveScrollbars(bool) override;
   WebSize GetScrollOffset() const override;
   void SetScrollOffset(const WebSize&) override;
   WebSize ContentsSize() const override;

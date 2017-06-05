@@ -94,7 +94,7 @@ class TestLauncher {
     // These mirror values in base::LaunchOptions, see it for details.
     HandlesToInheritVector* handles_to_inherit = nullptr;
     bool inherit_handles = false;
-#elif defined(OS_POSIX) && !defined(OS_FUCHSIA)
+#elif defined(OS_POSIX)
     const FileHandleMappingVector* fds_to_remap = nullptr;
 #endif
   };
@@ -147,10 +147,6 @@ class TestLauncher {
                                   std::vector<std::string> filter_b);
 
   void RunTestIteration();
-
-#if defined(OS_POSIX)
-  void OnShutdownPipeReadable();
-#endif
 
   // Saves test results summary as JSON if requested from command line.
   void MaybeSaveSummaryAsJSON(const std::vector<std::string>& additional_tags);

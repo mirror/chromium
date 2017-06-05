@@ -10,8 +10,6 @@ static_library("core") {
   sources = [
     "archive_manager.cc",
     "archive_manager.h",
-    "client_id.cc",
-    "client_id.h",
     "client_namespace_constants.cc",
     "client_namespace_constants.h",
     "client_policy_controller.cc",

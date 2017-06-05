@@ -22,6 +22,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/win/shortcut.h"
+#include "base/win/windows_version.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/shell_integration_win.h"
 #include "chrome/browser/web_applications/update_shortcut_worker_win.h"
@@ -299,8 +300,10 @@ void GetShortcutLocationsAndDeleteShortcuts(
       web_app::APP_MENU_LOCATION_SUBDIR_CHROMEAPPS;
   std::vector<base::FilePath> all_paths = web_app::internals::GetShortcutPaths(
       all_shortcut_locations);
-  if (!web_app_path.empty())
+  if (base::win::GetVersion() >= base::win::VERSION_WIN7 &&
+      !web_app_path.empty()) {
     all_paths.push_back(web_app_path);
+  }
 
   if (was_pinned_to_taskbar) {
     // Determine if there is a link to this app in the TaskBar pin directory.

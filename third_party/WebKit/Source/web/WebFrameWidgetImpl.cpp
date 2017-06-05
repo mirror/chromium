@@ -764,11 +764,12 @@ bool WebFrameWidgetImpl::GetCompositionCharacterBounds(
 void WebFrameWidgetImpl::SetRemoteViewportIntersection(
     const WebRect& viewport_intersection) {
   // Remote viewports are only applicable to local frames with remote ancestors.
-  DCHECK(local_root_->Parent() && local_root_->Parent()->IsWebRemoteFrame() &&
-         local_root_->GetFrame());
+  DCHECK(local_root_->Parent() && local_root_->Parent()->IsWebRemoteFrame());
 
-  local_root_->GetFrame()->SetViewportIntersectionFromParent(
-      viewport_intersection);
+  if (local_root_->GetFrame()) {
+    local_root_->GetFrame()->SetViewportIntersectionFromParent(
+        viewport_intersection);
+  }
 }
 
 void WebFrameWidgetImpl::HandleMouseLeave(LocalFrame& main_frame,

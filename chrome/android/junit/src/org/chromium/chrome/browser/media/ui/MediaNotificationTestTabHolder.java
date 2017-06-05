@@ -4,8 +4,6 @@
 
 package org.chromium.chrome.browser.media.ui;
 
-import android.graphics.Bitmap;
-
 import static org.mockito.Mockito.when;
 
 import org.mockito.Mock;
@@ -65,10 +63,6 @@ public class MediaNotificationTestTabHolder {
     public void simulateTitleUpdated(String title) {
         mTitle = title;
         mMediaSessionTabHelper.mTabObserver.onTitleUpdated(mTab);
-    }
-
-    public void simulateFaviconUpdated(Bitmap icon) {
-        mMediaSessionTabHelper.mTabObserver.onFaviconUpdated(mTab, icon);
     }
 
     public void simulateMediaSessionStateChanged(boolean isControllable, boolean isSuspended) {

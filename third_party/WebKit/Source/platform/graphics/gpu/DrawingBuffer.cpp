@@ -296,7 +296,6 @@ bool DrawingBuffer::PrepareTextureMailboxInternal(
 bool DrawingBuffer::FinishPrepareTextureMailboxSoftware(
     cc::TextureMailbox* out_mailbox,
     std::unique_ptr<cc::SingleReleaseCallback>* out_release_callback) {
-  DCHECK(state_restorer_);
   std::unique_ptr<cc::SharedBitmap> bitmap = CreateOrRecycleBitmap();
   if (!bitmap)
     return false;
@@ -309,8 +308,6 @@ bool DrawingBuffer::FinishPrepareTextureMailboxSoftware(
     WebGLImageConversion::AlphaOp op =
         need_premultiply ? WebGLImageConversion::kAlphaDoPremultiply
                          : WebGLImageConversion::kAlphaDoNothing;
-    state_restorer_->SetFramebufferBindingDirty();
-    gl_->BindFramebuffer(GL_FRAMEBUFFER, fbo_);
     ReadBackFramebuffer(pixels, Size().Width(), Size().Height(), kReadbackSkia,
                         op);
   }

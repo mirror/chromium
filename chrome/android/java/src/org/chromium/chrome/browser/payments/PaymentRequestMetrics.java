@@ -31,4 +31,16 @@ public final class PaymentRequestMetrics {
         RecordHistogram.recordEnumeratedHistogram("PaymentRequest.RequestedInformation",
                 requestInformation, RequestedInformation.MAX);
     }
+
+    /*
+     * Records the metric that keeps track of what payment method was used to complete a Payment
+     * Request transaction.
+     *
+     * @param paymentMethod The payment method that was used to complete the current transaction.
+     */
+    public static void recordSelectedPaymentMethodHistogram(int paymentMethod) {
+        assert paymentMethod < SelectedPaymentMethod.MAX;
+        RecordHistogram.recordEnumeratedHistogram(
+                "PaymentRequest.SelectedPaymentMethod", paymentMethod, SelectedPaymentMethod.MAX);
+    }
 }

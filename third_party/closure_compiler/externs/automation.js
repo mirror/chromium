@@ -90,7 +90,6 @@ chrome.automation.RoleType = {
   BUTTON_DROP_DOWN: 'buttonDropDown',
   CANVAS: 'canvas',
   CAPTION: 'caption',
-  CARET: 'caret',
   CELL: 'cell',
   CHECK_BOX: 'checkBox',
   CLIENT: 'client',
@@ -111,6 +110,7 @@ chrome.automation.RoleType = {
   DIALOG: 'dialog',
   DIRECTORY: 'directory',
   DISCLOSURE_TRIANGLE: 'disclosureTriangle',
+  DIV: 'div',
   DOCUMENT: 'document',
   EMBEDDED_OBJECT: 'embeddedObject',
   FEED: 'feed',
@@ -118,7 +118,6 @@ chrome.automation.RoleType = {
   FIGURE: 'figure',
   FOOTER: 'footer',
   FORM: 'form',
-  GENERIC_CONTAINER: 'genericContainer',
   GRID: 'grid',
   GROUP: 'group',
   HEADING: 'heading',
@@ -215,6 +214,7 @@ chrome.automation.RoleType = {
  */
 chrome.automation.StateType = {
   BUSY: 'busy',
+  CHECKED: 'checked',
   COLLAPSED: 'collapsed',
   DEFAULT: 'default',
   DISABLED: 'disabled',
@@ -230,6 +230,7 @@ chrome.automation.StateType = {
   MULTILINE: 'multiline',
   MULTISELECTABLE: 'multiselectable',
   OFFSCREEN: 'offscreen',
+  PRESSED: 'pressed',
   PROTECTED: 'protected',
   READ_ONLY: 'readOnly',
   REQUIRED: 'required',
@@ -259,7 +260,6 @@ chrome.automation.TreeChangeType = {
 chrome.automation.NameFromType = {
   UNINITIALIZED: 'uninitialized',
   ATTRIBUTE: 'attribute',
-  ATTRIBUTE_EXPLICITLY_EMPTY: 'attributeExplicitlyEmpty',
   CONTENTS: 'contents',
   PLACEHOLDER: 'placeholder',
   RELATED_ELEMENT: 'relatedElement',
@@ -919,11 +919,11 @@ chrome.automation.AutomationNode.prototype.imageDataUrl;
 chrome.automation.AutomationNode.prototype.language;
 
 /**
- * Tri-state describing checkbox or radio button: 'false' | 'true' | 'mixed'
- * @type {(string|undefined)}
- * @see https://developer.chrome.com/extensions/automation#type-checked
+ * If a checkbox or toggle button is in the mixed state.
+ * @type {(boolean|undefined)}
+ * @see https://developer.chrome.com/extensions/automation#type-buttonMixed
  */
-chrome.automation.AutomationNode.prototype.checked;
+chrome.automation.AutomationNode.prototype.buttonMixed;
 
 /**
  * The RGBA foreground color of this subtree, as an integer.

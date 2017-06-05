@@ -592,6 +592,8 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
    * @return {?SDK.DebuggerModel.Location}
    */
   createRawLocation(script, lineNumber, columnNumber) {
+    if (script.sourceURL)
+      return this.createRawLocationByURL(script.sourceURL, lineNumber, columnNumber);
     return new SDK.DebuggerModel.Location(this, script.scriptId, lineNumber, columnNumber);
   }
 

@@ -5,7 +5,12 @@
 #ifndef NET_REPORTING_REPORTING_CACHE_H_
 #define NET_REPORTING_REPORTING_CACHE_H_
 
+#include <map>
 #include <memory>
+#include <set>
+#include <string>
+#include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 #include "base/macros.h"
@@ -16,6 +21,10 @@
 #include "net/reporting/reporting_client.h"
 #include "url/gurl.h"
 #include "url/origin.h"
+
+namespace base {
+class TickClock;
+}  // namespace base
 
 namespace net {
 
@@ -35,20 +44,21 @@ struct ReportingReport;
 // "doomed", which will cause it to be deallocated once it is no longer pending.
 class NET_EXPORT ReportingCache {
  public:
-  static std::unique_ptr<ReportingCache> Create(ReportingContext* context);
+  // |context| must outlive the ReportingCache.
+  ReportingCache(ReportingContext* context);
 
-  virtual ~ReportingCache();
+  ~ReportingCache();
 
   // Adds a report to the cache.
   //
   // All parameters correspond to the desired values for the relevant fields in
   // ReportingReport.
-  virtual void AddReport(const GURL& url,
-                         const std::string& group,
-                         const std::string& type,
-                         std::unique_ptr<const base::Value> body,
-                         base::TimeTicks queued,
-                         int attempts) = 0;
+  void AddReport(const GURL& url,
+                 const std::string& group,
+                 const std::string& type,
+                 std::unique_ptr<const base::Value> body,
+                 base::TimeTicks queued,
+                 int attempts);
 
   // Gets all reports in the cache. The returned pointers are valid as long as
   // either no calls to |RemoveReports| have happened or the reports' |pending|
@@ -56,32 +66,28 @@ class NET_EXPORT ReportingCache {
   // doomed reports (pending reports for which removal has been requested).
   //
   // (Clears any existing data in |*reports_out|.)
-  virtual void GetReports(
-      std::vector<const ReportingReport*>* reports_out) const = 0;
+  void GetReports(std::vector<const ReportingReport*>* reports_out) const;
 
   // Marks a set of reports as pending. |reports| must not already be marked as
   // pending.
-  virtual void SetReportsPending(
-      const std::vector<const ReportingReport*>& reports) = 0;
+  void SetReportsPending(const std::vector<const ReportingReport*>& reports);
 
   // Unmarks a set of reports as pending. |reports| must be previously marked as
   // pending.
-  virtual void ClearReportsPending(
-      const std::vector<const ReportingReport*>& reports) = 0;
+  void ClearReportsPending(const std::vector<const ReportingReport*>& reports);
 
   // Increments |attempts| on a set of reports.
-  virtual void IncrementReportsAttempts(
-      const std::vector<const ReportingReport*>& reports) = 0;
+  void IncrementReportsAttempts(
+      const std::vector<const ReportingReport*>& reports);
 
   // Removes a set of reports. Any reports that are pending will not be removed
   // immediately, but rather marked doomed and removed once they are no longer
   // pending.
-  virtual void RemoveReports(
-      const std::vector<const ReportingReport*>& reports) = 0;
+  void RemoveReports(const std::vector<const ReportingReport*>& reports);
 
   // Removes all reports. Like |RemoveReports()|, pending reports are doomed
   // until no longer pending.
-  virtual void RemoveAllReports() = 0;
+  void RemoveAllReports();
 
   // Creates or updates a client for a particular origin and a particular
   // endpoint.
@@ -90,20 +96,18 @@ class NET_EXPORT ReportingCache {
   // |Client|.
   //
   // |endpoint| must use a cryptographic scheme.
-  virtual void SetClient(const url::Origin& origin,
-                         const GURL& endpoint,
-                         ReportingClient::Subdomains subdomains,
-                         const std::string& group,
-                         base::TimeTicks expires) = 0;
+  void SetClient(const url::Origin& origin,
+                 const GURL& endpoint,
+                 ReportingClient::Subdomains subdomains,
+                 const std::string& group,
+                 base::TimeTicks expires);
 
-  virtual void MarkClientUsed(const url::Origin& origin,
-                              const GURL& endpoint) = 0;
+  void MarkClientUsed(const url::Origin& origin, const GURL& endpoint);
 
   // Gets all of the clients in the cache, regardless of origin or group.
   //
   // (Clears any existing data in |*clients_out|.)
-  virtual void GetClients(
-      std::vector<const ReportingClient*>* clients_out) const = 0;
+  void GetClients(std::vector<const ReportingClient*>* clients_out) const;
 
   // Gets all of the clients configured for a particular origin in a particular
   // group. The returned pointers are only guaranteed to be valid if no calls
@@ -121,43 +125,95 @@ class NET_EXPORT ReportingCache {
   // etc.
   //
   // (Clears any existing data in |*clients_out|.)
-  virtual void GetClientsForOriginAndGroup(
+  void GetClientsForOriginAndGroup(
       const url::Origin& origin,
       const std::string& group,
-      std::vector<const ReportingClient*>* clients_out) const = 0;
+      std::vector<const ReportingClient*>* clients_out) const;
 
   // Removes a set of clients.
   //
   // May invalidate ReportingClient pointers returned by |GetClients| or
   // |GetClientsForOriginAndGroup|.
-  virtual void RemoveClients(
-      const std::vector<const ReportingClient*>& clients) = 0;
+  void RemoveClients(const std::vector<const ReportingClient*>& clients);
 
   // Removes a client for a particular origin and a particular endpoint.
-  virtual void RemoveClientForOriginAndEndpoint(const url::Origin& origin,
-                                                const GURL& endpoint) = 0;
+  void RemoveClientForOriginAndEndpoint(const url::Origin& origin,
+                                        const GURL& endpoint);
 
   // Removes all clients whose endpoint is |endpoint|.
   //
   // May invalidate ReportingClient pointers returned by |GetClients| or
   // |GetClientsForOriginAndGroup|.
-  virtual void RemoveClientsForEndpoint(const GURL& endpoint) = 0;
+  void RemoveClientsForEndpoint(const GURL& endpoint);
 
   // Removes all clients.
-  virtual void RemoveAllClients() = 0;
+  void RemoveAllClients();
 
   // Gets the count of reports in the cache, *including* doomed reports.
   //
   // Needed to ensure that doomed reports are eventually deleted, since no
   // method provides a view of *every* report in the cache, just non-doomed
   // ones.
-  virtual size_t GetFullReportCountForTesting() const = 0;
+  size_t GetFullReportCountForTesting() const { return reports_.size(); }
 
-  virtual bool IsReportPendingForTesting(
-      const ReportingReport* report) const = 0;
+  bool IsReportPendingForTesting(const ReportingReport* report) const {
+    return base::ContainsKey(pending_reports_, report);
+  }
 
-  virtual bool IsReportDoomedForTesting(
-      const ReportingReport* report) const = 0;
+  bool IsReportDoomedForTesting(const ReportingReport* report) const {
+    return base::ContainsKey(doomed_reports_, report);
+  }
+
+ private:
+  const ReportingReport* FindReportToEvict() const;
+
+  void AddClient(std::unique_ptr<ReportingClient> client,
+                 base::TimeTicks last_used);
+
+  void RemoveClient(const ReportingClient* client);
+
+  const ReportingClient* GetClientByOriginAndEndpoint(
+      const url::Origin& origin,
+      const GURL& endpoint) const;
+
+  void GetWildcardClientsForDomainAndGroup(
+      const std::string& domain,
+      const std::string& group,
+      std::vector<const ReportingClient*>* clients_out) const;
+
+  const ReportingClient* FindClientToEvict(base::TimeTicks now) const;
+
+  base::TickClock* tick_clock();
+
+  ReportingContext* context_;
+
+  // Owns all reports, keyed by const raw pointer for easier lookup.
+  std::unordered_map<const ReportingReport*, std::unique_ptr<ReportingReport>>
+      reports_;
+
+  // Reports that have been marked pending (in use elsewhere and should not be
+  // deleted until no longer pending).
+  std::unordered_set<const ReportingReport*> pending_reports_;
+
+  // Reports that have been marked doomed (would have been deleted, but were
+  // pending when the deletion was requested).
+  std::unordered_set<const ReportingReport*> doomed_reports_;
+
+  // Owns all clients, keyed by origin, then endpoint URL.
+  // (These would be unordered_map, but neither url::Origin nor GURL has a hash
+  // function implemented.)
+  std::map<url::Origin, std::map<GURL, std::unique_ptr<ReportingClient>>>
+      clients_;
+
+  // References but does not own all clients with includeSubdomains set, keyed
+  // by domain name.
+  std::unordered_map<std::string, std::unordered_set<const ReportingClient*>>
+      wildcard_clients_;
+
+  // The time that each client has last been used.
+  std::unordered_map<const ReportingClient*, base::TimeTicks> client_last_used_;
+
+  DISALLOW_COPY_AND_ASSIGN(ReportingCache);
 };
 
 }  // namespace net

@@ -1714,15 +1714,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Arc.PlayStoreShown.TimeDelta" units="ms">
-  <owner>yusukes@google.com</owner>
-  <owner>khmel@google.com</owner>
-  <summary>
-    Elapsed time from the when the user agrees ToS to when the Play Store window
-    is shown to the user.
-  </summary>
-</histogram>
-
 <histogram name="Arc.Provisioning.Result" enum="ArcProvisioningResult">
   <obsolete>
     Deprecated on 2016-09-15 and replaced by Arc.Provisioning.Result.Managed and
@@ -3889,44 +3880,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Autofill.FieldPrediction">
-<!-- Name completed by histogram_suffixes
-     name="AutofillFieldPredictionSource" -->
-
-  <owner>rogerm@chromium.org</owner>
-  <summary>
-    Predicted and actual form field type. This is a computed sparse histogram
-    where the value is ((predicted &lt;&lt; 16)| actual). Predicted and actual
-    are taken from the autofill::ServerFieldType enumeration.
-  </summary>
-</histogram>
-
-<histogram name="Autofill.FieldPredictionQuality.Aggregate"
-    enum="AutofillFieldPredictionQuality">
-<!-- Name completed by histogram_suffixes
-     name="AutofillFieldPredictionSource" -->
-
-  <owner>rogerm@chromium.org</owner>
-  <summary>
-    Aggregate Autofill field-type prediction outcomes. See
-    https://en.wikipedia.org/wiki/Confusion_matrix for an explanation of the
-    values.
-  </summary>
-</histogram>
-
-<histogram name="Autofill.FieldPredictionQuality.ByFieldType"
-    enum="AutofillFieldPredictionQualityByFieldType">
-<!-- Name completed by histogram_suffixes
-     name="AutofillFieldPredictionSource" -->
-
-  <owner>rogerm@chromium.org</owner>
-  <summary>
-    Autofill field-type prediction outcomes, broken down by field type. See
-    https://en.wikipedia.org/wiki/Confusion_matrix for an explanation of the
-    values.
-  </summary>
-</histogram>
-
 <histogram name="Autofill.FillDuration.FromInteraction.WithAutofill">
   <owner>isherman@chromium.org</owner>
   <summary>
@@ -4253,20 +4206,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Autofill.Quality.HeuristicType" enum="AutofillTypeQuality">
-  <obsolete>
-    Deprecated as of 6/2017, replaced by
-    Autofill.FieldPredictionQuality.Aggregate.Heuristic.
-  </obsolete>
   <owner>isherman@chromium.org</owner>
   <summary>The quality of Autofill's heuristic field type detection.</summary>
 </histogram>
 
 <histogram name="Autofill.Quality.HeuristicType.ByFieldType"
     enum="AutofillTypeQualityByFieldType">
-  <obsolete>
-    Deprecated as of 6/2017, replaced by
-    Autofill.FieldPredictionQuality.ByFieldType.Heuristic.
-  </obsolete>
   <owner>isherman@chromium.org</owner>
   <summary>
     The quality of Autofill's heuristic field type detection, broken down by the
@@ -4276,20 +4221,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Autofill.Quality.PredictedType" enum="AutofillTypeQuality">
-  <obsolete>
-    Deprecated as of 6/2017, replaced by
-    Autofill.FieldPredictionQuality.Aggregate.Overall.
-  </obsolete>
   <owner>isherman@chromium.org</owner>
   <summary>The overall quality of the Autofill field type predictions.</summary>
 </histogram>
 
 <histogram name="Autofill.Quality.PredictedType.ByFieldType"
     enum="AutofillTypeQualityByFieldType">
-  <obsolete>
-    Deprecated as of 6/2017, replaced by
-    Autofill.FieldPredictionQuality.ByFieldType.Overall.
-  </obsolete>
   <owner>isherman@chromium.org</owner>
   <summary>
     The overall quality of the Autofill field type predictions, broken down by
@@ -4299,20 +4236,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Autofill.Quality.ServerType" enum="AutofillTypeQuality">
-  <obsolete>
-    Deprecated as of 6/2017, replaced by
-    Autofill.FieldPredictionQuality.Aggregate.Server.
-  </obsolete>
   <owner>isherman@chromium.org</owner>
   <summary>The quality of the Autofill server's field type detection.</summary>
 </histogram>
 
 <histogram name="Autofill.Quality.ServerType.ByFieldType"
     enum="AutofillTypeQualityByFieldType">
-  <obsolete>
-    Deprecated as of 6/2017, replaced by
-    Autofill.FieldPredictionQuality.ByFieldType.Server.
-  </obsolete>
   <owner>isherman@chromium.org</owner>
   <summary>
     The quality of the Autofill server's field type detection, broken down by
@@ -5641,9 +5570,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Blink.XHR.setRequestHeader.HeaderValueCategoryInRFC7230"
     enum="XMLHttpRequestHeaderValueCategoryInRFC7230">
-  <obsolete>
-    Deprecated 06/2017 in Issues 455099 and 681769 (M61).
-  </obsolete>
   <owner>hiroshige@chromium.org</owner>
   <summary>
     The count of XMLHttpRequest.setRequestHeader() calls where header values are
@@ -7461,14 +7387,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The default search engine selected by a user in slot 4 of a randomized
     search engine dialog.
-  </summary>
-</histogram>
-
-<histogram name="Chrome.UmaPageloadCounter" enum="BooleanHit">
-  <owner>asvitkine@chromium.org</owner>
-  <summary>
-    Records when a page load happens, based on the same logic as the PageLoad
-    user action.
   </summary>
 </histogram>
 
@@ -26106,17 +26024,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     because Chrome already had an up-to-date network timestamp that it could
     use, or because the client is not in the experimental group that enables
     network time queries).
-  </summary>
-</histogram>
-
-<histogram name="interstitial.ssl_error_handler.superfish" enum="Boolean">
-  <owner>estark@chromium.org</owner>
-  <summary>
-    When encountering a certificate error, Chrome looks for the well-known
-    Superfish certificate in the certificate chain and records this histogram as
-    true if the Superfish certificate is present and false otherwise. The
-    Superfish certificate is an indication that the user is vulnerable to
-    man-in-the-middle attacks because of software installed on their computer.
   </summary>
 </histogram>
 
@@ -78150,9 +78057,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="UMA.Discarded Log Events">
-  <obsolete>
-    Replaced by UMA.Truncate* metrics.
-  </obsolete>
   <owner>asvitkine@chromium.org</owner>
   <owner>rkaplow@chromium.org</owner>
   <summary>
@@ -78640,22 +78544,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     The number of synthetic field trials added to the UMA log when the system
     profile is recorded. Since this is done prior to capturing the histograms
     from the current process, this will generally be logged once per UMA log.
-  </summary>
-</histogram>
-
-<histogram name="UMA.TruncatedEvents.Omnibox" units="events">
-  <owner>rkaplow@chromium.org</owner>
-  <summary>
-    The number of omnibox events that existed in the metrics log before we
-    truncated them to save bandwidth.
-  </summary>
-</histogram>
-
-<histogram name="UMA.TruncatedEvents.UserAction" units="events">
-  <owner>rkaplow@chromium.org</owner>
-  <summary>
-    The number of user actions events that existed in the metrics log before we
-    truncated them to save bandwidth.
   </summary>
 </histogram>
 
@@ -79998,14 +79886,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>hpayer@chromium.org</owner>
   <summary>
     The size of committed memory in the map space after each GC in KB.
-  </summary>
-</histogram>
-
-<histogram name="V8.MemoryHeapSampleMaximumCommitted" units="KB">
-  <owner>jochen@chromium.org</owner>
-  <owner>hpayer@chromium.org</owner>
-  <summary>
-    The maximum size of committed memory used by V8 after each GC in KB.
   </summary>
 </histogram>
 
@@ -82369,10 +82249,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="WebCore.WebSocket.HandshakeResult"
     enum="WebSocketHandshakeResult">
-  <obsolete>
-    Deprecated 2014-06 when we replaced the WebSocket implementation (see issue
-    226931).
-  </obsolete>
   <owner>yhirano@chromium.org</owner>
   <owner>ricea@chromium.org</owner>
   <owner>tyoshino@chromium.org</owner>
@@ -82404,10 +82280,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="WebCore.WebSocket.PerMessageDeflateContextTakeOverMode"
     enum="WebSocketPerMessageDeflateContextTakeOverMode">
-  <obsolete>
-    Deprecated 2014-06 when we replaced the WebSocket implementation (see issue
-    226931).
-  </obsolete>
   <owner>yhirano@chromium.org</owner>
   <owner>ricea@chromium.org</owner>
   <owner>tyoshino@chromium.org</owner>
@@ -85844,12 +85716,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="Startup.AppListFirstPaintWarmStart"/>
 </histogram_suffixes>
 
-<histogram_suffixes name="ArcUserTypes" separator=".">
-  <suffix name="Managed" label="User with forced Play Store feature"/>
-  <suffix name="Unmanaged" label="User with optional Play Store feature"/>
-  <affected-histogram name="Arc.PlayStoreShown.TimeDelta"/>
-</histogram_suffixes>
-
 <histogram_suffixes name="AsyncDNSPref" separator="_">
   <suffix name="Disabled"/>
   <suffix name="Enabled"/>
@@ -85900,20 +85766,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
       label="both server and local autofill data"/>
   <affected-histogram name="Autofill.FormEvents.Address"/>
   <affected-histogram name="Autofill.FormEvents.CreditCard"/>
-</histogram_suffixes>
-
-<histogram_suffixes name="AutofillFieldPredictionSource" separator=".">
-  <suffix name="Heuristic"
-      label="Field type predictions using local heuristics."/>
-  <suffix name="Server"
-      label="Field types based on crowd-sourced prediction fetched from the
-             Autofill Server"/>
-  <suffix name="Overall"
-      label="Field type prediction as seen by the user after combining the
-             heuristic and crowd sourced predictions."/>
-  <affected-histogram name="Autofill.FieldPrediction"/>
-  <affected-histogram name="Autofill.FieldPredictionQuality.Aggregate"/>
-  <affected-histogram name="Autofill.FieldPredictionQuality.ByFieldType"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="AutofillPayloadCompressionType" separator=".">
@@ -87295,12 +87147,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </suffix>
   <suffix name="NTPSnippetsSuggestions"/>
   <suffix name="NTPSnippetsThumbnails"/>
-  <suffix name="GAIA"/>
-  <suffix name="GCMDriver"/>
-  <suffix name="ImageFetcherUntagged"/>
-  <suffix name="SafeBrowsing"/>
-  <suffix name="UpdateClient"/>
-  <suffix name="WebResourceService"/>
   <affected-histogram name="DataUse.MessageSize"/>
 </histogram_suffixes>
 
@@ -87954,19 +87800,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="NoSubmission" label="No observed submission."/>
   <suffix name="BasedOnAutocomplete"
       label="Quality metrics based on autocomplete attributes."/>
-  <affected-histogram name="Autofill.FieldPrediction.Heuristic"/>
-  <affected-histogram name="Autofill.FieldPrediction.Overall"/>
-  <affected-histogram name="Autofill.FieldPrediction.Server"/>
-  <affected-histogram
-      name="Autofill.FieldPredictionQuality.Aggregate.Heuristic"/>
-  <affected-histogram name="Autofill.FieldPredictionQuality.Aggregate.Overall"/>
-  <affected-histogram name="Autofill.FieldPredictionQuality.Aggregate.Server"/>
-  <affected-histogram
-      name="Autofill.FieldPredictionQuality.ByFieldType.Heuristic"/>
-  <affected-histogram
-      name="Autofill.FieldPredictionQuality.ByFieldType.Overall"/>
-  <affected-histogram
-      name="Autofill.FieldPredictionQuality.ByFieldType.Server"/>
   <affected-histogram
       name="Autofill.NumberOfEditedAutofilledFieldsAtSubmission"/>
   <affected-histogram name="Autofill.Quality.HeuristicType"/>
@@ -91282,10 +91115,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram_suffixes name="OtherActivityProcesses" separator=".">
   <suffix name="gpu-process"/>
-  <suffix name="ppapi"/>
   <suffix name="renderer"/>
   <suffix name="setup"/>
-  <suffix name="utility"/>
   <affected-histogram name="UMA.Histograms.Activity"/>
 </histogram_suffixes>
 
@@ -92405,7 +92236,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram_suffixes name="PersistentMemoryErrors" separator="."
     ordering="prefix,2">
   <suffix name="BrowserMetrics" label="For browser process metrics."/>
-  <suffix name="CrashpadMetrics" label="For metrics from Crashpad."/>
   <suffix name="FieldTrialAllocator" label="For field-trial allocator."/>
   <suffix name="GpuMetrics" label="For GPU process metrics."/>
   <suffix name="PpapiBrokerMetrics"

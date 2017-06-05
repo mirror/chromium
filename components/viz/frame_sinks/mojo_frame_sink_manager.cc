@@ -12,7 +12,7 @@
 #include "cc/scheduler/begin_frame_source.h"
 #include "cc/surfaces/display.h"
 #include "cc/surfaces/surface_dependency_tracker.h"
-#include "components/viz/display_compositor/display_provider.h"
+#include "components/viz/frame_sinks/display_provider.h"
 #include "components/viz/frame_sinks/gpu_compositor_frame_sink.h"
 #include "components/viz/frame_sinks/gpu_root_compositor_frame_sink.h"
 
@@ -121,10 +121,9 @@ void MojoFrameSinkManager::OnSurfaceCreated(
     client_->OnSurfaceCreated(surface_info);
 }
 
-bool MojoFrameSinkManager::OnSurfaceDamaged(const cc::SurfaceId& surface_id,
-                                            const cc::BeginFrameAck& ack) {
-  return false;
-}
+void MojoFrameSinkManager::OnSurfaceDamaged(const cc::SurfaceId& surface_id,
+                                            const cc::BeginFrameAck& ack,
+                                            bool* changed) {}
 
 void MojoFrameSinkManager::OnSurfaceDiscarded(const cc::SurfaceId& surface_id) {
 }

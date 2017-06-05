@@ -29,8 +29,8 @@
 #include "core/frame/BarProp.h"
 
 #include "core/frame/LocalFrame.h"
+#include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
-#include "public/web/WebWindowFeatures.h"
 
 namespace blink {
 
@@ -46,19 +46,17 @@ bool BarProp::visible() const {
     return false;
   DCHECK(GetFrame()->GetPage());
 
-  const WebWindowFeatures& features =
-      GetFrame()->GetPage()->GetWindowFeatures();
   switch (type_) {
     case kLocationbar:
     case kPersonalbar:
     case kToolbar:
-      return features.tool_bar_visible;
+      return GetFrame()->GetPage()->GetChromeClient().ToolbarsVisible();
     case kMenubar:
-      return features.menu_bar_visible;
+      return GetFrame()->GetPage()->GetChromeClient().MenubarVisible();
     case kScrollbars:
-      return features.scrollbars_visible;
+      return GetFrame()->GetPage()->GetChromeClient().ScrollbarsVisible();
     case kStatusbar:
-      return features.status_bar_visible;
+      return GetFrame()->GetPage()->GetChromeClient().StatusbarVisible();
   }
 
   NOTREACHED();

@@ -89,7 +89,6 @@ int SearchResult::GetPreferredIconDimension() const {
     case DISPLAY_LIST:
       return kListIconSize;
     case DISPLAY_NONE:
-    case DISPLAY_CARD:
       return 0;
     case DISPLAY_TYPE_LAST:
       break;

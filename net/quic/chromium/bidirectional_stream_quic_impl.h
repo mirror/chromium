@@ -29,7 +29,8 @@ struct BidirectionalStreamRequestInfo;
 class IOBuffer;
 
 class NET_EXPORT_PRIVATE BidirectionalStreamQuicImpl
-    : public BidirectionalStreamImpl {
+    : public BidirectionalStreamImpl,
+      public QuicChromiumClientStream::Delegate {
  public:
   explicit BidirectionalStreamQuicImpl(
       std::unique_ptr<QuicChromiumClientSession::Handle> session);
@@ -53,7 +54,14 @@ class NET_EXPORT_PRIVATE BidirectionalStreamQuicImpl
   bool GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const override;
 
  private:
-  int WriteHeaders();
+  // QuicChromiumClientStream::Delegate implementation:
+  void OnClose() override;
+  void OnError(int error) override;
+
+  // Write headers to the stream and returns true on success. Posts a task to
+  // notify the delegate asynchronously and returns false on failure
+  bool WriteHeaders();
+
   void OnStreamReady(int rv);
   void OnSendDataComplete(int rv);
   void ReadInitialHeaders();

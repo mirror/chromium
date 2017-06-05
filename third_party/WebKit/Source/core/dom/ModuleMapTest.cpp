@@ -184,7 +184,7 @@ TEST_F(ModuleMapTest, sequentialRequests) {
             1);
   EXPECT_TRUE(client->WasNotifyFinished());
   EXPECT_TRUE(client->GetModuleScript());
-  EXPECT_EQ(client->GetModuleScript()->State(),
+  EXPECT_EQ(client->GetModuleScript()->InstantiationState(),
             ModuleInstantiationState::kUninstantiated);
 
   // Secondary request
@@ -203,7 +203,7 @@ TEST_F(ModuleMapTest, sequentialRequests) {
       << "registerModuleScript sholudn't be called in secondary request.";
   EXPECT_TRUE(client2->WasNotifyFinished());
   EXPECT_TRUE(client2->GetModuleScript());
-  EXPECT_EQ(client2->GetModuleScript()->State(),
+  EXPECT_EQ(client2->GetModuleScript()->InstantiationState(),
             ModuleInstantiationState::kUninstantiated);
 }
 
@@ -240,11 +240,11 @@ TEST_F(ModuleMapTest, concurrentRequestsShouldJoin) {
 
   EXPECT_TRUE(client->WasNotifyFinished());
   EXPECT_TRUE(client->GetModuleScript());
-  EXPECT_EQ(client->GetModuleScript()->State(),
+  EXPECT_EQ(client->GetModuleScript()->InstantiationState(),
             ModuleInstantiationState::kUninstantiated);
   EXPECT_TRUE(client2->WasNotifyFinished());
   EXPECT_TRUE(client2->GetModuleScript());
-  EXPECT_EQ(client2->GetModuleScript()->State(),
+  EXPECT_EQ(client2->GetModuleScript()->InstantiationState(),
             ModuleInstantiationState::kUninstantiated);
 }
 

@@ -16,9 +16,9 @@ void AddLocalizedStrings(content::WebUIDataSource* html_source) {
     const char* name;
     int id;
   } localized_strings[] = {
-      {"OncTypeCellular", IDS_NETWORK_TYPE_MOBILE_DATA},
+      {"OncTypeCellular", IDS_NETWORK_TYPE_CELLULAR},
       {"OncTypeEthernet", IDS_NETWORK_TYPE_ETHERNET},
-      {"OncTypeTether", IDS_NETWORK_TYPE_MOBILE_DATA},
+      {"OncTypeTether", IDS_NETWORK_TYPE_TETHER},
       {"OncTypeVPN", IDS_NETWORK_TYPE_VPN},
       {"OncTypeWiFi", IDS_NETWORK_TYPE_WIFI},
       {"OncTypeWiMAX", IDS_NETWORK_TYPE_WIMAX},

@@ -42,7 +42,6 @@ class DOMMimeTypeArray final : public GarbageCollected<DOMMimeTypeArray>,
   static DOMMimeTypeArray* Create(LocalFrame* frame) {
     return new DOMMimeTypeArray(frame);
   }
-  void UpdatePluginData();
 
   unsigned length() const;
   DOMMimeType* item(unsigned index);
@@ -53,8 +52,6 @@ class DOMMimeTypeArray final : public GarbageCollected<DOMMimeTypeArray>,
  private:
   explicit DOMMimeTypeArray(LocalFrame*);
   PluginData* GetPluginData() const;
-
-  HeapVector<Member<DOMMimeType>> dom_mime_types_;
 };
 
 }  // namespace blink

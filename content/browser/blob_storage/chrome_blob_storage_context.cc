@@ -197,7 +197,7 @@ storage::BlobStorageContext* GetBlobStorageContext(
   return blob_storage_context->context();
 }
 
-bool AttachRequestBodyBlobDataHandles(ResourceRequestBodyImpl* body,
+void AttachRequestBodyBlobDataHandles(ResourceRequestBodyImpl* body,
                                       ResourceContext* resource_context) {
   storage::BlobStorageContext* blob_context = GetBlobStorageContext(
       GetChromeBlobStorageContextForResourceContext(resource_context));
@@ -209,14 +209,14 @@ bool AttachRequestBodyBlobDataHandles(ResourceRequestBodyImpl* body,
       continue;
     std::unique_ptr<storage::BlobDataHandle> handle =
         blob_context->GetBlobDataFromUUID(element.blob_uuid());
+    DCHECK(handle);
     if (!handle)
-      return false;
+      continue;
     // Ensure the blob and any attached shareable files survive until
     // upload completion. The |body| takes ownership of |handle|.
     const void* key = handle.get();
     body->SetUserData(key, std::move(handle));
   }
-  return true;
 }
 
 }  // namespace content

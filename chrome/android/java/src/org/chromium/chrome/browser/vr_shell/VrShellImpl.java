@@ -25,10 +25,8 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.chrome.browser.ChromeActivity;
-import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.NativePage;
 import org.chromium.chrome.browser.UrlConstants;
-import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabObserver;
@@ -63,15 +61,15 @@ public class VrShellImpl
     // a way to compute good values for any screen size/scaling ratio.
 
     // Increasing DPR any more than this doesn't appear to increase text quality.
-    private static final float DEFAULT_DPR = 1.4f;
+    private static final float DEFAULT_DPR = 1.2f;
     // For WebVR we just create a DPR 1.0 display that matches the physical display size.
     private static final float WEBVR_DPR = 1.0f;
     // Fairly arbitrary values that put a good amount of content on the screen without making the
     // text too small to read.
     @VisibleForTesting
-    public static final float DEFAULT_CONTENT_WIDTH = 800f;
+    public static final float DEFAULT_CONTENT_WIDTH = 960f;
     @VisibleForTesting
-    public static final float DEFAULT_CONTENT_HEIGHT = 533f;
+    public static final float DEFAULT_CONTENT_HEIGHT = 640f;
 
     // Make full screen 16:9 until we get exact dimensions from playing video.
     private static final float FULLSCREEN_CONTENT_WIDTH = 1024f;
@@ -587,27 +585,14 @@ public class VrShellImpl
 
     @CalledByNative
     public void navigateBack() {
-        if (mActivity instanceof ChromeTabbedActivity) {
-            // TODO(mthiesse): We should do this for custom tabs as well, as back for custom tabs
-            // is also expected to close tabs.
-            ((ChromeTabbedActivity) mActivity).handleBackPressed();
-        } else {
-            mActivity.getToolbarManager().back();
-        }
+        mActivity.getToolbarManager().back();
         updateHistoryButtonsVisibility();
     }
 
     private void updateHistoryButtonsVisibility() {
-        if (mTab == null) {
-            nativeSetHistoryButtonsEnabled(mNativeVrShell, false, false);
-            return;
-        }
-        // Hitting back when on the NTP usually closes Chrome, which we don't allow in VR, so we
-        // just disable the back button.
-        boolean shouldAlwaysGoBack = mActivity instanceof ChromeTabbedActivity
-                && (mNativePage == null || !(mNativePage instanceof NewTabPage));
-        boolean canGoBack = mTab.canGoBack() || shouldAlwaysGoBack;
-        nativeSetHistoryButtonsEnabled(mNativeVrShell, canGoBack, mTab.canGoForward());
+        boolean canGoBack = mTab != null && mTab.canGoBack();
+        boolean canGoForward = mTab != null && mTab.canGoForward();
+        nativeSetHistoryButtonsEnabled(mNativeVrShell, canGoBack, canGoForward);
     }
 
     @CalledByNative

@@ -4,7 +4,6 @@
 
 package org.chromium.chrome.browser.download;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.DownloadManager;
 import android.app.Notification;
@@ -544,9 +543,6 @@ public class DownloadNotificationService extends Service {
     }
 
     private void rescheduleDownloads() {
-        // Cancel any existing task.  If we have any downloads to resume we'll reschedule another
-        // one.
-        DownloadResumptionScheduler.getDownloadResumptionScheduler(mContext).cancelTask();
         List<DownloadSharedPreferenceEntry> entries = mDownloadSharedPreferenceHelper.getEntries();
         if (entries.isEmpty()) return;
 
@@ -562,7 +558,6 @@ public class DownloadNotificationService extends Service {
                 }
             }
         }
-
         if (scheduleAutoResumption && mNumAutoResumptionAttemptLeft > 0) {
             DownloadResumptionScheduler.getDownloadResumptionScheduler(mContext).schedule(
                     allowMeteredConnection);
@@ -670,44 +665,38 @@ public class DownloadNotificationService extends Service {
      *                               here if there is a notification that should be assumed gone.
      *                               Or pass -1 if no notification fits that criteria.
      */
-    @SuppressWarnings("NewApi")
-    @SuppressLint("NewApi")
+    @TargetApi(Build.VERSION_CODES.M)
     boolean hideSummaryNotificationIfNecessary(int notificationIdToIgnore) {
+        if (!useForegroundService()) return false;
         if (mDownloadsInProgress.size() > 0) return false;
 
-        if (useForegroundService()) {
-            if (hasDownloadNotificationsInternal(notificationIdToIgnore)) return false;
+        if (hasDownloadNotificationsInternal(notificationIdToIgnore)) return false;
 
-            StatusBarNotification notification = getSummaryNotification(mNotificationManager);
-            if (notification != null) {
-                // We have a valid summary notification, but how we dismiss it depends on whether or
-                // not it is currently bound to this service via startForeground(...).
-                if ((notification.getNotification().flags & Notification.FLAG_FOREGROUND_SERVICE)
-                        != 0) {
-                    // If we are a foreground service and we are hiding the notification, we have no
-                    // other downloads notifications showing, so we need to remove the notification
-                    // and unregister it from this service at the same time.
-                    stopForegroundInternal(true);
-                } else {
-                    // If we are not a foreground service, remove the notification via the
-                    // NotificationManager.  The notification is not bound to this service, so any
-                    // call to stopForeground() won't affect the notification.
-                    cancelSummaryNotification();
-                }
-            } else {
-                // If we don't have a valid summary, just guarantee that we aren't in the foreground
-                // for safety.  Still try to remove the summary notification to make sure it's gone.
-                // This is because querying for it might fail if we have just recently started up
-                // and began showing it.  This might leave us in a bad state if the cancel request
-                // fails inside the framework.
-                // TODO(dtrainor): Add a way to attempt to automatically clean up the notification
-                // shortly after this.
+        StatusBarNotification notification = getSummaryNotification(mNotificationManager);
+        if (notification != null) {
+            // We have a valid summary notification, but how we dismiss it depends on whether or not
+            // it is currently bound to this service via startForeground(...).
+            if ((notification.getNotification().flags & Notification.FLAG_FOREGROUND_SERVICE)
+                    != 0) {
+                // If we are a foreground service and we are hiding the notification, we have no
+                // other downloads notifications showing, so we need to remove the notification and
+                // unregister it from this service at the same time.
                 stopForegroundInternal(true);
+            } else {
+                // If we are not a foreground service, remove the notification via the
+                // NotificationManager.  The notification is not bound to this service, so any call
+                // to stopForeground() won't affect the notification.
+                cancelSummaryNotification();
             }
         } else {
-            // If we're not using a foreground service, just shut down after we are no longer
-            // tracking any downloads.
-            if (mDownloadSharedPreferenceHelper.getEntries().size() > 0) return false;
+            // If we don't have a valid summary, just guarantee that we aren't in the foreground for
+            // safety.  Still try to remove the summary notification to make sure it's gone.  This
+            // is because querying for it might fail if we have just recently started up and began
+            // showing it.  This might leave us in a bad state if the cancel request fails inside
+            // the framework.
+            // TODO(dtrainor): Add a way to attempt to automatically clean up the notification
+            // shortly after this.
+            stopForegroundInternal(true);
         }
 
         // Stop the service which should start the destruction process.  At this point we should be
@@ -1400,8 +1389,8 @@ public class DownloadNotificationService extends Service {
             if (!canResumeDownload(mContext, entry)) continue;
             if (mDownloadsInProgress.contains(entry.id)) continue;
 
-            notifyDownloadPending(entry.id, entry.fileName, entry.isOffTheRecord,
-                    entry.canDownloadWhileMetered, entry.isTransient, null);
+            notifyDownloadPending(entry.id, entry.fileName, false, entry.canDownloadWhileMetered,
+                    entry.isTransient, null);
             DownloadServiceDelegate downloadServiceDelegate = getServiceDelegate(entry.id);
             downloadServiceDelegate.resumeDownload(entry.id, entry.buildDownloadItem(), false);
             downloadServiceDelegate.destroyServiceDelegate();

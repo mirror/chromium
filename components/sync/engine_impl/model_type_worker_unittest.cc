@@ -22,12 +22,6 @@
 #include "components/sync/test/engine/single_type_mock_server.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-using base::Time;
-using base::TimeDelta;
-using sync_pb::EntitySpecifics;
-using sync_pb::ModelTypeState;
-using sync_pb::SyncEntity;
-
 namespace syncer {
 
 namespace {
@@ -51,9 +45,9 @@ const std::string kHash1(GenerateTagHash(kTag1));
 const std::string kHash2(GenerateTagHash(kTag2));
 const std::string kHash3(GenerateTagHash(kTag3));
 
-EntitySpecifics GenerateSpecifics(const std::string& tag,
-                                  const std::string& value) {
-  EntitySpecifics specifics;
+sync_pb::EntitySpecifics GenerateSpecifics(const std::string& tag,
+                                           const std::string& value) {
+  sync_pb::EntitySpecifics specifics;
   specifics.mutable_preference()->set_name(tag);
   specifics.mutable_preference()->set_value(value);
   return specifics;
@@ -84,11 +78,12 @@ KeyParams GetNthKeyParams(int n) {
 
 // Modifies the input/output parameter |specifics| by encrypting it with
 // a Nigori intialized with the specified KeyParams.
-void EncryptUpdate(const KeyParams& params, EntitySpecifics* specifics) {
+void EncryptUpdate(const KeyParams& params,
+                   sync_pb::EntitySpecifics* specifics) {
   Nigori nigori;
   nigori.InitByDerivation(params.hostname, params.username, params.password);
 
-  EntitySpecifics original_specifics = *specifics;
+  sync_pb::EntitySpecifics original_specifics = *specifics;
   std::string plaintext;
   original_specifics.SerializeToString(&plaintext);
 
@@ -149,7 +144,7 @@ class ModelTypeWorkerTest : public ::testing::Test {
   // significant server action until we receive an update response that
   // contains the type root node for this type.
   void FirstInitialize() {
-    ModelTypeState initial_state;
+    sync_pb::ModelTypeState initial_state;
     initial_state.mutable_progress_marker()->set_data_type_id(
         GetSpecificsFieldNumberFromModelType(kModelType));
 
@@ -165,7 +160,7 @@ class ModelTypeWorkerTest : public ::testing::Test {
   // Initialize with some saved pending updates from the model thread.
   void InitializeWithPendingUpdates(
       const UpdateResponseDataList& initial_pending_updates) {
-    ModelTypeState initial_state;
+    sync_pb::ModelTypeState initial_state;
     initial_state.mutable_progress_marker()->set_data_type_id(
         GetSpecificsFieldNumberFromModelType(kModelType));
     initial_state.mutable_progress_marker()->set_token(
@@ -180,7 +175,7 @@ class ModelTypeWorkerTest : public ::testing::Test {
 
   // Initialize with a custom initial ModelTypeState and pending updates.
   void InitializeWithState(
-      const ModelTypeState& state,
+      const sync_pb::ModelTypeState& state,
       const UpdateResponseDataList& initial_pending_updates) {
     DCHECK(!worker_);
 
@@ -288,7 +283,7 @@ class ModelTypeWorkerTest : public ::testing::Test {
   // Pretend to receive update messages from the server.
 
   void TriggerTypeRootUpdateFromServer() {
-    SyncEntity entity = mock_server_.TypeRootUpdate();
+    sync_pb::SyncEntity entity = mock_server_.TypeRootUpdate();
     worker_->ProcessGetUpdatesResponse(mock_server_.GetProgress(),
                                        mock_server_.GetContext(), {&entity},
                                        nullptr);
@@ -298,7 +293,7 @@ class ModelTypeWorkerTest : public ::testing::Test {
   void TriggerPartialUpdateFromServer(int64_t version_offset,
                                       const std::string& tag,
                                       const std::string& value) {
-    SyncEntity entity = mock_server_.UpdateFromServer(
+    sync_pb::SyncEntity entity = mock_server_.UpdateFromServer(
         version_offset, GenerateTagHash(tag), GenerateSpecifics(tag, value));
 
     if (update_encryption_filter_index_ != 0) {
@@ -320,7 +315,7 @@ class ModelTypeWorkerTest : public ::testing::Test {
 
   void TriggerTombstoneFromServer(int64_t version_offset,
                                   const std::string& tag) {
-    SyncEntity entity =
+    sync_pb::SyncEntity entity =
         mock_server_.TombstoneFromServer(version_offset, GenerateTagHash(tag));
 
     if (update_encryption_filter_index_ != 0) {
@@ -498,7 +493,7 @@ TEST_F(ModelTypeWorkerTest, SimpleCommit) {
   ASSERT_EQ(1U, server()->GetNumCommitMessages());
   EXPECT_EQ(1, server()->GetNthCommitMessage(0).commit().entries_size());
   ASSERT_TRUE(server()->HasCommitEntity(kHash1));
-  const SyncEntity& entity = server()->GetLastCommittedEntity(kHash1);
+  const sync_pb::SyncEntity& entity = server()->GetLastCommittedEntity(kHash1);
   EXPECT_FALSE(entity.id_string().empty());
   EXPECT_EQ(0, entity.version());
   EXPECT_NE(0, entity.mtime());
@@ -564,7 +559,7 @@ TEST_F(ModelTypeWorkerTest, SimpleDelete) {
   ASSERT_EQ(2U, server()->GetNumCommitMessages());
   EXPECT_EQ(1, server()->GetNthCommitMessage(1).commit().entries_size());
   ASSERT_TRUE(server()->HasCommitEntity(kHash1));
-  const SyncEntity& entity = server()->GetLastCommittedEntity(kHash1);
+  const sync_pb::SyncEntity& entity = server()->GetLastCommittedEntity(kHash1);
   EXPECT_FALSE(entity.id_string().empty());
   EXPECT_EQ(GenerateTagHash(kTag1), entity.client_defined_unique_tag());
   EXPECT_EQ(base_version, entity.version());
@@ -621,7 +616,7 @@ TEST_F(ModelTypeWorkerTest, SendInitialSyncDone) {
   // The update contains no entities.
   EXPECT_EQ(0U, processor()->GetNthUpdateResponse(0).size());
 
-  const ModelTypeState& state = processor()->GetNthUpdateState(0);
+  const sync_pb::ModelTypeState& state = processor()->GetNthUpdateState(0);
   EXPECT_FALSE(state.progress_marker().token().empty());
   EXPECT_TRUE(state.initial_sync_done());
   EXPECT_TRUE(worker()->IsInitialSyncEnded());
@@ -639,7 +634,8 @@ TEST_F(ModelTypeWorkerTest, TwoNewItemsCommittedSeparately) {
   ASSERT_EQ(1U, server()->GetNumCommitMessages());
   EXPECT_EQ(1, server()->GetNthCommitMessage(0).commit().entries_size());
   ASSERT_TRUE(server()->HasCommitEntity(kHash1));
-  const SyncEntity& tag1_entity = server()->GetLastCommittedEntity(kHash1);
+  const sync_pb::SyncEntity& tag1_entity =
+      server()->GetLastCommittedEntity(kHash1);
 
   // Commit the second of two entities.
   CommitRequest(kTag2, kValue2);
@@ -649,7 +645,8 @@ TEST_F(ModelTypeWorkerTest, TwoNewItemsCommittedSeparately) {
   ASSERT_EQ(2U, server()->GetNumCommitMessages());
   EXPECT_EQ(1, server()->GetNthCommitMessage(1).commit().entries_size());
   ASSERT_TRUE(server()->HasCommitEntity(kHash2));
-  const SyncEntity& tag2_entity = server()->GetLastCommittedEntity(kHash2);
+  const sync_pb::SyncEntity& tag2_entity =
+      server()->GetLastCommittedEntity(kHash2);
 
   EXPECT_FALSE(WillCommit());
 
@@ -761,7 +758,8 @@ TEST_F(ModelTypeWorkerTest, EncryptedCommit) {
   ASSERT_EQ(1U, server()->GetNumCommitMessages());
   EXPECT_EQ(1, server()->GetNthCommitMessage(0).commit().entries_size());
   ASSERT_TRUE(server()->HasCommitEntity(kHash1));
-  const SyncEntity& tag1_entity = server()->GetLastCommittedEntity(kHash1);
+  const sync_pb::SyncEntity& tag1_entity =
+      server()->GetLastCommittedEntity(kHash1);
 
   EXPECT_TRUE(tag1_entity.specifics().has_encrypted());
 
@@ -820,7 +818,8 @@ TEST_F(ModelTypeWorkerTest, EncryptionBlocksCommits) {
   ASSERT_EQ(1U, server()->GetNumCommitMessages());
   EXPECT_EQ(1, server()->GetNthCommitMessage(0).commit().entries_size());
   ASSERT_TRUE(server()->HasCommitEntity(kHash1));
-  const SyncEntity& tag1_entity = server()->GetLastCommittedEntity(kHash1);
+  const sync_pb::SyncEntity& tag1_entity =
+      server()->GetLastCommittedEntity(kHash1);
   EXPECT_TRUE(tag1_entity.specifics().has_encrypted());
   EXPECT_EQ(tag1_entity.name(), "encrypted");
   EXPECT_TRUE(tag1_entity.specifics().has_preference());
@@ -993,7 +992,7 @@ TEST_F(ModelTypeWorkerTest, OldVersionCommit) {
   EXPECT_TRUE(WillCommit());
   DoSuccessfulCommit();
   sync_pb::ClientToServerMessage message = server()->GetNthCommitMessage(1);
-  const google::protobuf::RepeatedPtrField<SyncEntity>& entries =
+  const google::protobuf::RepeatedPtrField<sync_pb::SyncEntity>& entries =
       message.commit().entries();
   ASSERT_EQ(1, entries.size());
   EXPECT_EQ(entries.Get(0).version(), commit_version);
@@ -1005,8 +1004,10 @@ TEST_F(ModelTypeWorkerTest, RestorePendingEntries) {
   EntityData entity;
   entity.client_tag_hash = GenerateTagHash(kTag1);
   entity.id = "SomeID";
-  entity.creation_time = Time::UnixEpoch() + TimeDelta::FromSeconds(10);
-  entity.modification_time = Time::UnixEpoch() + TimeDelta::FromSeconds(11);
+  entity.creation_time =
+      base::Time::UnixEpoch() + base::TimeDelta::FromSeconds(10);
+  entity.modification_time =
+      base::Time::UnixEpoch() + base::TimeDelta::FromSeconds(11);
   entity.non_unique_name = "encrypted";
   entity.specifics = GenerateSpecifics(kTag1, kValue1);
   EncryptUpdate(GetNthKeyParams(1), &(entity.specifics));
@@ -1044,8 +1045,10 @@ TEST_F(ModelTypeWorkerTest, RestoreApplicableEntries) {
   EntityData entity;
   entity.client_tag_hash = GenerateTagHash(kTag1);
   entity.id = "SomeID";
-  entity.creation_time = Time::UnixEpoch() + TimeDelta::FromSeconds(10);
-  entity.modification_time = Time::UnixEpoch() + TimeDelta::FromSeconds(11);
+  entity.creation_time =
+      base::Time::UnixEpoch() + base::TimeDelta::FromSeconds(10);
+  entity.modification_time =
+      base::Time::UnixEpoch() + base::TimeDelta::FromSeconds(11);
   entity.non_unique_name = "encrypted";
 
   entity.specifics = GenerateSpecifics(kTag1, kValue1);
@@ -1104,7 +1107,7 @@ TEST_F(ModelTypeWorkerTest, ReceiveCorruptEncryption) {
   DecryptPendingKey();
 
   // Manually create an update.
-  SyncEntity entity;
+  sync_pb::SyncEntity entity;
   entity.set_client_defined_unique_tag(GenerateTagHash(kTag1));
   entity.set_id_string("SomeID");
   entity.set_version(1);
@@ -1157,7 +1160,8 @@ TEST_F(ModelTypeWorkerTest, RecreateDeletedEntity) {
 
   // Verify that entity got deleted from the server.
   {
-    const SyncEntity& entity = server()->GetLastCommittedEntity(kHash1);
+    const sync_pb::SyncEntity& entity =
+        server()->GetLastCommittedEntity(kHash1);
     EXPECT_TRUE(entity.deleted());
   }
 
@@ -1167,7 +1171,8 @@ TEST_F(ModelTypeWorkerTest, RecreateDeletedEntity) {
   DoSuccessfulCommit();
   // Verify that there is a valid entity on the server.
   {
-    const SyncEntity& entity = server()->GetLastCommittedEntity(kHash1);
+    const sync_pb::SyncEntity& entity =
+        server()->GetLastCommittedEntity(kHash1);
     EXPECT_FALSE(entity.deleted());
   }
 }

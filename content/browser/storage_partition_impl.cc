@@ -15,7 +15,6 @@
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
-#include "content/browser/blob_storage/chrome_blob_storage_context.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/browsing_data/storage_partition_http_cache_data_remover.h"
 #include "content/browser/fileapi/browser_file_system_helper.h"
@@ -41,7 +40,6 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "ppapi/features/features.h"
 #include "services/service_manager/public/cpp/connector.h"
-#include "storage/browser/blob/blob_storage_context.h"
 #include "storage/browser/database/database_tracker.h"
 #include "storage/browser/quota/quota_manager.h"
 
@@ -230,12 +228,6 @@ void ClearSessionStorageOnUIThread(
       base::Bind(&OnSessionStorageUsageInfo, dom_storage_context,
                  special_storage_policy, origin_matcher,
                  callback));
-}
-
-base::WeakPtr<storage::BlobStorageContext> BlobStorageContextGetter(
-    scoped_refptr<ChromeBlobStorageContext> blob_context) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  return blob_context->context()->AsWeakPtr();
 }
 
 }  // namespace
@@ -537,13 +529,6 @@ std::unique_ptr<StoragePartitionImpl> StoragePartitionImpl::Create(
     network_service->CreateNetworkContext(
         MakeRequest(&partition->network_context_), std::move(context_params));
 
-    scoped_refptr<ChromeBlobStorageContext> blob_context =
-        ChromeBlobStorageContext::GetFor(context);
-    BlobURLLoaderFactory::BlobContextGetter blob_getter =
-        base::BindOnce(&BlobStorageContextGetter, blob_context);
-    partition->blob_url_loader_factory_ = new BlobURLLoaderFactory(
-        std::move(blob_getter), partition->filesystem_context_);
-
     partition->url_loader_factory_getter_ = new URLLoaderFactoryGetter();
     partition->url_loader_factory_getter_->Initialize(partition.get());
   }
@@ -636,10 +621,6 @@ BroadcastChannelProvider* StoragePartitionImpl::GetBroadcastChannelProvider() {
 BluetoothAllowedDevicesMap*
 StoragePartitionImpl::GetBluetoothAllowedDevicesMap() {
   return bluetooth_allowed_devices_map_.get();
-}
-
-BlobURLLoaderFactory* StoragePartitionImpl::GetBlobURLLoaderFactory() {
-  return blob_url_loader_factory_.get();
 }
 
 void StoragePartitionImpl::OpenLocalStorage(

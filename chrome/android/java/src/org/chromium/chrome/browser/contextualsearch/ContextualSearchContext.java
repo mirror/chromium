@@ -5,7 +5,6 @@
 package org.chromium.chrome.browser.contextualsearch;
 
 import android.annotation.SuppressLint;
-import android.os.Build;
 import android.text.TextUtils;
 
 import org.chromium.base.annotations.CalledByNative;
@@ -279,7 +278,7 @@ public abstract class ContextualSearchContext {
     private int findWordStartOffset(String text, int initial) {
         // Scan before, aborting if we hit any ideographic letter.
         for (int offset = initial - 1; offset >= 0; offset--) {
-            if (isUnreliableWordBreakAtIndex(text, offset)) return INVALID_OFFSET;
+            if (isIdeographicAtIndex(text, offset)) return INVALID_OFFSET;
 
             if (isWordBreakAtIndex(text, offset)) {
                 // The start of the word is after this word break.
@@ -302,7 +301,7 @@ public abstract class ContextualSearchContext {
     private int findWordEndOffset(String text, int initial) {
         // Scan after, aborting if we hit any CJKN letter.
         for (int offset = initial; offset < text.length(); offset++) {
-            if (isUnreliableWordBreakAtIndex(text, offset)) return INVALID_OFFSET;
+            if (isIdeographicAtIndex(text, offset)) return INVALID_OFFSET;
 
             if (isWordBreakAtIndex(text, offset)) {
                 // The end of the word is the offset of this word break.
@@ -313,17 +312,12 @@ public abstract class ContextualSearchContext {
     }
 
     /**
-     * @return Whether the character at the given index in the text might be in an alphabet that has
-     *         unreliable word breaks, such as CKJV languages.  Returns {@code true} on older
-     *         platforms where we can't know for sure.
+     * @return Whether the character at the given index in the text is "Ideographic" (as in CJKV
+     *         languages), which means there may not be reliable word breaks.
      */
     @SuppressLint("NewApi")
-    private boolean isUnreliableWordBreakAtIndex(String text, int index) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            return Character.isIdeographic(text.charAt(index));
-        } else {
-            return true; // Assume the worst if we can't check.
-        }
+    private boolean isIdeographicAtIndex(String text, int index) {
+        return Character.isIdeographic(text.charAt(index));
     }
 
     /**

@@ -190,6 +190,9 @@ bool ComputeFramesOfKeyboardParts(UIView* inputAccessoryView,
 // The current web state.
 @property(nonatomic, readonly) web::WebState* webState;
 
+// The current web view proxy.
+@property(nonatomic, readonly) id<CRWWebViewProxy> webViewProxy;
+
 @end
 
 @implementation FormInputAccessoryViewController {

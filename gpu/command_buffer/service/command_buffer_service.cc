@@ -66,9 +66,6 @@ void CommandBufferService::Flush(int32_t put_offset) {
     return;
   }
 
-  TRACE_EVENT1("gpu", "CommandBufferService:PutChanged", "handler",
-               handler_->GetLogPrefix().as_string());
-
   put_offset_ = put_offset;
 
   DCHECK(buffer_);
@@ -151,8 +148,7 @@ CommandBuffer::State CommandBufferService::GetState() {
 }
 
 void CommandBufferService::SetReleaseCount(uint64_t release_count) {
-  DLOG_IF(ERROR, release_count < state_.release_count)
-      << "Non-monotonic SetReleaseCount";
+  DCHECK(release_count >= state_.release_count);
   state_.release_count = release_count;
   UpdateState();
 }

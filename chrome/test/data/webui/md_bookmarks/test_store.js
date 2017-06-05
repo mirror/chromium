@@ -12,8 +12,6 @@ suiteSetup(function() {
       this.lastAction_ = null;
       this.acceptInit_ = false;
       this.enableReducers_ = false;
-      /** @type {!Map<string, !PromiseResolver>} */
-      this.resolverMap_ = new Map();
     };
 
     TestStore.prototype = {
@@ -56,8 +54,6 @@ suiteSetup(function() {
         this.lastAction_ = action;
         if (this.enableReducers_)
           bookmarks.Store.prototype.reduce_.call(this, action);
-        if (this.resolverMap_.has(action.name))
-          this.resolverMap_.get(action.name).resolve(action);
       },
 
       /**
@@ -74,32 +70,6 @@ suiteSetup(function() {
       acceptInitOnce: function() {
         this.acceptInit_ = true;
         this.initialized_ = false;
-      },
-
-      /**
-       * Track actions called |name|, allowing that type of action to be waited
-       * for with `waitForAction`.
-       * @param {string} name
-       */
-      expectAction: function(name) {
-        this.resolverMap_.set(name, new PromiseResolver());
-      },
-
-      /**
-       * Returns a Promise that will resolve when an action called |name| is
-       * dispatched. The promise must be prepared by calling
-       * `expectAction(name)` before the action is dispatched.
-       * @param {string} name
-       * @return {!Promise<!Action>}
-       */
-      waitForAction: function(name) {
-        assertTrue(
-            this.resolverMap_.has(name),
-            'Must call expectAction before each call to waitForAction');
-        return this.resolverMap_.get(name).promise.then((action) => {
-          this.resolverMap_.delete(name);
-          return action;
-        });
       },
     };
 

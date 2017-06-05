@@ -387,13 +387,15 @@ static HashSet<int>* g_registered_layer_set;
 void GraphicsLayer::RegisterContentsLayer(WebLayer* layer) {
   if (!g_registered_layer_set)
     g_registered_layer_set = new HashSet<int>;
-  CHECK(!g_registered_layer_set->Contains(layer->Id()));
+  if (g_registered_layer_set->Contains(layer->Id()))
+    IMMEDIATE_CRASH();
   g_registered_layer_set->insert(layer->Id());
 }
 
 void GraphicsLayer::UnregisterContentsLayer(WebLayer* layer) {
   DCHECK(g_registered_layer_set);
-  CHECK(g_registered_layer_set->Contains(layer->Id()));
+  if (!g_registered_layer_set->Contains(layer->Id()))
+    IMMEDIATE_CRASH();
   g_registered_layer_set->erase(layer->Id());
 }
 
@@ -401,7 +403,8 @@ void GraphicsLayer::SetContentsTo(WebLayer* layer) {
   bool children_changed = false;
   if (layer) {
     DCHECK(g_registered_layer_set);
-    CHECK(g_registered_layer_set->Contains(layer->Id()));
+    if (!g_registered_layer_set->Contains(layer->Id()))
+      IMMEDIATE_CRASH();
     if (contents_layer_id_ != layer->Id()) {
       SetupContentsLayer(layer);
       children_changed = true;

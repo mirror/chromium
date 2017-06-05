@@ -66,6 +66,11 @@
   return self.items;
 }
 
+- (CollectionViewItem*)selectableItemAtIndex:(NSUInteger)index {
+  DCHECK(index < self.items.count);
+  return [self.items objectAtIndex:index];
+}
+
 - (CollectionViewItem*)addButtonItem {
   return nil;
 }
