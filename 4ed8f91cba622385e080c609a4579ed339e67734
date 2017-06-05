@@ -93,6 +93,30 @@
       "revId": "4ed8f91cba622385e080c609a4579ed339e67734",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e8b2775_4dde4275",
+        "filename": "components/about_ui/credit_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-05T20:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00d5c4eb_67072802",
+      "range": {
+        "startLine": 62,
+        "startChar": 5,
+        "endLine": 62,
+        "endChar": 25
+      },
+      "revId": "4ed8f91cba622385e080c609a4579ed339e67734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
