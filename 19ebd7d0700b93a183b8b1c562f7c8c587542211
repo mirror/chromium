@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabdfeef_853ba646",
+        "filename": "components/safe_browsing_db/v4_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-06-05T23:44:54Z",
+      "side": 1,
+      "message": "Would you mind adding: DCHECK(db_task_runner-\u003eRunsTasksOnCurrentThread());",
+      "revId": "19ebd7d0700b93a183b8b1c562f7c8c587542211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
