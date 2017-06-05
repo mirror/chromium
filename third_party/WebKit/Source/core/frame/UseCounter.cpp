@@ -1174,7 +1174,7 @@ void UseCounter::DidCommitLoad(KURL url) {
   css_recorded_.ClearAll();
   animated_css_recorded_.ClearAll();
   if (context_ != kDisabledContext && !mute_count_) {
-    FeaturesHistogram().Count(kPageVisits);
+    FeaturesHistogram().Count(static_cast<int>(WebFeature::kPageVisits));
     if (context_ != kExtensionContext) {
       CssHistogram().Count(totalPagesMeasuredCSSSampleId());
       AnimatedCSSHistogram().Count(totalPagesMeasuredCSSSampleId());
@@ -1329,15 +1329,15 @@ EnumerationHistogram& UseCounter::FeaturesHistogram() const {
   // that's tricky (SVGImage is intentionally isolated, and the Page that
   // created it may not even exist anymore).
   // So instead we just use a dedicated histogram for the SVG case.
-  DEFINE_STATIC_LOCAL(blink::EnumerationHistogram, svg_histogram,
-                      ("Blink.UseCounter.SVGImage.Features",
-                       blink::UseCounter::kNumberOfFeatures));
-  DEFINE_STATIC_LOCAL(blink::EnumerationHistogram, extension_histogram,
-                      ("Blink.UseCounter.Extensions.Features",
-                       blink::UseCounter::kNumberOfFeatures));
+  DEFINE_STATIC_LOCAL(
+      blink::EnumerationHistogram, svg_histogram,
+      ("Blink.UseCounter.SVGImage.Features", UseCounter::kNumberOfFeatures));
+  DEFINE_STATIC_LOCAL(
+      blink::EnumerationHistogram, extension_histogram,
+      ("Blink.UseCounter.Extensions.Features", UseCounter::kNumberOfFeatures));
   DEFINE_STATIC_LOCAL(
       blink::EnumerationHistogram, histogram,
-      ("Blink.UseCounter.Features", blink::UseCounter::kNumberOfFeatures));
+      ("Blink.UseCounter.Features", UseCounter::kNumberOfFeatures));
   switch (context_) {
     case kSVGImageContext:
       return svg_histogram;
@@ -1393,7 +1393,8 @@ UseCounter::LegacyCounter::LegacyCounter()
 UseCounter::LegacyCounter::~LegacyCounter() {
   // PageDestruction was intended to be used as a scale, but it's broken (due to
   // fast shutdown).  See https://crbug.com/597963.
-  FeatureObserverHistogram().Count(kOBSOLETE_PageDestruction);
+  FeatureObserverHistogram().Count(
+      static_cast<int>(WebFeature::kOBSOLETE_PageDestruction));
   UpdateMeasurements();
 }
 
@@ -1407,7 +1408,7 @@ void UseCounter::LegacyCounter::CountCSS(CSSPropertyID property) {
 
 void UseCounter::LegacyCounter::UpdateMeasurements() {
   EnumerationHistogram& feature_histogram = FeatureObserverHistogram();
-  feature_histogram.Count(kPageVisits);
+  feature_histogram.Count(static_cast<int>(WebFeature::kPageVisits));
   for (size_t i = 0; i < kNumberOfFeatures; ++i) {
     if (feature_bits_.QuickGet(i))
       feature_histogram.Count(i);
