@@ -16,6 +16,24 @@
       "revId": "f47bfb8514c9c20c621b88e54472a38036696be3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a7a5fb_82e9a0b6",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19706,
+      "author": {
+        "id": 1132399
+      },
+      "writtenOn": "2017-06-05T21:19:15Z",
+      "side": 1,
+      "message": "Makes sense.... for alignment, I hadn\u0027t been worrying about cases where the shared memory buffer (at offset 0) was not aligned correctly for Atomic32 (seems unlikely this would be a problem?) - so I\u0027m just checking that the offset into the shared memory buffer is a multiple of sizeof(Atomic32).",
+      "parentUuid": "60d13860_db15b1ba",
+      "revId": "f47bfb8514c9c20c621b88e54472a38036696be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

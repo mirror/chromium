@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f87cc26_deaef835",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 19697,
+      "author": {
+        "id": 1132399
+      },
+      "writtenOn": "2017-06-05T21:19:15Z",
+      "side": 1,
+      "message": "Other parts of this file stat_cast the parameters to the expected type (for instance, l.19647, but many other places as well).... seems unnecessary, as they are defined as the correct types in the struct - is this just a remnant of a previous implementation where these were defined more generically? Or is there a reason for this cast?",
+      "range": {
+        "startLine": 19697,
+        "startChar": 0,
+        "endLine": 19697,
+        "endChar": 35
+      },
+      "revId": "0241f214f90ccf77d15f9c726000d239c46ad1ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
