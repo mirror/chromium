@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "34d3f2aa_a0ce0e63",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/wasm/resources/load_wasm.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125279
+      },
+      "writtenOn": "2017-06-05T19:56:14Z",
+      "side": 1,
+      "message": "Removing the comment. Since wasm shipped, the versioning issue mentioned in the comment (\"wasm format changes\") is moot.",
+      "parentUuid": "0ddc66ea_bbb87906",
+      "revId": "6ced6835ecabc73035dbb405b05badd7b2ea91ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "861f49a3_09a6f1b1",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/wasm/wasm_indexeddb_test.js",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-05T18:17:45Z",
       "side": 1,
       "message": "This file could be simpler by using some of the helpers from /IndexedDB/support.js; see for example https://github.com/w3c/web-platform-tests/blob/master/html/infrastructure/safe-passing-of-structured-data/shared-array-buffers/serialization-via-idb.any.js",
+      "revId": "6ced6835ecabc73035dbb405b05badd7b2ea91ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfd0e9e1_dacc7676",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/wasm/wasm_indexeddb_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1125279
+      },
+      "writtenOn": "2017-06-05T19:56:14Z",
+      "side": 1,
+      "message": "I\u0027ll look into that, thanks!",
+      "parentUuid": "861f49a3_09a6f1b1",
       "revId": "6ced6835ecabc73035dbb405b05badd7b2ea91ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
