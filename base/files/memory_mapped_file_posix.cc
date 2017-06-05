@@ -130,6 +130,8 @@ bool MemoryMappedFile::MapFileRegionToMemory(
         struct stat statbuf;
         if (fstat(file_.GetPlatformFile(), &statbuf) == 0)
           block_size = statbuf.st_blksize;
+        if (block_size == 0)
+          block_size = 512;
         const off_t map_end = map_start + static_cast<off_t>(map_size);
         for (off_t i = map_start; i < map_end; i += block_size) {
           char existing_byte;

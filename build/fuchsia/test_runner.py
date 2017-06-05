@@ -119,6 +119,7 @@ def BuildBootfs(output_directory, runtime_deps_path, test_name, gtest_filter,
   # QEMU.
   autorun_file = tempfile.NamedTemporaryFile()
   autorun_file.write('#!/bin/sh\n')
+  autorun_file.write('ls -l /system/bin\n')
   autorun_file.write('/system/' + os.path.basename(test_name))
   autorun_file.write(' --test-launcher-retry-limit=0')
   if gtest_filter:
@@ -126,7 +127,6 @@ def BuildBootfs(output_directory, runtime_deps_path, test_name, gtest_filter,
   autorun_file.write('\n')
   # If shutdown happens too soon after the test completion, log statements from
   # the end of the run will be lost, so sleep for a bit before shutting down.
-  autorun_file.write('sleep 3\n')
   autorun_file.write('dm poweroff\n')
   autorun_file.flush()
   os.chmod(autorun_file.name, 0750)
