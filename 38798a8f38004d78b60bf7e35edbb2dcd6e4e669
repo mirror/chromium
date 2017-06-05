@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "21858c39_0f325a93",
+        "filename": "services/shape_detection/android/java/src/org/chromium/shape_detection/FaceDetectionImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-06-05T19:58:58Z",
+      "side": 1,
+      "message": "I think it might be more appropriate to link directly to the API.  Let me know if you really want the bug though.",
+      "parentUuid": "1f8bcfa1_c43da053",
+      "revId": "38798a8f38004d78b60bf7e35edbb2dcd6e4e669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8491a1eb_6492462b",
         "filename": "services/shape_detection/android/java/src/org/chromium/shape_detection/FaceDetectionImpl.java",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "38798a8f38004d78b60bf7e35edbb2dcd6e4e669",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e7fe7f9_96aa72de",
+        "filename": "services/shape_detection/android/java/src/org/chromium/shape_detection/FaceDetectionImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-06-05T19:58:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8491a1eb_6492462b",
+      "range": {
+        "startLine": 71,
+        "startChar": 18,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "38798a8f38004d78b60bf7e35edbb2dcd6e4e669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
