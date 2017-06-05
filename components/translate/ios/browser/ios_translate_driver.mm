@@ -92,6 +92,12 @@ void IOSTranslateDriver::OnLanguageDetermined(
   translate_manager_->GetLanguageState().LanguageDetermined(
       details.adopted_language, true);
 
+  translate::LanguageDetectionDetails detection_details;
+  detection_details.cld_language = details.content_language;
+  detection_details.is_cld_reliable = false;
+  detection_details.adopted_language = details.adopted_language;
+  translate_manager_->translate_client()->RecordLanguageDetectionEvent(
+      detection_details);
   if (web_state())
     translate_manager_->InitiateTranslation(details.adopted_language);
 }

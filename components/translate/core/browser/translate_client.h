@@ -26,6 +26,8 @@ class TranslateAcceptLanguages;
 class TranslateDriver;
 class TranslateInfoBarDelegate;
 
+struct LanguageDetectionDetails;
+
 // A client interface that needs to be supplied to TranslateManager by the
 // embedder.
 //
@@ -49,6 +51,10 @@ class TranslateClient {
 
   // Returns the resource ID of the icon to be shown for the Translate infobars.
   virtual int GetInfobarIconID() const = 0;
+
+  // Record language detection event.
+  virtual void RecordLanguageDetectionEvent(
+      const LanguageDetectionDetails& details) const = 0;
 
 #if !defined(USE_AURA)
   // Returns a translate infobar that owns |delegate|.
