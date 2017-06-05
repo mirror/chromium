@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dce2a341_43d1c94b",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-05T18:34:32Z",
+      "side": 1,
+      "message": "Making them virtual was intentional, forgot to move the implementation out of the header file after doing that.",
+      "parentUuid": "37667084_2af963d8",
+      "revId": "6b61042b0496d2cce884009ac586a386332d362d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e412e665_5201d651",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "6b61042b0496d2cce884009ac586a386332d362d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7db4660c_2df81433",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1447,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-05T18:34:32Z",
+      "side": 1,
+      "message": "Oh, that\u0027s cool :)",
+      "parentUuid": "e412e665_5201d651",
+      "revId": "6b61042b0496d2cce884009ac586a386332d362d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

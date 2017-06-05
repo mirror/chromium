@@ -230,6 +230,24 @@
       "revId": "23166c4f3363b9cce860885cd69910fe19cbd4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d355e03a_e5459719",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1449,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-05T18:34:32Z",
+      "side": 1,
+      "message": "All right, that sounds good :)\n\nWhat I\u0027m not really sure of right now is if V8PerIsolateData::MainThreadIsolate() can return null for websites without script/if scripts are disabled? Looking at code, it looks like we call V8Initializer::initializeMainThread() in blink::Initialize(), so I think the answer is no, but I\u0027d like to confirm that this is the case. If it can return null, we\u0027ll have to do an isolate check every time we use it outside of bindings (which isn\u0027t ideal).",
+      "parentUuid": "3e76de3c_426533d2",
+      "revId": "23166c4f3363b9cce860885cd69910fe19cbd4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
