@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "992bf659_b731b4b1",
+        "filename": "components/subresource_filter/content/browser/subframe_navigation_filtering_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-06-05T16:48:28Z",
+      "side": 1,
+      "message": "What doesn\u0027t have \u003c\u003c for logging, LoadPolicy? That should be fixed as of https://bugs.chromium.org/p/chromium/issues/detail?id\u003d555314",
+      "parentUuid": "1465616f_89cd0d48",
+      "revId": "febd830d8e24b4312d17d47985b54f78abc8c63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01d714b9_05c192c0",
         "filename": "components/subresource_filter/content/browser/subframe_navigation_filtering_throttle.cc",
         "patchSetId": 4
@@ -107,6 +125,30 @@
       "side": 1,
       "message": "Can you give an example? The observer_ is not a pointer type, and this follows the example in base/observer_list.h",
       "parentUuid": "0e945930_93b86173",
+      "range": {
+        "startLine": 45,
+        "startChar": 11,
+        "endLine": 45,
+        "endChar": 12
+      },
+      "revId": "febd830d8e24b4312d17d47985b54f78abc8c63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e0fcbdb_6658c5ce",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_observer_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-06-05T16:48:28Z",
+      "side": 1,
+      "message": "Er, yep. Looks good.",
+      "parentUuid": "436bda48_29a7b2e4",
       "range": {
         "startLine": 45,
         "startChar": 11,
