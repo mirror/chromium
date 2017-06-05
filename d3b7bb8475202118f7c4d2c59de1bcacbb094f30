@@ -16,6 +16,24 @@
       "revId": "d3b7bb8475202118f7c4d2c59de1bcacbb094f30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5edd782_be17a58c",
+        "filename": "third_party/WebKit/Source/platform/mojo/Time.typemap",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-05T16:53:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60f4d876_4378bc02",
+      "revId": "d3b7bb8475202118f7c4d2c59de1bcacbb094f30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
