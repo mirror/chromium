@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "06384674_0ce71cac",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-05T19:28:20Z",
+      "side": 1,
+      "message": "Mostly based on https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#CHECK_DCHECK_and-NOTREACHED.\n\n(and of course, I\u0027d say the advice in there is at least somewhat ambiguous ;-)",
+      "parentUuid": "336f57f4_25421ffd",
+      "range": {
+        "startLine": 162,
+        "startChar": 9,
+        "endLine": 162,
+        "endChar": 18
+      },
+      "revId": "4f4bd3574767318f37c56aacb1b11a9c6c436a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0797b48_d4d5dca0",
         "filename": "content/renderer/render_frame_proxy.h",
         "patchSetId": 2
