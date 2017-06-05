@@ -15,8 +15,10 @@
 #include "base/posix/eintr_wrapper.h"
 #include "base/run_loop.h"
 #include "base/sequence_token.h"
+#include "base/task_scheduler/sequence.h"
 #include "base/task_scheduler/task.h"
 #include "base/task_scheduler/task_traits.h"
+#include "base/task_scheduler/test_utils.h"
 #include "base/time/time.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -35,7 +37,11 @@ TEST(TaskSchedulerTaskTrackerPosixTest, RunTask) {
   tracker.set_watch_file_descriptor_message_loop(&message_loop);
 
   EXPECT_TRUE(tracker.WillPostTask(task.get()));
-  EXPECT_TRUE(tracker.RunTask(std::move(task), SequenceToken::Create()));
+
+  bool sequence_became_empty;
+  EXPECT_TRUE(
+      tracker.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
+                          &sequence_became_empty));
   EXPECT_TRUE(did_run);
 }
 
@@ -53,8 +59,11 @@ TEST(TaskSchedulerTaskTrackerPosixTest, FileDescriptorWatcher) {
   tracker.set_watch_file_descriptor_message_loop(&message_loop);
 
   EXPECT_TRUE(tracker.WillPostTask(task.get()));
-  EXPECT_TRUE(tracker.RunTask(std::move(task), SequenceToken::Create()));
 
+  bool sequence_became_empty;
+  EXPECT_TRUE(
+      tracker.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
+                          &sequence_became_empty));
   // Run the MessageLoop to allow the read watch to be registered and
   // unregistered. This prevents a memory leak.
   RunLoop().RunUntilIdle();

@@ -15,6 +15,7 @@
 #include "base/sequence_token.h"
 #include "base/synchronization/condition_variable.h"
 #include "base/task_scheduler/scoped_set_task_priority_for_current_thread.h"
+#include "base/threading/sequence_local_storage.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -235,10 +236,12 @@ bool TaskTracker::WillPostTask(const Task* task) {
   return true;
 }
 
-bool TaskTracker::RunTask(std::unique_ptr<Task> task,
-                          const SequenceToken& sequence_token) {
+bool TaskTracker::RunNextTask(Sequence* sequence, bool* sequence_became_empty) {
+  DCHECK(sequence);
+  DCHECK(sequence_became_empty);
+
+  std::unique_ptr<Task> task = sequence->TakeTask();
   DCHECK(task);
-  DCHECK(sequence_token.IsValid());
 
   const TaskShutdownBehavior shutdown_behavior =
       task->traits.shutdown_behavior();
@@ -246,13 +249,14 @@ bool TaskTracker::RunTask(std::unique_ptr<Task> task,
   const bool is_delayed = !task->delayed_run_time.is_null();
 
   if (can_run_task) {
-    PerformRunTask(std::move(task), sequence_token);
+    PerformRunTask(std::move(task), sequence);
     AfterRunTask(shutdown_behavior);
   }
 
   if (!is_delayed)
     DecrementNumPendingUndelayedTasks();
 
+  *sequence_became_empty = sequence->Pop();
   return can_run_task;
 }
 
@@ -278,7 +282,7 @@ void TaskTracker::SetHasShutdownStartedForTesting() {
 }
 
 void TaskTracker::PerformRunTask(std::unique_ptr<Task> task,
-                                 const SequenceToken& sequence_token) {
+                                 Sequence* sequence) {
   RecordTaskLatencyHistogram(task.get());
 
   const bool previous_singleton_allowed =
@@ -291,10 +295,15 @@ void TaskTracker::PerformRunTask(std::unique_ptr<Task> task,
       task->traits.with_base_sync_primitives());
 
   {
+    const SequenceToken& sequence_token = sequence->token();
+    DCHECK(sequence_token.IsValid());
     ScopedSetSequenceTokenForCurrentThread
         scoped_set_sequence_token_for_current_thread(sequence_token);
     ScopedSetTaskPriorityForCurrentThread
         scoped_set_task_priority_for_current_thread(task->traits.priority());
+    ScopedSetSequenceLocalStorageForCurrentThread
+        scoped_set_sequence_local_storage_for_current_thread(
+            sequence->GetSequenceLocalStoragePtr());
 
     // Set up TaskRunnerHandle as expected for the scope of the task.
     std::unique_ptr<SequencedTaskRunnerHandle> sequenced_task_runner_handle;
