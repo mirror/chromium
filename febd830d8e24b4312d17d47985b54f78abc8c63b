@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c440625e_40a39797",
+        "filename": "components/subresource_filter/content/browser/subframe_navigation_filtering_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-06-05T15:31:36Z",
+      "side": 1,
+      "message": "DCHECK_NE",
+      "revId": "febd830d8e24b4312d17d47985b54f78abc8c63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d714b9_05c192c0",
+        "filename": "components/subresource_filter/content/browser/subframe_navigation_filtering_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-06-05T15:31:36Z",
+      "side": 1,
+      "message": "DCHECK_NE",
+      "revId": "febd830d8e24b4312d17d47985b54f78abc8c63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e945930_93b86173",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_observer_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-06-05T15:31:36Z",
+      "side": 1,
+      "message": "optional nit: I prefer a pointer to a reference here as it\u0027s non-const.",
+      "range": {
+        "startLine": 45,
+        "startChar": 11,
+        "endLine": 45,
+        "endChar": 12
+      },
+      "revId": "febd830d8e24b4312d17d47985b54f78abc8c63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60428efe_c5a8160a",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_observer_test_utils.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-06-05T15:31:36Z",
+      "side": 1,
+      "message": "Add a comment to this class.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 5
+      },
+      "revId": "febd830d8e24b4312d17d47985b54f78abc8c63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7f9fcf4_22446e8a",
+        "filename": "components/subresource_filter/core/common/document_subresource_filter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-06-05T15:31:36Z",
+      "side": 1,
+      "message": "nit: aleady included in associated header",
+      "revId": "febd830d8e24b4312d17d47985b54f78abc8c63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
