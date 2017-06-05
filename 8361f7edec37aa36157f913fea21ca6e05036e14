@@ -22,6 +22,30 @@
       "revId": "8361f7edec37aa36157f913fea21ca6e05036e14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "906ce698_3609af67",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPaintInvalidator.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-05T21:05:49Z",
+      "side": 1,
+      "message": "\u003e Add a unit test for this? I know it\u0027s a simple case.\n\u003e \n\nDone.\n\n\u003e Just to talk out loud, I wondered whether perhaps we should just add this check instead to the StyleWillChange callsite which I would guess is this one:\n\u003e \n\u003e https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/LayoutBoxModelObject.cpp?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d282\n\u003e \n\u003e Since it looks like this should never be the case for the other callsites (famous last words). But having this early-out seems fine too if you prefer.\n\nDone.",
+      "parentUuid": "a2006a50_3432f32a",
+      "range": {
+        "startLine": 210,
+        "startChar": 2,
+        "endLine": 210,
+        "endChar": 26
+      },
+      "revId": "8361f7edec37aa36157f913fea21ca6e05036e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
