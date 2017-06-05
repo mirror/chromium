@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60d13860_db15b1ba",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19706,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-05T19:47:01Z",
+      "side": 1,
+      "message": "You can return a real error message, typically kInvalidArguments or kOutOfBounds. This is a definite client error, so we want to lose the context rather than silently fail.\n\nGoing through this again, I think there\u0027s another 2 security issues:\n- we need to check that the shm has enough space after c.shm_offset to safely cast to an Atomic32* that can be dereferenced. For that matter, we should also check the alignment\n- c.shm_id is dereferenced twice. This can be a security issue because a malicious client could race to change the command buffer shared memory between both lookups, for example making us store a shm_id in the ServiceDiscardableHandle that doesn\u0027t match the Buffer (or any Buffer at all, for that matter). The common pattern is to extract all fields of the command into local variables at the beginning of the function, ensuring we read only once. See any other \"Handle*\" functions in this file. Speaking of which, what is the shm_id used for? If we don\u0027t use it, maybe we can simply remove it? Either way, it is true of c.texture_id as well, dereferenced twice (l.19697 and l.19711).",
+      "revId": "f47bfb8514c9c20c621b88e54472a38036696be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
