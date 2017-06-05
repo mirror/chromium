@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c524ffc7_9a558bbe",
+        "filename": "docs/testing/web_platform_tests.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-05T01:36:41Z",
+      "side": 1,
+      "message": "Nit: Not sure the word \"currently\" helps much. Remove it?",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 9
+      },
+      "revId": "b2e7333d4db03773e7739dc8e5e2f88a493b83d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b15ee4c0_dde22516",
+        "filename": "docs/testing/web_platform_tests.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-05T01:36:41Z",
+      "side": 1,
+      "message": "This is still missing a clear decision point around whether to add test expectations or revert. As sheriff, my priority is 1. if a culprit can be found, revert; 2. otherwise add a test exception. You are asking to reverse that priority, which is fine, but you should say something like \"Because these tests are imported from the Web Platform tests, it is better to have them in the repository (and marked failing) than not, so prefer to add test expectations rather than reverting. However, if a huge number of tests are failing, please revert the CL so we can fix it manually.\"",
+      "revId": "b2e7333d4db03773e7739dc8e5e2f88a493b83d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee17481a_c5df7ef6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-05T01:36:41Z",
+      "side": 1,
+      "message": "s/it may be faster to/please/.\n\nMy original complaint with this message is that \"it may be faster to\" doesn\u0027t give any clear direction to the sheriff (you\u0027re asking me to make a value judgement when I have no context). I think you should just ask the sheriff to add expectations instead of asking them to make a decision.",
+      "range": {
+        "startLine": 413,
+        "startChar": 33,
+        "endLine": 413,
+        "endChar": 52
+      },
+      "revId": "b2e7333d4db03773e7739dc8e5e2f88a493b83d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
