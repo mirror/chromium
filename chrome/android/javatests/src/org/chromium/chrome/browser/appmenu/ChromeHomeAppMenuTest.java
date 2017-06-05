@@ -32,7 +32,7 @@ public class ChromeHomeAppMenuTest extends BottomSheetTestCaseBase {
 
         showAppMenuAndAssertMenuShown();
         AppMenu appMenu = getActivity().getAppMenuHandler().getAppMenu();
-        AppMenuIconRowFooter iconRow = (AppMenuIconRowFooter) appMenu.getPromptView();
+        AppMenuIconRowFooter iconRow = (AppMenuIconRowFooter) appMenu.getFooterView();
 
         assertFalse(iconRow.getForwardButtonForTests().isEnabled());
         assertTrue(iconRow.getBookmarkButtonForTests().isEnabled());
@@ -51,7 +51,7 @@ public class ChromeHomeAppMenuTest extends BottomSheetTestCaseBase {
         });
 
         showAppMenuAndAssertMenuShown();
-        iconRow = (AppMenuIconRowFooter) appMenu.getPromptView();
+        iconRow = (AppMenuIconRowFooter) appMenu.getFooterView();
         assertTrue(iconRow.getForwardButtonForTests().isEnabled());
     }
 
@@ -67,7 +67,7 @@ public class ChromeHomeAppMenuTest extends BottomSheetTestCaseBase {
         showAppMenuAndAssertMenuShown();
         AppMenu appMenu = getActivity().getAppMenuHandler().getAppMenu();
 
-        assertNull(appMenu.getPromptView());
+        assertNull(appMenu.getFooterView());
     }
 
     private void showAppMenuAndAssertMenuShown() {
