@@ -2,12 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/feedback/system_logs/system_logs_fetcher_base.h"
+#include "chrome/browser/feedback/system_logs/system_logs_fetcher.h"
 
 #include <utility>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/memory/ptr_util.h"
 #include "content/public/browser/browser_thread.h"
 
 using content::BrowserThread;
@@ -15,20 +16,24 @@ using content::BrowserThread;
 namespace system_logs {
 
 SystemLogsSource::SystemLogsSource(const std::string& source_name)
-    : source_name_(source_name) {
-}
+    : source_name_(source_name) {}
 
-SystemLogsSource::~SystemLogsSource() {
-}
+SystemLogsSource::~SystemLogsSource() {}
 
-SystemLogsFetcherBase::SystemLogsFetcherBase()
+SystemLogsFetcher::SystemLogsFetcher(bool scrub_data)
     : response_(new SystemLogsResponse),
-      num_pending_requests_(0) {
+      num_pending_requests_(0),
+      scrub_data_(scrub_data) {
+  if (scrub_data)
+    anonymizer_ = base::MakeUnique<feedback::AnonymizerTool>();
 }
 
-SystemLogsFetcherBase::~SystemLogsFetcherBase() {}
+void SystemLogsFetcher::AddSource(std::unique_ptr<SystemLogsSource> source) {
+  data_sources_.push_back(std::move(source));
+  num_pending_requests_++;
+}
 
-void SystemLogsFetcherBase::Fetch(const SysLogsFetcherCallback& callback) {
+void SystemLogsFetcher::Fetch(const SysLogsFetcherCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(callback_.is_null());
   DCHECK(!callback.is_null());
@@ -36,32 +41,33 @@ void SystemLogsFetcherBase::Fetch(const SysLogsFetcherCallback& callback) {
   callback_ = callback;
   for (size_t i = 0; i < data_sources_.size(); ++i) {
     VLOG(1) << "Fetching SystemLogSource: " << data_sources_[i]->source_name();
-    data_sources_[i]->Fetch(base::Bind(&SystemLogsFetcherBase::OnFetched,
+    data_sources_[i]->Fetch(base::Bind(&SystemLogsFetcher::OnFetched,
                                        AsWeakPtr(),
                                        data_sources_[i]->source_name()));
   }
 }
 
-void SystemLogsFetcherBase::OnFetched(const std::string& source_name,
-                                      SystemLogsResponse* response) {
+void SystemLogsFetcher::OnFetched(const std::string& source_name,
+                                  SystemLogsResponse* response) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   VLOG(1) << "Received SystemLogSource: " << source_name;
 
-  Rewrite(source_name, response);
+  if (scrub_data_)
+    Scrub(response);
   AddResponse(source_name, response);
 }
 
-void SystemLogsFetcherBase::Rewrite(const std::string& /* source_name */,
-                                    SystemLogsResponse* /* response */) {
-  // This implementation in the base class is intentionally empty.
+void SystemLogsFetcher::Scrub(SystemLogsResponse* response) {
+  DCHECK(anonymizer_.get());
+  for (auto& element : *response)
+    element.second = anonymizer_->Anonymize(element.second);
 }
 
-void SystemLogsFetcherBase::AddResponse(const std::string& source_name,
-                                        SystemLogsResponse* response) {
+void SystemLogsFetcher::AddResponse(const std::string& source_name,
+                                    SystemLogsResponse* response) {
   for (SystemLogsResponse::const_iterator it = response->begin();
-       it != response->end();
-       ++it) {
+       it != response->end(); ++it) {
     // It is an error to insert an element with a pre-existing key.
     bool ok = response_->insert(*it).second;
     DCHECK(ok) << "Duplicate key found: " << it->first;
