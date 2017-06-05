@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "794f5b61_cdab30c2",
+        "filename": "components/offline_pages/core/prefetch/suggested_articles_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-05T19:01:48Z",
+      "side": 1,
+      "message": "The comment is out of date now and became unclear for the reader...",
+      "revId": "69018d1a8712c517b82beacd02056468710861d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df26f56_8ad389b3",
+        "filename": "components/offline_pages/core/prefetch/suggested_articles_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-05T19:01:48Z",
+      "side": 1,
+      "message": "I don\u0027t have strong feeling here, but what prompted to change form service to dispatcher pointer? On one hand, it\u0027s better to depend on smaller things, however this goes a bit off the pattern, and raises question - for example, should Dispatcher has a pointer to Store etc. \n\nI\u0027d slightly lean toward keeping the pattern of pulling all the parts through accessors on PrefetchService, and not cache them, so there is always clear where they come from. WDYT?",
+      "revId": "69018d1a8712c517b82beacd02056468710861d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
