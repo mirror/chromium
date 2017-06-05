@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.os.HandlerThread;
 
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.annotations.CalledByNative;
+import org.chromium.base.annotations.JNINamespace;
 import org.chromium.media.mojom.AndroidOverlay;
 import org.chromium.media.mojom.AndroidOverlayClient;
 import org.chromium.media.mojom.AndroidOverlayConfig;
@@ -21,8 +23,10 @@ import org.chromium.services.service_manager.InterfaceFactory;
  * Default impl of AndroidOverlayProvider.  Creates AndroidOverlayImpls.  We're a singleton, in the
  * sense that all provider clients talk to the same instance in the browser.
  */
+@JNINamespace("content")
 public class AndroidOverlayProviderImpl implements AndroidOverlayProvider {
     private static final String TAG = "AndroidOverlayProvider";
+    private static AndroidOverlayProviderImpl sImpl;
 
     // Maximum number of concurrent overlays that we allow.
     private static final int MAX_OVERLAYS = 1;
@@ -102,17 +106,28 @@ public class AndroidOverlayProviderImpl implements AndroidOverlayProvider {
     @Override
     public void onConnectionError(MojoException e) {}
 
+    // Are overlays supported by the embedder?
+    @CalledByNative
+    private boolean areOverlaysSupported() {
+        return true;
+    }
+
+    // Return the singleton provider instance.
+    @CalledByNative
+    private static AndroidOverlayProviderImpl createImpl() {
+        if (sImpl == null) sImpl = new AndroidOverlayProviderImpl();
+        return sImpl;
+    }
+
     /**
      * Mojo factory.
      */
     public static class Factory implements InterfaceFactory<AndroidOverlayProvider> {
-        private static AndroidOverlayProviderImpl sImpl;
         public Factory(Context context) {}
 
         @Override
         public AndroidOverlayProvider createImpl() {
-            if (sImpl == null) sImpl = new AndroidOverlayProviderImpl();
-            return sImpl;
+            return AndroidOverlayProviderImpl.createImpl();
         }
     }
 }
