@@ -16,6 +16,24 @@
       "revId": "4c66e34e830a8c51a26f284cdd7742e8dfccf1ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1392569f_619a1c5f",
+        "filename": "media/capture/video/mac/video_capture_device_avfoundation_mac.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-05T18:05:47Z",
+      "side": 1,
+      "message": "Sorry, I misinterpreted you suggestions from PatchSet 2 and thought you wanted me to literally return an NSString*.\n\nChanged back to using an output parameter, this time of type NSString**.",
+      "parentUuid": "a3ff9ad6_6bae771f",
+      "revId": "4c66e34e830a8c51a26f284cdd7742e8dfccf1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
