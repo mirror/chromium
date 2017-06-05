@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2721ec01_aad3740e",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-05T00:17:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b0fd2939_48802e96",
+      "range": {
+        "startLine": 1,
+        "startChar": 40,
+        "endLine": 1,
+        "endChar": 43
+      },
+      "revId": "cf5aeda4cdcb45e730e795c272fe0063ee46e96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62f339fb_937cc25c",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
         "patchSetId": 14
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Done, but I changed it to an EXPECT_NE() instead because you can\u0027t have ASSERTs inside non-test fixtures. Is that OK?",
       "parentUuid": "62f339fb_937cc25c",
+      "range": {
+        "startLine": 39,
+        "startChar": 1,
+        "endLine": 39,
+        "endChar": 0
+      },
+      "revId": "cf5aeda4cdcb45e730e795c272fe0063ee46e96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b7449c_f1867877",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-05T00:17:01Z",
+      "side": 1,
+      "message": "yup EXPECT is fine, but those lines may have been lost in the patchset wrangling?\n\n(note ASSERT is just `EXPECT(..) || return;` so it only works in methods that return void).",
+      "parentUuid": "ebf2e640_5129afd9",
       "range": {
         "startLine": 39,
         "startChar": 1,
