@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "28fedbcb_ca8c8731",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-06-05T18:30:52Z",
+      "side": 1,
+      "message": "additional",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 15
+      },
+      "revId": "a960638f9d5497711b33cb285bfb74823336994c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8790bb3_a42764e6",
         "filename": "docs/testing/layout_tests.md",
         "patchSetId": 4
@@ -53,6 +76,29 @@
     },
     {
       "key": {
+        "uuid": "8cbf3446_ad5cb598",
+        "filename": "docs/testing/layout_tests.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-06-05T18:30:52Z",
+      "side": 1,
+      "message": "flag-specific -\u003e FlagExpectations\n\nright?",
+      "range": {
+        "startLine": 467,
+        "startChar": 13,
+        "endLine": 467,
+        "endChar": 26
+      },
+      "revId": "a960638f9d5497711b33cb285bfb74823336994c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ede22e7c_e9a41e06",
         "filename": "docs/testing/layout_tests.md",
         "patchSetId": 4
@@ -64,6 +110,29 @@
       "writtenOn": "2017-06-05T18:22:50Z",
       "side": 1,
       "message": "\"expectation files\" may be ambiguous because it could refer to TestExpectations files, it it might be clearer to say \"baselines\" or maybe \"-expected files\".",
+      "revId": "a960638f9d5497711b33cb285bfb74823336994c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37cdbca8_60d866dd",
+        "filename": "docs/testing/layout_tests.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-06-05T18:30:52Z",
+      "side": 1,
+      "message": "This additional documentation is helpful and worth including. However it also seems like it is and will remain very rare (has anyone set up a special try bot for FlagExpectation use other than us for SPv2)?\n\nWould be interested to hear how skobes@ has approached this issue for RLS as we might want to add some description of what his workflow has been, and whether he thinks he would use the new logic as added in this change.",
+      "range": {
+        "startLine": 473,
+        "startChar": 0,
+        "endLine": 473,
+        "endChar": 21
+      },
       "revId": "a960638f9d5497711b33cb285bfb74823336994c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
