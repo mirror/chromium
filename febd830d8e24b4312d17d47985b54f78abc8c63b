@@ -198,6 +198,24 @@
       "revId": "febd830d8e24b4312d17d47985b54f78abc8c63b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf6b536_28ec8608",
+        "filename": "components/subresource_filter/core/common/document_subresource_filter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-05T16:32:18Z",
+      "side": 1,
+      "message": "As discussed, IWYU says foo_test.cc can use headers in foo.h so Done",
+      "parentUuid": "767d345d_e7ac0235",
+      "revId": "febd830d8e24b4312d17d47985b54f78abc8c63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
