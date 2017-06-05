@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e5c151af_21b6fc76",
+        "filename": "third_party/WebKit/Source/core/offscreencanvas/OffscreenCanvas.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-05T20:20:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7e69e215_657706a2",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 63
+      },
+      "revId": "c8de50bce49e995a7f8ca5d0dd29ef7115738fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b340fd8_e5f5a268",
         "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-05T18:38:13Z",
       "side": 1,
       "message": "I don\u0027t think I get the full picture here. I thought it should be || instead of \u0026\u0026. Let\u0027s use the page visibility hidden as an example: say that a page is put in background, then we suspend the animation. Few seconds later, user put that page up in front, would that trigger needs_begin_frame_\u003dtrue?",
+      "range": {
+        "startLine": 454,
+        "startChar": 4,
+        "endLine": 454,
+        "endChar": 78
+      },
+      "revId": "c8de50bce49e995a7f8ca5d0dd29ef7115738fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "883d2d6f_200535fa",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-05T20:20:32Z",
+      "side": 1,
+      "message": "Here is what the things mean\nneeds_begin_frame_: When this is true, it means commit was called and it returned a promise a that is still in the unresolved state. Therefore, the dispatcher is listening for a begin frame signal.  This flag being set to true indicates that an animation is in progress.\n\nsuspended_animation_: Is true if the page is currently hidden, in which case we do not want to animation loops to run.\n\nSo we want to receive the begin frame signal (which triggers an animation frame) only when both of these conditions are met: 1) an animation frame is requested (implicitly by the promise returned by commit) and 2) animations are not suspended.",
+      "parentUuid": "0b340fd8_e5f5a268",
       "range": {
         "startLine": 454,
         "startChar": 4,
