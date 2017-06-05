@@ -648,7 +648,7 @@ void XMLHttpRequest::open(const AtomicString& method,
     if (!GetDocument()->ProcessingBeforeUnload())
       Deprecation::CountDeprecation(
           GetExecutionContext(),
-          UseCounter::kXMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload);
+          WebFeature::kXMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload);
   }
 
   method_ = FetchUtils::NormalizeMethod(method);
@@ -686,7 +686,7 @@ bool XMLHttpRequest::InitSend(ExceptionState& exception_state) {
     v8::Isolate* isolate = v8::Isolate::GetCurrent();
     if (isolate && v8::MicrotasksScope::IsRunningMicrotasks(isolate)) {
       UseCounter::Count(GetExecutionContext(),
-                        UseCounter::kDuring_Microtask_SyncXHR);
+                        WebFeature::kDuring_Microtask_SyncXHR);
     }
   }
 
@@ -978,7 +978,7 @@ void XMLHttpRequest::CreateRequest(PassRefPtr<EncodedFormData> http_body,
 
   if (!same_origin_request_ && include_credentials)
     UseCounter::Count(&execution_context,
-                      UseCounter::kXMLHttpRequestCrossOriginWithCredentials);
+                      WebFeature::kXMLHttpRequestCrossOriginWithCredentials);
 
   // We also remember whether upload events should be allowed for this request
   // in case the upload listeners are added after the request is started.
@@ -1049,7 +1049,7 @@ void XMLHttpRequest::CreateRequest(PassRefPtr<EncodedFormData> http_body,
 
   if (async_) {
     UseCounter::Count(&execution_context,
-                      UseCounter::kXMLHttpRequestAsynchronous);
+                      WebFeature::kXMLHttpRequestAsynchronous);
     if (upload_)
       request.SetReportUploadProgress(true);
 
@@ -1063,7 +1063,7 @@ void XMLHttpRequest::CreateRequest(PassRefPtr<EncodedFormData> http_body,
   }
 
   // Use count for XHR synchronous requests.
-  UseCounter::Count(&execution_context, UseCounter::kXMLHttpRequestSynchronous);
+  UseCounter::Count(&execution_context, WebFeature::kXMLHttpRequestSynchronous);
   ThreadableLoader::LoadResourceSynchronously(execution_context, request, *this,
                                               options, resource_loader_options);
 
