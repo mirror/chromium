@@ -27,7 +27,7 @@ using media::AudioBus;
 using media::AudioParameters;
 
 namespace content {
-
+/*
 namespace {
 
 // Number of audio buffers in the faked ring buffer.
@@ -364,5 +364,5 @@ TEST_F(AudioInputSyncWriterTest, MultipleFillAndEmptyRingBufferAndPartOfFifo) {
   socket_->Read(3);
   EXPECT_TRUE(TestSocketAndFifoExpectations(0, 3 * sizeof(uint32_t), 0));
 }
-
+*/
 }  // namespace content

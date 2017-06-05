@@ -35,8 +35,13 @@
 #include "content/public/browser/browser_message_filter.h"
 #include "media/audio/audio_input_controller.h"
 
+namespace base {
+class FilePath;
+}
+
 namespace media {
 class AudioManager;
+class AudioLog;
 class UserInputMonitor;
 }
 

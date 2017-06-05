@@ -9,7 +9,6 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/files/file.h"
-#include "base/memory/ref_counted.h"
 #include "base/memory/shared_memory.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/numerics/safe_math.h"
@@ -64,11 +63,6 @@ struct AudioInputRendererHost::AudioEntry {
   // The audio input stream ID in the RenderFrame.
   int stream_id;
 
-  // Shared memory for transmission of the audio data. It has
-  // |shared_memory_segment_count| equal lengthed segments.
-  base::SharedMemory shared_memory;
-  int shared_memory_segment_count;
-
   // The synchronous writer to be used by the controller. We have the
   // ownership of the writer.
   std::unique_ptr<AudioInputSyncWriter> writer;
@@ -82,7 +76,6 @@ struct AudioInputRendererHost::AudioEntry {
 
 AudioInputRendererHost::AudioEntry::AudioEntry()
     : stream_id(0),
-      shared_memory_segment_count(0),
       pending_close(false),
       has_keyboard_mic(false) {
 }
@@ -177,7 +170,7 @@ void AudioInputRendererHost::DoCompleteCreation(
   // Once the audio stream is created then complete the creation process by
   // mapping shared memory and sharing with the renderer process.
   base::SharedMemoryHandle foreign_memory_handle =
-      entry->shared_memory.handle().Duplicate();
+      entry->writer->shared_memory()->handle().Duplicate();
   if (!foreign_memory_handle.IsValid()) {
     // If we failed to map and share the shared memory then close the audio
     // stream and send an error message.
@@ -187,11 +180,16 @@ void AudioInputRendererHost::DoCompleteCreation(
 
   AudioInputSyncWriter* writer = entry->writer.get();
 
-  base::SyncSocket::TransitDescriptor socket_transit_descriptor;
+  base::CancelableSyncSocket::TransitDescriptor socket_transit_descriptor;
+
+  std::unique_ptr<base::CancelableSyncSocket> foreign_socket =
+      writer->TakeForeignSocket();
 
   // If we failed to prepare the sync socket for the renderer then we fail
   // the construction of audio input stream.
-  if (!writer->PrepareForeignSocket(PeerHandle(), &socket_transit_descriptor)) {
+  if (!foreign_socket->PrepareTransitDescriptor(PeerHandle(),
+                                                &socket_transit_descriptor)) {
+    foreign_memory_handle.Close();
     DeleteEntryOnError(entry, SYNC_SOCKET_ERROR);
     return;
   }
@@ -202,8 +200,8 @@ void AudioInputRendererHost::DoCompleteCreation(
 
   Send(new AudioInputMsg_NotifyStreamCreated(
       entry->stream_id, foreign_memory_handle, socket_transit_descriptor,
-      entry->shared_memory.requested_size(),
-      entry->shared_memory_segment_count));
+      writer->shared_memory()->requested_size(),
+      writer->shared_memory_segment_count()));
 }
 
 void AudioInputRendererHost::DoHandleError(
@@ -310,38 +308,17 @@ void AudioInputRendererHost::DoCreateStream(
       << ": device_name=" << device_name;
 
   // Create a new AudioEntry structure.
-  std::unique_ptr<AudioEntry> entry(new AudioEntry());
+  std::unique_ptr<AudioEntry> entry = base::MakeUnique<AudioEntry>();
 
-  const uint32_t segment_size =
-      (sizeof(media::AudioInputBufferParameters) +
-       media::AudioBus::CalculateMemorySize(audio_params));
-  entry->shared_memory_segment_count = config.shared_memory_count;
+  entry->writer =
+      AudioInputSyncWriter::Create(config.shared_memory_count, audio_params);
 
-  // Create the shared memory and share it with the renderer process
-  // using a new SyncWriter object.
-  base::CheckedNumeric<uint32_t> size = segment_size;
-  size *= entry->shared_memory_segment_count;
-  if (!size.IsValid() ||
-      !entry->shared_memory.CreateAndMapAnonymous(size.ValueOrDie())) {
-    // If creation of shared memory failed then send an error message.
-    SendErrorMessage(stream_id, SHARED_MEMORY_CREATE_FAILED);
-    MaybeUnregisterKeyboardMicStream(config);
-    return;
-  }
-
-  std::unique_ptr<AudioInputSyncWriter> writer(new AudioInputSyncWriter(
-      entry->shared_memory.memory(), entry->shared_memory.requested_size(),
-      entry->shared_memory_segment_count, audio_params));
-
-  if (!writer->Init()) {
+  if (!entry->writer) {
     SendErrorMessage(stream_id, SYNC_WRITER_INIT_FAILED);
     MaybeUnregisterKeyboardMicStream(config);
     return;
   }
 
-  // If we have successfully created the SyncWriter then assign it to the
-  // entry and construct an AudioInputController.
-  entry->writer.reset(writer.release());
   if (WebContentsMediaCaptureId::Parse(device_id, nullptr)) {
     // For MEDIA_DESKTOP_AUDIO_CAPTURE, the source is selected from picker
     // window, we do not mute the source audio.
