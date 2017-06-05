@@ -248,6 +248,24 @@
       "revId": "23166c4f3363b9cce860885cd69910fe19cbd4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1547162_ae2a4836",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1449,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-05T23:35:31Z",
+      "side": 1,
+      "message": "You\u0027re right. A V8 isolate is eagerly initialized in blink::Initialize(). (On the other hand, a V8 context is lazily initialized when the window object becomes really necessary.)\n\nHowever, then why do we need the isolate check in ThreadState::CollectGarbage? Does it mean that someone is calling ThreadState::CollectGarbage before calling blink::Initialize()?",
+      "parentUuid": "d355e03a_e5459719",
+      "revId": "23166c4f3363b9cce860885cd69910fe19cbd4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
