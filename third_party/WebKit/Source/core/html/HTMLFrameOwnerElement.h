@@ -69,15 +69,15 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   FrameOrPlugin* ReleaseWidget();
   FrameOrPlugin* OwnedWidget() const { return widget_; }
 
-  class UpdateSuspendScope {
+  class PluginDisposeSuspendScope {
     STACK_ALLOCATED();
 
    public:
-    UpdateSuspendScope();
-    ~UpdateSuspendScope();
+    PluginDisposeSuspendScope();
+    ~PluginDisposeSuspendScope();
 
    private:
-    void PerformDeferredWidgetTreeOperations();
+    void PerformDeferredPluginDispose();
   };
 
   // FrameOwner overrides:

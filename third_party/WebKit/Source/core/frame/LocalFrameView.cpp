@@ -382,6 +382,11 @@ void LocalFrameView::SetupRenderThrottling() {
 void LocalFrameView::Dispose() {
   CHECK(!IsInPerformLayout());
 
+  // Remove ScrollableArea if still attached.
+  // Dispose can be called from Document::Shutdown without calling Detach.
+  UpdateParentScrollableAreaSet();
+  is_attached_ = false;
+
   if (ScrollAnimatorBase* scroll_animator = ExistingScrollAnimator())
     scroll_animator->CancelAnimation();
   CancelProgrammaticScrollAnimation();
@@ -3877,8 +3882,7 @@ void LocalFrameView::Attach() {
 
 void LocalFrameView::Detach() {
   DCHECK(is_attached_);
-  if (!RuntimeEnabledFeatures::rootLayerScrollingEnabled())
-    ParentFrameView()->RemoveScrollableArea(this);
+  UpdateParentScrollableAreaSet();
   SetParentVisible(false);
   is_attached_ = false;
 }
