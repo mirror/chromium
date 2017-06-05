@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "6ef87786_d9aba320",
+        "filename": "components/subresource_filter/content/browser/subframe_navigation_filtering_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-05T18:10:14Z",
+      "side": 1,
+      "message": "Wow I didn\u0027t know that existed... Thx for pointing it out.",
+      "parentUuid": "992bf659_b731b4b1",
+      "revId": "febd830d8e24b4312d17d47985b54f78abc8c63b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01d714b9_05c192c0",
         "filename": "components/subresource_filter/content/browser/subframe_navigation_filtering_throttle.cc",
         "patchSetId": 4
