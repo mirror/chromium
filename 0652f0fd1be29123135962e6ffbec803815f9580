@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a033b005_a9461a2e",
+        "filename": "components/viz/display_compositor/display_output_surface_ozone.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-06-05T14:46:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea10b49f_78c0b5b5",
+      "revId": "0652f0fd1be29123135962e6ffbec803815f9580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b473ea9_6800b804",
         "filename": "components/viz/display_compositor/in_process_display_provider.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-02T20:17:48Z",
       "side": 1,
       "message": "Hmm, not sure about this name. DisplayProvider will always be in the same process MojoFrameSinkManager. It\u0027s just this is used in the viz process, so maybe VizDisplayProvider vs BrowserDisplayProvider? Idk.",
+      "revId": "0652f0fd1be29123135962e6ffbec803815f9580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e0f8798_2c1ca7f7",
+        "filename": "components/viz/display_compositor/in_process_display_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-06-05T14:46:32Z",
+      "side": 1,
+      "message": "Renamed to GpuDisplayProvider for now. We can rename all Gpu* things later if we decide that makes more sense at some point in the future.",
+      "parentUuid": "1b473ea9_6800b804",
       "revId": "0652f0fd1be29123135962e6ffbec803815f9580",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
