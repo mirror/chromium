@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89905aa8_27a8f972",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaFragmentURIParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-05T12:40:33Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be `!utf8_name.IsEmpty()` instead of `name`?\n\nAlso, maybe move `valid_utf8` out of the condition. Something like:\n```\nCString utf8_name;\nif (!name.IsEmpty())\n  utf8_name \u003d name.Utf8(kStrictUTF8Conversion);\nvalid_utf8 \u003d !utf8_name.IsEmpty();\n```",
+      "revId": "8008e42ee818499ab1f44fbf67ac8001e5d72724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01b3ee6a_253e12cb",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaFragmentURIParser.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-05T12:40:33Z",
+      "side": 1,
+      "message": "Same as above: use `utf8_value`?",
+      "revId": "8008e42ee818499ab1f44fbf67ac8001e5d72724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
