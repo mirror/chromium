@@ -51,6 +51,7 @@ const char kFallbackTimeZoneId[] = "America/Los_Angeles";
 // identity is likely to cut down the number to < 100. Until we
 // come up with a better list, we hard-code the following list. It came from
 // from Android initially, but more entries have been added.
+// Note that the list is sorted in terms of timezone offset from UTC.
 static const char* kTimeZones[] = {
     "Pacific/Midway",
     "Pacific/Honolulu",
