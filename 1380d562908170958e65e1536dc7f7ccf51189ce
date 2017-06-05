@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a1374876_61ee2d91",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-05T21:25:06Z",
+      "side": 1,
+      "message": "Hmm is this really a bug? The feature expresses that the permission is available to whitelisted (presumably non-kiosk.autolaunched) apps. There just happen to be no whitelisted apps at the moment, discounting the apitest itself which is manually whitelisted at runtime. Adding a new \"whitelist_only\" or somesuch feature seems roughly equivalent to adding an empty whitelist? Then again I might just not understand what you\u0027re asking for :)",
+      "parentUuid": "f1eb63f3_6c034464",
+      "revId": "1380d562908170958e65e1536dc7f7ccf51189ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3230320d_175a7746",
         "filename": "extensions/common/api/_permission_features.json",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-05T21:08:27Z",
       "side": 1,
       "message": "This exposes these bindings quite a bit, but I don\u0027t see a bug, doc, etc for context.  Can you provide a bug link with the reasoning for exposing these previously-private APIs publicly?",
+      "revId": "1380d562908170958e65e1536dc7f7ccf51189ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35dba87e_00b96b05",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-05T21:25:06Z",
+      "side": 1,
+      "message": "The context for exposing Mojo APIs is as the CL description implies, a general-purpose alternative to exposing feature-specific private APIs in the future.\n\nNote that my decision to include kiosk.autolaunched here by default is based only on my limited understanding that in general we treat autolaunched kiosk apps with a rather lax security policy and there wouldn\u0027t be a compelling reason to forbid the permission in such cases.\n\nI don\u0027t actually know if we want to do this, it\u0027s just a proof of concept.",
+      "parentUuid": "3230320d_175a7746",
       "revId": "1380d562908170958e65e1536dc7f7ccf51189ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "1380d562908170958e65e1536dc7f7ccf51189ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43184f0_bebb0f65",
+        "filename": "extensions/test/data/api_test/mojo_private/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-05T21:25:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b52520b_8d06f582",
+      "revId": "1380d562908170958e65e1536dc7f7ccf51189ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
