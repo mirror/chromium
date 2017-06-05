@@ -16,6 +16,24 @@
       "revId": "037dd323e339c6c93fadee26e03e63c645b9cbaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c15d3175_603519ad",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/platform/linux/fast/backgrounds/animated-svg-as-mask-expected.png",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-05T17:08:33Z",
+      "side": 1,
+      "message": "I wonder why they are subpixel differences. Any idea why?\n\nSorry to nag so much about this, but I think it\u0027s important to understand and avoid extra baselines.",
+      "parentUuid": "98c26434_249721d6",
+      "revId": "037dd323e339c6c93fadee26e03e63c645b9cbaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
