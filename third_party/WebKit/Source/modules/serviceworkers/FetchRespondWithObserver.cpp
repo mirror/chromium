@@ -16,6 +16,7 @@
 #include "modules/fetch/BytesConsumer.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScopeClient.h"
 #include "modules/serviceworkers/WaitUntilObserver.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerResponse.h"
 
 namespace blink {
@@ -231,12 +232,14 @@ void FetchRespondWithObserver::OnResponseFulfilled(const ScriptValue& value) {
     RefPtr<BlobDataHandle> blob_data_handle = buffer->DrainAsBlobDataHandle(
         BytesConsumer::BlobSizePolicy::kAllowBlobWithInvalidSize);
     if (blob_data_handle) {
+      TRACE_EVENT1("ServiceWorker", __func__, "type", "blob");
       // Handle the blob response.
       web_response.SetBlobDataHandle(blob_data_handle);
       ServiceWorkerGlobalScopeClient::From(GetExecutionContext())
           ->RespondToFetchEvent(event_id_, web_response, event_dispatch_time_);
       return;
     }
+    TRACE_EVENT1("ServiceWorker", __func__, "type", "stream");
     // Handle the stream response.
     mojo::DataPipe data_pipe;
     DCHECK(data_pipe.producer_handle.is_valid());
@@ -255,6 +258,7 @@ void FetchRespondWithObserver::OnResponseFulfilled(const ScriptValue& value) {
                          new FetchLoaderClient(std::move(body_stream_handle)));
     return;
   }
+  TRACE_EVENT1("ServiceWorker", __func__, "type", "no body");
   ServiceWorkerGlobalScopeClient::From(GetExecutionContext())
       ->RespondToFetchEvent(event_id_, web_response, event_dispatch_time_);
 }

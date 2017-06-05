@@ -15,6 +15,7 @@
 #include "modules/serviceworkers/ServiceWorkerGlobalScope.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8PrivateProperty.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/ResourceTimingInfo.h"
 #include "platform/network/NetworkUtils.h"
 #include "platform/wtf/PtrUtil.h"
@@ -113,6 +114,7 @@ void FetchEvent::OnNavigationPreloadResponse(
     ScriptState* script_state,
     std::unique_ptr<WebURLResponse> response,
     std::unique_ptr<WebDataConsumerHandle> data_consume_handle) {
+  TRACE_EVENT0("ServiceWorker", "OnNavigationPreloadResponse");
   if (!script_state->ContextIsValid())
     return;
   DCHECK(preload_response_property_);
@@ -162,6 +164,7 @@ void FetchEvent::OnNavigationPreloadComplete(
     int64_t encoded_data_length,
     int64_t encoded_body_length,
     int64_t decoded_body_length) {
+  TRACE_EVENT0("ServiceWorker", "OnNavigationPreloadComplete");
   DCHECK(preload_response_);
   std::unique_ptr<WebURLResponse> response = std::move(preload_response_);
   ResourceResponse resource_response = response->ToResourceResponse();

@@ -7,6 +7,7 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "platform/WebTaskRunner.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/wtf/Functional.h"
 #include "public/platform/WebTraceLocation.h"
 
@@ -109,6 +110,8 @@ void BytesConsumerForDataConsumerHandle::DidGetReadable() {
   DCHECK(state_ == InternalState::kReadable ||
          state_ == InternalState::kWaiting);
   if (is_in_two_phase_read_) {
+    TRACE_EVENT1("ServiceWorker", __PRETTY_FUNCTION__, "is_in_two_phase_read_",
+                 (is_in_two_phase_read_ ? "true" : "false"));
     has_pending_notification_ = true;
     return;
   }
@@ -117,6 +120,9 @@ void BytesConsumerForDataConsumerHandle::DidGetReadable() {
   WebDataConsumerHandle::Result result =
       reader_->Read(nullptr, 0, WebDataConsumerHandle::kFlagNone, &read_size);
   BytesConsumer::Client* client = client_;
+  TRACE_EVENT2("ServiceWorker", __PRETTY_FUNCTION__, "result",
+               static_cast<int>(result), "Is client null?",
+               (client ? "non null" : "null"));
   switch (result) {
     case WebDataConsumerHandle::kOk:
     case WebDataConsumerHandle::kShouldWait:

@@ -12,6 +12,7 @@
 #include "modules/fetch/MultipartParser.h"
 #include "mojo/public/cpp/system/simple_watcher.h"
 #include "platform/HTTPNames.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/network/ParsedContentDisposition.h"
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/PtrUtil.h"
@@ -61,6 +62,7 @@ class FetchDataLoaderAsBlobHandle final : public FetchDataLoader,
   void Cancel() override { consumer_->Cancel(); }
 
   void OnStateChange() override {
+    TRACE_EVENT0("ServiceWorker", __PRETTY_FUNCTION__);
     while (true) {
       const char* buffer;
       size_t available;
@@ -124,6 +126,7 @@ class FetchDataLoaderAsArrayBuffer final : public FetchDataLoader,
   void Cancel() override { consumer_->Cancel(); }
 
   void OnStateChange() override {
+    TRACE_EVENT0("ServiceWorker", __PRETTY_FUNCTION__);
     while (true) {
       const char* buffer;
       size_t available;
@@ -191,6 +194,7 @@ class FetchDataLoaderAsFailure final : public FetchDataLoader,
   }
 
   void OnStateChange() override {
+    TRACE_EVENT0("ServiceWorker", __PRETTY_FUNCTION__);
     while (true) {
       const char* buffer;
       size_t available;
@@ -258,6 +262,7 @@ class FetchDataLoaderAsFormData final : public FetchDataLoader,
   }
 
   void OnStateChange() override {
+    TRACE_EVENT0("ServiceWorker", __PRETTY_FUNCTION__);
     while (true) {
       const char* buffer;
       size_t available;
@@ -416,6 +421,7 @@ class FetchDataLoaderAsString final : public FetchDataLoader,
   }
 
   void OnStateChange() override {
+    TRACE_EVENT0("ServiceWorker", __PRETTY_FUNCTION__);
     while (true) {
       const char* buffer;
       size_t available;
@@ -491,6 +497,7 @@ class FetchDataLoaderAsDataPipe final : public FetchDataLoader,
 
   // Implements BytesConsumer::Client.
   void OnStateChange() override {
+    TRACE_EVENT0("ServiceWorker", __PRETTY_FUNCTION__);
     bool should_wait = false;
     while (!should_wait) {
       const char* buffer;

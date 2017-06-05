@@ -18,6 +18,7 @@
 #include "platform/bindings/V8PrivateProperty.h"
 #include "platform/bindings/V8ThrowException.h"
 #include "platform/blob/BlobData.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/network/EncodedFormData.h"
 
 namespace blink {
@@ -208,6 +209,7 @@ ScriptPromise BodyStreamBuffer::pull(ScriptState* script_state) {
   DCHECK_EQ(script_state, script_state_.Get());
   if (stream_needs_more_)
     return ScriptPromise::CastUndefined(script_state);
+  TRACE_EVENT0("ServiceWorker", __PRETTY_FUNCTION__);
   stream_needs_more_ = true;
   ProcessData();
   return ScriptPromise::CastUndefined(script_state);
@@ -222,10 +224,16 @@ ScriptPromise BodyStreamBuffer::Cancel(ScriptState* script_state,
 
 void BodyStreamBuffer::OnStateChange() {
   if (!consumer_ || !GetExecutionContext() ||
-      GetExecutionContext()->IsContextDestroyed())
+      GetExecutionContext()->IsContextDestroyed()) {
+    TRACE_EVENT1("ServiceWorker", __PRETTY_FUNCTION__, "state",
+                 "execution context is lost");
     return;
+  }
 
-  switch (consumer_->GetPublicState()) {
+  auto state = consumer_->GetPublicState();
+  TRACE_EVENT1("ServiceWorker", __PRETTY_FUNCTION__, "state",
+               static_cast<int>(state));
+  switch (state) {
     case BytesConsumer::PublicState::kReadableOrWaiting:
       break;
     case BytesConsumer::PublicState::kClosed:
@@ -311,6 +319,8 @@ void BodyStreamBuffer::CancelConsumer() {
 
 void BodyStreamBuffer::ProcessData() {
   DCHECK(consumer_);
+  TRACE_EVENT1("ServiceWorker", __PRETTY_FUNCTION__, "stream_needs_more_",
+               (stream_needs_more_ ? "yes" : "no"));
   while (stream_needs_more_) {
     const char* buffer = nullptr;
     size_t available = 0;

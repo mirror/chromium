@@ -11,6 +11,7 @@
 #include "modules/fetch/BlobBytesConsumer.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/blob/BlobData.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/RefPtr.h"
 #include "v8/include/v8.h"
@@ -24,7 +25,9 @@ class NoopClient final : public GarbageCollectedFinalized<NoopClient>,
   USING_GARBAGE_COLLECTED_MIXIN(NoopClient);
 
  public:
-  void OnStateChange() override {}
+  void OnStateChange() override {
+    TRACE_EVENT0("ServiceWorker", __PRETTY_FUNCTION__);
+  }
 };
 
 class TeeHelper final : public GarbageCollectedFinalized<TeeHelper>,
@@ -43,6 +46,7 @@ class TeeHelper final : public GarbageCollectedFinalized<TeeHelper>,
   }
 
   void OnStateChange() override {
+    TRACE_EVENT0("ServiceWorker", __PRETTY_FUNCTION__);
     bool destination1_was_empty = destination1_->IsEmpty();
     bool destination2_was_empty = destination2_->IsEmpty();
     bool has_enqueued = false;

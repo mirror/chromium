@@ -9,6 +9,7 @@
 #include "platform/blob/BlobData.h"
 #include "platform/blob/BlobRegistry.h"
 #include "platform/blob/BlobURL.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/FetchInitiatorTypeNames.h"
 #include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceRequest.h"
@@ -183,6 +184,7 @@ void BlobBytesConsumer::ContextDestroyed(ExecutionContext*) {
 }
 
 void BlobBytesConsumer::OnStateChange() {
+  TRACE_EVENT0("ServiceWorker", __PRETTY_FUNCTION__);
   if (state_ != PublicState::kReadableOrWaiting)
     return;
   DCHECK(body_);
