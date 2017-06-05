@@ -57,6 +57,7 @@ class PLATFORM_EXPORT WorkerSchedulerImpl : public WorkerScheduler,
   void IsNotQuiescent() override {}
   void OnIdlePeriodStarted() override {}
   void OnIdlePeriodEnded() override {}
+  void HasPendingTasksChanged(bool new_state) override {}
 
  private:
   void MaybeStartLongIdlePeriod();

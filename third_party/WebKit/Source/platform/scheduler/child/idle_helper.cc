@@ -288,6 +288,9 @@ void IdleHelper::OnIdleTaskPosted() {
                "OnIdleTaskPosted");
   if (is_shutdown_)
     return;
+
+  delegate_->HasPendingTasksChanged(true);
+
   if (idle_task_runner_->RunsTasksInCurrentSequence()) {
     OnIdleTaskPostedOnMainThread();
   } else {
@@ -324,6 +327,7 @@ void IdleHelper::DidProcessIdleTask() {
   if (IsInLongIdlePeriod(state_.idle_period_state())) {
     UpdateLongIdlePeriodStateAfterIdleTask();
   }
+  delegate_->HasPendingTasksChanged(idle_queue_->GetNumberOfPendingTasks() > 0);
 }
 
 base::TimeTicks IdleHelper::NowTicks() {

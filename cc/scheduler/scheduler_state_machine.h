@@ -264,6 +264,8 @@ class CC_EXPORT SchedulerStateMachine {
 
   void SetNeedsImplSideInvalidation();
 
+  void SetMainThreadWantsBeginMainFrameNotExpectedMessages(bool new_state);
+
   bool has_pending_tree() const { return has_pending_tree_; }
   bool active_tree_needs_first_draw() const {
     return active_tree_needs_first_draw_;
@@ -406,6 +408,8 @@ class CC_EXPORT SchedulerStateMachine {
 
   bool previous_pending_tree_was_impl_side_ = false;
   bool current_pending_tree_is_impl_side_ = false;
+
+  bool wants_begin_main_frame_not_expected_ = false;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SchedulerStateMachine);

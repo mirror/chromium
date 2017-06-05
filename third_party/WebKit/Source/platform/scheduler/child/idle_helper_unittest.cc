@@ -174,6 +174,7 @@ class IdleHelperForTest : public IdleHelper, public IdleHelper::Delegate {
   MOCK_METHOD0(IsNotQuiescent, void());
   MOCK_METHOD0(OnIdlePeriodStarted, void());
   MOCK_METHOD0(OnIdlePeriodEnded, void());
+  MOCK_METHOD1(HasPendingTasksChanged, void(bool has_tasks));
 };
 
 class BaseIdleHelperTest : public testing::Test {
