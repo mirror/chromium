@@ -172,6 +172,7 @@ class WebView : protected WebWidget {
   // Frames --------------------------------------------------------------
 
   virtual WebFrame* MainFrame() = 0;
+  virtual const WebFrame* MainFrame() const = 0;
 
   // Focus ---------------------------------------------------------------
 
