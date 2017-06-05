@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "775f0fad_4d12f322",
+        "filename": "third_party/jstemplate/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-05T15:13:25Z",
+      "side": 0,
+      "message": "Would probably be good to find a new owner for this.",
+      "revId": "6625cb67b95b550cba627728da3ccbdfb6744763",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
