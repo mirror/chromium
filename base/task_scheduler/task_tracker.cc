@@ -235,7 +235,7 @@ bool TaskTracker::WillPostTask(const Task* task) {
   return true;
 }
 
-bool TaskTracker::RunNextTask(Sequence* sequence, bool* sequence_became_empty) {
+void TaskTracker::RunNextTask(Sequence* sequence, bool* sequence_became_empty) {
   DCHECK(sequence);
   DCHECK(sequence_became_empty);
 
@@ -256,7 +256,6 @@ bool TaskTracker::RunNextTask(Sequence* sequence, bool* sequence_became_empty) {
     DecrementNumPendingUndelayedTasks();
 
   *sequence_became_empty = sequence->Pop();
-  return can_run_task;
 }
 
 bool TaskTracker::HasShutdownStarted() const {
