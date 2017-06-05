@@ -212,6 +212,24 @@
       "revId": "23166c4f3363b9cce860885cd69910fe19cbd4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e76de3c_426533d2",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1449,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-05T16:18:40Z",
+      "side": 1,
+      "message": "Yeah, this is a good point. Using ThreadSpecific\u003c\u003e might not be acceptable in terms of performance on some platform.\n\nSorry for going back and forth, but I changed my mind reading Jeremy\u0027s comment. Given that RCS is a feature to break down performance of V8 execution, it won\u0027t be a bad idea to make it a binding feature and focus on analyzing performance of code where an isolate exists. Then it would be fine to associate RCS with V8PerIsolateData and ignore cases where an isolate does not exist.\n\ni.e., the current CL looks good. Sorry about the noise!",
+      "parentUuid": "1a5cffc8_f395a9d5",
+      "revId": "23166c4f3363b9cce860885cd69910fe19cbd4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
