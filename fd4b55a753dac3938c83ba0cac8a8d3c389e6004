@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "160390a2_f0296eee",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestNameAndFreeShippingTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-05T16:08:48Z",
+      "side": 1,
+      "message": "and cancel*",
+      "range": {
+        "startLine": 84,
+        "startChar": 21,
+        "endLine": 84,
+        "endChar": 29
+      },
+      "revId": "fd4b55a753dac3938c83ba0cac8a8d3c389e6004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ded7247_27ee64f8",
+        "filename": "components/payments/core/journey_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-05T16:08:48Z",
+      "side": 1,
+      "message": "DCHECK(requested_information_ \u003d\u003d REQUESTED_INFORMATION_MAX) ?",
+      "range": {
+        "startLine": 150,
+        "startChar": 36,
+        "endLine": 150,
+        "endChar": 37
+      },
+      "revId": "fd4b55a753dac3938c83ba0cac8a8d3c389e6004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "941c6b45_207da6d8",
+        "filename": "components/payments/core/journey_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-05T16:08:48Z",
+      "side": 1,
+      "message": "DCHECK_NE(requested_information_, REQUESTED_INFORMATION_MAX)?",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 27
+      },
+      "revId": "fd4b55a753dac3938c83ba0cac8a8d3c389e6004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e012d317_3b607c08",
+        "filename": "components/payments/core/journey_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-05T16:08:48Z",
+      "side": 1,
+      "message": "int requested_information_ \u003d REQUESTED_INFORMATION_MAX ?",
+      "range": {
+        "startLine": 268,
+        "startChar": 6,
+        "endLine": 268,
+        "endChar": 28
+      },
+      "revId": "fd4b55a753dac3938c83ba0cac8a8d3c389e6004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
