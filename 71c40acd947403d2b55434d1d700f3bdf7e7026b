@@ -141,6 +141,30 @@
       "revId": "71c40acd947403d2b55434d1d700f3bdf7e7026b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b73bc93f_7360b87d",
+        "filename": "gpu/command_buffer/service/renderbuffer_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-05T23:44:04Z",
+      "side": 1,
+      "message": "I suggest keeping the original ref and remove this one, because that is what maps to GL semantics (a framebuffer keeps its attachments alive if they are destroyed while the framebuffer isn\u0027t current. The opposite isn\u0027t true). Calling RemoveFramebufferAttachmentPoint on all renderbuffer attachments in ~Framebuffer should be enough to clear this before the Framebuffer* becomes invalid.",
+      "parentUuid": "df73cd3c_f8b62feb",
+      "range": {
+        "startLine": 133,
+        "startChar": 27,
+        "endLine": 133,
+        "endChar": 38
+      },
+      "revId": "71c40acd947403d2b55434d1d700f3bdf7e7026b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
