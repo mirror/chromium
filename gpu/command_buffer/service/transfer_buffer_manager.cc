@@ -135,8 +135,10 @@ bool TransferBufferManager::OnMemoryDump(
     if (buffer->backing()->is_shared()) {
       auto guid = GetBufferGUIDForTracing(memory_tracker_->ClientTracingId(),
                                           buffer_id);
-      pmd->CreateSharedGlobalAllocatorDump(guid);
-      pmd->AddOwnershipEdge(dump->guid(), guid);
+      auto shared_memory_guid =
+          buffer->backing()->shared_memory_handle().GetGUID();
+      pmd->CreateSharedMemoryOwnershipEdge(
+          dump->guid(), guid, shared_memory_guid, false, 0 /* importance */);
     }
   }
 
