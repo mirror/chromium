@@ -115,6 +115,7 @@ NSString* const kTitleId = @"title";
                 callback:(const DesktopMediaPicker::DoneCallback&)callback
                  appName:(const base::string16&)appName
               targetName:(const base::string16&)targetName
+             sourceTypes:(const std::vector<DesktopMediaID::Type>&)sourceTypes
             requestAudio:(bool)requestAudio {
   const NSUInteger kStyleMask =
       NSTitledWindowMask | NSClosableWindowMask | NSResizableWindowMask;
@@ -144,6 +145,7 @@ NSString* const kTitleId = @"title";
       tabItems_.reset([[NSMutableArray alloc] init]);
     }
 
+    sourceTypes_ = sourceTypes;
     [self initializeContentsWithAppName:appName
                              targetName:targetName
                            requestAudio:requestAudio];
@@ -229,39 +231,51 @@ NSString* const kTitleId = @"title";
   sourceTypeControl_.reset(
       [[NSSegmentedControl alloc] initWithFrame:NSZeroRect]);
 
-  NSInteger segmentCount =
-      (screenList_ ? 1 : 0) + (windowList_ ? 1 : 0) + (tabList_ ? 1 : 0);
+  NSInteger segmentCount = sourceTypes_.size();
   [sourceTypeControl_ setSegmentCount:segmentCount];
   NSInteger segmentIndex = 0;
 
-  if (screenList_) {
-    [sourceTypeControl_
-          setLabel:l10n_util::GetNSString(
-                       IDS_DESKTOP_MEDIA_PICKER_SOURCE_TYPE_SCREEN)
-        forSegment:segmentIndex];
+  for (auto sourceType : sourceTypes_) {
+    switch (sourceType) {
+      case DesktopMediaID::TYPE_NONE:
+        NOTREACHED();
+        return;
 
-    [[sourceTypeControl_ cell] setTag:DesktopMediaID::TYPE_SCREEN
-                           forSegment:segmentIndex];
+      case DesktopMediaID::TYPE_SCREEN:
+        if (screenList_) {
+          [sourceTypeControl_
+                setLabel:l10n_util::GetNSString(
+                             IDS_DESKTOP_MEDIA_PICKER_SOURCE_TYPE_SCREEN)
+              forSegment:segmentIndex];
+
+          [[sourceTypeControl_ cell] setTag:DesktopMediaID::TYPE_SCREEN
+                                 forSegment:segmentIndex];
+        }
+        break;
+      case DesktopMediaID::TYPE_WINDOW:
+        if (windowList_) {
+          [sourceTypeControl_
+                setLabel:l10n_util::GetNSString(
+                             IDS_DESKTOP_MEDIA_PICKER_SOURCE_TYPE_WINDOW)
+              forSegment:segmentIndex];
+          [[sourceTypeControl_ cell] setTag:DesktopMediaID::TYPE_WINDOW
+                                 forSegment:segmentIndex];
+        }
+        break;
+      case DesktopMediaID::TYPE_WEB_CONTENTS:
+        if (tabList_) {
+          [sourceTypeControl_
+                setLabel:l10n_util::GetNSString(
+                             IDS_DESKTOP_MEDIA_PICKER_SOURCE_TYPE_TAB)
+              forSegment:segmentIndex];
+          [[sourceTypeControl_ cell] setTag:DesktopMediaID::TYPE_WEB_CONTENTS
+                                 forSegment:segmentIndex];
+        }
+        break;
+    }
     ++segmentIndex;
   }
 
-  if (windowList_) {
-    [sourceTypeControl_
-          setLabel:l10n_util::GetNSString(
-                       IDS_DESKTOP_MEDIA_PICKER_SOURCE_TYPE_WINDOW)
-        forSegment:segmentIndex];
-    [[sourceTypeControl_ cell] setTag:DesktopMediaID::TYPE_WINDOW
-                           forSegment:segmentIndex];
-    ++segmentIndex;
-  }
-
-  if (tabList_) {
-    [sourceTypeControl_ setLabel:l10n_util::GetNSString(
-                                     IDS_DESKTOP_MEDIA_PICKER_SOURCE_TYPE_TAB)
-                      forSegment:segmentIndex];
-    [[sourceTypeControl_ cell] setTag:DesktopMediaID::TYPE_WEB_CONTENTS
-                           forSegment:segmentIndex];
-  }
   [sourceTypeControl_ setTarget:self];
   [sourceTypeControl_ setAction:@selector(typeButtonPressed:)];
 
