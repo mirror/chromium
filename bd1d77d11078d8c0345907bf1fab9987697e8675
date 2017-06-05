@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a20351d2_f20a2e31",
+        "filename": "chrome/browser/ui/startup/bad_flags_prompt.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-05T18:20:06Z",
+      "side": 1,
+      "message": "Nit: I like this comment, but it\u0027s initially confusing to a reader that it\u0027s over a conditional about heap profiling.\n\nI wonder if we could do something like:\n\n  struct {\n    const char* flag_name;\n    bool condition;\n  } conditional_flags[] \u003d {\n    {switches::kEnableHeapProfiling,\n     base::trace_event::MemoryDumpManager::\n           GetHeapProfilingModeFromCommandLine() !\u003d\n         base::trace_event::kHeapProfilingModeInvalid},\n  };\n\n... and then basically have a loop that yells about these flags if |condition| is not satisfied?\n\nMy hope is that then this loop could somehow be joined with the \"bad flags\" one below via some kind of helper method(s).\n\nI haven\u0027t really thought this through much.",
+      "revId": "bd1d77d11078d8c0345907bf1fab9987697e8675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "550c1731_cbecc967",
+        "filename": "chrome/browser/ui/startup/bad_flags_prompt.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-05T18:20:06Z",
+      "side": 1,
+      "message": "Is attaching the value important?  Like, in some builds, --enable-heap-profiling\u003dx will be allowed but \u003dy won\u0027t?  Because if not I\u0027d avoid this.",
+      "revId": "bd1d77d11078d8c0345907bf1fab9987697e8675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d36f1ca_d5d3119a",
+        "filename": "chrome/browser/ui/startup/bad_flags_prompt.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-05T18:20:06Z",
+      "side": 1,
+      "message": "Nice :)",
+      "revId": "bd1d77d11078d8c0345907bf1fab9987697e8675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
