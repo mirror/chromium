@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "base/bind.h"
+#include "base/callback_helpers.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/download/internal/client_set.h"
 #include "components/download/internal/config.h"
@@ -130,6 +131,30 @@ DownloadClient ControllerImpl::GetOwnerOfDownload(const std::string& guid) {
   return entry ? entry->client : DownloadClient::INVALID;
 }
 
+void ControllerImpl::OnStartScheduledTask(
+    DownloadTaskType task_type,
+    const TaskFinishedCallback& callback) {
+  task_finished_callbacks_[task_type] = callback;
+  if (!startup_status_.Complete()) {
+    AttemptToFinalizeSetup();
+    return;
+  }
+
+  if (task_type == DownloadTaskType::CLEANUP_TASK) {
+    // TODO(shaktisahu): Cleanup entries and files that are ready to be deleted.
+    // file_monitor_->RemoveEntriesAfterTimeout();
+  } else if (task_type == DownloadTaskType::DOWNLOAD_TASK) {
+    // TODO(shaktisahu): Determine the state of the downloads and start new
+    // download.
+  }
+}
+
+bool ControllerImpl::OnStopScheduledTask(DownloadTaskType task_type) {
+  if (!task_finished_callbacks_[task_type].is_null())
+    task_finished_callbacks_[task_type].Reset();
+  return true;
+}
+
 void ControllerImpl::OnDriverReady(bool success) {
   DCHECK(!startup_status_.driver_ok.has_value());
   startup_status_.driver_ok = success;
@@ -196,6 +221,10 @@ void ControllerImpl::AttemptToFinalizeSetup() {
   if (!startup_status_.Ok()) {
     // TODO(dtrainor): Recover here.  Try to clean up any disk state and, if
     // possible, any DownloadDriver data and continue with initialization?
+    for (auto& task_map_entry : task_finished_callbacks_) {
+      base::ResetAndReturn(&task_map_entry.second).Run(true);
+    }
+    task_finished_callbacks_.clear();
     return;
   }
 
@@ -206,6 +235,12 @@ void ControllerImpl::AttemptToFinalizeSetup() {
   // TODO(dtrainor): Post this so that the initialization step is finalized
   // before Clients can take action.
   NotifyClientsOfStartup();
+
+  if (!task_finished_callbacks_[DownloadTaskType::DOWNLOAD_TASK].is_null()) {
+    base::ResetAndReturn(
+        &task_finished_callbacks_[DownloadTaskType::DOWNLOAD_TASK])
+        .Run(false);
+  }
 }
 
 void ControllerImpl::CancelOrphanedRequests() {
