@@ -302,10 +302,14 @@ class CC_EXPORT LayerImpl {
   // initial scroll
   gfx::Vector2dF ScrollBy(const gfx::Vector2dF& scroll);
 
+  // TODO(pdr): Remove scroll_clip_layer_id and use the scrolling bounds on the
+  // scroll node instead of the scroll clip layer's bounds.
   void SetScrollClipLayer(int scroll_clip_layer_id);
-  int scroll_clip_layer_id() const { return scroll_clip_layer_id_; }
   LayerImpl* scroll_clip_layer() const;
-  bool scrollable() const;
+
+  // TODO(pdr): Comment me.
+  void SetScrollable();
+  bool scrollable() const { return scrollable_; }
 
   void set_main_thread_scrolling_reasons(
       uint32_t main_thread_scrolling_reasons) {
@@ -480,6 +484,7 @@ class CC_EXPORT LayerImpl {
   // Properties synchronized from the associated Layer.
   gfx::Size bounds_;
   int scroll_clip_layer_id_;
+  bool scrollable_;
 
   gfx::Vector2dF offset_to_transform_parent_;
   uint32_t main_thread_scrolling_reasons_;

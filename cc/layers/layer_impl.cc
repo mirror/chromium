@@ -53,6 +53,7 @@ LayerImpl::LayerImpl(LayerTreeImpl* tree_impl, int id)
       layer_tree_impl_(tree_impl),
       test_properties_(nullptr),
       scroll_clip_layer_id_(Layer::INVALID_ID),
+      scrollable_(false),
       main_thread_scrolling_reasons_(
           MainThreadScrollingReason::kNotScrollingOnMain),
       should_flatten_transform_from_property_tree_(false),
@@ -274,18 +275,19 @@ void LayerImpl::SetScrollClipLayer(int scroll_clip_layer_id) {
     return;
   scroll_clip_layer_id_ = scroll_clip_layer_id;
 
-  layer_tree_impl()->RegisterScrollLayer(this);
-
-  // The scrolling bounds are determined from the scroll clip layer's bounds.
-  layer_tree_impl()->SetScrollbarGeometriesNeedUpdate();
+  if (scroll_clip_layer_id_ != Layer::INVALID_ID)
+    SetScrollable();
 }
 
 LayerImpl* LayerImpl::scroll_clip_layer() const {
   return layer_tree_impl()->LayerById(scroll_clip_layer_id_);
 }
 
-bool LayerImpl::scrollable() const {
-  return scroll_clip_layer_id_ != Layer::INVALID_ID;
+void LayerImpl::SetScrollable() {
+  if (scrollable_)
+    return;
+  scrollable_ = true;
+  layer_tree_impl()->RegisterScrollLayer(this);
 }
 
 std::unique_ptr<LayerImpl> LayerImpl::CreateLayerImpl(
@@ -336,6 +338,8 @@ void LayerImpl::PushPropertiesTo(LayerImpl* layer) {
 
   layer->SetBounds(bounds_);
   layer->SetScrollClipLayer(scroll_clip_layer_id_);
+  if (scrollable_)
+    layer->SetScrollable();
   layer->SetMutableProperties(mutable_properties_);
 
   // If the main thread commits multiple times before the impl thread actually

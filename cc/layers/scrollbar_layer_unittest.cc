@@ -832,10 +832,8 @@ TEST_F(ScrollbarLayerTest, LayerChangesAffectingScrollbarGeometries) {
           scroll_layer, HORIZONTAL, kThumbThickness, kTrackStart,
           kIsLeftSideVerticalScrollbar, kIsOverlayScrollbar);
   scrollbar_layer->SetScrollElementId(scroll_layer->element_id());
-  DCHECK(impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
-  impl.host_impl()->active_tree()->UpdateScrollbarGeometries();
-
   scroll_layer->SetScrollClipLayer(clip_layer->id());
+  scroll_layer->SetScrollable();
   DCHECK(impl.host_impl()->active_tree()->ScrollbarGeometriesNeedUpdate());
   impl.host_impl()->active_tree()->UpdateScrollbarGeometries();
 
