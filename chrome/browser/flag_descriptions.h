@@ -406,6 +406,9 @@ extern const char kImportantSitesInCbdDescription[];
 extern const char kInertVisualViewportName[];
 extern const char kInertVisualViewportDescription[];
 
+extern const char kIphDemoModeChoiceName[];
+extern const char kIphDemoModeChoiceDescription[];
+
 extern const char kJavascriptHarmonyName[];
 extern const char kJavascriptHarmonyDescription[];
 
@@ -984,9 +987,6 @@ extern const char kEnableWebPaymentsSingleAppUiSkipDescription[];
 extern const char kHerbPrototypeChoicesName[];
 extern const char kHerbPrototypeChoicesDescription[];
 extern const char kHerbPrototypeFlavorElderberry[];
-
-extern const char kIphDemoModeChoiceName[];
-extern const char kIphDemoModeChoiceDescription[];
 
 extern const char kLsdPermissionPromptName[];
 extern const char kLsdPermissionPromptDescription[];
