@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be842a92_1b6dcc05",
+        "filename": "base/memory/shared_memory_tracker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-05T17:56:31Z",
+      "side": 1,
+      "message": "Can we take the Handle here? is it hard to get handle from some dump provider?",
+      "range": {
+        "startLine": 28,
+        "startChar": 12,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "5d3870c0abc8730c234adb988e70442b6598819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c1eb41c_5bf168fe",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-05T17:56:31Z",
+      "side": 1,
+      "message": "Add a TODO(ssid): Handle the case of weak dumps here. This need s a new function GetOrCreaetGlobalDump() in PMD.",
+      "range": {
+        "startLine": 403,
+        "startChar": 4,
+        "endLine": 403,
+        "endChar": 20
+      },
+      "revId": "5d3870c0abc8730c234adb988e70442b6598819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00b554c3_cb719345",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-05T17:56:31Z",
+      "side": 1,
+      "message": "maybe we need 2 functions here:\nCreateSharedMemoryOwnershipEdge and CreateWeakSharedMemoryOwnershipEdge so that we don\u0027t have to specify false in all the providers.",
+      "range": {
+        "startLine": 146,
+        "startChar": 7,
+        "endLine": 146,
+        "endChar": 38
+      },
+      "revId": "5d3870c0abc8730c234adb988e70442b6598819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d89ad0f_c5ebab8e",
+        "filename": "cc/raster/staging_buffer_pool.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-05T17:56:31Z",
+      "side": 1,
+      "message": "false /* is_weak */",
+      "range": {
+        "startLine": 123,
+        "startChar": 59,
+        "endLine": 123,
+        "endChar": 64
+      },
+      "revId": "5d3870c0abc8730c234adb988e70442b6598819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
