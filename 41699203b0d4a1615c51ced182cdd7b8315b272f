@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce9b239e_f85275d9",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-05T15:20:22Z",
+      "side": 1,
+      "message": "webstore_installer",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29e72e0d_7cd754b3",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-05T15:20:22Z",
+      "side": 1,
+      "message": "WebstoreInstaller",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93c55da_170c1a02",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-05T15:20:22Z",
+      "side": 1,
+      "message": "Downloads an extension for installation",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3257a28_46afd64f",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-05T15:20:22Z",
+      "side": 1,
+      "message": "User initiates a webstore extension installation flow, including installing from the webstore, inline installation from a site, re-installing a corrupted extension, and others.",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a194e85_d3f1ebc5",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-05T15:20:22Z",
+      "side": 1,
+      "message": "The id of the extension to be installed and information about the user\u0027s installation, including version, language, distribution (Chrome vs Chromium), NaCl architecture, installation source (as an enum), and accepted crx formats.",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cd37826_1178c089",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-05T15:20:22Z",
+      "side": 1,
+      "message": "GOOGLE_OWNED_SERVICE",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6870bae1_93db808d",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-05T15:20:22Z",
+      "side": 1,
+      "message": "+waffles@.  It doesn\u0027t look like we\u0027re disallowing cookies, but I don\u0027t know if we need them.  It might be safe to remove them.",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b226b39_430fc4b8",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-05T15:20:22Z",
+      "side": 1,
+      "message": "This feature cannot be disabled; it is only activated if the user triggers an extension installation.",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80149ea0_2da8e9b7",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-05T15:20:22Z",
+      "side": 1,
+      "message": "The feature is only used if the user triggers an extension installation.",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
