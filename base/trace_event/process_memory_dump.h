@@ -34,6 +34,9 @@ namespace trace_event {
 class HeapProfilerSerializationState;
 class TracedValue;
 
+std::string GetSharedGlobalAllocatorDumpName(
+    const MemoryAllocatorDumpGuid& guid);
+
 // ProcessMemoryDump is as a strongly typed container which holds the dumps
 // produced by the MemoryDumpProvider(s) for a specific process.
 class BASE_EXPORT ProcessMemoryDump {
