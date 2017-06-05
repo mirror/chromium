@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e39d56d6_d855f106",
+        "filename": "third_party/WebKit/Source/modules/mediastream/UserMediaClientImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-05T23:25:14Z",
+      "side": 1,
+      "message": "UserMediaClientImpl looks like an unnecessary wrapper class. We should think about removing these abstraction classes at some point.",
+      "revId": "4445252c74809ae4e6584f6919191e71bac4f72e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
