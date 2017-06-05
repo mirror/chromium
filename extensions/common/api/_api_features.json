@@ -292,7 +292,11 @@
     "dependencies": ["manifest:mime_types_handler"],
     "contexts": ["blessed_extension"]
   },
-  "mojoPrivate": {
+  "mojoNative": {
+    "dependencies": ["permission:mojoNative"],
+    "contexts": ["blessed_extension"]
+  },
+  "mojoPrivate": [{
     "contexts": ["blessed_extension"],
     "channel": "stable",
     "extension_types": ["platform_app", "extension"],
@@ -300,7 +304,10 @@
       "63ED55E43214C211F82122ED56407FF1A807F2A3",   // Media Router Dev
       "226CF815E39A363090A1E547D53063472B8279FA"    // Media Router Stable
     ]
-  },
+  }, {
+    "dependencies": ["permission:mojoPrivate"],
+    "contexts": ["blessed_extension"]
+  }],
   "networking.config": {
     "dependencies": ["permission:networking.config"],
     "contexts": ["blessed_extension"]

@@ -66,6 +66,8 @@ ExtensionsAPIPermissions::GetAllPermissions() const {
       {APIPermission::kMediaPerceptionPrivate, "mediaPerceptionPrivate"},
       {APIPermission::kMetricsPrivate, "metricsPrivate",
        APIPermissionInfo::kFlagCannotBeOptional},
+      {APIPermission::kMojoPrivate, "mojoPrivate",
+       APIPermissionInfo::kFlagCannotBeOptional},
       {APIPermission::kNetworkingConfig, "networking.config"},
       {APIPermission::kNetworkingOnc, "networking.onc"},
       {APIPermission::kNetworkingPrivate, "networkingPrivate",

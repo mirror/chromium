@@ -25,6 +25,7 @@
 #include "extensions/renderer/v8_helpers.h"
 #include "gin/converter.h"
 #include "gin/modules/module_registry.h"
+#include "third_party/WebKit/public/web/WebContextFeatures.h"
 #include "third_party/WebKit/public/web/WebFrame.h"
 
 namespace extensions {
@@ -191,6 +192,10 @@ ModuleSystem::ModuleSystem(ScriptContext* context, const SourceMap* source_map)
   if (context_->GetRenderFrame() &&
       context_->context_type() == Feature::BLESSED_EXTENSION_CONTEXT &&
       ContextNeedsMojoBindings(context_)) {
+    blink::WebContextFeatures::EnableMojoJS(context->v8_context(), true);
+
+    // TODO(rockot): Get rid of these builtins, as they are redundant with and
+    // less efficient than the native bindings installed above.
     context_->GetRenderFrame()->EnsureMojoBuiltinsAreAvailable(
         context->isolate(), context->v8_context());
   }
