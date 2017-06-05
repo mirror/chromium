@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e1e4b460_4ee94f8a",
+        "filename": "services/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-06-05T19:59:02Z",
+      "side": 1,
+      "message": "This is already run with chrome_test_java.  See the other BUILD file I touched.",
+      "parentUuid": "bfb0047e_cbc8b34c",
+      "range": {
+        "startLine": 122,
+        "startChar": 19,
+        "endLine": 122,
+        "endChar": 36
+      },
+      "revId": "793938a1e7c3215da7950555a44cd5ab14c4e198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d27e56f3_2ba942cf",
         "filename": "services/shape_detection/android/java/src/org/chromium/shape_detection/FaceDetectionImpl.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "793938a1e7c3215da7950555a44cd5ab14c4e198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9cea94_19c7506d",
+        "filename": "services/shape_detection/android/java/src/org/chromium/shape_detection/FaceDetectionImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-06-05T19:59:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d27e56f3_2ba942cf",
+      "range": {
+        "startLine": 41,
+        "startChar": 23,
+        "endLine": 41,
+        "endChar": 41
+      },
+      "revId": "793938a1e7c3215da7950555a44cd5ab14c4e198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "94b0cdd9_3f5bd5e3",
+        "filename": "services/shape_detection/android/javatests/src/org/chromium/shape_detection/FaceDetectionImplTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-06-05T19:59:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e339f253_98ced679",
+      "range": {
+        "startLine": 29,
+        "startChar": 59,
+        "endLine": 29,
+        "endChar": 72
+      },
+      "revId": "793938a1e7c3215da7950555a44cd5ab14c4e198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4c0e0d1_8872ce32",
         "filename": "services/test/data/mona_lisa.png",
         "patchSetId": 1
@@ -85,6 +157,24 @@
       "revId": "793938a1e7c3215da7950555a44cd5ab14c4e198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b93475_3eeb4503",
+        "filename": "services/test/data/mona_lisa.png",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-06-05T19:59:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4c0e0d1_8872ce32",
+      "revId": "793938a1e7c3215da7950555a44cd5ab14c4e198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
