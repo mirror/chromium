@@ -22,6 +22,30 @@
       "revId": "7b45beaf3acdc55bc6d5b4a8ec02aede723dc35f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9c950db_7bcefe83",
+        "filename": "services/identity/public/interfaces/google_service_auth_error.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-05T11:18:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f77a96aa_d4231d2b",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 20
+      },
+      "revId": "7b45beaf3acdc55bc6d5b4a8ec02aede723dc35f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
