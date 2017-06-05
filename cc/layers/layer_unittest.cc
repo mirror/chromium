@@ -925,8 +925,10 @@ TEST_F(LayerTest, CheckPropertyChangeCausesCorrectBehavior) {
   EXPECT_SET_NEEDS_COMMIT(1, test_layer->SetTransform(
       gfx::Transform(0.0, 0.0, 0.0, 0.0, 0.0, 0.0)));
   EXPECT_SET_NEEDS_COMMIT(1, test_layer->SetDoubleSided(false));
-  EXPECT_SET_NEEDS_COMMIT(1, test_layer->SetTouchEventHandlerRegion(
-      gfx::Rect(10, 10)));
+  RegionMap region_map;
+  region_map[kTouchActionNone] = gfx::Rect(10, 10);
+  EXPECT_SET_NEEDS_COMMIT(
+      1, test_layer->SetTouchEventHandlerRegionMap(region_map));
   EXPECT_SET_NEEDS_COMMIT(1, test_layer->SetForceRenderSurfaceForTesting(true));
   EXPECT_SET_NEEDS_COMMIT(1, test_layer->SetHideLayerAndSubtree(true));
   EXPECT_SET_NEEDS_COMMIT(1, test_layer->SetElementId(ElementId(2)));
@@ -1264,6 +1266,41 @@ TEST_F(LayerTest, SafeOpaqueBackgroundColor) {
       }
     }
   }
+}
+
+TEST_F(LayerTest, UnionOfRegions) {
+  scoped_refptr<Layer> test_layer = Layer::Create();
+  Region r;
+  Region r1;
+  Region r2;
+  Region r3;
+  RegionMap region_map;
+
+  // A map with a containing rect gives back the containing rect.
+  r1 = r = gfx::Rect(0, 0, 50, 50);
+  r2 = gfx::Rect(20, 20, 10, 10);
+  region_map[kTouchActionNone] = r1;
+  region_map[kTouchActionPanLeft] = r2;
+  EXPECT_EQ(r, test_layer->UnionOfRegions(region_map));
+
+  // A map with a containing rect gives back the containing rect.
+  r1 = gfx::Rect(0, 0, 50, 50);
+  r2 = r = gfx::Rect(0, 0, 100, 100);
+  region_map[kTouchActionNone] = r1;
+  region_map[kTouchActionPanLeft] = r2;
+  EXPECT_EQ(r, test_layer->UnionOfRegions(region_map));
+
+  // A map with complex regions gives back the union of all mapped regions.
+  r = r1 = gfx::Rect(0, 0, 50, 50);
+  r2 = gfx::Rect(100, 0, 50, 50);
+  r.Union(r2);
+  r3 = gfx::Rect(0, 50, 50, 50);
+  r.Union(r3);
+
+  region_map[kTouchActionNone] = r1;
+  region_map[kTouchActionPanLeft] = r2;
+  region_map[kTouchActionPanRight] = r3;
+  EXPECT_EQ(r, test_layer->UnionOfRegions(region_map));
 }
 
 class DrawsContentChangeLayer : public Layer {

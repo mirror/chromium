@@ -22,6 +22,7 @@
 #include "cc/benchmarks/micro_benchmark.h"
 #include "cc/cc_export.h"
 #include "cc/input/input_handler.h"
+#include "cc/input/touch_action.h"
 #include "cc/layers/layer_collections.h"
 #include "cc/layers/layer_position_constraint.h"
 #include "cc/paint/paint_record.h"
@@ -43,6 +44,8 @@ class ConvertableToTraceFormat;
 }
 
 namespace cc {
+
+typedef base::flat_map<TouchAction, Region> RegionMap;
 
 class CopyOutputRequest;
 class LayerClient;
@@ -239,9 +242,10 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
     return inputs_.non_fast_scrollable_region;
   }
 
-  void SetTouchEventHandlerRegion(const Region& touch_event_handler_region);
-  const Region& touch_event_handler_region() const {
-    return inputs_.touch_event_handler_region;
+  void SetTouchEventHandlerRegionMap(
+      const RegionMap& touch_event_handler_region_map);
+  const RegionMap& touch_event_handler_region_map() const {
+    return inputs_.touch_event_handler_region_map;
   }
 
   void set_did_scroll_callback(
@@ -421,6 +425,9 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
   // Called on the scroll layer to trigger showing the overlay scrollbars.
   void ShowScrollbars() { needs_show_scrollbars_ = true; }
 
+  // Unions all regions contained in RegionMap.
+  Region UnionOfRegions(const RegionMap&) const;
+
  protected:
   friend class LayerImpl;
   friend class TreeSynchronizer;
@@ -571,7 +578,7 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
     uint32_t main_thread_scrolling_reasons;
     Region non_fast_scrollable_region;
 
-    Region touch_event_handler_region;
+    RegionMap touch_event_handler_region_map;
 
     bool is_container_for_fixed_position_layers : 1;
     LayerPositionConstraint position_constraint;
