@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "902640ed_0bcb4cd5",
+        "filename": "media/capture/video/mac/video_capture_device_avfoundation_mac.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-05T19:55:34Z",
+      "side": 1,
+      "message": "nit: s/error/errorMessage/ (|error| would imply NSError)",
+      "range": {
+        "startLine": 100,
+        "startChar": 45,
+        "endLine": 100,
+        "endChar": 50
+      },
+      "revId": "b7858b2e8a2149e8a7762c4c9a14ea4b5af5b4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf4e9d2_66d84069",
+        "filename": "media/capture/video/mac/video_capture_device_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-05T19:55:34Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we call here SetErrorState() (to call in \nturn client_-\u003eOnError() )?",
+      "range": {
+        "startLine": 374,
+        "startChar": 4,
+        "endLine": 374,
+        "endChar": 14
+      },
+      "revId": "b7858b2e8a2149e8a7762c4c9a14ea4b5af5b4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66638499_123a7cac",
+        "filename": "media/capture/video/mac/video_capture_device_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-05T19:55:34Z",
+      "side": 1,
+      "message": "nit: no {} for one-line bodies.",
+      "range": {
+        "startLine": 375,
+        "startChar": 2,
+        "endLine": 375,
+        "endChar": 3
+      },
+      "revId": "b7858b2e8a2149e8a7762c4c9a14ea4b5af5b4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
