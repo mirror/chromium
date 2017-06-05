@@ -149,7 +149,7 @@ views::View* TrayUpdate::CreateDefaultView(LoginStatus status) {
   return nullptr;
 }
 
-void TrayUpdate::DestroyDefaultView() {
+void TrayUpdate::OnDefaultViewDestroyed() {
   update_view_ = nullptr;
 }
 
