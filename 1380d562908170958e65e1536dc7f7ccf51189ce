@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1eb63f3_6c034464",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-05T21:08:27Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate we need this feature version.  I wonder if we should introduce a new concept of whitelist-darn-it to ignore the rest of the permission features.  Can you file a bug for this?",
+      "revId": "1380d562908170958e65e1536dc7f7ccf51189ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3230320d_175a7746",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-05T21:08:27Z",
+      "side": 1,
+      "message": "This exposes these bindings quite a bit, but I don\u0027t see a bug, doc, etc for context.  Can you provide a bug link with the reasoning for exposing these previously-private APIs publicly?",
+      "revId": "1380d562908170958e65e1536dc7f7ccf51189ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b52520b_8d06f582",
+        "filename": "extensions/test/data/api_test/mojo_private/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-05T21:08:27Z",
+      "side": 1,
+      "message": "single-quotes in js.",
+      "revId": "1380d562908170958e65e1536dc7f7ccf51189ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
