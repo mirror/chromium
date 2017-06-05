@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4880e1fd_2030b3fd",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-05T19:52:41Z",
+      "side": 1,
+      "message": "Yes, it sounds better, done",
+      "parentUuid": "4c52dab4_e9296530",
+      "revId": "28eb9747f8b79c9f1a49c720bc2ccefcbc9b03d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6aab55d_dc1c3b5e",
         "filename": "components/arc/arc_util.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "28eb9747f8b79c9f1a49c720bc2ccefcbc9b03d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49608b49_3cac2e4e",
+        "filename": "components/arc/arc_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-05T19:52:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6aab55d_dc1c3b5e",
+      "revId": "28eb9747f8b79c9f1a49c720bc2ccefcbc9b03d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
