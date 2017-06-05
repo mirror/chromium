@@ -261,9 +261,8 @@ TEST_P(TaskSchedulerTaskTrackerTest, WillPostAndRunBeforeShutdown) {
   // Run the task.
   EXPECT_EQ(0U, NumTasksExecuted());
   bool sequence_became_empty;
-  EXPECT_TRUE(
-      tracker_.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
-                           &sequence_became_empty));
+  tracker_.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
+                       &sequence_became_empty);
   EXPECT_EQ(1U, NumTasksExecuted());
 
   // Shutdown() shouldn't block.
@@ -338,16 +337,15 @@ TEST_P(TaskSchedulerTaskTrackerTest, WillPostBeforeShutdownRunDuringShutdown) {
   const bool should_run = GetParam() == TaskShutdownBehavior::BLOCK_SHUTDOWN;
 
   bool sequence_became_empty;
-  EXPECT_EQ(should_run, tracker_.RunNextTask(
-                            test::CreateSequenceWithTask(std::move(task)).get(),
-                            &sequence_became_empty));
+  tracker_.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
+                       &sequence_became_empty);
   EXPECT_EQ(should_run ? 1U : 0U, NumTasksExecuted());
   VERIFY_ASYNC_SHUTDOWN_IN_PROGRESS();
 
   // Unblock shutdown by running the remaining BLOCK_SHUTDOWN task.
-  EXPECT_TRUE(tracker_.RunNextTask(
+  tracker_.RunNextTask(
       test::CreateSequenceWithTask(std::move(block_shutdown_task)).get(),
-      &sequence_became_empty));
+      &sequence_became_empty);
   EXPECT_EQ(should_run ? 2U : 1U, NumTasksExecuted());
   WAIT_FOR_ASYNC_SHUTDOWN_COMPLETED();
 }
@@ -366,9 +364,8 @@ TEST_P(TaskSchedulerTaskTrackerTest, WillPostBeforeShutdownRunAfterShutdown) {
 
     // Run the task to unblock shutdown.
     bool sequence_became_empty;
-    EXPECT_TRUE(tracker_.RunNextTask(
-        test::CreateSequenceWithTask(std::move(task)).get(),
-        &sequence_became_empty));
+    tracker_.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
+                         &sequence_became_empty);
     EXPECT_EQ(1U, NumTasksExecuted());
     WAIT_FOR_ASYNC_SHUTDOWN_COMPLETED();
 
@@ -380,9 +377,8 @@ TEST_P(TaskSchedulerTaskTrackerTest, WillPostBeforeShutdownRunAfterShutdown) {
 
     // The task shouldn't be allowed to run after shutdown.
     bool sequence_became_empty;
-    EXPECT_FALSE(tracker_.RunNextTask(
-        test::CreateSequenceWithTask(std::move(task)).get(),
-        &sequence_became_empty));
+    tracker_.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
+                         &sequence_became_empty);
     EXPECT_EQ(0U, NumTasksExecuted());
   }
 }
@@ -406,9 +402,8 @@ TEST_P(TaskSchedulerTaskTrackerTest, WillPostAndRunDuringShutdown) {
     // Run the BLOCK_SHUTDOWN task.
     EXPECT_EQ(0U, NumTasksExecuted());
     bool sequence_became_empty;
-    EXPECT_TRUE(tracker_.RunNextTask(
-        test::CreateSequenceWithTask(std::move(task)).get(),
-        &sequence_became_empty));
+    tracker_.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
+                         &sequence_became_empty);
     EXPECT_EQ(1U, NumTasksExecuted());
   } else {
     // It shouldn't be allowed to post a non BLOCK_SHUTDOWN task.
@@ -421,9 +416,9 @@ TEST_P(TaskSchedulerTaskTrackerTest, WillPostAndRunDuringShutdown) {
   // Unblock shutdown by running |block_shutdown_task|.
   VERIFY_ASYNC_SHUTDOWN_IN_PROGRESS();
   bool sequence_became_empty;
-  EXPECT_TRUE(tracker_.RunNextTask(
+  tracker_.RunNextTask(
       test::CreateSequenceWithTask(std::move(block_shutdown_task)).get(),
-      &sequence_became_empty));
+      &sequence_became_empty);
   EXPECT_EQ(GetParam() == TaskShutdownBehavior::BLOCK_SHUTDOWN ? 2U : 1U,
             NumTasksExecuted());
   WAIT_FOR_ASYNC_SHUTDOWN_COMPLETED();
@@ -462,9 +457,8 @@ TEST_P(TaskSchedulerTaskTrackerTest, SingletonAllowed) {
   // Running the task should fail iff the task isn't allowed to use singletons.
   bool sequence_became_empty;
   if (can_use_singletons) {
-    EXPECT_TRUE(
-        tracker.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
-                            &sequence_became_empty));
+    tracker.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
+                        &sequence_became_empty);
   } else {
     EXPECT_DCHECK_DEATH({
       tracker.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
@@ -518,9 +512,9 @@ static void RunTaskRunnerHandleVerificationTask(
   EXPECT_FALSE(SequencedTaskRunnerHandle::IsSet());
 
   bool sequence_became_empty;
-  EXPECT_TRUE(tracker->RunNextTask(
+  tracker->RunNextTask(
       test::CreateSequenceWithTask(std::move(verify_task)).get(),
-      &sequence_became_empty));
+      &sequence_became_empty);
 
   // TaskRunnerHandle state is reset outside of task's scope.
   EXPECT_FALSE(ThreadTaskRunnerHandle::IsSet());
@@ -762,7 +756,7 @@ TEST_F(TaskSchedulerTaskTrackerTest, CurrentSequenceToken) {
 
   EXPECT_FALSE(SequenceToken::GetForCurrentThread().IsValid());
   bool sequence_became_empty;
-  EXPECT_TRUE(tracker_.RunNextTask(sequence.get(), &sequence_became_empty));
+  tracker_.RunNextTask(sequence.get(), &sequence_became_empty);
   EXPECT_FALSE(SequenceToken::GetForCurrentThread().IsValid());
 }
 
@@ -889,9 +883,9 @@ TEST_F(TaskSchedulerTaskTrackerTest, LoadWillPostAndRunDuringShutdown) {
 
   // Unblock shutdown by running |block_shutdown_task|.
   bool sequence_became_empty;
-  EXPECT_TRUE(tracker_.RunNextTask(
+  tracker_.RunNextTask(
       test::CreateSequenceWithTask(std::move(block_shutdown_task)).get(),
-      &sequence_became_empty));
+      &sequence_became_empty);
   EXPECT_EQ(kLoadTestNumIterations + 1, NumTasksExecuted());
   WAIT_FOR_ASYNC_SHUTDOWN_COMPLETED();
 }
@@ -994,9 +988,9 @@ TEST(TaskSchedulerTaskTrackerHistogramTest, TaskLatency) {
 
     HistogramTester tester;
     bool sequence_became_empty;
-    EXPECT_TRUE(
-        tracker.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
-                            &sequence_became_empty));
+
+    tracker.RunNextTask(test::CreateSequenceWithTask(std::move(task)).get(),
+                        &sequence_became_empty);
     tester.ExpectTotalCount(test.expected_histogram, 1);
   }
 }
