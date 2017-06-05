@@ -192,7 +192,7 @@ WebRTCICECandidate ConvertToWebRTCIceCandidate(
       sdp_m_line_index = ice_candidate_init.sdpMLineIndex();
     else
       UseCounter::Count(context,
-                        UseCounter::kRTCIceCandidateDefaultSdpMLineIndex);
+                        WebFeature::kRTCIceCandidateDefaultSdpMLineIndex);
     return WebRTCICECandidate(ice_candidate_init.candidate(),
                               ice_candidate_init.sdpMid(), sdp_m_line_index);
   }
@@ -239,11 +239,11 @@ WebRTCConfiguration ParseConfiguration(ExecutionContext* context,
   WebRTCIceTransportPolicy ice_transport_policy =
       WebRTCIceTransportPolicy::kAll;
   if (configuration.hasIceTransportPolicy()) {
-    UseCounter::Count(context, UseCounter::kRTCConfigurationIceTransportPolicy);
+    UseCounter::Count(context, WebFeature::kRTCConfigurationIceTransportPolicy);
     ice_transport_policy =
         IceTransportPolicyFromString(configuration.iceTransportPolicy());
   } else if (configuration.hasIceTransports()) {
-    UseCounter::Count(context, UseCounter::kRTCConfigurationIceTransports);
+    UseCounter::Count(context, WebFeature::kRTCConfigurationIceTransports);
     ice_transport_policy =
         IceTransportPolicyFromString(configuration.iceTransports());
   }
@@ -262,7 +262,7 @@ WebRTCConfiguration ParseConfiguration(ExecutionContext* context,
   String rtcp_mux_policy_string = configuration.rtcpMuxPolicy();
   if (rtcp_mux_policy_string == "negotiate") {
     rtcp_mux_policy = WebRTCRtcpMuxPolicy::kNegotiate;
-    Deprecation::CountDeprecation(context, UseCounter::kRtcpMuxPolicyNegotiate);
+    Deprecation::CountDeprecation(context, WebFeature::kRtcpMuxPolicyNegotiate);
   } else {
     DCHECK_EQ(rtcp_mux_policy_string, "require");
   }
@@ -276,7 +276,7 @@ WebRTCConfiguration ParseConfiguration(ExecutionContext* context,
     for (const RTCIceServer& ice_server : configuration.iceServers()) {
       Vector<String> url_strings;
       if (ice_server.hasURLs()) {
-        UseCounter::Count(context, UseCounter::kRTCIceServerURLs);
+        UseCounter::Count(context, WebFeature::kRTCIceServerURLs);
         const StringOrStringSequence& urls = ice_server.urls();
         if (urls.isString()) {
           url_strings.push_back(urls.getAsString());
@@ -285,7 +285,7 @@ WebRTCConfiguration ParseConfiguration(ExecutionContext* context,
           url_strings = urls.getAsStringSequence();
         }
       } else if (ice_server.hasURL()) {
-        UseCounter::Count(context, UseCounter::kRTCIceServerURL);
+        UseCounter::Count(context, WebFeature::kRTCIceServerURL);
         url_strings.push_back(ice_server.url());
       } else {
         exception_state.ThrowTypeError("Malformed RTCIceServer");
@@ -434,10 +434,10 @@ RTCPeerConnection* RTCPeerConnection::Create(
     ExceptionState& exception_state) {
   if (media_constraints.IsObject())
     UseCounter::Count(context,
-                      UseCounter::kRTCPeerConnectionConstructorConstraints);
+                      WebFeature::kRTCPeerConnectionConstructorConstraints);
   else
     UseCounter::Count(context,
-                      UseCounter::kRTCPeerConnectionConstructorCompliant);
+                      WebFeature::kRTCPeerConnectionConstructorCompliant);
 
   WebRTCConfiguration configuration =
       ParseConfiguration(context, rtc_configuration, exception_state);
@@ -559,7 +559,7 @@ ScriptPromise RTCPeerConnection::createOffer(ScriptState* script_state,
     ExecutionContext* context = ExecutionContext::From(script_state);
     UseCounter::Count(
         context,
-        UseCounter::kRTCPeerConnectionCreateOfferOptionsOfferToReceive);
+        WebFeature::kRTCPeerConnectionCreateOfferOptionsOfferToReceive);
   }
   peer_handler_->CreateOffer(request, ConvertToWebRTCOfferOptions(options));
   return promise;
@@ -575,7 +575,7 @@ ScriptPromise RTCPeerConnection::createOffer(
   DCHECK(error_callback);
   ExecutionContext* context = ExecutionContext::From(script_state);
   UseCounter::Count(
-      context, UseCounter::kRTCPeerConnectionCreateOfferLegacyFailureCallback);
+      context, WebFeature::kRTCPeerConnectionCreateOfferLegacyFailureCallback);
   if (CallErrorCallbackIfSignalingStateClosed(signaling_state_, error_callback))
     return ScriptPromise::CastUndefined(script_state);
 
@@ -591,10 +591,10 @@ ScriptPromise RTCPeerConnection::createOffer(
     if (offer_options->OfferToReceiveAudio() != -1 ||
         offer_options->OfferToReceiveVideo() != -1)
       UseCounter::Count(
-          context, UseCounter::kRTCPeerConnectionCreateOfferLegacyOfferOptions);
+          context, WebFeature::kRTCPeerConnectionCreateOfferLegacyOfferOptions);
     else
       UseCounter::Count(
-          context, UseCounter::kRTCPeerConnectionCreateOfferLegacyCompliant);
+          context, WebFeature::kRTCPeerConnectionCreateOfferLegacyCompliant);
 
     peer_handler_->CreateOffer(request, WebRTCOfferOptions(offer_options));
   } else {
@@ -613,10 +613,10 @@ ScriptPromise RTCPeerConnection::createOffer(
 
     if (!constraints.IsEmpty())
       UseCounter::Count(
-          context, UseCounter::kRTCPeerConnectionCreateOfferLegacyConstraints);
+          context, WebFeature::kRTCPeerConnectionCreateOfferLegacyConstraints);
     else
       UseCounter::Count(
-          context, UseCounter::kRTCPeerConnectionCreateOfferLegacyCompliant);
+          context, WebFeature::kRTCPeerConnectionCreateOfferLegacyCompliant);
 
     peer_handler_->CreateOffer(request, constraints);
   }
@@ -648,13 +648,13 @@ ScriptPromise RTCPeerConnection::createAnswer(
   DCHECK(error_callback);
   ExecutionContext* context = ExecutionContext::From(script_state);
   UseCounter::Count(
-      context, UseCounter::kRTCPeerConnectionCreateAnswerLegacyFailureCallback);
+      context, WebFeature::kRTCPeerConnectionCreateAnswerLegacyFailureCallback);
   if (media_constraints.IsObject())
     UseCounter::Count(
-        context, UseCounter::kRTCPeerConnectionCreateAnswerLegacyConstraints);
+        context, WebFeature::kRTCPeerConnectionCreateAnswerLegacyConstraints);
   else
     UseCounter::Count(
-        context, UseCounter::kRTCPeerConnectionCreateAnswerLegacyCompliant);
+        context, WebFeature::kRTCPeerConnectionCreateAnswerLegacyCompliant);
 
   if (CallErrorCallbackIfSignalingStateClosed(signaling_state_, error_callback))
     return ScriptPromise::CastUndefined(script_state);
@@ -705,17 +705,17 @@ ScriptPromise RTCPeerConnection::setLocalDescription(
   if (success_callback && error_callback) {
     UseCounter::Count(
         context,
-        UseCounter::kRTCPeerConnectionSetLocalDescriptionLegacyCompliant);
+        WebFeature::kRTCPeerConnectionSetLocalDescriptionLegacyCompliant);
   } else {
     if (!success_callback)
       UseCounter::Count(
           context,
-          UseCounter::
+          WebFeature::
               kRTCPeerConnectionSetLocalDescriptionLegacyNoSuccessCallback);
     if (!error_callback)
       UseCounter::Count(
           context,
-          UseCounter::
+          WebFeature::
               kRTCPeerConnectionSetLocalDescriptionLegacyNoFailureCallback);
   }
 
@@ -765,17 +765,17 @@ ScriptPromise RTCPeerConnection::setRemoteDescription(
   if (success_callback && error_callback) {
     UseCounter::Count(
         context,
-        UseCounter::kRTCPeerConnectionSetRemoteDescriptionLegacyCompliant);
+        WebFeature::kRTCPeerConnectionSetRemoteDescriptionLegacyCompliant);
   } else {
     if (!success_callback)
       UseCounter::Count(
           context,
-          UseCounter::
+          WebFeature::
               kRTCPeerConnectionSetRemoteDescriptionLegacyNoSuccessCallback);
     if (!error_callback)
       UseCounter::Count(
           context,
-          UseCounter::
+          WebFeature::
               kRTCPeerConnectionSetRemoteDescriptionLegacyNoFailureCallback);
   }
 
@@ -1161,7 +1161,7 @@ ScriptPromise RTCPeerConnection::getStats(ScriptState* script_state,
   ScriptPromise promise = resolver->Promise();
 
   UseCounter::Count(context,
-                    UseCounter::kRTCPeerConnectionGetStatsLegacyNonCompliant);
+                    WebFeature::kRTCPeerConnectionGetStatsLegacyNonCompliant);
   RTCStatsRequest* stats_request = RTCStatsRequestImpl::Create(
       GetExecutionContext(), this, success_callback, selector);
   // FIXME: Add passing selector as part of the statsRequest.
@@ -1173,7 +1173,7 @@ ScriptPromise RTCPeerConnection::getStats(ScriptState* script_state,
 
 ScriptPromise RTCPeerConnection::getStats(ScriptState* script_state) {
   ExecutionContext* context = ExecutionContext::From(script_state);
-  UseCounter::Count(context, UseCounter::kRTCPeerConnectionGetStats);
+  UseCounter::Count(context, WebFeature::kRTCPeerConnectionGetStats);
 
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   ScriptPromise promise = resolver->Promise();
@@ -1246,12 +1246,12 @@ RTCDataChannel* RTCPeerConnection::createDataChannel(
   if (data_channel_dict.hasMaxRetransmitTime()) {
     UseCounter::Count(
         context,
-        UseCounter::kRTCPeerConnectionCreateDataChannelMaxRetransmitTime);
+        WebFeature::kRTCPeerConnectionCreateDataChannelMaxRetransmitTime);
     init.max_retransmit_time = data_channel_dict.maxRetransmitTime();
   }
   if (data_channel_dict.hasMaxRetransmits()) {
     UseCounter::Count(
-        context, UseCounter::kRTCPeerConnectionCreateDataChannelMaxRetransmits);
+        context, WebFeature::kRTCPeerConnectionCreateDataChannelMaxRetransmits);
     init.max_retransmits = data_channel_dict.maxRetransmits();
   }
   init.protocol = data_channel_dict.protocol();

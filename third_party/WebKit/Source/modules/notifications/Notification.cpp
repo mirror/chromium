@@ -95,17 +95,17 @@ Notification* Notification::Create(ExecutionContext* context,
   }
 
   if (context->IsSecureContext()) {
-    UseCounter::Count(context, UseCounter::kNotificationSecureOrigin);
+    UseCounter::Count(context, WebFeature::kNotificationSecureOrigin);
     if (context->IsDocument())
       UseCounter::CountCrossOriginIframe(
-          *ToDocument(context), UseCounter::kNotificationAPISecureOriginIframe);
+          *ToDocument(context), WebFeature::kNotificationAPISecureOriginIframe);
   } else {
     Deprecation::CountDeprecation(context,
-                                  UseCounter::kNotificationInsecureOrigin);
+                                  WebFeature::kNotificationInsecureOrigin);
     if (context->IsDocument())
       Deprecation::CountDeprecationCrossOriginIframe(
           *ToDocument(context),
-          UseCounter::kNotificationAPIInsecureOriginIframe);
+          WebFeature::kNotificationAPIInsecureOriginIframe);
   }
 
   WebNotificationData data =
@@ -365,14 +365,14 @@ ScriptPromise Notification::requestPermission(
   ExecutionContext* context = ExecutionContext::From(script_state);
   if (!context->IsSecureContext()) {
     Deprecation::CountDeprecation(
-        context, UseCounter::kNotificationPermissionRequestedInsecureOrigin);
+        context, WebFeature::kNotificationPermissionRequestedInsecureOrigin);
   }
 
   if (context->IsDocument()) {
     LocalFrame* frame = ToDocument(context)->GetFrame();
     if (frame && !frame->IsMainFrame()) {
       Deprecation::CountDeprecation(
-          context, UseCounter::kNotificationPermissionRequestedIframe);
+          context, WebFeature::kNotificationPermissionRequestedIframe);
     }
   }
 

@@ -30,7 +30,7 @@ BeforeInstallPromptEvent::BeforeInstallPromptEvent(
       prompt_called_(false) {
   DCHECK(banner_service_);
   DCHECK(binding_.is_bound());
-  UseCounter::Count(&frame, UseCounter::kBeforeInstallPromptEvent);
+  UseCounter::Count(&frame, WebFeature::kBeforeInstallPromptEvent);
 }
 
 BeforeInstallPromptEvent::BeforeInstallPromptEvent(
@@ -54,7 +54,7 @@ Vector<String> BeforeInstallPromptEvent::platforms() const {
 
 ScriptPromise BeforeInstallPromptEvent::userChoice(ScriptState* script_state) {
   UseCounter::Count(ExecutionContext::From(script_state),
-                    UseCounter::kBeforeInstallPromptEventUserChoice);
+                    WebFeature::kBeforeInstallPromptEventUserChoice);
   // |m_binding| must be bound to allow the AppBannerService to resolve the
   // userChoice promise.
   if (user_choice_ && binding_.is_bound())
@@ -77,7 +77,7 @@ ScriptPromise BeforeInstallPromptEvent::prompt(ScriptState* script_state) {
   }
 
   UseCounter::Count(ExecutionContext::From(script_state),
-                    UseCounter::kBeforeInstallPromptEventPrompt);
+                    WebFeature::kBeforeInstallPromptEventPrompt);
 
   prompt_called_ = true;
   banner_service_->DisplayAppBanner(
@@ -93,7 +93,7 @@ void BeforeInstallPromptEvent::preventDefault() {
   Event::preventDefault();
   if (target()) {
     UseCounter::Count(target()->GetExecutionContext(),
-                      UseCounter::kBeforeInstallPromptEventPreventDefault);
+                      WebFeature::kBeforeInstallPromptEventPreventDefault);
   }
 }
 
