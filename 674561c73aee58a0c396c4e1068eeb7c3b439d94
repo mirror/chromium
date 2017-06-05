@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "561e73de_6ea8b37a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/StylesSourceMapping.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-05T23:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d63aeb8_9282f3a3",
+      "range": {
+        "startLine": 231,
+        "startChar": 33,
+        "endLine": 231,
+        "endChar": 38
+      },
+      "revId": "674561c73aee58a0c396c4e1068eeb7c3b439d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "678b4fad_d0f422f1",
         "filename": "third_party/WebKit/Source/devtools/front_end/elements/StylesSidebarPane.js",
         "patchSetId": 1
