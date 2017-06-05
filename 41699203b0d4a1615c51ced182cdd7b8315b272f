@@ -121,6 +121,24 @@
     },
     {
       "key": {
+        "uuid": "da20f370_d3a9b273",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-06-05T16:46:24Z",
+      "side": 1,
+      "message": "I think we need them for downloading domain-restricted apps.",
+      "parentUuid": "6870bae1_93db808d",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b226b39_430fc4b8",
         "filename": "chrome/browser/extensions/webstore_installer.cc",
         "patchSetId": 1
