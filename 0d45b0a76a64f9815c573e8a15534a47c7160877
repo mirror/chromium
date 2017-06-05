@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ddfd4db_4e870dad",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4317,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-06-05T18:21:12Z",
+      "side": 0,
+      "message": "The reason I asked for a DCHECK is here you removed this check.  So we want to make sure it\u0027s never nullptr, from the right beginning.  Feel free to do it as a follow up.",
+      "range": {
+        "startLine": 4317,
+        "startChar": 6,
+        "endLine": 4317,
+        "endChar": 28
+      },
+      "revId": "0d45b0a76a64f9815c573e8a15534a47c7160877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
