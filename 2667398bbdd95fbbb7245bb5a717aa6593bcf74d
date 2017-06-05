@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8983c3b7_009be69b",
+        "filename": "components/offline_pages/core/prefetch/offline_metrics_collector_stub.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-05T18:30:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56c6bef2_acaad594",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 39
+      },
+      "revId": "2667398bbdd95fbbb7245bb5a717aa6593bcf74d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1093fcf7_3e93b5a2",
         "filename": "components/offline_pages/core/prefetch/prefetch_service_stub_taco.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "2667398bbdd95fbbb7245bb5a717aa6593bcf74d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9767a318_aca4cab3",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_stub_taco.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-05T18:30:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1093fcf7_3e93b5a2",
+      "range": {
+        "startLine": 19,
+        "startChar": 47,
+        "endLine": 19,
+        "endChar": 66
+      },
+      "revId": "2667398bbdd95fbbb7245bb5a717aa6593bcf74d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e2fa2416_d3e61c1a",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_stub_taco.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-05T18:30:45Z",
+      "side": 1,
+      "message": "I think that ultimately the behavior of the service will depend on the dispatcher, so the test one should probably have the production logic.  If that changes, I\u0027m happy to add a test version.",
+      "parentUuid": "ac234f87_39ab8eee",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "2667398bbdd95fbbb7245bb5a717aa6593bcf74d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9cf4472_0fe63d3a",
         "filename": "components/offline_pages/core/prefetch/prefetch_service_stub_taco.h",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "2667398bbdd95fbbb7245bb5a717aa6593bcf74d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e41bba0d_11e1a4f9",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_stub_taco.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-05T18:30:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9cf4472_0fe63d3a",
+      "range": {
+        "startLine": 36,
+        "startChar": 41,
+        "endLine": 36,
+        "endChar": 65
+      },
+      "revId": "2667398bbdd95fbbb7245bb5a717aa6593bcf74d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
