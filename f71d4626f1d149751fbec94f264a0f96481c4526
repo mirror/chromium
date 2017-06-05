@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a738370_aca7635d",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-06-05T13:34:54Z",
+      "side": 1,
+      "message": "Would it be clearer to pass the event type, instead of \"hit_test_all_points\"?\n\nWithout looking at the code, I\u0027d assume that HitTestTouchEvent on a single pointer touchmove would work without |hit_test_all_points| being set.",
+      "range": {
+        "startLine": 1045,
+        "startChar": 9,
+        "endLine": 1045,
+        "endChar": 28
+      },
+      "revId": "f71d4626f1d149751fbec94f264a0f96481c4526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b9d90c_d1d4594d",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-06-05T13:34:54Z",
+      "side": 1,
+      "message": "Should this be renamed something that isn\u0027t touch start specific?",
+      "range": {
+        "startLine": 1054,
+        "startChar": 24,
+        "endLine": 1054,
+        "endChar": 56
+      },
+      "revId": "f71d4626f1d149751fbec94f264a0f96481c4526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "313f1bdf_456e2868",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-06-05T13:34:54Z",
+      "side": 1,
+      "message": "I think this is easier to read inverted.\n\nif (touch_result_ \u003d\u003d kEventDispositionUndefined || touch_event.touch_start_or_first_touch_move) {\n  bool is_touching_scrolling_layer;\n  return HitTestTouchEvent(touch_event, true, \u0026is_touching_scrolling_layer);\n}\nreturn static_cast\u003cEventDisposition\u003e(touch_result_);",
+      "range": {
+        "startLine": 1131,
+        "startChar": 6,
+        "endLine": 1132,
+        "endChar": 50
+      },
+      "revId": "f71d4626f1d149751fbec94f264a0f96481c4526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1861097_50feb9d0",
+        "filename": "ui/events/blink/input_handler_proxy_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2556,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-06-05T13:34:54Z",
+      "side": 1,
+      "message": "I think putting the expected value inline would make the test easier to read (and below)",
+      "range": {
+        "startLine": 2556,
+        "startChar": 12,
+        "endLine": 2556,
+        "endChar": 33
+      },
+      "revId": "f71d4626f1d149751fbec94f264a0f96481c4526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
