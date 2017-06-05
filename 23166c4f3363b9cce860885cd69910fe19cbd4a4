@@ -140,6 +140,24 @@
       "revId": "23166c4f3363b9cce860885cd69910fe19cbd4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cab2f21f_7dda0eb2",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1449,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-05T01:03:25Z",
+      "side": 1,
+      "message": "Ah... This is a very good point.\n\nOilpan\u0027s GC needs to run even when a V8 instance does not exist (e.g., when scripts are disabled, when scripts are not yet loaded etc). The situation is the same in layout, style recalc etc.\n\nI begin to think that it might not be a good idea to associate RCS with V8\u0027s isolate. I think that an ideal solution would be:\n\n- Introduce PerThreadData (See this bug  as well: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d663632).\n- Associate RCS with PerThreadData.\n- Make the caller site use currentThreadData() to get the PerThreadData of that thread.\n\nWhat do you think? Would it be an overkill?\n\n(I\u0027m sorry that I couldn\u0027t notice this when reviewing your design doc.)",
+      "parentUuid": "31aa4694_5f45582c",
+      "revId": "23166c4f3363b9cce860885cd69910fe19cbd4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
