@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1cb6ea2_b9bd5b11",
+        "filename": "chrome/browser/gcm/gcm_profile_service_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-05T23:11:13Z",
+      "side": 1,
+      "message": "Why is this include needed?",
+      "revId": "7c78e88d0cd98832f3af25c4884cbfd4daa1715d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddcca066_e736cbbf",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_instance_id_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-05T23:11:13Z",
+      "side": 1,
+      "message": "instance_id.cc defines this constant which should be exposed in header file. File a bug and I will fix this.",
+      "revId": "7c78e88d0cd98832f3af25c4884cbfd4daa1715d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f435a1a4_fc1f02df",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_instance_id_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-05T23:11:13Z",
+      "side": 1,
+      "message": "I think this should be moved to constructor.",
+      "range": {
+        "startLine": 41,
+        "startChar": 9,
+        "endLine": 41,
+        "endChar": 41
+      },
+      "revId": "7c78e88d0cd98832f3af25c4884cbfd4daa1715d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b128b00_5c803a14",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_instance_id_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-05T23:11:13Z",
+      "side": 1,
+      "message": "I think we should DCHECK(service). The InstanceIDProfileService should only be null for incgonito profile for which PrefetchService is also null.\n\nI think it is bad to return InstanceID::DISABLED, though not likely, in this case.\n\nIndeed these lines could be moved after the block of \"if (!token_.empty()) {\".",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 14
+      },
+      "revId": "7c78e88d0cd98832f3af25c4884cbfd4daa1715d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
