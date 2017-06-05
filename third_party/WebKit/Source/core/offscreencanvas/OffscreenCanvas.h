@@ -152,11 +152,12 @@ class CORE_EXPORT OffscreenCanvas final
 
   bool IsWebGLAllowed() const override { return true; }
 
+  OffscreenCanvasFrameDispatcher* GetOrCreateFrameDispatcher();
+
   DECLARE_VIRTUAL_TRACE();
 
  private:
   explicit OffscreenCanvas(const IntSize&);
-  OffscreenCanvasFrameDispatcher* GetOrCreateFrameDispatcher();
   void DoCommit();
   using ContextFactoryVector =
       Vector<std::unique_ptr<CanvasRenderingContextFactory>>;
