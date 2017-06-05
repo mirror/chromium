@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2f01aa2_448e3b90",
+        "filename": "services/preferences/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-05T05:33:58Z",
+      "side": 1,
+      "message": "The pref service",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 17
+      },
+      "revId": "5b80e9866c165776e73040badcb6b998886d7bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "033d7a78_c6f1b488",
+        "filename": "services/preferences/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-05T05:33:58Z",
+      "side": 1,
+      "message": "There is a pref service instance per profile (prefs are persisted on a per-profile basis).",
+      "range": {
+        "startLine": 14,
+        "startChar": 43,
+        "endLine": 14,
+        "endChar": 71
+      },
+      "revId": "5b80e9866c165776e73040badcb6b998886d7bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e9eabb_95625dca",
+        "filename": "services/preferences/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-05T05:33:58Z",
+      "side": 1,
+      "message": "Using the pref service",
+      "revId": "5b80e9866c165776e73040badcb6b998886d7bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a8ea7f_8b7501b1",
+        "filename": "services/preferences/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-05T05:33:58Z",
+      "side": 1,
+      "message": "The pref service",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 11
+      },
+      "revId": "5b80e9866c165776e73040badcb6b998886d7bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
