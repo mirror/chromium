@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa26df78_8792fdce",
+        "filename": "services/preferences/persistent_pref_store_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-05T14:38:47Z",
+      "side": 1,
+      "message": "The interface uses base::OnceClosure and I don\u0027t see where CommitPendingWriteCallback is defined nor why a custom type is required?",
+      "range": {
+        "startLine": 60,
+        "startChar": 26,
+        "endLine": 60,
+        "endChar": 53
+      },
+      "revId": "025535a63918a2e54f0f238399e25eed031e82ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
