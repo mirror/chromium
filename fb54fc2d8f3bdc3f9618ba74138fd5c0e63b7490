@@ -22,6 +22,30 @@
       "revId": "fb54fc2d8f3bdc3f9618ba74138fd5c0e63b7490",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa704eee_346ba582",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/worklet/webexposed/global-interface-listing-paint-worklet-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-05T20:45:36Z",
+      "side": 1,
+      "message": "Good point. I didn\u0027t realize that CSSNumericValue is : CSSStyleValue. I added [Exposed\u003dWindow] in CSSNumericValue.idl, specifically for the parse method.",
+      "parentUuid": "1c16c4df_e6d936ec",
+      "range": {
+        "startLine": 18,
+        "startChar": 31,
+        "endLine": 18,
+        "endChar": 37
+      },
+      "revId": "fb54fc2d8f3bdc3f9618ba74138fd5c0e63b7490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
