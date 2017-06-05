@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "74315024_fdddce3d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/autofill/PersonalDataManager.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-05T19:18:22Z",
+      "side": 1,
+      "message": "It would be easier to maintain to auto generate enum for java side. I\u0027ve suggested to do that for metrics, https://codereview.chromium.org/2904083003/.",
+      "range": {
+        "startLine": 355,
+        "startChar": 8,
+        "endLine": 355,
+        "endChar": 14
+      },
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "094eaf0c_62606380",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentApp.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-05T19:18:22Z",
+      "side": 1,
+      "message": "Why using Integer instead of int?  \u00270\u0027 is a reserved invalid resource Id. (https://developer.android.com/reference/android/content/res/Resources.html#getIdentifier%28java.lang.String,%20java.lang.String,%20java.lang.String%29)\n\nOtherwise annotate this interface Nullable?\n\nMight shorten the interface to \"getAdditionalAppTextResourceId\" as well?",
+      "range": {
+        "startLine": 517,
+        "startChar": 11,
+        "endLine": 517,
+        "endChar": 18
+      },
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c6b1e9_890f7a88",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AutofillPaymentApp.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-05T19:18:22Z",
+      "side": 1,
+      "message": "why Integer instead of int?",
+      "range": {
+        "startLine": 38,
+        "startChar": 16,
+        "endLine": 38,
+        "endChar": 23
+      },
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7493d1b_371f75c6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AutofillPaymentApp.java",
         "patchSetId": 7
@@ -48,6 +117,52 @@
     },
     {
       "key": {
+        "uuid": "823064b8_12a35141",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AutofillPaymentApp.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-05T19:18:22Z",
+      "side": 1,
+      "message": "why Integer is preferred here instead of primitive type?",
+      "range": {
+        "startLine": 127,
+        "startChar": 12,
+        "endLine": 127,
+        "endChar": 19
+      },
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d994fdd_c2198c69",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AutofillPaymentApp.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-05T19:18:22Z",
+      "side": 1,
+      "message": "one space line below?",
+      "range": {
+        "startLine": 194,
+        "startChar": 9,
+        "endLine": 194,
+        "endChar": 0
+      },
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c7f7bd1_f8f700f9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/CardEditor.java",
         "patchSetId": 7
@@ -64,6 +179,98 @@
         "startChar": 76,
         "endLine": 368,
         "endChar": 81
+      },
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d665da4_f96cab8f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1540,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-05T19:18:22Z",
+      "side": 1,
+      "message": "assert app instanceof AutofillPaymentApp   ?",
+      "range": {
+        "startLine": 1540,
+        "startChar": 12,
+        "endLine": 1540,
+        "endChar": 18
+      },
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a3555c_4da1d823",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/SectionInformation.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-05T19:18:22Z",
+      "side": 1,
+      "message": "text",
+      "range": {
+        "startLine": 213,
+        "startChar": 15,
+        "endLine": 213,
+        "endChar": 18
+      },
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "634e4185_994fd609",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/SectionInformation.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-05T19:18:22Z",
+      "side": 1,
+      "message": "annotate Nullable?",
+      "range": {
+        "startLine": 219,
+        "startChar": 4,
+        "endLine": 219,
+        "endChar": 10
+      },
+      "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d0a4fe_2a417829",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestDontHaveDebitTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-05T19:18:22Z",
+      "side": 1,
+      "message": "\\has",
+      "range": {
+        "startLine": 29,
+        "startChar": 88,
+        "endLine": 29,
+        "endChar": 91
       },
       "revId": "565f7453ad8e67410e0cce361a1641121a8b6627",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
