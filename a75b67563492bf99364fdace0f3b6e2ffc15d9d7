@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f1effef_c3989954",
+        "filename": "components/download/internal/proto/entry.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-05T17:34:24Z",
+      "side": 1,
+      "message": "Should we just make these -1, -2, -3 so that our histogram can just be straightforward 0 -\u003e max of real clients?",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 13
+      },
+      "revId": "a75b67563492bf99364fdace0f3b6e2ffc15d9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30213188_316278d7",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-05T17:34:24Z",
+      "side": 1,
+      "message": "Can we group the logic parts of the if statements?  Here\u0027s a potential suggestion, up to you how you do it though.\n\nbool is_ui \u003d candidate-\u003eschedul....\n\nif (!entry || is_ui) {\n  entry \u003d candidate;\n  DCHECK(entry);\n  current_client_index_ \u003d (index + i + 1) % download_clients_.size();\n\n  if (is_ui)\n    break;\n}",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 6
+      },
+      "revId": "a75b67563492bf99364fdace0f3b6e2ffc15d9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7f553ca_6d00f666",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-05T17:34:24Z",
+      "side": 1,
+      "message": "Do we need this?  What is map\u0027s operator[] return if there is no value for that key if the template V is a pointer?",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 22
+      },
+      "revId": "a75b67563492bf99364fdace0f3b6e2ffc15d9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9c65be3_d8e0b775",
+        "filename": "components/download/internal/scheduler/scheduler_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-05T17:34:24Z",
+      "side": 1,
+      "message": "space after 1.  Same for other comments like this",
+      "range": {
+        "startLine": 280,
+        "startChar": 27,
+        "endLine": 280,
+        "endChar": 28
+      },
+      "revId": "a75b67563492bf99364fdace0f3b6e2ffc15d9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e71739_0b14b75e",
+        "filename": "components/download/internal/scheduler/scheduler_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-05T17:34:24Z",
+      "side": 1,
+      "message": ". at end",
+      "range": {
+        "startLine": 325,
+        "startChar": 43,
+        "endLine": 325,
+        "endChar": 0
+      },
+      "revId": "a75b67563492bf99364fdace0f3b6e2ffc15d9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82a54fb_04ee8a48",
+        "filename": "components/download/public/clients.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-05T17:34:24Z",
+      "side": 1,
+      "message": "Same as other comment.  -1, -2, -3?",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 11
+      },
+      "revId": "a75b67563492bf99364fdace0f3b6e2ffc15d9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
