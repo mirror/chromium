@@ -93,6 +93,30 @@
       "revId": "71c40acd947403d2b55434d1d700f3bdf7e7026b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6be3ea35_bc77af09",
+        "filename": "gpu/command_buffer/service/renderbuffer_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-05T23:16:48Z",
+      "side": 1,
+      "message": "\u003e \u003e Should you use  scoped_refptr\u003cFramebuffer\u003e instead?\n\u003e \n\u003e Yes, good idea. Done.\n\nDrive-by: doesn\u0027t this cause a refcounting loop? Framebuffer-\u003eAttachment(Renderbuffer)-\u003eFramebuffer?",
+      "parentUuid": "3541d0ba_f4f40ebe",
+      "range": {
+        "startLine": 133,
+        "startChar": 27,
+        "endLine": 133,
+        "endChar": 38
+      },
+      "revId": "71c40acd947403d2b55434d1d700f3bdf7e7026b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
