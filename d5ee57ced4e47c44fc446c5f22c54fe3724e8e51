@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d79cdee_3aea2230",
+        "filename": "content/test/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1002068
+      },
+      "writtenOn": "2017-06-05T17:50:58Z",
+      "side": 1,
+      "message": "isn\u0027t this true by default now?",
+      "revId": "d5ee57ced4e47c44fc446c5f22c54fe3724e8e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "979b89f7_8b121083",
+        "filename": "third_party/WebKit/Source/core/mojo/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002068
+      },
+      "writtenOn": "2017-06-05T17:50:58Z",
+      "side": 1,
+      "message": "should these be in a test_only target?",
+      "revId": "d5ee57ced4e47c44fc446c5f22c54fe3724e8e51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
