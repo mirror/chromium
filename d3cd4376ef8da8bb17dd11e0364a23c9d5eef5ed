@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "752548db_818af7b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-06-06T06:47:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ba55e14_ef62f80c",
+      "revId": "d3cd4376ef8da8bb17dd11e0364a23c9d5eef5ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64b9c3dd_c353c1f2",
         "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ad3f4f83_7dbeabb6",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-06-06T06:47:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64b9c3dd_c353c1f2",
+      "revId": "d3cd4376ef8da8bb17dd11e0364a23c9d5eef5ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3f963e0_30040b48",
         "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-06T06:26:46Z",
       "side": 1,
       "message": "* Same, add {}\n* To be consistent with L609, this should be just \u0027else\u0027.",
+      "revId": "d3cd4376ef8da8bb17dd11e0364a23c9d5eef5ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05367c1d_db06ca5a",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1002188
+      },
+      "writtenOn": "2017-06-06T06:47:03Z",
+      "side": 1,
+      "message": "I think it\u0027ll be better to check on both side?",
+      "parentUuid": "f3f963e0_30040b48",
       "revId": "d3cd4376ef8da8bb17dd11e0364a23c9d5eef5ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
