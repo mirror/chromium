@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12812821_6420c8d9",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-06-06T01:02:09Z",
+      "side": 1,
+      "message": "the values you get back aren\u0027t necessarily the bits you passed to __mxio_wait_begin() - __mxio_wait_begin() will map the inputs you pass in to the internal signals appropriate for the implementation, then on the way back you need to translate back into the domain you care about (MXIO_EVT_...).  to do that, call __mxio_wait_end() with the raw signals from the kernel. it looks something like\n\nuint32_t signals;\n__mxio_wait_end(controller_-\u003eio_, packet.signal.observed, \u0026signals);\n\nthen test for (signals \u0026 MXIO_EVT_READABLE) etc\n\nthis is necessary since different implementations of the mxio_t* protocol may use different signal bits for readable/writable/etc",
+      "revId": "122701bf91ab1f0d0271cf01974ab16a7e598b5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
