@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "423e3c49_6b3ea235",
+        "filename": "chrome/browser/ui/views/payments/payment_request_completion_status_metrics_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-06-06T13:16:08Z",
+      "side": 1,
+      "message": "Do you want to test \"other abort\"? Perhaps closing the tab?",
+      "revId": "0cdf23e0e8e41a88d7b4680d64833decef0a8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85faf724_be0d2318",
+        "filename": "components/payments/content/payment_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-06-06T13:16:08Z",
+      "side": 1,
+      "message": "no curlies?",
+      "range": {
+        "startLine": 159,
+        "startChar": 23,
+        "endLine": 159,
+        "endChar": 24
+      },
+      "revId": "0cdf23e0e8e41a88d7b4680d64833decef0a8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bf480ca_2eb0b5ac",
+        "filename": "components/payments/content/payment_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-06-06T13:16:08Z",
+      "side": 1,
+      "message": "fix",
+      "range": {
+        "startLine": 268,
+        "startChar": 5,
+        "endLine": 268,
+        "endChar": 27
+      },
+      "revId": "0cdf23e0e8e41a88d7b4680d64833decef0a8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26dae370_9f7ab444",
+        "filename": "components/payments/content/payment_request.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-06-06T13:16:08Z",
+      "side": 1,
+      "message": "Add a comment what First means and why it\u0027s that way",
+      "range": {
+        "startLine": 102,
+        "startChar": 16,
+        "endLine": 102,
+        "endChar": 17
+      },
+      "revId": "0cdf23e0e8e41a88d7b4680d64833decef0a8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
