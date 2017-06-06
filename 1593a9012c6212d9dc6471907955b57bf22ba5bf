@@ -16,6 +16,24 @@
       "revId": "1593a9012c6212d9dc6471907955b57bf22ba5bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08f6a9a1_91598d7b",
+        "filename": "media/filters/ffmpeg_glue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-06T23:58:48Z",
+      "side": 1,
+      "message": "Actually also tag this with the crbug and mention that this should be removed when we support post-decode discard.",
+      "parentUuid": "63a8e1a4_0b373d20",
+      "revId": "1593a9012c6212d9dc6471907955b57bf22ba5bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
