@@ -1,4 +1,4 @@
-// Copyright 2013 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -25,18 +25,18 @@ import android.view.accessibility.AccessibilityNodeProvider;
 import org.chromium.base.BuildInfo;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.RenderCoordinates;
+import org.chromium.content_public.browser.WebContents;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 /**
- * Native accessibility for a {@link ContentViewCore}.
+ * Native accessibility for a {@link WebContents}.
  */
 @JNINamespace("content")
-public class BrowserAccessibilityManager {
+public class WebContentsAccessibility {
     // Constants from AccessibilityNodeInfo defined in the K SDK.
     private static final int ACTION_COLLAPSE = 0x00080000;
     private static final int ACTION_EXPAND = 0x00040000;
@@ -57,10 +57,11 @@ public class BrowserAccessibilityManager {
     protected static final int ACTION_SCROLL_RIGHT = 0x0102003b;
 
     private final AccessibilityNodeProvider mAccessibilityNodeProvider;
-    protected ContentViewCore mContentViewCore;
+    private final Context mContext;
     private final AccessibilityManager mAccessibilityManager;
     private final RenderCoordinates mRenderCoordinates;
-    private long mNativeObj;
+    private final WebContents mWebContents;
+    protected long mNativeObj;
     private Rect mAccessibilityFocusRect;
     private boolean mIsHovering;
     private int mLastHoverId = View.NO_ID;
@@ -78,41 +79,35 @@ public class BrowserAccessibilityManager {
     private View mAutofillPopupView;
 
     /**
-     * Create a BrowserAccessibilityManager object, which is owned by the C++
-     * BrowserAccessibilityManagerAndroid instance, and connects to the content view.
-     * @param nativeBrowserAccessibilityManagerAndroid A pointer to the counterpart native
-     *     C++ object that owns this object.
-     * @param contentViewCore The content view that this object provides accessibility for.
+     * Create a WebContentsAccessibility object.
      */
-    @CalledByNative
-    private static BrowserAccessibilityManager create(long nativeBrowserAccessibilityManagerAndroid,
-            ContentViewCore contentViewCore) {
+    public static WebContentsAccessibility create(Context context, ViewGroup containerView,
+            WebContents webContents, RenderCoordinates renderCoordinates) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            return new LollipopBrowserAccessibilityManager(
-                    nativeBrowserAccessibilityManagerAndroid, contentViewCore);
+            return new LollipopWebContentsAccessibility(
+                    context, containerView, webContents, renderCoordinates);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            return new KitKatBrowserAccessibilityManager(
-                    nativeBrowserAccessibilityManagerAndroid, contentViewCore);
+            return new KitKatWebContentsAccessibility(
+                    context, containerView, webContents, renderCoordinates);
         } else {
-            return new BrowserAccessibilityManager(
-                    nativeBrowserAccessibilityManagerAndroid, contentViewCore);
+            return new WebContentsAccessibility(
+                    context, containerView, webContents, renderCoordinates);
         }
     }
 
-    protected BrowserAccessibilityManager(long nativeBrowserAccessibilityManagerAndroid,
-            ContentViewCore contentViewCore) {
-        mNativeObj = nativeBrowserAccessibilityManagerAndroid;
-        mContentViewCore = contentViewCore;
+    protected WebContentsAccessibility(Context context, ViewGroup containerView,
+            WebContents webContents, RenderCoordinates renderCoordinates) {
+        mContext = context;
+        mWebContents = webContents;
         mAccessibilityFocusId = View.NO_ID;
         mIsHovering = false;
         mCurrentRootId = View.NO_ID;
-        mView = mContentViewCore.getContainerView();
-        mRenderCoordinates = mContentViewCore.getRenderCoordinates();
+        mView = containerView;
+        mRenderCoordinates = renderCoordinates;
         mAccessibilityManager =
-            (AccessibilityManager) mContentViewCore.getContext()
-            .getSystemService(Context.ACCESSIBILITY_SERVICE);
+                (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
 
-        final BrowserAccessibilityManager delegate = this;
+        final WebContentsAccessibility delegate = this;
         mAccessibilityNodeProvider = new AccessibilityNodeProvider() {
             @Override
             public AccessibilityNodeInfo createAccessibilityNodeInfo(int virtualViewId) {
@@ -120,8 +115,8 @@ public class BrowserAccessibilityManager {
             }
 
             @Override
-            public List<AccessibilityNodeInfo> findAccessibilityNodeInfosByText(String text,
-                    int virtualViewId) {
+            public List<AccessibilityNodeInfo> findAccessibilityNodeInfosByText(
+                    String text, int virtualViewId) {
                 return delegate.findAccessibilityNodeInfosByText(text, virtualViewId);
             }
 
@@ -130,23 +125,16 @@ public class BrowserAccessibilityManager {
                 return delegate.performAction(virtualViewId, action, arguments);
             }
         };
-
-        // This must occur last as it may cause a call to notifyFrameInfoInitialized.
-        mContentViewCore.setBrowserAccessibilityManager(this);
+        mNativeObj = nativeInit(webContents);
     }
 
     @CalledByNative
-    private void onNativeObjectDestroyed(long nativeBrowserAccessibilityManagerAndroid) {
-        // There are multiple native objects, one for each frame, but we only have a pointer
-        // to the native object for the root frame.
-        if (nativeBrowserAccessibilityManagerAndroid != mNativeObj) return;
-
-        if (mContentViewCore != null
-                && mContentViewCore.getBrowserAccessibilityManager() == this) {
-            mContentViewCore.setBrowserAccessibilityManager(null);
-        }
+    private void onNativeObjectDestroyed() {
         mNativeObj = 0;
-        mContentViewCore = null;
+    }
+
+    public void setAccessibilityEnabled(boolean enabled) {
+        nativeSetAccessibilityEnabled(mNativeObj, enabled);
     }
 
     /**
@@ -174,7 +162,7 @@ public class BrowserAccessibilityManager {
         }
 
         final AccessibilityNodeInfo info = AccessibilityNodeInfo.obtain(mView);
-        info.setPackageName(mContentViewCore.getContext().getPackageName());
+        info.setPackageName(mContext.getPackageName());
         info.setSource(mView, virtualViewId);
 
         if (virtualViewId == rootId) {
@@ -192,8 +180,8 @@ public class BrowserAccessibilityManager {
     /**
      * @see AccessibilityNodeProvider#findAccessibilityNodeInfosByText(String, int)
      */
-    protected List<AccessibilityNodeInfo> findAccessibilityNodeInfosByText(String text,
-            int virtualViewId) {
+    protected List<AccessibilityNodeInfo> findAccessibilityNodeInfosByText(
+            String text, int virtualViewId) {
         return new ArrayList<AccessibilityNodeInfo>();
     }
 
@@ -222,8 +210,7 @@ public class BrowserAccessibilityManager {
             case AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS:
                 if (!moveAccessibilityFocusToId(virtualViewId)) return true;
                 if (!mIsHovering) {
-                    nativeScrollToMakeNodeVisible(
-                            mNativeObj, mAccessibilityFocusId);
+                    nativeScrollToMakeNodeVisible(mNativeObj, mAccessibilityFocusId);
                 } else {
                     mPendingScrollToMakeNodeVisible = true;
                 }
@@ -231,8 +218,8 @@ public class BrowserAccessibilityManager {
             case AccessibilityNodeInfo.ACTION_CLEAR_ACCESSIBILITY_FOCUS:
                 // ALWAYS respond with TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED whether we thought
                 // it had focus or not, so that the Android framework cache is correct.
-                sendAccessibilityEvent(virtualViewId,
-                        AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED);
+                sendAccessibilityEvent(
+                        virtualViewId, AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUS_CLEARED);
                 if (mAccessibilityFocusId == virtualViewId) {
                     mAccessibilityFocusId = View.NO_ID;
                     mAccessibilityFocusRect = null;
@@ -266,8 +253,7 @@ public class BrowserAccessibilityManager {
             case ACTION_SET_TEXT: {
                 if (!nativeIsEditableText(mNativeObj, virtualViewId)) return false;
                 if (arguments == null) return false;
-                String newText = arguments.getString(
-                        ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE);
+                String newText = arguments.getString(ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE);
                 if (newText == null) return false;
                 nativeSetTextFieldValue(mNativeObj, virtualViewId, newText);
                 // Match Android framework and set the cursor to the end of the text field.
@@ -314,20 +300,20 @@ public class BrowserAccessibilityManager {
             case AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD:
                 return scrollBackward(virtualViewId);
             case AccessibilityNodeInfo.ACTION_CUT:
-                if (mContentViewCore != null && mContentViewCore.getWebContents() != null) {
-                    mContentViewCore.getWebContents().cut();
+                if (mWebContents != null) {
+                    mWebContents.cut();
                     return true;
                 }
                 return false;
             case AccessibilityNodeInfo.ACTION_COPY:
-                if (mContentViewCore != null && mContentViewCore.getWebContents() != null) {
-                    mContentViewCore.getWebContents().copy();
+                if (mWebContents != null) {
+                    mWebContents.copy();
                     return true;
                 }
                 return false;
             case AccessibilityNodeInfo.ACTION_PASTE:
-                if (mContentViewCore != null && mContentViewCore.getWebContents() != null) {
-                    mContentViewCore.getWebContents().paste();
+                if (mWebContents != null) {
+                    mWebContents.paste();
                     return true;
                 }
                 return false;
@@ -395,8 +381,7 @@ public class BrowserAccessibilityManager {
                 mLastHoverId = View.NO_ID;
             }
             if (mPendingScrollToMakeNodeVisible) {
-                nativeScrollToMakeNodeVisible(
-                        mNativeObj, mAccessibilityFocusId);
+                nativeScrollToMakeNodeVisible(mNativeObj, mAccessibilityFocusId);
             }
             mPendingScrollToMakeNodeVisible = false;
             return true;
@@ -418,11 +403,12 @@ public class BrowserAccessibilityManager {
     }
 
     /**
-     * Called by ContentViewCore to notify us when the frame info is initialized,
+     * Notify us when the frame info is initialized,
      * the first time, since until that point, we can't use mRenderCoordinates to transform
      * web coordinates to screen coordinates.
      */
-    public void notifyFrameInfoInitialized() {
+    @CalledByNative
+    private void notifyFrameInfoInitialized() {
         if (mNotifyFrameInfoInitializedCalled) return;
 
         mNotifyFrameInfoInitializedCalled = true;
@@ -455,10 +441,10 @@ public class BrowserAccessibilityManager {
         mSelectionGranularity = granularity;
         if (nativeIsEditableText(mNativeObj, mAccessibilityFocusId)
                 && nativeIsFocused(mNativeObj, mAccessibilityFocusId)) {
-            mSelectionStartIndex = nativeGetEditableTextSelectionStart(
-                    mNativeObj, mAccessibilityFocusId);
-            mSelectionEndIndex = nativeGetEditableTextSelectionEnd(
-                    mNativeObj, mAccessibilityFocusId);
+            mSelectionStartIndex =
+                    nativeGetEditableTextSelectionStart(mNativeObj, mAccessibilityFocusId);
+            mSelectionEndIndex =
+                    nativeGetEditableTextSelectionEnd(mNativeObj, mAccessibilityFocusId);
         }
     }
 
@@ -477,13 +463,13 @@ public class BrowserAccessibilityManager {
     }
 
     @CalledByNative
-    private void finishGranularityMove(String text, boolean extendSelection,
-            int itemStartIndex, int itemEndIndex, boolean forwards) {
+    private void finishGranularityMove(String text, boolean extendSelection, int itemStartIndex,
+            int itemEndIndex, boolean forwards) {
         if (mNativeObj == 0) return;
 
         // Prepare to send both a selection and a traversal event in sequence.
-        AccessibilityEvent selectionEvent = buildAccessibilityEvent(mAccessibilityFocusId,
-                AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED);
+        AccessibilityEvent selectionEvent = buildAccessibilityEvent(
+                mAccessibilityFocusId, AccessibilityEvent.TYPE_VIEW_TEXT_SELECTION_CHANGED);
         if (selectionEvent == null) return;
         AccessibilityEvent traverseEvent = buildAccessibilityEvent(mAccessibilityFocusId,
                 AccessibilityEvent.TYPE_VIEW_TEXT_TRAVERSED_AT_MOVEMENT_GRANULARITY);
@@ -504,8 +490,8 @@ public class BrowserAccessibilityManager {
         }
         if (nativeIsEditableText(mNativeObj, mAccessibilityFocusId)
                 && nativeIsFocused(mNativeObj, mAccessibilityFocusId)) {
-            nativeSetSelection(mNativeObj, mAccessibilityFocusId,
-                    mSelectionStartIndex, mSelectionEndIndex);
+            nativeSetSelection(
+                    mNativeObj, mAccessibilityFocusId, mSelectionStartIndex, mSelectionEndIndex);
         }
 
         // The selection event's "from" and "to" indices are just a cursor at the focus
@@ -526,8 +512,7 @@ public class BrowserAccessibilityManager {
         if (forwards) {
             traverseEvent.setAction(AccessibilityNodeInfo.ACTION_NEXT_AT_MOVEMENT_GRANULARITY);
         } else {
-            traverseEvent.setAction(
-                    AccessibilityNodeInfo.ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY);
+            traverseEvent.setAction(AccessibilityNodeInfo.ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY);
         }
 
         mView.requestSendAccessibilityEvent(mView, selectionEvent);
@@ -571,8 +556,8 @@ public class BrowserAccessibilityManager {
             nativeSetAccessibilityFocus(mNativeObj, mAccessibilityFocusId);
         }
 
-        sendAccessibilityEvent(mAccessibilityFocusId,
-                AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED);
+        sendAccessibilityEvent(
+                mAccessibilityFocusId, AccessibilityEvent.TYPE_VIEW_ACCESSIBILITY_FOCUSED);
         return true;
     }
 
@@ -610,7 +595,7 @@ public class BrowserAccessibilityManager {
 
     private void sendWindowContentChangedOnView() {
         // This can be called from a timeout, so we need to make sure we're still valid.
-        if (mNativeObj == 0 || mContentViewCore == null || mView == null) return;
+        if (mNativeObj == 0 || mView == null) return;
 
         if (mSendWindowContentChangedRunnable != null) {
             mView.removeCallbacks(mSendWindowContentChangedRunnable);
@@ -641,8 +626,7 @@ public class BrowserAccessibilityManager {
         // If we don't have any frame info, then the virtual hierarchy
         // doesn't exist in the view of the Android framework, so should
         // never send any events.
-        if (!mAccessibilityManager.isEnabled() || mNativeObj == 0
-                || !isFrameInfoInitialized()) {
+        if (!mAccessibilityManager.isEnabled() || mNativeObj == 0 || !isFrameInfoInitialized()) {
             return null;
         }
 
@@ -653,7 +637,7 @@ public class BrowserAccessibilityManager {
         mView.postInvalidate();
 
         final AccessibilityEvent event = AccessibilityEvent.obtain(eventType);
-        event.setPackageName(mContentViewCore.getContext().getPackageName());
+        event.setPackageName(mContext.getPackageName());
         event.setSource(mView, virtualViewId);
         if (!nativePopulateAccessibilityEvent(mNativeObj, event, virtualViewId, eventType)) {
             event.recycle();
@@ -722,10 +706,7 @@ public class BrowserAccessibilityManager {
     private void handlePageLoaded(int id) {
         if (mNativeObj == 0) return;
         if (mUserHasTouchExplored) return;
-
-        if (mContentViewCore.shouldSetAccessibilityFocusOnPageLoad()) {
-            moveAccessibilityFocusToIdAndRefocusIfNeeded(id);
-        }
+        moveAccessibilityFocusToIdAndRefocusIfNeeded(id);
     }
 
     @CalledByNative
@@ -830,8 +811,7 @@ public class BrowserAccessibilityManager {
 
     @CalledByNative
     private void setAccessibilityNodeInfoBooleanAttributes(AccessibilityNodeInfo node,
-            int virtualViewId,
-            boolean checkable, boolean checked, boolean clickable,
+            int virtualViewId, boolean checkable, boolean checked, boolean clickable,
             boolean enabled, boolean focusable, boolean focused, boolean password,
             boolean scrollable, boolean selected, boolean visibleToUser) {
         node.setCheckable(checkable);
@@ -845,8 +825,7 @@ public class BrowserAccessibilityManager {
         node.setSelected(selected);
         node.setVisibleToUser(visibleToUser);
 
-        node.setMovementGranularities(
-                AccessibilityNodeInfo.MOVEMENT_GRANULARITY_CHARACTER
+        node.setMovementGranularities(AccessibilityNodeInfo.MOVEMENT_GRANULARITY_CHARACTER
                 | AccessibilityNodeInfo.MOVEMENT_GRANULARITY_WORD
                 | AccessibilityNodeInfo.MOVEMENT_GRANULARITY_LINE);
 
@@ -859,7 +838,7 @@ public class BrowserAccessibilityManager {
 
     // For anything lower than API level 21 (Lollipop), calls AccessibilityNodeInfo.addAction(int)
     // if it's a supported action, and does nothing otherwise.  For 21 and higher, this is
-    // overridden in LollipopBrowserAccessibilityManager using the new non-deprecated API.
+    // overridden in LollipopWebContentsAccessibility using the new non-deprecated API.
     @SuppressWarnings("deprecation")
     protected void addAction(AccessibilityNodeInfo node, int actionId) {
         // Before API level 21, it's not possible to expose actions other than the "legacy standard"
@@ -870,12 +849,11 @@ public class BrowserAccessibilityManager {
     }
 
     @CalledByNative
-    protected void addAccessibilityNodeInfoActions(AccessibilityNodeInfo node,
-            int virtualViewId, boolean canScrollForward, boolean canScrollBackward,
-            boolean canScrollUp, boolean canScrollDown, boolean canScrollLeft,
-            boolean canScrollRight, boolean clickable, boolean editableText, boolean enabled,
-            boolean focusable, boolean focused, boolean isCollapsed, boolean isExpanded,
-            boolean hasNonEmptyValue) {
+    protected void addAccessibilityNodeInfoActions(AccessibilityNodeInfo node, int virtualViewId,
+            boolean canScrollForward, boolean canScrollBackward, boolean canScrollUp,
+            boolean canScrollDown, boolean canScrollLeft, boolean canScrollRight, boolean clickable,
+            boolean editableText, boolean enabled, boolean focusable, boolean focused,
+            boolean isCollapsed, boolean isExpanded, boolean hasNonEmptyValue) {
         addAction(node, AccessibilityNodeInfo.ACTION_NEXT_HTML_ELEMENT);
         addAction(node, AccessibilityNodeInfo.ACTION_PREVIOUS_HTML_ELEMENT);
         addAction(node, AccessibilityNodeInfo.ACTION_NEXT_AT_MOVEMENT_GRANULARITY);
@@ -948,8 +926,7 @@ public class BrowserAccessibilityManager {
     }
 
     @CalledByNative
-    private void setAccessibilityNodeInfoClassName(AccessibilityNodeInfo node,
-            String className) {
+    private void setAccessibilityNodeInfoClassName(AccessibilityNodeInfo node, String className) {
         node.setClassName(className);
     }
 
@@ -976,9 +953,8 @@ public class BrowserAccessibilityManager {
 
     @CalledByNative
     private void setAccessibilityNodeInfoLocation(AccessibilityNodeInfo node,
-            final int virtualViewId,
-            int absoluteLeft, int absoluteTop, int parentRelativeLeft, int parentRelativeTop,
-            int width, int height, boolean isRootNode) {
+            final int virtualViewId, int absoluteLeft, int absoluteTop, int parentRelativeLeft,
+            int parentRelativeTop, int width, int height, boolean isRootNode) {
         // First set the bounds in parent.
         Rect boundsInParent = new Rect(parentRelativeLeft, parentRelativeTop,
                 parentRelativeLeft + width, parentRelativeTop + height);
@@ -992,8 +968,7 @@ public class BrowserAccessibilityManager {
         Rect rect = new Rect(absoluteLeft, absoluteTop, absoluteLeft + width, absoluteTop + height);
 
         // Offset by the scroll position.
-        rect.offset(-(int) mRenderCoordinates.getScrollX(),
-                    -(int) mRenderCoordinates.getScrollY());
+        rect.offset(-(int) mRenderCoordinates.getScrollX(), -(int) mRenderCoordinates.getScrollY());
 
         // Convert CSS (web) pixels to Android View pixels
         rect.left = (int) mRenderCoordinates.fromLocalCssToPix(rect.left);
@@ -1002,8 +977,7 @@ public class BrowserAccessibilityManager {
         rect.right = (int) mRenderCoordinates.fromLocalCssToPix(rect.right);
 
         // Offset by the location of the web content within the view.
-        rect.offset(0,
-                    (int) mRenderCoordinates.getContentOffsetYPix());
+        rect.offset(0, (int) mRenderCoordinates.getContentOffsetYPix());
 
         // Finally offset by the location of the view within the screen.
         final int[] viewLocation = new int[2];
@@ -1012,7 +986,7 @@ public class BrowserAccessibilityManager {
 
         // Clip the node's bounding rect to the viewport bounds.
         int viewportRectTop = viewLocation[1] + (int) mRenderCoordinates.getContentOffsetYPix();
-        int viewportRectBottom = viewportRectTop + mContentViewCore.getViewportHeightPix();
+        int viewportRectBottom = viewportRectTop + mView.getHeight();
         if (rect.top < viewportRectTop) rect.top = viewportRectTop;
         if (rect.bottom > viewportRectBottom) rect.bottom = viewportRectBottom;
 
@@ -1042,18 +1016,14 @@ public class BrowserAccessibilityManager {
 
     @CalledByNative
     protected void setAccessibilityNodeInfoLollipopAttributes(AccessibilityNodeInfo node,
-            boolean canOpenPopup,
-            boolean contentInvalid,
-            boolean dismissable,
-            boolean multiLine,
-            int inputType,
-            int liveRegion) {
+            boolean canOpenPopup, boolean contentInvalid, boolean dismissable, boolean multiLine,
+            int inputType, int liveRegion) {
         // Requires Lollipop or higher.
     }
 
     @CalledByNative
-    protected void setAccessibilityNodeInfoCollectionInfo(AccessibilityNodeInfo node,
-            int rowCount, int columnCount, boolean hierarchical) {
+    protected void setAccessibilityNodeInfoCollectionInfo(
+            AccessibilityNodeInfo node, int rowCount, int columnCount, boolean hierarchical) {
         // Requires Lollipop or higher.
     }
 
@@ -1064,8 +1034,8 @@ public class BrowserAccessibilityManager {
     }
 
     @CalledByNative
-    protected void setAccessibilityNodeInfoRangeInfo(AccessibilityNodeInfo node,
-            int rangeType, float min, float max, float current) {
+    protected void setAccessibilityNodeInfoRangeInfo(
+            AccessibilityNodeInfo node, int rangeType, float min, float max, float current) {
         // Requires Lollipop or higher.
     }
 
@@ -1076,8 +1046,8 @@ public class BrowserAccessibilityManager {
     }
 
     @CalledByNative
-    private void setAccessibilityEventBooleanAttributes(AccessibilityEvent event,
-            boolean checked, boolean enabled, boolean password, boolean scrollable) {
+    private void setAccessibilityEventBooleanAttributes(AccessibilityEvent event, boolean checked,
+            boolean enabled, boolean password, boolean scrollable) {
         event.setChecked(checked);
         event.setEnabled(enabled);
         event.setPassword(password);
@@ -1090,15 +1060,15 @@ public class BrowserAccessibilityManager {
     }
 
     @CalledByNative
-    private void setAccessibilityEventListAttributes(AccessibilityEvent event,
-            int currentItemIndex, int itemCount) {
+    private void setAccessibilityEventListAttributes(
+            AccessibilityEvent event, int currentItemIndex, int itemCount) {
         event.setCurrentItemIndex(currentItemIndex);
         event.setItemCount(itemCount);
     }
 
     @CalledByNative
-    private void setAccessibilityEventScrollAttributes(AccessibilityEvent event,
-            int scrollX, int scrollY, int maxScrollX, int maxScrollY) {
+    private void setAccessibilityEventScrollAttributes(
+            AccessibilityEvent event, int scrollX, int scrollY, int maxScrollX, int maxScrollY) {
         event.setScrollX(scrollX);
         event.setScrollY(scrollY);
         event.setMaxScrollX(maxScrollX);
@@ -1106,8 +1076,8 @@ public class BrowserAccessibilityManager {
     }
 
     @CalledByNative
-    private void setAccessibilityEventTextChangedAttrs(AccessibilityEvent event,
-            int fromIndex, int addedCount, int removedCount, String beforeText, String text) {
+    private void setAccessibilityEventTextChangedAttrs(AccessibilityEvent event, int fromIndex,
+            int addedCount, int removedCount, String beforeText, String text) {
         event.setFromIndex(fromIndex);
         event.setAddedCount(addedCount);
         event.setRemovedCount(removedCount);
@@ -1116,8 +1086,8 @@ public class BrowserAccessibilityManager {
     }
 
     @CalledByNative
-    private void setAccessibilityEventSelectionAttrs(AccessibilityEvent event,
-            int fromIndex, int toIndex, int itemCount, String text) {
+    private void setAccessibilityEventSelectionAttrs(
+            AccessibilityEvent event, int fromIndex, int toIndex, int itemCount, String text) {
         event.setFromIndex(fromIndex);
         event.setToIndex(toIndex);
         event.setItemCount(itemCount);
@@ -1126,12 +1096,8 @@ public class BrowserAccessibilityManager {
 
     @CalledByNative
     protected void setAccessibilityEventLollipopAttributes(AccessibilityEvent event,
-            boolean canOpenPopup,
-            boolean contentInvalid,
-            boolean dismissable,
-            boolean multiLine,
-            int inputType,
-            int liveRegion) {
+            boolean canOpenPopup, boolean contentInvalid, boolean dismissable, boolean multiLine,
+            int inputType, int liveRegion) {
         // Backwards compatibility for Lollipop AccessibilityNodeInfo fields.
         Bundle bundle = getOrCreateBundleForAccessibilityEvent(event);
         bundle.putBoolean("AccessibilityNodeInfo.canOpenPopup", canOpenPopup);
@@ -1143,8 +1109,8 @@ public class BrowserAccessibilityManager {
     }
 
     @CalledByNative
-    protected void setAccessibilityEventCollectionInfo(AccessibilityEvent event,
-            int rowCount, int columnCount, boolean hierarchical) {
+    protected void setAccessibilityEventCollectionInfo(
+            AccessibilityEvent event, int rowCount, int columnCount, boolean hierarchical) {
         // Backwards compatibility for Lollipop AccessibilityNodeInfo fields.
         Bundle bundle = getOrCreateBundleForAccessibilityEvent(event);
         bundle.putInt("AccessibilityNodeInfo.CollectionInfo.rowCount", rowCount);
@@ -1153,16 +1119,15 @@ public class BrowserAccessibilityManager {
     }
 
     @CalledByNative
-    protected void setAccessibilityEventHeadingFlag(AccessibilityEvent event,
-            boolean heading) {
+    protected void setAccessibilityEventHeadingFlag(AccessibilityEvent event, boolean heading) {
         // Backwards compatibility for Lollipop AccessibilityNodeInfo fields.
         Bundle bundle = getOrCreateBundleForAccessibilityEvent(event);
         bundle.putBoolean("AccessibilityNodeInfo.CollectionItemInfo.heading", heading);
     }
 
     @CalledByNative
-    protected void setAccessibilityEventCollectionItemInfo(AccessibilityEvent event,
-            int rowIndex, int rowSpan, int columnIndex, int columnSpan) {
+    protected void setAccessibilityEventCollectionItemInfo(
+            AccessibilityEvent event, int rowIndex, int rowSpan, int columnIndex, int columnSpan) {
         // Backwards compatibility for Lollipop AccessibilityNodeInfo fields.
         Bundle bundle = getOrCreateBundleForAccessibilityEvent(event);
         bundle.putInt("AccessibilityNodeInfo.CollectionItemInfo.rowIndex", rowIndex);
@@ -1172,8 +1137,8 @@ public class BrowserAccessibilityManager {
     }
 
     @CalledByNative
-    protected void setAccessibilityEventRangeInfo(AccessibilityEvent event,
-            int rangeType, float min, float max, float current) {
+    protected void setAccessibilityEventRangeInfo(
+            AccessibilityEvent event, int rangeType, float min, float max, float current) {
         // Backwards compatibility for Lollipop AccessibilityNodeInfo fields.
         Bundle bundle = getOrCreateBundleForAccessibilityEvent(event);
         bundle.putInt("AccessibilityNodeInfo.RangeInfo.type", rangeType);
@@ -1201,7 +1166,7 @@ public class BrowserAccessibilityManager {
      */
     @CalledByNative
     boolean shouldExposePasswordText() {
-        ContentResolver contentResolver = mContentViewCore.getContext().getContentResolver();
+        ContentResolver contentResolver = mContext.getContentResolver();
 
         if (BuildInfo.isAtLeastO()) {
             return (Settings.System.getInt(contentResolver, Settings.System.TEXT_SHOW_PASSWORD, 1)
@@ -1213,56 +1178,52 @@ public class BrowserAccessibilityManager {
                 == 1);
     }
 
-    private native void nativeOnAutofillPopupDisplayed(
-            long nativeBrowserAccessibilityManagerAndroid);
-    private native void nativeOnAutofillPopupDismissed(
-            long nativeBrowserAccessibilityManagerAndroid);
+    private native long nativeInit(WebContents webContents);
+    private native void nativeOnAutofillPopupDisplayed(long nativeWebContentsAccessibilityAndroid);
+    private native void nativeOnAutofillPopupDismissed(long nativeWebContentsAccessibilityAndroid);
     private native int nativeGetIdForElementAfterElementHostingAutofillPopup(
-            long nativeBrowserAccessibilityManagerAndroid);
-    private native int nativeGetRootId(long nativeBrowserAccessibilityManagerAndroid);
-    private native boolean nativeIsNodeValid(long nativeBrowserAccessibilityManagerAndroid, int id);
+            long nativeWebContentsAccessibilityAndroid);
+    private native int nativeGetRootId(long nativeWebContentsAccessibilityAndroid);
+    private native boolean nativeIsNodeValid(long nativeWebContentsAccessibilityAndroid, int id);
     private native boolean nativeIsAutofillPopupNode(
-            long nativeBrowserAccessibilityManagerAndroid, int id);
-    private native boolean nativeIsEditableText(
-            long nativeBrowserAccessibilityManagerAndroid, int id);
-    private native boolean nativeIsFocused(
-            long nativeBrowserAccessibilityManagerAndroid, int id);
+            long nativeWebContentsAccessibilityAndroid, int id);
+    private native boolean nativeIsEditableText(long nativeWebContentsAccessibilityAndroid, int id);
+    private native boolean nativeIsFocused(long nativeWebContentsAccessibilityAndroid, int id);
     private native int nativeGetEditableTextSelectionStart(
-            long nativeBrowserAccessibilityManagerAndroid, int id);
+            long nativeWebContentsAccessibilityAndroid, int id);
     private native int nativeGetEditableTextSelectionEnd(
-            long nativeBrowserAccessibilityManagerAndroid, int id);
-    private native void nativeHitTest(long nativeBrowserAccessibilityManagerAndroid, int x, int y);
+            long nativeWebContentsAccessibilityAndroid, int id);
+    private native void nativeHitTest(long nativeWebContentsAccessibilityAndroid, int x, int y);
     private native boolean nativePopulateAccessibilityNodeInfo(
-            long nativeBrowserAccessibilityManagerAndroid, AccessibilityNodeInfo info, int id);
+            long nativeWebContentsAccessibilityAndroid, AccessibilityNodeInfo info, int id);
     private native boolean nativePopulateAccessibilityEvent(
-            long nativeBrowserAccessibilityManagerAndroid, AccessibilityEvent event, int id,
+            long nativeWebContentsAccessibilityAndroid, AccessibilityEvent event, int id,
             int eventType);
-    private native void nativeClick(long nativeBrowserAccessibilityManagerAndroid, int id);
-    private native void nativeFocus(long nativeBrowserAccessibilityManagerAndroid, int id);
-    private native void nativeBlur(long nativeBrowserAccessibilityManagerAndroid);
+    private native void nativeClick(long nativeWebContentsAccessibilityAndroid, int id);
+    private native void nativeFocus(long nativeWebContentsAccessibilityAndroid, int id);
+    private native void nativeBlur(long nativeWebContentsAccessibilityAndroid);
     private native void nativeScrollToMakeNodeVisible(
-            long nativeBrowserAccessibilityManagerAndroid, int id);
-    private native int nativeFindElementType(long nativeBrowserAccessibilityManagerAndroid,
+            long nativeWebContentsAccessibilityAndroid, int id);
+    private native int nativeFindElementType(long nativeWebContentsAccessibilityAndroid,
             int startId, String elementType, boolean forwards);
-    private native void nativeSetTextFieldValue(long nativeBrowserAccessibilityManagerAndroid,
-            int id, String newValue);
-    private native void nativeSetSelection(long nativeBrowserAccessibilityManagerAndroid,
-            int id, int start, int end);
-    private native boolean nativeNextAtGranularity(long nativeBrowserAccessibilityManagerAndroid,
+    private native void nativeSetTextFieldValue(
+            long nativeWebContentsAccessibilityAndroid, int id, String newValue);
+    private native void nativeSetSelection(
+            long nativeWebContentsAccessibilityAndroid, int id, int start, int end);
+    private native boolean nativeNextAtGranularity(long nativeWebContentsAccessibilityAndroid,
             int selectionGranularity, boolean extendSelection, int id, int cursorIndex);
-    private native boolean nativePreviousAtGranularity(
-            long nativeBrowserAccessibilityManagerAndroid,
+    private native boolean nativePreviousAtGranularity(long nativeWebContentsAccessibilityAndroid,
             int selectionGranularity, boolean extendSelection, int id, int cursorIndex);
     private native boolean nativeAdjustSlider(
-            long nativeBrowserAccessibilityManagerAndroid, int id, boolean increment);
+            long nativeWebContentsAccessibilityAndroid, int id, boolean increment);
     private native void nativeSetAccessibilityFocus(
-            long nativeBrowserAccessibilityManagerAndroid, int id);
-    private native boolean nativeIsSlider(
-            long nativeBrowserAccessibilityManagerAndroid, int id);
+            long nativeWebContentsAccessibilityAndroid, int id);
+    private native boolean nativeIsSlider(long nativeWebContentsAccessibilityAndroid, int id);
     private native boolean nativeScroll(
-            long nativeBrowserAccessibilityManagerAndroid, int id, int direction);
+            long nativeWebContentsAccessibilityAndroid, int id, int direction);
     protected native String nativeGetSupportedHtmlElementTypes(
-            long nativeBrowserAccessibilityManagerAndroid);
-    private native void nativeShowContextMenu(
-            long nativeBrowserAccessibilityManagerAndroid, int id);
+            long nativeWebContentsAccessibilityAndroid);
+    private native void nativeShowContextMenu(long nativeWebContentsAccessibilityAndroid, int id);
+    private native void nativeSetAccessibilityEnabled(
+            long nativeWebContentsAccessibilityAndroid, boolean enabled);
 }
