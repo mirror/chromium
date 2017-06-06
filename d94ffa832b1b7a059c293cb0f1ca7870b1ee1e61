@@ -70,6 +70,30 @@
       "revId": "d94ffa832b1b7a059c293cb0f1ca7870b1ee1e61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d92b8fef_9c42618c",
+        "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-06T04:35:30Z",
+      "side": 1,
+      "message": "Fair enough. A clone method makes sense. Done.",
+      "parentUuid": "6d23ff0c_64021854",
+      "range": {
+        "startLine": 152,
+        "startChar": 13,
+        "endLine": 152,
+        "endChar": 24
+      },
+      "revId": "d94ffa832b1b7a059c293cb0f1ca7870b1ee1e61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
