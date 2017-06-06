@@ -16,6 +16,24 @@
       "revId": "c73619a0858ef10b69e8ac58501b1c62f3cc5a6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b62a7e8c_3564a0cc",
+        "filename": "content/renderer/manifest/manifest_parser.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T05:21:02Z",
+      "side": 1,
+      "message": "Hmm... I don\u0027t recall what I\u0027ve said specifically, but in general, we check on both sides because:\n- the renderer shouldn\u0027t be sending invalid data\n- if it does, we should just kill it.\n\nFWIW, I\u0027d prefer for this to be expressible in mojom itself and to be done automatically under the hood, but AFAIK, it\u0027s still up in the air how to implement this. sammc@, is it possible to express this completely in StructTraits so we don\u0027t need this bit here?",
+      "parentUuid": "cdca5d19_f01a799e",
+      "revId": "c73619a0858ef10b69e8ac58501b1c62f3cc5a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
