@@ -11,12 +11,18 @@
 namespace blink {
 
 class ComputedStyle;
+class CSSVariableResolver;
 
 class CSSInterpolationEnvironment : public InterpolationEnvironment {
  public:
-  explicit CSSInterpolationEnvironment(const InterpolationTypesMap& map,
-                                       StyleResolverState& state)
-      : InterpolationEnvironment(map), state_(&state), style_(state.Style()) {}
+  explicit CSSInterpolationEnvironment(
+      const InterpolationTypesMap& map,
+      StyleResolverState& state,
+      CSSVariableResolver* variable_resolver = nullptr)
+      : InterpolationEnvironment(map),
+        state_(&state),
+        style_(state.Style()),
+        variable_resolver_(variable_resolver) {}
 
   explicit CSSInterpolationEnvironment(const InterpolationTypesMap& map,
                                        const ComputedStyle& style)
@@ -38,9 +44,15 @@ class CSSInterpolationEnvironment : public InterpolationEnvironment {
     return *style_;
   }
 
+  CSSVariableResolver& VariableResolver() const {
+    DCHECK(variable_resolver_);
+    return *variable_resolver_;
+  }
+
  private:
   StyleResolverState* state_ = nullptr;
   const ComputedStyle* style_ = nullptr;
+  CSSVariableResolver* variable_resolver_ = nullptr;
 };
 
 DEFINE_TYPE_CASTS(CSSInterpolationEnvironment,

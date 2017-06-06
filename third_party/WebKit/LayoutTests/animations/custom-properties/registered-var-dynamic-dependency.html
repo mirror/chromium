@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<div id="target">target</div>
+<script>
+for (let name of ['--a', '--b']) {
+  CSS.registerProperty({
+    name,
+    syntax: '<number>',
+    initialValue: '0',
+  });
+}
+
+test(() => {
+  let animation = target.animate({
+      '--a': ['100', 'var(--b)'],
+      '--b': ['var(--a)', '200'],
+  }, {
+    duration: 100,
+    fill: 'forwards',
+  });
+
+  // animation.currentTime = 0;
+  // assert_equals(getComputedStyle(target).getPropertyValue('--a'), '100', '--a at 0%');
+  // assert_equals(getComputedStyle(target).getPropertyValue('--b'), '100', '--b at 0%');
+
+  animation.currentTime = 25;
+  assert_equals(getComputedStyle(target).getPropertyValue('--a'), '100', '--a at 25%');
+  // assert_equals(getComputedStyle(target).getPropertyValue('--b'), '100', '--b at 25%');
+
+  // animation.currentTime = 50;
+  // assert_equals(getComputedStyle(target).getPropertyValue('--a'), '0', '--a at 50%');
+  // assert_equals(getComputedStyle(target).getPropertyValue('--b'), '0', '--b at 50%');
+
+  // animation.currentTime = 75;
+  // assert_equals(getComputedStyle(target).getPropertyValue('--a'), '200', '--a at 75%');
+  // assert_equals(getComputedStyle(target).getPropertyValue('--b'), '200', '--b at 75%');
+
+  // animation.currentTime = 100;
+  // assert_equals(getComputedStyle(target).getPropertyValue('--a'), '200', '--a at 100%');
+  // assert_equals(getComputedStyle(target).getPropertyValue('--b'), '200', '--b at 100%');
+}, '');//'Registered custom property animation keyframes with var() references should dynamically resolve dependencies according to which custom property is referencing which');
+</script>
