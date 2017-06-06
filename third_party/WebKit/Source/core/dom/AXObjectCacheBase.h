@@ -27,6 +27,9 @@ class CORE_EXPORT AXObjectCacheBase : public AXObjectCache {
 
   virtual AXObjectImpl* Get(const Node*) = 0;
 
+  virtual void PostNotification(LayoutObject*, AXNotification) = 0;
+  virtual void PostNotification(Node*, AXNotification) = 0;
+
  protected:
   AXObjectCacheBase();
 };

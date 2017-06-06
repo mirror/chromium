@@ -30,6 +30,7 @@
 
 #include "web/TextFinder.h"
 
+#include "core/dom/AXObjectCacheBase.h"
 #include "core/dom/Range.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/dom/shadow/ShadowRoot.h"
@@ -45,8 +46,6 @@
 #include "core/layout/LayoutObject.h"
 #include "core/layout/TextAutosizer.h"
 #include "core/page/Page.h"
-#include "modules/accessibility/AXObjectCacheImpl.h"
-#include "modules/accessibility/AXObjectImpl.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/Timer.h"
 #include "platform/wtf/CurrentTime.h"
@@ -57,6 +56,8 @@
 #include "public/web/WebViewClient.h"
 
 namespace blink {
+
+class AXObjectImpl;
 
 TextFinder::FindMatch::FindMatch(Range* range, int ordinal)
     : range_(range), ordinal_(ordinal) {}
@@ -247,24 +248,26 @@ void TextFinder::ReportFindInPageResultToAccessibility(int identifier) {
   if (!active_match_)
     return;
 
-  AXObjectCacheImpl* ax_object_cache = ToAXObjectCacheImpl(
+  AXObjectCacheBase* ax_object_cache = ToAXObjectCacheBase(
       OwnerFrame().GetFrame()->GetDocument()->ExistingAXObjectCache());
   if (!ax_object_cache)
     return;
 
-  AXObjectImpl* start_object =
-      ax_object_cache->Get(active_match_->startContainer());
-  AXObjectImpl* end_object =
-      ax_object_cache->Get(active_match_->endContainer());
+  Node* start_node = active_match_->startContainer();
+  Node* end_node = active_match_->endContainer();
+
+  AXObjectImpl* start_object = ax_object_cache->Get(start_node);
+  AXObjectImpl* end_object = ax_object_cache->Get(end_node);
   if (!start_object || !end_object)
     return;
 
   // Notify the client of new text marker data.
   ax_object_cache->PostNotification(
-      start_object, AXObjectCache::AXNotification::kAXChildrenChanged);
-  if (start_object != end_object)
+      start_node, AXObjectCache::AXNotification::kAXChildrenChanged);
+  if (start_object != end_object) {
     ax_object_cache->PostNotification(
-        end_object, AXObjectCache::AXNotification::kAXChildrenChanged);
+        end_node, AXObjectCache::AXNotification::kAXChildrenChanged);
+  }
 
   if (OwnerFrame().Client()) {
     OwnerFrame().Client()->HandleAccessibilityFindInPageResult(
