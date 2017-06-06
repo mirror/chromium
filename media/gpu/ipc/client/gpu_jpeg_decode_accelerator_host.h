@@ -12,19 +12,11 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/sequence_checker.h"
+#include "media/gpu/mojo/jpeg_decoder.mojom.h"
 #include "media/video/jpeg_decode_accelerator.h"
 
 namespace base {
 class SingleThreadTaskRunner;
-}
-
-namespace gpu {
-class GpuChannelHost;
-}
-
-namespace IPC {
-class Listener;
-class Message;
 }
 
 namespace media {
@@ -32,13 +24,12 @@ namespace media {
 // TODO(c.padhi): Move GpuJpegDecodeAcceleratorHost to media/gpu/mojo, see
 // http://crbug.com/699255.
 // This class is used to talk to JpegDecodeAccelerator in the GPU process
-// through IPC messages.
+// through Mojo messages.
 class GpuJpegDecodeAcceleratorHost : public JpegDecodeAccelerator {
  public:
   GpuJpegDecodeAcceleratorHost(
-      scoped_refptr<gpu::GpuChannelHost> channel,
-      int32_t route_id,
-      const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner);
+      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
+      mojom::GpuJpegDecodeAcceleratorPtrInfo jpeg_decoder_info);
   ~GpuJpegDecodeAcceleratorHost() override;
 
   // JpegDecodeAccelerator implementation.
@@ -49,22 +40,16 @@ class GpuJpegDecodeAcceleratorHost : public JpegDecodeAccelerator {
               const scoped_refptr<VideoFrame>& video_frame) override;
   bool IsSupported() override;
 
-  base::WeakPtr<IPC::Listener> GetReceiver();
-
  private:
-  class Receiver;
-
-  void Send(IPC::Message* message);
-
-  scoped_refptr<gpu::GpuChannelHost> channel_;
-
-  // Route ID for the associated decoder in the GPU process.
-  int32_t decoder_route_id_;
+  void OnDecodeAck(int32_t bitstream_buffer_id, mojom::Error error);
+  void OnDecodeAckOnIOThread(int32_t bitstream_buffer_id, mojom::Error error);
 
   // GPU IO task runner.
   scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
 
-  std::unique_ptr<Receiver> receiver_;
+  Client* client_;
+
+  mojom::GpuJpegDecodeAcceleratorPtr jpeg_decoder_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
