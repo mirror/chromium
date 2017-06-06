@@ -635,7 +635,7 @@ class MODULES_EXPORT AXObjectImpl
   virtual void AriaLabelledbyElements(AXObjectVector&) const {}
   virtual bool AriaHasPopup() const { return false; }
   virtual bool IsEditable() const { return false; }
-  bool IsMultiline() const;
+  virtual bool IsMultiline() const { return false; }
   virtual bool IsRichlyEditable() const { return false; }
   bool AriaCheckedIsPresent() const;
   bool AriaPressedIsPresent() const;
