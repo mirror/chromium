@@ -22,6 +22,30 @@
       "revId": "1c466a3627a3bdf465ed222cdf22ed8aac4d164f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3104df9c_f1a9025d",
+        "filename": "components/spellcheck/common/spellcheck.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T04:11:45Z",
+      "side": 1,
+      "message": "I didn\u0027t realize this was for testing. We don\u0027t have good guidelines on this. As a strawman proposal, I think:\n\n- Test interfaces should be clearly marked as such\n- Should live in separate interface files ideally (so we can enforce testonly\u003d1)\n- Should only be installed in tests.\n\nDoes this sound reasonable?\n\nThe other factor to consider here is this is an interface exposed by the renderer so maybe we can be more lax? Shrug.",
+      "parentUuid": "80aa4d64_2320e775",
+      "range": {
+        "startLine": 60,
+        "startChar": 10,
+        "endLine": 60,
+        "endChar": 25
+      },
+      "revId": "1c466a3627a3bdf465ed222cdf22ed8aac4d164f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

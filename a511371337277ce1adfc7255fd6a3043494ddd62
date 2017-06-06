@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "b46d220f_563d6c5b",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_delegate.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T04:11:45Z",
+      "side": 1,
+      "message": "Hmm, so this object destroyed and recreated if the main frame needs to swap processes? Would it make sense to make this scoped to a WebContents in the long-term?",
+      "parentUuid": "ebecdb41_e7005108",
+      "range": {
+        "startLine": 177,
+        "startChar": 38,
+        "endLine": 178,
+        "endChar": 46
+      },
+      "revId": "a511371337277ce1adfc7255fd6a3043494ddd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6f11ee7_8389a080",
         "filename": "components/spellcheck/common/spellcheck.mojom",
         "patchSetId": 18
@@ -331,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "81511579_bebd4dc7",
+        "filename": "components/spellcheck/common/spellcheck.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T04:11:45Z",
+      "side": 1,
+      "message": "I think there\u0027s some value to being consistent with naming conventions used throughout the rest of Chrome. Traditionally, there\u0027s a 1:1 FooHost : Foo IPC relationship, and it would be really nice if we could keep that: it\u0027s true that we can get this information from the comments, but it\u0027d be even nicer if it was apparent in the name.",
+      "parentUuid": "4dfa0ca7_544de2ea",
+      "range": {
+        "startLine": 60,
+        "startChar": 10,
+        "endLine": 60,
+        "endChar": 25
+      },
+      "revId": "a511371337277ce1adfc7255fd6a3043494ddd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ebdae6c_f38d27a9",
         "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
         "patchSetId": 18
@@ -366,6 +414,30 @@
       "side": 1,
       "message": "\u003e Is this just for tests? \n\nNot just for tests ...\n\n\u003e What\u0027s the reason this might not be set?\n\n... when the OS platform doesn\u0027t have a spelling panel.",
       "parentUuid": "8ebdae6c_f38d27a9",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 37
+      },
+      "revId": "a511371337277ce1adfc7255fd6a3043494ddd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34c603cb_f35bd694",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T04:11:45Z",
+      "side": 1,
+      "message": "Is it possible to use BUILDFLAG(SPELLCHECK_PANEL) to #ifdef this out? It seems like we should be consistent about how we treat this throughout the entire stack: right now, it\u0027s #ifdef\u0027d out in content, but Blink needs to turn it into a no-op.",
+      "parentUuid": "c7455986_7b6b00c0",
       "range": {
         "startLine": 120,
         "startChar": 0,
