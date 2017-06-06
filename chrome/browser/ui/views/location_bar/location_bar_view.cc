@@ -21,6 +21,7 @@
 #include "chrome/browser/themes/theme_properties.h"
 #include "chrome/browser/themes/theme_service.h"
 #include "chrome/browser/translate/chrome_translate_client.h"
+#include "chrome/grit/generated_resources.h"
 #include "chrome/browser/translate/translate_service.h"
 #include "chrome/browser/ui/autofill/save_card_bubble_controller_impl.h"
 #include "chrome/browser/ui/browser.h"
@@ -83,7 +84,7 @@
 #include "ui/gfx/skia_util.h"
 #include "ui/gfx/text_utils.h"
 #include "ui/native_theme/native_theme.h"
-#include "ui/vector_icons/vector_icons.h"
+#include "chrome/app/vector_icons/vector_icons.h"
 #include "ui/views/background.h"
 #include "ui/views/border.h"
 #include "ui/views/button_drag_utils.h"
@@ -245,7 +246,8 @@ void LocationBarView::Init() {
   AddChildView(star_view_);
 
   clear_all_button_ = views::CreateVectorImageButton(this);
-  // FIXME: add tooltip text.
+  clear_all_button_->SetTooltipText(
+      l10n_util::GetStringUTF16(IDS_OMNIBOX_CLEAR_ALL));
   RefreshClearAllButtonIcon();
   AddChildView(clear_all_button_);
 
@@ -779,7 +781,7 @@ void LocationBarView::RefreshClearAllButtonIcon() {
   if (!clear_all_button_)
     return;
 
-  SetImageFromVectorIcon(clear_all_button_, ui::kCloseIcon,
+  SetImageFromVectorIcon(clear_all_button_, kTabCloseNormalIcon,
                          GetNativeTheme()->GetSystemColor(
                              ui::NativeTheme::kColorId_TextfieldDefaultColor));
 }
