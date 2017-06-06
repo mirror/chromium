@@ -16,6 +16,24 @@
       "revId": "1ac6aa9ac0325de2619d381dcbda479c4b4f9bba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da99bd1_9264ba27",
+        "filename": "components/viz/host/frame_sink_manager_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-06T17:00:29Z",
+      "side": 1,
+      "message": "So I guess the issue here is that GPTF and FSMH don\u0027t keep track of all the things that submit CompositorFrames. Only the root cc::Display CompositorFrameSink gets created via ContextFactory::CreateCompositorFrameSink(). Other clients create CompositorFrameSinkSupport directly or use FSMH::CreateCompositorFrameSink() for the new MojoCompositorFrameSink based path.\n\nAlthough it would make sense to keep track of everything that submits CompositorFrames and have GPTF or FSMH store that information.\n\nAnother suggestion fsamuel had was to just always use Mojo for RegisterFrameSinkHierarchy()/UnregisterFrameSinkHierarchy(). It could add a tiny bit of delay before the first BeginFrame is received but everything works correctly as far as I can tell. Any objections to that?",
+      "parentUuid": "bac7d57d_2edff54f",
+      "revId": "1ac6aa9ac0325de2619d381dcbda479c4b4f9bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
