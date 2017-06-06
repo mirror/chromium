@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4405cebe_354d5b52",
+        "filename": "third_party/WebKit/Source/modules/app_banner/BeforeInstallPromptEvent.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-06T16:04:30Z",
+      "side": 1,
+      "message": "You can use ConstructorCallWith\u003dExecutionContext.",
+      "revId": "7d66440147c435416f3f1033e84c99f0f0be7656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
