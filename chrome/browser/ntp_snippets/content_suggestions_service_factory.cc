@@ -357,9 +357,11 @@ KeyedService* ContentSuggestionsServiceFactory::BuildServiceInstanceFor(
                               pref_service);
   }
 
-  offline_pages::PrefetchService* prefetch_service =
-      offline_pages::PrefetchServiceFactory::GetForBrowserContext(profile);
-  prefetch_service->ObserveContentSuggestionsService(service);
+  if (offline_pages::IsPrefetchingOfflinePagesEnabled()) {
+    offline_pages::PrefetchService* prefetch_service =
+        offline_pages::PrefetchServiceFactory::GetForBrowserContext(profile);
+    prefetch_service->ObserveContentSuggestionsService(service);
+  }
 #endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
 
 #if defined(OS_ANDROID)
