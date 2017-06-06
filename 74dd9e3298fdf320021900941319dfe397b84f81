@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c2752e6_87d1c933",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-06T06:55:27Z",
+      "side": 1,
+      "message": "Doing this in another CL is fine (to make M59 merge simpler)",
+      "revId": "74dd9e3298fdf320021900941319dfe397b84f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33cff60d_549d03af",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-06T06:55:27Z",
+      "side": 1,
+      "message": "This one is also inconsistent.",
+      "revId": "74dd9e3298fdf320021900941319dfe397b84f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

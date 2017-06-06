@@ -104,6 +104,24 @@
       "revId": "d3cd4376ef8da8bb17dd11e0364a23c9d5eef5ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "796838da_b79eab08",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-06T06:55:27Z",
+      "side": 1,
+      "message": "Then please fix L609 and L728 with maybe\n\n } else {\n   NOTREACHED();\n }\n\nDoing it in a separate CL is fine.",
+      "parentUuid": "05367c1d_db06ca5a",
+      "revId": "d3cd4376ef8da8bb17dd11e0364a23c9d5eef5ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
