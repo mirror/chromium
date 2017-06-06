@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af6bb1a9_84457831",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-06T00:32:38Z",
+      "side": 1,
+      "message": "space before \u0027(\u0027. weird that clang format didn\u0027t catch that.\n\nDo we have to check for this case explicitly? Is it not handled correctly now via the normal teardown path?",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 5
+      },
+      "revId": "4cc4bb446d42c684b4009ee5189d29a6c5767283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9388b1b1_d2dfb839",
+        "filename": "content/browser/media/android/media_player_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-06T00:32:38Z",
+      "side": 1,
+      "message": "break? Does this compile?\n\nIt\u0027s not clear why we care about the renderframehost when we\u0027re only looking up the RPH below. media_resource_getter uses its ids asynchronously, so this only catches one instance of the race. I would have expected to see instead: host \u003d RPH::FromId(); if (!host) return;",
+      "range": {
+        "startLine": 185,
+        "startChar": 6,
+        "endLine": 185,
+        "endChar": 11
+      },
+      "revId": "4cc4bb446d42c684b4009ee5189d29a6c5767283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6834140c_467bb0ce",
+        "filename": "content/browser/media/android/media_player_renderer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-06T00:32:38Z",
+      "side": 1,
+      "message": "do not know*",
+      "range": {
+        "startLine": 112,
+        "startChar": 75,
+        "endLine": 112,
+        "endChar": 78
+      },
+      "revId": "4cc4bb446d42c684b4009ee5189d29a6c5767283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
