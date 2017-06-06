@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "a1b0e8a9_bab72d1d",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-06-06T22:18:33Z",
+      "side": 1,
+      "message": "Hmm...Looks like things changed in AudioInputDeviceManager, and I\u0027m not familiar with all the assumptions there.\n\nOverall, what I think would be ideal for any tab/window/desktop capture: If exact constraints (e.g., sample rate, channels) were specified, we should just open the audio input device with those settings. Otherwise, default to the parameters of the default output device, to avoid the need to resample after audio is looped-back in the browser process.\n\nIf the constraints specify a range (e.g., a sample rate of 32kHz - 48kHz), see if the default audio output device\u0027s parameter is within that range. If so, use it. Otherwise, pick the ideal (or the max) value (and there will be resampling in the loopback code in the browser process). I expect some of your \"fitness\" logic may help in the decision-making process for the range constraint scenarios like this.",
+      "parentUuid": "0a22e0f1_87db966e",
+      "range": {
+        "startLine": 49,
+        "startChar": 37,
+        "endLine": 51,
+        "endChar": 30
+      },
+      "revId": "42d39dc981ef3a7b4a62ae1dc4746276340b7468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74cad686_fdeb3fb2",
         "filename": "content/renderer/media/media_stream_constraints_util_sets.h",
         "patchSetId": 4
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Removed the aliases. Using DiscreteSet\u003cbool\u003e and DiscreteSet\u003cstd::string\u003e directly.\nDo you think DiscreteSet should be in its own namespace as well?\nIf so, I will make that change in a follow-up CL in order to keep this one focused on audio.",
       "parentUuid": "74cad686_fdeb3fb2",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 34
+      },
+      "revId": "42d39dc981ef3a7b4a62ae1dc4746276340b7468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee5a948_7e609fed",
+        "filename": "content/renderer/media/media_stream_constraints_util_sets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-06-06T22:18:33Z",
+      "side": 1,
+      "message": "IMHO, this is still \"walking the fine line,\" but it\u0027s better now. \"ConstraintSet\" or \"MediaConstraintSet\" might be better (more-specific naming is less likely to clash). However, I leave the decision up to you. :)\n\nThe reason I noticed this originally was because these classes used to be in one .cc module\u0027s anonymous namespace.",
+      "parentUuid": "8c5297ab_9ae1358c",
       "range": {
         "startLine": 147,
         "startChar": 0,
