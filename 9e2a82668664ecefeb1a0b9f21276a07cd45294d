@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1cf8e66_17ebc127",
+        "filename": "third_party/WebKit/Source/core/layout/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-06T23:41:35Z",
+      "side": 1,
+      "message": "Why not allow all indirect compositing reasons? Is there one that doesn\u0027t work?",
+      "revId": "9e2a82668664ecefeb1a0b9f21276a07cd45294d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
