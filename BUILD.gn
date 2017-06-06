@@ -341,6 +341,7 @@ group("gn_all") {
       "//breakpad:core-2-minidump",
       "//breakpad:generate_test_dump",
       "//breakpad:minidump-2-core",
+      "//chrome/browser/android/vr_shell:vr_common_unittests",
     ]
   }
 

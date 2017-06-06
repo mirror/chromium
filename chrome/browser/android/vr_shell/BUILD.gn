@@ -2,17 +2,20 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-import("//build/config/android/rules.gni")
 import("//chrome/common/features.gni")
 import("//device/vr/features/features.gni")
 import("//testing/test.gni")
+if (is_android) {
+  import("//build/config/android/rules.gni")
+}
 
 assert(enable_vr)
 
-if (current_cpu == "arm" || current_cpu == "arm64") {
+# Linux is included here for unit testing purposes.
+if (is_android || is_linux) {
   # This library is platform-independent UI and related modules, which should
   # compile on any platform.
-  static_library("vr_common_ui") {
+  static_library("vr_common") {
     sources = [
       "animation.cc",
       "animation.h",
@@ -92,8 +95,6 @@ if (current_cpu == "arm" || current_cpu == "arm64") {
       "//components/toolbar:vector_icons",
       "//components/url_formatter",
       "//components/vector_icons",
-      "//content/public/browser",
-      "//content/public/common",
       "//device/vr",
       "//skia",
       "//ui/base",
@@ -104,9 +105,44 @@ if (current_cpu == "arm" || current_cpu == "arm64") {
     ]
   }
 
+  test("vr_common_unittests") {
+    sources = [
+      "fps_meter_unittest.cc",
+      "gltf_parser_unittest.cc",
+      "test/paths.cc",
+      "test/paths.h",
+      "textures/close_button_texture_unittest.cc",
+      "textures/url_bar_texture_unittest.cc",
+      "ui_elements/ui_element_unittest.cc",
+      "ui_scene_manager_unittest.cc",
+      "ui_scene_unittest.cc",
+    ]
+
+    deps = [
+      ":vr_common",
+      "//base/test:run_all_unittests",
+      "//base/test:test_support",
+      "//components/security_state/core",
+      "//skia",
+      "//testing/gmock",
+      "//testing/gtest",
+      "//ui/gfx/geometry",
+      "//ui/gl",
+    ]
+
+    data = [
+      "test/data/sample_inline.gltf",
+      "test/data/sample_external.gltf",
+      "test/data/sample.bin",
+      "test/data/sample.glb",
+    ]
+  }
+}
+
+if (is_android) {
   # This library contains the VR code specific to Android.
   # TODO(cjgrant): It should be renamed to reflect this.
-  static_library("vr_common") {
+  static_library("vr_android") {
     defines = []
 
     sources = [
@@ -145,7 +181,7 @@ if (current_cpu == "arm" || current_cpu == "arm64") {
     ]
 
     deps = [
-      ":vr_common_ui",
+      ":vr_common",
       ":vr_shell_jni_headers",
       "//base",
       "//cc",
@@ -183,37 +219,4 @@ if (current_cpu == "arm" || current_cpu == "arm64") {
     ]
     jni_package = "vr_shell"
   }
-}
-
-test("vr_shell_unittests") {
-  sources = [
-    "fps_meter_unittest.cc",
-    "gltf_parser_unittest.cc",
-    "test/paths.cc",
-    "test/paths.h",
-    "textures/close_button_texture_unittest.cc",
-    "textures/url_bar_texture_unittest.cc",
-    "ui_elements/ui_element_unittest.cc",
-    "ui_scene_manager_unittest.cc",
-    "ui_scene_unittest.cc",
-  ]
-
-  deps = [
-    ":vr_common_ui",
-    "//base/test:run_all_unittests",
-    "//base/test:test_support",
-    "//components/security_state/core",
-    "//skia",
-    "//testing/gmock",
-    "//testing/gtest",
-    "//ui/gfx/geometry",
-    "//ui/gl",
-  ]
-
-  data = [
-    "test/data/sample_inline.gltf",
-    "test/data/sample_external.gltf",
-    "test/data/sample.bin",
-    "test/data/sample.glb",
-  ]
 }
