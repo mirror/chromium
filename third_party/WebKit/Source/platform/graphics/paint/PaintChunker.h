@@ -34,7 +34,8 @@ class PLATFORM_EXPORT PaintChunker final {
     return current_properties_;
   }
   void UpdateCurrentPaintChunkProperties(const PaintChunk::Id*,
-                                         const PaintChunkProperties&);
+                                         const PaintChunkProperties&,
+                                         bool force_new_chunk = false);
 
   // Returns true if a new chunk is created.
   bool IncrementDisplayItemIndex(const DisplayItem&);
@@ -72,6 +73,7 @@ class PLATFORM_EXPORT PaintChunker final {
   Vector<ItemBehavior> chunk_behavior_;
   Optional<PaintChunk::Id> current_chunk_id_;
   PaintChunkProperties current_properties_;
+  bool force_new_chunk_;
 };
 
 }  // namespace blink
