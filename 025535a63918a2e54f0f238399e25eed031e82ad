@@ -258,6 +258,30 @@
       "revId": "025535a63918a2e54f0f238399e25eed031e82ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e47c15ab_3fdbd95a",
+        "filename": "services/preferences/public/interfaces/preferences.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T18:01:48Z",
+      "side": 1,
+      "message": "(In fact, even [Sync] methods return results via a callback on the handler side, it\u0027s just the sending side that looks different)",
+      "parentUuid": "44848cd5_f4981b91",
+      "range": {
+        "startLine": 134,
+        "startChar": 20,
+        "endLine": 134,
+        "endChar": 22
+      },
+      "revId": "025535a63918a2e54f0f238399e25eed031e82ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
