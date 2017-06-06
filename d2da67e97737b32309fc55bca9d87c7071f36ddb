@@ -140,6 +140,30 @@
       "revId": "d2da67e97737b32309fc55bca9d87c7071f36ddb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c02e74_4d5c7e31",
+        "filename": "base/memory/shared_memory_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-06T02:55:50Z",
+      "side": 1,
+      "message": "As we discussed on hangout, I\u0027ll revert this to GetGlobalGUIDForTracing to return the same GUID as GetGUIDForTracing.",
+      "parentUuid": "9cd131ea_2b85319e",
+      "range": {
+        "startLine": 30,
+        "startChar": 46,
+        "endLine": 30,
+        "endChar": 69
+      },
+      "revId": "d2da67e97737b32309fc55bca9d87c7071f36ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
