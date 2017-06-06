@@ -118,6 +118,30 @@
       "revId": "b2ac6e6a06b2662472c5f5f2a74352dee6f3885e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a85ea23_d53f1592",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T22:43:23Z",
+      "side": 1,
+      "message": "My concern is that we\u0027ll end up adding logic to Detach() and forget to add it here as well.\n\nFor szager (or any other layout person): what does \"is parent visible\" really mean? The comment says \"whether or not our parent is visible\", but why would detaching this LocalFrameView affect our parent\u0027s visibility?",
+      "parentUuid": "1bda8478_52389fb9",
+      "range": {
+        "startLine": 386,
+        "startChar": 67,
+        "endLine": 386,
+        "endChar": 73
+      },
+      "revId": "b2ac6e6a06b2662472c5f5f2a74352dee6f3885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
