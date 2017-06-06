@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b5fdfa2_8b119a60",
+        "filename": "content/browser/renderer_host/media/js_level_video_capture_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-06T23:36:22Z",
+      "side": 1,
+      "message": "nit: If this is the only place you plan to call the helper function, maybe just inline the code here?",
+      "revId": "3847d32bf1d3516208587a490e9ef41fa3de5f08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc73cc99_de0f5632",
+        "filename": "content/browser/renderer_host/media/js_level_video_capture_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-06T23:36:22Z",
+      "side": 1,
+      "message": "Remove this?",
+      "revId": "3847d32bf1d3516208587a490e9ef41fa3de5f08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3857c0b7_8b8e9f10",
+        "filename": "services/video_capture/service_manifest.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-06T23:36:22Z",
+      "side": 1,
+      "message": "nit: looks like maybe a tab creeped in here?",
+      "revId": "3847d32bf1d3516208587a490e9ef41fa3de5f08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
