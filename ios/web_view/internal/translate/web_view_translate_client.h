@@ -24,6 +24,8 @@ namespace translate {
 class TranslateAcceptLanguages;
 class TranslatePrefs;
 class TranslateManager;
+
+struct LanguageDetectionDetails;
 }  // namespace translate
 
 namespace web {
@@ -60,6 +62,8 @@ class WebViewTranslateClient
   std::unique_ptr<translate::TranslatePrefs> GetTranslatePrefs() override;
   translate::TranslateAcceptLanguages* GetTranslateAcceptLanguages() override;
   int GetInfobarIconID() const override;
+  void RecordLanguageDetectionEvent(
+      const translate::LanguageDetectionDetails& details) const override;
   std::unique_ptr<infobars::InfoBar> CreateInfoBar(
       std::unique_ptr<translate::TranslateInfoBarDelegate> delegate)
       const override;

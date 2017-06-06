@@ -11,6 +11,7 @@
 #include "base/time/time.h"
 #include "components/translate/core/browser/translate_client.h"
 #include "components/translate/core/browser/translate_manager.h"
+#include "components/translate/core/common/language_detection_details.h"
 #include "components/translate/core/common/translate_constants.h"
 #include "components/translate/core/common/translate_errors.h"
 #include "components/translate/core/common/translate_metrics.h"
@@ -92,6 +93,12 @@ void IOSTranslateDriver::OnLanguageDetermined(
   translate_manager_->GetLanguageState().LanguageDetermined(
       details.adopted_language, true);
 
+  translate::LanguageDetectionDetails detection_details;
+  detection_details.cld_language = details.content_language;
+  detection_details.is_cld_reliable = false;
+  detection_details.adopted_language = details.adopted_language;
+  translate_manager_->translate_client()->RecordLanguageDetectionEvent(
+      detection_details);
   if (web_state())
     translate_manager_->InitiateTranslation(details.adopted_language);
 }
