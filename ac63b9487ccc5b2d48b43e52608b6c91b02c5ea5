@@ -52,6 +52,24 @@
       "revId": "ac63b9487ccc5b2d48b43e52608b6c91b02c5ea5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a061c92d_896857ce",
+        "filename": "base/win/com_init_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-06T20:00:05Z",
+      "side": 1,
+      "message": "Of course, if this CQ fails, we\u0027ll know! :-D",
+      "parentUuid": "941c8c93_70213e86",
+      "revId": "ac63b9487ccc5b2d48b43e52608b6c91b02c5ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
