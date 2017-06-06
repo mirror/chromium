@@ -45,27 +45,42 @@ void FakeArcSupport::Close() {
 }
 
 void FakeArcSupport::ClickAgreeButton() {
-  DCHECK(native_message_host_);
   DCHECK_EQ(ui_page_, ArcSupportHost::UIPage::TERMS);
+  PostOnAgree(native_message_host_.get(), metrics_mode_,
+              backup_and_restore_mode_, location_service_mode_);
+}
 
-  base::DictionaryValue message;
-  message.SetString("event", "onAgreed");
-  message.SetBoolean("isMetricsEnabled", metrics_mode_);
-  message.SetBoolean("isBackupRestoreEnabled", backup_and_restore_mode_);
-  message.SetBoolean("isLocationServiceEnabled", location_service_mode_);
-
-  std::string message_string;
-  if (!base::JSONWriter::Write(message, &message_string)) {
-    NOTREACHED();
-    return;
-  }
-  native_message_host_->OnMessage(message_string);
+void FakeArcSupport::ClickAdAuthNextButton() {
+  DCHECK_EQ(ui_page_, ArcSupportHost::UIPage::AD_AUTH_NOTIFICATION);
+  PostOnAgree(native_message_host_.get(), false, false, false);
 }
 
 void FakeArcSupport::ClickRetryButton() {
   DCHECK(native_message_host_);
   DCHECK_EQ(ui_page_, ArcSupportHost::UIPage::ERROR);
   native_message_host_->OnMessage("{\"event\": \"onRetryClicked\"}");
+}
+
+// static
+void FakeArcSupport::PostOnAgree(
+    extensions::NativeMessageHost* native_message_host,
+    bool metrics_mode,
+    bool backup_and_restore_mode,
+    bool location_service_mode) {
+  DCHECK(native_message_host);
+
+  base::DictionaryValue message;
+  message.SetString("event", "onAgreed");
+  message.SetBoolean("isMetricsEnabled", metrics_mode);
+  message.SetBoolean("isBackupRestoreEnabled", backup_and_restore_mode);
+  message.SetBoolean("isLocationServiceEnabled", location_service_mode);
+
+  std::string message_string;
+  if (!base::JSONWriter::Write(message, &message_string)) {
+    NOTREACHED();
+    return;
+  }
+  native_message_host->OnMessage(message_string);
 }
 
 void FakeArcSupport::PostMessageFromNativeHost(
@@ -94,6 +109,8 @@ void FakeArcSupport::PostMessageFromNativeHost(
       ui_page_ = ArcSupportHost::UIPage::LSO;
     } else if (page == "arc-loading") {
       ui_page_ = ArcSupportHost::UIPage::ARC_LOADING;
+    } else if (page == "ad-auth-notification") {
+      ui_page_ = ArcSupportHost::UIPage::AD_AUTH_NOTIFICATION;
     } else {
       NOTREACHED() << message_string;
     }
