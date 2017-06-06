@@ -169,6 +169,11 @@ Audits2.Audits2Panel = class extends UI.PanelWithSidebar {
     this._dialog.setOutsideClickCallback(event => event.consume(true));
     var root = UI.createShadowRootWithCoreStyles(this._dialog.contentElement, 'audits2/audits2Dialog.css');
     var auditsViewElement = root.createChild('div', 'audits2-view');
+
+    var closeButton = new UI.ToolbarButton(Common.UIString('Close'), 'largeicon-delete');
+    closeButton.addEventListener(UI.ToolbarButton.Events.Click, this._cancelAndClose, this);
+    auditsViewElement.appendChild(closeButton.element);
+
     var uiElement = auditsViewElement.createChild('div');
     var headerElement = uiElement.createChild('header');
     this._headerTitleElement = headerElement.createChild('p');
@@ -302,6 +307,11 @@ Audits2.Audits2Panel = class extends UI.PanelWithSidebar {
     delete this._headerTitleElement;
     delete this._emulationEnabledBefore;
     delete this._emulationOutlineEnabledBefore;
+  }
+
+  _cancelAndClose() {
+    this._cancel();
+    this._hideDialog();
   }
 
   _cancel() {

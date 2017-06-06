@@ -10,6 +10,15 @@
     align-items: center;
 }
 
+.audits2-view .toolbar-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
 header {
     color: #666;
     font-weight: bold;
