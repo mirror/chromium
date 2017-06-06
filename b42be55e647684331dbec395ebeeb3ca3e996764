@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60b77df3_660571c2",
+        "filename": "components/feature_engagement_tracker/internal/system_time_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-06T21:15:26Z",
+      "side": 1,
+      "message": "Future cleanup or you can do it here too.\n\nIt would be better to zero-init this struct with\nbase::Time::Exploded exploded_time \u003d {} \nand then set year, month, and day_of_month.",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 32
+      },
+      "revId": "b42be55e647684331dbec395ebeeb3ca3e996764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
