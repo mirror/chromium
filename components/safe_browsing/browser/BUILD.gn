@@ -27,3 +27,15 @@ source_set("browser") {
     "//net:extras",
   ]
 }
+
+source_set("mock_ui_manager") {
+  testonly = true
+  sources = [
+    "mock_safe_browsing_ui_manager.cc",
+    "mock_safe_browsing_ui_manager.h",
+  ]
+  deps = [
+    "//base",
+    "//components/safe_browsing:safe_browsing",
+  ]
+}
