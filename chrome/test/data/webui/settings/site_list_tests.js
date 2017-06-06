@@ -50,7 +50,7 @@ var prefsGeolocation = {
     plugins: [],
     protectedContent: [],
     popups: [],
-    subresource_filter: [],
+    ads: [],
     unsandboxed_plugins: [],
   }
 };
@@ -206,7 +206,7 @@ var prefsVarious = {
     plugins: [],
     protectedContent: [],
     popups: [],
-    subresource_filter: [],
+    ads: [],
     unsandboxed_plugins: [],
   }
 };

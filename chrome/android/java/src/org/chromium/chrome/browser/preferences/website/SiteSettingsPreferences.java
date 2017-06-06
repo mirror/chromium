@@ -48,7 +48,7 @@ public class SiteSettingsPreferences extends PreferenceFragment
     static final String STORAGE_KEY = "use_storage";
     static final String TRANSLATE_KEY = "translate";
     static final String USB_KEY = "usb";
-    static final String SUBRESOURCE_FILTER_KEY = "subresource_filter";
+    static final String ADS_KEY = "ads";
 
     // Whether the Protected Content menu is available for display.
     boolean mProtectedContentMenuAvailable;
@@ -98,7 +98,7 @@ public class SiteSettingsPreferences extends PreferenceFragment
             return ContentSettingsType.CONTENT_SETTINGS_TYPE_POPUPS;
         } else if (PROTECTED_CONTENT_KEY.equals(key)) {
             return ContentSettingsType.CONTENT_SETTINGS_TYPE_PROTECTED_MEDIA_IDENTIFIER;
-        } else if (SUBRESOURCE_FILTER_KEY.equals(key)) {
+        } else if (ADS_KEY.equals(key)) {
             return ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER;
         }
         return -1;
@@ -119,7 +119,7 @@ public class SiteSettingsPreferences extends PreferenceFragment
             getPreferenceScreen().removePreference(findPreference(NOTIFICATIONS_KEY));
             getPreferenceScreen().removePreference(findPreference(POPUPS_KEY));
             getPreferenceScreen().removePreference(findPreference(STORAGE_KEY));
-            getPreferenceScreen().removePreference(findPreference(SUBRESOURCE_FILTER_KEY));
+            getPreferenceScreen().removePreference(findPreference(ADS_KEY));
             getPreferenceScreen().removePreference(findPreference(TRANSLATE_KEY));
             getPreferenceScreen().removePreference(findPreference(USB_KEY));
         } else {
@@ -135,8 +135,8 @@ public class SiteSettingsPreferences extends PreferenceFragment
             }
             // TODO(csharrison): Remove this condition once the experimental UI lands. It is not
             // great to dynamically remove the preference in this way.
-            if (!SiteSettingsCategory.subresourceFilterCategoryEnabled()) {
-                getPreferenceScreen().removePreference(findPreference(SUBRESOURCE_FILTER_KEY));
+            if (!SiteSettingsCategory.adsCategoryEnabled()) {
+                getPreferenceScreen().removePreference(findPreference(ADS_KEY));
             }
         }
     }
@@ -168,8 +168,8 @@ public class SiteSettingsPreferences extends PreferenceFragment
             websitePrefs.add(NOTIFICATIONS_KEY);
             websitePrefs.add(POPUPS_KEY);
 
-            if (SiteSettingsCategory.subresourceFilterCategoryEnabled()) {
-                websitePrefs.add(SUBRESOURCE_FILTER_KEY);
+            if (SiteSettingsCategory.adsCategoryEnabled()) {
+                websitePrefs.add(ADS_KEY);
             }
         }
 
@@ -198,8 +198,8 @@ public class SiteSettingsPreferences extends PreferenceFragment
                 checked = PrefServiceBridge.getInstance().popupsEnabled();
             } else if (PROTECTED_CONTENT_KEY.equals(prefName)) {
                 checked = PrefServiceBridge.getInstance().isProtectedMediaIdentifierEnabled();
-            } else if (SUBRESOURCE_FILTER_KEY.equals(prefName)) {
-                checked = PrefServiceBridge.getInstance().subresourceFilterEnabled();
+            } else if (ADS_KEY.equals(prefName)) {
+                checked = PrefServiceBridge.getInstance().adsEnabled();
             }
 
             int contentType = keyToContentSettingsType(prefName);
@@ -217,6 +217,8 @@ public class SiteSettingsPreferences extends PreferenceFragment
             } else if (LOCATION_KEY.equals(prefName) && checked
                     && prefServiceBridge.isLocationAllowedByPolicy()) {
                 p.setSummary(ContentSettingsResources.getGeolocationAllowedSummary());
+            } else if (ADS_KEY.equals(prefName) && !checked) {
+                p.setSummary(ContentSettingsResources.getAdsBlockedListSummary());
             } else {
                 p.setSummary(ContentSettingsResources.getCategorySummary(contentType, checked));
             }

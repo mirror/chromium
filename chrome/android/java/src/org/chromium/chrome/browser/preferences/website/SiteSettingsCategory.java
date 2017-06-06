@@ -47,7 +47,7 @@ public class SiteSettingsCategory {
     public static final String CATEGORY_PROTECTED_MEDIA = "protected_content";
     public static final String CATEGORY_USE_STORAGE = "use_storage";
     public static final String CATEGORY_USB = "usb";
-    public static final String CATEGORY_SUBRESOURCE_FILTER = "subresource_filter";
+    public static final String CATEGORY_ADS = "ads";
 
     // The id of this category.
     private String mCategory;
@@ -127,9 +127,9 @@ public class SiteSettingsCategory {
             return new SiteSettingsCategory(CATEGORY_PROTECTED_MEDIA, "",
                     ContentSettingsType.CONTENT_SETTINGS_TYPE_PROTECTED_MEDIA_IDENTIFIER);
         }
-        if (CATEGORY_SUBRESOURCE_FILTER.equals(category) && subresourceFilterCategoryEnabled()) {
-            return new SiteSettingsCategory(CATEGORY_SUBRESOURCE_FILTER, "",
-                    ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER);
+        if (CATEGORY_ADS.equals(category) && adsCategoryEnabled()) {
+            return new SiteSettingsCategory(
+                    CATEGORY_ADS, "", ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER);
         }
         if (CATEGORY_USE_STORAGE.equals(category)) {
             return new SiteSettingsCategory(CATEGORY_USE_STORAGE, "", -1);
@@ -180,7 +180,7 @@ public class SiteSettingsCategory {
             return fromString(CATEGORY_PROTECTED_MEDIA);
         }
         if (contentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER) {
-            return fromString(CATEGORY_SUBRESOURCE_FILTER);
+            return fromString(CATEGORY_ADS);
         }
         if (contentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_USB_CHOOSER_DATA) {
             return fromString(CATEGORY_USB);
@@ -284,9 +284,9 @@ public class SiteSettingsCategory {
     }
 
     /**
-     * Returns whether this category is the Subresource Filter category.
+     * Returns whether this category is the Ads category.
      */
-    public boolean showSubresourceFilterSites() {
+    public boolean showAdsSites() {
         return mContentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER;
     }
 
@@ -298,9 +298,9 @@ public class SiteSettingsCategory {
     }
 
     /**
-     * Returns whether the Subresource Filter category is enabled via an experiment flag.
+     * Returns whether the Ads category is enabled via an experiment flag.
      */
-    public static boolean subresourceFilterCategoryEnabled() {
+    public static boolean adsCategoryEnabled() {
         return ChromeFeatureList.isEnabled("SubresourceFilterExperimentalUI");
     }
 
