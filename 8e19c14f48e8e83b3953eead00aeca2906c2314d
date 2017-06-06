@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a34e1a0_9a8ce18e",
+        "filename": "services/device/nfc/android/java/src/org/chromium/device/nfc/NfcImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-06T19:54:52Z",
+      "side": 1,
+      "message": "Can you add a test that https://notgoogle.com/foo doesn\u0027t match against https://google.com/*?",
+      "revId": "8e19c14f48e8e83b3953eead00aeca2906c2314d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
