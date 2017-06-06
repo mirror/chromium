@@ -66,9 +66,27 @@ std::unique_ptr<UrlDownloader, BrowserThread::DeleteOnIOThread> BeginDownload(
     base::WeakPtr<DownloadManagerImpl> download_manager) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("download_manager_begin_download", R"(
+        semantics {
+          sender: "Download Manager"
+          description:
+            "When user requests downloading a file, a network request is made "
+            "to fetch it."
+          trigger:
+            "User starts or resumes a download."
+          data:
+            "URL of the requested file."
+          destination: WEBSITE
+        }
+        policy {
+          cookies_allowed: true
+          cookies_store: "user"
+          setting: "This feature cannot be disabled."
+        })");
   std::unique_ptr<net::URLRequest> url_request =
       DownloadRequestCore::CreateRequestOnIOThread(download_id, params.get(),
-                                                   NO_TRAFFIC_ANNOTATION_YET);
+                                                   traffic_annotation);
   std::unique_ptr<storage::BlobDataHandle> blob_data_handle =
       params->GetBlobDataHandle();
   if (blob_data_handle) {
