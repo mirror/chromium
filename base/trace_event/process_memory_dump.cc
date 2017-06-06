@@ -48,6 +48,11 @@ size_t GetSystemPageCount(size_t mapped_size, size_t page_size) {
 }
 #endif
 
+bool UseSharedMemoryOwnershipEdges() {
+  return CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kUseSharedMemoryOwnershipEdges);
+}
+
 }  // namespace
 
 // static
@@ -381,6 +386,30 @@ MemoryAllocatorDump* ProcessMemoryDump::GetBlackHoleMad() {
   if (!black_hole_mad_)
     black_hole_mad_.reset(new MemoryAllocatorDump("discarded", this));
   return black_hole_mad_.get();
+}
+
+void ProcessMemoryDump::CreateSharedMemoryOwnershipEdge(
+    const MemoryAllocatorDumpGuid& client_local_dump_guid,
+    const MemoryAllocatorDumpGuid& client_global_dump_guid,
+    const UnguessableToken& shared_memory_guid,
+    bool is_weak,
+    int importance) {
+  if (UseSharedMemoryOwnershipEdges() && !shared_memory_guid.is_empty()) {
+    auto local_shm_guid =
+        SharedMemoryTracker::GetGUIDForTracing(shared_memory_guid);
+    auto* global_shm_dump = CreateSharedGlobalAllocatorDump(
+        SharedMemoryTracker::GetGlobalGUIDForTracing(shared_memory_guid));
+    auto global_shm_guid = global_shm_dump->guid();
+    AddOwnershipEdge(client_local_dump_guid, local_shm_guid);
+    AddOwnershipEdge(local_shm_guid, global_shm_guid, importance);
+  } else {
+    if (is_weak)
+      CreateWeakSharedGlobalAllocatorDump(client_global_dump_guid);
+    else
+      CreateSharedGlobalAllocatorDump(client_global_dump_guid);
+    AddOwnershipEdge(client_local_dump_guid, client_global_dump_guid,
+                     importance);
+  }
 }
 
 }  // namespace trace_event

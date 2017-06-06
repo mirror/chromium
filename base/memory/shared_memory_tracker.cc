@@ -6,15 +6,36 @@
 
 #include "base/memory/shared_memory.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/trace_event/memory_allocator_dump_guid.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/process_memory_dump.h"
 
 namespace base {
 
+namespace {
+
+std::string GetDumpNameForTracing(const UnguessableToken& id) {
+  return "shared_memory/" + id.ToString();
+}
+}
+
 // static
 SharedMemoryTracker* SharedMemoryTracker::GetInstance() {
   static SharedMemoryTracker* instance = new SharedMemoryTracker;
   return instance;
+}
+
+// static
+trace_event::MemoryAllocatorDumpGuid SharedMemoryTracker::GetGUIDForTracing(
+    const UnguessableToken& id) {
+  std::string dump_name = GetDumpNameForTracing(id);
+  return trace_event::MemoryAllocatorDumpGuid(dump_name);
+}
+
+// static
+trace_event::MemoryAllocatorDumpGuid
+SharedMemoryTracker::GetGlobalGUIDForTracing(const UnguessableToken& id) {
+  return GetGUIDForTracing(id);
 }
 
 void SharedMemoryTracker::IncrementMemoryUsage(
@@ -45,16 +66,16 @@ bool SharedMemoryTracker::OnMemoryDump(const trace_event::MemoryDumpArgs& args,
     const UnguessableToken& memory_guid = std::get<0>(usage);
     uintptr_t address = std::get<1>(usage);
     size_t size = std::get<2>(usage);
-    std::string dump_name = "shared_memory/";
+    std::string dump_name;
     if (memory_guid.is_empty()) {
       // TODO(hajimehoshi): As passing ID across mojo is not implemented yet
       // (crbug/713763), ID can be empty. For such case, use an address instead
       // of GUID so that approximate memory usages are available.
-      dump_name += Uint64ToString(address);
+      dump_name = "shared_memory/" + Uint64ToString(address);
     } else {
-      dump_name += memory_guid.ToString();
+      dump_name = GetDumpNameForTracing(memory_guid);
     }
-    auto dump_guid = trace_event::MemoryAllocatorDumpGuid(dump_name);
+    auto dump_guid = GetGUIDForTracing(memory_guid);
     // Discard duplicates that might be seen in single-process mode.
     if (pmd->GetAllocatorDump(dump_name))
       continue;
@@ -68,10 +89,8 @@ bool SharedMemoryTracker::OnMemoryDump(const trace_event::MemoryDumpArgs& args,
         pmd->CreateSharedGlobalAllocatorDump(dump_guid);
     global_dump->AddScalar(trace_event::MemoryAllocatorDump::kNameSize,
                            trace_event::MemoryAllocatorDump::kUnitsBytes, size);
-    // TOOD(hajimehoshi): Detect which the shared memory comes from browser,
-    // renderer or GPU process.
-    // TODO(hajimehoshi): Shared memory reported by GPU and discardable is
-    // currently double-counted. Add ownership edges to avoid this.
+    // TODO(ssid): This is replaced with AddOverridableOwnershipEdge to replace
+    // the edge's importance value.
     pmd->AddOwnershipEdge(local_dump->guid(), global_dump->guid());
   }
   return true;
