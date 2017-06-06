@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1787a064_0e6466d8",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-06T16:18:30Z",
+      "side": 1,
+      "message": "Not sure. Because elements could be erased from the middle, it\u0027s O(N). I\u0027ve been assuming that the decode time swamps any O(N) time caused by erasing from the middle of the vector.",
+      "parentUuid": "bcfaf3a5_5ea6d74c",
+      "range": {
+        "startLine": 486,
+        "startChar": 2,
+        "endLine": 486,
+        "endChar": 12
+      },
+      "revId": "bb58278d1796c26cdefcf4a52323a5f92eddde56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0525d5d_23d0a1ac",
         "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.h",
         "patchSetId": 4
