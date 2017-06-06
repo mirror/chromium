@@ -245,7 +245,7 @@ class BASE_EXPORT MemoryDumpManager {
   virtual ~MemoryDumpManager();
 
   static void SetInstanceForTesting(MemoryDumpManager* instance);
-  static uint32_t GetDumpsSumKb(const std::string&, const ProcessMemoryDump*);
+  static uint32_t GetDumpsSumKb(const std::string&, const ProcessMemoryDump&);
 
   void FinalizeDumpAndAddToTrace(
       std::unique_ptr<ProcessMemoryDumpAsyncState> pmd_async_state);

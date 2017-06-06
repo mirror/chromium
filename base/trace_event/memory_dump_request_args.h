@@ -11,6 +11,7 @@
 #include <stdint.h>
 #include <map>
 #include <string>
+#include <vector>
 
 #include "base/base_export.h"
 #include "base/callback.h"
@@ -20,6 +21,8 @@
 
 namespace base {
 namespace trace_event {
+
+class ProcessMemoryDump;
 
 // Captures the reason why a memory dump is being requested. This is to allow
 // selective enabling of dumps, filtering and post-processing. Keep this
@@ -112,7 +115,8 @@ using GlobalMemoryDumpCallback =
 using ProcessMemoryDumpCallback =
     Callback<void(uint64_t dump_guid,
                   bool success,
-                  const Optional<MemoryDumpCallbackResult>& result)>;
+                  const Optional<MemoryDumpCallbackResult>& result,
+                  std::vector<std::unique_ptr<ProcessMemoryDump>> dumps)>;
 
 BASE_EXPORT const char* MemoryDumpTypeToString(const MemoryDumpType& dump_type);
 

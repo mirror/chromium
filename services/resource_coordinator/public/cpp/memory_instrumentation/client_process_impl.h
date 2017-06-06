@@ -88,7 +88,8 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT ClientProcessImpl
       const RequestProcessMemoryDumpCallback&,
       uint64_t dump_guid,
       bool success,
-      const base::Optional<base::trace_event::MemoryDumpCallbackResult>&);
+      const base::Optional<base::trace_event::MemoryDumpCallbackResult>&,
+      std::vector<std::unique_ptr<base::trace_event::ProcessMemoryDump>> dumps);
 
   // A proxy callback for updating |pending_memory_dump_guid_|.
   void MemoryDumpCallbackProxy(

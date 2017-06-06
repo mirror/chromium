@@ -4,11 +4,14 @@
 
 #include "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.h"
 
+#include <vector>
+
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/lock.h"
 #include "base/trace_event/memory_dump_request_args.h"
+#include "base/trace_event/process_memory_dump.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "services/resource_coordinator/public/cpp/memory_instrumentation/coordinator.h"
 #include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
@@ -65,7 +68,8 @@ void ClientProcessImpl::OnProcessMemoryDumpDone(
     const RequestProcessMemoryDumpCallback& callback,
     uint64_t dump_guid,
     bool success,
-    const base::Optional<base::trace_event::MemoryDumpCallbackResult>& result) {
+    const base::Optional<base::trace_event::MemoryDumpCallbackResult>& result,
+    std::vector<std::unique_ptr<base::trace_event::ProcessMemoryDump>> dumps) {
   mojom::ProcessMemoryDumpPtr process_memory_dump(
       mojom::ProcessMemoryDump::New());
   process_memory_dump->process_type = config_.process_type();
