@@ -282,7 +282,7 @@ class LocationBarView : public LocationBar,
   // Updates |manage_passwords_icon_view_|. Returns true if visibility changed.
   bool RefreshManagePasswordsIconView();
 
-  // Updates the icon for the "clear all" button.
+  // Updates the color of the icon for the "clear all" button.
   void RefreshClearAllButtonIcon();
 
   // Helper to show the first run info bubble.
@@ -411,7 +411,7 @@ class LocationBarView : public LocationBar,
   views::ImageButton* clear_all_button_ = nullptr;
 
   // Animation to control showing / hiding the location bar.
-  gfx::SlideAnimation size_animation_;
+  gfx::SlideAnimation size_animation_{this};
 
   // Whether we're in popup mode. This value also controls whether the location
   // bar is read-only.
