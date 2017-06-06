@@ -70,6 +70,7 @@ IndexedDBCursor::IndexedDBCursor(
 }
 
 IndexedDBCursor::~IndexedDBCursor() {
+  RemoveCursorFromTransaction();
   // Call to make sure we complete our lifetime trace.
   Close();
 }
