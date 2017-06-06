@@ -2,9 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/task_scheduler/test_utils.h"
-
 #include <utility>
+
+#include "base/task_scheduler/sequence.h"
+#include "base/task_scheduler/test_utils.h"
 
 namespace base {
 namespace internal {

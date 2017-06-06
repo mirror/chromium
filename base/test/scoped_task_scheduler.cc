@@ -76,8 +76,7 @@ class TestTaskScheduler : public TaskScheduler {
   void FlushForTesting() override;
   void JoinForTesting() override;
 
-  // Adds |task| into |sequence| and posts a task to run the next task in
-  // |sequence| to the MessageLoop backing this TaskScheduler.
+  // Posts |task| into |sequence| and the |sequence| into this TaskScheduler.
   // Returns true on success.
   bool PostTask(std::unique_ptr<internal::Task> task,
                 scoped_refptr<internal::Sequence> sequence);
@@ -251,8 +250,6 @@ bool TestTaskScheduler::PostTask(std::unique_ptr<internal::Task> task,
     return false;
   internal::Task* const task_ptr = task.get();
 
-  // Create a one-off single-task Sequence if no Sequence is provided by the
-  // caller.
   if (!sequence)
     sequence = MakeRefCounted<internal::Sequence>();
 
