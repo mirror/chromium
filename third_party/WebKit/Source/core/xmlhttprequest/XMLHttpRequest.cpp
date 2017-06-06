@@ -1303,10 +1303,15 @@ void XMLHttpRequest::setRequestHeader(const AtomicString& name,
                                       const AtomicString& value,
                                       ExceptionState& exception_state) {
   // "1. If |state| is not "opened", throw an InvalidStateError exception.
-  //  2. If the send() flag is set, throw an InvalidStateError exception."
-  if (state_ != kOpened || send_flag_) {
+  if (state_ != kOpened) {
     exception_state.ThrowDOMException(kInvalidStateError,
-                                      "The object's state must be OPENED.");
+                                      "The state of the object is not opened.");
+    return;
+  }
+  //  2. If the send() flag is set, throw an InvalidStateError exception."
+  if (send_flag_) {
+    exception_state.ThrowDOMException(
+        kInvalidStateError, "The the send() flag of the object is set.");
     return;
   }
 
@@ -1317,21 +1322,22 @@ void XMLHttpRequest::setRequestHeader(const AtomicString& name,
   //     exception."
   if (!IsValidHTTPToken(name)) {
     exception_state.ThrowDOMException(
-        kSyntaxError, "'" + name + "' is not a valid HTTP header field name.");
+        kSyntaxError, "The given value '" + name +
+                          "' is not a valid HTTP header field name.");
     return;
   }
   if (!IsValidHTTPHeaderValue(normalized_value)) {
     exception_state.ThrowDOMException(
-        kSyntaxError,
-        "'" + normalized_value + "' is not a valid HTTP header field value.");
+        kSyntaxError, "The given value '" + normalized_value +
+                          "' is not a valid HTTP header field value.");
     return;
   }
 
   // "5. Terminate these steps if |name| is a forbidden header name."
   // No script (privileged or not) can set unsafe headers.
   if (FetchUtils::IsForbiddenHeaderName(name)) {
-    LogConsoleError(GetExecutionContext(),
-                    "Refused to set unsafe header \"" + name + "\"");
+    LogConsoleError(GetExecutionContext(), "The given name '" + name +
+                                               "' is a forbidden header name.");
     return;
   }
 
