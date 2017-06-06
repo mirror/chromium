@@ -93,7 +93,7 @@ FontResource* CSSFontFaceSrcValue::Fetch(Document* document) const {
     resource_request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
         referrer_.referrer_policy, resource_request.Url(), referrer_.referrer));
     FetchParameters params(resource_request, FetchInitiatorTypeNames::css);
-    if (RuntimeEnabledFeatures::webFontsCacheAwareTimeoutAdaptationEnabled())
+    if (RuntimeEnabledFeatures::WebFontsCacheAwareTimeoutAdaptationEnabled())
       params.SetCacheAwareLoadingEnabled(kIsCacheAwareLoadingEnabled);
     params.SetContentSecurityCheck(should_check_content_security_policy_);
     SecurityOrigin* security_origin = document->GetSecurityOrigin();
