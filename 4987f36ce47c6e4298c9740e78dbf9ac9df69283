@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "488f2c58_5e40bd12",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/storage-view-reports-quota-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-06T21:28:56Z",
+      "side": 1,
+      "message": "It should be stable as we know how much we are writing. It might change with the changes in IDB implementation. Fixable by updating the expectations.",
+      "parentUuid": "81defe49_b907a0ce",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 7
+      },
+      "revId": "4987f36ce47c6e4298c9740e78dbf9ac9df69283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9526ea07_3172d8b9",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/storage-view-reports-quota.html",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-06T17:16:53Z",
       "side": 1,
       "message": "remove this!",
+      "revId": "4987f36ce47c6e4298c9740e78dbf9ac9df69283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b04118_cd1f0c55",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/storage-view-reports-quota.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-06T21:28:56Z",
+      "side": 1,
+      "message": "Done (4realz!)!\n\nI feel like testing framework should handle this... :(",
+      "parentUuid": "9526ea07_3172d8b9",
       "revId": "4987f36ce47c6e4298c9740e78dbf9ac9df69283",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -77,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "75466d47_7ff01874",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 4533,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-06T21:28:56Z",
+      "side": 1,
+      "message": "Done (grudgingly)",
+      "parentUuid": "4e110654_4bed74c7",
+      "revId": "4987f36ce47c6e4298c9740e78dbf9ac9df69283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d305c8b_33853cd9",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
         "patchSetId": 4
@@ -94,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "4ea301b1_e6622ecc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-06T21:28:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d305c8b_33853cd9",
+      "revId": "4987f36ce47c6e4298c9740e78dbf9ac9df69283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "101e5a0e_b99bad05",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
         "patchSetId": 4
@@ -108,6 +186,24 @@
       "revId": "4987f36ce47c6e4298c9740e78dbf9ac9df69283",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf39cb1_19643ed4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-06T21:28:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "101e5a0e_b99bad05",
+      "revId": "4987f36ce47c6e4298c9740e78dbf9ac9df69283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
