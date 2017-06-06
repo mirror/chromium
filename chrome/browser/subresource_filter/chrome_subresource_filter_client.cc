@@ -18,7 +18,7 @@
 #include "chrome/browser/subresource_filter/subresource_filter_content_settings_manager.h"
 #include "chrome/browser/subresource_filter/subresource_filter_profile_context.h"
 #include "chrome/browser/subresource_filter/subresource_filter_profile_context_factory.h"
-#include "chrome/browser/ui/android/content_settings/subresource_filter_infobar_delegate.h"
+#include "chrome/browser/ui/android/content_settings/ads_blocked_infobar_delegate.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "components/safe_browsing_db/database_manager.h"
@@ -117,7 +117,7 @@ void ChromeSubresourceFilterClient::ToggleNotificationVisibility(
 #if defined(OS_ANDROID)
     InfoBarService* infobar_service =
         InfoBarService::FromWebContents(web_contents_);
-    SubresourceFilterInfobarDelegate::Create(infobar_service);
+    AdsBlockedInfobarDelegate::Create(infobar_service);
 #endif
     TabSpecificContentSettings* content_settings =
         TabSpecificContentSettings::FromWebContents(web_contents_);
