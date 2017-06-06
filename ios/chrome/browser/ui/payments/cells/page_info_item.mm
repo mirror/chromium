@@ -127,12 +127,18 @@ const CGFloat kLockIndicatorVerticalPadding = 4;
     _pageHostLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _pageHostLabel.font = [[MDCTypography fontLoader] regularFontOfSize:12];
     _pageHostLabel.textColor = [[MDCPalette greyPalette] tint600];
-    // Allow the label to break to multiple lines. This should be very rare but
-    // will prevent malicious domains from suppling very long host names and
-    // having the domain name truncated.
-    _pageHostLabel.numberOfLines = 0;
+    // Truncate host name from the left if it is too long. This is according
+    // to Eliding Origin Names and Hostnames guideline found here:
+    // https://www.chromium.org/Home/chromium-security/enamel#TOC-Presenting-Origins
+    _pageHostLabel.lineBreakMode = NSLineBreakByTruncatingHead;
     _pageHostLabel.backgroundColor = [UIColor clearColor];
     _pageHostLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    // Prevents host label from bleeding into lock indicator view when host text
+    // is very long.
+    [_pageHostLabel
+        setContentCompressionResistancePriority:500
+                                        forAxis:
+                                            UILayoutConstraintAxisHorizontal];
     [self.contentView addSubview:_pageHostLabel];
 
     // Lock indicator

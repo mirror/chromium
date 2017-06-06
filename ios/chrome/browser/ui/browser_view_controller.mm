@@ -1822,7 +1822,7 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
     _paymentRequestManager = [[PaymentRequestManager alloc]
         initWithBaseViewController:self
                       browserState:_browserState];
-    [_paymentRequestManager setWebState:[_model currentTab].webState];
+    [_paymentRequestManager setTabModel:_model];
   }
 }
 
