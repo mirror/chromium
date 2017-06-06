@@ -34,6 +34,24 @@
       "revId": "08913a6b0ff765fa6c74c8622645434cd6a3a5cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d9f0af6_16ecb835",
+        "filename": "extensions/renderer/module_system.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-06T00:04:35Z",
+      "side": 1,
+      "message": "Yeah, I wouldn\u0027t be surprised if MR still depends on this (even as a component, it may).  My concern here too was around exposing this to arbitrary apps - if we expose this to kiosk apps, we\u0027ll need to support it (or at least, it will be harder to deprecate).",
+      "parentUuid": "dc3bd42b_1f14f153",
+      "revId": "08913a6b0ff765fa6c74c8622645434cd6a3a5cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
