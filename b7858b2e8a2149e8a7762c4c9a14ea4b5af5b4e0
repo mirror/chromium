@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "85fb03c6_8a66977b",
+        "filename": "media/capture/video/mac/video_capture_device_avfoundation_mac.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-06T17:53:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "902640ed_0bcb4cd5",
+      "range": {
+        "startLine": 100,
+        "startChar": 45,
+        "endLine": 100,
+        "endChar": 50
+      },
+      "revId": "b7858b2e8a2149e8a7762c4c9a14ea4b5af5b4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cf4e9d2_66d84069",
         "filename": "media/capture/video/mac/video_capture_device_mac.mm",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-05T19:55:34Z",
       "side": 1,
       "message": "Shouldn\u0027t we call here SetErrorState() (to call in \nturn client_-\u003eOnError() )?",
+      "range": {
+        "startLine": 374,
+        "startChar": 4,
+        "endLine": 374,
+        "endChar": 14
+      },
+      "revId": "b7858b2e8a2149e8a7762c4c9a14ea4b5af5b4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b2dd1bc_d24fa038",
+        "filename": "media/capture/video/mac/video_capture_device_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-06T17:53:03Z",
+      "side": 1,
+      "message": "Excellent point. I initially though we shouldn\u0027t, but it turns out I thought this for the wrong reasons before you raised this question. After analyzing it more thoroughly, my conclusion is that we still shouldn\u0027t, because I believe that matches the behavior before this CL as I\u0027ll try to explain below.\n\nWhat (based on reading the code I believe) happened before this CL is that if setCaptureDevice() failed internally, it would invoke ReceiveError() in l.491, which would asynchronously (and through a weak_ptr) call SetErrorState(). However, the weak_ptr would probably already have expired by then, because otherwise it should have crashed, because |client_| was already reset to nullptr in l.377. As a result, SetErrorState() was probably never called in this case (and no error message was logged either).",
+      "parentUuid": "4cf4e9d2_66d84069",
       "range": {
         "startLine": 374,
         "startChar": 4,
@@ -68,6 +116,30 @@
       "revId": "b7858b2e8a2149e8a7762c4c9a14ea4b5af5b4e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a06ceed8_323498a5",
+        "filename": "media/capture/video/mac/video_capture_device_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-06T17:53:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66638499_123a7cac",
+      "range": {
+        "startLine": 375,
+        "startChar": 2,
+        "endLine": 375,
+        "endChar": 3
+      },
+      "revId": "b7858b2e8a2149e8a7762c4c9a14ea4b5af5b4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
