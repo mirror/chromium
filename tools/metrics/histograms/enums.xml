@@ -30896,6 +30896,11 @@ from previous Chrome versions.
   <int value="2" label="Will retry"/>
 </enum>
 
+<enum name="RebufferResult" type="int">
+  <int value="0" label="Rebuffers"/>
+  <int value="1" label="Zero Rebuffers"/>
+</enum>
+
 <enum name="RecentTabsAction" type="int">
   <int value="0" label="Local Session Tab"/>
   <int value="1" label="Other Device Tab"/>
