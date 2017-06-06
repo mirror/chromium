@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "3efb6a5a_36ed8a6c",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/CSSPropertyMetadata.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-06T21:35:30Z",
+      "side": 1,
+      "message": "Since I suggested this pattern, I\u0027ll reply:\n\n\u003e How is this thread safe? AFAIK static initialization is only thread safe for globals, not locals.\n\nThis is thread-safe as of C++11, and we already rely on this (e.g. this is how DEFINE_THREAD_SAFE_STATIC_LOCAL works). See, e.g., http://en.cppreference.com/w/cpp/language/storage_duration#Static_local_variables.\n\n\u003e Why does this need to be a lambda rather than just a regular function call?\n\nIt doesn\u0027t. We\u0027ve used this pattern with a lambda in a few other places, but it could equally be a free function.\n\nhttps://cs.chromium.org/search/?q\u003dpackage:%5Echromium$+static.*%5C+%3D%5C+%5C%5B%5C%5D+f:%5C.(cc%7Ccpp)$+case:yes\u0026type\u003dcs",
+      "parentUuid": "299a67d8_cc40703d",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 8
+      },
+      "revId": "29cfb05844deb42c41ae16c694a17a8b47a9bb84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edf4e039_11c9249d",
         "filename": "third_party/WebKit/Source/build/scripts/templates/StylePropertyShorthand.cpp.tmpl",
         "patchSetId": 1
