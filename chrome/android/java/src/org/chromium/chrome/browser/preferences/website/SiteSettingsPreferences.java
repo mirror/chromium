@@ -99,7 +99,7 @@ public class SiteSettingsPreferences extends PreferenceFragment
         } else if (PROTECTED_CONTENT_KEY.equals(key)) {
             return ContentSettingsType.CONTENT_SETTINGS_TYPE_PROTECTED_MEDIA_IDENTIFIER;
         } else if (ADS_KEY.equals(key)) {
-            return ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER;
+            return ContentSettingsType.CONTENT_SETTINGS_TYPE_ADS;
         }
         return -1;
     }
