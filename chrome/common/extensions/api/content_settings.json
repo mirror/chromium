@@ -205,6 +205,11 @@
         "enum": ["allow", "block"]
       },
       {
+        "id": "AdsContentSetting",
+        "type": "string",
+        "enum": ["allow", "block"]
+      },
+      {
         "id": "NotificationsContentSetting",
         "type": "string",
         "enum": ["allow", "block", "ask"]
@@ -287,6 +292,14 @@
         "value": [
           "popups",
           {"$ref":"PopupsContentSetting"}
+        ]
+      },
+      "ads": {
+        "$ref": "ContentSetting",
+        "description": "Whether to allow sites to show ads, if the site tends to show intrusive ads. One of<br><var>allow</var>: Allow sites to show ads,<br><var>block</var>: Don't allow sites to show ads if the site tends to show intrusive ads. <br>Default is <var>block</var>.<br>The primary URL is the URL of the top-level frame. The secondary URL is not used.",
+        "value": [
+          "ads",
+          {"$ref":"AdsContentSetting"}
         ]
       },
       "notifications": {
