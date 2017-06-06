@@ -187,21 +187,34 @@ void SharedWorkerHost::WorkerConnected(int connection_request_id) {
   }
 }
 
+// Trampolines the AllowFileSystem response from the UI to the IO thread.
+void AllowFileSystemResponseOnUIThread(base::WeakPtr<SharedWorkerHost> weak_ptr,
+                                       std::unique_ptr<IPC::Message> reply_msg,
+                                       bool allowed) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  content::BrowserThread::PostTask(
+      content::BrowserThread::IO, FROM_HERE,
+      base::Bind(&SharedWorkerHost::AllowFileSystemResponse, weak_ptr,
+                 base::Passed(std::move(reply_msg)), allowed));
+}
+
 void SharedWorkerHost::AllowFileSystem(
     const GURL& url,
     std::unique_ptr<IPC::Message> reply_msg) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+
   GetContentClient()->browser()->AllowWorkerFileSystem(
-      url,
-      instance_->resource_context(),
-      GetRenderFrameIDsForWorker(),
-      base::Bind(&SharedWorkerHost::AllowFileSystemResponse,
-                 weak_factory_.GetWeakPtr(),
+      url, instance_->resource_context(), GetRenderFrameIDsForWorker(),
+      base::Bind(&AllowFileSystemResponseOnUIThread, weak_factory_.GetWeakPtr(),
                  base::Passed(&reply_msg)));
 }
 
 void SharedWorkerHost::AllowFileSystemResponse(
     std::unique_ptr<IPC::Message> reply_msg,
     bool allowed) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+
   WorkerProcessHostMsg_RequestFileSystemAccessSync::WriteReplyParams(
       reply_msg.get(),
       allowed);

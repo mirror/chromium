@@ -94,6 +94,11 @@ class SharedWorkerHost {
   bool IsAvailable() const;
 
  private:
+  friend void AllowFileSystemResponseOnUIThread(
+      base::WeakPtr<SharedWorkerHost> weak_ptr,
+      std::unique_ptr<IPC::Message> reply_msg,
+      bool allowed);
+
   // Unique identifier for a worker client.
   class FilterInfo {
    public:
