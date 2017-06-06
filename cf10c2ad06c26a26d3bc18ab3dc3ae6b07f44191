@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46594b76_87f641f6",
+        "filename": "services/quota/public/interfaces/quota.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-06T20:52:53Z",
+      "side": 1,
+      "message": "The request_id is definitely not needed, it\u0027s solely for routing the response which mojo will be taking care of for us. The frame_id may not be needed either provided we vend instances that are framespecific, we also have to vend instances for WorkerNavigator.storage (sans frame_id i think).",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 16
+      },
+      "revId": "cf10c2ad06c26a26d3bc18ab3dc3ae6b07f44191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "139abf7e_0d34ee2d",
+        "filename": "services/quota/public/interfaces/quota.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-06T20:52:53Z",
+      "side": 1,
+      "message": "How are errors reflected in the api? In the IPC system, a QuotaMsg_DidFail message can be sent in response to both of these methods. I think we can add a QuotaStatusCode to the return value.",
+      "revId": "cf10c2ad06c26a26d3bc18ab3dc3ae6b07f44191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
