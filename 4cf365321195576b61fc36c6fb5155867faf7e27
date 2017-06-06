@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "82d8e100_4ba0fbac",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-06T05:52:42Z",
+      "side": 1,
+      "message": "I slightly like the current form in order to reuse existing logic in FrameFetchContext (PopulateResourceRequest, ClientHintsDeviceRAM). Cleaning up the interface more (e.g., dividing logic, getters and reporting) would resolve the problem.",
+      "parentUuid": "e9bff3ab_5f78bd64",
+      "revId": "4cf365321195576b61fc36c6fb5155867faf7e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a8be7a6_09b352ae",
         "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-02T08:43:32Z",
       "side": 1,
       "message": "(Intuitively sending all these when a frame is detached doesn\u0027t make a lot sense...)",
+      "revId": "4cf365321195576b61fc36c6fb5155867faf7e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9110c81_cf269526",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-06T05:52:42Z",
+      "side": 1,
+      "message": "Maybe, but I\u0027m not sure. I tried to keep the header consistency across detach events and redirects as much as possible.",
+      "parentUuid": "1a8be7a6_09b352ae",
       "revId": "4cf365321195576b61fc36c6fb5155867faf7e27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b4d69d15_5bce7172",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-06T05:52:42Z",
+      "side": 1,
+      "message": "Now these getters are always called when detached, and some getters didn\u0027t expect that.",
+      "parentUuid": "e9a3671d_d309b3aa",
+      "revId": "4cf365321195576b61fc36c6fb5155867faf7e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40729a32_8fbca3a6",
         "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "4cf365321195576b61fc36c6fb5155867faf7e27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc2b3c8_81c9cd59",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-06T05:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40729a32_8fbca3a6",
+      "revId": "4cf365321195576b61fc36c6fb5155867faf7e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
