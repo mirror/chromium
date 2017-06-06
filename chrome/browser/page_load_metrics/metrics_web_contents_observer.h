@@ -114,6 +114,7 @@ class MetricsWebContentsObserver
   // the UI thread.
   void OnRequestComplete(
       const GURL& url,
+      const net::HostPortPair& host_port_pair,
       int frame_tree_node_id,
       const content::GlobalRequestID& request_id,
       content::ResourceType resource_type,

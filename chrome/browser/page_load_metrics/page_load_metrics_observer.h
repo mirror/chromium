@@ -16,6 +16,7 @@
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/resource_type.h"
+#include "net/base/host_port_pair.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "url/gurl.h"
 
@@ -208,6 +209,7 @@ struct PageLoadExtraInfo {
 struct ExtraRequestCompleteInfo {
   ExtraRequestCompleteInfo(
       const GURL& url,
+      const net::HostPortPair& host_port_pair,
       int frame_tree_node_id,
       bool was_cached,
       int64_t raw_body_bytes,
@@ -220,6 +222,9 @@ struct ExtraRequestCompleteInfo {
 
   // The URL for the request.
   const GURL url;
+
+  // The host (IP address) and port for the request
+  const net::HostPortPair host_port_pair;
 
   // The frame tree node id that initiated the request.
   const int frame_tree_node_id;

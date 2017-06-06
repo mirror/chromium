@@ -73,6 +73,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/resource_response.h"
 #include "extensions/features/features.h"
+#include "net/base/host_port_pair.h"
 #include "net/base/load_flags.h"
 #include "net/base/load_timing_info.h"
 #include "net/base/request_priority.h"
@@ -373,6 +374,7 @@ void NotifyUIThreadOfRequestComplete(
     const content::ResourceRequestInfo::FrameTreeNodeIdGetter&
         frame_tree_node_id_getter,
     const GURL& url,
+    const net::HostPortPair& host_port_pair,
     const content::GlobalRequestID& request_id,
     ResourceType resource_type,
     bool is_download,
@@ -409,9 +411,9 @@ void NotifyUIThreadOfRequestComplete(
             web_contents);
     if (metrics_observer) {
       metrics_observer->OnRequestComplete(
-          url, frame_tree_node_id_getter.Run(), request_id, resource_type,
-          was_cached, std::move(data_reduction_proxy_data), raw_body_bytes,
-          original_content_length, request_creation_time);
+          url, host_port_pair, frame_tree_node_id_getter.Run(), request_id,
+          resource_type, was_cached, std::move(data_reduction_proxy_data),
+          raw_body_bytes, original_content_length, request_creation_time);
     }
   }
 }
@@ -878,16 +880,17 @@ void ChromeResourceDispatcherHostDelegate::RequestComplete(
 
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(
-          &NotifyUIThreadOfRequestComplete,
-          info->GetWebContentsGetterForRequest(),
-          info->GetFrameTreeNodeIdGetterForRequest(), url_request->url(),
-          info->GetGlobalRequestID(), info->GetResourceType(),
-          info->IsDownload(), url_request->was_cached(),
-          base::Passed(&data_reduction_proxy_data), net_error,
-          url_request->GetTotalReceivedBytes(), url_request->GetRawBodyBytes(),
-          original_content_length, url_request->creation_time(),
-          base::TimeTicks::Now() - url_request->creation_time()));
+      base::BindOnce(&NotifyUIThreadOfRequestComplete,
+                     info->GetWebContentsGetterForRequest(),
+                     info->GetFrameTreeNodeIdGetterForRequest(),
+                     url_request->url(), url_request->GetSocketAddress(),
+                     info->GetGlobalRequestID(), info->GetResourceType(),
+                     info->IsDownload(), url_request->was_cached(),
+                     base::Passed(&data_reduction_proxy_data), net_error,
+                     url_request->GetTotalReceivedBytes(),
+                     url_request->GetRawBodyBytes(), original_content_length,
+                     url_request->creation_time(),
+                     base::TimeTicks::Now() - url_request->creation_time()));
 }
 
 content::PreviewsState ChromeResourceDispatcherHostDelegate::GetPreviewsState(
