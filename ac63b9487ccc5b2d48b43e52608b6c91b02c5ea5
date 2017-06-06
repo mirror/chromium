@@ -16,6 +16,24 @@
       "revId": "ac63b9487ccc5b2d48b43e52608b6c91b02c5ea5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a7c79a_6196796b",
+        "filename": "base/win/com_init_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-06T19:54:46Z",
+      "side": 1,
+      "message": "My reading is that somehow empty functions are special. \n\nTurns out on Release and non-DCHECK builds, you get C2491.\nf:\\src\\base\\win\\com_init_util.h(18): error C2491: \u0027base::win::AssertComInitialized\u0027: definition of dllimport function not allowed\n\nThe fun question is how did this pass in the CQ and on the waterfall? Don\u0027t we have Release without DCHECK builds there?",
+      "parentUuid": "c0eba0c6_e57a1866",
+      "revId": "ac63b9487ccc5b2d48b43e52608b6c91b02c5ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
