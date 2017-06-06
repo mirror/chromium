@@ -303,6 +303,7 @@ void MetricsWebContentsObserver::OnRequestStarted(
 
 void MetricsWebContentsObserver::OnRequestComplete(
     const GURL& url,
+    const net::HostPortPair& host_port_pair,
     int frame_tree_node_id,
     const content::GlobalRequestID& request_id,
     content::ResourceType resource_type,
@@ -316,7 +317,7 @@ void MetricsWebContentsObserver::OnRequestComplete(
       GetTrackerOrNullForRequest(request_id, resource_type, creation_time);
   if (tracker) {
     ExtraRequestCompleteInfo extra_request_complete_info(
-        url, frame_tree_node_id, was_cached, raw_body_bytes,
+        url, host_port_pair, frame_tree_node_id, was_cached, raw_body_bytes,
         was_cached ? 0 : original_content_length,
         std::move(data_reduction_proxy_data), resource_type);
     tracker->OnLoadedResource(extra_request_complete_info);

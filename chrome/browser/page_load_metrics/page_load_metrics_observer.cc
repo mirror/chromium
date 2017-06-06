@@ -60,6 +60,7 @@ PageLoadExtraInfo PageLoadExtraInfo::CreateForTesting(
 
 ExtraRequestCompleteInfo::ExtraRequestCompleteInfo(
     const GURL& url,
+    const net::HostPortPair& host_port_pair,
     int frame_tree_node_id,
     bool was_cached,
     int64_t raw_body_bytes,
@@ -68,6 +69,7 @@ ExtraRequestCompleteInfo::ExtraRequestCompleteInfo(
         data_reduction_proxy_data,
     content::ResourceType detected_resource_type)
     : url(url),
+      host_port_pair(host_port_pair),
       frame_tree_node_id(frame_tree_node_id),
       was_cached(was_cached),
       raw_body_bytes(raw_body_bytes),
