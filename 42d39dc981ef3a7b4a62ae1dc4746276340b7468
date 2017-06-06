@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b63fc681_745f7faa",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-06-06T11:24:22Z",
+      "side": 1,
+      "message": "In practice the only effect it has is that if anyone explicitly requests a value different from 16, getUserMedia will fail. \nIt\u0027s added here in order to be more spec compliant.",
+      "parentUuid": "715c1bac_8b09f7ed",
+      "range": {
+        "startLine": 53,
+        "startChar": 1,
+        "endLine": 56,
+        "endChar": 3
+      },
+      "revId": "42d39dc981ef3a7b4a62ae1dc4746276340b7468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ff12fe5_107fed16",
         "filename": "content/renderer/media/media_stream_constraints_util_audio.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0a22e0f1_87db966e",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-06-06T11:24:22Z",
+      "side": 1,
+      "message": "The main reason it does not suport constraints at this time is that I have not devised a proper method to discover the capabilities (i.e., hardware parameters) of that input device in advance.\nThere is also this comment in AudioInputDeviceManager that suggests that the device parameters used to initialize the AudioInputDevice for tab capture are invalid. See https://cs.chromium.org/chromium/src/content/browser/renderer_host/media/audio_input_device_manager.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d87\n\nDo you have any advice here? Would reading the hardware parameters of the default output device be correct? Would it be the same for tab and system capture?\nIf there is a good way to read device capabilities, I can add the corresponding support in a follow up CL.",
+      "parentUuid": "5ff12fe5_107fed16",
+      "range": {
+        "startLine": 49,
+        "startChar": 37,
+        "endLine": 51,
+        "endChar": 30
+      },
+      "revId": "42d39dc981ef3a7b4a62ae1dc4746276340b7468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74cad686_fdeb3fb2",
         "filename": "content/renderer/media/media_stream_constraints_util_sets.h",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-05T20:45:03Z",
       "side": 1,
       "message": "Something to consider: \u0027StringSet\u0027 and \u0027BoolSet\u0027 are fairly abstract names. I\u0027m worried that there could potentially be namespace clashing in the future. You might want to put these data structures in an inner namespace (e.g., \"blink::media_track_constraints\"), instead of just in the \"blink\" namespace.",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 34
+      },
+      "revId": "42d39dc981ef3a7b4a62ae1dc4746276340b7468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c5297ab_9ae1358c",
+        "filename": "content/renderer/media/media_stream_constraints_util_sets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-06-06T11:24:22Z",
+      "side": 1,
+      "message": "Removed the aliases. Using DiscreteSet\u003cbool\u003e and DiscreteSet\u003cstd::string\u003e directly.\nDo you think DiscreteSet should be in its own namespace as well?\nIf so, I will make that change in a follow-up CL in order to keep this one focused on audio.",
+      "parentUuid": "74cad686_fdeb3fb2",
       "range": {
         "startLine": 147,
         "startChar": 0,
