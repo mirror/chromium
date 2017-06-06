@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7be3a8f3_40bd83f5",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-06T15:32:15Z",
+      "side": 1,
+      "message": "Met with storage team (and Pavel) - \"persistent\" storage will no longer be exposed (it is deprecated) - this makes the code simpler.",
+      "parentUuid": "d7bd9aa0_e2b76fa9",
+      "revId": "06abcb822b7186532a6c595693d55d43fc54d1e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "748be1bf_a5f76765",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view.html",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "06abcb822b7186532a6c595693d55d43fc54d1e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "495072e5_4c9d66d2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/clear-storage-view.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-06T15:32:15Z",
+      "side": 1,
+      "message": "I was hoping to extend this at some point... But oh well :)",
+      "parentUuid": "748be1bf_a5f76765",
+      "revId": "06abcb822b7186532a6c595693d55d43fc54d1e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -68,6 +104,24 @@
       "revId": "06abcb822b7186532a6c595693d55d43fc54d1e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93adb9ca_4846aab9",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 4536,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-06T15:32:15Z",
+      "side": 1,
+      "message": "No longer applies.",
+      "parentUuid": "727bd7c5_ea8bf1db",
+      "revId": "06abcb822b7186532a6c595693d55d43fc54d1e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
