@@ -292,9 +292,13 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
   content::WindowedNotificationObserver close_observer(
       content::NOTIFICATION_WEB_CONTENTS_DESTROYED,
       content::Source<content::WebContents>(shell()->web_contents()));
-  GURL url("chrome://resources/css/tabs.css");
-  NavigationHandleObserver handle_observer(shell()->web_contents(), url);
-  shell()->LoadURL(url);
+  GURL url =
+      embedded_test_server()->GetURL("/page_with_empty_beforeunload.html");
+  NavigateToURL(shell(), url);
+  GURL url2("chrome://resources/css/tabs.css");
+  NavigationHandleObserver handle_observer(shell()->web_contents(), url2);
+  shell()->LoadURL(url2);
+
   shell()->web_contents()->DispatchBeforeUnload();
   close_observer.Wait();
   EXPECT_EQ(net::ERR_ABORTED, handle_observer.net_error_code());
