@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5a470a8_bb0e9eac",
+        "filename": "components/page_info_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-06-06T18:59:48Z",
+      "side": 1,
+      "message": "Nit: Add new permission name string after IDS_PAGE_INFO_TYPE_MIDI_SYSEX.",
+      "revId": "d938d92cc836a98499cc36bcbef1b9c12f118c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a57763_c171d89b",
+        "filename": "components/page_info_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-06-06T18:59:48Z",
+      "side": 1,
+      "message": "I\u0027m assuming this is approved by the UI team?",
+      "revId": "d938d92cc836a98499cc36bcbef1b9c12f118c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
