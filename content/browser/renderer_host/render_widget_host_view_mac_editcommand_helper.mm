@@ -145,7 +145,7 @@ void EditCommandImp(id self, SEL _cmd, id sender) {
   RenderWidgetHostImpl* rwh =
       RenderWidgetHostImpl::From(rwhv->GetRenderWidgetHost());
   // The second parameter is the core command value which isn't used here.
-  rwh->ExecuteEditCommand(command, "");
+  rwh->GetWidgetInputHandler()->ExecuteEditCommand(command, "");
 }
 
 }  // namespace

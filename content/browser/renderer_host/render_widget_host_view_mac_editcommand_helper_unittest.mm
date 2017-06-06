@@ -86,7 +86,8 @@ class MockRenderWidgetHostDelegate : public RenderWidgetHostDelegate {
 };
 
 // Create a RenderWidget for which we can filter messages.
-class RenderWidgetHostEditCommandCounter : public RenderWidgetHostImpl {
+class RenderWidgetHostEditCommandCounter : public RenderWidgetHostImpl,
+                                           public mojom::WidgetInputHandler {
  public:
   RenderWidgetHostEditCommandCounter(RenderWidgetHostDelegate* delegate,
                                      RenderProcessHost* process,
@@ -94,11 +95,50 @@ class RenderWidgetHostEditCommandCounter : public RenderWidgetHostImpl {
       : RenderWidgetHostImpl(delegate, process, routing_id, false),
         edit_command_message_count_(0) {}
 
-  bool Send(IPC::Message* message) override {
-    if (message->type() == InputMsg_ExecuteEditCommand::ID)
-      edit_command_message_count_++;
-    return RenderWidgetHostImpl::Send(message);
+  mojom::WidgetInputHandler* GetWidgetInputHandler() override { return this; }
+
+  void SetFocus(bool focused) override {}
+
+  void MouseCaptureLost() override {}
+
+  void SetEditCommandsForNextKeyEvent(
+      const std::vector<content::EditCommand>& commands) override {}
+
+  void CursorVisibilityChanged(bool visible) override {}
+
+  void ImeSetComposition(
+      const base::string16& text,
+      const std::vector<ui::CompositionUnderline>& underlines,
+      const gfx::Range& range,
+      int32_t start,
+      int32_t end) override {}
+
+  void ImeCommitText(const base::string16& text,
+                     const std::vector<ui::CompositionUnderline>& underlines,
+                     const gfx::Range& range,
+                     int32_t relative_cursor_position) override {}
+
+  void ImeFinishComposingText(bool keep_selection) override {}
+
+  void ExecuteEditCommand(const std::string& command,
+                          const std::string& value) override {
+    edit_command_message_count_++;
   }
+
+  void RequestTextInputStateUpdate() override {}
+
+  void RequestCompositionUpdates(bool immediate_request,
+                                 bool monitor_request) override {}
+
+  void ScrollFocusedEditableNodeIntoRect(const gfx::Rect& rect) override {}
+
+  void MoveCaret(const gfx::Point& point) override {}
+
+  void DispatchEvent(
+      mojom::EventPtr event,
+      mojom::WidgetInputHandler::DispatchEventCallback callback) override {}
+
+  void DispatchNonBlockingEvent(mojom::EventPtr event) override {}
 
   unsigned int edit_command_message_count_;
 };

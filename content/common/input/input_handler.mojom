@@ -4,12 +4,88 @@
 
 module content.mojom;
 
+import "content/common/native_types.mojom";
 import "mojo/common/string16.mojom";
 import "services/ui/public/interfaces/ime/ime.mojom";
+import "ui/events/mojo/event.mojom";
+import "ui/events/mojo/event_constants.mojom";
+import "ui/latency/mojo/latency_info.mojom";
 import "ui/gfx/geometry/mojo/geometry.mojom";
+import "ui/gfx/range/mojo/range.mojom";
+
+
+// These structs are purposely duplicated from ui/events/mojom/event.mojom.
+// They map WebInputEvent <-> WebInputEvent across mojo.
+// We have to work at unifying them. The current problem is that the browser
+// uses WebInputEvents inside the render widget host and input router. Once
+// we move these to ui::Event's then we can get rid of these duplicated
+// mojom structs. Ideally the browser/renderer would use ui::Event up until we
+// pass the events into blink.
+struct KeyData {
+  int32 dom_key;
+  int32 dom_code;
+  int32 windows_key_code;
+  int32 native_key_code;
+  bool is_system_key;
+  bool is_browser_shortcut;
+  mojo.common.mojom.String16 text;
+  mojo.common.mojom.String16 unmodified_text;
+};
+
+struct PointerData {
+  int32 pointer_id;
+  float force;
+  int32 tilt_x;
+  int32 tilt_y;
+  float tangential_pressure;
+  int32 twist;
+  Button button;
+  PointerType pointer_type;
+  int32 movement_x;
+  int32 movement_y;
+  gfx.mojom.PointF screen_position;
+  gfx.mojom.PointF widget_position;
+  MouseData? mouse_data;
+};
+
+struct MouseData {
+  int32 click_count;
+};
+
+struct Event {
+  EventType type;
+  int32 modifiers;
+  double timestamp_seconds;
+  ui.mojom.LatencyInfo latency;
+  KeyData? key_data;
+  PointerData? pointer_data;
+};
+
+struct Overscroll {};
 
 interface WidgetInputHandler {
-  // TODO(dtapuska): Implement me.
+  SetFocus(bool focused);
+  MouseCaptureLost();
+  SetEditCommandsForNextKeyEvent(array<content.mojom.EditCommand> commands);
+  CursorVisibilityChanged(bool visible);
+  ImeSetComposition(mojo.common.mojom.String16 text,
+                    array<ui.mojom.CompositionUnderline> underlines,
+                    gfx.mojom.Range range, int32 start, int32 end);
+  ImeCommitText(mojo.common.mojom.String16 text,
+                array<ui.mojom.CompositionUnderline> underlines,
+                gfx.mojom.Range range, int32 relative_cursor_position);
+  ImeFinishComposingText(bool keep_selection);
+  ExecuteEditCommand(string command, string value);
+
+  RequestTextInputStateUpdate();
+  RequestCompositionUpdates(bool immediate_request, bool monitor_request);
+  ScrollFocusedEditableNodeIntoRect(gfx.mojom.Rect rect);
+  MoveCaret(gfx.mojom.Point point);
+
+  DispatchEvent(Event event)
+      => (InputEventAckSource source, ui.mojom.LatencyInfo updated_latency,
+         InputEventAckState state);
+  DispatchNonBlockingEvent(Event event);
 };
 
 // This interface provides the input actions associated with the RenderFrame.
