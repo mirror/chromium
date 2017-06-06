@@ -16,6 +16,24 @@
       "revId": "19ebd7d0700b93a183b8b1c562f7c8c587542211",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "076db486_139ba0cc",
+        "filename": "components/safe_browsing_db/v4_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-06T00:28:17Z",
+      "side": 1,
+      "message": "I\u0027m inclined to push back on this, for a couple reasons:\n* V4Store::VerifyChecksum() already does this check.\n* VerifyChecksumsOnDbSequence() is a free function, so we don\u0027t have easy access to the DB TaskRunner object. We could pass it in as a function argument, but the release time refptr churn seems like pure overhead given that it\u0027s powering a redundant dcheck.",
+      "parentUuid": "dabdfeef_853ba646",
+      "revId": "19ebd7d0700b93a183b8b1c562f7c8c587542211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
