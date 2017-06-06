@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01ca5926_96ca550f",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-06T03:24:41Z",
+      "side": 1,
+      "message": "IIRC from our discussion, the bounds will be the bounds of the overflow\nscrolling region, not the element which has overflow:scroll.",
+      "revId": "c9e336f65c49e737807c3025084936eadb58bd1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e154b85c_dfe772ea",
+        "filename": "cc/layers/layer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-06T03:24:41Z",
+      "side": 1,
+      "message": "Is it possible to be false in the current codebase?",
+      "revId": "c9e336f65c49e737807c3025084936eadb58bd1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
