@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2816098_0dac1d49",
+        "filename": "components/viz/display_compositor/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-06T19:46:51Z",
+      "side": 1,
+      "message": "question: was this added for blimp protobuffer things at one point? does it need to stay? there\u0027s one in cc/ for that reason, tho the code used to be clean of such implicit truncations. Now it has grown some since the warning was silenced. This code is probably similar?",
+      "revId": "69eb2e5d676722cbd1107462556cf8aea8c90f25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
