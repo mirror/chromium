@@ -2,14 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/download/internal/scheduler/network_listener.h"
+#include "components/download/internal/scheduler/device_status_listener.h"
+
+#include <memory>
 
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/test/power_monitor_test_base.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using testing::InSequence;
 using ConnectionTypeObserver =
     net::NetworkChangeNotifier::ConnectionTypeObserver;
 using ConnectionType = net::NetworkChangeNotifier::ConnectionType;
@@ -29,7 +33,7 @@ class TestNetworkChangeNotifier : public net::NetworkChangeNotifier {
     return conn_type_;
   }
 
-  // Change the network type.
+  // Changes the network type.
   void ChangeNetworkType(ConnectionType type) {
     conn_type_ = type;
     net::NetworkChangeNotifier::NotifyObserversOfConnectionTypeChangeForTests(
@@ -43,55 +47,92 @@ class TestNetworkChangeNotifier : public net::NetworkChangeNotifier {
   DISALLOW_COPY_AND_ASSIGN(TestNetworkChangeNotifier);
 };
 
-class MockObserver : public NetworkListener::Observer {
+class MockObserver : public DeviceStatusListener::Observer {
  public:
-  MOCK_METHOD1(OnNetworkChange, void(NetworkStatus));
+  MOCK_METHOD1(OnDeviceStatusChanged, void(const DeviceStatus&));
 };
 
-class NetworkListenerTest : public testing::Test {
+class DeviceStatusListenerTest : public testing::Test {
  public:
+  void SetUp() override {
+    power_monitor_ = base::MakeUnique<base::PowerMonitor>(
+        base::MakeUnique<base::PowerMonitorTestSource>());
+
+    listener_ = base::MakeUnique<DeviceStatusListener>(&mock_observer_);
+  }
+
+  void TearDown() override { listener_.reset(); }
+
   // Simulates a network change call.
   void ChangeNetworkType(ConnectionType type) {
     test_network_notifier_.ChangeNetworkType(type);
   }
 
+  // Simulates a battery change call.
+  void CallBatteryChange(bool on_battery_power) {
+    static_cast<base::PowerObserver*>(listener_.get())
+        ->OnPowerStateChange(on_battery_power);
+  }
+
  protected:
-  NetworkListener network_listener_;
+  std::unique_ptr<DeviceStatusListener> listener_;
   MockObserver mock_observer_;
 
   // Needed for network change notifier.
   base::MessageLoop message_loop_;
   TestNetworkChangeNotifier test_network_notifier_;
+
+  std::unique_ptr<base::PowerMonitor> power_monitor_;
 };
 
-TEST_F(NetworkListenerTest, NotifyObserverNetworkChange) {
-  network_listener_.Start();
-  network_listener_.AddObserver(&mock_observer_);
+// Ensures the observer is notified when network condition changes.
+TEST_F(DeviceStatusListenerTest, NotifyObserverNetworkChange) {
+  listener_->Start();
 
   // Initial states check.
-  EXPECT_EQ(NetworkStatus::DISCONNECTED,
-            network_listener_.CurrentNetworkStatus());
+  DeviceStatus status = listener_->CurrentDeviceStatus();
+  EXPECT_EQ(NetworkStatus::DISCONNECTED, status.network_status);
 
   // Network switch between mobile networks, the observer should be notified
   // only once.
-  EXPECT_CALL(mock_observer_, OnNetworkChange(NetworkStatus::METERED))
+  status.network_status = NetworkStatus::METERED;
+  EXPECT_CALL(mock_observer_, OnDeviceStatusChanged(status))
       .Times(1)
       .RetiresOnSaturation();
 
   ChangeNetworkType(ConnectionType::CONNECTION_4G);
   ChangeNetworkType(ConnectionType::CONNECTION_3G);
   ChangeNetworkType(ConnectionType::CONNECTION_2G);
-  EXPECT_EQ(NetworkStatus::METERED, network_listener_.CurrentNetworkStatus());
+  EXPECT_EQ(NetworkStatus::METERED,
+            listener_->CurrentDeviceStatus().network_status);
 
   // Network is switched between wifi and ethernet, the observer should be
   // notified only once.
-  EXPECT_CALL(mock_observer_, OnNetworkChange(NetworkStatus::UNMETERED))
+  status.network_status = NetworkStatus::UNMETERED;
+  EXPECT_CALL(mock_observer_, OnDeviceStatusChanged(status))
       .Times(1)
       .RetiresOnSaturation();
 
   ChangeNetworkType(ConnectionType::CONNECTION_WIFI);
   ChangeNetworkType(ConnectionType::CONNECTION_ETHERNET);
 }
+
+// Ensures the observer is notified when battery condition changes.
+TEST_F(DeviceStatusListenerTest, NotifyObserverBatteryChange) {
+  InSequence s;
+  listener_->Start();
+  DeviceStatus status = listener_->CurrentDeviceStatus();
+  status.battery_status = BatteryStatus::NOT_CHARGING;
+  EXPECT_CALL(mock_observer_, OnDeviceStatusChanged(status))
+      .RetiresOnSaturation();
+  CallBatteryChange(true);
+
+  status.battery_status = BatteryStatus::CHARGING;
+  EXPECT_CALL(mock_observer_, OnDeviceStatusChanged(status))
+      .RetiresOnSaturation();
+  CallBatteryChange(false);
+  listener_->Stop();
+};
 
 }  // namespace
 }  // namespace download
