@@ -22,6 +22,30 @@
       "revId": "d72447fc33133fd73ce957d0b05aabdf1b1f60e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26ef23c7_17a1940d",
+        "filename": "chrome/browser/chromeos/extensions/device_local_account_management_policy_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-06-06T08:21:41Z",
+      "side": 1,
+      "message": "Correct. I\u0027m wondering if I should also record UMA for whitelisted extensions.",
+      "parentUuid": "c9c569b5_fce2f4e5",
+      "range": {
+        "startLine": 749,
+        "startChar": 5,
+        "endLine": 749,
+        "endChar": 27
+      },
+      "revId": "d72447fc33133fd73ce957d0b05aabdf1b1f60e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
