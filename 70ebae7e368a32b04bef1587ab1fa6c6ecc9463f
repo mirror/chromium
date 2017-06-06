@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64100a4b_9a688348",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T22:21:15Z",
+      "side": 1,
+      "message": "Nit: DLOG or NOTREACHED here as well",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 9
+      },
+      "revId": "70ebae7e368a32b04bef1587ab1fa6c6ecc9463f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
