@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0eba0c6_e57a1866",
+        "filename": "base/win/com_init_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-06T19:51:55Z",
+      "side": 1,
+      "message": "This seems a bit suspect, but I\u0027m not a lawyer. Couldn\u0027t there be multiple definitions in a single binary this way?\n\nAlso, wouldn\u0027t you potentially need BASE_EXPORT for non-DCHECKing component?",
+      "revId": "ac63b9487ccc5b2d48b43e52608b6c91b02c5ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
