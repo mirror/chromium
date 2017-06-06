@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "55b108b8_136cdebe",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-06T22:54:14Z",
+      "side": 1,
+      "message": "I\u0027m generally supportive of using fewer buckets.  OTOH, 50 buckets per histogram is a reasonable default; so if you need the extra resolution, feel free to use it.  It\u0027s hard for me to gauge how helpful the extra data would be.",
+      "parentUuid": "42fdbdca_62efdbb9",
+      "revId": "93c1e2489d3423d0235f34c24f5d840c2819484c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce1b319d_7dc2066a",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
