@@ -516,8 +516,10 @@ IDBRequest* IDBObjectStore::put(ScriptState* script_state,
     index_ids.push_back(it.key);
     index_keys.push_back(keys);
   }
-  UMA_HISTOGRAM_MEMORY_KB("WebCore.IndexedDB.PutValueSize",
-                          value_wrapper.DataLengthBeforeWrapInBytes() / 1024);
+  // Records 1KB to 1GB. Large bucket count because value can vary.
+  UMA_HISTOGRAM_CUSTOM_COUNTS(
+      "WebCore.IndexedDB.PutValueSize2",
+      value_wrapper.DataLengthBeforeWrapInBytes() / 1024, 1, 1000000, 75);
 
   IDBRequest* request = IDBRequest::Create(
       script_state, source, transaction_.Get(), std::move(metrics));
