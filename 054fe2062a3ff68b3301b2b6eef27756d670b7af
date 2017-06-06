@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79ca9681_6c97e2c0",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/disable-blink-features\u003dMediaCastOverlayButton",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-06T14:27:53Z",
+      "side": 1,
+      "message": "nit. remove space at EOL",
+      "revId": "054fe2062a3ff68b3301b2b6eef27756d670b7af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
