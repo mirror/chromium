@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bd91421_5814c454",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-06T01:05:22Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we be using the new cmdline flag here instead of guid.empty?\n\nI think this should be\n\nTODO(): comment about mojo stuff.\nif (CommandLine-\u003egetFlag(\"memory-infra-use-shared-memory-guid\"))\n  DCHECK(!memory_guid.empty())\n  dump_name \u003d GetDumpNameForTracing(memory_guid);\nelse\n   dump_name \u003d \"shared_memory/\" + Uint64ToString(address);",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 19
+      },
+      "revId": "d2da67e97737b32309fc55bca9d87c7071f36ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d501368f_fbbbc153",
+        "filename": "base/memory/shared_memory_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-06T01:05:22Z",
+      "side": 1,
+      "message": "GetDumpGUIDForTracing. Because we already have a SharedMemory::GUID which represents some other id for shared memory?",
+      "range": {
+        "startLine": 27,
+        "startChar": 46,
+        "endLine": 27,
+        "endChar": 63
+      },
+      "revId": "d2da67e97737b32309fc55bca9d87c7071f36ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e90ab0a_ee1aa786",
+        "filename": "base/memory/shared_memory_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-06T01:05:22Z",
+      "side": 1,
+      "message": "GetGlobalDumpNameForTracing.\nWe do not need to use the GetSharedGlobalAllocatorDumpName here and it can stay internal.",
+      "range": {
+        "startLine": 30,
+        "startChar": 46,
+        "endLine": 30,
+        "endChar": 69
+      },
+      "revId": "d2da67e97737b32309fc55bca9d87c7071f36ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
