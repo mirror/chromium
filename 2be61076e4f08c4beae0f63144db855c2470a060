@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ff7d30b_f88ac691",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:28:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e4a5c0d_857d3c10",
+      "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f821ee17_a8a58ede",
         "filename": "content/browser/download/download_manager_impl.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-05T16:58:19Z",
       "side": 1,
       "message": "Download?",
+      "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ddb3ad5_20b17e74",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:28:50Z",
+      "side": 1,
+      "message": "What about Download Manager?",
+      "parentUuid": "f821ee17_a8a58ede",
       "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cfbbb2b6_5bacecd8",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:28:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b1e17bd_dfeb2784",
+      "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43705692_c94b07a4",
         "filename": "content/browser/download/download_manager_impl.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8575b48_ca351c2f",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:28:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43705692_c94b07a4",
+      "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "196d6b24_e5f3d8d8",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:28:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9eb8bc4_72475869",
+      "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47757590_f5bfcb83",
         "filename": "content/browser/download/download_manager_impl.cc",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc65301b_8ac717c6",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:28:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47757590_f5bfcb83",
+      "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,47 @@
     },
     {
       "key": {
+        "uuid": "678e4ab4_ae2211ba",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:28:50Z",
+      "side": 1,
+      "message": "If you do not change it, the default is \"user\". Otherwise it\u0027s the cookie store that your component creates like \"safe browsing\".",
+      "parentUuid": "61437b8a_864d131b",
+      "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dc6f352_158d7e36",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:28:50Z",
+      "side": 1,
+      "message": "Does it mean that downloading cannot be disabled by settings or policy?",
+      "range": {
+        "startLine": 81,
+        "startChar": 24,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c9cae5c_39592175",
         "filename": "content/browser/download/download_worker.cc",
         "patchSetId": 1
@@ -155,6 +304,24 @@
     },
     {
       "key": {
+        "uuid": "12b6b44c_2620f958",
+        "filename": "content/browser/download/download_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:28:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c9cae5c_39592175",
+      "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92342f4a_c8839852",
         "filename": "content/browser/download/download_worker.cc",
         "patchSetId": 1
@@ -169,6 +336,24 @@
       "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2bdf8e1_11705d19",
+        "filename": "content/browser/download/download_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:28:50Z",
+      "side": 1,
+      "message": "Done.\nCan this be \"Download Manager\" as well? This is the general component of this request, if it can be part of \"Download Manager\", may be it\u0027s better to group it with the other two.",
+      "parentUuid": "92342f4a_c8839852",
+      "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +391,24 @@
     },
     {
       "key": {
+        "uuid": "5806ad4d_d81476fb",
+        "filename": "content/browser/download/download_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:28:50Z",
+      "side": 1,
+      "message": "Is this always happening? Or Chrome somehow decides when to go parallel and when not?",
+      "parentUuid": "8b312d70_9b7ad545",
+      "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac0ca955_103b6d3c",
         "filename": "content/browser/download/download_worker.cc",
         "patchSetId": 1
@@ -217,6 +420,24 @@
       "writtenOn": "2017-06-05T16:58:19Z",
       "side": 1,
       "message": "a parallel url request for the download",
+      "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cdbc689_faccbb6c",
+        "filename": "content/browser/download/download_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:28:50Z",
+      "side": 1,
+      "message": "Is it just the URL to the file to be downloaded, or it has some extra data?",
+      "parentUuid": "ac0ca955_103b6d3c",
       "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -240,6 +461,24 @@
     },
     {
       "key": {
+        "uuid": "38d48543_f13c0492",
+        "filename": "content/browser/download/download_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:28:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49afa8bf_74bd7811",
+      "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4586d378_457a635e",
         "filename": "content/browser/download/download_worker.cc",
         "patchSetId": 1
@@ -251,6 +490,47 @@
       "writtenOn": "2017-06-05T16:58:19Z",
       "side": 1,
       "message": "true",
+      "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e413d9_4da46735",
+        "filename": "content/browser/download/download_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:28:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4586d378_457a635e",
+      "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4524f76_de6ea736",
+        "filename": "content/browser/download/download_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:28:50Z",
+      "side": 1,
+      "message": "I assume this cannot be disabled, yes?",
+      "range": {
+        "startLine": 53,
+        "startChar": 22,
+        "endLine": 53,
+        "endChar": 23
+      },
       "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -285,6 +565,24 @@
       "writtenOn": "2017-06-05T16:58:19Z",
       "side": 1,
       "message": "Drag to download",
+      "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3f326e_85560888",
+        "filename": "content/browser/download/drag_download_file.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:28:50Z",
+      "side": 1,
+      "message": "Can this be \"Download Manager\" as well? This is the general component of this request, if it can be part of \"Download Manager\", may be it\u0027s better to group it with the other two.",
+      "parentUuid": "d3969f1a_484a1389",
       "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -370,6 +668,23 @@
       "writtenOn": "2017-06-05T16:58:19Z",
       "side": 1,
       "message": "true",
+      "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa69bcf4_f3a80e7a",
+        "filename": "content/browser/download/drag_download_file.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:28:50Z",
+      "side": 1,
+      "message": "Again, assuming this cannot be disabled anyway.",
       "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
