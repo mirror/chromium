@@ -34,6 +34,24 @@
       "revId": "ac63b9487ccc5b2d48b43e52608b6c91b02c5ea5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "941c8c93_70213e86",
+        "filename": "base/win/com_init_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-06T19:58:09Z",
+      "side": 1,
+      "message": "OK. I\u0027d probably just use #define, but ... I might just be an old man yelling at clouds.\n\nI think it\u0027d have to be Release component non-DCHECK, which I don\u0027t think there\u0027s a bot for.",
+      "parentUuid": "e8a7c79a_6196796b",
+      "revId": "ac63b9487ccc5b2d48b43e52608b6c91b02c5ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
