@@ -25,15 +25,19 @@ ControllerImpl::ControllerImpl(std::unique_ptr<ClientSet> clients,
     : clients_(std::move(clients)),
       config_(std::move(config)),
       driver_(std::move(driver)),
-      model_(std::move(model)) {}
+      model_(std::move(model)),
+      device_status_listener_(this) {}
 
-ControllerImpl::~ControllerImpl() = default;
+ControllerImpl::~ControllerImpl() {
+  device_status_listener_.Stop();
+}
 
 void ControllerImpl::Initialize() {
   DCHECK(!startup_status_.Complete());
 
   driver_->Initialize(this);
   model_->Initialize(this);
+  device_status_listener_.Start();
 }
 
 const StartupStatus& ControllerImpl::GetStartupStatus() {
@@ -186,6 +190,10 @@ void ControllerImpl::OnItemRemoved(bool success,
                                    DownloadClient client,
                                    const std::string& guid) {
   // TODO(dtrainor): Fail and clean up the download if necessary.
+}
+
+void ControllerImpl::OnDeviceStatusChanged(const DeviceStatus& device_status) {
+  NOTIMPLEMENTED();
 }
 
 void ControllerImpl::AttemptToFinalizeSetup() {
