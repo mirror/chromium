@@ -75,9 +75,17 @@ bool ModuleInfoKey::operator<(const ModuleInfoKey& mik) const {
 }
 
 // ModuleInspectionResult ------------------------------------------------------
+
 ModuleInspectionResult::ModuleInspectionResult() = default;
 
 ModuleInspectionResult::~ModuleInspectionResult() = default;
+
+// ModuleType ------------------------------------------------------------------
+
+ModuleType& operator|=(ModuleType& value, ModuleType module_type) {
+  return reinterpret_cast<ModuleType&>(reinterpret_cast<int&>(value) |=
+                                       module_type);
+}
 
 // ModuleInfoData --------------------------------------------------------------
 

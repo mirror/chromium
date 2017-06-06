@@ -74,6 +74,17 @@ struct ModuleInspectionResult {
   CertificateInfo certificate_info;
 };
 
+// What type of module we are dealing with.
+enum ModuleType {
+  // These modules are or were loaded into one of chrome's process at some
+  // point.
+  LOADED_MODULE = 1 << 0,
+  // This module is registered as a shell extension.
+  SHELL_EXTENSION = 1 << 1,
+};
+
+ModuleType& operator|=(ModuleType& value, ModuleType module_type);
+
 // Contains the inspection result of a module and additional information that is
 // useful to the ModuleDatabase.
 struct ModuleInfoData {
@@ -85,6 +96,9 @@ struct ModuleInfoData {
   // ProcessType enumeration to a bitfield. See "ProcessTypeToBit" and
   // "BitIndexToProcessType" for details.
   uint32_t process_types;
+
+  // Bit set that describes the type of the module.
+  ModuleType module_type;
 
   // The inspection result obtained via InspectModule().
   std::unique_ptr<ModuleInspectionResult> inspection_result;
