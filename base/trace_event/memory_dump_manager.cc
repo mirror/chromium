@@ -114,24 +114,11 @@ struct SessionStateConvertableProxy : public ConvertableToTraceFormat {
   GetterFunctPtr const getter_function;
 };
 
-void OnPeakDetected(MemoryDumpLevelOfDetail level_of_detail) {
-  MemoryDumpManager::GetInstance()->RequestGlobalDump(
-      MemoryDumpType::PEAK_MEMORY_USAGE, level_of_detail);
-}
-
-void OnPeriodicSchedulerTick(MemoryDumpLevelOfDetail level_of_detail) {
-  MemoryDumpManager::GetInstance()->RequestGlobalDump(
-      MemoryDumpType::PERIODIC_INTERVAL, level_of_detail);
-}
-
 }  // namespace
 
 // static
 const char* const MemoryDumpManager::kTraceCategory =
     TRACE_DISABLED_BY_DEFAULT("memory-infra");
-
-// static
-const char* const MemoryDumpManager::kLogPrefix = "Memory-infra dump";
 
 // static
 const int MemoryDumpManager::kMaxConsecutiveFailuresCount = 3;
@@ -428,10 +415,8 @@ void MemoryDumpManager::RequestGlobalDump(
     MemoryDumpType dump_type,
     MemoryDumpLevelOfDetail level_of_detail,
     const GlobalMemoryDumpCallback& callback) {
-  // If |request_dump_function_| is null MDM hasn't been initialized yet.
-  if (request_dump_function_.is_null()) {
-    VLOG(1) << kLogPrefix << " failed because"
-            << " memory dump manager is not enabled.";
+  if (!is_initialized()) {
+    VLOG(1) << "RequestGlobalDump() FAIL: MemoryDumpManager is not initialized";
     if (!callback.is_null())
       callback.Run(0u /* guid */, false /* success */);
     return;
@@ -499,6 +484,15 @@ MemoryDumpManager::GetOrCreateBgTaskRunnerLocked() {
 void MemoryDumpManager::CreateProcessDump(
     const MemoryDumpRequestArgs& args,
     const ProcessMemoryDumpCallback& callback) {
+  if (!is_initialized()) {
+    VLOG(1) << "CreateProcessDump() FAIL: MemoryDumpManager is not initialized";
+    if (!callback.is_null()) {
+      callback.Run(args.dump_guid, false /* success */,
+                   Optional<MemoryDumpCallbackResult>());
+    }
+    return;
+  }
+
   char guid_str[20];
   sprintf(guid_str, "0x%" PRIx64, args.dump_guid);
   TRACE_EVENT_NESTABLE_ASYNC_BEGIN1(kTraceCategory, "ProcessMemoryDump",
@@ -714,6 +708,15 @@ uint32_t MemoryDumpManager::GetDumpsSumKb(const std::string& pattern,
   return sum / 1024;
 }
 
+// static
+void MemoryDumpManager::DoGlobalDumpWithoutCallback(
+    RequestGlobalDumpFunction global_dump_fn,
+    MemoryDumpType dump_type,
+    MemoryDumpLevelOfDetail level_of_detail) {
+  MemoryDumpRequestArgs args{0 /* dump_guid*/, dump_type, level_of_detail};
+  global_dump_fn.Run(args, GlobalMemoryDumpCallback());
+}
+
 void MemoryDumpManager::FinalizeDumpAndAddToTrace(
     std::unique_ptr<ProcessMemoryDumpAsyncState> pmd_async_state) {
   HEAP_PROFILER_SCOPED_IGNORE;
@@ -732,7 +735,7 @@ void MemoryDumpManager::FinalizeDumpAndAddToTrace(
 
   // The results struct to fill.
   // TODO(hjd): Transitional until we send the full PMD. See crbug.com/704203
-  base::Optional<MemoryDumpCallbackResult> result;
+  Optional<MemoryDumpCallbackResult> result;
 
   bool dump_successful = pmd_async_state->dump_successful;
 
@@ -832,7 +835,9 @@ void MemoryDumpManager::SetupForTracing(
   for (const auto& trigger : memory_dump_config.triggers) {
     if (trigger.trigger_type == MemoryDumpType::PERIODIC_INTERVAL) {
       if (periodic_config.triggers.empty()) {
-        periodic_config.callback = BindRepeating(&OnPeriodicSchedulerTick);
+        periodic_config.callback =
+            BindRepeating(&DoGlobalDumpWithoutCallback, request_dump_function_,
+                          MemoryDumpType::PERIODIC_INTERVAL);
       }
       periodic_config.triggers.push_back(
           {trigger.level_of_detail, trigger.min_time_between_dumps_ms});
@@ -844,7 +849,9 @@ void MemoryDumpManager::SetupForTracing(
           BindRepeating(&MemoryDumpManager::GetDumpProvidersForPolling,
                         Unretained(this)),
           GetOrCreateBgTaskRunnerLocked(),
-          BindRepeating(&OnPeakDetected, trigger.level_of_detail));
+          BindRepeating(&DoGlobalDumpWithoutCallback, request_dump_function_,
+                        MemoryDumpType::PEAK_MEMORY_USAGE,
+                        trigger.level_of_detail));
 
       MemoryPeakDetector::Config peak_config;
       peak_config.polling_interval_ms = 10;
@@ -857,12 +864,15 @@ void MemoryDumpManager::SetupForTracing(
       // gives a good reference point for analyzing the trace.
       if (is_coordinator_) {
         GetOrCreateBgTaskRunnerLocked()->PostTask(
-            FROM_HERE, BindRepeating(&OnPeakDetected, trigger.level_of_detail));
+            FROM_HERE,
+            BindRepeating(&DoGlobalDumpWithoutCallback, request_dump_function_,
+                          MemoryDumpType::PEAK_MEMORY_USAGE,
+                          trigger.level_of_detail));
       }
     }
   }
 
-  // Only coordinator process triggers periodic global memory dumps.
+  // Only coordinator process triggers periodic memory dumps.
   if (is_coordinator_ && !periodic_config.triggers.empty()) {
     MemoryDumpScheduler::GetInstance()->Start(periodic_config,
                                               GetOrCreateBgTaskRunnerLocked());
