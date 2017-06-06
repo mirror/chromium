@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "078e2bcf_9f43203e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-06T23:28:08Z",
+      "side": 1,
+      "message": "Nit: I think this CL fixes rather than prevents the UAF.",
+      "revId": "603d2411d787d770e42b96228a2c0106e2adaecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23eacfab_905d3434",
         "filename": "content/browser/indexed_db/indexed_db_cursor.cc",
         "patchSetId": 1
