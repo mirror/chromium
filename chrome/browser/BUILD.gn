@@ -138,6 +138,8 @@ split_static_library("browser") {
     "browser_process_platform_part_chromeos.h",
     "browser_process_platform_part_mac.h",
     "browser_process_platform_part_mac.mm",
+    "browser_process_platform_part_win.cc",
+    "browser_process_platform_part_win.h",
     "browser_shutdown.cc",
     "browser_shutdown.h",
     "browsing_data/browsing_data_appcache_helper.cc",
@@ -3781,6 +3783,7 @@ split_static_library("browser") {
     ]
     deps += [
       ":chrome_process_finder",
+      ":did_run_util",
       "//chrome:file_pre_reader",
       "//chrome/chrome_watcher:client",
       "//chrome/common:metrics_constants_util_win",
@@ -3803,7 +3806,10 @@ split_static_library("browser") {
     all_dependent_configs = [ ":browser_win_linker_flags" ]
 
     if (!is_chrome_branded) {
-      deps -= [ "//google_update" ]
+      deps -= [
+        ":did_run_util",
+        "//google_update",
+      ]
       sources -= [
         "google/did_run_updater_win.cc",
         "google/did_run_updater_win.h",
@@ -4372,6 +4378,19 @@ if (is_win) {
       "//chrome/browser/policy:path_parser",
       "//chrome/common:constants",
     ]
+  }
+
+  if (is_chrome_branded) {
+    source_set("did_run_util") {
+      sources = [
+        "win/did_run_util.cc",
+        "win/did_run_util.h",
+      ]
+      deps = [
+        "//base",
+        "//chrome/common:constants",
+      ]
+    }
   }
 }
 
