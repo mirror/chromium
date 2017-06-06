@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.payments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.support.v4.util.ArrayMap;
@@ -318,6 +319,7 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
     private Callback<PaymentInformation> mPaymentInformationCallback;
     private boolean mPaymentAppRunning;
     private boolean mMerchantSupportsAutofillPaymentInstruments;
+    private boolean mShowServerAutofillInstruments = true;
     private ContactEditor mContactEditor;
     private boolean mHasRecordedAbortReason;
     private Map<String, CurrencyFormatter> mCurrencyFormatterMap;
@@ -1487,7 +1489,11 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
                         instrument.getInstrumentMethodNames());
                 instrumentMethodNames.retainAll(mMethodData.keySet());
                 if (!instrumentMethodNames.isEmpty()) {
-                    if (instrument instanceof AutofillPaymentInstrument) {
+                    if (instrument.isServerAutofillInstrumentReplacement()) {
+                        mShowServerAutofillInstruments = false;
+                    }
+
+                    if (instrument.isAutofillInstrument()) {
                         mPendingAutofillInstruments.add(instrument);
                     } else {
                         nonAutofillInstruments.add(instrument);
@@ -1506,6 +1512,11 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
         if (!mPendingApps.isEmpty()) return;
 
         if (disconnectIfNoPaymentMethodsSupported()) return;
+
+        if (!mShowServerAutofillInstruments) {
+            // Hide the server autofill instruments.
+            
+        }
 
         // Load the validation rules for each unique region code in the credit card billing
         // addresses and check for validity.
