@@ -224,7 +224,10 @@ bool AutoplayPolicy::IsLockedPendingUserGesture() const {
       AutoplayPolicy::Type::kDocumentUserActivationRequired) {
     if (!element_->GetDocument().GetFrame())
       return true;
-    return !element_->GetDocument().GetFrame()->HasReceivedUserGesture();
+    return !(element_->GetDocument().GetFrame()->HasReceivedUserGesture() ||
+             element_->GetDocument()
+                 .GetFrame()
+                 ->HasReceivedUserGestureBeforeNavigation());
   }
 
   return locked_pending_user_gesture_;
