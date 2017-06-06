@@ -93,6 +93,30 @@
       "revId": "abfe5c120c4a233e522a9c3b648e2cdea6620c9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60584a71_dbddd81a",
+        "filename": "third_party/WebKit/Source/platform/mojo/GeometryStructTraitsTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T07:03:58Z",
+      "side": 1,
+      "message": "Sorry I was unclear. I think we should just delete the ones in Blink if they\u0027re not tested.",
+      "parentUuid": "de1f41d1_e959a450",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 14
+      },
+      "revId": "abfe5c120c4a233e522a9c3b648e2cdea6620c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
