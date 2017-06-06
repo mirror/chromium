@@ -39,9 +39,17 @@ static const char kImageCaptureHtmlFile[] = "/media/image_capture_test.html";
 // platforms where the ImageCaptureCode is landed, https://crbug.com/656810
 static struct TargetCamera {
   bool use_fake;
-} const kTestParameters[] = {{true},
+  bool use_mojo;
+} const kTestParameters[] = {{true, false},
+// Mojo video capture is currently not supported on Android
+// TODO(chfremer): Remove this as soon as https://crbug.com/720500 is
+// resolved.
+#if !defined(OS_ANDROID)
+                             {true, true},
+#endif
 #if defined(OS_LINUX) || defined(OS_MACOSX)
-                             {false}
+                             {false, false},
+                             {false, true}
 #endif
 };
 
