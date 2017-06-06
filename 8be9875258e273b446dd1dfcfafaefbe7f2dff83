@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8bfcad5_69b699de",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-06T00:08:45Z",
+      "side": 1,
+      "message": "This postpones the clean up and risks that you get a race condition between ResetState execution and perhaps the next request to use the offliner.\n\nDid you consider adding something like inside of ResetState instead?\nbase::ThreadTaskRunnerHandle::Get()-\u003eDeleteSoon(FROM_HERE, snapshot_controller_.release());",
+      "range": {
+        "startLine": 372,
+        "startChar": 10,
+        "endLine": 372,
+        "endChar": 32
+      },
+      "revId": "8be9875258e273b446dd1dfcfafaefbe7f2dff83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
