@@ -2255,7 +2255,7 @@ void WebLocalFrameImpl::SendOrientationChangeEvent() {
     ScreenOrientationController::From(*GetFrame())->NotifyOrientationChanged();
 
   // Legacy window.orientation API
-  if (RuntimeEnabledFeatures::orientationEventEnabled() &&
+  if (RuntimeEnabledFeatures::OrientationEventEnabled() &&
       GetFrame()->DomWindow())
     GetFrame()->DomWindow()->SendOrientationChangeEvent();
 }
