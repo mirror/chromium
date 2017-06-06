@@ -1494,6 +1494,8 @@ void WebMediaPlayerImpl::OnVideoNaturalSizeChange(const gfx::Size& size) {
 
   if (observer_)
     observer_->OnMetadataChanged(pipeline_metadata_);
+
+  delegate_->DidPlayerSizeChange(delegate_id_, NaturalSize());
 }
 
 void WebMediaPlayerImpl::OnVideoOpacityChange(bool opaque) {

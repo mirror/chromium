@@ -4,6 +4,7 @@
 
 package org.chromium.content_public.browser;
 
+import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Parcelable;
 
@@ -422,6 +423,12 @@ public interface WebContents extends Parcelable {
      * The WebContents must be fullscreen when this method is called.
      */
     public boolean hasActiveEffectivelyFullscreenVideo();
+
+    /**
+     * Gets a Rect containing the size of the currently playing video. The position of the rectangle
+     * is meaningless.
+     */
+    public Rect getCurrentlyPlayingVideoSize();
 
     /**
      * Issues a fake notification about the renderer being killed.

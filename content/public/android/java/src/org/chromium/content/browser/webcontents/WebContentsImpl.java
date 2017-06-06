@@ -582,6 +582,11 @@ import java.util.UUID;
         return nativeHasActiveEffectivelyFullscreenVideo(mNativeWebContentsAndroid);
     }
 
+    @Override
+    public Rect getCurrentlyPlayingVideoSize() {
+        return nativeGetCurrentlyPlayingVideoSize(mNativeWebContentsAndroid);
+    }
+
     @CalledByNative
     private final void setMediaSession(MediaSessionImpl mediaSession) {
         mMediaSession = mediaSession;
@@ -605,6 +610,11 @@ import java.util.UUID;
     @CalledByNative
     private static void createSizeAndAddToList(List<Rect> sizes, int width, int height) {
         sizes.add(new Rect(0, 0, width, height));
+    }
+
+    @CalledByNative
+    private static Rect createSize(int width, int height) {
+        return new Rect(0, 0, width, height);
     }
 
     // This is static to avoid exposing a public destroy method on the native side of this class.
@@ -676,4 +686,5 @@ import java.util.UUID;
     private native void nativeSetHasPersistentVideo(long nativeWebContentsAndroid, boolean value);
     private native boolean nativeHasActiveEffectivelyFullscreenVideo(long nativeWebContentsAndroid);
     private native EventForwarder nativeGetOrCreateEventForwarder(long nativeWebContentsAndroid);
+    private native Rect nativeGetCurrentlyPlayingVideoSize(long nativeWebContentsAndroid);
 }

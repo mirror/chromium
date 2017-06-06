@@ -295,6 +295,8 @@ void WebMediaPlayerMS::Play() {
   // focus changes. See http://crbug.com/596516 for more details.
   delegate_->DidPlay(delegate_id_, HasVideo(), HasAudio(),
                      media::MediaContentType::OneShot);
+  if (HasVideo())
+    delegate_->DidPlayerSizeChange(delegate_id_, NaturalSize());
   delegate_->SetIdle(delegate_id_, false);
 
   paused_ = false;
@@ -719,6 +721,8 @@ void WebMediaPlayerMS::ResetCanvasCache() {
 
 void WebMediaPlayerMS::TriggerResize() {
   get_client()->SizeChanged();
+
+  delegate_->DidPlayerSizeChange(delegate_id_, NaturalSize());
 }
 
 }  // namespace content

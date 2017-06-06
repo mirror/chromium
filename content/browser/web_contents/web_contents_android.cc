@@ -670,6 +670,19 @@ bool WebContentsAndroid::HasActiveEffectivelyFullscreenVideo(
   return web_contents_->HasActiveEffectivelyFullscreenVideo();
 }
 
+base::android::ScopedJavaLocalRef<jobject>
+WebContentsAndroid::GetCurrentlyPlayingVideoSize(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>& obj) {
+  const WebContents::VideoSizeMap& sizes =
+      web_contents_->GetCurrentlyPlayingVideoSizes();
+  DCHECK(sizes.size() > 0);
+
+  // We assume that only one video is playing.
+  const gfx::Size& size = sizes.begin()->second;
+  return Java_WebContentsImpl_createSize(env, size.width(), size.height());
+}
+
 ScopedJavaLocalRef<jobject> WebContentsAndroid::GetOrCreateEventForwarder(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& obj) {
