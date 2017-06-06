@@ -46,7 +46,6 @@ class BASE_EXPORT MemoryDumpManager {
                              const GlobalMemoryDumpCallback& callback)>;
 
   static const char* const kTraceCategory;
-  static const char* const kLogPrefix;
 
   // This value is returned as the tracing id of the child processes by
   // GetTracingProcessId() when tracing is not enabled.
@@ -67,6 +66,12 @@ class BASE_EXPORT MemoryDumpManager {
   //      triggering.
   void Initialize(RequestGlobalDumpFunction request_dump_function,
                   bool is_coordinator);
+
+  // Short circuits the RequestGlobalDumpFunction() to CreateProcessDump(),
+  // effectively allowing to use both in unittests with the same behavior.
+  // Unittests are in-process only and don't require all the multi-process
+  // dump handshaking (which would require bits outside of base).
+  void InitializeForTesting(bool is_coordinator);
 
   // (Un)Registers a MemoryDumpProvider instance.
   // Args:
@@ -246,6 +251,9 @@ class BASE_EXPORT MemoryDumpManager {
 
   static void SetInstanceForTesting(MemoryDumpManager* instance);
   static uint32_t GetDumpsSumKb(const std::string&, const ProcessMemoryDump*);
+  static void DoGlobalDumpWithoutCallback(RequestGlobalDumpFunction,
+                                          MemoryDumpType,
+                                          MemoryDumpLevelOfDetail);
 
   void FinalizeDumpAndAddToTrace(
       std::unique_ptr<ProcessMemoryDumpAsyncState> pmd_async_state);
@@ -279,6 +287,9 @@ class BASE_EXPORT MemoryDumpManager {
   // registered with is_fast_polling_supported == true.
   void GetDumpProvidersForPolling(
       std::vector<scoped_refptr<MemoryDumpProviderInfo>>*);
+
+  // Returns true if Initialize() has been called, false otherwise.
+  bool is_initialized() const { return !request_dump_function_.is_null(); }
 
   // An ordererd set of registered MemoryDumpProviderInfo(s), sorted by task
   // runner affinity (MDPs belonging to the same task runners are adjacent).
