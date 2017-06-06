@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34e74214_1efef4e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-06-06T15:48:35Z",
+      "side": 1,
+      "message": "@return Whether ads are enabled / allowed on sites that tend to show intrusive ads.",
+      "revId": "8de57301b7b6f5e216b1ff993f613b3ca9e19ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2187bc7_c5c9ef5e",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-06-06T15:48:35Z",
+      "side": 1,
+      "message": "I guess I am not aware of the difference in placement between the 2.\nShould the second string include intrusive ads:\n\"Blocked from some sites that tend to show intrusive ads\"",
+      "revId": "8de57301b7b6f5e216b1ff993f613b3ca9e19ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "800e2cde_7c87a5b1",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 12193,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-06-06T15:48:35Z",
+      "side": 1,
+      "message": "I am assuming the IDS_ADS_HEADER and IDS_ADS_BLOCK_RADIO are both shown together. If yes, make their explanations also similar e.g.\n\"Header for the ads setting on the Content Settings dialog.\"\n\"Radio button for the ads setting on the Content Settings dialog. Checked state indicates that ads are blocked on the site.\"",
+      "revId": "8de57301b7b6f5e216b1ff993f613b3ca9e19ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "698648bc_332e5121",
+        "filename": "chrome/browser/resources/settings/route.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-06-06T15:48:35Z",
+      "side": 1,
+      "message": "nit: remove the space added?",
+      "revId": "8de57301b7b6f5e216b1ff993f613b3ca9e19ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
