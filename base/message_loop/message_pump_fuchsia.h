@@ -8,7 +8,10 @@
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/message_loop/message_pump.h"
-#include "base/synchronization/waitable_event.h"
+
+#include <magenta/syscalls/port.h>
+#include <mxio/io.h>
+#include <mxio/private.h>
 
 namespace base {
 
@@ -40,7 +43,15 @@ class MessagePumpFuchsia : public MessagePump {
     }
 
    private:
+    friend class MessagePumpFuchsia;
+
     const tracked_objects::Location created_from_location_;
+    Watcher* watcher_ = nullptr;
+    mx_handle_t port_ = MX_HANDLE_INVALID;
+    mx_handle_t handle_ = MX_HANDLE_INVALID;
+    mxio_t* io_ = nullptr;
+    int fd_ = -1;
+    bool* was_destroyed_ = nullptr;
 
     DISALLOW_COPY_AND_ASSIGN(FileDescriptorWatcher);
   };
@@ -70,8 +81,7 @@ class MessagePumpFuchsia : public MessagePump {
   // This flag is set to false when Run should return.
   bool keep_running_;
 
-  // Used to sleep until there is more work to do.
-  WaitableEvent event_;
+  mx_handle_t port_;
 
   // The time at which we should call DoDelayedWork.
   TimeTicks delayed_work_time_;
