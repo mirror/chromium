@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "890c480a_0ad76915",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-06T18:54:40Z",
+      "side": 1,
+      "message": "Just to clarify, can you put the block \"if (item.data-\u003elength() \u003d\u003d 0) continue;\" before the switch statement? It looks like you do this for every case. Not sure if this conflicts with kUntilEndOfFile, which should be a -1 (or uint64_max) right?",
+      "parentUuid": "7267a8c7_e24e97dd",
+      "range": {
+        "startLine": 292,
+        "startChar": 0,
+        "endLine": 292,
+        "endChar": 39
+      },
+      "revId": "a09e1d4d76a2b4dedc86e1b9ef658db33fe9d128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "667fb072_f12fd3cb",
         "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
         "patchSetId": 4
@@ -125,6 +149,24 @@
       "side": 1,
       "message": "There\u0027s definitely no round trips, but there are of course extra messages. MakeRequest essentially just generates a random number, and calling Clone then sends that number to the blob implementation on the browser side which will add it as an increased refcount for that particular blob. None of this here is blocked on that though.\nThe register call will then effectively include the same random number to identify the blob. The only caveat being that by the time the browser gets the Register call it might not have had the clone call yet, so the browser side code might end up with a minor inefficiency where looking up the uuid for the blob might get routed back through the renderer, even though at that point everything about the blob should be known in the browser... So I definitely don\u0027t think the code here is problematic, the code in the browser that\u0027ll have to actually look up the blob UUID might introduce unfortunate round trips though...",
       "parentUuid": "667fb072_f12fd3cb",
+      "revId": "a09e1d4d76a2b4dedc86e1b9ef658db33fe9d128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe2e799e_fb36dec5",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-06T18:54:40Z",
+      "side": 1,
+      "message": "Interesting. sgtm. Maybe we could build some sort of \u0027const state\u0027 notion into mojo where it would pass this state to both sides of the pipe (so you can construct a blob with a uuid, and have that memory allocated and available on both sides). Anyways, future stuff that we can think about later.",
+      "parentUuid": "6a975649_7c86c98d",
       "revId": "a09e1d4d76a2b4dedc86e1b9ef658db33fe9d128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
