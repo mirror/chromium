@@ -16,6 +16,24 @@
       "revId": "9cb450a988c47f05cd67a63c4e002e9594affed5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b3ef897_223025ef",
+        "filename": "media/filters/ffmpeg_glue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-06T23:56:23Z",
+      "side": 1,
+      "message": "Done. The example I found just played with the dictionary, so it wasn\u0027t clear that it needed to be freed. However, looking at avformat_open_input() it clones the dictionary, so the original needs to be freed.",
+      "parentUuid": "2845c2b7_204f3158",
+      "revId": "9cb450a988c47f05cd67a63c4e002e9594affed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
