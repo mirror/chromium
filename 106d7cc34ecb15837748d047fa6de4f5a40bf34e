@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fb6543d_899f2e45",
+        "filename": "base/trace_event/memory_dump_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-06T12:00:51Z",
+      "side": 0,
+      "message": "just moving this below inside a lambda, as it\u0027s used only once within a function",
+      "range": {
+        "startLine": 102,
+        "startChar": 5,
+        "endLine": 102,
+        "endChar": 25
+      },
+      "revId": "106d7cc34ecb15837748d047fa6de4f5a40bf34e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c807e7_17bf4236",
+        "filename": "base/trace_event/memory_dump_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-06T12:00:51Z",
+      "side": 0,
+      "message": "farewell, callback adapter :)",
+      "range": {
+        "startLine": 127,
+        "startChar": 5,
+        "endLine": 127,
+        "endChar": 31
+      },
+      "revId": "106d7cc34ecb15837748d047fa6de4f5a40bf34e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
