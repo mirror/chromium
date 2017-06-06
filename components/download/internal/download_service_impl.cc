@@ -15,6 +15,7 @@
 #include "components/download/internal/download_store.h"
 #include "components/download/internal/model_impl.h"
 #include "components/download/internal/proto/entry.pb.h"
+#include "components/download/internal/scheduler/device_status_listener.h"
 #include "components/download/internal/stats.h"
 #include "components/leveldb_proto/proto_database_impl.h"
 
@@ -39,10 +40,11 @@ DownloadService* DownloadService::Create(
   auto config = Configuration::CreateFromFinch();
   auto driver = base::WrapUnique<DownloadDriver>(nullptr);
   auto model = base::MakeUnique<ModelImpl>(std::move(store));
+  auto device_status_listener = base::MakeUnique<DeviceStatusListener>();
 
-  std::unique_ptr<Controller> controller =
-      base::MakeUnique<ControllerImpl>(std::move(client_set), std::move(config),
-                                       std::move(driver), std::move(model));
+  std::unique_ptr<Controller> controller = base::MakeUnique<ControllerImpl>(
+      std::move(client_set), std::move(config), std::move(driver),
+      std::move(model), std::move(device_status_listener));
 
   return new DownloadServiceImpl(std::move(controller));
 }

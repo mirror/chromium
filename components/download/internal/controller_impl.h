@@ -13,6 +13,7 @@
 #include "components/download/internal/controller.h"
 #include "components/download/internal/download_driver.h"
 #include "components/download/internal/model.h"
+#include "components/download/internal/scheduler/device_status_listener.h"
 #include "components/download/internal/startup_status.h"
 #include "components/download/public/download_params.h"
 
@@ -29,13 +30,15 @@ struct SchedulingParams;
 // lifting for the DownloadService.
 class ControllerImpl : public Controller,
                        public DownloadDriver::Client,
-                       public Model::Client {
+                       public Model::Client,
+                       public DeviceStatusListener::Observer {
  public:
   // |clients| is externally owned and must be guaranteed to outlive this class.
   ControllerImpl(std::unique_ptr<ClientSet> clients,
                  std::unique_ptr<Configuration> config,
                  std::unique_ptr<DownloadDriver> driver,
-                 std::unique_ptr<Model> model);
+                 std::unique_ptr<Model> model,
+                 std::unique_ptr<DeviceStatusListener> device_status_listener);
   ~ControllerImpl() override;
 
   // Controller implementation.
@@ -69,6 +72,9 @@ class ControllerImpl : public Controller,
   void OnItemRemoved(bool success,
                      DownloadClient client,
                      const std::string& guid) override;
+
+  // DeviceStatusListener::Observer implementation.
+  void OnDeviceStatusChanged(const DeviceStatus& device_status) override;
 
   // Checks if initialization is complete and successful.  If so, completes the
   // internal state initialization.
@@ -106,6 +112,7 @@ class ControllerImpl : public Controller,
   // Owned Dependencies.
   std::unique_ptr<DownloadDriver> driver_;
   std::unique_ptr<Model> model_;
+  std::unique_ptr<DeviceStatusListener> device_status_listener_;
 
   // Internal state.
   StartupStatus startup_status_;
