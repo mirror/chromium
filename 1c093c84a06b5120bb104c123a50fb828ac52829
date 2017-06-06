@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ca43e1e_fe6e8a4b",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 1595,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T22:05:15Z",
+      "side": 1,
+      "message": "Can we enforce testonly \u003d true for these somehow? I think I\u0027d be OK with this change then.",
+      "range": {
+        "startLine": 1592,
+        "startChar": 0,
+        "endLine": 1595,
+        "endChar": 23
+      },
+      "revId": "1c093c84a06b5120bb104c123a50fb828ac52829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f8883de_194c15a9",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T22:05:15Z",
+      "side": 1,
+      "message": "Can we just make GetInterfaceProvider() do this internally? Using LocalFrameClient::GetFrameInterfaceProvider() is more verbose and exposes some strange-ness around the client potentially being null to all things that use Mojo.",
+      "range": {
+        "startLine": 229,
+        "startChar": 23,
+        "endLine": 229,
+        "endChar": 48
+      },
+      "revId": "1c093c84a06b5120bb104c123a50fb828ac52829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06654789_bfa3e73e",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameClient.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T22:05:15Z",
+      "side": 1,
+      "message": "Omit \"Frame\", LocalFrameClient corresponds to a frame.",
+      "range": {
+        "startLine": 337,
+        "startChar": 49,
+        "endLine": 337,
+        "endChar": 54
+      },
+      "revId": "1c093c84a06b5120bb104c123a50fb828ac52829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a81ba6_fa1532f7",
+        "filename": "third_party/WebKit/Source/web/LocalFrameClientImpl.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T22:05:15Z",
+      "side": 1,
+      "message": "This shouldn\u0027t need to null check WebFrameClient: if we\u0027re able to talk to the LocalFrameClient, the WebFrameClient should be present.\n\nThere are some very unusual edge cases where this is not true, but even then, it\u0027s not needed for most LocalFrameClient callbacks.",
+      "range": {
+        "startLine": 1057,
+        "startChar": 2,
+        "endLine": 1057,
+        "endChar": 28
+      },
+      "revId": "1c093c84a06b5120bb104c123a50fb828ac52829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d6c045_b69ed48d",
+        "filename": "third_party/WebKit/public/web/WebFrameClient.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T22:05:15Z",
+      "side": 1,
+      "message": "Please omit Frame in the name here: it\u0027s already in the class name that this method belongs to.",
+      "range": {
+        "startLine": 186,
+        "startChar": 49,
+        "endLine": 186,
+        "endChar": 54
+      },
+      "revId": "1c093c84a06b5120bb104c123a50fb828ac52829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
