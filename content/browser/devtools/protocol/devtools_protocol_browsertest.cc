@@ -285,7 +285,7 @@ class DevToolsProtocolTest : public ContentBrowserTest,
       std::vector<ExpectedNavigation> expected_navigations) {
     while (!expected_navigations.empty()) {
       std::unique_ptr<base::DictionaryValue> params =
-          WaitForNotification("Page.navigationRequested");
+          WaitForNotification("Page.navigationRequested", true);
 
       std::string url;
       ASSERT_TRUE(params->GetString("url", &url));
