@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecb057ab_6dc24578",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-06T00:20:17Z",
+      "side": 1,
+      "message": "I wonder if we could move BlobDataItem to a DataElementPtr (or even better - just hold a (mojo) DataElement).\n\nI want to do all I can to get rid of that web layer haha.",
+      "range": {
+        "startLine": 286,
+        "startChar": 0,
+        "endLine": 286,
+        "endChar": 36
+      },
+      "revId": "a09e1d4d76a2b4dedc86e1b9ef658db33fe9d128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b1919f8_bb2add58",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-06T00:20:17Z",
+      "side": 1,
+      "message": "nit: pull length check out of switch statement.",
+      "range": {
+        "startLine": 292,
+        "startChar": 0,
+        "endLine": 292,
+        "endChar": 39
+      },
+      "revId": "a09e1d4d76a2b4dedc86e1b9ef658db33fe9d128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667fb072_f12fd3cb",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-06T00:20:17Z",
+      "side": 1,
+      "message": "I wonder how performant this is - are we doing some messaging round trips here? If so, I wonder if we could make this work w/ less messaging round trips. (future issue obviously)",
+      "revId": "a09e1d4d76a2b4dedc86e1b9ef658db33fe9d128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
