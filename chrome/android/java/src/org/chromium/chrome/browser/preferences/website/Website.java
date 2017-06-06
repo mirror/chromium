@@ -37,7 +37,7 @@ public class Website implements Serializable {
     private MidiInfo mMidiInfo;
     private NotificationInfo mNotificationInfo;
     private ContentSettingException mPopupException;
-    private ContentSettingException mSubresourceFilterException;
+    private ContentSettingException mAdsException;
     private ProtectedMediaIdentifierInfo mProtectedMediaIdentifierInfo;
     private final List<StorageInfo> mStorageInfo = new ArrayList<StorageInfo>();
     private int mStorageInfoCallbacksLeft;
@@ -348,35 +348,35 @@ public class Website implements Serializable {
     }
 
     /**
-     * Sets the Subresource Filter exception info for this Website.
+     * Sets the Ads exception info for this Website.
      */
-    public void setSubresourceFilterException(ContentSettingException exception) {
-        mSubresourceFilterException = exception;
+    public void setAdsException(ContentSettingException exception) {
+        mAdsException = exception;
     }
 
     /**
-     * Returns the Subresource Filter exception info for this Website.
+     * Returns the Ads exception info for this Website.
      */
-    public ContentSettingException getSubresourceFilterException() {
-        return mSubresourceFilterException;
+    public ContentSettingException getAdsException() {
+        return mAdsException;
     }
 
     /**
-     * Returns what permission governs the Subresource Filter.
+     * Returns what permission governs the Ads setting.
      */
-    public ContentSetting getSubresourceFilterPermission() {
-        if (mSubresourceFilterException != null) {
-            return mSubresourceFilterException.getContentSetting();
+    public ContentSetting getAdsPermission() {
+        if (mAdsException != null) {
+            return mAdsException.getContentSetting();
         }
         return null;
     }
 
     /**
-     * Sets the Subresource Filter permission.
+     * Sets the Ads permission.
      */
-    public void setSubresourceFilterPermission(ContentSetting value) {
-        if (mSubresourceFilterException != null) {
-            mSubresourceFilterException.setContentSetting(value);
+    public void setAdsPermission(ContentSetting value) {
+        if (mAdsException != null) {
+            mAdsException.setContentSetting(value);
         }
     }
 
