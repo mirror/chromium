@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "81defe49_b907a0ce",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/storage-view-reports-quota-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-06T17:49:10Z",
+      "side": 1,
+      "message": "Are you sure this won\u0027t flake?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 7
+      },
+      "revId": "4987f36ce47c6e4298c9740e78dbf9ac9df69283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9526ea07_3172d8b9",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/storage-view-reports-quota.html",
         "patchSetId": 4
@@ -36,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "4e110654_4bed74c7",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 4533,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-06T17:49:10Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "b10dc524_36ea9d50",
+      "revId": "4987f36ce47c6e4298c9740e78dbf9ac9df69283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d305c8b_33853cd9",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
         "patchSetId": 4
@@ -47,6 +88,23 @@
       "writtenOn": "2017-06-06T17:16:53Z",
       "side": 1,
       "message": "nit: move under if below.",
+      "revId": "4987f36ce47c6e4298c9740e78dbf9ac9df69283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "101e5a0e_b99bad05",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-06T17:49:10Z",
+      "side": 1,
+      "message": "I think there is ThrottledWidget or something like that. Not sure it exactly matches your usecase, but take a look just in case.",
       "revId": "4987f36ce47c6e4298c9740e78dbf9ac9df69283",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
