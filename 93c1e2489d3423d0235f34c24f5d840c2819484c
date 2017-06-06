@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "42fdbdca_62efdbb9",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-06T22:34:05Z",
+      "side": 1,
+      "message": "Per our previous metrics the amount over 30 should be ~5% or less; i.e. ~95th percentile. I don\u0027t think we care all that much about reductions from say 100 to 30, we instead care that we absolutely reduce anything \u003e 30 into the \u003c 30 range.\n\nThat said, I don\u0027t think there\u0027s a huge reason to use a linear histogram here specifically versus COUNT_100, since that is linear in 0..28. I was just trying to be judicious with our histogram usage since we have so many of these watch time related metrics now. Since we don\u0027t care I\u0027d prefer to keep it as a linear 0..30, but defer to the wisdom of isherman@.",
+      "parentUuid": "3e28946c_bb478a8d",
+      "revId": "93c1e2489d3423d0235f34c24f5d840c2819484c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce1b319d_7dc2066a",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
