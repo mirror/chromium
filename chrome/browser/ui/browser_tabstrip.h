@@ -29,7 +29,7 @@ void AddTabAt(Browser* browser, const GURL& url, int index, bool foreground);
 content::WebContents* AddSelectedTabWithURL(Browser* browser,
                                             const GURL& url,
                                             ui::PageTransition transition);
-
+  
 // Creates a new tab with the already-created WebContents 'new_contents'.
 // The window for the added contents will be reparented correctly when this
 // method returns.  If |disposition| is NEW_POPUP, |initial_rect| should hold
