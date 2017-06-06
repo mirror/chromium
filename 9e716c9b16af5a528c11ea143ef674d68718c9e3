@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41899266_e8cb60c7",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-06T07:54:24Z",
+      "side": 1,
+      "message": "Is this ok?  looks a little ugly:(",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 14
+      },
+      "revId": "9e716c9b16af5a528c11ea143ef674d68718c9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "588aaf80_e280ef51",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-06T07:54:24Z",
+      "side": 1,
+      "message": "GenericSensor by default in disabled in DeviceSevice. Need to enable it here.",
+      "range": {
+        "startLine": 117,
+        "startChar": 25,
+        "endLine": 117,
+        "endChar": 45
+      },
+      "revId": "9e716c9b16af5a528c11ea143ef674d68718c9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c5a5b67_216b7528",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-06T07:54:24Z",
+      "side": 1,
+      "message": "Set the |check_value_| here, and run it in SensorReadingChanged(). Is it too ugly?",
+      "revId": "9e716c9b16af5a528c11ea143ef674d68718c9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
