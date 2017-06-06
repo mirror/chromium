@@ -34,6 +34,24 @@
       "revId": "1ac6aa9ac0325de2619d381dcbda479c4b4f9bba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064140fc_0e295f42",
+        "filename": "components/viz/host/frame_sink_manager_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-06T18:22:44Z",
+      "side": 1,
+      "message": "\u003e Another suggestion fsamuel had was to just always use Mojo for RegisterFrameSinkHierarchy()/UnregisterFrameSinkHierarchy(). It could add a tiny bit of delay before the first BeginFrame is received but everything works correctly as far as I can tell. Any objections to that?\n\nIf it\u0027s just a small latency delay and it doesn\u0027t significantly affect performance, I think I\u0027m ok with that. Your CL description suggests that doing it over IPC if frame submission is direct would cause issues, though.",
+      "parentUuid": "6da99bd1_9264ba27",
+      "revId": "1ac6aa9ac0325de2619d381dcbda479c4b4f9bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
