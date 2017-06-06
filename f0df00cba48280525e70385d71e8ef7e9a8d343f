@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "271c26e6_e824dadf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-06T05:50:43Z",
+      "side": 1,
+      "message": "nit: Clean this up a bit :)",
+      "revId": "f0df00cba48280525e70385d71e8ef7e9a8d343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "007e85ff_1fc2c9b3",
+        "filename": "components/download/internal/scheduler/device_status.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-06T05:50:43Z",
+      "side": 1,
+      "message": "At some point, we should probably add the battery percentage to the Criteria.\nIt\u0027s quite easy to get the percentage in android. The CHARGING and NOT_CHARGING don\u0027t map to BATTERY_SENSITIVE and BATTERY_INSENSITIVE correctly.\nFor example we may have 90% battery but not connected to power. In that case the right thing to do is to start/resume downloading but here we won\u0027t.",
+      "revId": "f0df00cba48280525e70385d71e8ef7e9a8d343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "103cdcc7_404dd88e",
+        "filename": "components/download/internal/scheduler/device_status_listener.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-06T05:50:43Z",
+      "side": 1,
+      "message": "if (listening_) Stop() ?",
+      "revId": "f0df00cba48280525e70385d71e8ef7e9a8d343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "158a00a0_56242cb5",
+        "filename": "components/download/internal/scheduler/device_status_listener.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-06T05:50:43Z",
+      "side": 1,
+      "message": "monitor-\u003eIsOnBatteryPower()?\nLet\u0027s  call it power_monitor.\n\nAlso can base::PowerMonitor::Get() be null? I don\u0027t think so, but I see null checks in the code. Maybe wrap this with an if? Not sure though..",
+      "range": {
+        "startLine": 65,
+        "startChar": 28,
+        "endLine": 65,
+        "endChar": 40
+      },
+      "revId": "f0df00cba48280525e70385d71e8ef7e9a8d343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "457b2264_de593d11",
+        "filename": "components/download/internal/scheduler/device_status_listener_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-06T05:50:43Z",
+      "side": 1,
+      "message": "nit: SimulateBatteryChange or SimulateBatteryStatusChange?",
+      "revId": "f0df00cba48280525e70385d71e8ef7e9a8d343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
