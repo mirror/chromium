@@ -20,6 +20,7 @@
 #include "chrome/test/base/testing_profile.h"
 #include "components/history/core/browser/history_backend.h"
 #include "components/history/core/browser/history_service.h"
+#include "components/safe_browsing/browser/mock_safe_browsing_ui_manager.h"
 #include "components/safe_browsing/browser/threat_details.h"
 #include "components/safe_browsing/browser/threat_details_history.h"
 #include "components/safe_browsing/common/safebrowsing_messages.h"
@@ -157,7 +158,7 @@ void FillCacheHttps(net::URLRequestContextGetter* context_getter) {
 class ThreatDetailsWrap : public ThreatDetails {
  public:
   ThreatDetailsWrap(
-      SafeBrowsingUIManager* ui_manager,
+      BaseUIManager* ui_manager,
       WebContents* web_contents,
       const security_interstitials::UnsafeResource& unsafe_resource,
       net::URLRequestContextGetter* request_context_getter,
@@ -172,38 +173,6 @@ class ThreatDetailsWrap : public ThreatDetails {
 
  private:
   ~ThreatDetailsWrap() override {}
-};
-
-class MockSafeBrowsingUIManager : public SafeBrowsingUIManager {
- public:
-  base::RunLoop* run_loop_;
-  // The safe browsing UI manager does not need a service for this test.
-  MockSafeBrowsingUIManager() : SafeBrowsingUIManager(NULL), run_loop_(NULL) {}
-
-  // When the ThreatDetails is done, this is called.
-  void SendSerializedThreatDetails(const std::string& serialized) override {
-    DVLOG(1) << "SendSerializedThreatDetails";
-    run_loop_->Quit();
-    run_loop_ = NULL;
-    serialized_ = serialized;
-  }
-
-  // Used to synchronize SendSerializedThreatDetails() with
-  // WaitForSerializedReport(). RunLoop::RunUntilIdle() is not sufficient
-  // because the MessageLoop task queue completely drains at some point
-  // between the send and the wait.
-  void SetRunLoopToQuit(base::RunLoop* run_loop) {
-    DCHECK(run_loop_ == NULL);
-    run_loop_ = run_loop;
-  }
-
-  const std::string& GetSerialized() { return serialized_; }
-
- private:
-  ~MockSafeBrowsingUIManager() override {}
-
-  std::string serialized_;
-  DISALLOW_COPY_AND_ASSIGN(MockSafeBrowsingUIManager);
 };
 
 }  // namespace

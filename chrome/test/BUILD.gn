@@ -4238,6 +4238,7 @@ test("unit_tests") {
       "../common/safe_browsing/file_type_policies_test_util.h",
       "../common/safe_browsing/file_type_policies_unittest.cc",
     ]
+    deps += [ "//components/safe_browsing/browser:mock_ui_manager" ]
   }
   if (safe_browsing_mode == 1) {
     # TODO(sgurun): enable tests for safe_browsing==2.
