@@ -94,6 +94,64 @@
       "revId": "399f70f6d6e764675568d6b1f7ec526b22fd5e2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6fb24878_80720729",
+        "filename": "cc/surfaces/display_scheduler.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-06T20:37:56Z",
+      "side": 1,
+      "message": "Maybe giving them a bit more different names would help with reading/talking about this class though. Perhaps the SurfaceDamaged() could be something like ProcessSurfaceDamage() or ApplySurfaceDamage() or some verb that seems appropriate for what it is doing and differentiate it from this method?",
+      "parentUuid": "49fb856c_58e45409",
+      "range": {
+        "startLine": 296,
+        "startChar": 2,
+        "endLine": 296,
+        "endChar": 16
+      },
+      "revId": "399f70f6d6e764675568d6b1f7ec526b22fd5e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f472e87a_b10ecbe0",
+        "filename": "cc/surfaces/display_scheduler.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-06T20:37:56Z",
+      "side": 1,
+      "message": "Comments are sentences.  \"SurfaceObserver implementation.\"\n\n*eyes the comment on L61 without a period*",
+      "revId": "399f70f6d6e764675568d6b1f7ec526b22fd5e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32767e93_b4b58ece",
+        "filename": "cc/surfaces/display_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-06T20:37:56Z",
+      "side": 1,
+      "message": "Note that GTest will construct this class once, call SetUp() and TearDown() on it for each test with the same prefix, while runing all of the tests, then destruct the class.\n\nSo the destructor is *not* 1:1 with SetUpDisplay() which is called per test. That\u0027s why I explicitly suggested doing the Unregister in some TearDownDisplay() that would be called in each test. It could happen as you did here but in TearDown() instead as that is per-test.\n\nThat way we don\u0027t keep objects alive that were created in one test when other tests are running, and avoid weird sideeffects.",
+      "revId": "399f70f6d6e764675568d6b1f7ec526b22fd5e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
