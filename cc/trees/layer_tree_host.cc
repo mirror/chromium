@@ -678,12 +678,6 @@ bool LayerTreeHost::DoUpdateLayers(Layer* root_layer) {
 
   UpdateHudLayer(debug_state_.ShowHudInfo());
 
-  Layer* root_scroll =
-      PropertyTreeBuilder::FindFirstScrollableLayer(root_layer);
-  Layer* page_scale_layer = viewport_layers_.page_scale.get();
-  if (!page_scale_layer && root_scroll)
-    page_scale_layer = root_scroll->parent();
-
   if (hud_layer_) {
     hud_layer_->PrepareForCalculateDrawProperties(device_viewport_size_,
                                                   device_scale_factor_);
@@ -715,7 +709,7 @@ bool LayerTreeHost::DoUpdateLayers(Layer* root_layer) {
       // If use_layer_lists is set, then the property trees should have been
       // built by the client already.
       PropertyTreeBuilder::BuildPropertyTrees(
-          root_layer, page_scale_layer, inner_viewport_scroll_layer(),
+          root_layer, page_scale_layer(), inner_viewport_scroll_layer(),
           outer_viewport_scroll_layer(), overscroll_elasticity_layer(),
           elastic_overscroll_, page_scale_factor_, device_scale_factor_,
           gfx::Rect(device_viewport_size_), identity_transform, property_trees);
