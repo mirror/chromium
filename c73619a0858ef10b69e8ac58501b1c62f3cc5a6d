@@ -34,6 +34,24 @@
       "revId": "c73619a0858ef10b69e8ac58501b1c62f3cc5a6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed0eb76a_7768b793",
+        "filename": "content/renderer/manifest/manifest_parser.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-06T13:02:06Z",
+      "side": 1,
+      "message": "My concern here is that we are leaking IPC restrictions to the parser and I\u0027m not sure we should. I agree that we should check for IPC restrictions before sending the data and we used to in the manifest_manager.cc. dcheng@, it sounds that you wouldn\u0027t mind it, right? If that\u0027s the case, sammc@, can you change this?",
+      "parentUuid": "b62a7e8c_3564a0cc",
+      "revId": "c73619a0858ef10b69e8ac58501b1c62f3cc5a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
