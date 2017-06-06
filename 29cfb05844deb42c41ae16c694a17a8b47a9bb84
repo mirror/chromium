@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9421b04_1f97217e",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/CSSPropertyMetadata.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-06T21:20:30Z",
+      "side": 1,
+      "message": "nit: add \"static const std::bitset\u003cnumCSSProperties\u003e*\" would give slightly more assurance that we only use it const ways after construction.",
+      "revId": "29cfb05844deb42c41ae16c694a17a8b47a9bb84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf4e039_11c9249d",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/StylePropertyShorthand.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-06T21:20:30Z",
+      "side": 1,
+      "message": "nit: This certainly works (no objection here), but you can be even more efficient by not heap-allocating, since these are just simple structs. If you make the StylePropertyShorthand constructors `constexpr`, then this will work (and generate less code):\n\n  static constexpr StylePropertyShorthand {{property.lower_camel_name}}Longhands(\n      {property_id}}, {{property.lower_camel_name}}Properties,\n      WTF_ARRAY_LENGTH({{property.lower_camel_name}}Properties);\n  return {{property.lower_camel_name}}Longhands;\n\nThis function will then simply return a constant pointer into the rodata section, with no initialization work needed (bonus: memory locality! cross-process sharing!).",
+      "revId": "29cfb05844deb42c41ae16c694a17a8b47a9bb84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daa39c18_e25870b9",
+        "filename": "third_party/WebKit/Source/core/css/StylePropertyShorthandCustom.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-06T21:20:30Z",
+      "side": 1,
+      "message": "Comment about constexpr initialization applies here (and below), too.",
+      "revId": "29cfb05844deb42c41ae16c694a17a8b47a9bb84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
