@@ -579,7 +579,7 @@ public class SingleWebsitePreferences extends PreferenceFragment
             case PREF_PROTECTED_MEDIA_IDENTIFIER_PERMISSION:
                 return ContentSettingsType.CONTENT_SETTINGS_TYPE_PROTECTED_MEDIA_IDENTIFIER;
             case PREF_ADS_PERMISSION:
-                return ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER;
+                return ContentSettingsType.CONTENT_SETTINGS_TYPE_ADS;
             default:
                 return 0;
         }
