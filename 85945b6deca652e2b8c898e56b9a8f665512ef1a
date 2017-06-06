@@ -46,6 +46,30 @@
       "revId": "85945b6deca652e2b8c898e56b9a8f665512ef1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca08c04_c1a0477b",
+        "filename": "third_party/WebKit/Source/platform/wtf/ThreadSafeRefCounted.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-06T07:49:21Z",
+      "side": 1,
+      "message": "Thanks! That makes sense to me.\n\nCan we replace the ref count manipulation in base/atomic_ref_count.h and use it in WTF::ThreadSafeRefCounted?",
+      "parentUuid": "01eb1346_ef766e2f",
+      "range": {
+        "startLine": 59,
+        "startChar": 58,
+        "endLine": 59,
+        "endChar": 0
+      },
+      "revId": "85945b6deca652e2b8c898e56b9a8f665512ef1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
