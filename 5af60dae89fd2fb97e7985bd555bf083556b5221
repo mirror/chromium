@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fe39859_1d0c8243",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-06T14:32:27Z",
+      "side": 1,
+      "message": "const bool",
+      "revId": "5af60dae89fd2fb97e7985bd555bf083556b5221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dac579f_d0e7197a",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-06T14:32:27Z",
+      "side": 1,
+      "message": "\"Returns true if the sequence was made empty when popping the task.\"\n\n(subtle difference but it\u0027s important because empty is checked while popping not after, checking after would be racy)",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 13
+      },
+      "revId": "5af60dae89fd2fb97e7985bd555bf083556b5221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a4685eb_be25691a",
+        "filename": "base/task_scheduler/test_utils.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-06T14:32:27Z",
+      "side": 1,
+      "message": "IWYU (include-what-you-use) rules are such that you need to include anything you either receive or return by value.\n\nscoped_refptr\u003cFoo\u003e needs both ref_counted.h and foo.h to be defined so here you need to include both headers (and not fwd-declare Sequence)",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 23
+      },
+      "revId": "5af60dae89fd2fb97e7985bd555bf083556b5221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
