@@ -120,8 +120,7 @@ LocationBarView::LocationBarView(Browser* browser,
       browser_(browser),
       delegate_(delegate),
       size_animation_(this),
-      is_popup_mode_(is_popup_mode),
-      show_focus_rect_(false) {
+      is_popup_mode_(is_popup_mode) {
   edit_bookmarks_enabled_.Init(
       bookmarks::prefs::kEditBookmarksEnabled, profile->GetPrefs(),
       base::Bind(&LocationBarView::UpdateWithoutTabRestore,

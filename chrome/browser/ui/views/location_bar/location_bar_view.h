@@ -282,7 +282,7 @@ class LocationBarView : public LocationBar,
   // Updates |manage_passwords_icon_view_|. Returns true if visibility changed.
   bool RefreshManagePasswordsIconView();
 
-  // FIXME
+  // Updates the icon for the "clear all" button.
   void RefreshClearAllButtonIcon();
 
   // Helper to show the first run info bubble.
@@ -406,7 +406,8 @@ class LocationBarView : public LocationBar,
   // The star.
   StarView* star_view_ = nullptr;
 
-  // FIXME
+  // An [x] that appears in touch mode (when the OSK is visible) and allows the
+  // user to clear all text.
   views::ImageButton* clear_all_button_ = nullptr;
 
   // Animation to control showing / hiding the location bar.
@@ -418,7 +419,7 @@ class LocationBarView : public LocationBar,
 
   // True if we should show a focus rect while the location entry field is
   // focused. Used when the toolbar is in full keyboard accessibility mode.
-  bool show_focus_rect_;
+  bool show_focus_rect_ = false;
 
   // This is in case we're destroyed before the model loads. We need to make
   // Add/RemoveObserver calls.
