@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7e3927c2_b7a072e3",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-06-06T18:14:26Z",
+      "side": 1,
+      "message": "kProgressThreshold seems more confusing to me. How about kArrowOpacityProgressThreshold (plus a comment)?",
+      "parentUuid": "aaeb5801_6d52cd4a",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 38
+      },
+      "revId": "c13ead92204aaafde5b342438e5b14a6b0c9157d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff9e7a2d_f867d684",
         "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-06T13:45:18Z",
       "side": 1,
       "message": "Nit: We are calling the same thing \"alpha\" and \"opacity\". IMHO best to pick one term and stick to it.\nA short comment before this new code block explaining we want to achieve a \"quick\" animation at the threshold progress value would also be nice.",
+      "range": {
+        "startLine": 298,
+        "startChar": 2,
+        "endLine": 298,
+        "endChar": 45
+      },
+      "revId": "c13ead92204aaafde5b342438e5b14a6b0c9157d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "679d4243_7fdc9055",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-06-06T18:14:26Z",
+      "side": 1,
+      "message": "Right. Changed alpha to opacity. Also added a comment.",
+      "parentUuid": "ff9e7a2d_f867d684",
       "range": {
         "startLine": 298,
         "startChar": 2,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "7f702144_0765af97",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-06-06T18:14:26Z",
+      "side": 1,
+      "message": "I think that would make code unnecessarily complicated. We should make Affordance Update-able for this to work. It is also probably not a common case. Most of the time an affordance is created and then deleted after the overscoll is completed or aborted.",
+      "parentUuid": "6cf85911_ead911ca",
+      "revId": "c13ead92204aaafde5b342438e5b14a6b0c9157d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "937035a4_d30bba19",
         "filename": "content/browser/web_contents/aura/gesture_nav_simple.h",
         "patchSetId": 1
@@ -76,6 +142,24 @@
       "writtenOn": "2017-06-06T13:45:18Z",
       "side": 1,
       "message": "Since this is called from Affordance, it should probably be public.",
+      "revId": "c13ead92204aaafde5b342438e5b14a6b0c9157d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f65c272_67d70b7a",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-06-06T18:14:26Z",
+      "side": 1,
+      "message": "The Affordance class is an inner class, thus a friend, of GestureNavSimple and have access to private methods. There is no need to make this public.",
+      "parentUuid": "937035a4_d30bba19",
       "revId": "c13ead92204aaafde5b342438e5b14a6b0c9157d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
