@@ -995,7 +995,6 @@ crbug.com/522648 fast/events/touch/compositor-touch-hit-rects-iframes.html [ Cra
 crbug.com/521858 [ Win7 ] http/tests/security/media-element-audio-source-node-same-origin.html [ Failure Pass ]
 crbug.com/521858 [ Win7 ] virtual/mojo-loading/http/tests/security/media-element-audio-source-node-same-origin.html [ Failure Pass ]
 crbug.com/521853 [ Win ] http/tests/inspector/search/sources-search-scope.html [ Failure Pass ]
-crbug.com/521853 [ Win ] virtual/mojo-loading/http/tests/inspector/search/sources-search-scope.html [ Failure Pass ]
 crbug.com/652536 fast/events/mouse-cursor-change-after-image-load.html [ Failure Pass ]
 crbug.com/520188 [ Win ] http/tests/local/fileapi/file-last-modified-after-delete.html [ Failure Pass ]
 crbug.com/520188 [ Win ] virtual/mojo-loading/http/tests/local/fileapi/file-last-modified-after-delete.html [ Failure Pass ]
@@ -1958,7 +1957,6 @@ crbug.com/705125 http/tests/w3c/webperf/submission/Intel/user-timing/test_user_t
 crbug.com/705125 virtual/mojo-loading/http/tests/w3c/webperf/submission/Intel/user-timing/test_user_timing_clearMarks.html [ Failure ]
 crbug.com/705125 virtual/mojo-loading/http/tests/security/cors-rfc1918/addressspace-document-appcache.html [ Failure ]
 crbug.com/705125 virtual/mojo-loading/http/tests/security/cors-rfc1918/addressspace-document-csp-appcache.html [ Failure ]
-crbug.com/705125 virtual/mojo-loading/http/tests/security/suborigins/crossorigin/suborigin-cors-xhr-failure-output.php [ Failure Pass ]
 
 # This test fails with the stable release mode.
 crbug.com/694958 virtual/stable/http/tests/navigation/same-and-different-back.html [ Skip ]
@@ -2969,10 +2967,6 @@ crbug.com/723086 virtual/off-main-thread-fetch/external/wpt/service-workers/serv
 crbug.com/718155 payments/payment-request-in-iframe.html [ Failure ]
 crbug.com/718155 payments/payment-request-in-iframe-nested-not-allowed.html [ Failure ]
 
-# Layout Tests on Swarming (Windows) - https://crbug.com/717347
-crbug.com/724392 [ Win ] fast/css/font-family-case-insensitive.html [ Failure Pass Timeout ]
-crbug.com/713094 [ Win ] fast/css/fontfaceset-check-platform-fonts.html [ Failure Pass ]
-
 # Image decode failures due to document destruction.
 crbug.com/721435 external/wpt/image-decodes/image-decode-iframe.html [ Skip ]
 
@@ -2989,12 +2983,10 @@ crbug.com/725455 [ Linux ] nfc/push.html [ Failure Pass Timeout ]
 crbug.com/725455 [ Linux ] nfc/watch.html [ Failure Pass Timeout ]
 
 # Sheriff failures 2017-05-29
-crbug.com/727014 [ Linux ] external/wpt/IndexedDB/large-nested-cloning.html [ Pass Timeout ]
 crbug.com/727252 [ Win7 ] external/wpt/media-source/mediasource-endofstream.html [ Pass Timeout ]
 
 # Compositor worker tests are flaky, crashing and timing out
 crbug.com/727991 [ Linux Mac Win ] virtual/threaded/fast/compositorworker/visual-update.html [ Pass Failure Timeout Crash ]
-crbug.com/728036 [ Linux Mac Win ] virtual/threaded/fast/compositorworker/compositor-proxy-supports.html [ Pass Failure Timeout Crash ]
 crbug.com/727505 [ Linux Mac Win ] virtual/threaded/fast/compositorworker/basic-plumbing-main-to-worker.html [ Pass Failure Timeout Crash ]
 crbug.com/727505 [ Linux Mac Win ] virtual/threaded/fast/compositorworker/basic-plumbing-worker-to-main.html [ Pass Failure Timeout Crash ]
 crbug.com/727505 [ Linux Mac Win ] virtual/threaded/fast/compositorworker/request-animation-frame.html [ Pass Failure Timeout Crash ]
