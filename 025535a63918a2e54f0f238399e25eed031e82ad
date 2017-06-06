@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "415fe609_6d12188f",
+        "filename": "components/prefs/json_pref_store_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T17:34:17Z",
+      "side": 1,
+      "message": "Nit: use auto if we\u0027re changing this anyway",
+      "range": {
+        "startLine": 174,
+        "startChar": 2,
+        "endLine": 174,
+        "endChar": 30
+      },
+      "revId": "025535a63918a2e54f0f238399e25eed031e82ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9c29e7f_41741081",
+        "filename": "components/prefs/persistent_pref_store.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T17:34:17Z",
+      "side": 1,
+      "message": "We prohibit default arguments on virtual interfaces. See https://google.github.io/styleguide/cppguide.html#Default_Arguments\n\nA non-virtual no-argument overload will be one way of getting around that.",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 59
+      },
+      "revId": "025535a63918a2e54f0f238399e25eed031e82ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa26df78_8792fdce",
         "filename": "services/preferences/persistent_pref_store_impl.cc",
         "patchSetId": 9
@@ -37,6 +83,30 @@
       "side": 1,
       "message": "This is an override of mojom::PersistentPrefStore::CommitPendingWrite(). This method takes a CommitPendingWriteCallback as argument. CommitPendingWriteCallback is defined as  \"using CommitPendingWriteCallback \u003d base::OnceClosure;\" in the header generated from preferences.mojom.",
       "parentUuid": "aa26df78_8792fdce",
+      "range": {
+        "startLine": 60,
+        "startChar": 26,
+        "endLine": 60,
+        "endChar": 53
+      },
+      "revId": "025535a63918a2e54f0f238399e25eed031e82ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b2a9755_61e65bbd",
+        "filename": "services/preferences/persistent_pref_store_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T17:34:17Z",
+      "side": 1,
+      "message": "I agree that using the generated mojo type is better here: otherwise, if we ever add return parameters, we\u0027ll need to update even more things.",
+      "parentUuid": "a15241e3_c1e4f5c4",
       "range": {
         "startLine": 60,
         "startChar": 26,
@@ -88,6 +158,54 @@
         "startChar": 20,
         "endLine": 134,
         "endChar": 22
+      },
+      "revId": "025535a63918a2e54f0f238399e25eed031e82ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48241cb6_47e278e6",
+        "filename": "services/preferences/public/interfaces/preferences.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T17:34:17Z",
+      "side": 1,
+      "message": "There are no input or output arguments, thus the list is empty. The purpose of \u003d\u003e () is to be notified when this function completes.",
+      "parentUuid": "d6808dc3_08a2c030",
+      "range": {
+        "startLine": 134,
+        "startChar": 20,
+        "endLine": 134,
+        "endChar": 22
+      },
+      "revId": "025535a63918a2e54f0f238399e25eed031e82ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e6c36f6_3c6a8a14",
+        "filename": "services/preferences/public/interfaces/preferences.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T17:34:17Z",
+      "side": 1,
+      "message": "This means you want to be notified when the function \"returns\"",
+      "parentUuid": "545facc0_eea307e0",
+      "range": {
+        "startLine": 134,
+        "startChar": 23,
+        "endLine": 134,
+        "endChar": 28
       },
       "revId": "025535a63918a2e54f0f238399e25eed031e82ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
