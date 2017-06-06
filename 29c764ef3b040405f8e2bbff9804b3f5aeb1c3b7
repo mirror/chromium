@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "023532d5_a84f8ab5",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-06T13:18:11Z",
+      "side": 1,
+      "message": "The notification is not part of PlayStore, it is shown instead of the TOS negotiation screen. We do launch the PlayStore for AD users as a de-facto confirmation that the AD auth flow worked.",
+      "parentUuid": "c445e4ec_ef07c771",
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ffd75ae_ab874637",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 2
@@ -66,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "773d8e4f_dfd8c5b7",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-06T13:18:11Z",
+      "side": 1,
+      "message": "Yury, I don\u0027t understand what you mean by that. Could you elaborate, please? Set prefs::kArcTermsAccepted?\n\nHidehiko: Why? What should we do instead? Should we just disable ARC altogether? (It\u0027s probably fine since it only affects Eve afaik, which is scheduled for M61 and we should have the OOBE version by then).",
+      "parentUuid": "694eacf4_e66e545b",
+      "range": {
+        "startLine": 701,
+        "startChar": 6,
+        "endLine": 701,
+        "endChar": 33
+      },
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88da375c_a2b4f864",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 2
@@ -77,6 +119,24 @@
       "writtenOn": "2017-06-05T13:40:44Z",
       "side": 1,
       "message": "style: based on style guide,\nif ( ... ) {\n  return;\n} else {\n  ...\n}\n\nshould be\nif (...) {\n  return;\n}\n...\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#Code-formatting",
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "620d08f9_28f0736c",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-06T13:18:11Z",
+      "side": 1,
+      "message": "Done. I did it this way to minimize the chance of error when the AD OOBE negotiator gets implemented. It\u0027s easy to forget to add back the else.",
+      "parentUuid": "88da375c_a2b4f864",
       "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -100,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "1bc3d6c3_2a4c2a1a",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-06T13:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bc53676_a3de55b2",
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57bfce69_caeb6e76",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 2
@@ -111,6 +189,24 @@
       "writtenOn": "2017-06-05T13:40:44Z",
       "side": 1,
       "message": "Please add unittest.",
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db9c820_5599a651",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-06T13:18:11Z",
+      "side": 1,
+      "message": "Done (hadn\u0027t noticed arc_util_unittest.cc).",
+      "parentUuid": "57bfce69_caeb6e76",
       "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "9166786c_3718c60f",
+        "filename": "chrome/browser/chromeos/arc/optin/arc_active_directory_auth_default_negotiator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-06T13:18:11Z",
+      "side": 1,
+      "message": "This would make it seem like Default, ActiveDirectory and OOBE are siblings, but it\u0027s more like a 2x2 matrix:\nDefault Default+AD\nOOBE    OOBE+AD",
+      "parentUuid": "8a64642f_753314fc",
+      "range": {
+        "startLine": 6,
+        "startChar": 68,
+        "endLine": 6,
+        "endChar": 75
+      },
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b456854f_68316c33",
         "filename": "chrome/browser/chromeos/arc/optin/arc_active_directory_auth_default_negotiator.h",
         "patchSetId": 2
@@ -157,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "5ec79ca4_8e9085c1",
+        "filename": "chrome/browser/chromeos/arc/optin/arc_active_directory_auth_default_negotiator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-06T13:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b456854f_68316c33",
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a522276e_2b903c58",
         "filename": "chrome/browser/chromeos/arc/optin/arc_active_directory_auth_default_negotiator.h",
         "patchSetId": 2
@@ -168,6 +306,30 @@
       "writtenOn": "2017-06-01T17:59:54Z",
       "side": 1,
       "message": "nit: ArcTermsOfServiceDefaultNegotiator has handler. Could we inherit from this and reuse\nvoid ArcTermsOfServiceDefaultNegotiator::OnAuthSucceeded(\nvoid ArcTermsOfServiceDefaultNegotiator::OnSendFeedbackClicked() {",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 22
+      },
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f1a1a29_06440630",
+        "filename": "chrome/browser/chromeos/arc/optin/arc_active_directory_auth_default_negotiator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-06T13:18:11Z",
+      "side": 1,
+      "message": "Potentially, but then you\u0027d meddle pref-related code into ArcActiveDirectoryAuthDefaultNegotiator. For instance, the constructor of ArcTermsOfServiceDefaultNegotiator takes a PrefService pointer (and DCHECKs it). It feels cleaner to keep all pref-related code out of this class.",
+      "parentUuid": "a522276e_2b903c58",
       "range": {
         "startLine": 33,
         "startChar": 7,
@@ -197,6 +359,24 @@
     },
     {
       "key": {
+        "uuid": "f403ba8d_c642f58e",
+        "filename": "chrome/browser/chromeos/arc/optin/arc_active_directory_auth_default_negotiator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-06T13:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c924b11d_6475d970",
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "655f967c_31680855",
         "filename": "chrome/browser/chromeos/arc/optin/arc_active_directory_auth_default_negotiator_unittest.cc",
         "patchSetId": 2
@@ -214,6 +394,24 @@
     },
     {
       "key": {
+        "uuid": "d52f608e_c4aaa41c",
+        "filename": "chrome/browser/chromeos/arc/optin/arc_active_directory_auth_default_negotiator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-06T13:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "655f967c_31680855",
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4490ba8_9c873ca0",
         "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
         "patchSetId": 2
@@ -225,6 +423,30 @@
       "writtenOn": "2017-06-01T17:59:54Z",
       "side": 1,
       "message": "Why metrics are ignored?",
+      "range": {
+        "startLine": 727,
+        "startChar": 8,
+        "endLine": 727,
+        "endChar": 24
+      },
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd1288a9_dabba379",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-06T13:18:11Z",
+      "side": 1,
+      "message": "When you\u0027re in this function, you\u0027re in the enterprise-managed (EM) case. AD users are always EM. As far as I understand (and please correct me if I\u0027m wrong), we always send metrics for EM devices unless the admin explicitly disables that by policy, see crbug.com/456186, which enables metrics if the policy is missing.\n\nFWIW, if I enroll my device, I never see the metrics checkbox in this screen.",
+      "parentUuid": "a4490ba8_9c873ca0",
       "range": {
         "startLine": 727,
         "startChar": 8,
@@ -260,6 +482,30 @@
     },
     {
       "key": {
+        "uuid": "b283aff3_0d479c47",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-06T13:18:11Z",
+      "side": 1,
+      "message": "You mean in ArcSupportHost::OnMessage? Wouldn\u0027t that allow mistyped parameters to slip through, e.g. isMetricsEnablde: true?",
+      "parentUuid": "fb0b2f84_a353d205",
+      "range": {
+        "startLine": 728,
+        "startChar": 8,
+        "endLine": 728,
+        "endChar": 30
+      },
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "163d6929_722de94d",
         "filename": "chrome/browser/resources/chromeos/arc_support/main.html",
         "patchSetId": 2
@@ -277,6 +523,24 @@
     },
     {
       "key": {
+        "uuid": "2c73933e_82b9328f",
+        "filename": "chrome/browser/resources/chromeos/arc_support/main.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-06T13:18:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "163d6929_722de94d",
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc54102c_520750e2",
         "filename": "chrome/browser/resources/chromeos/arc_support/main.html",
         "patchSetId": 2
@@ -288,6 +552,30 @@
       "writtenOn": "2017-06-01T17:59:54Z",
       "side": 1,
       "message": "Why there is no button Cancel? What if user closes this page. This should be equivalent to close.",
+      "range": {
+        "startLine": 140,
+        "startChar": 28,
+        "endLine": 140,
+        "endChar": 38
+      },
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed233f6_b2b0982f",
+        "filename": "chrome/browser/resources/chromeos/arc_support/main.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-06T13:18:11Z",
+      "side": 1,
+      "message": "Yes, closing is the same as canceling. The mock that I got didn\u0027t have a cancel button, but I agree it should be there. I\u0027ll add one.",
+      "parentUuid": "bc54102c_520750e2",
       "range": {
         "startLine": 140,
         "startChar": 28,
