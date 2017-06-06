@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b89e0c8f_7311db29",
+        "filename": "base/base_switches.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-06T00:58:07Z",
+      "side": 1,
+      "message": "Global memory dumps created for base::SharedMemory by SharedMemoryTracker.\n\ninstead of each client creating it\u0027s own global dump edges.",
+      "range": {
+        "startLine": 112,
+        "startChar": 8,
+        "endLine": 112,
+        "endChar": 14
+      },
+      "revId": "6e0f0cc462f438355e588ee6b3f7efbde7014b6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b08fe0f3_0d4395d9",
+        "filename": "base/base_switches.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-06T00:58:07Z",
+      "side": 1,
+      "message": "Suggestion: better name for this flag would be \"memory-infra-use-new-shared-memory-guid\" which means MemoryInfra uses the new GUID for SharedMemory dumps instead of double counting.\n\nUsing the new type of edges is just a side effect of us not being able to have GUID for matching base::SharedMemory.",
+      "revId": "6e0f0cc462f438355e588ee6b3f7efbde7014b6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
