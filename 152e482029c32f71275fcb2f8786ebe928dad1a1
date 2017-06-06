@@ -46,6 +46,30 @@
       "revId": "152e482029c32f71275fcb2f8786ebe928dad1a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac78d3af_1543f349",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-06T21:58:50Z",
+      "side": 1,
+      "message": "It\u0027s best to optimize for quality/simplicity of the code we get at the end with this change. Simplicity of the change itself is much less important, as it doesn\u0027t have long-term impact.\nIf you prefer, DesktopMediaList can be updated in a separate CL, to keep this CL simpler",
+      "parentUuid": "fe59c6c3_94658342",
+      "range": {
+        "startLine": 45,
+        "startChar": 56,
+        "endLine": 45,
+        "endChar": 68
+      },
+      "revId": "152e482029c32f71275fcb2f8786ebe928dad1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
