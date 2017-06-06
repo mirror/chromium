@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "60c0dc8b_5a9a7024",
+        "filename": "components/component_updater/default_component_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-06-06T16:50:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75489193_d5ecf327",
+      "revId": "86c5e348b9b2c95f2cd6efcb2b98da2a367301d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b3b0e02_f54054ca",
         "filename": "ios/chrome/browser/net/crl_set_fetcher.cc",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "writtenOn": "2017-06-06T16:44:33Z",
       "side": 1,
       "message": "Actually, are you sure that the manifest will outlive the callback?",
+      "revId": "86c5e348b9b2c95f2cd6efcb2b98da2a367301d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f9e910b_22959e11",
+        "filename": "ios/chrome/browser/net/crl_set_fetcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-06-06T16:50:50Z",
+      "side": 1,
+      "message": "We do in this case. The base::Bind call only binds the arguments for a blocking call through the function adapter InstallFunctionWrapper. The call is not posted to a runner, as in the usual bind-post idiom.",
+      "parentUuid": "7b3b0e02_f54054ca",
       "revId": "86c5e348b9b2c95f2cd6efcb2b98da2a367301d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
