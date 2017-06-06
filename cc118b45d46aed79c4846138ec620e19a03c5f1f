@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61fe6239_41cc397a",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-06T04:43:48Z",
+      "side": 1,
+      "message": "@digit Is this operation potentially expensive?\n(I am trying to make the code simpler by performing all the initializations and then notifying the main thread but I wouldn\u0027t want to regress perfs)",
+      "range": {
+        "startLine": 378,
+        "startChar": 40,
+        "endLine": 378,
+        "endChar": 52
+      },
+      "revId": "cc118b45d46aed79c4846138ec620e19a03c5f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
