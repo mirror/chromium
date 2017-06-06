@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaeb5801_6d52cd4a",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-06-06T13:45:18Z",
+      "side": 1,
+      "message": "Nit: Perhaps call this kProgressThreshold or something like that to make it clear that this is a threshold for the progress? Otherwise it could be interpreted as an opacity value based on the name. \nA short comment clarifying that we bump up the opacity when the progress reaches this threshold would also be nice.",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 38
+      },
+      "revId": "c13ead92204aaafde5b342438e5b14a6b0c9157d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff9e7a2d_f867d684",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-06-06T13:45:18Z",
+      "side": 1,
+      "message": "Nit: We are calling the same thing \"alpha\" and \"opacity\". IMHO best to pick one term and stick to it.\nA short comment before this new code block explaining we want to achieve a \"quick\" animation at the threshold progress value would also be nice.",
+      "range": {
+        "startLine": 298,
+        "startChar": 2,
+        "endLine": 298,
+        "endChar": 45
+      },
+      "revId": "c13ead92204aaafde5b342438e5b14a6b0c9157d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf85911_ead911ca",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-06-06T13:45:18Z",
+      "side": 1,
+      "message": "It\u0027s possible we already have an affordance. In such a case, would it make sense to reuse the existing one rather than create a new one?",
+      "revId": "c13ead92204aaafde5b342438e5b14a6b0c9157d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "937035a4_d30bba19",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-06-06T13:45:18Z",
+      "side": 1,
+      "message": "Since this is called from Affordance, it should probably be public.",
+      "revId": "c13ead92204aaafde5b342438e5b14a6b0c9157d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
