@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c3cbfd8_e5273f12",
+        "filename": "chrome/browser/resources/settings/privacy_page/privacy_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-06-06T17:15:33Z",
+      "side": 1,
+      "message": "Eek! Is that really the planned design (BLOCK makes toggle go on)? That would be different from all the other content settings. I think we can remove this TODO from the code.",
+      "range": {
+        "startLine": 412,
+        "startChar": 22,
+        "endLine": 412,
+        "endChar": 23
+      },
+      "revId": "ba0b49badae8216919f9a71cde500dee7fc495ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b12568_d8d353e9",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1893,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-06-06T17:15:33Z",
+      "side": 1,
+      "message": "Using strings from generated_resources.grd here instead of settings_strings is discouraged.",
+      "range": {
+        "startLine": 1893,
+        "startChar": 29,
+        "endLine": 1893,
+        "endChar": 48
+      },
+      "revId": "ba0b49badae8216919f9a71cde500dee7fc495ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
