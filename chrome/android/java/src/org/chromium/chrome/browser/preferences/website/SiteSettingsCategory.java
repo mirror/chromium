@@ -129,7 +129,7 @@ public class SiteSettingsCategory {
         }
         if (CATEGORY_ADS.equals(category) && adsCategoryEnabled()) {
             return new SiteSettingsCategory(
-                    CATEGORY_ADS, "", ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER);
+                    CATEGORY_ADS, "", ContentSettingsType.CONTENT_SETTINGS_TYPE_ADS);
         }
         if (CATEGORY_USE_STORAGE.equals(category)) {
             return new SiteSettingsCategory(CATEGORY_USE_STORAGE, "", -1);
@@ -179,7 +179,7 @@ public class SiteSettingsCategory {
                 == ContentSettingsType.CONTENT_SETTINGS_TYPE_PROTECTED_MEDIA_IDENTIFIER) {
             return fromString(CATEGORY_PROTECTED_MEDIA);
         }
-        if (contentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER) {
+        if (contentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_ADS) {
             return fromString(CATEGORY_ADS);
         }
         if (contentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_USB_CHOOSER_DATA) {
@@ -287,7 +287,7 @@ public class SiteSettingsCategory {
      * Returns whether this category is the Ads category.
      */
     public boolean showAdsSites() {
-        return mContentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER;
+        return mContentSettingsType == ContentSettingsType.CONTENT_SETTINGS_TYPE_ADS;
     }
 
     /**

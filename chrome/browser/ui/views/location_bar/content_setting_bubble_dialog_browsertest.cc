@@ -92,7 +92,7 @@ void ContentSettingBubbleDialogTest::ShowDialog(const std::string& name) {
       {"protocol_handlers", CONTENT_SETTINGS_TYPE_PROTOCOL_HANDLERS},
       {"automatic_downloads", CONTENT_SETTINGS_TYPE_AUTOMATIC_DOWNLOADS},
       {"midi_sysex", CONTENT_SETTINGS_TYPE_MIDI_SYSEX},
-      {"subresource_filter", CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER}};
+      {"subresource_filter", CONTENT_SETTINGS_TYPE_ADS}};
   for (auto content_settings : content_settings_values) {
     if (name == content_settings.name) {
       ShowDialogBubble(content_settings.content_type);
