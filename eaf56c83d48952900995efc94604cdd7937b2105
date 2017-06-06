@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54ae78c5_103b9468",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-06T06:26:40Z",
+      "side": 1,
+      "message": "Sorry, this still bothers me a bit. I think in general we want to carefully code when document_ is available or not, and adding bunch of this condition would make the clarification less clear.  For example in some cases we try to use GetFrame()-\u003eGetDocument() if document_ is not available, but might still want to make sure we do so only for some frame/request types.  Could we add a specialized ctor for !document_ case for FrozenState?",
+      "revId": "eaf56c83d48952900995efc94604cdd7937b2105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
