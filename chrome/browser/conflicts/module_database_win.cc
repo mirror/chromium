@@ -60,6 +60,14 @@ void ModuleDatabase::OnProcessStarted(uint32_t process_id,
   CreateProcessInfo(process_id, creation_time, process_type);
 }
 
+void ModuleDatabase::OnShellExtensionEnumerated(const base::FilePath& path,
+                                                uint32_t size_of_image,
+                                                uint32_t time_date_stamp) {
+  auto* module_info =
+      FindOrCreateModuleInfo(path, size_of_image, time_date_stamp);
+  module_info->second.module_type |= ModuleType::SHELL_EXTENSION;
+}
+
 void ModuleDatabase::OnModuleLoad(uint32_t process_id,
                                   uint64_t creation_time,
                                   const base::FilePath& module_path,
@@ -88,6 +96,8 @@ void ModuleDatabase::OnModuleLoad(uint32_t process_id,
 
   auto* module_info =
       FindOrCreateModuleInfo(module_path, module_size, module_time_date_stamp);
+
+  module_info->second.module_type |= ModuleType::LOADED_MODULE;
 
   // Update the list of process types that this module has been seen in.
   module_info->second.process_types |=
