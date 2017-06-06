@@ -54,6 +54,7 @@ class PLATFORM_EXPORT WebViewSchedulerImpl : public WebViewScheduler {
       std::unique_ptr<WTF::Closure> budget_exhausted_callback) override;
   void AudioStateChanged(bool is_audio_playing) override;
   bool HasActiveConnectionForTest() const override;
+  void RequestBeginMainFrameNotExpected(bool new_state) override;
 
   // Virtual for testing.
   virtual void ReportIntervention(const std::string& message);

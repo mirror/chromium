@@ -315,6 +315,8 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   void OnIdlePeriodStarted() override;
   void OnIdlePeriodEnded() override;
 
+  void HasPendingTasksChanged(bool has_tasks) override;
+
   void EndIdlePeriod();
 
   // Returns the serialized scheduler state for tracing.
@@ -494,6 +496,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     bool in_idle_period_for_testing;
     bool use_virtual_time;
     bool is_audio_playing;
+    bool compositor_will_send_main_frame_not_expected;
     bool virtual_time_paused;
     std::set<WebViewSchedulerImpl*> web_view_schedulers;  // Not owned.
     RAILModeObserver* rail_mode_observer;                 // Not owned.
