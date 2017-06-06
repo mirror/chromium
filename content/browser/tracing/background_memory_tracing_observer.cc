@@ -26,7 +26,7 @@ void BackgroundMemoryTracingObserver::OnTracingEnabled(
   if (preset ==
       BackgroundTracingConfigImpl::CategoryPreset::BENCHMARK_MEMORY_LIGHT) {
     auto* dump_manager = base::trace_event::MemoryDumpManager::GetInstance();
-    dump_manager->RequestGlobalDump(
+    dump_manager->RequestGlobalDump_NoCallback(
         base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
         base::trace_event::MemoryDumpLevelOfDetail::BACKGROUND);
   }
