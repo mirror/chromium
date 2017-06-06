@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8703792a_273f0019",
+        "filename": "media/filters/decoder_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-06T06:07:10Z",
+      "side": 1,
+      "message": "When we \"should find another decoder\", we\u0027ll blacklist the current decoder, which would work in most cases, but seems wrong and could cause more failures in some case. For example, we use sw decoder first, then get a higher res video, so SFAD() returns true, and we blacklist the sw decoder. Then hw decoder init failed, and playback will fail. In this case, what we really want is to use ALLOW_ALL_DECODERS here, and after we generate the list of decoders in DecoderSelector (using the callback), we sort the decoders based on the config, e.g. for high res video, we put the hw decoder first, and for low res video, we put the sw decoder first. That actually seems the right thing to do even for the initial decoder selection...",
+      "revId": "3562fab9554c4ee0b8ca9eccf2acb059f4766021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
