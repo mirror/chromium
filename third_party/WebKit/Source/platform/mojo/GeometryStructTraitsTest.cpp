@@ -34,7 +34,7 @@ class GeometryStructTraitsTest
     NOTREACHED();
   }
 
-  void EchoSize(const WebSize& s, const EchoSizeCallback& callback) {
+  void EchoSize(const WebSize& s, const EchoSizeCallback& callback) override {
     callback.Run(s);
   }
 
