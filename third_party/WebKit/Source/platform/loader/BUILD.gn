@@ -31,6 +31,8 @@ source_set("loader") {
     "fetch/CrossOriginAccessControl.h",
     "fetch/FetchContext.cpp",
     "fetch/FetchContext.h",
+    "fetch/FetchDispatcher.cpp",
+    "fetch/FetchDispatcher.h",
     "fetch/FetchInitiatorInfo.h",
     "fetch/FetchParameters.cpp",
     "fetch/FetchParameters.h",
