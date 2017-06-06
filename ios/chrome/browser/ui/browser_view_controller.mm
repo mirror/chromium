@@ -1764,6 +1764,7 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
       new ToolbarModelDelegateIOS([_model webStateList]));
   _toolbarModelIOS.reset([_dependencyFactory
       newToolbarModelIOSWithDelegate:_toolbarModelDelegate.get()]);
+
   _toolbarController = [_dependencyFactory
       newWebToolbarControllerWithDelegate:self
                                 urlLoader:self
@@ -1822,7 +1823,7 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
     _paymentRequestManager = [[PaymentRequestManager alloc]
         initWithBaseViewController:self
                       browserState:_browserState];
-    [_paymentRequestManager setWebState:[_model currentTab].webState];
+    [_paymentRequestManager setTabModel:_model];
   }
 }
 
