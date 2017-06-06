@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02088c99_bb3980d6",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-06T14:47:25Z",
+      "side": 1,
+      "message": "These two fields are always present. you can remove the \",if any\" part and the if statements in -setConsumer",
+      "range": {
+        "startLine": 52,
+        "startChar": 61,
+        "endLine": 52,
+        "endChar": 69
+      },
+      "revId": "4fc9e3cd118295e832b344d39f248a5e42df52d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80428f78_7e02e150",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-06T14:47:25Z",
+      "side": 1,
+      "message": "It\u0027s best to avoid using abbreviations for things other than very well known terms. Use something like dateComponents or etc here and everywhere in the file.",
+      "range": {
+        "startLine": 181,
+        "startChar": 20,
+        "endLine": 181,
+        "endChar": 25
+      },
+      "revId": "4fc9e3cd118295e832b344d39f248a5e42df52d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3afaa0e5_4300f663",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-06T14:47:25Z",
+      "side": 1,
+      "message": "I don\u0027t think we really need to count the month symbols to know how many months we need. I\u0027d say 12 is a safe a guess :)",
+      "range": {
+        "startLine": 185,
+        "startChar": 6,
+        "endLine": 185,
+        "endChar": 15
+      },
+      "revId": "4fc9e3cd118295e832b344d39f248a5e42df52d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "affef514_1c933f37",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-06T14:47:25Z",
+      "side": 1,
+      "message": "s/initialYear/currentYear?",
+      "range": {
+        "startLine": 208,
+        "startChar": 6,
+        "endLine": 208,
+        "endChar": 17
+      },
+      "revId": "4fc9e3cd118295e832b344d39f248a5e42df52d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1ea00a6_4d37d71c",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-06T14:47:25Z",
+      "side": 1,
+      "message": "s/foundAlwaysIncludedYear/foundCardExpirationYear?",
+      "range": {
+        "startLine": 209,
+        "startChar": 7,
+        "endLine": 209,
+        "endChar": 30
+      },
+      "revId": "4fc9e3cd118295e832b344d39f248a5e42df52d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b37b2e_d8d0e86b",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-06T14:47:25Z",
+      "side": 1,
+      "message": "The year value is currently formatted in three different ways in the file (probably all yielding the same result). Can we use @\"%04d\" everywhere?",
+      "range": {
+        "startLine": 211,
+        "startChar": 56,
+        "endLine": 211,
+        "endChar": 58
+      },
+      "revId": "4fc9e3cd118295e832b344d39f248a5e42df52d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9421986_f35d147c",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-06T14:47:25Z",
+      "side": 1,
+      "message": "is there any reason for using %02ld instead of %02d for the month here and elsewhere?",
+      "range": {
+        "startLine": 305,
+        "startChar": 41,
+        "endLine": 305,
+        "endChar": 46
+      },
+      "revId": "4fc9e3cd118295e832b344d39f248a5e42df52d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
