@@ -579,7 +579,11 @@ void TabManagerDelegate::LowMemoryKillImpl(
     // bad.
     ProcessType process_type = it->process_type();
     if (process_type <= ProcessType::IMPORTANT_APP) {
-      MEMORY_LOG(ERROR) << "Skipped killing " << it->app()->process_name();
+      if (it->app())
+        MEMORY_LOG(ERROR) << "Skipped killing " << it->app()->process_name();
+      else if (it->tab())
+        MEMORY_LOG(ERROR) << "Skipped killing " << it->tab()->title << " ("
+                          << it->tab()->renderer_handle << ")";
       continue;
     }
     if (it->app()) {
