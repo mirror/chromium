@@ -14,8 +14,6 @@ namespace cc {
 
 class PropertyTreeBuilder {
  public:
-  static Layer* FindFirstScrollableLayer(Layer* root_layer);
-
   static void CC_EXPORT
   BuildPropertyTrees(Layer* root_layer,
                      const Layer* page_scale_layer,

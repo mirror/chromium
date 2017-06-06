@@ -3582,6 +3582,12 @@ class LayerTreeHostTestLayersPushProperties : public LayerTreeHostTest {
     // Don't set the root layer here.
     LayerTreeHostTest::SetupTree();
     client_.set_bounds(root_->bounds());
+
+    // Set the page scale layer so a later call to SetPageScaleFactorAndLimits
+    // has a valid layer to use.
+    LayerTreeHost::ViewportLayers viewport_layers;
+    viewport_layers.page_scale = root_;
+    layer_tree_host()->RegisterViewportLayers(viewport_layers);
   }
 
   void DidCommitAndDrawFrame() override {
@@ -7603,6 +7609,12 @@ SINGLE_AND_MULTI_THREAD_TEST_F(GpuRasterizationSucceedsWithLargeImage);
 class LayerTreeHostTestSubmitFrameMetadata : public LayerTreeHostTest {
  protected:
   void BeginTest() override {
+    // Set the page scale layer so a later call to SetPageScaleFactorAndLimits
+    // has a valid layer to use.
+    LayerTreeHost::ViewportLayers viewport_layers;
+    viewport_layers.page_scale = layer_tree_host()->root_layer();
+    layer_tree_host()->RegisterViewportLayers(viewport_layers);
+
     layer_tree_host()->SetPageScaleFactorAndLimits(1.f, 0.5f, 4.f);
     PostSetNeedsCommitToMainThread();
   }
