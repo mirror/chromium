@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1d1e240_4508c5e5",
+        "filename": "testing/buildbot/chromium.linux.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1291,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-06-06T00:24:52Z",
+      "side": 1,
+      "message": "While you\u0027re here, we should give this suite a hard timeout.",
+      "revId": "a270347ceecc22635ca1806955aafda915c0e5da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
