@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da71e171_950d83f4",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1707,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-06T20:35:36Z",
+      "side": 1,
+      "message": "Let\u0027s reuse Page.ResourceType here.",
+      "range": {
+        "startLine": 1707,
+        "startChar": 31,
+        "endLine": 1707,
+        "endChar": 43
+      },
+      "revId": "6e7a82d137e72b218b29794af2214e4d48526599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
