@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "ab70ebf0_f90d2f04",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T22:38:09Z",
+      "side": 1,
+      "message": "Today, we make it transparently redirect to the empty interface provider if one wasn\u0027t provided, so this will actually never return null (I guess we should have made it return a mutable ref).\n\nI\u0027m not against changing the ownership model here, as there is value in explicitly making it impossible to use the interface provider on detached frames. However, do you see us making interface registry use the same ownership model too then? It\u0027s a bit weird to have them separated.",
+      "parentUuid": "98067ad8_0ab774ae",
+      "range": {
+        "startLine": 229,
+        "startChar": 23,
+        "endLine": 229,
+        "endChar": 48
+      },
+      "revId": "1c093c84a06b5120bb104c123a50fb828ac52829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06654789_bfa3e73e",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameClient.h",
         "patchSetId": 15
