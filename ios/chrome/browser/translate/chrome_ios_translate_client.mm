@@ -17,6 +17,7 @@
 #include "components/translate/core/browser/translate_manager.h"
 #include "components/translate/core/browser/translate_prefs.h"
 #include "components/translate/core/browser/translate_step.h"
+#include "components/translate/core/common/language_detection_details.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/infobars/infobar.h"
 #include "ios/chrome/browser/infobars/infobar_controller.h"
@@ -144,6 +145,11 @@ ChromeIOSTranslateClient::GetTranslateAcceptLanguages() {
 
 int ChromeIOSTranslateClient::GetInfobarIconID() const {
   return IDR_IOS_INFOBAR_TRANSLATE;
+}
+
+void ChromeIOSTranslateClient::RecordLanguageDetectionEvent(
+    const translate::LanguageDetectionDetails& details) const {
+  // TODO(renjieliu): Implement this.
 }
 
 bool ChromeIOSTranslateClient::IsTranslatableURL(const GURL& url) {
