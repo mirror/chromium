@@ -79,6 +79,9 @@ class WindowServer : public ServerWindowDelegate,
   void SetFrameSinkManager(
       std::unique_ptr<cc::mojom::FrameSinkManager> frame_sink_manager);
 
+  // Set |gpu_host_| to be |gpu_host|.
+  void SetGpuHost(std::unique_ptr<GpuHost> gpu_host);
+
   // Creates a new ServerWindow. The return value is owned by the caller, but
   // must be destroyed before WindowServer.
   ServerWindow* CreateServerWindow(
