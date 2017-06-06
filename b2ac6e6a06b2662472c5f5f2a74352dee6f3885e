@@ -94,6 +94,30 @@
       "revId": "b2ac6e6a06b2662472c5f5f2a74352dee6f3885e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1bda8478_52389fb9",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-06T08:42:15Z",
+      "side": 1,
+      "message": "We could only call to Detach if we added logic somewhere to stop it calling the chain:\nFrameView::Detach \u003d\u003e\nFrameView::SetParentVisible(false) \u003d\u003e\nFrameView::SetNeedsCompositingUpdate \u003d\u003e\nPaintLayerCompositor::SetNeedsCompositingUpdate \u003d\u003e\nDocumentLifecycle::EnsureStateAtMost(kLayoutClean) (ERROR HERE!)",
+      "parentUuid": "bdfa0f98_c4c2d77f",
+      "range": {
+        "startLine": 386,
+        "startChar": 67,
+        "endLine": 386,
+        "endChar": 73
+      },
+      "revId": "b2ac6e6a06b2662472c5f5f2a74352dee6f3885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
