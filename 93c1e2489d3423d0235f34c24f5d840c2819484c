@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9458e752_6ec2ceca",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-06T23:40:44Z",
+      "side": 1,
+      "message": "Fair enough, after discussion with xhwang@ switched to the standard UmaHistogramCounts100().",
+      "parentUuid": "55b108b8_136cdebe",
+      "revId": "93c1e2489d3423d0235f34c24f5d840c2819484c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce1b319d_7dc2066a",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
