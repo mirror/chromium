@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f77aa33e_125b1950",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:38:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce9b239e_f85275d9",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29e72e0d_7cd754b3",
         "filename": "chrome/browser/extensions/webstore_installer.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4597d970_4d33587d",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:38:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29e72e0d_7cd754b3",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f55cca04_8b7fac86",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:38:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a93c55da_170c1a02",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3257a28_46afd64f",
         "filename": "chrome/browser/extensions/webstore_installer.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "971d6df9_d46ce310",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:38:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3257a28_46afd64f",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1af4c1ec_925f7d44",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:38:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a194e85_d3f1ebc5",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cd37826_1178c089",
         "filename": "chrome/browser/extensions/webstore_installer.cc",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3f1941c_c6a943ad",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:38:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cd37826_1178c089",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "01858bdc_4274a8f7",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:38:52Z",
+      "side": 1,
+      "message": "Thank you, then the cookie store is \u0027user\u0027?",
+      "parentUuid": "da20f370_d3a9b273",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b226b39_430fc4b8",
         "filename": "chrome/browser/extensions/webstore_installer.cc",
         "patchSetId": 1
@@ -150,6 +276,41 @@
       "writtenOn": "2017-06-05T15:20:22Z",
       "side": 1,
       "message": "This feature cannot be disabled; it is only activated if the user triggers an extension installation.",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca4956a_4b7e5949",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:38:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b226b39_430fc4b8",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86e03d3e_244d8a73",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:38:52Z",
+      "side": 1,
+      "message": "Can we use \"ExtensionInstallBlacklist\"?",
       "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -170,6 +331,24 @@
       "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae76f52_a61d3285",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T09:38:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "80149ea0_2da8e9b7",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
