@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5475dc79_5079446b",
+        "filename": "components/translate/core/browser/mock_translate_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-06-06T06:58:51Z",
+      "side": 1,
+      "message": "Do you need to separate this with a newline from the declarations below?",
+      "revId": "93008e147a6f414e3434ab7bf5e7157d147e4b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6569b8b5_19584784",
+        "filename": "components/translate/ios/browser/ios_translate_driver.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-06-06T06:58:51Z",
+      "side": 1,
+      "message": "Do we need to mark this false?",
+      "revId": "93008e147a6f414e3434ab7bf5e7157d147e4b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
