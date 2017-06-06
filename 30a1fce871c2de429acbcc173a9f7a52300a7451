@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47f8fb36_1355c0ba",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchDispatcher.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-06-06T10:24:23Z",
+      "side": 1,
+      "message": "DCHECK(active_requests_ \u003e 0) before this?",
+      "revId": "30a1fce871c2de429acbcc173a9f7a52300a7451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e493b05_c04387fc",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchDispatcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-06-06T10:24:23Z",
+      "side": 1,
+      "message": "This looks like just a passive data structure rather than \"Dispatcher\" right now, but in the future it will receive signals and may kick queued resource loads, right?",
+      "revId": "30a1fce871c2de429acbcc173a9f7a52300a7451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
