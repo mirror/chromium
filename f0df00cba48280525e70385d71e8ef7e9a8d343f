@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de8dbc1c_46b43703",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-06T20:06:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "271c26e6_e824dadf",
+      "revId": "f0df00cba48280525e70385d71e8ef7e9a8d343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "007e85ff_1fc2c9b3",
         "filename": "components/download/internal/scheduler/device_status.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "22ff792b_bb8c1fff",
+        "filename": "components/download/internal/scheduler/device_status.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-06T20:06:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "007e85ff_1fc2c9b3",
+      "revId": "f0df00cba48280525e70385d71e8ef7e9a8d343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "103cdcc7_404dd88e",
         "filename": "components/download/internal/scheduler/device_status_listener.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-06T05:50:43Z",
       "side": 1,
       "message": "if (listening_) Stop() ?",
+      "revId": "f0df00cba48280525e70385d71e8ef7e9a8d343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd326f32_495eba01",
+        "filename": "components/download/internal/scheduler/device_status_listener.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-06T20:06:40Z",
+      "side": 1,
+      "message": "This is checked in Stop().",
+      "parentUuid": "103cdcc7_404dd88e",
       "revId": "f0df00cba48280525e70385d71e8ef7e9a8d343f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "84db01c1_193185be",
+        "filename": "components/download/internal/scheduler/device_status_listener.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-06T20:06:40Z",
+      "side": 1,
+      "message": "Renamed to power_monitor.\n\nPower monitor can be null in tests, currently we hit this DCHECK on try bots in controller unit test.",
+      "parentUuid": "158a00a0_56242cb5",
+      "range": {
+        "startLine": 65,
+        "startChar": 28,
+        "endLine": 65,
+        "endChar": 40
+      },
+      "revId": "f0df00cba48280525e70385d71e8ef7e9a8d343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "457b2264_de593d11",
         "filename": "components/download/internal/scheduler/device_status_listener_unittest.cc",
         "patchSetId": 1
@@ -90,6 +168,24 @@
       "revId": "f0df00cba48280525e70385d71e8ef7e9a8d343f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ee379c9_d8eea01e",
+        "filename": "components/download/internal/scheduler/device_status_listener_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-06T20:06:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "457b2264_de593d11",
+      "revId": "f0df00cba48280525e70385d71e8ef7e9a8d343f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
