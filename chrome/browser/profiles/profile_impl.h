@@ -128,6 +128,8 @@ class ProfileImpl : public Profile {
   ChromeZoomLevelPrefs* GetZoomLevelPrefs() override;
 #endif
   PrefService* GetOffTheRecordPrefs() override;
+  PrefService* CreateOffTheRecordPrefs(
+      service_manager::Connector* otr_connector) override;
   net::URLRequestContextGetter* GetRequestContext() override;
   net::URLRequestContextGetter* GetRequestContextForExtensions() override;
   net::SSLConfigService* GetSSLConfigService() override;
