@@ -47,8 +47,9 @@ class TestSoftwareOutputDevice : public SoftwareOutputDevice {
 
 class TestDisplayScheduler : public DisplayScheduler {
  public:
-  explicit TestDisplayScheduler(base::SingleThreadTaskRunner* task_runner)
-      : DisplayScheduler(task_runner, 1),
+  explicit TestDisplayScheduler(BeginFrameSource* begin_frame_source,
+                                base::SingleThreadTaskRunner* task_runner)
+      : DisplayScheduler(begin_frame_source, task_runner, 1),
         damaged(false),
         display_resized_(false),
         has_new_root_surface(false),
@@ -97,7 +98,13 @@ class DisplayTest : public testing::Test {
             true /* needs_sync_points */)),
         task_runner_(new base::NullTaskRunner) {}
 
-  ~DisplayTest() override { support_->EvictCurrentSurface(); }
+  ~DisplayTest() override {
+    // Only call UnregisterBeginFrameSource if SetupDisplay has been called.
+    if (begin_frame_source_)
+      manager_.UnregisterBeginFrameSource(begin_frame_source_.get());
+
+    support_->EvictCurrentSurface();
+  }
 
   void SetUpDisplay(const RendererSettings& settings,
                     std::unique_ptr<TestWebGraphicsContext3D> context) {
@@ -114,22 +121,23 @@ class DisplayTest : public testing::Test {
       output_surface = FakeOutputSurface::CreateSoftware(std::move(device));
     }
     output_surface_ = output_surface.get();
-    auto scheduler = base::MakeUnique<TestDisplayScheduler>(task_runner_.get());
+    auto scheduler = base::MakeUnique<TestDisplayScheduler>(
+        begin_frame_source_.get(), task_runner_.get());
     scheduler_ = scheduler.get();
     display_ = CreateDisplay(settings, kArbitraryFrameSinkId,
-                             begin_frame_source_.get(), std::move(scheduler),
-                             std::move(output_surface));
+                             std::move(scheduler), std::move(output_surface));
+    manager_.RegisterBeginFrameSource(begin_frame_source_.get(),
+                                      kArbitraryFrameSinkId);
   }
 
   std::unique_ptr<Display> CreateDisplay(
       const RendererSettings& settings,
       const FrameSinkId& frame_sink_id,
-      BeginFrameSource* begin_frame_source,
       std::unique_ptr<DisplayScheduler> scheduler,
       std::unique_ptr<OutputSurface> output_surface) {
     auto display = base::MakeUnique<Display>(
         &shared_bitmap_manager_, nullptr /* gpu_memory_buffer_manager */,
-        settings, frame_sink_id, begin_frame_source, std::move(output_surface),
+        settings, frame_sink_id, std::move(output_surface),
         std::move(scheduler),
         base::MakeUnique<TextureMailboxDeleter>(task_runner_.get()));
     display->SetVisible(true);
@@ -544,14 +552,15 @@ TEST_F(DisplayTest, CompositorFrameDamagesCorrectDisplay) {
       true /* handles_frame_sink_id_invalidation */,
       true /* needs_sync_points */);
   auto begin_frame_source2 = base::MakeUnique<StubBeginFrameSource>();
-  auto scheduler_for_display2 =
-      base::MakeUnique<TestDisplayScheduler>(task_runner_.get());
+  auto scheduler_for_display2 = base::MakeUnique<TestDisplayScheduler>(
+      begin_frame_source2.get(), task_runner_.get());
   TestDisplayScheduler* scheduler2 = scheduler_for_display2.get();
-  auto display2 =
-      CreateDisplay(settings, kAnotherFrameSinkId, begin_frame_source2.get(),
-                    std::move(scheduler_for_display2),
-                    FakeOutputSurface::CreateSoftware(
-                        base::MakeUnique<TestSoftwareOutputDevice>()));
+  auto display2 = CreateDisplay(
+      settings, kAnotherFrameSinkId, std::move(scheduler_for_display2),
+      FakeOutputSurface::CreateSoftware(
+          base::MakeUnique<TestSoftwareOutputDevice>()));
+  manager_.RegisterBeginFrameSource(begin_frame_source2.get(),
+                                    kAnotherFrameSinkId);
   StubDisplayClient client2;
   display2->Initialize(&client2, &manager_);
   display2->SetLocalSurfaceId(local_surface_id, 1.f);
@@ -577,6 +586,7 @@ TEST_F(DisplayTest, CompositorFrameDamagesCorrectDisplay) {
   // Should have damaged only display_ but not display2.
   EXPECT_TRUE(scheduler_->damaged);
   EXPECT_FALSE(scheduler2->damaged);
+  manager_.UnregisterBeginFrameSource(begin_frame_source2.get());
 }
 
 }  // namespace
