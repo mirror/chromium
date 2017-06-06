@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "84e04215_6ae9f4c1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/dom/reflection.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-06T08:28:44Z",
+      "side": 1,
+      "message": "Convention in WebKit/Chromium doesn\u0027t make much sense because here is in web-platform-tests.\nI found |ascii_lowercase()| in wpt/dom/nodes/case.js, and |toASCIIUppercase()| in wpt/dom/nodes/Document-creaseElement.html.  I\u0027ll follow the latter because reflection.js is written in camelCase format.",
+      "parentUuid": "4eef175d_e8c47e15",
+      "revId": "48f91465661856b7d729e2b6a7be95aa9291bf25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9df57f7_006a74ed",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/dom/reflection.js",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "48f91465661856b7d729e2b6a7be95aa9291bf25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c6c508_68b4697e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/dom/reflection.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-06T08:28:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9df57f7_006a74ed",
+      "revId": "48f91465661856b7d729e2b6a7be95aa9291bf25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
