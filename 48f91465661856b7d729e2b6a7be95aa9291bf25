@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4eef175d_e8c47e15",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/dom/reflection.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-06-06T07:40:17Z",
+      "side": 1,
+      "message": "nit: s/toLowerASCII/toASCIILower/\n\nTo follow WebKit usage, it is better to use \"toASCIILower\".\n\nWebKit/ uses \"toASCIILower()\", 26 occurrences.\nbase/ uses \"ToLowerASCII\", 196 occurrences.",
+      "revId": "48f91465661856b7d729e2b6a7be95aa9291bf25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9df57f7_006a74ed",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/dom/reflection.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-06-06T07:40:17Z",
+      "side": 1,
+      "message": "nit: s/\u003d\u003d/\u003d\u003d\u003d/",
+      "revId": "48f91465661856b7d729e2b6a7be95aa9291bf25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
