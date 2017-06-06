@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f165150_df76fdaf",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 5
+      },
+      "lineNbr": 2128,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-06T16:23:32Z",
+      "side": 1,
+      "message": "These started failing because the paint chunks changed, which resulted in different\noutput.",
+      "revId": "bea439ca53df8f716466baeaf20e1155811b20a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
