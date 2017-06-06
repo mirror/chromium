@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/time/time.h"
 
@@ -82,6 +83,10 @@ SequenceSortKey Sequence::GetSortKey() const {
   }
 
   return SequenceSortKey(priority, next_task_sequenced_time);
+}
+
+SequenceLocalStorage* Sequence::GetSequenceLocalStoragePtr() {
+  return &sequence_local_storage;
 }
 
 Sequence::~Sequence() = default;
