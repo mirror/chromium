@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7874dde_3e915401",
+        "filename": "content/public/browser/web_contents_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-06T14:35:35Z",
+      "side": 1,
+      "message": "nit. no explicit.\n\nIt\u0027s also not necessary to prefix the args with in_",
+      "revId": "15ca34fa4c44d84ad457dfca211eb061f53127b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
