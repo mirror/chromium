@@ -266,6 +266,24 @@
       "revId": "23166c4f3363b9cce860885cd69910fe19cbd4a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c66b496_5a6209aa",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1449,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-06T00:59:07Z",
+      "side": 1,
+      "message": "IIUC we have threads that used Oilpan but not V8 (e.g. DatabaseThread).",
+      "parentUuid": "a1547162_ae2a4836",
+      "revId": "23166c4f3363b9cce860885cd69910fe19cbd4a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
