@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "482ec7b0_572d9e32",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-06T20:50:34Z",
+      "side": 1,
+      "message": "nit: Not in this patch, but I guess there might be cases where we won\u0027t reschedule tasks. Like no files to clean up or no downloads.",
+      "range": {
+        "startLine": 155,
+        "startChar": 9,
+        "endLine": 155,
+        "endChar": 13
+      },
+      "revId": "5288d68bd6395a670aded125fb1edcee984bd097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1164246c_858f10dc",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-06T20:50:34Z",
+      "side": 1,
+      "message": "nit: Just some discussion, this might trigger a loop if the model or history db is keep failing. Shall we do nothing here?",
+      "range": {
+        "startLine": 225,
+        "startChar": 51,
+        "endLine": 225,
+        "endChar": 60
+      },
+      "revId": "5288d68bd6395a670aded125fb1edcee984bd097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
