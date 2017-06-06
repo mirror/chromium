@@ -4,6 +4,7 @@
 
 #include "core/html/media/AutoplayUmaHelper.h"
 
+#include "components/ukm/public/mojo_ukm_recorder.h"
 #include "core/dom/Document.h"
 #include "core/dom/ElementVisibilityObserver.h"
 #include "core/events/Event.h"
@@ -13,7 +14,9 @@
 #include "core/html/media/AutoplayPolicy.h"
 #include "platform/Histogram.h"
 #include "platform/wtf/CurrentTime.h"
+#include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 namespace blink {
 
@@ -440,6 +443,14 @@ bool AutoplayUmaHelper::ShouldRecordUserPausedAutoplayingCrossOriginVideo()
          !sources_.empty() &&
          !recorded_cross_origin_autoplay_results_.count(
              CrossOriginAutoplayResult::kUserPaused);
+}
+
+std::unique_ptr<ukm::UkmEntryBuilder> AutoplayUmaHelper::CreateUkmBuilder() {
+  ukm::mojom::UkmRecorderInterfacePtr interface;
+  Platform::Current()->GetInterfaceProvider()->GetInterface(
+      mojo::MakeRequest(&interface));
+  ukm::MojoUkmRecorder recorder(std::move(interface));
+  return recorder.GetEntryBuilder(recorder.GetNewSourceID(), "Media.Autoplay");
 }
 
 DEFINE_TRACE(AutoplayUmaHelper) {

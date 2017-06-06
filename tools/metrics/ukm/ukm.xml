@@ -269,6 +269,31 @@ be describing additional metrics about the same event.
   </metric>
 </event>
 
+<event name="Media.Autoplay">
+  <owner>mlamouri@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Metrics related to autoplay of media elements.
+  </summary>
+  <metric name="Video.Muted">
+    <summary>
+      Recorded when a video element did autoplay muted during its lifetime.
+    </summary>
+  </metric>
+  <metric name="Video.Muted.UnmuteActionResult">
+    <summary>
+      Record the result of the unmute action on an autoplay muted video. 0 will
+      reflect failure and 1 success.
+    </summary>
+  </metric>
+  <metric name="Video.Total">
+    <summary>
+      Recorded when a video element did autoplay during its lifetime. This
+      includes autoplay muted video.
+    </summary>
+  </metric>
+</event>
+
 <event name="Media.WatchTime">
   <owner>dalecurtis@chromium.org</owner>
   <summary>

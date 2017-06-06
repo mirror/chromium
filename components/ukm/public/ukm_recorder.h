@@ -24,6 +24,10 @@ namespace autofill {
 class AutofillMetrics;
 }
 
+namespace blink {
+class AutoplayUmaHelper;
+}
+
 namespace content {
 class MediaInternals;
 class RenderFrameImpl;
@@ -80,6 +84,7 @@ class UKM_EXPORT UkmRecorder {
   friend content::MediaInternals;
   friend content::RenderFrameImpl;
   friend content::RenderWidgetHostLatencyTracker;
+  friend blink::AutoplayUmaHelper;
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, AddEntryWithEmptyMetrics);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, EntryBuilderAndSerialization);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest,
