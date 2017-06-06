@@ -1646,11 +1646,13 @@ void RendererSchedulerImpl::RemovePendingNavigation(NavigatingFrameType type) {
   }
 }
 
-void RendererSchedulerImpl::OnNavigationStarted() {
-  TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
-               "RendererSchedulerImpl::OnNavigationStarted");
-  base::AutoLock lock(any_thread_lock_);
-  ResetForNavigationLocked();
+void RendererSchedulerImpl::OnNavigationStarted(bool navigation_within_page) {
+  if (!navigation_within_page) {
+    TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
+                 "RendererSchedulerImpl::OnNavigationStarted");
+    base::AutoLock lock(any_thread_lock_);
+    ResetForNavigationLocked();
+  }
 }
 
 void RendererSchedulerImpl::OnFirstMeaningfulPaint() {

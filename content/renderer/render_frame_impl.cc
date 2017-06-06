@@ -1680,8 +1680,10 @@ void RenderFrameImpl::OnNavigate(
     const RequestNavigationParams& request_params) {
   RenderThreadImpl* render_thread_impl = RenderThreadImpl::current();
   // Can be NULL in tests.
-  if (render_thread_impl)
-    render_thread_impl->GetRendererScheduler()->OnNavigationStarted();
+  if (render_thread_impl) {
+    render_thread_impl->GetRendererScheduler()->OnNavigationStarted(
+        false /* navigation_within_page */);
+  }
   DCHECK(!IsBrowserSideNavigationEnabled());
   TRACE_EVENT2("navigation,rail", "RenderFrameImpl::OnNavigate", "id",
                routing_id_, "url", common_params.url.possibly_invalid_spec());
@@ -3522,7 +3524,8 @@ void RenderFrameImpl::DidFailProvisionalLoad(
 
 void RenderFrameImpl::DidCommitProvisionalLoad(
     const blink::WebHistoryItem& item,
-    blink::WebHistoryCommitType commit_type) {
+    blink::WebHistoryCommitType commit_type,
+    bool navigation_within_page) {
   TRACE_EVENT2("navigation,rail", "RenderFrameImpl::didCommitProvisionalLoad",
                "id", routing_id_,
                "url", GetLoadingUrl().possibly_invalid_spec());
@@ -3662,7 +3665,8 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
       if (commit_type != blink::kWebHistoryInertCommit ||
           PageTransitionCoreTypeIs(navigation_state->GetTransitionType(),
                                    ui::PAGE_TRANSITION_RELOAD)) {
-        render_thread_impl->GetRendererScheduler()->OnNavigationStarted();
+        render_thread_impl->GetRendererScheduler()->OnNavigationStarted(
+            navigation_within_page);
       }
     }
   }
@@ -3964,7 +3968,7 @@ void RenderFrameImpl::DidNavigateWithinPage(
   static_cast<NavigationStateImpl*>(document_state->navigation_state())
       ->set_was_within_same_document(true);
 
-  DidCommitProvisionalLoad(item, commit_type);
+  DidCommitProvisionalLoad(item, commit_type, true /* navigate_within_page */);
 }
 
 void RenderFrameImpl::DidUpdateCurrentHistoryItem() {
