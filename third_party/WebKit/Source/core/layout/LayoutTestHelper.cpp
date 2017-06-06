@@ -83,7 +83,7 @@ void RenderingTest::LoadAhem() {
       testing::ReadFromFile(testing::WebTestDataPath("Ahem.ttf"));
   StringOrArrayBufferOrArrayBufferView buffer =
       StringOrArrayBufferOrArrayBufferView::fromArrayBuffer(
-          DOMArrayBuffer::Create(shared_buffer));
+          DOMArrayBuffer::Create(shared_buffer->Data(), shared_buffer->size()));
   FontFace* ahem =
       FontFace::Create(&GetDocument(), "Ahem", buffer, FontFaceDescriptors());
 

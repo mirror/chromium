@@ -5,7 +5,6 @@
 #include "components/history/core/browser/web_history_service.h"
 
 #include <memory>
-#include <utility>
 
 #include "base/bind.h"
 #include "base/command_line.h"
@@ -415,7 +414,7 @@ void WebHistoryService::ExpireHistory(
     if (expire.urls.empty())
       deletions->Append(CreateDeletion(min_timestamp, max_timestamp, GURL()));
   }
-  delete_request.Set("del", std::move(deletions));
+  delete_request.Set("del", deletions.release());
   std::string post_data;
   base::JSONWriter::Write(delete_request, &post_data);
 

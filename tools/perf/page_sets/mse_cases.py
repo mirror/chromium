@@ -7,8 +7,8 @@ from telemetry import story
 
 class MseCasesPage(page_module.Page):
 
-  def __init__(self, url, page_set, name):
-    super(MseCasesPage, self).__init__(url=url, page_set=page_set, name=name)
+  def __init__(self, url, page_set):
+    super(MseCasesPage, self).__init__(url=url, page_set=page_set)
 
   def RunNavigateSteps(self, action_runner):
     super(MseCasesPage, self).RunNavigateSteps(action_runner)
@@ -21,8 +21,7 @@ class MseCasesPageSet(story.StorySet):
 
   def __init__(self):
     super(MseCasesPageSet, self).__init__(
-        cloud_storage_bucket=story.PUBLIC_BUCKET,
-        verify_names=True)
+        cloud_storage_bucket=story.PUBLIC_BUCKET)
 
     urls_list = [
       'file://mse_cases/startup_test.html?testType=AV',
@@ -46,4 +45,4 @@ class MseCasesPageSet(story.StorySet):
     ]
 
     for url in urls_list:
-      self.AddStory(MseCasesPage(url, self, url.split('/')[-1]))
+      self.AddStory(MseCasesPage(url, self))

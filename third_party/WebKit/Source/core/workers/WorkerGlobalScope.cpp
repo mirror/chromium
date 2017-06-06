@@ -107,13 +107,13 @@ void WorkerGlobalScope::Dispose() {
   WorkerOrWorkletGlobalScope::Dispose();
 }
 
-void WorkerGlobalScope::ReportFeature(WebFeature feature) {
+void WorkerGlobalScope::ReportFeature(UseCounter::Feature feature) {
   DCHECK(IsContextThread());
   DCHECK(thread_);
   thread_->GetWorkerReportingProxy().CountFeature(feature);
 }
 
-void WorkerGlobalScope::ReportDeprecation(WebFeature feature) {
+void WorkerGlobalScope::ReportDeprecation(UseCounter::Feature feature) {
   DCHECK(IsContextThread());
   DCHECK(thread_);
   thread_->GetWorkerReportingProxy().CountDeprecation(feature);

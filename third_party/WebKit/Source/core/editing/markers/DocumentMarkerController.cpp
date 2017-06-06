@@ -150,16 +150,15 @@ void DocumentMarkerController::AddTextMatchMarker(
   // throttling algorithm. crbug.com/6819.
 }
 
-void DocumentMarkerController::AddCompositionMarker(
-    const EphemeralRange& range,
-    Color underline_color,
-    CompositionMarker::Thickness thickness,
-    Color background_color) {
+void DocumentMarkerController::AddCompositionMarker(const EphemeralRange& range,
+                                                    Color underline_color,
+                                                    bool thick,
+                                                    Color background_color) {
   DCHECK(!document_->NeedsLayoutTreeUpdate());
-  AddMarkerInternal(range, [underline_color, thickness, background_color](
+  AddMarkerInternal(range, [underline_color, thick, background_color](
                                int start_offset, int end_offset) {
     return new CompositionMarker(start_offset, end_offset, underline_color,
-                                 thickness, background_color);
+                                 thick, background_color);
   });
 }
 
@@ -404,7 +403,7 @@ DocumentMarkerVector DocumentMarkerController::Markers() {
   return result;
 }
 
-Vector<IntRect> DocumentMarkerController::LayoutRectsForTextMatchMarkers() {
+Vector<IntRect> DocumentMarkerController::RenderedRectsForTextMatchMarkers() {
   DCHECK(!document_->View()->NeedsLayout());
   DCHECK(!document_->NeedsLayoutTreeUpdate());
 
@@ -427,7 +426,7 @@ Vector<IntRect> DocumentMarkerController::LayoutRectsForTextMatchMarkers() {
         ListForType(markers, DocumentMarker::kTextMatch);
     if (!list)
       continue;
-    result.AppendVector(ToTextMatchMarkerListImpl(list)->LayoutRects(node));
+    result.AppendVector(ToTextMatchMarkerListImpl(list)->RenderedRects(node));
   }
 
   return result;

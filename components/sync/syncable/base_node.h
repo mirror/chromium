@@ -171,7 +171,7 @@ class BaseNode {
   const AttachmentIdList GetAttachmentIds() const;
 
   // Returns a base::DictionaryValue serialization of this node.
-  std::unique_ptr<base::DictionaryValue> ToValue() const;
+  base::DictionaryValue* ToValue() const;
 
  protected:
   BaseNode();

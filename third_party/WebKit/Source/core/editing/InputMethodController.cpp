@@ -465,9 +465,7 @@ void InputMethodController::AddCompositionUnderlines(
       continue;
 
     GetDocument().Markers().AddCompositionMarker(
-        ephemeral_line_range, underline.GetColor(),
-        underline.Thick() ? CompositionMarker::Thickness::kThick
-                          : CompositionMarker::Thickness::kThin,
+        ephemeral_line_range, underline.GetColor(), underline.Thick(),
         underline.BackgroundColor());
   }
 }
@@ -691,8 +689,7 @@ void InputMethodController::SetComposition(
 
   if (underlines.IsEmpty()) {
     GetDocument().Markers().AddCompositionMarker(
-        EphemeralRange(composition_range_), Color::kBlack,
-        CompositionMarker::Thickness::kThin,
+        EphemeralRange(composition_range_), Color::kBlack, false,
         LayoutTheme::GetTheme().PlatformDefaultCompositionBackgroundColor());
     return;
   }
@@ -902,7 +899,7 @@ void InputMethodController::ExtendSelectionAndDelete(int before, int after) {
                    .Start() == GetFrame()
                                    .Selection()
                                    .ComputeVisibleSelectionInDOMTreeDeprecated()
-                                   .End() &&
+                                   .end() &&
            before <= static_cast<int>(selection_offsets.Start()));
   // TODO(chongz): Find a way to distinguish Forward and Backward.
   Node* target = GetDocument().FocusedElement();

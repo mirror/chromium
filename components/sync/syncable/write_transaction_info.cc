@@ -30,9 +30,9 @@ WriteTransactionInfo::WriteTransactionInfo(const WriteTransactionInfo& other) =
 
 WriteTransactionInfo::~WriteTransactionInfo() {}
 
-std::unique_ptr<base::DictionaryValue> WriteTransactionInfo::ToValue(
+base::DictionaryValue* WriteTransactionInfo::ToValue(
     size_t max_mutations_size) const {
-  auto dict = base::MakeUnique<base::DictionaryValue>();
+  base::DictionaryValue* dict = new base::DictionaryValue();
   dict->SetString("id", base::Int64ToString(id));
   dict->SetString("location", location_string);
   dict->SetString("writer", WriterTagToString(writer));

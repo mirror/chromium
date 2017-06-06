@@ -22,7 +22,7 @@ suite('<bookmarks-toolbar>', function() {
         anchor: null,
       },
     });
-    store.replaceSingleton();
+    bookmarks.Store.instance_ = store;
 
     toolbar = document.createElement('bookmarks-toolbar');
     replaceBody(toolbar);

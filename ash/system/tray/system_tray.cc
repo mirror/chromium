@@ -213,7 +213,7 @@ SystemTray::~SystemTray() {
   key_event_watcher_.reset();
   system_bubble_.reset();
   for (const auto& item : items_)
-    item->OnTrayViewDestroyed();
+    item->DestroyTrayView();
 }
 
 void SystemTray::InitializeTrayItems(
@@ -265,10 +265,8 @@ void SystemTray::CreateItems(SystemTrayDelegate* delegate) {
   AddTrayItem(base::WrapUnique(tray_scale_));
   AddTrayItem(base::MakeUnique<TrayBrightness>(this));
   AddTrayItem(base::MakeUnique<TrayCapsLock>(this));
-  if (NightLightController::IsFeatureEnabled()) {
-    tray_night_light_ = new TrayNightLight(this);
-    AddTrayItem(base::WrapUnique(tray_night_light_));
-  }
+  tray_night_light_ = new TrayNightLight(this);
+  AddTrayItem(base::WrapUnique(tray_night_light_));
   // TODO(jamescook): Remove this when mash has support for display management
   // and we have a DisplayManager equivalent. See http://crbug.com/548429
   if (Shell::GetAshConfig() != Config::MASH)

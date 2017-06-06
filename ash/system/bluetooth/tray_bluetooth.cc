@@ -533,8 +533,12 @@ TrayBluetooth::~TrayBluetooth() {
   Shell::Get()->system_tray_notifier()->RemoveBluetoothObserver(this);
 }
 
+views::View* TrayBluetooth::CreateTrayView(LoginStatus status) {
+  return NULL;
+}
+
 views::View* TrayBluetooth::CreateDefaultView(LoginStatus status) {
-  CHECK(default_ == nullptr);
+  CHECK(default_ == NULL);
   default_ = new tray::BluetoothDefaultView(this);
   default_->SetEnabled(status != LoginStatus::LOCKED);
   default_->Update();
@@ -543,21 +547,23 @@ views::View* TrayBluetooth::CreateDefaultView(LoginStatus status) {
 
 views::View* TrayBluetooth::CreateDetailedView(LoginStatus status) {
   if (!Shell::Get()->tray_bluetooth_helper()->GetBluetoothAvailable())
-    return nullptr;
+    return NULL;
   ShellPort::Get()->RecordUserMetricsAction(
       UMA_STATUS_AREA_DETAILED_BLUETOOTH_VIEW);
-  CHECK(detailed_ == nullptr);
+  CHECK(detailed_ == NULL);
   detailed_ = new tray::BluetoothDetailedView(this, status);
   detailed_->Update();
   return detailed_;
 }
 
-void TrayBluetooth::OnDefaultViewDestroyed() {
-  default_ = nullptr;
+void TrayBluetooth::DestroyTrayView() {}
+
+void TrayBluetooth::DestroyDefaultView() {
+  default_ = NULL;
 }
 
-void TrayBluetooth::OnDetailedViewDestroyed() {
-  detailed_ = nullptr;
+void TrayBluetooth::DestroyDetailedView() {
+  detailed_ = NULL;
 }
 
 void TrayBluetooth::UpdateAfterLoginStatusChange(LoginStatus status) {}

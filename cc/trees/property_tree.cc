@@ -1023,7 +1023,7 @@ void EffectTree::UpdateRenderSurfaces(LayerTreeImpl* layer_tree_impl) {
 
     if (needs_render_surface) {
       render_surfaces_[id] = base::MakeUnique<RenderSurfaceImpl>(
-          layer_tree_impl, effect_node->stable_id);
+          layer_tree_impl, effect_node->owning_layer_id);
       render_surfaces_[id]->set_effect_tree_index(id);
     } else {
       render_surfaces_[id].reset();
@@ -1063,12 +1063,12 @@ bool EffectTree::CreateOrReuseRenderSurfaces(
     LayerTreeImpl* layer_tree_impl) {
   // Make a list of {stable id, node id} pairs for nodes that are supposed to
   // have surfaces.
-  std::vector<std::pair<uint64_t, int>> stable_id_node_id_list;
+  std::vector<std::pair<int, int>> stable_id_node_id_list;
   for (int id = kContentsRootNodeId; id < static_cast<int>(size()); ++id) {
     EffectNode* node = Node(id);
     if (node->has_render_surface) {
       stable_id_node_id_list.push_back(
-          std::make_pair(node->stable_id, node->id));
+          std::make_pair(node->owning_layer_id, node->id));
     }
   }
 
@@ -2104,13 +2104,12 @@ DrawTransformData& PropertyTrees::FetchDrawTransformsDataFromCache(
 ClipRectData* PropertyTrees::FetchClipRectFromCache(int clip_id,
                                                     int target_id) {
   ClipNode* clip_node = clip_tree.Node(clip_id);
-  for (size_t i = 0; i < clip_node->cached_clip_rects->size(); ++i) {
-    auto& data = clip_node->cached_clip_rects[i];
+  for (auto& data : clip_node->cached_clip_rects) {
     if (data.target_id == target_id || data.target_id == -1)
       return &data;
   }
-  clip_node->cached_clip_rects->emplace_back();
-  return &clip_node->cached_clip_rects->back();
+  clip_node->cached_clip_rects.push_back(ClipRectData());
+  return &clip_node->cached_clip_rects.back();
 }
 
 DrawTransforms& PropertyTrees::GetDrawTransforms(int transform_id,

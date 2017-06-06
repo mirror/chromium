@@ -131,7 +131,6 @@ class HeartbeatSender : public SignalStrategy::Listener {
   FRIEND_TEST_ALL_PREFIXES(HeartbeatSenderTest, ProcessResponseSetInterval);
   FRIEND_TEST_ALL_PREFIXES(HeartbeatSenderTest,
                            ProcessResponseExpectedSequenceId);
-  FRIEND_TEST_ALL_PREFIXES(HeartbeatSenderTest, ResponseTimeout);
   friend class HeartbeatSenderTest;
 
   void SendStanza();
@@ -140,7 +139,7 @@ class HeartbeatSender : public SignalStrategy::Listener {
   void ProcessResponse(bool is_offline_heartbeat_response,
                        IqRequest* request,
                        const buzz::XmlElement* response);
-  void SetInterval(base::TimeDelta interval);
+  void SetInterval(int interval);
   void SetSequenceId(int sequence_id);
 
   // Handlers for host-offline-reason completion and timeout.
@@ -159,15 +158,14 @@ class HeartbeatSender : public SignalStrategy::Listener {
   std::string directory_bot_jid_;
   std::unique_ptr<IqSender> iq_sender_;
   std::unique_ptr<IqRequest> request_;
-  base::TimeDelta interval_;
+  int interval_ms_;
   base::RepeatingTimer timer_;
   base::OneShotTimer timer_resend_;
-  int sequence_id_ = 0;
-  bool sequence_id_was_set_ = false;
-  int sequence_id_recent_set_num_ = 0;
-  bool heartbeat_succeeded_ = false;
-  int failed_startup_heartbeat_count_ = 0;
-  int timed_out_heartbeats_count_ = 0;
+  int sequence_id_;
+  bool sequence_id_was_set_;
+  int sequence_id_recent_set_num_;
+  bool heartbeat_succeeded_;
+  int failed_startup_heartbeat_count_;
 
   // Fields to send and indicate completion of sending host-offline-reason.
   std::string host_offline_reason_;

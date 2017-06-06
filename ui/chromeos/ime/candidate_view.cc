@@ -53,7 +53,6 @@ views::Label* CreateShortcutLabel(
   // |wrapped_shortcut_label| is deleted.
   views::Label* shortcut_label = new views::Label;
 
-  // TODO(tapted): Get this FontList from views::style.
   if (orientation == ui::CandidateWindow::VERTICAL) {
     shortcut_label->SetFontList(shortcut_label->font_list().Derive(
         kFontSizeDelta, gfx::Font::NORMAL, gfx::Font::Weight::BOLD));
@@ -63,6 +62,10 @@ views::Label* CreateShortcutLabel(
   }
   // TODO(satorux): Maybe we need to use language specific fonts for
   // candidate_label, like Chinese font for Chinese input method?
+  shortcut_label->SetEnabledColor(theme.GetSystemColor(
+      ui::NativeTheme::kColorId_LabelEnabledColor));
+  shortcut_label->SetDisabledColor(theme.GetSystemColor(
+      ui::NativeTheme::kColorId_LabelDisabledColor));
 
   // Setup paddings.
   const gfx::Insets kVerticalShortcutLabelInsets(1, 6, 1, 6);
@@ -83,8 +86,8 @@ views::Label* CreateShortcutLabel(
         0x40);
     SkColor transparent_blakish = color_utils::AlphaBlend(
         SK_ColorTRANSPARENT, blackish, 0xE0);
-    shortcut_label->SetBackground(
-        views::CreateSolidBackground(transparent_blakish));
+    shortcut_label->set_background(
+        views::Background::CreateSolidBackground(transparent_blakish));
   }
   shortcut_label->SetElideBehavior(gfx::NO_ELIDE);
 
@@ -160,8 +163,9 @@ CandidateView::CandidateView(
 
   if (orientation == ui::CandidateWindow::VERTICAL) {
     infolist_icon_ = new views::View;
-    infolist_icon_->SetBackground(views::CreateSolidBackground(
-        theme.GetSystemColor(ui::NativeTheme::kColorId_FocusedBorderColor)));
+    infolist_icon_->set_background(
+        views::Background::CreateSolidBackground(theme.GetSystemColor(
+            ui::NativeTheme::kColorId_FocusedBorderColor)));
     AddChildView(infolist_icon_);
   }
 }
@@ -200,8 +204,9 @@ void CandidateView::SetHighlighted(bool highlighted) {
   highlighted_ = highlighted;
   if (highlighted) {
     ui::NativeTheme* theme = GetNativeTheme();
-    SetBackground(views::CreateSolidBackground(theme->GetSystemColor(
-        ui::NativeTheme::kColorId_TextfieldSelectionBackgroundFocused)));
+    set_background(
+        views::Background::CreateSolidBackground(theme->GetSystemColor(
+            ui::NativeTheme::kColorId_TextfieldSelectionBackgroundFocused)));
     SetBorder(views::CreateSolidBorder(
         1,
         theme->GetSystemColor(ui::NativeTheme::kColorId_FocusedBorderColor)));
@@ -214,17 +219,14 @@ void CandidateView::SetHighlighted(bool highlighted) {
         view->SetHighlighted(false);
     }
   } else {
-    SetBackground(nullptr);
+    set_background(NULL);
     SetBorder(views::CreateEmptyBorder(1, 1, 1, 1));
   }
   SchedulePaint();
 }
 
 void CandidateView::StateChanged(ButtonState old_state) {
-  int text_style = state() == STATE_DISABLED ? views::style::STYLE_DISABLED
-                                             : views::style::STYLE_PRIMARY;
-  shortcut_label_->SetEnabledColor(views::style::GetColor(
-      views::style::CONTEXT_LABEL, text_style, GetNativeTheme()));
+  shortcut_label_->SetEnabled(state() != STATE_DISABLED);
   if (state() == STATE_PRESSED)
     SetHighlighted(true);
 }

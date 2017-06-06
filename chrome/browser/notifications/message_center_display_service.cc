@@ -15,9 +15,7 @@
 MessageCenterDisplayService::MessageCenterDisplayService(
     Profile* profile,
     NotificationUIManager* ui_manager)
-    : NotificationDisplayService(profile),
-      profile_(profile),
-      ui_manager_(ui_manager) {}
+    : profile_(profile), ui_manager_(ui_manager) {}
 
 MessageCenterDisplayService::~MessageCenterDisplayService() {}
 

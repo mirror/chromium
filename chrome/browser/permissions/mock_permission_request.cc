@@ -6,12 +6,7 @@
 
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
-
-#if defined(OS_ANDROID)
-#include "chrome/browser/android/android_theme_resources.h"
-#else
 #include "ui/vector_icons/vector_icons.h"
-#endif
 
 MockPermissionRequest::MockPermissionRequest()
     : MockPermissionRequest("test",
@@ -41,14 +36,14 @@ MockPermissionRequest::MockPermissionRequest(
                              request_type,
                              gesture_type) {}
 
-MockPermissionRequest::MockPermissionRequest(const std::string& text,
-                                             PermissionRequestType request_type,
-                                             const GURL& url)
+MockPermissionRequest::MockPermissionRequest(
+    const std::string& text,
+    const GURL& url)
     : MockPermissionRequest(text,
                             "button",
                             "button",
                             url,
-                            request_type,
+                            PermissionRequestType::UNKNOWN,
                             PermissionRequestGestureType::UNKNOWN) {}
 
 MockPermissionRequest::MockPermissionRequest(
@@ -66,18 +61,8 @@ MockPermissionRequest::~MockPermissionRequest() {}
 
 PermissionRequest::IconId MockPermissionRequest::GetIconId() const {
   // Use a valid icon ID to support UI tests.
-#if defined(OS_ANDROID)
-  return IDR_ANDROID_INFOBAR_WARNING;
-#else
   return ui::kWarningIcon;
-#endif
 }
-
-#if defined(OS_ANDROID)
-base::string16 MockPermissionRequest::GetMessageText() const {
-  return text_;
-}
-#endif
 
 base::string16 MockPermissionRequest::GetMessageTextFragment() const {
   return text_;

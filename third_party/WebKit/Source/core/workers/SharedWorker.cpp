@@ -56,7 +56,7 @@ SharedWorker* SharedWorker::Create(ExecutionContext* context,
   DCHECK(IsMainThread());
   SECURITY_DCHECK(context->IsDocument());
 
-  UseCounter::Count(context, WebFeature::kSharedWorkerStart);
+  UseCounter::Count(context, UseCounter::kSharedWorkerStart);
 
   SharedWorker* worker = new SharedWorker(context);
 

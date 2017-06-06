@@ -30,7 +30,7 @@ static jboolean StartPrefetchTask(JNIEnv* env,
   if (!prefetch_service)
     return false;
 
-  prefetch_service->GetPrefetchDispatcher()->BeginBackgroundTask(
+  prefetch_service->GetDispatcher()->BeginBackgroundTask(
       base::MakeUnique<PrefetchBackgroundTask>(env, jcaller, prefetch_service));
   return true;
 }
@@ -69,7 +69,7 @@ PrefetchBackgroundTask::~PrefetchBackgroundTask() {
 bool PrefetchBackgroundTask::OnStopTask(JNIEnv* env,
                                         const JavaParamRef<jobject>& jcaller) {
   DCHECK(jcaller.obj() == java_prefetch_background_task_.obj());
-  service_->GetPrefetchDispatcher()->StopBackgroundTask(this);
+  service_->GetDispatcher()->StopBackgroundTask(this);
   return needs_reschedule_;
 }
 

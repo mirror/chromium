@@ -816,7 +816,7 @@ TriState EditingStyle::TriStateOfStyle(
         }
       }
     }
-    if (&node == selection.End().AnchorNode())
+    if (&node == selection.end().AnchorNode())
       break;
   }
 

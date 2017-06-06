@@ -220,12 +220,10 @@ void DrmThread::CheckOverlayCapabilities(
     gfx::AcceleratedWidget widget,
     const std::vector<OverlayCheck_Params>& overlays,
     base::OnceCallback<void(gfx::AcceleratedWidget,
-                            const std::vector<OverlayCheck_Params>&,
-                            const std::vector<OverlayCheckReturn_Params>&)>
+                            const std::vector<OverlayCheck_Params>&)>
         callback) {
   std::move(callback).Run(
-      widget, overlays,
-      screen_manager_->GetWindow(widget)->TestPageFlip(overlays));
+      widget, screen_manager_->GetWindow(widget)->TestPageFlip(overlays));
 }
 
 void DrmThread::RefreshNativeDisplays(

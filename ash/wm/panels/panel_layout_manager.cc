@@ -229,8 +229,7 @@ class PanelCalloutWidget : public views::Widget {
     DCHECK_EQ(widget_window->GetRootWindow(), parent->GetRootWindow());
     views::View* content_view = new views::View;
     background_ = new CalloutWidgetBackground;
-    content_view->SetBackground(
-        std::unique_ptr<views::Background>(background_));
+    content_view->set_background(background_);
     SetContentsView(content_view);
     widget_window->layer()->SetOpacity(0);
   }

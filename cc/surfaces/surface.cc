@@ -269,7 +269,8 @@ void Surface::UpdateBlockingSurfaces(bool has_previous_pending_frame,
   blocking_surfaces_ = std::move(new_blocking_surfaces);
 }
 
-void Surface::TakeCopyOutputRequests(Surface::CopyRequestsMap* copy_requests) {
+void Surface::TakeCopyOutputRequests(
+    std::multimap<int, std::unique_ptr<CopyOutputRequest>>* copy_requests) {
   DCHECK(copy_requests->empty());
   if (!active_frame_data_)
     return;

@@ -362,7 +362,8 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
 // Tests that signing in, tapping the Settings link on the confirmation screen
 // and closing the Settings correctly leaves the user signed in without any
 // Settings shown.
-- (void)testSignInOpenSettings {
+// TODO(crbug.com/718023): Re-enable test.
+- (void)DISABLED_testSignInOpenSettings {
   ChromeIdentity* identity = GetFakeIdentity1();
   ios::FakeChromeIdentityService::GetInstanceFromChromeProvider()->AddIdentity(
       identity);
@@ -375,13 +376,10 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   // Tap Settings link.
   id<GREYMatcher> settings_link_matcher = grey_allOf(
       grey_accessibilityLabel(@"Settings"), grey_sufficientlyVisible(), nil);
-  WaitForMatcher(settings_link_matcher);
   [[EarlGrey selectElementWithMatcher:settings_link_matcher]
       performAction:grey_tap()];
 
-  id<GREYMatcher> done_button_matcher = NavigationBarDoneButton();
-  WaitForMatcher(done_button_matcher);
-  [[EarlGrey selectElementWithMatcher:done_button_matcher]
+  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
       performAction:grey_tap()];
 
   // All Settings should be gone and user signed in.

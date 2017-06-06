@@ -15,21 +15,22 @@ namespace blink {
 
 class NGLineBreakerTest : public NGBaseLayoutAlgorithmTest {
  protected:
-  NGInlineNode CreateInlineNode(const String& html_content) {
+  NGInlineNode* CreateInlineNode(const String& html_content) {
     SetBodyInnerHTML(html_content);
 
     LayoutNGBlockFlow* block_flow =
         ToLayoutNGBlockFlow(GetLayoutObjectByElementId("container"));
-    return NGInlineNode(block_flow, block_flow->FirstChild());
+    NGInlineNode* inline_node =
+        new NGInlineNode(block_flow->FirstChild(), block_flow);
+
+    return inline_node;
   }
 
   // Break lines using the specified available width.
-  Vector<NGInlineItemResults> BreakLines(NGInlineNode node,
+  Vector<NGInlineItemResults> BreakLines(NGInlineNode* node,
                                          LayoutUnit available_width) {
-    DCHECK(node);
-
-    if (!node.IsPrepareLayoutFinished())
-      node.PrepareLayout();
+    if (!node->IsPrepareLayoutFinished())
+      node->PrepareLayout();
 
     RefPtr<NGConstraintSpace> space =
         NGConstraintSpaceBuilder(NGWritingMode::kHorizontalTopBottom)
@@ -51,17 +52,18 @@ class NGLineBreakerTest : public NGBaseLayoutAlgorithmTest {
 
 namespace {
 
-String ToString(NGInlineItemResults line, NGInlineNode node) {
+String ToString(NGInlineItemResults line, NGInlineNode* node) {
   StringBuilder builder;
   for (const auto& item_result : line) {
-    builder.Append(node.Text(item_result.start_offset, item_result.end_offset));
+    builder.Append(
+        node->Text(item_result.start_offset, item_result.end_offset));
   }
   return builder.ToString();
 }
 
 TEST_F(NGLineBreakerTest, SingleNode) {
   LoadAhem();
-  NGInlineNode node = CreateInlineNode(R"HTML(
+  NGInlineNode* node = CreateInlineNode(R"HTML(
     <!DOCTYPE html>
     <style>
     #container {
@@ -86,7 +88,7 @@ TEST_F(NGLineBreakerTest, SingleNode) {
 
 TEST_F(NGLineBreakerTest, OverflowWord) {
   LoadAhem();
-  NGInlineNode node = CreateInlineNode(R"HTML(
+  NGInlineNode* node = CreateInlineNode(R"HTML(
     <!DOCTYPE html>
     <style>
     #container {
@@ -112,7 +114,7 @@ TEST_F(NGLineBreakerTest, OverflowWord) {
 
 TEST_F(NGLineBreakerTest, OverflowAtomicInline) {
   LoadAhem();
-  NGInlineNode node = CreateInlineNode(R"HTML(
+  NGInlineNode* node = CreateInlineNode(R"HTML(
     <!DOCTYPE html>
     <style>
     #container {
@@ -153,7 +155,7 @@ TEST_F(NGLineBreakerTest, OverflowAtomicInline) {
 
 TEST_F(NGLineBreakerTest, OverflowMargin) {
   LoadAhem();
-  NGInlineNode node = CreateInlineNode(R"HTML(
+  NGInlineNode* node = CreateInlineNode(R"HTML(
     <!DOCTYPE html>
     <style>
     #container {
@@ -165,7 +167,7 @@ TEST_F(NGLineBreakerTest, OverflowMargin) {
     </style>
     <div id=container><span>123 456</span> 789</div>
   )HTML");
-  const Vector<NGInlineItem>& items = node.Items();
+  const Vector<NGInlineItem>& items = node->Items();
 
   // While "123 456" can fit in a line, "456" has a right margin that cannot
   // fit. Since "456" and its right margin is not breakable, "456" should be on
@@ -189,7 +191,7 @@ TEST_F(NGLineBreakerTest, OverflowMargin) {
 
 TEST_F(NGLineBreakerTest, BoundaryInWord) {
   LoadAhem();
-  NGInlineNode node = CreateInlineNode(R"HTML(
+  NGInlineNode* node = CreateInlineNode(R"HTML(
     <!DOCTYPE html>
     <style>
     #container {
@@ -219,7 +221,7 @@ TEST_F(NGLineBreakerTest, BoundaryInWord) {
 
 TEST_F(NGLineBreakerTest, BoundaryInFirstWord) {
   LoadAhem();
-  NGInlineNode node = CreateInlineNode(R"HTML(
+  NGInlineNode* node = CreateInlineNode(R"HTML(
     <!DOCTYPE html>
     <style>
     #container {

@@ -123,12 +123,13 @@ class TooltipAura::TooltipView : public views::View {
   void SetBackgroundColor(SkColor background_color) {
     // Corner radius of tooltip background.
     const float kTooltipCornerRadius = 2.f;
-    SetBackground(CanUseTranslucentTooltipWidget()
-                      ? views::CreateBackgroundFromPainter(
-                            views::Painter::CreateSolidRoundRectPainter(
-                                background_color, kTooltipCornerRadius))
-                      : views::CreateSolidBackground(background_color));
-
+    views::Background* background =
+        CanUseTranslucentTooltipWidget()
+            ? views::Background::CreateBackgroundPainter(
+                  views::Painter::CreateSolidRoundRectPainter(
+                      background_color, kTooltipCornerRadius))
+            : views::Background::CreateSolidBackground(background_color);
+    set_background(background);
     // Force the text color to be readable when |background_color| is not
     // opaque.
     render_text_->set_subpixel_rendering_suppressed(

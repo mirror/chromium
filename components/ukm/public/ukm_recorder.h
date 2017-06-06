@@ -27,7 +27,6 @@ class AutofillMetrics;
 namespace content {
 class MediaInternals;
 class RenderFrameImpl;
-class RenderWidgetHostLatencyTracker;
 }
 
 namespace translate {
@@ -79,7 +78,6 @@ class UKM_EXPORT UkmRecorder {
   friend UkmInterface;
   friend content::MediaInternals;
   friend content::RenderFrameImpl;
-  friend content::RenderWidgetHostLatencyTracker;
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, AddEntryWithEmptyMetrics);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, EntryBuilderAndSerialization);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest,

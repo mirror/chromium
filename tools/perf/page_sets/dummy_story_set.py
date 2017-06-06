@@ -10,7 +10,6 @@ class DummyPage(page_module.Page):
   def __init__(self, page_set):
     super(DummyPage, self).__init__(
       url='file://dummy_pages/dummy_page.html',
-      name='dummy_page.html',
       page_set=page_set)
 
   def RunPageInteractions(self, action_runner):
@@ -33,5 +32,5 @@ class BrokenDummyPage(page_module.Page):
 class DummyStorySet(story.StorySet):
 
   def __init__(self):
-    super(DummyStorySet, self).__init__(verify_names=True)
+    super(DummyStorySet, self).__init__()
     self.AddStory(DummyPage(self))

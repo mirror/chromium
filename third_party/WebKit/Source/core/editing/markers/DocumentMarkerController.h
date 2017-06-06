@@ -32,7 +32,6 @@
 #include "core/CoreExport.h"
 #include "core/dom/SynchronousMutationObserver.h"
 #include "core/editing/iterators/TextIterator.h"
-#include "core/editing/markers/CompositionMarker.h"
 #include "core/editing/markers/DocumentMarker.h"
 #include "core/editing/markers/TextMatchMarker.h"
 #include "platform/geometry/IntRect.h"
@@ -62,7 +61,7 @@ class CORE_EXPORT DocumentMarkerController final
   void AddTextMatchMarker(const EphemeralRange&, TextMatchMarker::MatchStatus);
   void AddCompositionMarker(const EphemeralRange&,
                             Color underline_color,
-                            CompositionMarker::Thickness,
+                            bool thick,
                             Color background_color);
 
   void MoveMarkers(Node* src_node, int length, Node* dst_node);
@@ -94,7 +93,7 @@ class CORE_EXPORT DocumentMarkerController final
       Node*,
       DocumentMarker::MarkerTypes = DocumentMarker::AllMarkers());
   DocumentMarkerVector Markers();
-  Vector<IntRect> LayoutRectsForTextMatchMarkers();
+  Vector<IntRect> RenderedRectsForTextMatchMarkers();
   void InvalidateRectsForAllTextMatchMarkers();
   void InvalidateRectsForTextMatchMarkersInNode(const Node&);
 

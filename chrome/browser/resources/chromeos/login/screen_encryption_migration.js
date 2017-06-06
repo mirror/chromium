@@ -28,12 +28,8 @@ login.createScreen('EncryptionMigrationScreen', 'encryption-migration',
       encryptionMigration.addEventListener('skip', function() {
         chrome.send('skipMigration');
       });
-      encryptionMigration.addEventListener(
-          'restart-on-low-storage', function() {
-            chrome.send('requestRestartOnLowStorage');
-          });
-      encryptionMigration.addEventListener('restart-on-failure', function() {
-        chrome.send('requestRestartOnFailure');
+      encryptionMigration.addEventListener('restart', function() {
+        chrome.send('requestRestart');
       });
       encryptionMigration.addEventListener('openFeedbackDialog', function() {
         chrome.send('openFeedbackDialog');

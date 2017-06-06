@@ -159,24 +159,24 @@ void SelectionAdjuster::AdjustSelectionToAvoidCrossingShadowBoundaries(
   DCHECK(selection->Base().IsNotNull());
   DCHECK(selection->Extent().IsNotNull());
   DCHECK(selection->Start().IsNotNull());
-  DCHECK(selection->End().IsNotNull());
+  DCHECK(selection->end().IsNotNull());
 
   // TODO(hajimehoshi): Checking treeScope is wrong when a node is
   // distributed, but we leave it as it is for backward compatibility.
   if (selection->Start().AnchorNode()->GetTreeScope() ==
-      selection->End().AnchorNode()->GetTreeScope())
+      selection->end().AnchorNode()->GetTreeScope())
     return;
 
   if (selection->IsBaseFirst()) {
     const Position& new_end = AdjustPositionForEnd(
-        selection->End(), selection->Start().ComputeContainerNode());
+        selection->end(), selection->Start().ComputeContainerNode());
     selection->extent_ = new_end;
     selection->end_ = new_end;
     return;
   }
 
   const Position& new_start = AdjustPositionForStart(
-      selection->Start(), selection->End().ComputeContainerNode());
+      selection->Start(), selection->end().ComputeContainerNode());
   selection->extent_ = new_start;
   selection->start_ = new_start;
 }
@@ -188,7 +188,7 @@ void SelectionAdjuster::AdjustSelectionToAvoidCrossingShadowBoundaries(
     VisibleSelectionInFlatTree* selection) {
   Node* const shadow_host_start =
       EnclosingShadowHostForStart(selection->Start());
-  Node* const shadow_host_end = EnclosingShadowHostForEnd(selection->End());
+  Node* const shadow_host_end = EnclosingShadowHostForEnd(selection->end());
   if (shadow_host_start == shadow_host_end)
     return;
 
@@ -196,7 +196,7 @@ void SelectionAdjuster::AdjustSelectionToAvoidCrossingShadowBoundaries(
     Node* const shadow_host =
         shadow_host_start ? shadow_host_start : shadow_host_end;
     const PositionInFlatTree& new_end =
-        AdjustPositionInFlatTreeForEnd(selection->End(), shadow_host);
+        AdjustPositionInFlatTreeForEnd(selection->end(), shadow_host);
     selection->extent_ = new_end;
     selection->end_ = new_end;
     return;

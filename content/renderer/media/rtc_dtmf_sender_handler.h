@@ -10,7 +10,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
-#include "base/sequence_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "content/common/content_export.h"
 #include "third_party/WebKit/public/platform/WebRTCDTMFSenderHandler.h"
 #include "third_party/WebKit/public/platform/WebRTCDTMFSenderHandlerClient.h"
@@ -25,7 +25,8 @@ namespace content {
 // Callbacks to the webrtc::DtmfSenderObserverInterface implementation also
 // occur on the main render thread.
 class CONTENT_EXPORT RtcDtmfSenderHandler
-    : NON_EXPORTED_BASE(public blink::WebRTCDTMFSenderHandler) {
+    : NON_EXPORTED_BASE(public blink::WebRTCDTMFSenderHandler),
+      NON_EXPORTED_BASE(public base::NonThreadSafe) {
  public:
   explicit RtcDtmfSenderHandler(webrtc::DtmfSenderInterface* dtmf_sender);
   ~RtcDtmfSenderHandler() override;
@@ -46,8 +47,6 @@ class CONTENT_EXPORT RtcDtmfSenderHandler
   class Observer;
   scoped_refptr<Observer> observer_;
 
-  SEQUENCE_CHECKER(sequence_checker_);
-
   // |weak_factory_| must be the last member.
   base::WeakPtrFactory<RtcDtmfSenderHandler> weak_factory_;
 
@@ -57,3 +56,4 @@ class CONTENT_EXPORT RtcDtmfSenderHandler
 }  // namespace content
 
 #endif  // CONTENT_RENDERER_MEDIA_RTC_DTMF_SENDER_HANDLER_H_
+

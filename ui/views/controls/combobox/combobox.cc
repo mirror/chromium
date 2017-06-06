@@ -554,8 +554,8 @@ void Combobox::OnNativeThemeChanged(const ui::NativeTheme* theme) {
   if (!UseMd())
     return;
 
-  SetBackground(
-      CreateBackgroundFromPainter(Painter::CreateSolidRoundRectPainter(
+  set_background(
+      Background::CreateBackgroundPainter(Painter::CreateSolidRoundRectPainter(
           theme->GetSystemColor(
               ui::NativeTheme::kColorId_TextfieldDefaultBackground),
           FocusableBorder::kCornerRadiusDp)));

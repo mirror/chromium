@@ -376,12 +376,8 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   DISABLE_CFI_PERF LayoutRect PaddingBoxRect() const {
     return LayoutRect(ClientLeft(), ClientTop(), ClientWidth(), ClientHeight());
   }
-
-  IntRect PixelSnappedBorderBoxRect(
-      const LayoutSize& offset = LayoutSize()) const {
-    return IntRect(IntPoint(),
-                   PixelSnappedIntSize(frame_rect_.Size(),
-                                       frame_rect_.Location() + offset));
+  IntRect PixelSnappedBorderBoxRect() const {
+    return IntRect(IntPoint(), frame_rect_.PixelSnappedSize());
   }
   IntRect BorderBoundingBox() const final {
     return PixelSnappedBorderBoxRect();
@@ -1280,8 +1276,8 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
                                 VisualRectFlags,
                                 TransformState&) const;
 
-  bool HasRelativeLogicalWidth() const;
-  bool HasRelativeLogicalHeight() const;
+  virtual bool HasRelativeLogicalWidth() const;
+  virtual bool HasRelativeLogicalHeight() const;
 
   bool HasHorizontalLayoutOverflow() const {
     if (!overflow_)

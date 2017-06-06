@@ -15,7 +15,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/sequence_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "components/invalidation/impl/invalidation_state_tracker.h"
 #include "components/invalidation/impl/state_writer.h"
 #include "components/invalidation/impl/sync_system_resources.h"
@@ -36,7 +36,8 @@ class INVALIDATION_EXPORT SyncInvalidationListener
     : public NON_EXPORTED_BASE(invalidation::InvalidationListener),
       public StateWriter,
       public SyncNetworkChannel::Observer,
-      public AckHandler {
+      public AckHandler,
+      public base::NonThreadSafe {
  public:
   typedef base::Callback<invalidation::InvalidationClient*(
       invalidation::SystemResources*,
@@ -172,8 +173,6 @@ class INVALIDATION_EXPORT SyncInvalidationListener
   // The states of the ticl and the push client.
   InvalidatorState ticl_state_;
   InvalidatorState push_client_state_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
 
   base::WeakPtrFactory<SyncInvalidationListener> weak_ptr_factory_;
 

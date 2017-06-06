@@ -22,7 +22,7 @@
 }
 
 .add-button {
-    margin: 10px 2px;
+    margin: 10px 0;
     align-self: flex-start;
     flex: none;
 }

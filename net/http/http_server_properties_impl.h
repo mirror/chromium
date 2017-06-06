@@ -16,7 +16,7 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/threading/thread_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "base/time/default_tick_clock.h"
 #include "base/values.h"
 #include "net/base/host_port_pair.h"
@@ -35,7 +35,8 @@ namespace net {
 // The implementation for setting/retrieving the HTTP server properties.
 class NET_EXPORT HttpServerPropertiesImpl
     : public HttpServerProperties,
-      public BrokenAlternativeServices::Delegate {
+      public BrokenAlternativeServices::Delegate,
+      NON_EXPORTED_BASE(public base::NonThreadSafe) {
  public:
   HttpServerPropertiesImpl();
   explicit HttpServerPropertiesImpl(
@@ -167,8 +168,6 @@ class NET_EXPORT HttpServerPropertiesImpl
 
   QuicServerInfoMap quic_server_info_map_;
   size_t max_server_configs_stored_in_properties_;
-
-  THREAD_CHECKER(thread_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(HttpServerPropertiesImpl);
 };

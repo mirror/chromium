@@ -8,7 +8,6 @@
 #include <stdint.h>
 
 #include <utility>
-#include <vector>
 
 #include "base/build_time.h"
 #include "base/command_line.h"
@@ -337,7 +336,9 @@ bool VariationsService::CreateTrialsFromSeed(base::FeatureList* feature_list) {
       GetChannelForVariations(client_->GetChannel());
   UMA_HISTOGRAM_SPARSE_SLOWLY("Variations.UserChannel", channel);
 
-  const std::string latest_country = GetLatestCountry();
+  const std::string latest_country =
+      local_state_->GetString(prefs::kVariationsCountry);
+
   std::unique_ptr<const base::FieldTrial::EntropyProvider> low_entropy_provider(
       CreateLowEntropyProvider());
   // Note that passing |&ui_string_overrider_| via base::Unretained below is
@@ -372,6 +373,7 @@ void VariationsService::PerformPreMainMessageLoopStartup() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   StartRepeatedVariationsSeedFetch();
+  client_->OnInitialStartup();
 }
 
 void VariationsService::StartRepeatedVariationsSeedFetch() {
@@ -561,9 +563,16 @@ void VariationsService::DoActualFetch() {
   bool enable_deltas = false;
   if (!seed_store_.variations_serial_number().empty() &&
       !disable_deltas_for_next_request_) {
-    // Tell the server that delta-compressed seeds are supported.
-    enable_deltas = true;
-
+    // If the current seed includes a country code, deltas are not supported (as
+    // the serial number doesn't take into account the country code). The server
+    // will update us with a seed that doesn't include a country code which will
+    // enable deltas to work.
+    // TODO(asvitkine): Remove the check in M50+ when the percentage of clients
+    // that have an old seed with a country code becomes miniscule.
+    if (!seed_store_.seed_has_country_code()) {
+      // Tell the server that delta-compressed seeds are supported.
+      enable_deltas = true;
+    }
     // Get the seed only if its serial number doesn't match what we have.
     pending_seed_request_->AddExtraRequestHeader(
         "If-None-Match:" + seed_store_.variations_serial_number());
@@ -771,7 +780,8 @@ void VariationsService::PerformSimulationWithVersion(
   variations::VariationsSeedSimulator seed_simulator(*default_provider,
                                                      *low_provider);
 
-  const std::string latest_country = GetLatestCountry();
+  const std::string latest_country =
+      local_state_->GetString(prefs::kVariationsCountry);
   const variations::VariationsSeedSimulator::Result result =
       seed_simulator.SimulateSeedStudies(
           *seed, client_->GetApplicationLocale(),
@@ -812,12 +822,6 @@ std::string VariationsService::LoadPermanentConsistencyCountry(
     const std::string& latest_country) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(version.IsValid());
-
-  const std::string override_country =
-      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          switches::kVariationsOverrideCountry);
-  if (!override_country.empty())
-    return override_country;
 
   const base::ListValue* list_value =
       local_state_->GetList(prefs::kVariationsPermanentConsistencyCountry);
@@ -926,12 +930,7 @@ bool VariationsService::OverrideStoredPermanentCountry(
 }
 
 std::string VariationsService::GetLatestCountry() const {
-  const std::string override_country =
-      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          switches::kVariationsOverrideCountry);
-  return !override_country.empty()
-             ? override_country
-             : local_state_->GetString(prefs::kVariationsCountry);
+  return local_state_->GetString(prefs::kVariationsCountry);
 }
 
 }  // namespace variations

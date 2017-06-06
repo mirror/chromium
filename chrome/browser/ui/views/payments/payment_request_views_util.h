@@ -12,7 +12,6 @@
 #include "components/payments/mojom/payment_request.mojom.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/geometry/insets.h"
-#include "ui/gfx/text_constants.h"
 
 namespace autofill {
 class AutofillProfile;
@@ -87,16 +86,25 @@ std::unique_ptr<views::View> CreateProductLogoFooterView();
 enum class AddressStyleType { SUMMARY, DETAILED };
 
 // Extracts and formats descriptive text from the given |profile| to represent
+// the address in the context specified by |type|. If |error| is specified,
+// this will display it as the last item in an error state. |disabled_state|
+// will make the various label lines look disabled.
+std::unique_ptr<views::View> GetShippingAddressLabelWithError(
+    AddressStyleType type,
+    const std::string& locale,
+    const autofill::AutofillProfile& profile,
+    const base::string16& error,
+    bool disabled_state);
+
+// Extracts and formats descriptive text from the given |profile| to represent
 // the address in the context specified by |type|. The missing information will
 // be computed using |comp| and displayed as the last line in an informative
-// manner. |enabled| indicates whether the various label lines look enabled or
-// disabled.
+// manner.
 std::unique_ptr<views::View> GetShippingAddressLabelWithMissingInfo(
     AddressStyleType type,
     const std::string& locale,
     const autofill::AutofillProfile& profile,
-    const PaymentsProfileComparator& comp,
-    bool enabled = true);
+    const PaymentsProfileComparator& comp);
 
 // Extracts and formats descriptive text from the given |profile| to represent
 // the contact info in the context specified by |type|. Includes/excludes name,
@@ -122,11 +130,6 @@ std::unique_ptr<views::Label> CreateBoldLabel(const base::string16& text);
 // platforms that have no medium font, or where a user has configured their
 // default font with a heavier weight.
 std::unique_ptr<views::Label> CreateMediumLabel(const base::string16& text);
-
-// Creates a label with grey, "hint" text and the provided |alignment|.
-std::unique_ptr<views::Label> CreateHintLabel(
-    const base::string16& text,
-    gfx::HorizontalAlignment alignment = gfx::ALIGN_CENTER);
 
 // Creates a 2 line label containing |shipping_option|'s label and amount. If
 // |emphasize_label| is true, the label part will be in medium weight.

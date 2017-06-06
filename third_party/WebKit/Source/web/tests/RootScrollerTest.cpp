@@ -52,7 +52,7 @@ class RootScrollerTest : public ::testing::Test {
   }
 
   ~RootScrollerTest() override {
-    features_backup_.Restore();
+    features_backup_.restore();
     Platform::Current()
         ->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();

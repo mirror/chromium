@@ -11,7 +11,6 @@
 #include "base/feature_list.h"
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/stl_util.h"
 #include "base/strings/string_piece.h"
@@ -176,23 +175,22 @@ bool IsDefaultValue(const FeatureEntry& entry,
 }
 
 // Returns the Value representing the choice data in the specified entry.
-std::unique_ptr<base::Value> CreateOptionsData(
-    const FeatureEntry& entry,
-    const std::set<std::string>& enabled_entries) {
+base::Value* CreateOptionsData(const FeatureEntry& entry,
+                               const std::set<std::string>& enabled_entries) {
   DCHECK(entry.type == FeatureEntry::MULTI_VALUE ||
          entry.type == FeatureEntry::ENABLE_DISABLE_VALUE ||
          entry.type == FeatureEntry::FEATURE_VALUE ||
          entry.type == FeatureEntry::FEATURE_WITH_PARAMS_VALUE);
-  auto result = base::MakeUnique<base::ListValue>();
+  base::ListValue* result = new base::ListValue;
   for (int i = 0; i < entry.num_options; ++i) {
-    auto value = base::MakeUnique<base::DictionaryValue>();
+    std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue);
     const std::string name = entry.NameForOption(i);
     value->SetString("internal_name", name);
     value->SetString("description", entry.DescriptionForOption(i));
     value->SetBoolean("selected", enabled_entries.count(name) > 0);
     result->Append(std::move(value));
   }
-  return std::move(result);
+  return result;
 }
 
 // Registers variation parameters specified by |feature_variation_params| for
@@ -517,9 +515,9 @@ void FlagsState::GetFlagFeatureEntries(
     data->SetString("description",
                     base::StringPiece(entry.visible_description));
 
-    auto supported_platforms = base::MakeUnique<base::ListValue>();
-    AddOsStrings(entry.supported_platforms, supported_platforms.get());
-    data->Set("supported_platforms", std::move(supported_platforms));
+    base::ListValue* supported_platforms = new base::ListValue();
+    AddOsStrings(entry.supported_platforms, supported_platforms);
+    data->Set("supported_platforms", supported_platforms);
     // True if the switch is not currently passed.
     bool is_default_value = IsDefaultValue(entry, enabled_entries);
     data->SetBoolean("is_default", is_default_value);

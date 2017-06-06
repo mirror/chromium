@@ -8,40 +8,41 @@
 #error "This file requires ARC support."
 #endif
 
-@interface ContextMenuItem ()
+@interface ContextMenuItem () {
+  // Backing object for |commands|.
+  std::vector<SEL> _commands;
+}
 
 // Convenience initializer for use by the factory method.
 - (instancetype)initWithTitle:(NSString*)title
-                      command:(SEL)command
-              commandOpensTab:(BOOL)commandOpensTab NS_DESIGNATED_INITIALIZER;
+                     commands:(const std::vector<SEL>&)commands;
 
 @end
 
 @implementation ContextMenuItem
 
 @synthesize title = _title;
-@synthesize command = _command;
-@synthesize commandOpensTab = _commandOpensTab;
 
 - (instancetype)initWithTitle:(NSString*)title
-                      command:(SEL)command
-              commandOpensTab:(BOOL)commandOpensTab {
+                     commands:(const std::vector<SEL>&)commands {
   if ((self = [super init])) {
     _title = [title copy];
-    _command = command;
-    _commandOpensTab = commandOpensTab;
+    _commands = commands;
   }
   return self;
+}
+
+#pragma mark - Accessors
+
+- (const std::vector<SEL>&)commands {
+  return _commands;
 }
 
 #pragma mark - Public
 
 + (instancetype)itemWithTitle:(NSString*)title
-                      command:(SEL)command
-              commandOpensTab:(BOOL)commandOpensTab {
-  return [[ContextMenuItem alloc] initWithTitle:title
-                                        command:command
-                                commandOpensTab:commandOpensTab];
+                     commands:(const std::vector<SEL>&)commands {
+  return [[ContextMenuItem alloc] initWithTitle:title commands:commands];
 }
 
 @end

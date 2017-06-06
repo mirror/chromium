@@ -34,7 +34,7 @@ size_t GroupedPermissionInfoBarDelegate::PermissionCount() const {
 }
 
 bool GroupedPermissionInfoBarDelegate::ShouldShowPersistenceToggle() const {
-  return permission_prompt_->ShouldShowPersistenceToggle();
+  return PermissionUtil::ShouldShowPersistenceToggle();
 }
 
 ContentSettingsType GroupedPermissionInfoBarDelegate::GetContentSettingType(
@@ -66,20 +66,14 @@ base::string16 GroupedPermissionInfoBarDelegate::GetMessageText() const {
 }
 
 bool GroupedPermissionInfoBarDelegate::Accept() {
-  if (permission_prompt_) {
-    if (permission_prompt_->ShouldShowPersistenceToggle())
-      permission_prompt_->TogglePersist(persist_);
+  if (permission_prompt_)
     permission_prompt_->Accept();
-  }
   return true;
 }
 
 bool GroupedPermissionInfoBarDelegate::Cancel() {
-  if (permission_prompt_) {
-    if (permission_prompt_->ShouldShowPersistenceToggle())
-      permission_prompt_->TogglePersist(persist_);
+  if (permission_prompt_)
     permission_prompt_->Deny();
-  }
   return true;
 }
 

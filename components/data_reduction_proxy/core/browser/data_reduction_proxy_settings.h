@@ -169,6 +169,12 @@ class DataReductionProxySettings : public DataReductionProxyServiceObserver {
   // InitDataReductionProxySettings has not been called.
   DataReductionProxyEventStore* GetEventStore() const;
 
+  // Returns true if the data reduction proxy promo may be shown.
+  // This is independent of whether the data reduction proxy is allowed.
+  bool PromoAllowed() const {
+    return promo_allowed_;
+  }
+
   DataReductionProxyService* data_reduction_proxy_service() {
     return data_reduction_proxy_service_.get();
   }
@@ -187,6 +193,8 @@ class DataReductionProxySettings : public DataReductionProxyServiceObserver {
 
  protected:
   void InitPrefMembers();
+
+  void UpdateConfigValues();
 
   // Virtualized for unit test support.
   virtual PrefService* GetOriginalProfilePrefs();
@@ -272,6 +280,11 @@ class DataReductionProxySettings : public DataReductionProxyServiceObserver {
   // OnServiceInitialized is called, if |deferred_initialization_| is true,
   // IO object calls will be performed at that time.
   bool deferred_initialization_;
+
+  // The following values are cached in order to access the values on the
+  // correct thread.
+  bool allowed_;
+  bool promo_allowed_;
 
   // The number of requests to reload the page with images from the Lo-Fi
   // UI until Lo-Fi is disabled for the remainder of the session.

@@ -19,10 +19,6 @@
 #include "ui/base/l10n/l10n_util_mac.h"
 #include "url/gurl.h"
 
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
-
 // Mock delegate for HistoryEntriesStatusItem. Implement mock delegate rather
 // than use OCMock because delegate method takes a GURL as a parameter.
 @interface MockEntriesStatusItemDelegate
@@ -54,9 +50,10 @@ namespace {
 // property set to YES results in an empty label.
 TEST(HistoryEntriesStatusItemTest, TestHidden) {
   HistoryEntriesStatusItem* item =
-      [[HistoryEntriesStatusItem alloc] initWithType:0];
+      [[[HistoryEntriesStatusItem alloc] initWithType:0] autorelease];
   item.hidden = YES;
-  HistoryEntriesStatusCell* cell = [[HistoryEntriesStatusCell alloc] init];
+  HistoryEntriesStatusCell* cell =
+      [[[HistoryEntriesStatusCell alloc] init] autorelease];
   [item configureCell:cell];
   EXPECT_FALSE(cell.textLabel.text);
 }
@@ -65,8 +62,9 @@ TEST(HistoryEntriesStatusItemTest, TestHidden) {
 // possible HistoryEntriesStatus values shows a label with the correct text.
 TEST(HistoryEntriesStatusItemTest, TestEntriesStatus) {
   HistoryEntriesStatusItem* item =
-      [[HistoryEntriesStatusItem alloc] initWithType:0];
-  HistoryEntriesStatusCell* cell = [[HistoryEntriesStatusCell alloc] init];
+      [[[HistoryEntriesStatusItem alloc] initWithType:0] autorelease];
+  HistoryEntriesStatusCell* cell =
+      [[[HistoryEntriesStatusCell alloc] init] autorelease];
   NSRange range;
 
   item.entriesStatus = NO_ENTRIES;
@@ -94,8 +92,9 @@ TEST(HistoryEntriesStatusItemTest, TestEntriesStatus) {
 // data text to the label.
 TEST(HistoryEntriesStatusItemTest, TestOtherBrowsingDataNotice) {
   HistoryEntriesStatusItem* item =
-      [[HistoryEntriesStatusItem alloc] initWithType:0];
-  HistoryEntriesStatusCell* cell = [[HistoryEntriesStatusCell alloc] init];
+      [[[HistoryEntriesStatusItem alloc] initWithType:0] autorelease];
+  HistoryEntriesStatusCell* cell =
+      [[[HistoryEntriesStatusCell alloc] init] autorelease];
   item.hidden = NO;
   item.entriesStatus = SYNCED_ENTRIES;
   item.showsOtherBrowsingDataNotice = YES;
@@ -115,10 +114,11 @@ TEST(HistoryEntriesStatusItemTest, TestOtherBrowsingDataNotice) {
 // the HistoryEntriesStatusItemDelegate method.
 TEST(HistoryEntriesStatusItemTest, TestDelegate) {
   HistoryEntriesStatusItem* item =
-      [[HistoryEntriesStatusItem alloc] initWithType:0];
-  HistoryEntriesStatusCell* cell = [[HistoryEntriesStatusCell alloc] init];
+      [[[HistoryEntriesStatusItem alloc] initWithType:0] autorelease];
+  HistoryEntriesStatusCell* cell =
+      [[[HistoryEntriesStatusCell alloc] init] autorelease];
   MockEntriesStatusItemDelegate* delegate =
-      [[MockEntriesStatusItemDelegate alloc] init];
+      [[[MockEntriesStatusItemDelegate alloc] init] autorelease];
   item.delegate = delegate;
   item.hidden = NO;
   item.entriesStatus = SYNCED_ENTRIES;

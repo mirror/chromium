@@ -93,11 +93,10 @@ DnsConfigService::DnsConfigService()
       last_sent_empty_(true) {}
 
 DnsConfigService::~DnsConfigService() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 }
 
 void DnsConfigService::ReadConfig(const CallbackType& callback) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(!callback.is_null());
   DCHECK(callback_.is_null());
   callback_ = callback;
@@ -105,7 +104,7 @@ void DnsConfigService::ReadConfig(const CallbackType& callback) {
 }
 
 void DnsConfigService::WatchConfig(const CallbackType& callback) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(!callback.is_null());
   DCHECK(callback_.is_null());
   callback_ = callback;
@@ -114,7 +113,7 @@ void DnsConfigService::WatchConfig(const CallbackType& callback) {
 }
 
 void DnsConfigService::InvalidateConfig() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   base::TimeTicks now = base::TimeTicks::Now();
   if (!last_invalidate_config_time_.is_null()) {
     UMA_HISTOGRAM_LONG_TIMES("AsyncDNS.ConfigNotifyInterval",
@@ -128,7 +127,7 @@ void DnsConfigService::InvalidateConfig() {
 }
 
 void DnsConfigService::InvalidateHosts() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   base::TimeTicks now = base::TimeTicks::Now();
   if (!last_invalidate_hosts_time_.is_null()) {
     UMA_HISTOGRAM_LONG_TIMES("AsyncDNS.HostsNotifyInterval",
@@ -142,7 +141,7 @@ void DnsConfigService::InvalidateHosts() {
 }
 
 void DnsConfigService::OnConfigRead(const DnsConfig& config) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(config.IsValid());
 
   bool changed = false;
@@ -163,7 +162,7 @@ void DnsConfigService::OnConfigRead(const DnsConfig& config) {
 }
 
 void DnsConfigService::OnHostsRead(const DnsHosts& hosts) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
 
   bool changed = false;
   if (hosts != dns_config_.hosts) {
@@ -183,7 +182,7 @@ void DnsConfigService::OnHostsRead(const DnsHosts& hosts) {
 }
 
 void DnsConfigService::StartTimer() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   if (last_sent_empty_) {
     DCHECK(!timer_.IsRunning());
     return;  // No need to withdraw again.
@@ -208,7 +207,7 @@ void DnsConfigService::StartTimer() {
 }
 
 void DnsConfigService::OnTimeout() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(!last_sent_empty_);
   // Indicate that even if there is no change in On*Read, we will need to
   // update the receiver when the config becomes complete.

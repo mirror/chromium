@@ -37,8 +37,6 @@
 #include "extensions/common/api/app_runtime.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/manifest_handlers/action_handlers_handler.h"
-#include "extensions/common/permissions/api_permission.h"
-#include "extensions/common/permissions/permissions_data.h"
 #include "url/gurl.h"
 
 namespace app_runtime = extensions::api::app_runtime;
@@ -331,10 +329,8 @@ bool NoteTakingHelper::IsLockScreenEnabled(const extensions::Extension* app) {
   if (!lock_screen_apps::StateController::IsEnabled())
     return false;
 
-  if (!app->permissions_data()->HasAPIPermission(
-          extensions::APIPermission::kLockScreen)) {
+  if (!IsWhitelistedChromeApp(app))
     return false;
-  }
 
   return extensions::ActionHandlersInfo::HasLockScreenActionHandler(
       app, app_runtime::ACTION_TYPE_NEW_NOTE);

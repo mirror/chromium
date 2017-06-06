@@ -21,7 +21,6 @@ class ExtensionNotificationHandler : public NotificationHandler {
   ~ExtensionNotificationHandler() override;
 
   // NotificationHandler implementation.
-  void OnShow(Profile* profile, const std::string& notification_id) override;
   void OnClose(Profile* profile,
                const std::string& origin,
                const std::string& notification_id,
@@ -32,6 +31,8 @@ class ExtensionNotificationHandler : public NotificationHandler {
                int action_index,
                const base::NullableString16& reply) override;
   void OpenSettings(Profile* profile) override;
+  void RegisterNotification(const std::string& notification_id,
+                            NotificationDelegate* delegate) override;
 
  protected:
   // Overriden in unit tests.

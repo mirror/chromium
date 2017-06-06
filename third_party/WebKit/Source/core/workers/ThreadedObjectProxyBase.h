@@ -29,8 +29,8 @@ class CORE_EXPORT ThreadedObjectProxyBase : public WorkerReportingProxy {
   void ReportPendingActivity(bool has_pending_activity);
 
   // WorkerReportingProxy overrides.
-  void CountFeature(WebFeature) override;
-  void CountDeprecation(WebFeature) override;
+  void CountFeature(UseCounter::Feature) override;
+  void CountDeprecation(UseCounter::Feature) override;
   void ReportConsoleMessage(MessageSource,
                             MessageLevel,
                             const String& message,

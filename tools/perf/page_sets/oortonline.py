@@ -24,8 +24,7 @@ class OortOnlinePage(page_module.Page):
         url='http://oortonline.gl/#run', page_set=page_set,
         shared_page_state_class=(
             webgl_supported_shared_state.WebGLSupportedSharedState),
-        make_javascript_deterministic=False,
-        name='http://oortonline.gl/#run')
+        make_javascript_deterministic=False)
     self.archive_data_file = 'data/oortonline.json'
     self.script_to_evaluate_on_commit = STARTUP_SCRIPT
 
@@ -43,8 +42,7 @@ class OortOnlinePageSet(story.StorySet):
   def __init__(self):
     super(OortOnlinePageSet, self).__init__(
       archive_data_file='data/oortonline.json',
-      cloud_storage_bucket=story.PARTNER_BUCKET,
-      verify_names=True)
+      cloud_storage_bucket=story.PARTNER_BUCKET)
     self.AddStory(OortOnlinePage(self))
 
 class OortOnlineTBMPage(OortOnlinePage):
@@ -78,6 +76,5 @@ class OortOnlineTBMPageSet(story.StorySet):
   def __init__(self):
     super(OortOnlineTBMPageSet, self).__init__(
       archive_data_file='data/oortonline.json',
-      cloud_storage_bucket=story.PARTNER_BUCKET,
-      verify_names=True)
+      cloud_storage_bucket=story.PARTNER_BUCKET)
     self.AddStory(OortOnlineTBMPage(self))

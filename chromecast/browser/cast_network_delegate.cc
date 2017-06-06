@@ -12,7 +12,7 @@ namespace chromecast {
 namespace shell {
 
 CastNetworkDelegate::CastNetworkDelegate() {
-  DETACH_FROM_THREAD(thread_checker_);
+  DetachFromThread();
 }
 
 CastNetworkDelegate::~CastNetworkDelegate() {

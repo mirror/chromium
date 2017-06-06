@@ -83,15 +83,14 @@ const char kMetaItContentLanguage[] =
     "<meta http-equiv=\"content-language\" content=\"it\">";
 
 // Various link components.
-// TODO(crbug.com/729195): Re-write the hardcoded address.
-const char kHttpServerDomain[] = "127.0.0.1";
+const char kHttpServerDomain[] = "localhost";
 const char kLanguagePath[] = "/languagepath/";
 const char kLinkPath[] = "/linkpath/";
 const char kSubresourcePath[] = "/subresourcepath/";
 const char kSomeLanguageUrl[] = "http://languagepath/?http=es";
 const char kFrenchPagePath[] = "/frenchpage/";
 const char kFrenchPageWithLinkPath[] = "/frenchpagewithlink/";
-const char kTranslateScriptPath[] = "/translatescript/";
+const char kTranslateScriptPath[] = "/translatescript";
 const char kTranslateScript[] = "Fake Translate Script";
 
 // Builds a HTML document with a French text and the given |html| and |meta|
@@ -637,7 +636,7 @@ using translate::LanguageDetectionController;
 }
 
 // Tests that the Translate infobar is displayed after translation.
-- (void)testTranslateInfobar {
+- (void)DISABLED_testTranslateInfobar {
   const GURL URL =
       web::test::HttpServer::MakeUrl("http://scenarioTranslateInfobar");
   std::map<GURL, std::string> responses;

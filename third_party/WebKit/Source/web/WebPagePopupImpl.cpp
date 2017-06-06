@@ -599,7 +599,8 @@ WebRect WebPagePopupImpl::WindowRectInScreen() const {
 // WebPagePopup ----------------------------------------------------------------
 
 WebPagePopup* WebPagePopup::Create(WebWidgetClient* client) {
-  CHECK(client);
+  if (!client)
+    IMMEDIATE_CRASH();
   // A WebPagePopupImpl instance usually has two references.
   //  - One owned by the instance itself. It represents the visible widget.
   //  - One owned by a WebViewBase. It's released when the WebViewBase ask the

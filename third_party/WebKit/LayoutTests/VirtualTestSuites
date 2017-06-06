@@ -206,7 +206,7 @@
   {
     "prefix": "without-smil",
     "base": "svg/animations/exposed",
-    "args": ["--disable-blink-features=SMIL"]
+    "args": ["--disable-blink-features=smil"]
   },
   {
     "prefix": "linux-subpixel",
@@ -372,11 +372,6 @@
     "args": ["--enable-features=WebAssembly"]
   },
   {
-    "prefix": "enable_wasm",
-    "base": "external/wpt/wasm",
-    "args": ["--enable-features=WebAssembly"]
-  },
-  {
     "prefix": "enable_wasm_streaming",
     "base": "http/tests/wasm_streaming",
     "args": ["--enable-features=WebAssemblyStreaming"]
@@ -479,11 +474,6 @@
   {
     "prefix": "new-remote-playback-pipeline",
     "base": "media/controls",
-    "args": ["--enable-features=NewRemotePlaybackPipeline"]
-  },
-  {
-    "prefix": "new-remote-playback-pipeline",
-    "base": "external/wpt/remote-playback",
     "args": ["--enable-features=NewRemotePlaybackPipeline"]
   }
 ]

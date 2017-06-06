@@ -12,7 +12,6 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
-#include "base/values.h"
 #include "components/policy/core/common/schema_internal.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -620,7 +619,7 @@ TEST(SchemaTest, Validate) {
     bundle.Clear();
     base::ListValue list;
     list.AppendInteger(1);
-    bundle.Set("Array", base::MakeUnique<base::Value>(list));
+    bundle.Set("Array", list.DeepCopy());
     TestSchemaValidation(schema, bundle, SCHEMA_STRICT, false);
   }
 
@@ -629,7 +628,7 @@ TEST(SchemaTest, Validate) {
     bundle.Clear();
     base::DictionaryValue dict;
     dict.SetString("one", "one");
-    bundle.Set("Object", base::MakeUnique<base::Value>(dict));
+    bundle.Set("Object", dict.DeepCopy());
     TestSchemaValidation(schema, bundle, SCHEMA_STRICT, false);
   }
 
@@ -643,14 +642,14 @@ TEST(SchemaTest, Validate) {
   bundle.SetBoolean("Boolean", true);
   bundle.SetInteger("Integer", 123);
   bundle.Set("Null", base::MakeUnique<base::Value>());
-  bundle.SetDouble("Number", 3.14);
+  bundle.Set("Number", new base::Value(3.14));
   bundle.SetString("String", "omg");
 
   {
     base::ListValue list;
     list.AppendString("a string");
     list.AppendString("another string");
-    bundle.Set("Array", base::MakeUnique<base::Value>(list));
+    bundle.Set("Array", list.DeepCopy());
   }
 
   {
@@ -658,9 +657,9 @@ TEST(SchemaTest, Validate) {
     dict.SetString("one", "string");
     dict.SetInteger("two", 2);
     base::ListValue list;
-    list.GetList().push_back(dict);
-    list.GetList().push_back(dict);
-    bundle.Set("ArrayOfObjects", base::MakeUnique<base::Value>(list));
+    list.Append(dict.CreateDeepCopy());
+    list.Append(dict.CreateDeepCopy());
+    bundle.Set("ArrayOfObjects", list.DeepCopy());
   }
 
   {
@@ -668,9 +667,9 @@ TEST(SchemaTest, Validate) {
     list.AppendString("a string");
     list.AppendString("another string");
     base::ListValue listlist;
-    listlist.GetList().push_back(list);
-    listlist.GetList().push_back(list);
-    bundle.Set("ArrayOfArray", base::MakeUnique<base::Value>(listlist));
+    listlist.Append(list.CreateDeepCopy());
+    listlist.Append(list.CreateDeepCopy());
+    bundle.Set("ArrayOfArray", listlist.DeepCopy());
   }
 
   {
@@ -679,7 +678,7 @@ TEST(SchemaTest, Validate) {
     dict.SetInteger("two", 2);
     dict.SetString("additionally", "a string");
     dict.SetString("and also", "another string");
-    bundle.Set("Object", base::MakeUnique<base::Value>(dict));
+    bundle.Set("Object", dict.DeepCopy());
   }
 
   bundle.SetInteger("IntegerWithEnums", 1);
@@ -804,8 +803,8 @@ TEST(SchemaTest, Validate) {
     ASSERT_TRUE(subschema.valid());
     base::DictionaryValue root;
 
-    base::ListValue* list_value =
-        root.SetList("List", base::MakeUnique<base::ListValue>());
+    base::ListValue* list_value = new base::ListValue();
+    root.Set("List", list_value);  // Pass ownership to root.
 
     // Test that there are not errors here.
     list_value->AppendInteger(12345);
@@ -831,9 +830,10 @@ TEST(SchemaTest, Validate) {
     ASSERT_TRUE(subschema.valid());
     base::ListValue root;
 
-    auto dict_value = base::MakeUnique<base::DictionaryValue>();
-    base::ListValue* list_value =
-        dict_value->SetList("List", base::MakeUnique<base::ListValue>());
+    base::ListValue* list_value = new base::ListValue();
+    std::unique_ptr<base::DictionaryValue> dict_value(
+        new base::DictionaryValue());
+    dict_value->Set("List", list_value);  // Pass ownership to dict_value.
     root.Append(std::move(dict_value));
 
     // Test that there are not errors here.

@@ -40,12 +40,12 @@ SyncInvalidationListener::SyncInvalidationListener(
       ticl_state_(DEFAULT_INVALIDATION_ERROR),
       push_client_state_(DEFAULT_INVALIDATION_ERROR),
       weak_ptr_factory_(this) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   sync_network_channel_->AddObserver(this);
 }
 
 SyncInvalidationListener::~SyncInvalidationListener() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   sync_network_channel_->RemoveObserver(this);
   Stop();
   DCHECK(!delegate_);
@@ -61,7 +61,7 @@ void SyncInvalidationListener::Start(
     const scoped_refptr<base::SequencedTaskRunner>&
         invalidation_state_tracker_task_runner,
     Delegate* delegate) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   Stop();
 
   sync_system_resources_.set_platform(client_info);
@@ -97,12 +97,12 @@ void SyncInvalidationListener::Start(
 
 void SyncInvalidationListener::UpdateCredentials(
     const std::string& email, const std::string& token) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   sync_network_channel_->UpdateCredentials(email, token);
 }
 
 void SyncInvalidationListener::UpdateRegisteredIds(const ObjectIdSet& ids) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   registered_ids_ = ids;
   // |ticl_state_| can go to INVALIDATIONS_ENABLED even without a
   // working XMPP connection (as observed by us), so check it instead
@@ -114,7 +114,7 @@ void SyncInvalidationListener::UpdateRegisteredIds(const ObjectIdSet& ids) {
 
 void SyncInvalidationListener::Ready(
     invalidation::InvalidationClient* client) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_EQ(client, invalidation_client_.get());
   ticl_state_ = INVALIDATIONS_ENABLED;
   EmitStateChange();
@@ -125,7 +125,7 @@ void SyncInvalidationListener::Invalidate(
     invalidation::InvalidationClient* client,
     const invalidation::Invalidation& invalidation,
     const invalidation::AckHandle& ack_handle) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_EQ(client, invalidation_client_.get());
   client->Acknowledge(ack_handle);
 
@@ -151,7 +151,7 @@ void SyncInvalidationListener::InvalidateUnknownVersion(
     invalidation::InvalidationClient* client,
     const invalidation::ObjectId& object_id,
     const invalidation::AckHandle& ack_handle) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_EQ(client, invalidation_client_.get());
   DVLOG(1) << "InvalidateUnknownVersion";
   client->Acknowledge(ack_handle);
@@ -170,7 +170,7 @@ void SyncInvalidationListener::InvalidateUnknownVersion(
 void SyncInvalidationListener::InvalidateAll(
     invalidation::InvalidationClient* client,
     const invalidation::AckHandle& ack_handle) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_EQ(client, invalidation_client_.get());
   DVLOG(1) << "InvalidateAll";
   client->Acknowledge(ack_handle);
@@ -190,7 +190,7 @@ void SyncInvalidationListener::InvalidateAll(
 // If a handler is registered, emit right away.  Otherwise, save it for later.
 void SyncInvalidationListener::DispatchInvalidations(
     const ObjectIdInvalidationMap& invalidations) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   ObjectIdInvalidationMap to_save = invalidations;
   ObjectIdInvalidationMap to_emit =
@@ -231,7 +231,7 @@ void SyncInvalidationListener::InformRegistrationStatus(
       invalidation::InvalidationClient* client,
       const invalidation::ObjectId& object_id,
       InvalidationListener::RegistrationState new_state) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_EQ(client, invalidation_client_.get());
   DVLOG(1) << "InformRegistrationStatus: "
            << ObjectIdToString(object_id) << " " << new_state;
@@ -247,7 +247,7 @@ void SyncInvalidationListener::InformRegistrationFailure(
     const invalidation::ObjectId& object_id,
     bool is_transient,
     const std::string& error_message) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_EQ(client, invalidation_client_.get());
   DVLOG(1) << "InformRegistrationFailure: "
            << ObjectIdToString(object_id)
@@ -275,7 +275,7 @@ void SyncInvalidationListener::ReissueRegistrations(
     invalidation::InvalidationClient* client,
     const std::string& prefix,
     int prefix_length) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_EQ(client, invalidation_client_.get());
   DVLOG(1) << "AllRegistrationsLost";
   registration_manager_->MarkAllRegistrationsLost();
@@ -284,7 +284,7 @@ void SyncInvalidationListener::ReissueRegistrations(
 void SyncInvalidationListener::InformError(
     invalidation::InvalidationClient* client,
     const invalidation::ErrorInfo& error_info) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_EQ(client, invalidation_client_.get());
   LOG(ERROR) << "Ticl error " << error_info.error_reason() << ": "
              << error_info.error_message()
@@ -332,7 +332,7 @@ void SyncInvalidationListener::Drop(
 }
 
 void SyncInvalidationListener::WriteState(const std::string& state) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DVLOG(1) << "WriteState";
   invalidation_state_tracker_task_runner_->PostTask(
       FROM_HERE,
@@ -342,7 +342,7 @@ void SyncInvalidationListener::WriteState(const std::string& state) {
 }
 
 void SyncInvalidationListener::DoRegistrationUpdate() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   const ObjectIdSet& unregistered_ids =
       registration_manager_->UpdateRegisteredIds(registered_ids_);
   for (ObjectIdSet::iterator it = unregistered_ids.begin();
@@ -375,7 +375,7 @@ void SyncInvalidationListener::DoRegistrationUpdate() {
 
 void SyncInvalidationListener::RequestDetailedStatus(
     base::Callback<void(const base::DictionaryValue&)> callback) const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   sync_network_channel_->RequestDetailedStatus(callback);
   callback.Run(*CollectDebugData());
 }
@@ -395,20 +395,20 @@ SyncInvalidationListener::CollectDebugData() const {
            unacked_invalidations_map_.begin();
        it != unacked_invalidations_map_.end();
        ++it) {
-    unacked_map->Set((it->first).name(), (it->second).ToValue());
+    unacked_map->Set((it->first).name(), (it->second).ToValue().release());
   }
   return_value->Set("SyncInvalidationListener.UnackedInvalidationsMap",
-                    std::move(unacked_map));
+                    unacked_map.release());
   return return_value;
 }
 
 void SyncInvalidationListener::StopForTest() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   Stop();
 }
 
 void SyncInvalidationListener::Stop() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (!invalidation_client_) {
     return;
   }
@@ -425,7 +425,7 @@ void SyncInvalidationListener::Stop() {
 }
 
 InvalidatorState SyncInvalidationListener::GetState() const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (ticl_state_ == INVALIDATION_CREDENTIALS_REJECTED ||
       push_client_state_ == INVALIDATION_CREDENTIALS_REJECTED) {
     // If either the ticl or the push client rejected our credentials,
@@ -443,12 +443,12 @@ InvalidatorState SyncInvalidationListener::GetState() const {
 }
 
 void SyncInvalidationListener::EmitStateChange() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   delegate_->OnInvalidatorStateChange(GetState());
 }
 
 base::WeakPtr<AckHandler> SyncInvalidationListener::AsWeakPtr() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   base::WeakPtr<AckHandler> weak_ptr = weak_ptr_factory_.GetWeakPtr();
   weak_ptr.get();  // Binds the pointer to this thread.
   return weak_ptr;
@@ -456,7 +456,7 @@ base::WeakPtr<AckHandler> SyncInvalidationListener::AsWeakPtr() {
 
 void SyncInvalidationListener::OnNetworkChannelStateChanged(
     InvalidatorState invalidator_state) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   push_client_state_ = invalidator_state;
   EmitStateChange();
 }

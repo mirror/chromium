@@ -19,6 +19,7 @@
 #include "services/ui/ws/server_window.h"
 #include "services/ui/ws/server_window_compositor_frame_sink_manager.h"
 #include "services/ui/ws/user_activity_monitor.h"
+#include "services/ui/ws/window_coordinate_conversions.h"
 #include "services/ui/ws/window_manager_access_policy.h"
 #include "services/ui/ws/window_manager_display_root.h"
 #include "services/ui/ws/window_manager_state.h"
@@ -69,9 +70,13 @@ WindowServer::WindowServer(WindowServerDelegate* delegate)
       next_wm_change_id_(0),
       gpu_host_(new GpuHost(this)),
       window_manager_window_tree_factory_set_(this, &user_id_tracker_),
+      frame_sink_manager_client_binding_(this),
       display_creation_config_(DisplayCreationConfig::UNKNOWN) {
   user_id_tracker_.AddObserver(this);
   OnUserIdAdded(user_id_tracker_.active_id());
+  gpu_host_->CreateFrameSinkManager(
+      mojo::MakeRequest(&frame_sink_manager_),
+      frame_sink_manager_client_binding_.CreateInterfacePtrAndBind());
 }
 
 WindowServer::~WindowServer() {
@@ -96,11 +101,6 @@ void WindowServer::SetDisplayCreationConfig(DisplayCreationConfig config) {
   DCHECK_EQ(DisplayCreationConfig::UNKNOWN, display_creation_config_);
   display_creation_config_ = config;
   display_manager_->OnDisplayCreationConfigSet();
-}
-
-void WindowServer::SetFrameSinkManager(
-    std::unique_ptr<cc::mojom::FrameSinkManager> frame_sink_manager) {
-  frame_sink_manager_ = std::move(frame_sink_manager);
 }
 
 ServerWindow* WindowServer::CreateServerWindow(

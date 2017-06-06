@@ -149,8 +149,7 @@ QuicCryptoStream* QuartcSession::GetMutableCryptoStream() {
 
 QuartcStream* QuartcSession::CreateOutgoingDynamicStream(
     SpdyPriority priority) {
-  return ActivateDataStream(
-      CreateDataStream(GetNextOutgoingStreamId(), priority));
+  return CreateDataStream(GetNextOutgoingStreamId(), priority);
 }
 
 void QuartcSession::OnCryptoHandshakeEvent(CryptoHandshakeEvent event) {
@@ -172,21 +171,6 @@ void QuartcSession::CloseStream(QuicStreamId stream_id) {
   }
   write_blocked_streams()->UnregisterStream(stream_id);
   QuicSession::CloseStream(stream_id);
-}
-
-void QuartcSession::CancelStream(QuicStreamId stream_id) {
-  ResetStream(stream_id, QuicRstStreamErrorCode::QUIC_STREAM_CANCELLED);
-}
-
-void QuartcSession::ResetStream(QuicStreamId stream_id,
-                                QuicRstStreamErrorCode error) {
-  if (!IsOpenStream(stream_id)) {
-    return;
-  }
-  QuicStream* stream = QuicSession::GetOrCreateStream(stream_id);
-  if (stream) {
-    stream->Reset(error);
-  }
 }
 
 void QuartcSession::OnConnectionClosed(QuicErrorCode error,
@@ -283,50 +267,35 @@ void QuartcSession::SetServerCryptoConfig(
 }
 
 QuicStream* QuartcSession::CreateIncomingDynamicStream(QuicStreamId id) {
-  return ActivateDataStream(CreateDataStream(id, kDefaultPriority));
-}
-
-std::unique_ptr<QuicStream> QuartcSession::CreateStream(QuicStreamId id) {
-  return CreateDataStream(id, kDefaultPriority);
-}
-
-std::unique_ptr<QuartcStream> QuartcSession::CreateDataStream(
-    QuicStreamId id,
-    SpdyPriority priority) {
-  if (crypto_stream_ == nullptr || !crypto_stream_->encryption_established()) {
-    // Encryption not active so no stream created
-    return nullptr;
-  }
-  auto stream = QuicMakeUnique<QuartcStream>(id, this);
+  QuartcStream* stream = CreateDataStream(id, kDefaultPriority);
   if (stream) {
-    // Register the stream to the QuicWriteBlockedList. |priority| is clamped
-    // between 0 and 7, with 0 being the highest priority and 7 the lowest
-    // priority.
-    write_blocked_streams()->RegisterStream(stream->id(), priority);
-
-    if (IsIncomingStream(id)) {
-      DCHECK(session_delegate_);
-      // Incoming streams need to be registered with the session_delegate_.
-      session_delegate_->OnIncomingStream(stream.get());
-      // Quartc doesn't send on incoming streams.
-      stream->set_fin_sent(true);
-    } else {
-      // Quartc doesn't receive on outgoing streams.
-      stream->set_fin_received(true);
-    }
+    DCHECK(session_delegate_);
+    session_delegate_->OnIncomingStream(stream);
   }
   return stream;
 }
 
-QuartcStream* QuartcSession::ActivateDataStream(
-    std::unique_ptr<QuartcStream> stream) {
-  // Transfer ownership of the data stream to the session via ActivateStream().
-  QuartcStream* raw = stream.release();
-  if (raw) {
-    // Make QuicSession take ownership of the stream.
-    ActivateStream(std::unique_ptr<QuicStream>(raw));
+std::unique_ptr<QuicStream> QuartcSession::CreateStream(QuicStreamId id) {
+  QuartcStream* stream = CreateDataStream(id, kDefaultPriority);
+  return QuicWrapUnique(stream);
+}
+
+QuartcStream* QuartcSession::CreateDataStream(QuicStreamId id,
+                                              SpdyPriority priority) {
+  if (crypto_stream_ == nullptr || !crypto_stream_->encryption_established()) {
+    // Encryption not active so no stream created
+    return nullptr;
   }
-  return raw;
+  QuartcStream* stream = new QuartcStream(id, this);
+  if (stream) {
+    // Make QuicSession take ownership of the stream.
+    ActivateStream(std::unique_ptr<QuicStream>(stream));
+    // Register the stream to the QuicWriteBlockedList. |priority| is clamped
+    // between 0 and 7, with 0 being the highest priority and 7 the lowest
+    // priority.
+    write_blocked_streams()->RegisterStream(stream->id(), priority);
+  }
+  return stream;
 }
 
 }  // namespace net

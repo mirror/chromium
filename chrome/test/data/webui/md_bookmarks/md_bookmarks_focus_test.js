@@ -60,7 +60,7 @@ TEST_F('MaterialBookmarksFocusTest', 'All', function() {
         selectedFolder: '1',
       });
       store.setReducersEnabled(true);
-      store.replaceSingleton();
+      bookmarks.Store.instance_ = store;
 
       rootNode = document.createElement('bookmarks-folder-node');
       rootNode.itemId = '0';
@@ -205,7 +205,7 @@ TEST_F('MaterialBookmarksFocusTest', 'All', function() {
         selectedFolder: '1',
       });
       store.setReducersEnabled(true);
-      store.replaceSingleton();
+      bookmarks.Store.instance_ = store;
 
       list = document.createElement('bookmarks-list');
       list.style.height = '100%';

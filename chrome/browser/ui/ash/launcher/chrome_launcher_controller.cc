@@ -7,10 +7,10 @@
 #include "ash/multi_profile_uma.h"
 #include "ash/public/cpp/remote_shelf_item_delegate.h"
 #include "ash/public/cpp/shelf_item.h"
-#include "ash/public/cpp/shelf_model.h"
 #include "ash/public/interfaces/constants.mojom.h"
 #include "ash/resources/grit/ash_resources.h"
 #include "ash/shelf/shelf.h"
+#include "ash/shelf/shelf_model.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/strings/grit/ash_strings.h"
@@ -422,20 +422,12 @@ void ChromeLauncherController::ActivateApp(const std::string& app_id,
 void ChromeLauncherController::SetLauncherItemImage(
     const ash::ShelfID& shelf_id,
     const gfx::ImageSkia& image) {
-  DCHECK(!image.isNull());
   const ash::ShelfItem* item = GetItem(shelf_id);
   if (item) {
     ash::ShelfItem new_item = *item;
     new_item.image = image;
     model_->Set(model_->ItemIndexByID(shelf_id), new_item);
   }
-}
-
-void ChromeLauncherController::UpdateLauncherItemImage(
-    const std::string& app_id) {
-  AppIconLoader* icon_loader = GetAppIconLoaderForApp(app_id);
-  if (icon_loader)
-    icon_loader->UpdateImage(app_id);
 }
 
 void ChromeLauncherController::UpdateAppState(content::WebContents* contents,
@@ -694,6 +686,16 @@ ChromeLauncherController::GetArcDeferredLauncher() {
   return arc_deferred_launcher_.get();
 }
 
+AppIconLoader* ChromeLauncherController::GetAppIconLoaderForApp(
+    const std::string& app_id) {
+  for (const auto& app_icon_loader : app_icon_loaders_) {
+    if (app_icon_loader->CanLoadImageForApp(app_id))
+      return app_icon_loader.get();
+  }
+
+  return nullptr;
+}
+
 void ChromeLauncherController::SetShelfAutoHideBehaviorFromPrefs() {
   if (!ConnectToShelfController() || updating_shelf_pref_from_observer_)
     return;
@@ -757,16 +759,6 @@ bool ChromeLauncherController::IsAppPinned(const std::string& app_id) {
 
 void ChromeLauncherController::UnpinAppWithID(const std::string& app_id) {
   model_->UnpinAppWithID(app_id);
-}
-
-AppIconLoader* ChromeLauncherController::GetAppIconLoaderForApp(
-    const std::string& app_id) {
-  for (const auto& app_icon_loader : app_icon_loaders_) {
-    if (app_icon_loader->CanLoadImageForApp(app_id))
-      return app_icon_loader.get();
-  }
-
-  return nullptr;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1283,8 +1275,8 @@ void ChromeLauncherController::OnAutoHideBehaviorChanged(
 
 void ChromeLauncherController::OnShelfItemAdded(int32_t index,
                                                 const ash::ShelfItem& item) {
-  DCHECK(ash_util::IsRunningInMash()) << " Unexpected model synchronization";
-  DCHECK(!applying_remote_shelf_model_changes_) << " Unexpected model change";
+  DCHECK(ash_util::IsRunningInMash()) << "Unexpected model synchronization";
+  DCHECK(!applying_remote_shelf_model_changes_) << "Unexpected model change";
 
   // Ignore notifications of adding the AppList item; it should already exist.
   if (item.id.app_id == ash::kAppListId) {
@@ -1292,19 +1284,19 @@ void ChromeLauncherController::OnShelfItemAdded(int32_t index,
     return;
   }
 
-  DCHECK_LE(index, model_->item_count()) << " Index out of bounds";
-  DCHECK_GT(index, 0) << " Items can not preceed the AppList";
+  DCHECK_LE(index, model_->item_count()) << "Index out of bounds";
+  DCHECK_GT(index, 0) << "Items can not preceed the AppList";
   index = std::min(std::max(index, 1), model_->item_count());
   base::AutoReset<bool> reset(&applying_remote_shelf_model_changes_, true);
   model_->AddAt(index, item);
 }
 
 void ChromeLauncherController::OnShelfItemRemoved(const ash::ShelfID& id) {
-  DCHECK(ash_util::IsRunningInMash()) << " Unexpected model synchronization";
-  DCHECK(!applying_remote_shelf_model_changes_) << " Unexpected model change";
+  DCHECK(ash_util::IsRunningInMash()) << "Unexpected model synchronization";
+  DCHECK(!applying_remote_shelf_model_changes_) << "Unexpected model change";
   const int index = model_->ItemIndexByID(id);
-  DCHECK_GE(index, 0) << " No item found with the id: " << id;
-  DCHECK_NE(index, 0) << " The AppList shelf item cannot be removed";
+  DCHECK_GE(index, 0) << "Item not found";
+  DCHECK_NE(index, 0) << "The AppList shelf item cannot be removed";
   if (index <= 0)
     return;
   base::AutoReset<bool> reset(&applying_remote_shelf_model_changes_, true);
@@ -1313,17 +1305,17 @@ void ChromeLauncherController::OnShelfItemRemoved(const ash::ShelfID& id) {
 
 void ChromeLauncherController::OnShelfItemMoved(const ash::ShelfID& id,
                                                 int32_t index) {
-  DCHECK(ash_util::IsRunningInMash()) << " Unexpected model synchronization";
-  DCHECK(!applying_remote_shelf_model_changes_) << " Unexpected model change";
+  DCHECK(ash_util::IsRunningInMash()) << "Unexpected model synchronization";
+  DCHECK(!applying_remote_shelf_model_changes_) << "Unexpected model change";
   const int current_index = model_->ItemIndexByID(id);
-  DCHECK_GE(current_index, 0) << " No item found with the id: " << id;
-  DCHECK_NE(current_index, 0) << " The AppList shelf item cannot be moved";
+  DCHECK_GE(current_index, 0) << "No item found with the given id";
+  DCHECK_NE(current_index, 0) << "The AppList shelf item cannot be moved";
   if (current_index <= 0)
     return;
-  DCHECK_GT(index, 0) << " Items can not preceed the AppList";
-  DCHECK_LT(index, model_->item_count()) << " Index out of bounds";
+  DCHECK_GT(index, 0) << "Items can not preceed the AppList";
+  DCHECK_LT(index, model_->item_count()) << "Index out of bounds";
   index = std::min(std::max(index, 1), model_->item_count() - 1);
-  DCHECK_NE(current_index, index) << " The item is already at the given index";
+  DCHECK_NE(current_index, index) << "The item is already at the given index";
   if (current_index == index)
     return;
   base::AutoReset<bool> reset(&applying_remote_shelf_model_changes_, true);
@@ -1331,10 +1323,10 @@ void ChromeLauncherController::OnShelfItemMoved(const ash::ShelfID& id,
 }
 
 void ChromeLauncherController::OnShelfItemUpdated(const ash::ShelfItem& item) {
-  DCHECK(ash_util::IsRunningInMash()) << " Unexpected model synchronization";
-  DCHECK(!applying_remote_shelf_model_changes_) << " Unexpected model change";
+  DCHECK(ash_util::IsRunningInMash()) << "Unexpected model synchronization";
+  DCHECK(!applying_remote_shelf_model_changes_) << "Unexpected model change";
   const int index = model_->ItemIndexByID(item.id);
-  DCHECK_GE(index, 0) << " No item found with the id: " << item.id;
+  DCHECK_GE(index, 0) << "No item found with the given id";
   if (index < 0)
     return;
   base::AutoReset<bool> reset(&applying_remote_shelf_model_changes_, true);
@@ -1344,8 +1336,8 @@ void ChromeLauncherController::OnShelfItemUpdated(const ash::ShelfItem& item) {
 void ChromeLauncherController::OnShelfItemDelegateChanged(
     const ash::ShelfID& id,
     ash::mojom::ShelfItemDelegatePtr delegate) {
-  DCHECK(ash_util::IsRunningInMash()) << " Unexpected model synchronization";
-  DCHECK(!applying_remote_shelf_model_changes_) << " Unexpected model change";
+  DCHECK(ash_util::IsRunningInMash()) << "Unexpected model synchronization";
+  DCHECK(!applying_remote_shelf_model_changes_) << "Unexpected model change";
   base::AutoReset<bool> reset(&applying_remote_shelf_model_changes_, true);
   if (delegate.is_bound()) {
     model_->SetShelfItemDelegate(id,

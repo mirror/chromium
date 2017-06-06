@@ -39,7 +39,7 @@ views::View* TrayImageItem::CreateTrayView(LoginStatus status) {
   return tray_view_;
 }
 
-void TrayImageItem::OnTrayViewDestroyed() {
+void TrayImageItem::DestroyTrayView() {
   tray_view_ = nullptr;
 }
 

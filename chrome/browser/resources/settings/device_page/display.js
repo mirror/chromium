@@ -81,14 +81,6 @@ Polymer({
     },
 
     /** @private */
-    nightLightFeatureEnabled_: {
-      type: Boolean,
-      value: function() {
-        return loadTimeData.getBoolean('nightLightFeatureEnabled');
-      }
-    },
-
-    /** @private */
     unifiedDesktopMode_: {
       type: Boolean,
       value: false,

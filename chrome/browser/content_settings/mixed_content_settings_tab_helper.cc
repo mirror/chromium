@@ -23,8 +23,7 @@ MixedContentSettingsTabHelper::MixedContentSettingsTabHelper(WebContents* tab)
   // because in Chrome these settings are maintained at the tab level instead of
   // at the frame level as Blink does.
   MixedContentSettingsTabHelper* opener_settings =
-      MixedContentSettingsTabHelper::FromWebContents(
-          WebContents::FromRenderFrameHost(tab->GetOpener()));
+      MixedContentSettingsTabHelper::FromWebContents(tab->GetOpener());
   if (opener_settings) {
     insecure_content_site_instance_ =
         opener_settings->insecure_content_site_instance_;

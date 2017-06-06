@@ -29,7 +29,8 @@ struct BidirectionalStreamRequestInfo;
 class IOBuffer;
 
 class NET_EXPORT_PRIVATE BidirectionalStreamQuicImpl
-    : public BidirectionalStreamImpl {
+    : public BidirectionalStreamImpl,
+      public QuicChromiumClientStream::Delegate {
  public:
   explicit BidirectionalStreamQuicImpl(
       std::unique_ptr<QuicChromiumClientSession::Handle> session);
@@ -44,6 +45,9 @@ class NET_EXPORT_PRIVATE BidirectionalStreamQuicImpl
              std::unique_ptr<base::Timer> timer) override;
   void SendRequestHeaders() override;
   int ReadData(IOBuffer* buffer, int buffer_len) override;
+  void SendData(const scoped_refptr<IOBuffer>& data,
+                int length,
+                bool end_stream) override;
   void SendvData(const std::vector<scoped_refptr<IOBuffer>>& buffers,
                  const std::vector<int>& lengths,
                  bool end_stream) override;
@@ -53,7 +57,14 @@ class NET_EXPORT_PRIVATE BidirectionalStreamQuicImpl
   bool GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const override;
 
  private:
-  int WriteHeaders();
+  // QuicChromiumClientStream::Delegate implementation:
+  void OnClose() override;
+  void OnError(int error) override;
+
+  // Write headers to the stream and returns true on success. Posts a task to
+  // notify the delegate asynchronously and returns false on failure
+  bool WriteHeaders();
+
   void OnStreamReady(int rv);
   void OnSendDataComplete(int rv);
   void ReadInitialHeaders();
@@ -122,9 +133,6 @@ class NET_EXPORT_PRIVATE BidirectionalStreamQuicImpl
   // until next SendData/SendvData, during which QUIC will try to combine header
   // frame with data frame in the same packet if possible.
   bool send_request_headers_automatically_;
-
-  // True when callbacks to the delegate may be invoked synchronously.
-  bool may_invoke_callbacks_;
 
   base::WeakPtrFactory<BidirectionalStreamQuicImpl> weak_factory_;
 

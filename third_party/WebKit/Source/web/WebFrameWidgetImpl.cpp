@@ -59,8 +59,6 @@
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
 #include "core/page/PointerLockController.h"
-#include "modules/compositorworker/AnimationWorkletProxyClientImpl.h"
-#include "modules/compositorworker/CompositorWorkerProxyClientImpl.h"
 #include "platform/KeyboardCodes.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/animation/CompositorAnimationHost.h"
@@ -72,6 +70,8 @@
 #include "public/web/WebPlugin.h"
 #include "public/web/WebRange.h"
 #include "public/web/WebWidgetClient.h"
+#include "web/AnimationWorkletProxyClientImpl.h"
+#include "web/CompositorWorkerProxyClientImpl.h"
 #include "web/WebDevToolsAgentImpl.h"
 #include "web/WebPagePopupImpl.h"
 #include "web/WebRemoteFrameImpl.h"
@@ -596,10 +596,6 @@ bool WebFrameWidgetImpl::SelectionBounds(WebRect& anchor,
   if (!local_frame)
     return false;
 
-  FrameSelection& selection = local_frame->Selection();
-  if (!selection.IsAvailable() || selection.GetSelectionInDOMTree().IsNone())
-    return false;
-
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
   // needs to be audited.  See http://crbug.com/590369 for more details.
   local_frame->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
@@ -607,6 +603,7 @@ bool WebFrameWidgetImpl::SelectionBounds(WebRect& anchor,
   DocumentLifecycle::DisallowTransitionScope disallow_transition(
       local_frame->GetDocument()->Lifecycle());
 
+  FrameSelection& selection = local_frame->Selection();
   if (selection.ComputeVisibleSelectionInDOMTree().IsNone())
     return false;
 
@@ -645,14 +642,11 @@ bool WebFrameWidgetImpl::SelectionTextDirection(WebTextDirection& start,
   if (!frame)
     return false;
 
-  FrameSelection& selection = frame->Selection();
-  if (!selection.IsAvailable())
-    return false;
-
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
   // needs to be audited.  See http://crbug.com/590369 for more details.
   frame->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
+  FrameSelection& selection = frame->Selection();
   if (selection.ComputeVisibleSelectionInDOMTree()
           .ToNormalizedEphemeralRange()
           .IsNull())
@@ -660,7 +654,7 @@ bool WebFrameWidgetImpl::SelectionTextDirection(WebTextDirection& start,
   start = ToWebTextDirection(PrimaryDirectionOf(
       *selection.ComputeVisibleSelectionInDOMTree().Start().AnchorNode()));
   end = ToWebTextDirection(PrimaryDirectionOf(
-      *selection.ComputeVisibleSelectionInDOMTree().End().AnchorNode()));
+      *selection.ComputeVisibleSelectionInDOMTree().end().AnchorNode()));
   return true;
 }
 
@@ -668,9 +662,9 @@ bool WebFrameWidgetImpl::SelectionTextDirection(WebTextDirection& start,
 // code needs to be refactored  (http://crbug.com/629721).
 bool WebFrameWidgetImpl::IsSelectionAnchorFirst() const {
   if (const LocalFrame* frame = FocusedLocalFrameInWidget()) {
-    FrameSelection& selection = frame->Selection();
-    return selection.IsAvailable() &&
-           selection.ComputeVisibleSelectionInDOMTreeDeprecated().IsBaseFirst();
+    return frame->Selection()
+        .ComputeVisibleSelectionInDOMTreeDeprecated()
+        .IsBaseFirst();
   }
   return false;
 }
@@ -770,11 +764,12 @@ bool WebFrameWidgetImpl::GetCompositionCharacterBounds(
 void WebFrameWidgetImpl::SetRemoteViewportIntersection(
     const WebRect& viewport_intersection) {
   // Remote viewports are only applicable to local frames with remote ancestors.
-  DCHECK(local_root_->Parent() && local_root_->Parent()->IsWebRemoteFrame() &&
-         local_root_->GetFrame());
+  DCHECK(local_root_->Parent() && local_root_->Parent()->IsWebRemoteFrame());
 
-  local_root_->GetFrame()->SetViewportIntersectionFromParent(
-      viewport_intersection);
+  if (local_root_->GetFrame()) {
+    local_root_->GetFrame()->SetViewportIntersectionFromParent(
+        viewport_intersection);
+  }
 }
 
 void WebFrameWidgetImpl::HandleMouseLeave(LocalFrame& main_frame,

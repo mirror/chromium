@@ -23,9 +23,9 @@ class FakeResourceProvider : public ResourceProvider {
     resource_settings.texture_id_allocation_chunk_size = 1;
     resource_settings.buffer_to_texture_target_map =
         DefaultBufferToTextureTargetMapForTesting();
-    return base::WrapUnique(new FakeResourceProvider(
-        context_provider, shared_bitmap_manager, nullptr, nullptr, true, false,
-        resource_settings));
+    return base::WrapUnique(
+        new FakeResourceProvider(context_provider, shared_bitmap_manager,
+                                 nullptr, nullptr, true, resource_settings));
   }
 
   static std::unique_ptr<FakeResourceProvider> Create(
@@ -38,7 +38,7 @@ class FakeResourceProvider : public ResourceProvider {
         DefaultBufferToTextureTargetMapForTesting();
     return base::WrapUnique(new FakeResourceProvider(
         context_provider, shared_bitmap_manager, gpu_memory_buffer_manager,
-        nullptr, true, false, resource_settings));
+        nullptr, true, resource_settings));
   }
 
  private:
@@ -47,14 +47,12 @@ class FakeResourceProvider : public ResourceProvider {
                        gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
                        BlockingTaskRunner* blocking_main_thread_task_runner,
                        bool delegated_sync_points_required,
-                       bool enable_color_corect_rasterization,
                        const ResourceSettings resource_settings)
       : ResourceProvider(context_provider,
                          shared_bitmap_manager,
                          gpu_memory_buffer_manager,
                          blocking_main_thread_task_runner,
                          delegated_sync_points_required,
-                         enable_color_corect_rasterization,
                          resource_settings) {}
 };
 

@@ -35,7 +35,6 @@ namespace cc {
 namespace {
 
 static constexpr FrameSinkId kArbitraryFrameSinkId(3, 3);
-static constexpr FrameSinkId kAnotherFrameSinkId(4, 4);
 
 class TestSoftwareOutputDevice : public SoftwareOutputDevice {
  public:
@@ -109,31 +108,23 @@ class DisplayTest : public testing::Test {
       provider->BindToCurrentThread();
       output_surface = FakeOutputSurface::Create3d(std::move(provider));
     } else {
-      auto device = base::MakeUnique<TestSoftwareOutputDevice>();
+      std::unique_ptr<TestSoftwareOutputDevice> device(
+          new TestSoftwareOutputDevice);
       software_output_device_ = device.get();
       output_surface = FakeOutputSurface::CreateSoftware(std::move(device));
     }
     output_surface_ = output_surface.get();
-    auto scheduler = base::MakeUnique<TestDisplayScheduler>(task_runner_.get());
-    scheduler_ = scheduler.get();
-    display_ = CreateDisplay(settings, kArbitraryFrameSinkId,
-                             begin_frame_source_.get(), std::move(scheduler),
-                             std::move(output_surface));
-  }
 
-  std::unique_ptr<Display> CreateDisplay(
-      const RendererSettings& settings,
-      const FrameSinkId& frame_sink_id,
-      BeginFrameSource* begin_frame_source,
-      std::unique_ptr<DisplayScheduler> scheduler,
-      std::unique_ptr<OutputSurface> output_surface) {
-    auto display = base::MakeUnique<Display>(
+    std::unique_ptr<TestDisplayScheduler> scheduler(
+        new TestDisplayScheduler(task_runner_.get()));
+    scheduler_ = scheduler.get();
+
+    display_ = base::MakeUnique<Display>(
         &shared_bitmap_manager_, nullptr /* gpu_memory_buffer_manager */,
-        settings, frame_sink_id, begin_frame_source, std::move(output_surface),
-        std::move(scheduler),
+        settings, kArbitraryFrameSinkId, begin_frame_source_.get(),
+        std::move(output_surface), std::move(scheduler),
         base::MakeUnique<TextureMailboxDeleter>(task_runner_.get()));
-    display->SetVisible(true);
-    return display;
+    display_->SetVisible(true);
   }
 
  protected:
@@ -201,7 +192,7 @@ TEST_F(DisplayTest, DisplayDamaged) {
   std::unique_ptr<RenderPass> pass = RenderPass::Create();
   pass->output_rect = gfx::Rect(0, 0, 100, 100);
   pass->damage_rect = gfx::Rect(10, 10, 1, 1);
-  pass->id = 1u;
+  pass->id = 1;
   pass_list.push_back(std::move(pass));
 
   scheduler_->ResetDamageForTest();
@@ -225,7 +216,7 @@ TEST_F(DisplayTest, DisplayDamaged) {
     pass = RenderPass::Create();
     pass->output_rect = gfx::Rect(0, 0, 100, 100);
     pass->damage_rect = gfx::Rect(10, 10, 1, 1);
-    pass->id = 1u;
+    pass->id = 1;
 
     pass_list.push_back(std::move(pass));
     scheduler_->ResetDamageForTest();
@@ -251,7 +242,7 @@ TEST_F(DisplayTest, DisplayDamaged) {
     pass = RenderPass::Create();
     pass->output_rect = gfx::Rect(0, 0, 100, 100);
     pass->damage_rect = gfx::Rect(10, 10, 0, 0);
-    pass->id = 1u;
+    pass->id = 1;
 
     pass_list.push_back(std::move(pass));
     scheduler_->ResetDamageForTest();
@@ -271,7 +262,7 @@ TEST_F(DisplayTest, DisplayDamaged) {
     pass = RenderPass::Create();
     pass->output_rect = gfx::Rect(0, 0, 99, 99);
     pass->damage_rect = gfx::Rect(10, 10, 10, 10);
-    pass->id = 1u;
+    pass->id = 1;
 
     local_surface_id = id_allocator_.GenerateId();
     display_->SetLocalSurfaceId(local_surface_id, 1.f);
@@ -294,7 +285,7 @@ TEST_F(DisplayTest, DisplayDamaged) {
     pass = RenderPass::Create();
     pass->output_rect = gfx::Rect(0, 0, 100, 100);
     pass->damage_rect = gfx::Rect(10, 10, 0, 0);
-    pass->id = 1u;
+    pass->id = 1;
 
     local_surface_id = id_allocator_.GenerateId();
     display_->SetLocalSurfaceId(local_surface_id, 1.f);
@@ -322,7 +313,7 @@ TEST_F(DisplayTest, DisplayDamaged) {
     bool copy_called = false;
     pass->copy_requests.push_back(CopyOutputRequest::CreateRequest(
         base::Bind(&CopyCallback, &copy_called)));
-    pass->id = 1u;
+    pass->id = 1;
 
     pass_list.push_back(std::move(pass));
     scheduler_->ResetDamageForTest();
@@ -344,7 +335,7 @@ TEST_F(DisplayTest, DisplayDamaged) {
     pass = RenderPass::Create();
     pass->output_rect = gfx::Rect(0, 0, 100, 100);
     pass->damage_rect = gfx::Rect(10, 10, 0, 0);
-    pass->id = 1u;
+    pass->id = 1;
 
     pass_list.push_back(std::move(pass));
     scheduler_->ResetDamageForTest();
@@ -376,7 +367,7 @@ TEST_F(DisplayTest, DisplayDamaged) {
     pass = RenderPass::Create();
     pass->output_rect = gfx::Rect(0, 0, 200, 200);
     pass->damage_rect = gfx::Rect(10, 10, 10, 10);
-    pass->id = 1u;
+    pass->id = 1;
 
     pass_list.push_back(std::move(pass));
     scheduler_->ResetDamageForTest();
@@ -405,7 +396,7 @@ TEST_F(DisplayTest, DisplayDamaged) {
     pass = RenderPass::Create();
     pass->output_rect = gfx::Rect(0, 0, 99, 99);
     pass->damage_rect = gfx::Rect(0, 0, 99, 99);
-    pass->id = 1u;
+    pass->id = 1;
 
     pass_list.push_back(std::move(pass));
     scheduler_->ResetDamageForTest();
@@ -457,7 +448,7 @@ TEST_F(DisplayTest, Finish) {
     std::unique_ptr<RenderPass> pass = RenderPass::Create();
     pass->output_rect = gfx::Rect(0, 0, 100, 100);
     pass->damage_rect = gfx::Rect(10, 10, 1, 1);
-    pass->id = 1u;
+    pass->id = 1;
     pass_list.push_back(std::move(pass));
 
     SubmitCompositorFrame(&pass_list, local_surface_id1);
@@ -484,7 +475,7 @@ TEST_F(DisplayTest, Finish) {
     std::unique_ptr<RenderPass> pass = RenderPass::Create();
     pass->output_rect = gfx::Rect(0, 0, 200, 200);
     pass->damage_rect = gfx::Rect(10, 10, 1, 1);
-    pass->id = 1u;
+    pass->id = 1;
     pass_list.push_back(std::move(pass));
 
     SubmitCompositorFrame(&pass_list, local_surface_id2);
@@ -523,60 +514,6 @@ TEST_F(DisplayTest, ContextLossInformsClient) {
       GL_GUILTY_CONTEXT_RESET_ARB, GL_INNOCENT_CONTEXT_RESET_ARB);
   output_surface_->context_provider()->ContextGL()->Flush();
   EXPECT_EQ(1, client.loss_count());
-}
-
-// Regression test for https://crbug.com/727162: Submitting a CompositorFrame to
-// a surface should only cause damage on the Display the surface belongs to.
-// There should not be a side-effect on other Displays.
-TEST_F(DisplayTest, CompositorFrameDamagesCorrectDisplay) {
-  RendererSettings settings;
-  LocalSurfaceId local_surface_id(id_allocator_.GenerateId());
-
-  // Set up first display.
-  SetUpDisplay(settings, nullptr);
-  StubDisplayClient client;
-  display_->Initialize(&client, &manager_);
-  display_->SetLocalSurfaceId(local_surface_id, 1.f);
-
-  // Set up second frame sink + display.
-  auto support2 = CompositorFrameSinkSupport::Create(
-      nullptr, &manager_, kAnotherFrameSinkId, true /* is_root */,
-      true /* handles_frame_sink_id_invalidation */,
-      true /* needs_sync_points */);
-  auto begin_frame_source2 = base::MakeUnique<StubBeginFrameSource>();
-  auto scheduler_for_display2 =
-      base::MakeUnique<TestDisplayScheduler>(task_runner_.get());
-  TestDisplayScheduler* scheduler2 = scheduler_for_display2.get();
-  auto display2 =
-      CreateDisplay(settings, kAnotherFrameSinkId, begin_frame_source2.get(),
-                    std::move(scheduler_for_display2),
-                    FakeOutputSurface::CreateSoftware(
-                        base::MakeUnique<TestSoftwareOutputDevice>()));
-  StubDisplayClient client2;
-  display2->Initialize(&client2, &manager_);
-  display2->SetLocalSurfaceId(local_surface_id, 1.f);
-
-  display_->Resize(gfx::Size(100, 100));
-  display2->Resize(gfx::Size(100, 100));
-
-  scheduler_->ResetDamageForTest();
-  scheduler2->ResetDamageForTest();
-  EXPECT_FALSE(scheduler_->damaged);
-  EXPECT_FALSE(scheduler2->damaged);
-
-  // Submit a frame for display_ with full damage.
-  RenderPassList pass_list;
-  std::unique_ptr<RenderPass> pass = RenderPass::Create();
-  pass->output_rect = gfx::Rect(0, 0, 100, 100);
-  pass->damage_rect = gfx::Rect(10, 10, 1, 1);
-  pass->id = 1;
-  pass_list.push_back(std::move(pass));
-
-  SubmitCompositorFrame(&pass_list, local_surface_id);
-
-  // Should have damaged only display_ but not display2.
-  EXPECT_TRUE(scheduler_->damaged);
-  EXPECT_FALSE(scheduler2->damaged);
 }
 
 }  // namespace

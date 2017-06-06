@@ -239,7 +239,7 @@ void Internals::ResetToConsistentState(Page* page) {
 
   if (!g_s_features_backup)
     g_s_features_backup = new RuntimeEnabledFeatures::Backup;
-  g_s_features_backup->Restore();
+  g_s_features_backup->restore();
   page->SetIsCursorVisible(true);
   page->SetPageScaleFactor(1);
   page->DeprecatedLocalMainFrame()
@@ -1061,31 +1061,13 @@ static bool ParseColor(const String& value,
   return true;
 }
 
-static WTF::Optional<CompositionMarker::Thickness> ThicknessFrom(
-    const String& thickness) {
-  if (EqualIgnoringASCIICase(thickness, "thin"))
-    return CompositionMarker::Thickness::kThin;
-  if (EqualIgnoringASCIICase(thickness, "thick"))
-    return CompositionMarker::Thickness::kThick;
-  return WTF::nullopt;
-}
-
 void Internals::addCompositionMarker(const Range* range,
                                      const String& underline_color_value,
-                                     const String& thickness_value,
+                                     bool thick,
                                      const String& background_color_value,
                                      ExceptionState& exception_state) {
   DCHECK(range);
   range->OwnerDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-
-  WTF::Optional<CompositionMarker::Thickness> thickness =
-      ThicknessFrom(thickness_value);
-  if (!thickness) {
-    exception_state.ThrowDOMException(
-        kSyntaxError,
-        "The thickness provided ('" + thickness_value + "') is invalid.");
-    return;
-  }
 
   Color underline_color;
   Color background_color;
@@ -1094,8 +1076,7 @@ void Internals::addCompositionMarker(const Range* range,
       ParseColor(background_color_value, background_color, exception_state,
                  "Invalid background color.")) {
     range->OwnerDocument().Markers().AddCompositionMarker(
-        EphemeralRange(range), underline_color, thickness.value(),
-        background_color);
+        EphemeralRange(range), underline_color, thick, background_color);
   }
 }
 
@@ -3105,35 +3086,7 @@ void Internals::setNetworkConnectionInfoOverride(
         ExceptionMessages::FailedToEnumerate("connection type", type));
     return;
   }
-  GetNetworkStateNotifier().SetNetworkConnectionInfoOverride(on_line, webtype,
-                                                             downlink_max_mbps);
-}
-
-void Internals::setNetworkQualityInfoOverride(const String& effective_type,
-                                              unsigned long transport_rtt_msec,
-                                              double downlink_throughput_mbps,
-                                              ExceptionState& exception_state) {
-  WebEffectiveConnectionType web_effective_type =
-      WebEffectiveConnectionType::kTypeUnknown;
-  if (effective_type == "offline") {
-    web_effective_type = WebEffectiveConnectionType::kTypeOffline;
-  } else if (effective_type == "slow-2g") {
-    web_effective_type = WebEffectiveConnectionType::kTypeSlow2G;
-  } else if (effective_type == "2g") {
-    web_effective_type = WebEffectiveConnectionType::kType2G;
-  } else if (effective_type == "3g") {
-    web_effective_type = WebEffectiveConnectionType::kType3G;
-  } else if (effective_type == "4g") {
-    web_effective_type = WebEffectiveConnectionType::kType4G;
-  } else if (effective_type != "unknown") {
-    exception_state.ThrowDOMException(
-        kNotFoundError, ExceptionMessages::FailedToEnumerate(
-                            "effective connection type", effective_type));
-    return;
-  }
-
-  GetNetworkStateNotifier().SetNetworkQualityInfoOverride(
-      web_effective_type, transport_rtt_msec, downlink_throughput_mbps);
+  GetNetworkStateNotifier().SetOverride(on_line, webtype, downlink_max_mbps);
 }
 
 void Internals::clearNetworkConnectionInfoOverride() {

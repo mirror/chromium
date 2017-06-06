@@ -169,7 +169,7 @@ class TranslateBubbleViewTest : public views::ViewsTestBase {
   void CreateAndShowBubble() {
     std::unique_ptr<TranslateBubbleModel> model(mock_model_);
     bubble_ = new TranslateBubbleView(anchor_widget_->GetContentsView(),
-                                      gfx::Point(), std::move(model),
+                                      std::move(model),
                                       translate::TranslateErrors::NONE, NULL);
     views::BubbleDialogDelegateView::CreateBubble(bubble_)->Show();
   }

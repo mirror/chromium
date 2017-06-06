@@ -7,7 +7,6 @@
 #include <cmath>
 #include <limits>
 
-#include "ash/ash_switches.h"
 #include "ash/public/cpp/ash_pref_names.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/session_types.h"
@@ -16,7 +15,6 @@
 #include "ash/test/ash_test_helper.h"
 #include "ash/test/test_session_controller_client.h"
 #include "ash/test/test_shell_delegate.h"
-#include "base/command_line.h"
 #include "base/macros.h"
 #include "components/prefs/testing_pref_service.h"
 #include "ui/compositor/layer.h"
@@ -78,10 +76,6 @@ class NightLightTest : public test::AshTestBase {
 
   // ash::test::AshTestBase:
   void SetUp() override {
-    // Explicitly enable the NightLight feature for the tests.
-    base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        ash::switches::kAshEnableNightLight);
-
     test::AshTestBase::SetUp();
     CreateTestUserSessions();
     Shell::RegisterPrefs(user1_pref_service_.registry());

@@ -160,13 +160,13 @@ public class CustomTabsConnectionTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
+                Assert.assertFalse(WarmupManager.getInstance().hasSpareWebContents());
                 String referrer =
                         mCustomTabsConnection.getReferrerForSession(token).getUrl();
                 WebContents webContents =
                         mCustomTabsConnection.takePrerenderedUrl(token, URL, referrer);
                 Assert.assertNotNull(webContents);
                 webContents.destroy();
-                Assert.assertFalse(WarmupManager.getInstance().hasSpareWebContents());
             }
         });
     }
@@ -357,10 +357,9 @@ public class CustomTabsConnectionTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                Assert.assertEquals(URL, mCustomTabsConnection.getSpeculatedUrl(token));
+                Assert.assertNull(WarmupManager.getInstance().takeSpareWebContents(false, false));
             }
         });
-
         Assert.assertTrue(mCustomTabsConnection.mayLaunchUrl(token, null, null, null));
         // mayLaunchUrl() posts a task, the following has to run after it.
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
@@ -635,53 +634,5 @@ public class CustomTabsConnectionTest {
                 }
             });
         }
-    }
-
-    @Test
-    @SmallTest
-    @Restriction(RESTRICTION_TYPE_NON_LOW_END_DEVICE)
-    public void testCellularPrerenderingDoesntKillSpareRenderer() throws Exception {
-        final CustomTabsSessionToken token =
-                CustomTabsSessionToken.createDummySessionTokenForTesting();
-        Assert.assertTrue(mCustomTabsConnection.newSession(token));
-        mCustomTabsConnection.setShouldPrerenderOnCellularForSession(token, true);
-        mCustomTabsConnection.warmup(0);
-
-        Assert.assertTrue(mCustomTabsConnection.mayLaunchUrl(token, Uri.parse(URL), null, null));
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(WarmupManager.getInstance().hasSpareWebContents());
-                String referrer = mCustomTabsConnection.getReferrerForSession(token).getUrl();
-                WebContents webContents =
-                        mCustomTabsConnection.takePrerenderedUrl(token, URL, referrer);
-                Assert.assertNotNull(webContents);
-                webContents.destroy();
-                // destroyed when the prerender is used.
-                Assert.assertFalse(WarmupManager.getInstance().hasSpareWebContents());
-            }
-        });
-    }
-
-    @Test
-    @SmallTest
-    @Restriction(RESTRICTION_TYPE_NON_LOW_END_DEVICE)
-    public void testUnmatchedCellularPrerenderingDoesntKillSpareRenderer() throws Exception {
-        final CustomTabsSessionToken token =
-                CustomTabsSessionToken.createDummySessionTokenForTesting();
-        Assert.assertTrue(mCustomTabsConnection.newSession(token));
-        mCustomTabsConnection.setShouldPrerenderOnCellularForSession(token, true);
-        mCustomTabsConnection.warmup(0);
-
-        Assert.assertTrue(mCustomTabsConnection.mayLaunchUrl(token, Uri.parse(URL), null, null));
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(WarmupManager.getInstance().hasSpareWebContents());
-                String referrer = mCustomTabsConnection.getReferrerForSession(token).getUrl();
-                Assert.assertNull(mCustomTabsConnection.takePrerenderedUrl(token, URL2, referrer));
-                Assert.assertTrue(WarmupManager.getInstance().hasSpareWebContents());
-            }
-        });
     }
 }

@@ -84,7 +84,7 @@ class PaymentAppBrowserTest : public ContentBrowserTest {
     ASSERT_EQ("registered", script_result);
   }
 
-  std::map<std::string, int64_t> GetAllPaymentInstrumentRegistrationIDs() {
+  std::vector<int64_t> GetAllPaymentAppIDs() {
     base::RunLoop run_loop;
     PaymentAppProvider::PaymentApps apps;
     PaymentAppProvider::GetInstance()->GetAllPaymentApps(
@@ -93,21 +93,17 @@ class PaymentAppBrowserTest : public ContentBrowserTest {
                        &apps));
     run_loop.Run();
 
-    std::map<std::string, int64_t> registrationIds;
+    std::vector<int64_t> ids;
     for (const auto& app_info : apps) {
       for (const auto& instrument : app_info.second) {
-        registrationIds.insert(std::pair<std::string, int64_t>(
-            instrument->instrument_key, instrument->registration_id));
+        ids.push_back(instrument->registration_id);
       }
     }
 
-    return registrationIds;
+    return ids;
   }
 
-  PaymentAppResponsePtr InvokePaymentAppWithTestData(
-      int64_t registration_id,
-      const std::string& supported_method,
-      const std::string& instrument_key) {
+  PaymentAppResponsePtr InvokePaymentAppWithTestData(int64_t registration_id) {
     PaymentAppRequestPtr app_request = PaymentAppRequest::New();
 
     app_request->top_level_origin = GURL("https://example.com");
@@ -117,7 +113,7 @@ class PaymentAppBrowserTest : public ContentBrowserTest {
     app_request->payment_request_id = "payment-request-id";
 
     app_request->method_data.push_back(PaymentMethodData::New());
-    app_request->method_data[0]->supported_methods = {supported_method};
+    app_request->method_data[0]->supported_methods = {"basic-card"};
 
     app_request->total = PaymentItem::New();
     app_request->total->amount = PaymentCurrencyAmount::New();
@@ -128,10 +124,10 @@ class PaymentAppBrowserTest : public ContentBrowserTest {
     modifier->total->amount = PaymentCurrencyAmount::New();
     modifier->total->amount->currency = "USD";
     modifier->method_data = PaymentMethodData::New();
-    modifier->method_data->supported_methods = {supported_method};
+    modifier->method_data->supported_methods = {"basic-card"};
     app_request->modifiers.push_back(std::move(modifier));
 
-    app_request->instrument_key = instrument_key;
+    app_request->instrument_key = "instrument-key";
 
     base::RunLoop run_loop;
     PaymentAppResponsePtr response;
@@ -170,19 +166,16 @@ class PaymentAppBrowserTest : public ContentBrowserTest {
 IN_PROC_BROWSER_TEST_F(PaymentAppBrowserTest, PaymentAppInvocation) {
   RegisterPaymentApp();
 
-  std::map<std::string, int64_t> registrationIds =
-      GetAllPaymentInstrumentRegistrationIDs();
-  ASSERT_EQ(2U, registrationIds.size());
+  std::vector<int64_t> ids = GetAllPaymentAppIDs();
+  ASSERT_EQ(1U, ids.size());
 
-  PaymentAppResponsePtr response(InvokePaymentAppWithTestData(
-      registrationIds.at("basic-card-payment-app-id"), "basic-card",
-      "basic-card-payment-app-id"));
+  PaymentAppResponsePtr response(InvokePaymentAppWithTestData(ids[0]));
   ASSERT_EQ("test", response->method_name);
 
   ClearStoragePartitionData();
 
-  registrationIds = GetAllPaymentInstrumentRegistrationIDs();
-  ASSERT_EQ(0U, registrationIds.size());
+  ids = GetAllPaymentAppIDs();
+  ASSERT_EQ(0U, ids.size());
 
   EXPECT_EQ("https://example.com/", PopConsoleString() /* topLevelOrigin */);
   EXPECT_EQ("https://example.com/",
@@ -199,45 +192,7 @@ IN_PROC_BROWSER_TEST_F(PaymentAppBrowserTest, PaymentAppInvocation) {
       "\"total\":{\"amount\":{\"currency\":\"USD\",\"currencySystem\":\"urn:"
       "iso:std:iso:4217\",\"value\":\"\"},\"label\":\"\",\"pending\":false}}]",
       PopConsoleString() /* modifiers */);
-  EXPECT_EQ("basic-card-payment-app-id",
-            PopConsoleString() /* instrumentKey */);
+  EXPECT_EQ("instrument-key", PopConsoleString() /* instrumentKey */);
 }
 
-IN_PROC_BROWSER_TEST_F(PaymentAppBrowserTest, PaymentAppOpenWindowFailed) {
-  RegisterPaymentApp();
-
-  std::map<std::string, int64_t> registrationIds =
-      GetAllPaymentInstrumentRegistrationIDs();
-  ASSERT_EQ(2U, registrationIds.size());
-
-  PaymentAppResponsePtr response(InvokePaymentAppWithTestData(
-      registrationIds.at("bobpay-payment-app-id"), "https://bobpay.com",
-      "bobpay-payment-app-id"));
-  // InvokePaymentAppCallback returns empty method_name in case of failure, like
-  // in PaymentRequestRespondWithObserver::OnResponseRejected.
-  ASSERT_EQ("", response->method_name);
-
-  ClearStoragePartitionData();
-
-  registrationIds = GetAllPaymentInstrumentRegistrationIDs();
-  ASSERT_EQ(0U, registrationIds.size());
-
-  EXPECT_EQ("https://example.com/", PopConsoleString() /* topLevelOrigin */);
-  EXPECT_EQ("https://example.com/",
-            PopConsoleString() /* paymentRequestOrigin */);
-  EXPECT_EQ("payment-request-id", PopConsoleString() /* paymentRequestId */);
-  EXPECT_EQ("[{\"supportedMethods\":[\"https://bobpay.com\"]}]",
-            PopConsoleString() /* methodData */);
-  EXPECT_EQ(
-      "{\"amount\":{\"currency\":\"USD\",\"currencySystem\":\"urn:iso:std:iso:"
-      "4217\",\"value\":\"\"},\"label\":\"\",\"pending\":false}",
-      PopConsoleString() /* total */);
-  EXPECT_EQ(
-      "[{\"additionalDisplayItems\":[],\"supportedMethods\":[\"https://"
-      "bobpay.com\"],"
-      "\"total\":{\"amount\":{\"currency\":\"USD\",\"currencySystem\":\"urn:"
-      "iso:std:iso:4217\",\"value\":\"\"},\"label\":\"\",\"pending\":false}}]",
-      PopConsoleString() /* modifiers */);
-  EXPECT_EQ("bobpay-payment-app-id", PopConsoleString() /* instrumentKey */);
-}
 }  // namespace content

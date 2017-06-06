@@ -528,7 +528,6 @@ IN_PROC_BROWSER_TEST_F(SettingsResetPromptModelBrowserTest,
   // extensions so that we can expect the extensions to be disabled after the
   // reset even though we are mocking the |ProfileResetter|.
   model->PerformReset(
-      base::MakeUnique<BrandcodedDefaultSettings>(),
       base::Bind(&SettingsResetPromptModelBrowserTest::OnResetDone,
                  base::Unretained(this)));
   base::RunLoop().RunUntilIdle();
@@ -579,7 +578,6 @@ IN_PROC_BROWSER_TEST_F(SettingsResetPromptModelBrowserTest,
   // extensions so that we can expect the extensions to be disabled after the
   // reset even though we are mocking the |ProfileResetter|.
   model->PerformReset(
-      base::MakeUnique<BrandcodedDefaultSettings>(),
       base::Bind(&SettingsResetPromptModelBrowserTest::OnResetDone,
                  base::Unretained(this)));
   base::RunLoop().RunUntilIdle();
@@ -630,7 +628,6 @@ IN_PROC_BROWSER_TEST_F(SettingsResetPromptModelBrowserTest,
   // extensions so that we can expect the extensions to be disabled after the
   // reset even though we are mocking the |ProfileResetter|.
   model->PerformReset(
-      base::MakeUnique<BrandcodedDefaultSettings>(),
       base::Bind(&SettingsResetPromptModelBrowserTest::OnResetDone,
                  base::Unretained(this)));
   base::RunLoop().RunUntilIdle();

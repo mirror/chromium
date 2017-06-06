@@ -141,7 +141,11 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   static unsigned GetWebGLVersion(const CanvasRenderingContext*);
 
   static std::unique_ptr<WebGraphicsContext3DProvider>
-  CreateWebGraphicsContext3DProvider(CanvasRenderingContextHost*,
+  CreateWebGraphicsContext3DProvider(HTMLCanvasElement*,
+                                     const CanvasContextCreationAttributes&,
+                                     unsigned web_gl_version);
+  static std::unique_ptr<WebGraphicsContext3DProvider>
+  CreateWebGraphicsContext3DProvider(ScriptState*,
                                      const CanvasContextCreationAttributes&,
                                      unsigned web_gl_version);
   static void ForceNextWebGLContextCreationToFail();
@@ -1654,7 +1658,8 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
                             unsigned);
   static bool SupportOwnOffscreenSurface(ExecutionContext*);
   static std::unique_ptr<WebGraphicsContext3DProvider>
-  CreateContextProviderInternal(CanvasRenderingContextHost*,
+  CreateContextProviderInternal(HTMLCanvasElement*,
+                                ScriptState*,
                                 const CanvasContextCreationAttributes&,
                                 unsigned);
   void TexImageCanvasByGPU(TexImageFunctionID,

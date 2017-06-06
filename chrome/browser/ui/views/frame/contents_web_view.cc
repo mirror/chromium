@@ -61,11 +61,12 @@ void ContentsWebView::OnThemeChanged() {
   // Make sure the background is opaque.
   const SkColor ntp_background = color_utils::GetResultingPaintColor(
       theme->GetColor(ThemeProperties::COLOR_NTP_BACKGROUND), SK_ColorWHITE);
-  SetBackground(views::CreateSolidBackground(SkColorSetARGB(
-      SkColorGetA(ntp_background),
+  set_background(views::Background::CreateSolidBackground(
       SkColorGetR(ntp_background) * kBackgroundBrightness / 0xFF,
       SkColorGetG(ntp_background) * kBackgroundBrightness / 0xFF,
-      SkColorGetB(ntp_background) * kBackgroundBrightness / 0xFF)));
+      SkColorGetB(ntp_background) * kBackgroundBrightness / 0xFF,
+      SkColorGetA(ntp_background)));
+
 
   if (web_contents()) {
     content::RenderWidgetHostView* rwhv =

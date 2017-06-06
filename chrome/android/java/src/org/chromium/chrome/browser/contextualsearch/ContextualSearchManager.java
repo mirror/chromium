@@ -727,9 +727,8 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
         if ((selectionStartAdjust != 0 || selectionEndAdjust != 0)
                 && mSelectionController.getSelectionType() == SelectionType.TAP) {
             String originalSelection = mContext == null ? null : mContext.getInitialSelectedWord();
-            String currentSelection = mSelectionController.getSelectedText();
-            if (currentSelection != null) currentSelection = currentSelection.trim();
-            if (originalSelection != null && originalSelection.trim().equals(currentSelection)) {
+            if (originalSelection != null
+                    && originalSelection.equals(mSelectionController.getSelectedText())) {
                 mSelectionController.adjustSelection(selectionStartAdjust, selectionEndAdjust);
                 mContext.onSelectionAdjusted(selectionStartAdjust, selectionEndAdjust);
             }

@@ -74,13 +74,13 @@ views::View* TrayUser::CreateDefaultView(LoginStatus status) {
   return user_;
 }
 
-void TrayUser::OnTrayViewDestroyed() {
+void TrayUser::DestroyTrayView() {
   layout_view_ = nullptr;
   avatar_ = nullptr;
   label_ = nullptr;
 }
 
-void TrayUser::OnDefaultViewDestroyed() {
+void TrayUser::DestroyDefaultView() {
   user_ = nullptr;
 }
 

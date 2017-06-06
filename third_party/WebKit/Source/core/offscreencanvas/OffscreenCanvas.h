@@ -70,7 +70,7 @@ class CORE_EXPORT OffscreenCanvas final
   bool IsNeutered() const { return is_neutered_; }
   void SetNeutered();
   CanvasRenderingContext* GetCanvasRenderingContext(
-      ExecutionContext*,
+      ScriptState*,
       const String&,
       const CanvasContextCreationAttributes&);
   CanvasRenderingContext* RenderingContext() { return context_; }
@@ -95,6 +95,10 @@ class CORE_EXPORT OffscreenCanvas final
   }
   uint32_t ClientId() const { return client_id_; }
   uint32_t SinkId() const { return sink_id_; }
+
+  void SetExecutionContext(ExecutionContext* context) {
+    execution_context_ = context;
+  }
 
   ScriptPromise Commit(RefPtr<StaticBitmapImage>,
                        const SkIRect& damage_rect,
@@ -149,8 +153,6 @@ class CORE_EXPORT OffscreenCanvas final
   DispatchEventResult HostDispatchEvent(Event* event) {
     return DispatchEvent(event);
   }
-
-  bool IsWebGLAllowed() const override { return true; }
 
   DECLARE_VIRTUAL_TRACE();
 

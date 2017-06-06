@@ -7,7 +7,6 @@
 
 #include "core/CoreExport.h"
 #include "core/layout/ng/inline/ng_inline_item_result.h"
-#include "core/layout/ng/inline/ng_inline_node.h"
 #include "platform/heap/Handle.h"
 #include "platform/text/TextBreakIterator.h"
 #include "platform/wtf/Allocator.h"
@@ -26,7 +25,7 @@ class NGInlineLayoutAlgorithm;
 // so that NGInlineLayoutAlgorithm can build a line box from the output.
 class CORE_EXPORT NGLineBreaker {
  public:
-  NGLineBreaker(NGInlineNode,
+  NGLineBreaker(NGInlineNode*,
                 const NGConstraintSpace*,
                 NGInlineBreakToken* = nullptr);
   ~NGLineBreaker() {}
@@ -79,7 +78,7 @@ class CORE_EXPORT NGLineBreaker {
   void MoveToNextOf(const NGInlineItemResult&);
   void SkipCollapsibleWhitespaces();
 
-  NGInlineNode node_;
+  Persistent<NGInlineNode> node_;
   const NGConstraintSpace* constraint_space_;
   const AtomicString locale_;
   unsigned item_index_;

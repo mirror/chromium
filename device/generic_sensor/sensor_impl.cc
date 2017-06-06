@@ -25,21 +25,21 @@ mojom::SensorClientRequest SensorImpl::GetClient() {
 
 void SensorImpl::AddConfiguration(
     const PlatformSensorConfiguration& configuration,
-    AddConfigurationCallback callback) {
+    const AddConfigurationCallback& callback) {
   // TODO(Mikhail): To avoid overflowing browser by repeated AddConfigs
   // (maybe limit the number of configs per client).
-  std::move(callback).Run(sensor_->StartListening(this, configuration));
+  callback.Run(sensor_->StartListening(this, configuration));
 }
 
 void SensorImpl::GetDefaultConfiguration(
-    GetDefaultConfigurationCallback callback) {
-  std::move(callback).Run(sensor_->GetDefaultConfiguration());
+    const GetDefaultConfigurationCallback& callback) {
+  callback.Run(sensor_->GetDefaultConfiguration());
 }
 
 void SensorImpl::RemoveConfiguration(
     const PlatformSensorConfiguration& configuration,
-    RemoveConfigurationCallback callback) {
-  std::move(callback).Run(sensor_->StopListening(this, configuration));
+    const RemoveConfigurationCallback& callback) {
+  callback.Run(sensor_->StopListening(this, configuration));
 }
 
 void SensorImpl::Suspend() {

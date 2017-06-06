@@ -190,7 +190,7 @@ class Internals final : public GarbageCollected<Internals>,
                           ExceptionState&);
   void addCompositionMarker(const Range*,
                             const String& underline_color_value,
-                            const String& thickness_value,
+                            bool thick,
                             const String& background_color_value,
                             ExceptionState&);
   void setTextMatchMarkersActive(Node*,
@@ -478,10 +478,6 @@ class Internals final : public GarbageCollected<Internals>,
                                         const String&,
                                         double downlink_max_mbps,
                                         ExceptionState&);
-  void setNetworkQualityInfoOverride(const String&,
-                                     unsigned long transport_rtt_msec,
-                                     double downlink_throughput_mbps,
-                                     ExceptionState&);
   void clearNetworkConnectionInfoOverride();
 
   unsigned countHitRegions(CanvasRenderingContext*);

@@ -60,53 +60,45 @@ void DrmOverlayManager::CheckOverlaySupport(
       candidate.buffer_size = gfx::ToNearestRect(candidate.display_rect).size();
 
     overlay_params.push_back(OverlayCheck_Params(candidate));
-
-    if (!CanHandleCandidate(candidate, widget)) {
-      DCHECK(candidate.plane_z_order != 0);
-      overlay_params.back().is_overlay_candidate = false;
-    }
   }
+
+  const auto& iter = cache_.Get(overlay_params);
+  // We are still waiting on results for this candidate list from GPU.
+  if (iter != cache_.end() && iter->second)
+    return;
 
   size_t size = candidates->size();
-  const auto& iter = cache_.Get(overlay_params);
-  if (iter != cache_.end()) {
-    // We are still waiting on results for this candidate list from GPU.
-    if (iter->second.back().status ==
-        OverlayCheckReturn_Params::Status::PENDING)
-      return;
 
-    const std::vector<OverlayCheckReturn_Params>& returns = iter->second;
-    DCHECK(size == returns.size());
+  if (iter == cache_.end()) {
+    // We can skip GPU side validation in case all candidates are invalid.
+    bool needs_gpu_validation = false;
     for (size_t i = 0; i < size; i++) {
-      DCHECK(returns[i].status == OverlayCheckReturn_Params::Status::ABLE ||
-             returns[i].status == OverlayCheckReturn_Params::Status::NOT);
+      if (!overlay_params.at(i).is_overlay_candidate)
+        continue;
+
+      const OverlaySurfaceCandidate& candidate = candidates->at(i);
+      if (!CanHandleCandidate(candidate, widget)) {
+        DCHECK(candidate.plane_z_order != 0);
+        overlay_params.at(i).is_overlay_candidate = false;
+        continue;
+      }
+
+      needs_gpu_validation = true;
+    }
+
+    cache_.Put(overlay_params, needs_gpu_validation);
+
+    if (needs_gpu_validation)
+      SendOverlayValidationRequest(overlay_params, widget);
+  } else {
+    const std::vector<OverlayCheck_Params>& validated_params = iter->first;
+    DCHECK(size == validated_params.size());
+
+    for (size_t i = 0; i < size; i++) {
       candidates->at(i).overlay_handled =
-          returns[i].status == OverlayCheckReturn_Params::Status::ABLE ? true
-                                                                       : false;
-    }
-    return;
-  }
-
-  // We can skip GPU side validation in case all candidates are invalid.
-  bool needs_gpu_validation = false;
-  for (size_t i = 0; i < size; i++) {
-    if (!overlay_params.at(i).is_overlay_candidate)
-      continue;
-
-    needs_gpu_validation = true;
-  }
-
-  std::vector<OverlayCheckReturn_Params> returns(overlay_params.size());
-  if (needs_gpu_validation) {
-    for (auto param : returns) {
-      param.status = OverlayCheckReturn_Params::Status::NOT;
+          validated_params.at(i).is_overlay_candidate;
     }
   }
-
-  cache_.Put(overlay_params, returns);
-
-  if (needs_gpu_validation)
-    SendOverlayValidationRequest(overlay_params, widget);
 }
 
 void DrmOverlayManager::ResetCache() {
@@ -124,9 +116,8 @@ void DrmOverlayManager::SendOverlayValidationRequest(
 
 void DrmOverlayManager::GpuSentOverlayResult(
     gfx::AcceleratedWidget widget,
-    const std::vector<OverlayCheck_Params>& params,
-    const std::vector<OverlayCheckReturn_Params>& returns) {
-  cache_.Put(params, returns);
+    const std::vector<OverlayCheck_Params>& params) {
+  cache_.Put(params, false);
 }
 
 bool DrmOverlayManager::CanHandleCandidate(

@@ -57,16 +57,6 @@ scoped_refptr<PrefStore> CreatePrefStoreClient(
   return nullptr;
 }
 
-void OnPrefServiceInit(std::unique_ptr<PrefService> pref_service,
-                       ConnectCallback callback,
-                       bool success) {
-  if (success) {
-    callback.Run(std::move(pref_service));
-  } else {
-    callback.Run(nullptr);
-  }
-}
-
 void OnConnect(
     scoped_refptr<RefCountedInterfacePtr<mojom::PrefStoreConnector>>
         connector_ptr,
@@ -112,23 +102,9 @@ void OnConnect(
       managed_prefs.get(), supervised_user_prefs.get(), extension_prefs.get(),
       command_line_prefs.get(), user_pref_store.get(), recommended_prefs.get(),
       pref_registry->defaults().get(), pref_notifier);
-  auto pref_service = base::MakeUnique<PrefService>(
+  callback.Run(base::MakeUnique<::PrefService>(
       pref_notifier, pref_value_store, user_pref_store.get(),
-      pref_registry.get(), base::Bind(&DoNothingHandleReadError), true);
-  switch (pref_service->GetInitializationStatus()) {
-    case PrefService::INITIALIZATION_STATUS_WAITING:
-      pref_service->AddPrefInitObserver(base::Bind(&OnPrefServiceInit,
-                                                   base::Passed(&pref_service),
-                                                   base::Passed(&callback)));
-      break;
-    case PrefService::INITIALIZATION_STATUS_SUCCESS:
-    case PrefService::INITIALIZATION_STATUS_CREATED_NEW_PREF_STORE:
-      callback.Run(std::move(pref_service));
-      break;
-    case PrefService::INITIALIZATION_STATUS_ERROR:
-      callback.Run(nullptr);
-      break;
-  }
+      pref_registry.get(), base::Bind(&DoNothingHandleReadError), true));
   connector_ptr->reset();
 }
 
@@ -163,9 +139,9 @@ void ConnectToPrefService(
   auto serialized_pref_registry = SerializePrefRegistry(*pref_registry);
   connector_ptr->get()->Connect(
       std::move(serialized_pref_registry), std::move(already_connected_types),
-      base::BindOnce(&OnConnect, connector_ptr, std::move(pref_registry),
-                     std::move(local_layered_pref_stores),
-                     std::move(callback)));
+      base::Bind(&OnConnect, connector_ptr, base::Passed(&pref_registry),
+                 base::Passed(&local_layered_pref_stores),
+                 base::Passed(&callback)));
 }
 
 }  // namespace prefs

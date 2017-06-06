@@ -36,6 +36,7 @@
 #include "core/dom/UserGestureIndicator.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLMediaElement.h"
+#include "core/html/media/AutoplayPolicy.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/ConsoleTypes.h"
 #include "modules/mediastream/MediaStream.h"
@@ -104,21 +105,14 @@ BaseAudioContext::BaseAudioContext(Document* document)
       periodic_wave_sawtooth_(nullptr),
       periodic_wave_triangle_(nullptr),
       output_position_() {
-  switch (GetAutoplayPolicy()) {
-    case AutoplayPolicy::Type::kNoUserGestureRequired:
-      break;
-    case AutoplayPolicy::Type::kUserGestureRequired:
-    case AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin:
-      if (document->GetFrame() &&
-          document->GetFrame()->IsCrossOriginSubframe()) {
-        autoplay_status_ = AutoplayStatus::kAutoplayStatusFailed;
-        user_gesture_required_ = true;
-      }
-      break;
-    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
-      autoplay_status_ = AutoplayStatus::kAutoplayStatusFailed;
-      user_gesture_required_ = true;
-      break;
+  // If the autoplay policy requires a user gesture, cross origin iframes will
+  // require user gesture for the AudioContext to produce sound. This apply even
+  // if the autoplay policy requires user gesture for top frames.
+  if (AutoplayPolicy::GetAutoplayPolicyForDocument(*document) !=
+          AutoplayPolicy::Type::kNoUserGestureRequired &&
+      document->GetFrame() && document->GetFrame()->IsCrossOriginSubframe()) {
+    autoplay_status_ = AutoplayStatus::kAutoplayStatusFailed;
+    user_gesture_required_ = true;
   }
 }
 
@@ -591,7 +585,7 @@ PeriodicWave* BaseAudioContext::GetPeriodicWave(int type) {
 }
 
 void BaseAudioContext::MaybeRecordStartAttempt() {
-  if (!user_gesture_required_ || !AreAutoplayRequirementsFulfilled())
+  if (!user_gesture_required_ || !UserGestureIndicator::ProcessingUserGesture())
     return;
 
   DCHECK(!autoplay_status_.has_value() ||
@@ -679,32 +673,6 @@ void BaseAudioContext::RemoveFinishedSourceNodesOnMainThread() {
       active_source_nodes_.erase(i);
   }
   finished_source_nodes_.clear();
-}
-
-Document* BaseAudioContext::GetDocument() const {
-  return ToDocument(GetExecutionContext());
-}
-
-AutoplayPolicy::Type BaseAudioContext::GetAutoplayPolicy() const {
-  Document* document = GetDocument();
-  DCHECK(document);
-  return AutoplayPolicy::GetAutoplayPolicyForDocument(*document);
-}
-
-bool BaseAudioContext::AreAutoplayRequirementsFulfilled() const {
-  switch (GetAutoplayPolicy()) {
-    case AutoplayPolicy::Type::kNoUserGestureRequired:
-      return true;
-    case AutoplayPolicy::Type::kUserGestureRequired:
-    case AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin:
-      return UserGestureIndicator::ProcessingUserGesture();
-    case AutoplayPolicy::Type::kDocumentUserActivationRequired:
-      return GetDocument()->GetFrame() &&
-             GetDocument()->GetFrame()->HasReceivedUserGesture();
-  }
-
-  NOTREACHED();
-  return false;
 }
 
 bool BaseAudioContext::ReleaseFinishedSourceNodes() {
@@ -859,7 +827,7 @@ void BaseAudioContext::RejectPendingDecodeAudioDataResolvers() {
 }
 
 void BaseAudioContext::MaybeUnlockUserGesture() {
-  if (!user_gesture_required_ || !AreAutoplayRequirementsFulfilled())
+  if (!user_gesture_required_ || !UserGestureIndicator::ProcessingUserGesture())
     return;
 
   DCHECK(!autoplay_status_.has_value() ||
@@ -909,17 +877,8 @@ void BaseAudioContext::RecordAutoplayStatus() {
 
   DEFINE_STATIC_LOCAL(
       EnumerationHistogram, autoplay_histogram,
-      ("WebAudio.Autoplay", AutoplayStatus::kAutoplayStatusCount));
-  DEFINE_STATIC_LOCAL(
-      EnumerationHistogram, cross_origin_autoplay_histogram,
       ("WebAudio.Autoplay.CrossOrigin", AutoplayStatus::kAutoplayStatusCount));
-
   autoplay_histogram.Count(autoplay_status_.value());
-
-  if (GetDocument()->GetFrame() &&
-      GetDocument()->GetFrame()->IsCrossOriginSubframe()) {
-    cross_origin_autoplay_histogram.Count(autoplay_status_.value());
-  }
 
   autoplay_status_.reset();
 }

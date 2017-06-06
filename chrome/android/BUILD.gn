@@ -214,7 +214,6 @@ android_library("chrome_java") {
     "//services/service_manager/public/java:service_manager_java",
     "//services/shape_detection:shape_detection_java",
     "//services/shape_detection/public/interfaces:interfaces_java",
-    "//skia/public/interfaces:interfaces_java",
     "//third_party/WebKit/public:android_mojo_bindings_java",
     "//third_party/WebKit/public:blink_headers_java",
     "//third_party/android_data_chart:android_data_chart_java",
@@ -546,7 +545,6 @@ if (enable_vr) {
       "javatests/src/org/chromium/chrome/browser/vr_shell/EmulatedVrController.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/MockVrCoreVersionCheckerImpl.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/MockVrDaydreamApi.java",
-      "javatests/src/org/chromium/chrome/browser/vr_shell/nfc_apk/SimNfcActivity.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/NfcSimUtils.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/VrFeedbackInfoBarTest.java",
       "javatests/src/org/chromium/chrome/browser/vr_shell/VrShellTest.java",
@@ -581,6 +579,17 @@ if (enable_vr) {
       "//third_party/gvr-android-sdk/test-apks/",
       "//third_party/WebKit/LayoutTests/resources/testharness.js",
     ]
+  }
+
+  android_library("vr_nfc_simulator_java") {
+    testonly = true
+
+    java_files = [
+      "javatests/src/org/chromium/chrome/browser/vr_shell/nfc_apk/SimNfcActivity.java",
+      "javatests/src/org/chromium/chrome/browser/vr_shell/NfcSimUtils.java",
+    ]
+
+    deps = []
   }
 }
 
@@ -954,12 +963,9 @@ if (enable_vr) {
     android_manifest_dep = ":vr_nfc_simulator_apk_manifest"
 
     deps = [
-      ":chrome_test_vr_java",
+      ":vr_nfc_simulator_java",
     ]
     proguard_enabled = false
-
-    # APK exceeds dex limit if not enabled
-    enable_multidex = true
   }
 }
 

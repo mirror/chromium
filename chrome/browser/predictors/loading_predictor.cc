@@ -6,7 +6,6 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
-#include "chrome/browser/predictors/loading_stats_collector.h"
 #include "chrome/browser/predictors/resource_prefetch_common.h"
 #include "chrome/browser/predictors/resource_prefetch_predictor.h"
 
@@ -19,12 +18,7 @@ LoadingPredictor::LoadingPredictor(const LoadingPredictorConfig& config,
     : config_(config),
       profile_(profile),
       resource_prefetch_predictor_(
-          base::MakeUnique<ResourcePrefetchPredictor>(config, profile)),
-      stats_collector_(base::MakeUnique<LoadingStatsCollector>(
-          resource_prefetch_predictor_.get(),
-          config)) {
-  resource_prefetch_predictor_->SetStatsCollector(stats_collector_.get());
-}
+          base::MakeUnique<ResourcePrefetchPredictor>(config, profile)) {}
 
 LoadingPredictor::~LoadingPredictor() = default;
 

@@ -15,6 +15,7 @@
 #include "base/path_service.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/win/shortcut.h"
+#include "base/win/windows_version.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/extensions/tab_helper.h"
 #include "chrome/browser/profiles/profile.h"
@@ -158,7 +159,9 @@ void UpdateShortcutWorker::CheckExistingShortcuts() {
     }, {
       // For Win7, create_in_quick_launch_bar means pinning to taskbar.
       base::DIR_APP_DATA,
-      L"Microsoft\\Internet Explorer\\Quick Launch\\User Pinned\\TaskBar"
+      (base::win::GetVersion() >= base::win::VERSION_WIN7) ?
+          L"Microsoft\\Internet Explorer\\Quick Launch\\User Pinned\\TaskBar" :
+          L"Microsoft\\Internet Explorer\\Quick Launch"
     }
   };
 

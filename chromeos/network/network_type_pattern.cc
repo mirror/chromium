@@ -15,9 +15,11 @@ namespace chromeos {
 namespace {
 
 const char kPatternDefault[] = "PatternDefault";
+const char kPatternEthernet[] = "PatternEthernet";
 const char kPatternWireless[] = "PatternWireless";
 const char kPatternMobile[] = "PatternMobile";
 const char kPatternNonVirtual[] = "PatternNonVirtual";
+const char kPatternTether[] = "PatternTether";
 
 enum NetworkTypeBitFlag {
   kNetworkTypeNone = 0,
@@ -67,8 +69,7 @@ NetworkTypePattern NetworkTypePattern::Wireless() {
 
 // static
 NetworkTypePattern NetworkTypePattern::Mobile() {
-  return NetworkTypePattern(kNetworkTypeCellular | kNetworkTypeWimax |
-                            kNetworkTypeTether);
+  return NetworkTypePattern(kNetworkTypeCellular | kNetworkTypeWimax);
 }
 
 // static
@@ -132,14 +133,17 @@ bool NetworkTypePattern::MatchesPattern(
 std::string NetworkTypePattern::ToDebugString() const {
   if (Equals(Default()))
     return kPatternDefault;
+  if (Equals(Ethernet()))
+    return kPatternEthernet;
   if (Equals(Wireless()))
     return kPatternWireless;
   if (Equals(Mobile()))
     return kPatternMobile;
   if (Equals(NonVirtual()))
     return kPatternNonVirtual;
+  if (Equals(Tether()))
+    return kPatternTether;
 
-  // Note: shill_type_to_flag includes kTypeTether.
   std::string str;
   for (size_t i = 0; i < arraysize(shill_type_to_flag); ++i) {
     if (!(pattern_ & shill_type_to_flag[i].bit_flag))

@@ -772,8 +772,7 @@ static void AppendQuadsToFillScreen(
   }
 }
 
-static RenderPass* FindRenderPassById(const RenderPassList& list,
-                                      RenderPassId id) {
+static RenderPass* FindRenderPassById(const RenderPassList& list, int id) {
   auto it = std::find_if(
       list.begin(), list.end(),
       [id](const std::unique_ptr<RenderPass>& p) { return p->id == id; });
@@ -889,7 +888,7 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
 
   for (EffectTreeLayerListIterator it(active_tree());
        it.state() != EffectTreeLayerListIterator::State::END; ++it) {
-    auto target_render_pass_id = it.target_render_surface()->id();
+    auto target_render_pass_id = it.target_render_surface()->GetRenderPassId();
     RenderPass* target_render_pass =
         FindRenderPassById(frame->render_passes, target_render_pass_id);
 
@@ -1090,8 +1089,6 @@ DrawResult LayerTreeHostImpl::PrepareToDraw(FrameData* frame) {
   if (input_handler_client_)
     input_handler_client_->ReconcileElasticOverscrollAndRootScroll();
 
-  active_tree_->UpdateScrollbarGeometries();
-
   if (const char* client_name = GetClientNameForMetrics()) {
     size_t total_memory = 0;
     for (const PictureLayerImpl* layer : active_tree()->picture_layers())
@@ -1150,10 +1147,10 @@ void LayerTreeHostImpl::RemoveRenderPasses(FrameData* frame) {
   DCHECK_GE(frame->render_passes.size(), 1u);
 
   // A set of RenderPasses that we have seen.
-  base::flat_set<RenderPassId> pass_exists;
+  base::flat_set<int> pass_exists;
   // A set of RenderPassDrawQuads that we have seen (stored by the RenderPasses
   // they refer to).
-  base::flat_map<RenderPassId, int> pass_references;
+  base::flat_map<int, int> pass_references;
 
   // Iterate RenderPasses in draw order, removing empty render passes (except
   // the root RenderPass).
@@ -1622,11 +1619,11 @@ CompositorFrameMetadata LayerTreeHostImpl::MakeCompositorFrameMetadata() const {
 
   active_tree_->GetViewportSelection(&metadata.selection);
 
-  if (const auto* outer_viewport_scroll_node = OuterViewportScrollNode()) {
+  if (OuterViewportScrollLayer()) {
     metadata.root_overflow_x_hidden =
-        !outer_viewport_scroll_node->user_scrollable_horizontal;
+        !OuterViewportScrollLayer()->user_scrollable_horizontal();
     metadata.root_overflow_y_hidden =
-        !outer_viewport_scroll_node->user_scrollable_vertical;
+        !OuterViewportScrollLayer()->user_scrollable_vertical();
   }
 
   if (GetDrawMode() == DRAW_MODE_RESOURCELESS_SOFTWARE) {
@@ -1638,14 +1635,13 @@ CompositorFrameMetadata LayerTreeHostImpl::MakeCompositorFrameMetadata() const {
     metadata.referenced_surfaces.push_back(surface_id);
   }
 
-  const auto* inner_viewport_scroll_node = InnerViewportScrollNode();
-  if (!inner_viewport_scroll_node)
+  if (!InnerViewportScrollLayer())
     return metadata;
 
   metadata.root_overflow_x_hidden |=
-      !inner_viewport_scroll_node->user_scrollable_horizontal;
+      !InnerViewportScrollLayer()->user_scrollable_horizontal();
   metadata.root_overflow_y_hidden |=
-      !inner_viewport_scroll_node->user_scrollable_vertical;
+      !InnerViewportScrollLayer()->user_scrollable_vertical();
 
   // TODO(miletus) : Change the metadata to hold ScrollOffset.
   metadata.root_scroll_offset =
@@ -2013,21 +2009,11 @@ LayerImpl* LayerTreeHostImpl::InnerViewportScrollLayer() const {
   return active_tree_->InnerViewportScrollLayer();
 }
 
-ScrollNode* LayerTreeHostImpl::InnerViewportScrollNode() const {
-  const auto* inner_viewport_scroll_layer = InnerViewportScrollLayer();
-  if (!inner_viewport_scroll_layer)
-    return nullptr;
-  ScrollTree& scroll_tree = active_tree_->property_trees()->scroll_tree;
-  return scroll_tree.Node(inner_viewport_scroll_layer->scroll_tree_index());
-}
-
 LayerImpl* LayerTreeHostImpl::OuterViewportScrollLayer() const {
   return active_tree_->OuterViewportScrollLayer();
 }
 
 ScrollNode* LayerTreeHostImpl::OuterViewportScrollNode() const {
-  // TODO(pdr): Refactor this to work like InnerViewportScrollNode and access
-  // OuterViewportScrollLayer instead of MainScrollLayer.
   if (!viewport()->MainScrollLayer())
     return nullptr;
   ScrollTree& scroll_tree = active_tree_->property_trees()->scroll_tree;
@@ -2501,7 +2487,6 @@ bool LayerTreeHostImpl::InitializeRenderer(
       compositor_frame_sink_->gpu_memory_buffer_manager(),
       task_runner_provider_->blocking_main_thread_task_runner(),
       compositor_frame_sink_->capabilities().delegated_sync_points_required,
-      settings_.enable_color_correct_rasterization,
       settings_.resource_settings);
 
   // Since the new context may be capable of MSAA, update status here. We don't
@@ -3383,10 +3368,10 @@ InputHandlerScrollResult LayerTreeHostImpl::ScrollBy(
                                    scroll_state->delta_y());
 
   // When inner viewport is unscrollable, disable overscrolls.
-  if (const auto* inner_viewport_scroll_node = InnerViewportScrollNode()) {
-    if (!inner_viewport_scroll_node->user_scrollable_horizontal)
+  if (InnerViewportScrollLayer()) {
+    if (!InnerViewportScrollLayer()->user_scrollable_horizontal())
       unused_root_delta.set_x(0);
-    if (!inner_viewport_scroll_node->user_scrollable_vertical)
+    if (!InnerViewportScrollLayer()->user_scrollable_vertical())
       unused_root_delta.set_y(0);
   }
 

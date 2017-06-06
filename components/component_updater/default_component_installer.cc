@@ -41,12 +41,8 @@ using InstallError = update_client::InstallError;
 
 }  // namespace
 
-ComponentInstallerTraits::~ComponentInstallerTraits() {}
-
-DefaultComponentInstaller::RegistrationInfo::RegistrationInfo()
-    : version(kNullVersion) {}
-
-DefaultComponentInstaller::RegistrationInfo::~RegistrationInfo() = default;
+ComponentInstallerTraits::~ComponentInstallerTraits() {
+}
 
 DefaultComponentInstaller::DefaultComponentInstaller(
     std::unique_ptr<ComponentInstallerTraits> installer_traits)
@@ -69,14 +65,12 @@ void DefaultComponentInstaller::Register(
                << "has no installer traits.";
     return;
   }
-
-  auto registration_info = base::MakeRefCounted<RegistrationInfo>();
   task_runner_->PostTaskAndReply(
       FROM_HERE,
-      base::Bind(&DefaultComponentInstaller::StartRegistration, this,
-                 registration_info, cus),
-      base::Bind(&DefaultComponentInstaller::FinishRegistration, this,
-                 registration_info, cus, callback));
+      base::Bind(&DefaultComponentInstaller::StartRegistration,
+                 this, cus),
+      base::Bind(&DefaultComponentInstaller::FinishRegistration,
+                 this, cus, callback));
 }
 
 void DefaultComponentInstaller::OnUpdateError(int error) {
@@ -153,10 +147,11 @@ Result DefaultComponentInstaller::Install(const base::DictionaryValue& manifest,
 
   current_version_ = version;
   current_install_dir_ = install_path;
-
   // TODO(ddorwin): Change parameter to std::unique_ptr<base::DictionaryValue>
   // so we can avoid this DeepCopy.
-  std::unique_ptr<base::DictionaryValue> manifest_copy(manifest.DeepCopy());
+  current_manifest_.reset(manifest.DeepCopy());
+  std::unique_ptr<base::DictionaryValue> manifest_copy(
+      current_manifest_->DeepCopy());
   main_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&DefaultComponentInstaller::ComponentReady,
@@ -182,8 +177,7 @@ bool DefaultComponentInstaller::Uninstall() {
 }
 
 bool DefaultComponentInstaller::FindPreinstallation(
-    const base::FilePath& root,
-    const scoped_refptr<RegistrationInfo>& registration_info) {
+    const base::FilePath& root) {
   base::FilePath path = root.Append(installer_traits_->GetRelativeInstallDir());
   if (!base::PathExists(path)) {
     DVLOG(1) << "Relative install dir does not exist: " << path.MaybeAsASCII();
@@ -218,16 +212,13 @@ bool DefaultComponentInstaller::FindPreinstallation(
           << " at " << path.MaybeAsASCII() << " with version " << version
           << ".";
 
-  registration_info->install_dir = path;
-  registration_info->version = version;
-  registration_info->manifest = std::move(manifest);
-
+  current_install_dir_ = path;
+  current_manifest_ = std::move(manifest);
+  current_version_ = version;
   return true;
 }
 
-void DefaultComponentInstaller::StartRegistration(
-    const scoped_refptr<RegistrationInfo>& registration_info,
-    ComponentUpdateService* cus) {
+void DefaultComponentInstaller::StartRegistration(ComponentUpdateService* cus) {
   VLOG(1) << __func__ << " for " << installer_traits_->GetName();
   DCHECK(task_runner_.get());
   DCHECK(task_runner_->RunsTasksOnCurrentThread());
@@ -237,17 +228,16 @@ void DefaultComponentInstaller::StartRegistration(
   // First check for an installation set up alongside Chrome itself.
   base::FilePath root;
   if (PathService::Get(DIR_COMPONENT_PREINSTALLED, &root) &&
-      FindPreinstallation(root, registration_info)) {
-    latest_version = registration_info->version;
+      FindPreinstallation(root)) {
+    latest_version = current_version_;
   }
 
   // If there is a distinct alternate root, check there as well, and override
   // anything found in the basic root.
   base::FilePath root_alternate;
   if (PathService::Get(DIR_COMPONENT_PREINSTALLED_ALT, &root_alternate) &&
-      root != root_alternate &&
-      FindPreinstallation(root_alternate, registration_info)) {
-    latest_version = registration_info->version;
+      root != root_alternate && FindPreinstallation(root_alternate)) {
+    latest_version = current_version_;
   }
 
   // Then check for a higher-versioned user-wide installation.
@@ -312,11 +302,13 @@ void DefaultComponentInstaller::StartRegistration(
   }
 
   if (latest_manifest) {
-    registration_info->version = latest_version;
-    registration_info->manifest = std::move(latest_manifest);
-    registration_info->install_dir = latest_path;
+    current_version_ = latest_version;
+    current_manifest_ = std::move(latest_manifest);
+    current_install_dir_ = latest_path;
+    // TODO(ddorwin): Remove these members and pass them directly to
+    // FinishRegistration().
     base::ReadFileToString(latest_path.AppendASCII("manifest.fingerprint"),
-                           &registration_info->fingerprint);
+                           &current_fingerprint_);
   }
 
   // Remove older versions of the component. None should be in use during
@@ -360,15 +352,10 @@ void DefaultComponentInstaller::UninstallOnTaskRunner() {
 }
 
 void DefaultComponentInstaller::FinishRegistration(
-    const scoped_refptr<RegistrationInfo>& registration_info,
     ComponentUpdateService* cus,
     const base::Closure& callback) {
   VLOG(1) << __func__ << " for " << installer_traits_->GetName();
   DCHECK(thread_checker_.CalledOnValidThread());
-
-  current_install_dir_ = registration_info->install_dir;
-  current_version_ = registration_info->version;
-  current_fingerprint_ = registration_info->fingerprint;
 
   update_client::CrxComponent crx;
   installer_traits_->GetHash(&crx.pk_hash);
@@ -392,12 +379,14 @@ void DefaultComponentInstaller::FinishRegistration(
   if (!callback.is_null())
     callback.Run();
 
-  if (!registration_info->manifest) {
+  if (!current_manifest_) {
     DVLOG(1) << "No component found for " << installer_traits_->GetName();
     return;
   }
 
-  ComponentReady(std::move(registration_info->manifest));
+  std::unique_ptr<base::DictionaryValue> manifest_copy(
+      current_manifest_->DeepCopy());
+  ComponentReady(std::move(manifest_copy));
 }
 
 void DefaultComponentInstaller::ComponentReady(

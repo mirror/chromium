@@ -266,6 +266,14 @@ enum class TextEmphasisMark {
 
 enum TextOverflow { kTextOverflowClip = 0, kTextOverflowEllipsis };
 
+enum class EImageRendering {
+  kAuto,
+  kOptimizeSpeed,
+  kOptimizeQuality,
+  kOptimizeContrast,
+  kPixelated
+};
+
 static const size_t kGridAutoFlowBits = 4;
 enum InternalGridAutoFlowAlgorithm {
   kInternalAutoFlowAlgorithmSparse = 0x1,
@@ -389,6 +397,16 @@ enum class PageSizeType {
   kPortrait,   // size: portrait
   kResolved    // Size is fully resolved.
 };
+
+// In order to conserve memory, the border width uses fixed point,
+// which can be bitpacked.  This fixed point implementation is
+// essentially the same as in LayoutUnit.  Six bits are used for the
+// fraction, which leaves 20 bits for the integer part, making 1048575
+// the largest number.
+
+static const int kBorderWidthFractionalBits = 6;
+static const int kBorderWidthDenominator = 1 << kBorderWidthFractionalBits;
+static const int kMaxForBorderWidth = ((1 << 26) - 1) / kBorderWidthDenominator;
 
 }  // namespace blink
 

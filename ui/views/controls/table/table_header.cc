@@ -227,7 +227,7 @@ void TableHeader::OnGestureEvent(ui::GestureEvent* event) {
 }
 
 void TableHeader::OnNativeThemeChanged(const ui::NativeTheme* theme) {
-  SetBackground(CreateSolidBackground(
+  set_background(Background::CreateSolidBackground(
       theme->GetSystemColor(ui::NativeTheme::kColorId_TableHeaderBackground)));
 }
 

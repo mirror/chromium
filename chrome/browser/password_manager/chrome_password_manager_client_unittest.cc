@@ -89,8 +89,6 @@ class MockPasswordProtectionService
                void(WebContents*, const GURL&, const GURL&, const GURL&));
   MOCK_METHOD3(MaybeStartProtectedPasswordEntryRequest,
                void(WebContents*, const GURL&, const std::string&));
-  MOCK_METHOD3(ShowPhishingInterstitial,
-               void(const GURL&, const std::string&, content::WebContents*));
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockPasswordProtectionService);

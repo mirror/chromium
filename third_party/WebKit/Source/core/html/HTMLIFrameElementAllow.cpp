@@ -21,19 +21,18 @@ HTMLIFrameElementAllow::ParseAllowedFeatureNames(
   Vector<WebFeaturePolicyFeature> feature_names;
   unsigned num_token_errors = 0;
   StringBuilder token_errors;
-  const SpaceSplitString& token_set = this->TokenSet();
+  const SpaceSplitString& tokens = this->Tokens();
 
   // Collects a list of valid feature names.
   const FeatureNameMap& feature_name_map = GetDefaultFeatureNameMap();
-  for (size_t i = 0; i < token_set.size(); ++i) {
-    const AtomicString& token = token_set[i];
-    if (!feature_name_map.Contains(token)) {
+  for (size_t i = 0; i < tokens.size(); ++i) {
+    if (!feature_name_map.Contains(tokens[i])) {
       token_errors.Append(token_errors.IsEmpty() ? "'" : ", '");
-      token_errors.Append(token);
+      token_errors.Append(tokens[i]);
       token_errors.Append("'");
       ++num_token_errors;
     } else {
-      feature_names.push_back(feature_name_map.at(token));
+      feature_names.push_back(feature_name_map.at(tokens[i]));
     }
   }
 

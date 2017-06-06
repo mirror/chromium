@@ -62,15 +62,15 @@ views::View* TestSystemTrayItem::CreateDetailedView(LoginStatus status) {
   return detailed_view_;
 }
 
-void TestSystemTrayItem::OnTrayViewDestroyed() {
+void TestSystemTrayItem::DestroyTrayView() {
   tray_view_ = nullptr;
 }
 
-void TestSystemTrayItem::OnDefaultViewDestroyed() {
+void TestSystemTrayItem::DestroyDefaultView() {
   default_view_ = nullptr;
 }
 
-void TestSystemTrayItem::OnDetailedViewDestroyed() {
+void TestSystemTrayItem::DestroyDetailedView() {
   detailed_view_ = nullptr;
 }
 

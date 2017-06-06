@@ -26,8 +26,10 @@
 #include "ash/system/tray_accessibility.h"
 #include "base/logging.h"
 #include "base/strings/utf_string_conversions.h"
+#include "components/strings/grit/components_strings.h"
 #include "ui/accessibility/ax_enums.h"
 #include "ui/accessibility/ax_node_data.h"
+#include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/font.h"
 #include "ui/gfx/image/image.h"
@@ -37,6 +39,8 @@
 #include "ui/views/controls/label.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/widget/widget.h"
+
+using chromeos::input_method::InputMethodManager;
 
 namespace ash {
 namespace tray {
@@ -146,9 +150,9 @@ class IMEDetailedView : public ImeListView {
 
 TrayIME::TrayIME(SystemTray* system_tray)
     : SystemTrayItem(system_tray, UMA_IME),
-      tray_label_(nullptr),
-      default_(nullptr),
-      detailed_(nullptr),
+      tray_label_(NULL),
+      default_(NULL),
+      detailed_(NULL),
       keyboard_suppressed_(false),
       is_visible_(true) {
   SystemTrayNotifier* tray_notifier = Shell::Get()->system_tray_notifier();
@@ -224,7 +228,7 @@ base::string16 TrayIME::GetDefaultViewLabel(bool show_ime_label) {
 }
 
 views::View* TrayIME::CreateTrayView(LoginStatus status) {
-  CHECK(tray_label_ == nullptr);
+  CHECK(tray_label_ == NULL);
   tray_label_ = new TrayItemView(this);
   tray_label_->CreateLabel();
   SetupLabelForTray(tray_label_->label());
@@ -235,7 +239,7 @@ views::View* TrayIME::CreateTrayView(LoginStatus status) {
 }
 
 views::View* TrayIME::CreateDefaultView(LoginStatus status) {
-  CHECK(default_ == nullptr);
+  CHECK(default_ == NULL);
   default_ = new tray::IMEDefaultView(
       this, GetDefaultViewLabel(ShouldShowImeTrayItem(ime_list_.size())));
   default_->SetVisible(ShouldDefaultViewBeVisible());
@@ -243,23 +247,23 @@ views::View* TrayIME::CreateDefaultView(LoginStatus status) {
 }
 
 views::View* TrayIME::CreateDetailedView(LoginStatus status) {
-  CHECK(detailed_ == nullptr);
+  CHECK(detailed_ == NULL);
   detailed_ = new tray::IMEDetailedView(this);
   detailed_->SetImeManagedMessage(ime_managed_message_);
   detailed_->Init(ShouldShowKeyboardToggle(), GetSingleImeBehavior());
   return detailed_;
 }
 
-void TrayIME::OnTrayViewDestroyed() {
-  tray_label_ = nullptr;
+void TrayIME::DestroyTrayView() {
+  tray_label_ = NULL;
 }
 
-void TrayIME::OnDefaultViewDestroyed() {
-  default_ = nullptr;
+void TrayIME::DestroyDefaultView() {
+  default_ = NULL;
 }
 
-void TrayIME::OnDetailedViewDestroyed() {
-  detailed_ = nullptr;
+void TrayIME::DestroyDetailedView() {
+  detailed_ = NULL;
 }
 
 void TrayIME::OnIMERefresh() {
@@ -270,7 +274,11 @@ void TrayIME::OnIMERefresh() {
   delegate->GetCurrentIME(&current_ime_);
   delegate->GetAvailableIMEList(&ime_list_);
   delegate->GetCurrentIMEProperties(&property_list_);
-  ime_managed_message_ = delegate->GetIMEManagedMessage();
+  auto ime_state = InputMethodManager::Get()->GetActiveIMEState();
+  ime_managed_message_ =
+      ime_state->GetAllowedInputMethods().empty()
+          ? base::string16()
+          : l10n_util::GetStringUTF16(IDS_OPTIONS_CONTROLLED_SETTING_POLICY);
 
   Update();
 }

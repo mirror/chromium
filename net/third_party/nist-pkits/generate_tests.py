@@ -71,9 +71,8 @@ WRAPPED_TYPED_TEST_P(%(test_case_name)s, %(sanitized_test_name)s) {
   default_info = TestInfo(None)
 
   output.write('''PkitsTestInfo info;
-  info.test_number = "%s";
   info.should_validate = %s;
-''' % (test_number, bool_to_str(info.should_validate)))
+''' % (bool_to_str(info.should_validate)))
 
   # Output any non-default inputs/outputs. Only properties that differ from
   # the defaults are written, so as to keep the generated file more readable.
@@ -689,17 +688,6 @@ TEST_OVERRIDES = {
              user_constrained_policy_set=[]),
   ],
 
-  '4.10.7': [ # Invalid Mapping From anyPolicy Test7 
-    # Procedure: Validate Invalid Mapping From anyPolicy Test7 EE using the
-    # default settings or open and verify Signed Test Message 6.2.2.100 using
-    # the default settings.
-    #
-    # Expected Result: The path should not validate successfully since the
-    # intermediate certificate includes a policy mapping extension in which
-    # anyPolicy appears as an issuerDomainPolicy. 
-    TestInfo(False, user_constrained_policy_set=[]),
-  ],
-
   '4.10.8': [ # Invalid Mapping To anyPolicy Test8
     # Procedure: Validate Invalid Mapping To anyPolicy Test8 EE using the
     # default settings or open and verify Signed Test Message 6.2.2.101 using
@@ -708,6 +696,8 @@ TEST_OVERRIDES = {
     # Expected Result: The path should not validate successfully since the
     # intermediate certificate includes a policy mapping extension in which
     # anyPolicy appears as an subjectDomainPolicy.
+    #
+    # TODO(eroman): What should user_constrained_policy_set be?
     TestInfo(False, user_constrained_policy_set=[]),
   ],
 

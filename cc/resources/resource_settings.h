@@ -16,11 +16,11 @@ class CC_EXPORT ResourceSettings {
  public:
   ResourceSettings();
   ResourceSettings(const ResourceSettings& other);
-  ResourceSettings& operator=(const ResourceSettings& other);
   ~ResourceSettings();
 
   size_t texture_id_allocation_chunk_size = 64;
   bool use_gpu_memory_buffer_resources = false;
+  bool enable_color_correct_rasterization = false;
   BufferToTextureTargetMap buffer_to_texture_target_map;
 };
 

@@ -38,12 +38,8 @@ namespace blink {
 
 using URLSchemesSet = HashSet<String>;
 
-template <typename Mapped, typename MappedTraits>
-using URLSchemesMap = HashMap<String,
-                              Mapped,
-                              DefaultHash<String>::Hash,
-                              HashTraits<String>,
-                              MappedTraits>;
+template <typename T>
+using URLSchemesMap = HashMap<String, T>;
 
 class PLATFORM_EXPORT SchemeRegistry {
   STATIC_ONLY(SchemeRegistry);

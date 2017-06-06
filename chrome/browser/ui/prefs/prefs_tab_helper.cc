@@ -58,6 +58,10 @@
 #include "chrome/browser/themes/theme_service_factory.h"
 #endif
 
+#if defined(OS_WIN)
+#include "base/win/windows_version.h"
+#endif
+
 using content::WebContents;
 using content::WebPreferences;
 
@@ -162,7 +166,8 @@ bool ShouldUseAlternateDefaultFixedFont(const std::string& script) {
     return false;
   UINT smooth_type = 0;
   SystemParametersInfo(SPI_GETFONTSMOOTHINGTYPE, 0, &smooth_type, 0);
-  return smooth_type == FE_FONTSMOOTHINGCLEARTYPE;
+  return (base::win::GetVersion() >= base::win::VERSION_WIN7) &&
+         (smooth_type == FE_FONTSMOOTHINGCLEARTYPE);
 }
 #endif
 

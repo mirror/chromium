@@ -65,7 +65,6 @@ CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147:     method entries
 CONSOLE MESSAGE: line 147:     method forEach
 CONSOLE MESSAGE: line 147:     method keys
-CONSOLE MESSAGE: line 147:     method toMatrix
 CONSOLE MESSAGE: line 147:     method values
 CONSOLE MESSAGE: line 147: interface CSSTranslation : CSSTransformComponent
 CONSOLE MESSAGE: line 147:     getter x
@@ -120,7 +119,6 @@ CONSOLE MESSAGE: line 147:     method setUint8
 CONSOLE MESSAGE: line 147: interface PaintRenderingContext2D
 CONSOLE MESSAGE: line 147:     getter currentTransform
 CONSOLE MESSAGE: line 147:     getter fillStyle
-CONSOLE MESSAGE: line 147:     getter filter
 CONSOLE MESSAGE: line 147:     getter globalAlpha
 CONSOLE MESSAGE: line 147:     getter globalCompositeOperation
 CONSOLE MESSAGE: line 147:     getter imageSmoothingEnabled
@@ -170,7 +168,6 @@ CONSOLE MESSAGE: line 147:     method transform
 CONSOLE MESSAGE: line 147:     method translate
 CONSOLE MESSAGE: line 147:     setter currentTransform
 CONSOLE MESSAGE: line 147:     setter fillStyle
-CONSOLE MESSAGE: line 147:     setter filter
 CONSOLE MESSAGE: line 147:     setter globalAlpha
 CONSOLE MESSAGE: line 147:     setter globalCompositeOperation
 CONSOLE MESSAGE: line 147:     setter imageSmoothingEnabled

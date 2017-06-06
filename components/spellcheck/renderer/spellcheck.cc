@@ -113,25 +113,6 @@ void PreserveOriginalApostropheTypes(const base::string16& misspelled_word,
   }
 }
 
-std::vector<WebString> FilterReplacementSuggestions(
-    const base::string16& misspelled_word,
-    const std::vector<base::string16>& replacements) {
-  std::vector<WebString> replacements_filtered;
-  for (base::string16 replacement : replacements) {
-    // Use the same types of apostrophes as in the mispelled word.
-    PreserveOriginalApostropheTypes(misspelled_word, &replacement);
-
-    // Ignore suggestions that are just changing the apostrophe type
-    // (straight vs. typographical)
-    if (replacement == misspelled_word)
-      continue;
-
-    replacements_filtered.push_back(WebString::FromUTF16(replacement));
-  }
-
-  return replacements_filtered;
-}
-
 }  // namespace
 
 class SpellCheck::SpellcheckRequest {
@@ -492,8 +473,7 @@ void SpellCheck::CreateTextCheckingResults(
 
     const base::string16& misspelled_word =
         line_text.substr(spellcheck_result.location, spellcheck_result.length);
-    const std::vector<base::string16>& replacements =
-        spellcheck_result.replacements;
+    base::string16 replacement = spellcheck_result.replacement;
     SpellCheckResult::Decoration decoration = spellcheck_result.decoration;
 
     // Ignore words in custom dictionary.
@@ -502,13 +482,11 @@ void SpellCheck::CreateTextCheckingResults(
       continue;
     }
 
-    std::vector<WebString> replacements_filtered =
-        FilterReplacementSuggestions(misspelled_word, replacements);
+    // Use the same types of appostrophes as in the mispelled word.
+    PreserveOriginalApostropheTypes(misspelled_word, &replacement);
 
-    // If the spellchecker suggested replacements, but they were all just
-    // changing apostrophe styles, ignore this misspelling. If there were never
-    // any suggested replacements, keep the misspelling.
-    if (replacements_filtered.empty() && !replacements.empty())
+    // Ignore misspellings due the typographical apostrophe.
+    if (misspelled_word == replacement)
       continue;
 
     if (filter == USE_NATIVE_CHECKER) {
@@ -526,10 +504,10 @@ void SpellCheck::CreateTextCheckingResults(
       }
     }
 
-    results.push_back(
-        WebTextCheckingResult(static_cast<WebTextDecorationType>(decoration),
-                              line_offset + spellcheck_result.location,
-                              spellcheck_result.length, replacements_filtered));
+    results.push_back(WebTextCheckingResult(
+        static_cast<WebTextDecorationType>(decoration),
+        line_offset + spellcheck_result.location, spellcheck_result.length,
+        blink::WebString::FromUTF16(replacement)));
   }
 
   textcheck_results->Assign(results);

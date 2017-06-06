@@ -85,32 +85,40 @@ class BackgroundPainter : public Background {
   DISALLOW_COPY_AND_ASSIGN(BackgroundPainter);
 };
 
-Background::Background() : color_(SK_ColorWHITE) {}
+Background::Background()
+    : color_(SK_ColorWHITE)
+{
+}
 
-Background::~Background() {}
+Background::~Background() {
+}
 
 void Background::SetNativeControlColor(SkColor color) {
   color_ = color;
 }
 
-std::unique_ptr<Background> CreateSolidBackground(SkColor color) {
-  return base::MakeUnique<SolidBackground>(color);
+// static
+Background* Background::CreateSolidBackground(SkColor color) {
+  return new SolidBackground(color);
 }
 
-std::unique_ptr<Background> CreateThemedSolidBackground(
+// static
+Background* Background::CreateThemedSolidBackground(
     View* view,
     ui::NativeTheme::ColorId color_id) {
-  return base::MakeUnique<ThemedSolidBackground>(view, color_id);
+  return new ThemedSolidBackground(view, color_id);
 }
 
-std::unique_ptr<Background> CreateStandardPanelBackground() {
+// static
+Background* Background::CreateStandardPanelBackground() {
   // TODO(beng): Should be in NativeTheme.
   return CreateSolidBackground(SK_ColorWHITE);
 }
 
-std::unique_ptr<Background> CreateBackgroundFromPainter(
+// static
+Background* Background::CreateBackgroundPainter(
     std::unique_ptr<Painter> painter) {
-  return base::MakeUnique<BackgroundPainter>(std::move(painter));
+  return new BackgroundPainter(std::move(painter));
 }
 
 }  // namespace views

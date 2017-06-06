@@ -51,7 +51,7 @@ class CatalogViewerContents : public views::WidgetDelegateView,
         capability_(new views::Textfield) {
     constexpr int kPadding = 5;
     SetBorder(views::CreateEmptyBorder(gfx::Insets(kPadding)));
-    SetBackground(views::CreateStandardPanelBackground());
+    set_background(views::Background::CreateStandardPanelBackground());
 
     views::GridLayout* layout = new views::GridLayout(this);
     SetLayoutManager(layout);

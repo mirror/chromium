@@ -33,13 +33,13 @@ class DEVICE_GENERIC_SENSOR_EXPORT SensorProviderImpl final
   // SensorProvider implementation.
   void GetSensor(mojom::SensorType type,
                  mojom::SensorRequest sensor_request,
-                 GetSensorCallback callback) override;
+                 const GetSensorCallback& callback) override;
 
   // Helper callback method to return created sensors.
   void SensorCreated(mojom::SensorType type,
                      mojo::ScopedSharedBufferHandle cloned_handle,
                      mojom::SensorRequest sensor_request,
-                     GetSensorCallback callback,
+                     const GetSensorCallback& callback,
                      scoped_refptr<PlatformSensor> sensor);
 
   PlatformSensorProvider* provider_;

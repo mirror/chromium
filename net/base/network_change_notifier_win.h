@@ -13,7 +13,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/threading/thread_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "base/timer/timer.h"
 #include "base/win/object_watcher.h"
 #include "net/base/net_export.h"
@@ -21,12 +21,13 @@
 
 namespace net {
 
-// NetworkChangeNotifierWin uses a ThreadChecker, as all its internal
+// NetworkChangeNotifierWin inherits from NonThreadSafe, as all its internal
 // notification code must be called on the thread it is created and destroyed
 // on.  All the NetworkChangeNotifier methods it implements are threadsafe.
 class NET_EXPORT_PRIVATE NetworkChangeNotifierWin
     : public NetworkChangeNotifier,
-      public base::win::ObjectWatcher::Delegate {
+      public base::win::ObjectWatcher::Delegate,
+      NON_EXPORTED_BASE(public base::NonThreadSafe) {
  public:
   NetworkChangeNotifierWin();
 
@@ -113,8 +114,6 @@ class NET_EXPORT_PRIVATE NetworkChangeNotifierWin
   bool last_announced_offline_;
   // Number of times polled to check if still offline.
   int offline_polls_;
-
-  THREAD_CHECKER(thread_checker_);
 
   // Used for calling WatchForAddressChange again on failure.
   base::WeakPtrFactory<NetworkChangeNotifierWin> weak_factory_;

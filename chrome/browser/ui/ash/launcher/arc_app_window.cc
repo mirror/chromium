@@ -14,7 +14,6 @@
 #include "ui/aura/window.h"
 #include "ui/gfx/codec/png_codec.h"
 #include "ui/gfx/image/image_skia_operations.h"
-#include "ui/views/widget/native_widget_aura.h"
 #include "ui/views/widget/widget.h"
 
 ArcAppWindow::ArcAppWindow(int task_id,
@@ -34,6 +33,8 @@ void ArcAppWindow::SetController(
     ArcAppWindowLauncherItemController* controller) {
   DCHECK(!controller_ || !controller);
   controller_ = controller;
+  if (controller_)
+    controller_->UpdateLauncherItem();
 }
 
 void ArcAppWindow::SetFullscreenMode(FullScreenMode mode) {
@@ -48,7 +49,7 @@ void ArcAppWindow::SetDescription(
     GetNativeWindow()->SetTitle(base::UTF8ToUTF16(title));
   ImageDecoder::Cancel(this);
   if (unsafe_icon_data_png.empty()) {
-    SetIcon(gfx::ImageSkia());
+    ResetIcon();
     return;
   }
 
@@ -156,25 +157,21 @@ void ArcAppWindow::SetAlwaysOnTop(bool always_on_top) {
   NOTREACHED();
 }
 
-void ArcAppWindow::SetIcon(const gfx::ImageSkia& icon) {
-  if (!exo::ShellSurface::GetMainSurface(GetNativeWindow())) {
-    // Support unit tests where we don't have exo system initialized.
-    views::NativeWidgetAura::AssignIconToAuraWindow(
-        GetNativeWindow(), gfx::ImageSkia() /* window_icon */,
-        icon /* app_icon */);
+void ArcAppWindow::ResetIcon() {
+  if (icon_.isNull())
     return;
-  }
-  exo::ShellSurface* shell_surface = static_cast<exo::ShellSurface*>(
-      widget_->widget_delegate()->GetContentsView());
-  if (!shell_surface)
-    return;
-  shell_surface->SetIcon(icon);
+  icon_ = gfx::ImageSkia();
+  if (controller_)
+    controller_->UpdateLauncherItem();
 }
 
 void ArcAppWindow::OnImageDecoded(const SkBitmap& decoded_image) {
-  SetIcon(gfx::ImageSkiaOperations::CreateResizedImage(
+  // TODO(khmel): Use aura::Window property http://crbug.com/724292
+  icon_ = gfx::ImageSkiaOperations::CreateResizedImage(
       gfx::ImageSkia(gfx::ImageSkiaRep(decoded_image, 1.0f)),
       skia::ImageOperations::RESIZE_BEST,
       gfx::Size(extension_misc::EXTENSION_ICON_SMALL,
-                extension_misc::EXTENSION_ICON_SMALL)));
+                extension_misc::EXTENSION_ICON_SMALL));
+  if (controller_)
+    controller_->UpdateLauncherItem();
 }

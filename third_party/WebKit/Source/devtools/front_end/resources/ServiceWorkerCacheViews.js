@@ -76,9 +76,8 @@ Resources.ServiceWorkerCacheView = class extends UI.SimpleView {
   /**
    * @param {!DataGrid.DataGridNode} node
    */
-  async _deleteButtonClicked(node) {
-    await this._model.deleteCacheEntry(this._cache, /** @type {string} */ (node.data['request']));
-    node.remove();
+  _deleteButtonClicked(node) {
+    this._model.deleteCacheEntry(this._cache, /** @type {string} */ (node.data['request']), node.remove.bind(node));
   }
 
   /**

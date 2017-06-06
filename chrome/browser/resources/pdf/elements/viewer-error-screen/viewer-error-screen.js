@@ -5,13 +5,13 @@
 Polymer({
   is: 'viewer-error-screen',
   properties: {
-    reloadFn: Function,
+    reloadFn: Object,
 
     strings: Object,
   },
 
   show: function() {
-    /** @type {!CrDialogElement} */ (this.$.dialog).showModal();
+    this.$.dialog.showModal();
   },
 
   reload: function() {

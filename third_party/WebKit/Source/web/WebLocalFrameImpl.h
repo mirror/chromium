@@ -37,7 +37,6 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/WebFrameWidgetBase.h"
 #include "core/frame/WebLocalFrameBase.h"
-#include "modules/mediastream/UserMediaClientImpl.h"
 #include "platform/geometry/FloatRect.h"
 #include "platform/heap/SelfKeepAlive.h"
 #include "platform/wtf/Compiler.h"
@@ -45,6 +44,7 @@
 #include "public/platform/WebFileSystemType.h"
 #include "public/web/WebLocalFrame.h"
 #include "web/LocalFrameClientImpl.h"
+#include "web/UserMediaClientImpl.h"
 #include "web/WebExport.h"
 
 #include <memory>

@@ -32,7 +32,12 @@ pin-keyboard {
 }
 
 .account-picker.flying-pods .pod {
-  transition: all 180ms;
+  transition: all 300ms;
+}
+
+.pod.pin-enabled {
+  height: 417px;
+  top: -87px !important;
 }
 
 .pod .pin-container {
@@ -96,41 +101,11 @@ html[dir=rtl] .user-image-pane {
 }
 
 .user-image.switch-image-animation {
-  animation: switch-image 180ms;
+  animation: switch-image 300ms;
 }
 
 .pod .user-image {
   flex: none;
-}
-
-.pod .badge-container {
-  background: #FFF;
-  border-radius: 50%;
-  bottom: 0;
-  display: none;
-  height: 27px;
-  position: absolute;
-  right: 0;
-  width: 27px;
-}
-
-.pod .badge-container iron-icon {
-  --iron-icon-height: 25px;
-  --iron-icon-width: 25px;
-  display: none;
-  padding: 0;
-}
-
-/* Signed-in badge should be hidden when there's another badge. */
-.pod.legacy-supervised.signed-in .signed-in-badge {
-  display: none;
-}
-
-.pod.legacy-supervised .badge-container,
-.pod.signed-in .badge-container,
-.pod.legacy-supervised .legacy-supervised-badge,
-.pod.signed-in .signed-in-badge {
-  display: block;
 }
 
 /* TODO(noms): Refactor this out into a CrOS-specific file and simplify the
@@ -226,7 +201,7 @@ html[dir=rtl] .main-pane {
   display: none;
 }
 
-.input-line {
+#input-line {
   opacity: 0.34;
   position: absolute;
   stroke: #FFFFFF;
@@ -234,7 +209,7 @@ html[dir=rtl] .main-pane {
   top: 40px;
 }
 
-.input-present .input-line {
+#input-line[active] {
   opacity: 1;
 }
 
@@ -251,10 +226,6 @@ html[dir=rtl] .main-pane {
 .password-container {
   height: 40px;
   width: 180px;
-}
-
-.capslock-on .password-container {
-  width: 160px;
 }
 
 .pod input[type='password'] {
@@ -281,21 +252,18 @@ html[dir=rtl] .main-pane {
 .capslock-on .capslock-hint-container {
   display: block;
   flex: none;
-  height: 40px;
+  height: 43px;
   position: relative;
   width: 20px;
 }
 </if>
 
 .capslock-hint {
-  --iron-icon-height: 22px;
-  --iron-icon-width: 22px;
-  opacity: 0.34;
-  padding: 13px 0 5px;
-}
-
-.input-present .capslock-hint {
-  opacity: 1;
+  -webkit-margin-end: 6px;
+  -webkit-margin-start: -2px;
+  margin: auto;
+  position: relative;
+  top: 15px;
 }
 
 .password-label,
@@ -1074,10 +1042,6 @@ html[dir=rtl] .expanded-pane-contents {
 .large-pod {
   height: 346px;
   width: 306px;
-}
-
-.pod.pin-enabled .large-pod {
-  height: 618px;
 }
 
 .small-pod {

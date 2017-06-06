@@ -72,7 +72,7 @@ public class PaymentRequestNameAndFreeShippingTest implements MainActivityStartC
     }
 
     /**
-     * Test that ending a payment request that requires a payer name and a shipping address
+     * Test that starting a payment request that requires a payer name and a shipping address
      * results in the appropriate metric being logged in the PaymentRequest.RequestedInformation
      * histogram.
      */
@@ -81,11 +81,8 @@ public class PaymentRequestNameAndFreeShippingTest implements MainActivityStartC
     @Feature({"Payments"})
     public void testRequestedInformationMetric()
             throws InterruptedException, ExecutionException, TimeoutException {
-        // Start and cancel the Payment Request.
+        // Start the Payment Request.
         mPaymentRequestTestRule.triggerUIAndWait(mPaymentRequestTestRule.getReadyToPay());
-        mPaymentRequestTestRule.clickAndWait(
-                R.id.close_button, mPaymentRequestTestRule.getDismissed());
-        mPaymentRequestTestRule.expectResultContains(new String[] {"Request cancelled"});
 
         // Make sure that only the appropriate enum value was logged.
         for (int i = 0; i < RequestedInformation.MAX; ++i) {

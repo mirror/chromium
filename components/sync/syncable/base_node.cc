@@ -217,7 +217,7 @@ int BaseNode::GetPositionIndex() const {
   return GetEntry()->GetPositionIndex();
 }
 
-std::unique_ptr<base::DictionaryValue> BaseNode::ToValue() const {
+base::DictionaryValue* BaseNode::ToValue() const {
   return GetEntry()->ToValue(GetTransaction()->GetCryptographer());
 }
 

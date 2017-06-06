@@ -93,38 +93,10 @@ public class JourneyLogger {
 
     /**
      * Records that an event occurred.
-     *
-     * @param event The event that occured.
      */
     public void setEventOccurred(int event) {
-        assert event >= 0;
         assert event < Event.ENUM_MAX;
         nativeSetEventOccurred(mJourneyLoggerAndroid, event);
-    }
-
-    /*
-     * Records what user information were requested by the merchant to complete the Payment Request.
-     *
-     * @param requestShipping Whether the merchant requested a shipping address.
-     * @param requestEmail    Whether the merchant requested an email address.
-     * @param requestPhone    Whether the merchant requested a phone number.
-     * @param requestName     Whether the merchant requestes a name.
-     */
-    public void setRequestedInformation(boolean requestShipping, boolean requestEmail,
-            boolean requestPhone, boolean requestName) {
-        nativeSetRequestedInformation(
-                mJourneyLoggerAndroid, requestShipping, requestEmail, requestPhone, requestName);
-    }
-
-    /**
-     * Records the payment method that was selected by the user.
-     *
-     * @param paymentMethod The payment method that was selected.
-     */
-    public void setSelectedPaymentMethod(int paymentMethod) {
-        assert paymentMethod >= 0;
-        assert paymentMethod < SelectedPaymentMethod.MAX;
-        nativeSetSelectedPaymentMethod(mJourneyLoggerAndroid, paymentMethod);
     }
 
     /**
@@ -186,11 +158,6 @@ public class JourneyLogger {
             long nativeJourneyLoggerAndroid, boolean value);
     private native void nativeSetShowCalled(long nativeJourneyLoggerAndroid);
     private native void nativeSetEventOccurred(long nativeJourneyLoggerAndroid, int event);
-    private native void nativeSetSelectedPaymentMethod(
-            long nativeJourneyLoggerAndroid, int paymentMethod);
-    private native void nativeSetRequestedInformation(long nativeJourneyLoggerAndroid,
-            boolean requestShipping, boolean requestEmail, boolean requestPhone,
-            boolean requestName);
     private native void nativeSetCompleted(long nativeJourneyLoggerAndroid);
     private native void nativeSetAborted(long nativeJourneyLoggerAndroid, int reason);
     private native void nativeSetNotShown(long nativeJourneyLoggerAndroid, int reason);

@@ -17,10 +17,10 @@ class CHROMEOS_EXPORT NetworkTypePattern {
   // Matches any network.
   static NetworkTypePattern Default();
 
-  // Matches wireless (WiFi, Cellular, etc.) networks
+  // Matches wireless (WiFi, cellular, etc.) networks
   static NetworkTypePattern Wireless();
 
-  // Matches Cellular, WiMAX, or Tether networks.
+  // Matches cellular or wimax networks.
   static NetworkTypePattern Mobile();
 
   // Matches non virtual networks.

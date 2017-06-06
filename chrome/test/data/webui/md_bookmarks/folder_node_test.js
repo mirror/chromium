@@ -27,7 +27,7 @@ suite('<bookmarks-folder-node>', function() {
           createFolder('7', [])),
       selectedFolder: '1',
     });
-    store.replaceSingleton();
+    bookmarks.Store.instance_ = store;
 
     rootNode = document.createElement('bookmarks-folder-node');
     rootNode.itemId = '0';

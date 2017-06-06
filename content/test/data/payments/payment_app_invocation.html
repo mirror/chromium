@@ -9,23 +9,10 @@ function registerPaymentApp() {
         return navigator.serviceWorker.ready;
       })
     .then(registration => {
-      const instrumentPromises = [
-      registration.paymentManager.instruments.set(
-        'basic-card-payment-app-id',
-        {
-          name: 'Visa ****',
-          enabledMethods: ['basic-card']
-        }),
-
-      registration.paymentManager.instruments.set(
-        'bobpay-payment-app-id',
-        {
-          name: "Bob Pay",
-          enabledMethods: ['https://bobpay.com']
-        }),
-      ];
-
-      return Promise.all(instrumentPromises);
+        return registration.paymentManager.instruments.set('payment-app-id', {
+            name: 'Visa ****',
+            enabledMethods: ['basic-card']
+          });
       })
     .then(result => {
         sendResultToTest('registered');

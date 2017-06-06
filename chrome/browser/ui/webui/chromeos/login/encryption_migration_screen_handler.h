@@ -47,17 +47,14 @@ class EncryptionMigrationScreenHandler : public EncryptionMigrationScreenView,
   void Initialize() override;
 
  private:
-  // Enumeration for migration UI state. These values must be kept in sync with
-  // EncryptionMigrationUIState in JS code, and match the numbering for
-  // MigrationUIScreen in histograms/enums.xml. Do not reorder or remove items,
-  // only add new items before COUNT.
+  // Enumeration for the migration state. These values must be kept in sync with
+  // EncryptionMigrationUIState in JS code.
   enum UIState {
     INITIAL = 0,
     READY = 1,
     MIGRATING = 2,
     MIGRATION_FAILED = 3,
     NOT_ENOUGH_STORAGE = 4,
-    COUNT
   };
 
   // WebUIMessageHandler implementation:
@@ -69,8 +66,7 @@ class EncryptionMigrationScreenHandler : public EncryptionMigrationScreenView,
   // Handlers for JS API callbacks.
   void HandleStartMigration();
   void HandleSkipMigration();
-  void HandleRequestRestartOnLowStorage();
-  void HandleRequestRestartOnFailure();
+  void HandleRequestRestart();
   void HandleOpenFeedbackDialog();
 
   // Updates UI state.
@@ -97,9 +93,6 @@ class EncryptionMigrationScreenHandler : public EncryptionMigrationScreenView,
                            uint64_t current,
                            uint64_t total);
   void OnMigrationRequested(bool success);
-
-  // Records UMA about visible screen after delay.
-  void OnDelayedRecordVisibleScreen(UIState state);
 
   Delegate* delegate_ = nullptr;
   bool show_on_init_ = false;

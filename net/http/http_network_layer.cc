@@ -31,7 +31,6 @@ HttpNetworkLayer::HttpNetworkLayer(HttpNetworkSession* session)
 }
 
 HttpNetworkLayer::~HttpNetworkLayer() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 #if defined(OS_WIN)
   base::PowerMonitor* power_monitor = base::PowerMonitor::Get();
   if (power_monitor)

@@ -471,7 +471,12 @@ std::unique_ptr<DEVMODE, base::FreeDeleter> CreateDevModeWithColor(
   return ticket;
 }
 
-bool IsPrinterRPCSOnly(const wchar_t* name, const wchar_t* port) {
+bool IsPrinterRPCSOnly(HANDLE printer) {
+  PrinterInfo5 info_5;
+  if (!info_5.Init(printer))
+    return false;
+  const wchar_t* name = info_5.get()->pPrinterName;
+  const wchar_t* port = info_5.get()->pPortName;
   int num_languages =
       DeviceCapabilities(name, port, DC_PERSONALITY, NULL, NULL);
   if (num_languages != 1)
@@ -482,16 +487,12 @@ bool IsPrinterRPCSOnly(const wchar_t* name, const wchar_t* port) {
   return wcscmp(buf.data(), kRPCSLanguage) == 0;
 }
 
-bool PrinterHasValidPaperSize(const wchar_t* name, const wchar_t* port) {
-  return DeviceCapabilities(name, port, DC_PAPERSIZE, nullptr, nullptr) > 0;
-}
-
 std::unique_ptr<DEVMODE, base::FreeDeleter> CreateDevMode(HANDLE printer,
                                                           DEVMODE* in) {
   LONG buffer_size = DocumentProperties(
       NULL, printer, const_cast<wchar_t*>(L""), NULL, NULL, 0);
   if (buffer_size < static_cast<int>(sizeof(DEVMODE)))
-    return nullptr;
+    return std::unique_ptr<DEVMODE, base::FreeDeleter>();
 
   // Some drivers request buffers with size smaller than dmSize + dmDriverExtra.
   // crbug.com/421402
@@ -501,27 +502,17 @@ std::unique_ptr<DEVMODE, base::FreeDeleter> CreateDevMode(HANDLE printer,
       reinterpret_cast<DEVMODE*>(calloc(buffer_size, 1)));
   DWORD flags = (in ? (DM_IN_BUFFER) : 0) | DM_OUT_BUFFER;
 
-  PrinterInfo5 info_5;
-  if (!info_5.Init(printer))
-    return nullptr;
-  const wchar_t* name = info_5.get()->pPrinterName;
-  const wchar_t* port = info_5.get()->pPortName;
-
   // Check for RPCS drivers on Windows 8+ as DocumentProperties will crash if
-  // called on one of these printers. See crbug.com/679160.
-  // Also check that valid paper sizes exist; some old drivers return no paper
-  // sizes and crash in DocumentProperties if used with Win10. See
-  // crbug.com/724595
-  if ((base::win::GetVersion() >= base::win::VERSION_WIN8 &&
-       IsPrinterRPCSOnly(name, port)) ||
-      !PrinterHasValidPaperSize(name, port)) {
-    return nullptr;
+  // called on one of these printers. See crbug.com/679160
+  if (base::win::GetVersion() >= base::win::VERSION_WIN8 &&
+      IsPrinterRPCSOnly(printer)) {
+    return std::unique_ptr<DEVMODE, base::FreeDeleter>();
   }
 
   if (DocumentProperties(
           NULL, printer, const_cast<wchar_t*>(L""), out.get(), in, flags) !=
       IDOK) {
-    return nullptr;
+    return std::unique_ptr<DEVMODE, base::FreeDeleter>();
   }
   int size = out->dmSize;
   int extra_size = out->dmDriverExtra;

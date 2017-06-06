@@ -7,8 +7,8 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
-#include "content/common/net_adapters.h"
 #include "content/common/url_loader_factory.mojom.h"
+#include "content/network/net_adapters.h"
 #include "content/network/network_context.h"
 #include "content/public/common/referrer.h"
 #include "content/public/common/resource_response.h"
@@ -153,12 +153,11 @@ std::unique_ptr<net::UploadDataStream> CreateUploadDataStream(
 
 }  // namespace
 
-URLLoaderImpl::URLLoaderImpl(
-    NetworkContext* context,
-    mojom::URLLoaderAssociatedRequest url_loader_request,
-    int32_t options,
-    const ResourceRequest& request,
-    mojom::URLLoaderClientPtr url_loader_client)
+URLLoaderImpl::URLLoaderImpl(NetworkContext* context,
+                             mojom::URLLoaderRequest url_loader_request,
+                             int32_t options,
+                             const ResourceRequest& request,
+                             mojom::URLLoaderClientPtr url_loader_client)
     : context_(context),
       options_(options),
       connected_(true),

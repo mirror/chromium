@@ -207,9 +207,9 @@ class NetworkDefaultView : public TrayItemMore,
 
 TrayNetwork::TrayNetwork(SystemTray* system_tray)
     : SystemTrayItem(system_tray, UMA_NETWORK),
-      tray_(nullptr),
-      default_(nullptr),
-      detailed_(nullptr) {
+      tray_(NULL),
+      default_(NULL),
+      detailed_(NULL) {
   network_state_observer_.reset(new TrayNetworkStateObserver(this));
   SystemTrayNotifier* notifier = Shell::Get()->system_tray_notifier();
   notifier->AddNetworkObserver(this);
@@ -223,44 +223,44 @@ TrayNetwork::~TrayNetwork() {
 }
 
 views::View* TrayNetwork::CreateTrayView(LoginStatus status) {
-  CHECK(tray_ == nullptr);
+  CHECK(tray_ == NULL);
   if (!chromeos::NetworkHandler::IsInitialized())
-    return nullptr;
+    return NULL;
   tray_ = new tray::NetworkTrayView(this);
   return tray_;
 }
 
 views::View* TrayNetwork::CreateDefaultView(LoginStatus status) {
-  CHECK(default_ == nullptr);
+  CHECK(default_ == NULL);
   if (!chromeos::NetworkHandler::IsInitialized())
-    return nullptr;
-  CHECK(tray_ != nullptr);
+    return NULL;
+  CHECK(tray_ != NULL);
   default_ = new tray::NetworkDefaultView(this);
   default_->SetEnabled(status != LoginStatus::LOCKED);
   return default_;
 }
 
 views::View* TrayNetwork::CreateDetailedView(LoginStatus status) {
-  CHECK(detailed_ == nullptr);
+  CHECK(detailed_ == NULL);
   ShellPort::Get()->RecordUserMetricsAction(
       UMA_STATUS_AREA_DETAILED_NETWORK_VIEW);
   if (!chromeos::NetworkHandler::IsInitialized())
-    return nullptr;
+    return NULL;
   detailed_ = new tray::NetworkListView(this, status);
   detailed_->Init();
   return detailed_;
 }
 
-void TrayNetwork::OnTrayViewDestroyed() {
-  tray_ = nullptr;
+void TrayNetwork::DestroyTrayView() {
+  tray_ = NULL;
 }
 
-void TrayNetwork::OnDefaultViewDestroyed() {
-  default_ = nullptr;
+void TrayNetwork::DestroyDefaultView() {
+  default_ = NULL;
 }
 
-void TrayNetwork::OnDetailedViewDestroyed() {
-  detailed_ = nullptr;
+void TrayNetwork::DestroyDetailedView() {
+  detailed_ = NULL;
 }
 
 void TrayNetwork::RequestToggleWifi() {

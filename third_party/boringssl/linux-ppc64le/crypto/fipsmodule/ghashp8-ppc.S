@@ -1,19 +1,15 @@
 .machine	"any"
 
-.abiversion	2
 .text
 
 .globl	gcm_init_p8
-.type	gcm_init_p8,@function
 .align	5
 gcm_init_p8:
-.localentry	gcm_init_p8,0
-
 	li	0,-4096
 	li	8,0x10
-	li	12,-1
+	mfspr	12,256
 	li	9,0x20
-	or	0,0,0
+	mtspr	256,0
 	li	10,0x30
 	.long	0x7D202699
 
@@ -125,23 +121,20 @@ gcm_init_p8:
 	.long	0x7E291F99
 	.long	0x7E4A1F99
 
-	or	12,12,12
+	mtspr	256,12
 	blr	
 .long	0
 .byte	0,12,0x14,0,0,0,2,0
 .long	0
-.size	gcm_init_p8,.-gcm_init_p8
+
 .globl	gcm_gmult_p8
-.type	gcm_gmult_p8,@function
 .align	5
 gcm_gmult_p8:
-.localentry	gcm_gmult_p8,0
-
 	lis	0,0xfff8
 	li	8,0x10
-	li	12,-1
+	mfspr	12,256
 	li	9,0x20
-	or	0,0,0
+	mtspr	256,0
 	li	10,0x30
 	.long	0x7C601E99
 
@@ -177,24 +170,21 @@ gcm_gmult_p8:
 	vperm	0,0,0,12
 	.long	0x7C001F99
 
-	or	12,12,12
+	mtspr	256,12
 	blr	
 .long	0
 .byte	0,12,0x14,0,0,0,2,0
 .long	0
-.size	gcm_gmult_p8,.-gcm_gmult_p8
+
 
 .globl	gcm_ghash_p8
-.type	gcm_ghash_p8,@function
 .align	5
 gcm_ghash_p8:
-.localentry	gcm_ghash_p8,0
-
 	li	0,-4096
 	li	8,0x10
-	li	12,-1
+	mfspr	12,256
 	li	9,0x20
-	or	0,0,0
+	mtspr	256,0
 	li	10,0x30
 	.long	0x7C001E99
 
@@ -212,14 +202,14 @@ gcm_ghash_p8:
 	vxor	4,4,4
 
 	cmpldi	6,64
-	bge	.Lgcm_ghash_p8_4x
+	bge	Lgcm_ghash_p8_4x
 
 	.long	0x7C602E99
 	addi	5,5,16
 	subic.	6,6,16
 	vperm	3,3,3,12
 	vxor	3,3,0
-	beq	.Lshort
+	beq	Lshort
 
 	.long	0x7E682699
 	li	8,16
@@ -229,7 +219,7 @@ gcm_ghash_p8:
 
 
 .align	5
-.Loop_2x:
+Loop_2x:
 	.long	0x7E002E99
 	vperm	16,16,16,12
 
@@ -267,12 +257,12 @@ gcm_ghash_p8:
 	vxor	3,3,6
 	vxor	3,3,0
 	cmpld	9,5
-	bgt	.Loop_2x
+	bgt	Loop_2x
 
 	cmplwi	6,0
-	bne	.Leven
+	bne	Leven
 
-.Lshort:
+Lshort:
 	.long	0x10035CC8
 	.long	0x10234CC8
 	.long	0x104354C8
@@ -291,19 +281,19 @@ gcm_ghash_p8:
 	.long	0x100044C8
 	vxor	6,6,2
 
-.Leven:
+Leven:
 	vxor	0,0,6
 	vperm	0,0,0,12
 	.long	0x7C001F99
 
-	or	12,12,12
+	mtspr	256,12
 	blr	
 .long	0
 .byte	0,12,0x14,0,0,0,4,0
 .long	0
 .align	5
 .gcm_ghash_p8_4x:
-.Lgcm_ghash_p8_4x:
+Lgcm_ghash_p8_4x:
 	stdu	1,-256(1)
 	li	10,63
 	li	11,79
@@ -332,7 +322,7 @@ gcm_ghash_p8:
 	stvx	31,11,1
 	li	0,-1
 	stw	12,252(1)
-	or	0,0,0
+	mtspr	256,0
 
 	lvsl	5,0,8
 
@@ -392,9 +382,9 @@ gcm_ghash_p8:
 	vxor	27,27,21
 	vxor	26,26,15
 
-	blt	.Ltail_4x
+	blt	Ltail_4x
 
-.Loop_4x:
+Loop_4x:
 	.long	0x7C602E99
 	.long	0x7E082E99
 	subic.	6,6,4
@@ -443,9 +433,9 @@ gcm_ghash_p8:
 	vxor	2,2,6
 	vxor	27,27,21
 	vxor	2,2,0
-	bge	.Loop_4x
+	bge	Loop_4x
 
-.Ltail_4x:
+Ltail_4x:
 	.long	0x1002ECC8
 	.long	0x1022F4C8
 	.long	0x1042FCC8
@@ -470,16 +460,16 @@ gcm_ghash_p8:
 	vxor	0,0,6
 
 	addic.	6,6,4
-	beq	.Ldone_4x
+	beq	Ldone_4x
 
 	.long	0x7C602E99
 	cmpldi	6,2
 	li	6,-4
-	blt	.Lone
+	blt	Lone
 	.long	0x7E082E99
-	beq	.Ltwo
+	beq	Ltwo
 
-.Lthree:
+Lthree:
 	.long	0x7EC92E99
 	vperm	3,3,3,12
 	vperm	16,16,16,12
@@ -498,10 +488,10 @@ gcm_ghash_p8:
 	.long	0x134654C8
 
 	vxor	27,27,21
-	b	.Ltail_4x
+	b	Ltail_4x
 
 .align	4
-.Ltwo:
+Ltwo:
 	vperm	3,3,3,12
 	vperm	16,16,16,12
 
@@ -517,10 +507,10 @@ gcm_ghash_p8:
 	.long	0x13704CC8
 	.long	0x134654C8
 
-	b	.Ltail_4x
+	b	Ltail_4x
 
 .align	4
-.Lone:
+Lone:
 	vperm	3,3,3,12
 
 	vsldoi	29,4,9,8
@@ -532,15 +522,15 @@ gcm_ghash_p8:
 	vxor	27,27,27
 	vxor	26,26,26
 
-	b	.Ltail_4x
+	b	Ltail_4x
 
-.Ldone_4x:
+Ldone_4x:
 	vperm	0,0,0,12
 	.long	0x7C001F99
 
 	li	10,63
 	li	11,79
-	or	12,12,12
+	mtspr	256,12
 	lvx	20,10,1
 	addi	10,10,32
 	lvx	21,11,1
@@ -568,7 +558,7 @@ gcm_ghash_p8:
 .long	0
 .byte	0,12,0x04,0,0x80,0,4,0
 .long	0
-.size	gcm_ghash_p8,.-gcm_ghash_p8
+
 
 .byte	71,72,65,83,72,32,102,111,114,32,80,111,119,101,114,73,83,65,32,50,46,48,55,44,32,67,82,89,80,84,79,71,65,77,83,32,98,121,32,60,97,112,112,114,111,64,111,112,101,110,115,115,108,46,111,114,103,62,0
 .align	2

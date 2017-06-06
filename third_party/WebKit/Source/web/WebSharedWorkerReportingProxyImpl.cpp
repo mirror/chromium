@@ -23,7 +23,8 @@ WebSharedWorkerReportingProxyImpl::~WebSharedWorkerReportingProxyImpl() {
   DCHECK(IsMainThread());
 }
 
-void WebSharedWorkerReportingProxyImpl::CountFeature(WebFeature feature) {
+void WebSharedWorkerReportingProxyImpl::CountFeature(
+    UseCounter::Feature feature) {
   DCHECK(!IsMainThread());
   parent_frame_task_runners_->Get(TaskType::kUnspecedTimer)
       ->PostTask(BLINK_FROM_HERE,
@@ -31,7 +32,8 @@ void WebSharedWorkerReportingProxyImpl::CountFeature(WebFeature feature) {
                                  CrossThreadUnretained(worker_), feature));
 }
 
-void WebSharedWorkerReportingProxyImpl::CountDeprecation(WebFeature feature) {
+void WebSharedWorkerReportingProxyImpl::CountDeprecation(
+    UseCounter::Feature feature) {
   DCHECK(!IsMainThread());
   // Go through the same code path with countFeature() because a deprecation
   // message is already shown on the worker console and a remaining work is just

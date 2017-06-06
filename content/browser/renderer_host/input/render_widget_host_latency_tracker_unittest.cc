@@ -2,14 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/renderer_host/input/render_widget_host_latency_tracker.h"
-#include "base/metrics/metrics_hashes.h"
 #include "base/test/histogram_tester.h"
-#include "components/metrics/proto/ukm/entry.pb.h"
 #include "components/rappor/public/rappor_utils.h"
 #include "components/rappor/test_rappor_service.h"
-#include "components/ukm/test_ukm_recorder.h"
-#include "components/ukm/ukm_source.h"
+#include "content/browser/renderer_host/input/render_widget_host_latency_tracker.h"
 #include "content/common/input/synthetic_web_input_event_builders.h"
 #include "content/public/browser/native_web_keyboard_event.h"
 #include "content/test/test_content_browser_client.h"
@@ -24,8 +20,6 @@ using testing::ElementsAre;
 
 namespace content {
 namespace {
-
-const char kUrl[] = "http://www.foo.bar.com/subpage/1";
 
 void AddFakeComponentsWithTimeStamp(
     const RenderWidgetHostLatencyTracker& tracker,
@@ -83,11 +77,8 @@ class RenderWidgetHostLatencyTrackerTestBrowserClient
     return &rappor_service_;
   }
 
-  ukm::TestUkmRecorder* GetTestUkmRecorder() { return &test_ukm_recorder_; }
-
  private:
   rappor::TestRapporServiceImpl rappor_service_;
-  ukm::TestUkmRecorder test_ukm_recorder_;
   DISALLOW_COPY_AND_ASSIGN(RenderWidgetHostLatencyTrackerTestBrowserClient);
 };
 
@@ -142,44 +133,6 @@ class RenderWidgetHostLatencyTrackerTest
     }
   }
 
-  ::testing::AssertionResult AssertUkmReported(const char* event_name,
-                                               const char* metric_name) {
-    const ukm::TestUkmRecorder* ukm_recoder =
-        test_browser_client_.GetTestUkmRecorder();
-    size_t actual_event_count = 0;
-    for (size_t i = 0; i < ukm_recoder->entries_count(); ++i) {
-      const ukm::mojom::UkmEntry* entry = ukm_recoder->GetEntry(i);
-      if (entry->event_hash != base::HashMetricName(event_name))
-        continue;
-
-      const ukm::UkmSource* source =
-          ukm_recoder->GetSourceForSourceId(entry->source_id);
-      if (!source)
-        return ::testing::AssertionFailure() << "Source should not be null";
-
-      if (actual_event_count >= 1)
-        break;
-
-      if (GURL(kUrl) != source->url())
-        return ::testing::AssertionFailure() << "Incorrect URL is reported.";
-
-      actual_event_count++;
-      if (entry->metrics.size() != 1)
-        return ::testing::AssertionFailure()
-               << event_name << " entry expected only 1 metric but got "
-               << entry->metrics.size();
-
-      if (entry->metrics[0]->metric_hash != base::HashMetricName(metric_name))
-        return ::testing::AssertionFailure()
-               << "Expected a metric named " << metric_name;
-    }
-    if (actual_event_count != 1)
-      return ::testing::AssertionFailure()
-             << event_name << " expected " << 1 << " entry but got "
-             << actual_event_count;
-    return ::testing::AssertionSuccess();
-  }
-
   ::testing::AssertionResult HistogramSizeEq(const char* histogram_name,
                                              int size) {
     uint64_t histogram_size =
@@ -211,7 +164,6 @@ class RenderWidgetHostLatencyTrackerTest
   void TearDown() override {
     SetBrowserClientForTesting(old_browser_client_);
     RenderViewHostImplTestHarness::TearDown();
-    test_browser_client_.GetTestUkmRecorder()->Purge();
   }
 
  protected:
@@ -225,7 +177,7 @@ class RenderWidgetHostLatencyTrackerTest
 };
 
 TEST_F(RenderWidgetHostLatencyTrackerTest, TestWheelToFirstScrollHistograms) {
-  const GURL url(kUrl);
+  const GURL url("http://www.foo.bar.com/subpage/1");
   contents()->NavigateAndCommit(url);
   for (bool rendering_on_main : {false, true}) {
     ResetHistograms();
@@ -313,11 +265,6 @@ TEST_F(RenderWidgetHostLatencyTrackerTest, TestWheelToFirstScrollHistograms) {
           0));
       EXPECT_TRUE(
           HistogramSizeEq("Event.Latency.ScrollUpdate.Wheel.GpuSwap2", 0));
-
-      ukm::TestUkmRecorder* test_ukm_recorder =
-          test_browser_client_.GetTestUkmRecorder();
-      EXPECT_EQ(0U, test_ukm_recorder->sources_count());
-      EXPECT_EQ(0U, test_ukm_recorder->entries_count());
     }
   }
 }
@@ -396,7 +343,7 @@ TEST_F(RenderWidgetHostLatencyTrackerTest, TestWheelToScrollHistograms) {
 }
 
 TEST_F(RenderWidgetHostLatencyTrackerTest, TestTouchToFirstScrollHistograms) {
-  const GURL url(kUrl);
+  const GURL url("http://www.foo.bar.com/subpage/1");
   contents()->NavigateAndCommit(url);
   for (bool rendering_on_main : {false, true}) {
     ResetHistograms();
@@ -508,18 +455,12 @@ TEST_F(RenderWidgetHostLatencyTrackerTest, TestTouchToFirstScrollHistograms) {
         "Event.Latency.ScrollUpdate.Touch.BrowserNotifiedToBeforeGpuSwap2", 0));
     EXPECT_TRUE(
         HistogramSizeEq("Event.Latency.ScrollUpdate.Touch.GpuSwap2", 0));
-
-    ukm::TestUkmRecorder* test_ukm_recorder =
-        test_browser_client_.GetTestUkmRecorder();
-    EXPECT_EQ(0U, test_ukm_recorder->sources_count());
-    EXPECT_EQ(0U, test_ukm_recorder->entries_count());
   }
 }
 
 TEST_F(RenderWidgetHostLatencyTrackerTest, TestTouchToScrollHistograms) {
-  const GURL url(kUrl);
+  const GURL url("http://www.foo.bar.com/subpage/1");
   contents()->NavigateAndCommit(url);
-  size_t total_ukm_entry_count = 0;
   for (bool rendering_on_main : {false, true}) {
     ResetHistograms();
     EXPECT_EQ(0,
@@ -567,11 +508,6 @@ TEST_F(RenderWidgetHostLatencyTrackerTest, TestTouchToScrollHistograms) {
       tracker()->OnGpuSwapBuffersCompleted(touch_latency);
     }
 
-    // UKM metrics.
-    total_ukm_entry_count++;
-    EXPECT_TRUE(AssertUkmReported("Event.ScrollUpdate.Touch",
-                                  "TimeToScrollUpdateSwapBegin"));
-
     // Rappor metrics.
     EXPECT_TRUE(
         RapporSampleAssert("Event.Latency.ScrollUpdate.Touch."
@@ -585,7 +521,6 @@ TEST_F(RenderWidgetHostLatencyTrackerTest, TestTouchToScrollHistograms) {
         RapporSampleAssert("Event.Latency.ScrollBegin.Wheel."
                            "TimeToScrollUpdateSwapBegin2",
                            0));
-
     EXPECT_EQ(2,
               test_browser_client_.getTestRapporService()->GetReportsCount());
 
@@ -630,11 +565,6 @@ TEST_F(RenderWidgetHostLatencyTrackerTest, TestTouchToScrollHistograms) {
         "Event.Latency.ScrollUpdate.Touch.BrowserNotifiedToBeforeGpuSwap2", 1));
     EXPECT_TRUE(
         HistogramSizeEq("Event.Latency.ScrollUpdate.Touch.GpuSwap2", 1));
-
-    ukm::TestUkmRecorder* test_ukm_recorder =
-        test_browser_client_.GetTestUkmRecorder();
-    EXPECT_EQ(1U, test_ukm_recorder->sources_count());
-    EXPECT_EQ(total_ukm_entry_count, test_ukm_recorder->entries_count());
   }
 }
 

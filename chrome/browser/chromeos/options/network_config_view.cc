@@ -26,6 +26,7 @@
 #include "chromeos/network/network_state.h"
 #include "chromeos/network/network_state_handler.h"
 #include "components/device_event_log/device_event_log.h"
+#include "components/strings/grit/components_strings.h"
 #include "components/user_manager/user.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/aura/window_event_dispatcher.h"
@@ -39,6 +40,7 @@
 #include "ui/views/controls/button/md_text_button.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/layout/fill_layout.h"
+#include "ui/views/layout/layout_constants.h"
 #include "ui/views/widget/widget.h"
 
 using views::Widget;

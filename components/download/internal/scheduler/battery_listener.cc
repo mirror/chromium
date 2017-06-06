@@ -9,9 +9,11 @@
 namespace download {
 
 // Helper function that converts the battery status to battery requirement.
-BatteryStatus ToBatteryStatus(bool on_battery_power) {
-  return on_battery_power ? BatteryStatus::NOT_CHARGING
-                          : BatteryStatus::CHARGING;
+SchedulingParams::BatteryRequirements ToBatteryRequirement(
+    bool on_battery_power) {
+  return on_battery_power
+             ? SchedulingParams::BatteryRequirements::BATTERY_INSENSITIVE
+             : SchedulingParams::BatteryRequirements::BATTERY_SENSITIVE;
 }
 
 BatteryListener::BatteryListener() = default;
@@ -20,8 +22,9 @@ BatteryListener::~BatteryListener() {
   Stop();
 }
 
-BatteryStatus BatteryListener::CurrentBatteryStatus() const {
-  return ToBatteryStatus(base::PowerMonitor::Get()->IsOnBatteryPower());
+SchedulingParams::BatteryRequirements BatteryListener::CurrentBatteryStatus()
+    const {
+  return ToBatteryRequirement(base::PowerMonitor::Get()->IsOnBatteryPower());
 }
 
 void BatteryListener::Start() {
@@ -43,12 +46,13 @@ void BatteryListener::RemoveObserver(Observer* observer) {
 }
 
 void BatteryListener::OnPowerStateChange(bool on_battery_power) {
-  NotifyBatteryChange(ToBatteryStatus(on_battery_power));
+  NotifyBatteryChange(ToBatteryRequirement(on_battery_power));
 }
 
-void BatteryListener::NotifyBatteryChange(BatteryStatus battery_status) {
+void BatteryListener::NotifyBatteryChange(
+    SchedulingParams::BatteryRequirements current_battery) {
   for (auto& observer : observers_)
-    observer.OnBatteryChange(battery_status);
+    observer.OnBatteryChange(current_battery);
 }
 
 }  // namespace download

@@ -13,7 +13,6 @@
 #include <memory>
 #include <set>
 #include <string>
-#include <utility>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -4142,7 +4141,7 @@ TEST_F(SyncerTest, DirectoryCommitTest) {
 TEST_F(SyncerTest, TestClientCommandDuringUpdate) {
   using sync_pb::ClientCommand;
 
-  auto command = base::MakeUnique<ClientCommand>();
+  ClientCommand* command = new ClientCommand();
   command->set_set_sync_poll_interval(8);
   command->set_set_sync_long_poll_interval(800);
   command->set_sessions_commit_delay_seconds(3141);
@@ -4154,7 +4153,7 @@ TEST_F(SyncerTest, TestClientCommandDuringUpdate) {
   command->set_client_invalidation_hint_buffer_size(11);
   mock_server_->AddUpdateDirectory(1, 0, "in_root", 1, 1, foreign_cache_guid(),
                                    "-1");
-  mock_server_->SetGUClientCommand(std::move(command));
+  mock_server_->SetGUClientCommand(command);
   EXPECT_TRUE(SyncShareNudge());
 
   EXPECT_EQ(TimeDelta::FromSeconds(8), last_short_poll_interval_received_);
@@ -4163,7 +4162,7 @@ TEST_F(SyncerTest, TestClientCommandDuringUpdate) {
   EXPECT_EQ(TimeDelta::FromMilliseconds(950), last_bookmarks_commit_delay_);
   EXPECT_EQ(11, last_client_invalidation_hint_buffer_size_);
 
-  command = base::MakeUnique<ClientCommand>();
+  command = new ClientCommand();
   command->set_set_sync_poll_interval(180);
   command->set_set_sync_long_poll_interval(190);
   command->set_sessions_commit_delay_seconds(2718);
@@ -4174,7 +4173,7 @@ TEST_F(SyncerTest, TestClientCommandDuringUpdate) {
   command->set_client_invalidation_hint_buffer_size(9);
   mock_server_->AddUpdateDirectory(1, 0, "in_root", 1, 1, foreign_cache_guid(),
                                    "-1");
-  mock_server_->SetGUClientCommand(std::move(command));
+  mock_server_->SetGUClientCommand(command);
   EXPECT_TRUE(SyncShareNudge());
 
   EXPECT_EQ(TimeDelta::FromSeconds(180), last_short_poll_interval_received_);
@@ -4187,7 +4186,7 @@ TEST_F(SyncerTest, TestClientCommandDuringUpdate) {
 TEST_F(SyncerTest, TestClientCommandDuringCommit) {
   using sync_pb::ClientCommand;
 
-  auto command = base::MakeUnique<ClientCommand>();
+  ClientCommand* command = new ClientCommand();
   command->set_set_sync_poll_interval(8);
   command->set_set_sync_long_poll_interval(800);
   command->set_sessions_commit_delay_seconds(3141);
@@ -4198,7 +4197,7 @@ TEST_F(SyncerTest, TestClientCommandDuringCommit) {
   bookmark_delay->set_delay_ms(950);
   command->set_client_invalidation_hint_buffer_size(11);
   CreateUnsyncedDirectory("X", "id_X");
-  mock_server_->SetCommitClientCommand(std::move(command));
+  mock_server_->SetCommitClientCommand(command);
   EXPECT_TRUE(SyncShareNudge());
 
   EXPECT_EQ(TimeDelta::FromSeconds(8), last_short_poll_interval_received_);
@@ -4207,7 +4206,7 @@ TEST_F(SyncerTest, TestClientCommandDuringCommit) {
   EXPECT_EQ(TimeDelta::FromMilliseconds(950), last_bookmarks_commit_delay_);
   EXPECT_EQ(11, last_client_invalidation_hint_buffer_size_);
 
-  command = base::MakeUnique<ClientCommand>();
+  command = new ClientCommand();
   command->set_set_sync_poll_interval(180);
   command->set_set_sync_long_poll_interval(190);
   command->set_sessions_commit_delay_seconds(2718);
@@ -4217,7 +4216,7 @@ TEST_F(SyncerTest, TestClientCommandDuringCommit) {
   bookmark_delay->set_delay_ms(1050);
   command->set_client_invalidation_hint_buffer_size(9);
   CreateUnsyncedDirectory("Y", "id_Y");
-  mock_server_->SetCommitClientCommand(std::move(command));
+  mock_server_->SetCommitClientCommand(command);
   EXPECT_TRUE(SyncShareNudge());
 
   EXPECT_EQ(TimeDelta::FromSeconds(180), last_short_poll_interval_received_);

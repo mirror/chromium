@@ -5,7 +5,6 @@
 #import "ios/clean/chrome/browser/ui/context_menu/context_menu_view_controller.h"
 
 #include "base/logging.h"
-#import "ios/clean/chrome/browser/ui/commands/context_menu_commands.h"
 #import "ios/clean/chrome/browser/ui/context_menu/context_menu_context.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -15,6 +14,18 @@
 namespace {
 // Typedef the block parameter for UIAlertAction for readability.
 typedef void (^AlertActionHandler)(UIAlertAction*);
+// Sends |commands| to |dispatcher| using |context| as the menu context.
+void DispatchContextMenuCommands(const std::vector<SEL>& commands,
+                                 id dispatcher,
+                                 ContextMenuContext* context) {
+  DCHECK(dispatcher);
+  DCHECK(context);
+  for (SEL command : commands) {
+    IMP command_imp = [dispatcher methodForSelector:command];
+    DCHECK(command_imp);
+    command_imp(dispatcher, command, context);
+  }
+}
 }
 
 @interface ContextMenuViewController ()
@@ -75,22 +86,7 @@ typedef void (^AlertActionHandler)(UIAlertAction*);
   DCHECK(item);
   // Create a block that dispatches |item|'s ContextMenuCommands.
   AlertActionHandler handler = ^(UIAlertAction* action) {
-// |-performSelector:withObject:| throws a warning in ARC because the compiler
-// doesn't know how to handle the memory management of the returned values.
-// Since all ContextMenuCommands return void, these warning can be ignored
-// here.
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-    // TODO: Convert to DCHECK once all commands are implemented.
-    if (item.command)
-      [self.dispatcher performSelector:item.command withObject:self.context];
-    // If the command opens a new tab, the context menu will be hidden
-    // automatically.  If not, dispatch |-hideMenuContext:| to stop the menu UI.
-    if (!item.commandOpensTab) {
-      [self.dispatcher performSelector:@selector(hideContextMenu:)
-                            withObject:self.context];
-    }
-#pragma clang diagnostic pop
+    DispatchContextMenuCommands(item.commands, self.dispatcher, self.context);
   };
   return [UIAlertAction actionWithTitle:item.title style:style handler:handler];
 }

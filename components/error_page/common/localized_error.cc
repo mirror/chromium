@@ -506,7 +506,7 @@ void AddGoogleCachedCopyButton(base::ListValue* suggestions_summary_list,
             l10n_util::GetStringUTF16(IDS_ERRORPAGES_BUTTON_SHOW_SAVED_COPY));
       cache_button->SetString("cacheUrl", cache_url);
       cache_button->SetInteger("trackingId", cache_tracking_id);
-      error_strings->Set("cacheButton", std::move(cache_button));
+      error_strings->Set("cacheButton", cache_button.release());
 
       // Remove the item from suggestions dictionary so that it does not get
       // displayed by the template in the details section.
@@ -900,13 +900,13 @@ void LocalizedError::GetStrings(
   std::string icon_class = GetIconClassForError(error_domain, error_code);
   error_strings->SetString("iconClass", icon_class);
 
-  auto heading = base::MakeUnique<base::DictionaryValue>();
+  base::DictionaryValue* heading = new base::DictionaryValue;
   heading->SetString("msg",
                      l10n_util::GetStringUTF16(options.heading_resource_id));
   heading->SetString("hostName", host_name);
-  error_strings->Set("heading", std::move(heading));
+  error_strings->Set("heading", heading);
 
-  auto summary = base::MakeUnique<base::DictionaryValue>();
+  base::DictionaryValue* summary = new base::DictionaryValue;
 
   // Set summary message under the heading.
   summary->SetString(
@@ -934,7 +934,7 @@ void LocalizedError::GetStrings(
   error_strings->SetString(
       "hideDetails", l10n_util::GetStringUTF16(
           IDS_ERRORPAGE_NET_BUTTON_HIDE_DETAILS));
-  error_strings->Set("summary", std::move(summary));
+  error_strings->Set("summary", summary);
 
   base::string16 error_string;
   if (error_domain == net::kErrorDomain) {
@@ -961,17 +961,16 @@ void LocalizedError::GetStrings(
 
   bool use_default_suggestions = true;
   if (!params->override_suggestions) {
+    suggestions_details = new base::ListValue();
+    suggestions_summary_list = new base::ListValue();
     // Detailed suggestion information.
-    suggestions_details = error_strings->SetList(
-        "suggestionsDetails", base::MakeUnique<base::ListValue>());
-    suggestions_summary_list = error_strings->SetList(
-        "suggestionsSummaryList", base::MakeUnique<base::ListValue>());
+    error_strings->Set("suggestionsDetails", suggestions_details);
   } else {
-    suggestions_summary_list = error_strings->SetList(
-        "suggestionsSummaryList", std::move(params->override_suggestions));
+    suggestions_summary_list = params->override_suggestions.release();
     use_default_suggestions = false;
     AddGoogleCachedCopyButton(suggestions_summary_list, error_strings);
   }
+  error_strings->Set("suggestionsSummaryList", suggestions_summary_list);
 
   if (params->search_url.is_valid()) {
     std::unique_ptr<base::DictionaryValue> search_suggestion(
@@ -995,12 +994,12 @@ void LocalizedError::GetStrings(
 #if defined(OS_ANDROID)
     reload_visible = true;
 #endif  // defined(OS_ANDROID)
-    auto reload_button = base::MakeUnique<base::DictionaryValue>();
+    base::DictionaryValue* reload_button = new base::DictionaryValue;
     reload_button->SetString(
         "msg", l10n_util::GetStringUTF16(IDS_ERRORPAGES_BUTTON_RELOAD));
     reload_button->SetString("reloadUrl", failed_url.spec());
+    error_strings->Set("reloadButton", reload_button);
     reload_button->SetInteger("reloadTrackingId", params->reload_tracking_id);
-    error_strings->Set("reloadButton", std::move(reload_button));
   }
 
   // If not using the default suggestions, nothing else to do.
@@ -1034,7 +1033,7 @@ void LocalizedError::GetStrings(
       (show_saved_copy_primary || show_saved_copy_secondary));
 
   if (show_saved_copy_visible) {
-    auto show_saved_copy_button = base::MakeUnique<base::DictionaryValue>();
+    base::DictionaryValue* show_saved_copy_button = new base::DictionaryValue;
     show_saved_copy_button->SetString(
         "msg", l10n_util::GetStringUTF16(
             IDS_ERRORPAGES_BUTTON_SHOW_SAVED_COPY));
@@ -1043,8 +1042,7 @@ void LocalizedError::GetStrings(
         l10n_util::GetStringUTF16(IDS_ERRORPAGES_BUTTON_SHOW_SAVED_COPY_HELP));
     if (show_saved_copy_primary)
       show_saved_copy_button->SetString("primary", "true");
-    error_strings->Set("showSavedCopyButton",
-                       std::move(show_saved_copy_button));
+    error_strings->Set("showSavedCopyButton", show_saved_copy_button);
   }
 
 #if defined(OS_ANDROID)

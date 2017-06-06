@@ -56,19 +56,7 @@ namespace blink {
 using namespace HTMLNames;
 
 namespace {
-
-struct AccessibilityRoleHashTraits : HashTraits<AccessibilityRole> {
-  static const bool kEmptyValueIsZero = true;
-  static AccessibilityRole EmptyValue() {
-    return AccessibilityRole::kUnknownRole;
-  }
-};
-
-using ARIARoleMap = HashMap<String,
-                            AccessibilityRole,
-                            CaseFoldingHash,
-                            HashTraits<String>,
-                            AccessibilityRoleHashTraits>;
+typedef HashMap<String, AccessibilityRole, CaseFoldingHash> ARIARoleMap;
 
 struct RoleEntry {
   const char* aria_role;
@@ -821,7 +809,11 @@ bool AXObjectImpl::IsPresentationalChild() const {
 }
 
 bool AXObjectImpl::CanReceiveAccessibilityFocus() const {
-  const Element* elem = GetElement();
+  const Node* node = this->GetNode();
+  if (!node)
+    return false;
+
+  const Element* elem = ToElement(node);
   if (!elem)
     return false;
 

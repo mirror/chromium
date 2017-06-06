@@ -13,6 +13,7 @@
 
 namespace blink {
 
+class ComputedStyle;
 class LayoutObject;
 class NGBreakToken;
 class NGConstraintSpace;
@@ -23,12 +24,16 @@ struct MinMaxContentSize;
 // Represents a node to be laid out.
 class CORE_EXPORT NGBlockNode final : public NGLayoutInputNode {
   friend NGLayoutInputNode;
+
  public:
-  explicit NGBlockNode(LayoutBox*);
+  explicit NGBlockNode(LayoutObject*);
+
+  ~NGBlockNode() override;
 
   RefPtr<NGLayoutResult> Layout(NGConstraintSpace* constraint_space,
-                                NGBreakToken* break_token = nullptr);
-  NGLayoutInputNode NextSibling() const;
+                                NGBreakToken* break_token = nullptr) override;
+  NGLayoutInputNode* NextSibling() override;
+  LayoutObject* GetLayoutObject() const override;
 
   // Computes the value of min-content and max-content for this box.
   // If the underlying layout algorithm's ComputeMinMaxContentSize returns
@@ -36,12 +41,16 @@ class CORE_EXPORT NGBlockNode final : public NGLayoutInputNode {
   // special constraint spaces -- infinite available size for max content, zero
   // available size for min content, and percentage resolution size zero for
   // both.
-  MinMaxContentSize ComputeMinMaxContentSize();
+  MinMaxContentSize ComputeMinMaxContentSize() override;
 
-  NGLayoutInputNode FirstChild();
+  const ComputedStyle& Style() const override;
 
-  // Runs layout on the underlying LayoutObject and creates a fragment for the
-  // resulting geometry.
+  NGLayoutInputNode* FirstChild();
+
+  DECLARE_VIRTUAL_TRACE();
+
+  // Runs layout on layout_box_ and creates a fragment for the resulting
+  // geometry.
   RefPtr<NGLayoutResult> RunOldLayout(const NGConstraintSpace&);
 
   // Called if this is an out-of-flow block which needs to be
@@ -53,12 +62,18 @@ class CORE_EXPORT NGBlockNode final : public NGLayoutInputNode {
 
   bool CanUseNewLayout() const;
 
-  String ToString() const;
+  String ToString() const override;
 
  private:
   // After we run the layout algorithm, this function copies back the geometry
   // data to the layout box.
   void CopyFragmentDataToLayoutBox(const NGConstraintSpace&, NGLayoutResult*);
+
+  // We can either wrap a layout_box_ or a next_sibling_/first_child_
+  // combination.
+  LayoutBox* layout_box_;
+  Member<NGLayoutInputNode> next_sibling_;
+  Member<NGLayoutInputNode> first_child_;
 };
 
 DEFINE_TYPE_CASTS(NGBlockNode,

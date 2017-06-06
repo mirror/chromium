@@ -12,13 +12,13 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
-#include "base/threading/thread_checker.h"
+#include "base/threading/non_thread_safe.h"
 
 namespace base {
 namespace win {
 
 // Implements a message-only window.
-class BASE_EXPORT MessageWindow {
+class BASE_EXPORT MessageWindow : public base::NonThreadSafe {
  public:
   // Used to register a process-wide message window class.
   class WindowClass;
@@ -62,8 +62,6 @@ class BASE_EXPORT MessageWindow {
 
   // Handle of the input window.
   HWND window_;
-
-  THREAD_CHECKER(thread_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(MessageWindow);
 };

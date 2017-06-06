@@ -9,12 +9,12 @@ namespace blink {
 CompositionMarker::CompositionMarker(unsigned start_offset,
                                      unsigned end_offset,
                                      Color underline_color,
-                                     Thickness thickness,
+                                     bool thick,
                                      Color background_color)
     : DocumentMarker(start_offset, end_offset),
       underline_color_(underline_color),
       background_color_(background_color),
-      thickness_(thickness) {}
+      thick_(thick) {}
 
 DocumentMarker::MarkerType CompositionMarker::GetType() const {
   return DocumentMarker::kComposition;
@@ -24,8 +24,8 @@ Color CompositionMarker::UnderlineColor() const {
   return underline_color_;
 }
 
-bool CompositionMarker::IsThick() const {
-  return thickness_ == Thickness::kThick;
+bool CompositionMarker::Thick() const {
+  return thick_;
 }
 
 Color CompositionMarker::BackgroundColor() const {

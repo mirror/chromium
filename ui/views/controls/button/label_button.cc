@@ -99,7 +99,7 @@ void LabelButton::SetText(const base::string16& text) {
 void LabelButton::SetTextColor(ButtonState for_state, SkColor color) {
   button_state_colors_[for_state] = color;
   if (for_state == STATE_DISABLED)
-    label_->SetDisabledColorForLabelButton(color);
+    label_->SetDisabledColor(color);
   else if (for_state == state())
     label_->SetEnabledColor(color);
   explicitly_set_colors_[for_state] = true;
@@ -440,13 +440,13 @@ void LabelButton::ResetColorsFromNativeTheme() {
     colors[STATE_NORMAL] = colors[STATE_HOVERED] = colors[STATE_PRESSED] =
         SK_ColorWHITE;
     label_->SetBackgroundColor(SK_ColorBLACK);
-    label_->SetBackground(CreateSolidBackground(SK_ColorBLACK));
+    label_->set_background(Background::CreateSolidBackground(SK_ColorBLACK));
     label_->SetAutoColorReadabilityEnabled(true);
     label_->SetShadows(gfx::ShadowValues());
   } else {
     if (style() == STYLE_BUTTON)
       PlatformStyle::ApplyLabelButtonTextStyle(label_, &colors);
-    label_->SetBackground(nullptr);
+    label_->set_background(nullptr);
     label_->SetAutoColorReadabilityEnabled(false);
   }
 

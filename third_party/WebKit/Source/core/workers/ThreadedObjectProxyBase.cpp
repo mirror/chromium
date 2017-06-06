@@ -16,7 +16,7 @@
 
 namespace blink {
 
-void ThreadedObjectProxyBase::CountFeature(WebFeature feature) {
+void ThreadedObjectProxyBase::CountFeature(UseCounter::Feature feature) {
   GetParentFrameTaskRunners()
       ->Get(TaskType::kUnspecedTimer)
       ->PostTask(BLINK_FROM_HERE,
@@ -24,7 +24,7 @@ void ThreadedObjectProxyBase::CountFeature(WebFeature feature) {
                                  MessagingProxyWeakPtr(), feature));
 }
 
-void ThreadedObjectProxyBase::CountDeprecation(WebFeature feature) {
+void ThreadedObjectProxyBase::CountDeprecation(UseCounter::Feature feature) {
   GetParentFrameTaskRunners()
       ->Get(TaskType::kUnspecedTimer)
       ->PostTask(BLINK_FROM_HERE,

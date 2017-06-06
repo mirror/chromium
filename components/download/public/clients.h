@@ -20,19 +20,17 @@ namespace download {
 // but also to make sure the underlying database properly associates each
 // download with the right client.
 enum class DownloadClient {
-  // Test client values.  Meant to be used by the testing framework and not
-  // production code.  Callers will be unable to access the DownloadService with
-  // these test APIs.
-  TEST = -1,
-  TEST_2 = -2,
-  TEST_3 = -3,
-
   // Represents an uninitialized DownloadClient variable.
   INVALID = 0,
 
-  OFFLINE_PAGE_PREFETCH = 1,
+  // Test client values.  Meant to be used by the testing framework and not
+  // production code.  Callers will be unable to access the DownloadService with
+  // these test APIs.
+  TEST = 1,
 
-  BOUNDARY = 2,
+  OFFLINE_PAGE_PREFETCH = 2,
+
+  BOUNDARY = 3,
 };
 
 using DownloadClientMap = std::map<DownloadClient, std::unique_ptr<Client>>;

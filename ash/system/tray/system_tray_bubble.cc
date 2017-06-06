@@ -226,10 +226,10 @@ void SystemTrayBubble::DestroyItemViews() {
        it != items_.end(); ++it) {
     switch (bubble_type_) {
       case BUBBLE_TYPE_DEFAULT:
-        (*it)->OnDefaultViewDestroyed();
+        (*it)->DestroyDefaultView();
         break;
       case BUBBLE_TYPE_DETAILED:
-        (*it)->OnDetailedViewDestroyed();
+        (*it)->DestroyDetailedView();
         break;
     }
   }

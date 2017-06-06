@@ -79,12 +79,10 @@ class MODULES_EXPORT CanvasRenderingContext2D final
     Factory() {}
     ~Factory() override {}
 
-    CanvasRenderingContext* Create(
-        CanvasRenderingContextHost* host,
-        const CanvasContextCreationAttributes& attrs) override {
-      DCHECK(!host->IsOffscreenCanvas());
-      return new CanvasRenderingContext2D(static_cast<HTMLCanvasElement*>(host),
-                                          attrs);
+    CanvasRenderingContext* Create(HTMLCanvasElement* canvas,
+                                   const CanvasContextCreationAttributes& attrs,
+                                   Document& document) override {
+      return new CanvasRenderingContext2D(canvas, attrs, document);
     }
     CanvasRenderingContext::ContextType GetContextType() const override {
       return CanvasRenderingContext::kContext2d;
@@ -211,7 +209,9 @@ class MODULES_EXPORT CanvasRenderingContext2D final
   friend class CanvasRenderingContext2DAutoRestoreSkCanvas;
 
   CanvasRenderingContext2D(HTMLCanvasElement*,
-                           const CanvasContextCreationAttributes&);
+                           const CanvasContextCreationAttributes& attrs,
+                           Document&);
+
   void DispatchContextLostEvent(TimerBase*);
   void DispatchContextRestoredEvent(TimerBase*);
   void TryRestoreContextEvent(TimerBase*);

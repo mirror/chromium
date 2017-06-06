@@ -160,7 +160,8 @@ void LabelExample::ContentsChanged(Textfield* sender,
 void LabelExample::AddCustomLabel(View* container) {
   View* control_container = new View();
   control_container->SetBorder(CreateSolidBorder(2, SK_ColorGRAY));
-  control_container->SetBackground(CreateSolidBackground(SK_ColorLTGRAY));
+  control_container->set_background(
+      Background::CreateSolidBackground(SK_ColorLTGRAY));
   GridLayout* layout = GridLayout::CreatePanel(control_container);
   control_container->SetLayoutManager(layout);
 

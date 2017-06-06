@@ -28,7 +28,6 @@ suite('Internet', function() {
     CrOncStrings = {
       OncTypeCellular: 'OncTypeCellular',
       OncTypeEthernet: 'OncTypeEthernet',
-      OncTypeTether: 'OncTypeTether',
       OncTypeVPN: 'OncTypeVPN',
       OncTypeWiFi: 'OncTypeWiFi',
       OncTypeWiMAX: 'OncTypeWiMAX',
@@ -97,7 +96,7 @@ suite('Internet', function() {
       assertEquals('Disabled', api_.getDeviceStateForTest('WiFi').State);
       var toggle = wifi.$$('#deviceEnabledButton');
       assertTrue(!!toggle);
-      assertFalse(toggle.disabled);
+      assertTrue(toggle.enabled);
       assertFalse(toggle.checked);
 
       // Tap the enable toggle button and ensure the state becomes enabled.
@@ -107,10 +106,6 @@ suite('Internet', function() {
       assertEquals('Enabled', api_.getDeviceStateForTest('WiFi').State);
     });
   });
-
-  function callAsync(resolve) {
-    Polymer.Base.async(resolve);
-  };
 
   suite('SubPage', function() {
     test('WiFi', function() {
@@ -124,96 +119,12 @@ suite('Internet', function() {
       assertTrue(!!wifi);
       MockInteractions.tap(wifi.$$('button.subpage-arrow'));
       Polymer.dom.flush();
-      // Allow dom-if templates to resolve.
-      return new Promise(callAsync).then(function() {
-        var subpage = internetPage.$$('settings-internet-subpage');
-        assertTrue(!!subpage);
-        assertEquals(2, subpage.networkStateList_.length);
-        var toggle = wifi.$$('#deviceEnabledButton');
-        assertTrue(!!toggle);
-        assertFalse(toggle.disabled);
-        var networkList = subpage.$$('#networkList');
-        assertTrue(!!networkList);
-        assertEquals(2, networkList.networks.length);
-      });
-    });
-
-    test('Cellular', function() {
-      api_.addNetworksForTest([
-        {GUID: 'cellular1_guid', Name: 'cellular1', Type: 'Cellular'},
-      ]);
-      api_.enableNetworkType('Cellular');
-      Polymer.dom.flush();
-      // Allow dom-if templates to resolve.
-      return new Promise(callAsync).then(function() {
-        var mobile = networkSummary_.$$('#Cellular');
-        assertTrue(!!mobile);
-        MockInteractions.tap(mobile.$$('button.subpage-arrow'));
-        Polymer.dom.flush();
-        return new Promise(callAsync);
-      }).then(function() {
-        var detailPage = internetPage.$$('settings-internet-detail-page');
-        assertTrue(!!detailPage);
-      });
-    });
-
-    test('Tether', function() {
-      api_.addNetworksForTest([
-        {GUID: 'tether1_guid', Name: 'tether1', Type: 'Tether'},
-        {GUID: 'tether2_guid', Name: 'tether2', Type: 'Tether'},
-      ]);
-      api_.enableNetworkType('Tether');
-      Polymer.dom.flush();
-      // Allow dom-if templates to resolve.
-      return new Promise(callAsync).then(function() {
-        var mobile = networkSummary_.$$('#Tether');
-        assertTrue(!!mobile);
-        MockInteractions.tap(mobile.$$('button.subpage-arrow'));
-        Polymer.dom.flush();
-        var subpage = internetPage.$$('settings-internet-subpage');
-        assertTrue(!!subpage);
-        assertEquals(2, subpage.networkStateList_.length);
-        var toggle = mobile.$$('#deviceEnabledButton');
-        assertTrue(!!toggle);
-        assertFalse(toggle.disabled);
-        var networkList = subpage.$$('#networkList');
-        assertTrue(!!networkList);
-        assertEquals(2, networkList.networks.length);
-        var tetherToggle = mobile.$$('#tetherEnabledButton');
-        // No separate tether toggle when Celular is not available; the
-        // primary toggle enables or disables Tether in that case.
-        assertFalse(!!tetherToggle);
-      });
-    });
-
-    test('Tether plus Cellular', function() {
-      api_.addNetworksForTest([
-        {GUID: 'cellular1_guid', Name: 'cellular1', Type: 'Cellular'},
-        {GUID: 'tether1_guid', Name: 'tether1', Type: 'Tether'},
-        {GUID: 'tether2_guid', Name: 'tether2', Type: 'Tether'},
-      ]);
-      api_.enableNetworkType('Cellular');
-      api_.enableNetworkType('Tether');
-      Polymer.dom.flush();
-      // Allow dom-if templates to resolve.
-      return new Promise(callAsync).then(function() {
-        var mobile = networkSummary_.$$('#Cellular');
-        assertTrue(!!mobile);
-        MockInteractions.tap(mobile.$$('button.subpage-arrow'));
-        Polymer.dom.flush();
-        var subpage = internetPage.$$('settings-internet-subpage');
-        assertTrue(!!subpage);
-        assertEquals(3, subpage.networkStateList_.length);
-        var toggle = mobile.$$('#deviceEnabledButton');
-        assertTrue(!!toggle);
-        assertFalse(toggle.disabled);
-        var networkList = subpage.$$('#networkList');
-        assertTrue(!!networkList);
-        assertEquals(3, networkList.networks.length);
-        var tetherToggle = subpage.$$('#tetherEnabledButton');
-        assertTrue(!!tetherToggle);
-        assertFalse(tetherToggle.disabled);
-      });
+      var subpage = internetPage.$$('settings-internet-subpage');
+      assertTrue(!!subpage);
+      assertEquals(2, subpage.networkStateList_.length);
+      var networkList = subpage.$$('#networkList');
+      assertTrue(!!networkList);
+      assertEquals(2, networkList.networks.length);
     });
 
     test('VPN', function() {
@@ -250,21 +161,18 @@ suite('Internet', function() {
       ]);
       api_.onNetworkListChanged.callListeners();
       Polymer.dom.flush();
-      // Allow dom-if templates to resolve.
-      Polymer.Base.async(function() {
-        var vpn = networkSummary_.$$('#VPN');
-        assertTrue(!!vpn);
-        MockInteractions.tap(vpn.$$('button.subpage-arrow'));
-        Polymer.dom.flush();
-        var subpage = internetPage.$$('settings-internet-subpage');
-        assertTrue(!!subpage);
-        assertEquals(2, subpage.networkStateList_.length);
-        var networkList = subpage.$$('#networkList');
-        assertTrue(!!networkList);
-        assertEquals(2, networkList.networks.length);
-        // TODO(stevenjb): Implement fake management API and test third
-        // party provider sections.
-      });
+      var vpn = networkSummary_.$$('#VPN');
+      assertTrue(!!vpn);
+      MockInteractions.tap(vpn.$$('button.subpage-arrow'));
+      Polymer.dom.flush();
+      var subpage = internetPage.$$('settings-internet-subpage');
+      assertTrue(!!subpage);
+      assertEquals(2, subpage.networkStateList_.length);
+      var networkList = subpage.$$('#networkList');
+      assertTrue(!!networkList);
+      assertEquals(2, networkList.networks.length);
+      // TODO(stevenjb): Implement fake management API and test third
+      // party provider sections.
     });
   });
 });

@@ -225,6 +225,7 @@ class WebViewBase : public WebView, public RefCounted<WebViewBase> {
   virtual LinkHighlightImpl* GetLinkHighlight(int) = 0;
   virtual unsigned NumLinkHighlights() = 0;
   virtual void EnableTapHighlights(HeapVector<Member<Node>>&) = 0;
+  virtual void SetCurrentInputEventForTest(const WebInputEvent*) = 0;
 };
 }
 

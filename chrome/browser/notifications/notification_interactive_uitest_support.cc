@@ -122,10 +122,10 @@ void NotificationsTest::SetUpDefaultCommandLine(
   InProcessBrowserTest::SetUpDefaultCommandLine(command_line);
 // Temporary change while the whole support class is changed to deal
 // with native notifications. crbug.com/714679
-#if BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
+#if defined(OS_MACOSX)
   command_line->AppendSwitchASCII(switches::kDisableFeatures,
                                   features::kNativeNotifications.name);
-#endif  // BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
+#endif
 }
 
 int NotificationsTest::GetNotificationCount() {
@@ -294,30 +294,16 @@ content::WebContents* NotificationsTest::GetActiveWebContents(
 }
 
 void NotificationsTest::EnableFullscreenNotifications() {
-#if BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
-  feature_list_.InitWithFeatures(
-      {features::kPreferHtmlOverPlugins,
-       features::kAllowFullscreenWebNotificationsFeature},
-      {features::kNativeNotifications});
-#else
   feature_list_.InitWithFeatures(
       {features::kPreferHtmlOverPlugins,
        features::kAllowFullscreenWebNotificationsFeature},
       {});
-#endif  //  BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
 }
 
 void NotificationsTest::DisableFullscreenNotifications() {
-#if BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
-  feature_list_.InitWithFeatures(
-      {features::kPreferHtmlOverPlugins},
-      {features::kAllowFullscreenWebNotificationsFeature,
-       features::kNativeNotifications});
-#else
   feature_list_.InitWithFeatures(
       {features::kPreferHtmlOverPlugins},
       {features::kAllowFullscreenWebNotificationsFeature});
-#endif  // BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
 }
 
 void NotificationsTest::DropOriginPreference(const GURL& origin) {

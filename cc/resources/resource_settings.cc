@@ -12,7 +12,4 @@ ResourceSettings::ResourceSettings(const ResourceSettings& other) = default;
 
 ResourceSettings::~ResourceSettings() = default;
 
-ResourceSettings& ResourceSettings::operator=(const ResourceSettings& other) =
-    default;
-
 }  // namespace cc

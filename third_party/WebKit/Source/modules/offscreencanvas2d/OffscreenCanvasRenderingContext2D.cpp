@@ -4,7 +4,7 @@
 
 #include "modules/offscreencanvas2d/OffscreenCanvasRenderingContext2D.h"
 
-#include "bindings/modules/v8/OffscreenRenderingContext.h"
+#include "bindings/modules/v8/OffscreenCanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContext.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/ImageBitmap.h"
 #include "core/frame/Settings.h"
@@ -21,10 +21,11 @@ namespace blink {
 OffscreenCanvasRenderingContext2D::~OffscreenCanvasRenderingContext2D() {}
 
 OffscreenCanvasRenderingContext2D::OffscreenCanvasRenderingContext2D(
+    ScriptState* script_state,
     OffscreenCanvas* canvas,
     const CanvasContextCreationAttributes& attrs)
     : CanvasRenderingContext(canvas, attrs) {
-  ExecutionContext* execution_context = canvas->GetTopExecutionContext();
+  ExecutionContext* execution_context = ExecutionContext::From(script_state);
   if (execution_context->IsDocument()) {
     if (ToDocument(execution_context)
             ->GetSettings()

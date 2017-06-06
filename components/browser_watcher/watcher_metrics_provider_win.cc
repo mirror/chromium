@@ -14,7 +14,6 @@
 
 #include "base/bind.h"
 #include "base/feature_list.h"
-#include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram.h"
 #include "base/metrics/histogram_base.h"
 #include "base/metrics/histogram_macros.h"
@@ -224,48 +223,35 @@ void WatcherMetricsProviderWin::CollectPostmortemReports(
       done_callback);
 }
 
-// TODO(manzagop): consider mechanisms for partial collection if this is to be
-//     used on a critical path.
 void WatcherMetricsProviderWin::CollectPostmortemReportsOnBlockingPool() {
-  SCOPED_UMA_HISTOGRAM_TIMER("ActivityTracker.Collect.TotalTime");
-
+  // Note: the feature controls both instrumentation and collection.
   bool is_stability_debugging_on =
       base::FeatureList::IsEnabled(browser_watcher::kStabilityDebuggingFeature);
   if (!is_stability_debugging_on) {
-    return;  // TODO(manzagop): scan for possible data to delete?
+    // TODO(manzagop): delete possible leftover data.
+    return;
   }
 
+  SCOPED_UMA_HISTOGRAM_TIMER("ActivityTracker.Collect.TotalTime");
+
   if (user_data_dir_.empty() || crash_dir_.empty()) {
+    LOG(ERROR) << "User data directory or crash directory is unknown.";
     LogCollectionInitStatus(UNKNOWN_DIR);
     return;
   }
 
-  // Determine which files to harvest.
+  // Determine the stability directory and the stability file for the current
+  // process.
   base::FilePath stability_dir = GetStabilityDir(user_data_dir_);
-
   base::FilePath current_stability_file;
   if (!GetStabilityFileForProcess(base::Process::Current(), user_data_dir_,
                                   &current_stability_file)) {
+    LOG(ERROR) << "Failed to get the current stability file.";
     LogCollectionInitStatus(GET_STABILITY_FILE_PATH_FAILED);
     return;
   }
-  const std::set<base::FilePath>& excluded_stability_files = {
+  const std::set<base::FilePath>& excluded_debug_files = {
       current_stability_file};
-
-  std::vector<base::FilePath> stability_files = GetStabilityFiles(
-      stability_dir, GetStabilityFilePattern(), excluded_stability_files);
-  UMA_HISTOGRAM_COUNTS_100("ActivityTracker.Collect.StabilityFileCount",
-                           stability_files.size());
-
-  // If postmortem collection is disabled, delete the files.
-  const bool should_collect = base::GetFieldTrialParamByFeatureAsBool(
-      browser_watcher::kStabilityDebuggingFeature,
-      browser_watcher::kCollectPostmortemParam, false);
-  if (!should_collect) {
-    PostmortemDeleter deleter;
-    deleter.Process(stability_files);
-    return;
-  }
 
   // Create a database. Note: Chrome already has a g_database in crashpad.cc but
   // it has internal linkage. Create a new one.
@@ -287,8 +273,10 @@ void WatcherMetricsProviderWin::CollectPostmortemReportsOnBlockingPool() {
   SystemSessionAnalyzer analyzer(kSystemSessionsToInspect);
   PostmortemReportCollector collector(
       base::UTF16ToUTF8(product_name), base::UTF16ToUTF8(version_number),
-      base::UTF16ToUTF8(channel_name), crashpad_database.get(), &analyzer);
-  collector.Process(stability_files);
+      base::UTF16ToUTF8(channel_name), &analyzer);
+  collector.CollectAndSubmitAllPendingReports(
+      stability_dir, GetStabilityFilePattern(), excluded_debug_files,
+      crashpad_database.get());
 }
 
 }  // namespace browser_watcher

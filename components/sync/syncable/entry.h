@@ -8,12 +8,10 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include <memory>
 #include <string>
 #include <vector>
 
 #include "base/macros.h"
-#include "base/values.h"
 #include "components/sync/syncable/entry_kernel.h"
 
 namespace syncer {
@@ -258,8 +256,8 @@ class Entry {
   const EntryKernel GetKernelCopy() const { return *kernel_; }
 
   // Dumps all entry info into a DictionaryValue and returns it.
-  std::unique_ptr<base::DictionaryValue> ToValue(
-      Cryptographer* cryptographer) const;
+  // Transfers ownership of the DictionaryValue to the caller.
+  base::DictionaryValue* ToValue(Cryptographer* cryptographer) const;
 
  protected:  // Don't allow creation on heap, except by sync API wrappers.
   void* operator new(size_t size) { return (::operator new)(size); }

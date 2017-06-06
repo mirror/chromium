@@ -14,16 +14,7 @@
 #include "base/synchronization/lock.h"
 #import "ios/web/public/test/http_server/response_provider.h"
 
-namespace net {
-namespace test_server {
-class EmbeddedTestServer;
-struct HttpRequest;
-}
-}
-
-namespace web {
-class ResponseProvider;
-}
+@class GCDWebServer;
 
 namespace web {
 namespace test {
@@ -50,12 +41,12 @@ class RefCountedResponseProviderWrapper
 };
 
 // The HttpServer is an in-process web server that is used to service requests.
-// It is a singleton and backed by a EmbeddedTestServer.
+// It is a singleton and backed by a GCDWebServer.
 // HttpServer can be configured to serve requests by registering
 // web::ResponseProviders.
 // This class is not thread safe on the whole and only certain methods are
 // thread safe.
-class HttpServer : public base::RefCountedThreadSafe<HttpServer> {
+class HttpServer {
  public:
   typedef std::vector<std::unique_ptr<ResponseProvider>> ProviderList;
 
@@ -70,10 +61,14 @@ class HttpServer : public base::RefCountedThreadSafe<HttpServer> {
   // A convenience method for the longer form of
   // |web::test::HttpServer::GetSharedInstance().MakeUrlForHttpServer|
   static GURL MakeUrl(const std::string& url);
+
   // Starts the server on the default port 8080. CHECKs if the server can not be
   // started.
   // Must be called from the main thread.
   void StartOrDie();
+  // Starts the server on |port|. Returns true on success, false otherwise.
+  // Must be called from the main thread.
+  bool StartOnPort(NSUInteger port);
   // Stops the server and prevents it from accepting new requests.
   // Must be called from the main thread.
   void Stop();
@@ -97,7 +92,9 @@ class HttpServer : public base::RefCountedThreadSafe<HttpServer> {
   void RemoveAllResponseProviders();
 
  private:
-  friend class base::RefCountedThreadSafe<HttpServer>;
+  // Initializes the server by registering for a GCDWebServer servlet. Must be
+  // called from the main thread.
+  void InitHttpServer();
   HttpServer();
   ~HttpServer();
 
@@ -123,19 +120,10 @@ class HttpServer : public base::RefCountedThreadSafe<HttpServer> {
   mutable base::Lock port_lock_;
   // The port that the server is running on. 0 if the server is not running.
   NSUInteger port_;
-  // The EmbeddedTestServer backing the HttpServer.
-  std::unique_ptr<net::test_server::EmbeddedTestServer> embedded_test_server_;
+  // The GCDWebServer backing the HttpServer.
+  base::scoped_nsobject<GCDWebServer> gcd_web_server_;
   // The list of providers to service a request.
   std::vector<scoped_refptr<RefCountedResponseProviderWrapper>> providers_;
-  // Returns the response providers for a request.
-  ResponseProvider* GetResponseProviderForProviderRequest(
-      const web::ResponseProvider::Request& request);
-  // Provides a shim between EmbeddedTestServer and ResponseProvider. This
-  // handler converts an EmbeddedTestServer request to ResponseProvider
-  // request, look up the corresponding providers, and then converts the
-  // ResponseProvider response back to EmbeddedTestServer response.
-  std::unique_ptr<net::test_server::HttpResponse> GetResponse(
-      const net::test_server::HttpRequest& request);
   DISALLOW_COPY_AND_ASSIGN(HttpServer);
 };
 

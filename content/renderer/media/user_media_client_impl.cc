@@ -336,7 +336,6 @@ UserMediaClientImpl::UserMediaClientImpl(
 }
 
 UserMediaClientImpl::~UserMediaClientImpl() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   // Force-close all outstanding user media requests and local sources here,
   // before the outstanding WeakPtrs are invalidated, to ensure a clean
   // shutdown.
@@ -349,7 +348,7 @@ void UserMediaClientImpl::RequestUserMedia(
   // The histogram counts the number of calls to the JS API
   // webGetUserMedia.
   UpdateWebRTCMethodCount(WEBKIT_GET_USER_MEDIA);
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(!user_media_request.IsNull());
   DCHECK(user_media_request.Audio() || user_media_request.Video());
   // ownerDocument may be null if we are in a test.
@@ -383,7 +382,7 @@ void UserMediaClientImpl::RequestUserMedia(
 }
 
 void UserMediaClientImpl::MaybeProcessNextRequestInfo() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (current_request_info_ || pending_request_infos_.empty())
     return;
 
@@ -429,7 +428,7 @@ void UserMediaClientImpl::MaybeProcessNextRequestInfo() {
 void UserMediaClientImpl::SelectAudioInputDevice(
     const blink::WebUserMediaRequest& user_media_request,
     const EnumerationResult& device_enumeration) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (!IsCurrentRequestInfo(user_media_request))
     return;
 
@@ -449,7 +448,7 @@ void UserMediaClientImpl::SelectAudioInputDevice(
 
 void UserMediaClientImpl::SetupVideoInput(
     const blink::WebUserMediaRequest& user_media_request) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (!IsCurrentRequestInfo(user_media_request))
     return;
 
@@ -479,7 +478,7 @@ void UserMediaClientImpl::SelectVideoDeviceSettings(
     const blink::WebUserMediaRequest& user_media_request,
     std::vector<::mojom::VideoInputDeviceCapabilitiesPtr>
         video_input_capabilities) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (!IsCurrentRequestInfo(user_media_request))
     return;
 
@@ -507,7 +506,7 @@ void UserMediaClientImpl::SelectVideoDeviceSettings(
 void UserMediaClientImpl::FinalizeSelectVideoDeviceSettings(
     const blink::WebUserMediaRequest& user_media_request,
     const VideoCaptureSettings& settings) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (!IsCurrentRequestInfo(user_media_request))
     return;
 
@@ -532,7 +531,7 @@ void UserMediaClientImpl::FinalizeSelectVideoDeviceSettings(
 void UserMediaClientImpl::FinalizeSelectVideoContentSettings(
     const blink::WebUserMediaRequest& user_media_request,
     const VideoCaptureSettings& settings) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (!IsCurrentRequestInfo(user_media_request))
     return;
 
@@ -555,7 +554,7 @@ void UserMediaClientImpl::FinalizeSelectVideoContentSettings(
 }
 
 void UserMediaClientImpl::GenerateStreamForCurrentRequestInfo() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(current_request_info_);
 
   WebRtcLogMessage(base::StringPrintf(
@@ -577,7 +576,7 @@ void UserMediaClientImpl::GenerateStreamForCurrentRequestInfo() {
 
 void UserMediaClientImpl::CancelUserMediaRequest(
     const blink::WebUserMediaRequest& user_media_request) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (DeleteRequestInfo(user_media_request)) {
     // We can't abort the stream generation process.
     // Instead, erase the request. Once the stream is generated we will stop the
@@ -589,7 +588,7 @@ void UserMediaClientImpl::CancelUserMediaRequest(
 void UserMediaClientImpl::RequestMediaDevices(
     const blink::WebMediaDevicesRequest& media_devices_request) {
   UpdateWebRTCMethodCount(WEBKIT_GET_MEDIA_DEVICES);
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   GetMediaDevicesDispatcher()->EnumerateDevices(
       true /* audio input */, true /* video input */, true /* audio output */,
       base::Bind(&UserMediaClientImpl::FinalizeEnumerateDevices,
@@ -627,7 +626,7 @@ void UserMediaClientImpl::OnStreamGenerated(
     const std::string& label,
     const StreamDeviceInfoArray& audio_array,
     const StreamDeviceInfoArray& video_array) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (!IsCurrentRequestInfo(request_id)) {
     // This can happen if the request is cancelled or the frame reloads while
     // MediaStreamDispatcher is processing the request.
@@ -700,7 +699,7 @@ void UserMediaClientImpl::OnAudioSourceStarted(
     MediaStreamSource* source,
     MediaStreamRequestResult result,
     const blink::WebString& result_name) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   for (auto it = pending_local_sources_.begin();
        it != pending_local_sources_.end(); ++it) {
@@ -756,7 +755,7 @@ void UserMediaClientImpl::FinalizeEnumerateDevices(
 void UserMediaClientImpl::OnStreamGenerationFailed(
     int request_id,
     MediaStreamRequestResult result) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (!IsCurrentRequestInfo(request_id)) {
     // This can happen if the request is cancelled or the frame reloads while
     // MediaStreamDispatcher is processing the request.
@@ -772,7 +771,7 @@ void UserMediaClientImpl::OnStreamGenerationFailed(
 void UserMediaClientImpl::OnDeviceStopped(
     const std::string& label,
     const StreamDeviceInfo& device_info) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DVLOG(1) << "UserMediaClientImpl::OnDeviceStopped("
            << "{device_id = " << device_info.device.id << "})";
 
@@ -792,7 +791,7 @@ void UserMediaClientImpl::OnDeviceStopped(
 
 blink::WebMediaStreamSource UserMediaClientImpl::InitializeVideoSourceObject(
     const StreamDeviceInfo& device) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(current_request_info_);
 
   blink::WebMediaStreamSource source = FindOrInitializeSourceObject(device);
@@ -809,7 +808,7 @@ blink::WebMediaStreamSource UserMediaClientImpl::InitializeAudioSourceObject(
     const StreamDeviceInfo& device,
     const blink::WebMediaConstraints& constraints,
     bool* is_pending) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   *is_pending = true;
 
@@ -846,7 +845,7 @@ MediaStreamAudioSource* UserMediaClientImpl::CreateAudioSource(
     const StreamDeviceInfo& device,
     const blink::WebMediaConstraints& constraints,
     const MediaStreamSource::ConstraintsCallback& source_ready) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   // If the audio device is a loopback device (for screen capture), or if the
   // constraints/effects parameters indicate no audio processing is needed,
   // create an efficient, direct-path MediaStreamAudioSource instance.
@@ -868,7 +867,7 @@ MediaStreamAudioSource* UserMediaClientImpl::CreateAudioSource(
 MediaStreamVideoSource* UserMediaClientImpl::CreateVideoSource(
     const StreamDeviceInfo& device,
     const MediaStreamSource::SourceStoppedCallback& stop_callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(current_request_info_);
   if (IsOldVideoConstraints()) {
     return new MediaStreamVideoCapturerSource(stop_callback, device,
@@ -885,7 +884,7 @@ MediaStreamVideoSource* UserMediaClientImpl::CreateVideoSource(
 void UserMediaClientImpl::CreateVideoTracks(
     const StreamDeviceInfoArray& devices,
     blink::WebVector<blink::WebMediaStreamTrack>* webkit_tracks) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(current_request_info_);
   DCHECK_EQ(devices.size(), webkit_tracks->size());
 
@@ -901,7 +900,7 @@ void UserMediaClientImpl::CreateAudioTracks(
     const StreamDeviceInfoArray& devices,
     const blink::WebMediaConstraints& constraints,
     blink::WebVector<blink::WebMediaStreamTrack>* webkit_tracks) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(current_request_info_);
   DCHECK_EQ(devices.size(), webkit_tracks->size());
 
@@ -931,7 +930,7 @@ void UserMediaClientImpl::OnCreateNativeTracksCompleted(
     UserMediaRequestInfo* request_info,
     MediaStreamRequestResult result,
     const blink::WebString& result_name) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (result == content::MEDIA_DEVICE_OK) {
     GetUserMediaRequestSucceeded(*request_info->web_stream(),
                                  request_info->request());
@@ -1116,7 +1115,7 @@ blink::WebMediaStreamSource UserMediaClientImpl::FindOrInitializeSourceObject(
 
 bool UserMediaClientImpl::RemoveLocalSource(
     const blink::WebMediaStreamSource& source) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 
   for (LocalStreamSources::iterator device_it = local_sources_.begin();
        device_it != local_sources_.end(); ++device_it) {
@@ -1144,20 +1143,20 @@ bool UserMediaClientImpl::RemoveLocalSource(
 }
 
 bool UserMediaClientImpl::IsCurrentRequestInfo(int request_id) const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   return current_request_info_ &&
          current_request_info_->request_id() == request_id;
 }
 
 bool UserMediaClientImpl::IsCurrentRequestInfo(
     const blink::WebUserMediaRequest& request) const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   return current_request_info_ && current_request_info_->request() == request;
 }
 
 bool UserMediaClientImpl::DeleteRequestInfo(
     const blink::WebUserMediaRequest& user_media_request) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (current_request_info_ &&
       current_request_info_->request() == user_media_request) {
     current_request_info_.reset();
@@ -1225,7 +1224,7 @@ void UserMediaClientImpl::SetMediaDevicesDispatcherForTesting(
 
 void UserMediaClientImpl::OnLocalSourceStopped(
     const blink::WebMediaStreamSource& source) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DVLOG(1) << "UserMediaClientImpl::OnLocalSourceStopped";
 
   const bool some_source_removed = RemoveLocalSource(source);

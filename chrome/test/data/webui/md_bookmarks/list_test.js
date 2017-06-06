@@ -18,7 +18,7 @@ suite('<bookmarks-list>', function() {
           ])),
       selectedFolder: '10',
     });
-    store.replaceSingleton();
+    bookmarks.Store.instance_ = store;
 
     list = document.createElement('bookmarks-list');
     list.style.height = '100%';
@@ -90,7 +90,7 @@ suite('<bookmarks-list> integration test', function() {
           ])),
       selectedFolder: '10',
     });
-    store.replaceSingleton();
+    bookmarks.Store.instance_ = store;
     store.setReducersEnabled(true);
 
     list = document.createElement('bookmarks-list');

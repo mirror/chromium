@@ -145,7 +145,6 @@ class BorderedScrollView : public views::ScrollView {
   };
 
   BorderedScrollView() : views::ScrollView() {
-    SetBackgroundColor(SK_ColorWHITE);
     SetBorder(views::CreateBorderPainter(
         base::MakeUnique<BorderedScrollViewBorderPainter>(
             GetNativeTheme()->GetSystemColor(
@@ -197,7 +196,7 @@ std::unique_ptr<views::View> PaymentRequestSheetController::CreateView() {
   if (GetSheetId(&sheet_id))
     view->set_id(static_cast<int>(sheet_id));
 
-  view->SetBackground(views::CreateSolidBackground(SK_ColorWHITE));
+  view->set_background(views::Background::CreateSolidBackground(SK_ColorWHITE));
 
   // Paint the sheets to layers, otherwise the MD buttons (which do paint to a
   // layer) won't do proper clipping.
@@ -234,12 +233,14 @@ std::unique_ptr<views::View> PaymentRequestSheetController::CreateView() {
   content_view_ = new views::View;
   content_view_->SetPaintToLayer();
   content_view_->layer()->SetFillsBoundsOpaquely(true);
-  content_view_->SetBackground(views::CreateSolidBackground(SK_ColorWHITE));
+  content_view_->set_background(
+      views::Background::CreateSolidBackground(SK_ColorWHITE));
   pane_layout->AddView(content_view_);
   pane_->SizeToPreferredSize();
 
   scroll_ = base::MakeUnique<BorderedScrollView>();
   scroll_->set_owned_by_client();
+  scroll_->EnableViewPortLayer();
   scroll_->set_hide_horizontal_scrollbar(true);
   scroll_->SetContents(pane_);
   layout->AddView(scroll_.get());
@@ -384,7 +385,6 @@ void PaymentRequestSheetController::AddPrimaryButton(views::View* container) {
   primary_button_ = CreatePrimaryButton();
   if (primary_button_) {
     primary_button_->set_owned_by_client();
-    primary_button_->SetFocusBehavior(views::View::FocusBehavior::ALWAYS);
     container->AddChildView(primary_button_.get());
   }
 }
@@ -397,7 +397,6 @@ void PaymentRequestSheetController::AddSecondaryButton(views::View* container) {
   secondary_button_->set_tag(
       static_cast<int>(PaymentRequestCommonTags::CLOSE_BUTTON_TAG));
   secondary_button_->set_id(static_cast<int>(DialogViewID::CANCEL_BUTTON));
-  secondary_button_->SetFocusBehavior(views::View::FocusBehavior::ALWAYS);
   container->AddChildView(secondary_button_.get());
 }
 

@@ -10,6 +10,8 @@
 #include "content/public/browser/web_ui_controller.h"
 #include "ui/base/layout.h"
 
+#if defined(OS_WIN)
+
 namespace base {
 class RefCountedMemory;
 }
@@ -25,5 +27,7 @@ class ConflictsUI : public content::WebUIController {
  private:
   DISALLOW_COPY_AND_ASSIGN(ConflictsUI);
 };
+
+#endif
 
 #endif  // CHROME_BROWSER_UI_WEBUI_CONFLICTS_UI_H_

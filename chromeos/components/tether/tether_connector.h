@@ -19,8 +19,6 @@ namespace tether {
 class ActiveHost;
 class BleConnectionManager;
 class DeviceIdTetherNetworkGuidMap;
-class HostScanCache;
-class NotificationPresenter;
 class TetherHostFetcher;
 class TetherHostResponseRecorder;
 class WifiHotspotConnector;
@@ -39,9 +37,7 @@ class TetherConnector : public ConnectTetheringOperation::Observer {
       TetherHostFetcher* tether_host_fetcher,
       BleConnectionManager* connection_manager,
       TetherHostResponseRecorder* tether_host_response_recorder,
-      DeviceIdTetherNetworkGuidMap* device_id_tether_network_guid_map,
-      HostScanCache* host_scan_cache,
-      NotificationPresenter* notification_presenter);
+      DeviceIdTetherNetworkGuidMap* device_id_tether_network_guid_map);
   virtual ~TetherConnector();
 
   virtual void ConnectToNetwork(
@@ -82,8 +78,6 @@ class TetherConnector : public ConnectTetheringOperation::Observer {
   BleConnectionManager* connection_manager_;
   TetherHostResponseRecorder* tether_host_response_recorder_;
   DeviceIdTetherNetworkGuidMap* device_id_tether_network_guid_map_;
-  HostScanCache* host_scan_cache_;
-  NotificationPresenter* notification_presenter_;
 
   std::string device_id_pending_connection_;
   base::Closure success_callback_;

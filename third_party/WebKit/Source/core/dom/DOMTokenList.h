@@ -50,7 +50,7 @@ class CORE_EXPORT DOMTokenList : public GarbageCollectedFinalized<DOMTokenList>,
   virtual ~DOMTokenList() {}
   DECLARE_VIRTUAL_TRACE();
 
-  unsigned length() const { return token_set_.size(); }
+  unsigned length() const { return tokens_.size(); }
   const AtomicString item(unsigned index) const;
   bool contains(const AtomicString&) const;
   void add(const Vector<String>&, ExceptionState&);
@@ -70,7 +70,7 @@ class CORE_EXPORT DOMTokenList : public GarbageCollectedFinalized<DOMTokenList>,
   void DidUpdateAttributeValue(const AtomicString& old_value,
                                const AtomicString& new_value);
 
-  const SpaceSplitString& TokenSet() const { return token_set_; }
+  const SpaceSplitString& Tokens() const { return tokens_; }
   // Add() and Remove() have DCHECK for syntax of the specified token.
   void Add(const AtomicString&);
   void Remove(const AtomicString&);
@@ -80,15 +80,17 @@ class CORE_EXPORT DOMTokenList : public GarbageCollectedFinalized<DOMTokenList>,
       : element_(element), attribute_name_(attr) {}
   Element& GetElement() const { return *element_; }
 
+  bool ValidateToken(const String&, ExceptionState&) const;
+  bool ValidateTokens(const Vector<String>&, ExceptionState&) const;
   virtual bool ValidateTokenValue(const AtomicString&, ExceptionState&) const;
-
- private:
   void AddTokens(const Vector<String>&);
   void RemoveTokens(const Vector<String>&);
-  void UpdateWithTokenSet(const SpaceSplitString&);
-  static AtomicString SerializeTokenSet(const SpaceSplitString&);
 
-  SpaceSplitString token_set_;
+ private:
+  void UpdateWithTokenSet(const SpaceSplitString&);
+  static AtomicString SerializeSet(const SpaceSplitString&);
+
+  SpaceSplitString tokens_;
   AtomicString value_;
   const Member<Element> element_;
   const QualifiedName attribute_name_;

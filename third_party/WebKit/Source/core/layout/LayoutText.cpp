@@ -109,7 +109,9 @@ static void MakeCapitalized(String* string, UChar previous) {
   unsigned length = string->length();
   const StringImpl& input = *string->Impl();
 
-  CHECK_LT(length, std::numeric_limits<unsigned>::max());
+  if (length >= std::numeric_limits<unsigned>::max())
+    IMMEDIATE_CRASH();
+
   StringBuffer<UChar> string_with_previous(length + 1);
   string_with_previous[0] =
       previous == kNoBreakSpaceCharacter ? kSpaceCharacter : previous;

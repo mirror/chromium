@@ -148,13 +148,12 @@ HostCache::HostCache(size_t max_entries)
     : max_entries_(max_entries), network_changes_(0) {}
 
 HostCache::~HostCache() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   RecordEraseAll(ERASE_DESTRUCT, base::TimeTicks::Now());
 }
 
 const HostCache::Entry* HostCache::Lookup(const Key& key,
                                           base::TimeTicks now) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   if (caching_is_disabled())
     return nullptr;
 
@@ -177,7 +176,7 @@ const HostCache::Entry* HostCache::LookupStale(
     const Key& key,
     base::TimeTicks now,
     HostCache::EntryStaleness* stale_out) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   if (caching_is_disabled())
     return nullptr;
 
@@ -206,7 +205,7 @@ void HostCache::Set(const Key& key,
                     base::TimeTicks now,
                     base::TimeDelta ttl) {
   TRACE_EVENT0(kNetTracingCategory, "HostCache::Set");
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   if (caching_is_disabled())
     return;
 
@@ -239,14 +238,14 @@ void HostCache::OnNetworkChange() {
 }
 
 void HostCache::clear() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   RecordEraseAll(ERASE_CLEAR, base::TimeTicks::Now());
   entries_.clear();
 }
 
 void HostCache::ClearForHosts(
     const base::Callback<bool(const std::string&)>& host_filter) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
 
   if (host_filter.is_null()) {
     clear();
@@ -371,12 +370,12 @@ bool HostCache::RestoreFromListValue(base::ListValue& old_cache) {
 }
 
 size_t HostCache::size() const {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   return entries_.size();
 }
 
 size_t HostCache::max_entries() const {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   return max_entries_;
 }
 

@@ -83,7 +83,8 @@ MessageCenterButtonBar::MessageCenterButtonBar(
       settings_button_(NULL),
       quiet_mode_button_(NULL) {
   SetPaintToLayer();
-  SetBackground(views::CreateSolidBackground(kMessageCenterBackgroundColor));
+  set_background(
+      views::Background::CreateSolidBackground(kMessageCenterBackgroundColor));
 
   ui::ResourceBundle& resource_bundle = ui::ResourceBundle::GetSharedInstance();
 

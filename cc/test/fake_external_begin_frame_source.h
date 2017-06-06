@@ -9,7 +9,7 @@
 
 #include "base/cancelable_callback.h"
 #include "base/memory/weak_ptr.h"
-#include "base/sequence_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "cc/output/begin_frame_args.h"
 #include "cc/scheduler/begin_frame_source.h"
 
@@ -19,7 +19,9 @@ class SimpleTestTickClock;
 
 namespace cc {
 
-class FakeExternalBeginFrameSource : public BeginFrameSource {
+class FakeExternalBeginFrameSource
+    : public BeginFrameSource,
+      public NON_EXPORTED_BASE(base::NonThreadSafe) {
  public:
   class Client {
    public:
@@ -61,9 +63,6 @@ class FakeExternalBeginFrameSource : public BeginFrameSource {
   uint64_t next_begin_frame_number_ = BeginFrameArgs::kStartingFrameNumber;
   std::set<BeginFrameObserver*> observers_;
   base::CancelableCallback<void(const BeginFrameArgs&)> begin_frame_task_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
-
   base::WeakPtrFactory<FakeExternalBeginFrameSource> weak_ptr_factory_;
 };
 

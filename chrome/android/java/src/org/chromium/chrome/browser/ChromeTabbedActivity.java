@@ -381,10 +381,6 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
             TraceEvent.begin("ChromeTabbedActivity.initializeCompositor");
             super.initializeCompositor();
 
-            // LocaleManager can only function after the native library is loaded.
-            mLocaleManager = LocaleManager.getInstance();
-            mLocaleManager.showSearchEnginePromoIfNeeded(this, null);
-
             mTabModelSelectorImpl.onNativeLibraryReady(getTabContentManager());
 
             mTabModelObserver = new TabModelSelectorTabModelObserver(mTabModelSelectorImpl) {
@@ -472,13 +468,18 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
                 IncognitoNotificationManager.dismissIncognitoNotification();
             }
 
+            // LocaleManager can only function after the native library is loaded.
+            mLocaleManager = LocaleManager.getInstance();
+            boolean searchEnginePromoShown =
+                    mLocaleManager.showSearchEnginePromoIfNeeded(this, null);
+
             ChromePreferenceManager preferenceManager = ChromePreferenceManager.getInstance();
             // Promos can only be shown when we start with ACTION_MAIN intent and
             // after FRE is complete. Native initialization can finish before the FRE flow is
             // complete, and this will only show promos on the second opportunity. This is
             // because the FRE is shown on the first opportunity, and we don't want to show such
             // content back to back.
-            if (!mLocaleManager.hasShownSearchEnginePromoThisSession() && !mIntentWithEffect
+            if (!searchEnginePromoShown && !mIntentWithEffect
                     && FirstRunStatus.getFirstRunFlowComplete()
                     && preferenceManager.getPromosSkippedOnFirstStart()) {
                 // Data reduction promo should be temporarily suppressed if the sign in promo is
@@ -1741,12 +1742,6 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
         //   exit Chrome on top of closing the tab
         final boolean minimizeApp = !shouldCloseTab || currentTab.isCreatedForExternalApp();
         if (minimizeApp) {
-            // TODO(mthiesse): We never want to close Chrome through the in-vr back button (but we
-            // want to reuse CTA logic for how the back button should otherwise behave). We should
-            // refactor the behaviour in this function so that we can either re-use the parts of
-            // this behaviour we want, or be able to know in advance whether or not clicking the
-            // back button would close Chrome so that we can disable it.
-            if (VrShellDelegate.isInVr()) return true;
             if (shouldCloseTab) {
                 recordBackPressedUma("Minimized and closed tab", BACK_PRESSED_MINIMIZED_TAB_CLOSED);
                 mActivityStopMetrics.setStopReason(ActivityStopMetrics.STOP_REASON_BACK_BUTTON);
@@ -2167,6 +2162,6 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
 
     @Override
     public boolean supportsFullscreenActivity() {
-        return !VrShellDelegate.isInVr();
+        return true;
     }
 }

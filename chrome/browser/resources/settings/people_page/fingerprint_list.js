@@ -31,10 +31,7 @@ Polymer({
       value: function() {
         return [];
       }
-    },
-
-    /** @private */
-    showSetupFingerprintDialog_: Boolean,
+    }
   },
 
   /** @private {?settings.FingerprintBrowserProxy} */
@@ -148,12 +145,11 @@ Polymer({
    * @private
    */
   openAddFingerprintDialog_: function() {
-    this.showSetupFingerprintDialog_ = true;
+    this.$.setupFingerprint.open();
   },
 
   /** @private */
   onSetupFingerprintDialogClose_: function() {
-    this.showSetupFingerprintDialog_ = false;
     cr.ui.focusWithoutInk(assert(this.$$('#addFingerprint')));
     this.browserProxy_.startAuthentication();
   },
@@ -166,7 +162,7 @@ Polymer({
   onScreenLocked_: function(screenIsLocked) {
     if (!screenIsLocked &&
         settings.getCurrentRoute() == settings.Route.FINGERPRINT) {
-      this.onSetupFingerprintDialogClose_();
+      this.$.setupFingerprint.close();
     }
   },
 });

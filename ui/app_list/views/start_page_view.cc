@@ -62,7 +62,7 @@ class CustomLauncherPageBackgroundView : public views::View {
       const std::string& custom_launcher_page_name)
       : selected_(false),
         custom_launcher_page_name_(custom_launcher_page_name) {
-    SetBackground(views::CreateSolidBackground(kSelectedColor));
+    set_background(views::Background::CreateSolidBackground(kSelectedColor));
   }
   ~CustomLauncherPageBackgroundView() override {}
 
@@ -133,7 +133,8 @@ StartPageView::StartPageTilesContainer::StartPageTilesContainer(
     : contents_view_(contents_view),
       view_delegate_(view_delegate),
       all_apps_button_(all_apps_button) {
-  SetBackground(views::CreateSolidBackground(kLabelBackgroundColor));
+  set_background(
+      views::Background::CreateSolidBackground(kLabelBackgroundColor));
   all_apps_button_->SetHoverStyle(TileItemView::HOVER_STYLE_ANIMATE_SHADOW);
   all_apps_button_->SetParentBackgroundColor(kLabelBackgroundColor);
   CreateAppsGrid(kNumStartPageTiles);

@@ -35,7 +35,6 @@
 
 #if defined(OS_CHROMEOS)
 #include "ash/system/devicetype_utils.h"
-#include "ash/system/night_light/night_light_controller.h"
 #include "chrome/browser/chromeos/ownership/owner_settings_service_chromeos.h"
 #include "chrome/browser/chromeos/ownership/owner_settings_service_chromeos_factory.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
@@ -700,9 +699,6 @@ void AddDeviceStrings(content::WebUIDataSource* html_source) {
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           chromeos::switches::kEnableTouchCalibrationSetting));
 
-  html_source->AddBoolean("nightLightFeatureEnabled",
-                          ash::NightLightController::IsFeatureEnabled());
-
   LocalizedString storage_strings[] = {
       {"storageTitle", IDS_SETTINGS_STORAGE_TITLE},
       {"storageItemInUse", IDS_SETTINGS_STORAGE_ITEM_IN_USE},
@@ -924,9 +920,8 @@ void AddInternetStrings(content::WebUIDataSource* html_source) {
       {"internetPageTitle", IDS_SETTINGS_INTERNET},
       {"internetToggleMobileA11yLabel",
        IDS_SETTINGS_INTERNET_TOGGLE_MOBILE_ACCESSIBILITY_LABEL},
-      {"internetToggleTetherLabel", IDS_SETTINGS_INTERNET_TOGGLE_TETHER_LABEL},
-      {"internetToggleTetherSubtext",
-       IDS_SETTINGS_INTERNET_TOGGLE_TETHER_SUBTEXT},
+      {"internetToggleTetherA11yLabel",
+       IDS_SETTINGS_INTERNET_TOGGLE_TETHER_ACCESSIBILITY_LABEL},
       {"internetToggleWiFiA11yLabel",
        IDS_SETTINGS_INTERNET_TOGGLE_WIFI_ACCESSIBILITY_LABEL},
       {"internetToggleWiMAXA11yLabel",
@@ -1903,8 +1898,6 @@ void AddSiteSettingsStrings(content::WebUIDataSource* html_source,
   html_source->AddBoolean("enableSiteSettings",
                           base::CommandLine::ForCurrentProcess()->HasSwitch(
                               switches::kEnableSiteSettings));
-  html_source->AddBoolean("enableSiteDetails",
-                          base::FeatureList::IsEnabled(features::kSiteDetails));
   html_source->AddBoolean(
       "enableSafeBrowsingSubresourceFilter",
       base::FeatureList::IsEnabled(

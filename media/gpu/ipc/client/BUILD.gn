@@ -25,7 +25,6 @@ source_set("client") {
     "//media:media_features",
     "//media/gpu",
     "//media/gpu/ipc/common",
-    "//media/gpu/mojo:jpeg_decoder",
     "//ui/gfx:memory_buffer",
     "//ui/gfx/geometry",
     "//ui/gfx/ipc",

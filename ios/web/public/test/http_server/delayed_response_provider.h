@@ -25,9 +25,10 @@ class DelayedResponseProvider : public ResponseProvider {
   // Forwards to |delayed_provider_|.
   bool CanHandleRequest(const Request& request) override;
 
-  // Creates a test_server::HttpResponse that will delay the read operation
-  // by |delay_| seconds.
-  std::unique_ptr<net::test_server::HttpResponse> GetEmbeddedTestServerResponse(
+  // Creates a GCDWebServerResponse that will proxy the object returned by
+  // Forwards to |delayed_provider_->GetGCDWebServerResponse(request)|.
+  // The read operation will be delayed by |delay_| seconds.
+  GCDWebServerResponse* GetGCDWebServerResponse(
       const Request& request) override;
 
  private:

@@ -8,7 +8,6 @@
 #include "cc/paint/skia_paint_canvas.h"
 #include "chrome/browser/android/vr_shell/color_scheme.h"
 #include "chrome/browser/android/vr_shell/textures/render_text_wrapper.h"
-#include "components/toolbar/vector_icons.h"
 #include "components/url_formatter/url_formatter.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/font.h"
@@ -38,25 +37,21 @@ static constexpr float kSeparatorWidth = 0.002;
 
 using security_state::SecurityLevel;
 
-// See ToolbarModelImpl::GetVectorIcon().
 const struct gfx::VectorIcon& getSecurityIcon(SecurityLevel level) {
   switch (level) {
-    case security_state::NONE:
-    case security_state::HTTP_SHOW_WARNING:
-      return toolbar::kHttpIcon;
-    case security_state::EV_SECURE:
-    case security_state::SECURE:
-      return toolbar::kHttpsValidIcon;
-    case security_state::SECURITY_WARNING:
-      // Surface Dubious as Neutral.
-      return toolbar::kHttpIcon;
-    case security_state::SECURE_WITH_POLICY_INSTALLED_CERT:  // ChromeOS only.
-      return ui::kBusinessIcon;
-    case security_state::DANGEROUS:
-      return toolbar::kHttpsInvalidIcon;
+    case SecurityLevel::NONE:
+    case SecurityLevel::HTTP_SHOW_WARNING:
+    case SecurityLevel::SECURITY_WARNING:
+      return ui::kInfoOutlineIcon;
+    case SecurityLevel::SECURE:
+    case SecurityLevel::EV_SECURE:
+      return ui::kLockIcon;
+    case SecurityLevel::DANGEROUS:
+      return ui::kWarningIcon;
+    case SecurityLevel::SECURE_WITH_POLICY_INSTALLED_CERT:  // ChromeOS only.
     default:
       NOTREACHED();
-      return toolbar::kHttpsInvalidIcon;
+      return ui::kWarningIcon;
   }
 }
 
@@ -65,19 +60,17 @@ SkColor getSchemeColor(SecurityLevel level, const ColorScheme& color_scheme) {
   switch (level) {
     case SecurityLevel::NONE:
     case SecurityLevel::HTTP_SHOW_WARNING:
-      return color_scheme.deemphasized;
-    case SecurityLevel::EV_SECURE:
-    case SecurityLevel::SECURE:
-      return color_scheme.secure;
     case SecurityLevel::SECURITY_WARNING:
       return color_scheme.deemphasized;
-    case SecurityLevel::SECURE_WITH_POLICY_INSTALLED_CERT:  // ChromeOS only.
-      return color_scheme.insecure;
+    case SecurityLevel::SECURE:
+    case SecurityLevel::EV_SECURE:
+      return color_scheme.secure;
     case SecurityLevel::DANGEROUS:
       return color_scheme.insecure;
+    case SecurityLevel::SECURE_WITH_POLICY_INSTALLED_CERT:  // ChromeOS only.
     default:
       NOTREACHED();
-      return color_scheme.insecure;
+      return color_scheme.warning;
   }
 }
 

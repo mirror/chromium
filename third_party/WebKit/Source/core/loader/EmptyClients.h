@@ -95,7 +95,7 @@ class CORE_EXPORT EmptyChromeClient : public ChromeClient {
   void FocusedNodeChanged(Node*, Node*) override {}
   Page* CreateWindow(LocalFrame*,
                      const FrameLoadRequest&,
-                     const WebWindowFeatures&,
+                     const WindowFeatures&,
                      NavigationPolicy) override {
     return nullptr;
   }
@@ -116,6 +116,20 @@ class CORE_EXPORT EmptyChromeClient : public ChromeClient {
                      const WebImage& drag_image,
                      const WebPoint& drag_image_offset) {}
   bool AcceptsLoadDrops() const override { return true; }
+
+  void SetToolbarsVisible(bool) override {}
+  bool ToolbarsVisible() override { return false; }
+
+  void SetStatusbarVisible(bool) override {}
+  bool StatusbarVisible() override { return false; }
+
+  void SetScrollbarsVisible(bool) override {}
+  bool ScrollbarsVisible() override { return false; }
+
+  void SetMenubarVisible(bool) override {}
+  bool MenubarVisible() override { return false; }
+
+  void SetResizable(bool) override {}
 
   bool ShouldReportDetailedMessageForSource(LocalFrame&,
                                             const String&) override {
@@ -276,7 +290,6 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
 
   NavigationPolicy DecidePolicyForNavigation(
       const ResourceRequest&,
-      Document* origin_document,
       DocumentLoader*,
       NavigationType,
       NavigationPolicy,
@@ -322,7 +335,7 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
   LocalFrame* CreateFrame(const FrameLoadRequest&,
                           const AtomicString&,
                           HTMLFrameOwnerElement*) override;
-  PluginView* CreatePlugin(HTMLPlugInElement&,
+  PluginView* CreatePlugin(HTMLPlugInElement*,
                            const KURL&,
                            const Vector<String>&,
                            const Vector<String>&,

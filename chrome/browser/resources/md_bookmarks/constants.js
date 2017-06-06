@@ -32,17 +32,6 @@ var Command = {
   OPEN: 'open',
 };
 
-/**
- * Mirrors the C++ enum from IncognitoModePrefs.
- * @enum {number}
- * @const
- */
-var IncognitoAvailability = {
-  ENABLED: 0,
-  DISABLED: 1,
-  FORCED: 2,
-};
-
 /** @const */
 var LOCAL_STORAGE_CLOSED_FOLDERS_KEY = 'closedState';
 

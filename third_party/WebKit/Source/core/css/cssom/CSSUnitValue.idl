@@ -5,6 +5,7 @@
 // Represents numeric values that can be expressed as a single number plus a
 // unit (or a naked number or percentage).
 // https://drafts.css-houdini.org/css-typed-om/#cssunitvalue
+
 [
   Constructor(double value, DOMString unit),
   RaisesException=Constructor,
@@ -13,5 +14,5 @@
 ] interface CSSUnitValue : CSSNumericValue {
   [EnforceRange] attribute double value;
   [RaisesException=Setter] attribute DOMString unit;
-  readonly attribute DOMString type;
+  [ImplementedAs=cssType] readonly attribute DOMString type;
 };

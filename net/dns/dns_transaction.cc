@@ -23,7 +23,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
 #include "base/strings/string_piece.h"
-#include "base/threading/thread_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/timer/timer.h"
 #include "base/values.h"
@@ -559,6 +559,7 @@ class DnsTCPAttempt : public DnsAttempt {
 // DnsSession::NextFirstServerIndex, and the order is round-robin afterwards.
 // Each server is attempted DnsConfig::attempts times.
 class DnsTransactionImpl : public DnsTransaction,
+                           public base::NonThreadSafe,
                            public base::SupportsWeakPtr<DnsTransactionImpl> {
  public:
   DnsTransactionImpl(DnsSession* session,
@@ -582,7 +583,6 @@ class DnsTransactionImpl : public DnsTransaction,
   }
 
   ~DnsTransactionImpl() override {
-    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
     if (!callback_.is_null()) {
       net_log_.EndEventWithNetErrorCode(NetLogEventType::DNS_TRANSACTION,
                                         ERR_ABORTED);
@@ -590,12 +590,12 @@ class DnsTransactionImpl : public DnsTransaction,
   }
 
   const std::string& GetHostname() const override {
-    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    DCHECK(CalledOnValidThread());
     return hostname_;
   }
 
   uint16_t GetType() const override {
-    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    DCHECK(CalledOnValidThread());
     return qtype_;
   }
 
@@ -969,8 +969,6 @@ class DnsTransactionImpl : public DnsTransaction,
   int first_server_index_;
 
   base::OneShotTimer timer_;
-
-  THREAD_CHECKER(thread_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(DnsTransactionImpl);
 };

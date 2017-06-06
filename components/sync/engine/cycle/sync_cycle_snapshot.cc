@@ -95,7 +95,7 @@ std::unique_ptr<base::DictionaryValue> SyncCycleSnapshot::ToValue() const {
                              num_to_delete_entries_by_type_[i]);
 
     const std::string model_type = ModelTypeToString(static_cast<ModelType>(i));
-    counter_entries->Set(model_type, std::move(type_entries));
+    counter_entries->Set(model_type, type_entries.release());
   }
   value->Set("counter_entries", std::move(counter_entries));
   return value;

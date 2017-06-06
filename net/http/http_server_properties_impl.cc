@@ -38,13 +38,12 @@ HttpServerPropertiesImpl::HttpServerPropertiesImpl(
 }
 
 HttpServerPropertiesImpl::~HttpServerPropertiesImpl() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 }
 
 void HttpServerPropertiesImpl::SetSpdyServers(
     std::vector<std::string>* spdy_servers,
     bool support_spdy) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   if (!spdy_servers)
     return;
 
@@ -182,7 +181,7 @@ void HttpServerPropertiesImpl::SetQuicServerInfoMap(
 void HttpServerPropertiesImpl::GetSpdyServerList(
     base::ListValue* spdy_server_list,
     size_t max_size) const {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(spdy_server_list);
   spdy_server_list->Clear();
   size_t count = 0;
@@ -198,7 +197,7 @@ void HttpServerPropertiesImpl::GetSpdyServerList(
 }
 
 void HttpServerPropertiesImpl::Clear() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   spdy_servers_map_.Clear();
   alternative_service_map_.Clear();
   canonical_host_to_origin_map_.clear();
@@ -209,7 +208,7 @@ void HttpServerPropertiesImpl::Clear() {
 
 bool HttpServerPropertiesImpl::SupportsRequestPriority(
     const url::SchemeHostPort& server) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   if (server.host().empty())
     return false;
 
@@ -228,7 +227,7 @@ bool HttpServerPropertiesImpl::SupportsRequestPriority(
 
 bool HttpServerPropertiesImpl::GetSupportsSpdy(
     const url::SchemeHostPort& server) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   if (server.host().empty())
     return false;
 
@@ -240,7 +239,7 @@ bool HttpServerPropertiesImpl::GetSupportsSpdy(
 void HttpServerPropertiesImpl::SetSupportsSpdy(
     const url::SchemeHostPort& server,
     bool support_spdy) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   if (server.host().empty())
     return;
 
@@ -256,7 +255,7 @@ void HttpServerPropertiesImpl::SetSupportsSpdy(
 
 bool HttpServerPropertiesImpl::RequiresHTTP11(
     const HostPortPair& host_port_pair) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   if (host_port_pair.host().empty())
     return false;
 
@@ -265,7 +264,7 @@ bool HttpServerPropertiesImpl::RequiresHTTP11(
 
 void HttpServerPropertiesImpl::SetHTTP11Required(
     const HostPortPair& host_port_pair) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   if (host_port_pair.host().empty())
     return;
 

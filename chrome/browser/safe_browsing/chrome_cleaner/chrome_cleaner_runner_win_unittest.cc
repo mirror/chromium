@@ -122,9 +122,9 @@ class ChromeCleanerRunnerSimpleTest
 
   void OnConnectionClosed() {}
 
-  void OnProcessDone(ChromeCleanerRunner::ProcessStatus process_status) {
+  void OnProcessDone(ChromeCleanerRunner::LaunchStatus launch_status) {
     on_process_done_called_ = true;
-    process_status_ = process_status;
+    launch_status_ = launch_status;
     run_loop_.QuitWhenIdle();
   }
 
@@ -142,7 +142,7 @@ class ChromeCleanerRunnerSimpleTest
 
   // Variables set by OnProcessDone().
   bool on_process_done_called_ = false;
-  ChromeCleanerRunner::ProcessStatus process_status_;
+  ChromeCleanerRunner::LaunchStatus launch_status_;
 
   base::RunLoop run_loop_;
 };
@@ -300,9 +300,9 @@ class ChromeCleanerRunnerTest
     QuitTestRunLoopIfCommunicationDone();
   }
 
-  void OnProcessDone(ChromeCleanerRunner::ProcessStatus process_status) {
+  void OnProcessDone(ChromeCleanerRunner::LaunchStatus launch_status) {
     on_process_done_called_ = true;
-    process_status_ = process_status;
+    launch_status_ = launch_status;
     QuitTestRunLoopIfCommunicationDone();
   }
 
@@ -316,8 +316,7 @@ class ChromeCleanerRunnerTest
   PromptAcceptance prompt_acceptance_to_send_ = PromptAcceptance::UNSPECIFIED;
 
   // Set by OnProcessDone().
-  ChromeCleanerRunner::ProcessStatus process_status_;
-
+  ChromeCleanerRunner::LaunchStatus launch_status_ = {false, -1};
   // Set by OnPromptUser().
   std::unique_ptr<std::set<base::FilePath>> received_files_to_delete_;
 
@@ -359,17 +358,14 @@ TEST_P(ChromeCleanerRunnerTest, WithMockCleanerProcess) {
              cleaner_process_options_.crash_point() ==
                  MockChromeCleanerProcess::CrashPoint::kAfterResponseReceived));
 
-  if (on_prompt_user_called_ &&
-      !cleaner_process_options_.files_to_delete().empty()) {
+  if (on_prompt_user_called_ && !cleaner_process_options_.found_uws().empty()) {
     EXPECT_EQ(*received_files_to_delete_,
               cleaner_process_options_.files_to_delete());
   }
 
-  EXPECT_EQ(process_status_.launch_status,
-            ChromeCleanerRunner::LaunchStatus::kSuccess);
-  EXPECT_EQ(
-      process_status_.exit_code,
-      cleaner_process_options_.ExpectedExitCode(prompt_acceptance_to_send_));
+  EXPECT_TRUE(launch_status_.process_ok);
+  EXPECT_EQ(launch_status_.exit_code, cleaner_process_options_.ExpectedExitCode(
+                                          prompt_acceptance_to_send_));
 }
 
 INSTANTIATE_TEST_CASE_P(
@@ -395,7 +391,9 @@ INSTANTIATE_TEST_CASE_P(
                MockChromeCleanerProcess::CrashPoint::kAfterConnection,
                MockChromeCleanerProcess::CrashPoint::kAfterRequestSent,
                MockChromeCleanerProcess::CrashPoint::kAfterResponseReceived),
-        Values(PromptAcceptance::DENIED, PromptAcceptance::ACCEPTED)));
+        Values(PromptAcceptance::DENIED,
+               PromptAcceptance::ACCEPTED_WITH_LOGS,
+               PromptAcceptance::ACCEPTED_WITHOUT_LOGS)));
 
 }  // namespace
 }  // namespace safe_browsing

@@ -35,7 +35,7 @@ class ToughVideoCasesPage(page_module.Page):
       for t in tags:
         assert t in _PAGE_TAGS_LIST
     super(ToughVideoCasesPage, self).__init__(
-        url=url, page_set=page_set, tags=tags, name=url.split('/')[-1])
+        url=url, page_set=page_set, tags=tags)
 
   def PlayAction(self, action_runner):
     # Play the media until it has finished or it times out.
@@ -409,8 +409,7 @@ class ToughVideoCasesPageSet(story.StorySet):
   """
   def __init__(self, measure_memory=False):
     super(ToughVideoCasesPageSet, self).__init__(
-            cloud_storage_bucket=story.PARTNER_BUCKET,
-            verify_names=True)
+            cloud_storage_bucket=story.PARTNER_BUCKET)
 
     self.measure_memory = measure_memory
 

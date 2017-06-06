@@ -12,7 +12,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/power_monitor/power_observer.h"
-#include "base/threading/thread_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "net/base/net_export.h"
 #include "net/http/http_transaction_factory.h"
 
@@ -20,8 +20,10 @@ namespace net {
 
 class HttpNetworkSession;
 
-class NET_EXPORT HttpNetworkLayer : public HttpTransactionFactory,
-                                    public base::PowerObserver {
+class NET_EXPORT HttpNetworkLayer
+    : public HttpTransactionFactory,
+      public base::PowerObserver,
+      NON_EXPORTED_BASE(public base::NonThreadSafe) {
  public:
   // Construct a HttpNetworkLayer with an existing HttpNetworkSession which
   // contains a valid ProxyService. The HttpNetworkLayer must be destroyed
@@ -42,8 +44,6 @@ class NET_EXPORT HttpNetworkLayer : public HttpTransactionFactory,
  private:
   HttpNetworkSession* const session_;
   bool suspended_;
-
-  THREAD_CHECKER(thread_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(HttpNetworkLayer);
 };

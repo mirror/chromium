@@ -398,9 +398,15 @@ void CronetBidirectionalStreamAdapter::WritevDataOnNetworkThread(
 
   pending_write_data_ = std::move(pending_write_data);
   bool end_of_stream = pending_write_data_->jwrite_end_of_stream == JNI_TRUE;
-  bidi_stream_->SendvData(pending_write_data_->write_buffer_list,
-                          pending_write_data_->write_buffer_len_list,
-                          end_of_stream);
+  if (pending_write_data_->write_buffer_list.size() == 1) {
+    bidi_stream_->SendData(pending_write_data_->write_buffer_list[0],
+                           pending_write_data_->write_buffer_len_list[0],
+                           end_of_stream);
+  } else {
+    bidi_stream_->SendvData(pending_write_data_->write_buffer_list,
+                            pending_write_data_->write_buffer_len_list,
+                            end_of_stream);
+  }
 }
 
 void CronetBidirectionalStreamAdapter::DestroyOnNetworkThread(

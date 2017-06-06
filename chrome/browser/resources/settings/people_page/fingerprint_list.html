@@ -71,12 +71,10 @@
     </div>
     <i class="settings-box continuation">$i18n{lockScreenFingerprintWarning}</i>
 
-    <template is="dom-if" if="[[showSetupFingerprintDialog_]]" restamp>
-      <settings-setup-fingerprint-dialog
-          on-add-fingerprint="updateFingerprintsList_"
-          on-close="onSetupFingerprintDialogClose_">
-      </settings-setup-fingerprint-dialog>
-    </template>
+    <settings-setup-fingerprint-dialog id="setupFingerprint"
+        on-add-fingerprint="updateFingerprintsList_"
+        on-close="onSetupFingerprintDialogClose_">
+    </settings-setup-fingerprint-dialog>
   </template>
   <script src="fingerprint_list.js"></script>
 </dom-module>

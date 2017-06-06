@@ -163,23 +163,19 @@ class TestDelegateBase : public BidirectionalStreamImpl::Delegate {
   void Start(const BidirectionalStreamRequestInfo* request_info,
              const NetLogWithSource& net_log,
              std::unique_ptr<QuicChromiumClientSession::Handle> session) {
-    not_expect_callback_ = true;
     stream_ = base::MakeUnique<BidirectionalStreamQuicImpl>(std::move(session));
     stream_->Start(request_info, net_log, send_request_headers_automatically_,
                    this, nullptr);
-    not_expect_callback_ = false;
   }
 
-  void SendRequestHeaders() {
-    not_expect_callback_ = true;
-    stream_->SendRequestHeaders();
-    not_expect_callback_ = false;
-  }
+  void SendRequestHeaders() { stream_->SendRequestHeaders(); }
 
   void SendData(const scoped_refptr<IOBuffer>& data,
                 int length,
                 bool end_of_stream) {
-    SendvData({data}, {length}, end_of_stream);
+    not_expect_callback_ = true;
+    stream_->SendData(data, length, end_of_stream);
+    not_expect_callback_ = false;
   }
 
   void SendvData(const std::vector<scoped_refptr<IOBuffer>>& data,
@@ -1716,10 +1712,10 @@ TEST_P(BidirectionalStreamQuicImplTest, SessionClosedBeforeReadData) {
   // Try to send data after OnFailed(), should not get called back.
   scoped_refptr<StringIOBuffer> buf(new StringIOBuffer(kUploadData));
   delegate->SendData(buf, buf->size(), false);
+  base::RunLoop().RunUntilIdle();
 
-  EXPECT_THAT(delegate->ReadData(cb.callback()),
-              IsError(ERR_QUIC_PROTOCOL_ERROR));
-  EXPECT_THAT(delegate->error(), IsError(ERR_QUIC_PROTOCOL_ERROR));
+  EXPECT_THAT(delegate->ReadData(cb.callback()), IsError(ERR_UNEXPECTED));
+  EXPECT_THAT(delegate->error(), IsError(ERR_UNEXPECTED));
   EXPECT_EQ(0, delegate->on_data_read_count());
   EXPECT_EQ(0, delegate->on_data_sent_count());
   EXPECT_EQ(kProtoQUIC, delegate->GetProtocol());

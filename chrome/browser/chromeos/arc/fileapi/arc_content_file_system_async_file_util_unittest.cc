@@ -31,7 +31,6 @@ namespace {
 
 constexpr char kArcUrl[] = "content://org.chromium.foo/bar";
 constexpr char kData[] = "abcdef";
-constexpr char kMimeType[] = "application/octet-stream";
 
 class ArcContentFileSystemAsyncFileUtilTest : public testing::Test {
  public:
@@ -39,8 +38,7 @@ class ArcContentFileSystemAsyncFileUtilTest : public testing::Test {
   ~ArcContentFileSystemAsyncFileUtilTest() override = default;
 
   void SetUp() override {
-    fake_file_system_.AddFile(
-        File(kArcUrl, kData, kMimeType, File::Seekable::NO));
+    fake_file_system_.AddFile(File(kArcUrl, kData, File::Seekable::NO));
 
     arc_service_manager_ = base::MakeUnique<ArcServiceManager>(nullptr);
     arc_service_manager_->AddService(

@@ -174,7 +174,6 @@
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/native_widget_types.h"
-#include "ui/gfx/switches.h"
 #include "ui/latency/latency_info.h"
 #include "url/origin.h"
 #include "url/url_constants.h"
@@ -529,10 +528,29 @@ class AlwaysDrawSwapPromise : public cc::SwapPromise {
   ui::LatencyInfo latency_info_;
 };
 
+const char kWindowFeatureBackground[] = "background";
+const char kWindowFeaturePersistent[] = "persistent";
+
 content::mojom::WindowContainerType WindowFeaturesToContainerType(
     const blink::WebWindowFeatures& window_features) {
-  if (window_features.background) {
-    if (window_features.persistent)
+  bool background = false;
+  bool persistent = false;
+
+  for (size_t i = 0; i < window_features.additional_features.size(); ++i) {
+    blink::WebString feature = window_features.additional_features[i];
+    if (feature.ContainsOnlyASCII()) {
+      std::string featureASCII = feature.Ascii();
+      if (base::LowerCaseEqualsASCII(featureASCII, kWindowFeatureBackground)) {
+        background = true;
+      } else if (base::LowerCaseEqualsASCII(featureASCII,
+                                            kWindowFeaturePersistent)) {
+        persistent = true;
+      }
+    }
+  }
+
+  if (background) {
+    if (persistent)
       return content::mojom::WindowContainerType::PERSISTENT;
     else
       return content::mojom::WindowContainerType::BACKGROUND;
@@ -1425,8 +1443,8 @@ WebView* RenderViewImpl::CreateView(WebLocalFrame* creator,
 
   mojom::CreateNewWindowReplyPtr reply;
   mojom::FrameHostAssociatedPtr frame_host_ptr = creator_frame->GetFrameHost();
-  bool err = !frame_host_ptr->CreateNewWindow(std::move(params), &reply);
-  if (err || reply->route_id == MSG_ROUTING_NONE)
+  frame_host_ptr->CreateNewWindow(std::move(params), &reply);
+  if (reply->route_id == MSG_ROUTING_NONE)
     return nullptr;
 
   WebUserGestureIndicator::ConsumeUserGesture();
@@ -2171,9 +2189,8 @@ void RenderViewImpl::OnResize(const ResizeParams& params) {
     webview()->HidePopups();
     if (send_preferred_size_changes_ &&
         webview()->MainFrame()->IsWebLocalFrame()) {
-      webview()->MainFrame()->ToWebLocalFrame()->SetCanHaveScrollbars(
-          ShouldDisplayScrollbars(params.new_size.width(),
-                                  params.new_size.height()));
+      webview()->MainFrame()->SetCanHaveScrollbars(ShouldDisplayScrollbars(
+          params.new_size.width(), params.new_size.height()));
     }
     if (display_mode_ != params.display_mode) {
       display_mode_ = params.display_mode;
@@ -2524,13 +2541,6 @@ void RenderViewImpl::SetDeviceScaleFactorForTesting(float factor) {
 
 void RenderViewImpl::SetDeviceColorProfileForTesting(
     const gfx::ICCProfile& icc_profile) {
-  // TODO(ccameron): Remove this call when color correct rendering is the
-  // default.
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableColorCorrectRendering)) {
-    return;
-  }
-
   if (webview())
     webview()->SetDeviceColorProfile(icc_profile);
 

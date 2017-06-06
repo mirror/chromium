@@ -52,13 +52,13 @@ namespace payments {
 namespace {
 
 // |s1|, |s2|, and |s3| are lines identifying the profile. |s1| is the
-// "headline" which may be emphasized depending on |type|. If |enabled| is
-// false, the labels will look disabled.
+// "headline" which may be emphasized depending on |type|. If |disabled_state|
+// is true, the labels will look disabled.
 std::unique_ptr<views::View> GetBaseProfileLabel(AddressStyleType type,
                                                  const base::string16& s1,
                                                  const base::string16& s2,
                                                  const base::string16& s3,
-                                                 bool enabled = true) {
+                                                 bool disabled_state = false) {
   std::unique_ptr<views::View> container = base::MakeUnique<views::View>();
   std::unique_ptr<views::BoxLayout> layout =
       base::MakeUnique<views::BoxLayout>(views::BoxLayout::kVertical, 0, 0, 0);
@@ -74,7 +74,7 @@ std::unique_ptr<views::View> GetBaseProfileLabel(AddressStyleType type,
         s1, views::style::CONTEXT_LABEL, text_style);
     label->set_id(static_cast<int>(DialogViewID::PROFILE_LABEL_LINE_1));
     label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-    if (!enabled) {
+    if (disabled_state) {
       label->SetEnabledColor(label->GetNativeTheme()->GetSystemColor(
           ui::NativeTheme::kColorId_LabelDisabledColor));
     }
@@ -85,7 +85,7 @@ std::unique_ptr<views::View> GetBaseProfileLabel(AddressStyleType type,
     std::unique_ptr<views::Label> label = base::MakeUnique<views::Label>(s2);
     label->set_id(static_cast<int>(DialogViewID::PROFILE_LABEL_LINE_2));
     label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-    if (!enabled) {
+    if (disabled_state) {
       label->SetEnabledColor(label->GetNativeTheme()->GetSystemColor(
           ui::NativeTheme::kColorId_LabelDisabledColor));
     }
@@ -96,7 +96,7 @@ std::unique_ptr<views::View> GetBaseProfileLabel(AddressStyleType type,
     std::unique_ptr<views::Label> label = base::MakeUnique<views::Label>(s3);
     label->set_id(static_cast<int>(DialogViewID::PROFILE_LABEL_LINE_3));
     label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-    if (!enabled) {
+    if (disabled_state) {
       label->SetEnabledColor(label->GetNativeTheme()->GetSystemColor(
           ui::NativeTheme::kColorId_LabelDisabledColor));
     }
@@ -111,7 +111,7 @@ std::unique_ptr<views::View> GetShippingAddressLabel(
     AddressStyleType type,
     const std::string& locale,
     const autofill::AutofillProfile& profile,
-    bool enabled) {
+    bool disabled_state) {
   base::string16 name =
       profile.GetInfo(autofill::AutofillType(autofill::NAME_FULL), locale);
 
@@ -121,7 +121,7 @@ std::unique_ptr<views::View> GetShippingAddressLabel(
   base::string16 phone =
       data_util::GetFormattedPhoneNumberForDisplay(profile, locale);
 
-  return GetBaseProfileLabel(type, name, address, phone, enabled);
+  return GetBaseProfileLabel(type, name, address, phone, disabled_state);
 }
 
 std::unique_ptr<views::Label> GetLabelForMissingInformation(
@@ -260,14 +260,34 @@ std::unique_ptr<views::View> CreateProductLogoFooterView() {
   return content_view;
 }
 
+std::unique_ptr<views::View> GetShippingAddressLabelWithError(
+    AddressStyleType type,
+    const std::string& locale,
+    const autofill::AutofillProfile& profile,
+    const base::string16& error,
+    bool disabled_state) {
+  std::unique_ptr<views::View> base_label =
+      GetShippingAddressLabel(type, locale, profile, disabled_state);
+
+  if (!error.empty()) {
+    std::unique_ptr<views::Label> label =
+        base::MakeUnique<views::Label>(error, CONTEXT_DEPRECATED_SMALL);
+    label->set_id(static_cast<int>(DialogViewID::PROFILE_LABEL_ERROR));
+    // Error information is typically in red.
+    label->SetEnabledColor(label->GetNativeTheme()->GetSystemColor(
+        ui::NativeTheme::kColorId_AlertSeverityHigh));
+    base_label->AddChildView(label.release());
+  }
+  return base_label;
+}
+
 std::unique_ptr<views::View> GetShippingAddressLabelWithMissingInfo(
     AddressStyleType type,
     const std::string& locale,
     const autofill::AutofillProfile& profile,
-    const PaymentsProfileComparator& comp,
-    bool enabled) {
+    const PaymentsProfileComparator& comp) {
   std::unique_ptr<views::View> base_label =
-      GetShippingAddressLabel(type, locale, profile, enabled);
+      GetShippingAddressLabel(type, locale, profile, /*disabled_state=*/false);
 
   base::string16 missing = comp.GetStringForMissingShippingFields(profile);
   if (!missing.empty()) {
@@ -328,15 +348,6 @@ std::unique_ptr<views::Label> CreateMediumLabel(const base::string16& text) {
   std::unique_ptr<views::Label> label = base::MakeUnique<views::Label>(text);
   label->SetFontList(ResourceBundle::GetSharedInstance().GetFontListWithDelta(
       ui::kLabelFontSizeDelta, gfx::Font::NORMAL, gfx::Font::Weight::MEDIUM));
-  return label;
-}
-
-std::unique_ptr<views::Label> CreateHintLabel(
-    const base::string16& text,
-    gfx::HorizontalAlignment alignment) {
-  std::unique_ptr<views::Label> label = base::MakeUnique<views::Label>(
-      text, views::style::CONTEXT_LABEL, STYLE_HINT);
-  label->SetHorizontalAlignment(alignment);
   return label;
 }
 

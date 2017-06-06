@@ -192,8 +192,8 @@ gfx::NativeViewId ScreenCaptureNotificationUIViews::OnStarted(
   widget->Init(params);
   widget->SetAlwaysOnTop(true);
 
-  SetBackground(views::CreateSolidBackground(GetNativeTheme()->GetSystemColor(
-      ui::NativeTheme::kColorId_DialogBackground)));
+  set_background(views::Background::CreateSolidBackground(GetNativeTheme()->
+      GetSystemColor(ui::NativeTheme::kColorId_DialogBackground)));
 
   display::Screen* screen = display::Screen::GetScreen();
   // TODO(sergeyu): Move the notification to the display being captured when

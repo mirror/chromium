@@ -61,8 +61,6 @@ class MockRenderProcessHost : public RenderProcessHost {
   void WidgetHidden() override;
   int VisibleWidgetCount() const override;
   bool IsForGuestsOnly() const override;
-  RendererAudioOutputStreamFactoryContext*
-  GetRendererAudioOutputStreamFactoryContext() override;
   void OnAudioStreamAdded() override;
   void OnAudioStreamRemoved() override;
   StoragePartition* GetStoragePartition() const override;

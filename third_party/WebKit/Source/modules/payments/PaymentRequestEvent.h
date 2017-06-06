@@ -39,7 +39,6 @@ class MODULES_EXPORT PaymentRequestEvent final : public ExtendableEvent {
   const HeapVector<PaymentDetailsModifier>& modifiers() const;
   const String& instrumentKey() const;
 
-  ScriptPromise openWindow(ScriptState*, const String& url);
   void respondWith(ScriptState*, ScriptPromise, ExceptionState&);
 
   DECLARE_VIRTUAL_TRACE();

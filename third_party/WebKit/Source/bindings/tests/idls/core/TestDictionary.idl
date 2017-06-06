@@ -35,7 +35,7 @@ dictionary TestDictionary {
     EventTarget eventTargetMember;
     any anyMember = null;
     Dictionary dictionaryMember;
-    [RuntimeEnabled=RuntimeFeature] boolean runtimeMember;
+    [RuntimeEnabled=runtimeFeature] boolean runtimeMember;
     [PrefixGet] object prefixGetMember;
     record<ByteString, byte> recordMember;
     record<USVString, TestObject> garbageCollectedRecordMember;

@@ -53,8 +53,6 @@ class CC_EXPORT QuadList : public ListContainer<DrawQuad> {
 
 typedef ListContainer<SharedQuadState> SharedQuadStateList;
 
-using RenderPassId = uint64_t;
-
 class CC_EXPORT RenderPass {
  public:
   ~RenderPass();
@@ -75,12 +73,12 @@ class CC_EXPORT RenderPass {
   static void CopyAll(const std::vector<std::unique_ptr<RenderPass>>& in,
                       std::vector<std::unique_ptr<RenderPass>>* out);
 
-  void SetNew(RenderPassId id,
+  void SetNew(int id,
               const gfx::Rect& output_rect,
               const gfx::Rect& damage_rect,
               const gfx::Transform& transform_to_root_target);
 
-  void SetAll(RenderPassId id,
+  void SetAll(int id,
               const gfx::Rect& output_rect,
               const gfx::Rect& damage_rect,
               const gfx::Transform& transform_to_root_target,
@@ -101,12 +99,12 @@ class CC_EXPORT RenderPass {
   RenderPassDrawQuad* CopyFromAndAppendRenderPassDrawQuad(
       const RenderPassDrawQuad* quad,
       const SharedQuadState* shared_quad_state,
-      RenderPassId render_pass_id);
+      int render_pass_id);
   DrawQuad* CopyFromAndAppendDrawQuad(const DrawQuad* quad,
                                       const SharedQuadState* shared_quad_state);
 
   // Uniquely identifies the render pass in the compositor's current frame.
-  RenderPassId id = 0;
+  int id = 0;
 
   // These are in the space of the render pass' physical pixels.
   gfx::Rect output_rect;

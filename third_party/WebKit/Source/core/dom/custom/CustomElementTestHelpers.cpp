@@ -7,8 +7,7 @@
 namespace blink {
 
 CustomElementDefinition* TestCustomElementDefinitionBuilder::Build(
-    const CustomElementDescriptor& descriptor,
-    CustomElementDefinition::Id) {
+    const CustomElementDescriptor& descriptor) {
   return new TestCustomElementDefinition(descriptor);
 }
 

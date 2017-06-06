@@ -333,7 +333,7 @@ MediaStreamVideoSource::MediaStreamVideoSource()
       weak_factory_(this) {}
 
 MediaStreamVideoSource::~MediaStreamVideoSource() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
 }
 
 void MediaStreamVideoSource::AddTrackLegacy(
@@ -341,7 +341,7 @@ void MediaStreamVideoSource::AddTrackLegacy(
     const VideoCaptureDeliverFrameCB& frame_callback,
     const blink::WebMediaConstraints& constraints,
     const ConstraintsCallback& callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(IsOldVideoConstraints());
   DCHECK(!constraints.IsNull());
   DCHECK(std::find(tracks_.begin(), tracks_.end(), track) == tracks_.end());
@@ -397,7 +397,7 @@ void MediaStreamVideoSource::AddTrack(
     const VideoTrackAdapterSettings& track_adapter_settings,
     const VideoCaptureDeliverFrameCB& frame_callback,
     const ConstraintsCallback& callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(std::find(tracks_.begin(), tracks_.end(), track) == tracks_.end());
   tracks_.push_back(track);
   secure_tracker_.Add(track, true);
@@ -432,7 +432,7 @@ void MediaStreamVideoSource::AddTrack(
 }
 
 void MediaStreamVideoSource::RemoveTrack(MediaStreamVideoTrack* video_track) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   std::vector<MediaStreamVideoTrack*>::iterator it =
       std::find(tracks_.begin(), tracks_.end(), video_track);
   DCHECK(it != tracks_.end());
@@ -457,7 +457,7 @@ void MediaStreamVideoSource::RemoveTrack(MediaStreamVideoTrack* video_track) {
 
 void MediaStreamVideoSource::UpdateHasConsumers(MediaStreamVideoTrack* track,
                                                 bool has_consumers) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   const auto it =
       std::find(suspended_tracks_.begin(), suspended_tracks_.end(), track);
   if (has_consumers) {
@@ -472,19 +472,19 @@ void MediaStreamVideoSource::UpdateHasConsumers(MediaStreamVideoTrack* track,
 
 void MediaStreamVideoSource::UpdateCapturingLinkSecure(
     MediaStreamVideoTrack* track, bool is_secure) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   secure_tracker_.Update(track, is_secure);
   OnCapturingLinkSecured(secure_tracker_.is_capturing_secure());
 }
 
 base::SingleThreadTaskRunner* MediaStreamVideoSource::io_task_runner() const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   return track_adapter_->io_task_runner();
 }
 
 base::Optional<media::VideoCaptureFormat>
 MediaStreamVideoSource::GetCurrentFormat() const {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (IsOldVideoConstraints()) {
     if (state_ == STARTING || state_ == STARTED)
       return current_format_;
@@ -500,7 +500,7 @@ MediaStreamVideoSource::GetCurrentFormatImpl() const {
 }
 
 void MediaStreamVideoSource::DoStopSource() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DVLOG(3) << "DoStopSource()";
   if (state_ == ENDED)
     return;
@@ -512,7 +512,7 @@ void MediaStreamVideoSource::DoStopSource() {
 
 void MediaStreamVideoSource::OnSupportedFormats(
     const media::VideoCaptureFormats& formats) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(IsOldVideoConstraints());
   DCHECK_EQ(RETRIEVING_CAPABILITIES, state_);
 
@@ -543,7 +543,7 @@ bool MediaStreamVideoSource::FindBestFormatWithConstraints(
     const media::VideoCaptureFormats& formats,
     media::VideoCaptureFormat* best_format,
     blink::WebMediaConstraints* fulfilled_constraints) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DVLOG(3) << "MediaStreamVideoSource::FindBestFormatWithConstraints "
            << "with " << formats.size() << " formats";
   // Find the first track descriptor that can fulfil the constraints.
@@ -581,7 +581,7 @@ bool MediaStreamVideoSource::FindBestFormatWithConstraints(
 }
 
 void MediaStreamVideoSource::OnStartDone(MediaStreamRequestResult result) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DVLOG(3) << "OnStartDone({result =" << result << "})";
   if (result == MEDIA_DEVICE_OK) {
     DCHECK_EQ(STARTING, state_);
@@ -605,7 +605,7 @@ void MediaStreamVideoSource::OnStartDone(MediaStreamRequestResult result) {
 }
 
 void MediaStreamVideoSource::FinalizeAddTrackLegacy() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(IsOldVideoConstraints());
   const media::VideoCaptureFormats formats(1, current_format_);
 
@@ -666,7 +666,7 @@ void MediaStreamVideoSource::FinalizeAddTrackLegacy() {
 }
 
 void MediaStreamVideoSource::FinalizeAddTrack() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(!IsOldVideoConstraints());
   std::vector<TrackDescriptor> track_descriptors;
   track_descriptors.swap(track_descriptors_);
@@ -704,7 +704,7 @@ void MediaStreamVideoSource::FinalizeAddTrack() {
 void MediaStreamVideoSource::SetReadyState(
     blink::WebMediaStreamSource::ReadyState state) {
   DVLOG(3) << "MediaStreamVideoSource::SetReadyState state " << state;
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (!Owner().IsNull())
     Owner().SetReadyState(state);
   for (auto* track : tracks_)
@@ -713,7 +713,7 @@ void MediaStreamVideoSource::SetReadyState(
 
 void MediaStreamVideoSource::SetMutedState(bool muted_state) {
   DVLOG(3) << "MediaStreamVideoSource::SetMutedState state=" << muted_state;
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(CalledOnValidThread());
   if (!Owner().IsNull()) {
     Owner().SetReadyState(muted_state
                               ? blink::WebMediaStreamSource::kReadyStateMuted

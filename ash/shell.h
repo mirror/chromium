@@ -91,7 +91,6 @@ namespace ash {
 
 class AcceleratorController;
 class AccessibilityDelegate;
-class AshDisplayController;
 class AppListDelegateImpl;
 class AshNativeCursorManager;
 class AshTouchTransformController;
@@ -268,9 +267,6 @@ class ASH_EXPORT Shell : public SessionObserver,
   // Returns true if simplified display management should be enabled.
   // TODO(sky): remove this; temporary until http://crbug.com/718860 is done.
   static bool ShouldEnableSimplifiedDisplayManagement();
-  // Use this variant if you have a Config and the Shell may not have been
-  // initialized yet.
-  static bool ShouldEnableSimplifiedDisplayManagement(ash::Config config);
 
   // Creates a default views::NonClientFrameView for use by windows in the
   // Ash environment.
@@ -307,9 +303,6 @@ class ASH_EXPORT Shell : public SessionObserver,
     return accessibility_delegate_.get();
   }
   app_list::AppList* app_list() { return app_list_.get(); }
-  AshDisplayController* ash_display_controller() {
-    return ash_display_controller_.get();
-  }
   const scoped_refptr<base::SequencedWorkerPool>& blocking_pool() {
     return blocking_pool_;
   }
@@ -344,7 +337,9 @@ class ASH_EXPORT Shell : public SessionObserver,
   NewWindowController* new_window_controller() {
     return new_window_controller_.get();
   }
-  NightLightController* night_light_controller();
+  NightLightController* night_light_controller() {
+    return night_light_controller_.get();
+  }
   SessionController* session_controller() { return session_controller_.get(); }
   ShelfController* shelf_controller() { return shelf_controller_.get(); }
   ShelfModel* shelf_model();
@@ -684,7 +679,6 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   std::unique_ptr<AcceleratorController> accelerator_controller_;
   std::unique_ptr<AccessibilityDelegate> accessibility_delegate_;
-  std::unique_ptr<AshDisplayController> ash_display_controller_;
   std::unique_ptr<BrightnessControlDelegate> brightness_control_delegate_;
   std::unique_ptr<CastConfigController> cast_config_;
   std::unique_ptr<DragDropController> drag_drop_controller_;

@@ -279,7 +279,7 @@ TrayDetailsView::TrayDetailsView(SystemTrayItem* owner)
       tri_view_(nullptr),
       back_button_(nullptr) {
   SetLayoutManager(box_layout_);
-  SetBackground(views::CreateThemedSolidBackground(
+  set_background(views::Background::CreateThemedSolidBackground(
       this, ui::NativeTheme::kColorId_BubbleBackground));
 }
 
@@ -334,9 +334,12 @@ void TrayDetailsView::CreateScrollableList() {
   scroll_content_ = new ScrollContentsView();
   scroller_ = new views::ScrollView;
   scroller_->SetContents(scroll_content_);
+  // Make the |scroller_| have a layer to clip |scroll_content_|'s children.
   // TODO(varkha): Make the sticky rows work with EnableViewPortLayer().
-  scroller_->SetBackgroundThemeColorId(
-      ui::NativeTheme::kColorId_BubbleBackground);
+  scroller_->SetPaintToLayer();
+  scroller_->set_background(views::Background::CreateThemedSolidBackground(
+      scroller_, ui::NativeTheme::kColorId_BubbleBackground));
+  scroller_->layer()->SetMasksToBounds(true);
 
   AddChildView(scroller_);
   box_layout_->SetFlexForView(scroller_, 1);

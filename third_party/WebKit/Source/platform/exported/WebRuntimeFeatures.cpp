@@ -36,7 +36,7 @@
 namespace blink {
 
 void WebRuntimeFeatures::EnableExperimentalFeatures(bool enable) {
-  RuntimeEnabledFeatures::SetExperimentalFeaturesEnabled(enable);
+  RuntimeEnabledFeatures::setExperimentalFeaturesEnabled(enable);
 }
 
 void WebRuntimeFeatures::EnableWebBluetooth(bool enable) {
@@ -57,11 +57,11 @@ void WebRuntimeFeatures::EnableWebUsb(bool enable) {
 
 void WebRuntimeFeatures::EnableFeatureFromString(const std::string& name,
                                                  bool enable) {
-  RuntimeEnabledFeatures::SetFeatureEnabledFromString(name, enable);
+  RuntimeEnabledFeatures::setFeatureEnabledFromString(name, enable);
 }
 
 void WebRuntimeFeatures::EnableTestOnlyFeatures(bool enable) {
-  RuntimeEnabledFeatures::SetTestFeaturesEnabled(enable);
+  RuntimeEnabledFeatures::setTestFeaturesEnabled(enable);
 }
 
 void WebRuntimeFeatures::EnableAccelerated2dCanvas(bool enable) {
@@ -400,10 +400,6 @@ void WebRuntimeFeatures::EnableMediaControlsOverlayPlayButton(bool enable) {
 
 void WebRuntimeFeatures::EnableLocationHardReload(bool enable) {
   RuntimeEnabledFeatures::setLocationHardReloadEnabled(enable);
-}
-
-void WebRuntimeFeatures::EnableRemotePlaybackBackend(bool enable) {
-  RuntimeEnabledFeatures::setRemotePlaybackBackendEnabled(enable);
 }
 
 }  // namespace blink

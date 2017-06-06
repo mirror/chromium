@@ -3,7 +3,6 @@ include_rules = [
   "+cc/ipc",
   "+cc/output",
   "+cc/resources",
-  "+cc/scheduler",
   "+cc/surfaces",
   "+cc/test",
   "+gpu/GLES2",
@@ -18,7 +17,6 @@ include_rules = [
   "+ui/display",
   "+ui/gfx",
   "+ui/gl",
-  "+ui/latency",
   "+ui/ozone/public",
 ]
 

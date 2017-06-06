@@ -9,7 +9,6 @@
 
 #include "base/observer_list.h"
 #include "base/power_monitor/power_observer.h"
-#include "components/download/internal/scheduler/device_status.h"
 #include "components/download/public/download_params.h"
 
 namespace download {
@@ -22,14 +21,15 @@ class BatteryListener : public base::PowerObserver {
   class Observer {
    public:
     // Called when certain battery requirements are meet.
-    virtual void OnBatteryChange(BatteryStatus battery_status) = 0;
+    virtual void OnBatteryChange(
+        SchedulingParams::BatteryRequirements battery_status) = 0;
   };
 
   BatteryListener();
   ~BatteryListener() override;
 
   // Retrieves the current minimum battery requirement.
-  BatteryStatus CurrentBatteryStatus() const;
+  SchedulingParams::BatteryRequirements CurrentBatteryStatus() const;
 
   // Start to listen to battery change.
   void Start();
@@ -46,7 +46,7 @@ class BatteryListener : public base::PowerObserver {
   void OnPowerStateChange(bool on_battery_power) override;
 
   // Notifies |observers_| about battery requirement change.
-  void NotifyBatteryChange(BatteryStatus status);
+  void NotifyBatteryChange(SchedulingParams::BatteryRequirements);
 
   // Observers to monitor battery change in download service.
   base::ObserverList<Observer> observers_;

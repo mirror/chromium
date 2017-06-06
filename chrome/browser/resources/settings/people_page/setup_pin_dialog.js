@@ -7,7 +7,8 @@
  * 'settings-setup-pin-dialog' is the settings page for choosing a PIN.
  *
  * Example:
- * * <settings-setup-pin-dialog set-modes="[[quickUnlockSetModes]]">
+ *
+ * <settings-setup-pin-dialog set-modes="[[quickUnlockSetModes]]">
  * </settings-setup-pin-dialog>
  */
 
@@ -100,7 +101,11 @@ Polymer({
   /** @override */
   attached: function() {
     this.resetState_();
+  },
+
+  open: function() {
     this.$.dialog.showModal();
+    this.$.pinKeyboard.focus();
   },
 
   close: function() {
@@ -271,8 +276,7 @@ Polymer({
       }
 
       this.resetState_();
-      if (this.$.dialog.open)
-        this.$.dialog.close();
+      this.fire('done');
     }
 
     this.setModes.call(

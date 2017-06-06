@@ -89,7 +89,6 @@ LayerTreeImpl::LayerTreeImpl(
       layers_(new OwnedLayerImplList),
       viewport_size_invalid_(false),
       needs_update_draw_properties_(true),
-      scrollbar_geometries_need_update_(false),
       needs_full_tree_sync_(true),
       needs_surface_ids_sync_(false),
       next_activation_forces_redraw_(false),
@@ -151,10 +150,26 @@ void LayerTreeImpl::RecreateTileResources() {
   }
 }
 
-void LayerTreeImpl::DidUpdateScrollOffset(int layer_id) {
-  // Scrollbar positions depend on the current scroll offset.
-  SetScrollbarGeometriesNeedUpdate();
+bool LayerTreeImpl::IsViewportLayerId(int id) const {
+#if DCHECK_IS_ON()
+  // Ensure the LayerImpl viewport layer types correspond to the LayerTreeImpl's
+  // viewport layers.
+  if (id == viewport_layer_ids_.inner_viewport_container)
+    DCHECK(LayerById(id)->viewport_layer_type() == INNER_VIEWPORT_CONTAINER);
+  if (id == viewport_layer_ids_.outer_viewport_container)
+    DCHECK(LayerById(id)->viewport_layer_type() == OUTER_VIEWPORT_CONTAINER);
+  if (id == viewport_layer_ids_.inner_viewport_scroll)
+    DCHECK(LayerById(id)->viewport_layer_type() == INNER_VIEWPORT_SCROLL);
+  if (id == viewport_layer_ids_.outer_viewport_scroll)
+    DCHECK(LayerById(id)->viewport_layer_type() == OUTER_VIEWPORT_SCROLL);
+#endif
+  if (auto* layer = LayerById(id))
+    return layer->viewport_layer_type() != NOT_VIEWPORT_LAYER;
+  return false;
+}
 
+void LayerTreeImpl::DidUpdateScrollOffset(int layer_id) {
+  DidUpdateScrollState(layer_id);
   DCHECK(lifecycle().AllowsPropertyTreeAccess());
   TransformTree& transform_tree = property_trees()->transform_tree;
   ScrollTree& scroll_tree = property_trees()->scroll_tree;
@@ -189,83 +204,85 @@ void LayerTreeImpl::DidUpdateScrollOffset(int layer_id) {
     layer_tree_host_impl_->pending_tree()->DidUpdateScrollOffset(layer_id);
 }
 
-void LayerTreeImpl::UpdateScrollbarGeometries() {
+void LayerTreeImpl::DidUpdateScrollState(int layer_id) {
   if (!IsActiveTree())
     return;
 
   DCHECK(lifecycle().AllowsPropertyTreeAccess());
 
-  // Layer properties such as bounds should be up-to-date.
-  DCHECK(lifecycle().AllowsLayerPropertyAccess());
+  // The scroll_clip_layer Layer properties should be up-to-date.
+  // TODO(pdr): This DCHECK fails on existing tests but should be enabled.
+  // DCHECK(lifecycle().AllowsLayerPropertyAccess());
 
-  if (!scrollbar_geometries_need_update_)
+  if (layer_id == Layer::INVALID_ID)
     return;
 
-  for (auto& pair : element_id_to_scrollbar_layer_ids_) {
-    ElementId scrolling_element_id = pair.first;
-
-    // TODO(pdr): Remove this LayerImpl access and just use scroll nodes. This
-    // is blocked on scroll offset's dependency on LayerImpl.
-    LayerImpl* scrolling_layer = LayerByElementId(scrolling_element_id);
-    if (!scrolling_layer)
-      continue;
-    gfx::ScrollOffset current_offset = scrolling_layer->CurrentScrollOffset();
-
-    auto& scroll_tree = property_trees()->scroll_tree;
-    auto* scroll_node = scroll_tree.FindNodeFromElementId(scrolling_element_id);
-    if (!scroll_node)
-      continue;
-    gfx::SizeF scrolling_size(scroll_node->bounds);
-    gfx::SizeF bounds_size(
-        scroll_tree.scroll_clip_layer_bounds(scroll_node->id));
-
-    bool is_viewport_scrollbar = scroll_node->scrolls_inner_viewport ||
-                                 scroll_node->scrolls_outer_viewport;
-    if (is_viewport_scrollbar) {
-      if (scroll_node->scrolls_inner_viewport) {
-        // Add offset and bounds contribution of outer viewport.
-        current_offset += OuterViewportScrollLayer()->CurrentScrollOffset();
-        gfx::SizeF outer_viewport_bounds(scroll_tree.scroll_clip_layer_bounds(
-            OuterViewportScrollLayer()->scroll_tree_index()));
-        bounds_size.SetToMin(outer_viewport_bounds);
-
-        // The scrolling size is only determined by the outer viewport.
-        scroll_node = scroll_tree.FindNodeFromElementId(
-            OuterViewportScrollLayer()->element_id());
-        scrolling_size = gfx::SizeF(scroll_node->bounds);
-      } else {
-        // Add offset and bounds contribution of inner viewport.
-        current_offset += InnerViewportScrollLayer()->CurrentScrollOffset();
-        gfx::SizeF inner_viewport_bounds(scroll_tree.scroll_clip_layer_bounds(
-            InnerViewportScrollLayer()->scroll_tree_index()));
-        bounds_size.SetToMin(inner_viewport_bounds);
-      }
-      bounds_size.Scale(1 / current_page_scale_factor());
+  int scroll_layer_id, clip_layer_id;
+  if (IsViewportLayerId(layer_id)) {
+    // For scrollbar purposes, a change to any of the four viewport layers
+    // should affect the scrollbars tied to the outermost layers, which express
+    // the sum of the entire viewport.
+    scroll_layer_id = viewport_layer_ids_.outer_viewport_scroll;
+    clip_layer_id = viewport_layer_ids_.inner_viewport_container;
+  } else {
+    // If the clip layer id was passed in, then look up the scroll layer, or
+    // vice versa.
+    auto i = clip_scroll_map_.find(layer_id);
+    if (i != clip_scroll_map_.end()) {
+      scroll_layer_id = i->second;
+      clip_layer_id = layer_id;
+    } else {
+      scroll_layer_id = layer_id;
+      clip_layer_id = LayerById(scroll_layer_id)->scroll_clip_layer_id();
     }
+  }
+  UpdateScrollbars(scroll_layer_id, clip_layer_id);
+}
 
-    bool y_offset_did_change = false;
-    for (auto* scrollbar : ScrollbarsFor(scrolling_element_id)) {
-      if (scrollbar->orientation() == HORIZONTAL) {
-        scrollbar->SetCurrentPos(current_offset.x());
-        scrollbar->SetClipLayerLength(bounds_size.width());
-        scrollbar->SetScrollLayerLength(scrolling_size.width());
-      } else {
-        y_offset_did_change = scrollbar->SetCurrentPos(current_offset.y());
-        scrollbar->SetClipLayerLength(bounds_size.height());
-        scrollbar->SetScrollLayerLength(scrolling_size.height());
-      }
-      if (is_viewport_scrollbar) {
-        scrollbar->SetVerticalAdjust(
-            InnerViewportContainerLayer()->ViewportBoundsDelta().y());
-      }
-    }
+void LayerTreeImpl::UpdateScrollbars(int scroll_layer_id, int clip_layer_id) {
+  DCHECK(IsActiveTree());
 
-    if (y_offset_did_change && is_viewport_scrollbar)
-      TRACE_COUNTER_ID1("cc", "scroll_offset_y", scrolling_layer->id(),
-                        current_offset.y());
+  LayerImpl* clip_layer = LayerById(clip_layer_id);
+  LayerImpl* scroll_layer = LayerById(scroll_layer_id);
+
+  if (!clip_layer || !scroll_layer)
+    return;
+
+  gfx::SizeF clip_size(clip_layer->BoundsForScrolling());
+  gfx::SizeF scroll_size(scroll_layer->BoundsForScrolling());
+
+  if (scroll_size.IsEmpty())
+    return;
+
+  gfx::ScrollOffset current_offset = scroll_layer->CurrentScrollOffset();
+  float viewport_vertical_adjust = 0;
+
+  bool is_viewport_scrollbar = scroll_layer->is_viewport_layer_type();
+  if (is_viewport_scrollbar) {
+    current_offset += InnerViewportScrollLayer()->CurrentScrollOffset();
+    if (OuterViewportContainerLayer())
+      clip_size.SetToMin(OuterViewportContainerLayer()->BoundsForScrolling());
+    clip_size.Scale(1 / current_page_scale_factor());
+    viewport_vertical_adjust = clip_layer->ViewportBoundsDelta().y();
   }
 
-  scrollbar_geometries_need_update_ = false;
+  bool y_offset_did_change = false;
+  for (auto* scrollbar : ScrollbarsFor(scroll_layer->element_id())) {
+    if (scrollbar->orientation() == HORIZONTAL) {
+      scrollbar->SetCurrentPos(current_offset.x());
+      scrollbar->SetClipLayerLength(clip_size.width());
+      scrollbar->SetScrollLayerLength(scroll_size.width());
+    } else {
+      y_offset_did_change = scrollbar->SetCurrentPos(current_offset.y());
+      scrollbar->SetClipLayerLength(clip_size.height());
+      scrollbar->SetScrollLayerLength(scroll_size.height());
+    }
+    scrollbar->SetVerticalAdjust(viewport_vertical_adjust);
+  }
+
+  if (y_offset_did_change && is_viewport_scrollbar)
+    TRACE_COUNTER_ID1("cc", "scroll_offset_y", scroll_layer->id(),
+                      current_offset.y());
 }
 
 const RenderSurfaceImpl* LayerTreeImpl::RootRenderSurface() const {
@@ -908,9 +925,7 @@ void LayerTreeImpl::DidUpdatePageScale() {
         ClampPageScaleFactorToLimits(current_page_scale_factor()));
 
   set_needs_update_draw_properties();
-
-  // Viewport scrollbar sizes depend on the page scale factor.
-  SetScrollbarGeometriesNeedUpdate();
+  DidUpdateScrollState(viewport_layer_ids_.inner_viewport_scroll);
 
   if (IsActiveTree() && layer_tree_host_impl_->ViewportMainScrollLayer()) {
     if (ScrollbarAnimationController* controller =
@@ -979,9 +994,6 @@ void LayerTreeImpl::ApplySentScrollAndScaleDeltasFromAbortedCommit() {
 }
 
 void LayerTreeImpl::SetViewportLayersFromIds(const ViewportLayerIds& ids) {
-  if (viewport_layer_ids_ == ids)
-    return;
-
   viewport_layer_ids_ = ids;
 
   // Set the viewport layer types.
@@ -1698,8 +1710,9 @@ void LayerTreeImpl::RegisterScrollbar(ScrollbarLayerImplBase* scrollbar_layer) {
         scroll_element_id, scrollbar_layer->Opacity());
   }
 
-  // The new scrollbar's geometries need to be initialized.
-  SetScrollbarGeometriesNeedUpdate();
+  // TODO(pdr): Refactor DidUpdateScrollState to use ElementIds instead of
+  // layer ids and remove this use of LayerIdByElementId.
+  DidUpdateScrollState(LayerIdByElementId(scroll_element_id));
 }
 
 void LayerTreeImpl::UnregisterScrollbar(
@@ -1741,8 +1754,20 @@ void LayerTreeImpl::RegisterScrollLayer(LayerImpl* layer) {
   if (layer->scroll_clip_layer_id() == Layer::INVALID_ID)
     return;
 
+  clip_scroll_map_.insert(
+      std::pair<int, int>(layer->scroll_clip_layer_id(), layer->id()));
+
+  DidUpdateScrollState(layer->id());
+
   if (settings().scrollbar_animator == LayerTreeSettings::AURA_OVERLAY)
     layer->set_needs_show_scrollbars(true);
+}
+
+void LayerTreeImpl::UnregisterScrollLayer(LayerImpl* layer) {
+  if (layer->scroll_clip_layer_id() == Layer::INVALID_ID)
+    return;
+
+  clip_scroll_map_.erase(layer->scroll_clip_layer_id());
 }
 
 static bool PointHitsRect(

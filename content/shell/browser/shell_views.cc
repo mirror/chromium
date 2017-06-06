@@ -113,7 +113,7 @@ class ShellWindowDelegateView : public views::WidgetDelegateView,
  private:
   // Initialize the UI control contained in shell window
   void InitShellWindow() {
-    SetBackground(views::CreateStandardPanelBackground());
+    set_background(views::Background::CreateStandardPanelBackground());
 
     views::GridLayout* layout = new views::GridLayout(this);
     SetLayoutManager(layout);

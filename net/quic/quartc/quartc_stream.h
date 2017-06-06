@@ -7,14 +7,12 @@
 
 #include "net/quic/core/quic_session.h"
 #include "net/quic/core/quic_stream.h"
-#include "net/quic/platform/api/quic_export.h"
 #include "net/quic/quartc/quartc_stream_interface.h"
 
 namespace net {
 
 // Implements a QuartcStreamInterface using a QuicStream.
-class QUIC_EXPORT_PRIVATE QuartcStream : public QuicStream,
-                                         public QuartcStreamInterface {
+class QuartcStream : public QuicStream, public QuartcStreamInterface {
  public:
   QuartcStream(QuicStreamId id, QuicSession* session);
 
@@ -33,10 +31,6 @@ class QUIC_EXPORT_PRIVATE QuartcStream : public QuicStream,
   uint64_t buffered_amount() override;
 
   bool fin_sent() override;
-
-  int stream_error() override;
-
-  int connection_error() override;
 
   void Write(const char* data,
              size_t size,

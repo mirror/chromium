@@ -661,17 +661,10 @@ printing::PrinterBackendProxy* PrintPreviewHandler::printer_backend_proxy() {
   return printer_backend_proxy_.get();
 }
 
-void PrintPreviewHandler::HandleGetPrinters(const base::ListValue* args) {
+void PrintPreviewHandler::HandleGetPrinters(const base::ListValue* /*args*/) {
   VLOG(1) << "Enumerate printers start";
-  std::string callback_id;
-  CHECK(args->GetString(0, &callback_id));
-  CHECK(!callback_id.empty());
-
-  AllowJavascript();
-
-  printer_backend_proxy()->EnumeratePrinters(
-      base::Bind(&PrintPreviewHandler::SetupPrinterList,
-                 weak_factory_.GetWeakPtr(), callback_id));
+  printer_backend_proxy()->EnumeratePrinters(base::Bind(
+      &PrintPreviewHandler::SetupPrinterList, weak_factory_.GetWeakPtr()));
 }
 
 void PrintPreviewHandler::HandleGetPrivetPrinters(const base::ListValue* args) {
@@ -1332,7 +1325,6 @@ void PrintPreviewHandler::SendPrinterSetup(
 }
 
 void PrintPreviewHandler::SetupPrinterList(
-    const std::string& callback_id,
     const printing::PrinterList& printer_list) {
   base::ListValue printers;
   PrintersToValues(printer_list, &printers);
@@ -1345,7 +1337,7 @@ void PrintPreviewHandler::SetupPrinterList(
     has_logged_printers_count_ = true;
   }
 
-  ResolveJavascriptCallback(base::Value(callback_id), printers);
+  web_ui()->CallJavascriptFunctionUnsafe("setPrinters", printers);
 }
 
 void PrintPreviewHandler::SendCloudPrintEnabled() {
@@ -1783,8 +1775,7 @@ void PrintPreviewHandler::OnExtensionPrintResult(bool success,
 void PrintPreviewHandler::RegisterForGaiaCookieChanges() {
   DCHECK(!gaia_cookie_manager_service_);
   Profile* profile = Profile::FromWebUI(web_ui());
-  if (switches::IsAccountConsistencyMirrorEnabled() &&
-      !profile->IsOffTheRecord()) {
+  if (switches::IsEnableAccountConsistency() && !profile->IsOffTheRecord()) {
     gaia_cookie_manager_service_ =
         GaiaCookieManagerServiceFactory::GetForProfile(profile);
     if (gaia_cookie_manager_service_)

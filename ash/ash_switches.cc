@@ -40,9 +40,6 @@ const char kAshDisableTouchExplorationMode[] =
 const char kAshEnableMagnifierKeyScroller[] =
     "ash-enable-magnifier-key-scroller";
 
-// Enables the NightLight feature.
-const char kAshEnableNightLight[] = "ash-enable-night-light";
-
 // Enables the palette on every display, instead of only the internal one.
 const char kAshEnablePaletteOnAllDisplays[] =
     "ash-enable-palette-on-all-displays";

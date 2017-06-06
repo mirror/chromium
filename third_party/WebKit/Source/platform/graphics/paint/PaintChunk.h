@@ -23,11 +23,7 @@ namespace blink {
 // This is a Slimming Paint v2 class.
 struct PaintChunk {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
-  PaintChunk()
-      : begin_index(0),
-        end_index(0),
-        outset_for_raster_effects(0),
-        known_to_be_opaque(false) {}
+  PaintChunk() : begin_index(0), end_index(0), known_to_be_opaque(false) {}
   PaintChunk(size_t begin,
              size_t end,
              const DisplayItem::Id* chunk_id,
@@ -35,7 +31,6 @@ struct PaintChunk {
       : begin_index(begin),
         end_index(end),
         properties(props),
-        outset_for_raster_effects(0),
         known_to_be_opaque(false) {
     if (chunk_id)
       id.emplace(*chunk_id);
@@ -87,11 +82,6 @@ struct PaintChunk {
   // The total bounds of this paint chunk's contents, in the coordinate space of
   // the containing transform node.
   FloatRect bounds;
-
-  // Some raster effects can exceed |bounds| in the rasterization space. This
-  // is the maximum DisplayItemClient::VisualRectOutsetForRasterEffects() of
-  // all clients of items in this chunk.
-  float outset_for_raster_effects;
 
   // True if the bounds are filled entirely with opaque contents.
   bool known_to_be_opaque;

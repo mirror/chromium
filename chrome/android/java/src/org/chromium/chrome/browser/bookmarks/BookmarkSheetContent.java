@@ -44,8 +44,6 @@ public class BookmarkSheetContent implements BottomSheetContent {
         });
         ((BottomToolbarPhone) activity.getToolbarManager().getToolbar())
                 .setOtherToolbarStyle(mToolbarView);
-
-        mToolbarView.setActionBarDelegate(activity.getBottomSheet().getActionBarDelegate());
     }
 
     @Override

@@ -14,7 +14,6 @@
 #include "components/metrics/enabled_state_provider.h"
 #include "components/metrics/metrics_log_uploader.h"
 #include "components/metrics/metrics_service_client.h"
-#include "components/version_info/channel.h"
 
 class PrefService;
 
@@ -86,7 +85,6 @@ class AwMetricsServiceClient : public metrics::MetricsServiceClient,
   net::URLRequestContextGetter* request_context_;
   std::unique_ptr<metrics::MetricsStateManager> metrics_state_manager_;
   std::unique_ptr<metrics::MetricsService> metrics_service_;
-  version_info::Channel channel_;
 
   DISALLOW_COPY_AND_ASSIGN(AwMetricsServiceClient);
 };

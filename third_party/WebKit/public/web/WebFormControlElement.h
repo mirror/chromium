@@ -41,7 +41,7 @@ class HTMLFormControlElement;
 
 // Provides readonly access to some properties of a DOM form control element
 // node.
-class BLINK_EXPORT WebFormControlElement : public WebElement {
+class WebFormControlElement : public WebElement {
  public:
   WebFormControlElement() : WebElement() {}
   WebFormControlElement(const WebFormControlElement& e) : WebElement(e) {}
@@ -52,68 +52,68 @@ class BLINK_EXPORT WebFormControlElement : public WebElement {
   }
   void Assign(const WebFormControlElement& e) { WebElement::Assign(e); }
 
-  bool IsEnabled() const;
-  bool IsReadOnly() const;
-  WebString FormControlName() const;
-  WebString FormControlType() const;
+  BLINK_EXPORT bool IsEnabled() const;
+  BLINK_EXPORT bool IsReadOnly() const;
+  BLINK_EXPORT WebString FormControlName() const;
+  BLINK_EXPORT WebString FormControlType() const;
 
-  bool IsAutofilled() const;
-  void SetAutofilled(bool);
+  BLINK_EXPORT bool IsAutofilled() const;
+  BLINK_EXPORT void SetAutofilled(bool);
 
   // Returns true if autocomplete attribute of the element is not set as "off".
-  bool AutoComplete() const;
+  BLINK_EXPORT bool AutoComplete() const;
 
   // Sets value for input element, textarea element and select element. For
   // select element it finds the option with value matches the given parameter
   // and make the option as the current selection.
-  void SetValue(const WebString&, bool send_events = false);
+  BLINK_EXPORT void SetValue(const WebString&, bool send_events = false);
   // Sets the autofilled value for input element, textarea element and select
   // element and sends a sequence of events to the element.
-  void SetAutofillValue(const WebString&);
+  BLINK_EXPORT void SetAutofillValue(const WebString&);
   // Returns value of element. For select element, it returns the value of
   // the selected option if present. If no selected option, an empty string
   // is returned. If element doesn't fall into input element, textarea element
   // and select element categories, a null string is returned.
-  WebString Value() const;
+  BLINK_EXPORT WebString Value() const;
   // Sets suggested value for element. For select element it finds the option
   // with value matches the given parameter and make the option as the suggested
   // selection. The goal of introducing suggested value is to not leak any
   // information to JavaScript.
-  void SetSuggestedValue(const WebString&);
+  BLINK_EXPORT void SetSuggestedValue(const WebString&);
   // Returns suggested value of element. If element doesn't fall into input
   // element, textarea element and select element categories, a null string is
   // returned.
-  WebString SuggestedValue() const;
+  BLINK_EXPORT WebString SuggestedValue() const;
 
   // Returns the non-sanitized, exact value inside the text input field
   // or insisde the textarea. If neither input element nor textarea element,
   // a null string is returned.
-  WebString EditingValue() const;
+  BLINK_EXPORT WebString EditingValue() const;
 
   // Sets character selection range.
-  void SetSelectionRange(int start, int end);
+  BLINK_EXPORT void SetSelectionRange(int start, int end);
   // Returned value represents a cursor/caret position at the current
   // selection's start for text input field or textarea. If neither input
   // element nor textarea element, 0 is returned.
-  int SelectionStart() const;
+  BLINK_EXPORT int SelectionStart() const;
   // Returned value represents a cursor/caret position at the current
   // selection's end for text input field or textarea. If neither input
   // element nor textarea element, 0 is returned.
-  int SelectionEnd() const;
+  BLINK_EXPORT int SelectionEnd() const;
 
   // Returns text-align(only left and right are supported. see crbug.com/482339)
   // of text of element.
-  WebString AlignmentForFormData() const;
+  BLINK_EXPORT WebString AlignmentForFormData() const;
 
   // Returns direction of text of element.
-  WebString DirectionForFormData() const;
+  BLINK_EXPORT WebString DirectionForFormData() const;
 
   // Returns the name that should be used for the specified |element| when
   // storing autofill data.  This is either the field name or its id, an empty
   // string if it has no name and no id.
-  WebString NameForAutofill() const;
+  BLINK_EXPORT WebString NameForAutofill() const;
 
-  WebFormElement Form() const;
+  BLINK_EXPORT WebFormElement Form() const;
 
 #if BLINK_IMPLEMENTATION
   WebFormControlElement(HTMLFormControlElement*);

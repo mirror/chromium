@@ -148,7 +148,6 @@ bool AVDACodecImage::SetSharedState(
   if (shared_state == shared_state_)
     return false;
   shared_state_ = shared_state;
-  most_recent_bounds_ = gfx::Rect();
   return true;
 }
 

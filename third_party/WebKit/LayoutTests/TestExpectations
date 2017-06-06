@@ -551,7 +551,6 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/normal-flow/inline-bloc
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/normal-flow/inline-block-005.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/normal-flow/inline-block-non-replaced-height-002.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/normal-flow/inline-block-replaced-height-008.xht [ Skip ]
-crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/normal-flow/inline-block-valign-001.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/normal-flow/inline-block-valign-002.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/normal-flow/inline-replaced-height-008.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/normal-flow/inline-replaced-width-012.xht [ Failure ]
@@ -836,7 +835,6 @@ crbug.com/635619 virtual/layout_ng/fast/block/float/float-in-float-hit-testing.h
 crbug.com/635619 virtual/layout_ng/fast/block/float/float-in-float-painting.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/float-inserted-into-clean-line.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/float-list-changed-before-layout-crash.html [ Crash ]
-crbug.com/635619 virtual/layout_ng/fast/block/float/float-not-removed-crash2.html [ Crash ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/float-not-removed-from-first-letter.html [ Crash ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/float-not-removed-from-next-sibling-crash.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/float-not-removed-from-next-sibling.html [ Failure ]
@@ -875,7 +873,6 @@ crbug.com/635619 virtual/layout_ng/fast/block/float/intruding-painted-twice.html
 crbug.com/635619 virtual/layout_ng/fast/block/float/logical-bottom-exceeds-layoutunit-max.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/margin-top-changes.html [ Crash ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/marquee-shrink-to-avoid-floats.html [ Failure ]
-crbug.com/635619 virtual/layout_ng/fast/block/float/max-width-clear-float-with-overflow-hidden.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/multiple-float-positioning.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/negative-margin-on-element-avoiding-floats-with-margin-on-parent.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/negative-margin-on-element-avoiding-floats.html [ Failure ]
@@ -1553,8 +1550,6 @@ crbug.com/472330 fast/borders/border-image-outset-split-inline-vertical-lr.html 
 crbug.com/472330 fast/writing-mode/box-shadow-vertical-lr.html [ Failure ]
 crbug.com/472330 fast/writing-mode/box-shadow-vertical-rl.html [ Failure ]
 
-crbug.com/729279 external/wpt/scroll-anchoring/start-edge-in-block-layout-direction.html [ Failure ]
-
 crbug.com/700795 [ Mac ] inspector/animation/animation-transition-setTiming-crash.html [ Timeout Pass ]
 
 # These are the failing tests because Chrome hasn't implemented according to the spec.
@@ -1605,9 +1600,6 @@ crbug.com/613672 [ Mac ] virtual/scalefactor150/fast/events/synthetic-events/tap
 
 # We should send PointerLeave events for stylus devices.
 crbug.com/583413 external/wpt/pointerevents/pointerevent_pointerleave_pen-manual.html  [ Failure ]
-
-# Chrome touch-action computation ignores div transforms.
-crbug.com/715148 external/wpt/pointerevents/pointerevent_touch-action-rotated-divs_touch-manual.html  [ Skip ]
 
 # These testcases are incorrect, mark them as failing until they're fixed in the testsuite.
 # https://lists.w3.org/Archives/Public/www-style/2016Jan/0275.html
@@ -1856,16 +1848,16 @@ crbug.com/538717 [ Win Mac Linux ] virtual/mojo-loading/http/tests/permissions/c
 crbug.com/538717 [ Win Mac Linux ] virtual/mojo-loading/http/tests/permissions/chromium/test-request-multiple-worker.html [ Failure Pass Timeout ]
 crbug.com/538717 [ Win Mac Linux ] virtual/mojo-loading/http/tests/permissions/chromium/test-request-multiple-sharedworker.html [ Failure Pass Timeout ]
 
-crbug.com/543369 [ Win Mac Linux ] fast/forms/select-popup/popup-menu-appearance-tall.html [ Failure Pass ]
+crbug.com/543369 [ Linux ] fast/forms/select-popup/popup-menu-appearance-tall.html [ Failure ]
 
 crbug.com/546215 [ Android ] fast/inline-block/overflow-clip.html [ Failure ]
 
 crbug.com/548765 http/tests/inspector/console-fetch-logging.html [ Failure Pass ]
 crbug.com/548765 virtual/mojo-loading/http/tests/inspector/console-fetch-logging.html [ Failure Pass ]
 
-crbug.com/564109 [ Win ]  external/wpt/css-font-display/font-display.html [ Pass Failure Timeout ]
-crbug.com/564109 [ Win ]  http/tests/webfont/font-display-intervention.html [ Pass Failure Timeout ]
-crbug.com/564109 [ Win ]  virtual/mojo-loading/http/tests/webfont/font-display-intervention.html [ Pass Failure Timeout ]
+crbug.com/564109 [ Win7 ]  external/wpt/css-font-display/font-display.html [ Pass Failure ]
+crbug.com/564109 [ Win7 ]  http/tests/webfont/font-display-intervention.html [ Pass Failure ]
+crbug.com/564109 [ Win7 ]  virtual/mojo-loading/http/tests/webfont/font-display-intervention.html [ Pass Failure ]
 
 crbug.com/399951 http/tests/mime/javascript-mimetype-usecounters.html [ Pass Failure ]
 crbug.com/399951 virtual/mojo-loading/http/tests/mime/javascript-mimetype-usecounters.html [ Pass Failure ]
@@ -1976,6 +1968,7 @@ crbug.com/705125 virtual/mojo-loading/http/tests/security/suborigins/crossorigin
 crbug.com/694958 virtual/stable/http/tests/navigation/same-and-different-back.html [ Skip ]
 
 # Failing because of module-related implementation/test issues.
+crbug.com/594639 external/wpt/html/semantics/scripting-1/the-script-element/module/crossorigin.html [ Failure ]
 crbug.com/594639 external/wpt/html/semantics/scripting-1/the-script-element/module/errorhandling.html [ Failure ]
 crbug.com/594639 external/wpt/html/semantics/scripting-1/the-script-element/module/compilation-error-1.html [ Failure ]
 crbug.com/594639 external/wpt/html/semantics/scripting-1/the-script-element/module/compilation-error-2.html [ Failure ]
@@ -2236,6 +2229,7 @@ crbug.com/626703 external/wpt/secure-contexts/basic-shared-worker.html [ Timeout
 crbug.com/626703 external/wpt/secure-contexts/basic-shared-worker.https.html [ Timeout ]
 crbug.com/626703 external/wpt/secure-contexts/shared-worker-insecure-first.https.html [ Timeout ]
 crbug.com/626703 external/wpt/secure-contexts/shared-worker-secure-first.https.html [ Timeout ]
+crbug.com/626703 external/wpt/service-workers/service-worker/clients-matchall-order.https.html [ Failure Pass ]
 crbug.com/626703 external/wpt/streams/byte-length-queuing-strategy.sharedworker.html [ Timeout ]
 crbug.com/626703 external/wpt/streams/count-queuing-strategy.html [ Failure Timeout ]
 crbug.com/626703 external/wpt/streams/count-queuing-strategy.sharedworker.html [ Timeout ]
@@ -2506,6 +2500,7 @@ crbug.com/626703 external/wpt/XMLHttpRequest/setrequestheader-allow-empty-value.
 crbug.com/626703 external/wpt/XMLHttpRequest/setrequestheader-allow-whitespace-in-value.htm [ Failure ]
 crbug.com/626703 external/wpt/XMLHttpRequest/setrequestheader-content-type.htm [ Failure ]
 crbug.com/626703 external/wpt/XMLHttpRequest/setrequestheader-header-allowed.htm [ Failure ]
+crbug.com/626703 virtual/off-main-thread-fetch/external/wpt/service-workers/service-worker/clients-matchall-order.https.html [ Failure Pass ]
 
 crbug.com/666993 external/wpt/html/webappapis/idle-callbacks/basic.html [ Timeout ]
 crbug.com/666993 external/wpt/html/webappapis/idle-callbacks/callback-idle-periods.html [ Timeout ]
@@ -2517,7 +2512,6 @@ crbug.com/713732 fast/dom/Window/dom-access-from-closure-window-with-gc.html [ N
 crbug.com/713732 fast/dom/Window/dom-access-from-closure-window.html [ NeedsManualRebaseline ]
 crbug.com/713732 http/tests/serviceworker/chromium/frame-detached-by-navigation.html [ NeedsManualRebaseline ]
 crbug.com/713732 virtual/mojo-loading/http/tests/serviceworker/chromium/frame-detached-by-navigation.html [ NeedsManualRebaseline ]
-crbug.com/713732 virtual/off-main-thread-fetch/http/tests/serviceworker/chromium/frame-detached-by-navigation.html [ NeedsManualRebaseline ]
 
 # Crashes with DCHECK enabled, but not on normal Release builds.
 crbug.com/626703 external/wpt/workers/opaque-origin.html [ Failure Crash Timeout ]
@@ -2685,15 +2679,6 @@ crbug.com/576815 external/wpt/css/vendor-imports/mozilla/mozilla-central-reftest
 crbug.com/576815 external/wpt/css/vendor-imports/mozilla/mozilla-central-reftests/selectors4/dir-style-03a.html [ Failure ]
 crbug.com/576815 external/wpt/css/vendor-imports/mozilla/mozilla-central-reftests/selectors4/dir-style-03b.html [ Failure ]
 crbug.com/576815 external/wpt/css/vendor-imports/mozilla/mozilla-central-reftests/selectors4/dir-style-04.html [ Failure ]
-
-# Producing incorrect results due to crbug.com/729352
-# TODO(ccameron): Re-enable and re-baseline when fixed.
-crbug.com/729352 images/color-profile-background-image-cross-fade.html [ Pass Failure Crash Timeout ]
-crbug.com/729352 images/color-profile-background-image-space.html [ Pass Failure Crash Timeout ]
-crbug.com/729352 images/color-profile-group.html [ Pass Failure Crash Timeout ]
-crbug.com/729352 images/color-profile-layer-filter.html [ Pass Failure Crash Timeout ]
-crbug.com/729352 images/color-profile-svg.html [ Pass Failure Crash Timeout ]
-crbug.com/729352 images/color-profile-svg-fill-text.html [ Pass Failure Crash Timeout ]
 
 # TODO(chrishall): this is a temporary mediation step as part of the P0 issue crbug.com/657646
 # this is not meant to be here for more than a few days (from 2016-11-03 SYD)
@@ -2999,6 +2984,7 @@ crbug.com/725455 [ Linux ] nfc/mock-nfc.html [ Failure Pass Timeout ]
 crbug.com/725455 [ Linux ] nfc/nfc-block-iframe.html [ Failure Pass Timeout ]
 crbug.com/725455 [ Linux ] nfc/push.html [ Failure Pass Timeout ]
 crbug.com/725455 [ Linux ] nfc/watch.html [ Failure Pass Timeout ]
+crbug.com/725585 payments/payment-request-interface.html [ Failure Pass ]
 
 # Sheriff failures 2017-05-29
 crbug.com/727014 [ Linux ] external/wpt/IndexedDB/large-nested-cloning.html [ Pass Timeout ]
@@ -3010,7 +2996,3 @@ crbug.com/728036 [ Linux Mac Win ] virtual/threaded/fast/compositorworker/compos
 crbug.com/727505 [ Linux Mac Win ] virtual/threaded/fast/compositorworker/basic-plumbing-main-to-worker.html [ Pass Failure Timeout Crash ]
 crbug.com/727505 [ Linux Mac Win ] virtual/threaded/fast/compositorworker/basic-plumbing-worker-to-main.html [ Pass Failure Timeout Crash ]
 crbug.com/727505 [ Linux Mac Win ] virtual/threaded/fast/compositorworker/request-animation-frame.html [ Pass Failure Timeout Crash ]
-
-crbug.com/729075 [ Mac10.11 Retina ] css3/blending/background-blend-mode-gif-color-2.html [ Failure Pass ]
-
-crbug.com/729836 [ Win ] fast/workers/worker-document-leak.html [ Pass Failure ]

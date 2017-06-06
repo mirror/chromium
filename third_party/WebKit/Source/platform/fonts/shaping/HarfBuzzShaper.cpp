@@ -713,15 +713,8 @@ PassRefPtr<ShapeResult> HarfBuzzShaper::Shape(const Font* font,
     if (start < segment_range.end && end > segment_range.start)
       ShapeSegment(&range_data, segment_range, result.Get());
   }
-
-#if DCHECK_IS_ON()
-  DCHECK_EQ(length, result->NumCharacters());
-  if (length) {
-    DCHECK_EQ(start, result->StartIndexForResult());
-    DCHECK_EQ(end, result->EndIndexForResult());
-  }
-#endif
-
+  DCHECK(!result->NumCharacters() || (start == result->StartIndexForResult() &&
+                                      end == result->EndIndexForResult()));
   return result.Release();
 }
 

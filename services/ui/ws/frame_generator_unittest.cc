@@ -6,7 +6,6 @@
 
 #include "base/macros.h"
 #include "cc/output/compositor_frame_sink.h"
-#include "cc/quads/render_pass.h"
 #include "cc/scheduler/begin_frame_source.h"
 #include "cc/test/begin_frame_args_test.h"
 #include "cc/test/fake_external_begin_frame_source.h"
@@ -245,7 +244,7 @@ TEST_F(FrameGeneratorTest, WindowBoundsChanged) {
   InitWithSurfaceInfo();
 
   // Window bounds change triggers a BeginFrame.
-  constexpr cc::RenderPassId expected_render_pass_id = 1u;
+  constexpr int expected_render_pass_id = 1;
   frame_generator()->OnWindowSizeChanged(kArbitrarySize);
   IssueBeginFrame();
   EXPECT_EQ(2, NumberOfFramesReceived());

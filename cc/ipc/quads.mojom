@@ -20,7 +20,7 @@ struct DebugBorderQuadState {
 };
 
 struct RenderPassQuadState {
-  uint64 render_pass_id;
+  int32 render_pass_id;
 
   // If nonzero, resource id of mask to use when drawing this pass.
   uint32 mask_resource_id;

@@ -170,10 +170,11 @@ bool GLES2DecoderPassthroughImpl::Initialize(
   }
 
   // Each context initializes its own feature info because some extensions may
-  // be enabled dynamically.  Don't disallow any features, leave it up to ANGLE
-  // to dynamically enable extensions.
+  // be enabled dynamically
+  DisallowedFeatures adjusted_disallowed_features =
+      AdjustDisallowedFeatures(attrib_helper.context_type, disallowed_features);
   if (!feature_info_->Initialize(attrib_helper.context_type,
-                                 DisallowedFeatures())) {
+                                 adjusted_disallowed_features)) {
     Destroy(true);
     return false;
   }

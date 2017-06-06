@@ -1671,7 +1671,6 @@ void Browser::ShowRepostFormWarningDialog(WebContents* source) {
 
 bool Browser::ShouldCreateWebContents(
     content::WebContents* web_contents,
-    content::RenderFrameHost* opener,
     content::SiteInstance* source_site_instance,
     int32_t route_id,
     int32_t main_frame_route_id,
@@ -1686,7 +1685,7 @@ bool Browser::ShouldCreateWebContents(
       content::mojom::WindowContainerType::BACKGROUND) {
     // If a BackgroundContents is created, suppress the normal WebContents.
     return !MaybeCreateBackgroundContents(
-        source_site_instance, opener, opener_url, route_id, main_frame_route_id,
+        source_site_instance, opener_url, route_id, main_frame_route_id,
         main_frame_widget_route_id, frame_name, target_url, partition_id,
         session_storage_namespace);
   }
@@ -2550,7 +2549,6 @@ bool Browser::ShouldStartShutdown() const {
 
 bool Browser::MaybeCreateBackgroundContents(
     content::SiteInstance* source_site_instance,
-    content::RenderFrameHost* opener,
     const GURL& opener_url,
     int32_t route_id,
     int32_t main_frame_route_id,
@@ -2608,7 +2606,7 @@ bool Browser::MaybeCreateBackgroundContents(
   BackgroundContents* contents = nullptr;
   if (allow_js_access) {
     contents = service->CreateBackgroundContents(
-        source_site_instance, opener, route_id, main_frame_route_id,
+        source_site_instance, route_id, main_frame_route_id,
         main_frame_widget_route_id, profile_, frame_name,
         base::ASCIIToUTF16(extension->id()), partition_id,
         session_storage_namespace);
@@ -2620,7 +2618,7 @@ bool Browser::MaybeCreateBackgroundContents(
     contents = service->CreateBackgroundContents(
         content::SiteInstance::Create(
             source_site_instance->GetBrowserContext()),
-        nullptr, MSG_ROUTING_NONE, MSG_ROUTING_NONE, MSG_ROUTING_NONE, profile_,
+        MSG_ROUTING_NONE, MSG_ROUTING_NONE, MSG_ROUTING_NONE, profile_,
         frame_name, base::ASCIIToUTF16(extension->id()), partition_id,
         session_storage_namespace);
 

@@ -26,8 +26,6 @@
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/wtf/Allocator.h"
 
-#include <limits>
-
 namespace blink {
 
 // Returns true if |name| is invalid.
@@ -95,7 +93,7 @@ DEFINE_TRACE(CustomElementRegistry) {
 
 DEFINE_TRACE_WRAPPERS(CustomElementRegistry) {
   visitor->TraceWrappers(&CustomElementReactionStack::Current());
-  for (auto definition : definitions_)
+  for (auto definition : definitions_.Values())
     visitor->TraceWrappers(definition);
 }
 
@@ -187,16 +185,12 @@ CustomElementDefinition* CustomElementRegistry::define(
   }
 
   CustomElementDescriptor descriptor(name, local_name);
-  if (UNLIKELY(definitions_.size() >=
-               std::numeric_limits<CustomElementDefinition::Id>::max()))
-    return nullptr;
-  CustomElementDefinition::Id id = definitions_.size() + 1;
-  CustomElementDefinition* definition = builder.Build(descriptor, id);
+  CustomElementDefinition* definition = builder.Build(descriptor);
   CHECK(!exception_state.HadException());
   CHECK(definition->Descriptor() == descriptor);
-  definitions_.emplace_back(
+  DefinitionMap::AddResult result = definitions_.insert(
+      descriptor.GetName(),
       TraceWrapperMember<CustomElementDefinition>(this, definition));
-  NameIdMap::AddResult result = name_id_map_.insert(descriptor.GetName(), id);
   CHECK(result.is_new_entry);
 
   HeapVector<Member<Element>> candidates;
@@ -243,7 +237,7 @@ CustomElementDefinition* CustomElementRegistry::DefinitionFor(
 }
 
 bool CustomElementRegistry::NameIsDefined(const AtomicString& name) const {
-  return name_id_map_.Contains(name);
+  return definitions_.Contains(name);
 }
 
 void CustomElementRegistry::Entangle(V0CustomElementRegistrationContext* v0) {
@@ -261,12 +255,7 @@ bool CustomElementRegistry::V0NameIsDefined(const AtomicString& name) {
 
 CustomElementDefinition* CustomElementRegistry::DefinitionForName(
     const AtomicString& name) const {
-  return DefinitionForId(name_id_map_.at(name));
-}
-
-CustomElementDefinition* CustomElementRegistry::DefinitionForId(
-    CustomElementDefinition::Id id) const {
-  return id ? definitions_[id - 1].Get() : nullptr;
+  return definitions_.at(name);
 }
 
 void CustomElementRegistry::AddCandidate(Element* candidate) {

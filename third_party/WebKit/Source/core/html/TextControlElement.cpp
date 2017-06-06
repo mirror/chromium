@@ -541,7 +541,7 @@ unsigned TextControlElement::ComputeSelectionEnd() const {
   }
   const VisibleSelection& visible_selection =
       frame->Selection().ComputeVisibleSelectionInDOMTreeDeprecated();
-  return IndexForPosition(InnerEditorElement(), visible_selection.End());
+  return IndexForPosition(InnerEditorElement(), visible_selection.end());
 }
 
 static const AtomicString& DirectionString(

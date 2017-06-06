@@ -45,7 +45,6 @@ std::unique_ptr<ProcessorEntityTracker> ProcessorEntityTracker::CreateNew(
 std::unique_ptr<ProcessorEntityTracker>
 ProcessorEntityTracker::CreateFromMetadata(const std::string& storage_key,
                                            sync_pb::EntityMetadata* metadata) {
-  DCHECK(!storage_key.empty());
   return std::unique_ptr<ProcessorEntityTracker>(
       new ProcessorEntityTracker(storage_key, metadata));
 }
@@ -62,10 +61,8 @@ ProcessorEntityTracker::ProcessorEntityTracker(
 
 ProcessorEntityTracker::~ProcessorEntityTracker() {}
 
-void ProcessorEntityTracker::SetStorageKey(const std::string& storage_key) {
-  DCHECK(storage_key_.empty());
-  DCHECK(!storage_key.empty());
-  storage_key_ = storage_key;
+void ProcessorEntityTracker::SetStorageKey(const std::string& new_key) {
+  storage_key_ = new_key;
 }
 
 void ProcessorEntityTracker::SetCommitData(EntityData* data) {

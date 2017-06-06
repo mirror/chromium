@@ -5,9 +5,6 @@
 #include "core/editing/spellcheck/SpellChecker.h"
 
 #include "core/editing/Editor.h"
-#include "core/editing/markers/DocumentMarkerController.h"
-#include "core/editing/markers/SpellCheckMarker.h"
-#include "core/editing/spellcheck/SpellCheckRequester.h"
 #include "core/editing/spellcheck/SpellCheckTestBase.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
@@ -39,7 +36,7 @@ TEST_F(SpellCheckerTest, AdvanceToNextMisspellingWithEmptyInputNoCrash) {
   Element* input = GetDocument().QuerySelector("input");
   input->focus();
   // Do not crash in advanceToNextMisspelling.
-  GetSpellChecker().AdvanceToNextMisspelling(false);
+  GetDocument().GetFrame()->GetSpellChecker().AdvanceToNextMisspelling(false);
 }
 
 // Regression test for crbug.com/701309
@@ -55,21 +52,7 @@ TEST_F(SpellCheckerTest, AdvanceToNextMisspellingWithImageInTableNoCrash) {
   UpdateAllLifecyclePhases();
 
   // Do not crash in advanceToNextMisspelling.
-  GetSpellChecker().AdvanceToNextMisspelling(false);
-}
-
-// Regression test for crbug.com/728801
-TEST_F(SpellCheckerTest, AdvancedToNextMisspellingWrapSearchNoCrash) {
-  SetBodyContent("<div contenteditable>  zz zz zz  </div>");
-
-  Element* div = GetDocument().QuerySelector("div");
-  div->focus();
-  Selection().SetSelection(SelectionInDOMTree::Builder()
-                               .Collapse(Position::LastPositionInNode(div))
-                               .Build());
-  UpdateAllLifecyclePhases();
-
-  GetSpellChecker().AdvanceToNextMisspelling(false);
+  GetDocument().GetFrame()->GetSpellChecker().AdvanceToNextMisspelling(false);
 }
 
 TEST_F(SpellCheckerTest, SpellCheckDoesNotCauseUpdateLayout) {
@@ -90,43 +73,13 @@ TEST_F(SpellCheckerTest, SpellCheckDoesNotCauseUpdateLayout) {
       SelectionInDOMTree::Builder().Collapse(new_position).Build());
   ASSERT_EQ(3u, input->selectionStart());
 
-  EXPECT_TRUE(GetSpellChecker().IsSpellCheckingEnabled());
+  EXPECT_TRUE(GetFrame().GetSpellChecker().IsSpellCheckingEnabled());
   ForceLayout();
   int start_count = LayoutCount();
-  GetSpellChecker().RespondToChangedSelection(
+  GetFrame().GetSpellChecker().RespondToChangedSelection(
       old_selection.Start(),
       FrameSelection::kCloseTyping | FrameSelection::kClearTypingStyle);
   EXPECT_EQ(start_count, LayoutCount());
-}
-
-TEST_F(SpellCheckerTest, MarkAndReplaceForHandlesMultipleReplacements) {
-  SetBodyContent(
-      "<div contenteditable>"
-      "spllchck"
-      "</div>");
-  Element* div = GetDocument().QuerySelector("div");
-  Node* text = div->firstChild();
-  EphemeralRange range_to_check =
-      EphemeralRange(Position(text, 0), Position(text, 8));
-
-  SpellCheckRequest* request = SpellCheckRequest::Create(range_to_check, 0);
-
-  TextCheckingResult result;
-  result.decoration = TextDecorationType::kTextDecorationTypeSpelling;
-  result.location = 0;
-  result.length = 8;
-  result.replacements = Vector<String>({"spellcheck", "spillchuck"});
-
-  GetDocument().GetFrame()->GetSpellChecker().MarkAndReplaceFor(
-      request, Vector<TextCheckingResult>({result}));
-
-  ASSERT_EQ(1u, GetDocument().Markers().Markers().size());
-
-  // The Spelling marker's description should be a newline-separated list of the
-  // suggested replacements
-  EXPECT_EQ(
-      "spellcheck\nspillchuck",
-      ToSpellCheckMarker(GetDocument().Markers().Markers()[0])->Description());
 }
 
 }  // namespace blink

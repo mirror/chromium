@@ -24,7 +24,6 @@
 #include "components/image_fetcher/core/image_fetcher.h"
 #include "components/image_fetcher/core/request_metadata.h"
 #include "components/variations/variations_params_manager.h"
-#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkBitmap.h"
@@ -165,7 +164,7 @@ TEST_F(LargeIconServiceTest, ShouldGetFromGoogleServer) {
       .GetLargeIconOrFallbackStyleFromGoogleServerSkippingLocalCache(
           GURL(kDummyUrl), /*min_source_size_in_pixel=*/42,
           /*desired_size_in_pixel=*/61, /*may_page_url_be_private=*/true,
-          TRAFFIC_ANNOTATION_FOR_TESTS, callback.Get());
+          callback.Get());
 
   EXPECT_CALL(callback, Run(true));
   base::RunLoop().RunUntilIdle();
@@ -202,7 +201,7 @@ TEST_F(LargeIconServiceTest, ShouldGetFromGoogleServerWithCustomUrl) {
       .GetLargeIconOrFallbackStyleFromGoogleServerSkippingLocalCache(
           GURL(kDummyUrl), /*min_source_size_in_pixel=*/42,
           /*desired_size_in_pixel=*/61, /*may_page_url_be_private=*/true,
-          TRAFFIC_ANNOTATION_FOR_TESTS, callback.Get());
+          callback.Get());
 
   EXPECT_CALL(callback, Run(true));
   base::RunLoop().RunUntilIdle();
@@ -233,7 +232,7 @@ TEST_F(LargeIconServiceTest, ShouldGetFromGoogleServerWithOriginalUrl) {
       .GetLargeIconOrFallbackStyleFromGoogleServerSkippingLocalCache(
           GURL(kDummyUrl), /*min_source_size_in_pixel=*/42,
           /*desired_size_in_pixel=*/61, /*may_page_url_be_private=*/true,
-          TRAFFIC_ANNOTATION_FOR_TESTS, callback.Get());
+          callback.Get());
 
   EXPECT_CALL(callback, Run(true));
   base::RunLoop().RunUntilIdle();
@@ -258,7 +257,7 @@ TEST_F(LargeIconServiceTest, ShouldTrimQueryParametersForGoogleServer) {
       .GetLargeIconOrFallbackStyleFromGoogleServerSkippingLocalCache(
           GURL(kDummyUrlWithQuery), /*min_source_size_in_pixel=*/42,
           /*desired_size_in_pixel=*/61, /*may_page_url_be_private=*/true,
-          TRAFFIC_ANNOTATION_FOR_TESTS, base::Callback<void(bool success)>());
+          base::Callback<void(bool success)>());
 
   base::RunLoop().RunUntilIdle();
 }
@@ -277,7 +276,7 @@ TEST_F(LargeIconServiceTest, ShouldNotCheckOnPublicUrls) {
       .GetLargeIconOrFallbackStyleFromGoogleServerSkippingLocalCache(
           GURL(kDummyUrl), /*min_source_size_in_pixel=*/42,
           /*desired_size_in_pixel=*/61, /*may_page_url_be_private=*/false,
-          TRAFFIC_ANNOTATION_FOR_TESTS, callback.Get());
+          callback.Get());
 
   EXPECT_CALL(callback, Run(false));
   base::RunLoop().RunUntilIdle();
@@ -295,7 +294,7 @@ TEST_F(LargeIconServiceTest, ShouldNotQueryGoogleServerIfInvalidScheme) {
       .GetLargeIconOrFallbackStyleFromGoogleServerSkippingLocalCache(
           GURL(kDummyFtpUrl), /*min_source_size_in_pixel=*/42,
           /*desired_size_in_pixel=*/61, /*may_page_url_be_private=*/true,
-          TRAFFIC_ANNOTATION_FOR_TESTS, callback.Get());
+          callback.Get());
 
   EXPECT_CALL(callback, Run(false));
   base::RunLoop().RunUntilIdle();
@@ -325,7 +324,7 @@ TEST_F(LargeIconServiceTest, ShouldReportUnavailableIfFetchFromServerFails) {
       .GetLargeIconOrFallbackStyleFromGoogleServerSkippingLocalCache(
           kDummyUrlWithQuery, /*min_source_size_in_pixel=*/42,
           /*desired_size_in_pixel=*/61, /*may_page_url_be_private=*/true,
-          TRAFFIC_ANNOTATION_FOR_TESTS, callback.Get());
+          callback.Get());
 
   EXPECT_CALL(callback, Run(false));
   base::RunLoop().RunUntilIdle();
@@ -354,7 +353,7 @@ TEST_F(LargeIconServiceTest, ShouldNotGetFromGoogleServerIfUnavailable) {
       .GetLargeIconOrFallbackStyleFromGoogleServerSkippingLocalCache(
           GURL(kDummyUrl), /*min_source_size_in_pixel=*/42,
           /*desired_size_in_pixel=*/61, /*may_page_url_be_private=*/true,
-          TRAFFIC_ANNOTATION_FOR_TESTS, callback.Get());
+          callback.Get());
 
   EXPECT_CALL(callback, Run(false));
   base::RunLoop().RunUntilIdle();

@@ -27,9 +27,9 @@ class MODULES_EXPORT ImageBitmapRenderingContext final
     Factory() {}
     ~Factory() override {}
 
-    CanvasRenderingContext* Create(
-        CanvasRenderingContextHost*,
-        const CanvasContextCreationAttributes&) override;
+    CanvasRenderingContext* Create(HTMLCanvasElement*,
+                                   const CanvasContextCreationAttributes&,
+                                   Document&) override;
     CanvasRenderingContext::ContextType GetContextType() const override {
       return CanvasRenderingContext::kContextImageBitmap;
     }
@@ -67,8 +67,9 @@ class MODULES_EXPORT ImageBitmapRenderingContext final
   virtual ~ImageBitmapRenderingContext();
 
  private:
-  ImageBitmapRenderingContext(CanvasRenderingContextHost*,
-                              const CanvasContextCreationAttributes&);
+  ImageBitmapRenderingContext(HTMLCanvasElement*,
+                              const CanvasContextCreationAttributes&,
+                              Document&);
 
   Member<ImageLayerBridge> image_layer_bridge_;
 };

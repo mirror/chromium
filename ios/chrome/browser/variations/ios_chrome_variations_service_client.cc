@@ -58,3 +58,5 @@ bool IOSChromeVariationsServiceClient::OverridesRestrictParameter(
     std::string* parameter) {
   return false;
 }
+
+void IOSChromeVariationsServiceClient::OnInitialStartup() {}

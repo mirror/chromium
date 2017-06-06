@@ -1067,11 +1067,6 @@ const char kEnableNavigationTracingDescription[] =
     "flag. The trace may include personally identifiable information (PII) "
     "such as the titles and URLs of websites you visit.";
 
-const char kEnableNightLightName[] = "Enable Night Light";
-const char kEnableNightLightDescription[] =
-    "Enable the Night Light feature to control the color temperature of the "
-    "screen.";
-
 const char kEnablePictureInPictureName[] = "Enable picture in picture.";
 
 const char kEnablePictureInPictureDescription[] =
@@ -1730,6 +1725,13 @@ const char kEnableWebNotificationCustomLayoutsDescription[] =
     "Enable custom layouts for Web Notifications. They will have subtle "
     "layout improvements that are otherwise not possible.";
 
+const char kAccountConsistencyName[] =
+    "Identity consistency between browser and cookie jar";
+
+const char kAccountConsistencyDescription[] =
+    "When enabled, the browser manages signing in and out of Google "
+    "accounts.";
+
 const char kGoogleProfileInfoName[] = "Google profile name and icon";
 
 const char kGoogleProfileInfoDescription[] =
@@ -2003,6 +2005,21 @@ const char kSettingsWindowName[] = "Show settings in a window";
 const char kSettingsWindowDescription[] =
     "Settings will be shown in a dedicated window instead of as a browser "
     "tab.";
+
+//  Mixed content issue workaround flags
+
+#if defined(OS_ANDROID)
+
+//  Flag strings for seccomp-bpf sandbox flag.
+
+const char kSeccompFilterSandboxAndroidName[] = "Seccomp-bpf renderer sandbox";
+
+const char kSeccompFilterSandboxAndroidDescription[] =
+    "Renderers will have a second-layer sandbox provided by seccomp-bpf. "
+    "This requires kernel features only available on select Android "
+    "versions.";
+
+#endif  // defined(OS_ANDROID)
 
 //  Extension Content Verification
 
@@ -3185,16 +3202,6 @@ const char kEnableD3DVsyncDescription[] =
 #endif  // defined(OS_WIN)
 
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
-
-const char kAccountConsistencyName[] =
-    "Identity consistency between browser and cookie jar";
-
-const char kAccountConsistencyDescription[] =
-    "When enabled, the browser manages signing in and out of Google "
-    "accounts.";
-
-const char kAccountConsistencyChoiceMirror[] = "Mirror";
-const char kAccountConsistencyChoiceDice[] = "Dice";
 
 const char kUseGoogleLocalNtpName[] = "Enable using the Google local NTP";
 const char kUseGoogleLocalNtpDescription[] =

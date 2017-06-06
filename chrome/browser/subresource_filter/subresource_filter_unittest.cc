@@ -30,7 +30,6 @@
 #include "components/subresource_filter/content/browser/content_ruleset_service.h"
 #include "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.h"
 #include "components/subresource_filter/content/browser/fake_safe_browsing_database_manager.h"
-#include "components/subresource_filter/content/browser/subresource_filter_observer_test_utils.h"
 #include "components/subresource_filter/core/browser/ruleset_service.h"
 #include "components/subresource_filter/core/browser/subresource_filter_features.h"
 #include "components/subresource_filter/core/browser/subresource_filter_features_test_support.h"
@@ -45,7 +44,6 @@
 namespace {
 using subresource_filter::testing::ScopedSubresourceFilterConfigurator;
 using subresource_filter::testing::ScopedSubresourceFilterFeatureToggle;
-const char kDisallowedUrl[] = "https://example.test/disallowed.html";
 }  // namespace
 
 // End to end unit test harness of (most of) the browser process portions of the
@@ -150,7 +148,8 @@ class SubresourceFilterTest : public ChromeRenderViewHostTestHarness {
       content::RenderFrameHost* parent) {
     auto* subframe =
         content::RenderFrameHostTester::For(parent)->AppendChild("subframe");
-    return SimulateNavigateAndCommit(GURL(kDisallowedUrl), subframe);
+    return SimulateNavigateAndCommit(
+        GURL("https://example.test/disallowed.html"), subframe);
   }
 
   void ConfigureAsSubresourceFilterOnlyURL(const GURL& url) {
@@ -296,22 +295,4 @@ TEST_F(SubresourceFilterTest,
   EXPECT_TRUE(CreateAndNavigateDisallowedSubframe(main_rfh()));
   EXPECT_EQ(subresource_filter::ActivationDecision::UNSUPPORTED_SCHEME,
             driver_factory->GetActivationDecisionForLastCommittedPageLoad());
-}
-
-TEST_F(SubresourceFilterTest, SimpleDisallowedLoad_WithObserver) {
-  GURL url("https://example.test");
-  ConfigureAsSubresourceFilterOnlyURL(url);
-
-  subresource_filter::TestSubresourceFilterObserver observer(web_contents());
-  SimulateNavigateAndCommit(url, main_rfh());
-
-  EXPECT_EQ(subresource_filter::ActivationDecision::ACTIVATED,
-            observer.GetPageActivation(url).value());
-
-  EXPECT_FALSE(CreateAndNavigateDisallowedSubframe(main_rfh()));
-  auto optional_load_policy =
-      observer.GetSubframeLoadPolicy(GURL(kDisallowedUrl));
-  EXPECT_TRUE(optional_load_policy.has_value());
-  EXPECT_EQ(subresource_filter::LoadPolicy::DISALLOW,
-            observer.GetSubframeLoadPolicy(GURL(kDisallowedUrl)).value());
 }

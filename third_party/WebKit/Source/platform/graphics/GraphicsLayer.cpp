@@ -387,13 +387,15 @@ static HashSet<int>* g_registered_layer_set;
 void GraphicsLayer::RegisterContentsLayer(WebLayer* layer) {
   if (!g_registered_layer_set)
     g_registered_layer_set = new HashSet<int>;
-  CHECK(!g_registered_layer_set->Contains(layer->Id()));
+  if (g_registered_layer_set->Contains(layer->Id()))
+    IMMEDIATE_CRASH();
   g_registered_layer_set->insert(layer->Id());
 }
 
 void GraphicsLayer::UnregisterContentsLayer(WebLayer* layer) {
   DCHECK(g_registered_layer_set);
-  CHECK(g_registered_layer_set->Contains(layer->Id()));
+  if (!g_registered_layer_set->Contains(layer->Id()))
+    IMMEDIATE_CRASH();
   g_registered_layer_set->erase(layer->Id());
 }
 
@@ -401,7 +403,8 @@ void GraphicsLayer::SetContentsTo(WebLayer* layer) {
   bool children_changed = false;
   if (layer) {
     DCHECK(g_registered_layer_set);
-    CHECK(g_registered_layer_set->Contains(layer->Id()));
+    if (!g_registered_layer_set->Contains(layer->Id()))
+      IMMEDIATE_CRASH();
     if (contents_layer_id_ != layer->Id()) {
       SetupContentsLayer(layer);
       children_changed = true;
@@ -592,7 +595,8 @@ std::unique_ptr<JSONObject> GraphicsLayer::LayerTreeAsJSON(
     return LayerTreeAsJSONInternal(flags, rendering_context_map);
   std::unique_ptr<JSONObject> json = JSONObject::Create();
   std::unique_ptr<JSONArray> layers_array = JSONArray::Create();
-  LayersAsJSONArray(flags, rendering_context_map, layers_array.get());
+  for (auto& child : children_)
+    child->LayersAsJSONArray(flags, rendering_context_map, layers_array.get());
   json->SetArray("layers", std::move(layers_array));
   return json;
 }
@@ -1294,18 +1298,7 @@ void showGraphicsLayerTree(const blink::GraphicsLayer* layer) {
     return;
   }
 
-  String output = layer->LayerTreeAsText(0xffffffff);  // with all flags.
-  LOG(INFO) << output.Utf8().data();
-}
-
-void showGraphicsLayers(const blink::GraphicsLayer* layer) {
-  if (!layer) {
-    LOG(INFO) << "Cannot showGraphicsLayers for (nil).";
-    return;
-  }
-
-  String output =
-      layer->LayerTreeAsText(0xffffffff & ~blink::kOutputAsLayerTree);
+  String output = layer->LayerTreeAsText(blink::kLayerTreeIncludesDebugInfo);
   LOG(INFO) << output.Utf8().data();
 }
 #endif

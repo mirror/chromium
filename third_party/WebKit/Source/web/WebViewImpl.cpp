@@ -97,8 +97,6 @@
 #include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
 #include "modules/accessibility/AXObjectCacheImpl.h"
-#include "modules/compositorworker/AnimationWorkletProxyClientImpl.h"
-#include "modules/compositorworker/CompositorWorkerProxyClientImpl.h"
 #include "modules/credentialmanager/CredentialManagerClient.h"
 #include "modules/encryptedmedia/MediaKeysController.h"
 #include "modules/speech/SpeechRecognitionClientProxy.h"
@@ -166,6 +164,8 @@
 #include "public/web/WebSelection.h"
 #include "public/web/WebViewClient.h"
 #include "public/web/WebWindowFeatures.h"
+#include "web/AnimationWorkletProxyClientImpl.h"
+#include "web/CompositorWorkerProxyClientImpl.h"
 #include "web/DedicatedWorkerMessagingProxyProviderImpl.h"
 #include "web/FullscreenController.h"
 #include "web/LinkHighlightImpl.h"
@@ -698,8 +698,8 @@ WebInputEventResult WebViewImpl::HandleGestureEvent(
                             event.data.fling_start.velocity_y),
               WebSize());
       DCHECK(fling_curve);
-      gesture_animation_ = WebActiveGestureAnimation::CreateWithTimeOffset(
-          std::move(fling_curve), this, event.TimeStampSeconds());
+      gesture_animation_ = WebActiveGestureAnimation::CreateAtAnimationStart(
+          std::move(fling_curve), this);
       MainFrameImpl()->FrameWidget()->ScheduleAnimation();
       event_result = WebInputEventResult::kHandledSystem;
 
@@ -2445,7 +2445,7 @@ bool WebViewImpl::SelectionTextDirection(WebTextDirection& start,
   start = ToWebTextDirection(PrimaryDirectionOf(
       *selection.ComputeVisibleSelectionInDOMTree().Start().AnchorNode()));
   end = ToWebTextDirection(PrimaryDirectionOf(
-      *selection.ComputeVisibleSelectionInDOMTree().End().AnchorNode()));
+      *selection.ComputeVisibleSelectionInDOMTree().end().AnchorNode()));
   return true;
 }
 
@@ -3584,7 +3584,7 @@ void WebViewImpl::SetDomainRelaxationForbidden(bool forbidden,
 }
 
 void WebViewImpl::SetWindowFeatures(const WebWindowFeatures& features) {
-  page_->SetWindowFeatures(features);
+  page_->GetChromeClient().SetWindowFeatures(features);
 }
 
 void WebViewImpl::SetOpenedByDOM() {
@@ -4017,9 +4017,9 @@ void WebViewImpl::RecordWheelAndTouchScrollingCount(
     return;
 
   if (has_scrolled_by_wheel)
-    UseCounter::Count(MainFrameImpl()->GetFrame(), WebFeature::kScrollByWheel);
+    UseCounter::Count(MainFrameImpl()->GetFrame(), UseCounter::kScrollByWheel);
   if (has_scrolled_by_touch)
-    UseCounter::Count(MainFrameImpl()->GetFrame(), WebFeature::kScrollByTouch);
+    UseCounter::Count(MainFrameImpl()->GetFrame(), UseCounter::kScrollByTouch);
 }
 
 void WebViewImpl::UpdateLayerTreeViewport() {

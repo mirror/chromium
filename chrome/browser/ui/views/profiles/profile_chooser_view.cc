@@ -244,15 +244,13 @@ class BackgroundColorHoverButton : public views::LabelButton {
   }
 
   void UpdateColors() {
-    // TODO(tapted): This should use views::style::GetColor() to obtain grey
-    // text where it's needed. But note |subtitle_| is used to draw an email,
-    // which might not be grey in Harmony.
     bool is_selected = HasFocus();
 
-    SetBackground(
+    set_background(
         is_selected
-            ? views::CreateSolidBackground(GetNativeTheme()->GetSystemColor(
-                  ui::NativeTheme::kColorId_FocusedMenuItemBackgroundColor))
+            ? views::Background::CreateSolidBackground(
+                  GetNativeTheme()->GetSystemColor(
+                      ui::NativeTheme::kColorId_FocusedMenuItemBackgroundColor))
             : nullptr);
 
     SkColor text_color = GetNativeTheme()->GetSystemColor(
@@ -263,7 +261,8 @@ class BackgroundColorHoverButton : public views::LabelButton {
       title_->SetEnabledColor(text_color);
 
     if (subtitle_) {
-      subtitle_->SetEnabledColor(GetNativeTheme()->GetSystemColor(
+      DCHECK(!subtitle_->enabled());
+      subtitle_->SetDisabledColor(GetNativeTheme()->GetSystemColor(
           is_selected
               ? ui::NativeTheme::kColorId_DisabledMenuItemForegroundColor
               : ui::NativeTheme::kColorId_LabelDisabledColor));
@@ -613,10 +612,11 @@ void ProfileChooserView::Init() {
 
   // If view mode is PROFILE_CHOOSER but there is an auth error, force
   // ACCOUNT_MANAGEMENT mode.
-  if (IsProfileChooser(view_mode_) && HasAuthError(browser_->profile()) &&
-      switches::IsAccountConsistencyMirrorEnabled() &&
-      avatar_menu_->GetItemAt(avatar_menu_->GetActiveProfileIndex())
-          .signed_in) {
+  if (IsProfileChooser(view_mode_) &&
+      HasAuthError(browser_->profile()) &&
+      switches::IsEnableAccountConsistency() &&
+      avatar_menu_->GetItemAt(avatar_menu_->GetActiveProfileIndex()).
+          signed_in) {
     view_mode_ = profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT;
   }
 
@@ -630,8 +630,9 @@ void ProfileChooserView::Init() {
 void ProfileChooserView::OnNativeThemeChanged(
     const ui::NativeTheme* native_theme) {
   views::BubbleDialogDelegateView::OnNativeThemeChanged(native_theme);
-  SetBackground(views::CreateSolidBackground(GetNativeTheme()->GetSystemColor(
-      ui::NativeTheme::kColorId_DialogBackground)));
+  set_background(views::Background::CreateSolidBackground(
+      GetNativeTheme()->GetSystemColor(
+          ui::NativeTheme::kColorId_DialogBackground)));
   if (auth_error_email_button_) {
     auth_error_email_button_->SetTextColor(
         views::LabelButton::STATE_NORMAL,
@@ -656,10 +657,10 @@ void ProfileChooserView::OnRefreshTokenAvailable(
       view_mode_ == profiles::BUBBLE_VIEW_MODE_GAIA_ADD_ACCOUNT ||
       view_mode_ == profiles::BUBBLE_VIEW_MODE_GAIA_REAUTH) {
     // The account management UI is only available through the
-    // --account-consistency=mirror flag.
-    ShowViewFromMode(switches::IsAccountConsistencyMirrorEnabled()
-                         ? profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT
-                         : profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER);
+    // --enable-account-consistency flag.
+    ShowViewFromMode(switches::IsEnableAccountConsistency() ?
+        profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT :
+        profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER);
   }
 }
 
@@ -675,7 +676,7 @@ void ProfileChooserView::ShowView(profiles::BubbleViewMode view_to_display,
   // The account management view should only be displayed if the active profile
   // is signed in.
   if (view_to_display == profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT) {
-    DCHECK(switches::IsAccountConsistencyMirrorEnabled());
+    DCHECK(switches::IsEnableAccountConsistency());
     const AvatarMenu::Item& active_item = avatar_menu->GetItemAt(
         avatar_menu->GetActiveProfileIndex());
     if (!active_item.signed_in) {
@@ -832,11 +833,11 @@ void ProfileChooserView::ButtonPressed(views::Button* sender,
     ShowViewFromMode(profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT);
   } else if (sender == gaia_signin_cancel_button_) {
     // The account management view is only available with the
-    // --account-consistency=mirror flag.
+    // --enable-account-consistency flag.
     bool account_management_available =
-        SigninManagerFactory::GetForProfile(browser_->profile())
-            ->IsAuthenticated() &&
-        switches::IsAccountConsistencyMirrorEnabled();
+        SigninManagerFactory::GetForProfile(browser_->profile())->
+            IsAuthenticated() &&
+        switches::IsEnableAccountConsistency();
     ShowViewFromMode(account_management_available ?
         profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT :
         profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER);
@@ -1109,9 +1110,8 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
                      views::GridLayout::USE_PREF, 0, 0);
   grid_layout->AddPaddingRow(0, 0);
   const int num_labels =
-      (avatar_item.signed_in && !switches::IsAccountConsistencyMirrorEnabled())
-          ? 2
-          : 1;
+      (avatar_item.signed_in && !switches::IsEnableAccountConsistency()) ? 2
+                                                                         : 1;
   int profile_card_height =
       kImageSide + 2 * (kBadgeSpacing + vertical_spacing_small);
   const int line_height = profile_card_height / num_labels;
@@ -1155,7 +1155,7 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
 
   // The available links depend on the type of profile that is active.
   if (avatar_item.signed_in) {
-    if (switches::IsAccountConsistencyMirrorEnabled()) {
+    if (switches::IsEnableAccountConsistency()) {
       base::string16 button_text = l10n_util::GetStringUTF16(
           IsProfileChooser(view_mode_)
               ? IDS_PROFILES_PROFILE_MANAGE_ACCOUNTS_BUTTON
@@ -1171,6 +1171,7 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
       current_profile_card->set_subtitle(email_label);
       email_label->SetAutoColorReadabilityEnabled(false);
       email_label->SetElideBehavior(gfx::ELIDE_EMAIL);
+      email_label->SetEnabled(false);
       email_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
       grid_layout->StartRow(1, 0);
       // Skip first column for the profile icon.
@@ -1380,7 +1381,7 @@ views::View* ProfileChooserView::CreateCurrentProfileAccountsView(
     const AvatarMenu::Item& avatar_item) {
   DCHECK(avatar_item.signed_in);
   views::View* view = new views::View();
-  view->SetBackground(views::CreateSolidBackground(
+  view->set_background(views::Background::CreateSolidBackground(
       profiles::kAvatarBubbleAccountsBackgroundColor));
   views::GridLayout* layout = CreateSingleColumnLayout(view, kFixedMenuWidth);
 

@@ -16,7 +16,6 @@ ValidatingCombobox::ValidatingCombobox(
     : Combobox(std::move(model)), delegate_(std::move(delegate)) {
   // No need to remove observer on owned model.
   this->model()->AddObserver(this);
-  SetFocusBehavior(FocusBehavior::ALWAYS);
 }
 
 ValidatingCombobox::~ValidatingCombobox() {}

@@ -72,6 +72,8 @@ NSString* const kSessionStorageKey = @"sessionStorage";
       _javaScriptDialogPresenter;
 }
 
+// Redefine the property as readwrite.
+@property(nonatomic, copy) CWVWebViewConfiguration* configuration;
 // Redefine these properties as readwrite to define setters, which send KVO
 // notifications.
 @property(nonatomic, readwrite) double estimatedProgress;
@@ -126,7 +128,7 @@ static NSString* gUserAgentProduct = nil;
                 configuration:(CWVWebViewConfiguration*)configuration {
   self = [super initWithFrame:frame];
   if (self) {
-    _configuration = configuration;
+    _configuration = [configuration copy];
     _scrollView = [[CWVScrollView alloc] init];
     [self resetWebStateWithSessionStorage:nil];
   }

@@ -75,29 +75,24 @@ String CSSUnitValue::unit() const {
   return CSSPrimitiveValue::UnitTypeToString(unit_);
 }
 
-String CSSUnitValue::type() const {
-  return StyleValueTypeToString(GetType());
-}
-
-CSSStyleValue::StyleValueType CSSUnitValue::GetType() const {
+String CSSUnitValue::cssType() const {
   if (unit_ == CSSPrimitiveValue::UnitType::kNumber)
-    return StyleValueType::kNumberType;
+    return "number";
   if (unit_ == CSSPrimitiveValue::UnitType::kPercentage)
-    return StyleValueType::kPercentType;
+    return "percent";
   if (CSSPrimitiveValue::IsLength(unit_))
-    return StyleValueType::kLengthType;
+    return "length";
   if (CSSPrimitiveValue::IsAngle(unit_))
-    return StyleValueType::kAngleType;
+    return "angle";
   if (CSSPrimitiveValue::IsTime(unit_))
-    return StyleValueType::kTimeType;
+    return "time";
   if (CSSPrimitiveValue::IsFrequency(unit_))
-    return StyleValueType::kFrequencyType;
+    return "frequency";
   if (CSSPrimitiveValue::IsResolution(unit_))
-    return StyleValueType::kResolutionType;
+    return "resolution";
   if (CSSPrimitiveValue::IsFlex(unit_))
-    return StyleValueType::kFlexType;
-  NOTREACHED();
-  return StyleValueType::kUnknownType;
+    return "flex";
+  return "";
 }
 
 const CSSValue* CSSUnitValue::ToCSSValue() const {

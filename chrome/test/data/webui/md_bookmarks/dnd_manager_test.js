@@ -89,7 +89,7 @@ suite('drag and drop', function() {
           createFolder('2', [])),
       selectedFolder: '1',
     });
-    store.replaceSingleton();
+    bookmarks.Store.instance_ = store;
 
     chrome.bookmarkManagerPrivate.startDrag = function(nodes, isTouch) {
       draggedIds = nodes;

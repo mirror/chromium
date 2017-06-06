@@ -44,6 +44,7 @@
 #include "chrome/browser/chromeos/dbus/chrome_display_power_service_provider_delegate.h"
 #include "chrome/browser/chromeos/dbus/chrome_proxy_resolution_service_provider_delegate.h"
 #include "chrome/browser/chromeos/dbus/kiosk_info_service_provider.h"
+#include "chrome/browser/chromeos/dbus/mus_console_service_provider_delegate.h"
 #include "chrome/browser/chromeos/dbus/screen_lock_service_provider.h"
 #include "chrome/browser/chromeos/display/quirks_manager_delegate_impl.h"
 #include "chrome/browser/chromeos/events/event_rewriter_controller.h"
@@ -146,7 +147,6 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/main_function_params.h"
-#include "content/public/common/service_manager_connection.h"
 #include "crypto/nss_util_internal.h"
 #include "crypto/scoped_nss_types.h"
 #include "dbus/object_path.h"
@@ -294,13 +294,15 @@ class DBusServices {
     service_providers.push_back(
         base::MakeUnique<LivenessServiceProvider>(kLibCrosServiceInterface));
     service_providers.push_back(base::MakeUnique<ScreenLockServiceProvider>());
-    std::unique_ptr<ChromeConsoleServiceProviderDelegate>
-        console_service_provider_delegate =
-            base::MakeUnique<ChromeConsoleServiceProviderDelegate>();
-    console_service_provider_delegate_ =
-        console_service_provider_delegate->AsWeakPtr();
-    service_providers.push_back(base::MakeUnique<ConsoleServiceProvider>(
-        std::move(console_service_provider_delegate)));
+    // TODO(sky): once mash supports simplified display mode we should always
+    // use ChromeConsoleServiceProviderDelegate.
+    if (GetAshConfig() != ash::Config::MASH) {
+      service_providers.push_back(base::MakeUnique<ConsoleServiceProvider>(
+          base::MakeUnique<ChromeConsoleServiceProviderDelegate>()));
+    } else {
+      service_providers.push_back(base::MakeUnique<ConsoleServiceProvider>(
+          base::MakeUnique<MusConsoleServiceProviderDelegate>()));
+    }
     // TODO(teravest): Remove this provider once all callers are using
     // |kiosk_info_service_| instead: http://crbug.com/703229
     service_providers.push_back(base::MakeUnique<KioskInfoService>(
@@ -392,12 +394,6 @@ class DBusServices {
     DBusThreadManager::Shutdown();
   }
 
-  void ServiceManagerConnectionStarted(
-      content::ServiceManagerConnection* connection) {
-    if (console_service_provider_delegate_)
-      console_service_provider_delegate_->Connect(connection->GetConnector());
-  }
-
  private:
   // Hosts providers for the "org.chromium.LibCrosService" D-Bus service owned
   // by Chrome. The name of this service was chosen for historical reasons that
@@ -411,9 +407,6 @@ class DBusServices {
   std::unique_ptr<CrosDBusService> liveness_service_;
 
   std::unique_ptr<NetworkConnectDelegateChromeOS> network_connect_delegate_;
-
-  base::WeakPtr<ChromeConsoleServiceProviderDelegate>
-      console_service_provider_delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(DBusServices);
 };
@@ -588,12 +581,6 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopStart() {
   dbus_services_.reset(new internal::DBusServices(parameters()));
 
   ChromeBrowserMainPartsLinux::PostMainMessageLoopStart();
-}
-
-void ChromeBrowserMainPartsChromeos::ServiceManagerConnectionStarted(
-    content::ServiceManagerConnection* connection) {
-  ChromeBrowserMainPartsLinux::ServiceManagerConnectionStarted(connection);
-  dbus_services_->ServiceManagerConnectionStarted(connection);
 }
 
 // Threads are initialized between MainMessageLoopStart and MainMessageLoopRun.

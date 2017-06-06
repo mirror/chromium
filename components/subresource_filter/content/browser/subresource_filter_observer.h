@@ -6,7 +6,6 @@
 #define COMPONENTS_SUBRESOURCE_FILTER_CONTENT_BROWSER_SUBRESOURCE_FILTER_OBSERVER_H_
 
 #include "components/subresource_filter/core/common/activation_decision.h"
-#include "components/subresource_filter/core/common/load_policy.h"
 
 namespace content {
 class NavigationHandle;
@@ -28,12 +27,6 @@ class SubresourceFilterObserver {
       content::NavigationHandle* navigation_handle,
       ActivationDecision activation_decision,
       const ActivationState& activation_state) {}
-
-  // Called before navigation commit, either at the WillStartRequest stage or
-  // WillRedirectRequest stage.
-  virtual void OnSubframeNavigationEvaluated(
-      content::NavigationHandle* navigation_handle,
-      LoadPolicy load_policy) {}
 };
 
 }  // namespace subresource_filter

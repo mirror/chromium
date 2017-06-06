@@ -12,10 +12,6 @@
 #import "ios/web/interstitials/web_interstitial_impl.h"
 #import "ios/web/public/web_state/js/crw_js_injection_receiver.h"
 
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
-
 using testing::kWaitForJSCompletionTimeout;
 using testing::WaitUntilConditionOrTimeout;
 
@@ -58,7 +54,7 @@ void WaitUntilWindowIdInjected(WebState* web_state) {
 
 id ExecuteJavaScript(WebState* web_state,
                      NSString* javascript,
-                     NSError* __autoreleasing* out_error) {
+                     NSError** out_error) {
   __block bool did_complete = false;
   __block id result = nil;
   CRWJSInjectionReceiver* receiver = web_state->GetJSInjectionReceiver();
@@ -76,7 +72,9 @@ id ExecuteJavaScript(WebState* web_state,
   });
   GREYAssert(suceeded, @"Script execution timed out");
 
-  return result;
+  if (out_error)
+    [*out_error autorelease];
+  return [result autorelease];
 }
 
 id ExecuteScriptOnInterstitial(WebState* web_state, NSString* script) {
@@ -93,7 +91,7 @@ id ExecuteScriptOnInterstitial(WebState* web_state, NSString* script) {
     return did_finish;
   });
   GREYAssert(suceeded, @"Script execution timed out");
-  return script_result;
+  return [script_result autorelease];
 }
 
 }  // namespace web

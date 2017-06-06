@@ -50,17 +50,9 @@ var ClosedFolderState;
 
 /**
  * @typedef {{
- *   incognitoAvailability: IncognitoAvailability,
- * }}
- */
-var PreferencesState;
-
-/**
- * @typedef {{
  *   nodes: NodeMap,
  *   selectedFolder: string,
  *   closedFolders: ClosedFolderState,
- *   prefs: PreferencesState,
  *   search: SearchState,
  *   selection: SelectionState,
  * }}

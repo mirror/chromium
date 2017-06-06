@@ -80,8 +80,8 @@ GestureEventQueue::Config GetGestureEventQueueConfig() {
 
 }  // namespace
 
-InputRouter::Config GetInputRouterConfigForPlatform() {
-  InputRouter::Config config;
+InputRouterImpl::Config GetInputRouterConfigForPlatform() {
+  InputRouterImpl::Config config;
   config.gesture_config = GetGestureEventQueueConfig();
   config.touch_config = GetTouchEventQueueConfig();
   return config;

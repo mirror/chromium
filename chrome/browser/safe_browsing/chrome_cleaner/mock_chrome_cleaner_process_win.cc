@@ -31,11 +31,20 @@ namespace {
 using ::chrome_cleaner::mojom::ChromePrompt;
 using ::chrome_cleaner::mojom::ChromePromptPtr;
 using ::chrome_cleaner::mojom::ChromePromptPtrInfo;
+using ::chrome_cleaner::mojom::ElevationStatus;
 using ::chrome_cleaner::mojom::PromptAcceptance;
+using ::chrome_cleaner::mojom::UwSPtr;
 
 constexpr char kCrashPointSwitch[] = "mock-crash-point";
 constexpr char kUwsFoundSwitch[] = "mock-uws-found";
 constexpr char kRebootRequiredSwitch[] = "mock-reboot-required";
+
+std::vector<UwSPtr> CloneUwsVector(const std::vector<UwSPtr>& uws_ptrs) {
+  std::vector<UwSPtr> cloned;
+  for (const UwSPtr& uws_ptr : uws_ptrs)
+    cloned.push_back(uws_ptr->Clone());
+  return cloned;
+}
 
 }  // namespace
 
@@ -67,10 +76,12 @@ MockChromeCleanerProcess::Options::Options(const Options& other)
     : files_to_delete_(other.files_to_delete_),
       reboot_required_(other.reboot_required_),
       crash_point_(other.crash_point_) {
+  found_uws_ = CloneUwsVector(other.found_uws_);
 }
 
 MockChromeCleanerProcess::Options& MockChromeCleanerProcess::Options::operator=(
     const Options& other) {
+  found_uws_ = CloneUwsVector(other.found_uws_);
   files_to_delete_ = other.files_to_delete_;
   reboot_required_ = other.reboot_required_;
   crash_point_ = other.crash_point_;
@@ -81,7 +92,7 @@ MockChromeCleanerProcess::Options::~Options() {}
 
 void MockChromeCleanerProcess::Options::AddSwitchesToCommandLine(
     base::CommandLine* command_line) const {
-  if (!files_to_delete_.empty())
+  if (!found_uws_.empty())
     command_line->AppendSwitch(kUwsFoundSwitch);
 
   if (reboot_required())
@@ -94,16 +105,33 @@ void MockChromeCleanerProcess::Options::AddSwitchesToCommandLine(
 }
 
 void MockChromeCleanerProcess::Options::SetDoFindUws(bool do_find_uws) {
+  found_uws_.clear();
   files_to_delete_.clear();
   if (!do_find_uws)
     return;
 
-  files_to_delete_.insert(
-      base::FilePath(FILE_PATH_LITERAL("/path/to/file1.exe")));
-  files_to_delete_.insert(
-      base::FilePath(FILE_PATH_LITERAL("/path/to/other/file2.exe")));
-  files_to_delete_.insert(
-      base::FilePath(FILE_PATH_LITERAL("/path/to/some file.dll")));
+  UwSPtr uws1 = chrome_cleaner::mojom::UwS::New();
+  uws1->id = 1;
+  uws1->name = "Some UwS";
+  uws1->observed_behaviours = chrome_cleaner::mojom::ObservedBehaviours::New();
+  uws1->files_to_delete.push_back(
+      base::FilePath((FILE_PATH_LITERAL("/path/to/file1.exe"))));
+  uws1->files_to_delete.push_back(
+      base::FilePath((FILE_PATH_LITERAL("/path/to/other/file2.exe"))));
+  found_uws_.push_back(std::move(uws1));
+
+  UwSPtr uws2 = chrome_cleaner::mojom::UwS::New();
+  uws2->id = 2;
+  uws2->name = "Other UwS";
+  uws2->observed_behaviours = chrome_cleaner::mojom::ObservedBehaviours::New();
+  uws2->files_to_delete.push_back(
+      base::FilePath((FILE_PATH_LITERAL("/path/to/some file.dll"))));
+  found_uws_.push_back(std::move(uws2));
+
+  for (const UwSPtr& uws_ptr : found_uws_) {
+    files_to_delete_.insert(uws_ptr->files_to_delete.begin(),
+                            uws_ptr->files_to_delete.end());
+  }
 }
 
 int MockChromeCleanerProcess::Options::ExpectedExitCode(
@@ -111,10 +139,11 @@ int MockChromeCleanerProcess::Options::ExpectedExitCode(
   if (crash_point() != CrashPoint::kNone)
     return kDeliberateCrashExitCode;
 
-  if (files_to_delete_.empty())
+  if (found_uws_.empty())
     return kNothingFoundExitCode;
 
-  if (received_prompt_acceptance == PromptAcceptance::ACCEPTED) {
+  if (received_prompt_acceptance == PromptAcceptance::ACCEPTED_WITH_LOGS ||
+      received_prompt_acceptance == PromptAcceptance::ACCEPTED_WITHOUT_LOGS) {
     return reboot_required() ? kRebootRequiredExitCode
                              : kRebootNotRequiredExitCode;
   }
@@ -201,10 +230,13 @@ void MockChromeCleanerProcess::SendScanResults(
         FROM_HERE, base::Bind([]() { exit(kDeliberateCrashExitCode); }));
   }
 
+  std::vector<UwSPtr> uws_found;
+  for (const UwSPtr& uws_ptr : options_.found_uws())
+    uws_found.push_back(uws_ptr->Clone());
+
   (*chrome_prompt_ptr_)
       ->PromptUser(
-          std::vector<base::FilePath>(options_.files_to_delete().begin(),
-                                      options_.files_to_delete().end()),
+          std::move(uws_found), ElevationStatus::REQUIRED,
           base::BindOnce(&MockChromeCleanerProcess::PromptUserCallback,
                          base::Unretained(this), std::move(quit_closure)));
 }

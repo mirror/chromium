@@ -29,8 +29,12 @@ class WebGL2RenderingContext : public WebGL2RenderingContextBase {
     Factory() {}
     ~Factory() override {}
 
+    CanvasRenderingContext* Create(HTMLCanvasElement*,
+                                   const CanvasContextCreationAttributes&,
+                                   Document&) override;
     CanvasRenderingContext* Create(
-        CanvasRenderingContextHost*,
+        ScriptState*,
+        OffscreenCanvas*,
         const CanvasContextCreationAttributes&) override;
     CanvasRenderingContext::ContextType GetContextType() const override {
       return CanvasRenderingContext::kContextWebgl2;
@@ -53,7 +57,12 @@ class WebGL2RenderingContext : public WebGL2RenderingContextBase {
 
  protected:
   WebGL2RenderingContext(
-      CanvasRenderingContextHost*,
+      HTMLCanvasElement* passed_canvas,
+      std::unique_ptr<WebGraphicsContext3DProvider>,
+      const CanvasContextCreationAttributes& requested_attributes);
+
+  WebGL2RenderingContext(
+      OffscreenCanvas* passed_offscreen_canvas,
       std::unique_ptr<WebGraphicsContext3DProvider>,
       const CanvasContextCreationAttributes& requested_attributes);
 

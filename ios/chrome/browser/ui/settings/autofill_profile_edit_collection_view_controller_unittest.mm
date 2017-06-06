@@ -52,6 +52,9 @@ class AutofillProfileEditCollectionViewControllerTest : public PlatformTest {
   AutofillProfileEditCollectionViewControllerTest() {
     TestChromeBrowserState::Builder test_cbs_builder;
     chrome_browser_state_ = test_cbs_builder.Build();
+    // Profile import requires a PersonalDataManager which itself needs the
+    // WebDataService; this is not initialized on a TestChromeBrowserState by
+    // The WebDataService in turn needs a UI thread and a DB thread.
     chrome_browser_state_->CreateWebDataService();
     personal_data_manager_ =
         autofill::PersonalDataManagerFactory::GetForBrowserState(
@@ -85,7 +88,9 @@ class AutofillProfileEditCollectionViewControllerTest : public PlatformTest {
 };
 
 // Default test case of no addresses or credit cards.
-TEST_F(AutofillProfileEditCollectionViewControllerTest, TestInitialization) {
+// TODO(crbug.com/375196): This test is flaky.
+TEST_F(AutofillProfileEditCollectionViewControllerTest,
+       FLAKY_TestInitialization) {
   CollectionViewModel* model =
       [autofill_profile_edit_controller_ collectionViewModel];
 
@@ -94,7 +99,8 @@ TEST_F(AutofillProfileEditCollectionViewControllerTest, TestInitialization) {
 }
 
 // Adding a single address results in an address section.
-TEST_F(AutofillProfileEditCollectionViewControllerTest, TestOneProfile) {
+// TODO(crbug.com/375196): This test is flaky.
+TEST_F(AutofillProfileEditCollectionViewControllerTest, FLAKY_TestOneProfile) {
   CollectionViewModel* model =
       [autofill_profile_edit_controller_ collectionViewModel];
   UICollectionView* collectionView =

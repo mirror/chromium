@@ -13,7 +13,6 @@
 #include "net/http/http_request_headers.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_status_code.h"
-#include "net/test/embedded_test_server/http_response.h"
 #include "url/gurl.h"
 
 @class GCDWebServerResponse;
@@ -21,7 +20,7 @@
 namespace web {
 
 // An abstract class for a provider that services a request and returns a
-// EmbeddedTestServerResponse.
+// GCDWebServerResponse.
 // Note: The ResponseProviders can be called from any arbitrary GCD thread.
 class ResponseProvider {
  public:
@@ -47,10 +46,10 @@ class ResponseProvider {
   // Returns true if the request is handled by the provider.
   virtual bool CanHandleRequest(const Request& request) = 0;
 
-  // Returns the test_server::HttpResponse as a reply to the request. Will only
-  // be called if the provider can handle the request.
-  virtual std::unique_ptr<net::test_server::HttpResponse>
-  GetEmbeddedTestServerResponse(const Request& request) = 0;
+  // Returns the GCDWebServerResponse as a reply to the request. Will only be
+  // called if the provider can handle the request.
+  virtual GCDWebServerResponse* GetGCDWebServerResponse(
+      const Request& request) = 0;
 
   // Gets default response headers with a text/html content type and a 200
   // response code.

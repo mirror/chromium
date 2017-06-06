@@ -59,7 +59,6 @@ bool IsOmniboxEnabled(Profile* profile);
 }
 
 namespace safe_browsing {
-class ChromeCleanerControllerDelegate;
 class DownloadUrlSBClient;
 class IncidentReportingService;
 class ReporterRunner;
@@ -121,7 +120,6 @@ class ChromeMetricsServiceAccessor : public metrics::MetricsServiceAccessor {
   friend class speech::ChromeSpeechRecognitionManagerDelegate;
   friend class system_logs::ChromeInternalLogSource;
   friend class UmaSessionStats;
-  friend class safe_browsing::ChromeCleanerControllerDelegate;
   friend class safe_browsing::DownloadUrlSBClient;
   friend class safe_browsing::IncidentReportingService;
   friend class safe_browsing::ReporterRunner;

@@ -24,7 +24,7 @@ CWV_EXPORT
 @interface CWVWebView : UIView
 
 // The configuration of the web view.
-@property(nonatomic, readonly) CWVWebViewConfiguration* configuration;
+@property(nonatomic, readonly, copy) CWVWebViewConfiguration* configuration;
 
 // This web view's navigation delegate.
 @property(nonatomic, weak) id<CWVNavigationDelegate> navigationDelegate;
@@ -40,7 +40,7 @@ CWV_EXPORT
 @property(nonatomic, readonly) BOOL canGoForward;
 
 // Whether or not this web view is loading a page.
-@property(nonatomic, readonly, getter=isLoading) BOOL loading;
+@property(nonatomic, readonly) BOOL isLoading;
 
 // The URL displayed in the url bar.
 @property(nonatomic, readonly) NSURL* visibleURL;

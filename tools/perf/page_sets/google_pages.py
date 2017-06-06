@@ -31,8 +31,7 @@ class GmailPage(GooglePages):
     super(GmailPage, self).__init__(
         url='https://mail.google.com/mail/',
         page_set=page_set,
-        shared_page_state_class=shared_page_state_class,
-        name='https://mail.google.com/mail/')
+        shared_page_state_class=shared_page_state_class)
 
   def RunNavigateSteps(self, action_runner):
     google_login.LoginGoogleAccount(action_runner, 'google',

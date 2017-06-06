@@ -50,6 +50,10 @@
   return _items;
 }
 
+- (CollectionViewItem*)selectableItemAtIndex:(NSUInteger)index {
+  return [_items objectAtIndex:index];
+}
+
 - (CollectionViewItem*)addButtonItem {
   return [[CollectionViewItem alloc] init];
 }

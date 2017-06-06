@@ -41,7 +41,6 @@
 #include "mojo/public/cpp/bindings/interface_ptr.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerEventResult.h"
-#include "ui/base/mojo/window_open_disposition.mojom.h"
 #include "url/gurl.h"
 #include "url/origin.h"
 
@@ -585,15 +584,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
   void OnGetClients(int request_id,
                     const ServiceWorkerClientQueryOptions& options);
 
-  // Currently used for Clients.openWindow() only.
-  void OnOpenNewTab(int request_id, const GURL& url);
-
-  // Currently used for PaymentRequestEvent.openWindow() only.
-  void OnOpenNewPopup(int request_id, const GURL& url);
-
-  void OnOpenWindow(int request_id,
-                    GURL url,
-                    WindowOpenDisposition disposition);
+  void OnOpenWindow(int request_id, GURL url);
   void OnOpenWindowFinished(int request_id,
                             ServiceWorkerStatusCode status,
                             const ServiceWorkerClientInfo& client_info);
@@ -642,8 +633,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
   void OnGetClientFinished(int request_id,
                            const ServiceWorkerClientInfo& client_info);
 
-  void OnGetClientsFinished(int request_id,
-                            std::unique_ptr<ServiceWorkerClients> clients);
+  void OnGetClientsFinished(int request_id, ServiceWorkerClients* clients);
 
   // The timeout timer periodically calls OnTimeoutTimer, which stops the worker
   // if it is excessively idle or unresponsive to ping.

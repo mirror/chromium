@@ -58,6 +58,7 @@
 
 #if defined(OS_WIN)
 #include "base/win/win_util.h"
+#include "base/win/windows_version.h"
 #include "content/child/font_warmup_win.h"
 #include "sandbox/win/src/sandbox.h"
 #elif defined(OS_MACOSX)
@@ -74,6 +75,10 @@ const char kWidevineCdmAdapterFileName[] = "widevinecdmadapter.dll";
 extern sandbox::TargetServices* g_target_services;
 
 // Used by EnumSystemLocales for warming up.
+static BOOL CALLBACK EnumLocalesProc(LPTSTR lpLocaleString) {
+  return TRUE;
+}
+
 static BOOL CALLBACK EnumLocalesProcEx(
     LPWSTR lpLocaleString,
     DWORD dwFlags,
@@ -86,8 +91,21 @@ static void WarmupWindowsLocales(const ppapi::PpapiPermissions& permissions) {
   ::GetUserDefaultLangID();
   ::GetUserDefaultLCID();
 
-  if (permissions.HasPermission(ppapi::PERMISSION_FLASH))
-    ::EnumSystemLocalesEx(EnumLocalesProcEx, LOCALE_WINDOWS, 0, 0);
+  if (permissions.HasPermission(ppapi::PERMISSION_FLASH)) {
+    if (base::win::GetVersion() >= base::win::VERSION_VISTA) {
+      typedef BOOL (WINAPI *PfnEnumSystemLocalesEx)
+          (LOCALE_ENUMPROCEX, DWORD, LPARAM, LPVOID);
+
+      HMODULE handle_kern32 = GetModuleHandleW(L"Kernel32.dll");
+      PfnEnumSystemLocalesEx enum_sys_locales_ex =
+          reinterpret_cast<PfnEnumSystemLocalesEx>
+              (GetProcAddress(handle_kern32, "EnumSystemLocalesEx"));
+
+      enum_sys_locales_ex(EnumLocalesProcEx, LOCALE_WINDOWS, 0, 0);
+    } else {
+      EnumSystemLocalesW(EnumLocalesProc, LCID_INSTALLED);
+    }
+  }
 }
 
 #endif
@@ -397,22 +415,28 @@ void PpapiThread::OnLoadPlugin(const base::FilePath& path,
   // can be loaded. TODO(cpu): consider changing to the loading style of
   // regular plugins.
   if (g_target_services) {
-    // Let Flash and Widevine CDM adapter load DXVA before lockdown.
+    // Let Flash and Widevine CDM adapter load DXVA before lockdown on Vista+.
     if (permissions.HasPermission(ppapi::PERMISSION_FLASH) ||
         path.BaseName().MaybeAsASCII() == kWidevineCdmAdapterFileName) {
-      LoadLibraryA("dxva2.dll");
+      if (base::win::OSInfo::GetInstance()->version() >=
+          base::win::VERSION_VISTA) {
+        LoadLibraryA("dxva2.dll");
+      }
     }
 
     if (permissions.HasPermission(ppapi::PERMISSION_FLASH)) {
-      base::CPU cpu;
-      if (cpu.vendor_name() == "AuthenticAMD") {
-        // The AMD crypto acceleration is only AMD Bulldozer and above.
+      if (base::win::OSInfo::GetInstance()->version() >=
+          base::win::VERSION_WIN7) {
+        base::CPU cpu;
+        if (cpu.vendor_name() == "AuthenticAMD") {
+          // The AMD crypto acceleration is only AMD Bulldozer and above.
 #if defined(_WIN64)
-        LoadLibraryA("amdhcp64.dll");
+          LoadLibraryA("amdhcp64.dll");
 #else
-        LoadLibraryA("amdhcp32.dll");
+          LoadLibraryA("amdhcp32.dll");
 #endif
         }
+      }
     }
 
     // Cause advapi32 to load before the sandbox is turned on.

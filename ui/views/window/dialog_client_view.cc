@@ -220,8 +220,8 @@ void DialogClientView::OnNativeThemeChanged(const ui::NativeTheme* theme) {
   const DialogDelegate* dialog = GetDialogDelegate();
 
   if (dialog && !dialog->ShouldUseCustomFrame()) {
-    SetBackground(views::CreateSolidBackground(GetNativeTheme()->GetSystemColor(
-        ui::NativeTheme::kColorId_DialogBackground)));
+    set_background(views::Background::CreateSolidBackground(GetNativeTheme()->
+        GetSystemColor(ui::NativeTheme::kColorId_DialogBackground)));
   }
 }
 
@@ -329,7 +329,8 @@ void DialogClientView::SetupLayout() {
   GridLayout* layout = new GridLayout(button_row_container_);
   layout->set_minimum_size(minimum_size_);
   FocusManager* focus_manager = GetFocusManager();
-  ViewTracker view_tracker(focus_manager->GetFocusedView());
+  ViewTracker view_tracker;
+  view_tracker.Add(focus_manager->GetFocusedView());
 
   // Clobber any existing LayoutManager since it has weak references to child
   // Views which may be removed by SetupViews().
@@ -420,7 +421,8 @@ void DialogClientView::SetupLayout() {
 
   // The default focus is lost when child views are added back into the dialog.
   // This restores focus if the button is still available.
-  View* previously_focused_view = view_tracker.view();
+  View* previously_focused_view =
+      view_tracker.views().empty() ? nullptr : view_tracker.views()[0];
   if (previously_focused_view && !focus_manager->GetFocusedView() &&
       Contains(previously_focused_view)) {
     previously_focused_view->RequestFocus();

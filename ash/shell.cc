@@ -22,7 +22,6 @@
 #include "ash/cast_config_controller.h"
 #include "ash/devtools/ash_devtools_css_agent.h"
 #include "ash/devtools/ash_devtools_dom_agent.h"
-#include "ash/display/ash_display_controller.h"
 #include "ash/display/cursor_window_controller.h"
 #include "ash/display/display_color_manager_chromeos.h"
 #include "ash/display/display_configuration_controller.h"
@@ -52,12 +51,12 @@
 #include "ash/new_window_controller.h"
 #include "ash/palette_delegate.h"
 #include "ash/public/cpp/config.h"
-#include "ash/public/cpp/shelf_model.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_controller.h"
+#include "ash/shelf/shelf_model.h"
 #include "ash/shelf/shelf_window_watcher.h"
 #include "ash/shell_delegate.h"
 #include "ash/shell_init_params.h"
@@ -324,11 +323,7 @@ void Shell::RegisterPrefs(PrefRegistrySimple* registry) {
 
 // static
 bool Shell::ShouldEnableSimplifiedDisplayManagement() {
-  return ShouldEnableSimplifiedDisplayManagement(GetAshConfig());
-}
-
-bool Shell::ShouldEnableSimplifiedDisplayManagement(Config config) {
-  return true;
+  return GetAshConfig() != Config::MASH;
 }
 
 views::NonClientFrameView* Shell::CreateDefaultNonClientFrameView(
@@ -372,16 +367,10 @@ void Shell::DeactivateKeyboard() {
 }
 
 bool Shell::ShouldSaveDisplaySettings() {
-  // This function is only called from Chrome, hence the DCHECK for not-MASH.
   DCHECK(GetAshConfig() != Config::MASH);
   return !(
       screen_orientation_controller_->ignore_display_configuration_updates() ||
       resolution_notification_controller_->DoesNotificationTimeout());
-}
-
-NightLightController* Shell::night_light_controller() {
-  DCHECK(NightLightController::IsFeatureEnabled());
-  return night_light_controller_.get();
 }
 
 ShelfModel* Shell::shelf_model() {
@@ -559,7 +548,6 @@ void Shell::SetIsBrowserProcessWithMash() {
 Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
              std::unique_ptr<ShellPort> shell_port)
     : shell_port_(std::move(shell_port)),
-      ash_display_controller_(base::MakeUnique<AshDisplayController>()),
       brightness_control_delegate_(
           base::MakeUnique<system::BrightnessControllerChromeos>()),
       cast_config_(base::MakeUnique<CastConfigController>()),
@@ -573,6 +561,8 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
       media_controller_(base::MakeUnique<MediaController>()),
       new_window_controller_(base::MakeUnique<NewWindowController>()),
       session_controller_(base::MakeUnique<SessionController>()),
+      night_light_controller_(
+          base::MakeUnique<NightLightController>(session_controller_.get())),
       shelf_controller_(base::MakeUnique<ShelfController>()),
       shell_delegate_(std::move(shell_delegate)),
       shutdown_controller_(base::MakeUnique<ShutdownController>()),
@@ -595,7 +585,7 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
   gpu_support_.reset(shell_delegate_->CreateGPUSupport());
 
   // Don't use Shell::GetAshConfig() as |instance_| has not yet been set.
-  if (ShouldEnableSimplifiedDisplayManagement(shell_port_->GetAshConfig())) {
+  if (shell_port_->GetAshConfig() != Config::MASH) {
     display_manager_.reset(ScreenAsh::CreateDisplayManager());
     window_tree_host_manager_.reset(new WindowTreeHostManager);
     user_metrics_recorder_.reset(new UserMetricsRecorder);
@@ -638,7 +628,7 @@ Shell::~Shell() {
   RemovePreTargetHandler(event_transformation_handler_.get());
   RemovePreTargetHandler(toplevel_window_event_handler_.get());
   RemovePostTargetHandler(toplevel_window_event_handler_.get());
-  if (ShouldEnableSimplifiedDisplayManagement()) {
+  if (config != Config::MASH) {
     RemovePreTargetHandler(system_gesture_filter_.get());
     RemovePreTargetHandler(mouse_cursor_filter_.get());
   }
@@ -800,11 +790,6 @@ Shell::~Shell() {
 void Shell::Init(const ShellInitParams& init_params) {
   const Config config = shell_port_->GetAshConfig();
 
-  if (NightLightController::IsFeatureEnabled()) {
-    night_light_controller_ =
-        base::MakeUnique<NightLightController>(session_controller_.get());
-  }
-
   blocking_pool_ = init_params.blocking_pool;
 
   wallpaper_delegate_ = shell_delegate_->CreateWallpaperDelegate();
@@ -861,15 +846,16 @@ void Shell::Init(const ShellInitParams& init_params) {
   }
 
   shell_delegate_->PreInit();
-  bool display_initialized = (!ShouldEnableSimplifiedDisplayManagement() ||
-                              display_manager_->InitFromCommandLine());
-  if (!display_initialized && config != Config::CLASSIC &&
-      ShouldEnableSimplifiedDisplayManagement()) {
+  // TODO(sky): remove MASH from here.
+  bool display_initialized =
+      (config == Config::MASH || display_manager_->InitFromCommandLine());
+  if (config == Config::MUS && !display_initialized) {
     // Run display configuration off device in mus mode.
     display_manager_->set_configure_displays(true);
     display_configurator_->set_configure_display(true);
   }
-  if (ShouldEnableSimplifiedDisplayManagement()) {
+  if (config != Config::MASH) {
+    // TODO(sky): should work in mash too.
     display_configuration_controller_.reset(new DisplayConfigurationController(
         display_manager_.get(), window_tree_host_manager_.get()));
     display_configurator_->Init(shell_port_->CreateNativeDisplayDelegate(),
@@ -884,9 +870,10 @@ void Shell::Init(const ShellInitParams& init_params) {
   display_configurator_->AddObserver(projecting_observer_.get());
   AddShellObserver(projecting_observer_.get());
 
-  if (!display_initialized && ((config != Config::CLASSIC &&
-                                ShouldEnableSimplifiedDisplayManagement()) ||
-                               chromeos::IsRunningAsSystemCompositor())) {
+  // TODO(sky): once simplified display management is enabled for mash
+  // config == Config::MUS should be config != Config::CLASSIC.
+  if (!display_initialized &&
+      (config == Config::MUS || chromeos::IsRunningAsSystemCompositor())) {
     display_change_observer_ = base::MakeUnique<display::DisplayChangeObserver>(
         display_configurator_.get(), display_manager_.get());
 
@@ -913,11 +900,9 @@ void Shell::Init(const ShellInitParams& init_params) {
   if (!display_initialized)
     display_manager_->InitDefaultDisplay();
 
-  // TODO(sky): move this to chrome for mash. http://crbug.com/729824.
-  if (ShouldEnableSimplifiedDisplayManagement())
+  if (config == Config::CLASSIC) {
     display_manager_->RefreshFontParams();
 
-  if (config == Config::CLASSIC) {
     aura::Env::GetInstance()->set_context_factory(init_params.context_factory);
     aura::Env::GetInstance()->set_context_factory_private(
         init_params.context_factory_private);
@@ -945,7 +930,7 @@ void Shell::Init(const ShellInitParams& init_params) {
   shell_port_->CreatePrimaryHost();
   root_window_for_new_windows_ = GetPrimaryRootWindow();
 
-  if (ShouldEnableSimplifiedDisplayManagement()) {
+  if (config != Config::MASH) {
     resolution_notification_controller_.reset(
         new ResolutionNotificationController);
   }
@@ -1018,7 +1003,7 @@ void Shell::Init(const ShellInitParams& init_params) {
   screenshot_controller_.reset(new ScreenshotController());
   // TODO: evaluate if MouseCursorEventFilter needs to work for mash.
   // http://crbug.com/706474.
-  if (ShouldEnableSimplifiedDisplayManagement()) {
+  if (config != Config::MASH) {
     mouse_cursor_filter_.reset(new MouseCursorEventFilter());
     PrependPreTargetHandler(mouse_cursor_filter_.get());
   }
@@ -1100,7 +1085,7 @@ void Shell::Init(const ShellInitParams& init_params) {
   video_activity_notifier_.reset(
       new VideoActivityNotifier(video_detector_.get()));
   bluetooth_notification_controller_.reset(new BluetoothNotificationController);
-  if (ShouldEnableSimplifiedDisplayManagement()) {
+  if (config != Config::MASH) {
     screen_orientation_controller_.reset(new ScreenOrientationController());
     screen_layout_observer_.reset(new ScreenLayoutObserver());
   }
@@ -1109,7 +1094,7 @@ void Shell::Init(const ShellInitParams& init_params) {
   // The compositor thread and main message loop have to be running in
   // order to create mirror window. Run it after the main message loop
   // is started.
-  if (ShouldEnableSimplifiedDisplayManagement())
+  if (config != Config::MASH)
     display_manager_->CreateMirrorWindowAsyncIfAny();
 
   for (auto& observer : shell_observers_)

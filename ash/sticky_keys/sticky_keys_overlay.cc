@@ -38,6 +38,7 @@ const ui::ResourceBundle::FontStyle kKeyLabelFontStyle =
 
 // Duration of slide animation when overlay is shown or hidden.
 const int kSlideAnimationDurationMs = 100;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //  StickyKeyOverlayLabel
@@ -66,6 +67,7 @@ StickyKeyOverlayLabel::StickyKeyOverlayLabel(const std::string& key_name)
   SetFontList(rb->GetFontList(kKeyLabelFontStyle));
   SetAutoColorReadabilityEnabled(false);
   SetEnabledColor(SkColorSetARGB(0x80, 0xFF, 0xFF, 0xFF));
+  SetDisabledColor(SkColorSetARGB(0x80, 0xFF, 0xFF, 0xFF));
   SetSubpixelRenderingEnabled(false);
 }
 
@@ -90,10 +92,9 @@ void StickyKeyOverlayLabel::SetKeyState(StickyKeyState state) {
   }
 
   SetEnabledColor(label_color);
+  SetDisabledColor(label_color);
   SetFontList(font_list().DeriveWithStyle(style));
 }
-
-}  // namespace
 
 ///////////////////////////////////////////////////////////////////////////////
 //  StickyKeysOverlayView

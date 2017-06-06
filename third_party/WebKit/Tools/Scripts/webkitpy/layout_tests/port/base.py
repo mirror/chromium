@@ -257,12 +257,6 @@ class Port(object):
         baseline_search_paths = self.baseline_search_path()
         return baseline_search_paths[0]
 
-    def baseline_flag_specific_dir(self):
-        """If --additional-driver-flag is specified, returns the absolute path to the flag-specific
-           platform-independent results. Otherwise returns None."""
-        flag_specific_path = self._flag_specific_baseline_search_path()
-        return flag_specific_path[-1] if flag_specific_path else None
-
     def virtual_baseline_search_path(self, test_name):
         suite = self.lookup_virtual_suite(test_name)
         if not suite:
@@ -1490,12 +1484,10 @@ class Port(object):
         pass
 
     def physical_test_suites(self):
-        color_correct_rendering_flags = ['--enable-color-correct-rendering', '--force-color-profile=srgb']
         return [
             # For example, to turn on force-compositing-mode in the svg/ directory:
             # PhysicalTestSuite('svg', ['--force-compositing-mode']),
             PhysicalTestSuite('fast/text', ['--enable-direct-write', '--enable-font-antialiasing']),
-            PhysicalTestSuite('images', color_correct_rendering_flags),
         ]
 
     def virtual_test_suites(self):

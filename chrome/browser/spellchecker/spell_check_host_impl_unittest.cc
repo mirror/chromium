@@ -63,9 +63,7 @@ TEST(SpellCheckHostImplTest, CustomSpellingResults) {
   EXPECT_EQ(service_results[1].decoration, results[0].decoration);
   EXPECT_EQ(service_results[1].location, results[0].location);
   EXPECT_EQ(service_results[1].length, results[0].length);
-  EXPECT_EQ(service_results[1].replacements.size(),
-            results[0].replacements.size());
-  EXPECT_EQ(service_results[1].replacements[0], results[0].replacements[0]);
+  EXPECT_EQ(service_results[1].replacement, results[0].replacement);
 }
 
 // Spelling corrections of words that are not in the custom dictionary should
@@ -86,8 +84,6 @@ TEST(SpellCheckHostImplTest, SpellingServiceResults) {
     EXPECT_EQ(service_results[i].decoration, results[i].decoration);
     EXPECT_EQ(service_results[i].location, results[i].location);
     EXPECT_EQ(service_results[i].length, results[i].length);
-    EXPECT_EQ(service_results[i].replacements.size(),
-              results[i].replacements.size());
-    EXPECT_EQ(service_results[i].replacements[0], results[i].replacements[0]);
+    EXPECT_EQ(service_results[i].replacement, results[i].replacement);
   }
 }

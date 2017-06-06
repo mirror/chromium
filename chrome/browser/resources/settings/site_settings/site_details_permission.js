@@ -52,6 +52,7 @@ Polymer({
    * @private
    */
   siteChanged_: function(site) {
+    this.$.details.hidden = true;
 
     this.browserProxy.getExceptionList(this.category).then(
         function(exceptionList) {
@@ -59,6 +60,7 @@ Polymer({
         if (exceptionList[i].embeddingOrigin == site.embeddingOrigin &&
             this.sameOrigin_(exceptionList[i].origin, site.origin)) {
           this.$.permission.value = exceptionList[i].setting;
+          this.$.details.hidden = false;
           break;
         }
       }
@@ -92,6 +94,7 @@ Polymer({
     this.browserProxy.resetCategoryPermissionForOrigin(
         this.site.origin, this.site.embeddingOrigin, this.category,
         this.site.incognito);
+    this.$.details.hidden = true;
   },
 
   /**

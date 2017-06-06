@@ -68,14 +68,7 @@ Elements.ElementsPanel = class extends UI.Panel {
     this._breadcrumbs.show(crumbsContainer);
     this._breadcrumbs.addEventListener(Elements.ElementsBreadcrumbs.Events.NodeSelected, this._crumbNodeSelected, this);
 
-    /** @type {?UI.Widget} */
     this._currentToolbarPane = null;
-    /** @type {?UI.Widget} */
-    this._animatedToolbarPane = null;
-    /** @type {?UI.Widget} */
-    this._pendingWidget = null;
-    /** @type {?UI.ToolbarToggle} */
-    this._pendingWidgetToggle = null;
 
     this._stylesWidget = new Elements.StylesSidebarPane();
     this._computedStyleWidget = new Elements.ComputedStyleWidget();
@@ -148,14 +141,14 @@ Elements.ElementsPanel = class extends UI.Panel {
 
   /**
    * @param {?UI.Widget} widget
-   * @param {?UI.ToolbarToggle} toggle
+   * @param {!UI.ToolbarToggle=} toggle
    */
   showToolbarPane(widget, toggle) {
     if (this._pendingWidgetToggle)
       this._pendingWidgetToggle.setToggled(false);
     this._pendingWidgetToggle = toggle;
 
-    if (this._animatedToolbarPane)
+    if (this._animatedToolbarPane !== undefined)
       this._pendingWidget = widget;
     else
       this._startToolbarPaneAnimation(widget);
@@ -205,11 +198,11 @@ Elements.ElementsPanel = class extends UI.Panel {
       this._currentToolbarPane = this._animatedToolbarPane;
       if (this._currentToolbarPane)
         this._currentToolbarPane.focus();
-      this._animatedToolbarPane = null;
+      delete this._animatedToolbarPane;
 
-      if (this._pendingWidget) {
+      if (this._pendingWidget !== undefined) {
         this._startToolbarPaneAnimation(this._pendingWidget);
-        this._pendingWidget = null;
+        delete this._pendingWidget;
       }
     }
   }
@@ -268,7 +261,7 @@ Elements.ElementsPanel = class extends UI.Panel {
       return;
     header.removeChildren();
     header.createChild('div', 'elements-tree-header-frame').textContent = Common.UIString('Frame');
-    header.appendChild(Components.Linkifier.linkifyURL(target.inspectedURL(), {text: target.name()}));
+    header.appendChild(Components.Linkifier.linkifyURL(target.inspectedURL(), target.name()));
   }
 
   _updateTreeOutlineVisibleWidth() {
@@ -838,7 +831,7 @@ Elements.ElementsPanel = class extends UI.Panel {
     }
 
     this._splitWidget.setVertical(this._splitMode === Elements.ElementsPanel._splitMode.Vertical);
-    this.showToolbarPane(null /* widget */, null /* toggle */);
+    this.showToolbarPane(null);
 
     var matchedStylesContainer = new UI.VBox();
     matchedStylesContainer.element.appendChild(this._stylesSidebarToolbar);

@@ -77,6 +77,12 @@
   return self.items;
 }
 
+- (CollectionViewItem<PaymentsHasAccessoryType>*)selectableItemAtIndex:
+    (NSUInteger)index {
+  DCHECK(index < self.items.count);
+  return [self.items objectAtIndex:index];
+}
+
 - (CollectionViewItem*)addButtonItem {
   return [self createItemWithText:@"Add an item"];
 }

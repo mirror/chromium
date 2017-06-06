@@ -79,13 +79,6 @@ class ArcFileSystemOperationRunnerTest : public testing::Test {
     runner_->GetFileSize(
         GURL(kUrl),
         base::Bind([](int* counter, int64_t size) { ++*counter; }, counter));
-    runner_->GetMimeType(
-        GURL(kUrl),
-        base::Bind(
-            [](int* counter, const base::Optional<std::string>& mime_type) {
-              ++*counter;
-            },
-            counter));
     runner_->OpenFileToRead(
         GURL(kUrl),
         base::Bind([](int* counter, mojo::ScopedHandle handle) { ++*counter; },
@@ -112,7 +105,7 @@ TEST_F(ArcFileSystemOperationRunnerTest, RunImmediately) {
   CallSetShouldDefer(false);
   CallAllFunctions(&counter);
   base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(7, counter);
+  EXPECT_EQ(6, counter);
 }
 
 TEST_F(ArcFileSystemOperationRunnerTest, DeferAndRun) {
@@ -124,7 +117,7 @@ TEST_F(ArcFileSystemOperationRunnerTest, DeferAndRun) {
 
   CallSetShouldDefer(false);
   base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(7, counter);
+  EXPECT_EQ(6, counter);
 }
 
 TEST_F(ArcFileSystemOperationRunnerTest, DeferAndDiscard) {
@@ -147,7 +140,7 @@ TEST_F(ArcFileSystemOperationRunnerTest, FileInstanceUnavailable) {
   CallSetShouldDefer(false);
   CallAllFunctions(&counter);
   base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(7, counter);
+  EXPECT_EQ(6, counter);
 }
 
 }  // namespace arc

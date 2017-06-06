@@ -21,7 +21,8 @@ NotificationButton::NotificationButton(views::ButtonListener* listener)
   SetFocusForPlatform();
   // Create a background so that it does not change when the MessageView
   // background changes to show touch feedback
-  SetBackground(views::CreateSolidBackground(kNotificationBackgroundColor));
+  set_background(views::Background::CreateSolidBackground(
+      kNotificationBackgroundColor));
   set_notify_enter_exit_on_child(true);
   SetLayoutManager(
       new views::BoxLayout(views::BoxLayout::kHorizontal,
@@ -94,10 +95,11 @@ void NotificationButton::ViewHierarchyChanged(
 
 void NotificationButton::StateChanged(ButtonState old_state) {
   if (state() == STATE_HOVERED || state() == STATE_PRESSED) {
-    SetBackground(views::CreateSolidBackground(
+    set_background(views::Background::CreateSolidBackground(
         message_center::kHoveredButtonBackgroundColor));
   } else {
-    SetBackground(views::CreateSolidBackground(kNotificationBackgroundColor));
+    set_background(views::Background::CreateSolidBackground(
+        kNotificationBackgroundColor));
   }
 }
 

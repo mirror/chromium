@@ -45,9 +45,6 @@ ExtensionNotificationHandler::ExtensionNotificationHandler() = default;
 
 ExtensionNotificationHandler::~ExtensionNotificationHandler() = default;
 
-void ExtensionNotificationHandler::OnShow(Profile* profile,
-                                          const std::string& notification_id) {}
-
 void ExtensionNotificationHandler::OnClose(Profile* profile,
                                            const std::string& origin,
                                            const std::string& notification_id,
@@ -98,6 +95,10 @@ void ExtensionNotificationHandler::OpenSettings(Profile* profile) {
   // Extension notifications don't display a settings button.
   NOTREACHED();
 }
+
+void ExtensionNotificationHandler::RegisterNotification(
+    const std::string& notification_id,
+    NotificationDelegate* delegate) {}
 
 void ExtensionNotificationHandler::SendEvent(
     Profile* profile,

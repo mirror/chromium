@@ -34,7 +34,6 @@ import org.chromium.base.BuildInfo;
 import org.chromium.base.Log;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.ChromeStringConstants;
 import org.chromium.chrome.browser.sync.ProfileSyncService;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.components.sync.PassphraseType;
@@ -200,7 +199,8 @@ public class PassphraseDialogFragment extends DialogFragment implements OnClickL
                     @Override
                     public void onClick(View view) {
                         recordPassphraseDialogDismissal(PASSPHRASE_DIALOG_RESET_LINK);
-                        Uri syncDashboardUrl = Uri.parse(ChromeStringConstants.SYNC_DASHBOARD_URL);
+                        Uri syncDashboardUrl = Uri.parse(
+                                context.getText(R.string.sync_dashboard_url).toString());
                         Intent intent = new Intent(Intent.ACTION_VIEW, syncDashboardUrl);
                         intent.setPackage(BuildInfo.getPackageName());
                         IntentUtils.safePutBinderExtra(

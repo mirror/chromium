@@ -147,7 +147,6 @@ source_set("unit_tests_internal") {
     "//ios/testing:ocmock_support",
     "//ios/web",
     "//ios/web/public/test",
-    "//ios/web/public/test/fakes",
     "//testing/gtest",
     "//third_party/ocmock",
   ]

@@ -983,7 +983,11 @@ class WebGL2RenderingContextBase : public WebGLRenderingContextBase {
   friend class WebGLGetBufferSubDataAsync;
 
   WebGL2RenderingContextBase(
-      CanvasRenderingContextHost*,
+      HTMLCanvasElement*,
+      std::unique_ptr<WebGraphicsContext3DProvider>,
+      const CanvasContextCreationAttributes& requested_attributes);
+  WebGL2RenderingContextBase(
+      OffscreenCanvas*,
       std::unique_ptr<WebGraphicsContext3DProvider>,
       const CanvasContextCreationAttributes& requested_attributes);
 

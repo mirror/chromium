@@ -47,6 +47,10 @@ class CC_SURFACES_EXPORT CompositorFrameSinkSupport
   SurfaceManager* surface_manager() { return surface_manager_; }
   bool needs_sync_points() { return needs_sync_points_; }
 
+  const ReferencedSurfaceTracker& ReferenceTrackerForTesting() const {
+    return reference_tracker_;
+  }
+
   // SurfaceResourceHolderClient implementation.
   void ReturnResources(const ReturnedResourceArray& resources) override;
 
@@ -78,16 +82,18 @@ class CC_SURFACES_EXPORT CompositorFrameSinkSupport
   void Init(SurfaceManager* surface_manager);
 
  private:
-  // Updates surface references using |active_referenced_surfaces| from the most
-  // recent CompositorFrame. This will add and remove top-level root references
-  // if |is_root_| is true and |local_surface_id| has changed. Modifies surface
-  // references stored in SurfaceManager.
-  void UpdateSurfaceReferences(
-      const LocalSurfaceId& local_surface_id,
-      const std::vector<SurfaceId>& active_referenced_surfaces);
+  // Update surface references with SurfaceManager for current CompositorFrame
+  // that has |local_surface_id|. UpdateReferences() must be called on
+  // |reference_tracker_| before calling this. Will add and remove top-level
+  // root references if |display_| is not null.
+  void UpdateSurfaceReferences(const SurfaceId& last_surface_id,
+                               const LocalSurfaceId& local_surface_id);
 
-  // Creates a surface reference from the top-level root to |surface_id|.
-  SurfaceReference MakeTopLevelRootReference(const SurfaceId& surface_id);
+  void AddTopLevelRootReference(const SurfaceId& surface_id);
+  void RemoveTopLevelRootReference(const SurfaceId& surface_id);
+  void ReferencedSurfacesChanged(
+      const LocalSurfaceId& local_surface_id,
+      const std::vector<SurfaceId>* active_referenced_surfaces);
 
   void DidReceiveCompositorFrameAck();
   void WillDrawSurface(const LocalSurfaceId& local_surface_id,
@@ -108,11 +114,6 @@ class CC_SURFACES_EXPORT CompositorFrameSinkSupport
 
   const FrameSinkId frame_sink_id_;
 
-  // If this contains a value then a surface reference from the top-level root
-  // to SurfaceId(frame_sink_id_, referenced_local_surface_id_.value()) was
-  // added. This will not contain a value if |is_root_| is false.
-  base::Optional<LocalSurfaceId> referenced_local_surface_id_;
-
   SurfaceResourceHolder surface_resource_holder_;
 
   std::unique_ptr<Surface> current_surface_;
@@ -132,6 +133,10 @@ class CC_SURFACES_EXPORT CompositorFrameSinkSupport
 
   // Whether or not a frame observer has been added.
   bool added_frame_observer_ = false;
+
+  // Track the surface references for the surface corresponding to this
+  // compositor frame sink.
+  ReferencedSurfaceTracker reference_tracker_;
 
   const bool is_root_;
   const bool needs_sync_points_;

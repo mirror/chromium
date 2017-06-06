@@ -24,7 +24,7 @@ class DataReductionProxyMutableConfigValuesTest : public testing::Test {
   ~DataReductionProxyMutableConfigValuesTest() override {}
 
   void Init() {
-    params_.reset(new DataReductionProxyParams());
+    params_.reset(new DataReductionProxyParams(0));
     mutable_config_values_ =
         DataReductionProxyMutableConfigValues::CreateFromParams(params_.get());
   }

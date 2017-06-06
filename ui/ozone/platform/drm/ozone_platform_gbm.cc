@@ -124,6 +124,8 @@ class OzonePlatformGbm : public OzonePlatform {
       const gfx::Rect& bounds) override {
     GpuThreadAdapter* adapter = gpu_platform_support_host_.get();
     if (using_mojo_ || single_process_) {
+      DCHECK(drm_thread_proxy_)
+          << "drm_thread_proxy_ should exist (and be running) here.";
       adapter = mus_thread_proxy_.get();
     }
 
@@ -174,13 +176,15 @@ class OzonePlatformGbm : public OzonePlatform {
       gl_api_loader_.reset(new GlApiLoader());
 
     if (using_mojo_) {
-      mus_thread_proxy_ =
-          base::MakeUnique<MusThreadProxy>(cursor_.get(), args.connector);
+      DCHECK(args.connector);
+      mus_thread_proxy_.reset(new MusThreadProxy());
       adapter = mus_thread_proxy_.get();
+      cursor_->SetDrmCursorProxy(new CursorProxyMojo(args.connector));
     } else if (single_process_) {
-      mus_thread_proxy_ =
-          base::MakeUnique<MusThreadProxy>(cursor_.get(), nullptr);
+      mus_thread_proxy_.reset(new MusThreadProxy());
       adapter = mus_thread_proxy_.get();
+      cursor_->SetDrmCursorProxy(
+          new CursorProxyThread(mus_thread_proxy_.get()));
     } else {
       gpu_platform_support_host_.reset(
           new DrmGpuPlatformSupportHost(cursor_.get()));

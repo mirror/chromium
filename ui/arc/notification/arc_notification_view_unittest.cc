@@ -36,7 +36,7 @@ class TestNotificationContentsView : public views::View {
  public:
   TestNotificationContentsView() {
     SetFocusBehavior(FocusBehavior::ALWAYS);
-    SetBackground(views::CreateSolidBackground(kBackgroundColor));
+    set_background(views::Background::CreateSolidBackground(kBackgroundColor));
     SetPreferredSize(gfx::Size(100, 100));
   }
   ~TestNotificationContentsView() override = default;

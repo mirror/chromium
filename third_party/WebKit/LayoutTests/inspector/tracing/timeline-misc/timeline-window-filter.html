@@ -27,8 +27,7 @@ function test()
         overviewPane._overviewGrid.setWindow(0.1, 0.9);
 
         InspectorTest.addResult("--------------------------------------------------------");
-        var selectionData = timeline._currentModelSelectionData();
-        InspectorTest.addResult("time range = " + selectionData.windowStartTime + " - " + selectionData.windowEndTime);
+        InspectorTest.addResult("time range = " + timeline._windowStartTime + " - " + timeline._windowEndTime);
         InspectorTest.completeTest();
     }
 
@@ -39,8 +38,7 @@ function test()
         overviewPane._overviewGrid.setWindow(windowLeft, windowRight);
         mainView.update();
         InspectorTest.addResult("range = " + windowLeft + " - " + windowRight);
-        var selectionData = timeline._currentModelSelectionData();
-        InspectorTest.addResult("time range = " + selectionData.windowStartTime + " - " + selectionData.windowEndTime);
+        InspectorTest.addResult("time range = " + mainView._timeWindowLeft + " - " + mainView._timeWindowRight);
         InspectorTest.addResult("");
     }
 

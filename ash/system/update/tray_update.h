@@ -52,7 +52,7 @@ class ASH_EXPORT TrayUpdate : public TrayImageItem {
   // Overridden from TrayImageItem.
   bool GetInitialVisibility() override;
   views::View* CreateDefaultView(LoginStatus status) override;
-  void OnDefaultViewDestroyed() override;
+  void DestroyDefaultView() override;
 
   // Expose label information for testing.
   views::Label* GetLabelForTesting();

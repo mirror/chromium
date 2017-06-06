@@ -257,7 +257,8 @@ HRESULT UninstallPrinter(void) {
 
 bool IsOSSupported() {
   // We don't support Vista or older.
-  return base::win::GetVersion() >= base::win::VERSION_WIN7;
+  base::win::Version version = base::win::GetVersion();
+  return (version >= base::win::VERSION_WIN7);
 }
 
 HRESULT RegisterVirtualDriver(const base::FilePath& install_path) {

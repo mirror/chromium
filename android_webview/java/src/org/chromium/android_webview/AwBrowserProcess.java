@@ -158,11 +158,6 @@ public abstract class AwBrowserProcess {
         sWebViewPackageName = webViewPackageName;
     }
 
-    public static String getWebViewPackageName() {
-        if (sWebViewPackageName == null) return ""; // May be null in testing.
-        return sWebViewPackageName;
-    }
-
     /**
      * Trigger minidump copying, which in turn triggers minidump uploading.
      */

@@ -353,25 +353,21 @@ void SourceBuffer::setAppendWindowEnd(double end,
 
 void SourceBuffer::appendBuffer(DOMArrayBuffer* data,
                                 ExceptionState& exception_state) {
-  double media_time = GetMediaTime();
-  BLINK_SBLOG << __func__ << " this=" << this << " media_time=" << media_time
-              << " size=" << data->ByteLength();
+  BLINK_SBLOG << __func__ << " this=" << this << " size=" << data->ByteLength();
   // Section 3.2 appendBuffer()
   // https://dvcs.w3.org/hg/html-media/raw-file/default/media-source/media-source.html#widl-SourceBuffer-appendBuffer-void-ArrayBufferView-data
-  AppendBufferInternal(media_time,
-                       static_cast<const unsigned char*>(data->Data()),
+  AppendBufferInternal(static_cast<const unsigned char*>(data->Data()),
                        data->ByteLength(), exception_state);
 }
 
 void SourceBuffer::appendBuffer(NotShared<DOMArrayBufferView> data,
                                 ExceptionState& exception_state) {
-  double media_time = GetMediaTime();
-  BLINK_SBLOG << __func__ << " this=" << this << " media_time=" << media_time
+  BLINK_SBLOG << __func__ << " this=" << this
               << " size=" << data.View()->byteLength();
   // Section 3.2 appendBuffer()
   // https://dvcs.w3.org/hg/html-media/raw-file/default/media-source/media-source.html#widl-SourceBuffer-appendBuffer-void-ArrayBufferView-data
   AppendBufferInternal(
-      media_time, static_cast<const unsigned char*>(data.View()->BaseAddress()),
+      static_cast<const unsigned char*>(data.View()->BaseAddress()),
       data.View()->byteLength(), exception_state);
 }
 
@@ -684,13 +680,6 @@ void SourceBuffer::RemoveMediaTracks() {
   }
 
   // 7-8. TODO(servolk): Remove text tracks once SourceBuffer has text tracks.
-}
-
-double SourceBuffer::GetMediaTime() {
-  double media_time = std::numeric_limits<float>::quiet_NaN();
-  if (source_ && source_->MediaElement())
-    media_time = source_->MediaElement()->currentTime();
-  return media_time;
 }
 
 template <class T>
@@ -1081,8 +1070,7 @@ void SourceBuffer::ScheduleEvent(const AtomicString& event_name) {
   async_event_queue_->EnqueueEvent(event);
 }
 
-bool SourceBuffer::PrepareAppend(double media_time,
-                                 size_t new_data_size,
+bool SourceBuffer::PrepareAppend(size_t new_data_size,
                                  ExceptionState& exception_state) {
   TRACE_EVENT_ASYNC_BEGIN0("media", "SourceBuffer::prepareAppend", this);
   // http://w3c.github.io/media-source/#sourcebuffer-prepare-append
@@ -1118,7 +1106,7 @@ bool SourceBuffer::PrepareAppend(double media_time,
   source_->OpenIfInEndedState();
 
   // 5. Run the coded frame eviction algorithm.
-  if (!EvictCodedFrames(media_time, new_data_size)) {
+  if (!EvictCodedFrames(new_data_size)) {
     // 6. If the buffer full flag equals true, then throw a QUOTA_EXCEEDED_ERR
     //    exception and abort these steps.
     BLINK_SBLOG << __func__ << " this=" << this
@@ -1135,7 +1123,7 @@ bool SourceBuffer::PrepareAppend(double media_time,
   return true;
 }
 
-bool SourceBuffer::EvictCodedFrames(double media_time, size_t new_data_size) {
+bool SourceBuffer::EvictCodedFrames(size_t new_data_size) {
   DCHECK(source_);
   DCHECK(source_->MediaElement());
 
@@ -1145,18 +1133,19 @@ bool SourceBuffer::EvictCodedFrames(double media_time, size_t new_data_size) {
     return true;
   }
 
-  bool result = web_source_buffer_->EvictCodedFrames(media_time, new_data_size);
+  double current_time = source_->MediaElement()->currentTime();
+  bool result =
+      web_source_buffer_->EvictCodedFrames(current_time, new_data_size);
   if (!result) {
     BLINK_SBLOG << __func__ << " this=" << this
                 << " failed. newDataSize=" << new_data_size
-                << " media_time=" << media_time << " buffered="
+                << " currentTime=" << current_time << " buffered="
                 << WebTimeRangesToString(web_source_buffer_->Buffered());
   }
   return result;
 }
 
-void SourceBuffer::AppendBufferInternal(double media_time,
-                                        const unsigned char* data,
+void SourceBuffer::AppendBufferInternal(const unsigned char* data,
                                         unsigned size,
                                         ExceptionState& exception_state) {
   TRACE_EVENT_ASYNC_BEGIN1("media", "SourceBuffer::appendBuffer", this, "size",
@@ -1165,7 +1154,7 @@ void SourceBuffer::AppendBufferInternal(double media_time,
   // https://dvcs.w3.org/hg/html-media/raw-file/default/media-source/media-source.html#widl-SourceBuffer-appendBuffer-void-ArrayBufferView-data
 
   // 1. Run the prepare append algorithm.
-  if (!PrepareAppend(media_time, size, exception_state)) {
+  if (!PrepareAppend(size, exception_state)) {
     TRACE_EVENT_ASYNC_END0("media", "SourceBuffer::appendBuffer", this);
     return;
   }
@@ -1257,9 +1246,7 @@ void SourceBuffer::AppendBufferAsyncPart() {
   }
 
   TRACE_EVENT_ASYNC_END0("media", "SourceBuffer::appendBuffer", this);
-  double media_time = GetMediaTime();
-  BLINK_SBLOG << __func__ << " done. this=" << this
-              << " media_time=" << media_time << " buffered="
+  BLINK_SBLOG << __func__ << " done. this=" << this << " buffered="
               << WebTimeRangesToString(web_source_buffer_->Buffered());
 }
 

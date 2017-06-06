@@ -6,7 +6,6 @@
 #define CONTENT_RENDERER_PEPPER_PEPPER_PLATFORM_AUDIO_OUTPUT_DEV_H_
 
 #include <memory>
-#include <string>
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -17,6 +16,14 @@
 namespace base {
 class OneShotTimer;
 class SingleThreadTaskRunner;
+}
+
+namespace {
+#if defined(OS_WIN) || defined(OS_MACOSX)
+const int64_t kMaxAuthorizationTimeoutMs = 4000;
+#else
+const int64_t kMaxAuthorizationTimeoutMs = 0;  // No timeout.
+#endif
 }
 
 namespace content {

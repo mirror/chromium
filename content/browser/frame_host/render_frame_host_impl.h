@@ -575,10 +575,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // Returns the Mojo ImageDownloader service.
   const content::mojom::ImageDownloaderPtr& GetMojoImageDownloader();
 
-  // Returns the interface to the Global Resource Coordinator
-  resource_coordinator::ResourceCoordinatorInterface*
-  GetFrameResourceCoordinator() override;
-
   // Resets the loading state. Following this call, the RenderFrameHost will be
   // in a non-loading state.
   void ResetLoadingState();
@@ -909,10 +905,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void DeleteWebBluetoothService(
       WebBluetoothServiceImpl* web_bluetooth_service);
 
-  void CreateAudioOutputStreamFactory(
-      const service_manager::BindSourceInfo& source_info,
-      mojom::RendererAudioOutputStreamFactoryRequest request);
-
   void BindMediaInterfaceFactoryRequest(
       const service_manager::BindSourceInfo& source_info,
       media::mojom::InterfaceFactoryRequest request);
@@ -1145,10 +1137,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // Holder of Mojo connection with ImageDownloader service in RenderFrame.
   content::mojom::ImageDownloaderPtr mojo_image_downloader_;
 
-  // Holds the interface wrapper to the Global Resource Coordinator service.
-  std::unique_ptr<resource_coordinator::ResourceCoordinatorInterface>
-      frame_resource_coordinator_;
-
   // Tracks a navigation happening in this frame. Note that while there can be
   // two navigations in the same FrameTreeNode, there can only be one
   // navigation per RenderFrameHost.
@@ -1201,8 +1189,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // Callback for responding when
   // |FrameHostMsg_TextSurroundingSelectionResponse| message comes.
   TextSurroundingSelectionCallback text_surrounding_selection_callback_;
-
-  UniqueAudioOutputStreamFactoryPtr audio_output_stream_factory_;
 
   // Hosts media::mojom::InterfaceFactory for the RenderFrame and forwards
   // media::mojom::InterfaceFactory calls to the remote "media" service.

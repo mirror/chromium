@@ -58,7 +58,6 @@ class KeyboardContentsDelegate : public content::WebContentsDelegate,
 
   bool ShouldCreateWebContents(
       content::WebContents* web_contents,
-      content::RenderFrameHost* opener,
       content::SiteInstance* source_site_instance,
       int32_t route_id,
       int32_t main_frame_route_id,

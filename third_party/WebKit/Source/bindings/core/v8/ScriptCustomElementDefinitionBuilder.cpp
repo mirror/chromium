@@ -56,27 +56,23 @@ bool ScriptCustomElementDefinitionBuilder::CheckConstructorNotRegistered() {
 }
 
 bool ScriptCustomElementDefinitionBuilder::ValueForName(
-    v8::Isolate* isolate,
-    v8::Local<v8::Context>& context,
-    const v8::TryCatch& try_catch,
     const v8::Local<v8::Object>& object,
     const StringView& name,
     v8::Local<v8::Value>& value) const {
+  v8::Isolate* isolate = script_state_->GetIsolate();
+  v8::Local<v8::Context> context = script_state_->GetContext();
   v8::Local<v8::String> name_string = V8AtomicString(isolate, name);
+  v8::TryCatch try_catch(isolate);
   if (!object->Get(context, name_string).ToLocal(&value)) {
     exception_state_.RethrowV8Exception(try_catch.Exception());
     return false;
   }
-  return script_state_->ContextIsValid();
+  return true;
 }
 
 bool ScriptCustomElementDefinitionBuilder::CheckPrototype() {
-  v8::Isolate* isolate = script_state_->GetIsolate();
-  v8::Local<v8::Context> context = script_state_->GetContext();
-  v8::TryCatch try_catch(isolate);
   v8::Local<v8::Value> prototype_value;
-  if (!ValueForName(isolate, context, try_catch, constructor_, "prototype",
-                    prototype_value))
+  if (!ValueForName(constructor_, "prototype", prototype_value))
     return false;
   if (!prototype_value->IsObject()) {
     exception_state_.ThrowTypeError("constructor prototype is not an object");
@@ -89,15 +85,12 @@ bool ScriptCustomElementDefinitionBuilder::CheckPrototype() {
 }
 
 bool ScriptCustomElementDefinitionBuilder::CallableForName(
-    v8::Isolate* isolate,
-    v8::Local<v8::Context>& context,
-    const v8::TryCatch& try_catch,
     const StringView& name,
     v8::Local<v8::Function>& callback) const {
   v8::Local<v8::Value> value;
-  if (!ValueForName(isolate, context, try_catch, prototype_, name, value))
+  if (!ValueForName(prototype_, name, value))
     return false;
-  // "undefined" means "omitted", which is valid.
+  // "undefined" means "omitted", so return true.
   if (value->IsUndefined())
     return true;
   if (!value->IsFunction()) {
@@ -109,19 +102,16 @@ bool ScriptCustomElementDefinitionBuilder::CallableForName(
   return true;
 }
 
-bool ScriptCustomElementDefinitionBuilder::RetrieveObservedAttributes(
-    v8::Isolate* isolate,
-    v8::Local<v8::Context>& context,
-    const v8::TryCatch& try_catch) {
+bool ScriptCustomElementDefinitionBuilder::RetrieveObservedAttributes() {
   v8::Local<v8::Value> observed_attributes_value;
-  if (!ValueForName(isolate, context, try_catch, constructor_,
-                    "observedAttributes", observed_attributes_value))
+  if (!ValueForName(constructor_, "observedAttributes",
+                    observed_attributes_value))
     return false;
   if (observed_attributes_value->IsUndefined())
     return true;
   Vector<String> list = NativeValueTraits<IDLSequence<IDLString>>::NativeValue(
-      isolate, observed_attributes_value, exception_state_);
-  if (exception_state_.HadException() || !script_state_->ContextIsValid())
+      script_state_->GetIsolate(), observed_attributes_value, exception_state_);
+  if (exception_state_.HadException())
     return false;
   if (list.IsEmpty())
     return true;
@@ -134,27 +124,19 @@ bool ScriptCustomElementDefinitionBuilder::RetrieveObservedAttributes(
 bool ScriptCustomElementDefinitionBuilder::RememberOriginalProperties() {
   // Spec requires to use values of these properties at the point
   // CustomElementDefinition is built, even if JS changes them afterwards.
-  v8::Isolate* isolate = script_state_->GetIsolate();
-  v8::Local<v8::Context> context = script_state_->GetContext();
-  v8::TryCatch try_catch(isolate);
-  return CallableForName(isolate, context, try_catch, "connectedCallback",
-                         connected_callback_) &&
-         CallableForName(isolate, context, try_catch, "disconnectedCallback",
-                         disconnected_callback_) &&
-         CallableForName(isolate, context, try_catch, "adoptedCallback",
-                         adopted_callback_) &&
-         CallableForName(isolate, context, try_catch,
-                         "attributeChangedCallback",
+  return CallableForName("connectedCallback", connected_callback_) &&
+         CallableForName("disconnectedCallback", disconnected_callback_) &&
+         CallableForName("adoptedCallback", adopted_callback_) &&
+         CallableForName("attributeChangedCallback",
                          attribute_changed_callback_) &&
          (attribute_changed_callback_.IsEmpty() ||
-          RetrieveObservedAttributes(isolate, context, try_catch));
+          RetrieveObservedAttributes());
 }
 
 CustomElementDefinition* ScriptCustomElementDefinitionBuilder::Build(
-    const CustomElementDescriptor& descriptor,
-    CustomElementDefinition::Id id) {
+    const CustomElementDescriptor& descriptor) {
   return ScriptCustomElementDefinition::Create(
-      script_state_.Get(), registry_, descriptor, id, constructor_,
+      script_state_.Get(), registry_, descriptor, constructor_,
       connected_callback_, disconnected_callback_, adopted_callback_,
       attribute_changed_callback_, std::move(observed_attributes_));
 }

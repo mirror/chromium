@@ -201,9 +201,7 @@ GURL BasePingManager::SafeBrowsingHitUrl(
          hit_report.threat_type == SB_THREAT_TYPE_URL_UNWANTED ||
          hit_report.threat_type == SB_THREAT_TYPE_BINARY_MALWARE_URL ||
          hit_report.threat_type == SB_THREAT_TYPE_CLIENT_SIDE_PHISHING_URL ||
-         hit_report.threat_type == SB_THREAT_TYPE_CLIENT_SIDE_MALWARE_URL ||
-         hit_report.threat_type ==
-             SB_THREAT_TYPE_PASSWORD_PROTECTION_PHISHING_URL);
+         hit_report.threat_type == SB_THREAT_TYPE_CLIENT_SIDE_MALWARE_URL);
   std::string url = ProtocolManagerHelper::ComposeUrl(
       url_prefix_, "report", client_name_, version_, std::string(),
       hit_report.extended_reporting_level);
@@ -228,9 +226,6 @@ GURL BasePingManager::SafeBrowsingHitUrl(
     case SB_THREAT_TYPE_CLIENT_SIDE_MALWARE_URL:
       threat_list = "malcsdhit";
       break;
-    case SB_THREAT_TYPE_PASSWORD_PROTECTION_PHISHING_URL:
-      threat_list = "phishpphit";
-      break;
     default:
       NOTREACHED();
   }
@@ -251,9 +246,6 @@ GURL BasePingManager::SafeBrowsingHitUrl(
       break;
     case safe_browsing::ThreatSource::CLIENT_SIDE_DETECTION:
       threat_source = "csd";
-      break;
-    case safe_browsing::ThreatSource::PASSWORD_PROTECTION_SERVICE:
-      threat_source = "pps";
       break;
     case safe_browsing::ThreatSource::UNKNOWN:
       NOTREACHED();

@@ -49,7 +49,8 @@ class CONTENT_EXPORT IndexedDBTransaction {
 
   leveldb::Status Commit();
 
-  // This object is destroyed by this method.
+  // This object is destroyed by these method calls.
+  virtual void Abort();
   void Abort(const IndexedDBDatabaseError& error);
 
   // Called by the transaction coordinator when this transaction is unblocked.

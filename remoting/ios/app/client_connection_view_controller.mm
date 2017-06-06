@@ -8,16 +8,11 @@
 
 #import "remoting/ios/app/client_connection_view_controller.h"
 
-#import "base/mac/bind_objc_block.h"
 #import "ios/third_party/material_components_ios/src/components/ActivityIndicator/src/MDCActivityIndicator.h"
 #import "ios/third_party/material_components_ios/src/components/Buttons/src/MaterialButtons.h"
 #import "ios/third_party/material_components_ios/src/components/NavigationBar/src/MaterialNavigationBar.h"
-#import "remoting/ios/app/host_view_controller.h"
 #import "remoting/ios/app/pin_entry_view.h"
 #import "remoting/ios/domain/client_session_details.h"
-#import "remoting/ios/domain/host_info.h"
-#import "remoting/ios/facade/remoting_authentication.h"
-#import "remoting/ios/facade/remoting_service.h"
 #import "remoting/ios/session/remoting_client.h"
 
 #include "base/strings/sys_string_conversions.h"
@@ -45,43 +40,22 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   MDCNavigationBar* _navBar;
   PinEntryView* _pinEntryView;
   NSString* _remoteHostName;
-  RemotingClient* _client;
 }
 @end
 
 @implementation ClientConnectionViewController
 
 @synthesize state = _state;
+@synthesize delegate = _delegate;
 
-- (instancetype)initWithHostInfo:(HostInfo*)hostInfo {
+- (id)init {
   self = [super init];
   if (self) {
-    _client = [[RemotingClient alloc] init];
-
-    __weak RemotingClient* weakClient = _client;
-    [[RemotingService SharedInstance].authentication
-        callbackWithAccessToken:base::BindBlockArc(^(
-                                    remoting::OAuthTokenGetter::Status status,
-                                    const std::string& user_email,
-                                    const std::string& access_token) {
-          [weakClient connectToHost:hostInfo
-                           username:base::SysUTF8ToNSString(user_email)
-                        accessToken:base::SysUTF8ToNSString(access_token)];
-        })];
-
-    _remoteHostName = hostInfo.hostName;
-
-    // TODO(yuweih): This logic may be reused by other views.
-    UIButton* cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [cancelButton setTitle:@"CANCEL" forState:UIControlStateNormal];
-    [cancelButton setImage:[[UIImage imageNamed:@"Back"]
-                               imageFlippedForRightToLeftLayoutDirection]
-                  forState:UIControlStateNormal];
-    [cancelButton addTarget:self
-                     action:@selector(didTapCancel:)
-           forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem =
-        [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
+    self.navigationItem.rightBarButtonItem =
+        [[UIBarButtonItem alloc] initWithTitle:@"CANCEL"
+                                         style:UIBarButtonItemStylePlain
+                                        target:self
+                                        action:@selector(didTapCancel:)];
 
     _navBar = [[MDCNavigationBar alloc] initWithFrame:CGRectZero];
     [_navBar observeNavigationItem:self.navigationItem];
@@ -92,16 +66,7 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
     [mutator mutate:_navBar];
     [self.view addSubview:_navBar];
     _navBar.translatesAutoresizingMaskIntoConstraints = NO;
-
-    // Attach navBar to the top of the view.
-    [NSLayoutConstraint activateConstraints:@[
-      [[_navBar topAnchor] constraintEqualToAnchor:[self.view topAnchor]],
-      [[_navBar leadingAnchor]
-          constraintEqualToAnchor:[self.view leadingAnchor]],
-      [[_navBar trailingAnchor]
-          constraintEqualToAnchor:[self.view trailingAnchor]],
-      [[_navBar heightAnchor] constraintEqualToConstant:kBarHeight],
-    ]];
+    _remoteHostName = @"";
   }
   return self;
 }
@@ -153,6 +118,9 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
 
+  _navBar.frame = CGRectMake(0.f, 0.f, self.view.frame.size.width, kBarHeight);
+  [_navBar setNeedsLayout];
+
   _iconView.frame = CGRectMake(0, 0, kIconRadius * 2, kIconRadius * 2.f);
   _iconView.center =
       CGPointMake(self.view.center.x, self.view.center.y + kCenterShift);
@@ -203,10 +171,6 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   [super viewWillDisappear:animated];
   [_activityIndicator stopAnimating];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (BOOL)prefersStatusBarHidden {
-  return YES;
 }
 
 #pragma mark - Keyboard
@@ -262,6 +226,15 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   }
 }
 
+- (void)setDelegate:(id<ClientConnectionViewControllerDelegate>)delegate {
+  _delegate = delegate;
+  if (_delegate) {
+    _remoteHostName = [_delegate getConnectingHostName];
+    // To get the view to use the new remote host name.
+    [self setState:_state];
+  }
+}
+
 #pragma mark - Private
 
 - (void)showConnectingState {
@@ -295,17 +268,10 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   _activityIndicator.cycleColors = @[ [UIColor greenColor] ];
   [_activityIndicator startAnimating];
   _activityIndicator.progress = 1.0;
-
-  HostViewController* hostViewController =
-      [[HostViewController alloc] initWithClient:_client];
-  _client = nil;
-
-  // Replaces current (topmost) view controller with |hostViewController|.
-  NSMutableArray* controllers =
-      [self.navigationController.viewControllers mutableCopy];
-  [controllers removeLastObject];
-  [controllers addObject:hostViewController];
-  [self.navigationController setViewControllers:controllers animated:NO];
+  [self dismissViewControllerAnimated:YES
+                           completion:^{
+                             [_delegate clientConnected];
+                           }];
 }
 
 - (void)didProvidePin:(NSString*)pin createPairing:(BOOL)createPairing {
@@ -319,12 +285,12 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 }
 
 - (void)didTapCancel:(id)sender {
-  _client = nil;
-  [self.navigationController popViewControllerAnimated:YES];
+  NSLog(@"%@ was tapped.", NSStringFromClass([sender class]));
+  // TODO(nicholss): Need to cancel the pending connection.
+  [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)hostSessionStatusChanged:(NSNotification*)notification {
-  NSLog(@"hostSessionStatusChanged: %@", [notification userInfo]);
   ClientConnectionViewState state;
   ClientSessionDetails* sessionDetails =
       [[notification userInfo] objectForKey:kSessionDetails];

@@ -11,8 +11,6 @@
 
 namespace blink {
 
-class SharedBuffer;
-
 class CORE_EXPORT DOMArrayBuffer final : public DOMArrayBufferBase {
   DEFINE_WRAPPERTYPEINFO();
 
@@ -30,7 +28,6 @@ class CORE_EXPORT DOMArrayBuffer final : public DOMArrayBufferBase {
   static DOMArrayBuffer* Create(WTF::ArrayBufferContents& contents) {
     return Create(WTF::ArrayBuffer::Create(contents));
   }
-  static DOMArrayBuffer* Create(PassRefPtr<SharedBuffer>);
 
   // Only for use by XMLHttpRequest::responseArrayBuffer and
   // Internals::serializeObject.

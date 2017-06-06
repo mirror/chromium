@@ -1155,8 +1155,7 @@ bool TextAutosizer::IsWiderOrNarrowerDescendant(Cluster* cluster) {
       parent_deepest_block_containing_all_text));
 #endif
 
-  float content_width =
-      DeepestBlockContainingAllText(cluster)->ContentLogicalWidth().ToFloat();
+  float content_width = cluster->root_->ContentLogicalWidth().ToFloat();
   float cluster_text_width =
       parent_deepest_block_containing_all_text->ContentLogicalWidth().ToFloat();
 

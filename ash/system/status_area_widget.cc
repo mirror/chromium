@@ -148,13 +148,8 @@ void StatusAreaWidget::UpdateAfterLoginStatusChange(LoginStatus login_status) {
 }
 
 bool StatusAreaWidget::ShouldShowShelf() const {
-  // The system tray bubble may or may not want to force the shelf to be
-  // visible.
-  if (system_tray_ && system_tray_->IsSystemBubbleVisible())
-    return system_tray_->ShouldShowShelf();
-
-  // All other tray bubbles will force the shelf to be visible.
-  return views::TrayBubbleView::IsATrayBubbleOpen();
+  return (system_tray_ && system_tray_->ShouldShowShelf()) ||
+         views::TrayBubbleView::IsATrayBubbleOpen();
 }
 
 bool StatusAreaWidget::IsMessageBubbleShown() const {

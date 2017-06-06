@@ -216,10 +216,6 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
       CreateRendererFactorySelector(media_log.get(), use_media_player_renderer,
                                     GetDecoderFactory(), &media_observer);
 
-#if BUILDFLAG(ENABLE_MEDIA_REMOTING)
-  DCHECK(media_observer);
-#endif
-
   if (!url_index_.get() || url_index_->frame() != web_frame)
     url_index_.reset(new media::UrlIndex(web_frame));
 
@@ -353,7 +349,8 @@ MediaFactory::CreateRendererFactorySelector(
   std::unique_ptr<RemotingController> remoting_controller(
       new RemotingController(new media::remoting::SharedSession(
           std::move(remoting_source_request), std::move(remoter))));
-  *out_media_observer = remoting_controller->GetWeakPtr();
+  base::WeakPtr<media::MediaObserver> media_observer =
+      remoting_controller->GetWeakPtr();
 
   auto courier_factory =
       base::MakeUnique<media::remoting::CourierRendererFactory>(

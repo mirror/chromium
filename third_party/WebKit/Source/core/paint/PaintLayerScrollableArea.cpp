@@ -309,11 +309,9 @@ IntRect PaintLayerScrollableArea::ScrollCornerRect() const {
   bool has_vertical_bar = VerticalScrollbar();
   bool has_resizer = Box().Style()->Resize() != RESIZE_NONE;
   if ((has_horizontal_bar && has_vertical_bar) ||
-      (has_resizer && (has_horizontal_bar || has_vertical_bar))) {
-    return CornerRect(
-        Box(), HorizontalScrollbar(), VerticalScrollbar(),
-        Box().PixelSnappedBorderBoxRect(Layer()->SubpixelAccumulation()));
-  }
+      (has_resizer && (has_horizontal_bar || has_vertical_bar)))
+    return CornerRect(Box(), HorizontalScrollbar(), VerticalScrollbar(),
+                      Box().PixelSnappedBorderBoxRect());
   return IntRect();
 }
 
@@ -1158,8 +1156,7 @@ int PaintLayerScrollableArea::HorizontalScrollbarStart(int min_x) const {
   if (Box().ShouldPlaceBlockDirectionScrollbarOnLogicalLeft())
     x += HasVerticalScrollbar()
              ? VerticalScrollbar()->ScrollbarThickness()
-             : ResizerCornerRect(Box().PixelSnappedBorderBoxRect(
-                                     Layer()->SubpixelAccumulation()),
+             : ResizerCornerRect(Box().PixelSnappedBorderBoxRect(),
                                  kResizerForPointer)
                    .Width();
   return x;
@@ -1401,9 +1398,7 @@ void PaintLayerScrollableArea::PositionOverflowControls() {
   if (!HasScrollbar() && !Box().CanResize())
     return;
 
-  const IntRect border_box =
-      Box().PixelSnappedBorderBoxRect(layer_.SubpixelAccumulation());
-
+  const IntRect border_box = Box().PixelSnappedBorderBoxRect();
   if (Scrollbar* vertical_scrollbar = this->VerticalScrollbar())
     vertical_scrollbar->SetFrameRect(RectForVerticalScrollbar(border_box));
 
@@ -1459,9 +1454,8 @@ bool PaintLayerScrollableArea::HitTestOverflowControls(
 
   IntRect resize_control_rect;
   if (Box().Style()->Resize() != RESIZE_NONE) {
-    resize_control_rect = ResizerCornerRect(
-        Box().PixelSnappedBorderBoxRect(Layer()->SubpixelAccumulation()),
-        kResizerForPointer);
+    resize_control_rect = ResizerCornerRect(Box().PixelSnappedBorderBoxRect(),
+                                            kResizerForPointer);
     if (resize_control_rect.Contains(local_point))
       return true;
   }
@@ -1534,11 +1528,9 @@ IntRect PaintLayerScrollableArea::ResizerCornerRect(
 
 IntRect PaintLayerScrollableArea::ScrollCornerAndResizerRect() const {
   IntRect scroll_corner_and_resizer = ScrollCornerRect();
-  if (scroll_corner_and_resizer.IsEmpty()) {
+  if (scroll_corner_and_resizer.IsEmpty())
     scroll_corner_and_resizer = ResizerCornerRect(
-        Box().PixelSnappedBorderBoxRect(Layer()->SubpixelAccumulation()),
-        kResizerForPointer);
-  }
+        Box().PixelSnappedBorderBoxRect(), kResizerForPointer);
   return scroll_corner_and_resizer;
 }
 

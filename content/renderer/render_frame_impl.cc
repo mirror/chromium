@@ -71,6 +71,7 @@
 #include "content/common/swapped_out_messages.h"
 #include "content/common/view_messages.h"
 #include "content/common/worker_url_loader_factory_provider.mojom.h"
+#include "content/public/child/url_loader_throttle.h"
 #include "content/public/common/appcache_info.h"
 #include "content/public/common/associated_interface_provider.h"
 #include "content/public/common/bindings_policy.h"
@@ -86,7 +87,6 @@
 #include "content/public/common/resource_response.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/url_constants.h"
-#include "content/public/common/url_loader_throttle.h"
 #include "content/public/common/url_utils.h"
 #include "content/public/renderer/browser_plugin_delegate.h"
 #include "content/public/renderer/content_renderer_client.h"
@@ -118,7 +118,6 @@
 #include "content/renderer/internal_document_state_data.h"
 #include "content/renderer/manifest/manifest_manager.h"
 #include "content/renderer/media/audio_device_factory.h"
-#include "content/renderer/media/audio_ipc_factory.h"
 #include "content/renderer/media/media_devices_listener_impl.h"
 #include "content/renderer/media/media_permission_dispatcher.h"
 #include "content/renderer/media/media_stream_dispatcher.h"
@@ -819,8 +818,7 @@ struct RenderFrameImpl::PendingFileChooser {
 const std::string& UniqueNameForWebFrame(blink::WebFrame* frame) {
   return frame->IsWebLocalFrame()
              ? RenderFrameImpl::FromWebFrame(frame)->unique_name()
-             : RenderFrameProxy::FromWebFrame(frame->ToWebRemoteFrame())
-                   ->unique_name();
+             : RenderFrameProxy::FromWebFrame(frame)->unique_name();
 }
 
 RenderFrameImpl::UniqueNameFrameAdapter::UniqueNameFrameAdapter(
@@ -1075,10 +1073,8 @@ void RenderFrame::ForEach(RenderFrameVisitor* visitor) {
 int RenderFrame::GetRoutingIdForWebFrame(blink::WebFrame* web_frame) {
   if (!web_frame)
     return MSG_ROUTING_NONE;
-  if (web_frame->IsWebRemoteFrame()) {
-    return RenderFrameProxy::FromWebFrame(web_frame->ToWebRemoteFrame())
-        ->routing_id();
-  }
+  if (web_frame->IsWebRemoteFrame())
+    return RenderFrameProxy::FromWebFrame(web_frame)->routing_id();
   return RenderFrameImpl::FromWebFrame(web_frame)->GetRoutingID();
 }
 
@@ -1232,9 +1228,6 @@ RenderFrameImpl::~RenderFrameImpl() {
   if (input_handler_manager)
     input_handler_manager->UnregisterRoutingID(GetRoutingID());
 
-  if (auto* factory = AudioIPCFactory::get())
-    factory->MaybeDeregisterRemoteFactory(GetRoutingID());
-
   if (is_main_frame_) {
     // Ensure the RenderView doesn't point to this object, once it is destroyed.
     // TODO(nasko): Add a check that the |main_render_frame_| of |render_view_|
@@ -1307,10 +1300,6 @@ void RenderFrameImpl::Initialize() {
     input_handler_manager->RegisterAssociatedRenderFrameRoutingID(
         GetRoutingID(), render_view_->GetRoutingID());
   }
-
-  // AudioIPCFactory may be null in tests.
-  if (auto* factory = AudioIPCFactory::get())
-    factory->MaybeRegisterRemoteFactory(GetRoutingID(), GetRemoteInterfaces());
 
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();

@@ -464,15 +464,15 @@ views::View* TrayCast::CreateDetailedView(LoginStatus status) {
   return detailed_;
 }
 
-void TrayCast::OnTrayViewDestroyed() {
+void TrayCast::DestroyTrayView() {
   tray_ = nullptr;
 }
 
-void TrayCast::OnDefaultViewDestroyed() {
+void TrayCast::DestroyDefaultView() {
   default_ = nullptr;
 }
 
-void TrayCast::OnDetailedViewDestroyed() {
+void TrayCast::DestroyDetailedView() {
   detailed_ = nullptr;
 }
 

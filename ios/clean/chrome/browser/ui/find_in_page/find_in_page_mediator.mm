@@ -72,11 +72,9 @@
 
 - (void)stopFinding {
   web::WebState* webState = self.webStateList->GetActiveWebState();
-  if (webState) {
-    FindTabHelper* helper = FindTabHelper::FromWebState(webState);
-    DCHECK(helper);
-    helper->StopFinding(nil);
-  }
+  FindTabHelper* helper = FindTabHelper::FromWebState(webState);
+  DCHECK(helper);
+  helper->StopFinding(nil);
 }
 
 - (void)findResultsAvailable:(FindInPageModel*)model {

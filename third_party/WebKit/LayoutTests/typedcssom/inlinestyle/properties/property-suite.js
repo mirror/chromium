@@ -103,8 +103,7 @@ function runSetterTests(
   // Negative tests
   for (let invalidObject of invalidObjects) {
     let name = invalidObject instanceof CSSStyleValue ?
-        invalidObject.constructor.name + ' "' + invalidObject.toString() + '"' :
-        invalidObject;
+        invalidObject.constructor.name : invalidObject;
     test(function() {
       assert_throws(new TypeError(), function() {
         element.styleMap.set(propertyName, invalidObject);

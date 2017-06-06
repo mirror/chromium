@@ -44,7 +44,8 @@ scoped_refptr<ParsedCertificate> ParseCertificateFromFile(
           reinterpret_cast<const uint8_t*>(data.data()), data.size(), nullptr)),
       options, &errors);
 
-  VerifyCertErrors(expected_errors, errors, test_file_path);
+  EXPECT_EQ(expected_errors, errors.ToDebugString()) << "Test file: "
+                                                     << test_file_path;
 
   // TODO(crbug.com/634443): Every parse failure being tested should emit error
   // information.

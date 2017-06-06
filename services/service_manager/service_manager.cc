@@ -336,13 +336,13 @@ class ServiceManager::Instance
           target_identity_(target_identity),
           service_manager_(service_manager),
           target_(std::move(target)),
-          source_binding_(this, std::move(source_request)) {
+          source_binding_(this, std::move(source_request)) {}
+    ~InterfaceProviderImpl() override {
       target_.set_connection_error_handler(base::Bind(
           &InterfaceProviderImpl::OnConnectionError, base::Unretained(this)));
       source_binding_.set_connection_error_handler(base::Bind(
           &InterfaceProviderImpl::OnConnectionError, base::Unretained(this)));
     }
-    ~InterfaceProviderImpl() override {}
 
    private:
     // mojom::InterfaceProvider:

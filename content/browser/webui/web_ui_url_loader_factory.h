@@ -10,8 +10,8 @@
 namespace content {
 class FrameTreeNode;
 
-// Creates a URLLoaderFactory interface pointer for serving WebUI requests.
-mojom::URLLoaderFactoryPtr CreateWebUIURLLoader(FrameTreeNode* node);
+// Returns a URLLoaderFactory interface pointer for serving WebUI requests.
+mojom::URLLoaderFactoryPtr GetWebUIURLLoader(FrameTreeNode* node);
 
 }  // namespace content
 

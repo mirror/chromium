@@ -374,12 +374,12 @@ ResourceProvider::Child::~Child() {}
 ResourceProvider::Settings::Settings(
     ContextProvider* compositor_context_provider,
     bool delegated_sync_points_required,
-    bool enable_color_correct_rasterization,
     const ResourceSettings& resource_settings)
     : default_resource_type(resource_settings.use_gpu_memory_buffer_resources
                                 ? RESOURCE_TYPE_GPU_MEMORY_BUFFER
                                 : RESOURCE_TYPE_GL_TEXTURE),
-      enable_color_correct_rasterization(enable_color_correct_rasterization),
+      enable_color_correct_rasterization(
+          resource_settings.enable_color_correct_rasterization),
       delegated_sync_points_required(delegated_sync_points_required) {
   if (!compositor_context_provider) {
     default_resource_type = RESOURCE_TYPE_BITMAP;
@@ -420,11 +420,9 @@ ResourceProvider::ResourceProvider(
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     BlockingTaskRunner* blocking_main_thread_task_runner,
     bool delegated_sync_points_required,
-    bool enable_color_correct_rasterization,
     const ResourceSettings& resource_settings)
     : settings_(compositor_context_provider,
                 delegated_sync_points_required,
-                enable_color_correct_rasterization,
                 resource_settings),
       compositor_context_provider_(compositor_context_provider),
       shared_bitmap_manager_(shared_bitmap_manager),

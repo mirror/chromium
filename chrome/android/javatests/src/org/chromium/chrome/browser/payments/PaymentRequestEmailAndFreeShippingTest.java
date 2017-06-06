@@ -72,7 +72,7 @@ public class PaymentRequestEmailAndFreeShippingTest implements MainActivityStart
     }
 
     /**
-     * Test that ending a payment request that requires and email address and a shipping address
+     * Test that starting a payment request that requires and email address and a shipping address
      * results in the appropriate metric being logged in the PaymentRequest.RequestedInformation
      * histogram.
      */
@@ -81,11 +81,8 @@ public class PaymentRequestEmailAndFreeShippingTest implements MainActivityStart
     @Feature({"Payments"})
     public void testRequestedInformationMetric()
             throws InterruptedException, ExecutionException, TimeoutException {
-        // Start and cancel the Payment Request.
+        // Start the Payment Request.
         mPaymentRequestTestRule.triggerUIAndWait(mPaymentRequestTestRule.getReadyToPay());
-        mPaymentRequestTestRule.clickAndWait(
-                R.id.close_button, mPaymentRequestTestRule.getDismissed());
-        mPaymentRequestTestRule.expectResultContains(new String[] {"Request cancelled"});
 
         // Make sure that only the appropriate enum value was logged.
         for (int i = 0; i < RequestedInformation.MAX; ++i) {
@@ -94,30 +91,5 @@ public class PaymentRequestEmailAndFreeShippingTest implements MainActivityStart
                     RecordHistogram.getHistogramValueCountForTesting(
                             "PaymentRequest.RequestedInformation", i));
         }
-    }
-
-    /**
-     * Adding a new shipping address should not crash when updating the email-only contact info
-     * section.
-     */
-    @Test
-    @MediumTest
-    @Feature({"Payments"})
-    public void testAddAddressNoCrash()
-            throws InterruptedException, ExecutionException, TimeoutException {
-        mPaymentRequestTestRule.triggerUIAndWait(mPaymentRequestTestRule.getReadyForInput());
-        mPaymentRequestTestRule.clickInShippingAddressAndWait(
-                R.id.payments_section, mPaymentRequestTestRule.getReadyForInput());
-        mPaymentRequestTestRule.clickInShippingAddressAndWait(
-                R.id.payments_add_option_button, mPaymentRequestTestRule.getReadyToEdit());
-        mPaymentRequestTestRule.setTextInEditorAndWait(
-                new String[] {"Bob", "Google", "1600 Amphitheatre Pkwy", "Mountain View", "CA",
-                        "94043", "650-253-0000"},
-                mPaymentRequestTestRule.getEditorTextUpdate());
-        mPaymentRequestTestRule.clickInEditorAndWait(
-                R.id.payments_edit_done_button, mPaymentRequestTestRule.getReadyForInput());
-        mPaymentRequestTestRule.clickAndWait(
-                R.id.close_button, mPaymentRequestTestRule.getDismissed());
-        mPaymentRequestTestRule.expectResultContains(new String[] {"Request cancelled"});
     }
 }

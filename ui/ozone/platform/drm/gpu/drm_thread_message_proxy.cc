@@ -239,10 +239,8 @@ void DrmThreadMessageProxy::OnSetColorCorrection(
 
 void DrmThreadMessageProxy::OnCheckOverlayCapabilitiesCallback(
     gfx::AcceleratedWidget widget,
-    const std::vector<OverlayCheck_Params>& overlays,
-    const std::vector<OverlayCheckReturn_Params>& returns) const {
-  sender_->Send(
-      new OzoneHostMsg_OverlayCapabilitiesReceived(widget, overlays, returns));
+    const std::vector<OverlayCheck_Params>& overlays) const {
+  sender_->Send(new OzoneHostMsg_OverlayCapabilitiesReceived(widget, overlays));
 }
 
 void DrmThreadMessageProxy::OnRefreshNativeDisplaysCallback(

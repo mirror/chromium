@@ -141,7 +141,6 @@ TEST(LayerImplTest, VerifyPendingLayerChangesAreTrackedProperly) {
 
   root->test_properties()->force_render_surface = true;
   root->SetMasksToBounds(true);
-  root->SetScrollClipLayer(root_clip->id());
   root->layer_tree_impl()->ResetAllChangeTracking();
 
   root->test_properties()->AddChild(
@@ -623,7 +622,7 @@ TEST_F(LayerImplScrollTest, ScrollUserUnscrollableLayer) {
   gfx::ScrollOffset scroll_offset(10, 5);
   gfx::Vector2dF scroll_delta(20.5f, 8.5f);
 
-  layer()->test_properties()->user_scrollable_vertical = false;
+  layer()->set_user_scrollable_vertical(false);
   layer()->layer_tree_impl()->property_trees()->needs_rebuild = true;
   layer()->layer_tree_impl()->BuildLayerListAndPropertyTreesForTesting();
   scroll_tree(layer())->UpdateScrollOffsetBaseForTesting(layer()->id(),

@@ -163,7 +163,6 @@ class DriveWebContentsManager : public content::WebContentsObserver,
   // content::WebContentsDelegate overrides:
   bool ShouldCreateWebContents(
       content::WebContents* web_contents,
-      content::RenderFrameHost* opener,
       content::SiteInstance* source_site_instance,
       int32_t route_id,
       int32_t main_frame_route_id,
@@ -277,7 +276,6 @@ void DriveWebContentsManager::DidFailLoad(
 
 bool DriveWebContentsManager::ShouldCreateWebContents(
     content::WebContents* web_contents,
-    content::RenderFrameHost* opener,
     content::SiteInstance* source_site_instance,
     int32_t route_id,
     int32_t main_frame_route_id,
@@ -308,14 +306,11 @@ bool DriveWebContentsManager::ShouldCreateWebContents(
       base::UTF8ToUTF16(app_id_))) {
     return false;
   }
-  // drive_first_run/app/manifest.json sets allow_js_access to false and
-  // therefore we are creating a new SiteInstance (and thus a new renderer
-  // process) here, so we must use MSG_ROUTING_NONE and we cannot pass the
-  // opener (similarily to how allow_js_access:false is handled in
-  // Browser::MaybeCreateBackgroundContents).
+  // We are creating a new SiteInstance (and thus a new renderer process) here,
+  // so we must not use |route_id|, etc, which are IDs in a different process.
   BackgroundContents* contents =
       background_contents_service->CreateBackgroundContents(
-          content::SiteInstance::Create(profile_), nullptr, MSG_ROUTING_NONE,
+          content::SiteInstance::Create(profile_), MSG_ROUTING_NONE,
           MSG_ROUTING_NONE, MSG_ROUTING_NONE, profile_, frame_name,
           base::ASCIIToUTF16(app_id_), partition_id, session_storage_namespace);
 

@@ -34,9 +34,7 @@ body {
 
 h1 {
   color: rgba(0,0,0,.38);
-  font-family: Roboto-Regular;
   font-size: 1.037037em;
-  font-weight: normal;
   line-height: 1.4em;
   margin: 8px 0 8px;
 }
@@ -57,11 +55,10 @@ h1 {
 
 .icon {
   background-image: url(images/blocked.svg);
-  background-position: center;
   height: 20vh;
   margin: 0 auto;
-  max-height: 24px;
-  max-width: 24px;
+  max-height: 36px;
+  max-width: 36px;
   min-height: 18px;
   min-width: 18px;
   opacity: .54;
@@ -99,8 +96,8 @@ h1 {
 @media (min-height:25em) and (min-width:37.5em),
        (min-height:37.5em) and (min-width:25em) {
   .icon {
-    max-height: 36px;
-    max-width: 36px;
+    height: 36px;
+    width: 36px;
   }
 }
 

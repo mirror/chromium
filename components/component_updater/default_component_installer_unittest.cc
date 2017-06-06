@@ -244,8 +244,6 @@ TEST_F(DefaultComponentInstallerTest, RegisterComponent) {
     base::Closure quit_closure_;
   };
 
-  base::ScopedPathOverride scoped_path_override(DIR_COMPONENT_USER);
-
   const std::string id("jebgalgnebhfojomionfpkfelancnnkf");
 
   // Quit after one update check has been fired.

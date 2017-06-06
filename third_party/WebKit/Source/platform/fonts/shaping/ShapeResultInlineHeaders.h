@@ -99,7 +99,7 @@ struct ShapeResult::RunInfo {
   }
 
   // Creates a new RunInfo instance representing a subset of the current run.
-  std::unique_ptr<RunInfo> CreateSubRun(unsigned start, unsigned end) {
+  RunInfo* CreateSubRun(unsigned start, unsigned end) {
     DCHECK(end > start);
     unsigned number_of_characters = std::min(end - start, num_characters_);
 
@@ -121,9 +121,9 @@ struct ShapeResult::RunInfo {
           });
     }
 
-    auto run = base::MakeUnique<RunInfo>(font_data_.Get(), direction_, script_,
-                                         start_index_ + start, number_of_glyphs,
-                                         number_of_characters);
+    RunInfo* run =
+        new RunInfo(font_data_.Get(), direction_, script_, start_index_ + start,
+                    number_of_glyphs, number_of_characters);
 
     unsigned sub_glyph_index = 0;
     float total_advance = 0;

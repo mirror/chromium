@@ -536,7 +536,7 @@ static void AddMarker(Document* document,
                       DocumentMarker::MarkerType type,
                       int location,
                       int length,
-                      const Vector<String>& descriptions) {
+                      const String& description) {
   DCHECK(type == DocumentMarker::kSpelling || type == DocumentMarker::kGrammar)
       << type;
   DCHECK_GT(length, 0);
@@ -547,13 +547,6 @@ static void AddMarker(Document* document,
     return;
   if (!SpellChecker::IsSpellCheckingEnabledAt(range_to_mark.EndPosition()))
     return;
-
-  String description;
-  for (size_t i = 0; i < descriptions.size(); ++i) {
-    if (i != 0)
-      description.append('\n');
-    description.append(descriptions[i]);
-  }
 
   if (type == DocumentMarker::kSpelling) {
     document->Markers().AddSpellingMarker(range_to_mark, description);
@@ -614,7 +607,7 @@ void SpellChecker::MarkAndReplaceFor(
     // behavior and should be rewritten.
     // Attempt to save the caret position so we can restore it later if needed
     const Position& caret_position =
-        GetFrame().Selection().ComputeVisibleSelectionInDOMTree().End();
+        GetFrame().Selection().ComputeVisibleSelectionInDOMTree().end();
     const Position& paragraph_start = checking_range.StartPosition();
     const int selection_offset =
         paragraph_start < caret_position
@@ -650,7 +643,7 @@ void SpellChecker::MarkAndReplaceFor(
           continue;
         AddMarker(GetFrame().GetDocument(), paragraph.CheckingRange(),
                   DocumentMarker::kSpelling, result_location, result_length,
-                  result.replacements);
+                  result.replacement);
         continue;
 
       case kTextDecorationTypeGrammar:
@@ -666,7 +659,7 @@ void SpellChecker::MarkAndReplaceFor(
             continue;
           AddMarker(GetFrame().GetDocument(), paragraph.CheckingRange(),
                     DocumentMarker::kGrammar, result_location + detail.location,
-                    detail.length, result.replacements);
+                    detail.length, result.replacement);
         }
         continue;
     }
@@ -1146,15 +1139,15 @@ std::pair<String, int> SpellChecker::FindFirstMisspelling(const Position& start,
   // needs that much context. Determine the character offset from the start of
   // the paragraph to the start of the original search range, since we will want
   // to ignore results in this area.
-  EphemeralRange paragraph_range =
-      ExpandToParagraphBoundary(EphemeralRange(start, start));
-  Position paragraph_start = paragraph_range.StartPosition();
-  Position paragraph_end = paragraph_range.EndPosition();
+  Position paragraph_start =
+      StartOfParagraph(CreateVisiblePosition(start)).ToParentAnchoredPosition();
+  Position paragraph_end = end;
+  int total_range_length =
+      TextIterator::RangeLength(paragraph_start, paragraph_end);
+  paragraph_end =
+      EndOfParagraph(CreateVisiblePosition(start)).ToParentAnchoredPosition();
 
-  const int total_range_length =
-      TextIterator::RangeLength(paragraph_start, end);
-  const int range_start_offset =
-      TextIterator::RangeLength(paragraph_start, start);
+  int range_start_offset = TextIterator::RangeLength(paragraph_start, start);
   int total_length_processed = 0;
 
   bool first_iteration = true;
@@ -1175,7 +1168,8 @@ std::pair<String, int> SpellChecker::FindFirstMisspelling(const Position& start,
       last_iteration = true;
     }
     if (current_start_offset < current_end_offset) {
-      String paragraph_string = PlainText(paragraph_range);
+      String paragraph_string =
+          PlainText(EphemeralRange(paragraph_start, paragraph_end));
       if (paragraph_string.length() > 0) {
         int spelling_location = 0;
 
@@ -1209,16 +1203,14 @@ std::pair<String, int> SpellChecker::FindFirstMisspelling(const Position& start,
     if (last_iteration ||
         total_length_processed + current_length >= total_range_length)
       break;
-    Position new_paragraph_start =
-        StartOfNextParagraph(CreateVisiblePosition(paragraph_end))
-            .DeepEquivalent();
+    VisiblePosition new_paragraph_start =
+        StartOfNextParagraph(CreateVisiblePosition(paragraph_end));
     if (new_paragraph_start.IsNull())
       break;
 
-    paragraph_range = ExpandToParagraphBoundary(
-        EphemeralRange(new_paragraph_start, new_paragraph_start));
-    paragraph_start = paragraph_range.StartPosition();
-    paragraph_end = paragraph_range.EndPosition();
+    paragraph_start = new_paragraph_start.ToParentAnchoredPosition();
+    paragraph_end =
+        EndOfParagraph(new_paragraph_start).ToParentAnchoredPosition();
     first_iteration = false;
     total_length_processed += current_length;
   }

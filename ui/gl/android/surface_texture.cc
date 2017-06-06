@@ -16,9 +16,13 @@
 namespace gl {
 
 scoped_refptr<SurfaceTexture> SurfaceTexture::Create(int texture_id) {
+  return new SurfaceTexture(CreateJavaSurfaceTexture(texture_id));
+}
+
+base::android::ScopedJavaLocalRef<jobject>
+SurfaceTexture::CreateJavaSurfaceTexture(int texture_id) {
   JNIEnv* env = base::android::AttachCurrentThread();
-  return new SurfaceTexture(
-      Java_SurfaceTexturePlatformWrapper_create(env, texture_id));
+  return Java_SurfaceTexturePlatformWrapper_create(env, texture_id);
 }
 
 SurfaceTexture::SurfaceTexture(
@@ -27,11 +31,20 @@ SurfaceTexture::SurfaceTexture(
 }
 
 SurfaceTexture::~SurfaceTexture() {
-  JNIEnv* env = base::android::AttachCurrentThread();
-  Java_SurfaceTexturePlatformWrapper_destroy(env, j_surface_texture_);
+  DestroyJavaObject();
 }
 
-void SurfaceTexture::SetFrameAvailableCallback(const base::Closure& callback) {
+void SurfaceTexture::DestroyJavaObject() {
+  if (j_surface_texture_.is_null())
+    return;
+
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_SurfaceTexturePlatformWrapper_destroy(env, j_surface_texture_);
+  j_surface_texture_.Reset();
+}
+
+void SurfaceTexture::SetFrameAvailableCallback(
+    const base::Closure& callback) {
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_SurfaceTexturePlatformWrapper_setFrameAvailableCallback(
       env, j_surface_texture_,
@@ -89,12 +102,12 @@ ANativeWindow* SurfaceTexture::CreateSurface() {
   // ANativeWindow_fromSurface are released immediately. This is needed as a
   // workaround for https://code.google.com/p/android/issues/detail?id=68174
   base::android::ScopedJavaLocalFrame scoped_local_reference_frame(env);
-  ANativeWindow* native_window =
-      ANativeWindow_fromSurface(env, surface.j_surface().obj());
+  ANativeWindow* native_window = ANativeWindow_fromSurface(
+      env, surface.j_surface().obj());
   return native_window;
 }
 
-void SurfaceTexture::ReleaseBackBuffers() {
+void SurfaceTexture::ReleaseSurfaceTexture() {
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_SurfaceTexturePlatformWrapper_release(env, j_surface_texture_);
 }

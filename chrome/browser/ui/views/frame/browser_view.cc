@@ -137,6 +137,7 @@
 #include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/controls/webview/webview.h"
 #include "ui/views/focus/external_focus_tracker.h"
+#include "ui/views/focus/view_storage.h"
 #include "ui/views/layout/grid_layout.h"
 #include "ui/views/widget/native_widget.h"
 #include "ui/views/widget/root_view.h"
@@ -196,6 +197,10 @@ void PaintDetachedBookmarkBar(gfx::Canvas* canvas,
   // Paint background for detached state; if animating, this is fade in/out.
   const ui::ThemeProvider* tp = view->GetThemeProvider();
   gfx::Rect fill_rect = view->GetLocalBounds();
+  // We have to not color the top 1dp, because that should be painted by the
+  // toolbar. We will, however, paint the 1px separator at the bottom of the
+  // first dp. See crbug.com/610359
+  fill_rect.Inset(0, 1, 0, 0);
 
   // In detached mode, the bar is meant to overlap with |contents_container_|.
   // The detached background color may be partially transparent, but the layer
@@ -395,6 +400,8 @@ const char BrowserView::kViewClassName[] = "BrowserView";
 
 BrowserView::BrowserView()
     : views::ClientView(nullptr, nullptr),
+      last_focused_view_storage_id_(
+          views::ViewStorage::GetInstance()->CreateStorageID()),
       frame_(nullptr),
       top_container_(nullptr),
       tabstrip_(nullptr),
@@ -2093,7 +2100,7 @@ void BrowserView::InitViews() {
   devtools_web_view_->SetVisible(false);
 
   contents_container_ = new views::View();
-  contents_container_->SetBackground(views::CreateSolidBackground(
+  contents_container_->set_background(views::Background::CreateSolidBackground(
       GetThemeProvider()->GetColor(ThemeProperties::COLOR_CONTROL_BACKGROUND)));
   contents_container_->AddChildView(devtools_web_view_);
   contents_container_->AddChildView(contents_web_view_);
@@ -2201,9 +2208,8 @@ bool BrowserView::MaybeShowBookmarkBar(WebContents* contents) {
   if (!bookmark_bar_view_.get()) {
     bookmark_bar_view_.reset(new BookmarkBarView(browser_.get(), this));
     bookmark_bar_view_->set_owned_by_client();
-    bookmark_bar_view_->SetBackground(
-        base::MakeUnique<BookmarkBarViewBackground>(this,
-                                                    bookmark_bar_view_.get()));
+    bookmark_bar_view_->set_background(
+        new BookmarkBarViewBackground(this, bookmark_bar_view_.get()));
     bookmark_bar_view_->SetBookmarkBarState(
         browser_->bookmark_bar_state(),
         BookmarkBar::DONT_ANIMATE_STATE_CHANGE);
@@ -2540,7 +2546,8 @@ int BrowserView::GetRenderViewHeightInsetWithDetachedBookmarkBar() {
   }
   // Don't use bookmark_bar_view_->height() which won't be the final height if
   // the bookmark bar is animating.
-  return chrome::kNTPBookmarkBarHeight;
+  return chrome::kNTPBookmarkBarHeight -
+         views::NonClientFrameView::kClientEdgeThickness;
 }
 
 void BrowserView::ExecuteExtensionCommand(

@@ -37,8 +37,11 @@ FaceDetector::FaceDetector(const FaceDetectorOptions& options)
       &FaceDetector::OnFaceServiceConnectionError, WrapWeakPersistent(this))));
 }
 
-ScriptPromise FaceDetector::DoDetect(ScriptPromiseResolver* resolver,
-                                     skia::mojom::blink::BitmapPtr bitmap) {
+ScriptPromise FaceDetector::DoDetect(
+    ScriptPromiseResolver* resolver,
+    mojo::ScopedSharedBufferHandle shared_buffer_handle,
+    int image_width,
+    int image_height) {
   ScriptPromise promise = resolver->Promise();
   if (!face_service_) {
     resolver->Reject(DOMException::Create(
@@ -46,7 +49,8 @@ ScriptPromise FaceDetector::DoDetect(ScriptPromiseResolver* resolver,
     return promise;
   }
   face_service_requests_.insert(resolver);
-  face_service_->Detect(std::move(bitmap),
+  face_service_->Detect(std::move(shared_buffer_handle), image_width,
+                        image_height,
                         ConvertToBaseCallback(WTF::Bind(
                             &FaceDetector::OnDetectFaces, WrapPersistent(this),
                             WrapPersistent(resolver))));

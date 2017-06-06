@@ -184,7 +184,9 @@ class TestDelegateBase : public BidirectionalStream::Delegate {
   void SendData(const scoped_refptr<IOBuffer>& data,
                 int length,
                 bool end_of_stream) {
-    SendvData({data}, {length}, end_of_stream);
+    not_expect_callback_ = true;
+    stream_->SendData(data, length, end_of_stream);
+    not_expect_callback_ = false;
   }
 
   void SendvData(const std::vector<scoped_refptr<IOBuffer>>& data,
@@ -767,7 +769,7 @@ TEST_F(BidirectionalStreamTest, TestNetLogContainEntries) {
       entries, index, NetLogEventType::BIDIRECTIONAL_STREAM_RECV_TRAILERS,
       NetLogEventPhase::NONE);
   index = ExpectLogContainsSomewhere(
-      entries, index, NetLogEventType::BIDIRECTIONAL_STREAM_SENDV_DATA,
+      entries, index, NetLogEventType::BIDIRECTIONAL_STREAM_SEND_DATA,
       NetLogEventPhase::NONE);
   index = ExpectLogContainsSomewhere(
       entries, index, NetLogEventType::BIDIRECTIONAL_STREAM_READ_DATA,

@@ -4,9 +4,6 @@
 
 #include "services/resource_coordinator/resource_coordinator_service.h"
 
-#include <string>
-#include <utility>
-
 #include "base/macros.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_provider_impl.h"
 #include "services/service_manager/public/cpp/service_context.h"
@@ -27,7 +24,8 @@ void ResourceCoordinatorService::OnStart() {
       base::Bind(&service_manager::ServiceContext::RequestQuit,
                  base::Unretained(context()))));
 
-  coordination_unit_manager_.OnStart(&registry_, ref_factory_.get());
+  registry_.AddInterface(base::Bind(&CoordinationUnitProviderImpl::Create,
+                                    base::Unretained(ref_factory_.get())));
 }
 
 void ResourceCoordinatorService::OnBindInterface(
@@ -38,4 +36,4 @@ void ResourceCoordinatorService::OnBindInterface(
                           std::move(interface_pipe));
 }
 
-}  // namespace resource_coordinator
+}  // namespace speed

@@ -133,8 +133,8 @@ class ProfileAttributesStorageTest : public testing::Test {
   }
 
  private:
-  content::TestBrowserThreadBundle thread_bundle_;
   TestingProfileManager testing_profile_manager_;
+  content::TestBrowserThreadBundle thread_bundle_;
 };
 
 class ProfileAttributesTestObserver

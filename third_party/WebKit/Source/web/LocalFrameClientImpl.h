@@ -107,7 +107,6 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   void DispatchDidChangeThemeColor() override;
   NavigationPolicy DecidePolicyForNavigation(
       const ResourceRequest&,
-      Document* origin_document,
       DocumentLoader*,
       NavigationType,
       NavigationPolicy,
@@ -150,7 +149,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
                           const WTF::AtomicString& name,
                           HTMLFrameOwnerElement*) override;
   virtual bool CanCreatePluginWithoutRenderer(const String& mime_type) const;
-  PluginView* CreatePlugin(HTMLPlugInElement&,
+  PluginView* CreatePlugin(HTMLPlugInElement*,
                            const KURL&,
                            const Vector<WTF::String>&,
                            const Vector<WTF::String>&,

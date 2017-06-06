@@ -140,7 +140,7 @@ bool Invalidation::Equals(const Invalidation& other) const {
 
 std::unique_ptr<base::DictionaryValue> Invalidation::ToValue() const {
   std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue());
-  value->Set(kObjectIdKey, ObjectIdToValue(id_));
+  value->Set(kObjectIdKey, ObjectIdToValue(id_).release());
   if (is_unknown_version_) {
     value->SetBoolean(kIsUnknownVersionKey, true);
   } else {

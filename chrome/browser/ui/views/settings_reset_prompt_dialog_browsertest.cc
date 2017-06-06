@@ -68,6 +68,8 @@ class MockSettingsResetPromptModel
       : SettingsResetPromptModel(
             profile,
             base::MakeUnique<NiceMock<MockSettingsResetPromptConfig>>(),
+            base::MakeUnique<ResettableSettingsSnapshot>(profile),
+            base::MakeUnique<BrandcodedDefaultSettings>(),
             base::MakeUnique<NiceMock<MockProfileResetter>>(profile)) {
     EXPECT_LE(params.startup_pages, arraysize(kStartupUrls));
 
@@ -89,7 +91,7 @@ class MockSettingsResetPromptModel
     }
 
     ON_CALL(*this, ShouldPromptForReset()).WillByDefault(Return(true));
-    ON_CALL(*this, MockPerformReset(_, _)).WillByDefault(Return());
+    ON_CALL(*this, PerformReset(_)).WillByDefault(Return());
     ON_CALL(*this, DialogShown()).WillByDefault(Return());
 
     ON_CALL(*this, homepage()).WillByDefault(Return(GURL(kHomepageUrl)));
@@ -120,12 +122,7 @@ class MockSettingsResetPromptModel
   }
   ~MockSettingsResetPromptModel() override {}
 
-  void PerformReset(std::unique_ptr<BrandcodedDefaultSettings> default_settings,
-                    const base::Closure& callback) override {
-    MockPerformReset(default_settings.get(), callback);
-  }
-  MOCK_METHOD2(MockPerformReset,
-               void(BrandcodedDefaultSettings*, const base::Closure&));
+  MOCK_METHOD1(PerformReset, void(const base::Closure&));
   MOCK_CONST_METHOD0(ShouldPromptForReset, bool());
   MOCK_METHOD0(DialogShown, void());
   MOCK_CONST_METHOD0(homepage, GURL());
@@ -169,8 +166,7 @@ class SettingsResetPromptDialogTest : public DialogBrowserTest {
 
     safe_browsing::SettingsResetPromptController::ShowSettingsResetPrompt(
         browser(),
-        new safe_browsing::SettingsResetPromptController(
-            std::move(model), base::MakeUnique<BrandcodedDefaultSettings>()));
+        new safe_browsing::SettingsResetPromptController(std::move(model)));
   }
 };
 

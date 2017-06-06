@@ -149,12 +149,10 @@ Components.Linkifier = class {
    * @return {?Element}
    */
   maybeLinkifyScriptLocation(target, scriptId, sourceURL, lineNumber, columnNumber, classes) {
-    var fallbackAnchor = null;
-    if (sourceURL) {
-      fallbackAnchor = Components.Linkifier.linkifyURL(
-          sourceURL,
-          {className: classes, lineNumber: lineNumber, columnNumber: columnNumber, maxLength: this._maxLength});
-    }
+    var fallbackAnchor = sourceURL ?
+        Components.Linkifier.linkifyURL(
+            sourceURL, undefined, classes, lineNumber, columnNumber, undefined, this._maxLength) :
+        null;
     if (!target || target.isDisposed())
       return fallbackAnchor;
     var debuggerModel = target.model(SDK.DebuggerModel);
@@ -190,11 +188,9 @@ Components.Linkifier = class {
    * @return {!Element}
    */
   linkifyScriptLocation(target, scriptId, sourceURL, lineNumber, columnNumber, classes) {
-    var scriptLink = this.maybeLinkifyScriptLocation(target, scriptId, sourceURL, lineNumber, columnNumber, classes);
-    return scriptLink ||
+    return this.maybeLinkifyScriptLocation(target, scriptId, sourceURL, lineNumber, columnNumber, classes) ||
         Components.Linkifier.linkifyURL(
-            sourceURL,
-            {className: classes, lineNumber: lineNumber, columnNumber: columnNumber, maxLength: this._maxLength});
+            sourceURL, undefined, classes, lineNumber, columnNumber, undefined, this._maxLength);
   }
 
   /**
@@ -230,12 +226,8 @@ Components.Linkifier = class {
     console.assert(stackTrace.callFrames && stackTrace.callFrames.length);
 
     var topFrame = stackTrace.callFrames[0];
-    var fallbackAnchor = Components.Linkifier.linkifyURL(topFrame.url, {
-      className: classes,
-      lineNumber: topFrame.lineNumber,
-      columnNumber: topFrame.columnNumber,
-      maxLength: this._maxLength
-    });
+    var fallbackAnchor = Components.Linkifier.linkifyURL(
+        topFrame.url, undefined, classes, topFrame.lineNumber, topFrame.columnNumber, undefined, this._maxLength);
     if (target.isDisposed())
       return fallbackAnchor;
 
@@ -332,17 +324,15 @@ Components.Linkifier = class {
 
   /**
    * @param {string} url
-   * @param  {!Components.LinkifyURLOptions=} options
+   * @param {string=} text
+   * @param {string=} className
+   * @param {number=} lineNumber
+   * @param {number=} columnNumber
+   * @param {boolean=} preventClick
+   * @param {number=} maxLength
    * @return {!Element}
    */
-  static linkifyURL(url, options) {
-    options = options || {};
-    var text = options.text;
-    var className = options.className || '';
-    var lineNumber = options.lineNumber;
-    var columnNumber = options.columnNumber;
-    var preventClick = options.preventClick;
-    var maxLength = options.maxLength || UI.MaxLengthForDisplayedURLs;
+  static linkifyURL(url, text, className, lineNumber, columnNumber, preventClick, maxLength) {
     if (!url || url.trim().toLowerCase().startsWith('javascript:')) {
       var element = createElementWithClass('span', className);
       element.textContent = text || url || Common.UIString('(unknown)');
@@ -353,7 +343,8 @@ Components.Linkifier = class {
     if (typeof lineNumber === 'number' && !text)
       linkText += ':' + (lineNumber + 1);
     var title = linkText !== url ? url : '';
-    var link = Components.Linkifier._createLink(linkText, className, maxLength, title, url, preventClick);
+    var link = Components.Linkifier._createLink(
+        linkText, className || '', maxLength || UI.MaxLengthForDisplayedURLs, title, url, preventClick);
     var info = Components.Linkifier._linkInfo(link);
     if (typeof lineNumber === 'number')
       info.lineNumber = lineNumber;
@@ -616,18 +607,6 @@ Components.Linkifier._untruncatedNodeTextSymbol = Symbol('Linkifier.untruncatedN
 Components._LinkInfo;
 
 /**
- * @typedef {{
- *     text: (string|undefined),
- *     className: (string|undefined),
- *     lineNumber: (number|undefined),
- *     columnNumber: (number|undefined),
- *     preventClick: (boolean|undefined),
- *     maxLength: (number|undefined)
- * }}
- */
-Components.LinkifyURLOptions;
-
-/**
  * The maximum length before strings are considered too long for finding URLs.
  * @const
  * @type {number}
@@ -713,7 +692,7 @@ Components.linkifyStringAsFragment = function(string) {
    * @return {!Node}
    */
   function linkifier(title, url, lineNumber, columnNumber) {
-    return Components.Linkifier.linkifyURL(url, {text: title, lineNumber: lineNumber, columnNumber: columnNumber});
+    return Components.Linkifier.linkifyURL(url, title, undefined, lineNumber, columnNumber);
   }
 
   return Components.linkifyStringAsFragmentWithCustomLinkifier(string, linkifier);

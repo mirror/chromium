@@ -5,6 +5,7 @@
 #import "ios/chrome/browser/ui/history/history_entry_inserter.h"
 
 #import "base/mac/foundation_util.h"
+#include "base/mac/scoped_nsobject.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_model.h"
@@ -16,38 +17,34 @@
 #import "third_party/ocmock/OCMock/OCMock.h"
 #import "third_party/ocmock/gtest_support.h"
 
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
-
 HistoryEntryItem* TestHistoryEntryItem(base::Time timestamp,
                                        const std::string& name) {
   history::HistoryEntry entry = history::HistoryEntry(
       history::HistoryEntry::LOCAL_ENTRY, GURL(("http://" + name).c_str()),
       base::UTF8ToUTF16(name.c_str()), timestamp, std::string(), false,
       base::string16(), false);
-  return [[HistoryEntryItem alloc] initWithType:kItemTypeEnumZero
-                                   historyEntry:entry
-                                   browserState:nil
-                                       delegate:nil];
+  return [[[HistoryEntryItem alloc] initWithType:kItemTypeEnumZero
+                                    historyEntry:entry
+                                    browserState:nil
+                                        delegate:nil] autorelease];
 }
 
 // Test fixture for HistoryEntryInserter.
 class HistoryEntryInserterTest : public PlatformTest {
  public:
   HistoryEntryInserterTest() {
-    model_ = [[CollectionViewModel alloc] init];
+    model_.reset([[CollectionViewModel alloc] init]);
     [model_ addSectionWithIdentifier:kSectionIdentifierEnumZero];
-    inserter_ = [[HistoryEntryInserter alloc] initWithModel:model_];
-    mock_delegate_ =
-        [OCMockObject mockForProtocol:@protocol(HistoryEntryInserterDelegate)];
+    inserter_.reset([[HistoryEntryInserter alloc] initWithModel:model_]);
+    mock_delegate_.reset([[OCMockObject
+        mockForProtocol:@protocol(HistoryEntryInserterDelegate)] retain]);
     [inserter_ setDelegate:mock_delegate_];
   }
 
  protected:
-  __strong CollectionViewModel* model_;
-  __strong HistoryEntryInserter* inserter_;
-  __strong id<HistoryEntryInserterDelegate> mock_delegate_;
+  base::scoped_nsobject<CollectionViewModel> model_;
+  base::scoped_nsobject<HistoryEntryInserter> inserter_;
+  base::scoped_nsprotocol<id<HistoryEntryInserterDelegate>> mock_delegate_;
 };
 
 // Tests that history entry items added to CollectionViewModel are sorted by
@@ -61,7 +58,7 @@ TEST_F(HistoryEntryInserterTest, AddItems) {
   HistoryEntryItem* entry3 =
       TestHistoryEntryItem(today - 2 * (minute), "entry3");
 
-  OCMockObject* mock_delegate = (OCMockObject*)mock_delegate_;
+  OCMockObject* mock_delegate = (OCMockObject*)mock_delegate_.get();
   [[mock_delegate expect] historyEntryInserter:inserter_
                        didInsertSectionAtIndex:1];
   [[mock_delegate expect]
@@ -109,7 +106,7 @@ TEST_F(HistoryEntryInserterTest, AddSections) {
       TestHistoryEntryItem(today - day - minute, "day2_entry2");
   HistoryEntryItem* day3 = TestHistoryEntryItem(today - 2 * day, "day3");
 
-  OCMockObject* mock_delegate = (OCMockObject*)mock_delegate_;
+  OCMockObject* mock_delegate = (OCMockObject*)mock_delegate_.get();
 
   [[mock_delegate expect] historyEntryInserter:inserter_
                        didInsertSectionAtIndex:1];
@@ -199,7 +196,7 @@ TEST_F(HistoryEntryInserterTest, AddDuplicateItems) {
   HistoryEntryItem* entry1 = TestHistoryEntryItem(today, "entry");
   HistoryEntryItem* entry2 = TestHistoryEntryItem(today, "entry");
 
-  OCMockObject* mock_delegate = (OCMockObject*)mock_delegate_;
+  OCMockObject* mock_delegate = (OCMockObject*)mock_delegate_.get();
   [[mock_delegate expect] historyEntryInserter:inserter_
                        didInsertSectionAtIndex:1];
   [[mock_delegate expect]
@@ -227,7 +224,7 @@ TEST_F(HistoryEntryInserterTest, RemoveSection) {
   HistoryEntryItem* day1 = TestHistoryEntryItem(today, "day1");
   HistoryEntryItem* day2 = TestHistoryEntryItem(today - day, "day2");
 
-  OCMockObject* mock_delegate = (OCMockObject*)mock_delegate_;
+  OCMockObject* mock_delegate = (OCMockObject*)mock_delegate_.get();
 
   [[mock_delegate expect] historyEntryInserter:inserter_
                        didInsertSectionAtIndex:1];

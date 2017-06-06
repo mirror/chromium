@@ -9,33 +9,12 @@
 #include "base/task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "ui/ozone/platform/drm/common/drm_util.h"
-#include "ui/ozone/platform/drm/cursor_proxy_mojo.h"
 #include "ui/ozone/platform/drm/gpu/drm_thread.h"
 #include "ui/ozone/platform/drm/gpu/proxy_helpers.h"
 #include "ui/ozone/platform/drm/host/drm_display_host_manager.h"
 #include "ui/ozone/platform/drm/host/drm_overlay_manager.h"
 
 namespace ui {
-
-namespace {
-
-// Forwarding proxy to handle ownership semantics.
-class CursorProxyThread : public DrmCursorProxy {
- public:
-  explicit CursorProxyThread(MusThreadProxy* mus_thread_proxy);
-  ~CursorProxyThread() override;
-
- private:
-  // DrmCursorProxy.
-  void CursorSet(gfx::AcceleratedWidget window,
-                 const std::vector<SkBitmap>& bitmaps,
-                 const gfx::Point& point,
-                 int frame_delay_ms) override;
-  void Move(gfx::AcceleratedWidget window, const gfx::Point& point) override;
-  void InitializeOnEvdevIfNecessary() override;
-  MusThreadProxy* const mus_thread_proxy_;  // Not owned.
-  DISALLOW_COPY_AND_ASSIGN(CursorProxyThread);
-};
 
 CursorProxyThread::CursorProxyThread(MusThreadProxy* mus_thread_proxy)
     : mus_thread_proxy_(mus_thread_proxy) {}
@@ -51,19 +30,16 @@ void CursorProxyThread::Move(gfx::AcceleratedWidget window,
                              const gfx::Point& point) {
   mus_thread_proxy_->Move(window, point);
 }
-void CursorProxyThread::InitializeOnEvdevIfNecessary() {
-  mus_thread_proxy_->InitializeOnEvdevIfNecessary();
+void CursorProxyThread::InitializeOnEvdev() {
+  mus_thread_proxy_->InitializeOnEvdev();
 }
 
-}  // namespace
-
-MusThreadProxy::MusThreadProxy(DrmCursor* cursor,
-                               service_manager::Connector* connector)
+MusThreadProxy::MusThreadProxy()
     : ws_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       drm_thread_(nullptr),
-      cursor_(cursor),
-      connector_(connector),
       weak_ptr_factory_(this) {}
+
+void MusThreadProxy::InitializeOnEvdev() {}
 
 MusThreadProxy::~MusThreadProxy() {
   DCHECK(on_window_server_thread_.CalledOnValidThread());
@@ -83,7 +59,6 @@ void MusThreadProxy::ProvideManagers(DrmDisplayHostManager* display_manager,
   overlay_manager_ = overlay_manager;
 }
 
-// Runs on Gpu thread.
 void MusThreadProxy::StartDrmThread() {
   DCHECK(drm_thread_);
   drm_thread_->Start();
@@ -106,21 +81,6 @@ void MusThreadProxy::RunObservers() {
     observer.OnGpuProcessLaunched();
     observer.OnGpuThreadReady();
   }
-
-  // The cursor is special since it will process input events on the IO thread
-  // and can by-pass the UI thread. This means that we need to special case it
-  // and notify it after all other observers/handlers are notified.
-  if (connector_ == nullptr) {
-    // CursorProxyThread does not need to use delegate because the non-mojo
-    // MusThreadProxy is only used in tests that do not operate the cursor.
-    // Future refactoring will unify the mojo and in-process modes.
-    cursor_->SetDrmCursorProxy(base::MakeUnique<CursorProxyThread>(this));
-  } else {
-    cursor_->SetDrmCursorProxy(base::MakeUnique<CursorProxyMojo>(connector_));
-  }
-
-  // TODO(rjkroege): Call ResetDrmCursorProxy when the mojo connection to the
-  // DRM thread is broken.
 }
 
 void MusThreadProxy::AddGpuThreadObserver(GpuThreadObserver* observer) {
@@ -161,9 +121,8 @@ void MusThreadProxy::UnRegisterHandlerForDrmDisplayHostManager() {
 }
 
 bool MusThreadProxy::GpuCreateWindow(gfx::AcceleratedWidget widget) {
+  DCHECK(drm_thread_->IsRunning());
   DCHECK(on_window_server_thread_.CalledOnValidThread());
-  if (!drm_thread_ || !drm_thread_->IsRunning())
-    return false;
   drm_thread_->task_runner()->PostTask(
       FROM_HERE, base::Bind(&DrmThread::CreateWindow,
                             base::Unretained(drm_thread_), widget));
@@ -171,9 +130,8 @@ bool MusThreadProxy::GpuCreateWindow(gfx::AcceleratedWidget widget) {
 }
 
 bool MusThreadProxy::GpuDestroyWindow(gfx::AcceleratedWidget widget) {
+  DCHECK(drm_thread_->IsRunning());
   DCHECK(on_window_server_thread_.CalledOnValidThread());
-  if (!drm_thread_ || !drm_thread_->IsRunning())
-    return false;
   drm_thread_->task_runner()->PostTask(
       FROM_HERE, base::Bind(&DrmThread::DestroyWindow,
                             base::Unretained(drm_thread_), widget));
@@ -182,23 +140,20 @@ bool MusThreadProxy::GpuDestroyWindow(gfx::AcceleratedWidget widget) {
 
 bool MusThreadProxy::GpuWindowBoundsChanged(gfx::AcceleratedWidget widget,
                                             const gfx::Rect& bounds) {
+  DCHECK(drm_thread_->IsRunning());
   DCHECK(on_window_server_thread_.CalledOnValidThread());
-  if (!drm_thread_ || !drm_thread_->IsRunning())
-    return false;
   drm_thread_->task_runner()->PostTask(
       FROM_HERE, base::Bind(&DrmThread::SetWindowBounds,
                             base::Unretained(drm_thread_), widget, bounds));
   return true;
 }
 
-// Services needed for DrmCursorProxy.
 void MusThreadProxy::CursorSet(gfx::AcceleratedWidget widget,
                                const std::vector<SkBitmap>& bitmaps,
                                const gfx::Point& location,
                                int frame_delay_ms) {
+  DCHECK(drm_thread_->IsRunning());
   DCHECK(on_window_server_thread_.CalledOnValidThread());
-  if (!drm_thread_ || !drm_thread_->IsRunning())
-    return;
   drm_thread_->task_runner()->PostTask(
       FROM_HERE,
       base::Bind(&DrmThread::SetCursor, base::Unretained(drm_thread_), widget,
@@ -208,14 +163,11 @@ void MusThreadProxy::CursorSet(gfx::AcceleratedWidget widget,
 void MusThreadProxy::Move(gfx::AcceleratedWidget widget,
                           const gfx::Point& location) {
   // NOTE: Input events skip the main thread to avoid jank.
-  if (!drm_thread_ || !drm_thread_->IsRunning())
-    return;
+  DCHECK(drm_thread_->IsRunning());
   drm_thread_->task_runner()->PostTask(
       FROM_HERE, base::Bind(&DrmThread::MoveCursor,
                             base::Unretained(drm_thread_), widget, location));
 }
-
-void MusThreadProxy::InitializeOnEvdevIfNecessary() {}
 
 // Services needed for DrmOverlayManager.
 void MusThreadProxy::RegisterHandlerForDrmOverlayManager(
@@ -232,9 +184,8 @@ void MusThreadProxy::UnRegisterHandlerForDrmOverlayManager() {
 bool MusThreadProxy::GpuCheckOverlayCapabilities(
     gfx::AcceleratedWidget widget,
     const std::vector<OverlayCheck_Params>& overlays) {
+  DCHECK(drm_thread_->IsRunning());
   DCHECK(on_window_server_thread_.CalledOnValidThread());
-  if (!drm_thread_ || !drm_thread_->IsRunning())
-    return false;
   auto callback =
       base::BindOnce(&MusThreadProxy::GpuCheckOverlayCapabilitiesCallback,
                      weak_ptr_factory_.GetWeakPtr());
@@ -247,9 +198,8 @@ bool MusThreadProxy::GpuCheckOverlayCapabilities(
 }
 
 bool MusThreadProxy::GpuRefreshNativeDisplays() {
+  DCHECK(drm_thread_->IsRunning());
   DCHECK(on_window_server_thread_.CalledOnValidThread());
-  if (!drm_thread_ || !drm_thread_->IsRunning())
-    return false;
   auto callback =
       base::BindOnce(&MusThreadProxy::GpuRefreshNativeDisplaysCallback,
                      weak_ptr_factory_.GetWeakPtr());
@@ -264,9 +214,8 @@ bool MusThreadProxy::GpuRefreshNativeDisplays() {
 bool MusThreadProxy::GpuConfigureNativeDisplay(int64_t id,
                                                const DisplayMode_Params& pmode,
                                                const gfx::Point& origin) {
+  DCHECK(drm_thread_->IsRunning());
   DCHECK(on_window_server_thread_.CalledOnValidThread());
-  if (!drm_thread_ || !drm_thread_->IsRunning())
-    return false;
 
   auto mode = CreateDisplayModeFromParams(pmode);
   auto callback =
@@ -282,9 +231,8 @@ bool MusThreadProxy::GpuConfigureNativeDisplay(int64_t id,
 }
 
 bool MusThreadProxy::GpuDisableNativeDisplay(int64_t id) {
+  DCHECK(drm_thread_->IsRunning());
   DCHECK(on_window_server_thread_.CalledOnValidThread());
-  if (!drm_thread_ || !drm_thread_->IsRunning())
-    return false;
   auto callback =
       base::BindOnce(&MusThreadProxy::GpuDisableNativeDisplayCallback,
                      weak_ptr_factory_.GetWeakPtr());
@@ -297,9 +245,8 @@ bool MusThreadProxy::GpuDisableNativeDisplay(int64_t id) {
 }
 
 bool MusThreadProxy::GpuTakeDisplayControl() {
+  DCHECK(drm_thread_->IsRunning());
   DCHECK(on_window_server_thread_.CalledOnValidThread());
-  if (!drm_thread_ || !drm_thread_->IsRunning())
-    return false;
   auto callback = base::BindOnce(&MusThreadProxy::GpuTakeDisplayControlCallback,
                                  weak_ptr_factory_.GetWeakPtr());
   auto safe_callback = CreateSafeOnceCallback(std::move(callback));
@@ -311,9 +258,8 @@ bool MusThreadProxy::GpuTakeDisplayControl() {
 }
 
 bool MusThreadProxy::GpuRelinquishDisplayControl() {
+  DCHECK(drm_thread_->IsRunning());
   DCHECK(on_window_server_thread_.CalledOnValidThread());
-  if (!drm_thread_ || !drm_thread_->IsRunning())
-    return false;
   auto callback =
       base::BindOnce(&MusThreadProxy::GpuRelinquishDisplayControlCallback,
                      weak_ptr_factory_.GetWeakPtr());
@@ -327,9 +273,8 @@ bool MusThreadProxy::GpuRelinquishDisplayControl() {
 
 bool MusThreadProxy::GpuAddGraphicsDevice(const base::FilePath& path,
                                           const base::FileDescriptor& fd) {
+  DCHECK(drm_thread_->IsRunning());
   DCHECK(on_window_server_thread_.CalledOnValidThread());
-  if (!drm_thread_ || !drm_thread_->IsRunning())
-    return false;
   drm_thread_->task_runner()->PostTask(
       FROM_HERE, base::Bind(&DrmThread::AddGraphicsDevice,
                             base::Unretained(drm_thread_), path, fd));
@@ -337,9 +282,8 @@ bool MusThreadProxy::GpuAddGraphicsDevice(const base::FilePath& path,
 }
 
 bool MusThreadProxy::GpuRemoveGraphicsDevice(const base::FilePath& path) {
+  DCHECK(drm_thread_->IsRunning());
   DCHECK(on_window_server_thread_.CalledOnValidThread());
-  if (!drm_thread_ || !drm_thread_->IsRunning())
-    return false;
   drm_thread_->task_runner()->PostTask(
       FROM_HERE, base::Bind(&DrmThread::RemoveGraphicsDevice,
                             base::Unretained(drm_thread_), path));
@@ -347,9 +291,8 @@ bool MusThreadProxy::GpuRemoveGraphicsDevice(const base::FilePath& path) {
 }
 
 bool MusThreadProxy::GpuGetHDCPState(int64_t display_id) {
+  DCHECK(drm_thread_->IsRunning());
   DCHECK(on_window_server_thread_.CalledOnValidThread());
-  if (!drm_thread_ || !drm_thread_->IsRunning())
-    return false;
   auto callback = base::BindOnce(&MusThreadProxy::GpuGetHDCPStateCallback,
                                  weak_ptr_factory_.GetWeakPtr());
   auto safe_callback = CreateSafeOnceCallback(std::move(callback));
@@ -363,8 +306,7 @@ bool MusThreadProxy::GpuGetHDCPState(int64_t display_id) {
 bool MusThreadProxy::GpuSetHDCPState(int64_t display_id,
                                      display::HDCPState state) {
   DCHECK(on_window_server_thread_.CalledOnValidThread());
-  if (!drm_thread_ || !drm_thread_->IsRunning())
-    return false;
+  DCHECK(drm_thread_->IsRunning());
   auto callback = base::BindOnce(&MusThreadProxy::GpuSetHDCPStateCallback,
                                  weak_ptr_factory_.GetWeakPtr());
   auto safe_callback = CreateSafeOnceCallback(std::move(callback));
@@ -380,9 +322,8 @@ bool MusThreadProxy::GpuSetColorCorrection(
     const std::vector<display::GammaRampRGBEntry>& degamma_lut,
     const std::vector<display::GammaRampRGBEntry>& gamma_lut,
     const std::vector<float>& correction_matrix) {
+  DCHECK(drm_thread_->IsRunning());
   DCHECK(on_window_server_thread_.CalledOnValidThread());
-  if (!drm_thread_ || !drm_thread_->IsRunning())
-    return false;
   drm_thread_->task_runner()->PostTask(
       FROM_HERE,
       base::Bind(&DrmThread::SetColorCorrection, base::Unretained(drm_thread_),
@@ -392,10 +333,9 @@ bool MusThreadProxy::GpuSetColorCorrection(
 
 void MusThreadProxy::GpuCheckOverlayCapabilitiesCallback(
     gfx::AcceleratedWidget widget,
-    const std::vector<OverlayCheck_Params>& overlays,
-    const std::vector<OverlayCheckReturn_Params>& returns) const {
+    const std::vector<OverlayCheck_Params>& overlays) const {
   DCHECK(on_window_server_thread_.CalledOnValidThread());
-  overlay_manager_->GpuSentOverlayResult(widget, overlays, returns);
+  overlay_manager_->GpuSentOverlayResult(widget, overlays);
 }
 
 void MusThreadProxy::GpuConfigureNativeDisplayCallback(int64_t display_id,

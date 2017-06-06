@@ -16,11 +16,8 @@
 
 @interface TabCollectionViewController ()<UICollectionViewDelegate,
                                           SessionCellDelegate>
-// Collection view of tabs.
 @property(nonatomic, readwrite) UICollectionView* tabs;
-// The model backing the collection view.
 @property(nonatomic, readwrite) NSMutableArray<TabCollectionItem*>* items;
-// Selected index of tab collection.
 @property(nonatomic, assign) int selectedIndex;
 @end
 
@@ -53,25 +50,11 @@
     [self.tabs.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
   ]];
 
-  [self.tabs
-      selectItemAtIndexPath:[NSIndexPath indexPathForItem:self.selectedIndex
-                                                inSection:0]
-                   animated:NO
-             scrollPosition:UICollectionViewScrollPositionNone];
+  [self selectItemAtIndex:self.selectedIndex];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
   return UIStatusBarStyleLightContent;
-}
-
-#pragma mark - Setters
-
-- (void)setSelectedIndex:(int)selectedIndex {
-  [self.tabs selectItemAtIndexPath:[NSIndexPath indexPathForItem:selectedIndex
-                                                       inSection:0]
-                          animated:YES
-                    scrollPosition:UICollectionViewScrollPositionNone];
-  _selectedIndex = selectedIndex;
 }
 
 #pragma mark - Required subclass override
@@ -155,55 +138,47 @@
 
 #pragma mark - TabCollectionConsumer methods
 
-- (void)insertItem:(TabCollectionItem*)item
-           atIndex:(int)index
-     selectedIndex:(int)selectedIndex {
-  DCHECK_GE(index, 0);
+- (void)insertItem:(TabCollectionItem*)item atIndex:(int)index {
   DCHECK_LE(static_cast<NSUInteger>(index), self.items.count);
   [self.items insertObject:item atIndex:index];
-  [self.tabs insertItemsAtIndexPaths:@[ [NSIndexPath indexPathForItem:index
-                                                            inSection:0] ]];
-  self.selectedIndex = selectedIndex;
+  [self.tabs insertItemsAtIndexPaths:@[ [self indexPathForIndex:index] ]];
 }
 
-- (void)deleteItemAtIndex:(int)index selectedIndex:(int)selectedIndex {
-  DCHECK_GE(index, 0);
+- (void)deleteItemAtIndex:(int)index {
   DCHECK_LT(static_cast<NSUInteger>(index), self.items.count);
   [self.items removeObjectAtIndex:index];
-  [self.tabs deleteItemsAtIndexPaths:@[ [NSIndexPath indexPathForItem:index
-                                                            inSection:0] ]];
-  self.selectedIndex = selectedIndex;
+  [self.tabs deleteItemsAtIndexPaths:@[ [self indexPathForIndex:index] ]];
 }
 
-- (void)moveItemFromIndex:(int)fromIndex
-                  toIndex:(int)toIndex
-            selectedIndex:(int)selectedIndex {
+- (void)moveItemFromIndex:(int)fromIndex toIndex:(int)toIndex {
   TabCollectionItem* item = self.items[fromIndex];
   [self.items removeObjectAtIndex:fromIndex];
   [self.items insertObject:item atIndex:toIndex];
-  [self.tabs
-      moveItemAtIndexPath:[NSIndexPath indexPathForItem:fromIndex inSection:0]
-              toIndexPath:[NSIndexPath indexPathForItem:toIndex inSection:0]];
-  self.selectedIndex = selectedIndex;
+  [self.tabs moveItemAtIndexPath:[self indexPathForIndex:fromIndex]
+                     toIndexPath:[self indexPathForIndex:toIndex]];
 }
 
 - (void)replaceItemAtIndex:(int)index withItem:(TabCollectionItem*)item {
-  DCHECK_GE(index, 0);
-  DCHECK_LT(static_cast<NSUInteger>(index), self.items.count);
-  self.items[index] = item;
-  TabCollectionTabCell* cell = base::mac::ObjCCastStrict<TabCollectionTabCell>(
-      [self.tabs cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index
-                                                            inSection:0]]);
-  [cell setAppearanceForTabTitle:self.items[index].title
-                         favicon:nil
-                        cellSize:CGSizeZero];
+  [self.items removeObjectAtIndex:index];
+  [self.items insertObject:item atIndex:index];
 }
 
-- (void)populateItems:(NSArray<TabCollectionItem*>*)items
-        selectedIndex:(int)selectedIndex {
+- (void)selectItemAtIndex:(int)index {
+  self.selectedIndex = index;
+  [self.tabs selectItemAtIndexPath:[self indexPathForIndex:index]
+                          animated:YES
+                    scrollPosition:UITableViewScrollPositionNone];
+}
+
+- (void)populateItems:(NSArray<TabCollectionItem*>*)items {
   self.items = [items mutableCopy];
-  [self.tabs reloadItemsAtIndexPaths:[self.tabs indexPathsForVisibleItems]];
-  self.selectedIndex = selectedIndex;
+  [self.tabs reloadData];
+}
+
+#pragma mark - Private
+
+- (NSIndexPath*)indexPathForIndex:(int)index {
+  return [NSIndexPath indexPathForItem:index inSection:0];
 }
 
 @end

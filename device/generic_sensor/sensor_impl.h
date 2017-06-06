@@ -23,11 +23,12 @@ class SensorImpl final : public mojom::Sensor, public PlatformSensor::Client {
  private:
   // Sensor implementation.
   void AddConfiguration(const PlatformSensorConfiguration& configuration,
-                        AddConfigurationCallback callback) override;
+                        const AddConfigurationCallback& callback) override;
   void GetDefaultConfiguration(
-      GetDefaultConfigurationCallback callback) override;
-  void RemoveConfiguration(const PlatformSensorConfiguration& configuration,
-                           RemoveConfigurationCallback callback) override;
+      const GetDefaultConfigurationCallback& callback) override;
+  void RemoveConfiguration(
+      const PlatformSensorConfiguration& configuration,
+      const RemoveConfigurationCallback& callback) override;
   void Suspend() override;
   void Resume() override;
 

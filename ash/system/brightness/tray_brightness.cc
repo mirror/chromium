@@ -174,7 +174,7 @@ void BrightnessView::SliderDragEnded(views::Slider* slider) {
 
 TrayBrightness::TrayBrightness(SystemTray* system_tray)
     : SystemTrayItem(system_tray, UMA_DISPLAY_BRIGHTNESS),
-      brightness_view_(nullptr),
+      brightness_view_(NULL),
       current_percent_(100.0),
       got_current_percent_(false),
       weak_ptr_factory_(this) {
@@ -208,28 +208,34 @@ void TrayBrightness::HandleInitialBrightness(double percent) {
     HandleBrightnessChanged(percent, false);
 }
 
+views::View* TrayBrightness::CreateTrayView(LoginStatus status) {
+  return NULL;
+}
+
 views::View* TrayBrightness::CreateDefaultView(LoginStatus status) {
-  CHECK(brightness_view_ == nullptr);
+  CHECK(brightness_view_ == NULL);
   brightness_view_ = new tray::BrightnessView(true, current_percent_);
   return brightness_view_;
 }
 
 views::View* TrayBrightness::CreateDetailedView(LoginStatus status) {
-  CHECK(brightness_view_ == nullptr);
+  CHECK(brightness_view_ == NULL);
   ShellPort::Get()->RecordUserMetricsAction(
       UMA_STATUS_AREA_DETAILED_BRIGHTNESS_VIEW);
   brightness_view_ = new tray::BrightnessView(false, current_percent_);
   return brightness_view_;
 }
 
-void TrayBrightness::OnDefaultViewDestroyed() {
+void TrayBrightness::DestroyTrayView() {}
+
+void TrayBrightness::DestroyDefaultView() {
   if (brightness_view_ && brightness_view_->is_default_view())
-    brightness_view_ = nullptr;
+    brightness_view_ = NULL;
 }
 
-void TrayBrightness::OnDetailedViewDestroyed() {
+void TrayBrightness::DestroyDetailedView() {
   if (brightness_view_ && !brightness_view_->is_default_view())
-    brightness_view_ = nullptr;
+    brightness_view_ = NULL;
 }
 
 void TrayBrightness::UpdateAfterLoginStatusChange(LoginStatus status) {}

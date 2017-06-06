@@ -156,7 +156,6 @@ class WebRuntimeFeatures {
   BLINK_PLATFORM_EXPORT static void EnableVideoFullscreenDetection(bool);
   BLINK_PLATFORM_EXPORT static void EnableMediaControlsOverlayPlayButton(bool);
   BLINK_PLATFORM_EXPORT static void EnableLocationHardReload(bool);
-  BLINK_PLATFORM_EXPORT static void EnableRemotePlaybackBackend(bool);
 
  private:
   WebRuntimeFeatures();

@@ -9,6 +9,7 @@
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/location.h"
+#include "base/mac/scoped_nsobject.h"
 #include "base/path_service.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/sys_string_conversions.h"
@@ -28,10 +29,6 @@
 #include "third_party/ocmock/gtest_support.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "url/gurl.h"
-
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
 
 @interface FaviconViewProvider (Testing)
 @property(nonatomic, retain) UIImage* favicon;
@@ -101,14 +98,14 @@ class FaviconViewProviderTest : public PlatformTest {
 TEST_F(FaviconViewProviderTest, Favicon) {
   id mock_delegate =
       [OCMockObject mockForProtocol:@protocol(FaviconViewProviderDelegate)];
-  FaviconViewProvider* viewProvider =
+  base::scoped_nsobject<FaviconViewProvider> viewProvider(
       [[FaviconViewProvider alloc] initWithURL:GURL(kTestFaviconURL)
                                    faviconSize:kTestFaviconSize
                                 minFaviconSize:kTestFaviconSize
                               largeIconService:large_icon_service_.get()
-                                      delegate:mock_delegate];
+                                      delegate:mock_delegate]);
   void (^confirmationBlock)(NSInvocation*) = ^(NSInvocation* invocation) {
-    __unsafe_unretained FaviconViewProvider* viewProvider;
+    FaviconViewProvider* viewProvider;
     [invocation getArgument:&viewProvider atIndex:2];
     EXPECT_NSNE(nil, viewProvider.favicon);
   };
@@ -126,16 +123,16 @@ TEST_F(FaviconViewProviderTest, FallbackIcon) {
 
   id mock_delegate =
       [OCMockObject mockForProtocol:@protocol(FaviconViewProviderDelegate)];
-  FaviconViewProvider* item =
-      [[FaviconViewProvider alloc] initWithURL:GURL(kTestFallbackURL)
-                                   faviconSize:kTestFaviconSize
-                                minFaviconSize:kTestFaviconSize
-                              largeIconService:large_icon_service_.get()
-                                      delegate:mock_delegate];
+  base::scoped_nsobject<FaviconViewProvider> item([[FaviconViewProvider alloc]
+           initWithURL:GURL(kTestFallbackURL)
+           faviconSize:kTestFaviconSize
+        minFaviconSize:kTestFaviconSize
+      largeIconService:large_icon_service_.get()
+              delegate:mock_delegate]);
 
   // Confirm that fallback text and color have been set before delegate call.
   void (^confirmationBlock)(NSInvocation*) = ^(NSInvocation* invocation) {
-    __unsafe_unretained FaviconViewProvider* viewProvider;
+    FaviconViewProvider* viewProvider;
     [invocation getArgument:&viewProvider atIndex:2];
     // Fallback text is the first letter of the URL.
     NSString* defaultText = @"T";

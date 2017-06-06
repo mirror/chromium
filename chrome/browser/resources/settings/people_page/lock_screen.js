@@ -123,12 +123,6 @@ Polymer({
       type: Boolean,
       value: false,
     },
-
-    /** @private */
-    showPasswordPromptDialog_: Boolean,
-
-    /** @private */
-    showSetupPinDialog_: Boolean,
   },
 
   /** @private {?settings.EasyUnlockBrowserProxy} */
@@ -143,7 +137,7 @@ Polymer({
   /** @override */
   attached: function() {
     if (this.shouldAskForPassword_(settings.getCurrentRoute()))
-      this.openPasswordPromptDialog_();
+      this.$.passwordPrompt.open();
 
     this.easyUnlockBrowserProxy_ =
         settings.EasyUnlockBrowserProxyImpl.getInstance();
@@ -175,7 +169,7 @@ Polymer({
     }
 
     if (this.shouldAskForPassword_(newRoute)) {
-      this.openPasswordPromptDialog_();
+      this.$.passwordPrompt.open();
     } else if (newRoute != settings.Route.FINGERPRINT &&
         oldRoute != settings.Route.FINGERPRINT) {
       // If the user navigated away from the lock screen settings page they will
@@ -205,37 +199,25 @@ Polymer({
   onSetModesChanged_: function() {
     if (this.shouldAskForPassword_(settings.getCurrentRoute())) {
       this.$.setupPin.close();
-      this.openPasswordPromptDialog_();
+      this.$.passwordPrompt.open();
     }
   },
 
   /** @private */
-  openPasswordPromptDialog_: function() {
-    this.showPasswordPromptDialog_ = true;
-  },
-
-  /** @private */
-  onPasswordPromptDialogClose_: function() {
-    this.showPasswordPromptDialog_ = false;
+  onPasswordClosed_: function() {
     if (!this.setModes_)
-      settings.navigateToPreviousRoute();
+      settings.navigateTo(settings.Route.PEOPLE);
     else
       cr.ui.focusWithoutInk(assert(this.$$('#unlockType')));
   },
 
-  /**
-   * @param {!Event} e
-   * @private
-   */
-  onConfigurePin_: function(e) {
-    e.preventDefault();
-    this.writeUma_(LockScreenProgress.CHOOSE_PIN_OR_PASSWORD);
-    this.showSetupPinDialog_ = true;
+  /** @private */
+  onPinSetupDone_: function() {
+    this.$.setupPin.close();
   },
 
   /** @private */
-  onSetupPinDialogClose_: function() {
-    this.showSetupPinDialog_ = false;
+  onSetupPinClosed_: function() {
     cr.ui.focusWithoutInk(assert(this.$$('#setupPinButton')));
   },
 
@@ -267,6 +249,16 @@ Polymer({
     }
 
     return this.i18n('lockScreenEditFingerprintsDescription');
+  },
+
+  /**
+   * @param {!Event} e
+   * @private
+   */
+  onConfigurePin_: function(e) {
+    e.preventDefault();
+    this.$.setupPin.open();
+    this.writeUma_(LockScreenProgress.CHOOSE_PIN_OR_PASSWORD);
   },
 
   /** @private */

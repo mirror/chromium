@@ -66,13 +66,11 @@ WebContents* GetWebContentsFromFrameTreeNodeID(int frame_tree_node_id) {
 // redirects happen.
 class NavigationURLLoaderNetworkService::URLLoaderRequestController {
  public:
-  URLLoaderRequestController(
-      std::unique_ptr<ResourceRequest> resource_request,
-      ResourceContext* resource_context,
-      scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter)
+  URLLoaderRequestController(std::unique_ptr<ResourceRequest> resource_request,
+                             ResourceContext* resource_context)
       : resource_request_(std::move(resource_request)),
         resource_context_(resource_context),
-        url_loader_factory_getter_(url_loader_factory_getter) {}
+        network_factory_(nullptr) {}
 
   virtual ~URLLoaderRequestController() {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -83,8 +81,9 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController {
       AppCacheNavigationHandleCore* appcache_handle_core,
       std::unique_ptr<NavigationRequestInfo> request_info,
       mojom::URLLoaderFactoryPtrInfo factory_for_webui,
+      scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter,
       const base::Callback<WebContents*(void)>& web_contents_getter,
-      mojom::URLLoaderAssociatedRequest url_loader_request,
+      mojom::URLLoaderRequest url_loader_request,
       mojom::URLLoaderClientPtr url_loader_client_ptr,
       std::unique_ptr<service_manager::Connector> connector) {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -133,11 +132,14 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController {
       // TODO: add appcache code here.
     }
 
+    DCHECK(!network_factory_);
+    network_factory_ = url_loader_factory_getter->GetNetworkFactory()->get();
+
     Restart(std::move(url_loader_request), std::move(url_loader_client_ptr));
   }
 
   // This could be called multiple times.
-  void Restart(mojom::URLLoaderAssociatedRequest url_loader_request,
+  void Restart(mojom::URLLoaderRequest url_loader_request,
                mojom::URLLoaderClientPtr url_loader_client_ptr) {
     url_loader_request_ = std::move(url_loader_request);
     url_loader_client_ptr_ = std::move(url_loader_client_ptr);
@@ -165,12 +167,8 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController {
     }
 
     DCHECK_EQ(handlers_.size(), handler_index_);
-    if (resource_request_->url.SchemeIs(url::kBlobScheme)) {
-      factory = url_loader_factory_getter_->GetBlobFactory()->get();
-    } else {
-      factory = url_loader_factory_getter_->GetNetworkFactory()->get();
-    }
-    MaybeStartLoader(factory);
+    DCHECK(network_factory_ != nullptr);
+    MaybeStartLoader(network_factory_);
   }
 
  private:
@@ -180,10 +178,12 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController {
   std::unique_ptr<ResourceRequest> resource_request_;
   ResourceContext* resource_context_;
 
-  scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter_;
+  // The factory for doing a vanilla network request, called when
+  // any of other request handlers handle the given request.
+  mojom::URLLoaderFactory* network_factory_;
 
   // Kept around until we create a loader.
-  mojom::URLLoaderAssociatedRequest url_loader_request_;
+  mojom::URLLoaderRequest url_loader_request_;
   mojom::URLLoaderClientPtr url_loader_client_ptr_;
 
   DISALLOW_COPY_AND_ASSIGN(URLLoaderRequestController);
@@ -237,8 +237,7 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
 
   int frame_tree_node_id = request_info->frame_tree_node_id;
 
-  mojom::URLLoaderAssociatedRequest loader_associated_request =
-      mojo::MakeRequest(&url_loader_associated_ptr_);
+  mojom::URLLoaderRequest loader_request = mojo::MakeRequest(&url_loader_ptr_);
   mojom::URLLoaderClientPtr url_loader_client_ptr_to_pass;
   binding_.Bind(mojo::MakeRequest(&url_loader_client_ptr_to_pass));
 
@@ -249,16 +248,14 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
       schemes.end()) {
     FrameTreeNode* frame_tree_node =
         FrameTreeNode::GloballyFindByID(frame_tree_node_id);
-    factory_for_webui = CreateWebUIURLLoader(frame_tree_node).PassInterface();
+    factory_for_webui = GetWebUIURLLoader(frame_tree_node).PassInterface();
   }
 
   g_next_request_id--;
 
   DCHECK(!request_controller_);
   request_controller_ = base::MakeUnique<URLLoaderRequestController>(
-      std::move(new_request), resource_context,
-      static_cast<StoragePartitionImpl*>(storage_partition)
-          ->url_loader_factory_getter());
+      std::move(new_request), resource_context);
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::Bind(
@@ -270,8 +267,10 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
           appcache_handle ? appcache_handle->core() : nullptr,
           base::Passed(std::move(request_info)),
           base::Passed(std::move(factory_for_webui)),
+          static_cast<StoragePartitionImpl*>(storage_partition)
+              ->url_loader_factory_getter(),
           base::Bind(&GetWebContentsFromFrameTreeNodeID, frame_tree_node_id),
-          base::Passed(std::move(loader_associated_request)),
+          base::Passed(std::move(loader_request)),
           base::Passed(std::move(url_loader_client_ptr_to_pass)),
           base::Passed(ServiceManagerConnection::GetForProcess()
                            ->GetConnector()
@@ -284,7 +283,7 @@ NavigationURLLoaderNetworkService::~NavigationURLLoaderNetworkService() {
 }
 
 void NavigationURLLoaderNetworkService::FollowRedirect() {
-  url_loader_associated_ptr_->FollowRedirect();
+  url_loader_ptr_->FollowRedirect();
 }
 
 void NavigationURLLoaderNetworkService::ProceedWithResponse() {}

@@ -67,10 +67,6 @@ NSString* const kHostSessionPin = @"kHostSessionPin";
   return self;
 }
 
-- (void)dealloc {
-  [self disconnectFromHost];
-}
-
 - (void)connectToHost:(HostInfo*)hostInfo
              username:(NSString*)username
           accessToken:(NSString*)accessToken {

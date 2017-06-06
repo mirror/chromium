@@ -12,7 +12,7 @@
 #include <memory>
 
 #include "base/macros.h"
-#include "base/sequence_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 // For invalidation::InvalidationListener::RegistrationState.
@@ -33,7 +33,7 @@ using ::invalidation::InvalidationListener;
 // implementations include the syncer thread (both versions) and XMPP
 // retries.  The most sophisticated one is URLRequestThrottler; making
 // that generic should work for everyone.
-class INVALIDATION_EXPORT RegistrationManager {
+class INVALIDATION_EXPORT RegistrationManager : public base::NonThreadSafe {
  public:
   // Constants for exponential backoff (used by tests).
   static const int kInitialRegistrationDelaySeconds;
@@ -178,8 +178,6 @@ class INVALIDATION_EXPORT RegistrationManager {
       registration_statuses_;
   // Weak pointer.
   invalidation::InvalidationClient* invalidation_client_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(RegistrationManager);
 };

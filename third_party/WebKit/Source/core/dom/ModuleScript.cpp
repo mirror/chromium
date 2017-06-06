@@ -38,19 +38,6 @@ ModuleScript* ModuleScript::Create(
                         parser_state, credentials_mode, start_position);
 }
 
-ModuleScript* ModuleScript::CreateForTest(
-    Modulator* modulator,
-    ScriptModule record,
-    const KURL& base_url,
-    const String& nonce,
-    ParserDisposition parser_state,
-    WebURLRequest::FetchCredentialsMode credentials_mode) {
-  String dummy_source_text = "";
-  return CreateInternal(dummy_source_text, modulator, record, base_url, nonce,
-                        parser_state, credentials_mode,
-                        TextPosition::MinimumPosition());
-}
-
 ModuleScript* ModuleScript::CreateInternal(
     const String& source_text,
     Modulator* modulator,
@@ -80,6 +67,19 @@ ModuleScript* ModuleScript::CreateInternal(
   return module_script;
 }
 
+ModuleScript* ModuleScript::CreateForTest(
+    Modulator* modulator,
+    ScriptModule record,
+    const KURL& base_url,
+    const String& nonce,
+    ParserDisposition parser_state,
+    WebURLRequest::FetchCredentialsMode credentials_mode) {
+  String dummy_source_text = "";
+  return CreateInternal(dummy_source_text, modulator, record, base_url, nonce,
+                        parser_state, credentials_mode,
+                        TextPosition::MinimumPosition());
+}
+
 ModuleScript::ModuleScript(Modulator* settings_object,
                            ScriptModule record,
                            const KURL& base_url,
@@ -91,7 +91,7 @@ ModuleScript::ModuleScript(Modulator* settings_object,
     : settings_object_(settings_object),
       record_(this),
       base_url_(base_url),
-      error_(this),
+      instantiation_error_(this),
       nonce_(nonce),
       parser_state_(parser_state),
       credentials_mode_(credentials_mode),
@@ -118,33 +118,23 @@ ScriptModule ModuleScript::Record() const {
   return ScriptModule(isolate, record_.NewLocal(isolate));
 }
 
-void ModuleScript::SetErrorAndClearRecord(ScriptValue error) {
-  // https://html.spec.whatwg.org/multipage/webappapis.html#error-a-module-script
-  // Step 1. Assert: script's state is not "errored".
-  DCHECK_NE(state_, ModuleInstantiationState::kErrored);
+void ModuleScript::SetInstantiationErrorAndClearRecord(ScriptValue error) {
+  // Implements Step 7.1 of:
+  // https://html.spec.whatwg.org/multipage/webappapis.html#internal-module-script-graph-fetching-procedure
 
-  // Step 2. If script's module record is set, then:
-  if (!record_.IsEmpty()) {
-    // Step 2.1. Set script module record's [[HostDefined]] field to undefined.
-    // TODO(kouhei): Implement this step.
-    // if (ScriptModuleResolver* resolver =
-    // modulator_->GetScriptModuleResolver())
-    //   resolver->UnregisterModuleScript(this);
-    NOTIMPLEMENTED();
+  // "set script's instantiation state to "errored", ..."
+  DCHECK_EQ(instantiation_state_, ModuleInstantiationState::kUninstantiated);
+  instantiation_state_ = ModuleInstantiationState::kErrored;
 
-    // Step 2.2. Set script's module record to null.
-    record_.Clear();
-  }
-
-  // Step 3. Set script's state to "errored".
-  state_ = ModuleInstantiationState::kErrored;
-
-  // Step 4. Set script's error to error.
+  // "its instantiation error to instantiationStatus.[[Value]], and ..."
   DCHECK(!error.IsEmpty());
   {
     ScriptState::Scope scope(error.GetScriptState());
-    error_.Set(error.GetIsolate(), error.V8Value());
+    instantiation_error_.Set(error.GetIsolate(), error.V8Value());
   }
+
+  // "its module record to null."
+  record_.Clear();
 }
 
 void ModuleScript::SetInstantiationSuccess() {
@@ -152,8 +142,8 @@ void ModuleScript::SetInstantiationSuccess() {
   // https://html.spec.whatwg.org/multipage/webappapis.html#internal-module-script-graph-fetching-procedure
 
   // "set script's instantiation state to "instantiated"."
-  DCHECK_EQ(state_, ModuleInstantiationState::kUninstantiated);
-  state_ = ModuleInstantiationState::kInstantiated;
+  DCHECK_EQ(instantiation_state_, ModuleInstantiationState::kUninstantiated);
+  instantiation_state_ = ModuleInstantiationState::kInstantiated;
 }
 
 DEFINE_TRACE(ModuleScript) {
@@ -164,7 +154,7 @@ DEFINE_TRACE_WRAPPERS(ModuleScript) {
   // TODO(mlippautz): Support TraceWrappers(const
   // TraceWrapperV8Reference<v8::Module>&) to remove the cast.
   visitor->TraceWrappers(record_.Cast<v8::Value>());
-  visitor->TraceWrappers(error_);
+  visitor->TraceWrappers(instantiation_error_);
 }
 
 bool ModuleScript::IsEmpty() const {

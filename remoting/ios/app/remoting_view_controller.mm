@@ -20,6 +20,7 @@
 #import "remoting/ios/domain/client_session_details.h"
 #import "remoting/ios/facade/remoting_authentication.h"
 #import "remoting/ios/facade/remoting_service.h"
+#import "remoting/ios/session/remoting_client.h"
 
 #include "base/strings/sys_string_conversions.h"
 #include "remoting/base/oauth_token_getter.h"
@@ -27,10 +28,8 @@
 
 static CGFloat kHostInset = 5.f;
 
-static UIColor* kChromotingBlueBackground =
-    [UIColor colorWithRed:0.11f green:0.23f blue:0.66f alpha:1.f];
-
 @interface RemotingViewController ()<HostCollectionViewControllerDelegate,
+                                     ClientConnectionViewControllerDelegate,
                                      UIViewControllerAnimatedTransitioning,
                                      UIViewControllerTransitioningDelegate> {
   bool _isAuthenticated;
@@ -38,6 +37,7 @@ static UIColor* kChromotingBlueBackground =
   MDCAppBar* _appBar;
   HostCollectionViewController* _collectionViewController;
   RemotingService* _remotingService;
+  RemotingClient* _client;
 }
 @end
 
@@ -69,7 +69,7 @@ static UIColor* kChromotingBlueBackground =
     [self addChildViewController:_appBar.headerViewController];
 
     _appBar.headerViewController.headerView.backgroundColor =
-        kChromotingBlueBackground;
+        [UIColor clearColor];
     _appBar.navigationBar.tintColor = [UIColor whiteColor];
 
     UIBarButtonItem* menuButton =
@@ -85,6 +85,12 @@ static UIColor* kChromotingBlueBackground =
                                         target:self
                                         action:@selector(didSelectRefresh)];
     self.navigationItem.rightBarButtonItem = refreshButton;
+
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+           selector:@selector(hostSessionStatusChanged:)
+               name:kHostSessionStatusChanged
+             object:nil];
   }
   return self;
 }
@@ -93,20 +99,6 @@ static UIColor* kChromotingBlueBackground =
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-
-  UIImage* image = [UIImage imageNamed:@"Background"];
-  UIImageView* imageView = [[UIImageView alloc] initWithImage:image];
-  [self.view addSubview:imageView];
-  [self.view sendSubviewToBack:imageView];
-
-  imageView.translatesAutoresizingMaskIntoConstraints = NO;
-  [NSLayoutConstraint activateConstraints:@[
-    [[imageView widthAnchor]
-        constraintGreaterThanOrEqualToAnchor:[self.view widthAnchor]],
-    [[imageView heightAnchor]
-        constraintGreaterThanOrEqualToAnchor:[self.view heightAnchor]],
-  ]];
-
   [_appBar addSubviewsToParent];
 
   [[NSNotificationCenter defaultCenter]
@@ -143,8 +135,18 @@ static UIColor* kChromotingBlueBackground =
   }
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-  return UIStatusBarStyleLightContent;
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+
+  // Adjust the collection view's position and size so that it doesn't get
+  // overlayed by the navigation bar.
+  CGFloat collectionOffsetY =
+      _appBar.headerViewController.headerView.frame.size.height;
+  CGFloat collectionHeight = self.view.bounds.size.height - collectionOffsetY;
+  CGRect oldFrame = _collectionViewController.collectionView.frame;
+  _collectionViewController.collectionView.frame =
+      CGRectMake(oldFrame.origin.x, collectionOffsetY, oldFrame.size.width,
+                 collectionHeight);
 }
 
 #pragma mark - Remoting Service Notifications
@@ -181,6 +183,22 @@ static UIColor* kChromotingBlueBackground =
   [_collectionViewController.collectionView reloadData];
 }
 
+#pragma mark - ClientConnectionViewControllerDelegate
+
+- (void)clientConnected {
+  HostViewController* hostViewController =
+      [[HostViewController alloc] initWithClient:_client];
+  _client = nil;
+  [self presentViewController:hostViewController animated:YES completion:nil];
+}
+
+- (NSString*)getConnectingHostName {
+  if (_client) {
+    return _client.hostInfo.hostName;
+  }
+  return nil;
+}
+
 #pragma mark - HostCollectionViewControllerDelegate
 
 - (void)didSelectCell:(HostCollectionViewCell*)cell
@@ -192,10 +210,26 @@ static UIColor* kChromotingBlueBackground =
     return;
   }
 
+  _client = [[RemotingClient alloc] init];
+
+  [_remotingService.authentication
+      callbackWithAccessToken:base::BindBlockArc(^(
+                                  remoting::OAuthTokenGetter::Status status,
+                                  const std::string& user_email,
+                                  const std::string& access_token) {
+        // TODO(nicholss): Check status.
+        HostInfo* hostInfo = cell.hostInfo;
+        [_client connectToHost:hostInfo
+                      username:base::SysUTF8ToNSString(user_email)
+                   accessToken:base::SysUTF8ToNSString(access_token)];
+      })];
+
   ClientConnectionViewController* clientConnectionViewController =
-      [[ClientConnectionViewController alloc] initWithHostInfo:cell.hostInfo];
-  [self.navigationController pushViewController:clientConnectionViewController
-                                       animated:YES];
+      [[ClientConnectionViewController alloc] init];
+  clientConnectionViewController.delegate = self;
+  [self presentViewController:clientConnectionViewController
+                     animated:YES
+                   completion:nil];
   completionBlock();
 }
 
@@ -234,6 +268,10 @@ animationControllerForDismissedController:(UIViewController*)dismissed {
 }
 
 #pragma mark - Private
+
+- (void)hostSessionStatusChanged:(NSNotification*)notification {
+  NSLog(@"hostSessionStatusChanged: %@", [notification userInfo]);
+}
 
 - (void)closeViewController {
   [self dismissViewControllerAnimated:true completion:nil];

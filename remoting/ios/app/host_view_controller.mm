@@ -258,7 +258,7 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 
   void (^disconnectHandler)(UIAlertAction*) = ^(UIAlertAction*) {
     [_client disconnectFromHost];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
   };
   [alert addAction:[UIAlertAction actionWithTitle:@"Disconnect"
                                             style:UIAlertActionStyleDefault

@@ -8,9 +8,7 @@
 #include "net/quic/core/quic_crypto_client_stream.h"
 #include "net/quic/core/quic_crypto_server_stream.h"
 #include "net/quic/core/quic_crypto_stream.h"
-#include "net/quic/core/quic_error_codes.h"
 #include "net/quic/core/quic_session.h"
-#include "net/quic/platform/api/quic_export.h"
 #include "net/quic/quartc/quartc_clock_interface.h"
 #include "net/quic/quartc/quartc_session_interface.h"
 #include "net/quic/quartc/quartc_stream.h"
@@ -28,10 +26,9 @@ class QuartcCryptoServerStreamHelper : public QuicCryptoServerStream::Helper {
                             std::string* error_details) const override;
 };
 
-class QUIC_EXPORT_PRIVATE QuartcSession
-    : public QuicSession,
-      public QuartcSessionInterface,
-      public QuicCryptoClientStream::ProofHandler {
+class QuartcSession : public QuicSession,
+                      public QuartcSessionInterface,
+                      public QuicCryptoClientStream::ProofHandler {
  public:
   QuartcSession(std::unique_ptr<QuicConnection> connection,
                 const QuicConfig& config,
@@ -70,8 +67,6 @@ class QUIC_EXPORT_PRIVATE QuartcSession
   QuartcStreamInterface* CreateOutgoingStream(
       const OutgoingStreamParameters& param) override;
 
-  void CancelStream(QuicStreamId stream_id) override;
-
   void SetDelegate(QuartcSessionInterface::Delegate* session_delegate) override;
 
   void OnTransportCanWrite() override;
@@ -99,13 +94,7 @@ class QUIC_EXPORT_PRIVATE QuartcSession
   QuicStream* CreateIncomingDynamicStream(QuicStreamId id) override;
   std::unique_ptr<QuicStream> CreateStream(QuicStreamId id) override;
 
-  std::unique_ptr<QuartcStream> CreateDataStream(QuicStreamId id,
-                                                 SpdyPriority priority);
-  // Activates a QuartcStream.  The session takes ownership of the stream, but
-  // returns an unowned pointer to the stream for convenience.
-  QuartcStream* ActivateDataStream(std::unique_ptr<QuartcStream> stream);
-
-  void ResetStream(QuicStreamId stream_id, QuicRstStreamErrorCode error);
+  QuartcStream* CreateDataStream(QuicStreamId id, SpdyPriority priority);
 
  private:
   // For crypto handshake.

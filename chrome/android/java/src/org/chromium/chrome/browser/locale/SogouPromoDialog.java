@@ -68,7 +68,7 @@ public class SogouPromoDialog extends PromoDialog {
     /**
      * Creates an instance of the dialog.
      */
-    SogouPromoDialog(Activity activity, LocaleManager localeManager,
+    public SogouPromoDialog(Activity activity, LocaleManager localeManager,
             @Nullable Callback<Boolean> onDismissed) {
         super(activity);
         mLocaleManager = localeManager;

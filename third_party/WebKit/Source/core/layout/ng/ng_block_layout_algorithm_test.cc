@@ -60,14 +60,14 @@ class NGBlockLayoutAlgorithmTest : public NGBaseLayoutAlgorithmTest {
 
   RefPtr<NGPhysicalBoxFragment> RunBlockLayoutAlgorithm(
       NGConstraintSpace* space,
-      NGBlockNode node) {
+      NGBlockNode* node) {
     RefPtr<NGLayoutResult> result =
         NGBlockLayoutAlgorithm(node, space).Layout();
 
     return ToNGPhysicalBoxFragment(result->PhysicalFragment().Get());
   }
 
-  MinMaxContentSize RunComputeMinAndMax(NGBlockNode node) {
+  MinMaxContentSize RunComputeMinAndMax(NGBlockNode* node) {
     // The constraint space is not used for min/max computation, but we need
     // it to create the algorithm.
     RefPtr<NGConstraintSpace> space =
@@ -122,7 +122,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, FixedSize) {
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(100), NGSizeIndefinite));
 
-  NGBlockNode box(ToLayoutBox(GetLayoutObjectByElementId("box")));
+  auto* box = new NGBlockNode(GetLayoutObjectByElementId("box"));
 
   RefPtr<NGPhysicalFragment> frag = RunBlockLayoutAlgorithm(space.Get(), box);
 
@@ -144,7 +144,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, LayoutBlockChildren) {
   const int kHeight2 = 30;
   const int kMarginTop = 5;
 
-  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  auto* container = new NGBlockNode(GetLayoutObjectByElementId("container"));
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(100), NGSizeIndefinite));
@@ -188,7 +188,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, LayoutBlockChildrenWithWritingMode) {
   const int kHeight = 50;
   const int kMarginLeft = 100;
 
-  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  auto* container = new NGBlockNode(GetLayoutObjectByElementId("container"));
   RefPtr<NGConstraintSpace> space =
       ConstructConstraintSpace(kHorizontalTopBottom, TextDirection::kLtr,
                                NGLogicalSize(LayoutUnit(500), LayoutUnit(500)));
@@ -607,7 +607,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, DISABLED_CollapsingMarginsCase6) {
   const int kMarginBottom = 10;
   const int kMarginTop = 40;
 
-  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  auto* container = new NGBlockNode(GetLayoutObjectByElementId("container"));
   RefPtr<NGConstraintSpace> space =
       ConstructConstraintSpace(kHorizontalTopBottom, TextDirection::kLtr,
                                NGLogicalSize(LayoutUnit(500), LayoutUnit(500)));
@@ -711,7 +711,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, BorderAndPadding) {
   const int kPaddingBottom = 7;
   const int kPaddingLeft = 8;
 
-  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  auto* container = new NGBlockNode(GetLayoutObjectByElementId("container"));
 
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
@@ -748,7 +748,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, PercentageResolutionSize) {
   const int kPaddingLeft = 10;
   const int kWidth = 30;
 
-  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  auto* container = new NGBlockNode(GetLayoutObjectByElementId("container"));
 
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
@@ -780,7 +780,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, AutoMargin) {
   const int kWidth = 30;
   const int kChildWidth = 10;
 
-  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  auto* container = new NGBlockNode(GetLayoutObjectByElementId("container"));
 
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
@@ -1198,7 +1198,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, ComputeMinMaxContent) {
 
   const int kSecondChildWidth = 30;
 
-  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  auto* container = new NGBlockNode(GetLayoutObjectByElementId("container"));
 
   MinMaxContentSize sizes = RunComputeMinAndMax(container);
   EXPECT_EQ(kSecondChildWidth, sizes.min_content);
@@ -1215,7 +1215,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, ShrinkToFit) {
   )HTML");
   const int kWidthChild2 = 30;
 
-  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  auto* container = new NGBlockNode(GetLayoutObjectByElementId("container"));
 
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
@@ -1245,7 +1245,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, DISABLED_EmptyMulticol) {
     </div>
   )HTML");
 
-  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  auto* container = new NGBlockNode(GetLayoutObjectByElementId("container"));
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(1000), NGSizeIndefinite));
@@ -1279,7 +1279,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, DISABLED_EmptyBlock) {
     </div>
   )HTML");
 
-  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  auto* container = new NGBlockNode(GetLayoutObjectByElementId("container"));
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(1000), NGSizeIndefinite));
@@ -1322,7 +1322,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, DISABLED_BlockInOneColumn) {
     </div>
   )HTML");
 
-  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  auto* container = new NGBlockNode(GetLayoutObjectByElementId("container"));
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(1000), NGSizeIndefinite));
@@ -1365,7 +1365,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, DISABLED_BlockInTwoColumns) {
     </div>
   )HTML");
 
-  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  auto* container = new NGBlockNode(GetLayoutObjectByElementId("container"));
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(1000), NGSizeIndefinite));
@@ -1417,7 +1417,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, DISABLED_BlockInThreeColumns) {
     </div>
   )HTML");
 
-  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  auto* container = new NGBlockNode(GetLayoutObjectByElementId("container"));
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(1000), NGSizeIndefinite));
@@ -1478,7 +1478,7 @@ TEST_F(NGBlockLayoutAlgorithmTest,
     </div>
   )HTML");
 
-  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  auto* container = new NGBlockNode(GetLayoutObjectByElementId("container"));
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(1000), NGSizeIndefinite));
@@ -1540,7 +1540,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, DISABLED_TwoBlocksInTwoColumns) {
     </div>
   )HTML");
 
-  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  auto* container = new NGBlockNode(GetLayoutObjectByElementId("container"));
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(1000), NGSizeIndefinite));
@@ -1604,7 +1604,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, DISABLED_OverflowedBlock) {
     </div>
   )HTML");
 
-  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  auto* container = new NGBlockNode(GetLayoutObjectByElementId("container"));
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(1000), NGSizeIndefinite));
@@ -1679,7 +1679,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, DISABLED_FloatInOneColumn) {
     </div>
   )HTML");
 
-  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  auto* container = new NGBlockNode(GetLayoutObjectByElementId("container"));
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(1000), NGSizeIndefinite));
@@ -1725,7 +1725,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, DISABLED_TwoFloatsInOneColumn) {
     </div>
   )HTML");
 
-  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  auto* container = new NGBlockNode(GetLayoutObjectByElementId("container"));
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(1000), NGSizeIndefinite));
@@ -1777,7 +1777,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, DISABLED_TwoFloatsInTwoColumns) {
     </div>
   )HTML");
 
-  NGBlockNode container(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  auto* container = new NGBlockNode(GetLayoutObjectByElementId("container"));
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(1000), NGSizeIndefinite));
@@ -1974,7 +1974,8 @@ TEST_F(NGBlockLayoutAlgorithmTest, NoFragmentation) {
 
   LayoutUnit kFragmentainerSpaceAvailable(200);
 
-  NGBlockNode node(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  NGBlockNode* node = new NGBlockNode(
+      ToLayoutBlockFlow(GetLayoutObjectByElementId("container")));
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(1000), NGSizeIndefinite), false, true,
@@ -2002,7 +2003,8 @@ TEST_F(NGBlockLayoutAlgorithmTest, SimpleFragmentation) {
 
   LayoutUnit kFragmentainerSpaceAvailable(200);
 
-  NGBlockNode node(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  NGBlockNode* node = new NGBlockNode(
+      ToLayoutBlockFlow(GetLayoutObjectByElementId("container")));
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(1000), NGSizeIndefinite), false, true,
@@ -2048,7 +2050,8 @@ TEST_F(NGBlockLayoutAlgorithmTest, InnerChildrenFragmentation) {
 
   LayoutUnit kFragmentainerSpaceAvailable(200);
 
-  NGBlockNode node(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  NGBlockNode* node = new NGBlockNode(
+      ToLayoutBlockFlow(GetLayoutObjectByElementId("container")));
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(1000), NGSizeIndefinite), false, true,
@@ -2115,7 +2118,8 @@ TEST_F(NGBlockLayoutAlgorithmTest,
 
   LayoutUnit kFragmentainerSpaceAvailable(200);
 
-  NGBlockNode node(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  NGBlockNode* node = new NGBlockNode(
+      ToLayoutBlockFlow(GetLayoutObjectByElementId("container")));
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(1000), NGSizeIndefinite), false, true,
@@ -2180,7 +2184,8 @@ TEST_F(NGBlockLayoutAlgorithmTest, InnerChildrenFragmentationSmallHeight) {
 
   LayoutUnit kFragmentainerSpaceAvailable(200);
 
-  NGBlockNode node(ToLayoutBox(GetLayoutObjectByElementId("container")));
+  NGBlockNode* node = new NGBlockNode(
+      ToLayoutBlockFlow(GetLayoutObjectByElementId("container")));
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(1000), NGSizeIndefinite), false, true,
@@ -2246,7 +2251,8 @@ TEST_F(NGBlockLayoutAlgorithmTest, FloatFragmentationParallelFlows) {
 
   LayoutUnit kFragmentainerSpaceAvailable(150);
 
-  NGBlockNode node(ToLayoutBlockFlow(GetLayoutObjectByElementId("container")));
+  NGBlockNode* node = new NGBlockNode(
+      ToLayoutBlockFlow(GetLayoutObjectByElementId("container")));
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(1000), NGSizeIndefinite), false, true,
@@ -2328,7 +2334,8 @@ TEST_F(NGBlockLayoutAlgorithmTest, FloatFragmentationOrthogonalFlows) {
 
   LayoutUnit kFragmentainerSpaceAvailable(150);
 
-  NGBlockNode node(ToLayoutBlockFlow(GetLayoutObjectByElementId("container")));
+  NGBlockNode* node = new NGBlockNode(
+      ToLayoutBlockFlow(GetLayoutObjectByElementId("container")));
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(1000), NGSizeIndefinite), false, true,
@@ -2378,7 +2385,8 @@ TEST_F(NGBlockLayoutAlgorithmTest, DISABLED_FloatFragmentationZeroHeight) {
 
   LayoutUnit kFragmentainerSpaceAvailable(150);
 
-  NGBlockNode node(ToLayoutBlockFlow(GetLayoutObjectByElementId("container")));
+  NGBlockNode* node = new NGBlockNode(
+      ToLayoutBlockFlow(GetLayoutObjectByElementId("container")));
   RefPtr<NGConstraintSpace> space = ConstructConstraintSpace(
       kHorizontalTopBottom, TextDirection::kLtr,
       NGLogicalSize(LayoutUnit(1000), NGSizeIndefinite), false, true,

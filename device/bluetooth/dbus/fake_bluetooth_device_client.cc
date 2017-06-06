@@ -601,9 +601,8 @@ void FakeBluetoothDeviceClient::SetLEConnectionParameters(
     const base::Closure& callback,
     const ErrorCallback& error_callback) {
   Properties* properties = GetProperties(object_path);
-  if (!properties->type.is_valid() || properties->type.value() == kTypeBredr) {
-    error_callback.Run(bluetooth_device::kErrorFailed,
-                       "BR/EDR devices not supported");
+  if (!properties->connected.value()) {
+    error_callback.Run(bluetooth_device::kErrorNotConnected, "Not Connected");
     return;
   }
 

@@ -14,14 +14,13 @@
 
 namespace switches {
 
-bool IsAccountConsistencyMirrorEnabled() {
+bool IsEnableAccountConsistency() {
 #if defined(OS_ANDROID) || defined(OS_IOS)
   // Account consistency is enabled on Android and iOS.
   return true;
 #else
-  base::CommandLine* cmd = base::CommandLine::ForCurrentProcess();
-  return cmd->GetSwitchValueASCII(switches::kAccountConsistency) ==
-         switches::kAccountConsistencyMirror;
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kEnableAccountConsistency);
 #endif  // defined(OS_ANDROID) || defined(OS_IOS)
 }
 
@@ -34,13 +33,12 @@ bool IsExtensionsMultiAccount() {
 
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
              switches::kExtensionsMultiAccount) ||
-         IsAccountConsistencyMirrorEnabled();
+         IsEnableAccountConsistency();
 }
 
-void EnableAccountConsistencyMirrorForTesting(base::CommandLine* command_line) {
+void EnableAccountConsistencyForTesting(base::CommandLine* command_line) {
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
-  command_line->AppendSwitchASCII(switches::kAccountConsistency,
-                                  switches::kAccountConsistencyMirror);
+  command_line->AppendSwitch(switches::kEnableAccountConsistency);
 #endif
 }
 

@@ -38,33 +38,57 @@ namespace blink {
 // up-to-date.
 class CORE_EXPORT TextMatchMarker final : public DocumentMarker {
  private:
-  enum class LayoutStatus { kInvalid, kValidNull, kValidNotNull };
+  enum class State { kInvalid, kValidNull, kValidNotNull };
 
  public:
   enum class MatchStatus { kInactive, kActive };
 
-  TextMatchMarker(unsigned start_offset, unsigned end_offset, MatchStatus);
+  TextMatchMarker(unsigned start_offset,
+                  unsigned end_offset,
+                  MatchStatus status)
+      : DocumentMarker(start_offset, end_offset), match_status_(status) {
+    layout_state_ = State::kInvalid;
+  }
 
   // DocumentMarker implementations
   MarkerType GetType() const final;
 
   // TextMatchMarker-specific
-  bool IsActiveMatch() const;
-  void SetIsActiveMatch(bool active);
+  bool IsActiveMatch() const { return match_status_ == MatchStatus::kActive; }
+  void SetIsActiveMatch(bool active) {
+    match_status_ = active ? MatchStatus::kActive : MatchStatus::kInactive;
+  }
 
-  bool IsRendered() const;
-  bool Contains(const LayoutPoint&) const;
-  void SetLayoutRect(const LayoutRect&);
-  const LayoutRect& GetLayoutRect() const;
-  void NullifyLayoutRect();
+  bool IsRendered() const { return layout_state_ == State::kValidNotNull; }
+  bool Contains(const LayoutPoint& point) const {
+    DCHECK_EQ(layout_state_, State::kValidNotNull);
+    return rendered_rect_.Contains(point);
+  }
+  void SetRenderedRect(const LayoutRect& rect) {
+    if (layout_state_ == State::kValidNotNull && rect == rendered_rect_)
+      return;
+    layout_state_ = State::kValidNotNull;
+    rendered_rect_ = rect;
+  }
 
-  void Invalidate();
-  bool IsValid() const;
+  const LayoutRect& RenderedRect() const {
+    DCHECK_EQ(layout_state_, State::kValidNotNull);
+    return rendered_rect_;
+  }
+
+  void NullifyRenderedRect() {
+    layout_state_ = State::kValidNull;
+    // Now |m_renderedRect| can not be accessed until |setRenderedRect| is
+    // called.
+  }
+
+  void Invalidate() { layout_state_ = State::kInvalid; }
+  bool IsValid() const { return layout_state_ != State::kInvalid; }
 
  private:
   MatchStatus match_status_;
-  LayoutStatus layout_status_ = LayoutStatus::kInvalid;
-  LayoutRect layout_rect_;
+  LayoutRect rendered_rect_;
+  State layout_state_;
 
   DISALLOW_COPY_AND_ASSIGN(TextMatchMarker);
 };

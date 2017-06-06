@@ -139,7 +139,9 @@ class TestDelegateBase : public BidirectionalStreamImpl::Delegate {
   }
 
   void SendData(IOBuffer* data, int length, bool end_of_stream) {
-    SendvData({data}, {length}, end_of_stream);
+    not_expect_callback_ = true;
+    stream_->SendData(data, length, end_of_stream);
+    not_expect_callback_ = false;
   }
 
   void SendvData(const std::vector<scoped_refptr<IOBuffer>>& data,

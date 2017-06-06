@@ -429,10 +429,8 @@ bool FrameSelection::SelectionHasFocus() const {
   // TODO(editing-dev): Hoist UpdateStyleAndLayoutIgnorePendingStylesheets
   // to caller. See http://crbug.com/590369 for more details.
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-  if (ComputeVisibleSelectionInFlatTree().IsNone())
-    return false;
   const Node* current =
-      ComputeVisibleSelectionInFlatTree().Start().ComputeContainerNode();
+      ComputeVisibleSelectionInDOMTree().Start().ComputeContainerNode();
   if (!current)
     return false;
 
@@ -446,11 +444,17 @@ bool FrameSelection::SelectionHasFocus() const {
   if (focused_element->IsTextControl())
     return focused_element->ContainsIncludingHostElements(*current);
 
+  if (ComputeVisibleSelectionInFlatTree().IsNone()) {
+    // TODO(editing-dev): We should avoid any case where VSInFlatTree is none
+    // but VSInDOMTree is not none.
+    DLOG(FATAL) << ComputeVisibleSelectionInDOMTree();
+  }
+
   // Selection has focus if it contains the focused element.
   const PositionInFlatTree& focused_position =
       PositionInFlatTree::FirstPositionInNode(focused_element);
   if (ComputeVisibleSelectionInFlatTree().Start() <= focused_position &&
-      ComputeVisibleSelectionInFlatTree().End() >= focused_position)
+      ComputeVisibleSelectionInFlatTree().end() >= focused_position)
     return true;
 
   bool has_editable_style = HasEditableStyle(*current);
@@ -951,7 +955,7 @@ LayoutRect FrameSelection::UnclippedBounds() const {
 static IntRect AbsoluteSelectionBoundsOf(
     const VisibleSelectionInFlatTree& selection) {
   return ComputeTextRect(
-      EphemeralRangeInFlatTree(selection.Start(), selection.End()));
+      EphemeralRangeInFlatTree(selection.Start(), selection.end()));
 }
 
 // TODO(editing-dev): This should be done in FlatTree world.

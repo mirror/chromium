@@ -22,9 +22,6 @@ namespace {
 // See crbug.com/377613.
 const int kUnlockDelayInMs = 10;
 
-base::LazyInstance<WebSocketEndpointLockManager>::Leaky manager_instance =
-    LAZY_INSTANCE_INITIALIZER;
-
 }  // namespace
 
 WebSocketEndpointLockManager::Waiter::~Waiter() {
@@ -35,7 +32,7 @@ WebSocketEndpointLockManager::Waiter::~Waiter() {
 }
 
 WebSocketEndpointLockManager* WebSocketEndpointLockManager::GetInstance() {
-  return manager_instance.Pointer();
+  return base::Singleton<WebSocketEndpointLockManager>::get();
 }
 
 int WebSocketEndpointLockManager::LockEndpoint(const IPEndPoint& endpoint,
@@ -117,7 +114,9 @@ WebSocketEndpointLockManager::LockInfo::LockInfo(const LockInfo& rhs)
 
 WebSocketEndpointLockManager::WebSocketEndpointLockManager()
     : unlock_delay_(base::TimeDelta::FromMilliseconds(kUnlockDelayInMs)),
-      pending_unlock_count_(0) {}
+      pending_unlock_count_(0),
+      weak_factory_(this) {
+}
 
 WebSocketEndpointLockManager::~WebSocketEndpointLockManager() {
   DCHECK_EQ(lock_info_map_.size(), pending_unlock_count_);
@@ -132,7 +131,7 @@ void WebSocketEndpointLockManager::UnlockEndpointAfterDelay(
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE,
       base::Bind(&WebSocketEndpointLockManager::DelayedUnlockEndpoint,
-                 base::Unretained(this), endpoint),
+                 weak_factory_.GetWeakPtr(), endpoint),
       unlock_delay_);
 }
 

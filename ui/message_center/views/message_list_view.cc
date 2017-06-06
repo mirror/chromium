@@ -44,7 +44,8 @@ MessageListView::MessageListView()
   // because of the shadow of message view. Use an empty border instead
   // to provide this margin.
   gfx::Insets shadow_insets = MessageView::GetShadowInsets();
-  SetBackground(views::CreateSolidBackground(kMessageCenterBackgroundColor));
+  set_background(
+      views::Background::CreateSolidBackground(kMessageCenterBackgroundColor));
   SetBorder(views::CreateEmptyBorder(
       kMarginBetweenItems - shadow_insets.top(), /* top */
       kMarginBetweenItems - shadow_insets.left(), /* left */

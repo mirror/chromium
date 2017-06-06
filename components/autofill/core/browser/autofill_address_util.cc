@@ -171,7 +171,7 @@ void SetCountryData(const PersonalDataManager& manager,
         "value", countries[i] ? countries[i]->country_code() : "separator");
     country_list->Append(std::move(option_details));
   }
-  localized_strings->Set("autofillCountrySelectList", std::move(country_list));
+  localized_strings->Set("autofillCountrySelectList", country_list.release());
 
   std::unique_ptr<base::ListValue> default_country_components(
       new base::ListValue);
@@ -180,7 +180,7 @@ void SetCountryData(const PersonalDataManager& manager,
                        default_country_components.get(),
                        &default_country_language_code);
   localized_strings->Set("autofillDefaultCountryComponents",
-                         std::move(default_country_components));
+                         default_country_components.release());
   localized_strings->SetString("autofillDefaultCountryLanguageCode",
                                default_country_language_code);
 }

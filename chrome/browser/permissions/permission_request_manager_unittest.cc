@@ -28,22 +28,10 @@ class PermissionRequestManagerTest : public ChromeRenderViewHostTestHarness {
         request2_("test2",
                   PermissionRequestType::DOWNLOAD,
                   PermissionRequestGestureType::NO_GESTURE),
-        request_mic_("mic",
-                     PermissionRequestType::PERMISSION_MEDIASTREAM_MIC,
-                     PermissionRequestGestureType::NO_GESTURE),
-        request_camera_("cam",
-                        PermissionRequestType::PERMISSION_MEDIASTREAM_CAMERA,
-                        PermissionRequestGestureType::NO_GESTURE),
         iframe_request_same_domain_("iframe",
-                                    PermissionRequestType::UNKNOWN,
                                     GURL("http://www.google.com/some/url")),
-        iframe_request_other_domain_("iframe",
-                                     PermissionRequestType::UNKNOWN,
-                                     GURL("http://www.youtube.com")),
-        iframe_request_mic_other_domain_(
-            "iframe",
-            PermissionRequestType::PERMISSION_MEDIASTREAM_MIC,
-            GURL("http://www.youtube.com")) {}
+        iframe_request_other_domain_("iframe", GURL("http://www.youtube.com")) {
+  }
   ~PermissionRequestManagerTest() override {}
 
   void SetUp() override {
@@ -83,7 +71,7 @@ class PermissionRequestManagerTest : public ChromeRenderViewHostTestHarness {
     base::RunLoop().RunUntilIdle();
   }
 
-  void WaitForBubbleToBeShown() {
+  void WaitForCoalescing() {
     manager_->DocumentOnLoadCompletedInMainFrame();
     base::RunLoop().RunUntilIdle();
   }
@@ -100,11 +88,8 @@ class PermissionRequestManagerTest : public ChromeRenderViewHostTestHarness {
  protected:
   MockPermissionRequest request1_;
   MockPermissionRequest request2_;
-  MockPermissionRequest request_mic_;
-  MockPermissionRequest request_camera_;
   MockPermissionRequest iframe_request_same_domain_;
   MockPermissionRequest iframe_request_other_domain_;
-  MockPermissionRequest iframe_request_mic_other_domain_;
   std::unique_ptr<PermissionRequestManager> manager_;
   std::unique_ptr<MockPermissionPromptFactory> prompt_factory_;
 };
@@ -112,7 +97,7 @@ class PermissionRequestManagerTest : public ChromeRenderViewHostTestHarness {
 TEST_F(PermissionRequestManagerTest, SingleRequest) {
   manager_->AddRequest(&request1_);
   manager_->DisplayPendingRequests();
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
 
   EXPECT_TRUE(prompt_factory_->is_visible());
   ASSERT_EQ(prompt_factory_->request_count(), 1);
@@ -125,7 +110,7 @@ TEST_F(PermissionRequestManagerTest, SingleRequest) {
 TEST_F(PermissionRequestManagerTest, SingleRequestViewFirst) {
   manager_->DisplayPendingRequests();
   manager_->AddRequest(&request1_);
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
 
   EXPECT_TRUE(prompt_factory_->is_visible());
   ASSERT_EQ(prompt_factory_->request_count(), 1);
@@ -135,55 +120,27 @@ TEST_F(PermissionRequestManagerTest, SingleRequestViewFirst) {
   EXPECT_TRUE(request1_.granted());
 }
 
-// Most requests should never be grouped.
-TEST_F(PermissionRequestManagerTest, TwoRequestsUngrouped) {
+TEST_F(PermissionRequestManagerTest, TwoRequests) {
   manager_->AddRequest(&request1_);
   manager_->AddRequest(&request2_);
   manager_->DisplayPendingRequests();
-
-  WaitForBubbleToBeShown();
-  EXPECT_TRUE(prompt_factory_->is_visible());
-  ASSERT_EQ(prompt_factory_->request_count(), 1);
-  Accept();
-  EXPECT_TRUE(request1_.granted());
-
-  WaitForBubbleToBeShown();
-  EXPECT_TRUE(prompt_factory_->is_visible());
-  ASSERT_EQ(prompt_factory_->request_count(), 1);
-  Accept();
-  EXPECT_TRUE(request2_.granted());
-}
-
-// Only mic/camera requests from the same origin should be grouped.
-TEST_F(PermissionRequestManagerTest, MicCameraGrouped) {
-  manager_->AddRequest(&request_mic_);
-  manager_->AddRequest(&request_camera_);
-  manager_->DisplayPendingRequests();
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
 
   EXPECT_TRUE(prompt_factory_->is_visible());
   ASSERT_EQ(prompt_factory_->request_count(), 2);
 
   ToggleAccept(0, true);
-  ToggleAccept(1, true);
+  ToggleAccept(1, false);
   Accept();
-  EXPECT_TRUE(request_mic_.granted());
-  EXPECT_TRUE(request_camera_.granted());
-
-  // If the requests come from different origins, they should not be grouped.
-  manager_->AddRequest(&iframe_request_mic_other_domain_);
-  manager_->AddRequest(&request_camera_);
-  WaitForBubbleToBeShown();
-
-  EXPECT_TRUE(prompt_factory_->is_visible());
-  ASSERT_EQ(prompt_factory_->request_count(), 1);
+  EXPECT_TRUE(request1_.granted());
+  EXPECT_FALSE(request2_.granted());
 }
 
 TEST_F(PermissionRequestManagerTest, TwoRequestsTabSwitch) {
-  manager_->AddRequest(&request_mic_);
-  manager_->AddRequest(&request_camera_);
+  manager_->AddRequest(&request1_);
+  manager_->AddRequest(&request2_);
   manager_->DisplayPendingRequests();
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
 
   EXPECT_TRUE(prompt_factory_->is_visible());
   ASSERT_EQ(prompt_factory_->request_count(), 2);
@@ -195,32 +152,43 @@ TEST_F(PermissionRequestManagerTest, TwoRequestsTabSwitch) {
   EXPECT_FALSE(prompt_factory_->is_visible());
 
   MockTabSwitchBack();
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   EXPECT_TRUE(prompt_factory_->is_visible());
   ASSERT_EQ(prompt_factory_->request_count(), 2);
 
   Accept();
-  EXPECT_TRUE(request_mic_.granted());
-  EXPECT_FALSE(request_camera_.granted());
+  EXPECT_TRUE(request1_.granted());
+  EXPECT_FALSE(request2_.granted());
 }
 
 TEST_F(PermissionRequestManagerTest, NoRequests) {
   manager_->DisplayPendingRequests();
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   EXPECT_FALSE(prompt_factory_->is_visible());
 }
 
 TEST_F(PermissionRequestManagerTest, NoView) {
   manager_->AddRequest(&request1_);
   // Don't display the pending requests.
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   EXPECT_FALSE(prompt_factory_->is_visible());
+}
+
+TEST_F(PermissionRequestManagerTest, TwoRequestsCoalesce) {
+  manager_->DisplayPendingRequests();
+  manager_->AddRequest(&request1_);
+  manager_->AddRequest(&request2_);
+  EXPECT_FALSE(prompt_factory_->is_visible());
+  WaitForCoalescing();
+
+  EXPECT_TRUE(prompt_factory_->is_visible());
+  ASSERT_EQ(prompt_factory_->request_count(), 2);
 }
 
 TEST_F(PermissionRequestManagerTest, TwoRequestsDoNotCoalesce) {
   manager_->DisplayPendingRequests();
   manager_->AddRequest(&request1_);
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   manager_->AddRequest(&request2_);
 
   EXPECT_TRUE(prompt_factory_->is_visible());
@@ -230,14 +198,14 @@ TEST_F(PermissionRequestManagerTest, TwoRequestsDoNotCoalesce) {
 TEST_F(PermissionRequestManagerTest, TwoRequestsShownInTwoBubbles) {
   manager_->DisplayPendingRequests();
   manager_->AddRequest(&request1_);
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   manager_->AddRequest(&request2_);
 
   EXPECT_TRUE(prompt_factory_->is_visible());
   ASSERT_EQ(prompt_factory_->request_count(), 1);
 
   Accept();
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
 
   EXPECT_TRUE(prompt_factory_->is_visible());
   ASSERT_EQ(prompt_factory_->request_count(), 1);
@@ -247,17 +215,18 @@ TEST_F(PermissionRequestManagerTest, TwoRequestsShownInTwoBubbles) {
 TEST_F(PermissionRequestManagerTest, TestAddDuplicateRequest) {
   manager_->DisplayPendingRequests();
   manager_->AddRequest(&request1_);
+  manager_->AddRequest(&request2_);
   manager_->AddRequest(&request1_);
 
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   EXPECT_TRUE(prompt_factory_->is_visible());
-  ASSERT_EQ(prompt_factory_->request_count(), 1);
+  ASSERT_EQ(prompt_factory_->request_count(), 2);
 }
 
 TEST_F(PermissionRequestManagerTest, SequentialRequests) {
   manager_->DisplayPendingRequests();
   manager_->AddRequest(&request1_);
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   EXPECT_TRUE(prompt_factory_->is_visible());
 
   Accept();
@@ -266,7 +235,7 @@ TEST_F(PermissionRequestManagerTest, SequentialRequests) {
   EXPECT_FALSE(prompt_factory_->is_visible());
 
   manager_->AddRequest(&request2_);
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   EXPECT_TRUE(prompt_factory_->is_visible());
   Accept();
   EXPECT_FALSE(prompt_factory_->is_visible());
@@ -279,7 +248,7 @@ TEST_F(PermissionRequestManagerTest, SameRequestRejected) {
   manager_->AddRequest(&request1_);
   EXPECT_FALSE(request1_.finished());
 
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   EXPECT_TRUE(prompt_factory_->is_visible());
   ASSERT_EQ(prompt_factory_->request_count(), 1);
 }
@@ -299,7 +268,7 @@ TEST_F(PermissionRequestManagerTest, DuplicateRequestCancelled) {
 TEST_F(PermissionRequestManagerTest, DuplicateQueuedRequest) {
   manager_->DisplayPendingRequests();
   manager_->AddRequest(&request1_);
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   manager_->AddRequest(&request2_);
 
   MockPermissionRequest dupe_request("test1");
@@ -324,7 +293,7 @@ TEST_F(PermissionRequestManagerTest, DuplicateQueuedRequest) {
 TEST_F(PermissionRequestManagerTest, ForgetRequestsOnPageNavigation) {
   manager_->DisplayPendingRequests();
   manager_->AddRequest(&request1_);
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   manager_->AddRequest(&request2_);
   manager_->AddRequest(&iframe_request_other_domain_);
 
@@ -332,7 +301,7 @@ TEST_F(PermissionRequestManagerTest, ForgetRequestsOnPageNavigation) {
   ASSERT_EQ(prompt_factory_->request_count(), 1);
 
   NavigateAndCommit(GURL("http://www2.google.com/"));
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
 
   EXPECT_FALSE(prompt_factory_->is_visible());
   EXPECT_TRUE(request1_.finished());
@@ -351,7 +320,7 @@ TEST_F(PermissionRequestManagerTest, TestCancelQueued) {
   EXPECT_FALSE(prompt_factory_->is_visible());
 
   manager_->AddRequest(&request2_);
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   EXPECT_TRUE(prompt_factory_->is_visible());
   ASSERT_EQ(prompt_factory_->request_count(), 1);
 }
@@ -359,13 +328,13 @@ TEST_F(PermissionRequestManagerTest, TestCancelQueued) {
 TEST_F(PermissionRequestManagerTest, TestCancelWhileDialogShown) {
   manager_->DisplayPendingRequests();
   manager_->AddRequest(&request1_);
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
 
   prompt_factory_->SetCanUpdateUi(true);
   EXPECT_TRUE(prompt_factory_->is_visible());
   EXPECT_FALSE(request1_.finished());
   manager_->CancelRequest(&request1_);
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   EXPECT_TRUE(request1_.finished());
   EXPECT_FALSE(prompt_factory_->is_visible());
 }
@@ -374,7 +343,7 @@ TEST_F(PermissionRequestManagerTest, TestCancelWhileDialogShownNoUpdate) {
   manager_->DisplayPendingRequests();
   prompt_factory_->SetCanUpdateUi(false);
   manager_->AddRequest(&request1_);
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   prompt_factory_->SetCanUpdateUi(false);
 
   EXPECT_TRUE(prompt_factory_->is_visible());
@@ -388,7 +357,7 @@ TEST_F(PermissionRequestManagerTest, TestCancelWhileDialogShownNoUpdate) {
 TEST_F(PermissionRequestManagerTest, TestCancelPendingRequest) {
   manager_->DisplayPendingRequests();
   manager_->AddRequest(&request1_);
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   manager_->AddRequest(&request2_);
 
   EXPECT_TRUE(prompt_factory_->is_visible());
@@ -403,7 +372,7 @@ TEST_F(PermissionRequestManagerTest, TestCancelPendingRequest) {
 TEST_F(PermissionRequestManagerTest, MainFrameNoRequestIFrameRequest) {
   manager_->DisplayPendingRequests();
   manager_->AddRequest(&iframe_request_same_domain_);
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   WaitForFrameLoad();
 
   EXPECT_TRUE(prompt_factory_->is_visible());
@@ -416,19 +385,14 @@ TEST_F(PermissionRequestManagerTest, MainFrameAndIFrameRequestSameDomain) {
   manager_->AddRequest(&request1_);
   manager_->AddRequest(&iframe_request_same_domain_);
   WaitForFrameLoad();
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
 
   EXPECT_TRUE(prompt_factory_->is_visible());
-  ASSERT_EQ(1, prompt_factory_->request_count());
+  ASSERT_EQ(prompt_factory_->request_count(), 2);
   Closing();
   EXPECT_TRUE(request1_.finished());
-  EXPECT_FALSE(iframe_request_same_domain_.finished());
-  WaitForBubbleToBeShown();
-  EXPECT_TRUE(prompt_factory_->is_visible());
-  ASSERT_EQ(1, prompt_factory_->request_count());
-  Closing();
-  EXPECT_FALSE(prompt_factory_->is_visible());
   EXPECT_TRUE(iframe_request_same_domain_.finished());
+  EXPECT_FALSE(prompt_factory_->is_visible());
 }
 
 TEST_F(PermissionRequestManagerTest, MainFrameAndIFrameRequestOtherDomain) {
@@ -436,7 +400,7 @@ TEST_F(PermissionRequestManagerTest, MainFrameAndIFrameRequestOtherDomain) {
   manager_->AddRequest(&request1_);
   manager_->AddRequest(&iframe_request_other_domain_);
   WaitForFrameLoad();
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
 
   EXPECT_TRUE(prompt_factory_->is_visible());
   Closing();
@@ -450,7 +414,7 @@ TEST_F(PermissionRequestManagerTest, MainFrameAndIFrameRequestOtherDomain) {
 TEST_F(PermissionRequestManagerTest, IFrameRequestWhenMainRequestVisible) {
   manager_->DisplayPendingRequests();
   manager_->AddRequest(&request1_);
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   EXPECT_TRUE(prompt_factory_->is_visible());
 
   manager_->AddRequest(&iframe_request_same_domain_);
@@ -469,7 +433,7 @@ TEST_F(PermissionRequestManagerTest,
        IFrameRequestOtherDomainWhenMainRequestVisible) {
   manager_->DisplayPendingRequests();
   manager_->AddRequest(&request1_);
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   EXPECT_TRUE(prompt_factory_->is_visible());
 
   manager_->AddRequest(&iframe_request_other_domain_);
@@ -485,7 +449,7 @@ TEST_F(PermissionRequestManagerTest,
 TEST_F(PermissionRequestManagerTest, RequestsDontNeedUserGesture) {
   manager_->DisplayPendingRequests();
   WaitForFrameLoad();
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   manager_->AddRequest(&request1_);
   manager_->AddRequest(&iframe_request_other_domain_);
   manager_->AddRequest(&request2_);
@@ -499,7 +463,7 @@ TEST_F(PermissionRequestManagerTest, UMAForSimpleAcceptedGestureBubble) {
 
   manager_->AddRequest(&request1_);
   manager_->DisplayPendingRequests();
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   histograms.ExpectUniqueSample(
       PermissionUmaUtil::kPermissionsPromptShown,
       static_cast<base::HistogramBase::Sample>(PermissionRequestType::QUOTA),
@@ -535,7 +499,7 @@ TEST_F(PermissionRequestManagerTest, UMAForSimpleDeniedNoGestureBubble) {
 
   manager_->AddRequest(&request2_);
   manager_->DisplayPendingRequests();
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
 
   histograms.ExpectTotalCount(
       PermissionUmaUtil::kPermissionsPromptShownGesture, 0);
@@ -570,7 +534,7 @@ TEST_F(PermissionRequestManagerTest, UMAForSimpleDeniedBubbleAlternatePath) {
 
   manager_->AddRequest(&request1_);
   manager_->DisplayPendingRequests();
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   // No need to test UMA for showing prompts again, they were tested in
   // UMAForSimpleAcceptedBubble.
 
@@ -585,10 +549,10 @@ TEST_F(PermissionRequestManagerTest, UMAForSimpleDeniedBubbleAlternatePath) {
 TEST_F(PermissionRequestManagerTest, UMAForMergedAcceptedBubble) {
   base::HistogramTester histograms;
 
-  manager_->AddRequest(&request_mic_);
-  manager_->AddRequest(&request_camera_);
+  manager_->AddRequest(&request1_);
+  manager_->AddRequest(&request2_);
   manager_->DisplayPendingRequests();
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
 
   histograms.ExpectUniqueSample(
       PermissionUmaUtil::kPermissionsPromptShown,
@@ -596,13 +560,11 @@ TEST_F(PermissionRequestManagerTest, UMAForMergedAcceptedBubble) {
       1);
   histograms.ExpectBucketCount(
       PermissionUmaUtil::kPermissionsPromptMergedBubbleTypes,
-      static_cast<base::HistogramBase::Sample>(
-          PermissionRequestType::PERMISSION_MEDIASTREAM_MIC),
+      static_cast<base::HistogramBase::Sample>(PermissionRequestType::QUOTA),
       1);
   histograms.ExpectBucketCount(
       PermissionUmaUtil::kPermissionsPromptMergedBubbleTypes,
-      static_cast<base::HistogramBase::Sample>(
-          PermissionRequestType::PERMISSION_MEDIASTREAM_CAMERA),
+      static_cast<base::HistogramBase::Sample>(PermissionRequestType::DOWNLOAD),
       1);
   histograms.ExpectUniqueSample(
       PermissionUmaUtil::kPermissionsPromptRequestsPerPrompt, 2, 1);
@@ -621,23 +583,21 @@ TEST_F(PermissionRequestManagerTest, UMAForMergedAcceptedBubble) {
       1);
   histograms.ExpectBucketCount(
       PermissionUmaUtil::kPermissionsPromptMergedBubbleAccepted,
-      static_cast<base::HistogramBase::Sample>(
-          PermissionRequestType::PERMISSION_MEDIASTREAM_MIC),
+      static_cast<base::HistogramBase::Sample>(PermissionRequestType::QUOTA),
       1);
   histograms.ExpectBucketCount(
       PermissionUmaUtil::kPermissionsPromptMergedBubbleAccepted,
-      static_cast<base::HistogramBase::Sample>(
-          PermissionRequestType::PERMISSION_MEDIASTREAM_CAMERA),
+      static_cast<base::HistogramBase::Sample>(PermissionRequestType::DOWNLOAD),
       1);
 }
 
 TEST_F(PermissionRequestManagerTest, UMAForMergedMixedBubble) {
   base::HistogramTester histograms;
 
-  manager_->AddRequest(&request_mic_);
-  manager_->AddRequest(&request_camera_);
+  manager_->AddRequest(&request1_);
+  manager_->AddRequest(&request2_);
   manager_->DisplayPendingRequests();
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   // No need to test UMA for showing prompts again, they were tested in
   // UMAForMergedAcceptedBubble.
 
@@ -651,23 +611,21 @@ TEST_F(PermissionRequestManagerTest, UMAForMergedMixedBubble) {
       1);
   histograms.ExpectBucketCount(
       PermissionUmaUtil::kPermissionsPromptMergedBubbleAccepted,
-      static_cast<base::HistogramBase::Sample>(
-          PermissionRequestType::PERMISSION_MEDIASTREAM_MIC),
+      static_cast<base::HistogramBase::Sample>(PermissionRequestType::QUOTA),
       1);
   histograms.ExpectBucketCount(
       PermissionUmaUtil::kPermissionsPromptMergedBubbleDenied,
-      static_cast<base::HistogramBase::Sample>(
-          PermissionRequestType::PERMISSION_MEDIASTREAM_CAMERA),
+      static_cast<base::HistogramBase::Sample>(PermissionRequestType::DOWNLOAD),
       1);
 }
 
 TEST_F(PermissionRequestManagerTest, UMAForMergedDeniedBubble) {
   base::HistogramTester histograms;
 
-  manager_->AddRequest(&request_mic_);
-  manager_->AddRequest(&request_camera_);
+  manager_->AddRequest(&request1_);
+  manager_->AddRequest(&request2_);
   manager_->DisplayPendingRequests();
-  WaitForBubbleToBeShown();
+  WaitForCoalescing();
   // No need to test UMA for showing prompts again, they were tested in
   // UMAForMergedAcceptedBubble.
 
@@ -681,12 +639,10 @@ TEST_F(PermissionRequestManagerTest, UMAForMergedDeniedBubble) {
       1);
   histograms.ExpectBucketCount(
       PermissionUmaUtil::kPermissionsPromptMergedBubbleDenied,
-      static_cast<base::HistogramBase::Sample>(
-          PermissionRequestType::PERMISSION_MEDIASTREAM_MIC),
+      static_cast<base::HistogramBase::Sample>(PermissionRequestType::QUOTA),
       1);
   histograms.ExpectBucketCount(
       PermissionUmaUtil::kPermissionsPromptMergedBubbleDenied,
-      static_cast<base::HistogramBase::Sample>(
-          PermissionRequestType::PERMISSION_MEDIASTREAM_CAMERA),
+      static_cast<base::HistogramBase::Sample>(PermissionRequestType::DOWNLOAD),
       1);
 }

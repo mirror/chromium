@@ -26,7 +26,6 @@ class RenderFrameHost;
 
 namespace views {
 class FocusManager;
-class ViewTracker;
 class Widget;
 }
 
@@ -63,8 +62,8 @@ class ChromeWebContentsViewDelegateViews
   views::FocusManager* GetFocusManager();
   void SetInitialFocus();
 
-  // Used to store the last focused view.
-  std::unique_ptr<views::ViewTracker> last_focused_view_tracker_;
+  // The id used in the ViewStorage to store the last focused view.
+  int last_focused_view_storage_id_;
 
   // The context menu is reset every time we show it, but we keep a pointer to
   // between uses so that it won't go out of scope before we're done with it.

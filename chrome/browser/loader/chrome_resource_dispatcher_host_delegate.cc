@@ -350,21 +350,19 @@ void NotifyUIThreadOfRequestStarted(
     const content::ResourceRequestInfo::WebContentsGetter& web_contents_getter,
     const content::GlobalRequestID& request_id,
     ResourceType resource_type,
-    bool is_download,
     base::TimeTicks request_creation_time) {
   content::WebContents* web_contents = web_contents_getter.Run();
+
   if (!web_contents)
     return;
 
-  if (!is_download) {
-    page_load_metrics::MetricsWebContentsObserver* metrics_observer =
-        page_load_metrics::MetricsWebContentsObserver::FromWebContents(
-            web_contents);
+  page_load_metrics::MetricsWebContentsObserver* metrics_observer =
+      page_load_metrics::MetricsWebContentsObserver::FromWebContents(
+          web_contents);
 
-    if (metrics_observer) {
-      metrics_observer->OnRequestStarted(request_id, resource_type,
-                                         request_creation_time);
-    }
+  if (metrics_observer) {
+    metrics_observer->OnRequestStarted(request_id, resource_type,
+                                       request_creation_time);
   }
 }
 
@@ -375,7 +373,6 @@ void NotifyUIThreadOfRequestComplete(
     const GURL& url,
     const content::GlobalRequestID& request_id,
     ResourceType resource_type,
-    bool is_download,
     bool was_cached,
     std::unique_ptr<data_reduction_proxy::DataReductionProxyData>
         data_reduction_proxy_data,
@@ -403,16 +400,14 @@ void NotifyUIThreadOfRequestComplete(
       background_loader->OnNetworkBytesChanged(total_received_bytes);
 #endif  // OS_ANDROID
   }
-  if (!is_download) {
-    page_load_metrics::MetricsWebContentsObserver* metrics_observer =
-        page_load_metrics::MetricsWebContentsObserver::FromWebContents(
-            web_contents);
-    if (metrics_observer) {
-      metrics_observer->OnRequestComplete(
-          url, frame_tree_node_id_getter.Run(), request_id, resource_type,
-          was_cached, std::move(data_reduction_proxy_data), raw_body_bytes,
-          original_content_length, request_creation_time);
-    }
+  page_load_metrics::MetricsWebContentsObserver* metrics_observer =
+      page_load_metrics::MetricsWebContentsObserver::FromWebContents(
+          web_contents);
+  if (metrics_observer) {
+    metrics_observer->OnRequestComplete(
+        url, frame_tree_node_id_getter.Run(), request_id, resource_type,
+        was_cached, std::move(data_reduction_proxy_data), raw_body_bytes,
+        original_content_length, request_creation_time);
   }
 }
 
@@ -483,7 +478,7 @@ void ChromeResourceDispatcherHostDelegate::RequestBeginning(
       base::Bind(&NotifyUIThreadOfRequestStarted,
                  info->GetWebContentsGetterForRequest(),
                  info->GetGlobalRequestID(), info->GetResourceType(),
-                 info->IsDownload(), request->creation_time()));
+                 request->creation_time()));
 
   ProfileIOData* io_data = ProfileIOData::FromResourceContext(
       resource_context);
@@ -528,9 +523,9 @@ void ChromeResourceDispatcherHostDelegate::RequestBeginning(
   if (io_data->policy_header_helper())
     io_data->policy_header_helper()->AddPolicyHeaders(request->url(), request);
 
-  signin::FixAccountConsistencyRequestHeader(request, GURL() /* redirect_url */,
-                                             io_data, info->GetChildID(),
-                                             info->GetRouteID());
+  signin::FixMirrorRequestHeaderHelper(request, GURL() /* redirect_url */,
+                                       io_data, info->GetChildID(),
+                                       info->GetRouteID());
 
   AppendStandardResourceThrottles(request,
                                   resource_context,
@@ -833,17 +828,14 @@ void ChromeResourceDispatcherHostDelegate::OnRequestRedirected(
 
   const ResourceRequestInfo* info = ResourceRequestInfo::ForRequest(request);
 
-  // Chrome tries to ensure that the identity is consistent between Chrome and
-  // the content area.
-  //
-  // For example, on Android, for users that are signed in to Chrome, the
-  // identity is mirrored into the content area. To do so, Chrome appends a
-  // X-Chrome-Connected header to all Gaia requests from a connected profile so
-  // Gaia could return a 204 response and let Chrome handle the action with
-  // native UI. The only exception is requests from gaia webview, since the
-  // native profile management UI is built on top of it.
-  signin::FixAccountConsistencyRequestHeader(
-      request, redirect_url, io_data, info->GetChildID(), info->GetRouteID());
+  // In the Mirror world (for users that are signed in to the browser on
+  // Android, the identity is mirrored into the content area), Chrome should
+  // append a X-Chrome-Connected header to all Gaia requests from a connected
+  // profile so Gaia could return a 204 response and let Chrome handle the
+  // action with native UI. The only exception is requests from gaia webview,
+  // since the native profile management UI is built on top of it.
+  signin::FixMirrorRequestHeaderHelper(request, redirect_url, io_data,
+                                       info->GetChildID(), info->GetRouteID());
 
   if (io_data->loading_predictor_observer()) {
     io_data->loading_predictor_observer()->OnRequestRedirected(
@@ -878,16 +870,16 @@ void ChromeResourceDispatcherHostDelegate::RequestComplete(
 
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(
-          &NotifyUIThreadOfRequestComplete,
-          info->GetWebContentsGetterForRequest(),
-          info->GetFrameTreeNodeIdGetterForRequest(), url_request->url(),
-          info->GetGlobalRequestID(), info->GetResourceType(),
-          info->IsDownload(), url_request->was_cached(),
-          base::Passed(&data_reduction_proxy_data), net_error,
-          url_request->GetTotalReceivedBytes(), url_request->GetRawBodyBytes(),
-          original_content_length, url_request->creation_time(),
-          base::TimeTicks::Now() - url_request->creation_time()));
+      base::BindOnce(&NotifyUIThreadOfRequestComplete,
+                     info->GetWebContentsGetterForRequest(),
+                     info->GetFrameTreeNodeIdGetterForRequest(),
+                     url_request->url(), info->GetGlobalRequestID(),
+                     info->GetResourceType(), url_request->was_cached(),
+                     base::Passed(&data_reduction_proxy_data), net_error,
+                     url_request->GetTotalReceivedBytes(),
+                     url_request->GetRawBodyBytes(), original_content_length,
+                     url_request->creation_time(),
+                     base::TimeTicks::Now() - url_request->creation_time()));
 }
 
 content::PreviewsState ChromeResourceDispatcherHostDelegate::GetPreviewsState(

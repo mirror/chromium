@@ -4,6 +4,7 @@
 
 #import "ios/chrome/browser/ui/reading_list/reading_list_coordinator.h"
 
+#include "base/mac/scoped_nsobject.h"
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/default_clock.h"
@@ -24,10 +25,6 @@
 #import "third_party/ocmock/OCMock/OCMock.h"
 #import "third_party/ocmock/gtest_support.h"
 #include "ui/base/page_transition_types.h"
-
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
 
 using favicon::PostReply;
 using testing::_;
@@ -95,22 +92,22 @@ using testing::_;
 class ReadingListCoordinatorTest : public web::WebTestWithWebState {
  public:
   ReadingListCoordinatorTest() {
-    loader_mock_ = [[UrlLoaderStub alloc] init];
+    loader_mock_.reset([[UrlLoaderStub alloc] init]);
 
     TestChromeBrowserState::Builder builder;
     browser_state_ = builder.Build();
 
     reading_list_model_.reset(new ReadingListModelImpl(
         nullptr, nullptr, base::MakeUnique<base::DefaultClock>()));
-    mediator_ =
-        [[ReadingListMediator alloc] initWithModel:reading_list_model_.get()];
+    mediator_.reset(
+        [[ReadingListMediator alloc] initWithModel:reading_list_model_.get()]);
     large_icon_service_.reset(new favicon::LargeIconService(
         &mock_favicon_service_, base::ThreadTaskRunnerHandle::Get(),
         /*image_fetcher=*/nullptr));
-    coordinator_ = [[ReadingListCoordinator alloc]
+    coordinator_.reset([[ReadingListCoordinator alloc]
         initWithBaseViewController:nil
                       browserState:browser_state_.get()
-                            loader:loader_mock_];
+                            loader:loader_mock_]);
 
     EXPECT_CALL(mock_favicon_service_,
                 GetLargestRawFaviconForPageURL(_, _, _, _, _))
@@ -126,17 +123,17 @@ class ReadingListCoordinatorTest : public web::WebTestWithWebState {
 
   ReadingListCollectionViewController*
   GetAReadingListCollectionViewController() {
-    return [[ReadingListCollectionViewController alloc]
+    return [[[ReadingListCollectionViewController alloc]
         initWithDataSource:mediator_
           largeIconService:large_icon_service_.get()
-                   toolbar:nil];
+                   toolbar:nil] autorelease];
   }
 
  private:
-  ReadingListCoordinator* coordinator_;
-  ReadingListMediator* mediator_;
+  base::scoped_nsobject<ReadingListCoordinator> coordinator_;
+  base::scoped_nsobject<ReadingListMediator> mediator_;
   std::unique_ptr<ReadingListModelImpl> reading_list_model_;
-  UrlLoaderStub* loader_mock_;
+  base::scoped_nsobject<UrlLoaderStub> loader_mock_;
   testing::StrictMock<favicon::MockFaviconService> mock_favicon_service_;
   std::unique_ptr<favicon::LargeIconService> large_icon_service_;
   std::unique_ptr<TestChromeBrowserState> browser_state_;
@@ -153,10 +150,11 @@ TEST_F(ReadingListCoordinatorTest, OpenItem) {
   ReadingListModel* model = GetReadingListModel();
   model->AddEntry(url, title, reading_list::ADDED_VIA_CURRENT_APP);
 
-  ReadingListCollectionViewItem* item = [[ReadingListCollectionViewItem alloc]
-           initWithType:0
-                    url:url
-      distillationState:ReadingListUIDistillationStatusSuccess];
+  base::scoped_nsobject<ReadingListCollectionViewItem> item(
+      [[ReadingListCollectionViewItem alloc]
+               initWithType:0
+                        url:url
+          distillationState:ReadingListUIDistillationStatusSuccess]);
 
   // Action.
   [GetCoordinator() readingListCollectionViewController:

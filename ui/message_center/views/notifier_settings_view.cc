@@ -424,7 +424,8 @@ NotifierSettingsView::NotifierSettingsView(NotifierSettingsProvider* provider)
     provider_->AddObserver(this);
 
   SetFocusBehavior(FocusBehavior::ALWAYS);
-  SetBackground(views::CreateSolidBackground(kMessageCenterBackgroundColor));
+  set_background(
+      views::Background::CreateSolidBackground(kMessageCenterBackgroundColor));
   SetPaintToLayer();
 
   title_label_ = new views::Label(

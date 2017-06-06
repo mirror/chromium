@@ -114,7 +114,6 @@
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/data_pipe.h"
-#include "services/resource_coordinator/public/cpp/resource_coordinator_interface.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/public/platform/WebFeaturePolicy.h"
@@ -266,14 +265,6 @@ class RemoterFactoryImpl final : public media::mojom::RemoterFactory {
   DISALLOW_COPY_AND_ASSIGN(RemoterFactoryImpl);
 };
 #endif  // BUILDFLAG(ENABLE_MEDIA_REMOTING)
-
-void CreateResourceCoordinatorFrameInterface(
-    RenderFrameHostImpl* render_frame_host,
-    const service_manager::BindSourceInfo& source_info,
-    resource_coordinator::mojom::CoordinationUnitRequest request) {
-  render_frame_host->GetFrameResourceCoordinator()->service()->AddBinding(
-      std::move(request));
-}
 
 template <typename Interface>
 void IgnoreInterfaceRequest(const service_manager::BindSourceInfo& source_info,
@@ -2840,15 +2831,6 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
       base::Bind(&IgnoreInterfaceRequest<device::mojom::VRService>));
 #endif
 
-  if (RendererAudioOutputStreamFactoryContextImpl::UseMojoFactories()) {
-    GetInterfaceRegistry()->AddInterface(base::BindRepeating(
-        &RenderFrameHostImpl::CreateAudioOutputStreamFactory,
-        base::Unretained(this)));
-  }
-
-  GetInterfaceRegistry()->AddInterface(base::Bind(
-      &CreateResourceCoordinatorFrameInterface, base::Unretained(this)));
-
 #if BUILDFLAG(ENABLE_WEBRTC)
   // BrowserMainLoop::GetInstance() may be null on unit tests.
   if (BrowserMainLoop::GetInstance()) {
@@ -3169,7 +3151,7 @@ void RenderFrameHostImpl::CommitNavigation(
     const auto& schemes = URLDataManagerBackend::GetWebUISchemes();
     if (std::find(schemes.begin(), schemes.end(), common_params.url.scheme()) !=
         schemes.end()) {
-      commit_data.url_loader_factory = CreateWebUIURLLoader(frame_tree_node_)
+      commit_data.url_loader_factory = GetWebUIURLLoader(frame_tree_node_)
                                            .PassInterface()
                                            .PassHandle()
                                            .release();
@@ -3273,8 +3255,6 @@ void RenderFrameHostImpl::InvalidateMojoConnection() {
 
   // Disconnect with ImageDownloader Mojo service in RenderFrame.
   mojo_image_downloader_.reset();
-
-  frame_resource_coordinator_.reset();
 }
 
 bool RenderFrameHostImpl::IsFocused() {
@@ -3379,17 +3359,6 @@ RenderFrameHostImpl::GetMojoImageDownloader() {
   if (!mojo_image_downloader_.get() && GetRemoteInterfaces())
     GetRemoteInterfaces()->GetInterface(&mojo_image_downloader_);
   return mojo_image_downloader_;
-}
-
-resource_coordinator::ResourceCoordinatorInterface*
-RenderFrameHostImpl::GetFrameResourceCoordinator() {
-  if (!frame_resource_coordinator_) {
-    frame_resource_coordinator_ =
-        base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
-            ServiceManagerConnection::GetForProcess()->GetConnector(),
-            resource_coordinator::CoordinationUnitType::kFrame);
-  }
-  return frame_resource_coordinator_.get();
 }
 
 void RenderFrameHostImpl::ResetLoadingState() {
@@ -3859,17 +3828,6 @@ void RenderFrameHostImpl::ResetFeaturePolicy() {
       frame_tree_node()->effective_container_policy();
   feature_policy_ = FeaturePolicy::CreateFromParentPolicy(
       parent_policy, container_policy, last_committed_origin_);
-}
-
-void RenderFrameHostImpl::CreateAudioOutputStreamFactory(
-    const service_manager::BindSourceInfo& source_info,
-    mojom::RendererAudioOutputStreamFactoryRequest request) {
-  RendererAudioOutputStreamFactoryContext* factory_context =
-      GetProcess()->GetRendererAudioOutputStreamFactoryContext();
-  DCHECK(factory_context);
-  audio_output_stream_factory_ =
-      RenderFrameAudioOutputStreamFactoryHandle::CreateFactory(
-          factory_context, GetRoutingID(), std::move(request));
 }
 
 void RenderFrameHostImpl::BindMediaInterfaceFactoryRequest(

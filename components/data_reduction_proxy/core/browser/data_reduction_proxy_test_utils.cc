@@ -294,7 +294,9 @@ DataStore::Status TestDataStore::RecreateDB() {
 }
 
 DataReductionProxyTestContext::Builder::Builder()
-    : client_(Client::UNKNOWN),
+    : params_flags_(DataReductionProxyParams::kPromoAllowed),
+      params_definitions_(TestDataReductionProxyParams::HAS_EVERYTHING),
+      client_(Client::UNKNOWN),
       request_context_(nullptr),
       mock_socket_factory_(nullptr),
       use_mock_config_(false),
@@ -305,6 +307,19 @@ DataReductionProxyTestContext::Builder::Builder()
       skip_settings_initialization_(false) {}
 
 DataReductionProxyTestContext::Builder::~Builder() {}
+
+DataReductionProxyTestContext::Builder&
+DataReductionProxyTestContext::Builder::WithParamsFlags(int params_flags) {
+  params_flags_ = params_flags;
+  return *this;
+}
+
+DataReductionProxyTestContext::Builder&
+DataReductionProxyTestContext::Builder::WithParamsDefinitions(
+    unsigned int params_definitions) {
+  params_definitions_ = params_definitions;
+  return *this;
+}
 
 DataReductionProxyTestContext::Builder&
 DataReductionProxyTestContext::Builder::WithURLRequestContext(
@@ -409,7 +424,7 @@ DataReductionProxyTestContext::Builder::Build() {
   std::unique_ptr<DataReductionProxyConfigServiceClient> config_client;
   DataReductionProxyMutableConfigValues* raw_mutable_config = nullptr;
   std::unique_ptr<TestDataReductionProxyParams> params(
-      new TestDataReductionProxyParams());
+      new TestDataReductionProxyParams(params_flags_, params_definitions_));
   TestDataReductionProxyParams* raw_params = params.get();
   if (use_config_client_) {
     test_context_flags |= USE_CONFIG_CLIENT;

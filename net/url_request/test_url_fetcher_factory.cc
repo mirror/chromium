@@ -36,7 +36,6 @@ ScopedURLFetcherFactory::ScopedURLFetcherFactory(
 }
 
 ScopedURLFetcherFactory::~ScopedURLFetcherFactory() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(URLFetcherImpl::factory());
   URLFetcherImpl::set_factory(NULL);
 }

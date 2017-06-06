@@ -7,7 +7,6 @@
 
 #import <UIKit/UIKit.h>
 
-// View for displaying the favicon of a history entry.
 @interface FaviconView : UIView
 
 // Size for the favicon.

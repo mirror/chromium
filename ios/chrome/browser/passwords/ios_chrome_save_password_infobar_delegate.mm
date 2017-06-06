@@ -72,8 +72,3 @@ bool IOSChromeSavePasswordInfoBarDelegate::Cancel() {
   set_infobar_response(password_manager::metrics_util::CLICKED_NEVER);
   return true;
 }
-
-bool IOSChromeSavePasswordInfoBarDelegate::ShouldExpire(
-    const NavigationDetails& details) const {
-  return !details.is_redirect && ConfirmInfoBarDelegate::ShouldExpire(details);
-}

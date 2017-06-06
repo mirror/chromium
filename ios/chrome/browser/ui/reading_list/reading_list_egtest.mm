@@ -337,9 +337,7 @@ void AssertIsShowingDistillablePage(bool online) {
 
   // Test Omnibox URL
   [[EarlGrey selectElementWithMatcher:chrome_test_util::OmniboxText(
-                                          web::test::HttpServer::MakeUrl(
-                                              kDistillableURL)
-                                              .GetContent())]
+                                          "localhost:8080/potato/")]
       assertWithMatcher:grey_notNil()];
 
   // Test presence of online page
@@ -450,8 +448,7 @@ void AssertIsShowingDistillablePage(bool online) {
 // Tests that sharing a web page to the Reading List results in a snackbar
 // appearing, and that the Reading List entry is present in the Reading List.
 // Loads online version by tapping on entry.
-// TODO(crbug.com/724555): Re-enable the test.
-- (void)DISABLED_testSavingToReadingListAndLoadNormal {
+- (void)testSavingToReadingListAndLoadNormal {
   auto network_change_disabler =
       base::MakeUnique<net::NetworkChangeNotifier::DisableForTest>();
   auto wifi_network = base::MakeUnique<WifiNetworkChangeNotifier>();
@@ -490,8 +487,7 @@ void AssertIsShowingDistillablePage(bool online) {
 // Tests that sharing a web page to the Reading List results in a snackbar
 // appearing, and that the Reading List entry is present in the Reading List.
 // Loads offline version by tapping on entry without web server.
-// TODO(crbug.com/724555): Re-enable the test.
-- (void)DISABLED_testSavingToReadingListAndLoadNoNetwork {
+- (void)testSavingToReadingListAndLoadNoNetwork {
   auto network_change_disabler =
       base::MakeUnique<net::NetworkChangeNotifier::DisableForTest>();
   auto wifi_network = base::MakeUnique<WifiNetworkChangeNotifier>();
@@ -562,18 +558,14 @@ void AssertIsShowingDistillablePage(bool online) {
   TapEntry(pageTitle);
 
   AssertIsShowingDistillablePage(false);
-
-  // TODO(crbug.com/724555): Re-enable the reload checks.
-  if (false) {
-    // Reload should load online page.
-    chrome_test_util::GetCurrentWebState()->GetNavigationManager()->Reload(
-        web::ReloadType::NORMAL, false);
-    AssertIsShowingDistillablePage(true);
-    // Reload should load offline page.
-    chrome_test_util::GetCurrentWebState()->GetNavigationManager()->Reload(
-        web::ReloadType::NORMAL, false);
-    AssertIsShowingDistillablePage(false);
-  }
+  // Reload should load online page.
+  chrome_test_util::GetCurrentWebState()->GetNavigationManager()->Reload(
+      web::ReloadType::NORMAL, false);
+  AssertIsShowingDistillablePage(true);
+  // Reload should load offline page.
+  chrome_test_util::GetCurrentWebState()->GetNavigationManager()->Reload(
+      web::ReloadType::NORMAL, false);
+  AssertIsShowingDistillablePage(false);
 }
 
 // Tests that only the "Edit" button is showing when not editing.

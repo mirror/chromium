@@ -69,15 +69,6 @@ const AtomicString& FetchEvent::InterfaceName() const {
   return EventNames::FetchEvent;
 }
 
-bool FetchEvent::HasPendingActivity() const {
-  // Prevent V8 from garbage collecting the wrapper object while waiting for the
-  // preload response. This is in order to keep the resolver of preloadResponse
-  // Promise alive.
-  return preload_response_property_->GetState() ==
-             PreloadResponseProperty::kPending &&
-         GetExecutionContext();
-}
-
 FetchEvent::FetchEvent(ScriptState* script_state,
                        const AtomicString& type,
                        const FetchEventInit& initializer,
@@ -85,7 +76,6 @@ FetchEvent::FetchEvent(ScriptState* script_state,
                        WaitUntilObserver* wait_until_observer,
                        bool navigation_preload_sent)
     : ExtendableEvent(type, initializer, wait_until_observer),
-      ContextClient(ExecutionContext::From(script_state)),
       observer_(respond_with_observer),
       preload_response_property_(new PreloadResponseProperty(
           ExecutionContext::From(script_state),
@@ -118,8 +108,6 @@ FetchEvent::FetchEvent(ScriptState* script_state,
     // graceful shutdown mechanism is introduced.
   }
 }
-
-FetchEvent::~FetchEvent() {}
 
 void FetchEvent::OnNavigationPreloadResponse(
     ScriptState* script_state,
@@ -200,7 +188,6 @@ DEFINE_TRACE(FetchEvent) {
   visitor->Trace(request_);
   visitor->Trace(preload_response_property_);
   ExtendableEvent::Trace(visitor);
-  ContextClient::Trace(visitor);
 }
 
 }  // namespace blink

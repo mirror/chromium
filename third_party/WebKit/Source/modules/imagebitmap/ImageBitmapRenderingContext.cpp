@@ -15,9 +15,10 @@
 namespace blink {
 
 ImageBitmapRenderingContext::ImageBitmapRenderingContext(
-    CanvasRenderingContextHost* host,
-    const CanvasContextCreationAttributes& attrs)
-    : CanvasRenderingContext(host, attrs),
+    HTMLCanvasElement* canvas,
+    const CanvasContextCreationAttributes& attrs,
+    Document& document)
+    : CanvasRenderingContext(canvas, attrs),
       image_layer_bridge_(
           new ImageLayerBridge(attrs.alpha() ? kNonOpaque : kOpaque)) {}
 
@@ -47,11 +48,12 @@ void ImageBitmapRenderingContext::transferFromImageBitmap(
 }
 
 CanvasRenderingContext* ImageBitmapRenderingContext::Factory::Create(
-    CanvasRenderingContextHost* host,
-    const CanvasContextCreationAttributes& attrs) {
+    HTMLCanvasElement* canvas,
+    const CanvasContextCreationAttributes& attrs,
+    Document& document) {
   if (!RuntimeEnabledFeatures::experimentalCanvasFeaturesEnabled())
     return nullptr;
-  return new ImageBitmapRenderingContext(host, attrs);
+  return new ImageBitmapRenderingContext(canvas, attrs, document);
 }
 
 void ImageBitmapRenderingContext::Stop() {

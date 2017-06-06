@@ -11,13 +11,9 @@
 
 namespace blink {
 
-class SpellChecker;
-
 class SpellCheckTestBase : public EditingTestBase {
  protected:
   void SetUp() override;
-
-  SpellChecker& GetSpellChecker() const;
 
  private:
   class DummySpellCheckerClient : public EmptySpellCheckerClient {

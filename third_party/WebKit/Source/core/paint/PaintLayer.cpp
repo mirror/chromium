@@ -105,6 +105,7 @@ struct SameSizeAsPaintLayer : DisplayItemClient {
     void* pointer;
     LayoutRect rect;
   } previous_paint_status;
+  uint64_t unique_id;
 };
 
 static_assert(sizeof(PaintLayer) == sizeof(SameSizeAsPaintLayer),
@@ -167,6 +168,8 @@ PaintLayer::PaintLayer(LayoutBoxModelObject& layout_object)
       static_inline_position_(0),
       static_block_position_(0),
       ancestor_overflow_layer_(nullptr) {
+  static PaintLayerId paint_layer_id_counter = 0;
+  unique_id_ = ++paint_layer_id_counter;
   UpdateStackingNode();
 
   is_self_painting_layer_ = ShouldBeSelfPaintingLayer();
@@ -275,12 +278,8 @@ LayoutSize PaintLayer::SubpixelAccumulation() const {
 }
 
 void PaintLayer::SetSubpixelAccumulation(const LayoutSize& size) {
-  if (rare_data_ || !size.IsZero()) {
+  if (rare_data_ || !size.IsZero())
     EnsureRareData().subpixel_accumulation = size;
-    if (PaintLayerScrollableArea* scrollable_area = GetScrollableArea()) {
-      scrollable_area->PositionOverflowControls();
-    }
-  }
 }
 
 void PaintLayer::UpdateLayerPositionsAfterLayout() {
@@ -2900,7 +2899,7 @@ bool PaintLayer::ShouldBeSelfPaintingLayer() const {
 
   return GetLayoutObject().LayerTypeRequired() == kNormalPaintLayer ||
          (scrollable_area_ && scrollable_area_->HasOverlayScrollbars()) ||
-         ScrollsOverflow();
+         NeedsCompositedScrolling();
 }
 
 void PaintLayer::UpdateSelfPaintingLayer() {

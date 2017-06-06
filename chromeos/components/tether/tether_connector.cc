@@ -7,12 +7,9 @@
 #include "base/bind.h"
 #include "chromeos/components/tether/active_host.h"
 #include "chromeos/components/tether/device_id_tether_network_guid_map.h"
-#include "chromeos/components/tether/host_scan_cache.h"
-#include "chromeos/components/tether/notification_presenter.h"
 #include "chromeos/components/tether/tether_host_fetcher.h"
 #include "chromeos/components/tether/wifi_hotspot_connector.h"
 #include "chromeos/network/network_handler.h"
-#include "chromeos/network/network_state.h"
 #include "chromeos/network/network_state_handler.h"
 #include "components/proximity_auth/logging/logging.h"
 
@@ -27,9 +24,7 @@ TetherConnector::TetherConnector(
     TetherHostFetcher* tether_host_fetcher,
     BleConnectionManager* connection_manager,
     TetherHostResponseRecorder* tether_host_response_recorder,
-    DeviceIdTetherNetworkGuidMap* device_id_tether_network_guid_map,
-    HostScanCache* host_scan_cache,
-    NotificationPresenter* notification_presenter)
+    DeviceIdTetherNetworkGuidMap* device_id_tether_network_guid_map)
     : network_state_handler_(network_state_handler),
       wifi_hotspot_connector_(wifi_hotspot_connector),
       active_host_(active_host),
@@ -37,8 +32,6 @@ TetherConnector::TetherConnector(
       connection_manager_(connection_manager),
       tether_host_response_recorder_(tether_host_response_recorder),
       device_id_tether_network_guid_map_(device_id_tether_network_guid_map),
-      host_scan_cache_(host_scan_cache),
-      notification_presenter_(notification_presenter),
       weak_ptr_factory_(this) {}
 
 TetherConnector::~TetherConnector() {
@@ -76,13 +69,6 @@ void TetherConnector::ConnectToNetwork(
     CancelConnectionAttempt(
         device_id_tether_network_guid_map_->GetTetherNetworkGuidForDeviceId(
             device_id_pending_connection_));
-  }
-
-  if (host_scan_cache_->DoesHostRequireSetup(tether_network_guid)) {
-    const std::string& device_name =
-        network_state_handler_->GetNetworkStateFromGuid(tether_network_guid)
-            ->name();
-    notification_presenter_->NotifySetupRequired(device_name);
   }
 
   device_id_pending_connection_ = device_id;
@@ -199,14 +185,10 @@ void TetherConnector::OnTetherHostToConnectFetched(
 
   DCHECK(device_id == tether_host_to_connect->GetDeviceId());
 
-  const std::string& tether_network_guid =
-      device_id_tether_network_guid_map_->GetTetherNetworkGuidForDeviceId(
-          device_id);
   connect_tethering_operation_ =
       ConnectTetheringOperation::Factory::NewInstance(
           *tether_host_to_connect, connection_manager_,
-          tether_host_response_recorder_,
-          host_scan_cache_->DoesHostRequireSetup(tether_network_guid));
+          tether_host_response_recorder_);
   connect_tethering_operation_->AddObserver(this);
   connect_tethering_operation_->Initialize();
 }
@@ -214,8 +196,6 @@ void TetherConnector::OnTetherHostToConnectFetched(
 void TetherConnector::SetConnectionFailed(const std::string& error_name) {
   DCHECK(!device_id_pending_connection_.empty());
   DCHECK(!error_callback_.is_null());
-
-  notification_presenter_->RemoveSetupRequiredNotification();
 
   // Save a copy of the callback before resetting it below.
   network_handler::StringResultCallback error_callback = error_callback_;
@@ -234,8 +214,6 @@ void TetherConnector::SetConnectionSucceeded(
   DCHECK(!device_id_pending_connection_.empty());
   DCHECK(device_id_pending_connection_ == device_id);
   DCHECK(!success_callback_.is_null());
-
-  notification_presenter_->RemoveSetupRequiredNotification();
 
   // Save a copy of the callback before resetting it below.
   base::Closure success_callback = success_callback_;

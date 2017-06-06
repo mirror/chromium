@@ -11,10 +11,6 @@
 PersistentNotificationHandler::PersistentNotificationHandler() {}
 PersistentNotificationHandler::~PersistentNotificationHandler() {}
 
-void PersistentNotificationHandler::OnShow(Profile* profile,
-                                           const std::string& notification_id) {
-}
-
 void PersistentNotificationHandler::OnClose(Profile* profile,
                                             const std::string& origin,
                                             const std::string& notification_id,
@@ -44,4 +40,10 @@ void PersistentNotificationHandler::OnClick(
 
 void PersistentNotificationHandler::OpenSettings(Profile* profile) {
   NotificationCommon::OpenNotificationSettings(profile);
+}
+
+void PersistentNotificationHandler::RegisterNotification(
+    const std::string& notification_id,
+    NotificationDelegate* delegate) {
+  // Nothing to do here since there is no state kept.
 }

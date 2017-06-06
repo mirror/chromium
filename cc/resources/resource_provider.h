@@ -86,7 +86,6 @@ class CC_EXPORT ResourceProvider
                    gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
                    BlockingTaskRunner* blocking_main_thread_task_runner,
                    bool delegated_sync_points_required,
-                   bool enable_color_correct_rasterization,
                    const ResourceSettings& resource_settings);
   ~ResourceProvider() override;
 
@@ -764,7 +763,6 @@ class CC_EXPORT ResourceProvider
   struct Settings {
     Settings(ContextProvider* compositor_context_provider,
              bool delegated_sync_points_needed,
-             bool enable_color_correct_rasterization,
              const ResourceSettings& resource_settings);
 
     int max_texture_size = 0;

@@ -64,6 +64,8 @@ QuicHttpStream::QuicHttpStream(
       closed_is_first_stream_(false),
       user_buffer_len_(0),
       session_error_(ERR_UNEXPECTED),
+      quic_connection_error_(QUIC_NO_ERROR),
+      quic_stream_error_(QUIC_STREAM_NO_ERROR),
       found_promise_(false),
       push_handle_(nullptr),
       in_loop_(false),
@@ -105,7 +107,8 @@ bool QuicHttpStream::CheckVary(const SpdyHeaderBlock& client_request,
 void QuicHttpStream::OnRendezvousResult(QuicSpdyStream* stream) {
   push_handle_ = nullptr;
   if (stream) {
-    stream_ = static_cast<QuicChromiumClientStream*>(stream)->CreateHandle();
+    stream_ =
+        static_cast<QuicChromiumClientStream*>(stream)->CreateHandle(this);
   }
 
   // callback_ should only be non-null in the case of asynchronous
@@ -190,7 +193,7 @@ int QuicHttpStream::InitializeStream(const HttpRequestInfo* request_info,
   if (rv == ERR_IO_PENDING)
     callback_ = callback;
 
-  return MapStreamError(rv);
+  return rv;
 }
 
 int QuicHttpStream::DoHandlePromise() {
@@ -302,12 +305,15 @@ int QuicHttpStream::SendRequest(const HttpRequestHeaders& request_headers,
   if (rv == ERR_IO_PENDING)
     callback_ = callback;
 
-  return rv > 0 ? OK : MapStreamError(rv);
+  return rv > 0 ? OK : rv;
 }
 
 int QuicHttpStream::ReadResponseHeaders(const CompletionCallback& callback) {
   CHECK(callback_.is_null());
   CHECK(!callback.is_null());
+
+  if (stream_ == nullptr)
+    return GetResponseStatus();
 
   int rv = stream_->ReadInitialHeaders(
       &response_header_block_,
@@ -322,7 +328,7 @@ int QuicHttpStream::ReadResponseHeaders(const CompletionCallback& callback) {
   }
 
   if (rv < 0)
-    return MapStreamError(rv);
+    return rv;
 
   // Check if we already have the response headers. If so, return synchronously.
   if (response_headers_received_)
@@ -349,7 +355,7 @@ int QuicHttpStream::ReadResponseBody(IOBuffer* buf,
   request_info_ = nullptr;
 
   // If the stream is already closed, there is no body to read.
-  if (stream_->IsDoneReading())
+  if (!stream_)
     return GetResponseStatus();
 
   int rv = stream_->ReadBody(buf, buf_len,
@@ -363,7 +369,7 @@ int QuicHttpStream::ReadResponseBody(IOBuffer* buf,
   }
 
   if (rv < 0)
-    return MapStreamError(rv);
+    return rv;
 
   return HandleReadComplete(rv);
 }
@@ -372,13 +378,15 @@ void QuicHttpStream::Close(bool /*not_reusable*/) {
   session_error_ = ERR_ABORTED;
   SaveResponseStatus();
   // Note: the not_reusable flag has no meaning for QUIC streams.
-  if (stream_)
+  if (stream_) {
+    stream_->ClearDelegate();
     stream_->Reset(QUIC_STREAM_CANCELLED);
+  }
   ResetStream();
 }
 
 bool QuicHttpStream::IsResponseBodyComplete() const {
-  return next_state_ == STATE_OPEN && stream_->IsDoneReading();
+  return next_state_ == STATE_OPEN && !stream_;
 }
 
 bool QuicHttpStream::IsConnectionReused() const {
@@ -437,8 +445,8 @@ void QuicHttpStream::PopulateNetErrorDetails(NetErrorDetails* details) {
   details->connection_info =
       ConnectionInfoFromQuicVersion(quic_session()->GetQuicVersion());
   quic_session()->PopulateNetErrorDetails(details);
-  if (quic_session()->IsCryptoHandshakeConfirmed() && stream_)
-    details->quic_connection_error = stream_->connection_error();
+  if (quic_session()->IsCryptoHandshakeConfirmed())
+    details->quic_connection_error = quic_connection_error_;
 }
 
 void QuicHttpStream::SetPriority(RequestPriority priority) {
@@ -458,6 +466,9 @@ void QuicHttpStream::OnReadResponseHeadersComplete(int rv) {
 }
 
 void QuicHttpStream::ReadTrailingHeaders() {
+  if (!stream_)
+    return;
+
   int rv = stream_->ReadTrailingHeaders(
       &trailing_header_block_,
       base::Bind(&QuicHttpStream::OnReadTrailingHeadersComplete,
@@ -481,6 +492,33 @@ void QuicHttpStream::OnReadTrailingHeadersComplete(int rv) {
   }
 }
 
+void QuicHttpStream::OnClose() {
+  quic_connection_error_ = stream_->connection_error();
+  quic_stream_error_ = stream_->stream_error();
+  SaveResponseStatus();
+
+  ResetStream();
+  // If already in DoLoop(), |callback_| will be handled when DoLoop() exits.
+  if (in_loop_)
+    return;
+
+  if (!callback_.is_null()) {
+    DoCallback(GetResponseStatus());
+  }
+}
+
+void QuicHttpStream::OnError(int error) {
+  ResetStream();
+  session_error_ = error;
+  SaveResponseStatus();
+  if (in_loop_) {
+    // If already in DoLoop(), |callback_| will be handled when DoLoop() exits.
+    return;
+  }
+  if (!callback_.is_null())
+    DoCallback(GetResponseStatus());
+}
+
 void QuicHttpStream::OnIOComplete(int rv) {
   rv = DoLoop(rv);
 
@@ -496,7 +534,7 @@ void QuicHttpStream::DoCallback(int rv) {
 
   // The client callback can do anything, including destroying this class,
   // so any pending callback must be issued after everything else is done.
-  base::ResetAndReturn(&callback_).Run(MapStreamError(rv));
+  base::ResetAndReturn(&callback_).Run(rv);
 }
 
 int QuicHttpStream::DoLoop(int rv) {
@@ -573,7 +611,7 @@ int QuicHttpStream::DoRequestStreamComplete(int rv) {
     return GetResponseStatus();
   }
 
-  stream_ = quic_session()->ReleaseStream();
+  stream_ = quic_session()->ReleaseStream(this);
   if (request_info_->load_flags & LOAD_DISABLE_CONNECTION_MIGRATION) {
     stream_->DisableConnectionMigration();
   }
@@ -600,6 +638,9 @@ int QuicHttpStream::DoSetRequestPriority() {
 }
 
 int QuicHttpStream::DoSendHeaders() {
+  if (!stream_)
+    return GetResponseStatus();
+
   // Log the actual request with the URL Request's net log.
   stream_net_log_.AddEvent(
       NetLogEventType::HTTP_TRANSACTION_QUIC_SEND_REQUEST_HEADERS,
@@ -620,6 +661,10 @@ int QuicHttpStream::DoSendHeadersComplete(int rv) {
   if (rv < 0)
     return rv;
 
+  // If the stream is already closed, don't read the request body.
+  if (!stream_)
+    return GetResponseStatus();
+
   next_state_ = request_body_stream_ ? STATE_READ_REQUEST_BODY : STATE_OPEN;
 
   return OK;
@@ -633,9 +678,14 @@ int QuicHttpStream::DoReadRequestBody() {
 }
 
 int QuicHttpStream::DoReadRequestBodyComplete(int rv) {
+  // If the stream is already closed, don't continue.
+  if (!stream_)
+    return GetResponseStatus();
+
   // |rv| is the result of read from the request body from the last call to
   // DoSendBody().
   if (rv < 0) {
+    stream_->ClearDelegate();
     stream_->Reset(QUIC_ERROR_PROCESSING_STREAM);
     ResetStream();
     return rv;
@@ -651,6 +701,9 @@ int QuicHttpStream::DoReadRequestBodyComplete(int rv) {
 }
 
 int QuicHttpStream::DoSendBody() {
+  if (!stream_)
+    return GetResponseStatus();
+
   CHECK(request_body_stream_);
   CHECK(request_body_buf_.get());
   const bool eof = request_body_stream_->IsEOF();
@@ -670,6 +723,10 @@ int QuicHttpStream::DoSendBody() {
 int QuicHttpStream::DoSendBodyComplete(int rv) {
   if (rv < 0)
     return rv;
+
+  // If the stream is already closed, don't continue.
+  if (!stream_)
+    return GetResponseStatus();
 
   request_body_buf_->DidConsume(request_body_buf_->BytesRemaining());
 
@@ -713,12 +770,6 @@ int QuicHttpStream::ProcessResponseHeaders(const SpdyHeaderBlock& headers) {
       FROM_HERE, base::Bind(&QuicHttpStream::ReadTrailingHeaders,
                             weak_factory_.GetWeakPtr()));
 
-  if (stream_->IsDoneReading()) {
-    session_error_ = OK;
-    SaveResponseStatus();
-    stream_->OnFinRead();
-  }
-
   return OK;
 }
 
@@ -732,6 +783,7 @@ void QuicHttpStream::OnReadBodyComplete(int rv) {
 
 int QuicHttpStream::HandleReadComplete(int rv) {
   if (stream_->IsDoneReading()) {
+    stream_->ClearDelegate();
     stream_->OnFinRead();
     SetResponseStatus(OK);
     ResetStream();
@@ -752,20 +804,13 @@ void QuicHttpStream::ResetStream() {
 
   if (!stream_)
     return;
-
   DCHECK_LE(stream_->NumBytesConsumed(), stream_->stream_bytes_read());
   // Only count the uniquely received bytes.
   closed_stream_received_bytes_ = stream_->NumBytesConsumed();
   closed_stream_sent_bytes_ = stream_->stream_bytes_written();
   closed_is_first_stream_ = stream_->IsFirstStream();
-}
-
-int QuicHttpStream::MapStreamError(int rv) {
-  if (rv == ERR_QUIC_PROTOCOL_ERROR &&
-      !quic_session()->IsCryptoHandshakeConfirmed()) {
-    return ERR_QUIC_HANDSHAKE_FAILED;
-  }
-  return rv;
+  stream_->ClearDelegate();
+  stream_ = nullptr;
 }
 
 int QuicHttpStream::GetResponseStatus() {
@@ -802,10 +847,12 @@ int QuicHttpStream::ComputeResponseStatus() const {
     return ERR_CONNECTION_CLOSED;
 
   // Explicit stream error are always fatal.
-  if (stream_->stream_error() != QUIC_STREAM_NO_ERROR &&
-      stream_->stream_error() != QUIC_STREAM_CONNECTION_ERROR) {
+  if (quic_stream_error_ != QUIC_STREAM_NO_ERROR &&
+      quic_stream_error_ != QUIC_STREAM_CONNECTION_ERROR) {
     return ERR_QUIC_PROTOCOL_ERROR;
   }
+
+  DCHECK_NE(QUIC_HANDSHAKE_TIMEOUT, quic_connection_error_);
 
   return ERR_QUIC_PROTOCOL_ERROR;
 }

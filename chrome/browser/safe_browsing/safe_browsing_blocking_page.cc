@@ -78,6 +78,7 @@ class SafeBrowsingBlockingPageFactoryImpl
         web_contents->GetBrowserContext()->IsOffTheRecord(),
         IsExtendedReportingEnabled(*prefs), IsScout(*prefs),
         is_proceed_anyway_disabled,
+        BaseBlockingPage::IsMainPageLoadBlocked(unsafe_resources),
         kHelpCenterLink);
 
     return new SafeBrowsingBlockingPage(ui_manager, web_contents,
@@ -142,8 +143,7 @@ bool SafeBrowsingBlockingPage::ShouldReportThreatDetails(
          threat_type == SB_THREAT_TYPE_URL_MALWARE ||
          threat_type == SB_THREAT_TYPE_URL_UNWANTED ||
          threat_type == SB_THREAT_TYPE_CLIENT_SIDE_PHISHING_URL ||
-         threat_type == SB_THREAT_TYPE_CLIENT_SIDE_MALWARE_URL ||
-         threat_type == SB_THREAT_TYPE_PASSWORD_PROTECTION_PHISHING_URL;
+         threat_type == SB_THREAT_TYPE_CLIENT_SIDE_MALWARE_URL;
 }
 
 SafeBrowsingBlockingPage::~SafeBrowsingBlockingPage() {

@@ -36,7 +36,7 @@ class ASH_EXPORT TrayRotationLock
   void OnMaximizeModeEnded() override;
 
   // TrayImageItem:
-  void OnTrayViewDestroyed() override;
+  void DestroyTrayView() override;
 
  protected:
   // TrayImageItem:

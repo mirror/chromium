@@ -151,11 +151,12 @@ class ServiceWorkerURLRequestJobTest
   void SetUp() override {
     browser_context_.reset(new TestBrowserContext);
     InitializeResourceContext(browser_context_.get());
+    SetUpWithHelper(new EmbeddedWorkerTestHelper(base::FilePath()));
   }
 
-  void SetUpWithHelper(std::unique_ptr<EmbeddedWorkerTestHelper> helper,
+  void SetUpWithHelper(EmbeddedWorkerTestHelper* helper,
                        bool set_main_script_http_response_info = true) {
-    helper_ = std::move(helper);
+    helper_.reset(helper);
 
     registration_ = new ServiceWorkerRegistration(
         GURL("https://example.com/"), 1L, helper_->context()->AsWeakPtr());
@@ -365,8 +366,6 @@ class ServiceWorkerURLRequestJobTest
 };
 
 TEST_F(ServiceWorkerURLRequestJobTest, Simple) {
-  SetUpWithHelper(base::MakeUnique<EmbeddedWorkerTestHelper>(base::FilePath()));
-
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
   TestRequest(200, "OK", std::string(), true /* expect_valid_ssl */);
 
@@ -386,8 +385,6 @@ TEST_F(ServiceWorkerURLRequestJobTest, Simple) {
 }
 
 TEST_F(ServiceWorkerURLRequestJobTest, CustomTimeout) {
-  SetUpWithHelper(base::MakeUnique<EmbeddedWorkerTestHelper>(base::FilePath()));
-
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
 
   // Set mock clock on version_ to check timeout behavior.
@@ -432,12 +429,11 @@ class ProviderDeleteHelper : public EmbeddedWorkerTestHelper {
   DISALLOW_COPY_AND_ASSIGN(ProviderDeleteHelper);
 };
 
-// Shouldn't crash if the ProviderHost is deleted prior to completion of the
-// fetch event.
 TEST_F(ServiceWorkerURLRequestJobTest, DeletedProviderHostOnFetchEvent) {
-  SetUpWithHelper(base::MakeUnique<ProviderDeleteHelper>());
-
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
+  // Shouldn't crash if the ProviderHost is deleted prior to completion of
+  // the fetch event.
+  SetUpWithHelper(new ProviderDeleteHelper);
 
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
   TestRequest(500, "Service Worker Response Error", std::string(),
@@ -457,8 +453,6 @@ TEST_F(ServiceWorkerURLRequestJobTest, DeletedProviderHostOnFetchEvent) {
 }
 
 TEST_F(ServiceWorkerURLRequestJobTest, DeletedProviderHostBeforeFetchEvent) {
-  SetUpWithHelper(base::MakeUnique<EmbeddedWorkerTestHelper>(base::FilePath()));
-
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
   request_ = url_request_context_.CreateRequest(
       GURL("https://example.com/foo.html"), net::DEFAULT_PRIORITY,
@@ -526,9 +520,6 @@ class BlobResponder : public EmbeddedWorkerTestHelper {
 TEST_F(ServiceWorkerURLRequestJobTest, BlobResponse) {
   ChromeBlobStorageContext* blob_storage_context =
       ChromeBlobStorageContext::GetFor(browser_context_.get());
-  // Wait for chrome_blob_storage_context to finish initializing.
-  base::RunLoop().RunUntilIdle();
-
   std::string expected_response;
   expected_response.reserve((sizeof(kTestData) - 1) * 1024);
   for (int i = 0; i < 1024; ++i) {
@@ -537,8 +528,8 @@ TEST_F(ServiceWorkerURLRequestJobTest, BlobResponse) {
   }
   std::unique_ptr<storage::BlobDataHandle> blob_handle =
       blob_storage_context->context()->AddFinishedBlob(blob_data_.get());
-  SetUpWithHelper(base::MakeUnique<BlobResponder>(blob_handle->uuid(),
-                                                  expected_response.size()));
+  SetUpWithHelper(
+      new BlobResponder(blob_handle->uuid(), expected_response.size()));
 
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
   TestRequest(200, "OK", expected_response, true /* expect_valid_ssl */);
@@ -558,8 +549,7 @@ TEST_F(ServiceWorkerURLRequestJobTest, BlobResponse) {
 }
 
 TEST_F(ServiceWorkerURLRequestJobTest, NonExistentBlobUUIDResponse) {
-  SetUpWithHelper(
-      base::MakeUnique<BlobResponder>("blob-id:nothing-is-here", 0));
+  SetUpWithHelper(new BlobResponder("blob-id:nothing-is-here", 0));
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
   TestRequest(500, "Service Worker Response Error", std::string(),
               true /* expect_valid_ssl */);
@@ -622,9 +612,8 @@ class StreamResponder : public EmbeddedWorkerTestHelper {
 TEST_F(ServiceWorkerURLRequestJobTest, StreamResponse) {
   blink::mojom::ServiceWorkerStreamCallbackPtr stream_callback;
   mojo::DataPipe data_pipe;
-  SetUpWithHelper(
-      base::MakeUnique<StreamResponder>(mojo::MakeRequest(&stream_callback),
-                                        std::move(data_pipe.consumer_handle)));
+  SetUpWithHelper(new StreamResponder(mojo::MakeRequest(&stream_callback),
+                                      std::move(data_pipe.consumer_handle)));
 
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
   request_ = url_request_context_.CreateRequest(
@@ -676,9 +665,8 @@ TEST_F(ServiceWorkerURLRequestJobTest, StreamResponse) {
 TEST_F(ServiceWorkerURLRequestJobTest, StreamResponse_ConsecutiveRead) {
   blink::mojom::ServiceWorkerStreamCallbackPtr stream_callback;
   mojo::DataPipe data_pipe;
-  SetUpWithHelper(
-      base::MakeUnique<StreamResponder>(mojo::MakeRequest(&stream_callback),
-                                        std::move(data_pipe.consumer_handle)));
+  SetUpWithHelper(new StreamResponder(mojo::MakeRequest(&stream_callback),
+                                      std::move(data_pipe.consumer_handle)));
 
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
   request_ = url_request_context_.CreateRequest(
@@ -724,9 +712,8 @@ TEST_F(ServiceWorkerURLRequestJobTest, StreamResponse_ConsecutiveRead) {
 TEST_F(ServiceWorkerURLRequestJobTest, StreamResponseAndCancel) {
   blink::mojom::ServiceWorkerStreamCallbackPtr stream_callback;
   mojo::DataPipe data_pipe;
-  SetUpWithHelper(
-      base::MakeUnique<StreamResponder>(mojo::MakeRequest(&stream_callback),
-                                        std::move(data_pipe.consumer_handle)));
+  SetUpWithHelper(new StreamResponder(mojo::MakeRequest(&stream_callback),
+                                      std::move(data_pipe.consumer_handle)));
 
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
   request_ = url_request_context_.CreateRequest(
@@ -779,9 +766,8 @@ TEST_F(ServiceWorkerURLRequestJobTest, StreamResponseAndCancel) {
 TEST_F(ServiceWorkerURLRequestJobTest, StreamResponse_Abort) {
   blink::mojom::ServiceWorkerStreamCallbackPtr stream_callback;
   mojo::DataPipe data_pipe;
-  SetUpWithHelper(
-      base::MakeUnique<StreamResponder>(mojo::MakeRequest(&stream_callback),
-                                        std::move(data_pipe.consumer_handle)));
+  SetUpWithHelper(new StreamResponder(mojo::MakeRequest(&stream_callback),
+                                      std::move(data_pipe.consumer_handle)));
 
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
   request_ = url_request_context_.CreateRequest(
@@ -833,9 +819,8 @@ TEST_F(ServiceWorkerURLRequestJobTest, StreamResponse_Abort) {
 TEST_F(ServiceWorkerURLRequestJobTest, StreamResponse_AbortBeforeData) {
   blink::mojom::ServiceWorkerStreamCallbackPtr stream_callback;
   mojo::DataPipe data_pipe;
-  SetUpWithHelper(
-      base::MakeUnique<StreamResponder>(mojo::MakeRequest(&stream_callback),
-                                        std::move(data_pipe.consumer_handle)));
+  SetUpWithHelper(new StreamResponder(mojo::MakeRequest(&stream_callback),
+                                      std::move(data_pipe.consumer_handle)));
 
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
 
@@ -892,9 +877,8 @@ TEST_F(ServiceWorkerURLRequestJobTest, StreamResponse_AbortBeforeData) {
 TEST_F(ServiceWorkerURLRequestJobTest, StreamResponse_AbortAfterData) {
   blink::mojom::ServiceWorkerStreamCallbackPtr stream_callback;
   mojo::DataPipe data_pipe;
-  SetUpWithHelper(
-      base::MakeUnique<StreamResponder>(mojo::MakeRequest(&stream_callback),
-                                        std::move(data_pipe.consumer_handle)));
+  SetUpWithHelper(new StreamResponder(mojo::MakeRequest(&stream_callback),
+                                      std::move(data_pipe.consumer_handle)));
 
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
 
@@ -937,9 +921,8 @@ TEST_F(ServiceWorkerURLRequestJobTest, StreamResponse_AbortAfterData) {
 TEST_F(ServiceWorkerURLRequestJobTest, StreamResponse_ConsecutiveReadAndAbort) {
   blink::mojom::ServiceWorkerStreamCallbackPtr stream_callback;
   mojo::DataPipe data_pipe;
-  SetUpWithHelper(
-      base::MakeUnique<StreamResponder>(mojo::MakeRequest(&stream_callback),
-                                        std::move(data_pipe.consumer_handle)));
+  SetUpWithHelper(new StreamResponder(mojo::MakeRequest(&stream_callback),
+                                      std::move(data_pipe.consumer_handle)));
 
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
   request_ = url_request_context_.CreateRequest(
@@ -1008,7 +991,7 @@ class FailFetchHelper : public EmbeddedWorkerTestHelper {
 };
 
 TEST_F(ServiceWorkerURLRequestJobTest, FailFetchDispatch) {
-  SetUpWithHelper(base::MakeUnique<FailFetchHelper>());
+  SetUpWithHelper(new FailFetchHelper);
 
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
   request_ = url_request_context_.CreateRequest(
@@ -1037,7 +1020,6 @@ TEST_F(ServiceWorkerURLRequestJobTest, FailFetchDispatch) {
 }
 
 TEST_F(ServiceWorkerURLRequestJobTest, FailToActivate_MainResource) {
-  SetUpWithHelper(base::MakeUnique<EmbeddedWorkerTestHelper>(base::FilePath()));
   RunFailToActivateTest(RESOURCE_TYPE_MAIN_FRAME);
 
   // The load should fail and we should have fallen back to network because
@@ -1054,7 +1036,6 @@ TEST_F(ServiceWorkerURLRequestJobTest, FailToActivate_MainResource) {
 }
 
 TEST_F(ServiceWorkerURLRequestJobTest, FailToActivate_Subresource) {
-  SetUpWithHelper(base::MakeUnique<EmbeddedWorkerTestHelper>(base::FilePath()));
   RunFailToActivateTest(RESOURCE_TYPE_IMAGE);
 
   // The load should fail and we should not fall back to network because
@@ -1110,9 +1091,8 @@ class EarlyResponseHelper : public EmbeddedWorkerTestHelper {
 // This simulates the case when a response is returned and the fetch event is
 // still in flight.
 TEST_F(ServiceWorkerURLRequestJobTest, EarlyResponse) {
-  SetUpWithHelper(base::MakeUnique<EarlyResponseHelper>());
-  EarlyResponseHelper* helper =
-      static_cast<EarlyResponseHelper*>(helper_.get());
+  EarlyResponseHelper* helper = new EarlyResponseHelper;
+  SetUpWithHelper(helper);
 
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
   TestRequest(200, "OK", std::string(), true /* expect_valid_ssl */);
@@ -1182,9 +1162,8 @@ class DelayedResponseHelper : public EmbeddedWorkerTestHelper {
 
 // Test cancelling the URLRequest while the fetch event is in flight.
 TEST_F(ServiceWorkerURLRequestJobTest, CancelRequest) {
-  SetUpWithHelper(base::MakeUnique<DelayedResponseHelper>());
-  DelayedResponseHelper* helper =
-      static_cast<DelayedResponseHelper*>(helper_.get());
+  DelayedResponseHelper* helper = new DelayedResponseHelper;
+  SetUpWithHelper(helper);
 
   // Start the URL request. The job will be waiting for the
   // worker to respond to the fetch event.

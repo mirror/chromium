@@ -976,7 +976,7 @@ Profiler.HeapSnapshotProfileType = class extends Profiler.ProfileType {
    * @param {string=} title
    */
   constructor(id, title) {
-    super(id || Profiler.HeapSnapshotProfileType.TypeId, title || Common.UIString('Take heap snapshot'));
+    super(id || Profiler.HeapSnapshotProfileType.TypeId, title || Common.UIString('Take Heap Snapshot'));
     SDK.targetManager.observeModels(SDK.HeapProfilerModel, this);
     SDK.targetManager.addModelListener(
         SDK.HeapProfilerModel, SDK.HeapProfilerModel.Events.ResetProfiles, this._resetProfiles, this);
@@ -1128,7 +1128,7 @@ Profiler.HeapSnapshotProfileType.SnapshotReceived = 'SnapshotReceived';
  */
 Profiler.TrackingHeapSnapshotProfileType = class extends Profiler.HeapSnapshotProfileType {
   constructor() {
-    super(Profiler.TrackingHeapSnapshotProfileType.TypeId, Common.UIString('Record allocation timeline'));
+    super(Profiler.TrackingHeapSnapshotProfileType.TypeId, Common.UIString('Record Allocation Timeline'));
   }
 
   /**

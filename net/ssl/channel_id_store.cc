@@ -39,10 +39,6 @@ ChannelIDStore::ChannelID& ChannelIDStore::ChannelID::operator=(
 
 ChannelIDStore::ChannelID::~ChannelID() {}
 
-ChannelIDStore::~ChannelIDStore() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-}
-
 void ChannelIDStore::InitializeFrom(const ChannelIDList& list) {
   for (ChannelIDList::const_iterator i = list.begin(); i != list.end();
       ++i) {

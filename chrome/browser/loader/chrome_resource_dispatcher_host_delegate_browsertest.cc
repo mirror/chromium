@@ -482,7 +482,7 @@ IN_PROC_BROWSER_TEST_F(ChromeResourceDispatcherHostDelegateBrowserTest,
                        MirrorRequestHeader) {
   // Enable account consistency so that mirror actually sets the
   // X-Chrome-Connected header in requests to Google.
-  switches::EnableAccountConsistencyMirrorForTesting(
+  switches::EnableAccountConsistencyForTesting(
       base::CommandLine::ForCurrentProcess());
 
   browser()->profile()->GetPrefs()->SetString(prefs::kGoogleServicesUsername,

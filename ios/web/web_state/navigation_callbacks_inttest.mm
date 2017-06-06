@@ -486,13 +486,7 @@ TEST_F(NavigationCallbacksTest, NativeContentReload) {
 }
 
 // Tests successful navigation to a new page with post HTTP method.
-// TODO (crbug/729602): This test is disabled due to failing on iOS 9.3 devices.
-#if TARGET_IPHONE_SIMULATOR
-#define MAYBE_UserInitiatedPostNavigation UserInitiatedPostNavigation
-#else
-#define MAYBE_UserInitiatedPostNavigation DISABLED_UserInitiatedPostNavigation
-#endif
-TEST_F(NavigationCallbacksTest, MAYBE_UserInitiatedPostNavigation) {
+TEST_F(NavigationCallbacksTest, UserInitiatedPostNavigation) {
   const GURL url = HttpServer::MakeUrl("http://chromium.test");
   std::map<GURL, std::string> responses;
   responses[url] = "Chromium Test";
@@ -541,13 +535,7 @@ TEST_F(NavigationCallbacksTest, RendererInitiatedPostNavigation) {
 }
 
 // Tests successful reload of a page returned for post request.
-// TODO (crbug/729602): This test is disabled due to failing on iOS 9.3 devices.
-#if TARGET_IPHONE_SIMULATOR
-#define MAYBE_ReloadPostNavigation ReloadPostNavigation
-#else
-#define MAYBE_ReloadPostNavigation DISABLED_ReloadPostNavigation
-#endif
-TEST_F(NavigationCallbacksTest, MAYBE_ReloadPostNavigation) {
+TEST_F(NavigationCallbacksTest, ReloadPostNavigation) {
   const GURL url = HttpServer::MakeUrl("http://chromium.test");
   std::map<GURL, std::string> responses;
   const GURL action = HttpServer::MakeUrl("http://action.test");
@@ -592,13 +580,7 @@ TEST_F(NavigationCallbacksTest, MAYBE_ReloadPostNavigation) {
 }
 
 // Tests going forward to a page rendered from post response.
-// TODO (crbug/729602): This test is disabled due to failing on iOS 9.3 devices.
-#if TARGET_IPHONE_SIMULATOR
-#define MAYBE_ForwardPostNavigation ForwardPostNavigation
-#else
-#define MAYBE_ForwardPostNavigation DISABLED_ForwardPostNavigation
-#endif
-TEST_F(NavigationCallbacksTest, MAYBE_ForwardPostNavigation) {
+TEST_F(NavigationCallbacksTest, ForwardPostNavigation) {
   const GURL url = HttpServer::MakeUrl("http://chromium.test");
   std::map<GURL, std::string> responses;
   const GURL action = HttpServer::MakeUrl("http://action.test");

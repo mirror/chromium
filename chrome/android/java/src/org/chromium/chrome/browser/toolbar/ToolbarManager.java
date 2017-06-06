@@ -16,6 +16,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnAttachStateChangeListener;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.MarginLayoutParams;
+import android.widget.FrameLayout;
 import android.widget.PopupWindow.OnDismissListener;
 
 import org.chromium.base.ApiCompatibilityUtils;
@@ -186,12 +188,34 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
             ToolbarControlContainer controlContainer, final AppMenuHandler menuHandler,
             AppMenuPropertiesDelegate appMenuPropertiesDelegate,
             Invalidator invalidator, Callback<Boolean> urlFocusChangedCallback) {
-        if (activity.getBottomSheet() != null) {
-            mActionBarDelegate =
-                    new ViewShiftingActionBarDelegate(activity, activity.getBottomSheet());
-        } else {
-            mActionBarDelegate = new ViewShiftingActionBarDelegate(activity, controlContainer);
-        }
+        mActionBarDelegate = new ActionModeController.ActionBarDelegate() {
+            @Override
+            public void setControlTopMargin(int margin) {
+                MarginLayoutParams lp = (MarginLayoutParams)
+                        mControlContainer.getLayoutParams();
+                lp.topMargin = margin;
+                mControlContainer.setLayoutParams(lp);
+            }
+
+            @Override
+            public int getControlTopMargin() {
+                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams)
+                        mControlContainer.getLayoutParams();
+                return lp.topMargin;
+            }
+
+            @Override
+            public ActionBar getSupportActionBar() {
+                return activity.getSupportActionBar();
+            }
+
+            @Override
+            public void setActionBarBackgroundVisibility(boolean visible) {
+                int visibility = visible ? View.VISIBLE : View.GONE;
+                activity.findViewById(R.id.action_bar_black_background).setVisibility(visibility);
+                // TODO(tedchoc): Add support for changing the color based on the brand color.
+            }
+        };
 
         mToolbarModel = new ToolbarModelImpl(activity.getBottomSheet());
         mControlContainer = controlContainer;

@@ -44,7 +44,6 @@ ACRONYMS = [
     'HTML',
     'IME',
     'JS',
-    'SMIL',
     'SVG',
     'URL',
     'WOFF',

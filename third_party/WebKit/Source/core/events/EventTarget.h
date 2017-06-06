@@ -208,7 +208,6 @@ class CORE_EXPORT EventTarget : public GarbageCollectedFinalized<EventTarget>,
  private:
   LocalDOMWindow* ExecutingWindow();
   void SetDefaultAddEventListenerOptions(const AtomicString& event_type,
-                                         EventListener*,
                                          AddEventListenerOptionsResolved&);
 
   // UseCounts the event if it has the specified type. Returns true iff the

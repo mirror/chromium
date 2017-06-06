@@ -26,7 +26,7 @@
 #include "modules/webgl/WebGLRenderingContext.h"
 
 #include <memory>
-#include "bindings/modules/v8/OffscreenRenderingContext.h"
+#include "bindings/modules/v8/OffscreenCanvasRenderingContext2DOrWebGLRenderingContextOrWebGL2RenderingContext.h"
 #include "bindings/modules/v8/RenderingContext.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
@@ -87,17 +87,37 @@ static bool ShouldCreateContext(
 }
 
 CanvasRenderingContext* WebGLRenderingContext::Factory::Create(
-    CanvasRenderingContextHost* host,
+    ScriptState* script_state,
+    OffscreenCanvas* offscreen_canvas,
     const CanvasContextCreationAttributes& attrs) {
   std::unique_ptr<WebGraphicsContext3DProvider> context_provider(
-      CreateWebGraphicsContext3DProvider(host, attrs, 1));
+      CreateWebGraphicsContext3DProvider(script_state, attrs, 1));
+  if (!ShouldCreateContext(context_provider.get()))
+    return nullptr;
+
+  WebGLRenderingContext* rendering_context = new WebGLRenderingContext(
+      offscreen_canvas, std::move(context_provider), attrs);
+  if (!rendering_context->GetDrawingBuffer())
+    return nullptr;
+  rendering_context->InitializeNewContext();
+  rendering_context->RegisterContextExtensions();
+
+  return rendering_context;
+}
+
+CanvasRenderingContext* WebGLRenderingContext::Factory::Create(
+    HTMLCanvasElement* canvas,
+    const CanvasContextCreationAttributes& attrs,
+    Document&) {
+  std::unique_ptr<WebGraphicsContext3DProvider> context_provider(
+      CreateWebGraphicsContext3DProvider(canvas, attrs, 1));
   if (!ShouldCreateContext(context_provider.get()))
     return nullptr;
 
   WebGLRenderingContext* rendering_context =
-      new WebGLRenderingContext(host, std::move(context_provider), attrs);
+      new WebGLRenderingContext(canvas, std::move(context_provider), attrs);
   if (!rendering_context->GetDrawingBuffer()) {
-    host->HostDispatchEvent(WebGLContextEvent::Create(
+    canvas->DispatchEvent(WebGLContextEvent::Create(
         EventTypeNames::webglcontextcreationerror, false, true,
         "Could not create a WebGL context."));
     return nullptr;
@@ -115,10 +135,19 @@ void WebGLRenderingContext::Factory::OnError(HTMLCanvasElement* canvas,
 }
 
 WebGLRenderingContext::WebGLRenderingContext(
-    CanvasRenderingContextHost* host,
+    HTMLCanvasElement* passed_canvas,
     std::unique_ptr<WebGraphicsContext3DProvider> context_provider,
     const CanvasContextCreationAttributes& requested_attributes)
-    : WebGLRenderingContextBase(host,
+    : WebGLRenderingContextBase(passed_canvas,
+                                std::move(context_provider),
+                                requested_attributes,
+                                1) {}
+
+WebGLRenderingContext::WebGLRenderingContext(
+    OffscreenCanvas* passed_offscreen_canvas,
+    std::unique_ptr<WebGraphicsContext3DProvider> context_provider,
+    const CanvasContextCreationAttributes& requested_attributes)
+    : WebGLRenderingContextBase(passed_offscreen_canvas,
                                 std::move(context_provider),
                                 requested_attributes,
                                 1) {}
@@ -170,7 +199,7 @@ void WebGLRenderingContext::RegisterContextExtensions() {
   RegisterExtension<WebGLCompressedTextureS3TC>(
       webgl_compressed_texture_s3tc_, kApprovedExtension, kBothPrefixes);
   RegisterExtension<WebGLCompressedTextureS3TCsRGB>(
-      webgl_compressed_texture_s3tc_srgb_);
+      webgl_compressed_texture_s3tc_srgb_, kDraftExtension, kBothPrefixes);
   RegisterExtension<WebGLDebugRendererInfo>(webgl_debug_renderer_info_);
   RegisterExtension<WebGLDebugShaders>(webgl_debug_shaders_);
   RegisterExtension<WebGLDepthTexture>(webgl_depth_texture_, kApprovedExtension,

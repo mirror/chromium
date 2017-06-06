@@ -225,7 +225,7 @@ views::View* TrayCapsLock::CreateDefaultView(LoginStatus status) {
   return default_;
 }
 
-void TrayCapsLock::OnDefaultViewDestroyed() {
+void TrayCapsLock::DestroyDefaultView() {
   default_ = nullptr;
 }
 

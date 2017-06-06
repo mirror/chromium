@@ -32,7 +32,8 @@ class CORE_EXPORT NGLayoutResult : public RefCounted<NGLayoutResult> {
     return physical_fragment_;
   }
 
-  const Vector<NGBlockNode>& OutOfFlowDescendants() const {
+  const HeapLinkedHashSet<WeakMember<NGBlockNode>>& OutOfFlowDescendants()
+      const {
     return out_of_flow_descendants_;
   }
 
@@ -56,12 +57,13 @@ class CORE_EXPORT NGLayoutResult : public RefCounted<NGLayoutResult> {
   friend class NGFragmentBuilder;
 
   NGLayoutResult(PassRefPtr<NGPhysicalFragment> physical_fragment,
-                 Vector<NGBlockNode>& out_of_flow_descendants,
+                 PersistentHeapLinkedHashSet<WeakMember<NGBlockNode>>&
+                     out_of_flow_descendants,
                  Vector<NGStaticPosition> out_of_flow_positions,
                  Vector<RefPtr<NGUnpositionedFloat>>& unpositioned_floats);
 
   RefPtr<NGPhysicalFragment> physical_fragment_;
-  Vector<NGBlockNode> out_of_flow_descendants_;
+  PersistentHeapLinkedHashSet<WeakMember<NGBlockNode>> out_of_flow_descendants_;
   Vector<NGStaticPosition> out_of_flow_positions_;
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats_;
 };

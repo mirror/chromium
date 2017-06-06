@@ -42,11 +42,6 @@ const char kDriveV2TeamDrivesUrl[] = "drive/v2/teamdrives";
 
 const char kIncludeTeamDriveItems[] = "includeTeamDriveItems";
 const char kSupportsTeamDrives[] = "supportsTeamDrives";
-const char kCorpora[] = "corpora";
-const char kCorporaAllTeamDrives[] = "default,allTeamDrives";
-const char kCorporaDefault[] = "default";
-const char kCorporaTeamDrive[] = "teamDrive";
-const char kTeamDriveId[] = "teamDriveId";
 
 // apps.delete and file.authorize API is exposed through a special endpoint
 // v2internal that is accessible only by the official API key for Chrome.
@@ -62,19 +57,6 @@ GURL AddResumableUploadParam(const GURL& url) {
 
 GURL AddMultipartUploadParam(const GURL& url) {
   return net::AppendOrReplaceQueryParameter(url, "uploadType", "multipart");
-}
-
-const char* GetCorporaString(FilesListCorpora corpora) {
-  switch (corpora) {
-    case FilesListCorpora::DEFAULT:
-      return kCorporaDefault;
-    case FilesListCorpora::TEAM_DRIVE:
-      return kCorporaTeamDrive;
-    case FilesListCorpora::ALL_TEAM_DRIVES:
-      return kCorporaAllTeamDrives;
-  }
-  NOTREACHED();
-  return kCorporaDefault;
 }
 
 }  // namespace
@@ -203,21 +185,12 @@ GURL DriveApiUrlGenerator::GetFilesCopyUrl(
 
 GURL DriveApiUrlGenerator::GetFilesListUrl(int max_results,
                                            const std::string& page_token,
-                                           FilesListCorpora corpora,
-                                           const std::string& team_drive_id,
                                            const std::string& q) const {
   GURL url = base_url_.Resolve(kDriveV2FilesUrl);
   if (enable_team_drives_) {
     url = net::AppendOrReplaceQueryParameter(url, kSupportsTeamDrives, "true");
-    if (corpora != FilesListCorpora::DEFAULT) {
-      url = net::AppendOrReplaceQueryParameter(url, kIncludeTeamDriveItems,
-                                               "true");
-    }
-    url = net::AppendOrReplaceQueryParameter(url, kCorpora,
-                                             GetCorporaString(corpora));
-    if (!team_drive_id.empty())
-      url =
-          net::AppendOrReplaceQueryParameter(url, kTeamDriveId, team_drive_id);
+    url = net::AppendOrReplaceQueryParameter(url, kIncludeTeamDriveItems,
+                                             "true");
   }
   // maxResults is 100 by default.
   if (max_results != 100) {
@@ -265,7 +238,7 @@ GURL DriveApiUrlGenerator::GetChangesListUrl(
                                              "true");
     if (!team_drive_id.empty()) {
       url =
-          net::AppendOrReplaceQueryParameter(url, kTeamDriveId, team_drive_id);
+          net::AppendOrReplaceQueryParameter(url, "teamDriveId", team_drive_id);
     }
   }
   // includeDeleted is "true" by default.

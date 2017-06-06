@@ -434,9 +434,7 @@ WiFiDisplayTransportStreamPacketizer::WiFiDisplayTransportStreamPacketizer(
     CHECK(SetElementaryStreams(stream_infos));
 }
 
-WiFiDisplayTransportStreamPacketizer::~WiFiDisplayTransportStreamPacketizer() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-}
+WiFiDisplayTransportStreamPacketizer::~WiFiDisplayTransportStreamPacketizer() {}
 
 bool WiFiDisplayTransportStreamPacketizer::EncodeElementaryStreamUnit(
     unsigned stream_index,
@@ -446,7 +444,7 @@ bool WiFiDisplayTransportStreamPacketizer::EncodeElementaryStreamUnit(
     base::TimeTicks pts,
     base::TimeTicks dts,
     bool flush) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_LT(stream_index, stream_states_.size());
   ElementaryStreamState& stream_state = stream_states_[stream_index];
 
@@ -551,7 +549,7 @@ bool WiFiDisplayTransportStreamPacketizer::EncodeElementaryStreamUnit(
 }
 
 bool WiFiDisplayTransportStreamPacketizer::EncodeMetaInformation(bool flush) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
 
   return (EncodeProgramAssociationTable(false) &&
           EncodeProgramMapTables(false) && EncodeProgramClockReference(flush));
@@ -559,7 +557,7 @@ bool WiFiDisplayTransportStreamPacketizer::EncodeMetaInformation(bool flush) {
 
 bool WiFiDisplayTransportStreamPacketizer::EncodeProgramAssociationTable(
     bool flush) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
 
   // Fill in a packet header.
   uint8_t header_data[ts::kPacketHeaderSize];
@@ -578,7 +576,7 @@ bool WiFiDisplayTransportStreamPacketizer::EncodeProgramAssociationTable(
 
 bool WiFiDisplayTransportStreamPacketizer::EncodeProgramClockReference(
     bool flush) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
 
   program_clock_reference_ = base::TimeTicks::Now();
 
@@ -609,7 +607,7 @@ bool WiFiDisplayTransportStreamPacketizer::EncodeProgramClockReference(
 }
 
 bool WiFiDisplayTransportStreamPacketizer::EncodeProgramMapTables(bool flush) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(!program_map_table_.empty());
 
   // Fill in a packet header.
@@ -635,7 +633,7 @@ void WiFiDisplayTransportStreamPacketizer::
 void WiFiDisplayTransportStreamPacketizer::NormalizeUnitTimeStamps(
     base::TimeTicks* pts,
     base::TimeTicks* dts) const {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
 
   // Normalize a presentation time stamp.
   if (!pts || pts->is_null())
@@ -653,7 +651,7 @@ void WiFiDisplayTransportStreamPacketizer::NormalizeUnitTimeStamps(
 
 bool WiFiDisplayTransportStreamPacketizer::SetElementaryStreams(
     const std::vector<WiFiDisplayElementaryStreamInfo>& stream_infos) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
 
   std::vector<ElementaryStreamState> new_stream_states;
   new_stream_states.reserve(stream_infos.size());
@@ -719,7 +717,7 @@ bool WiFiDisplayTransportStreamPacketizer::SetElementaryStreams(
 void WiFiDisplayTransportStreamPacketizer::UpdateDelayForUnitTimeStamps(
     const base::TimeTicks& pts,
     const base::TimeTicks& dts) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
 
   if (pts.is_null())
     return;

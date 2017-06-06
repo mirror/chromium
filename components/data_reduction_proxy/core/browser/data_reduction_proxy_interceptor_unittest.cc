@@ -116,6 +116,8 @@ class DataReductionProxyInterceptorTest : public testing::Test {
   DataReductionProxyInterceptorTest() {
     test_context_ =
         DataReductionProxyTestContext::Builder()
+            .WithParamsFlags(0)
+            .WithParamsDefinitions(TestDataReductionProxyParams::HAS_EVERYTHING)
             .Build();
     default_context_.reset(new TestURLRequestContextWithDataReductionProxy(
         test_context_->config()
@@ -213,6 +215,7 @@ class DataReductionProxyInterceptorWithServerTest : public testing::Test {
     ASSERT_TRUE(direct_.Start());
 
     test_context_ = DataReductionProxyTestContext::Builder()
+                        .WithParamsFlags(0)
                         .WithURLRequestContext(&context_)
                         .Build();
     std::string spec;

@@ -344,14 +344,17 @@ bool XSLTProcessor::TransformToString(Node* source_node,
 
     xsltSecurityPrefsPtr security_prefs = xsltNewSecurityPrefs();
     // Read permissions are checked by docLoaderFunc.
-    CHECK_EQ(0, xsltSetSecurityPrefs(security_prefs, XSLT_SECPREF_WRITE_FILE,
-                                     xsltSecurityForbid));
-    CHECK_EQ(0,
-             xsltSetSecurityPrefs(security_prefs, XSLT_SECPREF_CREATE_DIRECTORY,
-                                  xsltSecurityForbid));
-    CHECK_EQ(0, xsltSetSecurityPrefs(security_prefs, XSLT_SECPREF_WRITE_NETWORK,
-                                     xsltSecurityForbid));
-    CHECK_EQ(0, xsltSetCtxtSecurityPrefs(security_prefs, transform_context));
+    if (0 != xsltSetSecurityPrefs(security_prefs, XSLT_SECPREF_WRITE_FILE,
+                                  xsltSecurityForbid))
+      IMMEDIATE_CRASH();
+    if (0 != xsltSetSecurityPrefs(security_prefs, XSLT_SECPREF_CREATE_DIRECTORY,
+                                  xsltSecurityForbid))
+      IMMEDIATE_CRASH();
+    if (0 != xsltSetSecurityPrefs(security_prefs, XSLT_SECPREF_WRITE_NETWORK,
+                                  xsltSecurityForbid))
+      IMMEDIATE_CRASH();
+    if (0 != xsltSetCtxtSecurityPrefs(security_prefs, transform_context))
+      IMMEDIATE_CRASH();
 
     // <http://bugs.webkit.org/show_bug.cgi?id=16077>: XSLT processor
     // <xsl:sort> algorithm only compares by code point.

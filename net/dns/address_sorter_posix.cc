@@ -251,13 +251,12 @@ AddressSorterPosix::AddressSorterPosix(ClientSocketFactory* socket_factory)
 }
 
 AddressSorterPosix::~AddressSorterPosix() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   NetworkChangeNotifier::RemoveIPAddressObserver(this);
 }
 
 void AddressSorterPosix::Sort(const AddressList& list,
                               const CallbackType& callback) const {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   std::vector<std::unique_ptr<DestinationInfo>> sort_list;
 
   for (size_t i = 0; i < list.size(); ++i) {
@@ -316,7 +315,7 @@ void AddressSorterPosix::Sort(const AddressList& list,
 }
 
 void AddressSorterPosix::OnIPAddressChanged() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   source_map_.clear();
 #if defined(OS_LINUX)
   const internal::AddressTrackerLinux* tracker =
@@ -386,7 +385,7 @@ void AddressSorterPosix::OnIPAddressChanged() {
 
 void AddressSorterPosix::FillPolicy(const IPAddress& address,
                                     SourceAddressInfo* info) const {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   info->scope = GetScope(ipv4_scope_table_, address);
   info->label = GetPolicyValue(label_table_, address);
 }

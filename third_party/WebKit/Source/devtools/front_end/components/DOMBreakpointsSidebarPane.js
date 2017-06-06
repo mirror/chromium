@@ -31,14 +31,11 @@
 /**
  * @implements {UI.ContextFlavorListener}
  */
-Components.DOMBreakpointsSidebarPane = class extends UI.VBox {
+Components.DOMBreakpointsSidebarPane = class extends Components.BreakpointsSidebarPaneBase {
   constructor() {
-    super(true);
-    this.registerRequiredCSS('components/domBreakpointsSidebarPane.css');
-
-    this._listElement = this.contentElement.createChild('div', 'breakpoint-list hidden');
-    this._emptyElement = this.contentElement.createChild('div', 'gray-info-message');
-    this._emptyElement.textContent = Common.UIString('No breakpoints');
+    super();
+    this.registerRequiredCSS('components/breakpointsList.css');
+    this.listElement.classList.add('dom-breakpoints-list');
 
     /** @type {!Map<!SDK.DOMDebuggerModel.DOMBreakpoint, !Components.DOMBreakpointsSidebarPane.Item>} */
     this._items = new Map();
@@ -120,12 +117,8 @@ Components.DOMBreakpointsSidebarPane = class extends UI.VBox {
       var item = this._items.get(breakpoint);
       if (item) {
         this._items.delete(breakpoint);
-        this._listElement.removeChild(item.element);
+        this.removeListElement(item.element);
       }
-    }
-    if (!this._listElement.firstChild) {
-      this._emptyElement.classList.remove('hidden');
-      this._listElement.classList.add('hidden');
     }
   }
 
@@ -133,7 +126,7 @@ Components.DOMBreakpointsSidebarPane = class extends UI.VBox {
    * @param {!SDK.DOMDebuggerModel.DOMBreakpoint} breakpoint
    */
   _addBreakpoint(breakpoint) {
-    var element = createElementWithClass('div', 'breakpoint-entry');
+    var element = createElement('li');
     element.addEventListener('contextmenu', this._contextMenu.bind(this, breakpoint), true);
 
     var checkboxLabel = UI.CheckboxLabel.create('', breakpoint.enabled);
@@ -157,15 +150,13 @@ Components.DOMBreakpointsSidebarPane = class extends UI.VBox {
     element._item = item;
     this._items.set(breakpoint, item);
 
-    var currentElement = this._listElement.firstChild;
+    var currentElement = this.listElement.firstChild;
     while (currentElement) {
       if (currentElement._item && currentElement._item.breakpoint.type < breakpoint.type)
         break;
       currentElement = currentElement.nextSibling;
     }
-    this._listElement.insertBefore(element, currentElement);
-    this._emptyElement.classList.add('hidden');
-    this._listElement.classList.remove('hidden');
+    this.addListElement(element, currentElement);
   }
 
   /**
@@ -234,9 +225,9 @@ Components.DOMBreakpointsSidebarPane = class extends UI.VBox {
 Components.DOMBreakpointsSidebarPane.Item;
 
 Components.DOMBreakpointsSidebarPane.BreakpointTypeLabels = new Map([
-  [SDK.DOMDebuggerModel.DOMBreakpoint.Type.SubtreeModified, Common.UIString('Subtree modified')],
-  [SDK.DOMDebuggerModel.DOMBreakpoint.Type.AttributeModified, Common.UIString('Attribute modified')],
-  [SDK.DOMDebuggerModel.DOMBreakpoint.Type.NodeRemoved, Common.UIString('Node removed')],
+  [SDK.DOMDebuggerModel.DOMBreakpoint.Type.SubtreeModified, Common.UIString('Subtree Modified')],
+  [SDK.DOMDebuggerModel.DOMBreakpoint.Type.AttributeModified, Common.UIString('Attribute Modified')],
+  [SDK.DOMDebuggerModel.DOMBreakpoint.Type.NodeRemoved, Common.UIString('Node Removed')],
 ]);
 
 Components.DOMBreakpointsSidebarPane.BreakpointTypeNouns = new Map([

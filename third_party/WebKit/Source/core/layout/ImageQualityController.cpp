@@ -179,8 +179,7 @@ bool ImageQualityController::ShouldPaintAtLowQuality(
   if (!layer)
     return false;
 
-  if (object.Style()->ImageRendering() ==
-      EImageRendering::kWebkitOptimizeContrast)
+  if (object.Style()->ImageRendering() == EImageRendering::kOptimizeContrast)
     return true;
 
   if (LocalFrame* frame = object.GetFrame()) {

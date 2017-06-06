@@ -541,7 +541,11 @@ bool IsInternalURL(const GURL& url) {
 - (void)showSiteSettingsData:(id)sender {
   DCHECK(webContents_);
   DCHECK(presenter_);
-  presenter_->OpenSiteSettingsView();
+  presenter_->RecordPageInfoAction(PageInfo::PAGE_INFO_SITE_SETTINGS_OPENED);
+  webContents_->OpenURL(content::OpenURLParams(
+      GURL(chrome::kChromeUIContentSettingsURL), content::Referrer(),
+      WindowOpenDisposition::NEW_FOREGROUND_TAB, ui::PAGE_TRANSITION_LINK,
+      false));
 }
 
 // TODO(lgarron): Move some of this to the presenter for separation of concerns

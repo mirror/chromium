@@ -34,6 +34,9 @@ extern const char kAccelerated2dCanvasDescription[];
 extern const char kAcceleratedVideoDecodeName[];
 extern const char kAcceleratedVideoDecodeDescription[];
 
+extern const char kAccountConsistencyName[];
+extern const char kAccountConsistencyDescription[];
+
 extern const char kAddToShelfName[];
 extern const char kAddToShelfDescription[];
 
@@ -234,9 +237,6 @@ extern const char kEnableMidiManagerDynamicInstantiationDescription[];
 
 extern const char kEnableNavigationTracingName[];
 extern const char kEnableNavigationTracingDescription[];
-
-extern const char kEnableNightLightName[];
-extern const char kEnableNightLightDescription[];
 
 extern const char kEnablePictureInPictureName[];
 extern const char kEnablePictureInPictureDescription[];
@@ -1078,6 +1078,9 @@ extern const char kReaderModeHeuristicsAdaboost[];
 extern const char kReaderModeHeuristicsAlwaysOff[];
 extern const char kReaderModeHeuristicsAlwaysOn[];
 
+extern const char kSeccompFilterSandboxAndroidName[];
+extern const char kSeccompFilterSandboxAndroidDescription[];
+
 extern const char kServiceWorkerPaymentAppsName[];
 extern const char kServiceWorkerPaymentAppsDescription[];
 
@@ -1396,13 +1399,6 @@ extern const char kPauseBackgroundTabsDescription[];
 
 extern const char kUseGoogleLocalNtpName[];
 extern const char kUseGoogleLocalNtpDescription[];
-
-extern const char kAccountConsistencyName[];
-extern const char kAccountConsistencyDescription[];
-
-// Choices for enable account consistency flag
-extern const char kAccountConsistencyChoiceMirror[];
-extern const char kAccountConsistencyChoiceDice[];
 
 #endif
 

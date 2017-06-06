@@ -8,10 +8,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include <memory>
 #include <string>
 
-#include "base/values.h"
 #include "components/sync/syncable/entry_kernel.h"
 #include "components/sync/syncable/syncable_base_transaction.h"
 
@@ -28,8 +26,8 @@ struct WriteTransactionInfo {
   WriteTransactionInfo(const WriteTransactionInfo& other);
   ~WriteTransactionInfo();
 
-  std::unique_ptr<base::DictionaryValue> ToValue(
-      size_t max_mutations_size) const;
+  // Caller owns the return value.
+  base::DictionaryValue* ToValue(size_t max_mutations_size) const;
 
   int64_t id;
   // If tracked_objects::Location becomes assignable, we can use that

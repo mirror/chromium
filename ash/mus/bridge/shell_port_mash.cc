@@ -136,7 +136,8 @@ void ShellPortMash::Shutdown() {
 
   ShellPort::Shutdown();
 
-  if (Shell::ShouldEnableSimplifiedDisplayManagement())
+  // TODO(sky): Config::MASH should use WindowTreeHostManager too.
+  if (GetAshConfig() == Config::MUS)
     Shell::Get()->window_tree_host_manager()->Shutdown();
   else
     window_manager_->DeleteAllRootWindowControllers();
@@ -147,7 +148,7 @@ Config ShellPortMash::GetAshConfig() const {
 }
 
 aura::Window* ShellPortMash::GetPrimaryRootWindow() {
-  if (Shell::ShouldEnableSimplifiedDisplayManagement())
+  if (GetAshConfig() == Config::MUS)
     return Shell::Get()->window_tree_host_manager()->GetPrimaryRootWindow();
   // NOTE: This is called before the RootWindowController has been created, so
   // it can't call through to RootWindowController to get all windows.
@@ -155,7 +156,7 @@ aura::Window* ShellPortMash::GetPrimaryRootWindow() {
 }
 
 aura::Window* ShellPortMash::GetRootWindowForDisplayId(int64_t display_id) {
-  if (Shell::ShouldEnableSimplifiedDisplayManagement()) {
+  if (GetAshConfig() == Config::MUS) {
     return Shell::Get()->window_tree_host_manager()->GetRootWindowForDisplayId(
         display_id);
   }
@@ -167,7 +168,8 @@ aura::Window* ShellPortMash::GetRootWindowForDisplayId(int64_t display_id) {
 
 const display::ManagedDisplayInfo& ShellPortMash::GetDisplayInfo(
     int64_t display_id) const {
-  if (Shell::ShouldEnableSimplifiedDisplayManagement())
+  // TODO(sky): mash should use this too http://crbug.com/718860.
+  if (GetAshConfig() == Config::MUS)
     return Shell::Get()->display_manager()->GetDisplayInfo(display_id);
 
   // TODO(mash): implement http://crbug.com/622480.
@@ -177,7 +179,8 @@ const display::ManagedDisplayInfo& ShellPortMash::GetDisplayInfo(
 }
 
 bool ShellPortMash::IsActiveDisplayId(int64_t display_id) const {
-  if (Shell::ShouldEnableSimplifiedDisplayManagement())
+  // TODO(sky): mash should use this too http://crbug.com/718860.
+  if (GetAshConfig() == Config::MUS)
     return Shell::Get()->display_manager()->IsActiveDisplayId(display_id);
 
   // TODO(mash): implement http://crbug.com/622480.
@@ -186,7 +189,8 @@ bool ShellPortMash::IsActiveDisplayId(int64_t display_id) const {
 }
 
 display::Display ShellPortMash::GetFirstDisplay() const {
-  if (Shell::ShouldEnableSimplifiedDisplayManagement()) {
+  // TODO(sky): mash should use this too http://crbug.com/718860.
+  if (GetAshConfig() == Config::MUS) {
     return Shell::Get()
         ->display_manager()
         ->software_mirroring_display_list()[0];
@@ -198,7 +202,8 @@ display::Display ShellPortMash::GetFirstDisplay() const {
 }
 
 bool ShellPortMash::IsInUnifiedMode() const {
-  if (Shell::ShouldEnableSimplifiedDisplayManagement())
+  // TODO(sky): mash should use this too http://crbug.com/718860.
+  if (GetAshConfig() == Config::MUS)
     return Shell::Get()->display_manager()->IsInUnifiedMode();
 
   // TODO(mash): implement http://crbug.com/622480.
@@ -207,7 +212,8 @@ bool ShellPortMash::IsInUnifiedMode() const {
 }
 
 bool ShellPortMash::IsInUnifiedModeIgnoreMirroring() const {
-  if (Shell::ShouldEnableSimplifiedDisplayManagement()) {
+  // TODO(sky): mash should use this too http://crbug.com/718860.
+  if (GetAshConfig() == Config::MUS) {
     return Shell::Get()
                ->display_manager()
                ->current_default_multi_display_mode() ==
@@ -221,7 +227,7 @@ bool ShellPortMash::IsInUnifiedModeIgnoreMirroring() const {
 
 void ShellPortMash::SetDisplayWorkAreaInsets(aura::Window* window,
                                              const gfx::Insets& insets) {
-  if (Shell::ShouldEnableSimplifiedDisplayManagement()) {
+  if (GetAshConfig() == Config::MUS) {
     Shell::Get()
         ->window_tree_host_manager()
         ->UpdateWorkAreaOfDisplayNearestWindow(window, insets);
@@ -265,7 +271,7 @@ bool ShellPortMash::IsMouseEventsEnabled() {
 }
 
 std::vector<aura::Window*> ShellPortMash::GetAllRootWindows() {
-  if (Shell::ShouldEnableSimplifiedDisplayManagement())
+  if (GetAshConfig() == Config::MUS)
     return Shell::Get()->window_tree_host_manager()->GetAllRootWindows();
 
   aura::Window::Windows root_windows;
@@ -337,7 +343,7 @@ ShellPortMash::CreateMaximizeModeEventHandler() {
 
 std::unique_ptr<ScopedDisableInternalMouseAndKeyboard>
 ShellPortMash::CreateScopedDisableInternalMouseAndKeyboard() {
-  if (Shell::ShouldEnableSimplifiedDisplayManagement()) {
+  if (GetAshConfig() == Config::MUS) {
 #if defined(USE_OZONE)
     return base::MakeUnique<ScopedDisableInternalMouseAndKeyboardOzone>();
 #else
@@ -383,8 +389,9 @@ std::unique_ptr<KeyEventWatcher> ShellPortMash::CreateKeyEventWatcher() {
 }
 
 void ShellPortMash::AddDisplayObserver(WmDisplayObserver* observer) {
-  // TODO(sky): WmDisplayObserver should be removed; http://crbug.com/718860.
-  if (!Shell::ShouldEnableSimplifiedDisplayManagement()) {
+  // TODO(sky): mash should use the same code as mus/classic and
+  // WmDisplayObserver should be removed; http://crbug.com/718860.
+  if (GetAshConfig() == Config::MASH) {
     NOTIMPLEMENTED();
     return;
   }
@@ -396,8 +403,9 @@ void ShellPortMash::AddDisplayObserver(WmDisplayObserver* observer) {
 }
 
 void ShellPortMash::RemoveDisplayObserver(WmDisplayObserver* observer) {
-  // TODO(sky): WmDisplayObserver should be removed; http://crbug.com/718860.
-  if (!Shell::ShouldEnableSimplifiedDisplayManagement()) {
+  // TODO(sky): mash should use the same code as mus/classic and
+  // WmDisplayObserver should be removed; http://crbug.com/718860.
+  if (GetAshConfig() == Config::MASH) {
     NOTIMPLEMENTED();
     return;
   }
@@ -512,9 +520,10 @@ void ShellPortMash::OnCreatedRootWindowContainers(
 }
 
 void ShellPortMash::CreatePrimaryHost() {
-  if (!Shell::ShouldEnableSimplifiedDisplayManagement())
+  if (GetAshConfig() == Config::MASH)
     return;
 
+  DCHECK_EQ(Config::MUS, GetAshConfig());
   Shell::Get()->window_tree_host_manager()->Start();
   AshWindowTreeHostInitParams ash_init_params;
   Shell::Get()->window_tree_host_manager()->CreatePrimaryHost(ash_init_params);

@@ -743,18 +743,7 @@ void SVGElement::ParseAttribute(const AttributeModificationParams& params) {
   }
 }
 
-// If the attribute is not present in the map, the map will return the "empty
-// value" - which is kAnimatedUnknown.
-struct AnimatedPropertyTypeHashTraits : HashTraits<AnimatedPropertyType> {
-  static const bool kEmptyValueIsZero = true;
-  static AnimatedPropertyType EmptyValue() { return kAnimatedUnknown; }
-};
-
-using AttributeToPropertyTypeMap = HashMap<QualifiedName,
-                                           AnimatedPropertyType,
-                                           DefaultHash<QualifiedName>::Hash,
-                                           HashTraits<QualifiedName>,
-                                           AnimatedPropertyTypeHashTraits>;
+typedef HashMap<QualifiedName, AnimatedPropertyType> AttributeToPropertyTypeMap;
 AnimatedPropertyType SVGElement::AnimatedPropertyTypeForCSSAttribute(
     const QualifiedName& attribute_name) {
   DEFINE_STATIC_LOCAL(AttributeToPropertyTypeMap, css_property_map, ());
@@ -823,6 +812,9 @@ AnimatedPropertyType SVGElement::AnimatedPropertyTypeForCSSAttribute(
     for (size_t i = 0; i < WTF_ARRAY_LENGTH(attr_to_types); i++)
       css_property_map.Set(attr_to_types[i].attr, attr_to_types[i].prop_type);
   }
+  // If the attribute is not present in the map, this will return the "empty
+  // value" per HashTraits - which is AnimatedUnknown.
+  DCHECK_EQ(HashTraits<AnimatedPropertyType>::EmptyValue(), kAnimatedUnknown);
   return css_property_map.at(attribute_name);
 }
 

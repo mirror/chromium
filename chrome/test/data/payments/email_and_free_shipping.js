@@ -10,49 +10,32 @@
  * Launches the PaymentRequest UI that requests an email address and offers free
  * shipping worldwide.
  */
-function buy() { // eslint-disable-line no-unused-vars
+function buy() {  // eslint-disable-line no-unused-vars
   try {
-    const details = {
-      total: {
-        label: 'Total',
-        amount: {
-          currency: 'USD',
-          value: '5.00'
-        }
-      },
-      shippingOptions: [{
-        id: 'freeShippingOption',
-        label: 'Free global shipping',
-        amount: {
-          currency: 'USD',
-          value: '0'
+    var request = new PaymentRequest(
+        [{supportedMethods: ['visa']}], {
+          total: {label: 'Total', amount: {currency: 'USD', value: '5.00'}},
+          shippingOptions: [{
+            id: 'freeShippingOption',
+            label: 'Free global shipping',
+            amount: {currency: 'USD', value: '0'},
+            selected: true
+          }]
         },
-        selected: true
-      }]
-    };
-    const request = new PaymentRequest(
-      [{
-        supportedMethods: ['visa']
-      }], details, {
-        requestPayerEmail: true,
-        requestShipping: true
-      });
-    request.addEventListener('shippingaddresschange', function(e) {
-      e.updateWith(details);
-    });
+        {requestPayerEmail: true, requestShipping: true});
     request.show()
-      .then(function(resp) {
-        resp.complete('success')
-          .then(function() {
-            print(JSON.stringify(resp, undefined, 2));
-          })
-          .catch(function(error) {
-            print(error);
-          });
-      })
-      .catch(function(error) {
-        print(error);
-      });
+        .then(function(resp) {
+          resp.complete('success')
+              .then(function() {
+                print(JSON.stringify(resp, undefined, 2));
+              })
+              .catch(function(error) {
+                print(error);
+              });
+        })
+        .catch(function(error) {
+          print(error);
+        });
   } catch (error) {
     print(error.message);
   }

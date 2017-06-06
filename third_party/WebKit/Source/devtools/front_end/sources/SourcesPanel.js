@@ -692,7 +692,7 @@ Sources.SourcesPanel = class extends UI.Panel {
   _createDebugToolbarDrawer() {
     var debugToolbarDrawer = createElementWithClass('div', 'scripts-debug-toolbar-drawer');
 
-    var label = Common.UIString('Pause on caught exceptions');
+    var label = Common.UIString('Pause On Caught Exceptions');
     var setting = Common.moduleSetting('pauseOnCaughtException');
     debugToolbarDrawer.appendChild(UI.SettingsUI.createSettingCheckbox(label, setting, true));
 
@@ -1056,7 +1056,7 @@ Sources.SourcesPanel = class extends UI.Panel {
       this._sidebarPaneStack.showView(jsBreakpoints);
       this._extensionSidebarPanesContainer = this._sidebarPaneStack;
       this.sidebarPaneView = vbox;
-      this._splitWidget.uninstallResizer(this._debugToolbar.gripElementForResize());
+      this._splitWidget.uninstallResizer(this._debugToolbar.element);
     } else {
       var splitWidget = new UI.SplitWidget(true, true, 'sourcesPanelDebuggerSidebarSplitViewState', 0.5);
       splitWidget.setMainWidget(vbox);
@@ -1068,7 +1068,7 @@ Sources.SourcesPanel = class extends UI.Panel {
       splitWidget.setSidebarWidget(tabbedLocation.tabbedPane());
       this._tabbedLocationHeader = tabbedLocation.tabbedPane().headerElement();
       this._splitWidget.installResizer(this._tabbedLocationHeader);
-      this._splitWidget.installResizer(this._debugToolbar.gripElementForResize());
+      this._splitWidget.installResizer(this._debugToolbar.element);
       tabbedLocation.appendView(scopeChainView);
       tabbedLocation.appendView(this._watchSidebarPane);
       this._extensionSidebarPanesContainer = tabbedLocation;

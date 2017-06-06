@@ -13,7 +13,6 @@
 #include "base/time/time.h"
 #include "ui/gfx/range/range.h"
 
-class BrandcodedDefaultSettings;
 class Browser;
 
 namespace safe_browsing {
@@ -29,9 +28,8 @@ class SettingsResetPromptController {
  public:
   // A controller should be created only if |model->ShouldPromptforReset()|
   // is true.
-  SettingsResetPromptController(
-      std::unique_ptr<SettingsResetPromptModel> model,
-      std::unique_ptr<BrandcodedDefaultSettings> default_settings);
+  explicit SettingsResetPromptController(
+      std::unique_ptr<SettingsResetPromptModel> model);
 
   static void ShowSettingsResetPrompt(
       Browser* browser,
@@ -67,7 +65,6 @@ class SettingsResetPromptController {
   void OnInteractionDone();
 
   std::unique_ptr<SettingsResetPromptModel> model_;
-  std::unique_ptr<BrandcodedDefaultSettings> default_settings_;
   base::string16 main_text_;
   gfx::Range main_text_url_range_;
 

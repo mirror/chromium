@@ -62,14 +62,15 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
     return list;
   }
 
-  using NamedNodeListKey = std::pair<CollectionType, AtomicString>;
   struct NodeListAtomicCacheMapEntryHash {
     STATIC_ONLY(NodeListAtomicCacheMapEntryHash);
-    static unsigned GetHash(const NamedNodeListKey& entry) {
+    static unsigned GetHash(
+        const std::pair<unsigned char, AtomicString>& entry) {
       return DefaultHash<AtomicString>::Hash::GetHash(entry.second) +
              entry.first;
     }
-    static bool Equal(const NamedNodeListKey& a, const NamedNodeListKey& b) {
+    static bool Equal(const std::pair<unsigned char, AtomicString>& a,
+                      const std::pair<unsigned char, AtomicString>& b) {
       return a == b;
     }
     static const bool safe_to_compare_to_empty_or_deleted =
@@ -78,7 +79,7 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
 
   // Oilpan: keep a weak reference to the collection objects.
   // Object unregistration is handled by GC's weak processing.
-  typedef HeapHashMap<NamedNodeListKey,
+  typedef HeapHashMap<std::pair<unsigned char, AtomicString>,
                       WeakMember<LiveNodeListBase>,
                       NodeListAtomicCacheMapEntryHash>
       NodeListAtomicNameCacheMap;
@@ -91,7 +92,7 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
               const AtomicString& name) {
     DCHECK(ThreadState::Current()->IsGCForbidden());
     NodeListAtomicNameCacheMap::AddResult result = atomic_name_caches_.insert(
-        std::make_pair(collection_type, name), nullptr);
+        NamedNodeListKey(collection_type, name), nullptr);
     if (!result.is_new_entry) {
       return static_cast<T*>(result.stored_value->value.Get());
     }
@@ -179,6 +180,12 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
 
  private:
   NodeListsNodeData() : child_node_list_(nullptr) {}
+
+  std::pair<unsigned char, AtomicString> NamedNodeListKey(
+      CollectionType type,
+      const AtomicString& name) {
+    return std::pair<unsigned char, AtomicString>(type, name);
+  }
 
   // Can be a ChildNodeList or an EmptyNodeList.
   WeakMember<NodeList> child_node_list_;

@@ -4,6 +4,8 @@
 
 #include "components/sync/engine/events/protocol_event.h"
 
+#include <utility>
+
 #include "base/memory/ptr_util.h"
 
 namespace syncer {

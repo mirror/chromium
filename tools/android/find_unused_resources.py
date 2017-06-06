@@ -54,14 +54,8 @@ def GetUsedResources(source_paths, resource_types):
     [('drawable', 'app_icon'), ('layout', 'month_picker'), ...]
   """
   type_regex = '|'.join(map(re.escape, resource_types))
-  patterns = [
-      # @+drawable/id and @drawable/id
-      r'@((\+?))(%s)/(\w+)' % type_regex,
-      # package.R.style.id
-      r'\b((\w+\.)*)R\.(%s)\.(\w+)' % type_regex,
-      # <style name="child" parent="id">
-      r'<(())(%s).*parent="(\w+)">' % type_regex,
-  ]
+  patterns = [r'@((\+?))(%s)/(\w+)' % type_regex,
+              r'\b((\w+\.)*)R\.(%s)\.(\w+)' % type_regex]
   resources = []
   for pattern in patterns:
     p = subprocess.Popen(

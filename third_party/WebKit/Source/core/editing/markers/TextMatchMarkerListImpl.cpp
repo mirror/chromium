@@ -57,23 +57,24 @@ DEFINE_TRACE(TextMatchMarkerListImpl) {
   DocumentMarkerList::Trace(visitor);
 }
 
-static void UpdateMarkerLayoutRect(const Node& node, TextMatchMarker& marker) {
+static void UpdateMarkerRenderedRect(const Node& node,
+                                     TextMatchMarker& marker) {
   const Position start_position(&const_cast<Node&>(node), marker.StartOffset());
   const Position end_position(&const_cast<Node&>(node), marker.EndOffset());
   EphemeralRange range(start_position, end_position);
-  marker.SetLayoutRect(LayoutRect(ComputeTextRect(range)));
+  marker.SetRenderedRect(LayoutRect(ComputeTextRect(range)));
 }
 
-Vector<IntRect> TextMatchMarkerListImpl::LayoutRects(const Node& node) const {
+Vector<IntRect> TextMatchMarkerListImpl::RenderedRects(const Node& node) const {
   Vector<IntRect> result;
 
   for (DocumentMarker* marker : markers_) {
     TextMatchMarker* const text_match_marker = ToTextMatchMarker(marker);
     if (!text_match_marker->IsValid())
-      UpdateMarkerLayoutRect(node, *text_match_marker);
+      UpdateMarkerRenderedRect(node, *text_match_marker);
     if (!text_match_marker->IsRendered())
       continue;
-    result.push_back(text_match_marker->GetLayoutRect());
+    result.push_back(text_match_marker->RenderedRect());
   }
 
   return result;

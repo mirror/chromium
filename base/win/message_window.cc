@@ -73,7 +73,7 @@ MessageWindow::MessageWindow()
 }
 
 MessageWindow::~MessageWindow() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
 
   if (window_ != NULL) {
     BOOL result = DestroyWindow(window_);
@@ -98,7 +98,7 @@ HWND MessageWindow::FindWindow(const string16& window_name) {
 
 bool MessageWindow::DoCreate(MessageCallback message_callback,
                              const wchar_t* window_name) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(message_callback_.is_null());
   DCHECK(!window_);
 

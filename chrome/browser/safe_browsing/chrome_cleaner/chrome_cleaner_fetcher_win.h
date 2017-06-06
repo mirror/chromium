@@ -16,8 +16,6 @@ namespace safe_browsing {
 using ChromeCleanerFetchedCallback =
     base::OnceCallback<void(base::FilePath, int /*http response code*/)>;
 
-// Fetches the Chrome Cleaner binary. This function can be called from any
-// sequence and |fetched_callback| will be called back on that same sequence.
 void FetchChromeCleaner(ChromeCleanerFetchedCallback fetched_callback);
 
 }  // namespace safe_browsing

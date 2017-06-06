@@ -186,7 +186,6 @@ class CORE_EXPORT FrameLoader final {
   // returns NavigationPolicyCurrentTab.
   NavigationPolicy ShouldContinueForNavigationPolicy(
       const ResourceRequest&,
-      Document* origin_document,
       const SubstituteData&,
       DocumentLoader*,
       ContentSecurityPolicyDisposition,

@@ -29,9 +29,7 @@ bool FocusManager::arrow_key_traversal_enabled_ = false;
 
 FocusManager::FocusManager(Widget* widget,
                            std::unique_ptr<FocusManagerDelegate> delegate)
-    : widget_(widget),
-      delegate_(std::move(delegate)),
-      view_tracker_for_stored_view_(base::MakeUnique<ViewTracker>()) {
+    : widget_(widget), delegate_(std::move(delegate)) {
   DCHECK(widget_);
 }
 
@@ -423,11 +421,23 @@ bool FocusManager::RestoreFocusedView() {
 }
 
 void FocusManager::SetStoredFocusView(View* focus_view) {
-  view_tracker_for_stored_view_->SetView(focus_view);
+  if (focus_view == GetStoredFocusView())
+    return;
+  view_tracker_for_stored_view_.reset();
+  if (!focus_view)
+    return;
+
+  view_tracker_for_stored_view_ = base::MakeUnique<ViewTracker>();
+  view_tracker_for_stored_view_->Add(focus_view);
 }
 
 View* FocusManager::GetStoredFocusView() {
-  return view_tracker_for_stored_view_->view();
+  if (!view_tracker_for_stored_view_ ||
+      view_tracker_for_stored_view_->views().empty()) {
+    return nullptr;
+  }
+  DCHECK_EQ(1u, view_tracker_for_stored_view_->views().size());
+  return view_tracker_for_stored_view_->views()[0];
 }
 
 // Find the next (previous if reverse is true) focusable view for the specified
@@ -550,6 +560,12 @@ void FocusManager::OnViewIsDeleting(View* view) {
   // such that ViewRemoved() is never called.
   CHECK_EQ(view, focused_view_);
   SetFocusedView(nullptr);
+  if (GetStoredFocusView() == view) {
+    // SetFocusedView() stored |view|. As |view| is being deleting and because
+    // a ViewObserver was just added, ViewTracker won't get
+    // OnViewIsDeleting() to properly clean up. Force that cleanup by
+    SetStoredFocusView(nullptr);
+  }
 }
 
 }  // namespace views

@@ -38,6 +38,23 @@ namespace {
 
 const QuicStreamId kTestStreamId = 5u;
 
+class MockDelegate : public QuicChromiumClientStream::Delegate {
+ public:
+  MockDelegate() {}
+
+  MOCK_METHOD0(OnSendData, int());
+  MOCK_METHOD2(OnSendDataComplete, int(int, bool*));
+  MOCK_METHOD0(OnClose, void());
+  MOCK_METHOD1(OnError, void(int));
+  MOCK_METHOD0(HasSendHeadersComplete, bool());
+
+  SpdyHeaderBlock headers_;
+  SpdyHeaderBlock trailers_;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MockDelegate);
+};
+
 class MockQuicClientSessionBase : public QuicClientSessionBase {
  public:
   explicit MockQuicClientSessionBase(QuicConnection* connection,
@@ -166,7 +183,7 @@ class QuicChromiumClientStreamTest
     stream_ = new QuicChromiumClientStream(kTestStreamId, &session_,
                                            NetLogWithSource());
     session_.ActivateStream(base::WrapUnique(stream_));
-    handle_ = stream_->CreateHandle();
+    handle_ = stream_->CreateHandle(&delegate_);
   }
 
   void InitializeHeaders() {
@@ -222,9 +239,10 @@ class QuicChromiumClientStreamTest
   QuicHeaderList ProcessHeadersFull(const SpdyHeaderBlock& headers) {
     QuicHeaderList h = ProcessHeaders(headers);
     TestCompletionCallback callback;
-    EXPECT_EQ(static_cast<int>(h.uncompressed_header_bytes()),
-              handle_->ReadInitialHeaders(&headers_, callback.callback()));
-    EXPECT_EQ(headers, headers_);
+    EXPECT_EQ(
+        static_cast<int>(h.uncompressed_header_bytes()),
+        handle_->ReadInitialHeaders(&delegate_.headers_, callback.callback()));
+    EXPECT_EQ(headers, delegate_.headers_);
     EXPECT_TRUE(stream_->header_list().empty());
     return h;
   }
@@ -243,13 +261,14 @@ class QuicChromiumClientStreamTest
 
   QuicCryptoClientConfig crypto_config_;
   std::unique_ptr<QuicChromiumClientStream::Handle> handle_;
+  testing::StrictMock<MockDelegate> delegate_;
   std::unique_ptr<QuicChromiumClientStream::Handle> handle2_;
+  testing::StrictMock<MockDelegate> delegate2_;
   MockQuicConnectionHelper helper_;
   MockAlarmFactory alarm_factory_;
   MockQuicClientSessionBase session_;
   QuicChromiumClientStream* stream_;
   SpdyHeaderBlock headers_;
-  SpdyHeaderBlock trailers_;
   QuicClientPushPromiseIndex push_promise_index_;
 };
 
@@ -274,6 +293,7 @@ TEST_P(QuicChromiumClientStreamTest, Handle) {
   QuicStreamOffset offset = 0;
   ProcessHeadersFull(headers_);
   QuicStreamFrame frame2(kTestStreamId, true, offset, QuicStringPiece());
+  EXPECT_CALL(delegate_, OnClose());
   stream_->OnStreamFrame(frame2);
   EXPECT_TRUE(handle_->fin_received());
   handle_->OnFinRead();
@@ -312,10 +332,12 @@ TEST_P(QuicChromiumClientStreamTest, Handle) {
       handle_->WritevStreamData(buffers, lengths, true, callback.callback()));
 
   SpdyHeaderBlock headers;
-  EXPECT_EQ(0, handle_->WriteHeaders(std::move(headers), true, nullptr));
+  EXPECT_EQ(0u, handle_->WriteHeaders(std::move(headers), true, nullptr));
 }
 
 TEST_P(QuicChromiumClientStreamTest, HandleAfterConnectionClose) {
+  // Verify that the delegate's OnClose is called after closing the connection.
+  EXPECT_CALL(delegate_, OnClose());
   EXPECT_CALL(session_,
               SendRstStream(kTestStreamId, QUIC_RST_ACKNOWLEDGEMENT, 0));
   stream_->OnConnectionClosed(QUIC_INVALID_FRAME_DATA,
@@ -326,7 +348,24 @@ TEST_P(QuicChromiumClientStreamTest, HandleAfterConnectionClose) {
 }
 
 TEST_P(QuicChromiumClientStreamTest, HandleAfterStreamReset) {
-  // Verify that the Handle still behaves correctly after the stream is reset.
+  // Verify that the delegate's OnClose is called after the stream is reset,
+  // but that the Handle still behaves correctly.
+  EXPECT_CALL(delegate_, OnClose());
+  QuicRstStreamFrame rst(kTestStreamId, QUIC_STREAM_CANCELLED, 0);
+  EXPECT_CALL(session_,
+              SendRstStream(kTestStreamId, QUIC_RST_ACKNOWLEDGEMENT, 0));
+  stream_->OnStreamReset(rst);
+
+  EXPECT_FALSE(handle_->IsOpen());
+  EXPECT_EQ(QUIC_STREAM_CANCELLED, handle_->stream_error());
+}
+
+TEST_P(QuicChromiumClientStreamTest, HandleAfterClearDelegate) {
+  EXPECT_TRUE(handle_->IsOpen());
+  handle_->ClearDelegate();
+
+  // Verify that the delegate's OnClose is not called after ClearDelegate.
+  EXPECT_CALL(delegate_, OnClose()).Times(0);
   QuicRstStreamFrame rst(kTestStreamId, QUIC_STREAM_CANCELLED, 0);
   EXPECT_CALL(session_,
               SendRstStream(kTestStreamId, QUIC_RST_ACKNOWLEDGEMENT, 0));
@@ -341,6 +380,7 @@ TEST_P(QuicChromiumClientStreamTest, OnFinRead) {
   QuicStreamOffset offset = 0;
   ProcessHeadersFull(headers_);
   QuicStreamFrame frame2(kTestStreamId, true, offset, QuicStringPiece());
+  EXPECT_CALL(delegate_, OnClose());
   stream_->OnStreamFrame(frame2);
 }
 
@@ -359,6 +399,8 @@ TEST_P(QuicChromiumClientStreamTest, OnDataAvailable) {
   EXPECT_EQ(data_len,
             handle_->ReadBody(buffer.get(), 2 * data_len, callback.callback()));
   EXPECT_EQ(QuicStringPiece(data), QuicStringPiece(buffer->data(), data_len));
+
+  EXPECT_CALL(delegate_, OnClose());
 }
 
 TEST_P(QuicChromiumClientStreamTest, OnDataAvailableAfterReadBody) {
@@ -380,6 +422,8 @@ TEST_P(QuicChromiumClientStreamTest, OnDataAvailableAfterReadBody) {
   EXPECT_EQ(data_len, callback.WaitForResult());
   EXPECT_EQ(QuicStringPiece(data), QuicStringPiece(buffer->data(), data_len));
   base::RunLoop().RunUntilIdle();
+
+  EXPECT_CALL(delegate_, OnClose());
 }
 
 TEST_P(QuicChromiumClientStreamTest, ProcessHeadersWithError) {
@@ -393,6 +437,8 @@ TEST_P(QuicChromiumClientStreamTest, ProcessHeadersWithError) {
                               headers);
 
   base::RunLoop().RunUntilIdle();
+
+  EXPECT_CALL(delegate_, OnClose());
 }
 
 TEST_P(QuicChromiumClientStreamTest, OnDataAvailableWithError) {
@@ -418,10 +464,12 @@ TEST_P(QuicChromiumClientStreamTest, OnDataAvailableWithError) {
                                          /*offset=*/0, data));
 
   base::RunLoop().RunUntilIdle();
+
+  EXPECT_CALL(delegate_, OnClose());
 }
 
 TEST_P(QuicChromiumClientStreamTest, OnError) {
-  //  EXPECT_CALL(delegate_, OnError(ERR_INTERNET_DISCONNECTED)).Times(1);
+  EXPECT_CALL(delegate_, OnError(ERR_INTERNET_DISCONNECTED)).Times(1);
 
   stream_->OnError(ERR_INTERNET_DISCONNECTED);
   stream_->OnError(ERR_INTERNET_DISCONNECTED);
@@ -450,9 +498,9 @@ TEST_P(QuicChromiumClientStreamTest, OnTrailers) {
   auto t = ProcessTrailers(trailers);
 
   TestCompletionCallback trailers_callback;
-  EXPECT_EQ(
-      static_cast<int>(t.uncompressed_header_bytes()),
-      handle_->ReadTrailingHeaders(&trailers_, trailers_callback.callback()));
+  EXPECT_EQ(static_cast<int>(t.uncompressed_header_bytes()),
+            handle_->ReadTrailingHeaders(&delegate_.trailers_,
+                                         trailers_callback.callback()));
 
   // Read the body and verify that it arrives correctly.
   EXPECT_EQ(0,
@@ -460,8 +508,9 @@ TEST_P(QuicChromiumClientStreamTest, OnTrailers) {
 
   // Make sure kFinalOffsetHeaderKey is gone from the delivered actual trailers.
   trailers.erase(kFinalOffsetHeaderKey);
-  EXPECT_EQ(trailers, trailers_);
+  EXPECT_EQ(trailers, delegate_.trailers_);
   base::RunLoop().RunUntilIdle();
+  EXPECT_CALL(delegate_, OnClose());
 }
 
 // Tests that trailers are marked as consumed only before delegate is to be
@@ -493,8 +542,9 @@ TEST_P(QuicChromiumClientStreamTest, MarkTrailersConsumedWhenNotifyDelegate) {
   QuicHeaderList t = ProcessTrailers(trailers);
   EXPECT_FALSE(stream_->IsDoneReading());
 
-  EXPECT_EQ(static_cast<int>(t.uncompressed_header_bytes()),
-            handle_->ReadTrailingHeaders(&trailers_, callback.callback()));
+  EXPECT_EQ(
+      static_cast<int>(t.uncompressed_header_bytes()),
+      handle_->ReadTrailingHeaders(&delegate_.trailers_, callback.callback()));
 
   // Read the body and verify that it arrives correctly.
   EXPECT_EQ(0, callback.WaitForResult());
@@ -504,9 +554,10 @@ TEST_P(QuicChromiumClientStreamTest, MarkTrailersConsumedWhenNotifyDelegate) {
   EXPECT_TRUE(stream_->IsDoneReading());
   // Make sure kFinalOffsetHeaderKey is gone from the delivered actual trailers.
   trailers.erase(kFinalOffsetHeaderKey);
-  EXPECT_EQ(trailers, trailers_);
+  EXPECT_EQ(trailers, delegate_.trailers_);
 
   base::RunLoop().RunUntilIdle();
+  EXPECT_CALL(delegate_, OnClose());
 }
 
 // Test that if Read() is called after response body is read and after trailers
@@ -545,8 +596,9 @@ TEST_P(QuicChromiumClientStreamTest, ReadAfterTrailersReceivedButNotDelivered) {
   EXPECT_FALSE(stream_->IsDoneReading());
 
   TestCompletionCallback callback2;
-  EXPECT_EQ(static_cast<int>(t.uncompressed_header_bytes()),
-            handle_->ReadTrailingHeaders(&trailers_, callback2.callback()));
+  EXPECT_EQ(
+      static_cast<int>(t.uncompressed_header_bytes()),
+      handle_->ReadTrailingHeaders(&delegate_.trailers_, callback2.callback()));
 
   // Read the body and verify that it arrives correctly.
   // OnDataAvailable() should follow right after and Read() will return 0.
@@ -558,12 +610,15 @@ TEST_P(QuicChromiumClientStreamTest, ReadAfterTrailersReceivedButNotDelivered) {
 
   // Make sure kFinalOffsetHeaderKey is gone from the delivered actual trailers.
   trailers.erase(kFinalOffsetHeaderKey);
-  EXPECT_EQ(trailers, trailers_);
+  EXPECT_EQ(trailers, delegate_.trailers_);
 
   base::RunLoop().RunUntilIdle();
+  EXPECT_CALL(delegate_, OnClose());
 }
 
 TEST_P(QuicChromiumClientStreamTest, WriteStreamData) {
+  EXPECT_CALL(delegate_, OnClose());
+
   const char kData1[] = "hello world";
   const size_t kDataLen = arraysize(kData1);
 
@@ -576,6 +631,9 @@ TEST_P(QuicChromiumClientStreamTest, WriteStreamData) {
 }
 
 TEST_P(QuicChromiumClientStreamTest, WriteStreamDataAsync) {
+  EXPECT_CALL(delegate_, HasSendHeadersComplete()).Times(AnyNumber());
+  EXPECT_CALL(delegate_, OnClose());
+
   const char kData1[] = "hello world";
   const size_t kDataLen = arraysize(kData1);
 
@@ -597,6 +655,8 @@ TEST_P(QuicChromiumClientStreamTest, WriteStreamDataAsync) {
 }
 
 TEST_P(QuicChromiumClientStreamTest, WritevStreamData) {
+  EXPECT_CALL(delegate_, OnClose());
+
   scoped_refptr<StringIOBuffer> buf1(new StringIOBuffer("hello world!"));
   scoped_refptr<StringIOBuffer> buf2(
       new StringIOBuffer("Just a small payload"));
@@ -612,6 +672,9 @@ TEST_P(QuicChromiumClientStreamTest, WritevStreamData) {
 }
 
 TEST_P(QuicChromiumClientStreamTest, WritevStreamDataAsync) {
+  EXPECT_CALL(delegate_, HasSendHeadersComplete()).Times(AnyNumber());
+  EXPECT_CALL(delegate_, OnClose());
+
   scoped_refptr<StringIOBuffer> buf1(new StringIOBuffer("hello world!"));
   scoped_refptr<StringIOBuffer> buf2(
       new StringIOBuffer("Just a small payload"));
@@ -637,7 +700,7 @@ TEST_P(QuicChromiumClientStreamTest, WritevStreamDataAsync) {
   EXPECT_THAT(callback.WaitForResult(), IsOk());
 }
 
-TEST_P(QuicChromiumClientStreamTest, HeadersBeforeHandle) {
+TEST_P(QuicChromiumClientStreamTest, HeadersBeforeDelegate) {
   // We don't use stream_ because we want an incoming server push
   // stream.
   QuicStreamId stream_id = GetNthServerInitiatedStreamId(0);
@@ -651,16 +714,22 @@ TEST_P(QuicChromiumClientStreamTest, HeadersBeforeHandle) {
   QuicHeaderList header_list = AsHeaderList(headers_);
   stream2->OnStreamHeaderList(true, header_list.uncompressed_header_bytes(),
                               header_list);
+  EXPECT_TRUE(delegate2_.headers_.empty());
 
   // Now set the delegate and verify that the headers are delivered.
-  handle2_ = stream2->CreateHandle();
+  handle2_ = stream2->CreateHandle(&delegate2_);
   TestCompletionCallback callback;
-  EXPECT_EQ(static_cast<int>(header_list.uncompressed_header_bytes()),
-            handle2_->ReadInitialHeaders(&headers_, callback.callback()));
-  EXPECT_EQ(headers_, headers_);
+  EXPECT_EQ(
+      static_cast<int>(header_list.uncompressed_header_bytes()),
+      handle2_->ReadInitialHeaders(&delegate2_.headers_, callback.callback()));
+  EXPECT_EQ(headers_, delegate2_.headers_);
+
+  // Both delegates should be notified that theirs streams are closed.
+  EXPECT_CALL(delegate2_, OnClose());
+  EXPECT_CALL(delegate_, OnClose());
 }
 
-TEST_P(QuicChromiumClientStreamTest, HeadersAndDataBeforeHandle) {
+TEST_P(QuicChromiumClientStreamTest, HeadersAndDataBeforeDelegate) {
   // We don't use stream_ because we want an incoming server push
   // stream.
   QuicStreamId stream_id = GetNthServerInitiatedStreamId(0);
@@ -674,17 +743,19 @@ TEST_P(QuicChromiumClientStreamTest, HeadersAndDataBeforeHandle) {
   QuicHeaderList header_list = AsHeaderList(headers_);
   stream2->OnStreamHeaderList(false, header_list.uncompressed_header_bytes(),
                               header_list);
+  EXPECT_TRUE(delegate2_.headers_.empty());
   const char data[] = "hello world!";
   stream2->OnStreamFrame(QuicStreamFrame(stream_id, /*fin=*/false,
                                          /*offset=*/0, data));
 
   // Now set the delegate and verify that the headers are delivered, but
   // not the data, which needs to be read explicitly.
-  handle2_ = stream2->CreateHandle();
+  handle2_ = stream2->CreateHandle(&delegate2_);
   TestCompletionCallback callback;
-  EXPECT_EQ(static_cast<int>(header_list.uncompressed_header_bytes()),
-            handle2_->ReadInitialHeaders(&headers_, callback.callback()));
-  EXPECT_EQ(headers_, headers_);
+  EXPECT_EQ(
+      static_cast<int>(header_list.uncompressed_header_bytes()),
+      handle2_->ReadInitialHeaders(&delegate2_.headers_, callback.callback()));
+  EXPECT_EQ(headers_, delegate2_.headers_);
   base::RunLoop().RunUntilIdle();
 
   // Now explicitly read the data.
@@ -692,6 +763,10 @@ TEST_P(QuicChromiumClientStreamTest, HeadersAndDataBeforeHandle) {
   scoped_refptr<IOBuffer> buffer(new IOBuffer(data_len + 1));
   ASSERT_EQ(data_len, stream2->Read(buffer.get(), data_len + 1));
   EXPECT_EQ(QuicStringPiece(data), QuicStringPiece(buffer->data(), data_len));
+
+  // Both delegates should be notified that theirs streams are closed.
+  EXPECT_CALL(delegate2_, OnClose());
+  EXPECT_CALL(delegate_, OnClose());
 }
 
 }  // namespace

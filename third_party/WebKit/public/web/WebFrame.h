@@ -65,6 +65,7 @@ class WebLocalFrame;
 class WebPerformance;
 class WebRemoteFrame;
 class WebSecurityOrigin;
+class WebSharedWorkerRepositoryClient;
 class WebString;
 class WebURL;
 class WebURLRequest;
@@ -134,6 +135,10 @@ class WebFrame {
   // URLs
   virtual WebVector<WebIconURL> IconURLs(int icon_types_mask) const = 0;
 
+  // Initializes the various client interfaces.
+  virtual void SetSharedWorkerRepositoryClient(
+      WebSharedWorkerRepositoryClient*) = 0;
+
   // The security origin of this frame.
   BLINK_EXPORT WebSecurityOrigin GetSecurityOrigin() const;
 
@@ -159,6 +164,9 @@ class WebFrame {
 
   // NOTE: These routines do not force page layout so their results may
   // not be accurate if the page layout is out-of-date.
+
+  // If set to false, do not draw scrollbars on this frame's view.
+  virtual void SetCanHaveScrollbars(bool) = 0;
 
   // The scroll offset from the top-left corner of the frame in pixels.
   virtual WebSize GetScrollOffset() const = 0;

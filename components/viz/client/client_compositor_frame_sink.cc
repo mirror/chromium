@@ -9,7 +9,6 @@
 #include "cc/output/begin_frame_args.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/output/compositor_frame_sink_client.h"
-#include "components/viz/client/local_surface_id_provider.h"
 
 namespace viz {
 
@@ -21,13 +20,11 @@ ClientCompositorFrameSink::ClientCompositorFrameSink(
     std::unique_ptr<cc::SyntheticBeginFrameSource> synthetic_begin_frame_source,
     cc::mojom::MojoCompositorFrameSinkPtrInfo compositor_frame_sink_info,
     cc::mojom::MojoCompositorFrameSinkClientRequest client_request,
-    std::unique_ptr<LocalSurfaceIdProvider> local_surface_id_provider,
     bool enable_surface_synchronization)
     : cc::CompositorFrameSink(std::move(context_provider),
                               std::move(worker_context_provider),
                               gpu_memory_buffer_manager,
                               shared_bitmap_manager),
-      local_surface_id_provider_(std::move(local_surface_id_provider)),
       synthetic_begin_frame_source_(std::move(synthetic_begin_frame_source)),
       compositor_frame_sink_info_(std::move(compositor_frame_sink_info)),
       client_request_(std::move(client_request)),
@@ -41,10 +38,8 @@ ClientCompositorFrameSink::ClientCompositorFrameSink(
     std::unique_ptr<cc::SyntheticBeginFrameSource> synthetic_begin_frame_source,
     cc::mojom::MojoCompositorFrameSinkPtrInfo compositor_frame_sink_info,
     cc::mojom::MojoCompositorFrameSinkClientRequest client_request,
-    std::unique_ptr<LocalSurfaceIdProvider> local_surface_id_provider,
     bool enable_surface_synchronization)
     : cc::CompositorFrameSink(std::move(vulkan_context_provider)),
-      local_surface_id_provider_(std::move(local_surface_id_provider)),
       synthetic_begin_frame_source_(std::move(synthetic_begin_frame_source)),
       compositor_frame_sink_info_(std::move(compositor_frame_sink_info)),
       client_request_(std::move(client_request)),
@@ -99,10 +94,13 @@ void ClientCompositorFrameSink::SubmitCompositorFrame(
   DCHECK_LE(cc::BeginFrameArgs::kStartingFrameNumber,
             frame.metadata.begin_frame_ack.sequence_number);
 
-  if (!enable_surface_synchronization_) {
-    local_surface_id_ =
-        local_surface_id_provider_->GetLocalSurfaceIdForFrame(frame);
-  }
+  if (!enable_surface_synchronization_ &&
+      (!local_surface_id_.is_valid() || ShouldAllocateNewLocalSurfaceId(frame)))
+    local_surface_id_ = id_allocator_.GenerateId();
+
+  surface_size_ = frame.render_pass_list.back()->output_rect.size();
+  device_scale_factor_ = frame.metadata.device_scale_factor;
+
   compositor_frame_sink_->SubmitCompositorFrame(local_surface_id_,
                                                 std::move(frame));
 }
@@ -131,6 +129,13 @@ void ClientCompositorFrameSink::ReclaimResources(
     const cc::ReturnedResourceArray& resources) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   client_->ReclaimResources(resources);
+}
+
+bool ClientCompositorFrameSink::ShouldAllocateNewLocalSurfaceId(
+    const cc::CompositorFrame& frame) {
+  gfx::Size frame_size = frame.render_pass_list.back()->output_rect.size();
+  return frame_size != surface_size_ ||
+         device_scale_factor_ != frame.metadata.device_scale_factor;
 }
 
 void ClientCompositorFrameSink::OnNeedsBeginFrames(bool needs_begin_frames) {

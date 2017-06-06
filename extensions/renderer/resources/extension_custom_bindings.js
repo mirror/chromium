@@ -4,7 +4,7 @@
 
 // Custom binding for the extension API.
 
-var binding = apiBridge || require('binding').Binding.create('extension');
+var binding = require('binding').Binding.create('extension');
 
 var messaging = require('messaging');
 var runtimeNatives = requireNative('runtime');
@@ -113,5 +113,4 @@ binding.registerCustomHook(function(bindingsAPI, extensionId) {
   }
 });
 
-if (!apiBridge)
-  exports.$set('binding', binding.generate());
+exports.$set('binding', binding.generate());

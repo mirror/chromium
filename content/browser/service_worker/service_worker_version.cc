@@ -180,25 +180,6 @@ int NextTraceId() {
   return trace_id;
 }
 
-void OnEventDispatcherConnectionError(
-    base::WeakPtr<EmbeddedWorkerInstance> embedded_worker) {
-  if (!embedded_worker)
-    return;
-
-  switch (embedded_worker->status()) {
-    case EmbeddedWorkerStatus::STARTING:
-    case EmbeddedWorkerStatus::RUNNING:
-      // In this case the disconnection might be happening because of sudden
-      // renderer shutdown like crash.
-      embedded_worker->Detach();
-      break;
-    case EmbeddedWorkerStatus::STOPPING:
-    case EmbeddedWorkerStatus::STOPPED:
-      // Do nothing
-      break;
-  }
-}
-
 }  // namespace
 
 const int ServiceWorkerVersion::kTimeoutTimerDelaySeconds = 30;
@@ -946,8 +927,8 @@ bool ServiceWorkerVersion::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ServiceWorkerHostMsg_GetClient, OnGetClient)
     IPC_MESSAGE_HANDLER(ServiceWorkerHostMsg_GetClients,
                         OnGetClients)
-    IPC_MESSAGE_HANDLER(ServiceWorkerHostMsg_OpenNewTab, OnOpenNewTab)
-    IPC_MESSAGE_HANDLER(ServiceWorkerHostMsg_OpenNewPopup, OnOpenNewPopup)
+    IPC_MESSAGE_HANDLER(ServiceWorkerHostMsg_OpenWindow,
+                        OnOpenWindow)
     IPC_MESSAGE_HANDLER(ServiceWorkerHostMsg_SetCachedMetadata,
                         OnSetCachedMetadata)
     IPC_MESSAGE_HANDLER(ServiceWorkerHostMsg_ClearCachedMetadata,
@@ -1024,9 +1005,8 @@ void ServiceWorkerVersion::OnGetClients(
                  weak_factory_.GetWeakPtr(), request_id));
 }
 
-void ServiceWorkerVersion::OnGetClientsFinished(
-    int request_id,
-    std::unique_ptr<ServiceWorkerClients> clients) {
+void ServiceWorkerVersion::OnGetClientsFinished(int request_id,
+                                                ServiceWorkerClients* clients) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   TRACE_EVENT_ASYNC_END1("ServiceWorker", "ServiceWorkerVersion::OnGetClients",
                          request_id, "The number of clients", clients->size());
@@ -1065,17 +1045,7 @@ void ServiceWorkerVersion::CountFeature(uint32_t feature) {
     provider_host_by_uuid.second->CountFeature(feature);
 }
 
-void ServiceWorkerVersion::OnOpenNewTab(int request_id, const GURL& url) {
-  OnOpenWindow(request_id, url, WindowOpenDisposition::NEW_FOREGROUND_TAB);
-}
-
-void ServiceWorkerVersion::OnOpenNewPopup(int request_id, const GURL& url) {
-  OnOpenWindow(request_id, url, WindowOpenDisposition::NEW_POPUP);
-}
-
-void ServiceWorkerVersion::OnOpenWindow(int request_id,
-                                        GURL url,
-                                        WindowOpenDisposition disposition) {
+void ServiceWorkerVersion::OnOpenWindow(int request_id, GURL url) {
   // Just abort if we are shutting down.
   if (!context_)
     return;
@@ -1106,7 +1076,7 @@ void ServiceWorkerVersion::OnOpenWindow(int request_id,
   }
 
   service_worker_client_utils::OpenWindow(
-      url, script_url_, embedded_worker_->process_id(), context_, disposition,
+      url, script_url_, embedded_worker_->process_id(), context_,
       base::Bind(&ServiceWorkerVersion::OnOpenWindowFinished,
                  weak_factory_.GetWeakPtr(), request_id));
 }
@@ -1469,8 +1439,6 @@ void ServiceWorkerVersion::StartWorkerInternal() {
       std::move(params), mojo::MakeRequest(&event_dispatcher_),
       base::Bind(&ServiceWorkerVersion::OnStartSentAndScriptEvaluated,
                  weak_factory_.GetWeakPtr()));
-  event_dispatcher_.set_connection_error_handler(base::Bind(
-      &OnEventDispatcherConnectionError, embedded_worker_->AsWeakPtr()));
 }
 
 void ServiceWorkerVersion::StartTimeoutTimer() {

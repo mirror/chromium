@@ -143,19 +143,16 @@ public class PaymentRequestEmailTest implements MainActivityStartCallback {
     }
 
     /**
-     * Test that ending a payment request that requires only the shipping address results in the
-     * appropriate metric being logged in the PaymentRequest.RequestedInformation histogram.
+     * Test that starting a payment request that requires only the user's email address results in
+     * the appropriate metric being logged in the PaymentRequest.RequestedInformation histogram.
      */
     @Test
     @MediumTest
     @Feature({"Payments"})
     public void testRequestedInformationMetric()
             throws InterruptedException, ExecutionException, TimeoutException {
-        // Start and complete the Payment Request.
+        // Start the Payment Request.
         mPaymentRequestTestRule.triggerUIAndWait(mPaymentRequestTestRule.getReadyToPay());
-        mPaymentRequestTestRule.clickAndWait(
-                R.id.button_primary, mPaymentRequestTestRule.getDismissed());
-        mPaymentRequestTestRule.expectResultContains(new String[] {"jon.doe@google.com"});
 
         // Make sure that only the appropriate enum value was logged.
         for (int i = 0; i < RequestedInformation.MAX; ++i) {

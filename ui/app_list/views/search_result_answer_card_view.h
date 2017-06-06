@@ -5,17 +5,22 @@
 #ifndef UI_APP_LIST_VIEWS_SEARCH_RESULT_ANSWER_CARD_VIEW_H_
 #define UI_APP_LIST_VIEWS_SEARCH_RESULT_ANSWER_CARD_VIEW_H_
 
+#include "ui/app_list/app_list_model_observer.h"
 #include "ui/app_list/views/search_result_container_view.h"
 
 namespace app_list {
 
-class AppListViewDelegate;
+class AppListModel;
+class SearchResultPageView;
 
 // Result container for the search answer card.
 class APP_LIST_EXPORT SearchResultAnswerCardView
-    : public SearchResultContainerView {
+    : public SearchResultContainerView,
+      public AppListModelObserver {
  public:
-  explicit SearchResultAnswerCardView(AppListViewDelegate* view_delegate);
+  SearchResultAnswerCardView(AppListModel* model,
+                             SearchResultPageView* search_results_page_view,
+                             views::View* search_answer_view);
   ~SearchResultAnswerCardView() override;
 
  private:
@@ -31,7 +36,12 @@ class APP_LIST_EXPORT SearchResultAnswerCardView
   int GetYSize() override;
   int DoUpdate() override;
   void UpdateSelectedIndex(int old_selected, int new_selected) override;
-  bool OnKeyPressed(const ui::KeyEvent& event) override;
+
+  // Overridden from AppListModelObserver
+  void OnSearchAnswerAvailableChanged(bool has_answer) override;
+
+  // Unowned pointer to application list model.
+  AppListModel* const model_;
 
   // Pointer to the container of the search answer; owned by the view hierarchy.
   // It's visible iff we have a search answer result.

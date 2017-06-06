@@ -88,7 +88,7 @@ import org.chromium.chrome.browser.history.HistoryManagerUtils;
 import org.chromium.chrome.browser.infobar.InfoBarContainer;
 import org.chromium.chrome.browser.init.AsyncInitializationActivity;
 import org.chromium.chrome.browser.init.ProcessInitializationHandler;
-import org.chromium.chrome.browser.media.PictureInPictureController;
+import org.chromium.chrome.browser.media.VideoPersister;
 import org.chromium.chrome.browser.metrics.LaunchMetrics;
 import org.chromium.chrome.browser.metrics.StartupMetrics;
 import org.chromium.chrome.browser.metrics.UmaSessionStats;
@@ -251,9 +251,6 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
 
     private ChromeFullscreenManager mFullscreenManager;
     private boolean mCreatedFullscreenManager;
-
-    private final PictureInPictureController mPictureInPictureController =
-            new PictureInPictureController();
 
     private CompositorViewHolder mCompositorViewHolder;
     private InsetObserverView mInsetObserverView;
@@ -873,15 +870,14 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         FeatureUtilities.setIsInMultiWindowMode(
                 MultiWindowUtils.getInstance().isInMultiWindowMode(this));
 
-        mPictureInPictureController.cleanup(this);
+        VideoPersister.getInstance().cleanup(this);
         VrShellDelegate.maybeRegisterVrEntryHook(this);
     }
 
     @Override
     protected void onUserLeaveHint() {
         super.onUserLeaveHint();
-
-        mPictureInPictureController.attemptPictureInPicture(this);
+        VideoPersister.getInstance().attemptPersist(this);
     }
 
     @Override
@@ -917,7 +913,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
 
     @Override
     public void onNewIntentWithNative(Intent intent) {
-        mPictureInPictureController.cleanup(this);
+        VideoPersister.getInstance().cleanup(this);
 
         super.onNewIntentWithNative(intent);
         if (mIntentHandler.shouldIgnoreIntent(intent)) return;

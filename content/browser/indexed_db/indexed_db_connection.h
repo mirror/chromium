@@ -62,6 +62,7 @@ class CONTENT_EXPORT IndexedDBConnection {
       blink::WebIDBTransactionMode mode,
       IndexedDBBackingStore::Transaction* backing_store_transaction);
 
+  void AbortTransaction(IndexedDBTransaction* transaction);
   void AbortTransaction(IndexedDBTransaction* transaction,
                         const IndexedDBDatabaseError& error);
 

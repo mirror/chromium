@@ -222,7 +222,7 @@ class WebUIURLLoaderFactory : public mojom::URLLoaderFactory,
   }
 
   // mojom::URLLoaderFactory implementation:
-  void CreateLoaderAndStart(mojom::URLLoaderAssociatedRequest loader,
+  void CreateLoaderAndStart(mojom::URLLoaderRequest loader,
                             int32_t routing_id,
                             int32_t request_id,
                             uint32_t options,
@@ -286,7 +286,7 @@ class WebUIURLLoaderFactory : public mojom::URLLoaderFactory,
 
 }  // namespace
 
-mojom::URLLoaderFactoryPtr CreateWebUIURLLoader(FrameTreeNode* node) {
+mojom::URLLoaderFactoryPtr GetWebUIURLLoader(FrameTreeNode* node) {
   int ftn_id = node->frame_tree_node_id();
   if (g_factories.Get()[ftn_id].get() == nullptr)
     g_factories.Get()[ftn_id] = base::MakeUnique<WebUIURLLoaderFactory>(node);

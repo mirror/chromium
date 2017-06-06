@@ -882,7 +882,7 @@ void ResourceDispatcherHostImpl::OnRequestResourceInternal(
     int routing_id,
     int request_id,
     const ResourceRequest& request_data,
-    mojom::URLLoaderAssociatedRequest mojo_request,
+    mojom::URLLoaderRequest mojo_request,
     mojom::URLLoaderClientPtr url_loader_client) {
   DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
   // TODO(pkasting): Remove ScopedTracker below once crbug.com/477117 is fixed.
@@ -946,7 +946,7 @@ void ResourceDispatcherHostImpl::UpdateRequestForTransfer(
     int request_id,
     const ResourceRequest& request_data,
     LoaderMap::iterator iter,
-    mojom::URLLoaderAssociatedRequest mojo_request,
+    mojom::URLLoaderRequest mojo_request,
     mojom::URLLoaderClientPtr url_loader_client) {
   DCHECK(requester_info->IsRenderer());
   int child_id = requester_info->child_id();
@@ -1029,7 +1029,7 @@ void ResourceDispatcherHostImpl::CompleteTransfer(
     int request_id,
     const ResourceRequest& request_data,
     int route_id,
-    mojom::URLLoaderAssociatedRequest mojo_request,
+    mojom::URLLoaderRequest mojo_request,
     mojom::URLLoaderClientPtr url_loader_client) {
   DCHECK(requester_info->IsRenderer());
   // Caller should ensure that |request_data| is associated with a transfer.
@@ -1084,7 +1084,7 @@ void ResourceDispatcherHostImpl::BeginRequest(
     const ResourceRequest& request_data,
     const SyncLoadResultCallback& sync_result_handler,  // only valid for sync
     int route_id,
-    mojom::URLLoaderAssociatedRequest mojo_request,
+    mojom::URLLoaderRequest mojo_request,
     mojom::URLLoaderClientPtr url_loader_client) {
   DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
   int child_id = requester_info->child_id();
@@ -1157,28 +1157,6 @@ void ResourceDispatcherHostImpl::BeginRequest(
   }
 
   if (!is_navigation_stream_request) {
-    storage::BlobStorageContext* blob_context =
-        GetBlobStorageContext(requester_info->blob_storage_context());
-    // Resolve elements from request_body and prepare upload data.
-    if (request_data.request_body.get()) {
-      // |blob_context| could be null when the request is from the plugins
-      // because ResourceMessageFilters created in PluginProcessHost don't have
-      // the blob context.
-      if (blob_context) {
-        // Attaches the BlobDataHandles to request_body not to free the blobs
-        // and any attached shareable files until upload completion. These data
-        // will be used in UploadDataStream and ServiceWorkerURLRequestJob.
-        bool blobs_alive = AttachRequestBodyBlobDataHandles(
-            request_data.request_body.get(), resource_context);
-        if (!blobs_alive) {
-          AbortRequestBeforeItStarts(requester_info->filter(),
-                                     sync_result_handler, request_id,
-                                     std::move(url_loader_client));
-          return;
-        }
-      }
-    }
-
     // Check if we have a registered interceptor for the headers passed in. If
     // yes then we need to mark the current request as pending and wait for the
     // interceptor to invoke the callback with a status code indicating whether
@@ -1222,7 +1200,7 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
     const SyncLoadResultCallback& sync_result_handler,  // only valid for sync
     int route_id,
     const net::HttpRequestHeaders& headers,
-    mojom::URLLoaderAssociatedRequest mojo_request,
+    mojom::URLLoaderRequest mojo_request,
     mojom::URLLoaderClientPtr url_loader_client,
     HeaderInterceptorResult interceptor_result) {
   DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
@@ -1326,6 +1304,16 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
         GetBlobStorageContext(requester_info->blob_storage_context());
     // Resolve elements from request_body and prepare upload data.
     if (request_data.request_body.get()) {
+      // |blob_context| could be null when the request is from the plugins
+      // because ResourceMessageFilters created in PluginProcessHost don't have
+      // the blob context.
+      if (blob_context) {
+        // Attaches the BlobDataHandles to request_body not to free the blobs
+        // and any attached shareable files until upload completion. These data
+        // will be used in UploadDataStream and ServiceWorkerURLRequestJob.
+        AttachRequestBodyBlobDataHandles(request_data.request_body.get(),
+                                         resource_context);
+      }
       new_request->set_upload(UploadDataStreamBuilder::Build(
           request_data.request_body.get(), blob_context,
           requester_info->file_system_context(),
@@ -1471,7 +1459,7 @@ ResourceDispatcherHostImpl::CreateResourceHandler(
     int route_id,
     int child_id,
     ResourceContext* resource_context,
-    mojom::URLLoaderAssociatedRequest mojo_request,
+    mojom::URLLoaderRequest mojo_request,
     mojom::URLLoaderClientPtr url_loader_client) {
   DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
   // TODO(pkasting): Remove ScopedTracker below once crbug.com/456331 is fixed.
@@ -1539,7 +1527,7 @@ ResourceDispatcherHostImpl::CreateResourceHandler(
 std::unique_ptr<ResourceHandler>
 ResourceDispatcherHostImpl::CreateBaseResourceHandler(
     net::URLRequest* request,
-    mojom::URLLoaderAssociatedRequest mojo_request,
+    mojom::URLLoaderRequest mojo_request,
     mojom::URLLoaderClientPtr url_loader_client,
     ResourceType resource_type) {
   std::unique_ptr<ResourceHandler> handler;
@@ -2083,12 +2071,7 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
   // Resolve elements from request_body and prepare upload data.
   ResourceRequestBodyImpl* body = info.common_params.post_data.get();
   if (body) {
-    bool blobs_alive = AttachRequestBodyBlobDataHandles(body, resource_context);
-    if (!blobs_alive) {
-      new_request->CancelWithError(net::ERR_INSUFFICIENT_RESOURCES);
-      loader->NotifyRequestFailed(false, net::ERR_ABORTED);
-      return;
-    }
+    AttachRequestBodyBlobDataHandles(body, resource_context);
     new_request->set_upload(UploadDataStreamBuilder::Build(
         body, blob_context, upload_file_system_context,
         BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE).get()));
@@ -2203,7 +2186,7 @@ void ResourceDispatcherHostImpl::OnRequestResourceWithMojo(
     int routing_id,
     int request_id,
     const ResourceRequest& request,
-    mojom::URLLoaderAssociatedRequest mojo_request,
+    mojom::URLLoaderRequest mojo_request,
     mojom::URLLoaderClientPtr url_loader_client) {
   OnRequestResourceInternal(requester_info, routing_id, request_id, request,
                             std::move(mojo_request),

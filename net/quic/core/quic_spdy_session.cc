@@ -360,9 +360,6 @@ QuicSpdySession::~QuicSpdySession() {
   for (auto& stream : *closed_streams()) {
     static_cast<QuicSpdyStream*>(stream.get())->ClearSession();
   }
-  for (auto const& kv : zombie_streams()) {
-    static_cast<QuicSpdyStream*>(kv.second.get())->ClearSession();
-  }
   for (auto const& kv : dynamic_streams()) {
     static_cast<QuicSpdyStream*>(kv.second.get())->ClearSession();
   }

@@ -33,7 +33,7 @@ class CursorProxyMojo : public DrmCursorProxy {
                  const gfx::Point& point,
                  int frame_delay_ms) override;
   void Move(gfx::AcceleratedWidget window, const gfx::Point& point) override;
-  void InitializeOnEvdevIfNecessary() override;
+  void InitializeOnEvdev() override;
 
   std::unique_ptr<service_manager::Connector> connector_;
 
@@ -41,8 +41,7 @@ class CursorProxyMojo : public DrmCursorProxy {
   ui::ozone::mojom::DeviceCursorPtr main_cursor_ptr_;
   ui::ozone::mojom::DeviceCursorPtr evdev_cursor_ptr_;
 
-  base::PlatformThreadRef ui_thread_ref_;
-  DISALLOW_COPY_AND_ASSIGN(CursorProxyMojo);
+  base::PlatformThreadRef evdev_ref_;
 };
 
 }  // namespace ui

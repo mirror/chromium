@@ -482,11 +482,12 @@ bool ServiceWorkerGlobalScopeProxy::HasFetchEventHandler() {
   return worker_global_scope_->HasEventListeners(EventTypeNames::fetch);
 }
 
-void ServiceWorkerGlobalScopeProxy::CountFeature(WebFeature feature) {
+void ServiceWorkerGlobalScopeProxy::CountFeature(UseCounter::Feature feature) {
   Client().CountFeature(static_cast<uint32_t>(feature));
 }
 
-void ServiceWorkerGlobalScopeProxy::CountDeprecation(WebFeature feature) {
+void ServiceWorkerGlobalScopeProxy::CountDeprecation(
+    UseCounter::Feature feature) {
   // Go through the same code path with countFeature() because a deprecation
   // message is already shown on the worker console and a remaining work is just
   // to record an API use.

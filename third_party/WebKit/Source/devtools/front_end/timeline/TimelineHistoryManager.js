@@ -6,11 +6,11 @@ Timeline.TimelineHistoryManager = class {
   constructor() {
     /** @type {!Array<!Timeline.PerformanceModel>} */
     this._recordings = [];
-    this._action = /** @type {!UI.Action} */ (UI.actionRegistry.action('timeline.show-history'));
+    this._action = UI.actionRegistry.action('timeline.show-history');
+    this._action.setEnabled(false);
     /** @type {!Map<string, number>} */
     this._nextNumberByDomain = new Map();
     this._button = new Timeline.TimelineHistoryManager.ToolbarButton(this._action);
-    this.clear();
 
     this._allOverviews = [
       {constructor: Timeline.TimelineEventOverviewResponsiveness, height: 3},
@@ -65,7 +65,6 @@ Timeline.TimelineHistoryManager = class {
     this._recordings = [];
     this._lastActiveModel = null;
     this._updateState();
-    this._button.setText(Common.UIString('(no recordings)'));
     this._nextNumberByDomain.clear();
   }
 
@@ -85,37 +84,14 @@ Timeline.TimelineHistoryManager = class {
       console.assert(false, `selected recording not found`);
       return null;
     }
-    this._setCurrentModel(model);
+    Timeline.TimelineHistoryManager._dataForModel(model).lastUsed = Date.now();
+    this._lastActiveModel = model;
+    this._button.setText(this._title(model));
     return model;
   }
 
   cancelIfShowing() {
     Timeline.TimelineHistoryManager.DropDown.cancelIfShowing();
-  }
-
-  /**
-   * @param {number} direction
-   * @return {?Timeline.PerformanceModel}
-   */
-  navigate(direction) {
-    if (!this._enabled || !this._lastActiveModel)
-      return null;
-    var index = this._recordings.indexOf(this._lastActiveModel);
-    if (index < 0)
-      return null;
-    var newIndex = Number.constrain(index + direction, 0, this._recordings.length - 1);
-    var model = this._recordings[newIndex];
-    this._setCurrentModel(model);
-    return model;
-  }
-
-  /**
-   * @param {!Timeline.PerformanceModel} model
-   */
-  _setCurrentModel(model) {
-    Timeline.TimelineHistoryManager._dataForModel(model).lastUsed = Date.now();
-    this._lastActiveModel = model;
-    this._button.setText(this._title(model));
   }
 
   _updateState() {
@@ -238,7 +214,7 @@ Timeline.TimelineHistoryManager = class {
       var sourceContext = timelineOverview.context();
       var imageData = sourceContext.getImageData(0, 0, sourceContext.canvas.width, sourceContext.canvas.height);
       ctx.putImageData(imageData, 0, yOffset);
-      yOffset += overview.height * window.devicePixelRatio;
+      yOffset += overview.height;
     }
     return container;
   }
@@ -434,7 +410,7 @@ Timeline.TimelineHistoryManager.ToolbarButton = class extends UI.ToolbarItem {
     shadowRoot.appendChild(dropdownArrowIcon);
     this.element.addEventListener('click', () => void action.execute(), false);
     this.setEnabled(action.enabled());
-    action.addEventListener(UI.Action.Events.Enabled, event => this.setEnabled(/** @type {boolean} */ (event.data)));
+    action.addEventListener(UI.Action.Events.Enabled, data => this.setEnabled(/** @type {boolean} */ (data)));
   }
 
   /**

@@ -45,10 +45,10 @@ console-dir.html:19 ƒ anonymous()
 console-dir.html:23 inner
     __proto__: Object
 console-dir.html:26 Object
-    No properties
+    No Properties
 console-dir.html:27 Object
     foo: 
-        No properties
+        No Properties
     __proto__: Object
 console-dir.html:29 ƒ __proto__()
     arguments: null

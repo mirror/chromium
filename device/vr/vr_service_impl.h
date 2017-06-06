@@ -60,9 +60,6 @@ class VRServiceImpl : public mojom::VRService {
   mojom::VRServiceClientPtr client_;
 
   bool listening_for_activate_;
-  bool in_set_client_;
-  unsigned connected_devices_;
-  unsigned handled_devices_;
 
   base::WeakPtrFactory<VRServiceImpl> weak_ptr_factory_;
 

@@ -303,16 +303,6 @@ const FeatureEntry::Choice kDefaultTileHeightChoices[] = {
     {flag_descriptions::kDefaultTileHeightVenti, switches::kDefaultTileHeight,
      "1024"}};
 
-#if !defined(OS_ANDROID)
-const FeatureEntry::Choice kAccountConsistencyChoices[] = {
-    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
-    {flag_descriptions::kAccountConsistencyChoiceMirror,
-     switches::kAccountConsistency, switches ::kAccountConsistencyMirror},
-    {flag_descriptions::kAccountConsistencyChoiceDice,
-     switches::kAccountConsistency, switches::kAccountConsistencyDice},
-};
-#endif
-
 const FeatureEntry::Choice kSimpleCacheBackendChoices[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
     {flags_ui::kGenericExperimentChoiceDisabled,
@@ -1394,9 +1384,6 @@ const FeatureEntry kFeatureEntries[] = {
          proximity_auth::switches::kEnableBluetoothLowEnergyDiscovery)},
 #endif  // OS_CHROMEOS
 #if defined(USE_ASH)
-    {"ash-enable-night-light", flag_descriptions::kEnableNightLightName,
-     flag_descriptions::kEnableNightLightDescription, kOsAll,
-     SINGLE_VALUE_TYPE(ash::switches::kAshEnableNightLight)},
     {"show-touch-hud", flag_descriptions::kShowTouchHudName,
      flag_descriptions::kShowTouchHudDescription, kOsAll,
      SINGLE_VALUE_TYPE(ash::switches::kAshTouchHud)},
@@ -1684,9 +1671,9 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kWebglDraftExtensionsDescription, kOsAll,
      SINGLE_VALUE_TYPE(switches::kEnableWebGLDraftExtensions)},
 #if !defined(OS_ANDROID)
-    {"account-consistency", flag_descriptions::kAccountConsistencyName,
-     flag_descriptions::kAccountConsistencyDescription,
-     kOsWin | kOsLinux | kOsMac, MULTI_VALUE_TYPE(kAccountConsistencyChoices)},
+    {"enable-account-consistency", flag_descriptions::kAccountConsistencyName,
+     flag_descriptions::kAccountConsistencyDescription, kOsDesktop,
+     SINGLE_VALUE_TYPE(switches::kEnableAccountConsistency)},
 #endif
 #if BUILDFLAG(ENABLE_APP_LIST)
     {"reset-app-list-install-state",
@@ -1924,6 +1911,12 @@ const FeatureEntry kFeatureEntries[] = {
      SINGLE_DISABLE_VALUE_TYPE(
          chromeos::switches::kDisableCaptivePortalBypassProxy)},
 #endif  // OS_CHROMEOS
+#if defined(OS_ANDROID)
+    {"enable-seccomp-sandbox-android",
+     flag_descriptions::kSeccompFilterSandboxAndroidName,
+     flag_descriptions::kSeccompFilterSandboxAndroidDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(features::kSeccompSandboxAndroid)},
+#endif  // OS_ANDROID
 #if defined(OS_CHROMEOS)
     {"enable-wifi-credential-sync", flag_descriptions::kWifiCredentialSyncName,
      flag_descriptions::kWifiCredentialSyncDescription, kOsCrOS,

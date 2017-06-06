@@ -18,6 +18,7 @@
 
 namespace blink {
 
+class CustomElementDefinition;
 class CustomElementDefinitionBuilder;
 class CustomElementDescriptor;
 class Element;
@@ -54,7 +55,6 @@ class CORE_EXPORT CustomElementRegistry final
   ScriptValue get(const AtomicString& name);
   bool NameIsDefined(const AtomicString& name) const;
   CustomElementDefinition* DefinitionForName(const AtomicString& name) const;
-  CustomElementDefinition* DefinitionForId(CustomElementDefinition::Id) const;
 
   // TODO(dominicc): Switch most callers of definitionForName to
   // definitionFor when implementing type extensions.
@@ -85,12 +85,9 @@ class CORE_EXPORT CustomElementRegistry final
   class ElementDefinitionIsRunning;
   bool element_definition_is_running_;
 
-  using DefinitionList =
-      HeapVector<TraceWrapperMember<CustomElementDefinition>>;
-  DefinitionList definitions_;
-
-  using NameIdMap = HashMap<AtomicString, size_t>;
-  NameIdMap name_id_map_;
+  using DefinitionMap =
+      HeapHashMap<AtomicString, TraceWrapperMember<CustomElementDefinition>>;
+  DefinitionMap definitions_;
 
   Member<const LocalDOMWindow> owner_;
 

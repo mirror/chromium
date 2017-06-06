@@ -13,7 +13,7 @@
 
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/threading/thread_checker.h"
+#include "base/threading/non_thread_safe.h"
 
 #if !defined(NDEBUG)
 #include <unordered_set>
@@ -30,8 +30,8 @@ namespace net {
 // In debug-mode, the internal queues store (id, value) pairs where id is used
 // to validate Pointers.
 //
-template <typename T>
-class PriorityQueue {
+template<typename T>
+class PriorityQueue : public base::NonThreadSafe {
  private:
   // This section is up-front for Pointer only.
 #if !defined(NDEBUG)
@@ -137,12 +137,10 @@ class PriorityQueue {
 #endif
   }
 
-  ~PriorityQueue() { DCHECK_CALLED_ON_VALID_THREAD(thread_checker_); }
-
   // Adds |value| with |priority| to the queue. Returns a pointer to the
   // created element.
   Pointer Insert(const T& value, Priority priority) {
-    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    DCHECK(CalledOnValidThread());
     DCHECK_LT(priority, lists_.size());
     ++size_;
     List& list = lists_[priority];
@@ -160,7 +158,7 @@ class PriorityQueue {
   // Adds |value| with |priority| to the queue. Returns a pointer to the
   // created element.
   Pointer InsertAtFront(const T& value, Priority priority) {
-    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    DCHECK(CalledOnValidThread());
     DCHECK_LT(priority, lists_.size());
     ++size_;
     List& list = lists_[priority];
@@ -178,7 +176,7 @@ class PriorityQueue {
   // Removes the value pointed by |pointer| from the queue. All pointers to this
   // value including |pointer| become invalid.
   void Erase(const Pointer& pointer) {
-    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    DCHECK(CalledOnValidThread());
     DCHECK_LT(pointer.priority_, lists_.size());
     DCHECK_GT(size_, 0u);
 
@@ -194,7 +192,7 @@ class PriorityQueue {
   // Returns a pointer to the first value of minimum priority or a null-pointer
   // if empty.
   Pointer FirstMin() const {
-    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    DCHECK(CalledOnValidThread());
     for (size_t i = 0; i < lists_.size(); ++i) {
       List* list = const_cast<List*>(&lists_[i]);
       if (!list->empty())
@@ -206,7 +204,7 @@ class PriorityQueue {
   // Returns a pointer to the last value of minimum priority or a null-pointer
   // if empty.
   Pointer LastMin() const {
-    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    DCHECK(CalledOnValidThread());
     for (size_t i = 0; i < lists_.size(); ++i) {
       List* list = const_cast<List*>(&lists_[i]);
       if (!list->empty())
@@ -218,7 +216,7 @@ class PriorityQueue {
   // Returns a pointer to the first value of maximum priority or a null-pointer
   // if empty.
   Pointer FirstMax() const {
-    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    DCHECK(CalledOnValidThread());
     for (size_t i = lists_.size(); i > 0; --i) {
       size_t index = i - 1;
       List* list = const_cast<List*>(&lists_[index]);
@@ -231,7 +229,7 @@ class PriorityQueue {
   // Returns a pointer to the last value of maximum priority or a null-pointer
   // if empty.
   Pointer LastMax() const {
-    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    DCHECK(CalledOnValidThread());
     for (size_t i = lists_.size(); i > 0; --i) {
       size_t index = i - 1;
       List* list = const_cast<List*>(&lists_[index]);
@@ -250,7 +248,7 @@ class PriorityQueue {
   // GetNextTowards{First,Last}Max() [increasing priority, then
   // {,reverse} FIFO].)
   Pointer GetNextTowardsLastMin(const Pointer& pointer) const {
-    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    DCHECK(CalledOnValidThread());
     DCHECK(!pointer.is_null());
     DCHECK_LT(pointer.priority_, lists_.size());
 
@@ -269,7 +267,7 @@ class PriorityQueue {
 
   // Empties the queue. All pointers become invalid.
   void Clear() {
-    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    DCHECK(CalledOnValidThread());
     for (size_t i = 0; i < lists_.size(); ++i) {
       lists_[i].clear();
     }
@@ -281,18 +279,18 @@ class PriorityQueue {
 
   // Returns the number of priorities the queue supports.
   size_t num_priorities() const {
-    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    DCHECK(CalledOnValidThread());
     return lists_.size();
   }
 
   bool empty() const {
-    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    DCHECK(CalledOnValidThread());
     return size_ == 0;
   }
 
   // Returns number of queued values.
   size_t size() const {
-    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    DCHECK(CalledOnValidThread());
     return size_;
   }
 
@@ -306,8 +304,6 @@ class PriorityQueue {
 
   ListVector lists_;
   size_t size_;
-
-  THREAD_CHECKER(thread_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(PriorityQueue);
 };

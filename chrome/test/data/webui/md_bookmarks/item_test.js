@@ -16,7 +16,7 @@ suite('<bookmarks-item>', function() {
             createItem('3'),
           ])),
     });
-    store.replaceSingleton();
+    bookmarks.Store.instance_ = store;
 
     item = document.createElement('bookmarks-item');
     item.itemId = '2';

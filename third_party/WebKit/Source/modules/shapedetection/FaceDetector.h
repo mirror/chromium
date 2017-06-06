@@ -31,7 +31,9 @@ class MODULES_EXPORT FaceDetector final : public ShapeDetector,
   ~FaceDetector() override = default;
 
   ScriptPromise DoDetect(ScriptPromiseResolver*,
-                         skia::mojom::blink::BitmapPtr) override;
+                         mojo::ScopedSharedBufferHandle,
+                         int image_width,
+                         int image_height) override;
   void OnDetectFaces(
       ScriptPromiseResolver*,
       Vector<shape_detection::mojom::blink::FaceDetectionResultPtr>);

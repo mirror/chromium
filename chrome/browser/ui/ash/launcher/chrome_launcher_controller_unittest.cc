@@ -18,11 +18,11 @@
 #include "ash/display/screen_orientation_controller_chromeos.h"
 #include "ash/public/cpp/shelf_item.h"
 #include "ash/public/cpp/shelf_item_delegate.h"
-#include "ash/public/cpp/shelf_model.h"
-#include "ash/public/cpp/shelf_model_observer.h"
 #include "ash/shelf/shelf_application_menu_model.h"
 #include "ash/shelf/shelf_constants.h"
 #include "ash/shelf/shelf_controller.h"
+#include "ash/shelf/shelf_model.h"
+#include "ash/shelf/shelf_model_observer.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_helper.h"
 #include "ash/test/shell_test_api.h"
@@ -2329,7 +2329,6 @@ TEST_P(ChromeLauncherControllerWithArcTest, ArcCustomAppIcon) {
 
   // Set custom icon on active item. Icon should change to custom.
   arc_test_.app_instance()->SendTaskDescription(2, std::string(), png_data);
-  base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(item_delegate->image_set_by_controller());
 
   // Switch back to the item without custom icon. Icon should be changed to

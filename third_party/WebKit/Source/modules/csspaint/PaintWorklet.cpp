@@ -17,7 +17,7 @@ PaintWorklet* PaintWorklet::Create(LocalFrame* frame) {
 }
 
 PaintWorklet::PaintWorklet(LocalFrame* frame)
-    : Worklet(frame),
+    : MainThreadWorklet(frame),
       pending_generator_registry_(new PaintWorkletPendingGeneratorRegistry) {}
 
 PaintWorklet::~PaintWorklet() = default;
@@ -38,7 +38,7 @@ void PaintWorklet::AddPendingGenerator(const String& name,
 
 DEFINE_TRACE(PaintWorklet) {
   visitor->Trace(pending_generator_registry_);
-  Worklet::Trace(visitor);
+  MainThreadWorklet::Trace(visitor);
 }
 
 bool PaintWorklet::NeedsToCreateGlobalScope() {

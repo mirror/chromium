@@ -113,8 +113,7 @@
             show-spinner="[[showSpinner_]]">
           <settings-internet-subpage 
               default-network="[[defaultNetwork]]"
-              device-state="[[getDeviceState_(subpageType_, deviceStates)]]"
-              tether-device-state="[[get('Tether', deviceStates)]]"
+              device-state="[[get(subpageType_, deviceStates)]]"
               global-policy="[[globalPolicy_]]"
               third-party-vpn-providers="[[thirdPartyVpnProviders_]]"
               networking-private="[[networkingPrivate]]"

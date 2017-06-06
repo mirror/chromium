@@ -53,6 +53,8 @@ gfx::Rect GetUserWorkAreaBounds() {
       ->GetUserWorkAreaBounds();
 }
 
+}  // anonymous namespace
+
 ///////////////////////////////////////////////////////////////////////////////
 //  ToastOverlayLabel
 class ToastOverlayLabel : public views::Label {
@@ -70,6 +72,7 @@ ToastOverlayLabel::ToastOverlayLabel(const base::string16& label)
   SetAutoColorReadabilityEnabled(false);
   SetMultiLine(true);
   SetEnabledColor(SK_ColorWHITE);
+  SetDisabledColor(SK_ColorWHITE);
   SetSubpixelRenderingEnabled(false);
 
   int verticalSpacing =
@@ -79,8 +82,6 @@ ToastOverlayLabel::ToastOverlayLabel(const base::string16& label)
 }
 
 ToastOverlayLabel::~ToastOverlayLabel() {}
-
-}  // namespace
 
 ///////////////////////////////////////////////////////////////////////////////
 //  ToastOverlayButton

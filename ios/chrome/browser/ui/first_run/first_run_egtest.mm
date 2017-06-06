@@ -6,7 +6,6 @@
 #import <XCTest/XCTest.h>
 
 #include "base/strings/sys_string_conversions.h"
-#import "base/test/ios/wait_util.h"
 #include "components/metrics/metrics_pref_names.h"
 #include "components/metrics/metrics_reporting_default_state.h"
 #include "components/prefs/pref_member.h"
@@ -29,7 +28,6 @@
 #import "ios/chrome/test/earl_grey/chrome_test_case.h"
 #import "ios/public/provider/chrome/browser/signin/fake_chrome_identity.h"
 #import "ios/public/provider/chrome/browser/signin/fake_chrome_identity_service.h"
-#import "ios/testing/wait_util.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -87,19 +85,6 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
                   @"Unexpected Gaia ID of the signed in user [expected = "
                   @"\"%@\", actual = \"%s\"]",
                   identity.gaiaID, info.gaia.c_str());
-}
-
-// Wait until |matcher| is accessible (not nil)
-void WaitForMatcher(id<GREYMatcher> matcher) {
-  ConditionBlock condition = ^{
-    NSError* error = nil;
-    [[EarlGrey selectElementWithMatcher:matcher] assertWithMatcher:grey_notNil()
-                                                             error:&error];
-    return error == nil;
-  };
-  GREYAssert(testing::WaitUntilConditionOrTimeout(
-                 testing::kWaitForUIElementTimeout, condition),
-             @"Waiting for matcher %@ failed.", matcher);
 }
 }
 
@@ -231,7 +216,8 @@ void WaitForMatcher(id<GREYMatcher> matcher) {
 }
 
 // Signs in to an account and then taps the Advanced link to go to settings.
-- (void)testSignInAndTapSettingsLink {
+// TODO(crbug.com/718023): Re-enable test.
+- (void)DISABLED_testSignInAndTapSettingsLink {
   ChromeIdentity* identity = GetFakeIdentity();
   ios::FakeChromeIdentityService::GetInstanceFromChromeProvider()->AddIdentity(
       identity);
@@ -249,7 +235,6 @@ void WaitForMatcher(id<GREYMatcher> matcher) {
   // Tap Settings link.
   id<GREYMatcher> settings_link_matcher = grey_allOf(
       grey_accessibilityLabel(@"Settings"), grey_sufficientlyVisible(), nil);
-  WaitForMatcher(settings_link_matcher);
   [[EarlGrey selectElementWithMatcher:settings_link_matcher]
       performAction:grey_tap()];
 

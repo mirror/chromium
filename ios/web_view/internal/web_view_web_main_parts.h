@@ -7,8 +7,9 @@
 
 #include <memory>
 
-#include "base/macros.h"
 #include "ios/web/public/app/web_main_parts.h"
+
+@protocol CWVDelegate;
 
 namespace ios_web_view {
 
@@ -18,15 +19,8 @@ class WebViewWebMainParts : public web::WebMainParts {
   WebViewWebMainParts();
   ~WebViewWebMainParts() override;
 
- private:
-  // web::WebMainParts implementation.
-  void PreMainMessageLoopStart() override;
-  void PreCreateThreads() override;
+  // WebMainParts implementation.
   void PreMainMessageLoopRun() override;
-  void PostMainMessageLoopRun() override;
-  void PostDestroyThreads() override;
-
-  DISALLOW_COPY_AND_ASSIGN(WebViewWebMainParts);
 };
 
 }  // namespace ios_web_view

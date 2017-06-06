@@ -204,10 +204,13 @@ CreditCardEditorViewController::CreateHeaderView() {
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_START);
   view->SetLayoutManager(layout);
 
-  // "Cards accepted" label is "hint" grey.
-  view->AddChildView(CreateHintLabel(l10n_util::GetStringUTF16(
-                                         IDS_PAYMENTS_ACCEPTED_CARDS_LABEL))
-                         .release());
+  // "Cards accepted" label is "disabled" grey.
+  std::unique_ptr<views::Label> label = base::MakeUnique<views::Label>(
+      l10n_util::GetStringUTF16(IDS_PAYMENTS_ACCEPTED_CARDS_LABEL));
+  label->SetDisabledColor(label->GetNativeTheme()->GetSystemColor(
+      ui::NativeTheme::kColorId_LabelDisabledColor));
+  label->SetEnabled(false);
+  view->AddChildView(label.release());
 
   // 8dp padding is required between icons.
   constexpr int kPaddingBetweenCardIcons = 8;
@@ -326,7 +329,6 @@ CreditCardEditorViewController::CreateExtraViewForField(
   add_button->set_id(
       static_cast<int>(DialogViewID::ADD_BILLING_ADDRESS_BUTTON));
   add_button->set_tag(add_billing_address_button_tag_);
-  add_button->SetFocusBehavior(views::View::FocusBehavior::ALWAYS);
   button_view->AddChildView(add_button.release());
   return button_view;
 }

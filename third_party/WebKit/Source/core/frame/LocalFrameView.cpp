@@ -2094,7 +2094,7 @@ bool LocalFrameView::ComputeCompositedSelection(
       PrimaryDirectionOf(*visible_selection.Start().AnchorNode()) ==
       TextDirection::kRtl;
   selection.end.is_text_direction_rtl |=
-      PrimaryDirectionOf(*visible_selection.End().AnchorNode()) ==
+      PrimaryDirectionOf(*visible_selection.end().AnchorNode()) ==
       TextDirection::kRtl;
 
   return true;
@@ -2666,7 +2666,7 @@ void LocalFrameView::GetTickmarks(Vector<IntRect>& tickmarks) const {
     return;
   }
   tickmarks =
-      GetFrame().GetDocument()->Markers().LayoutRectsForTextMatchMarkers();
+      GetFrame().GetDocument()->Markers().RenderedRectsForTextMatchMarkers();
 }
 
 void LocalFrameView::SetInputEventsTransformForEmulation(

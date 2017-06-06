@@ -144,6 +144,7 @@ class DataReductionProxyConfigServiceClientTest : public testing::Test {
       mock_socket_factory_.reset(nullptr);
     test_context_ =
         DataReductionProxyTestContext::Builder()
+            .WithParamsDefinitions(TestDataReductionProxyParams::HAS_EVERYTHING)
             .WithURLRequestContext(context_.get())
             .WithMockClientSocketFactory(mock_socket_factory_.get())
             .WithMockRequestOptions()

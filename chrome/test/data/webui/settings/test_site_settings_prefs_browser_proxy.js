@@ -15,7 +15,6 @@
  *   midiDevices: !Array<!RawSiteException>},
  *   notifications: !Array<!RawSiteException>},
  *   plugins: !Array<!RawSiteException>},
- *   images: !Array<!RawSiteException>},
  *   popups: !Array<!RawSiteException>},
  *   unsandboxed_plugins: !Array<!RawSiteException>},
  * }}
@@ -46,7 +45,6 @@ var prefsEmpty = {
     midiDevices: '',
     notifications: '',
     plugins: '',
-    images: '',
     popups: '',
     subresource_filter: '',
     unsandboxed_plugins: '',
@@ -62,7 +60,6 @@ var prefsEmpty = {
     midiDevices: [],
     notifications: [],
     plugins: [],
-    images: [],
     popups: [],
     subresource_filter: [],
     unsandboxed_plugins: [],

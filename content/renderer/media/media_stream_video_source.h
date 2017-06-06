@@ -13,7 +13,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
 #include "base/optional.h"
-#include "base/sequence_checker.h"
+#include "base/threading/non_thread_safe.h"
 #include "content/common/content_export.h"
 #include "content/common/media/video_capture.h"
 #include "content/renderer/media/media_stream_source.h"
@@ -46,7 +46,9 @@ CONTENT_EXPORT bool IsOldVideoConstraints();
 // MediaStreamVideoSource then match the constraints provided in AddTrack with
 // the formats and call StartSourceImpl. The source implementation must call
 // OnStartDone when the underlying source has been started or failed to start.
-class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
+class CONTENT_EXPORT MediaStreamVideoSource
+    : public MediaStreamSource,
+      NON_EXPORTED_BASE(public base::NonThreadSafe) {
  public:
   enum {
     // Default resolution. If no constraints are specified and the delegate
@@ -163,8 +165,6 @@ class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
     ENDED
   };
   State state() const { return state_; }
-
-  SEQUENCE_CHECKER(sequence_checker_);
 
  private:
   void OnSupportedFormats(const media::VideoCaptureFormats& formats);

@@ -1350,8 +1350,7 @@ void CompositedLayerMapping::UpdateOverflowControlsHostLayerGeometry(
   overflow_controls_host_layer_->SetPosition(FloatPoint(host_layer_position));
 
   const IntRect border_box =
-      owning_layer_.GetLayoutBox()->PixelSnappedBorderBoxRect(
-          owning_layer_.SubpixelAccumulation());
+      ToLayoutBox(owning_layer_.GetLayoutObject()).PixelSnappedBorderBoxRect();
   overflow_controls_host_layer_->SetSize(FloatSize(border_box.Size()));
   overflow_controls_host_layer_->SetMasksToBounds(true);
   overflow_controls_host_layer_->SetBackfaceVisibility(
@@ -1456,8 +1455,8 @@ void CompositedLayerMapping::UpdateScrollingLayerGeometry(
 
   DCHECK(scrolling_contents_layer_);
   LayoutBox& layout_box = ToLayoutBox(GetLayoutObject());
-  IntRect overflow_clip_rect = PixelSnappedIntRect(layout_box.OverflowClipRect(
-      LayoutPoint(owning_layer_.SubpixelAccumulation())));
+  IntRect overflow_clip_rect =
+      PixelSnappedIntRect(layout_box.OverflowClipRect(LayoutPoint()));
 
   // When a m_childTransformLayer exists, local content offsets for the
   // m_scrollingLayer have already been applied. Otherwise, we apply them here.
@@ -2275,9 +2274,8 @@ void CompositedLayerMapping::UpdateElementIdAndCompositorMutableProperties() {
                                  CompositorMutableProperty::kScrollTop) &
                                 compositor_mutable_properties;
   } else {
-    element_id = CompositorElementIdFromLayoutObjectId(
-        owning_layer_.GetLayoutObject().UniqueId(),
-        CompositorElementIdNamespace::kPrimary);
+    element_id = CompositorElementIdFromPaintLayerId(
+        owning_layer_.UniqueId(), CompositorElementIdNamespace::kPrimary);
   }
 
   graphics_layer_->SetElementId(element_id);
@@ -2411,9 +2409,8 @@ bool CompositedLayerMapping::UpdateScrollingLayers(
             DOMNodeIds::IdForNode(data.owning_node),
             CompositorElementIdNamespace::kScrollCompositorProxy);
       } else {
-        element_id = CompositorElementIdFromLayoutObjectId(
-            owning_layer_.GetLayoutObject().UniqueId(),
-            CompositorElementIdNamespace::kScroll);
+        element_id = CompositorElementIdFromPaintLayerId(
+            owning_layer_.UniqueId(), CompositorElementIdNamespace::kScroll);
       }
 
       scrolling_contents_layer_->SetElementId(element_id);

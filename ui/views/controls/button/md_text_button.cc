@@ -283,9 +283,9 @@ void MdTextButton::UpdateColors() {
   }
 
   DCHECK_EQ(SK_AlphaOPAQUE, static_cast<int>(SkColorGetA(bg_color)));
-  SetBackground(
-      CreateBackgroundFromPainter(Painter::CreateRoundRectWith1PxBorderPainter(
-          bg_color, stroke_color, kInkDropSmallCornerRadius)));
+  set_background(Background::CreateBackgroundPainter(
+      Painter::CreateRoundRectWith1PxBorderPainter(bg_color, stroke_color,
+                                                   kInkDropSmallCornerRadius)));
   SchedulePaint();
 }
 

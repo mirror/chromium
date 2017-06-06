@@ -986,9 +986,8 @@ void TileManager::ScheduleTasks(
   // TODO(vmpstr): SOON is misleading here, but these images can come from
   // several diffent tiles. Rethink what we actually want to trace here. Note
   // that I'm using SOON, since it can't be NOW (these are prepaint).
-  ImageDecodeCache::TracingInfo tracing_info(
-      prepare_tiles_count_, TilePriority::SOON,
-      ImageDecodeCache::TaskType::kInRaster);
+  ImageDecodeCache::TracingInfo tracing_info(prepare_tiles_count_,
+                                             TilePriority::SOON);
   std::vector<scoped_refptr<TileTask>> new_locked_image_tasks =
       image_controller_.SetPredecodeImages(std::move(new_locked_images),
                                            tracing_info);
@@ -1122,8 +1121,7 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
 
   // Get the tasks for the required images.
   ImageDecodeCache::TracingInfo tracing_info(
-      prepare_tiles_count_, prioritized_tile.priority().priority_bin,
-      ImageDecodeCache::TaskType::kInRaster);
+      prepare_tiles_count_, prioritized_tile.priority().priority_bin);
   image_controller_.GetTasksForImagesAndRef(&sync_decoded_images, &decode_tasks,
                                             tracing_info);
 

@@ -1112,7 +1112,7 @@ bool WebLocalFrameImpl::HasSelection() const {
              .Start() != GetFrame()
                              ->Selection()
                              .ComputeVisibleSelectionInDOMTreeDeprecated()
-                             .End();
+                             .end();
 }
 
 WebRange WebLocalFrameImpl::SelectionRange() const {
@@ -2223,7 +2223,7 @@ void WebLocalFrameImpl::BlinkFeatureUsageReport(const std::set<int>& features) {
   DCHECK(!features.empty());
   // Assimilate all features used/performed by the browser into UseCounter.
   for (int feature : features) {
-    UseCounter::Count(GetFrame(), static_cast<WebFeature>(feature));
+    UseCounter::Count(GetFrame(), static_cast<UseCounter::Feature>(feature));
   }
 }
 
@@ -2261,11 +2261,11 @@ void WebLocalFrameImpl::SendOrientationChangeEvent() {
 }
 
 void WebLocalFrameImpl::DidCallAddSearchProvider() {
-  UseCounter::Count(GetFrame(), WebFeature::kExternalAddSearchProvider);
+  UseCounter::Count(GetFrame(), UseCounter::kExternalAddSearchProvider);
 }
 
 void WebLocalFrameImpl::DidCallIsSearchProviderInstalled() {
-  UseCounter::Count(GetFrame(), WebFeature::kExternalIsSearchProviderInstalled);
+  UseCounter::Count(GetFrame(), UseCounter::kExternalIsSearchProviderInstalled);
 }
 
 void WebLocalFrameImpl::RequestFind(int identifier,
@@ -2511,33 +2511,33 @@ void WebLocalFrameImpl::ClearActiveFindMatch() {
 }
 
 void WebLocalFrameImpl::UsageCountChromeLoadTimes(const WebString& metric) {
-  WebFeature feature = WebFeature::kChromeLoadTimesUnknown;
+  UseCounter::Feature feature = UseCounter::kChromeLoadTimesUnknown;
   if (metric == "requestTime") {
-    feature = WebFeature::kChromeLoadTimesRequestTime;
+    feature = UseCounter::kChromeLoadTimesRequestTime;
   } else if (metric == "startLoadTime") {
-    feature = WebFeature::kChromeLoadTimesStartLoadTime;
+    feature = UseCounter::kChromeLoadTimesStartLoadTime;
   } else if (metric == "commitLoadTime") {
-    feature = WebFeature::kChromeLoadTimesCommitLoadTime;
+    feature = UseCounter::kChromeLoadTimesCommitLoadTime;
   } else if (metric == "finishDocumentLoadTime") {
-    feature = WebFeature::kChromeLoadTimesFinishDocumentLoadTime;
+    feature = UseCounter::kChromeLoadTimesFinishDocumentLoadTime;
   } else if (metric == "finishLoadTime") {
-    feature = WebFeature::kChromeLoadTimesFinishLoadTime;
+    feature = UseCounter::kChromeLoadTimesFinishLoadTime;
   } else if (metric == "firstPaintTime") {
-    feature = WebFeature::kChromeLoadTimesFirstPaintTime;
+    feature = UseCounter::kChromeLoadTimesFirstPaintTime;
   } else if (metric == "firstPaintAfterLoadTime") {
-    feature = WebFeature::kChromeLoadTimesFirstPaintAfterLoadTime;
+    feature = UseCounter::kChromeLoadTimesFirstPaintAfterLoadTime;
   } else if (metric == "navigationType") {
-    feature = WebFeature::kChromeLoadTimesNavigationType;
+    feature = UseCounter::kChromeLoadTimesNavigationType;
   } else if (metric == "wasFetchedViaSpdy") {
-    feature = WebFeature::kChromeLoadTimesWasFetchedViaSpdy;
+    feature = UseCounter::kChromeLoadTimesWasFetchedViaSpdy;
   } else if (metric == "wasNpnNegotiated") {
-    feature = WebFeature::kChromeLoadTimesWasNpnNegotiated;
+    feature = UseCounter::kChromeLoadTimesWasNpnNegotiated;
   } else if (metric == "npnNegotiatedProtocol") {
-    feature = WebFeature::kChromeLoadTimesNpnNegotiatedProtocol;
+    feature = UseCounter::kChromeLoadTimesNpnNegotiatedProtocol;
   } else if (metric == "wasAlternateProtocolAvailable") {
-    feature = WebFeature::kChromeLoadTimesWasAlternateProtocolAvailable;
+    feature = UseCounter::kChromeLoadTimesWasAlternateProtocolAvailable;
   } else if (metric == "connectionInfo") {
-    feature = WebFeature::kChromeLoadTimesConnectionInfo;
+    feature = UseCounter::kChromeLoadTimesConnectionInfo;
   }
   UseCounter::Count(GetFrame(), feature);
 }

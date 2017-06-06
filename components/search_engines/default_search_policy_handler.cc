@@ -36,8 +36,7 @@ void SetListInPref(const PolicyMap& policies,
     bool is_list = policy_value->GetAsList(&policy_list);
     DCHECK(is_list);
   }
-  dict->Set(key, policy_list ? base::MakeUnique<base::ListValue>(*policy_list)
-                             : base::MakeUnique<base::ListValue>());
+  dict->Set(key, policy_list ? policy_list->DeepCopy() : new base::ListValue());
 }
 
 // Extracts a string from a policy value and adds it to a pref dictionary.

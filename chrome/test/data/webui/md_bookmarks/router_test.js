@@ -19,7 +19,7 @@ suite('<bookmarks-router>', function() {
         term: '',
       },
     });
-    store.replaceSingleton();
+    bookmarks.Store.instance_ = store;
 
     router = document.createElement('bookmarks-router');
     replaceBody(router);

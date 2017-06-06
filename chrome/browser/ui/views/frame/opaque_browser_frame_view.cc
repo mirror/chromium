@@ -469,7 +469,7 @@ views::ImageButton* OpaqueBrowserFrameView::InitWindowCaptionButton(
   button->SetImage(views::CustomButton::STATE_PRESSED,
                    tp->GetImageSkiaNamed(pushed_image_id));
   if (browser_view()->IsBrowserTypeNormal()) {
-    button->SetBackgroundImage(
+    button->SetBackground(
         tp->GetColor(ThemeProperties::COLOR_BUTTON_BACKGROUND),
         tp->GetImageSkiaNamed(IDR_THEME_WINDOW_CONTROL_BACKGROUND),
         tp->GetImageSkiaNamed(mask_image_id));

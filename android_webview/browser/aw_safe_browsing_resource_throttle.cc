@@ -51,17 +51,4 @@ void AwSafeBrowsingResourceThrottle::CancelResourceLoad() {
   Cancel();
 }
 
-void AwSafeBrowsingResourceThrottle::OnCheckBrowseUrlResult(
-    const GURL& url,
-    SBThreatType threat_type,
-    const ThreatMetadata& metadata) {
-  if (threat_type != safe_browsing::SB_THREAT_TYPE_URL_PHISHING &&
-      threat_type != safe_browsing::SB_THREAT_TYPE_URL_MALWARE) {
-    // If we don't recognize the threat type, just mark it as safe
-    threat_type = safe_browsing::SB_THREAT_TYPE_SAFE;
-  }
-
-  BaseResourceThrottle::OnCheckBrowseUrlResult(url, threat_type, metadata);
-}
-
 }  // namespace android_webview

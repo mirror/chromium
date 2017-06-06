@@ -307,6 +307,15 @@ class CC_EXPORT LayerImpl {
   LayerImpl* scroll_clip_layer() const;
   bool scrollable() const;
 
+  void set_user_scrollable_horizontal(bool scrollable);
+  bool user_scrollable_horizontal() const {
+    return user_scrollable_horizontal_;
+  }
+  void set_user_scrollable_vertical(bool scrollable);
+  bool user_scrollable_vertical() const { return user_scrollable_vertical_; }
+
+  bool user_scrollable(ScrollbarOrientation orientation) const;
+
   void set_main_thread_scrolling_reasons(
       uint32_t main_thread_scrolling_reasons) {
     main_thread_scrolling_reasons_ = main_thread_scrolling_reasons;
@@ -439,8 +448,6 @@ class CC_EXPORT LayerImpl {
   }
   bool raster_even_if_not_drawn() const { return raster_even_if_not_drawn_; }
 
-  bool HasValidPropertyTreeIndices() const;
-
  protected:
   LayerImpl(LayerTreeImpl* layer_impl,
             int id,
@@ -484,6 +491,8 @@ class CC_EXPORT LayerImpl {
   gfx::Vector2dF offset_to_transform_parent_;
   uint32_t main_thread_scrolling_reasons_;
 
+  bool user_scrollable_horizontal_ : 1;
+  bool user_scrollable_vertical_ : 1;
   bool should_flatten_transform_from_property_tree_ : 1;
 
   // Tracks if drawing-related properties have changed since last redraw.

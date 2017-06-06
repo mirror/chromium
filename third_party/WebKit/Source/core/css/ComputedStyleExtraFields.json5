@@ -546,7 +546,7 @@
       field_group: "rare-inherited",
     },
     {
-      name: "InheritedVariables",
+      name: "Variables",
       inherited: true,
       field_template: "storage_only",
       type_name: "StyleInheritedVariables",

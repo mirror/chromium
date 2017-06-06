@@ -16,8 +16,10 @@ static const char kFlagSecureProxyCheckURL[] = "http://proxycheck.org/";
 }
 
 namespace data_reduction_proxy {
-TestDataReductionProxyParams::TestDataReductionProxyParams()
-    : DataReductionProxyParams(false) {
+TestDataReductionProxyParams::TestDataReductionProxyParams(
+    int flags, unsigned int has_definitions)
+    : DataReductionProxyParams(flags, false),
+      has_definitions_(has_definitions) {
   init_result_ = Init();
   }
 
@@ -55,16 +57,26 @@ std::string TestDataReductionProxyParams::FlagSecureProxyCheckURL() {
 }
 
 std::string TestDataReductionProxyParams::GetDefaultOrigin() const {
-  return kDefaultOrigin;
+  return GetDefinition(
+      TestDataReductionProxyParams::HAS_ORIGIN, kDefaultOrigin);
 }
 
 std::string TestDataReductionProxyParams::GetDefaultFallbackOrigin() const {
-  return kDefaultFallbackOrigin;
+  return GetDefinition(
+      TestDataReductionProxyParams::HAS_FALLBACK_ORIGIN,
+      kDefaultFallbackOrigin);
 }
 
 std::string TestDataReductionProxyParams::GetDefaultSecureProxyCheckURL()
     const {
-  return kDefaultSecureProxyCheckURL;
+  return GetDefinition(
+      TestDataReductionProxyParams::HAS_SECURE_PROXY_CHECK_URL,
+      kDefaultSecureProxyCheckURL);
 }
 
+std::string TestDataReductionProxyParams::GetDefinition(
+    unsigned int has_def,
+    const std::string& definition) const {
+  return ((has_definitions_ & has_def) ? definition : std::string());
+}
 }  // namespace data_reduction_proxy

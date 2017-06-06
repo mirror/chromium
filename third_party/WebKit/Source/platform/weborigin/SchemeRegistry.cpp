@@ -36,13 +36,6 @@ namespace blink {
 
 namespace {
 
-struct PolicyAreasHashTraits : HashTraits<SchemeRegistry::PolicyAreas> {
-  static const bool kEmptyValueIsZero = true;
-  static SchemeRegistry::PolicyAreas EmptyValue() {
-    return SchemeRegistry::kPolicyAreaNone;
-  }
-};
-
 class URLSchemesRegistry final {
  public:
   URLSchemesRegistry()
@@ -80,7 +73,7 @@ class URLSchemesRegistry final {
   URLSchemesSet service_worker_schemes;
   URLSchemesSet fetch_api_schemes;
   URLSchemesSet first_party_when_top_level_schemes;
-  URLSchemesMap<SchemeRegistry::PolicyAreas, PolicyAreasHashTraits>
+  URLSchemesMap<SchemeRegistry::PolicyAreas>
       content_security_policy_bypassing_schemes;
   URLSchemesSet secure_context_bypassing_schemes;
   URLSchemesSet allowed_in_referrer_schemes;

@@ -22,7 +22,6 @@
 #include "chrome/browser/shell_integration.h"
 #include "chrome/browser/signin/chrome_signin_helper.h"
 #include "chrome/browser/translate/chrome_translate_client.h"
-#include "chrome/browser/ui/bookmarks/bookmark_bar_constants.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_command_controller.h"
 #include "chrome/browser/ui/browser_commands.h"
@@ -843,7 +842,7 @@ int
 BrowserWindowCocoa::GetRenderViewHeightInsetWithDetachedBookmarkBar() {
   if (browser_->bookmark_bar_state() != BookmarkBar::DETACHED)
     return 0;
-  return chrome::kNTPBookmarkBarHeight;
+  return 40;
 }
 
 void BrowserWindowCocoa::ExecuteExtensionCommand(

@@ -140,7 +140,7 @@ class ExamplesWindowContents : public WidgetDelegateView,
     combobox_model_.SetExamples(std::move(examples));
     combobox_->ModelChanged();
 
-    SetBackground(CreateStandardPanelBackground());
+    set_background(Background::CreateStandardPanelBackground());
     GridLayout* layout = new GridLayout(this);
     SetLayoutManager(layout);
     ColumnSet* column_set = layout->AddColumnSet(0);

@@ -11,7 +11,6 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/json/json_string_value_serializer.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/sequenced_task_runner.h"
 #include "base/strings/string_number_conversions.h"
@@ -122,7 +121,7 @@ void TestHarness::InstallBooleanPolicy(const std::string& policy_name,
 void TestHarness::InstallStringListPolicy(const std::string& policy_name,
                                           const base::ListValue* policy_value) {
   base::DictionaryValue dict;
-  dict.Set(policy_name, base::MakeUnique<base::Value>(*policy_value));
+  dict.Set(policy_name, policy_value->DeepCopy());
   WriteConfigFile(dict, NextConfigFileName());
 }
 
@@ -130,13 +129,13 @@ void TestHarness::InstallDictionaryPolicy(
     const std::string& policy_name,
     const base::DictionaryValue* policy_value) {
   base::DictionaryValue dict;
-  dict.Set(policy_name, base::MakeUnique<base::Value>(*policy_value));
+  dict.Set(policy_name, policy_value->DeepCopy());
   WriteConfigFile(dict, NextConfigFileName());
 }
 
 void TestHarness::Install3rdPartyPolicy(const base::DictionaryValue* policies) {
   base::DictionaryValue dict;
-  dict.Set("3rdparty", base::MakeUnique<base::Value>(*policies));
+  dict.Set("3rdparty", policies->DeepCopy());
   WriteConfigFile(dict, NextConfigFileName());
 }
 

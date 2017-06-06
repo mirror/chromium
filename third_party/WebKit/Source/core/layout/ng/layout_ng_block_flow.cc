@@ -23,8 +23,13 @@ void LayoutNGBlockFlow::UpdateBlockLayout(bool relayout_children) {
 
   RefPtr<NGConstraintSpace> constraint_space =
       NGConstraintSpace::CreateFromLayoutObject(*this);
-  RefPtr<NGLayoutResult> result =
-      NGBlockNode(this).Layout(constraint_space.Get());
+
+  // TODO(layout-dev): This should be created in the constructor once instead.
+  // There is some internal state which needs to be cleared between layout
+  // passes (probably FirstChild(), etc).
+  box_ = new NGBlockNode(this);
+
+  RefPtr<NGLayoutResult> result = box_->Layout(constraint_space.Get());
 
   if (IsOutOfFlowPositioned()) {
     // In legacy layout, abspos differs from regular blocks in that abspos
@@ -41,8 +46,8 @@ void LayoutNGBlockFlow::UpdateBlockLayout(bool relayout_children) {
     SetLogicalTop(computed_values.position_);
   }
 
-  for (NGBlockNode descendant : result->OutOfFlowDescendants())
-    descendant.UseOldOutOfFlowPositioning();
+  for (auto& descendant : result->OutOfFlowDescendants())
+    descendant->UseOldOutOfFlowPositioning();
 
   UpdateAfterLayout();
   ClearNeedsLayout();

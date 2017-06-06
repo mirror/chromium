@@ -15,7 +15,17 @@ class DataReductionProxyServer;
 
 class TestDataReductionProxyParams : public DataReductionProxyParams {
  public:
-  TestDataReductionProxyParams();
+  // Used to emulate having constants defined by the preprocessor.
+  enum HasNames {
+    HAS_NOTHING = 0x0,
+    HAS_ORIGIN = 0x2,
+    HAS_FALLBACK_ORIGIN = 0x4,
+    HAS_SECURE_PROXY_CHECK_URL = 0x40,
+    HAS_EVERYTHING = 0xff,
+  };
+
+  TestDataReductionProxyParams(int flags,
+                               unsigned int has_definitions);
   bool init_result() const;
 
   void SetProxiesForHttp(const std::vector<DataReductionProxyServer>& proxies);
@@ -37,6 +47,10 @@ class TestDataReductionProxyParams : public DataReductionProxyParams {
   std::string GetDefaultSecureProxyCheckURL() const override;
 
  private:
+  std::string GetDefinition(unsigned int has_def,
+                            const std::string& definition) const;
+
+  unsigned int has_definitions_;
   bool init_result_;
 };
 }  // namespace data_reduction_proxy

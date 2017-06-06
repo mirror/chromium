@@ -169,7 +169,6 @@ std::unique_ptr<Layer> Layer::Clone() const {
   clone->SetBackgroundZoom(zoom_, zoom_inset_);
 
   // Filters.
-  clone->SetLayerTemperature(GetTargetTemperature());
   clone->SetLayerSaturation(layer_saturation_);
   clone->SetLayerBrightness(GetTargetBrightness());
   clone->SetLayerGrayscale(GetTargetGrayscale());
@@ -178,13 +177,9 @@ std::unique_ptr<Layer> Layer::Clone() const {
     clone->SetAlphaShape(base::MakeUnique<SkRegion>(*alpha_shape_));
 
   // cc::Layer state.
-  if (surface_layer_) {
-    if (surface_layer_->primary_surface_info().is_valid()) {
-      clone->SetShowPrimarySurface(surface_layer_->primary_surface_info(),
-                                   surface_layer_->surface_reference_factory());
-    }
-    if (surface_layer_->fallback_surface_info().is_valid())
-      clone->SetFallbackSurface(surface_layer_->fallback_surface_info());
+  if (surface_layer_ && surface_layer_->primary_surface_info().is_valid()) {
+    clone->SetShowPrimarySurface(surface_layer_->primary_surface_info(),
+                                 surface_layer_->surface_reference_factory());
   } else if (type_ == LAYER_SOLID_COLOR) {
     clone->SetColor(GetTargetColor());
   }
@@ -385,14 +380,6 @@ float Layer::GetCombinedOpacity() const {
 
 void Layer::SetLayerTemperature(float value) {
   GetAnimator()->SetTemperature(value);
-}
-
-float Layer::GetTargetTemperature() const {
-  if (animator_ &&
-      animator_->IsAnimatingProperty(LayerAnimationElement::TEMPERATURE)) {
-    return animator_->GetTargetTemperature();
-  }
-  return layer_temperature();
 }
 
 void Layer::SetBackgroundBlur(int blur_radius) {

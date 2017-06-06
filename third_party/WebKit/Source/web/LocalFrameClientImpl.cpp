@@ -59,6 +59,7 @@
 #include "core/loader/HistoryItem.h"
 #include "core/origin_trials/OriginTrials.h"
 #include "core/page/Page.h"
+#include "core/page/WindowFeatures.h"
 #include "modules/audio_output_devices/HTMLMediaElementAudioOutputDevice.h"
 #include "modules/device_orientation/DeviceMotionController.h"
 #include "modules/device_orientation/DeviceOrientationAbsoluteController.h"
@@ -493,7 +494,6 @@ static bool AllowCreatingBackgroundTabs() {
 
 NavigationPolicy LocalFrameClientImpl::DecidePolicyForNavigation(
     const ResourceRequest& request,
-    Document* origin_document,
     DocumentLoader* loader,
     NavigationType type,
     NavigationPolicy policy,
@@ -555,14 +555,8 @@ NavigationPolicy LocalFrameClientImpl::DecidePolicyForNavigation(
   if (form)
     navigation_info.form = WebFormElement(form);
 
-  // The frame has navigated either by itself or by the action of the
-  // |origin_document| when it is defined. |source_location| represents the
-  // line of code that has initiated the navigation. It is used to let web
-  // developpers locate the root cause of blocked navigations.
   std::unique_ptr<SourceLocation> source_location =
-      origin_document
-          ? SourceLocation::Capture(origin_document)
-          : SourceLocation::Capture(web_frame_->GetFrame()->GetDocument());
+      SourceLocation::Capture(web_frame_->GetFrame()->GetDocument());
   if (source_location && !source_location->IsUnknown()) {
     navigation_info.source_location.url = source_location->Url();
     navigation_info.source_location.line_number = source_location->LineNumber();
@@ -754,7 +748,7 @@ bool LocalFrameClientImpl::CanCreatePluginWithoutRenderer(
 }
 
 PluginView* LocalFrameClientImpl::CreatePlugin(
-    HTMLPlugInElement& element,
+    HTMLPlugInElement* element,
     const KURL& url,
     const Vector<String>& param_names,
     const Vector<String>& param_values,
@@ -782,7 +776,7 @@ PluginView* LocalFrameClientImpl::CreatePlugin(
   if (!web_plugin->Initialize(container))
     return nullptr;
 
-  if (policy != kAllowDetachedPlugin && !element.GetLayoutObject())
+  if (policy != kAllowDetachedPlugin && !element->GetLayoutObject())
     return nullptr;
 
   return container;

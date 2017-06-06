@@ -15,8 +15,8 @@
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
+#include "base/threading/non_thread_safe.h"
 #include "base/threading/thread.h"
-#include "base/threading/thread_checker.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "net/base/net_errors.h"
@@ -98,7 +98,8 @@ class Executor : public base::RefCountedThreadSafe<Executor> {
 };
 
 class MultiThreadedProxyResolver : public ProxyResolver,
-                                   public Executor::Coordinator {
+                                   public Executor::Coordinator,
+                                   public base::NonThreadSafe {
  public:
   // Creates an asynchronous ProxyResolver that runs requests on up to
   // |max_num_threads|.
@@ -144,8 +145,6 @@ class MultiThreadedProxyResolver : public ProxyResolver,
   PendingJobsQueue pending_jobs_;
   ExecutorList executors_;
   scoped_refptr<ProxyResolverScriptData> script_data_;
-
-  THREAD_CHECKER(thread_checker_);
 };
 
 // Job ---------------------------------------------
@@ -448,7 +447,7 @@ MultiThreadedProxyResolver::MultiThreadedProxyResolver(
 }
 
 MultiThreadedProxyResolver::~MultiThreadedProxyResolver() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   // We will cancel all outstanding requests.
   pending_jobs_.clear();
 
@@ -463,7 +462,7 @@ int MultiThreadedProxyResolver::GetProxyForURL(
     const CompletionCallback& callback,
     std::unique_ptr<Request>* request,
     const NetLogWithSource& net_log) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK(!callback.is_null());
 
   scoped_refptr<GetProxyForURLJob> job(
@@ -496,7 +495,7 @@ int MultiThreadedProxyResolver::GetProxyForURL(
 }
 
 Executor* MultiThreadedProxyResolver::FindIdleExecutor() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   for (ExecutorList::iterator it = executors_.begin();
        it != executors_.end(); ++it) {
     Executor* executor = it->get();
@@ -507,7 +506,7 @@ Executor* MultiThreadedProxyResolver::FindIdleExecutor() {
 }
 
 void MultiThreadedProxyResolver::AddNewExecutor() {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   DCHECK_LT(executors_.size(), max_num_threads_);
   // The "thread number" is used to give the thread a unique name.
   int thread_number = executors_.size();
@@ -518,7 +517,7 @@ void MultiThreadedProxyResolver::AddNewExecutor() {
 }
 
 void MultiThreadedProxyResolver::OnExecutorReady(Executor* executor) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DCHECK(CalledOnValidThread());
   while (!pending_jobs_.empty()) {
     scoped_refptr<Job> job = pending_jobs_.front();
     pending_jobs_.pop_front();

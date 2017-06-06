@@ -14,7 +14,7 @@
 namespace media {
 
 // FrameAvailableEvent is a RefCounted wrapper for a WaitableEvent
-// (it's not possible to put one in RefCountedData).
+// because it's not possible to put one in RefCountedData.
 // This lets us safely signal an event on any thread.
 struct FrameAvailableEvent
     : public base::RefCountedThreadSafe<FrameAvailableEvent> {
@@ -29,7 +29,7 @@ struct FrameAvailableEvent
   ~FrameAvailableEvent() = default;
 };
 
-scoped_refptr<SurfaceTextureGLOwner> SurfaceTextureGLOwnerImpl::Create() {
+scoped_refptr<SurfaceTextureGLOwner> SurfaceTextureGLOwner::Create() {
   GLuint texture_id;
   glGenTextures(1, &texture_id);
   if (!texture_id)
@@ -44,25 +44,25 @@ scoped_refptr<SurfaceTextureGLOwner> SurfaceTextureGLOwnerImpl::Create() {
   glTexParameteri(GL_TEXTURE_EXTERNAL_OES, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
   DCHECK_EQ(static_cast<GLenum>(GL_NO_ERROR), glGetError());
 
-  return new SurfaceTextureGLOwnerImpl(texture_id);
+  return new SurfaceTextureGLOwner(texture_id);
 }
 
-SurfaceTextureGLOwnerImpl::SurfaceTextureGLOwnerImpl(GLuint texture_id)
-    : surface_texture_(gl::SurfaceTexture::Create(texture_id)),
-      texture_id_(texture_id),
+SurfaceTextureGLOwner::SurfaceTextureGLOwner(GLuint texture_id)
+    : SurfaceTexture(CreateJavaSurfaceTexture(texture_id)),
       context_(gl::GLContext::GetCurrent()),
       surface_(gl::GLSurface::GetCurrent()),
+      texture_id_(texture_id),
       frame_available_event_(new FrameAvailableEvent()) {
   DCHECK(context_);
   DCHECK(surface_);
-  surface_texture_->SetFrameAvailableCallbackOnAnyThread(
+  SetFrameAvailableCallbackOnAnyThread(
       base::Bind(&FrameAvailableEvent::Signal, frame_available_event_));
 }
 
-SurfaceTextureGLOwnerImpl::~SurfaceTextureGLOwnerImpl() {
+SurfaceTextureGLOwner::~SurfaceTextureGLOwner() {
   DCHECK(thread_checker_.CalledOnValidThread());
   // Make sure that the SurfaceTexture isn't using the GL objects.
-  surface_texture_ = nullptr;
+  DestroyJavaObject();
 
   ui::ScopedMakeCurrent scoped_make_current(context_.get(), surface_.get());
   if (scoped_make_current.Succeeded()) {
@@ -71,47 +71,19 @@ SurfaceTextureGLOwnerImpl::~SurfaceTextureGLOwnerImpl() {
   }
 }
 
-GLuint SurfaceTextureGLOwnerImpl::GetTextureId() const {
-  return texture_id_;
-}
-
-gl::ScopedJavaSurface SurfaceTextureGLOwnerImpl::CreateJavaSurface() const {
-  return gl::ScopedJavaSurface(surface_texture_.get());
-}
-
-void SurfaceTextureGLOwnerImpl::UpdateTexImage() {
-  surface_texture_->UpdateTexImage();
-}
-
-void SurfaceTextureGLOwnerImpl::GetTransformMatrix(float mtx[]) {
-  surface_texture_->GetTransformMatrix(mtx);
-}
-
-void SurfaceTextureGLOwnerImpl::ReleaseBackBuffers() {
-  surface_texture_->ReleaseBackBuffers();
-}
-
-gl::GLContext* SurfaceTextureGLOwnerImpl::GetContext() const {
-  return context_.get();
-}
-
-gl::GLSurface* SurfaceTextureGLOwnerImpl::GetSurface() const {
-  return surface_.get();
-}
-
-void SurfaceTextureGLOwnerImpl::SetReleaseTimeToNow() {
+void SurfaceTextureGLOwner::SetReleaseTimeToNow() {
   release_time_ = base::TimeTicks::Now();
 }
 
-void SurfaceTextureGLOwnerImpl::IgnorePendingRelease() {
+void SurfaceTextureGLOwner::IgnorePendingRelease() {
   release_time_ = base::TimeTicks();
 }
 
-bool SurfaceTextureGLOwnerImpl::IsExpectingFrameAvailable() {
+bool SurfaceTextureGLOwner::IsExpectingFrameAvailable() {
   return !release_time_.is_null();
 }
 
-void SurfaceTextureGLOwnerImpl::WaitForFrameAvailable() {
+void SurfaceTextureGLOwner::WaitForFrameAvailable() {
   DCHECK(!release_time_.is_null());
 
   // 5msec covers >99.9% of cases, so just wait for up to that much before
@@ -139,6 +111,14 @@ void SurfaceTextureGLOwnerImpl::WaitForFrameAvailable() {
              << "ms, total: " << (elapsed + remaining).InMillisecondsF()
              << "ms";
   }
+}
+
+void SurfaceTextureGLOwner::AttachToGLContext() {
+  NOTIMPLEMENTED();
+}
+
+void SurfaceTextureGLOwner::DetachFromGLContext() {
+  NOTIMPLEMENTED();
 }
 
 }  // namespace media

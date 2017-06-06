@@ -555,7 +555,7 @@ void AppBannerManager::OnBannerPromptReply(
   UpdateState(State::COMPLETE);
 }
 
-void AppBannerManager::DisplayAppBanner(bool user_gesture) {
+void AppBannerManager::DisplayAppBanner() {
   if (is_pending_event()) {
     // Simulate a non-canceled OnBannerPromptReply to show the delayed banner.
     OnBannerPromptReply(blink::mojom::AppBannerPromptReply::NONE, referrer_);

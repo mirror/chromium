@@ -395,6 +395,12 @@ CHAR-LIMIT guidelines:
       <message name="IDS_AUTOFILL_WALLET_MANAGEMENT_LINK_TEXT" desc="Text for link that allows users to see and edit their Wallet information.">
         Edit
       </message>
+      <message name="IDS_AUTOFILL_MANAGE_WALLET_CARDS_URL" desc="URL for managing wallet credit cards" translateable="false">
+        https://payments.google.com/#paymentMethods
+      </message>
+      <message name="IDS_AUTOFILL_MANAGE_WALLET_ADDRESSES_URL" desc="URL for managing wallet addresses" translateable="false">
+        https://payments.google.com/#paymentMethods
+      </message>
       <message name="IDS_AUTOFILL_FROM_GOOGLE_ACCOUNT_LONG" desc="Text that indicates an address or credit card came from Google servers.">
         From Google Payments
       </message>
@@ -977,6 +983,11 @@ To obtain new licenses, connect to the internet and play your downloaded content
         No USB devices here
       </message>
 
+      <!-- IPH Strings -->
+      <message name="IDS_IPH_DATA_SAVER_PREVIEW_TEXT" desc="In-product help for when a data saver preview page and infobar are shown.">
+          Chrome is using less data to show you this page
+      </message>
+
       <!-- Data Saver -->
       <message name="IDS_DATA_REDUCTION_TITLE" desc="Menu item for Data Saver, which allows users to save mobile data by compressing network traffic.">
         Data Saver
@@ -1331,6 +1342,9 @@ To obtain new licenses, connect to the internet and play your downloaded content
       </message>
       <message name="IDS_SYNC_CUSTOM_PASSPHRASE" desc="Prompt user to create a custom sync password.">
         Only someone with your passphrase can read your encrypted data. The passphrase is not sent to or stored by Google. If you forget your passphrase or want to change this setting you'll need to reset sync. <ph name="BEGIN_LINK">&lt;learnmore&gt;</ph>Learn more<ph name="END_LINK">&lt;/learnmore&gt;</ph>
+      </message>
+      <message name="IDS_SYNC_DASHBOARD_URL" desc="URL for the sync dashboard." translateable="false">
+        https://www.google.com/settings/chrome/sync
       </message>
       <message name="IDS_SYNC_ENTER_CUSTOM_PASSPHRASE_HINT" desc="Hint for the passphrase field when user is to type in a passphrase. [CHAR-LIMIT=30]">
         Passphrase
@@ -3021,15 +3035,6 @@ You must have Bluetooth and Location turned on in order to use the Physical Web.
       </message>
       <message name="IDS_IPH_DOWNLOAD_HOME_ACCESSIBILITY_TEXT" desc="The in-product-help accessibility text to open download home after a restart.">
         Find your files and pages in Downloads from the More Options button
-      </message>
-      <message name="IDS_IPH_DATA_SAVER_PREVIEW_TEXT" desc="In-product help for when a data saver preview page and infobar are shown.">
-          Chrome is using less data to show you this page
-      </message>
-      <message name="IDS_IPH_DATA_SAVER_DETAIL_TEXT" desc="The in-product-help message to open data saver.">
-        See how much data you've saved
-      </message>
-      <message name="IDS_IPH_DATA_SAVER_DETAIL_ACCESSIBILITY_TEXT" desc="The in-product-help accessibility text to open data saver.">
-        See how much data you've saved from the More Options button
       </message>
 
       <!-- Search Widget strings -->

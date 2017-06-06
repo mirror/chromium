@@ -8,7 +8,7 @@
 Sources.JavaScriptBreakpointsSidebarPane = class extends UI.ThrottledWidget {
   constructor() {
     super(true);
-    this.registerRequiredCSS('sources/javaScriptBreakpointsSidebarPane.css');
+    this.registerRequiredCSS('components/breakpointsList.css');
 
     this._breakpointManager = Bindings.breakpointManager;
     this._breakpointManager.addEventListener(Bindings.BreakpointManager.Events.BreakpointAdded, this.update, this);
@@ -31,7 +31,7 @@ Sources.JavaScriptBreakpointsSidebarPane = class extends UI.ThrottledWidget {
       this._listElement = null;
       this.contentElement.removeChildren();
       var emptyElement = this.contentElement.createChild('div', 'gray-info-message');
-      emptyElement.textContent = Common.UIString('No breakpoints');
+      emptyElement.textContent = Common.UIString('No Breakpoints');
       this.contentElement.appendChild(emptyElement);
       this._didUpdateForTest();
       return Promise.resolve();

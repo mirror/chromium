@@ -238,8 +238,7 @@ static ConditionalClip ComputeAccumulatedClip(PropertyTrees* property_trees,
   while (target_node->clip_id < clip_node->id) {
     if (parent_chain.size() > 0) {
       // Search the cache.
-      for (size_t i = 0; i < clip_node->cached_clip_rects->size(); ++i) {
-        auto& data = clip_node->cached_clip_rects[i];
+      for (auto& data : clip_node->cached_clip_rects) {
         if (data.target_id == target_id) {
           cache_hit = true;
           cached_clip = data.clip;
@@ -458,6 +457,15 @@ static inline bool LayerShouldBeSkippedInternal(
   const TransformNode* transform_node =
       transform_tree.Node(layer->transform_tree_index());
   const EffectNode* effect_node = effect_tree.Node(layer->effect_tree_index());
+
+  DCHECK(effect_node);
+  DCHECK(transform_node);
+  // TODO(crbug.com/726423) : This is a workaround for crbug.com/726225 to
+  // avoid crashing when there is no effect or transform node. Effect node and
+  // transform node should always exist here and this workaround should be
+  // removed.
+  if (!transform_node || !effect_node)
+    return true;
 
   if (effect_node->has_render_surface && effect_node->subtree_has_copy_request)
     return false;
@@ -770,7 +778,7 @@ static void ComputeClips(PropertyTrees* property_trees) {
        i < static_cast<int>(clip_tree->size()); ++i) {
     ClipNode* clip_node = clip_tree->Node(i);
     // Clear the clip rect cache
-    clip_node->cached_clip_rects->clear();
+    clip_node->cached_clip_rects = std::vector<ClipRectData>(1);
     if (clip_node->id == ClipTree::kViewportNodeId) {
       clip_node->cached_accumulated_rect_in_screen_space = clip_node->clip;
       continue;
@@ -849,7 +857,7 @@ void FindLayersThatNeedUpdates(LayerTreeImpl* layer_tree_impl,
     // TODO(crbug.com/726423) : This is a workaround for crbug.com/725851 to
     // avoid crashing when layer_impl is nullptr. This workaround should be
     // removed as layer_impl should not be nullptr here.
-    if (!layer_impl || !layer_impl->HasValidPropertyTreeIndices())
+    if (!layer_impl)
       continue;
     if (!IsRootLayer(layer_impl) &&
         LayerShouldBeSkippedForDrawPropertiesComputation(

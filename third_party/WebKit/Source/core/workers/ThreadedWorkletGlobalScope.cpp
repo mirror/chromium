@@ -35,13 +35,14 @@ ThreadedWorkletGlobalScope::~ThreadedWorkletGlobalScope() {
   DCHECK(!thread_);
 }
 
-void ThreadedWorkletGlobalScope::ReportFeature(WebFeature feature) {
+void ThreadedWorkletGlobalScope::ReportFeature(UseCounter::Feature feature) {
   DCHECK(IsContextThread());
   DCHECK(thread_);
   thread_->GetWorkerReportingProxy().CountFeature(feature);
 }
 
-void ThreadedWorkletGlobalScope::ReportDeprecation(WebFeature feature) {
+void ThreadedWorkletGlobalScope::ReportDeprecation(
+    UseCounter::Feature feature) {
   DCHECK(IsContextThread());
   DCHECK(thread_);
   thread_->GetWorkerReportingProxy().CountDeprecation(feature);

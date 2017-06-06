@@ -16,6 +16,7 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.gfx.mojom.RectF;
 import org.chromium.mojo.system.MojoException;
+import org.chromium.mojo.system.SharedBufferHandle;
 import org.chromium.shape_detection.mojom.FaceDetection;
 import org.chromium.shape_detection.mojom.FaceDetectionResult;
 import org.chromium.shape_detection.mojom.FaceDetectorOptions;
@@ -56,7 +57,8 @@ public class FaceDetectionImplGmsCore implements FaceDetection {
     }
 
     @Override
-    public void detect(org.chromium.skia.mojom.Bitmap bitmapData, DetectResponse callback) {
+    public void detect(
+            SharedBufferHandle frameData, int width, int height, DetectResponse callback) {
         // The vision library will be downloaded the first time the API is used
         // on the device; this happens "fast", but it might have not completed,
         // bail in this case.
@@ -68,11 +70,11 @@ public class FaceDetectionImplGmsCore implements FaceDetection {
             options.fastMode = mFastMode;
             options.maxDetectedFaces = mMaxFaces;
             FaceDetectionImpl detector = new FaceDetectionImpl(options);
-            detector.detect(bitmapData, callback);
+            detector.detect(frameData, width, height, callback);
             return;
         }
 
-        Frame frame = BitmapUtils.convertToFrame(bitmapData);
+        Frame frame = SharedBufferUtils.convertToFrame(frameData, width, height);
         if (frame == null) {
             Log.e(TAG, "Error converting SharedMemory to Frame");
             callback.call(new FaceDetectionResult[0]);
