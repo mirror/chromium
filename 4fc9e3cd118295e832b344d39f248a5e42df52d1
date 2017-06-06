@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2cb49ea3_4bb65ca1",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-06T22:32:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02088c99_bb3980d6",
+      "range": {
+        "startLine": 52,
+        "startChar": 61,
+        "endLine": 52,
+        "endChar": 69
+      },
+      "revId": "4fc9e3cd118295e832b344d39f248a5e42df52d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80428f78_7e02e150",
         "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "4fc9e3cd118295e832b344d39f248a5e42df52d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db8aaef8_bb27e13f",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-06T22:32:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80428f78_7e02e150",
+      "range": {
+        "startLine": 181,
+        "startChar": 20,
+        "endLine": 181,
+        "endChar": 25
+      },
+      "revId": "4fc9e3cd118295e832b344d39f248a5e42df52d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7ef12a86_24d997b5",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-06T22:32:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3afaa0e5_4300f663",
+      "range": {
+        "startLine": 185,
+        "startChar": 6,
+        "endLine": 185,
+        "endChar": 15
+      },
+      "revId": "4fc9e3cd118295e832b344d39f248a5e42df52d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "affef514_1c933f37",
         "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "4fc9e3cd118295e832b344d39f248a5e42df52d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "898de169_766148e1",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-06T22:32:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "affef514_1c933f37",
+      "range": {
+        "startLine": 208,
+        "startChar": 6,
+        "endLine": 208,
+        "endChar": 17
+      },
+      "revId": "4fc9e3cd118295e832b344d39f248a5e42df52d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "fdc0b2d1_d4c8ef73",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-06T22:32:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1ea00a6_4d37d71c",
+      "range": {
+        "startLine": 209,
+        "startChar": 7,
+        "endLine": 209,
+        "endChar": 30
+      },
+      "revId": "4fc9e3cd118295e832b344d39f248a5e42df52d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5b37b2e_d8d0e86b",
         "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
         "patchSetId": 6
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "6a3d1c4e_2df8483f",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-06T22:32:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5b37b2e_d8d0e86b",
+      "range": {
+        "startLine": 211,
+        "startChar": 56,
+        "endLine": 211,
+        "endChar": 58
+      },
+      "revId": "4fc9e3cd118295e832b344d39f248a5e42df52d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9421986_f35d147c",
         "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
         "patchSetId": 6
@@ -151,6 +295,30 @@
       "writtenOn": "2017-06-06T14:47:25Z",
       "side": 1,
       "message": "is there any reason for using %02ld instead of %02d for the month here and elsewhere?",
+      "range": {
+        "startLine": 305,
+        "startChar": 41,
+        "endLine": 305,
+        "endChar": 46
+      },
+      "revId": "4fc9e3cd118295e832b344d39f248a5e42df52d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda523ca_c677de1f",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-06T22:32:07Z",
+      "side": 1,
+      "message": "This is because [comps month] returns a long instead of an int. However in this case and the two other cases I have saved these values to int variables and removed all the %02ld changing them to %02d.",
+      "parentUuid": "f9421986_f35d147c",
       "range": {
         "startLine": 305,
         "startChar": 41,
