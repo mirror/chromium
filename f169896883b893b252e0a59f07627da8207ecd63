@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "17a59dc5_df347f58",
+        "filename": "cc/paint/display_item_list_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-06T23:16:17Z",
+      "side": 0,
+      "message": "What about tests like this that verify optimizations?",
+      "revId": "f169896883b893b252e0a59f07627da8207ecd63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e956cfc_4a8807e3",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintControllerTest.cpp",
         "patchSetId": 32
