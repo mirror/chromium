@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64c156c7_af6095b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-06T20:58:26Z",
+      "side": 1,
+      "message": "Sorry. I was unclear. I meant something like:\n\n  Original CL: https://chromium-review.googlesource.com/c/518933/\n  Revert CL: https://chromium-review.googlesource.com/c/524289/",
+      "revId": "be4ebcb39a49b4edaa8b6528e2b8cdc94c04f6f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
