@@ -53,11 +53,8 @@ class AXSlider : public AXLayoutObject {
 
   AccessibilityRole DetermineAccessibilityRole() final;
   bool IsSlider() const final { return true; }
-  bool IsControl() const final { return true; }
 
   void AddChildren() final;
-
-  bool CanSetValueAttribute() const final { return true; }
 
   void SetValue(const String&) final;
   AccessibilityOrientation Orientation() const final;
