@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "29fc7123_57ec049c",
+        "filename": "chrome/browser/android/vr_shell/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-06T14:06:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e68fa70e_4701724d",
+      "range": {
+        "startLine": 106,
+        "startChar": 8,
+        "endLine": 106,
+        "endChar": 9
+      },
+      "revId": "541612b034d466ae0390d54d2ad7251aa079e7bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ec9ae14_2e6d2dd3",
         "filename": "chrome/browser/android/vr_shell/ui_browser_interface.h",
         "patchSetId": 2
@@ -92,6 +116,30 @@
       "revId": "541612b034d466ae0390d54d2ad7251aa079e7bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c47b64d3_01164551",
+        "filename": "chrome/browser/android/vr_shell/vr_browser_interface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-06T14:06:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c167a261_3ff546de",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 23
+      },
+      "revId": "541612b034d466ae0390d54d2ad7251aa079e7bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
