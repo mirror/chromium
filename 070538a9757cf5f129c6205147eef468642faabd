@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91d8afad_e5d8fe55",
+        "filename": "chrome/browser/speech/tts_controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-06T20:10:41Z",
+      "side": 1,
+      "message": "Are you sure that you want to record both Speak and SpeakViaExtension/ViaNativeAPI?  You\u0027ll end up with duplicate actions when viewing the sequence.  I\u0027d recommend either using a histogram, or dropping the broader action, depending on what your analysis goals are.",
+      "range": {
+        "startLine": 203,
+        "startChar": 67,
+        "endLine": 203,
+        "endChar": 0
+      },
+      "revId": "070538a9757cf5f129c6205147eef468642faabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "753119a8_1cdf675d",
+        "filename": "chrome/browser/speech/tts_controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-06T20:10:41Z",
+      "side": 1,
+      "message": "Are you sure that you want to record these as user actions?  I would recommend using an enumerated histogram, unless you think it will be useful to see these in sequence relative to other actions.",
+      "range": {
+        "startLine": 322,
+        "startChar": 66,
+        "endLine": 322,
+        "endChar": 0
+      },
+      "revId": "070538a9757cf5f129c6205147eef468642faabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cb79e14_7a3b997e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 75821,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-06T20:10:41Z",
+      "side": 1,
+      "message": "(Just within the XML files), please use a custom enum label, with labels like \"Chrome TTS extension API\" and \"Web speech API\".  Ditto for the other histograms.",
+      "range": {
+        "startLine": 75821,
+        "startChar": 64,
+        "endLine": 75821,
+        "endChar": 78
+      },
+      "revId": "070538a9757cf5f129c6205147eef468642faabd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
