@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9403232a_2910c088",
+        "filename": "chrome/android/java/res/layout/app_menu_layout.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-06T05:21:07Z",
+      "side": 1,
+      "message": "why relativelayout?  Looks like you are setting padding on the ListView manually (i.e. why not FrameLayout).\n\nAlternatively, why do you need to set the padding manually yourself?  Couldn\u0027t the relativelayout do this for us if we did some combination of above and android:layout_alignWithParentIfMissing?",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "310174dd649c5dc4016f16df20c68349c6047d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "891c439e_8afde9d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenu.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-06T05:21:07Z",
+      "side": 1,
+      "message": "Did you try the ListView#addFooter?  Wondering why that wouldn\u0027t work as well:\nhttps://developer.android.com/reference/android/widget/ListView.html#addFooterView(android.view.View)",
+      "range": {
+        "startLine": 243,
+        "startChar": 21,
+        "endLine": 243,
+        "endChar": 31
+      },
+      "revId": "310174dd649c5dc4016f16df20c68349c6047d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6566f00_dd1ae52a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenu.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-06T05:21:07Z",
+      "side": 1,
+      "message": "for the width, I think you need to set a max value otherwise it wouldn\u0027t attempt to wrap I think",
+      "range": {
+        "startLine": 247,
+        "startChar": 32,
+        "endLine": 247,
+        "endChar": 43
+      },
+      "revId": "310174dd649c5dc4016f16df20c68349c6047d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b60841_497b0de8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenu.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-06T05:21:07Z",
+      "side": 1,
+      "message": "from my comment in the xml, I think we should be able to find a way to not need this.  We could even potentially have the outer layout to be a LinearLayout that sets the visibility of these conditionally.",
+      "range": {
+        "startLine": 250,
+        "startChar": 22,
+        "endLine": 250,
+        "endChar": 32
+      },
+      "revId": "310174dd649c5dc4016f16df20c68349c6047d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
