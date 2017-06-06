@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ec59589_499188e7",
+        "filename": "components/about_ui/android/OWNERS",
+        "patchSetId": 15
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-06T14:30:20Z",
+      "side": 1,
+      "message": "nit. remove empty line",
+      "revId": "c3696c2807c26615f7e6784ea810b7a7ef3ca769",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
