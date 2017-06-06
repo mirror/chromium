@@ -253,6 +253,15 @@ bool ViewAndroid::StartDragAndDrop(const JavaRef<jstring>& jtext,
                                                    jimage);
 }
 
+bool ViewAndroid::ShouldSetAccessibilityFocusOnPageLoad() {
+  ScopedJavaLocalRef<jobject> delegate(GetViewAndroidDelegate());
+  if (delegate.is_null())
+    return false;
+  JNIEnv* env = base::android::AttachCurrentThread();
+  return Java_ViewAndroidDelegate_shouldSetAccessibilityFocusOnPageLoad(
+      env, delegate);
+}
+
 void ViewAndroid::OnBackgroundColorChanged(unsigned int color) {
   ScopedJavaLocalRef<jobject> delegate(GetViewAndroidDelegate());
   if (delegate.is_null())
