@@ -235,7 +235,7 @@ bool WasmCompileOverload(const v8::FunctionCallbackInfo<v8::Value>& args) {
 }  // namespace
 
 void WasmResponseExtensions::Initialize(v8::Isolate* isolate) {
-  if (RuntimeEnabledFeatures::webAssemblyStreamingEnabled()) {
+  if (RuntimeEnabledFeatures::WebAssemblyStreamingEnabled()) {
     isolate->SetWasmCompileCallback(WasmCompileOverload);
   }
 }
