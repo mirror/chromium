@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e6d99ff_47deb6f9",
+        "filename": "chrome/browser/ui/ash/launcher/extension_app_window_launcher_item_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-06-06T21:25:22Z",
+      "side": 1,
+      "message": "Ensure that window-\u003eGetTitle() isn\u0027t empty here.\n\nAlso, maybe add a comment here briefly explaining that when show_in_shelf is false the app name is always used for the title/tooltip, but show_in_shelf windows use the window title (if set) to differentiate them.",
+      "revId": "ca55cd7e7b6761929f35ace43b6c433277ffc0c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
