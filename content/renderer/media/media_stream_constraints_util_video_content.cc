@@ -43,9 +43,6 @@ const double kDefaultScreenCastFrameRate =
 namespace {
 
 using Point = ResolutionSet::Point;
-using StringSet = DiscreteSet<std::string>;
-using BoolSet = DiscreteSet<bool>;
-
 
 constexpr double kMinScreenCastAspectRatio =
     static_cast<double>(kMinScreenCastDimension) /
@@ -54,24 +51,6 @@ constexpr double kMaxScreenCastAspectRatio =
     static_cast<double>(kMaxScreenCastDimension) /
     static_cast<double>(kMinScreenCastDimension);
 
-StringSet StringSetFromConstraint(const blink::StringConstraint& constraint) {
-  if (!constraint.HasExact())
-    return StringSet::UniversalSet();
-
-  std::vector<std::string> elements;
-  for (const auto& entry : constraint.Exact())
-    elements.push_back(entry.Ascii());
-
-  return StringSet(std::move(elements));
-}
-
-BoolSet BoolSetFromConstraint(const blink::BooleanConstraint& constraint) {
-  if (!constraint.HasExact())
-    return BoolSet::UniversalSet();
-
-  return BoolSet({constraint.Exact()});
-}
-
 using DoubleRangeSet = NumericRangeSet<double>;
 
 class VideoContentCaptureCandidates {
@@ -79,9 +58,7 @@ class VideoContentCaptureCandidates {
   VideoContentCaptureCandidates()
       : has_explicit_max_height_(false),
         has_explicit_max_width_(false),
-        has_explicit_max_frame_rate_(false),
-        device_id_set_(StringSet::UniversalSet()),
-        noise_reduction_set_(BoolSet::UniversalSet()) {}
+        has_explicit_max_frame_rate_(false) {}
   explicit VideoContentCaptureCandidates(
       const blink::WebMediaTrackConstraintSet& constraint_set)
       : resolution_set_(ResolutionSet::FromConstraintSet(constraint_set)),
@@ -138,8 +115,12 @@ class VideoContentCaptureCandidates {
   bool has_explicit_max_frame_rate() const {
     return has_explicit_max_frame_rate_;
   }
-  const StringSet& device_id_set() const { return device_id_set_; }
-  const BoolSet& noise_reduction_set() const { return noise_reduction_set_; }
+  const DiscreteSet<std::string>& device_id_set() const {
+    return device_id_set_;
+  }
+  const DiscreteSet<bool>& noise_reduction_set() const {
+    return noise_reduction_set_;
+  }
   void set_resolution_set(const ResolutionSet& set) { resolution_set_ = set; }
   void set_frame_rate_set(const DoubleRangeSet& set) { frame_rate_set_ = set; }
 
@@ -149,8 +130,8 @@ class VideoContentCaptureCandidates {
   bool has_explicit_max_width_;
   DoubleRangeSet frame_rate_set_;
   bool has_explicit_max_frame_rate_;
-  StringSet device_id_set_;
-  BoolSet noise_reduction_set_;
+  DiscreteSet<std::string> device_id_set_;
+  DiscreteSet<bool> noise_reduction_set_;
 };
 
 ResolutionSet ScreenCastResolutionCapabilities() {
@@ -239,7 +220,7 @@ media::VideoCaptureParams SelectVideoCaptureParamsFromCandidates(
 }
 
 std::string SelectDeviceIDFromCandidates(
-    const StringSet& candidates,
+    const DiscreteSet<std::string>& candidates,
     const blink::WebMediaTrackConstraintSet& basic_constraint_set) {
   DCHECK(!candidates.IsEmpty());
   if (basic_constraint_set.device_id.HasIdeal()) {
@@ -265,7 +246,7 @@ std::string SelectDeviceIDFromCandidates(
 }
 
 base::Optional<bool> SelectNoiseReductionFromCandidates(
-    const BoolSet& candidates,
+    const DiscreteSet<bool>& candidates,
     const blink::WebMediaTrackConstraintSet& basic_constraint_set) {
   DCHECK(!candidates.IsEmpty());
   if (basic_constraint_set.goog_noise_reduction.HasIdeal() &&
