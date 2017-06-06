@@ -70,6 +70,30 @@
       "revId": "1c466a3627a3bdf465ed222cdf22ed8aac4d164f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a54ac046_c85295d1",
+        "filename": "components/spellcheck/common/spellcheck.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T17:46:38Z",
+      "side": 1,
+      "message": "Oh I misread groby\u0027s comment, I thought this was for testing.\n\nIn general, that\u0027s still how the security team feels: things that aren\u0027t enabled shouldn\u0027t be exposed as part of the IPC surface.\n\nI see two possibilities here:\n- add conditional compilation to mojom: this was previously discussed in https://groups.google.com/a/chromium.org/forum/#!msg/chromium-mojo/BfvXCPBpcUs/j93c3TU_DAAJ, and the plan was to add it, but it was never actually implemented\n- split the interface file\n\nEither one is acceptable; I suspect splitting the interface will be simpler in the short-term.\n\n(This goes along with my comment that the Blink bits should be guarded by BUILDFLAG as well)",
+      "parentUuid": "c9e786ea_eaf574ec",
+      "range": {
+        "startLine": 60,
+        "startChar": 10,
+        "endLine": 60,
+        "endChar": 25
+      },
+      "revId": "1c466a3627a3bdf465ed222cdf22ed8aac4d164f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
