@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a66e1e6c_59670adb",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-06-06T22:21:46Z",
+      "side": 1,
+      "message": "nit: \"starts to increase quickly\"?\nI don\u0027t thin \"starts to bump up\" is grammatically correct.\nOr perhaps: Opacity remains constant until progress reaches the threshold, then increases quickly as the progress increases beyond the threshold.",
+      "range": {
+        "startLine": 39,
+        "startChar": 54,
+        "endLine": 39,
+        "endChar": 71
+      },
+      "revId": "c2ed37073162fd3d984329bdbd272ae7c3b23969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

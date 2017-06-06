@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "6914626a_f9a0b49d",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-06-06T22:21:46Z",
+      "side": 1,
+      "message": "fair enough.",
+      "parentUuid": "7f702144_0765af97",
+      "revId": "c13ead92204aaafde5b342438e5b14a6b0c9157d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "937035a4_d30bba19",
         "filename": "content/browser/web_contents/aura/gesture_nav_simple.h",
         "patchSetId": 1
@@ -160,6 +178,24 @@
       "side": 1,
       "message": "The Affordance class is an inner class, thus a friend, of GestureNavSimple and have access to private methods. There is no need to make this public.",
       "parentUuid": "937035a4_d30bba19",
+      "revId": "c13ead92204aaafde5b342438e5b14a6b0c9157d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b10ec215_d77d9b0b",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-06-06T22:21:46Z",
+      "side": 1,
+      "message": "Sure. There\u0027s no particular reason it needs to be though. I\u0027d rather not encourage tight coupling between the two by having Affordance call private methods in GestureNavSimple. We may also move it out into a separate class if GestureNavSimple becomes too big - no reason to make that harder than it needs to be.\nA purist may even say Affordance should call OnAffordanceAnimationEnded() through an interface, although that is probably an overkill right now.",
+      "parentUuid": "5f65c272_67d70b7a",
       "revId": "c13ead92204aaafde5b342438e5b14a6b0c9157d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
