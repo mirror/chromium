@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "636ced16_d9370e49",
+        "filename": "services/device/device_service_test_base.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-06T23:01:46Z",
+      "side": 1,
+      "message": "Why not have both the IO and FILE threads owned by the same object?",
+      "revId": "9e716c9b16af5a528c11ea143ef674d68718c9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f979c093_db6ef274",
         "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
         "patchSetId": 4
@@ -59,6 +76,30 @@
       "writtenOn": "2017-06-06T07:54:24Z",
       "side": 1,
       "message": "Is this ok?  looks a little ugly:(",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 14
+      },
+      "revId": "9e716c9b16af5a528c11ea143ef674d68718c9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "827c6c7f_23a00b97",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-06T23:01:46Z",
+      "side": 1,
+      "message": "We actually have base::DoNothing().",
+      "parentUuid": "41899266_e8cb60c7",
       "range": {
         "startLine": 36,
         "startChar": 5,
