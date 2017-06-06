@@ -52,6 +52,24 @@
       "revId": "27deddf7f2bb211c5c74695c0088d346cb129372",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa69d669_947f26bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/ContentSuggestionsNotificationHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-06-06T14:34:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cee52b0_a8340460",
+      "revId": "27deddf7f2bb211c5c74695c0088d346cb129372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
