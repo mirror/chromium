@@ -563,13 +563,16 @@ void WebPluginContainerImpl::RequestTouchEventType(
   if (Page* page = element_->GetDocument().GetPage()) {
     EventHandlerRegistry& registry = page->GetEventHandlerRegistry();
     if (request_type != kTouchEventRequestTypeNone &&
-        touch_event_request_type_ == kTouchEventRequestTypeNone)
+        touch_event_request_type_ == kTouchEventRequestTypeNone) {
       registry.DidAddEventHandler(
-          *element_, EventHandlerRegistry::kTouchStartOrMoveEventBlocking);
-    else if (request_type == kTouchEventRequestTypeNone &&
-             touch_event_request_type_ != kTouchEventRequestTypeNone)
+          *element_,
+          EventHandlerRegistry::kTouchStartOrMoveEventBlockingLowLatency);
+    } else if (request_type == kTouchEventRequestTypeNone &&
+               touch_event_request_type_ != kTouchEventRequestTypeNone) {
       registry.DidRemoveEventHandler(
-          *element_, EventHandlerRegistry::kTouchStartOrMoveEventBlocking);
+          *element_,
+          EventHandlerRegistry::kTouchStartOrMoveEventBlockingLowLatency);
+    }
   }
   touch_event_request_type_ = request_type;
 }
@@ -881,7 +884,8 @@ void WebPluginContainerImpl::HandleTouchEvent(TouchEvent* event) {
   switch (touch_event_request_type_) {
     case kTouchEventRequestTypeNone:
       return;
-    case kTouchEventRequestTypeRaw: {
+    case kTouchEventRequestTypeRaw:
+    case kTouchEventRequestTypeRawLowLatency: {
       if (!event->NativeEvent())
         return;
 
