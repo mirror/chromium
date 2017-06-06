@@ -16,6 +16,24 @@
       "revId": "082844485d73fe5c43b75902e665a86883043042",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51b568f1_3aef2dcd",
+        "filename": "third_party/WebKit/Source/core/dom/ContainerNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-06T06:42:06Z",
+      "side": 1,
+      "message": "Add a comment.\nRename the function to CollectChildrenAndRemoveFromOldParentWithOptionalRecheck().\n\n\u003e Also, is there such a case where new_doc.DomTreeVersion() \u003c original_version_for_new_node + 1?\n\nYes.  If |new_child| has no parentNode, DOM tree version isn\u0027t changed.",
+      "parentUuid": "cb3c88e5_29f94d1e",
+      "revId": "082844485d73fe5c43b75902e665a86883043042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
