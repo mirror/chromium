@@ -182,11 +182,7 @@ SelectionState InlineTextBox::GetSelectionState() const {
     int last_selectable = Start() + Len() - (IsLineBreak() ? 1 : 0);
 
     // FIXME: Remove -webkit-line-break: LineBreakAfterWhiteSpace.
-    int end_of_line_adjustment_for_css_line_break =
-        GetLineLayoutItem().Style()->GetLineBreak() ==
-                LineBreak::kAfterWhiteSpace
-            ? -1
-            : 0;
+    int end_of_line_adjustment_for_css_line_break = 0;
     bool start = (state != SelectionState::kEnd && start_pos >= start_ &&
                   start_pos <= start_ + len_ +
                                    end_of_line_adjustment_for_css_line_break);

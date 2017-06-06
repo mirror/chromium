@@ -3178,8 +3178,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
     return false;
   }
   bool BreakOnlyAfterWhiteSpace() const {
-    return WhiteSpace() == EWhiteSpace::kPreWrap ||
-           GetLineBreak() == LineBreak::kAfterWhiteSpace;
+    return WhiteSpace() == EWhiteSpace::kPreWrap;
   }
 
   bool BreakWords() const {
