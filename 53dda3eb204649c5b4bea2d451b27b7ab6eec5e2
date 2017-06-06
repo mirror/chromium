@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8e96c67_9feecfbf",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-06T06:50:10Z",
+      "side": 1,
+      "message": "s/proxyClient/proxy_client/",
+      "revId": "53dda3eb204649c5b4bea2d451b27b7ab6eec5e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37257254_02743d40",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-06T06:50:10Z",
+      "side": 1,
+      "message": "proxy_client-\u003eSetGlobalScope(this);",
+      "revId": "53dda3eb204649c5b4bea2d451b27b7ab6eec5e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6804d11d_7bf1f752",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-06T06:50:10Z",
+      "side": 1,
+      "message": "s/proxyClient/proxy_client/",
+      "revId": "53dda3eb204649c5b4bea2d451b27b7ab6eec5e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b110d4c9_c23ad8b7",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-06T06:50:10Z",
+      "side": 1,
+      "message": "AWGS doesn\u0027t have to own the clients because the base class (WorkerOrWorkletGlobalScope) owns it and provides an accessor (Clients()).",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 23
+      },
+      "revId": "53dda3eb204649c5b4bea2d451b27b7ab6eec5e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e47993f3_ad19a872",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-06T06:50:10Z",
+      "side": 1,
+      "message": "s/scope/global_scope/ for consistency.",
+      "range": {
+        "startLine": 25,
+        "startChar": 24,
+        "endLine": 25,
+        "endChar": 29
+      },
+      "revId": "53dda3eb204649c5b4bea2d451b27b7ab6eec5e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b2a7c17_ad11001e",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-06T06:50:10Z",
+      "side": 1,
+      "message": "style-nit: Can you add an extra blank line here?",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 24
+      },
+      "revId": "53dda3eb204649c5b4bea2d451b27b7ab6eec5e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
