@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "18e2d0a3_e05b88da",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-06T18:01:31Z",
+      "side": 1,
+      "message": "This should not happen: \"Active Directory OOBE negotiator not yet present, skipping.\", right?\nAs Hidehiko mentioned about we should not silently start ARC.\nMy idea is similar. Disable ARC OOBE OptIn in case IsActiveDirectoryUserForProfile(profile_)\nIn this case line L698 should look like:\nDCHECK(!IsOobeOptInActive())\n\nYou probably may want to add something like\n\n...\nelse if (IsActiveDirectoryUserForProfile(profile_)) {\n  VLOG(1) \u003c\u003c \"Skip ARC Terms of Service screen because ARC is for AD is not implemented.\";\n} else {\n....\n}\n\n\nto here: https://cs.chromium.org/chromium/src/chrome/browser/chromeos/login/wizard_controller.cc?l\u003d564",
+      "parentUuid": "773d8e4f_dfd8c5b7",
+      "range": {
+        "startLine": 701,
+        "startChar": 6,
+        "endLine": 701,
+        "endChar": 33
+      },
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88da375c_a2b4f864",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 2
