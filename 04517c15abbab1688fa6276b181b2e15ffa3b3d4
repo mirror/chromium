@@ -16,6 +16,24 @@
       "revId": "04517c15abbab1688fa6276b181b2e15ffa3b3d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b78ef9a5_b7f73776",
+        "filename": "media/blink/watch_time_reporter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-06T09:54:33Z",
+      "side": 1,
+      "message": "I had a look again this morning with a clear head and it was actually easier than last night :)\n\nI think we tried to merge a mechanism where has_native_controls_ is updated like and one where it\u0027s updated after the results are committed. As a result, the `bool record_native_controls \u003d has_native_controls \u0026\u0026 !is_controls_change_pending;` was bogus. Dropping this solved everything \\o/",
+      "parentUuid": "8f907b3f_235276d2",
+      "revId": "04517c15abbab1688fa6276b181b2e15ffa3b3d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
