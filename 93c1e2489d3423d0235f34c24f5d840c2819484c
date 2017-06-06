@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3e28946c_bb478a8d",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-06T22:13:25Z",
+      "side": 1,
+      "message": "Does it make sense to leave some head room for thinks like regressions which could cause large number of underflow counts that\u0027s \u003e30? How about something like 50?\n\nOr, maybe we should just stick with a normal (log) histogram? Is there a compelling reason to prefer the linear histogram to the normal one?",
+      "revId": "93c1e2489d3423d0235f34c24f5d840c2819484c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce1b319d_7dc2066a",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
