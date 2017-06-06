@@ -51,7 +51,7 @@ class CORE_EXPORT ExceptionToRejectPromiseScope {
     // promises must also be created in the current realm while regular promises
     // are created in the relevant realm of the context object.
     ScriptState* script_state = ScriptState::ForFunctionObject(info_);
-    V8SetReturnValue(info_, exception_state_.Reject(script_state).V8Value());
+    V8SetReturnValue(info_, ScriptPromise::Reject(script_state, exception_state_.GetException()).V8Value());
   }
 
  private:

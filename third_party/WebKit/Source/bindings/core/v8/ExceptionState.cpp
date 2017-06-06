@@ -99,14 +99,10 @@ void ExceptionState::ClearException() {
 }
 
 ScriptPromise ExceptionState::Reject(ScriptState* script_state) {
-  ScriptPromise promise = ScriptPromise::Reject(script_state, GetException());
-  ClearException();
-  return promise;
+  return ScriptPromise();
 }
 
 void ExceptionState::Reject(ScriptPromiseResolver* resolver) {
-  resolver->Reject(GetException());
-  ClearException();
 }
 
 void ExceptionState::SetException(ExceptionCode ec,

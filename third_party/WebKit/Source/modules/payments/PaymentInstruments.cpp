@@ -217,7 +217,8 @@ void PaymentInstruments::onGetPaymentInstrument(
                                    stored_instrument->stringified_capabilities,
                                    exception_state)));
     if (exception_state.HadException()) {
-      exception_state.Reject(resolver);
+      resolver->Reject(exception_state.GetException());
+      exception_state.ClearException();
       return;
     }
   }
