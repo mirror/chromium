@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "80afd77c_72f1f8b1",
+        "filename": "chrome/android/java/res/layout/app_menu_layout.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-06T17:18:54Z",
+      "side": 1,
+      "message": "My initial assumptions about the height of the ListView and interaction with the fading edge wre incorrect. I changed this to a LinearLayout and removed the programmatic padding.",
+      "parentUuid": "9403232a_2910c088",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "310174dd649c5dc4016f16df20c68349c6047d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "891c439e_8afde9d9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenu.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "310174dd649c5dc4016f16df20c68349c6047d4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "defc93f2_f0015dbe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenu.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-06T17:18:54Z",
+      "side": 1,
+      "message": "Yes, I tried #addFooterView(). ListView#addFooterView() adds an item as a fixed position at the end of the list; the footer view behaves as a regular list item (and can be scrolled off) as opposed to a sticky view that is always visible at the bottom of the menu.",
+      "parentUuid": "891c439e_8afde9d9",
+      "range": {
+        "startLine": 243,
+        "startChar": 21,
+        "endLine": 243,
+        "endChar": 31
+      },
+      "revId": "310174dd649c5dc4016f16df20c68349c6047d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1d990334_59ac615c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenu.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-06T17:18:54Z",
+      "side": 1,
+      "message": "Done.\n\nI tested with a really long string in the data saver menu item and the content wraps when needed. Using the menu width and MeasureSpec.EXACTLY to create the MeasureSpec results in a footerHeight (on the line below) that matches the drawn height (retrieved from Android monitor).\n\nScreenshots of a really tall, wrapped footer are in the Google drive folder (search for \"Wrapped_Footer\").",
+      "parentUuid": "d6566f00_dd1ae52a",
+      "range": {
+        "startLine": 247,
+        "startChar": 32,
+        "endLine": 247,
+        "endChar": 43
+      },
+      "revId": "310174dd649c5dc4016f16df20c68349c6047d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19b60841_497b0de8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenu.java",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "310174dd649c5dc4016f16df20c68349c6047d4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57666782_840d531d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenu.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-06T17:18:54Z",
+      "side": 1,
+      "message": "I changed it to a LinearLayout.\n\nThis more closely matches what Android does (compared to the initial RelativeLayout approach). ListPopupWindow uses a LinearLayout and programatically adds the \"dropDownView\" (containing the list of items) and \"hintContainer\" (containing the prompt view); the order they are added in depends on whether the prompt is above or below the list content.",
+      "parentUuid": "19b60841_497b0de8",
+      "range": {
+        "startLine": 250,
+        "startChar": 22,
+        "endLine": 250,
+        "endChar": 32
+      },
+      "revId": "310174dd649c5dc4016f16df20c68349c6047d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
