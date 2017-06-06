@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9dff5d9_f34c621d",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-06T05:39:16Z",
+      "side": 1,
+      "message": "You may want to move this line (with comments) to L96.",
+      "range": {
+        "startLine": 108,
+        "startChar": 31,
+        "endLine": 108,
+        "endChar": 32
+      },
+      "revId": "19f7a6c7d626806e840833fb0ea07de306a207fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
