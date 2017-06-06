@@ -1159,7 +1159,7 @@ IntSize LayoutBox::OriginAdjustmentForScrollbars() const {
 }
 
 IntSize LayoutBox::ScrolledContentOffset() const {
-  DCHECK(HasOverflowClip());
+  DCHECK(HasOverflowClip() || RootScrollerUtil::IsEffective(*this));
   DCHECK(HasLayer());
   // FIXME: Return DoubleSize here. crbug.com/414283.
   PaintLayerScrollableArea* scrollable_area = GetScrollableArea();
