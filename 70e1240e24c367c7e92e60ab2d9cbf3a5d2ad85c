@@ -22,6 +22,30 @@
       "revId": "70e1240e24c367c7e92e60ab2d9cbf3a5d2ad85c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e22fad1_30c1369b",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-06T17:26:13Z",
+      "side": 1,
+      "message": "My mistake. Intention wasn\u0027t to make GJDA run on IO.\nNeed to pass base::ThreadTaskRunnerHandle::Get() to AddInterface() at https://chromium-review.googlesource.com/c/525672/2/content/gpu/gpu_child_thread.cc#213 then?\nThanks.",
+      "parentUuid": "d83ed44a_b4bf5dd4",
+      "range": {
+        "startLine": 156,
+        "startChar": 54,
+        "endLine": 156,
+        "endChar": 58
+      },
+      "revId": "70e1240e24c367c7e92e60ab2d9cbf3a5d2ad85c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
