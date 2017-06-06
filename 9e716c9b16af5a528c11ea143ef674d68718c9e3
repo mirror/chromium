@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "b2be0f16_834d967d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-06-06T08:04:27Z",
+      "side": 1,
+      "message": "Remove trailing spaces and wrap at 80?",
+      "range": {
+        "startLine": 12,
+        "startChar": 116,
+        "endLine": 12,
+        "endChar": 117
+      },
+      "revId": "9e716c9b16af5a528c11ea143ef674d68718c9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f979c093_db6ef274",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-06-06T08:04:27Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "9e716c9b16af5a528c11ea143ef674d68718c9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41899266_e8cb60c7",
         "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
         "patchSetId": 4
@@ -25,6 +71,52 @@
     },
     {
       "key": {
+        "uuid": "ab3d5e7c_004a2045",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-06-06T08:04:27Z",
+      "side": 1,
+      "message": "Better to reuse FakePlatformSensor",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 28
+      },
+      "revId": "9e716c9b16af5a528c11ea143ef674d68718c9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "725c1f72_cadf09b0",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-06-06T08:04:27Z",
+      "side": 1,
+      "message": "FakePlatformSensorProvider can be reused, easier to mock / test.",
+      "range": {
+        "startLine": 79,
+        "startChar": 6,
+        "endLine": 79,
+        "endChar": 24
+      },
+      "revId": "9e716c9b16af5a528c11ea143ef674d68718c9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "588aaf80_e280ef51",
         "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
         "patchSetId": 4
@@ -41,6 +133,52 @@
         "startChar": 25,
         "endLine": 117,
         "endChar": 45
+      },
+      "revId": "9e716c9b16af5a528c11ea143ef674d68718c9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "333a3f84_07439656",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-06-06T08:04:27Z",
+      "side": 1,
+      "message": "Maybe better to remove sensor specific constraints, GenericSensorServiceTest should be generic, and may be used for testing other sensors.",
+      "range": {
+        "startLine": 150,
+        "startChar": 54,
+        "endLine": 150,
+        "endChar": 63
+      },
+      "revId": "9e716c9b16af5a528c11ea143ef674d68718c9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2164520_cba1d546",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-06-06T08:04:27Z",
+      "side": 1,
+      "message": "Would be better to remove sensor specific constraints. The GenericSensorServiceTest should be generic, and may be used for testing other sensors. You can check how PlatformSensorAndProviderTestWin is implemented.",
+      "range": {
+        "startLine": 150,
+        "startChar": 54,
+        "endLine": 150,
+        "endChar": 63
       },
       "revId": "9e716c9b16af5a528c11ea143ef674d68718c9e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
