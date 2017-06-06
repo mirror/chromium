@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af9556ee_2779c176",
+        "filename": "third_party/WebKit/LayoutTests/nfc/watch.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-06T21:47:27Z",
+      "side": 1,
+      "message": "Is https://a.com/*/foo valid?",
+      "revId": "cbcd2ed3d19d69dd8b8f5ad5961f056c9a3596f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
