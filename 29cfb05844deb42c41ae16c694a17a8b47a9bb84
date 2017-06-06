@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "299a67d8_cc40703d",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/CSSPropertyMetadata.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-06T21:27:12Z",
+      "side": 1,
+      "message": "1) How is this thread safe? AFAIK static initialization is only thread safe for globals, not locals.\n2) Why does this need to be a lambda rather than just a regular function call?",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 8
+      },
+      "revId": "29cfb05844deb42c41ae16c694a17a8b47a9bb84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edf4e039_11c9249d",
         "filename": "third_party/WebKit/Source/build/scripts/templates/StylePropertyShorthand.cpp.tmpl",
         "patchSetId": 1
