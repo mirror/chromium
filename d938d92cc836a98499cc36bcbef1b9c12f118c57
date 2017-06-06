@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3ef18c14_7ccadced",
+        "filename": "components/page_info_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-06T19:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5a470a8_bb0e9eac",
+      "revId": "d938d92cc836a98499cc36bcbef1b9c12f118c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13a57763_c171d89b",
         "filename": "components/page_info_strings.grdp",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-06T18:59:48Z",
       "side": 1,
       "message": "I\u0027m assuming this is approved by the UI team?",
+      "revId": "d938d92cc836a98499cc36bcbef1b9c12f118c57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed6491da_511f01e2",
+        "filename": "components/page_info_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-06T19:07:15Z",
+      "side": 1,
+      "message": "Yes you can find the strings at the internal go/chrome-ad-block-strings. Note that this is all still behind a feature flag for slow rollout.",
+      "parentUuid": "13a57763_c171d89b",
       "revId": "d938d92cc836a98499cc36bcbef1b9c12f118c57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
