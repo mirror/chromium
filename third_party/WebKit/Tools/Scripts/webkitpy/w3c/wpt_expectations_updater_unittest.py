@@ -533,6 +533,7 @@ class WPTExpectationsUpdaterTest(LoggingTestCase):
             }
         }
         updater.ports_with_no_results = {'test-mac-mac10.10'}
+        updater.ports_with_all_pass = {'test-mac-mac10.10'}
         self.assertEqual(
             updater.create_line_list(results),
             ['crbug.com/test [ Linux Mac ] external/wpt/x.html [ Failure ]'])
