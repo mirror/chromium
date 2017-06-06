@@ -433,7 +433,8 @@ void NotifyMacEvent(AXPlatformNodeCocoa* target, ui::AXEvent event_type) {
       [attributeName isEqualToString:NSAccessibilitySelectedTextAttribute] ||
       [attributeName
           isEqualToString:NSAccessibilitySelectedTextRangeAttribute]) {
-    return !node_->GetData().HasState(ui::AX_STATE_READ_ONLY);
+    return node_->GetData().GetIntAttribute(ui::AX_ATTR_CONTROL_MODE) ==
+           ui::AX_CONTROL_MODE_ENABLED;
   }
 
   if ([attributeName isEqualToString:NSAccessibilityFocusedAttribute]) {
@@ -537,7 +538,8 @@ void NotifyMacEvent(AXPlatformNodeCocoa* target, ui::AXEvent event_type) {
 }
 
 - (NSNumber*)AXEnabled {
-  return @(!node_->GetData().HasState(ui::AX_STATE_DISABLED));
+  return @(node_->GetData().GetIntAttribute(ui::AX_ATTR_CONTROL_MODE) ==
+           ui::AX_CONTROL_MODE_ENABLED);
 }
 
 - (NSNumber*)AXFocused {
