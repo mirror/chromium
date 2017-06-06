@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "833e3718_ffe210e4",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-06-06T12:50:27Z",
+      "side": 1,
+      "message": "No. Removed.",
+      "parentUuid": "e10196a6_b102f20c",
+      "range": {
+        "startLine": 13,
+        "startChar": 15,
+        "endLine": 13,
+        "endChar": 22
+      },
+      "revId": "3523ab7ece2ca77a9268453c113b71027c238f76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b67435c5_65605ab6",
         "filename": "third_party/WebKit/Source/core/workers/ThreadedWorkletMessagingProxy.h",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "adb69f5c_9703f1f8",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedWorkletMessagingProxy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-06-06T12:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b67435c5_65605ab6",
+      "revId": "3523ab7ece2ca77a9268453c113b71027c238f76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18d624e2_76464583",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
         "patchSetId": 5
@@ -53,6 +95,30 @@
       "writtenOn": "2017-06-01T13:45:25Z",
       "side": 1,
       "message": "This condition means Mutate() can be called from AnimationWorkletProxyClientImpl after AnimationWorkletGlobalScope::Dispose(), right? Probably we need to call AnimationWorkletProxyClientImpl::Dispose() from AnimationWorkletGlobalScope::Dispose() to avoid it.",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 16
+      },
+      "revId": "3523ab7ece2ca77a9268453c113b71027c238f76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c944d0c_743f68aa",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-06-06T12:50:27Z",
+      "side": 1,
+      "message": "Good catch. This is in fact what should happen.",
+      "parentUuid": "18d624e2_76464583",
       "range": {
         "startLine": 70,
         "startChar": 7,
@@ -105,6 +171,30 @@
     },
     {
       "key": {
+        "uuid": "19a9a540_e81f043c",
+        "filename": "third_party/WebKit/Source/web/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-06-06T12:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2aad2701_b18adb8e",
+      "range": {
+        "startLine": 26,
+        "startChar": 10,
+        "endLine": 26,
+        "endChar": 22
+      },
+      "revId": "3523ab7ece2ca77a9268453c113b71027c238f76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07e89719_02dc902b",
         "filename": "third_party/WebKit/Source/web/AnimationWorkletProxyClientImpl.cpp",
         "patchSetId": 5
@@ -145,6 +235,24 @@
     },
     {
       "key": {
+        "uuid": "db63886f_f37d9197",
+        "filename": "third_party/WebKit/Source/web/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-06-06T12:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07e89719_02dc902b",
+      "revId": "3523ab7ece2ca77a9268453c113b71027c238f76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ed9d9a2_f43b197f",
         "filename": "third_party/WebKit/Source/web/AnimationWorkletProxyClientImpl.cpp",
         "patchSetId": 5
@@ -168,6 +276,30 @@
     },
     {
       "key": {
+        "uuid": "f96687fd_d79eba4f",
+        "filename": "third_party/WebKit/Source/web/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-06-06T12:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ed9d9a2_f43b197f",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "3523ab7ece2ca77a9268453c113b71027c238f76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6f9e9e7_ee72289c",
         "filename": "third_party/WebKit/Source/web/AnimationWorkletProxyClientImpl.h",
         "patchSetId": 5
@@ -182,6 +314,24 @@
       "revId": "3523ab7ece2ca77a9268453c113b71027c238f76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67ee4fc0_61f5182c",
+        "filename": "third_party/WebKit/Source/web/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-06-06T12:50:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6f9e9e7_ee72289c",
+      "revId": "3523ab7ece2ca77a9268453c113b71027c238f76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
