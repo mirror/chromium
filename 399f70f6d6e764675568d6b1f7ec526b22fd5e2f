@@ -46,6 +46,30 @@
       "revId": "399f70f6d6e764675568d6b1f7ec526b22fd5e2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5bec0c6_726d102d",
+        "filename": "cc/surfaces/display_scheduler.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-06T15:06:06Z",
+      "side": 1,
+      "message": "Ah, right. My bad :) No, let\u0027s keep them apart, we probably don\u0027t want to notify the display for those other calls to SurfaceDamaged.",
+      "parentUuid": "6db26cd0_6e3099b7",
+      "range": {
+        "startLine": 296,
+        "startChar": 2,
+        "endLine": 296,
+        "endChar": 16
+      },
+      "revId": "399f70f6d6e764675568d6b1f7ec526b22fd5e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
