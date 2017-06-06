@@ -1805,4 +1805,25 @@ TEST_P(CompositedLayerMappingTest, StickyPositionNestedStickyContentOffset) {
       IntPoint(inner_sticky_constraint.parent_relative_sticky_box_offset));
 }
 
+TEST_P(CompositedLayerMappingTest, TransformedRasterizationForInlineTransform) {
+  // This test verifies we allow layers that are indirectly composited due to
+  // an inline transform (but no direct reason otherwise) to raster in the
+  // device space for higher quality.
+  SetBodyInnerHTML(
+      "<div style='will-change:transform; width:500px; "
+      "height:20px;'>composited</div>"
+      "<div id='target' style='transform:translate(1.5px,-10.5px); "
+      "width:500px; height:20px;'>indirectly composited due to inline "
+      "transform</div>");
+
+  LayoutObject* target = GetLayoutObjectByElementId("target");
+  ASSERT_TRUE(target && target->IsBox());
+  PaintLayer* target_layer = ToLayoutBox(target)->Layer();
+  GraphicsLayer* target_graphics_layer =
+      target_layer ? target_layer->GraphicsLayerBacking() : nullptr;
+  ASSERT_TRUE(target_graphics_layer);
+  EXPECT_TRUE(target_graphics_layer->ContentLayer()
+                  ->GetAllowTransformedRasterization());
+}
+
 }  // namespace blink
