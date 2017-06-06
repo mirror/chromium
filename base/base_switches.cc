@@ -53,6 +53,22 @@ const char kDisableLowEndDeviceMode[]       = "disable-low-end-device-mode";
 // FieldTrialList::CreateTrialsFromString() in field_trial.h for details.
 const char kForceFieldTrials[]              = "force-fieldtrials";
 
+// The memory-infra creates a memory allocation dump for each allocation, and
+// ownership edges between dumps to represent memory usage relationships. They
+// are usually created at each client. For dumps that are shared by multiple
+// processes, clients create 'global' memory dumps and ownership edges.
+//
+// When this flag is on, base::SharedMemory clients create global memory dumps
+// with newly defined GUIDs for base::SharedMemory instead of current general
+// GUIDs for shared components. Also, clients create new ownership edges
+// client-side dumps and the new global dumps. As a result, tracing memory-infra
+// dumps will be able to show base::SharedMemory usages correctly.
+//
+// This feature is implemented behind flag until base::SharedMemory's GUID works
+// regarding Mojo (crbug/713763).
+const char kMemoryInfraUsesSharedMemoryOwnershipEdges[] =
+    "memory-infra-uses-shared-memory-ownership-edges";
+
 // Suppresses all error dialogs when present.
 const char kNoErrorDialogs[]                = "noerrdialogs";
 
