@@ -37,8 +37,9 @@
 Timeline.TimelinePanel = class extends UI.Panel {
   constructor() {
     super('timeline');
-    this.registerRequiredCSS('timeline/timelinePanel.css');
     this.element.addEventListener('contextmenu', this._contextMenu.bind(this), false);
+    this.registerRequiredCSS('timeline/timelinePanel.css');
+
     this._dropTarget = new UI.DropTarget(
         this.element, [UI.DropTarget.Types.Files, UI.DropTarget.Types.URIList],
         Common.UIString('Drop timeline file or URL here'), this._handleDrop.bind(this));
@@ -52,8 +53,16 @@ Timeline.TimelinePanel = class extends UI.Panel {
         /** @type {!UI.Action }*/ (UI.actionRegistry.action('timeline.toggle-recording'));
     this._recordReloadAction =
         /** @type {!UI.Action }*/ (UI.actionRegistry.action('timeline.record-reload'));
-    this._historyManager =
-        Runtime.experiments.isEnabled('timelineKeepHistory') ? new Timeline.TimelineHistoryManager() : null;
+
+    if (!Runtime.experiments.isEnabled('timelineKeepHistory')) {
+      this._historyManager = null;
+    } else {
+      this._historyManager = new Timeline.TimelineHistoryManager();
+      this.registerShortcuts(
+          UI.ShortcutsScreen.PerformancePanelShortcuts.PreviousRecording, () => this._navigateHistory(1));
+      this.registerShortcuts(
+          UI.ShortcutsScreen.PerformancePanelShortcuts.NextRecording, () => this._navigateHistory(-1));
+    }
 
     /** @type {!Array<!TimelineModel.TimelineModelFilter>} */
     this._filters = [];
@@ -371,6 +380,19 @@ Timeline.TimelinePanel = class extends UI.Panel {
     var model = await this._historyManager.showHistoryDropDown();
     if (model && model !== this._performanceModel)
       this._setModel(model);
+  }
+
+  /**
+   * @param {number} direction
+   * @return {boolean}
+   */
+  _navigateHistory(direction) {
+    if (!this._historyManager)
+      return true;
+    var model = this._historyManager.navigate(direction);
+    if (model && model !== this._performanceModel)
+      this._setModel(model);
+    return true;
   }
 
   /**
