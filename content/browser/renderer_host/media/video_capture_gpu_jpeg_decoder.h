@@ -20,11 +20,7 @@
 #include "base/threading/thread.h"
 #include "content/common/content_export.h"
 #include "media/capture/video/video_capture_jpeg_decoder.h"
-#include "media/video/jpeg_decode_accelerator.h"
-
-namespace gpu {
-class GpuChannelHost;
-}
+#include "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.h"
 
 namespace content {
 
@@ -66,26 +62,20 @@ class CONTENT_EXPORT VideoCaptureGpuJpegDecoder
                    media::JpegDecodeAccelerator::Error error) override;
 
  private:
-  // Initialization helper, to establish GPU channel.
-  static void EstablishGpuChannelOnUIThread(
+  // Initialization helper, to connect to GpuJpegDecodeAccelerator in GPU
+  // process.
+  static void ConnectToGpuJpegDecodeAcceleratorOnIOThread(
       const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
       base::WeakPtr<VideoCaptureGpuJpegDecoder> weak_this);
 
-  static void GpuChannelEstablishedOnUIThread(
-      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
-      base::WeakPtr<VideoCaptureGpuJpegDecoder> weak_this,
-      scoped_refptr<gpu::GpuChannelHost> established_channel_host);
-
   void FinishInitialization(
-      scoped_refptr<gpu::GpuChannelHost> gpu_channel_host);
+      media::mojom::GpuJpegDecodeAcceleratorPtrInfo remote_decoder_info);
 
   // Returns true if the decoding of last frame is not finished yet.
   bool IsDecoding_Locked() const;
 
   // Records |decoder_status_| to histogram.
   void RecordInitDecodeUMA_Locked();
-
-  scoped_refptr<gpu::GpuChannelHost> gpu_channel_host_;
 
   // The underlying JPEG decode accelerator.
   std::unique_ptr<media::JpegDecodeAccelerator> decoder_;
