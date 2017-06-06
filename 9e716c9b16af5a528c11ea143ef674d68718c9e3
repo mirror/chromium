@@ -186,6 +186,30 @@
     },
     {
       "key": {
+        "uuid": "116248e9_d29171d9",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-06T09:47:18Z",
+      "side": 1,
+      "message": "Hi, Alexander, thanks very much! Yes, it is better to reuse existing fake classes.\n\nI found in the fake_platform_sensor.cc, the fake sensor doesn\u0027t really update the sharedmemory, it use a flag |started_| to simulate. While in service_unittest the fake_sensor and Test are run in different threads, it is not convenient to check the fake_sensor\u0027s status. That\u0027s why I override the |StartSensor| to let it update the sharedmemory in IO thread, so I can check the data in main thread.\n\nHow about to reuse the Fake classes like you said, but to override the |startSensor| function to let is update the sharememory? And I prefer |ON_CHANGE| to |CONTINUOUS| because I want to the mojo interface SensorReadingChanged() be called and tested.\n\nThe service_unittest is more focus on the mojo interfaces, it is a supplement to existed unittest, so I just mocked on a AMBIENT_LIGHT type, and not generalize to all the types. What do you think?\n\nThanks again!!",
+      "parentUuid": "a2164520_cba1d546",
+      "range": {
+        "startLine": 150,
+        "startChar": 54,
+        "endLine": 150,
+        "endChar": 63
+      },
+      "revId": "9e716c9b16af5a528c11ea143ef674d68718c9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c5a5b67_216b7528",
         "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
         "patchSetId": 4
