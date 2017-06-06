@@ -25,6 +25,131 @@
     },
     {
       "key": {
+        "uuid": "ef075be3_482f455b",
+        "filename": "content/browser/bluetooth/web_bluetooth_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-06T23:25:06Z",
+      "side": 1,
+      "message": "We don\u0027t want multiple callbacks for a single request. I guess this is a temporary code situation to be converted back to a OnceCallback once the CreateGattConnection method is updated to use OnceCallbacks. If you agree, let\u0027s add a //TODO(issue number) here explaining that.\n\nBetter, we should fix the device/bluetooth interface first and not leave brittle code here in the medium term. Then we wouldn\u0027t need any AdaptCallbackForRepeating in this file.",
+      "range": {
+        "startLine": 338,
+        "startChar": 7,
+        "endLine": 338,
+        "endChar": 24
+      },
+      "revId": "c9140f1a70eb8d379ed990953b119b4f4cef3093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff1f6c08_8ae4178a",
+        "filename": "content/browser/bluetooth/web_bluetooth_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-06T23:25:06Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c9140f1a70eb8d379ed990953b119b4f4cef3093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31257fb7_75c9bd3d",
+        "filename": "content/browser/bluetooth/web_bluetooth_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-06T23:25:06Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c9140f1a70eb8d379ed990953b119b4f4cef3093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fef27453_a946f1b9",
+        "filename": "content/browser/bluetooth/web_bluetooth_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-06T23:25:06Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c9140f1a70eb8d379ed990953b119b4f4cef3093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97016d4b_429d23e1",
+        "filename": "content/browser/bluetooth/web_bluetooth_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-06T23:25:06Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c9140f1a70eb8d379ed990953b119b4f4cef3093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c8b565_89b2901f",
+        "filename": "content/browser/bluetooth/web_bluetooth_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-06T23:25:06Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c9140f1a70eb8d379ed990953b119b4f4cef3093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e153b7d_91fe0787",
+        "filename": "content/browser/bluetooth/web_bluetooth_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-06T23:25:06Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c9140f1a70eb8d379ed990953b119b4f4cef3093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a865013_1cd8ff41",
         "filename": "content/browser/presentation/presentation_service_impl.h",
         "patchSetId": 10
