@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "749ac5f2_63957288",
+        "filename": "base/memory/shared_memory_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-06T02:27:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d501368f_fbbbc153",
+      "range": {
+        "startLine": 27,
+        "startChar": 46,
+        "endLine": 27,
+        "endChar": 63
+      },
+      "revId": "d2da67e97737b32309fc55bca9d87c7071f36ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e90ab0a_ee1aa786",
         "filename": "base/memory/shared_memory_tracker.h",
         "patchSetId": 4
@@ -59,6 +83,30 @@
       "writtenOn": "2017-06-06T01:05:22Z",
       "side": 1,
       "message": "GetGlobalDumpNameForTracing.\nWe do not need to use the GetSharedGlobalAllocatorDumpName here and it can stay internal.",
+      "range": {
+        "startLine": 30,
+        "startChar": 46,
+        "endLine": 30,
+        "endChar": 69
+      },
+      "revId": "d2da67e97737b32309fc55bca9d87c7071f36ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd131ea_2b85319e",
+        "filename": "base/memory/shared_memory_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-06T02:27:53Z",
+      "side": 1,
+      "message": "So the implementation will be just simply\n\n`GetDumpGUIDForTracing(id).ToString()`\n\nand this string is passed to GetSharedGlobalAllocatorDumpName. Hmm, I\u0027m not sure we can call this \u0027shared_memory/...\u0027 string as a shared global allocator dump name.\n\nNow GetSharedGlobalAllocatorDumpName takes GUID not a string. We would need to have a string version of GetSharedGlobalAllocatorDumpName.",
+      "parentUuid": "4e90ab0a_ee1aa786",
       "range": {
         "startLine": 30,
         "startChar": 46,
