@@ -80,7 +80,8 @@ void RasterSource::PlaybackToCanvas(
   raster_canvas->clipRect(SkRect::MakeFromIRect(raster_bounds));
   raster_canvas->translate(raster_transform.translation().x(),
                            raster_transform.translation().y());
-  raster_canvas->scale(raster_transform.scale(), raster_transform.scale());
+  if (!display_list_->pixel_canvas_enabled())
+    raster_canvas->scale(raster_transform.scale(), raster_transform.scale());
   PlaybackToCanvas(raster_canvas, target_color_space, settings);
   raster_canvas->restore();
 }
@@ -238,17 +239,22 @@ size_t RasterSource::GetMemoryUsage() const {
          painter_reported_memory_usage_;
 }
 
-bool RasterSource::PerformSolidColorAnalysis(const gfx::Rect& content_rect,
-                                             float contents_scale,
-                                             SkColor* color) const {
+bool RasterSource::PerformSolidColorAnalysis(
+    gfx::Rect content_rect,
+    const gfx::AxisTransform2d& raster_transform,
+    SkColor* color) const {
   TRACE_EVENT0("cc", "RasterSource::PerformSolidColorAnalysis");
+  if (display_list_->pixel_canvas_enabled()) {
+    content_rect.Intersect(
+        gfx::ScaleToEnclosingRect(gfx::Rect(size_), raster_transform.scale()));
+  } else {
+    content_rect = gfx::ToEnclosingRect(
+        raster_transform.InverseMapRect(gfx::RectF(content_rect)));
+    content_rect.Intersect(gfx::Rect(size_));
+  }
+  skia::AnalysisCanvas canvas(content_rect.width(), content_rect.height());
+  canvas.translate(-content_rect.x(), -content_rect.y());
 
-  gfx::Rect layer_rect =
-      gfx::ScaleToEnclosingRect(content_rect, 1.f / contents_scale);
-
-  layer_rect.Intersect(gfx::Rect(size_));
-  skia::AnalysisCanvas canvas(layer_rect.width(), layer_rect.height());
-  canvas.translate(-layer_rect.x(), -layer_rect.y());
   // Note that because no color conversion is applied to solid color analysis,
   // the resulting solid color will be known to be sRGB.
   RasterCommon(&canvas, &canvas);
