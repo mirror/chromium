@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fba3e74f_149f709e",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-06T19:37:29Z",
+      "side": 1,
+      "message": "nit: there\u0027s already a \"desktop-only\" deps section on :273, could that one be used?",
+      "range": {
+        "startLine": 319,
+        "startChar": 6,
+        "endLine": 319,
+        "endChar": 17
+      },
+      "revId": "8f98b9fb46619b3cb0211abe8d74c74942e88329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41f34429_f2fb0a85",
+        "filename": "components/safe_browsing_db/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-06T19:37:29Z",
+      "side": 1,
+      "message": "the mobile target wasn\u0027t depending on this before - was that an error, or is this dep not really required?",
+      "revId": "8f98b9fb46619b3cb0211abe8d74c74942e88329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
