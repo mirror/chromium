@@ -34,6 +34,24 @@
       "revId": "68ec2c62d6a72f3d71d8f103db5573b7fce7b1d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92406538_e91d0e90",
+        "filename": "chrome/browser/memory/tab_manager_delegate_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-06T17:28:00Z",
+      "side": 1,
+      "message": "ok.\n\nbut next time, please do not mix a crash fix and a random refactoring (when landing a CL to master.)",
+      "parentUuid": "43c6b478_af095aa3",
+      "revId": "68ec2c62d6a72f3d71d8f103db5573b7fce7b1d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
