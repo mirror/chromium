@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f56e2d59_e7c5e24f",
+        "filename": "cc/paint/display_item_list_unittest.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-06T19:56:50Z",
+      "side": 0,
+      "message": "Yes, now DisplayItemList methods only define where a range starts/ends, not how many elements will be in the ranges, which is what this is testing for a FilterDisplayItem. So other tests that do a StartPaint/EndPaintOfPairedBegin and count the ops duplicate this, and there\u0027s no need to do something specific for filters as there\u0027s no different code in DisplayItemList for them. DisplayItemListTest.SizeMultiple should cover this.",
+      "parentUuid": "595e81bf_95d08f9e",
+      "revId": "f169896883b893b252e0a59f07627da8207ecd63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e956cfc_4a8807e3",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintControllerTest.cpp",
         "patchSetId": 32
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-01T21:37:57Z",
       "side": 0,
       "message": "Are these tests preserved equivalently elsewhere?",
+      "revId": "f169896883b893b252e0a59f07627da8207ecd63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "797eaf26_053b458a",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintControllerTest.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 1943,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-06T19:56:50Z",
+      "side": 0,
+      "message": "The code is gone, so no there\u0027s nothing to test. We no longer store and pass in the number of slow paths. It is counted directly from the PaintOps as they are pushed into the PaintOpBuffer.",
+      "parentUuid": "1e956cfc_4a8807e3",
       "revId": "f169896883b893b252e0a59f07627da8207ecd63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
