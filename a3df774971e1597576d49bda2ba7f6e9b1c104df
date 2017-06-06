@@ -22,6 +22,218 @@
       "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e72864b3_7767384d",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-06T16:35:50Z",
+      "side": 1,
+      "message": "Forward declare?",
+      "range": {
+        "startLine": 17,
+        "startChar": 36,
+        "endLine": 17,
+        "endChar": 43
+      },
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f71a3b70_82c696c2",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-06T16:35:50Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this format be localized (I\u0027m pretty sure I asked this before too).",
+      "range": {
+        "startLine": 152,
+        "startChar": 28,
+        "endLine": 152,
+        "endChar": 43
+      },
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15045dad_83edd55d",
+        "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-06T16:35:50Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it make more sense for the callback to take a const ShareTarget\u0026? If the implementations wants a copy it can use Clone(). That may not work because of the optional. Perhaps the callback could take a const ShareTarget* ?",
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6876e0b0_7f744925",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-06T16:35:50Z",
+      "side": 1,
+      "message": "DCHECK url is valid?",
+      "range": {
+        "startLine": 152,
+        "startChar": 8,
+        "endLine": 152,
+        "endChar": 23
+      },
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3057933_82ca12d8",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-06T16:35:50Z",
+      "side": 1,
+      "message": "no {}",
+      "range": {
+        "startLine": 154,
+        "startChar": 10,
+        "endLine": 154,
+        "endChar": 20
+      },
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c535f41b_8fd5053a",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-06T16:35:50Z",
+      "side": 1,
+      "message": "Doesn\u0027t url offer functions (maybe via replacements) to remove the filename?",
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70bdadee_4f803d86",
+        "filename": "chrome/browser/webshare/share_service_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-06T16:35:50Z",
+      "side": 1,
+      "message": "Is it really worth caching this?",
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5adea4ee_ab50f5f2",
+        "filename": "chrome/browser/webshare/share_target.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-06T16:35:50Z",
+      "side": 1,
+      "message": "Is the string16 or values include needed?",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 22
+      },
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f6823a7_4a0bb280",
+        "filename": "chrome/browser/webshare/share_target.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-06T16:35:50Z",
+      "side": 1,
+      "message": "The name ShareTarget outside this directory is not particular clear. How about naming this WebShareTarget?",
+      "range": {
+        "startLine": 16,
+        "startChar": 7,
+        "endLine": 16,
+        "endChar": 12
+      },
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19798e72_7cf62bee",
+        "filename": "chrome/browser/webshare/share_target.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-06T16:35:50Z",
+      "side": 1,
+      "message": "Document what the url_template means.",
+      "range": {
+        "startLine": 33,
+        "startChar": 23,
+        "endLine": 33,
+        "endChar": 29
+      },
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
