@@ -55,7 +55,7 @@ void OverscrollWindowDelegate::ResetOverscroll() {
 void OverscrollWindowDelegate::CompleteOrResetOverscroll() {
   if (overscroll_mode_ == OVERSCROLL_NONE)
     return;
-  int width = delegate_->GetVisibleBounds().width();
+  int width = delegate_->GetDisplaySize().width();
   float ratio = (fabs(delta_x_)) / width;
   if (ratio < complete_threshold_ratio_) {
     ResetOverscroll();

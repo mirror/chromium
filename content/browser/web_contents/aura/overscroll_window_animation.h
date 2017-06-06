@@ -84,7 +84,7 @@ class CONTENT_EXPORT OverscrollWindowAnimation
   }
 
   // OverscrollControllerDelegate:
-  gfx::Rect GetVisibleBounds() const override;
+  gfx::Size GetDisplaySize() const override;
   bool OnOverscrollUpdate(float delta_x, float delta_y) override;
   void OnOverscrollComplete(OverscrollMode overscroll_mode) override;
   void OnOverscrollModeChange(OverscrollMode old_mode,
@@ -92,6 +92,9 @@ class CONTENT_EXPORT OverscrollWindowAnimation
                               OverscrollSource source) override;
 
  private:
+  // Helper function retuning size of the main window.
+  const gfx::Size& GetMainWindowSize() const;
+
   // Cancels the slide, animating the front and back window to their original
   // positions.
   void CancelSlide();
