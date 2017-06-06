@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/memory/tab_manager_delegate_chromeos.h"
+#include "chrome/browser/resource_coordinator/tab_manager_delegate_chromeos.h"
 
 #include <math.h>
 #include <stdint.h>
@@ -28,7 +28,7 @@
 #include "chrome/browser/chromeos/arc/process/arc_process.h"
 #include "chrome/browser/chromeos/arc/process/arc_process_service.h"
 #include "chrome/browser/memory/memory_kills_monitor.h"
-#include "chrome/browser/memory/tab_stats.h"
+#include "chrome/browser/resource_coordinator/tab_stats.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -52,7 +52,7 @@ using base::TimeDelta;
 using base::TimeTicks;
 using content::BrowserThread;
 
-namespace memory {
+namespace resource_coordinator {
 namespace {
 
 // When switching to a new tab the tab's renderer's OOM score needs to be
@@ -61,10 +61,10 @@ namespace {
 // a little while before doing the adjustment.
 const int kFocusedProcessScoreAdjustIntervalMs = 500;
 
-aura::client::ActivationClient* GetActivationClient() {
+wm::ActivationClient* GetActivationClient() {
   if (!ash::Shell::HasInstance())
     return nullptr;
-  return aura::client::GetActivationClient(ash::Shell::GetPrimaryRootWindow());
+  return wm::GetActivationClient(ash::Shell::GetPrimaryRootWindow());
 }
 
 bool IsArcMemoryManagementEnabled() {
@@ -105,8 +105,8 @@ std::ostream& operator<<(std::ostream& os, const ProcessType& type) {
 }
 
 // TabManagerDelegate::Candidate implementation.
-std::ostream& operator<<(
-    std::ostream& out, const TabManagerDelegate::Candidate& candidate) {
+std::ostream& operator<<(std::ostream& out,
+                         const TabManagerDelegate::Candidate& candidate) {
   if (candidate.app()) {
     out << "app " << *candidate.app();
   } else if (candidate.tab()) {
@@ -214,18 +214,17 @@ class TabManagerDelegate::FocusedProcess {
 // TabManagerDelegate::MemoryStat implementation.
 
 // static
-int TabManagerDelegate::MemoryStat::ReadIntFromFile(
-    const char* file_name, const int default_val) {
+int TabManagerDelegate::MemoryStat::ReadIntFromFile(const char* file_name,
+                                                    const int default_val) {
   std::string file_string;
   if (!base::ReadFileToString(base::FilePath(file_name), &file_string)) {
-    LOG(WARNING) << "Unable to read file" << file_name;
+    LOG(ERROR) << "Unable to read file" << file_name;
     return default_val;
   }
   int val = default_val;
   if (!base::StringToInt(
-          base::TrimWhitespaceASCII(file_string, base::TRIM_TRAILING),
-          &val)) {
-    LOG(WARNING) << "Unable to parse string" << file_string;
+          base::TrimWhitespaceASCII(file_string, base::TRIM_TRAILING), &val)) {
+    LOG(ERROR) << "Unable to parse string" << file_string;
     return default_val;
   }
   return val;
@@ -236,36 +235,20 @@ int TabManagerDelegate::MemoryStat::LowMemoryMarginKB() {
   static const int kDefaultLowMemoryMarginMb = 50;
   static const char kLowMemoryMarginConfig[] =
       "/sys/kernel/mm/chromeos-low_mem/margin";
-  return ReadIntFromFile(
-      kLowMemoryMarginConfig, kDefaultLowMemoryMarginMb) * 1024;
+  return ReadIntFromFile(kLowMemoryMarginConfig, kDefaultLowMemoryMarginMb) *
+         1024;
 }
 
-// The logic of available memory calculation is copied from
-// _is_low_mem_situation() in kernel file include/linux/low-mem-notify.h.
-// Maybe we should let kernel report the number directly.
+// Target memory to free is the amount which brings available
+// memory back to the margin.
 int TabManagerDelegate::MemoryStat::TargetMemoryToFreeKB() {
-  static const int kRamVsSwapWeight = 4;
-  static const char kMinFilelistConfig[] = "/proc/sys/vm/min_filelist_kbytes";
-  static const char kMinFreeKbytes[] = "/proc/sys/vm/min_free_kbytes";
-
-  base::SystemMemoryInfoKB system_mem;
-  base::GetSystemMemoryInfo(&system_mem);
-  const int file_mem_kb = system_mem.active_file + system_mem.inactive_file;
-  const int min_filelist_kb = ReadIntFromFile(kMinFilelistConfig, 0);
-  const int min_free_kb = ReadIntFromFile(kMinFreeKbytes, 0);
-  // Calculate current available memory in system.
-  // File-backed memory should be easy to reclaim, unless they're dirty.
-  // TODO(cylee): On ChromeOS, kernel reports low memory condition when
-  // available memory is low. The following formula duplicates the logic in
-  // kernel to calculate how much memory should be released. In the future,
-  // kernel should try to report the amount of memory to release directly to
-  // eliminate the duplication here.
-  const int available_mem_kb = system_mem.free +
-      file_mem_kb - system_mem.dirty - min_filelist_kb +
-      system_mem.swap_free / kRamVsSwapWeight -
-      min_free_kb;
-
-  return LowMemoryMarginKB() - available_mem_kb;
+  static constexpr char kLowMemAvailableEntry[] =
+      "/sys/kernel/mm/chromeos-low_mem/available";
+  const int available_mem_mb = ReadIntFromFile(kLowMemAvailableEntry, 0);
+  // available_mem_mb is rounded down in the kernel computation, so even if
+  // it's just below the margin, the difference will be at least 1 MB.  This
+  // matters because we shouldn't return 0 when we're below the margin.
+  return LowMemoryMarginKB() - available_mem_mb * 1024;
 }
 
 int TabManagerDelegate::MemoryStat::EstimatedMemoryFreedKB(
@@ -279,8 +262,7 @@ int TabManagerDelegate::MemoryStat::EstimatedMemoryFreedKB(
 
 TabManagerDelegate::TabManagerDelegate(
     const base::WeakPtr<TabManager>& tab_manager)
-  : TabManagerDelegate(tab_manager, new MemoryStat()) {
-}
+    : TabManagerDelegate(tab_manager, new MemoryStat()) {}
 
 TabManagerDelegate::TabManagerDelegate(
     const base::WeakPtr<TabManager>& tab_manager,
@@ -325,7 +307,7 @@ void TabManagerDelegate::OnBrowserSetLastActive(Browser* browser) {
 }
 
 void TabManagerDelegate::OnWindowActivated(
-    aura::client::ActivationChangeObserver::ActivationReason reason,
+    wm::ActivationChangeObserver::ActivationReason reason,
     aura::Window* gained_active,
     aura::Window* lost_active) {
   if (arc::IsArcAppWindow(gained_active)) {
@@ -340,8 +322,8 @@ void TabManagerDelegate::OnWindowActivated(
     // here.
     focus_process_score_adjust_timer_.Start(
         FROM_HERE,
-        TimeDelta::FromMilliseconds(kFocusedProcessScoreAdjustIntervalMs),
-        this, &TabManagerDelegate::ScheduleEarlyOomPrioritiesAdjustment);
+        TimeDelta::FromMilliseconds(kFocusedProcessScoreAdjustIntervalMs), this,
+        &TabManagerDelegate::ScheduleEarlyOomPrioritiesAdjustment);
   }
   if (arc::IsArcAppWindow(lost_active)) {
     // Do not bother adjusting OOM score if the ARC window is deactivated
@@ -361,8 +343,7 @@ void TabManagerDelegate::ScheduleEarlyOomPrioritiesAdjustment() {
 
 // If able to get the list of ARC procsses, prioritize tabs and apps as a whole.
 // Otherwise try to kill tabs only.
-void TabManagerDelegate::LowMemoryKill(
-    const TabStatsList& tab_list) {
+void TabManagerDelegate::LowMemoryKill(const TabStatsList& tab_list) {
   arc::ArcProcessService* arc_process_service = arc::ArcProcessService::Get();
   if (arc_process_service &&
       arc_process_service->RequestAppProcessList(
@@ -429,8 +410,8 @@ void TabManagerDelegate::AdjustFocusedTabScore(base::ProcessHandle pid) {
     // would be replaced by a new task.
     focus_process_score_adjust_timer_.Start(
         FROM_HERE,
-        TimeDelta::FromMilliseconds(kFocusedProcessScoreAdjustIntervalMs),
-        this, &TabManagerDelegate::OnFocusTabScoreAdjustmentTimeout);
+        TimeDelta::FromMilliseconds(kFocusedProcessScoreAdjustIntervalMs), this,
+        &TabManagerDelegate::OnFocusTabScoreAdjustmentTimeout);
   }
 }
 
@@ -463,8 +444,8 @@ void TabManagerDelegate::Observe(int type,
       if (visible) {
         content::RenderProcessHost* render_host =
             content::Source<content::RenderWidgetHost>(source)
-            .ptr()
-            ->GetProcess();
+                .ptr()
+                ->GetProcess();
         AdjustFocusedTabScore(render_host->GetHandle());
       }
       // Do not handle the "else" case when it changes to invisible because
@@ -557,11 +538,9 @@ bool TabManagerDelegate::KillArcProcess(const int nspid) {
 
 bool TabManagerDelegate::KillTab(int64_t tab_id) {
   // Check |tab_manager_| is alive before taking tabs into consideration.
-  return tab_manager_ &&
-      tab_manager_->CanDiscardTab(tab_id) &&
-      tab_manager_->DiscardTabById(tab_id);
+  return tab_manager_ && tab_manager_->CanDiscardTab(tab_id) &&
+         tab_manager_->DiscardTabById(tab_id);
 }
-
 
 chromeos::DebugDaemonClient* TabManagerDelegate::GetDebugDaemonClient() {
   return chromeos::DBusThreadManager::Get()->GetDebugDaemonClient();
@@ -576,6 +555,8 @@ void TabManagerDelegate::LowMemoryKillImpl(
   const std::vector<TabManagerDelegate::Candidate> candidates =
       GetSortedCandidates(tab_list, arc_processes);
 
+  // TODO(semenzato): decide if TargetMemoryToFreeKB is doing real
+  // I/O and if it is, move to I/O thread.
   int target_memory_to_free_kb = mem_stat_->TargetMemoryToFreeKB();
   const TimeTicks now = TimeTicks::Now();
 
@@ -617,7 +598,8 @@ void TabManagerDelegate::LowMemoryKillImpl(
       if (KillArcProcess(it->app()->nspid())) {
         recently_killed_arc_processes_[it->app()->process_name()] = now;
         target_memory_to_free_kb -= estimated_memory_freed_kb;
-        MemoryKillsMonitor::LogLowMemoryKill("APP", estimated_memory_freed_kb);
+        memory::MemoryKillsMonitor::LogLowMemoryKill("APP",
+                                                     estimated_memory_freed_kb);
         MEMORY_LOG(ERROR) << "Killed app " << it->app()->process_name() << " ("
                           << it->app()->pid() << ")"
                           << ", estimated " << estimated_memory_freed_kb
@@ -634,7 +616,8 @@ void TabManagerDelegate::LowMemoryKillImpl(
           mem_stat_->EstimatedMemoryFreedKB(it->tab()->renderer_handle);
       if (KillTab(tab_id)) {
         target_memory_to_free_kb -= estimated_memory_freed_kb;
-        MemoryKillsMonitor::LogLowMemoryKill("TAB", estimated_memory_freed_kb);
+        memory::MemoryKillsMonitor::LogLowMemoryKill("TAB",
+                                                     estimated_memory_freed_kb);
         MEMORY_LOG(ERROR) << "Killed tab " << it->tab()->title << " ("
                           << it->tab()->renderer_handle << "), estimated "
                           << estimated_memory_freed_kb << " KB freed";
@@ -684,12 +667,11 @@ void TabManagerDelegate::AdjustOomPrioritiesImpl(
   int range_middle =
       (chrome::kLowestRendererOomScore + chrome::kHighestRendererOomScore) / 2;
 
-  // Find some pivot point. For now processes with priority >= CHROME_INTERNAL
-  // are prone to be affected by LRU change. Taking them as "high priority"
-  // processes.
+  // Find some pivot point. For now (roughly) apps are in the first half and
+  // tabs are in the second half.
   auto lower_priority_part = candidates.end();
   for (auto it = candidates.begin(); it != candidates.end(); ++it) {
-    if (it->process_type() >= ProcessType::BACKGROUND_APP) {
+    if (it->process_type() >= ProcessType::BACKGROUND_TAB) {
       lower_priority_part = it;
       break;
     }
@@ -773,9 +755,9 @@ void TabManagerDelegate::DistributeOomScoreInRange(
   }
 
   if (oom_scores_to_change.size()) {
-    GetDebugDaemonClient()->SetOomScoreAdj(
-        oom_scores_to_change, base::Bind(&OnSetOomScoreAdj));
+    GetDebugDaemonClient()->SetOomScoreAdj(oom_scores_to_change,
+                                           base::Bind(&OnSetOomScoreAdj));
   }
 }
 
-}  // namespace memory
+}  // namespace resource_coordinator
