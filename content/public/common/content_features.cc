@@ -131,6 +131,10 @@ const base::Feature kMediaDocumentDownloadButton{
     base::FEATURE_DISABLED_BY_DEFAULT
 };
 
+// Enables the old algorithm for processing audio constraints in getUserMedia().
+const base::Feature kMediaStreamOldAudioConstraints{
+    "MediaStreamOldAudioConstraints", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Enables the old algorithm for processing video constraints in getUserMedia().
 const base::Feature kMediaStreamOldVideoConstraints{
     "MediaStreamOldVideoConstraints", base::FEATURE_DISABLED_BY_DEFAULT};

@@ -37,10 +37,11 @@ class TaskRunner;
 }
 
 namespace content {
-class PeerConnectionDependencyFactory;
+class AudioCaptureSettings;
 class MediaStreamAudioSource;
 class MediaStreamDispatcher;
 class MediaStreamVideoSource;
+class PeerConnectionDependencyFactory;
 class VideoCaptureSettings;
 
 // UserMediaClientImpl is a delegate for the Media Stream GetUserMedia API.
@@ -122,9 +123,12 @@ class CONTENT_EXPORT UserMediaClientImpl
 
   // Returns no value if there is no request being processed. Use only for
   // testing.
-  // TODO(guidou): Remove this method once spec-compliant constraints algorithm
-  // for audio is implemented. http://crbug.com/543997
+  // TODO(guidou): Remove this function. http://crbug.com/706408
   base::Optional<bool> AutomaticOutputDeviceSelectionEnabledForCurrentRequest();
+
+  // Intended to be used for testing.
+  const AudioCaptureSettings& AudioCaptureSettingsForCurrentRequest() const;
+  const VideoCaptureSettings& VideoCaptureSettingsForCurrentRequest() const;
 
  private:
   class UserMediaRequestInfo;
@@ -226,21 +230,29 @@ class CONTENT_EXPORT UserMediaClientImpl
 
   const ::mojom::MediaDevicesDispatcherHostPtr& GetMediaDevicesDispatcher();
 
-  void SelectAudioInputDevice(
+  // TODO(guidou): Remove these functions. http://crbug.com/706408
+  void LegacySetupAudioInput();
+  void LegacySelectAudioInputDevice(
       const blink::WebUserMediaRequest& user_media_request,
       const EnumerationResult& device_enumeration);
 
-  void SetupVideoInput(const blink::WebUserMediaRequest& user_media_request);
+  void SetupAudioInput(const blink::WebUserMediaRequest& user_media_request);
+  void SelectAudioDeviceSettings(
+      const blink::WebUserMediaRequest& user_media_request,
+      std::vector<::mojom::AudioInputDeviceCapabilitiesPtr>
+          audio_input_capabilities);
+  void FinalizeSelectAudioSettings(
+      const blink::WebUserMediaRequest& user_media_request,
+      const AudioCaptureSettings& settings);
 
+  void SetupVideoInput(const blink::WebUserMediaRequest& user_media_request);
   void SelectVideoDeviceSettings(
       const blink::WebUserMediaRequest& user_media_request,
       std::vector<::mojom::VideoInputDeviceCapabilitiesPtr>
           video_input_capabilities);
-
   void FinalizeSelectVideoDeviceSettings(
       const blink::WebUserMediaRequest& user_media_request,
       const VideoCaptureSettings& settings);
-
   void FinalizeSelectVideoContentSettings(
       const blink::WebUserMediaRequest& user_media_request,
       const VideoCaptureSettings& settings);

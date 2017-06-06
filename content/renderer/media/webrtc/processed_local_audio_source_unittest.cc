@@ -7,9 +7,12 @@
 
 #include "base/logging.h"
 #include "base/message_loop/message_loop.h"
+#include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
+#include "content/public/common/content_features.h"
 #include "content/public/renderer/media_stream_audio_sink.h"
 #include "content/renderer/media/media_stream_audio_track.h"
+#include "content/renderer/media/media_stream_audio_processor_options.h"
 #include "content/renderer/media/mock_audio_device_factory.h"
 #include "content/renderer/media/mock_constraint_factory.h"
 #include "content/renderer/media/webrtc/mock_peer_connection_dependency_factory.h"
@@ -72,11 +75,32 @@ class MockMediaStreamAudioSink : public MediaStreamAudioSink {
   media::AudioParameters params_;
 };
 
+void DisableDefaultAudioProcessingProperties(AudioProcessingProperties* properties) {
+  properties->enable_sw_echo_cancellation = false;
+  properties->goog_experimental_echo_cancellation = false;
+  properties->goog_auto_gain_control = false;
+  properties->goog_experimental_auto_gain_control = false;
+  properties->goog_noise_suppression = false;
+  properties->goog_noise_suppression = false;
+  properties->goog_highpass_filter = false;
+  properties->goog_typing_noise_detection = false;
+  properties->goog_experimental_noise_suppression = false;
+  properties->goog_beamforming = false;
+}
+
 }  // namespace
 
-class ProcessedLocalAudioSourceTest : public testing::Test {
+class ProcessedLocalAudioSourceTest : public testing::TestWithParam<bool> {
  protected:
-  ProcessedLocalAudioSourceTest() {}
+  ProcessedLocalAudioSourceTest() {
+    if (GetParam()) {
+      scoped_feature_list_.InitAndEnableFeature(
+          features::kMediaStreamOldAudioConstraints);
+    } else {
+      scoped_feature_list_.InitAndDisableFeature(
+          features::kMediaStreamOldAudioConstraints);
+    }
+  }
 
   ~ProcessedLocalAudioSourceTest() override {}
 
@@ -103,6 +127,21 @@ class ProcessedLocalAudioSourceTest : public testing::Test {
                          "mock_audio_device_id", kSampleRate, kChannelLayout,
                          kRequestedBufferSize),
         constraints,
+        base::Bind(&ProcessedLocalAudioSourceTest::OnAudioSourceStarted,
+                   base::Unretained(this)),
+        &mock_dependency_factory_);
+    source->SetAllowInvalidRenderFrameIdForTesting(true);
+    blink_audio_source_.SetExtraData(source);  // Takes ownership.
+  }
+
+  void CreateProcessedLocalAudioSource(
+      const AudioProcessingProperties& properties) {
+    ProcessedLocalAudioSource* const source = new ProcessedLocalAudioSource(
+        -1 /* consumer_render_frame_id is N/A for non-browser tests */,
+        StreamDeviceInfo(MEDIA_DEVICE_AUDIO_CAPTURE, "Mock audio device",
+                         "mock_audio_device_id", kSampleRate, kChannelLayout,
+                         kRequestedBufferSize),
+        properties,
         base::Bind(&ProcessedLocalAudioSourceTest::OnAudioSourceStarted,
                    base::Unretained(this)),
         &mock_dependency_factory_);
@@ -149,23 +188,30 @@ class ProcessedLocalAudioSourceTest : public testing::Test {
   MockPeerConnectionDependencyFactory mock_dependency_factory_;
   blink::WebMediaStreamSource blink_audio_source_;
   blink::WebMediaStreamTrack blink_audio_track_;
+  // TODO(guidou): Remove this field. http://crbug.com/706408
+  base::test::ScopedFeatureList scoped_feature_list_;
 };
 
 // Tests a basic end-to-end start-up, track+sink connections, audio flow, and
 // shut-down. The unit tests in media_stream_audio_unittest.cc provide more
 // comprehensive testing of the object graph connections and multi-threading
 // concerns.
-TEST_F(ProcessedLocalAudioSourceTest, VerifyAudioFlowWithoutAudioProcessing) {
+TEST_P(ProcessedLocalAudioSourceTest, VerifyAudioFlowWithoutAudioProcessing) {
   using ThisTest =
       ProcessedLocalAudioSourceTest_VerifyAudioFlowWithoutAudioProcessing_Test;
 
   // Turn off the default constraints so the sink will get audio in chunks of
   // the native buffer size.
-  MockConstraintFactory constraint_factory;
-  constraint_factory.DisableDefaultAudioConstraints();
-
-  CreateProcessedLocalAudioSource(
-      constraint_factory.CreateWebMediaConstraints());
+  if (IsOldAudioConstraints()) {
+    MockConstraintFactory constraint_factory;
+    constraint_factory.DisableDefaultAudioConstraints();
+    CreateProcessedLocalAudioSource(
+        constraint_factory.CreateWebMediaConstraints());
+  } else {
+    AudioProcessingProperties properties;
+    DisableDefaultAudioProcessingProperties(&properties);
+    CreateProcessedLocalAudioSource(properties);
+  }
 
   // Connect the track, and expect the MockCapturerSource to be initialized and
   // started by ProcessedLocalAudioSource.
@@ -208,7 +254,11 @@ TEST_F(ProcessedLocalAudioSourceTest, VerifyAudioFlowWithoutAudioProcessing) {
 
 // Tests that the source is not started when invalid audio constraints are
 // present.
-TEST_F(ProcessedLocalAudioSourceTest, FailToStartWithWrongConstraints) {
+// TODO(guidou): Remove this test. http://crbug.com/706408
+TEST_P(ProcessedLocalAudioSourceTest, FailToStartWithWrongConstraints) {
+  if (!IsOldAudioConstraints())
+    return;
+
   MockConstraintFactory constraint_factory;
   const std::string dummy_constraint = "dummy";
   // Set a non-audio constraint.
@@ -236,5 +286,7 @@ TEST_F(ProcessedLocalAudioSourceTest, FailToStartWithWrongConstraints) {
 
 // TODO(miu): There's a lot of logic in ProcessedLocalAudioSource around
 // constraints processing and validation that should have unit testing.
+
+INSTANTIATE_TEST_CASE_P(, ProcessedLocalAudioSourceTest, testing::Values(true, false));
 
 }  // namespace content
