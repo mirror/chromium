@@ -673,8 +673,10 @@ public class BottomSheet
                 mToolbarHeight = bottom - top;
                 updateSheetDimensions();
 
-                cancelAnimation();
-                setSheetState(mCurrentState, false);
+                if (!mIsScrolling) {
+                    cancelAnimation();
+                    setSheetState(mCurrentState, false);
+                }
             }
         });
 
