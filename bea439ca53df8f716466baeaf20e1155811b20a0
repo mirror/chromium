@@ -16,6 +16,40 @@
       "revId": "bea439ca53df8f716466baeaf20e1155811b20a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd07189c_8bd6b3ff",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-06T17:09:24Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we always force new chunk here?",
+      "revId": "bea439ca53df8f716466baeaf20e1155811b20a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb7e1f01_ba436767",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-06T17:09:24Z",
+      "side": 1,
+      "message": "How about\n  const bool always_force_new_chunk \u003d true;\nand replacing \u0027true\u0027 with \u0027always_force_new_chunk\u0027?\n(or defining an enum?)",
+      "revId": "bea439ca53df8f716466baeaf20e1155811b20a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
