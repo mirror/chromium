@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23eacfab_905d3434",
+        "filename": "content/browser/indexed_db/indexed_db_cursor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-06T23:26:06Z",
+      "side": 1,
+      "message": "Nit: Would it make sense to inline this method? It\u0027s only called here and it\u0027s two lines, and the name is mildly confusing (I\u0027d expect it to either remove another cursor, or to be called RemoveFromTransaction / UnregisterFromTransaction). Either way, the version of the code with the inlined body seems more straightforward to me.",
+      "revId": "603d2411d787d770e42b96228a2c0106e2adaecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
