@@ -237,10 +237,12 @@ class WebGLConformanceExpectations(GpuTestExpectations):
         ['win10', ('nvidia', 0x1cb3), 'd3d9'], bug=680754)
     self.Flaky('conformance/textures/image_bitmap_from_video/' +
         'tex-2d-rgba-rgba-unsigned_short_5_5_5_1.html',
-        ['win10', ('nvidia', 0x1cb3)], bug=728670)
+
+    # Win10 / NVIDIA Quadro P400 / D3D11 failures
+        ['win10', ('nvidia', 0x1cb3), 'd3d11'], bug=728670)
     self.Flaky('conformance/textures/image_bitmap_from_video/' +
         'tex-2d-rgba-rgba-unsigned_short_4_4_4_4.html',
-        ['win10', ('nvidia', 0x1cb3)], bug=728670)
+        ['win10', ('nvidia', 0x1cb3), 'd3d11'], bug=728670)
 
     # Win7 / Intel failures
     self.Fail('conformance/textures/misc/' +
