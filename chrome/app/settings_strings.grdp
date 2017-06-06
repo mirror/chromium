@@ -1931,6 +1931,9 @@
   <message name="IDS_SETTINGS_SITE_SETTINGS_CATEGORY" desc="Name of the settings page which allows users to modify a specific category under site settings.">
     Permission Category
   </message>
+  <message name="IDS_SETTINGS_SITE_SETTINGS_ADS" desc="Label for the ads site settings.">
+    Ads
+  </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_ALL_SITES" desc="Label for the all sites site settings.">
     All sites
   </message>
@@ -2091,6 +2094,9 @@
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_HANDLERS_BLOCKED" desc="The block label for protocol handlers in site settings.">
     Do not allow any site to handle protocols
+  </message>
+  <message name="IDS_SETTINGS_SITE_SETTINGS_ADS_BLOCK" desc="The block label for ads in site settings.">
+    Blocked on sites that tend to show intrusive ads
   </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_AUTOMATIC_DOWNLOAD_ASK" desc="The allow label for automatic download in site settings.">
     Ask when a site tries to download files automatically after the first file
