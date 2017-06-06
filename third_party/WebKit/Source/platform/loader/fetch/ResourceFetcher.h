@@ -31,6 +31,7 @@
 #include "platform/PlatformExport.h"
 #include "platform/Timer.h"
 #include "platform/loader/fetch/FetchContext.h"
+#include "platform/loader/fetch/FetchDispatcher.h"
 #include "platform/loader/fetch/FetchInitiatorInfo.h"
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/PreloadKey.h"
@@ -83,8 +84,9 @@ class PLATFORM_EXPORT ResourceFetcher
     return document_resources_;
   }
 
-  // Actually starts loading a Resource if it wasn't started during
-  // requestResource().
+  // Requests to start loading a Resource if it wasn't requested during
+  // RequestResource(). Actual start timing may be delayed internally.
+  // Note: RequestResource() just calls StartLoad() internally to request.
   bool StartLoad(Resource*);
 
   void SetAutoLoadImages(bool);
@@ -238,7 +240,11 @@ class PLATFORM_EXPORT ResourceFetcher
                               const ResourceFactory&,
                               bool is_static_data) const;
 
+  // Actually starts loading a Resource.
+  void StartActualLoad(Resource*);
+
   Member<FetchContext> context_;
+  Member<FetchDispatcher> dispatcher_;
 
   HashSet<String> validated_urls_;
   mutable DocumentResourceMap document_resources_;
