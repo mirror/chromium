@@ -22,6 +22,30 @@
       "revId": "c3f1bb4efe1d035f5f81d8313c9cd6927169be00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b69724_921dd615",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValue.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-06T13:49:06Z",
+      "side": 1,
+      "message": "The discussion here: https://github.com/w3c/css-houdini-drafts/issues/238, pointed out that the CSS Working Group has agreed to not expose constructor and parse methods to Worklet. That\u0027s why I make it only exposed to Window. Does that make sense?",
+      "parentUuid": "dd2faf96_8b6de447",
+      "range": {
+        "startLine": 18,
+        "startChar": 31,
+        "endLine": 18,
+        "endChar": 38
+      },
+      "revId": "c3f1bb4efe1d035f5f81d8313c9cd6927169be00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
