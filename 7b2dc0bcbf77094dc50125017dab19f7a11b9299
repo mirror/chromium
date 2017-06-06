@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "753cb9f6_31e14d8e",
+        "filename": "extensions/browser/blob_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-06T08:48:59Z",
+      "side": 1,
+      "message": "I think it\u0027s best if this is properly annotated now that it\u0027s moved. This is the template:\n\nnet::NetworkTrafficAnnotationTag traffic_annotation \u003d\n      net::DefineNetworkTrafficAnnotation(\"...\", R\"(\n        semantics {\n          sender: \"...\"\n          description: \"...\"\n          trigger: \"...\"\n          data: \"...\"\n          destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL\n        }\n        policy {\n          cookies_allowed: false/true\n          cookies_store: \"...\"\n          setting: \"...\"\n          chrome_policy {\n            [POLICY_NAME] {\n              [POLICY_NAME]: ... //(value to disable it)\n            }\n          }\n          policy_exception_justification: \"...\"\n        })\");",
+      "range": {
+        "startLine": 41,
+        "startChar": 37,
+        "endLine": 41,
+        "endChar": 62
+      },
+      "revId": "7b2dc0bcbf77094dc50125017dab19f7a11b9299",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
