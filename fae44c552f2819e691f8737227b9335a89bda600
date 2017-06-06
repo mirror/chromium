@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7816bd7_0c3ef202",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-06T19:56:04Z",
+      "side": 1,
+      "message": "Is this conditional for tests of something?",
+      "revId": "fae44c552f2819e691f8737227b9335a89bda600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da2a9743_f0c5812f",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-06T19:56:04Z",
+      "side": 1,
+      "message": "It sounded like on the spec the designers were proposing omitting the input_in_progress() check so this could be used to clear the permanent text as well.  WDYT of that?  I think it would sort of make sense to show this any time the box has focus.  Imagine tapping after the text and then wanting to delete everything.  You need to either hold down backspace or select all and then delete.",
+      "revId": "fae44c552f2819e691f8737227b9335a89bda600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069b8ddd_93ba2740",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-06T19:56:04Z",
+      "side": 1,
+      "message": "Nit: Should this mention \"based on the current textfield color\" or something, to suggest to readers that even if the icon shape doesn\u0027t change, the color might?  (I was confused when reading this why we needed this function, until I saw its implementation.)",
+      "revId": "fae44c552f2819e691f8737227b9335a89bda600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef10d3c3_068319f0",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-06T19:56:04Z",
+      "side": 1,
+      "message": "Nit: Maybe init this too?  (Could require use of {})",
+      "revId": "fae44c552f2819e691f8737227b9335a89bda600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
