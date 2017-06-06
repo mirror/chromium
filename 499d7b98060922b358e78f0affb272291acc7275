@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d77ae8a9_92518dc9",
+        "filename": "chrome/browser/safe_browsing/incident_reporting/resource_request_detector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-06T21:42:43Z",
+      "side": 1,
+      "message": "nit: i would release these in the opposite order so that teardown is the inverse of build-up.",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 27
+      },
+      "revId": "499d7b98060922b358e78f0affb272291acc7275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
