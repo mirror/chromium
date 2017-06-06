@@ -55,6 +55,7 @@ class RenderWidgetHostImpl;
 class SelectionPopupController;
 class SynchronousCompositorHost;
 class SynchronousCompositorClient;
+class TouchSelectionControllerClientManagerAndroid;
 struct NativeWebKeyboardEvent;
 
 // -----------------------------------------------------------------------------
@@ -91,6 +92,10 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
 
   void AddDestructionObserver(DestructionObserver* connector);
   void RemoveDestructionObserver(DestructionObserver* connector);
+
+  ui::TouchSelectionController* touch_selection_controller() {
+    return touch_selection_controller_.get();
+  }
 
   // RenderWidgetHostView implementation.
   bool OnMessageReceived(const IPC::Message& msg) override;
@@ -179,6 +184,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
       const gfx::Point& point,
       RenderWidgetHostViewBase* target_view,
       gfx::Point* transformed_point) override;
+  TouchSelectionControllerClientManager*
+  touch_selection_controller_client_manager() override;
 
   // ui::ViewClient implementation.
   bool OnTouchEvent(const ui::MotionEventAndroid& m,
@@ -398,6 +405,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   // Provides gesture synthesis given a stream of touch events (derived from
   // Android MotionEvent's) and touch event acks.
   ui::FilteredGestureProvider gesture_provider_;
+  int touch_starts_sent_to_renderer_;
 
   // Handles gesture based text selection
   StylusTextSelector stylus_text_selector_;
@@ -405,6 +413,10 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   // Manages selection handle rendering and manipulation.
   // This will always be NULL if |content_view_core_| is NULL.
   std::unique_ptr<ui::TouchSelectionController> touch_selection_controller_;
+  // Keeps track of currently active touch selection controller clients (some
+  // may be representing out-of-process iframes).
+  std::unique_ptr<TouchSelectionControllerClientManagerAndroid>
+      touch_selection_controller_client_manager_;
 
   // Bounds to use if we have no backing ContentViewCore
   gfx::Rect default_bounds_;
