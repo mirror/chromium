@@ -308,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "12a6ae77_a9647dc4",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_delegate.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-06T05:21:37Z",
+      "side": 1,
+      "message": "\u003e Hmm, so this object destroyed and recreated if the main frame needs to swap processes?\n\nDunno if that follows or not, I\u0027m not a Mac person, sorry.",
+      "parentUuid": "b46d220f_563d6c5b",
+      "range": {
+        "startLine": 177,
+        "startChar": 38,
+        "endLine": 178,
+        "endChar": 46
+      },
+      "revId": "a511371337277ce1adfc7255fd6a3043494ddd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6f11ee7_8389a080",
         "filename": "components/spellcheck/common/spellcheck.mojom",
         "patchSetId": 18
@@ -367,6 +391,30 @@
       "side": 1,
       "message": "I think there\u0027s some value to being consistent with naming conventions used throughout the rest of Chrome. Traditionally, there\u0027s a 1:1 FooHost : Foo IPC relationship, and it would be really nice if we could keep that: it\u0027s true that we can get this information from the comments, but it\u0027d be even nicer if it was apparent in the name.",
       "parentUuid": "4dfa0ca7_544de2ea",
+      "range": {
+        "startLine": 60,
+        "startChar": 10,
+        "endLine": 60,
+        "endChar": 25
+      },
+      "revId": "a511371337277ce1adfc7255fd6a3043494ddd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "444053ab_d808a87f",
+        "filename": "components/spellcheck/common/spellcheck.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-06T05:21:37Z",
+      "side": 1,
+      "message": "\u003e I think there\u0027s some value to being consistent with naming conventions used throughout the rest of Chrome. Traditionally, there\u0027s a 1:1 FooHost : Foo IPC relationship, \n\nWell that wasn\u0027t true of the spelling IPC being converted here. They were all calling into a browser message filter (many to 1).\n\n\u003e and it would be really nice if we could keep that: it\u0027s true that we can get this information from the comments, but it\u0027d be even nicer if it was apparent in the name.\n\nI am using Host to mean browser, and these interfaces have mojo binding set members, which is many to one and common in mojo.  Suggestions for alternative names welcome.",
+      "parentUuid": "81511579_bebd4dc7",
       "range": {
         "startLine": 60,
         "startChar": 10,

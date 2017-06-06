@@ -22,6 +22,30 @@
       "revId": "1b60ce1988c6f45083e9de70496b474c4db7022a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310c61b9_bbc37861",
+        "filename": "third_party/WebKit/Source/core/loader/EmptyClients.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-06T05:21:37Z",
+      "side": 1,
+      "message": "\u003e Nit: nullptr\n\nOne day we will run clang-tidy 0 -\u003e nullptr over Blink.",
+      "parentUuid": "94576d87_48c85d6b",
+      "range": {
+        "startLine": 363,
+        "startChar": 11,
+        "endLine": 363,
+        "endChar": 12
+      },
+      "revId": "1b60ce1988c6f45083e9de70496b474c4db7022a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
