@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f84395f_967c60e1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-06T17:13:01Z",
+      "side": 1,
+      "message": "Can you prefix this with [layoutng]? It\u0027s not otherwise clear that this is about NG",
+      "revId": "a138100a005463f827ec9cbe997ed96e66d0ec8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8141a5b_a49b81cf",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-06T17:13:01Z",
+      "side": 1,
+      "message": "I\u0027m not in love with this variable name (even though I suggested it), but logical_fragment is very long, so this seems OK.",
+      "revId": "a138100a005463f827ec9cbe997ed96e66d0ec8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
