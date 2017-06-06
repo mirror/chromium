@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "bb408075_9de56eee",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-06T17:30:44Z",
+      "side": 1,
+      "message": "Could you DCHECK this assertion?",
+      "revId": "c9e336f65c49e737807c3025084936eadb58bd1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01ca5926_96ca550f",
         "filename": "cc/layers/layer.h",
         "patchSetId": 4
@@ -13,6 +30,24 @@
       "writtenOn": "2017-06-06T03:24:41Z",
       "side": 1,
       "message": "IIRC from our discussion, the bounds will be the bounds of the overflow\nscrolling region, not the element which has overflow:scroll.",
+      "revId": "c9e336f65c49e737807c3025084936eadb58bd1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a6d058_bdddb61b",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-06T17:30:44Z",
+      "side": 1,
+      "message": "Having two values that need to be synced to each other is a little unfortunate.  I\u0027m not sure I see any way around this, though.",
+      "parentUuid": "01ca5926_96ca550f",
       "revId": "c9e336f65c49e737807c3025084936eadb58bd1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
