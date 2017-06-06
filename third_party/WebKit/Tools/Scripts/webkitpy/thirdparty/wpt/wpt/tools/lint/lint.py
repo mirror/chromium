@@ -13,7 +13,7 @@ import sys
 from collections import defaultdict
 
 from . import fnmatch
-from ..localpaths import repo_root
+from ..localpaths import repo_root, here
 from ..gitignore.gitignore import PathFilter
 
 from manifest.sourcefile import SourceFile, js_meta_re, python_meta_re
@@ -22,6 +22,9 @@ from six.moves import range
 from six.moves.urllib.parse import urlsplit, urljoin
 
 import logging
+
+# FIXME: repo_root should be parameterizable
+repo_root = os.path.abspath(os.path.join(here, '..', '..', '..', '..', '..', '..', '..', 'LayoutTests', 'external', 'wpt'))
 
 logger = None
 
@@ -604,7 +607,6 @@ def check_all_paths(repo_root, paths, css_mode):
     :param css_mode: whether we're in CSS testsuite mode
     :returns: a list of errors found in ``f``
     """
-
     errors = []
     for paths_fn in all_paths_lints:
         errors.extend(paths_fn(repo_root, paths, css_mode))
@@ -695,6 +697,7 @@ def main(**kwargs):
     paths = list(kwargs.get("paths") if kwargs.get("paths") else all_filesystem_paths(repo_root))
     if output_format == "markdown":
         setup_logging(True)
+
     return lint(repo_root, paths, output_format, kwargs.get("css_mode", False))
 
 
@@ -731,6 +734,7 @@ def lint(repo_root, paths, output_format, css_mode):
 
     for path in paths[:]:
         abs_path = os.path.join(repo_root, path)
+
         if not os.path.exists(abs_path):
             paths.remove(path)
             continue
