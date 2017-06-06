@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9526ea07_3172d8b9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/resources/storage-view-reports-quota.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-06T17:16:53Z",
+      "side": 1,
+      "message": "remove this!",
+      "revId": "4987f36ce47c6e4298c9740e78dbf9ac9df69283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b10dc524_36ea9d50",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 4533,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-06T17:16:53Z",
+      "side": 1,
+      "message": "nit: since this is no longer reused, it may be practical to have just two return parameters.",
+      "revId": "4987f36ce47c6e4298c9740e78dbf9ac9df69283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d305c8b_33853cd9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-06T17:16:53Z",
+      "side": 1,
+      "message": "nit: move under if below.",
+      "revId": "4987f36ce47c6e4298c9740e78dbf9ac9df69283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
