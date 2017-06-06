@@ -5,6 +5,7 @@
 #include <inttypes.h>
 
 #include <memory>
+#include <vector>
 
 #include "base/callback.h"
 #include "base/files/file_path.h"
@@ -98,7 +99,8 @@ void ProcessDumpCallbackAdapter(
     base::trace_event::GlobalMemoryDumpCallback callback,
     uint64_t dump_guid,
     bool success,
-    const base::Optional<base::trace_event::MemoryDumpCallbackResult>&) {
+    const base::Optional<base::trace_event::MemoryDumpCallbackResult>&,
+    std::vector<std::unique_ptr<base::trace_event::ProcessMemoryDump>> dumps) {
   callback.Run(dump_guid, success);
 }
 

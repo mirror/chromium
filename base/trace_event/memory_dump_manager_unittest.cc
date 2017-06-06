@@ -128,7 +128,8 @@ void ProcessDumpCallbackAdapter(
     GlobalMemoryDumpCallback callback,
     uint64_t dump_guid,
     bool success,
-    const base::Optional<base::trace_event::MemoryDumpCallbackResult>&) {
+    const base::Optional<base::trace_event::MemoryDumpCallbackResult>&,
+    std::vector<std::unique_ptr<ProcessMemoryDump>> dumps) {
   callback.Run(dump_guid, success);
 }
 
@@ -324,7 +325,8 @@ class MemoryDumpManagerTest : public testing::Test {
       GlobalMemoryDumpCallback callback,
       uint64_t dump_guid,
       bool success,
-      const base::Optional<MemoryDumpCallbackResult>& result) {
+      const base::Optional<MemoryDumpCallbackResult>& result,
+      std::vector<std::unique_ptr<ProcessMemoryDump>> dumps) {
     if (result.has_value()) {
       results_.push_back(result.value());
     }
