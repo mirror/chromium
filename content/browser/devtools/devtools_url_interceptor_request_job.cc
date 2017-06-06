@@ -17,23 +17,70 @@
 #include "net/url_request/url_request_context.h"
 
 namespace content {
+namespace protocol {
+const char* ResourceTypeToString(ResourceType resource_type) {
+  switch (resource_type) {
+    case RESOURCE_TYPE_MAIN_FRAME:
+      return Network::RequestIntercepted::ResourceTypeEnum::MainFrame;
+    case RESOURCE_TYPE_SUB_FRAME:
+      return Network::RequestIntercepted::ResourceTypeEnum::SubFrame;
+    case RESOURCE_TYPE_STYLESHEET:
+      return Network::RequestIntercepted::ResourceTypeEnum::Stylesheet;
+    case RESOURCE_TYPE_SCRIPT:
+      return Network::RequestIntercepted::ResourceTypeEnum::Script;
+    case RESOURCE_TYPE_IMAGE:
+      return Network::RequestIntercepted::ResourceTypeEnum::Image;
+    case RESOURCE_TYPE_FONT_RESOURCE:
+      return Network::RequestIntercepted::ResourceTypeEnum::FontResource;
+    case RESOURCE_TYPE_SUB_RESOURCE:
+      return Network::RequestIntercepted::ResourceTypeEnum::SubResource;
+    case RESOURCE_TYPE_OBJECT:
+      return Network::RequestIntercepted::ResourceTypeEnum::Object;
+    case RESOURCE_TYPE_MEDIA:
+      return Network::RequestIntercepted::ResourceTypeEnum::Media;
+    case RESOURCE_TYPE_WORKER:
+      return Network::RequestIntercepted::ResourceTypeEnum::Worker;
+    case RESOURCE_TYPE_SHARED_WORKER:
+      return Network::RequestIntercepted::ResourceTypeEnum::SharedWorker;
+    case RESOURCE_TYPE_PREFETCH:
+      return Network::RequestIntercepted::ResourceTypeEnum::Prefetch;
+    case RESOURCE_TYPE_FAVICON:
+      return Network::RequestIntercepted::ResourceTypeEnum::Favicon;
+    case RESOURCE_TYPE_XHR:
+      return Network::RequestIntercepted::ResourceTypeEnum::XHR;
+    case RESOURCE_TYPE_PING:
+      return Network::RequestIntercepted::ResourceTypeEnum::Ping;
+    case RESOURCE_TYPE_SERVICE_WORKER:
+      return Network::RequestIntercepted::ResourceTypeEnum::ServiceWorker;
+    case RESOURCE_TYPE_CSP_REPORT:
+      return Network::RequestIntercepted::ResourceTypeEnum::CspReport;
+    case RESOURCE_TYPE_PLUGIN_RESOURCE:
+      return Network::RequestIntercepted::ResourceTypeEnum::PluginResource;
+    default:
+      return Network::RequestIntercepted::ResourceTypeEnum::Other;
+  }
+}
+}  // namespace protocol
 
 namespace {
+
 void SendRequestInterceptedEventOnUiThread(
     base::WeakPtr<protocol::NetworkHandler> network_handler,
     std::string interception_id,
-    std::unique_ptr<protocol::Network::Request> network_request) {
+    std::unique_ptr<protocol::Network::Request> network_request,
+    std::string resource_type) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (!network_handler)
     return;
-  network_handler->frontend()->RequestIntercepted(interception_id,
-                                                  std::move(network_request));
+  network_handler->frontend()->RequestIntercepted(
+      interception_id, std::move(network_request), resource_type);
 }
 
 void SendRedirectInterceptedEventOnUiThread(
     base::WeakPtr<protocol::NetworkHandler> network_handler,
     std::string interception_id,
     std::unique_ptr<protocol::Network::Request> network_request,
+    std::string resource_type,
     std::unique_ptr<protocol::Object> headers_object,
     int http_status_code,
     std::string redirect_url) {
@@ -41,8 +88,8 @@ void SendRedirectInterceptedEventOnUiThread(
   if (!network_handler)
     return;
   return network_handler->frontend()->RequestIntercepted(
-      interception_id, std::move(network_request), std::move(headers_object),
-      http_status_code, redirect_url);
+      interception_id, std::move(network_request), resource_type,
+      std::move(headers_object), http_status_code, redirect_url);
 }
 
 class ProxyUploadElementReader : public net::UploadElementReader {
@@ -106,7 +153,8 @@ DevToolsURLInterceptorRequestJob::DevToolsURLInterceptorRequestJob(
     net::NetworkDelegate* original_network_delegate,
     WebContents* web_contents,
     base::WeakPtr<protocol::NetworkHandler> network_handler,
-    bool is_redirect)
+    bool is_redirect,
+    ResourceType resource_type)
     : net::URLRequestJob(original_request, original_network_delegate),
       devtools_url_request_interceptor_state_(
           devtools_url_request_interceptor_state),
@@ -123,6 +171,7 @@ DevToolsURLInterceptorRequestJob::DevToolsURLInterceptorRequestJob(
       web_contents_(web_contents),
       network_handler_(network_handler),
       is_redirect_(is_redirect),
+      resource_type_(resource_type),
       weak_ptr_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 }
@@ -154,7 +203,8 @@ void DevToolsURLInterceptorRequestJob::Start() {
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::Bind(SendRequestInterceptedEventOnUiThread, network_handler_,
-                   interception_id_, base::Passed(&network_request)));
+                   interception_id_, base::Passed(&network_request),
+                   protocol::ResourceTypeToString(resource_type_)));
   }
 }
 
@@ -357,6 +407,7 @@ void DevToolsURLInterceptorRequestJob::OnReceivedRedirect(
       BrowserThread::UI, FROM_HERE,
       base::Bind(SendRedirectInterceptedEventOnUiThread, network_handler_,
                  interception_id_, base::Passed(&network_request),
+                 protocol::ResourceTypeToString(resource_type_),
                  base::Passed(&headers_object), redirectinfo.status_code,
                  redirectinfo.new_url.spec()));
 }
