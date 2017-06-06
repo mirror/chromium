@@ -30,36 +30,12 @@ bool HasFocusableChild(const AXNode* node) {
   return false;
 }
 
-gfx::Rect RelativeToAbsoluteBounds(const AXNode* node,
-                                   gfx::RectF bounds,
-                                   const AXTree* tree) {
-  const AXNode* current = node;
-  while (current != nullptr) {
-    if (current->data().transform)
-      current->data().transform->TransformRect(&bounds);
-    auto* container = tree->GetFromId(current->data().offset_container_id);
-    if (!container) {
-      if (current == tree->root())
-        container = current->parent();
-      else
-        container = tree->root();
-    }
-    if (!container || container == current)
-      break;
-
-    gfx::RectF container_bounds = container->data().location;
-    bounds.Offset(container_bounds.x(), container_bounds.y());
-    current = container;
-  }
-  return gfx::ToEnclosingRect(bounds);
-}
-
 void FixEmptyBounds(const AXNode* node, gfx::RectF* bounds, const AXTree* tree);
 
 gfx::Rect GetPageBoundsRect(const AXNode* node, const AXTree* tree) {
   gfx::RectF bounds = node->data().location;
   FixEmptyBounds(node, &bounds, tree);
-  return RelativeToAbsoluteBounds(node, bounds, tree);
+  return gfx::ToEnclosingRect(tree->GetTreeBounds(node));
 }
 
 void FixEmptyBounds(const AXNode* node,
@@ -397,7 +373,7 @@ AXSnapshotNodeAndroid::WalkAXTreeDepthFirst(
     gfx::RectF text_size_rect(
         0, 0, 1, node->data().GetFloatAttribute(ui::AX_ATTR_FONT_SIZE));
     gfx::Rect scaled_text_size_rect =
-        RelativeToAbsoluteBounds(node, text_size_rect, tree);
+        gfx::ToEnclosingRect(tree->RelativeToTreeBounds(node, text_size_rect));
     result->text_size = scaled_text_size_rect.height();
 
     const int text_style = node->data().GetIntAttribute(ui::AX_ATTR_TEXT_STYLE);
