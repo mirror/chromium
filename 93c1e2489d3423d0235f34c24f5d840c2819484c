@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce1b319d_7dc2066a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 29258,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-06T21:59:14Z",
+      "side": 1,
+      "message": "nit: Please add units\u003d\"rebuffers\"",
+      "range": {
+        "startLine": 29258,
+        "startChar": 39,
+        "endLine": 29258,
+        "endChar": 0
+      },
+      "revId": "93c1e2489d3423d0235f34c24f5d840c2819484c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
