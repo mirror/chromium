@@ -20,7 +20,6 @@
 #include "widevine_cdm_version.h"  //  In SHARED_INTERMEDIATE_DIR.
 
 #if BUILDFLAG(ENABLE_PEPPER_CDMS)
-#include "chrome/browser/media/pepper_cdm_test_constants.h"
 #include "media/cdm/cdm_paths.h"
 #endif
 
