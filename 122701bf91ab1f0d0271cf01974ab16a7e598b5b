@@ -52,6 +52,24 @@
       "revId": "122701bf91ab1f0d0271cf01974ab16a7e598b5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c20329dc_688df95f",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-06T21:18:58Z",
+      "side": 1,
+      "message": "For a bit more context, the thing that\u0027s being watched is\n\nhttps://cs.chromium.org/chromium/src/base/files/file_descriptor_watcher_posix_unittest.cc?rcl\u003dbf671ef01f848c38d2259f98b4fdc24c9666f5db\u0026l\u003d279\n\nwhich I believe is \n\nhttps://cs.chromium.org/chromium/src/base/files/file_descriptor_watcher_posix_unittest.cc?rcl\u003dbf671ef01f848c38d2259f98b4fdc24c9666f5db\u0026l\u003d100\n\nwhich is the read end of a pipe https://cs.chromium.org/chromium/src/base/files/file_descriptor_watcher_posix_unittest.cc?rcl\u003dbf671ef01f848c38d2259f98b4fdc24c9666f5db\u0026l\u003d89\n\nSo maybe it actually shouldn\u0027t be observing WRITABLE?\n\n(I assume it\u0027s going through mx_pipe_wait_begin/_end() and that looks fine, so I\u0027m not actually sure where the 0x400003 is coming from now. Maybe that\u0027s just how pipe()\u0027s fds work.)",
+      "parentUuid": "dfd2cf86_281d85af",
+      "revId": "122701bf91ab1f0d0271cf01974ab16a7e598b5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
