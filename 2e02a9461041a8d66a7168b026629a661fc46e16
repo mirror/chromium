@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c2859517_cb931dad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-06T19:11:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7d5fbc0_1a82440e",
+      "revId": "2e02a9461041a8d66a7168b026629a661fc46e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a752daa_14ebd721",
         "filename": "content/browser/renderer_host/media/service_launched_video_capture_device.cc",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-06-06T18:50:23Z",
       "side": 1,
       "message": "Do we need the local trampoline methods? |device_| should\nunderstand the mojo parameters, so something like:\n\n  device_-\u003eGetPhotoCapabilities(base::Passed(\u0026callback));\n\nwas what I was expecting. \n\nMoreover, |device_| expects to have a \nScopedResultCallback [1]: if something goes wrong in any\nimage-capture-related methods, these will silently drop \nthe callback, which is supposed to do the right thing,\nwhereas it seems that in the current implementation here \nwould not be calling |callback|.\n\n\n[1] https://cs.chromium.org/chromium/src/media/capture/video/video_capture_device.h?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d275",
+      "range": {
+        "startLine": 28,
+        "startChar": 42,
+        "endLine": 28,
+        "endChar": 72
+      },
+      "revId": "2e02a9461041a8d66a7168b026629a661fc46e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a57294a_c9296bd0",
+        "filename": "content/browser/renderer_host/media/service_launched_video_capture_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-06T19:11:39Z",
+      "side": 1,
+      "message": "I had the same expectation when I first authored this, but the compiler complained.\nSince |device_| exposes the Mojo interface video_capture.mojom.Device, it expects a regular callback instead of a ScopedResultCallback. Therefore, we here need to convert from ScopedResultCallback to regular Callback, and on the service side, we need to convert from regular Callback to ScopedResultCallback. \n\nI agree that this is unfortunate. Please let me know if you see a better solution.",
+      "parentUuid": "4a752daa_14ebd721",
       "range": {
         "startLine": 28,
         "startChar": 42,
