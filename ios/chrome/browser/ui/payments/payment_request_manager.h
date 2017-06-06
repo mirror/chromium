@@ -6,6 +6,7 @@
 #define IOS_CHROME_BROWSER_UI_PAYMENTS_PAYMENT_REQUEST_MANAGER_H_
 
 #import <UIKit/UIKit.h>
+#import "ios/chrome/browser/tabs/tab_model.h"
 
 namespace ios {
 class ChromeBrowserState;
@@ -25,6 +26,9 @@ class WebState;
 // YES if Payment Request is enabled on the current web state.
 @property(readonly) BOOL enabled;
 
+// The browser's tab model.
+@property(nonatomic, assign) TabModel* tabModel;
+
 // The current web state being observed for PaymentRequest invocations.
 @property(nonatomic, assign) web::WebState* webState;
 
@@ -39,9 +43,13 @@ class WebState;
 
 - (instancetype)init NS_UNAVAILABLE;
 
-// Sets the WebState to be observed for invocations of the Payment Request API.
-// |webState|'s lifetime should be greater than the receiver's. |webState| can
-// be nil.
+// Sets the TabModel to be used for grabbing the WebState and the ToolbarModel
+// that holds security info.
+- (void)setTabModel:(TabModel*)tabModel;
+
+// Sets the WebState to be observed for invocations of the
+// Payment Request API. |webState|'s lifetime should be
+// greater than the receiver's. |webState| can be nil.
 - (void)setWebState:(web::WebState*)webState;
 
 // Enables or disables the Payment Request API for the current webState. If
