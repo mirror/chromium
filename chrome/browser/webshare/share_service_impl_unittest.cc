@@ -2,7 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <map>
 #include <memory>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/callback.h"
@@ -81,8 +83,15 @@ class ShareServiceTestImpl : public ShareServiceImpl {
 
   const std::string& GetLastUsedTargetURL() { return last_used_target_url_; }
 
-  const std::vector<std::pair<base::string16, GURL>>& GetTargetsInPicker() {
+  const std::vector<ShareTarget>& GetTargetsInPicker() {
     return targets_in_picker_;
+  }
+
+  void PickTarget(const std::string& target_url) {
+    const auto& it = url_to_target_pos_.find(target_url);
+    ASSERT_NE(it, url_to_target_pos_.end());
+
+    std::move(picker_callback_).Run(std::move(targets_in_picker_[it->second]));
   }
 
   chrome::WebShareTargetPickerCallback picker_callback() {
@@ -91,10 +100,15 @@ class ShareServiceTestImpl : public ShareServiceImpl {
 
  private:
   void ShowPickerDialog(
-      const std::vector<std::pair<base::string16, GURL>>& targets,
+      std::vector<ShareTarget> targets,
       chrome::WebShareTargetPickerCallback callback) override {
     // Store the arguments passed to the picker dialog.
-    targets_in_picker_ = targets;
+    targets_in_picker_ = std::move(targets);
+    for (size_t i = 0; i < targets_in_picker_.size(); i++) {
+      url_to_target_pos_.emplace(targets_in_picker_[i].manifest_url().spec(),
+                                 i);
+    }
+
     picker_callback_ = std::move(callback);
 
     // Quit the test's run loop. It is the test's responsibility to call the
@@ -122,7 +136,9 @@ class ShareServiceTestImpl : public ShareServiceImpl {
   // The last URL passed to OpenTargetURL.
   std::string last_used_target_url_;
   // The targets passed to ShowPickerDialog.
-  std::vector<std::pair<base::string16, GURL>> targets_in_picker_;
+  std::vector<ShareTarget> targets_in_picker_;
+  // Tracks targets' positions in targets_in_picker_.
+  std::map<std::string, size_t> url_to_target_pos_;
   // The callback passed to ShowPickerDialog (which is supposed to be called
   // with the user's chosen result, or nullopt if cancelled).
   chrome::WebShareTargetPickerCallback picker_callback_;
@@ -185,14 +201,15 @@ TEST_F(ShareServiceImplUnittest, ShareCallbackParams) {
 
   run_loop.Run();
 
-  const std::vector<std::pair<base::string16, GURL>> kExpectedTargets{
-      make_pair(base::UTF8ToUTF16(kTargetName), GURL(kManifestUrlHigh)),
-      make_pair(base::UTF8ToUTF16(kTargetName), GURL(kManifestUrlLow))};
-  EXPECT_EQ(kExpectedTargets, share_service_helper()->GetTargetsInPicker());
+  std::vector<ShareTarget> expected_targets;
+  expected_targets.emplace_back(GURL(kManifestUrlHigh), kTargetName,
+                                kUrlTemplate);
+  expected_targets.emplace_back(GURL(kManifestUrlLow), kTargetName,
+                                kUrlTemplate);
+  EXPECT_EQ(expected_targets, share_service_helper()->GetTargetsInPicker());
 
   // Pick example-low.com.
-  share_service_helper()->picker_callback().Run(
-      base::Optional<std::string>(kManifestUrlLow));
+  share_service_helper()->PickTarget(kManifestUrlLow);
 
   const char kExpectedURL[] =
       "https://www.example-low.com/target/"
@@ -243,10 +260,12 @@ TEST_F(ShareServiceImplUnittest, ShareCancelWithTargets) {
 
   run_loop.Run();
 
-  const std::vector<std::pair<base::string16, GURL>> kExpectedTargets{
-      make_pair(base::UTF8ToUTF16(kTargetName), GURL(kManifestUrlHigh)),
-      make_pair(base::UTF8ToUTF16(kTargetName), GURL(kManifestUrlLow))};
-  EXPECT_EQ(kExpectedTargets, share_service_helper()->GetTargetsInPicker());
+  std::vector<ShareTarget> expected_targets;
+  expected_targets.emplace_back(GURL(kManifestUrlHigh), kTargetName,
+                                kUrlTemplate);
+  expected_targets.emplace_back(GURL(kManifestUrlLow), kTargetName,
+                                kUrlTemplate);
+  EXPECT_EQ(expected_targets, share_service_helper()->GetTargetsInPicker());
 
   // Cancel the dialog.
   share_service_helper()->picker_callback().Run(base::nullopt);
@@ -274,13 +293,13 @@ TEST_F(ShareServiceImplUnittest, ShareBrokenUrl) {
 
   run_loop.Run();
 
-  const std::vector<std::pair<base::string16, GURL>> kExpectedTargets{
-      make_pair(base::UTF8ToUTF16(kTargetName), GURL(kManifestUrlHigh))};
-  EXPECT_EQ(kExpectedTargets, share_service_helper()->GetTargetsInPicker());
+  std::vector<ShareTarget> expected_targets;
+  expected_targets.emplace_back(GURL(kManifestUrlHigh), kTargetName,
+                                kBrokenUrlTemplate);
+  EXPECT_EQ(expected_targets, share_service_helper()->GetTargetsInPicker());
 
   // Pick example-high.com.
-  share_service_helper()->picker_callback().Run(
-      base::Optional<std::string>(kManifestUrlHigh));
+  share_service_helper()->PickTarget(kManifestUrlHigh);
 
   EXPECT_TRUE(share_service_helper()->GetLastUsedTargetURL().empty());
 }
@@ -303,13 +322,13 @@ TEST_F(ShareServiceImplUnittest, ShareWithSomeInsufficientlyEngagedTargets) {
 
   run_loop.Run();
 
-  const std::vector<std::pair<base::string16, GURL>> kExpectedTargets{
-      make_pair(base::UTF8ToUTF16(kTargetName), GURL(kManifestUrlLow))};
-  EXPECT_EQ(kExpectedTargets, share_service_helper()->GetTargetsInPicker());
+  std::vector<ShareTarget> expected_targets;
+  expected_targets.emplace_back(GURL(kManifestUrlLow), kTargetName,
+                                kUrlTemplate);
+  EXPECT_EQ(expected_targets, share_service_helper()->GetTargetsInPicker());
 
   // Pick example-low.com.
-  share_service_helper()->picker_callback().Run(
-      base::Optional<std::string>(kManifestUrlLow));
+  share_service_helper()->PickTarget(kManifestUrlLow);
 
   const char kExpectedURL[] =
       "https://www.example-low.com/target/"
@@ -338,9 +357,10 @@ TEST_F(ShareServiceImplUnittest, ShareServiceDeletion) {
 
   run_loop.Run();
 
-  const std::vector<std::pair<base::string16, GURL>> kExpectedTargets{
-      make_pair(base::UTF8ToUTF16(kTargetName), GURL(kManifestUrlLow))};
-  EXPECT_EQ(kExpectedTargets, share_service_helper()->GetTargetsInPicker());
+  std::vector<ShareTarget> expected_targets;
+  expected_targets.emplace_back(GURL(kManifestUrlLow), kTargetName,
+                                kUrlTemplate);
+  EXPECT_EQ(expected_targets, share_service_helper()->GetTargetsInPicker());
 
   chrome::WebShareTargetPickerCallback picker_callback =
       share_service_helper()->picker_callback();
@@ -348,7 +368,7 @@ TEST_F(ShareServiceImplUnittest, ShareServiceDeletion) {
   DeleteShareService();
 
   // Pick example-low.com.
-  std::move(picker_callback).Run(base::Optional<std::string>(kManifestUrlLow));
+  std::move(picker_callback).Run(std::move(expected_targets[0]));
 }
 
 // Replace various numbers of placeholders in various orders. Placeholders are
