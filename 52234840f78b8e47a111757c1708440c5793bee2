@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "110803b1_8fa39074",
+        "filename": "chrome/browser/speech/tts_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-06T22:10:08Z",
+      "side": 1,
+      "message": "nit: Perhaps use an enum class here?  (Note: No typecasts needed to use enum class with the UMA_HISTOGRAM_ENUMERATION macro \u003d])",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "52234840f78b8e47a111757c1708440c5793bee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c3345c7_75799110",
+        "filename": "chrome/browser/speech/tts_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-06T22:10:08Z",
+      "side": 1,
+      "message": "nit: I\u0027d recommend s/MAX/COUNT, as \"max\" is usually used as an alias for the last item in an enum.",
+      "range": {
+        "startLine": 49,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 19
+      },
+      "revId": "52234840f78b8e47a111757c1708440c5793bee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f0bcc4f_52770ecc",
+        "filename": "chrome/browser/speech/tts_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-06T22:10:08Z",
+      "side": 1,
+      "message": "nit: The UMA_HISTOGRAM_* macros expand to a fair bit of code, so I\u0027d recommend moving it out of the switch stmt, e.g.\n\nYourMetricType metric;\nswitch (event_type) {\n  case TTS_EVENT_START:\n    metric \u003d https://crbug.com/730204;\n    break;\n  ...\n}\nUMA_HISTOGRAM_ENUMERATION(\"TextToSpeech.Event\", metric, UMA_TTS_EVENT_MAX);",
+      "range": {
+        "startLine": 328,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 74
+      },
+      "revId": "52234840f78b8e47a111757c1708440c5793bee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcebdeed_df0f1eae",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34654,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-06T22:10:08Z",
+      "side": 1,
+      "message": "I think these labels are reversed?  Likewise for the other enums.",
+      "range": {
+        "startLine": 34651,
+        "startChar": 0,
+        "endLine": 34654,
+        "endChar": 7
+      },
+      "revId": "52234840f78b8e47a111757c1708440c5793bee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
