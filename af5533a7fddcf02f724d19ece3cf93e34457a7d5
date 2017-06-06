@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "555a83bc_e36ca188",
+        "filename": "cc/layers/region_map_utils_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-06T15:35:38Z",
+      "side": 1,
+      "message": "To be consistent, please make this anonymous namespace. I think all the cc unittests are in anonymous namespace so that the method is not supposed to be called from the outside.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 26
+      },
+      "revId": "af5533a7fddcf02f724d19ece3cf93e34457a7d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d38abc_beccd7dc",
+        "filename": "cc/layers/region_map_utils_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-06T15:35:38Z",
+      "side": 1,
+      "message": "This should be TEST_F.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 4
+      },
+      "revId": "af5533a7fddcf02f724d19ece3cf93e34457a7d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a77e083a_15dbfa7a",
+        "filename": "cc/layers/region_map_utils_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-06T15:35:38Z",
+      "side": 1,
+      "message": "I might be missing something, but I feel that this test is the same as the first one, and we can probably just remove this.",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "af5533a7fddcf02f724d19ece3cf93e34457a7d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c2bb75_5bc93730",
+        "filename": "cc/layers/region_map_utils_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-06T15:35:38Z",
+      "side": 1,
+      "message": "To keep each test minimal, I\u0027d propose breaking this test into two tests:\n1. UnionOfContainingRects\n2. UnionofNonContainingRects\n\nThat way, if there is any code change in the future that is causing the failure of a particular test, it would be easier to debug. Does that make sense?",
+      "revId": "af5533a7fddcf02f724d19ece3cf93e34457a7d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
