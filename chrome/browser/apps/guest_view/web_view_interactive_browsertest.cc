@@ -1015,6 +1015,9 @@ IN_PROC_BROWSER_TEST_P(WebViewNewWindowInteractiveTest,
 // CrossProcessFrameConnector::TransformPointToRootCoordSpace.
 IN_PROC_BROWSER_TEST_F(WebViewContextMenuInteractiveTest,
                        ContextMenuParamCoordinates) {
+  if (base::FeatureList::IsEnabled(features::kGuestViewCrossProcessFrames))
+    return;
+
   TestHelper("testCoordinates", "web_view/context_menus/coordinates",
              NO_TEST_SERVER);
   ASSERT_TRUE(guest_web_contents());
