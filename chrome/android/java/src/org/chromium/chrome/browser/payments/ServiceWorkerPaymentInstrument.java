@@ -56,6 +56,15 @@ public class ServiceWorkerPaymentInstrument extends PaymentInstrument {
     }
 
     @Override
+    public boolean isAutofillInstrument() { return false; }
+
+    @Override
+    public boolean isServerAutofillInstrument() { return false; }
+
+    @Override
+    public boolean isServerAutofillInstrumentReplacement() { return false; }
+
+    @Override
     public void invokePaymentApp(String id, String merchantName, String origin, String iframeOrigin,
             byte[][] unusedCertificateChain, Map<String, PaymentMethodData> methodData,
             PaymentItem total, List<PaymentItem> displayItems,

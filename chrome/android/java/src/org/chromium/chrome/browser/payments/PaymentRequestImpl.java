@@ -318,6 +318,7 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
     private Callback<PaymentInformation> mPaymentInformationCallback;
     private boolean mPaymentAppRunning;
     private boolean mMerchantSupportsAutofillPaymentInstruments;
+    private boolean mShowServerAutofillInstruments = true;
     private ContactEditor mContactEditor;
     private boolean mHasRecordedAbortReason;
     private Map<String, CurrencyFormatter> mCurrencyFormatterMap;
