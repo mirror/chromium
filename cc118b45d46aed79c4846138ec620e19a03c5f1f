@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3dda19b4_e735f79f",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-06T17:03:44Z",
+      "side": 1,
+      "message": "Oh yes, you are right. Brought back that lock.",
+      "parentUuid": "8e0e64ef_ecaa14c4",
+      "revId": "cc118b45d46aed79c4846138ec620e19a03c5f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee678610_04bb772f",
         "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "cc118b45d46aed79c4846138ec620e19a03c5f1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf35911_380336a2",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-06T17:03:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee678610_04bb772f",
+      "revId": "cc118b45d46aed79c4846138ec620e19a03c5f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,30 @@
       "side": 1,
       "message": "Hi jay, the implementation may block if the library has not finished loading, otherwise it\u0027s very quick, so it depends on context. I\u0027m not sure I understand when this runs exactly :-/",
       "parentUuid": "61fe6239_41cc397a",
+      "range": {
+        "startLine": 378,
+        "startChar": 40,
+        "endLine": 378,
+        "endChar": 52
+      },
+      "revId": "cc118b45d46aed79c4846138ec620e19a03c5f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6e466a_ec988eda",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-06T17:03:44Z",
+      "side": 1,
+      "message": "I am slightly confused on how the linker work.\nIs it supposed to be set before the native library is loaded? But then if it blocks until it is loaded, does it need to be called from a different thread?",
+      "parentUuid": "1bd033fd_0d7d4f19",
       "range": {
         "startLine": 378,
         "startChar": 40,
