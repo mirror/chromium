@@ -65,6 +65,8 @@ LabelButton::LabelButton(ButtonListener* listener,
   ink_drop_container_->SetVisible(false);
 
   AddChildView(image_);
+  image_->SetPaintToLayer();
+  image_->layer()->SetFillsBoundsOpaquely(false);
   image_->set_can_process_events_within_subtree(false);
 
   AddChildView(label_);
@@ -357,14 +359,11 @@ void LabelButton::OnNativeThemeChanged(const ui::NativeTheme* theme) {
 }
 
 void LabelButton::AddInkDropLayer(ui::Layer* ink_drop_layer) {
-  image()->SetPaintToLayer();
-  image()->layer()->SetFillsBoundsOpaquely(false);
   ink_drop_container_->AddInkDropLayer(ink_drop_layer);
   InstallInkDropMask(ink_drop_layer);
 }
 
 void LabelButton::RemoveInkDropLayer(ui::Layer* ink_drop_layer) {
-  image()->DestroyLayer();
   ResetInkDropMask();
   ink_drop_container_->RemoveInkDropLayer(ink_drop_layer);
 }

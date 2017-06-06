@@ -93,7 +93,10 @@ void Display::ResetForceDeviceScaleFactorForTesting() {
 // static
 void Display::SetForceDeviceScaleFactor(double dsf) {
   // Reset any previously set values and unset the flag.
+  g_has_forced_device_scale_factor = -1;
   g_forced_device_scale_factor = -1.0;
+
+  LOG(ERROR) << "Should set the dsf to: " << dsf;
 
   base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
       switches::kForceDeviceScaleFactor, base::StringPrintf("%.2f", dsf));

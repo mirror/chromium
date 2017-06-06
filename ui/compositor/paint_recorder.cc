@@ -18,34 +18,38 @@ namespace ui {
 // by its recorder_, and the cache. Thus all 3 of these must remain
 // valid for the lifetime of this object.
 PaintRecorder::PaintRecorder(const PaintContext& context,
-                             const gfx::Size& recording_size,
+                             const gfx::Size& effective_recording_size,
                              PaintCache* cache)
     : context_(context),
       canvas_(context.recorder_->beginRecording(
-                  gfx::RectToSkRect(gfx::Rect(recording_size))),
+                  gfx::RectToSkRect(gfx::Rect(effective_recording_size))),
               context.device_scale_factor_),
       cache_(cache),
-      recording_size_(recording_size) {
+      bounds_in_layer_(context.ToLayerSpaceBounds(effective_recording_size)) {
 #if DCHECK_IS_ON()
   DCHECK(!context.inside_paint_recorder_);
   context.inside_paint_recorder_ = true;
 #endif
+  if (context_.IsPixelCanvas()) {
+    canvas()->Scale(context.effective_scale_factor_x(),
+                    context.effective_scale_factor_y());
+  }
 }
 
 PaintRecorder::PaintRecorder(const PaintContext& context,
                              const gfx::Size& recording_size)
-    : PaintRecorder(context, recording_size, nullptr) {
-}
+    : PaintRecorder(context,
+                    context.ScaleToEffectivePixelSize(recording_size),
+                    nullptr) {}
 
 PaintRecorder::~PaintRecorder() {
 #if DCHECK_IS_ON()
   context_.inside_paint_recorder_ = false;
 #endif
-  gfx::Rect bounds_in_layer = context_.ToLayerSpaceBounds(recording_size_);
   const auto& item =
       context_.list_->CreateAndAppendDrawingItem<cc::DrawingDisplayItem>(
-          bounds_in_layer, context_.recorder_->finishRecordingAsPicture(),
-          gfx::RectToSkRect(gfx::Rect(recording_size_)));
+          bounds_in_layer_, context_.recorder_->finishRecordingAsPicture(),
+          gfx::RectToSkRect(gfx::Rect(bounds_in_layer_.size())));
   if (cache_)
     cache_->SetCache(item);
 }

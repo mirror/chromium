@@ -14,12 +14,11 @@ PaintCache::PaintCache() {}
 PaintCache::~PaintCache() {
 }
 
-bool PaintCache::UseCache(const PaintContext& context,
-                          const gfx::Size& size_in_context) {
+bool PaintCache::UseCache(const PaintContext& context) {
   if (!display_item_.has_value())
     return false;
   DCHECK(context.list_);
-  gfx::Rect bounds_in_layer = context.ToLayerSpaceBounds(size_in_context);
+  gfx::Rect bounds_in_layer = context.ToLayerSpaceBounds(context.pixel_size());
   context.list_->CreateAndAppendDrawingItem<cc::DrawingDisplayItem>(
       bounds_in_layer, *display_item_);
   return true;

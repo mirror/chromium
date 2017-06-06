@@ -4,6 +4,7 @@
 
 #include "ash/frame/caption_buttons/frame_caption_button.h"
 
+#include "ui/compositor/paint_context.h"
 #include "ui/gfx/animation/slide_animation.h"
 #include "ui/gfx/animation/throb_animation.h"
 #include "ui/gfx/canvas.h"
@@ -122,6 +123,10 @@ void FrameCaptionButton::OnGestureEvent(ui::GestureEvent* event) {
     }
   }
   CustomButton::OnGestureEvent(event);
+}
+
+int FrameCaptionButton::GetContextScaleType() const {
+  return ui::PaintContext::SCALE_TO_SCALE_FACTOR;
 }
 
 void FrameCaptionButton::PaintButtonContents(gfx::Canvas* canvas) {
