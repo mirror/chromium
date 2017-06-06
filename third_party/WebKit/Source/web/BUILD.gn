@@ -93,7 +93,6 @@ component("web") {
     "TextFinder.h",
     "UserMediaClientImpl.cpp",
     "UserMediaClientImpl.h",
-    "WebAXObject.cpp",
     "WebContextFeatures.cpp",
     "WebDOMMessageEvent.cpp",
     "WebDevToolsAgentImpl.cpp",
