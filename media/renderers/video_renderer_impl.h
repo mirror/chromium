@@ -186,6 +186,10 @@ class MEDIA_EXPORT VideoRendererImpl
   void AttemptReadAndCheckForMetadataChanges(VideoPixelFormat pixel_format,
                                              const gfx::Size& natural_size);
 
+  // Updates |max_buffered_frames_| based on the current memory pressure level,
+  // |max_read_duration_|, and |time_progressing_|.
+  void UpdateMaxBufferedFrames();
+
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
   // Sink which calls into VideoRendererImpl via Render() for video frames.  Do
@@ -300,9 +304,14 @@ class MEDIA_EXPORT VideoRendererImpl
   // Indicates if we've painted the first valid frame after StartPlayingFrom().
   bool painted_first_frame_;
 
-  // Current maximum for buffered frames, increases up to a limit upon each
-  // call to OnTimeStopped() when we're in the BUFFERING_HAVE_NOTHING state.
+  // Current minimum and maximum for buffered frames. The minimum increases up
+  // to a maximum upon each call to OnTimeStopped() when we're in the
+  // BUFFERING_HAVE_NOTHING state. It is reset upon Flush(). The maximum is
+  // determined by |max_read_duration_| relative to the average frame duration.
+  size_t min_buffered_frames_;
   size_t max_buffered_frames_;
+  base::TimeDelta max_read_duration_;
+  base::TimeTicks last_read_time_;
 
   // NOTE: Weak pointers must be invalidated before all other member variables.
   base::WeakPtrFactory<VideoRendererImpl> weak_factory_;
