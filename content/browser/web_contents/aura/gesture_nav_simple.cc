@@ -34,6 +34,10 @@ namespace {
 // Parameters defining the arrow icon inside the affordance.
 const int kArrowSize = 16;
 const SkColor kArrowColor = gfx::kGoogleBlue500;
+const uint8_t kArrowInitialOpacity = 0x4D;
+
+// When progress passes this threshold, arrow opacity starts to bump up.
+const float kArrowOpacityProgressThreshold = .9f;
 
 // Parameters defining the background circle of the affordance.
 const int kBackgroundRadius = 18;
@@ -47,7 +51,7 @@ const SkColor kBgShadowColor = SkColorSetA(SK_ColorBLACK, 0x4D);
 // overscroll is successful, the ripple will burst by fading out and growing to
 // |kMaxRippleBurstRadius|.
 const int kMaxRippleRadius = 54;
-const SkColor kRippleColor = SkColorSetA(gfx::kGoogleBlue500, 0x33);
+const SkColor kRippleColor = SkColorSetA(gfx::kGoogleBlue500, 0x66);
 const int kMaxRippleBurstRadius = 72;
 const gfx::Tween::Type kBurstAnimationTweenType = gfx::Tween::EASE_IN;
 const int kRippleBurstAnimationDuration = 160;
@@ -80,7 +84,9 @@ bool ShouldNavigateBack(const NavigationController& controller,
 class GestureNavSimple::Affordance : public ui::LayerDelegate,
                                      public gfx::AnimationDelegate {
  public:
-  Affordance(OverscrollMode mode, const gfx::Rect& content_bounds);
+  Affordance(GestureNavSimple* owner,
+             OverscrollMode mode,
+             const gfx::Rect& content_bounds);
   ~Affordance() override;
 
   // Sets progress of affordance drag as a value between 0 and 1.
@@ -115,6 +121,8 @@ class GestureNavSimple::Affordance : public ui::LayerDelegate,
   void AnimationProgressed(const gfx::Animation* animation) override;
   void AnimationCanceled(const gfx::Animation* animation) override;
 
+  GestureNavSimple* const owner_;
+
   const OverscrollMode mode_;
 
   // Root layer of the affordance. This is used to clip the affordance to the
@@ -138,9 +146,11 @@ class GestureNavSimple::Affordance : public ui::LayerDelegate,
   DISALLOW_COPY_AND_ASSIGN(Affordance);
 };
 
-GestureNavSimple::Affordance::Affordance(OverscrollMode mode,
+GestureNavSimple::Affordance::Affordance(GestureNavSimple* owner,
+                                         OverscrollMode mode,
                                          const gfx::Rect& content_bounds)
-    : mode_(mode),
+    : owner_(owner),
+      mode_(mode),
       root_layer_(base::MakeUnique<ui::Layer>(ui::LAYER_NOT_DRAWN)),
       painted_layer_(base::MakeUnique<ui::Layer>(ui::LAYER_TEXTURED)),
       image_(gfx::CreateVectorIcon(
@@ -287,10 +297,20 @@ void GestureNavSimple::Affordance::OnPaintLayer(
   float arrow_x_offset =
       (1 - progress) * (-kBackgroundRadius + kArrowSize / 2.f);
   arrow_x += mode_ == OVERSCROLL_EAST ? arrow_x_offset : -arrow_x_offset;
-  uint8_t arrow_alpha =
-      static_cast<uint8_t>(std::min(0xFF, static_cast<int>(progress * 0xFF)));
+  // Calculate arrow opacity. Opacity is fixed before progress reaches
+  // kArrowOpacityProgressThreshold and after that increases linearly to 1;
+  // essentially, making a quick bump at the end.
+  uint8_t arrow_opacity = kArrowInitialOpacity;
+  if (progress > kArrowOpacityProgressThreshold) {
+    const uint8_t max_opacity_bump = 0xFF - kArrowInitialOpacity;
+    const float opacity_bump_ratio =
+        std::min(1.f, (progress - kArrowOpacityProgressThreshold) /
+                          (1.f - kArrowOpacityProgressThreshold));
+    arrow_opacity +=
+        static_cast<uint8_t>(opacity_bump_ratio * max_opacity_bump);
+  }
   canvas->DrawImageInt(*image_.ToImageSkia(), static_cast<int>(arrow_x),
-                       static_cast<int>(arrow_y), arrow_alpha);
+                       static_cast<int>(arrow_y), arrow_opacity);
 }
 
 void GestureNavSimple::Affordance::OnDelegatedFrameDamage(
@@ -301,7 +321,7 @@ void GestureNavSimple::Affordance::OnDeviceScaleFactorChanged(
 
 void GestureNavSimple::Affordance::AnimationEnded(
     const gfx::Animation* animation) {
-  delete this;
+  owner_->OnAffordanceAnimationEnded();
 }
 
 void GestureNavSimple::Affordance::AnimationProgressed(
@@ -334,21 +354,17 @@ GestureNavSimple::GestureNavSimple(WebContentsImpl* web_contents)
 GestureNavSimple::~GestureNavSimple() {}
 
 void GestureNavSimple::AbortGestureAnimation() {
-  if (!affordance_)
-    return;
-  // Release the unique pointer. The affordance will delete itself upon
-  // completion of animation.
-  Affordance* affordance = affordance_.release();
-  affordance->Abort();
+  if (affordance_)
+    affordance_->Abort();
 }
 
 void GestureNavSimple::CompleteGestureAnimation() {
-  if (!affordance_)
-    return;
-  // Release the unique pointer. The affordance will delete itself upon
-  // completion of animation.
-  Affordance* affordance = affordance_.release();
-  affordance->Complete();
+  if (affordance_)
+    affordance_->Complete();
+}
+
+void GestureNavSimple::OnAffordanceAnimationEnded() {
+  affordance_.reset();
 }
 
 gfx::Rect GestureNavSimple::GetVisibleBounds() const {
@@ -395,7 +411,7 @@ void GestureNavSimple::OnOverscrollModeChange(OverscrollMode old_mode,
           GetOverscrollConfig(OVERSCROLL_CONFIG_HORIZ_THRESHOLD_COMPLETE) -
       start_threshold;
 
-  affordance_.reset(new Affordance(new_mode, window_bounds));
+  affordance_.reset(new Affordance(this, new_mode, window_bounds));
 
   // Adding the affordance as a child of the content window is not sufficient,
   // because it is possible for a new layer to be parented on top of the
