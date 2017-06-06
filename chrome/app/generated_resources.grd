@@ -5454,6 +5454,15 @@ Keep your key file in a safe place. You will need it to create new versions of y
       <message name="IDS_ZOOM_SET_DEFAULT" desc="The text label of a button which, when clicked, returns the page to default zoom">
         Reset
       </message>
+      <message name="IDS_ZOOM_CLOSE" desc="Test Close">
+        Close
+      </message>
+      <message name="IDS_ZOOM_OPEN_1" desc="Test Open 1">
+        Open1
+      </message>
+      <message name="IDS_ZOOM_OPEN_2" desc="Test Open 2">
+        Open2
+      </message>
 
       <!--Accessible name/action strings-->
       <message name="IDS_ACCESSIBLE_INCOGNITO_WINDOW_TITLE_FORMAT" desc="The format for the accessible title of an incognito window">
@@ -5510,6 +5519,12 @@ the Bookmarks menu.">
       </message>
       <message name="IDS_ACCNAME_ZOOM_SET_DEFAULT" desc="The accessible description of the Reset button in the Zoom bubble.">
         Reset to default zoom level
+      </message>
+      <message name="IDS_ACCNAME_ZOOM_CLOSE" desc="Tooltip close test">
+        Close Zoom Bubble
+      </message>
+      <message name="IDS_ACCNAME_ZOOM_OPEN" desc="Open test">
+        Open new text with click
       </message>
 
       <!-- Browser Hung Plugin Detector -->

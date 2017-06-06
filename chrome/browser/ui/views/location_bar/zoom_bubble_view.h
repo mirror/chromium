@@ -104,8 +104,8 @@ class ZoomBubbleView : public LocationBarBubbleDelegateView,
   // the zoom change.
   void SetExtensionInfo(const extensions::Extension* extension);
 
-  // Updates |label_| with the up to date zoom.
-  void UpdateZoomPercent();
+  // Updates |label_| with the up to date zoom
+  .void UpdateZoomPercent();
 
   // Updates visibility of the zoom icon in location bar.
   void UpdateZoomIconVisibility();
@@ -141,6 +141,8 @@ class ZoomBubbleView : public LocationBarBubbleDelegateView,
   views::Button* zoom_out_button_;
   views::Button* zoom_in_button_;
   views::Button* reset_button_;
+  views::Button* test_button_1;
+  views::Button* test_button_2;
 
   // The WebContents for the page whose zoom has changed.
   content::WebContents* web_contents_;

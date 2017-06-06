@@ -222,6 +222,8 @@ ZoomBubbleView::ZoomBubbleView(
       zoom_out_button_(nullptr),
       zoom_in_button_(nullptr),
       reset_button_(nullptr),
+      test_button_1(nullptr),
+      test_button_2(nullptr),
       web_contents_(web_contents),
       auto_close_(reason == AUTOMATIC),
       ignore_close_bubble_(false),
@@ -311,6 +313,19 @@ void ZoomBubbleView::Init() {
       l10n_util::GetStringUTF16(IDS_ACCNAME_ZOOM_SET_DEFAULT));
   AddChildView(reset_button_);
 
+  // test1 - close
+  test_button_1 = views::MdTextButton::CreateSecondaryUiButton(
+      this, l10n_util::GetStringUTF16(IDS_ZOOM_CLOSE));
+  test_button_1->SetTooltipText(
+      l10n_util::GetStringUTF16(IDS_ACCNAME_ZOOM_CLOSE));
+  AddChildView(test_button_1);
+
+  test_button_2 = views::MdTextButton::CreateSecondaryUiButton(
+      this, l10n_util::GetStringUTF16(IDS_ZOOM_OPEN_1));
+  test_button_2->SetTooltipText(
+      l10n_util::GetStringUTF16(IDS_ACCNAME_ZOOM_OPEN));
+  AddChildView(test_button_2);
+
   StartTimerIfNecessary();
 }
 
@@ -358,6 +373,12 @@ void ZoomBubbleView::ButtonPressed(views::Button* sender,
     zoom::PageZoom::Zoom(web_contents_, content::PAGE_ZOOM_IN);
   } else if (sender == reset_button_) {
     zoom::PageZoom::Zoom(web_contents_, content::PAGE_ZOOM_RESET);
+  } else if (sender == test_button_1) {
+    base::AutoReset<bool> auto_ignore_close_bubble(&ignore_close_bubble_,
+                                                   false);
+    CloseBubble();
+  } else if (sender == test_button_2) {
+    test_button_2->SetTooltipText(l10n_util::GetStringUTF16(IDS_ZOOM_OPEN_2));
   } else {
     NOTREACHED();
   }
