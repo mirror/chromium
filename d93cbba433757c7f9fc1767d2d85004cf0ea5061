@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5774131b_86bcb8cd",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 8531,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-06-06T18:09:42Z",
+      "side": 1,
+      "message": "If you move it inside RenderbufferStorageMultisampleHelper(), then all the above TODOs you added are already covered. And you only need to call RegenerateRenderbufferIfNeeded() in one place instead of three.",
+      "range": {
+        "startLine": 8531,
+        "startChar": 2,
+        "endLine": 8531,
+        "endChar": 32
+      },
+      "revId": "d93cbba433757c7f9fc1767d2d85004cf0ea5061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb0dce4d_b8f14c63",
+        "filename": "gpu/config/gpu_driver_bug_workaround_type.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-06-06T18:09:42Z",
+      "side": 1,
+      "message": "I realized someone already messed up this, but originally they are ordered alphabetically.\n\nAlso, as the name for a workaround, maybe multisample_renderbuffer_resize_emulation?",
+      "range": {
+        "startLine": 225,
+        "startChar": 9,
+        "endLine": 225,
+        "endChar": 47
+      },
+      "revId": "d93cbba433757c7f9fc1767d2d85004cf0ea5061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
