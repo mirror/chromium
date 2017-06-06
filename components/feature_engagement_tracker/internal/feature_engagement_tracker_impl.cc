@@ -9,6 +9,7 @@
 
 #include "base/bind.h"
 #include "base/feature_list.h"
+#include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/metrics/user_metrics.h"
@@ -175,10 +176,12 @@ bool FeatureEngagementTrackerImpl::ShouldTriggerHelpUI(
   }
 
   stats::RecordShouldTriggerHelpUI(feature, result);
+  DVLOG(2) << "Trigger result for " << feature.name << ": " << result;
   return result.NoErrors();
 }
 
 void FeatureEngagementTrackerImpl::Dismissed(const base::Feature& feature) {
+  DVLOG(2) << "Dismissing " << feature.name;
   condition_validator_->NotifyDismissed(feature);
   stats::RecordUserDismiss();
 }
@@ -203,6 +206,8 @@ void FeatureEngagementTrackerImpl::OnEventModelInitializationFinished(
   DCHECK_EQ(success, model_->IsReady());
   event_model_initialization_finished_ = true;
 
+  DVLOG(2) << "Event model initialization result = " << success;
+
   MaybePostInitializedCallbacks();
 }
 
@@ -210,6 +215,8 @@ void FeatureEngagementTrackerImpl::OnAvailabilityModelInitializationFinished(
     bool success) {
   DCHECK_EQ(success, availability_model_->IsReady());
   availability_model_initialization_finished_ = true;
+
+  DVLOG(2) << "Availability model initialization result = " << success;
 
   MaybePostInitializedCallbacks();
 }
@@ -222,6 +229,8 @@ bool FeatureEngagementTrackerImpl::IsInitializationFinished() const {
 void FeatureEngagementTrackerImpl::MaybePostInitializedCallbacks() {
   if (!IsInitializationFinished())
     return;
+
+  DVLOG(2) << "Initialization finished.";
 
   for (auto& callback : on_initialized_callbacks_) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
