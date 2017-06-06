@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "62a13046_faabc150",
+        "filename": "chrome/browser/profiles/profile.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-06T10:44:19Z",
+      "side": 1,
+      "message": "Yes, but as you say, what is created lazily is the incognito profile, not its PrefService. If someone lazily creates the incognito profile but doesn\u0027t call this method, calling it later will not end up creating the PrefService. Maybe change it to say \"This PrefService is created along with the incognito profile the first time the latter is accessed\" or something?",
+      "parentUuid": "e5729546_1f61cfc7",
+      "revId": "9add22a9d4dfda2f113235be48827d93496e3e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf416b70_256260ca",
         "filename": "chrome/browser/profiles/profile.h",
         "patchSetId": 11

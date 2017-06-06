@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aedd2991_a8e223c4",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-06T10:44:19Z",
+      "side": 1,
+      "message": "Coming to think of it, I would even make this a non-virtual method on Profile now -- it\u0027s just a convenience method now that the complicated stuff is in CreateOffTheRecordPrefs().",
+      "range": {
+        "startLine": 997,
+        "startChar": 50,
+        "endLine": 997,
+        "endChar": 0
+      },
+      "revId": "3202e1e95c472bdfad001418c9f745baed5781db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
