@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fdfd33d_f09b9644",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/parsing/offset-parsing-valid.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-06T09:27:59Z",
+      "side": 1,
+      "message": "Should we add FIXMEs to WPT?",
+      "revId": "a41b5f70e89b2721485f9eb7edea628e568f38d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
