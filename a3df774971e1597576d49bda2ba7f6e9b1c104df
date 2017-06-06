@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45cf1ee7_1a017fb3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-06T06:54:01Z",
+      "side": 1,
+      "message": "Also closes 717323.",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 11
+      },
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
