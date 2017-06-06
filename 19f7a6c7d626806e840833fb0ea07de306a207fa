@@ -22,6 +22,30 @@
       "revId": "19f7a6c7d626806e840833fb0ea07de306a207fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f8b46b8_190b65a4",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-06T07:13:36Z",
+      "side": 1,
+      "message": "Yeah, though g_empty_atom is empty while FetchInitiatorInfo::name\u0027s default is null, this should have been set just because the argument was required to create a FetchParameters.\n\nTo minimize the possible effect of this change, I\u0027d like to clean up initiator setting sites separately.",
+      "parentUuid": "d9dff5d9_f34c621d",
+      "range": {
+        "startLine": 108,
+        "startChar": 31,
+        "endLine": 108,
+        "endChar": 32
+      },
+      "revId": "19f7a6c7d626806e840833fb0ea07de306a207fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
