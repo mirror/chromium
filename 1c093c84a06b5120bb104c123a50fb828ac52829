@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ac065517_1d490822",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 1595,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-06T22:24:05Z",
+      "side": 1,
+      "message": "OK, removed. This hardly seems worth any amount of effort to pursue.\n\nInstead I\u0027ve obeyed the presubmit and added SECURITY_OWNERS lines to content/test/data/OWNERS, which seems kinda goofy. Alas...",
+      "parentUuid": "4ca43e1e_fe6e8a4b",
+      "range": {
+        "startLine": 1592,
+        "startChar": 0,
+        "endLine": 1595,
+        "endChar": 23
+      },
+      "revId": "1c093c84a06b5120bb104c123a50fb828ac52829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f8883de_194c15a9",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "1c093c84a06b5120bb104c123a50fb828ac52829",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98067ad8_0ab774ae",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-06T22:24:05Z",
+      "side": 1,
+      "message": "Eventually, sure.\n\nThey aren\u0027t returning the same thing though. blink::InterfaceProvider is not service_manager::InterfaceProvider and is still used by some code. When we can get rid of that, we can change this method to forward to the client. But I guess I don\u0027t really see why that\u0027s better. \n\nIn the case of GetFrameInterfaceProvider() the client does own the service_manager::InterfaceProvider, so to me the difference between\n\n  foo-\u003eGetThing()\n\nand\n\n  foo-\u003eClient()-\u003eGetThing()\n\nis marginal when GetThing() can still return null in either case. What am I missing?",
+      "parentUuid": "6f8883de_194c15a9",
+      "range": {
+        "startLine": 229,
+        "startChar": 23,
+        "endLine": 229,
+        "endChar": 48
+      },
+      "revId": "1c093c84a06b5120bb104c123a50fb828ac52829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b07965a6_69e14750",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameClient.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-06T22:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06654789_bfa3e73e",
+      "range": {
+        "startLine": 337,
+        "startChar": 49,
+        "endLine": 337,
+        "endChar": 54
+      },
+      "revId": "1c093c84a06b5120bb104c123a50fb828ac52829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19a81ba6_fa1532f7",
         "filename": "third_party/WebKit/Source/web/LocalFrameClientImpl.cpp",
         "patchSetId": 15
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a89fd9f7_00ae1792",
+        "filename": "third_party/WebKit/Source/web/LocalFrameClientImpl.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-06T22:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19a81ba6_fa1532f7",
+      "range": {
+        "startLine": 1057,
+        "startChar": 2,
+        "endLine": 1057,
+        "endChar": 28
+      },
+      "revId": "1c093c84a06b5120bb104c123a50fb828ac52829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3d6c045_b69ed48d",
         "filename": "third_party/WebKit/public/web/WebFrameClient.h",
         "patchSetId": 15
@@ -114,6 +210,30 @@
       "revId": "1c093c84a06b5120bb104c123a50fb828ac52829",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d37742_49df8840",
+        "filename": "third_party/WebKit/public/web/WebFrameClient.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-06T22:24:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3d6c045_b69ed48d",
+      "range": {
+        "startLine": 186,
+        "startChar": 49,
+        "endLine": 186,
+        "endChar": 54
+      },
+      "revId": "1c093c84a06b5120bb104c123a50fb828ac52829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
