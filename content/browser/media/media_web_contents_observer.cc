@@ -141,7 +141,8 @@ void MediaWebContentsObserver::OnMediaPaused(RenderFrameHost* render_frame_host,
     // Notify observers the player has been "paused".
     static_cast<WebContentsImpl*>(web_contents())
         ->MediaStoppedPlaying(
-            WebContentsObserver::MediaPlayerInfo(removed_video), player_id);
+            WebContentsObserver::MediaPlayerInfo(removed_video, removed_audio),
+            player_id);
   }
 
   if (reached_end_of_stream)
@@ -183,8 +184,8 @@ void MediaWebContentsObserver::OnMediaPlaying(
   // Notify observers of the new player.
   DCHECK(has_audio || has_video);
   static_cast<WebContentsImpl*>(web_contents())
-      ->MediaStartedPlaying(WebContentsObserver::MediaPlayerInfo(has_video),
-                            id);
+      ->MediaStartedPlaying(
+          WebContentsObserver::MediaPlayerInfo(has_video, has_audio), id);
 }
 
 void MediaWebContentsObserver::OnMediaEffectivelyFullscreenChange(
@@ -205,11 +206,13 @@ void MediaWebContentsObserver::OnMediaEffectivelyFullscreenChange(
 void MediaWebContentsObserver::ClearWakeLocks(
     RenderFrameHost* render_frame_host) {
   std::set<MediaPlayerId> removed_players;
+  std::set<MediaPlayerId> video_players;
   RemoveAllMediaPlayerEntries(render_frame_host, &active_video_players_,
-                              &removed_players);
-  std::set<MediaPlayerId> video_players(removed_players);
+                              &video_players, &removed_players);
+  std::set<MediaPlayerId> audio_players;
   RemoveAllMediaPlayerEntries(render_frame_host, &active_audio_players_,
-                              &removed_players);
+                              &audio_players, &removed_players);
+
   MaybeCancelVideoLock();
 
   // Notify all observers the player has been "paused".
@@ -217,8 +220,9 @@ void MediaWebContentsObserver::ClearWakeLocks(
   for (const auto& id : removed_players) {
     auto it = video_players.find(id);
     bool was_video = (it != video_players.end());
-    wci->MediaStoppedPlaying(WebContentsObserver::MediaPlayerInfo(was_video),
-                             id);
+    bool was_audio = (audio_players.find(id) != audio_players.end());
+    wci->MediaStoppedPlaying(
+        WebContentsObserver::MediaPlayerInfo(was_video, was_audio), id);
   }
 }
 
@@ -311,13 +315,17 @@ bool MediaWebContentsObserver::RemoveMediaPlayerEntry(
 void MediaWebContentsObserver::RemoveAllMediaPlayerEntries(
     RenderFrameHost* render_frame_host,
     ActiveMediaPlayerMap* player_map,
-    std::set<MediaPlayerId>* removed_players) {
+    std::set<MediaPlayerId>* removed_players,
+    std::set<MediaPlayerId>* all_removed_players) {
   auto it = player_map->find(render_frame_host);
   if (it == player_map->end())
     return;
 
-  for (int delegate_id : it->second)
-    removed_players->insert(MediaPlayerId(render_frame_host, delegate_id));
+  for (int delegate_id : it->second) {
+    const MediaPlayerId id = MediaPlayerId(render_frame_host, delegate_id);
+    removed_players->insert(id);
+    all_removed_players->insert(id);
+  }
 
   player_map->erase(it);
 }

@@ -110,10 +110,12 @@ class CONTENT_EXPORT MediaWebContentsObserver : public WebContentsObserver {
   bool RemoveMediaPlayerEntry(const MediaPlayerId& id,
                               ActiveMediaPlayerMap* player_map);
   // Removes all entries from |player_map| for |render_frame_host|. Removed
-  // entries are added to |removed_players|.
-  void RemoveAllMediaPlayerEntries(RenderFrameHost* render_frame_host,
-                                   ActiveMediaPlayerMap* player_map,
-                                   std::set<MediaPlayerId>* removed_players);
+  // entries are added to |removed_players| and |all_removed_players|.
+  void RemoveAllMediaPlayerEntries(
+      RenderFrameHost* render_frame_host,
+      ActiveMediaPlayerMap* player_map,
+      std::set<MediaPlayerId>* removed_players,
+      std::set<MediaPlayerId>* all_removed_players);
 
   // Tracking variables and associated wake locks for media playback.
   ActiveMediaPlayerMap active_audio_players_;
