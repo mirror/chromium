@@ -79,22 +79,17 @@ void VerifyCommonProperties(std::unique_ptr<base::DictionaryValue> response,
 
 class MockIt2MeHost : public It2MeHost {
  public:
-  MockIt2MeHost(std::unique_ptr<ChromotingHostContext> context,
-                base::WeakPtr<It2MeHost::Observer> observer,
-                std::unique_ptr<SignalStrategy> signal_strategy,
-                const std::string& username,
-                const std::string& directory_bot_jid)
-      : It2MeHost(std::move(context),
-                  /*confirmation_dialog_factory=*/nullptr,
-                  observer,
-                  std::move(signal_strategy),
-                  username,
-                  directory_bot_jid) {}
+  MockIt2MeHost() {}
 
   // It2MeHost overrides
-  void Connect() override;
+  void Connect(std::unique_ptr<ChromotingHostContext> context,
+               std::unique_ptr<base::DictionaryValue> policies,
+               std::unique_ptr<It2MeConfirmationDialogFactory> dialog_factory,
+               base::WeakPtr<It2MeHost::Observer> observer,
+               std::unique_ptr<SignalStrategy> signal_strategy,
+               const std::string& username,
+               const std::string& directory_bot_jid) override;
   void Disconnect() override;
-  void RequestNatPolicy() override;
 
  private:
   ~MockIt2MeHost() override {}
@@ -104,12 +99,15 @@ class MockIt2MeHost : public It2MeHost {
   DISALLOW_COPY_AND_ASSIGN(MockIt2MeHost);
 };
 
-void MockIt2MeHost::Connect() {
-  if (!host_context()->ui_task_runner()->BelongsToCurrentThread()) {
-    host_context()->ui_task_runner()->PostTask(
-        FROM_HERE, base::Bind(&MockIt2MeHost::Connect, this));
-    return;
-  }
+void MockIt2MeHost::Connect(
+    std::unique_ptr<ChromotingHostContext> context,
+    std::unique_ptr<base::DictionaryValue> policies,
+    std::unique_ptr<It2MeConfirmationDialogFactory> dialog_factory,
+    base::WeakPtr<It2MeHost::Observer> observer,
+    std::unique_ptr<SignalStrategy> signal_strategy,
+    const std::string& username,
+    const std::string& directory_bot_jid) {
+  DCHECK(host_context()->ui_task_runner()->BelongsToCurrentThread());
 
   RunSetState(kStarting);
   RunSetState(kRequestedAccessCode);
@@ -118,7 +116,7 @@ void MockIt2MeHost::Connect() {
   base::TimeDelta lifetime =
       base::TimeDelta::FromSeconds(kTestAccessCodeLifetimeInSeconds);
   host_context()->ui_task_runner()->PostTask(
-      FROM_HERE, base::Bind(&It2MeHost::Observer::OnStoreAccessCode, observer(),
+      FROM_HERE, base::Bind(&It2MeHost::Observer::OnStoreAccessCode, observer,
                             access_code, lifetime));
 
   RunSetState(kReceivedAccessCode);
@@ -127,7 +125,7 @@ void MockIt2MeHost::Connect() {
   std::string client_username(kTestClientUsername);
   host_context()->ui_task_runner()->PostTask(
       FROM_HERE, base::Bind(&It2MeHost::Observer::OnClientAuthenticated,
-                            observer(), client_username));
+                            observer, client_username));
 
   RunSetState(kConnected);
 }
@@ -143,8 +141,6 @@ void MockIt2MeHost::Disconnect() {
   RunSetState(kDisconnected);
 }
 
-void MockIt2MeHost::RequestNatPolicy() {}
-
 void MockIt2MeHost::RunSetState(It2MeHostState state) {
   if (!host_context()->network_task_runner()->BelongsToCurrentThread()) {
     host_context()->network_task_runner()->PostTask(
@@ -156,34 +152,16 @@ void MockIt2MeHost::RunSetState(It2MeHostState state) {
 
 class MockIt2MeHostFactory : public It2MeHostFactory {
  public:
-  MockIt2MeHostFactory();
-  ~MockIt2MeHostFactory() override;
+  MockIt2MeHostFactory() {}
+  ~MockIt2MeHostFactory() override {}
 
-  scoped_refptr<It2MeHost> CreateIt2MeHost(
-      std::unique_ptr<ChromotingHostContext> context,
-      base::WeakPtr<It2MeHost::Observer> observer,
-      std::unique_ptr<SignalStrategy> signal_strategy,
-      const std::string& username,
-      const std::string& directory_bot_jid) override;
+  scoped_refptr<It2MeHost> CreateIt2MeHost() override {
+    return new MockIt2MeHost();
+  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockIt2MeHostFactory);
 };
-
-MockIt2MeHostFactory::MockIt2MeHostFactory() : It2MeHostFactory() {}
-
-MockIt2MeHostFactory::~MockIt2MeHostFactory() {}
-
-scoped_refptr<It2MeHost> MockIt2MeHostFactory::CreateIt2MeHost(
-    std::unique_ptr<ChromotingHostContext> context,
-    base::WeakPtr<It2MeHost::Observer> observer,
-    std::unique_ptr<SignalStrategy> signal_strategy,
-    const std::string& username,
-    const std::string& directory_bot_jid) {
-  return new MockIt2MeHost(std::move(context), observer,
-                           std::move(signal_strategy), username,
-                           directory_bot_jid);
-}
 
 }  // namespace
 
