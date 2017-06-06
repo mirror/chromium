@@ -73,3 +73,18 @@ void ExtensionAppWindowLauncherItemController::ExecuteCommand(
     int32_t event_flags) {
   ChromeLauncherController::instance()->ActivateShellApp(app_id(), command_id);
 }
+
+void ExtensionAppWindowLauncherItemController::OnWindowTitleChanged(
+    aura::Window* window) {
+  ui::BaseWindow* base_window = GetAppWindow(window);
+  extensions::AppWindowRegistry* app_window_registry =
+      extensions::AppWindowRegistry::Get(
+          ChromeLauncherController::instance()->profile());
+  extensions::AppWindow* app_window =
+      app_window_registry->GetAppWindowForNativeWindow(
+          base_window->GetNativeWindow());
+  if (app_window->show_in_shelf()) {
+    ChromeLauncherController::instance()->SetItemTitle(shelf_id(),
+                                                       window->GetTitle());
+  }
+}
