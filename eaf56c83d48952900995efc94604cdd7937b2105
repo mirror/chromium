@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e733fa83_878c6e0b",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 4950,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-06T09:27:20Z",
+      "side": 1,
+      "message": "When does this return `nullptr`? Shouldn\u0027t every security context that has a document have a security origin?",
+      "revId": "eaf56c83d48952900995efc94604cdd7937b2105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54ae78c5_103b9468",
         "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
         "patchSetId": 13
