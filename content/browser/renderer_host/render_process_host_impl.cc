@@ -2206,6 +2206,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kTraceConfigFile,
     switches::kTraceToConsole,
     switches::kUseFakeUIForMediaStream,
+    switches::kUseSharedMemoryOwnershipEdges,
     // This flag needs to be propagated to the renderer process for
     // --in-process-webgl.
     switches::kUseGL,
