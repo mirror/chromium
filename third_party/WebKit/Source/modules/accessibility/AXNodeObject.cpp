@@ -1294,11 +1294,14 @@ bool AXNodeObject::CanSetValueAttribute() const {
 }
 
 bool AXNodeObject::CanSetSelectedAttribute() const {
-  const AccessibilityRole role = AriaRoleAttribute();
+  const AccessibilityRole role = RoleValue();
+
   // These elements can be selected if not disabled (native or ARIA)
   if ((role == kListBoxOptionRole || role == kMenuListOptionRole ||
-       role == kTreeItemRole || role == kCellRole || role == kTabRole) &&
-      IsEnabled() && CanSetFocusAttribute()) {
+       role == kTreeItemRole || role == kCellRole || role == kTabRole ||
+       role == kRowRole || role == kColumnRole || role == kRowHeaderRole ||
+       role == kColumnHeaderRole) &&
+      IsEnabled()) {
     return true;
   }
   return AXObjectImpl::CanSetSelectedAttribute();
