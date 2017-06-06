@@ -156,6 +156,7 @@ static const char* const kSwitchNames[] = {
     switches::kTraceToConsole,
     switches::kUseFakeJpegDecodeAccelerator,
     switches::kUseGpuInTests,
+    switches::kUseSharedMemoryOwnershipEdges,
     switches::kV,
     switches::kVModule,
 #if defined(OS_MACOSX)

@@ -475,8 +475,10 @@ bool GpuMemoryBufferVideoFramePool::PoolImpl::OnMemoryDump(
         auto shared_buffer_guid =
             plane_resource.gpu_memory_buffer->GetGUIDForTracing(
                 tracing_process_id);
-        pmd->CreateSharedGlobalAllocatorDump(shared_buffer_guid);
-        pmd->AddOwnershipEdge(dump->guid(), shared_buffer_guid, kImportance);
+        auto shared_memory_guid =
+            plane_resource.gpu_memory_buffer->GetHandle().handle.GetGUID();
+        pmd->CreateSharedMemoryOwnershipEdge(dump->guid(), shared_buffer_guid,
+                                             shared_memory_guid, kImportance);
       }
     }
   }

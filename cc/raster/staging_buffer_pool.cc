@@ -116,12 +116,11 @@ void StagingBuffer::OnMemoryDump(base::trace_event::ProcessMemoryDump* pmd,
           ->GetTracingProcessId();
   auto shared_buffer_guid =
       gpu_memory_buffer->GetGUIDForTracing(tracing_process_id);
-  pmd->CreateSharedGlobalAllocatorDump(shared_buffer_guid);
 
-  // By creating an edge with a higher |importance| (w.r.t. browser-side dumps)
-  // the tracing UI will account the effective size of the buffer to the child.
+  auto shared_memory_guid = gpu_memory_buffer->GetHandle().handle.GetGUID();
   const int kImportance = 2;
-  pmd->AddOwnershipEdge(buffer_dump->guid(), shared_buffer_guid, kImportance);
+  pmd->CreateSharedMemoryOwnershipEdge(buffer_dump->guid(), shared_buffer_guid,
+                                       shared_memory_guid, kImportance);
 }
 
 StagingBufferPool::StagingBufferPool(base::SequencedTaskRunner* task_runner,
