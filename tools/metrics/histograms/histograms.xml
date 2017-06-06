@@ -75818,6 +75818,69 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="TextToSpeech.Utterance.FromExtensionAPI" enum="BooleanEnabled">
+  <owner>dmazzoni@chromium.org</owner>
+  <summary>
+    True if an utterance spoken via synthesized text-to-speech was triggered by
+    the Chrome TTS extension API (vs the web speech API).
+  </summary>
+</histogram>
+
+<histogram name="TextToSpeech.Utterance.HasGender" enum="BooleanEnabled">
+  <owner>dmazzoni@chromium.org</owner>
+  <summary>
+    True if an utterance spoken via synthesized text-to-speech requested a
+    specific gender.
+  </summary>
+</histogram>
+
+<histogram name="TextToSpeech.Utterance.HasLang" enum="BooleanEnabled">
+  <owner>dmazzoni@chromium.org</owner>
+  <summary>
+    True if an utterance spoken via synthesized text-to-speech specified a
+    language code.
+  </summary>
+</histogram>
+
+<histogram name="TextToSpeech.Utterance.HasPitch" enum="BooleanEnabled">
+  <owner>dmazzoni@chromium.org</owner>
+  <summary>
+    True if an utterance spoken via synthesized text-to-speech requested a
+    specific pitch other than the default.
+  </summary>
+</histogram>
+
+<histogram name="TextToSpeech.Utterance.HasRate" enum="BooleanEnabled">
+  <owner>dmazzoni@chromium.org</owner>
+  <summary>
+    True if an utterance spoken via synthesized text-to-speech requested a
+    specific speech rate other than the default.
+  </summary>
+</histogram>
+
+<histogram name="TextToSpeech.Utterance.HasVoiceName" enum="BooleanEnabled">
+  <owner>dmazzoni@chromium.org</owner>
+  <summary>
+    True if an utterance spoken via synthesized text-to-speech requested a
+    specific voice by name.
+  </summary>
+</histogram>
+
+<histogram name="TextToSpeech.Utterance.HasVolume" enum="BooleanEnabled">
+  <owner>dmazzoni@chromium.org</owner>
+  <summary>
+    True if an utterance spoken via synthesized text-to-speech requested a
+    specific volume other than the default.
+  </summary>
+</histogram>
+
+<histogram name="TextToSpeech.Utterance.TextLength" units="bytes">
+  <owner>dmazzoni@chromium.org</owner>
+  <summary>
+    The length of an utterance to be spoken via synthesized text-to-speech.
+  </summary>
+</histogram>
+
 <histogram name="ThirdPartyModules.Certificates.Microsoft" units="certificates">
   <owner>chrisha@chromium.org</owner>
   <summary>

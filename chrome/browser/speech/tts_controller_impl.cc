@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 
+#include "base/metrics/histogram_macros.h"
+#include "base/metrics/user_metrics.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
@@ -177,8 +179,28 @@ void TtsControllerImpl::SpeakNow(Utterance* utterance) {
 
   GetPlatformImpl()->WillSpeakUtteranceWithVoice(utterance, voice);
 
+  base::RecordAction(base::UserMetricsAction("TextToSpeech.Speak"));
+  UMA_HISTOGRAM_COUNTS_100000("TextToSpeech.Utterance.TextLength",
+                              utterance->text().size());
+  UMA_HISTOGRAM_BOOLEAN("TextToSpeech.Utterance.FromExtensionAPI",
+                        !utterance->src_url().is_empty());
+  UMA_HISTOGRAM_BOOLEAN("TextToSpeech.Utterance.HasVoiceName",
+                        !utterance->voice_name().empty());
+  UMA_HISTOGRAM_BOOLEAN("TextToSpeech.Utterance.HasLang",
+                        !utterance->lang().empty());
+  UMA_HISTOGRAM_BOOLEAN("TextToSpeech.Utterance.HasGender",
+                        utterance->gender() != TTS_GENDER_NONE);
+  UMA_HISTOGRAM_BOOLEAN("TextToSpeech.Utterance.HasRate",
+                        utterance->continuous_parameters().rate != 1.0);
+  UMA_HISTOGRAM_BOOLEAN("TextToSpeech.Utterance.HasPitch",
+                        utterance->continuous_parameters().pitch != 1.0);
+  UMA_HISTOGRAM_BOOLEAN("TextToSpeech.Utterance.HasVolume",
+                        utterance->continuous_parameters().volume != 1.0);
+
   if (!voice.native) {
 #if !defined(OS_ANDROID)
+    base::RecordAction(
+        base::UserMetricsAction("TextToSpeech.SpeakViaExtension"));
     DCHECK(!voice.extension_id.empty());
     current_utterance_ = utterance;
     utterance->set_extension_id(voice.extension_id);
@@ -194,6 +216,9 @@ void TtsControllerImpl::SpeakNow(Utterance* utterance) {
     }
 #endif
   } else {
+    base::RecordAction(
+        base::UserMetricsAction("TextToSpeech.SpeakViaNativeAPI"));
+
     // It's possible for certain platforms to send start events immediately
     // during |speak|.
     current_utterance_ = utterance;
@@ -224,6 +249,8 @@ void TtsControllerImpl::SpeakNow(Utterance* utterance) {
 }
 
 void TtsControllerImpl::Stop() {
+  base::RecordAction(base::UserMetricsAction("TextToSpeech.Stop"));
+
   paused_ = false;
   if (current_utterance_ && !current_utterance_->extension_id().empty()) {
     if (tts_engine_delegate_)
@@ -241,6 +268,8 @@ void TtsControllerImpl::Stop() {
 }
 
 void TtsControllerImpl::Pause() {
+  base::RecordAction(base::UserMetricsAction("TextToSpeech.Pause"));
+
   paused_ = true;
   if (current_utterance_ && !current_utterance_->extension_id().empty()) {
     if (tts_engine_delegate_)
@@ -252,6 +281,8 @@ void TtsControllerImpl::Pause() {
 }
 
 void TtsControllerImpl::Resume() {
+  base::RecordAction(base::UserMetricsAction("TextToSpeech.Resume"));
+
   paused_ = false;
   if (current_utterance_ && !current_utterance_->extension_id().empty()) {
     if (tts_engine_delegate_)
@@ -265,9 +296,9 @@ void TtsControllerImpl::Resume() {
 }
 
 void TtsControllerImpl::OnTtsEvent(int utterance_id,
-                                        TtsEventType event_type,
-                                        int char_index,
-                                        const std::string& error_message) {
+                                   TtsEventType event_type,
+                                   int char_index,
+                                   const std::string& error_message) {
   // We may sometimes receive completion callbacks "late", after we've
   // already finished the utterance (for example because another utterance
   // interrupted or we got a call to Stop). This is normal and we can
@@ -275,6 +306,43 @@ void TtsControllerImpl::OnTtsEvent(int utterance_id,
   if (!current_utterance_ || utterance_id != current_utterance_->id()) {
     return;
   }
+
+  switch (event_type) {
+    case TTS_EVENT_START:
+      base::RecordAction(base::UserMetricsAction("TextToSpeech.Event.Start"));
+      break;
+    case TTS_EVENT_END:
+      base::RecordAction(base::UserMetricsAction("TextToSpeech.Event.End"));
+      break;
+    case TTS_EVENT_WORD:
+      base::RecordAction(base::UserMetricsAction("TextToSpeech.Event.Word"));
+      break;
+    case TTS_EVENT_SENTENCE:
+      base::RecordAction(
+          base::UserMetricsAction("TextToSpeech.Event.Sentence"));
+      break;
+    case TTS_EVENT_MARKER:
+      base::RecordAction(base::UserMetricsAction("TextToSpeech.Event.Marker"));
+      break;
+    case TTS_EVENT_INTERRUPTED:
+      base::RecordAction(
+          base::UserMetricsAction("TextToSpeech.Event.Interrupted"));
+      break;
+    case TTS_EVENT_CANCELLED:
+      base::RecordAction(
+          base::UserMetricsAction("TextToSpeech.Event.Cancelled"));
+      break;
+    case TTS_EVENT_ERROR:
+      base::RecordAction(base::UserMetricsAction("TextToSpeech.Event.Error"));
+      break;
+    case TTS_EVENT_PAUSE:
+      base::RecordAction(base::UserMetricsAction("TextToSpeech.Event.Pause"));
+      break;
+    case TTS_EVENT_RESUME:
+      base::RecordAction(base::UserMetricsAction("TextToSpeech.Event.Resume"));
+      break;
+  }
+
   current_utterance_->OnTtsEvent(event_type, char_index, error_message);
   if (current_utterance_->finished()) {
     FinishCurrentUtterance();

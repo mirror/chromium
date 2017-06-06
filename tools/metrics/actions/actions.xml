@@ -16403,6 +16403,120 @@ should be able to be added at any place in this file.
   <description>Please enter the description of this user action.</description>
 </action>
 
+<action name="TextToSpeech.Event.Cancelled">
+  <owner>dmazzoni@chromium.org</owner>
+  <description>
+    The text-to-speech engine fired an event indicating that an utterance was
+    cancelled before it could start speaking.
+  </description>
+</action>
+
+<action name="TextToSpeech.Event.End">
+  <owner>dmazzoni@chromium.org</owner>
+  <description>
+    The text-to-speech engine fired an event indicating speech finished.
+  </description>
+</action>
+
+<action name="TextToSpeech.Event.Error">
+  <owner>dmazzoni@chromium.org</owner>
+  <description>
+    The text-to-speech engine fired an event indicating that it encountered an
+    error while trying to speak a requested utterance.
+  </description>
+</action>
+
+<action name="TextToSpeech.Event.Interrupted">
+  <owner>dmazzoni@chromium.org</owner>
+  <description>
+    The text-to-speech engine fired an event indicating that an utterance was
+    interrupted before it could finish speaking.
+  </description>
+</action>
+
+<action name="TextToSpeech.Event.Marker">
+  <owner>dmazzoni@chromium.org</owner>
+  <description>
+    The text-to-speech engine fired an event indicating speech reached an
+    explicit marker in the utterance text.
+  </description>
+</action>
+
+<action name="TextToSpeech.Event.Pause">
+  <owner>dmazzoni@chromium.org</owner>
+  <description>
+    The text-to-speech engine fired an event indicating that it paused speech.
+  </description>
+</action>
+
+<action name="TextToSpeech.Event.Resume">
+  <owner>dmazzoni@chromium.org</owner>
+  <description>
+    The text-to-speech engine fired an event indicating that it resumed speech.
+  </description>
+</action>
+
+<action name="TextToSpeech.Event.Sentence">
+  <owner>dmazzoni@chromium.org</owner>
+  <description>
+    The text-to-speech engine fired an event indicating speech reached a
+    sentence boundary.
+  </description>
+</action>
+
+<action name="TextToSpeech.Event.Start">
+  <owner>dmazzoni@chromium.org</owner>
+  <description>
+    The text-to-speech engine fired an event indicating speech started.
+  </description>
+</action>
+
+<action name="TextToSpeech.Event.Word">
+  <owner>dmazzoni@chromium.org</owner>
+  <description>
+    The text-to-speech engine fired an event indicating speech reached a word
+    boundary.
+  </description>
+</action>
+
+<action name="TextToSpeech.Pause">
+  <owner>dmazzoni@chromium.org</owner>
+  <description>Synthesized speech is paused.</description>
+</action>
+
+<action name="TextToSpeech.Resume">
+  <owner>dmazzoni@chromium.org</owner>
+  <description>Synthesized speech is resumed after being paused.</description>
+</action>
+
+<action name="TextToSpeech.Speak">
+  <owner>dmazzoni@chromium.org</owner>
+  <description>
+    A single utterance is spoken using synthesized text-to-speech.
+  </description>
+</action>
+
+<action name="TextToSpeech.SpeakViaExtension">
+  <owner>dmazzoni@chromium.org</owner>
+  <description>
+    A single utterance is spoken using synthesized text-to-speech implemented by
+    a Chrome extension, including possibly built-in component extensions.
+  </description>
+</action>
+
+<action name="TextToSpeech.SpeakViaNativeAPI">
+  <owner>dmazzoni@chromium.org</owner>
+  <description>
+    A single utterance is spoken using a native text-to-speech API provided by
+    the operating system.
+  </description>
+</action>
+
+<action name="TextToSpeech.Stop">
+  <owner>dmazzoni@chromium.org</owner>
+  <description>Synthesized speech is stopped.</description>
+</action>
+
 <action name="Themes.Gone">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
