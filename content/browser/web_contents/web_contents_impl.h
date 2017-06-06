@@ -127,6 +127,8 @@ class CONTENT_EXPORT WebContentsImpl
       public NON_EXPORTED_BASE(NavigationControllerDelegate),
       public NON_EXPORTED_BASE(NavigatorDelegate) {
  public:
+        
+  bool is_error_page;
   class FriendWrapper;
 
   ~WebContentsImpl() override;
