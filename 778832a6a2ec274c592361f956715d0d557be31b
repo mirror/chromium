@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1dcb45ce_d733066e",
+        "filename": "tools/metrics/rappor/rappor.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-06-06T09:01:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb08e8fd_03bd0716",
+      "revId": "778832a6a2ec274c592361f956715d0d557be31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d556950e_c3cca3e9",
         "filename": "tools/metrics/rappor/rappor.xml",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "778832a6a2ec274c592361f956715d0d557be31b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881ed22f_a25bc52b",
+        "filename": "tools/metrics/rappor/rappor.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1207,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-06-06T09:01:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d556950e_c3cca3e9",
+      "revId": "778832a6a2ec274c592361f956715d0d557be31b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
