@@ -30,6 +30,7 @@
 #include "content/common/associated_interface_registry_impl.h"
 #include "content/common/associated_interfaces.mojom.h"
 #include "content/common/content_export.h"
+#include "content/common/crasher.mojom.h"
 #include "content/common/indexed_db/indexed_db.mojom.h"
 #include "content/common/media/renderer_audio_output_stream_factory.mojom.h"
 #include "content/common/renderer.mojom.h"
@@ -133,6 +134,7 @@ class CONTENT_EXPORT RenderProcessHostImpl
   StoragePartition* GetStoragePartition() const override;
   bool Shutdown(int exit_code, bool wait) override;
   bool FastShutdownIfPossible() override;
+  void TerminateHungRenderProcess() override;
   base::ProcessHandle GetHandle() const override;
   bool IsReady() const override;
   BrowserContext* GetBrowserContext() const override;
@@ -679,6 +681,21 @@ class CONTENT_EXPORT RenderProcessHostImpl
 
   mojom::RouteProviderAssociatedPtr remote_route_provider_;
   mojom::RendererAssociatedPtr renderer_interface_;
+  mojom::CrasherPtr crasher_interface_;
+
+  enum class TerminationStatus {
+    TerminatedItself,
+    TerminatedForcibly,
+  };
+  base::OnceCallback<void(base::TimeTicks, TerminationStatus)>
+      report_hung_renderer_stats_;
+  base::OneShotTimer termination_timer_;
+
+  mojom::CrashKeysPtr CollectCrashKeysForRendererHang();
+  void ReportHungRendererStats(base::TimeTicks start,
+                               base::TimeTicks end,
+                               TerminationStatus termination_status);
+  void OnHungRendererTerminationTimedOut();
 
   // Tracks active audio streams within the render process; used to determine if
   // if a process should be backgrounded.
