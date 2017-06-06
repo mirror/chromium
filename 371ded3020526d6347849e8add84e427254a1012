@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "673f4559_f109f1f6",
+        "filename": "base/base_switches.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-06T04:26:26Z",
+      "side": 1,
+      "message": "documentation nits: I\u0027m having a bit trouble parsing this text, is \u0027created for base::SharedMemory\u0027 adjective for \u0027ownership edges\u0027 or \u0027global memory dumps and ownership edges\u0027?  Also if the term \u0027ownership edges\u0027 specifically means something in memory dump context it might be better to make it clearer.",
+      "revId": "371ded3020526d6347849e8add84e427254a1012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
