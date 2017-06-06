@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "530271a9_d035d4e8",
+        "filename": "chrome/browser/engagement/site_engagement_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-06T19:36:39Z",
+      "side": 1,
+      "message": "Its weird to me that these infos have neither audio nor video. Is that a reasonable condition to test? my first time seeing the media egagement code, so I may be missing bigger context",
+      "range": {
+        "startLine": 70,
+        "startChar": 61,
+        "endLine": 70,
+        "endChar": 66
+      },
+      "revId": "15ca34fa4c44d84ad457dfca211eb061f53127b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee2b79f_fb169ccd",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-06T19:36:39Z",
+      "side": 1,
+      "message": "nit: ditto on jochen\u0027s comment about in_",
+      "range": {
+        "startLine": 122,
+        "startChar": 38,
+        "endLine": 122,
+        "endChar": 50
+      },
+      "revId": "15ca34fa4c44d84ad457dfca211eb061f53127b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4a676db_fc740570",
+        "filename": "content/browser/media/media_web_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-06T19:36:39Z",
+      "side": 1,
+      "message": "nit: The API is funny with two outputs for removed players. I would revert to having just one and cat the separate vectors together to make all_removed_players after the two calls.",
+      "range": {
+        "startLine": 214,
+        "startChar": 51,
+        "endLine": 214,
+        "endChar": 52
+      },
+      "revId": "15ca34fa4c44d84ad457dfca211eb061f53127b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7874dde_3e915401",
         "filename": "content/public/browser/web_contents_observer.h",
         "patchSetId": 1
