@@ -10,6 +10,7 @@
 #include "base/run_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
+#include "components/viz/host/frame_sink_manager_host.h"
 #include "content/browser/compositor/test/no_transport_image_transport_factory.h"
 #include "content/browser/frame_host/navigation_entry_impl.h"
 #include "content/browser/renderer_host/render_view_host_factory.h"
@@ -132,6 +133,10 @@ RenderViewHostTestEnabler::RenderViewHostTestEnabler()
 #if !defined(OS_ANDROID)
   ImageTransportFactory::InitializeForUnitTests(
       base::WrapUnique(new NoTransportImageTransportFactory));
+  ImageTransportFactory::GetInstance()
+      ->GetContextFactoryPrivate()
+      ->GetFrameSinkManagerHost()
+      ->ConnectToFrameSinkManager();
 #else
   if (!screen_)
     screen_.reset(ui::CreateDummyScreenAndroid());

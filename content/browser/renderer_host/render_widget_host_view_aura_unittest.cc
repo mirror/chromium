@@ -35,6 +35,7 @@
 #include "cc/test/fake_surface_observer.h"
 #include "components/viz/display_compositor/gl_helper.h"
 #include "components/viz/display_compositor/host_shared_bitmap_manager.h"
+#include "components/viz/host/frame_sink_manager_host.h"
 #include "content/browser/browser_thread_impl.h"
 #include "content/browser/compositor/test/no_transport_image_transport_factory.h"
 #include "content/browser/frame_host/render_widget_host_view_guest.h"
@@ -594,6 +595,10 @@ class RenderWidgetHostViewAuraTest : public testing::Test {
     ImageTransportFactory::InitializeForUnitTests(
         std::unique_ptr<ImageTransportFactory>(
             new NoTransportImageTransportFactory));
+    ImageTransportFactory::GetInstance()
+        ->GetContextFactoryPrivate()
+        ->GetFrameSinkManagerHost()
+        ->ConnectToFrameSinkManager();
     aura_test_helper_.reset(new aura::test::AuraTestHelper());
     aura_test_helper_->SetUp(
         ImageTransportFactory::GetInstance()->GetContextFactory(),
