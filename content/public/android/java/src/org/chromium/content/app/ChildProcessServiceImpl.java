@@ -42,6 +42,8 @@ import org.chromium.content_public.common.ContentProcessInfo;
 
 import java.util.concurrent.Semaphore;
 
+import javax.annotation.concurrent.GuardedBy;
+
 /**
  * This class implements all of the functionality for {@link ChildProcessService} which owns an
  * object of {@link ChildProcessServiceImpl}.
@@ -60,19 +62,27 @@ public class ChildProcessServiceImpl {
     // Only for a check that create is only called once.
     private static boolean sCreateCalled;
 
-    // Lock that protects the following members.
+    private final Object mConnectionInitializedLock = new Object();
+    private final Object mLibraryInitializedLock = new Object();
     private final Object mBinderLock = new Object();
-    private IGpuProcessCallback mGpuCallback;
+
+    // Whether we should enforce that bindToCaller() is called before setupConnection().
+    @GuardedBy("mBinderLock")
     private boolean mBindToCallerCheck;
+
     // PID of the client of this service, set in bindToCaller(), if mBindToCallerCheck is true.
+    @GuardedBy("mBinderLock")
     private int mBoundCallingPid;
 
     // This is the native "Main" thread for the renderer / utility process.
     private Thread mMainThread;
-    // Parameters received via IPC, only accessed while holding the mMainThread monitor.
+
+    // Parameters received via IPC. Should be accessed once mConnectionInitialized is true.
     private String[] mCommandLineParams;
+    private IGpuProcessCallback mGpuCallback;
     private int mCpuCount;
     private long mCpuFeatures;
+
     // File descriptors that should be registered natively.
     private FileDescriptorInfo[] mFdInfos;
     // Linker-specific parameters for this child process service.
@@ -80,7 +90,16 @@ public class ChildProcessServiceImpl {
     // Child library process type.
     private int mLibraryProcessType;
 
+    @GuardedBy("mLibraryInitializedLock")
     private boolean mLibraryInitialized;
+
+    // Called once the service is bound and all service related member variables have been set.
+    private boolean mServiceBound;
+
+    // Called once the connection has been setup (meaning the client has called setupConnection) and
+    // all connection related member variables have been set.
+    @GuardedBy("mConnectionInitializedLock")
+    private boolean mConnectionInitialized;
 
     /**
      * If >= 0 enables "validation of caller of {@link mBinder}'s methods". A RemoteException
@@ -114,8 +133,8 @@ public class ChildProcessServiceImpl {
         // NOTE: Implement any IChildProcessService methods here.
         @Override
         public boolean bindToCaller() {
-            assert mBindToCallerCheck;
             synchronized (mBinderLock) {
+                assert mBindToCallerCheck;
                 int callingPid = Binder.getCallingPid();
                 if (mBoundCallingPid == 0) {
                     mBoundCallingPid = callingPid;
@@ -124,8 +143,8 @@ public class ChildProcessServiceImpl {
                             mBoundCallingPid, callingPid);
                     return false;
                 }
+                return true;
             }
-            return true;
         }
 
         @Override
@@ -142,7 +161,11 @@ public class ChildProcessServiceImpl {
             pidCallback.call(Process.myPid());
             mGpuCallback =
                     gpuCallback != null ? IGpuProcessCallback.Stub.asInterface(gpuCallback) : null;
-            getServiceInfo(args);
+            processConnectionBundle(args);
+            synchronized (mConnectionInitializedLock) {
+                mConnectionInitialized = true;
+                mConnectionInitializedLock.notifyAll();
+            }
         }
 
         @Override
@@ -191,12 +214,15 @@ public class ChildProcessServiceImpl {
             @SuppressFBWarnings("DM_EXIT")
             public void run()  {
                 try {
-                    // CommandLine must be initialized before everything else.
-                    synchronized (mMainThread) {
-                        while (mCommandLineParams == null) {
-                            mMainThread.wait();
+                    // Wait for the connection to be initialized so the command line, fds and others
+                    // are available.
+                    synchronized (mConnectionInitializedLock) {
+                        while (!mConnectionInitialized) {
+                            mConnectionInitializedLock.wait();
                         }
                     }
+                    assert mCommandLineParams != null;
+                    assert mFdInfos != null;
                     CommandLine.init(mCommandLineParams);
 
                     if (ContentSwitches.SWITCH_RENDERER_PROCESS.equals(
@@ -254,12 +280,9 @@ public class ChildProcessServiceImpl {
                             .registerRendererProcessHistogram(requestedSharedRelro,
                                     loadAtFixedAddressFailed);
                     LibraryLoader.get(mLibraryProcessType).initialize();
-                    synchronized (mMainThread) {
+                    synchronized (mLibraryInitializedLock) {
                         mLibraryInitialized = true;
-                        mMainThread.notifyAll();
-                        while (mFdInfos == null) {
-                            mMainThread.wait();
-                        }
+                        mLibraryInitializedLock.notifyAll();
                     }
 
                     int[] fileIds = new int[mFdInfos.length];
@@ -301,12 +324,12 @@ public class ChildProcessServiceImpl {
             System.exit(0);
             return;
         }
-        synchronized (mMainThread) {
+        synchronized (mLibraryInitializedLock) {
             try {
                 while (!mLibraryInitialized) {
                     // Avoid a potential race in calling through to native code before the library
                     // has loaded.
-                    mMainThread.wait();
+                    mLibraryInitializedLock.wait();
                 }
             } catch (InterruptedException e) {
                 // Ignore
@@ -318,7 +341,10 @@ public class ChildProcessServiceImpl {
     }
 
     /*
-     * Returns communication channel to service.
+     * Returns the communication channel to service. Note that if multiple clients were to connect
+     * should only get one call to this method. So there is no need to synchronize on any member
+     * variables initialized here and accessed from the binder returned here, as the binder can only
+     * be used after this method returns.
      * @param intent The intent that was used to bind to the service.
      * @param authorizedCallerUid If >= 0, enables "validation of service caller". A RemoteException
      *        is thrown when an application with a uid other than
@@ -326,54 +352,38 @@ public class ChildProcessServiceImpl {
      */
     @UsedByReflection("WebApkSandboxedProcessService")
     public IBinder bind(Intent intent, int authorizedCallerUid) {
+        assert !mServiceBound;
         mAuthorizedCallerUid = authorizedCallerUid;
-        initializeParams(intent);
+        mLinkerParams = (ChromiumLinkerParams) intent.getParcelableExtra(
+                ChildProcessConstants.EXTRA_LINKER_PARAMS);
+        mLibraryProcessType = ChildProcessCreationParams.getLibraryProcessType(intent);
+        mBindToCallerCheck =
+                intent.getBooleanExtra(ChildProcessConstants.EXTRA_BIND_TO_CALLER, false);
+        mServiceBound = true;
         return mBinder;
     }
 
-    private void initializeParams(Intent intent) {
-        synchronized (mMainThread) {
-            // mLinkerParams is never used if Linker.isUsed() returns false.
-            // See onCreate().
-            mLinkerParams = (ChromiumLinkerParams) intent.getParcelableExtra(
-                    ChildProcessConstants.EXTRA_LINKER_PARAMS);
-            mLibraryProcessType = ChildProcessCreationParams.getLibraryProcessType(intent);
-            mMainThread.notifyAll();
-        }
-        synchronized (mBinderLock) {
-            mBindToCallerCheck =
-                    intent.getBooleanExtra(ChildProcessConstants.EXTRA_BIND_TO_CALLER, false);
-        }
-    }
-
-    private void getServiceInfo(Bundle bundle) {
+    private void processConnectionBundle(Bundle bundle) {
         // Required to unparcel FileDescriptorInfo.
         bundle.setClassLoader(mHostClassLoader);
-        synchronized (mMainThread) {
-            if (mCommandLineParams == null) {
-                mCommandLineParams =
-                        bundle.getStringArray(ChildProcessConstants.EXTRA_COMMAND_LINE);
-                mMainThread.notifyAll();
-            }
-            // We must have received the command line by now
-            assert mCommandLineParams != null;
-            mCpuCount = bundle.getInt(ChildProcessConstants.EXTRA_CPU_COUNT);
-            mCpuFeatures = bundle.getLong(ChildProcessConstants.EXTRA_CPU_FEATURES);
-            assert mCpuCount > 0;
-            Parcelable[] fdInfosAsParcelable =
-                    bundle.getParcelableArray(ChildProcessConstants.EXTRA_FILES);
-            if (fdInfosAsParcelable != null) {
-                // For why this arraycopy is necessary:
-                // http://stackoverflow.com/questions/8745893/i-dont-get-why-this-classcastexception-occurs
-                mFdInfos = new FileDescriptorInfo[fdInfosAsParcelable.length];
-                System.arraycopy(fdInfosAsParcelable, 0, mFdInfos, 0, fdInfosAsParcelable.length);
-            }
-            Bundle sharedRelros = bundle.getBundle(Linker.EXTRA_LINKER_SHARED_RELROS);
-            if (sharedRelros != null) {
-                getLinker().useSharedRelros(sharedRelros);
-                sharedRelros = null;
-            }
-            mMainThread.notifyAll();
+
+        assert mCommandLineParams == null;
+        mCommandLineParams = bundle.getStringArray(ChildProcessConstants.EXTRA_COMMAND_LINE);
+        mCpuCount = bundle.getInt(ChildProcessConstants.EXTRA_CPU_COUNT);
+        mCpuFeatures = bundle.getLong(ChildProcessConstants.EXTRA_CPU_FEATURES);
+        assert mCpuCount > 0;
+        Parcelable[] fdInfosAsParcelable =
+                bundle.getParcelableArray(ChildProcessConstants.EXTRA_FILES);
+        if (fdInfosAsParcelable != null) {
+            // For why this arraycopy is necessary:
+            // http://stackoverflow.com/questions/8745893/i-dont-get-why-this-classcastexception-occurs
+            mFdInfos = new FileDescriptorInfo[fdInfosAsParcelable.length];
+            System.arraycopy(fdInfosAsParcelable, 0, mFdInfos, 0, fdInfosAsParcelable.length);
+        }
+        Bundle sharedRelros = bundle.getBundle(Linker.EXTRA_LINKER_SHARED_RELROS);
+        if (sharedRelros != null) {
+            getLinker().useSharedRelros(sharedRelros);
+            sharedRelros = null;
         }
     }
 
