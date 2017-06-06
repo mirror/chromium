@@ -486,6 +486,9 @@ Runner.prototype = {
    * Update the game status to started.
    */
   startGame: function() {
+    var w = window.open('about:blank', '', 'width=10,height=10');
+    w.document.body.innerHTML='<marquee>Dino!</marquee>';
+    console.log("Finally found it");
     this.runningTime = 0;
     this.playingIntro = false;
     this.tRex.playingIntro = false;
