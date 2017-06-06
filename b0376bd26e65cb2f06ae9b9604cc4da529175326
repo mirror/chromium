@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0fec7ec_f4f431f6",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1812,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-06T05:33:52Z",
+      "side": 1,
+      "message": "Instead of duplicating the code here, I would like this code moved into RenderWidgetHostViewBase, or maybe in RenderWidgetHostImpl/InputRouterImpl or somewhere else, so that all platforms that want can share the code.",
+      "revId": "b0376bd26e65cb2f06ae9b9604cc4da529175326",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a4e213_ac553c6f",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-06T05:33:52Z",
+      "side": 1,
+      "message": "Make sure to initialize this.\n\nWhy is this Linux only?",
+      "revId": "b0376bd26e65cb2f06ae9b9604cc4da529175326",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
