@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3b10151e_f53cec71",
+        "filename": "third_party/WebKit/Source/platform/mojo/GeometryStructTraitsTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-06T05:39:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9195ef21_6e4cf5b7",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 13
+      },
+      "revId": "abfe5c120c4a233e522a9c3b648e2cdea6620c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71e82a43_872c0f8c",
         "filename": "third_party/WebKit/Source/platform/mojo/GeometryStructTraitsTest.cpp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-05T20:52:12Z",
       "side": 1,
       "message": "I wonder why we have all these if they\u0027re not used...",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 14
+      },
+      "revId": "abfe5c120c4a233e522a9c3b648e2cdea6620c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de1f41d1_e959a450",
+        "filename": "third_party/WebKit/Source/platform/mojo/GeometryStructTraitsTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-06T05:39:23Z",
+      "side": 1,
+      "message": "Other structs than Size seem to be used in Chromium only, and they are covered by geometry_struct_traits_unittest.cc.",
+      "parentUuid": "71e82a43_872c0f8c",
       "range": {
         "startLine": 43,
         "startChar": 4,
