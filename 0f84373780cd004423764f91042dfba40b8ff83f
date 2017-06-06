@@ -22,6 +22,30 @@
       "revId": "0f84373780cd004423764f91042dfba40b8ff83f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c728d2e_e0baad63",
+        "filename": "cc/scheduler/scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-06-06T09:17:18Z",
+      "side": 0,
+      "message": "I can put this back later if we find we miss it. My 2 cents: it makes failures very verbose and it\u0027s very easy to put it back when you actually need it (and for the cases where it wasn\u0027t previously showing like for mismatches in actions rather than length).",
+      "parentUuid": "8efadf83_bad08745",
+      "range": {
+        "startLine": 37,
+        "startChar": 31,
+        "endLine": 37,
+        "endChar": 45
+      },
+      "revId": "0f84373780cd004423764f91042dfba40b8ff83f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
