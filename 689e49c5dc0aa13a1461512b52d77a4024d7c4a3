@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c5a3e92_7c3b775e",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_blocking_page.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-06-06T22:08:09Z",
+      "side": 1,
+      "message": "!threat_details_in_progress_ will always be true, since you just set it in the initialization list.",
+      "revId": "689e49c5dc0aa13a1461512b52d77a4024d7c4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6ff8b1_24427474",
+        "filename": "components/safe_browsing/browser/mock_safe_browsing_ui_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-06-06T22:08:09Z",
+      "side": 1,
+      "message": "We have already got TestSafeBrowsingUIManager class in chrome/browser/safe_browsing/test_safe_browsing_service.h\n\nCan we use that instead?",
+      "revId": "689e49c5dc0aa13a1461512b52d77a4024d7c4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c506ff_8183b524",
+        "filename": "components/safe_browsing/browser/mock_safe_browsing_ui_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-06-06T22:08:09Z",
+      "side": 1,
+      "message": "This should be a utility function of the test class, not part of Mock/TestSafeBrowsingUIManager.\n\nYou can simply call base::RunLoop().RunUntilIdle(); when you need to wait for something to happen.",
+      "revId": "689e49c5dc0aa13a1461512b52d77a4024d7c4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd7d190_61557fdd",
+        "filename": "components/safe_browsing/triggers/trigger_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-06-06T22:08:09Z",
+      "side": 1,
+      "message": "I\u0027m a little bit confused. Should it returns true?\nIf I read correctly, the return value of this will be assigned to threat_details_in_progress_ in SafeBrowsingBlockingPage. \nSince web_contents is already in the data_collectors_map_, it means some threat detail collection is already in process, right?",
+      "revId": "689e49c5dc0aa13a1461512b52d77a4024d7c4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55c0c0f_de772006",
+        "filename": "components/safe_browsing/triggers/trigger_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-06-06T22:08:09Z",
+      "side": 1,
+      "message": "I\u0027m not sure if threat_details knows it should self-delete at the end of FinishCollection. This might be a problem in the old code too. \nMaybe we should call Release() at the end of ThreatDetails::OnCacheCollectionReady()?",
+      "revId": "689e49c5dc0aa13a1461512b52d77a4024d7c4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
