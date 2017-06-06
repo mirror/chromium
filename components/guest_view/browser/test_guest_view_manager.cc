@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/memory/ptr_util.h"
+#include "components/guest_view/browser/guest_view_base.h"
 #include "components/guest_view/browser/guest_view_manager_delegate.h"
 
 namespace guest_view {
@@ -82,6 +83,14 @@ void TestGuestViewManager::WaitForNumGuestsCreated(size_t count) {
   num_created_message_loop_runner_->Run();
 }
 
+void TestGuestViewManager::WaitUntilAttached(
+    content::WebContents* guest_web_contents) {
+  waiting_for_attach_ = GuestViewBase::FromWebContents(guest_web_contents);
+
+  attached_message_loop_runner_ = new content::MessageLoopRunner;
+  attached_message_loop_runner_->Run();
+}
+
 void TestGuestViewManager::WaitForViewGarbageCollected() {
   gc_message_loop_runner_ = new content::MessageLoopRunner;
   gc_message_loop_runner_->Run();
@@ -111,6 +120,22 @@ void TestGuestViewManager::AddGuest(int guest_instance_id,
 
   if (num_created_message_loop_runner_.get())
     num_created_message_loop_runner_->Quit();
+}
+
+void TestGuestViewManager::AttachGuest(
+    int embedder_process_id,
+    int element_instance_id,
+    int guest_instance_id,
+    const base::DictionaryValue& attach_params) {
+  GuestViewManager::AttachGuest(embedder_process_id, element_instance_id,
+                                guest_instance_id, attach_params);
+
+  if (waiting_for_attach_ ==
+          GuestViewBase::From(embedder_process_id, guest_instance_id) &&
+      attached_message_loop_runner_.get()) {
+    attached_message_loop_runner_->Quit();
+    waiting_for_attach_ = nullptr;
+  }
 }
 
 void TestGuestViewManager::GetGuestWebContentsList(
