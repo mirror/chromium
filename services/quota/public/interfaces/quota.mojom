@@ -1,0 +1,51 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module quota.mojom;
+
+import "mojo/common/file_path.mojom";
+import "mojo/common/string16.mojom";
+import "mojo/common/values.mojom";
+#include "ipc/ipc_message.h"
+#include "storage/common/quota/quota_types.h"
+#include "url/gurl.h"
+
+const string kServiceName = "quota";
+
+enum StorageType {
+  kStorageTypeTemporary,
+  kStorageTypePersistent,
+  kStorageTypeSyncable,
+  kStorageTypeQuotaNotManaged,
+  kStorageTypeUnknown,
+  kStorageTypeLast = kStorageTypeUnknown
+};
+
+enum QuotaLimitType {
+  kQuotaLimitTypeUnknown,
+  kQuotaLimitTypeLimited,
+  kQuotaLimitTypeUnlimited,
+  kQuotaLimitTypeLast = kQuotaLimitTypeUnlimited
+};
+
+// Parameters from the renderer to the browser process on a
+// RequestStorageQuota call.
+struct StorageQuotaParams {
+  int render_frame_id;
+  int request_id;
+  GURL origin_url;
+  StorageType storage_type;
+  uint64_t requested_size;
+
+  // Request was made in the context of a user gesture.
+  bool user_gesture;
+};
+
+interface Quota {
+  RequestStorageQuota(StorageQuotaParams params)
+    => (int64 current_usage, int64 granted_quota);
+
+  QueryStorageUsageAndQuota(storage::StorageType type, url.mojom.Origin origin)
+    => (int64 current_usage, int64 current_quota);
+};
