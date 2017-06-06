@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 #import <Foundation/Foundation.h>
+
 #include <getopt.h>
 #include <string>
 
@@ -25,7 +26,9 @@ void PrintUsage() {
       "  -c  Specifies command line flags to pass to application.\n"
       "  -p  Print the device's home directory, does not run a test.\n"
       "  -s  Specifies the SDK version to use (e.g '9.3'). Will use system "
-      "default if not specified.\n");
+      "default if not specified.\n"
+      "  -t  Enable killing and relaunching the tests after a timeout when "
+      "it's detected to be hanging.");
 }
 
 // Exit status codes.
@@ -45,7 +48,46 @@ void LogError(NSString* format, ...) {
   va_end(list);
 }
 
+// Defines the behaviors to respond when tests are detected to be hanging.
+enum class TestsHangingOptions {
+  // No-op, default behavior.
+  NONE = 0,
+
+  // Kill the tests running task and relaunch.
+  RELAUNCH,
+};
 }
+
+// Wrapper around NSTimer to execute a simple block.
+@interface NSTimer (Block)
++ (id)scheduledTimerWithTimeInterval:(NSTimeInterval)timeInterval
+                               block:(void (^)())block
+                             repeats:(BOOL)repeats;
+@end
+
+@implementation NSTimer (Block)
+
++ (id)scheduledTimerWithTimeInterval:(NSTimeInterval)timeInterval
+                               block:(void (^)())block
+                             repeats:(BOOL)repeats {
+  NSTimer* timer =
+      [self scheduledTimerWithTimeInterval:timeInterval
+                                    target:self
+                                  selector:@selector(timerFireMethod:)
+                                  userInfo:block
+                                   repeats:repeats];
+  [block release];
+  return timer;
+}
+
++ (void)timerFireMethod:(NSTimer*)timer {
+  if ([timer userInfo]) {
+    void (^block)() = (void (^)())[timer userInfo];
+    block();
+  }
+}
+
+@end
 
 // Wrap boiler plate calls to xcrun NSTasks.
 @interface XCRunTask : NSObject {
@@ -53,6 +95,7 @@ void LogError(NSString* format, ...) {
 }
 - (instancetype)initWithArguments:(NSArray*)arguments;
 - (void)run;
+- (void)terminate;
 - (void)setStandardOutput:(id)output;
 - (void)setStandardError:(id)error;
 @end
@@ -88,6 +131,10 @@ void LogError(NSString* format, ...) {
 - (void)run {
   [_task launch];
   [_task waitUntilExit];
+}
+
+- (void)terminate {
+  [_task terminate];
 }
 
 - (void)launch {
@@ -225,7 +272,8 @@ void RunApplication(NSString* app_path,
                     NSString* udid,
                     NSMutableDictionary* app_env,
                     NSString* cmd_args,
-                    NSMutableArray* only_testing_tests) {
+                    NSMutableArray* only_testing_tests,
+                    TestsHangingOptions tests_hanging_option) {
   NSString* tempFilePath = [NSTemporaryDirectory()
       stringByAppendingPathComponent:[[NSUUID UUID] UUIDString]];
   [[NSFileManager defaultManager] createFileAtPath:tempFilePath
@@ -283,34 +331,91 @@ void RunApplication(NSString* app_path,
                     format:NSPropertyListXMLFormat_v1_0
           errorDescription:&error];
   [data writeToFile:tempFilePath atomically:YES];
-  XCRunTask* task = [[[XCRunTask alloc] initWithArguments:@[
-    @"xcodebuild", @"-xctestrun", tempFilePath, @"-destination",
-    [@"platform=iOS Simulator,id=" stringByAppendingString:udid],
-    @"test-without-building"
-  ]] autorelease];
 
-  if (!xctest_path) {
-    // The following stderr messages are meaningless on iossim when not running
-    // xctests and can be safely stripped.
-    NSArray* ignore_strings = @[
-      @"IDETestOperationsObserverErrorDomain", @"** TEST EXECUTE FAILED **"
-    ];
-    NSPipe* stderr_pipe = [NSPipe pipe];
-    stderr_pipe.fileHandleForReading.readabilityHandler =
-        ^(NSFileHandle* handle) {
-          NSString* log = [[[NSString alloc] initWithData:handle.availableData
-                                                 encoding:NSUTF8StringEncoding]
-              autorelease];
-          for (NSString* ignore_string in ignore_strings) {
-            if ([log rangeOfString:ignore_string].location != NSNotFound) {
-              return;
+  // xcodebuild -xctestrun sometimes hangs in the middle of tests running, thus
+  // adding the following workaround to kill the task and re-run the tests if
+  // detected hanging.
+  __block BOOL shouldRunTests = YES;
+  while (shouldRunTests) {
+    // Should re-run tests if and only if the tests running task hangs and gets
+    // killed manually.
+    shouldRunTests = NO;
+
+    XCRunTask* task = [[[XCRunTask alloc] initWithArguments:@[
+      @"xcodebuild", @"-xctestrun", tempFilePath, @"-destination",
+      [@"platform=iOS Simulator,id=" stringByAppendingString:udid],
+      @"test-without-building"
+    ]] autorelease];
+
+    if (!xctest_path) {
+      // The following stderr messages are meaningless on iossim when not
+      // running xctests and can be safely stripped.
+      NSArray* ignore_strings = @[
+        @"IDETestOperationsObserverErrorDomain", @"** TEST EXECUTE FAILED **"
+      ];
+      NSPipe* stderr_pipe = [NSPipe pipe];
+      stderr_pipe.fileHandleForReading.readabilityHandler =
+          ^(NSFileHandle* handle) {
+            NSString* log = [[[NSString alloc]
+                initWithData:handle.availableData
+                    encoding:NSUTF8StringEncoding] autorelease];
+
+            for (NSString* ignore_string in ignore_strings) {
+              if ([log rangeOfString:ignore_string].location != NSNotFound) {
+                return;
+              }
             }
-          }
-          printf("%s", [log UTF8String]);
-        };
-    [task setStandardError:stderr_pipe];
+            NSLog(@"%@", log);
+          };
+      [task setStandardError:stderr_pipe];
+    }
+
+    NSTimer* repeatingTimer = nil;
+
+    if (tests_hanging_option == TestsHangingOptions::RELAUNCH) {
+      // Whether tests running task is hanging or not is determined by
+      // monitoring the standard output stream, and if no output has been sent
+      // to the pipe over a predefined timeout, the task is considered to be
+      // hanging.
+      __block BOOL outputStreamAlive = NO;
+
+      // Extensive experience and experiments show that the bottleneck of tests
+      // running without output lies under starting the simulator, which takes
+      // no more than 20s, so it should be pretty safe to conclude that the
+      // tests running task is hanging if no output has been seen over 30s.
+      float timeout = 30.0;
+
+      NSPipe* stdoutPipe = [NSPipe pipe];
+      stdoutPipe.fileHandleForReading.readabilityHandler =
+          ^(NSFileHandle* handle) {
+            NSString* log = [[[NSString alloc]
+                initWithData:handle.availableData
+                    encoding:NSUTF8StringEncoding] autorelease];
+            if ([log length] != 0) {
+              outputStreamAlive = YES;
+              NSLog(@"%@", log);
+            }
+          };
+      [task setStandardOutput:stdoutPipe];
+
+      repeatingTimer =
+          [NSTimer scheduledTimerWithTimeInterval:timeout
+                                            block:^{
+                                              if (!outputStreamAlive) {
+                                                shouldRunTests = YES;
+                                                [task terminate];
+                                                KillSimulator();
+                                              } else {
+                                                outputStreamAlive = NO;
+                                              }
+                                            }
+                                          repeats:YES];
+    }
+
+    [task run];
+
+    [repeatingTimer invalidate];
   }
-  [task run];
 }
 
 int main(int argc, char* const argv[]) {
@@ -338,9 +443,10 @@ int main(int argc, char* const argv[]) {
   NSString* sdk_version = [NSString stringWithFormat:@"%0.1f", sdk];
   NSMutableDictionary* app_env = [NSMutableDictionary dictionary];
   NSMutableArray* only_testing_tests = [NSMutableArray array];
+  TestsHangingOptions tests_hanging_option = TestsHangingOptions::NONE;
 
   int c;
-  while ((c = getopt(argc, argv, "hs:d:u:t:e:c:o:pwl")) != -1) {
+  while ((c = getopt(argc, argv, "hs:d:u:e:c:o:pwlt")) != -1) {
     switch (c) {
       case 's':
         sdk_version = [NSString stringWithUTF8String:optarg];
@@ -350,6 +456,9 @@ int main(int argc, char* const argv[]) {
         break;
       case 'w':
         wants_wipe = true;
+        break;
+      case 't':
+        tests_hanging_option = TestsHangingOptions::RELAUNCH;
         break;
       case 'c':
         cmd_args = [NSString stringWithUTF8String:optarg];
@@ -436,7 +545,7 @@ int main(int argc, char* const argv[]) {
   }
 
   RunApplication(app_path, xctest_path, udid, app_env, cmd_args,
-                 only_testing_tests);
+                 only_testing_tests, tests_hanging_option);
   KillSimulator();
   return kExitSuccess;
 }

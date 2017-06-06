@@ -573,6 +573,7 @@ class SimulatorTestRunner(TestRunner):
         self.iossim_path,
         '-d', self.platform,
         '-s', self.version,
+        '-t' # enable re-launching tests after a timeout when iossim.
     ]
 
     if test_filter:
