@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fd6cf8e_6931d67b",
+        "filename": "third_party/WebKit/Source/core/html/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-06T11:01:05Z",
+      "side": 1,
+      "message": "Won\u0027t making Blink depend on //components/ create a cycle?\n\n- //components/ uses Blink via public APIs.\n- Blink uses //components/. This will create a cycle...?",
+      "revId": "0b37df8779580ddf3ae3fc02ccb550c25d206efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
