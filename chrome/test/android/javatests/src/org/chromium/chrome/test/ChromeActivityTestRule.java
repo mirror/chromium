@@ -51,7 +51,6 @@ public class ChromeActivityTestRule<T extends ChromeActivity>
 
     @Override
     public Statement apply(final Statement base, Description description) {
-        mCurrentTestName = description.getMethodName();
         final Statement superBase = super.apply(new Statement() {
             @Override
             public void evaluate() throws Throwable {
@@ -59,14 +58,7 @@ public class ChromeActivityTestRule<T extends ChromeActivity>
                 base.evaluate();
             }
         }, description);
-        return new Statement() {
-            @Override
-            public void evaluate() throws Throwable {
-                String perfTagAnalysisString = mTestCommon.setupPotentialPerfTest();
-                superBase.evaluate();
-                mTestCommon.endPerfTest(perfTagAnalysisString);
-            }
-        };
+        return superBase;
     }
 
     /**
