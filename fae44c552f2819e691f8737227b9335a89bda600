@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59f82fe8_adbcfcb8",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-06T23:32:58Z",
+      "side": 1,
+      "message": "it\u0027s because this can be called before Init()",
+      "parentUuid": "e7816bd7_0c3ef202",
+      "revId": "fae44c552f2819e691f8737227b9335a89bda600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da2a9743_f0c5812f",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-06T19:56:04Z",
       "side": 1,
       "message": "It sounded like on the spec the designers were proposing omitting the input_in_progress() check so this could be used to clear the permanent text as well.  WDYT of that?  I think it would sort of make sense to show this any time the box has focus.  Imagine tapping after the text and then wanting to delete everything.  You need to either hold down backspace or select all and then delete.",
+      "revId": "fae44c552f2819e691f8737227b9335a89bda600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d98fa5ff_122239c6",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-06T23:32:58Z",
+      "side": 1,
+      "message": "That was the initial proposal, however they accepted the counter proposal seen here. I didn\u0027t like having the [x] co-exist with other toolbar decorations for a split second before the other ones disappear (assuming you focus the location bar then start typing). If you tap after the text, it still selects the entire text, at which point you can just start typing. It would only be a problem if you tap in the omnibox and then also tap after the text, which probably is a minority use case, and it doesn\u0027t seem that out of line to make users manually select all once again.",
+      "parentUuid": "da2a9743_f0c5812f",
       "revId": "fae44c552f2819e691f8737227b9335a89bda600",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b635f43d_b509fb73",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-06T23:32:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "069b8ddd_93ba2740",
+      "revId": "fae44c552f2819e691f8737227b9335a89bda600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef10d3c3_068319f0",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "fae44c552f2819e691f8737227b9335a89bda600",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e31c0d_03b2a25c",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-06T23:32:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef10d3c3_068319f0",
+      "revId": "fae44c552f2819e691f8737227b9335a89bda600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
