@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "aead50e2_5b269c2c",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-06T17:32:16Z",
+      "side": 1,
+      "message": "Yeah this is that, it\u0027s just a little confusing :)\n\nScrollNode has two bounds:\nScrollNode.bounds: the overflow scrolling region\nScrollNode.scroll_clip_layer_bounds: the scroll element\u0027s bounds.",
+      "parentUuid": "01ca5926_96ca550f",
+      "revId": "c9e336f65c49e737807c3025084936eadb58bd1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e154b85c_dfe772ea",
         "filename": "cc/layers/layer_impl.cc",
         "patchSetId": 4
@@ -65,6 +83,24 @@
       "writtenOn": "2017-06-06T03:24:41Z",
       "side": 1,
       "message": "Is it possible to be false in the current codebase?",
+      "revId": "c9e336f65c49e737807c3025084936eadb58bd1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87689a55_91764888",
+        "filename": "cc/layers/layer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-06T17:32:16Z",
+      "side": 1,
+      "message": "Not in the code but there are 4 tests that hit this. I\u0027d like to remove SetScrollClipLayer and then remove the scrollable param on SetScrollable so you can only set a layer to be scrollable, never un-set it.",
+      "parentUuid": "e154b85c_dfe772ea",
       "revId": "c9e336f65c49e737807c3025084936eadb58bd1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
