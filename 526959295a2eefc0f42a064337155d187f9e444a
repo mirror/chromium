@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "325f5974_69296f63",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-06T20:53:35Z",
+      "side": 1,
+      "message": "I don\u0027t think this CL reverts that commit, but it re-lands that CL :-)\n\nIt reverts:\nhttps://chromium.googlesource.com/chromium/src/+/527967f74f2505aabedb6eba72ac5c22abc5ccc7\n\nI\u0027d probably refer to both.",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 12
+      },
+      "revId": "526959295a2eefc0f42a064337155d187f9e444a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
