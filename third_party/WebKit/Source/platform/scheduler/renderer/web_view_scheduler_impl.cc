@@ -133,6 +133,9 @@ void WebViewSchedulerImpl::SetPageVisible(bool page_visible) {
 
   page_visible_ = page_visible;
 
+  for (auto frame_scheduler : frame_schedulers_)
+    frame_scheduler->SetPageVisible(page_visible_);
+
   UpdateBackgroundThrottlingState();
 }
 
@@ -142,6 +145,7 @@ WebViewSchedulerImpl::CreateWebFrameSchedulerImpl(
   MaybeInitializeBackgroundCPUTimeBudgetPool();
   std::unique_ptr<WebFrameSchedulerImpl> frame_scheduler(
       new WebFrameSchedulerImpl(renderer_scheduler_, this, blame_context));
+  frame_scheduler->SetPageVisible(page_visible_);
   frame_scheduler->SetPageThrottled(should_throttle_frames_);
   frame_schedulers_.insert(frame_scheduler.get());
   return frame_scheduler;
