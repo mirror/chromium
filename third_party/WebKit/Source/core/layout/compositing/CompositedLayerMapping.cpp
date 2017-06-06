@@ -510,7 +510,8 @@ void CompositedLayerMapping::UpdateContentsOpaque() {
 void CompositedLayerMapping::UpdateRasterizationPolicy() {
   bool allow_transformed_rasterization =
       !RequiresCompositing(owning_layer_.GetCompositingReasons() &
-                           ~kCompositingReasonSquashingDisallowed);
+                           ~kCompositingReasonSquashingDisallowed &
+                           ~kCompositingReasonInlineTransform);
   graphics_layer_->ContentLayer()->SetAllowTransformedRasterization(
       allow_transformed_rasterization);
   if (squashing_layer_)
