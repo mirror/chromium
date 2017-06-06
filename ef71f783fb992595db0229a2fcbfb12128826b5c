@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6ebcae1e_22ee2364",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/blocklisted-service-in-optionalServices.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-06T22:44:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0a57e19_4e688836",
+      "revId": "ef71f783fb992595db0229a2fcbfb12128826b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ae25c78_98f1802c",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "ef71f783fb992595db0229a2fcbfb12128826b5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d10be02_64cdd5f5",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-06T22:44:31Z",
+      "side": 1,
+      "message": "\u003e Describe this and how it\u0027s limited.\n\nActually no tests use this so removing.\n\n\u003e IIUC we expect operations such as get services to crash in chromium if setNextGATTDiscoveryResponse is not called first?\n\u003e from:\n\u003e   FakePeripheral::DispatchDiscoveryResponse() {\n\u003e     DCHECK(next_discovery_response_);\n\u003e \n\u003e Perhaps we should have discovery default to completing unless an error has been registered?\n\nInitially I only posted the task if next_discovery_response_ had been set which I think accomplishes what you suggest. But that got me thinking that there might be a better way to solve this. Please see changes in fake_peripheral.",
+      "parentUuid": "3ae25c78_98f1802c",
+      "range": {
+        "startLine": 469,
+        "startChar": 9,
+        "endLine": 469,
+        "endChar": 44
+      },
+      "revId": "ef71f783fb992595db0229a2fcbfb12128826b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
