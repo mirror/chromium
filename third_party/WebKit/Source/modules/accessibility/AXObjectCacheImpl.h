@@ -155,8 +155,8 @@ class MODULES_EXPORT AXObjectCacheImpl : public AXObjectCacheBase {
   // values are cached as long as the modification count hasn't changed.
   int ModificationCount() const { return modification_count_; }
 
-  void PostNotification(LayoutObject*, AXNotification);
-  void PostNotification(Node*, AXNotification);
+  void PostNotification(LayoutObject*, AXNotification) override;
+  void PostNotification(Node*, AXNotification) override;
   void PostNotification(AXObjectImpl*, AXNotification);
 
   //
