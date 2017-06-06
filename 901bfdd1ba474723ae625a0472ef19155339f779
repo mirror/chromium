@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "178f5f63_5f079027",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeActivityTestCommon.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-06T23:08:02Z",
+      "side": 0,
+      "message": "Looks like only one other file uses PerfTraceEvent. My guess is that class can be removed as part of this cleanup (or repurposed if need be)",
+      "revId": "901bfdd1ba474723ae625a0472ef19155339f779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baca4641_89f663f5",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeActivityTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-06T23:08:02Z",
+      "side": 0,
+      "message": "Did you mean to delete this? If so, would have to clean up getName and getTestName methods that use it.",
+      "revId": "901bfdd1ba474723ae625a0472ef19155339f779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
