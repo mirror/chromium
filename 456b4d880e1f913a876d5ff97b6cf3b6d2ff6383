@@ -22,6 +22,30 @@
       "revId": "456b4d880e1f913a876d5ff97b6cf3b6d2ff6383",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa76dff3_26a5cbc4",
+        "filename": "content/test/gpu/gpu_tests/webgl_conformance_integration_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-06T23:55:25Z",
+      "side": 1,
+      "message": "Thanks; removed.",
+      "parentUuid": "1811ee74_206d7acb",
+      "range": {
+        "startLine": 266,
+        "startChar": 21,
+        "endLine": 266,
+        "endChar": 22
+      },
+      "revId": "456b4d880e1f913a876d5ff97b6cf3b6d2ff6383",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
