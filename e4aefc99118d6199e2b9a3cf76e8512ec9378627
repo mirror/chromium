@@ -33,6 +33,24 @@
       "revId": "e4aefc99118d6199e2b9a3cf76e8512ec9378627",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4778847_6e7b86bf",
+        "filename": "components/feature_engagement_tracker/public/feature_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-06T00:26:53Z",
+      "side": 1,
+      "message": "Or maybe remove the \u0027kFeatureEntries\u0027 part and just refer to //chrome/browser/about_flags.cc.",
+      "parentUuid": "b468f4cb_31bad0d1",
+      "revId": "e4aefc99118d6199e2b9a3cf76e8512ec9378627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
