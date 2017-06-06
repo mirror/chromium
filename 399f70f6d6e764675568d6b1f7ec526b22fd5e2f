@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1abe884f_488f6425",
+        "filename": "cc/surfaces/display_scheduler.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-06T14:10:04Z",
+      "side": 1,
+      "message": "nit: let\u0027s merge SurfaceDamaged into OnSurfaceDamaged?",
+      "range": {
+        "startLine": 296,
+        "startChar": 2,
+        "endLine": 296,
+        "endChar": 16
+      },
+      "revId": "399f70f6d6e764675568d6b1f7ec526b22fd5e2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
