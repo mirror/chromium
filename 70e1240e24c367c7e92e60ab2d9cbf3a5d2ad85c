@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d83ed44a_b4bf5dd4",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-06T16:46:09Z",
+      "side": 1,
+      "message": "Do we have to run GJDA on the IO thread? Typically IO thread should only do IO",
+      "range": {
+        "startLine": 156,
+        "startChar": 54,
+        "endLine": 156,
+        "endChar": 58
+      },
+      "revId": "70e1240e24c367c7e92e60ab2d9cbf3a5d2ad85c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
