@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "5a53fb22_20934e38",
+        "filename": "base/memory/shared_memory_tracker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-06T01:14:13Z",
+      "side": 1,
+      "message": "Ah yes I forgot about the BrowserGpuMemoryBufferManager::OnMemoryDump issue. yes passing the token is fine.\n\nMaybe I am being too paranoid here about the UnguessableToken thing here. Lets just use UnguessableToken here. If the owners have a problem then let\u0027s try the SharedMemory::ID idea.\nFor now just UnguessableToken is fine.",
+      "parentUuid": "84c60bfe_2e6075b5",
+      "range": {
+        "startLine": 28,
+        "startChar": 12,
+        "endLine": 28,
+        "endChar": 28
+      },
+      "revId": "5d3870c0abc8730c234adb988e70442b6598819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c1eb41c_5bf168fe",
         "filename": "base/trace_event/process_memory_dump.cc",
         "patchSetId": 5
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Agreed. I prefer creating another function instead of a boolean parameter.",
       "parentUuid": "00b554c3_cb719345",
+      "range": {
+        "startLine": 146,
+        "startChar": 7,
+        "endLine": 146,
+        "endChar": 38
+      },
+      "revId": "5d3870c0abc8730c234adb988e70442b6598819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7de6a1_db72b519",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-06T01:14:13Z",
+      "side": 1,
+      "message": "Sounds good!",
+      "parentUuid": "50ccab54_ecfe2cd5",
       "range": {
         "startLine": 146,
         "startChar": 7,
