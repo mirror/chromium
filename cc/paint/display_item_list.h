@@ -164,6 +164,9 @@ class CC_PAINT_EXPORT DisplayItemList
 
   bool has_discardable_images() const { return has_discardable_images_; }
 
+  bool pixel_canvas_enabled() const { return pixel_canvas_enabled_; }
+  void set_pixel_canvas_enabled(bool value) { pixel_canvas_enabled_ = value; }
+
  private:
   FRIEND_TEST_ALL_PREFIXES(DisplayItemListTest, AsValueWithNoItems);
   FRIEND_TEST_ALL_PREFIXES(DisplayItemListTest, AsValueWithItems);
@@ -203,6 +206,11 @@ class CC_PAINT_EXPORT DisplayItemList
   // Finalize().
   bool retain_visual_rects_ = false;
   bool has_discardable_images_ = false;
+
+  // Set true if we are using scalable views and canvas. This mode records all
+  // canvas draw commands in pixel aligned measurements. Use the compositor
+  // switch --enable-pixel-canvas-recording to enable this mode.
+  bool pixel_canvas_enabled_ = false;
 
   friend class base::RefCountedThreadSafe<DisplayItemList>;
   FRIEND_TEST_ALL_PREFIXES(DisplayItemListTest, ApproximateMemoryUsage);

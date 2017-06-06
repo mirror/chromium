@@ -919,8 +919,12 @@ scoped_refptr<cc::DisplayItemList> Layer::PaintContentsToDisplayList(
   paint_region_.Clear();
   auto display_list = make_scoped_refptr(new cc::DisplayItemList);
   if (delegate_) {
-    delegate_->OnPaintLayer(
-        PaintContext(display_list.get(), device_scale_factor_, invalidation));
+    display_list->set_pixel_canvas_enabled(
+        base::CommandLine::ForCurrentProcess()->HasSwitch(
+            switches::kEnablePixelCanvasRecording));
+    PaintContext context(display_list.get(), device_scale_factor_, invalidation,
+                         size());
+    delegate_->OnPaintLayer(context);
   }
   display_list->Finalize();
   // TODO(domlaskowski): Move mirror invalidation to Layer::SchedulePaint.

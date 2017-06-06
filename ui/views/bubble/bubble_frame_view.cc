@@ -384,7 +384,8 @@ void BubbleFrameView::PaintChildren(const ui::PaintContext& context) {
   NonClientFrameView::PaintChildren(context);
 
   ui::PaintCache paint_cache;
-  ui::PaintRecorder recorder(context, size(), &paint_cache);
+  ui::PaintRecorder recorder(context, context.ScaleToEffectivePixelSize(size()),
+                             &paint_cache);
   OnPaintBorder(recorder.canvas());
 }
 
