@@ -27,7 +27,8 @@ v8::Local<v8::Object> ScriptWrappable::Wrap(
 
   v8::Local<v8::Object> wrapper =
       V8DOMWrapper::CreateWrapper(isolate, creation_context, wrapper_type_info);
-  DCHECK(!wrapper.IsEmpty());
+  if (wrapper.IsEmpty())
+    return wrapper;
   return AssociateWithWrapper(isolate, wrapper_type_info, wrapper);
 }
 

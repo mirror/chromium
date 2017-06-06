@@ -45,6 +45,10 @@ v8::Local<v8::Object> V8DOMWrapper::CreateWrapper(
   // check fails and throws an exception.
   V8WrapperInstantiationScope scope(creation_context, isolate, type);
 
+  // Cross-origin wrapper creation must fail.
+  if (scope.AccessCheckFailed())
+    return v8::Local<v8::Object>();
+
   V8PerContextData* per_context_data =
       V8PerContextData::From(scope.GetContext());
   v8::Local<v8::Object> wrapper;
@@ -62,6 +66,8 @@ v8::Local<v8::Object> V8DOMWrapper::CreateWrapper(
                   ->NewInstance(scope.GetContext())
                   .ToLocalChecked();
   }
+  // We should only hit this CHECK in case of stack overflow, OOM, etc.
+  CHECK(!wrapper.IsEmpty());
   return wrapper;
 }
 
