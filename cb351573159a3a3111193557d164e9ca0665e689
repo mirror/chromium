@@ -16,6 +16,24 @@
       "revId": "cb351573159a3a3111193557d164e9ca0665e689",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a6f175_7d13e31a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-06-06T23:32:50Z",
+      "side": 1,
+      "message": "Is an event fired on hide I can hook into to do the protocol cleanup then though? I might have missed it",
+      "parentUuid": "5f48ebbe_210e3e29",
+      "revId": "cb351573159a3a3111193557d164e9ca0665e689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
