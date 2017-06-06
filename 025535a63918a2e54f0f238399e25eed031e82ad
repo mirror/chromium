@@ -234,6 +234,30 @@
       "revId": "025535a63918a2e54f0f238399e25eed031e82ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44848cd5_f4981b91",
+        "filename": "services/preferences/public/interfaces/preferences.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T17:55:55Z",
+      "side": 1,
+      "message": "Mojo methods are async by default, so if the function has to \"return\" something (even if that something is the empty tuple), then you magically get a callback as one of your parameters.",
+      "parentUuid": "8809f5df_5a4065a8",
+      "range": {
+        "startLine": 134,
+        "startChar": 20,
+        "endLine": 134,
+        "endChar": 22
+      },
+      "revId": "025535a63918a2e54f0f238399e25eed031e82ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
