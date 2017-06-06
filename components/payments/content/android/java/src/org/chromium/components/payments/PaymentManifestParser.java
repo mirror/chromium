@@ -66,6 +66,7 @@ public class PaymentManifestParser {
      * @param callback The callback to invoke when finished parsing.
      */
     public void parsePaymentMethodManifest(String content, ManifestParseCallback callback) {
+        assert mNativePaymentManifestParserAndroid != 0;
         nativeParsePaymentMethodManifest(mNativePaymentManifestParserAndroid, content, callback);
     }
 
@@ -76,6 +77,7 @@ public class PaymentManifestParser {
      * @param callback The callback to invoke when finished parsing.
      */
     public void parseWebAppManifest(String content, ManifestParseCallback callback) {
+        assert mNativePaymentManifestParserAndroid != 0;
         nativeParseWebAppManifest(mNativePaymentManifestParserAndroid, content, callback);
     }
 
