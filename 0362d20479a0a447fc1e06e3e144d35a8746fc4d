@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54e7652b_b1b75d87",
+        "filename": "content/test/data/OWNERS",
+        "patchSetId": 16
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T22:44:57Z",
+      "side": 1,
+      "message": "Btw for this sort of thing, we\u0027ve generally been OK adding a duplicate rule to explicitly allow all reviewers:\n\nper-file *.mojom\u003d*",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 43
+      },
+      "revId": "0362d20479a0a447fc1e06e3e144d35a8746fc4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
