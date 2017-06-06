@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0f897d9_4aa6fe05",
+        "filename": "chrome/browser/speech/tts_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-06T23:33:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "110803b1_8fa39074",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "52234840f78b8e47a111757c1708440c5793bee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c3345c7_75799110",
         "filename": "chrome/browser/speech/tts_controller_impl.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "52234840f78b8e47a111757c1708440c5793bee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe1d1961_9bbca101",
+        "filename": "chrome/browser/speech/tts_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-06T23:33:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c3345c7_75799110",
+      "range": {
+        "startLine": 49,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 19
+      },
+      "revId": "52234840f78b8e47a111757c1708440c5793bee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d27abd44_916b677c",
+        "filename": "chrome/browser/speech/tts_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-06T23:33:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f0bcc4f_52770ecc",
+      "range": {
+        "startLine": 328,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 74
+      },
+      "revId": "52234840f78b8e47a111757c1708440c5793bee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcebdeed_df0f1eae",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-06T22:10:08Z",
       "side": 1,
       "message": "I think these labels are reversed?  Likewise for the other enums.",
+      "range": {
+        "startLine": 34651,
+        "startChar": 0,
+        "endLine": 34654,
+        "endChar": 7
+      },
+      "revId": "52234840f78b8e47a111757c1708440c5793bee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e03f97e_fb23a78b",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34654,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-06T23:33:48Z",
+      "side": 1,
+      "message": "Oops, good catch. Fixed.",
+      "parentUuid": "bcebdeed_df0f1eae",
       "range": {
         "startLine": 34651,
         "startChar": 0,
