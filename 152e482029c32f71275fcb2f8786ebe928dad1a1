@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58aa8605_960d54bd",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-06T20:54:58Z",
+      "side": 1,
+      "message": "How about we add content::DesktopMediaID::Type property in DesktopMediaList interface and here pass the list of sources as std::vector\u003cunique_ptr\u003cDesktopMediaList\u003e\u003e.\n\nIt would make this interface simpler.",
+      "range": {
+        "startLine": 45,
+        "startChar": 56,
+        "endLine": 45,
+        "endChar": 68
+      },
+      "revId": "152e482029c32f71275fcb2f8786ebe928dad1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
