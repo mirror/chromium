@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d29b8752_6055e305",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-06T04:46:33Z",
+      "side": 1,
+      "message": "As I said in my initial comment \"Ultimately it might make sense to make BlobData directly build mojo DataElements rather than converting from one type of elements to another type on BlobDataHandle, but this seemed the least invasive for now, while we still have both code paths.\"\n\nI could make such a change now, but I don\u0027t really want to change the IPC code path for now, so BlobData would have to hold both mojo DataElements and BlobDataItems, and depending on the feature flag generate one or the other, which seemed like it would result in much harder to follow code. This way there at least is only one place where we check if we\u0027re using the mojo or ipc code paths...",
+      "parentUuid": "ecb057ab_6dc24578",
+      "range": {
+        "startLine": 286,
+        "startChar": 0,
+        "endLine": 286,
+        "endChar": 36
+      },
+      "revId": "a09e1d4d76a2b4dedc86e1b9ef658db33fe9d128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b1919f8_bb2add58",
         "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-06T00:20:17Z",
       "side": 1,
       "message": "nit: pull length check out of switch statement.",
+      "range": {
+        "startLine": 292,
+        "startChar": 0,
+        "endLine": 292,
+        "endChar": 39
+      },
+      "revId": "a09e1d4d76a2b4dedc86e1b9ef658db33fe9d128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7267a8c7_e24e97dd",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-06T04:46:33Z",
+      "side": 1,
+      "message": "The tricky part is that (afaict) kData items require looking at item.data-\u003elength() (length is always kUntilEndOfFile, while all other items require looking at item.length. So not sure what to best do here...",
+      "parentUuid": "0b1919f8_bb2add58",
       "range": {
         "startLine": 292,
         "startChar": 0,
@@ -62,6 +110,24 @@
       "revId": "a09e1d4d76a2b4dedc86e1b9ef658db33fe9d128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a975649_7c86c98d",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-06T04:46:33Z",
+      "side": 1,
+      "message": "There\u0027s definitely no round trips, but there are of course extra messages. MakeRequest essentially just generates a random number, and calling Clone then sends that number to the blob implementation on the browser side which will add it as an increased refcount for that particular blob. None of this here is blocked on that though.\nThe register call will then effectively include the same random number to identify the blob. The only caveat being that by the time the browser gets the Register call it might not have had the clone call yet, so the browser side code might end up with a minor inefficiency where looking up the uuid for the blob might get routed back through the renderer, even though at that point everything about the blob should be known in the browser... So I definitely don\u0027t think the code here is problematic, the code in the browser that\u0027ll have to actually look up the blob UUID might introduce unfortunate round trips though...",
+      "parentUuid": "667fb072_f12fd3cb",
+      "revId": "a09e1d4d76a2b4dedc86e1b9ef658db33fe9d128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
