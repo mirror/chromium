@@ -52,6 +52,24 @@
       "revId": "c73619a0858ef10b69e8ac58501b1c62f3cc5a6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ffe142_e94e7809",
+        "filename": "content/renderer/manifest/manifest_parser.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-06T17:24:17Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly about where the check is, as long as it\u0027s present.",
+      "parentUuid": "ed0eb76a_7768b793",
+      "revId": "c73619a0858ef10b69e8ac58501b1c62f3cc5a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
