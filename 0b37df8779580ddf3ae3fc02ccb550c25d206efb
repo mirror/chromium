@@ -16,6 +16,24 @@
       "revId": "0b37df8779580ddf3ae3fc02ccb550c25d206efb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daaf4541_97182130",
+        "filename": "third_party/WebKit/Source/core/html/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-06T12:56:31Z",
+      "side": 1,
+      "message": "I did not realise //components/ was using Blink.\n\nWould you prefer to go via ContentRenderClient like Rappor then?",
+      "parentUuid": "1fd6cf8e_6931d67b",
+      "revId": "0b37df8779580ddf3ae3fc02ccb550c25d206efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
