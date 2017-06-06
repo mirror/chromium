@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "bb55348e_a6f951f3",
+        "filename": "tools/checkteamtags/extract_components_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-06-06T09:14:57Z",
+      "side": 1,
+      "message": "nit: please move this value to a constant... method decorations should normally be limited to 1-2 lines\nalternatively you can move mocking into test function:\n\n  def tearDown(self):\n    super(ExtractComponentsTest, self).tearDown()\n    mock.patch.stopall()\n\n  def testBaseCase(self):\n    mock.patch(\u0027extract_components.scrape_owners\u0027, return_value\u003d{\n      \u0027.\u0027: {},\n      \u0027dummydir1\u0027: {\n          \u0027team\u0027: \u0027dummy-team@chromium.org\u0027,\n          \u0027component\u0027: \u0027Dummy\u003eComponent\u0027,\n      },\n      \u0027dummydir2\u0027: {\n          \u0027team\u0027: \u0027other-dummy-team@chromium.org\u0027,\n          \u0027component\u0027: \u0027Components\u003eComponent2\u0027,\n      },\n      \u0027dummydir1/innerdir1\u0027: {\n          \u0027team\u0027: \u0027dummy-specialist-team@chromium.org\u0027,\n          \u0027component\u0027: \u0027Dummy\u003eComponent\u003eSubcomponent\u0027\n      }\n    }\n    saved_output \u003d StringIO()\n    with mock.patch(\u0027sys.stdout\u0027, saved_output):\n      error_code \u003d extract_components.main([\u0027%prog\u0027, \u0027src\u0027])\n    self.assertEqual(0, error_code)\n    result_minus_readme \u003d json.loads(saved_output.getvalue())\n    del result_minus_readme[\u0027AAA-README\u0027]\n    self.assertEqual(result_minus_readme, {\n        \u0027component-to-team\u0027: {\n            \u0027Components\u003eComponent2\u0027: \u0027other-dummy-team@chromium.org\u0027,\n            \u0027Dummy\u003eComponent\u0027: \u0027dummy-team@chromium.org\u0027,\n            \u0027Dummy\u003eComponent\u003eSubcomponent\u0027: \u0027dummy-specialist-team@chromium.org\u0027\n        },\n        \u0027dir-to-component\u0027: {\n            \u0027dummydir1\u0027: \u0027Dummy\u003eComponent\u0027,\n            \u0027dummydir1/innerdir1\u0027:\n                \u0027Dummy\u003eComponent\u003eSubcomponent\u0027,\n            \u0027dummydir2\u0027: \u0027Components\u003eComponent2\u0027\n        }\n    })",
+      "range": {
+        "startLine": 27,
+        "startChar": 63,
+        "endLine": 41,
+        "endChar": 3
+      },
+      "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64dd4375_f29ae3b5",
+        "filename": "tools/checkteamtags/extract_components_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-06-06T09:14:57Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "range": {
+        "startLine": 62,
+        "startChar": 63,
+        "endLine": 77,
+        "endChar": 3
+      },
+      "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33403b62_5df1733c",
         "filename": "tools/checkteamtags/owners_file_tags.py",
         "patchSetId": 4
@@ -18,6 +64,29 @@
         "startChar": 33,
         "endLine": 44,
         "endChar": 51
+      },
+      "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "378d2df1_0c1231e7",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-06-06T09:14:57Z",
+      "side": 1,
+      "message": "team, component and os",
+      "range": {
+        "startLine": 44,
+        "startChar": 56,
+        "endLine": 44,
+        "endChar": 74
       },
       "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -65,6 +134,70 @@
         "endLine": 104,
         "endChar": 76
       },
+      "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc19a526_5f417cb8",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-06-06T09:14:57Z",
+      "side": 1,
+      "message": "The dir-to-team mapping was only present in in component_map_subdirs.json which will not be generated anymore according to the doc. Since the same routine was used for generating both component_map.json and component_map_subdirs.json, this comment is to remind to remove this code as it won\u0027t be necessary for generating component_map.json.",
+      "parentUuid": "40cbc7c8_a78442d5",
+      "range": {
+        "startLine": 103,
+        "startChar": 23,
+        "endLine": 104,
+        "endChar": 76
+      },
+      "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba754f97_a1054359",
+        "filename": "tools/checkteamtags/owners_file_tags_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-06-06T09:14:57Z",
+      "side": 1,
+      "message": "nit: ditto (here and below)",
+      "range": {
+        "startLine": 62,
+        "startChar": 18,
+        "endLine": 73,
+        "endChar": 3
+      },
+      "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a659ffa_80c21324",
+        "filename": "tools/checkteamtags/owners_file_tags_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-06-06T09:14:57Z",
+      "side": 1,
+      "message": "This should inherit component, shouldn\u0027t it? If so, then innerdir2 should also inherit team and innerdir3 should inherit both.",
       "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

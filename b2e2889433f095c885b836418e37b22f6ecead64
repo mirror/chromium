@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "be0addf0_d24489d7",
+        "filename": "tools/checkteamtags/extract_components_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-06-06T09:14:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b32ea1e9_c9b14a3b",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 54
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec67520a_3712f1e6",
         "filename": "tools/checkteamtags/owners_file_tags.py",
         "patchSetId": 2
@@ -178,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "932b30b0_f8614403",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-06-06T09:14:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d2f868c7_dea7d92f",
+      "range": {
+        "startLine": 78,
+        "startChar": 17,
+        "endLine": 78,
+        "endChar": 51
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f134bf9_17a32cd9",
         "filename": "tools/checkteamtags/owners_file_tags.py",
         "patchSetId": 2
@@ -213,6 +261,30 @@
       "side": 1,
       "message": "os is the name of the library imported in line 5, this is to avoid overriding that name.",
       "parentUuid": "7f134bf9_17a32cd9",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 7
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ca4c1a_64580d23",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-06-06T09:14:57Z",
+      "side": 1,
+      "message": "Ah, I see. Please use something like os_tag or operating_system, but not _os, because it\u0027s confusing to the reader.",
+      "parentUuid": "72917b9d_fbc2cb99",
       "range": {
         "startLine": 83,
         "startChar": 4,
