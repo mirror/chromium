@@ -79,6 +79,7 @@
 #include "components/offline_pages/core/background/request_coordinator.h"
 #include "components/offline_pages/core/offline_page_feature.h"
 #include "components/offline_pages/core/offline_page_model.h"
+#include "components/offline_pages/core/prefetch/prefetch_service.h"
 #include "components/offline_pages/core/prefetch/suggested_articles_observer.h"
 #include "components/offline_pages/core/recent_tabs/recent_tabs_ui_adapter_delegate.h"
 #endif
@@ -357,9 +358,14 @@ KeyedService* ContentSuggestionsServiceFactory::BuildServiceInstanceFor(
                               pref_service);
   }
 
-  offline_pages::PrefetchService* prefetch_service =
-      offline_pages::PrefetchServiceFactory::GetForBrowserContext(profile);
-  prefetch_service->ObserveContentSuggestionsService(service);
+  if (offline_pages::IsPrefetchingOfflinePagesEnabled()) {
+    offline_pages::PrefetchService* prefetch_service =
+        offline_pages::PrefetchServiceFactory::GetForBrowserContext(profile);
+    offline_pages::SuggestedArticlesObserver* observer =
+        prefetch_service->GetSuggestedArticlesObserver();
+    observer->SetContentSuggestionsService(service);
+    service->AddObserver(observer);
+  }
 #endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
 
 #if defined(OS_ANDROID)
