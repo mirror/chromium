@@ -22,6 +22,30 @@
       "revId": "152e482029c32f71275fcb2f8786ebe928dad1a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe59c6c3_94658342",
+        "filename": "chrome/browser/media/webrtc/desktop_media_picker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-06-06T21:42:38Z",
+      "side": 1,
+      "message": "Yes I once considered your suggestion too.\npros: this interface, picker-\u003eShow(), will be simpler\ncons: the implementation will be more complicated(more files will be involved). And logic will be more complicated, to MediaList related especially.\n\nMy proposal\npros: the implementation is simpler, not logic changing.  \ncons: this interface, picker-\u003eShow(), is more complex.\n\nSo finally I chose to make current cl which is overall simpler. Anyway, I don\u0027t have strong opinion on these two solutions.\nCould you please think about it for a second time and help to make a call? :)",
+      "parentUuid": "58aa8605_960d54bd",
+      "range": {
+        "startLine": 45,
+        "startChar": 56,
+        "endLine": 45,
+        "endChar": 68
+      },
+      "revId": "152e482029c32f71275fcb2f8786ebe928dad1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
