@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f644fb5e_a13965ad",
+        "filename": "services/quota/public/interfaces/quota.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-06T23:16:27Z",
+      "side": 1,
+      "message": "Ken is working on improving how we associate pipes to script contexts but for now the answer is that |render_frame_id| is unnecessary and we can vend connections to this service that are associated with a RenderFrameHost or one where that pointer is null which would correspond to a WorkerNavigator. When the RenderFrameHost pointer is available we should check (and mojo::ReportBadMessage) if |origin_url| is equal to RenderFrameHost::GetLastCommittedURL().",
+      "parentUuid": "46594b76_87f641f6",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 16
+      },
+      "revId": "cf10c2ad06c26a26d3bc18ab3dc3ae6b07f44191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "139abf7e_0d34ee2d",
         "filename": "services/quota/public/interfaces/quota.mojom",
         "patchSetId": 1
