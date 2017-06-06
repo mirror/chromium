@@ -162,8 +162,6 @@ void HTMLFrameOwnerElement::DisposeFrameOrPluginSoon(
     FrameOrPlugin* frame_or_plugin) {
   if (g_plugin_dispose_suspend_count && frame_or_plugin->IsPluginView())
     PluginsPendingDispose().insert(ToPluginView(frame_or_plugin));
-  else
-    frame_or_plugin->Dispose();
 }
 
 void HTMLFrameOwnerElement::UpdateContainerPolicy() {
