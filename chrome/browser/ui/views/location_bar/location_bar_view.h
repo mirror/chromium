@@ -403,7 +403,7 @@ class LocationBarView : public LocationBar,
   // The icon for Translate.
   TranslateIconView* translate_icon_view_ = nullptr;
 
-  // The star.
+  // The star for bookmarking.
   StarView* star_view_ = nullptr;
 
   // An [x] that appears in touch mode (when the OSK is visible) and allows the
