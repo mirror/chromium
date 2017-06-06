@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "5141a834_6cec0702",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-06T20:47:21Z",
+      "side": 1,
+      "message": "Renamed to Media.RebuffersCount.",
+      "parentUuid": "a45bed1a_e282e190",
+      "range": {
+        "startLine": 370,
+        "startChar": 7,
+        "endLine": 370,
+        "endChar": 45
+      },
+      "revId": "bd1e0107f8a3fa2a75a5c0b764c8bb26a3578921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f208f400_e9b99c29",
         "filename": "content/browser/media/media_internals.cc",
         "patchSetId": 3
@@ -107,6 +131,54 @@
       "writtenOn": "2017-06-05T22:00:32Z",
       "side": 1,
       "message": "Please use base::UmaHistogramBoolean",
+      "range": {
+        "startLine": 372,
+        "startChar": 0,
+        "endLine": 374,
+        "endChar": 41
+      },
+      "revId": "bd1e0107f8a3fa2a75a5c0b764c8bb26a3578921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43cd48d6_3ef9ce06",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-06T20:47:21Z",
+      "side": 1,
+      "message": "Resolved by just recording the count.",
+      "parentUuid": "f208f400_e9b99c29",
+      "range": {
+        "startLine": 374,
+        "startChar": 21,
+        "endLine": 374,
+        "endChar": 39
+      },
+      "revId": "bd1e0107f8a3fa2a75a5c0b764c8bb26a3578921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9415c7f6_6e17a4f8",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-06T20:47:21Z",
+      "side": 1,
+      "message": "Fixed here and elsewhere. Didn\u0027t know about these functions, thanks!",
+      "parentUuid": "3e859b8e_a492857b",
       "range": {
         "startLine": 372,
         "startChar": 0,
@@ -201,6 +273,30 @@
       "writtenOn": "2017-06-05T22:00:32Z",
       "side": 1,
       "message": "nit: I\u0027d suggest something like \"Had Rebuffers\" here.",
+      "range": {
+        "startLine": 30893,
+        "startChar": 24,
+        "endLine": 30893,
+        "endChar": 33
+      },
+      "revId": "bd1e0107f8a3fa2a75a5c0b764c8bb26a3578921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa07fe7_c1b90d5b",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 30893,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-06T20:47:21Z",
+      "side": 1,
+      "message": "Deleted.",
+      "parentUuid": "b5ed0a98_bb314a75",
       "range": {
         "startLine": 30893,
         "startChar": 24,
