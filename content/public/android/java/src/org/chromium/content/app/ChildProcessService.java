@@ -8,7 +8,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content.browser.ChildProcessLauncher;
 
 /**
@@ -21,15 +20,15 @@ import org.chromium.content.browser.ChildProcessLauncher;
  *              android:process=":[non]sandboxed_processX" />
  * for X in 0...N-1 (where N is {@link ChildProcessLauncher#MAX_REGISTERED_SERVICES})
  */
-@JNINamespace("content")
-public class ChildProcessService extends Service {
-    private final ChildProcessServiceImpl mChildProcessServiceImpl = new ChildProcessServiceImpl();
+public abstract class ChildProcessService extends Service {
+    private ChildProcessServiceImpl mChildProcessServiceImpl;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mChildProcessServiceImpl.create(getApplicationContext(),
-                getApplicationContext());
+        assert mChildProcessServiceImpl == null;
+        mChildProcessServiceImpl = new ChildProcessServiceImpl(createDelegate());
+        mChildProcessServiceImpl.create(getApplicationContext(), getApplicationContext());
     }
 
     @Override
@@ -47,4 +46,6 @@ public class ChildProcessService extends Service {
         stopSelf();
         return mChildProcessServiceImpl.bind(intent, -1);
     }
+
+    protected abstract ChildProcessServiceDelegate createDelegate();
 }
