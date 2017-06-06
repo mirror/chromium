@@ -68,6 +68,8 @@ class MOJO_CPP_BINDINGS_EXPORT BindingStateBase {
     return router_->handle();
   }
 
+  ReportBadMessageCallback GetBadMessageCallback();
+
   void FlushForTesting();
 
   void EnableTestingMode();

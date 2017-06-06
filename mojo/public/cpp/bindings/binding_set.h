@@ -150,11 +150,55 @@ class BindingSetBase {
     return *dispatch_context_;
   }
 
+  // Implementations may call this when processing a dispatched message or
+  // error. During the extent of message or error dispatch, this will return the
+  // BindingId of the specific binding which received the message or error.
+  BindingId dispatch_binding() const {
+    static_assert(ContextTraits::SupportsContext(),
+                  "dispatch_binding() requires non-void context type.");
+    DCHECK(dispatch_context_);
+    return dispatch_binding_;
+  }
+
+  // Reports the currently dispatching Message as bad and closes the binding the
+  // message was received from. Note that this is only legal to call from
+  // directly within the stack frame of a message dispatch. If you need to do
+  // asynchronous work before you can determine the legitimacy of a message, use
+  // GetBadMessageCallback() and retain its result until you're ready to invoke
+  // or discard it.
+  void ReportBadMessage(const std::string& error) {
+    static_assert(ContextTraits::SupportsContext(),
+                  "ReportBadMessage() requires non-void context type.");
+    GetBadMessageCallback().Run(error);
+  }
+
+  // Acquires a callback which may be run to report the currently dispatching
+  // Message as bad and close the binding the message was received from. Note
+  // that this is only legal to call from directly within the stack frame of a
+  // message dispatch, but the returned callback may be called exactly once any
+  // time thereafter as long as the binding set itself hasn't been destroyed yet
+  // to report the message as bad. This may only be called once per message.
+  ReportBadMessageCallback GetBadMessageCallback() {
+    static_assert(ContextTraits::SupportsContext(),
+                  "GetBadMessageCallback() requires non-void context type.");
+    DCHECK(dispatch_context_);
+    return base::Bind(
+        [](const ReportBadMessageCallback& error_callback,
+           BindingSetBase* binding_set, BindingId binding_id,
+           const std::string& error) {
+          error_callback.Run(error);
+          binding_set->RemoveBinding(binding_id);
+        },
+        mojo::GetBadMessageCallback(), base::Unretained(this),
+        dispatch_binding());
+  }
+
   void FlushForTesting() {
     DCHECK(!is_flushing_);
     is_flushing_ = true;
     for (auto& binding : bindings_)
-      binding.second->FlushForTesting();
+      if (binding.second)
+        binding.second->FlushForTesting();
     is_flushing_ = false;
     // Clean up any bindings that were destroyed.
     for (auto it = bindings_.begin(); it != bindings_.end();) {
@@ -207,7 +251,7 @@ class BindingSetBase {
 
     void WillDispatch() {
       DCHECK(ContextTraits::SupportsContext());
-      binding_set_->SetDispatchContext(&context_);
+      binding_set_->SetDispatchContext(&context_, binding_id_);
     }
 
     void OnConnectionError(uint32_t custom_reason,
@@ -225,9 +269,10 @@ class BindingSetBase {
     DISALLOW_COPY_AND_ASSIGN(Entry);
   };
 
-  void SetDispatchContext(const Context* context) {
+  void SetDispatchContext(const Context* context, BindingId binding_id) {
     DCHECK(ContextTraits::SupportsContext());
     dispatch_context_ = context;
+    dispatch_binding_ = binding_id;
     if (!pre_dispatch_handler_.is_null())
       pre_dispatch_handler_.Run(*context);
   }
@@ -267,6 +312,7 @@ class BindingSetBase {
   std::map<BindingId, std::unique_ptr<Entry>> bindings_;
   bool is_flushing_ = false;
   const Context* dispatch_context_ = nullptr;
+  BindingId dispatch_binding_;
 
   DISALLOW_COPY_AND_ASSIGN(BindingSetBase);
 };

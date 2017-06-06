@@ -51,6 +51,16 @@ void BindingStateBase::CloseWithReason(uint32_t custom_reason,
   Close();
 }
 
+ReportBadMessageCallback BindingStateBase::GetBadMessageCallback() {
+  return base::Bind(
+      [](const ReportBadMessageCallback& inner_callback,
+         BindingStateBase* binding, const std::string& error) {
+        inner_callback.Run(error);
+        binding->Close();
+      },
+      mojo::GetBadMessageCallback(), base::Unretained(this));
+}
+
 void BindingStateBase::FlushForTesting() {
   endpoint_client_->FlushForTesting();
 }
