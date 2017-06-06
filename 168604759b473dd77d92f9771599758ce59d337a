@@ -16,6 +16,24 @@
       "revId": "168604759b473dd77d92f9771599758ce59d337a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ecd144e_6cdc2991",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DOMDebuggerModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-06T20:33:51Z",
+      "side": 1,
+      "message": "The line is short so it\u0027s pretty clear.",
+      "parentUuid": "3046a5da_7207f578",
+      "revId": "168604759b473dd77d92f9771599758ce59d337a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
