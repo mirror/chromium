@@ -16,6 +16,24 @@
       "revId": "f48930ff844972e93f9a30e774a182bdf594abf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6feb2d7f_db5a05d7",
+        "filename": "third_party/brotli/README.chromium",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115908
+      },
+      "writtenOn": "2017-06-06T08:30:04Z",
+      "side": 1,
+      "message": "Surely.",
+      "parentUuid": "9fd44118_68df996a",
+      "revId": "f48930ff844972e93f9a30e774a182bdf594abf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
