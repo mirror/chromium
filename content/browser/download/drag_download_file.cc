@@ -77,8 +77,26 @@ class DragDownloadFile::DragDownloadFileUI : public DownloadItem::Observer {
                                     weak_ptr_factory_.GetWeakPtr()));
     params->set_file_path(file_path);
     params->set_file(std::move(file));  // Nulls file.
+    net::NetworkTrafficAnnotationTag traffic_annotation =
+        net::DefineNetworkTrafficAnnotation("drag_download_file", R"(
+        semantics {
+          sender: "Drag To Download"
+          description:
+            "Users can download files by dragging them out of browser and unto "
+            "a disk related area."
+          trigger:
+            "When user drags a file from the browser."
+          data:
+            "URL of the requested file."
+          destination: WEBSITE
+        }
+        policy {
+          cookies_allowed: true
+          cookies_store: "user"
+          setting: "This feature cannot be disabled."
+        })");
     BrowserContext::GetDownloadManager(web_contents_->GetBrowserContext())
-        ->DownloadUrl(std::move(params), NO_TRAFFIC_ANNOTATION_YET);
+        ->DownloadUrl(std::move(params), traffic_annotation);
   }
 
   void Cancel() {

@@ -38,9 +38,27 @@ CreateUrlDownloader(std::unique_ptr<DownloadUrlParameters> params,
 
   // Build the URLRequest, BlobDataHandle is hold in original request for image
   // download.
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("download_worker", R"(
+        semantics {
+          sender: "Download Worker"
+          description:
+            "Chrome makes parallel request to speed up download of a file. "
+            "This network request is made by the parallel threads."
+          trigger:
+            "Starting a parallel download request."
+          data:
+            "URL of the requested file."
+          destination: WEBSITE
+        }
+        policy {
+          cookies_allowed: true
+          cookies_store: user"
+          setting: "This feature cannot be disabled."
+        })");
   std::unique_ptr<net::URLRequest> url_request =
       DownloadRequestCore::CreateRequestOnIOThread(
-          DownloadItem::kInvalidId, params.get(), NO_TRAFFIC_ANNOTATION_YET);
+          DownloadItem::kInvalidId, params.get(), traffic_annotation);
 
   return std::unique_ptr<UrlDownloader, BrowserThread::DeleteOnIOThread>(
       UrlDownloader::BeginDownload(delegate, std::move(url_request),
