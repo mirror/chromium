@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f57050e6_be153fa4",
+        "filename": "ui/views/controls/menu/menu_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2526,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-06T00:10:23Z",
+      "side": 1,
+      "message": "optional nit: \"Reset the\" (to match comment below)",
+      "range": {
+        "startLine": 2526,
+        "startChar": 11,
+        "endLine": 2526,
+        "endChar": 18
+      },
+      "revId": "cca11dc6a0c2da5c6085d3de2c5a009bb1bb10e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb777b2_0124d79f",
+        "filename": "ui/views/controls/menu/menu_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2537,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-06T00:10:23Z",
+      "side": 1,
+      "message": "optional nit: \"active mouse view\" (replace underscores with spaces) (to match comment above)",
+      "revId": "cca11dc6a0c2da5c6085d3de2c5a009bb1bb10e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a1a63ca_29ffad7d",
+        "filename": "ui/views/view_tracker_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-06T00:10:23Z",
+      "side": 1,
+      "message": "EXPECT_EQ(view, tracker.view()); after SetView",
+      "revId": "cca11dc6a0c2da5c6085d3de2c5a009bb1bb10e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
