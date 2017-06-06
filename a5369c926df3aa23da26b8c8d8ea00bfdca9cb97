@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2deed359_8c030de8",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-06T21:59:21Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s ugly. I copied this from the posix libevent implementation.\n\nWhat it\u0027s trying to handle is that the callback can destroy the controller, so this bool is to handle the case where the \"can write\" callback destroys the controller so it\u0027s not save to call the can read callback. I added a comment to the header and updated this one a bit.",
+      "parentUuid": "09811066_9fb2e3cc",
+      "range": {
+        "startLine": 132,
+        "startChar": 8,
+        "endLine": 132,
+        "endChar": 74
+      },
+      "revId": "a5369c926df3aa23da26b8c8d8ea00bfdca9cb97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8996c2ad_02434c4c",
         "filename": "base/message_loop/message_pump_fuchsia.cc",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-06T21:46:05Z",
       "side": 1,
       "message": "Out of curiosity, why CHECK() here and elsewhere? Is this \"just in case\" the underlying SDK changes?",
+      "range": {
+        "startLine": 147,
+        "startChar": 6,
+        "endLine": 147,
+        "endChar": 11
+      },
+      "revId": "a5369c926df3aa23da26b8c8d8ea00bfdca9cb97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f63f855_394be127",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-06T21:59:21Z",
+      "side": 1,
+      "message": "Those were probably a bit aggressive. I changed all to DCHECK or error check and DLOG(ERROR) and error return, except for the initial port creation in the constructor, as not much useful can happen if that fails.",
+      "parentUuid": "8996c2ad_02434c4c",
       "range": {
         "startLine": 147,
         "startChar": 6,
@@ -68,6 +116,30 @@
       "revId": "a5369c926df3aa23da26b8c8d8ea00bfdca9cb97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52eca909_9a80d9e9",
+        "filename": "base/message_loop/message_pump_fuchsia.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-06T21:59:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "582249e9_764e8b16",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 35
+      },
+      "revId": "a5369c926df3aa23da26b8c8d8ea00bfdca9cb97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
