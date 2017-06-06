@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41ec68f1_da8ea759",
+        "filename": "components/content_settings/core/browser/content_settings_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-06T22:19:06Z",
+      "side": 1,
+      "message": "The previous content setting created two pref dictionaries:\n\nprofile.content_settings.exceptions.subresource_filter\nprofile.default_content_setting_values.subresource_filter\n\n(see https://cs.chromium.org/chromium/src/components/content_settings/core/browser/website_settings_info.cc?l\u003d20 )\n\nAt the very least you should delete the old exceptions dictionary (as it contains traces of browsing history which can now no longer be deleted from the UI), but AFAIU this code is already exposed in stable, so you should also provide a migration path.\n\nI recommend adding a migration code that checks whether an old dictionary exists and the new one doesn\u0027t, and renames it. Added for 2-3 milestones to ContentSettingsPref and DefaultProvider.\n\nAnd the same for the default setting.\n\n...or you can leave this name as is :)",
+      "range": {
+        "startLine": 277,
+        "startChar": 39,
+        "endLine": 277,
+        "endChar": 42
+      },
+      "revId": "496d0bcc0c827c6ada4812381dfc7c9825650b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
