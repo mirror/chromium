@@ -48,6 +48,10 @@ namespace user_prefs {
 class PrefRegistrySyncable;
 }
 
+namespace service_manager {
+class Connector;
+}
+
 // Instead of adding more members to Profile, consider creating a
 // KeyedService. See
 // http://dev.chromium.org/developers/design-documents/profile-architecture
@@ -190,6 +194,11 @@ class Profile : public content::BrowserContext {
   // for OffTheRecord Profiles.  This PrefService is lazily created the first
   // time that this method is called.
   virtual PrefService* GetOffTheRecordPrefs() = 0;
+
+  // Similar to above, but used to initially construct the |PrefService| that's
+  // returned by the above method if the Mojo pref service is used.
+  virtual PrefService* CreateOffTheRecordPrefs(
+      service_manager::Connector* otr_connector);
 
   // Returns the main request context.
   virtual net::URLRequestContextGetter* GetRequestContext() = 0;
