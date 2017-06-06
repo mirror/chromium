@@ -34,6 +34,24 @@
       "revId": "0b37df8779580ddf3ae3fc02ccb550c25d206efb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a1a038_f0a80011",
+        "filename": "third_party/WebKit/Source/core/html/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-06T14:44:28Z",
+      "side": 1,
+      "message": "I haven\u0027t yet looked at the CL, but note that there\u0027s precedent for this:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/payments/PaymentAddress.h?q\u003dPaymentAddress.h+package:%5Echromium$\u0026dr\u003dCSs\u0026l\u003d9\n\nIt would be worth tracking down the introduction of that dependency to find out what discussions were had around it. I agree with Kentaro that this is dicey territory (although note that //components isn\u0027t a monolithic target, so we\u0027re not *inherently* creating a cycle). Either we should document the conditions under which this is allowed, or we should fix the existing case in the codebase.",
+      "parentUuid": "daaf4541_97182130",
+      "revId": "0b37df8779580ddf3ae3fc02ccb550c25d206efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
