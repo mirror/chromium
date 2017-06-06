@@ -22,6 +22,30 @@
       "revId": "b2ac6e6a06b2662472c5f5f2a74352dee6f3885e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "606d7c69_23df1eed",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-06T01:44:26Z",
+      "side": 1,
+      "message": "I like AttachToLayout/DetachFromLayout names.  I can do that in another CL.\n\nIt does not help for Document::Shutdown to call Detach since this will still end up calling through to the invalid state (see CL description) since the call is not being deferred.  As it is, I am actually changing the code in Dispose (setting is_attached_ \u003d false) so that it doesn\u0027t end up flowing through to call Detach.\n\nThe code cannot be moved entirely from Detach to Dispose since Detach still needs to remove the ScrollableArea from parent in the case where frame is hidden (display:none) but not disposed.\n\nIt looks like I can make the code a little shorter and arguably easier to read by unconditionally calling UpdateParentScrollableAreaSet, then setting is_attached_ \u003d false.",
+      "parentUuid": "03ad522b_3e9536ec",
+      "range": {
+        "startLine": 386,
+        "startChar": 67,
+        "endLine": 386,
+        "endChar": 73
+      },
+      "revId": "b2ac6e6a06b2662472c5f5f2a74352dee6f3885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

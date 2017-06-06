@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "57da3cc1_d702712a",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-06T01:44:26Z",
+      "side": 1,
+      "message": "I prefer to keep plugin on HTMLFrameOwnerElement to ensure that Document::Shutdown is a catch-all to dispose of plugins.",
+      "parentUuid": "c3e7e2e3_ed920452",
+      "range": {
+        "startLine": 161,
+        "startChar": 28,
+        "endLine": 161,
+        "endChar": 52
+      },
+      "revId": "750095b1db610b89bd8dbe7f335df20d17debad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6b3747c_c5b19c5e",
         "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
         "patchSetId": 15
@@ -120,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "0224e769_e30b8824",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-06T01:44:26Z",
+      "side": 1,
+      "message": "Yes, Document::Shutdown calls View().Dispose(), and then in addition, it also calls SetWidget(nullptr).  Although I don\u0027t yet fully understand how it can happen, I believe that both calls to Dispose are important since document-\u003eView() may be different to owner-\u003eWidget().",
+      "parentUuid": "e0e73f33_1b6e150a",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 31
+      },
+      "revId": "750095b1db610b89bd8dbe7f335df20d17debad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "997e07f7_3ba14b91",
         "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
         "patchSetId": 15
@@ -167,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "25e5f729_6589cd99",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-06T01:44:26Z",
+      "side": 1,
+      "message": "Marked resolved",
+      "parentUuid": "8a23cdd4_352aade7",
+      "range": {
+        "startLine": 226,
+        "startChar": 8,
+        "endLine": 226,
+        "endChar": 29
+      },
+      "revId": "750095b1db610b89bd8dbe7f335df20d17debad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c8967bb_dc3776f3",
         "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
         "patchSetId": 15
@@ -211,6 +283,30 @@
       "revId": "750095b1db610b89bd8dbe7f335df20d17debad0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a2152b9_9168bb6a",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-06T01:44:26Z",
+      "side": 1,
+      "message": "I did make the change to put plugins on HTMLPlugInElement, but I\u0027ve put it back, and I think overall it is best to stay on HTMLFrameOwnerElement.",
+      "parentUuid": "8c4af9aa_afecedc8",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 256,
+        "endChar": 22
+      },
+      "revId": "750095b1db610b89bd8dbe7f335df20d17debad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
