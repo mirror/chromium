@@ -34,6 +34,24 @@
       "revId": "122701bf91ab1f0d0271cf01974ab16a7e598b5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfd2cf86_281d85af",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-06T21:06:38Z",
+      "side": 1,
+      "message": "Does it seem reasonable to use .trigger here instead of .observed?\n\nI was just debugging the (tersely named) MessageLoopForIOOnOtherThread/FileDescriptorWatcherTest.DeleteControllerAfterFileDescriptorReadable/0\n\nand what I\u0027m seeing is:\n\n- pass 1 \u003d\u003d MXIO_EVT_READABLE to __mxio_wait_begin()\n- it returns signals \u003d\u003d 5 \u003d\u003d __MX_OBJECT_READABLE | __MX_OBJECT_PEER_CLOSED (I think)\n- then calling mx_object_wait_async() with those signals\n- when mx_port_wait() returns, packet.signal.observed is \n\n\u003e\u003e\u003e hex(4194307)\n\u00270x400003\u0027\n\u003e\u003e\u003e bin(4194307)\n\u00270b10000000000000000000011\u0027\n\nwhich I think is READABLE | WRITABLE | LAST_HANDLE.\n\nWhen decoded back into events by __mxio_wait_end(), that causes OnFileCanWriteWithoutBlocking() to be unexpectedly called in tests.",
+      "parentUuid": "1a41aa94_a6b7e860",
+      "revId": "122701bf91ab1f0d0271cf01974ab16a7e598b5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
