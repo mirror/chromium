@@ -1547,9 +1547,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
   bool WillChangeScrollPosition() const {
     return rare_non_inherited_data_->will_change_data_->scroll_position_;
   }
-  bool SubtreeWillChangeContents() const {
-    return SubtreeWillChangeContentsInternal();
-  }
   void SetWillChangeProperties(const Vector<CSSPropertyID>& properties) {
     SET_NESTED_VAR(rare_non_inherited_data_, will_change_data_, properties_,
                    properties);
@@ -1560,9 +1557,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase<ComputedStyle>,
   void SetWillChangeScrollPosition(bool b) {
     SET_NESTED_VAR(rare_non_inherited_data_, will_change_data_,
                    scroll_position_, b);
-  }
-  void SetSubtreeWillChangeContents(bool b) {
-    SetSubtreeWillChangeContentsInternal(b);
   }
 
   // z-index
