@@ -195,6 +195,7 @@ if (!is_android && !is_mac) {
         "//breakpad:breakpad_sender",
         "//chrome/app/version_assembly:chrome_exe_manifest",
         "//chrome/browser:chrome_process_finder",
+        "//chrome/browser:did_run_util",
         "//chrome/chrome_watcher",
         "//chrome/chrome_watcher:client",
         "//chrome/common:constants",
@@ -214,6 +215,10 @@ if (!is_android && !is_mac) {
       data_deps = [
         "//chrome/app/version_assembly:version_assembly_manifest",
       ]
+
+      if (!is_chrome_branded) {
+        deps -= [ "//chrome/browser:did_run_util" ]
+      }
 
       if (win_console_app) {
         defines += [ "WIN_CONSOLE_APP" ]
