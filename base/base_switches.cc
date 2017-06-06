@@ -53,6 +53,14 @@ const char kDisableLowEndDeviceMode[]       = "disable-low-end-device-mode";
 // FieldTrialList::CreateTrialsFromString() in field_trial.h for details.
 const char kForceFieldTrials[]              = "force-fieldtrials";
 
+// Uses global memory dumps and ownership edges created for base::SharedMemory
+// by SharedMemoryTracker instead of each client creating it's own global dump
+// edges. This makes tracing memory-infra dumps enable to show
+// base::SharedMemory usages. This feature is implemented behind flag until
+// base::SharedMemory's GUID works regarding Mojo (crbug/713763).
+const char kMemoryInfraUsesSharedMemoryOwnershipEdges[] =
+    "memory-infra-uses-shared-memory-ownership-edges";
+
 // Suppresses all error dialogs when present.
 const char kNoErrorDialogs[]                = "noerrdialogs";
 
