@@ -34,14 +34,14 @@ const StylePropertyShorthand& {{property.lower_camel_name}}Shorthand() {
     {{longhand_id}},
     {% endfor %}
   };
-  DEFINE_STATIC_LOCAL(StylePropertyShorthand, {{property.lower_camel_name}}Longhands, ({{property_id}}, {{property.lower_camel_name}}Properties, WTF_ARRAY_LENGTH({{property.lower_camel_name}}Properties)));
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(StylePropertyShorthand, {{property.lower_camel_name}}Longhands, ({{property_id}}, {{property.lower_camel_name}}Properties, WTF_ARRAY_LENGTH({{property.lower_camel_name}}Properties)));
   return {{property.lower_camel_name}}Longhands;
 }
 {% endfor %}
 
 // Returns an empty list if the property is not a shorthand
 const StylePropertyShorthand& shorthandForProperty(CSSPropertyID propertyID) {
-  DEFINE_STATIC_LOCAL(StylePropertyShorthand, emptyShorthand, ());
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(StylePropertyShorthand, emptyShorthand, ());
   if (propertyID == CSSPropertyTextDecoration &&
       !RuntimeEnabledFeatures::CSS3TextDecorationsEnabled())
     return emptyShorthand;
