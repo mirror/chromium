@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6cd1f77_2efc2202",
+        "filename": "mojo/edk/system/ports/node.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-06T23:56:14Z",
+      "side": 1,
+      "message": "Nit: typo retrainsmit",
+      "range": {
+        "startLine": 576,
+        "startChar": 7,
+        "endLine": 576,
+        "endChar": 18
+      },
+      "revId": "bfb14e5c2bbf91296f2fa888127cf57b6112bf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
