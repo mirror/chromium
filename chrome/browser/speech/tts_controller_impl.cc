@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 
+#include "base/metrics/histogram_macros.h"
+#include "base/metrics/user_metrics.h"
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
@@ -26,6 +28,26 @@ std::string TrimLanguageCode(const std::string& lang) {
   else
     return lang;
 }
+
+// IMPORTANT!
+// These values are written to logs.  Do not renumber or delete
+// existing items; add new entries to the end of the list.
+enum {
+  UMA_TTS_EVENT_START = 0,
+  UMA_TTS_EVENT_END = 1,
+  UMA_TTS_EVENT_WORD = 2,
+  UMA_TTS_EVENT_SENTENCE = 3,
+  UMA_TTS_EVENT_MARKER = 4,
+  UMA_TTS_EVENT_INTERRUPTED = 5,
+  UMA_TTS_EVENT_CANCELLED = 6,
+  UMA_TTS_EVENT_ERROR = 7,
+  UMA_TTS_EVENT_PAUSE = 8,
+  UMA_TTS_EVENT_RESUME = 9,
+
+  // This must always be the last enum. It's okay for its value to
+  // increase, but none of the other enum values may change.
+  UMA_TTS_EVENT_MAX
+};
 
 }  // namespace
 
@@ -177,6 +199,25 @@ void TtsControllerImpl::SpeakNow(Utterance* utterance) {
 
   GetPlatformImpl()->WillSpeakUtteranceWithVoice(utterance, voice);
 
+  base::RecordAction(base::UserMetricsAction("TextToSpeech.Speak"));
+  UMA_HISTOGRAM_COUNTS_100000("TextToSpeech.Utterance.TextLength",
+                              utterance->text().size());
+  UMA_HISTOGRAM_BOOLEAN("TextToSpeech.Utterance.FromExtensionAPI",
+                        !utterance->src_url().is_empty());
+  UMA_HISTOGRAM_BOOLEAN("TextToSpeech.Utterance.HasVoiceName",
+                        !utterance->voice_name().empty());
+  UMA_HISTOGRAM_BOOLEAN("TextToSpeech.Utterance.HasLang",
+                        !utterance->lang().empty());
+  UMA_HISTOGRAM_BOOLEAN("TextToSpeech.Utterance.HasGender",
+                        utterance->gender() != TTS_GENDER_NONE);
+  UMA_HISTOGRAM_BOOLEAN("TextToSpeech.Utterance.HasRate",
+                        utterance->continuous_parameters().rate != 1.0);
+  UMA_HISTOGRAM_BOOLEAN("TextToSpeech.Utterance.HasPitch",
+                        utterance->continuous_parameters().pitch != 1.0);
+  UMA_HISTOGRAM_BOOLEAN("TextToSpeech.Utterance.HasVolume",
+                        utterance->continuous_parameters().volume != 1.0);
+  UMA_HISTOGRAM_BOOLEAN("TextToSpeech.Utterance.Native", voice.native);
+
   if (!voice.native) {
 #if !defined(OS_ANDROID)
     DCHECK(!voice.extension_id.empty());
@@ -224,6 +265,8 @@ void TtsControllerImpl::SpeakNow(Utterance* utterance) {
 }
 
 void TtsControllerImpl::Stop() {
+  base::RecordAction(base::UserMetricsAction("TextToSpeech.Stop"));
+
   paused_ = false;
   if (current_utterance_ && !current_utterance_->extension_id().empty()) {
     if (tts_engine_delegate_)
@@ -241,6 +284,8 @@ void TtsControllerImpl::Stop() {
 }
 
 void TtsControllerImpl::Pause() {
+  base::RecordAction(base::UserMetricsAction("TextToSpeech.Pause"));
+
   paused_ = true;
   if (current_utterance_ && !current_utterance_->extension_id().empty()) {
     if (tts_engine_delegate_)
@@ -252,6 +297,8 @@ void TtsControllerImpl::Pause() {
 }
 
 void TtsControllerImpl::Resume() {
+  base::RecordAction(base::UserMetricsAction("TextToSpeech.Resume"));
+
   paused_ = false;
   if (current_utterance_ && !current_utterance_->extension_id().empty()) {
     if (tts_engine_delegate_)
@@ -265,9 +312,9 @@ void TtsControllerImpl::Resume() {
 }
 
 void TtsControllerImpl::OnTtsEvent(int utterance_id,
-                                        TtsEventType event_type,
-                                        int char_index,
-                                        const std::string& error_message) {
+                                   TtsEventType event_type,
+                                   int char_index,
+                                   const std::string& error_message) {
   // We may sometimes receive completion callbacks "late", after we've
   // already finished the utterance (for example because another utterance
   // interrupted or we got a call to Stop). This is normal and we can
@@ -275,6 +322,50 @@ void TtsControllerImpl::OnTtsEvent(int utterance_id,
   if (!current_utterance_ || utterance_id != current_utterance_->id()) {
     return;
   }
+
+  switch (event_type) {
+    case TTS_EVENT_START:
+      UMA_HISTOGRAM_ENUMERATION("TextToSpeech.Event", UMA_TTS_EVENT_START,
+                                UMA_TTS_EVENT_MAX);
+      break;
+    case TTS_EVENT_END:
+      UMA_HISTOGRAM_ENUMERATION("TextToSpeech.Event", UMA_TTS_EVENT_END,
+                                UMA_TTS_EVENT_MAX);
+      break;
+    case TTS_EVENT_WORD:
+      UMA_HISTOGRAM_ENUMERATION("TextToSpeech.Event", UMA_TTS_EVENT_WORD,
+                                UMA_TTS_EVENT_MAX);
+      break;
+    case TTS_EVENT_SENTENCE:
+      UMA_HISTOGRAM_ENUMERATION("TextToSpeech.Event", UMA_TTS_EVENT_SENTENCE,
+                                UMA_TTS_EVENT_MAX);
+      break;
+    case TTS_EVENT_MARKER:
+      UMA_HISTOGRAM_ENUMERATION("TextToSpeech.Event", UMA_TTS_EVENT_MARKER,
+                                UMA_TTS_EVENT_MAX);
+      break;
+    case TTS_EVENT_INTERRUPTED:
+      UMA_HISTOGRAM_ENUMERATION("TextToSpeech.Event", UMA_TTS_EVENT_INTERRUPTED,
+                                UMA_TTS_EVENT_MAX);
+      break;
+    case TTS_EVENT_CANCELLED:
+      UMA_HISTOGRAM_ENUMERATION("TextToSpeech.Event", UMA_TTS_EVENT_CANCELLED,
+                                UMA_TTS_EVENT_MAX);
+      break;
+    case TTS_EVENT_ERROR:
+      UMA_HISTOGRAM_ENUMERATION("TextToSpeech.Event", UMA_TTS_EVENT_ERROR,
+                                UMA_TTS_EVENT_MAX);
+      break;
+    case TTS_EVENT_PAUSE:
+      UMA_HISTOGRAM_ENUMERATION("TextToSpeech.Event", UMA_TTS_EVENT_PAUSE,
+                                UMA_TTS_EVENT_MAX);
+      break;
+    case TTS_EVENT_RESUME:
+      UMA_HISTOGRAM_ENUMERATION("TextToSpeech.Event", UMA_TTS_EVENT_RESUME,
+                                UMA_TTS_EVENT_MAX);
+      break;
+  }
+
   current_utterance_->OnTtsEvent(event_type, char_index, error_message);
   if (current_utterance_->finished()) {
     FinishCurrentUtterance();
