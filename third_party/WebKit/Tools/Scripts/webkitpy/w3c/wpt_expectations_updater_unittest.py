@@ -8,6 +8,7 @@ import json
 from webkitpy.common.host_mock import MockHost
 from webkitpy.common.net.buildbot import Build
 from webkitpy.common.net.buildbot_mock import MockBuildBot
+from webkitpy.common.net.git_cl import TryJobStatus
 from webkitpy.common.net.layout_test_results import LayoutTestResult, LayoutTestResults
 from webkitpy.common.system.log_testing import LoggingTestCase
 from webkitpy.layout_tests.builder_list import BuilderList
@@ -74,6 +75,37 @@ class WPTExpectationsUpdaterTest(LoggingTestCase):
             }))
 
         return host
+
+    def test_run_single_platform_failure(self):
+        """Tests the main run method in a case where one test fails on one platform."""
+        host = self.mock_host()
+        expectations_path = host.port_factory.get().path_to_generic_test_expectations_file()
+        host.filesystem.write_text_file(expectations_path, MARKER_COMMENT + '\n')
+        host.buildbot.set_results(Build('MOCK Try Mac10.11', 333), LayoutTestResults({
+            'tests': {
+                'x': {
+                    'passing-test.html': {
+                        'expected': 'PASS',
+                        'actual': 'TEXT',
+                    },
+                },
+            },
+        }))
+        updater = WPTExpectationsUpdater(host)
+        updater.get_latest_try_jobs = lambda: {
+            Build('MOCK Try Mac10.10', 333): TryJobStatus('COMPLETE', 'FAILURE'),
+            Build('MOCK Try Mac10.11', 111): TryJobStatus('COMPLETE', 'SUCCESS'),
+            Build('MOCK Try Trusty', 222): TryJobStatus('COMPLETE', 'SUCCESS'),
+            Build('MOCK Try Precise', 333): TryJobStatus('COMPLETE', 'SUCCESS'),
+            Build('MOCK Try Win10', 444): TryJobStatus('COMPLETE', 'SUCCESS'),
+            Build('MOCK Try Win7', 555): TryJobStatus('COMPLETE', 'SUCCESS'),
+        }
+
+        self.assertEqual(0, updater.run(args=0))
+
+        self.assertEqual(
+            host.filesystem.read_text_file(expectations_path),
+            'crbug.com/626703 [ Mac10.10 ] external/wpt/x.html [ Failure ]')
 
     def test_get_failing_results_dict_only_passing_results(self):
         host = self.mock_host()
@@ -335,7 +367,6 @@ class WPTExpectationsUpdaterTest(LoggingTestCase):
 
     def test_write_to_test_expectations_with_marker_comment(self):
         host = self.mock_host()
-
         expectations_path = host.port_factory.get().path_to_generic_test_expectations_file()
         host.filesystem.write_text_file(
             expectations_path,
@@ -343,7 +374,7 @@ class WPTExpectationsUpdaterTest(LoggingTestCase):
         updater = WPTExpectationsUpdater(host)
         line_list = ['crbug.com/123 [ Trusty ] fake/file/path.html [ Pass ]']
         updater.write_to_test_expectations(line_list)
-        value = updater.host.filesystem.read_text_file(expectations_path)
+        value = host.filesystem.read_text_file(expectations_path)
         self.assertMultiLineEqual(
             value,
             (MARKER_COMMENT + '\n'
@@ -392,7 +423,7 @@ class WPTExpectationsUpdaterTest(LoggingTestCase):
             MARKER_COMMENT + '\n' + 'crbug.com/123 [ Trusty ] fake/file/path.html [ Pass ]\n')
         updater = WPTExpectationsUpdater(host)
         updater.write_to_test_expectations([])
-        value = updater.host.filesystem.read_text_file(expectations_path)
+        value = host.filesystem.read_text_file(expectations_path)
         self.assertMultiLineEqual(
             value,
             MARKER_COMMENT + '\n' + 'crbug.com/123 [ Trusty ] fake/file/path.html [ Pass ]\n')

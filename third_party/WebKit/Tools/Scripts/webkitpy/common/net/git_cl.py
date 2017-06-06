@@ -34,7 +34,6 @@ class TryJobStatus(collections.namedtuple('TryJobStatus', ('status', 'result')))
         assert result in (None, 'FAILURE', 'SUCCESS', 'CANCELED')
         return super(TryJobStatus, cls).__new__(cls, status, result)
 
-
 class GitCL(object):
 
     def __init__(self, host, auth_refresh_token_json=None, cwd=None):
