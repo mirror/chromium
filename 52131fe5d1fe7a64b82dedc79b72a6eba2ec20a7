@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d82c702f_fede13b9",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-07T18:57:54Z",
+      "side": 1,
+      "message": "nit: Forward declare TabModel here (@class TabModel) and add the imports to the implementation file.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 59
+      },
+      "revId": "52131fe5d1fe7a64b82dedc79b72a6eba2ec20a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b40eb3e_e89ebeb7",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-07T18:57:54Z",
+      "side": 1,
+      "message": "please move this property to the implementation file as it doesn\u0027t need to be exposed publicly.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 46
+      },
+      "revId": "52131fe5d1fe7a64b82dedc79b72a6eba2ec20a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65c435a4_1029ec95",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-07T18:57:54Z",
+      "side": 1,
+      "message": "why modify this?",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 1
+      },
+      "revId": "52131fe5d1fe7a64b82dedc79b72a6eba2ec20a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f626c2e_0753f311",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-07T18:57:54Z",
+      "side": 1,
+      "message": "unused.",
+      "revId": "52131fe5d1fe7a64b82dedc79b72a6eba2ec20a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6be32489_6821c8ba",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-07T18:57:54Z",
+      "side": 1,
+      "message": "nit: Only _toolbarModelIOS needs to be a member variable. _toolbarModelDelegate is used once and can be discarded if I understand correctly.",
+      "range": {
+        "startLine": 141,
+        "startChar": 43,
+        "endLine": 141,
+        "endChar": 64
+      },
+      "revId": "52131fe5d1fe7a64b82dedc79b72a6eba2ec20a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5ac270a_2788e838",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-07T18:57:54Z",
+      "side": 1,
+      "message": "Why do you need this if statement?",
+      "range": {
+        "startLine": 640,
+        "startChar": 2,
+        "endLine": 640,
+        "endChar": 68
+      },
+      "revId": "52131fe5d1fe7a64b82dedc79b72a6eba2ec20a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3fc57d_1d472d56",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-07T18:57:54Z",
+      "side": 1,
+      "message": "nit: store SecurityLevel in a variable and avoid calling this method multiple times.",
+      "range": {
+        "startLine": 642,
+        "startChar": 10,
+        "endLine": 642,
+        "endChar": 46
+      },
+      "revId": "52131fe5d1fe7a64b82dedc79b72a6eba2ec20a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
