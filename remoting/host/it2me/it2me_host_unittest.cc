@@ -265,7 +265,7 @@ void It2MeHostTest::StartHost() {
                        std::move(dialog_factory), weak_factory_.GetWeakPtr(),
                        base::WrapUnique(new FakeSignalStrategy(
                            SignalingAddress("fake_local_jid"))),
-                       kTestUserName, "fake_bot_jid");
+                       kTestUserName, "fake_bot_jid", protocol::IceConfig());
 
   base::RunLoop run_loop;
   state_change_callback_ =
