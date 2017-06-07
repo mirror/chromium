@@ -22,6 +22,30 @@
       "revId": "496d0bcc0c827c6ada4812381dfc7c9825650b67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84566bf9_39d94371",
+        "filename": "components/content_settings/core/browser/content_settings_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-07T14:39:05Z",
+      "side": 1,
+      "message": "Let\u0027s just keep the name as-is for now, if it\u0027s ok with you. I don\u0027t think a migration step is worth the rename since this is a relatively small impact name.",
+      "parentUuid": "41ec68f1_da8ea759",
+      "range": {
+        "startLine": 277,
+        "startChar": 39,
+        "endLine": 277,
+        "endChar": 42
+      },
+      "revId": "496d0bcc0c827c6ada4812381dfc7c9825650b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
