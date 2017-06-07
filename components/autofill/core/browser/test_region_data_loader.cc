@@ -17,7 +17,7 @@ void TestRegionDataLoader::LoadRegionData(
     autofill::RegionDataLoader::RegionDataLoaded callback,
     int64_t unused_timeout_ms) {
   if (synchronous_callback_) {
-    callback.Run(std::vector<const ::i18n::addressinput::RegionData*>());
+    SendRegionData(callback);
   } else {
     country_code_ = country_code;
     callback_ = callback;
@@ -26,6 +26,18 @@ void TestRegionDataLoader::LoadRegionData(
 
 void TestRegionDataLoader::ClearCallback() {
   callback_.Reset();
+}
+
+void TestRegionDataLoader::SendRegionData(
+    autofill::RegionDataLoader::RegionDataLoaded callback) {
+  DCHECK(regions_ != nullptr);
+
+  ::i18n::addressinput::RegionData root_region("");
+  for (const auto& region : *regions_) {
+    root_region.AddSubRegion(region.first, region.second);
+  }
+
+  callback.Run(root_region.sub_regions());
 }
 
 void TestRegionDataLoader::SendAsynchronousData(
