@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dd3155e5_493e1495",
+        "filename": "docs/memory/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-06-07T21:32:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01adea50_19cce2eb",
+      "revId": "1365401f100f65326ce44b4fe494c33957c151fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "712559a5_d9f4140e",
         "filename": "docs/memory/README.md",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "44c41fc0_f4ad3d8d",
+        "filename": "docs/memory/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-06-07T21:32:00Z",
+      "side": 1,
+      "message": "We can add more stuff as we go.",
+      "parentUuid": "712559a5_d9f4140e",
+      "revId": "1365401f100f65326ce44b4fe494c33957c151fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3768777_ce4c583a",
         "filename": "docs/memory/README.md",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-07T00:29:30Z",
       "side": 1,
       "message": "This seems like a good breakdown to me for all the projects within chrome-memory itself, but there are probably groups [net, v8, etc.] which are not captured by this.",
+      "revId": "1365401f100f65326ce44b4fe494c33957c151fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ef64f3_f50dcf6b",
+        "filename": "docs/memory/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-06-07T21:32:00Z",
+      "side": 1,
+      "message": "Okay. Let\u0027s just start with this for now and we can add as it becomes useful or apparently.",
+      "parentUuid": "e3768777_ce4c583a",
       "revId": "1365401f100f65326ce44b4fe494c33957c151fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "7da40be6_4b0310ca",
+        "filename": "docs/memory/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-06-07T21:32:00Z",
+      "side": 1,
+      "message": "Moved.\n\nIt\u0027s the same people, but from the perspective of someone not working on memory looking to ask a question, I think it\u0027s important to have a link for browser.",
+      "parentUuid": "66fa0633_88ac7fe5",
+      "revId": "1365401f100f65326ce44b4fe494c33957c151fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d5fc29f_6a768564",
         "filename": "docs/memory/README.md",
         "patchSetId": 3
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d87c76fe_fb6b7e02",
+        "filename": "docs/memory/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-06-07T21:32:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d5fc29f_6a768564",
+      "revId": "1365401f100f65326ce44b4fe494c33957c151fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e640947_b9a80991",
         "filename": "docs/memory/README.md",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "1365401f100f65326ce44b4fe494c33957c151fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "683a76c9_a02c7f03",
+        "filename": "docs/memory/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-06-07T21:32:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e640947_b9a80991",
+      "revId": "1365401f100f65326ce44b4fe494c33957c151fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
