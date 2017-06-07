@@ -28,13 +28,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "web/WebSharedWorkerImpl.h"
+#include "core/exported/WebSharedWorkerImpl.h"
 
 #include <memory>
 #include "core/dom/Document.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/events/MessageEvent.h"
 #include "core/exported/WebDataSourceImpl.h"
+#include "core/exported/WebFactory.h"
+#include "core/exported/WebViewBase.h"
 #include "core/frame/WebLocalFrameBase.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/loader/FrameLoadRequest.h"
@@ -73,10 +75,22 @@
 #include "public/web/WebSettings.h"
 #include "public/web/WebView.h"
 #include "public/web/WebWorkerContentSettingsClientProxy.h"
-#include "web/IndexedDBClientImpl.h"
-#include "web/LocalFileSystemClient.h"
 
 namespace blink {
+
+namespace {
+
+// Vector of callbacks for the OnScriptLoaderFinished method.
+using OnScriptLoaderFinishedCallbackVector =
+    WTF::Vector<WebSharedWorkerImpl::OnScriptLoaderFinishedCallback>;
+OnScriptLoaderFinishedCallbackVector&
+GetOnScriptLoaderFinishedCallbackVector() {
+  DEFINE_STATIC_LOCAL(OnScriptLoaderFinishedCallbackVector, callback_vector,
+                      ());
+  return callback_vector;
+}
+
+}  // namespace
 
 // TODO(toyoshim): Share implementation with WebEmbeddedWorkerImpl as much as
 // possible.
@@ -127,7 +141,8 @@ void WebSharedWorkerImpl::InitializeLoader(bool data_saver_enabled) {
   // loading requests from the worker context to the rest of WebKit and Chromium
   // infrastructure.
   DCHECK(!web_view_);
-  web_view_ = WebView::Create(nullptr, kWebPageVisibilityStateVisible);
+  web_view_ = WebFactory::GetInstance().CreateWebViewBase(
+      nullptr, kWebPageVisibilityStateVisible);
   // FIXME: http://crbug.com/363843. This needs to find a better way to
   // not create graphics layers.
   web_view_->GetSettings()->SetAcceleratedCompositingEnabled(false);
@@ -135,9 +150,9 @@ void WebSharedWorkerImpl::InitializeLoader(bool data_saver_enabled) {
   // FIXME: Settings information should be passed to the Worker process from
   // Browser process when the worker is created (similar to
   // RenderThread::OnCreateNewView).
-  main_frame_ = ToWebLocalFrameBase(WebLocalFrame::Create(
+  main_frame_ = WebFactory::GetInstance().CreateWebLocalFrameBase(
       WebTreeScopeType::kDocument, this,
-      Platform::Current()->GetInterfaceProvider(), nullptr));
+      Platform::Current()->GetInterfaceProvider(), nullptr);
   web_view_->SetMainFrame(main_frame_.Get());
   main_frame_->SetDevToolsAgentClient(this);
 
@@ -250,6 +265,11 @@ void WebSharedWorkerImpl::DidTerminateWorkerThread() {
   delete this;
 }
 
+void WebSharedWorkerImpl::RegisterOnScriptLoaderFinishedCallback(
+    OnScriptLoaderFinishedCallback callback) {
+  GetOnScriptLoaderFinishedCallbackVector().push_back(callback);
+}
+
 void WebSharedWorkerImpl::Connect(
     std::unique_ptr<WebMessagePortChannel> web_channel) {
   DCHECK(IsMainThread());
@@ -320,15 +340,10 @@ void WebSharedWorkerImpl::OnScriptLoaderFinished() {
   SecurityOrigin* starter_origin = loading_document_->GetSecurityOrigin();
 
   WorkerClients* worker_clients = WorkerClients::Create();
-  ProvideLocalFileSystemToWorker(worker_clients,
-                                 LocalFileSystemClient::Create());
-  WebSecurityOrigin web_security_origin(loading_document_->GetSecurityOrigin());
-  ProvideContentSettingsClientToWorker(
-      worker_clients,
-      WTF::WrapUnique(client_->CreateWorkerContentSettingsClientProxy(
-          web_security_origin)));
-  ProvideIndexedDBClientToWorker(worker_clients,
-                                 IndexedDBClientImpl::Create(*worker_clients));
+  DCHECK(!GetOnScriptLoaderFinishedCallbackVector().IsEmpty());
+  for (auto& callback : GetOnScriptLoaderFinishedCallbackVector()) {
+    callback(this, worker_clients);
+  }
 
   if (RuntimeEnabledFeatures::OffMainThreadFetchEnabled()) {
     std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
@@ -427,9 +442,10 @@ void WebSharedWorkerImpl::DispatchDevToolsMessage(int session_id,
   if (asked_to_terminate_)
     return;
   WebDevToolsAgent* devtools_agent = main_frame_->DevToolsAgent();
-  if (devtools_agent)
+  if (devtools_agent) {
     devtools_agent->DispatchOnInspectorBackend(session_id, call_id, method,
                                                message);
+  }
 }
 
 WebSharedWorker* WebSharedWorker::Create(WebSharedWorkerClient* client) {
