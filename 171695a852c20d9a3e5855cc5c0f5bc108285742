@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0cf91bcf_95f2dab5",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-07T18:01:50Z",
+      "side": 1,
+      "message": "Done.\n\n(I replaced this with a WTF::Closure that the entity which requests streaming passes in. That way, ClassicPendingScript doesn\u0027t have to \"guess\" the ScriptRunner. Also, it\u0027s probably easier to test.)",
+      "parentUuid": "e2a865bf_321fc43d",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 26
+      },
+      "revId": "171695a852c20d9a3e5855cc5c0f5bc108285742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8d508dc_04be5a4d",
         "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
         "patchSetId": 1
@@ -119,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "636c88fe_305d9adc",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-07T18:01:50Z",
+      "side": 1,
+      "message": "Removed, due to refactoring.",
+      "parentUuid": "2164c545_512ca09a",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 3
+      },
+      "revId": "171695a852c20d9a3e5855cc5c0f5bc108285742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6f72070_cf946fa9",
         "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.cpp",
         "patchSetId": 1
@@ -166,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "5b65c697_b55ea9b2",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-07T18:01:50Z",
+      "side": 1,
+      "message": "All of this was removed, due to the suggested refactoring.",
+      "parentUuid": "acc0600c_47b06143",
+      "range": {
+        "startLine": 319,
+        "startChar": 0,
+        "endLine": 321,
+        "endChar": 48
+      },
+      "revId": "171695a852c20d9a3e5855cc5c0f5bc108285742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "578d44da_d34c200c",
         "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.h",
         "patchSetId": 1
@@ -201,6 +273,30 @@
       "side": 1,
       "message": "Mostly agree. I think we\u0027ll need two methods, though: HasStreamer() (to prevent double-streaming) and IsStreamingInProgress() (to prevent script execution before streaming has finished).",
       "parentUuid": "578d44da_d34c200c",
+      "range": {
+        "startLine": 112,
+        "startChar": 60,
+        "endLine": 112,
+        "endChar": 70
+      },
+      "revId": "171695a852c20d9a3e5855cc5c0f5bc108285742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca21540_7910938c",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-07T18:01:50Z",
+      "side": 1,
+      "message": "Done. (Using a predicate now.)",
+      "parentUuid": "2dfce730_70017e1c",
       "range": {
         "startLine": 112,
         "startChar": 60,
