@@ -627,8 +627,10 @@ bool PaintLayerScrollableArea::ShouldSuspendScrollAnimations() const {
 void PaintLayerScrollableArea::ScrollbarVisibilityChanged() {
   UpdateScrollbarEnabledState();
 
+  layer_.ClearClipRects();
+
   if (LayoutView* view = Box().View())
-    return view->ClearHitTestCache();
+    view->ClearHitTestCache();
 }
 
 void PaintLayerScrollableArea::ScrollbarFrameRectChanged() {
