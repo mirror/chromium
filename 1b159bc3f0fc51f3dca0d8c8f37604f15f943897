@@ -22,6 +22,30 @@
       "revId": "1b159bc3f0fc51f3dca0d8c8f37604f15f943897",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c313f205_d3ab743a",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 2134,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-07T06:13:45Z",
+      "side": 1,
+      "message": "I found unit tests that end up here without a Document.  This code is the best that I can think of to handle that case.  If I make the check to be |frame_-\u003eDocument() \u0026\u0026 !frame_-\u003eDocument()-\u003eIsDetached()| or |frame_-\u003eDocument() \u0026\u0026 frame_-\u003eDocument()-\u003eIsActive()| then I suspect that checking for Layout is redundant.",
+      "parentUuid": "867b6dfd_0190067a",
+      "range": {
+        "startLine": 2134,
+        "startChar": 6,
+        "endLine": 2134,
+        "endChar": 27
+      },
+      "revId": "1b159bc3f0fc51f3dca0d8c8f37604f15f943897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

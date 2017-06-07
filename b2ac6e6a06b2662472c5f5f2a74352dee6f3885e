@@ -214,6 +214,30 @@
       "revId": "b2ac6e6a06b2662472c5f5f2a74352dee6f3885e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40b6fdaf_426fdd20",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-07T06:13:45Z",
+      "side": 1,
+      "message": "SetParentVisible looks like a cut-down version of Show/Hide.  Show/Hide recursively calls SetParentVisible on descendants.  The method seems well named for this case.\n\nThis scenario is the sort of thing where I see SetParentVisible is needed as distinct to Show/Hide:  A has child frame B.  B is set to display:none.  Then A is set to display:none.  Then A is set to display:block.  A should now be visible, but B should not, so we cannot just blindly call Show on all children.\n\nThe case where SetParentVisible is called from Attach/Detach doesn\u0027t seem like such a good naming, but it is the correct code.  It isn\u0027t that anything has happened to the parent, it is just that we need to do the cut-down version of Show/Hide.  I just tried using Show/Hide instead of SetParentVisible and it causes unit tests to fail mostly from code in GetScrollingReasons which expects a document to exist.",
+      "parentUuid": "47e8b40f_b5431146",
+      "range": {
+        "startLine": 386,
+        "startChar": 67,
+        "endLine": 386,
+        "endChar": 73
+      },
+      "revId": "b2ac6e6a06b2662472c5f5f2a74352dee6f3885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
