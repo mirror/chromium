@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3a7dd7a_9b2de673",
+        "filename": "third_party/WebKit/Source/web/WebPluginContainerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-07T06:45:18Z",
+      "side": 1,
+      "message": "Thanks for adding these comments.",
+      "range": {
+        "startLine": 581,
+        "startChar": 0,
+        "endLine": 582,
+        "endChar": 74
+      },
+      "revId": "be47a7267f2364399b394ec5b6859f650c361054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2298eeec_0accbf42",
+        "filename": "third_party/WebKit/Source/web/WebPluginContainerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-07T06:45:18Z",
+      "side": 1,
+      "message": "Let\u0027s make this return a mutable reference and DCHECK(is_attached_) inside, since all (?) callsites seem to check is_attached_ now.",
+      "range": {
+        "startLine": 687,
+        "startChar": 0,
+        "endLine": 687,
+        "endChar": 10
+      },
+      "revId": "be47a7267f2364399b394ec5b6859f650c361054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
