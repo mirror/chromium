@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "8d96cf70_16bb788c",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-07T15:27:01Z",
+      "side": 1,
+      "message": "Sorry for not being clear. Currently you have a hard coded non-localizable format for the string. I\u0027m suggesting you making the formatting localizable. Specifically base::string16 TargetPickerTableModel::GetText(int row, int /*column_id*/)",
+      "parentUuid": "95db470c_3699dd80",
+      "range": {
+        "startLine": 152,
+        "startChar": 28,
+        "endLine": 152,
+        "endChar": 43
+      },
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15045dad_83edd55d",
         "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view.cc",
         "patchSetId": 12
