@@ -165,9 +165,9 @@ public class SingleCategoryPreferences extends PreferenceFragment
                         }
                     }
 
-                    // For the subresource filter permission, the Allowed list should appear first.
-                    // Default collapsed settings should not change.
-                    if (mCategory.showSubresourceFilterSites()) {
+                    // For the ads permission, the Allowed list should appear first. Default
+                    // collapsed settings should not change.
+                    if (mCategory.showAdsSites()) {
                         blockedGroup.setOrder(allowedGroup.getOrder() + 1);
                     }
 
@@ -234,8 +234,8 @@ public class SingleCategoryPreferences extends PreferenceFragment
             return website.site().getPopupPermission() == ContentSetting.BLOCK;
         } else if (mCategory.showProtectedMediaSites()) {
             return website.site().getProtectedMediaIdentifierPermission() == ContentSetting.BLOCK;
-        } else if (mCategory.showSubresourceFilterSites()) {
-            return website.site().getSubresourceFilterPermission() == ContentSetting.BLOCK;
+        } else if (mCategory.showAdsSites()) {
+            return website.site().getAdsPermission() == ContentSetting.BLOCK;
         }
 
         return false;
@@ -498,9 +498,8 @@ public class SingleCategoryPreferences extends PreferenceFragment
             } else if (mCategory.showProtectedMediaSites()) {
                 PrefServiceBridge.getInstance().setProtectedMediaIdentifierEnabled(
                         (boolean) newValue);
-            } else if (mCategory.showSubresourceFilterSites()) {
-                PrefServiceBridge.getInstance().setAllowSubresourceFilterEnabled(
-                        (boolean) newValue);
+            } else if (mCategory.showAdsSites()) {
+                PrefServiceBridge.getInstance().setAllowAdsEnabled((boolean) newValue);
             }
 
             // Categories that support adding exceptions also manage the 'Add site' preference.
@@ -728,9 +727,8 @@ public class SingleCategoryPreferences extends PreferenceFragment
                 } else if (mCategory.showProtectedMediaSites()) {
                     globalToggle.setChecked(
                             PrefServiceBridge.getInstance().isProtectedMediaIdentifierEnabled());
-                } else if (mCategory.showSubresourceFilterSites()) {
-                    globalToggle.setChecked(
-                            PrefServiceBridge.getInstance().subresourceFilterEnabled());
+                } else if (mCategory.showAdsSites()) {
+                    globalToggle.setChecked(PrefServiceBridge.getInstance().adsEnabled());
                 }
             }
         }
