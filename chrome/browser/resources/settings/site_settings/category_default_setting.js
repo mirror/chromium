@@ -91,7 +91,7 @@ Polymer({
       case settings.ContentSettingsTypes.JAVASCRIPT:
       case settings.ContentSettingsTypes.POPUPS:
       case settings.ContentSettingsTypes.PROTOCOL_HANDLERS:
-      case settings.ContentSettingsTypes.SUBRESOURCE_FILTER:
+      case settings.ContentSettingsTypes.ADS:
 
         // "Allowed" vs "Blocked".
         this.browserProxy.setDefaultValueForContentType(
