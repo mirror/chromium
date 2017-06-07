@@ -522,6 +522,30 @@
     },
     {
       "key": {
+        "uuid": "22a0517d_a3f72195",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-07T14:45:28Z",
+      "side": 1,
+      "message": "\u003e Is it possible to use BUILDFLAG(SPELLCHECK_PANEL) to #ifdef this out?\n\nPossible, but this is core/ code and adding that #ifdef is a layering violation: adding platform or build flag specific #ifdef in core/.\n\n+kentaro@, this is the example I what I was discussing with you in the Onion Soup 2.0 document.  What\u0027s your view on the above?\n\n\u003e It seems like we should be consistent about how we treat this throughout the entire stack: right now, it\u0027s #ifdef\u0027d out in content, but Blink needs to turn it into a no-op.\n\nUse of the no-op classes seems common, at least in my looking at core/loader/EmptyClients.h, and avoids layering violations.\n\nThe core/editing/spelling code used an no-op EmptyClients class, and the concrete implementation, that exposes the IPC (now Mojo), is provided to Blink by RenderFrame, guarded by BUILDFLAG #ifdef.\n\nBeing \"#ifdef\u0027d out in content\" is expected, but we should not be adding such #ifdef to core/ core imho, core/ is platform agnostic.",
+      "parentUuid": "34c603cb_f35bd694",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 37
+      },
+      "revId": "a511371337277ce1adfc7255fd6a3043494ddd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d3a3de4_b98a8194",
         "filename": "third_party/WebKit/public/platform/WebSpellCheckPanelHost.h",
         "patchSetId": 18
