@@ -94,6 +94,30 @@
       "revId": "1c466a3627a3bdf465ed222cdf22ed8aac4d164f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e768a5a6_1382efe5",
+        "filename": "components/spellcheck/common/spellcheck.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-07T14:09:23Z",
+      "side": 1,
+      "message": "\u003e Oh I misread groby\u0027s comment, I thought this was for testing.\n\u003e \n\u003e In general, that\u0027s still how the security team feels: things that aren\u0027t enabled shouldn\u0027t be exposed as part of the IPC surface.\n\nThe mojo surface isn\u0027t exposed, unless the build flag is on. That is the only case where the mojo code is defined.  It\u0027s IDL might be complied into declarations though, regardless of the build flag, and there maybe security issues there, not sure.  Anyho ...\n\n\u003e I see two possibilities here:\n\u003e - add conditional compilation to mojom: this was previously discussed in https://groups.google.com/a/chromium.org/forum/#!msg/chromium-mojo/BfvXCPBpcUs/j93c3TU_DAAJ, and the plan was to add it, but it was never actually implemented\n\nAnd no one working on it either.\n\n\u003e - split the interface file\n\u003e \n\u003e Either one is acceptable; I suspect splitting the interface will be simpler in the short-term.\n\nI gone with the split.  Moved the panel mojo .idl into its own file, updated the BUILD.gn to conditionally compile it.\n\n\u003e (This goes along with my comment that the Blink bits should be guarded by BUILDFLAG as well)",
+      "parentUuid": "a54ac046_c85295d1",
+      "range": {
+        "startLine": 60,
+        "startChar": 10,
+        "endLine": 60,
+        "endChar": 25
+      },
+      "revId": "1c466a3627a3bdf465ed222cdf22ed8aac4d164f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
