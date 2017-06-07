@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abf241b0_24f988c4",
+        "filename": "third_party/WebKit/Tools/Scripts/common.vpython",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1109829
+      },
+      "writtenOn": "2017-06-07T21:19:46Z",
+      "side": 1,
+      "message": "This is not the correct platform for 32-bit Windows. For examples, see packages in:\nhttps://pypi.python.org/pypi/coverage",
+      "range": {
+        "startLine": 25,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 18
+      },
+      "revId": "4b867b19de4b0af79bafe964b4a164285320c94f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "930f7857_85fb2e94",
+        "filename": "third_party/WebKit/Tools/Scripts/common.vpython",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1109829
+      },
+      "writtenOn": "2017-06-07T21:19:46Z",
+      "side": 1,
+      "message": "Update tag now that the PEP425 tag alignment has landed.",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 8
+      },
+      "revId": "4b867b19de4b0af79bafe964b4a164285320c94f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
