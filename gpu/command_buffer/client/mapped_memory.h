@@ -113,6 +113,8 @@ class GPU_EXPORT MemoryChunk {
   }
 
  private:
+  friend class MappedMemoryManager;
+
   int32_t shm_id_;
   scoped_refptr<gpu::Buffer> shm_;
   FencedAllocatorWrapper allocator_;
