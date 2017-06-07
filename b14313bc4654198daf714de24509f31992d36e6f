@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95d56324_23bfeee0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/protocol/InspectorBackend.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-07T05:00:52Z",
+      "side": 1,
+      "message": "Should we implement this one through invoke?",
+      "range": {
+        "startLine": 583,
+        "startChar": 2,
+        "endLine": 583,
+        "endChar": 30
+      },
+      "revId": "b14313bc4654198daf714de24509f31992d36e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4376f97f_1b381504",
+        "filename": "third_party/WebKit/Source/devtools/front_end/screencast/InputModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-07T05:00:52Z",
+      "side": 1,
+      "message": "/* unmodifiedText */",
+      "range": {
+        "startLine": 38,
+        "startChar": 76,
+        "endLine": 38,
+        "endChar": 113
+      },
+      "revId": "b14313bc4654198daf714de24509f31992d36e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a007613f_db30116c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/EmulationModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-07T05:00:52Z",
+      "side": 1,
+      "message": "No need for invoke here.",
+      "range": {
+        "startLine": 57,
+        "startChar": 32,
+        "endLine": 57,
+        "endChar": 63
+      },
+      "revId": "b14313bc4654198daf714de24509f31992d36e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc3513cf_fc9739ad",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/RemoteObject.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-07T05:00:52Z",
+      "side": 1,
+      "message": "Comment the names of these?",
+      "range": {
+        "startLine": 641,
+        "startChar": 67,
+        "endLine": 641,
+        "endChar": 76
+      },
+      "revId": "b14313bc4654198daf714de24509f31992d36e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beeae0c0_104be962",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/RemoteObject.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-07T05:00:52Z",
+      "side": 1,
+      "message": "/* silent */",
+      "range": {
+        "startLine": 672,
+        "startChar": 114,
+        "endLine": 672,
+        "endChar": 118
+      },
+      "revId": "b14313bc4654198daf714de24509f31992d36e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef5e9d0_e2f073a9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/RemoteObject.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-07T05:00:52Z",
+      "side": 1,
+      "message": "/* silent */",
+      "range": {
+        "startLine": 687,
+        "startChar": 114,
+        "endLine": 687,
+        "endChar": 118
+      },
+      "revId": "b14313bc4654198daf714de24509f31992d36e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b179c6c2_644bf796",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-07T05:00:52Z",
+      "side": 1,
+      "message": "No need for invoke.",
+      "range": {
+        "startLine": 409,
+        "startChar": 22,
+        "endLine": 409,
+        "endChar": 42
+      },
+      "revId": "b14313bc4654198daf714de24509f31992d36e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "891b32a3_6720a191",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-07T05:00:52Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 444,
+        "startChar": 29,
+        "endLine": 444,
+        "endChar": 49
+      },
+      "revId": "b14313bc4654198daf714de24509f31992d36e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af6c08ac_4cc5d294",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-07T05:00:52Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 451,
+        "startChar": 29,
+        "endLine": 451,
+        "endChar": 49
+      },
+      "revId": "b14313bc4654198daf714de24509f31992d36e6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
