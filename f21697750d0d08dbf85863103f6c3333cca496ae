@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "747a6034_b5cc215d",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-07T17:46:11Z",
+      "side": 1,
+      "message": "I think I\u0027ve actually addressed the todo at the original site.  I sorta copied the other comment into the implementation of RendererSchedulerImpl::DidCommitProvisionalLoad.",
+      "parentUuid": "325be54c_ec5ee934",
+      "revId": "f21697750d0d08dbf85863103f6c3333cca496ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e4ff238_7801ec0f",
         "filename": "third_party/WebKit/Source/platform/WebFrameScheduler.h",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "e59d7c2d_ec9b738e",
+        "filename": "third_party/WebKit/Source/platform/WebFrameScheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-07T17:46:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e4ff238_7801ec0f",
+      "range": {
+        "startLine": 106,
+        "startChar": 15,
+        "endLine": 106,
+        "endChar": 38
+      },
+      "revId": "f21697750d0d08dbf85863103f6c3333cca496ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05b0445e_518e48d6",
         "filename": "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h",
         "patchSetId": 6
@@ -62,6 +104,30 @@
       "revId": "f21697750d0d08dbf85863103f6c3333cca496ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df441804_ce0a653c",
+        "filename": "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-07T17:46:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05b0445e_518e48d6",
+      "range": {
+        "startLine": 154,
+        "startChar": 25,
+        "endLine": 154,
+        "endChar": 44
+      },
+      "revId": "f21697750d0d08dbf85863103f6c3333cca496ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
