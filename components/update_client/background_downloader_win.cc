@@ -574,8 +574,6 @@ void BackgroundDownloader::OnDownloading() {
 void BackgroundDownloader::EndDownload(HRESULT error) {
   DCHECK(task_runner()->RunsTasksOnCurrentThread());
 
-  DCHECK(!TimerIsRunning());
-
   const base::TimeTicks download_end_time(base::TimeTicks::Now());
   const base::TimeDelta download_time =
       download_end_time >= download_start_time_
@@ -617,13 +615,21 @@ void BackgroundDownloader::EndDownload(HRESULT error) {
   result.total_bytes = total_bytes;
   main_task_runner()->PostTask(
       FROM_HERE,
+      base::Bind(&BackgroundDownloader::EndDownloadHelper,
+                 base::Unretained(this), is_handled, result, download_metrics));
+}
+
+void BackgroundDownloader::EndDownloadHelper(
+    bool is_handled,
+    const Result& result,
+    const DownloadMetrics& download_metrics) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  DCHECK(!TimerIsRunning());
+  main_task_runner()->PostTask(
+      FROM_HERE,
       base::Bind(&BackgroundDownloader::OnDownloadComplete,
                  base::Unretained(this), is_handled, result, download_metrics));
-
-  // Once the task is posted to the the main thread, this object may be deleted
-  // by its owner. It is not safe to access members of this object on the
-  // task runner from this point on. The timer is stopped and all BITS
-  // interface pointers have been released.
 }
 
 // Called when the BITS job has been transferred successfully. Completes the

@@ -60,6 +60,9 @@ class BackgroundDownloader : public CrxDownloader {
   void EndDownload(HRESULT hr);
 
   HRESULT BeginDownloadHelper(const GURL& url);
+  void EndDownloadHelper(bool is_handled,
+                         const Result& result,
+                         const DownloadMetrics& download_metrics);
 
   // Handles the job state transitions to a final state. Returns true always
   // since the download has reached a final state and no further processing for
