@@ -546,6 +546,30 @@
     },
     {
       "key": {
+        "uuid": "0c5de409_9bdd2108",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-07T23:26:13Z",
+      "side": 1,
+      "message": "I commented on the Onion Soup 2.0 doc as well, but I think see #ifdefs in core as being fundamentally bad. It\u0027s already used in core in a number of places (for example see https://cs.chromium.org/search/?q\u003d%22OS(%22+file:WebKit/Source/core+package:%5Echromium$\u0026type\u003dcs), and it makes a simple rule for how platform-specific things should be guarded. It will also make platforms that care heavily about size happier: admittedly, this object is pretty small, but if we can omit it, that\u0027s still strictly better.\n\nFor this particular BUILDFLAG, I talked to brettw@, and he mentioned that there\u0027s already a features target for buildflags that in both browser and renderer: third_party/WebKit/public:public_features",
+      "parentUuid": "22a0517d_a3f72195",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 37
+      },
+      "revId": "a511371337277ce1adfc7255fd6a3043494ddd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d3a3de4_b98a8194",
         "filename": "third_party/WebKit/public/platform/WebSpellCheckPanelHost.h",
         "patchSetId": 18

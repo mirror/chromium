@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28a40c97_bb89d237",
+        "filename": "components/spellcheck/renderer/spellcheck_panel.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-07T23:26:13Z",
+      "side": 1,
+      "message": "Nit 1: make this a helper in the unnamed namespace, since it doesn\u0027t actually depend on |this|.\n\nNit 2: I /think/ this would usually be prefixed with \"Get\": it seems much more common in Chrome at least.\n\n(Blink has stlightly different naming conventions, for better or worse)",
+      "range": {
+        "startLine": 31,
+        "startChar": 59,
+        "endLine": 31,
+        "endChar": 76
+      },
+      "revId": "c8cbb002db4d4feac45e261caf48f1841bae25ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
