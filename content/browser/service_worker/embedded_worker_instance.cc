@@ -11,11 +11,13 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/trace_event/trace_event.h"
+#include "content/browser/appcache/appcache_response.h"
 #include "content/browser/bad_message.h"
 #include "content/browser/devtools/service_worker_devtools_manager.h"
 #include "content/browser/service_worker/embedded_worker_registry.h"
 #include "content/browser/service_worker/embedded_worker_status.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
+#include "content/browser/service_worker/service_worker_disk_cache.h"
 #include "content/common/content_switches_internal.h"
 #include "content/common/service_worker/embedded_worker_messages.h"
 #include "content/common/service_worker/embedded_worker_settings.h"
@@ -28,6 +30,7 @@
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/content_switches.h"
 #include "ipc/ipc_message.h"
+#include "net/base/io_buffer.h"
 #include "third_party/WebKit/public/web/WebConsoleMessage.h"
 #include "url/gurl.h"
 
@@ -136,6 +139,164 @@ bool HasSentStartWorker(EmbeddedWorkerInstance::StartingPhase phase) {
   }
   return false;
 }
+
+class WriterIOBuffer final : public net::IOBufferWithSize {
+ public:
+  WriterIOBuffer(void* data, size_t size)
+      : net::IOBufferWithSize(static_cast<char*>(data), size) {}
+ private:
+  ~WriterIOBuffer() override { data_ = nullptr; }
+  DISALLOW_COPY_AND_ASSIGN(WriterIOBuffer);
+};
+
+class ScriptPump {
+ public:
+  ScriptPump(base::WeakPtr<EmbeddedWorkerInstance> instance,
+             std::unique_ptr<ServiceWorkerResponseReader> reader,
+             const GURL& url,
+             mojo::ScopedDataPipeProducerHandle stream,
+             mojo::ScopedDataPipeProducerHandle metadata_stream)
+      : instance_(instance),
+        reader_(std::move(reader)),
+        url_(url),
+        stream_(std::move(stream)),
+        metadata_sender_(new MetadataSender(std::move(metadata_stream))),
+        handle_watcher_(FROM_HERE,
+                        mojo::SimpleWatcher::ArmingPolicy::AUTOMATIC),
+        weak_factory_(this) {}
+  void StartRead() {
+    http_info_io_buffer_ = new HttpResponseInfoIOBuffer;
+    reader_->ReadInfo(http_info_io_buffer_.get(),
+                      base::Bind(&ScriptPump::OnReadInfoComplete,
+                                 weak_factory_.GetWeakPtr()));
+  }
+  ~ScriptPump() {}
+
+ private:
+  class MetadataSender {
+   public:
+    MetadataSender(mojo::ScopedDataPipeProducerHandle metadata_stream)
+        : metadata_stream_(std::move(metadata_stream)),
+          handle_watcher_(FROM_HERE,
+                          mojo::SimpleWatcher::ArmingPolicy::AUTOMATIC),
+          weak_factory_(this) {}
+    ~MetadataSender() {}
+    void StartSend(scoped_refptr<net::IOBufferWithSize> buf,
+                   base::Closure callback) {
+      TRACE_EVENT0("ServiceWorker", "MetadataSender::StartSend");
+      buffer_ = buf;
+      callback_ = callback;
+      remaining_ = buf->size();
+      SendNext();
+    }
+    void OnWritable(MojoResult unused) { SendNext(); }
+    void SendNext() {
+      TRACE_EVENT0("ServiceWorker", "MetadataSender::SendNext");
+      uint32_t num_bytes = remaining_;
+      MojoResult mojo_result =
+          mojo::WriteDataRaw(metadata_stream_.get(),
+                             buffer_->data() + (buffer_->size() - remaining_),
+                             &num_bytes,  // In/out.
+                             MOJO_WRITE_DATA_FLAG_NONE);
+      if (mojo_result == MOJO_RESULT_SHOULD_WAIT) {
+        handle_watcher_.Watch(metadata_stream_.get(),
+                              MOJO_HANDLE_SIGNAL_WRITABLE,
+                              base::Bind(&MetadataSender::OnWritable,
+                                         weak_factory_.GetWeakPtr()));
+        return;
+      }
+      remaining_ -= num_bytes;
+      if (remaining_ == 0) {
+        callback_.Run();
+        return;
+      }
+      SendNext();
+    }
+
+   private:
+    mojo::ScopedDataPipeProducerHandle metadata_stream_;
+    base::Closure callback_;
+    scoped_refptr<net::IOBufferWithSize> buffer_;
+    uint32_t remaining_;
+    mojo::SimpleWatcher handle_watcher_;
+    base::WeakPtrFactory<MetadataSender> weak_factory_;
+  };
+
+  void OnReadInfoComplete(int result) {
+    TRACE_EVENT0("ServiceWorker", "ScriptPump::OnReadInfoComplete");
+    // TODO: send metadata
+    if (!http_info_io_buffer_->http_info->metadata) {
+      metadata_sender_ = nullptr;
+    } else {
+      metadata_sender_->StartSend(
+          http_info_io_buffer_->http_info->metadata,
+          base::Bind(&ScriptPump::OnMetadataSent, weak_factory_.GetWeakPtr()));
+    }
+    ReadNext();
+  }
+  void OnMetadataSent() {
+    TRACE_EVENT0("ServiceWorker", "MetadataSender::OnMetadataSent");
+    metadata_sender_ = nullptr;
+    if (sent_all_data_) {
+      // instance_->PumpFinished(this);
+      return;
+    }
+  }
+  void OnWritable(MojoResult unused) { ReadNext(); }
+  void ReadNext() {
+    TRACE_EVENT0("ServiceWorker", "ScriptPump::ReadNext");
+    LOG(ERROR) << "ScriptPump::ReadNext";
+    void* buf = nullptr;
+    uint32_t available = 0;
+    MojoResult mojo_result = mojo::BeginWriteDataRaw(
+        stream_.get(), &buf, &available, MOJO_WRITE_DATA_FLAG_NONE);
+    // TODO: We need error handling code.
+    if (mojo_result == MOJO_RESULT_SHOULD_WAIT) {
+      handle_watcher_.Watch(
+          stream_.get(), MOJO_HANDLE_SIGNAL_WRITABLE,
+          base::Bind(&ScriptPump::OnWritable, weak_factory_.GetWeakPtr()));
+      return;
+    }
+    buffer_ = new WriterIOBuffer(buf, available);
+
+    reader_->ReadData(
+        buffer_.get(), available,
+        base::Bind(&ScriptPump::OnReadComplete, weak_factory_.GetWeakPtr()));
+  }
+  void OnReadComplete(int result) {
+    TRACE_EVENT0("ServiceWorker", "ScriptPump::OnReadComplete");
+    LOG(ERROR) << "ScriptPump::OnReadComplete";
+    if (result < 0) {
+      LOG(ERROR) << " read error !!!!";
+      return;
+    }
+    MojoResult mojo_result = mojo::EndWriteDataRaw(stream_.get(), result);
+    if (mojo_result != MOJO_RESULT_OK) {
+      LOG(ERROR) << " EndWriteDataRaw error !!!!";
+      return;
+    }
+    buffer_ = nullptr;
+    if (result == 0) {
+      sent_all_data_ = true;
+      if (!metadata_sender_) {
+        // instance_->PumpFinished(this);
+      }
+      return;
+    }
+    ReadNext();
+  }
+
+  base::WeakPtr<EmbeddedWorkerInstance> instance_;
+  std::unique_ptr<ServiceWorkerResponseReader> reader_;
+  const GURL url_;
+  scoped_refptr<HttpResponseInfoIOBuffer> http_info_io_buffer_;
+  mojo::ScopedDataPipeProducerHandle stream_;
+  std::unique_ptr<MetadataSender> metadata_sender_;
+  scoped_refptr<net::IOBufferWithSize> buffer_;
+  mojo::SimpleWatcher handle_watcher_;
+  bool sent_all_data_ = false;
+  base::WeakPtrFactory<ScriptPump> weak_factory_;
+};
 
 }  // namespace
 
@@ -442,6 +603,7 @@ EmbeddedWorkerInstance::~EmbeddedWorkerInstance() {
 
 void EmbeddedWorkerInstance::Start(
     std::unique_ptr<EmbeddedWorkerStartParams> params,
+    const std::vector<ServiceWorkerDatabase::ResourceRecord>& resources,
     mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
     const StatusCallback& callback) {
   restart_count_++;
@@ -473,9 +635,54 @@ void EmbeddedWorkerInstance::Start(
 
   pending_dispatcher_request_ = std::move(dispatcher_request);
 
+  resources_ = resources;
+  script_list_ = mojom::WorkerScriptList::New();
+
+  // script_list_.clear();
+  // Start reading the scripts here?
+  for (const auto& record : resources) {
+    if (params->script_url == record.url)
+      PushScriptPump(record.resource_id, record.url);
+  }
+  for (const auto& record : resources) {
+    if (params->script_url != record.url)
+      PushScriptPump(record.resource_id, record.url);
+  }
+
+
   inflight_start_task_.reset(
       new StartTask(this, params->script_url, std::move(request)));
   inflight_start_task_->Start(std::move(params), callback);
+}
+
+void EmbeddedWorkerInstance::PushScriptPump(int64_t resource_id, GURL url) {
+  MojoCreateDataPipeOptions options;
+  options.struct_size = sizeof(MojoCreateDataPipeOptions);
+  options.flags = MOJO_CREATE_DATA_PIPE_OPTIONS_FLAG_NONE;
+  options.element_num_bytes = 1;
+  options.capacity_num_bytes = 1024 * 1024;
+  mojo::DataPipe data_pipe(options);
+  CHECK(data_pipe.producer_handle.is_valid());
+
+  MojoCreateDataPipeOptions options_for_metadata;
+  options_for_metadata.struct_size = sizeof(MojoCreateDataPipeOptions);
+  options_for_metadata.flags = MOJO_CREATE_DATA_PIPE_OPTIONS_FLAG_NONE;
+  options_for_metadata.element_num_bytes = 1;
+  options_for_metadata.capacity_num_bytes = 1024 * 1024;
+  mojo::DataPipe data_pipe_for_metadata(options_for_metadata);
+  CHECK(data_pipe_for_metadata.producer_handle.is_valid());
+
+  std::unique_ptr<ScriptPump> pump(
+      new ScriptPump(weak_factory_.GetWeakPtr(),
+                     context_->storage()->CreateResponseReader(resource_id),
+                     url, std::move(data_pipe.producer_handle),
+                     std::move(data_pipe_for_metadata.producer_handle)));
+
+  mojom::WorkerScriptPtr script = mojom::WorkerScript::New();
+  script->url = url.spec();
+  script->data_pipe = std::move(data_pipe.consumer_handle);
+  script->meta_data_pipe = std::move(data_pipe_for_metadata.consumer_handle);
+  script_list_->scripts.push_back(std::move(script));
 }
 
 bool EmbeddedWorkerInstance::Stop() {

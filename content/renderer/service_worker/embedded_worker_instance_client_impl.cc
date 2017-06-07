@@ -60,13 +60,33 @@ void EmbeddedWorkerInstanceClientImpl::StartWorker(
   DCHECK(!stop_worker_time_.has_value());
   TRACE_EVENT0("ServiceWorker",
                "EmbeddedWorkerInstanceClientImpl::StartWorker");
-
   wrapper_ = StartWorkerContext(
       params,
       base::MakeUnique<ServiceWorkerContextClient>(
           params.embedded_worker_id, params.service_worker_version_id,
           params.scope, params.script_url, std::move(dispatcher_request),
           std::move(instance_host), std::move(temporal_self_)));
+
+// We could conceivably read the script contents here.
+#if 0
+  LOG(ERROR) << "(R) EWICI::StartWorker: " << params.script_url;
+  if (params.is_installed) {
+    LOG(ERROR) << "  Installed. Got script_list: " << script_list->scripts.size();
+    for (const auto& script : script_list->scripts) {
+      LOG(ERROR) << "  " << script->url;
+    }
+  } else {
+    LOG(ERROR) << "  Not installed, will read as we go.";
+  }
+#endif
+}
+
+void EmbeddedWorkerInstanceClientImpl::StartWorkerWithScripts(
+    const EmbeddedWorkerStartParams& params,
+    mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
+    mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
+    mojom::WorkerScriptListPtr script_list) {
+  StartWorker(params, std::move(dispatcher_request), std::move(instance_host));
 }
 
 void EmbeddedWorkerInstanceClientImpl::StopWorker() {

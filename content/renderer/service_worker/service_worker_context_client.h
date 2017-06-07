@@ -63,7 +63,8 @@ class ThreadSafeSender;
 class EmbeddedWorkerInstanceClientImpl;
 class WebWorkerFetchContext;
 
-// This class provides access to/from an ServiceWorker's WorkerGlobalScope.
+// ServiceWorkerContextClient lives in Chromium's content layer and provides
+// access to/from an ServiceWorker's WorkerGlobalScope.
 // Unless otherwise noted, all methods are called on the worker thread.
 class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
                                    public mojom::ServiceWorkerEventDispatcher {

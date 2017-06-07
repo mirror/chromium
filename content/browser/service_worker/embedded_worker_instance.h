@@ -27,6 +27,8 @@
 #include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
 #include "content/common/service_worker/service_worker_status_code.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
+#include "mojo/public/cpp/system/data_pipe.h"
+#include "mojo/public/cpp/system/simple_watcher.h"
 #include "url/gurl.h"
 
 // Windows headers will redefine SendMessage.
@@ -109,9 +111,13 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
   // started and evaluated, or when an error occurs.
   // |params| should be populated with service worker version info needed
   // to start the worker.
-  void Start(std::unique_ptr<EmbeddedWorkerStartParams> params,
-             mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
-             const StatusCallback& callback);
+  void Start(
+      std::unique_ptr<EmbeddedWorkerStartParams> params,
+      const std::vector<ServiceWorkerDatabase::ResourceRecord>& resources,
+      mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
+      const StatusCallback& callback);
+
+  void PushScriptPump(int64_t resource_id, GURL url);
 
   // Stops the worker. It is invalid to call this when the worker is
   // not in STARTING or RUNNING status.
@@ -153,6 +159,10 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
 
   bool network_accessed_for_script() const {
     return network_accessed_for_script_;
+  }
+
+  const std::vector<ServiceWorkerDatabase::ResourceRecord>& resources() {
+    return resources_;
   }
 
   ServiceWorkerMetrics::StartSituation start_situation() const {
@@ -311,6 +321,9 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
 
   // Used for UMA. The start time of the current start sequence step.
   base::TimeTicks step_time_;
+
+  std::vector<ServiceWorkerDatabase::ResourceRecord> resources_;
+  mojom::WorkerScriptListPtr script_list_;
 
   base::WeakPtrFactory<EmbeddedWorkerInstance> weak_factory_;
 

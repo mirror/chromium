@@ -88,6 +88,15 @@ void EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient::StartWorker(
                              std::move(instance_host));
 }
 
+void EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient::
+    StartWorkerWithScripts(
+        const EmbeddedWorkerStartParams& params,
+        mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
+        mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
+        mojom::WorkerScriptListPtr script_list) {
+  StartWorker(params, std::move(dispatcher_request), std::move(instance_host));
+}
+
 void EmbeddedWorkerTestHelper::MockEmbeddedWorkerInstanceClient::StopWorker() {
   if (!helper_)
     return;

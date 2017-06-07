@@ -1473,8 +1473,10 @@ void ServiceWorkerVersion::StartWorkerInternal() {
   params->is_installed = IsInstalled(status_);
   params->pause_after_download = pause_after_download_;
 
+  std::vector<ServiceWorkerDatabase::ResourceRecord> resources;
+  script_cache_map_.GetResources(&resources);
   embedded_worker_->Start(
-      std::move(params), mojo::MakeRequest(&event_dispatcher_),
+      std::move(params), resources, mojo::MakeRequest(&event_dispatcher_),
       base::Bind(&ServiceWorkerVersion::OnStartSentAndScriptEvaluated,
                  weak_factory_.GetWeakPtr()));
   event_dispatcher_.set_connection_error_handler(base::Bind(

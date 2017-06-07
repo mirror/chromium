@@ -91,14 +91,16 @@ class EmbeddedWorkerInstanceTest : public testing::Test,
   void TearDown() override { helper_.reset(); }
 
   ServiceWorkerStatusCode StartWorker(EmbeddedWorkerInstance* worker,
-                                      int id, const GURL& pattern,
+                                      int id,
+                                      const GURL& pattern,
                                       const GURL& url) {
     ServiceWorkerStatusCode status;
     base::RunLoop run_loop;
     std::unique_ptr<EmbeddedWorkerStartParams> params =
         CreateStartParams(id, pattern, url);
     worker->Start(
-        std::move(params), CreateEventDispatcher(),
+        std::move(params), std::vector<ServiceWorkerDatabase::ResourceRecord>(),
+        CreateEventDispatcher(),
         base::Bind(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
     run_loop.Run();
     return status;
@@ -214,7 +216,8 @@ TEST_F(EmbeddedWorkerInstanceTest, StartAndStop) {
   std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(service_worker_version_id, pattern, url);
   worker->Start(
-      std::move(params), CreateEventDispatcher(),
+      std::move(params), std::vector<ServiceWorkerDatabase::ResourceRecord>(),
+      CreateEventDispatcher(),
       base::Bind(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
   EXPECT_EQ(EmbeddedWorkerStatus::STARTING, worker->status());
   run_loop.Run();
@@ -271,7 +274,8 @@ TEST_F(EmbeddedWorkerInstanceTest, ForceNewProcess) {
     std::unique_ptr<EmbeddedWorkerStartParams> params =
         CreateStartParams(service_worker_version_id, pattern, url);
     worker->Start(
-        std::move(params), CreateEventDispatcher(),
+        std::move(params), std::vector<ServiceWorkerDatabase::ResourceRecord>(),
+        CreateEventDispatcher(),
         base::Bind(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
     run_loop.Run();
     EXPECT_EQ(SERVICE_WORKER_OK, status);
@@ -296,7 +300,8 @@ TEST_F(EmbeddedWorkerInstanceTest, ForceNewProcess) {
     std::unique_ptr<EmbeddedWorkerStartParams> params =
         CreateStartParams(service_worker_version_id, pattern, url);
     worker->Start(
-        std::move(params), CreateEventDispatcher(),
+        std::move(params), std::vector<ServiceWorkerDatabase::ResourceRecord>(),
+        CreateEventDispatcher(),
         base::Bind(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
     EXPECT_EQ(EmbeddedWorkerStatus::STARTING, worker->status());
     run_loop.Run();
@@ -377,7 +382,8 @@ TEST_F(EmbeddedWorkerInstanceTest, RemoveWorkerInSharedProcess) {
     std::unique_ptr<EmbeddedWorkerStartParams> params =
         CreateStartParams(version_id1, pattern, url);
     worker1->Start(
-        std::move(params), CreateEventDispatcher(),
+        std::move(params), std::vector<ServiceWorkerDatabase::ResourceRecord>(),
+        CreateEventDispatcher(),
         base::Bind(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
     run_loop.Run();
     EXPECT_EQ(SERVICE_WORKER_OK, status);
@@ -390,7 +396,8 @@ TEST_F(EmbeddedWorkerInstanceTest, RemoveWorkerInSharedProcess) {
     std::unique_ptr<EmbeddedWorkerStartParams> params =
         CreateStartParams(version_id2, pattern, url);
     worker2->Start(
-        std::move(params), CreateEventDispatcher(),
+        std::move(params), std::vector<ServiceWorkerDatabase::ResourceRecord>(),
+        CreateEventDispatcher(),
         base::Bind(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
     run_loop.Run();
     EXPECT_EQ(SERVICE_WORKER_OK, status);
@@ -428,7 +435,8 @@ TEST_F(EmbeddedWorkerInstanceTest, DetachDuringProcessAllocation) {
   std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, scope, url);
   worker->Start(
-      std::move(params), CreateEventDispatcher(),
+      std::move(params), std::vector<ServiceWorkerDatabase::ResourceRecord>(),
+      CreateEventDispatcher(),
       base::Bind(&SaveStatusAndCall, &status, base::Bind(&base::DoNothing)));
   worker->Detach();
   base::RunLoop().RunUntilIdle();
@@ -461,7 +469,8 @@ TEST_F(EmbeddedWorkerInstanceTest, DetachAfterSendingStartWorkerMessage) {
   std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, scope, url);
   worker->Start(
-      std::move(params), CreateEventDispatcher(),
+      std::move(params), std::vector<ServiceWorkerDatabase::ResourceRecord>(),
+      CreateEventDispatcher(),
       base::Bind(&SaveStatusAndCall, &status, base::Bind(&base::DoNothing)));
   base::RunLoop().RunUntilIdle();
 
@@ -501,7 +510,8 @@ TEST_F(EmbeddedWorkerInstanceTest, StopDuringProcessAllocation) {
   std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, scope, url);
   worker->Start(
-      std::move(params), CreateEventDispatcher(),
+      std::move(params), std::vector<ServiceWorkerDatabase::ResourceRecord>(),
+      CreateEventDispatcher(),
       base::Bind(&SaveStatusAndCall, &status, base::Bind(&base::DoNothing)));
   worker->Stop();
   base::RunLoop().RunUntilIdle();
@@ -524,7 +534,8 @@ TEST_F(EmbeddedWorkerInstanceTest, StopDuringProcessAllocation) {
   std::unique_ptr<base::RunLoop> run_loop(new base::RunLoop);
   params = CreateStartParams(version_id, scope, url);
   worker->Start(
-      std::move(params), CreateEventDispatcher(),
+      std::move(params), std::vector<ServiceWorkerDatabase::ResourceRecord>(),
+      CreateEventDispatcher(),
       base::Bind(&SaveStatusAndCall, &status, run_loop->QuitClosure()));
   run_loop->Run();
 
@@ -576,7 +587,8 @@ TEST_F(EmbeddedWorkerInstanceTest, StopDuringPausedAfterDownload) {
       CreateStartParams(version_id, scope, url);
   params->pause_after_download = true;
   worker->Start(
-      std::move(params), CreateEventDispatcher(),
+      std::move(params), std::vector<ServiceWorkerDatabase::ResourceRecord>(),
+      CreateEventDispatcher(),
       base::Bind(&SaveStatusAndCall, &status, base::Bind(&base::DoNothing)));
   base::RunLoop().RunUntilIdle();
 
@@ -606,7 +618,8 @@ TEST_F(EmbeddedWorkerInstanceTest, StopAfterSendingStartWorkerMessage) {
   std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, scope, url);
   worker->Start(
-      std::move(params), CreateEventDispatcher(),
+      std::move(params), std::vector<ServiceWorkerDatabase::ResourceRecord>(),
+      CreateEventDispatcher(),
       base::Bind(&SaveStatusAndCall, &status, base::Bind(&base::DoNothing)));
   base::RunLoop().RunUntilIdle();
 
@@ -639,7 +652,8 @@ TEST_F(EmbeddedWorkerInstanceTest, StopAfterSendingStartWorkerMessage) {
 
   params = CreateStartParams(version_id, scope, url);
   worker->Start(
-      std::move(params), CreateEventDispatcher(),
+      std::move(params), std::vector<ServiceWorkerDatabase::ResourceRecord>(),
+      CreateEventDispatcher(),
       base::Bind(&SaveStatusAndCall, &status, run_loop->QuitClosure()));
   run_loop->Run();
 
@@ -670,7 +684,8 @@ TEST_F(EmbeddedWorkerInstanceTest, Detach) {
   std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, pattern, url);
   worker->Start(
-      std::move(params), CreateEventDispatcher(),
+      std::move(params), std::vector<ServiceWorkerDatabase::ResourceRecord>(),
+      CreateEventDispatcher(),
       base::Bind(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
   run_loop.Run();
 
@@ -704,7 +719,9 @@ TEST_F(EmbeddedWorkerInstanceTest, FailToSendStartIPC) {
   // Attempt to start the worker.
   std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, pattern, url);
-  worker->Start(std::move(params), CreateEventDispatcher(),
+  worker->Start(std::move(params),
+                std::vector<ServiceWorkerDatabase::ResourceRecord>(),
+                CreateEventDispatcher(),
                 base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
   base::RunLoop().RunUntilIdle();
 
@@ -752,7 +769,9 @@ TEST_F(EmbeddedWorkerInstanceTest, RemoveRemoteInterface) {
   // Attempt to start the worker.
   std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, pattern, url);
-  worker->Start(std::move(params), CreateEventDispatcher(),
+  worker->Start(std::move(params),
+                std::vector<ServiceWorkerDatabase::ResourceRecord>(),
+                CreateEventDispatcher(),
                 base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
   base::RunLoop().RunUntilIdle();
 
@@ -808,7 +827,9 @@ TEST_F(EmbeddedWorkerInstanceTest, AddMessageToConsole) {
       std::make_pair(blink::WebConsoleMessage::kLevelVerbose, "");
   std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, pattern, url);
-  worker->Start(std::move(params), CreateEventDispatcher(),
+  worker->Start(std::move(params),
+                std::vector<ServiceWorkerDatabase::ResourceRecord>(),
+                CreateEventDispatcher(),
                 base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
   worker->AddMessageToConsole(test_message.first, test_message.second);
   base::RunLoop().RunUntilIdle();
