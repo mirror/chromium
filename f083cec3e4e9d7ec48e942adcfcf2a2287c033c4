@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3238aff0_8a4bd44a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentManifestVerifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-07T21:50:27Z",
+      "side": 1,
+      "message": "Shall we add a counter here in case the utility process has been stopped by the other PR, is it possible? https://cs.chromium.org/chromium/src/components/payments/content/android/java/src/org/chromium/components/payments/PaymentManifestParser.java?rcl\u003d1caed9e9b41dfa2485d899edde6aacc64c907c9f\u0026l\u003d51",
+      "range": {
+        "startLine": 306,
+        "startChar": 21,
+        "endLine": 306,
+        "endChar": 44
+      },
+      "revId": "f083cec3e4e9d7ec48e942adcfcf2a2287c033c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c8f383b_3333942c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentManifestVerifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-07T21:50:27Z",
+      "side": 1,
+      "message": "nit: a little prefer assert here since we don\u0027t know whether it solves problem or not, might add it if it happens in the wield?\n\nor add an assert inside the if statement?",
+      "range": {
+        "startLine": 331,
+        "startChar": 21,
+        "endLine": 331,
+        "endChar": 44
+      },
+      "revId": "f083cec3e4e9d7ec48e942adcfcf2a2287c033c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
