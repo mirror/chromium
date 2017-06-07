@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86ad49b2_0e6ec9ac",
+        "filename": "third_party/WebKit/Source/core/dom/TaskRunnerHelper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-07T02:32:42Z",
+      "side": 1,
+      "message": "Conceptually it makes sense to use an unthrottled task runner for these task types because these tasks will be related to responsiveness.\n\nCould you add a comment and mention why these two task types should use the unthrottled task runner?",
+      "revId": "fe658f3dbfb23bd264ac677c7b227c6a3dac9333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
