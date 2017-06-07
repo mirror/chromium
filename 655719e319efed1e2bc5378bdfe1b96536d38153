@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f322a42c_d24cad87",
+        "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-06-07T21:44:28Z",
+      "side": 1,
+      "message": "nit: I imagine this is automagically the locale country, correct? Can you expand the comment?",
+      "revId": "655719e319efed1e2bc5378bdfe1b96536d38153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa6ee7c7_f569a522",
+        "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-06-07T21:44:28Z",
+      "side": 1,
+      "message": "Not a huge fan of tying logic like this to a string value. Is there a clearer/more robust way to implement this?",
+      "revId": "655719e319efed1e2bc5378bdfe1b96536d38153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fa665eb_50530266",
+        "filename": "components/autofill/core/browser/region_combobox_model.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-06-07T21:44:28Z",
+      "side": 1,
+      "message": "Would this be displayed? If so, the string should probably be an l10n string.",
+      "revId": "655719e319efed1e2bc5378bdfe1b96536d38153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a278ff1_7d844421",
+        "filename": "components/autofill/core/browser/test_region_data_loader.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-06-07T21:44:28Z",
+      "side": 1,
+      "message": "Instead of passing a pointer, we could pass a const ref and change |regions_| to std::vector\u003cstd::pair\u003cstd::string, std::string\u003e\u003e, copying the data. This will prevent some hard to find lifetime issues.",
+      "revId": "655719e319efed1e2bc5378bdfe1b96536d38153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
