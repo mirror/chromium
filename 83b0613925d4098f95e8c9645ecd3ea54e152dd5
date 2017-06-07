@@ -94,6 +94,30 @@
       "revId": "83b0613925d4098f95e8c9645ecd3ea54e152dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ef7a0e_8700819d",
+        "filename": "services/ui/ws/window_manager_display_root.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-07T21:05:52Z",
+      "side": 1,
+      "message": "So ash does call TransformerHelper::UpdateWindowSize() like you expected. That changes the ash root window size correctly.\n\nThe issue is I think the ui::Compositor is waiting for the parent to tell it a new size and LocalSurfaceId. That never happens, so the CompositorFrames that get submitted are the old size and SurfaceId.",
+      "parentUuid": "12bbf493_01621424",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "83b0613925d4098f95e8c9645ecd3ea54e152dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
