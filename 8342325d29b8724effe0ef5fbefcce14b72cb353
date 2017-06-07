@@ -52,6 +52,24 @@
       "revId": "8342325d29b8724effe0ef5fbefcce14b72cb353",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "166a9e95_5609612a",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-06-07T17:58:22Z",
+      "side": 1,
+      "message": "There should be no way for a child LocalFrameView to run script during UpdateGeometry.  Even if the child FrameView has dirty layout and winds up calling into UpdateLayout(), that method has a ScriptForbiddenScope.  It\u0027s worth adding a DCHECK after the call to part-\u003eUpdateGeometry() to verify that the frame tree hasn\u0027t changed.\n\nThe old code skips over non-LocalFrameView children, that\u0027s why I think it\u0027s better to use ForAllChildLocalFrameViews.",
+      "parentUuid": "4fa995b8_bc0a6835",
+      "revId": "8342325d29b8724effe0ef5fbefcce14b72cb353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
