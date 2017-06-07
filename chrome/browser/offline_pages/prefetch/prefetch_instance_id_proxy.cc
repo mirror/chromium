@@ -4,6 +4,8 @@
 
 #include "chrome/browser/offline_pages/prefetch/prefetch_instance_id_proxy.h"
 
+#include <map>
+
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
@@ -34,6 +36,11 @@ PrefetchInstanceIDProxy::PrefetchInstanceIDProxy(
     content::BrowserContext* context)
     : app_id_(app_id), context_(context), weak_factory_(this) {
   DCHECK(IsPrefetchingOfflinePagesEnabled());
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&PrefetchInstanceIDProxy::GetGCMToken,
+                            weak_factory_.GetWeakPtr(),
+                            base::Bind([](const std::string& token,
+                                          InstanceID::Result result) {})));
 }
 
 PrefetchInstanceIDProxy::~PrefetchInstanceIDProxy() = default;
