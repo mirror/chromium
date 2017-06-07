@@ -118,6 +118,30 @@
       "revId": "83b0613925d4098f95e8c9645ecd3ea54e152dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d4a7ec_c68b0a8a",
+        "filename": "services/ui/ws/window_manager_display_root.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-07T21:51:55Z",
+      "side": 1,
+      "message": "I think the issue is that mus needs to supply a LocalSurfaceId when ash resizes the window, but it probably isn\u0027t. If this is what needs to happen then I think you need a new function like OnDisplayRootBoundsChanged() that passes in the LocalSurfaceId. What would happen is mus sees the window-manager changes the bounds of the display root and then calls it back with the new LocalSurfaceIf. It\u0027s unfortunate we need a new function for this, but none of the other functions really work here.",
+      "parentUuid": "66ef7a0e_8700819d",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "83b0613925d4098f95e8c9645ecd3ea54e152dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
