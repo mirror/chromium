@@ -88,7 +88,8 @@ class MockIt2MeHost : public It2MeHost {
                base::WeakPtr<It2MeHost::Observer> observer,
                std::unique_ptr<SignalStrategy> signal_strategy,
                const std::string& username,
-               const std::string& directory_bot_jid) override;
+               const std::string& directory_bot_jid,
+               const protocol::IceConfig& ice_config) override;
   void Disconnect() override;
 
  private:
@@ -106,7 +107,8 @@ void MockIt2MeHost::Connect(
     base::WeakPtr<It2MeHost::Observer> observer,
     std::unique_ptr<SignalStrategy> signal_strategy,
     const std::string& username,
-    const std::string& directory_bot_jid) {
+    const std::string& directory_bot_jid,
+    const protocol::IceConfig& ice_config) {
   DCHECK(host_context()->ui_task_runner()->BelongsToCurrentThread());
 
   RunSetState(kStarting);
