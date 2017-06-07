@@ -3211,4 +3211,8 @@ const char kDisableNewVirtualKeyboardBehaviorDescription[] =
 
 #endif  // defined(OS_CHROMEOS)
 
+const char kUpdateHoverPostLayoutName[] =
+    "Update hover effect when a layout is changed";
+const char kUpdateHoverPostLayoutDescription[] = "Update hover at post-layout";
+
 }  // namespace flag_descriptions
