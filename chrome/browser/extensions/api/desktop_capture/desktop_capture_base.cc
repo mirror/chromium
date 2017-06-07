@@ -142,6 +142,10 @@ bool DesktopCaptureChooseDesktopMediaFunctionBase::Execute(
     tab_list = std::move(media_lists[2]);
     picker_ = g_picker_factory->CreatePicker();
   } else {
+    webrtc::DesktopCaptureOptions capture_options =
+        webrtc::DesktopCaptureOptions::CreateDefault();
+    capture_options.set_disable_effects(false);
+
     // Create a screens list.
     if (show_screens) {
 #if defined(USE_ASH)
@@ -149,14 +153,9 @@ bool DesktopCaptureChooseDesktopMediaFunctionBase::Execute(
           base::MakeUnique<DesktopMediaListAsh>(DesktopMediaListAsh::SCREENS);
 #endif
       if (!screen_list) {
-        webrtc::DesktopCaptureOptions options =
-            webrtc::DesktopCaptureOptions::CreateDefault();
-        options.set_disable_effects(false);
-        std::unique_ptr<webrtc::DesktopCapturer> screen_capturer(
-            webrtc::DesktopCapturer::CreateScreenCapturer(options));
-
         screen_list = base::MakeUnique<NativeDesktopMediaList>(
-            std::move(screen_capturer), nullptr);
+            content::DesktopMediaID::TYPE_SCREEN,
+            webrtc::DesktopCapturer::CreateScreenCapturer(capture_options));
       }
     }
 
@@ -167,14 +166,9 @@ bool DesktopCaptureChooseDesktopMediaFunctionBase::Execute(
           base::MakeUnique<DesktopMediaListAsh>(DesktopMediaListAsh::WINDOWS);
 #endif
       if (!window_list) {
-        webrtc::DesktopCaptureOptions options =
-            webrtc::DesktopCaptureOptions::CreateDefault();
-        options.set_disable_effects(false);
-        std::unique_ptr<webrtc::DesktopCapturer> window_capturer(
-            webrtc::DesktopCapturer::CreateWindowCapturer(options));
-
         window_list = base::MakeUnique<NativeDesktopMediaList>(
-            nullptr, std::move(window_capturer));
+            content::DesktopMediaID::TYPE_WINDOW,
+            webrtc::DesktopCapturer::CreateWindowCapturer(capture_options));
       }
     }
 
