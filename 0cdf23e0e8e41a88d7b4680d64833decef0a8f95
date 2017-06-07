@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2551adfa_3c4adb63",
+        "filename": "chrome/browser/ui/views/payments/payment_request_completion_status_metrics_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-06-07T21:28:03Z",
+      "side": 1,
+      "message": "I don\u0027t have an idea how to test it, since it should never happen. I added closing the tab but that\u0027s a user abort.",
+      "parentUuid": "423e3c49_6b3ea235",
+      "revId": "0cdf23e0e8e41a88d7b4680d64833decef0a8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85faf724_be0d2318",
         "filename": "components/payments/content/payment_request.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "0cdf23e0e8e41a88d7b4680d64833decef0a8f95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f693fab_cb4a9932",
+        "filename": "components/payments/content/payment_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-06-07T21:28:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85faf724_be0d2318",
+      "range": {
+        "startLine": 159,
+        "startChar": 23,
+        "endLine": 159,
+        "endChar": 24
+      },
+      "revId": "0cdf23e0e8e41a88d7b4680d64833decef0a8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "c8765123_8b5193ef",
+        "filename": "components/payments/content/payment_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-06-07T21:28:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bf480ca_2eb0b5ac",
+      "range": {
+        "startLine": 268,
+        "startChar": 5,
+        "endLine": 268,
+        "endChar": 27
+      },
+      "revId": "0cdf23e0e8e41a88d7b4680d64833decef0a8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26dae370_9f7ab444",
         "filename": "components/payments/content/payment_request.h",
         "patchSetId": 3
@@ -85,6 +151,30 @@
       "revId": "0cdf23e0e8e41a88d7b4680d64833decef0a8f95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63454eb_f0994152",
+        "filename": "components/payments/content/payment_request.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-06-07T21:28:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26dae370_9f7ab444",
+      "range": {
+        "startLine": 102,
+        "startChar": 16,
+        "endLine": 102,
+        "endChar": 17
+      },
+      "revId": "0cdf23e0e8e41a88d7b4680d64833decef0a8f95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
