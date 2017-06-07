@@ -397,6 +397,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
     for (const std::string& feature : disabled_features)
       WebRuntimeFeatures::EnableFeatureFromString(feature, false);
   }
+
+  WebRuntimeFeatures::EnableUpdateHoverPostLayout(
+      base::FeatureList::IsEnabled(features::kUpdateHoverPostLayout));
 }
 
 }  // namespace content

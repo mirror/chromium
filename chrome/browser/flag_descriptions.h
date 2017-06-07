@@ -729,6 +729,9 @@ extern const char kTrySupportedChannelLayoutsDescription[];
 extern const char kUiPartialSwapName[];
 extern const char kUiPartialSwapDescription[];
 
+extern const char kUpdateHoverPostLayoutName[];
+extern const char kUpdateHoverPostLayoutDescription[];
+
 extern const char kUserConsentForExtensionScriptsName[];
 extern const char kUserConsentForExtensionScriptsDescription[];
 

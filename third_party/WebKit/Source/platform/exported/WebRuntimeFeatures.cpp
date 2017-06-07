@@ -406,4 +406,8 @@ void WebRuntimeFeatures::EnableRemotePlaybackBackend(bool enable) {
   RuntimeEnabledFeatures::setRemotePlaybackBackendEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableUpdateHoverPostLayout(bool enable) {
+  RuntimeEnabledFeatures::setUpdateHoverPostLayoutEnabled(enable);
+}
+
 }  // namespace blink
