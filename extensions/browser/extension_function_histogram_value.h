@@ -1239,6 +1239,7 @@ enum HistogramValue {
   MEDIAPERCEPTIONPRIVATE_GETDIAGNOSTICS,
   NETWORKINGPRIVATE_GETCERTIFICATELISTS,
   ACCESSIBILITY_PRIVATE_SETSWITCHACCESSKEYS,
+  DIAL_GETNETWORKID,
   // Last entry: Add new entries above, then run:
   // python tools/metrics/histograms/update_extension_histograms.py
   ENUM_BOUNDARY

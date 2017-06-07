@@ -34,9 +34,12 @@ DialAPI::DialAPI(Profile* profile)
     : RefcountedKeyedService(
           BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)),
       profile_(profile),
-      dial_registry_(nullptr) {
-  EventRouter::Get(profile)->RegisterObserver(
-      this, api::dial::OnDeviceList::kEventName);
+      dial_registry_(nullptr),
+      num_network_id_listeners_(0) {
+  auto* event_router = EventRouter::Get(profile);
+  event_router->RegisterObserver(this, api::dial::OnDeviceList::kEventName);
+  event_router->RegisterObserver(this,
+                                 api::dial::OnNetworkIdChanged::kEventName);
 }
 
 DialAPI::~DialAPI() {
@@ -62,16 +65,45 @@ DialRegistry* DialAPI::dial_registry() {
 
 void DialAPI::OnListenerAdded(const EventListenerInfo& details) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&DialAPI::NotifyListenerAddedOnIOThread, this));
+  if (details.event_name == api::dial::OnNetworkIdChanged::kEventName) {
+    if (++num_network_id_listeners_ == 1) {
+      BrowserThread::PostTask(
+          BrowserThread::IO, FROM_HERE,
+          base::BindOnce(&DialAPI::NetworkIdListenerAddedOnIOThread, this));
+    }
+  } else {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&DialAPI::NotifyListenerAddedOnIOThread, this));
+  }
 }
 
 void DialAPI::OnListenerRemoved(const EventListenerInfo& details) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&DialAPI::NotifyListenerRemovedOnIOThread, this));
+  if (details.event_name == api::dial::OnNetworkIdChanged::kEventName) {
+    DCHECK_GT(num_network_id_listeners_, 0);
+    if (--num_network_id_listeners_ == 0) {
+      BrowserThread::PostTask(
+          BrowserThread::IO, FROM_HERE,
+          base::BindOnce(&DialAPI::NetworkIdListenerRemovedOnIOThread, this));
+    }
+  } else {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&DialAPI::NotifyListenerRemovedOnIOThread, this));
+  }
+}
+
+void DialAPI::NetworkIdListenerAddedOnIOThread() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  VLOG(2) << "Network Id event listener added.";
+  DiscoveryNetworkMonitor::GetInstance()->AddObserver(this);
+}
+
+void DialAPI::NetworkIdListenerRemovedOnIOThread() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  VLOG(2) << "Network Id event listener removed.";
+  DiscoveryNetworkMonitor::GetInstance()->RemoveObserver(this);
 }
 
 void DialAPI::NotifyListenerAddedOnIOThread() {
@@ -109,6 +141,14 @@ void DialAPI::OnDialError(const DialRegistry::DialErrorCode code) {
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(&DialAPI::SendErrorOnUIThread, this, code));
+}
+
+void DialAPI::OnNetworksChanged(const DiscoveryNetworkMonitor& monitor) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&DialAPI::SendNetworkIdChangedOnUIThread, this,
+                     monitor.GetNetworkId()));
 }
 
 void DialAPI::SendEventOnUIThread(const DialRegistry::DeviceList& devices) {
@@ -158,6 +198,17 @@ void DialAPI::SendErrorOnUIThread(const DialRegistry::DialErrorCode code) {
   std::unique_ptr<Event> event(new Event(events::DIAL_ON_ERROR,
                                          api::dial::OnError::kEventName,
                                          std::move(results)));
+  EventRouter::Get(profile_)->BroadcastEvent(std::move(event));
+}
+
+void DialAPI::SendNetworkIdChangedOnUIThread(const std::string& network_id) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  std::unique_ptr<base::ListValue> results =
+      api::dial::OnNetworkIdChanged::Create(network_id);
+  std::unique_ptr<Event> event(
+      new Event(events::DIAL_ON_NETWORK_ID_CHANGED,
+                api::dial::OnNetworkIdChanged::kEventName, std::move(results)));
   EventRouter::Get(profile_)->BroadcastEvent(std::move(event));
 }
 
@@ -266,6 +317,35 @@ void DialFetchDeviceDescriptionFunction::OnFetchError(
   device_description_fetcher_.reset();
   SetError(message);
   SendResponse(false);
+}
+
+DialGetNetworkIdFunction::DialGetNetworkIdFunction() {}
+
+DialGetNetworkIdFunction::~DialGetNetworkIdFunction() {}
+
+bool DialGetNetworkIdFunction::RunAsync() {
+  auto* network_monitor = DiscoveryNetworkMonitor::GetInstance();
+  // If we are the first to call the DiscoveryNetworkMonitor, it will have no
+  // network state.  Force a refresh to be sure the network ID is populated.
+  network_monitor->Refresh(
+      base::Bind(&DialGetNetworkIdFunction::OnNetworkInfoReady, this));
+  return true;
+}
+
+void DialGetNetworkIdFunction::OnNetworkInfoReady() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  BrowserThread::PostTaskAndReply(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&DialGetNetworkIdFunction::GetNetworkIdOnIOThread, this),
+      base::BindOnce(&DialGetNetworkIdFunction::SendResponse, this, true));
+}
+
+void DialGetNetworkIdFunction::GetNetworkIdOnIOThread() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  const auto* network_monitor = DiscoveryNetworkMonitor::GetInstance();
+  std::string network_id(network_monitor->GetNetworkId());
+
+  SetResult(base::MakeUnique<base::Value>(network_id));
 }
 
 }  // namespace extensions

@@ -11445,6 +11445,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="407" label="ACCESSIBILITY_PRIVATE_ON_TWO_FINGER_TOUCH_STOP"/>
   <int value="408" label="MEDIA_PERCEPTION_PRIVATE_ON_MEDIA_PERCEPTION"/>
   <int value="409" label="NETWORKING_PRIVATE_ON_CERTIFICATE_LISTS_CHANGED"/>
+  <int value="410" label="DIAL_ON_NETWORK_ID_CHANGED"/>
 </enum>
 
 <enum name="ExtensionFileWriteResult" type="int">
@@ -12673,6 +12674,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1176" label="MEDIAPERCEPTIONPRIVATE_GETDIAGNOSTICS"/>
   <int value="1177" label="NETWORKINGPRIVATE_GETCERTIFICATELISTS"/>
   <int value="1178" label="ACCESSIBILITY_PRIVATE_SETSWITCHACCESSKEYS"/>
+  <int value="1179" label="DIAL_GETNETWORKID"/>
 </enum>
 
 <enum name="ExtensionIconState" type="int">
