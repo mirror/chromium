@@ -679,6 +679,7 @@ def parse_args():
                         help="Output markdown")
     parser.add_argument("--css-mode", action="store_true",
                         help="Run CSS testsuite specific lints")
+    parser.add_argument("--repo-root", help="Override repo_root variable in lint.")
     return parser.parse_args()
 
 
@@ -686,6 +687,9 @@ def main(**kwargs):
     if kwargs.get("json") and kwargs.get("markdown"):
         logger.critical("Cannot specify --json and --markdown")
         sys.exit(2)
+
+    if kwargs.get('repo_root'):
+        repo_root = kwargs.get('repo_root')
 
     output_format = {(True, False): "json",
                      (False, True): "markdown",
