@@ -38,12 +38,16 @@ MojoFrameSinkManager::~MojoFrameSinkManager() {
   manager_.RemoveObserver(this);
 }
 
-void MojoFrameSinkManager::Connect(
-    cc::mojom::FrameSinkManagerRequest request,
+void MojoFrameSinkManager::SetClient(
     cc::mojom::FrameSinkManagerClientPtr client) {
   DCHECK(!binding_.is_bound());
-  binding_.Bind(std::move(request));
   client_ = std::move(client);
+}
+
+void MojoFrameSinkManager::BindRequest(
+    cc::mojom::FrameSinkManagerRequest request) {
+  DCHECK(!binding_.is_bound());
+  binding_.Bind(std::move(request));
 }
 
 void MojoFrameSinkManager::CreateRootCompositorFrameSink(
