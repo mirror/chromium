@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f8b22f8_512e13e9",
+        "filename": "content/public/common/manifest_struct_traits.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-07T06:41:40Z",
+      "side": 1,
+      "message": "Is there any plan to look at not measuring serializing sizes precisely, which requires invoking these twice?\n\n(It seems like we\u0027ve tried to make this as cheap as possible, but it\u0027s still not free)",
+      "range": {
+        "startLine": 33,
+        "startChar": 9,
+        "endLine": 33,
+        "endChar": 44
+      },
+      "revId": "3032683761a515c9bf1b8b7aa744c81280cf31d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
