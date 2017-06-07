@@ -16,6 +16,24 @@
       "revId": "cbcd2ed3d19d69dd8b8f5ad5961f056c9a3596f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae748199_856d0c6c",
+        "filename": "third_party/WebKit/LayoutTests/nfc/watch.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-06-07T07:20:11Z",
+      "side": 1,
+      "message": "Yes, it is valid url. I added new layout test for that case.",
+      "parentUuid": "af9556ee_2779c176",
+      "revId": "cbcd2ed3d19d69dd8b8f5ad5961f056c9a3596f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
