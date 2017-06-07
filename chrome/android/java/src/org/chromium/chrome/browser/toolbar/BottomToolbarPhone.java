@@ -469,6 +469,8 @@ public class BottomToolbarPhone extends ToolbarPhone {
             setContentDescription(
                     getResources().getString(R.string.bottom_sheet_accessibility_toolbar));
         }
+
+        mBottomSheet.showHelpBubbleIfNecessary();
     }
 
     /**
