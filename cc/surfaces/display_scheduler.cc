@@ -77,6 +77,7 @@ void DisplayScheduler::ForceImmediateSwapIfPossible() {
 void DisplayScheduler::DisplayResized() {
   expecting_root_surface_damage_because_of_resize_ = true;
   needs_draw_ = true;
+  StartObservingBeginFrames();
   ScheduleBeginFrameDeadline();
 }
 
@@ -230,8 +231,13 @@ bool DisplayScheduler::OnBeginFrameDerivedImpl(const BeginFrameArgs& args) {
 
   // If we get another BeginFrame before the previous deadline,
   // synchronously trigger the previous deadline before progressing.
-  if (inside_begin_frame_deadline_interval_)
+  if (inside_begin_frame_deadline_interval_) {
     OnBeginFrameDeadline();
+
+    // We may no longer need BeginFrames.
+    if (!observing_begin_frame_source_)
+      return false;
+  }
 
   // Schedule the deadline.
   current_begin_frame_args_ = save_args;
@@ -401,16 +407,23 @@ bool DisplayScheduler::AttemptDrawAndSwap() {
   begin_frame_deadline_task_time_ = base::TimeTicks();
 
   if (ShouldDraw()) {
+    bool result = false;
     if (pending_swaps_ < max_pending_swaps_ && !root_surface_resources_locked_)
-      return DrawAndSwap();
-  } else {
-    // We are going idle, so reset expectations.
-    // TODO(eseckler): Should we avoid going idle if
-    // |expecting_root_surface_damage_because_of_resize_| is true?
-    expecting_root_surface_damage_because_of_resize_ = false;
+      result = DrawAndSwap();
 
-    StopObservingBeginFrames();
+    // Damage persists if DrawAndSwap failed, so we will try again during next
+    // BeginFrame. Otherwise, we will resume observing BeginFrames as soon as
+    // there is new surface damage. Note that we don't proactively observe the
+    // next BeginFrame to avoid completing it immediately if no producer is
+    // observing it at the time it is issued.
+    if (result)
+      StopObservingBeginFrames();
+    return result;
   }
+
+  // No need to draw at the moment, we will resume when there is new damage or
+  // we become visible again.
+  StopObservingBeginFrames();
   return false;
 }
 
