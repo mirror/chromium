@@ -5712,6 +5712,17 @@ void WebContentsImpl::SetOpenerForNewContents(FrameTreeNode* opener,
       created_with_opener_ = true;
     }
   }
+
+  void WebContentsImpl::MediaVolumeChanged(
+      const WebContentsObserver::MediaPlayerId& id, double volume) {
+    cached_media_volumes_[id] = volume;
+
+    for (auto& observer : observers_)
+      observer.MediaVolumeChanged(id, volume);
+  }
+
+  const WebContents::MediaVolumeMap& WebContentsImpl::GetMediaVolumes() {
+    return cached_media_volumes_;
 }
 
 }  // namespace content
