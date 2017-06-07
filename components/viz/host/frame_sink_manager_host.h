@@ -6,6 +6,7 @@
 #define COMPONENTS_VIZ_HOST_FRAME_SINK_MANAGER_HOST_H_
 
 #include "base/compiler_specific.h"
+#include "base/containers/flat_map.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "cc/ipc/frame_sink_manager.mojom.h"
@@ -71,6 +72,11 @@ class VIZ_HOST_EXPORT FrameSinkManagerHost
   // Other than using SurfaceManager, access to |frame_sink_manager_| should
   // happen using Mojo. See http://crbug.com/657959.
   MojoFrameSinkManager frame_sink_manager_;
+
+  // Directed graph of FrameSinkId hierarchy where key is the child and value is
+  // the parent. This hiearchy is used to find the parent that is expected to
+  // embed another FrameSink.
+  base::flat_map<cc::FrameSinkId, cc::FrameSinkId> frame_sink_hiearchy_;
 
   // Local observers to that receive OnSurfaceCreated() messages from IPC.
   base::ObserverList<FrameSinkObserver> observers_;
