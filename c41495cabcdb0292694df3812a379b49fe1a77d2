@@ -1,0 +1,786 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf6714dc_ad290b68",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Remove the word filter?",
+      "range": {
+        "startLine": 624,
+        "startChar": 19,
+        "endLine": 624,
+        "endChar": 25
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a122bfa_bc01dfd2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Please move this block up to line 291 (the permission list is in alphabetical order).",
+      "range": {
+        "startLine": 315,
+        "startChar": 13,
+        "endLine": 315,
+        "endChar": 0
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "392dd049_fbc014b2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Please move this block up to line 559 (alphabetical ordering).",
+      "range": {
+        "startLine": 582,
+        "startChar": 23,
+        "endLine": 582,
+        "endChar": 42
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bdafd4f_09783ba8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Ditto, line 621.",
+      "range": {
+        "startLine": 644,
+        "startChar": 18,
+        "endLine": 644,
+        "endChar": 34
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6add75da_d69b5308",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Ditto, line 705.",
+      "range": {
+        "startLine": 716,
+        "startChar": 14,
+        "endLine": 716,
+        "endChar": 30
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2fadb69_7e53f961",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SiteSettingsCategory.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Move to line 38 (keep All Sites top).",
+      "range": {
+        "startLine": 50,
+        "startChar": 43,
+        "endLine": 50,
+        "endChar": 44
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8137544_62d7f53b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SiteSettingsCategory.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Move to line 87.",
+      "range": {
+        "startLine": 132,
+        "startChar": 20,
+        "endLine": 132,
+        "endChar": 32
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e29bfd0_c65a0f39",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SiteSettingsCategory.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the CONTENT_SETTINGS_TYPE change also? Or is that a separate CL?",
+      "range": {
+        "startLine": 182,
+        "startChar": 55,
+        "endLine": 182,
+        "endChar": 95
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6843051_fcec666a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SiteSettingsCategory.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Move block to top of function.",
+      "range": {
+        "startLine": 183,
+        "startChar": 19,
+        "endLine": 183,
+        "endChar": 29
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772f0a54_f10064e2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SiteSettingsCategory.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Move to line 206.",
+      "range": {
+        "startLine": 291,
+        "startChar": 5,
+        "endLine": 291,
+        "endChar": 0
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10d9dc0b_c1808114",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SiteSettingsPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Move to line 37 (keeping All Sites on top).",
+      "range": {
+        "startLine": 51,
+        "startChar": 31,
+        "endLine": 51,
+        "endChar": 32
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aae3a7ed_12d65472",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SiteSettingsPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: To top.",
+      "range": {
+        "startLine": 101,
+        "startChar": 19,
+        "endLine": 101,
+        "endChar": 26
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c327ac_006fb52c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SiteSettingsPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Line 112.",
+      "range": {
+        "startLine": 122,
+        "startChar": 34,
+        "endLine": 122,
+        "endChar": 50
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be985ca4_11b7e7de",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SiteSettingsPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Move this if block to line 159.",
+      "range": {
+        "startLine": 173,
+        "startChar": 13,
+        "endLine": 173,
+        "endChar": 0
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d71b2a83_4cc4f68c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SiteSettingsPreferences.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: To line 181.",
+      "range": {
+        "startLine": 202,
+        "startChar": 16,
+        "endLine": 202,
+        "endChar": 23
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4bc7778_a2b50262",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/Website.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: To line 29.",
+      "range": {
+        "startLine": 40,
+        "startChar": 36,
+        "endLine": 40,
+        "endChar": 49
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0fe2961_6330b1d5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/Website.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Move these to line 88.",
+      "range": {
+        "startLine": 381,
+        "startChar": 5,
+        "endLine": 381,
+        "endChar": 0
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c88a5937_049e4b36",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/WebsitePermissionsFetcher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Hmm... if the CONTENT_SETTINGS_TYPE is changing then I\u0027d definitely move this to line 172.",
+      "range": {
+        "startLine": 188,
+        "startChar": 25,
+        "endLine": 188,
+        "endChar": 40
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe713bb_8099bfee",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: This looks roughly alphabetical also. Doesn\u0027t hurt to move to line 720, I guess.",
+      "range": {
+        "startLine": 743,
+        "startChar": 16,
+        "endLine": 743,
+        "endChar": 0
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9ee288e_8b78197e",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1936,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: I\u0027m a bit torn, but for consistency maybe we should keep this below All Sites...",
+      "range": {
+        "startLine": 1936,
+        "startChar": 12,
+        "endLine": 1936,
+        "endChar": 0
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b410276e_3d815d83",
+        "filename": "chrome/browser/resources/settings/privacy_page/privacy_page.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Wait... this ContentSettingsType has already been renamed. Shouldn\u0027t they match?",
+      "range": {
+        "startLine": 413,
+        "startChar": 49,
+        "endLine": 413,
+        "endChar": 52
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d42822e_b2ac401d",
+        "filename": "chrome/browser/resources/settings/privacy_page/privacy_page.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Um... there\u0027s a flip here (Block/Allow). Is that intentional?",
+      "range": {
+        "startLine": 415,
+        "startChar": 39,
+        "endLine": 415,
+        "endChar": 58
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ba3012e_9be6ac6d",
+        "filename": "chrome/browser/resources/settings/route.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Move to line 182.",
+      "range": {
+        "startLine": 205,
+        "startChar": 4,
+        "endLine": 205,
+        "endChar": 21
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ee4d5f5_32ea6f1e",
+        "filename": "chrome/browser/resources/settings/site_settings_page/site_settings_page.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "There\u0027s also a flip here (Allow/Block).",
+      "range": {
+        "startLine": 201,
+        "startChar": 30,
+        "endLine": 201,
+        "endChar": 50
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ca43bf7_2b7293f2",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1897,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "The siteSettingsAdsAllow label is now missing. Is that intentional?",
+      "range": {
+        "startLine": 1897,
+        "startChar": 6,
+        "endLine": 1897,
+        "endChar": 27
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48562867_73daa7d8",
+        "filename": "chrome/test/data/webui/settings/all_sites_tests.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Line 42.",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 8
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9bae2ac_4d94b03d",
+        "filename": "chrome/test/data/webui/settings/all_sites_tests.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Line 81.",
+      "range": {
+        "startLine": 131,
+        "startChar": 4,
+        "endLine": 131,
+        "endChar": 7
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd1e408_984fbdaa",
+        "filename": "chrome/test/data/webui/settings/site_list_tests.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Line 15.",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 7
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e3e4bd5_7bb72783",
+        "filename": "chrome/test/data/webui/settings/site_list_tests.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Line 159.",
+      "range": {
+        "startLine": 209,
+        "startChar": 8,
+        "endLine": 209,
+        "endChar": 9
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "539d177e_dadccfea",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Line 39.",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 8
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a20136_a1573787",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Line 55.",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 8
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "494ff489_81e9b8b6",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Block to line 203.",
+      "range": {
+        "startLine": 234,
+        "startChar": 38,
+        "endLine": 234,
+        "endChar": 0
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e2daa4c_c914e544",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Block to line 248.",
+      "range": {
+        "startLine": 279,
+        "startChar": 36,
+        "endLine": 279,
+        "endChar": 39
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5f961a_08c467f9",
+        "filename": "components/page_info_strings.grdp",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-07T15:28:04Z",
+      "side": 1,
+      "message": "Nit: Block to line 179.",
+      "range": {
+        "startLine": 214,
+        "startChar": 14,
+        "endLine": 214,
+        "endChar": 0
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
