@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "260e394c_2466ca44",
+        "filename": "extensions/browser/extension_icon_image.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-07T23:36:31Z",
+      "side": 0,
+      "message": "Default icon update is also update. I unified usage.",
+      "range": {
+        "startLine": 193,
+        "startChar": 25,
+        "endLine": 193,
+        "endChar": 42
+      },
+      "revId": "0527f72f6822c6aba0370d8245bd9acb6715a2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6395781a_4d0f909e",
+        "filename": "extensions/browser/extension_icon_image.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-07T23:36:31Z",
+      "side": 0,
+      "message": "it is used in one place only and we may drop it to simplify",
+      "range": {
+        "startLine": 77,
+        "startChar": 13,
+        "endLine": 77,
+        "endChar": 18
+      },
+      "revId": "0527f72f6822c6aba0370d8245bd9acb6715a2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
