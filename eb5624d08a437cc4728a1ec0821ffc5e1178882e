@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6affa676_4c3c21e9",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/android_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-06-07T17:34:37Z",
+      "side": 1,
+      "message": "stop the new patcher here, too.",
+      "revId": "eb5624d08a437cc4728a1ec0821ffc5e1178882e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
