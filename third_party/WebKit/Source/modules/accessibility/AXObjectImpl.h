@@ -385,7 +385,6 @@ class MODULES_EXPORT AXObjectImpl
   bool IsCheckboxOrRadio() const { return IsCheckbox() || IsRadioButton(); }
   bool IsColorWell() const { return RoleValue() == kColorWellRole; }
   bool IsComboBox() const { return RoleValue() == kComboBoxRole; }
-  virtual bool IsControl() const { return false; }
   virtual bool IsDataTable() const { return false; }
   virtual bool IsEmbeddedObject() const { return false; }
   virtual bool IsFieldset() const { return false; }
@@ -441,7 +440,6 @@ class MODULES_EXPORT AXObjectImpl
   // Check object state.
   virtual bool IsClickable() const;
   virtual bool IsCollapsed() const { return false; }
-  virtual bool IsEnabled() const { return false; }
   virtual AccessibilityExpanded IsExpanded() const {
     return kExpandedUndefined;
   }
@@ -452,7 +450,6 @@ class MODULES_EXPORT AXObjectImpl
   virtual bool IsModal() const { return false; }
   virtual bool IsMultiSelectable() const { return false; }
   virtual bool IsOffScreen() const { return false; }
-  virtual bool IsReadOnly() const { return false; }
   virtual bool IsRequired() const { return false; }
   virtual bool IsSelected() const { return false; }
   virtual bool IsSelectedOptionActive() const { return false; }
@@ -460,9 +457,9 @@ class MODULES_EXPORT AXObjectImpl
   virtual bool IsVisited() const { return false; }
 
   // Check whether certain properties can be modified.
-  virtual bool CanSetFocusAttribute() const { return false; }
-  virtual bool CanSetValueAttribute() const { return false; }
-  virtual bool CanSetSelectedAttribute() const { return false; }
+  bool CanSetValueAttribute() const;
+  virtual bool CanSetFocusAttribute() const;
+  virtual bool CanSetSelectedAttribute() const;
 
   // Whether objects are ignored, i.e. not included in the tree.
   bool AccessibilityIsIgnored();
@@ -619,6 +616,7 @@ class MODULES_EXPORT AXObjectImpl
   virtual InvalidState GetInvalidState() const {
     return kInvalidStateUndefined;
   }
+  virtual AXControlMode ControlMode() const { return kNotAControl; }
   // Only used when invalidState() returns InvalidStateOther.
   virtual String AriaInvalidValue() const { return String(); }
   virtual String ValueDescription() const { return String(); }
@@ -807,6 +805,7 @@ class MODULES_EXPORT AXObjectImpl
   // Static helper functions.
   static bool IsARIAControl(AccessibilityRole);
   static bool IsARIAInput(AccessibilityRole);
+  static bool IsSubWidget(AccessibilityRole);
   static AccessibilityRole AriaRoleToWebCoreRole(const String&);
   static const AtomicString& RoleName(AccessibilityRole);
   static const AtomicString& InternalRoleName(AccessibilityRole);
@@ -859,6 +858,8 @@ class MODULES_EXPORT AXObjectImpl
   }
 
   const AXObjectImpl* InertRoot() const;
+
+  bool IsControl() const { return ControlMode() != kNotAControl; }
 
   mutable Member<AXObjectImpl> parent_;
 
