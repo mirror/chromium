@@ -39,9 +39,9 @@ function test(tagName, compositionText, expected) {
 
 test("div", "AB", "AB");
 test("div", "A B", "A B");
-test("div", "A  B", "A \xA0B");
-test("div", "A   B", "A \xA0 B");
-test("div", "A    B", "A \xA0 \xA0B"); 
+test("div", "A  B", "A\xA0 B");
+test("div", "A   B", "A\xA0 \xA0B");
+test("div", "A    B", "A\xA0 \xA0 B");
 
 test("div", " AB", "\xA0AB");
 test("div", "  AB", "\xA0 AB");
@@ -50,15 +50,15 @@ test("div", "    AB", "\xA0 \xA0 AB");
 test("div", "     AB", "\xA0 \xA0 \xA0AB");
 test("div", "      AB", "\xA0 \xA0 \xA0 AB");
 test("div", "       AB", "\xA0 \xA0 \xA0 \xA0AB");
-test("div", "AB  ", "AB \xA0");
-test("div", "AB   ", "AB \xA0\xA0");
-test("div", "AB    ", "AB \xA0 \xA0");
-test("div", "AB     ", "AB \xA0 \xA0\xA0");
-test("div", "AB      ", "AB \xA0 \xA0 \xA0");
-test("div", "AB       ", "AB \xA0 \xA0 \xA0\xA0");
+test("div", "AB  ", "AB\xA0\xA0");
+test("div", "AB   ", "AB\xA0 \xA0");
+test("div", "AB    ", "AB\xA0 \xA0\xA0");
+test("div", "AB     ", "AB\xA0 \xA0 \xA0");
+test("div", "AB      ", "AB\xA0 \xA0 \xA0\xA0");
+test("div", "AB       ", "AB\xA0 \xA0 \xA0 \xA0");
 
-test("div", "  A  B  ", "\xA0 A \xA0B \xA0");
-test("div", "\t\tA\t\tB\t\t", "\xA0 A \xA0B \xA0");
+test("div", "  A  B  ", "\xA0 A\xA0 B\xA0\xA0");
+test("div", "\t\tA\t\tB\t\t", "\xA0 A\xA0 B\xA0\xA0");
 
 test("div", " ", "\xA0");
 test("div", "  ", "\xA0\xA0");
