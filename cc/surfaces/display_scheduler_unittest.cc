@@ -80,11 +80,15 @@ class TestDisplayScheduler : public DisplayScheduler {
   }
 
   void BeginFrameDeadlineForTest() {
+    RunMissedBeginFrameTask();
+    OnBeginFrameDeadline();
+  }
+
+  void RunMissedBeginFrameTask() {
     // Ensure that any missed BeginFrames were handled by the scheduler. We need
     // to run the scheduled task ourselves since the NullTaskRunner won't.
     if (!missed_begin_frame_task_.IsCancelled())
       missed_begin_frame_task_.callback().Run();
-    OnBeginFrameDeadline();
   }
 
   void ScheduleBeginFrameDeadline() override {
@@ -141,6 +145,7 @@ class DisplaySchedulerTest : public testing::Test {
     client_.SurfaceDamaged(surface_id);
     scheduler_.ProcessSurfaceDamage(surface_id, AckForCurrentBeginFrame(),
                                     true);
+    scheduler_.RunMissedBeginFrameTask();
   }
 
  protected:
@@ -288,8 +293,6 @@ TEST_F(DisplaySchedulerTest, SurfaceDamaged) {
   AdvanceTimeAndBeginFrameForTest({sid1, sid2});
 
   // Deadline doesn't trigger early until surface 1 and 2 are both damaged.
-  EXPECT_LT(now_src().NowTicks(),
-            scheduler_.DesiredBeginFrameDeadlineTimeForTest());
   SurfaceDamaged(sid1);
   EXPECT_LT(now_src().NowTicks(),
             scheduler_.DesiredBeginFrameDeadlineTimeForTest());
@@ -299,17 +302,18 @@ TEST_F(DisplaySchedulerTest, SurfaceDamaged) {
   scheduler_.BeginFrameDeadlineForTest();
 
   // SurfaceDamage with |!has_damage| triggers early deadline.
-  AdvanceTimeAndBeginFrameForTest({sid1});
+  AdvanceTimeAndBeginFrameForTest({sid1, sid2});
+  SurfaceDamaged(sid1);
   EXPECT_LT(now_src().NowTicks(),
             scheduler_.DesiredBeginFrameDeadlineTimeForTest());
   BeginFrameAck ack = AckForCurrentBeginFrame();
   ack.has_damage = false;
-  scheduler_.ProcessSurfaceDamage(sid1, ack, false);
+  scheduler_.ProcessSurfaceDamage(sid2, ack, false);
   EXPECT_GE(now_src().NowTicks(),
             scheduler_.DesiredBeginFrameDeadlineTimeForTest());
   scheduler_.BeginFrameDeadlineForTest();
 
-  // System should be idle now.
+  // System should be idle until damaged.
   AdvanceTimeAndBeginFrameForTest(std::vector<SurfaceId>());
   EXPECT_FALSE(scheduler_.inside_begin_frame_deadline_interval());
 
@@ -352,7 +356,8 @@ TEST_F(DisplaySchedulerTest, OutputSurfaceLost) {
   EXPECT_EQ(1, client_.draw_and_swap_count());
 
   // Deadline triggers immediately on OutputSurfaceLost.
-  AdvanceTimeAndBeginFrameForTest({sid1});
+  AdvanceTimeAndBeginFrameForTest({root_surface_id, sid1});
+  SurfaceDamaged(root_surface_id);
   EXPECT_LT(now_src().NowTicks(),
             scheduler_.DesiredBeginFrameDeadlineTimeForTest());
   scheduler_.OutputSurfaceLost();
@@ -422,7 +427,8 @@ TEST_F(DisplaySchedulerTest, Visibility) {
   scheduler_.BeginFrameDeadlineForTest();
   EXPECT_EQ(1, client_.draw_and_swap_count());
 
-  AdvanceTimeAndBeginFrameForTest({sid1});
+  AdvanceTimeAndBeginFrameForTest({root_surface_id, sid1});
+  SurfaceDamaged(root_surface_id);
   EXPECT_LT(now_src().NowTicks(),
             scheduler_.DesiredBeginFrameDeadlineTimeForTest());
 
@@ -438,6 +444,13 @@ TEST_F(DisplaySchedulerTest, Visibility) {
   EXPECT_EQ(1, client_.draw_and_swap_count());
   // Now it stops listening for begin frames.
   EXPECT_EQ(0u, fake_begin_frame_source_.num_observers());
+
+  // Clear damage.
+  scheduler_.SetVisible(true);
+  EXPECT_EQ(1u, fake_begin_frame_source_.num_observers());
+  AdvanceTimeAndBeginFrameForTest(std::vector<SurfaceId>());
+  scheduler_.BeginFrameDeadlineForTest();
+  scheduler_.SetVisible(false);
 
   // Does not start listening for begin frames when becoming visible without
   // damage.
@@ -637,8 +650,12 @@ TEST_F(DisplaySchedulerTest, ScheduleBeginFrameDeadline) {
 
   scheduler_.BeginFrameDeadlineForTest();
   scheduler_.DidSwapBuffers();
+  EXPECT_EQ(count, scheduler_.scheduler_begin_frame_deadline_count());
+
   AdvanceTimeAndBeginFrameForTest(std::vector<SurfaceId>());
-  EXPECT_EQ(++count, scheduler_.scheduler_begin_frame_deadline_count());
+  SurfaceDamaged(sid1);
+  count += 2;  // Once when starting to observe, once in ProcessSurfaceDamage().
+  EXPECT_EQ(count, scheduler_.scheduler_begin_frame_deadline_count());
 
   scheduler_.DidReceiveSwapBuffersAck();
   EXPECT_EQ(++count, scheduler_.scheduler_begin_frame_deadline_count());
