@@ -143,6 +143,8 @@
          max_vertex_uniform_vectors_256)                     \
   GPU_OP(MSAA_IS_SLOW,                                       \
          msaa_is_slow)                                       \
+  GPU_OP(MULTISAMPLE_RENDERBUFFER_RESIZE_EMULATION,          \
+         multisample_renderbuffer_resize_emulation)          \
   GPU_OP(NEEDS_OFFSCREEN_BUFFER_WORKAROUND,                  \
          needs_offscreen_buffer_workaround)                  \
   GPU_OP(PACK_PARAMETERS_WORKAROUND_WITH_PACK_BUFFER,        \
