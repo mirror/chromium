@@ -1,20 +1,20 @@
-rootWebArea
-++link name='Empty anchor' inPageLinkTargetId=anchor
+rootWebArea focusable
+++link focusable name='Empty anchor' inPageLinkTargetId=anchor
 ++++staticText name='Empty anchor'
 ++++++inlineTextBox name='Empty anchor'
-++link name='Anchor with content' inPageLinkTargetId=anchor
+++link focusable name='Anchor with content' inPageLinkTargetId=anchor
 ++++staticText name='Anchor with content'
 ++++++inlineTextBox name='Anchor with content'
-++link name='Anchor with ID' inPageLinkTargetId=anchor
+++link focusable name='Anchor with ID' inPageLinkTargetId=anchor
 ++++staticText name='Anchor with ID'
 ++++++inlineTextBox name='Anchor with ID'
-++link name='Empty span' inPageLinkTargetId=genericContainer
+++link focusable name='Empty span' inPageLinkTargetId=genericContainer
 ++++staticText name='Empty span'
 ++++++inlineTextBox name='Empty span'
-++link name='Span with content' inPageLinkTargetId=genericContainer
+++link focusable name='Span with content' inPageLinkTargetId=genericContainer
 ++++staticText name='Span with content'
 ++++++inlineTextBox name='Span with content'
-++link name='Paragraph with content' inPageLinkTargetId=paragraph
+++link focusable name='Paragraph with content' inPageLinkTargetId=paragraph
 ++++staticText name='Paragraph with content'
 ++++++inlineTextBox name='Paragraph with content'
 ++paragraph

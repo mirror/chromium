@@ -1,6 +1,6 @@
-rootWebArea pageLocation=(0, 0) scrollX=0 scrollY=0
+rootWebArea focusable pageLocation=(0, 0) scrollX=0 scrollY=0
 ++genericContainer pageLocation=(0, 0)
-++++iframe pageLocation=(0, 0) transform
-++++++rootWebArea pageLocation=(0, 0) scrollX=150 scrollY=50
+++++iframe focusable pageLocation=(0, 0) transform
+++++++rootWebArea focusable pageLocation=(0, 0) scrollX=150 scrollY=50
 ++++++++genericContainer pageLocation=(-300, -100)
-++++++++++button pageLocation=(-250, -50) pageSize=(500, 100) name='Scrolled Button'
+++++++++++button focusable pageLocation=(-250, -50) pageSize=(500, 100) name='Scrolled Button'

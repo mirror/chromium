@@ -1,5 +1,5 @@
-rootWebArea
+rootWebArea focusable
 ++genericContainer
-++++button keyShortcuts='Ctrl+X' name='Cut'
-++++button keyShortcuts='Ctrl+C' name='Copy'
-++++button keyShortcuts='Ctrl+V' name='Paste'
+++++button focusable keyShortcuts='Ctrl+X' name='Cut'
+++++button focusable keyShortcuts='Ctrl+C' name='Copy'
+++++button focusable keyShortcuts='Ctrl+V' name='Paste'

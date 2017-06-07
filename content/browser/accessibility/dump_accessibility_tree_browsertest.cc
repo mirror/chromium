@@ -56,10 +56,88 @@ typedef AccessibilityTreeFormatter::Filter Filter;
 class DumpAccessibilityTreeTest : public DumpAccessibilityTestBase {
  public:
   void AddDefaultFilters(std::vector<Filter>* filters) override {
+    // TODO(aleventhal) Each platform deserves separate default filters.
+    // Windows
+    // Note: SELECTABLE, IA2_STATE_OPAQUE, LINKED off by default -- too noisy.
+    filters->push_back(Filter(base::ASCIIToUTF16("ALERT*"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("ANIMATED*"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("BUSY"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("CHECKED"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("COLLAPSED"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("DEFAULT"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("EXPANDED"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("FLOATING"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("FOCUS*"), Filter::ALLOW));
     filters->push_back(Filter(base::ASCIIToUTF16("FOCUSABLE"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("HASPOPUP"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("HOTTRACKED"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("INVISIBLE"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("MARQUEED"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("MIXED"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("MOVEABLE"), Filter::ALLOW));
+    filters->push_back(
+        Filter(base::ASCIIToUTF16("MULTISELECTABLE"), Filter::ALLOW));
+    // Produces false-positive for contentless elements, including <br>
+    // filters->push_back(Filter(base::ASCIIToUTF16("OFFSCREEN"),
+    // Filter::ALLOW));
     filters->push_back(Filter(base::ASCIIToUTF16("READONLY"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("PRESSED"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("PROTECTED"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("SELECTED"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("SIZEABLE"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("TRAVERSED"), Filter::ALLOW));
+    filters->push_back(
+        Filter(base::ASCIIToUTF16("UNAVAILABLE"), Filter::ALLOW));
+    filters->push_back(
+        Filter(base::ASCIIToUTF16("IA2_STATE_*"), Filter::ALLOW));
+    filters->push_back(
+        Filter(base::ASCIIToUTF16("IA2_STATE_OPAQUE"), Filter::DENY));
+
+    // Blink
+    filters->push_back(Filter(base::ASCIIToUTF16("check*"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("descript*"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("value*"), Filter::ALLOW));
+    // TODO(aleventhal) Add disabled back after control mode refactor
+    // filters->push_back(Filter(base::ASCIIToUTF16("disabled"),
+    // Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("invalid"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("busy"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("collapsed"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("default"), Filter::ALLOW));
+    // TODO(aleventhal) Perhaps add editable and richlyEditable in later
+    // filters->push_back(Filter(base::ASCIIToUTF16("editable"),
+    // Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("expandable"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("focus*"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("haspopup"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("horizontal"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("hovered"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("invisible"), Filter::ALLOW));
+    // Linked is disallowed by default -- too noisy
+    // filters->push_back(Filter(base::ASCIIToUTF16("linked"), Filter::ALLOW));
+    // TODO(aleventhal) Add multiline in separate patch
+    // filters->push_back(Filter(base::ASCIIToUTF16("multiline"),
+    // Filter::ALLOW));
+    filters->push_back(
+        Filter(base::ASCIIToUTF16("multiselectable"), Filter::ALLOW));
+    // Produces false-positive for contentless elements, including <br>
+    // filters->push_back(Filter(base::ASCIIToUTF16("offscreen"),
+    // Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("protected"), Filter::ALLOW));
+    // TODO(aleventhal) Add readonly support back after control mode refactor
+    // filters->push_back(Filter(base::ASCIIToUTF16("read*"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("required"), Filter::ALLOW));
+    // TODO(aleventhal) Perhaps add editable and richlyEditable in later
+    // filters->push_back(Filter(base::ASCIIToUTF16("richly*"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("select*"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("vertical"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("visited"), Filter::ALLOW));
+
+    // OS X
     filters->push_back(Filter(base::ASCIIToUTF16("roleDescription=*"),
                               Filter::ALLOW));
+
+    // General
     filters->push_back(Filter(base::ASCIIToUTF16("*=''"), Filter::DENY));
     // After denying empty values, because we want to allow name=''
     filters->push_back(

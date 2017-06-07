@@ -1,4 +1,4 @@
 rootWebArea focusable
-++listBox
+++listBox vertical
 ++++listBoxOption focusable selectable name='option 1'
 ++++listBoxOption focusable selectable name='label 2'

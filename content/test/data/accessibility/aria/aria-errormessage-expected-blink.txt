@@ -1,6 +1,6 @@
-rootWebArea
+rootWebArea focusable
 ++genericContainer
-++++textField errormessageId=paragraph
+++++textField focusable errormessageId=paragraph
 ++paragraph
 ++++staticText name='Error'
 ++++++inlineTextBox name='Error'
