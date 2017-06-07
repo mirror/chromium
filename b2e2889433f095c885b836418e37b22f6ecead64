@@ -297,6 +297,30 @@
     },
     {
       "key": {
+        "uuid": "7b4b73cd_1661c171",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-06-07T21:17:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23ca4c1a_64580d23",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 7
+      },
+      "revId": "b2e2889433f095c885b836418e37b22f6ecead64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e04c7114_80a4a751",
         "filename": "tools/checkteamtags/owners_file_tags.py",
         "patchSetId": 2

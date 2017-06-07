@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9533a86d_959006f6",
+        "filename": "tools/checkteamtags/extract_components_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-06-07T21:17:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb55348e_a6f951f3",
+      "range": {
+        "startLine": 27,
+        "startChar": 63,
+        "endLine": 41,
+        "endChar": 3
+      },
+      "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64dd4375_f29ae3b5",
         "filename": "tools/checkteamtags/extract_components_test.py",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a40cd370_9afa166a",
+        "filename": "tools/checkteamtags/extract_components_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-06-07T21:17:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64dd4375_f29ae3b5",
+      "range": {
+        "startLine": 62,
+        "startChar": 63,
+        "endLine": 77,
+        "endChar": 3
+      },
+      "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "24937911_24fc6e27",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-06-07T21:17:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "378d2df1_0c1231e7",
+      "range": {
+        "startLine": 44,
+        "startChar": 56,
+        "endLine": 44,
+        "endChar": 74
+      },
+      "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e91afda_cbab3096",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-06-07T21:17:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33403b62_5df1733c",
+      "range": {
+        "startLine": 44,
+        "startChar": 33,
+        "endLine": 44,
+        "endChar": 51
+      },
+      "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba2bec4a_e2d43203",
         "filename": "tools/checkteamtags/owners_file_tags.py",
         "patchSetId": 4
@@ -114,6 +210,30 @@
       "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc1886d_938cd8b5",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-06-07T21:17:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba2bec4a_e2d43203",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 7
+      },
+      "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "9f48eb6e_861ecaf9",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-06-07T21:17:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc19a526_5f417cb8",
+      "range": {
+        "startLine": 103,
+        "startChar": 23,
+        "endLine": 104,
+        "endChar": 76
+      },
+      "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba754f97_a1054359",
         "filename": "tools/checkteamtags/owners_file_tags_test.py",
         "patchSetId": 4
@@ -187,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "ff018ffd_ff0182db",
+        "filename": "tools/checkteamtags/owners_file_tags_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-06-07T21:17:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba754f97_a1054359",
+      "range": {
+        "startLine": 62,
+        "startChar": 18,
+        "endLine": 73,
+        "endChar": 3
+      },
+      "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a659ffa_80c21324",
         "filename": "tools/checkteamtags/owners_file_tags_test.py",
         "patchSetId": 4
@@ -198,6 +366,24 @@
       "writtenOn": "2017-06-06T09:14:57Z",
       "side": 1,
       "message": "This should inherit component, shouldn\u0027t it? If so, then innerdir2 should also inherit team and innerdir3 should inherit both.",
+      "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c13f3657_74aad44f",
+        "filename": "tools/checkteamtags/owners_file_tags_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-06-07T21:17:53Z",
+      "side": 1,
+      "message": "I thought that just having an OWNERS file would override all three tags from the parent dir. (or set them as having no value)\n\nI expected inheritance to only apply to dirs with no OWNERS file.",
+      "parentUuid": "8a659ffa_80c21324",
       "revId": "5eb8f36de7541331ab315a8810fb2eb3212121ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
