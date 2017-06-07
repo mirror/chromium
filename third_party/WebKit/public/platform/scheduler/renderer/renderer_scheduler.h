@@ -148,12 +148,12 @@ class BLINK_PLATFORM_EXPORT RendererScheduler : public ChildScheduler {
   // Must be called on the main thread.
   virtual void RemovePendingNavigation(NavigatingFrameType type) = 0;
 
-  // Tells the scheduler that a navigation has started.  The scheduler will
+  // Tells the scheduler that a navigation has started.  The scheduler may
   // prioritize loading tasks for a short duration afterwards.
   // Must be called from the main thread.
   // TODO(maxlg): remove OnNavigationStarted and migrate this part into
   // OnCommitProvisionalLoad.
-  virtual void OnNavigationStarted() = 0;
+  virtual void OnNavigationStarted(bool is_same_document_navigation) = 0;
 
   // Tells the scheduler that the provisional load has been committed. This
   // signals the point that activity stops happening in the old page and the

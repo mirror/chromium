@@ -1680,8 +1680,10 @@ void RenderFrameImpl::OnNavigate(
     const RequestNavigationParams& request_params) {
   RenderThreadImpl* render_thread_impl = RenderThreadImpl::current();
   // Can be NULL in tests.
-  if (render_thread_impl)
-    render_thread_impl->GetRendererScheduler()->OnNavigationStarted();
+  if (render_thread_impl) {
+    render_thread_impl->GetRendererScheduler()->OnNavigationStarted(
+        false /* is_same_document_navigation */);
+  }
   DCHECK(!IsBrowserSideNavigationEnabled());
   TRACE_EVENT2("navigation,rail", "RenderFrameImpl::OnNavigate", "id",
                routing_id_, "url", common_params.url.possibly_invalid_spec());
@@ -3522,7 +3524,8 @@ void RenderFrameImpl::DidFailProvisionalLoad(
 
 void RenderFrameImpl::DidCommitProvisionalLoad(
     const blink::WebHistoryItem& item,
-    blink::WebHistoryCommitType commit_type) {
+    blink::WebHistoryCommitType commit_type,
+    bool is_same_document_navigation) {
   TRACE_EVENT2("navigation,rail", "RenderFrameImpl::didCommitProvisionalLoad",
                "id", routing_id_,
                "url", GetLoadingUrl().possibly_invalid_spec());
@@ -3664,7 +3667,8 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
                                    ui::PAGE_TRANSITION_RELOAD)) {
         // TODO(maxlg): remove OnNavigationStarted and migrate this part into
         // OnCommitProvisionalLoad.
-        render_thread_impl->GetRendererScheduler()->OnNavigationStarted();
+        render_thread_impl->GetRendererScheduler()->OnNavigationStarted(
+            is_same_document_navigation);
         render_thread_impl->GetRendererScheduler()->OnCommitProvisionalLoad();
       }
     }
@@ -3967,7 +3971,8 @@ void RenderFrameImpl::DidNavigateWithinPage(
   static_cast<NavigationStateImpl*>(document_state->navigation_state())
       ->set_was_within_same_document(true);
 
-  DidCommitProvisionalLoad(item, commit_type);
+  DidCommitProvisionalLoad(item, commit_type,
+                           true /* is_same_document_navigation */);
 }
 
 void RenderFrameImpl::DidUpdateCurrentHistoryItem() {
