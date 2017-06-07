@@ -157,7 +157,7 @@ void PaymentRequest::Abort() {
 
   bool accepting_abort = !state_->IsPaymentAppInvoked();
   if (accepting_abort) {
-    RecordFirstCompletionStatus(JourneyLogger::COMPLETION_STATUS_OTHER_ABORTED);
+    RecordFirstAbortReason(JourneyLogger::ABORT_REASON_ABORTED_BY_MERCHANT);
   }
 
   if (client_.is_bound())
@@ -234,7 +234,7 @@ void PaymentRequest::UserCancelled() {
   if (!client_.is_bound())
     return;
 
-  RecordFirstCompletionStatus(JourneyLogger::COMPLETION_STATUS_USER_ABORTED);
+  RecordFirstAbortReason(JourneyLogger::ABORT_REASON_ABORTED_BY_USER);
 
   // This sends an error to the renderer, which informs the API user.
   client_->OnError(mojom::PaymentErrorReason::USER_CANCEL);
@@ -248,9 +248,9 @@ void PaymentRequest::UserCancelled() {
 }
 
 void PaymentRequest::DidStartNavigation(bool is_user_initiated) {
-  RecordFirstCompletionStatus(
-      is_user_initiated ? JourneyLogger::COMPLETION_STATUS_USER_ABORTED
-                        : JourneyLogger::COMPLETION_STATUS_OTHER_ABORTED);
+  RecordFirstAbortReason(is_user_initiated
+                             ? JourneyLogger::ABORT_REASON_ABORTED_BY_USER
+                             : JourneyLogger::ABORT_REASON_ABORTED_BY_MERCHANT);
 }
 
 void PaymentRequest::OnConnectionTerminated() {
@@ -264,6 +264,8 @@ void PaymentRequest::OnConnectionTerminated() {
   delegate_->CloseDialog();
   if (observer_for_testing_)
     observer_for_testing_->OnConnectionTerminated();
+
+  // RecordFirstAbortReason(JourneyLogger::ABORT_REASON_OTHER);
   manager_->DestroyRequest(this);
 }
 
@@ -273,16 +275,11 @@ void PaymentRequest::Pay() {
   state_->GeneratePaymentResponse();
 }
 
-void PaymentRequest::RecordFirstCompletionStatus(
-    JourneyLogger::CompletionStatus completion_status) {
+void PaymentRequest::RecordFirstAbortReason(
+    JourneyLogger::AbortReason abort_reason) {
   if (!has_recorded_abort_reason_) {
     has_recorded_abort_reason_ = true;
-    // TODO(crbug.com/716546): Record more abort reasons.
-    if (completion_status == JourneyLogger::COMPLETION_STATUS_USER_ABORTED) {
-      journey_logger_.SetAborted(JourneyLogger::ABORT_REASON_ABORTED_BY_USER);
-    } else {
-      journey_logger_.SetAborted(JourneyLogger::ABORT_REASON_OTHER);
-    }
+    journey_logger_.SetAborted(abort_reason);
   }
 }
 

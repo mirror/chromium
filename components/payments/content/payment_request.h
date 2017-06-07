@@ -99,8 +99,7 @@ class PaymentRequest : public mojom::PaymentRequest,
   PaymentRequestState* state() { return state_.get(); }
 
  private:
-  void RecordFirstCompletionStatus(
-      JourneyLogger::CompletionStatus completion_status);
+  void RecordFirstAbortReason(JourneyLogger::AbortReason completion_status);
 
   content::WebContents* web_contents_;
   std::unique_ptr<PaymentRequestDelegate> delegate_;
