@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ec3375c_f815fd65",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-06-07T19:04:28Z",
+      "side": 1,
+      "message": "We should make |safe_id| in ShelfModel::SetShelfItemDelegate instead and add a comment like \"// Create a copy of the id that can be safely accessed if |shelf_id| is backed by a controller that will be deleted in the assignment below.\"",
+      "range": {
+        "startLine": 336,
+        "startChar": 13,
+        "endLine": 336,
+        "endChar": 20
+      },
+      "revId": "7145c84028b5b0a1ffb0d8e912d2317e18a8fe41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
