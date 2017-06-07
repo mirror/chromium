@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01adea50_19cce2eb",
+        "filename": "docs/memory/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-07T00:29:30Z",
+      "side": 1,
+      "message": "I think these are for OOM crashes.",
+      "revId": "1365401f100f65326ce44b4fe494c33957c151fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "712559a5_d9f4140e",
+        "filename": "docs/memory/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-07T00:29:30Z",
+      "side": 1,
+      "message": "More instructions for macOS:\nhttps://docs.google.com/document/d/15mBOu_uZbgP5bpdHZJXEnF9csSRq7phUWXnZcteVr0o/edit\n\nUnfortunately, memory-infra traces only capture a subset of the things we care about. :(",
+      "revId": "1365401f100f65326ce44b4fe494c33957c151fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3768777_ce4c583a",
+        "filename": "docs/memory/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-07T00:29:30Z",
+      "side": 1,
+      "message": "This seems like a good breakdown to me for all the projects within chrome-memory itself, but there are probably groups [net, v8, etc.] which are not captured by this.",
+      "revId": "1365401f100f65326ce44b4fe494c33957c151fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66fa0633_88ac7fe5",
+        "filename": "docs/memory/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-07T00:29:30Z",
+      "side": 1,
+      "message": "I\u0027d move mmenke, rsleevi and xunjieli to be entirely under net, which is subsumed by browser anyways.\n\nAnd then this becomes equivalent to Android. How are you trying to distinguish between android and browser? Maybe just get rid of \"Android process\"?",
+      "revId": "1365401f100f65326ce44b4fe494c33957c151fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d5fc29f_6a768564",
+        "filename": "docs/memory/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-07T00:29:30Z",
+      "side": 1,
+      "message": "I\u0027d do GPU/cc and just list ericrk and maaaybe vmiura.",
+      "revId": "1365401f100f65326ce44b4fe494c33957c151fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e640947_b9a80991",
+        "filename": "docs/memory/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-07T00:29:30Z",
+      "side": 1,
+      "message": "wouldn\u0027t include ericrk here.",
+      "revId": "1365401f100f65326ce44b4fe494c33957c151fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
