@@ -16,6 +16,24 @@
       "revId": "8e19c14f48e8e83b3953eead00aeca2906c2314d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fc3f83d_c2578660",
+        "filename": "services/device/nfc/android/java/src/org/chromium/device/nfc/NfcImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-06-07T08:14:19Z",
+      "side": 1,
+      "message": "Thanks for the catch Reilly! Added new test and refined subdomain matching rule. Will need to make PR for the spec as well.",
+      "parentUuid": "4a34e1a0_9a8ce18e",
+      "revId": "8e19c14f48e8e83b3953eead00aeca2906c2314d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
