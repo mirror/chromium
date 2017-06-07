@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df824d0e_7f7ef8ec",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-07T19:13:05Z",
+      "side": 1,
+      "message": "We just got burned by base::Feature (https://cs.chromium.org/chromium/src/base/feature_list.h?q\u003dFeatureList+package:%5Echromium$\u0026l\u003d34) generating a static initializer when included with about_flags (which itself has static initializers, but that\u0027s a different story).\n\nWe ended up making those constexpr to get rid of them. What makes this different?",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 73
+      },
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
