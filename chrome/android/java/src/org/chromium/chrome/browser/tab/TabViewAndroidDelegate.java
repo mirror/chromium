@@ -24,6 +24,13 @@ class TabViewAndroidDelegate extends ViewAndroidDelegate {
     }
 
     @Override
+    public boolean shouldSetAccessibilityFocusOnPageLoad() {
+        // For browser tabs, we want to set accessibility focus to the page
+        // when it loads. This is not the default behavior for embedded web views.
+        return true;
+    }
+
+    @Override
     public void onBackgroundColorChanged(int color) {
         mTab.onBackgroundColorChanged(color);
     }
