@@ -28,7 +28,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "web/ExternalPopupMenu.h"
+#include "core/page/ExternalPopupMenu.h"
 
 #include "core/dom/NodeComputedStyle.h"
 #include "core/dom/TaskRunnerHelper.h"
@@ -103,12 +103,12 @@ bool ExternalPopupMenu::ShowInternal() {
     IntRect rect_in_viewport = local_frame_->View()->ContentsToViewport(rect);
     web_external_popup_menu_->Show(rect_in_viewport);
     return true;
-  } else {
-    // The client might refuse to create a popup (when there is already one
-    // pending to be shown for example).
-    DidCancel();
-    return false;
   }
+
+  // The client might refuse to create a popup (when there is already one
+  // pending to be shown for example).
+  DidCancel();
+  return false;
 }
 
 void ExternalPopupMenu::Show() {
