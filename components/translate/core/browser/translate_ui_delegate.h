@@ -52,6 +52,9 @@ class TranslateUIDelegate {
   // Returns the number of languages supported.
   size_t GetNumberOfLanguages() const;
 
+  // Returns the "unknown" language index.
+  size_t GetUnknownLanguageIndex() const;
+
   // Returns the original language index.
   size_t GetOriginalLanguageIndex() const;
 
@@ -148,6 +151,9 @@ class TranslateUIDelegate {
 
   // The index for language the page should be translated to.
   size_t target_language_index_;
+
+  // The index for the "unknown" language entry.
+  size_t unknown_language_index_;
 
   // The translation related preferences.
   std::unique_ptr<TranslatePrefs> prefs_;

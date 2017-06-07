@@ -36,6 +36,7 @@ class TranslateBubbleModelImpl : public TranslateBubbleModel {
   void GoBackFromAdvanced() override;
   int GetNumberOfLanguages() const override;
   base::string16 GetLanguageNameAt(int index) const override;
+  int GetUnknownLanguageIndex() const override;
   int GetOriginalLanguageIndex() const override;
   void UpdateOriginalLanguageIndex(int index) override;
   int GetTargetLanguageIndex() const override;

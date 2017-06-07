@@ -72,6 +72,10 @@ base::string16 TranslateBubbleModelImpl::GetLanguageNameAt(int index) const {
   return ui_delegate_->GetLanguageNameAt(index);
 }
 
+int TranslateBubbleModelImpl::GetUnknownLanguageIndex() const {
+  return ui_delegate_->GetUnknownLanguageIndex();
+}
+
 int TranslateBubbleModelImpl::GetOriginalLanguageIndex() const {
   return ui_delegate_->GetOriginalLanguageIndex();
 }

@@ -4,10 +4,13 @@
 
 #include "components/translate/core/browser/translate_ui_delegate.h"
 
+#include <algorithm>
+
 #include "base/i18n/string_compare.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "components/metrics/proto/translate_event.pb.h"
+#include "components/strings/grit/components_strings.h"
 #include "components/translate/core/browser/language_state.h"
 #include "components/translate/core/browser/translate_client.h"
 #include "components/translate/core/browser/translate_download_manager.h"
@@ -66,38 +69,27 @@ TranslateUIDelegate::TranslateUIDelegate(
 
   std::vector<std::string> language_codes;
   TranslateDownloadManager::GetSupportedLanguages(&language_codes);
-
-  // Preparing for the alphabetical order in the locale.
   std::string locale =
       TranslateDownloadManager::GetInstance()->application_locale();
-  std::unique_ptr<icu::Collator> collator = CreateCollator(locale);
 
-  languages_.reserve(language_codes.size());
-  for (std::vector<std::string>::const_iterator iter = language_codes.begin();
-       iter != language_codes.end(); ++iter) {
-    std::string language_code = *iter;
-
-    base::string16 language_name =
+  for (const std::string& language_code : language_codes) {
+    const base::string16 language_name =
         l10n_util::GetDisplayNameForLocale(language_code, locale, true);
-    // Insert the language in languages_ in alphabetical order.
-    std::vector<LanguageNamePair>::iterator iter2;
-    if (collator) {
-      for (iter2 = languages_.begin(); iter2 != languages_.end(); ++iter2) {
-        int result = base::i18n::CompareString16WithCollator(
-            *collator, language_name, iter2->second);
-        if (result == UCOL_LESS)
-          break;
-      }
-    } else {
-      // |locale| may not be supported by ICU collator (crbug/54833). In this
-      // case, let's order the languages in UTF-8.
-      for (iter2 = languages_.begin(); iter2 != languages_.end(); ++iter2) {
-        if (language_name.compare(iter2->second) < 0)
-          break;
-      }
-    }
-    languages_.insert(iter2, LanguageNamePair(language_code, language_name));
+    languages_.push_back(LanguageNamePair(language_code, language_name));
   }
+  languages_.push_back(LanguageNamePair(
+      translate::kUnknownLanguageCode,
+      l10n_util::GetStringUTF16(IDS_TRANSLATE_BUBBLE_UNKNOWN_LANGUAGE)));
+
+  // Preparing for the alphabetical order in the locale.
+  std::unique_ptr<icu::Collator> collator = CreateCollator(locale);
+  const auto cmp = [&](const LanguageNamePair& a, const LanguageNamePair& b) {
+    return (collator ? base::i18n::CompareString16WithCollator(
+                           *collator, a.second, b.second)
+                     : a.second.compare(b.second)) < 0;
+  };
+  std::sort(languages_.begin(), languages_.end(), cmp);
+
   for (std::vector<LanguageNamePair>::const_iterator iter = languages_.begin();
        iter != languages_.end(); ++iter) {
     std::string language_code = iter->first;
@@ -107,6 +99,8 @@ TranslateUIDelegate::TranslateUIDelegate(
     }
     if (language_code == target_language)
       target_language_index_ = iter - languages_.begin();
+    if (language_code == translate::kUnknownLanguageCode)
+      unknown_language_index_ = iter - languages_.begin();
   }
 
   prefs_ = translate_manager_->translate_client()->GetTranslatePrefs();
@@ -131,6 +125,10 @@ const LanguageState& TranslateUIDelegate::GetLanguageState() {
 
 size_t TranslateUIDelegate::GetNumberOfLanguages() const {
   return languages_.size();
+}
+
+size_t TranslateUIDelegate::GetUnknownLanguageIndex() const {
+  return unknown_language_index_;
 }
 
 size_t TranslateUIDelegate::GetOriginalLanguageIndex() const {
