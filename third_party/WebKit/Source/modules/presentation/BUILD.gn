@@ -8,6 +8,7 @@ blink_modules_sources("presentation") {
   sources = [
     "ExistingPresentationConnectionCallbacks.cpp",
     "ExistingPresentationConnectionCallbacks.h",
+    "MockWebPresentationClient.h",
     "NavigatorPresentation.cpp",
     "NavigatorPresentation.h",
     "Presentation.cpp",
