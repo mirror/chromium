@@ -156,6 +156,7 @@ void OpenVRDevice::CreateVRDisplayInfo(
 }
 
 void OpenVRDevice::RequestPresent(mojom::VRSubmitFrameClientPtr submit_client,
+                                  mojom::VRPresentationProviderRequest request,
                                   const base::Callback<void(bool)>& callback) {
   callback.Run(false);
   // We don't support presentation currently.
@@ -169,21 +170,9 @@ void OpenVRDevice::ExitPresent() {
   // We don't support presentation currently, so don't do anything.
 }
 
-void OpenVRDevice::SubmitFrame(int16_t frame_index,
-                               const gpu::MailboxHolder& mailbox) {
-  // We don't support presentation currently, so don't do anything.
-}
-
-void OpenVRDevice::UpdateLayerBounds(int16_t frame_index,
-                                     mojom::VRLayerBoundsPtr left_bounds,
-                                     mojom::VRLayerBoundsPtr right_bounds,
-                                     int16_t source_width,
-                                     int16_t source_height) {
-  // We don't support presentation currently, so don't do anything.
-}
-
-void OpenVRDevice::GetVRVSyncProvider(mojom::VRVSyncProviderRequest request) {
-  render_loop_->Bind(std::move(request));
+void OpenVRDevice::GetNextMagicWindowPose(
+    mojom::VRDisplay::GetNextMagicWindowPoseCallback callback) {
+  std::move(callback).Run(mojom::VRPosePtr(nullptr));
 }
 
 OpenVRDevice::OpenVRRenderLoop::OpenVRRenderLoop(vr::IVRSystem* vr_system)
@@ -195,7 +184,7 @@ OpenVRDevice::OpenVRRenderLoop::OpenVRRenderLoop(vr::IVRSystem* vr_system)
 }
 
 void OpenVRDevice::OpenVRRenderLoop::Bind(
-    mojom::VRVSyncProviderRequest request) {
+    mojom::VRPresentationProvider request) {
   binding_.Close();
   binding_.Bind(std::move(request));
 }
@@ -296,7 +285,7 @@ void OpenVRDevice::OpenVRRenderLoop::UnregisterPollingEventCallback() {
 }
 
 void OpenVRDevice::OpenVRRenderLoop::GetVSync(
-    const mojom::VRVSyncProvider::GetVSyncCallback& callback) {
+    const mojom::VRPresentationProvider::GetVSyncCallback& callback) {
   static int16_t next_frame = 0;
   int16_t frame = next_frame++;
 
@@ -314,7 +303,22 @@ void OpenVRDevice::OpenVRRenderLoop::GetVSync(
   Sleep(11);  // TODO (billorr): Use real vsync timing instead of a sleep (this
               // sleep just throttles vsyncs so we don't fill message queues).
   callback.Run(std::move(pose), time, frame,
-               device::mojom::VRVSyncProvider::Status::SUCCESS);
+               device::mojom::VRPresentationProvider::VSyncStatus::SUCCESS);
+}
+
+void OpenVRDevice::OpenVRRenderLoop::SubmitFrame(
+    int16_t frame_index,
+    const gpu::MailboxHolder& mailbox) {
+  // We don't support presentation currently, so don't do anything.
+}
+
+void OpenVRDevice::OpenVRRenderLoop::UpdateLayerBounds(
+    int16_t frame_index,
+    mojom::VRLayerBoundsPtr left_bounds,
+    mojom::VRLayerBoundsPtr right_bounds,
+    int16_t source_width,
+    int16_t source_height) {
+  // We don't support presentation currently, so don't do anything.
 }
 
 }  // namespace device
