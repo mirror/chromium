@@ -70,6 +70,30 @@
       "revId": "83b0613925d4098f95e8c9645ecd3ea54e152dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12bbf493_01621424",
+        "filename": "services/ui/ws/window_manager_display_root.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-07T20:58:36Z",
+      "side": 1,
+      "message": "If the call to set the window bounds is being dropped, it could be because I assumed all bounds to the embed point would be routed through WindowTreeHostMus::SetBoundsInPixels.",
+      "parentUuid": "6c6de32e_4e1481c4",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "83b0613925d4098f95e8c9645ecd3ea54e152dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
