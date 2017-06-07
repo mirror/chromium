@@ -283,13 +283,16 @@ void RunApplication(NSString* app_path,
                     format:NSPropertyListXMLFormat_v1_0
           errorDescription:&error];
   [data writeToFile:tempFilePath atomically:YES];
+
+  NSLog(@"After write to log");
+
   XCRunTask* task = [[[XCRunTask alloc] initWithArguments:@[
     @"xcodebuild", @"-xctestrun", tempFilePath, @"-destination",
     [@"platform=iOS Simulator,id=" stringByAppendingString:udid],
     @"test-without-building"
   ]] autorelease];
 
-  if (!xctest_path) {
+  /*if (!xctest_path) {
     // The following stderr messages are meaningless on iossim when not running
     // xctests and can be safely stripped.
     NSArray* ignore_strings = @[
@@ -309,8 +312,10 @@ void RunApplication(NSString* app_path,
           printf("%s", [log UTF8String]);
         };
     [task setStandardError:stderr_pipe];
-  }
+  }*/
+  NSLog(@"Before task run.");
   [task run];
+  NSLog(@"After task run.");
 }
 
 int main(int argc, char* const argv[]) {
