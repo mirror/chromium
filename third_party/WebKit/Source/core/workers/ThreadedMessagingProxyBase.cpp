@@ -66,11 +66,6 @@ int ThreadedMessagingProxyBase::ProxyCount() {
   return g_live_messaging_proxy_count;
 }
 
-void ThreadedMessagingProxyBase::SetWorkerThreadForTest(
-    std::unique_ptr<WorkerThread> worker_thread) {
-  worker_thread_ = std::move(worker_thread);
-}
-
 void ThreadedMessagingProxyBase::InitializeWorkerThread(
     std::unique_ptr<WorkerThreadStartupData> startup_data) {
   DCHECK(IsParentContextThread());
@@ -81,9 +76,16 @@ void ThreadedMessagingProxyBase::InitializeWorkerThread(
           ? document->Loader()->GetTiming().ReferenceMonotonicTime()
           : MonotonicallyIncreasingTime();
 
+  // Deeply copy the script URL because |startup_data| will be transferred to
+  // the worker thread and the underlying StringImpl objects of |script_url_|
+  // will not be accessible from this thread.
+  KURL script_url = startup_data->script_url_.Copy();
+
   worker_thread_ = CreateWorkerThread(origin_time);
   worker_thread_->Start(std::move(startup_data), GetParentFrameTaskRunners());
   WorkerThreadCreated();
+  GetWorkerInspectorProxy()->WorkerThreadCreated(document, GetWorkerThread(),
+                                                 script_url);
 }
 
 ThreadableLoadingContext*
