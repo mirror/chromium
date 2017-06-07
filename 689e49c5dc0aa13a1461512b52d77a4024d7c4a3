@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cf1bdff4_ec083893",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_blocking_page.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-07T17:25:37Z",
+      "side": 1,
+      "message": "Yeah good point. I guess the check in the old code (threat_details_\u003d\u003dnull) was also redundant then. Removed.",
+      "parentUuid": "5c5a3e92_7c3b775e",
+      "revId": "689e49c5dc0aa13a1461512b52d77a4024d7c4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e6ff8b1_24427474",
         "filename": "components/safe_browsing/browser/mock_safe_browsing_ui_manager.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "689e49c5dc0aa13a1461512b52d77a4024d7c4a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "212922d4_a9c92017",
+        "filename": "components/safe_browsing/browser/mock_safe_browsing_ui_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-07T17:25:37Z",
+      "side": 1,
+      "message": "It turns out I don\u0027t need this class for trigger manager so reverted this change.",
+      "parentUuid": "1e6ff8b1_24427474",
+      "revId": "689e49c5dc0aa13a1461512b52d77a4024d7c4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ed4ceb5a_5a6c25db",
+        "filename": "components/safe_browsing/browser/mock_safe_browsing_ui_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-07T17:25:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c6c506ff_8183b524",
+      "revId": "689e49c5dc0aa13a1461512b52d77a4024d7c4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fd7d190_61557fdd",
         "filename": "components/safe_browsing/triggers/trigger_manager.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "cd3ed2a9_5bc81219",
+        "filename": "components/safe_browsing/triggers/trigger_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-07T17:25:37Z",
+      "side": 1,
+      "message": "Yeah that\u0027s a fair interpretation. This would only happen if you somehow got two interstitials for the same tab and both tried to start a report. If you make them both think that the report started then they will both try to finish/send the report. The first one will successfully complete the report, while the second will get an error. I think this makes sense.\n\nThere is a possible race condition here though (both interstitials completing the report at the same time). Is the DCHECK(UI thread) enough to handle that? This is one argument to continue returning \"false\" when a report is already running on the current threatDetails - that way the second interstitial won\u0027t try to complete its report.\n\nAFAICT, a single interstitial can\u0027t currently start more than one report.\n\nWDYT?",
+      "parentUuid": "8fd7d190_61557fdd",
+      "revId": "689e49c5dc0aa13a1461512b52d77a4024d7c4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b55c0c0f_de772006",
         "filename": "components/safe_browsing/triggers/trigger_manager.cc",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-06-06T22:08:09Z",
       "side": 1,
       "message": "I\u0027m not sure if threat_details knows it should self-delete at the end of FinishCollection. This might be a problem in the old code too. \nMaybe we should call Release() at the end of ThreatDetails::OnCacheCollectionReady()?",
+      "revId": "689e49c5dc0aa13a1461512b52d77a4024d7c4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7dec11b_8a1f6ba6",
+        "filename": "components/safe_browsing/triggers/trigger_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-07T17:25:37Z",
+      "side": 1,
+      "message": "Anecdotally, threat_details seems to get deleted correctly (in unit tests as well as in manual testing).\n\nSeems like implementing RefCountedThreadSafe handles this (deletes the obj when the ref count drops to zero, which I assume happens at the end of OnCacheCollectionReady when the final Bind call is finished).\n\nLooking at other usage, Release seems to be used to unwind an earlier AddRef call, and those cases seem to be in response to external events. I\u0027m not sure ThreatDetails behaves this way. Thoughts?",
+      "parentUuid": "b55c0c0f_de772006",
       "revId": "689e49c5dc0aa13a1461512b52d77a4024d7c4a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
