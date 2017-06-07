@@ -425,6 +425,25 @@ class SessionManagerClientImpl : public SessionManagerClient {
                    weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
+  void StartArcInstanceForLoginScreen(
+      const StartArcInstanceCallback& callback) override {
+    dbus::MethodCall method_call(
+        login_manager::kSessionManagerInterface,
+        login_manager::kSessionManagerStartArcInstance);
+    dbus::MessageWriter writer(&method_call);
+
+    login_manager::StartArcInstanceRequest request;
+    request.set_for_login_screen(true);
+    writer.AppendProtoAsArrayOfBytes(request);
+
+    session_manager_proxy_->CallMethodWithErrorCallback(
+        &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+        base::Bind(&SessionManagerClientImpl::OnStartArcInstanceSucceeded,
+                   weak_ptr_factory_.GetWeakPtr(), callback),
+        base::Bind(&SessionManagerClientImpl::OnStartArcInstanceFailed,
+                   weak_ptr_factory_.GetWeakPtr(), callback));
+  }
+
   void StopArcInstance(const ArcCallback& callback) override {
     dbus::MethodCall method_call(login_manager::kSessionManagerInterface,
                                  login_manager::kSessionManagerStopArcInstance);
@@ -1054,6 +1073,10 @@ class SessionManagerClientStubImpl : public SessionManagerClient {
                         bool enable_vendor_privileged,
                         const StartArcInstanceCallback& callback) override {
     callback.Run(StartArcInstanceResult::UNKNOWN_ERROR, std::string());
+  }
+
+  void StartArcInstanceForLoginScreen(const StartArcInstanceCallback& callback) override {
+    //callback.Run(StartArcInstanceResult::UNKNOWN_ERROR, std::string());
   }
 
   void SetArcCpuRestriction(

@@ -304,6 +304,8 @@ class CHROMEOS_EXPORT SessionManagerClient : public DBusClient {
                                 bool skip_boot_completed_broadcast,
                                 bool scan_vendor_priv_app,
                                 const StartArcInstanceCallback& callback) = 0;
+  virtual void StartArcInstanceForLoginScreen(
+      const StartArcInstanceCallback& callback) = 0;
 
   // Asynchronously stops the ARC instance.  Upon completion, invokes
   // |callback| with the result; true on success, false on failure (either
