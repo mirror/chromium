@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d0c33ba7_de14301c",
+        "filename": "ios/chrome/browser/ui/payments/cells/page_info_item.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-07T18:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af9c485c_2d4b510c",
+      "range": {
+        "startLine": 139,
+        "startChar": 48,
+        "endLine": 139,
+        "endChar": 51
+      },
+      "revId": "3fc80d317784e059662f0454715d4fdf7536398c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1ebde01_822598a8",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "87b1d3a2_691dfefe",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-07T18:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1ebde01_822598a8",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 28
+      },
+      "revId": "3fc80d317784e059662f0454715d4fdf7536398c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad95336e_d48ee3bf",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-07T15:41:18Z",
       "side": 1,
       "message": "Please make sure we don\u0027t need to display the lock icon for cryptographic schemes other than Https.",
+      "range": {
+        "startLine": 455,
+        "startChar": 54,
+        "endLine": 455,
+        "endChar": 71
+      },
+      "revId": "3fc80d317784e059662f0454715d4fdf7536398c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4eac67a_d9161d32",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-07T18:02:09Z",
+      "side": 1,
+      "message": "Just checked in with Rouslan, he said we should keep it the same as with iOS which only displays the lock icon for the https scheme. With that being said it may be worth changing the name of this boolean to reflect that and/or also pass in the scheme name with it as it appears as though Android passes in the scheme. But this may all be a change for a later CL as properly formatting the URL just like Omnibox will require a larger refactoring given that there are no readily available formatting functions like in Android (for reference here is how Android does it: https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/payments/ui/PaymentRequestHeader.java?type\u003dcs\u0026q\u003demphasizeUrl\u0026l\u003d54)",
+      "parentUuid": "ad95336e_d48ee3bf",
       "range": {
         "startLine": 455,
         "startChar": 54,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "3ebc0e25_9c4764f8",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-07T18:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0153050f_1e9ae81f",
+      "range": {
+        "startLine": 638,
+        "startChar": 8,
+        "endLine": 638,
+        "endChar": 46
+      },
+      "revId": "3fc80d317784e059662f0454715d4fdf7536398c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e3a5875_81113b08",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 4
@@ -114,6 +210,30 @@
       "revId": "3fc80d317784e059662f0454715d4fdf7536398c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db622c85_384f76b4",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-07T18:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e3a5875_81113b08",
+      "range": {
+        "startLine": 643,
+        "startChar": 2,
+        "endLine": 643,
+        "endChar": 51
+      },
+      "revId": "3fc80d317784e059662f0454715d4fdf7536398c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
