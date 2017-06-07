@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0ccc062_3f56ad45",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-07T15:35:13Z",
+      "side": 1,
+      "message": "Let\u0027s call this loader_observers_ so it\u0027s clear how to set the policies for them.",
+      "range": {
+        "startLine": 109,
+        "startChar": 22,
+        "endLine": 109,
+        "endChar": 32
+      },
+      "revId": "dab71125fe9bade40db562402cec4f3bdae0914c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b02835_a405b89c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-07T15:35:13Z",
+      "side": 1,
+      "message": "Hmm, any reason not to just use page_throttled_? Otherwise we\u0027ll be introducing a new type of throttling and we already have too many of those :P",
+      "range": {
+        "startLine": 111,
+        "startChar": 7,
+        "endLine": 111,
+        "endChar": 20
+      },
+      "revId": "dab71125fe9bade40db562402cec4f3bdae0914c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
