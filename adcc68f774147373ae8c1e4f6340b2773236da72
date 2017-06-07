@@ -16,6 +16,40 @@
       "revId": "adcc68f774147373ae8c1e4f6340b2773236da72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ef034e1_50b9fe72",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-07T03:14:44Z",
+      "side": 1,
+      "message": "Please name this RegisterWorkerClientsInitializeCallback (or ...CreatedCallback)",
+      "revId": "adcc68f774147373ae8c1e4f6340b2773236da72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88351c26_33100def",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-07T03:14:44Z",
+      "side": 1,
+      "message": "This (WorkerContentSettingsClient) doesn\u0027t need to live in modules, is that right?",
+      "revId": "adcc68f774147373ae8c1e4f6340b2773236da72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
