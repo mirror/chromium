@@ -17,7 +17,7 @@ async function test() {
     await InspectorTest.clearNetworkCache();
 
     InspectorTest.evaluateInPage("sendXHRRequest()");
-    var request = await InspectorTest.waitForEvent(SDK.NetworkManager.Events.RequestFinished, InspectorTest.networkManager,
+    var request = await InspectorTest.networkManager.once(SDK.NetworkManager.Events.RequestFinished,
         request => request.name() === "empty.html?xhr");
     var xhrNode = await InspectorTest.waitForNetworkLogViewNodeForRequest(request);
 

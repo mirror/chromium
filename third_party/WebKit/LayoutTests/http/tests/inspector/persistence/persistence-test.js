@@ -27,7 +27,7 @@ InspectorTest.waitForBinding = function(fileName)
         if (uiSourceCode.name() === fileName)
             return Promise.resolve(binding);
     }
-    return InspectorTest.waitForEvent(Persistence.Persistence.Events.BindingCreated, Persistence.persistence,
+    return Persistence.persistence.once(Persistence.Persistence.Events.BindingCreated,
         binding => binding.network.name() === fileName || binding.fileSystem.name() === fileName);
 }
 

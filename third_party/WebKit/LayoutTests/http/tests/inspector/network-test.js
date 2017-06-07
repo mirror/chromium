@@ -64,7 +64,7 @@ InspectorTest.waitForRequestResponse = function(request)
 {
     if (request.responseReceivedTime !== -1)
         return Promise.resolve(request);
-    return InspectorTest.waitForEvent(SDK.NetworkManager.Events.RequestUpdated, InspectorTest.networkManager,
+    return InspectorTest.networkManager.once(SDK.NetworkManager.Events.RequestUpdated,
         updateRequest => updateRequest === request && request.responseReceivedTime !== -1);
 }
 
@@ -79,7 +79,7 @@ InspectorTest.waitForNetworkLogViewNodeForRequest = function(request)
     if (node)
         return Promise.resolve(node);
 
-    var promise = InspectorTest.waitForEvent(Network.NetworkLogView.Events.UpdateRequest, networkLogView,
+    var promise = networkLogView.once(Network.NetworkLogView.Events.UpdateRequest,
         updateRequest => updateRequest === request);
     return promise.then(() => {
         var node = networkLogView._nodesByRequestId.get(request.requestId());
@@ -99,7 +99,7 @@ InspectorTest.waitForWebsocketFrameReceived = function(wsRequest, message)
         if (checkFrame(frame))
             return Promise.resolve(frame);
     }
-    return InspectorTest.waitForEvent(SDK.NetworkRequest.Events.WebsocketFrameAdded, wsRequest, checkFrame);
+    return wsRequest.once(SDK.NetworkRequest.Events.WebsocketFrameAdded, checkFrame);
 
     function checkFrame(frame) {
         return frame.type === SDK.NetworkRequest.WebSocketFrameType.Receive && frame.text === message;
