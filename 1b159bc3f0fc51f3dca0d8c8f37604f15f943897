@@ -70,6 +70,54 @@
       "revId": "1b159bc3f0fc51f3dca0d8c8f37604f15f943897",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf542d2e_cd9dcdc3",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 2134,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-07T06:38:02Z",
+      "side": 1,
+      "message": "Unfortunately, I think there are cases where we can get here with an active document but no layout item: there\u0027s some frame blocking code that tells Blink to not even create a layout item for an \u003ciframe\u003e: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp?rcl\u003d613581c6d2fac5deb21685714964ee1f2f71f36f\u0026l\u003d202\n\nThere\u0027s possibly other situations that could trigger this as well.\n\nOut of curiosity, what unit tests were failing?",
+      "parentUuid": "c313f205_d3ab743a",
+      "range": {
+        "startLine": 2134,
+        "startChar": 6,
+        "endLine": 2134,
+        "endChar": 27
+      },
+      "revId": "1b159bc3f0fc51f3dca0d8c8f37604f15f943897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1150a32c_39079b2e",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 2134,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-07T06:38:02Z",
+      "side": 1,
+      "message": "(Yep, see my other comment)\n\nSorry for all the questions, but one last question...\nIs it possible to just call Dispose() before we advance the DocumentLifecycle to stopping, or is that fundamentally incorrect as well?",
+      "parentUuid": "40f2fdaf_c23103c1",
+      "range": {
+        "startLine": 2134,
+        "startChar": 6,
+        "endLine": 2134,
+        "endChar": 27
+      },
+      "revId": "1b159bc3f0fc51f3dca0d8c8f37604f15f943897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
