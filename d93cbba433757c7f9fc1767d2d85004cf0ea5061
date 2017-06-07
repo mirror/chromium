@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "bef9b7a7_e97add12",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 8531,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-06-07T02:43:30Z",
+      "side": 1,
+      "message": "Yes, I think to have a centralized place to do this is beneficial.  Let\u0027s make it non-static.",
+      "parentUuid": "18abb7ce_ecea6f31",
+      "range": {
+        "startLine": 8531,
+        "startChar": 2,
+        "endLine": 8531,
+        "endChar": 32
+      },
+      "revId": "d93cbba433757c7f9fc1767d2d85004cf0ea5061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb0dce4d_b8f14c63",
         "filename": "gpu/config/gpu_driver_bug_workaround_type.h",
         "patchSetId": 12
