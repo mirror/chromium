@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "01135c14_cc85756b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/protocol/InspectorBackend.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-07T07:28:45Z",
+      "side": 1,
+      "message": "1. for-of is not slower as of M60\n2. This is not that hot as we\u0027re going to invoke protocol method.\n\nSo let me keep the cleaner code.",
+      "parentUuid": "f4e3bf4c_85fbd6e0",
+      "revId": "60eadee3c0362aadb90838dd178baa8595bf79e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bcb74135_3efe2569",
         "filename": "third_party/WebKit/Source/devtools/front_end/protocol/InspectorBackend.js",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "60eadee3c0362aadb90838dd178baa8595bf79e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56278dbd_91c953d8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/protocol/InspectorBackend.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-07T07:28:45Z",
+      "side": 1,
+      "message": "Oops, I believe I\u0027ve fixed that...",
+      "parentUuid": "bcb74135_3efe2569",
+      "range": {
+        "startLine": 569,
+        "startChar": 22,
+        "endLine": 569,
+        "endChar": 23
+      },
+      "revId": "60eadee3c0362aadb90838dd178baa8595bf79e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
