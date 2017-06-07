@@ -63,6 +63,11 @@ KeywordHintView::KeywordHintView(views::ButtonListener* listener,
 KeywordHintView::~KeywordHintView() {}
 
 void KeywordHintView::SetKeyword(const base::string16& keyword) {
+  // Only the chip is shown if the virtual keyboard is visible.
+  const bool chip_only = LocationBarView::IsVirtualKeyboardVisible();
+  if (chip_only == leading_label_->text().empty() && keyword_ == keyword)
+    return;
+
   keyword_ = keyword;
   if (keyword_.empty())
     return;
@@ -76,7 +81,7 @@ void KeywordHintView::SetKeyword(const base::string16& keyword) {
   base::string16 short_name(
       url_service->GetKeywordShortName(keyword, &is_extension_keyword));
 
-  if (LocationBarView::IsVirtualKeyboardVisible()) {
+  if (chip_only) {
     int message_id = is_extension_keyword
                          ? IDS_OMNIBOX_EXTENSION_KEYWORD_HINT_TOUCH
                          : IDS_OMNIBOX_KEYWORD_HINT_TOUCH;

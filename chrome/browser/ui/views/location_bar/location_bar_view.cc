@@ -540,8 +540,7 @@ void LocationBarView::Layout() {
     trailing_decorations.AddDecoration(vertical_padding, location_height, true,
                                        0, item_padding, item_padding,
                                        keyword_hint_view_);
-    if (keyword_hint_view_->keyword() != keyword)
-      keyword_hint_view_->SetKeyword(keyword);
+    keyword_hint_view_->SetKeyword(keyword);
   }
 
   if (clear_all_button_->visible()) {
