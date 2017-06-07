@@ -46,6 +46,30 @@
       "revId": "29a151d88ac2d3e979c53058431b6778b670a78d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c098065e_1acf554f",
+        "filename": "base/android/field_trial_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-07T15:03:29Z",
+      "side": 1,
+      "message": "OK; I see the slight benefit to this in theory from that description. However, it doesn\u0027t look like there are very many occurrences of this pattern in Chromium at all, and it looks surprising to me at least :)\n\nI think if we want to prefer this style that\u0027d be fine, but if so it\u0027d be better to fix it globally and actually specify it as a style rule, which we should probably discuss on the list. For now I\u0027d prefer if you left this as it is, especially since it\u0027s not related to the CL.",
+      "parentUuid": "e551a100_bd122b17",
+      "range": {
+        "startLine": 14,
+        "startChar": 9,
+        "endLine": 14,
+        "endChar": 10
+      },
+      "revId": "29a151d88ac2d3e979c53058431b6778b670a78d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
