@@ -70,6 +70,24 @@
       "revId": "1224fc242d74b8eceb638f4fbfd442beabe07c1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ff1860_d5fcd503",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-07T15:10:07Z",
+      "side": 1,
+      "message": "First, I think it\u0027s still up to the scheduler to decide the priority of this queue. Setting it to high for now is probably the right thing to do, but we could easily adjust it in the future, e.g., based on the use case. This is also why the name is \"Control\" rather than \"HighPriority\".\n\nWe\u0027re in the middle of adding more attribution and statistics gathering about the tasks we run. I suspect once the time comes to land this we\u0027ll have an easy way to add a new UMA metric specifically for these types of tasks. I suspect we\u0027ll want that instead of looking at all of HIGH_PRIORITY since the latter isn\u0027t very actionable.",
+      "parentUuid": "211b602e_adda051d",
+      "revId": "1224fc242d74b8eceb638f4fbfd442beabe07c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
