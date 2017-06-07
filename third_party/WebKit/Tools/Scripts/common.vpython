@@ -1,0 +1,35 @@
+# vpython config for webkitpy.
+# vpython docs: https://github.com/luci/luci-go/tree/master/vpython
+
+python_version: "2.7"
+
+
+# psutil is used indirectly by devil, in the android port.
+
+wheel: <
+  name: "infra/python/wheels/psutil-py2"
+  version: "version:xxx"
+>
+
+# On windows, we want to import the following names:
+#
+# msvcrt
+# win32pipe
+# win32file
+# _winreg
+
+wheel: <
+  name: "infra/python/wheels/pywin32-win_amd64"
+  version: "version:219"
+  match_tag: <
+    arch: "win_386"
+  >
+>
+
+wheel: <
+  name: "infra/python/wheels/pywin32-win32"
+  version: "version:219"
+  match_tag: <
+    arch: "win_amd64"
+  >
+>
