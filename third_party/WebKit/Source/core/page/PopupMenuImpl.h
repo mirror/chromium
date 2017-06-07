@@ -5,6 +5,7 @@
 #ifndef PopupMenuImpl_h
 #define PopupMenuImpl_h
 
+#include "core/CoreExport.h"
 #include "core/page/PagePopupClient.h"
 #include "platform/PopupMenu.h"
 
@@ -18,7 +19,8 @@ class HTMLOptGroupElement;
 class HTMLOptionElement;
 class HTMLSelectElement;
 
-class PopupMenuImpl final : public PopupMenu, public PagePopupClient {
+class CORE_EXPORT PopupMenuImpl final : public PopupMenu,
+                                        public PagePopupClient {
  public:
   static PopupMenuImpl* Create(ChromeClient*, HTMLSelectElement&);
   ~PopupMenuImpl() override;
