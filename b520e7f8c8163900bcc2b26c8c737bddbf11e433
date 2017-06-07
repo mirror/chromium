@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5c7f4b5f_6102d755",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-07T19:15:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d17ef0c8_859acbf3",
+      "range": {
+        "startLine": 520,
+        "startChar": 8,
+        "endLine": 520,
+        "endChar": 40
+      },
+      "revId": "b520e7f8c8163900bcc2b26c8c737bddbf11e433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17b3631e_088f992d",
         "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-07T18:47:28Z",
       "side": 1,
       "message": "Can you explain a bit more when/if the default display info gets used? Using plausible but slightly wrong parameters would be a potential source of problems, especially if it\u0027s unpredictable.",
+      "range": {
+        "startLine": 235,
+        "startChar": 2,
+        "endLine": 235,
+        "endChar": 10
+      },
+      "revId": "b520e7f8c8163900bcc2b26c8c737bddbf11e433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e077b28_25675dfa",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-07T19:15:15Z",
+      "side": 1,
+      "message": "Added a comment. This is only for magic window mode, and doesn\u0027t change the behaviour at all from before this CL.",
+      "parentUuid": "17b3631e_088f992d",
       "range": {
         "startLine": 235,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e91bffe1_755f268d",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-07T19:15:15Z",
+      "side": 1,
+      "message": "No, this doesn\u0027t cancel any of the page\u0027s rAFs. This only cancels the internal rAF we use to schedule the vrdisplay rAF.\n\nSo the internal rAF is either a doc-\u003erequestAnimationFrame, or a presentation_provider-\u003eGetVSync, but never both at once.",
+      "parentUuid": "63284e2f_bef32392",
+      "range": {
+        "startLine": 163,
+        "startChar": 9,
+        "endLine": 163,
+        "endChar": 29
+      },
+      "revId": "b520e7f8c8163900bcc2b26c8c737bddbf11e433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ad55946_d70ac1a3",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 6
@@ -82,6 +154,24 @@
       "writtenOn": "2017-06-07T18:47:28Z",
       "side": 1,
       "message": "for clarity, rename this to RequestPresentingVSync()?",
+      "revId": "b520e7f8c8163900bcc2b26c8c737bddbf11e433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e18fc339_6bfa98f4",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-07T19:15:15Z",
+      "side": 1,
+      "message": "No, RequestVSync is used for both presenting and magic window. I update the comment to hopefully increase clarity.",
+      "parentUuid": "9ad55946_d70ac1a3",
       "revId": "b520e7f8c8163900bcc2b26c8c737bddbf11e433",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
