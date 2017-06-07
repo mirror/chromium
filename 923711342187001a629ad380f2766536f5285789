@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2db7335a_6b9b0a3c",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-07T06:23:32Z",
+      "side": 1,
+      "message": "Just for my understanding: in the past, I thought we had issues using web classes from core due to linking issues. How come it\u0027s not a problem for these classes? WebColorChooser and WebFrameClient look like they\u0027re only defined in headers, but WebColorSuggestion appears to have a small part in the .cc file.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 39
+      },
+      "revId": "923711342187001a629ad380f2766536f5285789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
