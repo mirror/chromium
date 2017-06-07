@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83a6c971_2800145c",
+        "filename": "services/ui/ws/window_manager_display_root.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-07T19:56:03Z",
+      "side": 1,
+      "message": "Is this line necessary? The reason I didn\u0027t update the client_visible_root is that I assumed the window-manager (ash) would handle updating the size of the root. If you update it here, then we may have ordering issues because both the window-manager and mus will attempt to set the size. It should end up ok, but it seems best to let ash deal with this as it already has code for this.",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "83b0613925d4098f95e8c9645ecd3ea54e152dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
