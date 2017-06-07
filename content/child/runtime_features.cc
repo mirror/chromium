@@ -78,6 +78,8 @@ static void SetRuntimeFeatureDefaultsForPlatform() {
 #if !defined(OS_MACOSX)
   WebRuntimeFeatures::EnableNotificationContentImage(true);
 #endif
+
+  WebRuntimeFeatures::EnableUpdateHoverPostLayout(true);
 }
 
 void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
