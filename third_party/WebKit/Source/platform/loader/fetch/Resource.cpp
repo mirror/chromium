@@ -58,6 +58,15 @@
 
 namespace blink {
 
+namespace {
+
+void NotifyAsyncClients(HeapHashSet<WeakMember<AsyncResourceClient>> clients) {
+  for (const auto& client : clients)
+    client->NotifyFinished();
+}
+
+}  // namespace
+
 // These response headers are not copied from a revalidated response to the
 // cached response headers. For compatibility, this list is based on Chromium's
 // net/http/http_response_headers.cc.
@@ -302,6 +311,7 @@ DEFINE_TRACE(Resource) {
   visitor->Trace(clients_);
   visitor->Trace(clients_awaiting_callback_);
   visitor->Trace(finished_clients_);
+  visitor->Trace(async_clients_);
   MemoryCoordinatorClient::Trace(visitor);
 }
 
@@ -315,6 +325,8 @@ void Resource::SetLoader(ResourceLoader* loader) {
 void Resource::CheckNotify() {
   if (IsLoading())
     return;
+
+  TriggerNotificationForAsyncClients();
 
   ResourceClientWalker<ResourceClient> w(clients_);
   while (ResourceClient* c = w.Next()) {
@@ -354,6 +366,18 @@ void Resource::SetResourceBuffer(PassRefPtr<SharedBuffer> resource_buffer) {
 void Resource::ClearData() {
   data_.Clear();
   encoded_size_memory_usage_ = 0;
+}
+
+void Resource::TriggerNotificationForAsyncClients() {
+  Platform::Current()
+      ->CurrentThread()
+      ->Scheduler()
+      ->LoadingTaskRunner()
+      ->PostTask(BLINK_FROM_HERE,
+                 WTF::Bind(&NotifyAsyncClients, std::move(async_clients_)));
+
+  async_clients_.clear();
+  DidRemoveClientOrObserver();
 }
 
 void Resource::SetDataBufferingPolicy(
@@ -708,6 +732,24 @@ void Resource::RemoveClient(ResourceClient* client) {
     async_finish_pending_clients_task_.Cancel();
   }
 
+  DidRemoveClientOrObserver();
+}
+
+void Resource::AddAsyncClient(AsyncResourceClient* client,
+                              PreloadReferencePolicy policy) {
+  CHECK(!is_add_remove_client_prohibited_);
+  DCHECK(!async_clients_.Contains(client));
+
+  WillAddClientOrObserver(policy);
+  async_clients_.insert(client);
+  if (IsLoaded())
+    TriggerNotificationForAsyncClients();
+}
+
+void Resource::RemoveAsyncClient(AsyncResourceClient* client) {
+  CHECK(!is_add_remove_client_prohibited_);
+
+  async_clients_.erase(client);
   DidRemoveClientOrObserver();
 }
 
