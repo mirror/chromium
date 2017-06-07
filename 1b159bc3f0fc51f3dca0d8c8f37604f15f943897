@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "867b6dfd_0190067a",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 2134,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-07T05:18:25Z",
+      "side": 1,
+      "message": "Is it possible to end up here without a Document? It doesn\u0027t seem like we should be calling into layout code without a document anyway.\n\n(But maybe I\u0027m missing something, since apparently we have to check for a null layout view)",
+      "range": {
+        "startLine": 2134,
+        "startChar": 6,
+        "endLine": 2134,
+        "endChar": 27
+      },
+      "revId": "1b159bc3f0fc51f3dca0d8c8f37604f15f943897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
