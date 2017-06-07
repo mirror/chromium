@@ -51,6 +51,10 @@ gfx::Rect TestBrowserWindowAura::GetBounds() const {
   return native_window_->bounds();
 }
 
+bool TestBrowserWindowAura::IsVisible() const {
+  return native_window_->IsVisible();
+}
+
 std::unique_ptr<Browser> TestBrowserWindowAura::CreateBrowser(
     Browser::CreateParams* params) {
   params->window = this;

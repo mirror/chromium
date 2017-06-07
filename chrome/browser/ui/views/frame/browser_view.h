@@ -295,6 +295,7 @@ class BrowserView : public BrowserWindow,
   bool IsFullscreenBubbleVisible() const override;
   void MaybeShowNewBackShortcutBubble(bool forward) override;
   void HideNewBackShortcutBubble() override;
+  bool IsVisible() const override;
   LocationBar* GetLocationBar() const override;
   void SetFocusToLocationBar(bool select_all) override;
   void UpdateReloadStopState(bool is_loading, bool force) override;

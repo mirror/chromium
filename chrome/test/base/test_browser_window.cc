@@ -89,6 +89,10 @@ gfx::Rect TestBrowserWindow::GetBounds() const {
   return gfx::Rect();
 }
 
+bool TestBrowserWindow::IsVisible() const {
+  return true;
+}
+
 gfx::Size TestBrowserWindow::GetContentsSize() const {
   return gfx::Size();
 }

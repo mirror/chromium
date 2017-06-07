@@ -197,16 +197,19 @@ void TabManager::Stop() {
 }
 
 int TabManager::FindTabStripModelById(int64_t target_web_contents_id,
-                                      TabStripModel** model) const {
+                                      TabStripModel** model,
+                                      bool* window_is_visible) const {
   DCHECK(model);
   // TODO(tasak): Move this code to a TabStripModel enumeration delegate!
   if (!test_tab_strip_models_.empty()) {
     for (size_t i = 0; i < test_tab_strip_models_.size(); ++i) {
       TabStripModel* local_model =
-          const_cast<TabStripModel*>(test_tab_strip_models_[i].first);
+          const_cast<TabStripModel*>(test_tab_strip_models_[i].tab_strip_model);
       int idx = FindWebContentsById(local_model, target_web_contents_id);
       if (idx != -1) {
         *model = local_model;
+        if (window_is_visible)
+          *window_is_visible = test_tab_strip_models_[i].window_is_visible;
         return idx;
       }
     }
@@ -219,6 +222,8 @@ int TabManager::FindTabStripModelById(int64_t target_web_contents_id,
     int idx = FindWebContentsById(local_model, target_web_contents_id);
     if (idx != -1) {
       *model = local_model;
+      if (window_is_visible)
+        *window_is_visible = browser->window()->IsVisible();
       return idx;
     }
   }
@@ -242,12 +247,19 @@ bool TabManager::IsTabDiscarded(content::WebContents* contents) const {
 
 bool TabManager::CanDiscardTab(int64_t target_web_contents_id) const {
   TabStripModel* model;
-  int idx = FindTabStripModelById(target_web_contents_id, &model);
+  bool window_is_visible;
+  int idx =
+      FindTabStripModelById(target_web_contents_id, &model, &window_is_visible);
 
   if (idx == -1)
     return false;
 
   WebContents* web_contents = model->GetWebContentsAt(idx);
+
+  const bool is_tab_visible =
+      window_is_visible && model->GetActiveWebContents() == web_contents;
+  if (is_tab_visible)
+    return false;
 
   // Do not discard tabs that don't have a valid URL (most probably they have
   // just been opened and dicarding them would lose the URL).
@@ -309,7 +321,7 @@ void TabManager::DiscardTab() {
 
 WebContents* TabManager::DiscardTabById(int64_t target_web_contents_id) {
   TabStripModel* model;
-  int index = FindTabStripModelById(target_web_contents_id, &model);
+  int index = FindTabStripModelById(target_web_contents_id, &model, nullptr);
 
   if (index == -1)
     return nullptr;
@@ -354,10 +366,10 @@ TabStatsList TabManager::GetUnsortedTabStats() const {
   // TODO(chrisha): Move this code to a TabStripModel enumeration delegate!
   if (!test_tab_strip_models_.empty()) {
     for (size_t i = 0; i < test_tab_strip_models_.size(); ++i) {
-      AddTabStats(test_tab_strip_models_[i].first,   // tab_strip_model
-                  test_tab_strip_models_[i].second,  // is_app
-                  i == 0,                            // is_active
-                  &stats_list);
+      AddTabStats(test_tab_strip_models_[i].tab_strip_model,
+                  test_tab_strip_models_[i].window_is_visible,
+                  i == 0,  // window_is_active
+                  test_tab_strip_models_[i].browser_is_app, &stats_list);
     }
   } else {
     // The code here can only be tested under a full browser test.
@@ -392,7 +404,7 @@ void TabManager::SetTabAutoDiscardableState(content::WebContents* contents,
 content::WebContents* TabManager::GetWebContentsById(
     int64_t tab_contents_id) const {
   TabStripModel* model = nullptr;
-  int index = FindTabStripModelById(tab_contents_id, &model);
+  int index = FindTabStripModelById(tab_contents_id, &model, nullptr);
   if (index == -1)
     return nullptr;
   return model->GetWebContentsAt(index);
@@ -416,11 +428,15 @@ bool TabManager::CanSuspendBackgroundedRenderer(int render_process_id) const {
 // static
 bool TabManager::CompareTabStats(const TabStats& first,
                                  const TabStats& second) {
-  // Being currently selected is most important to protect.
+  // Being currently visible is most important to protect.
+  if (first.is_visible != second.is_visible)
+    return first.is_visible;
+
+  // Protect tab which is selected in its window.
   if (first.is_selected != second.is_selected)
     return first.is_selected;
 
-  // Non auto-discardable tabs are more important to protect.
+  // Protect non auto-discardable tabs.
   if (first.is_auto_discardable != second.is_auto_discardable)
     return !first.is_auto_discardable;
 
@@ -588,28 +604,29 @@ void TabManager::AddTabStats(TabStatsList* stats_list) const {
        browser_iterator != browser_list->end_last_active();
        ++browser_iterator) {
     Browser* browser = *browser_iterator;
-    // |is_active_window| tells us whether this browser window is active. It is
-    // possible that none of the browser windows is active because it's some
-    // other application window in the foreground.
-    bool is_active_window = browser->window()->IsActive();
-    AddTabStats(browser->tab_strip_model(), browser->is_app(), is_active_window,
-                stats_list);
+    // If some other application window is in the foreground, no browser window
+    // will be active.
+    bool window_is_active = browser->window()->IsActive();
+    AddTabStats(browser->tab_strip_model(), browser->window()->IsVisible(),
+                window_is_active, browser->is_app(), stats_list);
   }
 }
 
-void TabManager::AddTabStats(const TabStripModel* model,
-                             bool is_app,
-                             bool active_model,
+void TabManager::AddTabStats(const TabStripModel* tab_strip_model,
+                             bool window_is_visible,
+                             bool window_is_active,
+                             bool browser_is_app,
                              TabStatsList* stats_list) const {
-  for (int i = 0; i < model->count(); i++) {
-    WebContents* contents = model->GetWebContentsAt(i);
+  for (int i = 0; i < tab_strip_model->count(); i++) {
+    WebContents* contents = tab_strip_model->GetWebContentsAt(i);
     if (!contents->IsCrashed()) {
       TabStats stats;
-      stats.is_app = is_app;
+      stats.is_app = browser_is_app;
       stats.is_internal_page = IsInternalPage(contents->GetLastCommittedURL());
       stats.is_media = IsMediaTab(contents);
-      stats.is_pinned = model->IsTabPinned(i);
-      stats.is_selected = active_model && model->IsTabSelected(i);
+      stats.is_pinned = tab_strip_model->IsTabPinned(i);
+      stats.is_selected = window_is_active && tab_strip_model->IsTabSelected(i);
+      stats.is_visible = window_is_visible && tab_strip_model->IsTabSelected(i);
       stats.is_discarded = GetWebContentsData(contents)->IsDiscarded();
       stats.has_form_entry =
           contents->GetPageImportanceSignals().had_form_interaction;
@@ -694,10 +711,6 @@ void TabManager::PurgeBackgroundedTabsIfNeeded() {
 }
 
 WebContents* TabManager::DiscardWebContentsAt(int index, TabStripModel* model) {
-  // Can't discard active index.
-  if (model->active_index() == index)
-    return nullptr;
-
   WebContents* old_contents = model->GetWebContentsAt(index);
 
   // Can't discard tabs that are already discarded.
