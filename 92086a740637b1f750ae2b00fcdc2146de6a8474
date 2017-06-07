@@ -45,6 +45,30 @@
       "revId": "92086a740637b1f750ae2b00fcdc2146de6a8474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44655ebf_a0e46995",
+        "filename": "third_party/WebKit/Source/modules/navigatorcontentutils/NavigatorContentUtilsClientImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-07T07:14:50Z",
+      "side": 1,
+      "message": "Yeah would be able to implement it directly. (Can be a follow-up change too though)",
+      "parentUuid": "3857e49d_0a056ff7",
+      "range": {
+        "startLine": 9,
+        "startChar": 9,
+        "endLine": 9,
+        "endChar": 70
+      },
+      "revId": "92086a740637b1f750ae2b00fcdc2146de6a8474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
