@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b78ed81_37de70cd",
+        "filename": "components/viz/host/frame_sink_manager_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-06-07T17:21:18Z",
+      "side": 1,
+      "message": "Maybe a flat_map? I think this will usually be very small?",
+      "range": {
+        "startLine": 80,
+        "startChar": 25,
+        "endLine": 80,
+        "endChar": 36
+      },
+      "revId": "a62a2eba01be6dfdb8a9c1e349bc851e9750e471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
