@@ -232,11 +232,7 @@ net::URLRequestJob* CertReportJobInterceptor::MaybeInterceptRequest(
 
   const std::string serialized_report =
       GetReportContents(request, server_private_key_);
-  content::BrowserThread::PostTask(
-      content::BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&CertReportJobInterceptor::RequestCreated,
-                     weak_factory_.GetWeakPtr(), serialized_report,
-                     expected_report_result_));
+  RequestCreated(serialized_report, expected_report_result_);
 
   if (expected_report_result_ == REPORTS_FAIL) {
     return new DelayableCertReportURLRequestJob(
@@ -307,8 +303,11 @@ void CertReportJobInterceptor::ResumeOnIOThread() {
 void CertReportJobInterceptor::RequestCreated(
     const std::string& serialized_report,
     ReportSendingResult expected_report_result) const {
-  request_created_observer_.OnRequest(serialized_report,
-                                      expected_report_result);
+  content::BrowserThread::PostTask(
+      content::BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&RequestObserver::OnRequest,
+                     base::Unretained(&request_created_observer_),
+                     serialized_report, expected_report_result));
 }
 
 void CertReportJobInterceptor::RequestDestructed(
