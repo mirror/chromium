@@ -22,6 +22,30 @@
       "revId": "83b0613925d4098f95e8c9645ecd3ea54e152dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd14873_6c45675e",
+        "filename": "services/ui/ws/window_manager_display_root.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-07T20:18:26Z",
+      "side": 1,
+      "message": "I actually don\u0027t think ash is resizing it\u0027s root window correctly, at the very least ash doesn\u0027t submitting CompositorFrames with the new size. Also, the parent (eg. mus-ws) needs to provide the new LocalSurfaceId to the child (ash) for surface sync as far as I understand.\n\nThe hierarchy looks like this now:\n\n0:2 (owned by ws::Display, corresponds to ws::FrameGenerator, submits CompositorFrames)\n  0:3 (owned by ws::WindowManagerDisplayRoot)\n    1:1 (owned by ash, corresponds to the ash root window and submits CompositorFrames)\n\nThe problem was that 0:3 was getting resized and got the new LocalSurfaceId. 0:3 never submits CompositorFrames though, so that does nothing. \n\nAsh doesn\u0027t seem to submit CompositorFrames with the new size until the parent tells it to.\n\nAt some point in the past I thought that 0:3 was visible in the ash WindowTree and that ash submitted CompositorFrames to FrameSinkId(WindowIdToTransportId(WindowId(0, 3), 0) instead of FrameSinkId(WindowIdToTransportId(WindowId(1, 1)), 0). I\u0027m not sure when that changed.",
+      "parentUuid": "83a6c971_2800145c",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "83b0613925d4098f95e8c9645ecd3ea54e152dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
