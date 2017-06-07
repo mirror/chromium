@@ -683,6 +683,8 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestCreditCardEditorTest,
                           autofill::ADDRESS_HOME_STREET_ADDRESS);
   SetEditorTextfieldValue(base::ASCIIToUTF16("BobCity"),
                           autofill::ADDRESS_HOME_CITY);
+  SetEditorTextfieldValue(base::ASCIIToUTF16("BobState"),
+                          autofill::ADDRESS_HOME_STATE);
   SetEditorTextfieldValue(base::ASCIIToUTF16("BobZip"),
                           autofill::ADDRESS_HOME_ZIP);
   SetEditorTextfieldValue(base::ASCIIToUTF16("5755555555"),
