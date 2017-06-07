@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc69981e_408873d3",
+        "filename": "chrome/browser/chromeos/policy/system_log_uploader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-07T14:15:25Z",
+      "side": 1,
+      "message": "Not insisting, but it may be useful to append to the file a note about truncation in case this happens (i.e. when data.length() \u003d\u003d kLogCutoffSize).",
+      "range": {
+        "startLine": 58,
+        "startChar": 15,
+        "endLine": 58,
+        "endChar": 41
+      },
+      "revId": "5b5cf2492b2d28add755c1a10d4208cd7d8b180e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38660b88_13ec8e38",
+        "filename": "chrome/browser/chromeos/policy/system_log_uploader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-07T14:15:25Z",
+      "side": 1,
+      "message": "Just cutting the file at an arbitrary point may lead to the sensitive data staying not removed. For instance, if there\u0027s a URL or an e-mail at this cut-off point.\nI\u0027d suggest to add a code to remove the last unterminated line, e.g.:\n  size_t last_newline_pos \u003d s.find_last_of(\"\\r\\n\");\n  if (last_newline_pos !\u003d std::string::npos)\n    s.erase(last_newline_pos + 1);\nIn order to not over-complicate this function, you may want to extract the whole reading logic into a separate function like ReadAndAnonymizeLogFile.",
+      "range": {
+        "startLine": 58,
+        "startChar": 15,
+        "endLine": 58,
+        "endChar": 42
+      },
+      "revId": "5b5cf2492b2d28add755c1a10d4208cd7d8b180e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1efde4c9_e81bfd5c",
+        "filename": "chrome/browser/chromeos/policy/system_log_uploader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-07T14:15:25Z",
+      "side": 1,
+      "message": "What about printing this log message only when data.empty()?\nFirst, it would allow to not spam when the log file needs to be truncated.\nSecond, it doesn\u0027t make much sense to log \"Failed to read ...\" when there\u0027s actually some portion of the file being read successfully.",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 62
+      },
+      "revId": "5b5cf2492b2d28add755c1a10d4208cd7d8b180e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
