@@ -23,7 +23,9 @@ class LayoutPartItem : public LayoutBoxItem {
 
   LayoutPartItem() {}
 
-  void UpdateOnWidgetChange() { ToPart()->UpdateOnWidgetChange(); }
+  void UpdateOnEmbeddedContentViewChange() {
+    ToPart()->UpdateOnEmbeddedContentViewChange();
+  }
 
  private:
   LayoutPart* ToPart() { return ToLayoutPart(GetLayoutObject()); }

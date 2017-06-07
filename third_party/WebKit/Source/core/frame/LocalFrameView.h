@@ -642,7 +642,8 @@ class CORE_EXPORT LocalFrameView final
   IntRect ConvertFromRootFrame(const IntRect&) const;
   IntPoint ConvertFromRootFrame(const IntPoint&) const override;
   FloatPoint ConvertFromRootFrame(const FloatPoint&) const;
-  IntPoint ConvertSelfToChild(const FrameOrPlugin&, const IntPoint&) const;
+  IntPoint ConvertSelfToChild(const EmbeddedContentView&,
+                              const IntPoint&) const;
 
   // Handles painting of the contents of the view as well as the scrollbars.
   void Paint(GraphicsContext&, const CullRect&) const override;
@@ -658,7 +659,7 @@ class CORE_EXPORT LocalFrameView final
   bool ScrollbarCornerPresent() const;
   IntRect ScrollCornerRect() const override;
 
-  IntPoint ConvertFromContainingFrameViewBaseToScrollbar(
+  IntPoint ConvertFromContainingEmbeddedContentViewToScrollbar(
       const Scrollbar&,
       const IntPoint&) const override;
 
@@ -878,7 +879,8 @@ class CORE_EXPORT LocalFrameView final
     AutoReset<bool> scope_;
   };
 
-  // Only for LayoutPart to traverse into sub frames during paint invalidation.
+  // Only for LayoutPart to traverse into sub frames during paint
+  // invalidation.
   void DeprecatedInvalidateTree(const PaintInvalidationState&);
 
  private:
@@ -956,10 +958,10 @@ class CORE_EXPORT LocalFrameView final
 
   // Methods to do point conversion via layoutObjects, in order to take
   // transforms into account.
-  IntRect ConvertToContainingFrameViewBase(const IntRect&) const;
-  IntPoint ConvertToContainingFrameViewBase(const IntPoint&) const;
-  IntRect ConvertFromContainingFrameViewBase(const IntRect&) const;
-  IntPoint ConvertFromContainingFrameViewBase(const IntPoint&) const;
+  IntRect ConvertToContainingEmbeddedContentView(const IntRect&) const;
+  IntPoint ConvertToContainingEmbeddedContentView(const IntPoint&) const;
+  IntRect ConvertFromContainingEmbeddedContentView(const IntRect&) const;
+  IntPoint ConvertFromContainingEmbeddedContentView(const IntPoint&) const;
 
   void DidChangeGlobalRootScroller() override;
 
@@ -1264,10 +1266,10 @@ DEFINE_TYPE_CASTS(LocalFrameView,
                   platform_frame_view->IsLocalFrameView(),
                   platform_frame_view.IsLocalFrameView());
 DEFINE_TYPE_CASTS(LocalFrameView,
-                  FrameOrPlugin,
-                  frame_or_plugin,
-                  frame_or_plugin->IsLocalFrameView(),
-                  frame_or_plugin.IsLocalFrameView());
+                  EmbeddedContentView,
+                  embedded_content_view,
+                  embedded_content_view->IsLocalFrameView(),
+                  embedded_content_view.IsLocalFrameView());
 DEFINE_TYPE_CASTS(LocalFrameView,
                   ScrollableArea,
                   scrollableArea,

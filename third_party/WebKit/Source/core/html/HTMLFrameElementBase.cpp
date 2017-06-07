@@ -209,7 +209,7 @@ void HTMLFrameElementBase::AttachLayoutTree(const AttachContext& context) {
   HTMLFrameOwnerElement::AttachLayoutTree(context);
 
   if (GetLayoutPart() && ContentFrame())
-    SetWidget(ContentFrame()->View());
+    SetEmbeddedContentView(ContentFrame()->View());
 }
 
 void HTMLFrameElementBase::SetLocation(const String& str) {

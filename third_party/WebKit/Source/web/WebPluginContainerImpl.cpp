@@ -239,9 +239,9 @@ void WebPluginContainerImpl::HandleEvent(Event* event) {
   else if (event->IsDragEvent() && web_plugin_->CanProcessDrag())
     HandleDragEvent(ToDragEvent(event));
 
-  // FIXME: it would be cleaner if FrameViewBase::handleEvent returned
-  // true/false and HTMLPluginElement called setDefaultHandled or
-  // defaultEventHandler.
+  // FIXME: it would be cleaner if EmbeddedContentView::HandleEvent returned
+  // true/false and HTMLPluginElement called SetDefaultHandled or
+  // DefaultEventHandler.
   if (!event->DefaultHandled())
     element_->Node::DefaultEventHandler(event);
 }

@@ -2558,14 +2558,14 @@ void Document::Shutdown() {
   lifecycle_.AdvanceTo(DocumentLifecycle::kStopping);
   View()->Dispose();
 
-  // If the FrameViewBase of the document's frame owner doesn't match view()
-  // then LocalFrameView::Dispose() didn't clear the owner's FrameViewBase. If
-  // we don't clear it here, it may be clobbered later in
-  // LocalFrame::CreateView(). See also https://crbug.com/673170 and the comment
-  // in LocalFrameView::Dispose().
+  // If the EmbeddedContentView of the document's frame owner doesn't match
+  // view() then LocalFrameView::Dispose() didn't clear the owner's
+  // EmbeddedContentView. If we don't clear it here, it may be clobbered later
+  // in LocalFrame::CreateView(). See also https://crbug.com/673170 and the
+  // comment in LocalFrameView::Dispose().
   HTMLFrameOwnerElement* owner_element = frame_->DeprecatedLocalOwner();
   if (owner_element)
-    owner_element->SetWidget(nullptr);
+    owner_element->SetEmbeddedContentView(nullptr);
 
   markers_->PrepareForDestruction();
 
