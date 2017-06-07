@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8061bf22_4a248f18",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2239,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-06-07T14:45:32Z",
+      "side": 1,
+      "message": "disabled",
+      "range": {
+        "startLine": 2239,
+        "startChar": 36,
+        "endLine": 2239,
+        "endChar": 43
+      },
+      "revId": "c9482ab1ec33125f4b50594112cb47598bfe744a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19af2646_fcfeaad3",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2240,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-06-07T14:45:32Z",
+      "side": 1,
+      "message": "... in the context menu.",
+      "range": {
+        "startLine": 2240,
+        "startChar": 55,
+        "endLine": 2240,
+        "endChar": 62
+      },
+      "revId": "c9482ab1ec33125f4b50594112cb47598bfe744a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
