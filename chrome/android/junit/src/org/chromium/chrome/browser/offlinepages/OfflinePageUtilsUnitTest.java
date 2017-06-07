@@ -42,8 +42,8 @@ import java.io.File;
  */
 @RunWith(LocalRobolectricTestRunner.class)
 @Config(manifest = Config.NONE, application = BaseChromiumApplication.class,
-        shadows = {OfflinePageUtilsTest.WrappedEnvironment.class, ShadowMultiDex.class})
-public class OfflinePageUtilsTest {
+        shadows = {OfflinePageUtilsUnitTest.WrappedEnvironment.class, ShadowMultiDex.class})
+public class OfflinePageUtilsUnitTest {
     @Mock
     private File mMockDataDirectory;
     @Mock
@@ -77,8 +77,6 @@ public class OfflinePageUtilsTest {
                 .when(mOfflinePageUtils)
                 .getOfflinePageBridge((Profile) isNull());
         OfflinePageUtils.setInstanceForTesting(mOfflinePageUtils);
-
-        OfflinePageBridge.setOfflineBookmarksEnabledForTesting(true);
     }
 
     @Test
