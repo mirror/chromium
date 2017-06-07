@@ -13,6 +13,7 @@ import android.os.Build;
 import android.support.test.filters.LargeTest;
 import android.support.test.filters.MediumTest;
 import android.support.test.filters.SmallTest;
+import android.view.View;
 import android.widget.TextView;
 
 import org.junit.Assert;
@@ -21,6 +22,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.DisableIf;
 import org.chromium.base.test.util.DisabledTest;
@@ -183,19 +185,20 @@ public class WebVrTest {
      *
      * @param checkerReturnValue The value to have the VrCoreVersionChecker return
      */
-    private void infoBarTestHelper(int checkerReturnValue) throws InterruptedException {
-        MockVrCoreVersionCheckerImpl mockChecker = new MockVrCoreVersionCheckerImpl();
-        mockChecker.setMockReturnValue(checkerReturnValue);
-        VrUtils.getVrShellDelegateInstance().overrideVrCoreVersionCheckerForTesting(mockChecker);
-        mVrTestRule.loadUrlAndAwaitInitialization(
-                VrTestRule.getHtmlTestFile("generic_webvr_page"), PAGE_LOAD_TIMEOUT_S);
-        String displayFound = "VRDisplay Found";
-        String barPresent = "InfoBar present";
+    private void infoBarTestHelper(final int checkerReturnValue) {
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                MockVrCoreVersionCheckerImpl mockChecker = new MockVrCoreVersionCheckerImpl();
+                mockChecker.setMockReturnValue(checkerReturnValue);
+                VrShellDelegate.getInstanceForTesting().overrideVrCoreVersionCheckerForTesting(
+                        mockChecker);
+                Assert.assertEquals(checkerReturnValue, mockChecker.getLastReturnValue());
+            }
+        });
+        View decorView = mVrTestRule.getActivity().getWindow().getDecorView();
         if (checkerReturnValue == VrCoreVersionChecker.VR_READY) {
-            Assert.assertTrue(
-                    displayFound, mVrTestRule.vrDisplayFound(mVrTestRule.getFirstTabWebContents()));
-            Assert.assertFalse(barPresent,
-                    VrUtils.isInfoBarPresent(mVrTestRule.getActivity().getWindow().getDecorView()));
+            VrUtils.expectInfoBarPresent(decorView, false);
         } else if (checkerReturnValue == VrCoreVersionChecker.VR_OUT_OF_DATE
                 || checkerReturnValue == VrCoreVersionChecker.VR_NOT_AVAILABLE) {
             // Out of date and missing cases are the same, but with different text
@@ -211,10 +214,7 @@ public class WebVrTest {
                 expectedButton = mVrTestRule.getActivity().getString(
                         R.string.vr_services_check_infobar_install_button);
             }
-            Assert.assertFalse(
-                    displayFound, mVrTestRule.vrDisplayFound(mVrTestRule.getFirstTabWebContents()));
-            Assert.assertTrue(barPresent,
-                    VrUtils.isInfoBarPresent(mVrTestRule.getActivity().getWindow().getDecorView()));
+            VrUtils.expectInfoBarPresent(decorView, true);
             TextView tempView =
                     (TextView) mVrTestRule.getActivity().getWindow().getDecorView().findViewById(
                             R.id.infobar_message);
@@ -223,15 +223,11 @@ public class WebVrTest {
                     R.id.button_primary);
             Assert.assertEquals(expectedButton, tempView.getText().toString());
         } else if (checkerReturnValue == VrCoreVersionChecker.VR_NOT_SUPPORTED) {
-            Assert.assertFalse(
-                    displayFound, mVrTestRule.vrDisplayFound(mVrTestRule.getFirstTabWebContents()));
-            Assert.assertFalse(barPresent,
-                    VrUtils.isInfoBarPresent(mVrTestRule.getActivity().getWindow().getDecorView()));
+            VrUtils.expectInfoBarPresent(decorView, false);
         } else {
             Assert.fail(
                     "Invalid VrCoreVersionChecker value: " + String.valueOf(checkerReturnValue));
         }
-        Assert.assertEquals(checkerReturnValue, mockChecker.getLastReturnValue());
     }
 
     /**

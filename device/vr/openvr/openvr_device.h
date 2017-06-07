@@ -26,24 +26,18 @@ class OpenVRDevice : public VRDevice {
       const base::Callback<void(mojom::VRDisplayInfoPtr)>& on_created) override;
 
   void RequestPresent(mojom::VRSubmitFrameClientPtr submit_client,
+                      mojom::VRPresentationProviderRequest request,
                       const base::Callback<void(bool)>& callback) override;
   void SetSecureOrigin(bool secure_origin) override;
   void ExitPresent() override;
-
-  void SubmitFrame(int16_t frame_index,
-                   const gpu::MailboxHolder& mailbox) override;
-  void UpdateLayerBounds(int16_t frame_index,
-                         mojom::VRLayerBoundsPtr left_bounds,
-                         mojom::VRLayerBoundsPtr right_bounds,
-                         int16_t source_width,
-                         int16_t source_height) override;
-  void GetVRVSyncProvider(mojom::VRVSyncProviderRequest request) override;
+  void GetNextMagicWindowPose(
+      mojom::VRDisplay::GetNextMagicWindowPoseCallback callback) override;
 
   void OnPollingEvents();
 
  private:
   class OpenVRRenderLoop : public base::SimpleThread,
-                           device::mojom::VRVSyncProvider {
+                           device::mojom::VRPresentationProvider {
    public:
     OpenVRRenderLoop(vr::IVRSystem* vr);
 
@@ -52,20 +46,27 @@ class OpenVRDevice : public VRDevice {
 
     void UnregisterPollingEventCallback();
 
-    void Bind(mojom::VRVSyncProviderRequest request);
+    void Bind(mojom::VRPresentationProvider request);
 
     mojom::VRPosePtr getPose();
 
    private:
     void Run() override;
 
-    void GetVSync(const device::mojom::VRVSyncProvider::GetVSyncCallback&
+    void GetVSync(const device::mojom::VRPresentationProvider::GetVSyncCallback&
                       callback) override;
+    void SubmitFrame(int16_t frame_index,
+                     const gpu::MailboxHolder& mailbox) override;
+    void UpdateLayerBounds(int16_t frame_index,
+                           mojom::VRLayerBoundsPtr left_bounds,
+                           mojom::VRLayerBoundsPtr right_bounds,
+                           int16_t source_width,
+                           int16_t source_height) override;
 
     scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
     base::Callback<void()> on_polling_events_;
     vr::IVRSystem* vr_system_;
-    mojo::Binding<device::mojom::VRVSyncProvider> binding_;
+    mojo::Binding<device::mojom::VRPresentationProvider> binding_;
   };
 
   std::unique_ptr<OpenVRRenderLoop>

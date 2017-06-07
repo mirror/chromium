@@ -33,10 +33,6 @@ namespace content {
 class WebContents;
 }
 
-namespace gpu {
-struct MailboxHolder;
-}
-
 namespace ui {
 class WindowAndroid;
 }
@@ -65,7 +61,7 @@ class VrMetricsHelper;
 
 // The native instance of the Java VrShell. This class is not threadsafe and
 // must only be used on the UI thread.
-class VrShell : public device::PresentingGvrDelegate,
+class VrShell : public device::GvrDelegate,
                 device::GvrGamepadDataProvider,
                 device::CardboardGamepadDataProvider {
  public:
@@ -184,23 +180,14 @@ class VrShell : public device::PresentingGvrDelegate,
 
   // device::GvrDelegate implementation.
   void SetWebVRSecureOrigin(bool secure_origin) override;
-  void SubmitWebVRFrame(int16_t frame_index,
-                        const gpu::MailboxHolder& mailbox) override;
-  void UpdateWebVRTextureBounds(int16_t frame_index,
-                                const gfx::RectF& left_bounds,
-                                const gfx::RectF& right_bounds,
-                                const gfx::Size& source_size) override;
-  void OnVRVsyncProviderRequest(
-      device::mojom::VRVSyncProviderRequest request) override;
   void UpdateVSyncInterval(int64_t timebase_nanos,
                            double interval_seconds) override;
   void CreateVRDisplayInfo(
       const base::Callback<void(device::mojom::VRDisplayInfoPtr)>& callback,
       uint32_t device_id) override;
-
-  // device::PresentingGvrDelegate implementation.
-  void SetSubmitClient(
-      device::mojom::VRSubmitFrameClientPtr submit_client) override;
+  void ConnectPresentingService(
+      device::mojom::VRSubmitFrameClientPtr submit_client,
+      device::mojom::VRPresentationProviderRequest request) override;
 
   void ProcessTabArray(JNIEnv* env, jobjectArray tabs, bool incognito);
 
