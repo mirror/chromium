@@ -1,23 +1,22 @@
-rootWebArea name='Action verbs'
+rootWebArea focusable name='Action verbs'
 ++genericContainer
 ++++staticText name='Generic div'
 ++++++inlineTextBox name='Generic div'
 ++heading name='Heading'
 ++++staticText name='Heading'
 ++++++inlineTextBox name='Heading'
-++button name='Button' defaultActionVerb=6
-++link name='Link' defaultActionVerb=4
-++++staticText name='Link' defaultActionVerb=3
+++button focusable name='Button' defaultActionVerb=6
+++link focusable linked name='Link' defaultActionVerb=4
+++++staticText linked name='Link' defaultActionVerb=3
 ++++++inlineTextBox name='Link'
-++textField
-++checkBox defaultActionVerb=2
-++checkBox defaultActionVerb=8
-++radioButton defaultActionVerb=7
-++switch name='ARIA Switch' defaultActionVerb=2
-++popUpButton defaultActionVerb=5
-++++menuListPopup
-++++++menuListOption name='Pop-up button' defaultActionVerb=3
+++textField editable focusable
+++checkBox focusable defaultActionVerb=2 checkedState=1
+++checkBox focusable defaultActionVerb=8 checkedState=2
+++radioButton focusable defaultActionVerb=7 checkedState=3
+++switch focusable name='ARIA Switch' defaultActionVerb=2 checkedState=1
+++popUpButton collapsed focusable haspopup value='Pop-up button' defaultActionVerb=5
+++++menuListPopup invisible offscreen
+++++++menuListOption focusable selectable selected name='Pop-up button' defaultActionVerb=3
 ++genericContainer defaultActionVerb=3
 ++++staticText name='Div with click handler' defaultActionVerb=3
 ++++++inlineTextBox name='Div with click handler'
-<-- End-of-file -->

@@ -1,4 +1,4 @@
-rootWebArea
+rootWebArea focusable
 ++grid ariaColumnCount=5
 ++++row
 ++++++columnHeader name='cell 2' ariaCellColumnIndex=2

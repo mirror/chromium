@@ -1,4 +1,4 @@
-rootWebArea
+rootWebArea focusable
 ++tree
 ++++treeItem name='Animals ' hierarchicalLevel=1 setSize=2 posInSet=1 checkedState=3
 ++++++staticText name='Animals'

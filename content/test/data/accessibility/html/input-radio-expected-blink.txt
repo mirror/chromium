@@ -1,4 +1,4 @@
-rootWebArea
+rootWebArea focusable
 ++form
 ++++radioButton radioGroupIds=radioButton
 ++++staticText name='Radio1'

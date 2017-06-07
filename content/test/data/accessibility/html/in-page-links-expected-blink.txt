@@ -1,4 +1,4 @@
-rootWebArea
+rootWebArea focusable
 ++link name='Empty anchor' inPageLinkTargetId=anchor
 ++++staticText name='Empty anchor'
 ++++++inlineTextBox name='Empty anchor'

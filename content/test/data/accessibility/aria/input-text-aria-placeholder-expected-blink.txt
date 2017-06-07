@@ -1,4 +1,4 @@
-rootWebArea
+rootWebArea focusable
 ++textField name='aria-placeholder1'
 ++textField name='placeholder2'
 ++++genericContainer
