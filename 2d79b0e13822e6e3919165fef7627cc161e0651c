@@ -22,6 +22,30 @@
       "revId": "2d79b0e13822e6e3919165fef7627cc161e0651c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7791762_72c406c1",
+        "filename": "google_apis/drive/drive_api_url_generator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-06-07T08:51:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d91c42dc_0b737f24",
+      "range": {
+        "startLine": 243,
+        "startChar": 16,
+        "endLine": 243,
+        "endChar": 29
+      },
+      "revId": "2d79b0e13822e6e3919165fef7627cc161e0651c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
