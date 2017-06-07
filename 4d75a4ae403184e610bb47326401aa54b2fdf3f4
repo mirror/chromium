@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "572f1215_0e244c6b",
+        "filename": "components/arc/arc_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-07T15:36:03Z",
+      "side": 1,
+      "message": "Is it possible to have one flag with multiple values? Kind of like what we did for --arc-availability. That would remove the need for runtime validation of switches and make things less error prone.\n\nHow about --arc-start-mode\u003d{always-start,always-start-with-no-play-store}?",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 67
+      },
+      "revId": "4d75a4ae403184e610bb47326401aa54b2fdf3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
