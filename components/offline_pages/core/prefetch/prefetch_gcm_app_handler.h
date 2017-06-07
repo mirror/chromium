@@ -5,6 +5,7 @@
 #ifndef COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_PREFETCH_GCM_APP_HANDLER_H_
 #define COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_PREFETCH_GCM_APP_HANDLER_H_
 
+#include <memory>
 #include <string>
 
 #include "components/gcm_driver/gcm_app_handler.h"
@@ -12,6 +13,7 @@
 #include "components/offline_pages/core/prefetch/prefetch_gcm_handler.h"
 
 namespace offline_pages {
+class PrefetchDispatcher;
 
 extern const char kPrefetchingOfflinePagesAppId[];
 
@@ -28,7 +30,8 @@ class PrefetchGCMAppHandler : public gcm::GCMAppHandler,
         instance_id::InstanceID::GetTokenCallback callback) = 0;
   };
 
-  PrefetchGCMAppHandler(std::unique_ptr<TokenFactory> token_factory);
+  PrefetchGCMAppHandler(PrefetchDispatcher* dispatcher,
+                        std::unique_ptr<TokenFactory> token_factory);
   ~PrefetchGCMAppHandler() override;
 
   // PrefetchGCMHandler implementation.
@@ -52,6 +55,10 @@ class PrefetchGCMAppHandler : public gcm::GCMAppHandler,
   std::string GetAppId() const override;
 
  private:
+  // Not owned, the owner of |PrefetchGCMAppHandler| is responsible for ensuring
+  // PrefetchDispatcher remains alive while |this| is alive.
+  PrefetchDispatcher* dispatcher_;
+
   std::unique_ptr<TokenFactory> token_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PrefetchGCMAppHandler);
