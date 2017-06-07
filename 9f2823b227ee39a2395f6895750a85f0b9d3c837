@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fcf33889_321a2eac",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-07T17:48:12Z",
+      "side": 1,
+      "message": "Hm, PresentationDispatcher is what I\u0027m using as this is what implements WebPresentationClient interface. PresentationDispatcher doesn\u0027t have much more to offer as is. Maybe it could notify AvailabilityObservers about availability not being supported along with the callbacks? We don\u0027t need this in the RemotePlayback currently as we simply check for IsLowEndDevice directly.\n\nI looked at using the PresentationService but that currently allows only one client (implemented by PresentationDispatcher) so would require some work to allow RemotePlayback to use it in parallel with the PresentationDispatcher. It still would need plumbing an enum instead of a bool through from the MR to PresentationDispatcher.\n\nSeems like fixing crbug/723032 is unavoidable :)",
+      "parentUuid": "3441e1b9_fbb833e6",
+      "revId": "9f2823b227ee39a2395f6895750a85f0b9d3c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d6b758e_733492e9",
         "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
         "patchSetId": 4
@@ -77,6 +95,24 @@
       "writtenOn": "2017-06-07T16:52:24Z",
       "side": 1,
       "message": "It would be good to define a kConstant for this scheme before this string get copied and pasted somewhere... :)",
+      "revId": "9f2823b227ee39a2395f6895750a85f0b9d3c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32bf8a23_30f87286",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-07T17:48:12Z",
+      "side": 1,
+      "message": "The only other place I can think of where it will be used is in the MRP (or maybe MR for whitelisting). In Clank case it will be Java code only.\nHowever, I didn\u0027t find a good way of sharing a string constant between Blink and chrome/browser/, not to say Java.",
+      "parentUuid": "09a3c7b5_020bf8cd",
       "revId": "9f2823b227ee39a2395f6895750a85f0b9d3c837",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
