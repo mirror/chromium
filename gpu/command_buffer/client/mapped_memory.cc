@@ -188,9 +188,11 @@ bool MappedMemoryManager::OnMemoryDump(
 
     auto guid = GetBufferGUIDForTracing(tracing_process_id, chunk->shm_id());
 
+    auto shared_memory_guid =
+        chunk->shm_->backing()->shared_memory_handle().GetGUID();
     const int kImportance = 2;
-    pmd->CreateSharedGlobalAllocatorDump(guid);
-    pmd->AddOwnershipEdge(dump->guid(), guid, kImportance);
+    pmd->CreateSharedMemoryOwnershipEdge(dump->guid(), guid, shared_memory_guid,
+                                         kImportance);
   }
 
   return true;
