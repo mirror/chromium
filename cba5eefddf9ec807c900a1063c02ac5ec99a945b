@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85ef1f8b_77ba89b8",
+        "filename": "chrome/browser/conflicts/module_info_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-06-07T13:16:21Z",
+      "side": 1,
+      "message": "Ugh, this is all kinds of dangerous.\nFirst you don\u0027t need this. Second, you don\u0027t need reinterpret cast for converting integral types, for that you use static_cast. Third, NEVER reinterpret_cast pointer or reference types unless you know exactly what you\u0027re doing, and in the case that you really need this, pepper the code with DCHECKs that the underlying storage size is appropriate to what you\u0027re doing.\nHere you\u0027re making a hard assumption that sizeof(ModuleType)\u003d\u003dsizeof(int), if not, then oh boy is the result here going to surprise you and all your users.",
+      "range": {
+        "startLine": 86,
+        "startChar": 9,
+        "endLine": 86,
+        "endChar": 25
+      },
+      "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b21f09_e0da3831",
+        "filename": "chrome/browser/conflicts/module_info_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-06-07T13:16:21Z",
+      "side": 1,
+      "message": "Use an enum for the bit flags, but an integral type to store a mask of flags.",
+      "range": {
+        "startLine": 101,
+        "startChar": 13,
+        "endLine": 101,
+        "endChar": 24
+      },
+      "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85ea2664_7406619d",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-06-07T13:16:21Z",
+      "side": 1,
+      "message": "Why the intermediate storage for the entire enumeration? Why not process each shell extension as it\u0027s discovered?",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 30
+      },
+      "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0b8de09_40e877cf",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-06-07T13:16:21Z",
+      "side": 1,
+      "message": "for (const auto\u0026 path : ...)?",
+      "range": {
+        "startLine": 46,
+        "startChar": 17,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86e8c8fa_8565ae73",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-06-07T13:16:21Z",
+      "side": 1,
+      "message": "What is the expected size order here? Are we talking tens, hundreds or thousands? Would there be a benefit to dispatching a single notification, or to do it in batches?",
+      "range": {
+        "startLine": 52,
+        "startChar": 17,
+        "endLine": 52,
+        "endChar": 25
+      },
+      "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e5ec0cb_4c5c14f3",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-06-07T13:16:21Z",
+      "side": 1,
+      "message": "No - the file can be inaccessible or missing for all kinds of reasons. DCHECK is for catching programming errors, this is a runtime error, which you need to guard for with a conditional-and-bail here.",
+      "range": {
+        "startLine": 103,
+        "startChar": 13,
+        "endLine": 103,
+        "endChar": 14
+      },
+      "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba79e7f7_7ebbce58",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-06-07T13:16:21Z",
+      "side": 1,
+      "message": "ditto, you need to check the return of this function.",
+      "range": {
+        "startLine": 108,
+        "startChar": 12,
+        "endLine": 108,
+        "endChar": 19
+      },
+      "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06fba151_17d312d8",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-06-07T13:16:21Z",
+      "side": 1,
+      "message": "I see what you\u0027re doing here, but a sequence of three short reads is probably about three times more expensive than a single 4K read.\nAlso, if you read the header into memory, you can parse it with PEImage.",
+      "range": {
+        "startLine": 114,
+        "startChar": 7,
+        "endLine": 114,
+        "endChar": 11
+      },
+      "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49312878_6cf17ec9",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-06-07T13:16:21Z",
+      "side": 1,
+      "message": "you should probably also test the case where the file doesn\u0027t exist, as well as e.g. a malformed file :/.",
+      "range": {
+        "startLine": 105,
+        "startChar": 7,
+        "endLine": 105,
+        "endChar": 35
+      },
+      "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
