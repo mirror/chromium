@@ -214,6 +214,10 @@ void MemoryDumpManager::EnableHeapProfilingIfNeeded() {
         AllocationContextTracker::CaptureMode::NATIVE_STACK);
 #endif  // !defined(OS_NACL)
 #if BUILDFLAG(USE_ALLOCATOR_SHIM)
+  } else if (profiling_mode == switches::kEnableHeapProfilingModeCount) {
+    // Enable tracing of memory allocations through the shim with counters.
+    AllocationContextTracker::SetCaptureMode(
+        AllocationContextTracker::CaptureMode::DISABLED);
   } else if (profiling_mode == switches::kEnableHeapProfilingTaskProfiler) {
     // Enable heap tracking, which in turn enables capture of heap usage
     // tracking in tracked_objects.cc.

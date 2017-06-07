@@ -205,6 +205,7 @@ extern const char kEnableHDRDescription[];
 extern const char kEnableHeapProfilingName[];
 extern const char kEnableHeapProfilingDescription[];
 extern const char kEnableHeapProfilingModePseudo[];
+extern const char kEnableHeapProfilingModeCount[];
 extern const char kEnableHeapProfilingModeNative[];
 extern const char kEnableHeapProfilingTaskProfiler[];
 

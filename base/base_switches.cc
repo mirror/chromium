@@ -24,6 +24,10 @@ const char kEnableHeapProfiling[]           = "enable-heap-profiling";
 // active trace events.
 const char kEnableHeapProfilingModePseudo[] = "";
 
+// Report counters of the allocation traces. No allocation context are used,
+// only allocation counters.
+const char kEnableHeapProfilingModeCount[] = "count";
+
 // Report native (walk the stack) allocation traces. By default pseudo stacks
 // derived from trace events are reported.
 const char kEnableHeapProfilingModeNative[] = "native";

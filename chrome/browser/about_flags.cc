@@ -1033,6 +1033,8 @@ const FeatureEntry::Choice kEnableHeapProfilingChoices[] = {
     {flags_ui::kGenericExperimentChoiceDisabled, "", ""},
     {flag_descriptions::kEnableHeapProfilingModePseudo,
      switches::kEnableHeapProfiling, switches::kEnableHeapProfilingModePseudo},
+    {flag_descriptions::kEnableHeapProfilingModeCount,
+     switches::kEnableHeapProfiling, switches::kEnableHeapProfilingModeCount},
     {flag_descriptions::kEnableHeapProfilingModeNative,
      switches::kEnableHeapProfiling, switches::kEnableHeapProfilingModeNative},
     {flag_descriptions::kEnableHeapProfilingTaskProfiler,

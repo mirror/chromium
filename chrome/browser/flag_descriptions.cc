@@ -3159,6 +3159,8 @@ const char kEnableHeapProfilingDescription[] = "Enables heap profiling.";
 
 const char kEnableHeapProfilingModePseudo[] = "Enabled (pseudo mode)";
 
+const char kEnableHeapProfilingModeCount[] = "Enabled (count mode)";
+
 const char kEnableHeapProfilingModeNative[] = "Enabled (native mode)";
 
 const char kEnableHeapProfilingTaskProfiler[] = "Enabled (task mode)";
