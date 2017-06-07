@@ -48,6 +48,9 @@ class VIZ_EXPORT MojoFrameSinkManager
   void Connect(cc::mojom::FrameSinkManagerRequest request,
                cc::mojom::FrameSinkManagerClientPtr client);
 
+  // Sets |client_| for tests without a Mojo connection.
+  void SetClientForTest(cc::mojom::FrameSinkManagerClient* client);
+
   // cc::mojom::FrameSinkManager implementation:
   void CreateRootCompositorFrameSink(
       const cc::FrameSinkId& frame_sink_id,
@@ -110,7 +113,11 @@ class VIZ_EXPORT MojoFrameSinkManager
 
   base::ThreadChecker thread_checker_;
 
-  cc::mojom::FrameSinkManagerClientPtr client_;
+  // This will point at |client_mojo_| if there is a Mojo connection. For tests
+  // this can also be set to point directly at a client.
+  cc::mojom::FrameSinkManagerClient* client_;
+
+  cc::mojom::FrameSinkManagerClientPtr client_mojo_;
   mojo::Binding<cc::mojom::FrameSinkManager> binding_;
 
   DISALLOW_COPY_AND_ASSIGN(MojoFrameSinkManager);

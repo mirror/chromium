@@ -32,8 +32,11 @@ class VIZ_HOST_EXPORT FrameSinkManagerHost
 
   cc::SurfaceManager* surface_manager();
 
-  // Start Mojo connection to FrameSinkManager. Most tests won't need this.
+  // Connects to MojoFrameSinkManager asnychronously via Mojo.
   void ConnectToFrameSinkManager();
+
+  // Connects to MojoFrameSinkManager synchronously for tests.
+  void ConnectForTest();
 
   void AddObserver(FrameSinkObserver* observer);
   void RemoveObserver(FrameSinkObserver* observer);
@@ -53,8 +56,13 @@ class VIZ_HOST_EXPORT FrameSinkManagerHost
   // cc::mojom::FrameSinkManagerClient:
   void OnSurfaceCreated(const cc::SurfaceInfo& surface_info) override;
 
+  // This will point at |frame_sink_manager_mojo_| if there is a Mojo connection
+  // and calls will happen asynchronously. For tests this can point directly at
+  // |frame_sink_manager_| and requests will happen synchronously.
+  cc::mojom::FrameSinkManager* frame_sink_manager_ptr_ = nullptr;
+
   // Mojo connection to |frame_sink_manager_|.
-  cc::mojom::FrameSinkManagerPtr frame_sink_manager_ptr_;
+  cc::mojom::FrameSinkManagerPtr frame_sink_manager_mojo_;
 
   // Mojo connection back from |frame_sink_manager_|.
   mojo::Binding<cc::mojom::FrameSinkManagerClient> binding_;
