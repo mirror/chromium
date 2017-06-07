@@ -17,6 +17,8 @@
 #include "ui/compositor/layer.h"
 #include "ui/compositor/layer_delegate.h"
 #include "ui/compositor/paint_recorder.h"
+#include "ui/display/display.h"
+#include "ui/display/screen.h"
 #include "ui/gfx/animation/animation_delegate.h"
 #include "ui/gfx/animation/linear_animation.h"
 #include "ui/gfx/animation/tween.h"
@@ -351,8 +353,10 @@ void GestureNavSimple::CompleteGestureAnimation() {
   affordance->Complete();
 }
 
-gfx::Rect GestureNavSimple::GetVisibleBounds() const {
-  return web_contents_->GetNativeView()->bounds();
+gfx::Size GestureNavSimple::GetDisplaySize() const {
+  return display::Screen::GetScreen()
+      ->GetDisplayNearestView(web_contents_->GetNativeView())
+      .size();
 }
 
 bool GestureNavSimple::OnOverscrollUpdate(float delta_x, float delta_y) {
@@ -383,19 +387,18 @@ void GestureNavSimple::OnOverscrollModeChange(OverscrollMode old_mode,
     return;
   }
 
-  aura::Window* window = web_contents_->GetNativeView();
-  const gfx::Rect& window_bounds = window->bounds();
   DCHECK_NE(source, OverscrollSource::NONE);
-  float start_threshold = GetOverscrollConfig(
+  const float start_threshold = GetOverscrollConfig(
       source == OverscrollSource::TOUCHPAD
           ? OVERSCROLL_CONFIG_HORIZ_THRESHOLD_START_TOUCHPAD
           : OVERSCROLL_CONFIG_HORIZ_THRESHOLD_START_TOUCHSCREEN);
   completion_threshold_ =
-      window_bounds.width() *
+      GetDisplaySize().width() *
           GetOverscrollConfig(OVERSCROLL_CONFIG_HORIZ_THRESHOLD_COMPLETE) -
       start_threshold;
 
-  affordance_.reset(new Affordance(new_mode, window_bounds));
+  aura::Window* window = web_contents_->GetNativeView();
+  affordance_.reset(new Affordance(new_mode, window->bounds()));
 
   // Adding the affordance as a child of the content window is not sufficient,
   // because it is possible for a new layer to be parented on top of the
