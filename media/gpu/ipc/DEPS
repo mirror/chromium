@@ -1,5 +1,7 @@
 include_rules = [
   "+gpu/ipc/common",
   "+ipc",
+  "+mojo/public/cpp",
+  "+services/service_manager/public/cpp",
   "-media/base/media_export.h",
 ]
