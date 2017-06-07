@@ -118,6 +118,30 @@
       "revId": "1b159bc3f0fc51f3dca0d8c8f37604f15f943897",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11f03d45_250fba01",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 2134,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-07T06:53:40Z",
+      "side": 1,
+      "message": "\u003e Is it possible to just call Dispose() before we advance the DocumentLifecycle to stopping\n\nYes, I did try that.  As long as we move both of:\n  View()-\u003eDispose()\nand\n  Owner()-\u003eSetWidget(nullptr)\n\nbefore setting lifecycle to stopping, the code seems to work OK.\n\nBut I think that logically, it is correct that the very first thing that Shutdown should do is to set lifecycle to stopping.\n\nI think that adding the check for either Document()-\u003eIsActive() or !Document()-\u003eIsDetached() into SetNeedsCompositingUpdate is a better solution.  There is no need to be calling the compositor when the document is shutting down, or for whatever other reason is not active.\n\n\n\u003e Which tests fail?\nHundreds of tests fail in that they do not have a document at this point of the code.  Some typical traces:\n\n66027:66027:0606/234704.403061:4261740562304:FATAL:LocalFrameView.cpp(2133)] Check failed: frame_-\u003eGetDocument(). \n#0 0x7f89ca011b67 base::debug::StackTrace::StackTrace()\n#1 0x7f89ca03764d logging::LogMessage::~LogMessage()\n#2 0x7f89c7a6bf1f blink::LocalFrameView::SetNeedsCompositingUpdate()\n#3 0x7f89c7a5e911 blink::LocalFrameView::Show()\n#4 0x7f89c7a5eac9 blink::LocalFrameView::Create()\n#5 0x7f89c7a536ea blink::LocalFrame::CreateView()\n\n\n[65523:65523:0606/234703.715687:4261739874950:FATAL:LocalFrameView.cpp(2133)] Check failed: frame_-\u003eGetDocument(). \n#0 0x7f83eb483b67 base::debug::StackTrace::StackTrace()\n#1 0x7f83eb4a964d logging::LogMessage::~LogMessage()\n#2 0x7f83e8eddf1f blink::LocalFrameView::SetNeedsCompositingUpdate()\n#3 0x7f83e8ed0911 blink::LocalFrameView::Show()\n#4 0x7f83e8ed0ac9 blink::LocalFrameView::Create()\n#5 0x0000014a11db blink::DummyPageHolder::DummyPageHolder()\n#6 0x0000014a0eda blink::DummyPageHolder::Create()",
+      "parentUuid": "cf542d2e_cd9dcdc3",
+      "range": {
+        "startLine": 2134,
+        "startChar": 6,
+        "endLine": 2134,
+        "endChar": 27
+      },
+      "revId": "1b159bc3f0fc51f3dca0d8c8f37604f15f943897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
