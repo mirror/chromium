@@ -210,6 +210,27 @@ blink::WebViewScheduler* WebFrameSchedulerImpl::GetWebViewScheduler() {
   return parent_web_view_scheduler_;
 }
 
+void WebFrameSchedulerImpl::NavigateBackForwardSoon() {
+  parent_web_view_scheduler_->OnNavigateBackForwardSoon(this);
+}
+
+void WebFrameSchedulerImpl::DidStartProvisionalLoad() {
+  parent_web_view_scheduler_->DidBeginProvisionalLoad(this);
+}
+
+void WebFrameSchedulerImpl::DidFailProvisionalLoad() {
+  parent_web_view_scheduler_->DidEndProvisionalLoad(this);
+}
+
+void WebFrameSchedulerImpl::DidCommitProvisionalLoad(
+    bool is_web_history_inert_commit,
+    bool is_reload,
+    bool is_main_frame) {
+  parent_web_view_scheduler_->DidEndProvisionalLoad(this);
+  renderer_scheduler_->DidCommitProvisionalLoad(is_web_history_inert_commit,
+                                                is_reload, is_main_frame);
+}
+
 void WebFrameSchedulerImpl::DidStartLoading(unsigned long identifier) {
   if (parent_web_view_scheduler_)
     parent_web_view_scheduler_->DidStartLoading(identifier);

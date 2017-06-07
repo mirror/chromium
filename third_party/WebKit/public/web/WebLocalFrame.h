@@ -32,6 +32,7 @@ class WebDevToolsAgentClient;
 class WebDoubleSize;
 class WebFrameClient;
 class WebFrameWidget;
+class WebFrameScheduler;
 class WebInputMethodController;
 class WebRange;
 class WebScriptExecutionCallback;
@@ -574,6 +575,10 @@ class WebLocalFrame : public WebFrame {
   // TEMP: Usage count for chrome.loadtimes deprecation.
   // This will be removed following the deprecation.
   virtual void UsageCountChromeLoadTimes(const WebString& metric) = 0;
+
+  // Scheduling ---------------------------------------------------------------
+
+  virtual WebFrameScheduler* Scheduler() const = 0;
 
   // Task queues --------------------------------------------------------------
 
