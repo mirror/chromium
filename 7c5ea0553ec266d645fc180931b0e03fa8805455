@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b44fbc23_8d79fbc1",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-07T01:03:11Z",
+      "side": 1,
+      "message": "Is it possible to pass null callback here? I think we have null checks everywhere that invokes the callback.",
+      "range": {
+        "startLine": 492,
+        "startChar": 53,
+        "endLine": 492,
+        "endChar": 66
+      },
+      "revId": "7c5ea0553ec266d645fc180931b0e03fa8805455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e51c7fcf_21abfb6b",
+        "filename": "base/trace_event/memory_dump_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-07T01:03:11Z",
+      "side": 1,
+      "message": "Can we have this function implemented just in the test file?\nIt seems to be used in 2 files and the code doesn\u0027t really need to be in memory_dump_manager.cc\nIt also does not generalize across tests since some browser tests use the other function.",
+      "range": {
+        "startLine": 74,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 27
+      },
+      "revId": "7c5ea0553ec266d645fc180931b0e03fa8805455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "600c585f_242e2776",
+        "filename": "base/trace_event/memory_dump_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-07T01:03:11Z",
+      "side": 1,
+      "message": "Sorry, can you tell me why you need this line?\nThere is only one expect_call.",
+      "revId": "7c5ea0553ec266d645fc180931b0e03fa8805455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
