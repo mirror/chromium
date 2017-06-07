@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3441e1b9_fbb833e6",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-07T16:52:24Z",
+      "side": 1,
+      "message": "Since you\u0027ve layered RemotePlayback on PresentationController which reports true/false availability, you\u0027re not going to be able to fix this TODO until the layering is done at a lower level: on PresentationDispatcher, or directly to the Mojo stub once Presentation API is fully Onion Soup\u0027ed.",
+      "revId": "9f2823b227ee39a2395f6895750a85f0b9d3c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d6b758e_733492e9",
         "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
         "patchSetId": 4
@@ -43,6 +60,23 @@
         "endLine": 399,
         "endChar": 0
       },
+      "revId": "9f2823b227ee39a2395f6895750a85f0b9d3c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "09a3c7b5_020bf8cd",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-07T16:52:24Z",
+      "side": 1,
+      "message": "It would be good to define a kConstant for this scheme before this string get copied and pasted somewhere... :)",
       "revId": "9f2823b227ee39a2395f6895750a85f0b9d3c837",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
