@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "059bcea9_5603a247",
+        "filename": "remoting/host/it2me/it2me_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-06-07T17:09:46Z",
+      "side": 1,
+      "message": "Is it straightforward to add a unit test to make sure the config is propagated correctly?",
+      "revId": "917f1e811ca0b5d30c0a576840d9ce161911ba4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
