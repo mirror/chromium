@@ -104,6 +104,24 @@
       "revId": "7ce4055202d5a555e6e2b949aa5bc4b233b39e16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45a54b75_4051ac35",
+        "filename": "components/guest_view/browser/test_guest_view_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-06-07T19:08:32Z",
+      "side": 1,
+      "message": "Actually, this turned out to be wrong. It\u0027s possible for waiting_for_attach_ to be null, and that we can\u0027t find the guest by embedder_process_id/guest_instance_id and still not have a message loop.",
+      "parentUuid": "2a68c4a9_26e8f929",
+      "revId": "7ce4055202d5a555e6e2b949aa5bc4b233b39e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
