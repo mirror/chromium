@@ -10,6 +10,7 @@
 #include "core/dom/SecurityContext.h"
 #include "core/exported/WebViewBase.h"
 #include "core/frame/LocalFrameView.h"
+#include "core/frame/RemoteFrameOwner.h"
 #include "core/frame/Settings.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/HTMLFrameOwnerElement.h"
@@ -27,7 +28,6 @@
 #include "public/web/WebRange.h"
 #include "public/web/WebTreeScopeType.h"
 #include "v8/include/v8.h"
-#include "web/RemoteFrameOwner.h"
 #include "web/WebLocalFrameImpl.h"
 
 namespace blink {

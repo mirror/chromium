@@ -63,8 +63,6 @@ component("web") {
     "PrerendererClientImpl.h",
     "RemoteFrameClientImpl.cpp",
     "RemoteFrameClientImpl.h",
-    "RemoteFrameOwner.cpp",
-    "RemoteFrameOwner.h",
     "ServiceWorkerGlobalScopeClientImpl.cpp",
     "ServiceWorkerGlobalScopeClientImpl.h",
     "ServiceWorkerGlobalScopeProxy.cpp",

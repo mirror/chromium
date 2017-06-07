@@ -90,6 +90,8 @@ blink_core_sources("frame") {
     "RemoteFrame.cpp",
     "RemoteFrame.h",
     "RemoteFrameClient.h",
+    "RemoteFrameOwner.cpp",
+    "RemoteFrameOwner.h",
     "RemoteFrameView.cpp",
     "RemoteFrameView.h",
     "ResizeViewportAnchor.cpp",

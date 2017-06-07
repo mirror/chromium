@@ -12,6 +12,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/RemoteFrame.h"
+#include "core/frame/RemoteFrameOwner.h"
 #include "core/frame/WebLocalFrameBase.h"
 #include "core/frame/WebRemoteFrameBase.h"
 #include "core/html/HTMLFrameElementBase.h"
@@ -23,7 +24,6 @@
 #include "public/web/WebFrameOwnerProperties.h"
 #include "public/web/WebSandboxFlags.h"
 #include "web/OpenedFrameTracker.h"
-#include "web/RemoteFrameOwner.h"
 
 namespace blink {
 
