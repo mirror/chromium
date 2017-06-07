@@ -44,7 +44,7 @@ TEST(ContentSuggestionsItemTest, CellIsConfiguredWithoutImage) {
   ASSERT_EQ(url, item.URL);
   ASSERT_EQ(nil, item.image);
   id cellMock = OCMPartialMock(cell);
-  OCMExpect([cellMock setContentImage:item.image]);
+  OCMExpect([cellMock setContentImage:item.image animated:YES]);
   OCMExpect([cellMock setSubtitleText:subtitle]);
   OCMExpect([cellMock setAdditionalInformationWithPublisherName:publisher
                                                            date:date
@@ -86,7 +86,7 @@ TEST(ContentSuggestionsItemTest, DontFetchImageIsImageIsBeingFetched) {
       OCMStrictProtocolMock(@protocol(SuggestedContentDelegate));
   item.delegate = strictDelegateMock;
   id cellMock = OCMPartialMock(cell);
-  OCMExpect([cellMock setContentImage:item.image]);
+  OCMExpect([cellMock setContentImage:item.image animated:NO]);
 
   // Action.
   [item configureCell:cell];
