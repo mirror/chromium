@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2eaa930_45db27f4",
+        "filename": "device/bluetooth/test/fake_peripheral.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-07T05:47:56Z",
+      "side": 1,
+      "message": "To me, this would suggest that perhaps the function shouldn\u0027t be const (there are currently only 8 instances of mutable WeakPtrFactory throughout the codebase). But I suppose that\u0027s a larger change.",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 14
+      },
+      "revId": "64066e5a15e8725ca33bd6ca3fee19ec749ff516",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
