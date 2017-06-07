@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e80e1a5e_16227b7e",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-07T16:57:57Z",
+      "side": 1,
+      "message": "No need for \u003d nullptr; it\u0027s default null.",
+      "revId": "3c2dc7befdd7b5f08f36f4ca007ffa8d97ecbf15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
