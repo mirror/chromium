@@ -556,7 +556,6 @@ Bug(none) fast/css/vertical-text-overflow-ellipsis-text-align-left.html [ Failur
 Bug(none) fast/css/vertical-text-overflow-ellipsis-text-align-right.html [ Failure ]
 Bug(none) fast/dom/34176.html [ Failure ]
 Bug(none) fast/dom/52776.html [ Failure ]
-Bug(none) fast/dom/CompositorProxy/proxy-forces-layer.html [ Failure Timeout Pass ]
 Bug(none) fast/dom/focus-contenteditable.html [ Failure ]
 Bug(none) fast/dom/rtl-scroll-to-leftmost-and-resize.html [ Failure Crash ]
 Bug(none) fast/dynamic/anchor-lock.html [ Failure ]

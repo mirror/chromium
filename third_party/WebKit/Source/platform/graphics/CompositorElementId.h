@@ -23,8 +23,6 @@ enum class CompositorElementIdNamespace {
   kScrollState,
   kViewport,
   kLinkHighlight,
-  kPrimaryCompositorProxy,
-  kScrollCompositorProxy,
   // A sentinel to indicate the maximum representable namespace id
   // (the maximum is one less than this value).
   kMaxRepresentableNamespaceId = 1 << kCompositorNamespaceBitCount
@@ -41,9 +39,7 @@ CompositorElementId PLATFORM_EXPORT
 
 // This method should only be used for "special" layers that are not allocated
 // during the normal lifecycle. Examples include VisualViewport,
-// root scrolling (when rootLayerScrollingEnabled is off), and LinkHighlight,
-// or when CompositorProxies are involved.
-
+// root scrolling (when rootLayerScrollingEnabled is off), and LinkHighlight.
 // Otherwise, CompositorElementIdFromPaintLayerId is preferred for performance
 // reasons (since computing a DOMNodeId requires a hash map lookup),
 // and future compatibility with multicol/pagination.

@@ -6,12 +6,13 @@
 #define AnimationWorkletProxyClient_h
 
 #include "core/CoreExport.h"
-#include "core/dom/CompositorProxyClient.h"
+#include "platform/heap/Heap.h"
 #include "platform/wtf/Noncopyable.h"
 
 namespace blink {
 
-class CORE_EXPORT AnimationWorkletProxyClient : public GarbageCollectedMixin {
+class CORE_EXPORT AnimationWorkletProxyClient
+    : public GarbageCollectedFinalized<AnimationWorkletProxyClient> {
   WTF_MAKE_NONCOPYABLE(AnimationWorkletProxyClient);
 
  public:
