@@ -1149,23 +1149,6 @@ AXDefaultActionVerb AXObjectImpl::Action() const {
   }
 }
 
-bool AXObjectImpl::IsMultiline() const {
-  Node* node = this->GetNode();
-  if (!node)
-    return false;
-
-  if (isHTMLTextAreaElement(*node))
-    return true;
-
-  if (HasEditableStyle(*node))
-    return true;
-
-  if (!IsNativeTextControl() && !IsNonNativeTextControl())
-    return false;
-
-  return AOMPropertyOrARIAAttributeIsTrue(AOMBooleanProperty::kMultiline);
-}
-
 bool AXObjectImpl::AriaPressedIsPresent() const {
   return !GetAttribute(aria_pressedAttr).IsEmpty();
 }
