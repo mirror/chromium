@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6efb83e1_20b13533",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 1164,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-07T14:03:39Z",
+      "side": 1,
+      "message": "It\u0027s very likely that we\u0027ll switch to using desugar instead of retrolambda. Since this is the public variable for it, can we call it \"process_java8\" instead?\n\nAlso - please update the list of supported fields in rules.gni\u0027s android_java_prebuilt() and java_prebuilt() comments to mention the new parameter.",
+      "range": {
+        "startLine": 1164,
+        "startChar": 26,
+        "endLine": 1164,
+        "endChar": 41
+      },
+      "revId": "3593e3efd32b1e74f59c7b845c17c23f4cc98c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
