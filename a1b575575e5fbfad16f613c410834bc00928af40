@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62969811_eb0fd1fe",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchDispatcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-07T10:25:46Z",
+      "side": 1,
+      "message": "nit: this first sentence doesn\u0027t really tell what this class does (but tells what it wants to be), this could probably more plainly document what it does. E.g. \u0027Implements a resource queue with which the caller (i.e. ResourceFetcher) can append and retrieve resources to throttle/schedule resource requests.  Currently this just works as a simple FIFO queue with a credit system that controls how and when next resource can be dispatched.\u0027 ...or something like that?\n\nCan you also document the \u0027credit\u0027?\n\nBy the way this doesn\u0027t look a \u0027dispatcher\u0027 to me, rather it\u0027s basically a queue?",
+      "revId": "a1b575575e5fbfad16f613c410834bc00928af40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "301b2830_7c5e7afd",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchDispatcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-07T10:25:46Z",
+      "side": 1,
+      "message": "Maybe no need to have Create method",
+      "revId": "a1b575575e5fbfad16f613c410834bc00928af40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6f05edd_ffd66305",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchDispatcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-07T10:25:46Z",
+      "side": 1,
+      "message": "mange -\u003e manage",
+      "revId": "a1b575575e5fbfad16f613c410834bc00928af40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

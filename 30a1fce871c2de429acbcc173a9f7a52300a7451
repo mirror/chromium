@@ -69,6 +69,23 @@
       "revId": "30a1fce871c2de429acbcc173a9f7a52300a7451",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef0b5a4a_a9b4bbd4",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1397,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-07T10:25:46Z",
+      "side": 1,
+      "message": "Keeping resources at this layer worries me a bit, as Resource is a complex, overloaded thing in my understanding (and that\u0027s why I was thinking about doing this a bit lower layer initially)\n\nI\u0027d like to get others opinion as well, +yhirano",
+      "revId": "30a1fce871c2de429acbcc173a9f7a52300a7451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
