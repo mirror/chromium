@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ea11ab6_598a0586",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8DOMWrapper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-07T02:08:26Z",
+      "side": 1,
+      "message": "Do you know when this can fail?\n\nBTW I noticed that no one was using AccessCheckFailed before this CL...",
+      "revId": "3c5b59379791210c2949f9fe61787b58f59181ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
