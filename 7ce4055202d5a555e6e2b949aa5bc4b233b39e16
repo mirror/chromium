@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4dae520_44127c72",
+        "filename": "chrome/browser/extensions/process_manager_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-07T05:56:14Z",
+      "side": 1,
+      "message": "Out of curiosity, what breaks in the test if we don\u0027t wait for this?",
+      "revId": "7ce4055202d5a555e6e2b949aa5bc4b233b39e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c390872_05e5f124",
+        "filename": "components/guest_view/browser/test_guest_view_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-07T05:56:14Z",
+      "side": 1,
+      "message": "Is it possible that the guest has already been attached when the test calls this?  Do we need to check for this here?",
+      "revId": "7ce4055202d5a555e6e2b949aa5bc4b233b39e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbdc84a8_54398f5c",
+        "filename": "components/guest_view/browser/test_guest_view_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-07T05:56:14Z",
+      "side": 1,
+      "message": "Might as well drop this check since the runner should always be non-null here.",
+      "revId": "7ce4055202d5a555e6e2b949aa5bc4b233b39e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
