@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a265d679_9c1cf143",
+        "filename": "third_party/WebKit/Source/core/paint/RoundedInnerRectClipper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-07T01:42:57Z",
+      "side": 1,
+      "message": "What do you think about including the following in this patch?\n\n- change line 79-82 to:\n  paint_info.context.Save();\n  for (const auto\u0026 r : rounded_rect_clips)\n    paint_info.context.ClipRoundedRect(r);\n\n- change line95-96 to:\n  paint_info_.context.restore();\n\nso that we\u0027ll avoid all paired display items for SPv2, and we can add\n  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled())\nin the constructors of PairedBeginDisplayItem and PairedEndDisplayItem.",
+      "revId": "0fc35d3495afb256f53f013d876b9e1142115e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
