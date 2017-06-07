@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb9c236c_9f4a2e3a",
+        "filename": "content/browser/indexed_db/indexed_db_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-07T18:50:56Z",
+      "side": 1,
+      "message": "nit: please don\u0027t use unnecessary abbreviations in comments",
+      "range": {
+        "startLine": 390,
+        "startChar": 43,
+        "endLine": 390,
+        "endChar": 47
+      },
+      "revId": "202c8d831a519189765d9d7e6357c8c6b9f3937b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b52f9d_a31e9043",
+        "filename": "content/browser/indexed_db/indexed_db_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-07T18:50:56Z",
+      "side": 1,
+      "message": "optional side comment: it might be good to use the same range and number of buckets for read-only transactions as for other transactions.  This might make it easier to combine information in a spreadsheet.  Just a thought.",
+      "range": {
+        "startLine": 393,
+        "startChar": 21,
+        "endLine": 393,
+        "endChar": 30
+      },
+      "revId": "202c8d831a519189765d9d7e6357c8c6b9f3937b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7271bed_d273bbc9",
+        "filename": "content/browser/indexed_db/indexed_db_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-07T18:50:56Z",
+      "side": 1,
+      "message": "nit: I read \"Large bucket count\" as \"a bucket with a large count in it\" at first, which isn\u0027t what you meant.\n// Use 75 buckets for more detail.\n\n(I assume you\u0027re sure you need this.)\n\nditto below and in other file.",
+      "range": {
+        "startLine": 398,
+        "startChar": 44,
+        "endLine": 398,
+        "endChar": 49
+      },
+      "revId": "202c8d831a519189765d9d7e6357c8c6b9f3937b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ccfe40_e999b4d9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 81841,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-07T18:50:56Z",
+      "side": 1,
+      "message": "Uh, you don\u0027t seem to have touched this histogram in this changelist.  Did you mean to mark WebCore.IndexedDB.PutValueSize and introduce a new WebCore.IndexedDB.PutValueSize2 instead?",
+      "range": {
+        "startLine": 81841,
+        "startChar": 35,
+        "endLine": 81841,
+        "endChar": 45
+      },
+      "revId": "202c8d831a519189765d9d7e6357c8c6b9f3937b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c8738f4_92cc8b71",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 81843,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-07T18:50:56Z",
+      "side": 1,
+      "message": "Recommend that you put a date or milestone in the obsolete label (here and below).",
+      "range": {
+        "startLine": 81843,
+        "startChar": 35,
+        "endLine": 81843,
+        "endChar": 36
+      },
+      "revId": "202c8d831a519189765d9d7e6357c8c6b9f3937b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
