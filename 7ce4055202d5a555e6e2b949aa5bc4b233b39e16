@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9399d4bf_83e7bf24",
+        "filename": "chrome/browser/extensions/process_manager_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-07T20:38:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "339d38e7_672d816e",
+      "revId": "7ce4055202d5a555e6e2b949aa5bc4b233b39e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c390872_05e5f124",
         "filename": "components/guest_view/browser/test_guest_view_manager.cc",
         "patchSetId": 1
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "Actually, this turned out to be wrong. It\u0027s possible for waiting_for_attach_ to be null, and that we can\u0027t find the guest by embedder_process_id/guest_instance_id and still not have a message loop.",
       "parentUuid": "2a68c4a9_26e8f929",
+      "revId": "7ce4055202d5a555e6e2b949aa5bc4b233b39e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24a85d0e_1e7ec7db",
+        "filename": "components/guest_view/browser/test_guest_view_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-07T20:38:09Z",
+      "side": 1,
+      "message": "Ack - I guess you could also avoid that by checking that waiting_for_attach_ is not null, which might be a bit more intuitive than checking the message loop for null.",
+      "parentUuid": "45a54b75_4051ac35",
       "revId": "7ce4055202d5a555e6e2b949aa5bc4b233b39e16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
