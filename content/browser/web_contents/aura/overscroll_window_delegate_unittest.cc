@@ -16,7 +16,8 @@
 namespace content {
 
 namespace {
-const int kTestWindowWidth = 600;
+const int kTestDisplaySize = 800;
+const int kTestWindowSize = 600;
 }
 
 class OverscrollWindowDelegateTest : public aura::test::AuraTestBase,
@@ -43,7 +44,7 @@ class OverscrollWindowDelegateTest : public aura::test::AuraTestBase,
     current_mode_ = OVERSCROLL_NONE;
     window_.reset(CreateNormalWindow(
         0, root_window(), new OverscrollWindowDelegate(this, gfx::Image())));
-    window_->SetBounds(gfx::Rect(0, 0, kTestWindowWidth, kTestWindowWidth));
+    window_->SetBounds(gfx::Rect(0, 0, kTestWindowSize, kTestWindowSize));
   }
 
   // Accessors.
@@ -58,7 +59,7 @@ class OverscrollWindowDelegateTest : public aura::test::AuraTestBase,
   float touch_start_threshold() { return touch_start_threshold_; }
 
   float touch_complete_threshold() {
-    return kTestWindowWidth * touch_complete_threshold_;
+    return kTestDisplaySize * touch_complete_threshold_;
   }
 
  protected:
@@ -77,8 +78,8 @@ class OverscrollWindowDelegateTest : public aura::test::AuraTestBase,
 
  private:
   // OverscrollControllerDelegate:
-  gfx::Rect GetVisibleBounds() const override {
-    return gfx::Rect(kTestWindowWidth, kTestWindowWidth);
+  gfx::Size GetDisplaySize() const override {
+    return gfx::Size(kTestDisplaySize, kTestDisplaySize);
   }
 
   bool OnOverscrollUpdate(float delta_x, float delta_y) override {
