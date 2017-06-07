@@ -18,7 +18,7 @@ function initialize_TracingManagerClient()
 InspectorTest.TracingManagerClient = function(callback)
 {
     this._completionCallback = callback;
-    this._tracingModel = InspectorTest.createTracingModel();
+    this._tracingModel = new SDK.TracingModel(new Bindings.TempFileBackingStorage("tracing"));
 }
 
 InspectorTest.TracingManagerClient.prototype = {
