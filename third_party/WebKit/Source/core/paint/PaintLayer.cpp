@@ -290,8 +290,7 @@ void PaintLayer::UpdateLayerPositionsAfterLayout() {
   TRACE_EVENT0("blink,benchmark",
                "PaintLayer::updateLayerPositionsAfterLayout");
 
-  Clipper(PaintLayer::kDoNotUseGeometryMapper)
-      .ClearClipRectsIncludingDescendants();
+  ClearClipRects();
   UpdateLayerPositionRecursive();
 
   {
@@ -382,8 +381,7 @@ bool PaintLayer::ScrollsWithRespectTo(const PaintLayer* other) const {
 }
 
 void PaintLayer::UpdateLayerPositionsAfterOverflowScroll() {
-  Clipper(PaintLayer::kDoNotUseGeometryMapper)
-      .ClearClipRectsIncludingDescendants();
+  ClearClipRects();
   UpdateLayerPositionRecursive();
 }
 
@@ -427,11 +425,9 @@ void PaintLayer::UpdateTransform(const ComputedStyle* old_style,
 
     // PaintLayers with transforms act as clip rects roots, so clear the cached
     // clip rects here.
-    Clipper(PaintLayer::kDoNotUseGeometryMapper)
-        .ClearClipRectsIncludingDescendants();
+    ClearClipRects();
   } else if (has_transform) {
-    Clipper(PaintLayer::kDoNotUseGeometryMapper)
-        .ClearClipRectsIncludingDescendants(kAbsoluteClipRects);
+    ClearClipRects(kAbsoluteClipRects);
   }
 
   UpdateTransformationMatrix();
@@ -1368,6 +1364,11 @@ PaintLayer* PaintLayer::RemoveChild(PaintLayer* old_child) {
   return old_child;
 }
 
+void PaintLayer::ClearClipRects(ClipRectsCacheSlot cache_slot) {
+  Clipper(PaintLayer::kDoNotUseGeometryMapper)
+      .ClearClipRectsIncludingDescendants(cache_slot);
+}
+
 void PaintLayer::RemoveOnlyThisLayerAfterStyleChange() {
   if (!parent_)
     return;
@@ -1395,8 +1396,7 @@ void PaintLayer::RemoveOnlyThisLayerAfterStyleChange() {
       enclosing_self_painting_layer->MergeNeedsPaintPhaseFlagsFrom(*this);
   }
 
-  Clipper(PaintLayer::kDoNotUseGeometryMapper)
-      .ClearClipRectsIncludingDescendants();
+  ClearClipRects();
 
   PaintLayer* next_sib = NextSibling();
 
@@ -1460,8 +1460,7 @@ void PaintLayer::InsertOnlyThisLayerAfterStyleChange() {
   }
 
   // Clear out all the clip rects.
-  Clipper(PaintLayer::kDoNotUseGeometryMapper)
-      .ClearClipRectsIncludingDescendants();
+  ClearClipRects();
 }
 
 // Returns the layer reached on the walk up towards the ancestor.

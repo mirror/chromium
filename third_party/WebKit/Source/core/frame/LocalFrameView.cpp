@@ -2955,6 +2955,11 @@ void LocalFrameView::VisualViewportScrollbarsChanged() {
     if (!VisualViewportSuppliesScrollbars())
       UpdateScrollbarGeometry();
   }
+
+  if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
+    if (LayoutView* layout_view = GetLayoutView())
+      layout_view->Layer()->ClearClipRects();
+  }
 }
 
 void LocalFrameView::UpdateGeometriesIfNeeded() {
