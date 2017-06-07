@@ -365,11 +365,7 @@ InterpolatedMatrixTransform::~InterpolatedMatrixTransform() {}
 gfx::Transform
 InterpolatedMatrixTransform::InterpolateButDoNotCompose(float t) const {
   gfx::DecomposedTransform blended;
-  bool success = gfx::BlendDecomposedTransforms(&blended,
-                                                end_decomp_,
-                                                start_decomp_,
-                                                t);
-  DCHECK(success);
+  gfx::BlendDecomposedTransforms(&blended, end_decomp_, start_decomp_, t);
   return gfx::ComposeTransform(blended);
 }
 

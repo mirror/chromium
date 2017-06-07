@@ -176,7 +176,7 @@ void InitializeApproxIdentityMatrix(Transform* transform) {
 #else
 #define ERROR_THRESHOLD 1e-7
 #endif
-#define LOOSE_ERROR_THRESHOLD 1e-7
+#define LOOSE_ERROR_THRESHOLD 1e-6
 
 TEST(XFormTest, Equality) {
   Transform lhs, rhs, interpolated;
@@ -745,13 +745,8 @@ TEST(XFormTest, CanBlend180DegreeRotation) {
       // A 180 degree rotation is exactly opposite on the sphere, therefore
       // either great circle arc to it is equivalent (and numerical precision
       // will determine which is closer).  Test both directions.
-      Transform expected1;
-      expected1.RotateAbout(axes[index], 180.0 * t);
-      Transform expected2;
-      expected2.RotateAbout(axes[index], -180.0 * t);
-
-      EXPECT_TRUE(MatricesAreNearlyEqual(expected1, to) ||
-                  MatricesAreNearlyEqual(expected2, to))
+      Transform expected = from;
+      EXPECT_TRUE(MatricesAreNearlyEqual(expected, to))
           << "axis: " << index << ", i: " << i;
     }
   }
@@ -1270,11 +1265,15 @@ TEST(XFormTest, DecomposedTransformCtor) {
     EXPECT_EQ(0.0, decomp.translate[i]);
     EXPECT_EQ(1.0, decomp.scale[i]);
     EXPECT_EQ(0.0, decomp.skew[i]);
-    EXPECT_EQ(0.0, decomp.quaternion[i]);
     EXPECT_EQ(0.0, decomp.perspective[i]);
   }
-  EXPECT_EQ(1.0, decomp.quaternion[3]);
   EXPECT_EQ(1.0, decomp.perspective[3]);
+
+  EXPECT_EQ(0.0, decomp.quaternion.x());
+  EXPECT_EQ(0.0, decomp.quaternion.y());
+  EXPECT_EQ(0.0, decomp.quaternion.z());
+  EXPECT_EQ(1.0, decomp.quaternion.w());
+
   Transform identity;
   Transform composed = ComposeTransform(decomp);
   EXPECT_TRUE(MatricesAreNearlyEqual(identity, composed));
@@ -1295,7 +1294,7 @@ TEST(XFormTest, FactorTRS) {
     EXPECT_FLOAT_EQ(decomp.translate[0], degrees * 2);
     EXPECT_FLOAT_EQ(decomp.translate[1], -degrees * 3);
     double rotation =
-        std::acos(SkMScalarToDouble(decomp.quaternion[3])) * 360.0 / M_PI;
+        std::acos(SkMScalarToDouble(decomp.quaternion.w())) * 360.0 / M_PI;
     while (rotation < 0.0)
       rotation += 360.0;
     while (rotation > 360.0)
