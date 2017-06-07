@@ -1866,10 +1866,9 @@ std::string View::DoPrintViewGraph(bool first, View* view_with_children) {
                    decomp.translate[1]);
     result.append(bounds_buffer);
 
-    base::snprintf(bounds_buffer,
-                   arraysize(bounds_buffer),
+    base::snprintf(bounds_buffer, arraysize(bounds_buffer),
                    "\\n rotation: %3.2f",
-                   std::acos(decomp.quaternion[3]) * 360.0 / M_PI);
+                   std::acos(decomp.quaternion.w()) * 360.0 / M_PI);
     result.append(bounds_buffer);
 
     base::snprintf(bounds_buffer,
