@@ -86,7 +86,8 @@ void FakeRendererScheduler::AddPendingNavigation(NavigatingFrameType type) {}
 
 void FakeRendererScheduler::RemovePendingNavigation(NavigatingFrameType type) {}
 
-void FakeRendererScheduler::OnNavigationStarted() {}
+void FakeRendererScheduler::OnNavigationStarted(
+    bool is_same_document_navigation) {}
 
 bool FakeRendererScheduler::ShouldYieldForHighPriorityWork() {
   return false;

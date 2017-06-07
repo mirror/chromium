@@ -1082,17 +1082,37 @@ TEST_F(RendererSchedulerImplTest, TestCompositorPolicy_DidAnimateForInput) {
 TEST_F(RendererSchedulerImplTest, Navigation_ResetsTaskCostEstimations) {
   std::vector<std::string> run_order;
 
+  scheduler_->SetHasVisibleRenderWidgetWithTouchHandler(true);
   SimulateExpensiveTasks(timer_task_runner_);
-  scheduler_->OnNavigationStarted();
+  DoMainFrame();
+  // A navigation occurs which creates a new Document thus resetting the task
+  // cost estimations.
+  scheduler_->OnNavigationStarted(false /* is_same_document_navigation */);
+  SimulateMainThreadGestureStart(TouchEventPolicy::SEND_TOUCH_START,
+                                 blink::WebInputEvent::kGestureScrollUpdate);
   PostTestTasks(&run_order, "C1 T1");
-
-  SimulateMainThreadGestureStart(TouchEventPolicy::DONT_SEND_TOUCH_START,
-                                 blink::WebInputEvent::kGestureScrollBegin);
-  scheduler_->DidCommitFrameToCompositor();  // Starts Idle Period
   RunUntilIdle();
 
   EXPECT_THAT(run_order,
               testing::ElementsAre(std::string("C1"), std::string("T1")));
+}
+
+TEST_F(RendererSchedulerImplTest,
+       Navigation_SameDocumentPreservesTaskCostEstimations) {
+  std::vector<std::string> run_order;
+
+  scheduler_->SetHasVisibleRenderWidgetWithTouchHandler(true);
+  SimulateExpensiveTasks(timer_task_runner_);
+  DoMainFrame();
+  // A navigation occurs which doesn't create a new Document leaving the task
+  // estimations in place.
+  scheduler_->OnNavigationStarted(true /* is_same_document_navigation */);
+  SimulateMainThreadGestureStart(TouchEventPolicy::SEND_TOUCH_START,
+                                 blink::WebInputEvent::kGestureScrollUpdate);
+  PostTestTasks(&run_order, "C1 T1");
+  RunUntilIdle();
+
+  EXPECT_THAT(run_order, testing::ElementsAre(std::string("C1")));
 }
 
 TEST_F(RendererSchedulerImplTest,
@@ -1254,7 +1274,7 @@ TEST_F(RendererSchedulerImplTest, DISABLED_LoadingUseCase) {
   std::vector<std::string> run_order;
   PostTestTasks(&run_order, "I1 D1 C1 T1 L1 D2 C2 T2 L2");
 
-  scheduler_->OnNavigationStarted();
+  scheduler_->OnNavigationStarted(false /* is_same_document_navigation */);
   EnableIdleTasks();
   RunUntilIdle();
 
@@ -3028,7 +3048,7 @@ TEST_F(RendererSchedulerImplTest,
 // TODO(alexclarke): Reenable once we've reinstaed the Loading UseCase.
 TEST_F(RendererSchedulerImplTest,
        DISABLED_EstimateLongestJankFreeTaskDuration_UseCase_) {
-  scheduler_->OnNavigationStarted();
+  scheduler_->OnNavigationStarted(false /* is_same_document_navigation */);
   EXPECT_EQ(UseCase::LOADING, ForceUpdatePolicyAndGetCurrentUseCase());
   EXPECT_EQ(rails_response_time(),
             scheduler_->EstimateLongestJankFreeTaskDuration());
@@ -3657,7 +3677,7 @@ TEST_F(RendererSchedulerImplTest, TestLoadRAILMode) {
   EXPECT_CALL(observer, OnRAILModeChanged(v8::PERFORMANCE_ANIMATION));
   EXPECT_CALL(observer, OnRAILModeChanged(v8::PERFORMANCE_LOAD));
 
-  scheduler_->OnNavigationStarted();
+  scheduler_->OnNavigationStarted(false /* is_same_document_navigation */);
   EXPECT_EQ(v8::PERFORMANCE_LOAD, GetRAILMode());
   EXPECT_EQ(UseCase::LOADING, ForceUpdatePolicyAndGetCurrentUseCase());
   scheduler_->OnFirstMeaningfulPaint();
@@ -3672,7 +3692,7 @@ TEST_F(RendererSchedulerImplTest, InputTerminatesLoadRAILMode) {
   EXPECT_CALL(observer, OnRAILModeChanged(v8::PERFORMANCE_ANIMATION));
   EXPECT_CALL(observer, OnRAILModeChanged(v8::PERFORMANCE_LOAD));
 
-  scheduler_->OnNavigationStarted();
+  scheduler_->OnNavigationStarted(false /* is_same_document_navigation */);
   EXPECT_EQ(v8::PERFORMANCE_LOAD, GetRAILMode());
   EXPECT_EQ(UseCase::LOADING, ForceUpdatePolicyAndGetCurrentUseCase());
   scheduler_->DidHandleInputEventOnCompositorThread(

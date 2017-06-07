@@ -1653,11 +1653,14 @@ RendererSchedulerImpl::CreateMaxQueueingTimeMetric() {
       "RendererScheduler.MaxQueueingTime", 1, 10000, 50);
 }
 
-void RendererSchedulerImpl::OnNavigationStarted() {
-  TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
-               "RendererSchedulerImpl::OnNavigationStarted");
-  base::AutoLock lock(any_thread_lock_);
-  ResetForNavigationLocked();
+void RendererSchedulerImpl::OnNavigationStarted(
+    bool is_same_document_navigation) {
+  if (!is_same_document_navigation) {
+    TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
+                 "RendererSchedulerImpl::OnNavigationStarted");
+    base::AutoLock lock(any_thread_lock_);
+    ResetForNavigationLocked();
+  }
 }
 
 void RendererSchedulerImpl::OnCommitProvisionalLoad() {

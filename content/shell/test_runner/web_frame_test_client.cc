@@ -464,7 +464,8 @@ void WebFrameTestClient::DidFailProvisionalLoad(
 
 void WebFrameTestClient::DidCommitProvisionalLoad(
     const blink::WebHistoryItem& history_item,
-    blink::WebHistoryCommitType history_type) {
+    blink::WebHistoryCommitType history_type,
+    bool is_same_document_navigation) {
   if (test_runner()->shouldDumpFrameLoadCallbacks()) {
     PrintFrameDescription(delegate_, web_frame_test_proxy_base_->web_frame());
     delegate_->PrintMessage(" - didCommitLoadForFrame\n");
