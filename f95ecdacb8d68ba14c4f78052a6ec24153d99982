@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "390c2793_0c71f914",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/util/VrInfoBarUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-07T23:15:20Z",
+      "side": 1,
+      "message": "Previous version in VrUtils searched through the View hierarchy. This version should be functionally equivalent, but simpler and faster.",
+      "range": {
+        "startLine": 25,
+        "startChar": 26,
+        "endLine": 25,
+        "endChar": 42
+      },
+      "revId": "f95ecdacb8d68ba14c4f78052a6ec24153d99982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cfbddf7_cd159692",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/util/VrInfoBarUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-07T23:15:20Z",
+      "side": 1,
+      "message": "This is how this function was before the refactor, but I feel like this should be waiting for the number of InfoBars to decrease by one in case there are multiple InfoBars. Thoughts?",
+      "range": {
+        "startLine": 51,
+        "startChar": 20,
+        "endLine": 51,
+        "endChar": 44
+      },
+      "revId": "f95ecdacb8d68ba14c4f78052a6ec24153d99982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec6de7b0_2522f072",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/util/VrInfoBarUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-07T23:15:20Z",
+      "side": 1,
+      "message": "Same as above.",
+      "range": {
+        "startLine": 67,
+        "startChar": 20,
+        "endLine": 67,
+        "endChar": 44
+      },
+      "revId": "f95ecdacb8d68ba14c4f78052a6ec24153d99982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f64d72f_59d736cf",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/util/VrTransitionUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-07T23:15:20Z",
+      "side": 1,
+      "message": "Took a VrShellDelegate as an argument before the refactor, but I saw no reason to keep that around.",
+      "range": {
+        "startLine": 47,
+        "startChar": 23,
+        "endLine": 47,
+        "endChar": 34
+      },
+      "revId": "f95ecdacb8d68ba14c4f78052a6ec24153d99982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
