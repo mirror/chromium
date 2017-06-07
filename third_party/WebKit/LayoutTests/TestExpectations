@@ -1887,13 +1887,6 @@ crbug.com/626703 external/wpt/mixed-content/blockable/no-opt-in/same-host-http/i
 crbug.com/626703 external/wpt/mixed-content/blockable/no-opt-in/same-host-http/iframe-tag/top-level/swap-scheme-redirect/no-opt-in-blocks.https.html [ Timeout ]
 
 # These expectations are temporarily commented-out while the test directory is disabled (see top of file).
-crbug.com/695270 [ Linux ] external/wpt/css/css-writing-modes-3/overconstrained-rel-pos-ltr-top-bottom-vlr-003.xht [ Failure ]
-crbug.com/695270 [ Linux ] external/wpt/css/css-writing-modes-3/overconstrained-rel-pos-ltr-top-bottom-vrl-002.xht [ Failure ]
-crbug.com/695270 [ Linux ] external/wpt/css/css-writing-modes-3/overconstrained-rel-pos-rtl-left-right-vlr-009.xht [ Failure ]
-crbug.com/695270 [ Linux ] external/wpt/css/css-writing-modes-3/overconstrained-rel-pos-rtl-left-right-vrl-008.xht [ Failure ]
-crbug.com/695270 [ Linux ] external/wpt/css/css-writing-modes-3/overconstrained-rel-pos-rtl-top-bottom-vlr-007.xht [ Failure ]
-crbug.com/695270 [ Linux ] external/wpt/css/css-writing-modes-3/overconstrained-rel-pos-rtl-top-bottom-vrl-006.xht [ Failure ]
-
 crbug.com/626703 external/wpt/domxpath/001.html [ Failure ]
 
 # These HTTP tests that started failing after a web-platform-tests import.
