@@ -188,6 +188,24 @@
       "revId": "9f2823b227ee39a2395f6895750a85f0b9d3c837",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1bda65ec_0e5f6db1",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-07T22:40:14Z",
+      "side": 1,
+      "message": "OK.  Sounds like we\u0027ll duplicate it as needed in chrome/ or content/.\n\nLong term the URLs will be replaced with a proper availability API for remote playback, so not a big deal.",
+      "parentUuid": "0b363757_60819e89",
+      "revId": "9f2823b227ee39a2395f6895750a85f0b9d3c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
