@@ -5,7 +5,6 @@
 #include "modules/compositorworker/AnimationWorkletProxyClientImpl.h"
 
 #include "core/animation/CompositorMutatorImpl.h"
-#include "core/dom/CompositorProxy.h"
 #include "platform/graphics/CompositorMutableStateProvider.h"
 
 namespace blink {

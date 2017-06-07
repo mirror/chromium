@@ -6,9 +6,9 @@
 
 #include "core/animation/CompositorAnimator.h"
 #include "core/animation/CustomCompositorAnimationManager.h"
-#include "core/dom/CompositorProxy.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WaitableEvent.h"
+#include "platform/WebTaskRunner.h"
 #include "platform/graphics/CompositorMutationsTarget.h"
 #include "platform/graphics/CompositorMutatorClient.h"
 #include "platform/heap/Handle.h"
