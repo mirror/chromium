@@ -1,0 +1,679 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bdbdca9_9d0d93b5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "Add a short description of what SequenceLocalStorage does (store and retrieve data from a sequence, data is destroyed when the sequence is destroyed).",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "998aede9_43ddc4fe",
+        "filename": "base/task_scheduler/sequence.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "not used",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f142467_b3567abe",
+        "filename": "base/task_scheduler/sequence.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "Explain the purpose of this member rather than repeating the type (it\u0027s obvious that this is a \"SequenceLocalStorage object\").\n\n// Holds data stored through the SequenceLocalStorageSlot API.",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fcfa511_0f11cbb8",
+        "filename": "base/task_scheduler/sequence.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "sequence_local_storage_;\n\n\"Data members of classes, both static and non-static, are named like ordinary nonmember variables, but with a trailing underscore.\"\nhttps://google.github.io/styleguide/cppguide.html#Variable_Names",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ed599c_798d4cef",
+        "filename": "base/task_scheduler/task_tracker_posix_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "Not required. Probably an artifact of git rebase.",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f37062_a16dce05",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "Not required. Probably an artifact of git rebase.",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93907073_42f8b57b",
+        "filename": "base/task_scheduler/test_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "This change shouldn\u0027t be here. Probably an artifact of git rebase.",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bc932b5_109fcab7",
+        "filename": "base/test/scoped_task_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "This change shouldn\u0027t be here. Probably an artifact of git rebase.",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cda7d732_34928084",
+        "filename": "base/threading/sequence_local_storage.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "The |sequence_local_storage_| member is not very useful here (only useful for the DCHECK in the destructor, which doesn\u0027t bring us much since the constructor verifies that the TLS slot is empty before storing a value in it).\n\nYou could store |sequence_local_storage| in TLS directly and get rid of the |sequence_local_storage_| member.",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4177c7d_fe229346",
+        "filename": "base/threading/sequence_local_storage.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "DCHECK(current_sequence_local_storage) \u003c\u003c \"SequenceLocalStorageSlot cannot be used because no SequenceLocalStorageMap was stored in TLS.\"\n\nWe typically don\u0027t specify an error message for DCHECKs that shouldn\u0027t be hit if there is no error in our code. In this case, even if there is no error in our code, a developer who tries to use the SequenceLocalStorageSlot API on a custom thread that didn\u0027t set a SequenceLocalStorageMap in TLS may hit this DCHECK so we want a clear error message.",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6af9f4e_14eb96e4",
+        "filename": "base/threading/sequence_local_storage.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "operator[] creates an entry if it didn\u0027t previously exist. If you call sls_map[3] on an empty sls_map, a default constructed ValDtorPair will be inserted:\n\nsls_map \u003d {3: {val: ?, dtor \u003d nullptr}}\n\nWhen ~SequenceLocalStorage is called, it will try invoke sls_map[3].dtor. Since it\u0027s nullptr, it will crash.\n\nTo avoid insertions in Get(), you can write:\n\nvoid* SequenceLocalStorage::Get(int slot_id) {\n  auto it \u003d sls_map.find(slot_id);\n  if (it \u003d\u003d sls_map.end())\n    return nullptr;\n  return it-\u003esecond.value;\n}",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e374ca_8c793374",
+        "filename": "base/threading/sequence_local_storage.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "This statement adds a default-constructed entry to sls_map and then copies val_dtor_pair into it. You can avoid the default construction by writing:\n\nsls_map.emplace(slot_id, val_dtor_pair);\n\nMore details:\noperator[key] checks if there is an entry for key in the map map. If not, it adds a default constructed entry. Then, it returns a reference to the entry. After that, operator\u003d copies |val_dtor_pair| into the returned reference.",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac64363_65d9d423",
+        "filename": "base/threading/sequence_local_storage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "\u003cutility\u003e is not used in this file",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c33816_8cf5a2c0",
+        "filename": "base/threading/sequence_local_storage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "Make this an inner struct. Typically, we make B an inner struct of A if B is used solely as:\n- an argument type for methods of A\n- a return value type for methods of A\n- a member type for A\n\n(i.e. it doesn\u0027t make sense to use B without knowing about A)",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "150966b3_a8f81c7a",
+        "filename": "base/threading/sequence_local_storage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "ValueDestructorPair\n\n\"Names should be descriptive; avoid abbreviation.\"\nhttps://google.github.io/styleguide/cppguide.html#General_Naming_Rules",
+      "range": {
+        "startLine": 16,
+        "startChar": 7,
+        "endLine": 16,
+        "endChar": 19
+      },
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b5b0cf_bc7ae6b1",
+        "filename": "base/threading/sequence_local_storage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "val -\u003e value",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ecf440b_e622c7f8",
+        "filename": "base/threading/sequence_local_storage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "dtor -\u003e destructor",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3abf48e8_70443ded",
+        "filename": "base/threading/sequence_local_storage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "Add a comment that describes this class and how it should be used. \n\nInformation to include in the description:\n\n- SequenceLocalStorageSlot stores and retrieves values in the SequenceLocalStorage set in TLS by ScopedSetSequenceLocalStorageForCurrentThread.\n- Values are stored with a destructor. Destroying a SequenceLocalStorage object invokes the destructor of every stored value.\n\n\"Every non-obvious class declaration should have an accompanying comment that describes what it is for and how it should be used.\"\nhttps://google.github.io/styleguide/cppguide.html#Class_Comments",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee5f6a6_ac321acd",
+        "filename": "base/threading/sequence_local_storage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "I would rename SequenceLocalStorage -\u003e SequenceLocalStorageMap to make the purpose of this class more obvious.",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6ba1d5_04636f38",
+        "filename": "base/threading/sequence_local_storage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "#include \"base/base_export.h\"\nIWYU (include what you use) rule",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eec46b5_56da394d",
+        "filename": "base/threading/sequence_local_storage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "Add comment on every method.\n\n// Returns the SequenceLocalStorage bound to the current thread. It is invalid to call this outside the scope of a ScopedSetSequenceLocalStorageForCurrentThread.",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c86177_52da2c65",
+        "filename": "base/threading/sequence_local_storage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "Add comment on every method.\n\n// Returns the value stored in |slot_id|, or nullptr if no value was stored.",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8452b084_20638171",
+        "filename": "base/threading/sequence_local_storage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "Get() should only return the void* value. A caller doesn\u0027t need the destructor.",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8722851_5c47683b",
+        "filename": "base/threading/sequence_local_storage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "Add comment on every method.\n\n// Stores |value_destructor_pair| in |slot_id|. Overwrites any previously stored value.",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09b5cb44_62d726cd",
+        "filename": "base/threading/sequence_local_storage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "We typically put comments on top of members.\n\n// Slot id to ValueDestructorPair map.",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb1b44c5_ed38a47f",
+        "filename": "base/threading/sequence_local_storage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "Add class comment:\n\n// Within the scope of this object, SequenceLocalStorage::GetForCurrentThread() will return a reference to the SequenceLocalStorage object passed to the constructor.",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f9044c4_2546132b",
+        "filename": "base/threading/sequence_local_storage_slot.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "Remove empty line below",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0cc375_198958c4",
+        "filename": "base/threading/sequence_local_storage_slot.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "#include \u003cnumeric_limits\u003e\n\nint slot_id \u003d g_sequence_local_storage_slot_generator.GetNext();\nDCHECK_LT(slot_id, std::numeric_limits\u003cint\u003e::max());\n\nSo we can detect overflow.",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2abe3c4d_efcf7980",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "add:\n\n// TODO(jeffreyhe): Change this method to return a default-constructed value instead of crashing if no value was previously set. https://crbug.com/695727",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d509181_225a2325",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "Mention that if sizeof(T) is big, it may be more appropriate to use a SequenceLocalStorageSlot\u003cstd::unique_ptr\u003cT\u003e\u003e than a SequenceLocalStorageSlot\u003cT\u003e to avoid a costly copy.",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b183687b_178bd4ab",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "#include \u003cutility\u003e for std::move",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a52e001_2aaca949",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "Add a comment explaining how the value will be freed. We would like every allocation to be made via MakeUnique/MakeRefCounted *or* to be accompanied with a justification.",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fb3d88d_873f8424",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "Personal preference: Deleter()(static_cast\u003cT*\u003e(ptr));\n\nYou\u0027re allowed to disagree.",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "843168ef_cb8abb5b",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "slot_id_;\n\n\"Data members of classes, both static and non-static, are named like ordinary nonmember variables, but with a trailing underscore.\"\nhttps://google.github.io/styleguide/cppguide.html#Variable_Names",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 20
+      },
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75aca72e_1e00bea5",
+        "filename": "base/threading/sequence_local_storage_slot_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "#include \"base/macros.h\"",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a94adb7_b7b56b9b",
+        "filename": "base/threading/sequence_local_storage_slot_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "Add a short comment before each test to describe its purpose.\n\ne.g. Verify that a value stored with Set() can be retrieved with Set().",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "595cd1c4_5d63261f",
+        "filename": "base/threading/sequence_local_storage_slot_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "Since the test is very short, the empty lines aren\u0027t useful. They\u0027re more useful in your other tests, where they group multiple statements.\n\nhttps://google.github.io/styleguide/cppguide.html#Vertical_Whitespace",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f27d9b1e_425adfb9",
+        "filename": "base/threading/sequence_local_storage_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "Since this test uses SequenceLocalStorageSlot, I would move it to sequence_local_storage_slot_unittest.cc and remove this file.",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4926876_9c0d74a9",
+        "filename": "base/threading/sequence_local_storage_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-07T14:23:39Z",
+      "side": 1,
+      "message": "Unfortunately, even if SequenceLocalStorage doesn\u0027t destroy the value, the bool will be set to true when the |set_on_destroy| local variable is destroyed and the test will succeed.\n\nYou can use RefCounted to avoid this problem:\n\nclass SetOnDestroy : public RefCounted\u003cSetOnDestroy\u003e {\n public:\n  SetOnDestroy(bool* bool_ptr) : bool_ptr{bool_ptr} {\n    DCHECK(bool_ptr);\n    DCHECK(!(*bool_ptr));\n  }\n  ~SetOnDestroy() { *bool_ptr \u003d true; }\n\n private:\n  bool* bool_ptr;\n\n  DISALLOW_COPY_AND_ASSIGN(SetOnDestroy);\n};\n\n...\n\n  SequenceLocalStorageSlot\u003cscoped_refptr\u003cSetOnDestroy\u003e\u003e slot;\n  slot.Set(MakeRefCounted\u003cSetOnDestroy\u003e(\u0026set_on_destruction));\n}\n\n// will only be true if *all* references to the SetOnDestroy instance are gone\nEXPECT_TRUE(set_on_destruction);",
+      "revId": "c8f324f0f4da9309d7554fffdb2b83eee3a803fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
