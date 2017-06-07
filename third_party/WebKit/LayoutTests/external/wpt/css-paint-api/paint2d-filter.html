@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<html>
-<head>
-<script src="../resources/run-after-layout-and-paint.js"></script>
-<script src="resources/test-runner-paint-worklet.js"></script>
+<html class="reftest-wait">
+<link rel="match" href="paint2d-filter-ref.html">
 <style>
     div {
         display: inline-block;
@@ -25,7 +23,8 @@
     #filter-hue-rotate { background-image: paint(filter-hue-rotate); }
     #filter-url { background-image: paint(filter-url); }
 </style>
-</head>
+<script src="/common/reftest-wait.js"></script>
+<script src="/common/css-paint-tests.js"></script>
 <body>
 <div id="filter-none"></div>
 <div id="filter-blur-10px"></div>
@@ -84,7 +83,6 @@ var filterOps = [
 
 function doPaint(ctx, op) {
   ctx.filter = op;
-  console.log(op);
   ctx.fillStyle = '#A00';
   ctx.fillRect(0, 0, 15, 15);
   ctx.fillStyle = '#0A0';
