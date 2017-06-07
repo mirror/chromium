@@ -33,6 +33,24 @@
       "revId": "901bfdd1ba474723ae625a0472ef19155339f779",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a8b3cc_4581f424",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeActivityTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-07T17:22:37Z",
+      "side": 0,
+      "message": "Oops, I didn\u0027t realize that variable was persistent.",
+      "parentUuid": "baca4641_89f663f5",
+      "revId": "901bfdd1ba474723ae625a0472ef19155339f779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
