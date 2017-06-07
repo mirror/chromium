@@ -173,6 +173,7 @@ source_set("unit_tests") {
     "//components/autofill/core/browser:test_support",
     "//components/payments/core",
     "//components/prefs:prefs",
+    "//components/signin/core/browser",
     "//components/strings",
     "//ios/chrome/app/strings",
     "//ios/chrome/browser",
