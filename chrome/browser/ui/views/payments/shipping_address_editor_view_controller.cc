@@ -243,14 +243,16 @@ void ShippingAddressEditorViewController::UpdateCountries(
     autofill::AutofillType country_type(autofill::ADDRESS_HOME_COUNTRY);
     base::string16 chosen_country(profile_to_edit_->GetInfo(
         country_type, state()->GetApplicationLocale()));
+    LOG(ERROR) << "Chosen country " << chosen_country;
     for (chosen_country_index_ = 0; chosen_country_index_ < countries_.size();
          ++chosen_country_index_) {
       if (chosen_country == countries_[chosen_country_index_].second)
         break;
     }
-    // Make sure the the country was actually found in |countries_|, otherwise
-    // set |chosen_country_index_| as the default country at index 0.
-    if (chosen_country_index_ >= countries_.size()) {
+    // Make sure the the country was actually found in |countries_| and was not
+    // empty, otherwise set |chosen_country_index_| as the default country at
+    // index 0.
+    if (chosen_country_index_ >= countries_.size() || chosen_country.empty()) {
       // But only if there is at least one country.
       if (countries_.size() > 0) {
         LOG(ERROR) << "Unexpected country: " << chosen_country;
@@ -425,6 +427,7 @@ void ShippingAddressEditorViewController::OnComboboxModelChanged(
     views::Combobox* combobox) {
   if (combobox->id() != GetInputFieldViewId(autofill::ADDRESS_HOME_STATE))
     return;
+
   autofill::RegionComboboxModel* model =
       static_cast<autofill::RegionComboboxModel*>(combobox->model());
   if (model->IsPendingRegionDataLoad())
@@ -518,9 +521,17 @@ bool ShippingAddressEditorViewController::ShippingAddressValidationDelegate::
       }
       return false;
     }
+
+    if (field_.type == autofill::ADDRESS_HOME_STATE &&
+        value == l10n_util::GetStringUTF16(IDS_AUTOFILL_LOADING_REGIONS)) {
+      // Wait for the regions to be loaded before assessing validity.
+      return false;
+    }
+
     // As long as other field types are non-empty, they are valid.
     return true;
   }
+
   if (error_message && field_.required) {
     *error_message = l10n_util::GetStringUTF16(
         IDS_PAYMENTS_FIELD_REQUIRED_VALIDATION_MESSAGE);

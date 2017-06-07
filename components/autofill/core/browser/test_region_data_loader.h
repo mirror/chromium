@@ -33,10 +33,18 @@ class TestRegionDataLoader : public RegionDataLoader {
     synchronous_callback_ = synchronous_callback;
   }
 
+  void SetRegionData(
+      std::vector<const ::i18n::addressinput::RegionData*>* regions) {
+    regions_ = regions;
+  }
+
+  std::vector<const ::i18n::addressinput::RegionData*> GetRegionData();
+
   void SendAsynchronousData(
       const std::vector<std::pair<std::string, std::string>>& regions);
 
  private:
+  std::vector<const ::i18n::addressinput::RegionData*>* regions_ = nullptr;
   std::string country_code_;
   autofill::RegionDataLoader::RegionDataLoaded callback_;
   bool synchronous_callback_{false};

@@ -21,6 +21,7 @@
 #include "content/public/test/browser_test_utils.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/null_storage.h"
+#include "third_party/libaddressinput/src/cpp/include/libaddressinput/region_data.h"
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/source.h"
 #include "ui/views/controls/combobox/combobox.h"
 #include "ui/views/controls/label.h"
@@ -679,6 +680,256 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
       static_cast<int>(DialogViewID::PROFILE_LABEL_ERROR));
   EXPECT_EQ(base::ASCIIToUTF16("Phone number required"),
             static_cast<views::Label*>(error_label)->text());
+}
+
+// Tests that if the a profile has a country and no state, the editor makes the
+// user pick a state. This should also disable the "Done" button.
+IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
+                       CountryButNoState) {
+  // Add address with a country but no state.
+  autofill::AutofillProfile profile = autofill::test::GetFullProfile();
+  profile.SetInfo(autofill::AutofillType(autofill::ADDRESS_HOME_STATE),
+                  base::ASCIIToUTF16(""), kLocale);
+  AddAutofillProfile(profile);
+
+  InvokePaymentRequestUI();
+  SetRegionDataLoader(&test_region_data_loader_);
+
+  test_region_data_loader_.set_synchronous_callback(false);
+  OpenShippingAddressSectionScreen();
+
+  // There should be an error label for the address.
+  views::View* sheet = dialog_view()->GetViewByID(
+      static_cast<int>(DialogViewID::SHIPPING_ADDRESS_SHEET_LIST_VIEW));
+  ASSERT_EQ(1, sheet->child_count());
+  views::View* error_label = sheet->child_at(0)->GetViewByID(
+      static_cast<int>(DialogViewID::PROFILE_LABEL_ERROR));
+  EXPECT_EQ(base::ASCIIToUTF16("Enter a valid address"),
+            static_cast<views::Label*>(error_label)->text());
+
+  ResetEventObserver(DialogEvent::SHIPPING_ADDRESS_EDITOR_OPENED);
+  ClickOnChildInListViewAndWait(/*child_index=*/0, /*num_children=*/1,
+                                DialogViewID::SHIPPING_ADDRESS_SHEET_LIST_VIEW);
+  std::vector<std::pair<std::string, std::string>> regions1;
+  regions1.push_back(std::make_pair("AL", "Alabama"));
+  regions1.push_back(std::make_pair("CA", "California"));
+  test_region_data_loader_.SendAsynchronousData(regions1);
+  // Expect that the country is set correctly.
+  EXPECT_EQ(base::ASCIIToUTF16("United States"),
+            GetComboboxValue(autofill::ADDRESS_HOME_COUNTRY));
+
+  // Expect that no state is selected.
+  EXPECT_EQ(base::ASCIIToUTF16("---"),
+            GetComboboxValue(autofill::ADDRESS_HOME_STATE));
+
+  // Expect that the save button is disabled.
+  views::View* save_button = dialog_view()->GetViewByID(
+      static_cast<int>(DialogViewID::SAVE_ADDRESS_BUTTON));
+  EXPECT_FALSE(save_button->enabled());
+}
+
+// Tests that if the a profile has a country and an invalid state, the editor
+// makes the user pick a state. This should also disable the "Done" button.
+IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
+                       CountryAndInvalidState) {
+  // Add address with a country but no state.
+  autofill::AutofillProfile profile = autofill::test::GetFullProfile();
+  profile.SetInfo(autofill::AutofillType(autofill::ADDRESS_HOME_STATE),
+                  base::ASCIIToUTF16("INVALIDSTATE"), kLocale);
+  AddAutofillProfile(profile);
+
+  LOG(ERROR) << profile.GetInfo(
+      autofill::AutofillType(autofill::ADDRESS_HOME_COUNTRY), kLocale);
+
+  InvokePaymentRequestUI();
+  SetRegionDataLoader(&test_region_data_loader_);
+
+  test_region_data_loader_.set_synchronous_callback(false);
+  OpenShippingAddressSectionScreen();
+
+  // There should be an error label for the address.
+  views::View* sheet = dialog_view()->GetViewByID(
+      static_cast<int>(DialogViewID::SHIPPING_ADDRESS_SHEET_LIST_VIEW));
+  ASSERT_EQ(1, sheet->child_count());
+  views::View* error_label = sheet->child_at(0)->GetViewByID(
+      static_cast<int>(DialogViewID::PROFILE_LABEL_ERROR));
+  EXPECT_EQ(base::ASCIIToUTF16("Enter a valid address"),
+            static_cast<views::Label*>(error_label)->text());
+
+  ResetEventObserver(DialogEvent::SHIPPING_ADDRESS_EDITOR_OPENED);
+  ClickOnChildInListViewAndWait(/*child_index=*/0, /*num_children=*/1,
+                                DialogViewID::SHIPPING_ADDRESS_SHEET_LIST_VIEW);
+  std::vector<std::pair<std::string, std::string>> regions1;
+  regions1.push_back(std::make_pair("AL", "Alabama"));
+  regions1.push_back(std::make_pair("CA", "California"));
+  test_region_data_loader_.SendAsynchronousData(regions1);
+  // Expect that the country is set correctly.
+  EXPECT_EQ(base::ASCIIToUTF16("United States"),
+            GetComboboxValue(autofill::ADDRESS_HOME_COUNTRY));
+
+  // Expect that no state is selected.
+  EXPECT_EQ(base::ASCIIToUTF16("---"),
+            GetComboboxValue(autofill::ADDRESS_HOME_STATE));
+
+  // Expect that the save button is disabled.
+  views::View* save_button = dialog_view()->GetViewByID(
+      static_cast<int>(DialogViewID::SAVE_ADDRESS_BUTTON));
+  EXPECT_FALSE(save_button->enabled());
+}
+
+// Tests that if the a profile has no country and no state, the editor sets the
+// country and lets the user pick a state. This should also disable the "Done"
+// button.
+IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
+                       NoCountryNoState) {
+  // Add address without a country or no state.
+  autofill::AutofillProfile profile = autofill::test::GetFullProfile();
+  profile.SetInfo(autofill::AutofillType(autofill::ADDRESS_HOME_COUNTRY),
+                  base::ASCIIToUTF16(""), kLocale);
+  profile.SetInfo(autofill::AutofillType(autofill::ADDRESS_HOME_STATE),
+                  base::ASCIIToUTF16(""), kLocale);
+  AddAutofillProfile(profile);
+
+  InvokePaymentRequestUI();
+  SetRegionDataLoader(&test_region_data_loader_);
+
+  test_region_data_loader_.set_synchronous_callback(false);
+  OpenShippingAddressSectionScreen();
+
+  // There should be an error label for the address.
+  views::View* sheet = dialog_view()->GetViewByID(
+      static_cast<int>(DialogViewID::SHIPPING_ADDRESS_SHEET_LIST_VIEW));
+  ASSERT_EQ(1, sheet->child_count());
+  views::View* error_label = sheet->child_at(0)->GetViewByID(
+      static_cast<int>(DialogViewID::PROFILE_LABEL_ERROR));
+  EXPECT_EQ(base::ASCIIToUTF16("Enter a valid address"),
+            static_cast<views::Label*>(error_label)->text());
+
+  ResetEventObserver(DialogEvent::SHIPPING_ADDRESS_EDITOR_OPENED);
+  ClickOnChildInListViewAndWait(/*child_index=*/0, /*num_children=*/1,
+                                DialogViewID::SHIPPING_ADDRESS_SHEET_LIST_VIEW);
+  std::vector<std::pair<std::string, std::string>> regions1;
+  regions1.push_back(std::make_pair("AL", "Alabama"));
+  regions1.push_back(std::make_pair("CA", "California"));
+  test_region_data_loader_.SendAsynchronousData(regions1);
+
+  // Expect that the default country was selected.
+  EXPECT_FALSE(GetComboboxValue(autofill::ADDRESS_HOME_COUNTRY).empty());
+
+  // Expect that no state is selected.
+  EXPECT_EQ(base::ASCIIToUTF16("---"),
+            GetComboboxValue(autofill::ADDRESS_HOME_STATE));
+
+  // Expect that the save button is disabled.
+  views::View* save_button = dialog_view()->GetViewByID(
+      static_cast<int>(DialogViewID::SAVE_ADDRESS_BUTTON));
+  EXPECT_FALSE(save_button->enabled());
+}
+
+// Tests that if the a profile has no country and an invalid state for the
+// default country, the editor sets the country and lets the user pick a state.
+// This should also disable the "Done" button.
+IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
+                       NoCountryInvalidState) {
+  // Add address without a country or no state.
+  autofill::AutofillProfile profile = autofill::test::GetFullProfile();
+  profile.SetInfo(autofill::AutofillType(autofill::ADDRESS_HOME_COUNTRY),
+                  base::ASCIIToUTF16(""), kLocale);
+  profile.SetInfo(autofill::AutofillType(autofill::ADDRESS_HOME_STATE),
+                  base::ASCIIToUTF16("INVALIDSTATE"), kLocale);
+  AddAutofillProfile(profile);
+
+  InvokePaymentRequestUI();
+  SetRegionDataLoader(&test_region_data_loader_);
+
+  test_region_data_loader_.set_synchronous_callback(false);
+  OpenShippingAddressSectionScreen();
+
+  // There should be an error label for the address.
+  views::View* sheet = dialog_view()->GetViewByID(
+      static_cast<int>(DialogViewID::SHIPPING_ADDRESS_SHEET_LIST_VIEW));
+  ASSERT_EQ(1, sheet->child_count());
+  views::View* error_label = sheet->child_at(0)->GetViewByID(
+      static_cast<int>(DialogViewID::PROFILE_LABEL_ERROR));
+  EXPECT_EQ(base::ASCIIToUTF16("Enter a valid address"),
+            static_cast<views::Label*>(error_label)->text());
+
+  ResetEventObserver(DialogEvent::SHIPPING_ADDRESS_EDITOR_OPENED);
+  ClickOnChildInListViewAndWait(/*child_index=*/0, /*num_children=*/1,
+                                DialogViewID::SHIPPING_ADDRESS_SHEET_LIST_VIEW);
+  std::vector<std::pair<std::string, std::string>> regions1;
+  regions1.push_back(std::make_pair("AL", "Alabama"));
+  regions1.push_back(std::make_pair("CA", "California"));
+  test_region_data_loader_.SendAsynchronousData(regions1);
+
+  // Expect that the default country was selected.
+  EXPECT_FALSE(GetComboboxValue(autofill::ADDRESS_HOME_COUNTRY).empty());
+
+  // Expect that no state is selected.
+  EXPECT_EQ(base::ASCIIToUTF16("---"),
+            GetComboboxValue(autofill::ADDRESS_HOME_STATE));
+
+  // Expect that the save button is disabled.
+  views::View* save_button = dialog_view()->GetViewByID(
+      static_cast<int>(DialogViewID::SAVE_ADDRESS_BUTTON));
+  EXPECT_FALSE(save_button->enabled());
+}
+
+// TODO(crbug.com/730165): The profile should be considered valid.
+// Tests that if the a profile has no country but has a valid state for the
+// default country, the editor sets the country and the state for the user.
+// This should also enable the "Done" button.
+IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
+                       NoCountryValidState) {
+  // Add address without a country but a valid state for the default country.
+  autofill::AutofillProfile profile = autofill::test::GetFullProfile();
+  profile.SetInfo(autofill::AutofillType(autofill::ADDRESS_HOME_COUNTRY),
+                  base::ASCIIToUTF16(""), kLocale);
+  profile.SetInfo(autofill::AutofillType(autofill::ADDRESS_HOME_STATE),
+                  base::ASCIIToUTF16("California"), kLocale);
+  AddAutofillProfile(profile);
+
+  InvokePaymentRequestUI();
+  SetRegionDataLoader(&test_region_data_loader_);
+
+  // TODO(crbug.com/730166): This should work with async callback too.
+  test_region_data_loader_.set_synchronous_callback(true);
+  ::i18n::addressinput::RegionData root_region("");
+  std::string a1("AL");
+  std::string a2("Alabama");
+  std::string c1("CA");
+  std::string c2("California");
+  root_region.AddSubRegion(a1, a2);
+  root_region.AddSubRegion(c1, c2);
+  std::vector<const ::i18n::addressinput::RegionData*> region_data =
+      root_region.sub_regions();
+  test_region_data_loader_.SetRegionData(&region_data);
+  OpenShippingAddressSectionScreen();
+
+  // There should be an error label for the address.
+  views::View* sheet = dialog_view()->GetViewByID(
+      static_cast<int>(DialogViewID::SHIPPING_ADDRESS_SHEET_LIST_VIEW));
+  ASSERT_EQ(1, sheet->child_count());
+  views::View* error_label = sheet->child_at(0)->GetViewByID(
+      static_cast<int>(DialogViewID::PROFILE_LABEL_ERROR));
+  EXPECT_EQ(base::ASCIIToUTF16("Enter a valid address"),
+            static_cast<views::Label*>(error_label)->text());
+
+  ResetEventObserver(DialogEvent::SHIPPING_ADDRESS_EDITOR_OPENED);
+  ClickOnChildInListViewAndWait(/*child_index=*/0, /*num_children=*/1,
+                                DialogViewID::SHIPPING_ADDRESS_SHEET_LIST_VIEW);
+
+  // Expect that the default country was selected.
+  EXPECT_FALSE(GetComboboxValue(autofill::ADDRESS_HOME_COUNTRY).empty());
+
+  // Expect that the state was selected.
+  EXPECT_EQ(base::ASCIIToUTF16("California"),
+            GetComboboxValue(autofill::ADDRESS_HOME_STATE));
+
+  // Expect that the save button is enabled, since the profile is now valid.
+  views::View* save_button = dialog_view()->GetViewByID(
+      static_cast<int>(DialogViewID::SAVE_ADDRESS_BUTTON));
+  EXPECT_TRUE(save_button->enabled());
 }
 
 }  // namespace payments
