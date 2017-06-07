@@ -43,6 +43,7 @@ class WebContentLayer {
   // With this flag set to true, the compositor may raster contents in any
   // space, e.g. device pixel space.
   virtual void SetAllowTransformedRasterization(bool) = 0;
+  virtual bool GetAllowTransformedRasterization() const;
 };
 
 }  // namespace blink
