@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a855954f_1a71c562",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-07T18:55:21Z",
+      "side": 1,
+      "message": "Update this description to describe the contents of your change.\n\nSince this is a test change, you can put DNS or DO NOT SUBMIT in the title.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "b8f67cce571f10abe6fd8533e809524e8471a19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae9bf76c_9ba9a2cf",
+        "filename": "chrome/browser/ui/views/location_bar/zoom_bubble_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-07T18:55:21Z",
+      "side": 1,
+      "message": "Stray \".\" change?",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 3
+      },
+      "revId": "b8f67cce571f10abe6fd8533e809524e8471a19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
