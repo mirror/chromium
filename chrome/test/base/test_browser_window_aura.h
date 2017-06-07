@@ -20,6 +20,7 @@ class TestBrowserWindowAura : public TestBrowserWindow {
   void Show() override;
   void Hide() override;
   gfx::Rect GetBounds() const override;
+  bool IsVisible() const override;
 
   std::unique_ptr<Browser> CreateBrowser(Browser::CreateParams* params);
 

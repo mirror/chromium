@@ -604,7 +604,7 @@ void BrowserView::Show() {
 #endif
 
   // If the window is already visible, just activate it.
-  if (frame_->IsVisible()) {
+  if (IsVisible()) {
     frame_->Activate();
     return;
   }
@@ -637,7 +637,7 @@ void BrowserView::Show() {
 }
 
 void BrowserView::ShowInactive() {
-  if (!frame_->IsVisible())
+  if (!IsVisible())
     frame_->ShowInactive();
 }
 
@@ -973,6 +973,10 @@ void BrowserView::MaybeShowNewBackShortcutBubble(bool forward) {
 void BrowserView::HideNewBackShortcutBubble() {
   if (new_back_shortcut_bubble_)
     new_back_shortcut_bubble_->Hide();
+}
+
+bool BrowserView::IsVisible() const {
+  return frame()->IsVisible();
 }
 
 void BrowserView::RestoreFocus() {

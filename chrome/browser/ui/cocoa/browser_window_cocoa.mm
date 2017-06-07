@@ -403,6 +403,10 @@ ui::WindowShowState BrowserWindowCocoa::GetRestoredState() const {
   return ui::SHOW_STATE_NORMAL;
 }
 
+bool BrowserWindowCocoa::IsVisible() const {
+  return [window() occlusionState] & NSWindowOcclusionStateVisible;
+}
+
 gfx::Rect BrowserWindowCocoa::GetBounds() const {
   return GetRestoredBounds();
 }

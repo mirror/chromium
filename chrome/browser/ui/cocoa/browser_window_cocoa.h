@@ -74,6 +74,7 @@ class BrowserWindowCocoa
   std::string GetWorkspace() const override;
   bool IsVisibleOnAllWorkspaces() const override;
   ui::WindowShowState GetRestoredState() const override;
+  bool IsVisible() const override;
   gfx::Rect GetBounds() const override;
   gfx::Size GetContentsSize() const override;
   bool IsMaximized() const override;
