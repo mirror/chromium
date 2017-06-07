@@ -117,9 +117,8 @@ class LinuxPortTest(port_testcase.PortTestCase):
 
     def test_setup_test_run_starts_xvfb(self):
         def run_command_fake(args):
-            if args[0] == 'xdpyinfo':
-                if '-display' in args:
-                    return 1
+            if args[0:2] == ['xdpyinfo', '-display']:
+                return 1
             return 0
 
         port = self.make_port()
@@ -138,9 +137,8 @@ class LinuxPortTest(port_testcase.PortTestCase):
 
     def test_setup_test_run_starts_xvfb_clears_tmpdir(self):
         def run_command_fake(args):
-            if args[0] == 'xdpyinfo':
-                if '-display' in args:
-                    return 1
+            if args[0:2] == ['xdpyinfo', '-display']:
+                return 1
             return 0
 
         port = self.make_port()
@@ -162,10 +160,8 @@ class LinuxPortTest(port_testcase.PortTestCase):
 
     def test_setup_test_runs_finds_free_display(self):
         def run_command_fake(args):
-            if args[0] == 'xdpyinfo':
-                if '-display' in args:
-                    if ':102' in args:
-                        return 1
+            if args == ['xdpyinfo', '-display', ':102']:
+                return 1
             return 0
 
         port = self.make_port()
@@ -189,12 +185,13 @@ class LinuxPortTest(port_testcase.PortTestCase):
         count = [0]
 
         def run_command_fake(args):
-            if args[0] == 'xdpyinfo':
-                if '-display' in args:
-                    return 1
-                if count[0] < 3:
-                    count[0] += 1
-                    return 1
+            if args[0:2] == ['xdpyinfo', '-display']:
+                return 1
+            # The variable `count` is a list rather than an int so that this
+            # function can increment the value.
+            if args == ['xdpyinfo'] and count[0] < 3:
+                count[0] += 1
+                return 1
             return 0
 
         port = self.make_port()
