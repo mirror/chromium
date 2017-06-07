@@ -88,6 +88,24 @@
       "revId": "1224fc242d74b8eceb638f4fbfd442beabe07c1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d660244_6b403b72",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-07T17:41:45Z",
+      "side": 1,
+      "message": "So... I did some quicky\u0026dirty printing of how much time we spend in those tasks. Nearly all of them are 5..30µs. However.... sometimes, ca. 1x/page, it\u0027s ~70000µs, or about 70ms.\n\nThat struck me as quite high, so I looked a bit more into it. The \u0027slow\u0027 tasks were always parser blocking scripts, where a whole lot of stuff gets done in the \u0027finish\u0027 notification. While for async scripts - which is what I\u0027m mainly looking at - the work done in the finish notification is a handful of checks, plus a PostTask (at normal \u0027loading\u0027 priority) for the \u0027real\u0027 work.\n\nIt makes sense to me that parser blocking scripts would immediately resume the processing when they\u0027re notified, rather than scheduling a task. So I\u0027m a bit undecided... what do you people think? Is that an abuse of the \u0027control\u0027 loading queue?\n\n(I think it\u0027d be fairly easy to separate those two cases, and to use the \u0027regular\u0027 queue in the one case, and the \u0027control\u0027 queue in the other. I\u0027d want to hear your opinion first, though.)",
+      "parentUuid": "87ff1860_d5fcd503",
+      "revId": "1224fc242d74b8eceb638f4fbfd442beabe07c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
