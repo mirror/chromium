@@ -22,6 +22,30 @@
       "revId": "f3c8bdf029d9a310fd436e025fbbbbf7ed50b4b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea13260a_a18e00f1",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-07T17:51:35Z",
+      "side": 1,
+      "message": "Unfortunately \"Depends On\" is a highly misleading term here. In a sense, the PrefetchService \"build on\", \"uses services of\" and \"consumes data off\" CSS. So in normal human sense it \"depends on CSS\". However, the DependsOn method means a different thing, it is \"for proper initialization order, create those before me\". Here, since CSS is sourcing events, the event handlers (observers) must be created and added before CSS is really started. That\u0027s why CSS DependsOn its clients - because it exposes \u0027push\u0027 model rather than \u0027poll\u0027.\n\nThis inverted dependency is pretty widespread. I wish we renamed DependsOn or had a specific pattern of registering observers between services.",
+      "parentUuid": "01fb04c3_7669f737",
+      "range": {
+        "startLine": 364,
+        "startChar": 45,
+        "endLine": 364,
+        "endChar": 0
+      },
+      "revId": "f3c8bdf029d9a310fd436e025fbbbbf7ed50b4b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
