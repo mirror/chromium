@@ -45,6 +45,8 @@ class GPU_EXPORT MemoryChunk {
     return static_cast<unsigned int>(shm_->size());
   }
 
+  gpu::Buffer* buffer() { return shm_.get(); }
+
   // The shared memory id for this chunk.
   int32_t shm_id() const {
     return shm_id_;
