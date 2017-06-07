@@ -137,7 +137,7 @@ void LayoutEmbeddedObject::UpdateLayout() {
 
   UpdateAfterLayout();
 
-  if (!GetFrameOrPlugin() && GetFrameView())
+  if (!GetEmbeddedContentView() && GetFrameView())
     GetFrameView()->AddPartToUpdate(*this);
 
   ClearNeedsLayout();

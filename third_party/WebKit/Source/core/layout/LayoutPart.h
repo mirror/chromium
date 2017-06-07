@@ -28,7 +28,7 @@
 
 namespace blink {
 
-class FrameOrPlugin;
+class EmbeddedContentView;
 class PluginView;
 
 // LayoutObject for frames via LayoutFrame and LayoutIFrame, and plugins via
@@ -56,11 +56,11 @@ class CORE_EXPORT LayoutPart : public LayoutReplaced {
   // the LocalFrameView associated with the root Document Frame.
   LocalFrameView* ChildFrameView() const;
   PluginView* Plugin() const;
-  FrameOrPlugin* GetFrameOrPlugin() const;
+  EmbeddedContentView* GetEmbeddedContentView() const;
 
   LayoutRect ReplacedContentRect() const final;
 
-  void UpdateOnWidgetChange();
+  void UpdateOnEmbeddedContentViewChange();
   void UpdateGeometry();
 
   bool IsLayoutPart() const final { return true; }
@@ -81,13 +81,13 @@ class CORE_EXPORT LayoutPart : public LayoutReplaced {
       const PaintInvalidationState&) override;
 
  private:
-  void UpdateGeometryInternal(FrameOrPlugin&);
+  void UpdateGeometryInternal(EmbeddedContentView&);
   CompositingReasons AdditionalCompositingReasons() const override;
 
   void WillBeDestroyed() final;
   void Destroy() final;
 
-  bool NodeAtPointOverFrameViewBase(
+  bool NodeAtPointOverEmbeddedContentView(
       HitTestResult&,
       const HitTestLocation& location_in_container,
       const LayoutPoint& accumulated_offset,

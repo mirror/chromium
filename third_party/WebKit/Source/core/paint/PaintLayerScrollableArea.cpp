@@ -317,7 +317,8 @@ IntRect PaintLayerScrollableArea::ScrollCornerRect() const {
   return IntRect();
 }
 
-IntRect PaintLayerScrollableArea::ConvertFromScrollbarToContainingFrameViewBase(
+IntRect
+PaintLayerScrollableArea::ConvertFromScrollbarToContainingEmbeddedContentView(
     const Scrollbar& scrollbar,
     const IntRect& scrollbar_rect) const {
   LayoutView* view = Box().View();
@@ -332,7 +333,7 @@ IntRect PaintLayerScrollableArea::ConvertFromScrollbarToContainingFrameViewBase(
 }
 
 IntPoint
-PaintLayerScrollableArea::ConvertFromScrollbarToContainingFrameViewBase(
+PaintLayerScrollableArea::ConvertFromScrollbarToContainingEmbeddedContentView(
     const Scrollbar& scrollbar,
     const IntPoint& scrollbar_point) const {
   LayoutView* view = Box().View();
@@ -346,7 +347,7 @@ PaintLayerScrollableArea::ConvertFromScrollbarToContainingFrameViewBase(
 }
 
 IntPoint
-PaintLayerScrollableArea::ConvertFromContainingFrameViewBaseToScrollbar(
+PaintLayerScrollableArea::ConvertFromContainingEmbeddedContentViewToScrollbar(
     const Scrollbar& scrollbar,
     const IntPoint& parent_point) const {
   LayoutView* view = Box().View();

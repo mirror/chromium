@@ -4,7 +4,7 @@
 
 #include "core/paint/PartPainter.h"
 
-#include "core/frame/FrameOrPlugin.h"
+#include "core/frame/EmbeddedContentView.h"
 #include "core/layout/LayoutPart.h"
 #include "core/paint/BoxPainter.h"
 #include "core/paint/LayoutObjectDrawingRecorder.h"
@@ -70,9 +70,9 @@ void PartPainter::Paint(const PaintInfo& paint_info,
   if (paint_info.phase != kPaintPhaseForeground)
     return;
 
-  if (layout_part_.GetFrameOrPlugin()) {
+  if (layout_part_.GetEmbeddedContentView()) {
     // TODO(schenney) crbug.com/93805 Speculative release assert to verify that
-    // the crashes we see in FrameViewBase painting are due to a destroyed
+    // the crashes we see in EmbeddedContentView painting are due to a destroyed
     // LayoutPart object.
     CHECK(layout_part_.GetNode());
     Optional<RoundedInnerRectClipper> clipper;
@@ -96,7 +96,7 @@ void PartPainter::Paint(const PaintInfo& paint_info,
     layout_part_.PaintContents(paint_info, paint_offset);
   }
 
-  // Paint a partially transparent wash over selected FrameViewBases.
+  // Paint a partially transparent wash over selected EmbeddedContentViews.
   if (IsSelected() && !paint_info.IsPrinting() &&
       !LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
           paint_info.context, layout_part_, paint_info.phase)) {
@@ -120,8 +120,9 @@ void PartPainter::PaintContents(const PaintInfo& paint_info,
                                 const LayoutPoint& paint_offset) {
   LayoutPoint adjusted_paint_offset = paint_offset + layout_part_.Location();
 
-  FrameOrPlugin* frame_or_plugin = layout_part_.GetFrameOrPlugin();
-  CHECK(frame_or_plugin);
+  EmbeddedContentView* embedded_content_view =
+      layout_part_.GetEmbeddedContentView();
+  CHECK(embedded_content_view);
 
   IntPoint paint_location(RoundedIntPoint(
       adjusted_paint_offset + layout_part_.ReplacedContentRect().Location()));
@@ -131,13 +132,13 @@ void PartPainter::PaintContents(const PaintInfo& paint_info,
   // our desired location, we need to apply paint offset as a transform, with
   // the frame rect neutralized.
   IntSize view_paint_offset =
-      paint_location - frame_or_plugin->FrameRect().Location();
+      paint_location - embedded_content_view->FrameRect().Location();
   TransformRecorder transform(
       paint_info.context, layout_part_,
       AffineTransform::Translation(view_paint_offset.Width(),
                                    view_paint_offset.Height()));
   CullRect adjusted_cull_rect(paint_info.GetCullRect(), -view_paint_offset);
-  frame_or_plugin->Paint(paint_info.context, adjusted_cull_rect);
+  embedded_content_view->Paint(paint_info.context, adjusted_cull_rect);
 }
 
 }  // namespace blink

@@ -24,6 +24,7 @@
 #include "core/CoreExport.h"
 #include "core/dom/Document.h"
 #include "core/frame/DOMWindow.h"
+#include "core/frame/EmbeddedContentView.h"
 #include "core/frame/FrameOwner.h"
 #include "core/html/HTMLElement.h"
 #include "platform/feature_policy/FeaturePolicy.h"
@@ -36,7 +37,6 @@ namespace blink {
 
 class ExceptionState;
 class Frame;
-class FrameOrPlugin;
 class LayoutPart;
 class PluginView;
 
@@ -66,9 +66,11 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   virtual bool LoadedNonEmptyDocument() const { return false; }
   virtual void DidLoadNonEmptyDocument() {}
 
-  void SetWidget(FrameOrPlugin*);
-  FrameOrPlugin* ReleaseWidget();
-  FrameOrPlugin* OwnedWidget() const { return widget_; }
+  void SetEmbeddedContentView(EmbeddedContentView*);
+  EmbeddedContentView* ReleaseEmbeddedContentView();
+  EmbeddedContentView* OwnedEmbeddedContentView() const {
+    return embedded_content_view_;
+  }
 
   class PluginDisposeSuspendScope {
     STACK_ALLOCATED();
@@ -97,7 +99,7 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   int MarginHeight() const override { return -1; }
   bool AllowFullscreen() const override { return false; }
   bool AllowPaymentRequest() const override { return false; }
-  bool IsDisplayNone() const override { return !widget_; }
+  bool IsDisplayNone() const override { return !embedded_content_view_; }
   AtomicString Csp() const override { return g_null_atom; }
   const WebVector<WebFeaturePolicyFeature>& AllowedFeatures() const override;
   const WebParsedFeaturePolicy& ContainerPolicy() const override;
@@ -145,7 +147,7 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   }
 
   Member<Frame> content_frame_;
-  Member<FrameOrPlugin> widget_;
+  Member<EmbeddedContentView> embedded_content_view_;
   SandboxFlags sandbox_flags_;
 
   WebParsedFeaturePolicy container_policy_;
