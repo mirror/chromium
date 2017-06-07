@@ -46,6 +46,30 @@
       "revId": "923711342187001a629ad380f2766536f5285789",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852fb5f3_aa5b0f24",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-07T06:42:23Z",
+      "side": 1,
+      "message": "Oh I didn\u0027t realize we moved that one already. That answers my questions.",
+      "parentUuid": "821d401f_415b4246",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 39
+      },
+      "revId": "923711342187001a629ad380f2766536f5285789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
