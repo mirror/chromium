@@ -2222,8 +2222,26 @@ void RenderViewContextMenu::ExecSaveLinkAs() {
   dl_params->set_suggested_name(params_.suggested_filename);
   dl_params->set_prompt(true);
 
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("render_view_context_menu", R"(
+        semantics {
+          sender: "Save Link As"
+          description: "Saving url to local file."
+          trigger:
+            "The user selects the "Save link as" command in the context menu."
+          data: "A url request to fetch the data."
+          destination: WEBSITE
+        }
+        policy {
+          cookies_allowed: true
+          cookies_store: "user"
+          setting:
+            "This feature cannot be disable by settings. The request is made "
+            "only if user chooses 'Save link as...' in context menu."
+          policy_exception_justification: "Not implemented."
+        })");
   BrowserContext::GetDownloadManager(browser_context_)
-      ->DownloadUrl(std::move(dl_params), NO_TRAFFIC_ANNOTATION_YET);
+      ->DownloadUrl(std::move(dl_params), traffic_annotation);
 }
 
 void RenderViewContextMenu::ExecSaveAs() {
