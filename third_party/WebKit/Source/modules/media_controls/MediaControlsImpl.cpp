@@ -733,8 +733,8 @@ void MediaControlsImpl::RefreshCastButtonVisibilityWithoutUpdate() {
   // to correspond with anything the user wants to do.  If a user does want to
   // cast a paused autoplay video then they can still do so by touching or
   // clicking on the video, which will cause the cast button to appear.
-  if (!MediaElement().ShouldShowControls() && !MediaElement().Autoplay() &&
-      MediaElement().paused()) {
+  if (!MediaElement().ShouldShowControls() &&
+      !(MediaElement().Autoplay() && MediaElement().paused())) {
     // Note that this is a case where we add the overlay cast button
     // without wanting the panel cast button.  We depend on the fact
     // that computeWhichControlsFit() won't change overlay cast button
@@ -969,12 +969,12 @@ void MediaControlsImpl::OnPlay() {
   UpdatePlayState();
   timeline_->SetPosition(MediaElement().currentTime());
   UpdateCurrentTimeDisplay();
-
-  StartHideMediaControlsTimer();
 }
 
 void MediaControlsImpl::OnPlaying() {
   timeline_->OnPlaying();
+
+  StartHideMediaControlsTimer();
 }
 
 void MediaControlsImpl::OnPause() {
