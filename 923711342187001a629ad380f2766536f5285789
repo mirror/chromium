@@ -22,6 +22,30 @@
       "revId": "923711342187001a629ad380f2766536f5285789",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "821d401f_415b4246",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-07T06:41:13Z",
+      "side": 1,
+      "message": "The cpp file for WebColorSuggestion is still in core/, so its fine. The linker error occurs when the header is in public/web but the cpp file is in web/. Then it can\u0027t be included from core/.\n\n+slangley anyway in case this isn\u0027t right.",
+      "parentUuid": "2db7335a_6b9b0a3c",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 39
+      },
+      "revId": "923711342187001a629ad380f2766536f5285789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
