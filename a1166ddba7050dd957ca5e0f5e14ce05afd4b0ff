@@ -22,6 +22,30 @@
       "revId": "a1166ddba7050dd957ca5e0f5e14ce05afd4b0ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58866114_95de833c",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 5
+      },
+      "lineNbr": 2999,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-07T22:08:22Z",
+      "side": 0,
+      "message": "Darn, sorry for the trouble.\n\nFor background, the reason why it was removed in this CL is because the script update-flaky-expectations only looks at recent results for continuous builders, not for the MSAN builder. Normally timeout expectations that only apply to the MSAN would be in LayoutTests/MSANExpectations.",
+      "parentUuid": "0d187262_36d749d2",
+      "range": {
+        "startLine": 2999,
+        "startChar": 63,
+        "endLine": 2999,
+        "endChar": 70
+      },
+      "revId": "a1166ddba7050dd957ca5e0f5e14ce05afd4b0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
