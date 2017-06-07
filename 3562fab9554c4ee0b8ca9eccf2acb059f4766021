@@ -34,6 +34,24 @@
       "revId": "3562fab9554c4ee0b8ca9eccf2acb059f4766021",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac95bc8_3129d379",
+        "filename": "media/filters/decoder_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-07T04:46:40Z",
+      "side": 1,
+      "message": "I see. \n\nThis is good. But does it still make sense to adjust the order of decoders based on some criteria, instead of hard coding some restrictions? The nicer part of that is that if one decoder fails for unexpected reason, we will still be able to choose another decoder. For example, for this CL, if the video res changes to 240p, and software decoder actually fails, we\u0027ll fail playback. But if we put the hw decoder after the sw decoder and doesn\u0027t specify a hard constraint, we\u0027ll still be able to use the hw decoder. (Well, after writing this, I feel this is probably a very rare case. But I wonder whether it makes more sense when we have more rules in the future.)\n\nIf it still makes any sense to you, to adjust order of decoders, we could add something like\n\nint VideoDecoder::ComfortableLevel(video_decoder_config)\n\nwhere the return value could be in the range of [0, 10], where 0 means \"not supported\", and 10 means \"I am the best decoder for this config\".\n\nFor now, this is probably overkill. But if we ever need more complicated logic, this might make sense.",
+      "parentUuid": "40c0094d_4274a0d3",
+      "revId": "3562fab9554c4ee0b8ca9eccf2acb059f4766021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
