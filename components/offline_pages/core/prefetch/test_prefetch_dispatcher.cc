@@ -37,6 +37,14 @@ void TestPrefetchDispatcher::StopBackgroundTask() {}
 
 void TestPrefetchDispatcher::SetService(PrefetchService* service) {}
 
-void TestPrefetchDispatcher::RequestFinishBackgroundTaskForTest() {}
+void TestPrefetchDispatcher::GCMReceivedForOperation(
+    const std::string& operation_name) {
+  operation_list.push_back(operation_name);
+}
 
+OfflineEventLogger* TestPrefetchDispatcher::GetLogger() {
+  return &logger_;
+}
+
+void TestPrefetchDispatcher::RequestFinishBackgroundTaskForTest() {}
 }  // namespace offline_pages
