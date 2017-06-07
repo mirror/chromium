@@ -14,7 +14,6 @@ namespace variations {
 void SetVariationListCrashKeys() {
   std::vector<std::string> experiment_strings;
   GetFieldTrialActiveGroupIdsAsStrings(&experiment_strings);
-  GetSyntheticTrialGroupIdsAsString(&experiment_strings);
   crash_keys::SetVariationsList(experiment_strings);
 }
 

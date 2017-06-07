@@ -7,10 +7,10 @@
  *
  * @constructor
  * @implements {signin.ProfileBrowserProxy}
- * @extends {TestBrowserProxy}
+ * @extends {settings.TestBrowserProxy}
  */
 var TestProfileBrowserProxy = function() {
-  TestBrowserProxy.call(this, [
+  settings.TestBrowserProxy.call(this, [
     'getAvailableIcons',
     'getSignedInUsers',
     'launchGuestUser',
@@ -39,7 +39,7 @@ var TestProfileBrowserProxy = function() {
 };
 
 TestProfileBrowserProxy.prototype = {
-  __proto__: TestBrowserProxy.prototype,
+  __proto__: settings.TestBrowserProxy.prototype,
 
   /**
    * @param {!Array<!AvatarIcon>} icons

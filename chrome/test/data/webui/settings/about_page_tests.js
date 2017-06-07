@@ -6,7 +6,7 @@ cr.define('settings_about_page', function() {
   /**
    * @constructor
    * @implements {settings.AboutPageBrowserProxy}
-   * @extends {TestBrowserProxy}
+   * @extends {settings.TestBrowserProxy}
    */
   var TestAboutPageBrowserProxy = function() {
     var methodNames = [
@@ -27,7 +27,7 @@ cr.define('settings_about_page', function() {
     if (cr.isMac)
       methodNames.push('promoteUpdater');
 
-    TestBrowserProxy.call(this, methodNames);
+    settings.TestBrowserProxy.call(this, methodNames);
 
     /** @private {!UpdateStatus} */
     this.updateStatus_ = UpdateStatus.UPDATED;
@@ -53,7 +53,7 @@ cr.define('settings_about_page', function() {
   };
 
   TestAboutPageBrowserProxy.prototype = {
-    __proto__: TestBrowserProxy.prototype,
+    __proto__: settings.TestBrowserProxy.prototype,
 
     /** @param {!UpdateStatus} updateStatus */
     setUpdateStatus: function(updateStatus) {

@@ -4,7 +4,6 @@
 
 package org.chromium.chrome.browser.preferences.website;
 
-import org.chromium.chrome.browser.ContentSettingsType;
 import org.chromium.chrome.browser.util.MathUtils;
 
 import java.io.Serializable;
@@ -376,15 +375,9 @@ public class Website implements Serializable {
      * Sets the Subresource Filter permission.
      */
     public void setSubresourceFilterPermission(ContentSetting value) {
-        // It is possible to set the permission without having an existing exception, because we can
-        // show the BLOCK state even when this permission is set to the default. In that case, just
-        // set an exception now to BLOCK to enable changing the permission.
-        if (mSubresourceFilterException == null) {
-            setSubresourceFilterException(new ContentSettingException(
-                    ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER,
-                    getAddress().getOrigin(), ContentSetting.BLOCK, ""));
+        if (mSubresourceFilterException != null) {
+            mSubresourceFilterException.setContentSetting(value);
         }
-        mSubresourceFilterException.setContentSetting(value);
     }
 
     /**

@@ -17,7 +17,7 @@ SettingsBasicPageBrowserTest.prototype = {
 
   /** @override */
   extraLibraries: SettingsPageBrowserTest.prototype.extraLibraries.concat([
-    '../test_browser_proxy.js',
+    'test_browser_proxy.js',
   ]),
 };
 
@@ -39,10 +39,10 @@ TEST_F('SettingsBasicPageBrowserTest', 'MAYBE_Load', function() {
    * This fake SearchManager just hides and re-displays the sections on search.
    *
    * @implements {SearchManager}
-   * @extends {TestBrowserProxy}
+   * @extends {settings.TestBrowserProxy}
    */
   var TestSearchManager = function() {
-    TestBrowserProxy.call(this, [
+    settings.TestBrowserProxy.call(this, [
       'search',
     ]);
 
@@ -51,7 +51,7 @@ TEST_F('SettingsBasicPageBrowserTest', 'MAYBE_Load', function() {
   }
 
   TestSearchManager.prototype = {
-    __proto__: TestBrowserProxy.prototype,
+    __proto__: settings.TestBrowserProxy.prototype,
 
     /** @override */
     search: function(text, page) {

@@ -8,7 +8,6 @@
 #include "cc/paint/display_item_list.h"
 #include "cc/paint/paint_record.h"
 #include "third_party/skia/include/core/SkAnnotation.h"
-#include "third_party/skia/include/core/SkCanvas.h"
 
 namespace cc {
 
@@ -116,24 +115,29 @@ struct Rasterizer<T, true> {
   }
 };
 
-// These should never be used, as we should recurse into them to draw their
-// contained op with alpha instead.
-template <bool HasFlags>
-struct Rasterizer<DrawRecordOp, HasFlags> {
+template <>
+struct Rasterizer<DrawRecordOp, false> {
   static void RasterWithAlpha(const DrawRecordOp* op,
                               SkCanvas* canvas,
                               const SkRect& bounds,
                               uint8_t alpha) {
-    NOTREACHED();
-  }
-};
-template <bool HasFlags>
-struct Rasterizer<DrawDisplayItemListOp, HasFlags> {
-  static void RasterWithAlpha(const DrawDisplayItemListOp* op,
-                              SkCanvas* canvas,
-                              const SkRect& bounds,
-                              uint8_t alpha) {
-    NOTREACHED();
+    // This "looking into records" optimization is done here instead of
+    // in the PaintOpBuffer::Raster function as DisplayItemList calls
+    // into RasterWithAlpha directly.
+    if (op->record->size() == 1u) {
+      PaintOp* single_op = op->record->GetFirstOp();
+      // RasterWithAlpha only supported for draw ops.
+      if (single_op->IsDrawOp()) {
+        single_op->RasterWithAlpha(canvas, bounds, alpha);
+        return;
+      }
+    }
+
+    bool unset = bounds.x() == PaintOp::kUnsetRect.x();
+    canvas->saveLayerAlpha(unset ? nullptr : &bounds, alpha);
+    SkMatrix unused_matrix;
+    DrawRecordOp::Raster(op, canvas, unused_matrix);
+    canvas->restore();
   }
 };
 
@@ -423,14 +427,7 @@ void SaveLayerAlphaOp::Raster(const PaintOp* base_op,
   auto* op = static_cast<const SaveLayerAlphaOp*>(base_op);
   // See PaintOp::kUnsetRect
   bool unset = op->bounds.left() == SK_ScalarInfinity;
-  if (op->preserve_lcd_text_requests) {
-    SkPaint paint;
-    paint.setAlpha(op->alpha);
-    canvas->saveLayerPreserveLCDTextRequests(unset ? nullptr : &op->bounds,
-                                             &paint);
-  } else {
-    canvas->saveLayerAlpha(unset ? nullptr : &op->bounds, op->alpha);
-  }
+  canvas->saveLayerAlpha(unset ? nullptr : &op->bounds, op->alpha);
 }
 
 void ScaleOp::Raster(const PaintOp* base_op,
@@ -527,11 +524,11 @@ DrawDisplayItemListOp::DrawDisplayItemListOp(
     : list(list) {}
 
 size_t DrawDisplayItemListOp::AdditionalBytesUsed() const {
-  return list->BytesUsed();
+  return list->ApproximateMemoryUsage();
 }
 
 bool DrawDisplayItemListOp::HasDiscardableImages() const {
-  return list->HasDiscardableImages();
+  return list->has_discardable_images();
 }
 
 DrawDisplayItemListOp::DrawDisplayItemListOp(const DrawDisplayItemListOp& op) =
@@ -674,38 +671,6 @@ static const PaintOp* NextOp(const std::vector<size_t>& range_starts,
   return op;
 }
 
-// When |op| is a nested PaintOpBuffer, this returns the PaintOp inside
-// that buffer if the buffer contains a single drawing op, otherwise it
-// returns null. This searches recursively if the PaintOpBuffer contains only
-// another PaintOpBuffer.
-static const PaintOp* GetNestedSingleDrawingOp(const PaintOp* op) {
-  if (!op->IsDrawOp())
-    return nullptr;
-
-  while (op->GetType() == PaintOpType::DrawRecord ||
-         op->GetType() == PaintOpType::DrawDisplayItemList) {
-    if (op->GetType() == PaintOpType::DrawDisplayItemList) {
-      // TODO(danakj): If we could inspect the PaintOpBuffer here, then
-      // we could see if it is a single draw op.
-      return nullptr;
-    }
-    auto* draw_record_op = static_cast<const DrawRecordOp*>(op);
-    if (draw_record_op->record->size() > 1) {
-      // If there's more than one op, then we need to keep the
-      // SaveLayer.
-      return nullptr;
-    }
-
-    // Recurse into the single-op DrawRecordOp and make sure it's a
-    // drawing op.
-    op = draw_record_op->record->GetFirstOp();
-    if (!op->IsDrawOp())
-      return nullptr;
-  }
-
-  return op;
-}
-
 void PaintOpBuffer::playback(SkCanvas* canvas,
                              SkPicture::AbortCallback* callback) const {
   static auto* zero = new std::vector<size_t>({0});
@@ -737,9 +702,6 @@ void PaintOpBuffer::PlaybackRanges(const std::vector<size_t>& range_starts,
   }
 #endif
 
-  // Prevent PaintOpBuffers from having side effects back into the canvas.
-  SkAutoCanvasRestore save_restore(canvas, true);
-
   // TODO(enne): a PaintRecord that contains a SetMatrix assumes that the
   // SetMatrix is local to that PaintRecord itself.  Said differently, if you
   // translate(x, y), then draw a paint record with a SetMatrix(identity),
@@ -760,9 +722,8 @@ void PaintOpBuffer::PlaybackRanges(const std::vector<size_t>& range_starts,
   while (const PaintOp* op =
              NextOp(range_starts, range_indices, &stack, &iter, &range_index)) {
     // Optimize out save/restores or save/draw/restore that can be a single
-    // draw.  See also: similar code in SkRecordOpts.
+    // draw.  See also: similar code in SkRecordOpts and cc's DisplayItemList.
     // TODO(enne): consider making this recursive?
-    // TODO(enne): should we avoid this if the SaveLayerAlphaOp has bounds?
     if (op->GetType() == PaintOpType::SaveLayerAlpha) {
       const PaintOp* second =
           NextOp(range_starts, range_indices, &stack, &iter, &range_index);
@@ -771,18 +732,13 @@ void PaintOpBuffer::PlaybackRanges(const std::vector<size_t>& range_starts,
         if (second->GetType() == PaintOpType::Restore) {
           continue;
         }
-
-        // Find a nested drawing PaintOp to replace |second| if possible, while
-        // holding onto the pointer to |second| in case we can't find a nested
-        // drawing op to replace it with.
-        const PaintOp* draw_op = GetNestedSingleDrawingOp(second);
-
-        if (draw_op) {
+        if (second->IsDrawOp()) {
           third =
               NextOp(range_starts, range_indices, &stack, &iter, &range_index);
           if (third && third->GetType() == PaintOpType::Restore) {
-            auto* save_op = static_cast<const SaveLayerAlphaOp*>(op);
-            draw_op->RasterWithAlpha(canvas, save_op->bounds, save_op->alpha);
+            const SaveLayerAlphaOp* save_op =
+                static_cast<const SaveLayerAlphaOp*>(op);
+            second->RasterWithAlpha(canvas, save_op->bounds, save_op->alpha);
             continue;
           }
         }

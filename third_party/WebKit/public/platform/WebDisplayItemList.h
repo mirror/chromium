@@ -66,6 +66,8 @@ class WebDisplayItemList {
   virtual void AppendScrollItem(const WebSize& scroll_offset,
                                 ScrollContainerId) {}
   virtual void AppendEndScrollItem() {}
+
+  virtual void SetNumSlowPaths(int num_slow_paths) {}
 };
 
 }  // namespace blink

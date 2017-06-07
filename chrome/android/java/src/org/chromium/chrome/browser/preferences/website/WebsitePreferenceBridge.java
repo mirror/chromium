@@ -240,14 +240,6 @@ public abstract class WebsitePreferenceBridge {
         nativeSetDSEGeolocationSetting(setting);
     }
 
-    /**
-     * Returns whether this origin is activated for subresource filtering, and will have
-     * resources filtered unless they are explicitly allowed via a permission.
-     */
-    public static boolean getSubresourceFilterActivated(String origin) {
-        return nativeGetSubresourceFilterActivated(origin);
-    }
-
     private static native void nativeGetGeolocationOrigins(Object list, boolean managedOnly);
     static native int nativeGetGeolocationSettingForOrigin(
             String origin, String embedder, boolean isIncognito);
@@ -292,5 +284,4 @@ public abstract class WebsitePreferenceBridge {
             String origin, boolean isIncognito);
     private static native boolean nativeGetDSEGeolocationSetting();
     private static native void nativeSetDSEGeolocationSetting(boolean setting);
-    private static native boolean nativeGetSubresourceFilterActivated(String origin);
 }

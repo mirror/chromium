@@ -10,10 +10,10 @@ cr.define('settings_main_page', function() {
    * TestProxy).
    *
    * @implements {SearchManager}
-   * @extends {TestBrowserProxy}
+   * @extends {settings.TestBrowserProxy}
    */
   var TestSearchManager = function() {
-    TestBrowserProxy.call(this, [
+    settings.TestBrowserProxy.call(this, [
       'search',
     ]);
 
@@ -25,7 +25,7 @@ cr.define('settings_main_page', function() {
   }
 
   TestSearchManager.prototype = {
-    __proto__: TestBrowserProxy.prototype,
+    __proto__: settings.TestBrowserProxy.prototype,
 
     /**
      * @param {boolean} matchesFound

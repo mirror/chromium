@@ -5,7 +5,6 @@
 #include "base/sequenced_task_runner.h"
 
 #include "base/bind.h"
-#include "base/gtest_prod_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/threading/thread.h"
@@ -14,89 +13,60 @@
 namespace base {
 namespace {
 
-class FlagOnDelete {
- public:
-  FlagOnDelete(bool* deleted,
-               scoped_refptr<SequencedTaskRunner> expected_deletion_sequence)
-      : deleted_(deleted),
-        expected_deletion_sequence_(std::move(expected_deletion_sequence)) {}
-
- private:
-  friend class DeleteHelper<FlagOnDelete>;
-  FRIEND_TEST_ALL_PREFIXES(SequencedTaskRunnerTest,
-                           OnTaskRunnerDeleterTargetStoppedEarly);
-
-  ~FlagOnDelete() {
-    EXPECT_FALSE(*deleted_);
-    *deleted_ = true;
-    if (expected_deletion_sequence_)
-      EXPECT_TRUE(expected_deletion_sequence_->RunsTasksInCurrentSequence());
+struct DeleteCounter {
+  DeleteCounter(int* counter, scoped_refptr<SequencedTaskRunner> task_runner)
+      : counter_(counter),
+        task_runner_(std::move(task_runner)) {
+  }
+  ~DeleteCounter() {
+    ++*counter_;
+    EXPECT_TRUE(!task_runner_ || task_runner_->RunsTasksOnCurrentThread());
   }
 
-  bool* deleted_;
-  const scoped_refptr<SequencedTaskRunner> expected_deletion_sequence_;
-
-  DISALLOW_COPY_AND_ASSIGN(FlagOnDelete);
+  int* counter_;
+  scoped_refptr<SequencedTaskRunner> task_runner_;
 };
 
-class SequencedTaskRunnerTest : public testing::Test {
- protected:
-  SequencedTaskRunnerTest() : foreign_thread_("foreign") {}
+}  // namespace
 
-  void SetUp() override {
-    main_runner_ = message_loop_.task_runner();
+TEST(SequencedTaskRunnerTest, OnTaskRunnerDeleter) {
+  base::MessageLoop message_loop;
+  base::Thread thread("Foreign");
+  thread.Start();
 
-    foreign_thread_.Start();
-    foreign_runner_ = foreign_thread_.task_runner();
-  }
+  scoped_refptr<SequencedTaskRunner> current_thread =
+      message_loop.task_runner();
+  scoped_refptr<SequencedTaskRunner> foreign_thread =
+      thread.task_runner();
 
-  scoped_refptr<SequencedTaskRunner> main_runner_;
-  scoped_refptr<SequencedTaskRunner> foreign_runner_;
+  using SequenceBoundUniquePtr =
+      std::unique_ptr<DeleteCounter, OnTaskRunnerDeleter>;
 
-  Thread foreign_thread_;
-
- private:
-  MessageLoop message_loop_;
-
-  DISALLOW_COPY_AND_ASSIGN(SequencedTaskRunnerTest);
-};
-
-using SequenceBoundUniquePtr =
-    std::unique_ptr<FlagOnDelete, OnTaskRunnerDeleter>;
-
-TEST_F(SequencedTaskRunnerTest, OnTaskRunnerDeleterOnMainThread) {
-  bool deleted_on_main_thread = false;
-  SequenceBoundUniquePtr ptr(
-      new FlagOnDelete(&deleted_on_main_thread, main_runner_),
-      OnTaskRunnerDeleter(main_runner_));
-  EXPECT_FALSE(deleted_on_main_thread);
-  foreign_runner_->PostTask(
+  int counter = 0;
+  SequenceBoundUniquePtr ptr(new DeleteCounter(&counter, current_thread),
+                             OnTaskRunnerDeleter(current_thread));
+  EXPECT_EQ(0, counter);
+  foreign_thread->PostTask(
       FROM_HERE, BindOnce([](SequenceBoundUniquePtr) {}, Passed(&ptr)));
 
   {
     RunLoop run_loop;
-    foreign_runner_->PostTaskAndReply(FROM_HERE, BindOnce([] {}),
-                                      run_loop.QuitClosure());
+    foreign_thread->PostTaskAndReply(FROM_HERE, BindOnce([] {}),
+                                     run_loop.QuitClosure());
     run_loop.Run();
   }
-  EXPECT_TRUE(deleted_on_main_thread);
-}
+  EXPECT_EQ(1, counter);
 
-TEST_F(SequencedTaskRunnerTest, OnTaskRunnerDeleterTargetStoppedEarly) {
-  bool deleted_on_main_thread = false;
-  FlagOnDelete* raw = new FlagOnDelete(&deleted_on_main_thread, main_runner_);
-  SequenceBoundUniquePtr ptr(raw, OnTaskRunnerDeleter(foreign_runner_));
-  EXPECT_FALSE(deleted_on_main_thread);
+  DeleteCounter* raw = new DeleteCounter(&counter, nullptr);
+  SequenceBoundUniquePtr ptr2(raw, OnTaskRunnerDeleter(foreign_thread));
+  EXPECT_EQ(1, counter);
 
-  // Stopping the target ahead of deleting |ptr| should make its
-  // OnTaskRunnerDeleter no-op.
-  foreign_thread_.Stop();
-  ptr = nullptr;
-  EXPECT_FALSE(deleted_on_main_thread);
+  thread.Stop();
+  ptr2 = nullptr;
+  ASSERT_EQ(1, counter);
 
   delete raw;
-  EXPECT_TRUE(deleted_on_main_thread);
+  EXPECT_EQ(2, counter);
 }
 
-}  // namespace
 }  // namespace base

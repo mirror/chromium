@@ -14,10 +14,6 @@
 #import "ios/web/web_state/ui/crw_web_view_proxy_impl.h"
 #import "ios/web/web_state/web_state_impl.h"
 
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
-
 using web::NavigationManager;
 
 namespace web {
@@ -34,7 +30,7 @@ std::unique_ptr<base::Value> ExecuteJavaScript(web::WebState* web_state,
   __block std::unique_ptr<base::Value> result;
   __block bool did_finish = false;
   web_state->ExecuteJavaScript(base::UTF8ToUTF16(script),
-                               base::BindBlockArc(^(const base::Value* value) {
+                               base::BindBlock(^(const base::Value* value) {
                                  if (value)
                                    result = value->CreateDeepCopy();
                                  did_finish = true;

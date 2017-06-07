@@ -32,7 +32,7 @@ cr.define('settings', function() {
     this.onInputMethodRemoved = new FakeChromeEvent();
 
     // List of method names expected to be tested with whenCalled()
-    TestBrowserProxy.call(this, [
+    settings.TestBrowserProxy.call(this, [
       'getSpellcheckWords',
     ]);
 
@@ -110,7 +110,7 @@ cr.define('settings', function() {
   }
 
   FakeLanguageSettingsPrivate.prototype = {
-    __proto__: TestBrowserProxy.prototype,
+    __proto__: settings.TestBrowserProxy.prototype,
     // Methods for use in testing.
 
     /** @param {SettingsPrefsElement} */

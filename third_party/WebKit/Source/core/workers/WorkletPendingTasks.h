@@ -5,7 +5,6 @@
 #ifndef WorkletPendingTasks_h
 #define WorkletPendingTasks_h
 
-#include "core/CoreExport.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "platform/heap/Heap.h"
 
@@ -19,8 +18,7 @@ namespace blink {
 // https://drafts.css-houdini.org/worklets/#fetch-and-invoke-a-worklet-script
 //
 // All functions must be accessed on the main thread.
-class CORE_EXPORT WorkletPendingTasks final
-    : public GarbageCollected<WorkletPendingTasks> {
+class WorkletPendingTasks final : public GarbageCollected<WorkletPendingTasks> {
  public:
   WorkletPendingTasks(int counter, ScriptPromiseResolver*);
 

@@ -6,10 +6,10 @@ cr.define('settings_people_page_sync_page', function() {
   /**
    * @constructor
    * @implements {settings.SyncBrowserProxy}
-   * @extends {TestBrowserProxy}
+   * @extends {settings.TestBrowserProxy}
    */
   var TestSyncBrowserProxy = function() {
-    TestBrowserProxy.call(this, [
+    settings.TestBrowserProxy.call(this, [
       'didNavigateToSyncPage',
       'didNavigateAwayFromSyncPage',
       'setSyncDatatypes',
@@ -21,7 +21,7 @@ cr.define('settings_people_page_sync_page', function() {
   };
 
   TestSyncBrowserProxy.prototype = {
-    __proto__: TestBrowserProxy.prototype,
+    __proto__: settings.TestBrowserProxy.prototype,
 
     /** @override */
     didNavigateToSyncPage: function() {

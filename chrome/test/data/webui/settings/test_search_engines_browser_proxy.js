@@ -10,10 +10,10 @@ cr.define('settings_search', function() {
    *
    * @constructor
    * @implements {settings.SearchEnginesBrowserProxy}
-   * @extends {TestBrowserProxy}
+   * @extends {settings.TestBrowserProxy}
    */
   var TestSearchEnginesBrowserProxy = function() {
-    TestBrowserProxy.call(this, [
+    settings.TestBrowserProxy.call(this, [
       'getSearchEnginesList',
       'removeSearchEngine',
       'searchEngineEditCancelled',
@@ -47,7 +47,7 @@ cr.define('settings_search', function() {
   };
 
   TestSearchEnginesBrowserProxy.prototype = {
-    __proto__: TestBrowserProxy.prototype,
+    __proto__: settings.TestBrowserProxy.prototype,
 
     /** @override */
     setDefaultSearchEngine: function(modelIndex) {

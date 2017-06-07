@@ -11,11 +11,11 @@ var HARDWARE_ACCELERATION_AT_STARTUP = true;
  * @implements {settings.SystemPageBrowserProxy}
  */
 function TestSystemPageBrowserProxy() {
-  TestBrowserProxy.call(this, ['showProxySettings']);
+  settings.TestBrowserProxy.call(this, ['showProxySettings']);
 }
 
 TestSystemPageBrowserProxy.prototype = {
-  __proto__: TestBrowserProxy.prototype,
+  __proto__: settings.TestBrowserProxy.prototype,
 
   /** @override */
   showProxySettings: function() {

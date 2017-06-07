@@ -430,8 +430,6 @@ class MetricsService : public base::HistogramFlattener {
   FRIEND_TEST_ALL_PREFIXES(MetricsServiceTest, RegisterSyntheticTrial);
   FRIEND_TEST_ALL_PREFIXES(MetricsServiceTest,
                            RegisterSyntheticMultiGroupFieldTrial);
-  FRIEND_TEST_ALL_PREFIXES(MetricsServiceTest,
-                           GetSyntheticFieldTrialActiveGroups);
 
   base::ThreadChecker thread_checker_;
 

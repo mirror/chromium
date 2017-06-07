@@ -5,17 +5,17 @@
 /**
  * @constructor
  * @implements {settings.AndroidAppsBrowserProxy}
- * @extends {TestBrowserProxy}
+ * @extends {settings.TestBrowserProxy}
  */
 function TestAndroidAppsBrowserProxy() {
-  TestBrowserProxy.call(this, [
+  settings.TestBrowserProxy.call(this, [
     'requestAndroidAppsInfo',
     'showAndroidAppsSettings',
   ]);
 }
 
 TestAndroidAppsBrowserProxy.prototype = {
-  __proto__: TestBrowserProxy.prototype,
+  __proto__: settings.TestBrowserProxy.prototype,
 
   /** @override */
   requestAndroidAppsInfo: function() {
