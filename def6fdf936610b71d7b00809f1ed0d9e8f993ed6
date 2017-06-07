@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "d89845cb_f848c0b8",
+        "filename": "third_party/WebKit/Source/core/dom/Modulator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-07T02:14:52Z",
+      "side": 1,
+      "message": "I only checked the code path of RawResource for off-main-thread-fetch. There may be non-thread-safe code in other resources.\nCurrently we don\u0027t support MemoryCache on worker threads.\nSo if ScriptResource depends on MemoryCache (especially for performance?) we should make MemoryCache available on worker threads.",
+      "parentUuid": "10a786e1_8d13a55e",
+      "revId": "def6fdf936610b71d7b00809f1ed0d9e8f993ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76a47d7d_fa838714",
         "filename": "third_party/WebKit/Source/core/workers/ThreadedWorkletMessagingProxy.cpp",
         "patchSetId": 1
