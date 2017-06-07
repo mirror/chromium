@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad61560d_a12b7826",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 4950,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-07T09:51:23Z",
+      "side": 1,
+      "message": "I don\u0027t know, but All/ParameterizedWebFrameTest.EmbedderTriggeredDetachWithRemoteMainFrame/1 and other tests fail without this change.\n\nSee test failures on PS16.",
+      "parentUuid": "e733fa83_878c6e0b",
+      "revId": "eaf56c83d48952900995efc94604cdd7937b2105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54ae78c5_103b9468",
         "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "eaf56c83d48952900995efc94604cdd7937b2105",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d0874b9_5fd74994",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-07T09:51:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54ae78c5_103b9468",
+      "revId": "eaf56c83d48952900995efc94604cdd7937b2105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
