@@ -29,6 +29,9 @@ class CC_EXPORT PictureLayer : public Layer {
   }
 
   void SetAllowTransformedRasterization(bool allowed);
+  bool allow_transformed_rasterization() const {
+    return picture_layer_inputs_.allow_transformed_rasterization;
+  }
 
   // Layer interface.
   std::unique_ptr<LayerImpl> CreateLayerImpl(LayerTreeImpl* tree_impl) override;
