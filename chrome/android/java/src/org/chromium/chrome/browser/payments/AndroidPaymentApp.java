@@ -267,6 +267,15 @@ public class AndroidPaymentApp
     }
 
     @Override
+    public boolean isAutofillInstrument() { return false; }
+
+    @Override
+    public boolean isServerAutofillInstrument() { return false; }
+
+    @Override
+    public boolean isServerAutofillInstrumentReplacement() { return false; }
+
+    @Override
     public void invokePaymentApp(final String id, final String merchantName, String origin,
             String iframeOrigin, final byte[][] certificateChain,
             final Map<String, PaymentMethodData> methodDataMap, final PaymentItem total,
