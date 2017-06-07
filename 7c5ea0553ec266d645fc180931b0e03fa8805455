@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d2e864d0_cce90efb",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-07T18:05:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c9ffd655_4b96160b",
+      "range": {
+        "startLine": 492,
+        "startChar": 53,
+        "endLine": 492,
+        "endChar": 66
+      },
+      "revId": "7c5ea0553ec266d645fc180931b0e03fa8805455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e51c7fcf_21abfb6b",
         "filename": "base/trace_event/memory_dump_manager.h",
         "patchSetId": 7
@@ -84,6 +108,30 @@
       "side": 1,
       "message": ":) When I see this comment I see myself writing the same if the parts were reversed. I feel I created a monster (in the good sense!).\n\nMoved this function to memory_dump_manager_test_utils.h and renamed to InitializeMemoryDumpManagerForInProcessTesting() so becomes clearer that it\u0027s only for unittests.",
       "parentUuid": "e51c7fcf_21abfb6b",
+      "range": {
+        "startLine": 74,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 27
+      },
+      "revId": "7c5ea0553ec266d645fc180931b0e03fa8805455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "517a3a9a_64274aec",
+        "filename": "base/trace_event/memory_dump_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-07T18:05:13Z",
+      "side": 1,
+      "message": "Haha!",
+      "parentUuid": "6071fcfe_d2f6651c",
       "range": {
         "startLine": 74,
         "startChar": 7,
@@ -172,6 +220,24 @@
       "side": 1,
       "message": "\u003e There is only one expect_call.\nNo there is another above\n\nSo, aha, I realized this was a small bug in the previous test.\nEssentially the scope {} itself doesn\u0027t bound the expectation of EXPECT_CALL if you don\u0027t put a scoped InSequence.\n\nEssentially the previous code was precisely the same of:\n\n\nEXPECT_CALL(mdp, OnMemoryDump(_, _)).Times(0);\nEXPECT_CALL(mdp, OnMemoryDump(_, _)).Times(1);\n\nEXPECT_FALSE(RequestProcessDumpAndWait(MemoryDumpType::EXPLICITLY_TRIGGERED,\n                                           MemoryDumpLevelOfDetail::DETAILED));\nInitializeForTesting(..)\nEXPECT_TRUE(RequestProcessDumpAndWait(MemoryDumpType::EXPLICITLY_TRIGGERED,\n                                          MemoryDumpLevelOfDetail::DETAILED));\n\nWhich technically mean that  OnMemoryDump is called only once but in the first section  (not the second) this test will silently pass.\n\nSee https://github.com/google/googletest/blob/master/googlemock/docs/ForDummies.md#ordered-vs-unordered-calls",
       "parentUuid": "600c585f_242e2776",
+      "revId": "7c5ea0553ec266d645fc180931b0e03fa8805455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c3a811d_926fc35f",
+        "filename": "base/trace_event/memory_dump_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-07T18:05:13Z",
+      "side": 1,
+      "message": "Oh yes. But can\u0027t you just write one InSequence outside of the scopes and not have the scopes at all? I don\u0027t think the expect statement in second scope can happen before first and that way it is easier to follow.",
+      "parentUuid": "b4dd870e_802ca053",
       "revId": "7c5ea0553ec266d645fc180931b0e03fa8805455",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
