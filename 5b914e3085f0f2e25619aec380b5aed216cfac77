@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "50a34df9_4efdfbe4",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleScript.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-07T09:43:17Z",
+      "side": 1,
+      "message": "3-5?",
+      "range": {
+        "startLine": 35,
+        "startChar": 62,
+        "endLine": 35,
+        "endChar": 63
+      },
+      "revId": "5b914e3085f0f2e25619aec380b5aed216cfac77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ee8f29c_477f5c60",
         "filename": "third_party/WebKit/Source/core/dom/ModuleScript.cpp",
         "patchSetId": 3
