@@ -21,12 +21,15 @@
         android:layout_marginEnd="16dp"
         android:contentDescription="@null"/>
 
+    <!-- 2dp bottom padding is necessary to move text 1dp up according to the Material spec.
+         See https://crbug.com/701221#c37. -->
     <TextView
         android:id="@+id/account_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:minHeight="56dp"
+        android:paddingBottom="2dp"
         android:gravity="center_vertical"
         android:textColor="@color/default_text_color"
         android:textSize="@dimen/fre_normal_text_size"/>
