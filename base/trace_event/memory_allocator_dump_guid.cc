@@ -20,6 +20,13 @@ uint64_t HashString(const std::string& str) {
 }
 }  // namespace
 
+// static
+bool MemoryAllocatorDumpGuid::UseSharedMemoryBasedGUIDs() {
+  // TODO(hajimehoshi): This should just become the default behavior once the
+  // Mojo GUID (crbug.com/604726) is fixed.
+  return false;
+}
+
 MemoryAllocatorDumpGuid::MemoryAllocatorDumpGuid(uint64_t guid) : guid_(guid) {}
 
 MemoryAllocatorDumpGuid::MemoryAllocatorDumpGuid()
