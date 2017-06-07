@@ -395,17 +395,13 @@ void RenderWidgetHostInputEventRouter::RouteTouchEvent(
         }
       }
 
-      if (touch_target_.target) {
-        TransformEventTouchPositions(event, touch_target_.delta);
-        touch_target_.target->ProcessTouchEvent(*event, latency);
-      }
+      TransformEventTouchPositions(event, touch_target_.delta);
+      touch_target_.target->ProcessTouchEvent(*event, latency);
       break;
     }
     case blink::WebInputEvent::kTouchMove:
-      if (touch_target_.target) {
-        TransformEventTouchPositions(event, touch_target_.delta);
-        touch_target_.target->ProcessTouchEvent(*event, latency);
-      }
+      TransformEventTouchPositions(event, touch_target_.delta);
+      touch_target_.target->ProcessTouchEvent(*event, latency);
       break;
     case blink::WebInputEvent::kTouchEnd:
     case blink::WebInputEvent::kTouchCancel:
