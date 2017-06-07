@@ -22,6 +22,30 @@
       "revId": "98dee7702162992e0f0a605c09879f0bde1ce987",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c39d0cdf_00b1e4db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-07T20:51:09Z",
+      "side": 0,
+      "message": "It depends on the intended use. For assets that are shared between normal and tab switcher toolbars, this is the information you want. The reason I changed it here is because the tint would change mid-fade-out and look like jank. This way it just fades out with whatever color it happened to be.",
+      "parentUuid": "a5f95380_c44bae49",
+      "range": {
+        "startLine": 489,
+        "startChar": 34,
+        "endLine": 489,
+        "endChar": 59
+      },
+      "revId": "98dee7702162992e0f0a605c09879f0bde1ce987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
