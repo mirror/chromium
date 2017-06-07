@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac02a5ec_b766679f",
+        "filename": "ui/gfx/geometry/quat_f.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-06-07T18:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32d6c79e_8bef2385",
+      "revId": "621aa582001fc11dac16c032d73f1c2412a0ee85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b73159f_dc472cac",
         "filename": "ui/gfx/geometry/quat_f.h",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "470cd3ca_079a1a2c",
+        "filename": "ui/gfx/geometry/quat_f.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-06-07T18:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b73159f_dc472cac",
+      "revId": "621aa582001fc11dac16c032d73f1c2412a0ee85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34cbc843_81406144",
         "filename": "ui/gfx/geometry/quat_f.h",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-07T15:07:20Z",
       "side": 1,
       "message": "What is the range of t? 0-1 right?",
+      "revId": "621aa582001fc11dac16c032d73f1c2412a0ee85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc68040_312eb50c",
+        "filename": "ui/gfx/geometry/quat_f.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-06-07T18:11:56Z",
+      "side": 1,
+      "message": "No. lerp can extrapolate beyond [0, 1] and is still meaningful. It\u0027s useful for \"overshooting\" in animations. I\u0027ve added comment to this effect. Let me know what you think of it.\n\nHere and below.",
+      "parentUuid": "34cbc843_81406144",
       "revId": "621aa582001fc11dac16c032d73f1c2412a0ee85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -81,6 +135,24 @@
       "writtenOn": "2017-06-07T15:07:20Z",
       "side": 1,
       "message": "What is the range of s?",
+      "revId": "621aa582001fc11dac16c032d73f1c2412a0ee85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf642562_5bbc05bd",
+        "filename": "ui/gfx/geometry/quat_f.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-06-07T18:11:56Z",
+      "side": 1,
+      "message": "Any real number. Added a comment to this effect. Here and below.",
+      "parentUuid": "524dbe0e_d4130df9",
       "revId": "621aa582001fc11dac16c032d73f1c2412a0ee85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +227,24 @@
     },
     {
       "key": {
+        "uuid": "c1eaace0_aa3e902c",
+        "filename": "ui/gfx/transform_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-06-07T18:11:56Z",
+      "side": 1,
+      "message": "This was used in a bogus test*, which I\u0027ve updated. This change is no longer needed.\n\n* The test was the verify skew blending unit test. The decomposition of a skew is inherently underconstrained, so the behavior is arbitrary. The old code compared against hardcoded constants that are not meaningful. I\u0027ve changed that test to reflect this.",
+      "parentUuid": "d8a8b768_c4d96c27",
+      "revId": "621aa582001fc11dac16c032d73f1c2412a0ee85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "821f8835_aead5d31",
         "filename": "ui/gfx/transform_unittest.cc",
         "patchSetId": 6
@@ -166,6 +256,24 @@
       "writtenOn": "2017-06-07T15:07:20Z",
       "side": 1,
       "message": "This is no longer testing -180?",
+      "revId": "621aa582001fc11dac16c032d73f1c2412a0ee85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "706e9224_8a5b6405",
+        "filename": "ui/gfx/transform_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-06-07T18:11:56Z",
+      "side": 1,
+      "message": "It is, actually. What it\u0027s testing is that interpolation does nothing if the transform represents a 180 degree rotation (since it\u0027s undefined which great arc it would traverse to get from a to b). The old behavior it was testing was undefined; I think it wasn\u0027t a valid test. This current test is meaningful, though.",
+      "parentUuid": "821f8835_aead5d31",
       "revId": "621aa582001fc11dac16c032d73f1c2412a0ee85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +297,24 @@
     },
     {
       "key": {
+        "uuid": "4447bf7d_ebdf096f",
+        "filename": "ui/gfx/transform_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-06-07T18:11:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb24fe88_4cb50733",
+      "revId": "621aa582001fc11dac16c032d73f1c2412a0ee85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbf1746e_4e1c3b4e",
         "filename": "ui/gfx/transform_util.cc",
         "patchSetId": 6
@@ -200,6 +326,24 @@
       "writtenOn": "2017-06-07T15:07:20Z",
       "side": 1,
       "message": "Isn\u0027t this calling an implicit constructor? Cuz this is not a struct with public fields even tho this is the syntax you\u0027d use for that. Use () to call constructors not {}.",
+      "revId": "621aa582001fc11dac16c032d73f1c2412a0ee85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e15d5ad_5420b7a7",
+        "filename": "ui/gfx/transform_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-06-07T18:11:56Z",
+      "side": 1,
+      "message": "Done. Here and in the unit test.",
+      "parentUuid": "bbf1746e_4e1c3b4e",
       "revId": "621aa582001fc11dac16c032d73f1c2412a0ee85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
