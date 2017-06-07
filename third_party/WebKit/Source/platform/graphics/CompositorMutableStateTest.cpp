@@ -101,9 +101,9 @@ TEST_F(CompositorMutableStateTest, MutableStateMutableProperties) {
 
   uint64_t primary_id = 12;
   root->SetElementId(CompositorElementIdFromDOMNodeId(
-      primary_id, CompositorElementIdNamespace::kPrimaryCompositorProxy));
+      primary_id, CompositorElementIdNamespace::kPrimary));
   layer->SetElementId(CompositorElementIdFromDOMNodeId(
-      primary_id, CompositorElementIdNamespace::kScrollCompositorProxy));
+      primary_id, CompositorElementIdNamespace::kScroll));
 
   root->SetMutableProperties(CompositorMutableProperty::kOpacity |
                              CompositorMutableProperty::kTransform);

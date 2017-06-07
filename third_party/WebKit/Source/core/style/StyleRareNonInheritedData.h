@@ -210,7 +210,6 @@ class CORE_EXPORT StyleRareNonInheritedData
   // style.
   unsigned has_inline_transform_ : 1;
   unsigned resize_ : 2;  // EResize
-  unsigned has_compositor_proxy_ : 1;
 
   // Style adjustment for appearance is disabled when certain properties are
   // set.
