@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "07b3a08e_7ee46538",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-07T19:44:29Z",
+      "side": 1,
+      "message": "Ohhh, the security level info is queried from the delegate and it shouldn\u0027t get deallocated. I thought the ToolbarModelIOS would own the delegate reference passed to it (which probably should, but doesn\u0027t). Looks good as is then. Thanks for the explanation.",
+      "parentUuid": "8e9b3760_c23995f9",
+      "range": {
+        "startLine": 141,
+        "startChar": 43,
+        "endLine": 141,
+        "endChar": 64
+      },
+      "revId": "52131fe5d1fe7a64b82dedc79b72a6eba2ec20a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5ac270a_2788e838",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 5
