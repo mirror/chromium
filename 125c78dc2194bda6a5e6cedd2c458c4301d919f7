@@ -52,6 +52,24 @@
       "revId": "125c78dc2194bda6a5e6cedd2c458c4301d919f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f75706_4e8cf9af",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-07T07:10:28Z",
+      "side": 1,
+      "message": "\u003e Oh I see now I know... the order is different. WorkerStartupData creates a copy when storing URL, while this code pulls the URL back again.\n\nI see. I missed that WorkerThreadStartupData deeply copies the given script url. I blindly assumed it\u0027s shallow-copied :p\n\n\u003e Hm, I feel pulling the URL back from startup_data is probably not great (it\u0027s to be passed to worker thread), does it make sense to pass the script_url separately to InitializeWorkerThread?\n\nSounds reasonable. Done.",
+      "parentUuid": "94e30011_ba137ec8",
+      "revId": "125c78dc2194bda6a5e6cedd2c458c4301d919f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
