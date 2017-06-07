@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "144e5d70_377ce19c",
+        "filename": "content/browser/manifest/manifest_manager_host.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-07T02:34:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53f37116_7cc2c829",
+      "range": {
+        "startLine": 23,
+        "startChar": 19,
+        "endLine": 23,
+        "endChar": 26
+      },
+      "revId": "ecedf569e15de3632bcf0643bfe84c4ce791d449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31c298cd_08569f26",
         "filename": "content/renderer/manifest/manifest_manager.cc",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5e7963d6_7252b092",
+        "filename": "content/renderer/manifest/manifest_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-07T02:34:51Z",
+      "side": 1,
+      "message": "Switched back to swap.",
+      "parentUuid": "31c298cd_08569f26",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 190,
+        "endChar": 29
+      },
+      "revId": "ecedf569e15de3632bcf0643bfe84c4ce791d449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb078454_10d553e3",
         "filename": "content/renderer/manifest/manifest_manager.cc",
         "patchSetId": 15
@@ -68,6 +116,30 @@
       "revId": "ecedf569e15de3632bcf0643bfe84c4ce791d449",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed448095_338f1c95",
+        "filename": "content/renderer/manifest/manifest_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-07T02:34:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb078454_10d553e3",
+      "range": {
+        "startLine": 198,
+        "startChar": 29,
+        "endLine": 198,
+        "endChar": 38
+      },
+      "revId": "ecedf569e15de3632bcf0643bfe84c4ce791d449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "c7f47ddb_1c063a57",
+        "filename": "third_party/WebKit/public/platform/modules/manifest/manifest.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-07T02:34:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3b0df69_45bf4db6",
+      "range": {
+        "startLine": 33,
+        "startChar": 50,
+        "endLine": 33,
+        "endChar": 62
+      },
+      "revId": "ecedf569e15de3632bcf0643bfe84c4ce791d449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb424e83_e59557dc",
         "filename": "third_party/WebKit/public/platform/modules/manifest/manifest.mojom",
         "patchSetId": 15
@@ -160,6 +256,30 @@
       "revId": "ecedf569e15de3632bcf0643bfe84c4ce791d449",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a3b8fdf_84e404fc",
+        "filename": "third_party/WebKit/public/platform/modules/manifest/manifest.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-07T02:34:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab0d9f7b_0214862b",
+      "range": {
+        "startLine": 90,
+        "startChar": 11,
+        "endLine": 90,
+        "endChar": 14
+      },
+      "revId": "ecedf569e15de3632bcf0643bfe84c4ce791d449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
