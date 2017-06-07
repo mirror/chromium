@@ -839,6 +839,11 @@ bool Node::InActiveDocument() const {
   return isConnected() && GetDocument().IsActive();
 }
 
+bool Node::DocumentIsPerformingLayout() const {
+  return isConnected() && GetDocument().Lifecycle().GetState() ==
+                              DocumentLifecycle::kInPerformLayout;
+}
+
 Node* Node::FocusDelegate() {
   return this;
 }
