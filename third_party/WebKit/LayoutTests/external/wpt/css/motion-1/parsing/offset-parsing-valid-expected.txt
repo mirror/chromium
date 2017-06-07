@@ -1,0 +1,31 @@
+This is a testharness.js-based test.
+PASS e.style['offset'] = "path('m 0 0 h 100') 100px 0deg" should set the property value 
+PASS Serialization should round-trip after setting e.style['offset'] = "path('m 0 0 h 100') 100px 0deg" 
+PASS e.style['offset'] = "ray(sides 0deg) 50% 90deg auto" should set the property value 
+PASS Serialization should round-trip after setting e.style['offset'] = "ray(sides 0deg) 50% 90deg auto" 
+PASS e.style['offset'] = "none calc(10px + 20%) auto" should set the property value 
+PASS Serialization should round-trip after setting e.style['offset'] = "none calc(10px + 20%) auto" 
+PASS e.style['offset'] = "path('m 1 2 v 3 Z')" should set the property value 
+PASS Serialization should round-trip after setting e.style['offset'] = "path('m 1 2 v 3 Z')" 
+PASS e.style['offset'] = "ray(farthest-corner 90deg) 1%" should set the property value 
+PASS Serialization should round-trip after setting e.style['offset'] = "ray(farthest-corner 90deg) 1%" 
+PASS e.style['offset'] = "none reverse" should set the property value 
+PASS Serialization should round-trip after setting e.style['offset'] = "none reverse" 
+PASS e.style['offset'] = "path('m 0 0 h 100') -7rad 8px" should set the property value 
+PASS Serialization should round-trip after setting e.style['offset'] = "path('m 0 0 h 100') -7rad 8px" 
+FAIL e.style['offset'] = "auto none reverse" should set the property value assert_not_equals: got disallowed value ""
+FAIL Serialization should round-trip after setting e.style['offset'] = "auto none reverse" assert_equals: expected "none 0px auto 180deg" but got ""
+FAIL e.style['offset'] = "path('m 0 0 h 100') -7rad 8px / auto" should set the property value assert_not_equals: got disallowed value ""
+FAIL Serialization should round-trip after setting e.style['offset'] = "path('m 0 0 h 100') -7rad 8px / auto" assert_equals: expected "path('m 0 0 h 100') 8px -7rad" but got ""
+FAIL e.style['offset'] = "left top" should set the property value assert_not_equals: got disallowed value ""
+FAIL Serialization should round-trip after setting e.style['offset'] = "left top" assert_equals: expected "left top none 0px auto 0deg" but got ""
+FAIL e.style['offset'] = "center bottom path('m 1 2 v 3 z')" should set the property value assert_not_equals: got disallowed value ""
+FAIL Serialization should round-trip after setting e.style['offset'] = "center bottom path('m 1 2 v 3 z')" assert_equals: expected "center bottom path('m 1 2 v 3 z') 0px auto 0deg" but got ""
+FAIL e.style['offset'] = "right bottom / left top" should set the property value assert_not_equals: got disallowed value ""
+FAIL Serialization should round-trip after setting e.style['offset'] = "right bottom / left top" assert_equals: expected "right bottom none 0px auto 0deg /  left top" but got ""
+FAIL e.style['offset'] = "path('m 0 0 h 100') -7rad 8px / left top" should set the property value assert_not_equals: got disallowed value ""
+FAIL Serialization should round-trip after setting e.style['offset'] = "path('m 0 0 h 100') -7rad 8px / left top" assert_equals: expected "path('m 0 0 h 100') 8px -7rad / left top" but got ""
+FAIL e.style['offset'] = "left bottom ray(0rad closest-side) 10px auto 30deg / right bottom" should set the property value assert_not_equals: got disallowed value ""
+FAIL Serialization should round-trip after setting e.style['offset'] = "left bottom ray(0rad closest-side) 10px auto 30deg / right bottom" assert_equals: expected "left bottom ray(0rad closest-side) 10px auto 30deg / right bottom" but got ""
+Harness: the test ran to completion.
+
