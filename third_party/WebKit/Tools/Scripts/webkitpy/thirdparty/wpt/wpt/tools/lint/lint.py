@@ -604,7 +604,6 @@ def check_all_paths(repo_root, paths, css_mode):
     :param css_mode: whether we're in CSS testsuite mode
     :returns: a list of errors found in ``f``
     """
-
     errors = []
     for paths_fn in all_paths_lints:
         errors.extend(paths_fn(repo_root, paths, css_mode))
@@ -679,6 +678,7 @@ def parse_args():
                         help="Output markdown")
     parser.add_argument("--css-mode", action="store_true",
                         help="Run CSS testsuite specific lints")
+    parser.add_argument("--repo-root", help="Override repo_root variable in lint.")
     return parser.parse_args()
 
 
@@ -686,6 +686,9 @@ def main(**kwargs):
     if kwargs.get("json") and kwargs.get("markdown"):
         logger.critical("Cannot specify --json and --markdown")
         sys.exit(2)
+
+    if kwargs.get('repo_root'):
+        repo_root = kwargs.get('repo_root')
 
     output_format = {(True, False): "json",
                      (False, True): "markdown",
@@ -695,6 +698,7 @@ def main(**kwargs):
     paths = list(kwargs.get("paths") if kwargs.get("paths") else all_filesystem_paths(repo_root))
     if output_format == "markdown":
         setup_logging(True)
+
     return lint(repo_root, paths, output_format, kwargs.get("css_mode", False))
 
 
@@ -731,6 +735,7 @@ def lint(repo_root, paths, output_format, css_mode):
 
     for path in paths[:]:
         abs_path = os.path.join(repo_root, path)
+
         if not os.path.exists(abs_path):
             paths.remove(path)
             continue
