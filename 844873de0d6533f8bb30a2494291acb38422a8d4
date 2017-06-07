@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5952911d_4e6e6d32",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-07T10:46:12Z",
+      "side": 1,
+      "message": "Can you add the link to the bug or the design doc for future reference?",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 27
+      },
+      "revId": "844873de0d6533f8bb30a2494291acb38422a8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac7a64a2_e8996bf1",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-07T10:46:12Z",
+      "side": 1,
+      "message": "Let\u0027s put a blank line between scenarios or remove the blank lines below.",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 1
+      },
+      "revId": "844873de0d6533f8bb30a2494291acb38422a8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b12ffe63_9397db98",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-07T10:46:12Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 53
+      },
+      "revId": "844873de0d6533f8bb30a2494291acb38422a8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6ff6ac_ec5b7362",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-07T10:46:12Z",
+      "side": 1,
+      "message": "DCHECK or VLOG?",
+      "range": {
+        "startLine": 216,
+        "startChar": 2,
+        "endLine": 216,
+        "endChar": 7
+      },
+      "revId": "844873de0d6533f8bb30a2494291acb38422a8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a138bff_6eb97c08",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-07T10:46:12Z",
+      "side": 1,
+      "message": "We should return something to prevent the compile error.",
+      "range": {
+        "startLine": 216,
+        "startChar": 62,
+        "endLine": 216,
+        "endChar": 0
+      },
+      "revId": "844873de0d6533f8bb30a2494291acb38422a8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35403696_f8bd82ce",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-07T10:46:12Z",
+      "side": 1,
+      "message": "I think state_ can be KeyboardControllerState::INITIAL here.",
+      "range": {
+        "startLine": 492,
+        "startChar": 54,
+        "endLine": 492,
+        "endChar": 0
+      },
+      "revId": "844873de0d6533f8bb30a2494291acb38422a8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "047d3f2b_b187218c",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-07T10:46:12Z",
+      "side": 1,
+      "message": "IIUC, we don\u0027t have to call PostDelayedTask when state_ \u003d\u003d WAIT_RESIZE. Instead of that, we might want to set show_on_resize_ to false here?",
+      "range": {
+        "startLine": 510,
+        "startChar": 54,
+        "endLine": 510,
+        "endChar": 0
+      },
+      "revId": "844873de0d6533f8bb30a2494291acb38422a8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f958fc56_85c72c10",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-07T10:46:12Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 553,
+        "startChar": 0,
+        "endLine": 560,
+        "endChar": 7
+      },
+      "revId": "844873de0d6533f8bb30a2494291acb38422a8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c6165c_c07f6552",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-07T10:46:12Z",
+      "side": 1,
+      "message": "Could you rename this to the name representing the controller is waiting for loading the extension?",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 13
+      },
+      "revId": "844873de0d6533f8bb30a2494291acb38422a8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
