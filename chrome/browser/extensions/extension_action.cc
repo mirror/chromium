@@ -234,7 +234,7 @@ gfx::Image ExtensionAction::GetDefaultIconImage() const {
   // If we have a default icon, it should be loaded before trying to use it.
   DCHECK(!default_icon_image_ == !default_icon_);
   if (default_icon_image_)
-    return default_icon_image_->image();
+    return gfx::Image(default_icon_image_->image_skia());
 
   if (placeholder_icon_image_.IsEmpty()) {
     // For extension actions, we use a special placeholder icon (with the first
