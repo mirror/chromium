@@ -5,6 +5,7 @@
 #ifndef UI_GFX_TRANSFORM_H_
 #define UI_GFX_TRANSFORM_H_
 
+#include <algorithm>
 #include <iosfwd>
 #include <string>
 
@@ -19,6 +20,7 @@ class BoxF;
 class RectF;
 class Point;
 class Point3F;
+class Quaternion;
 class Vector3dF;
 
 // 4x4 transformation matrix. Transform is cheap and explicitly allows
@@ -68,6 +70,9 @@ class GFX_EXPORT Transform {
             SkMScalar col2row2,
             SkMScalar x_translation,
             SkMScalar y_translation);
+
+  // Constructs a transform corresponding to the given quaternion.
+  explicit Transform(const Quaternion& q);
 
   bool operator==(const Transform& rhs) const { return matrix_ == rhs.matrix_; }
   bool operator!=(const Transform& rhs) const { return matrix_ != rhs.matrix_; }
