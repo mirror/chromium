@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01fb04c3_7669f737",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-07T16:55:13Z",
+      "side": 1,
+      "message": "Hm. So all this is so that the PrefetchService doesn\u0027t have to know about ContentSuggestionsService? To me, it kinda feels like the CSSFactory knows more about the PrefetchService internals than it should have to.\n\nI think maybe the DependsOn relation should really be the other way around? It\u0027s really PrefetchService that depends on CSS, right? Then PrefetchServiceFactory could just grab a CSS pointer and pass it wherever it needs to go. (Maybe that would create a circular dependency, since CSS depends on other offline_pages things?)\n\nAnyway, that\u0027s mostly orthogonal to this CL, so I\u0027ll leave it to you as a possible followup.",
+      "range": {
+        "startLine": 364,
+        "startChar": 45,
+        "endLine": 364,
+        "endChar": 0
+      },
+      "revId": "f3c8bdf029d9a310fd436e025fbbbbf7ed50b4b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
