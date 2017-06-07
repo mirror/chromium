@@ -28,6 +28,7 @@ class NetworkObserver;
 class NetworkPortalDetectorObserver;
 class ScreenCaptureObserver;
 class ScreenShareObserver;
+class SessionLengthLimitObserver;
 class StatusAreaFocusObserver;
 class TracingObserver;
 class VirtualKeyboardObserver;
@@ -110,6 +111,12 @@ class ASH_EXPORT SystemTrayNotifier {
                               const base::string16& helper_name);
   void NotifyScreenShareStop();
 
+  // Session length limit.
+  void AddSessionLengthLimitObserver(SessionLengthLimitObserver* observer);
+  void RemoveSessionLengthLimitObserver(SessionLengthLimitObserver* observer);
+  void NotifySessionStartTimeChanged();
+  void NotifySessionLengthLimitChanged();
+
   // Status area focus.
   void AddStatusAreaFocusObserver(StatusAreaFocusObserver* observer);
   void RemoveStatusAreaFocusObserver(StatusAreaFocusObserver* observer);
@@ -138,6 +145,8 @@ class ASH_EXPORT SystemTrayNotifier {
       network_portal_detector_observers_;
   base::ObserverList<ScreenCaptureObserver> screen_capture_observers_;
   base::ObserverList<ScreenShareObserver> screen_share_observers_;
+  base::ObserverList<SessionLengthLimitObserver>
+      session_length_limit_observers_;
   base::ObserverList<StatusAreaFocusObserver> status_area_focus_observers_;
   base::ObserverList<TracingObserver> tracing_observers_;
   base::ObserverList<VirtualKeyboardObserver> virtual_keyboard_observers_;

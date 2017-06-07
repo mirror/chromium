@@ -34,8 +34,19 @@ class COMPOSITOR_EXPORT ClipRecorder {
   void ClipPathWithAntiAliasing(const gfx::Path& clip_path);
 
  private:
+  enum Closer {
+    CLIP_RECT,
+    CLIP_PATH,
+  };
+
+  void RecordCloser(Closer);
+
   const PaintContext& context_;
-  int num_closers_ = 0;
+  // If someone needs to do more than this many operations with a single
+  // ClipRecorder then we'll increase this.
+  enum : int { kMaxOpCount = 4 };
+  Closer closers_[kMaxOpCount];
+  int num_closers_;
 
   DISALLOW_COPY_AND_ASSIGN(ClipRecorder);
 };

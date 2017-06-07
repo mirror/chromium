@@ -5,10 +5,10 @@
 /**
  * @constructor
  * @implements {settings.ChromeCleanupProxy}
- * @extends {TestBrowserProxy}
+ * @extends {settings.TestBrowserProxy}
  */
 var TestChromeCleanupProxy = function() {
-  TestBrowserProxy.call(this, [
+  settings.TestBrowserProxy.call(this, [
     'dismissCleanupPage',
     'getChromeCleanupVisibility',
     'registerChromeCleanupObserver',
@@ -18,7 +18,7 @@ var TestChromeCleanupProxy = function() {
 };
 
 TestChromeCleanupProxy.prototype = {
-  __proto__: TestBrowserProxy.prototype,
+  __proto__: settings.TestBrowserProxy.prototype,
 
   /** @override */
   dismissCleanupPage: function() {

@@ -5,17 +5,17 @@
 /**
  * @constructor
  * @implements {settings.ExtensionControlBrowserProxy}
- * @extends {TestBrowserProxy}
+ * @extends {settings.TestBrowserProxy}
  */
 function TestExtensionControlBrowserProxy() {
-  TestBrowserProxy.call(this, [
+  settings.TestBrowserProxy.call(this, [
     'disableExtension',
     'manageExtension',
   ]);
 }
 
 TestExtensionControlBrowserProxy.prototype = {
-  __proto__: TestBrowserProxy.prototype,
+  __proto__: settings.TestBrowserProxy.prototype,
 
   /** @override */
   disableExtension: function(extensionId) {

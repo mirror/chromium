@@ -161,10 +161,6 @@ std::unique_ptr<FeaturePolicy> FeaturePolicy::CreateFromParentPolicy(
     const ParsedFeaturePolicyHeader& container_policy,
     const url::Origin& origin,
     const FeaturePolicy::FeatureList& features) {
-  // If there is a non-empty container policy, then there must also be a parent
-  // policy.
-  DCHECK(parent_policy || container_policy.empty());
-
   std::unique_ptr<FeaturePolicy> new_policy =
       base::WrapUnique(new FeaturePolicy(origin, features));
   for (const auto& feature : features) {
@@ -175,7 +171,7 @@ std::unique_ptr<FeaturePolicy> FeaturePolicy::CreateFromParentPolicy(
       new_policy->inherited_policies_[feature.first] = false;
     }
   }
-  if (!container_policy.empty())
+  if (parent_policy && !container_policy.empty())
     new_policy->AddContainerPolicy(container_policy, parent_policy);
   return new_policy;
 }

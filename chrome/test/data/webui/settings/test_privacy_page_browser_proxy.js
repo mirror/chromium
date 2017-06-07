@@ -8,7 +8,7 @@
  * @implements {settings.PrivacyPageBrowserProxy}
  */
 function TestPrivacyPageBrowserProxy() {
-  TestBrowserProxy.call(this, [
+  settings.TestBrowserProxy.call(this, [
     'getMetricsReporting',
     'getSafeBrowsingExtendedReporting',
     'setMetricsReportingEnabled',
@@ -18,7 +18,7 @@ function TestPrivacyPageBrowserProxy() {
 }
 
 TestPrivacyPageBrowserProxy.prototype = {
-  __proto__: TestBrowserProxy.prototype,
+  __proto__: settings.TestBrowserProxy.prototype,
 
   /** @type {!MetricsReporting} */
   metricsReporting: {

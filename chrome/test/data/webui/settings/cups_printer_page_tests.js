@@ -5,10 +5,10 @@
 /**
  * @constructor
  * @implements {settings.CupsPrintersBrowserProxy}
- * @extends {TestBrowserProxy}
+ * @extends {settings.TestBrowserProxy}
  */
 var TestCupsPrintersBrowserProxy = function() {
-  TestBrowserProxy.call(this, [
+  settings.TestBrowserProxy.call(this, [
     'getCupsPrintersList',
     'getCupsPrinterManufacturersList',
     'getCupsPrinterModelsList',
@@ -18,7 +18,7 @@ var TestCupsPrintersBrowserProxy = function() {
 };
 
 TestCupsPrintersBrowserProxy.prototype = {
-  __proto__: TestBrowserProxy.prototype,
+  __proto__: settings.TestBrowserProxy.prototype,
 
   printerList: [],
   manufacturers: [],

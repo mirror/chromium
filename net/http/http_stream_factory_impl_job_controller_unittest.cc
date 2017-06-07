@@ -148,7 +148,7 @@ class HttpStreamFactoryImplJobPeer {
   // Return SpdySessionKey of |job|.
   static const SpdySessionKey GetSpdySessionKey(
       const HttpStreamFactoryImpl::Job* job) {
-    return job->spdy_session_key_;
+    return job->GetSpdySessionKey();
   }
 };
 

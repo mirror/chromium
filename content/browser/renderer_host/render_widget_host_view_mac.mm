@@ -440,7 +440,6 @@ RenderWidgetHostViewMac::RenderWidgetHostViewMac(RenderWidgetHost* widget,
                                                  bool is_guest_view_hack)
     : render_widget_host_(RenderWidgetHostImpl::From(widget)),
       page_at_minimum_scale_(true),
-      mouse_wheel_phase_handler_(RenderWidgetHostImpl::From(widget), this),
       is_loading_(false),
       allow_pause_for_resize_or_repaint_(true),
       is_guest_view_hack_(is_guest_view_hack),
@@ -1752,6 +1751,50 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
   UpdateScreenInfo(cocoa_view_);
 }
 
+void RenderWidgetHostViewMac::ScheduleMouseWheelEndDispatching(
+    blink::WebMouseWheelEvent wheel_event,
+    bool should_route_event) {
+  mouse_wheel_end_dispatch_timer_.Start(
+      FROM_HERE,
+      base::TimeDelta::FromMilliseconds(
+          kDefaultMouseWheelLatchingTransactionMs),
+      base::Bind(
+          &RenderWidgetHostViewMac::SendSyntheticWheelEventWithPhaseEnded,
+          base::Unretained(this), wheel_event, should_route_event));
+}
+
+void RenderWidgetHostViewMac::DispatchPendingWheelEndEvent() {
+  if (mouse_wheel_end_dispatch_timer_.IsRunning()) {
+    base::Closure task = mouse_wheel_end_dispatch_timer_.user_task();
+    mouse_wheel_end_dispatch_timer_.Stop();
+    task.Run();
+  }
+}
+
+void RenderWidgetHostViewMac::IgnorePendingWheelEndEvent() {
+  mouse_wheel_end_dispatch_timer_.Stop();
+}
+
+bool RenderWidgetHostViewMac::HasPendingWheelEndEvent() {
+  return mouse_wheel_end_dispatch_timer_.IsRunning();
+}
+
+void RenderWidgetHostViewMac::SendSyntheticWheelEventWithPhaseEnded(
+    blink::WebMouseWheelEvent wheel_event,
+    bool should_route_event) {
+  wheel_event.dispatch_type =
+      blink::WebInputEvent::DispatchType::kEventNonBlocking;
+  if (should_route_event) {
+    render_widget_host_->delegate()
+        ->GetInputEventRouter()
+        ->RouteMouseWheelEvent(this, &wheel_event,
+                               ui::LatencyInfo(ui::SourceEventType::WHEEL));
+  } else {
+    ProcessMouseWheelEvent(wheel_event,
+                           ui::LatencyInfo(ui::SourceEventType::WHEEL));
+  }
+}
+
 }  // namespace content
 
 // RenderWidgetHostViewCocoa ---------------------------------------------------
@@ -2353,8 +2396,7 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
         event, self);
     webEvent.rails_mode = mouseWheelFilter_.UpdateRailsMode(webEvent);
     if (renderWidgetHostView_->wheel_scroll_latching_enabled()) {
-      renderWidgetHostView_->mouse_wheel_phase_handler_
-          .AddPhaseIfNeededAndScheduleEndEvent(webEvent, false);
+      renderWidgetHostView_->ScheduleMouseWheelEndDispatching(webEvent, false);
     } else {
       ui::LatencyInfo latency_info(ui::SourceEventType::WHEEL);
       latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
@@ -2567,14 +2609,24 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
     ui::LatencyInfo latency_info(ui::SourceEventType::WHEEL);
     latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
     if (renderWidgetHostView_->wheel_scroll_latching_enabled()) {
-      renderWidgetHostView_->mouse_wheel_phase_handler_
-          .AddPhaseIfNeededAndScheduleEndEvent(
-              webEvent, renderWidgetHostView_->ShouldRouteEvent(webEvent));
       if (webEvent.phase == blink::WebMouseWheelEvent::kPhaseEnded) {
-        // A wheel end event is scheduled and will get dispatched if momentum
-        // phase doesn't start in 100ms. Don't sent the wheel end event
-        // immediately.
+        // Don't send the wheel end event immediately, start a timer instead to
+        // see whether momentum phase of the scrolling starts or not.
+        renderWidgetHostView_->ScheduleMouseWheelEndDispatching(
+            webEvent, renderWidgetHostView_->ShouldRouteEvent(webEvent));
         return;
+      }
+      if (webEvent.phase == blink::WebMouseWheelEvent::kPhaseBegan) {
+        // A new scrolling sequence has started, send the pending wheel end
+        // event to end the previous scrolling sequence.
+        renderWidgetHostView_->DispatchPendingWheelEndEvent();
+
+      } else if (webEvent.momentum_phase ==
+                 blink::WebMouseWheelEvent::kPhaseBegan) {
+        // Momentum phase has started, drop the pending wheel end event to make
+        // sure that no wheel end event will be sent during the momentum phase
+        // of scrolling.
+        renderWidgetHostView_->IgnorePendingWheelEndEvent();
       }
     }
 

@@ -13,13 +13,11 @@
 @synthesize keyPath = _keyPath;
 @synthesize lastValue = _lastValue;
 @synthesize object = _object;
-@synthesize previousValue = _previousValue;
 
 - (void)setObservedObject:(NSObject*)object keyPath:(NSString*)keyPath {
   [_object removeObserver:self forKeyPath:_keyPath];
 
   _lastValue = nil;
-  _previousValue = nil;
   _keyPath = [keyPath copy];
   _object = object;
   [_object addObserver:self
@@ -36,7 +34,6 @@
     // Ignore extraneous call from previous |_object| or |_keyPath|.
     return;
   }
-  _previousValue = _lastValue;
   _lastValue = change[NSKeyValueChangeNewKey];
 }
 

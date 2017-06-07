@@ -31,6 +31,16 @@ NetworkingConfigDelegate* SystemTrayDelegate::GetNetworkingConfigDelegate()
   return nullptr;
 }
 
+bool SystemTrayDelegate::GetSessionStartTime(
+    base::TimeTicks* session_start_time) {
+  return false;
+}
+
+bool SystemTrayDelegate::GetSessionLengthLimit(
+    base::TimeDelta* session_length_limit) {
+  return false;
+}
+
 void SystemTrayDelegate::ActiveUserWasChanged() {}
 
 bool SystemTrayDelegate::IsSearchKeyMappedToCapsLock() {

@@ -5,10 +5,10 @@
 /**
  * @constructor
  * @implements {settings.DownloadsBrowserProxy}
- * @extends {TestBrowserProxy}
+ * @extends {settings.TestBrowserProxy}
  */
 var TestDownloadsBrowserProxy = function() {
-  TestBrowserProxy.call(this, [
+  settings.TestBrowserProxy.call(this, [
     'initializeDownloads',
     'selectDownloadLocation',
     'resetAutoOpenFileTypes',
@@ -16,7 +16,7 @@ var TestDownloadsBrowserProxy = function() {
 };
 
 TestDownloadsBrowserProxy.prototype = {
-  __proto__: TestBrowserProxy.prototype,
+  __proto__: settings.TestBrowserProxy.prototype,
 
   /** @override */
   initializeDownloads: function() {

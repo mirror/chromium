@@ -9,10 +9,6 @@
 #include "ios/web/public/web_state/global_web_state_observer.h"
 #import "ios/web/public/test/fakes/test_web_client.h"
 
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
-
 namespace web {
 
 class WebTestRenderProcessCrashObserver : public GlobalWebStateObserver {

@@ -6,10 +6,10 @@ cr.define('reset_page', function() {
   /**
    * @constructor
    * @implements {settings.ResetBrowserProxy}
-   * @extends {TestBrowserProxy}
+   * @extends {settings.TestBrowserProxy}
    */
   var TestResetBrowserProxy = function() {
-    TestBrowserProxy.call(this, [
+    settings.TestBrowserProxy.call(this, [
       'performResetProfileSettings',
       'onHideResetProfileDialog',
       'onHideResetProfileBanner',
@@ -21,7 +21,7 @@ cr.define('reset_page', function() {
   };
 
   TestResetBrowserProxy.prototype = {
-    __proto__: TestBrowserProxy.prototype,
+    __proto__: settings.TestBrowserProxy.prototype,
 
     /** @override */
     performResetProfileSettings: function(sendSettings, requestOrigin) {

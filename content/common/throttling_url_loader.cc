@@ -4,49 +4,7 @@
 
 #include "content/common/throttling_url_loader.h"
 
-#include "base/single_thread_task_runner.h"
-
 namespace content {
-
-ThrottlingURLLoader::StartInfo::StartInfo(
-    mojom::URLLoaderFactory* in_url_loader_factory,
-    int32_t in_routing_id,
-    int32_t in_request_id,
-    uint32_t in_options,
-    std::unique_ptr<ResourceRequest> in_url_request,
-    scoped_refptr<base::SingleThreadTaskRunner> in_task_runner)
-    : url_loader_factory(in_url_loader_factory),
-      routing_id(in_routing_id),
-      request_id(in_request_id),
-      options(in_options),
-      url_request(std::move(in_url_request)),
-      task_runner(std::move(in_task_runner)) {}
-
-ThrottlingURLLoader::StartInfo::~StartInfo() = default;
-
-ThrottlingURLLoader::ResponseInfo::ResponseInfo(
-    const ResourceResponseHead& in_response_head,
-    const base::Optional<net::SSLInfo>& in_ssl_info,
-    mojom::DownloadedTempFilePtr in_downloaded_file)
-    : response_head(in_response_head),
-      ssl_info(in_ssl_info),
-      downloaded_file(std::move(in_downloaded_file)) {}
-
-ThrottlingURLLoader::ResponseInfo::~ResponseInfo() = default;
-
-ThrottlingURLLoader::RedirectInfo::RedirectInfo(
-    const net::RedirectInfo& in_redirect_info,
-    const ResourceResponseHead& in_response_head)
-    : redirect_info(in_redirect_info), response_head(in_response_head) {}
-
-ThrottlingURLLoader::RedirectInfo::~RedirectInfo() = default;
-
-ThrottlingURLLoader::PriorityInfo::PriorityInfo(
-    net::RequestPriority in_priority,
-    int32_t in_intra_priority_value)
-    : priority(in_priority), intra_priority_value(in_intra_priority_value) {}
-
-ThrottlingURLLoader::PriorityInfo::~PriorityInfo() = default;
 
 // static
 std::unique_ptr<ThrottlingURLLoader> ThrottlingURLLoader::CreateLoaderAndStart(
@@ -56,12 +14,11 @@ std::unique_ptr<ThrottlingURLLoader> ThrottlingURLLoader::CreateLoaderAndStart(
     int32_t request_id,
     uint32_t options,
     std::unique_ptr<ResourceRequest> url_request,
-    mojom::URLLoaderClient* client,
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+    mojom::URLLoaderClient* client) {
   std::unique_ptr<ThrottlingURLLoader> loader(
       new ThrottlingURLLoader(std::move(throttles), client));
   loader->Start(factory, routing_id, request_id, options,
-                std::move(url_request), std::move(task_runner));
+                std::move(url_request));
   return loader;
 }
 
@@ -76,8 +33,9 @@ void ThrottlingURLLoader::SetPriority(net::RequestPriority priority,
                                       int32_t intra_priority_value) {
   if (!url_loader_ && !cancelled_by_throttle_) {
     DCHECK_EQ(DEFERRED_START, deferred_stage_);
-    priority_info_ =
-        base::MakeUnique<PriorityInfo>(priority, intra_priority_value);
+    set_priority_cached_ = true;
+    priority_ = priority;
+    intra_priority_value_ = intra_priority_value;
     return;
   }
 
@@ -97,13 +55,11 @@ ThrottlingURLLoader::ThrottlingURLLoader(
   }
 }
 
-void ThrottlingURLLoader::Start(
-    mojom::URLLoaderFactory* factory,
-    int32_t routing_id,
-    int32_t request_id,
-    uint32_t options,
-    std::unique_ptr<ResourceRequest> url_request,
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+void ThrottlingURLLoader::Start(mojom::URLLoaderFactory* factory,
+                                int32_t routing_id,
+                                int32_t request_id,
+                                uint32_t options,
+                                std::unique_ptr<ResourceRequest> url_request) {
   DCHECK_EQ(DEFERRED_NONE, deferred_stage_);
   DCHECK(!cancelled_by_throttle_);
 
@@ -116,17 +72,18 @@ void ThrottlingURLLoader::Start(
 
     if (deferred) {
       deferred_stage_ = DEFERRED_START;
-      start_info_ = base::MakeUnique<StartInfo>(factory, routing_id, request_id,
-                                                options, std::move(url_request),
-                                                std::move(task_runner));
+      url_loader_factory_ = factory;
+      routing_id_ = routing_id;
+      request_id_ = request_id;
+      options_ = options;
+      url_request_ = std::move(url_request);
       return;
     }
   }
 
-  factory->CreateLoaderAndStart(
-      mojo::MakeRequest(&url_loader_), routing_id, request_id, options,
-      *url_request,
-      client_binding_.CreateInterfacePtrAndBind(std::move(task_runner)));
+  factory->CreateLoaderAndStart(mojo::MakeRequest(&url_loader_), routing_id,
+                                request_id, options, *url_request,
+                                client_binding_.CreateInterfacePtrAndBind());
 }
 
 void ThrottlingURLLoader::OnReceiveResponse(
@@ -144,8 +101,9 @@ void ThrottlingURLLoader::OnReceiveResponse(
 
     if (deferred) {
       deferred_stage_ = DEFERRED_RESPONSE;
-      response_info_ = base::MakeUnique<ResponseInfo>(
-          response_head, ssl_info, std::move(downloaded_file));
+      response_head_ = response_head;
+      ssl_info_ = ssl_info;
+      downloaded_file_ = std::move(downloaded_file);
       client_binding_.PauseIncomingMethodCallProcessing();
       return;
     }
@@ -169,8 +127,8 @@ void ThrottlingURLLoader::OnReceiveRedirect(
 
     if (deferred) {
       deferred_stage_ = DEFERRED_REDIRECT;
-      redirect_info_ =
-          base::MakeUnique<RedirectInfo>(redirect_info, response_head);
+      redirect_info_ = redirect_info;
+      response_head_ = response_head;
       client_binding_.PauseIncomingMethodCallProcessing();
       return;
     }
@@ -254,31 +212,25 @@ void ThrottlingURLLoader::Resume() {
 
   switch (deferred_stage_) {
     case DEFERRED_START: {
-      start_info_->url_loader_factory->CreateLoaderAndStart(
-          mojo::MakeRequest(&url_loader_), start_info_->routing_id,
-          start_info_->request_id, start_info_->options,
-          *start_info_->url_request,
-          client_binding_.CreateInterfacePtrAndBind(
-              std::move(start_info_->task_runner)));
+      url_loader_factory_->CreateLoaderAndStart(
+          mojo::MakeRequest(&url_loader_), routing_id_, request_id_, options_,
+          *url_request_, client_binding_.CreateInterfacePtrAndBind());
 
-      if (priority_info_) {
-        auto priority_info = std::move(priority_info_);
-        url_loader_->SetPriority(priority_info->priority,
-                                 priority_info->intra_priority_value);
+      if (set_priority_cached_) {
+        set_priority_cached_ = false;
+        url_loader_->SetPriority(priority_, intra_priority_value_);
       }
       break;
     }
     case DEFERRED_REDIRECT: {
       client_binding_.ResumeIncomingMethodCallProcessing();
-      forwarding_client_->OnReceiveRedirect(redirect_info_->redirect_info,
-                                            redirect_info_->response_head);
+      forwarding_client_->OnReceiveRedirect(redirect_info_, response_head_);
       break;
     }
     case DEFERRED_RESPONSE: {
       client_binding_.ResumeIncomingMethodCallProcessing();
-      forwarding_client_->OnReceiveResponse(
-          response_info_->response_head, response_info_->ssl_info,
-          std::move(response_info_->downloaded_file));
+      forwarding_client_->OnReceiveResponse(response_head_, ssl_info_,
+                                            std::move(downloaded_file_));
       break;
     }
     default:
