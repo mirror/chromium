@@ -16,6 +16,24 @@
       "revId": "b7b964bdc8be0f62c5a01483ed2edeeee44c0446",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c7bc63_d8e0077b",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtilsUnitTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-07T23:38:22Z",
+      "side": 0,
+      "message": "As discussed offline we can\u0027t. This deletion above was in fact the cause of the UnsatisfiedLinkError I was getting on the last failing trybot.\n\nThis call is required because normally this value comes from a native call that is impossible to be done in unit tests as they don\u0027t load native. I reverted the diff above and added helpful comments providing more context.",
+      "parentUuid": "7cd55368_cc410ac6",
+      "revId": "b7b964bdc8be0f62c5a01483ed2edeeee44c0446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
