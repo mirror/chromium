@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30acc129_19bce30a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-07T10:54:59Z",
+      "side": 1,
+      "message": "s/when/during",
+      "revId": "2c67e529a908c248d958c807d4f529c2d2667362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f663b8e_fcff569b",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-07T10:54:59Z",
+      "side": 1,
+      "message": "Can you put DCHECK(!PlzNavigate)",
+      "revId": "2c67e529a908c248d958c807d4f529c2d2667362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa04501b_d4645f0f",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-07T10:54:59Z",
+      "side": 1,
+      "message": "I think this makes sense: while we\u0027re transferring we should be considered not a Real provider host.\n\nHowever I never really understood cross site transfer. It seems weird also that this provider host will miss out on messages and then later get transferred back in action with live |matching_registrations_|.\n\nDo you think it\u0027d make sense instead to call RemoveAllMatchingRegistrations here at line 593?",
+      "revId": "2c67e529a908c248d958c807d4f529c2d2667362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "914736d5_2ab18b22",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-07T10:54:59Z",
+      "side": 1,
+      "message": "DCHECK(!PlzNavigate)",
+      "revId": "2c67e529a908c248d958c807d4f529c2d2667362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709678b7_e7d15971",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-07T10:54:59Z",
+      "side": 1,
+      "message": "It feels what\u0027s really needed is to re-initialize this provider host from the ground up. We were disconnected from the world and suddenly coming back.\n\nWould it make more sense to call SyncMatchingRegistrations here?",
+      "revId": "2c67e529a908c248d958c807d4f529c2d2667362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
