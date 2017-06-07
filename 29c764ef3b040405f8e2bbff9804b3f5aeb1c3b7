@@ -132,6 +132,30 @@
     },
     {
       "key": {
+        "uuid": "75bdec92_6a126c5d",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-07T16:11:36Z",
+      "side": 1,
+      "message": "Ah I think I see now. I was under the impression that the kEnableArcOOBEOptIn switch would cause this code to be run in OOBE ONLY, but it is actually run in the session as well. This simplifies things tremendously as I won\u0027t need the OOBE screen for AD users at all. I thought I had to implement the \"You need to auth, hit next\" screen in OOBE as well.",
+      "parentUuid": "18e2d0a3_e05b88da",
+      "range": {
+        "startLine": 701,
+        "startChar": 6,
+        "endLine": 701,
+        "endChar": 33
+      },
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88da375c_a2b4f864",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 2
@@ -164,6 +188,24 @@
       "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745ab6df_cb17e7af",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-07T16:11:36Z",
+      "side": 1,
+      "message": "Moot with latest changes.",
+      "parentUuid": "620d08f9_28f0736c",
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
