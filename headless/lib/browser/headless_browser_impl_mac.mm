@@ -11,17 +11,21 @@ namespace headless {
 
 void HeadlessBrowserImpl::PlatformInitialize() {}
 
-void HeadlessBrowserImpl::PlatformCreateWindow() {}
+void HeadlessBrowserImpl::PlatformStart() {}
 
 void HeadlessBrowserImpl::PlatformInitializeWebContents(
-    const gfx::Size& initial_size,
     HeadlessWebContentsImpl* web_contents) {
   NSView* web_view = web_contents->web_contents()->GetNativeView();
   [web_view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+}
 
-  NSRect frame = NSMakeRect(0, 0, initial_size.width(), initial_size.height());
+void HeadlessBrowserImpl::PlatformSetWebContentsBounds(
+    HeadlessWebContentsImpl* web_contents,
+    const gfx::Rect& bounds) {
+  NSView* web_view = web_contents->web_contents()->GetNativeView();
+  NSRect frame =
+      NSMakeRect(bounds.x(), bounds.y(), bounds.width(), bounds.height());
   [web_view setFrame:frame];
-  return;
 }
 
 }  // namespace headless
