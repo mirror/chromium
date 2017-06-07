@@ -23,6 +23,7 @@
 #include "content/public/browser/save_page_type.h"
 #include "content/public/browser/screen_orientation_delegate.h"
 #include "content/public/browser/site_instance.h"
+#include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/common/stop_find_action.h"
 #include "ipc/ipc_sender.h"
@@ -775,6 +776,11 @@ class WebContents : public PageNavigator,
 
   virtual int GetCurrentlyPlayingVideoCount() = 0;
   virtual bool IsFullscreen() = 0;
+
+  // Returns a map containing the volumes of all media elements.
+  using MediaVolumeMap =
+      base::flat_map<WebContentsObserver::MediaPlayerId, double>;
+  virtual const MediaVolumeMap& GetMediaVolumes() = 0;
 
   // Tells the renderer to clear the focused element (if any).
   virtual void ClearFocusedElement() = 0;

@@ -795,6 +795,10 @@ class CONTENT_EXPORT WebContentsImpl
   // No interstitial page should already be attached.
   void AttachInterstitialPage(InterstitialPageImpl* interstitial_page) override;
 
+  void MediaVolumeChanged(const WebContentsObserver::MediaPlayerId& id,
+                          double volume);
+  const MediaVolumeMap& GetMediaVolumes() override;
+
   // Unsets the currently showing interstitial.
   void DetachInterstitialPage() override;
 
@@ -1606,6 +1610,7 @@ class CONTENT_EXPORT WebContentsImpl
   bool is_overlay_content_;
 
   int currently_playing_video_count_ = 0;
+  MediaVolumeMap cached_media_volumes_;
 
   bool has_persistent_video_ = false;
 
