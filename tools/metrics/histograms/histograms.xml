@@ -32199,16 +32199,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Mojo.System.MessagesAcceptedPerEvent">
-  <owner>rockot@chromium.org</owner>
-  <summary>
-    Number of internal Mojo system messages processed synchronously during a
-    single execution of NodeController::AcceptIncomingMessages(). This is called
-    any time an event requires internal Mojo system messages to be pumped.
-    Values below 4 are no longer logged.
-  </summary>
-</histogram>
-
 <histogram name="Mojo.System.Node.ConnectedPeers">
   <owner>rockot@chromium.org</owner>
   <summary>
