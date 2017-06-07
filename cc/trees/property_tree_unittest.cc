@@ -529,5 +529,81 @@ TEST(PropertyTreeTest, SingularTransformSnapTest) {
   EXPECT_NE(to_target, rounded);
 }
 
+TEST(PropertyTreeTest, HasTransformOrEffectNode) {
+  ElementId a_element_id(42);
+  ElementId b_element_id(43);
+  ElementId c_element_id(44);
+
+  {
+    PropertyTrees property_trees;
+    EXPECT_FALSE(property_trees.HasTransformOrEffectNode(ElementId()));
+    EXPECT_FALSE(property_trees.HasTransformOrEffectNode(a_element_id));
+  }
+
+  {
+    PropertyTrees property_trees;
+    TransformTree& tree = property_trees.transform_tree;
+    TransformNode transform_node;
+    transform_node.id = tree.Insert(transform_node, 0);
+    property_trees.element_id_to_transform_node_index[a_element_id] =
+        transform_node.id;
+    EXPECT_TRUE(property_trees.HasTransformOrEffectNode(a_element_id));
+    EXPECT_FALSE(property_trees.HasTransformOrEffectNode(b_element_id));
+  }
+
+  {
+    PropertyTrees property_trees;
+    EffectTree& tree = property_trees.effect_tree;
+    EffectNode effect_node;
+    effect_node.id = tree.Insert(effect_node, 0);
+    property_trees.element_id_to_effect_node_index[b_element_id] =
+        effect_node.id;
+    EXPECT_FALSE(property_trees.HasTransformOrEffectNode(a_element_id));
+    EXPECT_TRUE(property_trees.HasTransformOrEffectNode(b_element_id));
+  }
+
+  {
+    PropertyTrees property_trees;
+
+    // Both transform and effect nodes present under differing element ids.
+
+    TransformTree& transform_tree = property_trees.transform_tree;
+    TransformNode transform_node;
+    transform_node.id = transform_tree.Insert(transform_node, 0);
+    property_trees.element_id_to_transform_node_index[a_element_id] =
+        transform_node.id;
+
+    EffectTree& effect_tree = property_trees.effect_tree;
+    EffectNode effect_node;
+    effect_node.id = effect_tree.Insert(effect_node, 0);
+    property_trees.element_id_to_effect_node_index[b_element_id] =
+        effect_node.id;
+    EXPECT_TRUE(property_trees.HasTransformOrEffectNode(a_element_id));
+    EXPECT_TRUE(property_trees.HasTransformOrEffectNode(b_element_id));
+    EXPECT_FALSE(property_trees.HasTransformOrEffectNode(c_element_id));
+  }
+
+  {
+    PropertyTrees property_trees;
+
+    // Both transform and effect nodes present under the same element id.
+
+    TransformTree& transform_tree = property_trees.transform_tree;
+    TransformNode transform_node;
+    transform_node.id = transform_tree.Insert(transform_node, 0);
+    property_trees.element_id_to_transform_node_index[a_element_id] =
+        transform_node.id;
+
+    EffectTree& effect_tree = property_trees.effect_tree;
+    EffectNode effect_node;
+    effect_node.id = effect_tree.Insert(effect_node, 0);
+    property_trees.element_id_to_effect_node_index[a_element_id] =
+        effect_node.id;
+    EXPECT_TRUE(property_trees.HasTransformOrEffectNode(a_element_id));
+    EXPECT_FALSE(property_trees.HasTransformOrEffectNode(b_element_id));
+    EXPECT_FALSE(property_trees.HasTransformOrEffectNode(c_element_id));
+  }
+}
+
 }  // namespace
 }  // namespace cc
