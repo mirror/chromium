@@ -577,6 +577,7 @@ class CORE_EXPORT Node : public EventTarget {
   }
 
   bool InActiveDocument() const;
+  bool DocumentIsPerformingLayout() const;
 
   // Returns true if this node is connected to a document, false otherwise.
   // See https://dom.spec.whatwg.org/#connected for the definition.
@@ -1011,7 +1012,8 @@ inline ContainerNode* Node::parentNode() const {
 inline void Node::LazyReattachIfAttached() {
   if (NeedsAttach())
     return;
-  if (!InActiveDocument())
+  // It's possible to get here from FrameView::ForceLayoutParentViewIfNeeded
+  if (!InActiveDocument() || DocumentIsPerformingLayout())
     return;
 
   AttachContext context;
