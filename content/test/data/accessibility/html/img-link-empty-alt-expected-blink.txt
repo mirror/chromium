@@ -1,4 +1,4 @@
-rootWebArea
+rootWebArea focusable
 ++genericContainer
 ++++link name='unread '
 ++++++staticText name='unread '

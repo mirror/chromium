@@ -1,4 +1,4 @@
-rootWebArea
+rootWebArea focusable
 ++genericContainer
 ++++iframe name='Empty iframe'
-++++++rootWebArea
+++++++rootWebArea focusable

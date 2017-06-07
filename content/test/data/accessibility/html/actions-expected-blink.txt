@@ -1,9 +1,8 @@
-rootWebArea name='Actions'
+rootWebArea focusable name='Actions'
 ++genericContainer
-++++slider actions=setValue
+++++slider focusable horizontal value='50' actions=setValue
 ++++++sliderThumb
-++++textField name='Test textfield' actions=setValue
+++++textField editable focusable name='Test textfield' actions=setValue
 ++++++genericContainer
 ++++++++staticText name='Test textfield'
 ++++++++++inlineTextBox name='Test textfield'
-<-- End-of-file -->

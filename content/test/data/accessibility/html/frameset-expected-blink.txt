@@ -1,6 +1,6 @@
-rootWebArea
+rootWebArea focusable
 ++genericContainer
-++++rootWebArea
+++++rootWebArea focusable
 ++++++paragraph
 ++++++++staticText name='My favorite browser is '
 ++++++++++inlineTextBox name='My favorite browser is '
@@ -11,7 +11,7 @@ rootWebArea
 ++++++++staticText name='!'
 ++++++++++inlineTextBox name='!'
 ++genericContainer
-++++rootWebArea
+++++rootWebArea focusable
 ++++++paragraph
 ++++++++staticText name='This test is to check '
 ++++++++++inlineTextBox name='This test is to check '

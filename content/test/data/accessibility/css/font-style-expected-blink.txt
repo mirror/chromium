@@ -1,4 +1,4 @@
-rootWebArea
+rootWebArea focusable
 ++paragraph
 ++++staticText name='The '
 ++++++inlineTextBox name='The '

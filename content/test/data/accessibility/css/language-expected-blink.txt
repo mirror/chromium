@@ -1,4 +1,4 @@
-rootWebArea
+rootWebArea focusable
 ++paragraph language='en-US'
 ++++staticText name='How are you?'
 ++++++inlineTextBox name='How are you?'
