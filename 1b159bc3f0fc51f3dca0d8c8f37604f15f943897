@@ -142,6 +142,30 @@
       "revId": "1b159bc3f0fc51f3dca0d8c8f37604f15f943897",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9296c951_2fcdf08c",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 2134,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-07T06:59:27Z",
+      "side": 1,
+      "message": "Ah, makes sense that it\u0027s failing while creating a new frame--this happens before we install a new document.",
+      "parentUuid": "11f03d45_250fba01",
+      "range": {
+        "startLine": 2134,
+        "startChar": 6,
+        "endLine": 2134,
+        "endChar": 27
+      },
+      "revId": "1b159bc3f0fc51f3dca0d8c8f37604f15f943897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
