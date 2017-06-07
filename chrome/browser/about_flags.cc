@@ -3057,6 +3057,11 @@ const FeatureEntry kFeatureEntries[] = {
      SINGLE_VALUE_TYPE(switches::kEnablePictureInPicture)},
 #endif  // !defined(OS_ANDROID) && !defined(OS_IOS)
 
+    {"enable-update-hover-post-layout",
+     flag_descriptions::kUpdateHoverPostLayoutName,
+     flag_descriptions::kUpdateHoverPostLayoutDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kUpdateHoverPostLayout)},
+
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in
     // enums.xml and don't forget to run AboutFlagsHistogramTest unit test.
