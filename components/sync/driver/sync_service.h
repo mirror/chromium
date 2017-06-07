@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #ifndef COMPONENTS_SYNC_DRIVER_SYNC_SERVICE_H_
+
 #define COMPONENTS_SYNC_DRIVER_SYNC_SERVICE_H_
 
 #include <memory>
