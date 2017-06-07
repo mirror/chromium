@@ -1210,6 +1210,30 @@ TEST_F(ScrollbarAnimationControllerAuraOverlayTest,
   EXPECT_FALSE(scrollbar_controller_->ScrollbarsHidden());
 }
 
+TEST_F(ScrollbarAnimationControllerAuraOverlayTest, ScrollBeforeMouseMove) {
+  // Move the mouse near the thumb in the top position.
+  auto near_thumb_in_top_position =
+      NearVerticalScrollbarBegin(0, -kMouseMoveDistanceToTriggerExpand + 1);
+  scrollbar_controller_->DidMouseMove(near_thumb_in_top_position);
+  EXPECT_TRUE(scrollbar_controller_->MouseIsNearScrollbarThumb(VERTICAL));
+
+  // Move the mouse away from the thumb.
+  scrollbar_controller_->DidMouseMove(
+      NearVerticalScrollbarBegin(0, -kMouseMoveDistanceToTriggerExpand - 1));
+  EXPECT_FALSE(scrollbar_controller_->MouseIsNearScrollbarThumb(VERTICAL));
+
+  // Scroll the page which moves the thumb down.
+  ElementId scroll_element_id = v_scrollbar_layer_->scroll_element_id();
+  auto& scroll_tree = host_impl_.active_tree()->property_trees()->scroll_tree;
+  auto* scroll_node = scroll_tree.FindNodeFromElementId(scroll_element_id);
+  gfx::Vector2dF offset(0, 10);
+  scroll_tree.ScrollBy(scroll_node, offset, host_impl_.active_tree());
+
+  // Move the mouse near the thumb in the top position.
+  scrollbar_controller_->DidMouseMove(near_thumb_in_top_position);
+  EXPECT_FALSE(scrollbar_controller_->MouseIsNearScrollbarThumb(VERTICAL));
+}
+
 class ScrollbarAnimationControllerAndroidTest
     : public testing::Test,
       public ScrollbarAnimationControllerClient {
