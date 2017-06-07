@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20cd98fc_57a1fce1",
+        "filename": "content/browser/download/download_item_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-07T06:15:10Z",
+      "side": 1,
+      "message": "Remove _ from here and target_path_ below.",
+      "range": {
+        "startLine": 122,
+        "startChar": 65,
+        "endLine": 122,
+        "endChar": 66
+      },
+      "revId": "087ba8edcbb352fb4c58ca2f429afe41390471e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd337db0_26f20a86",
+        "filename": "content/browser/download/download_item_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-07T06:15:10Z",
+      "side": 1,
+      "message": "Close )?",
+      "revId": "087ba8edcbb352fb4c58ca2f429afe41390471e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
