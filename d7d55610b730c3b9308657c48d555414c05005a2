@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "248afee6_41ffc44d",
+        "filename": "chrome/test/data/android/capybara.jpg",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-06-07T19:53:38Z",
+      "side": 1,
+      "message": "Personally I think this one looks happier http://www.fuzzytoday.com/wp-content/uploads/2014/05/PIbKpeE.jpg \n\nBut I couldn\u0027t find the usage rights...",
+      "revId": "d7d55610b730c3b9308657c48d555414c05005a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
