@@ -1107,12 +1107,15 @@ ProfileImpl::CreateMediaRequestContextForStoragePartition(
 
 void ProfileImpl::RegisterInProcessServices(StaticServiceMap* services) {
   if (features::PrefServiceEnabled()) {
+    // TODO(crbug.com/678155): Use a SequencedTaskRunner once mojo supports it.
+    prefs_task_runner_ = base::CreateSingleThreadTaskRunnerWithTraits(
+        base::TaskTraits(base::TaskShutdownBehavior::BLOCK_SHUTDOWN,
+                         base::TaskPriority::USER_VISIBLE));
     content::ServiceInfo info;
     info.factory = base::Bind(
         &prefs::CreatePrefService, chrome::ExpectedPrefStores(),
         make_scoped_refptr(content::BrowserThread::GetBlockingPool()));
-    info.task_runner = content::BrowserThread::GetTaskRunnerForThread(
-        content::BrowserThread::IO);
+    info.task_runner = prefs_task_runner_;
     services->insert(std::make_pair(prefs::mojom::kServiceName, info));
   }
 
@@ -1254,6 +1257,11 @@ PrefProxyConfigTracker* ProfileImpl::GetProxyConfigTracker() {
   if (!pref_proxy_config_tracker_)
     pref_proxy_config_tracker_.reset(CreateProxyConfigTracker());
   return pref_proxy_config_tracker_.get();
+}
+
+scoped_refptr<base::SingleThreadTaskRunner>
+ProfileImpl::GetPrefServiceTaskRunner() {
+  return prefs_task_runner_;
 }
 
 chrome_browser_net::Predictor* ProfileImpl::GetNetworkPredictor() {

@@ -152,6 +152,8 @@ class ProfileImpl : public Profile {
 #endif  // defined(OS_CHROMEOS)
 
   PrefProxyConfigTracker* GetProxyConfigTracker() override;
+  scoped_refptr<base::SingleThreadTaskRunner> GetPrefServiceTaskRunner()
+      override;
 
  private:
 #if defined(OS_CHROMEOS)
@@ -232,6 +234,7 @@ class ProfileImpl : public Profile {
   // first.
   scoped_refptr<user_prefs::PrefRegistrySyncable> pref_registry_;
   std::unique_ptr<sync_preferences::PrefServiceSyncable> prefs_;
+  scoped_refptr<base::SingleThreadTaskRunner> prefs_task_runner_;
   std::unique_ptr<sync_preferences::PrefServiceSyncable> otr_prefs_;
   ProfileImplIOData::Handle io_data_;
 #if BUILDFLAG(ENABLE_EXTENSIONS)
