@@ -1270,11 +1270,15 @@ TEST(XFormTest, DecomposedTransformCtor) {
     EXPECT_EQ(0.0, decomp.translate[i]);
     EXPECT_EQ(1.0, decomp.scale[i]);
     EXPECT_EQ(0.0, decomp.skew[i]);
-    EXPECT_EQ(0.0, decomp.quaternion[i]);
     EXPECT_EQ(0.0, decomp.perspective[i]);
   }
-  EXPECT_EQ(1.0, decomp.quaternion[3]);
   EXPECT_EQ(1.0, decomp.perspective[3]);
+
+  EXPECT_EQ(0.0, decomp.quaternion.x());
+  EXPECT_EQ(0.0, decomp.quaternion.y());
+  EXPECT_EQ(0.0, decomp.quaternion.z());
+  EXPECT_EQ(1.0, decomp.quaternion.w());
+
   Transform identity;
   Transform composed = ComposeTransform(decomp);
   EXPECT_TRUE(MatricesAreNearlyEqual(identity, composed));
@@ -1295,7 +1299,7 @@ TEST(XFormTest, FactorTRS) {
     EXPECT_FLOAT_EQ(decomp.translate[0], degrees * 2);
     EXPECT_FLOAT_EQ(decomp.translate[1], -degrees * 3);
     double rotation =
-        std::acos(SkMScalarToDouble(decomp.quaternion[3])) * 360.0 / M_PI;
+        std::acos(SkMScalarToDouble(decomp.quaternion.w())) * 360.0 / M_PI;
     while (rotation < 0.0)
       rotation += 360.0;
     while (rotation > 360.0)
