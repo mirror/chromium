@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a98ce6cb_92044281",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/FullscreenWebContentsActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-07T14:29:50Z",
+      "side": 1,
+      "message": "Why the \":37\"?",
+      "range": {
+        "startLine": 41,
+        "startChar": 82,
+        "endLine": 41,
+        "endChar": 85
+      },
+      "revId": "1de3b92d0f3e14cf3e0a2a4122099f05c482fcaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
