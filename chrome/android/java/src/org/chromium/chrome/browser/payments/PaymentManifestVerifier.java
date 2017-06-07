@@ -303,6 +303,10 @@ public class PaymentManifestVerifier
 
     @Override
     public void onPaymentMethodManifestDownloadSuccess(String content) {
+        if (!mParser.isUtilityProcessRunning()) {
+            onManifestParseFailure();
+            return;
+        }
         mParser.parsePaymentMethodManifest(content, this);
     }
 
@@ -324,6 +328,10 @@ public class PaymentManifestVerifier
     @Override
     public void onWebAppManifestDownloadSuccess(String content) {
         if (mAtLeastOneManifestFailedToDownloadOrParse) return;
+        if (!mParser.isUtilityProcessRunning()) {
+            onManifestParseFailure();
+            return;
+        }
         mParser.parseWebAppManifest(content, this);
     }
 

@@ -100,7 +100,7 @@ public class AndroidPaymentAppFinderTest {
                 Mockito.mock(PaymentManifestParser.class), packageManagerDelegate, callback);
 
         Mockito.verify(packageManagerDelegate, Mockito.never())
-                .getResourcesForApplication(ArgumentMatchers.anyObject());
+                .getResourcesForApplication(ArgumentMatchers.any(ApplicationInfo.class));
         Mockito.verify(callback, Mockito.never())
                 .onPaymentAppCreated(Mockito.any(PaymentApp.class));
         Mockito.verify(callback).onAllPaymentAppsCreated();
@@ -130,7 +130,7 @@ public class AndroidPaymentAppFinderTest {
                 Mockito.mock(PaymentManifestParser.class), packageManagerDelegate, callback);
 
         Mockito.verify(packageManagerDelegate, Mockito.never())
-                .getResourcesForApplication(ArgumentMatchers.anyObject());
+                .getResourcesForApplication(ArgumentMatchers.any(ApplicationInfo.class));
         Mockito.verify(callback, Mockito.never())
                 .onPaymentAppCreated(Mockito.any(PaymentApp.class));
         Mockito.verify(callback).onAllPaymentAppsCreated();
@@ -165,7 +165,7 @@ public class AndroidPaymentAppFinderTest {
                 Mockito.mock(PaymentManifestParser.class), packageManagerDelegate, callback);
 
         Mockito.verify(packageManagerDelegate, Mockito.never())
-                .getResourcesForApplication(ArgumentMatchers.anyObject());
+                .getResourcesForApplication(ArgumentMatchers.any(ApplicationInfo.class));
         Mockito.verify(callback, Mockito.never())
                 .onPaymentAppCreated(Mockito.any(PaymentApp.class));
         Mockito.verify(callback).onAllPaymentAppsCreated();
@@ -302,8 +302,11 @@ public class AndroidPaymentAppFinderTest {
         };
 
         PaymentManifestParser parser = new PaymentManifestParser() {
+            private boolean mIsRunning;
+
             @Override
             public void parsePaymentMethodManifest(String content, ManifestParseCallback callback) {
+                assert mIsRunning;
                 try {
                     callback.onPaymentMethodManifestParseSuccess(
                             new URI[] {new URI("https://bobpay.com/app.json")});
@@ -314,6 +317,7 @@ public class AndroidPaymentAppFinderTest {
 
             @Override
             public void parseWebAppManifest(String content, ManifestParseCallback callback) {
+                assert mIsRunning;
                 WebAppManifestSection[] manifest = new WebAppManifestSection[1];
                 manifest[0] = new WebAppManifestSection();
                 manifest[0].id = "com.bobpay.app";
@@ -330,10 +334,19 @@ public class AndroidPaymentAppFinderTest {
             }
 
             @Override
-            public void startUtilityProcess() {}
+            public void startUtilityProcess() {
+                mIsRunning = true;
+            }
 
             @Override
-            public void stopUtilityProcess() {}
+            public void stopUtilityProcess() {
+                mIsRunning = false;
+            }
+
+            @Override
+            public boolean isUtilityProcessRunning() {
+                return mIsRunning;
+            }
         };
 
         Set<String> methodNames = new HashSet<>();

@@ -98,6 +98,11 @@ public class PaymentManifestVerifierTest {
                         (byte) 0x74, (byte) 0xF5, (byte) 0x93, (byte) 0xFB}};
                 callback.onWebAppManifestParseSuccess(manifest);
             }
+
+            @Override
+            public boolean isUtilityProcessRunning() {
+                return true;
+            }
         };
 
         mPackageManagerDelegate = Mockito.mock(PackageManagerDelegate.class);
@@ -216,6 +221,11 @@ public class PaymentManifestVerifierTest {
 
     private class CountingParser extends PaymentManifestParser {
         public int mParseWebAppManifestCounter;
+
+        @Override
+        public boolean isUtilityProcessRunning() {
+            return true;
+        }
     }
 
     private class CountingDownloader extends PaymentManifestDownloader {
