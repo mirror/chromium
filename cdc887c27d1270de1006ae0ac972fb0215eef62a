@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40971791_ad576c7d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 32226,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-07T06:43:10Z",
+      "side": 0,
+      "message": "Thanks for the cleanup!  Please mark this histogram as \u003cobsolete\u003e rather than removing its metadata.",
+      "range": {
+        "startLine": 32217,
+        "startChar": 0,
+        "endLine": 32226,
+        "endChar": 0
+      },
+      "revId": "cdc887c27d1270de1006ae0ac972fb0215eef62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
