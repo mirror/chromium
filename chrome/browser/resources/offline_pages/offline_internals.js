@@ -248,6 +248,14 @@ cr.define('offlineInternals', function() {
       $('request-status').textContent = enabled ? 'On' : 'Off';
     }
 
+    /**
+     * @param {!boolean} enabled Whether to enable Logging.
+     */
+    function togglePrefetchServiceLog(enabled) {
+      browserProxy.setRecordPrefetchService(enabled);
+      $('prefetch-status').textContent = enabled ? 'On' : 'Off';
+    }
+
     var incognito = loadTimeData.getBoolean('isIncognito');
     $('delete-all-pages').disabled = incognito;
     $('delete-selected-pages').disabled = incognito;
@@ -269,6 +277,8 @@ cr.define('offlineInternals', function() {
     $('log-model-off').onclick = togglePageModelLog.bind(this, false);
     $('log-request-on').onclick = toggleRequestQueueLog.bind(this, true);
     $('log-request-off').onclick = toggleRequestQueueLog.bind(this, false);
+    $('log-prefetch-on').onclick = togglePrefetchServiceLog.bind(this, true);
+    $('log-prefetch-off').onclick = togglePrefetchServiceLog.bind(this, false);
     $('refresh-logs').onclick = refreshLog;
     $('add-to-queue').onclick = function() {
       var saveUrls = $('url').value.split(',');

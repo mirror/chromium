@@ -68,4 +68,14 @@ void PrefetchDispatcherImpl::DisposeTask() {
       base::Bind(&DeleteBackgroundTaskHelper, base::Passed(std::move(task_))));
 }
 
+void PrefetchDispatcherImpl::GCMReceivedForOperation(
+    const std::string& operation_name) {
+  event_logger_.RecordActivity("Received GCM message. Operation name: " +
+                               operation_name);
+}
+
+OfflineEventLogger* PrefetchDispatcherImpl::GetLogger() {
+  return &event_logger_;
+}
+
 }  // namespace offline_pages

@@ -14,6 +14,7 @@
 #include "content/public/browser/web_ui_message_handler.h"
 
 namespace offline_pages {
+class PrefetchService;
 enum class GetRequestsResult;
 }
 
@@ -47,7 +48,10 @@ class OfflineInternalsUIMessageHandler : public content::WebUIMessageHandler {
   // Set whether to record request queue events.
   void HandleSetRecordRequestQueue(const base::ListValue* args);
 
-  // Load both Page Model and Request Queue event logs.
+  // Set whether to record prefetch service events.
+  void HandleSetRecordPrefetchService(const base::ListValue* args);
+
+  // Load all offline services' event logs.
   void HandleGetEventLogs(const base::ListValue* args);
 
   // Load whether logs are being recorded.
@@ -101,6 +105,9 @@ class OfflineInternalsUIMessageHandler : public content::WebUIMessageHandler {
 
   // Request coordinator for background offline actions.
   offline_pages::RequestCoordinator* request_coordinator_;
+
+  // Prefetch service for prefetching service logs and actions.
+  offline_pages::PrefetchService* prefetch_service_;
 
   // Factory for creating references in callbacks.
   base::WeakPtrFactory<OfflineInternalsUIMessageHandler> weak_ptr_factory_;
