@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bf48983_858e155b",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-06-07T23:52:14Z",
+      "side": 1,
+      "message": "can this be shared with the renderer code? i.e. put it in somewhere in content/common?",
+      "range": {
+        "startLine": 964,
+        "startChar": 18,
+        "endLine": 964,
+        "endChar": 43
+      },
+      "revId": "91649080a0a07f11de8f8dc85b422eee7d4263d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
