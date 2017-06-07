@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c3877ed5_381c8d6b",
+        "filename": "third_party/WebKit/Source/core/dom/AnimationWorkletProxyClient.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-06-07T15:14:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac41c9f7_0d87e2d9",
+      "revId": "8a48912f0dd2a6c469d91286b01d70e6909b8400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d0d5a09_bbe2acc8",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorklet.cpp",
         "patchSetId": 8
