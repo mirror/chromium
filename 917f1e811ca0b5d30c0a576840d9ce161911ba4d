@@ -16,6 +16,24 @@
       "revId": "917f1e811ca0b5d30c0a576840d9ce161911ba4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7e90e02_fd534b0a",
+        "filename": "remoting/host/it2me/it2me_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-07T23:23:07Z",
+      "side": 1,
+      "message": "Added test here and for the NM host.",
+      "parentUuid": "059bcea9_5603a247",
+      "revId": "917f1e811ca0b5d30c0a576840d9ce161911ba4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
