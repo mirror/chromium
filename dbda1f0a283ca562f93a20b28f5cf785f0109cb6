@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d973b96_c32a4a12",
+        "filename": "cc/input/single_scrollbar_animation_controller_thinning.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-07T17:34:07Z",
+      "side": 1,
+      "message": "It seems nice to let DistanceToScrollbarPart be a const function with no side effects.  Do you think the update could happen in DidMouseMove or even in LayerTreeHostImpl\u0027s hit testing code?  Just wondering if there\u0027s a more logical place.",
+      "revId": "dbda1f0a283ca562f93a20b28f5cf785f0109cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
