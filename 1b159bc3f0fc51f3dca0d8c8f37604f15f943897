@@ -46,6 +46,30 @@
       "revId": "1b159bc3f0fc51f3dca0d8c8f37604f15f943897",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40f2fdaf_c23103c1",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 2134,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-07T06:31:13Z",
+      "side": 1,
+      "message": "Checking for Layout is still required.  I think the best check is:\n\nif (!GetLayoutViewItem().IsNull() \u0026\u0026 frame_-\u003eGetDocument()-\u003eIsActive())\n\nif LayoutViewItem is non-null, then Document must also be non-null, so no need to explicitly check if document exists.",
+      "parentUuid": "c313f205_d3ab743a",
+      "range": {
+        "startLine": 2134,
+        "startChar": 6,
+        "endLine": 2134,
+        "endChar": 27
+      },
+      "revId": "1b159bc3f0fc51f3dca0d8c8f37604f15f943897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
