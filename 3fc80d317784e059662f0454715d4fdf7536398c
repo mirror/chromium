@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af9c485c_2d4b510c",
+        "filename": "ios/chrome/browser/ui/payments/cells/page_info_item.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-07T15:41:18Z",
+      "side": 1,
+      "message": "Can you use UILayoutPriorityDefaultLow/High/Required instead as appropriate?",
+      "range": {
+        "startLine": 139,
+        "startChar": 48,
+        "endLine": 139,
+        "endChar": 51
+      },
+      "revId": "3fc80d317784e059662f0454715d4fdf7536398c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1ebde01_822598a8",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-07T15:41:18Z",
+      "side": 1,
+      "message": "@property(nonatomic, weak)\nwith ARC, assign shouldn\u0027t be used for objective-C objects.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 28
+      },
+      "revId": "3fc80d317784e059662f0454715d4fdf7536398c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad95336e_d48ee3bf",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-07T15:41:18Z",
+      "side": 1,
+      "message": "Please make sure we don\u0027t need to display the lock icon for cryptographic schemes other than Https.",
+      "range": {
+        "startLine": 455,
+        "startChar": 54,
+        "endLine": 455,
+        "endChar": 71
+      },
+      "revId": "3fc80d317784e059662f0454715d4fdf7536398c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0153050f_1e9ae81f",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-07T15:41:18Z",
+      "side": 1,
+      "message": "Avoid dependency to BrowserViewControllerDependencyFactory if possible.",
+      "range": {
+        "startLine": 638,
+        "startChar": 8,
+        "endLine": 638,
+        "endChar": 46
+      },
+      "revId": "3fc80d317784e059662f0454715d4fdf7536398c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3a5875_81113b08",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-07T15:41:18Z",
+      "side": 1,
+      "message": "Could you pass in the TabModel as an initializer argument and create an toolbarModelIOS instance in -init and keep as a member variable? That way calls to -webStateContentIsSecureHTML should be cheaper. Also, the property definition can be moved to the implementation file.",
+      "range": {
+        "startLine": 643,
+        "startChar": 2,
+        "endLine": 643,
+        "endChar": 51
+      },
+      "revId": "3fc80d317784e059662f0454715d4fdf7536398c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
