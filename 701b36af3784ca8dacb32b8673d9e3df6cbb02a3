@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59532b2b_c99c0287",
+        "filename": "mojo/public/cpp/bindings/binding.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-07T20:47:39Z",
+      "side": 1,
+      "message": "Please also point out that the returned callback must be called from the Binding\u0027s own thread. (this is not true of the one returned by mojo::GetBadMessageCallback.)",
+      "revId": "701b36af3784ca8dacb32b8673d9e3df6cbb02a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea7e7262_ac373c6a",
+        "filename": "mojo/public/cpp/bindings/binding_set.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-07T20:47:39Z",
+      "side": 1,
+      "message": "Please also point out that the returned callback must be called from the BindingSet\u0027s own thread.",
+      "revId": "701b36af3784ca8dacb32b8673d9e3df6cbb02a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
