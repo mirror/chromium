@@ -145,8 +145,8 @@ bool DesktopCaptureChooseDesktopMediaFunctionBase::Execute(
     // Create a screens list.
     if (show_screens) {
 #if defined(USE_ASH)
-      screen_list =
-          base::MakeUnique<DesktopMediaListAsh>(DesktopMediaListAsh::SCREENS);
+      screen_list = base::MakeUnique<DesktopMediaListAsh>(
+          content::DesktopMediaID::TYPE_SCREEN);
 #endif
       if (!screen_list) {
         webrtc::DesktopCaptureOptions options =
@@ -163,8 +163,8 @@ bool DesktopCaptureChooseDesktopMediaFunctionBase::Execute(
     // Create a windows list.
     if (show_windows) {
 #if defined(USE_ASH)
-      window_list =
-          base::MakeUnique<DesktopMediaListAsh>(DesktopMediaListAsh::WINDOWS);
+      window_list = base::MakeUnique<DesktopMediaListAsh>(
+          content::DesktopMediaID::TYPE_WINDOW);
 #endif
       if (!window_list) {
         webrtc::DesktopCaptureOptions options =
