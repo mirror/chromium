@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 
 import org.chromium.base.DiscardableReferencePool;
 import org.chromium.chrome.browser.NativePageHost;
+import org.chromium.chrome.browser.download.ui.ThumbnailProvider;
+import org.chromium.chrome.browser.download.ui.ThumbnailProviderImpl;
 import org.chromium.chrome.browser.favicon.FaviconHelper;
 import org.chromium.chrome.browser.favicon.FaviconHelper.FaviconImageCallback;
 import org.chromium.chrome.browser.favicon.FaviconHelper.IconAvailabilityCallback;
@@ -28,6 +30,7 @@ public class SuggestionsUiDelegateImpl implements SuggestionsUiDelegate {
     private final SuggestionsRanker mSuggestionsRanker;
     private final SuggestionsEventReporter mSuggestionsEventReporter;
     private final SuggestionsNavigationDelegate mSuggestionsNavigationDelegate;
+    private final ThumbnailProvider mThumbnailProvider;
 
     private final Profile mProfile;
 
@@ -48,6 +51,7 @@ public class SuggestionsUiDelegateImpl implements SuggestionsUiDelegate {
         mSuggestionsRanker = new SuggestionsRanker();
         mSuggestionsEventReporter = eventReporter;
         mSuggestionsNavigationDelegate = navigationDelegate;
+        mThumbnailProvider = new ThumbnailProviderImpl();
 
         mProfile = profile;
         mHost = host;
@@ -98,6 +102,11 @@ public class SuggestionsUiDelegateImpl implements SuggestionsUiDelegate {
     @Override
     public SuggestionsNavigationDelegate getNavigationDelegate() {
         return mSuggestionsNavigationDelegate;
+    }
+
+    @Override
+    public ThumbnailProvider getThumbnailProvider() {
+        return mThumbnailProvider;
     }
 
     @Override

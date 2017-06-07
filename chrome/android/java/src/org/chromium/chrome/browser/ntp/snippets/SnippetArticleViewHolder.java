@@ -25,13 +25,13 @@ import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.download.DownloadUtils;
 import org.chromium.chrome.browser.download.ui.DownloadFilter;
 import org.chromium.chrome.browser.download.ui.ThumbnailProvider;
-import org.chromium.chrome.browser.download.ui.ThumbnailProviderImpl;
 import org.chromium.chrome.browser.favicon.FaviconHelper.FaviconImageCallback;
 import org.chromium.chrome.browser.favicon.FaviconHelper.IconAvailabilityCallback;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
@@ -70,7 +70,9 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
             REFRESH_OFFLINE_BADGE_VISIBILITY_CALLBACK = new RefreshOfflineBadgeVisibilityCallback();
 
     private static final String ARTICLE_AGE_FORMAT_STRING = " - %s";
-    private static final int FADE_IN_ANIMATION_TIME_MS = 300;
+
+    @VisibleForTesting
+    static final int FADE_IN_ANIMATION_TIME_MS = 300;
     private static final int[] FAVICON_SERVICE_SUPPORTED_SIZES = {16, 24, 32, 48, 64};
     private static final String FAVICON_SERVICE_FORMAT =
             "https://s2.googleusercontent.com/s2/favicons?domain=%s&src=chrome_newtab_mobile&sz=%d&alt=404";
@@ -122,6 +124,7 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
 
         mUiDelegate = uiDelegate;
         mUiConfig = uiConfig;
+        mThumbnailProvider = uiDelegate.getThumbnailProvider();
 
         mThumbnailView = (TintedImageView) itemView.findViewById(R.id.article_thumbnail);
         mThumbnailSize =
@@ -140,9 +143,6 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
 
         mIconBackgroundColor = DownloadUtils.getIconBackgroundColor(parent.getContext());
         mIconForegroundColorList = DownloadUtils.getIconForegroundColorList(parent.getContext());
-
-        // TODO(bauerb): Share ThumbnailProvider between instances
-        mThumbnailProvider = new ThumbnailProviderImpl(mThumbnailSize);
 
         new ImpressionTracker(itemView, this);
         new DisplayStyleObserverAdapter(itemView, uiConfig, new DisplayStyleObserver() {
@@ -372,16 +372,9 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
             // For image downloads, attempt to fetch a thumbnail.
             cancelImageFetch();
             mImageCallback = new FetchImageCallback(this, mArticle, THUMBNAIL_SOURCE_DOWNLOAD);
-            mDownloadThumbnailCallback = new ThumbnailCallback(mImageCallback, mArticle);
-            Bitmap thumbnail = mThumbnailProvider.getThumbnail(mDownloadThumbnailCallback);
-            if (thumbnail != null) {
-                // If there is already a thumbnail available, use it immediately, otherwise fall
-                // through to using the default icon for the type. Once the thumbnail is fetched
-                // it will be faded in.
-                mArticle.setThumbnailBitmap(mUiDelegate.getReferencePool().put(thumbnail));
-                setThumbnailFromBitmap(thumbnail);
-                return;
-            }
+            mDownloadThumbnailCallback =
+                    new ThumbnailCallback(mImageCallback, mArticle, mThumbnailSize);
+            mThumbnailProvider.getThumbnail(mDownloadThumbnailCallback);
         }
         setThumbnailFromFileType(fileType);
     }
@@ -605,13 +598,16 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
     private static class ThumbnailCallback implements ThumbnailProvider.ThumbnailRequest {
         private final SnippetArticle mSnippet;
         private final FetchImageCallback mCallback;
+        private final int mIconSize;
 
-        public ThumbnailCallback(FetchImageCallback callback, SnippetArticle snippet) {
+        public ThumbnailCallback(
+                FetchImageCallback callback, SnippetArticle snippet, int iconSize) {
             assert snippet != null;
             assert callback != null;
 
             mSnippet = snippet;
             mCallback = callback;
+            mIconSize = iconSize;
         }
 
         @Override
@@ -627,6 +623,11 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
             if (thumbnail.getWidth() <= 0 || thumbnail.getHeight() <= 0) return;
 
             mCallback.onResult(thumbnail);
+        }
+
+        @Override
+        public int getIconSize() {
+            return mIconSize;
         }
     }
 

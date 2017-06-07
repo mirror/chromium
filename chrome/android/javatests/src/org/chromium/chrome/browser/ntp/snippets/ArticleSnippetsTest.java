@@ -9,10 +9,12 @@ import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
+import android.text.format.DateUtils;
 import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,12 +25,17 @@ import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.RetryOnFailure;
+import org.chromium.base.test.util.UrlUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
+import org.chromium.chrome.browser.download.ui.ThumbnailProvider;
+import org.chromium.chrome.browser.download.ui.ThumbnailProvider.ThumbnailRequest;
 import org.chromium.chrome.browser.favicon.FaviconHelper.FaviconImageCallback;
 import org.chromium.chrome.browser.favicon.FaviconHelper.IconAvailabilityCallback;
 import org.chromium.chrome.browser.favicon.LargeIconBridge.LargeIconCallback;
+import org.chromium.chrome.browser.ntp.ContextMenuManager;
+import org.chromium.chrome.browser.ntp.ContextMenuManager.TouchEnabledDelegate;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageAdapter;
 import org.chromium.chrome.browser.ntp.cards.SuggestionsCategoryInfo;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
@@ -50,7 +57,10 @@ import org.chromium.chrome.test.util.browser.suggestions.DummySuggestionsEventRe
 import org.chromium.chrome.test.util.browser.suggestions.FakeSuggestionsSource;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Tests for the appearance of Article Snippets.
@@ -72,7 +82,11 @@ public class ArticleSnippetsTest {
     private NewTabPageAdapter mAdapter;
 
     private FrameLayout mContentView;
+    private SnippetArticleViewHolder mSuggestion;
+
     private UiConfig mUiConfig;
+
+    private MockThumbnailProvider mThumbnailProvider;
 
     @Test
     @MediumTest
@@ -139,6 +153,71 @@ public class ArticleSnippetsTest {
         mRenderTestRule.render(mRecyclerView, "snippets_narrow");
     }
 
+    @Test
+    @MediumTest
+    @Feature({"ArticleSnippets", "RenderTest"})
+    public void testDownloadSuggestion() throws IOException, InterruptedException {
+        final String filePath =
+                UrlUtils.getIsolatedTestFilePath("chrome/test/data/android/capybara.jpg");
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mContentView = new FrameLayout(mActivityTestRule.getActivity());
+                mUiConfig = new UiConfig(mContentView);
+
+                mActivityTestRule.getActivity().setContentView(mContentView);
+
+                mRecyclerView = new SuggestionsRecyclerView(mActivityTestRule.getActivity());
+                TouchEnabledDelegate touchEnabledDelegate = new TouchEnabledDelegate() {
+                    @Override
+                    public void setTouchEnabled(boolean enabled) {
+                        mRecyclerView.setTouchEnabled(enabled);
+                    }
+                };
+                ContextMenuManager contextMenuManager =
+                        new ContextMenuManager(mActivityTestRule.getActivity(),
+                                mUiDelegate.getNavigationDelegate(), touchEnabledDelegate);
+                mRecyclerView.init(mUiConfig, contextMenuManager, mAdapter);
+
+                mSuggestion = new SnippetArticleViewHolder(
+                        mRecyclerView, /* contextMenuManager = */ null, mUiDelegate, mUiConfig);
+
+                long timestamp = System.currentTimeMillis() - 5 * DateUtils.MINUTE_IN_MILLIS;
+
+                SnippetArticle download = new SnippetArticle(KnownCategories.DOWNLOADS, "id1",
+                        "test_image.jpg", "example.com", null, "http://example.com", timestamp, 10f,
+                        timestamp);
+                download.setAssetDownloadData("asdf", filePath, "image/jpeg");
+                SuggestionsCategoryInfo categoryInfo =
+                        new SuggestionsCategoryInfo(KnownCategories.DOWNLOADS, "Downloads",
+                                ContentSuggestionsCardLayout.FULL_CARD,
+                                ContentSuggestionsAdditionalAction.NONE,
+                                /* show_if_empty = */ true, "No suggestions");
+                mSuggestion.onBindViewHolder(download, categoryInfo);
+                mContentView.addView(mSuggestion.itemView);
+            }
+        });
+
+        mRenderTestRule.render(mSuggestion.itemView, "download_snippet_placeholder");
+
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
+        List<ThumbnailRequest> requests = mThumbnailProvider.getRequests();
+        Assert.assertEquals(1, requests.size());
+        final ThumbnailRequest request = requests.get(0);
+        Assert.assertEquals(filePath, request.getFilePath());
+
+        final Bitmap thumbnail = BitmapFactory.decodeFile(filePath);
+
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mThumbnailProvider.fulfillRequest(request, thumbnail);
+            }
+        });
+        Thread.sleep(SnippetArticleViewHolder.FADE_IN_ANIMATION_TIME_MS); // XXX
+        mRenderTestRule.render(mSuggestion.itemView, "download_snippet_thumbnail");
+    }
+
     private void setupTestData() {
         @CategoryInt
         int fullCategory = 0;
@@ -201,7 +280,43 @@ public class ArticleSnippetsTest {
     public void setUp() throws Exception {
         mActivityTestRule.startMainActivityOnBlankPage();
         mUiDelegate = new MockUiDelegate();
+        mThumbnailProvider = new MockThumbnailProvider();
         mSnippetsSource = new FakeSuggestionsSource();
+        Bitmap favicon = BitmapFactory.decodeResource(
+                mActivityTestRule.getActivity().getResources(), R.drawable.star_green);
+        mSnippetsSource.setDefaultFavicon(favicon);
+    }
+
+    /**
+     * A SuggestionsUiDelegate to initialize our Adapter.
+     */
+    private static class MockThumbnailProvider implements ThumbnailProvider {
+        private final List<ThumbnailRequest> mRequests = new ArrayList<>();
+
+        public List<ThumbnailRequest> getRequests() {
+            return mRequests;
+        }
+
+        public void fulfillRequest(ThumbnailRequest request, Bitmap bitmap) {
+            cancelRetrieval(request);
+            request.onThumbnailRetrieved(request.getFilePath(), bitmap);
+        }
+
+        @Override
+        public void destroy() {}
+
+        @Override
+        public void getThumbnail(ThumbnailRequest request) {
+            mRequests.add(request);
+        }
+
+        @Override
+        public void cancelRetrieval(ThumbnailRequest request) {
+            boolean removed = mRequests.remove(request);
+            Assert.assertTrue(
+                    String.format(Locale.US, "Request for '%s' not found", request.getFilePath()),
+                    removed);
+        }
     }
 
     /**
@@ -254,6 +369,11 @@ public class ArticleSnippetsTest {
         @Override
         public DiscardableReferencePool getReferencePool() {
             return mReferencePool;
+        }
+
+        @Override
+        public ThumbnailProvider getThumbnailProvider() {
+            return mThumbnailProvider;
         }
 
         @Override
