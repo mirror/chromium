@@ -9,6 +9,7 @@
 #include "base/base64.h"
 #include "base/json/json_writer.h"
 #include "content/public/test/browser_test.h"
+#include "headless/lib/browser/headless_web_contents_impl.h"
 #include "headless/public/devtools/domains/page.h"
 #include "headless/public/devtools/domains/runtime.h"
 #include "headless/public/devtools/domains/security.h"
@@ -39,6 +40,24 @@ using testing::UnorderedElementsAre;
 
 namespace headless {
 
+#define EXPECT_CHILD_CONTENTS_CREATED(obs)                                    \
+  EXPECT_CALL((obs), OnChildContentsCreated(::testing::_, ::testing::_))      \
+      .WillOnce(::testing::DoAll(::testing::SaveArg<0>(&((obs).last_parent)), \
+                                 ::testing::SaveArg<1>(&((obs).last_child))))
+
+class MockHeadlessBrowserContextObserver
+    : public HeadlessBrowserContext::Observer {
+ public:
+  MOCK_METHOD2(OnChildContentsCreated,
+               void(HeadlessWebContents*, HeadlessWebContents*));
+
+  MockHeadlessBrowserContextObserver() {}
+  virtual ~MockHeadlessBrowserContextObserver() {}
+
+  HeadlessWebContents* last_parent;
+  HeadlessWebContents* last_child;
+};
+
 class HeadlessWebContentsTest : public HeadlessBrowserTest {};
 
 IN_PROC_BROWSER_TEST_F(HeadlessWebContentsTest, Navigation) {
@@ -63,6 +82,10 @@ IN_PROC_BROWSER_TEST_F(HeadlessWebContentsTest, WindowOpen) {
   HeadlessBrowserContext* browser_context =
       browser()->CreateBrowserContextBuilder().Build();
 
+  MockHeadlessBrowserContextObserver observer;
+  browser_context->AddObserver(&observer);
+  EXPECT_CHILD_CONTENTS_CREATED(observer);
+
   HeadlessWebContents* web_contents =
       browser_context->CreateWebContentsBuilder()
           .SetInitialURL(embedded_test_server()->GetURL("/window_open.html"))
@@ -71,6 +94,16 @@ IN_PROC_BROWSER_TEST_F(HeadlessWebContentsTest, WindowOpen) {
 
   EXPECT_EQ(static_cast<size_t>(2),
             browser_context->GetAllWebContents().size());
+
+  auto* parent = HeadlessWebContentsImpl::From(observer.last_parent);
+  auto* child = HeadlessWebContentsImpl::From(observer.last_child);
+  EXPECT_NE(nullptr, parent);
+  EXPECT_NE(nullptr, child);
+  EXPECT_NE(parent, child);
+
+  // Mac doesn't have WindowTreeHosts.
+  if (parent && child && parent->window_tree_host())
+    EXPECT_NE(parent->window_tree_host(), child->window_tree_host());
 }
 
 IN_PROC_BROWSER_TEST_F(HeadlessWebContentsTest, Focus) {
