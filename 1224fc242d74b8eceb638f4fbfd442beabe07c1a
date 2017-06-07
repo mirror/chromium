@@ -52,6 +52,24 @@
       "revId": "1224fc242d74b8eceb638f4fbfd442beabe07c1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "211b602e_adda051d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-07T10:40:52Z",
+      "side": 1,
+      "message": "I take that as a 2nd vote for somehow ensuring those tasks are very lightweight.\n\n- Should this be done here, or somewhere higher up (maybe for all HIGH_PRIORITY tasks, or something)?\n- If here, how would I do it?\n\nAlso, I\u0027ll try to get some numbers on how long my control tasks actually take.",
+      "parentUuid": "6e244d4f_459acdc7",
+      "revId": "1224fc242d74b8eceb638f4fbfd442beabe07c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
