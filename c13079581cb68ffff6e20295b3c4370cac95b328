@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e400f02_ef9b779d",
+        "filename": "content/browser/android/browser_jni_registrar.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-07T23:33:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "038c7e90_9feace05",
+      "revId": "c13079581cb68ffff6e20295b3c4370cac95b328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8517f793_e0e10e4a",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.h",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "c13079581cb68ffff6e20295b3c4370cac95b328",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80991af2_bb806386",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-07T23:33:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8517f793_e0e10e4a",
+      "revId": "c13079581cb68ffff6e20295b3c4370cac95b328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "554846a2_9d33fb9f",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-07T23:33:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3808a793_73cd22d6",
+      "revId": "c13079581cb68ffff6e20295b3c4370cac95b328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3068dbc_f340a208",
         "filename": "ui/android/view_android.h",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-07T19:01:48Z",
       "side": 1,
       "message": "this has nothing to do with the view tree, previous way of having embedder set this value seems fine?",
+      "revId": "c13079581cb68ffff6e20295b3c4370cac95b328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f19e5c_06eeb541",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-07T23:33:57Z",
+      "side": 1,
+      "message": "Passed the flag to WebContentsAccessibility instead. The value stays constant per embedder, so doesn\u0027t have to be queried on Java layer for each occasion.",
+      "parentUuid": "d3068dbc_f340a208",
       "revId": "c13079581cb68ffff6e20295b3c4370cac95b328",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72d08c55_a8162745",
+        "filename": "content/browser/android/content_view_core_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1121,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-07T23:33:57Z",
+      "side": 0,
+      "message": "dmazzoni@: I have a question on how disabling accessibility mode works before this CL. The only situation where the native accessibility mode gets flipped back from _enabled_ to _disabled_ state is RenderViewHost swapping (ContentViewCoreImpl::RenderViewHostChanged() -\u003e SetAccessibilityEnabledInternal() here) for a WebContents that hasn\u0027t got its browser accessibility triggered yet via ContentViewCore.getAccessibilityNodeProvider(). \n\nI wonder if this \u0027else\u0027 part is necessary since the native accessibility will turn on again by the request from Android framework through Java layer right away. Even if the WebContents goes away without turning on the mode, accessibility events that may come from renderer side in the meantime will be ignored due to lack of WebContentsAccessibility instance anyway - so I think there\u0027s no side effect even if it is not invoked.\n\nPlease let me know this makes sense. I\u0027ll either remove this part or revive the flow that calls it in the situation above.",
+      "revId": "a4430857991cdb2b974bd99c565ff8713b48e3ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
