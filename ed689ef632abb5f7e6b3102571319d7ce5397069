@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a0f331e_9fd2dc4a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/Object.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-07T21:20:17Z",
+      "side": 1,
+      "message": "I use a template to only show that return and condition function are the same, I do not expect people to actually use the template unless they want.",
+      "revId": "ed689ef632abb5f7e6b3102571319d7ce5397069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
