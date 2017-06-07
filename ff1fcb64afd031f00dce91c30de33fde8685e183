@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "beab06b1_84443cfd",
+        "filename": "content/browser/dom_storage/dom_storage_context_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-07T23:46:13Z",
+      "side": 1,
+      "message": "I am not very familiar with this code. Isn\u0027t mojo_state_ associated with a single renderer / gpu process? If so, we should have one instance per process and it should go away once the process dies. So, it doesn\u0027t wait till browser shutdown. I am assuming the service still runs on browser process.",
+      "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60b5a9c2_06c5856c",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-07T23:46:13Z",
+      "side": 1,
+      "message": "Is there any reason why you aren\u0027t doing the registration at the constructor?",
+      "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "670a4a8b_048032e0",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-07T23:46:13Z",
+      "side": 1,
+      "message": "What does this TODO mean? can you please explain?",
+      "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26902f8a_39238f2b",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-07T23:46:13Z",
+      "side": 1,
+      "message": "Is it possible to have both implementations in the same instance? Ie, will the old code also create dumps with name \"dom_storage/...\"",
+      "range": {
+        "startLine": 373,
+        "startChar": 28,
+        "endLine": 373,
+        "endChar": 39
+      },
+      "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "201ac850_4a54b62a",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-07T23:46:13Z",
+      "side": 1,
+      "message": "this include isn\u0027t needed. Please forward declare ProcessMemoryDump?",
+      "range": {
+        "startLine": 17,
+        "startChar": 27,
+        "endLine": 17,
+        "endChar": 47
+      },
+      "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
