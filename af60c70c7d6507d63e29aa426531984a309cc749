@@ -22,6 +22,30 @@
       "revId": "af60c70c7d6507d63e29aa426531984a309cc749",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26144d88_a55c2127",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-07T17:17:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc0d10dc_afc7dc0b",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 39
+      },
+      "revId": "af60c70c7d6507d63e29aa426531984a309cc749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
