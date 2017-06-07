@@ -47,7 +47,7 @@ public class PaymentRequestFailCompleteTest implements MainActivityStartCallback
                 "US", "310-310-6000", "jon.doe@gmail.com", "en-US"));
         helper.setCreditCard(new CreditCard("", "https://example.com", true, true, "Jon Doe",
                 "4111111111111111", "1111", "12", "2050", "visa", R.drawable.visa_card,
-                billingAddressId, "" /* serverId */));
+                CreditCard.CARD_TYPE_UNKNOWN, billingAddressId, "" /* serverId */));
     }
 
     @Test

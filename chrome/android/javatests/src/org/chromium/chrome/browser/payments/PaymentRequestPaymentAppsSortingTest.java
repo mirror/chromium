@@ -56,7 +56,7 @@ public class PaymentRequestPaymentAppsSortingTest implements MainActivityStartCa
         // behind non-autofill payment instruments in payment request.
         helper.setCreditCard(new CreditCard("", "https://example.com", true, true, "Jon Doe",
                 "4111111111111111", "", "12", "2050", "visa", R.drawable.visa_card,
-                billingAddressId, "" /* serverId */));
+                CreditCard.CARD_TYPE_UNKNOWN, billingAddressId, "" /* serverId */));
     }
 
     @Test

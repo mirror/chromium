@@ -35,7 +35,7 @@ void* UserDataKey() {
   return reinterpret_cast<void*>(&user_data_key);
 }
 
-const char* CardTypeFromWalletCardType(
+const char* CardNetworkFromWalletCardType(
     sync_pb::WalletMaskedCreditCard::WalletCardType type) {
   switch (type) {
     case sync_pb::WalletMaskedCreditCard::AMEX:
@@ -60,6 +60,23 @@ const char* CardTypeFromWalletCardType(
   }
 }
 
+CreditCard::CardType CardTypeFromWalletCardClass(
+    sync_pb::WalletMaskedCreditCard::WalletCardClass card_class) {
+  switch (card_class) {
+    case sync_pb::WalletMaskedCreditCard::UNKNOWN_CARD_CLASS:
+      return CreditCard::CARD_TYPE_UNKNOWN;
+    case sync_pb::WalletMaskedCreditCard::CREDIT:
+      return CreditCard::CARD_TYPE_CREDIT;
+    case sync_pb::WalletMaskedCreditCard::DEBIT:
+      return CreditCard::CARD_TYPE_DEBIT;
+    case sync_pb::WalletMaskedCreditCard::PREPAID:
+      return CreditCard::CARD_TYPE_PREPAID;
+    default:
+      NOTREACHED();
+      return CreditCard::CARD_TYPE_UNKNOWN;
+  }
+}
+
 CreditCard::ServerStatus ServerToLocalStatus(
     sync_pb::WalletMaskedCreditCard::WalletCardStatus status) {
   switch (status) {
@@ -76,7 +93,8 @@ CreditCard CardFromSpecifics(const sync_pb::WalletMaskedCreditCard& card) {
   CreditCard result(CreditCard::MASKED_SERVER_CARD, card.id());
   result.SetNumber(base::UTF8ToUTF16(card.last_four()));
   result.SetServerStatus(ServerToLocalStatus(card.status()));
-  result.SetNetworkForMaskedCard(CardTypeFromWalletCardType(card.type()));
+  result.SetNetworkForMaskedCard(CardNetworkFromWalletCardType(card.type()));
+  result.set_card_type(CardTypeFromWalletCardClass(card.card_class()));
   result.SetRawInfo(CREDIT_CARD_NAME_FULL,
                     base::UTF8ToUTF16(card.name_on_card()));
   result.SetExpirationMonth(card.exp_month());

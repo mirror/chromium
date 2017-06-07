@@ -46,6 +46,14 @@ class CreditCard : public AutofillDataModel {
     OK,
   };
 
+  // The type of the card. Known only for server cards.
+  enum CardType : int {
+    CARD_TYPE_UNKNOWN,
+    CARD_TYPE_CREDIT,
+    CARD_TYPE_DEBIT,
+    CARD_TYPE_PREPAID,
+  };
+
   CreditCard(const std::string& guid, const std::string& origin);
 
   // Creates a server card.  The type must be MASKED_SERVER_CARD or
@@ -147,6 +155,11 @@ class CreditCard : public AutofillDataModel {
   RecordType record_type() const { return record_type_; }
   void set_record_type(RecordType rt) { record_type_ = rt; }
 
+  // Whether this is a credit, debit, or prepaid card. Known only for server
+  // cards.
+  CardType card_type() const { return card_type_; }
+  void set_card_type(CardType card_type) { card_type_ = card_type; }
+
   // Returns true if there are no values (field types) set.
   bool IsEmpty(const std::string& app_locale) const;
 
@@ -237,6 +250,7 @@ class CreditCard : public AutofillDataModel {
 
   // See enum definition above.
   RecordType record_type_;
+  CardType card_type_;
 
   // The card number. For MASKED_SERVER_CARDs, this number will just contain the
   // last four digits of the card number.
@@ -280,6 +294,6 @@ extern const char kMirCard[];
 extern const char kUnionPay[];
 extern const char kVisaCard[];
 
-}  // namespace autofill
+}  // NAMESPAce autofill
 
 #endif  // COMPONENTS_AUTOFILL_CORE_BROWSER_CREDIT_CARD_H_

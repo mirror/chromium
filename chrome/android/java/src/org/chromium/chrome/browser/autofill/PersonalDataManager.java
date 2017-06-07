@@ -351,8 +351,21 @@ public class PersonalDataManager {
      * Autofill credit card information.
      */
     public static class CreditCard {
+        /** Unknown card type. Must be kept in sync with credit_card.h */
+        public static final int CARD_TYPE_UNKNOWN = 0;
+
+        /** Credit card type. Must be kept in sync with credit_card.h */
+        public static final int CARD_TYPE_CREDIT = 1;
+
+        /** Debit card type. Must be kept in sync with credit_card.h */
+        public static final int CARD_TYPE_DEBIT = 2;
+
+        /** Prepaid card type. Must be kept in sync with credit_card.h */
+        public static final int CARD_TYPE_PREPAID = 3;
+
         // Note that while some of these fields are numbers, they're predominantly read,
-        // marshaled and compared as strings. To save conversions, we use strings everywhere.
+        // marshaled and compared as strings. To save conversions, we sometimes use strings.
+        private final int mCardType;
         private String mGUID;
         private String mOrigin;
         private boolean mIsLocal;
@@ -370,17 +383,18 @@ public class PersonalDataManager {
         @CalledByNative("CreditCard")
         public static CreditCard create(String guid, String origin, boolean isLocal,
                 boolean isCached, String name, String number, String obfuscatedNumber, String month,
-                String year, String basicCardIssuerNetwork, int enumeratedIconId,
+                String year, String basicCardIssuerNetwork, int enumeratedIconId, int cardType,
                 String billingAddressId, String serverId) {
             return new CreditCard(guid, origin, isLocal, isCached, name, number, obfuscatedNumber,
                     month, year, basicCardIssuerNetwork,
-                    ResourceId.mapToDrawableId(enumeratedIconId), billingAddressId, serverId);
+                    ResourceId.mapToDrawableId(enumeratedIconId), cardType, billingAddressId,
+                    serverId);
         }
 
         public CreditCard(String guid, String origin, boolean isLocal, boolean isCached,
                 String name, String number, String obfuscatedNumber, String month, String year,
-                String basicCardIssuerNetwork, int issuerIconDrawableId, String billingAddressId,
-                String serverId) {
+                String basicCardIssuerNetwork, int issuerIconDrawableId, int cardType,
+                String billingAddressId, String serverId) {
             mGUID = guid;
             mOrigin = origin;
             mIsLocal = isLocal;
@@ -392,6 +406,7 @@ public class PersonalDataManager {
             mYear = year;
             mBasicCardIssuerNetwork = basicCardIssuerNetwork;
             mIssuerIconDrawableId = issuerIconDrawableId;
+            mCardType = cardType;
             mBillingAddressId = billingAddressId;
             mServerId = serverId;
         }
@@ -401,7 +416,7 @@ public class PersonalDataManager {
                     true /* isLocal */, false /* isCached */, "" /* name */, "" /* number */,
                     "" /* obfuscatedNumber */, "" /* month */, "" /* year */,
                     "" /* basicCardIssuerNetwork */, 0 /* issuerIconDrawableId */,
-                    "" /* billingAddressId */, "" /* serverId */);
+                    CARD_TYPE_UNKNOWN, "" /* billingAddressId */, "" /* serverId */);
         }
 
         /** TODO(estade): remove this constructor. */
@@ -410,7 +425,8 @@ public class PersonalDataManager {
                 String obfuscatedNumber, String month, String year) {
             this(guid, origin, true /* isLocal */, false /* isCached */, name, number,
                     obfuscatedNumber, month, year, "" /* basicCardIssuerNetwork */,
-                    0 /* issuerIconDrawableId */, "" /* billingAddressId */, "" /* serverId */);
+                    0 /* issuerIconDrawableId */, CARD_TYPE_UNKNOWN, "" /* billingAddressId */,
+                    "" /* serverId */);
         }
 
         @CalledByNative("CreditCard")
@@ -470,6 +486,11 @@ public class PersonalDataManager {
 
         public int getIssuerIconDrawableId() {
             return mIssuerIconDrawableId;
+        }
+
+        @CalledByNative("CreditCard")
+        public int getCardType() {
+            return mCardType;
         }
 
         @CalledByNative("CreditCard")

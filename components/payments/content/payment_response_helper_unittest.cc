@@ -37,7 +37,7 @@ class PaymentResponseHelperTest : public testing::Test,
     visa_card.set_billing_address_id(address_.guid());
     visa_card.set_use_count(5u);
     autofill_instrument_ = base::MakeUnique<AutofillPaymentInstrument>(
-        "visa", visa_card, billing_addresses_, "en-US",
+        "visa", visa_card, /*matches_type=*/true, billing_addresses_, "en-US",
         &test_payment_request_delegate_);
   }
   ~PaymentResponseHelperTest() override {}

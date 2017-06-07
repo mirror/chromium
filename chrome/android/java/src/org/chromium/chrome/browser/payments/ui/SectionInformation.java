@@ -33,6 +33,7 @@ public class SectionInformation {
     protected ArrayList<PaymentOption> mItems;
     private int mSelectedItem;
     public String mErrorMessage;
+    public String mAddditionalText;
 
     /**
      * Builds an empty section without selection.
@@ -207,6 +208,16 @@ public class SectionInformation {
     /** @return The optional error message to display when the selection is invalid. */
     public String getErrorMessage() {
         return mErrorMessage;
+    }
+
+    /** @param msg The optional additional text to display in this section. */
+    public void setAdditionalText(String text) {
+        mAddditionalText = text;
+    }
+
+    /** @return The optional additional text to display in this section. */
+    public String getAdditionalText() {
+        return mAddditionalText;
     }
 
     /**

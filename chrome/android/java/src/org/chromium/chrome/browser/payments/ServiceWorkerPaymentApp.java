@@ -75,4 +75,9 @@ public class ServiceWorkerPaymentApp implements PaymentApp {
     public String getAppIdentifier() {
         return "Chrome_Service_Worker_Payment_App";
     }
+
+    @Override
+    public Integer getAdditionalAppTextResourceIdentifier() {
+        return null;
+    }
 }

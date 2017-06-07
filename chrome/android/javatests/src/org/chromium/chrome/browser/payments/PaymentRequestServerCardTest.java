@@ -48,7 +48,7 @@ public class PaymentRequestServerCardTest implements MainActivityStartCallback {
         helper.addServerCreditCard(new CreditCard("4754d21d-8773-40b6-b4be-5f7486be834f",
                 "https://example.com", false /* isLocal */, true /* isCached */, "Jon Doe",
                 "4111111111111111", "1111", "12", "2050", "visa", R.drawable.visa_card,
-                billingAddressId, "" /* serverId */));
+                CreditCard.CARD_TYPE_UNKNOWN, billingAddressId, "" /* serverId */));
     }
 
     /** Click [PAY] and dismiss the card unmask dialog. */

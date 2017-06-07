@@ -81,7 +81,7 @@ bool PaymentRequestState::CanMakePayment() const {
        available_instruments_) {
     if (instrument->IsValidForCanMakePayment()) {
       // AddAutofillPaymentInstrument() filters out available instruments based
-      // on supported card networks.
+      // on supported card networks (visa, amex) and types (credit, debit).
       DCHECK(spec_->supported_card_networks_set().find(
                  instrument->method_name()) !=
              spec_->supported_card_networks_set().end());
@@ -144,15 +144,23 @@ void PaymentRequestState::AddAutofillPaymentInstrument(
   std::string basic_card_network =
       autofill::data_util::GetPaymentRequestData(card.network())
           .basic_card_issuer_network;
-  if (!spec_->supported_card_networks_set().count(basic_card_network))
+  if (!spec_->supported_card_networks_set().count(basic_card_network) ||
+      !spec_->supported_card_types_set().count(card.card_type())) {
     return;
+  }
+
+  // The total number of card types: credit, debit, prepaid, unknown.
+  constexpr size_t kTotalNumberOfCardTypes = 4U;
+  bool matches_type =
+      card.card_type() != autofill::CreditCard::CARD_TYPE_UNKNOWN ||
+      spec_->supported_card_types_set().size() == kTotalNumberOfCardTypes;
 
   // AutofillPaymentInstrument makes a copy of |card| so it is effectively
   // owned by this object.
   std::unique_ptr<PaymentInstrument> instrument =
       base::MakeUnique<AutofillPaymentInstrument>(
-          basic_card_network, card, shipping_profiles_, app_locale_,
-          payment_request_delegate_);
+          basic_card_network, card, matches_type, shipping_profiles_,
+          app_locale_, payment_request_delegate_);
   available_instruments_.push_back(std::move(instrument));
 
   if (selected)
@@ -293,7 +301,8 @@ void PaymentRequestState::SetDefaultProfileSelections() {
   auto first_complete_instrument =
       std::find_if(instruments.begin(), instruments.end(),
                    [](const std::unique_ptr<PaymentInstrument>& instrument) {
-                     return instrument->IsCompleteForPayment();
+                     return instrument->IsCompleteForPayment() &&
+                            instrument->IsExactlyMatchingMerchantRequest();
                    });
   selected_instrument_ = first_complete_instrument == instruments.end()
                              ? nullptr

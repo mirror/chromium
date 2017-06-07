@@ -738,10 +738,11 @@ public class SyncCustomizationFragmentTest extends SyncTestBase {
             @Override
             public void run() {
                 boolean isLocal = false;
-                PersonalDataManager.getInstance().addServerCreditCardForTest(new CreditCard("",
-                        "https://example.com", isLocal, false, "Jon Doe", "4111111111111111",
-                        "1111", "11", "20", "visa", 0, "" /* billingAddressId */,
-                        "025eb937c022489eb8dc78cbaa969218" /* serverId */));
+                PersonalDataManager.getInstance().addServerCreditCardForTest(
+                        new CreditCard("", "https://example.com", isLocal, false, "Jon Doe",
+                                "4111111111111111", "1111", "11", "20", "visa", 0,
+                                CreditCard.CARD_TYPE_UNKNOWN, "" /* billingAddressId */,
+                                "025eb937c022489eb8dc78cbaa969218" /* serverId */));
             }
         });
     }

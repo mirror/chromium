@@ -163,7 +163,7 @@ class ShippingProfileViewController : public ProfileListViewController,
   }
 
   std::unique_ptr<views::View> CreateHeaderView() override {
-    if (spec()->selected_shipping_option_error().empty())
+    if (!spec()->details().shipping_options.empty())
       return nullptr;
 
     std::unique_ptr<views::View> header_view = base::MakeUnique<views::View>();
@@ -179,22 +179,27 @@ class ShippingProfileViewController : public ProfileListViewController,
         views::BoxLayout::CROSS_AXIS_ALIGNMENT_STRETCH);
     header_view->SetLayoutManager(layout);
 
-    std::unique_ptr<views::ImageView> warning_icon =
-        base::MakeUnique<views::ImageView>();
-    warning_icon->set_can_process_events_within_subtree(false);
-    warning_icon->SetImage(gfx::CreateVectorIcon(
-        ui::kWarningIcon, 16,
-        warning_icon->GetNativeTheme()->GetSystemColor(
-            ui::NativeTheme::kColorId_AlertSeverityHigh)));
-    header_view->AddChildView(warning_icon.release());
-
     std::unique_ptr<views::Label> label = base::MakeUnique<views::Label>(
-        spec()->selected_shipping_option_error());
+        spec()->selected_shipping_option_error().empty()
+            ? GetShippingAddressSelectorInfoMessage(spec()->shipping_type())
+            : spec()->selected_shipping_option_error());
     label->set_id(
         static_cast<int>(DialogViewID::SHIPPING_ADDRESS_OPTION_ERROR));
-    label->SetEnabledColor(label->GetNativeTheme()->GetSystemColor(
-        ui::NativeTheme::kColorId_AlertSeverityHigh));
     label->SetMultiLine(true);
+
+    if (!spec()->selected_shipping_option_error().empty()) {
+      std::unique_ptr<views::ImageView> warning_icon =
+          base::MakeUnique<views::ImageView>();
+      warning_icon->set_can_process_events_within_subtree(false);
+      warning_icon->SetImage(gfx::CreateVectorIcon(
+          ui::kWarningIcon, 16,
+          warning_icon->GetNativeTheme()->GetSystemColor(
+              ui::NativeTheme::kColorId_AlertSeverityHigh)));
+      header_view->AddChildView(warning_icon.release());
+      label->SetEnabledColor(label->GetNativeTheme()->GetSystemColor(
+          ui::NativeTheme::kColorId_AlertSeverityHigh));
+    }
+
     header_view->AddChildView(label.release());
     return header_view;
   }

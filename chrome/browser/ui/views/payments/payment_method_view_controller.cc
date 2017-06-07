@@ -22,6 +22,7 @@
 #include "components/payments/content/payment_request_state.h"
 #include "components/payments/core/autofill_payment_instrument.h"
 #include "components/payments/core/payment_instrument.h"
+#include "components/payments/core/strings_util.h"
 #include "components/strings/grit/components_strings.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -185,7 +186,34 @@ base::string16 PaymentMethodViewController::GetSheetTitle() {
 }
 
 void PaymentMethodViewController::FillContentView(views::View* content_view) {
-  content_view->SetLayoutManager(new views::FillLayout);
+  auto layout =
+      base::MakeUnique<views::BoxLayout>(views::BoxLayout::kVertical, 0, 0, 0);
+  layout->set_main_axis_alignment(views::BoxLayout::MAIN_AXIS_ALIGNMENT_START);
+  layout->set_cross_axis_alignment(
+      views::BoxLayout::CROSS_AXIS_ALIGNMENT_STRETCH);
+  content_view->SetLayoutManager(layout.release());
+
+  base::string16 sub_header =
+      GetCardTypesAreAcceptedText(spec()->supported_card_types_set());
+  if (!sub_header.empty()) {
+    auto sub_header_view = base::MakeUnique<views::View>();
+    // 8 pixels between the sub-header view and the text.
+    constexpr int kRowHorizontalSpacing = 8;
+    auto layout = base::MakeUnique<views::BoxLayout>(
+        views::BoxLayout::kHorizontal,
+        payments::kPaymentRequestRowHorizontalInsets, 0, kRowHorizontalSpacing);
+    layout->set_main_axis_alignment(
+        views::BoxLayout::MAIN_AXIS_ALIGNMENT_START);
+    layout->set_cross_axis_alignment(
+        views::BoxLayout::CROSS_AXIS_ALIGNMENT_STRETCH);
+    sub_header_view->SetLayoutManager(layout.release());
+    std::unique_ptr<views::Label> label =
+        base::MakeUnique<views::Label>(sub_header);
+    label->SetMultiLine(true);
+    sub_header_view->AddChildView(label.release());
+    content_view->AddChildView(sub_header_view.release());
+  }
+
   std::unique_ptr<views::View> list_view =
       payment_method_list_.CreateListView();
   list_view->set_id(

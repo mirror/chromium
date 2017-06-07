@@ -31,7 +31,7 @@ public class PaymentRequestCcCanMakePaymentQueryTest extends PaymentRequestTestB
         // for canMakePayment() to return true.
         new AutofillTestHelper().setCreditCard(new CreditCard("", "https://example.com", true, true,
                 "Jon Doe", "4111111111111111", "1111", "12", "2050", "visa", R.drawable.visa_card,
-                "" /* billingAddressId */, "" /* serverId */));
+                CreditCard.CARD_TYPE_UNKNOWN, "" /* billingAddressId */, "" /* serverId */));
     }
 
     @MediumTest

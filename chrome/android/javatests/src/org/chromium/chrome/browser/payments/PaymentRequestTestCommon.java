@@ -131,8 +131,9 @@ final class PaymentRequestTestCommon implements PaymentRequestObserverForTest,
         mViewCoreRef = new AtomicReference<>();
         mWebContentsRef = new AtomicReference<>();
         mTestFilePath = testFileName.startsWith("data:")
-                ? testFileName : UrlUtils.getIsolatedTestFilePath(
-                        String.format("chrome/test/data/payments/%s", testFileName));
+                ? testFileName
+                : UrlUtils.getIsolatedTestFilePath(
+                          String.format("chrome/test/data/payments/%s", testFileName));
     }
 
     public void startMainActivity() throws InterruptedException {
@@ -877,8 +878,8 @@ final class PaymentRequestTestCommon implements PaymentRequestObserverForTest,
         installPaymentApp(asList(methodName), instrumentPresence, responseSpeed, creationSpeed);
     }
 
-    void installPaymentApp(final List<String> appMethodNames,
-            final int instrumentPresence, final int responseSpeed, final int creationSpeed) {
+    void installPaymentApp(final List<String> appMethodNames, final int instrumentPresence,
+            final int responseSpeed, final int creationSpeed) {
         PaymentAppFactory.getInstance().addAdditionalFactory(new PaymentAppFactoryAddition() {
             @Override
             public void create(WebContents webContents, Set<String> methodNames,
@@ -962,6 +963,11 @@ final class PaymentRequestTestCommon implements PaymentRequestObserverForTest,
         public String getAppIdentifier() {
             return TestPay.this.toString();
         }
+
+        @Override
+        public Integer getAdditionalAppTextResourceIdentifier() {
+            return null;
+        }
     }
 
     /** A payment instrument implementation for test. */
@@ -986,8 +992,7 @@ final class PaymentRequestTestCommon implements PaymentRequestObserverForTest,
                 Map<String, PaymentMethodData> methodData, PaymentItem total,
                 List<PaymentItem> displayItems, Map<String, PaymentDetailsModifier> modifiers,
                 InstrumentDetailsCallback detailsCallback) {
-            detailsCallback.onInstrumentDetailsReady(
-                    mMethodName, "{\"transaction\": 1337}");
+            detailsCallback.onInstrumentDetailsReady(mMethodName, "{\"transaction\": 1337}");
         }
 
         @Override

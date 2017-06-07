@@ -180,7 +180,7 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
         public void addObserver(PaymentRequestImpl observer) {
             mObservers.add(observer);
         }
-    };
+    }
 
     /** Limit in the number of suggested items in a section. */
     public static final int SUGGESTIONS_LIMIT = 4;
@@ -196,14 +196,26 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
                 }
             };
 
+    private static final Comparator<AutofillPaymentInstrument>
+            COMPLETENESS_AND_TYPE_MATCH_COMPARATOR = new Comparator<AutofillPaymentInstrument>() {
+                @Override
+                public int compare(AutofillPaymentInstrument a, AutofillPaymentInstrument b) {
+                    int completeness = (b.isComplete() ? 1 : 0) - (a.isComplete() ? 1 : 0);
+                    int typeMatch = (b.isMatchingMerchantsRequestedCardType() ? 1 : 0)
+                            - (a.isMatchingMerchantsRequestedCardType() ? 1 : 0);
+                    return completeness == 0 ? typeMatch : completeness;
+                }
+            };
+
     /**
      * Comparator to sort payment apps by maximum frecency score of the contained instruments. Note
      * that the first instrument in the list must have the maximum frecency score.
      */
-    private static final Comparator<List<PaymentInstrument>> APP_FRECENCY_COMPARATOR =
-            new Comparator<List<PaymentInstrument>>() {
+    private static final Comparator<List<? extends PaymentInstrument>> APP_FRECENCY_COMPARATOR =
+            new Comparator<List<? extends PaymentInstrument>>() {
                 @Override
-                public int compare(List<PaymentInstrument> a, List<PaymentInstrument> b) {
+                public int compare(
+                        List<? extends PaymentInstrument> a, List<? extends PaymentInstrument> b) {
                     return compareInstrumentsByFrecency(b.get(0), a.get(0));
                 }
             };
@@ -311,8 +323,9 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
     private ContactDetailsSection mContactSection;
     private List<PaymentApp> mApps;
     private List<PaymentApp> mPendingApps;
-    private List<List<PaymentInstrument>> mPendingInstruments;
-    private List<PaymentInstrument> mPendingAutofillInstruments;
+    private List<List<? extends PaymentInstrument>> mPendingInstruments;
+    private List<AutofillPaymentInstrument> mPendingAutofillInstruments;
+    private Integer mPaymentMethodsSectionAdditionalTextResourceId;
     private SectionInformation mPaymentMethodsSection;
     private PaymentRequestUI mUI;
     private Callback<PaymentInformation> mPaymentInformationCallback;
@@ -479,7 +492,8 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
         mShouldSkipShowingPaymentRequestUi =
                 ChromeFeatureList.isEnabled(ChromeFeatureList.WEB_PAYMENTS_SINGLE_APP_UI_SKIP)
                 && mMethodData.size() == 1 && !mRequestShipping && !mRequestPayerName
-                && !mRequestPayerPhone && !mRequestPayerEmail
+                && !mRequestPayerPhone
+                && !mRequestPayerEmail
                 // Only allowing payment apps that own their own UIs.
                 // This excludes AutofillPaymentApp as its UI is rendered inline in
                 // the payment request UI, thus can't be skipped.
@@ -693,8 +707,8 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
         Map<PaymentApp, Map<String, PaymentMethodData>> queryApps = new ArrayMap<>();
         for (int i = 0; i < mApps.size(); i++) {
             PaymentApp app = mApps.get(i);
-            Map<String, PaymentMethodData> appMethods = filterMerchantMethodData(mMethodData,
-                    app.getAppMethodNames());
+            Map<String, PaymentMethodData> appMethods =
+                    filterMerchantMethodData(mMethodData, app.getAppMethodNames());
             if (appMethods == null || !app.supportsMethodsAndData(appMethods)) {
                 mPendingApps.remove(app);
             } else {
@@ -851,7 +865,8 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
     }
 
     /** @return The first modifier that matches the given instrument, or null. */
-    @Nullable private PaymentDetailsModifier getModifier(@Nullable PaymentInstrument instrument) {
+    @Nullable
+    private PaymentDetailsModifier getModifier(@Nullable PaymentInstrument instrument) {
         if (mModifiers == null || instrument == null) return null;
         // Makes a copy to ensure it is modifiable.
         Set<String> methodNames = new HashSet<>(instrument.getInstrumentMethodNames());
@@ -862,7 +877,7 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
     /**
      * Converts a list of payment items and returns their parsed representation.
      *
-     * @param items     The payment items to parse. Can be null.
+     * @param items The payment items to parse. Can be null.
      * @return A list of valid line items.
      */
     private List<LineItem> getLineItems(@Nullable PaymentItem[] items) {
@@ -884,7 +899,7 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
     /**
      * Converts a list of shipping options and returns their parsed representation.
      *
-     * @param options   The raw shipping options to parse. Can be null.
+     * @param options The raw shipping options to parse. Can be null.
      * @return The UI representation of the shipping options.
      */
     private SectionInformation getShippingOptions(@Nullable PaymentShippingOption[] options) {
@@ -1266,8 +1281,8 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
         PaymentInstrument instrument = (PaymentInstrument) selectedPaymentMethod;
         mPaymentAppRunning = true;
 
-        PaymentOption selectedContact = mContactSection != null ? mContactSection.getSelectedItem()
-                : null;
+        PaymentOption selectedContact =
+                mContactSection != null ? mContactSection.getSelectedItem() : null;
         mPaymentResponseHelper = new PaymentResponseHelper(
                 selectedShippingAddress, selectedShippingOption, selectedContact, this);
 
@@ -1483,12 +1498,12 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
             List<PaymentInstrument> nonAutofillInstruments = new ArrayList<>();
             for (int i = 0; i < instruments.size(); i++) {
                 PaymentInstrument instrument = instruments.get(i);
-                Set<String> instrumentMethodNames = new HashSet<>(
-                        instrument.getInstrumentMethodNames());
+                Set<String> instrumentMethodNames =
+                        new HashSet<>(instrument.getInstrumentMethodNames());
                 instrumentMethodNames.retainAll(mMethodData.keySet());
                 if (!instrumentMethodNames.isEmpty()) {
                     if (instrument instanceof AutofillPaymentInstrument) {
-                        mPendingAutofillInstruments.add(instrument);
+                        mPendingAutofillInstruments.add((AutofillPaymentInstrument) instrument);
                     } else {
                         nonAutofillInstruments.add(instrument);
                     }
@@ -1502,6 +1517,12 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
             }
         }
 
+        Integer additionalTextResourceId = app.getAdditionalAppTextResourceIdentifier();
+        if (additionalTextResourceId != null) {
+            assert mPaymentMethodsSectionAdditionalTextResourceId == null;
+            mPaymentMethodsSectionAdditionalTextResourceId = additionalTextResourceId;
+        }
+
         // Some payment apps still have not responded. Continue waiting for them.
         if (!mPendingApps.isEmpty()) return;
 
@@ -1511,9 +1532,7 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
         // addresses and check for validity.
         Set<String> uniqueCountryCodes = new HashSet<>();
         for (int i = 0; i < mPendingAutofillInstruments.size(); ++i) {
-            assert mPendingAutofillInstruments.get(i) instanceof AutofillPaymentInstrument;
-            AutofillPaymentInstrument creditCard =
-                    (AutofillPaymentInstrument) mPendingAutofillInstruments.get(i);
+            AutofillPaymentInstrument creditCard = mPendingAutofillInstruments.get(i);
 
             String countryCode = AutofillAddress.getCountryCode(creditCard.getBillingAddress());
             if (!uniqueCountryCodes.contains(countryCode)) {
@@ -1528,9 +1547,10 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
 
         // List order:
         // > Non-autofill instruments.
-        // > Complete autofill instruments.
+        // > Complete autofill instruments whose card type matches what the merchant requested.
+        // > Complete autofill instruments whose card type does not matches merchant's request.
         // > Incomplete autofill instruments.
-        Collections.sort(mPendingAutofillInstruments, COMPLETENESS_COMPARATOR);
+        Collections.sort(mPendingAutofillInstruments, COMPLETENESS_AND_TYPE_MATCH_COMPARATOR);
         Collections.sort(mPendingInstruments, APP_FRECENCY_COMPARATOR);
         if (!mPendingAutofillInstruments.isEmpty()) {
             mPendingInstruments.add(mPendingAutofillInstruments);
@@ -1545,8 +1565,8 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
         if (!mPendingInstruments.isEmpty()) {
             PaymentInstrument first = mPendingInstruments.get(0).get(0);
             if (first instanceof AutofillPaymentInstrument) {
-                AutofillPaymentInstrument creditCard = (AutofillPaymentInstrument) first;
-                if (creditCard.isComplete()) selection = 0;
+                AutofillPaymentInstrument card = (AutofillPaymentInstrument) first;
+                if (card.isComplete() && card.isMatchingMerchantsRequestedCardType()) selection = 0;
             } else {
                 // If a payment app is available, then PaymentRequest.canMakePayment() returns true.
                 mCanMakePayment = true;
@@ -1561,11 +1581,18 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
 
         // The list of payment instruments is ready to display.
         List<PaymentInstrument> sortedInstruments = new ArrayList<>();
-        for (List<PaymentInstrument> a : mPendingInstruments) {
+        for (List<? extends PaymentInstrument> a : mPendingInstruments) {
             sortedInstruments.addAll(a);
         }
         mPaymentMethodsSection = new SectionInformation(
                 PaymentRequestUI.TYPE_PAYMENT_METHODS, selection, sortedInstruments);
+        if (mPaymentMethodsSectionAdditionalTextResourceId != null) {
+            Context context = ChromeActivity.fromWebContents(mWebContents);
+            if (context != null) {
+                mPaymentMethodsSection.setAdditionalText(
+                        context.getString(mPaymentMethodsSectionAdditionalTextResourceId));
+            }
+        }
 
         mPendingInstruments.clear();
 
@@ -1585,8 +1612,8 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
     private boolean disconnectIfNoPaymentMethodsSupported() {
         if (!isFinishedQueryingPaymentApps() || !mIsCurrentPaymentRequestShowing) return false;
 
-        boolean foundPaymentMethods = mPaymentMethodsSection != null
-                && !mPaymentMethodsSection.isEmpty();
+        boolean foundPaymentMethods =
+                mPaymentMethodsSection != null && !mPaymentMethodsSection.isEmpty();
         boolean userCanAddCreditCard = mMerchantSupportsAutofillPaymentInstruments
                 && !ChromeFeatureList.isEnabled(ChromeFeatureList.NO_CREDIT_CARD_ABORT);
 
@@ -1673,8 +1700,8 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
         if (mShippingAddressesSection.getSelectedItem() == null) return;
 
         assert mShippingAddressesSection.getSelectedItem() instanceof AutofillAddress;
-        AutofillAddress selectedAddress = (AutofillAddress) mShippingAddressesSection
-                .getSelectedItem();
+        AutofillAddress selectedAddress =
+                (AutofillAddress) mShippingAddressesSection.getSelectedItem();
 
         // The label should only include the country if the view is focused.
         if (willFocus) {
@@ -1711,8 +1738,10 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
         onAddressNormalized(profile);
     }
 
-    /** Starts the normalization of the new shipping address. Will call back into either
-     * onAddressNormalized or onCouldNotNormalize which will send the result to the merchant. */
+    /**
+     * Starts the normalization of the new shipping address. Will call back into either
+     * onAddressNormalized or onCouldNotNormalize which will send the result to the merchant.
+     */
     private void startShippingAddressChangeNormalization(AutofillAddress address) {
         PersonalDataManager.getInstance().normalizeAddress(
                 address.getProfile(), AutofillAddress.getCountryCode(address.getProfile()), this);

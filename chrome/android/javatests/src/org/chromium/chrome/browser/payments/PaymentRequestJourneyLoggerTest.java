@@ -53,14 +53,14 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
                 "US", "650-253-0000", "", "en-US"));
         mHelper.setCreditCard(new CreditCard("", "https://example.com", true, true, "Jon Doe",
                 "4111111111111111", "1111", "12", "2050", "visa", R.drawable.visa_card,
-                mBillingAddressId, "" /* serverId */));
+                CreditCard.CARD_TYPE_UNKNOWN, mBillingAddressId, "" /* serverId */));
         // The user also has an incomplete address and an incomplete card saved.
         String mIncompleteAddressId = mHelper.setProfile(new AutofillProfile("",
                 "https://example.com", true, "In Complete", "Google", "344 Main St", "CA", "", "",
                 "90291", "", "US", "650-253-0000", "", "en-US"));
         mHelper.setCreditCard(new CreditCard("", "https://example.com", true, true, "",
                 "4111111111111111", "1111", "18", "2075", "visa", R.drawable.visa_card,
-                mIncompleteAddressId, "" /* serverId */));
+                CreditCard.CARD_TYPE_UNKNOWN, mIncompleteAddressId, "" /* serverId */));
     }
 
     /**

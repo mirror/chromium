@@ -36,6 +36,7 @@ import javax.annotation.Nullable;
 public class AutofillPaymentInstrument extends PaymentInstrument
         implements FullCardRequestDelegate, NormalizedAddressRequestDelegate {
     private final WebContents mWebContents;
+    private final boolean mIsMatchingMerchantsRequestedCardType;
     private CreditCard mCard;
     private String mSecurityCode;
     @Nullable private AutofillProfile mBillingAddress;
@@ -48,19 +49,26 @@ public class AutofillPaymentInstrument extends PaymentInstrument
     /**
      * Builds a payment instrument for the given credit card.
      *
-     * @param webContents    The web contents where PaymentRequest was invoked.
-     * @param card           The autofill card that can be used for payment.
-     * @param billingAddress The billing address for the card.
-     * @param methodName     The payment method name, e.g., "basic-card", "visa", amex", or null.
+     * @param webContents                    The web contents where PaymentRequest was invoked.
+     * @param card                           The autofill card that can be used for payment.
+     * @param billingAddress                 The billing address for the card.
+     * @param methodName                     The payment method name, e.g., "basic-card", "visa",
+     *                                       amex", or null.
+     * @param matchesMerchantCardTypeExactly Whether the card type (credit, debit, prepaid) matches
+     *                                       the type that the merchant has requested exactly. This
+     *                                       should be false for unknown card types, if the merchant
+     *                                       cannot accept some card types.
      */
     public AutofillPaymentInstrument(WebContents webContents, CreditCard card,
-            @Nullable AutofillProfile billingAddress, @Nullable String methodName) {
+            @Nullable AutofillProfile billingAddress, @Nullable String methodName,
+            boolean matchesMerchantCardTypeExactly) {
         super(card.getGUID(), card.getObfuscatedNumber(), card.getName(), null);
         mWebContents = webContents;
         mCard = card;
         mBillingAddress = billingAddress;
         mIsEditable = true;
         mMethodName = methodName;
+        mIsMatchingMerchantsRequestedCardType = matchesMerchantCardTypeExactly;
 
         Context context = ChromeActivity.fromWebContents(mWebContents);
         if (context == null) return;
@@ -229,6 +237,16 @@ public class AutofillPaymentInstrument extends PaymentInstrument
      */
     public boolean isValidCard() {
         return mHasValidNumberAndName;
+    }
+
+    /**
+     * @return Whether the card type (credit, debit, prepaid) matches the merchant's requested card
+     * type exactly. If the merchant accepts all card types, then always returns true. If the
+     * merchant accepts only a subset of the card types, then this function returns false for
+     * unknown card types.
+     */
+    public boolean isMatchingMerchantsRequestedCardType() {
+        return mIsMatchingMerchantsRequestedCardType;
     }
 
     /**
