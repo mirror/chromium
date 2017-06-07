@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d17ef0c8_859acbf3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-06-07T18:47:28Z",
+      "side": 1,
+      "message": "Shutting down followed by creating sounds like a no-op, but it presumably isn\u0027t. Would it be clearer to add a ResetNonPresentingNativeContext() method or similar?",
+      "range": {
+        "startLine": 520,
+        "startChar": 8,
+        "endLine": 520,
+        "endChar": 40
+      },
+      "revId": "b520e7f8c8163900bcc2b26c8c737bddbf11e433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b3631e_088f992d",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-06-07T18:47:28Z",
+      "side": 1,
+      "message": "Can you explain a bit more when/if the default display info gets used? Using plausible but slightly wrong parameters would be a potential source of problems, especially if it\u0027s unpredictable.",
+      "range": {
+        "startLine": 235,
+        "startChar": 2,
+        "endLine": 235,
+        "endChar": 10
+      },
+      "revId": "b520e7f8c8163900bcc2b26c8c737bddbf11e433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63284e2f_bef32392",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-06-07T18:47:28Z",
+      "side": 1,
+      "message": "I don\u0027t understand this part - if the app has a pending window rAF and its callback looks something like this: \n\n if (presenting) \n    vrdisplay.rAF(animate)\n else\n    window.rAF(animate)\n\nthen, if you cancel that execution, don\u0027t we lose the vrdisplay.rAF call to schedule the next frame?",
+      "range": {
+        "startLine": 163,
+        "startChar": 9,
+        "endLine": 163,
+        "endChar": 29
+      },
+      "revId": "b520e7f8c8163900bcc2b26c8c737bddbf11e433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ad55946_d70ac1a3",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-06-07T18:47:28Z",
+      "side": 1,
+      "message": "for clarity, rename this to RequestPresentingVSync()?",
+      "revId": "b520e7f8c8163900bcc2b26c8c737bddbf11e433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
