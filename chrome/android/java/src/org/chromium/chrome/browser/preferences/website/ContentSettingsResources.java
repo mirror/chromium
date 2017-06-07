@@ -149,7 +149,7 @@ public class ContentSettingsResources {
                                  org.chromium.chrome.R.string.protected_content,
                                  ContentSetting.ASK, ContentSetting.BLOCK, 0, 0));
             // TODO(csharrison): Swap out the placeholder icon once it is ready.
-            localMap.put(ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER,
+            localMap.put(ContentSettingsType.CONTENT_SETTINGS_TYPE_ADS,
                     new ResourceItem(R.drawable.permission_popups, R.string.ads_permission_title,
                             R.string.ads_permission_title, ContentSetting.ALLOW,
                             ContentSetting.BLOCK, 0,

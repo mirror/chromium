@@ -622,7 +622,7 @@ public class PageInfoPopup implements OnClickListener {
         }
 
         // The ads filter permission requires an additional static subtitle.
-        if (permission.type == ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER) {
+        if (permission.type == ContentSettingsType.CONTENT_SETTINGS_TYPE_ADS) {
             TextView permissionSubtitle =
                     (TextView) permissionRow.findViewById(R.id.page_info_permission_subtitle);
             permissionSubtitle.setVisibility(View.VISIBLE);

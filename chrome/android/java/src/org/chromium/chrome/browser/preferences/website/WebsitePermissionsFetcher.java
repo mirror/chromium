@@ -184,7 +184,7 @@ public class WebsitePermissionsFetcher {
                 case ContentSettingsType.CONTENT_SETTINGS_TYPE_POPUPS:
                     site.setPopupException(exception);
                     break;
-                case ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER:
+                case ContentSettingsType.CONTENT_SETTINGS_TYPE_ADS:
                     site.setAdsException(exception);
                     break;
                 default:
@@ -264,7 +264,7 @@ public class WebsitePermissionsFetcher {
     private class AdsExceptionInfoFetcher extends Task {
         @Override
         public void run() {
-            setException(ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER);
+            setException(ContentSettingsType.CONTENT_SETTINGS_TYPE_ADS);
         }
     }
 
