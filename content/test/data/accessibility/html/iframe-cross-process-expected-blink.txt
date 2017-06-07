@@ -1,10 +1,10 @@
-rootWebArea
+rootWebArea focusable
 ++paragraph
 ++++staticText name='Before frame'
 ++++++inlineTextBox name='Before frame'
 ++genericContainer
-++++iframe name='Cross-process iframe'
-++++++rootWebArea
+++++iframe focusable name='Cross-process iframe'
+++++++rootWebArea focusable
 ++++++++genericContainer
 ++++++++++staticText name='Text in iframe'
 ++++++++++++inlineTextBox name='Text in iframe'

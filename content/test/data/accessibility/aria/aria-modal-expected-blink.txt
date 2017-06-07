@@ -1,4 +1,4 @@
-rootWebArea
+rootWebArea focusable
 ++dialog modal=false
 ++++staticText name='Nonmodal'
 ++++++inlineTextBox name='Nonmodal'

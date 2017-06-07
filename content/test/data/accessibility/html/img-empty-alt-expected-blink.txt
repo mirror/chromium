@@ -1,4 +1,4 @@
-rootWebArea
+rootWebArea focusable
 ++genericContainer
 ++++image name=''
 ++++image name=''
