@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93210390_74499328",
+        "filename": "chrome/browser/extensions/api/downloads/downloads_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1115874
+      },
+      "writtenOn": "2017-06-07T18:47:09Z",
+      "side": 1,
+      "message": "\"extension\" maybe?\nMaybe include the extension id? But some extension ids are kept secret. Where does this data go? If it will only ever go directly to Google, then you can include the id, otherwise probably not, but let\u0027s check with somebody from extensions/apps team.",
+      "revId": "c2e23a1adae53478a8dfb6366f33e6433bb443a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e2d234e_af9cad5c",
+        "filename": "chrome/browser/extensions/api/downloads/downloads_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1115874
+      },
+      "writtenOn": "2017-06-07T18:47:09Z",
+      "side": 1,
+      "message": "\"File download\"? Sorry, I\u0027m not sure what other information should go in the description.",
+      "revId": "c2e23a1adae53478a8dfb6366f33e6433bb443a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4fd2e77_25f652d6",
+        "filename": "chrome/browser/extensions/api/downloads/downloads_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1050,
+      "author": {
+        "id": 1115874
+      },
+      "writtenOn": "2017-06-07T18:47:09Z",
+      "side": 1,
+      "message": "\"extension\"?\nExtensions can trigger downloads in response to user input, or autonomously, or in response to any other event that extensions can access.",
+      "revId": "c2e23a1adae53478a8dfb6366f33e6433bb443a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fd437a_0f8ab250",
+        "filename": "chrome/browser/extensions/api/downloads/downloads_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1115874
+      },
+      "writtenOn": "2017-06-07T18:47:09Z",
+      "side": 1,
+      "message": "Request may contain data passed by the extension, which could be sensitive depending on the extension\u0027s permissions.",
+      "revId": "c2e23a1adae53478a8dfb6366f33e6433bb443a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ad4225_2c7ad812",
+        "filename": "chrome/browser/extensions/api/downloads/downloads_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1115874
+      },
+      "writtenOn": "2017-06-07T18:47:09Z",
+      "side": 1,
+      "message": "true",
+      "revId": "c2e23a1adae53478a8dfb6366f33e6433bb443a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34738511_67fe2caa",
+        "filename": "chrome/browser/extensions/api/downloads/downloads_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1115874
+      },
+      "writtenOn": "2017-06-07T18:47:09Z",
+      "side": 1,
+      "message": "\"user\"",
+      "revId": "c2e23a1adae53478a8dfb6366f33e6433bb443a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0fcc9eb_5abffe95",
+        "filename": "chrome/browser/extensions/api/downloads/downloads_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1115874
+      },
+      "writtenOn": "2017-06-07T18:47:09Z",
+      "side": 1,
+      "message": "Disable extensions at chrome://extensions",
+      "revId": "c2e23a1adae53478a8dfb6366f33e6433bb443a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3360ff21_6e80b7f3",
+        "filename": "chrome/browser/extensions/api/downloads/downloads_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1115874
+      },
+      "writtenOn": "2017-06-07T18:47:09Z",
+      "side": 1,
+      "message": "Sorry, I am unfamiliar with how enterprise policies interact with extensions.",
+      "revId": "c2e23a1adae53478a8dfb6366f33e6433bb443a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
