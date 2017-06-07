@@ -16,6 +16,24 @@
       "revId": "3c5b59379791210c2949f9fe61787b58f59181ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c23aad8_34451807",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8DOMWrapper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-06-07T06:12:45Z",
+      "side": 1,
+      "message": "This is checking the same-origin policy, so it fails in case of cross origin.\n\n\u003e no one was using AccessCheckFailed\nWhen adithyas@ refactored things out to platform/bindings/, they planned to use this API (like this) but abandoned the plan for some reason which I forget...\n\nI should have removed their comment on line 44-45.",
+      "parentUuid": "7ea11ab6_598a0586",
+      "revId": "3c5b59379791210c2949f9fe61787b58f59181ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
