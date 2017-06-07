@@ -48,36 +48,37 @@
 
 // ------------------------- IMPORTANT: Thread-safety -------------------------
 
-// Weak pointers may be passed safely between threads, but must always be
+// Weak pointers may be passed safely between sequences, but must always be
 // dereferenced and invalidated on the same SequencedTaskRunner otherwise
 // checking the pointer would be racey.
 //
-// To ensure correct use, the first time a WeakPtr issued by a WeakPtrFactory
-// is dereferenced, the factory and its WeakPtrs become bound to the calling
-// thread or current SequencedWorkerPool token, and cannot be dereferenced or
-// invalidated on any other task runner. Bound WeakPtrs can still be handed
-// off to other task runners, e.g. to use to post tasks back to object on the
-// bound sequence.
+// To ensure correct use, the first time a WeakPtr issued by a WeakPtrFactory is
+// dereferenced, the factory and its WeakPtrs become bound to the calling
+// sequence, and cannot be dereferenced or invalidated on any other task runner.
+// Bound WeakPtrs can still be handed off to other task runners, e.g. to use to
+// post tasks back to object on the bound sequence.
 //
 // If all WeakPtr objects are destroyed or invalidated then the factory is
-// unbound from the SequencedTaskRunner/Thread. The WeakPtrFactory may then be
-// destroyed, or new WeakPtr objects may be used, from a different sequence.
+// unbound from the sequence. The WeakPtrFactory may then be destroyed, or new
+// WeakPtr objects may be used, from a different sequence.
 //
 // Thus, at least one WeakPtr object must exist and have been dereferenced on
-// the correct thread to enforce that other WeakPtr objects will enforce they
-// are used on the desired thread.
+// the correct sequence to enforce that other WeakPtr objects will enforce they
+// are used on the desired sequence.
 
 #ifndef BASE_MEMORY_WEAK_PTR_H_
 #define BASE_MEMORY_WEAK_PTR_H_
 
 #include <cstddef>
 #include <type_traits>
+#include <utility>
 
 #include "base/base_export.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/sequence_checker.h"
+#include "base/synchronization/atomic_flag.h"
 
 namespace base {
 
@@ -90,8 +91,13 @@ namespace internal {
 
 class BASE_EXPORT WeakReference {
  public:
-  // Although Flag is bound to a specific SequencedTaskRunner, it may be
-  // deleted from another via base::WeakPtr::~WeakPtr().
+  // Flag is more or less a ref-counted AtomicFlag. It's always set
+  // (invalidated) from the same sequence by WeakPtrFactory's WeakReferenceOwner
+  // but can be owned/freed by many threads by different WeakPtrs'
+  // WeakReference. It enforces slightly stricter threading requirements than
+  // AtomicFlag so that callers who call IsValid() verify they're on the proper
+  // sequence before using the underlying pointer as a result of that call
+  // (AtomicFlag::IsSet() doesn't have that requirement).
   class BASE_EXPORT Flag : public RefCountedThreadSafe<Flag> {
    public:
     Flag();
@@ -99,17 +105,25 @@ class BASE_EXPORT WeakReference {
     void Invalidate();
     bool IsValid() const;
 
+    // IsValidThreadSafe() is the same as IsValid() but doesn't enforce
+    // sequence-affinity. It can be used as an optimistic validity check but the
+    // underlying pointer should *never* be used as a result of this returning
+    // true as it may become invalid right after this call.
+    bool IsValidThreadSafe() const;
+
    private:
     friend class base::RefCountedThreadSafe<Flag>;
+    ~Flag() = default;
 
-    ~Flag();
+    AtomicFlag invalidated_;
 
-    SequenceChecker sequence_checker_;
-    bool is_valid_;
+    // Enforces the thread-safety requirements described at the top of this
+    // file.
+    SEQUENCE_CHECKER(sequence_checker_);
   };
 
   WeakReference();
-  explicit WeakReference(const Flag* flag);
+  explicit WeakReference(scoped_refptr<const Flag> flag);
   ~WeakReference();
 
   WeakReference(WeakReference&& other);
@@ -117,9 +131,11 @@ class BASE_EXPORT WeakReference {
   WeakReference& operator=(WeakReference&& other) = default;
   WeakReference& operator=(const WeakReference& other) = default;
 
-  bool is_valid() const;
+  bool IsValid() const;
+  bool IsValidThreadSafe() const;
 
  private:
+  // TODO: Would be nice to make this const but copy-assignment prevents that.
   scoped_refptr<const Flag> flag_;
 };
 
@@ -146,6 +162,7 @@ class BASE_EXPORT WeakReferenceOwner {
 // base class gives us a way to access ref_ in a protected fashion.
 class BASE_EXPORT WeakPtrBase {
  public:
+  // FIXME protected?
   WeakPtrBase();
   ~WeakPtrBase();
 
@@ -222,7 +239,7 @@ class WeakPtr : public internal::WeakPtrBase {
   WeakPtr(WeakPtr<U>&& other)
       : WeakPtrBase(std::move(other)), ptr_(other.ptr_) {}
 
-  T* get() const { return ref_.is_valid() ? ptr_ : nullptr; }
+  T* get() const { return ref_.IsValid() ? ptr_ : nullptr; }
 
   T& operator*() const {
     DCHECK(get() != nullptr);
@@ -233,13 +250,20 @@ class WeakPtr : public internal::WeakPtrBase {
     return get();
   }
 
+  // FIXME, reset() makes thread-safe validity check impossible per |ref_|
+  // possibly changing from other the active thread. I'm pretty sure we don't
+  // need reset() outside the SupportsWeakPtr use case but we would need to get
+  // rid of it (50+ instances) before we can have thread-safe validity checks.
   void reset() {
     ref_ = internal::WeakReference();
-    ptr_ = nullptr;
   }
 
-  // Allow conditionals to test validity, e.g. if (weak_ptr) {...};
-  explicit operator bool() const { return get() != nullptr; }
+  // Allow conditionals to test validity, e.g. if (weak_ptr) {...}; Validity
+  // checks are thread-safe but using the pointer after this returns true is
+  // only safe on the WeakPtr's owning sequence (see thread-safety requirements
+  // at the top of this file -- enforced by WeakReference::Flag's
+  // SequenceChecker).
+  explicit operator bool() const { return ref_.IsValidThreadSafe() && ptr_; }
 
  private:
   friend class internal::SupportsWeakPtrBase;
@@ -252,8 +276,12 @@ class WeakPtr : public internal::WeakPtrBase {
         ptr_(ptr) {
   }
 
-  // This pointer is only valid when ref_.is_valid() is true.  Otherwise, its
+  // This pointer is only valid when ref_.IsValid() is true.  Otherwise, its
   // value is undefined (as opposed to nullptr).
+  // TODO: ideally this pointer would be const so that it can be safely looked
+  // up across threads for being nullptr. reset() will invalidate |ref_| at
+  // which point this value becomes irrelevant. This forces a const_cast for
+  // copy-assignment however which makes a bit of a mess..
   T* ptr_;
 };
 
