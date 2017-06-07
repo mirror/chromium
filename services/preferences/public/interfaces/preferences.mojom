@@ -146,7 +146,9 @@ interface PersistentPrefStore {
   SetValues(array<PrefUpdate> updates);
 
   // These mirror the C++ PersistentPrefStore methods.
-  CommitPendingWrite();
+  // "=> ()" make the generated interface take as argument a base::OnceClosure
+  // that must be invoked by implementations when disk operations are complete.
+  CommitPendingWrite() => ();
   SchedulePendingLossyWrites();
   ClearMutableValues();
 };

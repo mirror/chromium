@@ -10,6 +10,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/values.h"
 #include "components/prefs/pref_notifier_impl.h"
 #include "components/prefs/pref_registry_simple.h"
@@ -90,7 +91,10 @@ class PersistentPrefStoreClientTest : public testing::Test,
       std::move(on_update_).Run();
   }
 
-  void CommitPendingWrite() override {}
+  void CommitPendingWrite(CommitPendingWriteCallback callback) override {
+    base::SequencedTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                     std::move(callback));
+  }
   void SchedulePendingLossyWrites() override {}
   void ClearMutableValues() override {}
 
