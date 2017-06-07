@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35a6f2b2_6ff2d1bb",
+        "filename": "chrome/browser/chromeos/policy/system_log_uploader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-07T16:11:23Z",
+      "side": 1,
+      "message": "nit: This check against kLogCutoffSize becomes unnecessary now, as in this latest revision you\u0027re doing a stronger check that is based on the last character.",
+      "range": {
+        "startLine": 58,
+        "startChar": 6,
+        "endLine": 58,
+        "endChar": 39
+      },
+      "revId": "21aa0ae7737d75f5a70c6693fa12bb8fc5573a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eafb0181_c3b1bf64",
+        "filename": "chrome/browser/chromeos/policy/system_log_uploader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-07T16:11:23Z",
+      "side": 1,
+      "message": "nit: Just use +\u003d, it\u0027s easier to read (sorry for not commenting on the previous patchset).",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 16
+      },
+      "revId": "21aa0ae7737d75f5a70c6693fa12bb8fc5573a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
