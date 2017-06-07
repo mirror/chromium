@@ -217,6 +217,17 @@ class CORE_EXPORT SerializedScriptValue
   TransferredWasmModulesArray& WasmModules() { return wasm_modules_; }
   BlobDataHandleMap& BlobDataHandles() { return blob_data_handles_; }
 
+  // if HasPrefetchwork(), then the SSV isn't complete yet, and not
+  // ready to be sent to onsuccess().
+  bool HasPrefetchWork() const;
+  typedef void (*OnPrefetchCompleted)(bool);
+  // When all prefetching is done, the callback is called with "true"
+  // if the SSV's data was mutated in the process - meaning that the client
+  // may want to consider re-saving the SSV.
+  // We pass a ScriptState for whatever additional work the prefetchers
+  // may need to do - wasm may need to recompile, for example.
+  void Prefetch(ScriptState*, OnPrefetchCompleted);
+
  private:
   friend class ScriptValueSerializer;
   friend class V8ScriptValueSerializer;
