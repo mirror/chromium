@@ -62,6 +62,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Manages interactions with the VR Shell.
@@ -233,7 +234,19 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
 
     @VisibleForTesting
     public static VrShellDelegate getInstanceForTesting() {
-        return getInstance();
+        // This function is usually called from the instrumentation thread,
+        // meaning that if it causes the delegate to be constructed, the
+        // Choreographer it obtains will be for the instrumentation thread
+        // instead of the UI thread. So, always run on the UI thread so the
+        // Choreographer is correct.
+        final AtomicReference<VrShellDelegate> delegate = new AtomicReference<VrShellDelegate>();
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                delegate.set(getInstance());
+            }
+        });
+        return delegate.get();
     }
 
     /**
