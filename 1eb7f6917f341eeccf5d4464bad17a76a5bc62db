@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8a1551d_fdb2219c",
+        "filename": "chrome/browser/extensions/api/desktop_capture/desktop_capture_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-06-07T23:04:16Z",
+      "side": 1,
+      "message": "This condition can be replaced as a compiling time condition: i.e. merge with the \"if defined\" above.",
+      "range": {
+        "startLine": 155,
+        "startChar": 11,
+        "endLine": 155,
+        "endChar": 22
+      },
+      "revId": "1eb7f6917f341eeccf5d4464bad17a76a5bc62db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47bad846_50d1b48e",
+        "filename": "chrome/browser/extensions/api/desktop_capture/desktop_capture_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-06-07T23:04:16Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 168,
+        "startChar": 11,
+        "endLine": 168,
+        "endChar": 22
+      },
+      "revId": "1eb7f6917f341eeccf5d4464bad17a76a5bc62db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38194edf_4e0e3028",
+        "filename": "chrome/browser/media/webrtc/native_desktop_media_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-06-07T23:04:16Z",
+      "side": 1,
+      "message": "How about moving this into a function or let RefreshForAuraWindows() post the task? So you do not need to write this long statement twice.",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 45
+      },
+      "revId": "1eb7f6917f341eeccf5d4464bad17a76a5bc62db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e2b0a6_b6e73dd7",
+        "filename": "chrome/browser/media/webrtc/native_desktop_media_list_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-06-07T23:04:16Z",
+      "side": 1,
+      "message": "This test case seems out of date: when type \u003d\u003d SCREEN, window_count is totally ignored.\nSuggest to add a TODO to update test cases.",
+      "range": {
+        "startLine": 274,
+        "startChar": 47,
+        "endLine": 274,
+        "endChar": 0
+      },
+      "revId": "1eb7f6917f341eeccf5d4464bad17a76a5bc62db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb6562e_7cbff7fb",
+        "filename": "chrome/browser/media/webrtc/native_desktop_media_list_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-06-07T23:04:16Z",
+      "side": 1,
+      "message": "Add a TODO to test scenarios with multiple screens.",
+      "range": {
+        "startLine": 336,
+        "startChar": 47,
+        "endLine": 336,
+        "endChar": 0
+      },
+      "revId": "1eb7f6917f341eeccf5d4464bad17a76a5bc62db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
