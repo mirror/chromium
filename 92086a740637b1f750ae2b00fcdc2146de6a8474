@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5c0bc05_1c9b4450",
+        "filename": "third_party/WebKit/Source/core/page/PopupMenuImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-07T07:02:59Z",
+      "side": 1,
+      "message": "Perhaps we should move this file to core/page as well?\n\n(Maybe we don\u0027t even need it at all now?)",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 31
+      },
+      "revId": "92086a740637b1f750ae2b00fcdc2146de6a8474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3857e49d_0a056ff7",
+        "filename": "third_party/WebKit/Source/modules/navigatorcontentutils/NavigatorContentUtilsClientImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-07T07:02:59Z",
+      "side": 1,
+      "message": "Same here: do we still need this intermediate interface class?",
+      "range": {
+        "startLine": 9,
+        "startChar": 9,
+        "endLine": 9,
+        "endChar": 70
+      },
+      "revId": "92086a740637b1f750ae2b00fcdc2146de6a8474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
