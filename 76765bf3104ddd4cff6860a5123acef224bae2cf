@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1609cae8_aebade43",
+        "filename": "third_party/WebKit/Source/core/loader/EmptyClients.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-06-07T09:56:02Z",
+      "side": 1,
+      "message": "Remove ; (this and next line)",
+      "revId": "76765bf3104ddd4cff6860a5123acef224bae2cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
