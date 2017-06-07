@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3741b240_6cd39e64",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-07T08:56:46Z",
+      "side": 1,
+      "message": "How about having SuggestedArticlesObserver register itself as an observer to CSS in SetContentSuggestionsService? As it is, it looks like it\u0027s never unregistered.",
+      "range": {
+        "startLine": 367,
+        "startChar": 35,
+        "endLine": 367,
+        "endChar": 0
+      },
+      "revId": "cf9619ffcd13fd840bd4bbff7c43336338b5e455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
