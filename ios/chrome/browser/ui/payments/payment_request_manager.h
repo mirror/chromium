@@ -7,6 +7,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class TabModel;
+
 namespace ios {
 class ChromeBrowserState;
 }  // namespace ios
@@ -35,6 +37,7 @@ class WebState;
 - (instancetype)initWithBaseViewController:(UIViewController*)viewController
                               browserState:
                                   (ios::ChromeBrowserState*)browserState
+                                  tabModel:(TabModel*)tabModel
     NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init NS_UNAVAILABLE;

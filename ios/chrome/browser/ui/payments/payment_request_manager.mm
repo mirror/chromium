@@ -29,14 +29,20 @@
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/payments/payment_request.h"
 #include "ios/chrome/browser/procedural_block_types.h"
+#import "ios/chrome/browser/tabs/tab.h"
+#import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
 #import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
 #import "ios/chrome/browser/ui/commands/ios_command_ids.h"
 #import "ios/chrome/browser/ui/payments/js_payment_request_manager.h"
 #import "ios/chrome/browser/ui/payments/payment_request_coordinator.h"
+#include "ios/chrome/browser/ui/toolbar/toolbar_model_delegate_ios.h"
+#include "ios/chrome/browser/ui/toolbar/toolbar_model_impl_ios.h"
+#include "ios/chrome/browser/ui/toolbar/toolbar_model_ios.h"
 #include "ios/web/public/favicon_status.h"
 #include "ios/web/public/navigation_item.h"
 #include "ios/web/public/navigation_manager.h"
+#include "ios/web/public/origin_util.h"
 #include "ios/web/public/payments/payment_request.h"
 #include "ios/web/public/ssl_status.h"
 #import "ios/web/public/url_scheme_util.h"
@@ -47,6 +53,7 @@
 #import "ios/web/public/web_state/web_state_observer_bridge.h"
 #include "third_party/libaddressinput/chromium/chrome_metadata_source.h"
 #include "third_party/libaddressinput/chromium/chrome_storage_impl.h"
+#include "url/gurl.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -91,6 +98,9 @@ struct PendingPaymentResponse {
   // current PaymentRequest flow.
   std::unique_ptr<PaymentRequest> _paymentRequest;
 
+  // The browser's tab model.
+  TabModel* _tabModel;
+
   // WebState for the tab this object is attached to.
   web::WebState* _webState;
 
@@ -127,6 +137,11 @@ struct PendingPaymentResponse {
   // Storage for data to return in the payment response, until we're ready to
   // send an actual PaymentResponse.
   PendingPaymentResponse _pendingPaymentResponse;
+
+  // IOS specific version of ToolbarModel and its delegate that are used
+  // for grabbing security info.
+  std::unique_ptr<ToolbarModelDelegateIOS> _toolbarModelDelegate;
+  std::unique_ptr<ToolbarModelIOS> _toolbarModelIOS;
 }
 
 // Object that manages JavaScript injection into the web view.
@@ -207,7 +222,8 @@ struct PendingPaymentResponse {
 
 - (instancetype)initWithBaseViewController:(UIViewController*)viewController
                               browserState:
-                                  (ios::ChromeBrowserState*)browserState {
+                                  (ios::ChromeBrowserState*)browserState
+                                  tabModel:(TabModel*)tabModel {
   if ((self = [super init])) {
     _baseViewController = viewController;
 
@@ -216,6 +232,15 @@ struct PendingPaymentResponse {
     _personalDataManager =
         autofill::PersonalDataManagerFactory::GetForBrowserState(
             browserState->GetOriginalChromeBrowserState());
+
+    _tabModel = tabModel;
+
+    [self setWebState:[tabModel currentTab].webState];
+
+    _toolbarModelDelegate =
+        base::MakeUnique<ToolbarModelDelegateIOS>([_tabModel webStateList]);
+    _toolbarModelIOS =
+        base::MakeUnique<ToolbarModelImplIOS>(_toolbarModelDelegate.get());
   }
   return self;
 }
@@ -433,8 +458,8 @@ struct PendingPaymentResponse {
   NSString* pageTitle = base::SysUTF16ToNSString([self webState]->GetTitle());
   NSString* pageHost =
       base::SysUTF8ToNSString([self webState]->GetLastCommittedURL().host());
-  // TODO(crbug.com/728639): Determine when connection is secure.
-  BOOL connectionSecure = false;
+  BOOL connectionSecure =
+      [self webState]->GetLastCommittedURL().SchemeIs(url::kHttpsScheme);
   autofill::AutofillManager* autofillManager =
       autofill::AutofillDriverIOS::FromWebState(_webState)->autofill_manager();
   _paymentRequestCoordinator = [[PaymentRequestCoordinator alloc]
@@ -603,15 +628,27 @@ struct PendingPaymentResponse {
     return NO;
   }
 
-  if (!web::UrlHasWebScheme([self webState]->GetLastCommittedURL()) ||
+  // Checks if the current page is a web view with HTML and that the
+  // origin is localhost, file://, or cryptographic.
+  if (!web::IsOriginSecure([self webState]->GetLastCommittedURL()) ||
       ![self webState]->ContentIsHTML()) {
     return NO;
   }
 
-  const web::NavigationItem* navigationItem =
-      [self webState]->GetNavigationManager()->GetLastCommittedItem();
-  return navigationItem && navigationItem->GetSSL().security_style ==
-                               web::SECURITY_STYLE_AUTHENTICATED;
+  // The following security level checks ensure that if the scheme is
+  // cryptographic then the SSL certificate is valid.
+  ToolbarModel* toolbarModel = _toolbarModelIOS->GetToolbarModel();
+  security_state::SecurityLevel securityLevel =
+      toolbarModel->GetSecurityLevel(true);
+  if ([self webState]->GetLastCommittedURL().SchemeIsCryptographic()) {
+    if (securityLevel != security_state::EV_SECURE &&
+        securityLevel != security_state::SECURE &&
+        securityLevel != security_state::SECURE_WITH_POLICY_INSTALLED_CERT) {
+      return NO;
+    }
+  }
+
+  return YES;
 }
 
 #pragma mark - PaymentRequestCoordinatorDelegate methods
