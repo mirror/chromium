@@ -26,6 +26,7 @@ namespace blink {
 class WebContentDecryptionModule;
 class WebEncryptedMediaClient;
 class WebLocalFrame;
+class WebMediaCapabilitiesClient;
 class WebMediaPlayer;
 class WebMediaPlayerClient;
 class WebMediaPlayerEncryptedMediaClient;
@@ -98,6 +99,9 @@ class MediaFactory {
   // implementation of requestMediaKeySystemAccess. Will always return the same
   // client whose lifetime is tied to this Factory (same as the RenderFrame).
   blink::WebEncryptedMediaClient* EncryptedMediaClient();
+
+  // Creates a new WebMediaCapabilities client insteance to be used by Blink.
+  blink::WebMediaCapabilitiesClient* CreateCapabilitiesClient();
 
  private:
   std::unique_ptr<media::RendererFactorySelector> CreateRendererFactorySelector(

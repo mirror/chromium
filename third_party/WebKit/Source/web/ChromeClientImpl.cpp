@@ -68,6 +68,7 @@
 #include "modules/filesystem/LocalFileSystemClient.h"
 #include "modules/indexeddb/IndexedDBClientImpl.h"
 #include "modules/installedapp/InstalledAppController.h"
+#include "modules/media_capabilities/MediaCapabilitiesController.h"
 #include "modules/mediastream/UserMediaController.h"
 #include "modules/navigatorcontentutils/NavigatorContentUtils.h"
 #include "modules/presentation/PresentationController.h"
@@ -1145,6 +1146,10 @@ void ChromeClientImpl::InstallSupplements(LocalFrame& frame) {
                                      new AudioOutputDeviceClientImpl(frame));
   }
   InstalledAppController::ProvideTo(frame, client->GetRelatedAppsFetcher());
+  if (RuntimeEnabledFeatures::MediaCapabilitiesEnabled()) {
+    MediaCapabilitiesController::ProvideTo(
+        frame, client->GetMediaCapabilitiesClient());
+  }
 }
 
 }  // namespace blink

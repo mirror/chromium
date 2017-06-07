@@ -92,6 +92,7 @@ class WebExternalPopupMenu;
 class WebExternalPopupMenuClient;
 class WebFileChooserCompletion;
 class WebLocalFrame;
+class WebMediaCapabilitiesClient;
 class WebMediaPlayer;
 class WebMediaPlayerClient;
 class WebMediaPlayerEncryptedMediaClient;
@@ -807,6 +808,11 @@ class BLINK_EXPORT WebFrameClient {
   // Loading --------------------------------------------------------------
   virtual std::unique_ptr<blink::WebURLLoader> CreateURLLoader() {
     NOTREACHED();
+    return nullptr;
+  }
+
+  // Media Capabilities ---------------------------------------------------
+  virtual blink::WebMediaCapabilitiesClient* GetMediaCapabilitiesClient() {
     return nullptr;
   }
 };

@@ -183,6 +183,7 @@
 #include "third_party/WebKit/public/platform/WebURLError.h"
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
 #include "third_party/WebKit/public/platform/WebVector.h"
+#include "third_party/WebKit/public/platform/modules/media_capabilities/WebMediaCapabilitiesClient.h"
 #include "third_party/WebKit/public/platform/modules/permissions/permission.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h"
@@ -6648,6 +6649,13 @@ blink::WebPageVisibilityState RenderFrameImpl::VisibilityState() const {
 std::unique_ptr<blink::WebURLLoader> RenderFrameImpl::CreateURLLoader() {
   // TODO(yhirano): Stop using Platform::CreateURLLoader() here.
   return blink::Platform::Current()->CreateURLLoader();
+}
+
+blink::WebMediaCapabilitiesClient*
+RenderFrameImpl::GetMediaCapabilitiesClient() {
+  if (!media_capabilities_client_)
+    media_capabilities_client_.reset(media_factory_.CreateCapabilitiesClient());
+  return media_capabilities_client_.get();
 }
 
 blink::WebPageVisibilityState RenderFrameImpl::GetVisibilityState() const {

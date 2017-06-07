@@ -8,6 +8,8 @@
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "core/dom/DOMException.h"
+#include "core/dom/Document.h"
+#include "modules/media_capabilities/MediaCapabilitiesController.h"
 #include "modules/media_capabilities/MediaCapabilitiesInfo.h"
 #include "modules/media_capabilities/MediaConfiguration.h"
 #include "modules/media_capabilities/MediaDecodingConfiguration.h"
@@ -23,6 +25,26 @@
 namespace blink {
 
 namespace {
+
+WebMediaCapabilitiesClient* GetMediaCapabilitiesClient(
+    ScriptState* script_state) {
+  DCHECK(script_state);
+
+  ExecutionContext* execution_context = ExecutionContext::From(script_state);
+  if (!execution_context || !execution_context->IsDocument())
+    return nullptr;
+
+  Document* document = ToDocument(execution_context);
+  DCHECK(document);
+
+  LocalFrame* frame = document->GetFrame();
+  if (!frame)
+    return nullptr;
+
+  MediaCapabilitiesController* controller =
+      MediaCapabilitiesController::From(*frame);
+  return controller ? controller->Client() : nullptr;
+}
 
 constexpr const char* kApplicationMimeTypePrefix = "application/";
 constexpr const char* kAudioMimeTypePrefix = "audio/";
@@ -216,7 +238,14 @@ ScriptPromise MediaCapabilities::decodingInfo(
     return promise;
   }
 
-  Platform::Current()->MediaCapabilitiesClient()->DecodingInfo(
+  WebMediaCapabilitiesClient* client = GetMediaCapabilitiesClient(script_state);
+  if (!client) {
+    resolver->Reject(DOMException::Create(kInvalidStateError,
+                                          "The frame is in an invalid state."));
+    return promise;
+  }
+
+  client->DecodingInfo(
       ToWebMediaConfiguration(configuration),
       WTF::MakeUnique<CallbackPromiseAdapter<MediaCapabilitiesInfo, void>>(
           resolver));

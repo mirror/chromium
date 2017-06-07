@@ -25,6 +25,7 @@
 #include "media/base/renderer_factory_selector.h"
 #include "media/base/surface_manager.h"
 #include "media/blink/webencryptedmediaclient_impl.h"
+#include "media/blink/webmediacapabilitiesclient_impl.h"
 #include "media/blink/webmediaplayer_impl.h"
 #include "media/filters/context_3d.h"
 #include "media/renderers/default_renderer_factory.h"
@@ -269,6 +270,12 @@ blink::WebEncryptedMediaClient* MediaFactory::EncryptedMediaClient() {
                 .GetURL())));
   }
   return web_encrypted_media_client_.get();
+}
+
+blink::WebMediaCapabilitiesClient* MediaFactory::CreateCapabilitiesClient() {
+  // TODO(chcunningham): Inject a RendererFactorySelector to propogate
+  // capabilities query to the RendererFactory.
+  return new media::WebMediaCapabilitiesClientImpl();
 }
 
 std::unique_ptr<media::RendererFactorySelector>

@@ -668,6 +668,7 @@ class CONTENT_EXPORT RenderFrameImpl
       blink::WebSetSinkIdCallbacks* web_callbacks) override;
   blink::WebPageVisibilityState VisibilityState() const override;
   std::unique_ptr<blink::WebURLLoader> CreateURLLoader() override;
+  blink::WebMediaCapabilitiesClient* GetMediaCapabilitiesClient() override;
 
   // WebFrameSerializerClient implementation:
   void DidSerializeDataForFrame(
@@ -1416,6 +1417,8 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // Callbacks that we should call when we get a routing token.
   std::vector<media::RoutingTokenCallback> pending_routing_token_callbacks_;
+
+  std::unique_ptr<blink::WebMediaCapabilitiesClient> media_capabilities_client_;
 
   base::WeakPtrFactory<RenderFrameImpl> weak_factory_;
 
