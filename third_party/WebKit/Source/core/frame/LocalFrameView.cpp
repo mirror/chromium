@@ -159,17 +159,6 @@ constexpr int kLetterPortraitPageHeight = 792;
 
 namespace blink {
 
-namespace {
-
-void SetNeedsCompositingUpdate(blink::LayoutViewItem layout_view_item,
-                               blink::CompositingUpdateType update_type) {
-  if (PaintLayerCompositor* compositor =
-          !layout_view_item.IsNull() ? layout_view_item.Compositor() : nullptr)
-    compositor->SetNeedsCompositingUpdate(update_type);
-}
-
-}  // namespace
-
 using namespace HTMLNames;
 
 // The maximum number of updatePlugins iterations that should be done before
@@ -2139,6 +2128,14 @@ void LocalFrameView::UpdateCompositedSelectionIfNeeded() {
   }
 }
 
+void LocalFrameView::SetNeedsCompositingUpdate(
+    CompositingUpdateType update_type) {
+  bool document_detached =
+      frame_->GetDocument() && frame_->GetDocument()->IsDetached();
+  if (!document_detached && !GetLayoutViewItem().IsNull())
+    GetLayoutViewItem().Compositor()->SetNeedsCompositingUpdate(update_type);
+}
+
 PlatformChromeClient* LocalFrameView::GetChromeClient() const {
   Page* page = GetFrame().GetPage();
   if (!page)
@@ -2928,8 +2925,7 @@ void LocalFrameView::DidChangeGlobalRootScroller() {
   // Being the global root scroller will affect clipping size due to browser
   // controls behavior so we need to update compositing based on updated clip
   // geometry.
-  LayoutViewItem view = GetLayoutViewItem();
-  SetNeedsCompositingUpdate(view, kCompositingUpdateAfterGeometryChange);
+  SetNeedsCompositingUpdate(kCompositingUpdateAfterGeometryChange);
   if (RuntimeEnabledFeatures::SlimmingPaintInvalidationEnabled())
     SetNeedsPaintPropertyUpdate();
 
@@ -4817,7 +4813,7 @@ void LocalFrameView::SetParentVisible(bool visible) {
 
   // As parent visibility changes, we may need to recomposite this frame view
   // and potentially child frame views.
-  SetNeedsCompositingUpdate(GetLayoutViewItem(), kCompositingUpdateRebuildTree);
+  SetNeedsCompositingUpdate(kCompositingUpdateRebuildTree);
 
   parent_visible_ = visible;
 
@@ -4835,8 +4831,7 @@ void LocalFrameView::Show() {
     if (ScrollingCoordinator* scrolling_coordinator =
             this->GetScrollingCoordinator())
       scrolling_coordinator->FrameViewVisibilityDidChange();
-    SetNeedsCompositingUpdate(GetLayoutViewItem(),
-                              kCompositingUpdateRebuildTree);
+    SetNeedsCompositingUpdate(kCompositingUpdateRebuildTree);
     UpdateParentScrollableAreaSet();
     if (RuntimeEnabledFeatures::SlimmingPaintInvalidationEnabled() &&
         !RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
@@ -4863,8 +4858,7 @@ void LocalFrameView::Hide() {
     if (ScrollingCoordinator* scrolling_coordinator =
             this->GetScrollingCoordinator())
       scrolling_coordinator->FrameViewVisibilityDidChange();
-    SetNeedsCompositingUpdate(GetLayoutViewItem(),
-                              kCompositingUpdateRebuildTree);
+    SetNeedsCompositingUpdate(kCompositingUpdateRebuildTree);
     UpdateParentScrollableAreaSet();
     if (RuntimeEnabledFeatures::SlimmingPaintInvalidationEnabled() &&
         !RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
