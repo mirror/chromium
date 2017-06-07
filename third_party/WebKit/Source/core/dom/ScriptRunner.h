@@ -62,6 +62,7 @@ class CORE_EXPORT ScriptRunner final
   void Resume();
   void NotifyScriptReady(ScriptLoader*, AsyncExecutionType);
   void NotifyScriptLoadError(ScriptLoader*, AsyncExecutionType);
+  void NotifyScriptStreamerFinished();
 
   static void MovePendingScript(Document&, Document&, ScriptLoader*);
 
@@ -78,9 +79,17 @@ class CORE_EXPORT ScriptRunner final
 
   void PostTask(const WebTraceLocation&);
 
-  bool ExecuteTaskFromQueue(HeapDeque<Member<ScriptLoader>>*);
+  // Execute the first task in the queue. (For in-order scripts.)
+  bool ExecuteFirstTaskFromQueue(HeapDeque<Member<ScriptLoader>>*);
+  // Execzte any task in the queue. (For async scripts.)
+  bool ExecuteAnyTaskFromQueue(HeapDeque<Member<ScriptLoader>>*);
 
   void ExecuteTask();
+
+  // Try to start streaming the script in this ScriptLoader.
+  bool TryStream(ScriptLoader*);
+  // Try streaming any script that is being loaded.
+  void TryStreamMore();
 
   Member<Document> document_;
 
@@ -96,8 +105,14 @@ class CORE_EXPORT ScriptRunner final
   int number_of_in_order_scripts_with_pending_notification_;
 
   bool is_suspended_;
+
 #ifndef NDEBUG
-  bool has_ever_been_suspended_;
+  // We expect to have one posted task in flight for each script in either
+  // .._to_be_executed_soon_ queue. This invariant will be temporarily violated
+  // when the ScriptRunner is suspended, or when we take a Script out the
+  // async_scripts_to_be_executed_soon_ queue for streaming. We'll use this
+  // variable to account & check this invariant for debugging.
+  int number_of_extra_tasks_;
 #endif
 };
 
