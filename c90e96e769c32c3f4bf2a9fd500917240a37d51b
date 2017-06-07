@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86ef5747_1eb2a394",
+        "filename": "content/browser/renderer_host/media/audio_input_renderer_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-06-07T13:53:10Z",
+      "side": 1,
+      "message": "SHARED_MEMORY_CREATE_FAILED is not used anymore, right? Maybe we don\u0027t need to separate that and the _INIT_FAILED.\n\nShould SHARED_MEMORY_CREATE_FAILED be removed from elsewhere?",
+      "revId": "c90e96e769c32c3f4bf2a9fd500917240a37d51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1b31702_b3cc4714",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-06-07T13:53:10Z",
+      "side": 1,
+      "message": "Nit: {}\n\nSame below.",
+      "revId": "c90e96e769c32c3f4bf2a9fd500917240a37d51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a184b5_9c2ed4bb",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-06-07T13:53:10Z",
+      "side": 1,
+      "message": "It looks like we always take the socket when completing creation of the stream. It seems a bit awkward to hand the foreign socket to the writer just to grab it back a bit later. Would it make sense to let the host own it?",
+      "revId": "c90e96e769c32c3f4bf2a9fd500917240a37d51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
