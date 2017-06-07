@@ -19,8 +19,7 @@
 namespace blink {
 
 void PaintController::SetTracksRasterInvalidations(bool value) {
-  if (value ||
-      RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled()) {
+  if (value) {
     raster_invalidation_tracking_info_ =
         WTF::MakeUnique<RasterInvalidationTrackingInfo>();
 
@@ -33,6 +32,14 @@ void PaintController::SetTracksRasterInvalidations(bool value) {
     }
   } else {
     raster_invalidation_tracking_info_ = nullptr;
+  }
+}
+
+void PaintController::SetupRasterUnderInvalidationChecking() {
+  if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled() &&
+      !raster_invalidation_tracking_info_) {
+    raster_invalidation_tracking_info_ =
+        WTF::MakeUnique<RasterInvalidationTrackingInfo>();
   }
 }
 
@@ -607,10 +614,6 @@ void PaintController::CommitNewDisplayItems() {
   // The new list will not be appended to again so we can release unused memory.
   new_display_item_list_.ShrinkToFit();
 
-  if (raster_invalidation_tracking_info_) {
-    for (const auto& chunk : current_paint_artifact_.PaintChunks())
-      raster_invalidation_tracking_info_->map.Remove(&chunk);
-  }
   current_paint_artifact_ =
       PaintArtifact(std::move(new_display_item_list_),
                     new_paint_chunks_.ReleasePaintChunks());
@@ -676,6 +679,7 @@ void PaintController::AppendDebugDrawingAfterCommit(
     const DisplayItemClient& display_item_client,
     sk_sp<PaintRecord> record,
     const FloatRect& record_bounds) {
+  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
   DCHECK(new_display_item_list_.IsEmpty());
   DrawingDisplayItem& display_item =
       current_paint_artifact_.GetDisplayItemList()
@@ -772,8 +776,7 @@ void PaintController::TrackRasterInvalidation(const DisplayItemClient& client,
     info.client_debug_name = client.DebugName();
   }
 
-  raster_invalidation_tracking_info_->map.Add(&chunk).invalidations.push_back(
-      info);
+  chunk.raster_invalidation_tracking.push_back(info);
 }
 
 void PaintController::GenerateRasterInvalidationsComparingChunks(
