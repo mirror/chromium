@@ -57,6 +57,8 @@ void FrameSinkManagerHost::CreateCompositorFrameSink(
 void FrameSinkManagerHost::RegisterFrameSinkHierarchy(
     const cc::FrameSinkId& parent_frame_sink_id,
     const cc::FrameSinkId& child_frame_sink_id) {
+  frame_sink_hiearchy_[child_frame_sink_id] = parent_frame_sink_id;
+
   DCHECK(frame_sink_manager_ptr_);
   frame_sink_manager_ptr_->RegisterFrameSinkHierarchy(parent_frame_sink_id,
                                                       child_frame_sink_id);
@@ -65,6 +67,12 @@ void FrameSinkManagerHost::RegisterFrameSinkHierarchy(
 void FrameSinkManagerHost::UnregisterFrameSinkHierarchy(
     const cc::FrameSinkId& parent_frame_sink_id,
     const cc::FrameSinkId& child_frame_sink_id) {
+  auto iter = frame_sink_hiearchy_.find(child_frame_sink_id);
+  if (iter != frame_sink_hiearchy_.end()) {
+    DCHECK_EQ(iter->second, parent_frame_sink_id);
+    frame_sink_hiearchy_.erase(iter);
+  }
+
   DCHECK(frame_sink_manager_ptr_);
   frame_sink_manager_ptr_->UnregisterFrameSinkHierarchy(parent_frame_sink_id,
                                                         child_frame_sink_id);
