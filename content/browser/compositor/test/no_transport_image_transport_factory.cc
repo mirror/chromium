@@ -21,6 +21,8 @@ NoTransportImageTransportFactory::NoTransportImageTransportFactory()
     : frame_sink_manager_host_(base::MakeUnique<viz::FrameSinkManagerHost>()),
       context_factory_(base::MakeUnique<ui::InProcessContextFactory>(
           frame_sink_manager_host_.get())) {
+  // Create a synchronous connection for tests.
+  frame_sink_manager_host_->ConnectForTest();
   // The context factory created here is for unit tests, thus using a higher
   // refresh rate to spend less time waiting for BeginFrames.
   context_factory_->SetUseFastRefreshRateForTests();

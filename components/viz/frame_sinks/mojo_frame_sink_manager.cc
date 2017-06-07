@@ -43,7 +43,14 @@ void MojoFrameSinkManager::Connect(
     cc::mojom::FrameSinkManagerClientPtr client) {
   DCHECK(!binding_.is_bound());
   binding_.Bind(std::move(request));
-  client_ = std::move(client);
+  client_mojo_ = std::move(client);
+  client_ = client_mojo_.get();
+}
+
+void MojoFrameSinkManager::SetClientForTest(
+    cc::mojom::FrameSinkManagerClient* client) {
+  DCHECK(!binding_.is_bound());
+  client_ = client;
 }
 
 void MojoFrameSinkManager::CreateRootCompositorFrameSink(
