@@ -350,6 +350,14 @@ scoped_refptr<TaskQueue> RendererSchedulerImpl::NewLoadingTaskQueue(
   return loading_task_queue;
 }
 
+scoped_refptr<TaskQueue> RendererSchedulerImpl::NewLoadingControlTaskQueue(
+    TaskQueue::QueueType queue_type) {
+  scoped_refptr<TaskQueue> loading_control_task_queue(
+      NewLoadingTaskQueue(queue_type));
+  loading_control_task_queue->SetQueuePriority(TaskQueue::HIGH_PRIORITY);
+  return loading_control_task_queue;
+}
+
 scoped_refptr<TaskQueue> RendererSchedulerImpl::NewTimerTaskQueue(
     TaskQueue::QueueType queue_type) {
   helper_.CheckOnValidThread();
@@ -371,8 +379,6 @@ scoped_refptr<TaskQueue> RendererSchedulerImpl::NewTimerTaskQueue(
       TimeDomainType::THROTTLED) {
     task_queue_throttler_->IncreaseThrottleRefCount(timer_task_queue.get());
   }
-  if (GetMainThreadOnly().virtual_time_paused)
-    timer_task_queue->InsertFence(TaskQueue::InsertFencePosition::NOW);
   timer_task_queue->AddTaskObserver(
       &GetMainThreadOnly().timer_task_cost_estimator);
   AddQueueToWakeUpBudgetPool(timer_task_queue.get());
