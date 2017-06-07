@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4224e92_3d6c7b65",
+        "filename": "components/offline_pages/core/offline_page_model_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1321,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-07T18:01:28Z",
+      "side": 0,
+      "message": "I see you are dropping the test of initialization from command line, I agree it is somewhat redundant but is there some other reason as well?",
+      "revId": "8acf7ed04acf24171f8928a26329a731955470e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
