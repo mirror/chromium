@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "6da67323_a54eb0c3",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-07T21:47:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd07189c_8bd6b3ff",
+      "revId": "bea439ca53df8f716466baeaf20e1155811b20a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb7e1f01_ba436767",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
         "patchSetId": 5
@@ -47,6 +65,24 @@
       "writtenOn": "2017-06-06T17:09:24Z",
       "side": 1,
       "message": "How about\n  const bool always_force_new_chunk \u003d true;\nand replacing \u0027true\u0027 with \u0027always_force_new_chunk\u0027?\n(or defining an enum?)",
+      "revId": "bea439ca53df8f716466baeaf20e1155811b20a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1af6ac3_d2e61e9f",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-07T21:47:21Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "eb7e1f01_ba436767",
       "revId": "bea439ca53df8f716466baeaf20e1155811b20a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
