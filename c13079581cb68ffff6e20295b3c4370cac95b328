@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8517f793_e0e10e4a",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-07T16:32:34Z",
+      "side": 1,
+      "message": "Is it possible to bump this up to RenderWidgetHostViewBase?",
+      "revId": "c13079581cb68ffff6e20295b3c4370cac95b328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3808a793_73cd22d6",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-07T16:32:34Z",
+      "side": 1,
+      "message": "Same, can we put WebContentsAccessibility* in RenderWidgetHostViewBase and\nonly cast to WebContentsAccessibilityAndroid when\npassing something Android-specific?",
+      "revId": "c13079581cb68ffff6e20295b3c4370cac95b328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
