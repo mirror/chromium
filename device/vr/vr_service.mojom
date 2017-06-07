@@ -91,23 +91,24 @@ interface VRSubmitFrameClient {
 };
 
 interface VRDisplay {
-  RequestPresent(bool secureOrigin, VRSubmitFrameClient client) => (bool success);
+  RequestPresent(bool secureOrigin, VRSubmitFrameClient client,
+                 VRPresentationProvider& request) => (bool success);
   ExitPresent();
-  SubmitFrame(int16 frameId, gpu.mojom.MailboxHolder mailboxHolder);
-  UpdateLayerBounds(int16 frameId, VRLayerBounds leftBounds,
-                    VRLayerBounds rightBounds, int16 sourceWidth,
-                    int16 sourceHeight);
-  GetVRVSyncProvider(VRVSyncProvider& request);
+  GetNextMagicWindowPose() => (VRPose? pose);
 };
 
-interface VRVSyncProvider {
-  enum Status { SUCCESS, CLOSING };
+interface VRPresentationProvider {
+  enum VSyncStatus { SUCCESS, CLOSING };
 
   // The frameId maps a VSync to a frame arriving from the compositor. IDs will
   // be reused after the frame arrives from the compositor. Negative IDs imply
   // no mapping.
   GetVSync() => (VRPose? pose, mojo.common.mojom.TimeDelta time, int16 frameId,
-                 Status status);
+                 VSyncStatus status);
+  SubmitFrame(int16 frameId, gpu.mojom.MailboxHolder mailboxHolder);
+  UpdateLayerBounds(int16 frameId, VRLayerBounds leftBounds,
+                    VRLayerBounds rightBounds, int16 sourceWidth,
+                    int16 sourceHeight);
 };
 
 interface VRDisplayClient {
