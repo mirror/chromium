@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03083205_cf841144",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-07T15:56:39Z",
+      "side": 1,
+      "message": "nit: s/false/NO and s/true/YES for BOOL or s/BOOL/bool\nsorry for not noticing this in the previous patch.",
+      "range": {
+        "startLine": 195,
+        "startChar": 33,
+        "endLine": 195,
+        "endChar": 38
+      },
+      "revId": "3e0b35e25f95c06c19b60a18ed5ad3a43b4a44cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

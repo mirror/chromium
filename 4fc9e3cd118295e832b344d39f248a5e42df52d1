@@ -328,6 +328,30 @@
       "revId": "4fc9e3cd118295e832b344d39f248a5e42df52d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e6bab81_c8f36982",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-07T15:56:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fda523ca_c677de1f",
+      "range": {
+        "startLine": 305,
+        "startChar": 41,
+        "endLine": 305,
+        "endChar": 46
+      },
+      "revId": "4fc9e3cd118295e832b344d39f248a5e42df52d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
