@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6fc930d_057a122c",
+        "filename": "chrome/test/data/banners/appinstalled_test_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-06-07T03:44:54Z",
+      "side": 1,
+      "message": "Strictly speaking, this doesn\u0027t test that both the listener and and attribute both fire. It tests that we got 2 calls to onAppInstalled. I could imagine a situation where we get the bindings slightly wrong so that the attribute version isn\u0027t correct, but the event is. If we accidentally fire the event twice (which existed as a bug for WebAPKs), you could get 2 calls to onAppInstalled just from the event listener.\n\nCan you modify this so that the listener prepends \"a\" to the title and the attribute postpends \"b\" so it\u0027s absolutely clear we managed to get one call from each?",
+      "range": {
+        "startLine": 14,
+        "startChar": 19,
+        "endLine": 14,
+        "endChar": 35
+      },
+      "revId": "33633860acd875f9383cdbcc49497a77ac4863ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
