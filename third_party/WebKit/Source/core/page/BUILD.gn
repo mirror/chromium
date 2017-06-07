@@ -51,6 +51,8 @@ blink_core_sources("page") {
     "PageWidgetDelegate.h",
     "PointerLockController.cpp",
     "PointerLockController.h",
+    "PopupMenuImpl.cpp",
+    "PopupMenuImpl.h",
     "PopupOpeningObserver.h",
     "PrintContext.cpp",
     "PrintContext.h",
