@@ -188,6 +188,8 @@ TEST_F(DisplayTest, DisplayDamaged) {
 
   StubDisplayClient client;
   display_->Initialize(&client, &manager_);
+  manager_.RegisterBeginFrameSource(begin_frame_source_.get(),
+                                    kArbitraryFrameSinkId);
   display_->SetColorSpace(color_space_1, color_space_1);
 
   LocalSurfaceId local_surface_id(id_allocator_.GenerateId());
@@ -456,6 +458,8 @@ TEST_F(DisplayTest, Finish) {
 
   StubDisplayClient client;
   display_->Initialize(&client, &manager_);
+  manager_.RegisterBeginFrameSource(begin_frame_source_.get(),
+                                    kArbitraryFrameSinkId);
 
   display_->SetLocalSurfaceId(local_surface_id1, 1.f);
 
@@ -505,6 +509,7 @@ TEST_F(DisplayTest, Finish) {
 
   EXPECT_CALL(*context_ptr, shallowFinishCHROMIUM());
   display_->Resize(gfx::Size(250, 250));
+  manager_.UnregisterBeginFrameSource(begin_frame_source_.get());
   testing::Mock::VerifyAndClearExpectations(context_ptr);
   TearDownDisplay();
 }
@@ -526,6 +531,8 @@ TEST_F(DisplayTest, ContextLossInformsClient) {
 
   CountLossDisplayClient client;
   display_->Initialize(&client, &manager_);
+  manager_.RegisterBeginFrameSource(begin_frame_source_.get(),
+                                    kArbitraryFrameSinkId);
 
   // Verify DidLoseOutputSurface callback is hooked up correctly.
   EXPECT_EQ(0, client.loss_count());
