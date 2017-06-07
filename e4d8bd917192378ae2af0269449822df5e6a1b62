@@ -22,6 +22,30 @@
       "revId": "e4d8bd917192378ae2af0269449822df5e6a1b62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a47bd310_8c47d935",
+        "filename": "content/browser/android/android_overlay_provider_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-07T16:59:50Z",
+      "side": 1,
+      "message": "hmm, java side is a singleton already, so you could just make the jni call static, and not worry about holding a reference at all in native code?",
+      "parentUuid": "a40b64f9_9f06e37e",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 25
+      },
+      "revId": "e4d8bd917192378ae2af0269449822df5e6a1b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
