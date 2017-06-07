@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c78c9df_def58a3c",
+        "filename": "components/viz/frame_sinks/mojo_frame_sink_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-07T20:57:56Z",
+      "side": 1,
+      "message": "I merged these 2 back together now that I understand what they do.",
+      "revId": "c1fd736b0f7ef518015d5b271b523edf8a7e8427",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
