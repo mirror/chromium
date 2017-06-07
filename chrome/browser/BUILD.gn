@@ -460,8 +460,6 @@ split_static_library("browser") {
     "gpu/gpu_mode_manager.cc",
     "gpu/gpu_mode_manager.h",
     "gpu/gpu_profile_cache.h",
-    "gpu/three_d_api_observer.cc",
-    "gpu/three_d_api_observer.h",
     "hang_monitor/hang_crash_dump_win.cc",
     "hang_monitor/hang_crash_dump_win.h",
     "history/browsing_history_service.cc",

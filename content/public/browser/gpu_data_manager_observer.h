@@ -9,8 +9,6 @@
 #include "content/common/content_export.h"
 #include "content/public/common/three_d_api_types.h"
 
-class GURL;
-
 namespace content {
 
 // Observers can register themselves via GpuDataManager::AddObserver, and
@@ -19,13 +17,6 @@ class CONTENT_EXPORT GpuDataManagerObserver {
  public:
   // Called for any observers whenever there is a GPU info update.
   virtual void OnGpuInfoUpdate() {}
-
-  // Indicates that client 3D APIs (Pepper 3D, WebGL) were just blocked on the
-  // given page, specifically because the GPU was reset recently.
-  virtual void DidBlock3DAPIs(const GURL& top_origin_url,
-                              int render_process_id,
-                              int render_frame_id,
-                              ThreeDAPIType requester) {}
 
   // Called for any observer when the GPU process crashed.
   virtual void OnGpuProcessCrashed(base::TerminationStatus exit_code) {}

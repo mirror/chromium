@@ -51,6 +51,7 @@ class CORE_EXPORT CanvasRenderingContextHost : public GarbageCollectedMixin {
   virtual ImageBuffer* GetOrCreateImageBuffer() = 0;
 
   virtual bool IsWebGLAllowed() const = 0;
+  virtual void SetContextCreationWasBlocked() {}
 
   // TODO(fserb): remove this.
   virtual bool IsOffscreenCanvas() const { return false; }

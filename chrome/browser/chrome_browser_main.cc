@@ -67,7 +67,6 @@
 #include "chrome/browser/first_run/first_run.h"
 #include "chrome/browser/geolocation/chrome_access_token_store.h"
 #include "chrome/browser/gpu/gpu_profile_cache.h"
-#include "chrome/browser/gpu/three_d_api_observer.h"
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/metrics/field_trial_synchronizer.h"
@@ -1352,8 +1351,6 @@ void ChromeBrowserMainParts::PreBrowserStart() {
   TRACE_EVENT0("startup", "ChromeBrowserMainParts::PreBrowserStart");
   for (size_t i = 0; i < chrome_extra_parts_.size(); ++i)
     chrome_extra_parts_[i]->PreBrowserStart();
-
-  three_d_observer_.reset(new ThreeDAPIObserver());
 
 #if defined(SYZYASAN)
   SetupSyzyASAN();

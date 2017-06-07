@@ -23476,12 +23476,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="GPU.ThreeDAPIInfoBarDismissal"
-    enum="GPUThreeDAPIInfoBarDismissal">
-  <owner>vmiura@chromium.org</owner>
-  <summary>Counts user actions when a 3D API info bar is raised.</summary>
-</histogram>
-
 <histogram name="GPU.WaitForVBlankErrorCode" enum="WaitForVBlankErrorCode">
   <owner>stanisc@chromium.org</owner>
   <summary>
