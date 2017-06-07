@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "270bf7bf_d84a59eb",
+        "filename": "chrome/browser/ui/views/payments/error_message_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-06-07T19:43:17Z",
+      "side": 1,
+      "message": "\"auto button \u003d \" is shorter, if it works.",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 40
+      },
+      "revId": "6b291d948c345324a1843b00f02ba1b569526b56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21b28ef8_cd6d6b7a",
+        "filename": "chrome/browser/ui/views/payments/payment_request_sheet_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-06-07T19:43:17Z",
+      "side": 1,
+      "message": "A brief comment please.",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 43
+      },
+      "revId": "6b291d948c345324a1843b00f02ba1b569526b56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
