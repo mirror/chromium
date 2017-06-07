@@ -706,22 +706,37 @@ static CSSValue* ConsumeOffsetRotate(CSSParserTokenRange& range,
   return list;
 }
 
-// offset: <offset-path> <offset-distance> <offset-rotate>
+// offset: <offset-path> [<offset-distance> || <offset-rotate>]?
 bool CSSPropertyParser::ConsumeOffsetShorthand(bool important) {
   const CSSValue* offset_path =
       CSSPropertyOffsetPathUtils::ConsumeOffsetPath(range_, context_);
   const CSSValue* offset_distance =
       ConsumeLengthOrPercent(range_, context_->Mode(), kValueRangeAll);
   const CSSValue* offset_rotate = ConsumeOffsetRotate(range_, *context_);
-  if (!offset_path || !offset_distance || !offset_rotate || !range_.AtEnd())
+  if (offset_rotate && !offset_distance) {
+    offset_distance =
+        ConsumeLengthOrPercent(range_, context_->Mode(), kValueRangeAll);
+  }
+  if (!offset_path || !range_.AtEnd())
     return false;
 
   AddParsedProperty(CSSPropertyOffsetPath, CSSPropertyOffset, *offset_path,
                     important);
-  AddParsedProperty(CSSPropertyOffsetDistance, CSSPropertyOffset,
-                    *offset_distance, important);
-  AddParsedProperty(CSSPropertyOffsetRotate, CSSPropertyOffset, *offset_rotate,
-                    important);
+  if (offset_distance) {
+    AddParsedProperty(CSSPropertyOffsetDistance, CSSPropertyOffset,
+                      *offset_distance, important);
+  } else {
+    AddParsedProperty(CSSPropertyOffsetDistance, CSSPropertyOffset,
+                      *CSSInitialValue::Create(), important);
+  }
+
+  if (offset_rotate) {
+    AddParsedProperty(CSSPropertyOffsetRotate, CSSPropertyOffset,
+                      *offset_rotate, important);
+  } else {
+    AddParsedProperty(CSSPropertyOffsetRotate, CSSPropertyOffset,
+                      *CSSInitialValue::Create(), important);
+  }
 
   return true;
 }
