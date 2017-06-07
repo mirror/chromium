@@ -16,6 +16,24 @@
       "revId": "dbda1f0a283ca562f93a20b28f5cf785f0109cb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f23ace0_5ab09f93",
+        "filename": "cc/input/single_scrollbar_animation_controller_thinning.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-07T18:18:57Z",
+      "side": 1,
+      "message": "Yeah we could put this in LayerTreeHostImpl::MouseMoveAt--there\u0027s already an UpdateDrawProperties hiding in there (via FindLayerThatIsHitByPoint). Is that a more logical place though? It is pretty far from this call to ComputeExpandedThumbQuadRect which is only needed for overlay scrollbars.\n\nWe could just update the scrollbar geometries in ScrollbarAnimationController::DidMouseMove but that would require adding UpdateScrollbarGeometries to ScrollbarAnimationControllerClient.\n\nMeta question: do we have any guarantees about the tree state when mouse events occur? From the tests it looks like we are not guaranteed to have done a commit nor to have drawn, but I am not sure the tests are representative of the actual code.",
+      "parentUuid": "2d973b96_c32a4a12",
+      "revId": "dbda1f0a283ca562f93a20b28f5cf785f0109cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
