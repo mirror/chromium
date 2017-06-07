@@ -1901,10 +1901,7 @@
     },
 
     'v8_future': {
-      # TODO(machenbach): Switch back to v8_enable_future=true when
-      # turbofan+ignition are stable.
-      # http://crbug.com/682617
-      'gn_args': 'v8_disable_turbo=true',
+      'gn_args': 'v8_enable_future=true',
     },
 
     'v8_heap': {
