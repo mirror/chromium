@@ -46,6 +46,30 @@
       "revId": "83b0613925d4098f95e8c9645ecd3ea54e152dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c6de32e_4e1481c4",
+        "filename": "services/ui/ws/window_manager_display_root.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-07T20:33:42Z",
+      "side": 1,
+      "message": "I would expect mus to changes the bounds of 0:2 and 0:3. I would expect ash to update the bounds of 1:1 (animations are another cases where mus would update the bounds after a delay). I believe the calls to ash updating the bounds of 1:1 come through via https://cs.chromium.org/chromium/src/ash/host/transformer_helper.cc?q\u003dTransformerHelper\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d114 . Maybe that doesn\u0027t makes it way to a mus correctly?",
+      "parentUuid": "7cd14873_6c45675e",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "83b0613925d4098f95e8c9645ecd3ea54e152dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
