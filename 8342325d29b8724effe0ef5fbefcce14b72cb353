@@ -70,6 +70,24 @@
       "revId": "8342325d29b8724effe0ef5fbefcce14b72cb353",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "702332a1_348e8bb6",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-07T23:16:33Z",
+      "side": 1,
+      "message": "I agree that LocalFrameView will not run script.  But plugins can.  The code does not skip remoteframe and plugin children.  The old code works:\n\n1/ LayoutEmbeddedContent objects (previously LayoutPart) register themselves with LocalFrameView::AddPart which stores into LocalFrameView::parts_.\n\nSee: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/LayoutEmbeddedContent.cpp?l\u003d52\u0026rcl\u003dd2529b8590c349d96f6144c09e8df6e982b15145\n\nNote that subclass LayoutEmbeddedObject does this for plugins.\n\n2/ LocalFrameView::UpdateGeometries iterates all |parts_| and calls UpdateGeometry.\n\nSee: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/frame/LocalFrameView.cpp?l\u003d1482\u0026rcl\u003dd2529b8590c349d96f6144c09e8df6e982b15145\n\nThere is special case handling here for when the part\u0027s EmbeddedContentView is a LocalFrameView.  The special handling calls CheckDoesNotNeedLayout at the end which is a debug level enforcement.\n\nFor plugins, the PluginView::GeometryMayHaveChanged method is called from https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/LayoutEmbeddedContent.cpp?l\u003d368\u0026rcl\u003dd2529b8590c349d96f6144c09e8df6e982b15145\n\n\u003d\u003d\u003d\u003d\u003d\n\nI think the current code that I have is the simplest way to remove the LocalFrameView::parts_ field and use FrameTree instead.  If you like the current approach, I can go ahead and submit this CL.\n\nI\u0027m also considering doing a major change of the code here and in LayoutEmbeddedContent::UpdateGeometry and try to cleanly separate the handling of LocalFrameView, RemoteFrameView and PluginView.  I might try that in a new CL, and then you guys can pick what you like best.",
+      "parentUuid": "166a9e95_5609612a",
+      "revId": "8342325d29b8724effe0ef5fbefcce14b72cb353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
