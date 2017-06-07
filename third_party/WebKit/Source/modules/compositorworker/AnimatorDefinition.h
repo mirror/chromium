@@ -5,6 +5,7 @@
 #ifndef AnimatorDefinition_h
 #define AnimatorDefinition_h
 
+#include "modules/ModulesExport.h"
 #include "platform/bindings/ScopedPersistent.h"
 #include "platform/heap/Handle.h"
 #include "v8/include/v8.h"
@@ -16,7 +17,7 @@ namespace blink {
 // proper type.
 // It can be used to instantiate new animators and also to call the Javascript
 // 'animate' callback on a given instance.
-class AnimatorDefinition final
+class MODULES_EXPORT AnimatorDefinition final
     : public GarbageCollectedFinalized<AnimatorDefinition> {
  public:
   AnimatorDefinition(v8::Isolate*,
@@ -26,6 +27,7 @@ class AnimatorDefinition final
   DEFINE_INLINE_TRACE() {}
 
   v8::Local<v8::Function> ConstructorLocal(v8::Isolate*);
+  v8::Local<v8::Function> AnimateLocal(v8::Isolate*);
 
  private:
   // This object keeps the constructor function, and animate function alive.
