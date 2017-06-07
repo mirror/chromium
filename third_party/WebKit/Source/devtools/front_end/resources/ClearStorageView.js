@@ -3,16 +3,19 @@
 // found in the LICENSE file.
 /**
  * @implements {SDK.TargetManager.Observer}
- * @unrestricted
  */
-Resources.ClearStorageView = class extends UI.VBox {
+Resources.ClearStorageView = class extends UI.ThrottledWidget {
   constructor() {
-    super(true);
+    super(true, 1000);
 
     this._reportView = new UI.ReportView(Common.UIString('Clear storage'));
     this._reportView.registerRequiredCSS('resources/clearStorageView.css');
     this._reportView.element.classList.add('clear-storage-header');
     this._reportView.show(this.contentElement);
+    /** @type {?SDK.Target} */
+    this._target = null;
+    /** @type {?string} */
+    this._securityOrigin = null;
 
     this._settings = new Map();
     for (var type
@@ -22,6 +25,8 @@ Resources.ClearStorageView = class extends UI.VBox {
                  Protocol.Storage.StorageType.Websql])
       this._settings.set(type, Common.settings.createSetting('clear-storage-' + type, true));
 
+    var quota = this._reportView.appendSection(Common.UIString('Usage'));
+    this._quotaRow = quota.appendRow();
 
     var application = this._reportView.appendSection(Common.UIString('Application'));
     this._appendItem(application, Common.UIString('Unregister service workers'), 'service_workers');
@@ -41,6 +46,7 @@ Resources.ClearStorageView = class extends UI.VBox {
     this._clearButton = UI.createTextButton(
         Common.UIString('Clear site data'), this._clear.bind(this), Common.UIString('Clear site data'));
     footer.appendChild(this._clearButton);
+    this.doUpdate();
   }
 
   /**
@@ -96,6 +102,8 @@ Resources.ClearStorageView = class extends UI.VBox {
   }
 
   _clear() {
+    if (!this._securityOrigin)
+      return;
     var storageTypes = [];
     for (var type of this._settings.keys()) {
       if (this._settings.get(type).get())
@@ -154,5 +162,33 @@ Resources.ClearStorageView = class extends UI.VBox {
       this._clearButton.disabled = false;
       this._clearButton.textContent = label;
     }, 500);
+  }
+
+  /**
+   * @override
+   * @return {!Promise<?>}
+   */
+  async doUpdate() {
+    if (!this._securityOrigin)
+      return;
+
+    var origin = /** @type {string} */ (this._securityOrigin);
+    var response = await this._target.storageAgent().invoke_getUsageAndQuota({origin});
+    if (response[Protocol.Error]) {
+      this._quotaRow.textContent = '';
+      return;
+    }
+    this._quotaRow.textContent = Common.UIString(
+        '%s storage quota used out of %s', Number.bytesToString(response.usage), Number.bytesToString(response.quota));
+
+    this._usageUpdatedForTest(response.usage, response.quota);
+    this.update();
+  }
+
+  /**
+   * @param {number} usage
+   * @param {number} quota
+   */
+  _usageUpdatedForTest(usage, quota) {
   }
 };

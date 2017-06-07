@@ -7,10 +7,11 @@
 UI.ThrottledWidget = class extends UI.VBox {
   /**
    * @param {boolean=} isWebComponent
+   * @param {number=} timeout
    */
-  constructor(isWebComponent) {
+  constructor(isWebComponent, timeout = 100) {
     super(isWebComponent);
-    this._updateThrottler = new Common.Throttler(100);
+    this._updateThrottler = new Common.Throttler(timeout);
     this._updateWhenVisible = false;
   }
 
