@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da9a259c_b0e3fa43",
+        "filename": "third_party/WebKit/Source/core/exported/ExternalPopupMenu.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-07T07:37:39Z",
+      "side": 1,
+      "message": "I\u0027d prefer putting this file in core/page/ (assuming that we move PopupMenu to core/page/ in a follow-up CL). ExternalPopupMenu is an implementation of PopupMenu so the two should exist in the same directory.",
+      "revId": "16465ac18bed7bb1a3148e76b13b7dab0c411650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e626fa_8213c89b",
+        "filename": "third_party/WebKit/Source/core/page/PopupMenuImpl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-07T07:37:39Z",
+      "side": 1,
+      "message": "BTW is there any benefit of putting PopupMenu in platform/?\n\nI think we can just move PopupMenu to core/page/ and merge PopupMenuImpl into PopupMenu.",
+      "revId": "16465ac18bed7bb1a3148e76b13b7dab0c411650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
