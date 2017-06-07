@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0b912c3_8de1fa2b",
+        "filename": "content/test/gpu/gpu_tests/gpu_process_integration_test.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-07T20:58:16Z",
+      "side": 1,
+      "message": "Could you undo this no-op change?",
+      "revId": "df3e19a6136e254102cc3ee335ce44343d65feae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
