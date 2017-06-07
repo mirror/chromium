@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html>
-<head>
-<script src="../resources/run-after-layout-and-paint.js"></script>
+<html class="reftest-wait">
+<link rel="match" href="valid-image-after-load-ref.html">
 <style>
     #output {
         width: 100px;
@@ -9,7 +8,8 @@
         background-color: red;
     }
 </style>
-</head>
+<script src="/common/reftest-wait.js"></script>
+<script src="/common/css-paint-tests.js"></script>
 <body>
 <div id="output"></div>
 
@@ -27,16 +27,14 @@ if (window.testRunner) {
   testRunner.waitUntilDone();
 }
 
-var el = document.getElementById('output');
-el.style.backgroundImage = 'paint(green)';
-
 var blob = new Blob([document.getElementById('code').textContent],
                     {type: 'text/javascript'});
+var frame_cnt = 0;
 paintWorklet.addModule(URL.createObjectURL(blob)).then(function() {
-    runAfterLayoutAndPaint(function() {
-        if (window.testRunner) {
-            testRunner.notifyDone();
-        }
+    var el = document.getElementById('output');
+    el.style.backgroundImage = 'paint(green)';
+    requestAnimationFrame(function() {
+        takeScreenshot(frame_cnt);
     });
 });
 </script>
