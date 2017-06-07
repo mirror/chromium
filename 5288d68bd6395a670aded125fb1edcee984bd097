@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e1b4978e_41ac25b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-07T21:45:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1433aa22_9d850720",
+      "range": {
+        "startLine": 17,
+        "startChar": 84,
+        "endLine": 17,
+        "endChar": 85
+      },
+      "revId": "5288d68bd6395a670aded125fb1edcee984bd097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd4bff27_21030fe9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "5288d68bd6395a670aded125fb1edcee984bd097",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2158cf1_90a68329",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-07T21:45:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd4bff27_21030fe9",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 59
+      },
+      "revId": "5288d68bd6395a670aded125fb1edcee984bd097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "7d5c6bac_12b20fe2",
+        "filename": "chrome/browser/android/download/service/download_background_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-07T21:45:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5ae21f7_a3845f26",
+      "range": {
+        "startLine": 52,
+        "startChar": 50,
+        "endLine": 52,
+        "endChar": 65
+      },
+      "revId": "5288d68bd6395a670aded125fb1edcee984bd097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ae854f9_7645ad9a",
         "filename": "chrome/browser/android/download/service/download_background_task.h",
         "patchSetId": 5
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "ca5138d0_b14edeb3",
+        "filename": "chrome/browser/android/download/service/download_background_task.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-07T21:45:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ae854f9_7645ad9a",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 28
+      },
+      "revId": "5288d68bd6395a670aded125fb1edcee984bd097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be1e2f3a_881c4390",
         "filename": "chrome/browser/android/download/service/download_task_scheduler.cc",
         "patchSetId": 5
@@ -137,6 +233,30 @@
       "revId": "5288d68bd6395a670aded125fb1edcee984bd097",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4741c858_87ed8a8b",
+        "filename": "chrome/browser/android/download/service/download_task_scheduler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-07T21:45:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be1e2f3a_881c4390",
+      "range": {
+        "startLine": 13,
+        "startChar": 49,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "5288d68bd6395a670aded125fb1edcee984bd097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -302,6 +422,30 @@
     },
     {
       "key": {
+        "uuid": "61fa78c0_49dc7aa8",
+        "filename": "components/download/internal/controller_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-07T21:45:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7d07ee1_4e44d849",
+      "range": {
+        "startLine": 113,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 21
+      },
+      "revId": "5288d68bd6395a670aded125fb1edcee984bd097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c296f0e9_ab1932de",
         "filename": "components/download/public/download_service.h",
         "patchSetId": 5
@@ -313,6 +457,30 @@
       "writtenOn": "2017-06-07T07:03:29Z",
       "side": 1,
       "message": "Does it explicitly do this?  Or is that what the chrome/ layer does?",
+      "range": {
+        "startLine": 69,
+        "startChar": 47,
+        "endLine": 69,
+        "endChar": 66
+      },
+      "revId": "5288d68bd6395a670aded125fb1edcee984bd097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6b56ada_0ce9952b",
+        "filename": "components/download/public/download_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-07T21:45:07Z",
+      "side": 1,
+      "message": "Yea, but I thought of this info might be useful here. Modified a bit, let me know if you think we should remove the details.",
+      "parentUuid": "c296f0e9_ab1932de",
       "range": {
         "startLine": 69,
         "startChar": 47,
