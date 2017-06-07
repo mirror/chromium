@@ -11,21 +11,19 @@
 
 namespace viz {
 
-FrameSinkManagerHost::FrameSinkManagerHost()
-    : binding_(this),
-      frame_sink_manager_(false,  // Use surface sequences.
-                          nullptr) {}
+FrameSinkManagerHost::FrameSinkManagerHost() : binding_(this) {}
 
-FrameSinkManagerHost::~FrameSinkManagerHost() {}
+FrameSinkManagerHost::~FrameSinkManagerHost() = default;
 
-cc::SurfaceManager* FrameSinkManagerHost::surface_manager() {
-  return frame_sink_manager_.surface_manager();
+cc::mojom::FrameSinkManagerClientPtr
+FrameSinkManagerHost::GetClientInterfacePtr() {
+  DCHECK(!binding_.is_bound());
+  return binding_.CreateInterfacePtrAndBind();
 }
 
-void FrameSinkManagerHost::ConnectToFrameSinkManager() {
-  DCHECK(!frame_sink_manager_ptr_.is_bound());
-  frame_sink_manager_.Connect(mojo::MakeRequest(&frame_sink_manager_ptr_),
-                              binding_.CreateInterfacePtrAndBind());
+void FrameSinkManagerHost::SetFrameSinkManager(
+    cc::mojom::FrameSinkManagerPtr ptr) {
+  frame_sink_manager_ptr_ = std::move(ptr);
 }
 
 void FrameSinkManagerHost::AddObserver(FrameSinkObserver* observer) {

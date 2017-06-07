@@ -44,9 +44,12 @@ class VIZ_EXPORT MojoFrameSinkManager
 
   cc::SurfaceManager* surface_manager() { return &manager_; }
 
-  // Binds to |request| and store connection back to |client|.
-  void Connect(cc::mojom::FrameSinkManagerRequest request,
-               cc::mojom::FrameSinkManagerClientPtr client);
+  // Call this before BindRequest().
+  void SetClient(cc::mojom::FrameSinkManagerClientPtr client);
+
+  // Binds |this| as a FrameSinkManager for a given |request|. This may
+  // only be called once.
+  void BindRequest(cc::mojom::FrameSinkManagerRequest request);
 
   // cc::mojom::FrameSinkManager implementation:
   void CreateRootCompositorFrameSink(
