@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d27e188_78a16c9a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-07T03:12:57Z",
+      "side": 1,
+      "message": "So does this affect Cocoa Mac as well? (that bug currently doesn\u0027t have Mac at all :)\n\nThe CL description should follow the guide at https://www.chromium.org/developers/contributing-code#TOC-Writing-change-list-descriptions\n\nE.g.\n\ndescription of previous behavior \u003d \"On Mac, Page Zoom via Cmd +/- currently does Foo (for both Views and Cocoa)\"\n\nwhy the change is made \u003d \"it should do Bar\"\n\nnewly introduced differences \u003d \"Pass the Baz through for Views, and make X inherit from Y for Cocoa so that Bar happens\".",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "2157daaf07f9f47a9e6ed57fe789601962329476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d304455_70b6b64e",
+        "filename": "chrome/browser/ui/cocoa/browser/zoom_bubble_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-07T03:12:57Z",
+      "side": 1,
+      "message": "nit: move the definition of decorationForBubble down here with the other overrides.\n\nI guess put\n\n// OmniboxDecorationBubbleController implementation.\n\nabove it.\n\nand\n\n// NSWindowController implementation.\n\nabove windowWillClose.",
+      "revId": "2157daaf07f9f47a9e6ed57fe789601962329476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
