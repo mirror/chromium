@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f38c6f56_cbe6a985",
+        "filename": "chrome/browser/ui/ash/launcher/extension_app_window_launcher_item_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-06-07T23:58:40Z",
+      "side": 1,
+      "message": "nit: avoid extra GetTitle() call:\n\nif (show_in_shelf) {\n  title \u003d GetTitle();\n  if (!title.empty)\n    SetItemTitle(title)\n}",
+      "range": {
+        "startLine": 89,
+        "startChar": 46,
+        "endLine": 89,
+        "endChar": 54
+      },
+      "revId": "a06a488df8cc911d98ce5b7cb8a7348dc8edf154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
