@@ -104,6 +104,24 @@
       "revId": "adcc68f774147373ae8c1e4f6340b2773236da72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28bd6a7e_551cc738",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-07T05:17:00Z",
+      "side": 1,
+      "message": "I see that\u0027s a valid concern. No, in general these supplemental registrations (Provide*) don\u0027t (or shouldn\u0027t) have order dependency to each other, and if we have we probably rather want to fix it.",
+      "parentUuid": "5411a8c2_7d66a1c1",
+      "revId": "adcc68f774147373ae8c1e4f6340b2773236da72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbc1ab85_c32fe846",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-07T05:17:00Z",
+      "side": 1,
+      "message": "These methods are no longer necessary either",
+      "revId": "a827bb111607c155d341b062ec2a246d7927226b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
