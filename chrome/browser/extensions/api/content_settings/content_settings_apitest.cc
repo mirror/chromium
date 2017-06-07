@@ -94,6 +94,9 @@ class ExtensionContentSettingsApiTest : public ExtensionApiTest {
                                      example_url,
                                      CONTENT_SETTINGS_TYPE_POPUPS,
                                      std::string()));
+    EXPECT_EQ(CONTENT_SETTING_BLOCK,
+              map->GetContentSetting(example_url, example_url,
+                                     CONTENT_SETTINGS_TYPE_ADS, std::string()));
     EXPECT_EQ(CONTENT_SETTING_ASK,
               map->GetContentSetting(example_url,
                                      example_url,
@@ -145,6 +148,9 @@ class ExtensionContentSettingsApiTest : public ExtensionApiTest {
     EXPECT_EQ(CONTENT_SETTING_ALLOW,
               map->GetContentSetting(
                   url, url, CONTENT_SETTINGS_TYPE_POPUPS, std::string()));
+    EXPECT_EQ(CONTENT_SETTING_ALLOW,
+              map->GetContentSetting(url, url, CONTENT_SETTINGS_TYPE_ADS,
+                                     std::string()));
     EXPECT_EQ(CONTENT_SETTING_BLOCK,
               map->GetContentSetting(
                   url, url, CONTENT_SETTINGS_TYPE_GEOLOCATION, std::string()));
@@ -192,6 +198,9 @@ class ExtensionContentSettingsApiTest : public ExtensionApiTest {
     EXPECT_EQ(CONTENT_SETTING_BLOCK,
               map->GetContentSetting(
                   url, url, CONTENT_SETTINGS_TYPE_POPUPS, std::string()));
+    EXPECT_EQ(CONTENT_SETTING_BLOCK,
+              map->GetContentSetting(url, url, CONTENT_SETTINGS_TYPE_ADS,
+                                     std::string()));
     EXPECT_EQ(CONTENT_SETTING_ASK,
               map->GetContentSetting(
                   url, url, CONTENT_SETTINGS_TYPE_GEOLOCATION, std::string()));

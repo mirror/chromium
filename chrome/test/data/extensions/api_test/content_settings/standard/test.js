@@ -12,6 +12,7 @@ var default_content_settings = {
   "javascript": "block",
   "plugins": "allow",
   "popups": "block",
+  "ads": "block",
   "location": "ask",
   "notifications": "ask",
   "fullscreen": "ask",
@@ -28,6 +29,7 @@ var settings = {
   "javascript": "block",
   "plugins": "detect_important_content",
   "popups": "allow",
+  "ads": "allow",
   "location": "block",
   "notifications": "block",
   "fullscreen": "block",  // Should be ignored.
