@@ -9513,7 +9513,10 @@ TEST_F(LayerTreeHostCommonTest, LayerWithInputHandlerAndZeroOpacity) {
   test_layer->test_properties()->transform = translation;
   test_layer->SetBounds(gfx::Size(20, 20));
   test_layer->SetDrawsContent(true);
-  test_layer->SetTouchEventHandlerRegion(gfx::Rect(0, 0, 20, 20));
+
+  RegionMap region_map;
+  region_map[kTouchActionNone] = gfx::Rect(0, 0, 20, 20);
+  test_layer->SetTouchEventHandlerRegionMap(region_map);
   test_layer->test_properties()->opacity = 0.f;
 
   ExecuteCalculateDrawProperties(root);

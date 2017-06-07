@@ -28,6 +28,7 @@
 #include "cc/layers/layer_impl_test_properties.h"
 #include "cc/layers/layer_position_constraint.h"
 #include "cc/layers/performance_properties.h"
+#include "cc/layers/region_map_utils.h"
 #include "cc/layers/render_surface_impl.h"
 #include "cc/quads/shared_quad_state.h"
 #include "cc/resources/resource_provider.h"
@@ -322,11 +323,11 @@ class CC_EXPORT LayerImpl {
     return non_fast_scrollable_region_;
   }
 
-  void SetTouchEventHandlerRegion(const Region& region) {
-    touch_event_handler_region_ = region;
+  void SetTouchEventHandlerRegionMap(const RegionMap& region_map) {
+    touch_event_handler_region_map_ = region_map;
   }
-  const Region& touch_event_handler_region() const {
-    return touch_event_handler_region_;
+  const RegionMap& touch_event_handler_region_map() const {
+    return touch_event_handler_region_map_;
   }
 
   bool HasPotentiallyRunningTransformAnimation() const;
@@ -503,7 +504,7 @@ class CC_EXPORT LayerImpl {
   uint8_t viewport_layer_type_ : 3;  // ViewportLayerType
 
   Region non_fast_scrollable_region_;
-  Region touch_event_handler_region_;
+  RegionMap touch_event_handler_region_map_;
   SkColor background_color_;
   SkColor safe_opaque_background_color_;
 

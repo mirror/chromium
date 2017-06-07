@@ -317,7 +317,7 @@ void LayerImpl::PushPropertiesTo(LayerImpl* layer) {
   layer->should_check_backface_visibility_ = should_check_backface_visibility_;
   layer->draws_content_ = draws_content_;
   layer->non_fast_scrollable_region_ = non_fast_scrollable_region_;
-  layer->touch_event_handler_region_ = touch_event_handler_region_;
+  layer->touch_event_handler_region_map_ = touch_event_handler_region_map_;
   layer->background_color_ = background_color_;
   layer->safe_opaque_background_color_ = safe_opaque_background_color_;
   layer->position_ = position_;
@@ -393,8 +393,10 @@ std::unique_ptr<base::DictionaryValue> LayerImpl::LayerTreeAsJson() {
   if (scrollable())
     result->SetBoolean("Scrollable", true);
 
-  if (!touch_event_handler_region_.IsEmpty()) {
-    std::unique_ptr<base::Value> region = touch_event_handler_region_.AsValue();
+  if (!touch_event_handler_region_map_.empty()) {
+    std::unique_ptr<base::Value> region =
+        region_map_utils::UnionOfRegions(touch_event_handler_region_map_)
+            .AsValue();
     result->Set("TouchRegion", std::move(region));
   }
 
@@ -804,9 +806,10 @@ void LayerImpl::AsValueInto(base::trace_event::TracedValue* state) const {
       MathUtil::MapQuad(ScreenSpaceTransform(),
                         gfx::QuadF(gfx::RectF(gfx::Rect(bounds()))), &clipped);
   MathUtil::AddToTracedValue("layer_quad", layer_quad, state);
-  if (!touch_event_handler_region_.IsEmpty()) {
+  if (!touch_event_handler_region_map_.empty()) {
     state->BeginArray("touch_event_handler_region");
-    touch_event_handler_region_.AsValueInto(state);
+    region_map_utils::UnionOfRegions(touch_event_handler_region_map_)
+        .AsValueInto(state);
     state->EndArray();
   }
   if (!non_fast_scrollable_region_.IsEmpty()) {

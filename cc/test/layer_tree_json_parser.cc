@@ -138,7 +138,9 @@ scoped_refptr<Layer> ParseTreeFromValue(const base::Value& val,
       success &= list->GetInteger(i++, &rect_height);
       touch_region.Union(gfx::Rect(rect_x, rect_y, rect_width, rect_height));
     }
-    new_layer->SetTouchEventHandlerRegion(touch_region);
+    RegionMap touch_region_map;
+    touch_region_map[kTouchActionNone] = touch_region;
+    new_layer->SetTouchEventHandlerRegionMap(touch_region_map);
   }
 
   success &= dict->GetList("Transform", &list);
