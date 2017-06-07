@@ -33,6 +33,9 @@ const int kMaxNumRetries = 1;
 // String constant defining the url tail we upload system logs to.
 const char* kSystemLogUploadUrlTail = "/upload";
 
+// The cutoff point (in bytes) after which log contents are ignored.
+const size_t kLogCutoffSize = 50 * 1024 * 1024;  // 50 MB.
+
 // The file names of the system logs to upload.
 // Note: do not add anything to this list without checking for PII in the file.
 const char* const kSystemLogFileNames[] = {
@@ -52,7 +55,8 @@ std::unique_ptr<policy::SystemLogUploader::SystemLogs> ReadFiles() {
     if (!base::PathExists(base::FilePath(file_path)))
       continue;
     std::string data = std::string();
-    if (!base::ReadFileToString(base::FilePath(file_path), &data)) {
+    if (!base::ReadFileToStringWithMaxSize(base::FilePath(file_path), &data,
+                                           kLogCutoffSize)) {
       SYSLOG(ERROR) << "Failed to read the system log file from the disk "
                     << file_path << std::endl;
     }
