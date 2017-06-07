@@ -7,16 +7,16 @@ createSVGTestCase();
 var rectElement = createSVGElement("rect");
 rectElement.setAttribute("x", "0");
 rectElement.setAttribute("y", "0");
-rectElement.setAttribute("width", "50");
-rectElement.setAttribute("height", "200");
+rectElement.setAttribute("width", "10");
+rectElement.setAttribute("height", "10");
 rectElement.setAttribute("fill", "green");
 
 rootSVGElement.appendChild(rectElement);
-shouldBeEqualToString("rectElement.getAttribute('width')", "50");
+shouldBeEqualToString("rectElement.getAttribute('width')", "10");
 
 function repaintTest() {
-    rectElement.setAttribute("width", "200");
-    shouldBeEqualToString("rectElement.getAttribute('width')", "200");
+    rectElement.setAttribute("width", "20");
+    shouldBeEqualToString("rectElement.getAttribute('width')", "20");
 }
 
 var successfullyParsed = true;
