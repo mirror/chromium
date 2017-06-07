@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e92d6d17_c6989233",
+        "filename": "third_party/WebKit/LayoutTests/external/PRESUBMIT.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-07T20:45:28Z",
+      "side": 1,
+      "message": "Nit: The (c) isn\u0027t necessary (https://www.chromium.org/blink/coding-style#TOC-License).",
+      "revId": "f541d5dff87e279788649d63153bf18330ab819c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d20058c7_5a6007e4",
+        "filename": "third_party/WebKit/LayoutTests/external/PRESUBMIT.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-07T20:45:28Z",
+      "side": 1,
+      "message": "This kind of makes it sound like this presubmit itself results in higher WPT export latency. I\u0027d remove the second half of this sentence.",
+      "revId": "f541d5dff87e279788649d63153bf18330ab819c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "366bc33c_6430d263",
+        "filename": "third_party/WebKit/LayoutTests/external/PRESUBMIT.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-07T20:45:28Z",
+      "side": 1,
+      "message": "Would the lint run faster if we specified the list of paths to lint?\n\ne.g.\n\n  paths \u003d [f.LocalPath() for f in input_api.AffectedFiles() if f.startswith(wpt_path)]\n  args \u003d [input_api.python_executable, linter_path, \u0027--repo-root\u0027, wpt_path] + paths",
+      "revId": "f541d5dff87e279788649d63153bf18330ab819c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bfba9f7_064ca705",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/lint.whitelist",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-07T20:45:28Z",
+      "side": 1,
+      "message": "We\u0027re expecting this to be exported, right?",
+      "revId": "f541d5dff87e279788649d63153bf18330ab819c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc8c5c1f_914fe3c1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/lint.whitelist",
+        "patchSetId": 9
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-07T20:45:28Z",
+      "side": 1,
+      "message": "Why is this added in this CL?",
+      "revId": "f541d5dff87e279788649d63153bf18330ab819c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32028c0e_904dad51",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/README.chromium",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-07T20:45:28Z",
+      "side": 1,
+      "message": "Do you know if we\u0027ll be able to make this change upstream as well?",
+      "revId": "f541d5dff87e279788649d63153bf18330ab819c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32e91cf_5b907bdb",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/wpt/wpt/lint",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-07T20:45:28Z",
+      "side": 1,
+      "message": "Is this a local change or was this done upstream?",
+      "revId": "f541d5dff87e279788649d63153bf18330ab819c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02bbcb86_129c0636",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/wpt/wpt/tools/lint/lint.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-07T20:45:28Z",
+      "side": 1,
+      "message": "The help here could say that this is supposed to be the root of the \"web-platform-tests\" directory tree. Also help could go on the next line and omit the period for consistency.",
+      "revId": "f541d5dff87e279788649d63153bf18330ab819c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd81e398_1edb7119",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/wpt/wpt/tools/lint/lint.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-07T20:45:28Z",
+      "side": 1,
+      "message": "(1) You could use double quotes for consistency within the file.\n(2) This could also be written as `repo_root \u003d kwargs.get(\u0027repo_root\u0027) or repo_root`\n\nWhen I just read this, I found it slightly confusing that repo_root is a global variable and here we\u0027re making local variable to override it. This isn\u0027t necessary to change in this CL, but perhaps the way I would expect this to be is for the top of the file to have `from .. import localpaths` and for this function to have repo_root \u003d localpaths.repo_root.",
+      "revId": "f541d5dff87e279788649d63153bf18330ab819c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

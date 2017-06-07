@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "038335f0_a59ebfcf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/netinfo/netinfo-basics.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-07T20:45:28Z",
+      "side": 0,
+      "message": "This change seems unrelated to this CL.",
+      "revId": "f5a32df768b6d95dc80d4f2dd900ff16bfed00aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
