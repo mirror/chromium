@@ -580,8 +580,10 @@ ServiceWorkerProviderHost::PrepareForCrossSiteTransfer() {
   for (const GURL& pattern : associated_patterns_)
     DecreaseProcessReference(pattern);
 
-  for (auto& key_registration : matching_registrations_)
+  for (auto& key_registration : matching_registrations_) {
+    key_registration.second->RemoveListener(this);
     DecreaseProcessReference(key_registration.second->pattern());
+  }
 
   if (associated_registration_.get()) {
     if (dispatcher_host_) {
@@ -613,6 +615,9 @@ void ServiceWorkerProviderHost::CompleteCrossSiteTransfer(
   binding_.set_connection_error_handler(
       base::Bind(&RemoveProviderHost, context_, provisional_host->process_id(),
                  provider_id()));
+
+  for (auto& key_registration : matching_registrations_)
+    key_registration.second->AddListener(this);
 
   FinalizeInitialization(provisional_host->process_id(),
                          provisional_host->dispatcher_host());
