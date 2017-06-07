@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7af3810a_08ee37d2",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-07T21:15:23Z",
+      "side": 1,
+      "message": "tiny nit: \"static\" is not necessary",
+      "range": {
+        "startLine": 110,
+        "startChar": 9,
+        "endLine": 110,
+        "endChar": 10
+      },
+      "revId": "9e4f6a71a16d40f44c94b827117ca15b085d8a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f6f7525_f3ad4f9a",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-07T21:15:23Z",
+      "side": 1,
+      "message": "OOC, why do we also want to reset |max_buffered_frames_|?",
+      "revId": "9e4f6a71a16d40f44c94b827117ca15b085d8a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0fd3a9_4446bb25",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-07T21:15:23Z",
+      "side": 1,
+      "message": "nit: Now it seems more intuitive to check \n\nif (min_buffered_frames_ \u003c max_buffered_frames_)",
+      "revId": "9e4f6a71a16d40f44c94b827117ca15b085d8a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bd6c729_3ecb21a0",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-07T21:15:23Z",
+      "side": 1,
+      "message": "As discussed offline, it\u0027ll be more accurate to have an average_read_duration for a moving window.\n\nThe current solution would work, but I am slightly worried about memory usage increase which is unnecessary in a lot of cases. We should monitor memory metrics if we land this as is.",
+      "revId": "9e4f6a71a16d40f44c94b827117ca15b085d8a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0be1a710_94a9e19d",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-07T21:15:23Z",
+      "side": 1,
+      "message": "nit: one option is to bind |read_time| in the FrameReady() callback so that you don\u0027t need to keep track of it, or reset it etc.",
+      "revId": "9e4f6a71a16d40f44c94b827117ca15b085d8a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3349e2f5_5b554ada",
+        "filename": "media/renderers/video_renderer_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-07T21:15:23Z",
+      "side": 1,
+      "message": "It\u0027s worth mentioning that min_buffered_frames_ is the minimum number of buffered frames to start playback or finish a seek, and max_buffered_frames_ is the maximum number of buffered frames |this| will try to cache at any time.",
+      "revId": "9e4f6a71a16d40f44c94b827117ca15b085d8a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af502d5f_d1a784e3",
+        "filename": "media/renderers/video_renderer_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-07T21:15:23Z",
+      "side": 1,
+      "message": "Please add comments about what these two are.",
+      "revId": "9e4f6a71a16d40f44c94b827117ca15b085d8a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
