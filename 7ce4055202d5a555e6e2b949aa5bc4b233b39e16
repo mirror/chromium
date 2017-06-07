@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "339d38e7_672d816e",
+        "filename": "chrome/browser/extensions/process_manager_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 974,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-06-07T16:58:51Z",
+      "side": 1,
+      "message": "When using OOPIF-based guests, we do the same creation sequence as regular OOPIFs. That means \nfirst creating a LocalFrame in the parent\u0027s process, and then swapping the local frame with a RemoteFrame.\n\nSo, if we only wait for creation, the expectation below that there are only 2 frames fail because we have an extra local frame, we need to wait for the guest to be attached, which means that the swap has just happened.",
+      "parentUuid": "c4dae520_44127c72",
+      "revId": "7ce4055202d5a555e6e2b949aa5bc4b233b39e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c390872_05e5f124",
         "filename": "components/guest_view/browser/test_guest_view_manager.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-07T05:56:14Z",
       "side": 1,
       "message": "Is it possible that the guest has already been attached when the test calls this?  Do we need to check for this here?",
+      "revId": "7ce4055202d5a555e6e2b949aa5bc4b233b39e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f5ffcb3_79063678",
+        "filename": "components/guest_view/browser/test_guest_view_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-06-07T16:58:51Z",
+      "side": 1,
+      "message": "Yes, good catch, there\u0027s nothing that guarantee that the guest has not been attached yet. I\u0027ve added a check here.",
+      "parentUuid": "5c390872_05e5f124",
       "revId": "7ce4055202d5a555e6e2b949aa5bc4b233b39e16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "7ce4055202d5a555e6e2b949aa5bc4b233b39e16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a68c4a9_26e8f929",
+        "filename": "components/guest_view/browser/test_guest_view_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-06-07T16:58:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbdc84a8_54398f5c",
+      "revId": "7ce4055202d5a555e6e2b949aa5bc4b233b39e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
