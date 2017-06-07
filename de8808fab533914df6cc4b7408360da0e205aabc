@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dd72860_d1d7132c",
+        "filename": "services/ui/public/interfaces/input_devices/input_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-07T18:42:35Z",
+      "side": 1,
+      "message": "I wonder if this could come from InputDeviceClient instead? We should know if there is a mouse or touchpad there. Just something to consider.",
+      "revId": "de8808fab533914df6cc4b7408360da0e205aabc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
