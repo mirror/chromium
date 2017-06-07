@@ -327,6 +327,9 @@
         "test": "cc_unittests"
       },
       {
+        "args": [
+          "--gs-results-bucket=chromium-result-details"
+        ],
         "merge": {
           "args": [
             "--bucket",
@@ -367,6 +370,9 @@
         "test": "chrome_public_test_apk"
       },
       {
+        "args": [
+          "--gs-results-bucket=chromium-result-details"
+        ],
         "merge": {
           "args": [
             "--bucket",
@@ -525,6 +531,9 @@
         "test": "content_browsertests"
       },
       {
+        "args": [
+          "--gs-results-bucket=chromium-result-details"
+        ],
         "merge": {
           "args": [
             "--bucket",
@@ -1459,6 +1468,9 @@
         "test": "unit_tests"
       },
       {
+        "args": [
+          "--gs-results-bucket=chromium-result-details"
+        ],
         "merge": {
           "args": [
             "--bucket",
@@ -1857,6 +1869,9 @@
         "test": "cc_unittests"
       },
       {
+        "args": [
+          "--gs-results-bucket=chromium-result-details"
+        ],
         "merge": {
           "args": [
             "--bucket",
@@ -1897,6 +1912,9 @@
         "test": "chrome_public_test_apk"
       },
       {
+        "args": [
+          "--gs-results-bucket=chromium-result-details"
+        ],
         "merge": {
           "args": [
             "--bucket",
@@ -2055,6 +2073,9 @@
         "test": "content_browsertests"
       },
       {
+        "args": [
+          "--gs-results-bucket=chromium-result-details"
+        ],
         "merge": {
           "args": [
             "--bucket",
@@ -3020,6 +3041,9 @@
         "test": "unit_tests"
       },
       {
+        "args": [
+          "--gs-results-bucket=chromium-result-details"
+        ],
         "merge": {
           "args": [
             "--bucket",
