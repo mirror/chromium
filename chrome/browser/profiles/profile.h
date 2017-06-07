@@ -277,6 +277,9 @@ class Profile : public content::BrowserContext {
   // Returns whether it is a system profile.
   virtual bool IsSystemProfile() const;
 
+  // Returns the SequencedTaskRunner the pref service runs on.
+  virtual scoped_refptr<base::SequencedTaskRunner> GetPrefServiceTaskRunner();
+
   // Did the user restore the last session? This is set by SessionRestore.
   void set_restored_last_session(bool restored_last_session) {
     restored_last_session_ = restored_last_session;
