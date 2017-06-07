@@ -34,6 +34,24 @@
       "revId": "dbda1f0a283ca562f93a20b28f5cf785f0109cb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24fee3f9_dbc265bb",
+        "filename": "cc/input/single_scrollbar_animation_controller_thinning.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-07T19:43:35Z",
+      "side": 1,
+      "message": "Re: guarantees.  There\u0027s always an active tree, even if it has no layers.  So, if there\u0027s an UpdateDrawProperties, then the tree is in a state that you can ask questions about its geometry.\n\nI think putting this next to the UpdateDrawProperties makes sense.  I think it is a more logical place, in that you\u0027re doing hit testing and so you want to make sure that scrollbars know how to be hit test against.  In some future time when we handle scrollbar click+drag in the compositor, we\u0027ll need to know it for all scrollbars.  I agree it\u0027s far from the place that it needs it in practice, but in terms of expectations, I think having it at a higher level makes sense.\n\nI mean, arguably you could put UpdateScrollbarGeometries in UpdateDrawProperties (for the active tree) and that\u0027d be reasonable too.  (And could remove the AppendQuads one.)",
+      "parentUuid": "8f23ace0_5ab09f93",
+      "revId": "dbda1f0a283ca562f93a20b28f5cf785f0109cb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
