@@ -50,6 +50,29 @@
       "revId": "c90e96e769c32c3f4bf2a9fd500917240a37d51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6015d320_7ab5ace0",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-06-07T13:59:10Z",
+      "side": 1,
+      "message": "I think you should rename this method to ReleaseForeignSocket() or similar, since this object is not taking the socket but the opposite.",
+      "range": {
+        "startLine": 60,
+        "startChar": 46,
+        "endLine": 60,
+        "endChar": 63
+      },
+      "revId": "c90e96e769c32c3f4bf2a9fd500917240a37d51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
