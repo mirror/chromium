@@ -2122,6 +2122,7 @@ crbug.com/723826 virtual/mojo-loading/http/tests/security/w3c/cross-origin-objec
 crbug.com/724251 virtual/threaded/animations/svg-attribute-interpolation/svg-startOffset-interpolation.html [ Failure Pass ]
 
 # ====== New tests from wpt-importer added here ======
+crbug.com/626703 external/wpt/wasm/wasm_indexeddb_test.html [ Timeout ]
 crbug.com/626703 external/wpt/payment-request/payment-request-show-method.https.html [ Pass Failure ]
 crbug.com/626703 external/wpt/webrtc/RTCPeerConnection-createOffer.html [ Timeout ]
 crbug.com/626703 external/wpt/webrtc/RTCPeerConnection-onnegotiationneeded.html [ Timeout ]
@@ -2682,7 +2683,6 @@ crbug.com/576815 external/wpt/css/vendor-imports/mozilla/mozilla-central-reftest
 
 # Flakily timing out.
 # TODO(ccameron): Investigate this.
-crbug.com/730267 virtual/gpu-rasterization/images/color-profile-group.html [ Pass Timeout ]
 crbug.com/730267 virtual/gpu-rasterization/images/color-profile-layer.html [ Pass Timeout  ]
 crbug.com/730267 virtual/gpu-rasterization/images/color-profile-layer-filter.html [ Pass Timeout ]
 
