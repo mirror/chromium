@@ -117,6 +117,30 @@
       "revId": "abfe5c120c4a233e522a9c3b648e2cdea6620c9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceb3fca9_92563007",
+        "filename": "third_party/WebKit/Source/platform/mojo/GeometryStructTraitsTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-07T08:16:20Z",
+      "side": 1,
+      "message": "We should probably split //ui/gfx/geometry/mojo/geometry.mojom into chromium and blink only part to remove them from Blink. Let me try it separately.",
+      "parentUuid": "60584a71_dbddd81a",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 14
+      },
+      "revId": "abfe5c120c4a233e522a9c3b648e2cdea6620c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
