@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0530f041_e3a1f3ba",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1162,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-06-07T17:36:50Z",
+      "side": 1,
+      "message": "Does this actually get called for a layer with !HasOverflowClip() ?",
+      "revId": "bb189a7b3f40f299569bbe9914d31225ec2cb3ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c9a6e5_3b910f8e",
+        "filename": "third_party/WebKit/Source/core/layout/compositing/CompositingReasonFinder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-06-07T17:36:50Z",
+      "side": 1,
+      "message": "Suggest refactoring this into a PaintLayer method, to be called from here and from PaintLayerScrollableArea::ComputeNeedsCompositedScrolling, and get rid of RootScrollerUtil::IsEffective(const PaintLayer\u0026).",
+      "revId": "bb189a7b3f40f299569bbe9914d31225ec2cb3ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
