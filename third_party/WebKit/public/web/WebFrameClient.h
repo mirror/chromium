@@ -399,7 +399,8 @@ class BLINK_EXPORT WebFrameClient {
   // response body has been received, and the encoding of the response
   // body is known.
   virtual void DidCommitProvisionalLoad(const WebHistoryItem&,
-                                        WebHistoryCommitType) {}
+                                        WebHistoryCommitType,
+                                        bool is_same_document_navigation) {}
 
   // The frame's document has just been initialized.
   virtual void DidCreateNewDocument(WebLocalFrame* frame) {}
