@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b343b88c_45aa06ff",
+        "filename": "third_party/WebKit/LayoutTests/nfc/watch.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-07T15:40:22Z",
+      "side": 1,
+      "message": "nit: This can be simplified to: then(() \u003d\u003e navigator.nfc.cancelWatch());\n\nThe return is unnecessary if the right-hand side of the arrow is a single expression without braces.",
+      "revId": "bcfc92356c16a38c57d3328ca8586139bfe44182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
