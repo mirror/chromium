@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "6b07987d_143ed80f",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_stub_taco.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-07T17:17:10Z",
+      "side": 1,
+      "message": "I think that we should just let it be as is and let it play out a bit.  If it becomes obvious that a central testing dispatcher is useful then we can make TestPrefetchDispatcher the main testing class.\n\nIt is currently only used by one test but seemed like it might be useful elsewhere, so I\u0027d prefer to just leave it in its own file.",
+      "parentUuid": "dc0db5ea_12212f02",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "2667398bbdd95fbbb7245bb5a717aa6593bcf74d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9cf4472_0fe63d3a",
         "filename": "components/offline_pages/core/prefetch/prefetch_service_stub_taco.h",
         "patchSetId": 2
