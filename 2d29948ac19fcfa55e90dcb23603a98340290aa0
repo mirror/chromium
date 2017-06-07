@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9de7705_c9ff7106",
+        "filename": "third_party/WebKit/Source/core/frame/FrameTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-06-07T15:02:05Z",
+      "side": 1,
+      "message": "Nit: perhaps ASSERT_FALSE is more accurate here since SetUp() comes before the actual TESTs?",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "2d29948ac19fcfa55e90dcb23603a98340290aa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b32b78e2_19325211",
+        "filename": "third_party/WebKit/Source/core/frame/FrameTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-06-07T15:02:05Z",
+      "side": 1,
+      "message": "Does the Navigate to the exact same URL count as a new navigation? I would prefer the following navigations:\n  NavigateSameDomain(\"page1\");\n  ...\n  NavigateSameDomain(\"page2\");\n  ...\n\nSame applies to the following tests.",
+      "range": {
+        "startLine": 95,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 20
+      },
+      "revId": "2d29948ac19fcfa55e90dcb23603a98340290aa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce160a03_ce13f0c7",
+        "filename": "third_party/WebKit/Source/core/frame/FrameTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-06-07T15:02:05Z",
+      "side": 1,
+      "message": "This test covers the previous (NavigateSameDomain) test (after my last comment is applied).  Please drop the previous test if I am not missing anything.",
+      "range": {
+        "startLine": 101,
+        "startChar": 18,
+        "endLine": 101,
+        "endChar": 49
+      },
+      "revId": "2d29948ac19fcfa55e90dcb23603a98340290aa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2a35021_8670dff8",
+        "filename": "third_party/WebKit/Source/core/frame/FrameTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-06-07T15:02:05Z",
+      "side": 1,
+      "message": "Please add a NavigateSameDomain+EXPECTs in the first (NoGesture) test to guarantee that the \"before navigation\" bit is not blindly true after a NavigateSameDomain.",
+      "range": {
+        "startLine": 148,
+        "startChar": 1,
+        "endLine": 148,
+        "endChar": 0
+      },
+      "revId": "2d29948ac19fcfa55e90dcb23603a98340290aa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
