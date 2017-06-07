@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0e8a6ee0_b696c9a7",
+        "filename": "components/viz/host/frame_sink_manager_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-07T23:52:06Z",
+      "side": 1,
+      "message": "ok i changed this",
+      "parentUuid": "37eede33_0039f0b1",
+      "range": {
+        "startLine": 28,
+        "startChar": 29,
+        "endLine": 28,
+        "endChar": 43
+      },
+      "revId": "67e41d72cec04750e2cb3ff75c6ab8385e6c1f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "989b5184_723394ff",
         "filename": "components/viz/host/frame_sink_manager_host.h",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-07T21:00:03Z",
       "side": 1,
       "message": "This is really a move...FrameSinkmanagerClientPtr is a move-only type.",
+      "revId": "67e41d72cec04750e2cb3ff75c6ab8385e6c1f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a352457_0bf1a995",
+        "filename": "components/viz/host/frame_sink_manager_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-07T23:52:06Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean, I didn\u0027t write copy anywhere. What are you suggesting?",
+      "parentUuid": "989b5184_723394ff",
       "revId": "67e41d72cec04750e2cb3ff75c6ab8385e6c1f4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -73,6 +115,24 @@
       "revId": "67e41d72cec04750e2cb3ff75c6ab8385e6c1f4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b14fb844_0e91c676",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-07T23:52:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd9529dc_d8af2354",
+      "revId": "67e41d72cec04750e2cb3ff75c6ab8385e6c1f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
