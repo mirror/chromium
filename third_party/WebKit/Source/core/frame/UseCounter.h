@@ -78,10 +78,6 @@ class CORE_EXPORT UseCounter {
 
   UseCounter(Context = kDefaultContext);
 
-  enum Feature : uint32_t {
-#include "public/platform/UseCounterFeature.def"
-  };
-
   // An interface to observe UseCounter changes. Note that this is never
   // notified when the counter is disabled by |m_muteCount| or when |m_context|
   // is kDisabledContext.
