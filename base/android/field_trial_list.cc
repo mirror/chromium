@@ -8,12 +8,17 @@
 
 #include "base/android/jni_string.h"
 #include "base/metrics/field_trial.h"
+#include "base/metrics/field_trial_params.h"
 #include "jni/FieldTrialList_jni.h"
 
-using base::android::ConvertJavaStringToUTF8;
-using base::android::ConvertUTF8ToJavaString;
-using base::android::JavaParamRef;
-using base::android::ScopedJavaLocalRef;
+namespace {
+
+using ::base::android::ConvertJavaStringToUTF8;
+using ::base::android::ConvertUTF8ToJavaString;
+using ::base::android::JavaParamRef;
+using ::base::android::ScopedJavaLocalRef;
+
+}  // namespace
 
 static ScopedJavaLocalRef<jstring> FindFullName(
     JNIEnv* env,
@@ -29,6 +34,18 @@ static jboolean TrialExists(JNIEnv* env,
                             const JavaParamRef<jstring>& jtrial_name) {
   std::string trial_name(ConvertJavaStringToUTF8(env, jtrial_name));
   return base::FieldTrialList::TrialExists(trial_name);
+}
+
+static ScopedJavaLocalRef<jstring> GetVariationParameter(
+    JNIEnv* env,
+    const JavaParamRef<jclass>& clazz,
+    const JavaParamRef<jstring>& jtrial_name,
+    const JavaParamRef<jstring>& jparameter_key) {
+  std::map<std::string, std::string> parameters;
+  base::GetFieldTrialParams(ConvertJavaStringToUTF8(env, jtrial_name),
+                            &parameters);
+  return ConvertUTF8ToJavaString(
+      env, parameters[ConvertJavaStringToUTF8(env, jparameter_key)]);
 }
 
 namespace base {
