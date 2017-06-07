@@ -403,6 +403,10 @@ addSuggestionsToModel:(NSArray<CSCollectionViewItem*>*)suggestions
   [UIView setAnimationsEnabled:YES];
 }
 
+- (void)dismissItem:(CSCollectionViewItem*)item {
+  [self.dataSource dismissSuggestion:item.suggestionIdentifier];
+}
+
 #pragma mark - SuggestedContentDelegate
 
 - (void)loadImageForSuggestedItem:(CSCollectionViewItem*)suggestedItem {
