@@ -1,4 +1,4 @@
-rootWebArea name='Action verbs'
+rootWebArea focusable name='Action verbs'
 ++genericContainer
 ++++staticText name='Generic div'
 ++++++inlineTextBox name='Generic div'

@@ -1,4 +1,4 @@
-rootWebArea
+rootWebArea focusable
 ++genericContainer
 ++++link name='normal link'
 ++++++staticText name='normal link'

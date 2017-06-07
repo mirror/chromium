@@ -1,4 +1,4 @@
-rootWebArea
+rootWebArea focusable
 ++genericContainer name='parent node' activedescendantId=menuItemCheckBox
 ++++menuItem name='Inactive descendant'
 ++++menuItemCheckBox name='Active descendant'

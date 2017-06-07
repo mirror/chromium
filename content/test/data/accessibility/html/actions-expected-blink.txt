@@ -1,4 +1,4 @@
-rootWebArea name='Actions'
+rootWebArea focusable name='Actions'
 ++genericContainer
 ++++slider actions=setValue
 ++++++sliderThumb
