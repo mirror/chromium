@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9fb138c4_c111fea9",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-07T09:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17033074_c77b0c6b",
+      "revId": "49a751d4b93276c292d86152cad2e9bbd33f442a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02f0e1c3_c65510d5",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
         "patchSetId": 1
@@ -90,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "527621c9_c728eb2f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-07T09:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d463b48_baf1c64d",
+      "range": {
+        "startLine": 358,
+        "startChar": 58,
+        "endLine": 358,
+        "endChar": 74
+      },
+      "revId": "49a751d4b93276c292d86152cad2e9bbd33f442a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88e8f28f_32994425",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc",
         "patchSetId": 1
@@ -101,6 +143,24 @@
       "writtenOn": "2017-05-09T14:46:54Z",
       "side": 1,
       "message": "When we get to testing this, let\u0027s add a test that checks loading control tasks generally take priority over loading tasks.",
+      "revId": "49a751d4b93276c292d86152cad2e9bbd33f442a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ba728e_ef9f7724",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3673,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-07T09:52:34Z",
+      "side": 1,
+      "message": "Done.\n\n(See below: TEST_F(RendererSchedulerImplTest, LoadingControlTasks) ... )",
+      "parentUuid": "88e8f28f_32994425",
       "revId": "49a751d4b93276c292d86152cad2e9bbd33f442a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -130,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "598b1952_46938b61",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-07T09:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef274076_4cffcef4",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 15
+      },
+      "revId": "49a751d4b93276c292d86152cad2e9bbd33f442a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1942f15a_31ead91b",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
         "patchSetId": 1
@@ -141,6 +225,30 @@
       "writtenOn": "2017-05-10T07:30:32Z",
       "side": 1,
       "message": "Please add this here:\n if (loading_control_task_queue_) {\n    state-\u003eSetString(\"loading_control_task_queue\",\n                     PointerToId(loading_control_task_queue_.get()));\n  }",
+      "range": {
+        "startLine": 254,
+        "startChar": 2,
+        "endLine": 254,
+        "endChar": 7
+      },
+      "revId": "49a751d4b93276c292d86152cad2e9bbd33f442a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f426a6f8_a2de2162",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-07T09:52:34Z",
+      "side": 1,
+      "message": "Done.\n\n(All similar lines changed to trace_helper::PointerToString, so I copied that pattern.)",
+      "parentUuid": "1942f15a_31ead91b",
       "range": {
         "startLine": 254,
         "startChar": 2,
@@ -173,6 +281,30 @@
       "revId": "49a751d4b93276c292d86152cad2e9bbd33f442a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f78a2ec_0e69a4e1",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-07T09:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0deca2f7_59bb0ad4",
+      "range": {
+        "startLine": 292,
+        "startChar": 21,
+        "endLine": 292,
+        "endChar": 36
+      },
+      "revId": "49a751d4b93276c292d86152cad2e9bbd33f442a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
