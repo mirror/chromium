@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72626ae9_32e05c95",
+        "filename": "android_webview/browser/aw_content_browser_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-07T23:10:11Z",
+      "side": 1,
+      "message": "boliu: It seems to me L1 is not currently enabled for WebView so I am keeping it\u0027s current behavior here. We\u0027ll enable L1 on WebView when AndroidOverlay is enabled on WebView. Please let me know if you have any concerns.",
+      "revId": "808f277614bee03c488f97c127536899985a04b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

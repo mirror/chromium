@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "50605353_557fbaa8",
+        "filename": "android_webview/browser/aw_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-07T23:10:11Z",
+      "side": 1,
+      "message": "Unless there\u0027s some other hidden magic, I believe so. We\u0027ll enable L1 on WebView when AndroidOverlay is supported on WebView.",
+      "parentUuid": "296b7b4b_c52cb549",
+      "revId": "31f2a784c5c742041b9a13cdc8b1596ff5f52be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "413499db_3f263c94",
         "filename": "components/cdm/browser/cdm_message_filter_android.cc",
         "patchSetId": 6
@@ -30,6 +48,30 @@
       "writtenOn": "2017-06-07T17:22:54Z",
       "side": 1,
       "message": "With this change, the browser process is responsible for how to render the decoded output. Specifically, I\u0027m not sure whether we\u0027d be able to support doing a more flexible path for non-secure codecs on platforms that support secure codecs. I don\u0027t think anything needs to change - just an observation.",
+      "range": {
+        "startLine": 137,
+        "startChar": 14,
+        "endLine": 137,
+        "endChar": 20
+      },
+      "revId": "31f2a784c5c742041b9a13cdc8b1596ff5f52be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c64eea5_e8de433e",
+        "filename": "components/cdm/browser/cdm_message_filter_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-07T23:10:11Z",
+      "side": 1,
+      "message": "Could you please elaborate on \"doing a more flexible path for non-secure codecs on platforms that support secure codecs\"? Do you mean to promote to L1 even for other security level, or have the ability to use secure texture on platforms that supports AndroidOverlay?",
+      "parentUuid": "413499db_3f263c94",
       "range": {
         "startLine": 137,
         "startChar": 14,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "bcb124bb_c8160461",
+        "filename": "components/cdm/browser/cdm_message_filter_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-07T23:10:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e02b501a_a2160625",
+      "revId": "31f2a784c5c742041b9a13cdc8b1596ff5f52be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43006269_82c7e1f1",
         "filename": "components/cdm/browser/cdm_message_filter_android.h",
         "patchSetId": 6
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "a82a43da_14c8e758",
+        "filename": "components/cdm/browser/cdm_message_filter_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-07T23:10:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43006269_82c7e1f1",
+      "revId": "31f2a784c5c742041b9a13cdc8b1596ff5f52be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "675b1e26_0c431df5",
         "filename": "media/blink/key_system_config_selector.cc",
         "patchSetId": 6
@@ -87,6 +165,30 @@
       "writtenOn": "2017-06-07T17:22:54Z",
       "side": 1,
       "message": "The function and variable now have different names and meanings.\nAlso, the inclusion of \"hw\" was intentional.",
+      "range": {
+        "startLine": 183,
+        "startChar": 50,
+        "endLine": 183,
+        "endChar": 77
+      },
+      "revId": "31f2a784c5c742041b9a13cdc8b1596ff5f52be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee6c64b4_840d71d9",
+        "filename": "media/blink/key_system_config_selector.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-07T23:10:11Z",
+      "side": 1,
+      "message": "Good catch. This wasn\u0027t part of the original CL. It seems my \"sed\" script accidentally changed this.\n\nRenamed back.",
+      "parentUuid": "675b1e26_0c431df5",
       "range": {
         "startLine": 183,
         "startChar": 50,
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "3791f49c_5b80b9b4",
+        "filename": "media/filters/android/media_codec_audio_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-07T23:10:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46ab5932_e97e964a",
+      "revId": "31f2a784c5c742041b9a13cdc8b1596ff5f52be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82c80be2_476b1118",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 6
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "7ce8aef6_030fe80e",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-07T23:10:11Z",
+      "side": 1,
+      "message": "MCVD is still in development and not used today.",
+      "parentUuid": "82c80be2_476b1118",
+      "revId": "31f2a784c5c742041b9a13cdc8b1596ff5f52be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "effeb681_d1924ff4",
         "filename": "media/gpu/avda_codec_allocator.cc",
         "patchSetId": 6
@@ -144,6 +282,24 @@
       "writtenOn": "2017-06-07T17:22:54Z",
       "side": 1,
       "message": "This check is insufficient since MediaCrypto can be required without requiring a secure video codec. What is the purpose of this check?",
+      "revId": "31f2a784c5c742041b9a13cdc8b1596ff5f52be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec2580c2_ef841d10",
+        "filename": "media/gpu/avda_codec_allocator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-07T23:10:11Z",
+      "side": 1,
+      "message": "It\u0027s only checking that when we \"require secure codec\", we must have media_crypto.\n\nThe case you mentioned is totally possible, but it seems not interesting to check IMHO.",
+      "parentUuid": "effeb681_d1924ff4",
       "revId": "31f2a784c5c742041b9a13cdc8b1596ff5f52be1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
