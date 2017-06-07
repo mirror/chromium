@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "531f891e_2c48af96",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-07T21:09:41Z",
+      "side": 1,
+      "message": "Yes, PresentationDispatcher implements WebPresentationClient, but the patch description talks about PresentationController.  I think the patch description is out of date then?\n\nWebPresentationClient/PresentationService would need to be upgraded to return the enum as we discussed earlier to distinguish these states.\n\nDirect use of PresentationService won\u0027t happen until we fully Onion Soup the Presentation API, which is a decent sized refactoring; it requires writing a bunch of new typemaps and moving API-specific logic out of PresentationDispatcher.",
+      "parentUuid": "fcf33889_321a2eac",
+      "revId": "9f2823b227ee39a2395f6895750a85f0b9d3c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d6b758e_733492e9",
         "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
         "patchSetId": 4
@@ -113,6 +131,24 @@
       "side": 1,
       "message": "The only other place I can think of where it will be used is in the MRP (or maybe MR for whitelisting). In Clank case it will be Java code only.\nHowever, I didn\u0027t find a good way of sharing a string constant between Blink and chrome/browser/, not to say Java.",
       "parentUuid": "09a3c7b5_020bf8cd",
+      "revId": "9f2823b227ee39a2395f6895750a85f0b9d3c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59d9b546_39ccaa85",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-07T21:09:41Z",
+      "side": 1,
+      "message": "It could be put into e.g. content/public/common/remote_playback_constants.h",
+      "parentUuid": "32bf8a23_30f87286",
       "revId": "9f2823b227ee39a2395f6895750a85f0b9d3c837",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
