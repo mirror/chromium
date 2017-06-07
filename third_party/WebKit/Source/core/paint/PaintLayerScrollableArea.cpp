@@ -670,13 +670,17 @@ bool PaintLayerScrollableArea::UserInputScrollable(
     return true;
 
   if (Box().IsLayoutView()) {
+    Document& document = Box().GetDocument();
+    Element* fullscreen_element = Fullscreen::FullscreenElementFrom(document);
+    if (fullscreen_element && fullscreen_element != document.documentElement())
+      return false;
+
     ScrollbarMode h_mode;
     ScrollbarMode v_mode;
     ToLayoutView(Box()).CalculateScrollbarModes(h_mode, v_mode);
-    if (orientation == kHorizontalScrollbar && h_mode == kScrollbarAlwaysOff)
-      return false;
-    if (orientation == kVerticalScrollbar && v_mode == kScrollbarAlwaysOff)
-      return false;
+    ScrollbarMode mode =
+        (orientation == kHorizontalScrollbar) ? h_mode : v_mode;
+    return mode == kScrollbarAuto || mode == kScrollbarAlwaysOn;
   }
 
   EOverflow overflow_style = (orientation == kHorizontalScrollbar)
