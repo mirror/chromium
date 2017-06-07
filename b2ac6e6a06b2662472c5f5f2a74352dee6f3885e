@@ -166,6 +166,30 @@
       "revId": "b2ac6e6a06b2662472c5f5f2a74352dee6f3885e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9ec8aef_ba19beba",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-07T02:09:11Z",
+      "side": 1,
+      "message": "I\u0027ve changed the code now to leave Detach and Dispose as-is.  I have added a guard within SetNeedsCompositingUpdate to check if document is detached.  Previously this method only checked if LayoutViewItem still existed, but now it checks both Document()-\u003eIsDetached() and GetLayoutViewItem().IsNull()",
+      "parentUuid": "2940144f_0081ee21",
+      "range": {
+        "startLine": 386,
+        "startChar": 67,
+        "endLine": 386,
+        "endChar": 73
+      },
+      "revId": "b2ac6e6a06b2662472c5f5f2a74352dee6f3885e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
