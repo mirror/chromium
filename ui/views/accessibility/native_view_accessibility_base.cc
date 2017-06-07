@@ -69,7 +69,6 @@ const ui::AXNodeData& NativeViewAccessibilityBase::GetData() const {
   // rather than possibly crashing.
   if (!view_->GetWidget() || view_->GetWidget()->IsClosed()) {
     data_.role = ui::AX_ROLE_UNKNOWN;
-    data_.AddState(ui::AX_STATE_DISABLED);
     return data_;
   }
 
@@ -83,8 +82,9 @@ const ui::AXNodeData& NativeViewAccessibilityBase::GetData() const {
   if (view_->IsAccessibilityFocusable())
     data_.AddState(ui::AX_STATE_FOCUSABLE);
 
-  if (!view_->enabled())
-    data_.AddState(ui::AX_STATE_DISABLED);
+  data_.AddIntAttribute(ui::AX_ATTR_CONTROL_MODE,
+                        view_->enabled() ? ui::AX_CONTROL_MODE_ENABLED
+                                         : ui::AX_CONTROL_MODE_DISABLED);
 
   if (!view_->IsDrawn())
     data_.AddState(ui::AX_STATE_INVISIBLE);
