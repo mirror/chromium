@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "038c7e90_9feace05",
+        "filename": "content/browser/android/browser_jni_registrar.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-07T19:01:48Z",
+      "side": 1,
+      "message": "nit: alphabetical order",
+      "revId": "c13079581cb68ffff6e20295b3c4370cac95b328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8517f793_e0e10e4a",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.h",
         "patchSetId": 10
@@ -30,6 +47,23 @@
       "writtenOn": "2017-06-07T16:32:34Z",
       "side": 1,
       "message": "Same, can we put WebContentsAccessibility* in RenderWidgetHostViewBase and\nonly cast to WebContentsAccessibilityAndroid when\npassing something Android-specific?",
+      "revId": "c13079581cb68ffff6e20295b3c4370cac95b328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3068dbc_f340a208",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-07T19:01:48Z",
+      "side": 1,
+      "message": "this has nothing to do with the view tree, previous way of having embedder set this value seems fine?",
       "revId": "c13079581cb68ffff6e20295b3c4370cac95b328",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
