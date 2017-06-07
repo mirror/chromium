@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23fbb56f_20dc0dfd",
+        "filename": "base/android/field_trial_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-07T14:41:11Z",
+      "side": 1,
+      "message": "Also, why this change? I\u0027m not sure what the meaning of putting these using declarations in an anonymous namespace actually is.",
+      "range": {
+        "startLine": 14,
+        "startChar": 9,
+        "endLine": 14,
+        "endChar": 10
+      },
+      "revId": "29a151d88ac2d3e979c53058431b6778b670a78d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
