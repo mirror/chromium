@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "179f7347_a82360fb",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-06-07T01:26:17Z",
+      "side": 1,
+      "message": "just \"all\" is sufficient.",
+      "revId": "f0384024e4eb9729b445a6769dfe2cc776349f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f8960f0_dabcf178",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-06-07T01:26:17Z",
+      "side": 1,
+      "message": "You don\u0027t need this if you just have \"all\".",
+      "revId": "f0384024e4eb9729b445a6769dfe2cc776349f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
