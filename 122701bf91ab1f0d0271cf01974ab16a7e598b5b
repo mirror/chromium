@@ -70,6 +70,24 @@
       "revId": "122701bf91ab1f0d0271cf01974ab16a7e598b5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6484f1b_9eac7cc6",
+        "filename": "base/message_loop/message_pump_fuchsia.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-06-07T20:49:01Z",
+      "side": 1,
+      "message": "The docs are sparse but I believe |trigger| tells you what you were asking for, and |observed| tells you everything that the kernel knows to be true when generating the return value.  I\u0027m not sure why MXIO_EVT_READABLE translates to MX_OBJECT_PEER_CLOSED, but the return values here mean that when the wait returned the pipe was both readable and writable.\n\nIf the contract here is that a controller that asks about readability should only trigger the OnFileCanRead..() callback, then I think you need to mask the |observed| values against the bits you care about.\n\nCarlos - does that sound right?",
+      "parentUuid": "c20329dc_688df95f",
+      "revId": "122701bf91ab1f0d0271cf01974ab16a7e598b5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
