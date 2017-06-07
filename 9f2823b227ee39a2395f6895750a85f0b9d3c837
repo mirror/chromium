@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "e517cf29_75de5b49",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-07T21:30:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "531f891e_2c48af96",
+      "revId": "9f2823b227ee39a2395f6895750a85f0b9d3c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d6b758e_733492e9",
         "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
         "patchSetId": 4
@@ -149,6 +167,24 @@
       "side": 1,
       "message": "It could be put into e.g. content/public/common/remote_playback_constants.h",
       "parentUuid": "32bf8a23_30f87286",
+      "revId": "9f2823b227ee39a2395f6895750a85f0b9d3c837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b363757_60819e89",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-07T21:30:57Z",
+      "side": 1,
+      "message": "Blink can\u0027t depend on anything outside of it so the constant would have to be defined in Blink, for example, in WebRemotePlaybackClient.h and then reused in content/ and chrome/. However I didn\u0027t find any example of defining a const string expression in Blink (there\u0027re only integers and enums).",
+      "parentUuid": "59d9b546_39ccaa85",
       "revId": "9f2823b227ee39a2395f6895750a85f0b9d3c837",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
