@@ -436,8 +436,6 @@ CompositorImpl::CompositorImpl(CompositorClient* client,
       compositor_frame_sink_request_pending_(false),
       weak_factory_(this) {
   GetSurfaceManager()->RegisterFrameSinkId(frame_sink_id_);
-  GetSurfaceManager()->RegisterBeginFrameSource(
-      root_window_->GetBeginFrameSource(), frame_sink_id_);
   DCHECK(client);
   DCHECK(root_window);
   DCHECK(root_window->GetLayer() == nullptr);
@@ -455,8 +453,6 @@ CompositorImpl::~CompositorImpl() {
   root_window_->SetLayer(nullptr);
   // Clean-up any surface references.
   SetSurface(NULL);
-  GetSurfaceManager()->UnregisterBeginFrameSource(
-      root_window_->GetBeginFrameSource());
   GetSurfaceManager()->InvalidateFrameSinkId(frame_sink_id_);
 }
 
@@ -567,6 +563,8 @@ void CompositorImpl::SetVisible(bool visible) {
     host_->ReleaseCompositorFrameSink();
     has_compositor_frame_sink_ = false;
     pending_frames_ = 0;
+    GetSurfaceManager()->UnregisterBeginFrameSource(
+        root_window_->GetBeginFrameSource());
     display_.reset();
   } else {
     host_->SetVisible(true);
@@ -801,6 +799,8 @@ void CompositorImpl::InitializeDisplay(
 
   display_->SetVisible(true);
   display_->Resize(size_);
+  GetSurfaceManager()->RegisterBeginFrameSource(
+      root_window_->GetBeginFrameSource(), frame_sink_id_);
   host_->SetCompositorFrameSink(std::move(compositor_frame_sink));
 }
 
