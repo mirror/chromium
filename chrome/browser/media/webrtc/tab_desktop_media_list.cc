@@ -62,6 +62,7 @@ TabDesktopMediaList::TabDesktopMediaList()
       weak_factory_(this) {
   thumbnail_task_runner_ = base::CreateSequencedTaskRunnerWithTraits(
       {base::MayBlock(), base::TaskPriority::USER_VISIBLE});
+  SetMediaListType(DesktopMediaID::TYPE_WEB_CONTENTS);
 }
 
 TabDesktopMediaList::~TabDesktopMediaList() {}

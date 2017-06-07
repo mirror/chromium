@@ -30,6 +30,8 @@ class DesktopMediaListBase : public DesktopMediaList {
   void StartUpdating(DesktopMediaListObserver* observer) override;
   int GetSourceCount() const override;
   const Source& GetSource(int index) const override;
+  void SetMediaListType(content::DesktopMediaID::Type type) override;
+  content::DesktopMediaID::Type GetMediaListType() const override;
 
   static uint32_t GetImageHash(const gfx::Image& image);
 

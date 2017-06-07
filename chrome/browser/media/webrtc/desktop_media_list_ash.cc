@@ -15,6 +15,7 @@
 #include "ui/snapshot/snapshot.h"
 
 using content::BrowserThread;
+using content::DesktopMediaID;
 
 namespace {
 
@@ -28,7 +29,13 @@ DesktopMediaListAsh::DesktopMediaListAsh(int source_types)
           base::TimeDelta::FromMilliseconds(kDefaultUpdatePeriod)),
       source_types_(source_types),
       pending_window_capture_requests_(0),
-      weak_factory_(this) {}
+      weak_factory_(this) {
+  if (source_types_ & SCREENS) {
+    SetMediaListType(DesktopMediaID::TYPE_SCREEN);
+  } else if (source_types_ & WINDOWS) {
+    SetMediaListType(DesktopMediaID::TYPE_WINDOW);
+  }
+}
 
 DesktopMediaListAsh::~DesktopMediaListAsh() {}
 

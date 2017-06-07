@@ -240,6 +240,12 @@ NativeDesktopMediaList::NativeDesktopMediaList(
   capture_task_runner_ = base::CreateSequencedTaskRunnerWithTraits(
       {base::MayBlock(), base::TaskPriority::USER_VISIBLE});
 
+  if (screen_capturer) {
+    SetMediaListType(DesktopMediaID::TYPE_SCREEN);
+  } else if (window_capturer) {
+    SetMediaListType(DesktopMediaID::TYPE_WINDOW);
+  }
+
   worker_.reset(new Worker(weak_factory_.GetWeakPtr(),
                            std::move(screen_capturer),
                            std::move(window_capturer)));

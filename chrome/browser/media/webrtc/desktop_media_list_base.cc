@@ -14,7 +14,9 @@ using content::BrowserThread;
 using content::DesktopMediaID;
 
 DesktopMediaListBase::DesktopMediaListBase(base::TimeDelta update_period)
-    : update_period_(update_period), weak_factory_(this) {}
+    : update_period_(update_period), weak_factory_(this) {
+  SetMediaListType(DesktopMediaID::TYPE_NONE);
+}
 
 DesktopMediaListBase::~DesktopMediaListBase() {}
 
@@ -47,6 +49,14 @@ const DesktopMediaList::Source& DesktopMediaListBase::GetSource(
   DCHECK_GE(index, 0);
   DCHECK_LT(index, static_cast<int>(sources_.size()));
   return sources_[index];
+}
+
+void DesktopMediaListBase::SetMediaListType(DesktopMediaID::Type type) {
+  type_ = type;
+}
+
+DesktopMediaID::Type DesktopMediaListBase::GetMediaListType() const {
+  return type_;
 }
 
 DesktopMediaListBase::SourceDescription::SourceDescription(
