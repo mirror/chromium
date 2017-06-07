@@ -16,6 +16,24 @@
       "revId": "125c78dc2194bda6a5e6cedd2c458c4301d919f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf73e7ea_6a5a9018",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-07T06:30:42Z",
+      "side": 1,
+      "message": "Yes. I\u0027m not sure why the original code didn\u0027t hit the DCHECK failure (timing issue?). When I ran unit tests w/o this \"Copy()\", I got following check failures:\n\n[ RUN      ] DedicatedWorkerTest.PendingActivity_SetInterval\n[16791:16798:0607/151402.486325:2445264023635:FATAL:StringImpl.h(265)] Check failed: IsStatic() || verifier_.OnRef(ref_count_). http://fake.url/\n#0 0x7f03ee802b0b base::debug::StackTrace::StackTrace()\n#1 0x7f03ee80180c base::debug::StackTrace::StackTrace()\n#2 0x7f03ee8753a3 logging::LogMessage::~LogMessage()\n#3 0x7f03e846c9c9 WTF::StringImpl::Ref()\n#4 0x7f03e846c88a WTF::RefIfNotNull\u003c\u003e()\n#5 0x7f03e846c846 WTF::RefPtr\u003c\u003e::RefPtr()\n#6 0x7f03e846c3fd WTF::String::String()\n#7 0x7f03e8a29f25 blink::KURL::KURL()\n#8 0x7f03eb3c3efb blink::WorkerThread::InitializeOnWorkerThread()",
+      "parentUuid": "1bc07f56_acc8e6b3",
+      "revId": "125c78dc2194bda6a5e6cedd2c458c4301d919f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
