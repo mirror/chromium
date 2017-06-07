@@ -16,6 +16,24 @@
       "revId": "9e2a82668664ecefeb1a0b9f21276a07cd45294d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c444d50_9d2cbda1",
+        "filename": "third_party/WebKit/Source/core/layout/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-07T00:12:48Z",
+      "side": 1,
+      "message": "Great question. The original criteria was too conservative. Let\u0027s try\n!(owning_layer_.GetCompositingReasons() \u0026 kCompositingReasonComboAllDirectReasons)",
+      "parentUuid": "d1cf8e66_17ebc127",
+      "revId": "9e2a82668664ecefeb1a0b9f21276a07cd45294d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
