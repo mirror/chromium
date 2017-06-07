@@ -34,6 +34,24 @@
       "revId": "8342325d29b8724effe0ef5fbefcce14b72cb353",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa995b8_bc0a6835",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-07T05:02:52Z",
+      "side": 1,
+      "message": "Stefan, I think that the UpdateGeometry call would have the potential to trigger JS in plugins which could change the FrameTree, so I like the approach to collect the parts before calling UpdateGeometry on them.\n\nYour suggested code is for LocalFrameView children only.  Do you have a suggestion on how to handle the RemoteFrameView and PluginView children?  The code that I have handles all 3.",
+      "parentUuid": "c5cb1d83_b6d2a20c",
+      "revId": "8342325d29b8724effe0ef5fbefcce14b72cb353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
