@@ -16,6 +16,24 @@
       "revId": "0fc35d3495afb256f53f013d876b9e1142115e83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a32aef01_718bd70b",
+        "filename": "third_party/WebKit/Source/core/paint/RoundedInnerRectClipper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-07T21:03:50Z",
+      "side": 1,
+      "message": "Had a quick chat with pdr@. We both think it should be a good idea.\n\nI think it could be done in a separate that both change line 79-82, 95-96 and add the DCHECK. Because the two changes are more logically associated.",
+      "parentUuid": "a265d679_9c1cf143",
+      "revId": "0fc35d3495afb256f53f013d876b9e1142115e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
