@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a5d2e142_8921e8b5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-07T01:30:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45cf1ee7_1a017fb3",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 11
+      },
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e72864b3_7767384d",
         "filename": "chrome/browser/ui/browser_dialogs.h",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "006cbbdd_2a2a16a8",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-07T01:30:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e72864b3_7767384d",
+      "range": {
+        "startLine": 17,
+        "startChar": 36,
+        "endLine": 17,
+        "endChar": 43
+      },
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f71a3b70_82c696c2",
         "filename": "chrome/browser/ui/browser_dialogs.h",
         "patchSetId": 12
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-06T16:35:50Z",
       "side": 1,
       "message": "Shouldn\u0027t this format be localized (I\u0027m pretty sure I asked this before too).",
+      "range": {
+        "startLine": 152,
+        "startChar": 28,
+        "endLine": 152,
+        "endChar": 43
+      },
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95db470c_3699dd80",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-07T01:30:23Z",
+      "side": 1,
+      "message": "I think I\u0027m missing some context here. What do you mean by \"localized format\"?",
+      "parentUuid": "f71a3b70_82c696c2",
       "range": {
         "startLine": 152,
         "startChar": 28,
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "f45bc449_ae1880a6",
+        "filename": "chrome/browser/ui/views/webshare/webshare_target_picker_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-07T01:30:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15045dad_83edd55d",
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6876e0b0_7f744925",
         "filename": "chrome/browser/webshare/share_service_impl.cc",
         "patchSetId": 12
@@ -108,6 +198,30 @@
       "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3149e283_cbe0119c",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-07T01:30:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6876e0b0_7f744925",
+      "range": {
+        "startLine": 152,
+        "startChar": 8,
+        "endLine": 152,
+        "endChar": 23
+      },
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "85ad28b2_be29ebf8",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-07T01:30:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3057933_82ca12d8",
+      "range": {
+        "startLine": 154,
+        "startChar": 10,
+        "endLine": 154,
+        "endChar": 20
+      },
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c535f41b_8fd5053a",
         "filename": "chrome/browser/webshare/share_service_impl.cc",
         "patchSetId": 12
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "0a36121b_89fc8f43",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-07T01:30:23Z",
+      "side": 1,
+      "message": "Sadly it seems it doesn\u0027t and to support it via replacements appears non-trivial. The filename is not kept as a component, rather it is parsed when ExtractFilename is called.",
+      "parentUuid": "c535f41b_8fd5053a",
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70bdadee_4f803d86",
         "filename": "chrome/browser/webshare/share_service_impl_unittest.cc",
         "patchSetId": 12
@@ -165,6 +321,24 @@
       "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f5c9e5_6eb40d5e",
+        "filename": "chrome/browser/webshare/share_service_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-07T01:30:23Z",
+      "side": 1,
+      "message": "Changed to iterating the array. Done.",
+      "parentUuid": "70bdadee_4f803d86",
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "1420b3d3_11733ab1",
+        "filename": "chrome/browser/webshare/share_target.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-07T01:30:23Z",
+      "side": 1,
+      "message": "Ah sorry. They are leftover from a previous version of the patch. Removed.",
+      "parentUuid": "5adea4ee_ab50f5f2",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 22
+      },
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f6823a7_4a0bb280",
         "filename": "chrome/browser/webshare/share_target.h",
         "patchSetId": 12
@@ -214,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "fc7f6cc9_c9f4e36b",
+        "filename": "chrome/browser/webshare/share_target.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-07T01:30:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f6823a7_4a0bb280",
+      "range": {
+        "startLine": 16,
+        "startChar": 7,
+        "endLine": 16,
+        "endChar": 12
+      },
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19798e72_7cf62bee",
         "filename": "chrome/browser/webshare/share_target.h",
         "patchSetId": 12
@@ -234,6 +456,30 @@
       "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6228df8_7d570fd9",
+        "filename": "chrome/browser/webshare/share_target.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-07T01:30:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19798e72_7cf62bee",
+      "range": {
+        "startLine": 33,
+        "startChar": 23,
+        "endLine": 33,
+        "endChar": 29
+      },
+      "revId": "a3df774971e1597576d49bda2ba7f6e9b1c104df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
