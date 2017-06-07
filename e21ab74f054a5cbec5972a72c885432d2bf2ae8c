@@ -71,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "50d52399_8b16ee26",
+        "filename": "chrome/browser/chromeos/arc/arc_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-07T16:25:30Z",
+      "side": 1,
+      "message": "nit: if",
+      "range": {
+        "startLine": 107,
+        "startChar": 16,
+        "endLine": 107,
+        "endChar": 19
+      },
+      "revId": "e21ab74f054a5cbec5972a72c885432d2bf2ae8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e58aed8b_2108d00c",
         "filename": "chrome/browser/chromeos/arc/arc_util.h",
         "patchSetId": 5
