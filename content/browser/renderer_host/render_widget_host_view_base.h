@@ -80,6 +80,7 @@ class RenderWidgetHostViewBaseObserver;
 class SyntheticGestureTarget;
 class TextInputManager;
 class TouchSelectionControllerClientManager;
+class WebContentsAccessibility;
 class WebCursor;
 struct NativeWebKeyboardEvent;
 struct TextInputState;
@@ -434,6 +435,10 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
     return wheel_scroll_latching_enabled_;
   }
 
+  void set_web_contents_accessibility(WebContentsAccessibility* wcax) {
+    web_contents_accessibility_ = wcax;
+  }
+
   // This only returns non-null on platforms that implement touch
   // selection editing (TSE), currently Aura and (soon) Android.
   // TODO(wjmaclean): update this comment when OOPIF TSE is implemented on
@@ -481,6 +486,8 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   TextInputManager* text_input_manager_;
 
   const bool wheel_scroll_latching_enabled_;
+
+  WebContentsAccessibility* web_contents_accessibility_;
 
  private:
   gfx::Rect current_display_area_;
