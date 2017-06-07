@@ -38,10 +38,10 @@ const StylePropertyShorthand& animationShorthandForParsing() {
       CSSPropertyAnimationDelay,     CSSPropertyAnimationIterationCount,
       CSSPropertyAnimationDirection, CSSPropertyAnimationFillMode,
       CSSPropertyAnimationPlayState, CSSPropertyAnimationName};
-  DEFINE_STATIC_LOCAL(StylePropertyShorthand,
-                      webkit_animation_longhands_for_parsing,
-                      (CSSPropertyAnimation, kAnimationPropertiesForParsing,
-                       WTF_ARRAY_LENGTH(kAnimationPropertiesForParsing)));
+  static constexpr StylePropertyShorthand
+      webkit_animation_longhands_for_parsing(
+          CSSPropertyAnimation, kAnimationPropertiesForParsing,
+          WTF_ARRAY_LENGTH(kAnimationPropertiesForParsing));
   return webkit_animation_longhands_for_parsing;
 }
 
@@ -51,9 +51,9 @@ const StylePropertyShorthand& transitionShorthandForParsing() {
   static const CSSPropertyID kTransitionProperties[] = {
       CSSPropertyTransitionDuration, CSSPropertyTransitionTimingFunction,
       CSSPropertyTransitionDelay, CSSPropertyTransitionProperty};
-  DEFINE_STATIC_LOCAL(StylePropertyShorthand, transition_longhands,
-                      (CSSPropertyTransition, kTransitionProperties,
-                       WTF_ARRAY_LENGTH(kTransitionProperties)));
+  static constexpr StylePropertyShorthand transition_longhands(
+      CSSPropertyTransition, kTransitionProperties,
+      WTF_ARRAY_LENGTH(kTransitionProperties));
   return transition_longhands;
 }
 
