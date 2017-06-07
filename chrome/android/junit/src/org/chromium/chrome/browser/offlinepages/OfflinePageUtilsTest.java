@@ -77,8 +77,6 @@ public class OfflinePageUtilsTest {
                 .when(mOfflinePageUtils)
                 .getOfflinePageBridge((Profile) isNull());
         OfflinePageUtils.setInstanceForTesting(mOfflinePageUtils);
-
-        OfflinePageBridge.setOfflineBookmarksEnabledForTesting(true);
     }
 
     @Test
