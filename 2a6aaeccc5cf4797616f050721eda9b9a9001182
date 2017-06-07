@@ -22,6 +22,30 @@
       "revId": "2a6aaeccc5cf4797616f050721eda9b9a9001182",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71d87fdb_ec0dbc73",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-07T22:01:44Z",
+      "side": 1,
+      "message": "I used \"refry\" in the sense of warming up an old meal.",
+      "parentUuid": "efb175d8_26702add",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "2a6aaeccc5cf4797616f050721eda9b9a9001182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
