@@ -185,8 +185,10 @@ void AccessibilityTreeFormatterWin::AddProperties(
   }
   temp_bstr.Reset();
 
-  if (SUCCEEDED(
-          ax_object->GetCOM()->get_accValue(variant_self, temp_bstr.Receive())))
+  // Ignore value on document, which is an old MSAA hack for providing the URL
+  if (ax_object->GetCOM()->ia2_role() !=
+      = ROLE_SYSTEM_DOCUMENT && SUCCEEDED(ax_object->GetCOM()->get_accValue(
+                                    variant_self, temp_bstr.Receive())))
     dict->SetString("value", base::string16(temp_bstr, temp_bstr.Length()));
   temp_bstr.Reset();
 
