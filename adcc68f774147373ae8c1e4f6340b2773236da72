@@ -122,6 +122,24 @@
       "revId": "adcc68f774147373ae8c1e4f6340b2773236da72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa394b1_97bfd3bf",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-07T05:33:57Z",
+      "side": 1,
+      "message": "Great; thanks.",
+      "parentUuid": "28bd6a7e_551cc738",
+      "revId": "adcc68f774147373ae8c1e4f6340b2773236da72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
