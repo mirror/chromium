@@ -1,0 +1,78 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module ui.mojom;
+
+import "mojo/common/file_path.mojom";
+import "mojo/common/time.mojom";
+import "ui/events/devices/mojo/input_devices.mojom";
+
+struct InputDeviceControllerConfig {
+  bool has_mouse;
+  bool has_touchpad;
+
+  bool is_caps_lock_enabled;
+  bool is_num_lock_enabled;
+  bool is_auto_repeat_enabled;
+  mojo.common.mojom.TimeDelta auto_repeat_delay;
+  mojo.common.mojom.TimeDelta auto_repeat_interval;
+  string keyboard_layout_name;
+
+  int32 touchpad_sensitivity;
+  bool tap_to_click;
+  bool is_three_finger_click_enabled;
+  bool is_tab_dragging_enabled;
+  bool is_natural_scroll_enabled;
+  bool is_internal_touchpad_enabled;
+
+  bool is_touchscreens_enabled;
+
+  int32 mouse_sensitivity;
+  bool is_primary_button_right;
+
+  string? touch_device_status;
+  array<mojo.common.mojom.FilePath>? touch_event_logs;
+};
+
+// InputDeviceController is mojo wrapper for ui::InputController, see it for
+// details.
+interface InputDeviceController {
+  [Sync]
+  GetConfig() => (InputDeviceControllerConfig config);
+
+  // Keyboard settings.
+  SetCapsLockEnabled(bool enabled);
+  SetNumLockEnabled(bool enabled);
+  SetAutoRepeatEnabled(bool enabled);
+  SetAutoRepeatRate(mojo.common.mojom.TimeDelta auto_repeat_delay,
+                    mojo.common.mojom.TimeDelta auto_repeat_interval);
+  SetKeyboardLayoutByName(string name);
+
+  // Touchpad settings.
+  SetTouchpadSensitivity(int32 value);
+  SetTapToClick(bool enabled);
+  SetThreeFingerClick(bool enabled);
+  SetTapDragging(bool enabled);
+  SetNaturalScroll(bool enabled);
+
+  // Mouse settings.
+  SetMouseSensitivity(int32 value);
+  SetPrimaryButtonRight(bool right);
+
+  // Touchscreen log settings.
+  SetTouchEventLoggingEnabled(bool enabled);
+
+  // Temporarily enable/disable Tap-to-click. Used to enhance the user
+  // experience in some use cases (e.g., typing, watching video).
+  SetTapToClickPaused(bool state);
+
+  SetInternalTouchpadEnabled(bool enabled);
+
+  SetTouchscreensEnabled(bool enabled);
+
+  // If |enable_filter| is true, all keys on the internal keyboard except
+  // |allowed_keys| are disabled. |allowed_keys| is a list of DomCodes. Any
+  // invalid codes are mapped to NONE.
+  SetInternalKeyboardFilter(bool enable_filter, array<uint32>? allowed_keys);
+};

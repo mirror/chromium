@@ -14,7 +14,13 @@ mojom("input_devices") {
   ]
 
   if (is_chromeos) {
-    sources += [ "touch_device_server.mojom" ]
-    public_deps += [ "//ui/display/manager/chromeos/mojo:interfaces" ]
+    sources += [
+      "input_controller.mojom",
+      "touch_device_server.mojom",
+    ]
+    public_deps += [
+      "//mojo/common:common_custom_types",
+      "//ui/display/manager/chromeos/mojo:interfaces",
+    ]
   }
 }
