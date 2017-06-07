@@ -1011,8 +1011,11 @@ inline ContainerNode* Node::parentNode() const {
 inline void Node::LazyReattachIfAttached() {
   if (NeedsAttach())
     return;
-  if (!InActiveDocument())
+  // It's possible to get here from FrameView::ForceLayoutParentViewIfNeeded
+  if (!InActiveDocument() || GetDocument().Lifecycle().GetState() ==
+                                 DocumentLifecycle::kInPerformLayout) {
     return;
+  }
 
   AttachContext context;
   context.performing_reattach = true;
