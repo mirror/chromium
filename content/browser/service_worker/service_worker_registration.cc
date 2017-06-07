@@ -21,6 +21,14 @@ namespace content {
 
 namespace {
 
+// If an outgoing active worker has no controllees or the waiting worker called
+// skipWaiting(), it is given |kMaxLameDuckTime| time to finish its requests
+// before it is removed. If the waiting worker called skipWaiting() more than
+// this time ago, or the outgoing worker has had no controllees for a continuous
+// period of time exceeding this time, the outgoing worker will be removed even
+// if it has ongoing requests.
+constexpr base::TimeDelta kMaxLameDuckTime = base::TimeDelta::FromMinutes(5);
+
 ServiceWorkerVersionInfo GetVersionInfo(ServiceWorkerVersion* version) {
   if (!version)
     return ServiceWorkerVersionInfo();
@@ -275,6 +283,10 @@ bool ServiceWorkerRegistration::IsReadyToActivate() const {
     return true;
   if (!active->HasWork() &&
       (!active->HasControllee() || waiting_version()->skip_waiting())) {
+    return true;
+  }
+  if (waiting_version()->TimeSinceSkipWaiting() > kMaxLameDuckTime ||
+      active->TimeSinceNoControllees() > kMaxLameDuckTime) {
     return true;
   }
   return false;
