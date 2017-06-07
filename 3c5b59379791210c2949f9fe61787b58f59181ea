@@ -34,6 +34,24 @@
       "revId": "3c5b59379791210c2949f9fe61787b58f59181ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb880f8a_989c163a",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8DOMWrapper.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-07T06:28:53Z",
+      "side": 1,
+      "message": "\u003e This is checking the same-origin policy, so it fails in case of cross origin.\n\nSpecifically, when can it happen? i.e., how is it possible that the creation context and the current context are from cross origins when we reach here?",
+      "parentUuid": "7c23aad8_34451807",
+      "revId": "3c5b59379791210c2949f9fe61787b58f59181ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
