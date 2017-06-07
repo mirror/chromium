@@ -28,11 +28,11 @@
 #include <memory>
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/Node.h"
-#include "core/events/WebInputEventConversion.h"
 #include "core/exported/WebViewBase.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/WebLocalFrameBase.h"
 #include "core/input/EventHandler.h"
+#include "core/input/WebInputEventConversion.h"
 #include "core/page/Page.h"
 #include "core/page/TouchDisambiguation.h"
 #include "platform/geometry/IntRect.h"

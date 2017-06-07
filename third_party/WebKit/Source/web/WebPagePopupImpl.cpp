@@ -32,7 +32,6 @@
 
 #include "core/dom/ContextFeatures.h"
 #include "core/events/MessageEvent.h"
-#include "core/events/WebInputEventConversion.h"
 #include "core/exported/WebSettingsImpl.h"
 #include "core/exported/WebViewBase.h"
 #include "core/frame/LocalFrame.h"
@@ -41,6 +40,7 @@
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
 #include "core/input/EventHandler.h"
+#include "core/input/WebInputEventConversion.h"
 #include "core/layout/api/LayoutAPIShim.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/loader/EmptyClients.h"

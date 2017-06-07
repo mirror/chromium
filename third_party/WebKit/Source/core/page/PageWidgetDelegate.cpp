@@ -30,10 +30,10 @@
 
 #include "core/page/PageWidgetDelegate.h"
 
-#include "core/events/WebInputEventConversion.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/input/EventHandler.h"
+#include "core/input/WebInputEventConversion.h"
 #include "core/layout/compositing/PaintLayerCompositor.h"
 #include "core/page/AutoscrollController.h"
 #include "core/page/Page.h"

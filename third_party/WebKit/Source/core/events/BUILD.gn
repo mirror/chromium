@@ -108,8 +108,6 @@ blink_core_sources("events") {
     "VisualViewportResizeEvent.h",
     "VisualViewportScrollEvent.cpp",
     "VisualViewportScrollEvent.h",
-    "WebInputEventConversion.cpp",
-    "WebInputEventConversion.h",
     "WheelEvent.cpp",
     "WheelEvent.h",
     "WindowEventContext.cpp",

@@ -30,6 +30,8 @@ blink_core_sources("input") {
     "TouchActionUtil.h",
     "TouchEventManager.cpp",
     "TouchEventManager.h",
+    "WebInputEventConversion.cpp",
+    "WebInputEventConversion.h",
   ]
 
   configs += [

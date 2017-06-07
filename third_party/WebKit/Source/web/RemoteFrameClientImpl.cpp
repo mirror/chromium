@@ -7,11 +7,11 @@
 #include <memory>
 #include "core/events/KeyboardEvent.h"
 #include "core/events/MouseEvent.h"
-#include "core/events/WebInputEventConversion.h"
 #include "core/events/WheelEvent.h"
 #include "core/frame/RemoteFrame.h"
 #include "core/frame/RemoteFrameView.h"
 #include "core/frame/WebLocalFrameBase.h"
+#include "core/input/WebInputEventConversion.h"
 #include "core/layout/api/LayoutEmbeddedContentItem.h"
 #include "core/layout/api/LayoutItem.h"
 #include "platform/exported/WrappedResourceRequest.h"
