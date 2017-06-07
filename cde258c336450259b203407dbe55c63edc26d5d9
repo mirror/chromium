@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "64fbdc39_2389a3ba",
+        "filename": "content/browser/accessibility/web_contents_accessibility.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-07T04:21:58Z",
+      "side": 1,
+      "message": "Done. I take it that there shall be a header common to all the platforms (web_contents_accessibility.h) and platform-specific h/cc (web_contents_accessibility_android.*).",
+      "parentUuid": "e96c8bac_1c83becb",
+      "revId": "cde258c336450259b203407dbe55c63edc26d5d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f90ceba_485d0e17",
         "filename": "content/browser/accessibility/web_contents_accessibility.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-06T04:40:58Z",
       "side": 1,
       "message": "It looks like WebContentsAccessibility is owned by RenderWidgetHostViewAndroid.",
+      "revId": "cde258c336450259b203407dbe55c63edc26d5d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb881dec_36bdc5c6",
+        "filename": "content/browser/accessibility/web_contents_accessibility.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-07T04:21:58Z",
+      "side": 1,
+      "message": "Actually I had meant to make it own itself, and get destroyed via its |connector_| when the associated web contents is destroyed. Added the destruction logic and updated the comment.",
+      "parentUuid": "2f90ceba_485d0e17",
       "revId": "cde258c336450259b203407dbe55c63edc26d5d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "cde258c336450259b203407dbe55c63edc26d5d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa962270_3092e1d7",
+        "filename": "content/browser/accessibility/web_contents_accessibility.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-07T04:21:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d705f94_80b9d494",
+      "revId": "cde258c336450259b203407dbe55c63edc26d5d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
