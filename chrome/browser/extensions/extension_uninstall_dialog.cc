@@ -9,6 +9,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/extensions/chrome_app_icon_service.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_util.h"
 #include "chrome/browser/profiles/profile.h"
@@ -21,14 +22,15 @@
 #include "extensions/browser/image_loader.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
-#include "extensions/common/extension_icon_set.h"
-#include "extensions/common/extension_resource.h"
 #include "extensions/common/extension_urls.h"
 #include "extensions/common/manifest_handlers/icons_handler.h"
 #include "extensions/common/manifest_url_handlers.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/base/layout.h"
 #include "ui/base/page_transition_types.h"
 #include "ui/base/window_open_disposition.h"
+#include "ui/display/display.h"
+#include "ui/display/screen.h"
 #include "ui/gfx/image/image.h"
 #include "ui/gfx/image/image_skia.h"
 
@@ -36,25 +38,20 @@ namespace extensions {
 
 namespace {
 
-const char kExtensionRemovedError[] =
+constexpr int kIconSize = 64;
+
+constexpr char kExtensionRemovedError[] =
     "Extension was removed before dialog closed.";
 
-const char kReferrerId[] = "chrome-remove-extension-dialog";
-
-// Returns gfx::ImageSkia for the default icon.
-gfx::ImageSkia GetDefaultIconImage(bool is_app) {
-  return  is_app ? util::GetDefaultAppIcon() : util::GetDefaultExtensionIcon();
-}
+constexpr char kReferrerId[] = "chrome-remove-extension-dialog";
 
 }  // namespace
 
 ExtensionUninstallDialog::ExtensionUninstallDialog(
     Profile* profile,
+    gfx::NativeWindow parent,
     ExtensionUninstallDialog::Delegate* delegate)
-    : profile_(profile),
-      delegate_(delegate),
-      uninstall_reason_(UNINSTALL_REASON_FOR_TESTING) {
-}
+    : profile_(profile), parent_(parent), delegate_(delegate) {}
 
 ExtensionUninstallDialog::~ExtensionUninstallDialog() {
 }
@@ -79,48 +76,32 @@ void ExtensionUninstallDialog::ConfirmUninstall(
 
   extension_ = extension;
   uninstall_reason_ = reason;
-  // Bookmark apps may not have 128x128 icons so accept 64x64 icons.
-  const int icon_size = extension_->from_bookmark()
-                            ? extension_misc::EXTENSION_ICON_SMALL * 2
-                            : extension_misc::EXTENSION_ICON_LARGE;
-  ExtensionResource image = IconsInfo::GetIconResource(
-      extension_.get(), icon_size, ExtensionIconSet::MATCH_BIGGER);
 
-  // Load the image asynchronously. The response will be sent to OnImageLoaded.
-  ImageLoader* loader = ImageLoader::Get(profile_);
-
-  SetIcon(gfx::Image());
-  std::vector<ImageLoader::ImageRepresentation> images_list;
-  images_list.push_back(ImageLoader::ImageRepresentation(
-      image,
-      ImageLoader::ImageRepresentation::NEVER_RESIZE,
-      gfx::Size(),
-      ui::SCALE_FACTOR_100P));
-  loader->LoadImagesAsync(extension_.get(), images_list,
-                          base::Bind(&ExtensionUninstallDialog::OnImageLoaded,
-                                     AsWeakPtr(), extension_->id()));
+  icon_ = ChromeAppIconService::Get(profile_)->CreateIcon(this, extension->id(),
+                                                          kIconSize);
+  const float display_scale_factor =
+      parent_ ? ui::GetScaleFactorForNativeView(parent_)
+              : display::Screen::GetScreen()
+                    ->GetPrimaryDisplay()
+                    .device_scale_factor();
+  icon_->image_skia().GetRepresentation(display_scale_factor);
 }
 
-void ExtensionUninstallDialog::SetIcon(const gfx::Image& image) {
-  if (image.IsEmpty()) {
-    icon_ = GetDefaultIconImage(extension_->is_app());
-  } else {
-    icon_ = *image.ToImageSkia();
-  }
-}
+void ExtensionUninstallDialog::OnIconUpdated(ChromeAppIcon* icon) {
+  // Ignore initial update.
+  if (!icon_)
+    return;
 
-void ExtensionUninstallDialog::OnImageLoaded(const std::string& extension_id,
-                                             const gfx::Image& image) {
+  DCHECK_EQ(icon, icon_.get());
+
   const Extension* target_extension =
-      ExtensionRegistry::Get(profile_)
-          ->GetExtensionById(extension_id, ExtensionRegistry::EVERYTHING);
+      ExtensionRegistry::Get(profile_)->GetExtensionById(
+          extension_->id(), ExtensionRegistry::EVERYTHING);
   if (!target_extension) {
     delegate_->OnExtensionUninstallDialogClosed(
         false, base::ASCIIToUTF16(kExtensionRemovedError));
     return;
   }
-
-  SetIcon(image);
 
   switch (ScopedTestDialogAutoConfirm::GetAutoConfirmValue()) {
     case ScopedTestDialogAutoConfirm::NONE:
