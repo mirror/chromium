@@ -147,6 +147,8 @@ class CC_EXPORT Scheduler : public BeginFrameObserverBase {
 
   void SetDeferCommits(bool defer_commits);
 
+  void NotifyMainThreadWantsBeginMainFrameNotExpected(bool new_state);
+
   std::unique_ptr<base::trace_event::ConvertableToTraceFormat> AsValue() const;
 
   void AsValueInto(base::trace_event::TracedValue* state) const;
