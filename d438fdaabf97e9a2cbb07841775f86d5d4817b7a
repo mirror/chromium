@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab8ad103_f2d337de",
+        "filename": "ui/gfx/geometry/quat_f.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-07T19:05:16Z",
+      "side": 1,
+      "message": "typo: in the range",
+      "revId": "d438fdaabf97e9a2cbb07841775f86d5d4817b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9772bc0_347d9702",
+        "filename": "ui/gfx/geometry/quat_f.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-07T19:05:16Z",
+      "side": 1,
+      "message": "typo: in the range",
+      "revId": "d438fdaabf97e9a2cbb07841775f86d5d4817b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa49ed95_09dac5f7",
+        "filename": "ui/gfx/transform_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-07T19:05:16Z",
+      "side": 1,
+      "message": "why not set_x() etc, since the object is already constructed, just curious, it seems like that would make nicer lines to read",
+      "range": {
+        "startLine": 366,
+        "startChar": 6,
+        "endLine": 366,
+        "endChar": 23
+      },
+      "revId": "d438fdaabf97e9a2cbb07841775f86d5d4817b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05fa11ec_4ebea5f4",
+        "filename": "ui/gfx/transform_util.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-07T19:05:16Z",
+      "side": 1,
+      "message": "This comment shouldn\u0027t really refer to |out| at all now.",
+      "revId": "d438fdaabf97e9a2cbb07841775f86d5d4817b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
