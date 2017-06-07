@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "base/bind.h"
+#include "base/callback_helpers.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/download/internal/client_set.h"
 #include "components/download/internal/config.h"
@@ -21,11 +22,13 @@ namespace download {
 ControllerImpl::ControllerImpl(std::unique_ptr<ClientSet> clients,
                                std::unique_ptr<Configuration> config,
                                std::unique_ptr<DownloadDriver> driver,
-                               std::unique_ptr<Model> model)
+                               std::unique_ptr<Model> model,
+                               std::unique_ptr<TaskScheduler> task_scheduler)
     : clients_(std::move(clients)),
       config_(std::move(config)),
       driver_(std::move(driver)),
-      model_(std::move(model)) {}
+      model_(std::move(model)),
+      task_scheduler_(std::move(task_scheduler)) {}
 
 ControllerImpl::~ControllerImpl() = default;
 
@@ -130,6 +133,36 @@ DownloadClient ControllerImpl::GetOwnerOfDownload(const std::string& guid) {
   return entry ? entry->client : DownloadClient::INVALID;
 }
 
+void ControllerImpl::OnStartScheduledTask(
+    DownloadTaskType task_type,
+    const TaskFinishedCallback& callback) {
+  task_finished_callbacks_[task_type] = callback;
+  if (!startup_status_.Complete()) {
+    return;
+  } else if (!startup_status_.Ok()) {
+    NotifyTaskFinished(false);
+    return;
+  }
+
+  ProcessScheduledTasks();
+}
+
+bool ControllerImpl::OnStopScheduledTask(DownloadTaskType task_type) {
+  task_finished_callbacks_.erase(task_type);
+  return true;
+}
+
+void ControllerImpl::ProcessScheduledTasks() {
+  NOTIMPLEMENTED();
+}
+
+void ControllerImpl::NotifyTaskFinished(bool needs_reschedule) {
+  for (auto& task_map_entry : task_finished_callbacks_) {
+    base::ResetAndReturn(&task_map_entry.second).Run(needs_reschedule);
+  }
+  task_finished_callbacks_.clear();
+}
+
 void ControllerImpl::OnDriverReady(bool success) {
   DCHECK(!startup_status_.driver_ok.has_value());
   startup_status_.driver_ok = success;
@@ -196,6 +229,7 @@ void ControllerImpl::AttemptToFinalizeSetup() {
   if (!startup_status_.Ok()) {
     // TODO(dtrainor): Recover here.  Try to clean up any disk state and, if
     // possible, any DownloadDriver data and continue with initialization?
+    NotifyTaskFinished(false);
     return;
   }
 
@@ -206,6 +240,10 @@ void ControllerImpl::AttemptToFinalizeSetup() {
   // TODO(dtrainor): Post this so that the initialization step is finalized
   // before Clients can take action.
   NotifyClientsOfStartup();
+
+  if (!task_finished_callbacks_.empty()) {
+    ProcessScheduledTasks();
+  }
 }
 
 void ControllerImpl::CancelOrphanedRequests() {

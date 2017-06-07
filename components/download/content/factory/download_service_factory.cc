@@ -25,7 +25,8 @@ DownloadService* CreateDownloadService(
     std::unique_ptr<DownloadClientMap> clients,
     content::DownloadManager* download_manager,
     const base::FilePath& storage_dir,
-    const scoped_refptr<base::SequencedTaskRunner>& background_task_runner) {
+    const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
+    std::unique_ptr<TaskScheduler> task_scheduler) {
   auto client_set = base::MakeUnique<ClientSet>(std::move(clients));
   auto config = Configuration::CreateFromFinch();
 
@@ -41,9 +42,9 @@ DownloadService* CreateDownloadService(
                                                std::move(entry_db));
   auto model = base::MakeUnique<ModelImpl>(std::move(store));
 
-  auto controller =
-      base::MakeUnique<ControllerImpl>(std::move(client_set), std::move(config),
-                                       std::move(driver), std::move(model));
+  auto controller = base::MakeUnique<ControllerImpl>(
+      std::move(client_set), std::move(config), std::move(driver),
+      std::move(model), std::move(task_scheduler));
   return new DownloadServiceImpl(std::move(controller));
 }
 

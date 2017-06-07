@@ -15,6 +15,7 @@
 #include "components/download/internal/model.h"
 #include "components/download/internal/startup_status.h"
 #include "components/download/public/download_params.h"
+#include "components/download/public/task_scheduler.h"
 
 namespace download {
 
@@ -35,7 +36,8 @@ class ControllerImpl : public Controller,
   ControllerImpl(std::unique_ptr<ClientSet> clients,
                  std::unique_ptr<Configuration> config,
                  std::unique_ptr<DownloadDriver> driver,
-                 std::unique_ptr<Model> model);
+                 std::unique_ptr<Model> model,
+                 std::unique_ptr<TaskScheduler> task_scheduler);
   ~ControllerImpl() override;
 
   // Controller implementation.
@@ -48,6 +50,9 @@ class ControllerImpl : public Controller,
   void ChangeDownloadCriteria(const std::string& guid,
                               const SchedulingParams& params) override;
   DownloadClient GetOwnerOfDownload(const std::string& guid) override;
+  void OnStartScheduledTask(DownloadTaskType task_type,
+                            const TaskFinishedCallback& callback) override;
+  bool OnStopScheduledTask(DownloadTaskType task_type) override;
 
  private:
   // DownloadDriver::Client implementation.
@@ -100,16 +105,26 @@ class ControllerImpl : public Controller,
       DownloadParams::StartResult result,
       const DownloadParams::StartCallback& callback);
 
+  // Entry point for a scheduled task after the task is fired.
+  void ProcessScheduledTasks();
+
+  // Runs any pending task finished callbacks.
+  void NotifyTaskFinished(bool needs_reschedule);
+
   std::unique_ptr<ClientSet> clients_;
   std::unique_ptr<Configuration> config_;
 
   // Owned Dependencies.
   std::unique_ptr<DownloadDriver> driver_;
   std::unique_ptr<Model> model_;
+  // TODO(shaktisahu): Create it from //chrome/ and pass it through
+  // DownloadService.
+  std::unique_ptr<TaskScheduler> task_scheduler_;
 
   // Internal state.
   StartupStatus startup_status_;
   std::map<std::string, DownloadParams::StartCallback> start_callbacks_;
+  std::map<DownloadTaskType, TaskFinishedCallback> task_finished_callbacks_;
 
   DISALLOW_COPY_AND_ASSIGN(ControllerImpl);
 };

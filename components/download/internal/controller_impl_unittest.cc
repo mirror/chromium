@@ -30,6 +30,16 @@ namespace download {
 
 namespace {
 
+class MockTaskScheduler : public TaskScheduler {
+ public:
+  MockTaskScheduler() = default;
+  ~MockTaskScheduler() = default;
+
+  // TaskScheduler implementation.
+  MOCK_METHOD5(ScheduleTask, void(DownloadTaskType, bool, bool, long, long));
+  MOCK_METHOD1(CancelTask, void(DownloadTaskType));
+};
+
 class DownloadServiceControllerImplTest : public testing::Test {
  public:
   DownloadServiceControllerImplTest()
@@ -42,6 +52,7 @@ class DownloadServiceControllerImplTest : public testing::Test {
         base::Bind(&DownloadServiceControllerImplTest::StartCallback,
                    base::Unretained(this));
   }
+
   ~DownloadServiceControllerImplTest() override = default;
 
   void SetUp() override {
@@ -59,10 +70,11 @@ class DownloadServiceControllerImplTest : public testing::Test {
     clients->insert(std::make_pair(DownloadClient::TEST, std::move(client)));
     auto client_set = base::MakeUnique<ClientSet>(std::move(clients));
     auto model = base::MakeUnique<ModelImpl>(std::move(store));
+    auto task_scheduler = base::MakeUnique<MockTaskScheduler>();
 
     controller_ = base::MakeUnique<ControllerImpl>(
         std::move(client_set), std::move(config), std::move(driver),
-        std::move(model));
+        std::move(model), std::move(task_scheduler));
   }
 
  protected:
