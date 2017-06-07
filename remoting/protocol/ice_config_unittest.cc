@@ -73,6 +73,29 @@ TEST(IceConfigTest, ParseValid) {
   EXPECT_EQ(rtc::SocketAddress("1.2.3.4", 3478), config.stun_servers[1]);
 }
 
+TEST(IceConfigTest, ParseDataEnvelope) {
+  const char kTestConfigJson[] =
+      "{'data':{"
+      "  'lifetimeDuration': '43200.000s',"
+      "  'iceServers': ["
+      "    {"
+      "      'urls': ["
+      "        'turn:[2001:4860:4860::8888]:333'"
+      "      ],"
+      "      'username': '123',"
+      "      'credential': 'abc'"
+      "    },"
+      "  ]"
+      "}}";
+
+  IceConfig config = IceConfig::Parse(kTestConfigJson);
+
+  EXPECT_EQ(1U, config.turn_servers.size());
+  EXPECT_TRUE(cricket::RelayServerConfig("2001:4860:4860::8888", 333, "123",
+                                         "abc", cricket::PROTO_UDP,
+                                         false) == config.turn_servers[0]);
+}
+
 // Verify that we can still proceed if some servers cannot be parsed.
 TEST(IceConfigTest, ParsePartiallyInvalid) {
   const char kTestConfigJson[] =
