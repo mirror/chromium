@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "566bffc9_6f8f88c1",
+        "filename": "services/preferences/public/interfaces/preferences.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-07T18:31:04Z",
+      "side": 1,
+      "message": "To be honest, I\u0027m not certain of the value of this comment: this is just how Mojo works (and other places use it without any such comment. But I don\u0027t feel strongly.",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 14
+      },
+      "revId": "bc814c65244986dbba435e651d34cf9a6eb9f223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
