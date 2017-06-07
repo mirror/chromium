@@ -37,12 +37,14 @@ class WebResourceUtilTest : public testing::Test {
   void OnParseSuccess(std::unique_ptr<base::Value> value) {
     success_called_ = true;
     value_ = std::move(value);
+    run_loop_.Quit();
   }
 
   // Called on error.
   void OnParseError(const std::string& error) {
     error_called_ = true;
     error_ = error;
+    run_loop_.Quit();
   }
 
   void FlushBackgroundTasks() {
@@ -51,10 +53,11 @@ class WebResourceUtilTest : public testing::Test {
     EXPECT_FALSE(success_called_);
     EXPECT_FALSE(error_called_);
 
-    scoped_task_environment_.RunUntilIdle();
+    run_loop_.Run();
   }
 
   base::test::ScopedTaskEnvironment scoped_task_environment_;
+  base::RunLoop run_loop_;
   std::string error_;
   std::unique_ptr<base::Value> value_;
   bool error_called_;
@@ -72,8 +75,9 @@ TEST_F(WebResourceUtilTest, Success) {
   FlushBackgroundTasks();
 
   // The success callback is called with the reference value.
-  EXPECT_FALSE(error_called_);
-  EXPECT_TRUE(success_called_);
+  ASSERT_FALSE(error_called_);
+  ASSERT_TRUE(success_called_);
+  ASSERT_TRUE(value_);
 
   base::DictionaryValue* dictionary = nullptr;
   ASSERT_TRUE(value_->GetAsDictionary(&dictionary));
