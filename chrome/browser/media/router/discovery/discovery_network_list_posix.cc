@@ -4,15 +4,10 @@
 
 #include "chrome/browser/media/router/discovery/discovery_network_list.h"
 
-// TODO(btolsch): Remove the preprocessor conditionals when adding Mac version.
-#include "build/build_config.h"
-#if defined(OS_LINUX)
-
 #include <ifaddrs.h>
 #include <net/if.h>
 #include <net/if_arp.h>
 #include <netinet/in.h>
-#include <netpacket/packet.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 
@@ -20,10 +15,30 @@
 
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
+#include "build/build_config.h"
 #include "chrome/browser/media/router/discovery/discovery_network_list_wifi.h"
 #include "net/base/net_errors.h"
 
+#if !defined(OS_MACOSX)
+#include <netpacket/packet.h>
+#else
+#include <net/if_dl.h>
+#endif
+
 namespace {
+
+#if !defined(OS_MACOSX)
+using sll = struct sockaddr_ll;
+#define SLL_HATYPE(s) ((s)->sll_hatype)
+#define SLL_HALEN(s) ((s)->sll_halen)
+#define SLL_ADDR(s) ((s)->sll_addr)
+#else  // defined(OS_MACOSX)
+#define AF_PACKET AF_LINK
+using sll = struct sockaddr_dl;
+#define SLL_HATYPE(s) ((s)->sdl_type)
+#define SLL_HALEN(s) ((s)->sdl_alen)
+#define SLL_ADDR(s) (LLADDR(s))
+#endif
 
 void GetDiscoveryNetworkInfoListImpl(
     const struct ifaddrs* if_list,
@@ -44,12 +59,14 @@ void GetDiscoveryNetworkInfoListImpl(
       continue;
     }
 
-    // |addr| will always be sockaddr_ll when |sa_family| == AF_PACKET.
-    const struct sockaddr_ll* ll_addr =
-        reinterpret_cast<const struct sockaddr_ll*>(addr);
+    // |addr| will always be sockaddr_ll/sockaddr_dl when |sa_family| ==
+    // AF_PACKET.
+    const auto* ll_addr = reinterpret_cast<const sll*>(addr);
     // ARPHRD_ETHER is used to test for Ethernet, as in IEEE 802.3 MAC protocol.
     // This spec is used by both wired Ethernet and wireless (e.g. 802.11).
-    if (ll_addr->sll_hatype != ARPHRD_ETHER) {
+    // ARPHRD_IEEE802 is used to test for the 802.2 LLC protocol of Ethernet.
+    if (SLL_HATYPE(ll_addr) != ARPHRD_ETHER &&
+        SLL_HATYPE(ll_addr) != ARPHRD_IEEE802) {
       continue;
     }
 
@@ -58,12 +75,14 @@ void GetDiscoveryNetworkInfoListImpl(
       continue;
     }
 
-    if (ll_addr->sll_halen == 0) {
+    if (SLL_HALEN(ll_addr) == 0) {
       continue;
     }
 
     network_info_list->push_back(
-        {name, base::HexEncode(ll_addr->sll_addr, ll_addr->sll_halen)});
+        {name, base::HexEncode(
+                   reinterpret_cast<const unsigned char*>(SLL_ADDR(ll_addr)),
+                   SLL_HALEN(ll_addr))});
   }
 }
 
@@ -83,11 +102,3 @@ std::vector<DiscoveryNetworkInfo> GetDiscoveryNetworkInfoList() {
   freeifaddrs(if_list);
   return network_ids;
 }
-
-#else  // !defined(OS_LINUX)
-
-std::vector<DiscoveryNetworkInfo> GetDiscoveryNetworkInfoList() {
-  return std::vector<DiscoveryNetworkInfo>();
-}
-
-#endif
