@@ -1034,22 +1034,21 @@ String StringWithRebalancedWhitespace(const String& string,
   StringBuilder rebalanced_string;
   rebalanced_string.ReserveCapacity(length);
 
-  bool previous_character_was_space = false;
+  UChar previous = '\0';
   for (size_t i = 0; i < length; i++) {
     UChar c = string[i];
     if (!IsWhitespace(c)) {
       rebalanced_string.Append(c);
-      previous_character_was_space = false;
+      previous = c;
       continue;
     }
 
-    if (previous_character_was_space || (!i && start_is_start_of_paragraph) ||
-        (i + 1 == length && should_emit_nbs_pbefore_end)) {
-      rebalanced_string.Append(kNoBreakSpaceCharacter);
-      previous_character_was_space = false;
+    if (previous == ' ' || (!i && start_is_start_of_paragraph) ||
+        (i + 1 == length && should_emit_nbs_pbefore_end) ||
+        (previous != kNoBreakSpaceCharacter && IsWhitespace(string[i + 1]))) {
+      rebalanced_string.Append(previous = kNoBreakSpaceCharacter);
     } else {
-      rebalanced_string.Append(' ');
-      previous_character_was_space = true;
+      rebalanced_string.Append(previous = ' ');
     }
   }
 
