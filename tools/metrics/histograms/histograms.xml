@@ -59424,6 +59424,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Renderer.TimeToHungRendererTermination" units="ms">
+  <owner>tzik@chromium.org</owner>
+  <owner>bashi@chromium.org</owner>
+  <summary>
+    The time elapsed between a crash request from the browser to a hung renderer
+    and the corresponding renderer termination. The max value indicates the
+    timeout. Recorded for each renderer hang.
+  </summary>
+</histogram>
+
 <histogram name="Renderer.unloadEventsDurationMS" units="ms">
   <obsolete>
     Deprecated as of 10/2013.

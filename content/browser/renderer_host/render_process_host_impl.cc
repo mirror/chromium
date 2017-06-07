@@ -37,6 +37,7 @@
 #include "base/metrics/persistent_memory_allocator.h"
 #include "base/metrics/user_metrics.h"
 #include "base/process/process_handle.h"
+#include "base/process/process_metrics.h"
 #include "base/rand_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
@@ -263,6 +264,10 @@ namespace {
 
 const RenderProcessHostFactory* g_render_process_host_factory_ = nullptr;
 const char kSiteProcessMapKeyName[] = "content_site_process_map";
+constexpr base::TimeDelta kVoluntaryTerminationTimeoutMin =
+    base::TimeDelta::FromSeconds(3);
+constexpr base::TimeDelta kVoluntaryTerminationTimeoutMax =
+    base::TimeDelta::FromSeconds(5);
 
 #if defined(OS_ANDROID)
 // This matches Android's ChildProcessConnection state before OnProcessLaunched.
@@ -310,6 +315,12 @@ void GetContexts(
   *resource_context_out = resource_context;
   *request_context_out =
       GetRequestContext(request_context, media_request_context, resource_type);
+}
+
+base::TimeDelta RandomTimeDeltaInRange(base::TimeDelta min,
+                                       base::TimeDelta max) {
+  DCHECK_LT(min, max);
+  return min + base::RandDouble() * (max - min);
 }
 
 #if BUILDFLAG(ENABLE_WEBRTC)
@@ -1260,6 +1271,7 @@ void RenderProcessHostImpl::InitializeChannelProxy() {
   // surprising behavior.
   channel_->GetRemoteAssociatedInterface(&remote_route_provider_);
   channel_->GetRemoteAssociatedInterface(&renderer_interface_);
+  content::BindInterface(this, MakeRequest(&crasher_interface_));
 
   // We start the Channel in a paused state. It will be briefly unpaused again
   // in Init() if applicable, before process launch is initiated.
@@ -2408,6 +2420,20 @@ bool RenderProcessHostImpl::FastShutdownIfPossible() {
   return true;
 }
 
+void RenderProcessHostImpl::TerminateHungRenderProcess() {
+  crasher_interface_->Crash(CollectCrashKeysForRendererHang());
+
+  base::TimeDelta delay = RandomTimeDeltaInRange(
+      kVoluntaryTerminationTimeoutMin, kVoluntaryTerminationTimeoutMax);
+  report_hung_renderer_stats_ =
+      base::BindOnce(&RenderProcessHostImpl::ReportHungRendererStats,
+                     base::Unretained(this), base::TimeTicks::Now());
+  termination_timer_.Start(
+      FROM_HERE, delay,
+      base::Bind(&RenderProcessHostImpl::OnHungRendererTerminationTimedOut,
+                 base::Unretained(this)));
+}
+
 bool RenderProcessHostImpl::Send(IPC::Message* msg) {
   TRACE_EVENT0("renderer_host", "RenderProcessHostImpl::Send");
 
@@ -3235,6 +3261,14 @@ void RenderProcessHostImpl::ProcessDied(bool already_dead,
   if (delayed_cleanup_needed_)
     Cleanup();
 
+  if (report_hung_renderer_stats_) {
+    DCHECK(termination_timer_.IsRunning());
+    termination_timer_.Reset();
+    std::move(report_hung_renderer_stats_)
+        .Run(base::TimeTicks::Now(), TerminationStatus::TerminatedForcibly);
+  }
+  DCHECK(!termination_timer_.IsRunning())
+
   // If RenderProcessHostImpl is reused, the next renderer will send a new
   // request for FrameSinkProvider so make sure frame_sink_provider_ is ready
   // for that.
@@ -3626,6 +3660,47 @@ void RenderProcessHostImpl::OnMojoError(int render_process_id,
   base::debug::ScopedCrashKey error_key_value("mojo-message-error", error);
   bad_message::ReceivedBadMessage(render_process_id,
                                   bad_message::RPH_MOJO_PROCESS_ERROR);
+}
+
+mojom::CrashKeysPtr RenderProcessHostImpl::CollectCrashKeysForRendererHang() {
+  mojom::CrashKeysPtr crash_keys = mojom::CrashKeys::New();
+
+  base::SystemMemoryInfoKB info;
+  base::GetSystemMemoryInfo(&info);
+
+  int64_t available = 0;
+#if defined(OS_WIN)
+  available = info.avail_phys;
+#else
+  available = info.free;
+#endif
+  crash_keys->free_memory_ratio = available * 100 / info.total;
+
+  return crash_keys;
+}
+
+void RenderProcessHostImpl::ReportHungRendererStats(
+    base::TimeTicks start,
+    base::TimeTicks end,
+    TerminationStatus termination_status) {
+  base::TimeDelta elapsed_time;
+  if (termination_status == TerminationStatus::TerminatedItself) {
+    elapsed_time = std::min(end - start, kVoluntaryTerminationTimeoutMax);
+  } else {
+    DCHECK_EQ(TerminationStatus::TerminatedForcibly, termination_status);
+    elapsed_time = kVoluntaryTerminationTimeoutMax;
+  }
+  UMA_HISTOGRAM_CUSTOM_TIMES("Renderer.TimeToHungRendererTermination",
+                             elapsed_time, base::TimeDelta::FromMilliseconds(1),
+                             kVoluntaryTerminationTimeoutMax, 50);
+}
+
+void RenderProcessHostImpl::OnHungRendererTerminationTimedOut() {
+  if (report_hung_renderer_stats_) {
+    std::move(report_hung_renderer_stats_)
+        .Run(base::TimeTicks::Now(), TerminationStatus::TerminatedForcibly);
+  }
+  Shutdown(RESULT_CODE_HUNG, false);
 }
 
 }  // namespace content
