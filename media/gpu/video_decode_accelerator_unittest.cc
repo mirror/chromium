@@ -1527,32 +1527,29 @@ TEST_P(VideoDecodeAcceleratorParamTest, TestSimpleDecode) {
   }
 
   if (render_as_thumbnails) {
-    std::vector<unsigned char> rgb;
+    std::vector<unsigned char> rgba;
     bool alpha_solid;
     base::WaitableEvent done(base::WaitableEvent::ResetPolicy::AUTOMATIC,
                              base::WaitableEvent::InitialState::NOT_SIGNALED);
     g_env->GetRenderingTaskRunner()->PostTask(
-        FROM_HERE, base::Bind(&RenderingHelper::GetThumbnailsAsRGB,
-                              base::Unretained(&rendering_helper_), &rgb,
+        FROM_HERE, base::Bind(&RenderingHelper::GetThumbnailsAsRGBA,
+                              base::Unretained(&rendering_helper_), &rgba,
                               &alpha_solid, &done));
     done.Wait();
 
     std::vector<std::string> golden_md5s;
     std::string md5_string = base::MD5String(
-        base::StringPiece(reinterpret_cast<char*>(&rgb[0]), rgb.size()));
+        base::StringPiece(reinterpret_cast<char*>(&rgba[0]), rgba.size()));
     ReadGoldenThumbnailMD5s(test_video_files_[0].get(), &golden_md5s);
     std::vector<std::string>::iterator match =
         find(golden_md5s.begin(), golden_md5s.end(), md5_string);
     if (match == golden_md5s.end()) {
-      // Convert raw RGB into PNG for export.
+      // Convert raw RGBA into PNG for export.
       std::vector<unsigned char> png;
-      gfx::PNGCodec::Encode(&rgb[0],
-                            gfx::PNGCodec::FORMAT_RGB,
+      gfx::PNGCodec::Encode(&rgba[0], kRGBA_8888_SkColorType,
                             kThumbnailsPageSize,
-                            kThumbnailsPageSize.width() * 3,
-                            true,
-                            std::vector<gfx::PNGCodec::Comment>(),
-                            &png);
+                            kThumbnailsPageSize.width() * 4, true,
+                            std::vector<gfx::PNGCodec::Comment>(), &png);
 
       LOG(ERROR) << "Unknown thumbnails MD5: " << md5_string;
 
