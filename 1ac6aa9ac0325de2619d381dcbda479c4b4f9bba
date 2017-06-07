@@ -52,6 +52,24 @@
       "revId": "1ac6aa9ac0325de2619d381dcbda479c4b4f9bba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af06aaa6_9ba60d6e",
+        "filename": "components/viz/host/frame_sink_manager_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-07T14:09:57Z",
+      "side": 1,
+      "message": "I had thought that FrameSink registration/invalidation and FrameSink hierarchy were dependent on one another. That actually isn\u0027t the case, so my description is wrong!\n\nThe biggest issue with using Mojo for FrameSink hierarchy registration that I\u0027ve encountered is that it breaks some tests, since things now happen asynchronously. I\u0027m working on getting these fixed now. All tests that involve creating CompositorFrameSinks and submitting CompositorFrames will have to be updated as we move things to Mojo and eventually out of process.",
+      "parentUuid": "064140fc_0e295f42",
+      "revId": "1ac6aa9ac0325de2619d381dcbda479c4b4f9bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
