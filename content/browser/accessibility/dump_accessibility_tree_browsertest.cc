@@ -58,6 +58,9 @@ class DumpAccessibilityTreeTest : public DumpAccessibilityTestBase {
   void AddDefaultFilters(std::vector<Filter>* filters) override {
     filters->push_back(Filter(base::ASCIIToUTF16("FOCUSABLE"), Filter::ALLOW));
     filters->push_back(Filter(base::ASCIIToUTF16("READONLY"), Filter::ALLOW));
+    filters->push_back(
+        Filter(base::ASCIIToUTF16("IA2_STATE_MULTI_LINE"), Filter::ALLOW));
+    filters->push_back(Filter(base::ASCIIToUTF16("multiline"), Filter::ALLOW));
     filters->push_back(Filter(base::ASCIIToUTF16("roleDescription=*"),
                               Filter::ALLOW));
     filters->push_back(Filter(base::ASCIIToUTF16("*=''"), Filter::DENY));
