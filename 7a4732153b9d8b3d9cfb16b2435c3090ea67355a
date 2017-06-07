@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b2d4979_c84c6a48",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 8410,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-06-07T23:24:16Z",
+      "side": 1,
+      "message": "You can probably get rid of use_img here, and below just add else if (features().use_img_for_multisampled_render_to_texture) along with other conditions.",
+      "range": {
+        "startLine": 8410,
+        "startChar": 9,
+        "endLine": 8410,
+        "endChar": 16
+      },
+      "revId": "7a4732153b9d8b3d9cfb16b2435c3090ea67355a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01f72084_5008c285",
+        "filename": "gpu/config/gpu_driver_bug_workaround_type.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-06-07T23:24:16Z",
+      "side": 1,
+      "message": "Can you also move these entries to the right place?  They are also out of order (I understand it\u0027s unrelated, but it\u0027s trivia, so maybe just fix it here).",
+      "range": {
+        "startLine": 218,
+        "startChar": 9,
+        "endLine": 218,
+        "endChar": 38
+      },
+      "revId": "7a4732153b9d8b3d9cfb16b2435c3090ea67355a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
