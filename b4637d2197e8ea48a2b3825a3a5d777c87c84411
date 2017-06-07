@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "638f686d_29264410",
+        "filename": "chrome/browser/chromeos/arc/auth/arc_auth_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-07T14:58:58Z",
+      "side": 0,
+      "message": "\\o/",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 60
+      },
+      "revId": "b4637d2197e8ea48a2b3825a3a5d777c87c84411",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
