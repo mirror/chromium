@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76fc8197_ce389f89",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 67537,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-07T09:13:01Z",
+      "side": 1,
+      "message": "Note that these histograms are not actually logged, just the _MainFrame suffix (and later the _SubFrame suffix) will be logged. Not sure if there is a convention to follow for this pattern.",
+      "range": {
+        "startLine": 67537,
+        "startChar": 4,
+        "endLine": 67537,
+        "endChar": 8
+      },
+      "revId": "2a50ec0203a3994396bd6d03bd1129d4bac820ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
