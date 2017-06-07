@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "104e713a_09fbdffb",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchDispatcher.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-07T08:57:57Z",
+      "side": 1,
+      "message": "Since this is unsigned, just DCHECK_NE(0, active_requests_) would be fine?\nAlso, I\u0027d add the same check after active_requets_++ at line 22.",
+      "parentUuid": "47f8fb36_1355c0ba",
+      "revId": "30a1fce871c2de429acbcc173a9f7a52300a7451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e493b05_c04387fc",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchDispatcher.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "30a1fce871c2de429acbcc173a9f7a52300a7451",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5afcab2_90cfe51d",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchDispatcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-07T08:57:57Z",
+      "side": 1,
+      "message": "GetNextAvailableResource will be a kind of dispatch log holder though still it will be triggered by RF. But, will have a visitor interface to have OnReady() that will be implemented by RF and invoked when FetchDispatcher has available credits and pending reuqests.",
+      "parentUuid": "3e493b05_c04387fc",
+      "revId": "30a1fce871c2de429acbcc173a9f7a52300a7451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
