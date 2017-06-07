@@ -215,7 +215,8 @@ TEST_F(RenderFrameImplTest, LoFiNotUpdatedOnSubframeCommits) {
   static_cast<NavigationStateImpl*>(document_state->navigation_state())
       ->set_was_within_same_document(false);
 
-  frame()->DidCommitProvisionalLoad(item, blink::kWebStandardCommit);
+  frame()->DidCommitProvisionalLoad(item, blink::kWebStandardCommit,
+                                    false /* is_same_document_navigation */);
   EXPECT_EQ(SERVER_LOFI_ON, frame()->GetPreviewsState());
 
   // The main frame's LoFi state should be reset to off on commit.
@@ -226,8 +227,8 @@ TEST_F(RenderFrameImplTest, LoFiNotUpdatedOnSubframeCommits) {
 
   // Calling didCommitProvisionalLoad is not representative of a full navigation
   // but serves the purpose of testing the LoFi state logic.
-  GetMainRenderFrame()->DidCommitProvisionalLoad(item,
-                                                 blink::kWebStandardCommit);
+  GetMainRenderFrame()->DidCommitProvisionalLoad(
+      item, blink::kWebStandardCommit, false /* is_same_document_navigation */);
   EXPECT_EQ(PREVIEWS_OFF, GetMainRenderFrame()->GetPreviewsState());
   // The subframe would be deleted here after a cross-document navigation. It
   // happens to be left around in this test because this does not simulate the
@@ -273,7 +274,8 @@ TEST_F(RenderFrameImplTest, EffectiveConnectionType) {
     static_cast<NavigationStateImpl*>(document_state->navigation_state())
         ->set_was_within_same_document(false);
 
-    frame()->DidCommitProvisionalLoad(item, blink::kWebStandardCommit);
+    frame()->DidCommitProvisionalLoad(item, blink::kWebStandardCommit,
+                                      false /* is_same_document_navigation */);
     EXPECT_EQ(tests[i].type, frame()->GetEffectiveConnectionType());
 
     // The main frame's effective connection type should be reset on commit.
@@ -282,8 +284,9 @@ TEST_F(RenderFrameImplTest, EffectiveConnectionType) {
     static_cast<NavigationStateImpl*>(document_state->navigation_state())
         ->set_was_within_same_document(false);
 
-    GetMainRenderFrame()->DidCommitProvisionalLoad(item,
-                                                   blink::kWebStandardCommit);
+    GetMainRenderFrame()->DidCommitProvisionalLoad(
+        item, blink::kWebStandardCommit,
+        false /* is_same_document_navigation */);
     EXPECT_EQ(blink::WebEffectiveConnectionType::kTypeUnknown,
               GetMainRenderFrame()->GetEffectiveConnectionType());
 

@@ -556,9 +556,9 @@ class CONTENT_EXPORT RenderFrameImpl
   void DidReceiveServerRedirectForProvisionalLoad() override;
   void DidFailProvisionalLoad(const blink::WebURLError& error,
                               blink::WebHistoryCommitType commit_type) override;
-  void DidCommitProvisionalLoad(
-      const blink::WebHistoryItem& item,
-      blink::WebHistoryCommitType commit_type) override;
+  void DidCommitProvisionalLoad(const blink::WebHistoryItem& item,
+                                blink::WebHistoryCommitType commit_type,
+                                bool is_same_document_navigation) override;
   void DidCreateNewDocument(blink::WebLocalFrame* frame) override;
   void DidClearWindowObject() override;
   void DidCreateDocumentElement(blink::WebLocalFrame* frame) override;

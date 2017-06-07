@@ -4275,7 +4275,8 @@ class ClearScrollStateOnCommitWebFrameClient
     : public FrameTestHelpers::TestWebFrameClient {
  public:
   void DidCommitProvisionalLoad(const WebHistoryItem&,
-                                WebHistoryCommitType) override {
+                                WebHistoryCommitType,
+                                bool is_same_document_navigation) override {
     Frame()->View()->ResetScrollAndScaleState();
   }
 };
@@ -6493,7 +6494,8 @@ class TestSubstituteDataWebFrameClient
   }
 
   virtual void DidCommitProvisionalLoad(const WebHistoryItem&,
-                                        WebHistoryCommitType) {
+                                        WebHistoryCommitType,
+                                        bool is_same_document_navigation) {
     if (Frame()->DataSource()->GetResponse().Url() !=
         WebURL(URLTestHelpers::ToKURL("about:blank")))
       commit_called_ = true;
@@ -6547,7 +6549,8 @@ class TestWillInsertBodyWebFrameClient
   TestWillInsertBodyWebFrameClient() : num_bodies_(0), did_load_(false) {}
 
   void DidCommitProvisionalLoad(const WebHistoryItem&,
-                                WebHistoryCommitType) override {
+                                WebHistoryCommitType,
+                                bool is_same_document_navigation) override {
     num_bodies_ = 0;
     did_load_ = true;
   }
@@ -9448,9 +9451,9 @@ class RemoteToLocalSwapWebFrameClient
       : history_commit_type_(kWebHistoryInertCommit),
         remote_frame_(remote_frame) {}
 
-  void DidCommitProvisionalLoad(
-      const WebHistoryItem&,
-      WebHistoryCommitType history_commit_type) override {
+  void DidCommitProvisionalLoad(const WebHistoryItem&,
+                                WebHistoryCommitType history_commit_type,
+                                bool is_same_document_navigation) override {
     history_commit_type_ = history_commit_type;
     remote_frame_->Swap(Frame());
   }
@@ -9685,9 +9688,9 @@ class CommitTypeWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
   explicit CommitTypeWebFrameClient()
       : history_commit_type_(kWebHistoryInertCommit) {}
 
-  void DidCommitProvisionalLoad(
-      const WebHistoryItem&,
-      WebHistoryCommitType history_commit_type) override {
+  void DidCommitProvisionalLoad(const WebHistoryItem&,
+                                WebHistoryCommitType history_commit_type,
+                                bool is_same_document_navigation) override {
     history_commit_type_ = history_commit_type;
   }
 
@@ -10510,7 +10513,8 @@ class CallbackOrderingWebFrameClient
     EXPECT_EQ(1, callback_count_++);
   }
   void DidCommitProvisionalLoad(const WebHistoryItem&,
-                                WebHistoryCommitType) override {
+                                WebHistoryCommitType,
+                                bool is_same_document_navigation) override {
     EXPECT_EQ(2, callback_count_++);
   }
   void DidFinishDocumentLoad() override { EXPECT_EQ(3, callback_count_++); }
