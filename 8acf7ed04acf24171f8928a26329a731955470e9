@@ -16,6 +16,24 @@
       "revId": "8acf7ed04acf24171f8928a26329a731955470e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e170e658_05368456",
+        "filename": "components/offline_pages/core/offline_page_model_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1321,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-07T21:36:09Z",
+      "side": 0,
+      "message": "The reason to use command line initialization in these cases seems to be to enable more than one feature (what used to be required before) and not that it tested a different code path. The other tests where only a single feature was enabled/disabled don\u0027t test that either.\n\nLooking at ScopedFeatureList implementation it confirms that as all these methods end up calling into InitFromCommandLine in the end.",
+      "parentUuid": "f4224e92_3d6c7b65",
+      "revId": "8acf7ed04acf24171f8928a26329a731955470e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
