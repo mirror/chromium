@@ -1077,7 +1077,7 @@ class ChromeLauncherControllerWithArcTest
 
   void SetUp() override {
     if (GetParam())
-      arc::SetArcAlwaysStartForTesting();
+      arc::SetArcAlwaysStartForTesting(true);
     ChromeLauncherControllerTest::SetUp();
   }
 
@@ -1332,7 +1332,7 @@ class ChromeLauncherControllerMultiProfileWithArcTest
 
   void SetUp() override {
     if (GetParam())
-      arc::SetArcAlwaysStartForTesting();
+      arc::SetArcAlwaysStartForTesting(true);
     MultiProfileMultiBrowserShelfLayoutChromeLauncherControllerTest::SetUp();
   }
 
@@ -3868,7 +3868,7 @@ class ChromeLauncherControllerArcDefaultAppsTest
  protected:
   void SetUp() override {
     if (GetParam())
-      arc::SetArcAlwaysStartForTesting();
+      arc::SetArcAlwaysStartForTesting(true);
     ArcDefaultAppList::UseTestAppsDirectory();
     ChromeLauncherControllerTest::SetUp();
   }
