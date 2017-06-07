@@ -547,7 +547,10 @@ public class BottomToolbarPhone extends ToolbarPhone {
         if (mTextureCaptureMode) {
             super.drawTabSwitcherAnimationOverlay(canvas, 0f);
             if (!mUseToolbarHandle && mExpandButton.getVisibility() != View.GONE) {
+                canvas.save();
+                translateCanvasToView(this, mToolbarButtonsContainer, canvas);
                 drawChild(canvas, mExpandButton, SystemClock.uptimeMillis());
+                canvas.restore();
             }
         }
     }
