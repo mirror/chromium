@@ -333,13 +333,14 @@ void ChromeLauncherController::SetItemStatus(const ash::ShelfID& id,
 
 void ChromeLauncherController::CloseLauncherItem(const ash::ShelfID& id) {
   CHECK(!id.IsNull());
-  if (IsPinned(id)) {
+  const ash::ShelfID safe_id = id;
+  if (IsPinned(safe_id)) {
     // Create a new shortcut delegate.
-    SetItemStatus(id, ash::STATUS_CLOSED);
-    model_->SetShelfItemDelegate(id,
+    SetItemStatus(safe_id, ash::STATUS_CLOSED);
+    model_->SetShelfItemDelegate(safe_id,
                                  AppShortcutLauncherItemController::Create(id));
   } else {
-    RemoveShelfItem(id);
+    RemoveShelfItem(safe_id);
   }
 }
 
