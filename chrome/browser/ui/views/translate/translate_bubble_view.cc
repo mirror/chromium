@@ -535,10 +535,6 @@ views::View* TranslateBubbleView::CreateViewBeforeTranslate() {
 
   base::string16 original_language_name =
       model_->GetLanguageNameAt(model_->GetOriginalLanguageIndex());
-  if (original_language_name.empty()) {
-    original_language_name =
-        l10n_util::GetStringUTF16(IDS_TRANSLATE_BUBBLE_UNKNOWN_LANGUAGE);
-  }
 
   views::View* view = new views::View();
   views::GridLayout* layout = new views::GridLayout(view);
@@ -830,7 +826,8 @@ views::View* TranslateBubbleView::CreateViewAdvanced() {
 
   int source_default_index = model_->GetOriginalLanguageIndex();
   source_language_combobox_model_.reset(
-      new LanguageComboboxModel(source_default_index, model_.get()));
+      new LanguageComboboxModel(true /* is_source_combobox */,
+                                source_default_index, model_.get()));
   source_language_combobox_ =
       new views::Combobox(source_language_combobox_model_.get());
 
@@ -839,7 +836,8 @@ views::View* TranslateBubbleView::CreateViewAdvanced() {
 
   int target_default_index = model_->GetTargetLanguageIndex();
   target_language_combobox_model_.reset(
-      new LanguageComboboxModel(target_default_index, model_.get()));
+      new LanguageComboboxModel(false /* is_source_combobox */,
+                                target_default_index, model_.get()));
   target_language_combobox_ =
       new views::Combobox(target_language_combobox_model_.get());
 

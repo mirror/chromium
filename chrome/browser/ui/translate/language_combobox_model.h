@@ -18,7 +18,8 @@ class TranslateBubbleModel;
 // user interface to select language.
 class LanguageComboboxModel : public ui::ComboboxModel {
  public:
-  LanguageComboboxModel(int default_index,
+  LanguageComboboxModel(bool is_target_combobox,
+                        int default_index,
                         TranslateBubbleModel* model);
   ~LanguageComboboxModel() override;
 
@@ -26,8 +27,10 @@ class LanguageComboboxModel : public ui::ComboboxModel {
   int GetItemCount() const override;
   base::string16 GetItemAt(int index) override;
   int GetDefaultIndex() const override;
+  bool IsItemEnabledAt(int index) const override;
 
  private:
+  const bool is_source_combobox_;
   const int default_index_;
   TranslateBubbleModel* model_;
 

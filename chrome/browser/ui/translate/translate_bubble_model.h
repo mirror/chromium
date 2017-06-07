@@ -52,6 +52,9 @@ class TranslateBubbleModel {
   // Returns the displayable name for the language at |index|.
   virtual base::string16 GetLanguageNameAt(int index) const = 0;
 
+  // Returns the "unknown" language index.
+  virtual int GetUnknownLanguageIndex() const = 0;
+
   // Returns the original language index.
   virtual int GetOriginalLanguageIndex() const = 0;
 

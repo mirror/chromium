@@ -526,9 +526,11 @@ const CGFloat kContentWidth = kWindowWidth - 2 * kFramePadding;
   int sourceDefaultIndex = model_->GetOriginalLanguageIndex();
   int targetDefaultIndex = model_->GetTargetLanguageIndex();
   sourceLanguageComboboxModel_.reset(
-      new LanguageComboboxModel(sourceDefaultIndex, model_.get()));
+      new LanguageComboboxModel(true /* is_source_combobox */,
+                                sourceDefaultIndex, model_.get()));
   targetLanguageComboboxModel_.reset(
-      new LanguageComboboxModel(targetDefaultIndex, model_.get()));
+      new LanguageComboboxModel(false /* is_source_combobox */,
+                                targetDefaultIndex, model_.get()));
   SEL action = @selector(handleSourceLanguagePopUpButtonSelectedItemChanged:);
   NSPopUpButton* sourcePopUpButton =
       [self addPopUpButton:sourceLanguageComboboxModel_.get()
