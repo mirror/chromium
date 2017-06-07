@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97878b5e_b8b2d9d8",
+        "filename": "content/public/common/content_features.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-07T20:46:09Z",
+      "side": 1,
+      "message": "This is only necessary if you want to do a finch trial of the hover post layout. Is that what you are thinking?",
+      "range": {
+        "startLine": 71,
+        "startChar": 32,
+        "endLine": 71,
+        "endChar": 34
+      },
+      "revId": "3b52938bb82c92a30824a7e168f4c2f0eb4bf9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
