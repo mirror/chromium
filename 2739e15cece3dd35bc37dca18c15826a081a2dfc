@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f3bfb083_a3d66bb0",
+        "filename": "content/browser/service_worker/service_worker_metrics_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-07T08:00:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab209a81_895c4c88",
+      "revId": "2739e15cece3dd35bc37dca18c15826a081a2dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a783ea3e_db8ba79e",
         "filename": "content/browser/service_worker/service_worker_metrics_unittest.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5acc8fbf_2ecd898b",
+        "filename": "content/browser/service_worker/service_worker_metrics_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-07T08:00:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a783ea3e_db8ba79e",
+      "revId": "2739e15cece3dd35bc37dca18c15826a081a2dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "252ca88d_d34cd646",
         "filename": "content/browser/service_worker/service_worker_url_request_job.cc",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "2739e15cece3dd35bc37dca18c15826a081a2dfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "495e105d_5003f3e7",
+        "filename": "content/browser/service_worker/service_worker_url_request_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-07T08:00:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "252ca88d_d34cd646",
+      "revId": "2739e15cece3dd35bc37dca18c15826a081a2dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "21e33f28_25a1f3ce",
+        "filename": "content/browser/service_worker/service_worker_url_request_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-07T08:00:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c600e5a3_78915f07",
+      "range": {
+        "startLine": 279,
+        "startChar": 4,
+        "endLine": 279,
+        "endChar": 19
+      },
+      "revId": "2739e15cece3dd35bc37dca18c15826a081a2dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8222b5df_f65a540f",
         "filename": "content/browser/service_worker/service_worker_url_request_job.cc",
         "patchSetId": 4
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "4697d755_041c6dc4",
+        "filename": "content/browser/service_worker/service_worker_url_request_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-07T08:00:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8222b5df_f65a540f",
+      "range": {
+        "startLine": 607,
+        "startChar": 33,
+        "endLine": 607,
+        "endChar": 62
+      },
+      "revId": "2739e15cece3dd35bc37dca18c15826a081a2dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ae25f64_248827f6",
         "filename": "content/browser/service_worker/service_worker_url_request_job.h",
         "patchSetId": 4
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "5404be0a_9025cd6c",
+        "filename": "content/browser/service_worker/service_worker_url_request_job.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-07T08:00:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ae25f64_248827f6",
+      "revId": "2739e15cece3dd35bc37dca18c15826a081a2dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c18a3dc0_ef08ccb1",
         "filename": "content/browser/service_worker/service_worker_url_request_job_unittest.cc",
         "patchSetId": 4
@@ -127,6 +247,24 @@
       "writtenOn": "2017-06-07T07:24:41Z",
       "side": 1,
       "message": "Do we need this?\nDELAY_WORKER_START_ONLY is not used.\nAnd DELAY_RESPONSE_ONLY is used only in two tests. I think you can just call CompleteStartWorker() in the two tests.",
+      "revId": "2739e15cece3dd35bc37dca18c15826a081a2dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6943870_2dd88319",
+        "filename": "content/browser/service_worker/service_worker_url_request_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-07T08:00:15Z",
+      "side": 1,
+      "message": "Good call. Done.",
+      "parentUuid": "c18a3dc0_ef08ccb1",
       "revId": "2739e15cece3dd35bc37dca18c15826a081a2dfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
