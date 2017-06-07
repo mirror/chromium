@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37eede33_0039f0b1",
+        "filename": "components/viz/host/frame_sink_manager_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-06-07T21:00:03Z",
+      "side": 1,
+      "message": "I don\u0027t think this is correct. GpuProcessHost is on the IO thread whereas this is on the UI thread. I think FrameSinkManagerHost should always be on the UI thread.\n\nMojoFrameSinkManager could live on a separate display compositor thread in the software compositing case.",
+      "range": {
+        "startLine": 28,
+        "startChar": 29,
+        "endLine": 28,
+        "endChar": 43
+      },
+      "revId": "67e41d72cec04750e2cb3ff75c6ab8385e6c1f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "989b5184_723394ff",
+        "filename": "components/viz/host/frame_sink_manager_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-06-07T21:00:03Z",
+      "side": 1,
+      "message": "This is really a move...FrameSinkmanagerClientPtr is a move-only type.",
+      "revId": "67e41d72cec04750e2cb3ff75c6ab8385e6c1f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cad90813_079fb1f6",
+        "filename": "components/viz/host/frame_sink_manager_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-06-07T21:00:03Z",
+      "side": 1,
+      "message": "I think the preferred idiom is:\n\nConnectToFrameSinkManager(cc::mojom::FrameSinkManagerPtr frame_sink_manager,\n                          cc::mojom::FrameSinkManagerClientRequest client_request);",
+      "revId": "67e41d72cec04750e2cb3ff75c6ab8385e6c1f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd9529dc_d8af2354",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-06-07T21:00:03Z",
+      "side": 1,
+      "message": "I think what you want is:\n\ncc::mojom::FrameSinkManagerClientPtr frame_sink_manager_client_ptr;\ncc::mojom::FrameSinkManagerClientRequest client_request(\u0026frame_sink_manager_client_ptr);\n\n\ncc::mojom::FrameSinkManagerPtr frame_sink_manager_ptr;\ncc::mojom::FrameSinkManagerRequest request(\u0026frame_sink_manager_client_ptr);\n\nin_process_frame_sink_manager_-\u003eConnect(std::move(request), std::move(frame_sink_manager_client_ptr);\n\nframe_sink_manager_host_.Connect(std::move(client_request), std::move(frame_sink_manager_ptr));",
+      "revId": "67e41d72cec04750e2cb3ff75c6ab8385e6c1f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
