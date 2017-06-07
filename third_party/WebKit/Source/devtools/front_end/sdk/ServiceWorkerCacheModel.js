@@ -58,7 +58,7 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
    * @param {!SDK.ServiceWorkerCacheModel.Cache} cache
    */
   async deleteCache(cache) {
-    var response = await this._agent.invoke_deleteCache({cacheId: cache.cacheId});
+    var response = await this._agent.invoke_deleteCache(cache.cacheId);
     if (response[Protocol.Error]) {
       console.error(`ServiceWorkerCacheAgent error deleting cache ${cache.toString()}: ${response[Protocol.Error]}`);
       return;
@@ -73,7 +73,7 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
    * @return {!Promise}
    */
   async deleteCacheEntry(cache, request) {
-    var response = await this._agent.invoke_deleteEntry({cacheId: cache.cacheId, request});
+    var response = await this._agent.invoke_deleteEntry(cache.cacheId, request);
     if (!response[Protocol.Error])
       return;
     Common.console.error(Common.UIString(
@@ -217,7 +217,7 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
    * @param {function(!Array<!SDK.ServiceWorkerCacheModel.Entry>, boolean)} callback
    */
   async _requestEntries(cache, skipCount, pageSize, callback) {
-    var response = await this._agent.invoke_requestEntries({cacheId: cache.cacheId, skipCount, pageSize});
+    var response = await this._agent.invoke_requestEntries(cache.cacheId, skipCount, pageSize);
     if (response[Protocol.Error]) {
       console.error('ServiceWorkerCacheAgent error while requesting entries: ', response[Protocol.Error]);
       return;

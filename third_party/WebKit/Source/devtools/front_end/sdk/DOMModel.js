@@ -360,7 +360,7 @@ SDK.DOMNode = class {
    * @param {function(?Protocol.Error, number)=} callback
    */
   setNodeName(name, callback) {
-    this._agent.invoke_setNodeName({nodeId: this.id, name}).then(response => {
+    this._agent.invoke_setNodeName(this.id, name).then(response => {
       if (!response[Protocol.Error])
         this._domModel.markUndoableState();
       if (callback)
@@ -387,7 +387,7 @@ SDK.DOMNode = class {
    * @param {function(?Protocol.Error)=} callback
    */
   setNodeValue(value, callback) {
-    this._agent.invoke_setNodeValue({nodeId: this.id, value}).then(response => {
+    this._agent.invoke_setNodeValue(this.id, value).then(response => {
       if (!response[Protocol.Error])
         this._domModel.markUndoableState();
       if (callback)
@@ -410,7 +410,7 @@ SDK.DOMNode = class {
    * @param {function(?Protocol.Error)=} callback
    */
   setAttribute(name, text, callback) {
-    this._agent.invoke_setAttributesAsText({nodeId: this.id, text, name}).then(response => {
+    this._agent.invoke_setAttributesAsText(this.id, text, name).then(response => {
       if (!response[Protocol.Error])
         this._domModel.markUndoableState();
       if (callback)
@@ -424,7 +424,7 @@ SDK.DOMNode = class {
    * @param {function(?Protocol.Error)=} callback
    */
   setAttributeValue(name, value, callback) {
-    this._agent.invoke_setAttributeValue({nodeId: this.id, name, value}).then(response => {
+    this._agent.invoke_setAttributeValue(this.id, name, value).then(response => {
       if (!response[Protocol.Error])
         this._domModel.markUndoableState();
       if (callback)
@@ -453,7 +453,7 @@ SDK.DOMNode = class {
    * @return {!Promise}
    */
   async removeAttribute(name) {
-    var response = await this._agent.invoke_removeAttribute({nodeId: this.id, name});
+    var response = await this._agent.invoke_removeAttribute(this.id, name);
     if (response[Protocol.Error])
       return;
     delete this._attributesMap[name];
@@ -471,7 +471,7 @@ SDK.DOMNode = class {
       callback(this.children());
       return;
     }
-    this._agent.invoke_requestChildNodes({nodeId: this.id}).then(response => {
+    this._agent.invoke_requestChildNodes(this.id).then(response => {
       callback(response[Protocol.Error] ? null : this.children());
     });
   }
@@ -481,7 +481,7 @@ SDK.DOMNode = class {
    * @return {!Promise<?Array<!SDK.DOMNode>>}
    */
   async getSubtree(depth) {
-    var response = await this._agent.invoke_requestChildNodes({id: this.id, depth});
+    var response = await this._agent.invoke_requestChildNodes(this.id, depth);
     return response[Protocol.Error] ? null : this._children;
   }
 
@@ -497,7 +497,7 @@ SDK.DOMNode = class {
    * @param {function(?Protocol.Error)=} callback
    */
   setOuterHTML(html, callback) {
-    this._agent.invoke_setOuterHTML({nodeId: this.id, outerHTML: html}).then(response => {
+    this._agent.invoke_setOuterHTML(this.id, html).then(response => {
       if (!response[Protocol.Error])
         this._domModel.markUndoableState();
       if (callback)
@@ -509,7 +509,7 @@ SDK.DOMNode = class {
    * @param {function(?Protocol.Error, !Protocol.DOM.NodeId=)=} callback
    */
   removeNode(callback) {
-    this._agent.invoke_removeNode({nodeId: this.id}).then(response => {
+    this._agent.invoke_removeNode(this.id).then(response => {
       if (!response[Protocol.Error])
         this._domModel.markUndoableState();
       if (callback)
@@ -745,15 +745,12 @@ SDK.DOMNode = class {
    * @param {function(?Protocol.Error, !Protocol.DOM.NodeId=)=} callback
    */
   copyTo(targetNode, anchorNode, callback) {
-    this._agent
-        .invoke_copyTo(
-            {nodeId: this.id, targetNodeId: targetNode.id, insertBeforeNodeId: anchorNode ? anchorNode.id : undefined})
-        .then(response => {
-          if (!response[Protocol.Error])
-            this._domModel.markUndoableState();
-          if (callback)
-            callback(response[Protocol.Error] || null, response.nodeId);
-        });
+    this._agent.invoke_copyTo(this.id, targetNode.id, anchorNode ? anchorNode.id : undefined).then(response => {
+      if (!response[Protocol.Error])
+        this._domModel.markUndoableState();
+      if (callback)
+        callback(response[Protocol.Error] || null, response.nodeId);
+    });
   }
 
   /**
@@ -762,15 +759,12 @@ SDK.DOMNode = class {
    * @param {function(?Protocol.Error, !Protocol.DOM.NodeId=)=} callback
    */
   moveTo(targetNode, anchorNode, callback) {
-    this._agent
-        .invoke_moveTo(
-            {nodeId: this.id, targetNodeId: targetNode.id, insertBeforeNodeId: anchorNode ? anchorNode.id : undefined})
-        .then(response => {
-          if (!response[Protocol.Error])
-            this._domModel.markUndoableState();
-          if (callback)
-            callback(response[Protocol.Error] || null, response.nodeId);
-        });
+    this._agent.invoke_moveTo(this.id, targetNode.id, anchorNode ? anchorNode.id : undefined).then(response => {
+      if (!response[Protocol.Error])
+        this._domModel.markUndoableState();
+      if (callback)
+        callback(response[Protocol.Error] || null, response.nodeId);
+    });
   }
 
   /**
@@ -1442,7 +1436,7 @@ SDK.DOMModel = class extends SDK.SDKModel {
    * @return {!Promise<number>}
    */
   async performSearchPromise(query, includeUserAgentShadowDOM) {
-    var response = await this._agent.invoke_performSearch({query, includeUserAgentShadowDOM});
+    var response = await this._agent.invoke_performSearch(query, includeUserAgentShadowDOM);
     if (!response[Protocol.Error])
       this._searchId = response.searchId;
     return response[Protocol.Error] ? 0 : response.resultCount;

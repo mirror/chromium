@@ -42,7 +42,7 @@ function test()
 
     async function step1(node)
     {
-        var response = await InspectorTest.CSSAgent.invoke_getMatchedStylesForNode({nodeId: node.id});
+        var response = await InspectorTest.CSSAgent.invoke_getMatchedStylesForNode(node.id);
 
         for (var rule of response.matchedCSSRules)
             dumpStyleData(rule.rule);

@@ -48,14 +48,16 @@ SDK.EmulationModel = class extends SDK.SDKModel {
   }
 
   /**
-   * @param {?Protocol.PageAgent.SetDeviceMetricsOverrideRequest} metrics
+   * @param {?SDK.EmulationModel.DeviceMetricsOverride} metrics
    * @return {!Promise}
    */
   emulateDevice(metrics) {
-    if (metrics)
-      return this._emulationAgent.invoke_setDeviceMetricsOverride(metrics);
-    else
+    if (!metrics)
       return this._emulationAgent.clearDeviceMetricsOverride();
+    return this._emulationAgent.invoke_setDeviceMetricsOverride(
+        metrics.width, metrics.height, metrics.deviceScaleFactor, metrics.mobile, metrics.fitWindow, metrics.scale,
+        metrics.offsetX, metrics.offsetY, metrics.screenWidth, metrics.screenHeight, metrics.positionX,
+        metrics.positionY, metrics.screenOrientation);
   }
 
   /**
@@ -194,6 +196,25 @@ SDK.EmulationModel = class extends SDK.SDKModel {
     this._emulationAgent.setTouchEmulationEnabled(configuration.enabled, configuration.configuration);
   }
 };
+
+/**
+ * @typedef {!{
+ *   width: number,
+ *   height: number,
+ *   deviceScaleFactor: number,
+ *   mobile: boolean,
+ *   fitWindow: boolean,
+ *   scale: (number|undefined),
+ *   offsetX: (number|undefined),
+ *   offsetY: (number|undefined),
+ *   screenWidth: (number|undefined),
+ *   screenHeight: (number|undefined),
+ *   positionX: (number|undefined),
+ *   positionY: (number|undefined),
+ *   screenOrientation: (!Protocol.Emulation.ScreenOrientation|undefined)
+ * }}
+ */
+SDK.EmulationModel.DeviceMetricsOverride;
 
 SDK.SDKModel.register(SDK.EmulationModel, SDK.Target.Capability.Emulation, true);
 

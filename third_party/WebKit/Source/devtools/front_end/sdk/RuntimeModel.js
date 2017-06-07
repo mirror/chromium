@@ -248,12 +248,7 @@ SDK.RuntimeModel = class extends SDK.SDKModel {
    * @param {function(!Protocol.Runtime.ScriptId=, ?Protocol.Runtime.ExceptionDetails=)=} callback
    */
   async compileScript(expression, sourceURL, persistScript, executionContextId, callback) {
-    var response = await this._agent.invoke_compileScript({
-      expression: expression,
-      sourceURL: sourceURL,
-      persistScript: persistScript,
-      executionContextId: executionContextId
-    });
+    var response = await this._agent.invoke_compileScript(expression, sourceURL, persistScript, executionContextId);
 
     if (response[Protocol.Error]) {
       console.error(response[Protocol.Error]);
@@ -277,16 +272,9 @@ SDK.RuntimeModel = class extends SDK.SDKModel {
   async runScript(
       scriptId, executionContextId, objectGroup, silent, includeCommandLineAPI, returnByValue, generatePreview,
       awaitPromise, callback) {
-    var response = await this._agent.invoke_runScript({
-      scriptId,
-      executionContextId,
-      objectGroup,
-      silent,
-      includeCommandLineAPI,
-      returnByValue,
-      generatePreview,
-      awaitPromise
-    });
+    var response = await this._agent.invoke_runScript(
+        scriptId, executionContextId, objectGroup, silent, includeCommandLineAPI, returnByValue, generatePreview,
+        awaitPromise);
 
     if (response[Protocol.Error]) {
       console.error(response[Protocol.Error]);
@@ -644,17 +632,9 @@ SDK.ExecutionContext = class {
       expression = 'this';
     }
 
-    var response = await this.runtimeModel._agent.invoke_evaluate({
-      expression: expression,
-      objectGroup: objectGroup,
-      includeCommandLineAPI: includeCommandLineAPI,
-      silent: silent,
-      contextId: this.id,
-      returnByValue: returnByValue,
-      generatePreview: generatePreview,
-      userGesture: userGesture,
-      awaitPromise: false
-    });
+    var response = await this.runtimeModel._agent.invoke_evaluate(
+        expression, objectGroup, includeCommandLineAPI, silent, this.id, returnByValue, generatePreview, userGesture,
+        /* awaitPromise */ false);
 
     var error = response[Protocol.Error];
     if (error) {

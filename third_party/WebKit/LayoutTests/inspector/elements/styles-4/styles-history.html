@@ -88,7 +88,7 @@ function test()
 
         function onNodeSelected(node)
         {
-            InspectorTest.CSSAgent.invoke_getMatchedStylesForNode({nodeId: node.id}).then(onMatchedStylesForNode);
+            InspectorTest.CSSAgent.invoke_getMatchedStylesForNode(node.id).then(onMatchedStylesForNode);
         }
 
         function onMatchedStylesForNode(response)

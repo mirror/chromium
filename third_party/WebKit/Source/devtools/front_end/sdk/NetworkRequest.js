@@ -1018,8 +1018,7 @@ SDK.NetworkRequest = class extends Common.Object {
       return;
     this._contentRequested = true;
 
-    var response =
-        await this._networkManager.target().networkAgent().invoke_getResponseBody({requestId: this._requestId});
+    var response = await this._networkManager.target().networkAgent().invoke_getResponseBody(this._requestId);
 
     this._content = response[Protocol.Error] ? null : response.body;
     this._contentError = response[Protocol.Error];

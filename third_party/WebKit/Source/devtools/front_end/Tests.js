@@ -620,7 +620,8 @@
     var test = this;
 
     async function testOverrides(params, metrics, callback) {
-      await SDK.targetManager.mainTarget().emulationAgent().invoke_setDeviceMetricsOverride(params);
+      await SDK.targetManager.mainTarget().emulationAgent().invoke_setDeviceMetricsOverride(
+          params.width, params.height, params.deviceScaleFactor, params.mobile, params.fitWindow);
       test.evaluateInConsole_('(' + dumpPageMetrics.toString() + ')()', checkMetrics);
 
       function checkMetrics(consoleResult) {
@@ -664,9 +665,11 @@
 
   TestSuite.prototype.testDispatchKeyEventDoesNotCrash = function() {
     SDK.targetManager.mainTarget().inputAgent().invoke_dispatchKeyEvent(
-        {type: 'rawKeyDown', windowsVirtualKeyCode: 0x23, key: 'End'});
+        'rawKeyDown', undefined, undefined, undefined, undefined, undefined, undefined, 'End',
+        /* windowsVirtualKeyCode */ 0x23);
     SDK.targetManager.mainTarget().inputAgent().invoke_dispatchKeyEvent(
-        {type: 'keyUp', windowsVirtualKeyCode: 0x23, key: 'End'});
+        'keyUp', undefined, undefined, undefined, undefined, undefined, undefined, 'End',
+        /* windowsVirtualKeyCode */ 0x23);
   };
 
   TestSuite.prototype.testEmulateNetworkConditions = function() {

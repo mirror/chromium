@@ -365,15 +365,8 @@ Resources.IndexedDBModel = class extends SDK.SDKModel {
   async _requestData(databaseId, databaseName, objectStoreName, indexName, idbKeyRange, skipCount, pageSize, callback) {
     var keyRange = Resources.IndexedDBModel.keyRangeFromIDBKeyRange(idbKeyRange) || undefined;
 
-    var response = await this._agent.invoke_requestData({
-      securityOrigin: databaseId.securityOrigin,
-      databaseName,
-      objectStoreName,
-      indexName,
-      skipCount,
-      pageSize,
-      keyRange
-    });
+    var response = await this._agent.invoke_requestData(
+        databaseId.securityOrigin, databaseName, objectStoreName, indexName, skipCount, pageSize, keyRange);
 
     if (response[Protocol.Error]) {
       console.error('IndexedDBAgent error: ' + response[Protocol.Error]);

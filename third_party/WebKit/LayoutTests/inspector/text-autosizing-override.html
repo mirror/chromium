@@ -7,7 +7,7 @@
   body { width: 800px; margin: 0; overflow-y: hidden; }
 </style>
 <script>
-if (window.internals)	
+if (window.internals)
     window.internals.settings.setTextAutosizingWindowSizeOverride(320, 480);
 
 function getAutosizing()
@@ -44,13 +44,13 @@ function test()
 
         function checkNotAutosizedWithZeroDeviceMetrics(next)
         {
-            InspectorTest.PageAgent.invoke_setDeviceMetricsOverride({width: 0, height: 0, deviceScaleFactor: 0, mobile: false, fitWindow: true});
+            InspectorTest.PageAgent.setDeviceMetricsOverride(0, 0, 0, false, true);
             assertAutosizingResult(false, next);
         },
 
         function checkAutosizedWhenDeviceMetrics(next)
         {
-            InspectorTest.PageAgent.invoke_setDeviceMetricsOverride({width: 320, height: 480, deviceScaleFactor: 0, mobile: true, fitWindow: true});
+            InspectorTest.PageAgent.setDeviceMetricsOverride(320, 480, 0, true, true);
             assertAutosizingResult(true, next);
         },
 

@@ -406,7 +406,7 @@ SDK.ChildTargetManager = class {
     this._childConnections = new Map();
 
     parentTarget.registerTargetDispatcher(this);
-    this._targetAgent.invoke_setAutoAttach({autoAttach: true, waitForDebuggerOnStart: true});
+    this._targetAgent.invoke_setAutoAttach(true, /* waitForDebuggerOnStart */ true);
     if (Runtime.experiments.isEnabled('autoAttachToCrossProcessSubframes'))
       this._targetAgent.setAttachToFrames(true);
 
@@ -441,14 +441,14 @@ SDK.ChildTargetManager = class {
    * @return {!Promise}
    */
   suspend() {
-    return this._targetAgent.invoke_setAutoAttach({autoAttach: true, waitForDebuggerOnStart: false});
+    return this._targetAgent.invoke_setAutoAttach(true, /* waitForDebuggerOnStart */ false);
   }
 
   /**
    * @return {!Promise}
    */
   resume() {
-    return this._targetAgent.invoke_setAutoAttach({autoAttach: true, waitForDebuggerOnStart: true});
+    return this._targetAgent.invoke_setAutoAttach(true, /* waitForDebuggerOnStart */ true);
   }
 
   dispose() {

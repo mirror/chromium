@@ -46,10 +46,7 @@ InspectorTest.flushResults = function()
 
 InspectorTest.evaluateInPage = async function(code, callback)
 {
-    var response = await InspectorTest.RuntimeAgent.invoke_evaluate({
-        expression: code,
-        objectGroup: "console"
-    });
+    var response = await InspectorTest.RuntimeAgent.invoke_evaluate(code, "console");
     if (!response[Protocol.Error])
         InspectorTest.safeWrap(callback)(InspectorTest.runtimeModel.createRemoteObject(response.result), response.exceptionDetails);
 }
@@ -75,17 +72,8 @@ InspectorTest.evaluateInPagePromise = function(code)
 
 InspectorTest.evaluateInPageAsync = async function(code)
 {
-    var response = await InspectorTest.RuntimeAgent.invoke_evaluate({
-        expression: code,
-        objectGroup: "console",
-        includeCommandLineAPI: false,
-        silent: undefined,
-        contextId: undefined,
-        returnByValue: undefined,
-        generatePreview: undefined,
-        userGesture: undefined,
-        awaitPromise: true
-    });
+    var response = await InspectorTest.RuntimeAgent.invoke_evaluate(
+        code, "console", false, undefined, undefined, undefined, undefined, undefined, true);
 
     var error = response[Protocol.Error];
     if (!error && !response.exceptionDetails)

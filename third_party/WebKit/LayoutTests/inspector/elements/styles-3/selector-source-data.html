@@ -21,7 +21,7 @@ function test()
 
     async function nodeFound(node)
     {
-        var response = await InspectorTest.CSSAgent.invoke_getMatchedStylesForNode({nodeId: node.id});
+        var response = await InspectorTest.CSSAgent.invoke_getMatchedStylesForNode(node.id);
         if (response[Protocol.Error]) {
             InspectorTest.addResult("Failed to get styles: " + response[Protocol.Error]);
             return;

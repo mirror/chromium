@@ -32,7 +32,7 @@ function test()
         {
             ++requestsSent;
             var agent = target._agents[agentName];
-            var response = await agent.invoke_disable({});
+            var response = await agent.invoke_disable();
             finishWhenDone(agentName, "disable", response[Protocol.Error]);
         }
 
@@ -40,7 +40,7 @@ function test()
         {
             ++requestsSent;
             var agent = target._agents[agentName];
-            var response = await agent.invoke_enable({});
+            var response = await agent.invoke_enable();
             finishWhenDone(agentName, "enable", response[Protocol.Error]);
         }
 

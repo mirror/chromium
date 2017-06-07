@@ -40,7 +40,7 @@ function test()
 
     async function step1(node)
     {
-        var response = await InspectorTest.CSSAgent.invoke_getMatchedStylesForNode({nodeId: node.id});
+        var response = await InspectorTest.CSSAgent.invoke_getMatchedStylesForNode(node.id);
 
         for (var animation of response.cssKeyframesRules)
             dumpRule(animation);
@@ -49,7 +49,7 @@ function test()
         var style = new SDK.CSSStyleDeclaration(InspectorTest.cssModel, null, response.cssKeyframesRules[1].keyframes[0].style, SDK.CSSStyleDeclaration.Type.Regular);
         await style.setText("width: 123px");
 
-        response = await InspectorTest.CSSAgent.invoke_getMatchedStylesForNode({nodeId: node.id});
+        response = await InspectorTest.CSSAgent.invoke_getMatchedStylesForNode(node.id);
 
         for (var animation of response.cssKeyframesRules)
             dumpRule(animation);

@@ -18,7 +18,7 @@ function test()
     InspectorTest.runDebuggerTestSuite([
         async function testSetNoneOfURLAndRegex(next)
         {
-            var response = await InspectorTest.DebuggerAgent.invoke_setBreakpointByUrl({lineNumber: 1});
+            var response = await InspectorTest.DebuggerAgent.invoke_setBreakpointByUrl(/* lineNumber */ 1);
             InspectorTest.addResult(response[Protocol.Error]);
             next();
         },
@@ -27,14 +27,14 @@ function test()
         {
             var url = "debugger-set-breakpoint.js";
             var urlRegex = "debugger-set-breakpoint.*";
-            var response = await InspectorTest.DebuggerAgent.invoke_setBreakpointByUrl({lineNumber: 1, url, urlRegex});
+            var response = await InspectorTest.DebuggerAgent.invoke_setBreakpointByUrl(1, url, urlRegex);
             InspectorTest.addResult(response[Protocol.Error]);
             next();
         },
 
         async function testSetByRegex(next)
         {
-            await InspectorTest.DebuggerAgent.invoke_setBreakpointByUrl({urlRegex: "debugger-set-breakpoint.*", lineNumber:8});
+            await InspectorTest.DebuggerAgent.setBreakpointByUrl(8, undefined, "debugger-set-breakpoint.*");
             InspectorTest.runTestFunctionAndWaitUntilPaused(callFrames => {
                 InspectorTest.captureStackTrace(callFrames);
                 next();

@@ -502,23 +502,23 @@ Protocol.InspectorBackend._AgentPrototype = class {
     /**
      * @param {...*} vararg
      * @this {Protocol.InspectorBackend._AgentPrototype}
-     * @return {!Promise.<*>}
+     * @return {!Promise<*>}
      */
     function sendMessagePromise(vararg) {
       var params = Array.prototype.slice.call(arguments);
-      return Protocol.InspectorBackend._AgentPrototype.prototype._sendMessageToBackendPromise.call(
-          this, domainAndMethod, signature, params);
+      return this._sendMessageToBackendPromise.call(this, domainAndMethod, signature, params);
     }
 
     this[methodName] = sendMessagePromise;
 
     /**
      * @param {!Object} request
-     * @return {!Promise}
+     * @return {!Promise<*>}
      * @this {Protocol.InspectorBackend._AgentPrototype}
      */
     function invoke(request) {
-      return this._invoke(domainAndMethod, request);
+      var params = Array.prototype.slice.call(arguments);
+      return this._sendInvokeMessageToBackendPromise.call(this, domainAndMethod, signature, params);
     }
 
     this['invoke_' + methodName] = invoke;
@@ -607,17 +607,33 @@ Protocol.InspectorBackend._AgentPrototype = class {
 
   /**
    * @param {string} method
-   * @param {?Object} request
-   * @return {!Promise<!Object>}
+   * @param {!Array<!Object>} signature
+   * @param {!Array<*>} args
+   * @return {!Promise<?>}
    */
-  _invoke(method, request) {
-    return new Promise(fulfill => {
-      this._target._wrapCallbackAndSendMessageObject(this._domain, method, request, (error, result) => {
+  async _sendInvokeMessageToBackendPromise(method, signature, args) {
+    var errorMessage;
+    /**
+     * @param {string} message
+     */
+    function onError(message) {
+      console.error(message);
+      errorMessage = message;
+    }
+    var params = this._prepareParameters(method, signature, args, onError);
+    if (errorMessage) {
+      var response = {};
+      response[Protocol.Error] = errorMessage;
+      return response;
+    }
+
+    return new Promise(resolve => {
+      this._target._wrapCallbackAndSendMessageObject(this._domain, method, params, (error, result) => {
         if (!result)
           result = {};
         if (error)
           result[Protocol.Error] = error.message;
-        fulfill(result);
+        resolve(result);
       });
     });
   }
@@ -632,7 +648,7 @@ Protocol.InspectorBackend._AgentPrototype = class {
         messageObject.error.code !== Protocol.InspectorBackend.DevToolsStubErrorCode &&
         !Protocol.InspectorBackend.Options.suppressRequestErrors) {
       var id = Protocol.InspectorBackend.Options.dumpInspectorProtocolMessages ? ' with id = ' + messageObject.id : '';
-      console.error('Request ' + methodName + id + ' failed. ' + JSON.stringify(messageObject.error));
+      console.error(`Request ${methodName}${id} failed. ` + JSON.stringify(messageObject.error));
     }
     callback(messageObject.error, messageObject.result);
   }
@@ -675,8 +691,7 @@ Protocol.InspectorBackend._DispatcherPrototype = class {
 
     if (!this._eventArgs[messageObject.method]) {
       Protocol.InspectorBackend.reportProtocolError(
-          'Protocol Error: Attempted to dispatch an unspecified method \'' + messageObject.method + '\'',
-          messageObject);
+          `Protocol Error: Attempted to dispatch an unspecified method '${messageObject.method}'`, messageObject);
       return;
     }
 

@@ -329,7 +329,7 @@ SDK.CSSModel = class extends SDK.SDKModel {
    * @return {!Promise<?SDK.CSSMatchedStyles>}
    */
   async matchedStylesPromise(nodeId) {
-    var response = await this._agent.invoke_getMatchedStylesForNode({nodeId});
+    var response = await this._agent.invoke_getMatchedStylesForNode(nodeId);
 
     if (response[Protocol.Error])
       return null;
@@ -403,7 +403,7 @@ SDK.CSSModel = class extends SDK.SDKModel {
    * @return {!Promise<?SDK.CSSModel.InlineStyleResult>}
    */
   async inlineStylesPromise(nodeId) {
-    var response = await this._agent.invoke_getInlineStylesForNode({nodeId});
+    var response = await this._agent.invoke_getInlineStylesForNode(nodeId);
 
     if (response[Protocol.Error] || !response.inlineStyle)
       return null;
@@ -653,7 +653,7 @@ SDK.CSSModel = class extends SDK.SDKModel {
       newText += '\n/*# sourceURL=' + header.sourceURL + ' */';
 
     await this._ensureOriginalStyleSheetText(styleSheetId);
-    var response = await this._agent.invoke_setStyleSheetText({styleSheetId: header.id, text: newText});
+    var response = await this._agent.invoke_setStyleSheetText(header.id, newText);
     var sourceMapURL = response.sourceMapURL;
 
     this._sourceMapManager.detachSourceMap(header);

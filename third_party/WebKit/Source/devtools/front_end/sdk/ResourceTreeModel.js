@@ -397,7 +397,7 @@ SDK.ResourceTreeModel = class extends SDK.SDKModel {
    * @return {!Promise<?{currentIndex: number, entries: !Protocol.Page.NavigationEntry}>}
    */
   async navigationHistory() {
-    var response = await this._agent.invoke_getNavigationHistory({});
+    var response = await this._agent.invoke_getNavigationHistory();
     if (response[Protocol.Error])
       return null;
     return {currentIndex: response.currentIndex, entries: response.entries};
@@ -414,7 +414,7 @@ SDK.ResourceTreeModel = class extends SDK.SDKModel {
    * @param {function(string, ?string, !Array<!Protocol.Page.AppManifestError>)} callback
    */
   async fetchAppManifest(callback) {
-    var response = await this._agent.invoke_getAppManifest({});
+    var response = await this._agent.invoke_getAppManifest();
     if (response[Protocol.Error])
       callback(response.url, null, []);
     else

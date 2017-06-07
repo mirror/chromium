@@ -576,8 +576,7 @@ SDK.RemoteObjectImpl = class extends SDK.RemoteObject {
       return;
     }
 
-    this._runtimeAgent
-        .invoke_getProperties({objectId: this._objectId, ownProperties, accessorPropertiesOnly, generatePreview})
+    this._runtimeAgent.invoke_getProperties(this._objectId, ownProperties, accessorPropertiesOnly, generatePreview)
         .then(remoteObjectBinder.bind(this));
 
     /**
@@ -639,7 +638,7 @@ SDK.RemoteObjectImpl = class extends SDK.RemoteObject {
     if (!this._objectId)
       return `Can't set a property of non-object.`;
 
-    var response = await this._runtimeAgent.invoke_evaluate({expression: value, silent: true});
+    var response = await this._runtimeAgent.invoke_evaluate(value, undefined, undefined, /* silent */ true);
     if (response[Protocol.Error] || response.exceptionDetails) {
       return response[Protocol.Error] ||
           (response.result.type !== 'string' ? response.result.description :
@@ -670,8 +669,7 @@ SDK.RemoteObjectImpl = class extends SDK.RemoteObject {
     var setPropertyValueFunction = 'function(a, b) { this[a] = b; }';
 
     var argv = [name, SDK.RemoteObject.toCallArgument(result)];
-    var response = await this._runtimeAgent.invoke_callFunctionOn(
-        {objectId: this._objectId, functionDeclaration: setPropertyValueFunction, arguments: argv, silent: true});
+    var response = await this._runtimeAgent.invoke_callFunctionOn(this._objectId, setPropertyValueFunction, argv, true);
     var error = response[Protocol.Error];
     return error || response.exceptionDetails ? error || response.result.description : undefined;
   }
@@ -686,8 +684,7 @@ SDK.RemoteObjectImpl = class extends SDK.RemoteObject {
       return `Can't delete a property of non-object.`;
 
     var deletePropertyFunction = 'function(a) { delete this[a]; return !(a in this); }';
-    var response = await this._runtimeAgent.invoke_callFunctionOn(
-        {objectId: this._objectId, functionDeclaration: deletePropertyFunction, arguments: [name], silent: true});
+    var response = await this._runtimeAgent.invoke_callFunctionOn(this._objectId, deletePropertyFunction, [name], true);
 
     if (response[Protocol.Error] || response.exceptionDetails)
       return response[Protocol.Error] || response.result.description;
@@ -703,13 +700,7 @@ SDK.RemoteObjectImpl = class extends SDK.RemoteObject {
    * @param {function(?SDK.RemoteObject, boolean=)=} callback
    */
   callFunction(functionDeclaration, args, callback) {
-    this._runtimeAgent
-        .invoke_callFunctionOn({
-          objectId: this._objectId,
-          functionDeclaration: functionDeclaration.toString(),
-          arguments: args,
-          silent: true
-        })
+    this._runtimeAgent.invoke_callFunctionOn(this._objectId, functionDeclaration.toString(), args, /* silent */ true)
         .then(response => {
           if (!callback)
             return;
@@ -728,13 +719,8 @@ SDK.RemoteObjectImpl = class extends SDK.RemoteObject {
    */
   callFunctionJSON(functionDeclaration, args, callback) {
     this._runtimeAgent
-        .invoke_callFunctionOn({
-          objectId: this._objectId,
-          functionDeclaration: functionDeclaration.toString(),
-          arguments: args,
-          silent: true,
-          returnByValue: true
-        })
+        .invoke_callFunctionOn(
+            this._objectId, functionDeclaration.toString(), args, /* silent */ true, /* returnByValue */ true)
         .then(
             response => callback(response[Protocol.Error] || response.exceptionDetails ? null : response.result.value));
   }

@@ -200,8 +200,7 @@ SDK.Script = class {
     }
 
     await this.requestContent();
-    var response = await this.debuggerModel.target().debuggerAgent().invoke_setScriptSource(
-        {scriptId: this.scriptId, scriptSource: newSource});
+    var response = await this.debuggerModel.target().debuggerAgent().invoke_setScriptSource(this.scriptId, newSource);
 
     if (!response[Protocol.Error] && !response.exceptionDetails)
       this._source = newSource;
@@ -248,8 +247,8 @@ SDK.Script = class {
    * @return {!Promise<boolean>}
    */
   async setBlackboxedRanges(positions) {
-    var response = await this.debuggerModel.target().debuggerAgent().invoke_setBlackboxedRanges(
-        {scriptId: this.scriptId, positions});
+    var response =
+        await this.debuggerModel.target().debuggerAgent().invoke_setBlackboxedRanges(this.scriptId, positions);
     var error = response[Protocol.Error];
     if (error)
       console.error(error);

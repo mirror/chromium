@@ -87,10 +87,10 @@ async function test()
     await processResult("commandArgs1Rets0", agent.commandArgs1Rets0()); // Error: missing arg
     await processResult("commandArgs1Rets1", agent.commandArgs1Rets1({"value1": 234}));
     await processResult("commandArgs1Rets1", agent.commandArgs1Rets1({"value1": 234}));
-    await processResult("commandArgs3Rets3", agent.invoke_commandArgs3Rets3({arg1: {}, arg2: 345, arg3: "alph"}));
+    await processResult("commandArgs3Rets3", agent.invoke_commandArgs3Rets3({}, 345, "alph"));
     await processResult("commandArgs3Rets3", agent.commandArgs3Rets3({}, 345));
     await processResult("commandArgs3Rets3", agent.commandArgs3Rets3({}, undefined, "alph"));
-    await processResult("commandArgs3Rets3", agent.invoke_commandArgs3Rets3({arg1: {}, arg2: "alph"})); // Error: wrong type
+    await processResult("commandArgs3Rets3", agent.invoke_commandArgs3Rets3({}, "alph")); // Error: wrong type
     await processResult("commandArgs3Rets3", agent.commandArgs3Rets3({}));
     await processResult("commandArgs3Rets3", agent.commandArgs3Rets3());  // Error: missing arg
     await processResult("commandArgs3Rets3", agent.commandArgs3Rets3({}, "alph", 345)); // Error: wrong types

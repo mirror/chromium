@@ -80,7 +80,7 @@ function test()
 
         function nodeCallback(node)
         {
-            InspectorTest.CSSAgent.invoke_getMatchedStylesForNode({nodeId: node.id}).then(callback);
+            InspectorTest.CSSAgent.invoke_getMatchedStylesForNode(node.id).then(callback);
         }
 
         InspectorTest.selectNodeWithId("inspected", nodeCallback);

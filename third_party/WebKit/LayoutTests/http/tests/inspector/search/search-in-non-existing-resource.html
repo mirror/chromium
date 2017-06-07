@@ -14,7 +14,7 @@ function test()
     {
         var resource = Bindings.resourceForURL("http://127.0.0.1:8000/inspector/search/resources/search.js");
         var url = "http://127.0.0.1:8000/inspector/search/resources/non-existing.js";
-        var response = await InspectorTest.PageAgent.invoke_searchInResource({frameId: resource.frameId, url, query: text});
+        var response = await InspectorTest.PageAgent.invoke_searchInResource(resource.frameId, url, text);
         InspectorTest.addResult(response[Protocol.Error]);
         InspectorTest.completeTest();
     }

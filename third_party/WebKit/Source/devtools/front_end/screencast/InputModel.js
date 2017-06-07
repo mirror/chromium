@@ -34,21 +34,14 @@ Screencast.InputModel = class extends SDK.SDKModel {
     }
 
     var text = event.type === 'keypress' ? String.fromCharCode(event.charCode) : undefined;
-    this._inputAgent.invoke_dispatchKeyEvent({
-      type: type,
-      modifiers: this._modifiersForEvent(event),
-      timestamp: event.timeStamp / 1000,
-      text: text,
-      unmodifiedText: text ? text.toLowerCase() : undefined,
-      keyIdentifier: event.keyIdentifier,
-      code: event.code,
-      key: event.key,
-      windowsVirtualKeyCode: event.keyCode,
-      nativeVirtualKeyCode: event.keyCode,
-      autoRepeat: false,
-      isKeypad: false,
-      isSystemKey: false
-    });
+    this._inputAgent.invoke_dispatchKeyEvent(
+        type, this._modifiersForEvent(event), event.timeStamp / 1000, text, text ? text.toLowerCase() : undefined,
+        event.keyIdentifier, event.code, event.key,
+        /* windowsVirtualKeyCode */ event.keyCode,
+        /* nativeVirtualKeyCode */ event.keyCode,
+        /* autoRepeat */ false,
+        /* isKeypad */ false,
+        /* isSystemKey */ false);
   }
 
   /**
@@ -92,16 +85,20 @@ Screencast.InputModel = class extends SDK.SDKModel {
     }
     if (event.type === 'mouseup')
       this._activeTouchOffsetTop = null;
-    this._inputAgent.invoke_emulateTouchFromMouseEvent(params);
+    this._inputAgent.invoke_emulateTouchFromMouseEvent(
+        params.type, params.x, params.y, params.timestamp, params.button, params.deltaX, params.deltaY,
+        params.modifiers, params.clickCount);
   }
 
   cancelTouch() {
-    if (this._activeTouchOffsetTop !== null) {
-      var params = this._activeTouchParams;
-      this._activeTouchParams = null;
-      params.type = 'mouseReleased';
-      this._inputAgent.invoke_emulateTouchFromMouseEvent(params);
-    }
+    if (this._activeTouchOffsetTop === null)
+      return;
+    var params = this._activeTouchParams;
+    this._activeTouchParams = null;
+    params.type = 'mouseReleased';
+    this._inputAgent.invoke_emulateTouchFromMouseEvent(
+        params.type, params.x, params.y, params.timestamp, params.button, params.deltaX, params.deltaY,
+        params.modifiers, params.clickCount);
   }
 
   /**

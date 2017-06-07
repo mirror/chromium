@@ -120,7 +120,7 @@ function test()
         async function didEvaluate(remote)
         {
             InspectorTest.addResult(pageExpression + " type = " + remote.type);
-            var response = await InspectorTest.RuntimeAgent.invoke_getProperties({objectId: remote.objectId, isOwnProperty: false});
+            var response = await InspectorTest.RuntimeAgent.invoke_getProperties(remote.objectId, false);
 
             var propertiesMap = new Map();
             for (var prop of response.internalProperties)

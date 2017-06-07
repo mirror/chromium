@@ -234,8 +234,7 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
     }
     columnNumber = Math.max(columnNumber, minColumnNumber);
 
-    var response =
-        await this._agent.invoke_setBreakpointByUrl({lineNumber, url, urlRegex: undefined, columnNumber, condition});
+    var response = await this._agent.invoke_setBreakpointByUrl(lineNumber, url, undefined, columnNumber, condition);
 
     if (!callback)
       return;
@@ -249,7 +248,7 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
    * @param {function(?Protocol.Debugger.BreakpointId, !Array.<!SDK.DebuggerModel.Location>)=} callback
    */
   setBreakpointBySourceId(rawLocation, condition, callback) {
-    this._agent.invoke_setBreakpoint({location: rawLocation.payload(), condition}).then(response => {
+    this._agent.invoke_setBreakpoint(rawLocation.payload(), condition).then(response => {
       if (!callback)
         return;
       if (response[Protocol.Error] || !response.actualLocation) {
@@ -265,7 +264,7 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
    * @return {!Promise}
    */
   async removeBreakpoint(breakpointId) {
-    var response = await this._agent.invoke_removeBreakpoint({breakpointId});
+    var response = await this._agent.invoke_removeBreakpoint(breakpointId);
     if (response[Protocol.Error])
       console.error('Failed to remove breakpoint: ' + response[Protocol.Error]);
   }
@@ -278,7 +277,7 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
    */
   async getPossibleBreakpoints(startLocation, endLocation, restrictToFunction) {
     var response = await this._agent.invoke_getPossibleBreakpoints(
-        {start: startLocation.payload(), end: endLocation.payload(), restrictToFunction: restrictToFunction});
+        startLocation.payload(), endLocation.payload(), restrictToFunction);
     if (response[Protocol.Error] || !response.locations)
       return [];
     return response.locations.map(location => SDK.DebuggerModel.BreakLocation.fromPayload(this, location));
@@ -767,7 +766,7 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
    * @return {!Promise<string|undefined>}
    */
   async setVariableValue(scopeNumber, variableName, newValue, callFrameId) {
-    var response = await this._agent.invoke_setVariableValue({scopeNumber, variableName, newValue, callFrameId});
+    var response = await this._agent.invoke_setVariableValue(scopeNumber, variableName, newValue, callFrameId);
     var error = response[Protocol.Error];
     if (error)
       console.error(error);
@@ -797,7 +796,7 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
    * @return {!Promise<boolean>}
    */
   async setBlackboxPatterns(patterns) {
-    var response = await this._agent.invoke_setBlackboxPatterns({patterns});
+    var response = await this._agent.invoke_setBlackboxPatterns(patterns);
     var error = response[Protocol.Error];
     if (error)
       console.error(error);
@@ -1209,15 +1208,8 @@ SDK.DebuggerModel.CallFrame = class {
    * @param {function(?Protocol.Runtime.RemoteObject, !Protocol.Runtime.ExceptionDetails=, string=)} callback
    */
   async evaluate(code, objectGroup, includeCommandLineAPI, silent, returnByValue, generatePreview, callback) {
-    var response = await this.debuggerModel._agent.invoke_evaluateOnCallFrame({
-      callFrameId: this._payload.callFrameId,
-      expression: code,
-      objectGroup: objectGroup,
-      includeCommandLineAPI: includeCommandLineAPI,
-      silent: silent,
-      returnByValue: returnByValue,
-      generatePreview: generatePreview
-    });
+    var response = await this.debuggerModel._agent.invoke_evaluateOnCallFrame(
+        this._payload.callFrameId, code, objectGroup, includeCommandLineAPI, silent, returnByValue, generatePreview);
     var error = response[Protocol.Error];
     if (error) {
       console.error(error);
@@ -1258,7 +1250,7 @@ SDK.DebuggerModel.CallFrame = class {
   }
 
   async restart() {
-    var response = await this.debuggerModel._agent.invoke_restartFrame({callFrameId: this._payload.callFrameId});
+    var response = await this.debuggerModel._agent.invoke_restartFrame(this._payload.callFrameId);
     if (!response[Protocol.Error])
       this.debuggerModel.stepInto();
   }
