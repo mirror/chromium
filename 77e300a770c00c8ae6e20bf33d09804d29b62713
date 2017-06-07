@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c2fe3a1_879bebdb",
+        "filename": "chrome/browser/ui/views/location_bar/keyword_hint_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-07T01:51:44Z",
+      "side": 1,
+      "message": "Nit: It took me a while to understand this.  These tweaks might have helped:\n\n  // When the virtual keyboard is visible, we show a modified touch UI\n  // containing only the chip, and no surrounding labels.\n  const bool was_touch_ui \u003d leading_label_-\u003etext().empty();\n  const bool is_touch_ui \u003d LocationBarView::IsVirtualKeyboardVisible();\n  if (is_touch_ui \u003d\u003d was_touch_ui \u0026\u0026 keyword_ \u003d\u003d keyword)\n    return;",
+      "revId": "77e300a770c00c8ae6e20bf33d09804d29b62713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
