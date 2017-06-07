@@ -8,6 +8,7 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "ui/accessibility/ax_node_data.h"
+#include "ui/compositor/paint_context.h"
 #include "ui/gfx/animation/throb_animation.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/image/image_skia_operations.h"
@@ -110,6 +111,10 @@ gfx::Size ImageButton::CalculatePreferredSize() const {
   gfx::Insets insets = GetInsets();
   size.Enlarge(insets.width(), insets.height());
   return size;
+}
+
+int ImageButton::GetContextScaleType() const {
+  return ui::PaintContext::SCALE_TO_SCALE_FACTOR;
 }
 
 void ImageButton::PaintButtonContents(gfx::Canvas* canvas) {

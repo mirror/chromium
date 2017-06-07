@@ -36,6 +36,8 @@ ToolbarButton::ToolbarButton(Profile* profile,
   set_has_ink_drop_action_on_click(true);
   set_context_menu_controller(this);
   SetInkDropMode(InkDropMode::ON);
+  SetPaintToLayer();
+  layer()->SetFillsBoundsOpaquely(false);
   SetFocusPainter(nullptr);
   SetLeadingMargin(0);
 }

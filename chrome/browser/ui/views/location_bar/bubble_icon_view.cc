@@ -31,7 +31,10 @@ BubbleIconView::BubbleIconView(CommandUpdater* command_updater, int command_id)
       command_updater_(command_updater),
       command_id_(command_id),
       active_(false),
-      suppress_mouse_released_action_(false) {}
+      suppress_mouse_released_action_(false) {
+  image_->SetPaintToLayer();
+  image_->layer()->SetFillsBoundsOpaquely(false);
+}
 
 BubbleIconView::~BubbleIconView() {}
 
@@ -142,14 +145,11 @@ void BubbleIconView::OnNativeThemeChanged(const ui::NativeTheme* theme) {
 }
 
 void BubbleIconView::AddInkDropLayer(ui::Layer* ink_drop_layer) {
-  image_->SetPaintToLayer();
-  image_->layer()->SetFillsBoundsOpaquely(false);
   views::InkDropHostView::AddInkDropLayer(ink_drop_layer);
 }
 
 void BubbleIconView::RemoveInkDropLayer(ui::Layer* ink_drop_layer) {
   views::InkDropHostView::RemoveInkDropLayer(ink_drop_layer);
-  image_->DestroyLayer();
 }
 
 std::unique_ptr<views::InkDrop> BubbleIconView::CreateInkDrop() {

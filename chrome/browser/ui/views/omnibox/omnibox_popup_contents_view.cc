@@ -18,6 +18,7 @@
 #include "third_party/skia/include/core/SkDrawLooper.h"
 #include "ui/base/theme_provider.h"
 #include "ui/compositor/clip_recorder.h"
+#include "ui/compositor/paint_context.h"
 #include "ui/compositor/paint_recorder.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/safe_integer_conversions.h"
@@ -468,7 +469,7 @@ void OmniboxPopupContentsView::PaintChildren(const ui::PaintContext& context) {
                         g_bottom_shadow.Get().height());
 
   ui::ClipRecorder clip_recorder(context);
-  clip_recorder.ClipRect(contents_bounds);
+  clip_recorder.ClipRect(context.ScaleToEffectivePixelBounds(contents_bounds));
   {
     ui::PaintRecorder recorder(context, size());
     SkColor background_color = result_view_at(0)->GetColor(

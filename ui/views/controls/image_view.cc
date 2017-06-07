@@ -10,6 +10,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "cc/paint/paint_flags.h"
 #include "ui/accessibility/ax_node_data.h"
+#include "ui/compositor/paint_context.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/insets.h"
 
@@ -178,6 +179,10 @@ gfx::Size ImageView::CalculatePreferredSize() const {
   gfx::Size size = GetImageSize();
   size.Enlarge(GetInsets().width(), GetInsets().height());
   return size;
+}
+
+int ImageView::GetContextScaleType() const {
+  return ui::PaintContext::SCALE_TO_SCALE_FACTOR;
 }
 
 void ImageView::OnPaintImage(gfx::Canvas* canvas) {
