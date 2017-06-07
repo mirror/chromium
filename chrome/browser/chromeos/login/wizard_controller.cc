@@ -561,6 +561,9 @@ void WizardController::ShowArcTermsOfServiceScreen() {
   } else if (profile->GetPrefs()->IsManagedPreference(prefs::kArcEnabled) &&
              !profile->GetPrefs()->GetBoolean(prefs::kArcEnabled)) {
     VLOG(1) << "Skip ARC Terms of Service screen because ARC is disabled.";
+  } else if (arc::IsActiveDirectoryUserForProfile(profile)) {
+    VLOG(1) << "Skip ARC Terms of Service screen because it does not apply to "
+               "Active Directory users.";
   } else {
     show_arc_terms = true;
   }
