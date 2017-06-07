@@ -11,6 +11,7 @@
 
 #include "base/macros.h"
 #include "cc/surfaces/local_surface_id_allocator.h"
+#include "ui/gfx/geometry/rect.h"
 
 namespace ui {
 namespace ws {
@@ -52,6 +53,10 @@ class WindowManagerDisplayRoot {
   const WindowManagerState* window_manager_state() const {
     return window_manager_state_;
   }
+
+  // Updates the window bounds and allocates a new LocalSurfaceId for the
+  // client visible root, returning the new LocalSurfaceId.
+  cc::LocalSurfaceId UpdateBoundsAndSurfaceId(const gfx::Rect& bounds);
 
  private:
   friend class Display;

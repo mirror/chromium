@@ -301,17 +301,17 @@ void Display::OnViewportMetricsChanged(
     const display::ViewportMetrics& metrics) {
   platform_display_->UpdateViewportMetrics(metrics);
 
-  SetBoundsInPixels(metrics.bounds_in_pixels);
-}
-
-void Display::SetBoundsInPixels(const gfx::Rect& bounds_in_pixels) {
-  if (root_->bounds().size() == bounds_in_pixels.size())
+  // TODO(kylechar): Also check device_scale_factor changing.
+  if (GetSize() == metrics.bounds_in_pixels.size())
     return;
 
-  gfx::Rect new_bounds(bounds_in_pixels.size());
+  gfx::Rect new_bounds(metrics.bounds_in_pixels.size());
   root_->SetBounds(new_bounds, allocator_.GenerateId());
-  for (auto& pair : window_manager_display_root_map_)
-    pair.second->root()->SetBounds(new_bounds, allocator_.GenerateId());
+  for (auto& map_entry : window_manager_display_root_map_) {
+    // TODO(kylechar): Pass the new LocalSurfaceId for the active WM root to
+    // FrameGenerator right away so it doesn't embed the wrong size frame.
+    map_entry.second->UpdateBoundsAndSurfaceId(new_bounds);
+  }
 }
 
 ServerWindow* Display::GetActiveRootWindow() {

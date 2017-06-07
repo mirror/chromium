@@ -117,8 +117,15 @@ bool DisplayManager::SetDisplayConfiguration(
   for (size_t i = 0; i < displays.size(); ++i) {
     Display* ws_display = GetDisplayById(displays[i].id());
     DCHECK(ws_display);
+
+    display::ViewportMetrics metrics;
+    metrics.bounds_in_pixels = viewport_metrics[i]->bounds_in_pixels;
+    metrics.device_scale_factor = viewport_metrics[i]->device_scale_factor;
+    metrics.ui_scale_factor = viewport_metrics[i]->ui_scale_factor;
+
     ws_display->SetDisplay(displays[i]);
-    ws_display->SetBoundsInPixels(viewport_metrics[i]->bounds_in_pixels);
+    ws_display->OnViewportMetricsChanged(metrics);
+
     if (i != primary_display_index) {
       display_list.AddOrUpdateDisplay(displays[i],
                                       display::DisplayList::Type::NOT_PRIMARY);

@@ -33,6 +33,8 @@ WindowManagerDisplayRoot::WindowManagerDisplayRoot(Display* display)
   // Our root is always a child of the Display's root. Do this
   // before the WindowTree has been created so that the client doesn't get
   // notified of the add, bounds change and visibility change.
+  // TODO(kylechar): LocalSurfaceId allocation is wrong if |root_| isn't the
+  // client visible root.
   root_->SetBounds(gfx::Rect(display->root_window()->bounds().size()),
                    allocator_.GenerateId());
   root_->SetVisible(true);
@@ -52,6 +54,23 @@ const ServerWindow* WindowManagerDisplayRoot::GetClientVisibleRoot() const {
 
 WindowServer* WindowManagerDisplayRoot::window_server() {
   return display_->window_server();
+}
+
+cc::LocalSurfaceId WindowManagerDisplayRoot::UpdateBoundsAndSurfaceId(
+    const gfx::Rect& bounds) {
+  cc::LocalSurfaceId local_surface_id = allocator_.GenerateId();
+  ServerWindow* client_visible_root = GetClientVisibleRoot();
+
+  // Update the LocalSurfaceId for the client visible window.
+  if (client_visible_root == root_.get()) {
+    root_->SetBounds(bounds, local_surface_id);
+  } else {
+    root_->SetBounds(bounds);
+    if (client_visible_root)
+      client_visible_root->SetBounds(bounds, local_surface_id);
+  }
+
+  return local_surface_id;
 }
 
 }  // namespace ws
