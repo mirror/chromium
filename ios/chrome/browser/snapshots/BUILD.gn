@@ -8,6 +8,8 @@ source_set("snapshots") {
     "lru_cache.mm",
     "snapshot_cache.h",
     "snapshot_cache.mm",
+    "snapshot_cache_factory.h",
+    "snapshot_cache_factory.mm",
     "snapshot_cache_internal.h",
     "snapshot_cache_web_state_list_observer.h",
     "snapshot_cache_web_state_list_observer.mm",
