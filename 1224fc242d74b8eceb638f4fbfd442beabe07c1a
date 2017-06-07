@@ -34,6 +34,24 @@
       "revId": "1224fc242d74b8eceb638f4fbfd442beabe07c1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e244d4f_459acdc7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-07T09:57:07Z",
+      "side": 1,
+      "message": "Tasks on this queue will run before almost anything else except internal scheduler control priority tasks, and compositor tasks if we\u0027re prioritising those (in which case it\u0027s first come first serve).\n\nIt would be unfortunate for the user experience if tasks posted on this queue were slow.",
+      "parentUuid": "820966fa_7a1006d5",
+      "revId": "1224fc242d74b8eceb638f4fbfd442beabe07c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
