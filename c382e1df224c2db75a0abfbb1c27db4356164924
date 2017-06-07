@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a8b1d08_705b6b7d",
+        "filename": "third_party/WebKit/Source/core/dom/Node.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-07T22:45:52Z",
+      "side": 1,
+      "message": "What is the root cause here? Is it not possible to fix?\n\nI\u0027m not familiar with ForceLayoutParentViewIfNeeded(), but it doesn\u0027t sound like it should cause re-attachment?",
+      "revId": "c382e1df224c2db75a0abfbb1c27db4356164924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
