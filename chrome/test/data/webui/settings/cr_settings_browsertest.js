@@ -1181,7 +1181,13 @@ CrSettingsInternetPageTest.prototype = {
   ]),
 };
 
-TEST_F('CrSettingsInternetPageTest', 'All', function() {
+// TODO(crbug.com/729607): deflake. Failing on Linux ChromiumOS Test (dbg)(1).
+GEN('#if defined(OS_CHROMEOS) && !defined(NDEBUG)');
+GEN('#define MAYBE_All0 DISABLED_All0');
+GEN('#else');
+GEN('#define MAYBE_All0 All0');
+GEN('#endif');
+TEST_F('CrSettingsInternetPageTest', 'MAYBE_All0', function() {
   mocha.run();
 });
 
@@ -1421,11 +1427,11 @@ CrSettingsNonExistentRouteTest.prototype = {
 
 // Failing on ChromiumOS dbg. https://crbug.com/709442
 GEN('#if (defined(OS_WIN) || defined(OS_CHROMEOS)) && !defined(NDEBUG)');
-GEN('#define MAYBE_All DISABLED_All');
+GEN('#define MAYBE_All1 DISABLED_All1');
 GEN('#else');
-GEN('#define MAYBE_All All');
+GEN('#define MAYBE_All1 All1');
 GEN('#endif');
-TEST_F('CrSettingsNonExistentRouteTest', 'MAYBE_All', function() {
+TEST_F('CrSettingsNonExistentRouteTest', 'MAYBE_All1', function() {
   suite('NonExistentRoutes', function() {
     test('redirect to basic', function() {
       assertEquals(settings.Route.BASIC, settings.getCurrentRoute());
@@ -1483,9 +1489,9 @@ TEST_F('CrSettingsRouteDynamicParametersTest', 'All', function() {
 // Times out on Windows Tests (dbg). See https://crbug.com/651296.
 // Times out / crashes on chromium.linux/Linux Tests (dbg) crbug.com/667882
 GEN('#if !defined(NDEBUG)')
-GEN('#define MAYBE_MainPage_All DISABLED_MainPage_All');
+GEN('#define MAYBE_All2 DISABLED_All2');
 GEN('#else');
-GEN('#define MAYBE_MainPage_All MainPage_All');
+GEN('#define MAYBE_All2 All2');
 GEN('#endif');
 
 /**
@@ -1509,7 +1515,7 @@ CrSettingsMainPageTest.prototype = {
   ]),
 };
 
-TEST_F('CrSettingsMainPageTest', 'MAYBE_MainPage_All', function() {
+TEST_F('CrSettingsMainPageTest', 'MAYBE_All2', function() {
   settings_main_page.registerTests();
   mocha.run();
 });
