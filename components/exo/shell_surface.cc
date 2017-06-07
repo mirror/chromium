@@ -21,10 +21,13 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
+#include "cc/output/compositor_frame_sink.h"
+#include "components/exo/compositor_frame_sink_holder.h"
 #include "components/exo/surface.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/cursor_client.h"
 #include "ui/aura/window.h"
+#include "ui/aura/window_delegate.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/aura/window_targeter.h"
 #include "ui/aura/window_tree_host.h"
@@ -199,6 +202,111 @@ class ShellSurfaceWidget : public views::Widget {
   DISALLOW_COPY_AND_ASSIGN(ShellSurfaceWidget);
 };
 
+class CustomWindowDelegate : public aura::WindowDelegate {
+ public:
+  explicit CustomWindowDelegate(ShellSurface* shell_surface) : shell_surface_(shell_surface) {}
+  ~CustomWindowDelegate() override {}
+
+  // Overridden from aura::WindowDelegate:
+  gfx::Size GetMinimumSize() const override { return gfx::Size(); }
+  gfx::Size GetMaximumSize() const override { return gfx::Size(); }
+  void OnBoundsChanged(const gfx::Rect& old_bounds,
+                       const gfx::Rect& new_bounds) override {}
+  gfx::NativeCursor GetCursor(const gfx::Point& point) override {
+#if 0
+    return shell_surface_->GetCursor();
+#endif
+    return gfx::NativeCursor();
+  }
+  int GetNonClientComponent(const gfx::Point& point) const override {
+    return HTNOWHERE;
+  }
+  bool ShouldDescendIntoChildForEventHandling(
+      aura::Window* child,
+      const gfx::Point& location) override {
+    return true;
+  }
+  bool CanFocus() override { return true; }
+  void OnCaptureLost() override {}
+  void OnPaint(const ui::PaintContext& context) override {}
+  void OnDeviceScaleFactorChanged(float device_scale_factor) override {
+#if 0
+    shell_surface_->SetDeviceScaleFactor(device_scale_factor);
+#endif
+  }
+  void OnWindowDestroying(aura::Window* window) override {}
+  void OnWindowDestroyed(aura::Window* window) override { delete this; }
+  void OnWindowTargetVisibilityChanged(bool visible) override {}
+  bool HasHitTestMask() const override {
+#if 0
+    return shell_surface_->HasHitTestMask();
+#endif
+    return false;
+  }
+  void GetHitTestMask(gfx::Path* mask) const override {
+#if 0
+    shell_surface_->GetHitTestMask(mask);
+#endif
+  }
+  void OnKeyEvent(ui::KeyEvent* event) override {
+    // Propagates the key event upto the top-level views Widget so that we can
+    // trigger proper events in the views/ash level there. Event handling for
+    // Surfaces is done in a post event handler in keyboard.cc.
+    views::Widget* widget =
+        views::Widget::GetTopLevelWidgetForNativeView(shell_surface_->window());
+    if (widget)
+      widget->OnKeyEvent(event);
+  }
+
+ private:
+  ShellSurface* const shell_surface_;
+
+  DISALLOW_COPY_AND_ASSIGN(CustomWindowDelegate);
+};
+
+#if 0
+class CustomWindowTargeter : public aura::WindowTargeter {
+ public:
+  CustomWindowTargeter() {}
+  ~CustomWindowTargeter() override {}
+
+  // Overridden from aura::WindowTargeter:
+  bool SubtreeCanAcceptEvent(aura::Window* window,
+                             const ui::LocatedEvent& event) const override {
+    Surface* surface = Surface::AsSurface(window);
+    if (!surface)
+      return false;
+
+    if (surface->IsStylusOnly()) {
+      ui::EventPointerType type = ui::EventPointerType::POINTER_TYPE_UNKNOWN;
+      if (event.IsTouchEvent()) {
+        auto* touch_event = static_cast<const ui::TouchEvent*>(&event);
+        type = touch_event->pointer_details().pointer_type;
+      }
+      if (type != ui::EventPointerType::POINTER_TYPE_PEN)
+        return false;
+    }
+    return aura::WindowTargeter::SubtreeCanAcceptEvent(window, event);
+  }
+
+  bool EventLocationInsideBounds(aura::Window* window,
+                                 const ui::LocatedEvent& event) const override {
+    Surface* surface = Surface::AsSurface(window);
+    if (!surface)
+      return false;
+
+    gfx::Point local_point = event.location();
+    if (window->parent())
+      aura::Window::ConvertPointToTarget(window->parent(), window,
+                                         &local_point);
+    return surface->HitTestRect(gfx::Rect(local_point, gfx::Size(1, 1)));
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(CustomWindowTargeter);
+};
+#endif
+
 }  // namespace
 
 // Helper class used to coalesce a number of changes into one "configure"
@@ -310,6 +418,18 @@ ShellSurface::ShellSurface(Surface* surface,
   set_owned_by_client();
   if (parent_)
     parent_->AddObserver(this);
+
+  window_ = base::MakeUnique<aura::Window>(new CustomWindowDelegate(this),
+                                           aura::client::WINDOW_TYPE_CONTROL);
+  window_->SetName("ExoSurface");
+  // window_->SetProperty(kSurfaceKey, this);
+  window_->Init(ui::LAYER_SOLID_COLOR);
+  // window_->SetEventTargeter(base::WrapUnique(new CustomWindowTargeter));
+  window_->set_owned_by_parent(false);
+  window_->AddObserver(this);
+  // aura::Env::GetInstance()->context_factory()->AddObserver(this);
+  compositor_frame_sink_holder_ = base::MakeUnique<CompositorFrameSinkHolder>(
+      this, window_->CreateCompositorFrameSink());
 }
 
 ShellSurface::ShellSurface(Surface* surface)
@@ -665,6 +785,46 @@ void ShellSurface::SetContainer(int container) {
   TRACE_EVENT1("exo", "ShellSurface::SetContainer", "container", container);
 
   container_ = container;
+}
+
+void ShellSurface::DidReceiveCompositorFrameAck() {
+  NOTIMPLEMENTED();
+#if 0
+  active_frame_callbacks_.splice(active_frame_callbacks_.end(),
+                                 frame_callbacks_);
+  swapping_presentation_callbacks_.splice(
+      swapping_presentation_callbacks_.end(), presentation_callbacks_);
+#endif
+  UpdateNeedsBeginFrame();
+}
+
+void ShellSurface::SetBeginFrameSource(
+    cc::BeginFrameSource* begin_frame_source) {
+  if (needs_begin_frame_) {
+    DCHECK(begin_frame_source_);
+    begin_frame_source_->RemoveObserver(this);
+    needs_begin_frame_ = false;
+  }
+  begin_frame_source_ = begin_frame_source;
+  UpdateNeedsBeginFrame();
+}
+
+void ShellSurface::UpdateNeedsBeginFrame() {
+  if (!begin_frame_source_)
+    return;
+  
+  NOTIMPLEMENTED();
+#if 0
+  bool needs_begin_frame = !active_frame_callbacks_.empty();
+  if (needs_begin_frame == needs_begin_frame_)
+    return;
+  
+  needs_begin_frame_ = needs_begin_frame;
+  if (needs_begin_frame_)
+    begin_frame_source_->AddObserver(this);
+  else
+    begin_frame_source_->RemoveObserver(this);
+#endif
 }
 
 // static
@@ -1129,6 +1289,23 @@ bool ShellSurface::AcceleratorPressed(const ui::Accelerator& accelerator) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// cc::BeginFrameObserverBase overrides:
+
+bool ShellSurface::OnBeginFrameDerivedImpl(const cc::BeginFrameArgs& args) {
+  current_begin_frame_ack_ = cc::BeginFrameAck(
+      args.source_id, args.sequence_number, args.sequence_number, false);
+  NOTIMPLEMENTED();
+// XXX
+#if 0
+  while (!active_frame_callbacks_.empty()) {
+        active_frame_callbacks_.front().Run(args.frame_time);
+            active_frame_callbacks_.pop_front();
+              }
+#endif
+  return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // ShellSurface, private:
 
 void ShellSurface::CreateShellSurfaceWidget(ui::WindowShowState show_state) {
@@ -1163,7 +1340,7 @@ void ShellSurface::CreateShellSurfaceWidget(ui::WindowShowState show_state) {
   window->SetName("ExoShellSurface");
   window->SetProperty(aura::client::kAccessibilityFocusFallsbackToWidgetKey,
                       false);
-  window->AddChild(surface_->window());
+  window->AddChild(window_.get());
   window->SetEventTargeter(base::WrapUnique(new CustomWindowTargeter(widget_)));
   SetApplicationId(window, application_id_);
   SetMainSurface(window, surface_);

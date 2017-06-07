@@ -17,7 +17,7 @@ class CompositorFrameSink;
 }
 
 namespace exo {
-class Surface;
+class ShellSurface;
 
 // This class talks to MojoCompositorFrameSink and keeps track of references to
 // the contents of Buffers. It's keeped alive by references from
@@ -27,7 +27,7 @@ class CompositorFrameSinkHolder : public cc::CompositorFrameSinkClient,
                                   public SurfaceObserver {
  public:
   CompositorFrameSinkHolder(
-      Surface* surface,
+      ShellSurface* shell_surface,
       std::unique_ptr<cc::CompositorFrameSink> frame_sink);
   ~CompositorFrameSinkHolder() override;
 
@@ -66,7 +66,7 @@ class CompositorFrameSinkHolder : public cc::CompositorFrameSinkClient,
   using ResourceReleaseCallbackMap = base::flat_map<int, cc::ReleaseCallback>;
   ResourceReleaseCallbackMap release_callbacks_;
 
-  Surface* surface_;
+  ShellSurface* shell_surface_;
   std::unique_ptr<cc::CompositorFrameSink> frame_sink_;
 
   base::WeakPtrFactory<CompositorFrameSinkHolder> weak_factory_;

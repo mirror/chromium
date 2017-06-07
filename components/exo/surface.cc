@@ -197,9 +197,9 @@ Surface::Surface() : window_(new aura::Window(new CustomWindowDelegate(this))) {
   window_->SetEventTargeter(base::WrapUnique(new CustomWindowTargeter));
   window_->set_owned_by_parent(false);
   window_->AddObserver(this);
-  aura::Env::GetInstance()->context_factory()->AddObserver(this);
-  compositor_frame_sink_holder_ = base::MakeUnique<CompositorFrameSinkHolder>(
-      this, window_->CreateCompositorFrameSink());
+  // aura::Env::GetInstance()->context_factory()->AddObserver(this);
+  // compositor_frame_sink_holder_ = base::MakeUnique<CompositorFrameSinkHolder>(
+  //     this, window_->CreateCompositorFrameSink());
 }
 
 Surface::~Surface() {
