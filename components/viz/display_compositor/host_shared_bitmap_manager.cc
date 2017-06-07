@@ -51,6 +51,13 @@ class HostSharedBitmap : public cc::SharedBitmap {
       manager_->FreeSharedMemoryFromMap(id());
   }
 
+  // cc::SharedBitmap:
+  base::SharedMemoryHandle GetSharedMemoryHandle() const override {
+    if (!bitmap_data_->memory)
+      return base::SharedMemoryHandle();
+    return bitmap_data_->memory->handle();
+  }
+
  private:
   scoped_refptr<BitmapData> bitmap_data_;
   HostSharedBitmapManager* manager_;
@@ -179,8 +186,11 @@ bool HostSharedBitmapManager::OnMemoryDump(
     // Generate a global GUID used to share this allocation with renderer
     // processes.
     auto guid = cc::GetSharedBitmapGUIDForTracing(bitmap.first);
-    pmd->CreateSharedGlobalAllocatorDump(guid);
-    pmd->AddOwnershipEdge(dump->guid(), guid);
+    base::UnguessableToken shared_memory_guid;
+    if (bitmap.second->memory)
+      shared_memory_guid = bitmap.second->memory->handle().GetGUID();
+    pmd->CreateSharedMemoryOwnershipEdge(dump->guid(), guid, shared_memory_guid,
+                                         0 /* importance*/);
   }
 
   return true;

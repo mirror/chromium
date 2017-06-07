@@ -383,5 +383,52 @@ MemoryAllocatorDump* ProcessMemoryDump::GetBlackHoleMad() {
   return black_hole_mad_.get();
 }
 
+void ProcessMemoryDump::CreateSharedMemoryOwnershipEdge(
+    const MemoryAllocatorDumpGuid& client_local_dump_guid,
+    const MemoryAllocatorDumpGuid& client_global_dump_guid,
+    const UnguessableToken& shared_memory_guid,
+    int importance) {
+  CreateSharedMemoryOwnershipEdgeImpl(client_local_dump_guid,
+                                      client_global_dump_guid,
+                                      shared_memory_guid, false, importance);
+}
+
+void ProcessMemoryDump::CreateWeakSharedMemoryOwnershipEdge(
+    const MemoryAllocatorDumpGuid& client_local_dump_guid,
+    const MemoryAllocatorDumpGuid& client_global_dump_guid,
+    const UnguessableToken& shared_memory_guid,
+    int importance) {
+  CreateSharedMemoryOwnershipEdgeImpl(client_local_dump_guid,
+                                      client_global_dump_guid,
+                                      shared_memory_guid, true, importance);
+}
+
+void ProcessMemoryDump::CreateSharedMemoryOwnershipEdgeImpl(
+    const MemoryAllocatorDumpGuid& client_local_dump_guid,
+    const MemoryAllocatorDumpGuid& client_global_dump_guid,
+    const UnguessableToken& shared_memory_guid,
+    bool is_weak,
+    int importance) {
+  if (MemoryAllocatorDumpGuid::UseSharedMemoryBasedGUIDs() &&
+      !shared_memory_guid.is_empty()) {
+    auto local_shm_guid =
+        SharedMemoryTracker::GetGUIDForTracing(shared_memory_guid);
+    auto* global_shm_dump = CreateSharedGlobalAllocatorDump(
+        SharedMemoryTracker::GetGlobalGUIDForTracing(shared_memory_guid));
+    auto global_shm_guid = global_shm_dump->guid();
+    AddOwnershipEdge(client_local_dump_guid, local_shm_guid);
+    // TODO(ssid): Handle the case of weak dumps here. This need s a new
+    // function GetOrCreaetGlobalDump() in PMD.
+    AddOwnershipEdge(local_shm_guid, global_shm_guid, importance);
+  } else {
+    if (is_weak)
+      CreateWeakSharedGlobalAllocatorDump(client_global_dump_guid);
+    else
+      CreateSharedGlobalAllocatorDump(client_global_dump_guid);
+    AddOwnershipEdge(client_local_dump_guid, client_global_dump_guid,
+                     importance);
+  }
+}
+
 }  // namespace trace_event
 }  // namespace base
