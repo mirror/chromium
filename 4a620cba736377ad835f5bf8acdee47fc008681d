@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2faea6eb_18ba9e30",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-07T12:08:49Z",
+      "side": 1,
+      "message": "Nit: Dismisses, Does not.",
+      "range": {
+        "startLine": 71,
+        "startChar": 10,
+        "endLine": 71,
+        "endChar": 11
+      },
+      "revId": "4a620cba736377ad835f5bf8acdee47fc008681d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe00abd_8e93aff6",
+        "filename": "ios/showcase/content_suggestions/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-07T12:08:49Z",
+      "side": 1,
+      "message": "Do you abide by being a garant of the independence of Showcase from model classes?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 7
+      },
+      "revId": "4a620cba736377ad835f5bf8acdee47fc008681d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
