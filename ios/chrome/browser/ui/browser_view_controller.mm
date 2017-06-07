@@ -1819,10 +1819,10 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
   }
 
   if (experimental_flags::IsPaymentRequestEnabled()) {
-    _paymentRequestManager = [[PaymentRequestManager alloc]
-        initWithBaseViewController:self
-                      browserState:_browserState];
-    [_paymentRequestManager setWebState:[_model currentTab].webState];
+    _paymentRequestManager =
+        [[PaymentRequestManager alloc] initWithBaseViewController:self
+                                                     browserState:_browserState
+                                                         tabModel:_model];
   }
 }
 
