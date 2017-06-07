@@ -273,6 +273,8 @@ void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
 #endif
   }
 
+  Sleep(500);
+
   // Start all workers. CHECK that the first worker can be started (assume that
   // failure means that threads can't be created on this machine). Wake up one
   // worker for each wake up that occurred before Start().

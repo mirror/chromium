@@ -314,7 +314,7 @@ TEST_P(TaskSchedulerImplTest, PostDelayedTaskWithTraitsWithDelayBeforeStart) {
   EXPECT_FALSE(task_running.IsSignaled());
 
   StartTaskScheduler();
-  task_running.Wait();
+  EXPECT_TRUE(task_running.TimedWait(base::TimeDelta::FromMilliseconds(3000)));
 }
 
 // Verifies that a task posted via a TaskRunner doesn't run before Start() is
