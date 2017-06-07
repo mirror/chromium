@@ -122,6 +122,9 @@ const RoleEntry kRoles[] = {{"alert", kAlertRole},
                             {"radiogroup", kRadioGroupRole},
                             {"region", kRegionRole},
                             {"row", kRowRole},
+                            // Grids "ignore" their non-row children during
+                            // computation of children.
+                            {"rowgroup", kIgnoredRole},
                             {"rowheader", kRowHeaderRole},
                             {"scrollbar", kScrollBarRole},
                             {"search", kSearchRole},
