@@ -26,11 +26,12 @@
 #ifndef ColorChooserUIController_h
 #define ColorChooserUIController_h
 
+#include <memory>
+#include "core/CoreExport.h"
 #include "core/html/forms/ColorChooser.h"
 #include "platform/heap/Handle.h"
 #include "platform/text/PlatformLocale.h"
 #include "public/web/WebColorChooserClient.h"
-#include <memory>
 
 namespace blink {
 
@@ -38,7 +39,7 @@ class ColorChooserClient;
 class LocalFrame;
 class WebColorChooser;
 
-class ColorChooserUIController
+class CORE_EXPORT ColorChooserUIController
     : public GarbageCollectedFinalized<ColorChooserUIController>,
       public WebColorChooserClient,
       public ColorChooser {
