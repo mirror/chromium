@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "base/optional.h"
 #include "base/time/time.h"
+#include "base/trace_event/memory_dump_provider.h"
 #include "content/common/leveldb_wrapper.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/bindings/interface_ptr_set.h"
@@ -77,6 +78,9 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
   // Clears the in-memory cache if currently no changes are pending. If there
   // are uncommitted changes this method does nothing.
   void PurgeMemory();
+
+  void OnMemoryDump(const std::string& name,
+                    base::trace_event::ProcessMemoryDump* pmd);
 
   // LevelDBWrapper:
   void AddObserver(mojom::LevelDBObserverAssociatedPtrInfo observer) override;

@@ -133,6 +133,13 @@ DOMStorageContextWrapper::DOMStorageContextWrapper(
         data_path.empty() ? data_path
                           : data_path.AppendASCII(kLocalStorageDirectory),
         storage_dir, special_storage_policy);
+    // base::Unretained is safe here, because the mojo_state_ won't be deleted
+    // until a ShutdownAndDelete task has been ran on the mojo_task_runner_, and
+    // as soon as that task is posted, mojo_state_ is set to null, preventing
+    // further tasks from being queued.
+    mojo_task_runner_->PostTask(FROM_HERE,
+                                base::BindOnce(&LocalStorageContextMojo::Init,
+                                               base::Unretained(mojo_state_)));
   }
 
   if (base::FeatureList::IsEnabled(features::kMemoryCoordinator)) {
