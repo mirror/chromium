@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcf15f95_4188ee12",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 10559,
+      "author": {
+        "id": 1002075
+      },
+      "writtenOn": "2017-06-08T18:47:28Z",
+      "side": 1,
+      "message": "I\u0027ll add\n    \"additional_compile_targets\": [\n      \"all\"\n    ],\nhere once https://chromium-review.googlesource.com/c/528078 is approved.",
+      "range": {
+        "startLine": 10559,
+        "startChar": 4,
+        "endLine": 10559,
+        "endChar": 5
+      },
+      "revId": "b8fa982b1a077f3d3802653d96c63f0ec536f73f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea59db82_d8427cc7",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 10606,
+      "author": {
+        "id": 1002075
+      },
+      "writtenOn": "2017-06-08T18:47:28Z",
+      "side": 1,
+      "message": "We won\u0027t run tests on ARM64 to begin with since there are no ARM64 equipped Linux machines in the swarming fleet at the moment, it seems.",
+      "range": {
+        "startLine": 10584,
+        "startChar": 4,
+        "endLine": 10606,
+        "endChar": 5
+      },
+      "revId": "b8fa982b1a077f3d3802653d96c63f0ec536f73f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
