@@ -57,7 +57,7 @@ SuboriginFontFaceTest.prototype.execute = function() {
 new SuboriginFontFaceTest(
   false,
   'ACAO: ' + server,
-  xoriginFont()).execute();
+  xoriginFont('true')).execute();
 new SuboriginFontFaceTest(
   true,
   'ACAO: *',

@@ -77,7 +77,7 @@ promise_test(() => {
     // Use a different URL every time so that the cache behaviour does not
     // depend on execution order.
     directUrl = baseUrl + '?unique=' + Math.random().toString().substring(2) +
-        '&cors=*';
+        '&ACAOrigin=*';
     sameOriginRedirect = redirectUrl(hostInfo.HTTP_ORIGIN, '*', directUrl);
     crossOriginRedirect = redirectUrl(hostInfo.HTTP_REMOTE_ORIGIN,
                                       hostInfo.HTTP_ORIGIN, directUrl);

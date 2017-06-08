@@ -21,6 +21,6 @@ window.onerror = function(msg, url, line, column, error) {
   done();
 }
 </script>
-<script src="/security/resources/cors-script.php?fail=true&cors=false"></script>
+<script src="/security/resources/cors-script.php?throw=true&ACAOrigin=false"></script>
 </body>
 </html>

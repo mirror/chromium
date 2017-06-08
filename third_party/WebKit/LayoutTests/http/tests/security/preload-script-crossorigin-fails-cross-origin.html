@@ -33,6 +33,6 @@ var checkForPreload = function(url) {
 <!-- Force a preload -->
 <script src="http://127.0.0.1:8000/resources/slow-script.pl?delay=100"></script>
 <script>
-checkForPreload("http://localhost:8000/security/resources/cors-script.php?delay=100&cors=false&value=FAIL");
+checkForPreload("http://localhost:8000/security/resources/cors-script.php?delay=100&ACAOrigin=false&value=FAIL");
 </script>
-<script crossorigin="anonymous" src="http://localhost:8000/security/resources/cors-script.php?delay=100&cors=false&value=FAIL" onload="scriptLoad()" onerror="scriptError();"></script>
+<script crossorigin="anonymous" src="http://localhost:8000/security/resources/cors-script.php?delay=100&ACAOrigin=false&value=FAIL" onload="scriptLoad()" onerror="scriptError();"></script>
