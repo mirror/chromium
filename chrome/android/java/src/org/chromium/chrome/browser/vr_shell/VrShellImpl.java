@@ -108,6 +108,7 @@ public class VrShellImpl
     private float mLastContentWidth;
     private float mLastContentHeight;
     private float mLastContentDpr;
+    private boolean mPaused;
 
     private MotionEventSynthesizer mMotionEventSynthesizer;
 
@@ -432,6 +433,8 @@ public class VrShellImpl
 
     @Override
     public void onResume() {
+        if (!mPaused) return;
+        mPaused = false;
         super.onResume();
         if (mNativeVrShell != 0) {
             // Refreshing the viewer profile may accesses disk under some circumstances outside of
@@ -447,6 +450,8 @@ public class VrShellImpl
 
     @Override
     public void onPause() {
+        if (mPaused) return;
+        mPaused = true;
         super.onPause();
         if (mNativeVrShell != 0) {
             nativeOnPause(mNativeVrShell);
