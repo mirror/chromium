@@ -13,23 +13,44 @@ setcookie("TestCookieSuboriginUnsafeCredentialsSamePO", "cookieisset", 0, "/");
 <body>
 <div id="container"></div>
 <script>
-var same_physical_origin_url = '/security/resources/cors-script.php?' +
-  'resultvar=result1&cookie=TestCookieSuboriginUnsafeCredentialsSamePO&' +
-  'credentials=true&' +
-  'cors=http-so://foobar.127.0.0.1:8000';
-var diff_physical_origin_url =
-  'http://localhost:8000/security/resources/cors-script.php?' +
-  'resultvar=result2&cookie=TestCookieSuboriginUnsafeCredentialsDiffPO&' +
-  'credentials=true&' +
-  'cors=http-so://foobar.127.0.0.1:8000';
+const same_physical_origin_url_params = new URLSearchParams();
+for (const params of [
+  ['resultvar', 'result1'],
+  ['cookie', 'TestCookieSuboriginUnsafeCredentialsSamePO'],
+  ['ACACredentials', 'true'],
+  ['ACAOrigin', 'http-so://foobar.127.0.0.1:8000'],
+]) {
+  same_physical_origin_url_params.append(params[0], params[1]);
+}
+const same_physical_origin_url = '/security/resources/cors-script.php?' +
+  same_physical_origin_url_params.toString();
 
-var redirect_to_same_physical_origin_url_params = new URLSearchParams();
-redirect_to_same_physical_origin_url_params.append(
-  'url', same_physical_origin_url);
-var same_physical_origin_with_redirect_url =
+const diff_physical_origin_url_params = new URLSearchParams();
+for (const params of [
+  ['resultvar', 'result2'],
+  ['cookie', 'TestCookieSuboriginUnsafeCredentialsDiffPO'],
+  ['ACACredentials', 'true'],
+  ['ACAOrigin', 'http-so://foobar.127.0.0.1:8000'],
+]) {
+  diff_physical_origin_url_params.append(params[0], params[1]);
+}
+const diff_physical_origin_url =
+  'http://localhost:8000/security/resources/cors-script.php?' +
+  diff_physical_origin_url_params.toString();
+
+const redirect_to_same_physical_origin_url_params = new URLSearchParams();
+for (const params of [
+  ['url', same_physical_origin_url],
+  ['expect_cookie', 'true'],
+  ['cookie_name', 'TestCookieSuboriginUnsafeCredentialsSamePO'],
+  ['ACAOrigin', 'http-so://foobar.127.0.0.1:8000'],
+  ['ACASuborigin', 'foobar'],
+  ['ACACredentials', 'true'],
+]) {
+  redirect_to_same_physical_origin_url_params.append(params[0], params[1]);
+}
+const same_physical_origin_with_redirect_url =
   '/security/suborigins/resources/redirect.php?' +
-  'credentials=true&' +
-  'cors=http-so://foobar.127.0.0.1:8000&' +
   redirect_to_same_physical_origin_url_params.toString();
 
 var cross_origin_iframe_loaded_resolver = undefined;
@@ -85,13 +106,12 @@ function fetch_test(url, result_name, expected_value) {
   return function(test) {
     return fetch(url, { credentials: 'same-origin' })
       .then(r => {
-          return r.text()
-            .then(test.step_func(text => {
-                  assert_equals(
-                    text, result_name + ' = "' + expected_value + '";');
-              }))
-        });
-    };
+        return r.text();
+      })
+      .then(text => {
+        assert_equals(text, result_name + ' = "' + expected_value + '";');
+      });
+  };
 }
 
 promise_test(

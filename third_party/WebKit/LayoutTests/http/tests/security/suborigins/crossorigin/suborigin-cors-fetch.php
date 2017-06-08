@@ -60,7 +60,7 @@ SuboriginFetchTest.prototype.execute = function() {
 new SuboriginFetchTest(
   false,
   'anonymous, ACAO: ' + server,
-  xoriginAnonScript(),
+  xoriginAnonScript('true'),
   'anonymous').execute();
 
 new SuboriginFetchTest(
@@ -72,7 +72,7 @@ new SuboriginFetchTest(
 new SuboriginFetchTest(
   false,
   'use-credentials, ACAO: ' + server,
-  xoriginCredsScript(),
+  xoriginCredsScript('true'),
   'use-credentials').execute();
 
 new SuboriginFetchTest(
