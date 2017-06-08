@@ -22,6 +22,30 @@
       "revId": "8ed6a435e0bbdb8c6f1605bc03eca825483e932c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0776ac33_b4e9e667",
+        "filename": "third_party/WebKit/Source/modules/payments/AndroidPayMethodData.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-06-08T17:39:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "474074e2_12bc8d93",
+      "range": {
+        "startLine": 15,
+        "startChar": 25,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "8ed6a435e0bbdb8c6f1605bc03eca825483e932c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
