@@ -107,12 +107,13 @@ void InstallAttributeInternal(
 
   DCHECK(location);
   v8::Local<v8::Context> context = isolate->GetCurrentContext();
-  if (location & V8DOMConfiguration::kOnInstance) {
+  if (location & V8DOMConfiguration::kOnInstance && !instance->IsUndefined()) {
     instance
         ->SetNativeDataProperty(context, name, getter, setter, data, attribute)
         .ToChecked();
   }
-  if (location & V8DOMConfiguration::kOnPrototype) {
+  if (location & V8DOMConfiguration::kOnPrototype &&
+      !prototype->IsUndefined()) {
     prototype
         ->SetNativeDataProperty(context, name, getter, setter, data, attribute)
         .ToChecked();

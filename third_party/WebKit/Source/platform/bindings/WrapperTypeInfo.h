@@ -72,6 +72,11 @@ typedef void (*PreparePrototypeAndInterfaceObjectFunction)(
     v8::Local<v8::Object>,
     v8::Local<v8::Function>,
     v8::Local<v8::FunctionTemplate>);
+typedef void (*InstallRuntimeEnabledFeaturesFunction)(v8::Isolate*,
+                                                      const DOMWrapperWorld&,
+                                                      v8::Local<v8::Object>,
+                                                      v8::Local<v8::Object>,
+                                                      v8::Local<v8::Function>);
 
 // This struct provides a way to store a bunch of information that is helpful
 // when unwrapping v8 objects. Each v8 bindings class has exactly one static
@@ -164,6 +169,17 @@ struct WrapperTypeInfo {
     }
   }
 
+  void InstallRuntimeEnabledFeatures(v8::Isolate* isolate,
+                                     const DOMWrapperWorld& world,
+                                     v8::Local<v8::Object> wrapper,
+                                     v8::Local<v8::Object> prototype,
+                                     v8::Local<v8::Function> interface) {
+    if (install_runtime_enabled_features_function) {
+      install_runtime_enabled_features_function(isolate, world, wrapper,
+                                                prototype, interface);
+    }
+  }
+
   bool IsActiveScriptWrappable() const {
     return active_script_wrappable_inheritance ==
            kInheritFromActiveScriptWrappable;
@@ -178,6 +194,8 @@ struct WrapperTypeInfo {
   const TraceWrappersFunction trace_wrappers_function;
   PreparePrototypeAndInterfaceObjectFunction
       prepare_prototype_and_interface_object_function;
+  InstallRuntimeEnabledFeaturesFunction
+      install_runtime_enabled_features_function;
   const char* const interface_name;
   const WrapperTypeInfo* parent_class;
   const unsigned wrapper_type_prototype : 2;  // WrapperTypePrototype

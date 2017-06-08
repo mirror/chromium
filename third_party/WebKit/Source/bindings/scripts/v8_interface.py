@@ -68,6 +68,15 @@ INTERFACE_CPP_INCLUDES = frozenset([
     'platform/wtf/GetPtr.h',
     'platform/wtf/RefPtr.h',
 ])
+# TODO(peria): Generate the target list from 'Window' and 'HTMLDocument'.
+V8CLASSES_IN_SNAPSHOT = frozenset([
+    'V8Window',
+    'V8HTMLDocument',
+    'V8Document',
+    'V8Node',
+    'V8EventTarget',
+])
+
 
 
 def filter_has_constant_configuration(constants):
@@ -255,9 +264,10 @@ def interface_context(interface, interfaces):
     cpp_class_name_or_partial = cpp_name_or_partial(interface)
     v8_class_name_or_partial = v8_utilities.v8_class_name_or_partial(interface)
 
-    # TODO(peria): Generate the target list from 'Window' and 'HTMLDocument'.
-    needs_runtime_enabled_installer = v8_class_name in [
-        'V8Window', 'V8HTMLDocument', 'V8Document', 'V8Node', 'V8EventTarget']
+    install_runtime_enabled_features_func = None  # pylint: disable=invalid-name
+    if v8_class_name in V8CLASSES_IN_SNAPSHOT:
+        install_runtime_enabled_features_func = (  # pylint: disable=invalid-name
+            '%s::installRuntimeEnabledFeatures' % v8_class_name_or_partial)
 
     context = {
         'context_enabled_feature_name': context_enabled_feature_name(interface),  # [ContextEnabled]
@@ -270,6 +280,7 @@ def interface_context(interface, interfaces):
         'has_custom_legacy_call_as_function': has_extended_attribute_value(interface, 'Custom', 'LegacyCallAsFunction'),  # [Custom=LegacyCallAsFunction]
         'has_partial_interface': len(interface.partial_interfaces) > 0,
         'header_includes': header_includes,
+        'install_runtime_enabled_features_func': install_runtime_enabled_features_func,
         'interface_name': interface.name,
         'is_array_buffer_or_view': is_array_buffer_or_view,
         'is_check_security': is_check_security,
@@ -282,7 +293,6 @@ def interface_context(interface, interfaces):
         'is_typed_array_type': is_typed_array_type,
         'lifetime': 'kDependent' if is_dependent_lifetime else 'kIndependent',
         'measure_as': v8_utilities.measure_as(interface, None),  # [MeasureAs]
-        'needs_runtime_enabled_installer': needs_runtime_enabled_installer,
         'origin_trial_enabled_function': v8_utilities.origin_trial_enabled_function_name(interface),
         'parent_interface': parent_interface,
         'pass_cpp_type': cpp_name(interface) + '*',

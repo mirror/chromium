@@ -248,7 +248,7 @@ class {{v8_class}} {
   {{exported}}static void indexedPropertyDeleterCallback(uint32_t index, const v8::PropertyCallbackInfo<v8::Boolean>&);
   {% endif %}
 
-  {% if needs_runtime_enabled_installer %}
+  {% if install_runtime_enabled_features_func %}
   {{exported}}static void installRuntimeEnabledFeatures(
       v8::Isolate* isolate,
       const DOMWrapperWorld& world,

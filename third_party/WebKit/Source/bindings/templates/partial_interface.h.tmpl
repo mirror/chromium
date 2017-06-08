@@ -41,7 +41,7 @@ class {{v8_class_or_partial}} {
   {% endif %}
   {% endfor %}
 
-  {% if needs_runtime_enabled_installer %}
+  {% if install_runtime_enabled_features_func %}
   static void installRuntimeEnabledFeatures(
       v8::Isolate* isolate,
       const DOMWrapperWorld& world,
