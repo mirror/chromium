@@ -160,6 +160,24 @@
       "revId": "1224fc242d74b8eceb638f4fbfd442beabe07c1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "959af27d_04aaeec0",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-08T10:13:57Z",
+      "side": 1,
+      "message": "Does that involve running arbitrary user JS? It might be wise to avoid posting that kind of work in a control task since it can easily starve other stuff.",
+      "parentUuid": "c7369589_ac7048de",
+      "revId": "1224fc242d74b8eceb638f4fbfd442beabe07c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
