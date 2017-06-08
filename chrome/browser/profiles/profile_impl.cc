@@ -995,12 +995,24 @@ ChromeZoomLevelPrefs* ProfileImpl::GetZoomLevelPrefs() {
 #endif  // !defined(OS_ANDROID)
 
 PrefService* ProfileImpl::GetOffTheRecordPrefs() {
+  return GetOffTheRecordProfile()->GetPrefs();
+}
+
+PrefService* ProfileImpl::GetOffTheRecordPrefs(
+    service_manager::Connector* otr_connector) {
   DCHECK(prefs_);
   if (!otr_prefs_) {
+    service_manager::Connector* user_connector = nullptr;
+    std::set<PrefValueStore::PrefStoreType> already_connected_types;
+    if (otr_connector) {
+      user_connector = content::BrowserContext::GetConnectorFor(this);
+      already_connected_types = chrome::InProcessPrefStores();
+    }
     // The new ExtensionPrefStore is ref_counted and the new PrefService
     // stores a reference so that we do not leak memory here.
     otr_prefs_.reset(CreateIncognitoPrefServiceSyncable(
-        prefs_.get(), CreateExtensionPrefStore(this, true)));
+        prefs_.get(), CreateExtensionPrefStore(this, true),
+        std::move(already_connected_types), otr_connector, user_connector));
   }
   return otr_prefs_.get();
 }

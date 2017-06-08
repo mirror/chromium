@@ -162,8 +162,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionPreferenceApiTest, PersistentIncognito) {
       RunExtensionTestIncognito("preference/persistent_incognito")) <<
       message_;
 
-  // Setting an incognito preference should not create an incognito profile.
-  EXPECT_FALSE(profile_->HasOffTheRecordProfile());
+  // Having incognito preferences implies that there's an incognito profile.
+  EXPECT_TRUE(profile_->HasOffTheRecordProfile());
 
   PrefService* otr_prefs = profile_->GetOffTheRecordProfile()->GetPrefs();
   const PrefService::Preference* pref =
