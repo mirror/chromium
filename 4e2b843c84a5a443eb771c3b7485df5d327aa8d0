@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "375d6b18_63d9f916",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-08T14:28:33Z",
+      "side": 1,
+      "message": "you\u0027re right. you can just use the condition at 124:",
+      "revId": "4e2b843c84a5a443eb771c3b7485df5d327aa8d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6bcfdd0_2adc790e",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-08T14:28:33Z",
+      "side": 1,
+      "message": "same here. be consistent with checks.",
+      "range": {
+        "startLine": 232,
+        "startChar": 26,
+        "endLine": 232,
+        "endChar": 51
+      },
+      "revId": "4e2b843c84a5a443eb771c3b7485df5d327aa8d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd598dfa_7e919835",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-08T14:28:33Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 251,
+        "startChar": 18,
+        "endLine": 251,
+        "endChar": 26
+      },
+      "revId": "4e2b843c84a5a443eb771c3b7485df5d327aa8d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54cc96c9_22c8c68b",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-08T14:28:33Z",
+      "side": 1,
+      "message": "public ui::LayerDelegate\n\n(style guide says the superclass/interfaces should be public)",
+      "revId": "4e2b843c84a5a443eb771c3b7485df5d327aa8d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5fe849f_84f982ae",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-08T14:28:33Z",
+      "side": 1,
+      "message": "gfx::Rect. same for the other places.",
+      "revId": "4e2b843c84a5a443eb771c3b7485df5d327aa8d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9139c631_89cf71b2",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-08T14:28:33Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 154,
+        "startChar": 47,
+        "endLine": 154,
+        "endChar": 49
+      },
+      "revId": "4e2b843c84a5a443eb771c3b7485df5d327aa8d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04df3d03_362f02cc",
+        "filename": "ash/shelf/voice_interaction_overlay.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-08T14:28:33Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "4e2b843c84a5a443eb771c3b7485df5d327aa8d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

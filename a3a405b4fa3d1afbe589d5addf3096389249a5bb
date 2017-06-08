@@ -283,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "8d4215e9_a3e2fb87",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-08T14:28:33Z",
+      "side": 1,
+      "message": "sorry I should have asked about other private impl. Please move VoiceInteractionIconBackgroud and VoiceInteractionIcon as well.",
+      "parentUuid": "b37603d4_41600217",
+      "range": {
+        "startLine": 76,
+        "startChar": 6,
+        "endLine": 76,
+        "endChar": 23
+      },
+      "revId": "a3a405b4fa3d1afbe589d5addf3096389249a5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f54b4b4_334d6a8f",
         "filename": "ash/shelf/voice_interaction_overlay.cc",
         "patchSetId": 1
@@ -456,6 +480,23 @@
       "revId": "a3a405b4fa3d1afbe589d5addf3096389249a5bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "245cd71b_db9fe75d",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-08T14:28:33Z",
+      "side": 1,
+      "message": "unique_ptr to be consistent with other places.",
+      "revId": "a3a405b4fa3d1afbe589d5addf3096389249a5bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
