@@ -172,9 +172,9 @@ Workspace.Project.prototype = {
    * @param {!Workspace.ProjectSearchConfig} searchConfig
    * @param {!Array.<string>} filesMathingFileQuery
    * @param {!Common.Progress} progress
-   * @param {function(!Array.<string>)} callback
+   * @return {!Promise<!Array<string>>}
    */
-  findFilesMatchingSearchRequest(searchConfig, filesMathingFileQuery, progress, callback) {},
+  findFilesMatchingSearchRequest(searchConfig, filesMathingFileQuery, progress) {},
 
   /**
    * @param {!Common.Progress} progress
