@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "511b2917_3ef50575",
+        "filename": "ash/system/ime/tray_ime_chromeos_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-08T18:35:57Z",
+      "side": 0,
+      "message": "These test helpers were too tightly coupled to the internal details of TrayIME. In particular, it was possible to entirely remove all the calls to SystemTrayDelegate / ImeManager to get the list of IMEs and still have the entire test suite pass.",
+      "revId": "b8edd52416f1e93bf2330543f5b888d2dadc9e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

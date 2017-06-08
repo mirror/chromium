@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd6a87a6_2768b281",
+        "filename": "ash/ime/ime_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-08T18:35:57Z",
+      "side": 1,
+      "message": "These methods will have concrete implementations in the next CL.",
+      "revId": "8afb0746f22ab3cc2d6e1e80cb88f27fc8a4de0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe453ba_12357019",
+        "filename": "ash/shell_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-08T18:35:57Z",
+      "side": 1,
+      "message": "This will go away in the next CL.",
+      "revId": "8afb0746f22ab3cc2d6e1e80cb88f27fc8a4de0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df96526_81eb2efe",
+        "filename": "ash/system/ime_menu/ime_menu_tray_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-08T18:35:57Z",
+      "side": 1,
+      "message": "I changed these to get better error messages when tests fail.",
+      "revId": "8afb0746f22ab3cc2d6e1e80cb88f27fc8a4de0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e3e2c6b_c9ab0ecf",
+        "filename": "chrome/browser/chromeos/input_method/input_method_manager_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-08T18:35:57Z",
+      "side": 1,
+      "message": "This is equivalent to InputMethodManager::Get(), but is type safe. It seemed better than doing static_cast\u003cInputMethodManagerImpl\u003e(InputMethodManager::Get()) in the browser startup code.",
+      "revId": "8afb0746f22ab3cc2d6e1e80cb88f27fc8a4de0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
