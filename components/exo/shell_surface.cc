@@ -21,10 +21,14 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
+#include "cc/output/compositor_frame.h"
+#include "cc/output/compositor_frame_sink.h"
+#include "components/exo/compositor_frame_sink_holder.h"
 #include "components/exo/surface.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/cursor_client.h"
 #include "ui/aura/window.h"
+#include "ui/aura/window_delegate.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/aura/window_targeter.h"
 #include "ui/aura/window_tree_host.h"
@@ -199,6 +203,112 @@ class ShellSurfaceWidget : public views::Widget {
   DISALLOW_COPY_AND_ASSIGN(ShellSurfaceWidget);
 };
 
+class CustomWindowDelegate : public aura::WindowDelegate {
+ public:
+  explicit CustomWindowDelegate(ShellSurface* shell_surface)
+      : shell_surface_(shell_surface) {}
+  ~CustomWindowDelegate() override {}
+
+  // Overridden from aura::WindowDelegate:
+  gfx::Size GetMinimumSize() const override { return gfx::Size(); }
+  gfx::Size GetMaximumSize() const override { return gfx::Size(); }
+  void OnBoundsChanged(const gfx::Rect& old_bounds,
+                       const gfx::Rect& new_bounds) override {}
+  gfx::NativeCursor GetCursor(const gfx::Point& point) override {
+#if 0
+    return shell_surface_->GetCursor();
+#endif
+    return gfx::NativeCursor();
+  }
+  int GetNonClientComponent(const gfx::Point& point) const override {
+    return HTNOWHERE;
+  }
+  bool ShouldDescendIntoChildForEventHandling(
+      aura::Window* child,
+      const gfx::Point& location) override {
+    return true;
+  }
+  bool CanFocus() override { return true; }
+  void OnCaptureLost() override {}
+  void OnPaint(const ui::PaintContext& context) override {}
+  void OnDeviceScaleFactorChanged(float device_scale_factor) override {
+#if 0
+    shell_surface_->SetDeviceScaleFactor(device_scale_factor);
+#endif
+  }
+  void OnWindowDestroying(aura::Window* window) override {}
+  void OnWindowDestroyed(aura::Window* window) override { delete this; }
+  void OnWindowTargetVisibilityChanged(bool visible) override {}
+  bool HasHitTestMask() const override {
+#if 0
+    return shell_surface_->HasHitTestMask();
+#endif
+    return false;
+  }
+  void GetHitTestMask(gfx::Path* mask) const override {
+#if 0
+    shell_surface_->GetHitTestMask(mask);
+#endif
+  }
+  void OnKeyEvent(ui::KeyEvent* event) override {
+    // Propagates the key event upto the top-level views Widget so that we can
+    // trigger proper events in the views/ash level there. Event handling for
+    // Surfaces is done in a post event handler in keyboard.cc.
+    views::Widget* widget =
+        views::Widget::GetTopLevelWidgetForNativeView(shell_surface_->window());
+    if (widget)
+      widget->OnKeyEvent(event);
+  }
+
+ private:
+  ShellSurface* const shell_surface_;
+
+  DISALLOW_COPY_AND_ASSIGN(CustomWindowDelegate);
+};
+
+#if 0
+class CustomWindowTargeter : public aura::WindowTargeter {
+ public:
+  CustomWindowTargeter() {}
+  ~CustomWindowTargeter() override {}
+
+  // Overridden from aura::WindowTargeter:
+  bool SubtreeCanAcceptEvent(aura::Window* window,
+                             const ui::LocatedEvent& event) const override {
+    Surface* surface = Surface::AsSurface(window);
+    if (!surface)
+      return false;
+
+    if (surface->IsStylusOnly()) {
+      ui::EventPointerType type = ui::EventPointerType::POINTER_TYPE_UNKNOWN;
+      if (event.IsTouchEvent()) {
+        auto* touch_event = static_cast<const ui::TouchEvent*>(&event);
+        type = touch_event->pointer_details().pointer_type;
+      }
+      if (type != ui::EventPointerType::POINTER_TYPE_PEN)
+        return false;
+    }
+    return aura::WindowTargeter::SubtreeCanAcceptEvent(window, event);
+  }
+
+  bool EventLocationInsideBounds(aura::Window* window,
+                                 const ui::LocatedEvent& event) const override {
+    Surface* surface = Surface::AsSurface(window);
+    if (!surface)
+      return false;
+
+    gfx::Point local_point = event.location();
+    if (window->parent())
+      aura::Window::ConvertPointToTarget(window->parent(), window,
+                                         &local_point);
+    return surface->HitTestRect(gfx::Rect(local_point, gfx::Size(1, 1)));
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(CustomWindowTargeter);
+};
+#endif
+
 }  // namespace
 
 // Helper class used to coalesce a number of changes into one "configure"
@@ -306,10 +416,21 @@ ShellSurface::ShellSurface(Surface* surface,
   WMHelper::GetInstance()->AddDisplayConfigurationObserver(this);
   surface_->SetSurfaceDelegate(this);
   surface_->AddSurfaceObserver(this);
-  surface_->window()->Show();
   set_owned_by_client();
   if (parent_)
     parent_->AddObserver(this);
+
+  window_ = base::MakeUnique<aura::Window>(new CustomWindowDelegate(this),
+                                           aura::client::WINDOW_TYPE_CONTROL);
+  window_->SetName("ExoSurface");
+  // window_->SetProperty(kSurfaceKey, this);
+  window_->Init(ui::LAYER_SOLID_COLOR);
+  // window_->SetEventTargeter(base::WrapUnique(new CustomWindowTargeter));
+  window_->set_owned_by_parent(false);
+  window_->AddObserver(this);
+  // aura::Env::GetInstance()->context_factory()->AddObserver(this);
+  compositor_frame_sink_holder_ = base::MakeUnique<CompositorFrameSinkHolder>(
+      this, window_->CreateCompositorFrameSink());
 }
 
 ShellSurface::ShellSurface(Surface* surface)
@@ -675,6 +796,43 @@ void ShellSurface::SetContainer(int container) {
   container_ = container;
 }
 
+void ShellSurface::DidReceiveCompositorFrameAck() {
+  surface_->DidReceiveCompositorFrameAck();
+#if 0
+  active_frame_callbacks_.splice(active_frame_callbacks_.end(),
+                                 frame_callbacks_);
+  swapping_presentation_callbacks_.splice(
+      swapping_presentation_callbacks_.end(), presentation_callbacks_);
+#endif
+  UpdateNeedsBeginFrame();
+}
+
+void ShellSurface::SetBeginFrameSource(
+    cc::BeginFrameSource* begin_frame_source) {
+  if (needs_begin_frame_) {
+    DCHECK(begin_frame_source_);
+    begin_frame_source_->RemoveObserver(this);
+    needs_begin_frame_ = false;
+  }
+  begin_frame_source_ = begin_frame_source;
+  UpdateNeedsBeginFrame();
+}
+
+void ShellSurface::UpdateNeedsBeginFrame() {
+  if (!begin_frame_source_)
+    return;
+
+  bool needs_begin_frame = true;
+  if (needs_begin_frame == needs_begin_frame_)
+    return;
+
+  needs_begin_frame_ = needs_begin_frame;
+  if (needs_begin_frame_)
+    begin_frame_source_->AddObserver(this);
+  else
+    begin_frame_source_->RemoveObserver(this);
+}
+
 // static
 void ShellSurface::SetMainSurface(aura::Window* window, Surface* surface) {
   window->SetProperty(kMainSurfaceKey, surface);
@@ -704,8 +862,35 @@ std::unique_ptr<base::trace_event::TracedValue> ShellSurface::AsTracedValue()
 // SurfaceDelegate overrides:
 
 void ShellSurface::OnSurfaceCommit() {
+  cc::CompositorFrame frame;
+  // If we commit while we don't have an active BeginFrame, we acknowledge a
+  // manual one.
+  if (current_begin_frame_ack_.sequence_number ==
+      cc::BeginFrameArgs::kInvalidFrameNumber) {
+    current_begin_frame_ack_ = cc::BeginFrameAck::CreateManualAckWithDamage();
+  } else {
+    current_begin_frame_ack_.has_damage = true;
+  }
+  frame.metadata.begin_frame_ack = current_begin_frame_ack_;
+  frame.metadata.device_scale_factor = device_scale_factor_;
+
+  const int kRenderPassId = 1;
+  std::unique_ptr<cc::RenderPass> render_pass = cc::RenderPass::Create();
+  render_pass->SetNew(kRenderPassId, gfx::Rect(), gfx::Rect(),
+                      gfx::Transform());
+  frame.render_pass_list.push_back(std::move(render_pass));
+
   surface_->CheckIfSurfaceHierarchyNeedsCommitToNewSurfaces();
-  surface_->CommitSurfaceHierarchy();
+  surface_->CommitSurfaceHierarchy(&frame, compositor_frame_sink_holder_.get());
+  frame.render_pass_list.back()->output_rect =
+      gfx::Rect(surface_->content_size());
+  frame.render_pass_list.back()->damage_rect =
+      gfx::Rect(surface_->content_size());
+
+  LOG(ERROR) << "EEE content_size=" << surface_->content_size().ToString();
+
+  compositor_frame_sink_holder_->GetCompositorFrameSink()
+      ->SubmitCompositorFrame(std::move(frame));
 
   if (enabled() && !widget_) {
     // Defer widget creation until surface contains some contents.
@@ -713,9 +898,13 @@ void ShellSurface::OnSurfaceCommit() {
       Configure();
       return;
     }
-
     CreateShellSurfaceWidget(ui::SHOW_STATE_NORMAL);
   }
+  window_->Show();
+  window_->layer()->SetFillsBoundsOpaquely(true);
+
+  // If we commit while we don't have an active BeginFrame, we acknowledge a
+  // manual one.
 
   // Apply the accumulated pending origin offset to reflect acknowledged
   // configure requests.
@@ -765,7 +954,7 @@ void ShellSurface::OnSurfaceCommit() {
       gfx::Transform transform;
       DCHECK_NE(pending_scale_, 0.0);
       transform.Scale(1.0 / pending_scale_, 1.0 / pending_scale_);
-      surface_->window()->SetTransform(transform);
+      // surface_->window()->SetTransform(transform);
       scale_ = pending_scale_;
     }
 
@@ -904,7 +1093,9 @@ gfx::Size ShellSurface::CalculatePreferredSize() const {
   if (!geometry_.IsEmpty())
     return geometry_.size();
 
-  return surface_ ? surface_->window()->layer()->size() : gfx::Size();
+  gfx::Size size = surface_ ? surface_->content_size() : gfx::Size();
+  LOG(ERROR) << "EEE size=" << size.ToString();
+  return size;
 }
 
 gfx::Size ShellSurface::GetMinimumSize() const {
@@ -1141,6 +1332,24 @@ bool ShellSurface::AcceleratorPressed(const ui::Accelerator& accelerator) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// cc::BeginFrameObserverBase overrides:
+
+bool ShellSurface::OnBeginFrameDerivedImpl(const cc::BeginFrameArgs& args) {
+  current_begin_frame_ack_ = cc::BeginFrameAck(
+      args.source_id, args.sequence_number, args.sequence_number, false);
+  surface_->OnBeginFrameDerivedImpl(args);
+  NOTIMPLEMENTED();
+// XXX
+#if 0
+  while (!active_frame_callbacks_.empty()) {
+        active_frame_callbacks_.front().Run(args.frame_time);
+            active_frame_callbacks_.pop_front();
+              }
+#endif
+  return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // ShellSurface, private:
 
 void ShellSurface::CreateShellSurfaceWidget(ui::WindowShowState show_state) {
@@ -1175,7 +1384,7 @@ void ShellSurface::CreateShellSurfaceWidget(ui::WindowShowState show_state) {
   window->SetName("ExoShellSurface");
   window->SetProperty(aura::client::kAccessibilityFocusFallsbackToWidgetKey,
                       false);
-  window->AddChild(surface_->window());
+  window->AddChild(window_.get());
   window->SetEventTargeter(base::WrapUnique(new CustomWindowTargeter(widget_)));
   SetApplicationId(window, application_id_);
   SetMainSurface(window, surface_);
@@ -1413,8 +1622,7 @@ bool ShellSurface::IsResizing() const {
 
 gfx::Rect ShellSurface::GetVisibleBounds() const {
   // Use |geometry_| if set, otherwise use the visual bounds of the surface.
-  return geometry_.IsEmpty() ? gfx::Rect(surface_->window()->layer()->size())
-                             : geometry_;
+  return geometry_.IsEmpty() ? gfx::Rect(surface_->content_size()) : geometry_;
 }
 
 gfx::Point ShellSurface::GetSurfaceOrigin() const {
@@ -1500,6 +1708,7 @@ void ShellSurface::UpdateWidgetBounds() {
       break;
   }
 
+  LOG(ERROR) << "EEE new_widget_bounds=" << new_widget_bounds.ToString();
   // Set |ignore_window_bounds_changes_| as this change to window bounds
   // should not result in a configure request.
   DCHECK(!ignore_window_bounds_changes_);
@@ -1537,9 +1746,9 @@ void ShellSurface::UpdateSurfaceBounds() {
   gfx::Rect client_view_bounds =
       widget_->non_client_view()->frame_view()->GetBoundsForClientView();
 
-  surface_->window()->SetBounds(
+  window_->SetBounds(
       gfx::Rect(GetSurfaceOrigin() + client_view_bounds.OffsetFromOrigin(),
-                surface_->window()->layer()->size()));
+                surface_->content_size()));
 }
 
 void ShellSurface::UpdateShadow() {
@@ -1582,7 +1791,7 @@ void ShellSurface::UpdateShadow() {
     gfx::Rect shadow_underlay_bounds = shadow_content_bounds_;
 
     if (shadow_underlay_bounds.IsEmpty()) {
-      shadow_underlay_bounds = gfx::Rect(surface_->window()->bounds().size());
+      shadow_underlay_bounds = gfx::Rect(surface_->content_size());
     } else if (shadow_underlay_in_surface_) {
       // Since the shadow underlay is positioned relative to the surface, its
       // origin corresponds to the shadow content position relative to the
@@ -1621,8 +1830,8 @@ void ShellSurface::UpdateShadow() {
       shadow_underlay_->layer()->SetColor(SK_ColorBLACK);
       DCHECK(shadow_underlay_->layer()->fills_bounds_opaquely());
       if (shadow_underlay_in_surface_) {
-        surface_->window()->AddChild(shadow_underlay());
-        surface_->window()->StackChildAtBottom(shadow_underlay());
+        window_->AddChild(shadow_underlay());
+        window_->StackChildAtBottom(shadow_underlay());
       } else {
         window->AddChild(shadow_underlay());
         window->StackChildAtBottom(shadow_underlay());
@@ -1668,7 +1877,7 @@ void ShellSurface::UpdateShadow() {
       window->AddChild(shadow_overlay());
 
       if (shadow_underlay_in_surface_) {
-        window->StackChildBelow(shadow_overlay(), surface_->window());
+        window->StackChildBelow(shadow_overlay(), window_.get());
       } else {
         window->StackChildAbove(shadow_overlay(), shadow_underlay());
       }

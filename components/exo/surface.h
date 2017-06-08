@@ -20,7 +20,6 @@
 #include "third_party/skia/include/core/SkBlendMode.h"
 #include "third_party/skia/include/core/SkRegion.h"
 #include "ui/aura/window.h"
-#include "ui/aura/window_observer.h"
 #include "ui/compositor/compositor_vsync_manager.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/native_widget_types.h"
@@ -29,6 +28,10 @@ namespace base {
 namespace trace_event {
 class TracedValue;
 }
+}
+
+namespace cc {
+class CompositorFrame;
 }
 
 namespace gfx {
@@ -53,7 +56,6 @@ using CursorProvider = Pointer;
 // This class represents a rectangular area that is displayed on the screen.
 // It has a location, size and pixel contents.
 class Surface : public ui::ContextFactoryObserver,
-                public aura::WindowObserver,
                 public ui::PropertyHandler,
                 public ui::CompositorVSyncManager::Observer,
                 public cc::BeginFrameObserverBase {
@@ -144,7 +146,9 @@ class Surface : public ui::ContextFactoryObserver,
   // This will synchronously commit all pending state of the surface and its
   // descendants by recursively calling CommitSurfaceHierarchy() for each
   // sub-surface with pending state.
-  void CommitSurfaceHierarchy();
+  void CommitSurfaceHierarchy(
+      cc::CompositorFrame* frame = nullptr,
+      CompositorFrameSinkHolder* frame_sink_holder = nullptr);
 
   // Returns true if surface is in synchronized mode.
   bool IsSynchronized() const;
@@ -206,13 +210,10 @@ class Surface : public ui::ContextFactoryObserver,
   // Enables 'stylus-only' mode for the associated window.
   void SetStylusOnly();
 
+  void Composite(cc::CompositorFrame* frame, bool full_damage = false);
+
   // Overridden from ui::ContextFactoryObserver:
   void OnLostResources() override;
-
-  // Overridden from aura::WindowObserver:
-  void OnWindowAddedToRootWindow(aura::Window* window) override;
-  void OnWindowRemovingFromRootWindow(aura::Window* window,
-                                      aura::Window* new_root) override;
 
   // Overridden from ui::CompositorVSyncManager::Observer:
   void OnUpdateVSyncParameters(base::TimeTicks timebase,
@@ -280,8 +281,10 @@ class Surface : public ui::ContextFactoryObserver,
   // contents of the attached buffer (or id 0, if no buffer is attached).
   // UpdateSurface must be called afterwards to ensure the release callback
   // will be called.
-  void UpdateResource(bool client_usage);
+  void UpdateResource(CompositorFrameSinkHolder* frame_sink_holder,
+                      bool client_usage);
 
+  void UpdateContentSize();
   // Updates the current Surface with a new frame referring to the resource in
   // current_resource_.
   void UpdateSurface(bool full_damage);
