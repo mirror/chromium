@@ -142,6 +142,30 @@
       "revId": "83b0613925d4098f95e8c9645ecd3ea54e152dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b85d92_46972ddc",
+        "filename": "services/ui/ws/window_manager_display_root.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-08T15:24:19Z",
+      "side": 1,
+      "message": "+fsamuel\n\nHow should this work with surface sync? Should the child window resize and then wait for the parent to supply the new LocalSurfaceId? Or should the child window wait for the parent to tell it to resize along with the new LocalSurfaceId?",
+      "parentUuid": "09d4a7ec_c68b0a8a",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "83b0613925d4098f95e8c9645ecd3ea54e152dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
