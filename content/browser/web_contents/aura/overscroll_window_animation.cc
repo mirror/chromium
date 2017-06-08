@@ -85,7 +85,7 @@ void OverscrollWindowAnimation::OnImplicitAnimationsCompleted() {
   direction_ = SLIDE_NONE;
 }
 
-void OverscrollWindowAnimation::OnOverscrollModeChange(
+float OverscrollWindowAnimation::OnOverscrollModeChange(
     OverscrollMode old_mode,
     OverscrollMode new_mode,
     OverscrollSource source) {
@@ -95,7 +95,7 @@ void OverscrollWindowAnimation::OnOverscrollModeChange(
     // The user cancelled the in progress animation.
     if (is_active())
       CancelSlide();
-    return;
+    return 0.f;
   }
   if (is_active()) {
     slide_window_->layer()->GetAnimator()->StopAnimating();
@@ -123,11 +123,12 @@ void OverscrollWindowAnimation::OnOverscrollModeChange(
     // Cannot navigate, do not start an overscroll gesture.
     direction_ = SLIDE_NONE;
     overscroll_source_ = OverscrollSource::NONE;
-    return;
+    return 0.f;
   }
   overscroll_cancelled_ = false;
   direction_ = new_direction;
   shadow_.reset(new ShadowLayerDelegate(GetFrontLayer()));
+  return 0.f;
 }
 
 void OverscrollWindowAnimation::OnOverscrollComplete(

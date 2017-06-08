@@ -172,12 +172,13 @@ class TestOverscrollDelegate : public OverscrollControllerDelegate {
     current_mode_ = OVERSCROLL_NONE;
   }
 
-  void OnOverscrollModeChange(OverscrollMode old_mode,
-                              OverscrollMode new_mode,
-                              OverscrollSource source) override {
+  float OnOverscrollModeChange(OverscrollMode old_mode,
+                               OverscrollMode new_mode,
+                               OverscrollSource source) override {
     EXPECT_EQ(current_mode_, old_mode);
     current_mode_ = new_mode;
     delta_x_ = delta_y_ = 0.f;
+    return 0.f;
   }
 
   RenderWidgetHostView* view_;
