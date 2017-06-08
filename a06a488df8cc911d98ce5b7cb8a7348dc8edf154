@@ -22,6 +22,30 @@
       "revId": "a06a488df8cc911d98ce5b7cb8a7348dc8edf154",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90db470f_fcc40b48",
+        "filename": "chrome/browser/ui/ash/launcher/extension_app_window_launcher_item_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1118640
+      },
+      "writtenOn": "2017-06-08T16:12:35Z",
+      "side": 1,
+      "message": "Good point; done.",
+      "parentUuid": "f38c6f56_cbe6a985",
+      "range": {
+        "startLine": 89,
+        "startChar": 46,
+        "endLine": 89,
+        "endChar": 54
+      },
+      "revId": "a06a488df8cc911d98ce5b7cb8a7348dc8edf154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
