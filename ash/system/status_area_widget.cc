@@ -233,6 +233,7 @@ void StatusAreaWidget::AddVirtualKeyboardTray() {
 }
 
 void StatusAreaWidget::AddImeMenuTray() {
+  //JAMES made here
   ime_menu_tray_ = new ImeMenuTray(shelf_);
   status_area_widget_delegate_->AddTray(ime_menu_tray_);
 }

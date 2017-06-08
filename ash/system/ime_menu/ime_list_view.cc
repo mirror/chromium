@@ -4,6 +4,7 @@
 
 #include "ash/system/ime_menu/ime_list_view.h"
 
+#include "ash/ime/ime_manager.h"
 #include "ash/ime/ime_switch_type.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shell.h"
@@ -12,7 +13,6 @@
 #include "ash/system/tray/actionable_view.h"
 #include "ash/system/tray/ime_info.h"
 #include "ash/system/tray/system_menu_button.h"
-#include "ash/system/tray/system_tray_delegate.h"
 #include "ash/system/tray/tray_constants.h"
 #include "ash/system/tray/tray_details_view.h"
 #include "ash/system/tray/tray_popup_header_button.h"
@@ -195,11 +195,9 @@ ImeListView::~ImeListView() {}
 
 void ImeListView::Init(bool show_keyboard_toggle,
                        SingleImeBehavior single_ime_behavior) {
-  SystemTrayDelegate* delegate = Shell::Get()->system_tray_delegate();
-  IMEInfoList list;
-  delegate->GetAvailableIMEList(&list);
-  IMEPropertyInfoList property_list;
-  delegate->GetCurrentIMEProperties(&property_list);
+  ImeManager* ime_manager = Shell::Get()->ime_manager();
+  IMEInfoList list = ime_manager->GetAvailableImes();
+  IMEPropertyInfoList property_list = ime_manager->GetCurrentImeProperties();
   Update(list, property_list, show_keyboard_toggle, single_ime_behavior);
 }
 
