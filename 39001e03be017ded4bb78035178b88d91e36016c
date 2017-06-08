@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35475b0f_02a950c7",
+        "filename": "chrome/android/java_sources.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 0,
+      "message": "It is not clear to me from the review whether you are removing the file or just modifying it. Could you clean that up?\n\nAlso I\u0027d rather you tentatively leave a bridge in place, even if just from JNI boundary handling, than moving some of that functionality to OPUtils (which does not provide that capability right now)",
+      "range": {
+        "startLine": 691,
+        "startChar": 63,
+        "endLine": 691,
+        "endChar": 88
+      },
+      "revId": "39001e03be017ded4bb78035178b88d91e36016c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

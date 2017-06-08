@@ -1,0 +1,527 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db879677_93f3e324",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "utils",
+      "range": {
+        "startLine": 18,
+        "startChar": 49,
+        "endLine": 18,
+        "endChar": 64
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48aa0af0_4ab3b35f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "Is there a case when wrapping an offline page in a download history item wrapper results in a wrapper that for which isOfflinePage() is false?",
+      "range": {
+        "startLine": 336,
+        "startChar": 24,
+        "endLine": 336,
+        "endChar": 37
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad81c9aa_2961eac3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "push it outside of the if with line 414",
+      "range": {
+        "startLine": 402,
+        "startChar": 16,
+        "endLine": 402,
+        "endChar": 94
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b963ca87_65bcca43",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryItemWrapper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "This might cause a little trouble now as we do not support offline pages in incognito yet.",
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d3110f_6c39e303",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "This does not belong here I think (We don\u0027t call OPUtils from native). Did you mean to leave it in OfflinePageDownloadBridge for now?",
+      "range": {
+        "startLine": 393,
+        "startChar": 4,
+        "endLine": 394,
+        "endChar": 62
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdcd093b_3ba37654",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "This should probably go together with the above.",
+      "range": {
+        "startLine": 405,
+        "startChar": 0,
+        "endLine": 405,
+        "endChar": 53
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b993716b_12333fc3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/downloads/OfflinePageDownloadBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "It\u0027s would be good to revisit the documentation here as you are repurposing the method to work form native side and change parameters.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 98
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "973bcef6_4a2e37b8",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 4268,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "If this is a list of items registered for JNI, please don\u0027t include this.",
+      "range": {
+        "startLine": 4268,
+        "startChar": 6,
+        "endLine": 4268,
+        "endChar": 91
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2760a30_45d726dc",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 4271,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "please remove this line and the space above.",
+      "range": {
+        "startLine": 4271,
+        "startChar": 6,
+        "endLine": 4271,
+        "endChar": 111
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af65d89f_550cfe81",
+        "filename": "chrome/browser/android/chrome_jni_registrar.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "Decide on what to do with this, please.",
+      "range": {
+        "startLine": 357,
+        "startChar": 0,
+        "endLine": 358,
+        "endChar": 64
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad16aa02_39ff5e00",
+        "filename": "chrome/browser/android/offline_pages/downloads/offline_page_content_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "Please add {} as what follows spans multiple lines.",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 18
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbfa989d_69e30182",
+        "filename": "chrome/browser/android/offline_pages/downloads/offline_page_content_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "Please add {} as what follows spans multiple lines.",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 18
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f478e007_b8149393",
+        "filename": "chrome/browser/android/offline_pages/downloads/offline_page_content_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "Perhaps we should be injecting the aggregator if this is a valid option.",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 11
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac737b34_0f34c804",
+        "filename": "chrome/browser/android/offline_pages/downloads/offline_page_content_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "Based on return in 127 you might not have been subscribed.",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 45
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da43537c_f781d147",
+        "filename": "chrome/browser/android/offline_pages/downloads/offline_page_content_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "I don\u0027t think this file should contain JNI calls.\nCan we restructure that a little bit?\nA delegate injected to fulfill openItem call would probably be a little better, and you could probably implement this whole thing inside offline_pages component then.",
+      "range": {
+        "startLine": 182,
+        "startChar": 2,
+        "endLine": 182,
+        "endChar": 32
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "448d2b2b_0a06e598",
+        "filename": "chrome/browser/android/offline_pages/downloads/offline_page_content_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "nit applying to all methods using coordinator:\ndid you consider using a reverse?\nif (!coordinator) {\n  LOG \u003c\u003c\n  return;\n}\n\n// code doing work here.",
+      "range": {
+        "startLine": 206,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 20
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c947e536_48a75632",
+        "filename": "chrome/browser/android/offline_pages/downloads/offline_page_content_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "nit: here and in the following 3 methods you can probably omit the {}",
+      "range": {
+        "startLine": 229,
+        "startChar": 2,
+        "endLine": 231,
+        "endChar": 3
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba84998_70ed3a76",
+        "filename": "chrome/browser/android/offline_pages/downloads/offline_page_content_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "I think it would be helpful if we found a better place for this method.",
+      "range": {
+        "startLine": 254,
+        "startChar": 0,
+        "endLine": 254,
+        "endChar": 79
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fb15e67_0d09c126",
+        "filename": "chrome/browser/android/offline_pages/downloads/offline_page_content_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "offline_pages is enough. Please don\u0027t put android in the namespace.\nI don\u0027t see a reason this would not work on desktop.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 19
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "568c508e_c4f3ac4c",
+        "filename": "chrome/browser/android/offline_pages/downloads/offline_page_content_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "definitely!",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 30
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c353826_96b0a530",
+        "filename": "chrome/browser/android/offline_pages/downloads/offline_page_content_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "I think your goal should be to remove the DownloadUIAdapter as opposed to wrapping it. It currently serves the same purpose of OfflineItemCollection (and that is how the idea for it evolved).\n\nIf this is just an intermediate step I understand that.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 42
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d447149e_d5684bd1",
+        "filename": "chrome/browser/android/offline_pages/offline_page_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "Is all the code in this file moved verbatim?",
+      "range": {
+        "startLine": 92,
+        "startChar": 1,
+        "endLine": 93,
+        "endChar": 0
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d0c434_85e9511c",
+        "filename": "components/offline_pages/core/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T23:18:02Z",
+      "side": 1,
+      "message": "could we make such deps change in op/c/downloads/ specifically?",
+      "range": {
+        "startLine": 5,
+        "startChar": 15,
+        "endLine": 5,
+        "endChar": 39
+      },
+      "revId": "5c608ae55ced30fb4ac63131ae1cc9e2fe7d3a1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
