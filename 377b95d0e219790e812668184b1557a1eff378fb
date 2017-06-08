@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15ff6f3d_150dd73b",
+        "filename": "services/shape_detection/android/javatests/src/org/chromium/shape_detection/FaceDetectionImplTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-08T18:51:02Z",
+      "side": 1,
+      "message": "These names are very android-esque :-)\nWhat about BOUNDING_BOX_POSITION_ERROR and\nBOUNDING_BOX_SIZE_ERROR ?",
+      "range": {
+        "startLine": 32,
+        "startChar": 31,
+        "endLine": 32,
+        "endChar": 48
+      },
+      "revId": "377b95d0e219790e812668184b1557a1eff378fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "253ca468_e75c0174",
+        "filename": "services/shape_detection/android/javatests/src/org/chromium/shape_detection/FaceDetectionImplTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-08T18:51:02Z",
+      "side": 1,
+      "message": "nit: perhaps add here somewhere e.toString()?",
+      "range": {
+        "startLine": 70,
+        "startChar": 51,
+        "endLine": 70,
+        "endChar": 52
+      },
+      "revId": "377b95d0e219790e812668184b1557a1eff378fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
