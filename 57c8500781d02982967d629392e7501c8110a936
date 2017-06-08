@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "792fe3d1_95f90e2b",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-08T22:16:40Z",
+      "side": 1,
+      "message": "Instead of piping down the lock to start the threads in line, would this work to solve the race?\n\n\nstd::vector\u003cscoped_refptr\u003cSchedulerWorker\u003e\u003e local_workers;\n/* Create, Start and add workers to local_workers */\n\n{\n  AutoSchedulerLock auto_lock(idle_workers_stack_lock_);\n  workers_ \u003d std::move(local_workers);\n}\n\n/* Wake Up Workers */\n\nThere is the slight wrinkle with num_alive_workers where we could potentially wake up fewer than the expected workers at the end, but that\u0027s easy enough to fix up by checking and waking up more if the number changes.",
+      "range": {
+        "startLine": 276,
+        "startChar": 4,
+        "endLine": 284,
+        "endChar": 5
+      },
+      "revId": "57c8500781d02982967d629392e7501c8110a936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
