@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "28139310_1c125618",
+        "filename": "components/viz/display_compositor/host_shared_bitmap_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-08T09:52:45Z",
+      "side": 1,
+      "message": "If |bitmap|\u0027s backend is not base::SharedMemory when BitmapData is allocated at HostSharedBitmapManager::AllocateSharedBitmap. In this case, shared memory handle doesn\u0027t exist here, but we still need ownership edges.\n\nSo the next question would be \"if the backend is allocated at AllocateSharedBitmap, it is not shared between processes, and is it still required to have ownership edges?\" IIUC we still need ownership edges in this case. We have discussed at https://codereview.chromium.org/2866973003/#msg27",
+      "parentUuid": "dcdad1ab_3d5a3a02",
+      "range": {
+        "startLine": 185,
+        "startChar": 4,
+        "endLine": 185,
+        "endChar": 40
+      },
+      "revId": "d2b477d982a580632ba24c1c2863fdc0e3d02c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57812add_0afd90e8",
         "filename": "gpu/command_buffer/client/mapped_memory.h",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-08T09:35:43Z",
       "side": 1,
       "message": "what is this for?",
+      "range": {
+        "startLine": 116,
+        "startChar": 15,
+        "endLine": 116,
+        "endChar": 34
+      },
+      "revId": "d2b477d982a580632ba24c1c2863fdc0e3d02c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b64135d4_150ddcbb",
+        "filename": "gpu/command_buffer/client/mapped_memory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-08T09:52:45Z",
+      "side": 1,
+      "message": "It\u0027s because MappedMemoryManager::OnMemoryDump needs to access |shm_|.",
+      "parentUuid": "57812add_0afd90e8",
       "range": {
         "startLine": 116,
         "startChar": 15,
