@@ -237,6 +237,24 @@
       "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96ab3e1b_72dce4c7",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-08T15:05:00Z",
+      "side": 1,
+      "message": "Yes, this description is out-dated.\n\nThe latest description is in https://www.chromium.org/blink/coding-style#TOC-Documentation",
+      "parentUuid": "d780f489_8c2180e4",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
