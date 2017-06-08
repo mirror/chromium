@@ -9,7 +9,6 @@
 
 #include <memory>
 #include <string>
-#include <utility>
 #include <vector>
 
 #include "base/callback.h"
@@ -90,7 +89,7 @@ class TabManager : public TabStripModelObserver {
   // Goes through a list of checks to see if a tab is allowed to be discarded by
   // the automatic tab discarding mechanism. Note that this is not used when
   // discarding a particular tab from about:discards.
-  bool CanDiscardTab(int64_t target_web_contents_id) const;
+  bool CanDiscardTab(const TabStats& tab_stats) const;
 
   // Discards a tab to free the memory occupied by its renderer. The tab still
   // exists in the tab-strip; clicking on it will reload it.
@@ -228,10 +227,14 @@ class TabManager : public TabStripModelObserver {
   void AddTabStats(TabStatsList* stats_list) const;
 
   // Adds all the stats of the tabs in |tab_strip_model| into |stats_list|.
-  // If |active_model| is true, consider its first tab as being active.
-  void AddTabStats(const TabStripModel* model,
-                   bool is_app,
-                   bool active_model,
+  // |window_is_visible| indicates whether |tab_strip_model| lives in a window
+  // which is visible to the user. |window_is_active| indicates whether
+  // |tab_strip_model| lives in the currently active window. |browser_is_app|
+  // indicates whether |tab_strip_model| is in a Browser running an app.
+  void AddTabStats(const TabStripModel* tab_strip_model,
+                   bool window_is_visible,
+                   bool window_is_active,
+                   bool browser_is_app,
                    TabStatsList* stats_list) const;
 
   // Callback for when |update_timer_| fires. Takes care of executing the tasks
@@ -359,7 +362,11 @@ class TabManager : public TabStripModelObserver {
   // be the 'active' tab strip model.
   // TODO(chrisha): Factor out tab-strip model enumeration to a helper class,
   //     and make a delegate that centralizes all testing seams.
-  using TestTabStripModel = std::pair<const TabStripModel*, bool>;
+  struct TestTabStripModel {
+    TabStripModel* tab_strip_model;
+    bool window_is_visible;
+    bool browser_is_app;
+  };
   std::vector<TestTabStripModel> test_tab_strip_models_;
 
   // List of observers that will receive notifications on state changes.
