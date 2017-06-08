@@ -157,6 +157,16 @@ MediaFileSystemBackend::MediaFileSystemBackend(
 }
 
 MediaFileSystemBackend::~MediaFileSystemBackend() {
+  media_task_runner_->DeleteSoon(FROM_HERE, native_media_file_util_.release());
+
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_CHROMEOS)
+  media_task_runner_->DeleteSoon(FROM_HERE, picasa_file_util_.release());
+#endif
+#if defined(OS_WIN) || defined(OS_MACOSX)
+  media_task_runner_->DeleteSoon(FROM_HERE, itunes_file_util_.release());
+#endif
+
+  media_task_runner_->DeleteSoon(FROM_HERE, media_path_filter_.release());
 }
 
 // static
