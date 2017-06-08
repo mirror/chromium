@@ -31,6 +31,9 @@ class ReadingListModel;
 - (nullable const ReadingListEntry*)entryFromItem:
     (nonnull CollectionViewItem*)item;
 
+// Marks the entry with |URL| as read.
+- (void)markEntryRead:(const GURL&)URL;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_READING_LIST_READING_LIST_MEDIATOR_H_
