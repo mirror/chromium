@@ -22,6 +22,30 @@
       "revId": "63fcf248c295f5051713a6d24502a3d663198c2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fe42617_386e8f8d",
+        "filename": "chrome/browser/webshare/webshare_target.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-08T02:56:31Z",
+      "side": 1,
+      "message": "You brought this up in a previous review:\nhttps://codereview.chromium.org/2679533002/diff/1/chrome/browser/ui/views/webshare/webshare_target_picker_view_unittest.cc#newcode22\n\nAs I said there, this is a little wonky (having a capital \u0027S\u0027 in \"WebShare\" classes, with no underscore in the hacker_case variants) but goes quite deep in the codebase as we have been working on this feature for years across two implementations. We\u0027d have to rename every file in the following (not exhaustive) set of directories: c/b/webshare, c/b/ui/views/webshare,\nWebKit/public/platform/modules/webshare,\nandroid/java/src/org/chromium/chrome/browser/webshare/.\n\nIt\u0027s not appropriate for Gio to do this now, just on this one file or directory. I could make a CL that does them all in one go but it is a very low priority because it\u0027s a lot of churn for almost no value.",
+      "parentUuid": "c605af67_1c7db9f6",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 50
+      },
+      "revId": "63fcf248c295f5051713a6d24502a3d663198c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
