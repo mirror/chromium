@@ -104,17 +104,20 @@ bool OmniboxPopupModel::IsOpen() const {
   return view_->IsOpen();
 }
 
-void OmniboxPopupModel::SetHoveredLine(size_t line) {
+void OmniboxPopupModel::SetHoveredLine(size_t line, Action action) {
   const bool is_disabling = (line == kNoMatch);
   DCHECK(is_disabling || (line < result().size()));
 
-  if (line == hovered_line_)
+NOTIMPLEMENTED() << " hovered line action " << static_cast<int>(action);
+
+  if (line == hovered_line_ && hovered_line_action_ == action)
     return;  // Nothing to do
 
   // We need to update |hovered_line_| before calling InvalidateLine(), since it
   // will check it to determine how to draw.
   const size_t prev_hovered_line = hovered_line_;
   hovered_line_ = line;
+  hovered_line_action_ = action;
 
   // Make sure the old hovered line is redrawn.  No need to redraw the selected
   // line since selection overrides hover so the appearance won't change.
@@ -125,6 +128,8 @@ void OmniboxPopupModel::SetHoveredLine(size_t line) {
     view_->InvalidateLine(hovered_line_);
 }
 
+// FIXME
+// Add an action to this for non-full-line actions like TTS and "put in omnibox"
 void OmniboxPopupModel::SetSelectedLine(size_t line,
                                         bool reset_to_default,
                                         bool force) {

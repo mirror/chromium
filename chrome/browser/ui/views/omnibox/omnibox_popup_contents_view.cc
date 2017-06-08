@@ -321,6 +321,11 @@ bool OmniboxPopupContentsView::IsHoveredIndex(size_t index) const {
   return index == model_->hovered_line();
 }
 
+OmniboxPopupModel::Action OmniboxPopupContentsView::GetHoveredLineAction()
+    const {
+  return  model_->hovered_line_action();
+}
+
 gfx::Image OmniboxPopupContentsView::GetIconIfExtensionMatch(
     size_t index) const {
   if (!HasMatchAt(index))
@@ -395,7 +400,14 @@ void OmniboxPopupContentsView::OnMouseCaptureLost() {
 
 void OmniboxPopupContentsView::OnMouseMoved(
     const ui::MouseEvent& event) {
-  model_->SetHoveredLine(GetIndexForPoint(event.location()));
+  size_t index = GetIndexForPoint(event.location());
+  OmniboxPopupModel::Action action = OmniboxPopupModel::Action::NORMAL;
+  if (index != OmniboxPopupModel::kNoMatch) {
+    views::View* subview = views::ViewTargeterDelegate::TargetForRect(
+        this, gfx::Rect(event.location(), gfx::Size(1, 1)));
+    action = result_view_at(index)->GetActionForView(subview);
+  }
+  model_->SetHoveredLine(index, action);
 }
 
 void OmniboxPopupContentsView::OnMouseEntered(
@@ -516,8 +528,18 @@ size_t OmniboxPopupContentsView::GetIndexForPoint(
 void OmniboxPopupContentsView::UpdateLineEvent(
     const ui::LocatedEvent& event,
     bool should_set_selected_line) {
+ // views::View* subview = views::ViewTargeterDelegate::TargetForRect(
+ //     this, gfx::Rect(event.location(), gfx::Size(1, 1)));
+ // if (subview
+
   size_t index = GetIndexForPoint(event.location());
-  model_->SetHoveredLine(index);
+  OmniboxPopupModel::Action action = OmniboxPopupModel::Action::NORMAL;
+  if (index != OmniboxPopupModel::kNoMatch) {
+    views::View* subview = views::ViewTargeterDelegate::TargetForRect(
+        this, gfx::Rect(event.location(), gfx::Size(1, 1)));
+    action = result_view_at(index)->GetActionForView(subview);
+  }
+  model_->SetHoveredLine(index, action);
   if (HasMatchAt(index) && should_set_selected_line)
     model_->SetSelectedLine(index, false, false);
 }
@@ -528,8 +550,13 @@ void OmniboxPopupContentsView::OpenSelectedLine(
   size_t index = GetIndexForPoint(event.location());
   if (!HasMatchAt(index))
     return;
-  omnibox_view_->OpenMatch(model_->result().match_at(index), disposition,
-                           GURL(), base::string16(), index);
+
+  if (model_->hovered_line_action() == OmniboxPopupModel::Action::KEYWORD) {
+    omnibox_view_->model()->AcceptKeyword(KeywordModeEntryMethod::TAB);
+  } else {
+    omnibox_view_->OpenMatch(model_->result().match_at(index), disposition,
+                             GURL(), base::string16(), index);
+  }
 }
 
 OmniboxResultView* OmniboxPopupContentsView::result_view_at(size_t i) {
