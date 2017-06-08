@@ -2204,6 +2204,8 @@ void LocalFrameView::HandleLoadCompleted() {
 
   if (!scrollable_areas_)
     return;
+  int total_size = 0;
+  int small_scroller_size = 0;
   for (const auto& scrollable_area : *scrollable_areas_) {
     if (!scrollable_area->IsPaintLayerScrollableArea())
       continue;
@@ -2215,10 +2217,21 @@ void LocalFrameView::HandleLoadCompleted() {
           CustomCountHistogram, scrollable_area_size_histogram,
           ("Event.Scroll.ScrollerSize.OnLoad", 1, kScrollerSizeLargestBucket,
            kScrollerSizeBucketCount));
-      scrollable_area_size_histogram.Count(
-          paint_layer_scrollable_area->VisibleContentRect().Width() *
-          paint_layer_scrollable_area->VisibleContentRect().Height());
+      int size = paint_layer_scrollable_area->VisibleContentRect().Width() *
+                 paint_layer_scrollable_area->VisibleContentRect().Height();
+      scrollable_area_size_histogram.Count(size);
+      if (size <= kSmallScrollerThreshold)
+        small_scroller_size += size;
+      total_size += size;
     }
+  }
+  // This includes recording pages without small scrollers.
+  if (total_size > 0) {
+    DEFINE_STATIC_LOCAL(PercentageHistogram,
+                        small_scroller_percentage_histogram,
+                        ("Event.Scroll.ScrollerSize.SmallScrollerPercentage"));
+    small_scroller_percentage_histogram.Count(100.0f * small_scroller_size /
+                                              total_size);
   }
 }
 
