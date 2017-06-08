@@ -63,7 +63,10 @@ gfx::Size ImportLockDialogView::CalculatePreferredSize() const {
 void ImportLockDialogView::Layout() {
   gfx::Rect bounds(GetLocalBounds());
   const ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
-  bounds.Inset(provider->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS));
+  bounds.Inset(provider->GetDistanceMetric(
+                   views::DISTANCE_DIALOG_CONTENTS_HORIZONTAL_MARGIN),
+               provider->GetDistanceMetric(
+                   views::DISTANCE_DIALOG_CONTENTS_VERTICAL_MARGIN));
   description_label_->SetBoundsRect(bounds);
 }
 
