@@ -108,10 +108,22 @@ Audits2.Audits2Panel = class extends UI.PanelWithSidebar {
     return Audits2.Audits2Panel.Presets.some(preset => preset.setting.get());
   }
 
+  /**
+   * @return {?string}
+   */
+  _getUnauditablePageMessage() {
+    var inspectedURL = SDK.targetManager.mainTarget().inspectedURL();
+    if (/^about:/.test(inspectedURL))
+      return 'Cannot audit about:* pages. Navigate to a different page to start an audit.';
+
+    return null;
+  }
+
   _updateStartButtonEnabled() {
     var hasActiveServiceWorker = this._hasActiveServiceWorker();
     var hasAtLeastOneCategory = this._hasAtLeastOneCategory();
-    var isDisabled = hasActiveServiceWorker || !hasAtLeastOneCategory;
+    var unauditablePageMessage = this._getUnauditablePageMessage();
+    var isDisabled = hasActiveServiceWorker || !hasAtLeastOneCategory || !!unauditablePageMessage;
 
     if (this._dialogHelpText && hasActiveServiceWorker) {
       this._dialogHelpText.textContent = Common.UIString(
@@ -121,6 +133,9 @@ Audits2.Audits2Panel = class extends UI.PanelWithSidebar {
 
     if (this._dialogHelpText && !hasAtLeastOneCategory)
       this._dialogHelpText.textContent = Common.UIString('At least one category must be selected.');
+
+    if (this._dialogHelpText && unauditablePageMessage)
+      this._dialogHelpText.textContent = Common.UIString(unauditablePageMessage);
 
     if (this._dialogHelpText)
       this._dialogHelpText.classList.toggle('hidden', !isDisabled);
