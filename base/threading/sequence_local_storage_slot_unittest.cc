@@ -18,11 +18,11 @@ namespace {
 class SequenceLocalStorageSlotTest : public testing::Test {
  protected:
   SequenceLocalStorageSlotTest()
-      : scoped_sequence_local_storage_(&sequence_local_storage_) {}
+      : scoped_sequence_local_storage(&sequence_local_storage) {}
 
-  internal::SequenceLocalStorageMap sequence_local_storage_;
+  internal::SequenceLocalStorageMap sequence_local_storage;
   internal::ScopedSetSequenceLocalStorageMapForCurrentThread
-      scoped_sequence_local_storage_;
+      scoped_sequence_local_storage;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SequenceLocalStorageSlotTest);
