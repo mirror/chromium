@@ -15,6 +15,9 @@ enum TeamDrivesIntegrationStatus {
 // Whether Team Drives integration is enabled or not.
 TeamDrivesIntegrationStatus GetTeamDrivesIntegrationSwitch();
 
+// Whether to use allTeamDrives corpus when fetching list of files.
+bool GetTeamDrivesAllTeamDrivesCorpus();
+
 // For tests which require specific commandline switch settings.
 extern const char kEnableTeamDrives[];
 

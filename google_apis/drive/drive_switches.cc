@@ -8,10 +8,18 @@
 namespace google_apis {
 // Enables or disables Team Drives integration.
 const char kEnableTeamDrives[] = "team-drives";
+// Use allTeamDrives corpus when fetching list of files.
+const char kEnableTeamDrivesAllTeamDrivesCorpus[] =
+    "team-drives-all-team-drives-corpus";
 
 TeamDrivesIntegrationStatus GetTeamDrivesIntegrationSwitch() {
   return base::CommandLine::ForCurrentProcess()->HasSwitch(kEnableTeamDrives) ?
       TEAM_DRIVES_INTEGRATION_ENABLED : TEAM_DRIVES_INTEGRATION_DISABLED;
+}
+
+bool GetTeamDrivesAllTeamDrivesCorpus() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      kEnableTeamDrivesAllTeamDrivesCorpus);
 }
 
 }  // namespace google_apis
