@@ -150,6 +150,7 @@ component("gpu") {
     "//ui/gfx/geometry",
   ]
   deps = [
+    "//media/mojo/clients:clients",
     "//ui/base",
     "//ui/display/types",
     "//ui/gl",

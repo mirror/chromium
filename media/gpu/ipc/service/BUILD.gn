@@ -42,6 +42,7 @@ target(link_target_type, "service") {
     "//media:media_features",
     "//media/gpu/ipc/common",
     "//media/gpu/mojo:jpeg_decoder",
+    "//media/mojo/clients:clients",
     "//third_party/mesa:mesa_headers",
     "//ui/gfx/ipc/color",
   ]

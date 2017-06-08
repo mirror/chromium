@@ -12,8 +12,8 @@
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/config/gpu_driver_bug_workarounds.h"
 #include "gpu/config/gpu_info.h"
-#include "media/base/android_overlay_mojo_factory.h"
 #include "media/gpu/media_gpu_export.h"
+#include "media/mojo/clients/android_overlay_mojo_factory.h"
 #include "media/video/video_decode_accelerator.h"
 
 namespace gl {
