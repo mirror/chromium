@@ -193,6 +193,9 @@
       'Libfuzzer Upload Linux UBSan': 'release_libfuzzer_ubsan',
       'Libfuzzer Upload Mac ASan': 'release_libfuzzer_mac_asan',
       'Linux ARM': 'release_bot_arm',
+      'Linux ARM (dbg)': 'debug_bot_arm',
+      'Linux ARM64': 'release_bot_arm64',
+      'Linux ARM64 (dbg)': 'debug_bot_arm64',
       'Linux Clang Analyzer': 'linux_chromium_analysis',
       'Linux deterministic': 'release_bot',
       'Linux deterministic (dbg)': 'debug_bot',
@@ -1177,6 +1180,14 @@
       'debug_bot',
     ],
 
+    'debug_bot_arm': [
+      'debug_bot', 'arm',
+    ],
+
+    'debug_bot_arm64': [
+      'debug_bot', 'arm64',
+    ],
+
     'debug_bot_x86': [
       'debug_bot', 'x86',
     ],
@@ -1370,6 +1381,10 @@
 
     'release_bot_arm': [
       'release_bot', 'arm',
+    ],
+
+    'release_bot_arm64': [
+      'release_bot', 'arm64',
     ],
 
     'release_bot_chrome_with_codecs': [
