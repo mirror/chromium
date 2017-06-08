@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "bb372647_5bc86872",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-08T13:09:00Z",
+      "side": 1,
+      "message": "Re Why? What should we do instead? Should we just disable ARC altogether? (It\u0027s probably fine since it only affects Eve afaik, which is scheduled for M61 and we should have the OOBE version by then).\n\nWe *must* make ToS agreement with user before starting ARC.\nSo, as Yury mentioned, it is not allowed to start ARC silently.\nCurrent code (PS6) is fine for me.",
+      "parentUuid": "75bdec92_6a126c5d",
+      "range": {
+        "startLine": 701,
+        "startChar": 6,
+        "endLine": 701,
+        "endChar": 33
+      },
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88da375c_a2b4f864",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 2
