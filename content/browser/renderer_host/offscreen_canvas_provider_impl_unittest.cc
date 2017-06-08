@@ -147,10 +147,6 @@ class OffscreenCanvasProviderImplTest : public testing::Test {
     ImageTransportFactory::InitializeForUnitTests(
         std::unique_ptr<ImageTransportFactory>(
             new NoTransportImageTransportFactory));
-    ImageTransportFactory::GetInstance()
-        ->GetContextFactoryPrivate()
-        ->GetFrameSinkManagerHost()
-        ->ConnectToFrameSinkManager();
 #endif
     provider_ =
         base::MakeUnique<OffscreenCanvasProviderImpl>(kRendererClientId);

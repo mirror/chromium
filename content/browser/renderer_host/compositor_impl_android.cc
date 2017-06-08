@@ -97,10 +97,31 @@ class SingleThreadTaskGraphRunner : public cc::SingleThreadTaskGraphRunner {
 
 struct CompositorDependencies {
   CompositorDependencies() : frame_sink_id_allocator(kDefaultClientId) {
-    frame_sink_manager_host.ConnectToFrameSinkManager();
+    // A mojo pointer to |frame_sink_manager_host_|.
+    cc::mojom::FrameSinkManagerClientPtr frame_sink_manager_client_ptr;
+    // A mojo pointer to |in_process_frame_sink_manager_|.
+    cc::mojom::FrameSinkManagerPtr frame_sink_manager_ptr;
+
+    cc::mojom::FrameSinkManagerClientRequest frame_sink_manager_client_request =
+        mojo::MakeRequest(&frame_sink_manager_client_ptr);
+
+    // TODO(danakj): Don't make a MojoFrameSinkManager when display is in the
+    // Gpu process, instead get the mojo pointer from the Gpu process.
+    bool use_surface_sequences = false;
+    in_process_frame_sink_manager_ =
+        base::MakeUnique<viz::MojoFrameSinkManager>(use_surface_sequences,
+                                                    nullptr);
+    in_process_frame_sink_manager_->Connect(
+        mojo::MakeRequest(&frame_sink_manager_ptr),
+        std::move(frame_sink_manager_client_ptr));
+
+    frame_sink_manager_host_.Connect(
+        std::move(frame_sink_manager_client_request),
+        std::move(frame_sink_manager_ptr));
   }
 
   SingleThreadTaskGraphRunner task_graph_runner;
+  std::unique_ptr<viz::MojoFrameSinkManager> in_process_frame_sink_manager;
   viz::FrameSinkManagerHost frame_sink_manager_host;
   cc::FrameSinkIdAllocator frame_sink_id_allocator;
 
