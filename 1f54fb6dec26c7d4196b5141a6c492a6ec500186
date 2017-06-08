@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a477d06_c2b93dfa",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-08T00:32:22Z",
+      "side": 1,
+      "message": "The was_scrolled_by_user bit is supposed to be set for any scroller, not just the root.  Why isn\u0027t this handled by Element::NativeApplyScroll or ScrollManager::SetFrameWasScrolledByUser?",
+      "range": {
+        "startLine": 487,
+        "startChar": 49,
+        "endLine": 487,
+        "endChar": 69
+      },
+      "revId": "1f54fb6dec26c7d4196b5141a6c492a6ec500186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
