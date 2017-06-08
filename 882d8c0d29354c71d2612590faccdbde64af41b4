@@ -69,6 +69,24 @@
       "revId": "882d8c0d29354c71d2612590faccdbde64af41b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e137d8_bcba8cbb",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-08T21:39:01Z",
+      "side": 0,
+      "message": "I excluded this file in the latest patch. It seems hard to make the keep-alive fully correct when the document is destructing. I\u0027m considering removing the whole keep-alive thing. It was added when we built the code into canary release and expected to see the exact crash stacks when short-lived client is destructed. Now the code is for local debugging only, so we have more ways to track that.\n\nPtal.",
+      "parentUuid": "eb525d20_fbef271c",
+      "revId": "882d8c0d29354c71d2612590faccdbde64af41b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
