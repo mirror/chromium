@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d2f5b6c_b380d978",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-08T21:21:57Z",
+      "side": 1,
+      "message": "Please rename to scrollbar_size or scrollbars; I don\u0027t think \"scrollers\" is a common name in our codebase.",
+      "revId": "37c434ec53aed1fad1addae6eb8378285ed2c3de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1abf6796_6f994944",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-08T21:21:57Z",
+      "side": 1,
+      "message": "It is not sufficient to be \u003e\u003d 0; the size needs to be big enough to include border and padding (that is, content size always needs to be \u003e\u003d 0). We normally enforce that in ng_length_utils, e.g. https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc?l\u003d79.\n\nRelatedly, I don\u0027t think this handles shrink-to-fit sizing correctly which needs to take the scrollbar into account.\n\nSo basically I think Compute{Inline,Block}SizeForFragment needs to be aware of scrollbar sizes. Maybe pass in an NGBoxStrut with the sizes for now?\n\n(By the way, did you see https://bugs.chromium.org/p/chromium/issues/detail?id\u003d724255#c9 ?)",
+      "revId": "37c434ec53aed1fad1addae6eb8378285ed2c3de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7bc03b1_56b969ac",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-08T21:21:57Z",
+      "side": 1,
+      "message": "why not just scrollbars.block_start?",
+      "revId": "37c434ec53aed1fad1addae6eb8378285ed2c3de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84dc6245_43bc056f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-08T21:21:57Z",
+      "side": 1,
+      "message": "Please use real types instead of auto -- in many cases here it is not obvious exactly what the type is.",
+      "revId": "37c434ec53aed1fad1addae6eb8378285ed2c3de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
