@@ -1158,7 +1158,7 @@ RefPtr<DrawingBuffer::ColorBuffer> DrawingBuffer::CreateColorBuffer(
   GLuint image_id = 0;
   std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer;
   gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager =
-      Platform::Current()->GetGpuMemoryBufferManager();
+      ContextProvider()->GetGpuMemoryBufferManager();
   if (ShouldUseChromiumImage() && gpu_memory_buffer_manager) {
     parameters = GpuMemoryBufferColorBufferParameters();
     gfx::BufferFormat buffer_format;
