@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c52be32_f33416c0",
+        "filename": "content/browser/hyphenation/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-06-08T12:51:30Z",
+      "side": 1,
+      "message": "This is the actual change that I wanted to make, but without adding TEAM tag everywhere else, presubmit complains that Internals\u003eCore maps to something else otherwise.",
+      "range": {
+        "startLine": 6,
+        "startChar": 18,
+        "endLine": 6,
+        "endChar": 31
+      },
+      "revId": "5bc7aba3ffd94c9235ab623ab02fda787ba2cee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
