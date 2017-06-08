@@ -128,6 +128,29 @@
       "revId": "7379ada780fbc70acd901c7ef893fa7814677a92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "74e7dcc6_47ef1446",
+        "filename": "extensions/browser/extension_icon_image.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-08T21:41:22Z",
+      "side": 1,
+      "message": "nit: Remove since it is not used anymore?",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 17
+      },
+      "revId": "7379ada780fbc70acd901c7ef893fa7814677a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
