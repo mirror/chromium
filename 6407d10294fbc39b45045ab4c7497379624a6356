@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2ffdfbe_fbb5f4a6",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-08T00:19:30Z",
+      "side": 1,
+      "message": "Optional: consider updating these other callers of PLC::ClearClipRectsIncludingDescendants to use PaintLayer::ClearClipRects instead:\n\n  PaintLayerCompositor::AllocateOrClearCompositedLayerMapping\n  CompositingLayerAssigner::UpdateSquashingAssignment\n  LayoutBoxModelObject::StyleWillChange",
+      "range": {
+        "startLine": 249,
+        "startChar": 43,
+        "endLine": 249,
+        "endChar": 71
+      },
+      "revId": "6407d10294fbc39b45045ab4c7497379624a6356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
