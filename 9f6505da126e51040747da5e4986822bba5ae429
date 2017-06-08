@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e0cae40_4100d06b",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-08T20:12:10Z",
+      "side": 1,
+      "message": "nit: It\u0027s best practice to use ivars only in the setters, -init or methods that can be traced back to -init. Elsewhere, it\u0027s best to use \"-setX:\" or \"self.x \u003d\"\n\nI initially didn\u0027t really follow this rule of thumb. So I keep using ivars in the older files to avoid mixing and matching styles. But the files should be following this rule. It\u0027s best to look at the other variables in the file and follow that style.\n\nnote: _consumer is used here since we\u0027re in its setter. calling -setConsumer or self.consumer would result in an ummm infinite loop.",
+      "range": {
+        "startLine": 98,
+        "startChar": 6,
+        "endLine": 98,
+        "endChar": 30
+      },
+      "revId": "9f6505da126e51040747da5e4986822bba5ae429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
