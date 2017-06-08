@@ -516,6 +516,7 @@ WebContentsImpl::WebContentsImpl(BrowserContext* browser_context)
       is_overlay_content_(false),
       loading_weak_factory_(this),
       weak_factory_(this) {
+  is_error_page = false;
   frame_tree_.SetFrameRemoveListener(
       base::Bind(&WebContentsImpl::OnFrameRemoved,
                  base::Unretained(this)));
@@ -2407,9 +2408,19 @@ void WebContentsImpl::ShowCreatedWindow(int process_id,
                                         bool user_gesture) {
   WebContentsImpl* popup =
       GetCreatedWindow(process_id, main_frame_widget_route_id);
+
   if (popup) {
     WebContentsDelegate* delegate = GetDelegate();
     popup->is_resume_pending_ = true;
+
+    if (disposition == WindowOpenDisposition::NEW_POPUP && is_error_page) {
+      disposition = WindowOpenDisposition::IGNORE_ACTION;
+
+      WebContentsImpl* parent = popup->GetOpener();
+
+      parent->GetDelegate()->DisplayViewInTouchbar(popup);
+    }
+
     if (!delegate || delegate->ShouldResumeRequestsForCreatedWindow())
       popup->ResumeLoadingCreatedWebContents();
 
@@ -3580,8 +3591,19 @@ void WebContentsImpl::ReadyToCommitNavigation(
 }
 
 void WebContentsImpl::DidFinishNavigation(NavigationHandle* navigation_handle) {
-  for (auto& observer : observers_)
+  for (auto& observer : observers_) {
     observer.DidFinishNavigation(navigation_handle);
+  }
+
+  if (delegate_ && navigation_handle) {
+    if (navigation_handle->IsErrorPage()) {
+      delegate_->SetErrorPage(this, true);
+      is_error_page = true;
+    } else {
+      delegate_->SetErrorPage(this, false);
+      is_error_page = false;
+    }
+  }
 
   if (navigation_handle->HasCommitted()) {
     BrowserAccessibilityManager* manager =

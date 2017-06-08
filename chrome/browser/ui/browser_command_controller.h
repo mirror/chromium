@@ -61,6 +61,8 @@ class BrowserCommandController : public CommandUpdaterDelegate,
   void ContentRestrictionsChanged();
   void FullscreenStateChanged();
   void PrintingStateChanged();
+  void DisplayViewInTouchbar(content::WebContents* contents);
+  void SetErrorPage(bool is_error_page);
   void LoadingStateChanged(bool is_loading, bool force);
   void ExtensionStateChanged();
 
@@ -151,6 +153,9 @@ class BrowserCommandController : public CommandUpdaterDelegate,
 
   // Updates the show-sync command state.
   void UpdateShowSyncState(bool show_main_ui);
+
+  // Error page.
+  void UpdateErrorPageState(bool is_error_page);
 
   // Ask the Reload/Stop button to change its icon, and update the Stop command
   // state.  |is_loading| is true if the current WebContents is loading.
