@@ -22,6 +22,30 @@
       "revId": "8be9875258e273b446dd1dfcfafaefbe7f2dff83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56296b5b_e79c5d5b",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-06-08T01:04:46Z",
+      "side": 1,
+      "message": "Yes, at first I thought it was OK because the restart would reset most of the fields anyway. However, the real problem is the ResetState running afterwards....\n\nI also don\u0027t really see how using DeleteSoon would resolve this issue? Wouldn\u0027t that risk another race condition between starting next request and the snapshot controller deletion?\n\nI\u0027m playing with the idea of invalidating the weak ptrs right before we call loadurl on the webcontents, and also moving the number/field resetting to a method like ResetCounters and call that inside start request.\n\nStartRequest will reset the webcontents and the snapshot controller anyway, so those things don\u0027t really need to be reset to nullptr. The only important part is we reset download counters and error page states?",
+      "parentUuid": "b8bfcad5_69b699de",
+      "range": {
+        "startLine": 372,
+        "startChar": 10,
+        "endLine": 372,
+        "endChar": 32
+      },
+      "revId": "8be9875258e273b446dd1dfcfafaefbe7f2dff83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
