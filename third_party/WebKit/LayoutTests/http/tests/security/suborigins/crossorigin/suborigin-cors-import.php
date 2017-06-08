@@ -40,7 +40,7 @@ add_result_callback(function(res) {
 new SuboriginHTMLImportTest(
   false,
   '<crossorigin=\'anonymous\'>, ACAO: ' + server,
-  xoriginAnonHello(),
+  xoriginAnonHello('true'),
   'anonymous');
 
 new SuboriginHTMLImportTest(
@@ -52,7 +52,7 @@ new SuboriginHTMLImportTest(
 new SuboriginHTMLImportTest(
   false,
   '<crossorigin=\'use-credentials\'>, ACAO: ' + server,
-  xoriginCredsHello(),
+  xoriginCredsHello('true'),
   'use-credentials');
 
 new SuboriginHTMLImportTest(

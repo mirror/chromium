@@ -18,7 +18,7 @@ async_test(t => {
       headers: headers
     };
     fetch(
-        "http://127.0.0.1:8000/security/resources/cors-script.php?cors=false",
+        "http://127.0.0.1:8000/security/resources/cors-script.php?ACAOrigin=false",
         options)
       .then(t.unreached_func('Fetch succeeded'))
       .catch(t.step_func_done());
@@ -26,7 +26,7 @@ async_test(t => {
 
 async_test(t => {
       fetch(
-        "http://127.0.0.1:8000/security/resources/cors-script.php?cors=false")
+        "http://127.0.0.1:8000/security/resources/cors-script.php?ACAOrigin=false")
       .then(t.unreached_func('Fetch succeeded'))
       .catch(t.step_func_done());
   }, 'Lack of Access-Control-Allow-Suborigin on response causes failure');
