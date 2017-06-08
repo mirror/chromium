@@ -1,31 +1,23 @@
 <?php
-$url = $_GET['url'];
-header("Location: $url");
+$expect_cookie = $_GET['expect_cookie'];
+$cookie_name = $_GET['cookie_name'];
+if ($_SERVER['HTTP_SUBORIGIN'] == 'foobar') {
+  if ($expect_cookie == NULL ||
+      ($expect_cookie == 'false' && !isset($_COOKIE[$cookie_name])) ||
+      ($expect_cookie == 'true' && isset($_COOKIE[$cookie_name]))) {
+    header("Location: " . $_GET['url']);
 
-$code = $_GET['code'];
-if (!isset($code))
-    $code = 302;
-header("HTTP/1.1 $code");
-
-$cors_arg = strtolower($_GET["cors"]);
-if ($cors_arg != "false") {
-    if ($cors_arg == "" || $cors_arg == "true") {
-        header("Access-Control-Allow-Origin: http://127.0.0.1:8000");
-    } else {
-        header("Access-Control-Allow-Origin: " . $cors_arg . "");
+    if (isset($_GET['ACAOrigin'])) {
+      header('Access-Control-Allow-Origin: ' . $_GET['ACAOrigin']);
     }
-}
 
-if (strtolower($_GET["credentials"]) == "true") {
-    header("Access-Control-Allow-Credentials: true");
-}
+    if (isset($_GET['ACASuborigin'])) {
+      header('Access-Control-Allow-Suborigin: ' . $_GET['ACASuborigin']);
+    }
 
-$suborigin_arg = strtolower($_GET["suborigin"]);
-if (!(empty($suborigin_arg))) {
-    header("Access-Control-Allow-Suborigin: " . $suborigin_arg);
-}
-
-if ($_SERVER["HTTP_SUBORIGIN"] == "foobar") {
-    header("Access-Control-Allow-Suborigin: foobar");
+    if (isset($_GET['ACACredentials'])) {
+      header('Access-Control-Allow-Credentials: ' . $_GET['ACACredentials']);
+    }
+  }
 }
 ?>
