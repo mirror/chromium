@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "539b446b_32a52061",
+        "filename": "components/feature_engagement_tracker/public/feature_list.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-08T17:58:06Z",
+      "side": 1,
+      "message": "The fun begins if some other component #define\u0027s DEFINE_VARIATION_PARAM and VARIATION_ENTRY. I couldn\u0027t find a good way to hide these other than push_macro/pop_macro, but there doesn\u0027t seem to be any direct uses of these flags in Chromium.",
+      "parentUuid": "1b6a0dbc_245b2cd2",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 48
+      },
+      "revId": "bd345d56cfd04fe16b24eaed72104b8c4bc487c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c587624_7c707c11",
         "filename": "components/feature_engagement_tracker/public/feature_list.h",
         "patchSetId": 21
