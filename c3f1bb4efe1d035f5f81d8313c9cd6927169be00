@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "e20473ed_b9d08778",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValue.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-08T19:36:14Z",
+      "side": 1,
+      "message": "My understanding is that if interface A is specified to be: Exposed(Window Feature1, PaintWorklet Feature2), then all the interfaces that are inherited from A will automatically apply that constraint. For example, if we have interface B : A, B will be automatically Exposed(Window Feature1, PaintWorklet Feature2), even if B.idl says Exposed\u003d(Window,PaintWorklet).\n\nLoop in haraken@, is my understanding correct?",
+      "parentUuid": "5bfde512_8398c7b8",
+      "revId": "c3f1bb4efe1d035f5f81d8313c9cd6927169be00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd2faf96_8b6de447",
         "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValue.idl",
         "patchSetId": 4
@@ -95,6 +113,30 @@
       "side": 1,
       "message": "This whole class is exposed to window though? I still don\u0027t understand this change. Does this mean it _won\u0027t_ be exposed to PaintWorklet? If so, please add a comment explaining this.",
       "parentUuid": "b8b69724_921dd615",
+      "range": {
+        "startLine": 18,
+        "startChar": 31,
+        "endLine": 18,
+        "endChar": 38
+      },
+      "revId": "c3f1bb4efe1d035f5f81d8313c9cd6927169be00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aada606_e0f46416",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValue.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-08T19:36:14Z",
+      "side": 1,
+      "message": "This change basically says that the entire CSSNumericValue interface is exposed to Window and Worklet. However, for the parse method, it applies additional constraint, which is exposed\u003dwindow only. All the other methods in this interface are not affected by that, which means they are exposed to both Window and Worklet. Does that make sense?",
+      "parentUuid": "51e05ac2_8b127f9f",
       "range": {
         "startLine": 18,
         "startChar": 31,
