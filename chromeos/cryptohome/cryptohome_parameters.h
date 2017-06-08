@@ -174,6 +174,9 @@ class CHROMEOS_EXPORT MountParameters {
   // If |true|, mounts the existing ecryptfs vault to a temporary location while
   // setting up a new dircrypto directory.
   bool to_migrate_from_ecryptfs = false;
+
+  // TODO(kinaba): comment
+  bool public_mount = false;
 };
 
 // This function returns true if cryptohome of |account_id| is migrated to

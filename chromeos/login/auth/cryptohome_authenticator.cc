@@ -403,17 +403,22 @@ void MountGuestAndGetHash(const base::WeakPtr<AuthAttemptState>& attempt,
       base::Bind(&TriggerResolveHash, attempt, resolver));
 }
 
-// Calls cryptohome's MountPublic method
+// Calls cryptohome's MountEx method with the public_mount option.
 void MountPublic(const base::WeakPtr<AuthAttemptState>& attempt,
                  scoped_refptr<CryptohomeAuthenticator> resolver,
-                 int flags) {
-  cryptohome::AsyncMethodCaller::GetInstance()->AsyncMountPublic(
-      cryptohome::Identification(attempt->user_context.GetAccountId()), flags,
-      base::Bind(&TriggerResolveWithLoginTimeMarker,
-                 "CryptohomeMountPublic-End", attempt, resolver));
-  cryptohome::AsyncMethodCaller::GetInstance()->AsyncGetSanitizedUsername(
+                 bool force_dircrypto) {
+  // Set state that username_hash is requested here so that test implementation
+  // that returns directly would not generate 2 OnLoginSucces() calls.
+  attempt->UsernameHashRequested();
+
+  cryptohome::MountParameters mount(false /* ephemeral */);
+  mount.force_dircrypto_if_available = force_dircrypto;
+  mount.public_mount = true;
+
+  cryptohome::HomedirMethods::GetInstance()->MountEx(
       cryptohome::Identification(attempt->user_context.GetAccountId()),
-      base::Bind(&TriggerResolveHash, attempt, resolver));
+      cryptohome::Authorization(cryptohome::KeyDefinition()), mount,
+      base::Bind(&OnMount, attempt, resolver));
 }
 
 // Calls cryptohome's key migration method.
@@ -612,7 +617,7 @@ void CryptohomeAuthenticator::LoginAsKioskAccount(
   if (!use_guest_mount) {
     MountPublic(current_state_->AsWeakPtr(),
                 scoped_refptr<CryptohomeAuthenticator>(this),
-                cryptohome::CREATE_IF_MISSING);
+                false);  // force_dircrypto
   } else {
     ephemeral_mount_attempted_ = true;
     MountGuestAndGetHash(current_state_->AsWeakPtr(),
@@ -633,7 +638,7 @@ void CryptohomeAuthenticator::LoginAsArcKioskAccount(
   remove_user_data_on_failure_ = true;
   MountPublic(current_state_->AsWeakPtr(),
               scoped_refptr<CryptohomeAuthenticator>(this),
-              cryptohome::CREATE_IF_MISSING);
+              true);  // force_dircrypto
 }
 
 void CryptohomeAuthenticator::OnAuthSuccess() {
