@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "871d136e_4860fd24",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-06-08T17:59:22Z",
+      "side": 1,
+      "message": "I don\u0027t think we care about this anymore? We can likely just get rid of the is_selected calculation entirely? (This was meant to be a cheap proxy for is_visible, but now we have the real thing.)",
+      "range": {
+        "startLine": 474,
+        "startChar": 17,
+        "endLine": 474,
+        "endChar": 28
+      },
+      "revId": "eb9c26a6cb4cb7a7d80c186ba269764275360305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
