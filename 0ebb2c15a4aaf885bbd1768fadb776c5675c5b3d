@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "8ae61b71_85ac53c6",
+        "filename": "third_party/WebKit/Source/core/style/NamedGridLinesMap.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-06-08T03:22:16Z",
+      "side": 1,
+      "message": "Actually I don\u0027t think you need any includes for type defs. But upon further thought anywhere including this file would potentially need these and not know that they need them... So I guess it might be best to keep them here",
+      "parentUuid": "7fe3d762_ced02787",
+      "revId": "0ebb2c15a4aaf885bbd1768fadb776c5675c5b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4fb8dd6e_78c271d3",
         "filename": "third_party/WebKit/Source/core/style/NamedGridLinesMap.h",
         "patchSetId": 1
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "No good reason apart from what to call the file.",
       "parentUuid": "4fb8dd6e_78c271d3",
+      "revId": "0ebb2c15a4aaf885bbd1768fadb776c5675c5b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0594588b_2e1e9c4d",
+        "filename": "third_party/WebKit/Source/core/style/NamedGridLinesMap.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-06-08T03:22:16Z",
+      "side": 1,
+      "message": "NamedGridLinesTypes? Even better, make a StyleTypes.h and add all similar type defs that are used throughout style. e.g. CursorList",
+      "parentUuid": "4d0c3395_610a2930",
       "revId": "0ebb2c15a4aaf885bbd1768fadb776c5675c5b3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
