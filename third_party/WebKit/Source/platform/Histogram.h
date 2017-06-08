@@ -44,6 +44,11 @@ class PLATFORM_EXPORT EnumerationHistogram : public CustomCountHistogram {
                        base::HistogramBase::Sample boundary_value);
 };
 
+class PLATFORM_EXPORT PercentageHistogram : public CustomCountHistogram {
+ public:
+  PercentageHistogram(const char* name);
+};
+
 class PLATFORM_EXPORT SparseHistogram {
  public:
   explicit SparseHistogram(const char* name);

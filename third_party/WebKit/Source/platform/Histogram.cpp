@@ -40,6 +40,14 @@ EnumerationHistogram::EnumerationHistogram(
           boundary_value + 1,
           base::HistogramBase::kUmaTargetedHistogramFlag)) {}
 
+PercentageHistogram::PercentageHistogram(const char* name)
+    : CustomCountHistogram(base::LinearHistogram::FactoryGet(
+          name,
+          1,
+          100,
+          101,
+          base::HistogramBase::kUmaTargetedHistogramFlag)) {}
+
 SparseHistogram::SparseHistogram(const char* name) {
   histogram_ = base::SparseHistogram::FactoryGet(
       name, base::HistogramBase::kUmaTargetedHistogramFlag);

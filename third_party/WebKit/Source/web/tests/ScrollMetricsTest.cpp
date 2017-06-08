@@ -164,6 +164,59 @@ TEST_F(ScrollMetricsTest, ScrollerSizeOnPageLoadHistogramRecordingTest) {
 }
 
 TEST_F(ScrollMetricsTest,
+       SmallScrollerPercentageOnPageLoadHistogramRecordingTest) {
+  HistogramTester histogram_tester;
+  SetUpHtml(
+      "<!DOCTYPE html>"
+      "<style>"
+      " .smallBox { overflow: scroll; width: 100px; height: 100px; }"
+      " .mediumBox { overflow: scroll; width: 200px; height: 200px; }"
+      " .largeBox { overflow: auto; width: 500px; height: 500px; }"
+      " .spacer { height: 1000px; }"
+      " body { height: 2000px; width: 1000px; }"
+      "</style>"
+      "<div class='smallBox'><div class='spacer'></div></div>"
+      "<div class='mediumBox'><div class='spacer'></div></div>"
+      "<div class='largeBox'><div class='spacer'></div></div>");
+  testing::RunPendingTasks();
+  // Both small and medium box are considered as small scroller therefore the
+  // percentage = (100 * 100 + 200 * 200) / (100 * 100 + 200 * 200 + 500 * 500)
+  // = 16.6%.
+  histogram_tester.ExpectBucketCount(
+      "Event.Scroll.ScrollerSize.SmallScrollerPercentage", 16, 1);
+
+  // Set up new html as the metrics are recorded on page load.
+  SetUpHtml(
+      "<!DOCTYPE html>"
+      "<style>"
+      " .largeBox { overflow: auto; width: 500px; height: 500px; }"
+      " .spacer { height: 1000px; }"
+      " body { height: 2000px; width: 1000px; }"
+      "</style>"
+      "<div class='largeBox'><div class='spacer'></div></div>");
+  testing::RunPendingTasks();
+  // No small scroller.
+  histogram_tester.ExpectBucketCount(
+      "Event.Scroll.ScrollerSize.SmallScrollerPercentage", 0, 1);
+
+  SetUpHtml(
+      "<!DOCTYPE html>"
+      "<style>"
+      " .smallBox { overflow: scroll; width: 100px; height: 100px; }"
+      " .spacer { height: 1000px; }"
+      " body { height: 2000px; width: 1000px; }"
+      "</style>"
+      "<div class='smallBox'><div class='spacer'></div></div>");
+  testing::RunPendingTasks();
+  // Has small scroller only.
+  histogram_tester.ExpectBucketCount(
+      "Event.Scroll.ScrollerSize.SmallScrollerPercentage", 100, 1);
+
+  histogram_tester.ExpectTotalCount(
+      "Event.Scroll.ScrollerSize.SmallScrollerPercentage", 3);
+}
+
+TEST_F(ScrollMetricsTest,
        ScrollerSizeOfMainThreadScrollingHistogramRecordingTest) {
   HistogramTester histogram_tester;
   SetUpHtml(
