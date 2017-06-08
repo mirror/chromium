@@ -157,6 +157,8 @@ MediaFileSystemBackend::MediaFileSystemBackend(
 }
 
 MediaFileSystemBackend::~MediaFileSystemBackend() {
+  media_task_runner_->DeleteSoon(FROM_HERE, native_media_file_util_.release());
+  media_task_runner_->DeleteSoon(FROM_HERE, media_path_filter_.release());
 }
 
 // static
