@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a563d595_905c26c5",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-08T22:25:33Z",
+      "side": 1,
+      "message": "Do you think we should keep this one?",
+      "revId": "24b505263594d206e7a5f31f8cc1cb846e82a431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
