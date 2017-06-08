@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61ac358e_a567fdaf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-08T15:23:32Z",
+      "side": 1,
+      "message": "Add comments to explain why we do that?",
+      "range": {
+        "startLine": 266,
+        "startChar": 12,
+        "endLine": 266,
+        "endChar": 32
+      },
+      "revId": "eec5e1dfc2827baad70c7ca32276aeeb4c631020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b150781_13615b9a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-08T15:23:32Z",
+      "side": 1,
+      "message": "Really do not see how this could happen, the new stuff to listen for country code change for address editor looks not in M58 stable yet. \n\nMove this check to EditorDialog.show and add comments to indicate this is a defense check to avoid crash before we find out the root case, and add assert check for debug?",
+      "range": {
+        "startLine": 337,
+        "startChar": 12,
+        "endLine": 337,
+        "endChar": 24
+      },
+      "revId": "eec5e1dfc2827baad70c7ca32276aeeb4c631020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
