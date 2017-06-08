@@ -7,7 +7,6 @@
 
 #include <memory>
 #include "core/workers/ThreadedWorkletMessagingProxy.h"
-#include "platform/wtf/Allocator.h"
 
 namespace blink {
 
@@ -15,7 +14,7 @@ class ExecutionContext;
 class WorkerThread;
 
 class AudioWorkletMessagingProxy final : public ThreadedWorkletMessagingProxy {
-  USING_FAST_MALLOC(AudioWorkletMessagingProxy);
+  USING_GARBAGE_COLLECTED_MIXIN(AudioWorkletMessagingProxy);
 
  public:
   AudioWorkletMessagingProxy(ExecutionContext*, WorkerClients*);
