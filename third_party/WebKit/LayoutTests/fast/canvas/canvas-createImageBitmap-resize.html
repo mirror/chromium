@@ -113,42 +113,6 @@ function initializeTestCanvas()
     return testCanvas;
 }
 
-// Blob
-promise_test(function() {
-    return new Promise((resolve, reject) => {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", 'resources/pattern.png');
-        xhr.responseType = 'blob';
-        xhr.send();
-        xhr.onload = function() {
-            resolve(xhr.response);
-        };
-    }).then(testImageBitmap);
-}, 'createImageBitmap from a Blob with resize option.');
-
-// HTMLCanvasElement
-promise_test(function() {
-    var testCanvas = initializeTestCanvas();
-    return testImageBitmap(testCanvas);
-}, 'createImageBitmap from a HTMLCanvasElement with resize option.');
-
-// HTMLImageElement
-promise_test(function() {
-    return new Promise((resolve, reject) => {
-        var image = new Image();
-        image.onload = function() {
-            resolve(image);
-        }
-        image.src = 'resources/pattern.png'
-    }).then(testImageBitmap);
-}, 'createImageBitmap from a HTMLImageElement with resize option.');
-
-// ImageBitmap
-promise_test(function() {
-    var testCanvas = initializeTestCanvas();
-    return createImageBitmap(testCanvas).then(testImageBitmap);
-}, 'createImageBitmap from an ImageBitmap with resize option.');
-
 // ImageData
 promise_test(function() {
     var canvas = initializeTestCanvas();
