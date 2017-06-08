@@ -277,6 +277,7 @@ static void stringOrDoubleAttributeAttributeGetter(const v8::FunctionCallbackInf
   TestInterfaceImplementation* impl = V8TestInterface::toImpl(holder);
 
   StringOrDouble result;
+
   impl->stringOrDoubleAttribute(result);
 
   V8SetReturnValue(info, result);
@@ -1736,7 +1737,9 @@ static void implementsComplexMethodMethod(const v8::FunctionCallbackInfo<v8::Val
   }
 
   ExecutionContext* executionContext = CurrentExecutionContext(info.GetIsolate());
+
   TestInterfaceEmpty* result = impl->implementsComplexMethod(executionContext, strArg, testInterfaceEmptyArg, exceptionState);
+
   if (exceptionState.HadException()) {
     return;
   }
@@ -1797,7 +1800,9 @@ static void partialCallWithExecutionContextRaisesExceptionVoidMethodMethod(const
   TestInterfaceImplementation* impl = V8TestInterface::toImpl(info.Holder());
 
   ExecutionContext* executionContext = CurrentExecutionContext(info.GetIsolate());
+
   TestInterfacePartial::partialCallWithExecutionContextRaisesExceptionVoidMethod(executionContext, *impl, exceptionState);
+
   if (exceptionState.HadException()) {
     return;
   }
@@ -1990,6 +1995,7 @@ static void keysMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
   ScriptState* scriptState = ScriptState::ForReceiverObject(info);
 
   Iterator* result = impl->keysForBinding(scriptState, exceptionState);
+
   if (exceptionState.HadException()) {
     return;
   }
@@ -2004,6 +2010,7 @@ static void valuesMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
   ScriptState* scriptState = ScriptState::ForReceiverObject(info);
 
   Iterator* result = impl->valuesForBinding(scriptState, exceptionState);
+
   if (exceptionState.HadException()) {
     return;
   }
@@ -2034,6 +2041,7 @@ static void forEachMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
   thisArg = ScriptValue(ScriptState::Current(info.GetIsolate()), info[1]);
 
   impl->forEachForBinding(scriptState, ScriptValue(scriptState, info.Holder()), callback, thisArg, exceptionState);
+
   if (exceptionState.HadException()) {
     return;
   }
@@ -2047,6 +2055,7 @@ static void toJSONMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
   ScriptState* scriptState = ScriptState::ForReceiverObject(info);
 
   ScriptValue result = impl->toJSONForBinding(scriptState, exceptionState);
+
   if (exceptionState.HadException()) {
     return;
   }
@@ -2067,6 +2076,7 @@ static void iteratorMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
   ScriptState* scriptState = ScriptState::ForReceiverObject(info);
 
   Iterator* result = impl->GetIterator(scriptState, exceptionState);
+
   if (exceptionState.HadException()) {
     return;
   }

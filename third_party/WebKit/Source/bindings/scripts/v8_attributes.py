@@ -267,6 +267,13 @@ def getter_context(interface, attribute, context):
     base_idl_type = idl_type.base_type
     extended_attributes = attribute.extended_attributes
 
+    rcs_getter_counter = (
+        'k' + extended_attributes['RuntimeStatsCounter'] + '_Getter'
+        if 'RuntimeStatsCounter' in extended_attributes else '')
+    rcs_getter_bindings_counter = rcs_getter_counter + '_Bindings' if rcs_getter_counter else ''
+    if rcs_getter_counter:
+        includes.add('platform/bindings/RuntimeCallStats.h')
+
     cpp_value = getter_expression(interface, attribute, context)
     # Normally we can inline the function call into the return statement to
     # avoid the overhead of using a Ref<> temporary, but for some cases
@@ -279,7 +286,11 @@ def getter_context(interface, attribute, context):
             'CachedAttribute' in extended_attributes or
             'ReflectOnly' in extended_attributes or
             context['is_keep_alive_for_gc'] or
-            context['is_getter_raises_exception']):
+            context['is_getter_raises_exception'] or (
+                rcs_getter_counter and not (
+                    idl_type.use_output_parameter_for_result or
+                    'Reflect' in extended_attributes or
+                    idl_type.is_frozen_array))):
         context['cpp_value_original'] = cpp_value
         cpp_value = 'cppValue'
 
@@ -302,6 +313,8 @@ def getter_context(interface, attribute, context):
             extended_attributes=extended_attributes),
         'v8_set_return_value_for_main_world': v8_set_return_value_statement(for_main_world=True),
         'v8_set_return_value': v8_set_return_value_statement(),
+        'rcs_getter_counter': rcs_getter_counter,
+        'rcs_getter_bindings_counter': rcs_getter_bindings_counter
     })
 
 def getter_expression(interface, attribute, context):
@@ -424,6 +437,11 @@ def setter_context(interface, attribute, interfaces, context):
         not is_legacy_interface_type_checking(interface, attribute) and
         idl_type.is_wrapper_type)
 
+    rcs_setter_counter = (
+        'k' + extended_attributes['RuntimeStatsCounter'] + '_Setter'
+        if 'RuntimeStatsCounter' in extended_attributes else '')
+    rcs_setter_bindings_counter = rcs_setter_counter + '_Bindings' if rcs_setter_counter else ''
+
     context.update({
         'has_setter_exception_state':
             is_setter_raises_exception or has_type_checking_interface or
@@ -434,6 +452,8 @@ def setter_context(interface, attribute, interfaces, context):
         'is_setter_raises_exception': is_setter_raises_exception,
         'v8_value_to_local_cpp_value': idl_type.v8_value_to_local_cpp_value(
             extended_attributes, 'v8Value', 'cppValue'),
+        'rcs_setter_counter': rcs_setter_counter,
+        'rcs_setter_bindings_counter': rcs_setter_bindings_counter
     })
 
     # setter_expression() depends on context values we set above.

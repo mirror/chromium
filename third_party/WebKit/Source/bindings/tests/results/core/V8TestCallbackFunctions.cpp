@@ -204,6 +204,7 @@ static void voidMethodOptionalCallbackFunctionInArgMethod(const v8::FunctionCall
   }
   if (UNLIKELY(numArgsPassed <= 0)) {
     impl->voidMethodOptionalCallbackFunctionInArg();
+
     return;
   }
   if (!(info[0]->IsObject() && v8::Local<v8::Object>::Cast(info[0])->IsCallable())) {

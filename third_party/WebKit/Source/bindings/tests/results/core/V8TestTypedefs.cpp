@@ -111,6 +111,7 @@ static void domStringOrDoubleOrNullAttributeAttributeGetter(const v8::FunctionCa
   TestTypedefs* impl = V8TestTypedefs::toImpl(holder);
 
   StringOrDouble result;
+
   impl->domStringOrDoubleOrNullAttribute(result);
 
   V8SetReturnValue(info, result);
@@ -150,6 +151,7 @@ static void voidMethodArrayOfLongsArgMethod(const v8::FunctionCallbackInfo<v8::V
   }
   if (UNLIKELY(numArgsPassed <= 0)) {
     impl->voidMethodArrayOfLongsArg();
+
     return;
   }
   arrayOfLongsArg = NativeValueTraits<IDLSequence<IDLLong>>::NativeValue(info.GetIsolate(), info[0], exceptionState);
@@ -224,6 +226,7 @@ static void testInterfaceOrTestInterfaceEmptyMethodMethod(const v8::FunctionCall
 
   TestInterfaceOrTestInterfaceEmpty result;
   impl->testInterfaceOrTestInterfaceEmptyMethod(result);
+
   V8SetReturnValue(info, result);
 }
 
@@ -232,6 +235,7 @@ static void domStringOrDoubleMethodMethod(const v8::FunctionCallbackInfo<v8::Val
 
   StringOrDouble result;
   impl->domStringOrDoubleMethod(result);
+
   V8SetReturnValue(info, result);
 }
 
@@ -379,6 +383,7 @@ static void constructor(const v8::FunctionCallbackInfo<v8::Value>& info) {
     return;
 
   TestTypedefs* impl = TestTypedefs::Create(stringArg);
+
   v8::Local<v8::Object> wrapper = info.Holder();
   wrapper = impl->AssociateWithWrapper(info.GetIsolate(), &V8TestTypedefs::wrapperTypeInfo, wrapper);
   V8SetReturnValue(info, wrapper);

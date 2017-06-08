@@ -78,6 +78,7 @@ static void constructor(const v8::FunctionCallbackInfo<v8::Value>& info) {
     return;
 
   TestInterfaceConstructor3* impl = TestInterfaceConstructor3::Create(stringArg);
+
   v8::Local<v8::Object> wrapper = info.Holder();
   wrapper = impl->AssociateWithWrapper(info.GetIsolate(), &V8TestInterfaceConstructor3::wrapperTypeInfo, wrapper);
   V8SetReturnValue(info, wrapper);

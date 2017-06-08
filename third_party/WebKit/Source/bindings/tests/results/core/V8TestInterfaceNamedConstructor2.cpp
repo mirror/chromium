@@ -114,6 +114,7 @@ static void V8TestInterfaceNamedConstructor2ConstructorCallback(const v8::Functi
     return;
 
   TestInterfaceNamedConstructor2* impl = TestInterfaceNamedConstructor2::CreateForJSConstructor(stringArg);
+
   v8::Local<v8::Object> wrapper = info.Holder();
   wrapper = impl->AssociateWithWrapper(info.GetIsolate(), &V8TestInterfaceNamedConstructor2Constructor::wrapperTypeInfo, wrapper);
   V8SetReturnValue(info, wrapper);

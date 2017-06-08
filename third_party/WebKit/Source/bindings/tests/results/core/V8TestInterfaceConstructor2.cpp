@@ -75,6 +75,7 @@ static void constructor1(const v8::FunctionCallbackInfo<v8::Value>& info) {
     return;
 
   TestInterfaceConstructor2* impl = TestInterfaceConstructor2::Create(stringArg);
+
   v8::Local<v8::Object> wrapper = info.Holder();
   wrapper = impl->AssociateWithWrapper(info.GetIsolate(), &V8TestInterfaceConstructor2::wrapperTypeInfo, wrapper);
   V8SetReturnValue(info, wrapper);
@@ -94,6 +95,7 @@ static void constructor2(const v8::FunctionCallbackInfo<v8::Value>& info) {
     return;
 
   TestInterfaceConstructor2* impl = TestInterfaceConstructor2::Create(dictionaryArg);
+
   v8::Local<v8::Object> wrapper = info.Holder();
   wrapper = impl->AssociateWithWrapper(info.GetIsolate(), &V8TestInterfaceConstructor2::wrapperTypeInfo, wrapper);
   V8SetReturnValue(info, wrapper);
@@ -108,6 +110,7 @@ static void constructor3(const v8::FunctionCallbackInfo<v8::Value>& info) {
     return;
 
   TestInterfaceConstructor2* impl = TestInterfaceConstructor2::Create(stringSequenceSequenceArg);
+
   v8::Local<v8::Object> wrapper = info.Holder();
   wrapper = impl->AssociateWithWrapper(info.GetIsolate(), &V8TestInterfaceConstructor2::wrapperTypeInfo, wrapper);
   V8SetReturnValue(info, wrapper);
@@ -161,6 +164,7 @@ static void constructor4(const v8::FunctionCallbackInfo<v8::Value>& info) {
 
   if (UNLIKELY(numArgsPassed <= 5)) {
     TestInterfaceConstructor2* impl = TestInterfaceConstructor2::Create(testInterfaceEmptyArg, longArg, defaultUndefinedOptionalStringArg, defaultNullStringOptionalStringArg, defaultUndefinedOptionalDictionaryArg);
+
     v8::Local<v8::Object> wrapper = info.Holder();
     wrapper = impl->AssociateWithWrapper(info.GetIsolate(), &V8TestInterfaceConstructor2::wrapperTypeInfo, wrapper);
     V8SetReturnValue(info, wrapper);
@@ -171,6 +175,7 @@ static void constructor4(const v8::FunctionCallbackInfo<v8::Value>& info) {
     return;
 
   TestInterfaceConstructor2* impl = TestInterfaceConstructor2::Create(testInterfaceEmptyArg, longArg, defaultUndefinedOptionalStringArg, defaultNullStringOptionalStringArg, defaultUndefinedOptionalDictionaryArg, optionalStringArg);
+
   v8::Local<v8::Object> wrapper = info.Holder();
   wrapper = impl->AssociateWithWrapper(info.GetIsolate(), &V8TestInterfaceConstructor2::wrapperTypeInfo, wrapper);
   V8SetReturnValue(info, wrapper);

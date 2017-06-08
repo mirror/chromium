@@ -109,9 +109,25 @@ class PLATFORM_EXPORT RuntimeCallStats {
   V(TestCounter1)                    \
   V(TestCounter2)
 
+#define BINDINGS_METHOD(V, counter) \
+  V(counter)                        \
+  V(counter##_Bindings)
+
+#define BINDINGS_READ_ONLY_ATTRIBUTE(V, counter) \
+  V(counter##_Getter)                            \
+  V(counter##_Getter_Bindings)
+
+#define BINDINGS_ATTRIBUTE(V, counter)     \
+  BINDINGS_READ_ONLY_ATTRIBUTE(V, counter) \
+  V(counter##_Setter)                      \
+  V(counter##_Setter_Bindings)
+
+#define FOR_EACH_BINDINGS_COUNTER(V) \
+  BINDINGS_METHOD(V, BindingsMethodTestCounter)
+
   enum class CounterId : uint16_t {
 #define ADD_ENUM_VALUE(counter) k##counter,
-    FOR_EACH_COUNTER(ADD_ENUM_VALUE)
+    FOR_EACH_COUNTER(ADD_ENUM_VALUE) FOR_EACH_BINDINGS_COUNTER(ADD_ENUM_VALUE)
 #undef ADD_ENUM_VALUE
         kNumberOfCounters
   };
