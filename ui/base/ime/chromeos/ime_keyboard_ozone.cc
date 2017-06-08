@@ -14,9 +14,7 @@ ImeKeyboardOzone::ImeKeyboardOzone(ui::InputController* input_controller)
     : input_controller_(input_controller) {
 }
 
-
-ImeKeyboardOzone::~ImeKeyboardOzone() {
-}
+ImeKeyboardOzone::~ImeKeyboardOzone() = default;
 
 bool ImeKeyboardOzone::SetCurrentKeyboardLayoutByName(
     const std::string& layout_name) {

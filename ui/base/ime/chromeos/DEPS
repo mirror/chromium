@@ -1,5 +1,13 @@
 include_rules = [
   "+chromeos/chromeos_switches.h",
   "+chromeos/ime",
+  "+services/ui/public/cpp/input_devices",
   "+ui/chromeos/strings",
 ]
+
+specific_include_rules = {
+  # Don't let other files use ozone, ash doesn't have ozone inside it in mus.
+  "ime_keyboard_ozone\.cc": [
+    "+ui/ozone/public"
+  ],
+}
