@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37088d6d_35d5ce39",
+        "filename": "components/leveldb/leveldb_database_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-08T23:52:49Z",
+      "side": 1,
+      "message": "We should call\nauto* global_dump \u003d pmd-\u003eCreateSharedGlobalAllocatorDump();\nand then create an edge\nalso:\nglobal_dump-\u003eAddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,\n                 base::trace_event::MemoryAllocatorDump::kUnitsBytes,\n                 memory_usage);\nThis is required because the other side does not know the size and we need to propogate the size as well.\nLike:\nhttps://cs.chromium.org/chromium/src/components/discardable_memory/service/discardable_shared_memory_manager.cc?type\u003dcs\u0026q\u003df:discardable+CreateSharedGlobalAllocatorDump\u0026l\u003d342",
+      "revId": "7420c2620ad14a4fe0b0069c6cbcb72fe5aa4e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e14927dd_f5f0e5ea",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-08T23:52:49Z",
+      "side": 1,
+      "message": "nit: local_storage/0x%\nTo be consistent with other providers.",
+      "range": {
+        "startLine": 251,
+        "startChar": 42,
+        "endLine": 251,
+        "endChar": 55
+      },
+      "revId": "7420c2620ad14a4fe0b0069c6cbcb72fe5aa4e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1449b411_7f17000e",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-08T23:52:49Z",
+      "side": 1,
+      "message": "Here you\u0027d have to create a global dump again since we do not know if the mojo service is in current process.\n\nauto* global_dump \u003d CreateSharedGlobalAllocatorDump(memory_dump_id_)\npmd-\u003eCreateAllocatorDump(\n      base::StringPrintf(\"dom_storage/0x%\" PRIXPTR \"/leveldb\");\n// Specifies that the current context is responsible for keeping memory alive.\nint kImportance \u003d 2;\npmd-\u003eAddOwnershipEdge(mad-\u003eguid(), memory_dump_id_, kImportance);\n\nNote that the edge is reversed in this case. but it doesn\u0027t matter. only the importance tells the edge direction.\n\nFor cross process sharing we need to create a virtual dump called global dump and then add edge to that dump.",
+      "revId": "7420c2620ad14a4fe0b0069c6cbcb72fe5aa4e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb188734_52017a70",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-08T23:52:49Z",
+      "side": 1,
+      "message": "It will be good to account this with URL instead of ptr. But the background case canont accept URLs. So, we should create different dumps for background case and normal case.\n\nCould you please refactor the code little bit and make this happen?",
+      "range": {
+        "startLine": 369,
+        "startChar": 43,
+        "endLine": 369,
+        "endChar": 50
+      },
+      "revId": "7420c2620ad14a4fe0b0069c6cbcb72fe5aa4e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7126faa_4ca994bc",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-08T23:52:49Z",
+      "side": 1,
+      "message": "This should not be dump_id. the code is as mentioned in the comment above.",
+      "range": {
+        "startLine": 371,
+        "startChar": 6,
+        "endLine": 371,
+        "endChar": 21
+      },
+      "revId": "7420c2620ad14a4fe0b0069c6cbcb72fe5aa4e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
