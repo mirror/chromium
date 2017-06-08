@@ -21,8 +21,8 @@
 #include "gpu/ipc/service/gpu_command_buffer_stub.h"
 #include "ipc/ipc_listener.h"
 #include "ipc/ipc_sender.h"
-#include "media/base/android_overlay_mojo_factory.h"
 #include "media/gpu/gpu_video_decode_accelerator_helpers.h"
+#include "media/mojo/clients/android_overlay_mojo_factory.h"
 #include "media/video/video_decode_accelerator.h"
 #include "ui/gfx/geometry/size.h"
 

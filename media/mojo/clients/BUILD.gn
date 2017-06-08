@@ -23,6 +23,7 @@ source_set("clients") {
   ]
 
   sources = [
+    "android_overlay_mojo_factory.h",
     "mojo_audio_decoder.cc",
     "mojo_audio_decoder.h",
     "mojo_cdm.cc",

@@ -8,11 +8,11 @@
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_checker.h"
 #include "gpu/ipc/service/gpu_command_buffer_stub.h"
-#include "media/base/android_overlay_mojo_factory.h"
 #include "media/base/video_decoder.h"
 #include "media/gpu/android_video_surface_chooser.h"
 #include "media/gpu/avda_codec_allocator.h"
 #include "media/gpu/media_gpu_export.h"
+#include "media/mojo/clients/android_overlay_mojo_factory.h"
 
 namespace media {
 
