@@ -19,6 +19,17 @@ source_set("input_devices") {
   public_deps = [
     "//services/ui/public/interfaces/input_devices",
   ]
+
+  if (is_chromeos) {
+    sources += [
+      "input_device_controller_client.cc",
+      "input_device_controller_client.h",
+    ]
+    public_deps += [
+      "//services/ui/public/interfaces:constants",
+      "//ui/ozone",
+    ]
+  }
 }
 
 if (use_ozone) {
