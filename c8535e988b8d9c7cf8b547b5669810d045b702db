@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08045341_d6d135f1",
+        "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T19:34:06Z",
+      "side": 1,
+      "message": "I think this should always be non-null if GetFrame() returns non-null.",
+      "range": {
+        "startLine": 131,
+        "startChar": 6,
+        "endLine": 131,
+        "endChar": 28
+      },
+      "revId": "c8535e988b8d9c7cf8b547b5669810d045b702db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc0b5dd5_8ba097d9",
+        "filename": "third_party/WebKit/public/web/WebFrame.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T19:34:06Z",
+      "side": 1,
+      "message": "Given the number of BLINK_EXPORTs needed, maybe it\u0027d be easier to just tag the entire class BLINK_EXPORT at this point. *shrug*",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 15
+      },
+      "revId": "c8535e988b8d9c7cf8b547b5669810d045b702db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
