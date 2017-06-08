@@ -263,9 +263,11 @@ public class EditorDialog
 
     @Override
     public void onClick(View view) {
+        if (mDialogInOutAnimator != null) return;
+
         if (view.getId() == R.id.payments_edit_done_button) {
             if (validateForm()) {
-                mEditorModel.done();
+                if (mEditorModel != null) mEditorModel.done();
                 mEditorModel = null;
                 dismissDialog();
                 return;
@@ -332,6 +334,7 @@ public class EditorDialog
         mDropdownFields.clear();
 
         // Add Views for each of the {@link EditorFields}.
+        if (mEditorModel == null) return;
         for (int i = 0; i < mEditorModel.getFields().size(); i++) {
             EditorFieldModel fieldModel = mEditorModel.getFields().get(i);
             EditorFieldModel nextFieldModel = null;
