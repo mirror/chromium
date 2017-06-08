@@ -309,7 +309,7 @@ Canvas2DLayerBridge::CreateIOSurfaceBackedTexture() {
     return nullptr;
 
   gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager =
-      Platform::Current()->GetGpuMemoryBufferManager();
+      context_provider_->GetGpuMemoryBufferManager();
   if (!gpu_memory_buffer_manager)
     return nullptr;
 

@@ -105,7 +105,7 @@ class FakeGLES2InterfaceWithImageSupport : public FakeGLES2Interface {
   GLuint create_image_count_ = 0;
   GLuint destroy_image_count_ = 0;
 };
-
+/*
 class FakePlatformSupport : public TestingPlatformSupport {
   gpu::GpuMemoryBufferManager* GetGpuMemoryBufferManager() override {
     return &test_gpu_memory_buffer_manager_;
@@ -113,7 +113,7 @@ class FakePlatformSupport : public TestingPlatformSupport {
 
  private:
   cc::TestGpuMemoryBufferManager test_gpu_memory_buffer_manager_;
-};
+};*/
 
 }  // anonymous namespace
 
@@ -1302,7 +1302,7 @@ TEST_F(Canvas2DLayerBridgeTest, DISABLED_DeleteIOSurfaceAfterTeardown)
 #endif
 {
   FakeGLES2InterfaceWithImageSupport gl;
-  ScopedTestingPlatformSupport<FakePlatformSupport> platform;
+
   std::unique_ptr<FakeWebGraphicsContext3DProvider> context_provider =
       WTF::WrapUnique(new FakeWebGraphicsContext3DProvider(&gl));
 

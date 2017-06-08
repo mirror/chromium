@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "cc/test/test_gpu_memory_buffer_manager.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/common/capabilities.h"
 #include "public/platform/WebGraphicsContext3DProvider.h"
@@ -13,7 +14,9 @@ namespace blink {
 
 class FakeWebGraphicsContext3DProvider : public WebGraphicsContext3DProvider {
  public:
-  FakeWebGraphicsContext3DProvider(gpu::gles2::GLES2Interface* gl) : gl_(gl) {
+  FakeWebGraphicsContext3DProvider(gpu::gles2::GLES2Interface* gl)
+      : gl_(gl),
+        test_gpu_memory_buffer_manager_(new cc::TestGpuMemoryBufferManager) {
     sk_sp<const GrGLInterface> gl_interface(GrGLCreateNullInterface());
     gr_context_.reset(GrContext::Create(
         kOpenGL_GrBackend,
@@ -27,7 +30,9 @@ class FakeWebGraphicsContext3DProvider : public WebGraphicsContext3DProvider {
   bool IsSoftwareRendering() const override { return false; }
 
   gpu::gles2::GLES2Interface* ContextGL() override { return gl_; }
-
+  gpu::GpuMemoryBufferManager* GetGpuMemoryBufferManager() const override {
+    return test_gpu_memory_buffer_manager_.get();
+  }
   bool BindToCurrentThread() override { return false; }
   void SetLostContextCallback(const base::Closure&) override {}
   void SetErrorMessageCallback(
@@ -37,6 +42,8 @@ class FakeWebGraphicsContext3DProvider : public WebGraphicsContext3DProvider {
  private:
   gpu::gles2::GLES2Interface* gl_;
   sk_sp<GrContext> gr_context_;
+  std::unique_ptr<cc::TestGpuMemoryBufferManager>
+      test_gpu_memory_buffer_manager_;
 };
 
 }  // namespace blink

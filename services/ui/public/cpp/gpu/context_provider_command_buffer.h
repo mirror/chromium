@@ -27,13 +27,14 @@
 namespace gpu {
 class CommandBufferProxyImpl;
 class GpuChannelHost;
+class GpuMemoryBufferManager;
 class TransferBuffer;
 namespace gles2 {
 class GLES2CmdHelper;
 class GLES2Implementation;
 class GLES2TraceImplementation;
-}
-}
+}  // gles2
+}  // gpu
 
 namespace skia_bindings {
 class GrContextForGLES2Interface;
@@ -87,6 +88,8 @@ class ContextProviderCommandBuffer
   // which BindToThread is called.
   void SetDefaultTaskRunner(
       scoped_refptr<base::SingleThreadTaskRunner> default_task_runner);
+
+  gpu::GpuMemoryBufferManager* GetGpuMemoryBufferManager() const;
 
  protected:
   ~ContextProviderCommandBuffer() override;

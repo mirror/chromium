@@ -45,6 +45,7 @@ class SharedMemory;
 }
 
 namespace gpu {
+class GpuMemoryBufferManager;
 struct GpuProcessHostedCALayerTreeParamsMac;
 struct Mailbox;
 struct SyncToken;
@@ -142,6 +143,8 @@ class GPU_EXPORT CommandBufferProxyImpl
   void RemoveDeletionObserver(DeletionObserver* observer);
 
   bool EnsureBackbuffer();
+
+  gpu::GpuMemoryBufferManager* GetGpuMemoryBufferManager() const;
 
   using SwapBuffersCompletionCallback = base::Callback<void(
       const std::vector<ui::LatencyInfo>& latency_info,

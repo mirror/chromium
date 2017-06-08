@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "cc/test/test_gpu_memory_buffer_manager.h"
 #include "gpu/command_buffer/common/capabilities.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/graphics/CanvasColorParams.h"
@@ -29,9 +30,13 @@ class WebGraphicsContext3DProviderForTests
  public:
   WebGraphicsContext3DProviderForTests(
       std::unique_ptr<gpu::gles2::GLES2Interface> gl)
-      : gl_(std::move(gl)) {}
+      : gl_(std::move(gl)),
+        test_gpu_memory_buffer_manager_(new cc::TestGpuMemoryBufferManager) {}
 
   gpu::gles2::GLES2Interface* ContextGL() override { return gl_.get(); }
+  gpu::GpuMemoryBufferManager* GetGpuMemoryBufferManager() const override {
+    return test_gpu_memory_buffer_manager_.get();
+  }
   bool IsSoftwareRendering() const override { return false; }
 
   // Not used by WebGL code.
@@ -45,6 +50,8 @@ class WebGraphicsContext3DProviderForTests
 
  private:
   std::unique_ptr<gpu::gles2::GLES2Interface> gl_;
+  std::unique_ptr<cc::TestGpuMemoryBufferManager>
+      test_gpu_memory_buffer_manager_;
 };
 
 // The target to use when binding a texture to a Chromium image.
