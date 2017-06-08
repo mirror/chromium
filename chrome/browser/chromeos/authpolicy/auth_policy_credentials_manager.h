@@ -27,6 +27,8 @@ template <typename T>
 struct DefaultSingletonTraits;
 }  // namespace base
 
+namespace chromeos {
+
 // A service responsible for tracking user credential status. Created for each
 // Active Directory user profile.
 class AuthPolicyCredentialsManager
@@ -46,6 +48,7 @@ class AuthPolicyCredentialsManager
   void OnShuttingDown() override;
 
  private:
+  friend class AuthPolicyCredentialsManagerTest;
   // Calls AuthPolicyClient::GetUserStatus method.
   void GetUserStatus();
 
@@ -97,7 +100,7 @@ class AuthPolicyCredentialsManagerFactory
  public:
   static AuthPolicyCredentialsManagerFactory* GetInstance();
 
-  static void BuildForProfileIfActiveDirectory(Profile* profile);
+  static KeyedService* BuildForProfileIfActiveDirectory(Profile* profile);
 
  private:
   friend struct base::DefaultSingletonTraits<
@@ -111,5 +114,7 @@ class AuthPolicyCredentialsManagerFactory
 
   DISALLOW_COPY_AND_ASSIGN(AuthPolicyCredentialsManagerFactory);
 };
+
+}  // namespace chromeos
 
 #endif  // CHROME_BROWSER_CHROMEOS_AUTHPOLICY_AUTH_POLICY_CREDENTIALS_MANAGER_H_
