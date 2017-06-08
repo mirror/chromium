@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL serialize wasm to worker assert_unreached: DataCloneError: Failed to execute 'postMessage' on 'Worker': An object could not be cloned. Reached unreachable code
+Harness: the test ran to completion.
+
