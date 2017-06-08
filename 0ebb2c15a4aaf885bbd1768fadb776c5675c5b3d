@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "68d24a1f_6a21627f",
+        "filename": "third_party/WebKit/Source/core/style/NamedGridLinesMap.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-06-08T03:34:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8ae61b71_85ac53c6",
+      "revId": "0ebb2c15a4aaf885bbd1768fadb776c5675c5b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fb8dd6e_78c271d3",
         "filename": "third_party/WebKit/Source/core/style/NamedGridLinesMap.h",
         "patchSetId": 1
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "NamedGridLinesTypes? Even better, make a StyleTypes.h and add all similar type defs that are used throughout style. e.g. CursorList",
       "parentUuid": "4d0c3395_610a2930",
+      "revId": "0ebb2c15a4aaf885bbd1768fadb776c5675c5b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ef7cc1b_1cad4e6a",
+        "filename": "third_party/WebKit/Source/core/style/NamedGridLinesMap.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-06-08T03:34:06Z",
+      "side": 1,
+      "message": "Will make a separate patch for combining all the typedefs into one file and we can discuss there.",
+      "parentUuid": "0594588b_2e1e9c4d",
       "revId": "0ebb2c15a4aaf885bbd1768fadb776c5675c5b3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
