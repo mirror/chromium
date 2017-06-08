@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "0957fc94_418036d7",
+        "filename": "components/viz/display_compositor/host_shared_bitmap_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-08T22:49:59Z",
+      "side": 1,
+      "message": "We shouldn\u0027t be calling CreateSharedMemoryOwnershipEdge for the case of gl memory.\nThe internal implementation will DCHECK since the passed shared_mem_guid is null.\n\nSorry I should have reviewed earlier to avoid all this confusion.",
+      "parentUuid": "40b4bc52_a518ae95",
+      "range": {
+        "startLine": 185,
+        "startChar": 4,
+        "endLine": 185,
+        "endChar": 40
+      },
+      "revId": "d2b477d982a580632ba24c1c2863fdc0e3d02c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57812add_0afd90e8",
         "filename": "gpu/command_buffer/client/mapped_memory.h",
         "patchSetId": 5
