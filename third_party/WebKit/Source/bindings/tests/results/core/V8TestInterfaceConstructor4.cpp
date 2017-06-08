@@ -77,6 +77,7 @@ static void constructor1(const v8::FunctionCallbackInfo<v8::Value>& info) {
   }
 
   TestInterfaceConstructor4* impl = TestInterfaceConstructor4::Create(testInterface4Arg);
+
   v8::Local<v8::Object> wrapper = info.Holder();
   wrapper = impl->AssociateWithWrapper(info.GetIsolate(), &V8TestInterfaceConstructor4::wrapperTypeInfo, wrapper);
   V8SetReturnValue(info, wrapper);
@@ -91,6 +92,7 @@ static void constructor2(const v8::FunctionCallbackInfo<v8::Value>& info) {
     return;
 
   TestInterfaceConstructor4* impl = TestInterfaceConstructor4::Create(usvStringArg);
+
   v8::Local<v8::Object> wrapper = info.Holder();
   wrapper = impl->AssociateWithWrapper(info.GetIsolate(), &V8TestInterfaceConstructor4::wrapperTypeInfo, wrapper);
   V8SetReturnValue(info, wrapper);

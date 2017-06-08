@@ -102,6 +102,7 @@ static void constructor(const v8::FunctionCallbackInfo<v8::Value>& info) {
     return;
 
   TestException* impl = TestException::Create(argument);
+
   v8::Local<v8::Object> wrapper = info.Holder();
   wrapper = impl->AssociateWithWrapper(info.GetIsolate(), &V8TestException::wrapperTypeInfo, wrapper);
   V8SetReturnValue(info, wrapper);
