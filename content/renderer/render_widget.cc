@@ -799,6 +799,9 @@ void RenderWidget::OnWasShown(bool needs_repainting,
         compositor_->CreateLatencyInfoSwapPromiseMonitor(&swap_latency_info);
     // Force this SwapPromiseMonitor to trigger and insert a SwapPromise.
     compositor_->SetNeedsBeginFrame();
+    // Browser expects a new CompositorFrame. SetNeedsBeginFrame() alone doesn't
+    // ensure that we submit a new one if we don't have any updates.
+    compositor_->SetNeedsDisplayOnAllLayers();
   }
 }
 
