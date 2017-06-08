@@ -70,6 +70,30 @@
       "revId": "bc814c65244986dbba435e651d34cf9a6eb9f223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b259015b_f7ca720d",
+        "filename": "services/preferences/public/interfaces/preferences.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T18:05:16Z",
+      "side": 1,
+      "message": "Done. Removed comment.",
+      "parentUuid": "be9e831d_b4dbb0ed",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 14
+      },
+      "revId": "bc814c65244986dbba435e651d34cf9a6eb9f223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
