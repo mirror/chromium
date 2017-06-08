@@ -22,6 +22,30 @@
       "revId": "bc814c65244986dbba435e651d34cf9a6eb9f223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d2d49c5_0908df04",
+        "filename": "services/preferences/public/interfaces/preferences.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-08T16:24:00Z",
+      "side": 1,
+      "message": "AAaah I see, I guess a comment might not be needed, but this comment made me understand where this magic callback type comes from.\n\nSo \"\u003d\u003e (Foo, Bar)\" would mean it takes a Callback\u003cvoid(Foo, Bar)\u003e to be invoked by the impl as a reply?",
+      "parentUuid": "566bffc9_6f8f88c1",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 14
+      },
+      "revId": "bc814c65244986dbba435e651d34cf9a6eb9f223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
