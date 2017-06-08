@@ -49,7 +49,7 @@ add_result_callback(function(res) {
 new SuboriginStyleTest(
     false,
     '<crossorigin="anonymous">, ACAO: ' + server,
-    xoriginAnonStyle(),
+    xoriginAnonStyle('true'),
     'anonymous');
 
 new SuboriginStyleTest(
@@ -61,7 +61,7 @@ new SuboriginStyleTest(
 new SuboriginStyleTest(
     false,
     '<crossorigin="use-credentials">, ACAO: ' + server,
-    xoriginCredsStyle(),
+    xoriginCredsStyle('true'),
     'use-credentials');
 
 new SuboriginStyleTest(

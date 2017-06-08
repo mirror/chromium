@@ -4,21 +4,21 @@ var xorigin_anon_script_string =
   'http://127.0.0.1:8000/security/resources/cors-script.php?value=ran';
 var xorigin_creds_script_string =
   'http://127.0.0.1:8000/security/resources/cors-script.php?' +
-  'credentials=true&value=ran';
+  'ACACredentials=true&value=ran';
 var xorigin_ineligible_script_string =
   'http://127.0.0.1:8000/security/resources/cors-script.php?value=ran';
 
 var xorigin_anon_style_string =
   'http://127.0.0.1:8000/security/resources/cors-style.php?';
 var xorigin_creds_style_string =
-  'http://127.0.0.1:8000/security/resources/cors-style.php?credentials=true';
+  'http://127.0.0.1:8000/security/resources/cors-style.php?ACACredentials=true';
 var xorigin_ineligible_style_string =
   'http://127.0.0.1:8000/security/resources/cors-style.php?';
 
 var xorigin_anon_hello_string =
   'http://127.0.0.1:8000/security/resources/cors-hello.php?';
 var xorigin_creds_hello_string =
-  'http://127.0.0.1:8000/security/resources/cors-hello.php?credentials=true';
+  'http://127.0.0.1:8000/security/resources/cors-hello.php?ACACredentials=true';
 var xorigin_ineligible_hello_string =
   'http://127.0.0.1:8000/security/resources/cors-hello.php?';
 
@@ -27,7 +27,7 @@ var xorigin_font_string =
 
 function gen_cors_src(str, acao_value) {
   if (acao_value) {
-    str = str + '&cors=' + acao_value;
+    str = str + '&ACAOrigin=' + acao_value;
   }
   return str;
 }
