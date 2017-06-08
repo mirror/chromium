@@ -21,6 +21,7 @@ struct CompositorMutations;
 
 // This class is a window onto compositor-owned state. It vends out wrappers
 // around per-element bits of this state.
+// TODO(majidvp): Remove this as it is no longer needed for AnimationWorklet
 class PLATFORM_EXPORT CompositorMutableStateProvider {
  public:
   CompositorMutableStateProvider(cc::LayerTreeImpl*, CompositorMutations*);

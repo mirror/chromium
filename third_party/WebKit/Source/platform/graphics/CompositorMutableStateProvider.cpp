@@ -25,10 +25,10 @@ std::unique_ptr<CompositorMutableState>
 CompositorMutableStateProvider::GetMutableStateFor(DOMNodeId dom_node_id) {
   cc::LayerImpl* main_layer =
       tree_->LayerByElementId(CompositorElementIdFromDOMNodeId(
-          dom_node_id, CompositorElementIdNamespace::kPrimaryCompositorProxy));
+          dom_node_id, CompositorElementIdNamespace::kPrimary));
   cc::LayerImpl* scroll_layer =
       tree_->LayerByElementId(CompositorElementIdFromDOMNodeId(
-          dom_node_id, CompositorElementIdNamespace::kScrollCompositorProxy));
+          dom_node_id, CompositorElementIdNamespace::kScroll));
 
   if (!main_layer && !scroll_layer)
     return nullptr;
