@@ -22,18 +22,18 @@ class SurfaceManager;
 
 namespace viz {
 
-// Browser side implementation of mojom::FrameSinkManager. Manages frame sinks
-// and is intended to replace SurfaceManager.
+// Browser side implementation of mojom::FrameSinkManager, to be used from the
+// UI thread. Manages frame sinks and is intended to replace SurfaceManager.
 class VIZ_HOST_EXPORT FrameSinkManagerHost
     : NON_EXPORTED_BASE(cc::mojom::FrameSinkManagerClient) {
  public:
   FrameSinkManagerHost();
   ~FrameSinkManagerHost() override;
 
-  cc::SurfaceManager* surface_manager();
-
-  // Start Mojo connection to FrameSinkManager. Most tests won't need this.
-  void ConnectToFrameSinkManager();
+  // Binds |this| as a FrameSinkManagerClient to the |request|. May only be
+  // called once.
+  void Connect(cc::mojom::FrameSinkManagerClientRequest request,
+               cc::mojom::FrameSinkManagerPtr ptr);
 
   void AddObserver(FrameSinkObserver* observer);
   void RemoveObserver(FrameSinkObserver* observer);
@@ -53,16 +53,11 @@ class VIZ_HOST_EXPORT FrameSinkManagerHost
   // cc::mojom::FrameSinkManagerClient:
   void OnSurfaceCreated(const cc::SurfaceInfo& surface_info) override;
 
-  // Mojo connection to |frame_sink_manager_|.
+  // Mojo connection to the FrameSinkManager.
   cc::mojom::FrameSinkManagerPtr frame_sink_manager_ptr_;
 
-  // Mojo connection back from |frame_sink_manager_|.
+  // Mojo connection back from the FrameSinkManager.
   mojo::Binding<cc::mojom::FrameSinkManagerClient> binding_;
-
-  // This is owned here so that SurfaceManager will be accessible in process.
-  // Other than using SurfaceManager, access to |frame_sink_manager_| should
-  // happen using Mojo. See http://crbug.com/657959.
-  MojoFrameSinkManager frame_sink_manager_;
 
   // Local observers to that receive OnSurfaceCreated() messages from IPC.
   base::ObserverList<FrameSinkObserver> observers_;
