@@ -1128,6 +1128,11 @@ float WebViewImpl::ExpensiveBackgroundThrottlingMaxDelay() {
   return SettingsImpl()->ExpensiveBackgroundThrottlingMaxDelay();
 }
 
+void WebViewImpl::RequestBeginMainFrameNotExpected(bool new_state) {
+  if (layer_tree_view_)
+    layer_tree_view_->RequestBeginMainFrameNotExpected(new_state);
+}
+
 WebInputEventResult WebViewImpl::HandleKeyEvent(const WebKeyboardEvent& event) {
   DCHECK((event.GetType() == WebInputEvent::kRawKeyDown) ||
          (event.GetType() == WebInputEvent::kKeyDown) ||

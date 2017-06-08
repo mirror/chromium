@@ -759,6 +759,8 @@ class FakeWebViewSchedulerSettings
   float ExpensiveBackgroundThrottlingMaxBudget() override { return 0.0; }
 
   float ExpensiveBackgroundThrottlingMaxDelay() override { return 0.0; }
+
+  void RequestBeginMainFrameNotExpected(bool new_state) {}
 };
 
 }  // namespace
