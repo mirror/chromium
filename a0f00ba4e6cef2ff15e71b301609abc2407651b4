@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "abca9c31_81763bba",
+        "filename": "components/leveldb/env_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-08T21:17:00Z",
+      "side": 1,
+      "message": "Yeah... other than the types of some arguments this is just straight up copy-pasted... suggestions on how to do this better? :)",
+      "parentUuid": "a169471c_7dce5be7",
+      "range": {
+        "startLine": 260,
+        "startChar": 6,
+        "endLine": 260,
+        "endChar": 13
+      },
+      "revId": "a0f00ba4e6cef2ff15e71b301609abc2407651b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d35b2de6_26f60c89",
         "filename": "components/leveldb/env_mojo.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "536908ad_22ca4ba7",
+        "filename": "components/leveldb/env_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-08T21:17:00Z",
+      "side": 1,
+      "message": "Yeah, not sure how this value was decided, but there do seem to be some successes being logged even in the hundreds of milliseconds..",
+      "parentUuid": "d35b2de6_26f60c89",
+      "range": {
+        "startLine": 551,
+        "startChar": 9,
+        "endLine": 551,
+        "endChar": 13
+      },
+      "revId": "a0f00ba4e6cef2ff15e71b301609abc2407651b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5ddd15f_e5bd6bfb",
         "filename": "components/leveldb/env_mojo.h",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-08T20:54:14Z",
       "side": 1,
       "message": "i see this follows what ChromiumEnv does, but i don\u0027t see the utility of have these methods defined in a standalone mixin interface?",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "a0f00ba4e6cef2ff15e71b301609abc2407651b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0beca84_1f83e6b7",
+        "filename": "components/leveldb/env_mojo.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-08T21:17:00Z",
+      "side": 1,
+      "message": "I think what the code is trying to do is have these methods sort of private in the Env implementation, while not needing friend declarations for the Retrier etc classes. But yeah, it\u0027s a bit of a weird pattern, so I\u0027m happy to change that if you want me to (and probably just make these methods and the similar ones in UMALogger public in MojoEnv).",
+      "parentUuid": "f5ddd15f_e5bd6bfb",
       "range": {
         "startLine": 15,
         "startChar": 6,
