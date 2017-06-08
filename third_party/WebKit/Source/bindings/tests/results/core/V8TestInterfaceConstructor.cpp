@@ -79,7 +79,9 @@ static void constructor1(const v8::FunctionCallbackInfo<v8::Value>& info) {
 
   ExecutionContext* executionContext = CurrentExecutionContext(info.GetIsolate());
   Document& document = *ToDocument(CurrentExecutionContext(info.GetIsolate()));
+
   TestInterfaceConstructor* impl = TestInterfaceConstructor::Create(scriptState, executionContext, document, exceptionState);
+
   if (exceptionState.HadException()) {
     return;
   }
@@ -155,7 +157,9 @@ static void constructor2(const v8::FunctionCallbackInfo<v8::Value>& info) {
 
   ExecutionContext* executionContext = CurrentExecutionContext(info.GetIsolate());
   Document& document = *ToDocument(CurrentExecutionContext(info.GetIsolate()));
+
   TestInterfaceConstructor* impl = TestInterfaceConstructor::Create(scriptState, executionContext, document, doubleArg, stringArg, testInterfaceEmptyArg, dictionaryArg, sequenceStringArg, sequenceDictionaryArg, sequenceLongOrTestDictionaryArg, optionalDictionaryArg, optionalTestInterfaceEmptyArg, exceptionState);
+
   if (exceptionState.HadException()) {
     return;
   }
@@ -183,7 +187,9 @@ static void constructor3(const v8::FunctionCallbackInfo<v8::Value>& info) {
   if (UNLIKELY(numArgsPassed <= 1)) {
     ExecutionContext* executionContext = CurrentExecutionContext(info.GetIsolate());
     Document& document = *ToDocument(CurrentExecutionContext(info.GetIsolate()));
+
     TestInterfaceConstructor* impl = TestInterfaceConstructor::Create(scriptState, executionContext, document, arg, exceptionState);
+
     if (exceptionState.HadException()) {
       return;
     }
@@ -198,7 +204,9 @@ static void constructor3(const v8::FunctionCallbackInfo<v8::Value>& info) {
 
   ExecutionContext* executionContext = CurrentExecutionContext(info.GetIsolate());
   Document& document = *ToDocument(CurrentExecutionContext(info.GetIsolate()));
+
   TestInterfaceConstructor* impl = TestInterfaceConstructor::Create(scriptState, executionContext, document, arg, optArg, exceptionState);
+
   if (exceptionState.HadException()) {
     return;
   }
@@ -228,7 +236,9 @@ static void constructor4(const v8::FunctionCallbackInfo<v8::Value>& info) {
 
   ExecutionContext* executionContext = CurrentExecutionContext(info.GetIsolate());
   Document& document = *ToDocument(CurrentExecutionContext(info.GetIsolate()));
+
   TestInterfaceConstructor* impl = TestInterfaceConstructor::Create(scriptState, executionContext, document, arg, arg2, arg3, exceptionState);
+
   if (exceptionState.HadException()) {
     return;
   }
@@ -352,7 +362,9 @@ static void V8TestInterfaceConstructorConstructorCallback(const v8::FunctionCall
   if (UNLIKELY(numArgsPassed <= 1)) {
     ExecutionContext* executionContext = CurrentExecutionContext(info.GetIsolate());
     Document& document = *ToDocument(CurrentExecutionContext(info.GetIsolate()));
+
     TestInterfaceConstructor* impl = TestInterfaceConstructor::CreateForJSConstructor(scriptState, executionContext, document, arg, exceptionState);
+
     if (exceptionState.HadException()) {
       return;
     }
@@ -367,7 +379,9 @@ static void V8TestInterfaceConstructorConstructorCallback(const v8::FunctionCall
 
   ExecutionContext* executionContext = CurrentExecutionContext(info.GetIsolate());
   Document& document = *ToDocument(CurrentExecutionContext(info.GetIsolate()));
+
   TestInterfaceConstructor* impl = TestInterfaceConstructor::CreateForJSConstructor(scriptState, executionContext, document, arg, optArg, exceptionState);
+
   if (exceptionState.HadException()) {
     return;
   }

@@ -157,6 +157,11 @@ def method_context(interface, method, is_visible=True):
     if 'LenientThis' in extended_attributes:
         raise Exception('[LenientThis] is not supported for operations.')
 
+    rcs_counter = 'k' + extended_attributes['RuntimeStatsCounter'] if 'RuntimeStatsCounter' in extended_attributes else ''
+    rcs_bindings_counter = rcs_counter + '_Bindings' if rcs_counter else ''
+    if rcs_counter:
+        includes.add('platform/bindings/RuntimeCallStats.h')
+
     argument_contexts = [
         argument_context(interface, method, argument, index, is_visible=is_visible)
         for index, argument in enumerate(arguments)]
@@ -220,6 +225,8 @@ def method_context(interface, method, is_visible=True):
         'origin_trial_feature_name': v8_utilities.origin_trial_feature_name(method),  # [OriginTrialEnabled]
         'property_attributes': property_attributes(interface, method),
         'returns_promise': method.returns_promise,
+        'rcs_counter': rcs_counter,
+        'rcs_bindings_counter': rcs_bindings_counter,
         'runtime_enabled_feature_name': v8_utilities.runtime_enabled_feature_name(method),  # [RuntimeEnabled]
         'secure_context_test': v8_utilities.secure_context(method, interface),  # [SecureContext]
         'use_output_parameter_for_result': idl_type.use_output_parameter_for_result,

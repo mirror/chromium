@@ -162,7 +162,9 @@ static void V8TestInterfaceNamedConstructorConstructorCallback(const v8::Functio
   }
   if (UNLIKELY(numArgsPassed <= 5)) {
     Document& document = *ToDocument(CurrentExecutionContext(info.GetIsolate()));
+
     TestInterfaceNamedConstructor* impl = TestInterfaceNamedConstructor::CreateForJSConstructor(document, stringArg, defaultUndefinedOptionalBooleanArg, defaultUndefinedOptionalLongArg, defaultUndefinedOptionalStringArg, defaultNullStringOptionalstringArg, exceptionState);
+
     if (exceptionState.HadException()) {
       return;
     }
@@ -176,7 +178,9 @@ static void V8TestInterfaceNamedConstructorConstructorCallback(const v8::Functio
     return;
 
   Document& document = *ToDocument(CurrentExecutionContext(info.GetIsolate()));
+
   TestInterfaceNamedConstructor* impl = TestInterfaceNamedConstructor::CreateForJSConstructor(document, stringArg, defaultUndefinedOptionalBooleanArg, defaultUndefinedOptionalLongArg, defaultUndefinedOptionalStringArg, defaultNullStringOptionalstringArg, optionalStringArg, exceptionState);
+
   if (exceptionState.HadException()) {
     return;
   }

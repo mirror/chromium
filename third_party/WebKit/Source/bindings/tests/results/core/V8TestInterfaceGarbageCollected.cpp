@@ -136,6 +136,7 @@ static void keysMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
   ScriptState* scriptState = ScriptState::ForReceiverObject(info);
 
   Iterator* result = impl->keysForBinding(scriptState, exceptionState);
+
   if (exceptionState.HadException()) {
     return;
   }
@@ -150,6 +151,7 @@ static void entriesMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
   ScriptState* scriptState = ScriptState::ForReceiverObject(info);
 
   Iterator* result = impl->entriesForBinding(scriptState, exceptionState);
+
   if (exceptionState.HadException()) {
     return;
   }
@@ -180,6 +182,7 @@ static void forEachMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
   thisArg = ScriptValue(ScriptState::Current(info.GetIsolate()), info[1]);
 
   impl->forEachForBinding(scriptState, ScriptValue(scriptState, info.Holder()), callback, thisArg, exceptionState);
+
   if (exceptionState.HadException()) {
     return;
   }
@@ -203,6 +206,7 @@ static void hasMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
     return;
 
   bool result = impl->hasForBinding(scriptState, value, exceptionState);
+
   if (exceptionState.HadException()) {
     return;
   }
@@ -227,6 +231,7 @@ static void addMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
     return;
 
   TestInterfaceGarbageCollected* result = impl->addForBinding(scriptState, value, exceptionState);
+
   if (exceptionState.HadException()) {
     return;
   }
@@ -241,6 +246,7 @@ static void clearMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
   ScriptState* scriptState = ScriptState::ForReceiverObject(info);
 
   impl->clearForBinding(scriptState, exceptionState);
+
   if (exceptionState.HadException()) {
     return;
   }
@@ -264,6 +270,7 @@ static void deleteMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
     return;
 
   bool result = impl->deleteForBinding(scriptState, value, exceptionState);
+
   if (exceptionState.HadException()) {
     return;
   }
@@ -278,6 +285,7 @@ static void iteratorMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
   ScriptState* scriptState = ScriptState::ForReceiverObject(info);
 
   Iterator* result = impl->GetIterator(scriptState, exceptionState);
+
   if (exceptionState.HadException()) {
     return;
   }
@@ -296,6 +304,7 @@ static void constructor(const v8::FunctionCallbackInfo<v8::Value>& info) {
     return;
 
   TestInterfaceGarbageCollected* impl = TestInterfaceGarbageCollected::Create(str);
+
   v8::Local<v8::Object> wrapper = info.Holder();
   wrapper = impl->AssociateWithWrapper(info.GetIsolate(), &V8TestInterfaceGarbageCollected::wrapperTypeInfo, wrapper);
   V8SetReturnValue(info, wrapper);

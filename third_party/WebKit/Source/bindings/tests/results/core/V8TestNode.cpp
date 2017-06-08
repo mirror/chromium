@@ -174,6 +174,7 @@ static void hrefByteStringAttributeSetter(v8::Local<v8::Value> v8Value, const v8
 
 static void constructor(const v8::FunctionCallbackInfo<v8::Value>& info) {
   TestNode* impl = TestNode::Create();
+
   v8::Local<v8::Object> wrapper = info.Holder();
   wrapper = impl->AssociateWithWrapper(info.GetIsolate(), &V8TestNode::wrapperTypeInfo, wrapper);
   V8SetReturnValue(info, wrapper);
