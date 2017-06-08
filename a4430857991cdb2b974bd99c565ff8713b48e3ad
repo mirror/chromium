@@ -16,6 +16,24 @@
       "revId": "a4430857991cdb2b974bd99c565ff8713b48e3ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "773f1b79_12b0af6a",
+        "filename": "content/browser/android/content_view_core_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1121,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-08T05:22:37Z",
+      "side": 0,
+      "message": "I\u0027m very impressed with how well you dug into this code and\nunderstood it.\n\nThat makes sense. I agree that right now there\u0027s not much purpose\nfor the code to disable accessibility. However, we do a little bit\nbetter on some other platforms of disabling accessibility if a user\njust turned it on temporarily, which actually happens a lot. So it\u0027d\nbe great if we could create a design that worked well as we add support for detecting that accessibility isn\u0027t needed.\n\nAnother project I\u0027m working on (bug 428494) is switching from a boolean\nenabled/disabled to more granular accessibility flags. We already did\nthis on Windows earlier this year and improved performance for millions\nof users who had only a small lightweight accessibility service running\nand not something taxing like a screen reader.\n\nThe plan will be to enable individual accessibility flags as needed,\nand then hopefully disable them too when no longer accessed for a while.\nThe good news about that approach is that simple enabling accessibility\nat all (i.e. having a WebContentsAccessibility) will not be expensive.\n\nI\u0027m sorry I didn\u0027t give you a really definitive answer but I hope\nthat helps. Ping me sometime to chat about it if you\u0027d like to.",
+      "parentUuid": "72d08c55_a8162745",
+      "revId": "a4430857991cdb2b974bd99c565ff8713b48e3ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
