@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f2d8743b_7524713c",
+        "filename": "services/shape_detection/android/javatests/src/org/chromium/shape_detection/FaceDetectionImplTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-06-08T19:10:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15ff6f3d_150dd73b",
+      "range": {
+        "startLine": 32,
+        "startChar": 31,
+        "endLine": 32,
+        "endChar": 48
+      },
+      "revId": "377b95d0e219790e812668184b1557a1eff378fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "253ca468_e75c0174",
         "filename": "services/shape_detection/android/javatests/src/org/chromium/shape_detection/FaceDetectionImplTest.java",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "377b95d0e219790e812668184b1557a1eff378fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ed2581_9c68b762",
+        "filename": "services/shape_detection/android/javatests/src/org/chromium/shape_detection/FaceDetectionImplTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-06-08T19:10:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "253ca468_e75c0174",
+      "range": {
+        "startLine": 70,
+        "startChar": 51,
+        "endLine": 70,
+        "endChar": 52
+      },
+      "revId": "377b95d0e219790e812668184b1557a1eff378fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
