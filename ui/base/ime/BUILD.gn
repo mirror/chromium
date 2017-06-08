@@ -163,6 +163,7 @@ component("ime") {
   if (is_chromeos) {
     deps += [
       "//chromeos",
+      "//services/ui/public/cpp/input_devices",
       "//ui/chromeos/strings",
       "//ui/events:dom_keycode_converter",
     ]
@@ -170,6 +171,12 @@ component("ime") {
       sources -= [
         "chromeos/ime_keyboard_ozone.cc",
         "chromeos/ime_keyboard_ozone.h",
+      ]
+    }
+    if (use_ozone) {
+      sources += [
+        "chromeos/ime_keyboard_mus.cc",
+        "chromeos/ime_keyboard_mus.h",
       ]
     }
     if (!use_x11) {
