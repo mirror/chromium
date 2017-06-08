@@ -13,6 +13,7 @@
 #include "platform/wtf/Vector.h"
 #include "public/platform/Platform.h"
 #include "public/platform/modules/presentation/WebPresentationClient.h"
+#include "public/platform/modules/presentation/WebScreenAvailability.h"
 
 namespace blink {
 
@@ -67,7 +68,9 @@ void PresentationAvailability::AddedEventListener(
   }
 }
 
-void PresentationAvailability::AvailabilityChanged(bool value) {
+void PresentationAvailability::AvailabilityChanged(
+    WebScreenAvailability availability) {
+  bool value = availability == WebScreenAvailability::kAvailable;
   if (value_ == value)
     return;
 

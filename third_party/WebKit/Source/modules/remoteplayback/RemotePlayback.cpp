@@ -21,6 +21,8 @@
 #include "platform/MemoryCoordinator.h"
 #include "platform/json/JSONValues.h"
 #include "platform/wtf/text/Base64.h"
+#include "public/platform/modules/presentation/WebPresentationClient.h"
+#include "public/platform/modules/presentation/WebScreenAvailability.h"
 
 namespace blink {
 
@@ -202,7 +204,6 @@ ScriptPromise RemotePlayback::prompt(ScriptState* script_state) {
     return promise;
   }
 
-  // TODO(avayvod): this state is not propagated with the new pipeline.
   if (availability_ == WebRemotePlaybackAvailability::kSourceNotCompatible) {
     resolver->Reject(DOMException::Create(
         kNotSupportedError,
@@ -394,12 +395,34 @@ void RemotePlayback::RemotePlaybackDisabled() {
     media_element_->RequestRemotePlaybackStop();
 }
 
-void RemotePlayback::AvailabilityChanged(bool availability) {
+void RemotePlayback::AvailabilityChanged(WebScreenAvailability availability) {
   DCHECK(RuntimeEnabledFeatures::NewRemotePlaybackPipelineEnabled());
   DCHECK(is_listening_);
-  AvailabilityChanged(availability
-                          ? WebRemotePlaybackAvailability::kDeviceAvailable
-                          : WebRemotePlaybackAvailability::kDeviceNotAvailable);
+
+  // TODO(avayvod): Use WebScreenAvailability directly once
+  // WebRemotePlaybackAvailability is gone with the old pipeline.
+  WebRemotePlaybackAvailability remote_playback_availability =
+      WebRemotePlaybackAvailability::kUnknown;
+  switch (availability) {
+    case WebScreenAvailability::kUnknown:
+    case WebScreenAvailability::kUnsupported:
+      NOTREACHED();
+      remote_playback_availability = WebRemotePlaybackAvailability::kUnknown;
+      break;
+    case WebScreenAvailability::kUnavailable:
+      remote_playback_availability =
+          WebRemotePlaybackAvailability::kDeviceNotAvailable;
+      break;
+    case WebScreenAvailability::kSourceNotCompatible:
+      remote_playback_availability =
+          WebRemotePlaybackAvailability::kSourceNotCompatible;
+      break;
+    case WebScreenAvailability::kAvailable:
+      remote_playback_availability =
+          WebRemotePlaybackAvailability::kDeviceAvailable;
+      break;
+  }
+  AvailabilityChanged(remote_playback_availability);
 }
 
 const WebVector<WebURL>& RemotePlayback::Urls() const {
