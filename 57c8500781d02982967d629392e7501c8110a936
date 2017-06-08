@@ -22,6 +22,30 @@
       "revId": "57c8500781d02982967d629392e7501c8110a936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8626dfa_15480032",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-08T22:31:41Z",
+      "side": 1,
+      "message": "I think that would almost work. The concurrent access to num_wake_ups_before_start_ gives me the heebie-jeebies though (I think that\u0027s what you were saying we could fix up?). It\u0027s currently guarded by the idle_workers_stack_lock_ vs. ::WakeUpOneWorker() but if we defer the lock until swap, then we\u0027re racing mutation with that function.",
+      "parentUuid": "792fe3d1_95f90e2b",
+      "range": {
+        "startLine": 276,
+        "startChar": 4,
+        "endLine": 284,
+        "endChar": 5
+      },
+      "revId": "57c8500781d02982967d629392e7501c8110a936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
