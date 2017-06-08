@@ -6262,7 +6262,11 @@ void GLES2DecoderImpl::DoGenerateMipmap(GLenum target) {
   if (enable_srgb && feature_info_->feature_flags().desktop_srgb_support) {
     state_.EnableDisableFramebufferSRGB(enable_srgb);
   }
-  if (enable_srgb && workarounds().decode_encode_srgb_for_generatemipmap) {
+  if (!InitializeSRGBConverter("generateMipmap")) {
+    return;
+  }
+  srgb_converter_->GenerateMipmap(this, tex, target);
+  /*if (enable_srgb && workarounds().decode_encode_srgb_for_generatemipmap) {
     if (target == GL_TEXTURE_2D) {
       if (!InitializeSRGBConverter("generateMipmap")) {
         return;
@@ -6276,7 +6280,7 @@ void GLES2DecoderImpl::DoGenerateMipmap(GLenum target) {
     }
   } else {
     glGenerateMipmapEXT(target);
-  }
+  }*/
 
   if (texture_zero_level_set) {
     // This may have some unwanted side effects, but we expect command buffer
