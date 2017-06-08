@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "a054a896_7126bb66",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-08T17:59:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6ee5995b_fd78b41f",
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ffd75ae_ab874637",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 2
