@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43054717_71219af4",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-08T15:44:11Z",
+      "side": 1,
+      "message": "Just when becoming visible. I think maybe this should be in LTHI, because that is where we set to wait for readytodraw as well, and they should be together. wdyt?\n\nAlso please unit test",
+      "revId": "b474463cde11ecdd6cb4071ad28f4bcdfc9c18f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
