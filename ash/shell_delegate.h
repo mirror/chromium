@@ -39,6 +39,7 @@ namespace ash {
 
 class AccessibilityDelegate;
 class GPUSupport;
+class ImeManager;
 class PaletteDelegate;
 class Shelf;
 struct ShelfItem;
@@ -97,6 +98,9 @@ class ASH_EXPORT ShellDelegate {
 
   // Creates a system-tray delegate. Shell takes ownership of the delegate.
   virtual SystemTrayDelegate* CreateSystemTrayDelegate() = 0;
+
+  // TODO(jamescook): Remove in favor of mojo interface.
+  virtual ImeManager* GetImeManager() = 0;
 
   // Creates a wallpaper delegate. Shell takes ownership of the delegate.
   virtual std::unique_ptr<WallpaperDelegate> CreateWallpaperDelegate() = 0;

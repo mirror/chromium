@@ -42,6 +42,7 @@
 #include "ash/frame/custom_frame_view_ash.h"
 #include "ash/gpu_support.h"
 #include "ash/high_contrast/high_contrast_controller.h"
+#include "ash/ime/ime_manager.h"
 #include "ash/keyboard/keyboard_ui.h"
 #include "ash/laser/laser_pointer_controller.h"
 #include "ash/login/lock_screen_controller.h"
@@ -564,6 +565,7 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
           base::MakeUnique<system::BrightnessControllerChromeos>()),
       cast_config_(base::MakeUnique<CastConfigController>()),
       focus_cycler_(base::MakeUnique<FocusCycler>()),
+      ime_manager_(shell_delegate->GetImeManager()),
       immersive_context_(base::MakeUnique<ImmersiveContextAsh>()),
       keyboard_brightness_control_delegate_(
           base::MakeUnique<KeyboardBrightnessController>()),
@@ -591,6 +593,8 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
       is_touch_hud_projection_enabled_(false) {
   // TODO(sky): better refactor cash/mash dependencies. Perhaps put all cash
   // state on ShellPortClassic. http://crbug.com/671246.
+  LOG(ERROR) << "JAMES new Shell";
+  DCHECK(ime_manager_);
 
   gpu_support_.reset(shell_delegate_->CreateGPUSupport());
 

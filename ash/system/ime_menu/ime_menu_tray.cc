@@ -6,6 +6,7 @@
 
 #include "ash/accessibility_delegate.h"
 #include "ash/ash_constants.h"
+#include "ash/ime/ime_manager.h"
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
 #include "ash/shelf/shelf.h"
@@ -15,7 +16,6 @@
 #include "ash/system/ime_menu/ime_list_view.h"
 #include "ash/system/tray/system_menu_button.h"
 #include "ash/system/tray/system_tray_controller.h"
-#include "ash/system/tray/system_tray_delegate.h"
 #include "ash/system/tray/system_tray_notifier.h"
 #include "ash/system/tray/tray_constants.h"
 #include "ash/system/tray/tray_container.h"
@@ -279,12 +279,14 @@ class ImeMenuListView : public ImeListView {
 
 ImeMenuTray::ImeMenuTray(Shelf* shelf)
     : TrayBackgroundView(shelf),
+      ime_manager_(Shell::Get()->ime_manager()),
       label_(new ImeMenuLabel()),
       show_keyboard_(false),
       force_show_keyboard_(false),
       keyboard_suppressed_(false),
       show_bubble_after_keyboard_hidden_(false),
       weak_ptr_factory_(this) {
+  DCHECK(ime_manager_);
   SetInkDropMode(InkDropMode::ON);
   SetupLabelForTray(label_);
   label_->SetElideBehavior(gfx::TRUNCATE);
@@ -443,11 +445,9 @@ bool ImeMenuTray::PerformAction(const ui::Event& event) {
 void ImeMenuTray::OnIMERefresh() {
   UpdateTrayLabel();
   if (bubble_ && ime_list_view_) {
-    SystemTrayDelegate* delegate = Shell::Get()->system_tray_delegate();
-    IMEInfoList list;
-    delegate->GetAvailableIMEList(&list);
-    IMEPropertyInfoList property_list;
-    delegate->GetCurrentIMEProperties(&property_list);
+    std::vector<IMEInfo> list = ime_manager_->GetAvailableImes();
+    IMEPropertyInfoList property_list = ime_manager_->GetCurrentImeProperties();
+    //JAMES why doesn't a test fail with the above line commented out?
     ime_list_view_->Update(list, property_list, false,
                            ImeListView::SHOW_SINGLE_IME);
   }
@@ -534,7 +534,8 @@ void ImeMenuTray::OnKeyboardSuppressionChanged(bool suppressed) {
 }
 
 void ImeMenuTray::UpdateTrayLabel() {
-  Shell::Get()->system_tray_delegate()->GetCurrentIME(&current_ime_);
+  current_ime_ = ime_manager_->GetCurrentIme();
+  // Shell::Get()->system_tray_delegate()->GetCurrentIME(&current_ime_);
 
   // Updates the tray label based on the current input method.
   if (current_ime_.third_party)
