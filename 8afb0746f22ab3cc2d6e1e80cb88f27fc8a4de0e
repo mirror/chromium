@@ -67,6 +67,24 @@
       "revId": "8afb0746f22ab3cc2d6e1e80cb88f27fc8a4de0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3a190b_3b0d2580",
+        "filename": "chrome/browser/chromeos/input_method/input_method_manager_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000097
+      },
+      "writtenOn": "2017-06-08T20:25:00Z",
+      "side": 1,
+      "message": "Is there a reason not to use base/memory/singleton.h?",
+      "parentUuid": "1e3e2c6b_c9ab0ecf",
+      "revId": "8afb0746f22ab3cc2d6e1e80cb88f27fc8a4de0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
