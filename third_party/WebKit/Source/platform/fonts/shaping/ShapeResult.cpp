@@ -38,6 +38,8 @@
 #include "platform/fonts/shaping/ShapeResultSpacing.h"
 #include "platform/wtf/PtrUtil.h"
 
+#include <base/debug/stack_trace.h>
+
 namespace blink {
 
 float ShapeResult::RunInfo::XPositionForVisualOffset(
@@ -322,10 +324,6 @@ void ShapeResult::ApplySpacing(ShapeResultSpacing& spacing,
             text_run, run->start_index_ + glyph_data.character_index, offset);
         glyph_data.advance += space;
         total_space_for_run += space;
-        if (text_run.Rtl()) {
-          // In RTL, spacing should be added to left side of glyphs.
-          offset += space;
-        }
         glyph_data.offset.Expand(offset_x, offset_y);
       }
       has_vertical_offsets_ |= (glyph_data.offset.Height() != 0);
@@ -333,6 +331,10 @@ void ShapeResult::ApplySpacing(ShapeResultSpacing& spacing,
     run->width_ += total_space_for_run;
     total_space += total_space_for_run;
   }
+
+  if (!text_run.UseTrailingLetterSpacing())
+    total_space -= spacing.LetterSpacing();
+
   width_ += total_space;
   if (spacing.IsVerticalOffset())
     glyph_bounding_box_.SetHeight(glyph_bounding_box_.Height() + total_space);

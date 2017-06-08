@@ -80,6 +80,7 @@ std::string DumpLayout(WebLocalFrame* frame,
           WebFrameContentDumper::kLayoutAsTextNormal;
       if (flags.is_printing())
         layout_text_behavior |= WebFrameContentDumper::kLayoutAsTextPrinting;
+      layout_text_behavior |= WebFrameContentDumper::kLayoutAsTextWithLineTrees;
       result = WebFrameContentDumper::DumpLayoutTreeAsText(frame,
                                                            layout_text_behavior)
                    .Utf8();

@@ -7,6 +7,8 @@
 #include "platform/fonts/FontDescription.h"
 #include "platform/text/TextRun.h"
 
+#include <base/debug/stack_trace.h>
+
 namespace blink {
 
 ShapeResultSpacing::ShapeResultSpacing(const TextRun& run,
@@ -88,8 +90,12 @@ float ShapeResultSpacing::ComputeSpacing(const TextRun& run,
     character = kSpaceCharacter;
 
   float spacing = 0;
-  if (letter_spacing_ && !Character::TreatAsZeroWidthSpace(character))
+  if (letter_spacing_ && !Character::TreatAsZeroWidthSpace(character)) {
     spacing += letter_spacing_;
+    if (IsFirstRun(run) && run.UseLeadingLetterSpacing()) {
+      offset += letter_spacing_;
+    }
+  }
 
   if (treat_as_space &&
       (index || !IsFirstRun(run) || character == kNoBreakSpaceCharacter))
