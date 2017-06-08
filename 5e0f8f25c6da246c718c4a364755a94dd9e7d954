@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae3dfcef_78ee0438",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-06-08T22:40:51Z",
+      "side": 1,
+      "message": "Hopefully someone more familiar with HttpResponseInfo can clarify:\nIs the intent for InitFromPickle() to *only* ever be called on a default-initialized instance?\n\nThat seems to be the assumption in the current implementation -- both for this new property and other ones.\n\nIt is unclear to me when skimming this whether that is a pre-existing bug (i.e. may get bogus values if calling InitFromPickle() on a non-default initialized object), or whether it is a guarantee from the API contract (if it is, then it isn\u0027t mentioned in the documentation).",
+      "range": {
+        "startLine": 317,
+        "startChar": 14,
+        "endLine": 317,
+        "endChar": 44
+      },
+      "revId": "5e0f8f25c6da246c718c4a364755a94dd9e7d954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d63f170_67ef2215",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-06-08T22:40:51Z",
+      "side": 1,
+      "message": "The PAC string format isn\u0027t as compact as it could be. Probably fine, but an observation for cache folks who probably care most about this serializer.",
+      "range": {
+        "startLine": 428,
+        "startChar": 12,
+        "endLine": 428,
+        "endChar": 23
+      },
+      "revId": "5e0f8f25c6da246c718c4a364755a94dd9e7d954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
