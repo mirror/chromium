@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "301e1c45_ad23c25c",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-08T14:59:34Z",
+      "side": 1,
+      "message": "Somewhere we should probably mention that we are, at least for the moment, still using WebKit-style include guards (Foo_h, not THIRD_PARTY_WEBKIT_SOURCE_CORE_HTML_FOO_H_) and Source/-relative includes.",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69168681_717f1ab5",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-08T14:59:34Z",
+      "side": 1,
+      "message": "The very first item is in contradiction to this; the Google style guide still forbids non-const reference arguments. (I realize the doc also has this wording, but...it\u0027s still a little confusing.)",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b26ec201_b445d257",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-08T14:59:34Z",
+      "side": 1,
+      "message": "nit: Sentence-like comments should have a capital letter and a period. Doubly so in style documentation.\n\n\"Comments should be as readable as narrative text, with proper capitalization and punctuation.\"\nhttps://google.github.io/styleguide/cppguide.html#Punctuation,_Spelling_and_Grammar\n\n(here and elsewhere)",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1fff3ae_f19a5157",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-08T14:59:34Z",
+      "side": 1,
+      "message": "nit: While I like pointers, this example seems to break multiple other rules in this very document. For instance, if the first argument cannot be null (it would be slightly odd if it could), why is it not a reference? Also, what are the parameter names here?",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d05b441c_49e2daa8",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-08T14:59:34Z",
+      "side": 1,
+      "message": "nit: to avoid confusing the issue, keep the same member function name (ContextDestroyed) here",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5317f934_4a3c6cf9",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-08T14:59:34Z",
+      "side": 1,
+      "message": "nit: is the variable |frame| or |frame_|? This distracts me, at least, from the meaning of the snippet.",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d780f489_8c2180e4",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-08T14:59:34Z",
+      "side": 1,
+      "message": "Do we really want to continue to cite this? We\u0027ve been moving in a direction toward Chromium/Google\u0027s style of having more documentation than WebKit did, and yutak@ is even trying to organize an effort to add more.\n\nI\u0027d rather link to /docs/documentation_guidelines.md, if anything, but that\u0027s implied by the reference to Chromium style.",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
