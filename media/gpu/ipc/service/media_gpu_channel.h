@@ -10,8 +10,8 @@
 #include "base/unguessable_token.h"
 #include "ipc/ipc_listener.h"
 #include "ipc/ipc_sender.h"
-#include "media/base/android_overlay_mojo_factory.h"
 #include "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.h"
+#include "media/mojo/clients/android_overlay_mojo_factory.h"
 #include "media/video/video_decode_accelerator.h"
 
 namespace media {
