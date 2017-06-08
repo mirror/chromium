@@ -99,7 +99,6 @@ class WebIDBFactory;
 class WebImageCaptureFrameGrabber;
 class WebMIDIAccessor;
 class WebMIDIAccessorClient;
-class WebMediaCapabilitiesClient;
 class WebMediaPlayer;
 class WebMediaRecorderHandler;
 class WebMediaStream;
@@ -661,12 +660,6 @@ class BLINK_PLATFORM_EXPORT Platform {
   // Experimental Framework ----------------------------------------------
 
   virtual WebTrialTokenValidator* TrialTokenValidator() { return nullptr; }
-
-  // Media Capabilities --------------------------------------------------
-
-  virtual WebMediaCapabilitiesClient* MediaCapabilitiesClient() {
-    return nullptr;
-  }
 
   // Memory ------------------------------------------------------------
 

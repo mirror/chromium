@@ -232,7 +232,6 @@ target(link_target_type, "child") {
     "//crypto:platform",
     "//gpu/command_buffer/client",
     "//media",
-    "//media/blink",
     "//mojo/common",
     "//mojo/edk/system",
     "//net",
