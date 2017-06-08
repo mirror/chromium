@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a0ca5fa_c6688a64",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentInstrument.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-08T15:42:11Z",
+      "side": 1,
+      "message": "What about making these interfaces non abstract and return false by default so as to save few implementations in the subclass,\n\nHave you considered defining instrument types to distinguish them? these types might have other usage.",
+      "range": {
+        "startLine": 75,
+        "startChar": 28,
+        "endLine": 75,
+        "endChar": 48
+      },
+      "revId": "b081d5261893fc1272f5028c3cadcef042c3c02a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c56f81ae_7b9e04a2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-08T15:42:11Z",
+      "side": 1,
+      "message": "Rename it to mHideServerAutofillInstruments? so that you can use default value here and positive if statement below.",
+      "range": {
+        "startLine": 321,
+        "startChar": 20,
+        "endLine": 321,
+        "endChar": 50
+      },
+      "revId": "b081d5261893fc1272f5028c3cadcef042c3c02a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
