@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fe18d18_2aece927",
+        "filename": "third_party/WebKit/Source/core/style/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-06-08T01:05:19Z",
+      "side": 1,
+      "message": "missing .h?",
+      "revId": "0ebb2c15a4aaf885bbd1768fadb776c5675c5b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d2df56a_aa4263fa",
+        "filename": "third_party/WebKit/Source/core/style/NamedGridLinesMap.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-06-08T01:05:19Z",
+      "side": 1,
+      "message": "forward declare instead of #including where possible",
+      "revId": "0ebb2c15a4aaf885bbd1768fadb776c5675c5b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fb8dd6e_78c271d3",
+        "filename": "third_party/WebKit/Source/core/style/NamedGridLinesMap.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-06-08T01:05:19Z",
+      "side": 1,
+      "message": "a whole new .h for a single line seems a bit much, is there a good reason not to combine the type defs?",
+      "revId": "0ebb2c15a4aaf885bbd1768fadb776c5675c5b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
