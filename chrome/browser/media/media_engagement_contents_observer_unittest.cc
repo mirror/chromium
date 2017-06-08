@@ -51,6 +51,7 @@ class MediaEngagementContentsObserverTest
     content::WebContentsObserver::MediaPlayerId player_id =
         std::make_pair(nullptr /* RenderFrameHost */, id);
     contents_observer_->MediaStartedPlaying(player_info, player_id);
+    SimulateVolumeChange(id, 1);
   }
 
   void SimulatePlaybackStopped(int id) {
@@ -58,6 +59,12 @@ class MediaEngagementContentsObserverTest
     content::WebContentsObserver::MediaPlayerId player_id =
         std::make_pair(nullptr /* RenderFrameHost */, id);
     contents_observer_->MediaStoppedPlaying(player_info, player_id);
+  }
+
+  void SimulateVolumeChange(int id, double volume) {
+    content::WebContentsObserver::MediaPlayerId player_id =
+        std::make_pair(nullptr /* RenderFrameHost */, id);
+    web_contents()->MediaVolumeChanged(player_id, volume);
   }
 
   void SimulateIsVisible() { contents_observer_->WasShown(); }
@@ -129,6 +136,15 @@ TEST_F(MediaEngagementContentsObserverTest, AreConditionsMet) {
 
   SimulatePlaybackStarted(0);
   EXPECT_TRUE(AreConditionsMet());
+
+  SimulateVolumeChange(0, 0.5);
+  EXPECT_TRUE(AreConditionsMet());
+
+  SimulateVolumeChange(0, 0);
+  EXPECT_FALSE(AreConditionsMet());
+
+  SimulatePlaybackStarted(1);
+  EXPECT_TRUE(AreConditionsMet());
 }
 
 TEST_F(MediaEngagementContentsObserverTest, TimerRunsDependingOnConditions) {
@@ -151,6 +167,15 @@ TEST_F(MediaEngagementContentsObserverTest, TimerRunsDependingOnConditions) {
   EXPECT_FALSE(IsTimerRunning());
 
   SimulatePlaybackStarted(0);
+  EXPECT_TRUE(IsTimerRunning());
+
+  SimulateVolumeChange(0, 0.5);
+  EXPECT_TRUE(IsTimerRunning());
+
+  SimulateVolumeChange(0, 0);
+  EXPECT_FALSE(IsTimerRunning());
+
+  SimulatePlaybackStarted(1);
   EXPECT_TRUE(IsTimerRunning());
 }
 
