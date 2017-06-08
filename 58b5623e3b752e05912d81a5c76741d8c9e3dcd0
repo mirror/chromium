@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfe573ec_17f02494",
+        "filename": "chrome/browser/media/encrypted_media_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-08T00:45:58Z",
+      "side": 1,
+      "message": "Mojo shouldn\u0027t require Pepper CDMs. Or is the CDM registration based on Pepper, so it needs it? Maybe ECK is only built for Pepper?",
+      "range": {
+        "startLine": 299,
+        "startChar": 40,
+        "endLine": 299,
+        "endChar": 45
+      },
+      "revId": "58b5623e3b752e05912d81a5c76741d8c9e3dcd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ca21083_3a376370",
+        "filename": "chrome/browser/media/encrypted_media_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-08T00:45:58Z",
+      "side": 1,
+      "message": "nit: Not sure why this changed. Combine lines (either the one before or the one after).",
+      "range": {
+        "startLine": 324,
+        "startChar": 11,
+        "endLine": 324,
+        "endChar": 17
+      },
+      "revId": "58b5623e3b752e05912d81a5c76741d8c9e3dcd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
