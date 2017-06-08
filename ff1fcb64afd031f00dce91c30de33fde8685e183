@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c5ca1648_7675019d",
+        "filename": "content/browser/dom_storage/dom_storage_context_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-08T00:18:31Z",
+      "side": 1,
+      "message": "Okay can you please fix this?",
+      "parentUuid": "d7203766_e22549ca",
+      "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60b5a9c2_06c5856c",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 2
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "cc19174a_2954c51b",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-08T00:18:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d3b44605_dad189d6",
+      "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "670a4a8b_048032e0",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 2
@@ -104,6 +140,24 @@
       "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07851f6d_6f9c9db9",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-08T00:18:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "02f0f99c_02044c20",
+      "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -147,6 +201,53 @@
         "startChar": 28,
         "endLine": 373,
         "endChar": 39
+      },
+      "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "306794a4_cebf8a5a",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-08T00:18:31Z",
+      "side": 1,
+      "message": "Yes that is true. I am just wondering if we need to differentiate between old and new versions. But probably not useful.",
+      "parentUuid": "0277247e_5f918eeb",
+      "range": {
+        "startLine": 373,
+        "startChar": 28,
+        "endLine": 373,
+        "endChar": 39
+      },
+      "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a3745a_44fd48ce",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-08T00:18:31Z",
+      "side": 1,
+      "message": "just checking. Does anything change wrt old and new implementation?\nWill we see a difference in the benchmarks once this CL lands?",
+      "range": {
+        "startLine": 377,
+        "startChar": 19,
+        "endLine": 377,
+        "endChar": 35
       },
       "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
