@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d929ec94_59ae3372",
+        "filename": "cc/input/scroller_size_metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-06-08T20:24:17Z",
+      "side": 1,
+      "message": "Just to make sure this is clear: \"4% of scrolls\".",
+      "range": {
+        "startLine": 18,
+        "startChar": 53,
+        "endLine": 18,
+        "endChar": 59
+      },
+      "revId": "93cdd161d913cbe72825d01a0e4f612d2c267573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5fa74e41_4449d688",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2207,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-06-08T20:24:17Z",
+      "side": 1,
+      "message": "For clarity, could this chunk of code be moved into a function? We might even be able to move it into the anonymous namespace, and just pass in the dependencies.",
+      "range": {
+        "startLine": 2207,
+        "startChar": 6,
+        "endLine": 2207,
+        "endChar": 16
+      },
+      "revId": "93cdd161d913cbe72825d01a0e4f612d2c267573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c6f312f_51272d9d",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2222,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-06-08T20:24:17Z",
+      "side": 1,
+      "message": "Can we just use one of the normal histogram macros in histogram_macros.h?",
+      "range": {
+        "startLine": 2222,
+        "startChar": 37,
+        "endLine": 2222,
+        "endChar": 42
+      },
+      "revId": "93cdd161d913cbe72825d01a0e4f612d2c267573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d35192df_9b2fdf16",
+        "filename": "third_party/WebKit/Source/platform/Histogram.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-06-08T20:24:17Z",
+      "side": 1,
+      "message": "I think there\u0027s a macro in histogram_macros.h that will let you do this easily without defining this stuff.",
+      "range": {
+        "startLine": 49,
+        "startChar": 56,
+        "endLine": 49,
+        "endChar": 58
+      },
+      "revId": "93cdd161d913cbe72825d01a0e4f612d2c267573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06c68345_1505f931",
+        "filename": "third_party/WebKit/Source/platform/Histogram.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-06-08T20:24:17Z",
+      "side": 1,
+      "message": "I\u0027m not sure why this is needed.",
+      "range": {
+        "startLine": 47,
+        "startChar": 51,
+        "endLine": 47,
+        "endChar": 71
+      },
+      "revId": "93cdd161d913cbe72825d01a0e4f612d2c267573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6bf3ddd1_63751f08",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 17889,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-06-08T20:24:17Z",
+      "side": 1,
+      "message": "Looks like we\u0027re missing one of the metrics?",
+      "range": {
+        "startLine": 17889,
+        "startChar": 30,
+        "endLine": 17889,
+        "endChar": 42
+      },
+      "revId": "93cdd161d913cbe72825d01a0e4f612d2c267573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71b6ceae_6f72f253",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 17892,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-06-08T20:24:17Z",
+      "side": 1,
+      "message": "Don\u0027t include public lists as owners, mention them in the summary.",
+      "range": {
+        "startLine": 17891,
+        "startChar": 28,
+        "endLine": 17892,
+        "endChar": 30
+      },
+      "revId": "93cdd161d913cbe72825d01a0e4f612d2c267573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
