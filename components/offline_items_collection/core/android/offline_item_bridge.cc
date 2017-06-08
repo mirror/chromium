@@ -34,6 +34,8 @@ ScopedJavaLocalRef<jobject> createOfflineItemAndMaybeAddToList(
       static_cast<jint>(item.filter), item.is_transient, item.total_size_bytes,
       item.externally_removed, item.creation_time.ToJavaTime(),
       item.last_accessed_time.ToJavaTime(), item.is_openable,
+      ConvertUTF8ToJavaString(env, item.file_path),
+      ConvertUTF8ToJavaString(env, item.mime_type),
       ConvertUTF8ToJavaString(env, item.page_url.spec()),
       ConvertUTF8ToJavaString(env, item.original_url.spec()),
       item.is_off_the_record, static_cast<jint>(item.state), item.is_resumable,

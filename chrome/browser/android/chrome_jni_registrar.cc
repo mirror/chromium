@@ -76,7 +76,6 @@
 #include "chrome/browser/android/ntp/recent_tabs_page_prefs.h"
 #include "chrome/browser/android/ntp/suggestions_event_reporter_bridge.h"
 #include "chrome/browser/android/offline_pages/background_scheduler_bridge.h"
-#include "chrome/browser/android/offline_pages/downloads/offline_page_download_bridge.h"
 #include "chrome/browser/android/offline_pages/offline_page_bridge.h"
 #include "chrome/browser/android/offline_pages/prefetch/prefetch_background_task.h"
 #include "chrome/browser/android/omnibox/answers_image_bridge.h"
@@ -355,8 +354,8 @@ static base::android::RegistrationMethod kChromeRegisteredMethods[] = {
     {"OAuth2TokenServiceDelegateAndroid",
      OAuth2TokenServiceDelegateAndroid::Register},
     {"OfflinePageBridge", offline_pages::android::RegisterOfflinePageBridge},
-    {"OfflinePageDownloadBridge",
-     offline_pages::android::OfflinePageDownloadBridge::Register},
+/*{"OfflinePageDownloadBridge",
+ offline_pages::android::OfflinePageDownloadBridge::Register},*/
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES_HARNESS)
     {"OfflinePageEvaluationBridge",
      offline_pages::android::OfflinePageEvaluationBridge::Register},

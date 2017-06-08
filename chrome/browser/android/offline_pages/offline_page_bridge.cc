@@ -15,13 +15,18 @@
 #include "base/android/jni_array.h"
 #include "base/android/jni_string.h"
 #include "base/bind.h"
+#include "base/guid.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "chrome/browser/android/offline_pages/downloads/offline_page_content_provider.h"
+#include "chrome/browser/android/offline_pages/downloads/offline_page_infobar_delegate.h"
+#include "chrome/browser/android/offline_pages/downloads/offline_page_notification_bridge.h"
 #include "chrome/browser/android/offline_pages/offline_page_mhtml_archiver.h"
 #include "chrome/browser/android/offline_pages/offline_page_model_factory.h"
 #include "chrome/browser/android/offline_pages/offline_page_utils.h"
 #include "chrome/browser/android/offline_pages/recent_tab_helper.h"
 #include "chrome/browser/android/offline_pages/request_coordinator_factory.h"
+#include "chrome/browser/android/tab_android.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_android.h"
 #include "components/offline_pages/core/background/request_coordinator.h"
@@ -33,6 +38,9 @@
 #include "components/offline_pages/core/recent_tabs/recent_tabs_ui_adapter_delegate.h"
 #include "components/offline_pages/core/request_header/offline_page_header.h"
 #include "content/public/browser/browser_context.h"
+#include "content/public/browser/download_manager.h"
+#include "content/public/browser/download_url_parameters.h"
+#include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/web_contents.h"
 #include "jni/OfflinePageBridge_jni.h"
 #include "jni/SavePageRequest_jni.h"
@@ -50,6 +58,7 @@ namespace android {
 namespace {
 
 const char kOfflinePageBridgeKey[] = "offline-page-bridge";
+const char kOfflinePageContentProviderKey[] = "offline_page_content_provider";
 
 void ToJavaOfflinePageList(JNIEnv* env,
                            jobject j_result_obj,
@@ -78,6 +87,101 @@ ScopedJavaLocalRef<jobject> ToJavaOfflinePageItem(
       ConvertUTF8ToJavaString(env, offline_page.file_path.value()),
       offline_page.file_size, offline_page.creation_time.ToJavaTime(),
       offline_page.access_count, offline_page.last_access_time.ToJavaTime());
+}
+
+// TODO(dewittj): Move to Download UI Adapter.
+content::WebContents* GetWebContentsFromJavaTab(
+    const ScopedJavaGlobalRef<jobject>& j_tab_ref) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  TabAndroid* tab = TabAndroid::GetNativeTab(env, j_tab_ref);
+  if (!tab)
+    return nullptr;
+
+  return tab->web_contents();
+}
+
+void SavePageIfNotNavigatedAway(const GURL& url,
+                                const GURL& original_url,
+                                const ScopedJavaGlobalRef<jobject>& j_tab_ref) {
+  content::WebContents* web_contents = GetWebContentsFromJavaTab(j_tab_ref);
+  if (!web_contents)
+    return;
+
+  // This ignores fragment differences in URLs, bails out only if tab has
+  // navigated away and not just scrolled to a fragment.
+  GURL current_url = web_contents->GetLastCommittedURL();
+  if (!OfflinePageUtils::EqualsIgnoringFragment(current_url, url))
+    return;
+
+  offline_pages::ClientId client_id;
+  client_id.name_space = offline_pages::kDownloadNamespace;
+  client_id.id = base::GenerateGUID();
+  int64_t request_id = OfflinePageModel::kInvalidOfflineId;
+
+  if (offline_pages::IsBackgroundLoaderForDownloadsEnabled()) {
+    // Post disabled request before passing the download task to the tab helper.
+    // This will keep the request persisted in case Chrome is evicted from RAM
+    // or closed by the user.
+    // Note: the 'disabled' status is not persisted (stored in memory) so it
+    // automatically resets if Chrome is re-started.
+    offline_pages::RequestCoordinator* request_coordinator =
+        offline_pages::RequestCoordinatorFactory::GetForBrowserContext(
+            web_contents->GetBrowserContext());
+    if (request_coordinator) {
+      offline_pages::RequestCoordinator::SavePageLaterParams params;
+      params.url = current_url;
+      params.client_id = client_id;
+      params.availability =
+          RequestCoordinator::RequestAvailability::DISABLED_FOR_OFFLINER;
+      params.original_url = original_url;
+      request_id = request_coordinator->SavePageLater(params);
+    } else {
+      DVLOG(1) << "SavePageIfNotNavigatedAway has no valid coordinator.";
+    }
+  }
+
+  // Pass request_id to the current tab's helper to attempt download right from
+  // the tab. If unsuccessful, it'll enable the already-queued request for
+  // background offliner. Same will happen if Chrome is terminated since
+  // 'disabled' status of the request is RAM-stored info.
+  offline_pages::RecentTabHelper* tab_helper =
+      RecentTabHelper::FromWebContents(web_contents);
+  if (!tab_helper) {
+    if (request_id != OfflinePageModel::kInvalidOfflineId) {
+      offline_pages::RequestCoordinator* request_coordinator =
+          offline_pages::RequestCoordinatorFactory::GetForBrowserContext(
+              web_contents->GetBrowserContext());
+      if (request_coordinator)
+        request_coordinator->EnableForOffliner(request_id, client_id);
+      else
+        DVLOG(1) << "SavePageIfNotNavigatedAway has no valid coordinator.";
+    }
+    return;
+  }
+  tab_helper->ObserveAndDownloadCurrentPage(client_id, request_id);
+
+  OfflinePageNotificationBridge notification_bridge;
+  notification_bridge.ShowDownloadingToast();
+}
+
+void DuplicateCheckDone(const GURL& url,
+                        const GURL& original_url,
+                        const ScopedJavaGlobalRef<jobject>& j_tab_ref,
+                        OfflinePageUtils::DuplicateCheckResult result) {
+  if (result == OfflinePageUtils::DuplicateCheckResult::NOT_FOUND) {
+    SavePageIfNotNavigatedAway(url, original_url, j_tab_ref);
+    return;
+  }
+
+  content::WebContents* web_contents = GetWebContentsFromJavaTab(j_tab_ref);
+  if (!web_contents)
+    return;
+
+  bool duplicate_request_exists =
+      result == OfflinePageUtils::DuplicateCheckResult::DUPLICATE_REQUEST_FOUND;
+  OfflinePageInfoBarDelegate::Create(
+      base::Bind(&SavePageIfNotNavigatedAway, url, original_url, j_tab_ref),
+      url, duplicate_request_exists, web_contents);
 }
 
 void CheckPagesExistOfflineCallback(
@@ -251,6 +355,9 @@ static ScopedJavaLocalRef<jobject> GetOfflinePageBridgeForProfile(
     bridge = new OfflinePageBridge(env, profile, offline_page_model);
     offline_page_model->SetUserData(kOfflinePageBridgeKey,
                                     base::WrapUnique(bridge));
+    offline_page_model->SetUserData(
+        kOfflinePageContentProviderKey,
+        OfflinePageContentProvider::Create(profile->GetOriginalProfile()));
   }
 
   return ScopedJavaLocalRef<jobject>(bridge->java_ref());
@@ -323,6 +430,56 @@ void OfflinePageBridge::CheckPagesExistOffline(
   offline_page_model_->CheckPagesExistOffline(
       page_urls, base::Bind(&CheckPagesExistOfflineCallback,
                             ScopedJavaGlobalRef<jobject>(env, j_callback_obj)));
+}
+
+void OfflinePageBridge::StartDownload(JNIEnv* env,
+                                      const JavaParamRef<jobject>& obj,
+                                      const JavaParamRef<jobject>& j_tab) {
+  TabAndroid* tab = TabAndroid::GetNativeTab(env, j_tab);
+  if (!tab)
+    return;
+
+  content::WebContents* web_contents = tab->web_contents();
+  if (!web_contents)
+    return;
+
+  GURL url = web_contents->GetLastCommittedURL();
+  if (url.is_empty())
+    return;
+
+  GURL original_url =
+      offline_pages::OfflinePageUtils::GetOriginalURLFromWebContents(
+          web_contents);
+
+  // If the page is not a HTML page, route to DownloadManager.
+  if (!offline_pages::OfflinePageUtils::CanDownloadAsOfflinePage(
+          url, web_contents->GetContentsMimeType())) {
+    content::DownloadManager* dlm = content::BrowserContext::GetDownloadManager(
+        web_contents->GetBrowserContext());
+    std::unique_ptr<content::DownloadUrlParameters> dl_params(
+        content::DownloadUrlParameters::CreateForWebContentsMainFrame(
+            web_contents, url));
+
+    content::NavigationEntry* entry =
+        web_contents->GetController().GetLastCommittedEntry();
+    // |entry| should not be null since otherwise an empty URL is returned from
+    // calling GetLastCommittedURL and we should bail out earlier.
+    DCHECK(entry);
+    content::Referrer referrer =
+        content::Referrer::SanitizeForRequest(url, entry->GetReferrer());
+    dl_params->set_referrer(referrer);
+
+    dl_params->set_prefer_cache(true);
+    dl_params->set_prompt(false);
+    dlm->DownloadUrl(std::move(dl_params), NO_TRAFFIC_ANNOTATION_YET);
+    return;
+  }
+
+  ScopedJavaGlobalRef<jobject> j_tab_ref(env, j_tab);
+
+  OfflinePageUtils::CheckDuplicateDownloads(
+      tab->GetProfile()->GetOriginalProfile(), url,
+      base::Bind(&DuplicateCheckDone, url, original_url, j_tab_ref));
 }
 
 void OfflinePageBridge::GetAllPages(

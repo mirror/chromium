@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.offlinepages;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -17,9 +18,11 @@ import org.chromium.base.FileUtils;
 import org.chromium.base.Log;
 import org.chromium.base.StreamUtil;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.share.ShareHelper;
@@ -29,8 +32,11 @@ import org.chromium.chrome.browser.snackbar.SnackbarManager.SnackbarController;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModel;
+import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorTabModelObserver;
+import org.chromium.chrome.browser.tabmodel.document.AsyncTabCreationParams;
+import org.chromium.chrome.browser.tabmodel.document.TabDelegate;
 import org.chromium.components.bookmarks.BookmarkId;
 import org.chromium.components.offlinepages.SavePageResult;
 import org.chromium.content_public.browser.LoadUrlParams;
@@ -374,6 +380,37 @@ public class OfflinePageUtils {
         offlinePageBridge.selectPageForOnlineUrl(url, currentTab.getId(),
                 selectPageForOnlineUrlCallback(currentTab.getWebContents(), offlinePageBridge,
                         prepareForSharing));
+    }
+
+    /**
+     * 'Opens' the offline page identified by the GUID.
+     * This is done by creating a new tab and navigating it to the saved local snapshot.
+     * No automatic redirection is happening based on the connection status.
+     * If the item with specified GUID is not found or can't be opened, nothing happens.
+     * @param guid          GUID of the item to open.
+     * @param componentName If specified, targets a specific Activity to open the offline page in.
+     */
+    @CalledByNative
+    private static void openItem(String url, long offlineId) {
+        LoadUrlParams params =
+                OfflinePageUtils.getLoadUrlParamsForOpeningOfflineVersion(url, offlineId);
+        // TODO(shaktisahu): Check if a more accurate component name is actually required.
+        ComponentName componentName = getComponentName();
+        AsyncTabCreationParams asyncParams = componentName == null
+                ? new AsyncTabCreationParams(params)
+                : new AsyncTabCreationParams(params, componentName);
+        final TabDelegate tabDelegate = new TabDelegate(false);
+        tabDelegate.createNewTab(asyncParams, TabLaunchType.FROM_CHROME_UI, Tab.INVALID_TAB_ID);
+    }
+    private static ComponentName getComponentName() {
+        if (!ApplicationStatus.hasVisibleActivities()) return null;
+
+        Activity activity = ApplicationStatus.getLastTrackedFocusedActivity();
+        if (activity instanceof ChromeTabbedActivity) {
+            return activity.getComponentName();
+        }
+
+        return null;
     }
 
     /**

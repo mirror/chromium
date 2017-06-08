@@ -8,17 +8,66 @@
 #include "base/guid.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/offline_pages/core/background/request_coordinator.h"
 #include "components/offline_pages/core/background/save_page_request.h"
 #include "components/offline_pages/core/client_namespace_constants.h"
 #include "components/offline_pages/core/client_policy_controller.h"
-#include "components/offline_pages/core/downloads/download_ui_item.h"
 #include "components/offline_pages/core/offline_page_model.h"
 
 namespace {
 // Value of this constant doesn't matter, only its address is used.
 const char kDownloadUIAdapterKey[] = "";
+
+OfflineItem CreateOfflineItem(const offline_pages::OfflinePageItem& page) {
+  OfflineItem item;
+  item.id = ContentId(kOfflinePageNamespace, page.client_id.id);
+  item.title = base::UTF16ToUTF8(page.title);
+  item.filter = offline_items_collection::OfflineItemFilter::FILTER_PAGE;
+  item.state = offline_items_collection::OfflineItemState::COMPLETE;
+  item.total_size_bytes = page.file_size;
+  item.creation_time = page.creation_time;
+  item.file_path = page.file_path.value();
+  item.mime_type = "text/html";
+  item.page_url = page.url;
+  item.original_url = page.original_url;
+  item.progress.value = 100;
+  item.progress.max = 100;
+  item.progress.unit =
+      offline_items_collection::OfflineItemProgressUnit::PERCENTAGE;
+
+  return item;
+}
+
+OfflineItem CreateOfflineItem(const offline_pages::SavePageRequest& request) {
+  OfflineItem item;
+  item.id = ContentId(kOfflinePageNamespace, request.client_id().id);
+  item.filter = offline_items_collection::OfflineItemFilter::FILTER_PAGE;
+  item.creation_time = request.creation_time();
+  item.total_size_bytes = -1L;
+  item.received_bytes = 0;
+  item.mime_type = "text/html";
+  item.page_url = request.url();
+  item.original_url = request.original_url();
+  switch (request.request_state()) {
+    case offline_pages::SavePageRequest::RequestState::AVAILABLE:
+      item.state = offline_items_collection::OfflineItemState::PENDING;
+      break;
+    case offline_pages::SavePageRequest::RequestState::OFFLINING:
+      item.state = offline_items_collection::OfflineItemState::IN_PROGRESS;
+      break;
+    case offline_pages::SavePageRequest::RequestState::PAUSED:
+      item.state = offline_items_collection::OfflineItemState::PAUSED;
+      break;
+  }
+
+  item.progress.value = 0;
+  item.progress.unit =
+      offline_items_collection::OfflineItemProgressUnit::PERCENTAGE;
+
+  return item;
+}
 }
 
 namespace offline_pages {
@@ -42,7 +91,7 @@ void DownloadUIAdapter::AttachToOfflinePageModel(
 
 DownloadUIAdapter::ItemInfo::ItemInfo(const OfflinePageItem& page,
                                       bool temporarily_hidden)
-    : ui_item(base::MakeUnique<DownloadUIItem>(page)),
+    : ui_item(base::MakeUnique<OfflineItem>(CreateOfflineItem(page))),
       is_request(false),
       offline_id(page.offline_id),
       client_id(page.client_id),
@@ -50,7 +99,7 @@ DownloadUIAdapter::ItemInfo::ItemInfo(const OfflinePageItem& page,
 
 DownloadUIAdapter::ItemInfo::ItemInfo(const SavePageRequest& request,
                                       bool temporarily_hidden)
-    : ui_item(base::MakeUnique<DownloadUIItem>(request)),
+    : ui_item(base::MakeUnique<OfflineItem>(CreateOfflineItem(request))),
       is_request(true),
       offline_id(request.request_id()),
       client_id(request.client_id()),
@@ -160,9 +209,9 @@ void DownloadUIAdapter::OnChanged(const SavePageRequest& request) {
   if (state_ != State::LOADED)
     return;
 
-  const DownloadUIItem& download_ui_item = *(items_[guid]->ui_item);
+  const OfflineItem& offline_item = *(items_[guid]->ui_item);
   for (Observer& observer : observers_)
-    observer.ItemUpdated(download_ui_item);
+    observer.ItemUpdated(offline_item);
 }
 
 void DownloadUIAdapter::OnNetworkProgress(const SavePageRequest& request,
@@ -170,10 +219,10 @@ void DownloadUIAdapter::OnNetworkProgress(const SavePageRequest& request,
   for (auto& item : items_) {
     if (item.second->is_request &&
         item.second->offline_id == request.request_id()) {
-      if (received_bytes == item.second->ui_item->download_progress_bytes)
+      if (received_bytes == item.second->ui_item->received_bytes)
         return;
 
-      item.second->ui_item->download_progress_bytes = received_bytes;
+      item.second->ui_item->received_bytes = received_bytes;
       for (Observer& observer : observers_)
         observer.ItemUpdated(*(item.second->ui_item));
       return;
@@ -192,7 +241,7 @@ void DownloadUIAdapter::TemporaryHiddenStatusChanged(
       item.second->temporarily_hidden = hidden;
       if (hidden) {
         for (Observer& observer : observers_)
-          observer.ItemDeleted(item.second->ui_item->guid);
+          observer.ItemDeleted(item.second->ui_item->id);
       } else {
         for (Observer& observer : observers_)
           observer.ItemAdded(*item.second->ui_item.get());
@@ -201,8 +250,8 @@ void DownloadUIAdapter::TemporaryHiddenStatusChanged(
   }
 }
 
-std::vector<const DownloadUIItem*> DownloadUIAdapter::GetAllItems() const {
-  std::vector<const DownloadUIItem*> result;
+std::vector<const OfflineItem*> DownloadUIAdapter::GetAllItems() const {
+  std::vector<const OfflineItem*> result;
   for (const auto& item : items_) {
     if (delegate_->IsTemporarilyHiddenInUI(item.second->client_id))
       continue;
@@ -211,9 +260,8 @@ std::vector<const DownloadUIItem*> DownloadUIAdapter::GetAllItems() const {
   return result;
 }
 
-const DownloadUIItem* DownloadUIAdapter::GetItem(
-    const std::string& guid) const {
-  DownloadUIItems::const_iterator it = items_.find(guid);
+const OfflineItem* DownloadUIAdapter::GetItem(const std::string& guid) const {
+  OfflineItems::const_iterator it = items_.find(guid);
   if (it == items_.end() ||
       delegate_->IsTemporarilyHiddenInUI(it->second->client_id)) {
     return nullptr;
@@ -222,7 +270,7 @@ const DownloadUIItem* DownloadUIAdapter::GetItem(
 }
 
 void DownloadUIAdapter::DeleteItem(const std::string& guid) {
-  DownloadUIItems::const_iterator it = items_.find(guid);
+  OfflineItems::const_iterator it = items_.find(guid);
   if (it == items_.end())
     return;
 
@@ -234,10 +282,10 @@ void DownloadUIAdapter::DeleteItem(const std::string& guid) {
 }
 
 int64_t DownloadUIAdapter::GetOfflineIdByGuid(const std::string& guid) const {
-  if (deleting_item_ && deleting_item_->ui_item->guid == guid)
+  if (deleting_item_ && deleting_item_->ui_item->id.id == guid)
     return deleting_item_->offline_id;
 
-  DownloadUIItems::const_iterator it = items_.find(guid);
+  OfflineItems::const_iterator it = items_.find(guid);
   if (it != items_.end())
     return it->second->offline_id;
   return 0;
@@ -324,9 +372,9 @@ void DownloadUIAdapter::OnDeletePagesDone(DeletePageResult result) {
 }
 
 void DownloadUIAdapter::AddItemHelper(std::unique_ptr<ItemInfo> item_info) {
-  const std::string& guid = item_info->ui_item->guid;
+  const std::string& guid = item_info->ui_item->id.id;
 
-  DownloadUIItems::const_iterator it = items_.find(guid);
+  OfflineItems::const_iterator it = items_.find(guid);
   // In case when request is completed and morphed into a page, this comes as
   // new page added and request completed. We ignore request completion
   // notification and when page is added, fire 'updated' instead of 'added'.
@@ -338,24 +386,28 @@ void DownloadUIAdapter::AddItemHelper(std::unique_ptr<ItemInfo> item_info) {
   if (state_ != State::LOADED)
     return;
 
-  DownloadUIItem* download_ui_item = items_[guid]->ui_item.get();
+  OfflineItem* offline_item = items_[guid]->ui_item.get();
 
   if (request_to_page_transition) {
-    download_ui_item->download_state = DownloadUIItem::DownloadState::COMPLETE;
+    offline_item->state = offline_items_collection::OfflineItemState::COMPLETE;
+    offline_item->progress.value = 100;
+    offline_item->progress.max = 100L;
+    offline_item->progress.unit =
+        offline_items_collection::OfflineItemProgressUnit::PERCENTAGE;
     if (!items_[guid]->temporarily_hidden) {
       for (Observer& observer : observers_)
-        observer.ItemUpdated(*download_ui_item);
+        observer.ItemUpdated(*offline_item);
     }
   } else {
     if (!items_[guid]->temporarily_hidden) {
       for (Observer& observer : observers_)
-        observer.ItemAdded(*download_ui_item);
+        observer.ItemAdded(*offline_item);
     }
   }
 }
 
 void DownloadUIAdapter::DeleteItemHelper(const std::string& guid) {
-  DownloadUIItems::iterator it = items_.find(guid);
+  OfflineItems::iterator it = items_.find(guid);
   if (it == items_.end())
     return;
   DCHECK(deleting_item_ == nullptr);
@@ -364,7 +416,7 @@ void DownloadUIAdapter::DeleteItemHelper(const std::string& guid) {
 
   if (!deleting_item_->temporarily_hidden && state_ == State::LOADED) {
     for (Observer& observer : observers_)
-      observer.ItemDeleted(guid);
+      observer.ItemDeleted(ContentId(kOfflinePageNamespace, guid));
   }
 
   deleting_item_.reset();

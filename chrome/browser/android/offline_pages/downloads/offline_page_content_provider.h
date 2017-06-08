@@ -1,14 +1,10 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_ANDROID_OFFLINE_PAGES_DOWNLOADS_OFFLINE_PAGE_DOWNLOAD_BRIDGE_H_
-#define CHROME_BROWSER_ANDROID_OFFLINE_PAGES_DOWNLOADS_OFFLINE_PAGE_DOWNLOAD_BRIDGE_H_
+#ifndef CHROME_BROWSER_ANDROID_OFFLINE_PAGES_DOWNLOADS_OFFLINE_PAGE_CONTENT_PROVIDER_H_
+#define CHROME_BROWSER_ANDROID_OFFLINE_PAGES_DOWNLOADS_OFFLINE_PAGE_CONTENT_PROVIDER_H_
 
-#include <stdint.h>
-
-#include "base/android/jni_android.h"
-#include "base/android/jni_weak_ref.h"
 #include "base/macros.h"
 #include "base/supports_user_data.h"
 #include "components/offline_items_collection/core/offline_content_provider.h"
@@ -25,33 +21,17 @@ class BrowserContext;
 namespace offline_pages {
 namespace android {
 
-/**
- * Bridge between C++ and Java for exposing native implementation of offline
- * pages model in managed code.
- */
-class OfflinePageDownloadBridge : public OfflineContentProvider,
-                                  public DownloadUIAdapter::Observer {
+// TODO(shaktisahu): comments.
+class OfflinePageContentProvider : public OfflineContentProvider,
+                                   public DownloadUIAdapter::Observer,
+                                   public base::SupportsUserData::Data {
  public:
-  OfflinePageDownloadBridge(JNIEnv* env,
-                            const base::android::JavaParamRef<jobject>& obj,
-                            DownloadUIAdapter* download_ui_adapter,
-                            content::BrowserContext* browser_context);
-  ~OfflinePageDownloadBridge() override;
+  OfflinePageContentProvider(DownloadUIAdapter* download_ui_adapter,
+                             content::BrowserContext* browser_context);
+  ~OfflinePageContentProvider() override;
 
-  static bool Register(JNIEnv* env);
-
-  void Destroy(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& obj);
-
-  void StartDownload(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& obj,
-      const base::android::JavaParamRef<jobject>& j_tab);
-
-  void ResumePendingRequestImmediately(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& obj);
+  static std::unique_ptr<OfflinePageContentProvider> Create(
+      content::BrowserContext* browser_context);
 
   // OfflineContentProvider implmentation.
   bool AreItemsAvailable() override;
@@ -71,11 +51,9 @@ class OfflinePageDownloadBridge : public OfflineContentProvider,
   void ItemsLoaded() override;
   void ItemAdded(const OfflineItem& item) override;
   void ItemUpdated(const OfflineItem& item) override;
-  void ItemDeleted(const std::string& guid) override;
+  void ItemDeleted(const ContentId& id) override;
 
  private:
-  JavaObjectWeakGlobalRef weak_java_ref_;
-  // Not owned.
   DownloadUIAdapter* download_ui_adapter_;
   // Not owned.
   content::BrowserContext* browser_context_;
@@ -83,10 +61,10 @@ class OfflinePageDownloadBridge : public OfflineContentProvider,
 
   bool items_available_ = false;
 
-  DISALLOW_COPY_AND_ASSIGN(OfflinePageDownloadBridge);
+  DISALLOW_COPY_AND_ASSIGN(OfflinePageContentProvider);
 };
 
 }  // namespace android
 }  // namespace offline_pages
 
-#endif  // CHROME_BROWSER_ANDROID_OFFLINE_PAGES_DOWNLOADS_OFFLINE_PAGE_DOWNLOAD_BRIDGE_H_
+#endif  // CHROME_BROWSER_ANDROID_OFFLINE_PAGES_DOWNLOADS_OFFLINE_PAGE_CONTENT_PROVIDER_H_

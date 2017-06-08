@@ -27,8 +27,6 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.BasicNativePage;
 import org.chromium.chrome.browser.download.DownloadManagerService;
 import org.chromium.chrome.browser.download.DownloadUtils;
-import org.chromium.chrome.browser.offlinepages.downloads.OfflinePageDownloadBridge;
-import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.snackbar.Snackbar;
 import org.chromium.chrome.browser.snackbar.SnackbarManager;
 import org.chromium.chrome.browser.snackbar.SnackbarManager.SnackbarController;
@@ -68,7 +66,6 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
     }
 
     private static class DownloadBackendProvider implements BackendProvider {
-        private OfflinePageDownloadBridge mOfflinePageBridge;
         private SelectionDelegate<DownloadHistoryItemWrapper> mSelectionDelegate;
         private ThumbnailProvider mThumbnailProvider;
 
@@ -76,7 +73,6 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
             Resources resources = ContextUtils.getApplicationContext().getResources();
             int iconSize = resources.getDimensionPixelSize(R.dimen.downloads_item_icon_size);
 
-            mOfflinePageBridge = new OfflinePageDownloadBridge(Profile.getLastUsedProfile());
             mSelectionDelegate = new DownloadItemSelectionDelegate();
             mThumbnailProvider = new ThumbnailProviderImpl(iconSize);
         }
@@ -84,11 +80,6 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
         @Override
         public DownloadDelegate getDownloadDelegate() {
             return DownloadManagerService.getDownloadManagerService();
-        }
-
-        @Override
-        public OfflinePageDownloadBridge getOfflinePageBridge() {
-            return mOfflinePageBridge;
         }
 
         @Override
@@ -103,8 +94,6 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
 
         @Override
         public void destroy() {
-            getOfflinePageBridge().destroy();
-
             mThumbnailProvider.destroy();
             mThumbnailProvider = null;
         }
