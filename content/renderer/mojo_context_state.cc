@@ -28,6 +28,7 @@
 #include "gin/try_catch.h"
 #include "mojo/public/js/constants.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
+#include "third_party/WebKit/public/platform/WebURLRequest.h"
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebScriptSource.h"
@@ -191,9 +192,13 @@ void MojoContextState::FetchModule(const std::string& id) {
   DCHECK(url.is_valid() && !url.is_empty());
   DCHECK(fetched_modules_.find(id) == fetched_modules_.end());
   fetched_modules_.insert(id);
-  ResourceFetcher* fetcher = ResourceFetcher::Create(url);
+
+  blink::WebURLRequest request(url);
+  request.SetRequestContext(blink::WebURLRequest::kRequestContextScript);
+
+  ResourceFetcher* fetcher = ResourceFetcher::Create();
   module_fetchers_.push_back(base::WrapUnique(fetcher));
-  fetcher->Start(frame_, blink::WebURLRequest::kRequestContextScript,
+  fetcher->Start(frame_, request,
                  base::Bind(&MojoContextState::OnFetchModuleComplete,
                             base::Unretained(this), fetcher, id));
 }
