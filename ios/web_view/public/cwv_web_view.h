@@ -39,13 +39,13 @@ CWV_EXPORT
 @property(nonatomic, readonly) BOOL canGoBack;
 @property(nonatomic, readonly) BOOL canGoForward;
 
-// Whether or not this web view is loading a page.
+// Whether or not this web view is loading a page. KVO compliant.
 @property(nonatomic, readonly, getter=isLoading) BOOL loading;
 
-// The URL displayed in the url bar.
+// The URL displayed in the url bar. KVO Compliant.
 @property(nonatomic, readonly) NSURL* visibleURL;
 
-// The URL of the current document.
+// The URL of the current document. KVO Compliant.
 @property(nonatomic, readonly) NSURL* lastCommittedURL;
 
 // The current page title. KVO compliant.

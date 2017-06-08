@@ -87,11 +87,6 @@ void WebRemoteFrameImpl::SetName(const WebString&) {
   NOTREACHED();
 }
 
-WebVector<WebIconURL> WebRemoteFrameImpl::IconURLs(int icon_types_mask) const {
-  NOTREACHED();
-  return WebVector<WebIconURL>();
-}
-
 WebSize WebRemoteFrameImpl::GetScrollOffset() const {
   NOTREACHED();
   return WebSize();
@@ -144,10 +139,6 @@ WebPerformance WebRemoteFrameImpl::Performance() const {
 }
 
 void WebRemoteFrameImpl::DispatchUnloadEvent() {
-  NOTREACHED();
-}
-
-void WebRemoteFrameImpl::ExecuteScript(const WebScriptSource&) {
   NOTREACHED();
 }
 
@@ -215,26 +206,9 @@ void WebRemoteFrameImpl::LoadRequest(const WebURLRequest&) {
   NOTREACHED();
 }
 
-void WebRemoteFrameImpl::LoadHTMLString(const WebData& html,
-                                        const WebURL& base_url,
-                                        const WebURL& unreachable_url,
-                                        bool replace) {
-  NOTREACHED();
-}
-
 void WebRemoteFrameImpl::StopLoading() {
   // TODO(dcheng,japhet): Calling this method should stop loads
   // in all subframes, both remote and local.
-}
-
-WebDataSource* WebRemoteFrameImpl::ProvisionalDataSource() const {
-  NOTREACHED();
-  return nullptr;
-}
-
-WebDataSource* WebRemoteFrameImpl::DataSource() const {
-  NOTREACHED();
-  return nullptr;
 }
 
 void WebRemoteFrameImpl::EnableViewSourceMode(bool enable) {
@@ -300,11 +274,6 @@ void WebRemoteFrameImpl::DispatchMessageEventWithOriginCheck(
 WebRect WebRemoteFrameImpl::SelectionBoundsRect() const {
   NOTREACHED();
   return WebRect();
-}
-
-WebString WebRemoteFrameImpl::LayerTreeAsText(bool show_debug_info) const {
-  NOTREACHED();
-  return WebString();
 }
 
 WebLocalFrame* WebRemoteFrameImpl::CreateLocalChild(
@@ -402,7 +371,7 @@ void WebRemoteFrameImpl::SetReplicatedName(const WebString& name) {
 
 void WebRemoteFrameImpl::SetReplicatedFeaturePolicyHeader(
     const WebParsedFeaturePolicy& parsed_header) {
-  if (RuntimeEnabledFeatures::featurePolicyEnabled()) {
+  if (RuntimeEnabledFeatures::FeaturePolicyEnabled()) {
     WebFeaturePolicy* parent_feature_policy = nullptr;
     if (Parent()) {
       Frame* parent_frame = GetFrame()->Client()->Parent();

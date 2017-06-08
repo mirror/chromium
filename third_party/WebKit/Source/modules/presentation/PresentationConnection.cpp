@@ -225,19 +225,20 @@ void PresentationConnection::AddedEventListener(
     RegisteredEventListener& registered_listener) {
   EventTargetWithInlineData::AddedEventListener(event_type,
                                                 registered_listener);
-  if (event_type == EventTypeNames::connect)
+  if (event_type == EventTypeNames::connect) {
     UseCounter::Count(GetExecutionContext(),
-                      UseCounter::kPresentationConnectionConnectEventListener);
-  else if (event_type == EventTypeNames::close)
+                      WebFeature::kPresentationConnectionConnectEventListener);
+  } else if (event_type == EventTypeNames::close) {
     UseCounter::Count(GetExecutionContext(),
-                      UseCounter::kPresentationConnectionCloseEventListener);
-  else if (event_type == EventTypeNames::terminate)
+                      WebFeature::kPresentationConnectionCloseEventListener);
+  } else if (event_type == EventTypeNames::terminate) {
     UseCounter::Count(
         GetExecutionContext(),
-        UseCounter::kPresentationConnectionTerminateEventListener);
-  else if (event_type == EventTypeNames::message)
+        WebFeature::kPresentationConnectionTerminateEventListener);
+  } else if (event_type == EventTypeNames::message) {
     UseCounter::Count(GetExecutionContext(),
-                      UseCounter::kPresentationConnectionMessageEventListener);
+                      WebFeature::kPresentationConnectionMessageEventListener);
+  }
 }
 
 DEFINE_TRACE(PresentationConnection) {

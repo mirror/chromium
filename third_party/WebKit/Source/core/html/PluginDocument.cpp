@@ -27,7 +27,6 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/HTMLNames.h"
 #include "core/dom/RawDataDocumentParser.h"
-#include "core/frame/FrameOrPlugin.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/LocalFrameView.h"
@@ -167,9 +166,9 @@ PluginDocument::PluginDocument(const DocumentInit& initializer)
     : HTMLDocument(initializer, kPluginDocumentClass) {
   SetCompatibilityMode(kQuirksMode);
   LockCompatibilityMode();
-  UseCounter::Count(*this, UseCounter::kPluginDocument);
+  UseCounter::Count(*this, WebFeature::kPluginDocument);
   if (!IsInMainFrame())
-    UseCounter::Count(*this, UseCounter::kPluginDocumentInFrame);
+    UseCounter::Count(*this, WebFeature::kPluginDocumentInFrame);
 }
 
 DocumentParser* PluginDocument::CreateParser() {

@@ -135,7 +135,7 @@ static void CheckForLegacyProtocolInSubresource(
     return;
   }
   Deprecation::CountDeprecation(
-      document, UseCounter::kLegacyProtocolEmbeddedAsSubresource);
+      document, WebFeature::kLegacyProtocolEmbeddedAsSubresource);
 }
 
 static NavigationPolicy MaybeCheckCSP(
@@ -370,7 +370,7 @@ void FrameLoader::ReplaceDocumentWhileExecutingJavaScriptURL(
   DocumentLoader* document_loader(frame_->GetDocument()->Loader());
 
   UseCounter::Count(*frame_->GetDocument(),
-                    UseCounter::kReplaceDocumentViaJavaScriptURL);
+                    WebFeature::kReplaceDocumentViaJavaScriptURL);
 
   // Prepare a DocumentInit before clearing the frame, because it may need to
   // inherit an aliased security context.
@@ -1273,8 +1273,8 @@ NavigationPolicy FrameLoader::ShouldContinueForNavigationPolicy(
   if (request.Url().PotentiallyDanglingMarkup() &&
       request.Url().ProtocolIsInHTTPFamily()) {
     Deprecation::CountDeprecation(
-        frame_, UseCounter::kCanRequestURLHTTPContainingNewline);
-    if (RuntimeEnabledFeatures::restrictCanRequestURLCharacterSetEnabled())
+        frame_, WebFeature::kCanRequestURLHTTPContainingNewline);
+    if (RuntimeEnabledFeatures::RestrictCanRequestURLCharacterSetEnabled())
       return kNavigationPolicyIgnore;
   }
 
@@ -1575,7 +1575,7 @@ FrameLoader::InsecureNavigationsToUpgrade() const {
 
 void FrameLoader::ModifyRequestForCSP(ResourceRequest& resource_request,
                                       Document* document) const {
-  if (RuntimeEnabledFeatures::embedderCSPEnforcementEnabled() &&
+  if (RuntimeEnabledFeatures::EmbedderCSPEnforcementEnabled() &&
       !RequiredCSP().IsEmpty()) {
     DCHECK(ContentSecurityPolicy::IsValidCSPAttr(RequiredCSP().GetString()));
     resource_request.SetHTTPHeaderField(HTTPNames::Sec_Required_CSP,
@@ -1625,7 +1625,7 @@ void FrameLoader::UpgradeInsecureRequest(ResourceRequest& resource_request,
         (!url.Host().IsNull() &&
          relevant_navigation_set->Contains(url.Host().Impl()->GetHash()))) {
       UseCounter::Count(document,
-                        UseCounter::kUpgradeInsecureRequestsUpgradedRequest);
+                        WebFeature::kUpgradeInsecureRequestsUpgradedRequest);
       url.SetProtocol("https");
       if (url.Port() == 80)
         url.SetPort(443);

@@ -41,14 +41,12 @@ class GroupedPermissionInfoBarDelegate : public ConfirmInfoBarDelegate {
   // Message text to display for an individual permission at |position|.
   base::string16 GetMessageTextFragment(size_t position) const;
 
-  // Toggle accept value for an individual permission at |position|.
-  void ToggleAccept(size_t position, bool new_value);
-
   // ConfirmInfoBarDelegate:
   base::string16 GetMessageText() const override;
   bool Accept() override;
   bool Cancel() override;
   void InfoBarDismissed() override;
+  base::string16 GetLinkText() const override;
 
  protected:
   bool GetAcceptState(size_t position);
@@ -62,6 +60,7 @@ class GroupedPermissionInfoBarDelegate : public ConfirmInfoBarDelegate {
   Type GetInfoBarType() const override;
   int GetButtons() const override;
   base::string16 GetButtonLabel(InfoBarButton button) const override;
+  GURL GetLinkURL() const override;
 
   // InfoBarDelegate:
   bool EqualsDelegate(infobars::InfoBarDelegate* delegate) const override;

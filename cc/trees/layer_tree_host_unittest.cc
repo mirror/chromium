@@ -833,9 +833,9 @@ class LayerTreeHostTestPushNodeOwnerToNodeIdMap : public LayerTreeHostTest {
     const TransformNode* child_transform_node =
         property_trees->transform_tree.FindNodeFromOwningLayerId(child_->id());
     const EffectNode* root_effect_node =
-        property_trees->effect_tree.FindNodeFromOwningLayerId(root_->id());
+        property_trees->effect_tree.Node(root_->effect_tree_index());
     const EffectNode* child_effect_node =
-        property_trees->effect_tree.FindNodeFromOwningLayerId(child_->id());
+        property_trees->effect_tree.Node(child_->effect_tree_index());
     const ClipNode* root_clip_node =
         property_trees->clip_tree.FindNodeFromOwningLayerId(root_->id());
     const ClipNode* child_clip_node =
@@ -856,7 +856,7 @@ class LayerTreeHostTestPushNodeOwnerToNodeIdMap : public LayerTreeHostTest {
         EXPECT_EQ(root_scroll_node->id, root_->scroll_tree_index());
         EXPECT_EQ(root_clip_node, nullptr);
         EXPECT_EQ(child_transform_node, nullptr);
-        EXPECT_EQ(child_effect_node, nullptr);
+        EXPECT_EQ(child_effect_node, root_effect_node);
         EXPECT_EQ(child_clip_node, nullptr);
         EXPECT_EQ(child_scroll_node, nullptr);
         break;
@@ -865,7 +865,7 @@ class LayerTreeHostTestPushNodeOwnerToNodeIdMap : public LayerTreeHostTest {
         // node.
         EXPECT_NE(child_transform_node, nullptr);
         EXPECT_EQ(child_transform_node->id, child_->transform_tree_index());
-        EXPECT_NE(child_effect_node, nullptr);
+        EXPECT_NE(child_effect_node, root_effect_node);
         EXPECT_EQ(child_effect_node->id, child_->effect_tree_index());
         EXPECT_EQ(child_clip_node, nullptr);
         EXPECT_EQ(child_scroll_node, nullptr);
@@ -883,7 +883,7 @@ class LayerTreeHostTestPushNodeOwnerToNodeIdMap : public LayerTreeHostTest {
       case 4:
         // child_ should not create any property tree nodes.
         EXPECT_EQ(child_transform_node, nullptr);
-        EXPECT_EQ(child_effect_node, nullptr);
+        EXPECT_EQ(child_effect_node, root_effect_node);
         EXPECT_EQ(child_clip_node, nullptr);
         EXPECT_EQ(child_scroll_node, nullptr);
         EndTest();
@@ -7794,18 +7794,42 @@ class LayerTreeHostTestQueueImageDecode : public LayerTreeHostTest {
  protected:
   void BeginTest() override { PostSetNeedsCommitToMainThread(); }
 
+  void InitializeSettings(LayerTreeSettings* settings) override {
+    settings->enable_checker_imaging = true;
+  }
+
   void WillBeginMainFrame() override {
     if (!first_)
       return;
     first_ = false;
 
-    sk_sp<const SkImage> image = CreateDiscardableImage(gfx::Size(10, 10));
+    image_ = DrawImage(PaintImage(PaintImage::GetNextId(),
+                                  CreateDiscardableImage(gfx::Size(400, 400))),
+                       SkIRect::MakeWH(400, 400), kNone_SkFilterQuality,
+                       SkMatrix::I(), gfx::ColorSpace());
     auto callback =
         base::Bind(&LayerTreeHostTestQueueImageDecode::ImageDecodeFinished,
                    base::Unretained(this));
     // Schedule the decode twice for the same image.
-    layer_tree_host()->QueueImageDecode(image, callback);
-    layer_tree_host()->QueueImageDecode(image, callback);
+    layer_tree_host()->QueueImageDecode(image_.paint_image(), callback);
+    layer_tree_host()->QueueImageDecode(image_.paint_image(), callback);
+  }
+
+  void ReadyToCommitOnThread(LayerTreeHostImpl* impl) override {
+    if (one_commit_done_)
+      return;
+    EXPECT_TRUE(
+        impl->tile_manager()->checker_image_tracker().ShouldCheckerImage(
+            image_, WhichTree::PENDING_TREE));
+    // Reset the tracker as if it has never seen this image.
+    impl->tile_manager()->checker_image_tracker().ClearTracker(true);
+  }
+
+  void CommitCompleteOnThread(LayerTreeHostImpl* impl) override {
+    one_commit_done_ = true;
+    EXPECT_FALSE(
+        impl->tile_manager()->checker_image_tracker().ShouldCheckerImage(
+            image_, WhichTree::PENDING_TREE));
   }
 
   void ImageDecodeFinished(bool decode_succeeded) {
@@ -7820,7 +7844,9 @@ class LayerTreeHostTestQueueImageDecode : public LayerTreeHostTest {
 
  private:
   bool first_ = true;
+  bool one_commit_done_ = false;
   int finished_decode_count_ = 0;
+  DrawImage image_;
 };
 
 SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestQueueImageDecode);
@@ -7835,7 +7861,7 @@ class LayerTreeHostTestQueueImageDecodeNonLazy : public LayerTreeHostTest {
     first_ = false;
 
     bitmap_.allocN32Pixels(10, 10);
-    sk_sp<const SkImage> image = SkImage::MakeFromBitmap(bitmap_);
+    PaintImage image(PaintImage::GetNextId(), SkImage::MakeFromBitmap(bitmap_));
     auto callback = base::Bind(
         &LayerTreeHostTestQueueImageDecodeNonLazy::ImageDecodeFinished,
         base::Unretained(this));

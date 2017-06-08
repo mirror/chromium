@@ -40,7 +40,6 @@
 #include "core/css/parser/CSSVariableParser.h"
 #include "core/css/parser/FontVariantLigaturesParser.h"
 #include "core/css/parser/FontVariantNumericParser.h"
-#include "core/css/properties/CSSPropertyAPI.h"
 #include "core/css/properties/CSSPropertyAlignmentUtils.h"
 #include "core/css/properties/CSSPropertyAnimationNameUtils.h"
 #include "core/css/properties/CSSPropertyColumnUtils.h"
@@ -103,7 +102,7 @@ bool CSSPropertyParser::ParseValue(
 
   if (rule_type == StyleRule::kViewport) {
     parse_success =
-        (RuntimeEnabledFeatures::cssViewportEnabled() ||
+        (RuntimeEnabledFeatures::CSSViewportEnabled() ||
          IsUASheetBehavior(context->Mode())) &&
         parser.ParseViewportDescriptor(resolved_property, important);
   } else if (rule_type == StyleRule::kFontFace) {
@@ -349,7 +348,7 @@ static CSSValue* ConsumeSteps(CSSParserTokenRange& range) {
   if (ConsumeCommaIncludingWhitespace(args)) {
     switch (args.ConsumeIncludingWhitespace().Id()) {
       case CSSValueMiddle:
-        if (!RuntimeEnabledFeatures::webAnimationsAPIEnabled())
+        if (!RuntimeEnabledFeatures::WebAnimationsAPIEnabled())
           return nullptr;
         position = StepsTimingFunction::StepPosition::MIDDLE;
         break;
@@ -608,7 +607,7 @@ static CSSFunctionValue* ConsumeFilterFunction(
     parsed_value = ParseSingleShadow(args, context->Mode(), false);
   } else {
     if (args.AtEnd()) {
-      context->Count(UseCounter::kCSSFilterFunctionNoArguments);
+      context->Count(WebFeature::kCSSFilterFunctionNoArguments);
       return filter_value;
     }
     if (filter_type == CSSValueBrightness) {
@@ -618,7 +617,7 @@ static CSSFunctionValue* ConsumeFilterFunction(
         parsed_value = ConsumeNumber(args, kValueRangeAll);
     } else if (filter_type == CSSValueHueRotate) {
       parsed_value =
-          ConsumeAngle(args, *context, UseCounter::kUnitlessZeroAngleFilter);
+          ConsumeAngle(args, *context, WebFeature::kUnitlessZeroAngleFilter);
     } else if (filter_type == CSSValueBlur) {
       parsed_value =
           ConsumeLength(args, kHTMLStandardMode, kValueRangeNonNegative);
@@ -688,15 +687,13 @@ static CSSValue* ConsumeTextDecorationLine(CSSParserTokenRange& range) {
 
 static CSSValue* ConsumeOffsetRotate(CSSParserTokenRange& range,
                                      const CSSParserContext& context) {
-  CSSValue* angle =
-      ConsumeAngle(range, context, UseCounter::kUnitlessZeroAngleOffsetRotate);
+  CSSValue* angle = ConsumeAngle(range, context, Optional<WebFeature>());
   CSSValue* keyword = ConsumeIdent<CSSValueAuto, CSSValueReverse>(range);
   if (!angle && !keyword)
     return nullptr;
 
   if (!angle) {
-    angle = ConsumeAngle(range, context,
-                         UseCounter::kUnitlessZeroAngleOffsetRotate);
+    angle = ConsumeAngle(range, context, Optional<WebFeature>());
   }
 
   CSSValueList* list = CSSValueList::CreateSpaceSeparated();
@@ -709,8 +706,9 @@ static CSSValue* ConsumeOffsetRotate(CSSParserTokenRange& range,
 
 // offset: <offset-path> <offset-distance> <offset-rotate>
 bool CSSPropertyParser::ConsumeOffsetShorthand(bool important) {
+  DCHECK(context_);
   const CSSValue* offset_path =
-      CSSPropertyOffsetPathUtils::ConsumeOffsetPath(range_, context_);
+      CSSPropertyOffsetPathUtils::ConsumeOffsetPath(range_, *context_);
   const CSSValue* offset_distance =
       ConsumeLengthOrPercent(range_, context_->Mode(), kValueRangeAll);
   const CSSValue* offset_rotate = ConsumeOffsetRotate(range_, *context_);
@@ -745,7 +743,7 @@ static CSSValue* ConsumePerspective(CSSParserTokenRange& range,
     double perspective;
     if (!ConsumeNumberRaw(range, perspective))
       return nullptr;
-    context->Count(UseCounter::kUnitlessPerspectiveInPerspectiveProperty);
+    context->Count(WebFeature::kUnitlessPerspectiveInPerspectiveProperty);
     parsed_value = CSSPrimitiveValue::Create(
         perspective, CSSPrimitiveValue::UnitType::kPixels);
   }
@@ -967,7 +965,7 @@ static CSSValue* ConsumeBackgroundComposite(CSSParserTokenRange& range) {
 }
 
 static CSSValue* ConsumeMaskSourceType(CSSParserTokenRange& range) {
-  DCHECK(RuntimeEnabledFeatures::cssMaskSourceTypeEnabled());
+  DCHECK(RuntimeEnabledFeatures::CSSMaskSourceTypeEnabled());
   return ConsumeIdent<CSSValueAuto, CSSValueAlpha, CSSValueLuminance>(range);
 }
 
@@ -1526,31 +1524,31 @@ static void CountKeywordOnlyPropertyUsage(CSSPropertyID property,
     return;
   switch (property) {
     case CSSPropertyWebkitAppearance: {
-      UseCounter::Feature feature;
+      WebFeature feature;
       if (value_id == CSSValueNone) {
-        feature = UseCounter::kCSSValueAppearanceNone;
+        feature = WebFeature::kCSSValueAppearanceNone;
       } else {
-        feature = UseCounter::kCSSValueAppearanceNotNone;
+        feature = WebFeature::kCSSValueAppearanceNotNone;
         if (value_id == CSSValueButton)
-          feature = UseCounter::kCSSValueAppearanceButton;
+          feature = WebFeature::kCSSValueAppearanceButton;
         else if (value_id == CSSValueCaret)
-          feature = UseCounter::kCSSValueAppearanceCaret;
+          feature = WebFeature::kCSSValueAppearanceCaret;
         else if (value_id == CSSValueCheckbox)
-          feature = UseCounter::kCSSValueAppearanceCheckbox;
+          feature = WebFeature::kCSSValueAppearanceCheckbox;
         else if (value_id == CSSValueMenulist)
-          feature = UseCounter::kCSSValueAppearanceMenulist;
+          feature = WebFeature::kCSSValueAppearanceMenulist;
         else if (value_id == CSSValueMenulistButton)
-          feature = UseCounter::kCSSValueAppearanceMenulistButton;
+          feature = WebFeature::kCSSValueAppearanceMenulistButton;
         else if (value_id == CSSValueListbox)
-          feature = UseCounter::kCSSValueAppearanceListbox;
+          feature = WebFeature::kCSSValueAppearanceListbox;
         else if (value_id == CSSValueRadio)
-          feature = UseCounter::kCSSValueAppearanceRadio;
+          feature = WebFeature::kCSSValueAppearanceRadio;
         else if (value_id == CSSValueSearchfield)
-          feature = UseCounter::kCSSValueAppearanceSearchField;
+          feature = WebFeature::kCSSValueAppearanceSearchField;
         else if (value_id == CSSValueTextfield)
-          feature = UseCounter::kCSSValueAppearanceTextField;
+          feature = WebFeature::kCSSValueAppearanceTextField;
         else
-          feature = UseCounter::kCSSValueAppearanceOthers;
+          feature = WebFeature::kCSSValueAppearanceOthers;
       }
       context->Count(feature);
       break;
@@ -1559,13 +1557,13 @@ static void CountKeywordOnlyPropertyUsage(CSSPropertyID property,
     case CSSPropertyWebkitUserModify: {
       switch (value_id) {
         case CSSValueReadOnly:
-          context->Count(UseCounter::kCSSValueUserModifyReadOnly);
+          context->Count(WebFeature::kCSSValueUserModifyReadOnly);
           break;
         case CSSValueReadWrite:
-          context->Count(UseCounter::kCSSValueUserModifyReadWrite);
+          context->Count(WebFeature::kCSSValueUserModifyReadWrite);
           break;
         case CSSValueReadWritePlaintextOnly:
-          context->Count(UseCounter::kCSSValueUserModifyReadWritePlaintextOnly);
+          context->Count(WebFeature::kCSSValueUserModifyReadWritePlaintextOnly);
           break;
         default:
           NOTREACHED();
@@ -1629,13 +1627,13 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
     case CSSPropertyScrollSnapDestination:
       // TODO(crbug.com/724912): Retire scroll-snap-destination
       return ConsumePosition(range_, *context_, UnitlessQuirk::kForbid,
-                             Optional<UseCounter::Feature>());
+                             Optional<WebFeature>());
     case CSSPropertyObjectPosition:
       return ConsumePosition(range_, *context_, UnitlessQuirk::kForbid,
-                             UseCounter::kThreeValuedPositionObjectPosition);
+                             WebFeature::kThreeValuedPositionObjectPosition);
     case CSSPropertyPerspectiveOrigin:
       return ConsumePosition(range_, *context_, UnitlessQuirk::kForbid,
-                             UseCounter::kThreeValuedPositionPerspectiveOrigin);
+                             WebFeature::kThreeValuedPositionPerspectiveOrigin);
     case CSSPropertyWebkitHyphenateCharacter:
     case CSSPropertyWebkitLocale:
       return ConsumeLocale(range_);
@@ -1707,7 +1705,7 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
     case CSSPropertyBackdropFilter:
       return ConsumeFilter(range_, context_);
     case CSSPropertyTextDecoration:
-      DCHECK(!RuntimeEnabledFeatures::css3TextDecorationsEnabled());
+      DCHECK(!RuntimeEnabledFeatures::CSS3TextDecorationsEnabled());
     // fallthrough
     case CSSPropertyWebkitTextDecorationsInEffect:
     case CSSPropertyTextDecorationLine:
@@ -1731,9 +1729,6 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
     case CSSPropertyMarkerEnd:
     case CSSPropertyMask:
       return ConsumeNoneOrURI(range_, context_);
-    case CSSPropertyFlexGrow:
-    case CSSPropertyFlexShrink:
-      return ConsumeNumber(range_, kValueRangeNonNegative);
     case CSSPropertyWebkitBoxFlex:
       return ConsumeNumber(range_, kValueRangeAll);
     case CSSPropertyStrokeWidth:
@@ -1795,18 +1790,18 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
     case CSSPropertyGridColumnStart:
     case CSSPropertyGridRowEnd:
     case CSSPropertyGridRowStart:
-      DCHECK(RuntimeEnabledFeatures::cssGridLayoutEnabled());
+      DCHECK(RuntimeEnabledFeatures::CSSGridLayoutEnabled());
       return ConsumeGridLine(range_);
     case CSSPropertyGridAutoColumns:
     case CSSPropertyGridAutoRows:
-      DCHECK(RuntimeEnabledFeatures::cssGridLayoutEnabled());
+      DCHECK(RuntimeEnabledFeatures::CSSGridLayoutEnabled());
       return ConsumeGridTrackList(range_, context_->Mode(), kGridAuto);
     case CSSPropertyGridTemplateColumns:
     case CSSPropertyGridTemplateRows:
-      DCHECK(RuntimeEnabledFeatures::cssGridLayoutEnabled());
+      DCHECK(RuntimeEnabledFeatures::CSSGridLayoutEnabled());
       return ConsumeGridTemplatesRowsOrColumns(range_, context_->Mode());
     case CSSPropertyGridTemplateAreas:
-      DCHECK(RuntimeEnabledFeatures::cssGridLayoutEnabled());
+      DCHECK(RuntimeEnabledFeatures::CSSGridLayoutEnabled());
       return ConsumeGridTemplateAreas(range_);
     default:
       return nullptr;
@@ -2210,7 +2205,7 @@ static CSSValue* ConsumeSingleViewportDescriptor(
 
 bool CSSPropertyParser::ParseViewportDescriptor(CSSPropertyID prop_id,
                                                 bool important) {
-  DCHECK(RuntimeEnabledFeatures::cssViewportEnabled() ||
+  DCHECK(RuntimeEnabledFeatures::CSSViewportEnabled() ||
          IsUASheetBehavior(context_->Mode()));
 
   switch (prop_id) {
@@ -2604,7 +2599,7 @@ static bool ConsumeBackgroundPosition(CSSParserTokenRange& range,
     CSSValue* position_x = nullptr;
     CSSValue* position_y = nullptr;
     if (!ConsumePosition(range, *context, unitless,
-                         UseCounter::kThreeValuedPositionBackground, position_x,
+                         WebFeature::kThreeValuedPositionBackground, position_x,
                          position_y))
       return false;
     AddBackgroundValue(result_x, position_x);
@@ -2686,7 +2681,7 @@ bool CSSPropertyParser::ConsumeBackgroundShorthand(
         } else if (property == CSSPropertyBackgroundPositionX ||
                    property == CSSPropertyWebkitMaskPositionX) {
           if (!ConsumePosition(range_, *context_, UnitlessQuirk::kForbid,
-                               UseCounter::kThreeValuedPositionBackground,
+                               WebFeature::kThreeValuedPositionBackground,
                                value, value_y))
             continue;
         } else if (property == CSSPropertyBackgroundSize ||
@@ -2759,7 +2754,7 @@ bool CSSPropertyParser::ConsumeBackgroundShorthand(
 bool CSSPropertyParser::ConsumeGridItemPositionShorthand(
     CSSPropertyID shorthand_id,
     bool important) {
-  DCHECK(RuntimeEnabledFeatures::cssGridLayoutEnabled());
+  DCHECK(RuntimeEnabledFeatures::CSSGridLayoutEnabled());
   const StylePropertyShorthand& shorthand = shorthandForProperty(shorthand_id);
   DCHECK_EQ(shorthand.length(), 2u);
   CSSValue* start_value = ConsumeGridLine(range_);
@@ -2786,7 +2781,7 @@ bool CSSPropertyParser::ConsumeGridItemPositionShorthand(
 }
 
 bool CSSPropertyParser::ConsumeGridAreaShorthand(bool important) {
-  DCHECK(RuntimeEnabledFeatures::cssGridLayoutEnabled());
+  DCHECK(RuntimeEnabledFeatures::CSSGridLayoutEnabled());
   DCHECK_EQ(gridAreaShorthand().length(), 4u);
   CSSValue* row_start_value = ConsumeGridLine(range_);
   if (!row_start_value)
@@ -2902,7 +2897,7 @@ bool CSSPropertyParser::ConsumeGridTemplateRowsAndAreasAndColumns(
 
 bool CSSPropertyParser::ConsumeGridTemplateShorthand(CSSPropertyID shorthand_id,
                                                      bool important) {
-  DCHECK(RuntimeEnabledFeatures::cssGridLayoutEnabled());
+  DCHECK(RuntimeEnabledFeatures::CSSGridLayoutEnabled());
   DCHECK_EQ(gridTemplateShorthand().length(), 3u);
 
   CSSParserTokenRange range_copy = range_;
@@ -2967,7 +2962,7 @@ static CSSValueList* ConsumeImplicitAutoFlow(CSSParserTokenRange& range,
 }
 
 bool CSSPropertyParser::ConsumeGridShorthand(bool important) {
-  DCHECK(RuntimeEnabledFeatures::cssGridLayoutEnabled());
+  DCHECK(RuntimeEnabledFeatures::CSSGridLayoutEnabled());
   DCHECK_EQ(shorthandForProperty(CSSPropertyGrid).length(), 8u);
 
   CSSParserTokenRange range_copy = range_;
@@ -3067,7 +3062,7 @@ bool CSSPropertyParser::ConsumeGridShorthand(bool important) {
 }
 
 bool CSSPropertyParser::ConsumePlaceContentShorthand(bool important) {
-  DCHECK(RuntimeEnabledFeatures::cssGridLayoutEnabled());
+  DCHECK(RuntimeEnabledFeatures::CSSGridLayoutEnabled());
   DCHECK_EQ(shorthandForProperty(CSSPropertyPlaceContent).length(),
             static_cast<unsigned>(2));
 
@@ -3092,7 +3087,7 @@ bool CSSPropertyParser::ConsumePlaceContentShorthand(bool important) {
 }
 
 bool CSSPropertyParser::ConsumePlaceItemsShorthand(bool important) {
-  DCHECK(RuntimeEnabledFeatures::cssGridLayoutEnabled());
+  DCHECK(RuntimeEnabledFeatures::CSSGridLayoutEnabled());
   DCHECK_EQ(shorthandForProperty(CSSPropertyPlaceItems).length(),
             static_cast<unsigned>(2));
 
@@ -3122,7 +3117,7 @@ bool CSSPropertyParser::ConsumePlaceItemsShorthand(bool important) {
 }
 
 bool CSSPropertyParser::ConsumePlaceSelfShorthand(bool important) {
-  DCHECK(RuntimeEnabledFeatures::cssGridLayoutEnabled());
+  DCHECK(RuntimeEnabledFeatures::CSSGridLayoutEnabled());
   DCHECK_EQ(shorthandForProperty(CSSPropertyPlaceSelf).length(),
             static_cast<unsigned>(2));
 
@@ -3172,19 +3167,6 @@ bool CSSPropertyParser::ParseShorthand(CSSPropertyID unresolved_property,
                         CSSPropertyWebkitMarginCollapse, *before_collapse,
                         important);
       if (range_.AtEnd()) {
-        AddParsedProperty(CSSPropertyWebkitMarginAfterCollapse,
-                          CSSPropertyWebkitMarginCollapse, *before_collapse,
-                          important);
-        if (range_.AtEnd()) {
-          AddParsedProperty(CSSPropertyWebkitMarginAfterCollapse,
-                            CSSPropertyWebkitMarginCollapse, *before_collapse,
-                            important);
-          return true;
-        }
-        id = range_.ConsumeIncludingWhitespace().Id();
-        if (!CSSParserFastPaths::IsValidKeywordPropertyAndValue(
-                CSSPropertyWebkitMarginAfterCollapse, id, context_->Mode()))
-          return false;
         AddParsedProperty(CSSPropertyWebkitMarginAfterCollapse,
                           CSSPropertyWebkitMarginCollapse, *before_collapse,
                           important);
@@ -3248,7 +3230,7 @@ bool CSSPropertyParser::ParseShorthand(CSSPropertyID unresolved_property,
       return ConsumeAnimationShorthand(transitionShorthandForParsing(), false,
                                        important);
     case CSSPropertyTextDecoration:
-      DCHECK(RuntimeEnabledFeatures::css3TextDecorationsEnabled());
+      DCHECK(RuntimeEnabledFeatures::CSS3TextDecorationsEnabled());
       return ConsumeShorthandGreedily(textDecorationShorthand(), important);
     case CSSPropertyMargin:
       return Consume4Values(marginShorthand(), important);
@@ -3387,7 +3369,7 @@ bool CSSPropertyParser::ParseShorthand(CSSPropertyID unresolved_property,
     case CSSPropertyWebkitMask:
       return ConsumeBackgroundShorthand(webkitMaskShorthand(), important);
     case CSSPropertyGridGap: {
-      DCHECK(RuntimeEnabledFeatures::cssGridLayoutEnabled());
+      DCHECK(RuntimeEnabledFeatures::CSSGridLayoutEnabled());
       DCHECK_EQ(shorthandForProperty(CSSPropertyGridGap).length(), 2u);
       CSSValue* row_gap = ConsumeLengthOrPercent(range_, context_->Mode(),
                                                  kValueRangeNonNegative);

@@ -46,7 +46,7 @@
       'Android Cronet MIPS Builder': 'android_cronet_release_bot_minimal_symbols_mipsel',
       'Android Cronet x86 Builder': 'android_cronet_release_bot_minimal_symbols_x86',
       'Android Cronet x86 Builder (dbg)': 'android_cronet_debug_static_bot_x86',
-      'Android MIPS Builder (dbg)': 'android_debug_static_minimal_symbols_mipsel',
+      'Android MIPS Builder (dbg)': 'android_debug_static_bot_mipsel',
       'Android N5X Swarm Builder': 'android_release_bot_minimal_symbols_arm64',
       'Android arm Builder (dbg)': 'android_debug_static_bot',
       'Android arm64 Builder (dbg)': 'android_debug_static_bot_arm64',
@@ -215,6 +215,7 @@
       'Win 10 Fast Ring': 'release_trybot',
       'Windows deterministic': 'release_bot_x86_minimal_symbols',
       'Windows Clang deterministic': 'clang_release_bot_minimal_symbols_x86',
+      'Windows Clang Analyzer': 'windows_chromium_analysis',
     },
 
     'chromium.goma': {
@@ -384,7 +385,7 @@
       'V8 Android GN (dbg)': 'android_debug_bot',
       'V8 Linux GN': 'release_bot',
       'V8-Blink Linux 64': 'release_bot',
-      'V8-Blink Linux 64 - ignition': 'release_bot',
+      'V8-Blink Linux 64 - future': 'release_bot',
       'V8-Blink Linux 64 (dbg)': 'debug_bot',
       'V8-Blink Mac': 'release_bot',
       'V8-Blink Win': 'release_bot_x86_minimal_symbols',
@@ -813,8 +814,8 @@
       'android', 'debug_static_bot', 'x86',
     ],
 
-    'android_debug_static_minimal_symbols_mipsel': [
-      'android', 'debug', 'static', 'minimal_symbols', 'mipsel',
+    'android_debug_static_bot_mipsel': [
+      'android', 'debug_static_bot', 'minimal_symbols', 'mipsel',
     ],
 
     'android_debug_trybot_java_coverage': [
@@ -1295,6 +1296,10 @@
     'ios': [ 'error'],
 
     'linux_chromium_analysis': [
+      'analysis'
+    ],
+
+    'windows_chromium_analysis': [
       'analysis'
     ],
 
@@ -1901,10 +1906,7 @@
     },
 
     'v8_future': {
-      # TODO(machenbach): Switch back to v8_enable_future=true when
-      # turbofan+ignition are stable.
-      # http://crbug.com/682617
-      'gn_args': 'v8_disable_turbo=true',
+      'gn_args': 'v8_enable_future=true',
     },
 
     'v8_heap': {

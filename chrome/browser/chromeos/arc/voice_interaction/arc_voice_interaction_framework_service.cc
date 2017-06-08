@@ -174,7 +174,9 @@ void ArcVoiceInteractionFrameworkService::OnInstanceReady() {
       ARC_GET_INSTANCE_FOR_METHOD(
           arc_bridge_service()->voice_interaction_framework(), Init);
   DCHECK(framework_instance);
-  framework_instance->Init(binding_.CreateInterfacePtrAndBind());
+  mojom::VoiceInteractionFrameworkHostPtr host_proxy;
+  binding_.Bind(mojo::MakeRequest(&host_proxy));
+  framework_instance->Init(std::move(host_proxy));
 
   // Temporary shortcut added to enable the metalayer experiment.
   ash::Shell::Get()->accelerator_controller()->Register(
@@ -303,6 +305,17 @@ void ArcVoiceInteractionFrameworkService::HideMetalayer() {
   SetMetalayerVisibility(false);
 }
 
+void ArcVoiceInteractionFrameworkService::StartVoiceInteractionSetupWizard() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  arc::mojom::VoiceInteractionFrameworkInstance* framework_instance =
+      ARC_GET_INSTANCE_FOR_METHOD(
+          arc_bridge_service()->voice_interaction_framework(),
+          StartVoiceInteractionSetupWizard);
+  if (!framework_instance)
+    return;
+  framework_instance->StartVoiceInteractionSetupWizard();
+}
+
 void ArcVoiceInteractionFrameworkService::SetMetalayerVisibility(bool visible) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   mojom::VoiceInteractionFrameworkInstance* framework_instance =
@@ -315,6 +328,32 @@ void ArcVoiceInteractionFrameworkService::SetMetalayerVisibility(bool visible) {
     return;
   }
   framework_instance->SetMetalayerVisibility(visible);
+}
+
+void ArcVoiceInteractionFrameworkService::SetVoiceInteractionEnabled(
+    bool enable) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  mojom::VoiceInteractionFrameworkInstance* framework_instance =
+      ARC_GET_INSTANCE_FOR_METHOD(
+          arc_bridge_service()->voice_interaction_framework(),
+          SetVoiceInteractionEnabled);
+  if (!framework_instance)
+    return;
+  framework_instance->SetVoiceInteractionEnabled(enable);
+}
+
+void ArcVoiceInteractionFrameworkService::SetVoiceInteractionContextEnabled(
+    bool enable) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  mojom::VoiceInteractionFrameworkInstance* framework_instance =
+      ARC_GET_INSTANCE_FOR_METHOD(
+          arc_bridge_service()->voice_interaction_framework(),
+          SetVoiceInteractionContextEnabled);
+  if (!framework_instance)
+    return;
+  framework_instance->SetVoiceInteractionContextEnabled(enable);
 }
 
 void ArcVoiceInteractionFrameworkService::StartSessionFromUserInteraction(

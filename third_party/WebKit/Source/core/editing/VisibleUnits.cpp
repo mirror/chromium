@@ -305,19 +305,8 @@ static Node* ParentEditingBoundary(const PositionTemplate<Strategy>& position) {
   return boundary;
 }
 
-enum BoundarySearchContextAvailability {
-  kDontHaveMoreContext,
-  kMayHaveMoreContext
-};
-
-typedef unsigned (*BoundarySearchFunction)(const UChar*,
-                                           unsigned length,
-                                           unsigned offset,
-                                           BoundarySearchContextAvailability,
-                                           bool& need_more_context);
-
 template <typename Strategy>
-static PositionTemplate<Strategy> PreviousBoundary(
+static PositionTemplate<Strategy> PreviousBoundaryAlgorithm(
     const VisiblePositionTemplate<Strategy>& c,
     BoundarySearchFunction search_function) {
   DCHECK(c.IsValid()) << c;
@@ -414,7 +403,7 @@ static PositionTemplate<Strategy> PreviousBoundary(
 }
 
 template <typename Strategy>
-static PositionTemplate<Strategy> NextBoundary(
+static PositionTemplate<Strategy> NextBoundaryAlgorithm(
     const VisiblePositionTemplate<Strategy>& c,
     BoundarySearchFunction search_function) {
   DCHECK(c.IsValid()) << c;
@@ -528,167 +517,26 @@ static PositionTemplate<Strategy> NextBoundary(
   return pos;
 }
 
-// ---------
-
-static unsigned StartWordBoundary(
-    const UChar* characters,
-    unsigned length,
-    unsigned offset,
-    BoundarySearchContextAvailability may_have_more_context,
-    bool& need_more_context) {
-  TRACE_EVENT0("blink", "startWordBoundary");
-  DCHECK(offset);
-  if (may_have_more_context &&
-      !StartOfLastWordBoundaryContext(characters, offset)) {
-    need_more_context = true;
-    return 0;
-  }
-  need_more_context = false;
-  int start, end;
-  U16_BACK_1(characters, 0, offset);
-  FindWordBoundary(characters, length, offset, &start, &end);
-  return start;
+Position NextBoundary(const VisiblePosition& visible_position,
+                      BoundarySearchFunction search_function) {
+  return NextBoundaryAlgorithm(visible_position, search_function);
 }
 
-template <typename Strategy>
-static PositionTemplate<Strategy> StartOfWordAlgorithm(
-    const VisiblePositionTemplate<Strategy>& c,
-    EWordSide side) {
-  DCHECK(c.IsValid()) << c;
-  // TODO(yosin) This returns a null VP for c at the start of the document
-  // and |side| == |LeftWordIfOnBoundary|
-  VisiblePositionTemplate<Strategy> p = c;
-  if (side == kRightWordIfOnBoundary) {
-    // at paragraph end, the startofWord is the current position
-    if (IsEndOfParagraph(c))
-      return c.DeepEquivalent();
-
-    p = NextPositionOf(c);
-    if (p.IsNull())
-      return c.DeepEquivalent();
-  }
-  return PreviousBoundary(p, StartWordBoundary);
+PositionInFlatTree NextBoundary(
+    const VisiblePositionInFlatTree& visible_position,
+    BoundarySearchFunction search_function) {
+  return NextBoundaryAlgorithm(visible_position, search_function);
 }
 
-Position StartOfWordPosition(const VisiblePosition& position, EWordSide side) {
-  return StartOfWordAlgorithm<EditingStrategy>(position, side);
+Position PreviousBoundary(const VisiblePosition& visible_position,
+                          BoundarySearchFunction search_function) {
+  return PreviousBoundaryAlgorithm(visible_position, search_function);
 }
 
-VisiblePosition StartOfWord(const VisiblePosition& position, EWordSide side) {
-  return CreateVisiblePosition(StartOfWordPosition(position, side));
-}
-
-PositionInFlatTree StartOfWordPosition(
-    const VisiblePositionInFlatTree& position,
-    EWordSide side) {
-  return StartOfWordAlgorithm<EditingInFlatTreeStrategy>(position, side);
-}
-
-VisiblePositionInFlatTree StartOfWord(const VisiblePositionInFlatTree& position,
-                                      EWordSide side) {
-  return CreateVisiblePosition(StartOfWordPosition(position, side));
-}
-
-static unsigned EndWordBoundary(
-    const UChar* characters,
-    unsigned length,
-    unsigned offset,
-    BoundarySearchContextAvailability may_have_more_context,
-    bool& need_more_context) {
-  DCHECK_LE(offset, length);
-  if (may_have_more_context &&
-      EndOfFirstWordBoundaryContext(characters + offset, length - offset) ==
-          static_cast<int>(length - offset)) {
-    need_more_context = true;
-    return length;
-  }
-  need_more_context = false;
-  return FindWordEndBoundary(characters, length, offset);
-}
-
-template <typename Strategy>
-static PositionTemplate<Strategy> EndOfWordAlgorithm(
-    const VisiblePositionTemplate<Strategy>& c,
-    EWordSide side) {
-  DCHECK(c.IsValid()) << c;
-  VisiblePositionTemplate<Strategy> p = c;
-  if (side == kLeftWordIfOnBoundary) {
-    if (IsStartOfParagraph(c))
-      return c.DeepEquivalent();
-
-    p = PreviousPositionOf(c);
-    if (p.IsNull())
-      return c.DeepEquivalent();
-  } else if (IsEndOfParagraph(c)) {
-    return c.DeepEquivalent();
-  }
-
-  return NextBoundary(p, EndWordBoundary);
-}
-
-Position EndOfWordPosition(const VisiblePosition& position, EWordSide side) {
-  return EndOfWordAlgorithm<EditingStrategy>(position, side);
-}
-
-VisiblePosition EndOfWord(const VisiblePosition& position, EWordSide side) {
-  return CreateVisiblePosition(EndOfWordPosition(position, side),
-                               VP_UPSTREAM_IF_POSSIBLE);
-}
-
-PositionInFlatTree EndOfWordPosition(const VisiblePositionInFlatTree& position,
-                                     EWordSide side) {
-  return EndOfWordAlgorithm<EditingInFlatTreeStrategy>(position, side);
-}
-
-VisiblePositionInFlatTree EndOfWord(const VisiblePositionInFlatTree& position,
-                                    EWordSide side) {
-  return CreateVisiblePosition(EndOfWordPosition(position, side),
-                               VP_UPSTREAM_IF_POSSIBLE);
-}
-
-static unsigned PreviousWordPositionBoundary(
-    const UChar* characters,
-    unsigned length,
-    unsigned offset,
-    BoundarySearchContextAvailability may_have_more_context,
-    bool& need_more_context) {
-  if (may_have_more_context &&
-      !StartOfLastWordBoundaryContext(characters, offset)) {
-    need_more_context = true;
-    return 0;
-  }
-  need_more_context = false;
-  return FindNextWordFromIndex(characters, length, offset, false);
-}
-
-VisiblePosition PreviousWordPosition(const VisiblePosition& c) {
-  DCHECK(c.IsValid()) << c;
-  VisiblePosition prev =
-      CreateVisiblePosition(PreviousBoundary(c, PreviousWordPositionBoundary));
-  return HonorEditingBoundaryAtOrBefore(prev, c.DeepEquivalent());
-}
-
-static unsigned NextWordPositionBoundary(
-    const UChar* characters,
-    unsigned length,
-    unsigned offset,
-    BoundarySearchContextAvailability may_have_more_context,
-    bool& need_more_context) {
-  if (may_have_more_context &&
-      EndOfFirstWordBoundaryContext(characters + offset, length - offset) ==
-          static_cast<int>(length - offset)) {
-    need_more_context = true;
-    return length;
-  }
-  need_more_context = false;
-  return FindNextWordFromIndex(characters, length, offset, true);
-}
-
-VisiblePosition NextWordPosition(const VisiblePosition& c) {
-  DCHECK(c.IsValid()) << c;
-  VisiblePosition next = CreateVisiblePosition(
-      NextBoundary(c, NextWordPositionBoundary), VP_UPSTREAM_IF_POSSIBLE);
-  return HonorEditingBoundaryAtOrAfter(next, c.DeepEquivalent());
+PositionInFlatTree PreviousBoundary(
+    const VisiblePositionInFlatTree& visible_position,
+    BoundarySearchFunction search_function) {
+  return PreviousBoundaryAlgorithm(visible_position, search_function);
 }
 
 // ---------
@@ -814,363 +662,6 @@ EphemeralRange ExpandRangeToSentenceBoundary(const EphemeralRange& range) {
           ? sentence_start
           : range.StartPosition(),
       range.EndPosition()));
-}
-
-static bool NodeIsUserSelectAll(const Node* node) {
-  return node && node->GetLayoutObject() &&
-         node->GetLayoutObject()->Style()->UserSelect() == EUserSelect::kAll;
-}
-
-template <typename Strategy>
-PositionTemplate<Strategy> StartOfParagraphAlgorithm(
-    const PositionTemplate<Strategy>& position,
-    EditingBoundaryCrossingRule boundary_crossing_rule) {
-  Node* const start_node = position.AnchorNode();
-
-  if (!start_node)
-    return PositionTemplate<Strategy>();
-
-  if (IsRenderedAsNonInlineTableImageOrHR(start_node))
-    return PositionTemplate<Strategy>::BeforeNode(start_node);
-
-  Element* const start_block = EnclosingBlock(
-      PositionTemplate<Strategy>::FirstPositionInOrBeforeNode(start_node),
-      kCannotCrossEditingBoundary);
-  ContainerNode* const highest_root = HighestEditableRoot(position);
-  const bool start_node_is_editable = HasEditableStyle(*start_node);
-
-  Node* candidate_node = start_node;
-  PositionAnchorType candidate_type = position.AnchorType();
-  int candidate_offset = position.ComputeEditingOffset();
-
-  Node* previous_node_iterator = start_node;
-  while (previous_node_iterator) {
-    if (boundary_crossing_rule == kCannotCrossEditingBoundary &&
-        !NodeIsUserSelectAll(previous_node_iterator) &&
-        HasEditableStyle(*previous_node_iterator) != start_node_is_editable)
-      break;
-    if (boundary_crossing_rule == kCanSkipOverEditingBoundary) {
-      while (previous_node_iterator &&
-             HasEditableStyle(*previous_node_iterator) !=
-                 start_node_is_editable) {
-        previous_node_iterator =
-            Strategy::PreviousPostOrder(*previous_node_iterator, start_block);
-      }
-      if (!previous_node_iterator ||
-          !previous_node_iterator->IsDescendantOf(highest_root))
-        break;
-    }
-
-    const LayoutItem layout_item =
-        LayoutItem(previous_node_iterator->GetLayoutObject());
-    if (layout_item.IsNull()) {
-      previous_node_iterator =
-          Strategy::PreviousPostOrder(*previous_node_iterator, start_block);
-      continue;
-    }
-    const ComputedStyle& style = layout_item.StyleRef();
-    if (style.Visibility() != EVisibility::kVisible) {
-      previous_node_iterator =
-          Strategy::PreviousPostOrder(*previous_node_iterator, start_block);
-      continue;
-    }
-
-    if (layout_item.IsBR() || IsEnclosingBlock(previous_node_iterator))
-      break;
-
-    if (layout_item.IsText() &&
-        ToLayoutText(previous_node_iterator->GetLayoutObject())
-            ->ResolvedTextLength()) {
-      SECURITY_DCHECK(previous_node_iterator->IsTextNode());
-      if (style.PreserveNewline()) {
-        LayoutText* text =
-            ToLayoutText(previous_node_iterator->GetLayoutObject());
-        int index = text->TextLength();
-        if (previous_node_iterator == start_node && candidate_offset < index)
-          index = max(0, candidate_offset);
-        while (--index >= 0) {
-          if ((*text)[index] == '\n')
-            return PositionTemplate<Strategy>(ToText(previous_node_iterator),
-                                              index + 1);
-        }
-      }
-      candidate_node = previous_node_iterator;
-      candidate_type = PositionAnchorType::kOffsetInAnchor;
-      candidate_offset = 0;
-      previous_node_iterator =
-          Strategy::PreviousPostOrder(*previous_node_iterator, start_block);
-    } else if (EditingIgnoresContent(*previous_node_iterator) ||
-               IsDisplayInsideTable(previous_node_iterator)) {
-      candidate_node = previous_node_iterator;
-      candidate_type = PositionAnchorType::kBeforeAnchor;
-      previous_node_iterator = previous_node_iterator->previousSibling()
-                                   ? previous_node_iterator->previousSibling()
-                                   : Strategy::PreviousPostOrder(
-                                         *previous_node_iterator, start_block);
-    } else {
-      previous_node_iterator =
-          Strategy::PreviousPostOrder(*previous_node_iterator, start_block);
-    }
-  }
-
-  if (candidate_type == PositionAnchorType::kOffsetInAnchor)
-    return PositionTemplate<Strategy>(candidate_node, candidate_offset);
-
-  return PositionTemplate<Strategy>(candidate_node, candidate_type);
-}
-
-template <typename Strategy>
-VisiblePositionTemplate<Strategy> StartOfParagraphAlgorithm(
-    const VisiblePositionTemplate<Strategy>& visible_position,
-    EditingBoundaryCrossingRule boundary_crossing_rule) {
-  DCHECK(visible_position.IsValid()) << visible_position;
-  return CreateVisiblePosition(StartOfParagraphAlgorithm(
-      visible_position.DeepEquivalent(), boundary_crossing_rule));
-}
-
-VisiblePosition StartOfParagraph(
-    const VisiblePosition& c,
-    EditingBoundaryCrossingRule boundary_crossing_rule) {
-  return StartOfParagraphAlgorithm<EditingStrategy>(c, boundary_crossing_rule);
-}
-
-VisiblePositionInFlatTree StartOfParagraph(
-    const VisiblePositionInFlatTree& c,
-    EditingBoundaryCrossingRule boundary_crossing_rule) {
-  return StartOfParagraphAlgorithm<EditingInFlatTreeStrategy>(
-      c, boundary_crossing_rule);
-}
-
-template <typename Strategy>
-static PositionTemplate<Strategy> EndOfParagraphAlgorithm(
-    const PositionTemplate<Strategy>& position,
-    EditingBoundaryCrossingRule boundary_crossing_rule) {
-  Node* const start_node = position.AnchorNode();
-
-  if (!start_node)
-    return PositionTemplate<Strategy>();
-
-  if (IsRenderedAsNonInlineTableImageOrHR(start_node))
-    return PositionTemplate<Strategy>::AfterNode(start_node);
-
-  Element* const start_block = EnclosingBlock(
-      PositionTemplate<Strategy>::FirstPositionInOrBeforeNode(start_node),
-      kCannotCrossEditingBoundary);
-  ContainerNode* const highest_root = HighestEditableRoot(position);
-  const bool start_node_is_editable = HasEditableStyle(*start_node);
-
-  Node* candidate_node = start_node;
-  PositionAnchorType candidate_type = position.AnchorType();
-  int candidate_offset = position.ComputeEditingOffset();
-
-  Node* next_node_iterator = start_node;
-  while (next_node_iterator) {
-    if (boundary_crossing_rule == kCannotCrossEditingBoundary &&
-        !NodeIsUserSelectAll(next_node_iterator) &&
-        HasEditableStyle(*next_node_iterator) != start_node_is_editable)
-      break;
-    if (boundary_crossing_rule == kCanSkipOverEditingBoundary) {
-      while (next_node_iterator &&
-             HasEditableStyle(*next_node_iterator) != start_node_is_editable)
-        next_node_iterator = Strategy::Next(*next_node_iterator, start_block);
-      if (!next_node_iterator ||
-          !next_node_iterator->IsDescendantOf(highest_root))
-        break;
-    }
-
-    LayoutObject* const layout_object = next_node_iterator->GetLayoutObject();
-    if (!layout_object) {
-      next_node_iterator = Strategy::Next(*next_node_iterator, start_block);
-      continue;
-    }
-    const ComputedStyle& style = layout_object->StyleRef();
-    if (style.Visibility() != EVisibility::kVisible) {
-      next_node_iterator = Strategy::Next(*next_node_iterator, start_block);
-      continue;
-    }
-
-    if (layout_object->IsBR() || IsEnclosingBlock(next_node_iterator))
-      break;
-
-    // FIXME: We avoid returning a position where the layoutObject can't accept
-    // the caret.
-    if (layout_object->IsText() &&
-        ToLayoutText(layout_object)->ResolvedTextLength()) {
-      SECURITY_DCHECK(next_node_iterator->IsTextNode());
-      LayoutText* const text = ToLayoutText(layout_object);
-      if (style.PreserveNewline()) {
-        const int length = ToLayoutText(layout_object)->TextLength();
-        for (int i = (next_node_iterator == start_node ? candidate_offset : 0);
-             i < length; ++i) {
-          if ((*text)[i] == '\n')
-            return PositionTemplate<Strategy>(ToText(next_node_iterator),
-                                              i + text->TextStartOffset());
-        }
-      }
-
-      candidate_node = next_node_iterator;
-      candidate_type = PositionAnchorType::kOffsetInAnchor;
-      candidate_offset =
-          layout_object->CaretMaxOffset() + text->TextStartOffset();
-      next_node_iterator = Strategy::Next(*next_node_iterator, start_block);
-    } else if (EditingIgnoresContent(*next_node_iterator) ||
-               IsDisplayInsideTable(next_node_iterator)) {
-      candidate_node = next_node_iterator;
-      candidate_type = PositionAnchorType::kAfterAnchor;
-      next_node_iterator =
-          Strategy::NextSkippingChildren(*next_node_iterator, start_block);
-    } else {
-      next_node_iterator = Strategy::Next(*next_node_iterator, start_block);
-    }
-  }
-
-  if (candidate_type == PositionAnchorType::kOffsetInAnchor)
-    return PositionTemplate<Strategy>(candidate_node, candidate_offset);
-
-  return PositionTemplate<Strategy>(candidate_node, candidate_type);
-}
-
-template <typename Strategy>
-static VisiblePositionTemplate<Strategy> EndOfParagraphAlgorithm(
-    const VisiblePositionTemplate<Strategy>& visible_position,
-    EditingBoundaryCrossingRule boundary_crossing_rule) {
-  DCHECK(visible_position.IsValid()) << visible_position;
-  return CreateVisiblePosition(EndOfParagraphAlgorithm(
-      visible_position.DeepEquivalent(), boundary_crossing_rule));
-}
-
-VisiblePosition EndOfParagraph(
-    const VisiblePosition& c,
-    EditingBoundaryCrossingRule boundary_crossing_rule) {
-  return EndOfParagraphAlgorithm<EditingStrategy>(c, boundary_crossing_rule);
-}
-
-VisiblePositionInFlatTree EndOfParagraph(
-    const VisiblePositionInFlatTree& c,
-    EditingBoundaryCrossingRule boundary_crossing_rule) {
-  return EndOfParagraphAlgorithm<EditingInFlatTreeStrategy>(
-      c, boundary_crossing_rule);
-}
-
-// FIXME: isStartOfParagraph(startOfNextParagraph(pos)) is not always true
-VisiblePosition StartOfNextParagraph(const VisiblePosition& visible_position) {
-  DCHECK(visible_position.IsValid()) << visible_position;
-  VisiblePosition paragraph_end(
-      EndOfParagraph(visible_position, kCanSkipOverEditingBoundary));
-  VisiblePosition after_paragraph_end(
-      NextPositionOf(paragraph_end, kCannotCrossEditingBoundary));
-  // The position after the last position in the last cell of a table
-  // is not the start of the next paragraph.
-  if (TableElementJustBefore(after_paragraph_end))
-    return NextPositionOf(after_paragraph_end, kCannotCrossEditingBoundary);
-  return after_paragraph_end;
-}
-
-// FIXME: isStartOfParagraph(startOfNextParagraph(pos)) is not always true
-bool InSameParagraph(const VisiblePosition& a,
-                     const VisiblePosition& b,
-                     EditingBoundaryCrossingRule boundary_crossing_rule) {
-  DCHECK(a.IsValid()) << a;
-  DCHECK(b.IsValid()) << b;
-  return a.IsNotNull() &&
-         StartOfParagraph(a, boundary_crossing_rule).DeepEquivalent() ==
-             StartOfParagraph(b, boundary_crossing_rule).DeepEquivalent();
-}
-
-template <typename Strategy>
-static bool IsStartOfParagraphAlgorithm(
-    const VisiblePositionTemplate<Strategy>& pos,
-    EditingBoundaryCrossingRule boundary_crossing_rule) {
-  DCHECK(pos.IsValid()) << pos;
-  return pos.IsNotNull() &&
-         pos.DeepEquivalent() ==
-             StartOfParagraph(pos, boundary_crossing_rule).DeepEquivalent();
-}
-
-bool IsStartOfParagraph(const VisiblePosition& pos,
-                        EditingBoundaryCrossingRule boundary_crossing_rule) {
-  return IsStartOfParagraphAlgorithm<EditingStrategy>(pos,
-                                                      boundary_crossing_rule);
-}
-
-bool IsStartOfParagraph(const VisiblePositionInFlatTree& pos,
-                        EditingBoundaryCrossingRule boundary_crossing_rule) {
-  return IsStartOfParagraphAlgorithm<EditingInFlatTreeStrategy>(
-      pos, boundary_crossing_rule);
-}
-
-template <typename Strategy>
-static bool IsEndOfParagraphAlgorithm(
-    const VisiblePositionTemplate<Strategy>& pos,
-    EditingBoundaryCrossingRule boundary_crossing_rule) {
-  DCHECK(pos.IsValid()) << pos;
-  return pos.IsNotNull() &&
-         pos.DeepEquivalent() ==
-             EndOfParagraph(pos, boundary_crossing_rule).DeepEquivalent();
-}
-
-bool IsEndOfParagraph(const VisiblePosition& pos,
-                      EditingBoundaryCrossingRule boundary_crossing_rule) {
-  return IsEndOfParagraphAlgorithm<EditingStrategy>(pos,
-                                                    boundary_crossing_rule);
-}
-
-bool IsEndOfParagraph(const VisiblePositionInFlatTree& pos,
-                      EditingBoundaryCrossingRule boundary_crossing_rule) {
-  return IsEndOfParagraphAlgorithm<EditingInFlatTreeStrategy>(
-      pos, boundary_crossing_rule);
-}
-
-VisiblePosition PreviousParagraphPosition(const VisiblePosition& p,
-                                          LayoutUnit x) {
-  DCHECK(p.IsValid()) << p;
-  VisiblePosition pos = p;
-  do {
-    VisiblePosition n = PreviousLinePosition(pos, x);
-    if (n.IsNull() || n.DeepEquivalent() == pos.DeepEquivalent())
-      break;
-    pos = n;
-  } while (InSameParagraph(p, pos));
-  return pos;
-}
-
-VisiblePosition NextParagraphPosition(const VisiblePosition& p, LayoutUnit x) {
-  DCHECK(p.IsValid()) << p;
-  VisiblePosition pos = p;
-  do {
-    VisiblePosition n = NextLinePosition(pos, x);
-    if (n.IsNull() || n.DeepEquivalent() == pos.DeepEquivalent())
-      break;
-    pos = n;
-  } while (InSameParagraph(p, pos));
-  return pos;
-}
-
-EphemeralRange ExpandToParagraphBoundary(const EphemeralRange& range) {
-  const VisiblePosition& start = CreateVisiblePosition(range.StartPosition());
-  DCHECK(start.IsNotNull()) << range.StartPosition();
-  const Position& paragraph_start = StartOfParagraph(start).DeepEquivalent();
-  DCHECK(paragraph_start.IsNotNull()) << range.StartPosition();
-
-  const VisiblePosition& end = CreateVisiblePosition(range.EndPosition());
-  DCHECK(end.IsNotNull()) << range.EndPosition();
-  const Position& paragraph_end = EndOfParagraph(end).DeepEquivalent();
-  DCHECK(paragraph_end.IsNotNull()) << range.EndPosition();
-
-  // TODO(xiaochengh): There are some cases (crbug.com/640112) where we get
-  // |paragraphStart > paragraphEnd|, which is the reason we cannot directly
-  // return |EphemeralRange(paragraphStart, paragraphEnd)|. This is not
-  // desired, though. We should do more investigation to ensure that why
-  // |paragraphStart <= paragraphEnd| is violated.
-  const Position& result_start =
-      paragraph_start.IsNotNull() && paragraph_start <= range.StartPosition()
-          ? paragraph_start
-          : range.StartPosition();
-  const Position& result_end =
-      paragraph_end.IsNotNull() && paragraph_end >= range.EndPosition()
-          ? paragraph_end
-          : range.EndPosition();
-  return EphemeralRange(result_start, result_end);
 }
 
 // ---------
@@ -1944,26 +1435,26 @@ static PositionTemplate<Strategy> MostBackwardCaretPosition(
   DCHECK(!NeedsLayoutTreeUpdate(position)) << position;
   TRACE_EVENT0("input", "VisibleUnits::mostBackwardCaretPosition");
 
-  Node* start_node = position.AnchorNode();
+  Node* const start_node = position.AnchorNode();
   if (!start_node)
     return PositionTemplate<Strategy>();
 
   // iterate backward from there, looking for a qualified position
-  Node* boundary = EnclosingVisualBoundary<Strategy>(start_node);
+  Node* const boundary = EnclosingVisualBoundary<Strategy>(start_node);
   // FIXME: PositionIterator should respect Before and After positions.
   PositionIteratorAlgorithm<Strategy> last_visible(
       AdjustPositionForBackwardIteration<Strategy>(position));
-  PositionIteratorAlgorithm<Strategy> current_pos = last_visible;
-  bool start_editable = HasEditableStyle(*start_node);
+  const bool start_editable = HasEditableStyle(*start_node);
   Node* last_node = start_node;
   bool boundary_crossed = false;
-  for (; !current_pos.AtStart(); current_pos.Decrement()) {
+  for (PositionIteratorAlgorithm<Strategy> current_pos = last_visible;
+       !current_pos.AtStart(); current_pos.Decrement()) {
     Node* current_node = current_pos.GetNode();
     // Don't check for an editability change if we haven't moved to a different
     // node, to avoid the expense of computing hasEditableStyle().
     if (current_node != last_node) {
       // Don't change editability.
-      bool current_editable = HasEditableStyle(*current_node);
+      const bool current_editable = HasEditableStyle(*current_node);
       if (start_editable != current_editable) {
         if (rule == kCannotCrossEditingBoundary)
           break;
@@ -1980,7 +1471,7 @@ static PositionTemplate<Strategy> MostBackwardCaretPosition(
       return last_visible.DeprecatedComputePosition();
 
     // skip position in non-laid out or invisible node
-    LayoutObject* layout_object =
+    LayoutObject* const layout_object =
         AssociatedLayoutObjectOf(*current_node, current_pos.OffsetInLeafNode());
     if (!layout_object ||
         layout_object->Style()->Visibility() != EVisibility::kVisible)
@@ -2012,28 +1503,59 @@ static PositionTemplate<Strategy> MostBackwardCaretPosition(
     }
 
     // return current position if it is in laid out text
-    if (layout_object->IsText() &&
-        ToLayoutText(layout_object)->FirstTextBox()) {
-      LayoutText* const text_layout_object = ToLayoutText(layout_object);
-      const unsigned text_start_offset = text_layout_object->TextStartOffset();
-      if (current_node != start_node) {
-        // This assertion fires in layout tests in the case-transform.html test
-        // because of a mix-up between offsets in the text in the DOM tree with
-        // text in the layout tree which can have a different length due to case
-        // transformation.
-        // Until we resolve that, disable this so we can run the layout tests!
-        // DCHECK_GE(currentOffset, layoutObject->caretMaxOffset());
-        return PositionTemplate<Strategy>(
-            current_node, layout_object->CaretMaxOffset() + text_start_offset);
-      }
+    if (!layout_object->IsText())
+      continue;
+    LayoutText* const text_layout_object = ToLayoutText(layout_object);
+    if (!text_layout_object->FirstTextBox())
+      continue;
+    const unsigned text_start_offset = text_layout_object->TextStartOffset();
+    if (current_node != start_node) {
+      // This assertion fires in layout tests in the case-transform.html test
+      // because of a mix-up between offsets in the text in the DOM tree with
+      // text in the layout tree which can have a different length due to case
+      // transformation.
+      // Until we resolve that, disable this so we can run the layout tests!
+      // DCHECK_GE(currentOffset, layoutObject->caretMaxOffset());
+      return PositionTemplate<Strategy>(
+          current_node, layout_object->CaretMaxOffset() + text_start_offset);
+    }
 
-      if (CanBeBackwardCaretPosition(text_layout_object,
-                                     current_pos.OffsetInLeafNode())) {
-        return current_pos.ComputePosition();
-      }
+    if (CanBeBackwardCaretPosition(text_layout_object,
+                                   current_pos.OffsetInLeafNode())) {
+      return current_pos.ComputePosition();
     }
   }
   return last_visible.DeprecatedComputePosition();
+}
+
+// The text continues on the next line only if the last text box is not on this
+// line and none of the boxes on this line have a larger start offset.
+static bool DoesContinueOnNextLine(const LayoutText& text_layout_object,
+                                   InlineBox* box,
+                                   unsigned text_offset) {
+  InlineTextBox* const last_text_box = text_layout_object.LastTextBox();
+  DCHECK_NE(box, last_text_box);
+  for (InlineBox* runner = box->NextLeafChild(); runner;
+       runner = runner->NextLeafChild()) {
+    if (runner == last_text_box)
+      return false;
+    if (LineLayoutAPIShim::LayoutObjectFrom(runner->GetLineLayoutItem()) ==
+            text_layout_object &&
+        ToInlineTextBox(runner)->Start() >= text_offset)
+      return false;
+  }
+
+  for (InlineBox* runner = box->PrevLeafChild(); runner;
+       runner = runner->PrevLeafChild()) {
+    if (runner == last_text_box)
+      return false;
+    if (LineLayoutAPIShim::LayoutObjectFrom(runner->GetLineLayoutItem()) ==
+            text_layout_object &&
+        ToInlineTextBox(runner)->Start() >= text_offset)
+      return false;
+  }
+
+  return true;
 }
 
 // TODO(editing-dev): This function is just moved out from
@@ -2075,40 +1597,7 @@ static bool CanBeBackwardCaretPosition(const LayoutText* text_layout_object,
     if (box == last_text_box || text_offset != box->Start() + box->Len() + 1)
       continue;
 
-    // TODO(yosin): We should move below code fragment into
-    // |DoesContinueOnNextLine()|. Note: |MostForwardCaretPosition()| has
-    // same code fragment except for comparison on |text_offset|.
-    // Backward: other_box->Start() >  text_offset
-    // Forward:  other_box->Start() >= text_offset
-    // The text continues on the next line only if the last text box is not
-    // on this line and none of the boxes on this line have a larger start
-    // offset.
-    bool continues_on_next_line = true;
-    InlineBox* other_box = box;
-    while (continues_on_next_line) {
-      other_box = other_box->NextLeafChild();
-      if (!other_box)
-        break;
-      if (other_box == last_text_box ||
-          (LineLayoutAPIShim::LayoutObjectFrom(
-               other_box->GetLineLayoutItem()) == text_layout_object &&
-           ToInlineTextBox(other_box)->Start() > text_offset))
-        continues_on_next_line = false;
-    }
-
-    other_box = box;
-    while (continues_on_next_line) {
-      other_box = other_box->PrevLeafChild();
-      if (!other_box)
-        break;
-      if (other_box == last_text_box ||
-          (LineLayoutAPIShim::LayoutObjectFrom(
-               other_box->GetLineLayoutItem()) == text_layout_object &&
-           ToInlineTextBox(other_box)->Start() > text_offset))
-        continues_on_next_line = false;
-    }
-
-    if (continues_on_next_line)
+    if (DoesContinueOnNextLine(*text_layout_object, box, text_offset + 1))
       return true;
   }
   return false;
@@ -2131,12 +1620,12 @@ PositionTemplate<Strategy> MostForwardCaretPosition(
   DCHECK(!NeedsLayoutTreeUpdate(position)) << position;
   TRACE_EVENT0("input", "VisibleUnits::mostForwardCaretPosition");
 
-  Node* start_node = position.AnchorNode();
+  Node* const start_node = position.AnchorNode();
   if (!start_node)
     return PositionTemplate<Strategy>();
 
   // iterate forward from there, looking for a qualified position
-  Node* boundary = EnclosingVisualBoundary<Strategy>(start_node);
+  Node* const boundary = EnclosingVisualBoundary<Strategy>(start_node);
   // FIXME: PositionIterator should respect Before and After positions.
   PositionIteratorAlgorithm<Strategy> last_visible(
       position.IsAfterAnchor()
@@ -2144,17 +1633,17 @@ PositionTemplate<Strategy> MostForwardCaretPosition(
                 position.AnchorNode(),
                 Strategy::CaretMaxOffset(*position.AnchorNode()))
           : position);
-  PositionIteratorAlgorithm<Strategy> current_pos = last_visible;
-  bool start_editable = HasEditableStyle(*start_node);
+  const bool start_editable = HasEditableStyle(*start_node);
   Node* last_node = start_node;
   bool boundary_crossed = false;
-  for (; !current_pos.AtEnd(); current_pos.Increment()) {
+  for (PositionIteratorAlgorithm<Strategy> current_pos = last_visible;
+       !current_pos.AtEnd(); current_pos.Increment()) {
     Node* current_node = current_pos.GetNode();
     // Don't check for an editability change if we haven't moved to a different
     // node, to avoid the expense of computing hasEditableStyle().
     if (current_node != last_node) {
       // Don't change editability.
-      bool current_editable = HasEditableStyle(*current_node);
+      const bool current_editable = HasEditableStyle(*current_node);
       if (start_editable != current_editable) {
         if (rule == kCannotCrossEditingBoundary)
           break;
@@ -2181,16 +1670,14 @@ PositionTemplate<Strategy> MostForwardCaretPosition(
       return last_visible.DeprecatedComputePosition();
 
     // skip position in non-laid out or invisible node
-    LayoutObject* layout_object =
+    LayoutObject* const layout_object =
         AssociatedLayoutObjectOf(*current_node, current_pos.OffsetInLeafNode());
     if (!layout_object ||
         layout_object->Style()->Visibility() != EVisibility::kVisible)
       continue;
 
-    if (rule == kCanCrossEditingBoundary && boundary_crossed) {
-      last_visible = current_pos;
-      break;
-    }
+    if (rule == kCanCrossEditingBoundary && boundary_crossed)
+      return current_pos.DeprecatedComputePosition();
 
     // track last visible streamer position
     if (IsStreamer<Strategy>(current_pos))
@@ -2207,20 +1694,21 @@ PositionTemplate<Strategy> MostForwardCaretPosition(
     }
 
     // return current position if it is in laid out text
-    if (layout_object->IsText() &&
-        ToLayoutText(layout_object)->FirstTextBox()) {
-      LayoutText* const text_layout_object = ToLayoutText(layout_object);
-      const unsigned text_start_offset = text_layout_object->TextStartOffset();
-      if (current_node != start_node) {
-        DCHECK(current_pos.AtStartOfNode());
-        return PositionTemplate<Strategy>(
-            current_node, layout_object->CaretMinOffset() + text_start_offset);
-      }
+    if (!layout_object->IsText())
+      continue;
+    LayoutText* const text_layout_object = ToLayoutText(layout_object);
+    if (!text_layout_object->FirstTextBox())
+      continue;
+    const unsigned text_start_offset = text_layout_object->TextStartOffset();
+    if (current_node != start_node) {
+      DCHECK(current_pos.AtStartOfNode());
+      return PositionTemplate<Strategy>(
+          current_node, layout_object->CaretMinOffset() + text_start_offset);
+    }
 
-      if (CanBeForwardCaretPosition(text_layout_object,
-                                    current_pos.OffsetInLeafNode())) {
-        return current_pos.ComputePosition();
-      }
+    if (CanBeForwardCaretPosition(text_layout_object,
+                                  current_pos.OffsetInLeafNode())) {
+      return current_pos.ComputePosition();
     }
   }
   return last_visible.DeprecatedComputePosition();
@@ -2247,40 +1735,7 @@ static bool CanBeForwardCaretPosition(const LayoutText* text_layout_object,
     if (box == last_text_box || text_offset != box->Start() + box->Len())
       continue;
 
-    // TODO(yosin): We should move below code fragment into
-    // |DoesContinueOnNextLine()|. Note: |MostBackwardCaretPosition()| has
-    // same code fragment except for comparison on |text_offset|.
-    // Backward: other_box->Start() >  text_offset
-    // Forward:  other_box->Start() >= text_offset
-    // The text continues on the next line only if the last text box is not
-    // on this line and none of the boxes on this line have a larger start
-    // offset.
-    bool continues_on_next_line = true;
-    InlineBox* other_box = box;
-    while (continues_on_next_line) {
-      other_box = other_box->NextLeafChild();
-      if (!other_box)
-        break;
-      if (other_box == last_text_box ||
-          (LineLayoutAPIShim::LayoutObjectFrom(
-               other_box->GetLineLayoutItem()) == text_layout_object &&
-           ToInlineTextBox(other_box)->Start() >= text_offset))
-        continues_on_next_line = false;
-    }
-
-    other_box = box;
-    while (continues_on_next_line) {
-      other_box = other_box->PrevLeafChild();
-      if (!other_box)
-        break;
-      if (other_box == last_text_box ||
-          (LineLayoutAPIShim::LayoutObjectFrom(
-               other_box->GetLineLayoutItem()) == text_layout_object &&
-           ToInlineTextBox(other_box)->Start() >= text_offset))
-        continues_on_next_line = false;
-    }
-
-    if (continues_on_next_line)
+    if (DoesContinueOnNextLine(*text_layout_object, box, text_offset))
       return true;
   }
   return false;

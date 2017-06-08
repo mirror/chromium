@@ -579,7 +579,7 @@ void DocumentLoader::ResponseReceived(
     return;
   }
 
-  if (RuntimeEnabledFeatures::embedderCSPEnforcementEnabled() &&
+  if (RuntimeEnabledFeatures::EmbedderCSPEnforcementEnabled() &&
       !GetFrameLoader().RequiredCSP().IsEmpty()) {
     SecurityOrigin* parent_security_origin =
         frame_->Tree().Parent()->GetSecurityContext()->GetSecurityOrigin();
@@ -614,7 +614,7 @@ void DocumentLoader::ResponseReceived(
   DCHECK(!frame_->GetPage()->Suspended());
 
   if (response.DidServiceWorkerNavigationPreload())
-    UseCounter::Count(frame_, UseCounter::kServiceWorkerNavigationPreload);
+    UseCounter::Count(frame_, WebFeature::kServiceWorkerNavigationPreload);
   response_ = response;
 
   if (IsArchiveMIMEType(response_.MimeType()) &&
@@ -942,11 +942,11 @@ void DocumentLoader::DidInstallNewDocument(Document* document) {
   String referrer_policy_header =
       response_.HttpHeaderField(HTTPNames::Referrer_Policy);
   if (!referrer_policy_header.IsNull()) {
-    UseCounter::Count(*document, UseCounter::kReferrerPolicyHeader);
+    UseCounter::Count(*document, WebFeature::kReferrerPolicyHeader);
     document->ParseAndSetReferrerPolicy(referrer_policy_header);
   }
 
-  if (RuntimeEnabledFeatures::serverTimingEnabled() &&
+  if (RuntimeEnabledFeatures::ServerTimingEnabled() &&
       frame_->GetDocument()->domWindow()) {
     DOMWindowPerformance::performance(*(frame_->GetDocument()->domWindow()))
         ->AddServerTiming(response_,

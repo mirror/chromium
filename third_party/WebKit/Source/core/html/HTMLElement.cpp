@@ -188,11 +188,11 @@ void HTMLElement::MapLanguageAttributeToLocale(const AtomicString& value,
 
     // FIXME: Remove the following UseCounter code when we collect enough
     // data.
-    UseCounter::Count(GetDocument(), UseCounter::kLangAttribute);
+    UseCounter::Count(GetDocument(), WebFeature::kLangAttribute);
     if (isHTMLHtmlElement(*this))
-      UseCounter::Count(GetDocument(), UseCounter::kLangAttributeOnHTML);
+      UseCounter::Count(GetDocument(), WebFeature::kLangAttributeOnHTML);
     else if (isHTMLBodyElement(*this))
-      UseCounter::Count(GetDocument(), UseCounter::kLangAttributeOnBody);
+      UseCounter::Count(GetDocument(), WebFeature::kLangAttributeOnBody);
     String html_language = value.GetString();
     size_t first_separator = html_language.find('-');
     if (first_separator != kNotFound)
@@ -204,9 +204,10 @@ void HTMLElement::MapLanguageAttributeToLocale(const AtomicString& value,
     first_separator = ui_language.find('_');
     if (first_separator != kNotFound)
       ui_language = ui_language.Left(first_separator);
-    if (!DeprecatedEqualIgnoringCase(html_language, ui_language))
+    if (!DeprecatedEqualIgnoringCase(html_language, ui_language)) {
       UseCounter::Count(GetDocument(),
-                        UseCounter::kLangAttributeDoesNotMatchToUILocale);
+                        WebFeature::kLangAttributeDoesNotMatchToUILocale);
+    }
   } else {
     // The empty string means the language is explicitly unknown.
     AddPropertyToPresentationAttributeStyle(style, CSSPropertyWebkitLocale,
@@ -247,10 +248,11 @@ void HTMLElement::CollectStyleForPresentationAttribute(
                                               CSSValueBreakWord);
       AddPropertyToPresentationAttributeStyle(style, CSSPropertyWebkitLineBreak,
                                               CSSValueAfterWhiteSpace);
-      UseCounter::Count(GetDocument(), UseCounter::kContentEditableTrue);
-      if (HasTagName(htmlTag))
+      UseCounter::Count(GetDocument(), WebFeature::kContentEditableTrue);
+      if (HasTagName(htmlTag)) {
         UseCounter::Count(GetDocument(),
-                          UseCounter::kContentEditableTrueOnHTML);
+                          WebFeature::kContentEditableTrueOnHTML);
+      }
     } else if (DeprecatedEqualIgnoringCase(value, "plaintext-only")) {
       AddPropertyToPresentationAttributeStyle(
           style, CSSPropertyWebkitUserModify, CSSValueReadWritePlaintextOnly);
@@ -259,7 +261,7 @@ void HTMLElement::CollectStyleForPresentationAttribute(
       AddPropertyToPresentationAttributeStyle(style, CSSPropertyWebkitLineBreak,
                                               CSSValueAfterWhiteSpace);
       UseCounter::Count(GetDocument(),
-                        UseCounter::kContentEditablePlainTextOnly);
+                        WebFeature::kContentEditablePlainTextOnly);
     } else if (DeprecatedEqualIgnoringCase(value, "false")) {
       AddPropertyToPresentationAttributeStyle(
           style, CSSPropertyWebkitUserModify, CSSValueReadOnly);
@@ -268,7 +270,7 @@ void HTMLElement::CollectStyleForPresentationAttribute(
     AddPropertyToPresentationAttributeStyle(style, CSSPropertyDisplay,
                                             CSSValueNone);
   } else if (name == draggableAttr) {
-    UseCounter::Count(GetDocument(), UseCounter::kDraggableAttribute);
+    UseCounter::Count(GetDocument(), WebFeature::kDraggableAttribute);
     if (DeprecatedEqualIgnoringCase(value, "true")) {
       AddPropertyToPresentationAttributeStyle(style, CSSPropertyWebkitUserDrag,
                                               CSSValueElement);
@@ -463,7 +465,7 @@ void HTMLElement::ParseAttribute(const AttributeModificationParams& params) {
   } else if (params.name == langAttr) {
     PseudoStateChanged(CSSSelector::kPseudoLang);
   } else if (params.name == inertAttr) {
-    UseCounter::Count(GetDocument(), UseCounter::kInertAttribute);
+    UseCounter::Count(GetDocument(), WebFeature::kInertAttribute);
   } else if (params.name == nonceAttr) {
     if (params.new_value != g_empty_atom)
       setNonce(params.new_value);
@@ -921,7 +923,7 @@ Node::InsertionNotificationRequest HTMLElement::InsertedInto(
   // updated.
   Element::InsertedInto(insertion_point);
 
-  if (RuntimeEnabledFeatures::hideNonceContentAttributeEnabled() &&
+  if (RuntimeEnabledFeatures::HideNonceContentAttributeEnabled() &&
       FastHasAttribute(nonceAttr) &&
       GetDocument().GetContentSecurityPolicy()->HasHeaderDeliveredPolicy() &&
       InActiveDocument()) {
@@ -940,7 +942,7 @@ void HTMLElement::AddHTMLLengthToStyle(MutableStylePropertySet* style,
     return;
   if (property_id == CSSPropertyWidth &&
       (dimension.IsPercentage() || dimension.IsRelative())) {
-    UseCounter::Count(GetDocument(), UseCounter::kHTMLElementDeprecatedWidth);
+    UseCounter::Count(GetDocument(), WebFeature::kHTMLElementDeprecatedWidth);
   }
   if (dimension.IsRelative())
     return;

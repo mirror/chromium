@@ -50,12 +50,14 @@
 #include "core/html/HTMLInputElement.h"
 #include "core/html/forms/ColorChooser.h"
 #include "core/html/forms/ColorChooserClient.h"
+#include "core/html/forms/ColorChooserPopupUIController.h"
+#include "core/html/forms/ColorChooserUIController.h"
 #include "core/html/forms/DateTimeChooser.h"
 #include "core/html/forms/DateTimeChooserClient.h"
 #include "core/html/forms/DateTimeChooserImpl.h"
 #include "core/inspector/DevToolsEmulator.h"
 #include "core/layout/HitTestResult.h"
-#include "core/layout/LayoutPart.h"
+#include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/compositing/CompositedSelection.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoadRequest.h"
@@ -65,6 +67,8 @@
 #include "modules/accessibility/AXObjectImpl.h"
 #include "modules/audio_output_devices/AudioOutputDeviceClient.h"
 #include "modules/audio_output_devices/AudioOutputDeviceClientImpl.h"
+#include "modules/filesystem/LocalFileSystemClient.h"
+#include "modules/indexeddb/IndexedDBClientImpl.h"
 #include "modules/installedapp/InstalledAppController.h"
 #include "modules/mediastream/UserMediaController.h"
 #include "modules/navigatorcontentutils/NavigatorContentUtils.h"
@@ -113,12 +117,8 @@
 #include "public/web/WebUserGestureToken.h"
 #include "public/web/WebViewClient.h"
 #include "public/web/WebWindowFeatures.h"
-#include "web/ColorChooserPopupUIController.h"
-#include "web/ColorChooserUIController.h"
 #include "web/ExternalDateTimeChooser.h"
 #include "web/ExternalPopupMenu.h"
-#include "web/IndexedDBClientImpl.h"
-#include "web/LocalFileSystemClient.h"
 #include "web/NavigatorContentUtilsClientImpl.h"
 #include "web/PopupMenuImpl.h"
 #include "web/WebFrameWidgetImpl.h"
@@ -511,8 +511,8 @@ void ChromeClientImpl::ShowMouseOverURL(const HitTestResult& result) {
                (isHTMLObjectElement(*result.InnerNode()) ||
                 isHTMLEmbedElement(*result.InnerNode()))) {
       LayoutObject* object = result.InnerNode()->GetLayoutObject();
-      if (object && object->IsLayoutPart()) {
-        PluginView* plugin_view = ToLayoutPart(object)->Plugin();
+      if (object && object->IsLayoutEmbeddedContent()) {
+        PluginView* plugin_view = ToLayoutEmbeddedContent(object)->Plugin();
         if (plugin_view && plugin_view->IsPluginContainer()) {
           WebPluginContainerBase* plugin =
               ToWebPluginContainerBase(plugin_view);
@@ -565,7 +565,7 @@ ColorChooser* ChromeClientImpl::OpenColorChooser(
   if (frame->GetDocument()->GetSettings()->GetPagePopupsSuppressed())
     return nullptr;
 
-  if (RuntimeEnabledFeatures::pagePopupEnabled())
+  if (RuntimeEnabledFeatures::PagePopupEnabled())
     controller =
         ColorChooserPopupUIController::Create(frame, this, chooser_client);
   else
@@ -584,7 +584,7 @@ DateTimeChooser* ChromeClientImpl::OpenDateTimeChooser(
     return nullptr;
 
   NotifyPopupOpeningObservers();
-  if (RuntimeEnabledFeatures::inputMultipleFieldsUIEnabled())
+  if (RuntimeEnabledFeatures::InputMultipleFieldsUIEnabled())
     return DateTimeChooserImpl::Create(this, picker_client, parameters);
   return ExternalDateTimeChooser::Create(this, web_view_->Client(),
                                          picker_client, parameters);
@@ -690,7 +690,7 @@ String ChromeClientImpl::AcceptLanguages() {
 
 void ChromeClientImpl::AttachRootGraphicsLayer(GraphicsLayer* root_layer,
                                                LocalFrame* local_frame) {
-  DCHECK(!RuntimeEnabledFeatures::slimmingPaintV2Enabled());
+  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
   WebLocalFrameImpl* web_frame =
       WebLocalFrameImpl::FromFrame(local_frame)->LocalRoot();
 
@@ -790,7 +790,7 @@ PopupMenu* ChromeClientImpl::OpenPopupMenu(LocalFrame& frame,
   if (WebViewBase::UseExternalPopupMenus())
     return new ExternalPopupMenu(frame, select, *web_view_);
 
-  DCHECK(RuntimeEnabledFeatures::pagePopupEnabled());
+  DCHECK(RuntimeEnabledFeatures::PagePopupEnabled());
   return PopupMenuImpl::Create(this, select);
 }
 
@@ -836,10 +836,10 @@ WebRemoteFrameBase* ChromeClientImpl::GetWebRemoteFrameBase(
 
 void ChromeClientImpl::RequestDecode(
     LocalFrame* frame,
-    sk_sp<SkImage> image,
+    const PaintImage& image,
     std::unique_ptr<WTF::Function<void(bool)>> callback) {
   WebLocalFrameImpl* web_frame = WebLocalFrameImpl::FromFrame(frame);
-  web_frame->LocalRoot()->FrameWidget()->RequestDecode(std::move(image),
+  web_frame->LocalRoot()->FrameWidget()->RequestDecode(image,
                                                        std::move(callback));
 }
 
@@ -1138,9 +1138,9 @@ void ChromeClientImpl::InstallSupplements(LocalFrame& frame) {
 
   ScreenOrientationControllerImpl::ProvideTo(
       frame, client->GetWebScreenOrientationClient());
-  if (RuntimeEnabledFeatures::presentationEnabled())
+  if (RuntimeEnabledFeatures::PresentationEnabled())
     PresentationController::ProvideTo(frame, client->PresentationClient());
-  if (RuntimeEnabledFeatures::audioOutputDevicesEnabled()) {
+  if (RuntimeEnabledFeatures::AudioOutputDevicesEnabled()) {
     ProvideAudioOutputDeviceClientTo(frame,
                                      new AudioOutputDeviceClientImpl(frame));
   }

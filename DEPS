@@ -40,11 +40,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': '1608a1dd17187aeeada376e710ecfafb1e229af2',
+  'skia_revision': 'cde9031a5a347a762a3946d216f96542d9cfcef4',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': 'a5838cc92b08746ec9ebbb64f4ca2a1d44435491',
+  'v8_revision': '935f1cea119246d58da11082d384fae2ea4edb74',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
@@ -52,7 +52,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling ANGLE
   # and whatever else without interference from each other.
-  'angle_revision': '5978e28d3adc30d09c5cbdf51aa1e4b8dbfff6b1',
+  'angle_revision': '794607025b69599dd2607391cb13e51f39423f5d',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling build tools
   # and whatever else without interference from each other.
@@ -64,7 +64,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling PDFium
   # and whatever else without interference from each other.
-  'pdfium_revision': '8a5983391252d282e27cc2478798fb056c7df68a',
+  'pdfium_revision': '04c79d3d3839670dc4028d186c21b186c2a73aa3',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling openmax_dl
   # and whatever else without interference from each other.
@@ -96,7 +96,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': 'ceb07cf9dce01b0b83e76f1d8b6bcbf25b484f4e',
+  'catapult_revision': '32bdd960945af3580a61f9640bbfe72677e458ac',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.
@@ -150,6 +150,9 @@ deps = {
   'src/third_party/colorama/src':
     Var('chromium_git') + '/external/colorama.git' + '@' + '799604a1041e9b3bc5d2789ecbd7e8db2e18e6b8',
 
+  'src/third_party/depot_tools':
+    Var('chromium_git') + '/chromium/tools/depot_tools.git' + '@' + '6d0d04458d9c345bc7d77681996d89d6e5fc742c',
+
   'src/third_party/googletest/src':
     Var('chromium_git') + '/external/github.com/google/googletest.git' + '@' + '42bc671f47b122fad36db5eccbc06868afdf7862',
 
@@ -196,16 +199,16 @@ deps = {
     Var('chromium_git') + '/external/bidichecker/lib.git' + '@' + '97f2aa645b74c28c57eca56992235c79850fa9e0',
 
   'src/third_party/webgl/src':
-    Var('chromium_git') + '/external/khronosgroup/webgl.git' + '@' + '9422979e2a13b6d80de866a271a34653998d4c85',
+    Var('chromium_git') + '/external/khronosgroup/webgl.git' + '@' + '331fe3a462b2e1f5c9baa1a710312a1b5888e404',
 
   'src/third_party/webdriver/pylib':
     Var('chromium_git') + '/external/selenium/py.git' + '@' + '5fd78261a75fe08d27ca4835fb6c5ce4b42275bd',
 
   'src/third_party/libvpx/source/libvpx':
-    Var('chromium_git') + '/webm/libvpx.git' + '@' +  'b9649d240768cdcfc233960056aafb9ed1a3db14',
+    Var('chromium_git') + '/webm/libvpx.git' + '@' +  'ff42e04f9cb60e63ca3fe12ac497f27c68555e1f',
 
   'src/third_party/ffmpeg':
-    Var('chromium_git') + '/chromium/third_party/ffmpeg.git' + '@' + 'cb7f9fc2adbe20d57520176bb239683b08d3bcc8',
+    Var('chromium_git') + '/chromium/third_party/ffmpeg.git' + '@' + '06ac9ea361fa8d48916b83783bb7f36872388cc2',
 
   'src/third_party/usrsctp/usrsctplib':
     Var('chromium_git') + '/external/github.com/sctplab/usrsctp' + '@' + '2f6478eb8d40f1766a96b5b033ed26c0c2244589',
@@ -407,7 +410,7 @@ deps_os = {
 
     # Build tools for Chrome OS. Note: This depends on third_party/pyelftools.
     'src/third_party/chromite':
-      Var('chromium_git') + '/chromiumos/chromite.git' + '@' + '9a66c4dd0d61dad05b3505c4be8f914f54fb7f20',
+      Var('chromium_git') + '/chromiumos/chromite.git' + '@' + 'b97695f8e05e75b773b40d12a5eb9bb3b5872f5d',
 
     # Dependency of chromite.git and skia.
     'src/third_party/pyelftools':
@@ -553,6 +556,17 @@ hooks = [
     'action': [
         'python',
         'src/build/landmines.py',
+    ],
+  },
+  {
+    # Ensure that the DEPS'd "depot_tools" has its self-update capability
+    # disabled.
+    'name': 'disable_depot_tools_selfupdate',
+    'pattern': '.',
+    'action': [
+        'python',
+        'src/third_party/depot_tools/update_depot_tools_toggle.py',
+        '--disable',
     ],
   },
   {
@@ -890,6 +904,8 @@ hooks = [
     'name': 'fetch_telemetry_binary_dependencies',
     'pattern': '.',
     'action': [ 'python',
+                'src/tools/perf/conditionally_execute',
+                '--gyp-condition', 'fetch_telemetry_dependencies=1',
                 'src/third_party/catapult/telemetry/bin/fetch_telemetry_binary_dependencies',
     ],
   },

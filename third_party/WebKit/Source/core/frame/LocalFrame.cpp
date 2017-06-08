@@ -60,7 +60,7 @@
 #include "core/inspector/ConsoleMessage.h"
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutView.h"
-#include "core/layout/api/LayoutPartItem.h"
+#include "core/layout/api/LayoutEmbeddedContentItem.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/layout/compositing/PaintLayerCompositor.h"
 #include "core/loader/DocumentLoader.h"
@@ -92,6 +92,7 @@
 #include "platform/graphics/paint/PaintController.h"
 #include "platform/graphics/paint/PaintRecordBuilder.h"
 #include "platform/graphics/paint/TransformDisplayItem.h"
+#include "platform/instrumentation/resource_coordinator/FrameResourceCoordinator.h"
 #include "platform/json/JSONValues.h"
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
@@ -116,6 +117,9 @@ namespace {
 
 // Converts from bounds in CSS space to device space based on the given
 // frame.
+// TODO(tanvir.rizvi): DeviceSpaceBounds is used for drag related functionality
+// and is irrelevant to core functionality of LocalFrame. This should be moved
+// out of LocalFrame to appropriate place.
 static FloatRect DeviceSpaceBounds(const FloatRect css_bounds,
                                    const LocalFrame& frame) {
   float device_scale_factor = frame.GetPage()->DeviceScaleFactorDeprecated();
@@ -130,7 +134,10 @@ static FloatRect DeviceSpaceBounds(const FloatRect css_bounds,
 
 // Returns a DragImage whose bitmap contains |contents|, positioned and scaled
 // in device space.
-static std::unique_ptr<DragImage> CreateDragImage(
+// TODO(tanvir.rizvi): CreateDragImageForFrame is used for drag related
+// functionality and is irrelevant to core functionality of LocalFrame. This
+// should be moved out of LocalFrame to appropriate place.
+static std::unique_ptr<DragImage> CreateDragImageForFrame(
     const LocalFrame& frame,
     float opacity,
     RespectImageOrientationEnum image_orientation,
@@ -167,6 +174,9 @@ static std::unique_ptr<DragImage> CreateDragImage(
                            opacity);
 }
 
+// TODO(tanvir.rizvi): DraggedNodeImageBuilder is used for drag related
+// functionality and is irrelevant to core functionality of LocalFrame. This
+// should be moved out of LocalFrame to appropriate place.
 class DraggedNodeImageBuilder {
   STACK_ALLOCATED();
 
@@ -223,11 +233,11 @@ class DraggedNodeImageBuilder {
     PaintRecordBuilder builder(DeviceSpaceBounds(bounding_box, *local_frame_));
     PaintLayerPainter(*layer).Paint(builder.Context(), painting_info, flags);
     PropertyTreeState border_box_properties = PropertyTreeState::Root();
-    if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
       border_box_properties =
           *layer->GetLayoutObject().LocalBorderBoxProperties();
     }
-    return CreateDragImage(
+    return CreateDragImageForFrame(
         *local_frame_, 1.0f,
         LayoutObject::ShouldRespectImageOrientation(dragged_layout_object),
         bounding_box, builder, border_box_properties);
@@ -339,9 +349,10 @@ void LocalFrame::CreateView(const IntSize& viewport_size,
     DCHECK(owner);
     // FIXME: OOPI might lead to us temporarily lying to a frame and telling it
     // that it's owned by a FrameOwner that knows nothing about it. If we're
-    // lying to this frame, don't let it clobber the existing widget.
+    // lying to this frame, don't let it clobber the existing
+    // EmbeddedContentView.
     if (owner->ContentFrame() == this)
-      owner->SetWidget(frame_view);
+      owner->SetEmbeddedContentView(frame_view);
   }
 
   if (Owner())
@@ -370,6 +381,7 @@ DEFINE_TRACE(LocalFrame) {
   visitor->Trace(event_handler_);
   visitor->Trace(console_);
   visitor->Trace(input_method_controller_);
+  visitor->Trace(frame_resource_coordinator_);
   Frame::Trace(visitor);
   Supplementable<LocalFrame>::Trace(visitor);
 }
@@ -398,7 +410,7 @@ void LocalFrame::Reload(FrameLoadType load_type,
     request.SetClientRedirect(client_redirect_policy);
     loader_.Load(request, load_type);
   } else {
-    DCHECK_EQ(RuntimeEnabledFeatures::locationHardReloadEnabled()
+    DCHECK_EQ(RuntimeEnabledFeatures::LocationHardReloadEnabled()
                   ? kFrameLoadTypeReloadBypassingCache
                   : kFrameLoadTypeReload,
               load_type);
@@ -436,8 +448,8 @@ void LocalFrame::Detach(FrameDetachType type) {
   loader_.Detach();
   GetDocument()->Shutdown();
   // This is the earliest that scripting can be disabled:
-  // - FrameLoader::detach() can fire XHR abort events
-  // - Document::shutdown()'s deferred widget updates can run script.
+  // - FrameLoader::Detach() can fire XHR abort events
+  // - Document::Shutdown() can dispose plugins which can run script.
   ScriptForbiddenScope forbid_script;
   if (!Client())
     return;
@@ -628,7 +640,7 @@ void LocalFrame::SetPrinting(bool printing,
       ToLocalFrame(child)->SetPrinting(printing, FloatSize(), FloatSize(), 0);
   }
 
-  if (RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled())
+  if (RuntimeEnabledFeatures::SlimmingPaintInvalidationEnabled())
     View()->SetSubtreeNeedsPaintPropertyUpdate();
 
   if (!printing)
@@ -747,11 +759,17 @@ double LocalFrame::DevicePixelRatio() const {
   return ratio;
 }
 
+// TODO(tanvir.rizvi): NodeImage is used only by DataTransfer,
+// and is irrelevant to LocalFrame core functionality, so it can be moved to
+// DataTransfer.
 std::unique_ptr<DragImage> LocalFrame::NodeImage(Node& node) {
   DraggedNodeImageBuilder image_node(*this, node);
   return image_node.CreateImage();
 }
 
+// TODO(tanvir.rizvi): DragImageForSelection is used only by DragController,
+// and is irrelevant to LocalFrame core functionality, so it can be moved to
+// DragController.
 std::unique_ptr<DragImage> LocalFrame::DragImageForSelection(float opacity) {
   if (!Selection().ComputeVisibleSelectionInDOMTreeDeprecated().IsRange())
     return nullptr;
@@ -766,8 +784,9 @@ std::unique_ptr<DragImage> LocalFrame::DragImageForSelection(float opacity) {
   PaintRecordBuilder builder(DeviceSpaceBounds(painting_rect, *this));
   view_->PaintContents(builder.Context(), paint_flags,
                        EnclosingIntRect(painting_rect));
-  return CreateDragImage(*this, opacity, kDoNotRespectImageOrientation,
-                         painting_rect, builder, PropertyTreeState::Root());
+  return CreateDragImageForFrame(*this, opacity, kDoNotRespectImageOrientation,
+                                 painting_rect, builder,
+                                 PropertyTreeState::Root());
 }
 
 String LocalFrame::SelectedText() const {
@@ -849,12 +868,12 @@ void LocalFrame::RemoveSpellingMarkersUnderWords(const Vector<String>& words) {
   GetSpellChecker().RemoveSpellingMarkersUnderWords(words);
 }
 
-String LocalFrame::LayerTreeAsText(unsigned flags) const {
+String LocalFrame::GetLayerTreeAsTextForTesting(unsigned flags) const {
   if (ContentLayoutItem().IsNull())
     return String();
 
   std::unique_ptr<JSONObject> layers;
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     layers = View()->CompositedLayersAsJSON(static_cast<LayerTreeFlags>(flags));
   } else {
     layers = ContentLayoutItem().Compositor()->LayerTreeAsJSON(
@@ -908,6 +927,10 @@ inline LocalFrame::LocalFrame(LocalFrameClient* client,
       in_view_source_mode_(false),
       interface_provider_(interface_provider),
       interface_registry_(interface_registry) {
+  if (FrameResourceCoordinator::IsEnabled()) {
+    frame_resource_coordinator_ =
+        FrameResourceCoordinator::Create(interface_provider);
+  }
   if (IsLocalRoot()) {
     probe_sink_ = new CoreProbeSink();
     performance_monitor_ = new PerformanceMonitor(this);
@@ -937,9 +960,9 @@ bool LocalFrame::CanNavigate(const Frame& target_frame) {
 
   // Top navigation in sandbox with or w/o 'allow-top-navigation'.
   if (target_frame != this && sandboxed && target_frame == Tree().Top()) {
-    UseCounter::Count(this, UseCounter::kTopNavInSandbox);
+    UseCounter::Count(this, WebFeature::kTopNavInSandbox);
     if (!has_user_gesture) {
-      UseCounter::Count(this, UseCounter::kTopNavInSandboxWithoutGesture);
+      UseCounter::Count(this, WebFeature::kTopNavInSandboxWithoutGesture);
     }
   }
 
@@ -956,12 +979,12 @@ bool LocalFrame::CanNavigate(const Frame& target_frame) {
     if (has_user_gesture)
       framebust_params |= kUserGestureBit;
 
-    UseCounter::Count(this, UseCounter::kTopNavigationFromSubFrame);
+    UseCounter::Count(this, WebFeature::kTopNavigationFromSubFrame);
     if (sandboxed) {  // Sandboxed with 'allow-top-navigation'.
-      UseCounter::Count(this, UseCounter::kTopNavInSandboxWithPerm);
+      UseCounter::Count(this, WebFeature::kTopNavInSandboxWithPerm);
       if (!has_user_gesture) {
         UseCounter::Count(this,
-                          UseCounter::kTopNavInSandboxWithPermButNoGesture);
+                          WebFeature::kTopNavInSandboxWithPermButNoGesture);
       }
     }
 
@@ -974,7 +997,7 @@ bool LocalFrame::CanNavigate(const Frame& target_frame) {
     // now blocked if the document initiating the navigation has never received
     // a user gesture.
     if (!RuntimeEnabledFeatures::
-            framebustingNeedsSameOriginOrUserGestureEnabled()) {
+            FramebustingNeedsSameOriginOrUserGestureEnabled()) {
       String target_frame_description =
           target_frame.IsLocalFrame() ? "with URL '" +
                                             ToLocalFrame(target_frame)

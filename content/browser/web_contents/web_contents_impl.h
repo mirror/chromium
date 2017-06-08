@@ -45,7 +45,7 @@
 #include "content/public/common/renderer_preferences.h"
 #include "content/public/common/resource_type.h"
 #include "content/public/common/three_d_api_types.h"
-#include "device/wake_lock/public/interfaces/wake_lock_service.mojom.h"
+#include "device/wake_lock/public/interfaces/wake_lock.mojom.h"
 #include "net/base/load_states.h"
 #include "net/http/http_response_headers.h"
 #include "ppapi/features/features.h"
@@ -456,6 +456,8 @@ class CONTENT_EXPORT WebContentsImpl
   void SetIsOverlayContent(bool is_overlay_content) override;
   bool IsFocusedElementEditable() override;
   void ClearFocusedElement() override;
+  bool IsShowingContextMenu() const override;
+  void SetShowingContextMenu(bool showing) override;
 
 #if defined(OS_ANDROID)
   base::android::ScopedJavaLocalRef<jobject> GetJavaWebContents() override;
@@ -520,7 +522,7 @@ class CONTENT_EXPORT WebContentsImpl
       int browser_plugin_instance_id) override;
   device::GeolocationServiceContext* GetGeolocationServiceContext() override;
   device::mojom::WakeLockContext* GetWakeLockContext() override;
-  device::mojom::WakeLockService* GetRendererWakeLock() override;
+  device::mojom::WakeLock* GetRendererWakeLock() override;
 #if defined(OS_ANDROID)
   void GetNFC(device::mojom::NFCRequest request) override;
 #endif
@@ -720,6 +722,7 @@ class CONTENT_EXPORT WebContentsImpl
                              ukm::SourceId ukm_source_id) override;
   void FocusedNodeTouched(bool editable) override;
   void DidReceiveCompositorFrame() override;
+  bool IsShowingContextMenuOnPage() const override;
 
   // RenderFrameHostManager::Delegate ------------------------------------------
 
@@ -1119,7 +1122,7 @@ class CONTENT_EXPORT WebContentsImpl
   void OnBrowserPluginMessage(RenderFrameHost* render_frame_host,
                               const IPC::Message& message);
 #endif  // BUILDFLAG(ENABLE_PLUGINS)
-  void OnUpdateFaviconURL(RenderViewHostImpl* source,
+  void OnUpdateFaviconURL(RenderFrameHostImpl* source,
                           const std::vector<FaviconURL>& candidates);
   void OnFirstVisuallyNonEmptyPaint(RenderViewHostImpl* source);
   void OnShowValidationMessage(RenderViewHostImpl* source,
@@ -1541,7 +1544,7 @@ class CONTENT_EXPORT WebContentsImpl
 
   std::unique_ptr<WakeLockContextHost> wake_lock_context_host_;
 
-  device::mojom::WakeLockServicePtr renderer_wake_lock_;
+  device::mojom::WakeLockPtr renderer_wake_lock_;
 
 #if defined(OS_ANDROID)
   std::unique_ptr<NFCHost> nfc_host_;
@@ -1606,6 +1609,8 @@ class CONTENT_EXPORT WebContentsImpl
 
   // Whether this WebContents is for content overlay.
   bool is_overlay_content_;
+
+  bool showing_context_menu_;
 
   int currently_playing_video_count_ = 0;
 

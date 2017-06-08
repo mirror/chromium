@@ -15,7 +15,7 @@ namespace win {
 #if DCHECK_IS_ON()
 BASE_EXPORT void AssertComInitialized();
 #else   // DCHECK_IS_ON()
-BASE_EXPORT void AssertComInitialized() {}
+void AssertComInitialized() {}
 #endif  // DCHECK_IS_ON()
 
 }  // namespace win

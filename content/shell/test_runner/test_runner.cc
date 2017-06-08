@@ -2040,7 +2040,13 @@ class WorkItemLoadingScript : public TestRunner::WorkItem {
   WorkItemLoadingScript(const std::string& script) : script_(script) {}
 
   bool Run(WebTestDelegate*, WebView* web_view) override {
-    web_view->MainFrame()->ExecuteScript(
+    blink::WebFrame* main_frame = web_view->MainFrame();
+    if (!main_frame->IsWebLocalFrame()) {
+      CHECK(false) << "This function cannot be called if the main frame is not "
+                      "a local frame.";
+      return false;
+    }
+    main_frame->ToWebLocalFrame()->ExecuteScript(
         WebScriptSource(WebString::FromUTF8(script_)));
     return true;  // FIXME: Did it really start a navigation?
   }
@@ -2058,7 +2064,13 @@ class WorkItemNonLoadingScript : public TestRunner::WorkItem {
   WorkItemNonLoadingScript(const std::string& script) : script_(script) {}
 
   bool Run(WebTestDelegate*, WebView* web_view) override {
-    web_view->MainFrame()->ExecuteScript(
+    blink::WebFrame* main_frame = web_view->MainFrame();
+    if (!main_frame->IsWebLocalFrame()) {
+      CHECK(false) << "This function cannot be called if the main frame is not "
+                      "a local frame.";
+      return false;
+    }
+    main_frame->ToWebLocalFrame()->ExecuteScript(
         WebScriptSource(WebString::FromUTF8(script_)));
     return false;
   }
@@ -2546,8 +2558,12 @@ void TestRunner::DumpPermissionClientCallbacks() {
 void TestRunner::SetDisallowedSubresourcePathSuffixes(
     const std::vector<std::string>& suffixes) {
   DCHECK(main_view_);
-  main_view_->MainFrame()->DataSource()->SetSubresourceFilter(
-      new MockWebDocumentSubresourceFilter(suffixes));
+  if (!main_view_->MainFrame()->IsWebLocalFrame())
+    return;
+  main_view_->MainFrame()
+      ->ToWebLocalFrame()
+      ->DataSource()
+      ->SetSubresourceFilter(new MockWebDocumentSubresourceFilter(suffixes));
 }
 
 void TestRunner::DumpSpellCheckCallbacks() {
@@ -2779,7 +2795,11 @@ void TestRunner::CheckResponseMimeType() {
   if (!main_view_)
     return;
 
-  WebDataSource* data_source = main_view_->MainFrame()->DataSource();
+  if (!main_view_->MainFrame()->IsWebLocalFrame())
+    return;
+
+  WebDataSource* data_source =
+      main_view_->MainFrame()->ToWebLocalFrame()->DataSource();
   if (!data_source)
     return;
 

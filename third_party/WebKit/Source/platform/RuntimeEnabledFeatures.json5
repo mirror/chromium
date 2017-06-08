@@ -387,7 +387,7 @@
     },
     {
       name: "EmbedderCSPEnforcement",
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "ExecCommandInJavaScript",
@@ -670,6 +670,12 @@
       name: "MojoJS",
       status: "test",
     },
+    // MojoJSTest is used exclusively in testing environments, whereas MojoJS
+    // may also be used elsewhere.
+    {
+      name: "MojoJSTest",
+      status: "test",
+    },
     {
       name: "MultipleColorStopPositions",
       status: "experimental",
@@ -945,6 +951,10 @@
     {
       name: "SharedWorker",
       status: "stable",
+    },
+    {
+      name: "SkipCompositingSmallScrollers",
+      status: "test",
     },
     {
       name: "SlimmingPaintInvalidation",

@@ -5,6 +5,7 @@
 #include "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.h"
 
 #include "base/strings/string_number_conversions.h"
+#include "gpu/command_buffer/service/gpu_tracer.h"
 #include "ui/gl/gl_version_info.h"
 
 namespace gpu {
@@ -2778,8 +2779,13 @@ error::Error GLES2DecoderPassthroughImpl::DoSwapBuffers() {
   gfx::SwapResult result = surface_->SwapBuffers();
   if (result == gfx::SwapResult::SWAP_FAILED) {
     LOG(ERROR) << "Context lost because SwapBuffers failed.";
+    if (!CheckResetStatus()) {
+      MarkContextLost(error::kUnknown);
+      group_->LoseContexts(error::kUnknown);
+      return error::kLostContext;
+    }
   }
-  // TODO(geofflang): force the context loss?
+
   return error::kNoError;
 }
 
@@ -3331,8 +3337,12 @@ error::Error GLES2DecoderPassthroughImpl::DoPostSubBufferCHROMIUM(
   gfx::SwapResult result = surface_->PostSubBuffer(x, y, width, height);
   if (result == gfx::SwapResult::SWAP_FAILED) {
     LOG(ERROR) << "Context lost because PostSubBuffer failed.";
+    if (!CheckResetStatus()) {
+      MarkContextLost(error::kUnknown);
+      group_->LoseContexts(error::kUnknown);
+      return error::kLostContext;
+    }
   }
-  // TODO(geofflang): force the context loss?
   return error::kNoError;
 }
 
@@ -3593,12 +3603,18 @@ error::Error GLES2DecoderPassthroughImpl::DoReleaseTexImage2DCHROMIUM(
 error::Error GLES2DecoderPassthroughImpl::DoTraceBeginCHROMIUM(
     const char* category_name,
     const char* trace_name) {
-  NOTIMPLEMENTED();
+  if (!gpu_tracer_->Begin(category_name, trace_name, kTraceCHROMIUM)) {
+    InsertError(GL_INVALID_OPERATION, "Failed to create begin trace");
+    return error::kNoError;
+  }
   return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::DoTraceEndCHROMIUM() {
-  NOTIMPLEMENTED();
+  if (!gpu_tracer_->End(kTraceCHROMIUM)) {
+    InsertError(GL_INVALID_OPERATION, "No trace to end");
+    return error::kNoError;
+  }
   return error::kNoError;
 }
 
@@ -3628,7 +3644,9 @@ error::Error GLES2DecoderPassthroughImpl::DoDiscardFramebufferEXT(
 
 error::Error GLES2DecoderPassthroughImpl::DoLoseContextCHROMIUM(GLenum current,
                                                                 GLenum other) {
-  NOTIMPLEMENTED();
+  MarkContextLost(GetContextLostReasonFromResetStatus(current));
+  group_->LoseContexts(GetContextLostReasonFromResetStatus(other));
+  reset_by_robustness_extension_ = true;
   return error::kNoError;
 }
 
@@ -3639,8 +3657,7 @@ error::Error GLES2DecoderPassthroughImpl::DoDescheduleUntilFinishedCHROMIUM() {
 
 error::Error GLES2DecoderPassthroughImpl::DoInsertFenceSyncCHROMIUM(
     GLuint64 release_count) {
-  if (!fence_sync_release_callback_.is_null())
-    fence_sync_release_callback_.Run(release_count);
+  client_->OnFenceSyncRelease(release_count);
   return error::kNoError;
 }
 
@@ -3648,13 +3665,9 @@ error::Error GLES2DecoderPassthroughImpl::DoWaitSyncTokenCHROMIUM(
     CommandBufferNamespace namespace_id,
     CommandBufferId command_buffer_id,
     GLuint64 release_count) {
-  if (wait_sync_token_callback_.is_null()) {
-    return error::kNoError;
-  }
   SyncToken sync_token(namespace_id, 0, command_buffer_id, release_count);
-  return wait_sync_token_callback_.Run(sync_token)
-             ? error::kDeferCommandUntilLater
-             : error::kNoError;
+  return client_->OnWaitSyncToken(sync_token) ? error::kDeferCommandUntilLater
+                                              : error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::DoDrawBuffersEXT(

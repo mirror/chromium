@@ -182,10 +182,10 @@
 #include "core/inspector/MainThreadDebugger.h"
 #include "core/layout/HitTestCanvasResult.h"
 #include "core/layout/HitTestResult.h"
-#include "core/layout/LayoutPart.h"
+#include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/TextAutosizer.h"
-#include "core/layout/api/LayoutPartItem.h"
+#include "core/layout/api/LayoutEmbeddedContentItem.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/layout/compositing/PaintLayerCompositor.h"
 #include "core/loader/CookieJar.h"
@@ -418,8 +418,8 @@ static bool IsValidElementName(Document* document, const String& name) {
     // bindings is too slow.
     UseCounter::Count(document,
                       is_valid_dom_name
-                          ? UseCounter::kElementNameDOMValidHTMLParserInvalid
-                          : UseCounter::kElementNameDOMInvalidHTMLParserValid);
+                          ? WebFeature::kElementNameDOMValidHTMLParserInvalid
+                          : WebFeature::kElementNameDOMInvalidHTMLParserValid);
   }
   return is_valid_dom_name;
 }
@@ -784,7 +784,7 @@ String GetTypeExtension(Document* document,
 
   if (string_or_options.isString()) {
     UseCounter::Count(document,
-                      UseCounter::kDocumentCreateElement2ndArgStringHandling);
+                      WebFeature::kDocumentCreateElement2ndArgStringHandling);
     return string_or_options.getAsString();
   }
 
@@ -821,7 +821,7 @@ Element* Document::createElement(const AtomicString& local_name,
   bool is_v1 = string_or_options.isDictionary() || !RegistrationContext();
   bool create_v1_builtin =
       string_or_options.isDictionary() &&
-      RuntimeEnabledFeatures::customElementsBuiltinEnabled();
+      RuntimeEnabledFeatures::CustomElementsBuiltinEnabled();
   bool should_create_builtin =
       create_v1_builtin || string_or_options.isString();
 
@@ -835,7 +835,7 @@ Element* Document::createElement(const AtomicString& local_name,
   if (is_v1) {
     // Is the runtime flag enabled for customized builtin elements?
     const CustomElementDescriptor desc =
-        RuntimeEnabledFeatures::customElementsBuiltinEnabled()
+        RuntimeEnabledFeatures::CustomElementsBuiltinEnabled()
             ? CustomElementDescriptor(name, converted_local_name)
             : CustomElementDescriptor(converted_local_name,
                                       converted_local_name);
@@ -931,7 +931,7 @@ Element* Document::createElementNS(const AtomicString& namespace_uri,
   bool is_v1 = string_or_options.isDictionary() || !RegistrationContext();
   bool create_v1_builtin =
       string_or_options.isDictionary() &&
-      RuntimeEnabledFeatures::customElementsBuiltinEnabled();
+      RuntimeEnabledFeatures::CustomElementsBuiltinEnabled();
   bool should_create_builtin =
       create_v1_builtin || string_or_options.isString();
 
@@ -951,7 +951,7 @@ Element* Document::createElementNS(const AtomicString& namespace_uri,
   CustomElementDefinition* definition = nullptr;
   if (is_v1) {
     const CustomElementDescriptor desc =
-        RuntimeEnabledFeatures::customElementsBuiltinEnabled()
+        RuntimeEnabledFeatures::CustomElementsBuiltinEnabled()
             ? CustomElementDescriptor(name, qualified_name)
             : CustomElementDescriptor(qualified_name, qualified_name);
     if (CustomElementRegistry* registry = CustomElement::Registry(*this))
@@ -1104,7 +1104,7 @@ ProcessingInstruction* Document::createProcessingInstruction(
   }
   if (IsHTMLDocument()) {
     UseCounter::Count(*this,
-                      UseCounter::kHTMLDocumentCreateProcessingInstruction);
+                      WebFeature::kHTMLDocumentCreateProcessingInstruction);
   }
   return ProcessingInstruction::Create(*this, target, data);
 }
@@ -1468,13 +1468,13 @@ Range* Document::caretRangeFromPoint(int x, int y) {
 }
 
 Element* Document::scrollingElement() {
-  if (RuntimeEnabledFeatures::scrollTopLeftInteropEnabled() && InQuirksMode())
+  if (RuntimeEnabledFeatures::ScrollTopLeftInteropEnabled() && InQuirksMode())
     UpdateStyleAndLayoutTree();
   return ScrollingElementNoLayout();
 }
 
 Element* Document::ScrollingElementNoLayout() {
-  if (RuntimeEnabledFeatures::scrollTopLeftInteropEnabled()) {
+  if (RuntimeEnabledFeatures::ScrollTopLeftInteropEnabled()) {
     if (InQuirksMode()) {
       DCHECK(lifecycle_.GetState() >= DocumentLifecycle::kStyleClean);
       HTMLBodyElement* body = FirstBodyElement();
@@ -1792,6 +1792,9 @@ void Document::ScheduleLayoutTreeUpdate() {
   DCHECK(ShouldScheduleLayoutTreeUpdate());
   DCHECK(NeedsLayoutTreeUpdate());
 
+  // TODO(szager): Remove this CHECK after checking crash reports.
+  CHECK(lifecycle_.GetState() != DocumentLifecycle::kInPerformLayout);
+
   if (!View()->CanThrottleRendering())
     GetPage()->Animator().ScheduleVisualUpdate(GetFrame());
   lifecycle_.EnsureStateAtMost(DocumentLifecycle::kVisualUpdatePending);
@@ -1899,7 +1902,7 @@ void Document::InheritHtmlAndBodyElementStyles(StyleRecalcChange change) {
       // might want to try to eliminate some day (eg. for ScrollTopLeftInterop -
       // see http://crbug.com/157855).
       if (body_style && !body_style->IsOverflowVisible())
-        UseCounter::Count(*this, UseCounter::kBodyScrollsInAdditionToViewport);
+        UseCounter::Count(*this, WebFeature::kBodyScrollsInAdditionToViewport);
     }
   }
 
@@ -2118,12 +2121,14 @@ void Document::UpdateActiveStyle() {
 void Document::UpdateStyle() {
   DCHECK(!View()->ShouldThrottleRendering());
   TRACE_EVENT_BEGIN0("blink,blink_style", "Document::updateStyle");
+  RuntimeCallTimerScope scope(
+      RuntimeCallStats::From(V8PerIsolateData::MainThreadIsolate()),
+      RuntimeCallStats::CounterId::kUpdateStyle);
   double start_time = MonotonicallyIncreasingTime();
 
   unsigned initial_element_count = GetStyleEngine().StyleForElementCount();
 
-  HTMLFrameOwnerElement::UpdateSuspendScope
-      suspend_frame_view_base_hierarchy_updates;
+  HTMLFrameOwnerElement::PluginDisposeSuspendScope suspend_plugin_dispose;
   lifecycle_.AdvanceTo(DocumentLifecycle::kInStyleRecalc);
 
   StyleRecalcChange change = kNoChange;
@@ -2401,7 +2406,7 @@ void Document::EnsurePaintLocationDataValidForNode(const Node* node) {
   // we need to also clean compositing inputs.
   if (View() && node->GetLayoutObject() &&
       node->GetLayoutObject()->StyleRef().SubtreeIsSticky()) {
-    if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
       // In SPv2, compositing inputs are cleaned as part of PrePaint.
       View()->UpdateAllLifecyclePhasesExceptPaint();
     } else {
@@ -2542,11 +2547,10 @@ void Document::Shutdown() {
   // to trigger navigation here.  However, plugins (see below) can cause lots of
   // crazy things to happen, since plugin detach involves nested run loops.
   FrameNavigationDisabler navigation_disabler(*frame_);
-  // Defer FrameViewBase updates to avoid plugins trying to run script inside
+  // Defer plugin dispose to avoid plugins trying to run script inside
   // ScriptForbiddenScope, which will crash the renderer after
   // https://crrev.com/200984
-  HTMLFrameOwnerElement::UpdateSuspendScope
-      suspend_frame_view_base_hierarchy_updates;
+  HTMLFrameOwnerElement::PluginDisposeSuspendScope suspend_plugin_dispose;
   // Don't allow script to run in the middle of detachLayoutTree() because a
   // detaching Document is not in a consistent state.
   ScriptForbiddenScope forbid_script;
@@ -2554,14 +2558,14 @@ void Document::Shutdown() {
   lifecycle_.AdvanceTo(DocumentLifecycle::kStopping);
   View()->Dispose();
 
-  // If the FrameViewBase of the document's frame owner doesn't match view()
-  // then LocalFrameView::Dispose() didn't clear the owner's FrameViewBase. If
-  // we don't clear it here, it may be clobbered later in
-  // LocalFrame::CreateView(). See also https://crbug.com/673170 and the comment
-  // in LocalFrameView::Dispose().
+  // If the EmbeddedContentView of the document's frame owner doesn't match
+  // view() then LocalFrameView::Dispose() didn't clear the owner's
+  // EmbeddedContentView. If we don't clear it here, it may be clobbered later
+  // in LocalFrame::CreateView(). See also https://crbug.com/673170 and the
+  // comment in LocalFrameView::Dispose().
   HTMLFrameOwnerElement* owner_element = frame_->DeprecatedLocalOwner();
   if (owner_element)
-    owner_element->SetWidget(nullptr);
+    owner_element->SetEmbeddedContentView(nullptr);
 
   markers_->PrepareForDestruction();
 
@@ -3542,7 +3546,7 @@ void Document::SetBaseURLOverride(const KURL& url) {
 }
 
 void Document::ProcessBaseElement() {
-  UseCounter::Count(*this, UseCounter::kBaseElement);
+  UseCounter::Count(*this, WebFeature::kBaseElement);
 
   // Find the first href attribute in a base element and the first target
   // attribute in a base element.
@@ -3563,7 +3567,7 @@ void Document::ProcessBaseElement() {
     }
     if (GetContentSecurityPolicy()->IsActive()) {
       UseCounter::Count(*this,
-                        UseCounter::kContentSecurityPolicyWithBaseElement);
+                        WebFeature::kContentSecurityPolicyWithBaseElement);
     }
   }
 
@@ -3578,13 +3582,13 @@ void Document::ProcessBaseElement() {
 
   if (!base_element_url.IsEmpty()) {
     if (base_element_url.ProtocolIsData()) {
-      UseCounter::Count(*this, UseCounter::kBaseWithDataHref);
+      UseCounter::Count(*this, WebFeature::kBaseWithDataHref);
       AddConsoleMessage(ConsoleMessage::Create(
           kSecurityMessageSource, kErrorMessageLevel,
           "'data:' URLs may not be used as base URLs for a document."));
     }
     if (!this->GetSecurityOrigin()->CanRequest(base_element_url))
-      UseCounter::Count(*this, UseCounter::kBaseWithCrossOriginHref);
+      UseCounter::Count(*this, WebFeature::kBaseWithCrossOriginHref);
   }
 
   if (base_element_url != base_element_url_ &&
@@ -3596,9 +3600,9 @@ void Document::ProcessBaseElement() {
 
   if (target) {
     if (target->Contains('\n') || target->Contains('\r'))
-      UseCounter::Count(*this, UseCounter::kBaseWithNewlinesInTarget);
+      UseCounter::Count(*this, WebFeature::kBaseWithNewlinesInTarget);
     if (target->Contains('<'))
-      UseCounter::Count(*this, UseCounter::kBaseWithOpenBracketInTarget);
+      UseCounter::Count(*this, WebFeature::kBaseWithOpenBracketInTarget);
     base_target_ = *target;
   } else {
     base_target_ = g_null_atom;
@@ -3862,27 +3866,68 @@ bool Document::ChildTypeAllowed(NodeType type) const {
   return false;
 }
 
+// This is an implementation of step 6 of
+// https://dom.spec.whatwg.org/#concept-node-ensure-pre-insertion-validity
+// and https://dom.spec.whatwg.org/#concept-node-replace .
+//
+// 6. If parent is a document, and any of the statements below, switched on
+// node, are true, throw a HierarchyRequestError.
+//  -> DocumentFragment node
+//     If node has more than one element child or has a Text node child.
+//     Otherwise, if node has one element child and either parent has an element
+//     child, child is a doctype, or child is not null and a doctype is
+//     following child.
+//  -> element
+//     parent has an element child, child is a doctype, or child is not null and
+//     a doctype is following child.
+//  -> doctype
+//     parent has a doctype child, child is non-null and an element is preceding
+//     child, or child is null and parent has an element child.
+//
+// 6. If parent is a document, and any of the statements below, switched on
+// node, are true, throw a HierarchyRequestError.
+//  -> DocumentFragment node
+//     If node has more than one element child or has a Text node child.
+//     Otherwise, if node has one element child and either parent has an element
+//     child that is not child or a doctype is following child.
+//  -> element
+//     parent has an element child that is not child or a doctype is following
+//     child.
+//  -> doctype
+//     parent has a doctype child that is not child, or an element is preceding
+//     child.
 bool Document::CanAcceptChild(const Node& new_child,
+                              const Node* next,
                               const Node* old_child,
                               ExceptionState& exception_state) const {
+  DCHECK(!(next && old_child));
   if (old_child && old_child->getNodeType() == new_child.getNodeType())
     return true;
 
   int num_doctypes = 0;
   int num_elements = 0;
+  bool has_doctype_after_reference_node = false;
+  bool has_element_after_reference_node = false;
 
   // First, check how many doctypes and elements we have, not counting
   // the child we're about to remove.
+  bool saw_reference_node = false;
   for (Node& child : NodeTraversal::ChildrenOf(*this)) {
-    if (old_child && *old_child == child)
+    if (old_child && *old_child == child) {
+      saw_reference_node = true;
       continue;
+    }
+    if (&child == next)
+      saw_reference_node = true;
 
     switch (child.getNodeType()) {
       case kDocumentTypeNode:
         num_doctypes++;
+        has_doctype_after_reference_node = saw_reference_node;
         break;
       case kElementNode:
         num_elements++;
+        has_element_after_reference_node = saw_reference_node;
         break;
       default:
         break;
@@ -3912,6 +3957,12 @@ bool Document::CanAcceptChild(const Node& new_child,
           break;
         case kElementNode:
           num_elements++;
+          if (has_doctype_after_reference_node) {
+            exception_state.ThrowDOMException(
+                kHierarchyRequestError,
+                "Can't insert an element before a doctype.");
+            return false;
+          }
           break;
       }
     }
@@ -3932,9 +3983,21 @@ bool Document::CanAcceptChild(const Node& new_child,
         return true;
       case kDocumentTypeNode:
         num_doctypes++;
+        if (num_elements > 0 && !has_element_after_reference_node) {
+          exception_state.ThrowDOMException(
+              kHierarchyRequestError,
+              "Can't insert a doctype before the root element.");
+          return false;
+        }
         break;
       case kElementNode:
         num_elements++;
+        if (has_doctype_after_reference_node) {
+          exception_state.ThrowDOMException(
+              kHierarchyRequestError,
+              "Can't insert an element before a doctype.");
+          return false;
+        }
         break;
     }
   }
@@ -4649,7 +4712,7 @@ Event* Document::createEvent(ScriptState* script_state,
       // createEvent for TouchEvent should throw DOM exception if touch event
       // feature detection is not enabled. See crbug.com/392584#c22
       if (DeprecatedEqualIgnoringCase(event_type, "TouchEvent") &&
-          !RuntimeEnabledFeatures::touchEventFeatureDetectionEnabled())
+          !RuntimeEnabledFeatures::TouchEventFeatureDetectionEnabled())
         break;
       return event;
     }
@@ -4669,22 +4732,22 @@ void Document::AddMutationEventListenerTypeIfEnabled(
 void Document::AddListenerTypeIfNeeded(const AtomicString& event_type,
                                        EventTarget& event_target) {
   if (event_type == EventTypeNames::DOMSubtreeModified) {
-    UseCounter::Count(*this, UseCounter::kDOMSubtreeModifiedEvent);
+    UseCounter::Count(*this, WebFeature::kDOMSubtreeModifiedEvent);
     AddMutationEventListenerTypeIfEnabled(kDOMSubtreeModifiedListener);
   } else if (event_type == EventTypeNames::DOMNodeInserted) {
-    UseCounter::Count(*this, UseCounter::kDOMNodeInsertedEvent);
+    UseCounter::Count(*this, WebFeature::kDOMNodeInsertedEvent);
     AddMutationEventListenerTypeIfEnabled(kDOMNodeInsertedListener);
   } else if (event_type == EventTypeNames::DOMNodeRemoved) {
-    UseCounter::Count(*this, UseCounter::kDOMNodeRemovedEvent);
+    UseCounter::Count(*this, WebFeature::kDOMNodeRemovedEvent);
     AddMutationEventListenerTypeIfEnabled(kDOMNodeRemovedListener);
   } else if (event_type == EventTypeNames::DOMNodeRemovedFromDocument) {
-    UseCounter::Count(*this, UseCounter::kDOMNodeRemovedFromDocumentEvent);
+    UseCounter::Count(*this, WebFeature::kDOMNodeRemovedFromDocumentEvent);
     AddMutationEventListenerTypeIfEnabled(kDOMNodeRemovedFromDocumentListener);
   } else if (event_type == EventTypeNames::DOMNodeInsertedIntoDocument) {
-    UseCounter::Count(*this, UseCounter::kDOMNodeInsertedIntoDocumentEvent);
+    UseCounter::Count(*this, WebFeature::kDOMNodeInsertedIntoDocumentEvent);
     AddMutationEventListenerTypeIfEnabled(kDOMNodeInsertedIntoDocumentListener);
   } else if (event_type == EventTypeNames::DOMCharacterDataModified) {
-    UseCounter::Count(*this, UseCounter::kDOMCharacterDataModifiedEvent);
+    UseCounter::Count(*this, WebFeature::kDOMCharacterDataModifiedEvent);
     AddMutationEventListenerTypeIfEnabled(kDOMCharacterDataModifiedListener);
   } else if (event_type == EventTypeNames::webkitAnimationStart ||
              event_type == EventTypeNames::animationstart) {
@@ -4836,7 +4899,7 @@ String Document::domain() const {
 
 void Document::setDomain(const String& raw_domain,
                          ExceptionState& exception_state) {
-  UseCounter::Count(*this, UseCounter::kDocumentSetDomain);
+  UseCounter::Count(*this, WebFeature::kDocumentSetDomain);
 
   if (IsSandboxed(kSandboxDocumentDomain)) {
     exception_state.ThrowSecurityError(
@@ -5272,18 +5335,18 @@ KURL Document::OpenSearchDescriptionURL() {
       continue;
 
     // Count usage; perhaps we can lock this to secure contexts.
-    UseCounter::Feature osd_disposition;
+    WebFeature osd_disposition;
     RefPtr<SecurityOrigin> target =
         SecurityOrigin::Create(link_element->Href());
     if (IsSecureContext()) {
       osd_disposition = target->IsPotentiallyTrustworthy()
-                            ? UseCounter::kOpenSearchSecureOriginSecureTarget
-                            : UseCounter::kOpenSearchSecureOriginInsecureTarget;
+                            ? WebFeature::kOpenSearchSecureOriginSecureTarget
+                            : WebFeature::kOpenSearchSecureOriginInsecureTarget;
     } else {
       osd_disposition =
           target->IsPotentiallyTrustworthy()
-              ? UseCounter::kOpenSearchInsecureOriginSecureTarget
-              : UseCounter::kOpenSearchInsecureOriginInsecureTarget;
+              ? WebFeature::kOpenSearchInsecureOriginSecureTarget
+              : WebFeature::kOpenSearchInsecureOriginInsecureTarget;
     }
     UseCounter::Count(*this, osd_disposition);
 
@@ -5323,7 +5386,7 @@ void Document::setDesignMode(const String& value) {
   bool new_value = design_mode_;
   if (DeprecatedEqualIgnoringCase(value, "on")) {
     new_value = true;
-    UseCounter::Count(*this, UseCounter::kDocumentDesignModeEnabeld);
+    UseCounter::Count(*this, WebFeature::kDocumentDesignModeEnabeld);
   } else if (DeprecatedEqualIgnoringCase(value, "off")) {
     new_value = false;
   }
@@ -5630,7 +5693,7 @@ HTMLLinkElement* Document::LinkManifest() const {
 }
 
 void Document::SetFeaturePolicy(const String& feature_policy_header) {
-  if (!RuntimeEnabledFeatures::featurePolicyEnabled())
+  if (!RuntimeEnabledFeatures::FeaturePolicyEnabled())
     return;
 
   WebFeaturePolicy* parent_feature_policy = nullptr;
@@ -5649,15 +5712,6 @@ void Document::SetFeaturePolicy(const String& feature_policy_header) {
     if (frame_->Owner())
       container_policy = frame_->Owner()->ContainerPolicy();
   }
-
-  // Check that if there is a parent frame, that its feature policy is
-  // correctly initialized. Crash if that is not the case. (Temporary crash for
-  // isolating the cause of https://crbug.com/722333)
-  // Note that even with this check removed, the process will stil crash in
-  // feature_policy.cc when it attempts to dereference parent_feature_policy.
-  // This check is to distinguish between two possible causes.
-  if (!container_policy.empty())
-    CHECK(frame_ && (frame_->IsMainFrame() || parent_feature_policy));
 
   InitializeFeaturePolicy(parsed_header, container_policy,
                           parent_feature_policy);
@@ -6246,9 +6300,10 @@ Touch* Document::createTouch(DOMWindow* window,
   if (!std::isfinite(force))
     force = 0;
 
-  if (radius_x || radius_y || rotation_angle || force)
+  if (radius_x || radius_y || rotation_angle || force) {
     UseCounter::Count(*this,
-                      UseCounter::kDocumentCreateTouchMoreThanSevenArguments);
+                      WebFeature::kDocumentCreateTouchMoreThanSevenArguments);
+  }
 
   // FIXME: It's not clear from the documentation at
   // http://developer.apple.com/library/safari/#documentation/UserExperience/Reference/DocumentAdditionsReference/DocumentAdditions/DocumentAdditions.html
@@ -6332,7 +6387,7 @@ bool Document::ThreadedParsingEnabledForTesting() {
 }
 
 SnapCoordinator* Document::GetSnapCoordinator() {
-  if (RuntimeEnabledFeatures::cssScrollSnapPointsEnabled() &&
+  if (RuntimeEnabledFeatures::CSSScrollSnapPointsEnabled() &&
       !snap_coordinator_)
     snap_coordinator_ = SnapCoordinator::Create();
 
@@ -6469,7 +6524,7 @@ bool Document::HaveScriptBlockingStylesheetsLoaded() const {
 }
 
 bool Document::HaveRenderBlockingStylesheetsLoaded() const {
-  if (RuntimeEnabledFeatures::cssInBodyDoesNotBlockPaintEnabled())
+  if (RuntimeEnabledFeatures::CSSInBodyDoesNotBlockPaintEnabled())
     return style_engine_->HaveRenderBlockingStylesheetsLoaded();
   return style_engine_->HaveScriptBlockingStylesheetsLoaded();
 }
@@ -6477,7 +6532,7 @@ bool Document::HaveRenderBlockingStylesheetsLoaded() const {
 Locale& Document::GetCachedLocale(const AtomicString& locale) {
   AtomicString locale_key = locale;
   if (locale.IsEmpty() ||
-      !RuntimeEnabledFeatures::langAttributeAwareFormControlUIEnabled())
+      !RuntimeEnabledFeatures::LangAttributeAwareFormControlUIEnabled())
     return Locale::DefaultLocale();
   LocaleIdentifierToLocaleMap::AddResult result =
       locale_cache_.insert(locale_key, nullptr);
@@ -6622,11 +6677,11 @@ bool Document::IsSecureContext() const {
   if (GetSandboxFlags() != kSandboxNone) {
     UseCounter::Count(
         *this, is_secure
-                   ? UseCounter::kSecureContextCheckForSandboxedOriginPassed
-                   : UseCounter::kSecureContextCheckForSandboxedOriginFailed);
+                   ? WebFeature::kSecureContextCheckForSandboxedOriginPassed
+                   : WebFeature::kSecureContextCheckForSandboxedOriginFailed);
   }
-  UseCounter::Count(*this, is_secure ? UseCounter::kSecureContextCheckPassed
-                                     : UseCounter::kSecureContextCheckFailed);
+  UseCounter::Count(*this, is_secure ? WebFeature::kSecureContextCheckPassed
+                                     : WebFeature::kSecureContextCheckFailed);
   return is_secure;
 }
 
@@ -6651,7 +6706,7 @@ void Document::SetShadowCascadeOrder(ShadowCascadeOrder order) {
   if (order == ShadowCascadeOrder::kShadowCascadeV0) {
     may_contain_v0_shadow_ = true;
     if (shadow_cascade_order_ == ShadowCascadeOrder::kShadowCascadeV1)
-      UseCounter::Count(*this, UseCounter::kMixedShadowRootV0AndV1);
+      UseCounter::Count(*this, WebFeature::kMixedShadowRootV0AndV1);
   }
 
   // For V0 -> V1 upgrade, we need style recalculation for the whole document.
@@ -6660,7 +6715,7 @@ void Document::SetShadowCascadeOrder(ShadowCascadeOrder order) {
     this->SetNeedsStyleRecalc(
         kSubtreeStyleChange,
         StyleChangeReasonForTracing::Create(StyleChangeReason::kShadow));
-    UseCounter::Count(*this, UseCounter::kMixedShadowRootV0AndV1);
+    UseCounter::Count(*this, WebFeature::kMixedShadowRootV0AndV1);
   }
 
   if (order > shadow_cascade_order_)
@@ -6673,7 +6728,7 @@ LayoutViewItem Document::GetLayoutViewItem() const {
 
 PropertyRegistry* Document::GetPropertyRegistry() {
   // TODO(timloh): When the flag is removed, return a reference instead.
-  if (!property_registry_ && RuntimeEnabledFeatures::cssVariables2Enabled())
+  if (!property_registry_ && RuntimeEnabledFeatures::CSSVariables2Enabled())
     property_registry_ = PropertyRegistry::Create();
   return property_registry_;
 }

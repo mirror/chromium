@@ -7,6 +7,7 @@
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_view_delegate.h"
+#include "ui/app_list/search_result_observer.h"
 #include "ui/views/background.h"
 #include "ui/views/controls/button/custom_button.h"
 #include "ui/views/layout/box_layout.h"
@@ -17,7 +18,8 @@ namespace app_list {
 // Container of the search answer view.
 class SearchResultAnswerCardView::SearchAnswerContainerView
     : public views::CustomButton,
-      public views::ButtonListener {
+      public views::ButtonListener,
+      public SearchResultObserver {
  public:
   explicit SearchAnswerContainerView(AppListViewDelegate* view_delegate)
       : CustomButton(this), view_delegate_(view_delegate) {
@@ -49,7 +51,13 @@ class SearchResultAnswerCardView::SearchAnswerContainerView
         AddChildView(new_result_view);
     }
 
+    if (search_result_)
+      search_result_->RemoveObserver(this);
     search_result_ = search_result ? search_result->Duplicate() : nullptr;
+    if (search_result_) {
+      search_result_->AddObserver(this);
+      SetAccessibleName(search_result_->title());
+    }
 
     SetVisible(new_result_view != nullptr);
   }
@@ -69,12 +77,19 @@ class SearchResultAnswerCardView::SearchAnswerContainerView
                                      event.flags());
   }
 
+  // SearchResultObserver overrides:
+  void OnViewHoverStateChanged() override { UpdateBackgroundColor(); }
+
  private:
   void UpdateBackgroundColor() {
-    if (selected_)
+    if (selected_) {
       SetBackground(views::CreateSolidBackground(kSelectedColor));
-    else if (state() == STATE_HOVERED || state() == STATE_PRESSED)
+    } else if (state() == STATE_HOVERED || state() == STATE_PRESSED ||
+               (search_result_ && search_result_->is_mouse_in_view())) {
       SetBackground(views::CreateSolidBackground(kHighlightedColor));
+    } else {
+      SetBackground(nullptr);
+    }
 
     SchedulePaint();
   }
@@ -146,6 +161,11 @@ bool SearchResultAnswerCardView::OnKeyPressed(const ui::KeyEvent& event) {
   }
 
   return SearchResultContainerView::OnKeyPressed(event);
+}
+
+void SearchResultAnswerCardView::GetAccessibleNodeData(
+    ui::AXNodeData* node_data) {
+  search_answer_container_view_->GetAccessibleNodeData(node_data);
 }
 
 }  // namespace app_list

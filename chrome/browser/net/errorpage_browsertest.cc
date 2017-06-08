@@ -89,9 +89,10 @@ using net::URLRequestTestJob;
 
 namespace {
 
-// Returns true if |text| is displayed on the page |browser| is currently
-// displaying.  Uses "innerText", so will miss hidden text, and whitespace
-// space handling may be weird.
+// Searches for first node containing |text|, and if it finds one, searches
+// through all ancestors seeing if any of them is of class "hidden". Since it
+// relies on the hidden class used by network error pages, not suitable for
+// general use.
 bool WARN_UNUSED_RESULT IsDisplayingText(Browser* browser,
                                          const std::string& text) {
   // clang-format off
@@ -1513,6 +1514,20 @@ IN_PROC_BROWSER_TEST_F(ErrorPageTest, Http09WeirdPort) {
   ui_test_utils::NavigateToURL(
       browser(), embedded_test_server()->GetURL("/echo-raw?spam"));
   ExpectDisplayingLocalErrorPage(browser(), net::ERR_INVALID_HTTP_RESPONSE);
+}
+
+// Test that redirects to invalid URLs show an error. See
+// https://crbug.com/462272.
+IN_PROC_BROWSER_TEST_F(ErrorPageTest, RedirectToInvalidURL) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  GURL url = embedded_test_server()->GetURL("/server-redirect?https://:");
+  ui_test_utils::NavigateToURL(browser(), url);
+  ExpectDisplayingLocalErrorPage(browser(), net::ERR_INVALID_REDIRECT);
+  // The error page should commit before the redirect, not after.
+  EXPECT_EQ(url, browser()
+                     ->tab_strip_model()
+                     ->GetActiveWebContents()
+                     ->GetLastCommittedURL());
 }
 
 class ErrorPageWithHttp09OnNonDefaultPortsTest : public InProcessBrowserTest {

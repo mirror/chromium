@@ -6,6 +6,7 @@ Polymer({
   is: 'bookmarks-folder-node',
 
   behaviors: [
+    bookmarks.MouseFocusBehavior,
     bookmarks.StoreClient,
   ],
 
@@ -69,7 +70,10 @@ Polymer({
     }
   },
 
-  /** @return {HTMLElement} */
+  /**
+   * Overriden from bookmarks.MouseFocusBehavior.
+   * @return {!HTMLElement}
+   */
   getFocusTarget: function() {
     return this.$.container;
   },
@@ -109,6 +113,11 @@ Polymer({
 
     this.changeKeyboardSelection_(
         xDirection, yDirection, this.root.activeElement);
+
+    if (!handled) {
+      handled = bookmarks.CommandManager.getInstance().handleKeyEvent(
+          e, new Set([this.itemId]));
+    }
 
     if (!handled)
       return;
@@ -339,6 +348,6 @@ Polymer({
    * @return {string}
    */
   getTabIndex_: function() {
-    return this.isSelectedFolder_ ? '0' : '';
+    return this.isSelectedFolder_ ? '0' : '-1';
   },
 });

@@ -145,7 +145,7 @@ INSTANTIATE_TEST_CASE_P(All,
 TEST_P(PaintControllerTest, NestedRecorders) {
   GraphicsContext context(GetPaintController());
   FakeDisplayItemClient client("client", LayoutRect(100, 100, 200, 200));
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -154,7 +154,7 @@ TEST_P(PaintControllerTest, NestedRecorders) {
                   FloatRect(100, 100, 200, 200));
   GetPaintController().CommitNewDisplayItems();
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_DISPLAY_LIST(GetPaintController().GetDisplayItemList(), 1,
                         TestDisplayItem(client, kBackgroundDrawingType));
 
@@ -174,7 +174,7 @@ TEST_P(PaintControllerTest, UpdateBasic) {
   FakeDisplayItemClient first("first", LayoutRect(100, 100, 300, 300));
   FakeDisplayItemClient second("second", LayoutRect(100, 100, 200, 200));
   GraphicsContext context(GetPaintController());
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -195,7 +195,7 @@ TEST_P(PaintControllerTest, UpdateBasic) {
                       TestDisplayItem(second, kBackgroundDrawingType),
                       TestDisplayItem(first, kForegroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
                 UnorderedElementsAre(FloatRect(LayoutRect::InfiniteIntRect())));
@@ -222,7 +222,7 @@ TEST_P(PaintControllerTest, UpdateBasic) {
                       TestDisplayItem(first, kBackgroundDrawingType),
                       TestDisplayItem(first, kForegroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
                 // |second| disappeared from the chunk.
@@ -235,7 +235,7 @@ TEST_P(PaintControllerTest, UpdateSwapOrder) {
   FakeDisplayItemClient second("second", LayoutRect(100, 100, 50, 200));
   FakeDisplayItemClient unaffected("unaffected", LayoutRect(300, 300, 10, 10));
   GraphicsContext context(GetPaintController());
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -262,7 +262,7 @@ TEST_P(PaintControllerTest, UpdateSwapOrder) {
                       TestDisplayItem(unaffected, kBackgroundDrawingType),
                       TestDisplayItem(unaffected, kForegroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -296,7 +296,7 @@ TEST_P(PaintControllerTest, UpdateSwapOrder) {
                       TestDisplayItem(unaffected, kBackgroundDrawingType),
                       TestDisplayItem(unaffected, kForegroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
                 // Bounds of |second| (old and new are the same).
@@ -309,7 +309,7 @@ TEST_P(PaintControllerTest, UpdateSwapOrderWithInvalidation) {
   FakeDisplayItemClient second("second", LayoutRect(100, 100, 50, 200));
   FakeDisplayItemClient unaffected("unaffected", LayoutRect(300, 300, 10, 10));
   GraphicsContext context(GetPaintController());
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -336,7 +336,7 @@ TEST_P(PaintControllerTest, UpdateSwapOrderWithInvalidation) {
                       TestDisplayItem(unaffected, kBackgroundDrawingType),
                       TestDisplayItem(unaffected, kForegroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -372,7 +372,7 @@ TEST_P(PaintControllerTest, UpdateSwapOrderWithInvalidation) {
                       TestDisplayItem(unaffected, kBackgroundDrawingType),
                       TestDisplayItem(unaffected, kForegroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
                 // Bounds of |first| (old and new are the same).
@@ -387,7 +387,7 @@ TEST_P(PaintControllerTest, UpdateNewItemInMiddle) {
   FakeDisplayItemClient second("second", LayoutRect(100, 100, 50, 200));
   FakeDisplayItemClient third("third", LayoutRect(125, 100, 200, 50));
   GraphicsContext context(GetPaintController());
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -402,7 +402,7 @@ TEST_P(PaintControllerTest, UpdateNewItemInMiddle) {
                       TestDisplayItem(first, kBackgroundDrawingType),
                       TestDisplayItem(second, kBackgroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -428,7 +428,7 @@ TEST_P(PaintControllerTest, UpdateNewItemInMiddle) {
                       TestDisplayItem(third, kBackgroundDrawingType),
                       TestDisplayItem(second, kBackgroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
                 // |third| newly appeared in the chunk.
@@ -441,7 +441,7 @@ TEST_P(PaintControllerTest, UpdateInvalidationWithPhases) {
   FakeDisplayItemClient second("second", LayoutRect(100, 100, 50, 200));
   FakeDisplayItemClient third("third", LayoutRect(300, 100, 50, 50));
   GraphicsContext context(GetPaintController());
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -466,7 +466,7 @@ TEST_P(PaintControllerTest, UpdateInvalidationWithPhases) {
                       TestDisplayItem(second, kForegroundDrawingType),
                       TestDisplayItem(third, kForegroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -500,7 +500,7 @@ TEST_P(PaintControllerTest, UpdateInvalidationWithPhases) {
                       TestDisplayItem(second, kForegroundDrawingType),
                       TestDisplayItem(third, kForegroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
                 // Bounds of |second| (old and new are the same).
@@ -509,7 +509,7 @@ TEST_P(PaintControllerTest, UpdateInvalidationWithPhases) {
 }
 
 TEST_P(PaintControllerTest, IncrementalRasterInvalidation) {
-  if (!RuntimeEnabledFeatures::slimmingPaintV2Enabled())
+  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
     return;
 
   LayoutRect initial_rect(100, 100, 100, 100);
@@ -560,7 +560,7 @@ TEST_P(PaintControllerTest, UpdateAddFirstOverlap) {
   FakeDisplayItemClient first("first", LayoutRect(100, 100, 150, 150));
   FakeDisplayItemClient second("second", LayoutRect(200, 200, 50, 50));
   GraphicsContext context(GetPaintController());
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -575,7 +575,7 @@ TEST_P(PaintControllerTest, UpdateAddFirstOverlap) {
                       TestDisplayItem(second, kBackgroundDrawingType),
                       TestDisplayItem(second, kForegroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -600,7 +600,7 @@ TEST_P(PaintControllerTest, UpdateAddFirstOverlap) {
                       TestDisplayItem(second, kBackgroundDrawingType),
                       TestDisplayItem(second, kForegroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(
         GetPaintController().PaintChunks()[0].raster_invalidation_rects,
@@ -632,7 +632,7 @@ TEST_P(PaintControllerTest, UpdateAddFirstOverlap) {
                       TestDisplayItem(second, kBackgroundDrawingType),
                       TestDisplayItem(second, kForegroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
                 // |first| disappeared from the chunk.
@@ -644,7 +644,7 @@ TEST_P(PaintControllerTest, UpdateAddLastOverlap) {
   FakeDisplayItemClient first("first", LayoutRect(100, 100, 150, 150));
   FakeDisplayItemClient second("second", LayoutRect(200, 200, 50, 50));
   GraphicsContext context(GetPaintController());
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -659,7 +659,7 @@ TEST_P(PaintControllerTest, UpdateAddLastOverlap) {
                       TestDisplayItem(first, kBackgroundDrawingType),
                       TestDisplayItem(first, kForegroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -684,7 +684,7 @@ TEST_P(PaintControllerTest, UpdateAddLastOverlap) {
                       TestDisplayItem(second, kBackgroundDrawingType),
                       TestDisplayItem(second, kForegroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
                 UnorderedElementsAre(
@@ -711,7 +711,7 @@ TEST_P(PaintControllerTest, UpdateAddLastOverlap) {
                       TestDisplayItem(first, kBackgroundDrawingType),
                       TestDisplayItem(first, kForegroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
                 UnorderedElementsAre(
@@ -731,7 +731,7 @@ TEST_P(PaintControllerTest, UpdateClip) {
       nullptr, nullptr, FloatRoundedRect(1, 1, 2, 2));
 
   {
-    if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
       PaintChunk::Id id(first, kClipType);
       PaintChunkProperties properties = DefaultPaintChunkProperties();
       properties.property_tree_state.SetClip(clip.Get());
@@ -745,7 +745,7 @@ TEST_P(PaintControllerTest, UpdateClip) {
   }
   GetPaintController().CommitNewDisplayItems();
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_DISPLAY_LIST(GetPaintController().GetDisplayItemList(), 2,
                         TestDisplayItem(first, kBackgroundDrawingType),
                         TestDisplayItem(second, kBackgroundDrawingType));
@@ -780,7 +780,7 @@ TEST_P(PaintControllerTest, UpdateClip) {
                       TestDisplayItem(first, kBackgroundDrawingType),
                       TestDisplayItem(second, kBackgroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
                 // This is a new chunk.
@@ -798,7 +798,7 @@ TEST_P(PaintControllerTest, UpdateClip) {
       nullptr, nullptr, FloatRoundedRect(1, 1, 2, 2));
 
   {
-    if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
       PaintChunk::Id id(second, kClipType);
       PaintChunkProperties properties = DefaultPaintChunkProperties();
       properties.property_tree_state.SetClip(clip2.Get());
@@ -811,7 +811,7 @@ TEST_P(PaintControllerTest, UpdateClip) {
   }
   GetPaintController().CommitNewDisplayItems();
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_DISPLAY_LIST(GetPaintController().GetDisplayItemList(), 2,
                         TestDisplayItem(first, kBackgroundDrawingType),
                         TestDisplayItem(second, kBackgroundDrawingType));
@@ -837,7 +837,7 @@ TEST_P(PaintControllerTest, CachedDisplayItems) {
   FakeDisplayItemClient first("first");
   FakeDisplayItemClient second("second");
   GraphicsContext context(GetPaintController());
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -866,7 +866,7 @@ TEST_P(PaintControllerTest, CachedDisplayItems) {
   EXPECT_FALSE(GetPaintController().ClientCacheIsValid(first));
   EXPECT_TRUE(GetPaintController().ClientCacheIsValid(second));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -885,7 +885,7 @@ TEST_P(PaintControllerTest, CachedDisplayItems) {
                 GetPaintController().GetDisplayItemList()[0])
                 .GetPaintRecord());
   // The second display item should be cached.
-  if (!RuntimeEnabledFeatures::paintUnderInvalidationCheckingEnabled()) {
+  if (!RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled()) {
     EXPECT_EQ(second_paint_record,
               static_cast<const DrawingDisplayItem&>(
                   GetPaintController().GetDisplayItemList()[1])
@@ -907,7 +907,7 @@ TEST_P(PaintControllerTest, UpdateSwapOrderWithChildren) {
                                    LayoutRect(100, 200, 100, 100));
   FakeDisplayItemClient content2("content2", LayoutRect(100, 200, 50, 200));
   GraphicsContext context(GetPaintController());
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -940,7 +940,7 @@ TEST_P(PaintControllerTest, UpdateSwapOrderWithChildren) {
                       TestDisplayItem(content2, kForegroundDrawingType),
                       TestDisplayItem(container2, kForegroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -975,7 +975,7 @@ TEST_P(PaintControllerTest, UpdateSwapOrderWithChildren) {
                       TestDisplayItem(content1, kForegroundDrawingType),
                       TestDisplayItem(container1, kForegroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(
         GetPaintController().PaintChunks()[0].raster_invalidation_rects,
@@ -995,7 +995,7 @@ TEST_P(PaintControllerTest, UpdateSwapOrderWithChildrenAndInvalidation) {
                                    LayoutRect(100, 200, 100, 100));
   FakeDisplayItemClient content2("content2", LayoutRect(100, 200, 50, 200));
   GraphicsContext context(GetPaintController());
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -1028,7 +1028,7 @@ TEST_P(PaintControllerTest, UpdateSwapOrderWithChildrenAndInvalidation) {
                       TestDisplayItem(content2, kForegroundDrawingType),
                       TestDisplayItem(container2, kForegroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -1064,7 +1064,7 @@ TEST_P(PaintControllerTest, UpdateSwapOrderWithChildrenAndInvalidation) {
                       TestDisplayItem(content1, kForegroundDrawingType),
                       TestDisplayItem(container1, kForegroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(
         GetPaintController().PaintChunks()[0].raster_invalidation_rects,
@@ -1076,6 +1076,58 @@ TEST_P(PaintControllerTest, UpdateSwapOrderWithChildrenAndInvalidation) {
             // Bounds of |content2| which was moved along with |container2|.
             FloatRect(100, 200, 50, 200)));
   }
+}
+
+TEST_P(PaintControllerTest, CachedSubsequenceForcePaintChunk) {
+  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
+    return;
+
+  GraphicsContext context(GetPaintController());
+
+  FakeDisplayItemClient root("root");
+  auto root_properties = DefaultPaintChunkProperties();
+  PaintChunk::Id root_id(root, DisplayItem::kCaret);
+  // Record a first chunk with backface_hidden == false
+  GetPaintController().UpdateCurrentPaintChunkProperties(&root_id,
+                                                         root_properties);
+  DrawRect(context, root, kBackgroundDrawingType,
+           FloatRect(100, 100, 100, 100));
+
+  FakeDisplayItemClient container("container");
+  {
+    // Record a second chunk with backface_hidden == true
+    auto container_properties = DefaultPaintChunkProperties();
+    container_properties.backface_hidden = true;
+    PaintChunk::Id container_id(container, DisplayItem::kCaret);
+
+    SubsequenceRecorder r(context, container);
+    GetPaintController().UpdateCurrentPaintChunkProperties(
+        &container_id, container_properties);
+    DrawRect(context, container, kBackgroundDrawingType,
+             FloatRect(100, 100, 100, 100));
+    DrawRect(context, container, kForegroundDrawingType,
+             FloatRect(100, 100, 100, 100));
+  }
+  GetPaintController().CommitNewDisplayItems();
+
+  root_properties.backface_hidden = true;
+  // This time, record the fist chunk with backface_hidden == true
+  GetPaintController().UpdateCurrentPaintChunkProperties(&root_id,
+                                                         root_properties);
+  DrawRect(context, root, kBackgroundDrawingType,
+           FloatRect(100, 100, 100, 100));
+  EXPECT_TRUE(GetPaintController().UseCachedSubsequenceIfPossible(container));
+  GetPaintController().CommitNewDisplayItems();
+
+  // Even though the paint properties match, |container| should receive its
+  // own PaintChunk because it is a cached subsequence.
+  EXPECT_EQ(2u, GetPaintController().GetPaintArtifact().PaintChunks().size());
+  EXPECT_EQ(
+      root,
+      GetPaintController().GetPaintArtifact().PaintChunks()[0].id->client);
+  EXPECT_EQ(
+      container,
+      GetPaintController().GetPaintArtifact().PaintChunks()[1].id->client);
 }
 
 TEST_P(PaintControllerTest, CachedSubsequenceSwapOrder) {
@@ -1091,7 +1143,7 @@ TEST_P(PaintControllerTest, CachedSubsequenceSwapOrder) {
   PaintChunkProperties container2_properties = DefaultPaintChunkProperties();
 
   {
-    if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
       PaintChunk::Id id(container1, kBackgroundDrawingType);
       container1_properties.property_tree_state.SetEffect(
           CreateOpacityOnlyEffect(EffectPaintPropertyNode::Root(), 0.5).Get());
@@ -1109,7 +1161,7 @@ TEST_P(PaintControllerTest, CachedSubsequenceSwapOrder) {
              FloatRect(100, 100, 100, 100));
   }
   {
-    if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
       PaintChunk::Id id(container2, kBackgroundDrawingType);
       container2_properties.property_tree_state.SetEffect(
           CreateOpacityOnlyEffect(EffectPaintPropertyNode::Root(), 0.5).Get());
@@ -1150,7 +1202,7 @@ TEST_P(PaintControllerTest, CachedSubsequenceSwapOrder) {
   EXPECT_EQ(4u, markers->start);
   EXPECT_EQ(7u, markers->end);
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(2u, GetPaintController().PaintChunks().size());
     EXPECT_EQ(PaintChunk::Id(container1, kBackgroundDrawingType),
               GetPaintController().PaintChunks()[0].id);
@@ -1164,14 +1216,14 @@ TEST_P(PaintControllerTest, CachedSubsequenceSwapOrder) {
 
   // Simulate the situation when |container1| gets a z-index that is greater
   // than that of |container2|.
-  if (RuntimeEnabledFeatures::paintUnderInvalidationCheckingEnabled()) {
+  if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled()) {
     // When under-invalidation-checking is enabled,
     // useCachedSubsequenceIfPossible is forced off, and the client is expected
     // to create the same painting as in the previous paint.
     EXPECT_FALSE(SubsequenceRecorder::UseCachedSubsequenceIfPossible(
         context, container2));
     {
-      if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+      if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
         PaintChunk::Id id(container2, kBackgroundDrawingType);
         GetPaintController().UpdateCurrentPaintChunkProperties(
             &id, container2_properties);
@@ -1189,7 +1241,7 @@ TEST_P(PaintControllerTest, CachedSubsequenceSwapOrder) {
     EXPECT_FALSE(SubsequenceRecorder::UseCachedSubsequenceIfPossible(
         context, container1));
     {
-      if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+      if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
         PaintChunk::Id id(container1, kBackgroundDrawingType);
         GetPaintController().UpdateCurrentPaintChunkProperties(
             &id, container1_properties);
@@ -1244,7 +1296,7 @@ TEST_P(PaintControllerTest, CachedSubsequenceSwapOrder) {
   DisplayItemClient::EndShouldKeepAliveAllClients();
 #endif
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(2u, GetPaintController().PaintChunks().size());
     EXPECT_EQ(PaintChunk::Id(container2, kBackgroundDrawingType),
               GetPaintController().PaintChunks()[0].id);
@@ -1271,7 +1323,7 @@ TEST_P(PaintControllerTest, UpdateSwapOrderCrossingChunks) {
   PaintChunkProperties container2_properties = DefaultPaintChunkProperties();
 
   {
-    if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
       PaintChunk::Id id(container1, kBackgroundDrawingType);
       container1_properties.property_tree_state.SetEffect(
           CreateOpacityOnlyEffect(EffectPaintPropertyNode::Root(), 0.5).Get());
@@ -1284,7 +1336,7 @@ TEST_P(PaintControllerTest, UpdateSwapOrderCrossingChunks) {
              FloatRect(100, 100, 50, 200));
   }
   {
-    if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
       PaintChunk::Id id(container2, kBackgroundDrawingType);
       container2_properties.property_tree_state.SetEffect(
           CreateOpacityOnlyEffect(EffectPaintPropertyNode::Root(), 0.5).Get());
@@ -1304,7 +1356,7 @@ TEST_P(PaintControllerTest, UpdateSwapOrderCrossingChunks) {
                       TestDisplayItem(container2, kBackgroundDrawingType),
                       TestDisplayItem(content2, kBackgroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(2u, GetPaintController().PaintChunks().size());
     EXPECT_EQ(PaintChunk::Id(container1, kBackgroundDrawingType),
               GetPaintController().PaintChunks()[0].id);
@@ -1317,7 +1369,7 @@ TEST_P(PaintControllerTest, UpdateSwapOrderCrossingChunks) {
   }
 
   // Move content2 into container1, without invalidation.
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     PaintChunk::Id id(container1, kBackgroundDrawingType);
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &id, container1_properties);
@@ -1328,7 +1380,7 @@ TEST_P(PaintControllerTest, UpdateSwapOrderCrossingChunks) {
            FloatRect(100, 100, 50, 200));
   DrawRect(context, content2, kBackgroundDrawingType,
            FloatRect(100, 200, 50, 200));
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     PaintChunk::Id id(container2, kBackgroundDrawingType);
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &id, container2_properties);
@@ -1351,7 +1403,7 @@ TEST_P(PaintControllerTest, UpdateSwapOrderCrossingChunks) {
                       TestDisplayItem(content2, kBackgroundDrawingType),
                       TestDisplayItem(container2, kBackgroundDrawingType));
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(2u, GetPaintController().PaintChunks().size());
     EXPECT_EQ(PaintChunk::Id(container1, kBackgroundDrawingType),
               GetPaintController().PaintChunks()[0].id);
@@ -1377,7 +1429,7 @@ TEST_P(PaintControllerTest, OutOfOrderNoCrash) {
   const DisplayItem::Type kType4 =
       static_cast<DisplayItem::Type>(DisplayItem::kDrawingFirst + 3);
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -1388,7 +1440,7 @@ TEST_P(PaintControllerTest, OutOfOrderNoCrash) {
 
   GetPaintController().CommitNewDisplayItems();
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -1419,7 +1471,7 @@ TEST_P(PaintControllerTest, CachedNestedSubsequenceUpdate) {
   PaintChunkProperties content2_properties = DefaultPaintChunkProperties();
 
   {
-    if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
       PaintChunk::Id id(container1, kBackgroundDrawingType);
       container1_background_properties.property_tree_state.SetEffect(
           CreateOpacityOnlyEffect(EffectPaintPropertyNode::Root(), 0.5).Get());
@@ -1430,7 +1482,7 @@ TEST_P(PaintControllerTest, CachedNestedSubsequenceUpdate) {
     DrawRect(context, container1, kBackgroundDrawingType,
              FloatRect(100, 100, 100, 100));
     {
-      if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+      if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
         PaintChunk::Id id(content1, kBackgroundDrawingType);
         content1_properties.property_tree_state.SetEffect(
             CreateOpacityOnlyEffect(EffectPaintPropertyNode::Root(), 0.6)
@@ -1444,7 +1496,7 @@ TEST_P(PaintControllerTest, CachedNestedSubsequenceUpdate) {
       DrawRect(context, content1, kForegroundDrawingType,
                FloatRect(100, 100, 50, 200));
     }
-    if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
       PaintChunk::Id id(container1, kForegroundDrawingType);
       container1_foreground_properties.property_tree_state.SetEffect(
           CreateOpacityOnlyEffect(EffectPaintPropertyNode::Root(), 0.5).Get());
@@ -1455,7 +1507,7 @@ TEST_P(PaintControllerTest, CachedNestedSubsequenceUpdate) {
              FloatRect(100, 100, 100, 100));
   }
   {
-    if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
       PaintChunk::Id id(container2, kBackgroundDrawingType);
       container2_background_properties.property_tree_state.SetEffect(
           CreateOpacityOnlyEffect(EffectPaintPropertyNode::Root(), 0.7).Get());
@@ -1466,7 +1518,7 @@ TEST_P(PaintControllerTest, CachedNestedSubsequenceUpdate) {
     DrawRect(context, container2, kBackgroundDrawingType,
              FloatRect(100, 200, 100, 100));
     {
-      if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+      if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
         PaintChunk::Id id(content2, kBackgroundDrawingType);
         content2_properties.property_tree_state.SetEffect(
             CreateOpacityOnlyEffect(EffectPaintPropertyNode::Root(), 0.8)
@@ -1510,7 +1562,7 @@ TEST_P(PaintControllerTest, CachedNestedSubsequenceUpdate) {
   EXPECT_EQ(5u, markers->start);
   EXPECT_EQ(5u, markers->end);
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(5u, GetPaintController().PaintChunks().size());
     EXPECT_EQ(PaintChunk::Id(container1, kBackgroundDrawingType),
               GetPaintController().PaintChunks()[0].id);
@@ -1548,7 +1600,7 @@ TEST_P(PaintControllerTest, CachedNestedSubsequenceUpdate) {
       SubsequenceRecorder::UseCachedSubsequenceIfPossible(context, content2));
   // Content2 now outputs foreground only.
   {
-    if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
       PaintChunk::Id id(content2, kForegroundDrawingType);
       GetPaintController().UpdateCurrentPaintChunkProperties(
           &id, content2_properties);
@@ -1563,13 +1615,13 @@ TEST_P(PaintControllerTest, CachedNestedSubsequenceUpdate) {
         context, container1));
     SubsequenceRecorder r(context, container1);
     // Use cached subsequence of content1.
-    if (RuntimeEnabledFeatures::paintUnderInvalidationCheckingEnabled()) {
+    if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled()) {
       // When under-invalidation-checking is enabled,
       // useCachedSubsequenceIfPossible is forced off, and the client is
       // expected to create the same painting as in the previous paint.
       EXPECT_FALSE(SubsequenceRecorder::UseCachedSubsequenceIfPossible(
           context, content1));
-      if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+      if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
         PaintChunk::Id id(content1, kBackgroundDrawingType);
         GetPaintController().UpdateCurrentPaintChunkProperties(
             &id, content1_properties);
@@ -1583,7 +1635,7 @@ TEST_P(PaintControllerTest, CachedNestedSubsequenceUpdate) {
       EXPECT_TRUE(SubsequenceRecorder::UseCachedSubsequenceIfPossible(
           context, content1));
     }
-    if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
       PaintChunk::Id id(container1, kForegroundDrawingType);
       GetPaintController().UpdateCurrentPaintChunkProperties(
           &id, container1_foreground_properties);
@@ -1622,7 +1674,7 @@ TEST_P(PaintControllerTest, CachedNestedSubsequenceUpdate) {
   EXPECT_EQ(1u, markers->start);
   EXPECT_EQ(2u, markers->end);
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(3u, GetPaintController().PaintChunks().size());
     EXPECT_EQ(PaintChunk::Id(content2, kForegroundDrawingType),
               GetPaintController().PaintChunks()[0].id);
@@ -1650,7 +1702,7 @@ TEST_P(PaintControllerTest, SkipCache) {
   FakeDisplayItemClient multicol("multicol", LayoutRect(100, 100, 200, 200));
   FakeDisplayItemClient content("content", LayoutRect(100, 100, 100, 100));
   GraphicsContext context(GetPaintController());
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -1683,7 +1735,7 @@ TEST_P(PaintControllerTest, SkipCache) {
           .GetPaintRecord();
   EXPECT_NE(record1, record2);
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
                 UnorderedElementsAre(FloatRect(LayoutRect::InfiniteIntRect())));
@@ -1722,7 +1774,7 @@ TEST_P(PaintControllerTest, SkipCache) {
                          GetPaintController().GetDisplayItemList()[2])
                          .GetPaintRecord());
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
                 // Bounds of |content| (old and new are the same);
@@ -1758,7 +1810,7 @@ TEST_P(PaintControllerTest, SkipCache) {
 
   GetPaintController().CommitNewDisplayItems();
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     EXPECT_EQ(1u, GetPaintController().PaintChunks().size());
     EXPECT_THAT(GetPaintController().PaintChunks()[0].raster_invalidation_rects,
                 UnorderedElementsAre(
@@ -1777,7 +1829,7 @@ TEST_P(PaintControllerTest, PartialSkipCache) {
   FloatRect rect2(150, 100, 50, 50);
   FloatRect rect3(200, 100, 50, 50);
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -1812,7 +1864,7 @@ TEST_P(PaintControllerTest, PartialSkipCache) {
   EXPECT_EQ(PaintInvalidationReason::kFull,
             content.GetPaintInvalidationReason());
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         &root_paint_chunk_id_, DefaultPaintChunkProperties());
   }
@@ -1904,7 +1956,7 @@ TEST_F(PaintControllerTestBase, SmallPaintControllerHasOnePaintChunk) {
   ScopedSlimmingPaintV2ForTest enable_s_pv2(true);
   FakeDisplayItemClient client("test client");
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     GetPaintController().UpdateCurrentPaintChunkProperties(
         nullptr, DefaultPaintChunkProperties());
   }
@@ -1938,129 +1990,6 @@ void DrawPath(GraphicsContext& context,
   flags.setAntiAlias(true);
   for (unsigned i = 0; i < count; i++)
     context.DrawPath(path, flags);
-}
-
-TEST_F(PaintControllerTestBase, IsSuitableForGpuRasterizationSinglePath) {
-  FakeDisplayItemClient client("test client", LayoutRect(0, 0, 200, 100));
-  GraphicsContext context(GetPaintController());
-  DrawPath(context, client, kBackgroundDrawingType, 1);
-  GetPaintController().CommitNewDisplayItems();
-  EXPECT_EQ(1, GetPaintController().GetPaintArtifact().NumSlowPaths());
-}
-
-TEST_F(PaintControllerTestBase,
-       IsNotSuitableForGpuRasterizationSinglePaintRecordManyPaths) {
-  FakeDisplayItemClient client("test client", LayoutRect(0, 0, 200, 100));
-  GraphicsContext context(GetPaintController());
-
-  DrawPath(context, client, kBackgroundDrawingType, 50);
-  GetPaintController().CommitNewDisplayItems();
-  EXPECT_EQ(50, GetPaintController().GetPaintArtifact().NumSlowPaths());
-}
-
-TEST_F(PaintControllerTestBase,
-       IsNotSuitableForGpuRasterizationMultiplePaintRecordsSinglePathEach) {
-  FakeDisplayItemClient client("test client", LayoutRect(0, 0, 200, 100));
-  GraphicsContext context(GetPaintController());
-  GetPaintController().BeginSkippingCache();
-
-  for (int i = 0; i < 50; ++i)
-    DrawPath(context, client, kBackgroundDrawingType, 50);
-
-  GetPaintController().EndSkippingCache();
-  GetPaintController().CommitNewDisplayItems();
-  EXPECT_EQ(50 * 50, GetPaintController().GetPaintArtifact().NumSlowPaths());
-}
-
-TEST_F(PaintControllerTestBase,
-       IsNotSuitableForGpuRasterizationSinglePaintRecordManyPathsTwoPaints) {
-  FakeDisplayItemClient client("test client", LayoutRect(0, 0, 200, 100));
-
-  {
-    GraphicsContext context(GetPaintController());
-    DrawPath(context, client, kBackgroundDrawingType, 50);
-    GetPaintController().CommitNewDisplayItems();
-    EXPECT_EQ(50, GetPaintController().GetPaintArtifact().NumSlowPaths());
-  }
-
-  client.SetDisplayItemsUncached();
-
-  {
-    GraphicsContext context(GetPaintController());
-    DrawPath(context, client, kBackgroundDrawingType, 50);
-    GetPaintController().CommitNewDisplayItems();
-    EXPECT_EQ(50, GetPaintController().GetPaintArtifact().NumSlowPaths());
-  }
-}
-
-TEST_F(PaintControllerTestBase,
-       IsNotSuitableForGpuRasterizationSinglePaintRecordManyPathsCached) {
-  FakeDisplayItemClient client("test client", LayoutRect(0, 0, 200, 100));
-
-  {
-    GraphicsContext context(GetPaintController());
-    DrawPath(context, client, kBackgroundDrawingType, 50);
-    GetPaintController().CommitNewDisplayItems();
-    EXPECT_EQ(50, GetPaintController().GetPaintArtifact().NumSlowPaths());
-  }
-
-  {
-    GraphicsContext context(GetPaintController());
-    DrawPath(context, client, kBackgroundDrawingType, 50);
-    GetPaintController().CommitNewDisplayItems();
-    EXPECT_EQ(50, GetPaintController().GetPaintArtifact().NumSlowPaths());
-  }
-}
-
-TEST_F(
-    PaintControllerTestBase,
-    IsNotSuitableForGpuRasterizationSinglePaintRecordManyPathsCachedSubsequence) {
-  FakeDisplayItemClient client("test client", LayoutRect(0, 0, 200, 100));
-  FakeDisplayItemClient container("container", LayoutRect(0, 0, 200, 100));
-
-  GraphicsContext context(GetPaintController());
-  {
-    SubsequenceRecorder subsequence_recorder(context, container);
-    DrawPath(context, client, kBackgroundDrawingType, 50);
-  }
-  GetPaintController().CommitNewDisplayItems();
-  EXPECT_EQ(50, GetPaintController().GetPaintArtifact().NumSlowPaths());
-
-  EXPECT_TRUE(
-      SubsequenceRecorder::UseCachedSubsequenceIfPossible(context, container));
-  GetPaintController().CommitNewDisplayItems();
-  EXPECT_EQ(50, GetPaintController().GetPaintArtifact().NumSlowPaths());
-
-#if CHECK_DISPLAY_ITEM_CLIENT_ALIVENESS
-  DisplayItemClient::EndShouldKeepAliveAllClients();
-#endif
-}
-
-// Temporarily disabled (pref regressions due to GPU veto stickiness:
-// http://crbug.com/603969).
-TEST_F(PaintControllerTestBase,
-       DISABLED_IsNotSuitableForGpuRasterizationConcaveClipPath) {
-  Path path;
-  path.AddLineTo(FloatPoint(50, 50));
-  path.AddLineTo(FloatPoint(100, 0));
-  path.AddLineTo(FloatPoint(50, 100));
-  path.CloseSubpath();
-
-  FakeDisplayItemClient client("test client", LayoutRect(0, 0, 200, 100));
-  GraphicsContext context(GetPaintController());
-
-  // Run twice for empty/non-empty m_currentPaintArtifact coverage.
-  for (int i = 0; i < 2; ++i) {
-    for (int j = 0; j < 50; ++j)
-      GetPaintController().CreateAndAppend<BeginClipPathDisplayItem>(client,
-                                                                     path);
-    DrawRect(context, client, kBackgroundDrawingType,
-             FloatRect(0, 0, 100, 100));
-    for (int j = 0; j < 50; ++j)
-      GetPaintController().CreateAndAppend<EndClipPathDisplayItem>(client);
-    GetPaintController().CommitNewDisplayItems();
-    EXPECT_EQ(50 * i, GetPaintController().GetPaintArtifact().NumSlowPaths());
-  }
 }
 
 TEST_F(PaintControllerTestBase, BeginAndEndFrame) {

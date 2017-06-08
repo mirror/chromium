@@ -68,8 +68,10 @@ class TestWebViewClient;
 // pending resource requests, as well as waiting for the threaded parser to
 // finish, before returning.
 void LoadFrame(WebFrame*, const std::string& url);
-// Same as above, but for WebFrame::loadHTMLString().
-void LoadHTMLString(WebFrame*, const std::string& html, const WebURL& base_url);
+// Same as above, but for WebLocalFrame::LoadHTMLString().
+void LoadHTMLString(WebLocalFrame*,
+                    const std::string& html,
+                    const WebURL& base_url);
 // Same as above, but for WebFrame::loadHistoryItem().
 void LoadHistoryItem(WebFrame*,
                      const WebHistoryItem&,
@@ -121,23 +123,23 @@ class UseMockScrollbarSettings {
   UseMockScrollbarSettings()
       : original_mock_scrollbar_enabled_(Settings::MockScrollbarsEnabled()),
         original_overlay_scrollbars_enabled_(
-            RuntimeEnabledFeatures::overlayScrollbarsEnabled()) {
+            RuntimeEnabledFeatures::OverlayScrollbarsEnabled()) {
     Settings::SetMockScrollbarsEnabled(true);
-    RuntimeEnabledFeatures::setOverlayScrollbarsEnabled(true);
+    RuntimeEnabledFeatures::SetOverlayScrollbarsEnabled(true);
     EXPECT_TRUE(ScrollbarTheme::GetTheme().UsesOverlayScrollbars());
   }
 
   UseMockScrollbarSettings(bool use_mock, bool use_overlay)
       : original_mock_scrollbar_enabled_(Settings::MockScrollbarsEnabled()),
         original_overlay_scrollbars_enabled_(
-            RuntimeEnabledFeatures::overlayScrollbarsEnabled()) {
+            RuntimeEnabledFeatures::OverlayScrollbarsEnabled()) {
     Settings::SetMockScrollbarsEnabled(use_mock);
-    RuntimeEnabledFeatures::setOverlayScrollbarsEnabled(use_overlay);
+    RuntimeEnabledFeatures::SetOverlayScrollbarsEnabled(use_overlay);
   }
 
   ~UseMockScrollbarSettings() {
     Settings::SetMockScrollbarsEnabled(original_mock_scrollbar_enabled_);
-    RuntimeEnabledFeatures::setOverlayScrollbarsEnabled(
+    RuntimeEnabledFeatures::SetOverlayScrollbarsEnabled(
         original_overlay_scrollbars_enabled_);
   }
 
@@ -272,7 +274,9 @@ class TestWebFrameClient : public WebFrameClient {
   bool IsLoading() { return loads_in_progress_ > 0; }
 
   // Tests can override the virtual method below to mock the interface provider.
-  virtual blink::InterfaceProvider* GetInterfaceProvider() { return nullptr; }
+  virtual blink::InterfaceProvider* GetInterfaceProviderForTesting() {
+    return nullptr;
+  }
 
   std::unique_ptr<blink::WebURLLoader> CreateURLLoader() override {
     // TODO(yhirano): Stop using Platform::CreateURLLoader() here.

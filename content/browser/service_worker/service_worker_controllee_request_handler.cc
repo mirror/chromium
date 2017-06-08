@@ -159,10 +159,10 @@ net::URLRequestJob* ServiceWorkerControlleeRequestHandler::MaybeCreateJob(
   return job.release();
 }
 
-void ServiceWorkerControlleeRequestHandler::MaybeCreateLoaderFactory(
+void ServiceWorkerControlleeRequestHandler::MaybeCreateLoader(
     const ResourceRequest& resource_request,
     ResourceContext* resource_context,
-    base::OnceCallback<void(mojom::URLLoaderFactory*)> factory_callback) {
+    LoaderCallback callback) {
   DCHECK(is_main_resource_load_);
   ClearJob();
 
@@ -171,7 +171,7 @@ void ServiceWorkerControlleeRequestHandler::MaybeCreateLoaderFactory(
 
   if (!context_ || !provider_host_) {
     // We can't do anything other than to fall back to network.
-    std::move(factory_callback).Run(nullptr);
+    std::move(callback).Run(StartLoaderCallback());
     return;
   }
 
@@ -179,8 +179,8 @@ void ServiceWorkerControlleeRequestHandler::MaybeCreateLoaderFactory(
   // never see use_network_ gets true.
   DCHECK(!use_network_);
 
-  url_job_ =
-      base::MakeUnique<ServiceWorkerURLJobWrapper>(std::move(factory_callback));
+  url_job_ = base::MakeUnique<ServiceWorkerURLJobWrapper>(
+      std::move(callback), this, resource_request, blob_storage_context_);
 
   resource_context_ = resource_context;
 

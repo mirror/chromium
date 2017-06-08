@@ -43,6 +43,7 @@
 #include "core/events/UIEventWithKeyState.h"
 #include "core/exported/SharedWorkerRepositoryClientImpl.h"
 #include "core/exported/WebDataSourceImpl.h"
+#include "core/exported/WebPluginContainerImpl.h"
 #include "core/exported/WebViewBase.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
@@ -107,7 +108,6 @@
 #include "v8/include/v8.h"
 #include "web/WebDevToolsAgentImpl.h"
 #include "web/WebDevToolsFrontendImpl.h"
-#include "web/WebPluginContainerImpl.h"
 
 namespace blink {
 
@@ -180,10 +180,10 @@ void LocalFrameClientImpl::DispatchDidClearWindowObjectInMainWorld() {
       NavigatorGamepad::From(*document);
       NavigatorServiceWorker::From(*document);
       DOMWindowStorageController::From(*document);
-      if (RuntimeEnabledFeatures::webVREnabled() ||
+      if (RuntimeEnabledFeatures::WebVREnabled() ||
           OriginTrials::webVREnabled(document->GetExecutionContext()))
         NavigatorVR::From(*document);
-      if (RuntimeEnabledFeatures::presentationEnabled() &&
+      if (RuntimeEnabledFeatures::PresentationEnabled() &&
           web_frame_->GetFrame()->GetSettings()->GetPresentationReceiver()) {
         // Call this in order to ensure the object is created.
         PresentationReceiver::From(*document);
@@ -254,7 +254,7 @@ void LocalFrameClientImpl::DidUpdateCurrentHistoryItem() {
 
 bool LocalFrameClientImpl::AllowContentInitiatedDataUrlNavigations(
     const KURL& url) {
-  if (RuntimeEnabledFeatures::allowContentInitiatedDataUrlNavigationsEnabled())
+  if (RuntimeEnabledFeatures::AllowContentInitiatedDataUrlNavigationsEnabled())
     return true;
   if (web_frame_->Client())
     return web_frame_->Client()->AllowContentInitiatedDataUrlNavigations(url);
@@ -1050,6 +1050,11 @@ TextCheckerClient& LocalFrameClientImpl::GetTextCheckerClient() const {
 
 std::unique_ptr<blink::WebURLLoader> LocalFrameClientImpl::CreateURLLoader() {
   return web_frame_->CreateURLLoader();
+}
+
+service_manager::InterfaceProvider*
+LocalFrameClientImpl::GetInterfaceProvider() {
+  return web_frame_->Client()->GetInterfaceProvider();
 }
 
 }  // namespace blink

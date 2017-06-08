@@ -89,15 +89,11 @@ static bool ParseVp9CodecID(const std::string& mime_type_lower_case,
                             uint8_t* out_level,
                             VideoColorSpace* out_color_space) {
   if (mime_type_lower_case == "video/mp4") {
-    if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-            switches::kEnableVp9InMp4)) {
-      // Only new style is allowed for mp4.
-      return ParseNewStyleVp9CodecID(codec_id, out_profile, out_level,
-                                     out_color_space);
-    }
+    // Only new style is allowed for mp4.
+    return ParseNewStyleVp9CodecID(codec_id, out_profile, out_level,
+                                   out_color_space);
   } else if (mime_type_lower_case == "video/webm") {
-    if (HasNewVp9CodecStringSupport() &&
-        ParseNewStyleVp9CodecID(codec_id, out_profile, out_level,
+    if (ParseNewStyleVp9CodecID(codec_id, out_profile, out_level,
                                 out_color_space)) {
       return true;
     }
@@ -881,10 +877,12 @@ SupportsType MimeUtil::IsCodecSupported(const std::string& mime_type_lower_case,
       default:
         ambiguous_platform_support = true;
     }
-  } else if (codec == MimeUtil::VP9 && video_profile != VP9PROFILE_PROFILE0) {
-    // We don't know if the underlying platform supports these profiles. Need
-    // to add platform level querying to get supported profiles.
-    // https://crbug.com/604566
+  } else if (codec == MimeUtil::VP9 && video_profile != VP9PROFILE_PROFILE0 &&
+             is_encrypted) {
+    // LibVPX is not generally used for encrypted videos, so we do not know
+    // whether higher profiles are supported.
+    // TODO(chcunningham/xhwang): Add details to indicate which key system will
+    // be used and check support by querying the matching KeySystemProperties.
     ambiguous_platform_support = true;
   }
 

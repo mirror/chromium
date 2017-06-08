@@ -625,8 +625,8 @@ bool WebGLRenderingContextBase::SupportOwnOffscreenSurface(
   //
   // At this time, treat this as an experimental rendering optimization
   // that needs a separate opt-in. See crbug.com/691102 for details.
-  if (RuntimeEnabledFeatures::webVRExperimentalRenderingEnabled()) {
-    if (RuntimeEnabledFeatures::webVREnabled() ||
+  if (RuntimeEnabledFeatures::WebVRExperimentalRenderingEnabled()) {
+    if (RuntimeEnabledFeatures::WebVREnabled() ||
         OriginTrials::webVREnabled(execution_context)) {
       DVLOG(1) << "Requesting supportOwnOffscreenSurface";
       return true;
@@ -703,8 +703,7 @@ void WebGLRenderingContextBase::ForceNextWebGLContextCreationToFail() {
 
 ImageBitmap* WebGLRenderingContextBase::TransferToImageBitmapBase(
     ScriptState* script_state) {
-  UseCounter::Feature feature =
-      UseCounter::kOffscreenCanvasTransferToImageBitmapWebGL;
+  WebFeature feature = WebFeature::kOffscreenCanvasTransferToImageBitmapWebGL;
   UseCounter::Count(ExecutionContext::From(script_state), feature);
   if (!GetDrawingBuffer())
     return nullptr;
@@ -714,7 +713,7 @@ ImageBitmap* WebGLRenderingContextBase::TransferToImageBitmapBase(
 ScriptPromise WebGLRenderingContextBase::commit(
     ScriptState* script_state,
     ExceptionState& exception_state) {
-  UseCounter::Feature feature = UseCounter::kOffscreenCanvasCommitWebGL;
+  WebFeature feature = WebFeature::kOffscreenCanvasCommitWebGL;
   UseCounter::Count(ExecutionContext::From(script_state), feature);
   int width = GetDrawingBuffer()->Size().Width();
   int height = GetDrawingBuffer()->Size().Height();
@@ -2769,7 +2768,7 @@ bool WebGLRenderingContextBase::ExtensionTracker::MatchesNameWithPrefixes(
 bool WebGLRenderingContextBase::ExtensionSupportedAndAllowed(
     const ExtensionTracker* tracker) {
   if (tracker->Draft() &&
-      !RuntimeEnabledFeatures::webGLDraftExtensionsEnabled())
+      !RuntimeEnabledFeatures::WebGLDraftExtensionsEnabled())
     return false;
   if (!tracker->Supported(this))
     return false;
@@ -4826,7 +4825,7 @@ void WebGLRenderingContextBase::TexImageHelperHTMLImageElement(
   RefPtr<Image> image_for_render = image->CachedImage()->GetImage();
   if (image_for_render && image_for_render->IsSVGImage()) {
     if (canvas()) {
-      UseCounter::Count(canvas()->GetDocument(), UseCounter::kSVGInWebGL);
+      UseCounter::Count(canvas()->GetDocument(), WebFeature::kSVGInWebGL);
     }
     image_for_render =
         DrawImageIntoBuffer(std::move(image_for_render), image->width(),

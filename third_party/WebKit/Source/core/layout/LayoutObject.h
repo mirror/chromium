@@ -401,15 +401,20 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   // nodes that are created by the layout object. The property nodes should only
   // be updated during InPrePaint phase of the document lifecycle.
   const ObjectPaintProperties* PaintProperties() const {
-    DCHECK(RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled());
+    DCHECK(RuntimeEnabledFeatures::SlimmingPaintInvalidationEnabled());
     return rare_paint_data_ ? rare_paint_data_->PaintProperties() : nullptr;
+  }
+
+  LayoutObjectId UniqueId() const {
+    DCHECK(rare_paint_data_);
+    return rare_paint_data_ ? rare_paint_data_->UniqueId() : 0;
   }
 
   // The complete set of property nodes that should be used as a starting point
   // to paint this LayoutObject. See also the comment for
   // RarePaintData::local_border_box_properties_.
   const PropertyTreeState* LocalBorderBoxProperties() const {
-    DCHECK(RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled());
+    DCHECK(RuntimeEnabledFeatures::SlimmingPaintInvalidationEnabled());
     if (rare_paint_data_)
       return rare_paint_data_->LocalBorderBoxProperties();
     return nullptr;
@@ -569,7 +574,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   virtual bool IsLayoutBlockFlow() const { return false; }
   virtual bool IsLayoutFlowThread() const { return false; }
   virtual bool IsLayoutInline() const { return false; }
-  virtual bool IsLayoutPart() const { return false; }
+  virtual bool IsLayoutEmbeddedContent() const { return false; }
 
   bool IsDocumentElement() const {
     return GetDocument().documentElement() == node_;
@@ -1515,8 +1520,8 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   // While the destroy() method is virtual, this should only be overriden in
   // very rare circumstances.
   // You want to override willBeDestroyed() instead unless you explicitly need
-  // to stop this object from being destroyed (for example, LayoutPart
-  // overrides destroy() for this purpose).
+  // to stop this object from being destroyed (for example,
+  // LayoutEmbeddedContent overrides destroy() for this purpose).
   virtual void Destroy();
 
   // Virtual function helpers for the deprecated Flexible Box Layout (display:
@@ -1765,7 +1770,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
     // pre-paint tree walk. TODO(wangxianzhu): Add check of lifecycle states.
     void SetVisualRect(const LayoutRect& r) { layout_object_.SetVisualRect(r); }
     void SetPaintOffset(const LayoutPoint& p) {
-      DCHECK(RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled());
+      DCHECK(RuntimeEnabledFeatures::SlimmingPaintInvalidationEnabled());
       DCHECK_EQ(layout_object_.GetDocument().Lifecycle().GetState(),
                 DocumentLifecycle::kInPrePaint);
       layout_object_.paint_offset_ = p;
@@ -1967,7 +1972,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
     kLayoutObjectLayoutInline,
     kLayoutObjectLayoutMultiColumnSet,
     kLayoutObjectLayoutMultiColumnSpannerPlaceholder,
-    kLayoutObjectLayoutPart,
+    kLayoutObjectLayoutEmbeddedContent,
     kLayoutObjectLayoutReplaced,
     kLayoutObjectLayoutScrollbarPart,
     kLayoutObjectLayoutView,

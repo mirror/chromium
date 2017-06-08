@@ -293,6 +293,10 @@ static ARIARoleMap* CreateARIARoleMap() {
 
   for (size_t i = 0; i < WTF_ARRAY_LENGTH(kRoles); ++i)
     role_map->Set(String(kRoles[i].aria_role), kRoles[i].webcore_role);
+
+  // Grids "ignore" their non-row children during computation of children.
+  role_map->Set("rowgroup", kIgnoredRole);
+
   return role_map;
 }
 
@@ -760,7 +764,7 @@ const AXObjectImpl* AXObjectImpl::AriaHiddenRoot() const {
 
 const AXObjectImpl* AXObjectImpl::InertRoot() const {
   const AXObjectImpl* object = this;
-  if (!RuntimeEnabledFeatures::inertAttributeEnabled())
+  if (!RuntimeEnabledFeatures::InertAttributeEnabled())
     return 0;
 
   while (object && !object->IsAXNodeObject())

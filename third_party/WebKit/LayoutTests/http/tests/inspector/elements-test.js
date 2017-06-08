@@ -281,7 +281,7 @@ InspectorTest.filterMatchedStyles = function(text)
 {
     var regex = text ? new RegExp(text, "i") : null;
     InspectorTest.addResult("Filtering styles by: " + text);
-    UI.panels.elements._stylesWidget.onFilterChanged(regex);
+    UI.panels.elements._stylesWidget._onFilterChanged(regex);
 }
 
 InspectorTest.dumpRenderedMatchedStyles = function()
@@ -947,13 +947,9 @@ InspectorTest.dumpInspectorHighlightJSON = function(idValue, callback)
 {
     InspectorTest.nodeWithId(idValue, nodeResolved);
 
-    function nodeResolved(node)
+    async function nodeResolved(node)
     {
-        InspectorTest.OverlayAgent.getHighlightObjectForTest(node.id, report);
-    }
-
-    function report(error, result)
-    {
+        var result = await InspectorTest.OverlayAgent.getHighlightObjectForTest(node.id);
         InspectorTest.addResult(idValue + JSON.stringify(result, null, 2));
         callback();
     }

@@ -24,15 +24,6 @@ const char kEnableMaterialDesignPolicyPageDescription[] =
     "If enabled, the chrome://md-policy URL loads the Material Design "
     "policy page.";
 
-//  Material Design version of chrome://settings
-
-const char kEnableMaterialDesignSettingsName[] =
-    "Enable Material Design settings";
-
-const char kEnableMaterialDesignSettingsDescription[] =
-    "If enabled, the chrome://settings/ URL loads the Material Design "
-    "settings page.";
-
 //  Material Design version of chrome://extensions
 
 const char kEnableMaterialDesignExtensionsName[] =
@@ -194,7 +185,7 @@ const char kSavePageAsMhtmlDescription[] =
     "Enables saving pages as MHTML: a single text file containing HTML and "
     "all sub-resources.";
 
-//  Flag and values for MHTML Geenrator options lab.
+//  Flag and values for MHTML Generator options lab.
 
 const char kMhtmlGeneratorOptionName[] = "MHTML Generation Option";
 
@@ -763,13 +754,6 @@ const char kJavascriptHarmonyName[] = "Experimental JavaScript";
 
 const char kJavascriptHarmonyDescription[] =
     "Enable web pages to use experimental JavaScript features.";
-
-const char kV8DisableIgnitionTurboName[] =
-    "Classic JavaScript Compilation Pipeline";
-
-const char kV8DisableIgnitionTurboDescription[] =
-    "Enables V8's classic compilation pipeline for JavaScript execution "
-    "(disabling V8's new Ignition interpreter and TurboFan compiler)";
 
 const char kEnableAsmWasmName[] =
     "Experimental Validate Asm.js and convert to WebAssembly when valid.";
@@ -2196,7 +2180,7 @@ const char kMergeKeyCharEventsName[] =
     "event (WM_CHAR).";
 
 const char kMergeKeyCharEventsDescription[] =
-    "If disabled, Chrome will handle WM_KEY* and WM_CHAR separatedly.";
+    "If disabled, Chrome will handle WM_KEY* and WM_CHAR separately.";
 
 const char kUseWinrtMidiApiName[] = "Use Windows Runtime MIDI API";
 
@@ -3119,7 +3103,7 @@ const char kOmniboxUIMaxAutocompleteMatchesName[] =
     "Omnibox UI Max Autocomplete Matches";
 
 const char kOmniboxUIMaxAutocompleteMatchesDescription[] =
-    "Changes the maximum number af autocomplete matches displayed in the "
+    "Changes the maximum number of autocomplete matches displayed in the "
     "Omnibox UI.";
 
 const char kOmniboxUIVerticalLayoutName[] = "Omnibox UI Vertical Layout";

@@ -139,16 +139,20 @@ const CGFloat kAnimationDuration = 0.3;
   return self;
 }
 
-- (void)setContentImage:(UIImage*)image {
+- (void)setContentImage:(UIImage*)image animated:(BOOL)animated {
   if (!image) {
     self.contentImageView.hidden = YES;
     return;
   }
 
   self.contentImageView.image = image;
+  self.contentImageView.hidden = NO;
+
+  if (!animated) {
+    return;
+  }
 
   self.contentImageView.alpha = 0;
-  self.contentImageView.hidden = NO;
 
   [UIView animateWithDuration:kAnimationDuration
                    animations:^{
@@ -212,6 +216,7 @@ const CGFloat kAnimationDuration = 0.3;
 #pragma mark - UICollectionViewCell
 
 - (void)prepareForReuse {
+  [super prepareForReuse];
   self.titleLabel.text = nil;
   [self setSubtitleText:nil];
   self.displayImage = NO;

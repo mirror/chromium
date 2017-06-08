@@ -76,6 +76,14 @@ static LayerStickyPositionConstraint StickyPositionConstraint(
   return layer->test_properties()->sticky_position_constraint;
 }
 
+static gfx::Size OffsetForStickyPositionFromMainThread(Layer* layer) {
+  return layer->offset_for_sticky_position_from_main_thread();
+}
+
+static gfx::Size OffsetForStickyPositionFromMainThread(LayerImpl* layer) {
+  return layer->test_properties()->offset_for_sticky_position_from_main_thread;
+}
+
 static LayerImplList& Children(LayerImpl* layer) {
   return layer->test_properties()->children;
 }
@@ -540,14 +548,6 @@ bool AddTransformNodeIfNeeded(
             .AddNodeAffectedByOuterViewportBoundsDelta(node->id);
       }
     }
-    // TODO(smcgruer): Pass main thread sticky-shifting offsets of
-    // non-promoted ancestors, or promote all ancestor sticky elements.
-    // See http://crbug.com/702229
-    sticky_data->main_thread_offset =
-        layer->position().OffsetFromOrigin() -
-        sticky_data->constraints.parent_relative_sticky_box_offset
-            .OffsetFromOrigin();
-
     // Copy the ancestor nodes for later use. These layers are guaranteed to
     // have transform nodes at this point because they are our ancestors (so
     // have already been processed) and are sticky (so have transform nodes).
@@ -570,6 +570,9 @@ bool AddTransformNodeIfNeeded(
       DCHECK(sticky_data->nearest_node_shifting_containing_block !=
              TransformTree::kInvalidNodeId);
     }
+    node->offset_for_sticky_position_from_main_thread =
+        gfx::Vector2dF(OffsetForStickyPositionFromMainThread(layer).width(),
+                       OffsetForStickyPositionFromMainThread(layer).height());
   }
 
   node->needs_local_transform_update = true;
@@ -964,8 +967,6 @@ bool AddEffectNodeIfNeeded(
       node->closest_ancestor_with_copy_request_id;
   data_for_children->effect_tree_parent = node_id;
   layer->SetEffectTreeIndex(node_id);
-  data_for_children->property_trees->effect_tree.SetOwningLayerIdForNode(
-      effect_tree.back(), layer->id());
 
   // For animation subsystem purposes, if this layer has a compositor element
   // id, we build a map from that id to this effect node.

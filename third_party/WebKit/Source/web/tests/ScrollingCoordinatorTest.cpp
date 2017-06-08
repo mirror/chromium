@@ -31,7 +31,7 @@
 #include "core/frame/VisualViewport.h"
 #include "core/frame/WebLocalFrameBase.h"
 #include "core/html/HTMLIFrameElement.h"
-#include "core/layout/LayoutPart.h"
+#include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/layout/compositing/CompositedLayerMapping.h"
 #include "core/layout/compositing/PaintLayerCompositor.h"
@@ -91,7 +91,7 @@ class ScrollingCoordinatorTest : public ::testing::Test,
   }
 
   void LoadHTML(const std::string& html) {
-    FrameTestHelpers::LoadHTMLString(GetWebView()->MainFrame(), html,
+    FrameTestHelpers::LoadHTMLString(GetWebView()->MainFrameImpl(), html,
                                      URLTestHelpers::ToKURL("about:blank"));
   }
 
@@ -194,8 +194,8 @@ TEST_P(ScrollingCoordinatorTest, fastScrollingCanBeDisabledWithSetting) {
 
 TEST_P(ScrollingCoordinatorTest, fastFractionalScrollingDiv) {
   bool orig_fractional_offsets_enabled =
-      RuntimeEnabledFeatures::fractionalScrollOffsetsEnabled();
-  RuntimeEnabledFeatures::setFractionalScrollOffsetsEnabled(true);
+      RuntimeEnabledFeatures::FractionalScrollOffsetsEnabled();
+  RuntimeEnabledFeatures::SetFractionalScrollOffsetsEnabled(true);
 
   RegisterMockedHttpURLLoad("fractional-scroll-div.html");
   NavigateTo(base_url_ + "fractional-scroll-div.html");
@@ -229,7 +229,7 @@ TEST_P(ScrollingCoordinatorTest, fastFractionalScrollingDiv) {
   ASSERT_NEAR(1.2f, web_scroll_layer->ScrollPosition().x, 0.01f);
   ASSERT_NEAR(1.2f, web_scroll_layer->ScrollPosition().y, 0.01f);
 
-  RuntimeEnabledFeatures::setFractionalScrollOffsetsEnabled(
+  RuntimeEnabledFeatures::SetFractionalScrollOffsetsEnabled(
       orig_fractional_offsets_enabled);
 }
 
@@ -374,8 +374,6 @@ TEST_P(ScrollingCoordinatorTest, fastScrollingForStickyPosition) {
     EXPECT_EQ(
         IntRect(100, 100, 200, 200),
         IntRect(constraint.scroll_container_relative_containing_block_rect));
-    EXPECT_EQ(IntPoint(100, 100),
-              IntPoint(constraint.parent_relative_sticky_box_offset));
   }
   {
     Element* element = document->getElementById("div-tr");
@@ -451,8 +449,6 @@ TEST_P(ScrollingCoordinatorTest, fastScrollingForStickyPosition) {
     EXPECT_EQ(
         IntRect(100, 100, 200, 200),
         IntRect(constraint.scroll_container_relative_containing_block_rect));
-    EXPECT_EQ(IntPoint(0, 10),
-              IntPoint(constraint.parent_relative_sticky_box_offset));
   }
 }
 
@@ -666,12 +662,13 @@ TEST_P(ScrollingCoordinatorTest, iframeScrolling) {
 
   LayoutObject* layout_object = scrollable_frame->GetLayoutObject();
   ASSERT_TRUE(layout_object);
-  ASSERT_TRUE(layout_object->IsLayoutPart());
+  ASSERT_TRUE(layout_object->IsLayoutEmbeddedContent());
 
-  LayoutPart* layout_part = ToLayoutPart(layout_object);
-  ASSERT_TRUE(layout_part);
+  LayoutEmbeddedContent* layout_embedded_content =
+      ToLayoutEmbeddedContent(layout_object);
+  ASSERT_TRUE(layout_embedded_content);
 
-  LocalFrameView* inner_frame_view = layout_part->ChildFrameView();
+  LocalFrameView* inner_frame_view = layout_embedded_content->ChildFrameView();
   ASSERT_TRUE(inner_frame_view);
 
   LayoutViewItem inner_layout_view_item = inner_frame_view->GetLayoutViewItem();
@@ -718,12 +715,13 @@ TEST_P(ScrollingCoordinatorTest, rtlIframe) {
 
   LayoutObject* layout_object = scrollable_frame->GetLayoutObject();
   ASSERT_TRUE(layout_object);
-  ASSERT_TRUE(layout_object->IsLayoutPart());
+  ASSERT_TRUE(layout_object->IsLayoutEmbeddedContent());
 
-  LayoutPart* layout_part = ToLayoutPart(layout_object);
-  ASSERT_TRUE(layout_part);
+  LayoutEmbeddedContent* layout_embedded_content =
+      ToLayoutEmbeddedContent(layout_object);
+  ASSERT_TRUE(layout_embedded_content);
 
-  LocalFrameView* inner_frame_view = layout_part->ChildFrameView();
+  LocalFrameView* inner_frame_view = layout_embedded_content->ChildFrameView();
   ASSERT_TRUE(inner_frame_view);
 
   LayoutViewItem inner_layout_view_item = inner_frame_view->GetLayoutViewItem();
@@ -896,12 +894,13 @@ TEST_P(ScrollingCoordinatorTest,
 
   LayoutObject* layout_object = iframe->GetLayoutObject();
   ASSERT_TRUE(layout_object);
-  ASSERT_TRUE(layout_object->IsLayoutPart());
+  ASSERT_TRUE(layout_object->IsLayoutEmbeddedContent());
 
-  LayoutPart* layout_part = ToLayoutPart(layout_object);
-  ASSERT_TRUE(layout_part);
+  LayoutEmbeddedContent* layout_embedded_content =
+      ToLayoutEmbeddedContent(layout_object);
+  ASSERT_TRUE(layout_embedded_content);
 
-  LocalFrameView* inner_frame_view = layout_part->ChildFrameView();
+  LocalFrameView* inner_frame_view = layout_embedded_content->ChildFrameView();
   ASSERT_TRUE(inner_frame_view);
 
   LayoutViewItem inner_layout_view_item = inner_frame_view->GetLayoutViewItem();
@@ -988,7 +987,7 @@ TEST_P(ScrollingCoordinatorTest,
                                     ->LayerForScrolling();
   WebLayer* web_scroll_layer;
 
-  if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
+  if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
     // When RLS is enabled, the LayoutView won't have a scrolling contents
     // because it does not overflow.
     ASSERT_FALSE(scroll_layer);
@@ -1033,7 +1032,7 @@ TEST_P(ScrollingCoordinatorTest,
   scroll_layer = layout_object->GetFrameView()
                      ->LayoutViewportScrollableArea()
                      ->LayerForScrolling();
-  if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
+  if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
     // When RLS is enabled, the LayoutView won't have a scrolling contents
     // because it does not overflow.
     ASSERT_FALSE(scroll_layer);

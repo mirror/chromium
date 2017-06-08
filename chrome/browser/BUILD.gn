@@ -1521,7 +1521,8 @@ split_static_library("browser") {
     "//components/dom_distiller/content/browser",
     "//components/domain_reliability",
     "//components/doodle",
-    "//components/download",
+    "//components/download/content/factory",
+    "//components/download/public",
     "//components/error_page/common",
     "//components/favicon/content",
     "//components/favicon/core",
@@ -1645,7 +1646,6 @@ split_static_library("browser") {
     "//device/usb/public/interfaces",
     "//device/vr/features",
     "//extensions/features",
-    "//gin:gin_features",
     "//google_apis",
     "//gpu/config",
     "//media",
@@ -2239,8 +2239,6 @@ split_static_library("browser") {
       "safe_browsing/certificate_reporting_service.h",
       "safe_browsing/certificate_reporting_service_factory.cc",
       "safe_browsing/certificate_reporting_service_factory.h",
-      "safe_browsing/chrome_password_protection_service.cc",
-      "safe_browsing/chrome_password_protection_service.h",
       "safe_browsing/notification_image_reporter.cc",
       "safe_browsing/notification_image_reporter.h",
       "safe_browsing/permission_reporter.cc",
@@ -2288,6 +2286,8 @@ split_static_library("browser") {
         "safe_browsing/browser_feature_extractor.h",
         "safe_browsing/browser_features.cc",
         "safe_browsing/browser_features.h",
+        "safe_browsing/chrome_password_protection_service.cc",
+        "safe_browsing/chrome_password_protection_service.h",
         "safe_browsing/chunk_range.cc",
         "safe_browsing/chunk_range.h",
         "safe_browsing/client_side_detection_host.cc",
@@ -4342,7 +4342,7 @@ if (is_android) {
     ]
 
     # Used for testing only, should not be shipped to end users.
-    if (!is_official_build) {
+    if (enable_offline_pages_harness) {
       sources += [ "../android/java/src/org/chromium/chrome/browser/offlinepages/evaluation/OfflinePageEvaluationBridge.java" ]
     }
     jni_package = "chrome"
@@ -4488,8 +4488,6 @@ static_library("test_support") {
     "browsing_data/mock_browsing_data_media_license_helper.h",
     "browsing_data/mock_browsing_data_quota_helper.cc",
     "browsing_data/mock_browsing_data_quota_helper.h",
-    "browsing_data/mock_browsing_data_remover_delegate.cc",
-    "browsing_data/mock_browsing_data_remover_delegate.h",
     "browsing_data/mock_browsing_data_service_worker_helper.cc",
     "browsing_data/mock_browsing_data_service_worker_helper.h",
     "download/download_test_file_activity_observer.cc",
@@ -4717,10 +4715,7 @@ static_library("test_support") {
       "media/pepper_cdm_test_helper.cc",
       "media/pepper_cdm_test_helper.h",
     ]
-    deps += [
-      ":pepper_cdm_test_constants",
-      "//media:cdm_paths",
-    ]
+    deps += [ "//media:cdm_paths" ]
   }
 }
 
@@ -4776,19 +4771,6 @@ if (enable_rlz_support) {
       "//components/rlz",
       "//components/search_engines",
       "//rlz:rlz_lib",
-    ]
-  }
-}
-
-if (enable_pepper_cdms) {
-  # These constants are separated so that test binaries can use them without
-  # linking all of the test support.
-  static_library("pepper_cdm_test_constants") {
-    testonly = true
-    visibility = [ "//chrome/*" ]
-    sources = [
-      "media/pepper_cdm_test_constants.cc",
-      "media/pepper_cdm_test_constants.h",
     ]
   }
 }

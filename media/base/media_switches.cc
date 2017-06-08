@@ -26,9 +26,6 @@ const char kDisableMediaSuspend[] = "disable-media-suspend";
 const char kReportVp9AsAnUnsupportedMimeType[] =
     "report-vp9-as-an-unsupported-mime-type";
 
-// Enable parsing of new multi-part VP9 string for webm.
-const char kEnableNewVp9CodecString[] = "enable-new-vp9-codec-string";
-
 #if defined(OS_LINUX) || defined(OS_FREEBSD) || defined(OS_SOLARIS)
 // The Alsa device to use when opening an audio input stream.
 const char kAlsaInputDevice[] = "alsa-input-device";
@@ -137,10 +134,6 @@ const char kVideoUnderflowThresholdMs[] = "video-underflow-threshold-ms";
 // the rendering smoothness.
 const char kDisableRTCSmoothnessAlgorithm[] =
     "disable-rtc-smoothness-algorithm";
-
-// Enables demuxing of vp9 in mp4. Note that this flag will not have any effect
-// if MP4 demuxing is not enabled in the build.
-const char kEnableVp9InMp4[] = "enable-vp9-in-mp4";
 
 // Force media player using SurfaceView instead of SurfaceTexture on Android.
 const char kForceVideoOverlays[] = "force-video-overlays";

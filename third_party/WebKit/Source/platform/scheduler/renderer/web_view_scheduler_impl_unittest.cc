@@ -692,8 +692,8 @@ namespace {
 
 using ScopedExpensiveBackgroundTimerThrottlingForTest =
     ScopedRuntimeEnabledFeatureForTest<
-        RuntimeEnabledFeatures::expensiveBackgroundTimerThrottlingEnabled,
-        RuntimeEnabledFeatures::setExpensiveBackgroundTimerThrottlingEnabled>;
+        RuntimeEnabledFeatures::ExpensiveBackgroundTimerThrottlingEnabled,
+        RuntimeEnabledFeatures::SetExpensiveBackgroundTimerThrottlingEnabled>;
 
 void ExpensiveTestTask(base::SimpleTestTickClock* clock,
                        std::vector<base::TimeTicks>* run_times) {
@@ -711,6 +711,8 @@ class FakeWebViewSchedulerSettings
   float ExpensiveBackgroundThrottlingMaxBudget() override { return 0.0; }
 
   float ExpensiveBackgroundThrottlingMaxDelay() override { return 0.0; }
+
+  void RequestBeginMainFrameNotExpected(bool new_state) {}
 };
 
 }  // namespace

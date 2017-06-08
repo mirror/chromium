@@ -220,7 +220,9 @@ void Scheduler::BeginImplFrameNotExpectedSoon() {
   // Tying this to SendBeginMainFrameNotExpectedSoon will have some
   // false negatives, but we want to avoid running long idle tasks when
   // we are actually active.
-  client_->SendBeginMainFrameNotExpectedSoon();
+  if (state_machine_.wants_begin_main_frame_not_expected_messages()) {
+    client_->SendBeginMainFrameNotExpectedSoon();
+  }
 }
 
 void Scheduler::SetupNextBeginFrameIfNeeded() {
@@ -603,6 +605,11 @@ void Scheduler::SetDeferCommits(bool defer_commits) {
   TRACE_EVENT1("cc", "Scheduler::SetDeferCommits", "defer_commits",
                defer_commits);
   state_machine_.SetDeferCommits(defer_commits);
+  ProcessScheduledActions();
+}
+
+void Scheduler::NotifyMainThreadWantsBeginMainFrameNotExpected(bool new_state) {
+  state_machine_.SetMainThreadWantsBeginMainFrameNotExpectedMessages(new_state);
   ProcessScheduledActions();
 }
 

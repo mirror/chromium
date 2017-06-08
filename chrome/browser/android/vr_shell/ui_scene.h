@@ -70,7 +70,7 @@ class UiScene {
   void SetMode(ColorScheme::Mode mode);
   ColorScheme::Mode mode() const;
 
-  SkColor GetBackgroundColor() const;
+  SkColor GetWorldBackgroundColor() const;
 
   void SetBackgroundDistance(float distance);
   float GetBackgroundDistance() const;
@@ -80,6 +80,8 @@ class UiScene {
 
   bool is_exiting() const { return is_exiting_; }
   void set_is_exiting();
+  bool is_prompting_to_exit() { return is_prompting_to_exit_; }
+  void set_is_prompting_to_exit(bool prompting);
 
   void OnGLInitialized();
 
@@ -95,6 +97,7 @@ class UiScene {
   bool webvr_rendering_enabled_ = true;
   bool gl_initialized_ = false;
   bool is_exiting_ = false;
+  bool is_prompting_to_exit_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(UiScene);
 };

@@ -11,6 +11,7 @@
 
 #include "build/build_config.h"
 #include "chrome/common/features.h"
+#include "components/offline_pages/features/features.h"
 #include "extensions/features/features.h"
 #include "media/media_features.h"
 #include "ppapi/features/features.h"
@@ -32,6 +33,7 @@ extern const char kArcPackages[];
 extern const char kArcSetNotificationsEnabledDeferred[];
 extern const char kArcSignedIn[];
 extern const char kArcCompatibleFilesystemChosen[];
+extern const char kArcVoiceInteractionValuePropAccepted[];
 #endif
 extern const char kChildAccountStatusKnown[];
 extern const char kDefaultApps[];
@@ -919,6 +921,10 @@ extern const char kSettingsResetPromptLastTriggeredForHomepage[];
 
 #if defined(OS_ANDROID)
 extern const char kClipboardLastModifiedTime[];
+#endif
+
+#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
+extern const char kOfflinePrefetchBackoff[];
 #endif
 
 }  // namespace prefs

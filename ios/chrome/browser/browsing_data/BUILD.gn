@@ -27,6 +27,7 @@ source_set("browsing_data") {
     "//components/password_manager/core/browser",
     "//components/prefs",
     "//components/sessions",
+    "//components/translate/core/browser:browser",
     "//ios/chrome/browser",
     "//ios/chrome/browser/autofill",
     "//ios/chrome/browser/browser_state",
@@ -37,6 +38,7 @@ source_set("browsing_data") {
     "//ios/chrome/browser/sessions:serialisation",
     "//ios/chrome/browser/signin",
     "//ios/chrome/browser/sync",
+    "//ios/chrome/browser/translate:translate",
     "//ios/net",
     "//ios/public/provider/chrome/browser",
     "//ios/web",
@@ -77,6 +79,7 @@ source_set("unit_tests") {
 }
 
 source_set("browsing_data_internal") {
+  configs += [ "//build/config/compiler:enable_arc" ]
   sources = [
     "browsing_data_removal_controller.h",
     "browsing_data_removal_controller.mm",

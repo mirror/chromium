@@ -6,64 +6,75 @@
 #define SERVICES_UI_WS_EVENT_TARGETER_H_
 
 #include <stdint.h>
+#include <queue>
 
+#include "base/callback.h"
 #include "base/macros.h"
-
-namespace gfx {
-class Point;
-}
+#include "base/memory/weak_ptr.h"
+#include "services/ui/ws/window_finder.h"
+#include "ui/display/types/display_constants.h"
+#include "ui/gfx/geometry/point.h"
 
 namespace ui {
-class LocatedEvent;
-
 namespace ws {
-struct DeepestWindow;
 class EventTargeterDelegate;
-class ModalWindowController;
-class ServerWindow;
 
-// Keeps track of state associated with an active pointer.
-struct PointerTarget {
-  PointerTarget()
-      : window(nullptr),
-        is_mouse_event(false),
-        in_nonclient_area(false),
-        is_pointer_down(false) {}
-
-  // The target window, which may be null. null is used in two situations:
-  // when there is no valid window target, or there was a target but the
-  // window is destroyed before a corresponding release/cancel.
-  ServerWindow* window;
-
-  bool is_mouse_event;
-
-  // Did the pointer event start in the non-client area.
-  bool in_nonclient_area;
-
-  bool is_pointer_down;
+// The target |window| for a given location, |location| and |display_id| are
+// associated with the display |window| is on.
+struct LocationTarget {
+  DeepestWindow deepest_window;
+  gfx::Point location_in_root;
+  int64_t display_id = display::kInvalidDisplayId;
 };
 
-// Finds the PointerTarget for an event or the DeepestWindow for a location.
+using HitTestCallback = base::OnceCallback<void(const LocationTarget&)>;
+
+// Finds the target window for a location.
 class EventTargeter {
  public:
-  EventTargeter(EventTargeterDelegate* event_targeter_delegate,
-                ModalWindowController* modal_window_controller);
+  explicit EventTargeter(EventTargeterDelegate* event_targeter_delegate);
   ~EventTargeter();
 
-  // Returns a PointerTarget for the supplied |event|. If there is no valid
-  // event target for the specified location |window| in the returned value is
-  // null.
-  PointerTarget PointerTargetForEvent(const ui::LocatedEvent& event,
-                                      int64_t* display_id);
+  // Calls WindowFinder to find the target for |location|.
+  // |callback| is called with the LocationTarget found.
+  void FindTargetForLocation(const gfx::Point& location,
+                             int64_t display_id,
+                             HitTestCallback callback);
 
-  // Returns a DeepestWindow for the supplied |location|. If there is no valid
-  // root window, |window| in the returned value is null.
-  DeepestWindow FindDeepestVisibleWindowForEvents(gfx::Point* location,
-                                                  int64_t* display_id);
+  bool IsHitTestInFlight() const;
 
  private:
+  struct HitTestRequest {
+    HitTestRequest(const gfx::Point& location,
+                   int64_t display_id,
+                   HitTestCallback hittest_callback);
+    ~HitTestRequest();
+
+    gfx::Point location;
+    int64_t display_id;
+    HitTestCallback callback;
+  };
+
+  void ProcessFindTarget(const gfx::Point& location,
+                         int64_t display_id,
+                         HitTestCallback callback);
+
+  void FindTargetForLocationNow(const gfx::Point& location,
+                                int64_t display_id,
+                                HitTestCallback callback);
+
+  void ProcessNextHitTestRequestFromQueue();
+
   EventTargeterDelegate* event_targeter_delegate_;
-  ModalWindowController* modal_window_controller_;
+
+  // True if we are waiting for the result of a hit-test. False otherwise.
+  bool hit_test_in_flight_;
+
+  // Requests for a new location while waiting on an existing request are added
+  // here.
+  std::queue<std::unique_ptr<HitTestRequest>> hit_test_request_queue_;
+
+  base::WeakPtrFactory<EventTargeter> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(EventTargeter);
 };

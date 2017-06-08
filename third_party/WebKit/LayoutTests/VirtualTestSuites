@@ -71,7 +71,9 @@
   {
     "prefix": "gpu-rasterization",
     "base": "images",
-    "args": ["--force-gpu-rasterization"]
+    "args": ["--force-gpu-rasterization",
+             "--enable-color-correct-rendering",
+             "--force-color-profile=srgb"]
   },
   {
     "prefix": "stable",
@@ -442,6 +444,11 @@
     "args": ["--enable-blink-features=LayoutNG"]
   },
   {
+    "prefix": "layout_ng",
+    "base": "overflow",
+    "args": ["--enable-blink-features=LayoutNG"]
+  },
+  {
     "prefix": "feature-policy",
     "base": "http/tests/feature-policy",
     "args": ["--enable-blink-features=FeaturePolicy"]
@@ -454,12 +461,12 @@
   {
     "prefix": "mojo-localstorage",
     "base": "external/wpt/webstorage",
-    "args": ["--mojo-local-storage"]
+    "args": ["--disable-mojo-local-storage"]
   },
   {
     "prefix": "mojo-localstorage",
     "base": "storage/domstorage/localstorage",
-    "args": ["--mojo-local-storage"]
+    "args": ["--disable-mojo-local-storage"]
   },
   {
     "prefix": "print_browser",

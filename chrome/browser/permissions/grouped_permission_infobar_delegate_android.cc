@@ -52,13 +52,6 @@ base::string16 GroupedPermissionInfoBarDelegate::GetMessageTextFragment(
   return permission_prompt_->GetMessageTextFragment(position);
 }
 
-void GroupedPermissionInfoBarDelegate::ToggleAccept(size_t position,
-                                                    bool new_value) {
-  DCHECK_LT(position, PermissionCount());
-  if (permission_prompt_)
-    permission_prompt_->ToggleAccept(position, new_value);
-}
-
 base::string16 GroupedPermissionInfoBarDelegate::GetMessageText() const {
   return l10n_util::GetStringFUTF16(
       IDS_PERMISSIONS_BUBBLE_PROMPT,
@@ -86,6 +79,10 @@ bool GroupedPermissionInfoBarDelegate::Cancel() {
 void GroupedPermissionInfoBarDelegate::InfoBarDismissed() {
   if (permission_prompt_)
     permission_prompt_->Closing();
+}
+
+base::string16 GroupedPermissionInfoBarDelegate::GetLinkText() const {
+  return permission_prompt_->GetLinkText();
 }
 
 GroupedPermissionInfoBarDelegate::GroupedPermissionInfoBarDelegate(
@@ -124,6 +121,10 @@ base::string16 GroupedPermissionInfoBarDelegate::GetButtonLabel(
 
   return l10n_util::GetStringUTF16((button == BUTTON_OK) ? IDS_PERMISSION_ALLOW
                                                          : IDS_PERMISSION_DENY);
+}
+
+GURL GroupedPermissionInfoBarDelegate::GetLinkURL() const {
+  return permission_prompt_->GetLinkURL();
 }
 
 bool GroupedPermissionInfoBarDelegate::EqualsDelegate(

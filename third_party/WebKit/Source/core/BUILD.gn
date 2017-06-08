@@ -103,6 +103,7 @@ source_set("generated") {
 source_set("prerequisites") {
   public_deps = [
     "//gpu/command_buffer/client:gles2_c_lib",
+    "//services/service_manager/public/cpp",
     "//skia",
     "//third_party/WebKit/Source/core/inspector:generated",
     "//third_party/WebKit/Source/core/probe:generated",
@@ -331,6 +332,7 @@ generate_event_interfaces("core_event_interfaces") {
     "events/UIEvent.idl",
     "events/WheelEvent.idl",
     "html/track/TrackEvent.idl",
+    "mojo/testing/MojoInterfaceRequestEvent.idl",
   ]
   output_file = "core/EventInterfaces.json5"
 }
@@ -424,10 +426,12 @@ css_properties("make_core_generated_computed_style_base") {
     "../build/scripts/templates/fields/storage_only.tmpl",
     "../build/scripts/templates/fields/external.tmpl",
     "../build/scripts/templates/ComputedStyleBase.h.tmpl",
+    "../build/scripts/templates/ComputedStyleBase.cpp.tmpl",
     "../build/scripts/templates/ComputedStyleBaseConstants.h.tmpl",
   ]
   outputs = [
     "$blink_core_output_dir/ComputedStyleBase.h",
+    "$blink_core_output_dir/ComputedStyleBase.cpp",
     "$blink_core_output_dir/ComputedStyleBaseConstants.h",
   ]
 }
@@ -448,11 +452,9 @@ css_properties("make_core_generated_css_property_apis") {
     "../build/scripts/templates/CSSPropertyDescriptor.cpp.tmpl",
     "../build/scripts/templates/CSSPropertyDescriptor.h.tmpl",
     "../build/scripts/templates/CSSPropertyAPIFiles.h.tmpl",
-    "../build/scripts/templates/CSSPropertyAPI.h.tmpl",
   ]
   in_files = [ "css/properties/CSSPropertyAPIMethods.json5" ]
   outputs = [
-    "$blink_core_output_dir/css/properties/CSSPropertyAPI.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIAlignItems.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIAlignOrJustifyContent.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIAlignOrJustifySelf.h",
@@ -1184,6 +1186,7 @@ source_set("unit_tests") {
     "css/resolver/MatchResultTest.cpp",
     "css/resolver/ScopedStyleResolverTest.cpp",
     "css/resolver/SharedStyleFinderTest.cpp",
+    "css/threaded/CSSParserThreadedTest.cpp",
     "css/threaded/CSSToLengthConversionDataThreadedTest.cpp",
     "css/threaded/FilterOperationResolverThreadedTest.cpp",
     "dom/AttrTest.cpp",
@@ -1237,10 +1240,10 @@ source_set("unit_tests") {
     "fileapi/FileTest.cpp",
     "frame/DOMTimerTest.cpp",
     "frame/FrameTest.cpp",
-    "frame/FrameViewTest.cpp",
     "frame/HistoryTest.cpp",
     "frame/ImageBitmapTest.cpp",
     "frame/LocalFrameTest.cpp",
+    "frame/LocalFrameViewTest.cpp",
     "frame/OriginsUsingFeaturesTest.cpp",
     "frame/PerformanceMonitorTest.cpp",
     "frame/RootFrameViewportTest.cpp",
@@ -1306,11 +1309,11 @@ source_set("unit_tests") {
     "layout/LayoutBlockTest.cpp",
     "layout/LayoutBoxModelObjectTest.cpp",
     "layout/LayoutBoxTest.cpp",
+    "layout/LayoutEmbeddedContentTest.cpp",
     "layout/LayoutInlineTest.cpp",
     "layout/LayoutMediaTest.cpp",
     "layout/LayoutMultiColumnFlowThreadTest.cpp",
     "layout/LayoutObjectTest.cpp",
-    "layout/LayoutPartTest.cpp",
     "layout/LayoutProgressTest.cpp",
     "layout/LayoutTableCellTest.cpp",
     "layout/LayoutTableRowTest.cpp",

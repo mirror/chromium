@@ -257,7 +257,7 @@ LayoutBlockFlow::LayoutBlockFlow(ContainerNode* node) : LayoutBlock(node) {
 LayoutBlockFlow::~LayoutBlockFlow() {}
 
 LayoutBlockFlow* LayoutBlockFlow::CreateAnonymous(Document* document) {
-  LayoutBlockFlow* layout_block_flow = RuntimeEnabledFeatures::layoutNGEnabled()
+  LayoutBlockFlow* layout_block_flow = RuntimeEnabledFeatures::LayoutNGEnabled()
                                            ? new LayoutNGBlockFlow(nullptr)
                                            : new LayoutBlockFlow(nullptr);
   layout_block_flow->SetDocumentForAnonymous(document);
@@ -3016,7 +3016,7 @@ void LayoutBlockFlow::AddChild(LayoutObject* new_child,
   //   <div id=container>Hello!<oof></oof></div>
   //   Legacy Layout: oof is in inline context.
   //   LayoutNG: oof is in inline context.
-  bool layout_ng_enabled = RuntimeEnabledFeatures::layoutNGEnabled();
+  bool layout_ng_enabled = RuntimeEnabledFeatures::LayoutNGEnabled();
   if (new_child->IsFloatingOrOutOfFlowPositioned())
     child_is_block_level = layout_ng_enabled && !FirstChild();
 
@@ -4392,7 +4392,7 @@ LayoutMultiColumnFlowThread* LayoutBlockFlow::CreateMultiColumnFlowThread(
                                                           StyleRef());
     case kPagedFlowThread:
       // Paged overflow is currently done using the multicol implementation.
-      UseCounter::Count(GetDocument(), UseCounter::kCSSOverflowPaged);
+      UseCounter::Count(GetDocument(), WebFeature::kCSSOverflowPaged);
       return LayoutPagedFlowThread::CreateAnonymous(GetDocument(), StyleRef());
     default:
       NOTREACHED();

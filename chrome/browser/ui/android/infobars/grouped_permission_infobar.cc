@@ -19,21 +19,6 @@ GroupedPermissionInfoBar::GroupedPermissionInfoBar(
 GroupedPermissionInfoBar::~GroupedPermissionInfoBar() {
 }
 
-bool GroupedPermissionInfoBar::Register(JNIEnv* env) {
-  return RegisterNativesImpl(env);
-}
-
-void GroupedPermissionInfoBar::SetPermissionState(
-    JNIEnv* env,
-    const base::android::JavaParamRef<jobject>& obj,
-    const base::android::JavaParamRef<jbooleanArray>& permissions) {
-  for (size_t i = 0; i < GetDelegate()->PermissionCount(); i++) {
-    jboolean value;
-    env->GetBooleanArrayRegion(permissions.obj(), i, 1, &value);
-    GetDelegate()->ToggleAccept(i, value);
-  }
-}
-
 void GroupedPermissionInfoBar::ProcessButton(int action) {
   // Check if the delegate asked us to display a persistence toggle. If so,
   // inform it of the toggle state.
@@ -53,6 +38,8 @@ GroupedPermissionInfoBar::CreateRenderInfoBar(JNIEnv* env) {
   base::android::ScopedJavaLocalRef<jstring> message_text =
       base::android::ConvertUTF16ToJavaString(
           env, delegate->GetMessageText());
+  base::android::ScopedJavaLocalRef<jstring> link_text =
+      base::android::ConvertUTF16ToJavaString(env, delegate->GetLinkText());
   base::android::ScopedJavaLocalRef<jstring> ok_button_text =
       base::android::ConvertUTF16ToJavaString(
           env, GetTextFor(ConfirmInfoBarDelegate::BUTTON_OK));
@@ -74,18 +61,10 @@ GroupedPermissionInfoBar::CreateRenderInfoBar(JNIEnv* env) {
   return Java_GroupedPermissionInfoBar_create(
       env, GetTab()->GetJavaObject(),
       base::android::ToJavaIntArray(env, content_settings_types), message_text,
-      ok_button_text, cancel_button_text,
+      link_text, ok_button_text, cancel_button_text,
       delegate->ShouldShowPersistenceToggle(),
       base::android::ToJavaArrayOfStrings(env, permission_strings),
       base::android::ToJavaIntArray(env, permission_icons));
-}
-
-void GroupedPermissionInfoBar::SetJavaInfoBar(
-    const base::android::JavaRef<jobject>& java_info_bar) {
-  InfoBarAndroid::SetJavaInfoBar(java_info_bar);
-  JNIEnv* env = base::android::AttachCurrentThread();
-  Java_GroupedPermissionInfoBar_setNativePtr(env, java_info_bar,
-                                             reinterpret_cast<intptr_t>(this));
 }
 
 GroupedPermissionInfoBarDelegate* GroupedPermissionInfoBar::GetDelegate() {

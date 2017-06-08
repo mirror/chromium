@@ -611,7 +611,7 @@ void SVGImage::ServiceAnimations(double monotonic_animation_start_time) {
   // animations directly without worrying about including
   // PaintArtifactCompositor analysis of whether animations should be
   // composited.
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     Optional<CompositorElementIdSet> composited_element_ids;
     DocumentAnimations::UpdateAnimations(
         frame_view->GetLayoutView()->GetDocument(),
@@ -638,9 +638,10 @@ SVGImageChromeClient& SVGImage::ChromeClientForTesting() {
 
 void SVGImage::UpdateUseCounters(const Document& document) const {
   if (SVGSVGElement* root_element = SvgRootElement(page_.Get())) {
-    if (root_element->TimeContainer()->HasAnimations())
+    if (root_element->TimeContainer()->HasAnimations()) {
       UseCounter::Count(document,
-                        UseCounter::kSVGSMILAnimationInImageRegardlessOfCache);
+                        WebFeature::kSVGSMILAnimationInImageRegardlessOfCache);
+    }
   }
 }
 

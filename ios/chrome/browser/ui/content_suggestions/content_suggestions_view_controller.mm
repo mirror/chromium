@@ -98,6 +98,12 @@ using CSCollectionViewItem = CollectionViewItem<SuggestedContent>;
                                 completion:nil];
 
   [self.collectionView performBatchUpdates:^{
+    NSIndexPath* removedItem = [self.collectionUpdater
+        removeEmptySuggestionsForSectionInfo:sectionInfo];
+    if (removedItem) {
+      [self.collectionView deleteItemsAtIndexPaths:@[ removedItem ]];
+    }
+
     NSArray<NSIndexPath*>* addedItems =
         [self.collectionUpdater addSuggestionsToModel:suggestions
                                       withSectionInfo:sectionInfo];
@@ -237,6 +243,29 @@ using CSCollectionViewItem = CollectionViewItem<SuggestedContent>;
       cr_preferredHeightForWidth:CGRectGetWidth(collectionView.bounds) -
                                  inset.left - inset.right
                          forItem:item];
+}
+
+#pragma mark - MDCCollectionViewEditingDelegate
+
+- (BOOL)collectionViewAllowsSwipeToDismissItem:
+    (UICollectionView*)collectionView {
+  return YES;
+}
+
+- (BOOL)collectionView:(UICollectionView*)collectionView
+    canSwipeToDismissItemAtIndexPath:(NSIndexPath*)indexPath {
+  CollectionViewItem* item =
+      [self.collectionViewModel itemAtIndexPath:indexPath];
+  return ![self.collectionUpdater isMostVisitedSection:indexPath.section] &&
+         [self.collectionUpdater contentSuggestionTypeForItem:item] !=
+             ContentSuggestionTypeEmpty;
+}
+
+- (void)collectionView:(UICollectionView*)collectionView
+    didEndSwipeToDismissItemAtIndexPath:(NSIndexPath*)indexPath {
+  [self.collectionUpdater
+      dismissItem:[self.collectionViewModel itemAtIndexPath:indexPath]];
+  [self dismissEntryAtIndexPath:indexPath];
 }
 
 #pragma mark - Private

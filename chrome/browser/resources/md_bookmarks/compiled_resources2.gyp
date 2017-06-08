@@ -47,6 +47,7 @@
         '<(EXTERNS_GYP):bookmark_manager_private',
         'edit_dialog',
         'store_client',
+        'toast_manager'
       ],
       'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
@@ -70,8 +71,8 @@
       'dependencies': [
         '<(DEPTH)/third_party/polymer/v1_0/components-chromium/paper-input/compiled_resources2.gyp:paper-input-extracted',
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:assert',
+        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:load_time_data',
-        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:assert',
         '<(EXTERNS_GYP):chrome_extensions',
         'types',
       ],
@@ -83,6 +84,8 @@
       'dependencies': [
         '<(EXTERNS_GYP):chrome_extensions',
         'actions',
+        'command_manager',
+        'mouse_focus_behavior',
         'store_client',
       ],
     },
@@ -93,6 +96,7 @@
         '<(EXTERNS_GYP):chrome_extensions',
         'actions',
         'command_manager',
+        'mouse_focus_behavior',
         'store_client',
       ],
       'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi'],
@@ -103,7 +107,15 @@
         '<(DEPTH)/third_party/polymer/v1_0/components-chromium/iron-list/compiled_resources2.gyp:iron-list-extracted',
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:load_time_data',
         'actions',
+        'command_manager',
         'store_client',
+      ],
+      'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi'],
+    },
+    {
+      'target_name': 'mouse_focus_behavior',
+      'dependencies': [
+        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
       ],
       'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
@@ -142,6 +154,15 @@
         'types',
       ],
       'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi']
+    },
+    {
+      'target_name': 'toast_manager',
+      'dependencies': [
+        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
+        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:load_time_data',
+        '<(DEPTH)/third_party/polymer/v1_0/components-chromium/paper-button/compiled_resources2.gyp:paper-button-extracted',
+      ],
+      'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
     {
       'target_name': 'toolbar',

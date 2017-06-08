@@ -523,7 +523,7 @@ void StringifyAndParseMethodSpecificData(
     if (exception_state.HadException())
       exception_state.ClearException();
   }
-  if (RuntimeEnabledFeatures::paymentRequestBasicCardEnabled() &&
+  if (RuntimeEnabledFeatures::PaymentRequestBasicCardEnabled() &&
       supported_methods.Contains("basic-card")) {
     SetBasicCardMethodData(input, output, execution_context, exception_state);
     if (exception_state.HadException())
@@ -534,7 +534,7 @@ void StringifyAndParseMethodSpecificData(
     if (supported_methods.Contains(kBasicCardNetworks[i].name)) {
       Deprecation::CountDeprecation(
           &execution_context,
-          UseCounter::kPaymentRequestNetworkNameInSupportedMethods);
+          WebFeature::kPaymentRequestNetworkNameInSupportedMethods);
       break;
     }
   }
@@ -1023,9 +1023,12 @@ PaymentRequest::PaymentRequest(ExecutionContext* execution_context,
   payment_provider_.set_connection_error_handler(ConvertToBaseCallback(
       WTF::Bind(&PaymentRequest::OnError, WrapWeakPersistent(this),
                 PaymentErrorReason::UNKNOWN)));
+
+  payments::mojom::blink::PaymentRequestClientPtr client;
+  client_binding_.Bind(mojo::MakeRequest(&client));
   payment_provider_->Init(
-      client_binding_.CreateInterfacePtrAndBind(),
-      std::move(validated_method_data), std::move(validated_details),
+      std::move(client), std::move(validated_method_data),
+      std::move(validated_details),
       payments::mojom::blink::PaymentOptions::From(options_));
 }
 

@@ -469,6 +469,8 @@ RenderFrameDevToolsAgentHost::RenderFrameDevToolsAgentHost(
       current_frame_crashed_ = true;
   }
 
+  UpdateTypeAndTitle(host);
+
   g_instances.Get().push_back(this);
   AddRef();  // Balanced in RenderFrameHostDestroyed.
 
@@ -604,13 +606,13 @@ void RenderFrameDevToolsAgentHost::OnClientAttached() {
 
   frame_trace_recorder_.reset(new DevToolsFrameTraceRecorder());
 #if defined(OS_ANDROID)
-  GetWakeLockService()->RequestWakeLock();
+  GetWakeLock()->RequestWakeLock();
 #endif
 }
 
 void RenderFrameDevToolsAgentHost::OnClientDetached() {
 #if defined(OS_ANDROID)
-  GetWakeLockService()->CancelWakeLock();
+  GetWakeLock()->CancelWakeLock();
 #endif
   frame_trace_recorder_.reset();
   in_navigation_protocol_message_buffer_.clear();
@@ -825,13 +827,21 @@ bool RenderFrameDevToolsAgentHost::CheckConsistency() {
       handlers_frame_host_ == manager->pending_frame_host();
 }
 
+void RenderFrameDevToolsAgentHost::UpdateTypeAndTitle(RenderFrameHost* host) {
+  DevToolsManager* manager = DevToolsManager::GetInstance();
+  if (!manager->delegate())
+    return;
+  if (type_.empty() || type_ == DevToolsAgentHost::kTypeOther)
+    type_ = manager->delegate()->GetTargetType(host);
+  if (title_.empty())
+    title_ = manager->delegate()->GetTargetTitle(host);
+}
+
 #if defined(OS_ANDROID)
-device::mojom::WakeLockService*
-RenderFrameDevToolsAgentHost::GetWakeLockService() {
+device::mojom::WakeLock* RenderFrameDevToolsAgentHost::GetWakeLock() {
   // Here is a lazy binding, and will not reconnect after connection error.
   if (!wake_lock_) {
-    device::mojom::WakeLockServiceRequest request =
-        mojo::MakeRequest(&wake_lock_);
+    device::mojom::WakeLockRequest request = mojo::MakeRequest(&wake_lock_);
     device::mojom::WakeLockContext* wake_lock_context =
         web_contents()->GetWakeLockContext();
     if (wake_lock_context) {
@@ -914,13 +924,13 @@ void RenderFrameDevToolsAgentHost::DidDetachInterstitialPage() {
 
 void RenderFrameDevToolsAgentHost::WasShown() {
 #if defined(OS_ANDROID)
-  GetWakeLockService()->RequestWakeLock();
+  GetWakeLock()->RequestWakeLock();
 #endif
 }
 
 void RenderFrameDevToolsAgentHost::WasHidden() {
 #if defined(OS_ANDROID)
-  GetWakeLockService()->CancelWakeLock();
+  GetWakeLock()->CancelWakeLock();
 #endif
 }
 
@@ -1024,26 +1034,20 @@ std::string RenderFrameDevToolsAgentHost::GetParentId() {
 }
 
 std::string RenderFrameDevToolsAgentHost::GetType() {
-  DevToolsManager* manager = DevToolsManager::GetInstance();
-  if (manager->delegate() && current_) {
-    std::string type = manager->delegate()->GetTargetType(current_->host());
-    if (!type.empty())
-      return type;
-  }
-
+  if (current_)
+    UpdateTypeAndTitle(current_->host());
+  if (!type_.empty())
+    return type_;
   if (IsChildFrame())
     return kTypeFrame;
   return kTypePage;
 }
 
 std::string RenderFrameDevToolsAgentHost::GetTitle() {
-  DevToolsManager* manager = DevToolsManager::GetInstance();
-  if (manager->delegate() && current_) {
-    std::string title = manager->delegate()->GetTargetTitle(current_->host());
-    if (!title.empty())
-      return title;
-  }
-
+  if (current_)
+    UpdateTypeAndTitle(current_->host());
+  if (!title_.empty())
+    return title_;
   if (current_ && current_->host()->GetParent())
     return current_->host()->GetLastCommittedURL().spec();
   content::WebContents* web_contents = GetWebContents();

@@ -135,14 +135,14 @@ void HTMLIFrameElement::ParseAttribute(
           kOtherMessageSource, kErrorMessageLevel,
           "Error while parsing the 'sandbox' attribute: " + invalid_tokens));
     }
-    UseCounter::Count(GetDocument(), UseCounter::kSandboxViaIFrame);
+    UseCounter::Count(GetDocument(), WebFeature::kSandboxViaIFrame);
   } else if (name == referrerpolicyAttr) {
     referrer_policy_ = kReferrerPolicyDefault;
     if (!value.IsNull()) {
       SecurityPolicy::ReferrerPolicyFromString(
           value, kSupportReferrerPolicyLegacyKeywords, &referrer_policy_);
       UseCounter::Count(GetDocument(),
-                        UseCounter::kHTMLIFrameElementReferrerPolicyAttribute);
+                        WebFeature::kHTMLIFrameElementReferrerPolicyAttribute);
     }
   } else if (name == allowfullscreenAttr) {
     bool old_allow_fullscreen = allow_fullscreen_;
@@ -153,7 +153,7 @@ void HTMLIFrameElement::ParseAttribute(
       if (allow_fullscreen_ && ContentFrame()) {
         UseCounter::Count(
             GetDocument(),
-            UseCounter::
+            WebFeature::
                 kHTMLIFrameElementAllowfullscreenAttributeSetAfterContentLoad);
       }
       FrameOwnerPropertiesChanged();
@@ -166,7 +166,7 @@ void HTMLIFrameElement::ParseAttribute(
       FrameOwnerPropertiesChanged();
       UpdateContainerPolicy();
     }
-  } else if (RuntimeEnabledFeatures::embedderCSPEnforcementEnabled() &&
+  } else if (RuntimeEnabledFeatures::EmbedderCSPEnforcementEnabled() &&
              name == cspAttr) {
     if (!ContentSecurityPolicy::IsValidCSPAttr(value.GetString())) {
       csp_ = g_null_atom;
@@ -179,7 +179,7 @@ void HTMLIFrameElement::ParseAttribute(
     csp_ = value;
     if (csp_ != old_csp)
       FrameOwnerPropertiesChanged();
-  } else if (RuntimeEnabledFeatures::featurePolicyEnabled() &&
+  } else if (RuntimeEnabledFeatures::FeaturePolicyEnabled() &&
              name == allowAttr) {
     allow_->DidUpdateAttributeValue(params.old_value, value);
     String invalid_tokens;

@@ -75,7 +75,7 @@
 #include "core/input/EventHandler.h"
 #include "core/input/TouchActionUtil.h"
 #include "core/inspector/DevToolsEmulator.h"
-#include "core/layout/LayoutPart.h"
+#include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/TextAutosizer.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/layout/compositing/PaintLayerCompositor.h"
@@ -96,7 +96,6 @@
 #include "core/paint/PaintLayer.h"
 #include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
-#include "modules/accessibility/AXObjectCacheImpl.h"
 #include "modules/compositorworker/AnimationWorkletProxyClientImpl.h"
 #include "modules/compositorworker/CompositorWorkerProxyClientImpl.h"
 #include "modules/credentialmanager/CredentialManagerClient.h"
@@ -145,7 +144,6 @@
 #include "public/platform/WebTextInputInfo.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/WebVector.h"
-#include "public/web/WebAXObject.h"
 #include "public/web/WebActiveWheelFlingParameters.h"
 #include "public/web/WebAutofillClient.h"
 #include "public/web/WebConsoleMessage.h"
@@ -600,7 +598,7 @@ bool WebViewImpl::ScrollBy(const WebFloatSize& delta,
 
   if (fling_source_device_ == kWebGestureDeviceTouchpad) {
     bool enable_touchpad_scroll_latching =
-        RuntimeEnabledFeatures::touchpadAndWheelScrollLatchingEnabled();
+        RuntimeEnabledFeatures::TouchpadAndWheelScrollLatchingEnabled();
     WebMouseWheelEvent synthetic_wheel(WebInputEvent::kMouseWheel,
                                        fling_modifier_,
                                        WTF::MonotonicallyIncreasingTime());
@@ -1130,6 +1128,11 @@ float WebViewImpl::ExpensiveBackgroundThrottlingMaxDelay() {
   return SettingsImpl()->ExpensiveBackgroundThrottlingMaxDelay();
 }
 
+void WebViewImpl::RequestBeginMainFrameNotExpected(bool new_state) {
+  if (layer_tree_view_)
+    layer_tree_view_->RequestBeginMainFrameNotExpected(new_state);
+}
+
 WebInputEventResult WebViewImpl::HandleKeyEvent(const WebKeyboardEvent& event) {
   DCHECK((event.GetType() == WebInputEvent::kRawKeyDown) ||
          (event.GetType() == WebInputEvent::kKeyDown) ||
@@ -1178,7 +1181,7 @@ WebInputEventResult WebViewImpl::HandleKeyEvent(const WebKeyboardEvent& event) {
           // If the plugin supports keyboard focus then we should not send a tab
           // keypress event.
           PluginView* plugin_view =
-              ToLayoutPart(element->GetLayoutObject())->Plugin();
+              ToLayoutEmbeddedContent(element->GetLayoutObject())->Plugin();
           if (plugin_view && plugin_view->IsPluginContainer()) {
             WebPluginContainerBase* plugin =
                 ToWebPluginContainerBase(plugin_view);
@@ -1809,7 +1812,7 @@ void WebViewImpl::UpdateICBAndResizeViewport() {
   // controls hide so that the ICB will always be the same size as the
   // viewport with the browser controls shown.
   IntSize icb_size = size_;
-  if (RuntimeEnabledFeatures::inertTopControlsEnabled() &&
+  if (RuntimeEnabledFeatures::InertTopControlsEnabled() &&
       GetBrowserControls().PermittedState() == kWebBrowserControlsBoth &&
       !GetBrowserControls().ShrinkViewport())
     icb_size.Expand(0, -GetBrowserControls().Height());
@@ -3356,8 +3359,8 @@ void WebViewImpl::PerformPluginAction(const WebPluginAction& action,
     return;
 
   LayoutObject* object = node->GetLayoutObject();
-  if (object && object->IsLayoutPart()) {
-    PluginView* plugin_view = ToLayoutPart(object)->Plugin();
+  if (object && object->IsLayoutEmbeddedContent()) {
+    PluginView* plugin_view = ToLayoutEmbeddedContent(object)->Plugin();
     if (plugin_view && plugin_view->IsPluginContainer()) {
       WebPluginContainerBase* plugin = ToWebPluginContainerBase(plugin_view);
       switch (action.type) {
@@ -3504,9 +3507,9 @@ WebInputMethodController* WebViewImpl::GetActiveWebInputMethodController()
 }
 
 void WebViewImpl::RequestDecode(
-    sk_sp<SkImage> image,
+    const PaintImage& image,
     std::unique_ptr<WTF::Function<void(bool)>> callback) {
-  layer_tree_view_->RequestDecode(std::move(image),
+  layer_tree_view_->RequestDecode(image,
                                   ConvertToBaseCallback(std::move(callback)));
 }
 
@@ -3841,7 +3844,7 @@ void WebViewImpl::SetRootGraphicsLayer(GraphicsLayer* graphics_layer) {
     return;
 
   // In SPv2, setRootLayer is used instead.
-  DCHECK(!RuntimeEnabledFeatures::slimmingPaintV2Enabled());
+  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
 
   VisualViewport& visual_viewport = GetPage()->GetVisualViewport();
   visual_viewport.AttachLayerTree(graphics_layer);

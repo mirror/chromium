@@ -269,14 +269,15 @@ LayoutDeprecatedFlexibleBox::LayoutDeprecatedFlexibleBox(Element& element)
   stretching_children_ = false;
   if (!IsAnonymous()) {
     const KURL& url = GetDocument().Url();
-    if (url.ProtocolIs("chrome"))
-      UseCounter::Count(GetDocument(), UseCounter::kDeprecatedFlexboxChrome);
-    else if (url.ProtocolIs("chrome-extension"))
+    if (url.ProtocolIs("chrome")) {
+      UseCounter::Count(GetDocument(), WebFeature::kDeprecatedFlexboxChrome);
+    } else if (url.ProtocolIs("chrome-extension")) {
       UseCounter::Count(GetDocument(),
-                        UseCounter::kDeprecatedFlexboxChromeExtension);
-    else
+                        WebFeature::kDeprecatedFlexboxChromeExtension);
+    } else {
       UseCounter::Count(GetDocument(),
-                        UseCounter::kDeprecatedFlexboxWebContent);
+                        WebFeature::kDeprecatedFlexboxWebContent);
+    }
   }
 }
 
@@ -1088,7 +1089,7 @@ void LayoutDeprecatedFlexibleBox::LayoutVerticalBox(bool relayout_children) {
 
 void LayoutDeprecatedFlexibleBox::ApplyLineClamp(FlexBoxIterator& iterator,
                                                  bool relayout_children) {
-  UseCounter::Count(GetDocument(), UseCounter::kLineClamp);
+  UseCounter::Count(GetDocument(), WebFeature::kLineClamp);
 
   int max_line_count = 0;
   for (LayoutBox* child = iterator.First(); child; child = iterator.Next()) {

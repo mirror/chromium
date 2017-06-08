@@ -122,9 +122,9 @@ bool NavigatorBeacon::SendBeaconImpl(
     Blob* blob = data.getAsBlob();
     if (!FetchUtils::IsSimpleContentType(AtomicString(blob->type()))) {
       UseCounter::Count(context,
-                        UseCounter::kSendBeaconWithNonSimpleContentType);
+                        WebFeature::kSendBeaconWithNonSimpleContentType);
       if (RuntimeEnabledFeatures::
-              sendBeaconThrowForBlobWithNonSimpleTypeEnabled()) {
+              SendBeaconThrowForBlobWithNonSimpleTypeEnabled()) {
         exception_state.ThrowSecurityError(
             "sendBeacon() with a Blob whose type is not any of the "
             "CORS-safelisted values for the Content-Type request header is "
@@ -146,7 +146,7 @@ bool NavigatorBeacon::SendBeaconImpl(
   }
 
   if (!allowed) {
-    UseCounter::Count(context, UseCounter::kSendBeaconQuotaExceeded);
+    UseCounter::Count(context, WebFeature::kSendBeaconQuotaExceeded);
     return false;
   }
 

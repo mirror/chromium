@@ -76,7 +76,7 @@ bool PaintLayerPainter::PaintedOutputInvisible(
   if (layout_object.StyleRef().HasWillChangeOpacityHint())
     return false;
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     if (layout_object.StyleRef().Opacity())
       return false;
 
@@ -135,7 +135,7 @@ PaintResult PaintLayerPainter::Paint(
   // we simplify this optimization by painting even when effectively invisible
   // but skipping the painted content during layerization in
   // PaintArtifactCompositor.
-  if (!RuntimeEnabledFeatures::slimmingPaintV2Enabled() &&
+  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
       PaintedOutputInvisible(painting_info)) {
     return kFullyPainted;
   }
@@ -228,7 +228,7 @@ static bool ShouldRepaintSubsequence(
     needs_repaint = true;
 
   // Repaint if layer's clip changes.
-  if (!RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled()) {
+  if (!RuntimeEnabledFeatures::SlimmingPaintInvalidationEnabled()) {
     ClipRects& clip_rects =
         paint_layer.Clipper(PaintLayer::kDoNotUseGeometryMapper)
             .PaintingClipRects(painting_info.root_layer, respect_overflow_clip,
@@ -274,8 +274,8 @@ PaintResult PaintLayerPainter::PaintLayerContents(
     return result;
 
   Optional<ScopedPaintChunkProperties> scoped_paint_chunk_properties;
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled() &&
-      RuntimeEnabledFeatures::rootLayerScrollingEnabled() &&
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
+      RuntimeEnabledFeatures::RootLayerScrollingEnabled() &&
       paint_layer_.GetLayoutObject().IsLayoutView()) {
     const auto* local_border_box_properties =
         paint_layer_.GetLayoutObject().LocalBorderBoxProperties();
@@ -328,10 +328,12 @@ PaintResult PaintLayerPainter::PaintLayerContents(
   ShouldRespectOverflowClipType respect_overflow_clip =
       ShouldRespectOverflowClip(paint_flags, paint_layer_.GetLayoutObject());
 
+  bool should_create_subsequence = ShouldCreateSubsequence(
+      paint_layer_, context, painting_info_arg, paint_flags);
+
   Optional<SubsequenceRecorder> subsequence_recorder;
   bool should_clear_empty_paint_phase_flags = false;
-  if (ShouldCreateSubsequence(paint_layer_, context, painting_info_arg,
-                              paint_flags)) {
+  if (should_create_subsequence) {
     if (!ShouldRepaintSubsequence(paint_layer_, painting_info_arg,
                                   respect_overflow_clip, subpixel_accumulation,
                                   should_clear_empty_paint_phase_flags) &&
@@ -442,14 +444,14 @@ PaintResult PaintLayerPainter::PaintLayerContents(
 
     PaintLayer::GeometryMapperOption geometry_mapper_option =
         PaintLayer::kDoNotUseGeometryMapper;
-    if (RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled())
+    if (RuntimeEnabledFeatures::SlimmingPaintInvalidationEnabled())
       geometry_mapper_option = PaintLayer::kUseGeometryMapper;
 
     // TODO(trchen): We haven't decided how to handle visual fragmentation with
     // SPv2.  Related thread
     // https://groups.google.com/a/chromium.org/forum/#!topic/graphics-dev/81XuWFf-mxM
     if (fragment_policy == kForceSingleFragment ||
-        RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+        RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
       paint_layer_for_fragments->AppendSingleFragmentIgnoringPagination(
           layer_fragments, local_painting_info.root_layer,
           local_painting_info.paint_dirty_rect, cache_slot,
@@ -504,12 +506,12 @@ PaintResult PaintLayerPainter::PaintLayerContents(
   }
 
   Optional<ScopedPaintChunkProperties> content_scoped_paint_chunk_properties;
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled() &&
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
       !scoped_paint_chunk_properties.has_value()) {
     // If layoutObject() is a LayoutView and root layer scrolling is enabled,
     // the LayoutView's paint properties will already have been applied at
     // the top of this method, in scopedPaintChunkProperties.
-    DCHECK(!(RuntimeEnabledFeatures::rootLayerScrollingEnabled() &&
+    DCHECK(!(RuntimeEnabledFeatures::RootLayerScrollingEnabled() &&
              paint_layer_.GetLayoutObject().IsLayoutView()));
     const auto* local_border_box_properties =
         paint_layer_.GetLayoutObject().LocalBorderBoxProperties();
@@ -519,8 +521,11 @@ PaintResult PaintLayerPainter::PaintLayerContents(
     properties.property_tree_state = *local_border_box_properties;
     properties.backface_hidden =
         paint_layer_.GetLayoutObject().HasHiddenBackface();
-    content_scoped_paint_chunk_properties.emplace(context.GetPaintController(),
-                                                  paint_layer_, properties);
+    content_scoped_paint_chunk_properties.emplace(
+        context.GetPaintController(), paint_layer_, properties,
+        // Force a new paint chunk, since it is required for subsequence
+        // caching.
+        should_create_subsequence ? ForceNewChunk : DontForceNewChunk);
   }
 
   bool selection_only =
@@ -610,7 +615,7 @@ bool PaintLayerPainter::NeedsToClip(
     const PaintLayerPaintingInfo& local_painting_info,
     const ClipRect& clip_rect) {
   // Clipping will be applied by property nodes directly for SPv2.
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled())
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
     return false;
 
   return clip_rect.Rect() != local_painting_info.paint_dirty_rect ||
@@ -702,7 +707,7 @@ PaintResult PaintLayerPainter::PaintLayerWithTransform(
 
   PaintLayer::GeometryMapperOption geometry_mapper_option =
       PaintLayer::kDoNotUseGeometryMapper;
-  if (RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled())
+  if (RuntimeEnabledFeatures::SlimmingPaintInvalidationEnabled())
     geometry_mapper_option = PaintLayer::kUseGeometryMapper;
 
   PaintResult result = kFullyPainted;
@@ -760,7 +765,7 @@ PaintResult PaintLayerPainter::PaintLayerWithTransform(
     cache_skipper.emplace(context);
 
   ClipRect ancestor_background_clip_rect;
-  if (!RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     if (painting_info.root_layer == &paint_layer_) {
       // This works around a bug in squashed-layer painting.
       // Squashed layers paint into a backing in its compositing container's
@@ -790,7 +795,7 @@ PaintResult PaintLayerPainter::PaintLayerWithTransform(
 
   for (const auto& fragment : layer_fragments) {
     Optional<LayerClipRecorder> clip_recorder;
-    if (parent_layer && !RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+    if (parent_layer && !RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
       ClipRect clip_rect_for_fragment(ancestor_background_clip_rect);
       // A fixed-position object is repeated on every page instead of paginated,
       // so we should apply the original ancestor clip rect.
@@ -953,7 +958,7 @@ void PaintLayerPainter::PaintOverflowControlsForFragments(
     }
 
     Optional<ScrollRecorder> scroll_recorder;
-    if (!RuntimeEnabledFeatures::slimmingPaintV2Enabled() &&
+    if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
         !local_painting_info.scroll_offset_accumulation.IsZero()) {
       cull_rect.Move(local_painting_info.scroll_offset_accumulation);
       scroll_recorder.emplace(context, paint_layer_.GetLayoutObject(),
@@ -1026,7 +1031,7 @@ void PaintLayerPainter::PaintFragmentWithPhase(
   LayoutRect new_cull_rect(clip_rect.Rect());
   Optional<ScrollRecorder> scroll_recorder;
   LayoutPoint paint_offset = -paint_layer_.LayoutBoxLocation();
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     paint_offset += paint_layer_.GetLayoutObject().PaintOffset();
     new_cull_rect.Move(painting_info.scroll_offset_accumulation);
   } else {
@@ -1101,7 +1106,7 @@ void PaintLayerPainter::PaintForegroundForFragments(
                                          context, local_painting_info,
                                          paint_flags, clip_state);
   } else {
-    if (RuntimeEnabledFeatures::paintUnderInvalidationCheckingEnabled() ||
+    if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled() ||
         paint_layer_.NeedsPaintPhaseDescendantBlockBackgrounds()) {
       size_t size_before =
           context.GetPaintController().NewDisplayItemList().size();
@@ -1120,7 +1125,7 @@ void PaintLayerPainter::PaintForegroundForFragments(
       }
     }
 
-    if (RuntimeEnabledFeatures::paintUnderInvalidationCheckingEnabled() ||
+    if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled() ||
         paint_layer_.NeedsPaintPhaseFloat()) {
       size_t size_before =
           context.GetPaintController().NewDisplayItemList().size();
@@ -1138,7 +1143,7 @@ void PaintLayerPainter::PaintForegroundForFragments(
                                          context, local_painting_info,
                                          paint_flags, clip_state);
 
-    if (RuntimeEnabledFeatures::paintUnderInvalidationCheckingEnabled() ||
+    if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled() ||
         paint_layer_.NeedsPaintPhaseDescendantOutlines()) {
       size_t size_before =
           context.GetPaintController().NewDisplayItemList().size();
@@ -1200,7 +1205,7 @@ void PaintLayerPainter::PaintMaskForFragments(
     cache_skipper.emplace(context);
 
   Optional<ScopedPaintChunkProperties> scoped_paint_chunk_properties;
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     const auto* object_paint_properties =
         paint_layer_.GetLayoutObject().PaintProperties();
     DCHECK(object_paint_properties && object_paint_properties->Mask());

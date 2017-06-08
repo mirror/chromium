@@ -26,15 +26,17 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+import logging
 import optparse
 
-from webkitpy.common.system.executive_mock import MockExecutive
+from webkitpy.common.system.executive_mock import MockExecutive, MockProcess
 from webkitpy.common.system.system_host_mock import MockSystemHost
 from webkitpy.layout_tests.port import linux
 from webkitpy.layout_tests.port import port_testcase
+from webkitpy.common.system.log_testing import LoggingTestCase
 
 
-class LinuxPortTest(port_testcase.PortTestCase):
+class LinuxPortTest(port_testcase.PortTestCase, LoggingTestCase):
     os_name = 'linux'
     os_version = 'trusty'
     port_name = 'linux'
@@ -57,8 +59,8 @@ class LinuxPortTest(port_testcase.PortTestCase):
 
         self.assert_version_properties('linux', 'trusty', 'linux-trusty', 'trusty')
         self.assert_version_properties('linux-trusty', None, 'linux-trusty', 'trusty')
-        self.assertRaises(AssertionError, self.assert_version_properties,
-                          'linux-utopic', None, 'ignored', 'ignored', 'ignored')
+        with self.assertRaises(AssertionError):
+            self.assert_version_properties('linux-utopic', None, 'ignored', 'ignored', 'ignored')
 
     def assert_baseline_paths(self, port_name, os_version, *expected_paths):
         port = self.make_port(port_name=port_name, os_version=os_version)
@@ -76,7 +78,8 @@ class LinuxPortTest(port_testcase.PortTestCase):
     def test_check_illegal_port_names(self):
         # FIXME: Check that, for now, these are illegal port names.
         # Eventually we should be able to do the right thing here.
-        self.assertRaises(AssertionError, linux.LinuxPort, MockSystemHost(), port_name='linux-x86')
+        with self.assertRaises(AssertionError):
+            linux.LinuxPort(MockSystemHost(), port_name='linux-x86')
 
     def test_operating_system(self):
         self.assertEqual('linux', self.make_port().operating_system())
@@ -117,9 +120,8 @@ class LinuxPortTest(port_testcase.PortTestCase):
 
     def test_setup_test_run_starts_xvfb(self):
         def run_command_fake(args):
-            if args[0] == 'xdpyinfo':
-                if '-display' in args:
-                    return 1
+            if args[0:2] == ['xdpyinfo', '-display']:
+                return 1
             return 0
 
         port = self.make_port()
@@ -138,15 +140,13 @@ class LinuxPortTest(port_testcase.PortTestCase):
 
     def test_setup_test_run_starts_xvfb_clears_tmpdir(self):
         def run_command_fake(args):
-            if args[0] == 'xdpyinfo':
-                if '-display' in args:
-                    return 1
+            if args[0:2] == ['xdpyinfo', '-display']:
+                return 1
             return 0
 
         port = self.make_port()
         port.host.environ['TMPDIR'] = '/foo/bar'
-        port.host.executive = MockExecutive(
-            run_command_fn=run_command_fake)
+        port.host.executive = MockExecutive(run_command_fn=run_command_fake)
         port.setup_test_run()
 
         self.assertEqual(
@@ -162,10 +162,8 @@ class LinuxPortTest(port_testcase.PortTestCase):
 
     def test_setup_test_runs_finds_free_display(self):
         def run_command_fake(args):
-            if args[0] == 'xdpyinfo':
-                if '-display' in args:
-                    if ':102' in args:
-                        return 1
+            if args == ['xdpyinfo', '-display', ':102']:
+                return 1
             return 0
 
         port = self.make_port()
@@ -189,12 +187,13 @@ class LinuxPortTest(port_testcase.PortTestCase):
         count = [0]
 
         def run_command_fake(args):
-            if args[0] == 'xdpyinfo':
-                if '-display' in args:
-                    return 1
-                if count[0] < 3:
-                    count[0] += 1
-                    return 1
+            if args[0:2] == ['xdpyinfo', '-display']:
+                return 1
+            # The variable `count` is a list rather than an int so that this
+            # function can increment the value.
+            if args == ['xdpyinfo'] and count[0] < 3:
+                count[0] += 1
+                return 1
             return 0
 
         port = self.make_port()
@@ -214,7 +213,7 @@ class LinuxPortTest(port_testcase.PortTestCase):
         env = port.setup_environ_for_server()
         self.assertEqual(env['DISPLAY'], ':99')
 
-    def test_setup_test_runs_eventually_failes_on_failure(self):
+    def test_setup_test_runs_eventually_times_out(self):
         def run_command_fake(args):
             if args[0] == 'xdpyinfo':
                 return 1
@@ -224,6 +223,8 @@ class LinuxPortTest(port_testcase.PortTestCase):
         port = self.make_port(host=host)
         port.host.executive = MockExecutive(
             run_command_fn=run_command_fake)
+        self.set_logging_level(logging.DEBUG)
+
         port.setup_test_run()
         self.assertEqual(
             port.host.executive.calls,
@@ -233,3 +234,38 @@ class LinuxPortTest(port_testcase.PortTestCase):
             ] + [['xdpyinfo']] * 51)
         env = port.setup_environ_for_server()
         self.assertEqual(env['DISPLAY'], ':99')
+        self.assertLog(
+            ['DEBUG: Starting Xvfb with display ":99".\n'] +
+            ['WARNING: xdpyinfo check failed with exit code 1 while starting Xvfb on ":99".\n'] * 51 +
+            [
+                'DEBUG: Killing Xvfb process pid 42.\n',
+                'CRITICAL: Failed to start Xvfb on display ":99" (xvfb retcode: None).\n',
+            ])
+
+    def test_setup_test_runs_terminates_if_xvfb_proc_fails(self):
+        def run_command_fake(args):
+            if args[0] == 'xdpyinfo':
+                return 1
+            return 0
+
+        host = MockSystemHost(os_name=self.os_name, os_version=self.os_version)
+        port = self.make_port(host=host)
+        # Xvfb is started via Executive.popen, which returns an object for the
+        # process. Here we set up a fake process object that acts as if it has
+        # exited with return code 1 immediately.
+        proc = MockProcess(stdout='', stderr='', returncode=3)
+        port.host.executive = MockExecutive(
+            run_command_fn=run_command_fake, proc=proc)
+        self.set_logging_level(logging.DEBUG)
+
+        port.setup_test_run()
+        self.assertEqual(
+            port.host.executive.calls,
+            [
+                ['xdpyinfo', '-display', ':99'],
+                ['Xvfb', ':99', '-screen', '0', '1280x800x24', '-ac', '-dpi', '96']
+            ])
+        self.assertLog([
+            'DEBUG: Starting Xvfb with display ":99".\n',
+            'CRITICAL: Failed to start Xvfb on display ":99" (xvfb retcode: 3).\n'
+        ])

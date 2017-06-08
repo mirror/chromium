@@ -32,7 +32,16 @@ Polymer({
     },
 
     /** @private */
-    searchTerm_: String,
+    searchTerm_: {
+      type: String,
+      observer: 'onDisplayedListSourceChange_',
+    },
+
+    /** @private */
+    selectedFolder_: {
+      type: String,
+      observer: 'onDisplayedListSourceChange_',
+    },
   },
 
   listeners: {
@@ -48,6 +57,9 @@ Polymer({
     });
     this.watch('searchTerm_', function(state) {
       return state.search.term;
+    });
+    this.watch('selectedFolder_', function(state) {
+      return state.selectedFolder;
     });
     this.updateFromStore();
 
@@ -91,6 +103,11 @@ Polymer({
   },
 
   /** @private */
+  onDisplayedListSourceChange_: function() {
+    this.scrollTop = 0;
+  },
+
+  /** @private */
   emptyListMessage_: function() {
     var emptyListMessage = this.searchTerm_ ? 'noSearchResults' : 'emptyList';
     return loadTimeData.getString(emptyListMessage);
@@ -130,6 +147,7 @@ Polymer({
     var focusMoved = false;
     var focusedIndex =
         this.getIndexForItemElement_(/** @type {HTMLElement} */ (e.target));
+    var oldFocusedIndex = focusedIndex;
     if (e.key == 'ArrowUp') {
       focusedIndex--;
       focusMoved = true;
@@ -166,6 +184,12 @@ Polymer({
         this.dispatch(
             bookmarks.actions.updateAnchor(this.displayedIds_[focusedIndex]));
       } else {
+        // If shift-selecting with no anchor, use the old focus index.
+        if (e.shiftKey && this.getState().selection.anchor == null) {
+          this.dispatch(bookmarks.actions.updateAnchor(
+              this.displayedIds_[oldFocusedIndex]));
+        }
+
         // If the focus moved from something other than a Ctrl + move event,
         // update the selection.
         var config = {
@@ -177,6 +201,15 @@ Polymer({
         this.dispatch(bookmarks.actions.selectItem(
             this.displayedIds_[focusedIndex], this.getState(), config));
       }
+    }
+
+    // Prevent the iron-list from changing focus on enter.
+    if (e.path[0] instanceof HTMLButtonElement && e.key == 'Enter')
+      handled = true;
+
+    if (!handled) {
+      handled = bookmarks.CommandManager.getInstance().handleKeyEvent(
+          e, this.getState().selection.items);
     }
 
     if (handled)

@@ -388,12 +388,12 @@ source_set("blink_headers") {
     "platform/modules/notifications/WebNotificationDelegate.h",
     "platform/modules/notifications/WebNotificationManager.h",
     "platform/modules/notifications/WebNotificationResources.h",
-    "platform/modules/payments/WebPaymentAppRequest.h",
     "platform/modules/payments/WebPaymentAppResponse.h",
     "platform/modules/payments/WebPaymentCurrencyAmount.h",
     "platform/modules/payments/WebPaymentDetailsModifier.h",
     "platform/modules/payments/WebPaymentItem.h",
     "platform/modules/payments/WebPaymentMethodData.h",
+    "platform/modules/payments/WebPaymentRequestEventData.h",
     "platform/modules/presentation/WebPresentationAvailabilityObserver.h",
     "platform/modules/presentation/WebPresentationClient.h",
     "platform/modules/presentation/WebPresentationConnection.h",
@@ -683,7 +683,7 @@ grit("resources") {
   html_min_css = "$blink_core_output_dir/html.css"
   grit_flags = [
     "-E",
-    "html_min_css=" + rebase_path(html_min_css),
+    "html_min_css=" + rebase_path(html_min_css, "."),
   ]
   deps = [
     "//third_party/WebKit/Source/core:make_minimized_css",

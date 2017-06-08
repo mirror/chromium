@@ -54,6 +54,9 @@ const char kArcSignedIn[] = "arc.signedin";
 // the user directory (i.e., the user finished required migration.)
 extern const char kArcCompatibleFilesystemChosen[] =
     "arc.compatible_filesystem.chosen";
+// A preference that indicates that user accepted Assistant Value Prop.
+const char kArcVoiceInteractionValuePropAccepted[] =
+    "arc.voice_interaction_value_prop.accepted";
 #endif
 
 // A bool pref that keeps whether the child status for this profile was already
@@ -2554,6 +2557,10 @@ const char kSettingsResetPromptLastTriggeredForHomepage[] =
 // internal format (int64) in local store.  (I.e., this is not a per-profile
 // pref.)
 const char kClipboardLastModifiedTime[] = "ui.clipboard.last_modified_time";
+#endif
+
+#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
+const char kOfflinePrefetchBackoff[] = "offline_prefetch.backoff";
 #endif
 
 }  // namespace prefs

@@ -8,6 +8,7 @@
 #include "core/dom/UserGestureIndicator.h"
 #include "core/dom/shadow/FlatTreeTraversal.h"
 #include "core/events/MouseEvent.h"
+#include "core/frame/EventHandlerRegistry.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLCanvasElement.h"
@@ -27,6 +28,9 @@ namespace {
 
 size_t ToPointerTypeIndex(WebPointerProperties::PointerType t) {
   return static_cast<size_t>(t);
+}
+bool HasPointerEventListener(const EventHandlerRegistry& registry) {
+  return registry.HasEventHandlers(EventHandlerRegistry::kPointerEvent);
 }
 
 Vector<std::pair<WebTouchPoint, TimeTicks>> GetCoalescedPoints(
@@ -159,12 +163,15 @@ WebInputEventResult PointerEventManager::DispatchPointerEvent(
     }
   }
 
-  if (!RuntimeEnabledFeatures::pointerEventEnabled())
+  if (!frame_ || !frame_->GetPage() ||
+      !HasPointerEventListener(frame_->GetPage()->GetEventHandlerRegistry()) ||
+      !RuntimeEnabledFeatures::PointerEventEnabled())
     return WebInputEventResult::kNotHandled;
+
   if (!check_for_listener || target->HasEventListeners(event_type)) {
-    UseCounter::Count(frame_, UseCounter::kPointerEventDispatch);
+    UseCounter::Count(frame_, WebFeature::kPointerEventDispatch);
     if (event_type == EventTypeNames::pointerdown)
-      UseCounter::Count(frame_, UseCounter::kPointerEventDispatchPointerDown);
+      UseCounter::Count(frame_, WebFeature::kPointerEventDispatchPointerDown);
 
     DCHECK(!dispatching_pointer_id_);
     AutoReset<int> dispatch_holder(&dispatching_pointer_id_, pointer_id);
@@ -667,11 +674,11 @@ void PointerEventManager::ElementRemoved(EventTarget* target) {
 
 void PointerEventManager::SetPointerCapture(int pointer_id,
                                             EventTarget* target) {
-  UseCounter::Count(frame_, UseCounter::kPointerEventSetCapture);
+  UseCounter::Count(frame_, WebFeature::kPointerEventSetCapture);
   if (pointer_event_factory_.IsActiveButtonsState(pointer_id)) {
     if (pointer_id != dispatching_pointer_id_) {
       UseCounter::Count(frame_,
-                        UseCounter::kPointerEventSetCaptureOutsideDispatch);
+                        WebFeature::kPointerEventSetCaptureOutsideDispatch);
     }
     pending_pointer_capture_target_.Set(pointer_id, target);
   }

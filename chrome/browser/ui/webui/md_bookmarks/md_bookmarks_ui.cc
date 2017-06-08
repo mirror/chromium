@@ -10,6 +10,7 @@
 #include "base/strings/string16.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/webui/md_bookmarks/bookmarks_message_handler.h"
+#include "chrome/browser/ui/webui/plural_string_handler.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
@@ -86,6 +87,13 @@ content::WebUIDataSource* CreateMdBookmarksUIHTMLSource(Profile* profile) {
                      IDS_BOOKMARK_MANAGER_SEARCH_BUTTON);
   AddLocalizedString(source, "saveEdit", IDS_SAVE);
   AddLocalizedString(source, "title", IDS_MD_BOOKMARK_MANAGER_TITLE);
+  AddLocalizedString(source, "toastFolderSorted",
+                     IDS_MD_BOOKMARK_MANAGER_TOAST_FOLDER_SORTED);
+  AddLocalizedString(source, "toastItemDeleted",
+                     IDS_MD_BOOKMARK_MANAGER_TOAST_ITEM_DELETED);
+  AddLocalizedString(source, "toastUrlCopied",
+                     IDS_MD_BOOKMARK_MANAGER_TOAST_URL_COPIED);
+  AddLocalizedString(source, "undo", IDS_BOOKMARK_BAR_UNDO);
 
   // Resources.
 #if BUILDFLAG(USE_VULCANIZE)
@@ -121,6 +129,10 @@ content::WebUIDataSource* CreateMdBookmarksUIHTMLSource(Profile* profile) {
   source->AddResourcePath("item.js", IDR_MD_BOOKMARKS_ITEM_JS);
   source->AddResourcePath("list.html", IDR_MD_BOOKMARKS_LIST_HTML);
   source->AddResourcePath("list.js", IDR_MD_BOOKMARKS_LIST_JS);
+  source->AddResourcePath("mouse_focus_behavior.html",
+                          IDR_MD_BOOKMARKS_MOUSE_FOCUS_BEHAVIOR_HTML);
+  source->AddResourcePath("mouse_focus_behavior.js",
+                          IDR_MD_BOOKMARKS_MOUSE_FOCUS_BEHAVIOR_JS);
   source->AddResourcePath("reducers.html", IDR_MD_BOOKMARKS_REDUCERS_HTML);
   source->AddResourcePath("reducers.js", IDR_MD_BOOKMARKS_REDUCERS_JS);
   source->AddResourcePath("router.html", IDR_MD_BOOKMARKS_ROUTER_HTML);
@@ -134,6 +146,10 @@ content::WebUIDataSource* CreateMdBookmarksUIHTMLSource(Profile* profile) {
   source->AddResourcePath("store_client.html",
                           IDR_MD_BOOKMARKS_STORE_CLIENT_HTML);
   source->AddResourcePath("store_client.js", IDR_MD_BOOKMARKS_STORE_CLIENT_JS);
+  source->AddResourcePath("toast_manager.html",
+                          IDR_MD_BOOKMARKS_TOAST_MANAGER_HTML);
+  source->AddResourcePath("toast_manager.js",
+                          IDR_MD_BOOKMARKS_TOAST_MANAGER_JS);
   source->AddResourcePath("toolbar.html", IDR_MD_BOOKMARKS_TOOLBAR_HTML);
   source->AddResourcePath("toolbar.js", IDR_MD_BOOKMARKS_TOOLBAR_JS);
   source->AddResourcePath("util.html", IDR_MD_BOOKMARKS_UTIL_HTML);
@@ -154,6 +170,11 @@ MdBookmarksUI::MdBookmarksUI(content::WebUI* web_ui) : WebUIController(web_ui) {
   Profile* profile = Profile::FromWebUI(web_ui);
   content::WebUIDataSource::Add(profile,
                                 CreateMdBookmarksUIHTMLSource(profile));
+
+  auto plural_string_handler = base::MakeUnique<PluralStringHandler>();
+  plural_string_handler->AddLocalizedString(
+      "toastItemsDeleted", IDS_MD_BOOKMARK_MANAGER_TOAST_ITEMS_DELETED);
+  web_ui->AddMessageHandler(std::move(plural_string_handler));
 
   web_ui->AddMessageHandler(base::MakeUnique<BookmarksMessageHandler>());
 }

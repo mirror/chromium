@@ -49,16 +49,8 @@ StyleTransformData::StyleTransformData(const StyleTransformData& o)
 
 bool StyleTransformData::operator==(const StyleTransformData& o) const {
   return origin_ == o.origin_ && operations_ == o.operations_ &&
-         motion_ == o.motion_ &&
-         DataEquivalent<TransformOperation>(translate_, o.translate_) &&
-         DataEquivalent<TransformOperation>(rotate_, o.rotate_) &&
-         DataEquivalent<TransformOperation>(scale_, o.scale_);
-}
-
-bool StyleTransformData::Has3DTransform() const {
-  return operations_.Has3DOperation() || (translate_ && translate_->Z() != 0) ||
-         (rotate_ && (rotate_->X() != 0 || rotate_->Y() != 0)) ||
-         (scale_ && scale_->Z() != 1);
+         motion_ == o.motion_ && DataEquivalent(translate_, o.translate_) &&
+         DataEquivalent(rotate_, o.rotate_) && DataEquivalent(scale_, o.scale_);
 }
 
 }  // namespace blink

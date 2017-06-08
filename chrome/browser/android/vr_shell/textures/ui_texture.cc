@@ -65,6 +65,10 @@ void UiTexture::SetMode(ColorScheme::Mode mode) {
 
 void UiTexture::OnSetMode() {}
 
+const ColorScheme& UiTexture::color_scheme() const {
+  return ColorScheme::GetColorScheme(mode());
+}
+
 std::vector<std::unique_ptr<gfx::RenderText>> UiTexture::PrepareDrawStringRect(
     const base::string16& text,
     const gfx::FontList& font_list,
@@ -189,11 +193,13 @@ bool UiTexture::GetFontList(int size,
     bool found_name = GetFallbackFontNameForChar(default_font, c, "", &name);
     if (!found_name)
       return false;
-    if (name.empty())
+    if (!name.empty())
       names.insert(name);
   }
-  for (const auto& name : names)
+  for (const auto& name : names) {
+    DCHECK(!name.empty());
     fonts.push_back(gfx::Font(name, size));
+  }
   *font_list = gfx::FontList(fonts);
   return true;
 }

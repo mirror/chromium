@@ -75,6 +75,7 @@
 #include "third_party/WebKit/public/web/WebFrameLoadType.h"
 #include "third_party/WebKit/public/web/WebFrameSerializerClient.h"
 #include "third_party/WebKit/public/web/WebHistoryCommitType.h"
+#include "third_party/WebKit/public/web/WebIconURL.h"
 #include "third_party/WebKit/public/web/WebMeaningfulLayout.h"
 #include "third_party/WebKit/public/web/WebScriptExecutionCallback.h"
 #include "ui/gfx/range/range.h"
@@ -93,6 +94,7 @@ struct FrameMsg_TextTrackSettings_Params;
 
 namespace blink {
 class WebContentDecryptionModule;
+class WebLocalFrame;
 class WebPresentationClient;
 class WebPushClient;
 class WebSecurityOrigin;
@@ -498,6 +500,7 @@ class CONTENT_EXPORT RenderFrameImpl
   blink::BlameContext* GetFrameBlameContext() override;
   std::unique_ptr<blink::WebServiceWorkerProvider> CreateServiceWorkerProvider()
       override;
+  service_manager::InterfaceProvider* GetInterfaceProvider() override;
   void DidAccessInitialDocument() override;
   blink::WebLocalFrame* CreateChildFrame(
       blink::WebLocalFrame* parent,
@@ -826,7 +829,7 @@ class CONTENT_EXPORT RenderFrameImpl
   const RenderFrameImpl* GetLocalRoot() const;
 
   // Builds and sends DidCommitProvisionalLoad to the host.
-  void SendDidCommitProvisionalLoad(blink::WebFrame* frame,
+  void SendDidCommitProvisionalLoad(blink::WebLocalFrame* frame,
                                     blink::WebHistoryCommitType commit_type);
 
   // Swaps the current frame into the frame tree, replacing the
@@ -1113,6 +1116,8 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // Ask the host to send our AndroidOverlay routing token to us.
   void RequestOverlayRoutingTokenFromHost();
+
+  void SendUpdateFaviconURL(blink::WebIconURL::Type icon_types_mask);
 
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToWebFrame is called, and it is null after

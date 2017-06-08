@@ -131,6 +131,8 @@ class LayerTreeHostImplClient {
   // Called when a requested image decode completes.
   virtual void NotifyImageDecodeRequestFinished() = 0;
 
+  virtual void RequestBeginMainFrameNotExpected(bool new_state) = 0;
+
  protected:
   virtual ~LayerTreeHostImplClient() {}
 };
@@ -599,7 +601,7 @@ class CC_EXPORT LayerTreeHostImpl
 
   LayerImpl* ViewportMainScrollLayer();
 
-  void QueueImageDecode(sk_sp<const SkImage> image,
+  void QueueImageDecode(const PaintImage& image,
                         const base::Callback<void(bool)>& embedder_callback);
   std::vector<base::Closure> TakeCompletedImageDecodeCallbacks();
 

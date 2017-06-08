@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <utility>
+
 #include "base/message_loop/message_loop.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -18,26 +20,27 @@ class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
 
  protected:
   mojom::TraitsTestServicePtr GetTraitsTestProxy() {
-    return traits_test_bindings_.CreateInterfacePtrAndBind(this);
+    mojom::TraitsTestServicePtr proxy;
+    traits_test_bindings_.AddBinding(this, mojo::MakeRequest(&proxy));
+    return proxy;
   }
 
  private:
   // TraitsTestService:
-  void EchoLatencyComponent(
-      const LatencyInfo::LatencyComponent& l,
-      const EchoLatencyComponentCallback& callback) override {
-    callback.Run(l);
+  void EchoLatencyComponent(const LatencyInfo::LatencyComponent& l,
+                            EchoLatencyComponentCallback callback) override {
+    std::move(callback).Run(l);
   }
 
   void EchoLatencyComponentId(
       const std::pair<LatencyComponentType, int64_t>& id,
-      const EchoLatencyComponentIdCallback& callback) override {
-    callback.Run(id);
+      EchoLatencyComponentIdCallback callback) override {
+    std::move(callback).Run(id);
   }
 
   void EchoLatencyInfo(const LatencyInfo& info,
-                       const EchoLatencyInfoCallback& callback) override {
-    callback.Run(info);
+                       EchoLatencyInfoCallback callback) override {
+    std::move(callback).Run(info);
   }
 
   base::MessageLoop loop_;

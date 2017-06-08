@@ -195,7 +195,7 @@ static bool ConvertFontFamilyName(
     family_name = AtomicString(ToCSSFontFamilyValue(value).Value());
 #if OS(MACOSX)
     if (family_name == FontCache::LegacySystemFontFamily()) {
-      UseCounter::Count(state.GetDocument(), UseCounter::kBlinkMacSystemFont);
+      UseCounter::Count(state.GetDocument(), WebFeature::kBlinkMacSystemFont);
       family_name = FontFamilyNames::system_ui;
     }
 #endif
@@ -537,7 +537,7 @@ StyleContentAlignmentData StyleBuilderConverter::ConvertContentAlignmentData(
     const CSSValue& value) {
   StyleContentAlignmentData alignment_data =
       ComputedStyle::InitialContentAlignment();
-  if (!RuntimeEnabledFeatures::cssGridLayoutEnabled()) {
+  if (!RuntimeEnabledFeatures::CSSGridLayoutEnabled()) {
     const CSSIdentifierValue& identifier_value = ToCSSIdentifierValue(value);
     switch (identifier_value.GetValueID()) {
       case CSSValueStretch:

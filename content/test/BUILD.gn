@@ -76,6 +76,8 @@ static_library("test_support") {
     "../public/test/javascript_test_observer.h",
     "../public/test/memory_coordinator_test_utils.cc",
     "../public/test/memory_coordinator_test_utils.h",
+    "../public/test/mock_browsing_data_remover_delegate.cc",
+    "../public/test/mock_browsing_data_remover_delegate.h",
     "../public/test/mock_download_item.cc",
     "../public/test/mock_download_item.h",
     "../public/test/mock_download_manager.cc",
@@ -476,6 +478,13 @@ mojom("web_ui_test_mojo_bindings") {
 
   # TODO(crbug.com/699569): Convert to use the new JS bindings.
   use_new_js_bindings = false
+}
+
+mojom("mojo_layouttest_bindings") {
+  testonly = true
+  sources = [
+    "data/mojo_layouttest_test.mojom",
+  ]
 }
 
 static_library("layouttest_support") {
@@ -1744,6 +1753,7 @@ test("content_unittests") {
   }
   if (is_android) {
     sources += [
+      "../browser/android/android_overlay_provider_impl_unittest.cc",
       "../browser/android/java/gin_java_method_invocation_helper_unittest.cc",
       "../browser/android/java/java_type_unittest.cc",
       "../browser/android/java/jni_helper_unittest.cc",

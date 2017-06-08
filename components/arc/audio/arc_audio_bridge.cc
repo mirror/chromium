@@ -31,12 +31,24 @@ void ArcAudioBridge::OnInstanceReady() {
   mojom::AudioInstance* audio_instance =
       ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service()->audio(), Init);
   DCHECK(audio_instance);  // the instance on ARC side is too old.
-  audio_instance->Init(binding_.CreateInterfacePtrAndBind());
+  mojom::AudioHostPtr host_proxy;
+  binding_.Bind(mojo::MakeRequest(&host_proxy));
+  audio_instance->Init(std::move(host_proxy));
 }
 
 void ArcAudioBridge::ShowVolumeControls() {
   DVLOG(2) << "ArcAudioBridge::ShowVolumeControls";
   ash::TrayAudio::ShowPopUpVolumeView();
+}
+
+void ArcAudioBridge::OnSystemVolumeUpdateRequest(int32_t percent) {
+  if (percent < 0 || percent > 100)
+    return;
+  cras_audio_handler_->SetOutputVolumePercent(percent);
+  bool is_muted =
+      percent <= cras_audio_handler_->GetOutputDefaultVolumeMuteThreshold();
+  if (cras_audio_handler_->IsOutputMuted() != is_muted)
+    cras_audio_handler_->SetOutputMute(is_muted);
 }
 
 void ArcAudioBridge::OnAudioNodesChanged() {

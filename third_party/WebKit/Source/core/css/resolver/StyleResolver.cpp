@@ -191,7 +191,7 @@ void StyleResolver::SetRuleUsageTracker(StyleRuleUsageTracker* tracker) {
 }
 
 void StyleResolver::AddToStyleSharingList(Element& element) {
-  DCHECK(RuntimeEnabledFeatures::styleSharingEnabled());
+  DCHECK(RuntimeEnabledFeatures::StyleSharingEnabled());
   // Never add elements to the style sharing list if we're not in a recalcStyle,
   // otherwise we could leave stale pointers in there.
   if (!GetDocument().InStyleRecalc())
@@ -671,7 +671,7 @@ PassRefPtr<ComputedStyle> StyleResolver::StyleForElement(
 
   ElementResolveContext element_context(*element);
 
-  if (RuntimeEnabledFeatures::styleSharingEnabled() &&
+  if (RuntimeEnabledFeatures::StyleSharingEnabled() &&
       sharing_behavior == kAllowStyleSharing &&
       (default_parent || element_context.ParentStyle())) {
     if (RefPtr<ComputedStyle> shared_style =
@@ -745,10 +745,11 @@ PassRefPtr<ComputedStyle> StyleResolver::StyleForElement(
         const CSSValue* value =
             it->properties->GetPropertyCSSValue(CSSPropertyDisplay);
         if (value && value->IsIdentifierValue() &&
-            ToCSSIdentifierValue(*value).GetValueID() == CSSValueBlock)
+            ToCSSIdentifierValue(*value).GetValueID() == CSSValueBlock) {
           UseCounter::Count(
               element->GetDocument(),
-              UseCounter::kSummaryElementWithDisplayBlockAuthorRule);
+              WebFeature::kSummaryElementWithDisplayBlockAuthorRule);
+        }
       }
     }
 
@@ -1289,10 +1290,10 @@ static inline bool IsValidCueStyleProperty(CSSPropertyID id) {
     case CSSPropertyTextDecorationStyle:
     case CSSPropertyTextDecorationColor:
     case CSSPropertyTextDecorationSkip:
-      DCHECK(RuntimeEnabledFeatures::css3TextDecorationsEnabled());
+      DCHECK(RuntimeEnabledFeatures::CSS3TextDecorationsEnabled());
       return true;
     case CSSPropertyFontVariationSettings:
-      DCHECK(RuntimeEnabledFeatures::cssVariableFontsEnabled());
+      DCHECK(RuntimeEnabledFeatures::CSSVariableFontsEnabled());
       return true;
     default:
       break;
@@ -1397,16 +1398,16 @@ static inline bool IsValidFirstLetterStyleProperty(CSSPropertyID id) {
     case CSSPropertyWordSpacing:
       return true;
     case CSSPropertyFontVariationSettings:
-      DCHECK(RuntimeEnabledFeatures::cssVariableFontsEnabled());
+      DCHECK(RuntimeEnabledFeatures::CSSVariableFontsEnabled());
       return true;
     case CSSPropertyTextDecoration:
-      DCHECK(!RuntimeEnabledFeatures::css3TextDecorationsEnabled());
+      DCHECK(!RuntimeEnabledFeatures::CSS3TextDecorationsEnabled());
       return true;
     case CSSPropertyTextDecorationColor:
     case CSSPropertyTextDecorationLine:
     case CSSPropertyTextDecorationStyle:
     case CSSPropertyTextDecorationSkip:
-      DCHECK(RuntimeEnabledFeatures::css3TextDecorationsEnabled());
+      DCHECK(RuntimeEnabledFeatures::CSS3TextDecorationsEnabled());
       return true;
 
     // text-shadow added in text decoration spec:
@@ -1762,7 +1763,7 @@ void StyleResolver::ApplyCustomProperties(StyleResolverState& state,
   // TODO(leviw): stop recalculating every time
   CSSVariableResolver(state).ResolveVariableDefinitions();
 
-  if (RuntimeEnabledFeatures::cssApplyAtRulesEnabled()) {
+  if (RuntimeEnabledFeatures::CSSApplyAtRulesEnabled()) {
     if (CacheCustomPropertiesForApplyAtRules(state,
                                              match_result.AuthorRules())) {
       ApplyMatchedProperties<kResolveVariables, kUpdateNeedsApplyPass>(

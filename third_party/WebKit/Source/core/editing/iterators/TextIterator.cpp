@@ -220,11 +220,11 @@ TextIteratorAlgorithm<Strategy>::~TextIteratorAlgorithm() {
   if (!document)
     return;
   if (behavior_.ForInnerText())
-    UseCounter::Count(document, UseCounter::kInnerTextWithShadowTree);
+    UseCounter::Count(document, WebFeature::kInnerTextWithShadowTree);
   if (behavior_.ForSelectionToString())
-    UseCounter::Count(document, UseCounter::kSelectionToStringWithShadowTree);
+    UseCounter::Count(document, WebFeature::kSelectionToStringWithShadowTree);
   if (behavior_.ForWindowFind())
-    UseCounter::Count(document, UseCounter::kWindowFindWithShadowTree);
+    UseCounter::Count(document, WebFeature::kWindowFindWithShadowTree);
 }
 
 template <typename Strategy>
@@ -345,7 +345,8 @@ void TextIteratorAlgorithm<Strategy>::Advance() {
           if (!fully_clipped_stack_.Top() || IgnoresStyleVisibility())
             HandleTextNode();
         } else if (layout_object &&
-                   (layout_object->IsImage() || layout_object->IsLayoutPart() ||
+                   (layout_object->IsImage() ||
+                    layout_object->IsLayoutEmbeddedContent() ||
                     (node_ && node_->IsHTMLElement() &&
                      (IsHTMLFormControlElement(ToHTMLElement(*node_)) ||
                       isHTMLLegendElement(ToHTMLElement(*node_)) ||

@@ -14,8 +14,6 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-using testing::InSequence;
-
 namespace vr_shell {
 
 namespace {
@@ -34,6 +32,9 @@ class MockBrowserInterface : public UiBrowserInterface {
  private:
   DISALLOW_COPY_AND_ASSIGN(MockBrowserInterface);
 };
+
+std::set<UiElementDebugId> kElementsVisibleInBrowsing = {
+    kContentQuad, kBackplane, kCeiling, kFloor, kUrlBar, kLoadingIndicator};
 
 }  // namespace
 
@@ -109,16 +110,33 @@ TEST_F(UiSceneManagerTest, WebVrWarningsDoNotShowWhenInitiallyOutsideWebVr) {
   EXPECT_TRUE(IsVisible(kWebVrTransientHttpSecurityWarning));
 }
 
-TEST_F(UiSceneManagerTest, CctButtonVisibleInCct) {
+TEST_F(UiSceneManagerTest, CloseButtonVisibleInCctFullscreen) {
+  // Button should be visible in cct.
   MakeManager(kInCct, kNotInWebVr);
   EXPECT_TRUE(IsVisible(kCloseButton));
 
+  // Button should not be visible when not in cct or fullscreen.
   MakeManager(kNotInCct, kNotInWebVr);
   EXPECT_FALSE(IsVisible(kCloseButton));
 
+  // Button should be visible in fullscreen and hidden when leaving fullscreen.
+  manager_->SetFullscreen(true);
+  EXPECT_TRUE(IsVisible(kCloseButton));
+  manager_->SetFullscreen(false);
+  EXPECT_FALSE(IsVisible(kCloseButton));
+
+  // Button should not be visible when in WebVR.
   MakeManager(kInCct, kInWebVr);
   EXPECT_FALSE(IsVisible(kCloseButton));
   manager_->SetWebVrMode(false);
+  EXPECT_TRUE(IsVisible(kCloseButton));
+
+  // Button should be visible in Cct across transistions in fullscreen.
+  MakeManager(kInCct, kNotInWebVr);
+  EXPECT_TRUE(IsVisible(kCloseButton));
+  manager_->SetFullscreen(true);
+  EXPECT_TRUE(IsVisible(kCloseButton));
+  manager_->SetFullscreen(false);
   EXPECT_TRUE(IsVisible(kCloseButton));
 }
 
@@ -126,75 +144,71 @@ TEST_F(UiSceneManagerTest, UiUpdatesForIncognito) {
   MakeManager(kNotInCct, kNotInWebVr);
 
   // Hold onto the background color to make sure it changes.
-  SkColor initial_background = scene_->GetBackgroundColor();
+  SkColor initial_background = scene_->GetWorldBackgroundColor();
   manager_->SetFullscreen(true);
 
   {
     SCOPED_TRACE("Entered Fullsceen");
     // Make sure background has changed for fullscreen.
-    EXPECT_NE(initial_background, scene_->GetBackgroundColor());
+    EXPECT_NE(initial_background, scene_->GetWorldBackgroundColor());
   }
 
-  SkColor fullscreen_background = scene_->GetBackgroundColor();
+  SkColor fullscreen_background = scene_->GetWorldBackgroundColor();
 
   manager_->SetIncognito(true);
 
   {
     SCOPED_TRACE("Entered Incognito");
     // Make sure background has changed for incognito.
-    EXPECT_NE(fullscreen_background, scene_->GetBackgroundColor());
-    EXPECT_NE(initial_background, scene_->GetBackgroundColor());
+    EXPECT_NE(fullscreen_background, scene_->GetWorldBackgroundColor());
+    EXPECT_NE(initial_background, scene_->GetWorldBackgroundColor());
   }
 
-  SkColor incognito_background = scene_->GetBackgroundColor();
+  SkColor incognito_background = scene_->GetWorldBackgroundColor();
 
   manager_->SetIncognito(false);
 
   {
     SCOPED_TRACE("Exited Incognito");
-    EXPECT_EQ(fullscreen_background, scene_->GetBackgroundColor());
+    EXPECT_EQ(fullscreen_background, scene_->GetWorldBackgroundColor());
   }
 
   manager_->SetFullscreen(false);
 
   {
     SCOPED_TRACE("Exited Fullsceen");
-    EXPECT_EQ(initial_background, scene_->GetBackgroundColor());
+    EXPECT_EQ(initial_background, scene_->GetWorldBackgroundColor());
   }
 
   manager_->SetIncognito(true);
 
   {
     SCOPED_TRACE("Entered Incognito");
-    EXPECT_EQ(incognito_background, scene_->GetBackgroundColor());
+    EXPECT_EQ(incognito_background, scene_->GetWorldBackgroundColor());
   }
 
   manager_->SetIncognito(false);
 
   {
     SCOPED_TRACE("Exited Incognito");
-    EXPECT_EQ(initial_background, scene_->GetBackgroundColor());
+    EXPECT_EQ(initial_background, scene_->GetWorldBackgroundColor());
   }
 }
 
 TEST_F(UiSceneManagerTest, UiUpdatesForFullscreenChanges) {
-  std::set<UiElementDebugId> visible_in_browsing = {
-      UiElementDebugId::kContentQuad, UiElementDebugId::kBackplane,
-      UiElementDebugId::kCeiling,     UiElementDebugId::kFloor,
-      UiElementDebugId::kUrlBar,      UiElementDebugId::kLoadingIndicator};
   std::set<UiElementDebugId> visible_in_fullscreen = {
-      UiElementDebugId::kContentQuad, UiElementDebugId::kBackplane,
-      UiElementDebugId::kCeiling, UiElementDebugId::kFloor};
+      kContentQuad, kCloseButton, kBackplane, kCeiling, kFloor};
 
   MakeManager(kNotInCct, kNotInWebVr);
 
   // Hold onto the background color to make sure it changes.
-  SkColor initial_background = scene_->GetBackgroundColor();
+  SkColor initial_background = scene_->GetWorldBackgroundColor();
 
   for (const auto& element : scene_->GetUiElements()) {
     SCOPED_TRACE(element->debug_id());
-    bool should_be_visible = visible_in_browsing.find(element->debug_id()) !=
-                             visible_in_browsing.end();
+    bool should_be_visible =
+        kElementsVisibleInBrowsing.find(element->debug_id()) !=
+        kElementsVisibleInBrowsing.end();
     EXPECT_EQ(should_be_visible, element->visible());
   }
 
@@ -212,7 +226,7 @@ TEST_F(UiSceneManagerTest, UiUpdatesForFullscreenChanges) {
   {
     SCOPED_TRACE("Entered Fullsceen");
     // Make sure background has changed for fullscreen.
-    EXPECT_NE(initial_background, scene_->GetBackgroundColor());
+    EXPECT_NE(initial_background, scene_->GetWorldBackgroundColor());
   }
 
   // Exit fullscreen.
@@ -221,13 +235,50 @@ TEST_F(UiSceneManagerTest, UiUpdatesForFullscreenChanges) {
   // Everything should return to original state after leaving fullscreen.
   for (const auto& element : scene_->GetUiElements()) {
     SCOPED_TRACE(element->debug_id());
-    bool should_be_visible = visible_in_browsing.find(element->debug_id()) !=
-                             visible_in_browsing.end();
+    bool should_be_visible =
+        kElementsVisibleInBrowsing.find(element->debug_id()) !=
+        kElementsVisibleInBrowsing.end();
     EXPECT_EQ(should_be_visible, element->visible());
   }
   {
     SCOPED_TRACE("Exited Fullsceen");
-    EXPECT_EQ(initial_background, scene_->GetBackgroundColor());
+    EXPECT_EQ(initial_background, scene_->GetWorldBackgroundColor());
+  }
+}
+
+TEST_F(UiSceneManagerTest, UiUpdatesExitPrompt) {
+  std::set<UiElementDebugId> visible_when_prompting = {kExitPrompt, kBackplane,
+                                                       kCeiling, kFloor};
+  MakeManager(kNotInCct, kNotInWebVr);
+
+  manager_->SetWebVrSecureOrigin(true);
+
+  // Initial state.
+  for (const auto& element : scene_->GetUiElements()) {
+    SCOPED_TRACE(element->debug_id());
+    bool should_be_visible =
+        kElementsVisibleInBrowsing.find(element->debug_id()) !=
+        kElementsVisibleInBrowsing.end();
+    EXPECT_EQ(should_be_visible, element->visible());
+  }
+
+  // Exit prompt visible state.
+  manager_->OnSecurityIconClicked();
+  for (const auto& element : scene_->GetUiElements()) {
+    SCOPED_TRACE(element->debug_id());
+    bool should_be_visible = visible_when_prompting.find(element->debug_id()) !=
+                             visible_when_prompting.end();
+    EXPECT_EQ(should_be_visible, element->visible());
+  }
+
+  // Back to initial state.
+  manager_->OnExitPromptPrimaryButtonClicked();
+  for (const auto& element : scene_->GetUiElements()) {
+    SCOPED_TRACE(element->debug_id());
+    bool should_be_visible =
+        kElementsVisibleInBrowsing.find(element->debug_id()) !=
+        kElementsVisibleInBrowsing.end();
+    EXPECT_EQ(should_be_visible, element->visible());
   }
 }
 

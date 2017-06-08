@@ -216,7 +216,7 @@ TEST_P(VisualViewportTest, TestResize) {
 // Make sure that the visibleContentRect method acurately reflects the scale and
 // scroll location of the viewport with and without scrollbars.
 TEST_P(VisualViewportTest, TestVisibleContentRect) {
-  RuntimeEnabledFeatures::setOverlayScrollbarsEnabled(false);
+  RuntimeEnabledFeatures::SetOverlayScrollbarsEnabled(false);
   InitializeWithDesktopSettings();
 
   RegisterMockedHttpURLLoad("200-by-300.html");
@@ -517,8 +517,8 @@ TEST_P(VisualViewportTest, TestVisibleRectInDocument) {
 
 TEST_P(VisualViewportTest, TestFractionalScrollOffsetIsNotOverwritten) {
   bool orig_fractional_offsets_enabled =
-      RuntimeEnabledFeatures::fractionalScrollOffsetsEnabled();
-  RuntimeEnabledFeatures::setFractionalScrollOffsetsEnabled(true);
+      RuntimeEnabledFeatures::FractionalScrollOffsetsEnabled();
+  RuntimeEnabledFeatures::SetFractionalScrollOffsetsEnabled(true);
 
   InitializeWithAndroidSettings();
   WebViewImpl()->Resize(IntSize(200, 250));
@@ -536,7 +536,7 @@ TEST_P(VisualViewportTest, TestFractionalScrollOffsetIsNotOverwritten) {
       30.5,
       frame_view.LayoutViewportScrollableArea()->GetScrollOffset().Height());
 
-  RuntimeEnabledFeatures::setFractionalScrollOffsetsEnabled(
+  RuntimeEnabledFeatures::SetFractionalScrollOffsetsEnabled(
       orig_fractional_offsets_enabled);
 }
 
@@ -1012,13 +1012,13 @@ TEST_P(VisualViewportTest,
   WebRect extent_rect;
 
   WebViewImpl()->SetPageScaleFactor(2);
-  WebFrame* mainFrame = WebViewImpl()->MainFrame();
+  WebLocalFrame* mainFrame = WebViewImpl()->MainFrameImpl();
 
   // Select some text and get the base and extent rects (that's the start of
   // the range and its end). Do a sanity check that the expected text is
   // selected
   mainFrame->ExecuteScript(WebScriptSource("selectRange();"));
-  EXPECT_EQ("ir", mainFrame->ToWebLocalFrame()->SelectionAsText().Utf8());
+  EXPECT_EQ("ir", mainFrame->SelectionAsText().Utf8());
 
   WebViewImpl()->SelectionBounds(base_rect, extent_rect);
   WebPoint initialPoint(base_rect.x, base_rect.y);
@@ -1029,8 +1029,8 @@ TEST_P(VisualViewportTest,
   // right and down one line.
   VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
   visual_viewport.Move(ScrollOffset(60, 25));
-  mainFrame->ToWebLocalFrame()->MoveRangeSelection(initialPoint, endPoint);
-  EXPECT_EQ("t ", mainFrame->ToWebLocalFrame()->SelectionAsText().Utf8());
+  mainFrame->MoveRangeSelection(initialPoint, endPoint);
+  EXPECT_EQ("t ", mainFrame->SelectionAsText().Utf8());
 }
 
 // Test that the scrollFocusedEditableElementIntoRect method works with the
@@ -1635,7 +1635,7 @@ TEST_P(VisualViewportTest, TestChangingContentSizeAffectsScrollBounds) {
 
   LocalFrameView& frame_view = *WebViewImpl()->MainFrameImpl()->GetFrameView();
 
-  WebViewImpl()->MainFrame()->ExecuteScript(
+  WebViewImpl()->MainFrameImpl()->ExecuteScript(
       WebScriptSource("var content = document.getElementById(\"content\");"
                       "content.style.width = \"1500px\";"
                       "content.style.height = \"2400px\";"));
@@ -1728,7 +1728,7 @@ TEST_P(VisualViewportTest, bodyAndWindowScrollPropertiesAccountForViewport) {
 
   // Chrome's quirky behavior regarding viewport scrolling means we treat the
   // body element as the viewport and don't apply scrolling to the HTML element.
-  RuntimeEnabledFeatures::setScrollTopLeftInteropEnabled(false);
+  RuntimeEnabledFeatures::SetScrollTopLeftInteropEnabled(false);
 
   LocalDOMWindow* window =
       WebViewImpl()->MainFrameImpl()->GetFrame()->DomWindow();
@@ -1762,7 +1762,7 @@ TEST_P(VisualViewportTest, bodyAndWindowScrollPropertiesAccountForViewport) {
 
   // Turning on the standards-compliant viewport scrolling impl should make the
   // document element the viewport and not body.
-  RuntimeEnabledFeatures::setScrollTopLeftInteropEnabled(true);
+  RuntimeEnabledFeatures::SetScrollTopLeftInteropEnabled(true);
 
   window->scrollTo(100, 150);
   EXPECT_EQ(100, window->scrollX());
@@ -2012,8 +2012,8 @@ TEST_P(VisualViewportTest, PinchZoomGestureScrollsVisualViewportOnly) {
 
 TEST_P(VisualViewportTest, ResizeWithScrollAnchoring) {
   bool wasScrollAnchoringEnabled =
-      RuntimeEnabledFeatures::scrollAnchoringEnabled();
-  RuntimeEnabledFeatures::setScrollAnchoringEnabled(true);
+      RuntimeEnabledFeatures::ScrollAnchoringEnabled();
+  RuntimeEnabledFeatures::SetScrollAnchoringEnabled(true);
 
   InitializeWithDesktopSettings();
   WebViewImpl()->Resize(IntSize(800, 600));
@@ -2030,15 +2030,15 @@ TEST_P(VisualViewportTest, ResizeWithScrollAnchoring) {
   EXPECT_SIZE_EQ(ScrollOffset(700, 200),
                  frame_view.LayoutViewportScrollableArea()->GetScrollOffset());
 
-  RuntimeEnabledFeatures::setScrollAnchoringEnabled(wasScrollAnchoringEnabled);
+  RuntimeEnabledFeatures::SetScrollAnchoringEnabled(wasScrollAnchoringEnabled);
 }
 
 // Ensure that resize anchoring as happens when browser controls hide/show
 // affects the scrollable area that's currently set as the root scroller.
 TEST_P(VisualViewportTest, ResizeAnchoringWithRootScroller) {
   bool wasRootScrollerEnabled =
-      RuntimeEnabledFeatures::setRootScrollerEnabled();
-  RuntimeEnabledFeatures::setSetRootScrollerEnabled(true);
+      RuntimeEnabledFeatures::SetRootScrollerEnabled();
+  RuntimeEnabledFeatures::SetSetRootScrollerEnabled(true);
 
   InitializeWithAndroidSettings();
   WebViewImpl()->Resize(IntSize(800, 600));
@@ -2065,15 +2065,15 @@ TEST_P(VisualViewportTest, ResizeAnchoringWithRootScroller) {
   EXPECT_SIZE_EQ(ScrollOffset(),
                  frame_view.LayoutViewportScrollableArea()->GetScrollOffset());
 
-  RuntimeEnabledFeatures::setSetRootScrollerEnabled(wasRootScrollerEnabled);
+  RuntimeEnabledFeatures::SetSetRootScrollerEnabled(wasRootScrollerEnabled);
 }
 
 // Ensure that resize anchoring as happens when the device is rotated affects
 // the scrollable area that's currently set as the root scroller.
 TEST_P(VisualViewportTest, RotationAnchoringWithRootScroller) {
   bool wasRootScrollerEnabled =
-      RuntimeEnabledFeatures::setRootScrollerEnabled();
-  RuntimeEnabledFeatures::setSetRootScrollerEnabled(true);
+      RuntimeEnabledFeatures::SetRootScrollerEnabled();
+  RuntimeEnabledFeatures::SetSetRootScrollerEnabled(true);
 
   InitializeWithAndroidSettings();
   WebViewImpl()->Resize(IntSize(800, 600));
@@ -2096,7 +2096,7 @@ TEST_P(VisualViewportTest, RotationAnchoringWithRootScroller) {
                  frame_view.LayoutViewportScrollableArea()->GetScrollOffset());
   EXPECT_EQ(600, scroller->scrollTop());
 
-  RuntimeEnabledFeatures::setSetRootScrollerEnabled(wasRootScrollerEnabled);
+  RuntimeEnabledFeatures::SetSetRootScrollerEnabled(wasRootScrollerEnabled);
 }
 
 static void configureAndroidCompositing(WebSettings* settings) {
@@ -2112,8 +2112,8 @@ static void configureAndroidCompositing(WebSettings* settings) {
 // when using inert (non-layout affecting) browser controls.
 TEST_P(VisualViewportTest, ResizeCompositedAndFixedBackground) {
   bool originalInertTopControls =
-      RuntimeEnabledFeatures::inertTopControlsEnabled();
-  RuntimeEnabledFeatures::setInertTopControlsEnabled(true);
+      RuntimeEnabledFeatures::InertTopControlsEnabled();
+  RuntimeEnabledFeatures::SetInertTopControlsEnabled(true);
 
   std::unique_ptr<FrameTestHelpers::TestWebViewClient>
       fake_compositing_web_view_client =
@@ -2133,7 +2133,7 @@ TEST_P(VisualViewportTest, ResizeCompositedAndFixedBackground) {
 
   RegisterMockedHttpURLLoad("http://example.com/foo.png", "white-1x1.png");
   WebURL base_url = URLTestHelpers::ToKURL("http://example.com/");
-  FrameTestHelpers::LoadHTMLString(web_view_impl->MainFrame(),
+  FrameTestHelpers::LoadHTMLString(web_view_impl->MainFrameImpl(),
                                    "<!DOCTYPE html>"
                                    "<style>"
                                    "  body {"
@@ -2182,7 +2182,7 @@ TEST_P(VisualViewportTest, ResizeCompositedAndFixedBackground) {
   EXPECT_EQ(page_height,
             compositor->FixedRootBackgroundLayer()->Size().Height());
 
-  RuntimeEnabledFeatures::setInertTopControlsEnabled(originalInertTopControls);
+  RuntimeEnabledFeatures::SetInertTopControlsEnabled(originalInertTopControls);
 }
 
 static void configureAndroidNonCompositing(WebSettings* settings) {
@@ -2198,8 +2198,8 @@ static void configureAndroidNonCompositing(WebSettings* settings) {
 // resized when using inert (non-layout affecting) browser controls.
 TEST_P(VisualViewportTest, ResizeNonCompositedAndFixedBackground) {
   bool originalInertTopControls =
-      RuntimeEnabledFeatures::inertTopControlsEnabled();
-  RuntimeEnabledFeatures::setInertTopControlsEnabled(true);
+      RuntimeEnabledFeatures::InertTopControlsEnabled();
+  RuntimeEnabledFeatures::SetInertTopControlsEnabled(true);
 
   FrameTestHelpers::WebViewHelper web_view_helper;
   WebViewBase* web_view_impl = web_view_helper.Initialize(
@@ -2215,7 +2215,7 @@ TEST_P(VisualViewportTest, ResizeNonCompositedAndFixedBackground) {
 
   RegisterMockedHttpURLLoad("http://example.com/foo.png", "white-1x1.png");
   WebURL base_url = URLTestHelpers::ToKURL("http://example.com/");
-  FrameTestHelpers::LoadHTMLString(web_view_impl->MainFrame(),
+  FrameTestHelpers::LoadHTMLString(web_view_impl->MainFrameImpl(),
                                    "<!DOCTYPE html>"
                                    "<style>"
                                    "  body {"
@@ -2295,15 +2295,15 @@ TEST_P(VisualViewportTest, ResizeNonCompositedAndFixedBackground) {
             (*raster_invalidations)[0].rect);
 
   document->View()->SetTracksPaintInvalidations(false);
-  RuntimeEnabledFeatures::setInertTopControlsEnabled(originalInertTopControls);
+  RuntimeEnabledFeatures::SetInertTopControlsEnabled(originalInertTopControls);
 }
 
 // Make sure a browser control resize with background-attachment:not-fixed
 // background doesn't cause invalidation or layout.
 TEST_P(VisualViewportTest, ResizeNonFixedBackgroundNoLayoutOrInvalidation) {
   bool originalInertTopControls =
-      RuntimeEnabledFeatures::inertTopControlsEnabled();
-  RuntimeEnabledFeatures::setInertTopControlsEnabled(true);
+      RuntimeEnabledFeatures::InertTopControlsEnabled();
+  RuntimeEnabledFeatures::SetInertTopControlsEnabled(true);
 
   std::unique_ptr<FrameTestHelpers::TestWebViewClient>
       fake_compositing_web_view_client =
@@ -2324,7 +2324,7 @@ TEST_P(VisualViewportTest, ResizeNonFixedBackgroundNoLayoutOrInvalidation) {
   RegisterMockedHttpURLLoad("http://example.com/foo.png", "white-1x1.png");
   WebURL base_url = URLTestHelpers::ToKURL("http://example.com/");
   // This time the background is the default attachment.
-  FrameTestHelpers::LoadHTMLString(web_view_impl->MainFrame(),
+  FrameTestHelpers::LoadHTMLString(web_view_impl->MainFrameImpl(),
                                    "<!DOCTYPE html>"
                                    "<style>"
                                    "  body {"
@@ -2381,13 +2381,13 @@ TEST_P(VisualViewportTest, ResizeNonFixedBackgroundNoLayoutOrInvalidation) {
     EXPECT_FALSE(invalidation_tracking);
 
   document->View()->SetTracksPaintInvalidations(false);
-  RuntimeEnabledFeatures::setInertTopControlsEnabled(originalInertTopControls);
+  RuntimeEnabledFeatures::SetInertTopControlsEnabled(originalInertTopControls);
 }
 
 TEST_P(VisualViewportTest, InvalidateLayoutViewWhenDocumentSmallerThanView) {
   bool originalInertTopControls =
-      RuntimeEnabledFeatures::inertTopControlsEnabled();
-  RuntimeEnabledFeatures::setInertTopControlsEnabled(true);
+      RuntimeEnabledFeatures::InertTopControlsEnabled();
+  RuntimeEnabledFeatures::SetInertTopControlsEnabled(true);
 
   std::unique_ptr<FrameTestHelpers::TestWebViewClient>
       fake_compositing_web_view_client =
@@ -2435,7 +2435,7 @@ TEST_P(VisualViewportTest, InvalidateLayoutViewWhenDocumentSmallerThanView) {
   }
 
   document->View()->SetTracksPaintInvalidations(false);
-  RuntimeEnabledFeatures::setInertTopControlsEnabled(originalInertTopControls);
+  RuntimeEnabledFeatures::SetInertTopControlsEnabled(originalInertTopControls);
 }
 
 // Make sure we don't crash when the visual viewport's height is 0. This can
@@ -2446,7 +2446,7 @@ TEST_P(VisualViewportTest, AutoResizeNoHeightUsesMinimumHeight) {
   WebViewImpl()->ResizeWithBrowserControls(WebSize(0, 0), 0, false);
   WebViewImpl()->EnableAutoResizeMode(WebSize(25, 25), WebSize(100, 100));
   WebURL base_url = URLTestHelpers::ToKURL("http://example.com/");
-  FrameTestHelpers::LoadHTMLString(WebViewImpl()->MainFrame(),
+  FrameTestHelpers::LoadHTMLString(WebViewImpl()->MainFrameImpl(),
                                    "<!DOCTYPE html>"
                                    "<style>"
                                    "  body {"

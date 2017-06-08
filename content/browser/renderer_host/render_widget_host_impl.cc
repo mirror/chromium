@@ -286,6 +286,7 @@ RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
       suppress_events_until_keydown_(false),
       pending_mouse_lock_request_(false),
       allow_privileged_mouse_lock_(false),
+      is_last_unlocked_by_target_(false),
       has_touch_handler_(false),
       is_in_touchpad_gesture_fling_(false),
       latency_tracker_(),
@@ -1515,7 +1516,7 @@ void RenderWidgetHostImpl::GetSnapshotFromBrowser(
   // display/GPU are in a power-saving mode, so make sure display
   // does not go to sleep for the duration of reading a snapshot.
   if (pending_browser_snapshots_.empty())
-    GetWakeLockService()->RequestWakeLock();
+    GetWakeLock()->RequestWakeLock();
 #endif
   pending_browser_snapshots_.insert(std::make_pair(id, callback));
   ui::LatencyInfo latency_info;
@@ -2069,7 +2070,6 @@ void RenderWidgetHostImpl::OnImeCancelComposition() {
 }
 
 void RenderWidgetHostImpl::OnLockMouse(bool user_gesture,
-                                       bool last_unlocked_by_target,
                                        bool privileged) {
   if (pending_mouse_lock_request_) {
     Send(new ViewMsg_LockMouse_ACK(routing_id_, false));
@@ -2078,8 +2078,12 @@ void RenderWidgetHostImpl::OnLockMouse(bool user_gesture,
 
   pending_mouse_lock_request_ = true;
   if (delegate_) {
-    delegate_->RequestToLockMouse(this, user_gesture, last_unlocked_by_target,
+    delegate_->RequestToLockMouse(this, user_gesture,
+                                  is_last_unlocked_by_target_,
                                   privileged && allow_privileged_mouse_lock_);
+    // We need to reset |is_last_unlocked_by_target_| here as we don't know
+    // request source in |LostMouseLock()|.
+    is_last_unlocked_by_target_ = false;
     return;
   }
 
@@ -2093,7 +2097,12 @@ void RenderWidgetHostImpl::OnLockMouse(bool user_gesture,
 }
 
 void RenderWidgetHostImpl::OnUnlockMouse() {
+  // Got unlock request from renderer. Will update |is_last_unlocked_by_target_|
+  // for silent re-lock.
+  const bool was_mouse_locked = !pending_mouse_lock_request_ && IsMouseLocked();
   RejectMouseLockOrUnlockIfNecessary();
+  if (was_mouse_locked)
+    is_last_unlocked_by_target_ = true;
 }
 
 void RenderWidgetHostImpl::OnShowDisambiguationPopup(
@@ -2461,7 +2470,7 @@ void RenderWidgetHostImpl::OnSnapshotReceived(int snapshot_id,
   }
 #if defined(OS_MACOSX)
   if (pending_browser_snapshots_.empty())
-    GetWakeLockService()->CancelWakeLock();
+    GetWakeLock()->CancelWakeLock();
 #endif
 }
 
@@ -2643,11 +2652,10 @@ void RenderWidgetHostImpl::ProcessSwapMessages(
 }
 
 #if defined(OS_MACOSX)
-device::mojom::WakeLockService* RenderWidgetHostImpl::GetWakeLockService() {
+device::mojom::WakeLock* RenderWidgetHostImpl::GetWakeLock() {
   // Here is a lazy binding, and will not reconnect after connection error.
   if (!wake_lock_) {
-    device::mojom::WakeLockServiceRequest request =
-        mojo::MakeRequest(&wake_lock_);
+    device::mojom::WakeLockRequest request = mojo::MakeRequest(&wake_lock_);
     // In some testing contexts, the service manager connection isn't
     // initialized.
     if (ServiceManagerConnection::GetForProcess()) {

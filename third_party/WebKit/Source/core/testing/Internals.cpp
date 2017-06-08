@@ -156,6 +156,7 @@
 #include "public/platform/WebGraphicsContext3DProvider.h"
 #include "public/platform/WebLayer.h"
 #include "public/platform/modules/remoteplayback/WebRemotePlaybackAvailability.h"
+#include "public/platform/modules/remoteplayback/WebRemotePlaybackClient.h"
 #include "v8/include/v8.h"
 
 namespace blink {
@@ -534,7 +535,7 @@ void Internals::disableCompositedAnimation(Animation* animation) {
 }
 
 void Internals::disableCSSAdditiveAnimations() {
-  RuntimeEnabledFeatures::setCSSAdditiveAnimationsEnabled(false);
+  RuntimeEnabledFeatures::SetCSSAdditiveAnimationsEnabled(false);
 }
 
 void Internals::advanceTimeForImage(Element* image,
@@ -1070,11 +1071,17 @@ static WTF::Optional<StyleableMarker::Thickness> ThicknessFrom(
   return WTF::nullopt;
 }
 
-void Internals::addCompositionMarker(const Range* range,
-                                     const String& underline_color_value,
-                                     const String& thickness_value,
-                                     const String& background_color_value,
-                                     ExceptionState& exception_state) {
+namespace {
+
+void addStyleableMarkerHelper(
+    const Range* range,
+    const String& underline_color_value,
+    const String& thickness_value,
+    const String& background_color_value,
+    ExceptionState& exception_state,
+    std::function<
+        void(const EphemeralRange&, Color, StyleableMarker::Thickness, Color)>
+        create_marker) {
   DCHECK(range);
   range->OwnerDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
@@ -1093,10 +1100,47 @@ void Internals::addCompositionMarker(const Range* range,
                  "Invalid underline color.") &&
       ParseColor(background_color_value, background_color, exception_state,
                  "Invalid background color.")) {
-    range->OwnerDocument().Markers().AddCompositionMarker(
-        EphemeralRange(range), underline_color, thickness.value(),
-        background_color);
+    create_marker(EphemeralRange(range), underline_color, thickness.value(),
+                  background_color);
   }
+}
+
+}  // namespace
+
+void Internals::addCompositionMarker(const Range* range,
+                                     const String& underline_color_value,
+                                     const String& thickness_value,
+                                     const String& background_color_value,
+                                     ExceptionState& exception_state) {
+  DocumentMarkerController& document_marker_controller =
+      range->OwnerDocument().Markers();
+  addStyleableMarkerHelper(
+      range, underline_color_value, thickness_value, background_color_value,
+      exception_state,
+      [&document_marker_controller](
+          const EphemeralRange& range, Color underline_color,
+          StyleableMarker::Thickness thickness, Color background_color) {
+        document_marker_controller.AddCompositionMarker(
+            range, underline_color, thickness, background_color);
+      });
+}
+
+void Internals::addActiveSuggestionMarker(const Range* range,
+                                          const String& underline_color_value,
+                                          const String& thickness_value,
+                                          const String& background_color_value,
+                                          ExceptionState& exception_state) {
+  DocumentMarkerController& document_marker_controller =
+      range->OwnerDocument().Markers();
+  addStyleableMarkerHelper(
+      range, underline_color_value, thickness_value, background_color_value,
+      exception_state,
+      [&document_marker_controller](
+          const EphemeralRange& range, Color underline_color,
+          StyleableMarker::Thickness thickness, Color background_color) {
+        document_marker_controller.AddActiveSuggestionMarker(
+            range, underline_color, thickness, background_color);
+      });
 }
 
 void Internals::setTextMatchMarkersActive(Node* node,
@@ -1598,18 +1642,19 @@ static unsigned EventHandlerCount(
   return count;
 }
 
-unsigned Internals::wheelEventHandlerCount(Document* document) {
+unsigned Internals::wheelEventHandlerCount(Document* document) const {
   DCHECK(document);
   return EventHandlerCount(*document,
                            EventHandlerRegistry::kWheelEventBlocking);
 }
 
-unsigned Internals::scrollEventHandlerCount(Document* document) {
+unsigned Internals::scrollEventHandlerCount(Document* document) const {
   DCHECK(document);
   return EventHandlerCount(*document, EventHandlerRegistry::kScrollEvent);
 }
 
-unsigned Internals::touchStartOrMoveEventHandlerCount(Document* document) {
+unsigned Internals::touchStartOrMoveEventHandlerCount(
+    Document* document) const {
   DCHECK(document);
   return EventHandlerCount(
              *document, EventHandlerRegistry::kTouchStartOrMoveEventBlocking) +
@@ -1617,12 +1662,18 @@ unsigned Internals::touchStartOrMoveEventHandlerCount(Document* document) {
                            EventHandlerRegistry::kTouchStartOrMoveEventPassive);
 }
 
-unsigned Internals::touchEndOrCancelEventHandlerCount(Document* document) {
+unsigned Internals::touchEndOrCancelEventHandlerCount(
+    Document* document) const {
   DCHECK(document);
   return EventHandlerCount(
              *document, EventHandlerRegistry::kTouchEndOrCancelEventBlocking) +
          EventHandlerCount(*document,
                            EventHandlerRegistry::kTouchEndOrCancelEventPassive);
+}
+
+unsigned Internals::pointerEventHandlerCount(Document* document) const {
+  DCHECK(document);
+  return EventHandlerCount(*document, EventHandlerRegistry::kPointerEvent);
 }
 
 static PaintLayer* FindLayerForGraphicsLayer(PaintLayer* search_root,
@@ -2116,7 +2167,7 @@ String Internals::layerTreeAsText(Document* document,
 
   document->View()->UpdateAllLifecyclePhases();
 
-  return document->GetFrame()->LayerTreeAsText(flags);
+  return document->GetFrame()->GetLayerTreeAsTextForTesting(flags);
 }
 
 String Internals::elementLayerTreeAsText(
@@ -2144,7 +2195,7 @@ String Internals::elementLayerTreeAsText(
 
   return layer->GetCompositedLayerMapping()
       ->MainGraphicsLayer()
-      ->LayerTreeAsText(flags);
+      ->GetLayerTreeAsTextForTesting(flags);
 }
 
 String Internals::scrollingStateTreeAsText(Document*) const {
@@ -2344,7 +2395,8 @@ void Internals::mediaPlayerRemoteRouteAvailabilityChanged(
     HTMLMediaElement* media_element,
     bool available) {
   DCHECK(media_element);
-  media_element->RemoteRouteAvailabilityChanged(
+  DCHECK(media_element->remote_playback_client_);
+  media_element->remote_playback_client_->AvailabilityChanged(
       available ? WebRemotePlaybackAvailability::kDeviceAvailable
                 : WebRemotePlaybackAvailability::kSourceNotSupported);
 }
@@ -3226,10 +3278,9 @@ float Internals::visualViewportScrollY() {
 }
 
 bool Internals::isUseCounted(Document* document, uint32_t feature) {
-  if (feature >= UseCounter::kNumberOfFeatures)
+  if (feature >= static_cast<uint32_t>(WebFeature::kNumberOfFeatures))
     return false;
-  return UseCounter::IsCounted(*document,
-                               static_cast<UseCounter::Feature>(feature));
+  return UseCounter::IsCounted(*document, static_cast<WebFeature>(feature));
 }
 
 bool Internals::isCSSPropertyUseCounted(Document* document,
@@ -3247,13 +3298,12 @@ ScriptPromise Internals::observeUseCounter(ScriptState* script_state,
                                            uint32_t feature) {
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   ScriptPromise promise = resolver->Promise();
-  if (feature >= UseCounter::kNumberOfFeatures) {
+  if (feature >= static_cast<uint32_t>(WebFeature::kNumberOfFeatures)) {
     resolver->Reject();
     return promise;
   }
 
-  UseCounter::Feature use_counter_feature =
-      static_cast<UseCounter::Feature>(feature);
+  WebFeature use_counter_feature = static_cast<WebFeature>(feature);
   if (UseCounter::IsCounted(*document, use_counter_feature)) {
     resolver->Resolve();
     return promise;

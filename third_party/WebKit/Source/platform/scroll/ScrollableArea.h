@@ -167,7 +167,7 @@ class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin,
   // TODO(szager): Now that scroll offsets are floats everywhere, can we get rid
   // of this?
   virtual bool ShouldUseIntegerScrollOffset() const {
-    return !RuntimeEnabledFeatures::fractionalScrollOffsetsEnabled();
+    return !RuntimeEnabledFeatures::FractionalScrollOffsetsEnabled();
   }
 
   virtual bool IsActive() const = 0;
@@ -179,22 +179,22 @@ class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin,
   virtual void GetTickmarks(Vector<IntRect>&) const {}
 
   // Convert points and rects between the scrollbar and its containing
-  // FrameViewBase. The client needs to implement these in order to be aware of
-  // layout effects like CSS transforms.
-  virtual IntRect ConvertFromScrollbarToContainingFrameViewBase(
+  // EmbeddedContentView. The client needs to implement these in order to be
+  // aware of layout effects like CSS transforms.
+  virtual IntRect ConvertFromScrollbarToContainingEmbeddedContentView(
       const Scrollbar& scrollbar,
       const IntRect& scrollbar_rect) const {
     IntRect local_rect = scrollbar_rect;
     local_rect.MoveBy(scrollbar.Location());
     return local_rect;
   }
-  virtual IntPoint ConvertFromContainingFrameViewBaseToScrollbar(
+  virtual IntPoint ConvertFromContainingEmbeddedContentViewToScrollbar(
       const Scrollbar& scrollbar,
       const IntPoint& parent_point) const {
     NOTREACHED();
     return parent_point;
   }
-  virtual IntPoint ConvertFromScrollbarToContainingFrameViewBase(
+  virtual IntPoint ConvertFromScrollbarToContainingEmbeddedContentView(
       const Scrollbar& scrollbar,
       const IntPoint& scrollbar_point) const {
     NOTREACHED();

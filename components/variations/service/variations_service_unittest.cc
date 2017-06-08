@@ -44,7 +44,6 @@ class TestVariationsServiceClient : public VariationsServiceClient {
 
   // variations::VariationsServiceClient:
   std::string GetApplicationLocale() override { return std::string(); }
-  base::SequencedWorkerPool* GetBlockingPool() override { return nullptr; }
   base::Callback<base::Version(void)> GetVersionForSimulationCallback()
       override {
     return base::Callback<base::Version(void)>();
@@ -479,13 +478,15 @@ TEST_F(VariationsServiceTest, SeedNotStoredWhenNonOKStatus) {
   for (size_t i = 0; i < arraysize(non_ok_status_codes); ++i) {
     net::TestURLFetcherFactory factory;
     service.DoActualFetch();
-    EXPECT_TRUE(prefs.FindPreference(prefs::kVariationsSeed)->IsDefaultValue());
+    EXPECT_TRUE(prefs.FindPreference(prefs::kVariationsCompressedSeed)
+                    ->IsDefaultValue());
 
     net::TestURLFetcher* fetcher = factory.GetFetcherByID(0);
     SimulateServerResponse(non_ok_status_codes[i], fetcher);
     service.OnURLFetchComplete(fetcher);
 
-    EXPECT_TRUE(prefs.FindPreference(prefs::kVariationsSeed)->IsDefaultValue());
+    EXPECT_TRUE(prefs.FindPreference(prefs::kVariationsCompressedSeed)
+                    ->IsDefaultValue());
   }
 }
 

@@ -64,7 +64,6 @@
 #include "chrome/browser/ui/views/download/download_in_progress_dialog_view.h"
 #include "chrome/browser/ui/views/download/download_shelf_view.h"
 #include "chrome/browser/ui/views/exclusive_access_bubble_views.h"
-#include "chrome/browser/ui/views/extensions/bookmark_app_confirmation_view.h"
 #include "chrome/browser/ui/views/extensions/extension_keybinding_registry_views.h"
 #include "chrome/browser/ui/views/find_bar_host.h"
 #include "chrome/browser/ui/views/frame/browser_view_layout.h"
@@ -153,6 +152,7 @@
 #endif  // !defined(OS_CHROMEOS)
 
 #if defined(USE_AURA)
+#include "chrome/browser/ui/views/theme_profile_key.h"
 #include "ui/aura/client/window_parenting_client.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_tree_host.h"
@@ -1192,13 +1192,6 @@ void BrowserView::ShowBookmarkBubble(const GURL& url, bool already_bookmarked) {
                                bookmark_bar_view_.get());
 }
 
-void BrowserView::ShowBookmarkAppBubble(
-    const WebApplicationInfo& web_app_info,
-    const ShowBookmarkAppBubbleCallback& callback) {
-  BookmarkAppConfirmationView::CreateAndShow(GetNativeWindow(), web_app_info,
-                                             callback);
-}
-
 autofill::SaveCardBubbleView* BrowserView::ShowSaveCreditCardBubble(
     content::WebContents* web_contents,
     autofill::SaveCardBubbleController* controller,
@@ -2078,6 +2071,12 @@ void BrowserView::InitViews() {
   // can get it later when all we have is a native view.
   GetWidget()->SetNativeWindowProperty(Profile::kProfileKey,
                                        browser_->profile());
+
+#if defined(USE_AURA)
+  // Stow a pointer to the browser's profile onto the window handle so
+  // that windows will be styled with the appropriate NativeTheme.
+  SetThemeProfileForWindow(GetNativeWindow(), browser_->profile());
+#endif
 
   LoadAccelerators();
 

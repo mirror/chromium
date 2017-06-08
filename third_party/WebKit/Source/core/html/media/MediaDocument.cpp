@@ -203,7 +203,7 @@ void MediaDocumentParser::CreateDocumentStructure() {
                             options_or_boolean);
   }
 
-  if (RuntimeEnabledFeatures::mediaDocumentDownloadButtonEnabled()) {
+  if (RuntimeEnabledFeatures::MediaDocumentDownloadButtonEnabled()) {
     HTMLAnchorElement* anchor = HTMLAnchorElement::Create(*GetDocument());
     anchor->setAttribute(downloadAttr, "");
     anchor->SetURL(GetDocument()->Url());
@@ -265,9 +265,9 @@ MediaDocument::MediaDocument(const DocumentInit& initializer)
     : HTMLDocument(initializer, kMediaDocumentClass) {
   SetCompatibilityMode(kQuirksMode);
   LockCompatibilityMode();
-  UseCounter::Count(*this, UseCounter::kMediaDocument);
+  UseCounter::Count(*this, WebFeature::kMediaDocument);
   if (!IsInMainFrame())
-    UseCounter::Count(*this, UseCounter::kMediaDocumentInFrame);
+    UseCounter::Count(*this, WebFeature::kMediaDocumentInFrame);
 }
 
 DocumentParser* MediaDocument::CreateParser() {

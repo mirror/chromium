@@ -109,8 +109,6 @@ extern const base::Feature kAcknowledgeNtpOverrideOnDeactivate;
 
 extern const base::Feature kMaterialDesignIncognitoNTP;
 
-extern const base::Feature kMaterialDesignSettings;
-
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
 extern const base::Feature kMediaRemoting;
 extern const base::Feature kMediaRouterUIRouteController;
@@ -194,6 +192,8 @@ extern const base::Feature kEHVInputOnImeMenu;
 extern const base::Feature kCrosCompUpdates;
 
 extern const base::Feature kCrOSComponent;
+
+extern const base::Feature kInstantTethering;
 #endif  // defined(OS_CHROMEOS)
 
 extern const base::Feature kPageLoadMetricsMojofication;

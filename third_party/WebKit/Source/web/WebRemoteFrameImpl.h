@@ -34,7 +34,6 @@ class WEB_EXPORT WebRemoteFrameImpl final
   void Close() override;
   WebString AssignedName() const override;
   void SetName(const WebString&) override;
-  WebVector<WebIconURL> IconURLs(int icon_types_mask) const override;
   WebSize GetScrollOffset() const override;
   void SetScrollOffset(const WebSize&) override;
   WebSize ContentsSize() const override;
@@ -46,7 +45,6 @@ class WEB_EXPORT WebRemoteFrameImpl final
   WebDocument GetDocument() const override;
   WebPerformance Performance() const override;
   void DispatchUnloadEvent() override;
-  void ExecuteScript(const WebScriptSource&) override;
   void ExecuteScriptInIsolatedWorld(int world_id,
                                     const WebScriptSource* sources,
                                     unsigned num_sources) override;
@@ -72,13 +70,7 @@ class WEB_EXPORT WebRemoteFrameImpl final
   void ReloadWithOverrideURL(const WebURL& override_url,
                              WebFrameLoadType) override;
   void LoadRequest(const WebURLRequest&) override;
-  void LoadHTMLString(const WebData& html,
-                      const WebURL& base_url,
-                      const WebURL& unreachable_url,
-                      bool replace) override;
   void StopLoading() override;
-  WebDataSource* ProvisionalDataSource() const override;
-  WebDataSource* DataSource() const override;
   void EnableViewSourceMode(bool enable) override;
   bool IsViewSourceModeEnabled() const override;
   void SetReferrerForRequest(WebURLRequest&, const WebURL& referrer) override;
@@ -97,8 +89,6 @@ class WEB_EXPORT WebRemoteFrameImpl final
       const WebDOMEvent&) override;
 
   WebRect SelectionBoundsRect() const override;
-
-  WebString LayerTreeAsText(bool show_debug_info = false) const override;
 
   // WebRemoteFrame methods:
   WebLocalFrame* CreateLocalChild(WebTreeScopeType,

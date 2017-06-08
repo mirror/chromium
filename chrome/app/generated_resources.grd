@@ -1867,11 +1867,6 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
       </message>
 
       <!-- Bookmark app bubble -->
-      <if expr="is_macosx">
-        <message name="IDS_ADD_TO_APPLICATIONS_BUBBLE_TITLE" desc="Title of the bubble adding a bookmark app to the Applications Folder.">
-          Add to Applications
-        </message>
-      </if>
       <if expr="use_ash">
         <message name="IDS_ADD_TO_SHELF_BUBBLE_TITLE" desc="Title of the bubble for adding a bookmark app to the shelf.">
           Add to shelf
@@ -1882,9 +1877,14 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
           Add to desktop
         </message>
       </if>
-      <if expr="use_titlecase">
+      <if expr="use_titlecase and not is_macosx">
         <message name="IDS_ADD_TO_DESKTOP_BUBBLE_TITLE" desc="Title of the bubble for adding a bookmark app to the desktop.">
           Add to Desktop
+        </message>
+      </if>
+      <if expr="is_macosx">
+        <message name="IDS_ADD_TO_DESKTOP_BUBBLE_TITLE" desc="Title of the bubble adding a bookmark app to the Applications Folder on Mac.">
+          Add to Applications
         </message>
       </if>
 
@@ -5381,6 +5381,9 @@ Keep your key file in a safe place. You will need it to create new versions of y
       </message>
       <message name="IDS_OMNIBOX_ACCESSIBLE_ANSWER" desc="Readable text represening a query typed by the user in the omnibox, followed by an indication that an answer to that query will follow, followed by the answer. The commas are significant as they will introduce a pause in the spoken text.">
         <ph name="QUERY">$1<ex>weather in los angeles</ex></ph>, answer, <ph name="ANSWER">$2<ex>sunny and 84 degrees</ex></ph>
+      </message>
+      <message name="IDS_OMNIBOX_CLEAR_ALL" desc="Accessibility text for the button that deletes all text input from the omnibox on touch devices.">
+        Clear input
       </message>
 
       <!--Tooltip strings-->
@@ -12159,6 +12162,12 @@ read aloud to screenreader users to announce that a completion is available.">
       </message>
       <message name="IDS_VR_SHELL_NEW_INCOGNITO_TAB_BUTTON" desc="Text on the VR scene new incognito tab button">
         New Incognito Tab
+      </message>
+      <message name="IDS_VR_SHELL_EXIT_PROMPT_DESCRIPTION" desc="Text on the exit prompt that shows up when the user clicks on URL bar security icon in VR">
+        Site information is not available in VR
+      </message>
+      <message name="IDS_VR_SHELL_EXIT_PROMPT_EXIT_VR_BUTTON" desc="Text on the exit button of the exit prompt that shows up when the user clicks on URL bar security icon in VR">
+        EXIT VR
       </message>
     </if>
 

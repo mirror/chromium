@@ -38,15 +38,15 @@
 #include "core/html/HTMLMediaElement.h"
 #include "core/html/HTMLVideoElement.h"
 #include "core/html/canvas/CanvasRenderingContext.h"
+#include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutEmbeddedObject.h"
 #include "core/layout/LayoutHTMLCanvas.h"
 #include "core/layout/LayoutImage.h"
 #include "core/layout/LayoutInline.h"
-#include "core/layout/LayoutPart.h"
 #include "core/layout/LayoutVideo.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/api/LayoutAPIShim.h"
-#include "core/layout/api/LayoutPartItem.h"
+#include "core/layout/api/LayoutEmbeddedContentItem.h"
 #include "core/layout/compositing/PaintLayerCompositor.h"
 #include "core/loader/resource/ImageResourceContent.h"
 #include "core/page/ChromeClient.h"
@@ -282,8 +282,7 @@ void CompositedLayerMapping::UpdateBackdropFilters(const ComputedStyle& style) {
 }
 
 void CompositedLayerMapping::UpdateStickyConstraints(
-    const ComputedStyle& style,
-    const PaintLayer* compositing_container) {
+    const ComputedStyle& style) {
   bool sticky = style.GetPosition() == EPosition::kSticky;
   const PaintLayer* ancestor_overflow_layer =
       owning_layer_.AncestorOverflowLayer();
@@ -303,47 +302,6 @@ void CompositedLayerMapping::UpdateStickyConstraints(
     const StickyPositionScrollingConstraints& constraints =
         constraints_map.at(&owning_layer_);
 
-    // Find the layout offset of the unshifted sticky box within its parent
-    // composited layer. This information is used by the compositor side to
-    // compute the additional offset required to keep the element stuck under
-    // compositor scrolling.
-    //
-    // Starting from the scroll container relative location, removing the
-    // enclosing layer's offset and the content offset in the composited layer
-    // results in the parent-layer relative offset.
-    FloatPoint parent_relative_sticky_box_offset =
-        constraints.ScrollContainerRelativeStickyBoxRect().Location();
-
-    // The enclosing layers offset returned from |convertToLayerCoords| must be
-    // adjusted for both scroll and ancestor sticky elements.
-    LayoutPoint enclosing_layer_offset;
-    compositing_container->ConvertToLayerCoords(ancestor_overflow_layer,
-                                                enclosing_layer_offset);
-    DCHECK(!ScrollParent() || ScrollParent() == ancestor_overflow_layer);
-    if (!ScrollParent() && compositing_container != ancestor_overflow_layer) {
-      enclosing_layer_offset += LayoutSize(
-          ancestor_overflow_layer->GetScrollableArea()->GetScrollOffset());
-    }
-    // TODO(smcgruer): Until http://crbug.com/702229 is fixed, the nearest
-    // sticky ancestor may be non-composited which will make this offset wrong.
-    if (const LayoutBoxModelObject* ancestor =
-            constraints.NearestStickyAncestor()) {
-      enclosing_layer_offset -=
-          RoundedIntSize(constraints_map.at(ancestor->Layer())
-                             .GetTotalContainingBlockStickyOffset());
-    }
-
-    DCHECK(!content_offset_in_compositing_layer_dirty_);
-    parent_relative_sticky_box_offset.MoveBy(
-        FloatPoint(-enclosing_layer_offset) -
-        FloatSize(ContentOffsetInCompositingLayer()));
-
-    if (compositing_container != ancestor_overflow_layer) {
-      parent_relative_sticky_box_offset.MoveBy(
-          FloatPoint(compositing_container->GetCompositedLayerMapping()
-                         ->ContentOffsetInCompositingLayer()));
-    }
-
     web_constraint.is_sticky = true;
     web_constraint.is_anchored_left =
         constraints.GetAnchorEdges() &
@@ -361,8 +319,6 @@ void CompositedLayerMapping::UpdateStickyConstraints(
     web_constraint.right_offset = constraints.RightOffset();
     web_constraint.top_offset = constraints.TopOffset();
     web_constraint.bottom_offset = constraints.BottomOffset();
-    web_constraint.parent_relative_sticky_box_offset =
-        RoundedIntPoint(parent_relative_sticky_box_offset);
     web_constraint.scroll_container_relative_sticky_box_rect =
         EnclosingIntRect(constraints.ScrollContainerRelativeStickyBoxRect());
     web_constraint.scroll_container_relative_containing_block_rect =
@@ -527,10 +483,10 @@ void CompositedLayerMapping::UpdateCompositedBounds() {
 }
 
 void CompositedLayerMapping::UpdateAfterPartResize() {
-  if (GetLayoutObject().IsLayoutPart()) {
+  if (GetLayoutObject().IsLayoutEmbeddedContent()) {
     if (PaintLayerCompositor* inner_compositor =
             PaintLayerCompositor::FrameContentsCompositor(
-                ToLayoutPart(GetLayoutObject()))) {
+                ToLayoutEmbeddedContent(GetLayoutObject()))) {
       inner_compositor->FrameViewDidChangeSize();
       // We can floor this point because our frameviews are always aligned to
       // pixel boundaries.
@@ -826,9 +782,9 @@ bool CompositedLayerMapping::UpdateGraphicsLayerConfiguration() {
       graphics_layer_->SetContentsToPlatformLayer(context->PlatformLayer());
     layer_config_changed = true;
   }
-  if (layout_object.IsLayoutPart()) {
+  if (layout_object.IsLayoutEmbeddedContent()) {
     if (PaintLayerCompositor::AttachFrameContentLayersToIframeLayer(
-            ToLayoutPart(layout_object)))
+            ToLayoutEmbeddedContent(layout_object)))
       layer_config_changed = true;
   }
 
@@ -843,9 +799,10 @@ bool CompositedLayerMapping::UpdateGraphicsLayerConfiguration() {
       style.HasWillChangeTransformHint());
 
   if (style.Preserves3D() && style.HasOpacity() &&
-      owning_layer_.Has3DTransformedDescendant())
+      owning_layer_.Has3DTransformedDescendant()) {
     UseCounter::Count(layout_object.GetDocument(),
-                      UseCounter::kOpacityWithPreserve3DQuirk);
+                      WebFeature::kOpacityWithPreserve3DQuirk);
+  }
 
   return layer_config_changed;
 }
@@ -1113,7 +1070,7 @@ void CompositedLayerMapping::UpdateGraphicsLayerGeometry(
                                           graphics_layer_parent_location);
   UpdateContentsOffsetInCompositingLayer(
       snapped_offset_from_composited_ancestor, graphics_layer_parent_location);
-  UpdateStickyConstraints(GetLayoutObject().StyleRef(), compositing_container);
+  UpdateStickyConstraints(GetLayoutObject().StyleRef());
   UpdateSquashingLayerGeometry(
       graphics_layer_parent_location, compositing_container, squashed_layers_,
       squashing_layer_.get(),
@@ -1175,6 +1132,24 @@ void CompositedLayerMapping::UpdateMainGraphicsLayerGeometry(
       relative_compositing_bounds.Location() - graphics_layer_parent_location));
   graphics_layer_->SetOffsetFromLayoutObject(
       ToIntSize(local_compositing_bounds.Location()));
+  // Find the layout offset of the unshifted sticky box within its parent
+  // composited layer. This information is used by the compositor side to
+  // compute the additional offset required to keep the element stuck under
+  // compositor scrolling.
+  FloatSize main_thread_sticky_offset;
+  if (GetLayoutObject().Style()->GetPosition() == EPosition::kSticky) {
+    const StickyConstraintsMap& constraints_map =
+        owning_layer_.AncestorOverflowLayer()
+            ->GetScrollableArea()
+            ->GetStickyConstraintsMap();
+    const StickyPositionScrollingConstraints& constraints =
+        constraints_map.at(&owning_layer_);
+
+    main_thread_sticky_offset =
+        constraints.GetOffsetForStickyPosition(constraints_map);
+  }
+  graphics_layer_->SetOffsetForStickyPosition(
+      RoundedIntSize(main_thread_sticky_offset));
 
   FloatSize old_size = graphics_layer_->Size();
   const FloatSize contents_size(relative_compositing_bounds.Size());
@@ -1646,7 +1621,7 @@ void CompositedLayerMapping::UpdateInternalHierarchy() {
   // TODO(pdr): Ensure painting uses the correct GraphicsLayer when root layer
   // scrolls is enabled.  crbug.com/638719
   if (is_main_frame_layout_view_layer_ &&
-      !RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+      !RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     bottom_layer = GetLayoutObject()
                        .GetFrame()
                        ->GetPage()
@@ -2215,7 +2190,7 @@ struct AnimatingData {
 };
 
 void GetAnimatingData(PaintLayer& paint_layer, AnimatingData& data) {
-  if (!RuntimeEnabledFeatures::compositorWorkerEnabled())
+  if (!RuntimeEnabledFeatures::CompositorWorkerEnabled())
     return;
 
   data.owning_node = paint_layer.GetLayoutObject().GetNode();
@@ -2226,12 +2201,12 @@ void GetAnimatingData(PaintLayer& paint_layer, AnimatingData& data) {
   Document& document = data.owning_node->GetDocument();
   Element* scrolling_element = document.ScrollingElementNoLayout();
   if (data.owning_node->IsElementNode() &&
-      (!RuntimeEnabledFeatures::rootLayerScrollingEnabled() ||
+      (!RuntimeEnabledFeatures::RootLayerScrollingEnabled() ||
        data.owning_node != scrolling_element)) {
     data.animating_element = ToElement(data.owning_node);
     data.animating_style = paint_layer.GetLayoutObject().Style();
   } else if (data.owning_node->IsDocumentNode() &&
-             RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
+             RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
     data.owning_node = data.animating_element = scrolling_element;
     if (scrolling_element && scrolling_element->GetLayoutObject())
       data.animating_style = scrolling_element->GetLayoutObject()->Style();
@@ -2275,8 +2250,9 @@ void CompositedLayerMapping::UpdateElementIdAndCompositorMutableProperties() {
                                  CompositorMutableProperty::kScrollTop) &
                                 compositor_mutable_properties;
   } else {
-    element_id = CompositorElementIdFromPaintLayerId(
-        owning_layer_.UniqueId(), CompositorElementIdNamespace::kPrimary);
+    element_id = CompositorElementIdFromLayoutObjectId(
+        owning_layer_.GetLayoutObject().UniqueId(),
+        CompositorElementIdNamespace::kPrimary);
   }
 
   graphics_layer_->SetElementId(element_id);
@@ -2410,8 +2386,9 @@ bool CompositedLayerMapping::UpdateScrollingLayers(
             DOMNodeIds::IdForNode(data.owning_node),
             CompositorElementIdNamespace::kScrollCompositorProxy);
       } else {
-        element_id = CompositorElementIdFromPaintLayerId(
-            owning_layer_.UniqueId(), CompositorElementIdNamespace::kScroll);
+        element_id = CompositorElementIdFromLayoutObjectId(
+            owning_layer_.GetLayoutObject().UniqueId(),
+            CompositorElementIdNamespace::kScroll);
       }
 
       scrolling_contents_layer_->SetElementId(element_id);
@@ -2952,7 +2929,7 @@ void CompositedLayerMapping::SetContentsNeedDisplayInRect(
   DCHECK(!owning_layer_.GetLayoutObject().UsesCompositedScrolling());
   // TODO(wangxianzhu): Enable the following assert after paint invalidation for
   // spv2 is ready.
-  // DCHECK(!RuntimeEnabledFeatures::slimmingPaintV2Enabled());
+  // DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
 
   SetContentsNeedsDisplayInRectFunctor functor = {
       EnclosingIntRect(LayoutRect(
@@ -2968,7 +2945,7 @@ void CompositedLayerMapping::SetNonScrollingContentsNeedDisplayInRect(
   DCHECK(owning_layer_.GetLayoutObject().UsesCompositedScrolling());
   // TODO(wangxianzhu): Enable the following assert after paint invalidation for
   // spv2 is ready.
-  // DCHECK(!RuntimeEnabledFeatures::slimmingPaintV2Enabled());
+  // DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
 
   SetContentsNeedsDisplayInRectFunctor functor = {
       EnclosingIntRect(LayoutRect(
@@ -2984,7 +2961,7 @@ void CompositedLayerMapping::SetScrollingContentsNeedDisplayInRect(
   DCHECK(owning_layer_.GetLayoutObject().UsesCompositedScrolling());
   // TODO(wangxianzhu): Enable the following assert after paint invalidation for
   // spv2 is ready.
-  // DCHECK(!RuntimeEnabledFeatures::slimmingPaintV2Enabled());
+  // DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
 
   SetContentsNeedsDisplayInRectFunctor functor = {
       EnclosingIntRect(LayoutRect(

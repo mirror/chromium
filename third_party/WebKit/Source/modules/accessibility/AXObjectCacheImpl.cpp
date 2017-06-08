@@ -1153,6 +1153,19 @@ void AXObjectCacheImpl::HandleTextFormControlChanged(Node* node) {
   HandleEditableTextContentChanged(node);
 }
 
+void AXObjectCacheImpl::HandleTextMarkerDataAdded(Node* start, Node* end) {
+  AXObjectImpl* start_object = Get(start);
+  AXObjectImpl* end_object = Get(end);
+  if (!start_object || !end_object)
+    return;
+
+  // Notify the client of new text marker data.
+  PostNotification(start_object, kAXChildrenChanged);
+  if (start_object != end_object) {
+    PostNotification(end_object, kAXChildrenChanged);
+  }
+}
+
 void AXObjectCacheImpl::HandleValueChanged(Node* node) {
   PostNotification(node, AXObjectCache::kAXValueChanged);
 }
@@ -1235,7 +1248,8 @@ void AXObjectCacheImpl::OnTouchAccessibilityHover(const IntPoint& location) {
     // Ignore events on a frame or plug-in, because the touch events
     // will be re-targeted there and we don't want to fire duplicate
     // accessibility events.
-    if (hit->GetLayoutObject() && hit->GetLayoutObject()->IsLayoutPart())
+    if (hit->GetLayoutObject() &&
+        hit->GetLayoutObject()->IsLayoutEmbeddedContent())
       return;
 
     PostPlatformNotification(hit, kAXHover);

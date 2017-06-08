@@ -522,6 +522,7 @@ WebContentsImpl::WebContentsImpl(BrowserContext* browser_context)
 #endif  // !defined(OS_ANDROID)
       mouse_lock_widget_(nullptr),
       is_overlay_content_(false),
+      showing_context_menu_(false),
       loading_weak_factory_(this),
       weak_factory_(this) {
   frame_tree_.SetFrameRemoveListener(
@@ -773,7 +774,6 @@ bool WebContentsImpl::OnMessageReceived(RenderViewHostImpl* render_view_host,
     IPC_MESSAGE_HANDLER(ViewHostMsg_RequestPpapiBrokerPermission,
                         OnRequestPpapiBrokerPermission)
 #endif
-    IPC_MESSAGE_HANDLER(ViewHostMsg_UpdateFaviconURL, OnUpdateFaviconURL)
     IPC_MESSAGE_HANDLER(ViewHostMsg_ShowValidationMessage,
                         OnShowValidationMessage)
     IPC_MESSAGE_HANDLER(ViewHostMsg_HideValidationMessage,
@@ -828,6 +828,7 @@ bool WebContentsImpl::OnMessageReceived(RenderFrameHostImpl* render_frame_host,
     IPC_MESSAGE_HANDLER(FrameHostMsg_UpdatePageImportanceSignals,
                         OnUpdatePageImportanceSignals)
     IPC_MESSAGE_HANDLER(FrameHostMsg_Find_Reply, OnFindReply)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_UpdateFaviconURL, OnUpdateFaviconURL)
 #if BUILDFLAG(ENABLE_PLUGINS)
     IPC_MESSAGE_HANDLER(FrameHostMsg_PepperInstanceCreated,
                         OnPepperInstanceCreated)
@@ -1880,6 +1881,12 @@ void WebContentsImpl::RenderWidgetWasResized(
   GetScreenInfo(&screen_info);
   SendPageMessage(new PageMsg_UpdateScreenInfo(MSG_ROUTING_NONE, screen_info));
 
+  // Send resize message to subframes.
+  for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree()) {
+    if (view != rfh->GetView())
+      view->GetRenderWidgetHost()->WasResized();
+  }
+
   for (auto& observer : observers_)
     observer.MainFrameWasResized(width_changed);
 }
@@ -2642,10 +2649,10 @@ device::mojom::WakeLockContext* WebContentsImpl::GetWakeLockContext() {
   return wake_lock_context_host_->GetWakeLockContext();
 }
 
-device::mojom::WakeLockService* WebContentsImpl::GetRendererWakeLock() {
-  // WebContents creates a long-lived connection to one WakeLockServiceImpl.
+device::mojom::WakeLock* WebContentsImpl::GetRendererWakeLock() {
+  // WebContents creates a long-lived connection to one WakeLock.
   // All the frames' requests will be added into the BindingSet of
-  // WakeLockServiceImpl via this connection.
+  // WakeLock via this connection.
   if (!renderer_wake_lock_) {
     device::mojom::WakeLockContext* wake_lock_context = GetWakeLockContext();
     if (!wake_lock_context) {
@@ -4143,13 +4150,19 @@ void WebContentsImpl::OnBrowserPluginMessage(RenderFrameHost* render_frame_host,
 #endif  // BUILDFLAG(ENABLE_PLUGINS)
 
 void WebContentsImpl::OnUpdateFaviconURL(
-    RenderViewHostImpl* source,
+    RenderFrameHostImpl* source,
     const std::vector<FaviconURL>& candidates) {
+  // Ignore favicons for non-main frame.
+  if (source->GetParent()) {
+    NOTREACHED();
+    return;
+  }
+
   // We get updated favicon URLs after the page stops loading. If a cross-site
   // navigation occurs while a page is still loading, the initial page
   // may stop loading and send us updated favicon URLs after the navigation
   // for the new page has committed.
-  if (!source->is_active())
+  if (!source->IsCurrent())
     return;
 
   for (auto& observer : observers_)
@@ -4394,7 +4407,7 @@ void WebContentsImpl::ShowContextMenu(RenderFrameHost* render_frame_host,
                                       const ContextMenuParams& params) {
   // If a renderer fires off a second command to show a context menu before the
   // first context menu is closed, just ignore it. https://crbug.com/707534
-  if (GetRenderWidgetHostView()->IsShowingContextMenu())
+  if (showing_context_menu_)
     return;
 
   ContextMenuParams context_menu_params(params);
@@ -4506,6 +4519,21 @@ bool WebContentsImpl::HasActiveEffectivelyFullscreenVideo() const {
 bool WebContentsImpl::IsFocusedElementEditable() {
   RenderFrameHostImpl* frame = GetFocusedFrame();
   return frame && frame->has_focused_editable_element();
+}
+
+bool WebContentsImpl::IsShowingContextMenu() const {
+  return showing_context_menu_;
+}
+
+void WebContentsImpl::SetShowingContextMenu(bool showing) {
+  DCHECK_NE(showing_context_menu_, showing);
+  showing_context_menu_ = showing;
+
+  if (auto* view = GetRenderWidgetHostView()) {
+    // Notify the main frame's RWHV to run the platform-specific code, if any.
+    static_cast<RenderWidgetHostViewBase*>(view)->SetShowingContextMenu(
+        showing);
+  }
 }
 
 void WebContentsImpl::ClearFocusedElement() {
@@ -5658,6 +5686,10 @@ void WebContentsImpl::ShowInsecureLocalhostWarningIfNeeded() {
                          "visitors' data is vulnerable to theft and "
                          "tampering. Get a valid SSL certificate before"
                          " releasing your website to the public."));
+}
+
+bool WebContentsImpl::IsShowingContextMenuOnPage() const {
+  return showing_context_menu_;
 }
 
 void WebContentsImpl::NotifyPreferencesChanged() {

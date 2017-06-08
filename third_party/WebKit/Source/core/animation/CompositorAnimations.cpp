@@ -348,7 +348,7 @@ bool CompositorAnimations::CanStartAnimationOnCompositor(
   if (!Platform::Current()->IsThreadedAnimationEnabled())
     return false;
 
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     // We query paint property tree state below to determine whether the
     // animation is compositable. There is a known lifecycle violation where an
     // animation can be cancelled during style update. See
@@ -454,7 +454,7 @@ void CompositorAnimations::AttachCompositedLayers(Element& element,
       ToLayoutBoxModelObject(element.GetLayoutObject())->Layer();
 
   // Composited animations do not depend on a composited layer mapping for SPv2.
-  if (!RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     if (!layer->IsAllowedToQueryCompositingState() ||
         !layer->GetCompositedLayerMapping() ||
         !layer->GetCompositedLayerMapping()->MainGraphicsLayer())
@@ -467,8 +467,9 @@ void CompositorAnimations::AttachCompositedLayers(Element& element,
   }
 
   CompositorAnimationPlayer* compositor_player = animation.CompositorPlayer();
-  compositor_player->AttachElement(CompositorElementIdFromPaintLayerId(
-      layer->UniqueId(), CompositorElementIdNamespace::kPrimary));
+  compositor_player->AttachElement(CompositorElementIdFromLayoutObjectId(
+      element.GetLayoutObject()->UniqueId(),
+      CompositorElementIdNamespace::kPrimary));
 }
 
 bool CompositorAnimations::ConvertTimingForCompositor(

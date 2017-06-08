@@ -34,6 +34,7 @@
 #include "content/public/browser/stream_handle.h"
 #include "content/public/common/referrer.h"
 #include "content/public/common/url_constants.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/base/load_flags.h"
 #include "net/url_request/url_request_context.h"
 
@@ -55,15 +56,49 @@ WebContents* GetWebContentsFromFrameTreeNodeID(int frame_tree_node_id) {
   return WebContentsImpl::FromFrameTreeNode(frame_tree_node);
 }
 
+class AssociatedURLLoaderWrapper final : public mojom::URLLoader {
+ public:
+  static void CreateLoaderAndStart(mojom::URLLoaderFactory* factory,
+                                   mojom::URLLoaderRequest request,
+                                   uint32_t options,
+                                   const ResourceRequest& resource_request,
+                                   mojom::URLLoaderClientPtr client) {
+    mojom::URLLoaderAssociatedPtr associated_ptr;
+    mojom::URLLoaderAssociatedRequest associated_request =
+        mojo::MakeRequest(&associated_ptr);
+    factory->CreateLoaderAndStart(std::move(associated_request),
+                                  0 /* routing_id */, 0 /* request_id */,
+                                  options, resource_request, std::move(client));
+    mojo::MakeStrongBinding(
+        base::MakeUnique<AssociatedURLLoaderWrapper>(std::move(associated_ptr)),
+        std::move(request));
+  }
+
+  explicit AssociatedURLLoaderWrapper(
+      mojom::URLLoaderAssociatedPtr associated_ptr)
+      : associated_ptr_(std::move(associated_ptr)) {}
+  ~AssociatedURLLoaderWrapper() override {}
+
+  void FollowRedirect() override { associated_ptr_->FollowRedirect(); }
+
+  void SetPriority(net::RequestPriority priority,
+                   int intra_priority_value) override {
+    associated_ptr_->SetPriority(priority, intra_priority_value);
+  }
+
+ private:
+  mojom::URLLoaderAssociatedPtr associated_ptr_;
+  DISALLOW_COPY_AND_ASSIGN(AssociatedURLLoaderWrapper);
+};
+
 }  // namespace
 
 // Kept around during the lifetime of the navigation request, and is
 // responsible for dispatching a ResourceRequest to the appropriate
-// URLLoaderFactory.  In order to get the right URLLoaderFactory it
-// builds a vector of URLLoaderRequestHandler's and successively calls
-// MaybeCreateLoaderFactory on each until the request is successfully
-// handled. The same sequence may be performed multiple times when
-// redirects happen.
+// URLLoader.  In order to get the right URLLoader it builds a vector
+// of URLLoaderRequestHandler's and successively calls MaybeCreateLoader
+// on each until the request is successfully handled. The same sequence
+// may be performed multiple times when redirects happen.
 class NavigationURLLoaderNetworkService::URLLoaderRequestController {
  public:
   URLLoaderRequestController(
@@ -84,10 +119,11 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController {
       std::unique_ptr<NavigationRequestInfo> request_info,
       mojom::URLLoaderFactoryPtrInfo factory_for_webui,
       const base::Callback<WebContents*(void)>& web_contents_getter,
-      mojom::URLLoaderAssociatedRequest url_loader_request,
-      mojom::URLLoaderClientPtr url_loader_client_ptr,
+      mojom::URLLoaderRequest url_loader_request,
+      mojom::URLLoaderClientPtrInfo url_loader_client_ptr_info,
       std::unique_ptr<service_manager::Connector> connector) {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
+    url_loader_client_ptr_.Bind(std::move(url_loader_client_ptr_info));
     const ResourceType resource_type = request_info->is_main_frame
                                            ? RESOURCE_TYPE_MAIN_FRAME
                                            : RESOURCE_TYPE_SUB_FRAME;
@@ -102,10 +138,10 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController {
     if (factory_for_webui.is_valid()) {
       mojom::URLLoaderFactoryPtr factory_ptr;
       factory_ptr.Bind(std::move(factory_for_webui));
-      factory_ptr->CreateLoaderAndStart(
-          std::move(url_loader_request), 0 /* routing_id? */,
-          0 /* request_id? */, mojom::kURLLoadOptionSendSSLInfo,
-          *resource_request_, std::move(url_loader_client_ptr));
+      AssociatedURLLoaderWrapper::CreateLoaderAndStart(
+          factory_ptr.get(), std::move(url_loader_request),
+          mojom::kURLLoadOptionSendSSLInfo, *resource_request_,
+          std::move(url_loader_client_ptr_));
       return;
     }
 
@@ -133,44 +169,47 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController {
       // TODO: add appcache code here.
     }
 
-    Restart(std::move(url_loader_request), std::move(url_loader_client_ptr));
+    Restart(std::move(url_loader_request), std::move(url_loader_client_ptr_));
   }
 
   // This could be called multiple times.
-  void Restart(mojom::URLLoaderAssociatedRequest url_loader_request,
+  void Restart(mojom::URLLoaderRequest url_loader_request,
                mojom::URLLoaderClientPtr url_loader_client_ptr) {
     url_loader_request_ = std::move(url_loader_request);
     url_loader_client_ptr_ = std::move(url_loader_client_ptr);
     handler_index_ = 0;
-    MaybeStartLoader(nullptr);
+    MaybeStartLoader(StartLoaderCallback());
   }
 
-  void MaybeStartLoader(mojom::URLLoaderFactory* factory) {
+  void MaybeStartLoader(StartLoaderCallback start_loader_callback) {
     DCHECK(url_loader_client_ptr_.is_bound());
 
-    if (factory) {
-      factory->CreateLoaderAndStart(
-          std::move(url_loader_request_), 0 /* routing_id? */,
-          0 /* request_id? */, mojom::kURLLoadOptionSendSSLInfo,
-          *resource_request_, std::move(url_loader_client_ptr_));
+    if (start_loader_callback) {
+      std::move(start_loader_callback)
+          .Run(std::move(url_loader_request_),
+               std::move(url_loader_client_ptr_));
       return;
     }
 
     if (handler_index_ < handlers_.size()) {
-      handlers_[handler_index_++]->MaybeCreateLoaderFactory(
+      handlers_[handler_index_++]->MaybeCreateLoader(
           *resource_request_, resource_context_,
           base::BindOnce(&URLLoaderRequestController::MaybeStartLoader,
                          base::Unretained(this)));
       return;
     }
 
+    mojom::URLLoaderFactory* factory = nullptr;
     DCHECK_EQ(handlers_.size(), handler_index_);
     if (resource_request_->url.SchemeIs(url::kBlobScheme)) {
       factory = url_loader_factory_getter_->GetBlobFactory()->get();
     } else {
       factory = url_loader_factory_getter_->GetNetworkFactory()->get();
     }
-    MaybeStartLoader(factory);
+    AssociatedURLLoaderWrapper::CreateLoaderAndStart(
+        factory, std::move(url_loader_request_),
+        mojom::kURLLoadOptionSendSSLInfo, *resource_request_,
+        std::move(url_loader_client_ptr_));
   }
 
  private:
@@ -183,7 +222,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController {
   scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter_;
 
   // Kept around until we create a loader.
-  mojom::URLLoaderAssociatedRequest url_loader_request_;
+  mojom::URLLoaderRequest url_loader_request_;
   mojom::URLLoaderClientPtr url_loader_client_ptr_;
 
   DISALLOW_COPY_AND_ASSIGN(URLLoaderRequestController);
@@ -237,8 +276,7 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
 
   int frame_tree_node_id = request_info->frame_tree_node_id;
 
-  mojom::URLLoaderAssociatedRequest loader_associated_request =
-      mojo::MakeRequest(&url_loader_associated_ptr_);
+  mojom::URLLoaderRequest loader_request = mojo::MakeRequest(&url_loader_ptr_);
   mojom::URLLoaderClientPtr url_loader_client_ptr_to_pass;
   binding_.Bind(mojo::MakeRequest(&url_loader_client_ptr_to_pass));
 
@@ -271,8 +309,8 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
           base::Passed(std::move(request_info)),
           base::Passed(std::move(factory_for_webui)),
           base::Bind(&GetWebContentsFromFrameTreeNodeID, frame_tree_node_id),
-          base::Passed(std::move(loader_associated_request)),
-          base::Passed(std::move(url_loader_client_ptr_to_pass)),
+          base::Passed(std::move(loader_request)),
+          base::Passed(url_loader_client_ptr_to_pass.PassInterface()),
           base::Passed(ServiceManagerConnection::GetForProcess()
                            ->GetConnector()
                            ->Clone())));
@@ -284,7 +322,7 @@ NavigationURLLoaderNetworkService::~NavigationURLLoaderNetworkService() {
 }
 
 void NavigationURLLoaderNetworkService::FollowRedirect() {
-  url_loader_associated_ptr_->FollowRedirect();
+  url_loader_ptr_->FollowRedirect();
 }
 
 void NavigationURLLoaderNetworkService::ProceedWithResponse() {}

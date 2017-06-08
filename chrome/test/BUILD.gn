@@ -466,8 +466,6 @@ if (!is_android) {
       "../browser/ui/startup/startup_browser_creator_interactive_uitest.cc",
       "../browser/ui/translate/translate_bubble_test_utils.h",
       "../browser/ui/views/accessibility/navigation_accessibility_uitest_win.cc",
-      "../browser/ui/webui/options/language_dictionary_interactive_uitest.cc",
-      "../browser/ui/webui/options/language_options_interactive_uitest.cc",
       "//ui/base/clipboard/clipboard_unittest.cc",
       "base/always_on_top_window_killer_win.cc",
       "base/always_on_top_window_killer_win.h",
@@ -1507,6 +1505,7 @@ test("browser_tests") {
       "../browser/metrics/process_memory_metrics_emitter_browsertest.cc",
       "../browser/metrics/startup_metrics_browsertest.cc",
       "../browser/metrics/tab_reactivation_tracker_browsertest.cc",
+      "../browser/net/chrome_network_delegate_browsertest.cc",
       "../browser/net/cookie_policy_browsertest.cc",
       "../browser/net/dns_probe_browsertest.cc",
       "../browser/net/errorpage_browsertest.cc",
@@ -1716,17 +1715,6 @@ test("browser_tests") {
       "../browser/ui/webui/net_internals/net_internals_ui_browsertest.cc",
       "../browser/ui/webui/net_internals/net_internals_ui_browsertest.h",
       "../browser/ui/webui/ntp/new_tab_ui_browsertest.cc",
-      "../browser/ui/webui/options/certificate_manager_browsertest.cc",
-      "../browser/ui/webui/options/clear_browser_data_browsertest.cc",
-      "../browser/ui/webui/options/content_settings_exception_area_browsertest.cc",
-      "../browser/ui/webui/options/multilanguage_options_browsertest.cc",
-      "../browser/ui/webui/options/multilanguage_options_browsertest.h",
-      "../browser/ui/webui/options/options_browsertest.cc",
-      "../browser/ui/webui/options/options_browsertest.h",
-      "../browser/ui/webui/options/options_ui_browsertest.cc",
-      "../browser/ui/webui/options/options_ui_browsertest.h",
-      "../browser/ui/webui/options/preferences_browsertest.cc",
-      "../browser/ui/webui/options/preferences_browsertest.h",
       "../browser/ui/webui/password_manager_internals/password_manager_internals_ui_browsertest.cc",
       "../browser/ui/webui/policy_ui_browsertest.cc",
       "../browser/ui/webui/prefs_internals_browsertest.cc",
@@ -1737,7 +1725,6 @@ test("browser_tests") {
       "../browser/ui/webui/signin/inline_login_ui_browsertest.cc",
       "../browser/ui/webui/signin/user_manager_ui_browsertest.cc",
       "../browser/ui/webui/task_scheduler_internals/task_scheduler_internals_ui_browsertest.cc",
-      "../browser/ui/webui/uber/uber_ui_browsertest.cc",
       "../browser/ui/webui/webui_browsertest.cc",
       "../browser/ui/webui/webui_webview_browsertest.cc",
       "../browser/ui/zoom/zoom_controller_browsertest.cc",
@@ -1972,6 +1959,7 @@ test("browser_tests") {
       sources += [
         "../browser/apps/app_browsertest_util.cc",
         "../browser/apps/app_browsertest_util.h",
+        "../browser/extensions/bookmark_app_helper_browsertest.cc",
         "../browser/extensions/browsertest_util.cc",
         "../browser/extensions/browsertest_util.h",
         "../browser/extensions/extension_apitest.cc",
@@ -2283,11 +2271,6 @@ test("browser_tests") {
         "../browser/ui/views/arc_app_dialog_view_browsertest.cc",
         "../browser/ui/views/frame/browser_frame_ash_browsertest.cc",
         "../browser/ui/webui/chromeos/keyboard_overlay_ui_browsertest.cc",
-        "../browser/ui/webui/options/chromeos/accounts_options_browsertest.cc",
-        "../browser/ui/webui/options/chromeos/guest_mode_options_browsertest.cc",
-        "../browser/ui/webui/options/chromeos/guest_mode_options_browsertest.h",
-        "../browser/ui/webui/options/chromeos/guest_mode_options_ui_browsertest.cc",
-        "../browser/ui/webui/options/chromeos/shared_options_browsertest.cc",
       ]
       sources -= [
         "../../apps/load_and_launch_browsertest.cc",
@@ -2867,10 +2850,7 @@ if (!is_android) {
     ]
 
     if (enable_pepper_cdms) {
-      deps += [
-        "//chrome/browser:pepper_cdm_test_constants",
-        "//media:cdm_paths",
-      ]
+      deps += [ "//media:cdm_paths" ]
       data_deps = [
         "//media/cdm/ppapi:clearkeycdmadapter",
         "//third_party/widevine/cdm:widevinecdmadapter",
@@ -3658,12 +3638,6 @@ test("unit_tests") {
       "../browser/ui/webui/help/version_updater_chromeos_unittest.cc",
       "../browser/ui/webui/md_downloads/downloads_list_tracker_unittest.cc",
       "../browser/ui/webui/md_downloads/md_downloads_dom_handler_unittest.cc",
-      "../browser/ui/webui/options/autofill_options_handler_unittest.cc",
-      "../browser/ui/webui/options/font_settings_utils_unittest.cc",
-      "../browser/ui/webui/options/language_options_handler_unittest.cc",
-      "../browser/ui/webui/options/password_manager_handler_unittest.cc",
-      "../browser/ui/webui/options/pepper_flash_content_settings_utils_unittest.cc",
-      "../browser/ui/webui/options/sync_setup_handler_unittest.cc",
       "../browser/ui/webui/settings/downloads_handler_unittest.cc",
       "../browser/ui/webui/settings/md_settings_ui_unittest.cc",
       "../browser/ui/webui/settings/metrics_reporting_handler_unittest.cc",
@@ -3703,6 +3677,10 @@ test("unit_tests") {
       "../utility/importer/firefox_importer_unittest_utils.h",
       "../utility/importer/firefox_importer_unittest_utils_mac.cc",
       "../utility/importer/safari_importer_unittest.mm",
+
+      # In-browser discovery is not used by Android for now.
+      "../browser/media/router/discovery/discovery_network_list_unittest.cc",
+      "../browser/media/router/discovery/discovery_network_monitor_unittest.cc",
     ]
     sources -=
         [ "../browser/download/download_request_infobar_delegate_unittest.cc" ]
@@ -3748,6 +3726,7 @@ test("unit_tests") {
       "../browser/ui/webui/media_router/cast_modes_with_media_sources_unittest.cc",
       "../browser/ui/webui/media_router/media_cast_mode_unittest.cc",
       "../browser/ui/webui/media_router/media_router_dialog_controller_impl_unittest.cc",
+      "../browser/ui/webui/media_router/media_router_file_dialog_unittest.cc",
       "../browser/ui/webui/media_router/media_router_ui_unittest.cc",
       "../browser/ui/webui/media_router/media_router_web_ui_test.cc",
       "../browser/ui/webui/media_router/media_router_web_ui_test.h",
@@ -3937,7 +3916,6 @@ test("unit_tests") {
       "../browser/extensions/extension_message_bubble_controller_unittest.cc",
       "../browser/extensions/extension_migrator_unittest.cc",
       "../browser/extensions/extension_navigation_throttle_unittest.cc",
-      "../browser/extensions/extension_path_util_unittest.cc",
       "../browser/extensions/extension_prefs_unittest.cc",
       "../browser/extensions/extension_prefs_unittest.h",
       "../browser/extensions/extension_protocols_unittest.cc",

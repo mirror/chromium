@@ -27,7 +27,7 @@
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutAnalyzer.h"
 #include "core/layout/LayoutView.h"
-#include "core/layout/api/LayoutPartItem.h"
+#include "core/layout/api/LayoutEmbeddedContentItem.h"
 #include "core/layout/svg/LayoutSVGText.h"
 #include "core/layout/svg/SVGLayoutSupport.h"
 #include "core/layout/svg/SVGResourcesCache.h"
@@ -185,7 +185,7 @@ void LayoutSVGRoot::UpdateLayout() {
   if (transform_change != SVGTransformChange::kNone ||
       viewport_may_have_changed) {
     SetMayNeedPaintInvalidationSubtree();
-    if (RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled())
+    if (RuntimeEnabledFeatures::SlimmingPaintInvalidationEnabled())
       SetNeedsPaintPropertyUpdate();
   }
 
@@ -313,7 +313,7 @@ void LayoutSVGRoot::DescendantIsolationRequirementsChanged(
       has_non_isolated_blending_descendants_dirty_ = true;
       break;
   }
-  if (RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled())
+  if (RuntimeEnabledFeatures::SlimmingPaintInvalidationEnabled())
     SetNeedsPaintPropertyUpdate();
 }
 

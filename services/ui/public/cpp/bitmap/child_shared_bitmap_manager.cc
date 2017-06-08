@@ -46,6 +46,13 @@ class ChildSharedBitmap : public cc::SharedBitmap {
     (*shared_bitmap_manager_ptr_)->DidDeleteSharedBitmap(id());
   }
 
+  // cc::SharedBitmap:
+  base::SharedMemoryHandle GetSharedMemoryHandle() const override {
+    if (!shared_memory_holder_)
+      return base::SharedMemoryHandle();
+    return shared_memory_holder_->handle();
+  }
+
  private:
   scoped_refptr<cc::mojom::ThreadSafeSharedBitmapManagerAssociatedPtr>
       shared_bitmap_manager_ptr_;
@@ -139,8 +146,8 @@ std::unique_ptr<cc::SharedBitmap>
 ChildSharedBitmapManager::GetBitmapForSharedMemory(base::SharedMemory* mem) {
   cc::SharedBitmapId id = cc::SharedBitmap::GenerateId();
   NotifyAllocatedSharedBitmap(mem, cc::SharedBitmap::GenerateId());
-  return base::MakeUnique<ChildSharedBitmap>(shared_bitmap_manager_ptr_,
-                                             std::move(mem), id);
+  return base::MakeUnique<ChildSharedBitmap>(shared_bitmap_manager_ptr_, mem,
+                                             id);
 }
 
 // Notifies the browser process that a shared bitmap with the given ID was

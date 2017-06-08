@@ -56,7 +56,7 @@
 #include "ui/latency/latency_info.h"
 
 #if defined(OS_MACOSX)
-#include "device/wake_lock/public/interfaces/wake_lock_service.mojom.h"
+#include "device/wake_lock/public/interfaces/wake_lock.mojom.h"
 #endif
 
 class SkBitmap;
@@ -296,6 +296,10 @@ class CONTENT_EXPORT RenderWidgetHostImpl
 
   // Notifies the RenderWidget that it lost the mouse lock.
   void SendMouseLockLost();
+
+  bool is_last_unlocked_by_target() const {
+    return is_last_unlocked_by_target_;
+  }
 
   // Noifies the RenderWidget of the current mouse cursor visibility state.
   void SendCursorVisibilityState(bool is_visible);
@@ -666,7 +670,6 @@ class CONTENT_EXPORT RenderWidgetHostImpl
       const std::vector<gfx::Rect>& character_bounds);
   void OnImeCancelComposition();
   void OnLockMouse(bool user_gesture,
-                   bool last_unlocked_by_target,
                    bool privileged);
   void OnUnlockMouse();
   void OnShowDisambiguationPopup(const gfx::Rect& rect_pixels,
@@ -763,7 +766,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   virtual void ProcessSwapMessages(std::vector<IPC::Message> messages);
 
 #if defined(OS_MACOSX)
-  device::mojom::WakeLockService* GetWakeLockService();
+  device::mojom::WakeLock* GetWakeLock();
 #endif
 
   // true if a renderer has once been valid. We use this flag to display a sad
@@ -885,6 +888,11 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   bool pending_mouse_lock_request_;
   bool allow_privileged_mouse_lock_;
 
+  // Used when locking to indicate when a target application has voluntarily
+  // unlocked and desires to relock the mouse. If the mouse is unlocked due
+  // to ESC being pressed by the user, this will be false.
+  bool is_last_unlocked_by_target_;
+
   // Keeps track of whether the webpage has any touch event handler. If it does,
   // then touch events are sent to the renderer. Otherwise, the touch events are
   // not sent to the renderer.
@@ -963,7 +971,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   uint32_t last_received_content_source_id_ = 0;
 
 #if defined(OS_MACOSX)
-  device::mojom::WakeLockServicePtr wake_lock_;
+  device::mojom::WakeLockPtr wake_lock_;
 #endif
 
   // These information are used to verify that the renderer does not misbehave

@@ -72,12 +72,14 @@ class PLATFORM_EXPORT PaintController {
 
   void InvalidateAll();
 
-  // These methods are called during painting.
+  // These methods are called during painting.u
 
   // Provide a new set of paint chunk properties to apply to recorded display
   // items, for Slimming Paint v2.
-  void UpdateCurrentPaintChunkProperties(const PaintChunk::Id*,
-                                         const PaintChunkProperties&);
+  void UpdateCurrentPaintChunkProperties(
+      const PaintChunk::Id*,
+      const PaintChunkProperties&,
+      NewChunkForceState force_new_chunk = DontForceNewChunk);
 
   // Retrieve the current paint properties.
   const PaintChunkProperties& CurrentPaintChunkProperties() const;
@@ -243,7 +245,7 @@ class PLATFORM_EXPORT PaintController {
         last_cached_subsequence_end_(0) {
     ResetCurrentListIndices();
     SetTracksRasterInvalidations(
-        RuntimeEnabledFeatures::paintUnderInvalidationCheckingEnabled());
+        RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled());
 
     // frame_first_paints_ should have one null frame since the beginning, so
     // that PaintController is robust even if it paints outside of BeginFrame
@@ -321,7 +323,7 @@ class PLATFORM_EXPORT PaintController {
                                PaintInvalidationReason);
 
   // The following two methods are for checking under-invalidations
-  // (when RuntimeEnabledFeatures::paintUnderInvalidationCheckingEnabled).
+  // (when RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled).
   void ShowUnderInvalidationError(const char* reason,
                                   const DisplayItem& new_item,
                                   const DisplayItem* old_item) const;

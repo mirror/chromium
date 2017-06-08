@@ -614,7 +614,7 @@ static std::unique_ptr<base::ListValue> CreatePermissionList(
     std::unique_ptr<base::Value> detail(i->ToValue());
     if (detail) {
       auto tmp(base::MakeUnique<base::DictionaryValue>());
-      tmp->Set(i->name(), detail.release());
+      tmp->Set(i->name(), std::move(detail));
       values->Append(std::move(tmp));
     } else {
       values->AppendString(i->name());
@@ -1351,7 +1351,7 @@ bool ExtensionPrefs::FinishDelayedInstallInfo(
   for (base::DictionaryValue::Iterator it(
            *pending_install_dict->AsConstDictionary());
        !it.IsAtEnd(); it.Advance()) {
-    extension_dict->Set(it.key(), it.value().CreateDeepCopy());
+    extension_dict->Set(it.key(), base::MakeUnique<base::Value>(it.value()));
   }
   FinishExtensionInfoPrefs(extension_id, install_time, needs_sort_ordinal,
                            suggested_page_ordinal, extension_dict.get());
@@ -1841,8 +1841,8 @@ void ExtensionPrefs::PopulateExtensionInfoPrefs(
   // We store prefs about LOAD extensions, but don't cache their manifest
   // since it may change on disk.
   if (!Manifest::IsUnpackedLocation(extension->location())) {
-    extension_dict->Set(kPrefManifest,
-                        extension->manifest()->value()->CreateDeepCopy());
+    extension_dict->Set(kPrefManifest, base::MakeUnique<base::Value>(
+                                           *extension->manifest()->value()));
   }
 
   // Only writes kPrefDoNotSync when it is not the default.
@@ -1926,7 +1926,8 @@ void ExtensionPrefs::FinishExtensionInfoPrefs(
   extension_dict->Remove(kDelayedInstallInfo, NULL);
 
   // Clear state that may be registered from a previous install.
-  extension_dict->Remove(EventRouter::kRegisteredEvents, NULL);
+  extension_dict->Remove(EventRouter::kRegisteredLazyEvents, nullptr);
+  extension_dict->Remove(EventRouter::kRegisteredServiceWorkerEvents, nullptr);
 
   // FYI, all code below here races on sudden shutdown because |extension_dict|,
   // |app_sorting|, |extension_pref_value_map_|, and (potentially) observers

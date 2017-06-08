@@ -183,6 +183,7 @@ class PLATFORM_EXPORT GraphicsLayer : public cc::LayerClient,
   void SetBackdropFilters(CompositorFilterOperations);
 
   void SetStickyPositionConstraint(const WebLayerStickyPositionConstraint&);
+  void SetOffsetForStickyPosition(const WebSize&);
 
   void SetFilterQuality(SkFilterQuality);
 
@@ -216,13 +217,13 @@ class PLATFORM_EXPORT GraphicsLayer : public cc::LayerClient,
   // Return a string with a human readable form of the layer tree. If debug is
   // true, pointers for the layers and timing data will be included in the
   // returned string.
-  String LayerTreeAsText(LayerTreeFlags = kLayerTreeNormal) const;
+  String GetLayerTreeAsTextForTesting(LayerTreeFlags = kLayerTreeNormal) const;
 
   std::unique_ptr<JSONObject> LayerTreeAsJSON(LayerTreeFlags) const;
 
   void SetTracksRasterInvalidations(bool);
   bool IsTrackingOrCheckingRasterInvalidations() const {
-    return RuntimeEnabledFeatures::paintUnderInvalidationCheckingEnabled() ||
+    return RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled() ||
            is_tracking_raster_invalidations_;
   }
 

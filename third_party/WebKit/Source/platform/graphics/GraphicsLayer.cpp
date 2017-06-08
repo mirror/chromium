@@ -278,7 +278,7 @@ void GraphicsLayer::Paint(const IntRect* interest_rect,
                           GraphicsContext::DisabledMode disabled_mode) {
   if (PaintWithoutCommit(interest_rect, disabled_mode)) {
     GetPaintController().CommitNewDisplayItems();
-    if (RuntimeEnabledFeatures::paintUnderInvalidationCheckingEnabled()) {
+    if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled()) {
       sk_sp<PaintRecord> record = CaptureRecord();
       CheckPaintUnderInvalidations(record);
       RasterInvalidationTracking& tracking =
@@ -477,7 +477,7 @@ void GraphicsLayer::ResetTrackedRasterInvalidations() {
   if (!tracking)
     return;
 
-  if (RuntimeEnabledFeatures::paintUnderInvalidationCheckingEnabled())
+  if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled())
     tracking->invalidations.clear();
   else
     GetRasterInvalidationTrackingMap().Remove(this);
@@ -512,7 +512,7 @@ void GraphicsLayer::TrackRasterInvalidation(const DisplayItemClient& client,
     tracking.invalidations.push_back(info);
   }
 
-  if (RuntimeEnabledFeatures::paintUnderInvalidationCheckingEnabled()) {
+  if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled()) {
     // TODO(crbug.com/496260): Some antialiasing effects overflow the paint
     // invalidation rect.
     IntRect r = rect;
@@ -785,7 +785,7 @@ void GraphicsLayer::LayersAsJSONArray(
   }
 }
 
-String GraphicsLayer::LayerTreeAsText(LayerTreeFlags flags) const {
+String GraphicsLayer::GetLayerTreeAsTextForTesting(LayerTreeFlags flags) const {
   return LayerTreeAsJSON(flags)->ToPrettyJSONString();
 }
 
@@ -1093,6 +1093,10 @@ void GraphicsLayer::SetStickyPositionConstraint(
   layer_->Layer()->SetStickyPositionConstraint(sticky_constraint);
 }
 
+void GraphicsLayer::SetOffsetForStickyPosition(const WebSize& offset) {
+  layer_->Layer()->SetOffsetForStickyPosition(offset);
+}
+
 void GraphicsLayer::SetFilterQuality(SkFilterQuality filter_quality) {
   if (image_layer_)
     image_layer_->SetNearestNeighbor(filter_quality == kNone_SkFilterQuality);
@@ -1203,7 +1207,7 @@ static bool PixelsDiffer(SkColor p1, SkColor p2) {
 }
 
 // This method is used to graphically verify any under invalidation when
-// RuntimeEnabledFeatures::paintUnderInvalidationCheckingEnabled is being
+// RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled is being
 // used. It compares the last recording made by GraphicsLayer::Paint against
 // |new_record|, by rastering both into bitmaps. Any differences are colored
 // as dark red.
@@ -1294,7 +1298,7 @@ void showGraphicsLayerTree(const blink::GraphicsLayer* layer) {
     return;
   }
 
-  String output = layer->LayerTreeAsText(0xffffffff);  // with all flags.
+  String output = layer->GetLayerTreeAsTextForTesting(0xffffffff);
   LOG(INFO) << output.Utf8().data();
 }
 
@@ -1304,8 +1308,8 @@ void showGraphicsLayers(const blink::GraphicsLayer* layer) {
     return;
   }
 
-  String output =
-      layer->LayerTreeAsText(0xffffffff & ~blink::kOutputAsLayerTree);
+  String output = layer->GetLayerTreeAsTextForTesting(
+      0xffffffff & ~blink::kOutputAsLayerTree);
   LOG(INFO) << output.Utf8().data();
 }
 #endif

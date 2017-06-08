@@ -21,6 +21,7 @@ BeforeInstallPromptEvent::BeforeInstallPromptEvent(
     mojom::blink::AppBannerEventRequest event_request,
     const Vector<String>& platforms)
     : Event(name, false, true),
+      ContextClient(&frame),
       banner_service_(std::move(service_ptr)),
       binding_(this, std::move(event_request)),
       platforms_(platforms),
@@ -30,18 +31,22 @@ BeforeInstallPromptEvent::BeforeInstallPromptEvent(
       prompt_called_(false) {
   DCHECK(banner_service_);
   DCHECK(binding_.is_bound());
-  UseCounter::Count(&frame, UseCounter::kBeforeInstallPromptEvent);
+  UseCounter::Count(&frame, WebFeature::kBeforeInstallPromptEvent);
 }
 
 BeforeInstallPromptEvent::BeforeInstallPromptEvent(
+    ExecutionContext* execution_context,
     const AtomicString& name,
     const BeforeInstallPromptEventInit& init)
-    : Event(name, init), binding_(this), prompt_called_(false) {
+    : Event(name, init),
+      ContextClient(execution_context),
+      binding_(this),
+      prompt_called_(false) {
   if (init.hasPlatforms())
     platforms_ = init.platforms();
 }
 
-BeforeInstallPromptEvent::~BeforeInstallPromptEvent() {}
+BeforeInstallPromptEvent::~BeforeInstallPromptEvent() = default;
 
 void BeforeInstallPromptEvent::Dispose() {
   banner_service_.reset();
@@ -54,7 +59,7 @@ Vector<String> BeforeInstallPromptEvent::platforms() const {
 
 ScriptPromise BeforeInstallPromptEvent::userChoice(ScriptState* script_state) {
   UseCounter::Count(ExecutionContext::From(script_state),
-                    UseCounter::kBeforeInstallPromptEventUserChoice);
+                    WebFeature::kBeforeInstallPromptEventUserChoice);
   // |m_binding| must be bound to allow the AppBannerService to resolve the
   // userChoice promise.
   if (user_choice_ && binding_.is_bound())
@@ -77,7 +82,7 @@ ScriptPromise BeforeInstallPromptEvent::prompt(ScriptState* script_state) {
   }
 
   UseCounter::Count(ExecutionContext::From(script_state),
-                    UseCounter::kBeforeInstallPromptEventPrompt);
+                    WebFeature::kBeforeInstallPromptEventPrompt);
 
   prompt_called_ = true;
   banner_service_->DisplayAppBanner(
@@ -93,8 +98,13 @@ void BeforeInstallPromptEvent::preventDefault() {
   Event::preventDefault();
   if (target()) {
     UseCounter::Count(target()->GetExecutionContext(),
-                      UseCounter::kBeforeInstallPromptEventPreventDefault);
+                      WebFeature::kBeforeInstallPromptEventPreventDefault);
   }
+}
+
+bool BeforeInstallPromptEvent::HasPendingActivity() const {
+  return user_choice_ &&
+         user_choice_->GetState() == ScriptPromisePropertyBase::kPending;
 }
 
 void BeforeInstallPromptEvent::BannerAccepted(const String& platform) {
@@ -110,6 +120,7 @@ void BeforeInstallPromptEvent::BannerDismissed() {
 DEFINE_TRACE(BeforeInstallPromptEvent) {
   visitor->Trace(user_choice_);
   Event::Trace(visitor);
+  ContextClient::Trace(visitor);
 }
 
 }  // namespace blink

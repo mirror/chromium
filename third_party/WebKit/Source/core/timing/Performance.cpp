@@ -136,7 +136,7 @@ PerformanceTiming* Performance::timing() const {
 }
 
 PerformanceNavigationTiming* Performance::CreateNavigationTimingInstance() {
-  if (!RuntimeEnabledFeatures::performanceNavigationTiming2Enabled())
+  if (!RuntimeEnabledFeatures::PerformanceNavigationTiming2Enabled())
     return nullptr;
   if (!GetFrame())
     return nullptr;
@@ -156,7 +156,7 @@ void Performance::UpdateLongTaskInstrumentation() {
 
   if (HasObserverFor(PerformanceEntry::kLongTask)) {
     UseCounter::Count(&GetFrame()->LocalFrameRoot(),
-                      UseCounter::kLongTaskObserver);
+                      WebFeature::kLongTaskObserver);
     GetFrame()->GetPerformanceMonitor()->Subscribe(
         PerformanceMonitor::kLongTask, kLongTaskThreshold, this);
   } else {

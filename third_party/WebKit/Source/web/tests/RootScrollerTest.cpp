@@ -157,7 +157,7 @@ class RootScrollerTest : public ::testing::Test {
 
   WebViewBase* InitializeInternal(const std::string& url,
                                   FrameTestHelpers::TestWebViewClient* client) {
-    RuntimeEnabledFeatures::setSetRootScrollerEnabled(true);
+    RuntimeEnabledFeatures::SetSetRootScrollerEnabled(true);
 
     helper_.InitializeAndLoad(url, true, nullptr, client, nullptr,
                               &ConfigureSettings);
@@ -672,8 +672,14 @@ TEST_F(RootScrollerTest, RemoteIFrame) {
 // Do a basic sanity check that the scrolling and root scroller machinery
 // doesn't fail catastrophically in site isolation when the main frame is
 // remote. Setting a root scroller in OOPIF isn't implemented yet but we should
-// still scroll as before and not crash.
-TEST_F(RootScrollerTest, RemoteMainFrame) {
+// still scroll as before and not crash. TODO(crbug.com/730269): appears to
+// segfault during teardown on TSAN.
+#if defined(THREAD_SANITIZER)
+#define MAYBE_RemoteMainFrame DISABLED_RemoteMainFrame
+#else
+#define MAYBE_RemoteMainFrame RemoteMainFrame
+#endif
+TEST_F(RootScrollerTest, MAYBE_RemoteMainFrame) {
   FrameTestHelpers::TestWebRemoteFrameClient remote_client;
   FrameTestHelpers::TestWebWidgetClient web_widget_client;
   WebFrameWidget* widget;
@@ -845,7 +851,7 @@ TEST_F(RootScrollerTest, TopControlsAdjustmentAppliedToRootScroller) {
   Initialize();
 
   WebURL base_url = URLTestHelpers::ToKURL("http://www.test.com/");
-  FrameTestHelpers::LoadHTMLString(GetWebView()->MainFrame(),
+  FrameTestHelpers::LoadHTMLString(GetWebView()->MainFrameImpl(),
                                    "<!DOCTYPE html>"
                                    "<style>"
                                    "  body, html {"
@@ -1122,7 +1128,7 @@ TEST_F(RootScrollerHitTest, HitTestInAreaRevealedByURLBarSameLayer) {
   // that we can hit this target.
   Initialize();
   WebURL baseURL = URLTestHelpers::ToKURL("http://www.test.com/");
-  FrameTestHelpers::LoadHTMLString(GetWebView()->MainFrame(),
+  FrameTestHelpers::LoadHTMLString(GetWebView()->MainFrameImpl(),
                                    "<!DOCTYPE html>"
                                    "<style>"
                                    "  body, html {"
@@ -1171,7 +1177,7 @@ TEST_F(RootScrollerHitTest, HitTestInAreaRevealedByURLBarDifferentLayer) {
   // that we can hit this target.
   Initialize();
   WebURL baseURL = URLTestHelpers::ToKURL("http://www.test.com/");
-  FrameTestHelpers::LoadHTMLString(GetWebView()->MainFrame(),
+  FrameTestHelpers::LoadHTMLString(GetWebView()->MainFrameImpl(),
                                    "<!DOCTYPE html>"
                                    "<style>"
                                    "  body, html {"

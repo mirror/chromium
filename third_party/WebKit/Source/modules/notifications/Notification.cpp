@@ -74,7 +74,7 @@ Notification* Notification::Create(ExecutionContext* context,
                                    ExceptionState& exception_state) {
   // The Notification constructor may be disabled through a runtime feature when
   // the platform does not support non-persistent notifications.
-  if (!RuntimeEnabledFeatures::notificationConstructorEnabled()) {
+  if (!RuntimeEnabledFeatures::NotificationConstructorEnabled()) {
     exception_state.ThrowTypeError(
         "Illegal constructor. Use ServiceWorkerRegistration.showNotification() "
         "instead.");
@@ -95,17 +95,19 @@ Notification* Notification::Create(ExecutionContext* context,
   }
 
   if (context->IsSecureContext()) {
-    UseCounter::Count(context, UseCounter::kNotificationSecureOrigin);
-    if (context->IsDocument())
+    UseCounter::Count(context, WebFeature::kNotificationSecureOrigin);
+    if (context->IsDocument()) {
       UseCounter::CountCrossOriginIframe(
-          *ToDocument(context), UseCounter::kNotificationAPISecureOriginIframe);
+          *ToDocument(context), WebFeature::kNotificationAPISecureOriginIframe);
+    }
   } else {
     Deprecation::CountDeprecation(context,
-                                  UseCounter::kNotificationInsecureOrigin);
-    if (context->IsDocument())
+                                  WebFeature::kNotificationInsecureOrigin);
+    if (context->IsDocument()) {
       Deprecation::CountDeprecationCrossOriginIframe(
           *ToDocument(context),
-          UseCounter::kNotificationAPIInsecureOriginIframe);
+          WebFeature::kNotificationAPIInsecureOriginIframe);
+    }
   }
 
   WebNotificationData data =
@@ -365,14 +367,14 @@ ScriptPromise Notification::requestPermission(
   ExecutionContext* context = ExecutionContext::From(script_state);
   if (!context->IsSecureContext()) {
     Deprecation::CountDeprecation(
-        context, UseCounter::kNotificationPermissionRequestedInsecureOrigin);
+        context, WebFeature::kNotificationPermissionRequestedInsecureOrigin);
   }
 
   if (context->IsDocument()) {
     LocalFrame* frame = ToDocument(context)->GetFrame();
     if (frame && !frame->IsMainFrame()) {
       Deprecation::CountDeprecation(
-          context, UseCounter::kNotificationPermissionRequestedIframe);
+          context, WebFeature::kNotificationPermissionRequestedIframe);
     }
   }
 

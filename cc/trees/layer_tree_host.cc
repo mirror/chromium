@@ -1344,8 +1344,7 @@ void LayerTreeHost::SetElementOpacityMutated(ElementId element_id,
   layer->OnOpacityAnimated(opacity);
 
   if (EffectNode* node =
-          property_trees_.effect_tree.UpdateNodeFromOwningLayerId(
-              layer->id())) {
+          property_trees_.effect_tree.Node(layer->effect_tree_index())) {
     DCHECK_EQ(layer->effect_tree_index(), node->id);
     if (node->opacity == opacity)
       return;
@@ -1413,10 +1412,10 @@ gfx::ScrollOffset LayerTreeHost::GetScrollOffsetForAnimation(
 }
 
 void LayerTreeHost::QueueImageDecode(
-    sk_sp<const SkImage> image,
+    const PaintImage& image,
     const base::Callback<void(bool)>& callback) {
   TRACE_EVENT0("cc", "LayerTreeHost::QueueImageDecode");
-  queued_image_decodes_.emplace_back(std::move(image), callback);
+  queued_image_decodes_.emplace_back(image, callback);
   SetNeedsCommit();
 }
 
@@ -1443,6 +1442,10 @@ void LayerTreeHost::SetNeedsDisplayOnAllLayers() {
 
 void LayerTreeHost::SetHasCopyRequest(bool has_copy_request) {
   has_copy_request_ = has_copy_request;
+}
+
+void LayerTreeHost::RequestBeginMainFrameNotExpected(bool new_state) {
+  proxy_->RequestBeginMainFrameNotExpected(new_state);
 }
 
 }  // namespace cc

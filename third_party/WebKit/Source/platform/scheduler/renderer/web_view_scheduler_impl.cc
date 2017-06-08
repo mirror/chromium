@@ -277,6 +277,10 @@ bool WebViewSchedulerImpl::HasActiveConnectionForTest() const {
   return has_active_connection_;
 }
 
+void WebViewSchedulerImpl::RequestBeginMainFrameNotExpected(bool new_state) {
+  settings_->RequestBeginMainFrameNotExpected(new_state);
+}
+
 void WebViewSchedulerImpl::ApplyVirtualTimePolicyForLoading() {
   if (virtual_time_policy_ != VirtualTimePolicy::DETERMINISTIC_LOADING) {
     return;
@@ -342,7 +346,7 @@ void WebViewSchedulerImpl::MaybeInitializeBackgroundCPUTimeBudgetPool() {
   if (background_time_budget_pool_)
     return;
 
-  if (!RuntimeEnabledFeatures::expensiveBackgroundTimerThrottlingEnabled())
+  if (!RuntimeEnabledFeatures::ExpensiveBackgroundTimerThrottlingEnabled())
     return;
 
   background_time_budget_pool_ =

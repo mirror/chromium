@@ -12,12 +12,11 @@ namespace prefs {
 // Keep alphabetized, and document each in the .cc file.
 
 extern const char kVariationsCompressedSeed[];
+extern const char kVariationsCountry[];
 extern const char kVariationsLastFetchTime[];
 extern const char kVariationsPermanentConsistencyCountry[];
 extern const char kVariationsPermutedEntropyCache[];
-extern const char kVariationsCountry[];
 extern const char kVariationsRestrictParameter[];
-extern const char kVariationsSeed[];
 extern const char kVariationsSeedDate[];
 extern const char kVariationsSeedSignature[];
 

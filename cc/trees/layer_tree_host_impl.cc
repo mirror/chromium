@@ -1707,8 +1707,9 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
   // drawn.
   if (active_tree_->hud_layer()) {
     TRACE_EVENT0("cc", "DrawLayers.UpdateHudTexture");
-    active_tree_->hud_layer()->UpdateHudTexture(draw_mode,
-                                                resource_provider_.get());
+    active_tree_->hud_layer()->UpdateHudTexture(
+        draw_mode, resource_provider_.get(),
+        compositor_frame_sink_->context_provider());
   }
 
   CompositorFrameMetadata metadata = MakeCompositorFrameMetadata();
@@ -2382,11 +2383,12 @@ LayerImpl* LayerTreeHostImpl::ViewportMainScrollLayer() {
 }
 
 void LayerTreeHostImpl::QueueImageDecode(
-    sk_sp<const SkImage> image,
+    const PaintImage& image,
     const base::Callback<void(bool)>& embedder_callback) {
   decoded_image_tracker_.QueueImageDecode(
-      std::move(image), base::Bind(&LayerTreeHostImpl::ImageDecodeFinished,
-                                   base::Unretained(this), embedder_callback));
+      image, base::Bind(&LayerTreeHostImpl::ImageDecodeFinished,
+                        base::Unretained(this), embedder_callback));
+  tile_manager_.checker_image_tracker().DisallowCheckeringForImage(image);
 }
 
 void LayerTreeHostImpl::ImageDecodeFinished(

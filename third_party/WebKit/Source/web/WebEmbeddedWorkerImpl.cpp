@@ -50,6 +50,7 @@
 #include "core/workers/WorkerInspectorProxy.h"
 #include "core/workers/WorkerScriptLoader.h"
 #include "core/workers/WorkerThreadStartupData.h"
+#include "modules/indexeddb/IndexedDBClientImpl.h"
 #include "modules/serviceworkers/ServiceWorkerContainerClient.h"
 #include "modules/serviceworkers/ServiceWorkerThread.h"
 #include "platform/Histogram.h"
@@ -74,7 +75,6 @@
 #include "public/web/WebView.h"
 #include "public/web/WebWorkerContentSettingsClientProxy.h"
 #include "public/web/modules/serviceworker/WebServiceWorkerContextClient.h"
-#include "web/IndexedDBClientImpl.h"
 #include "web/ServiceWorkerGlobalScopeClientImpl.h"
 #include "web/ServiceWorkerGlobalScopeProxy.h"
 
@@ -417,7 +417,7 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
   ProvideServiceWorkerContainerClientToWorker(
       worker_clients, worker_context_client_->CreateServiceWorkerProvider());
 
-  if (RuntimeEnabledFeatures::offMainThreadFetchEnabled()) {
+  if (RuntimeEnabledFeatures::OffMainThreadFetchEnabled()) {
     std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
         worker_context_client_->CreateServiceWorkerFetchContext();
     DCHECK(web_worker_fetch_context);

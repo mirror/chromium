@@ -82,7 +82,6 @@
 #include "device/base/features.h"
 #include "device/vr/features/features.h"
 #include "extensions/features/features.h"
-#include "gin/public/gin_features.h"
 #include "google_apis/drive/drive_switches.h"
 #include "gpu/config/gpu_switches.h"
 #include "media/audio/audio_features.h"
@@ -1275,10 +1274,6 @@ const FeatureEntry kFeatureEntries[] = {
     {"shared-array-buffer", flag_descriptions::kEnableSharedArrayBufferName,
      flag_descriptions::kEnableSharedArrayBufferDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kSharedArrayBuffer)},
-    {"disable-v8-ignition-turbo",
-     flag_descriptions::kV8DisableIgnitionTurboName,
-     flag_descriptions::kV8DisableIgnitionTurboDescription, kOsAll,
-     FEATURE_VALUE_TYPE(features::kV8NoTurbo)},
     {"disable-software-rasterizer", flag_descriptions::kSoftwareRasterizerName,
      flag_descriptions::kSoftwareRasterizerDescription,
 #if BUILDFLAG(ENABLE_SWIFTSHADER)
@@ -1434,9 +1429,9 @@ const FeatureEntry kFeatureEntries[] = {
         flag_descriptions::kDisplayColorCalibrationDescription, kOsCrOS,
         SINGLE_DISABLE_VALUE_TYPE(::switches::kDisableDisplayColorCalibration),
     },
-    {"enable-tether", flag_descriptions::kTetherName,
+    {"instant-tethering", flag_descriptions::kTetherName,
      flag_descriptions::kTetherDescription, kOsCrOS,
-     SINGLE_VALUE_TYPE(chromeos::switches::kEnableTether)},
+     FEATURE_VALUE_TYPE(features::kInstantTethering)},
 #endif  // OS_CHROMEOS
     {
         "disable-accelerated-video-decode",
@@ -2250,9 +2245,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kMaterialDesignIncognitoNTPName,
      flag_descriptions::kMaterialDesignIncognitoNTPDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kMaterialDesignIncognitoNTP)},
-    {"enable-md-settings", flag_descriptions::kEnableMaterialDesignSettingsName,
-     flag_descriptions::kEnableMaterialDesignSettingsDescription, kOsDesktop,
-     FEATURE_VALUE_TYPE(features::kMaterialDesignSettings)},
     {"safe-search-url-reporting",
      flag_descriptions::kSafeSearchUrlReportingName,
      flag_descriptions::kSafeSearchUrlReportingDescription, kOsAll,

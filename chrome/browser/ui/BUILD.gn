@@ -308,6 +308,8 @@ split_static_library("ui") {
     "webui/chromeos/login/user_board_screen_handler.h",
     "webui/chromeos/login/user_image_screen_handler.cc",
     "webui/chromeos/login/user_image_screen_handler.h",
+    "webui/chromeos/login/voice_interaction_value_prop_screen_handler.cc",
+    "webui/chromeos/login/voice_interaction_value_prop_screen_handler.h",
     "webui/chromeos/login/wrong_hwid_screen_handler.cc",
     "webui/chromeos/login/wrong_hwid_screen_handler.h",
     "webui/chromeos/mobile_setup_dialog.cc",
@@ -646,12 +648,7 @@ split_static_library("ui") {
     ]
   }
 
-  if (is_android) {
-    sources += [
-      "webui/large_icon_source.cc",
-      "webui/large_icon_source.h",
-    ]
-  } else {
+  if (!is_android) {
     sources += [
       "apps/app_info_dialog.h",
       "apps/chrome_app_delegate.cc",
@@ -1076,6 +1073,8 @@ split_static_library("ui") {
       "webui/options/supervised_user_learn_more_handler.h",
       "webui/options/sync_setup_handler.cc",
       "webui/options/sync_setup_handler.h",
+      "webui/plural_string_handler.cc",
+      "webui/plural_string_handler.h",
       "webui/policy_indicator_localized_strings_provider.cc",
       "webui/policy_indicator_localized_strings_provider.h",
       "webui/profile_helper.cc",
@@ -1499,6 +1498,8 @@ split_static_library("ui") {
       "views/exclusive_access_bubble_views.cc",
       "views/exclusive_access_bubble_views.h",
       "views/exclusive_access_bubble_views_context.h",
+      "views/extensions/bookmark_app_confirmation_view.cc",
+      "views/extensions/bookmark_app_confirmation_view.h",
       "views/extensions/chooser_dialog_view.cc",
       "views/extensions/chooser_dialog_view.h",
       "views/extensions/extension_install_dialog_view.cc",
@@ -1658,8 +1659,6 @@ split_static_library("ui") {
     }
     if (enable_extensions && (!is_mac || mac_views_browser)) {
       sources += [
-        "views/extensions/bookmark_app_confirmation_view.cc",
-        "views/extensions/bookmark_app_confirmation_view.h",
         "views/extensions/browser_action_drag_data.cc",
         "views/extensions/browser_action_drag_data.h",
         "views/extensions/extension_action_platform_delegate_views.cc",
@@ -2146,6 +2145,8 @@ split_static_library("ui") {
       "views/sad_tab_view.h",
       "views/tab_contents/chrome_web_contents_view_delegate_views.cc",
       "views/tab_contents/chrome_web_contents_view_delegate_views.h",
+      "views/theme_profile_key.cc",
+      "views/theme_profile_key.h",
       "window_sizer/window_sizer_aura.cc",
     ]
     deps += [
@@ -2681,6 +2682,8 @@ split_static_library("ui") {
         "cocoa/dev_tools_controller.mm",
         "cocoa/device_chooser_content_view_cocoa.h",
         "cocoa/device_chooser_content_view_cocoa.mm",
+        "cocoa/dialog_text_field_editor.h",
+        "cocoa/dialog_text_field_editor.mm",
         "cocoa/download/background_theme.h",
         "cocoa/download/background_theme.mm",
         "cocoa/download/download_danger_prompt_impl.cc",
@@ -3476,6 +3479,8 @@ split_static_library("ui") {
       "webui/media_router/media_cast_mode.h",
       "webui/media_router/media_router_dialog_controller_impl.cc",
       "webui/media_router/media_router_dialog_controller_impl.h",
+      "webui/media_router/media_router_file_dialog.cc",
+      "webui/media_router/media_router_file_dialog.h",
       "webui/media_router/media_router_localized_strings_provider.cc",
       "webui/media_router/media_router_localized_strings_provider.h",
       "webui/media_router/media_router_resources_provider.cc",

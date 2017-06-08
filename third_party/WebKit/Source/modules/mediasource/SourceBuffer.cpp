@@ -404,7 +404,7 @@ void SourceBuffer::abort(ExceptionState& exception_state) {
     // Throwing the exception and aborting these steps is new behavior that
     // is implemented behind the MediaSourceNewAbortAndDuration
     // RuntimeEnabledFeature.
-    if (RuntimeEnabledFeatures::mediaSourceNewAbortAndDurationEnabled()) {
+    if (RuntimeEnabledFeatures::MediaSourceNewAbortAndDurationEnabled()) {
       MediaSource::LogAndThrowDOMException(
           exception_state, kInvalidStateError,
           "Aborting asynchronous remove() operation is disallowed.");
@@ -412,7 +412,7 @@ void SourceBuffer::abort(ExceptionState& exception_state) {
     }
 
     Deprecation::CountDeprecation(source_->MediaElement()->GetDocument(),
-                                  UseCounter::kMediaSourceAbortRemove);
+                                  WebFeature::kMediaSourceAbortRemove);
     CancelRemove();
   }
 
@@ -523,7 +523,7 @@ void SourceBuffer::CancelRemove() {
   pending_remove_end_ = -1;
   updating_ = false;
 
-  if (!RuntimeEnabledFeatures::mediaSourceNewAbortAndDurationEnabled()) {
+  if (!RuntimeEnabledFeatures::MediaSourceNewAbortAndDurationEnabled()) {
     ScheduleEvent(EventTypeNames::abort);
     ScheduleEvent(EventTypeNames::updateend);
   }

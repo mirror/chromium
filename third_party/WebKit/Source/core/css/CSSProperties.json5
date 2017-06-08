@@ -38,7 +38,7 @@
     // - api_class: true|"classname"
     // Specifies the existence (and optionally name) of a CSSPropertyAPI
     // implementation for the property to be used by make_css_property_apis.py.
-    // See core/css/properties/CSSPropertyAPI.h for API details.
+    // See core/css/properties/CSSPropertyAPI<PropertyName>.h for API details.
     // * Add this flag if the API has been implemented for this property.
     // * If the classname for this is different to the name of the property, specify a
     //   value for this flag. e.g. api_class=CSSPropertyAPIWebkitPadding
@@ -604,9 +604,9 @@
       svg: true,
     },
     {
+      name: "align-self",
       api_class: "CSSPropertyAPIAlignOrJustifySelf",
       api_methods: ["parseSingleValue"],
-      name: "align-self",
       converter: "ConvertSelfOrDefaultAlignmentData",
       initial: "InitialSelfAlignment",
     },
@@ -617,7 +617,9 @@
       interpolable: true,
       runtime_flag: "CSSBackdropFilter",
     },
-    "backface-visibility",
+    {
+      name: "backface-visibility",
+    },
     {
       name: "background-attachment",
       custom_all: true,
@@ -1159,20 +1161,26 @@
       converter: "ConvertLengthOrAuto",
       interpolable: true,
     },
-    "flex-direction",
+    {
+      name: "flex-direction",
+    },
     {
       name: "flex-grow",
       api_class: "CSSPropertyAPIFlexGrowOrShrink",
+      api_methods: ["parseSingleValue"],
       interpolable: true,
       type_name: "float",
     },
     {
       name: "flex-shrink",
       api_class: "CSSPropertyAPIFlexGrowOrShrink",
+      api_methods: ["parseSingleValue"],
       interpolable: true,
       type_name: "float",
     },
-    "flex-wrap",
+    {
+      name: "flex-wrap",
+    },
     {
       name: "float",
       default_value: "none",
@@ -1310,7 +1318,9 @@
       name_for_methods: "RespectImageOrientation",
       runtime_flag: "ImageOrientation",
     },
-    "isolation",
+    {
+      name: "isolation",
+    },
     {
       name: "justify-content",
       api_class: "CSSPropertyAPIAlignOrJustifyContent",
@@ -2048,7 +2058,6 @@
       field_size: 1,
       field_group: "rare-inherited",
     },
-    // FIXME: We shouldn't switch between shorthand/not shorthand based on a runtime flag
     {
       name: "text-decoration",
       api_class: true,
@@ -2152,16 +2161,17 @@
       field_template: "keyword",
       keywords: ["capitalize", "uppercase", "lowercase", "none"],
     },
+    // FIXME: Implement support for 'under left' and 'under right' values.
     {
       name: "text-underline-position",
       api_class: true,
       api_methods: ["parseSingleValue"],
       inherited: true,
       runtime_flag: "CSS3TextDecorations",
-      field_template: "storage_only",
+      field_template: "keyword",
       type_name: "TextUnderlinePosition",
-      default_value: "TextUnderlinePosition::kAuto",
-      field_size: 1,
+      default_value: "auto",
+      keywords: ["auto", "under"],
       field_group: "rare-inherited",
     },
     {
@@ -2366,8 +2376,12 @@
       api_methods: ["parseSingleValue"],
       type_name: "unsigned int",
     },
-    "-webkit-box-orient",
-    "-webkit-box-pack",
+    {
+      name: "-webkit-box-orient",
+    },
+    {
+      name: "-webkit-box-pack",
+    },
     {
       name: "-webkit-box-reflect",
       converter: "ConvertBoxReflect",
@@ -2697,7 +2711,9 @@
       converter: "ConvertComputedLength<float>",
       interpolable: true,
     },
-    "-webkit-user-drag",
+    {
+      name: "-webkit-user-drag",
+    },
     {
       name: "-webkit-user-modify",
       inherited: true,

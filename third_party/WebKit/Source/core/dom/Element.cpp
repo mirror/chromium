@@ -730,7 +730,7 @@ int Element::clientWidth() {
       (in_quirks_mode && IsHTMLElement() && GetDocument().body() == this)) {
     LayoutViewItem layout_view = GetDocument().GetLayoutViewItem();
     if (!layout_view.IsNull()) {
-      if (!RuntimeEnabledFeatures::overlayScrollbarsEnabled() ||
+      if (!RuntimeEnabledFeatures::OverlayScrollbarsEnabled() ||
           !GetDocument().GetFrame()->IsLocalRoot())
         GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheetsForNode(this);
       if (GetDocument().GetPage()->GetSettings().GetForceZeroLayoutHeight())
@@ -766,7 +766,7 @@ int Element::clientHeight() {
       (in_quirks_mode && IsHTMLElement() && GetDocument().body() == this)) {
     LayoutViewItem layout_view = GetDocument().GetLayoutViewItem();
     if (!layout_view.IsNull()) {
-      if (!RuntimeEnabledFeatures::overlayScrollbarsEnabled() ||
+      if (!RuntimeEnabledFeatures::OverlayScrollbarsEnabled() ||
           !GetDocument().GetFrame()->IsLocalRoot())
         GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheetsForNode(this);
       if (GetDocument().GetPage()->GetSettings().GetForceZeroLayoutHeight())
@@ -1205,7 +1205,7 @@ String Element::computedName() {
 }
 
 AccessibleNode* Element::ExistingAccessibleNode() const {
-  if (!RuntimeEnabledFeatures::accessibilityObjectModelEnabled())
+  if (!RuntimeEnabledFeatures::AccessibilityObjectModelEnabled())
     return nullptr;
 
   if (!HasRareData())
@@ -1215,7 +1215,7 @@ AccessibleNode* Element::ExistingAccessibleNode() const {
 }
 
 AccessibleNode* Element::accessibleNode() {
-  if (!RuntimeEnabledFeatures::accessibilityObjectModelEnabled())
+  if (!RuntimeEnabledFeatures::AccessibilityObjectModelEnabled())
     return nullptr;
 
   ElementRareData& rare_data = EnsureElementRareData();
@@ -1792,7 +1792,7 @@ void Element::AttachLayoutTree(const AttachContext& context) {
 }
 
 void Element::DetachLayoutTree(const AttachContext& context) {
-  HTMLFrameOwnerElement::UpdateSuspendScope suspend_widget_hierarchy_updates;
+  HTMLFrameOwnerElement::PluginDisposeSuspendScope suspend_plugin_dispose;
   CancelFocusAppearanceUpdate();
   RemoveCallbackSelectors();
   if (HasRareData()) {
@@ -2310,15 +2310,15 @@ ShadowRoot* Element::attachShadow(const ScriptState* script_state,
                                                   : ShadowRootType::kClosed;
 
   if (type == ShadowRootType::kClosed)
-    UseCounter::Count(GetDocument(), UseCounter::kElementAttachShadowClosed);
+    UseCounter::Count(GetDocument(), WebFeature::kElementAttachShadowClosed);
   else if (type == ShadowRootType::kOpen)
-    UseCounter::Count(GetDocument(), UseCounter::kElementAttachShadowOpen);
+    UseCounter::Count(GetDocument(), WebFeature::kElementAttachShadowOpen);
 
   ShadowRoot* shadow_root = CreateShadowRootInternal(type, exception_state);
 
   if (shadow_root_init_dict.hasDelegatesFocus()) {
     shadow_root->SetDelegatesFocus(shadow_root_init_dict.delegatesFocus());
-    UseCounter::Count(GetDocument(), UseCounter::kShadowRootDelegatesFocus);
+    UseCounter::Count(GetDocument(), WebFeature::kShadowRootDelegatesFocus);
   }
 
   return shadow_root;
@@ -2473,7 +2473,7 @@ Attr* Element::setAttributeNode(Attr* attr_node,
       attr_node->name() != attr_node->name().LowerASCII())
     UseCounter::Count(
         GetDocument(),
-        UseCounter::
+        WebFeature::
             kNonHTMLElementSetAttributeNodeFromHTMLDocumentNameNotLowercase);
 
   SynchronizeAllAttributes();
@@ -2771,7 +2771,8 @@ void Element::UpdateFocusAppearance(
         FrameSelection::kCloseTyping | FrameSelection::kClearTypingStyle |
             FrameSelection::kDoNotSetFocus);
     frame->Selection().RevealSelection();
-  } else if (GetLayoutObject() && !GetLayoutObject()->IsLayoutPart()) {
+  } else if (GetLayoutObject() &&
+             !GetLayoutObject()->IsLayoutEmbeddedContent()) {
     GetLayoutObject()->ScrollRectToVisible(BoundingBox());
   }
 }
@@ -4250,7 +4251,7 @@ void Element::AddPropertyToPresentationAttributeStyle(
 }
 
 bool Element::SupportsStyleSharing() const {
-  if (!RuntimeEnabledFeatures::styleSharingEnabled())
+  if (!RuntimeEnabledFeatures::StyleSharingEnabled())
     return false;
   if (!IsStyledElement() || !ParentOrShadowHostElement())
     return false;

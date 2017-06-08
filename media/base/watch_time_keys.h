@@ -21,6 +21,8 @@ MEDIA_EXPORT extern const char kWatchTimeAudioSrc[];
 MEDIA_EXPORT extern const char kWatchTimeAudioBattery[];
 MEDIA_EXPORT extern const char kWatchTimeAudioAc[];
 MEDIA_EXPORT extern const char kWatchTimeAudioEmbeddedExperience[];
+MEDIA_EXPORT extern const char kWatchTimeAudioNativeControlsOn[];
+MEDIA_EXPORT extern const char kWatchTimeAudioNativeControlsOff[];
 MEDIA_EXPORT extern const char kWatchTimeAudioVideoAll[];
 MEDIA_EXPORT extern const char kWatchTimeAudioVideoMse[];
 MEDIA_EXPORT extern const char kWatchTimeAudioVideoEme[];
@@ -28,6 +30,8 @@ MEDIA_EXPORT extern const char kWatchTimeAudioVideoSrc[];
 MEDIA_EXPORT extern const char kWatchTimeAudioVideoBattery[];
 MEDIA_EXPORT extern const char kWatchTimeAudioVideoAc[];
 MEDIA_EXPORT extern const char kWatchTimeAudioVideoEmbeddedExperience[];
+MEDIA_EXPORT extern const char kWatchTimeAudioVideoNativeControlsOn[];
+MEDIA_EXPORT extern const char kWatchTimeAudioVideoNativeControlsOff[];
 MEDIA_EXPORT extern const char kWatchTimeAudioVideoBackgroundAll[];
 MEDIA_EXPORT extern const char kWatchTimeAudioVideoBackgroundMse[];
 MEDIA_EXPORT extern const char kWatchTimeAudioVideoBackgroundEme[];
@@ -41,6 +45,7 @@ MEDIA_EXPORT extern const char
 // Markers which signify the watch time should be finalized immediately.
 MEDIA_EXPORT extern const char kWatchTimeFinalize[];
 MEDIA_EXPORT extern const char kWatchTimeFinalizePower[];
+MEDIA_EXPORT extern const char kWatchTimeFinalizeControls[];
 
 // Count of the number of underflow events during a media session.
 MEDIA_EXPORT extern const char kWatchTimeUnderflowCount[];
@@ -53,8 +58,17 @@ MEDIA_EXPORT extern const char kMeanTimeBetweenRebuffersAudioVideoSrc[];
 MEDIA_EXPORT extern const char kMeanTimeBetweenRebuffersAudioVideoMse[];
 MEDIA_EXPORT extern const char kMeanTimeBetweenRebuffersAudioVideoEme[];
 
+// Whether there were any rebuffers within a given watch time report.
+MEDIA_EXPORT extern const char kRebuffersCountAudioSrc[];
+MEDIA_EXPORT extern const char kRebuffersCountAudioMse[];
+MEDIA_EXPORT extern const char kRebuffersCountAudioEme[];
+MEDIA_EXPORT extern const char kRebuffersCountAudioVideoSrc[];
+MEDIA_EXPORT extern const char kRebuffersCountAudioVideoMse[];
+MEDIA_EXPORT extern const char kRebuffersCountAudioVideoEme[];
+
 MEDIA_EXPORT base::flat_set<base::StringPiece> GetWatchTimeKeys();
 MEDIA_EXPORT base::flat_set<base::StringPiece> GetWatchTimePowerKeys();
+MEDIA_EXPORT base::flat_set<base::StringPiece> GetWatchTimeControlsKeys();
 
 }  // namespace media
 

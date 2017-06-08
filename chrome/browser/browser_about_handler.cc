@@ -12,7 +12,6 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_util.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "build/build_config.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser_dialogs.h"
@@ -22,10 +21,6 @@
 #include "components/url_formatter/url_fixer.h"
 #include "content/public/common/content_features.h"
 #include "extensions/features/features.h"
-
-#if defined(OS_ANDROID)
-#include "chrome/browser/android/chrome_feature_list.h"
-#endif
 
 bool FixupBrowserAboutURL(GURL* url,
                           content::BrowserContext* browser_context) {
@@ -53,6 +48,14 @@ bool WillHandleBrowserAboutURL(GURL* url,
 
   std::string host(url->host());
   std::string path;
+
+  // Handle chrome://settings.
+  if (host == chrome::kChromeUISettingsHost)
+    return true;  // Prevent further rewriting - this is a valid URL.
+
+  // Do not handle chrome://help.
+  if (host == chrome::kChromeUIHelpHost)
+    return false;  // Handled in the HandleWebUI handler.
 
   // Replace about with chrome-urls.
   if (host == chrome::kChromeUIAboutHost)
@@ -87,31 +90,9 @@ bool WillHandleBrowserAboutURL(GURL* url,
     host = chrome::kChromeUIUberHost;
     path = chrome::kChromeUIExtensionsHost;
 #endif  // BUILDFLAG(ENABLE_EXTENSIONS)
-  // Redirect chrome://history.
   } else if (host == chrome::kChromeUIHistoryHost) {
+    // Redirect chrome://history.
     path = url->path();
-  // Redirect chrome://settings, unless MD settings is enabled.
-  } else if (host == chrome::kChromeUISettingsHost) {
-    if (base::FeatureList::IsEnabled(features::kMaterialDesignSettings)) {
-      return true;  // Prevent further rewriting - this is a valid URL.
-    } else if (::switches::SettingsWindowEnabled()) {
-      host = chrome::kChromeUISettingsFrameHost;
-    } else {
-      host = chrome::kChromeUIUberHost;
-      path = chrome::kChromeUISettingsHost + url->path();
-    }
-  // Redirect chrome://help, unless MD settings is enabled.
-  } else if (host == chrome::kChromeUIHelpHost) {
-    if (base::FeatureList::IsEnabled(features::kMaterialDesignSettings)) {
-      return false;  // Handled in the HandleWebUI handler.
-    } else if (::switches::SettingsWindowEnabled()) {
-      host = chrome::kChromeUISettingsFrameHost;
-      if (url->path().empty() || url->path() == "/")
-        path = chrome::kChromeUIHelpHost;
-    } else {
-      host = chrome::kChromeUIUberHost;
-      path = chrome::kChromeUIHelpHost + url->path();
-    }
   }
 
   GURL::Replacements replacements;
@@ -133,7 +114,8 @@ bool HandleNonNavigationAboutURL(const GURL& url) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::BindOnce(&chrome::AttemptRestart));
     return true;
-  } else if (base::LowerCaseEqualsASCII(spec, chrome::kChromeUIQuitURL)) {
+  }
+  if (base::LowerCaseEqualsASCII(spec, chrome::kChromeUIQuitURL)) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::BindOnce(&chrome::AttemptExit));
     return true;

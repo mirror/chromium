@@ -6,7 +6,7 @@
 #define PaymentRequestEvent_h
 
 #include "modules/EventModules.h"
-#include "modules/payments/PaymentAppRequest.h"
+#include "modules/payments/PaymentRequestEventInit.h"
 #include "modules/serviceworkers/ExtendableEvent.h"
 #include "platform/heap/Handle.h"
 
@@ -24,7 +24,9 @@ class MODULES_EXPORT PaymentRequestEvent final : public ExtendableEvent {
 
  public:
   static PaymentRequestEvent* Create(const AtomicString& type,
-                                     const PaymentAppRequest&,
+                                     const PaymentRequestEventInit&);
+  static PaymentRequestEvent* Create(const AtomicString& type,
+                                     const PaymentRequestEventInit&,
                                      RespondWithObserver*,
                                      WaitUntilObserver*);
   ~PaymentRequestEvent() override;
@@ -46,7 +48,7 @@ class MODULES_EXPORT PaymentRequestEvent final : public ExtendableEvent {
 
  private:
   PaymentRequestEvent(const AtomicString& type,
-                      const PaymentAppRequest&,
+                      const PaymentRequestEventInit&,
                       RespondWithObserver*,
                       WaitUntilObserver*);
 

@@ -226,10 +226,10 @@ ScriptPromise VRDisplay::requestPresent(ScriptState* script_state,
                                         const HeapVector<VRLayer>& layers) {
   DVLOG(1) << __FUNCTION__;
   ExecutionContext* execution_context = ExecutionContext::From(script_state);
-  UseCounter::Count(execution_context, UseCounter::kVRRequestPresent);
+  UseCounter::Count(execution_context, WebFeature::kVRRequestPresent);
   if (!execution_context->IsSecureContext()) {
     UseCounter::Count(execution_context,
-                      UseCounter::kVRRequestPresentInsecureOrigin);
+                      WebFeature::kVRRequestPresentInsecureOrigin);
   }
 
   ReportPresentationResult(PresentationResult::kRequested);
@@ -344,10 +344,11 @@ ScriptPromise VRDisplay::requestPresent(ScriptState* script_state,
     }
 
     pending_present_resolvers_.push_back(resolver);
+    device::mojom::blink::VRSubmitFrameClientPtr submit_frame_client;
     submit_frame_client_binding_.Close();
+    submit_frame_client_binding_.Bind(mojo::MakeRequest(&submit_frame_client));
     display_->RequestPresent(
-        secure_context,
-        submit_frame_client_binding_.CreateInterfacePtrAndBind(),
+        secure_context, std::move(submit_frame_client),
         ConvertToBaseCallback(
             WTF::Bind(&VRDisplay::OnPresentComplete, WrapPersistent(this))));
     pending_present_request_ = true;
@@ -833,7 +834,7 @@ void VRDisplay::ProcessScheduledAnimations(double timestamp) {
 }
 
 void VRDisplay::OnVSync(device::mojom::blink::VRPosePtr pose,
-                        mojo::common::mojom::blink::TimeDeltaPtr time,
+                        WTF::TimeDelta time_delta,
                         int16_t frame_id,
                         device::mojom::blink::VRVSyncProvider::Status error) {
   DVLOG(2) << __FUNCTION__;
@@ -846,8 +847,6 @@ void VRDisplay::OnVSync(device::mojom::blink::VRPosePtr pose,
   }
   pending_vsync_ = false;
 
-  WTF::TimeDelta time_delta =
-      WTF::TimeDelta::FromMicroseconds(time->microseconds);
   // Ensure a consistent timebase with document rAF.
   if (timebase_ < 0) {
     timebase_ = WTF::MonotonicallyIncreasingTime() - time_delta.InSecondsF();

@@ -57,8 +57,6 @@ class Visitor;
 class WebAssociatedURLLoader;
 struct WebAssociatedURLLoaderOptions;
 class WebDOMEvent;
-class WebData;
-class WebDataSource;
 class WebDocument;
 class WebElement;
 class WebLocalFrame;
@@ -128,12 +126,6 @@ class WebFrame {
   // frame name unique within the hierarchy.
   virtual void SetName(const WebString&) = 0;
 
-  // The urls of the given combination types of favicon (if any) specified by
-  // the document loaded in this frame. The iconTypesMask is a bit-mask of
-  // WebIconURL::Type values, used to select from the available set of icon
-  // URLs
-  virtual WebVector<WebIconURL> IconURLs(int icon_types_mask) const = 0;
-
   // The security origin of this frame.
   BLINK_EXPORT WebSecurityOrigin GetSecurityOrigin() const;
 
@@ -197,7 +189,10 @@ class WebFrame {
   void ClearOpener() { SetOpener(0); }
 
   // Returns the parent frame or 0 if this is a top-most frame.
-  BLINK_EXPORT WebFrame* Parent() const;
+  // TODO(sashab): "Virtual" is needed here temporarily to resolve linker errors
+  // in core/. Remove the "virtual" keyword once WebFrame and WebLocalFrameImpl
+  // have been moved to core/.
+  BLINK_EXPORT virtual WebFrame* Parent() const;
 
   // Returns the top-most frame in the hierarchy containing this frame.
   BLINK_EXPORT WebFrame* Top() const;
@@ -223,9 +218,6 @@ class WebFrame {
   virtual void DispatchUnloadEvent() = 0;
 
   // Scripting ----------------------------------------------------------
-
-  // Executes script in the context of the current page.
-  virtual void ExecuteScript(const WebScriptSource&) = 0;
 
   // Executes JavaScript in a new world associated with the web frame.
   // The script gets its own global scope and its own prototypes for
@@ -308,21 +300,8 @@ class WebFrame {
   // Load the given URL.
   virtual void LoadRequest(const WebURLRequest&) = 0;
 
-  // This method is short-hand for calling LoadData, where mime_type is
-  // "text/html" and text_encoding is "UTF-8".
-  virtual void LoadHTMLString(const WebData& html,
-                              const WebURL& base_url,
-                              const WebURL& unreachable_url = WebURL(),
-                              bool replace = false) = 0;
-
   // Stops any pending loads on the frame and its children.
   virtual void StopLoading() = 0;
-
-  // Returns the data source that is currently loading.  May be null.
-  virtual WebDataSource* ProvisionalDataSource() const = 0;
-
-  // Returns the data source that is currently loaded.
-  virtual WebDataSource* DataSource() const = 0;
 
   // View-source rendering mode.  Set this before loading an URL to cause
   // it to be rendered in view-source mode.
@@ -399,10 +378,6 @@ class WebFrame {
   // not be transformed itself. If no selection is present, the rect will be
   // empty ((0,0), (0,0)).
   virtual WebRect SelectionBoundsRect() const = 0;
-
-  // Dumps the layer tree, used by the accelerated compositor, in
-  // text form. This is used only by layout tests.
-  virtual WebString LayerTreeAsText(bool show_debug_info = false) const = 0;
 
   // Returns the frame inside a given frame or iframe element. Returns 0 if
   // the given element is not a frame, iframe or if the frame is empty.

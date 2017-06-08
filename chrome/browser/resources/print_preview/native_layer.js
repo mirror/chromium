@@ -73,8 +73,6 @@ cr.define('print_preview', function() {
     global.onPrivetCapabilitiesSet =
         this.onPrivetCapabilitiesSet_.bind(this);
     global.onPrivetPrintFailed = this.onPrivetPrintFailed_.bind(this);
-    global.onExtensionPrintersAdded =
-        this.onExtensionPrintersAdded_.bind(this);
     global.onExtensionCapabilitiesSet =
         this.onExtensionCapabilitiesSet_.bind(this);
     global.onEnableManipulateSettingsForTest =
@@ -126,7 +124,6 @@ cr.define('print_preview', function() {
     FILE_SELECTION_COMPLETE:
         'print_preview.NativeLayer.FILE_SELECTION_COMPLETE',
     GET_CAPABILITIES_FAIL: 'print_preview.NativeLayer.GET_CAPABILITIES_FAIL',
-    LOCAL_DESTINATIONS_SET: 'print_preview.NativeLayer.LOCAL_DESTINATIONS_SET',
     MANIPULATE_SETTINGS_FOR_TEST:
         'print_preview.NativeLayer.MANIPULATE_SETTINGS_FOR_TEST',
     PAGE_COUNT_READY: 'print_preview.NativeLayer.PAGE_COUNT_READY',
@@ -142,8 +139,6 @@ cr.define('print_preview', function() {
     PRIVET_CAPABILITIES_SET:
         'print_preview.NativeLayer.PRIVET_CAPABILITIES_SET',
     PRIVET_PRINT_FAILED: 'print_preview.NativeLayer.PRIVET_PRINT_FAILED',
-    EXTENSION_PRINTERS_ADDED:
-        'print_preview.NativeLayer.EXTENSION_PRINTERS_ADDED',
     EXTENSION_CAPABILITIES_SET:
         'print_preview.NativeLayer.EXTENSION_CAPABILITIES_SET',
     PRINT_PRESET_OPTIONS: 'print_preview.NativeLayer.PRINT_PRESET_OPTIONS',
@@ -228,8 +223,8 @@ cr.define('print_preview', function() {
     },
 
     /**
-     * Requests the system's local print destinations. A LOCAL_DESTINATIONS_SET
-     * event will be dispatched in response.
+     * Requests the system's local print destinations. The promise will be
+     * resolved with a list of the local destinations.
      * @return {!Promise<!Array<print_preview.LocalDestinationInfo>>}
      */
     getPrinters: function() {
@@ -263,11 +258,13 @@ cr.define('print_preview', function() {
     },
 
     /**
-     * Requests that extension system dispatches an event requesting the list of
-     * extension managed printers.
+     * Request a list of extension printers. Printers are reported as they are
+     * found by a series of 'extension-printers-added' events.
+     * @return {!Promise} Will be resolved when all extension managed printers
+     *     have been sent.
      */
-    startGetExtensionDestinations: function() {
-      chrome.send('getExtensionPrinters');
+    getExtensionPrinters: function() {
+      return cr.sendWithPromise('getExtensionPrinters');
     },
 
     /**
@@ -819,24 +816,6 @@ cr.define('print_preview', function() {
             new Event(NativeLayer.EventType.PRIVET_PRINT_FAILED);
       privetPrintFailedEvent.httpError = http_error;
       this.eventTarget_.dispatchEvent(privetPrintFailedEvent);
-    },
-
-    /**
-     * @param {Array<!{extensionId: string,
-     *                 extensionName: string,
-     *                 id: string,
-     *                 name: string,
-     *                 description: (string|undefined),
-     *                 provisional: (boolean|undefined)}>} printers The list
-     *     containing information about printers added by an extension.
-     * @param {boolean} done Whether this is the final list of extension
-     *     managed printers.
-     */
-    onExtensionPrintersAdded_: function(printers, done) {
-      var event = new Event(NativeLayer.EventType.EXTENSION_PRINTERS_ADDED);
-      event.printers = printers;
-      event.done = done;
-      this.eventTarget_.dispatchEvent(event);
     },
 
     /**

@@ -67,14 +67,14 @@ PresentationRequest* PresentationRequest::Create(
   for (size_t i = 0; i < urls.size(); ++i) {
     const KURL& parsed_url = KURL(execution_context->Url(), urls[i]);
 
-    if (!parsed_url.IsValid() || !(parsed_url.ProtocolIsInHTTPFamily() ||
-                                   parsed_url.ProtocolIs("cast"))) {
+    if (!parsed_url.IsValid()) {
       exception_state.ThrowDOMException(
           kSyntaxError, "'" + urls[i] + "' can't be resolved to a valid URL.");
       return nullptr;
     }
 
-    if (MixedContentChecker::IsMixedContent(
+    if (parsed_url.ProtocolIsInHTTPFamily() &&
+        MixedContentChecker::IsMixedContent(
             execution_context->GetSecurityOrigin(), parsed_url)) {
       exception_state.ThrowSecurityError(
           "Presentation of an insecure document [" + urls[i] +
@@ -100,16 +100,24 @@ void PresentationRequest::AddedEventListener(
     RegisteredEventListener& registered_listener) {
   EventTargetWithInlineData::AddedEventListener(event_type,
                                                 registered_listener);
-  if (event_type == EventTypeNames::connectionavailable)
+  if (event_type == EventTypeNames::connectionavailable) {
     UseCounter::Count(
         GetExecutionContext(),
-        UseCounter::kPresentationRequestConnectionAvailableEventListener);
+        WebFeature::kPresentationRequestConnectionAvailableEventListener);
+  }
 }
 
 bool PresentationRequest::HasPendingActivity() const {
   // Prevents garbage collecting of this object when not hold by another
   // object but still has listeners registered.
-  return GetExecutionContext() && HasEventListeners();
+  if (!GetExecutionContext())
+    return false;
+
+  if (HasEventListeners())
+    return true;
+
+  return availability_property_ && availability_property_->GetState() ==
+                                       ScriptPromisePropertyBase::kPending;
 }
 
 ScriptPromise PresentationRequest::start(ScriptState* script_state) {
@@ -216,10 +224,10 @@ void PresentationRequest::RecordOriginTypeAccess(
   DCHECK(execution_context);
   if (execution_context->IsSecureContext()) {
     UseCounter::Count(execution_context,
-                      UseCounter::kPresentationRequestSecureOrigin);
+                      WebFeature::kPresentationRequestSecureOrigin);
   } else {
     UseCounter::Count(execution_context,
-                      UseCounter::kPresentationRequestInsecureOrigin);
+                      WebFeature::kPresentationRequestInsecureOrigin);
   }
 }
 

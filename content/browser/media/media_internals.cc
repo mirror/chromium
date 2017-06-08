@@ -13,6 +13,7 @@
 #include "base/containers/flat_map.h"
 #include "base/containers/flat_set.h"
 #include "base/macros.h"
+#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_number_conversions.h"
@@ -351,15 +352,13 @@ class MediaInternals::MediaInternalsUMAHandler {
   void RecordWatchTime(base::StringPiece key,
                        base::TimeDelta value,
                        bool is_mtbr = false) {
-    base::Histogram::FactoryTimeGet(
-        key.as_string(),
+    base::UmaHistogramCustomTimes(
+        key.as_string(), value,
         // There are a maximum of 5 underflow events possible in a given 7s
         // watch time period, so the minimum value is 1.4s.
         is_mtbr ? base::TimeDelta::FromSecondsD(1.4)
                 : base::TimeDelta::FromSeconds(7),
-        base::TimeDelta::FromHours(10), 50,
-        base::HistogramBase::kUmaTargetedHistogramFlag)
-        ->AddTime(value);
+        base::TimeDelta::FromHours(10), 50);
   }
 
   void RecordMeanTimeBetweenRebuffers(base::StringPiece key,
@@ -367,7 +366,44 @@ class MediaInternals::MediaInternalsUMAHandler {
     RecordWatchTime(key, value, true);
   }
 
-  enum class FinalizeType { EVERYTHING, POWER_ONLY };
+  void RecordRebuffersCount(base::StringPiece key, int underflow_count) {
+    base::UmaHistogramCounts100(key.as_string(), underflow_count);
+  }
+
+  void RecordWatchTimeWithFilter(
+      const GURL& url,
+      WatchTimeInfo* watch_time_info,
+      const base::flat_set<base::StringPiece>& watch_time_filter) {
+    // UKM may be unavailable in content_shell or other non-chrome/ builds; it
+    // may also be unavailable if browser shutdown has started.
+    const bool has_ukm = !!ukm::UkmRecorder::Get();
+    std::unique_ptr<ukm::UkmEntryBuilder> builder;
+
+    for (auto it = watch_time_info->begin(); it != watch_time_info->end();) {
+      if (!watch_time_filter.empty() &&
+          watch_time_filter.find(it->first) == watch_time_filter.end()) {
+        ++it;
+        continue;
+      }
+
+      RecordWatchTime(it->first, it->second);
+
+      if (has_ukm && ShouldReportUkmWatchTime(it->first)) {
+        if (!builder)
+          builder = media_internals_->CreateUkmBuilder(url, kWatchTimeEvent);
+
+        // Strip Media.WatchTime. prefix for UKM since they're already
+        // grouped; arraysize() includes \0, so no +1 necessary for trailing
+        // period.
+        builder->AddMetric(it->first.substr(arraysize(kWatchTimeEvent)).data(),
+                           it->second.InMilliseconds());
+      }
+
+      it = watch_time_info->erase(it);
+    }
+  }
+
+  enum class FinalizeType { EVERYTHING, POWER_ONLY, CONTROLS_ONLY };
   void FinalizeWatchTime(bool has_video,
                          const GURL& url,
                          int* underflow_count,
@@ -378,64 +414,32 @@ class MediaInternals::MediaInternalsUMAHandler {
     if (!url.is_valid())
       return;
 
-    // UKM may be unavailable in content_shell or other non-chrome/ builds; it
-    // may also be unavailable if browser shutdown has started.
-    const bool has_ukm = !!ukm::UkmRecorder::Get();
-
-    if (finalize_type == FinalizeType::EVERYTHING) {
-      if (*underflow_count) {
+    switch (finalize_type) {
+      case FinalizeType::EVERYTHING:
         // Check for watch times entries that have corresponding MTBR entries
         // and report the MTBR value using watch_time / |underflow_count|
-        for (auto& kv : mtbr_keys_) {
-          auto it = watch_time_info->find(kv.first);
+        for (auto& mapping : rebuffer_keys_) {
+          auto it = watch_time_info->find(mapping.watch_time_key);
           if (it == watch_time_info->end())
             continue;
-          RecordMeanTimeBetweenRebuffers(kv.second,
-                                         it->second / *underflow_count);
+          if (*underflow_count) {
+            RecordMeanTimeBetweenRebuffers(mapping.mtbr_key,
+                                           it->second / *underflow_count);
+          }
+          RecordRebuffersCount(mapping.smooth_rate_key, *underflow_count);
         }
-
         *underflow_count = 0;
-      }
 
-      std::unique_ptr<ukm::UkmEntryBuilder> builder;
-      for (auto& kv : *watch_time_info) {
-        RecordWatchTime(kv.first, kv.second);
-
-        if (!has_ukm || !ShouldReportUkmWatchTime(kv.first))
-          continue;
-
-        if (!builder)
-          builder = media_internals_->CreateUkmBuilder(url, kWatchTimeEvent);
-
-        // Strip Media.WatchTime. prefix for UKM since they're already grouped;
-        // arraysize() includes \0, so no +1 necessary for trailing period.
-        builder->AddMetric(kv.first.substr(arraysize(kWatchTimeEvent)).data(),
-                           kv.second.InMilliseconds());
-      }
-
-      watch_time_info->clear();
-      return;
-    }
-
-    std::unique_ptr<ukm::UkmEntryBuilder> builder;
-    DCHECK_EQ(finalize_type, FinalizeType::POWER_ONLY);
-    for (auto power_key : watch_time_power_keys_) {
-      auto it = watch_time_info->find(power_key);
-      if (it == watch_time_info->end())
-        continue;
-      RecordWatchTime(it->first, it->second);
-
-      if (has_ukm && ShouldReportUkmWatchTime(it->first)) {
-        if (!builder)
-          builder = media_internals_->CreateUkmBuilder(url, kWatchTimeEvent);
-
-        // Strip Media.WatchTime. prefix for UKM since they're already grouped;
-        // arraysize() includes \0, so no +1 necessary for trailing period.
-        builder->AddMetric(it->first.substr(arraysize(kWatchTimeEvent)).data(),
-                           it->second.InMilliseconds());
-      }
-
-      watch_time_info->erase(it);
+        RecordWatchTimeWithFilter(url, watch_time_info,
+                                  base::flat_set<base::StringPiece>());
+        break;
+      case FinalizeType::POWER_ONLY:
+        RecordWatchTimeWithFilter(url, watch_time_info, watch_time_power_keys_);
+        break;
+      case FinalizeType::CONTROLS_ONLY:
+        RecordWatchTimeWithFilter(url, watch_time_info,
+                                  watch_time_controls_keys_);
+        break;
     }
   }
 
@@ -454,8 +458,17 @@ class MediaInternals::MediaInternalsUMAHandler {
   // Set of only the power related watch time keys.
   const base::flat_set<base::StringPiece> watch_time_power_keys_;
 
-  // Mapping of WatchTime metric keys to MeanTimeBetweenRebuffers (MTBR) keys.
-  const base::flat_map<base::StringPiece, base::StringPiece> mtbr_keys_;
+  // Set of only the controls related watch time keys.
+  const base::flat_set<base::StringPiece> watch_time_controls_keys_;
+
+  // Mapping of WatchTime metric keys to MeanTimeBetweenRebuffers (MTBR) and
+  // smooth rate (had zero rebuffers) keys.
+  struct RebufferMapping {
+    base::StringPiece watch_time_key;
+    base::StringPiece mtbr_key;
+    base::StringPiece smooth_rate_key;
+  };
+  const std::vector<RebufferMapping> rebuffer_keys_;
 
   content::MediaInternals* const media_internals_;
 
@@ -466,19 +479,23 @@ MediaInternals::MediaInternalsUMAHandler::MediaInternalsUMAHandler(
     content::MediaInternals* media_internals)
     : watch_time_keys_(media::GetWatchTimeKeys()),
       watch_time_power_keys_(media::GetWatchTimePowerKeys()),
-      mtbr_keys_({{media::kWatchTimeAudioSrc,
-                   media::kMeanTimeBetweenRebuffersAudioSrc},
-                  {media::kWatchTimeAudioMse,
-                   media::kMeanTimeBetweenRebuffersAudioMse},
-                  {media::kWatchTimeAudioEme,
-                   media::kMeanTimeBetweenRebuffersAudioEme},
-                  {media::kWatchTimeAudioVideoSrc,
-                   media::kMeanTimeBetweenRebuffersAudioVideoSrc},
-                  {media::kWatchTimeAudioVideoMse,
-                   media::kMeanTimeBetweenRebuffersAudioVideoMse},
-                  {media::kWatchTimeAudioVideoEme,
-                   media::kMeanTimeBetweenRebuffersAudioVideoEme}},
-                 base::KEEP_FIRST_OF_DUPES),
+      watch_time_controls_keys_(media::GetWatchTimeControlsKeys()),
+      rebuffer_keys_(
+          {{media::kWatchTimeAudioSrc, media::kMeanTimeBetweenRebuffersAudioSrc,
+            media::kRebuffersCountAudioSrc},
+           {media::kWatchTimeAudioMse, media::kMeanTimeBetweenRebuffersAudioMse,
+            media::kRebuffersCountAudioMse},
+           {media::kWatchTimeAudioEme, media::kMeanTimeBetweenRebuffersAudioEme,
+            media::kRebuffersCountAudioEme},
+           {media::kWatchTimeAudioVideoSrc,
+            media::kMeanTimeBetweenRebuffersAudioVideoSrc,
+            media::kRebuffersCountAudioVideoSrc},
+           {media::kWatchTimeAudioVideoMse,
+            media::kMeanTimeBetweenRebuffersAudioVideoMse,
+            media::kRebuffersCountAudioVideoMse},
+           {media::kWatchTimeAudioVideoEme,
+            media::kMeanTimeBetweenRebuffersAudioVideoEme,
+            media::kRebuffersCountAudioVideoEme}}),
       media_internals_(media_internals) {}
 
 void MediaInternals::MediaInternalsUMAHandler::SavePlayerState(
@@ -589,15 +606,28 @@ void MediaInternals::MediaInternalsUMAHandler::SavePlayerState(
                           &player_info.underflow_count,
                           &player_info.watch_time_info,
                           FinalizeType::EVERYTHING);
-      } else if (event.params.HasKey(media::kWatchTimeFinalizePower)) {
-        bool should_finalize;
-        DCHECK(event.params.GetBoolean(media::kWatchTimeFinalizePower,
-                                       &should_finalize) &&
-               should_finalize);
-        FinalizeWatchTime(player_info.has_video, player_info.origin_url,
-                          &player_info.underflow_count,
-                          &player_info.watch_time_info,
-                          FinalizeType::POWER_ONLY);
+      } else {
+        if (event.params.HasKey(media::kWatchTimeFinalizePower)) {
+          bool should_finalize;
+          DCHECK(event.params.GetBoolean(media::kWatchTimeFinalizePower,
+                                         &should_finalize) &&
+                 should_finalize);
+          FinalizeWatchTime(player_info.has_video, player_info.origin_url,
+                            &player_info.underflow_count,
+                            &player_info.watch_time_info,
+                            FinalizeType::POWER_ONLY);
+        }
+
+        if (event.params.HasKey(media::kWatchTimeFinalizeControls)) {
+          bool should_finalize;
+          DCHECK(event.params.GetBoolean(media::kWatchTimeFinalizeControls,
+                                         &should_finalize) &&
+                 should_finalize);
+          FinalizeWatchTime(player_info.has_video, player_info.origin_url,
+                            &player_info.underflow_count,
+                            &player_info.watch_time_info,
+                            FinalizeType::CONTROLS_ONLY);
+        }
       }
       break;
     }
@@ -667,11 +697,9 @@ void MediaInternals::MediaInternalsUMAHandler::ReportUMAForPipelineStatus(
     return;
 
   if (player_info.has_video && player_info.has_audio) {
-    base::LinearHistogram::FactoryGet(
-        GetUMANameForAVStream(player_info), 1, media::PIPELINE_STATUS_MAX,
-        media::PIPELINE_STATUS_MAX + 1,
-        base::HistogramBase::kUmaTargetedHistogramFlag)
-        ->Add(player_info.last_pipeline_status);
+    base::UmaHistogramExactLinear(GetUMANameForAVStream(player_info),
+                                  player_info.last_pipeline_status,
+                                  media::PIPELINE_STATUS_MAX);
   } else if (player_info.has_audio) {
     UMA_HISTOGRAM_ENUMERATION("Media.PipelineStatus.AudioOnly",
                               player_info.last_pipeline_status,
@@ -779,7 +807,7 @@ static bool ConvertEventToUpdate(int render_process_id,
     dict.SetString("params.pipeline_error",
                    media::MediaLog::PipelineStatusToString(error));
   } else {
-    dict.Set("params", event.params.DeepCopy());
+    dict.Set("params", base::MakeUnique<base::Value>(event.params));
   }
 
   *update = SerializeUpdate("media.onMediaEvent", &dict);
@@ -871,7 +899,7 @@ void MediaInternals::UpdateVideoCaptureDeviceCapabilities(
   video_capture_capabilities_cached_data_.Clear();
 
   for (const auto& device_format_pair : descriptors_and_formats) {
-    base::ListValue* format_list = new base::ListValue();
+    auto format_list = base::MakeUnique<base::ListValue>();
     // TODO(nisse): Representing format information as a string, to be
     // parsed by the javascript handler, is brittle. Consider passing
     // a list of mappings instead.
@@ -887,7 +915,7 @@ void MediaInternals::UpdateVideoCaptureDeviceCapabilities(
         new base::DictionaryValue());
     device_dict->SetString("id", descriptor.device_id);
     device_dict->SetString("name", descriptor.GetNameAndModel());
-    device_dict->Set("formats", format_list);
+    device_dict->Set("formats", std::move(format_list));
 #if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX) || \
     defined(OS_ANDROID)
     device_dict->SetString("captureApi", descriptor.GetCaptureApiTypeString());
@@ -970,7 +998,8 @@ void MediaInternals::UpdateAudioLog(AudioLogUpdateType type,
       return;
     } else if (!has_entry) {
       DCHECK_EQ(type, CREATE);
-      audio_streams_cached_data_.Set(cache_key, value->DeepCopy());
+      audio_streams_cached_data_.Set(cache_key,
+                                     base::MakeUnique<base::Value>(*value));
     } else if (type == UPDATE_AND_DELETE) {
       std::unique_ptr<base::Value> out_value;
       CHECK(audio_streams_cached_data_.Remove(cache_key, &out_value));

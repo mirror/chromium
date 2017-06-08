@@ -64,9 +64,21 @@ class ArcVoiceInteractionFrameworkService
   // VoiceInteractionFrameworkInstance::StartVoiceInteraction() is called.
   void StartSessionFromUserInteraction(const gfx::Rect& region);
 
+  // Turn on / off voice interaction in ARC.
+  // TODO(muyuanli): We should also check on Chrome side once CrOS side settings
+  // are ready (tracked separately at crbug.com/727873).
+  void SetVoiceInteractionEnabled(bool enable);
+
+  // Turn on / off voice interaction context (screenshot and structural data)
+  // in ARC.
+  void SetVoiceInteractionContextEnabled(bool enable);
+
   // Checks whether the caller is called within the time limit since last user
   // initiated interaction. Logs UMA metric when it's not.
   bool ValidateTimeSinceUserInteraction();
+
+  // Start the voice interaction setup wizard in container.
+  void StartVoiceInteractionSetupWizard();
 
   // For supporting ArcServiceManager::GetService<T>().
   static const char kArcServiceName[];

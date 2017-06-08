@@ -137,8 +137,6 @@ class PermissionRequestManager
 
   // PermissionPrompt::Delegate:
   const std::vector<PermissionRequest*>& Requests() override;
-  const std::vector<bool>& AcceptStates() override;
-  void ToggleAccept(int request_index, bool new_value) override;
   void TogglePersist(bool new_value) override;
   void Accept() override;
   void Deny() override;
@@ -198,9 +196,6 @@ class PermissionRequestManager
 
   // Whether the response to each request should be persisted.
   bool persist_;
-
-  // Whether each of the requests in |requests_| is accepted by the user.
-  std::vector<bool> accept_states_;
 
   base::ObserverList<Observer> observer_list_;
   AutoResponseType auto_response_for_test_;

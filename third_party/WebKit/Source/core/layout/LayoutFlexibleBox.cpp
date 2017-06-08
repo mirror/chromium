@@ -73,7 +73,7 @@ LayoutFlexibleBox::LayoutFlexibleBox(Element* element)
       in_layout_(false) {
   DCHECK(!ChildrenInline());
   if (!IsAnonymous())
-    UseCounter::Count(GetDocument(), UseCounter::kCSSFlexibleBox);
+    UseCounter::Count(GetDocument(), WebFeature::kCSSFlexibleBox);
 }
 
 LayoutFlexibleBox::~LayoutFlexibleBox() {}
@@ -162,9 +162,10 @@ float LayoutFlexibleBox::CountIntrinsicSizeForAlgorithmChange(
   float max_content_flex_fraction =
       max_preferred_logical_width.ToFloat() / flex_grow;
   if (previous_max_content_flex_fraction != -1 &&
-      max_content_flex_fraction != previous_max_content_flex_fraction)
+      max_content_flex_fraction != previous_max_content_flex_fraction) {
     UseCounter::Count(GetDocument(),
-                      UseCounter::kFlexboxIntrinsicSizeAlgorithmIsDifferent);
+                      WebFeature::kFlexboxIntrinsicSizeAlgorithmIsDifferent);
+  }
   return max_content_flex_fraction;
 }
 
@@ -925,7 +926,7 @@ LayoutUnit LayoutFlexibleBox::ComputeInnerFlexBaseSizeForChild(
   child.ClearOverrideSize();
 
   if (child.IsImage() || child.IsVideo() || child.IsCanvas())
-    UseCounter::Count(GetDocument(), UseCounter::kAspectRatioFlexItem);
+    UseCounter::Count(GetDocument(), WebFeature::kAspectRatioFlexItem);
 
   Length flex_basis = FlexBasisForChild(child);
   if (MainAxisLengthIsDefinite(child, flex_basis))
@@ -1604,7 +1605,7 @@ static LayoutUnit AlignmentOffset(LayoutUnit available_free_space,
       // FIXME: Implement these (https://crbug.com/507690). The extended grammar
       // is not enabled by default so we shouldn't hit this codepath.
       // The new grammar is only used when Grid Layout feature is enabled.
-      DCHECK(RuntimeEnabledFeatures::cssGridLayoutEnabled());
+      DCHECK(RuntimeEnabledFeatures::CSSGridLayoutEnabled());
       break;
   }
   return LayoutUnit();

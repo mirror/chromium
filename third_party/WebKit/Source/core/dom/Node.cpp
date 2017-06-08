@@ -90,7 +90,7 @@
 #include "core/html/HTMLSlotElement.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutBox.h"
-#include "core/layout/LayoutPart.h"
+#include "core/layout/LayoutEmbeddedContent.h"
 #include "core/page/ContextMenuController.h"
 #include "core/page/Page.h"
 #include "core/plugins/PluginView.h"
@@ -860,7 +860,7 @@ bool Node::IsInert() const {
     return true;
   }
 
-  if (RuntimeEnabledFeatures::inertAttributeEnabled()) {
+  if (RuntimeEnabledFeatures::InertAttributeEnabled()) {
     const Element* element = this->IsElementNode()
                                  ? ToElement(this)
                                  : FlatTreeTraversal::ParentElement(*this);
@@ -2163,9 +2163,9 @@ void Node::HandleLocalEvents(Event& event) {
     return;
 
   if (IsDisabledFormControl(this) && event.IsMouseEvent() &&
-      !RuntimeEnabledFeatures::sendMouseEventsDisabledFormControlsEnabled()) {
+      !RuntimeEnabledFeatures::SendMouseEventsDisabledFormControlsEnabled()) {
     UseCounter::Count(GetDocument(),
-                      UseCounter::kDispatchMouseEventOnDisabledFormControl);
+                      WebFeature::kDispatchMouseEventOnDisabledFormControl);
     return;
   }
 
@@ -2324,7 +2324,7 @@ void Node::DefaultEventHandler(Event* event) {
         frame->GetEventHandler().DefaultTextInputEventHandler(
             ToTextEvent(event));
     }
-  } else if (RuntimeEnabledFeatures::middleClickAutoscrollEnabled() &&
+  } else if (RuntimeEnabledFeatures::MiddleClickAutoscrollEnabled() &&
              event_type == EventTypeNames::mousedown && event->IsMouseEvent()) {
     MouseEvent* mouse_event = ToMouseEvent(event);
     if (mouse_event->button() ==
@@ -2359,7 +2359,7 @@ void Node::DefaultEventHandler(Event* event) {
   } else if (event->type() == EventTypeNames::webkitEditableContentChanged) {
     // TODO(chongz): Remove after shipped.
     // New InputEvent are dispatched in Editor::appliedEditing, etc.
-    if (!RuntimeEnabledFeatures::inputEventEnabled())
+    if (!RuntimeEnabledFeatures::InputEventEnabled())
       DispatchInputEvent();
   }
 }
@@ -2604,8 +2604,8 @@ WebPluginContainerBase* Node::GetWebPluginContainerBase() const {
   }
 
   LayoutObject* object = GetLayoutObject();
-  if (object && object->IsLayoutPart()) {
-    PluginView* plugin = ToLayoutPart(object)->Plugin();
+  if (object && object->IsLayoutEmbeddedContent()) {
+    PluginView* plugin = ToLayoutEmbeddedContent(object)->Plugin();
     if (plugin) {
       return plugin->GetWebPluginContainerBase();
     }

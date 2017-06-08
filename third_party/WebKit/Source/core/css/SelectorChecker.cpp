@@ -417,9 +417,10 @@ SelectorChecker::MatchStatus SelectorChecker::MatchForRelation(
 
     case CSSSelector::kShadowPseudo: {
       if (!is_ua_rule_ && mode_ != kQueryingRules &&
-          context.selector->GetPseudoType() == CSSSelector::kPseudoShadow)
+          context.selector->GetPseudoType() == CSSSelector::kPseudoShadow) {
         Deprecation::CountDeprecation(context.element->GetDocument(),
-                                      UseCounter::kCSSSelectorPseudoShadow);
+                                      WebFeature::kCSSSelectorPseudoShadow);
+      }
       // If we're in the same tree-scope as the scoping element, then following
       // a shadow descendant combinator would escape that and thus the scope.
       if (context.scope && context.scope->OwnerShadowHost() &&
@@ -435,9 +436,10 @@ SelectorChecker::MatchStatus SelectorChecker::MatchForRelation(
     }
 
     case CSSSelector::kShadowDeep: {
-      if (!is_ua_rule_ && mode_ != kQueryingRules)
+      if (!is_ua_rule_ && mode_ != kQueryingRules) {
         Deprecation::CountDeprecation(context.element->GetDocument(),
-                                      UseCounter::kCSSDeepCombinator);
+                                      WebFeature::kCSSDeepCombinator);
+      }
       if (ShadowRoot* root = context.element->ContainingShadowRoot()) {
         if (root->GetType() == ShadowRootType::kUserAgent)
           return kSelectorFailsCompletely;
@@ -450,9 +452,10 @@ SelectorChecker::MatchStatus SelectorChecker::MatchForRelation(
              element = element->ParentOrShadowHostElement()) {
           if (MatchForPseudoContent(next_context, *element, result) ==
               kSelectorMatches) {
-            if (context.element->IsInShadowTree())
+            if (context.element->IsInShadowTree()) {
               UseCounter::Count(context.element->GetDocument(),
-                                UseCounter::kCSSDeepCombinatorAndShadow);
+                                WebFeature::kCSSDeepCombinatorAndShadow);
+            }
             return kSelectorMatches;
           }
         }
@@ -464,9 +467,10 @@ SelectorChecker::MatchStatus SelectorChecker::MatchForRelation(
            next_context.element =
                ParentOrV0ShadowHostElement(*next_context.element)) {
         MatchStatus match = MatchSelector(next_context, result);
-        if (match == kSelectorMatches && context.element->IsInShadowTree())
+        if (match == kSelectorMatches && context.element->IsInShadowTree()) {
           UseCounter::Count(context.element->GetDocument(),
-                            UseCounter::kCSSDeepCombinatorAndShadow);
+                            WebFeature::kCSSDeepCombinatorAndShadow);
+        }
         if (match == kSelectorMatches || match == kSelectorFailsCompletely)
           return match;
         if (NextSelectorExceedsScope(next_context))
@@ -478,7 +482,7 @@ SelectorChecker::MatchStatus SelectorChecker::MatchForRelation(
     case CSSSelector::kShadowPiercingDescendant: {
       DCHECK_EQ(mode_, kQueryingRules);
       UseCounter::Count(context.element->GetDocument(),
-                        UseCounter::kCSSShadowPiercingDescendantCombinator);
+                        WebFeature::kCSSShadowPiercingDescendantCombinator);
       // TODO(kochi): parentOrOpenShadowHostElement() is necessary because
       // SelectorQuery can pass V0 shadow roots. All closed shadow roots are
       // already filtered out, thus once V0 is removed this logic can use
@@ -653,7 +657,7 @@ static bool AnyAttributeMatches(Element& element,
         AttributeValueMatches(attribute_item, match, selector_value,
                               kTextCaseASCIIInsensitive)) {
       UseCounter::Count(element.GetDocument(),
-                        UseCounter::kCaseInsensitiveAttrSelectorMatch);
+                        WebFeature::kCaseInsensitiveAttrSelectorMatch);
       return true;
     }
     if (selector_attr.NamespaceURI() != g_star_atom)
@@ -1086,7 +1090,7 @@ bool SelectorChecker::CheckPseudoClass(const SelectorCheckingContext& context,
     case CSSSelector::kPseudoUnresolved:
       return element.IsUnresolvedV0CustomElement();
     case CSSSelector::kPseudoDefined:
-      DCHECK(RuntimeEnabledFeatures::customElementsV1Enabled());
+      DCHECK(RuntimeEnabledFeatures::CustomElementsV1Enabled());
       return element.IsDefined();
     case CSSSelector::kPseudoHost:
     case CSSSelector::kPseudoHostContext:

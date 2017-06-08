@@ -193,6 +193,11 @@ class Internals final : public GarbageCollected<Internals>,
                             const String& thickness_value,
                             const String& background_color_value,
                             ExceptionState&);
+  void addActiveSuggestionMarker(const Range*,
+                                 const String& underline_color_value,
+                                 const String& thickness_value,
+                                 const String& background_color_value,
+                                 ExceptionState&);
   void setTextMatchMarkersActive(Node*,
                                  unsigned start_offset,
                                  unsigned end_offset,
@@ -261,10 +266,12 @@ class Internals final : public GarbageCollected<Internals>,
   unsigned mediaKeysCount();
   unsigned mediaKeySessionCount();
   unsigned suspendableObjectCount(Document*);
-  unsigned wheelEventHandlerCount(Document*);
-  unsigned scrollEventHandlerCount(Document*);
-  unsigned touchStartOrMoveEventHandlerCount(Document*);
-  unsigned touchEndOrCancelEventHandlerCount(Document*);
+  unsigned wheelEventHandlerCount(Document*) const;
+  unsigned scrollEventHandlerCount(Document*) const;
+  unsigned touchStartOrMoveEventHandlerCount(Document*) const;
+  unsigned touchEndOrCancelEventHandlerCount(Document*) const;
+  unsigned pointerEventHandlerCount(Document*) const;
+
   LayerRectList* touchEventTargetLayerRects(Document*, ExceptionState&);
 
   bool executeCommand(Document*,
@@ -510,7 +517,7 @@ class Internals final : public GarbageCollected<Internals>,
   float visualViewportScrollY();
 
   // Return true if the given use counter exists for the given document.
-  // |feature| must be one of the values from the UseCounter::Feature enum.
+  // |feature| must be one of the values from the WebFeature enum.
   bool isUseCounted(Document*, uint32_t feature);
   bool isCSSPropertyUseCounted(Document*, const String&);
   bool isAnimatedCSSPropertyUseCounted(Document*, const String&);

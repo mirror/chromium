@@ -20,7 +20,8 @@
 # same.  Because the whole point is that this test should fail when run, it's
 # not SKIP, just WONTFIX.
 fast/harness/sample-fail-mismatch-reftest.html [ WontFix ]
-
+# Not intended to be run as a test.
+fast/harness/test-expectations.html [ WontFix ]
 # Platform specific virtual test suites.
 [ Win Mac Android ] virtual/linux-subpixel [ WontFix ]
 
@@ -213,7 +214,6 @@ crbug.com/627953 [ Android Linux Mac ] fast/text/symbol-cmap.html [ WontFix ]
 
 # wasm tests. Currently under virtual/enable_wasm or virtual/enable_wasm_streaming
 crbug.com/642912 http/tests/wasm/ [ WontFix ]
-crbug.com/642912 external/wpt/wasm/ [ WontFix ]
 crbug.com/642912 virtual/mojo-loading/http/tests/wasm/ [ WontFix ]
 crbug.com/712970 http/tests/wasm_streaming/ [ WontFix ]
 crbug.com/712970 virtual/mojo-loading/http/tests/wasm_streaming/ [ WontFix ]

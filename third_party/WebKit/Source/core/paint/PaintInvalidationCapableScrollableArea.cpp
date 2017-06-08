@@ -50,7 +50,7 @@ static LayoutRect ScrollControlVisualRect(
   // transform space than their contained box (the scrollbarPaintOffset
   // transform node).
   if (!visual_rect.IsEmpty() &&
-      !RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+      !RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     // PaintInvalidatorContext::mapLocalRectToPaintInvalidationBacking() treats
     // the rect as in flipped block direction, but scrollbar controls don't
     // flip for block direction, so flip here to undo the flip in the function.
@@ -241,7 +241,7 @@ void PaintInvalidationCapableScrollableArea::
 void PaintInvalidationCapableScrollableArea::DidScrollWithScrollbar(
     ScrollbarPart part,
     ScrollbarOrientation orientation) {
-  UseCounter::Feature scrollbar_use_uma;
+  WebFeature scrollbar_use_uma;
   switch (part) {
     case kBackButtonStartPart:
     case kForwardButtonStartPart:
@@ -249,21 +249,21 @@ void PaintInvalidationCapableScrollableArea::DidScrollWithScrollbar(
     case kForwardButtonEndPart:
       scrollbar_use_uma =
           (orientation == kVerticalScrollbar
-               ? UseCounter::kScrollbarUseVerticalScrollbarButton
-               : UseCounter::kScrollbarUseHorizontalScrollbarButton);
+               ? WebFeature::kScrollbarUseVerticalScrollbarButton
+               : WebFeature::kScrollbarUseHorizontalScrollbarButton);
       break;
     case kThumbPart:
       scrollbar_use_uma =
           (orientation == kVerticalScrollbar
-               ? UseCounter::kScrollbarUseVerticalScrollbarThumb
-               : UseCounter::kScrollbarUseHorizontalScrollbarThumb);
+               ? WebFeature::kScrollbarUseVerticalScrollbarThumb
+               : WebFeature::kScrollbarUseHorizontalScrollbarThumb);
       break;
     case kBackTrackPart:
     case kForwardTrackPart:
       scrollbar_use_uma =
           (orientation == kVerticalScrollbar
-               ? UseCounter::kScrollbarUseVerticalScrollbarTrack
-               : UseCounter::kScrollbarUseHorizontalScrollbarTrack);
+               ? WebFeature::kScrollbarUseVerticalScrollbarTrack
+               : WebFeature::kScrollbarUseHorizontalScrollbarTrack);
       break;
     default:
       return;

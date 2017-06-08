@@ -104,8 +104,8 @@
 #include "content/public/common/url_utils.h"
 #include "device/geolocation/geolocation_service_context.h"
 #include "device/vr/features/features.h"
+#include "device/wake_lock/public/interfaces/wake_lock.mojom.h"
 #include "device/wake_lock/public/interfaces/wake_lock_context.mojom.h"
-#include "device/wake_lock/public/interfaces/wake_lock_service.mojom.h"
 #include "media/base/media_switches.h"
 #include "media/media_features.h"
 #include "media/mojo/interfaces/media_service.mojom.h"
@@ -2786,9 +2786,8 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
                    base::Unretained(geolocation_service_context)));
   }
 
-  GetInterfaceRegistry()->AddInterface<device::mojom::WakeLockService>(
-      base::Bind(&RenderFrameHostImpl::BindWakeLockServiceRequest,
-                 base::Unretained(this)));
+  GetInterfaceRegistry()->AddInterface<device::mojom::WakeLock>(base::Bind(
+      &RenderFrameHostImpl::BindWakeLockRequest, base::Unretained(this)));
 
 #if defined(OS_ANDROID)
   if (base::FeatureList::IsEnabled(features::kWebNfc)) {
@@ -3246,9 +3245,11 @@ void RenderFrameHostImpl::SetUpMojoIfNeeded() {
   RegisterMojoInterfaces();
   mojom::FrameFactoryPtr frame_factory;
   BindInterface(GetProcess(), &frame_factory);
-  frame_factory->CreateFrame(
-      routing_id_, MakeRequest(&frame_),
-      frame_host_interface_broker_binding_.CreateInterfacePtrAndBind());
+
+  mojom::FrameHostInterfaceBrokerPtr broker_proxy;
+  frame_host_interface_broker_binding_.Bind(mojo::MakeRequest(&broker_proxy));
+  frame_factory->CreateFrame(routing_id_, MakeRequest(&frame_),
+                             std::move(broker_proxy));
 
   service_manager::mojom::InterfaceProviderPtr remote_interfaces;
   frame_->GetInterfaceProvider(mojo::MakeRequest(&remote_interfaces));
@@ -3566,9 +3567,10 @@ void RenderFrameHostImpl::GetInterfaceProvider(
   service_manager::Identity child_identity = GetProcess()->GetChildIdentity();
   service_manager::Connector* connector =
       BrowserContext::GetConnectorFor(GetProcess()->GetBrowserContext());
-  connector->FilterInterfaces(
-      mojom::kNavigation_FrameSpec, child_identity, std::move(interfaces),
-      interface_provider_bindings_.CreateInterfacePtrAndBind(this));
+  service_manager::mojom::InterfaceProviderPtr provider;
+  interface_provider_bindings_.AddBinding(this, mojo::MakeRequest(&provider));
+  connector->FilterInterfaces(mojom::kNavigation_FrameSpec, child_identity,
+                              std::move(interfaces), std::move(provider));
 }
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
@@ -3887,10 +3889,10 @@ void RenderFrameHostImpl::OnMediaInterfaceFactoryConnectionError() {
   media_interface_proxy_.reset();
 }
 
-void RenderFrameHostImpl::BindWakeLockServiceRequest(
+void RenderFrameHostImpl::BindWakeLockRequest(
     const service_manager::BindSourceInfo& source_info,
-    device::mojom::WakeLockServiceRequest request) {
-  device::mojom::WakeLockService* renderer_wake_lock =
+    device::mojom::WakeLockRequest request) {
+  device::mojom::WakeLock* renderer_wake_lock =
       delegate_ ? delegate_->GetRendererWakeLock() : nullptr;
   if (renderer_wake_lock)
     renderer_wake_lock->AddClient(std::move(request));

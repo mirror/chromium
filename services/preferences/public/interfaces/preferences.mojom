@@ -32,6 +32,13 @@ interface PrefStoreObserver {
 
   // The PrefStore has been initialized (asynchronously).
   OnInitializationCompleted(bool succeeded);
+
+  // A preference write by this client has been applied. If this
+  // PrefStoreObserver is associated with a PersistentPrefStore, one
+  // OnPrefChangeAck() message is sent in response to each SetValues() message.
+  // This exists to ensure acks are ordered with respect to OnPrefsChanged
+  // messages.
+  OnPrefChangeAck();
 };
 
 // Captures the connections to a PrefStore by supplying the initial state of the
@@ -107,6 +114,7 @@ interface PrefStoreConnector {
           array<PrefStoreType> already_connected_types) =>
       (PersistentPrefStoreConnection connection,
        PersistentPrefStoreConnection? underlay,
+       array<PrefRegistration> remote_defaults,
        map<PrefStoreType, PrefStoreConnection> connections);
 
   // Connect to the user pref store. Used for incognito.
@@ -145,6 +153,12 @@ interface PersistentPrefStore {
   // Sets the values for prefs.
   SetValues(array<PrefUpdate> updates);
 
+  // Requests that the pref service transmits its value for a pref (or sub-pref
+  // if |sub_pref_path| is non-empty). The value will be transmitted over the
+  // corresponding PrefStoreObserver interface previous returned by
+  // PrefStoreConnector.Connect().
+  RequestValue(string key, array<string> sub_pref_path);
+
   // These mirror the C++ PersistentPrefStore methods.
   CommitPendingWrite();
   SchedulePendingLossyWrites();
@@ -153,10 +167,22 @@ interface PersistentPrefStore {
 
 // A registry of all prefs registered by a single client.
 struct PrefRegistry {
-  array<string> registrations;
+  // A list of pref keys that are private to this client. This client claims
+  // exclusive access to these prefs.
+  array<string> private_registrations;
+
+  // A list of pref keys that are public, but owned by another client.
+  array<string> foreign_registrations;
+
+  // A list of prefs that are publicly owned by this client. Each registration
+  // contains the key, the default value and flags. These are shared with
+  // clients that list the same pref in |foreign_registrations|.
+  array<PrefRegistration> public_registrations;
 };
 
 struct PrefRegistration {
+  string key;
+
   mojo.common.mojom.Value default_value;
 
   // A bitfield of flags. Flag values are defined in

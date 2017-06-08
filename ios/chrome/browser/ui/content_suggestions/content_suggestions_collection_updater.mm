@@ -221,7 +221,33 @@ const CGFloat kNumberOfMostVisitedLines = 2;
 }
 
 - (void)reloadSection:(ContentSuggestionsSectionInformation*)sectionInfo {
-  // TODO(crbug.com/707754): implement this method.
+  CSCollectionViewModel* model =
+      self.collectionViewController.collectionViewModel;
+  SectionIdentifier sectionIdentifier = SectionIdentifierForInfo(sectionInfo);
+
+  if (![model hasSectionForSectionIdentifier:sectionIdentifier]) {
+    [self.collectionViewController
+        addSuggestions:[self.dataSource itemsForSectionInfo:sectionInfo]
+         toSectionInfo:sectionInfo];
+    return;
+  }
+
+  NSInteger section = [model sectionForSectionIdentifier:sectionIdentifier];
+
+  NSMutableArray* oldItems = [NSMutableArray array];
+  NSInteger numberOfItems = [model numberOfItemsInSection:section];
+  for (NSInteger i = 0; i < numberOfItems; i++) {
+    [oldItems addObject:[NSIndexPath indexPathForItem:i inSection:section]];
+  }
+  [self.collectionViewController
+                   collectionView:self.collectionViewController.collectionView
+      willDeleteItemsAtIndexPaths:oldItems];
+
+  [self addSuggestionsToModel:[self.dataSource itemsForSectionInfo:sectionInfo]
+              withSectionInfo:sectionInfo];
+
+  [self.collectionViewController.collectionView
+      reloadSections:[NSIndexSet indexSetWithIndex:section]];
 }
 
 - (void)faviconAvailableForItem:(CollectionViewItem<SuggestedContent>*)item {
@@ -243,6 +269,23 @@ const CGFloat kNumberOfMostVisitedLines = 2;
 - (ContentSuggestionType)contentSuggestionTypeForItem:
     (CollectionViewItem*)item {
   return ContentSuggestionTypeForItemType(item.type);
+}
+
+- (NSIndexPath*)removeEmptySuggestionsForSectionInfo:
+    (ContentSuggestionsSectionInformation*)sectionInfo {
+  CSCollectionViewModel* model =
+      self.collectionViewController.collectionViewModel;
+  NSInteger sectionIdentifier = SectionIdentifierForInfo(sectionInfo);
+
+  NSArray<CSCollectionViewItem*>* existingItems =
+      [model itemsInSectionWithIdentifier:sectionIdentifier];
+  if (existingItems.count == 1 && existingItems[0].type == ItemTypeEmpty) {
+    [model removeItemWithType:ItemTypeEmpty
+        fromSectionWithIdentifier:sectionIdentifier];
+    NSInteger section = [model sectionForSectionIdentifier:sectionIdentifier];
+    return [NSIndexPath indexPathForItem:0 inSection:section];
+  }
+  return nil;
 }
 
 - (NSArray<NSIndexPath*>*)
@@ -267,15 +310,6 @@ addSuggestionsToModel:(NSArray<CSCollectionViewItem*>*)suggestions
     return indexPaths;
   }
 
-  BOOL emptyItemRemoved = NO;
-  NSArray<CSCollectionViewItem*>* existingItems =
-      [model itemsInSectionWithIdentifier:sectionIdentifier];
-  if (existingItems.count > 0 && existingItems[0].type == ItemTypeEmpty) {
-    [model removeItemWithType:ItemTypeEmpty
-        fromSectionWithIdentifier:sectionIdentifier];
-    emptyItemRemoved = YES;
-  }
-
   [suggestions enumerateObjectsUsingBlock:^(CSCollectionViewItem* item,
                                             NSUInteger index, BOOL* stop) {
     NSInteger section = [model sectionForSectionIdentifier:sectionIdentifier];
@@ -291,11 +325,7 @@ addSuggestionsToModel:(NSArray<CSCollectionViewItem*>*)suggestions
     [self fetchFaviconForItem:item];
     item.delegate = self;
 
-    if (!emptyItemRemoved || index > 0) {
-      [indexPaths addObject:addedIndexPath];
-    } else {
-      [self.collectionViewController.collectionViewLayout invalidateLayout];
-    }
+    [indexPaths addObject:addedIndexPath];
   }];
 
   return indexPaths;
@@ -401,6 +431,10 @@ addSuggestionsToModel:(NSArray<CSCollectionViewItem*>*)suggestions
                                     toSectionInfo:mostVisitedSectionInfo];
   }
   [UIView setAnimationsEnabled:YES];
+}
+
+- (void)dismissItem:(CSCollectionViewItem*)item {
+  [self.dataSource dismissSuggestion:item.suggestionIdentifier];
 }
 
 #pragma mark - SuggestedContentDelegate

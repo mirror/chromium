@@ -5,8 +5,10 @@
 #include "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.h"
 
 #include "base/strings/string_split.h"
+#include "gpu/command_buffer/service/command_buffer_service.h"
 #include "gpu/command_buffer/service/feature_info.h"
 #include "gpu/command_buffer/service/gl_utils.h"
+#include "gpu/command_buffer/service/gpu_tracer.h"
 #include "ui/gl/gl_version_info.h"
 
 namespace gpu {
@@ -70,22 +72,51 @@ void PassthroughResources::Destroy(bool have_context) {
   texture_object_map.clear();
 }
 
-GLES2DecoderPassthroughImpl::GLES2DecoderPassthroughImpl(ContextGroup* group)
-    : commands_to_process_(0),
+GLES2DecoderPassthroughImpl::GLES2DecoderPassthroughImpl(
+    GLES2DecoderClient* client,
+    CommandBufferServiceBase* command_buffer_service,
+    ContextGroup* group)
+    : GLES2Decoder(command_buffer_service),
+      client_(client),
+      commands_to_process_(0),
       debug_marker_manager_(),
-      logger_(&debug_marker_manager_),
+      logger_(&debug_marker_manager_, client_),
       surface_(),
       context_(),
       offscreen_(false),
       group_(group),
       feature_info_(new FeatureInfo),
+      gpu_decoder_category_(TRACE_EVENT_API_GET_CATEGORY_GROUP_ENABLED(
+          TRACE_DISABLED_BY_DEFAULT("gpu_decoder"))),
+      gpu_trace_level_(2),
+      gpu_trace_commands_(false),
+      gpu_debug_commands_(false),
+      has_robustness_extension_(false),
+      context_lost_(false),
+      reset_by_robustness_extension_(false),
       weak_ptr_factory_(this) {
+  DCHECK(client);
   DCHECK(group);
 }
 
 GLES2DecoderPassthroughImpl::~GLES2DecoderPassthroughImpl() {}
 
 GLES2Decoder::Error GLES2DecoderPassthroughImpl::DoCommands(
+    unsigned int num_commands,
+    const volatile void* buffer,
+    int num_entries,
+    int* entries_processed) {
+  if (gpu_debug_commands_) {
+    return DoCommandsImpl<true>(num_commands, buffer, num_entries,
+                                entries_processed);
+  } else {
+    return DoCommandsImpl<false>(num_commands, buffer, num_entries,
+                                 entries_processed);
+  }
+}
+
+template <bool DebugImpl>
+GLES2Decoder::Error GLES2DecoderPassthroughImpl::DoCommandsImpl(
     unsigned int num_commands,
     const volatile void* buffer,
     int num_entries,
@@ -113,6 +144,11 @@ GLES2Decoder::Error GLES2DecoderPassthroughImpl::DoCommands(
       break;
     }
 
+    if (DebugImpl && log_commands()) {
+      LOG(ERROR) << "[" << logger_.GetLogPrefix() << "]"
+                 << "cmd: " << GetCommandName(command);
+    }
+
     const unsigned int arg_count = size - 1;
     unsigned int command_index = command - kFirstGLES2Command;
     if (command_index < arraysize(command_info)) {
@@ -120,6 +156,15 @@ GLES2Decoder::Error GLES2DecoderPassthroughImpl::DoCommands(
       unsigned int info_arg_count = static_cast<unsigned int>(info.arg_count);
       if ((info.arg_flags == cmd::kFixed && arg_count == info_arg_count) ||
           (info.arg_flags == cmd::kAtLeastN && arg_count >= info_arg_count)) {
+        bool doing_gpu_trace = false;
+        if (DebugImpl && gpu_trace_commands_) {
+          if (CMD_FLAG_GET_TRACE_LEVEL(info.cmd_flags) <= gpu_trace_level_) {
+            doing_gpu_trace = true;
+            gpu_tracer_->Begin(TRACE_DISABLED_BY_DEFAULT("gpu_decoder"),
+                               GetCommandName(command), kTraceDecoder);
+          }
+        }
+
         uint32_t immediate_data_size = (arg_count - info_arg_count) *
                                        sizeof(CommandBufferEntry);  // NOLINT
         if (info.cmd_handler) {
@@ -127,11 +172,19 @@ GLES2Decoder::Error GLES2DecoderPassthroughImpl::DoCommands(
         } else {
           result = error::kUnknownCommand;
         }
+
+        if (DebugImpl && doing_gpu_trace) {
+          gpu_tracer_->End(kTraceDecoder);
+        }
       } else {
         result = error::kInvalidArguments;
       }
     } else {
       result = DoCommonCommand(command, arg_count, cmd_data);
+    }
+
+    if (result == error::kNoError && context_lost_) {
+      result = error::kLostContext;
     }
 
     if (result != error::kDeferCommandUntilLater) {
@@ -161,6 +214,9 @@ bool GLES2DecoderPassthroughImpl::Initialize(
   context_ = context;
   surface_ = surface;
   offscreen_ = offscreen;
+
+  // Create GPU Tracer for timing values.
+  gpu_tracer_.reset(new GPUTracer(this));
 
   if (!group_->Initialize(this, attrib_helper.context_type,
                           disallowed_features)) {
@@ -221,6 +277,9 @@ bool GLES2DecoderPassthroughImpl::Initialize(
     InitializeGLDebugLogging();
   }
 
+  has_robustness_extension_ = feature_info_->feature_flags().khr_robustness ||
+                              feature_info_->feature_flags().ext_robustness;
+
   set_initialized();
   return true;
 }
@@ -242,6 +301,12 @@ void GLES2DecoderPassthroughImpl::Destroy(bool have_context) {
   DeleteServiceObjects(
       &vertex_array_id_map_, have_context,
       [](GLuint vertex_array) { glDeleteVertexArraysOES(1, &vertex_array); });
+
+  // Destroy the GPU Tracer which may own some in process GPU Timings.
+  if (gpu_tracer_) {
+    gpu_tracer_->Destroy(have_context);
+    gpu_tracer_.reset();
+  }
 
   // Destroy the surface before the context, some surface destructors make GL
   // calls.
@@ -290,9 +355,23 @@ bool GLES2DecoderPassthroughImpl::MakeCurrent() {
   if (!context_.get())
     return false;
 
+  if (WasContextLost()) {
+    LOG(ERROR) << "  GLES2DecoderPassthroughImpl: Trying to make lost context "
+                  "current.";
+    return false;
+  }
+
   if (!context_->MakeCurrent(surface_.get())) {
-    LOG(ERROR) << "  GLES2DecoderImpl: Context lost during MakeCurrent.";
+    LOG(ERROR)
+        << "  GLES2DecoderPassthroughImpl: Context lost during MakeCurrent.";
     MarkContextLost(error::kMakeCurrentFailed);
+    group_->LoseContexts(error::kUnknown);
+    return false;
+  }
+
+  if (CheckResetStatus()) {
+    LOG(ERROR) << "  GLES2DecoderPassthroughImpl: Context reset detected after "
+                  "MakeCurrent.";
     group_->LoseContexts(error::kUnknown);
     return false;
   }
@@ -305,7 +384,7 @@ gpu::gles2::GLES2Util* GLES2DecoderPassthroughImpl::GetGLES2Util() {
 }
 
 gl::GLContext* GLES2DecoderPassthroughImpl::GetGLContext() {
-  return nullptr;
+  return context_.get();
 }
 
 gpu::gles2::ContextGroup* GLES2DecoderPassthroughImpl::GetContextGroup() {
@@ -434,22 +513,6 @@ size_t GLES2DecoderPassthroughImpl::GetCreatedBackTextureCountForTest() {
   return 0;
 }
 
-void GLES2DecoderPassthroughImpl::SetFenceSyncReleaseCallback(
-    const FenceSyncReleaseCallback& callback) {
-  fence_sync_release_callback_ = callback;
-}
-
-void GLES2DecoderPassthroughImpl::SetWaitSyncTokenCallback(
-    const WaitSyncTokenCallback& callback) {
-  wait_sync_token_callback_ = callback;
-}
-
-void GLES2DecoderPassthroughImpl::SetDescheduleUntilFinishedCallback(
-    const NoParamCallback& callback) {}
-
-void GLES2DecoderPassthroughImpl::SetRescheduleAfterFinishedCallback(
-    const NoParamCallback& callback) {}
-
 gpu::gles2::QueryManager* GLES2DecoderPassthroughImpl::GetQueryManager() {
   return nullptr;
 }
@@ -484,10 +547,12 @@ void GLES2DecoderPassthroughImpl::ProcessPendingQueries(bool did_finish) {
 }
 
 bool GLES2DecoderPassthroughImpl::HasMoreIdleWork() const {
-  return false;
+  return gpu_tracer_->HasTracesToProcess();
 }
 
-void GLES2DecoderPassthroughImpl::PerformIdleWork() {}
+void GLES2DecoderPassthroughImpl::PerformIdleWork() {
+  gpu_tracer_->ProcessTraces();
+}
 
 bool GLES2DecoderPassthroughImpl::HasPollingWork() const {
   return false;
@@ -542,24 +607,40 @@ gpu::gles2::ErrorState* GLES2DecoderPassthroughImpl::GetErrorState() {
   return nullptr;
 }
 
-void GLES2DecoderPassthroughImpl::SetShaderCacheCallback(
-    const ShaderCacheCallback& callback) {}
-
 void GLES2DecoderPassthroughImpl::WaitForReadPixels(base::Closure callback) {}
 
 bool GLES2DecoderPassthroughImpl::WasContextLost() const {
-  return false;
+  return context_lost_;
 }
 
 bool GLES2DecoderPassthroughImpl::WasContextLostByRobustnessExtension() const {
-  return false;
+  return WasContextLost() && reset_by_robustness_extension_;
 }
 
 void GLES2DecoderPassthroughImpl::MarkContextLost(
-    error::ContextLostReason reason) {}
+    error::ContextLostReason reason) {
+  // Only lose the context once.
+  if (WasContextLost()) {
+    return;
+  }
+
+  // Don't make GL calls in here, the context might not be current.
+  command_buffer_service()->SetContextLostReason(reason);
+  context_lost_ = true;
+}
 
 gpu::gles2::Logger* GLES2DecoderPassthroughImpl::GetLogger() {
   return &logger_;
+}
+
+void GLES2DecoderPassthroughImpl::BeginDecoding() {
+  gpu_tracer_->BeginDecoding();
+  gpu_trace_commands_ = gpu_tracer_->IsTracing() && *gpu_decoder_category_;
+  gpu_debug_commands_ = log_commands() || debug() || gpu_trace_commands_;
+}
+
+void GLES2DecoderPassthroughImpl::EndDecoding() {
+  gpu_tracer_->EndDecoding();
 }
 
 const gpu::gles2::ContextState* GLES2DecoderPassthroughImpl::GetContextState() {
@@ -569,6 +650,14 @@ const gpu::gles2::ContextState* GLES2DecoderPassthroughImpl::GetContextState() {
 scoped_refptr<ShaderTranslatorInterface>
 GLES2DecoderPassthroughImpl::GetTranslator(GLenum type) {
   return nullptr;
+}
+
+const char* GLES2DecoderPassthroughImpl::GetCommandName(
+    unsigned int command_id) const {
+  if (command_id >= kFirstGLES2Command && command_id < kNumCommands) {
+    return gles2::GetCommandName(static_cast<CommandId>(command_id));
+  }
+  return GetCommonCommandName(static_cast<cmd::CommandId>(command_id));
 }
 
 void* GLES2DecoderPassthroughImpl::GetScratchMemory(size_t size) {
@@ -741,9 +830,54 @@ bool GLES2DecoderPassthroughImpl::FlushErrors() {
   while (error != GL_NO_ERROR) {
     errors_.insert(error);
     had_error = true;
+
+    // Check for context loss on out-of-memory errors
+    if (error == GL_OUT_OF_MEMORY && !WasContextLost() && CheckResetStatus()) {
+      MarkContextLost(error::kOutOfMemory);
+      group_->LoseContexts(error::kUnknown);
+      break;
+    }
+
     error = glGetError();
   }
   return had_error;
+}
+
+bool GLES2DecoderPassthroughImpl::CheckResetStatus() {
+  DCHECK(!WasContextLost());
+  DCHECK(context_->IsCurrent(nullptr));
+
+  if (IsRobustnessSupported()) {
+    // If the reason for the call was a GL error, we can try to determine the
+    // reset status more accurately.
+    GLenum driver_status = glGetGraphicsResetStatusARB();
+    if (driver_status == GL_NO_ERROR) {
+      return false;
+    }
+
+    switch (driver_status) {
+      case GL_GUILTY_CONTEXT_RESET_ARB:
+        MarkContextLost(error::kGuilty);
+        break;
+      case GL_INNOCENT_CONTEXT_RESET_ARB:
+        MarkContextLost(error::kInnocent);
+        break;
+      case GL_UNKNOWN_CONTEXT_RESET_ARB:
+        MarkContextLost(error::kUnknown);
+        break;
+      default:
+        NOTREACHED();
+        return false;
+    }
+    reset_by_robustness_extension_ = true;
+    return true;
+  }
+  return false;
+}
+
+bool GLES2DecoderPassthroughImpl::IsRobustnessSupported() {
+  return has_robustness_extension_ &&
+         context_->WasAllocatedUsingRobustnessExtension();
 }
 
 bool GLES2DecoderPassthroughImpl::IsEmulatedQueryTarget(GLenum target) const {

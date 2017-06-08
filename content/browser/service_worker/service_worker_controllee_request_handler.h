@@ -13,6 +13,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
 #include "content/browser/service_worker/service_worker_request_handler.h"
+#include "content/browser/service_worker/service_worker_url_job_wrapper.h"
 #include "content/browser/service_worker/service_worker_url_request_job.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/public/common/request_context_frame_type.h"
@@ -29,7 +30,6 @@ class URLRequest;
 namespace content {
 
 class ResourceRequestBodyImpl;
-class ServiceWorkerURLJobWrapper;
 class ServiceWorkerRegistration;
 class ServiceWorkerVersion;
 
@@ -37,7 +37,8 @@ class ServiceWorkerVersion;
 // controlled documents.
 class CONTENT_EXPORT ServiceWorkerControlleeRequestHandler
     : public ServiceWorkerRequestHandler,
-      public ServiceWorkerURLRequestJob::Delegate {
+      public ServiceWorkerURLRequestJob::Delegate,
+      public NON_EXPORTED_BASE(ServiceWorkerURLJobWrapper::Delegate) {
  public:
   ServiceWorkerControlleeRequestHandler(
       base::WeakPtr<ServiceWorkerContextCore> context,
@@ -67,10 +68,9 @@ class CONTENT_EXPORT ServiceWorkerControlleeRequestHandler
   // cases. (In fallback-to-network cases we basically forward the request
   // to the request to the next request handler)
   // URLLoaderRequestHandler overrides:
-  void MaybeCreateLoaderFactory(
-      const ResourceRequest& request,
-      ResourceContext* resource_context,
-      base::OnceCallback<void(mojom::URLLoaderFactory*)> callback) override;
+  void MaybeCreateLoader(const ResourceRequest& request,
+                         ResourceContext* resource_context,
+                         LoaderCallback callback) override;
 
  private:
   FRIEND_TEST_ALL_PREFIXES(ServiceWorkerControlleeRequestHandlerTest,

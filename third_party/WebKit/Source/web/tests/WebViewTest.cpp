@@ -403,14 +403,14 @@ TEST_P(WebViewTest, SetBaseBackgroundColor) {
   EXPECT_EQ(kBlue, web_view->BackgroundColor());
 
   WebURL base_url = URLTestHelpers::ToKURL("http://example.com/");
-  FrameTestHelpers::LoadHTMLString(web_view->MainFrame(),
+  FrameTestHelpers::LoadHTMLString(web_view->MainFrameImpl(),
                                    "<html><head><style>body "
                                    "{background-color:#227788}</style></head></"
                                    "html>",
                                    base_url);
   EXPECT_EQ(kDarkCyan, web_view->BackgroundColor());
 
-  FrameTestHelpers::LoadHTMLString(web_view->MainFrame(),
+  FrameTestHelpers::LoadHTMLString(web_view->MainFrameImpl(),
                                    "<html><head><style>body "
                                    "{background-color:rgba(255,0,0,0.5)}</"
                                    "style></head></html>",
@@ -423,7 +423,7 @@ TEST_P(WebViewTest, SetBaseBackgroundColor) {
   EXPECT_EQ(0xBFE93A31, web_view->BackgroundColor());
 
   web_view->SetBaseBackgroundColor(kTransparent);
-  FrameTestHelpers::LoadHTMLString(web_view->MainFrame(),
+  FrameTestHelpers::LoadHTMLString(web_view->MainFrameImpl(),
                                    "<html><head><style>body "
                                    "{background-color:transparent}</style></"
                                    "head></html>",
@@ -816,7 +816,7 @@ TEST_P(WebViewTest, TextInputInfoUpdateStyleAndLayout) {
   // during Document::updateStyleAndLayout code, thus incrementing the DOM tree
   // version and freaking out the EphemeralRange (invalidating it).
   FrameTestHelpers::LoadHTMLString(
-      web_view_impl->MainFrame(),
+      web_view_impl->MainFrameImpl(),
       "<svg height='100%' version='1.1' viewBox='0 0 14 14' width='100%'>"
       "<use xmlns:xlink='http://www.w3.org/1999/xlink' xlink:href='#foo'></use>"
       "<path d='M 100 100 L 300 100 L 200 300 z' fill='#000'></path>"
@@ -2596,7 +2596,7 @@ TEST_P(WebViewTest, ShowPressOnTransformedLink) {
 
   WebURL base_url = URLTestHelpers::ToKURL("http://example.com/");
   FrameTestHelpers::LoadHTMLString(
-      web_view_impl->MainFrame(),
+      web_view_impl->MainFrameImpl(),
       "<a href='http://www.test.com' style='position: absolute; left: 20px; "
       "top: 20px; width: 200px; transform:translateZ(0);'>A link to "
       "highlight</a>",
@@ -2835,7 +2835,7 @@ TEST_P(WebViewTest, DoNotFocusCurrentFrameOnNavigateFromLocalFrame) {
 
   WebURL base_url = URLTestHelpers::ToKURL("http://example.com/");
   FrameTestHelpers::LoadHTMLString(
-      web_view_impl->MainFrame(),
+      web_view_impl->MainFrameImpl(),
       "<html><body><iframe src=\"about:blank\"></iframe></body></html>",
       base_url);
 
@@ -2931,8 +2931,8 @@ TEST_P(WebViewTest, DISABLED_ChooseValueFromDateTimeChooser) {
 TEST_P(WebViewTest, ChooseValueFromDateTimeChooser) {
 #endif
   bool original_multiple_fields_flag =
-      RuntimeEnabledFeatures::inputMultipleFieldsUIEnabled();
-  RuntimeEnabledFeatures::setInputMultipleFieldsUIEnabled(false);
+      RuntimeEnabledFeatures::InputMultipleFieldsUIEnabled();
+  RuntimeEnabledFeatures::SetInputMultipleFieldsUIEnabled(false);
   DateTimeChooserWebViewClient client;
   std::string url = RegisterMockedHttpURLLoad("date_time_chooser.html");
   WebViewBase* web_view_impl =
@@ -3006,7 +3006,7 @@ TEST_P(WebViewTest, ChooseValueFromDateTimeChooser) {
   // Clear the WebViewClient from the webViewHelper to avoid use-after-free in
   // the WebViewHelper destructor.
   web_view_helper_.Reset();
-  RuntimeEnabledFeatures::setInputMultipleFieldsUIEnabled(
+  RuntimeEnabledFeatures::SetInputMultipleFieldsUIEnabled(
       original_multiple_fields_flag);
 }
 
@@ -3960,7 +3960,7 @@ TEST_P(WebViewTest, SubframeBeforeUnloadUseCounter) {
   WebViewBase* web_view = web_view_helper_.InitializeAndLoad(
       base_url_ + "single_iframe.html", true);
 
-  WebFrame* frame = web_view_helper_.WebView()->MainFrame();
+  WebLocalFrame* frame = web_view_helper_.WebView()->MainFrameImpl();
   Document* document =
       ToLocalFrame(web_view_helper_.WebView()->GetPage()->MainFrame())
           ->GetDocument();
@@ -4183,7 +4183,7 @@ TEST_P(WebViewTest, ResizeForPrintingViewportUnits) {
   web_view->Resize(WebSize(800, 600));
 
   WebURL base_url = URLTestHelpers::ToKURL("http://example.com/");
-  FrameTestHelpers::LoadHTMLString(web_view->MainFrame(),
+  FrameTestHelpers::LoadHTMLString(web_view->MainFrameImpl(),
                                    "<style>"
                                    "  body { margin: 0px; }"
                                    "  #vw { width: 100vw; height: 100vh; }"
@@ -4227,7 +4227,7 @@ TEST_P(WebViewTest, WidthMediaQueryWithPageZoomAfterPrinting) {
   web_view->SetZoomLevel(WebView::ZoomFactorToZoomLevel(2.0));
 
   WebURL base_url = URLTestHelpers::ToKURL("http://example.com/");
-  FrameTestHelpers::LoadHTMLString(web_view->MainFrame(),
+  FrameTestHelpers::LoadHTMLString(web_view->MainFrameImpl(),
                                    "<style>"
                                    "  @media (max-width: 600px) {"
                                    "    div { color: green }"
@@ -4262,7 +4262,7 @@ TEST_P(WebViewTest, ViewportUnitsPrintingWithPageZoom) {
   web_view->SetZoomLevel(WebView::ZoomFactorToZoomLevel(2.0));
 
   WebURL base_url = URLTestHelpers::ToKURL("http://example.com/");
-  FrameTestHelpers::LoadHTMLString(web_view->MainFrame(),
+  FrameTestHelpers::LoadHTMLString(web_view->MainFrameImpl(),
                                    "<style>"
                                    "  body { margin: 0 }"
                                    "  #t1 { width: 100% }"
@@ -4300,7 +4300,7 @@ TEST_P(WebViewTest, DeviceEmulationResetScrollbars) {
   web_view->Resize(WebSize(800, 600));
 
   WebURL base_url = URLTestHelpers::ToKURL("http://example.com/");
-  FrameTestHelpers::LoadHTMLString(web_view->MainFrame(),
+  FrameTestHelpers::LoadHTMLString(web_view->MainFrameImpl(),
                                    "<!doctype html>"
                                    "<meta name='viewport'"
                                    "    content='width=device-width'>"
@@ -4312,7 +4312,7 @@ TEST_P(WebViewTest, DeviceEmulationResetScrollbars) {
   WebLocalFrameBase* frame = web_view->MainFrameImpl();
   auto* frame_view = frame->GetFrameView();
   EXPECT_FALSE(frame_view->VisualViewportSuppliesScrollbars());
-  if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
+  if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
     EXPECT_NE(nullptr,
               frame_view->LayoutViewportScrollableArea()->VerticalScrollbar());
   } else {
@@ -4336,7 +4336,7 @@ TEST_P(WebViewTest, DeviceEmulationResetScrollbars) {
 
   // The view should once again provide the scrollbars.
   EXPECT_FALSE(frame_view->VisualViewportSuppliesScrollbars());
-  if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
+  if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
     EXPECT_NE(nullptr,
               frame_view->LayoutViewportScrollableArea()->VerticalScrollbar());
   } else {

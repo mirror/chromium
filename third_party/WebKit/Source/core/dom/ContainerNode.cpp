@@ -63,9 +63,49 @@ using namespace HTMLNames;
 static void DispatchChildInsertionEvents(Node&);
 static void DispatchChildRemovalEvents(Node&);
 
+namespace {
+
+// This class is helpful to detect necessity of
+// RecheckNodeInsertionStructuralPrereq() after removeChild*() inside
+// InsertBefore(), AppendChild(), and ReplaceChild().
+//
+// After removeChild*(), we can detect necessity of
+// RecheckNodeInsertionStructuralPrereq() by
+//  - DOM tree version of |node_document_| was increased by at most one.
+//  - If |node| and |parent| are in different documents, Document for
+//    |parent| must not be changed.
+class DOMTreeMutationDetector {
+  STACK_ALLOCATED();
+
+ public:
+  DOMTreeMutationDetector(const Node& node, const Node& parent)
+      : node_document_(node.GetDocument()),
+        parent_document_(parent.GetDocument()),
+        original_node_document_version_(node_document_->DomTreeVersion()),
+        original_parent_document_version_(parent_document_->DomTreeVersion()) {}
+
+  bool HadAtMostOneDOMMutation() {
+    if (node_document_->DomTreeVersion() > original_node_document_version_ + 1)
+      return false;
+    if (node_document_ == parent_document_)
+      return true;
+    return parent_document_->DomTreeVersion() ==
+           original_parent_document_version_;
+  }
+
+ private:
+  const Member<Document> node_document_;
+  const Member<Document> parent_document_;
+  const uint64_t original_node_document_version_;
+  const uint64_t original_parent_document_version_;
+};
+
+}  // namespace
+
 // This dispatches various events; DOM mutation events, blur events, IFRAME
 // unload events, etc.
-static inline void CollectChildrenAndRemoveFromOldParent(
+// Returns true if DOM mutation should be proceeded.
+static inline bool CollectChildrenAndRemoveFromOldParent(
     Node& node,
     NodeVector& nodes,
     ExceptionState& exception_state) {
@@ -73,11 +113,12 @@ static inline void CollectChildrenAndRemoveFromOldParent(
     DocumentFragment& fragment = ToDocumentFragment(node);
     GetChildNodes(fragment, nodes);
     fragment.RemoveChildren();
-    return;
+    return !nodes.IsEmpty();
   }
   nodes.push_back(&node);
   if (ContainerNode* old_parent = node.parentNode())
     old_parent->RemoveChild(&node, exception_state);
+  return !exception_state.HadException() && !nodes.IsEmpty();
 }
 
 void ContainerNode::ParserTakeAllChildrenFrom(ContainerNode& old_parent) {
@@ -113,10 +154,16 @@ bool ContainerNode::ContainsConsideringHostElements(
   return new_child.contains(this);
 }
 
+// EnsurePreInsertionValidity() is an implementation of step 2 to 6 of
+// https://dom.spec.whatwg.org/#concept-node-ensure-pre-insertion-validity and
+// https://dom.spec.whatwg.org/#concept-node-replace .
 DISABLE_CFI_PERF
-bool ContainerNode::CheckAcceptChild(const Node* new_child,
-                                     const Node* old_child,
-                                     ExceptionState& exception_state) const {
+bool ContainerNode::EnsurePreInsertionValidity(
+    const Node* new_child,
+    const Node* next,
+    const Node* old_child,
+    ExceptionState& exception_state) const {
+  DCHECK(!(next && old_child));
   // Not mentioned in spec: throw NotFoundError if newChild is null
   if (!new_child) {
     exception_state.ThrowDOMException(kNotFoundError,
@@ -145,16 +192,17 @@ bool ContainerNode::CheckAcceptChild(const Node* new_child,
     return false;
   }
 
-  return CheckAcceptChildGuaranteedNodeTypes(*new_child, old_child,
+  return CheckAcceptChildGuaranteedNodeTypes(*new_child, next, old_child,
                                              exception_state);
 }
 
 bool ContainerNode::CheckAcceptChildGuaranteedNodeTypes(
     const Node& new_child,
+    const Node* next,
     const Node* old_child,
     ExceptionState& exception_state) const {
   if (IsDocumentNode())
-    return ToDocument(this)->CanAcceptChild(new_child, old_child,
+    return ToDocument(this)->CanAcceptChild(new_child, next, old_child,
                                             exception_state);
   // Skip containsIncludingHostElements() if !newChild.parentNode() &&
   // isConnected(). |newChild| typically has no parentNode(), and it means
@@ -168,6 +216,8 @@ bool ContainerNode::CheckAcceptChildGuaranteedNodeTypes(
         kHierarchyRequestError, "The new child element contains the parent.");
     return false;
   }
+  // TODO(tkent): IsChildTypeAllowed() is unnecessary for
+  // RecheckNodeInsertionStructuralPrereq().
   if (!IsChildTypeAllowed(new_child)) {
     exception_state.ThrowDOMException(
         kHierarchyRequestError,
@@ -178,41 +228,19 @@ bool ContainerNode::CheckAcceptChildGuaranteedNodeTypes(
   return true;
 }
 
-bool ContainerNode::CollectChildrenAndRemoveFromOldParentWithOptionalRecheck(
+// We need this extra structural check because prior DOM mutation operations
+// dispatched synchronous events, and their handlers might modified DOM trees.
+bool ContainerNode::RecheckNodeInsertionStructuralPrereq(
+    const NodeVector& new_children,
     const Node* next,
-    const Node* old_child,
-    Node& new_child,
-    NodeVector& new_children,
-    ExceptionState& exception_state) const {
-  Document& new_doc = new_child.GetDocument();
-  Document& this_doc = GetDocument();
-  uint64_t original_version_for_new_node = new_doc.DomTreeVersion();
-  uint64_t original_version_for_this = this_doc.DomTreeVersion();
-  CollectChildrenAndRemoveFromOldParent(new_child, new_children,
-                                        exception_state);
-  if (exception_state.HadException() || new_children.IsEmpty())
-    return false;
-  // We can skip the following hierarchy check if we have no DOM mutations other
-  // than one in CollectChildrenAndRemoveFromOldParent(). We can detect it by
-  //  - DOM tree version of |new_doc| was increased by at most one.
-  //  - If |this| and |new_child| are in different documents, Document for
-  //    |this| must not be changed.
-  if (new_doc.DomTreeVersion() <= original_version_for_new_node + 1) {
-    if (&new_doc == &this_doc)
-      return true;
-    if (this_doc.DomTreeVersion() == original_version_for_this)
-      return true;
-  }
-
-  // We need this extra check because synchronous event handlers triggered
-  // while CollectChildrenAndRemoveFromOldParent() modified DOM trees.
+    ExceptionState& exception_state) {
   for (const auto& child : new_children) {
     if (child->parentNode()) {
       // A new child was added to another parent before adding to this
       // node.  Firefox and Edge don't throw in this case.
       return false;
     }
-    if (!CheckAcceptChildGuaranteedNodeTypes(*child, old_child,
+    if (!CheckAcceptChildGuaranteedNodeTypes(*child, next, nullptr,
                                              exception_state))
       return false;
   }
@@ -320,14 +348,21 @@ Node* ContainerNode::InsertBefore(Node* new_child,
   }
 
   // Make sure adding the new child is OK.
-  if (!CheckAcceptChild(new_child, 0, exception_state))
+  if (!EnsurePreInsertionValidity(new_child, ref_child, nullptr,
+                                  exception_state))
     return new_child;
   DCHECK(new_child);
 
   NodeVector targets;
-  if (!CollectChildrenAndRemoveFromOldParentWithOptionalRecheck(
-          ref_child, nullptr, *new_child, targets, exception_state))
+  DOMTreeMutationDetector detector(*new_child, *this);
+  if (!CollectChildrenAndRemoveFromOldParent(*new_child, targets,
+                                             exception_state))
     return new_child;
+  if (!detector.HadAtMostOneDOMMutation()) {
+    if (!RecheckNodeInsertionStructuralPrereq(targets, ref_child,
+                                              exception_state))
+      return new_child;
+  }
 
   NodeVector post_insertion_notification_targets;
   {
@@ -388,7 +423,7 @@ bool ContainerNode::CheckParserAcceptChild(const Node& new_child) const {
     return true;
   // TODO(esprehn): Are there other conditions where the parser can create
   // invalid trees?
-  return ToDocument(*this).CanAcceptChild(new_child, nullptr,
+  return ToDocument(*this).CanAcceptChild(new_child, nullptr, nullptr,
                                           IGNORE_EXCEPTION_FOR_TESTING);
 }
 
@@ -450,7 +485,8 @@ Node* ContainerNode::ReplaceChild(Node* new_child,
   // doctype and parent is not a document, throw a HierarchyRequestError.
   // 6. If parent is a document, and any of the statements below, switched on
   // node, are true, throw a HierarchyRequestError.
-  if (!CheckAcceptChild(new_child, old_child, exception_state))
+  if (!EnsurePreInsertionValidity(new_child, nullptr, old_child,
+                                  exception_state))
     return old_child;
 
   // 3. If child’s parent is not parent, then throw a NotFoundError.
@@ -466,18 +502,21 @@ Node* ContainerNode::ReplaceChild(Node* new_child,
   if (next == new_child)
     next = new_child->nextSibling();
 
+  bool needs_recheck = false;
   // 10. Adopt node into parent’s node document.
   // TODO(tkent): Actually we do only RemoveChild() as a part of 'adopt'
   // operation.
   //
-  // Though the following
-  // CollectChildrenAndRemoveFromOldParentWithOptionalRecheck() also calls
+  // Though the following CollectChildrenAndRemoveFromOldParent() also calls
   // RemoveChild(), we'd like to call RemoveChild() here to make a separated
   // MutationRecord.
   if (ContainerNode* new_child_parent = new_child->parentNode()) {
+    DOMTreeMutationDetector detector(*new_child, *this);
     new_child_parent->RemoveChild(new_child, exception_state);
     if (exception_state.HadException())
       return nullptr;
+    if (!detector.HadAtMostOneDOMMutation())
+      needs_recheck = true;
   }
 
   NodeVector targets;
@@ -494,20 +533,24 @@ Node* ContainerNode::ReplaceChild(Node* new_child,
     //    1. Set removedNodes to a list solely containing child.
     //    2. Remove child from its parent with the suppress observers flag set.
     if (ContainerNode* old_child_parent = old_child->parentNode()) {
+      DOMTreeMutationDetector detector(*old_child, *this);
       old_child_parent->RemoveChild(old_child, exception_state);
       if (exception_state.HadException())
         return nullptr;
+      if (!detector.HadAtMostOneDOMMutation())
+        needs_recheck = true;
     }
-
-    // Does this one more time because removeChild() fires a MutationEvent.
-    if (!CheckAcceptChild(new_child, old_child, exception_state))
-      return old_child;
 
     // 13. Let nodes be node’s children if node is a DocumentFragment node, and
     // a list containing solely node otherwise.
-    if (!CollectChildrenAndRemoveFromOldParentWithOptionalRecheck(
-            next, old_child, *new_child, targets, exception_state))
+    DOMTreeMutationDetector detector(*new_child, *this);
+    if (!CollectChildrenAndRemoveFromOldParent(*new_child, targets,
+                                               exception_state))
       return old_child;
+    if (!detector.HadAtMostOneDOMMutation() || needs_recheck) {
+      if (!RecheckNodeInsertionStructuralPrereq(targets, next, exception_state))
+        return old_child;
+    }
 
     // 10. Adopt node into parent’s node document.
     // 14. Insert node into parent before reference child with the suppress
@@ -616,7 +659,7 @@ Node* ContainerNode::RemoveChild(Node* old_child,
   }
 
   {
-    HTMLFrameOwnerElement::UpdateSuspendScope suspend_widget_hierarchy_updates;
+    HTMLFrameOwnerElement::PluginDisposeSuspendScope suspend_plugin_dispose;
     DocumentOrderedMap::RemoveScope tree_remove_scope;
 
     Node* prev = child->previousSibling();
@@ -672,7 +715,7 @@ void ContainerNode::ParserRemoveChild(Node& old_child) {
   ChildListMutationScope(*this).WillRemoveChild(old_child);
   old_child.NotifyMutationObserversNodeWillDetach();
 
-  HTMLFrameOwnerElement::UpdateSuspendScope suspend_widget_hierarchy_updates;
+  HTMLFrameOwnerElement::PluginDisposeSuspendScope suspend_plugin_dispose;
   DocumentOrderedMap::RemoveScope tree_remove_scope;
 
   Node* prev = old_child.previousSibling();
@@ -710,7 +753,7 @@ void ContainerNode::RemoveChildren(SubtreeModificationAction action) {
   }
 
   {
-    HTMLFrameOwnerElement::UpdateSuspendScope suspend_widget_hierarchy_updates;
+    HTMLFrameOwnerElement::PluginDisposeSuspendScope suspend_plugin_dispose;
     DocumentOrderedMap::RemoveScope tree_remove_scope;
     {
       EventDispatchForbiddenScope assert_no_event_dispatch;
@@ -734,14 +777,20 @@ void ContainerNode::RemoveChildren(SubtreeModificationAction action) {
 Node* ContainerNode::AppendChild(Node* new_child,
                                  ExceptionState& exception_state) {
   // Make sure adding the new child is ok
-  if (!CheckAcceptChild(new_child, 0, exception_state))
+  if (!EnsurePreInsertionValidity(new_child, nullptr, nullptr, exception_state))
     return new_child;
   DCHECK(new_child);
 
   NodeVector targets;
-  if (!CollectChildrenAndRemoveFromOldParentWithOptionalRecheck(
-          nullptr, nullptr, *new_child, targets, exception_state))
+  DOMTreeMutationDetector detector(*new_child, *this);
+  if (!CollectChildrenAndRemoveFromOldParent(*new_child, targets,
+                                             exception_state))
     return new_child;
+  if (!detector.HadAtMostOneDOMMutation()) {
+    if (!RecheckNodeInsertionStructuralPrereq(targets, nullptr,
+                                              exception_state))
+      return new_child;
+  }
 
   NodeVector post_insertion_notification_targets;
   {

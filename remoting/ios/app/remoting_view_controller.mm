@@ -17,6 +17,7 @@
 #import "remoting/ios/app/host_collection_view_controller.h"
 #import "remoting/ios/app/host_view_controller.h"
 #import "remoting/ios/app/remoting_settings_view_controller.h"
+#import "remoting/ios/app/remoting_theme.h"
 #import "remoting/ios/domain/client_session_details.h"
 #import "remoting/ios/facade/remoting_authentication.h"
 #import "remoting/ios/facade/remoting_service.h"
@@ -26,9 +27,6 @@
 #include "remoting/client/connect_to_host_info.h"
 
 static CGFloat kHostInset = 5.f;
-
-static UIColor* kChromotingBlueBackground =
-    [UIColor colorWithRed:0.11f green:0.23f blue:0.66f alpha:1.f];
 
 @interface RemotingViewController ()<HostCollectionViewControllerDelegate,
                                      UIViewControllerAnimatedTransitioning,
@@ -68,23 +66,29 @@ static UIColor* kChromotingBlueBackground =
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
 
-    _appBar.headerViewController.headerView.backgroundColor =
-        kChromotingBlueBackground;
-    _appBar.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.title = @"Chrome Remote Desktop";
 
     UIBarButtonItem* menuButton =
-        [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Settings"]
+        [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_menu"]
                                          style:UIBarButtonItemStyleDone
                                         target:self
                                         action:@selector(didSelectSettings)];
     self.navigationItem.leftBarButtonItem = menuButton;
 
-    UIBarButtonItem* refreshButton =
-        [[UIBarButtonItem alloc] initWithTitle:@"Refresh"
-                                         style:UIBarButtonItemStyleDone
-                                        target:self
-                                        action:@selector(didSelectRefresh)];
+    UIBarButtonItem* refreshButton = [[UIBarButtonItem alloc]
+        initWithImage:[UIImage imageNamed:@"ic_refresh"]
+                style:UIBarButtonItemStyleDone
+               target:self
+               action:@selector(didSelectRefresh)];
     self.navigationItem.rightBarButtonItem = refreshButton;
+
+    _appBar.headerViewController.headerView.backgroundColor =
+        RemotingTheme.hostListBackgroundColor;
+    _appBar.navigationBar.backgroundColor =
+        RemotingTheme.hostListBackgroundColor;
+    MDCNavigationBarTextColorAccessibilityMutator* mutator =
+        [[MDCNavigationBarTextColorAccessibilityMutator alloc] init];
+    [mutator mutate:_appBar.navigationBar];
   }
   return self;
 }
@@ -192,6 +196,7 @@ static UIColor* kChromotingBlueBackground =
     return;
   }
 
+  [MDCSnackbarManager dismissAndCallCompletionBlocksWithCategory:nil];
   ClientConnectionViewController* clientConnectionViewController =
       [[ClientConnectionViewController alloc] initWithHostInfo:cell.hostInfo];
   [self.navigationController pushViewController:clientConnectionViewController

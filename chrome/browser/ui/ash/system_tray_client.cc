@@ -8,7 +8,6 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/public/interfaces/constants.mojom.h"
 #include "ash/shell.h"
-#include "base/feature_list.h"
 #include "base/logging.h"
 #include "base/memory/weak_ptr.h"
 #include "base/metrics/user_metrics.h"
@@ -35,7 +34,6 @@
 #include "chrome/browser/ui/scoped_tabbed_browser_displayer.h"
 #include "chrome/browser/ui/singleton_tabs.h"
 #include "chrome/browser/upgrade_detector.h"
-#include "chrome/common/chrome_features.h"
 #include "chrome/common/url_constants.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/session_manager_client.h"
@@ -102,7 +100,9 @@ SystemTrayClient::SystemTrayClient() : binding_(this) {
       ->GetConnector()
       ->BindInterface(ash::mojom::kServiceName, &system_tray_);
   // Register this object as the client interface implementation.
-  system_tray_->SetClient(binding_.CreateInterfacePtrAndBind());
+  ash::mojom::SystemTrayClientPtr client;
+  binding_.Bind(mojo::MakeRequest(&client));
+  system_tray_->SetClient(std::move(client));
 
   // If this observes clock setting changes before ash comes up the IPCs will
   // be queued on |system_tray_|.
@@ -415,9 +415,9 @@ void SystemTrayClient::ShowNetworkSettingsHelper(const std::string& network_id,
 
   std::string page = chrome::kInternetSubPage;
   if (!network_id.empty()) {
-    if (base::FeatureList::IsEnabled(features::kMaterialDesignSettings))
-      page = chrome::kNetworkDetailSubPage;
-    page += "?guid=" + net::EscapeUrlEncodedData(network_id, true);
+    page = chrome::kNetworkDetailSubPage;
+    page += "?guid=";
+    page += net::EscapeUrlEncodedData(network_id, true);
     if (show_configure)
       page += "&showConfigure=true";
   }

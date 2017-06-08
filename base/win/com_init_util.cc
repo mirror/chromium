@@ -10,6 +10,8 @@
 namespace base {
 namespace win {
 
+#if DCHECK_IS_ON()
+
 namespace {
 
 enum class ComInitStatus {
@@ -53,10 +55,10 @@ ComInitStatus GetComInitStatusForThread() {
 
 }  // namespace
 
-#if DCHECK_IS_ON()
 void AssertComInitialized() {
   DCHECK_NE(ComInitStatus::NONE, GetComInitStatusForThread());
 }
+
 #endif  // DCHECK_IS_ON()
 
 }  // namespace win

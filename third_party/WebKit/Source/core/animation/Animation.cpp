@@ -747,7 +747,7 @@ bool Animation::CanStartAnimationOnCompositor(
   // If the optional element id set has no value we must be in SPv1 mode in
   // which case we trust the compositing logic will create a layer if needed.
   if (composited_element_ids.has_value()) {
-    DCHECK(RuntimeEnabledFeatures::slimmingPaintV2Enabled());
+    DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
     Element* target_element =
         ToKeyframeEffectReadOnly(content_.Get())->Target();
     if (!target_element)
@@ -756,11 +756,10 @@ bool Animation::CanStartAnimationOnCompositor(
     if (target_element->GetLayoutObject() &&
         target_element->GetLayoutObject()->IsBoxModelObject() &&
         target_element->GetLayoutObject()->HasLayer()) {
-      PaintLayer* paint_layer =
-          ToLayoutBoxModelObject(target_element->GetLayoutObject())->Layer();
       CompositorElementId target_element_id =
-          CompositorElementIdFromPaintLayerId(
-              paint_layer->UniqueId(), CompositorElementIdNamespace::kPrimary);
+          CompositorElementIdFromLayoutObjectId(
+              target_element->GetLayoutObject()->UniqueId(),
+              CompositorElementIdNamespace::kPrimary);
       if (!composited_element_ids->Contains(target_element_id))
         return false;
     } else {
@@ -1116,7 +1115,7 @@ void Animation::AddedEventListener(
   EventTargetWithInlineData::AddedEventListener(event_type,
                                                 registered_listener);
   if (event_type == EventTypeNames::finish)
-    UseCounter::Count(GetExecutionContext(), UseCounter::kAnimationFinishEvent);
+    UseCounter::Count(GetExecutionContext(), WebFeature::kAnimationFinishEvent);
 }
 
 void Animation::PauseForTesting(double pause_time) {

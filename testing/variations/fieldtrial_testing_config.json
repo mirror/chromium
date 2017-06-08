@@ -491,21 +491,6 @@
             ]
         }
     ],
-    "ContextualSearch": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Default",
-                    "params": {
-                        "enable_ranker_logging": "true"
-                    }
-                }
-            ]
-        }
-    ],
     "CopylessPaste": [
         {
             "platforms": [
@@ -1414,23 +1399,6 @@
             "experiments": [
                 {
                     "name": "Mach"
-                }
-            ]
-        }
-    ],
-    "MarkNonSecureAs": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "ios",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "show-non-secure-passwords-cc-ui"
                 }
             ]
         }

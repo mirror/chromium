@@ -79,6 +79,7 @@
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/context_menu_params.h"
+#include "content/public/common/favicon_url.h"
 #include "content/public/common/file_chooser_file_info.h"
 #include "content/public/common/file_chooser_params.h"
 #include "content/public/common/isolated_world_ids.h"
@@ -675,6 +676,30 @@ MhtmlSaveStatus WriteMHTMLToDisk(std::vector<WebThreadSafeData> mhtml_contents,
 
 double ConvertToBlinkTime(const base::TimeTicks& time_ticks) {
   return (time_ticks - base::TimeTicks()).InSecondsF();
+}
+
+FaviconURL::IconType ToFaviconType(blink::WebIconURL::Type type) {
+  switch (type) {
+    case blink::WebIconURL::kTypeFavicon:
+      return FaviconURL::IconType::kFavicon;
+    case blink::WebIconURL::kTypeTouch:
+      return FaviconURL::IconType::kTouchIcon;
+    case blink::WebIconURL::kTypeTouchPrecomposed:
+      return FaviconURL::IconType::kTouchPrecomposedIcon;
+    case blink::WebIconURL::kTypeInvalid:
+      return FaviconURL::IconType::kInvalid;
+  }
+  NOTREACHED();
+  return FaviconURL::IconType::kInvalid;
+}
+
+std::vector<gfx::Size> ConvertToFaviconSizes(
+    const blink::WebVector<blink::WebSize>& web_sizes) {
+  std::vector<gfx::Size> result;
+  result.reserve(web_sizes.size());
+  for (const blink::WebSize& web_size : web_sizes)
+    result.push_back(gfx::Size(web_size));
+  return result;
 }
 
 }  // namespace
@@ -1834,7 +1859,7 @@ void RenderFrameImpl::OnDeleteFrame() {
   // See https://crbug.com/569683 for details.
   in_browser_initiated_detach_ = true;
 
-  // This will result in a call to RendeFrameImpl::frameDetached, which
+  // This will result in a call to RenderFrameImpl::frameDetached, which
   // deletes the object. Do not access |this| after detach.
   frame_->Detach();
 }
@@ -2756,9 +2781,11 @@ void RenderFrameImpl::SetEngagementLevel(const url::Origin& origin,
 void RenderFrameImpl::GetInterfaceProvider(
     service_manager::mojom::InterfaceProviderRequest request) {
   service_manager::Connector* connector = ChildThread::Get()->GetConnector();
-  connector->FilterInterfaces(
-      mojom::kNavigation_FrameSpec, browser_info_.identity, std::move(request),
-      interface_provider_bindings_.CreateInterfacePtrAndBind(this));
+  service_manager::mojom::InterfaceProviderPtr provider;
+  interface_provider_bindings_.AddBinding(this, mojo::MakeRequest(&provider));
+  connector->FilterInterfaces(mojom::kNavigation_FrameSpec,
+                              browser_info_.identity, std::move(request),
+                              std::move(provider));
 }
 
 void RenderFrameImpl::AllowBindings(int32_t enabled_bindings_flags) {
@@ -2948,6 +2975,11 @@ RenderFrameImpl::CreateServiceWorkerProvider() {
   }
   return base::MakeUnique<WebServiceWorkerProviderImpl>(
       ChildThreadImpl::current()->thread_safe_sender(), provider->context());
+}
+
+service_manager::InterfaceProvider* RenderFrameImpl::GetInterfaceProvider() {
+  DCHECK(remote_interfaces_);
+  return remote_interfaces_.get();
 }
 
 void RenderFrameImpl::DidAccessInitialDocument() {
@@ -3325,12 +3357,14 @@ void RenderFrameImpl::DidCreateDataSource(blink::WebLocalFrame* frame,
   }
 
   // Carry over the user agent override flag, if it exists.
+  // TODO(lukasza): https://crbug.com/426555: Need OOPIF support for propagating
+  // user agent overrides.
   blink::WebView* webview = render_view_->webview();
   if (content_initiated && webview && webview->MainFrame() &&
       webview->MainFrame()->IsWebLocalFrame() &&
-      webview->MainFrame()->DataSource()) {
-    DocumentState* old_document_state =
-        DocumentState::FromDataSource(webview->MainFrame()->DataSource());
+      webview->MainFrame()->ToWebLocalFrame()->DataSource()) {
+    DocumentState* old_document_state = DocumentState::FromDataSource(
+        webview->MainFrame()->ToWebLocalFrame()->DataSource());
     if (old_document_state) {
       InternalDocumentStateData* internal_data =
           InternalDocumentStateData::FromDocumentState(document_state);
@@ -3651,6 +3685,13 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
         is_new_navigation, navigation_state->WasWithinSameDocument());
   }
 
+  // Notify the MediaPermissionDispatcher that its connection will be closed
+  // due to a navigation to a different document.
+  if (media_permission_dispatcher_ &&
+      !navigation_state->WasWithinSameDocument()) {
+    media_permission_dispatcher_->OnNavigation();
+  }
+
   if (!frame_->Parent()) {  // Only for top frames.
     RenderThreadImpl* render_thread_impl = RenderThreadImpl::current();
     if (render_thread_impl) {  // Can be NULL in tests.
@@ -3773,8 +3814,28 @@ void RenderFrameImpl::DidReceiveTitle(const blink::WebString& title,
 }
 
 void RenderFrameImpl::DidChangeIcon(blink::WebIconURL::Type icon_type) {
-  // TODO(nasko): Investigate wheather implementation should move here.
-  render_view_->didChangeIcon(frame_, icon_type);
+  SendUpdateFaviconURL(icon_type);
+}
+
+void RenderFrameImpl::SendUpdateFaviconURL(
+    blink::WebIconURL::Type icon_types_mask) {
+  if (frame_->Parent())
+    return;
+
+  WebVector<blink::WebIconURL> icon_urls = frame_->IconURLs(icon_types_mask);
+  if (icon_urls.empty())
+    return;
+
+  std::vector<FaviconURL> urls;
+  urls.reserve(icon_urls.size());
+  for (const blink::WebIconURL& icon_url : icon_urls) {
+    urls.push_back(FaviconURL(icon_url.GetIconURL(),
+                              ToFaviconType(icon_url.IconType()),
+                              ConvertToFaviconSizes(icon_url.Sizes())));
+  }
+  DCHECK_EQ(icon_urls.size(), urls.size());
+
+  Send(new FrameHostMsg_UpdateFaviconURL(GetRoutingID(), urls));
 }
 
 void RenderFrameImpl::DidFinishDocumentLoad() {
@@ -4303,7 +4364,18 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
     }
   }
 
-  extra_data->set_url_loader_factory_override(url_loader_factory_.get());
+  // TODO: generalize how non-network schemes are sent to the renderer and used.
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableNetworkService)) {
+    if (request.Url().ProtocolIs(url::kBlobScheme)) {
+      extra_data->set_url_loader_factory_override(
+          RenderThreadImpl::current()->GetBlobURLLoaderFactory());
+    }
+  }
+
+  if (!extra_data->url_loader_factory_override())
+    extra_data->set_url_loader_factory_override(url_loader_factory_.get());
+
   // TODO(kinuko, yzshen): We need to set up throttles for some worker cases
   // that don't go through here.
   extra_data->set_url_loader_throttles(std::move(throttles));
@@ -4561,10 +4633,11 @@ blink::WebString RenderFrameImpl::UserAgentOverride() {
   // return early and fix properly as part of https://crbug.com/426555.
   if (render_view_->webview()->MainFrame()->IsWebRemoteFrame())
     return blink::WebString();
+  WebLocalFrame* main_frame =
+      render_view_->webview()->MainFrame()->ToWebLocalFrame();
 
   // If we're in the middle of committing a load, the data source we need
   // will still be provisional.
-  WebFrame* main_frame = render_view_->webview()->MainFrame();
   WebDataSource* data_source = NULL;
   if (main_frame->ProvisionalDataSource())
     data_source = main_frame->ProvisionalDataSource();
@@ -4747,7 +4820,7 @@ const RenderFrameImpl* RenderFrameImpl::GetLocalRoot() const {
 
 // Tell the embedding application that the URL of the active page has changed.
 void RenderFrameImpl::SendDidCommitProvisionalLoad(
-    blink::WebFrame* frame,
+    blink::WebLocalFrame* frame,
     blink::WebHistoryCommitType commit_type) {
   DCHECK_EQ(frame_, frame);
   WebDataSource* ds = frame->DataSource();
@@ -5016,6 +5089,13 @@ void RenderFrameImpl::DidStopLoading() {
   // current history navigation (if this was one), so we don't need to track
   // this state anymore.
   history_subframe_unique_names_.clear();
+
+  blink::WebIconURL::Type icon_types_mask =
+      static_cast<blink::WebIconURL::Type>(
+          blink::WebIconURL::kTypeFavicon |
+          blink::WebIconURL::kTypeTouchPrecomposed |
+          blink::WebIconURL::kTypeTouch);
+  SendUpdateFaviconURL(icon_types_mask);
 
   render_view_->FrameDidStopLoading(frame_);
   Send(new FrameHostMsg_DidStopLoading(routing_id_));

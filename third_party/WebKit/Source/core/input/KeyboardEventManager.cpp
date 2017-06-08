@@ -63,7 +63,7 @@ bool MapKeyCodeForScroll(int key_code,
                          WebInputEvent::Modifiers modifiers,
                          ScrollDirection* scroll_direction,
                          ScrollGranularity* scroll_granularity,
-                         UseCounter::Feature* scroll_use_uma) {
+                         WebFeature* scroll_use_uma) {
   if (modifiers & WebInputEvent::kShiftKey ||
       modifiers & WebInputEvent::kMetaKey)
     return false;
@@ -90,42 +90,42 @@ bool MapKeyCodeForScroll(int key_code,
     case VKEY_LEFT:
       *scroll_direction = kScrollLeftIgnoringWritingMode;
       *scroll_granularity = kScrollByLine;
-      *scroll_use_uma = UseCounter::kScrollByKeyboardArrowKeys;
+      *scroll_use_uma = WebFeature::kScrollByKeyboardArrowKeys;
       break;
     case VKEY_RIGHT:
       *scroll_direction = kScrollRightIgnoringWritingMode;
       *scroll_granularity = kScrollByLine;
-      *scroll_use_uma = UseCounter::kScrollByKeyboardArrowKeys;
+      *scroll_use_uma = WebFeature::kScrollByKeyboardArrowKeys;
       break;
     case VKEY_UP:
       *scroll_direction = kScrollUpIgnoringWritingMode;
       *scroll_granularity = kScrollByLine;
-      *scroll_use_uma = UseCounter::kScrollByKeyboardArrowKeys;
+      *scroll_use_uma = WebFeature::kScrollByKeyboardArrowKeys;
       break;
     case VKEY_DOWN:
       *scroll_direction = kScrollDownIgnoringWritingMode;
       *scroll_granularity = kScrollByLine;
-      *scroll_use_uma = UseCounter::kScrollByKeyboardArrowKeys;
+      *scroll_use_uma = WebFeature::kScrollByKeyboardArrowKeys;
       break;
     case VKEY_HOME:
       *scroll_direction = kScrollUpIgnoringWritingMode;
       *scroll_granularity = kScrollByDocument;
-      *scroll_use_uma = UseCounter::kScrollByKeyboardHomeEndKeys;
+      *scroll_use_uma = WebFeature::kScrollByKeyboardHomeEndKeys;
       break;
     case VKEY_END:
       *scroll_direction = kScrollDownIgnoringWritingMode;
       *scroll_granularity = kScrollByDocument;
-      *scroll_use_uma = UseCounter::kScrollByKeyboardHomeEndKeys;
+      *scroll_use_uma = WebFeature::kScrollByKeyboardHomeEndKeys;
       break;
     case VKEY_PRIOR:  // page up
       *scroll_direction = kScrollUpIgnoringWritingMode;
       *scroll_granularity = kScrollByPage;
-      *scroll_use_uma = UseCounter::kScrollByKeyboardPageUpDownKeys;
+      *scroll_use_uma = WebFeature::kScrollByKeyboardPageUpDownKeys;
       break;
     case VKEY_NEXT:  // page down
       *scroll_direction = kScrollDownIgnoringWritingMode;
       *scroll_granularity = kScrollByPage;
-      *scroll_use_uma = UseCounter::kScrollByKeyboardPageUpDownKeys;
+      *scroll_use_uma = WebFeature::kScrollByKeyboardPageUpDownKeys;
       break;
     default:
       return false;
@@ -172,7 +172,7 @@ WebInputEventResult KeyboardEventManager::KeyEvent(
     CapsLockStateMayHaveChanged();
 
   if (scroll_manager_->MiddleClickAutoscrollInProgress()) {
-    DCHECK(RuntimeEnabledFeatures::middleClickAutoscrollEnabled());
+    DCHECK(RuntimeEnabledFeatures::MiddleClickAutoscrollEnabled());
     // If a key is pressed while the middleClickAutoscroll is in progress then
     // we want to stop.
     if (initial_key_event.GetType() == WebInputEvent::kKeyDown ||
@@ -332,7 +332,7 @@ void KeyboardEventManager::DefaultSpaceEventHandler(
   if (scroll_manager_->LogicalScroll(direction, kScrollByPage, nullptr,
                                      possible_focused_node)) {
     UseCounter::Count(frame_->GetDocument(),
-                      UseCounter::kScrollByKeyboardSpacebarKey);
+                      WebFeature::kScrollByKeyboardSpacebarKey);
     event->SetDefaultHandled();
     return;
   }
@@ -341,7 +341,7 @@ void KeyboardEventManager::DefaultSpaceEventHandler(
 void KeyboardEventManager::DefaultBackspaceEventHandler(KeyboardEvent* event) {
   DCHECK_EQ(event->type(), EventTypeNames::keydown);
 
-  if (!RuntimeEnabledFeatures::backspaceDefaultHandlerEnabled())
+  if (!RuntimeEnabledFeatures::BackspaceDefaultHandlerEnabled())
     return;
 
   if (event->ctrlKey() || event->metaKey() || event->altKey())
@@ -349,10 +349,11 @@ void KeyboardEventManager::DefaultBackspaceEventHandler(KeyboardEvent* event) {
 
   if (!frame_->GetEditor().Behavior().ShouldNavigateBackOnBackspace())
     return;
-  UseCounter::Count(frame_->GetDocument(), UseCounter::kBackspaceNavigatedBack);
-  if (frame_->GetPage()->GetChromeClient().HadFormInteraction())
+  UseCounter::Count(frame_->GetDocument(), WebFeature::kBackspaceNavigatedBack);
+  if (frame_->GetPage()->GetChromeClient().HadFormInteraction()) {
     UseCounter::Count(frame_->GetDocument(),
-                      UseCounter::kBackspaceNavigatedBackAfterFormInteraction);
+                      WebFeature::kBackspaceNavigatedBackAfterFormInteraction);
+  }
   bool handled_event = frame_->Loader().Client()->NavigateBackForward(
       event->shiftKey() ? 1 : -1);
   if (handled_event)
@@ -382,7 +383,7 @@ void KeyboardEventManager::DefaultArrowEventHandler(
 
   ScrollDirection scroll_direction;
   ScrollGranularity scroll_granularity;
-  UseCounter::Feature scroll_use_uma;
+  WebFeature scroll_use_uma;
   if (!MapKeyCodeForScroll(event->keyCode(), event->GetModifiers(),
                            &scroll_direction, &scroll_granularity,
                            &scroll_use_uma))

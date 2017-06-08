@@ -10799,6 +10799,13 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
+<action name="MobileWebsiteSettingsOpenedFromVR">
+  <owner>ymalik@chromium.org</owner>
+  <description>
+    Page Info opened via the toolbar page info (i.e. https lock) icon in VR.
+  </description>
+</action>
+
 <action name="MostVisited0">
   <obsolete>No longer recorded.</obsolete>
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
@@ -16547,6 +16554,28 @@ should be able to be added at any place in this file.
 <action name="Terminate_ProcessMismatch_CreateNewWindow">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
+</action>
+
+<action name="TextToSpeech.Pause">
+  <owner>dmazzoni@chromium.org</owner>
+  <description>Synthesized speech is paused.</description>
+</action>
+
+<action name="TextToSpeech.Resume">
+  <owner>dmazzoni@chromium.org</owner>
+  <description>Synthesized speech is resumed after being paused.</description>
+</action>
+
+<action name="TextToSpeech.Speak">
+  <owner>dmazzoni@chromium.org</owner>
+  <description>
+    A single utterance is spoken using synthesized text-to-speech.
+  </description>
+</action>
+
+<action name="TextToSpeech.Stop">
+  <owner>dmazzoni@chromium.org</owner>
+  <description>Synthesized speech is stopped.</description>
 </action>
 
 <action name="Themes.Gone">

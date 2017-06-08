@@ -18,12 +18,12 @@
 #include "base/scoped_observer.h"
 #include "base/values.h"
 #include "components/keyed_service/core/keyed_service.h"
-#include "content/public/browser/notification_observer.h"
-#include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/render_process_host_observer.h"
 #include "extensions/browser/event_listener_map.h"
+#include "extensions/browser/events/lazy_event_dispatch_util.h"
 #include "extensions/browser/extension_event_histogram_value.h"
 #include "extensions/browser/extension_registry_observer.h"
+#include "extensions/common/constants.h"
 #include "extensions/common/event_filtering_info.h"
 #include "ipc/ipc_sender.h"
 #include "url/gurl.h"
@@ -44,8 +44,9 @@ class ExtensionRegistry;
 struct Event;
 struct EventListenerInfo;
 
+// TODO(lazyboy): Document how extension events work, including how listeners
+// are registered and how listeners are tracked in renderer and browser process.
 class EventRouter : public KeyedService,
-                    public content::NotificationObserver,
                     public ExtensionRegistryObserver,
                     public EventListenerMap::Delegate,
                     public content::RenderProcessHostObserver {
@@ -60,7 +61,10 @@ class EventRouter : public KeyedService,
 
   // The pref key for the list of event names for which an extension has
   // registered from its lazy background page.
-  static const char kRegisteredEvents[];
+  static const char kRegisteredLazyEvents[];
+  // The pref key for the list of event names for which an extension has
+  // registered from its service worker.
+  static const char kRegisteredServiceWorkerEvents[];
 
   // Observers register interest in events with a particular name and are
   // notified when a listener is added or removed. Observers are matched by
@@ -111,10 +115,18 @@ class EventRouter : public KeyedService,
   // mode extension.
   void AddEventListener(const std::string& event_name,
                         content::RenderProcessHost* process,
-                        const std::string& extension_id);
+                        const ExtensionId& extension_id);
+  void AddServiceWorkerEventListener(const std::string& event_name,
+                                     content::RenderProcessHost* process,
+                                     const ExtensionId& extension_id,
+                                     int worker_thread_id);
   void RemoveEventListener(const std::string& event_name,
                            content::RenderProcessHost* process,
-                           const std::string& extension_id);
+                           const ExtensionId& extension_id);
+  void RemoveServiceWorkerEventListener(const std::string& event_name,
+                                        content::RenderProcessHost* process,
+                                        const ExtensionId& extension_id,
+                                        int worker_thread_id);
 
   // Add or remove a URL as an event listener for |event_name|.
   void AddEventListenerForURL(const std::string& event_name,
@@ -139,9 +151,17 @@ class EventRouter : public KeyedService,
   // remembered even after the process goes away. We use this list to decide
   // which extension pages to load when dispatching an event.
   void AddLazyEventListener(const std::string& event_name,
-                            const std::string& extension_id);
+                            const ExtensionId& extension_id);
   void RemoveLazyEventListener(const std::string& event_name,
-                               const std::string& extension_id);
+                               const ExtensionId& extension_id);
+  // Similar to Add/RemoveLazyEventListener, but applies to extension service
+  // workers.
+  void AddLazyServiceWorkerEventListener(const std::string& event_name,
+                                         const ExtensionId& extension_id,
+                                         int worker_thread_id);
+  void RemoveLazyServiceWorkerEventListener(const std::string& event_name,
+                                            const ExtensionId& extension_id,
+                                            int worker_thread_id);
 
   // If |add_lazy_listener| is true also add the lazy version of this listener.
   void AddFilteredEventListener(const std::string& event_name,
@@ -186,13 +206,12 @@ class EventRouter : public KeyedService,
 
   // Returns whether or not the given extension has any registered events.
   bool HasRegisteredEvents(const ExtensionId& extension_id) const {
-    return !GetRegisteredEvents(extension_id).empty();
+    return !GetRegisteredEvents(extension_id, RegisteredEventType::kLazy)
+                .empty();
   }
 
   // Clears registered events for testing purposes.
-  void ClearRegisteredEventsForTest(const ExtensionId& extension_id) {
-    SetRegisteredEvents(extension_id, std::set<std::string>());
-  }
+  void ClearRegisteredEventsForTest(const ExtensionId& extension_id);
 
   // Reports UMA for an event dispatched to |extension| with histogram value
   // |histogram_value|. Must be called on the UI thread.
@@ -203,18 +222,28 @@ class EventRouter : public KeyedService,
                    const Extension* extension,
                    bool did_enqueue);
 
+  LazyEventDispatchUtil* lazy_event_dispatch_util() {
+    return &lazy_event_dispatch_util_;
+  }
+
  private:
   friend class EventRouterFilterTest;
   friend class EventRouterTest;
 
+  enum class RegisteredEventType {
+    kLazy,
+    kServiceWorker,
+  };
+
   // An identifier for an event dispatch that is used to prevent double dispatch
   // due to race conditions between the direct and lazy dispatch paths.
-  typedef std::pair<const content::BrowserContext*, std::string>
+  typedef std::tuple<const content::BrowserContext*, std::string, int>
       EventDispatchIdentifier;
 
   // TODO(gdk): Document this.
   static void DispatchExtensionMessage(
       IPC::Sender* ipc_sender,
+      int worker_thread_id,
       void* browser_context_id,
       const std::string& extension_id,
       int event_id,
@@ -225,20 +254,25 @@ class EventRouter : public KeyedService,
 
   // Returns or sets the list of events for which the given extension has
   // registered.
-  std::set<std::string> GetRegisteredEvents(
-      const std::string& extension_id) const;
+  std::set<std::string> GetRegisteredEvents(const std::string& extension_id,
+                                            RegisteredEventType type) const;
   void SetRegisteredEvents(const std::string& extension_id,
-                           const std::set<std::string>& events);
+                           const std::set<std::string>& events,
+                           RegisteredEventType type);
 
-  void Observe(int type,
-               const content::NotificationSource& source,
-               const content::NotificationDetails& details) override;
   // ExtensionRegistryObserver implementation.
   void OnExtensionLoaded(content::BrowserContext* browser_context,
                          const Extension* extension) override;
   void OnExtensionUnloaded(content::BrowserContext* browser_context,
                            const Extension* extension,
                            UnloadedExtensionReason reason) override;
+
+  void AddLazyEventListenerImpl(const std::string& event_name,
+                                const ExtensionId& extension_id,
+                                int worker_thread_id);
+  void RemoveLazyEventListenerImpl(const std::string& event_name,
+                                   const ExtensionId& extension_id,
+                                   int worker_thread_id);
 
   // Shared by all event dispatch methods. If |restrict_to_extension_id| is
   // empty, the event is broadcast.  An event that just came off the pending
@@ -260,6 +294,7 @@ class EventRouter : public KeyedService,
   void DispatchEventToProcess(const std::string& extension_id,
                               const GURL& listener_url,
                               content::RenderProcessHost* process,
+                              int worker_thread_id,
                               const linked_ptr<Event>& event,
                               const base::DictionaryValue* listener_filter,
                               bool did_enqueue);
@@ -330,8 +365,6 @@ class EventRouter : public KeyedService,
   // tests.
   ExtensionPrefs* const extension_prefs_;
 
-  content::NotificationRegistrar registrar_;
-
   ScopedObserver<ExtensionRegistry, ExtensionRegistryObserver>
       extension_registry_observer_;
 
@@ -342,6 +375,8 @@ class EventRouter : public KeyedService,
   ObserverMap observers_;
 
   std::set<content::RenderProcessHost*> observed_process_set_;
+
+  LazyEventDispatchUtil lazy_event_dispatch_util_;
 
   DISALLOW_COPY_AND_ASSIGN(EventRouter);
 };

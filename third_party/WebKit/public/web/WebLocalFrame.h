@@ -25,6 +25,8 @@ class InterfaceProvider;
 class InterfaceRegistry;
 class WebAutofillClient;
 class WebContentSettingsClient;
+class WebData;
+class WebDataSource;
 class WebDevToolsAgent;
 class WebDevToolsAgentClient;
 class WebDoubleSize;
@@ -114,6 +116,14 @@ class WebLocalFrame : public WebFrame {
   virtual void SetSharedWorkerRepositoryClient(
       WebSharedWorkerRepositoryClient*) = 0;
 
+  // Basic properties ---------------------------------------------------
+
+  // The urls of the given combination types of favicon (if any) specified by
+  // the document loaded in this frame. The iconTypesMask is a bit-mask of
+  // WebIconURL::Type values, used to select from the available set of icon
+  // URLs
+  virtual WebVector<WebIconURL> IconURLs(int icon_types_mask) const = 0;
+
   // Hierarchy ----------------------------------------------------------
 
   // Get the highest-level LocalFrame in this frame's in-process subtree.
@@ -153,6 +163,13 @@ class WebLocalFrame : public WebFrame {
                     WebHistoryLoadType = kWebHistoryDifferentDocumentLoad,
                     bool is_client_redirect = false) = 0;
 
+  // This method is short-hand for calling LoadData, where mime_type is
+  // "text/html" and text_encoding is "UTF-8".
+  virtual void LoadHTMLString(const WebData& html,
+                              const WebURL& base_url,
+                              const WebURL& unreachable_url = WebURL(),
+                              bool replace = false) = 0;
+
   // Loads the given data with specific mime type and optional text
   // encoding.  For HTML data, baseURL indicates the security origin of
   // the document and is used to resolve links.  If specified,
@@ -169,6 +186,12 @@ class WebLocalFrame : public WebFrame {
                         const WebHistoryItem& = WebHistoryItem(),
                         WebHistoryLoadType = kWebHistoryDifferentDocumentLoad,
                         bool is_client_redirect = false) = 0;
+
+  // Returns the data source that is currently loading.  May be null.
+  virtual WebDataSource* ProvisionalDataSource() const = 0;
+
+  // Returns the data source that is currently loaded.
+  virtual WebDataSource* DataSource() const = 0;
 
   enum FallbackContentResult {
     // An error page should be shown instead of fallback.
@@ -213,7 +236,7 @@ class WebLocalFrame : public WebFrame {
   // one of its descendants having processed a user gesture.
   virtual void SetHasReceivedUserGesture() = 0;
 
-  // Reports a list of unique blink::UseCounter::Feature values representing
+  // Reports a list of unique blink::WebFeature values representing
   // Blink features used, performed or encountered by the browser during the
   // current page load happening on the frame.
   virtual void BlinkFeatureUsageReport(const std::set<int>& features) = 0;
@@ -266,6 +289,10 @@ class WebLocalFrame : public WebFrame {
                                  int page_index) = 0;
 
   // Scripting --------------------------------------------------------------
+
+  // Executes script in the context of the current page.
+  virtual void ExecuteScript(const WebScriptSource&) = 0;
+
   // Executes script in the context of the current page and returns the value
   // that the script evaluated to with callback. Script execution can be
   // suspend.
@@ -568,6 +595,7 @@ class WebLocalFrame : public WebFrame {
   virtual WebInputMethodController* GetInputMethodController() = 0;
 
   // Loading ------------------------------------------------------------------
+
   // Creates and returns a loader. This function can be called only when this
   // frame is attached to a document.
   virtual std::unique_ptr<WebURLLoader> CreateURLLoader() = 0;
@@ -576,6 +604,13 @@ class WebLocalFrame : public WebFrame {
 
   // If set to false, do not draw scrollbars on this frame's view.
   virtual void SetCanHaveScrollbars(bool) = 0;
+
+  // Testing ------------------------------------------------------------------
+
+  // Dumps the layer tree, used by the accelerated compositor, in
+  // text form. This is used only by layout tests.
+  virtual WebString GetLayerTreeAsTextForTesting(
+      bool show_debug_info = false) const = 0;
 
  protected:
   explicit WebLocalFrame(WebTreeScopeType scope) : WebFrame(scope) {}

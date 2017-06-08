@@ -29,6 +29,14 @@ class FakeCentral : NON_EXPORTED_BASE(public mojom::FakeCentral),
       const std::string& name,
       const std::vector<device::BluetoothUUID>& known_service_uuids,
       SimulatePreconnectedPeripheralCallback callback) override;
+  void SetNextGATTConnectionResponse(
+      const std::string& address,
+      uint16_t code,
+      SetNextGATTConnectionResponseCallback) override;
+  void SetNextGATTDiscoveryResponse(
+      const std::string& address,
+      uint16_t code,
+      SetNextGATTDiscoveryResponseCallback callback) override;
 
   // BluetoothAdapter overrides:
   std::string GetAddress() const override;

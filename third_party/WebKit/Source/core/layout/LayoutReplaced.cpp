@@ -26,9 +26,9 @@
 #include "core/editing/PositionWithAffinity.h"
 #include "core/layout/LayoutAnalyzer.h"
 #include "core/layout/LayoutBlock.h"
+#include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutImage.h"
 #include "core/layout/LayoutInline.h"
-#include "core/layout/LayoutPart.h"
 #include "core/layout/LayoutVideo.h"
 #include "core/layout/api/LineLayoutBlockFlow.h"
 #include "core/paint/PaintInfo.h"
@@ -94,7 +94,7 @@ void LayoutReplaced::UpdateLayout() {
 
   ClearNeedsLayout();
 
-  if (!RuntimeEnabledFeatures::slimmingPaintV2Enabled() &&
+  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
       ReplacedContentRect() != old_content_rect)
     SetShouldDoFullPaintInvalidation();
 }

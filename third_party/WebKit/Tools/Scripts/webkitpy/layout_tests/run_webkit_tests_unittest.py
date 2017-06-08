@@ -253,15 +253,14 @@ class RunTest(unittest.TestCase, StreamTestingMixin):
         # Exceptions raised in a separate process are re-packaged into
         # WorkerExceptions (a subclass of BaseException), which have a string capture of the stack which can
         # be printed, but don't display properly in the unit test exception handlers.
-        self.assertRaises(BaseException, logging_run,
-                          ['failures/expected/exception.html', '--child-processes', '1'], tests_included=True)
+        with self.assertRaises(BaseException):
+            logging_run(['failures/expected/exception.html', '--child-processes', '1'], tests_included=True)
 
-        self.assertRaises(
-            BaseException,
-            logging_run,
-            ['--child-processes', '2', '--skipped=ignore', 'failures/expected/exception.html', 'passes/text.html'],
-            tests_included=True,
-            shared_port=False)
+        with self.assertRaises(BaseException):
+            logging_run(
+                ['--child-processes', '2', '--skipped=ignore', 'failures/expected/exception.html', 'passes/text.html'],
+                tests_included=True,
+                shared_port=False)
 
     def test_device_failure(self):
         # Test that we handle a device going offline during a test properly.
@@ -517,9 +516,12 @@ class RunTest(unittest.TestCase, StreamTestingMixin):
         self.assertEqual(tests_run, ['perf/foo/test.html'])
 
     def test_sharding_incorrect_arguments(self):
-        self.assertRaises(ValueError, get_tests_run, ['--shard-index', '3'])
-        self.assertRaises(ValueError, get_tests_run, ['--total-shards', '3'])
-        self.assertRaises(ValueError, get_tests_run, ['--shard-index', '3', '--total-shards', '3'])
+        with self.assertRaises(ValueError):
+            get_tests_run(['--shard-index', '3'])
+        with self.assertRaises(ValueError):
+            get_tests_run(['--total-shards', '3'])
+        with self.assertRaises(ValueError):
+            get_tests_run(['--shard-index', '3', '--total-shards', '3'])
 
     def test_sharding_environ(self):
         tests_to_run = ['passes/error.html', 'passes/image.html', 'passes/platform_image.html', 'passes/text.html']
@@ -1105,7 +1107,7 @@ class RebaselineTest(unittest.TestCase, StreamTestingMixin):
             tests_included=True, host=host)
         file_list = host.filesystem.written_files.keys()
         self.assertEqual(details.exit_code, 0)
-        self.assertEqual(len(file_list), 8)
+        self.assertEqual(len(file_list), 9)
         self.assert_baselines(file_list, 'failures/unexpected/text-image-checksum', ['.txt', '.png'], err)
 
     def test_reset_missing_results(self):
@@ -1118,7 +1120,7 @@ class RebaselineTest(unittest.TestCase, StreamTestingMixin):
                                       tests_included=True, host=host)
         file_list = host.filesystem.written_files.keys()
         self.assertEqual(details.exit_code, 0)
-        self.assertEqual(len(file_list), 9)
+        self.assertEqual(len(file_list), 10)
         self.assert_baselines(file_list, 'failures/unexpected/missing_text', ['.txt'], err)
         self.assert_baselines(file_list, 'failures/unexpected/missing_image', ['.png'], err)
         self.assert_baselines(file_list, 'failures/unexpected/missing_render_tree_dump', ['.txt'], err)
@@ -1139,7 +1141,7 @@ class RebaselineTest(unittest.TestCase, StreamTestingMixin):
             tests_included=True, host=host)
         file_list = host.filesystem.written_files.keys()
         self.assertEqual(details.exit_code, 0)
-        self.assertEqual(len(file_list), 8)
+        self.assertEqual(len(file_list), 9)
         self.assert_baselines(file_list,
                               'platform/test-mac-mac10.10/failures/unexpected/text-image-checksum',
                               ['.png'], err)
@@ -1161,7 +1163,7 @@ class RebaselineTest(unittest.TestCase, StreamTestingMixin):
             tests_included=True, host=host)
         file_list = host.filesystem.written_files.keys()
         self.assertEqual(details.exit_code, 0)
-        self.assertEqual(len(file_list), 8)
+        self.assertEqual(len(file_list), 9)
         # We should create new pixel baseline only.
         self.assertFalse(
             host.filesystem.exists(
@@ -1177,7 +1179,7 @@ class RebaselineTest(unittest.TestCase, StreamTestingMixin):
         details, err, _ = logging_run(['--reset-results', 'passes/reftest.html'], tests_included=True, host=host)
         file_list = host.filesystem.written_files.keys()
         self.assertEqual(details.exit_code, 0)
-        self.assertEqual(len(file_list), 6)
+        self.assertEqual(len(file_list), 7)
         self.assert_baselines(file_list, '', [], err)
 
         host.filesystem.write_text_file(test.LAYOUT_TEST_DIR + '/passes/reftest-expected.txt', '')
@@ -1185,7 +1187,7 @@ class RebaselineTest(unittest.TestCase, StreamTestingMixin):
         details, err, _ = logging_run(['--reset-results', 'passes/reftest.html'], tests_included=True, host=host)
         file_list = host.filesystem.written_files.keys()
         self.assertEqual(details.exit_code, 0)
-        self.assertEqual(len(file_list), 6)
+        self.assertEqual(len(file_list), 7)
         self.assert_baselines(file_list, 'passes/reftest', ['.txt'], err)
 
 

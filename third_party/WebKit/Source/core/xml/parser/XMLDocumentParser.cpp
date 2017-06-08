@@ -666,7 +666,7 @@ static void* OpenFunc(const char* uri) {
     return &g_global_descriptor;
 
   UseCounter::Count(XMLDocumentParserScope::current_document_,
-                    UseCounter::kXMLExternalResourceLoad);
+                    WebFeature::kXMLExternalResourceLoad);
 
   return new SharedBufferReader(data);
 }
@@ -783,7 +783,7 @@ XMLDocumentParser::XMLDocumentParser(Document& document,
       parsing_fragment_(false) {
   // This is XML being used as a document resource.
   if (frame_view && document.IsXMLDocument())
-    UseCounter::Count(document, UseCounter::kXMLDocument);
+    UseCounter::Count(document, WebFeature::kXMLDocument);
 }
 
 XMLDocumentParser::XMLDocumentParser(DocumentFragment* fragment,
@@ -1223,7 +1223,7 @@ void XMLDocumentParser::GetProcessingInstruction(const String& target,
   if (pi->IsCSS())
     saw_css_ = true;
 
-  if (!RuntimeEnabledFeatures::xsltEnabled())
+  if (!RuntimeEnabledFeatures::XSLTEnabled())
     return;
 
   saw_xsl_transform_ = !saw_first_element_ && pi->IsXSL();

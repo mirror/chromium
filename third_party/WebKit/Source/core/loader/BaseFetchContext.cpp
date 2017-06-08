@@ -204,7 +204,7 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
       }
       break;
     case Resource::kXSLStyleSheet:
-      DCHECK(RuntimeEnabledFeatures::xsltEnabled());
+      DCHECK(RuntimeEnabledFeatures::XSLTEnabled());
     case Resource::kSVGDocument:
       if (!security_origin->CanRequest(url)) {
         PrintAccessDeniedMessage(url);
@@ -252,11 +252,11 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
     if (SchemeRegistry::ShouldTreatURLSchemeAsLegacy(url.Protocol()) &&
         !SchemeRegistry::ShouldTreatURLSchemeAsLegacy(
             embedding_origin->Protocol())) {
-      CountDeprecation(UseCounter::kLegacyProtocolEmbeddedAsSubresource);
+      CountDeprecation(WebFeature::kLegacyProtocolEmbeddedAsSubresource);
 
       // TODO(mkwst): Enabled by default in M59. Drop the runtime-enabled check
       // in M60: https://www.chromestatus.com/feature/5709390967472128
-      if (RuntimeEnabledFeatures::blockLegacySubresourcesEnabled())
+      if (RuntimeEnabledFeatures::BlockLegacySubresourcesEnabled())
         return ResourceRequestBlockedReason::kOrigin;
     }
 
@@ -264,10 +264,10 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
         resource_request.GetRequestContext() !=
             WebURLRequest::kRequestContextXMLHttpRequest) {
       CountDeprecation(
-          UseCounter::kRequestedSubresourceWithEmbeddedCredentials);
+          WebFeature::kRequestedSubresourceWithEmbeddedCredentials);
       // TODO(mkwst): Remove the runtime-enabled check in M59:
       // https://www.chromestatus.com/feature/5669008342777856
-      if (RuntimeEnabledFeatures::blockCredentialedSubresourcesEnabled())
+      if (RuntimeEnabledFeatures::BlockCredentialedSubresourcesEnabled())
         return ResourceRequestBlockedReason::kOrigin;
     }
   }
@@ -280,8 +280,8 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequestInternal(
     return ResourceRequestBlockedReason::kMixedContent;
 
   if (url.PotentiallyDanglingMarkup() && url.ProtocolIsInHTTPFamily()) {
-    CountDeprecation(UseCounter::kCanRequestURLHTTPContainingNewline);
-    if (RuntimeEnabledFeatures::restrictCanRequestURLCharacterSetEnabled())
+    CountDeprecation(WebFeature::kCanRequestURLHTTPContainingNewline);
+    if (RuntimeEnabledFeatures::RestrictCanRequestURLCharacterSetEnabled())
       return ResourceRequestBlockedReason::kOther;
   }
 

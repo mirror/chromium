@@ -54,6 +54,7 @@ Layer::Inputs::Inputs(int layer_id)
       use_parent_backface_visibility(false),
       background_color(0),
       scroll_clip_layer_id(INVALID_ID),
+      scrollable(false),
       user_scrollable_horizontal(true),
       user_scrollable_vertical(true),
       main_thread_scrolling_reasons(
@@ -492,7 +493,7 @@ void Layer::SetOpacity(float opacity) {
   if (layer_tree_host_ && !force_rebuild) {
     PropertyTrees* property_trees = layer_tree_host_->property_trees();
     if (EffectNode* node =
-            property_trees->effect_tree.UpdateNodeFromOwningLayerId(id())) {
+            property_trees->effect_tree.Node(effect_tree_index())) {
       node->opacity = opacity;
       node->effect_changed = true;
       property_trees->effect_tree.set_needs_update(true);
@@ -597,18 +598,6 @@ void Layer::SetPosition(const gfx::PointF& position) {
           property_trees->transform_tree.UpdateNodeFromOwningLayerId(id())) {
     DCHECK_EQ(transform_tree_index(), transform_node->id);
     transform_node->update_post_local_transform(position, transform_origin());
-    if (transform_node->sticky_position_constraint_id >= 0) {
-      StickyPositionNodeData* sticky_data =
-          property_trees->transform_tree.StickyPositionData(
-              transform_tree_index());
-      // TODO(smcgruer): Pass main thread sticky-shifting offsets of
-      // non-promoted ancestors, or promote all ancestor sticky elements.
-      // See http://crbug.com/702229
-      sticky_data->main_thread_offset =
-          position.OffsetFromOrigin() -
-          sticky_data->constraints.parent_relative_sticky_box_offset
-              .OffsetFromOrigin();
-    }
     transform_node->needs_local_transform_update = true;
     transform_node->transform_changed = true;
     layer_tree_host_->property_trees()->transform_tree.set_needs_update(true);
@@ -818,13 +807,26 @@ void Layer::SetScrollClipLayerId(int clip_layer_id) {
   if (inputs_.scroll_clip_layer_id == clip_layer_id)
     return;
   inputs_.scroll_clip_layer_id = clip_layer_id;
+
   SetPropertyTreesNeedRebuild();
+
+  bool scrollable = clip_layer_id != Layer::INVALID_ID;
+  SetScrollable(scrollable);
+
   SetNeedsCommit();
 }
 
 Layer* Layer::scroll_clip_layer() const {
   DCHECK(layer_tree_host_);
   return layer_tree_host_->LayerById(inputs_.scroll_clip_layer_id);
+}
+
+void Layer::SetScrollable(bool scrollable) {
+  DCHECK(IsPropertyChangeAllowed());
+  if (inputs_.scrollable == scrollable)
+    return;
+  inputs_.scrollable = scrollable;
+  SetNeedsCommit();
 }
 
 void Layer::SetUserScrollable(bool horizontal, bool vertical) {
@@ -1108,6 +1110,31 @@ void Layer::SetStickyPositionConstraint(
   SetNeedsCommit();
 }
 
+void Layer::SetOffsetForStickyPositionFromMainThread(const gfx::Size& offset) {
+  DCHECK(IsPropertyChangeAllowed());
+  if (inputs_.offset_for_sticky_position_from_main_thread == offset)
+    return;
+  inputs_.offset_for_sticky_position_from_main_thread = offset;
+
+  if (!layer_tree_host_)
+    return;
+
+  SetSubtreePropertyChanged();
+  PropertyTrees* property_trees = layer_tree_host_->property_trees();
+  if (TransformNode* transform_node =
+          property_trees->transform_tree.FindNodeFromElementId(
+              inputs_.element_id)) {
+    DCHECK_EQ(transform_tree_index(), transform_node->id);
+    transform_node->offset_for_sticky_position_from_main_thread =
+        gfx::Vector2dF(offset.width(), offset.height());
+    transform_node->needs_local_transform_update = true;
+    transform_node->transform_changed = true;
+    layer_tree_host_->property_trees()->transform_tree.set_needs_update(true);
+  }
+
+  SetNeedsCommit();
+}
+
 static void RunCopyCallbackOnMainThread(
     std::unique_ptr<CopyOutputRequest> request,
     std::unique_ptr<CopyOutputResult> result) {
@@ -1171,6 +1198,7 @@ void Layer::PushPropertiesTo(LayerImpl* layer) {
   layer->SetShouldCheckBackfaceVisibility(should_check_backface_visibility_);
 
   layer->SetScrollClipLayer(inputs_.scroll_clip_layer_id);
+  layer->SetScrollable(inputs_.scrollable);
   layer->SetMutableProperties(inputs_.mutable_properties);
 
   // The property trees must be safe to access because they will be used below

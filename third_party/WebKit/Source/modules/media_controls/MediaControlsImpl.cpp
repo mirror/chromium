@@ -115,7 +115,7 @@ bool ShouldShowFullscreenButton(const HTMLMediaElement& media_element) {
 
   if (media_element.ControlsListInternal()->ShouldHideFullscreen()) {
     UseCounter::Count(media_element.GetDocument(),
-                      UseCounter::kHTMLMediaElementControlsListNoFullscreen);
+                      WebFeature::kHTMLMediaElementControlsListNoFullscreen);
     return false;
   }
 
@@ -137,7 +137,7 @@ bool ShouldShowCastButton(HTMLMediaElement& media_element) {
   if (media_element.ControlsListInternal()->ShouldHideRemotePlayback()) {
     UseCounter::Count(
         media_element.GetDocument(),
-        UseCounter::kHTMLMediaElementControlsListNoRemotePlayback);
+        WebFeature::kHTMLMediaElementControlsListNoRemotePlayback);
     return false;
   }
 
@@ -315,14 +315,14 @@ MediaControlsImpl* MediaControlsImpl::Create(HTMLMediaElement& media_element,
   controls->InitializeControls();
   controls->Reset();
 
-  if (RuntimeEnabledFeatures::videoFullscreenOrientationLockEnabled() &&
+  if (RuntimeEnabledFeatures::VideoFullscreenOrientationLockEnabled() &&
       media_element.IsHTMLVideoElement()) {
     // Initialize the orientation lock when going fullscreen feature.
     controls->orientation_lock_delegate_ =
         new MediaControlsOrientationLockDelegate(
             toHTMLVideoElement(media_element));
   }
-  if (RuntimeEnabledFeatures::videoRotateToFullscreenEnabled() &&
+  if (RuntimeEnabledFeatures::VideoRotateToFullscreenEnabled() &&
       media_element.IsHTMLVideoElement()) {
     // Initialize the rotate-to-fullscreen feature.
     controls->rotate_to_fullscreen_delegate_ =
@@ -383,7 +383,7 @@ MediaControlsImpl* MediaControlsImpl::Create(HTMLMediaElement& media_element,
 void MediaControlsImpl::InitializeControls() {
   overlay_enclosure_ = new MediaControlOverlayEnclosureElement(*this);
 
-  if (RuntimeEnabledFeatures::mediaControlsOverlayPlayButtonEnabled()) {
+  if (RuntimeEnabledFeatures::MediaControlsOverlayPlayButtonEnabled()) {
     overlay_play_button_ = new MediaControlOverlayPlayButtonElement(*this);
     overlay_enclosure_->AppendChild(overlay_play_button_);
   }
@@ -743,7 +743,7 @@ void MediaControlsImpl::RefreshCastButtonVisibilityWithoutUpdate() {
     // non-cast changes (e.g., resize) occur.  If the panel button
     // is shown, however, compute...() will take control of the
     // overlay cast button if it needs to hide it from the panel.
-    if (RuntimeEnabledFeatures::mediaCastOverlayButtonEnabled())
+    if (RuntimeEnabledFeatures::MediaCastOverlayButtonEnabled())
       overlay_cast_button_->TryShowOverlay();
     cast_button_->SetIsWanted(false);
   } else if (MediaElement().ShouldShowControls()) {
@@ -755,7 +755,7 @@ void MediaControlsImpl::RefreshCastButtonVisibilityWithoutUpdate() {
 void MediaControlsImpl::ShowOverlayCastButtonIfNeeded() {
   if (MediaElement().ShouldShowControls() ||
       !ShouldShowCastButton(MediaElement()) ||
-      !RuntimeEnabledFeatures::mediaCastOverlayButtonEnabled()) {
+      !RuntimeEnabledFeatures::MediaCastOverlayButtonEnabled()) {
     return;
   }
 

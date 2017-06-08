@@ -149,7 +149,7 @@
 #include "core/inspector/ConsoleMessage.h"
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutObject.h"
-#include "core/layout/api/LayoutPartItem.h"
+#include "core/layout/api/LayoutEmbeddedContentItem.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoadRequest.h"
@@ -595,7 +595,7 @@ WebSize WebLocalFrameImpl::ContentsSize() const {
 }
 
 bool WebLocalFrameImpl::HasVisibleContent() const {
-  LayoutPartItem layout_item = GetFrame()->OwnerLayoutItem();
+  LayoutEmbeddedContentItem layout_item = GetFrame()->OwnerLayoutItem();
   if (!layout_item.IsNull() &&
       layout_item.Style()->Visibility() != EVisibility::kVisible) {
     return false;
@@ -1490,11 +1490,12 @@ WebRect WebLocalFrameImpl::SelectionBoundsRect() const {
                         : WebRect();
 }
 
-WebString WebLocalFrameImpl::LayerTreeAsText(bool show_debug_info) const {
+WebString WebLocalFrameImpl::GetLayerTreeAsTextForTesting(
+    bool show_debug_info) const {
   if (!GetFrame())
     return WebString();
 
-  return WebString(GetFrame()->LayerTreeAsText(
+  return WebString(GetFrame()->GetLayerTreeAsTextForTesting(
       show_debug_info ? kLayerTreeIncludesDebugInfo : kLayerTreeNormal));
 }
 
@@ -2255,7 +2256,7 @@ void WebLocalFrameImpl::SendOrientationChangeEvent() {
     ScreenOrientationController::From(*GetFrame())->NotifyOrientationChanged();
 
   // Legacy window.orientation API
-  if (RuntimeEnabledFeatures::orientationEventEnabled() &&
+  if (RuntimeEnabledFeatures::OrientationEventEnabled() &&
       GetFrame()->DomWindow())
     GetFrame()->DomWindow()->SendOrientationChangeEvent();
 }

@@ -59,6 +59,7 @@ class EventHandler;
 class FetchParameters;
 class FloatSize;
 class FrameConsole;
+class FrameResourceCoordinator;
 class FrameSelection;
 class InputMethodController;
 class CoreProbeSink;
@@ -177,7 +178,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
   // LocalFrame into another class.
 
   // See GraphicsLayerClient.h for accepted flags.
-  String LayerTreeAsText(unsigned flags = 0) const;
+  String GetLayerTreeAsTextForTesting(unsigned flags = 0) const;
 
   void SetPrinting(bool printing,
                    const FloatSize& page_size,
@@ -225,12 +226,20 @@ class CORE_EXPORT LocalFrame final : public Frame,
 
   bool CanNavigate(const Frame&);
 
+  // This method is deprecated. Please use
+  // LocalFrameClient::GetInterfaceProvider() instead.
+  //
+  // TODO(crbug.com/726943): Remove this method.
   InterfaceProvider* GetInterfaceProvider() { return interface_provider_; }
+
   InterfaceRegistry* GetInterfaceRegistry() { return interface_registry_; }
 
   LocalFrameClient* Client() const;
 
   ContentSettingsClient* GetContentSettingsClient();
+  FrameResourceCoordinator* GetFrameResourceCoordinator() {
+    return frame_resource_coordinator_;
+  }
 
   PluginData* GetPluginData() const;
 
@@ -316,6 +325,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
   InterfaceRegistry* const interface_registry_;
 
   IntRect remote_viewport_intersection_;
+  Member<FrameResourceCoordinator> frame_resource_coordinator_;
 };
 
 inline FrameLoader& LocalFrame::Loader() const {
