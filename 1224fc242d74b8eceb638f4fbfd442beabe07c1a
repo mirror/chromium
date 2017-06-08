@@ -142,6 +142,24 @@
       "revId": "1224fc242d74b8eceb638f4fbfd442beabe07c1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7369589_ac7048de",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-08T08:46:24Z",
+      "side": 1,
+      "message": "Yeah as you say this seems to execute some parser blocking scripts in the end.\n\nProbably I\u0027m missing something, but why does the PendingScriptFinished task need to run at high-priority?",
+      "parentUuid": "7392f0ea_0ce7462a",
+      "revId": "1224fc242d74b8eceb638f4fbfd442beabe07c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
