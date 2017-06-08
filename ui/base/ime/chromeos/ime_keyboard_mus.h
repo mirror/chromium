@@ -1,28 +1,26 @@
-// Copyright 2014 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef UI_BASE_IME_CHROMEOS_IME_KEYBOARD_OZONE_H_
-#define UI_BASE_IME_CHROMEOS_IME_KEYBOARD_OZONE_H_
+#ifndef UI_BASE_IME_CHROMEOS_IME_KEYBOARD_MUS_H_
+#define UI_BASE_IME_CHROMEOS_IME_KEYBOARD_MUS_H_
 
-#include <string>
-
-#include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "ui/base/ime/chromeos/ime_keyboard.h"
 #include "ui/base/ime/ui_base_ime_export.h"
 
 namespace ui {
-class InputController;
+class InputDeviceControllerClient;
 }
 
 namespace chromeos {
 namespace input_method {
 
-class UI_BASE_IME_EXPORT ImeKeyboardOzone : public ImeKeyboard {
+class UI_BASE_IME_EXPORT ImeKeyboardMus : public ImeKeyboard {
  public:
-  explicit ImeKeyboardOzone(ui::InputController* controller);
-  ~ImeKeyboardOzone() override;
+  ImeKeyboardMus(
+      ui::InputDeviceControllerClient* input_device_controller_client);
+  ~ImeKeyboardMus() override;
 
   bool SetCurrentKeyboardLayoutByName(const std::string& layout_name) override;
   bool SetAutoRepeatRate(const AutoRepeatRate& rate) override;
@@ -35,12 +33,12 @@ class UI_BASE_IME_EXPORT ImeKeyboardOzone : public ImeKeyboard {
   bool CapsLockIsEnabled() override;
 
  private:
-  ui::InputController* input_controller_;
+  ui::InputDeviceControllerClient* input_device_controller_client_;
 
-  DISALLOW_COPY_AND_ASSIGN(ImeKeyboardOzone);
+  DISALLOW_COPY_AND_ASSIGN(ImeKeyboardMus);
 };
 
 }  // namespace input_method
 }  // namespace chromeos
 
-#endif  // UI_BASE_IME_CHROMEOS_IME_KEYBOARD_OZONE_H_
+#endif  // UI_BASE_IME_CHROMEOS_IME_KEYBOARD_MUS_H_
